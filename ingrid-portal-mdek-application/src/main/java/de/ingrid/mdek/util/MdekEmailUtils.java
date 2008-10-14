@@ -143,13 +143,18 @@ public class MdekEmailUtils {
 		sendEmail(text, MAIL_SENDER, emailList.toArray(new String[]{}) );
 	}
 
-	public static void sendObjectMovedMail(MdekDataBean data) {
+	private static void sendObjectMovedMail(MdekDataBean data, String fromUuid, String toUuid) {
 		List<User> qaUserList = getQAUsersForObject(data);
 		List<String> emailList = getEmailAddressesForUsers(qaUserList);
 		List<String> responsibleUserEmail = getEmailAddressesForUsers(new String[]{ data.getObjectOwner() });
 		emailList.addAll(responsibleUserEmail);
 
+		String srcTitle = (fromUuid == null? "" : getObjectTitle(fromUuid));
+		String dstTitle = (toUuid == null? "" : getObjectTitle(toUuid));
+
 		HashMap<String, String> movedDatasetMap = createDatasetFromObject(data);
+		movedDatasetMap.put("oldParent", srcTitle);
+		movedDatasetMap.put("newParent", dstTitle);
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_moved_email.vm");
 		String templatePath = url.getPath();
@@ -159,21 +164,26 @@ public class MdekEmailUtils {
 		sendEmail(text, MAIL_SENDER, emailList.toArray(new String[]{}) );		
 	}
 
-	public static void sendObjectMovedMail(String objUuid) {
+	public static void sendObjectMovedMail(String objUuid, String oldParentUuid, String newParentUuid) {
 		if (!isWorkflowControlEnabled() || isCurrentUserQAForObject(objUuid)) {
 			return;
 		}
 		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, Quantity.DETAIL_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, HTTPSessionHelper.getCurrentSessionId());
-		sendObjectMovedMail(MdekObjectUtils.extractSingleObjectFromResponse(response));
+		sendObjectMovedMail(MdekObjectUtils.extractSingleObjectFromResponse(response), oldParentUuid, newParentUuid);
 	}
 	
-	public static void sendAddressMovedMail(MdekAddressBean adr) {
+	private static void sendAddressMovedMail(MdekAddressBean adr, String fromUuid, String toUuid) {
 		List<User> qaUserList = getQAUsersForAddress(adr);
 		List<String> emailList = getEmailAddressesForUsers(qaUserList);
 		List<String> responsibleUserEmail = getEmailAddressesForUsers(new String[]{ adr.getAddressOwner() });
 		emailList.addAll(responsibleUserEmail);
 
+		String srcTitle = (fromUuid == null? "" : getAddressTitle(fromUuid));
+		String dstTitle = (toUuid == null? "" : getAddressTitle(toUuid));
+
 		HashMap<String, String> movedDatasetMap = createDatasetFromAddress(adr);
+		movedDatasetMap.put("oldParent", srcTitle);
+		movedDatasetMap.put("newParent", dstTitle);
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_moved_email.vm");
 		String templatePath = url.getPath();
@@ -183,12 +193,12 @@ public class MdekEmailUtils {
 		sendEmail(text, MAIL_SENDER, emailList.toArray(new String[]{}) );
 	}
 
-	public static void sendAddressMovedMail(String adrUuid) {
+	public static void sendAddressMovedMail(String adrUuid, String oldParentUuid, String newParentUuid) {
 		if (!isWorkflowControlEnabled() || isCurrentUserQAForAddress(adrUuid)) {
 			return;
 		}
 		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, Quantity.DETAIL_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 1, HTTPSessionHelper.getCurrentSessionId());
-		sendAddressMovedMail(MdekAddressUtils.extractSingleAddressFromResponse(response));	
+		sendAddressMovedMail(MdekAddressUtils.extractSingleAddressFromResponse(response), oldParentUuid, newParentUuid);	
 	}
 
 	public static void sendObjectMarkedDeletedMail(String objUuid) {
@@ -492,6 +502,7 @@ public class MdekEmailUtils {
 		assignedDatasetMap.put("title", data.getObjectName());
 		assignedDatasetMap.put("uuid", data.getUuid());
 		assignedDatasetMap.put("type", "O");
+		assignedDatasetMap.put("operation", data.getIsPublished() ? "B" : "A");
 
 		return assignedDatasetMap;
 	}
@@ -502,6 +513,7 @@ public class MdekEmailUtils {
 		assignedDatasetMap.put("title", MdekAddressUtils.createAddressTitle(data.getOrganisation(), data.getName(), data.getGivenName()));
 		assignedDatasetMap.put("uuid", data.getUuid());
 		assignedDatasetMap.put("type", "A");
+		assignedDatasetMap.put("operation", data.getIsPublished() ? "B" : "A");
 
 		return assignedDatasetMap;
 	}
@@ -534,6 +546,18 @@ public class MdekEmailUtils {
 		}
 
 		return false;
+	}
+
+	private static String getObjectTitle(String objUuid) {
+		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, Quantity.DETAIL_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, HTTPSessionHelper.getCurrentSessionId());
+		MdekDataBean data = MdekObjectUtils.extractSingleObjectFromResponse(response);
+		return data.getTitle();
+	}
+
+	private static String getAddressTitle(String adrUuid) {
+		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, Quantity.DETAIL_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 0, HTTPSessionHelper.getCurrentSessionId());
+		MdekAddressBean data = MdekAddressUtils.extractSingleAddressFromResponse(response);
+		return MdekAddressUtils.createAddressTitle(data.getOrganisation(), data.getName(), data.getGivenName());
 	}
 
 	public ConnectionFacade getConnectionFacade() {

@@ -124,13 +124,13 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		return MdekObjectUtils.extractObjectsFromResponse(response);
 	}
 
-	public void moveObjectSubTree(String fromUuid, String toUuid, boolean forcePublicationCondition) {
-		IngridDocument response = mdekCallerObject.moveObject(connectionFacade.getCurrentPlugId(), fromUuid, toUuid, forcePublicationCondition, HTTPSessionHelper.getCurrentSessionId());
+	public void moveObjectSubTree(String fromUuid, String oldParentUuid, String newParentUuid, boolean forcePublicationCondition) {
+		IngridDocument response = mdekCallerObject.moveObject(connectionFacade.getCurrentPlugId(), fromUuid, newParentUuid, forcePublicationCondition, HTTPSessionHelper.getCurrentSessionId());
 		if (mdekCaller.getResultFromResponse(response) == null) {
 			MdekErrorUtils.handleError(response);
 
 		} else {
-			MdekEmailUtils.sendObjectMovedMail(fromUuid);
+			MdekEmailUtils.sendObjectMovedMail(fromUuid, oldParentUuid, newParentUuid);
 		}
 	}
 

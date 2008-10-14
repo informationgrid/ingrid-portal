@@ -110,11 +110,13 @@ dojo.widget.defineWidget(
 		else
 			return false;
 
+		var dstIsRootNode = (node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot");
+
 		if (node != null) {
-			if (node.id == "newNode" || (!node.userWriteTreePermission && !node.userWriteSubTreePermission))
+			if (node.id == "newNode" || (!dstIsRootNode && (!node.userWriteTreePermission && !node.userWriteSubTreePermission)))
 				return false;
 
-			if (!UtilSecurity.canCreateRootNodes() && (node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot"))
+			if (dstIsRootNode && !UtilSecurity.canCreateRootNodes())
 				return false;
 
 			if (node.nodeAppType == srcNode.nodeAppType) {

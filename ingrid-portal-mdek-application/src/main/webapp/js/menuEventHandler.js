@@ -260,11 +260,19 @@ menuEventHandler.handlePaste = function(msg) {
 				var def = treeController.expand(targetNode);
 				if (appType == "O") {
 					def.addCallback(function() {
-						dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, forcePublicationCondition: false, resultHandler: deferred});
+						var parentUuid = treeController.nodeToCut.parent.id;
+						if (parentUuid == "objectRoot") {
+							parentUuid = null;
+						}
+						dojo.event.topic.publish("/cutObjectRequest", {srcId: treeController.nodeToCut.id, parentUuid: parentUuid, dstId: targetNode.id, forcePublicationCondition: false, resultHandler: deferred});
 					});
 				} else if (appType == "A") {
 					def.addCallback(function() {
-						dojo.event.topic.publish("/cutAddressRequest", {srcId: treeController.nodeToCut.id, dstId: targetNode.id, resultHandler: deferred});
+						var parentUuid = treeController.nodeToCut.parent.id;
+						if (parentUuid == "addressRoot" || parentUuid == "addressFreeRoot") {
+							parentUuid = null;
+						}
+						dojo.event.topic.publish("/cutAddressRequest", {srcId: treeController.nodeToCut.id, parentUuid: parentUuid, dstId: targetNode.id, resultHandler: deferred});
 					});
 				}
 			}

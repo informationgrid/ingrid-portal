@@ -5,6 +5,10 @@ Der folgende Datensatz wurde im Hierarchiebaum verschoben:
 
 Titel: $movedDS.title
 Uuid: $movedDS.uuid
+Ursprünglicher Elternknoten:#if( $movedDS.oldParent != "") $movedDS.oldParent#else Wurzelknoten#end
+
+Neuer Elternknoten:#if( $movedDS.newParent != "") $movedDS.newParent#else Wurzelknoten#end
+
 
 #if( $movedDS.type == "O")
 Direkter Link: ${DIRECT_LINK}?nodeType=O&nodeId=$movedDS.uuid

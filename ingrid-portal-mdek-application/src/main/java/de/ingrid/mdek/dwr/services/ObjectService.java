@@ -16,7 +16,7 @@ public interface ObjectService {
 	public MdekDataBean reassignObjectToAuthor(MdekDataBean data);
 	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer maxNum);
 	public Map<String, Object> copyNode(String nodeUuid, String dstNodeUuid, Boolean includeChildren);
-	public void moveNode(String nodeUuid, String dstNodeUuid, boolean forcePublicationCondition);
+	public void moveNode(String nodeUuid, String oldParentUuid, String newParentUuString, boolean forcePublicationCondition);
 	public void deleteNode(String nodeUuid, Boolean forceDeleteReferences, Boolean markOnly);
 	public MdekDataBean deleteObjectWorkingCopy(String nodeUuid, Boolean forceDeleteReferences, Boolean markOnly);
 	public MdekDataBean createNewNode(String parentUuid);

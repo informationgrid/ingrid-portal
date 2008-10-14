@@ -956,8 +956,8 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 		forcePubCond = msg.forcePublicationCondition;
 	}
 
-	dojo.debug("udkDataProxy calling ObjectService.moveNode("+msg.srcId+", "+msg.dstId+", "+forcePubCond+")");	
-	ObjectService.moveNode(msg.srcId, msg.dstId, forcePubCond,
+	dojo.debug("udkDataProxy calling ObjectService.moveNode("+msg.srcId+", "+msg.parentUuid+", "+msg.dstId+", "+forcePubCond+")");	
+	ObjectService.moveNode(msg.srcId, msg.parentUuid, msg.dstId, forcePubCond,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -997,6 +997,7 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 udkDataProxy.handleCutAddressRequest = function(msg) {
 	var srcId = msg.srcId;
 	var dstId = msg.dstId;
+	var parentUuid = msg.parentUuid;
 	var moveToFreeAddress = false;
 
 	if (dstId == "addressRoot") {
@@ -1006,8 +1007,8 @@ udkDataProxy.handleCutAddressRequest = function(msg) {
 		moveToFreeAddress = true;
 	}
 
-	dojo.debug("udkDataProxy calling AddressService.moveAddress("+srcId+", "+dstId+", "+moveToFreeAddress+")");	
-	AddressService.moveAddress(srcId, dstId, moveToFreeAddress,
+	dojo.debug("udkDataProxy calling AddressService.moveAddress("+srcId+", "+parentUuid+", "+dstId+", "+moveToFreeAddress+")");	
+	AddressService.moveAddress(srcId, parentUuid, dstId, moveToFreeAddress,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,

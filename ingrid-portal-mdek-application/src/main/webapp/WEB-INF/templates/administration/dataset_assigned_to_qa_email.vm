@@ -5,6 +5,11 @@ Der folgende Datensatz wurde Ihrer Benutzergruppe zur Qualitätssicherung überw
 
 Titel: $assignedDS.title
 Uuid: $assignedDS.uuid
+#if ( $assignedDS.operation == "A")
+Bearbeitungsoperation: neu angelegt
+#else
+Bearbeitungsoperation: bearbeitet
+#end
 
 #if( $assignedDS.type == "O")
 Direkter Link: ${DIRECT_LINK}?nodeType=O&nodeId=$assignedDS.uuid

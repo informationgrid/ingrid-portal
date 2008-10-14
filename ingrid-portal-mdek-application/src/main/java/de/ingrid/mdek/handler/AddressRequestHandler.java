@@ -26,7 +26,7 @@ public interface AddressRequestHandler {
 	public boolean canCopyAddress(String uuid);
 	public List<String> getPathToAddress(String uuid);
 	public Map<String, Object> copyAddress(String fromUuid, String toUuid, boolean copySubTree, boolean copyToFreeAddress);
-	public void moveAddressSubTree(String fromUuid, String toUuid, boolean moveToFreeAddress);
+	public void moveAddressSubTree(String fromUuid, String oldParentUuid, String newParentUuid, boolean moveToFreeAddress);
 	public MdekAddressBean fetchAddressObjectReferences(String addrUuid, int startIndex, int numRefs);
 	public List<MdekAddressBean> getQAAddresses(String workState, String selectionType, Integer maxNum);
 	public AddressStatisticsResultBean getAddressStatistics(String uuid, boolean freeAddressesOnly);

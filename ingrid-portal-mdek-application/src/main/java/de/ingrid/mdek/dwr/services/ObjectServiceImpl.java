@@ -171,11 +171,11 @@ public class ObjectServiceImpl implements ObjectService {
 		return objectRequestHandler.getPathToObject(uuid);
 	}
 
-	public void moveNode(String nodeUuid, String dstNodeUuid, boolean forcePublicationCondition) {
-		log.debug("Moving node with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
+	public void moveNode(String nodeUuid, String oldParentUuid, String newParentUuid, boolean forcePublicationCondition) {
+		log.debug("Moving node with ID: "+nodeUuid+" and parent: "+oldParentUuid+" to ID: "+newParentUuid);
 
 		try {
-			objectRequestHandler.moveObjectSubTree(nodeUuid, dstNodeUuid, forcePublicationCondition);
+			objectRequestHandler.moveObjectSubTree(nodeUuid, oldParentUuid, newParentUuid, forcePublicationCondition);
 		}
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it

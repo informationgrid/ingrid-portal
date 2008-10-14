@@ -163,11 +163,11 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 
-	public void moveAddress(String nodeUuid, String dstNodeUuid, boolean moveToFreeAddress) {
-		log.debug("Moving address with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
+	public void moveAddress(String nodeUuid, String oldParentUuid, String newParentUuid, boolean moveToFreeAddress) {
+		log.debug("Moving address with ID: "+nodeUuid+" and parent "+oldParentUuid+" to ID: "+newParentUuid);
 
 		try {
-			addressRequestHandler.moveAddressSubTree(nodeUuid, dstNodeUuid, moveToFreeAddress);
+			addressRequestHandler.moveAddressSubTree(nodeUuid, oldParentUuid, newParentUuid, moveToFreeAddress);
 		}
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it

@@ -127,13 +127,13 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		return MdekAddressUtils.extractAddressesFromResponse(response);
 	}
 
-	public void moveAddressSubTree(String fromUuid, String toUuid, boolean moveToFreeAddress) {
-		IngridDocument response = mdekCallerAddress.moveAddress(connectionFacade.getCurrentPlugId(), fromUuid, toUuid, moveToFreeAddress, HTTPSessionHelper.getCurrentSessionId());
+	public void moveAddressSubTree(String fromUuid, String oldParentUuid, String newParentUuid, boolean moveToFreeAddress) {
+		IngridDocument response = mdekCallerAddress.moveAddress(connectionFacade.getCurrentPlugId(), fromUuid, newParentUuid, moveToFreeAddress, HTTPSessionHelper.getCurrentSessionId());
 		if (MdekUtils.getResultFromResponse(response) == null) {
 			MdekErrorUtils.handleError(response);
 
 		} else {
-			MdekEmailUtils.sendAddressMovedMail(fromUuid);
+			MdekEmailUtils.sendAddressMovedMail(fromUuid, oldParentUuid, newParentUuid);
 		}
 	}
 
