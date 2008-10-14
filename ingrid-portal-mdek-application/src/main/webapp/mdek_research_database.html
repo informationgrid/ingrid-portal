@@ -93,32 +93,22 @@ this.saveAsCSV = function() {
 	if (currentQuery == null)
 		return;
 	
-//	window.open("testDownload.csv", "downloadFrame");
-/*
-	QueryService.queryHQLToCSV(currentQuery, function(data) {
-		window.open(data);
-		dojo.debug(data);
-	});
-*/
-	QueryService.queryHQLToCSV(currentQuery, {
-		preHook: showLoadingZone,
-		postHook: hideLoadingZone,
-		callback: function(data) {
-//			window.open(data);
-//			window.open(data, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=0,menubar=0');
-			dwr.engine.openInDownload(data);
-/*
-			var iframe = document.createElement("iframe");
-			iframe.src = data;
-			iframe.style.display = "none";
-			document.body.appendChild(iframe);
-*/
-		},
-		errorHandler: function(errMsg, err) {
-			displayErrorMessage(err);
-		}		
-	});
+	if (dojo.render.html.ie) {
+		var query = currentQuery.replace(/\s/g, " ");
+		window.open("mdek_download_csv_ie.html?query="+query, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=0,menubar=0');
 
+	} else {				
+		QueryService.queryHQLToCSV(currentQuery, {
+			preHook: showLoadingZone,
+			postHook: hideLoadingZone,
+			callback: function(data) {
+				dwr.engine.openInDownload(data);
+			},
+			errorHandler: function(errMsg, err) {
+				displayErrorMessage(err);
+			}		
+		});
+	}
 }
 
 function showLoadingZone() {
