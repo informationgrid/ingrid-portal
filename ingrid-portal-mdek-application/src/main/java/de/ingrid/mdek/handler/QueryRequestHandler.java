@@ -35,13 +35,4 @@ public interface QueryRequestHandler {
 
 	public ArrayList<AddressWorkflowResultBean> getQAAddresses(int numHits);
 	public ArrayList<ObjectWorkflowResultBean> getQAObjects(int numHits);
-
-	public ArrayList<ObjectWorkflowResultBean> getAllObjectsForQAAssignedToQA(int numHits, boolean userIsCatAdmin);
-	public ArrayList<AddressWorkflowResultBean> getAllAddressesForQAAssignedToQA(int numHits, boolean userIsCatAdmin);
-
-	public ArrayList<ObjectWorkflowResultBean> getAllModifiedObjectsForQA(int numHits, boolean userIsCatAdmin);
-	public ArrayList<AddressWorkflowResultBean> getAllModifiedAddressesForQA(int numHits, boolean userIsCatAdmin);
-
-	public ArrayList<ObjectWorkflowResultBean> getAllExpiredObjectsForQA(int numHits, boolean userIsCatAdmin);
-	public ArrayList<AddressWorkflowResultBean> getAllExpiredAddressesForQA(int numHits, boolean userIsCatAdmin);
 }

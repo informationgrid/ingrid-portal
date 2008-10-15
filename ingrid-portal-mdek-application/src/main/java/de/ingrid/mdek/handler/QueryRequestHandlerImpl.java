@@ -418,28 +418,6 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 		return adrResults;
 	}
 
-	public ArrayList<ObjectWorkflowResultBean> getAllObjectsForQAAssignedToQA(int numHits, boolean userIsCatAdmin) {
-		return new ArrayList<ObjectWorkflowResultBean>();
-	}
-
-	public ArrayList<AddressWorkflowResultBean> getAllAddressesForQAAssignedToQA(int numHits, boolean userIsCatAdmin) {
-		return new ArrayList<AddressWorkflowResultBean>();
-	}
-	public ArrayList<ObjectWorkflowResultBean> getAllModifiedObjectsForQA(int numHits, boolean userIsCatAdmin) {
-		return new ArrayList<ObjectWorkflowResultBean>();
-	}
-	public ArrayList<AddressWorkflowResultBean> getAllModifiedAddressesForQA(int numHits, boolean userIsCatAdmin) {
-		return new ArrayList<AddressWorkflowResultBean>();
-	}
-
-	public ArrayList<ObjectWorkflowResultBean> getAllExpiredObjectsForQA(int numHits, boolean userIsCatAdmin) {
-		return new ArrayList<ObjectWorkflowResultBean>();
-	}
-	public ArrayList<AddressWorkflowResultBean> getAllExpiredAddressesForQA(int numHits, boolean userIsCatAdmin) {
-		return new ArrayList<AddressWorkflowResultBean>();
-	}
-
-	
 	private MdekDataBean createObjectFromHQLMap(IngridDocument objEntity, String uuidKey,
 			String nameKey, String classKey) {
 		MdekDataBean result = new MdekDataBean();
