@@ -255,9 +255,9 @@ public class AddressServiceImpl implements AddressService {
 		}		
 	}
 
-	public List<MdekAddressBean> getQAAddresses(String workState, String selectionType, Integer maxNum) {
+	public List<MdekAddressBean> getQAAddresses(String workState, String selectionType, Integer startHit, Integer numHits) {
 		try {
-			return addressRequestHandler.getQAAddresses(workState, selectionType, maxNum);
+			return addressRequestHandler.getQAAddresses(workState, selectionType, startHit, numHits);
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it

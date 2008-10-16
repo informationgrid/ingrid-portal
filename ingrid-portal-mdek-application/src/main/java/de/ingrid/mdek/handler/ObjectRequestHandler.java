@@ -27,7 +27,7 @@ public interface ObjectRequestHandler {
 	public void moveObjectSubTree(String fromUuid, String oldParentUuid, String newParentUuid, boolean forcePublicationCondition);
 	public MdekDataBean assignObjectToQA(MdekDataBean data);
 	public MdekDataBean reassignObjectToAuthor(MdekDataBean data);
-	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer maxNum);
+	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer startHit, Integer numHits);
 	public ObjectStatisticsResultBean getObjectStatistics(String objUuid);
 	public ThesaurusStatisticsResultBean getObjectThesaurusStatistics(String objUuid, boolean thesaurusTerms, int startHit, int numHits);
 }

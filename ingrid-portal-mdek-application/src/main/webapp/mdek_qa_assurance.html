@@ -179,7 +179,7 @@ function navigateQAAssignedDatasetTable() {
 function getQAExpiredObjects() {
 	var def = new dojo.Deferred();
 
-	ObjectService.getQAObjects(null, "QA_EXPIRY_STATE_EXPIRED", NUM_OBJECTS_MAX, {
+	ObjectService.getQAObjects(null, "QA_EXPIRY_STATE_EXPIRED", 0, NUM_OBJECTS_MAX, {
 		callback: function(expObjList) {
 			def.callback(expObjList);
 		},
@@ -195,7 +195,7 @@ function getQAExpiredObjects() {
 function getQAExpiredAddresses() {
 	var def = new dojo.Deferred();
 
-	AddressService.getQAAddresses(null, "QA_EXPIRY_STATE_EXPIRED", NUM_ADDRESSES_MAX, {
+	AddressService.getQAAddresses(null, "QA_EXPIRY_STATE_EXPIRED", 0, NUM_ADDRESSES_MAX, {
 		callback: function(expAdrList) {
 			def.callback(expAdrList);
 		},
@@ -211,7 +211,7 @@ function getQAExpiredAddresses() {
 function getQAModifiedObjects() {
 	var def = new dojo.Deferred();
 
-	ObjectService.getQAObjects("B", null, NUM_OBJECTS_MAX, {
+	ObjectService.getQAObjects("B", null, 0, NUM_OBJECTS_MAX, {
 		callback: function(modObjList) {
 			def.callback(modObjList);
 		},
@@ -227,7 +227,7 @@ function getQAModifiedObjects() {
 function getQAModifiedAddresses() {
 	var def = new dojo.Deferred();
 
-	AddressService.getQAAddresses("B", null, NUM_ADDRESSES_MAX, {
+	AddressService.getQAAddresses("B", null, 0, NUM_ADDRESSES_MAX, {
 		callback: function(modAdrList) {
 			def.callback(modAdrList);
 		},
@@ -243,7 +243,7 @@ function getQAModifiedAddresses() {
 function getQAAssignedObjects() {
 	var def = new dojo.Deferred();
 
-	ObjectService.getQAObjects("Q", null, NUM_OBJECTS_MAX, {
+	ObjectService.getQAObjects("Q", null, 0, NUM_OBJECTS_MAX, {
 		callback: function(qaObjList) {
 			def.callback(qaObjList);
 		},
@@ -259,7 +259,7 @@ function getQAAssignedObjects() {
 function getQAAssignedAddresses() {
 	var def = new dojo.Deferred();
 
-	AddressService.getQAAddresses("Q", null, NUM_ADDRESSES_MAX, {
+	AddressService.getQAAddresses("Q", null, 0, NUM_ADDRESSES_MAX, {
 		callback: function(qaAdrList) {
 			def.callback(qaAdrList);
 		},

@@ -199,13 +199,10 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		return result;
 	}
 
-	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer maxNum) {
-		// TODO use this parameter
-		int startHit = 0;
-		
+	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer startHit, Integer numHits) {
 		WorkState ws = EnumUtil.mapDatabaseToEnumConst(WorkState.class, workState);
 		IdcEntitySelectionType st = selectionType == null ? null : IdcEntitySelectionType.valueOf(selectionType);
-		IngridDocument response = mdekCallerObject.getQAObjects(connectionFacade.getCurrentPlugId(), ws, st, startHit, maxNum, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.getQAObjects(connectionFacade.getCurrentPlugId(), ws, st, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		return MdekObjectUtils.extractDetailedObjects(result);
 	}
