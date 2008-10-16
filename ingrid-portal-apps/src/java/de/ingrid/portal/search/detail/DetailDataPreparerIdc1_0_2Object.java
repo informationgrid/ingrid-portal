@@ -1228,7 +1228,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     
     
     private List getLinkListOfObjectsFromQuery(String queryStr) {
-        ArrayList result = DetailDataPreparerHelper.getHits(queryStr, new String[] {}, null);
+        ArrayList result = DetailDataPreparerHelper.getHits(queryStr, new String[] {Settings.HIT_KEY_OBJ_ID}, null);
         ArrayList linkList = new ArrayList();
         for (int i=0; i<result.size(); i++) {
         	IngridHit hit = (IngridHit)result.get(i);
@@ -1239,6 +1239,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
         	PortletURL actionUrl = response.createActionURL();
         	actionUrl.setParameter("cmd", "doShowDocument");
     		actionUrl.setParameter("docid", hit.getId().toString());
+    		actionUrl.setParameter("docuuid", (String)((HashMap)hit.get("detail")).get(Settings.HIT_KEY_OBJ_ID));
     		actionUrl.setParameter("plugid", iPlugId);
     		if (hit.getString("alt_document_id") != null) {
     			actionUrl.setParameter("altdocid", hit.getString("alt_document_id"));

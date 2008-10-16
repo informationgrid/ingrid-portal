@@ -223,7 +223,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             String plugId = DetailDataPreparerHelper.getAddressPlugIdFromPlugId(request.getParameter("plugid"));
             try {
                 IngridHit hit = getAddressHit(addrId, plugId);
-                response.setRenderParameter("docid", hit.getId().toString());
+                response.setRenderParameter("docuuid", addrId);
                 response.setRenderParameter("plugid", hit.getPlugId());
                 if (hit.get(".alt_document_id") != null) {
                     response.setRenderParameter("altdocid", (String) hit.get("alt_document_id"));
@@ -240,7 +240,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             String plugId = DetailDataPreparerHelper.getPlugIdFromAddressPlugId(request.getParameter("plugid"));
             try {
                 IngridHit hit = getObjectHit(objId, plugId);
-                response.setRenderParameter("docid", hit.getId().toString());
+                response.setRenderParameter("docuuid", objId);
                 response.setRenderParameter("plugid", hit.getPlugId());
                 if (hit.get(".alt_document_id") != null) {
                     response.setRenderParameter("altdocid", (String) hit.get("alt_document_id"));
@@ -254,6 +254,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             }
         } else if (cmd.equals("doShowDocument")) {
             response.setRenderParameter("docid", request.getParameter("docid"));
+            if (request.getParameter("docuuid") != null) {
+            	response.setRenderParameter("docuuid", request.getParameter("docuuid"));
+            }
             response.setRenderParameter("plugid", request.getParameter("plugid"));
             if (request.getParameter("alt_document_id") != null) {
                 response.setRenderParameter("altdocid", request.getParameter("alt_document_id"));

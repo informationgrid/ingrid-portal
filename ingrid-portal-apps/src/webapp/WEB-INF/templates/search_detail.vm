@@ -51,6 +51,7 @@
 		#set ($action = $renderResponse.createActionURL())
 		$action.setParameter('cmd', "doShowDocument")
 		$action.setParameter('docid', "$ref.getId()")
+		$action.setParameter('docuuid', "$ref.detail.get('T01_object.obj_id')")
 		$action.setParameter('plugid', "$plugId")
 		#set($altDocId = $ref.get("alt_document_id"))
 		#if($altDocId)$action.setParameter('altdocid', "$altDocId")#end
@@ -70,6 +71,7 @@
 		#set ($action = $renderResponse.createActionURL())
 		$action.setParameter('cmd', "doShowDocument")
 		$action.setParameter('docid', "$ref.getId()")
+		$action.setParameter('docuuid', "$ref.detail.get('T01_object.obj_id')")
 		$action.setParameter('plugid', "$plugId")
 		#set($altDocId = $ref.get("alt_document_id"))
 		#if($altDocId)$action.setParameter('altdocid', "$altDocId")#end
@@ -89,6 +91,7 @@
 		#set ($action = $renderResponse.createActionURL())
 		$action.setParameter('cmd', "doShowDocument")
 		$action.setParameter('docid', "$ref.getId()")
+		$action.setParameter('docuuid', "$ref.detail.get('T01_object.obj_id')")
 		$action.setParameter('plugid', "$plugId")
 		#set($altDocId = $ref.get("alt_document_id"))
 		#if($altDocId)$action.setParameter('altdocid', "$altDocId")#end

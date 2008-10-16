@@ -551,7 +551,13 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
             	link.put("title", messages.getString("search.detail.dataRelations.next"));
     			PortletURL actionUrl = response.createActionURL();
     	    	actionUrl.setParameter("cmd", "doShowDocument");
-    			actionUrl.setParameter("docid", request.getParameter("docid"));
+    			if (request.getParameter("docid") != null) {
+        	    	actionUrl.setParameter("docid", request.getParameter("docid"));
+    			}
+    			if (request.getParameter("docuuid") != null) {
+        	    	actionUrl.setParameter("docuuid", request.getParameter("docuuid"));
+    			}
+    			
     			actionUrl.setParameter("plugid", iPlugId);
     			// max number to show of object references of direct address
     			actionUrl.setParameter("maxORs", Integer.toString(maxNumObjRefs + NUM_OBJ_REFS_PER_PAGE));
