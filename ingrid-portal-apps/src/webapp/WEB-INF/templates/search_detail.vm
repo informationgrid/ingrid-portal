@@ -738,16 +738,16 @@
     #renderUDKAdditionalInformation()
     #renderUDKSearchTerms()
 
-	<!--
-$rec
-   <br/><br/><br/><br/>
-   	  #if($record)
-			<br/>RENDER RECORD:<br/>
-   		#renderRecord($record 0)
-    	  #else
-    		no record available.
-    	  #end
-    -->
+##	<!--
+##$rec
+##   <br/><br/><br/><br/>
+##   	  #if($record)
+##			<br/>RENDER RECORD:<br/>
+##  		#renderRecord($record 0)
+##    	  #else
+##    		no record available.
+##    	  #end
+##    -->
 	</div>
 #else
 	<p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>
