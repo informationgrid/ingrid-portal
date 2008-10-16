@@ -176,6 +176,7 @@ public class Settings {
 
     public final static String RESULT_KEY_PLUG_ID = "plugid";
     public final static String RESULT_KEY_DOC_ID = "docid";
+    public final static String RESULT_KEY_DOC_UUID = "docuuid";
 
     public final static String RESULT_KEY_WMS_URL = "wms_url";
 

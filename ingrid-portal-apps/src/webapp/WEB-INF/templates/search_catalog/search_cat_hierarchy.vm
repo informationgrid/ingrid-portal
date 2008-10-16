@@ -19,7 +19,11 @@
 			#set($nodeIcon = "icn_udk_adr_${node.udk_class}.gif")
 			#set($nodeAlt = $MESSAGES.getString("udk_adr_class_name_${node.udk_class}"))
 		#end
-		#set($nodeUrl = "portal/search-detail.psml?plugid=${node.plugId}#if(${node.docId})&docid=${node.docId}#end")
+		#if($node.udk_docId)
+			#set($nodeUrl = "portal/search-detail.psml?plugid=${node.plugId}#if(${node.docId})&docuuid=${node.udk_docId}#end")
+		#else
+			#set($nodeUrl = "portal/search-detail.psml?plugid=${node.plugId}#if(${node.docId})&docid=${node.docId}#end")
+		#end
 	#else
 		#set($nodeIcon = "ico_tree_folder_close.gif")
 		#set($nodeAlt = "$MESSAGES.getString('common.alt.icon.folder')")

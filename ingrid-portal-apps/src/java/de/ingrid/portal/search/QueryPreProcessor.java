@@ -84,6 +84,7 @@ public class QueryPreProcessor {
         String[] requestedMetadata = new String[] {
         		// udk object metadata
         		Settings.HIT_KEY_UDK_CLASS,
+        		Settings.HIT_KEY_OBJ_ID,
         		// udk address metadata
         		Settings.HIT_KEY_ADDRESS_CLASS,
         		Settings.HIT_KEY_ADDRESS_CLASS2,

@@ -20,6 +20,7 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.forms.EnvironmentSearchForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
@@ -31,8 +32,11 @@ import de.ingrid.portal.search.detail.DetailDataPreparer;
 import de.ingrid.portal.search.detail.DetailDataPreparerFactory;
 import de.ingrid.portal.search.detail.DetailDataPreparerHelper;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Record;
+import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class SearchDetailPortlet extends GenericVelocityPortlet {
     private final static Log log = LogFactory.getLog(SearchDetailPortlet.class);
@@ -92,32 +96,62 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             	noIngridSession = true;    			
     		}
             context.put("noIngridSession", new Boolean(noIngridSession));
-
-            int documentId = Integer.parseInt(request.getParameter("docid"));
+            
+            String docUuid = request.getParameter("docuuid");
             String altDocumentId = request.getParameter("altdocid");
             String iplugId = request.getParameter("plugid");
 
-            context.put("docId", documentId);
+            context.put("docUuid", docUuid);
             context.put("plugId", iplugId);
             
-            IngridHit hit = new IngridHit();
-            hit.setDocumentId(documentId);
-            hit.setPlugId(iplugId);
-            if (altDocumentId != null) {
-                hit.put("alt_document_id", altDocumentId);
+            IngridHit hit = null;
+            PlugDescription plugDescription = null;
+            IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
+            plugDescription = ibus.getIPlug(iplugId);
+            String iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
+            
+            // try to get the result for a objects UUID
+            if (docUuid != null) {
+                String qStr = null;
+            	if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
+            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT)) {
+            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_OBJECT)) {
+            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_ADDRESS)) {
+            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
+            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+                } else {
+            		qStr = docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+                }
+
+            	IngridQuery q = QueryStringParser.parse(qStr);
+            	IngridHits hits = ibus.search(q, 1, 1, 0, 3000);
+            	if (hits.length() < 1) {
+            		log.error("No record found for document uuid:" + docUuid + " using iplug: " + iplugId);
+            	} else {
+            		hit = hits.getHits()[0];
+            	}
+            } else {
+                int documentId = Integer.parseInt(request.getParameter("docid"));
+                hit = new IngridHit();
+                hit.setDocumentId(documentId);
+                hit.setPlugId(iplugId);
+                context.put("docId", documentId);
             }
 
-            IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-
-            PlugDescription plugDescription = ibus.getIPlug(iplugId);
-
-            Record record = ibus.getRecord(hit);
-            
-//            XStream xstream = new XStream();
-//            String serializedObject = xstream.toXML(record);
+            Record record = null;
+            if (hit != null) {
+                if (altDocumentId != null) {
+                    hit.put("alt_document_id", altDocumentId);
+                }
+	            record = ibus.getRecord(hit);
+            }
             
             if (record == null) {
-                log.error("No record found for document id:" + documentId + " using iplug: " + iplugId);
+                log.error("No record found for document id:" + hit.getDocumentId() + " using iplug: " + iplugId);
             } else {
 
                 // set language code list
@@ -142,7 +176,6 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 // put codelist fetcher into context
                 context.put("codeList", new IngridSysCodeList(request.getLocale()));
 
-                String iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
                 DetailDataPreparerFactory ddpf = new DetailDataPreparerFactory(context, iplugId, dateFields, request, response, replacementFields);
                 
                 if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
