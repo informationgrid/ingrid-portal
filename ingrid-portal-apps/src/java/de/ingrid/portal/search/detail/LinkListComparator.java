@@ -18,10 +18,10 @@ public class LinkListComparator implements Comparator {
         try {
             sa = (String) ((HashMap) a).get("title");
             sb = (String) ((HashMap) b).get("title");
+            return sa.compareToIgnoreCase(sb);
         } catch (Exception e) {
             return 0;
         }
 
-        return sa.compareToIgnoreCase(sb);
     }
 }
