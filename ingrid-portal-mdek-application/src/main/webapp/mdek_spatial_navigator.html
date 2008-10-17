@@ -154,7 +154,7 @@ findLocationTopics = function() {
 	deleteComboboxWidgets();
 	showLoading();
 
-	SNSService.getLocationTopics(queryTerm, "exact", null, {
+	SNSService.getLocationTopics(queryTerm, "beginsWith", null, {
 		preHook: function() { showLoadingZone(); disableUiElements(); },
 		postHook: function() { hideLoadingZone(); enableUiElements(); },
 		callback:setResultList,

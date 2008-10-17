@@ -417,7 +417,7 @@ public class SNSService {
     
     public ArrayList<SNSLocationTopic> getLocationTopics(String queryTerm, String searchTypeStr, String pathStr) {
     	ArrayList<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
-    	SearchType searchType = (searchTypeStr == null || searchTypeStr.equalsIgnoreCase("exact")) ? SearchType.exact : SearchType.contains;
+    	SearchType searchType = getSearchType(searchTypeStr);
     	String path = (pathStr == null) ? "/location" : pathStr;
 
     	TopicMapFragment mapFragment = null;
@@ -645,7 +645,23 @@ public class SNSService {
     		result.setQualifier(result.getType());
     	return result;
     }
-    
+
+    private SearchType getSearchType(String searchTypeStr) {
+    	if (searchTypeStr == null) {
+    		return SearchType.exact;
+    		
+    	} else if (searchTypeStr.equalsIgnoreCase("exact")) {
+    		return SearchType.exact;
+
+    	} else if (searchTypeStr.equalsIgnoreCase("contains")) {
+    		return SearchType.contains;
+
+    	} else {
+    		return SearchType.beginsWith;
+    	}
+    }
+
+
     private static void printTopic(Topic t) {
     	System.out.println("Title: "+t.getTitle()+" ID: "+t.getTopicID());
     	

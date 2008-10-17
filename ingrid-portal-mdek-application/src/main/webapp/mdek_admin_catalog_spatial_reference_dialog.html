@@ -119,7 +119,7 @@ scriptScope.findLocationTopics = function() {
 	resetResultDiv();
 	showLoading();
 
-	SNSService.getLocationTopics(queryTerm, "exact", "/location/admin", {
+	SNSService.getLocationTopics(queryTerm, "beginsWith", "/location/admin", {
 		preHook: function() { showLoadingZone(); disableUiElements(); },
 		postHook: function() { hideLoadingZone(); enableUiElements(); },
 		callback:setResultList,

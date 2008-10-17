@@ -471,7 +471,7 @@ this.findLocationTopics = function() {
 
 	clearLocationResults();
 
-	SNSService.getLocationTopics(queryTerm, "exact", null, {
+	SNSService.getLocationTopics(queryTerm, "beginsWith", null, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback: setLocationResultList,
