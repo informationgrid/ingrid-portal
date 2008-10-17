@@ -22,35 +22,27 @@ _container_.addOnLoad(function() {
 
 	document.getElementById("importType1").onclick = selectImportType;
 	document.getElementById("importType2").onclick = selectImportType;
-    selectImportType();
+
+	// simulate a button click after the page is loaded. If we directly
+	// call the 'click' function from here, the SplitContainers won't be initialized properly
+	setTimeout("dojo.byId('importType1').click()", 1);
 });
 
 function selectImportType(e) {
-	// if (!e) var e = window.event
-	if (this.id == "importType2") {
-		document.getElementById("importTree").style.display = "none";
-//		document.getElementById("importUniversal").style.visibility = "visible";
-//		document.getElementById("importUniversal").style.display = "block";
-		document.getElementById("importType1").checked = false;
-		document.getElementById("importProcessInfo").style.top = 667 + "px";
-		
-		document.getElementById("analyzeBtn").style.display = "";
+	var importTreeDiv = dojo.byId("importTree");
+	var importUnivDiv = dojo.byId("importUniversal");
+	var processInfoDiv = dojo.byId("importProcessInfo");
+	var analyseButtonDiv = dojo.byId("analyzeBtn");
 
-    } else if (this.id == "importType1") {
-		document.getElementById("importTree").style.visibility = "visible";
-		document.getElementById("importTree").style.display = "block";
-		document.getElementById("importUniversal").style.display = "none";
-		document.getElementById("importType2").checked = false;
-		document.getElementById("importProcessInfo").style.top = 667 + "px";
-		
-		document.getElementById("analyzeBtn").style.display = "none";
+	if (this.id == "importType1") {
+		dojo.html.show(importTreeDiv);
+		dojo.html.hide(importUnivDiv);
+		dojo.html.hide(analyseButtonDiv);
 
-    } else {
-		document.getElementById("importTree").style.visibility = "hidden";
-		document.getElementById("importUniversal").style.visibility = "hidden";
-		document.getElementById("importProcessInfo").style.top = 167 + "px";
-		
-		document.getElementById("analyzeBtn").style.display = "none";
+	} else if (this.id == "importType2") {
+		dojo.html.hide(importTreeDiv);
+		dojo.html.hide(importUnivDiv);
+		dojo.html.show(analyseButtonDiv);
 	}
 }
 
@@ -92,8 +84,8 @@ scriptScope.selectInfoAddressForTreeImport = function() {
 
 scriptScope.analyseFile = function() {
 	// TODO Implement
-	document.getElementById("importUniversal").style.visibility = "visible";
-	document.getElementById("importUniversal").style.display = "block";
+	var importUnivDiv = dojo.byId("importUniversal");
+	dojo.html.show(importUnivDiv);
 }
 
 function startTreeImport() {
@@ -394,9 +386,23 @@ function cloneObject(obj) {
           </div>
           <!-- RIGHT HAND SIDE CONTENT IMPORT UNIVERSAL END -->
 
+			<div class="inputContainer">
+				<span class="button w915" style="height:20px !important;">
+					<span style="float:right;">
+						<button dojoType="ingrid:Button" title="Import starten" onClick="javascript:scriptScope.startImport();">Import starten</button>
+					</span>
+					<span style="float:right;">
+						<button dojoType="ingrid:Button" title="Zuordnung zur&uuml;cksetzen" onClick="javascript:scriptScope.resetImport();">Zur&uuml;cksetzen</button>
+					</span>
+				</span>
+	            <div class="fill"></div>
+			</div>
+
+<!-- 
           <div id="importUniversalButtons" class="inputContainer">
             <span class="button w915"><a href="#" class="buttonBlue" title="Zuordnung zur&uuml;cksetzen">Zur&uuml;cksetzen</a><a href="#" class="buttonBlue" title="Import starten">Import starten</a></span>
       	  </div>
+-->
         </div>
         <!-- IMPORT UNIVERSAL END -->
 
