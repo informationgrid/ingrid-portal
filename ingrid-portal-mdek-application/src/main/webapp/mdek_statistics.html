@@ -11,10 +11,26 @@ var statsThesTermsObjPageNav = new PageNavigation({ resultsPerPage: resultsPerPa
 var statsThesTermsAdrPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("statsThesTermsAdrTableInfo"), pagingSpan:dojo.byId("statsThesTermsAdrTablePaging") });
 
 _container_.addOnLoad(function() {
-	dojo.event.connectOnce("after", statsFreeTermsObjPageNav, "onPageSelected", function() { navigateFreeTermsObjTable(); });
-	dojo.event.connectOnce("after", statsFreeTermsAdrPageNav, "onPageSelected", function() { navigateFreeTermsAdrTable(); });
-	dojo.event.connectOnce("after", statsThesTermsObjPageNav, "onPageSelected", function() { navigateThesTermsObjTable(); });
-	dojo.event.connectOnce("after", statsThesTermsAdrPageNav, "onPageSelected", function() { navigateThesTermsAdrTable(); });
+	dojo.event.connectOnce("after", statsFreeTermsObjPageNav, "onPageSelected", function() {
+		showLoadingZone();
+		var def = navigateFreeTermsObjTable();
+		def.addBoth(hideLoadingZone);
+	});
+	dojo.event.connectOnce("after", statsFreeTermsAdrPageNav, "onPageSelected", function() {
+		showLoadingZone();
+		var def = navigateFreeTermsAdrTable();
+		def.addBoth(hideLoadingZone);
+	});
+	dojo.event.connectOnce("after", statsThesTermsObjPageNav, "onPageSelected", function() {
+		showLoadingZone();
+		var def = navigateThesTermsObjTable();
+		def.addBoth(hideLoadingZone);	
+	});
+	dojo.event.connectOnce("after", statsThesTermsAdrPageNav, "onPageSelected", function() {
+		showLoadingZone();
+		var def = navigateThesTermsAdrTable();
+		def.addBoth(hideLoadingZone);	
+	});
 
 	initStatsTree();
 
