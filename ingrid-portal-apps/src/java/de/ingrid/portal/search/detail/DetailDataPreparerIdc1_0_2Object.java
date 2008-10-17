@@ -233,7 +233,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     		ArrayList lines = new ArrayList();
 	    	for (int i=0; i<listRecords.size(); i++) {
 	    		Record listRecord = (Record)listRecords.get(i);
-	    		if (listRecord.get("syslist.lang_id").equals(request.getLocale().getLanguage())) {
+	    		if (listRecord != null && listRecord.get("syslist.lang_id") != null && listRecord.get("syslist.lang_id").equals(request.getLocale().getLanguage())) {
 		    		HashMap line = new HashMap();
 		        	line.put("type", "textLine");
 		        	line.put("body", listRecord.get("syslist.name"));
