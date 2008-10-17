@@ -234,6 +234,8 @@ function navigateFreeTermsAdrTable() {
 
 // The user clicked the catalog root node in the tree. Show statistics for the complete catalog.
 function showStatisticsForCatalog() {
+	showLoadingZone();
+
 	resetThesaurusTablePageNav("statsThesTermsObjTable");
 	resetThesaurusTablePageNav("statsFreeTermsObjTable");
 	resetThesaurusTablePageNav("statsThesTermsAdrTable");
@@ -251,16 +253,20 @@ function showStatisticsForCatalog() {
 	l1.addCallback(function(resultList) {
 		setStatsObjectsTableContent(resultList[0][1]);
 		setStatsAdrTableContent(resultList[1][1]);
+		hideLoadingZone();
 	});
 
 	l1.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
+		hideLoadingZone();
 	});
 }
 
 // The user clicked the object root node in the tree. Show statistics for all objects.
 function showStatisticsForAllObjects() {
+	showLoadingZone();
+
 	resetStatsAdrTable();
 	resetThesaurusTablePageNav("statsThesTermsObjTable");
 	resetThesaurusTablePageNav("statsFreeTermsObjTable");
@@ -275,16 +281,20 @@ function showStatisticsForAllObjects() {
 
 	l1.addCallback(function(resultList) {
 		setStatsObjectsTableContent(resultList[0][1]);
+		hideLoadingZone();
 	});
 
 	l1.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
+		hideLoadingZone();
 	});
 }
 
 // The user clicked the address root node in the tree. Show statistics for all addresses.
 function showStatisticsForAllAddresses() {
+	showLoadingZone();
+
 	resetStatsObjectsTable();
 	resetThesaurusTable("statsThesTermsObjTable");
 	resetThesaurusTable("statsFreeTermsObjTable");
@@ -299,16 +309,20 @@ function showStatisticsForAllAddresses() {
 
 	l1.addCallback(function(resultList) {
 		setStatsAdrTableContent(resultList[0][1]);
+		hideLoadingZone();
 	});
 
 	l1.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
+		hideLoadingZone();
 	});
 }
 
 // The user clicked the free address root node in the tree. Show statistics for all free addresses.
 function showStatisticsForAllFreeAddresses() {
+	showLoadingZone();
+
 	resetStatsObjectsTable();
 	resetThesaurusTable("statsThesTermsObjTable");
 	resetThesaurusTable("statsFreeTermsObjTable");
@@ -323,16 +337,20 @@ function showStatisticsForAllFreeAddresses() {
 
 	l1.addCallback(function(resultList) {
 		setStatsAdrTableContent(resultList[0][1]);
+		hideLoadingZone();
 	});
 
 	l1.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
+		hideLoadingZone();
 	});
 }
 
 // The user clicked a specific address node in the tree. Show statistics for the address.
 function showStatisticsForAddress(adrUuid) {
+	showLoadingZone();
+
 	resetStatsObjectsTable();
 	resetThesaurusTable("statsThesTermsObjTable");
 	resetThesaurusTable("statsFreeTermsObjTable");
@@ -347,16 +365,20 @@ function showStatisticsForAddress(adrUuid) {
 
 	l1.addCallback(function(resultList) {
 		setStatsAdrTableContent(resultList[0][1]);
+		hideLoadingZone();
 	});
 
 	l1.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
+		hideLoadingZone();
 	});
 }
 
 // The user clicked a specific object node in the tree. Show statistics for the object.
 function showStatisticsForObject(uuid) {
+	showLoadingZone();
+
 	resetStatsAdrTable();
 	resetThesaurusTablePageNav("statsThesTermsObjTable");
 	resetThesaurusTablePageNav("statsFreeTermsObjTable");
@@ -371,11 +393,13 @@ function showStatisticsForObject(uuid) {
 
 	l1.addCallback(function(resultList) {
 		setStatsObjectsTableContent(resultList[0][1]);
+		hideLoadingZone();
 	});
 
 	l1.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
+		hideLoadingZone();
 	});
 }
 
@@ -443,11 +467,11 @@ function initStatsTree() {
 		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
 
 		TreeService.getSubTree(node.uuid, node.nodeAppType, 1, {
-			preHook: UtilDWR.enterLoadingState,
-			postHook: UtilDWR.exitLoadingState,
+			preHook: showLoadingZone,
+			postHook: hideLoadingZone,
   			callback:function(res) { deferred.callback(res); },
 			errorHandler:function(message) {
-				UtilDWR.exitLoadingState();
+				hideLoadingZone();
 				deferred.errback(new dojo.RpcError(message, this));
 			}
   		});
@@ -650,6 +674,15 @@ function generateRandomString(strLength) {
 	return str;
 }
 
+function showLoadingZone() {
+	dojo.html.setVisibility(dojo.byId("statisticsLoadingZone"), "visible");
+}
+
+function hideLoadingZone() {
+	dojo.html.setVisibility(dojo.byId("statisticsLoadingZone"), "hidden");
+}
+
+
 </script>
 </head>
 
@@ -680,7 +713,10 @@ function generateRandomString(strLength) {
   	<div dojoType="ContentPane" id="statisticsContentContainer" class="contentContainer" layoutAlign="top">
 
       <div id="statisticsContentSection" class="contentBlockWhite">
-        <div style="z-index: 99;" id="winNavi">
+        <div style="z-index: 99; top:0px !important;" id="winNavi">
+			<span id="statisticsLoadingZone" z-index: 100;" style="visibility:hidden;">
+		        <img src="img/ladekreis.gif" style="background-color:#EEEEEE;" />
+		    </span>
           <a href="javascript:scriptScope.print()" title="drucken"><img src="img/ic_fl_print.gif" width="11" height="11" alt="drucken" />drucken</a><a href="#" title="Hilfe">[?]</a>
     	  </div>
     	  <div id="stats" class="content">
