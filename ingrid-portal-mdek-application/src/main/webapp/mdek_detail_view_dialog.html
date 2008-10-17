@@ -230,6 +230,8 @@ function renderSectionTitel(val) {
 
 function renderTextWithTitle(val, title) {
 	if (detailHelper.isValid(val)) {
+		// Replace newlines with <br/>
+		val = val.replace(/\n/g, "<br/>");
 		if (detailHelper.isValid(title)) {
 			dojo.byId("detailViewContent").innerHTML += "<p><strong>" + title + "</strong><br/>" + val + "</p><br/>";
 		} else {
@@ -261,6 +263,8 @@ function renderAddressList(list) {
 
 function renderText(val) {
 	if (val && val.length>0) {
+		// Replace newlines with <br/>
+		val = val.replace(/\n/g, "<br/>");
 		dojo.byId("detailViewContent").innerHTML += "<p>" + val + "</p><br/>";
 	}
 }
