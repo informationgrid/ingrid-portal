@@ -90,4 +90,21 @@ public class IngridPowerToolImpl extends JetspeedPowerToolImpl {
         return null;
     }
 
+    /**
+     * Turns all characters into HTML entity equivalents
+     * 
+     */
+    public String htmlescapeAll(String s1) {
+        if (s1 == null)
+            return null;
+        StringBuffer buf = new StringBuffer();
+        int i;
+        for (i = 0; i < s1.length(); ++i) {
+            char ch = s1.charAt(i);
+            buf.append("&#" + ((int) ch) + ";");
+        }
+        return buf.toString();
+    }
+    
+    
 }

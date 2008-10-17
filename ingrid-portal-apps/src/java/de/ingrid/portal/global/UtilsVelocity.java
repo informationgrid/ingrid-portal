@@ -65,5 +65,9 @@ public class UtilsVelocity {
         }
     }
     
+    public static String htmlescapeAll(String str) {
+    	return UtilsString.htmlescapeAll(str);
+    }
+    
     
 }

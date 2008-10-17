@@ -20,6 +20,7 @@ import de.ingrid.portal.global.IPlugHelperDscEcs;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -1319,9 +1320,9 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 			element.put("body", textLine);
 		} else if (type.equalsIgnoreCase("email") || type.equalsIgnoreCase("e-mail")) {
 			element.put("type", "textLinkLine");
-			element.put("href", "mailto:".concat(textLine));
-			element.put("body", textLine);
-			element.put("altText", textLine);
+			element.put("href", "mailto:".concat(UtilsString.htmlescapeAll(textLine)));
+			element.put("body", UtilsString.htmlescapeAll(textLine));
+			element.put("altText", UtilsString.htmlescapeAll(textLine));
 		} else if (type.equalsIgnoreCase("www") || type.equalsIgnoreCase("url")) {
 			element.put("type", "textLinkLine");
 			if (textLine.startsWith("http")) {

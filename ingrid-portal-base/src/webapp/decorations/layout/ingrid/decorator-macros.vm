@@ -204,6 +204,10 @@
             #set($linkName = $MESSAGES.getString($linkName))			
 		#end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
+        ## obfuscate email addresse (webmaster)
+        #if($linkUrl && $linkUrl.contains("@"))
+        	#set($linkUrl = $jetspeed.htmlescapeAll($linkUrl))
+        #end
         #if($velocityCount > 1)
            | 
         #end

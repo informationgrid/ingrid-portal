@@ -67,7 +67,7 @@
 		#elseif($myCommunication.get("t021_communication.comm_type") == "Fax")
 			$MESSAGES.getString("t021_communication.comm_type_fax"): $myCommunication.get("t021_communication.comm_value")<br/>
 		#elseif($myCommunication.get("t021_communication.comm_type") == "E-Mail" || $myCommunication.get("t021_communication.comm_type") == "EMail" || $myCommunication.get("t021_communication.comm_type") == "Email" || $myCommunication.get("t021_communication.comm_type") == "E-Mail")
-			$MESSAGES.getString("t021_communication.comm_type_email"): <a href="mailto:$myCommunication.get("t021_communication.comm_value")">$myCommunication.get("t021_communication.comm_value")</a><br/>
+			$MESSAGES.getString("t021_communication.comm_type_email"): <a href="mailto:$tool.htmlescapeAll($myCommunication.get("t021_communication.comm_value"))">$tool.htmlescapeAll($myCommunication.get("t021_communication.comm_value"))</a><br/>
 		#elseif($myCommunication.get("t021_communication.comm_type") == "URL" || $myCommunication.get("t021_communication.comm_type") == "url")
 			$myCommunication.get("t021_communication.comm_type"): <a href="$myCommunication.get("t021_communication.comm_value")" target="_new">$myCommunication.get("t021_communication.comm_value")</a><br/>
 		#else

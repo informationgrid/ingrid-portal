@@ -28,6 +28,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridCMS;
 import de.ingrid.portal.om.IngridCMSItem;
@@ -63,8 +64,8 @@ public class ContactPortlet extends GenericVelocityPortlet {
         context.put("actionForm", cf);
 
         // contact email address
-        context.put("portalEmail", PortalConfig.getInstance().getString(PortalConfig.EMAIL_CONTACT_FORM_RECEIVER,
-                "portalu@portalu.de"));
+        context.put("portalEmail", UtilsString.htmlescapeAll(PortalConfig.getInstance().getString(PortalConfig.EMAIL_CONTACT_FORM_RECEIVER,
+                "portalu@portalu.de")));
 
         // address after email
         Session session = HibernateUtil.currentSession();
