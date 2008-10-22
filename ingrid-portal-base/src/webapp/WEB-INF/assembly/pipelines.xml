@@ -465,30 +465,12 @@ limitations under the License.
         class='java.util.HashMap'>
     <constructor-arg>
         <map>
-            <entry key='/portlet'>
-                <value>portlet-pipeline</value>
-            </entry>            
             <entry key='/portal'>
                 <value>jetspeed-pipeline</value>
-            </entry>
-            <entry key='/ajaxapi'>
-                <value>ajax-pipeline</value>
             </entry>
             <entry key='/login'>
                 <value>jetspeed-pipeline</value>
             </entry>            
-            <entry key='/fileserver'>
-                <value>fileserver-pipeline</value>
-            </entry>                        
-            <entry key='/desktop'>                <!-- the key "/desktop" cannot be changed without editing core.js (at least) -->
-                <value>desktop-pipeline</value>   <!--    must be set in third argument in JetspeedDesktop bean initialization -->
-            </entry>                                    
-            <entry key='/action'>
-                <value>desktop-action-pipeline</value>
-            </entry>                                                
-            <entry key='/ajax'>
-                <value>ajax-direct-pipeline</value>
-            </entry>
         </map>        
     </constructor-arg>        
   </bean>
