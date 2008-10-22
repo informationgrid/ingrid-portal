@@ -176,10 +176,9 @@ public class JetspeedEngine implements Engine
     public void service( RequestContext context ) throws JetspeedException
     {        
         long start = System.currentTimeMillis();
-        String targetPipeline = null;
-        String requestPipeline = context
+        String targetPipeline = context
                 .getRequestParameter(PortalReservedParameters.PIPELINE);
-        if (null == requestPipeline)
+        if (null == targetPipeline)
         {
             targetPipeline = (String)context.getAttribute(PortalReservedParameters.PIPELINE);                
             if (null == targetPipeline)
@@ -198,10 +197,6 @@ public class JetspeedEngine implements Engine
                     targetPipeline = this.defaultPipelineName;
                 }
             }
-        } else {
-        	if (pipelineMapper.containsValue(requestPipeline)) {
-        		targetPipeline = requestPipeline;
-        	}
         }
         Pipeline pipeline = null;
         if (targetPipeline != null)
