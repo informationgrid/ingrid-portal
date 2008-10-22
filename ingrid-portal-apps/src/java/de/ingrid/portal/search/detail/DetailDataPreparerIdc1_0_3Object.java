@@ -299,7 +299,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     		ArrayList lines = new ArrayList();
 	    	for (int i=0; i<listRecords.size(); i++) {
 	    		Record listRecord = (Record)listRecords.get(i);
-	    		if (listRecord.get("syslist.lang_id").equals(request.getLocale().getLanguage())) {
+	    		if (listRecord != null && listRecord.get("syslist.lang_id") != null && listRecord.get("syslist.lang_id").equals(request.getLocale().getLanguage())) {
 		    		HashMap line = new HashMap();
 		        	line.put("type", "textLine");
 		        	line.put("body", listRecord.get("syslist.name"));
@@ -317,7 +317,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 	    	}
     	}
     	
-    	// environment categories
+    	// environment topics
 		listRecords = getSubRecordsByColumnName(record, "t0114_env_topic.topic_name");
     	if (listRecords.size() > 0) {
     		ArrayList lines = new ArrayList();
@@ -630,7 +630,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     	    		Record tableRecord = (Record)tableRecords.get(i);
     	    		ArrayList row = new ArrayList();
     	    		row.add(notNull(tableRecord.getString("t011_obj_geo_symc.symbol_cat_value")));
-    	    		row.add(notNull(tableRecord.getString("t011_obj_geo_symc.symbol_date")));
+    	    		row.add(UtilsDate.convertDateString(notNull(tableRecord.getString("t011_obj_geo_symc.symbol_date")).trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
     	    		row.add(notNull(tableRecord.getString("t011_obj_geo_symc.edition")));
     	    		if (!isEmptyRow(row)) {
     	    			body.add(row);
@@ -660,7 +660,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     	    		Record tableRecord = (Record)tableRecords.get(i);
     	    		ArrayList row = new ArrayList();
     	    		row.add(notNull(tableRecord.getString("t011_obj_geo_keyc.keyc_value")));
-    	    		row.add(notNull(tableRecord.getString("t011_obj_geo_keyc.key_date")));
+    	    		row.add(UtilsDate.convertDateString(notNull(tableRecord.getString("t011_obj_geo_keyc.key_date")).trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
     	    		row.add(notNull(tableRecord.getString("t011_obj_geo_keyc.edition")));
     	    		if (!isEmptyRow(row)) {
     	    			body.add(row);
