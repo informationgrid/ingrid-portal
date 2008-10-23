@@ -253,7 +253,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 }
             }
         } else if (cmd.equals("doShowDocument")) {
-            response.setRenderParameter("docid", request.getParameter("docid"));
+            if (request.getParameter("docid") != null) {
+            	response.setRenderParameter("docid", request.getParameter("docid"));
+            }
             if (request.getParameter("docuuid") != null) {
             	response.setRenderParameter("docuuid", request.getParameter("docuuid"));
             }
