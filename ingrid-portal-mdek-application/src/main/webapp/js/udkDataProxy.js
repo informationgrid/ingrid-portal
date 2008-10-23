@@ -343,16 +343,19 @@ udkDataProxy.handleLoadRequest = function(msg)
 			ObjectService.getNodeData(nodeId, nodeAppType, "false",
 				{
 					preHook: UtilDWR.enterLoadingState,
-					postHook: UtilDWR.exitLoadingState,
+//					postHook: UtilDWR.exitLoadingState,
 					callback:function(res){
 							if (res != null) {
-								udkDataProxy._setData(res);
-								udkDataProxy._updateTree(res);
-								resetRequiredFields();
-								if (resultHandler)
-									resultHandler.callback();
-								udkDataProxy.resetDirtyFlag();
-								udkDataProxy.onAfterLoad();
+								var def = udkDataProxy._setData(res);
+								def.addCallback(function(arg) {
+									udkDataProxy._updateTree(res);
+									resetRequiredFields();
+									if (resultHandler)
+										resultHandler.callback();
+									udkDataProxy.resetDirtyFlag();
+									udkDataProxy.onAfterLoad();
+									UtilDWR.exitLoadingState();
+								});
 							} else {
 	//							dojo.debug(resultHandler);
 								if (typeof(resultHandler) != "undefined") {
@@ -372,16 +375,19 @@ udkDataProxy.handleLoadRequest = function(msg)
 			AddressService.getAddressData(nodeId, "false",
 				{
 					preHook: UtilDWR.enterLoadingState,
-					postHook: UtilDWR.exitLoadingState,
+//					postHook: UtilDWR.exitLoadingState,
 					callback:function(res){
 							if (res != null) {
-								udkDataProxy._setData(res);
-								udkDataProxy._updateTree(res);
-								resetRequiredFields();
-								if (resultHandler)
-									resultHandler.callback();
-								udkDataProxy.resetDirtyFlag();
-								udkDataProxy.onAfterLoad();
+								var def = udkDataProxy._setData(res);
+								def.addCallback(function(arg){
+									udkDataProxy._updateTree(res);
+									resetRequiredFields();
+									if (resultHandler)
+										resultHandler.callback();
+									udkDataProxy.resetDirtyFlag();
+									udkDataProxy.onAfterLoad();
+									UtilDWR.exitLoadingState();
+								});
 							} else {
 								if (typeof(resultHandler) != "undefined") {
 									resultHandler.errback("Error loading Address. The Address with the specified id doesn't exist!");
