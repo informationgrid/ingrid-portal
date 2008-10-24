@@ -662,7 +662,8 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     		if (refRecord.getString("t011_obj_geo.rec_grade") != null) {
     			addElementEntryInline(elements, refRecord.getString("t011_obj_geo.rec_grade").concat(" %"), messages.getString("t011_obj_geo.rec_grade"));
     		}
-    		addElementEntryInline(elements, sysCodeList.getName("100", refRecord.getString("t011_obj_geo.referencesystem_value")), messages.getString("t011_obj_geo.referencesystem_id"));
+    		String referenceSystem = (refRecord.getString("t011_obj_geo.referencesystem_value") != null && refRecord.getString("t011_obj_geo.referencesystem_value").length() > 0) ? refRecord.getString("t011_obj_geo.referencesystem_value") : sysCodeList.getName("100", refRecord.getString("t011_obj_geo.referencesystem_key"));
+    		addElementEntryInline(elements, referenceSystem, messages.getString("t011_obj_geo.referencesystem_id"));
     		
     		tableRecords = getSubRecordsByColumnName(record, "t011_obj_geo_scale.line");
     		if (tableRecords.size() > 0) {
