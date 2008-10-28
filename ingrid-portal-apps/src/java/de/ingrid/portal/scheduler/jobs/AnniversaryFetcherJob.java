@@ -57,6 +57,7 @@ public class AnniversaryFetcherJob implements StatefulJob {
         try {
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());
+            int thisYear = cal.get(Calendar.YEAR);
             Date queryDate = cal.getTime();
 
             Calendar queryDateFrom = Calendar.getInstance();
@@ -99,6 +100,12 @@ public class AnniversaryFetcherJob implements StatefulJob {
                                 anni.setDateFrom(from);
                                 Date fromDate = UtilsDate.parseDateString(from);
                                 cal.setTime(fromDate);
+                                if (thisYear == cal.get(Calendar.YEAR)) {
+                                	if (log.isDebugEnabled()) {
+                                		log.debug("Skip Anniversary for (topic:'" + detail.getTopicID() + "', lang:" + lang + ") because the year of the event equals the current year.");
+                                	}
+                                	break;
+                                }
                                 anni.setDateFromYear(new Integer(cal.get(Calendar.YEAR)));
                                 anni.setDateFromMonth(new Integer(cal.get(Calendar.MONTH) + 1));
                                 anni.setDateFromDay(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
