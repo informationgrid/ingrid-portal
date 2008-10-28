@@ -22,6 +22,7 @@ import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
+import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.dsc.Column;
@@ -1060,15 +1061,35 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     }
 
     private void addCrossReferencedObjects(List elements, String objId) {
-    	List linkList = getLinkListOfObjectsFromQuery("object_reference.obj_from_id:".concat(objId).concat(
-                " iplugs:\"").concat(iPlugId).concat("\""));
-        if (!linkList.isEmpty()) {
-        	HashMap element = new HashMap();
-        	element.put("type", "linkList");
-        	element.put("title", messages.getString("cross_references"));
-        	element.put("linkList", linkList);
-        	elements.add(element);
-        }
+    	ArrayList<String> referenceList = new ArrayList<String>();
+    	ArrayList<IngridHit> result = DetailDataPreparerHelper.getHits("object_reference.obj_from_id:".concat(objId).concat(
+        " iplugs:\"").concat(iPlugId).concat("\""), new String[] {Settings.HIT_KEY_OBJ_ID, "object_reference.obj_to_uuid"}, null);
+    	String query = "";
+    	boolean firstUuid = true;
+    	for (IngridHit hit : result) {
+    		String[] referenceIds = ((IngridHitDetail)hit.get("detail")).getString("object_reference.obj_to_uuid").split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
+    		for (String str : referenceIds) {
+        		if (firstUuid) {
+            		query += Settings.HIT_KEY_OBJ_ID + ":" + str;
+            		firstUuid = false;
+        		} else {
+        			query += " OR " + Settings.HIT_KEY_OBJ_ID + ":" + str;
+        		}
+    		}
+    	}
+    	if (query.length() > 0) {
+    		query = "(" + query + ")";
+	    		
+	    	List linkList = getLinkListOfObjectsFromQuery(query.concat(
+	                " iplugs:\"").concat(iPlugId).concat("\""));
+	        if (!linkList.isEmpty()) {
+	        	HashMap element = new HashMap();
+	        	element.put("type", "linkList");
+	        	element.put("title", messages.getString("cross_references"));
+	        	element.put("linkList", linkList);
+	        	elements.add(element);
+	        }
+    	}
     }
     
     private void addUrlReferences(List elements, Record record) {
