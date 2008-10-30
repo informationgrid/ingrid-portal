@@ -851,6 +851,7 @@ var reassignToAuthorButton = null;
 		var hasWriteSinglePermission = message.node.userWriteSinglePermission;
 		var hasWriteTreePermission = message.node.userWriteTreePermission;
 		var hasWriteSubTreePermission = message.node.userWriteSubTreePermission;
+		var isPublished = message.node.isPublished;
 		var canCreateRootNodes = UtilSecurity.canCreateRootNodes();
 //		dojo.debug("User has write permission? "+hasWritePermission);
 
@@ -874,7 +875,12 @@ var reassignToAuthorButton = null;
 
 		} else {
 			// If a 'normal' node (obj/adr that is not root) is selected, always enable the following nodes
-			enableList = [showChangesButton, previewButton, copyEntityButton, showCommentButton];
+			enableList = [previewButton, copyEntityButton, showCommentButton];
+
+			// Only show the compare view dialog if a published version exists. Otherwise there's nothing to compare to
+			if (isPublished) {
+				enableList.push(showChangesButton);
+			}
 
 			// If the node has children, enable the 'copy tree' button
 			if (message.node.isFolder) {

@@ -49,8 +49,8 @@ function renderTextWithTitle(oldVal, newVal, title) {
 		newVal = "";
 	}
 	dojo.byId("diffContent").innerHTML += "<strong>" + title + "</strong><p>" + diffString(oldVal, newVal) + "</p>";
-	dojo.byId("oldContent").innerHTML += "<strong>" + title + "</strong><p>" + oldVal + "</p>";
-	dojo.byId("currentContent").innerHTML += "<strong>" + title + "</strong><p>" + newVal + "</p>";
+	dojo.byId("oldContent").innerHTML += "<strong>" + title + "</strong><p>" + oldVal.replace(/\n/g, "<br />") + "</p>";
+	dojo.byId("currentContent").innerHTML += "<strong>" + title + "</strong><p>" + newVal.replace(/\n/g, "<br />") + "</p>";
 }
 
 function renderText(oldVal, newVal) {

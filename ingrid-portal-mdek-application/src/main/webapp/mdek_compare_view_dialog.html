@@ -236,8 +236,8 @@ function renderTextWithTitle(oldVal, newVal, title) {
 		newVal = "";
 	}
 	dojo.byId("diffContent").innerHTML += "<strong>" + title + "</strong><p>" + diffString(oldVal, newVal) + "</p>";
-	dojo.byId("oldContent").innerHTML += "<strong>" + title + "</strong><p>" + oldVal + "</p>";
-	dojo.byId("currentContent").innerHTML += "<strong>" + title + "</strong><p>" + newVal + "</p>";
+	dojo.byId("oldContent").innerHTML += "<strong>" + title + "</strong><p>" + oldVal.replace(/\n/g, "<br />") + "</p>";
+	dojo.byId("currentContent").innerHTML += "<strong>" + title + "</strong><p>" + newVal.replace(/\n/g, "<br />") + "</p>";
 }
 
 function renderLinkedObjectListWithTitle(oldList, newList, title) {
@@ -306,8 +306,8 @@ function renderText(oldVal, newVal) {
 		newVal = "";
 	}
 	dojo.byId("diffContent").innerHTML += "<p>" + diffString(oldVal, newVal) + "</p><br/>";
-	dojo.byId("oldContent").innerHTML += "<p>" + oldVal + "</p><br/>";
-	dojo.byId("currentContent").innerHTML += "<p>" + newVal + "</p><br/>";
+	dojo.byId("oldContent").innerHTML += "<p>" + oldVal.replace(/\n/g, "<br />") + "</p><br/>";
+	dojo.byId("currentContent").innerHTML += "<p>" + newVal.replace(/\n/g, "<br />") + "</p><br/>";
 }
 
 function diffString(oldText, newText) {

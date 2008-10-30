@@ -941,9 +941,9 @@ menuEventHandler.handleShowChanges = function(msg) {
 	};
 
 	if (selectedNode.nodeAppType == "O") {
-		dialog.showPage("Compare View", "mdek_compare_view_dialog.html", 755, 600, false, params);
+		dialog.showPage(message.get("dialog.compareView.title"), "mdek_compare_view_dialog.html", 755, 600, false, params);
 	} else if (selectedNode.nodeAppType == "A") {
-		dialog.showPage("Compare View", "mdek_compare_view_address_dialog.html", 755, 600, false, params);
+		dialog.showPage(message.get("dialog.compareView.title"), "mdek_compare_view_address_dialog.html", 755, 600, false, params);
 	}
 }
 
