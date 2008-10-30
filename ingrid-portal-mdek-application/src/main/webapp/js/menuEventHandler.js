@@ -636,8 +636,10 @@ menuEventHandler._handleFinalSaveObject = function(msg) {
 		var deferred = new dojo.Deferred();
 		deferred.addErrback(displayErrorMessage);
 
+		var dialogText = currentUdk.isMarkedDeleted ? message.get("dialog.object.markedDeleted.finalSaveMessage") : message.get("dialog.object.finalSaveMessage");
+
 		// Show a dialog to query the user before publishing
-		dialog.show(message.get("dialog.finalSaveTitle"), message.get("dialog.object.finalSaveMessage"), dialog.INFO, [
+		dialog.show(message.get("dialog.finalSaveTitle"), dialogText, dialog.INFO, [
         	{ caption: message.get("general.no"),  action: function() { deferred.callback(); } },
         	{ caption: message.get("general.yes"), action: function() {
 					dojo.debug("Publishing event: /publishObjectRequest");
@@ -668,8 +670,10 @@ menuEventHandler._handleFinalSaveAddress = function(msg) {
 		var deferred = new dojo.Deferred();
 		deferred.addErrback(displayErrorMessage);
 
+		var dialogText = currentUdk.isMarkedDeleted ? message.get("dialog.address.markedDeleted.finalSaveMessage") : message.get("dialog.address.finalSaveMessage");
+
 		// Show a dialog to query the user before publishing
-		dialog.show(message.get("dialog.finalSaveTitle"), message.get("dialog.address.finalSaveMessage"), dialog.INFO, [
+		dialog.show(message.get("dialog.finalSaveTitle"), dialogText, dialog.INFO, [
         	{ caption: message.get("general.no"),  action: function() { deferred.callback(); } },
         	{ caption: message.get("general.yes"), action: function() {
 					dojo.debug("Publishing event: /publishAddressRequest");

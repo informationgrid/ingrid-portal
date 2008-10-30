@@ -846,6 +846,21 @@ var reassignToAuthorButton = null;
 	var treeListener = dojo.widget.byId("treeListener");
 	var treeController = dojo.widget.byId("treeController");
 
+	// Modify button tooltips depending on whether the current node is marked deleted
+	if (isQAActive && !isUserQA) {
+	    dojo.event.topic.subscribe(treeListener.eventNames.select, function(message) {
+			if (currentUdk.isMarkedDeleted) {
+				finalSaveButton.domNode.setAttribute("title", "Löschen Verwerfen");
+				deleteButton.domNode.setAttribute("title", "Ausgewähltes Objekt bzw. Teilbaum endgültig löschen");
+			} else {
+				finalSaveButton.domNode.setAttribute("title", "Abschließendes Speichern");
+				deleteButton.domNode.setAttribute("title", "Ausgewähltes Objekt bzw. Teilbaum löschen");
+			}
+		});
+	}
+
+
+	// Show/hide toolbar buttons depending on the user rights
     dojo.event.topic.subscribe(treeListener.eventNames.select, function(message) {
 		var hasWritePermission = message.node.userWritePermission;
 		var hasWriteSinglePermission = message.node.userWriteSinglePermission;
