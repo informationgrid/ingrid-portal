@@ -73,7 +73,8 @@ var notEmptyTablesClass1 = [["availabilityUsageLimitationTable", "availabilityUs
 							["extraInfoConformityTable", "extraInfoConformityTableLabel"]];
 var notEmptyTablesClass2 = [["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"]];
 var notEmptyTablesClass3 = [["ref3ServiceTypeTable", "ref3ServiceTypeTableLabel"],
-							["extraInfoConformityTable", "extraInfoConformityTableLabel"]];
+							["extraInfoConformityTable", "extraInfoConformityTableLabel"],
+							["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"]];
 var notEmptyTablesClass4 = [["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"]];
 var notEmptyTablesClass5 = [["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"]];
 
@@ -253,6 +254,13 @@ function isObjectPublishable(idcObject) {
 			break;
 		case '2':
 			// No additional required fields for object class 2
+			for (var i in notEmptyTablesClass2) {
+				if (idcObject[notEmptyTablesClass2[i][0]].length == 0) {
+					dojo.html.addClass(dojo.byId(notEmptyTablesClass2[i][1]), "important");
+					publishable = false;
+					dojo.debug("Object class two required table '"+notEmptyTablesClass2[i][0]+"' empty.");				
+				}
+			}
 			break;
 		case '3':
 			for (var i in notEmptyFieldsClass3) {
@@ -266,7 +274,7 @@ function isObjectPublishable(idcObject) {
 				if (idcObject[notEmptyTablesClass3[i][0]].length == 0) {
 					dojo.html.addClass(dojo.byId(notEmptyTablesClass3[i][1]), "important");
 					publishable = false;
-					dojo.debug("Object class one required table '"+notEmptyTablesClass3[i][0]+"' empty.");				
+					dojo.debug("Object class three required table '"+notEmptyTablesClass3[i][0]+"' empty.");				
 				}
 			}
 
@@ -283,10 +291,22 @@ function isObjectPublishable(idcObject) {
 
 			break;
 		case '4':
-			// No additional required fields for object class 4
+			for (var i in notEmptyTablesClass4) {
+				if (idcObject[notEmptyTablesClass4[i][0]].length == 0) {
+					dojo.html.addClass(dojo.byId(notEmptyTablesClass4[i][1]), "important");
+					publishable = false;
+					dojo.debug("Object class four required table '"+notEmptyTablesClass4[i][0]+"' empty.");				
+				}
+			}
 			break;
 		case '5':
-			// No additional required fields for object class 5
+			for (var i in notEmptyTablesClass5) {
+				if (idcObject[notEmptyTablesClass5[i][0]].length == 0) {
+					dojo.html.addClass(dojo.byId(notEmptyTablesClass5[i][1]), "important");
+					publishable = false;
+					dojo.debug("Object class five required table '"+notEmptyTablesClass5[i][0]+"' empty.");				
+				}
+			}
 			break;
 		default:
 			break;

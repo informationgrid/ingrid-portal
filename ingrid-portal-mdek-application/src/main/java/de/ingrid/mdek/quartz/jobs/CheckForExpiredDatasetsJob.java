@@ -91,9 +91,10 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			doc.put(MdekKeys.EXPIRY_STATE, state.getDbValue());
 
 			if (expiredDataset.getType() == ExpiredDataset.Type.ADDRESS) {
-				mdekCallerAddress.updateAddressPart(plugId, doc, IdcEntityVersion.PUBLISHED_VERSION, catAdminUuid);
+				mdekCallerAddress.updateAddressPart(plugId, doc, IdcEntityVersion.ALL_VERSIONS, catAdminUuid);
+
 			} else {
-				mdekCallerObject.updateObjectPart(plugId, doc, IdcEntityVersion.PUBLISHED_VERSION, catAdminUuid);
+				mdekCallerObject.updateObjectPart(plugId, doc, IdcEntityVersion.ALL_VERSIONS, catAdminUuid);
 			}
 		}
 	}

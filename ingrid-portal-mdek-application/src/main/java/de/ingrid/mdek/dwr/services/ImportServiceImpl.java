@@ -13,6 +13,7 @@ import java.util.zip.GZIPOutputStream;
 
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
+import org.directwebremoting.io.OutputStreamLoader;
 
 public class ImportServiceImpl {
 
@@ -21,18 +22,20 @@ public class ImportServiceImpl {
 	// Echoes the uploaded file back to the client
 	public FileTransfer uploadFile(FileTransfer fileTransfer) throws IOException {
 		log.debug("uploadFile called.");
-		log.debug("fileName: "+fileTransfer.getName());
+		log.debug("fileName: "+fileTransfer.getFilename());
 		log.debug("mimeType: "+fileTransfer.getMimeType());
 
 		// decompress if zip, otherwise compress
 		if (fileTransfer.getMimeType().equals("application/zip")) {
-			ByteArrayOutputStream baos = decompress(fileTransfer.getInputStream());
-			String fileName = fileTransfer.getName().replace(".zip", "");
+			ByteArrayOutputStream baos = decompress(fileTransfer.getOutputStreamLoader()); 
+//			ByteArrayOutputStream baos = decompress(fileTransfer.getInputStream());
+			String fileName = fileTransfer.getFilename().replace(".zip", "");
 			return new FileTransfer(fileName, "application/octet-stream", baos.toByteArray());
 
 		} else {
-			ByteArrayOutputStream output = compress(fileTransfer.getInputStream());
-			return new FileTransfer(fileTransfer.getName()+".zip", "application/zip", output.toByteArray());
+			ByteArrayOutputStream output = compress(fileTransfer.getOutputStreamLoader()); 
+//			ByteArrayOutputStream output = compress(fileTransfer.getInputStream());
+			return new FileTransfer(fileTransfer.getFilename()+".zip", "application/zip", output.toByteArray());
 		}
 	}
 
@@ -53,6 +56,16 @@ public class ImportServiceImpl {
 		return out;
 	}
 
+	// Compress (zip) any data on OutputStreamLoader and write it to a ByteArrayOutputStream
+	public static ByteArrayOutputStream compress(OutputStreamLoader osl) throws IOException {
+		// TODO Implement
+		log.debug("compress(OutputStreamLoader) not implemented yet.");
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		osl.load(bos);
+
+		return bos;
+	}
+
 	// Decompress (unzip) data on InputStream (has to contain zipped data) and write it to a ByteArrayOutputStream
 	public static ByteArrayOutputStream decompress(InputStream is) throws IOException {
 		GZIPInputStream gzin = new GZIPInputStream(new BufferedInputStream(is));
@@ -70,7 +83,17 @@ public class ImportServiceImpl {
 		return baout;
 	}
 
+	// Decompress (unzip) data on OutputStreamLoader (has to contain zipped data) and write it to a ByteArrayOutputStream
+	public static ByteArrayOutputStream decompress(OutputStreamLoader osl) throws IOException {
+		// TODO Implement
+		log.debug("decompress(OutputStreamLoader) not implemented yet.");
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		osl.load(bos);
 
+		return bos;
+	}
+
+	
 	public static void channelCopy(final ReadableByteChannel src, final WritableByteChannel dst) throws IOException {
 		final ByteBuffer buffer = ByteBuffer.allocateDirect(16 * 1024);
 		while (src.read(buffer) != -1) {

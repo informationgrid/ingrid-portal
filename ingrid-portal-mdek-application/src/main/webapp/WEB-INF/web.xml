@@ -64,4 +64,10 @@
 			org.springframework.web.context.ContextLoaderListener
 		</listener-class>
 	</listener>
-</web-app>
+	<listener>
+		<listener-class>
+			org.directwebremoting.servlet.DwrListener
+		</listener-class>
+	</listener>
+
+ </web-app>
