@@ -10,8 +10,9 @@ import org.apache.log4j.Logger;
 import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekError;
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
+import de.ingrid.mdek.MdekUtils.IdcStatisticsSelectionType;
 import de.ingrid.mdek.MdekUtils.WorkState;
-import de.ingrid.mdek.MdekUtils.IdcEntitySelectionType;
 import de.ingrid.mdek.MdekError.MdekErrorType;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
@@ -201,7 +202,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 
 	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer startHit, Integer numHits) {
 		WorkState ws = EnumUtil.mapDatabaseToEnumConst(WorkState.class, workState);
-		IdcEntitySelectionType st = selectionType == null ? null : IdcEntitySelectionType.valueOf(selectionType);
+		IdcQAEntitiesSelectionType st = selectionType == null ? null : IdcQAEntitiesSelectionType.valueOf(selectionType);
 		IngridDocument response = mdekCallerObject.getQAObjects(connectionFacade.getCurrentPlugId(), ws, st, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		return MdekObjectUtils.extractDetailedObjects(result);
@@ -211,13 +212,13 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		// startHit and numHits parameters are ignored for STATISTICS_CLASSES_AND_STATES
 		int startHit = 0;
 		int numHits = 0;
-		IngridDocument response = mdekCallerObject.getObjectStatistics(connectionFacade.getCurrentPlugId(), objUuid, IdcEntitySelectionType.STATISTICS_CLASSES_AND_STATES, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.getObjectStatistics(connectionFacade.getCurrentPlugId(), objUuid, IdcStatisticsSelectionType.CLASSES_AND_STATES, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		return MdekObjectUtils.extractObjectStatistics(result);
 	}
 
 	public ThesaurusStatisticsResultBean getObjectThesaurusStatistics(String objUuid, boolean thesaurusTerms, int startHit, int numHits) {
-		IdcEntitySelectionType selectionType = thesaurusTerms ? IdcEntitySelectionType.STATISTICS_SEARCHTERMS_THESAURUS : IdcEntitySelectionType.STATISTICS_SEARCHTERMS_FREE;
+		IdcStatisticsSelectionType selectionType = thesaurusTerms ? IdcStatisticsSelectionType.SEARCHTERMS_THESAURUS : IdcStatisticsSelectionType.SEARCHTERMS_FREE;
 		IngridDocument response = mdekCallerObject.getObjectStatistics(connectionFacade.getCurrentPlugId(), objUuid, selectionType, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		return MdekUtils.extractThesaurusStatistics(result);
