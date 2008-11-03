@@ -141,7 +141,7 @@ scriptScope.deleteUser = function() {
 			},
 			errorHandler: function(errMsg, err) {
 				hideLoadingZone();
-				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1) {
+				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1 || errMsg.indexOf("USER_HIERARCHY_WRONG") != -1) {
 					dialog.show(message.get("general.error"), "Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um den Benutzer zu l&ouml;schen!", dialog.WARNING);				
 				}
 
