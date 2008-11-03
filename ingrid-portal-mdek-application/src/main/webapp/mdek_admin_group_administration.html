@@ -9,6 +9,8 @@ var curSelectedGroupDetails = null;
 
 
 _container_.addOnLoad(function() {
+	showLoadingZone();
+
 	if (currentUser.role == 1) {
 		var def = new dojo.Deferred();
 		def.callback(null);
@@ -25,6 +27,7 @@ _container_.addOnLoad(function() {
 		initGroupList();
 		resetAllInputData();
 		hidePermissionLists();	
+		hideLoadingZone();
 	});
 });
 
@@ -33,10 +36,13 @@ function deleteGroup(group) {
 	var def = new dojo.Deferred();
 
 	SecurityService.deleteGroup(group.id, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
 		callback: function() {
 			def.callback();
 		},
 		errorHandler: function(errMsg, err) {
+			hideLoadingZone();
 			displayDeleteGroupError(err);
 /*
 			dojo.debug(errMsg);
@@ -220,6 +226,8 @@ function createNewGroup(groupName) {
 	}
 
 	SecurityService.createGroup( { name: groupName }, true, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
 		callback: function(data) {
 			var groupList = dojo.widget.byId("groups");
 			var groupStore = groupList.store;
@@ -233,6 +241,7 @@ function createNewGroup(groupName) {
 
 		},
 		errorHandler: function(errMsg, err) {
+			hideLoadingZone();
 			displayCreateGroupErrorMessage(err);
 /*
 			dojo.debug(errMsg);
@@ -411,10 +420,13 @@ function getAllGroups() {
 
 	// Don't display the administrator group
 	SecurityService.getGroups(false, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
 		callback: function(groupList) {
 			deferred.callback(groupList);
 		},
 		errorHandler: function(errMsg, err) {
+			hideLoadingZone();
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 			deferred.errback(err);			
@@ -429,10 +441,13 @@ function storeGroup(group, refetch) {
 	var deferred = new dojo.Deferred();
 
 	SecurityService.storeGroup(group, refetch, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
 		callback: function(group) {
 			deferred.callback(group);
 		},
 		errorHandler: function(errMsg, err) {
+			hideLoadingZone();
 			displayStoreGroupErrorMessage(err);
 /*
 			dojo.debug(errMsg);
@@ -558,10 +573,13 @@ function getGroupDetails(groupName) {
 	var deferred = new dojo.Deferred();
 
 	SecurityService.getGroupDetails(groupName, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
 		callback: function(groupDetails) {
 			deferred.callback(groupDetails);
 		},
 		errorHandler: function(errMsg, err) {
+			hideLoadingZone();
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 			deferred.errback(err);
@@ -705,6 +723,14 @@ function displayDeleteGroupError(err) {
 		// Show general error message if we can't determine what went wrong
 		dialog.show(message.get("general.error"), message.get("dialog.undefinedError"), dialog.WARNING);
 	}
+}
+
+function showLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("adminGroupLoadingZone"), "visible");
+}
+
+function hideLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("adminGroupLoadingZone"), "hidden");
 }
 
 </script>

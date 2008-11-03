@@ -71,9 +71,12 @@ function initializeUserTree() {
 		var deferred = new dojo.Deferred();
 
 		SecurityService.getSubUsers(node.userId, {
+			preHook: showLoadingZone,
+			postHook: hideLoadingZone,
   			callback:function(res) { deferred.callback(res); },
 //			timeout:10000,
 			errorHandler:function(message) {
+				hideLoadingZone();
 				deferred.errback(new dojo.RpcError(message, this));
 			}
   		});
@@ -129,12 +132,15 @@ scriptScope.deleteUser = function() {
 
 	deferred.addCallback(function() {
 		SecurityService.deleteUser(user.userId, user.addressUuid, {
+			preHook: showLoadingZone,
+			postHook: hideLoadingZone,
 			callback: function() {
 				user.destroy();
 				resetInputFields();
 				dojo.widget.byId("treeUser").selectedNode = null;
 			},
 			errorHandler: function(errMsg, err) {
+				hideLoadingZone();
 				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1) {
 					dialog.show(message.get("general.error"), "Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um den Benutzer zu l&ouml;schen!", dialog.WARNING);				
 				}
@@ -232,6 +238,8 @@ scriptScope.saveUser = function() {
 		dojo.debugShallow(user);
 
 		SecurityService.createUser(user, login, true, {
+			preHook: showLoadingZone,
+			postHook: hideLoadingZone,
 			callback: function(newUser) {
 				var tree = dojo.widget.byId("treeUser");
 				var treeListener = dojo.widget.byId("treeListenerUser");
@@ -245,6 +253,7 @@ scriptScope.saveUser = function() {
 			
 			},
 			errorHandler: function(errMsg, err) {
+				hideLoadingZone();
 				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1) {
 					dialog.show(message.get("general.error"), "Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um den Benutzer anzulegen!", dialog.WARNING);				
 
@@ -267,12 +276,15 @@ scriptScope.saveUser = function() {
 		user.parentUserId = currentSelectedUser.parentUserId;
 
 		SecurityService.storeUser(user, login, true, {
+			preHook: showLoadingZone,
+			postHook: hideLoadingZone,
 			callback: function(newUser) {
 				updateTreeNode(selectedUser, newUser);
 				dialog.show(message.get("general.hint"), "Die Benutzerdaten wurden erfolgreich aktualisiert.", dialog.INFO);				
 
 			},
 			errorHandler: function(errMsg, err) {
+				hideLoadingZone();
 				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1) {
 					dialog.show(message.get("general.error"), "Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um den Benutzer zu &auml;ndern!", dialog.WARNING);				
 
@@ -438,10 +450,13 @@ function getAllGroups(includeCatAdminGroup) {
 	var deferred = new dojo.Deferred();
 
 	SecurityService.getGroups(includeCatAdminGroup, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
 		callback: function(groupList) {
 			deferred.callback(groupList);
 		},
 		errorHandler: function(errMsg, err) {
+			hideLoadingZone();
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 			deferred.errback(err);			
@@ -455,10 +470,13 @@ function getUserDataForAddress(adrUuid) {
 	var deferred = new dojo.Deferred();
 
 	SecurityService.getUserDataForAddress( adrUuid, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
 		callback: function(userData) {
 			deferred.callback(userData);
 		},
 		errorHandler: function(errMsg, err) {
+			hideLoadingZone();
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 			deferred.errback(err);
@@ -472,10 +490,13 @@ function getAddressData(adrUuid) {
 	var deferred = new dojo.Deferred();
 
 	AddressService.getAddressData( adrUuid, null, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
 		callback: function(adr) {
 			deferred.callback(adr);
 		},
 		errorHandler: function(errMsg, err) {
+			hideLoadingZone();
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 			deferred.errback(err);
@@ -489,10 +510,13 @@ function getCatalogAdmin() {
 	var deferred = new dojo.Deferred();
 
 	SecurityService.getCatalogAdmin( {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
 		callback: function(user) {
 			deferred.callback(user);
 		},
 		errorHandler: function(errMsg, err) {
+			hideLoadingZone();
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 			deferred.errback(err);
@@ -556,6 +580,14 @@ function getDocTypeForRole(roleId) {
 		default:
 			return null;
 	}
+}
+
+function showLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("adminUserLoadingZone"), "visible");
+}
+
+function hideLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("adminUserLoadingZone"), "hidden");
 }
 
 </script>
