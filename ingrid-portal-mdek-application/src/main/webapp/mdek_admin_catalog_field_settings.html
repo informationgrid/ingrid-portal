@@ -14,6 +14,8 @@ _container_.addOnLoad(function() {
 });
 
 function initFieldsTable() {
+	showLoadingZone();
+
 	var guiIdList = getGuiIdList();
 
 	guiIdList.addCallback(function(guiIdList) {
@@ -31,11 +33,13 @@ function initFieldsTable() {
 
 			// adding all lines at once without delay causes dojo to hang for a couple of seconds.
 			// To prevent this, the calls are delayed for a couple of ms
-//			addLineToFieldsTable({ identifier: entry.id, name: UtilUI.getDescriptionForGuiId(entry.id), displayType: dispType });
-			setTimeout("addLineToFieldsTable({identifier: '"+entry.id+"', name: '"+UtilUI.getDescriptionForGuiId(entry.id)+"', displayType: '"+dispType+"' })", delay);
-			delay += 10;
-		});	
+			addLineToFieldsTable({ identifier: entry.id, name: UtilUI.getDescriptionForGuiId(entry.id), displayType: dispType });
+//			setTimeout("addLineToFieldsTable({identifier: '"+entry.id+"', name: '"+UtilUI.getDescriptionForGuiId(entry.id)+"', displayType: '"+dispType+"' })", delay);
+//			delay += 10;
+			hideLoadingZone();
+		});
 	});
+	guiIdList.addErrback(hideLoadingZone);
 }
 
 // Button function for the 'save' button
@@ -63,7 +67,7 @@ scriptScope.saveGuiIdList = function() {
 	var def = storeGuiIdList(guiIdList, false);
 
 	def.addCallback(function(res) {
-		dialog.show(message.get("general.hint"), "Die Feldeinstellungen wurden erfolgreich gespeichert.", dialog.INFO);
+		dialog.show(message.get("general.hint"), message.get("dialog.admin.fieldSettingsUpdated"), dialog.INFO);
 	});
 }
 
@@ -73,13 +77,10 @@ function getGuiIdList() {
 
 	// Get all gui ids
 	CatalogService.getSysGuis(null, {
-		preHook: showLoadingZone,
-		postHook: hideLoadingZone,
 		callback: function(sysGuiList) {
 			deferred.callback(sysGuiList);
 		},
 		errorHandler: function(errMsg, err) {
-			hideLoadingZone();
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 			deferred.errback(err);			

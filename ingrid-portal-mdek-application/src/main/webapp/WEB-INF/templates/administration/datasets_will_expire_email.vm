@@ -8,6 +8,7 @@ Titel: $expDS.title
 Uuid: $expDS.uuid
 Typ: $expDS.type
 Letzte Änderung: $expDS.lastModified
+
 Letzte Änderung von: $expDS.lastModifiedBy
 
 #if( $expDS.type.toString() == "OBJECT")

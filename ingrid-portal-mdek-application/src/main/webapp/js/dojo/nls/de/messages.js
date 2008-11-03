@@ -115,6 +115,7 @@
 	"dialog.storeCatalogError":"Die Katalogdaten konnten nicht gespeichert werden. Bitte versuchen Sie es erneut oder kontaktieren Sie den Administrator.",
 
 	"dialog.admin.userNotFoundError":"Der von Ihnen eingegebene Benutzername konnte nicht gefunden werden. Der Benutzer muss im Portal existieren und darf nicht bereits die Rolle 'mdek' besitzen!",
+	"dialog.admin.fieldSettingsUpdated":"Die Feldeinstellungen wurden erfolgreich gespeichert. Die &Auml;nderungen stehen Ihnen nach erneutem Laden der Erfassungsapplikation zur Verf&uuml;gung.",
 
 	"operation.error.object.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Objekte sind neu angelegt und befinden sich noch in der Bearbeitung. Bitte speichern Sie zun&auml;chst diese Objekte ab!",
 	"operation.error.address.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Adressen sind neu angelegt und befinden sich noch in der Bearbeitung. Bitte speichern Sie zun&auml;chst diese Adressen ab!",
