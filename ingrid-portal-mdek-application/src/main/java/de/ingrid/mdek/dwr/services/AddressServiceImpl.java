@@ -5,7 +5,10 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
+import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
+import de.ingrid.mdek.beans.query.AddressSearchResultBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 import de.ingrid.mdek.handler.AddressRequestHandler;
@@ -253,6 +256,21 @@ public class AddressServiceImpl implements AddressService {
 			log.debug("Error while fetching address AORs.", e);
 			throw e;
 		}		
+	}
+
+	public AddressSearchResultBean getWorkAddresses(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
+		try {
+			return addressRequestHandler.getWorkAddresses(selectionType, orderBy, orderAsc, startHit, numHits);
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while fetching Work addresses.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+	
+		} catch (RuntimeException e) {
+			log.debug("Error while fetching Work addresses", e);
+			throw e;
+		}
 	}
 
 	public List<MdekAddressBean> getQAAddresses(String workState, String selectionType, Integer startHit, Integer numHits) {

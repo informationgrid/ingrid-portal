@@ -19,8 +19,11 @@
 	"general.noObjectAddressSelected":"Kein Objekt oder Adresse ausgew&auml;hlt",
 	"general.workState.V":"Ver&ouml;ffentlicht",
 	"general.workState.B":"In Bearbeitung",
-	"general.workState.Q":"An Qualit&auml;tssicherung zugewiesen",
+	"general.workState.Q":"&Uuml;berwiesen an Qualit&auml;tssicherung",
 	"general.workState.R":"Von Qualit&auml;tssicherung r&uuml;ck&uuml;berwiesen",
+	"general.userOperation.NEW":"neu angelegt",
+	"general.userOperation.EDITED":"&uuml;berarbeitet",
+	"general.userOperation.DELETED":"als gel&ouml;scht markiert",
 	"general.state.maredDeleted":"als gel&ouml;scht markiert",
 
 	"menu.general.help":"Hilfe",

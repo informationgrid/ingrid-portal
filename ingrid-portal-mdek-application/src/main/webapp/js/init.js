@@ -847,7 +847,7 @@ var reassignToAuthorButton = null;
 	var treeController = dojo.widget.byId("treeController");
 
 	// Modify button tooltips depending on whether the current node is marked deleted
-	if (isQAActive && !isUserQA) {
+	if (isQAActive && isUserQA) {
 	    dojo.event.topic.subscribe(treeListener.eventNames.select, function(message) {
 			if (currentUdk.isMarkedDeleted) {
 				finalSaveButton.domNode.setAttribute("title", "Löschen Verwerfen");

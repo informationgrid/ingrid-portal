@@ -5,7 +5,10 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
+import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
 import de.ingrid.mdek.beans.object.MdekDataBean;
+import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 import de.ingrid.mdek.handler.ObjectRequestHandler;
@@ -249,6 +252,21 @@ public class ObjectServiceImpl implements ObjectService {
 		}
 	}		
 	
+	public ObjectSearchResultBean getWorkObjects(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
+		try {
+			return objectRequestHandler.getWorkObjects(selectionType, orderBy, orderAsc, startHit, numHits);
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while fetching Work objects.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+	
+		} catch (RuntimeException e) {
+			log.debug("Error while fetching Work objects", e);
+			throw e;
+		}
+	}
+
 	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer startHit, Integer numHits) {
 		try {
 			return objectRequestHandler.getQAObjects(workState, selectionType, startHit, numHits);

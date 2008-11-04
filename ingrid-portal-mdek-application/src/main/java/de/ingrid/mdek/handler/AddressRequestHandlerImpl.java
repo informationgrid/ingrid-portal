@@ -11,10 +11,13 @@ import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekError;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekError.MdekErrorType;
+import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
 import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcStatisticsSelectionType;
+import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
+import de.ingrid.mdek.beans.query.AddressSearchResultBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 import de.ingrid.mdek.caller.IMdekCaller;
@@ -210,6 +213,10 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		return MdekAddressUtils.extractSingleAddressFromResponse(response);
 	}
 
+	public AddressSearchResultBean getWorkAddresses(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
+		IngridDocument response = mdekCallerAddress.getWorkAddresses(connectionFacade.getCurrentPlugId(), selectionType, orderBy, orderAsc, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		return MdekAddressUtils.extractAddressSearchResultsFromResponse(response);
+	}
 
 	public List<MdekAddressBean> getQAAddresses(String workState, String selectionType, Integer startHit, Integer numHits) {
 		WorkState ws = EnumUtil.mapDatabaseToEnumConst(WorkState.class, workState);

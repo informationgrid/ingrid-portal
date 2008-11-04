@@ -102,5 +102,8 @@
 		<!-- both converters are needed to make dwr happy --> 
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtilsSecurity$IdcPermission"/>
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtilsSecurity.IdcPermission"/>
+
+		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcWorkEntitiesSelectionType"/>
+		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcEntityOrderBy"/>
 	</allow>
 </dwr>

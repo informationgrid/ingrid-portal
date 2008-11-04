@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
+import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
 import de.ingrid.mdek.beans.object.MdekDataBean;
+import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 
@@ -27,6 +30,7 @@ public interface ObjectRequestHandler {
 	public void moveObjectSubTree(String fromUuid, String oldParentUuid, String newParentUuid, boolean forcePublicationCondition);
 	public MdekDataBean assignObjectToQA(MdekDataBean data);
 	public MdekDataBean reassignObjectToAuthor(MdekDataBean data);
+	public ObjectSearchResultBean getWorkObjects(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits);
 	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer startHit, Integer numHits);
 	public ObjectStatisticsResultBean getObjectStatistics(String objUuid);
 	public ThesaurusStatisticsResultBean getObjectThesaurusStatistics(String objUuid, boolean thesaurusTerms, int startHit, int numHits);

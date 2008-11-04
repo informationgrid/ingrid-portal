@@ -100,8 +100,22 @@ public class MdekAddressUtils {
 				nodeList.add(dataMapper.getDetailedAddressRepresentation(adrEntity));
 			}
 
-			searchResult.setNumHits((Integer) result.get(MdekKeys.SEARCH_NUM_HITS));
-			searchResult.setTotalNumHits((Long) result.get(MdekKeys.SEARCH_TOTAL_NUM_HITS));
+			if (result.get(MdekKeys.SEARCH_NUM_HITS) != null) {
+				searchResult.setNumHits((Integer) result.get(MdekKeys.SEARCH_NUM_HITS));
+			} else if (result.get(MdekKeys.TOTAL_NUM) != null) {
+				searchResult.setNumHits(((Long) result.get(MdekKeys.TOTAL_NUM)).intValue());				
+			} else {
+				searchResult.setNumHits(0);
+			}
+
+			if (result.get(MdekKeys.SEARCH_TOTAL_NUM_HITS) != null) {
+				searchResult.setTotalNumHits((Long) result.get(MdekKeys.SEARCH_TOTAL_NUM_HITS));				
+			} else if (result.get(MdekKeys.TOTAL_NUM_PAGING) != null) {
+				searchResult.setTotalNumHits(((Long) result.get(MdekKeys.TOTAL_NUM_PAGING)).intValue());
+			} else {
+				searchResult.setTotalNumHits(0);
+			}
+
 			searchResult.setResultList(nodeList);
 		} else {
 			MdekErrorUtils.handleError(response);
