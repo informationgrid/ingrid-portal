@@ -849,7 +849,8 @@ var reassignToAuthorButton = null;
 	// Modify button tooltips depending on whether the current node is marked deleted
 	if (isQAActive && isUserQA) {
 	    dojo.event.topic.subscribe(treeListener.eventNames.select, function(message) {
-			if (currentUdk.isMarkedDeleted) {
+			var markedDeleted = message.node.isMarkedDeleted;
+			if (markedDeleted) {
 				finalSaveButton.domNode.setAttribute("title", "Löschen Verwerfen");
 				deleteButton.domNode.setAttribute("title", "Ausgewähltes Objekt bzw. Teilbaum endgültig löschen");
 			} else {

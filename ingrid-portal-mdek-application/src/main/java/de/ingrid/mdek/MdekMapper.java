@@ -547,6 +547,8 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.put(MDEK_TITLE, obj.get(MdekKeys.TITLE));
 		mdekObj.put(MDEK_HAS_CHILDREN, obj.get(MdekKeys.HAS_CHILD));
 		mdekObj.put(MDEK_IS_PUBLISHED, obj.get(MdekKeys.IS_PUBLISHED));
+		boolean markedDeleted = obj.get(MdekKeys.MARK_DELETED) == null ? false : ((String) obj.get(MdekKeys.MARK_DELETED)).equalsIgnoreCase("Y");
+		mdekObj.put(MDEK_IS_MARKED_DELETED, markedDeleted);
 
 		List<IngridDocument> idcPermissions = (List<IngridDocument>) obj.get(MdekKeysSecurity.IDC_PERMISSIONS);
 		mdekObj.put(MDEK_USER_WRITE_PERMISSION, hasWritePermission(idcPermissions));
@@ -616,7 +618,10 @@ public class MdekMapper implements DataMapperInterface {
 
 		mdekAdr.put(MDEK_HAS_CHILDREN, adr.get(MdekKeys.HAS_CHILD));
 		mdekAdr.put(MDEK_IS_PUBLISHED, adr.get(MdekKeys.IS_PUBLISHED));
-//		mdekAdr.put(MDEK_USER_WRITE_PERMISSION, adr.get(MdekKeysSecurity.IDC_PERMISSION_HAS_ACCESS));
+
+		boolean markedDeleted = adr.get(MdekKeys.MARK_DELETED) == null ? false : ((String) adr.get(MdekKeys.MARK_DELETED)).equalsIgnoreCase("Y");
+		mdekAdr.put(MDEK_IS_MARKED_DELETED, markedDeleted);
+
 		List<IngridDocument> idcPermissions = (List<IngridDocument>) adr.get(MdekKeysSecurity.IDC_PERMISSIONS);
 		mdekAdr.put(MDEK_USER_WRITE_PERMISSION, hasWritePermission(idcPermissions));
 		mdekAdr.put(MDEK_USER_WRITE_SINGLE_PERMISSION, hasWriteSinglePermission(idcPermissions));
