@@ -50,6 +50,8 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
             if (wmc != null && wmc.length() > 0) {
             	context.put("enableLoad", "true");
             }
+            context.put("mapBenderVersion", WMSInterfaceImpl.getInstance().getMapbenderVersion());
+
         }
 
         super.doView(request, response);
@@ -60,11 +62,18 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
         String action = request.getParameter("action");
 
         if (action != null && action.equals("doSaveWMC") && Utils.getLoggedOn(request)) {
-            // get the WMC from mapbender
-        	String wmc = WMSInterfaceImpl.getInstance().getWMCDocument(request.getPortletSession().getId());
             Principal principal = request.getUserPrincipal();
+        	// get the WMC from mapbender
+        	String wmc = WMSInterfaceImpl.getInstance().getWMCDocument(request.getPortletSession().getId());
             IngridPersistencePrefs.setPref(principal.getName(), IngridPersistencePrefs.WMC_DOCUMENT, wmc);
             actionResponse.setRenderParameter("wmsServicesSaved", "1");
+        } else if (action != null && action.equals("doSaveWMSServices") && Utils.getLoggedOn(request)) {
+            Principal principal = request.getUserPrincipal();
+            // get the WMS Services
+            Collection c = WMSInterfaceImpl.getInstance().getWMSServices(request.getPortletSession().getId());
+            IngridPersistencePrefs.setPref(principal.getName(), IngridPersistencePrefs.WMS_SERVICES, c);
+            actionResponse.setRenderParameter("wmsServicesSaved", "1");
+        	
         } else if (action != null && action.equals("doLoadWMC") && Utils.getLoggedOn(request)) {
             // set the WMC in mapbender
             Principal principal = request.getUserPrincipal();

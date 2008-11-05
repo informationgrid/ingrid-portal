@@ -21,6 +21,8 @@ import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
  */
 public interface WMSInterface {
 
+	public static final String MAPBENDER_VERSION_2_1 = "2.1";
+	
     /**
      * Returns the Configuration of the service.
      * 
@@ -160,5 +162,14 @@ public interface WMSInterface {
      *            The session id
      */
     void setWMCDocument(String wmc, String sessionId);
+    
+    
+    /**
+     * Returns the configured MapBender version in wms_interface.properties.
+     * 
+     * @return The MapBender version configured in wms_interface.properties
+     */
+    public String getMapbenderVersion();
+    
     
 }

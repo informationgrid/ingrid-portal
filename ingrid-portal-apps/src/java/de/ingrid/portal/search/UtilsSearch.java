@@ -1379,7 +1379,7 @@ public class UtilsSearch {
         PortletSession session = request.getPortletSession();
 
         // check for personalizes wms services
-        if (Utils.getLoggedOn(request)) {
+        if (Utils.getLoggedOn(request) && service.getMapbenderVersion().equals(service.MAPBENDER_VERSION_2_1)) {
             Principal principal = request.getUserPrincipal();
             Object obj = IngridPersistencePrefs.getPref(principal.getName(), IngridPersistencePrefs.WMS_SERVICES);
             if (obj != null && obj instanceof List) {

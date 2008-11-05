@@ -18,7 +18,7 @@
 		<span class="clearer"></span>
 	</div>
 	<span class="clearer"></span>
-	<div class="section">    
+	<div class="section">
 		<div class="formbody">
 			<iframe src="$wmsURL" style="width:860px;height:676px;border:0;" name="wms_viewer" marginheight="0" marginwidth="0" frameborder="0">
 				$MESSAGES.getString("maps.error.noframes") 
@@ -32,13 +32,25 @@
 				</span>&nbsp;&nbsp;
 #end
 #if($enableSave)
+	#if($mapBenderVersion == "2.1")
+	$action.setParameter('action','doSaveWMSServices')
+	#else
 	$action.setParameter('action','doSaveWMC')
+	#end
 		        <span class="iconLink">
 					<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString("common.alt.icon.intern")" />
+		#if($mapBenderVersion == "2.1")
+					<a href="$action">$MESSAGES.getString("maps.save.wms.services")</a>
+		#else
 					<a href="$action">$MESSAGES.getString("maps.save.wmc")</a>
+		#end
 				</span>
 #if($wmsServicesSaved)
+	#if($mapBenderVersion == "2.1")
+				<p class="portlet-msg-success">$MESSAGES.getString("maps.save.wms.services.saved")</p>
+	#else
 				<p class="portlet-msg-success">$MESSAGES.getString("maps.save.wmc.saved")</p>
+	#end
 #end					
 #end
 			</div>

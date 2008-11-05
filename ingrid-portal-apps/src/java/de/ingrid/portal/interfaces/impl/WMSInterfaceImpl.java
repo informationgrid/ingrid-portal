@@ -56,6 +56,8 @@ public class WMSInterfaceImpl implements WMSInterface {
     private final static String LANGUAGE_PARAM = "lang";
 
     private static WMSInterfaceImpl instance = null;
+    
+    private String mapBenderVersion = null;
 
     Configuration config;
 
@@ -76,6 +78,7 @@ public class WMSInterfaceImpl implements WMSInterface {
         super();
         String configFilename = getResourceAsStream("/wms_interface.properties");
         config = new PropertiesConfiguration(configFilename);
+        mapBenderVersion = config.getString("mapbender_version", MAPBENDER_VERSION_2_1);
     }
 
     public Configuration getConfig() {
@@ -127,10 +130,14 @@ public class WMSInterfaceImpl implements WMSInterface {
             }
             // get the wms services
             List nodes = document.selectNodes("//portal_communication/wms_services/wms");
+            String serviceURL = null;
             for (Iterator i = nodes.iterator(); i.hasNext();) {
                 Node node = (Node) i.next();
-                WMSServiceDescriptor wmsServiceDescriptor = new WMSServiceDescriptor(node.valueOf("name"), node
-                        .valueOf("url"));
+            	serviceURL = node.valueOf("url");
+                if (mapBenderVersion.equals(MAPBENDER_VERSION_2_1)) {
+                	serviceURL = serviceURL.replace(',', '&');
+                }
+                WMSServiceDescriptor wmsServiceDescriptor = new WMSServiceDescriptor(node.valueOf("name"), serviceURL);
                 result.add(wmsServiceDescriptor);
             }
 
@@ -327,11 +334,18 @@ public class WMSInterfaceImpl implements WMSInterface {
                 serviceName = service.getName();
                 if (serviceURL != null && serviceURL.length() > 0) {
                     if (!prequestAdded) {
-                        resultB.append("&COMMAND=addWMS");
+                        if (mapBenderVersion.equals(MAPBENDER_VERSION_2_1)) {
+                        	resultB.append("&PREQUEST=setServices");
+                        } else {
+                        	resultB.append("&COMMAND=addWMS");
+                        }
                         prequestAdded = true;
                     }
                     if (serviceName != null && serviceName.length() > 0) {
                         resultB.append("&wmsName" + (i + 1) + "=" + URLEncoder.encode(serviceName, "UTF-8"));
+                    }
+                    if (mapBenderVersion.equals(MAPBENDER_VERSION_2_1)) {
+                    	serviceURL.replace('&', ',');
                     }
                     resultB.append("&wms" + (i + 1) + "=" + URLEncoder.encode(serviceURL, "UTF-8"));
                 }
@@ -506,6 +520,13 @@ public class WMSInterfaceImpl implements WMSInterface {
           // Release the connection.
           method.releaseConnection();
         }         
+	}
+
+	/* (non-Javadoc)
+	 * @see de.ingrid.portal.interfaces.WMSInterface#getMapbenderVersion()
+	 */
+	public String getMapbenderVersion() {
+		return mapBenderVersion;
 	}
 
 }

@@ -55,7 +55,7 @@ public class WMSInterfaceTest extends TestCase {
     public void testGetWMSSearchURL() {
         String myUrl = wmsInterface.getWMSSearchURL("session0815", true, new Locale("de"));
         if (config.getProperty("display_search_url").toString().indexOf("?") > 0) {
-        	assertEquals(config.getProperty("v") + "&PHPSESSID=session0815&lang=de", myUrl);
+        	assertEquals(config.getProperty("display_search_url") + "&PHPSESSID=session0815&lang=de", myUrl);
         } else {
             assertEquals(config.getProperty("display_search_url") + "?PHPSESSID=session0815&lang=de", myUrl);
         }
@@ -71,25 +71,31 @@ public class WMSInterfaceTest extends TestCase {
                 "My WMS Service Name",
                 "http://wms1.ccgis.de/cgi-bin/mapserv?map=/data/umn/world/world_map.map&REQUEST=GetCapabilities&SERVICE=wms&VERSION=1.1.0");
         String myUrl = wmsInterface.getWMSAddedServiceURL(descr, "session0815", true, new Locale("de"), true);
+        String request = "COMMAND=addWMS";
+        String transmittedWmsUrl = "http://wms1.ccgis.de/cgi-bin/mapserv?map=/data/umn/world/world_map.map&REQUEST=GetCapabilities&SERVICE=wms&VERSION=1.1.0";
+        if (wmsInterface.getMapbenderVersion().equals(wmsInterface.MAPBENDER_VERSION_2_1)) {
+        	request = "PREQUEST=setServices";
+            transmittedWmsUrl = "http://wms1.ccgis.de/cgi-bin/mapserv?map=/data/umn/world/world_map.map,REQUEST=GetCapabilities,SERVICE=wms,VERSION=1.1.0";
+        }
         if (config.getProperty("display_viewer_url").toString().indexOf("?") > 0) {
 	        assertEquals(
 	                config.getProperty("display_viewer_url")
-	                        + "&PHPSESSID=session0815&lang=de&PREQUEST=setServices&wmsName1="
+	                        + "&PHPSESSID=session0815&lang=de&" + request + "&wmsName1="
 	                        + URLEncoder.encode("My WMS Service Name", "UTF-8")
 	                        + "&wms1="
 	                        + URLEncoder
 	                                .encode(
-	                                        "http://wms1.ccgis.de/cgi-bin/mapserv?map=/data/umn/world/world_map.map,REQUEST=GetCapabilities,SERVICE=wms,VERSION=1.1.0",
+	                                		transmittedWmsUrl,
 	                                        "UTF-8"), myUrl);
         } else {
 	        assertEquals(
 	                config.getProperty("display_viewer_url")
-	                        + "?PHPSESSID=session0815&lang=de&PREQUEST=setServices&wmsName1="
+	                        + "?PHPSESSID=session0815&lang=de&" + request + "&wmsName1="
 	                        + URLEncoder.encode("My WMS Service Name", "UTF-8")
 	                        + "&wms1="
 	                        + URLEncoder
 	                                .encode(
-	                                        "http://wms1.ccgis.de/cgi-bin/mapserv?map=/data/umn/world/world_map.map,REQUEST=GetCapabilities,SERVICE=wms,VERSION=1.1.0",
+	                                		transmittedWmsUrl,
 	                                        "UTF-8"), myUrl);
         }
         
@@ -112,22 +118,50 @@ public class WMSInterfaceTest extends TestCase {
         a.add(descr);
 
         String myUrl = wmsInterface.getWMSAddedServiceURL(a, "session0815", true, new Locale("de"), true);
-        assertEquals(
-                config.getProperty("display_viewer_url")
-                        + "?PHPSESSID=session0815&lang=de&PREQUEST=setServices&wmsName1="
-                        + URLEncoder.encode("My WMS Service Name", "UTF-8")
-                        + "&wms1="
-                        + URLEncoder
-                                .encode(
-                                        "http://wms1.ccgis.de/cgi-bin/mapserv?map=/data/umn/world/world_map.map,REQUEST=GetCapabilities,SERVICE=wms,VERSION=1.1.0",
-                                        "UTF-8")
-                        + "&wmsName2="
-                        + URLEncoder.encode("My WMS Service Name 2", "UTF-8")
-                        + "&wms2="
-                        + URLEncoder
-                                .encode(
-                                        "http://wms1.ccgis.de/cgi-bin/mapserv?map=/data/umn/world/world_map.map,REQUEST=GetCapabilities,SERVICE=wms,VERSION=2.2.2",
-                                        "UTF-8"), myUrl);
+        String request = "COMMAND=addWMS";
+        String transmittedWmsUrl1 = "http://wms1.ccgis.de/cgi-bin/mapserv?map=/data/umn/world/world_map.map&REQUEST=GetCapabilities&SERVICE=wms&VERSION=1.1.0";
+        String transmittedWmsUrl2 = "http://wms1.ccgis.de/cgi-bin/mapserv?map=/data/umn/world/world_map.map&REQUEST=GetCapabilities&SERVICE=wms&VERSION=2.2.2";
+        if (wmsInterface.getMapbenderVersion().equals(wmsInterface.MAPBENDER_VERSION_2_1)) {
+        	request = "PREQUEST=setServices";
+            transmittedWmsUrl1 = "http://wms1.ccgis.de/cgi-bin/mapserv?map=/data/umn/world/world_map.map,REQUEST=GetCapabilities,SERVICE=wms,VERSION=1.1.0";
+            transmittedWmsUrl2 = "http://wms1.ccgis.de/cgi-bin/mapserv?map=/data/umn/world/world_map.map,REQUEST=GetCapabilities,SERVICE=wms,VERSION=2.2.2";
+        }
+
+        if (config.getProperty("display_viewer_url").toString().indexOf("?") > 0) {
+	        assertEquals(
+	                config.getProperty("display_viewer_url")
+	                        + "&PHPSESSID=session0815&lang=de&" + request + "&wmsName1="
+	                        + URLEncoder.encode("My WMS Service Name", "UTF-8")
+	                        + "&wms1="
+	                        + URLEncoder
+	                                .encode(
+	                                		transmittedWmsUrl1,
+	                                        "UTF-8")
+	                        + "&wmsName2="
+	                        + URLEncoder.encode("My WMS Service Name 2", "UTF-8")
+	                        + "&wms2="
+	                        + URLEncoder
+	                                .encode(
+	                                		transmittedWmsUrl2,
+	                                        "UTF-8"), myUrl);
+        } else {
+	        assertEquals(
+	                config.getProperty("display_viewer_url")
+	                        + "?PHPSESSID=session0815&lang=de&" + request + "&wmsName1="
+	                        + URLEncoder.encode("My WMS Service Name", "UTF-8")
+	                        + "&wms1="
+	                        + URLEncoder
+	                                .encode(
+	                                		transmittedWmsUrl1,
+	                                        "UTF-8")
+	                        + "&wmsName2="
+	                        + URLEncoder.encode("My WMS Service Name 2", "UTF-8")
+	                        + "&wms2="
+	                        + URLEncoder
+	                                .encode(
+	                                		transmittedWmsUrl2,
+	                                        "UTF-8"), myUrl);
+        }
 
     }
 
