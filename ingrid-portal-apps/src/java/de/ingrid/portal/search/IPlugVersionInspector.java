@@ -32,6 +32,9 @@ public class IPlugVersionInspector {
 	
 	public static String getIPlugVersion(PlugDescription plugDescription) {
 		
+		if (plugDescription == null) {
+			return VERSION_UNKNOWN;
+		}
 		ArrayList fields = (ArrayList)plugDescription.get(PlugDescription.FIELDS);
 		
 		// try to get the right iPlug Type (object/adress/generic)
