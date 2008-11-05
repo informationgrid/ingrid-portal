@@ -77,9 +77,6 @@ dojo.addOnLoad(function() {
 });
 
 function initMenu() {
-	// Hide page3 for everyone. Remove this line when page3 is implemented.
-	dojo.byId("page3Menu").style.display = "none";
-
 	// Hide the first menu for all roles except the catAdmin
 	if (currentUser.role != 1) {
 		dojo.byId("page1Menu").style.display = "none";
@@ -346,8 +343,8 @@ function hideSplash(){
   	    <ul>
   	      <li><a id="page1Menu" onClick="clickMenu('page1')" href="javascript:void(0);" class="current" title="Katalogverwaltung">Katalogverwaltung</a></li>
   	      <li><a id="page2Menu" onClick="clickMenu('page2')" href="javascript:void(0);" title="Nutzerverwaltung">Nutzerverwaltung</a></li>
-  	      <li><a id="page3Menu" onClick="clickMenu('page3')" href="javascript:void(0);" title="Gesamtkatalogmanagement">Gesamtkatalogmanagement</a></li>
-  	      <li><a id="page4Menu" onClick="clickMenu('page4')" href="javascript:void(0);" title="Import/Export">Import/Export</a></li>
+  	      <li><a id="page3Menu" style="display:none;" onClick="clickMenu('page3')" href="javascript:void(0);" title="Gesamtkatalogmanagement">Gesamtkatalogmanagement</a></li>
+  	      <li><a id="page4Menu" style="display:none;" onClick="clickMenu('page4')" href="javascript:void(0);" title="Import/Export">Import/Export</a></li>
   	    </ul>
   	  </div>
   	  

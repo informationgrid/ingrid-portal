@@ -184,6 +184,7 @@
 
 <!-- Quartz Beans -->
 	<!-- Jobs -->
+<!--
 	<bean name="checkForExpiredDatasetsJob" class="org.springframework.scheduling.quartz.JobDetailBean">
 		<property name="jobClass" value="de.ingrid.mdek.quartz.jobs.CheckForExpiredDatasetsJob" />
 		<property name="jobDataAsMap">
@@ -195,15 +196,17 @@
 			</map>
 	  </property>
 	</bean>
-
+ -->
 	<!-- Trigger -->
+<!--
 	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
 		<property name="jobDetail" ref="checkForExpiredDatasetsJob" />
 		<property name="startDelay" value="10000" />
 		<property name="repeatInterval" value="600000" />
 	</bean>
-
+-->
 	<!-- Scheduler Factory -->
+<!--
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
@@ -211,4 +214,5 @@
 			</list>
 		</property>
 	</bean>
-</beans>
+ -->
+ </beans>

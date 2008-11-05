@@ -19,7 +19,7 @@ function initFieldsTable() {
 	var guiIdList = getGuiIdList();
 
 	guiIdList.addCallback(function(guiIdList) {
-		var delay = 10;
+		var data = [];
 		dojo.lang.forEach(guiIdList, function(entry) {
 
 			var dispType = "standard";
@@ -31,13 +31,17 @@ function initFieldsTable() {
 				dispType = "alwaysShow";
 			}
 
-			// adding all lines at once without delay causes dojo to hang for a couple of seconds.
-			// To prevent this, the calls are delayed for a couple of ms
-			addLineToFieldsTable({ identifier: entry.id, name: UtilUI.getDescriptionForGuiId(entry.id), displayType: dispType });
-//			setTimeout("addLineToFieldsTable({identifier: '"+entry.id+"', name: '"+UtilUI.getDescriptionForGuiId(entry.id)+"', displayType: '"+dispType+"' })", delay);
-//			delay += 10;
-			hideLoadingZone();
+			data.push(createTableEntryForField({ identifier: entry.id, name: UtilUI.getDescriptionForGuiId(entry.id), displayType: dispType }));
 		});
+		var compareByName = function(a, b) {
+			return (a.name == b.name) ? 0 : (a.name < b.name) ? -1 : 1;
+		}
+		data.sort(compareByName);
+		UtilList.addTableIndices(data);
+
+		var fieldStore = dojo.widget.byId("fieldTable").store;
+		fieldStore.setData(data);
+		hideLoadingZone();
 	});
 	guiIdList.addErrback(hideLoadingZone);
 }
@@ -112,12 +116,8 @@ function storeGuiIdList(guiIdList, refetchAfterStore) {
 }
 
 
-//function addLineToFieldsTable(field) {
-addLineToFieldsTable = function(field) {
-	var fieldStore = dojo.widget.byId("fieldTable").store;
-
+function createTableEntryForField(field) {
 	var f = {}
-	f.Id = UtilStore.getNewKey(fieldStore);
 	f.identifier = field.identifier;
 	f.name = field.name;
 	if (field.displayType == "standard")
@@ -135,7 +135,7 @@ addLineToFieldsTable = function(field) {
 	else
 		f.alwaysShow = "<input type='radio' name='"+field.identifier+"' id='"+field.identifier+"_alwaysShow' class='radio' />";
 
-	fieldStore.addData(f);
+	return f;
 }
 
 function showLoadingZone() {

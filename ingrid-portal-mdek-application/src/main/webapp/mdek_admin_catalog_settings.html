@@ -404,7 +404,7 @@ function isValidCatalog(cat) {
 					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onClick="javascript:scriptScope.selectSpatialReference();" title="Raumbezug ausw&auml;hlen [Popup]">Raumbezug ausw&auml;hlen</a></span>
 					<span class="input spaceBelow"><input type="text" required="true" widgetId="adminCatalogSpatialRef" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					
-					<div class="checkboxContainer">
+					<div class="checkboxContainer" style="display:none;">
 						<span class="input"><input type="checkbox" id="adminCatalogWorkflowControl" dojoType="Checkbox" /><label style="cursor:default;">Workflow-Kontrolle aktivieren</label></span>
 						<span class="input"><input type="checkbox" id="adminCatalogExpire" dojoType="Checkbox" /><label style="cursor:default;">&Uuml;berarbeiten nach <input widgetId="adminCatalogExpiryDuration" class="w033" min="1" max="2147483647" maxlength="10" dojoType="IntegerTextbox" /> Tagen</label></span>
 					</div>
