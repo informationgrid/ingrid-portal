@@ -30,7 +30,7 @@
 
 	var djConfig = {
 		locale: userLocale,
-		isDebug: true, // use with care, may lead to unexpected errors!
+		isDebug: false, // use with care, may lead to unexpected errors!
 		debugAtAllCosts: false,
 		debugContainerId: "dojoDebugOutput"
 	};
