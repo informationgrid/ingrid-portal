@@ -292,7 +292,10 @@ public class ActionValveImpl extends AbstractValve implements ActionValve
         Page page = request.getPage();
         if (page != null) {
         	Fragment fragment = page.getFragmentById(window.getId().toString());
-        	((MutablePortletEntity)window.getPortletEntity()).setFragment(fragment);
+        	MutablePortletEntity mpe = (MutablePortletEntity)window.getPortletEntity();
+        	if (mpe != null) {
+        		mpe.setFragment(fragment);
+        	}
         }
     }
 
