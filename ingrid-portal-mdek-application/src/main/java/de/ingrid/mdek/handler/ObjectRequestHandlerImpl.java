@@ -7,19 +7,17 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekError;
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekError.MdekErrorType;
 import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
 import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcStatisticsSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.WorkState;
-import de.ingrid.mdek.MdekError.MdekErrorType;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
-import de.ingrid.mdek.beans.query.ObjectWorkflowResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 import de.ingrid.mdek.caller.IMdekCaller;
 import de.ingrid.mdek.caller.IMdekCallerObject;
@@ -208,12 +206,9 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		return MdekObjectUtils.extractObjectSearchResultsFromResponse(response);
 	}
 
-	public List<MdekDataBean> getQAObjects(String workState, String selectionType, Integer startHit, Integer numHits) {
-		WorkState ws = EnumUtil.mapDatabaseToEnumConst(WorkState.class, workState);
-		IdcQAEntitiesSelectionType st = selectionType == null ? null : IdcQAEntitiesSelectionType.valueOf(selectionType);
-		IngridDocument response = mdekCallerObject.getQAObjects(connectionFacade.getCurrentPlugId(), ws, st, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
-		IngridDocument result = MdekUtils.getResultFromResponse(response);
-		return MdekObjectUtils.extractDetailedObjects(result);
+	public ObjectSearchResultBean getQAObjects(WorkState workState, IdcQAEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
+		IngridDocument response = mdekCallerObject.getQAObjects(connectionFacade.getCurrentPlugId(), workState, selectionType, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		return MdekObjectUtils.extractObjectSearchResultsFromResponse(response);
 	}
 
 	public ObjectStatisticsResultBean getObjectStatistics(String objUuid) {

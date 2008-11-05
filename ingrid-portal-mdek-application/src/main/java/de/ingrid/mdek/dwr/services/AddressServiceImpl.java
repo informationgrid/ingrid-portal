@@ -6,7 +6,9 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
+import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
+import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressSearchResultBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
@@ -273,9 +275,9 @@ public class AddressServiceImpl implements AddressService {
 		}
 	}
 
-	public List<MdekAddressBean> getQAAddresses(String workState, String selectionType, Integer startHit, Integer numHits) {
+	public AddressSearchResultBean getQAAddresses(WorkState workState, IdcQAEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
 		try {
-			return addressRequestHandler.getQAAddresses(workState, selectionType, startHit, numHits);
+			return addressRequestHandler.getQAAddresses(workState, selectionType, orderBy, orderAsc, startHit, numHits);
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it

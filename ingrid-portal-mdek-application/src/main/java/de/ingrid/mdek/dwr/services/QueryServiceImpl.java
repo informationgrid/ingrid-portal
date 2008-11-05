@@ -2,7 +2,6 @@ package de.ingrid.mdek.dwr.services;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
@@ -10,10 +9,8 @@ import org.directwebremoting.io.FileTransfer;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressExtSearchParamsBean;
 import de.ingrid.mdek.beans.query.AddressSearchResultBean;
-import de.ingrid.mdek.beans.query.AddressWorkflowResultBean;
 import de.ingrid.mdek.beans.query.ObjectExtSearchParamsBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
-import de.ingrid.mdek.beans.query.ObjectWorkflowResultBean;
 import de.ingrid.mdek.beans.query.SearchResultBean;
 import de.ingrid.mdek.handler.QueryRequestHandler;
 import de.ingrid.mdek.job.MdekException;
@@ -175,96 +172,6 @@ public class QueryServiceImpl implements QueryService {
 			log.error("Error while searching for addresses.", e);
 		}
 		return new AddressSearchResultBean();
-	}
-
-	public ArrayList<AddressWorkflowResultBean> getExpiredAddresses(int numHits) {
-		log.debug("Starting address search for expired addresses.");
-
-		try {
-			return queryRequestHandler.getExpiredAddresses(numHits);
-		} catch (MdekException e) {
-			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while searching for addresses - workflow management.", e);
-			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
-		} catch (Exception e) {
-			log.error("Error while searching for addresses - workflow management.", e);
-		}
-		return new ArrayList<AddressWorkflowResultBean>();
-	}
-
-	public ArrayList<ObjectWorkflowResultBean> getExpiredObjects(int numHits) {
-		log.debug("Starting object search for expired objects.");
-
-		try {
-			return queryRequestHandler.getExpiredObjects(numHits);
-		} catch (MdekException e) {
-			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while searching for objects - workflow management.", e);
-			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
-		} catch (Exception e) {
-			log.error("Error while searching for objects - workflow management.", e);
-		}
-		return new ArrayList<ObjectWorkflowResultBean>();
-	}
-
-	public ArrayList<AddressWorkflowResultBean> getModifiedAddresses(int numHits) {
-		log.debug("Starting address search for modified addresses.");
-
-		try {
-			return queryRequestHandler.getModifiedAddresses(numHits);
-		} catch (MdekException e) {
-			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while searching for modified addresses - workflow management.", e);
-			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
-		} catch (Exception e) {
-			log.error("Error while searching for modified addresses - workflow management.", e);
-		}
-		return new ArrayList<AddressWorkflowResultBean>();
-	}
-
-	public ArrayList<ObjectWorkflowResultBean> getModifiedObjects(int numHits) {
-		log.debug("Starting object search for modified objects.");
-
-		try {
-			return queryRequestHandler.getModifiedObjects(numHits);
-		} catch (MdekException e) {
-			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while searching for modified objects - workflow management.", e);
-			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
-		} catch (Exception e) {
-			log.error("Error while searching for modified objects - workflow management.", e);
-		}
-		return new ArrayList<ObjectWorkflowResultBean>();
-	}
-
-	public ArrayList<AddressWorkflowResultBean> getQAAddresses(int numHits) {
-		log.debug("Starting address search for qa addresses.");
-
-		try {
-			return queryRequestHandler.getQAAddresses(numHits);
-		} catch (MdekException e) {
-			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while searching for qa addresses - workflow management.", e);
-			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
-		} catch (Exception e) {
-			log.error("Error while searching for qa addresses - workflow management.", e);
-		}
-		return new ArrayList<AddressWorkflowResultBean>();
-	}
-
-	public ArrayList<ObjectWorkflowResultBean> getQAObjects(int numHits) {
-		log.debug("Starting object search for qa objects.");
-
-		try {
-			return queryRequestHandler.getQAObjects(numHits);
-		} catch (MdekException e) {
-			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while searching for qa objects - workflow management.", e);
-			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
-		} catch (Exception e) {
-			log.error("Error while searching for qa objects - workflow management.", e);
-		}
-		return new ArrayList<ObjectWorkflowResultBean>();
 	}
 
 	public QueryRequestHandler getQueryRequestHandler() {

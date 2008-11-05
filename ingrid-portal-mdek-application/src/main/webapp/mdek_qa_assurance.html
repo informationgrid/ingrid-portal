@@ -2,287 +2,329 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
-var NUM_OBJECTS_MAX = 100;
-var NUM_ADDRESSES_MAX = 100;
 var scriptScope = this;
 
+// display 10 datasets per page
 var resultsPerPage = 10;
-var qaExpiredDatasetPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("qaExpiredDatasetTableInfo"), pagingSpan:dojo.byId("qaExpiredDatasetTablePaging") });
-var qaModifiedDatasetPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("qaModifiedDatasetTableInfo"), pagingSpan:dojo.byId("qaModifiedDatasetTablePaging") });
-var qaAssignedDatasetPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("qaAssignedDatasetTableInfo"), pagingSpan:dojo.byId("qaAssignedDatasetTablePaging") });
-
-var qaExpiredDatasetTable = null;
-var qaModifiedDatasetTable = null;
-var qaAssignedDatasetTable = null;
+var tableIdList = ["qaAssignedObjTable", "qaAssignedAdrTable", "qaModifiedObjTable", "qaModifiedAdrTable",
+	"qaExpiredObjTable", "qaExpiredAdrTable"];
 
 _container_.addOnLoad(function() {
-	dojo.event.connectOnce("after", qaExpiredDatasetPageNav, "onPageSelected", function() { navigateQAExpiredDatasetTable(); });
-	dojo.event.connectOnce("after", qaModifiedDatasetPageNav, "onPageSelected", function() { navigateQAModifiedDatasetTable(); });
-	dojo.event.connectOnce("after", qaAssignedDatasetPageNav, "onPageSelected", function() { navigateQAAssignedDatasetTable(); });
 	initTables();
+	initSortFunctions();
+	reloadTables();
 });
 
+
+// Initialise the tables with PageNavs, sortParams, etc.
 function initTables() {
+	// Add PageNavs to tables
+	dojo.lang.forEach(tableIdList, function(tableId) {
+		dojo.widget.byId(tableId).pageNav = new PageNavigation({
+				resultsPerPage: resultsPerPage,
+				infoSpan:dojo.byId(tableId+"Info"),
+				pagingSpan:dojo.byId(tableId+"Paging") });
+	});
+
+	// Add query parameters to tables.
+	dojo.widget.byId("qaAssignedObjTable").queryParameters = { workState: "QS_UEBERWIESEN", selectionType: null } 
+	dojo.widget.byId("qaAssignedAdrTable").queryParameters = { workState: "QS_UEBERWIESEN", selectionType: null }
+	dojo.widget.byId("qaModifiedObjTable").queryParameters = { workState: "IN_BEARBEITUNG", selectionType: null }
+	dojo.widget.byId("qaModifiedAdrTable").queryParameters = { workState: "IN_BEARBEITUNG", selectionType: null }
+	dojo.widget.byId("qaExpiredObjTable").queryParameters = { workState: null, selectionType: "EXPIRED" }
+	dojo.widget.byId("qaExpiredAdrTable").queryParameters = { workState: null, selectionType: "EXPIRED" }
+
+	// Add initial sortParams to tables
+	dojo.lang.forEach(tableIdList, function(tableId) {
+		dojo.widget.byId(tableId).sortParams = { sortBy: "NAME", sortAsc: true }
+	});
+
+	// Connect PageNavs with navigate functions
+	dojo.lang.forEach(tableIdList, function(tableId) {
+		dojo.event.connectOnce("after", dojo.widget.byId(tableId).pageNav, "onPageSelected", function() { navigateTable(tableId); });
+	});
+}
+
+// Init the sort functions
+function initSortFunctions() {
+	dojo.lang.forEach(tableIdList, function(tableId) {
+		var table = dojo.widget.byId(tableId);
+		table.onSort = dojo.lang.curry(table, sortTable, tableId);
+		// remove the standard sorter since we sort by starting a new query
+		table.createSorter = function(){return null;}
+	});
+}
+
+
+// If a table header is clicked, the sortTable function is invoked with the corresponding table
+function sortTable(tableId, e) {
+	var table = dojo.widget.byId(tableId);
+	var field = getFieldFromTableHeaderClickEvent(table, e);
+	var sortBy = getSortIdentifierFor(field);
+
+	if (sortBy == "") {
+		return;
+
+	} else if (sortBy == table.sortParams.sortBy) {
+		table.sortParams.sortAsc = !table.sortParams.sortAsc;
+
+	} else {
+		table.sortParams.sortBy = sortBy;
+		table.sortParams.sortAsc = true;
+	}
+
+	navigateTable(tableId);
+}
+
+
+// Convert table field identifiers to sort identifiers (de.ingrid.mdek.MdekUtils.IdcEntityOrderBy)
+function getSortIdentifierFor(field) {
+	dojo.debug("getSortIdentifierFor("+field+") called");
+
+	if (field == "icon") {
+		return "CLASS";
+
+	} else if (field == "linkLabel") {
+		return "NAME";
+
+	} else if (field == "expiryDate" || field == "date") {
+		return "DATE";
+
+	} else if (field == "modUserTitle" || field == "assignerUserTitle") {
+		return "USER";
+
+	} else if (field == "state") {
+		return "STATE";
+
+	} else {
+		return "";
+	}
+}
+
+// Get the column identifier from the ClickEvent.
+function getFieldFromTableHeaderClickEvent(table, e) {
+	var source = e.target;
+	var row = dojo.html.getParentByType(source,"tr");
+	var cellTag = "td";
+	if(row.getElementsByTagName(cellTag).length == 0){
+		cellTag = "th";
+	}
+
+	var headers = row.getElementsByTagName(cellTag);
+	var header = dojo.html.getParentByType(source,cellTag);
+
+	for(var i=0; i<headers.length; i++){
+		if(headers[i] == header){
+			var meta = table.columns[i];
+			return meta.getField();
+		}
+	}
+	// Field was not found (should not happen), return an empty string
+	return "";
+}
+
+// Reset PageNavs
+function resetAllPageNavs() {
+	dojo.lang.forEach(tableIdList, function(tableId) {
+		dojo.widget.byId(tableId).pageNav.reset();
+	});
+}
+
+// Reset the tables sorting parameters
+function resetAllSortParams() {
+	dojo.lang.forEach(tableIdList, function(tableId) {
+		var tableWidget = dojo.widget.byId(tableId);
+		tableWidget.sortParams.sortBy = "NAME";
+		tableWidget.sortParams.sortAsc = true;
+	});
+}
+
+// Reload all the tables on the page
+function reloadTables() {
+	resetAllPageNavs();
+	resetAllSortParams();
+
+	var defList = [];
+	dojo.lang.forEach(tableIdList, function(tableId) {
+		defList.push(navigateTable(tableId));
+	});
+
 	enterLoadingState();
 
-	var d1 = getQAAssignedObjects();
-	var d2 = getQAAssignedAddresses();
-	var d3 = getQAModifiedObjects();
-	var d4 = getQAModifiedAddresses();
-	var d5 = getQAExpiredObjects();
-	var d6 = getQAExpiredAddresses();
-
-	var l1 = new dojo.DeferredList([d1, d2, d3, d4, d5, d6], false, false, true);
+	var l1 = new dojo.DeferredList(defList, false, false, true);
 	l1.addCallback(function (resultList) {
-		var qaAssignedObjList = resultList[0][1];
-		var qaAssignedAdrList = resultList[1][1];
-		var qaModifiedObjList = resultList[2][1];
-		var qaModifiedAdrList = resultList[3][1];
-		var qaExpiredObjList = resultList[4][1];
-		var qaExpiredAdrList = resultList[5][1];
-
-		// ---- Datasets in state Q where the current user is QA ----
-		// Prepare address entries for display
-		dojo.lang.forEach(qaAssignedAdrList, function(item) {
-			item.title = dojo.string.escape("html", UtilAddress.createAddressTitle(item));
-		});
-		UtilList.addAddressLinkLabels(qaAssignedAdrList);
-
-		// Prepare object entries for display
-		dojo.lang.forEach(qaAssignedObjList, function(item) {
-			item.title = dojo.string.escape("html", item.objectName);
-		});
-		UtilList.addObjectLinkLabels(qaAssignedObjList);
-
-		// Common (adr & obj) display properties
-		qaAssignedDatasetTable = qaAssignedObjList.concat(qaAssignedAdrList);
-		dojo.lang.forEach(qaAssignedDatasetTable, function(item) {
-			item.type = convertUserOperationToString(item.userOperation);
-			item.assignerUserTitle = UtilAddress.createAddressLinkLabel(item.assignerUser.uuid, UtilAddress.createAddressTitle(item.assignerUser));
-		});
-
-		UtilList.addIcons(qaAssignedDatasetTable);
-		UtilList.addTableIndices(qaAssignedDatasetTable);
-		qaAssignedDatasetPageNav.reset();
-		navigateQAAssignedDatasetTable();
-
-
-		// ---- Datasets in state B where the current user is QA ----
-		// Prepare address entries for display
-		dojo.lang.forEach(qaModifiedAdrList, function(item) {
-			item.title = dojo.string.escape("html", UtilAddress.createAddressTitle(item));
-		});
-		UtilList.addAddressLinkLabels(qaModifiedAdrList);
-
-		// Prepare object entries for display
-		dojo.lang.forEach(qaModifiedObjList, function(item) {
-			item.title = dojo.string.escape("html", item.objectName);
-		});
-		UtilList.addObjectLinkLabels(qaModifiedObjList);
-
-		// Common (adr & obj) display properties
-		qaModifiedDatasetTable = qaModifiedObjList.concat(qaModifiedAdrList);
-		dojo.lang.forEach(qaModifiedDatasetTable, function(item) {
-			item.type = convertUserOperationToString(item.userOperation);
-			item.modUserTitle = UtilAddress.createAddressLinkLabel(item.lastEditor.uuid, UtilAddress.createAddressTitle(item.lastEditor));
-			item.date = dojo.date.parse(item.modificationTime, {datePattern: "dd.MM.yyyy"});
-		});
-
-		UtilList.addIcons(qaModifiedDatasetTable);
-		UtilList.addTableIndices(qaModifiedDatasetTable);
-		qaModifiedDatasetPageNav.reset();
-		navigateQAModifiedDatasetTable();
-
-
-		// ---- Datasets which are expired where the current user is QA ----
-		// Prepare address entries for display
-		dojo.lang.forEach(qaExpiredAdrList, function(item) {
-			item.title = dojo.string.escape("html", UtilAddress.createAddressTitle(item));
-		});
-		UtilList.addAddressLinkLabels(qaExpiredAdrList);
-
-		// Prepare object entries for display
-		dojo.lang.forEach(qaExpiredObjList, function(item) {
-			item.title = dojo.string.escape("html", item.objectName);
-		});
-		UtilList.addObjectLinkLabels(qaExpiredObjList);
-
-		qaExpiredDatasetTable = qaExpiredObjList.concat(qaExpiredAdrList);
-		dojo.lang.forEach(qaExpiredDatasetTable, function(item) {
-			item.modUserTitle = UtilAddress.createAddressLinkLabel(item.lastEditor.uuid, UtilAddress.createAddressTitle(item.lastEditor));
-			item.date = dojo.date.parse(item.modificationTime, {datePattern: "dd.MM.yyyy"});
- 			// Add the expiry duration to the last mod date
- 			item.date.setDate(item.date.getDate()+catalogData.expiryDuration);
-		});
-
-		UtilList.addIcons(qaExpiredDatasetTable);
-		UtilList.addTableIndices(qaExpiredDatasetTable);
-		qaExpiredDatasetPageNav.reset();
-		navigateQAExpiredDatasetTable();
+/*
+		var expObjResult = resultList[0][1];
+		var expAdrResult = resultList[1][1];
+		var modObjResult = resultList[2][1];
+		var modAdrResult = resultList[3][1];
+		var qaObjResult = resultList[4][1];
+		var qaAdrResult = resultList[5][1];
+*/
 		exitLoadingState();
 	});
 
 	l1.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
-		displayErrorMessage(err);
 		exitLoadingState();
 	});
 }
 
-function navigateQAExpiredDatasetTable() {
-	qaExpiredDatasetPageNav.setTotalNumHits(qaExpiredDatasetTable.length);
-	qaExpiredDatasetPageNav.updateDomNodes();
+// NavigateTable should be called whenever the page or sortParameters have changed
+// A new request will be started with the new starHit (from PageNav) and sortParameters (from the Table)
+function navigateTable(tableId) {
+	var table = dojo.widget.byId(tableId);
+	var startHit = table.pageNav.getStartHit();
 
-	var expDatasetStore = dojo.widget.byId("qaExpiredDatasetTable").store;
-	var beginIndex = qaExpiredDatasetPageNav.getStartHit();
-	var endIndex = qaExpiredDatasetPageNav.getStartHit() + resultsPerPage;
-	endIndex = endIndex > qaExpiredDatasetTable.length ? qaExpiredDatasetTable.length : endIndex;
+	var def;
+	if (tableId.indexOf("Obj") != -1) {
+		def = getQAObjects(table.queryParameters.workState, table.queryParameters.selectionType, table.sortParams.sortBy,
+			table.sortParams.sortAsc, startHit, resultsPerPage);
 
-	expDatasetStore.clearData();
-	for (var i = beginIndex; i < endIndex; ++i) {
-		expDatasetStore.addData(qaExpiredDatasetTable[i]);
-	}
-}
-
-function navigateQAModifiedDatasetTable() {
-	qaModifiedDatasetPageNav.setTotalNumHits(qaModifiedDatasetTable.length);
-	qaModifiedDatasetPageNav.updateDomNodes();
-
-	var modDatasetStore = dojo.widget.byId("qaModifiedDatasetTable").store;
-	var beginIndex = qaModifiedDatasetPageNav.getStartHit();
-	var endIndex = qaModifiedDatasetPageNav.getStartHit() + resultsPerPage;
-	endIndex = endIndex > qaModifiedDatasetTable.length ? qaModifiedDatasetTable.length : endIndex;
-
-	modDatasetStore.clearData();
-	for (var i = beginIndex; i < endIndex; ++i) {
-		modDatasetStore.addData(qaModifiedDatasetTable[i]);
-	}
-}
-
-function navigateQAAssignedDatasetTable() {
-	qaAssignedDatasetPageNav.setTotalNumHits(qaAssignedDatasetTable.length);
-	qaAssignedDatasetPageNav.updateDomNodes();
-
-	var qaDatasetStore = dojo.widget.byId("qaAssignedDatasetTable").store;
-	var beginIndex = qaAssignedDatasetPageNav.getStartHit();
-	var endIndex = qaAssignedDatasetPageNav.getStartHit() + resultsPerPage;
-	endIndex = endIndex > qaAssignedDatasetTable.length ? qaAssignedDatasetTable.length : endIndex;
-
-	qaDatasetStore.clearData();
-	for (var i = beginIndex; i < endIndex; ++i) {
-		qaDatasetStore.addData(qaAssignedDatasetTable[i]);
-	}
-}
-
-
-function getQAExpiredObjects() {
-	var def = new dojo.Deferred();
-
-	ObjectService.getQAObjects(null, "EXPIRED", 0, NUM_OBJECTS_MAX, {
-		callback: function(expObjList) {
-			def.callback(expObjList);
-		},
-		errorHandler: function(errMsg, err) {
-			dojo.debug("Error: "+errMsg);
-			dojo.debugShallow(err);
-			def.errback(err);
-		}
-	});
-	return def;
-}
-
-function getQAExpiredAddresses() {
-	var def = new dojo.Deferred();
-
-	AddressService.getQAAddresses(null, "EXPIRED", 0, NUM_ADDRESSES_MAX, {
-		callback: function(expAdrList) {
-			def.callback(expAdrList);
-		},
-		errorHandler: function(errMsg, err) {
-			dojo.debug("Error: "+errMsg);
-			dojo.debugShallow(err);
-			def.errback(err);
-		}
-	});
-	return def;
-}
-
-function getQAModifiedObjects() {
-	var def = new dojo.Deferred();
-
-	ObjectService.getQAObjects("B", null, 0, NUM_OBJECTS_MAX, {
-		callback: function(modObjList) {
-			def.callback(modObjList);
-		},
-		errorHandler: function(errMsg, err) {
-			dojo.debug("Error: "+errMsg);
-			dojo.debugShallow(err);
-			def.errback(err);
-		}
-	});
-	return def;
-}
-
-function getQAModifiedAddresses() {
-	var def = new dojo.Deferred();
-
-	AddressService.getQAAddresses("B", null, 0, NUM_ADDRESSES_MAX, {
-		callback: function(modAdrList) {
-			def.callback(modAdrList);
-		},
-		errorHandler: function(errMsg, err) {
-			dojo.debug("Error: "+errMsg);
-			dojo.debugShallow(err);
-			def.errback(err);
-		}
-	});
-	return def;
-}
-
-function getQAAssignedObjects() {
-	var def = new dojo.Deferred();
-
-	ObjectService.getQAObjects("Q", null, 0, NUM_OBJECTS_MAX, {
-		callback: function(qaObjList) {
-			def.callback(qaObjList);
-		},
-		errorHandler: function(errMsg, err) {
-			dojo.debug("Error: "+errMsg);
-			dojo.debugShallow(err);
-			def.errback(err);
-		}
-	});
-	return def;
-}
-
-function getQAAssignedAddresses() {
-	var def = new dojo.Deferred();
-
-	AddressService.getQAAddresses("Q", null, 0, NUM_ADDRESSES_MAX, {
-		callback: function(qaAdrList) {
-			def.callback(qaAdrList);
-		},
-		errorHandler: function(errMsg, err) {
-			dojo.debug("Error: "+errMsg);
-			dojo.debugShallow(err);
-			def.errback(err);
-		}
-	});
-	return def;
-}
-
-function convertUserOperationToString(userOperation) {
-	if (userOperation == "DELETED") {
-		return "als gel&ouml;scht markiert";
-	
-	} else if (userOperation == "EDITED") {
-		return "&uuml;berarbeitet";
-	
 	} else {
-		return "neu angelegt";
+		def = getQAAddresses(table.queryParameters.workState, table.queryParameters.selectionType, table.sortParams.sortBy,
+			table.sortParams.sortAsc, startHit, resultsPerPage);
+	}
+
+	// After the data is loaded from the backend, update the table and return the result for the
+	// following callback functions
+	def.addCallback(function(res) {updateTable(tableId, res); return res; });
+
+	return def;
+}
+
+
+// Update a table with new data from SearchResult (see de.ingrid.mdek.beans.query.(Object|Address)SearchResultBean)
+// The connected PageNav is updated automatically
+function updateTable(tableId, searchResult) {
+	var table = dojo.widget.byId(tableId);
+	var resList = searchResult.resultList;
+	var numHits = searchResult.numHits;
+	var totalNumHits = searchResult.totalNumHits;
+
+	if (tableId.indexOf("Obj") != -1) {
+		addObjectTableIdentifiers(resList);
+	} else {
+		addAddressTableIdentifiers(resList);
+	}
+	addCommonTableIdentifiers(resList);
+
+	table.store.setData(resList);
+	table.pageNav.setTotalNumHits(totalNumHits);
+	table.pageNav.updateDomNodes();
+}
+
+// Get QA Objects from the backend. The result is returned in a deferred object.
+// workState - de.ingrid.mdek.MdekUtils.WorkState
+// selectionType - de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType
+// sortBy - de.ingrid.mdek.MdekUtils.IdcEntityOrderBy
+// sortAsc - boolean
+// startHit - int, where to start
+// numHits - int, limit number of results
+function getQAObjects(workState, selectionType, sortBy, sortAsc, startHit, numHits) {
+	var def = new dojo.Deferred();
+
+	ObjectService.getQAObjects(workState, selectionType, sortBy, sortAsc, startHit, numHits, {
+		callback: function(result) {
+			def.callback(result);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: "+errMsg);
+			dojo.debugShallow(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
+// Get QA Addresses from the backend. The result is returned in a deferred object.
+// workState - de.ingrid.mdek.MdekUtils.WorkState
+// selectionType - de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType
+// sortBy - de.ingrid.mdek.MdekUtils.IdcEntityOrderBy
+// sortAsc - boolean
+// startHit - int, where to start
+// numHits - int, limit number of results
+function getQAAddresses(workState, selectionType, sortBy, sortAsc, startHit, numHits) {
+	var def = new dojo.Deferred();
+
+	AddressService.getQAAddresses(workState, selectionType, sortBy, sortAsc, startHit, numHits, {
+		callback: function(result) {
+			def.callback(result);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: "+errMsg);
+			dojo.debugShallow(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
+// Add labels to each dataset in dsList, so they are properly displayed in the table.
+// Properties that will be set:
+// ds.lastEditor, ds.assignerUser, ds.date (last modification), ds.expiryData, ds.userOperation, ds.workState
+function addCommonTableIdentifiers(dsList) {
+	if (dsList) {
+		dojo.lang.forEach(dsList, function(ds) {
+			// modUser
+			if (ds.lastEditor) {
+				var modUserAddressTitle = UtilAddress.createAddressTitle(ds.lastEditor);
+				ds.modUserTitle = UtilAddress.createAddressLinkLabel(ds.lastEditor.uuid, modUserAddressTitle);
+			}
+			// assignerUser
+			if (ds.assignerUser) {
+				var assignerUserAddressTitle = UtilAddress.createAddressTitle(ds.assignerUser);
+				ds.assignerUserTitle = UtilAddress.createAddressLinkLabel(ds.assignerUser.uuid, assignerUserAddressTitle);
+			}
+			// date & expiryDate
+			ds.date = dojo.date.parse(ds.modificationTime, {datePattern: "dd.MM.yyyy"});
+			ds.expiryDate = dojo.date.parse(ds.modificationTime, {datePattern: "dd.MM.yyyy"});
+ 			ds.expiryDate.setDate(ds.expiryDate.getDate()+catalogData.expiryDuration);
+			// state
+			if (ds.userOperation) {
+				ds.type = getUserOperationText(ds.userOperation);
+			}
+			if (ds.workState) {
+				ds.state = getWorkStateText(ds.workState);
+			}
+		});
 	}
 }
+
+// Add titles to all objects in objList (escape obj.objectName and write it to obj.title)
+function addObjectTableIdentifiers(objList) {
+	if (objList) {
+		dojo.lang.forEach(objList, function(obj) {
+			obj.title = dojo.string.escape("html", obj.objectName);
+		});
+		UtilList.addObjectLinkLabels(objList);
+		UtilList.addIcons(objList);
+	}
+}
+
+// Add titles to all objects in objList (escape adr title and write it to adr.title)
+function addAddressTableIdentifiers(adrList) {
+	if (adrList) {
+		dojo.lang.forEach(adrList, function(adr) {
+			adr.title = UtilAddress.createAddressTitle(adr);
+		});
+		UtilList.addAddressLinkLabels(adrList);
+		UtilList.addIcons(adrList);
+	}
+
+}
+
+// Get The localized text for a userOperation (NEW, EDITED, DELETED)
+function getUserOperationText(userOperation) {
+	return message.get("general.userOperation."+userOperation);
+}
+
+// Get The localized text for a workState (Q, R)
+function getWorkStateText(workState) {
+	return message.get("general.workState."+workState);
+}
+
 
 function enterLoadingState() {
 	dojo.byId("qaLoadingZone").style.display = "block";
@@ -295,7 +337,7 @@ function exitLoadingState() {
 }
 
 scriptScope.reloadPage = function() {
-	initTables();
+	reloadTables();
 }
 
 </script>
@@ -324,80 +366,171 @@ scriptScope.reloadPage = function() {
 
 			<span class="label"><label>Objekte / Adressen die Ihnen als Qualit&auml;tssichernder zugewiesen wurden</label></span>
 
-			<div class="inputContainer">
-				<div class="listInfo wide">
-					<span id="qaAssignedDatasetTableInfo" class="searchResultsInfo">&nbsp;</span>
-					<span id="qaAssignedDatasetTablePaging" class="searchResultsPaging">&nbsp;</span>
-					<div class="fill"></div>
-				</div>
+        	<div id="qaAssignedDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="qaAssignedObjContentPane">
 
-		        <div class="tableContainer rows10 wide">
-					<table id="qaAssignedDatasetTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable nosort">
-						<thead>
-							<tr>
-								<th nosort="true" field="icon" dataType="String" width="32"></th>
-								<th nosort="true" field="linkLabel" dataType="String" width="550">Name</th>
-								<th nosort="true" field="assignerUserTitle" dataType="String" width="130">Zugewiesen von</th>
-								<th nosort="true" field="type" dataType="String" width="160">Typ</th>
-								<th nosort="true" field="assignTime" dataType="Date" width="100">Datum</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-				</div> <!-- tableContainer end -->
-			</div> <!-- inputContainer end -->
+        		<div id="qaAssignedObjContentPane" dojoType="ContentPane" label="Objekte" style="overflow:hidden;">
+					<div class="inputContainer">
+						<div class="listInfo wide">
+							<span id="qaAssignedObjTableInfo" class="searchResultsInfo">&nbsp;</span>
+							<span id="qaAssignedObjTablePaging" class="searchResultsPaging">&nbsp;</span>
+							<div class="fill"></div>
+						</div>
+		
+				        <div class="tableContainer rows10 wide">
+							<table id="qaAssignedObjTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable nosort">
+								<thead>
+									<tr>
+										<th nosort="true" field="icon" dataType="String" width="32"></th>
+										<th nosort="true" field="linkLabel" dataType="String" width="550">Name</th>
+										<th nosort="true" field="assignerUserTitle" dataType="String" width="130">Zugewiesen von</th>
+										<th nosort="true" field="type" dataType="String" width="160">Typ</th>
+										<th nosort="true" field="assignTime" dataType="Date" width="100">Datum</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div> <!-- tableContainer end -->
+					</div> <!-- inputContainer end -->
+				</div> <!-- ContentPane -->
+
+        		<div id="qaAssignedAdrContentPane" dojoType="ContentPane" label="Adressen" style="overflow:hidden;">
+					<div class="inputContainer">
+						<div class="listInfo wide">
+							<span id="qaAssignedAdrTableInfo" class="searchResultsInfo">&nbsp;</span>
+							<span id="qaAssignedAdrTablePaging" class="searchResultsPaging">&nbsp;</span>
+							<div class="fill"></div>
+						</div>
+		
+				        <div class="tableContainer rows10 wide">
+							<table id="qaAssignedAdrTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable nosort">
+								<thead>
+									<tr>
+										<th nosort="true" field="icon" dataType="String" width="32"></th>
+										<th nosort="true" field="linkLabel" dataType="String" width="550">Name</th>
+										<th nosort="true" field="assignerUserTitle" dataType="String" width="130">Zugewiesen von</th>
+										<th nosort="true" field="type" dataType="String" width="160">Typ</th>
+										<th nosort="true" field="assignTime" dataType="Date" width="100">Datum</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div> <!-- tableContainer end -->
+					</div> <!-- inputContainer end -->
+				</div> <!-- ContentPane -->
+			</div> <!-- TabContainer -->
 
 			<span class="label"><label>Objekte / Adressen die sich in Bearbeitung befinden, f&uuml;r die Sie Qualit&auml;tssichernder sind</label></span>
 
-			<div class="inputContainer">
-				<div class="listInfo wide">
-					<span id="qaModifiedDatasetTableInfo" class="searchResultsInfo">&nbsp;</span>
-					<span id="qaModifiedDatasetTablePaging" class="searchResultsPaging">&nbsp;</span>
-					<div class="fill"></div>
-				</div>
+        	<div id="qaModifiedDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="qaModifiedObjContentPane">
 
-		        <div class="tableContainer rows10 wide">
-					<table id="qaModifiedDatasetTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable nosort">
-						<thead>
-							<tr>
-								<th nosort="true" field="icon" dataType="String" width="32"></th>
-								<th nosort="true" field="linkLabel" dataType="String" width="550">Name</th>
-								<th nosort="true" field="modUserTitle" dataType="String" width="130">Bearbeiter</th>
-								<th nosort="true" field="type" dataType="String" width="160">Typ</th>
-								<th nosort="true" field="date" dataType="Date" width="100">Datum</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-				</div> <!-- tableContainer end -->
-			</div> <!-- inputContainer end -->
+        		<div id="qaModifiedObjContentPane" dojoType="ContentPane" label="Objekte" style="overflow:hidden;">
+					<div class="inputContainer">
+						<div class="listInfo wide">
+							<span id="qaModifiedObjTableInfo" class="searchResultsInfo">&nbsp;</span>
+							<span id="qaModifiedObjTablePaging" class="searchResultsPaging">&nbsp;</span>
+							<div class="fill"></div>
+						</div>
+		
+				        <div class="tableContainer rows10 wide">
+							<table id="qaModifiedObjTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable nosort">
+								<thead>
+									<tr>
+										<th nosort="true" field="icon" dataType="String" width="32"></th>
+										<th nosort="true" field="linkLabel" dataType="String" width="550">Name</th>
+										<th nosort="true" field="modUserTitle" dataType="String" width="130">Bearbeiter</th>
+										<th nosort="true" field="type" dataType="String" width="160">Typ</th>
+										<th nosort="true" field="date" dataType="Date" width="100">Datum</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div> <!-- tableContainer end -->
+					</div> <!-- inputContainer end -->
+				</div> <!-- ContentPane -->
+
+        		<div id="qaModifiedAdrContentPane" dojoType="ContentPane" label="Adressen" style="overflow:hidden;">
+					<div class="inputContainer">
+						<div class="listInfo wide">
+							<span id="qaModifiedAdrTableInfo" class="searchResultsInfo">&nbsp;</span>
+							<span id="qaModifiedAdrTablePaging" class="searchResultsPaging">&nbsp;</span>
+							<div class="fill"></div>
+						</div>
+		
+				        <div class="tableContainer rows10 wide">
+							<table id="qaModifiedAdrTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable nosort">
+								<thead>
+									<tr>
+										<th nosort="true" field="icon" dataType="String" width="32"></th>
+										<th nosort="true" field="linkLabel" dataType="String" width="550">Name</th>
+										<th nosort="true" field="modUserTitle" dataType="String" width="130">Bearbeiter</th>
+										<th nosort="true" field="type" dataType="String" width="160">Typ</th>
+										<th nosort="true" field="date" dataType="Date" width="100">Datum</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div> <!-- tableContainer end -->
+					</div> <!-- inputContainer end -->
+				</div> <!-- ContentPane -->
+			</div> <!-- TabContainer -->
 
 			<span class="label"><label>Objekte / Adressen deren Verfallszeitspanne abgelaufen ist, f&uuml;r die Sie Qualit&auml;tssichernder sind</label></span>
 
-			<div class="inputContainer">
-				<div class="listInfo wide">
-					<span id="qaExpiredDatasetTableInfo" class="searchResultsInfo">&nbsp;</span>
-					<span id="qaExpiredDatasetTablePaging" class="searchResultsPaging">&nbsp;</span>
-					<div class="fill"></div>
-				</div>
+        	<div id="qaExpiredDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="qaExpiredObjContentPane">
 
-		        <div class="tableContainer rows10 wide">
-					<table id="qaExpiredDatasetTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable nosort">
-						<thead>
-							<tr>
-								<th nosort="true" field="icon" dataType="String" width="32"></th>
-								<th nosort="true" field="linkLabel" dataType="String" width="710">Name</th>
-								<th nosort="true" field="modUserTitle" dataType="String" width="130">Bearbeiter</th>
-								<th nosort="true" field="date" dataType="Date" width="100">Datum</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-				</div> <!-- tableContainer end -->
-			</div> <!-- inputContainer end -->
+        		<div id="qaExpiredObjContentPane" dojoType="ContentPane" label="Objekte" style="overflow:hidden;">
+					<div class="inputContainer">
+						<div class="listInfo wide">
+							<span id="qaExpiredObjTableInfo" class="searchResultsInfo">&nbsp;</span>
+							<span id="qaExpiredObjTablePaging" class="searchResultsPaging">&nbsp;</span>
+							<div class="fill"></div>
+						</div>
+		
+				        <div class="tableContainer rows10 wide">
+							<table id="qaExpiredObjTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable nosort">
+								<thead>
+									<tr>
+										<th nosort="true" field="icon" dataType="String" width="32"></th>
+										<th nosort="true" field="linkLabel" dataType="String" width="710">Name</th>
+										<th nosort="true" field="modUserTitle" dataType="String" width="130">Bearbeiter</th>
+										<th nosort="true" field="expiryDate" dataType="Date" width="100">Abgelaufen am</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div> <!-- tableContainer end -->
+					</div> <!-- inputContainer end -->
+				</div> <!-- ContentPane -->
+
+        		<div id="qaExpiredAdrContentPane" dojoType="ContentPane" label="Adressen" style="overflow:hidden;">
+					<div class="inputContainer">
+						<div class="listInfo wide">
+							<span id="qaExpiredAdrTableInfo" class="searchResultsInfo">&nbsp;</span>
+							<span id="qaExpiredAdrTablePaging" class="searchResultsPaging">&nbsp;</span>
+							<div class="fill"></div>
+						</div>
+		
+				        <div class="tableContainer rows10 wide">
+							<table id="qaExpiredAdrTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable nosort">
+								<thead>
+									<tr>
+										<th nosort="true" field="icon" dataType="String" width="32"></th>
+										<th nosort="true" field="linkLabel" dataType="String" width="710">Name</th>
+										<th nosort="true" field="modUserTitle" dataType="String" width="130">Bearbeiter</th>
+										<th nosort="true" field="expiryDate" dataType="Date" width="100">Abgelaufen am</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div> <!-- tableContainer end -->
+					</div> <!-- inputContainer end -->
+			</div> <!-- TabContainer -->
 
 		</div> <!-- content end -->
 	</div> <!-- contentBlock end -->

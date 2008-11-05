@@ -218,12 +218,12 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		return MdekAddressUtils.extractAddressSearchResultsFromResponse(response);
 	}
 
-	public List<MdekAddressBean> getQAAddresses(String workState, String selectionType, Integer startHit, Integer numHits) {
-		WorkState ws = EnumUtil.mapDatabaseToEnumConst(WorkState.class, workState);
-		IdcQAEntitiesSelectionType st = selectionType == null ? null : IdcQAEntitiesSelectionType.valueOf(selectionType);
-		IngridDocument response = mdekCallerAddress.getQAAddresses(connectionFacade.getCurrentPlugId(), ws, st, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
-		IngridDocument result = MdekUtils.getResultFromResponse(response);
-		return MdekAddressUtils.extractDetailedAddresses(result);
+	public AddressSearchResultBean getQAAddresses(WorkState workState, IdcQAEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
+//		WorkState ws = EnumUtil.mapDatabaseToEnumConst(WorkState.class, workState);
+//		IdcQAEntitiesSelectionType st = selectionType == null ? null : IdcQAEntitiesSelectionType.valueOf(selectionType);
+//		IngridDocument response = mdekCallerAddress.getQAAddresses(connectionFacade.getCurrentPlugId(), workState, selectionType, orderBy, orderAsc, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.getQAAddresses(connectionFacade.getCurrentPlugId(), workState, selectionType, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		return MdekAddressUtils.extractAddressSearchResultsFromResponse(response);
 	}
 
 	public AddressStatisticsResultBean getAddressStatistics(String adrUuid, boolean freeAddressesOnly) {
