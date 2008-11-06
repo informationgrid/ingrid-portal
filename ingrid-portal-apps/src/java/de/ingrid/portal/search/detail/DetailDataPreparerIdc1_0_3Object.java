@@ -170,7 +170,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 		// add additional information
 		addAdditionalInformation(elements, record);
 
-		// add conformity information (new for INSPIRE)
+		// add object access information (new for INSPIRE)
 		List tableRecords = getSubRecordsByColumnName(record, "object_access.line");
 		if (tableRecords.size() > 0) {
 	    	HashMap element = new HashMap();
@@ -197,38 +197,38 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 		    	element.put("type", "space");
 				elements.add(element);
 	    	}
-	    	
 		}
 		
-		
 		// add conformity information (new for INSPIRE)
-		tableRecords = getSubRecordsByColumnName(record, "object_conformity.line");
-		if (tableRecords.size() > 0) {
-	    	HashMap element = new HashMap();
-	    	element.put("type", "table");
-	    	element.put("title", messages.getString("object_conformity"));
-			ArrayList head = new ArrayList();
-			head.add(messages.getString("object_conformity.specification"));
-			head.add(messages.getString("object_conformity.degree_value"));
-			element.put("head", head);
-			ArrayList body = new ArrayList();
-			element.put("body", body);
-	    	for (int i=0; i<tableRecords.size(); i++) {
-	    		Record tableRecord = (Record)tableRecords.get(i);
-	    		ArrayList row = new ArrayList();
-	    		row.add(notNull(tableRecord.getString("object_conformity.specification")));
-	    		row.add(notNull(tableRecord.getString("object_conformity.degree_value")));
-	    		if (!isEmptyRow(row)) {
-	    			body.add(row);
-	    		}
-	    	}
-	    	if (body.size() > 0) {
-		    	elements.add(element);
-		    	element = new HashMap();
-		    	element.put("type", "space");
-				elements.add(element);
-	    	}
-	    	
+		if (objClassStr.equals("3") || objClassStr.equals("1")) {
+			tableRecords = getSubRecordsByColumnName(record, "object_conformity.line");
+			if (tableRecords.size() > 0) {
+		    	HashMap element = new HashMap();
+		    	element.put("type", "table");
+		    	element.put("title", messages.getString("object_conformity"));
+				ArrayList head = new ArrayList();
+				head.add(messages.getString("object_conformity.specification"));
+				head.add(messages.getString("object_conformity.degree_value"));
+				element.put("head", head);
+				ArrayList body = new ArrayList();
+				element.put("body", body);
+		    	for (int i=0; i<tableRecords.size(); i++) {
+		    		Record tableRecord = (Record)tableRecords.get(i);
+		    		ArrayList row = new ArrayList();
+		    		row.add(notNull(tableRecord.getString("object_conformity.specification")));
+		    		row.add(notNull(tableRecord.getString("object_conformity.degree_value")));
+		    		if (!isEmptyRow(row)) {
+		    			body.add(row);
+		    		}
+		    	}
+		    	if (body.size() > 0) {
+			    	elements.add(element);
+			    	element = new HashMap();
+			    	element.put("type", "space");
+					elements.add(element);
+		    	}
+		    	
+			}
 		}
 		
 		
