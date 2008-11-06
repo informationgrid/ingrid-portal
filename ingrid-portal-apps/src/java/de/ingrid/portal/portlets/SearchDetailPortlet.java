@@ -111,7 +111,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             String iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
             
             // try to get the result for a objects UUID
-            if (docUuid != null) {
+            if (docUuid != null && iplugId != null) {
                 String qStr = null;
             	if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
             		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
