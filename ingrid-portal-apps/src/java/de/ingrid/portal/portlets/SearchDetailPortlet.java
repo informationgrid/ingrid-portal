@@ -15,6 +15,8 @@ import javax.portlet.PortletSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.jetspeed.PortalReservedParameters;
+import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
@@ -100,46 +102,50 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             String docUuid = request.getParameter("docuuid");
             String altDocumentId = request.getParameter("altdocid");
             String iplugId = request.getParameter("plugid");
-
-            context.put("docUuid", docUuid);
-            context.put("plugId", iplugId);
-            
             IngridHit hit = null;
             PlugDescription plugDescription = null;
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            plugDescription = ibus.getIPlug(iplugId);
-            String iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
+            String iPlugVersion = null;
             
-            // try to get the result for a objects UUID
-            if (docUuid != null && iplugId != null) {
-                String qStr = null;
-            	if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
-            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
-                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT)) {
-            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
-                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_OBJECT)) {
-            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
-                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_ADDRESS)) {
-            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
-                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
-            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
-                } else {
-            		qStr = docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
-                }
+            if (iplugId != null && iplugId.length() > 0) {
 
-            	IngridQuery q = QueryStringParser.parse(qStr);
-            	IngridHits hits = ibus.search(q, 1, 1, 0, 3000);
-            	if (hits.length() < 1) {
-            		log.error("No record found for document uuid:" + docUuid + " using iplug: " + iplugId);
-            	} else {
-            		hit = hits.getHits()[0];
-            	}
-            } else {
-                int documentId = Integer.parseInt(request.getParameter("docid"));
-                hit = new IngridHit();
-                hit.setDocumentId(documentId);
-                hit.setPlugId(iplugId);
-                context.put("docId", documentId);
+	            context.put("docUuid", docUuid);
+	            context.put("plugId", iplugId);
+	            
+	            plugDescription = ibus.getIPlug(iplugId);
+	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
+	            
+	            // try to get the result for a objects UUID
+	            if (docUuid != null) {
+	                String qStr = null;
+	            	if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
+	            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT)) {
+	            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_OBJECT)) {
+	            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_ADDRESS)) {
+	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
+	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+	                } else {
+	            		qStr = docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+	                }
+	
+	            	IngridQuery q = QueryStringParser.parse(qStr);
+	            	IngridHits hits = ibus.search(q, 1, 1, 0, 3000);
+	            	if (hits.length() < 1) {
+	            		log.error("No record found for document uuid:" + docUuid + " using iplug: " + iplugId);
+	            	} else {
+	            		hit = hits.getHits()[0];
+	            	}
+	            } else {
+	                int documentId = Integer.parseInt(request.getParameter("docid"));
+	                hit = new IngridHit();
+	                hit.setDocumentId(documentId);
+	                hit.setPlugId(iplugId);
+	                context.put("docId", documentId);
+	            }
             }
 
             Record record = null;
@@ -151,7 +157,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             }
             
             if (record == null) {
-                log.error("No record found for document id:" + hit.getDocumentId() + " using iplug: " + iplugId);
+               	log.error("No record found for document id:" + (hit != null ? hit.getDocumentId() : null) + " using iplug: " + iplugId + " for request: " + ((RequestContext) request.getAttribute(PortalReservedParameters.REQUEST_CONTEXT_ATTRIBUTE)).getRequest().getRequestURL() + "?" + ((RequestContext) request.getAttribute(PortalReservedParameters.REQUEST_CONTEXT_ATTRIBUTE)).getRequest().getQueryString());
             } else {
 
                 // set language code list
