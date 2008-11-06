@@ -103,6 +103,9 @@ public class ActionValveImpl extends AbstractValve implements ActionValve
                     try 
                     {
                         Fragment fragment = request.getPage().getFragmentById(actionWindow.getId().toString());
+                        if (fragment == null) {
+                        	log.error("Unable to get fragment for action windew id='" + actionWindow.getId().toString() + "' while making the following request: " + request.getRequest().getRequestURL() + "?" + request.getRequest().getQueryString());
+                        }
                         ContentFragment contentFragment = new ContentFragmentImpl(fragment, new HashMap());
                         actionWindow = this.windowAccessor.getPortletWindow(contentFragment);
                     } 
@@ -290,13 +293,12 @@ public class ActionValveImpl extends AbstractValve implements ActionValve
     protected void initWindow(PortletWindow window, RequestContext request)
     {
         Page page = request.getPage();
-        if (page != null) {
-        	Fragment fragment = page.getFragmentById(window.getId().toString());
-        	MutablePortletEntity mpe = (MutablePortletEntity)window.getPortletEntity();
-        	if (mpe != null) {
-        		mpe.setFragment(fragment);
-        	}
-        }
+    	Fragment fragment = page.getFragmentById(window.getId().toString());
+    	MutablePortletEntity mpe = (MutablePortletEntity)window.getPortletEntity();
+    	if (mpe == null) {
+    		log.error("Unable to get PortletEntity for fragment id='" + window.getId().toString() + "' while making the following request: " + request.getRequest().getRequestURL().toString());
+    	}
+		mpe.setFragment(fragment);
     }
 
 }
