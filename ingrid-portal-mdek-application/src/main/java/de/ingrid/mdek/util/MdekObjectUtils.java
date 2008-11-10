@@ -10,7 +10,6 @@ import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtils.ObjectType;
 import de.ingrid.mdek.MdekUtils.WorkState;
-import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
@@ -113,8 +112,19 @@ public class MdekObjectUtils {
 			} else {
 				searchResult.setTotalNumHits(0);
 			}
-
 			searchResult.setResultList(nodeList);
+
+			// Additional data
+			Map<String, String> additionalData = new HashMap<String, String>();
+			searchResult.setAdditionalData(additionalData);
+			Long totalNumQAAssigned = (Long) result.get(MdekKeys.TOTAL_NUM_QA_ASSIGNED);
+			if (totalNumQAAssigned != null) {
+				additionalData.put(MdekKeys.TOTAL_NUM_QA_ASSIGNED, totalNumQAAssigned.toString());
+			}
+			Long totalNumQAReassigned = (Long) result.get(MdekKeys.TOTAL_NUM_QA_REASSIGNED);
+			if (totalNumQAReassigned != null) {
+				additionalData.put(MdekKeys.TOTAL_NUM_QA_REASSIGNED, totalNumQAReassigned.toString());
+			}
 
 		} else {
 			MdekErrorUtils.handleError(response);

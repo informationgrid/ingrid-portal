@@ -160,12 +160,10 @@ function reloadTables() {
 		var qaAdrResult = resultList[5][1];
 
 		// Count the number of occurences and set the overview lst
-		var numAdrStateQ = 0;
-		var numAdrStateR = 0;
-		var numObjStateQ = 0;
-		var numObjStateR = 0;
-		dojo.lang.forEach(qaObjResult.resultList, function(item) {if (item.workState == "Q") {numObjStateQ++;} else {numObjStateR++;} });
-		dojo.lang.forEach(qaAdrResult.resultList, function(item) {if (item.workState == "Q") {numAdrStateQ++;} else {numAdrStateR++;} });
+		var numAdrStateQ = qaAdrResult.additionalData['total-num-qa-assigned'];
+		var numAdrStateR = qaAdrResult.additionalData['total-num-qa-reassigned'];
+		var numObjStateQ = qaObjResult.additionalData['total-num-qa-assigned'];
+		var numObjStateR = qaObjResult.additionalData['total-num-qa-reassigned'];
 		initOverviewTable(expObjResult.totalNumHits, expAdrResult.totalNumHits, numObjStateQ, numObjStateR, numAdrStateQ, numAdrStateR);
 
 		exitLoadingState();

@@ -112,6 +112,18 @@ public class MdekAddressUtils {
 				searchResult.setTotalNumHits(0);
 			}
 
+			// Additional data
+			Map<String, String> additionalData = new HashMap<String, String>();
+			searchResult.setAdditionalData(additionalData);
+			Long totalNumQAAssigned = (Long) result.get(MdekKeys.TOTAL_NUM_QA_ASSIGNED);
+			if (totalNumQAAssigned != null) {
+				additionalData.put(MdekKeys.TOTAL_NUM_QA_ASSIGNED, totalNumQAAssigned.toString());
+			}
+			Long totalNumQAReassigned = (Long) result.get(MdekKeys.TOTAL_NUM_QA_REASSIGNED);
+			if (totalNumQAReassigned != null) {
+				additionalData.put(MdekKeys.TOTAL_NUM_QA_REASSIGNED, totalNumQAReassigned.toString());
+			}
+
 			searchResult.setResultList(nodeList);
 		} else {
 			MdekErrorUtils.handleError(response);
