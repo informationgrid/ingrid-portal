@@ -15,6 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.security.RoleManager;
+import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.UserManager;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
@@ -24,18 +25,22 @@ import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekKeysSecurity;
 import de.ingrid.mdek.MdekUtils.AddressType;
 import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
 import de.ingrid.mdek.MdekUtils.IdcStatisticsSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.ObjectType;
 import de.ingrid.mdek.MdekUtils.UserOperation;
+import de.ingrid.mdek.MdekUtilsSecurity.IdcRole;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerObject;
+import de.ingrid.mdek.caller.IMdekCallerSecurity;
 import de.ingrid.mdek.caller.MdekCallerAddress;
 import de.ingrid.mdek.caller.MdekCallerCatalog;
 import de.ingrid.mdek.caller.MdekCallerObject;
+import de.ingrid.mdek.caller.MdekCallerSecurity;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekAddressUtils;
 import de.ingrid.mdek.util.MdekUtils;
@@ -55,9 +60,11 @@ public class MdekQuickViewPortlet extends GenericVelocityPortlet {
     private IMdekCallerCatalog mdekCallerCatalog;
     private IMdekCallerObject mdekCallerObject;
     private IMdekCallerAddress mdekCallerAddress;
+    private IMdekCallerSecurity mdekCallerSecurity;
 
     // maximum number of datasets displayed per table
     private static final int MAX_NUM_DISPLAYED_DATASETS = 20;
+
 
     public void init(PortletConfig config) throws PortletException {
 		super.init(config);
@@ -65,6 +72,7 @@ public class MdekQuickViewPortlet extends GenericVelocityPortlet {
 		mdekCallerCatalog = MdekCallerCatalog.getInstance();
 		mdekCallerObject = MdekCallerObject.getInstance();
 		mdekCallerAddress = MdekCallerAddress.getInstance();
+		mdekCallerSecurity = MdekCallerSecurity.getInstance();
 
 		userManager = (UserManager) getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
         if (null == userManager) {
@@ -85,15 +93,20 @@ public class MdekQuickViewPortlet extends GenericVelocityPortlet {
 
     	UserData userData = getUserData(request);
     	try {
-	    	Catalog cat = fetchCatalog(userData);
+    		IdcRole role = getRole(userData);
+    		context.put("userRole", role.name());
+
+    		Catalog cat = fetchCatalog(userData);
 	    	context.put("catalogName", cat.getName());
 	    	context.put("catalogLocation", cat.getLocation());
 	    	context.put("numObjects", fetchNumObjects(userData));
 	    	context.put("numAddresses", fetchNumAddresses(userData));
 	    	context.put("numUsers", fetchNumUsers(userData));
+
 	    	TableData objectTableData = fetchObjectQuicklist(userData);
 	    	context.put("objectList", objectTableData.getEntries());
 	    	context.put("totalNumObjects", objectTableData.getTotalNumEntries());
+
 	    	TableData addressTableData = fetchAddressQuicklist(userData);
 	    	context.put("addressList", addressTableData.getEntries());
 	    	context.put("totalNumAddresses", addressTableData.getTotalNumEntries());
@@ -259,6 +272,25 @@ public class MdekQuickViewPortlet extends GenericVelocityPortlet {
 
     	tableData.setEntries(entries);
     	return tableData;
+    }
+
+    private IdcRole getRole(UserData userData) throws PortletException, SecurityException {
+    	if (!roleManager.isUserInRole(userData.getPortalLogin(), "mdek")) {
+    		throw new PortletException("User with name "+userData.getPortalLogin()+" has to be associated with role mdek.");
+    	}
+
+    	// Check for the idcRole of the user
+    	IngridDocument response = null;
+    	try {
+    		response = mdekCallerSecurity.getUserDetails(userData.getPlugId(), userData.getAddressUuid(), userData.getAddressUuid());
+
+    	} catch (Exception e) {
+			throw new PortletException ("The connection to the iPlug with id '"+userData.getPlugId()+"' could not be established.", e);    		
+    	}
+
+    	IngridDocument userDoc = MdekUtils.getResultFromResponse(response);
+		Integer role = (Integer) userDoc.get(MdekKeysSecurity.IDC_ROLE);
+		return EnumUtil.mapDatabaseToEnumConst(IdcRole.class, role);
     }
 }
 

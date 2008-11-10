@@ -48,10 +48,13 @@
 				<th style="text-align: left;">$MESSAGES.getString('quickView.catalogInfo.numAddresses'):</th>
 				<td># $numAddresses</td>
 			</tr>
+## Only display the number of users if the user is in role CAT_ADMIN
+#if( $userRole == "CATALOG_ADMINISTRATOR")
 			<tr>
 				<th style="text-align: left;">$MESSAGES.getString('quickView.catalogInfo.numUsers'):</th>
 				<td># $numUsers</td>
 			</tr>
+#end
 		</tbody>
 	</table>
 <br />

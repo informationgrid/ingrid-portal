@@ -13,10 +13,10 @@
     <a href="../ingrid-portal-mdek-application/mdek_admin_entry.jsp">/ingrid-portal-mdek-application/mdek_admin_entry.jsp</a>
 -->
 	<input class="btn" type="button" name="Verweis" value="Erfassungskomponente"
-	  onClick="javaScript:void(window.open('/ingrid-portal-mdek-application/index.jsp'));">
+	  onClick="javaScript:void(window.open('/ingrid-portal-mdek-application/index.jsp', '_new'));">
 #if($showMdekAdmin)
 	<input class="btn" type="button" name="Verweis" value="Verwaltung"
-	  onClick="javaScript:void(window.open('/ingrid-portal-mdek-application/mdek_admin_entry.jsp'));">
+	  onClick="javaScript:void(window.open('/ingrid-portal-mdek-application/mdek_admin_entry.jsp', '_new'));">
 #end
   </div>
 </div>
