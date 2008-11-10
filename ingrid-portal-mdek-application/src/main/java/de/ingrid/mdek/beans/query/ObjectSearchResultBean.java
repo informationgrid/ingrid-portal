@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 
 public class ObjectSearchResultBean {
-	public int numHits;
+	public long numHits;
 	public long totalNumHits;
 
 	public ArrayList<MdekDataBean> resultList;
@@ -17,11 +17,11 @@ public class ObjectSearchResultBean {
 		this.resultList = new ArrayList<MdekDataBean>();
 	}
 	
-	public int getNumHits() {
+	public long getNumHits() {
 		return numHits;
 	}
 
-	public void setNumHits(int numHits) {
+	public void setNumHits(long numHits) {
 		this.numHits = numHits;
 	}
 

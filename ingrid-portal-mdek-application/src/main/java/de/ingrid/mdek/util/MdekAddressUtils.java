@@ -101,13 +101,13 @@ public class MdekAddressUtils {
 			}
 
 			if (result.get(MdekKeys.TOTAL_NUM) != null) {
-				searchResult.setNumHits(((Long) result.get(MdekKeys.TOTAL_NUM)).intValue());				
+				searchResult.setNumHits((Long) result.get(MdekKeys.TOTAL_NUM));				
 			} else {
 				searchResult.setNumHits(0);
 			}
 
 			if (result.get(MdekKeys.TOTAL_NUM_PAGING) != null) {
-				searchResult.setTotalNumHits(((Long) result.get(MdekKeys.TOTAL_NUM_PAGING)).intValue());
+				searchResult.setTotalNumHits((Long) result.get(MdekKeys.TOTAL_NUM_PAGING));
 			} else {
 				searchResult.setTotalNumHits(0);
 			}

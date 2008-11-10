@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 
 public class AddressSearchResultBean {
-	public int numHits;
+	public long numHits;
 	public long totalNumHits;
 
 	public ArrayList<MdekAddressBean> resultList;
@@ -17,11 +17,11 @@ public class AddressSearchResultBean {
 		this.resultList = new ArrayList<MdekAddressBean>();
 	}
 	
-	public int getNumHits() {
+	public long getNumHits() {
 		return numHits;
 	}
 
-	public void setNumHits(int numHits) {
+	public void setNumHits(long numHits) {
 		this.numHits = numHits;
 	}
 
