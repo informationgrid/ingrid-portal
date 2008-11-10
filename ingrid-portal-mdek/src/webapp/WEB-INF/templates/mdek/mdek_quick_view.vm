@@ -1,0 +1,122 @@
+#macro (renderTableHeader $colNames $colTitles)
+<tr>
+	#foreach ($colTitle in $colTitles)
+   		<td class="contentColumnHead">$colTitle</td>
+	#end
+</tr>
+#end
+
+#macro (renderTableRow $rowValues)
+<tr>
+#if ($velocityCount % 2 == 0)
+	#set ($rowstyle = "contentRowEven")
+#else
+	#set ($rowstyle = "contentRowOdd")
+#end
+#foreach ($rowValue in $rowValues)
+	<td class="$rowstyle">$rowValue</td>
+#end
+</tr>
+#end
+#macro (renderTableFooter $textLeft $textRight)
+<div class="formfooter">
+	<span class="float_left smaller">$textLeft</span>
+	<span class="float_right smaller">$textRight</span>
+	<p class="clearer"></p>
+</div>
+#end
+
+
+<div style="margin-top: 20px;" class="section">
+<h2>$MESSAGES.getString('quickView.catalogInfo.title')</h2>
+<p>
+	<table border="0">
+		<tbody>
+			<tr>
+				<th style="text-align: left;">$MESSAGES.getString('quickView.catalogInfo.name'):</th>
+				<td>$catalogName</td>
+			</tr>
+			<tr>
+				<th style="text-align: left;">$MESSAGES.getString('quickView.catalogInfo.location'):</th>
+				<td>$catalogLocation</td>
+			</tr>
+			<tr>
+				<th style="text-align: left;">$MESSAGES.getString('quickView.catalogInfo.numObjects'):</th>
+				<td># $numObjects</td>
+			</tr>
+			<tr>
+				<th style="text-align: left;">$MESSAGES.getString('quickView.catalogInfo.numAddresses'):</th>
+				<td># $numAddresses</td>
+			</tr>
+			<tr>
+				<th style="text-align: left;">$MESSAGES.getString('quickView.catalogInfo.numUsers'):</th>
+				<td># $numUsers</td>
+			</tr>
+		</tbody>
+	</table>
+<br />
+
+<h2>$MESSAGES.getString('quickView.table.obj.title')</h2>
+#if ( $objectList.isEmpty() )
+<span class="smaller">$MESSAGES.getString('quickView.table.obj.noHits')</span><br />
+#else
+<div class="formbody">
+<table class="border fullwidth">
+	#set ($colNames = ["icon", "name", "status", "modDate"])
+	#set ($colTitles = [$MESSAGES.getString('quickView.table.header.class'), $MESSAGES.getString('quickView.table.header.name'), $MESSAGES.getString('quickView.table.header.state'), $MESSAGES.getString('quickView.table.header.modDate')])
+	#renderTableHeader($colNames $colTitles)
+	#foreach ($entry in $objectList )
+		## set the icon for the class of the current entry
+		#set ($entryIcon = "<img src='/ingrid-portal-apps/images/icn_udk_obj_${entry.udkClass}.gif' alt='${entry.udkClass}' />")
+		## set the localised status string
+		#set ($entryStatus = $MESSAGES.getString("general.userOperation.${entry.status}"))
+		## set the link to the mdek app
+		#set ($entryRef = "<a href='/ingrid-portal-mdek-application/index.jsp?nodeType=O&nodeId=${entry.uuid}' title='${entry.name}' target='_new'>${entry.name}</a>")
+		#set ($rowValues = [$entryIcon, $entryRef, $entryStatus, $entry.modDate])
+		#renderTableRow($rowValues)
+	#end
+</table>
+</div>
+	#set ($footerTextLeft = "$MESSAGES.getString('quickView.table.numberOfHits'): $totalNumObjects")
+	## totalNumAddresses is of type 'Long'. convert to primitive type before comparing
+	#if( $totalNumObjects.intValue() > 20 )
+		#set ($footerTextRight = $MESSAGES.getString('quickView.table.maxNumReached'))
+	#else
+		#set ($footerTextRight = "")
+	#end
+	#renderTableFooter($footerTextLeft $footerTextRight)
+#end
+<br />
+
+<h2>$MESSAGES.getString('quickView.table.adr.title')</h2>
+#if ( $addressList.isEmpty() )
+<span class="smaller">$MESSAGES.getString('quickView.table.adr.noHits')</span><br />
+#else
+<div class="formbody">
+<table class="border fullwidth">
+	#set ($colNames = ["icon", "name", "status", "modDate"])
+	#set ($colTitles = [$MESSAGES.getString('quickView.table.header.class'), $MESSAGES.getString('quickView.table.header.name'), $MESSAGES.getString('quickView.table.header.state'), $MESSAGES.getString('quickView.table.header.modDate')])
+	#renderTableHeader($colNames $colTitles)
+	#foreach ($entry in $addressList )
+		## set the icon for the class of the current entry
+		#set ($entryIcon = "<img src='/ingrid-portal-apps/images/icn_udk_adr_${entry.udkClass}.gif' alt='${entry.udkClass}' />")
+		## set the localised status string
+		#set ($entryStatus = $MESSAGES.getString("general.userOperation.${entry.status}"))
+		## set the link to the mdek app
+		#set ($entryRef = "<a href='/ingrid-portal-mdek-application/index.jsp?nodeType=A&nodeId=${entry.uuid}' title='${entry.name}' target='_new'>${entry.name}</a>")
+		#set ($rowValues = [$entryIcon, $entryRef, $entryStatus, $entry.modDate])
+		#renderTableRow($rowValues)
+	#end
+</table>
+</div>
+	#set ($footerTextLeft = "$MESSAGES.getString('quickView.table.numberOfHits'): $totalNumAddresses")
+	## totalNumAddresses is of type 'Long'. convert to primitive type before comparing
+	#if( $totalNumAddresses.intValue() > 20 )
+		#set ($footerTextRight = $MESSAGES.getString('quickView.table.maxNumReached'))
+	#else
+		#set ($footerTextRight = "")
+	#end
+	#renderTableFooter($footerTextLeft $footerTextRight)
+#end
+</p>
+</div>

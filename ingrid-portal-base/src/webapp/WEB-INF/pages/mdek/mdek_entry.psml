@@ -10,6 +10,10 @@
     <fragment id="mdek-entry-0" type="portlet" name="ingrid-portal-mdek::MdekEntryPortlet">
       <property layout="OneColumn" name="row" value="0" />
     </fragment>
+
+    <fragment id="mdek-quick-view-0" type="portlet" decorator="clear" name="ingrid-portal-mdek::MdekQuickViewPortlet">
+      <property layout="OneColumn" name="row" value="1" />
+    </fragment>
   </fragment>
 
   <security-constraints>
