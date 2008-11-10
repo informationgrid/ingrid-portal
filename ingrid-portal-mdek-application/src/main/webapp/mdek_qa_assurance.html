@@ -79,7 +79,7 @@ function sortTable(tableId, e) {
 
 // Convert table field identifiers to sort identifiers (de.ingrid.mdek.MdekUtils.IdcEntityOrderBy)
 function getSortIdentifierFor(field) {
-	dojo.debug("getSortIdentifierFor("+field+") called");
+//	dojo.debug("getSortIdentifierFor("+field+") called");
 
 	if (field == "icon") {
 		return "CLASS";
@@ -87,7 +87,7 @@ function getSortIdentifierFor(field) {
 	} else if (field == "linkLabel") {
 		return "NAME";
 
-	} else if (field == "expiryDate" || field == "date") {
+	} else if (field == "expiryDate" || field == "date" || field == "assignTime") {
 		return "DATE";
 
 	} else if (field == "modUserTitle" || field == "assignerUserTitle") {

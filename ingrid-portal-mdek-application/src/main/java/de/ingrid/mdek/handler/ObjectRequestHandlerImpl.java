@@ -207,7 +207,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 	}
 
 	public ObjectSearchResultBean getQAObjects(WorkState workState, IdcQAEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
-		IngridDocument response = mdekCallerObject.getQAObjects(connectionFacade.getCurrentPlugId(), workState, selectionType, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.getQAObjects(connectionFacade.getCurrentPlugId(), workState, selectionType, orderBy, orderAsc, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
 		return MdekObjectUtils.extractObjectSearchResultsFromResponse(response);
 	}
 
