@@ -22,7 +22,8 @@
   <meta name="copyright" content="wemove digital solutions GmbH" />
   <meta name="robots" content="index,follow" />
   <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
-  <!--<link rel="stylesheet" media="screen, projection" type="text/css" href="styles/portal_u.css" />-->
+  <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/> 
+<!--<link rel="stylesheet" media="screen, projection" type="text/css" href="styles/portal_u.css" />-->
 
   #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
   #includeHeaderResource()
