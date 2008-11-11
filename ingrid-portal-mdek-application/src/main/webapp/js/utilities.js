@@ -924,3 +924,14 @@ UtilUI._uiElementsActive = true;
 UtilUI.getDescriptionForGuiId = function(guiId) {
 	return message.get("ui."+guiId+".description");
 }
+
+// Check if the nodeId is for a container node (objectRoot, addressRoot, addressFreeRoot)
+UtilUI.isContainerNodeId = function(nodeId) {
+	return nodeId == "objectRoot" || nodeId == "addressRoot" || nodeId == "addressFreeRoot";
+}
+
+// Check if the nodeId belongs to a newly created node without an id
+UtilUI.isNewNodeId = function(nodeId) {
+	return nodeId == "newNode";
+}
+

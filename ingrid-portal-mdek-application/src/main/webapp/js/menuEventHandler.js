@@ -965,91 +965,142 @@ menuEventHandler.handleShowComment = function() {
 // pathList should be a list containing node IDs from the top element to the target node.
 // index is the index where the expand process is started
 // resultHandler is an optional deferred obj which is called when all nodes have been expanded
-_expandPathRec = function(pathList, index, resultHandler) {
-
-	var objRoot = dojo.widget.byId("objectRoot");
-	var adrRoot = dojo.widget.byId("addressRoot");
-	var adrFreeRoot = dojo.widget.byId("addressFreeRoot");
-	var nextNode = dojo.widget.byId(pathList[index]);
-	var treeController = dojo.widget.byId("treeController");
-
+// If a node at index i can not be found, the children of the previous node will be reloaded  
+menuEventHandler._expandPathRec = function(pathList, index, resultHandler) {
 	if (index >= pathList.length) {
 		resultHandler.callback();
 		return;
+	}
+
+	var nextNode = dojo.widget.byId(pathList[index]);
+	var treeController = dojo.widget.byId("treeController");
+
+	if (nextNode) {
+		// expand the next node in the list
+		var deferred = treeController.expand(nextNode);
+		deferred.addCallback(function() { menuEventHandler._expandPathRec(pathList, index+1, resultHandler); });
 	} else {
-		if (!objRoot.isExpanded) {
-			// Expand the root objects if they aren't already expanded
-			var deferred = treeController.expand(objRoot);
-			deferred.addCallback(function() {
-				_expandPathRec(pathList, 0, resultHandler);
-			});
-		} else if (!adrRoot.isExpanded) {
-			// Expand the root addresses if they aren't already expanded
-			var deferred = treeController.expand(adrRoot);
-			deferred.addCallback(function() {
-				_expandPathRec(pathList, 0, resultHandler);
-			});
-		} else if (!adrFreeRoot.isExpanded) {
-			// Expand the 'free' addresses if they aren't already expanded
-			var deferred = treeController.expand(adrFreeRoot);
-			deferred.addCallback(function() {
-				_expandPathRec(pathList, 0, resultHandler);
-			});
+		// If the next node can not be found (due to another user creating nodes in parallel)
+		// the previous node has to be refreshed
+		var deferred = new dojo.Deferred();
+		deferred.callback();
+		if (index == 0) {
+			// If the index is 0, the root nodes have to be refreshed
+			deferred.addCallback(function() { return treeController.refreshChildren(dojo.widget.byId("objectRoot")); });
+			deferred.addCallback(function() { return treeController.refreshChildren(dojo.widget.byId("addressRoot")); });
+			deferred.addCallback(function() { return treeController.refreshChildren(dojo.widget.byId("addressFreeRoot")); });
 		} else {
-			var deferred = treeController.expand(nextNode);
+			// Otherwise try to refresh the previous node in the list
 			deferred.addCallback(function() {
-				_expandPathRec(pathList, index+1, resultHandler);
+				var currentNode = dojo.widget.byId(pathList[index-1]);
+				return treeController.refreshChildren(currentNode);
 			});
 		}
+		// Check if the target node exists after refreshing
+		deferred.addCallback(function() {
+			var nextNode = dojo.widget.byId(pathList[index]);
+			if (nextNode) {
+				// If it exists, continue with the expand procedure
+				menuEventHandler._expandPathRec(pathList, index, resultHandler);
+
+			} else {
+				// Otherwise something went wrong and the path can't be expanded further
+				// Stop in this case
+				resultHandler.errback();
+				return;
+			}
+		});
 	}
 }
 
-// Expands the tree according to the nodeIds in pathList.
-// pathList should be a list containing node IDs from the top element to the target node.
-// The return value is a deferred object which is invoked after all nodes have been expanded
-_expandPath = function(pathList) {
-	var deferred = new dojo.Deferred();
-	_expandPathRec(pathList, 0, deferred);
-	return deferred;
+// Expand the path to a TreeNode according to a path 'pathList' (List of uuids)
+menuEventHandler._expandPath = function(nodeAppType, pathList) {
+	var treeController = dojo.widget.byId("treeController");
+	var resultDef = new dojo.Deferred();
+
+	if (nodeAppType == "O") {
+		var objRoot = dojo.widget.byId("objectRoot");
+		var expandRootDef = new dojo.Deferred();
+		expandRootDef.callback();
+		// Check if the rootNode is expanded
+		if (!objRoot.isExpanded) {
+			// If not, expand
+			expandRootDef.addCallback(function() { return treeController.expand(objRoot); });
+		}
+		// Start expanding the path after the object rootNode is expanded 
+		expandRootDef.addCallback(function() { menuEventHandler._expandPathRec(pathList, 0, resultDef); });
+
+	} else if (nodeAppType == "A") {
+		var adrRoot = dojo.widget.byId("addressRoot");
+		var expandRootDef = new dojo.Deferred();
+		expandRootDef.callback();
+		if (!adrRoot.isExpanded) {
+			// Expand the root addresses if they aren't already expanded
+			expandRootDef.addCallback(function() { return treeController.expand(adrRoot); });
+		}
+
+		// If the addressRoot node has not been expanded yet, the addressFreeRoot hasn't been expanded either
+		// Therefore try to get the widget here and in the callback function
+		var adrFreeRoot = dojo.widget.byId("addressFreeRoot");
+		if (!adrFreeRoot || !adrFreeRoot.isExpanded) {
+			// Expand the free root addresses if they aren't already expanded
+			expandRootDef.addCallback(function() {
+				adrFreeRoot = dojo.widget.byId("addressFreeRoot");
+				return treeController.expand(adrFreeRoot);
+			});
+		}
+
+		// Start expanding the path after the address rootNodes are expanded 
+		expandRootDef.addCallback(function() { menuEventHandler._expandPathRec(pathList, 0, resultDef); });
+	}
+
+	return resultDef;
 }
 
+// Selects and loads a node in the tree. The path to the node is expanded step by step.
 menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType) {
 	clickMenu("page1");
 
-	if (nodeId != "newNode" && nodeId != "objectRoot" && nodeId != "addressRoot" && nodeId != "addressFreeRoot") {
-		var deferred = new dojo.Deferred();
-		var treeController = dojo.widget.byId("treeController");
-
-		deferred.addCallback(function(pathList) {
-			var def = _expandPath(pathList);
-			def.addCallback(function(){
-				var tree = dojo.widget.byId("tree");
-				var treeListener = dojo.widget.byId("treeListener");
-				var targetNode = dojo.widget.byId(pathList[pathList.length-1]);
-
-				var d = new dojo.Deferred();
-				d.addCallback(function(){				
-					tree.selectNode(targetNode);
-					tree.selectedNode = targetNode;
-					if (!dojo.render.html.ie)				
-						dojo.html.scrollIntoView(targetNode.domNode);
-					dojo.event.topic.publish(treeListener.eventNames.select, {node: targetNode});
-				});
-				d.addErrback(function(msg){
-					dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
-					dojo.debug(msg);
-				});
-
-	    		dojo.debug("Publishing event: /loadRequest("+targetNode.id+", "+targetNode.nodeAppType+")");
-		    	dojo.event.topic.publish("/loadRequest", {id: targetNode.id, appType: targetNode.nodeAppType, resultHandler:d});
-			});
-		});
-    	
+	if (!UtilUI.isContainerNodeId(nodeId) && !UtilUI.isNewNodeId(nodeId)) {
+		// Get the path to the node depending on its type
+		var getPathDef = new dojo.Deferred();
     	if (nodeAppType == "O") {
-    		dojo.event.topic.publish("/getObjectPathRequest", {id: nodeId, resultHandler: deferred});		
+    		dojo.event.topic.publish("/getObjectPathRequest", {id: nodeId, resultHandler: getPathDef});		
+
 		} else if (nodeAppType == "A" ){
-    		dojo.event.topic.publish("/getAddressPathRequest", {id: nodeId, resultHandler: deferred});		
+    		dojo.event.topic.publish("/getAddressPathRequest", {id: nodeId, resultHandler: getPathDef});		
 		}
+
+		// Expand the nodes along the path.
+		getPathDef.addCallback(dojo.lang.curry(menuEventHandler, menuEventHandler._expandPath, nodeAppType));
+		// If the path is successfully expanded, load the target node
+		getPathDef.addCallback(function() { menuEventHandler._loadNode(nodeId); });
+	}
+}
+
+// Loads a node with id 'nodeId'
+// The TreeNode with widgetId must exist before the node can be loaded
+menuEventHandler._loadNode = function(nodeId) {
+	var tree = dojo.widget.byId("tree");
+	var treeListener = dojo.widget.byId("treeListener");
+	var targetNode = dojo.widget.byId(nodeId);
+
+	if (targetNode) {
+		var loadNodeDef = new dojo.Deferred();
+		loadNodeDef.addCallback(function(){				
+			tree.selectNode(targetNode);
+			tree.selectedNode = targetNode;
+			if (!dojo.render.html.ie)				
+				dojo.html.scrollIntoView(targetNode.domNode);
+			dojo.event.topic.publish(treeListener.eventNames.select, {node: targetNode});
+		});
+		loadNodeDef.addErrback(function(msg){
+			dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
+			dojo.debug(msg);
+		});
+
+		dojo.debug("Publishing event: /loadRequest("+targetNode.id+", "+targetNode.nodeAppType+")");
+		dojo.event.topic.publish("/loadRequest", {id: targetNode.id, appType: targetNode.nodeAppType, resultHandler:loadNodeDef});
 	}
 }
 
