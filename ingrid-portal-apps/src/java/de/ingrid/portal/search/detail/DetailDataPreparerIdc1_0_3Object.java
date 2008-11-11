@@ -837,6 +837,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     		Record refRecord = (Record)refRecords.get(0);
     		addElementEntry(elements, refRecord.getString("t011_obj_serv.type_value"), messages.getString("t011_obj_serv.type"));
     		String serviceType = refRecord.getString("t011_obj_serv.type_value");
+    		String serviceTypeKey = refRecord.getString("t011_obj_serv.type_key");
     		addElementEntry(elements, refRecord.getString("t011_obj_serv.environment"), messages.getString("t011_obj_serv.environment"));
     		addElementEntry(elements, refRecord.getString("t011_obj_serv.history"), messages.getString("t011_obj_serv.history"));
     		addElementEntry(elements, refRecord.getString("t011_obj_serv.base"), messages.getString("t011_obj_serv.base"));
@@ -928,7 +929,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     	    		row.add(notNull(refRecord.getString("t011_obj_serv_operation.invocation_name")));
     	    		List serviceLinkRecords = getSubRecordsByColumnName(refRecord, "t011_obj_serv_op_connpoint.line");
     	    		// only add getCap urls of WMS services
-    	    		if (serviceType.equalsIgnoreCase("wms") && serviceLinkRecords.size() > 0 && refRecord.getString("t011_obj_serv_operation.name_value") != null && refRecord.getString("t011_obj_serv_operation.name_value").toLowerCase().equals("getcapabilities")) {
+    	    		if (serviceTypeKey.equals("2") && serviceLinkRecords.size() > 0 && refRecord.getString("t011_obj_serv_operation.name_value") != null && refRecord.getString("t011_obj_serv_operation.name_value").toLowerCase().equals("getcapabilities")) {
     	    	    	for (int j=0; j<serviceLinkRecords.size(); j++) {
     	    	    		wmsServiceLinks.add(((Record)serviceLinkRecords.get(i)).getString("t011_obj_serv_op_connpoint.connect_point"));
     	    	    	}
@@ -958,6 +959,12 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 	    	        	link.put("isExtern", new Boolean(false));
 	    	        	link.put("title", messages.getString("common.result.showMap"));
 	    	        	link.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(wmsServiceLinks.get(i).trim()));
+	    	        	linkList.add(link);
+	    	    		link = new HashMap();
+	    	        	link.put("hasLinkIcon", new Boolean(true));
+	    	        	link.put("isExtern", new Boolean(true));
+	    	        	link.put("title", messages.getString("common.result.showGetCapabilityUrl"));
+	    	        	link.put("href", wmsServiceLinks.get(i).trim());
 	    	        	linkList.add(link);
     	        	}
     	    	}
