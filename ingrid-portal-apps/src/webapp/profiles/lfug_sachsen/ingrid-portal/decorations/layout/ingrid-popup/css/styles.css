@@ -12,7 +12,7 @@
 body { padding: 0; margin: 0; color: #000000; background-color: #FFFFFF; font: normal 100% Verdana, Arial, sans-serif; line-height: 120%; }
 
 img { border:0; }
-span.icon { margin-right:4px; margin-top:5px; float:left; width:12px; }
+span.icon { padding-top: 0.25em; width:12px; vertical-align:top;}
 span.icon_udk { margin-right:6px; margin-top:2px; float:left; width:21px; height:14px; }
 /* no float for detail page in OPERA */
 span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px; }
