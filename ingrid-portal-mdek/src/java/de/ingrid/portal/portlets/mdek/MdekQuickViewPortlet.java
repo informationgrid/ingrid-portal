@@ -198,7 +198,7 @@ public class MdekQuickViewPortlet extends GenericVelocityPortlet {
     	List<HashMap<String, String>> entries = new ArrayList<HashMap<String,String>>();
 
     	IngridDocument response = mdekCallerAddress.getWorkAddresses(userData.getPlugId(),
-    			IdcWorkEntitiesSelectionType.MODIFIED, IdcEntityOrderBy.DATE, false,
+    			IdcWorkEntitiesSelectionType.PORTAL_QUICKLIST, IdcEntityOrderBy.DATE, false,
     			0, MAX_NUM_DISPLAYED_DATASETS, userData.getAddressUuid());
     	IngridDocument resultDoc = MdekUtils.getResultFromResponse(response);
 
@@ -240,7 +240,7 @@ public class MdekQuickViewPortlet extends GenericVelocityPortlet {
     	List<HashMap<String, String>> entries = new ArrayList<HashMap<String,String>>();
 
     	IngridDocument response = mdekCallerObject.getWorkObjects(userData.getPlugId(),
-    			IdcWorkEntitiesSelectionType.MODIFIED, IdcEntityOrderBy.DATE, false,
+    			IdcWorkEntitiesSelectionType.PORTAL_QUICKLIST, IdcEntityOrderBy.DATE, false,
     			0, MAX_NUM_DISPLAYED_DATASETS, userData.getAddressUuid());
     	IngridDocument resultDoc = MdekUtils.getResultFromResponse(response);
 
