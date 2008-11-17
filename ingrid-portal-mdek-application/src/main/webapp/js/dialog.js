@@ -70,6 +70,10 @@ dialog.showContextHelp = function(e, guiId, caption /* optional */) {
 	var mouseX = getMousePos(e)[0];
 	var mouseY = getMousePos(e)[1];
 
+	def.addErrback(function(err){
+		dialog.show(message.get('general.hint'), "Der Hilfetext f&uuml;r '"+guiId+"' konnte nicht gefunden werden.", dialog.INFO);
+	});
+
 	def.addCallback(function(helpMessage) {
 		dojo.require("ingrid.widget.FloatingPane");
 		  

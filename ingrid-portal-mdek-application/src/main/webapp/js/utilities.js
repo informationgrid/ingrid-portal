@@ -569,10 +569,15 @@ UtilUdk.loadHelpMessage = function(guiId) {
 
 	// Then load the help message via HelpService
 	HelpService.getHelpEntry(guiId, cls, {
-		callback: function(helpEntry) { deferred.callback(helpEntry); },
+		callback: function(helpEntry) {
+			if (helpEntry) {
+				deferred.callback(helpEntry);
+			} else {
+				deferred.errback();
+			}
+		},
 		errorHandler: function(errMsg, err) {
-			dojo.debug(errMsg);
-			dojo.debugShallow(err);
+			deferred.errback(new Error(errMsg));
 		}
 	});
 
