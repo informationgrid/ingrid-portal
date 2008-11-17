@@ -81,7 +81,7 @@ dialog.showContextHelp = function(e, guiId, caption /* optional */) {
 		if (dlg) {
 			// If the dialog already exists, update the caption&message and display it
 			dlg.titleBarText.innerHTML = caption;
-			dlg.containerNode.innerHTML = '<div class="popupContent" dojoAttachPoint="contentNode">'+helpMessage.helpText+'<br/><br/>Beispiel:<br/>'+helpMessage.sample+'</div>';
+			dlg.containerNode.innerHTML = '<div class="popupContent" dojoAttachPoint="contentNode">'+helpMessage.helpText+'<br/><br/>Beispiel:<br/>'+helpMessage.sample+'<br/><br/>Feld ID: '+guiId+'</div>';
 			dlg.domNode.style['left'] = mouseX + 30 + "px";
 			dlg.domNode.style['top'] = mouseY + "px";
 		
@@ -96,7 +96,7 @@ dialog.showContextHelp = function(e, guiId, caption /* optional */) {
 			    // define inner div
 			var div = document.createElement("div");
 			div.style.position = "absolute";
-			div.innerHTML = '<div class="popupContent" dojoAttachPoint="contentNode">'+helpMessage.helpText+'<br/><br/>Beispiel:<br/>'+helpMessage.sample+'</div>';
+			div.innerHTML = '<div class="popupContent" dojoAttachPoint="contentNode">'+helpMessage.helpText+'<br/><br/>Beispiel:<br/>'+helpMessage.sample+'<br/><br/>Feld ID: '+guiId+'</div>';
 			document.body.appendChild(div);
 			div.style['width'] = "300px";
 			div.style['height'] = "200px";

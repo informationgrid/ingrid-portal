@@ -212,7 +212,12 @@ function initTree() {
 			dojo.lang.forEach(res, function(obj){ obj.title = dojo.string.escape("html", obj.title); });
 			return _this.loadProcessResponse(node,res);
 		});
-		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
+		deferred.addErrback(function(err) {
+			displayErrorMessage(err);
+//			dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
+			dojo.debug(err);
+			return err;
+		});
 		return deferred;
 	};
 }

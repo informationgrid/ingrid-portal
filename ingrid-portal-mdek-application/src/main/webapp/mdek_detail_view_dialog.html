@@ -14,7 +14,10 @@ _container_.addOnLoad(function() {
 			{
 				callback:function(res) { renderNodeData(res); },
 //				timeout:5000,
-				errorHandler:function(message) {dojo.debug("Error in mdek_detail_view_dialog.html: Error while waiting for nodeData: " + message); }
+				errorHandler:function(message) {
+					displayErrorMessage(new Error(message));
+//					dojo.debug("Error in mdek_detail_view_dialog.html: Error while waiting for nodeData: " + message);
+				}
 			}
 		);
 	}

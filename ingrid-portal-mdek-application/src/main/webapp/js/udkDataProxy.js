@@ -434,7 +434,7 @@ udkDataProxy.handleCreateObjectRequest = function(msg)
 					UtilDWR.exitLoadingState();
 //					msg.resultHandler.errback("Error in js/udkDataProxy.js: Error while creating a new node.");
 					dojo.debug("Error in js/udkDataProxy.js: Error while creating a new node.");
-					msg.resultHandler.errback(err);
+					msg.resultHandler.errback(new Error(message));
 				}
 			}
 		);	
@@ -476,7 +476,7 @@ udkDataProxy.handleCreateAddressRequest = function(msg)
 					UtilDWR.exitLoadingState();
 //					msg.resultHandler.errback("Error in js/udkDataProxy.js: Error while creating a new address.");
 					dojo.debug("Error in js/udkDataProxy.js: Error while creating a new address.");
-					msg.resultHandler.errback(err);
+					msg.resultHandler.errback(new Error(message));
 				}
 			}
 		);	
