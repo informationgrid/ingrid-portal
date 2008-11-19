@@ -1419,7 +1419,7 @@ udkDataProxy._setAddressData = function(nodeData)
 
 	// Initialize the object address reference table with the links received from the backend
 	// TODO Modify to correct value when it's implemented in the backend
-	var numReferences = nodeData.totalNumReferences;
+	var numReferences = nodeData.totalNumReferences || 0;
 	UtilAddress.initObjectAddressReferenceTable(linkTable, numReferences);
 
 
