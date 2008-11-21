@@ -91,7 +91,7 @@ function hideLoadingZone() {
 
 	<div class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7022)" title="Hilfe">[?]</a>
 		</div>
 		<div id="spatialAssistContent" class="content">
 
@@ -102,27 +102,27 @@ function hideLoadingZone() {
 			<table cellspacing="0">
 				<tbody>
 					<tr>
-						<td class="label"><label for="spatialAssistRef">Freier Raumbezug: </label></td>
+						<td class="label"><label for="spatialAssistRef" onclick="javascript:dialog.showContextHelp(arguments[0], 7023, 'Freier Raumbezug')">Freier Raumbezug: </label></td>
 						<td colspan="2"><input type="text" dojoType="ingrid:ValidationTextbox" id="spatialAssistRef" class="w248"/></td>
 					</tr>
 					<tr>
-						<td class="label"><label for="spatialAssistLon1">Unten Links: Rechtswert / L&auml;nge:</label></td>
+						<td class="label"><label for="spatialAssistLon1" onclick="javascript:dialog.showContextHelp(arguments[0], 7024, 'Unten Links: Rechtswert / L&auml;nge')">Unten Links: Rechtswert / L&auml;nge:</label></td>
 						<td colspan="2"><input type="text" dojoType="RealNumberTextbox" id="spatialAssistLon1" class="w248"/></td>
 					</tr>
 					<tr>
-						<td class="label"><label for="spatialAssistLat1">Unten Links: Hochwert / Breite:</label></td>
+						<td class="label"><label for="spatialAssistLat1" onclick="javascript:dialog.showContextHelp(arguments[0], 7025, 'Unten Links: Hochwert / Breite')">Unten Links: Hochwert / Breite:</label></td>
 						<td colspan="2"><input type="text" dojoType="RealNumberTextbox" id="spatialAssistLat1" class="w248"/></td>
 					</tr>
 					<tr>
-						<td class="label"><label for="spatialAssistLon2">Oben Rechts: Rechtswert / L&auml;nge:</label></td>
+						<td class="label"><label for="spatialAssistLon2" onclick="javascript:dialog.showContextHelp(arguments[0], 7026, 'Oben Rechts: Rechtswert / L&auml;nge')">Oben Rechts: Rechtswert / L&auml;nge:</label></td>
 						<td colspan="2"><input type="text" dojoType="RealNumberTextbox" id="spatialAssistLon2" class="w248"/></td>
 					</tr>
 					<tr>
-						<td class="label"><label for="spatialAssistLat2">Oben Rechts: Hochwert / Breite:</label></td>
+						<td class="label"><label for="spatialAssistLat2" onclick="javascript:dialog.showContextHelp(arguments[0], 7027, 'Oben Rechts: Hochwert / Breite')">Oben Rechts: Hochwert / Breite:</label></td>
 						<td colspan="2"><input type="text" dojoType="RealNumberTextbox" id="spatialAssistLat2" class="w248"/></td>
 					</tr>
 					<tr>
-						<td class="label"><label for="spatialAssistCS">Koordinatensystem: </label></td>
+						<td class="label"><label for="spatialAssistCS" onclick="javascript:dialog.showContextHelp(arguments[0], 7028, 'Koordinatensystem')">Koordinatensystem: </label></td>
 						<td colspan="2">
 							<div id="spatialAssistCS" dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/spatialReferenceSystems.js" style="width:230px;" />
 						</td>

@@ -396,7 +396,7 @@ acceptTopicList = function() {
 
   <div id="thesaurus" class="contentBlockWhite top wideBlock">
     <div id="winNavi">
-      <a href="#" title="Hilfe">[?]</a>
+		<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7030)" title="Hilfe">[?]</a>
 	  </div>
 	  <div id="thesaurusContent" class="content">
 
@@ -404,7 +404,7 @@ acceptTopicList = function() {
       <div class="spacer"></div>
       <div class="inputContainer field grey noSpaceBelow fullField">
 
-        <span class="label"><label for="thesSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 'Suche nach')">Suche nach Deskriptoren und Ordnungsbegriffen</label></span>
+        <span class="label"><label for="thesSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 7031, 'Suche nach Deskriptoren und Ordnungsbegriffen')">Suche nach Deskriptoren und Ordnungsbegriffen</label></span>
         <span class="input"><input type="text" id="thesSearch" name="thesSearch" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
         <div class="spacerField"></div>
   	  </div>
@@ -454,7 +454,7 @@ acceptTopicList = function() {
 
       <!-- RIGHT HAND SIDE CONTENT START -->
       <div id="listThesaurus" class="inputContainer">
-        <span class="label"><label for="thesaurusDescList" onclick="javascript:dialog.showContextHelp(arguments[0], 'Liste der Deskriptoren')">Liste der Deskriptoren</label></span>
+        <span class="label"><label for="thesaurusDescList" onclick="javascript:dialog.showContextHelp(arguments[0], 7032, 'Liste der Deskriptoren')">Liste der Deskriptoren</label></span>
         <div class="listInfo third">
       	  <div class="fill"></div>
         </div>

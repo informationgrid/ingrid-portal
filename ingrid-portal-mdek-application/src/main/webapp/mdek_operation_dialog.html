@@ -330,10 +330,8 @@ closeDialog = function() {
 
   <div id="operations" class="contentBlockWhite top fullBlock">
     <div id="winNavi">
-<!-- 
-      <a href="#" title="Hilfe">[?]</a>
- -->
-      <a href="javascript:closeDialog();" title="schlie&szlig;en"><img src="img/ic_close.gif" />schlie&szlig;en</a> <a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:closeDialog();" title="schlie&szlig;en"><img src="img/ic_close.gif" />schlie&szlig;en</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7041)" title="Hilfe">[?]</a>
 	  </div>
 	  <div id="operationsContent" class="content">
 
@@ -363,7 +361,7 @@ closeDialog = function() {
   	  </div>
 
       <div class="inputContainer field grey fullField noSpaceBelow">
-        <span class="label required"><label id="operationsNameLabel" for="operationsName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name der Operation')">Name der Operation*</label></span>
+        <span class="label required"><label id="operationsNameLabel" for="operationsName" onclick="javascript:dialog.showContextHelp(arguments[0], 5201, 'Name der Operation')">Name der Operation*</label></span>
 		<span class="input">
 			<select dojoType="ingrid:Select" class="w616" id="operationsNameSelect" />
 			<input type="text" maxlength="120" id="operationsName" class="w640" dojoType="ingrid:ValidationTextBox" />
@@ -372,13 +370,13 @@ closeDialog = function() {
         
         <div class="inputContainer spaceBelow">
           <span class="entry first">
-            <span class="label"><label for="operationsDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 'Beschreibung')">Beschreibung</label></span>
+            <span class="label"><label for="operationsDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 5202, 'Beschreibung')">Beschreibung</label></span>
             <span class="input">
 				<input type="text" mode="textarea" id="operationsDescription" class="w308 h041" dojoType="ingrid:ValidationTextbox" />            
             </span>
           </span>
           <span class="entry">
-            <span class="label required"><label id="operationsPlatformLabel" for="operationsPlatform" onclick="javascript:dialog.showContextHelp(arguments[0], 'Unterst&uuml;tzte Plattformen')">Unterst&uuml;tzte Plattformen*</label></span>
+            <span class="label required"><label id="operationsPlatformLabel" for="operationsPlatform" onclick="javascript:dialog.showContextHelp(arguments[0], 5203, 'Unterst&uuml;tzte Plattformen')">Unterst&uuml;tzte Plattformen*</label></span>
             <div class="tableContainer headHiddenRows2 halfInside">
               <div class="cellEditors" id="operationsPlatformEditors">
                 <div dojoType="ingrid:ValidationTextbox" maxlength="120" widgetId="operationsPlatformText"></div>
@@ -397,11 +395,11 @@ closeDialog = function() {
           <div class="fill"></div>
         </div>
 
-        <span class="label"><label for="operationsCall" onclick="javascript:dialog.showContextHelp(arguments[0], 'Aufruf')">Aufruf</label></span>
+        <span class="label"><label for="operationsCall" onclick="javascript:dialog.showContextHelp(arguments[0], 5204, 'Aufruf')">Aufruf</label></span>
         <span class="input spaceBelow"><input type="text" maxlength="255" id="operationsCall" name="operationsCall" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
 
         <div class="inputContainer h130">
-          <span class="label"><label id="operationsParameterLabel" for="operationsParameter" onclick="javascript:dialog.showContextHelp(arguments[0], 'Parameter')">Parameter</label></span>
+          <span class="label"><label id="operationsParameterLabel" for="operationsParameter" onclick="javascript:dialog.showContextHelp(arguments[0], 5205, 'Parameter')">Parameter</label></span>
           <div class="tableContainer rows4 fullInside">
             <div class="cellEditors" id="operationsParameterEditors">
               <div dojoType="ingrid:ValidationTextbox" maxlength="120" widgetId="operationsParameterName"></div>
@@ -429,7 +427,7 @@ closeDialog = function() {
 
         <div class="inputContainer noSpaceBelow h067">
           <span class="half left">
-            <span class="label required"><label id="operationsAddressLabel" for="operationsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zugriffsadresse')">Zugriffsadresse*</label></span>
+            <span class="label required"><label id="operationsAddressLabel" for="operationsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 5206, 'Zugriffsadresse')">Zugriffsadresse*</label></span>
             <div class="tableContainer headHiddenRows2 halfInside">
               <div class="cellEditors" id="operationsAddressEditors">
                 <div dojoType="ingrid:ValidationTextbox" maxlength="255" widgetId="operationsAddressText"></div>
@@ -446,7 +444,7 @@ closeDialog = function() {
             </div>
           </span>
           <span class="half">
-            <span class="label"><label for="operationsDependencies" onclick="javascript:dialog.showContextHelp(arguments[0], 'Abh&auml;ngigkeiten')">Abh&auml;ngigkeiten</label></span>
+            <span class="label"><label for="operationsDependencies" onclick="javascript:dialog.showContextHelp(arguments[0], 5207, 'Abh&auml;ngigkeiten')">Abh&auml;ngigkeiten</label></span>
             <div class="tableContainer headHiddenRows2 halfInside">
               <div class="cellEditors" id="operationsDependenciesEditors">
                 <div dojoType="ingrid:ValidationTextbox" maxlength="120" widgetId="operationsDependenciesText"></div>

@@ -292,7 +292,7 @@ startNewSearch = function() {
 
 	<div class="contentBlockWhite top fullBlock">
 		<div id="winNavi">
-			<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7016)" title="Hilfe">[?]</a>
 		</div>
 	<div id="addressContent" class="content">
 
@@ -305,15 +305,15 @@ startNewSearch = function() {
 
 				<div class="inputContainer field grey noSpaceBelow">
 					<div>
-						<span class="label"><label for="addressSearchUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Einheit/Institution')">Einheit/Institution</label></span>
+						<span class="label"><label for="addressSearchUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 7017, 'Einheit/Institution')">Einheit/Institution</label></span>
 						<span class="input spaceBelow"><input type="text" id="addressSearchUnit" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
 					</div>
 					<div class="half left">
-						<span class="label"><label for="addressSearchLastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Nachname')">Nachname</label></span>
+						<span class="label"><label for="addressSearchLastname" onclick="javascript:dialog.showContextHelp(arguments[0], 7018, 'Nachname')">Nachname</label></span>
 						<span class="input"><input type="text" id="addressSearchLastname" class="w308" dojoType="ingrid:ValidationTextBox" /></span>
 					</div>
 					<div class="half noSpaceBelow">
-						<span class="label"><label for="addressSearchFirstname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname</label></span>
+						<span class="label"><label for="addressSearchFirstname" onclick="javascript:dialog.showContextHelp(arguments[0], 7019, 'Vorname')">Vorname</label></span>
 						<span class="input"><input type="text" id="addressSearchFirstname" class="w308" dojoType="ingrid:ValidationTextBox" /></span>
 					</div>
 					<div class="fill"></div>

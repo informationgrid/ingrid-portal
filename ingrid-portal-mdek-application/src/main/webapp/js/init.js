@@ -745,7 +745,8 @@ function initToolbar() {
                             widgetId:"toggleFieldsBtn"
                           });
   rightToolbar.addChild("img/ic_help.gif", "after", {
-                            onClick:function(){},
+	  						onClick:function() { dialog.showContextHelp(arguments[0], 7016); },
+//                            onClick:function(){},
                             caption:"Hilfe"
                           });
   

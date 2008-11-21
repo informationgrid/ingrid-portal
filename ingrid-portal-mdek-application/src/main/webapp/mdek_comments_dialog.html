@@ -75,7 +75,7 @@ addComment = function() {
 
   <div id="comment" class="contentBlockWhite top wideBlock">
     <div id="winNavi">
-      <a href="#" title="Hilfe">[?]</a>
+		<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7042)" title="Hilfe">[?]</a>
 	  </div>
 	  <div id="commentContent" class="content">
 
@@ -97,7 +97,7 @@ addComment = function() {
   	  </div>
 
       <div class="inputContainer wide noSpaceBelow">
-        <span class="label"><label for="commentNewComment" onclick="javascript:dialog.showContextHelp(arguments[0], 'Neuen Kommentar verfassen')">Neuen Kommentar verfassen</label></span>
+        <span class="label"><label for="commentNewComment" onclick="javascript:dialog.showContextHelp(arguments[0], 7043, 'Neuen Kommentar verfassen')">Neuen Kommentar verfassen</label></span>
         <span class="input field grey">
 			<input type="text" mode="textarea" id="commentNewComment" class="w915 h085" dojoType="ingrid:ValidationTextbox" />
         </span>

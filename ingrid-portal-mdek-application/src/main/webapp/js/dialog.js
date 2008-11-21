@@ -59,8 +59,13 @@ dialog.showPage = function(caption, url, width, height, /* boolean */modal, /* a
 dialog.showContextHelp = function(e, guiId, caption /* optional */) {
 	// Check if guiId is a string or int
 	// If it's a string (deprecated), display it
+	var errorText = "Der Hilfetext f&uuml;r das Feld mit der ID: '"+guiId+"' konnte nicht gefunden werden.";
+	if (caption) {
+		errorText += "<br>Feldname: '"+caption+"'";
+	}
+
 	if (typeof guiId == "string") {
-		dialog.show(message.get('general.hint'), "Der Hilfetext f&uuml;r '"+guiId+"' konnte nicht gefunden werden.", dialog.INFO);
+		dialog.show(message.get('general.hint'), errorText, dialog.INFO);
 		return;
 	}
 
@@ -71,7 +76,7 @@ dialog.showContextHelp = function(e, guiId, caption /* optional */) {
 	var mouseY = getMousePos(e)[1];
 
 	def.addErrback(function(err){
-		dialog.show(message.get('general.hint'), "Der Hilfetext f&uuml;r '"+guiId+"' konnte nicht gefunden werden.", dialog.INFO);
+		dialog.show(message.get('general.hint'), errorText, dialog.INFO);
 	});
 
 	def.addCallback(function(helpMessage) {
