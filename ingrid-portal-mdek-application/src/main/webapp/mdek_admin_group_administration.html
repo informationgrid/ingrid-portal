@@ -743,7 +743,7 @@ function hideLoadingZone() {
   
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8017)" title="Hilfe">[?]</a>
 		</div>
 		<div id="groupAdmin" class="content">
 
@@ -768,12 +768,12 @@ function hideLoadingZone() {
 	
 	        <!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
 	        <div id="groupData" class="inputContainer">
-				<span class="label"><label>Gruppendaten</label></span>
+				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8018)">Gruppendaten</label></span>
 <!-- 
 				<span class="functionalLink"><img src="img/ic_fl_new_group.gif" width="14" height="12" alt="Gruppe" /><a class="current" title="Gruppe">Gruppe</a><img src="img/ic_fl_new_user.gif" width="10" height="12" alt="Nutzer" /><a href="admin_nutzer_benutzer.html" title="Nutzer">Nutzer</a></span>
  -->
 				<div class="inputContainer field grey noSpaceBelow">
-	            	<span class="label"><label for="groupDataName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Gruppenname')">Gruppenname</label></span>
+	            	<span class="label"><label for="groupDataName" onclick="javascript:dialog.showContextHelp(arguments[0], 8019, 'Gruppenname')">Gruppenname</label></span>
 	            	<span class="input"><input type="text" maxlength="50" id="groupDataName" class="w550" dojoType="ingrid:ValidationTextBox" /></span>
 	            	<div class="spacerField"></div>
 	      	  	</div>
@@ -792,8 +792,8 @@ function hideLoadingZone() {
 					</span>
 				</div>
 				<div id="permissionCheckboxContainer" class="inputContainer grey field checkboxContainer" style="display:none;">
-					<span class="input"><input type="checkbox" id="userDataCreate" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Root-Objekte und -Adressen anlegen')">Root-Objekte und -Adressen anlegen</label></span>
-					<span class="input"><input type="checkbox" id="userDataQS" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Qualit&auml;tssichernder')">Qualit&auml;tssichernder</label></span>
+					<span class="input"><input type="checkbox" id="userDataCreate" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8020, 'Root-Objekte und -Adressen anlegen')">Root-Objekte und -Adressen anlegen</label></span>
+					<span class="input"><input type="checkbox" id="userDataQS" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8021, 'Qualit&auml;tssichernder')">Qualit&auml;tssichernder</label></span>
 		        </div>
 			</div>
 			<!-- RIGHT HAND SIDE CONTENT BLOCK 1 END -->
@@ -803,7 +803,7 @@ function hideLoadingZone() {
 			<div id="permissionListObjects" style="display:none;">
 				<div class="spacer"></div>
 				<div class="spacer"></div>
-				<span class="label"><label>Berechtigungen f&uuml;r Objekte</label></span>
+				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8022)">Berechtigungen f&uuml;r Objekte</label></span>
 				<div dojoType="SplitContainer" id="groupDataObjects" persist="false" orientation="horizontal" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
 		            <!-- LEFT HAND SIDE CONTENT BLOCK 2 START -->
 		            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="38">
@@ -871,7 +871,7 @@ function hideLoadingZone() {
 			<div id="permissionListAddresses" style="display:none;">
 				<div class="spacer"></div>
 				<div class="spacer"></div>
-				<span class="label"><label>Berechtigungen f&uuml;r Adressen</label></span>
+				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8023)">Berechtigungen f&uuml;r Adressen</label></span>
 				<div dojoType="SplitContainer" id="groupDataAddresses" persist="false" orientation="horizontal" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
 		            <!-- LEFT HAND SIDE CONTENT BLOCK 3 START -->
 		            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="38">

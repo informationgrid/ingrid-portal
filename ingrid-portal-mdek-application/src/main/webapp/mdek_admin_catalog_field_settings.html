@@ -156,7 +156,7 @@ function hideLoadingZone() {
 
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8009)" title="Hilfe">[?]</a>
 		</div>
 		<div id="catalogueAdminFields" class="content">
 	
@@ -164,7 +164,7 @@ function hideLoadingZone() {
 			<div class="spacer"></div>
 			<div class="spacer"></div>
 			<div class="inputContainer field grey">
-				<span class="label"><label>Folgende Felder auch in der Standard-Ansicht anzeigen</label></span>
+				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8010)">Folgende Felder auch in der Standard-Ansicht anzeigen</label></span>
 				<div class="tableContainer rows10 w652">
 					<table id="fieldTable" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
 						<thead>

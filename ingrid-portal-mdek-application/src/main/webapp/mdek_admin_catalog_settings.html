@@ -134,7 +134,7 @@ function isValidCatalog(cat) {
 	
 		<div id="contentSection" class="contentBlockWhite top">
 			<div id="winNavi">
-				<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8000)" title="Hilfe">[?]</a>
 			</div>
 			<div id="adminCatalog" class="content">
 
@@ -142,16 +142,16 @@ function isValidCatalog(cat) {
 				<div class="spacer"></div>
 				<div class="spacer"></div>
 				<div class="inputContainer field grey noSpaceBelow">
-					<span class="label"><label for="adminCatalogName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name des Kataloges')">Name des Kataloges</label></span>
+					<span class="label"><label for="adminCatalogName" onclick="javascript:dialog.showContextHelp(arguments[0], 8001, 'Name des Kataloges')">Name des Kataloges</label></span>
 					<span class="input spaceBelow"><input type="text" id="adminCatalogName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
 
-					<span class="label"><label for="adminCatalogPartnerName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name des Partners')">Name des Partners</label></span>
+					<span class="label"><label for="adminCatalogPartnerName" onclick="javascript:dialog.showContextHelp(arguments[0], 8002, 'Name des Partners')">Name des Partners</label></span>
 					<span class="input spaceBelow"><input type="text" id="adminCatalogPartnerName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
 		
-					<span class="label"><label for="adminCatalogProviderName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name des Anbieters')">Name des Anbieters</label></span>
+					<span class="label"><label for="adminCatalogProviderName" onclick="javascript:dialog.showContextHelp(arguments[0], 8003, 'Name des Anbieters')">Name des Anbieters</label></span>
 					<span class="input spaceBelow"><input type="text" id="adminCatalogProviderName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
 		
-					<span class="label required"><label for="adminCatalogCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 'Staat')">Staat*</label></span>
+					<span class="label required"><label for="adminCatalogCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 8004, 'Staat')">Staat*</label></span>
 					<select class="spaceBelow" dojoType="ingrid:Select" required="true" style="width:622px;" id="adminCatalogCountry" >
 						<option value='af'>Afghanistan</option>
 						<option value='eg'>&Auml;gypten</option>
@@ -394,19 +394,19 @@ function isValidCatalog(cat) {
 						<option value='cy'>Zypern</option>
 					</select>
 
-					<span class="label required"><label for="adminCatalogLanguage" onclick="javascript:dialog.showContextHelp(arguments[0], 'Katalogsprache')">Katalogsprache*</label></span>
+					<span class="label required"><label for="adminCatalogLanguage" onclick="javascript:dialog.showContextHelp(arguments[0], 8005, 'Katalogsprache')">Katalogsprache*</label></span>
 					<select class="spaceBelow" dojoType="ingrid:Select" required="true" style="width:622px;" disabled="true" id="adminCatalogLanguage" >
 						<option value="de">Deutsch</option>
 						<option value="en">Englisch</option>
 					</select>
 
-					<span class="label required"><label for="adminCatalogSpatialRef" onclick="javascript:dialog.showContextHelp(arguments[0], 'Raumbezug')">Raumbezug*</label></span>
+					<span class="label required"><label for="adminCatalogSpatialRef" onclick="javascript:dialog.showContextHelp(arguments[0], 8006, 'Raumbezug')">Raumbezug*</label></span>
 					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onClick="javascript:scriptScope.selectSpatialReference();" title="Raumbezug ausw&auml;hlen [Popup]">Raumbezug ausw&auml;hlen</a></span>
 					<span class="input spaceBelow"><input type="text" required="true" widgetId="adminCatalogSpatialRef" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					
 					<div class="checkboxContainer" style="display:none;">
-						<span class="input"><input type="checkbox" id="adminCatalogWorkflowControl" dojoType="Checkbox" /><label style="cursor:default;">Workflow-Kontrolle aktivieren</label></span>
-						<span class="input"><input type="checkbox" id="adminCatalogExpire" dojoType="Checkbox" /><label style="cursor:default;">&Uuml;berarbeiten nach <input widgetId="adminCatalogExpiryDuration" class="w033" min="1" max="2147483647" maxlength="10" dojoType="IntegerTextbox" /> Tagen</label></span>
+						<span class="input"><input type="checkbox" id="adminCatalogWorkflowControl" dojoType="Checkbox" /><label class="inActive">Workflow-Kontrolle aktivieren</label></span>
+						<span class="input"><input type="checkbox" id="adminCatalogExpire" dojoType="Checkbox" /><label class="inActive">&Uuml;berarbeiten nach <input widgetId="adminCatalogExpiryDuration" class="w033" min="1" max="2147483647" maxlength="10" dojoType="IntegerTextbox" /> Tagen</label></span>
 					</div>
 		
 					<div class="spacerField"></div>

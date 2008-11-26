@@ -348,7 +348,7 @@ scriptScope.reloadPage = function() {
 
 	<div class="contentBlockWhite top wideBlock">
 		<div id="winNavi">
-			<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7069)" title="Hilfe">[?]</a>
 		</div>
 
 		<span class="label" id="qaLoadingZone">
@@ -364,7 +364,7 @@ scriptScope.reloadPage = function() {
 			<button dojoType="ingrid:Button" title="Seite aktualisieren" onClick="javascript:scriptScope.reloadPage();">Seite aktualisieren</button>
 			<div class="spacer"></div>
 
-			<span class="label"><label>Objekte / Adressen die Ihnen als Qualit&auml;tssichernder zugewiesen wurden</label></span>
+			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7070)">Objekte / Adressen die Ihnen als Qualit&auml;tssichernder zugewiesen wurden</label></span>
 
         	<div id="qaAssignedDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="qaAssignedObjContentPane">
 
@@ -421,7 +421,7 @@ scriptScope.reloadPage = function() {
 				</div> <!-- ContentPane -->
 			</div> <!-- TabContainer -->
 
-			<span class="label"><label>Objekte / Adressen die sich in Bearbeitung befinden, f&uuml;r die Sie Qualit&auml;tssichernder sind</label></span>
+			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7071)">Objekte / Adressen die sich in Bearbeitung befinden, f&uuml;r die Sie Qualit&auml;tssichernder sind</label></span>
 
         	<div id="qaModifiedDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="qaModifiedObjContentPane">
 
@@ -478,7 +478,7 @@ scriptScope.reloadPage = function() {
 				</div> <!-- ContentPane -->
 			</div> <!-- TabContainer -->
 
-			<span class="label"><label>Objekte / Adressen deren Verfallszeitspanne abgelaufen ist, f&uuml;r die Sie Qualit&auml;tssichernder sind</label></span>
+			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7072)">Objekte / Adressen deren Verfallszeitspanne abgelaufen ist, f&uuml;r die Sie Qualit&auml;tssichernder sind</label></span>
 
         	<div id="qaExpiredDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="qaExpiredObjContentPane">
 

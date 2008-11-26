@@ -129,12 +129,12 @@ function hideLoadingZone() {
   
     <div id="researchDatabaseContentSection" class="contentBlockWhite top">
       <div id="winNavi">
-        <a href="#" title="Hilfe">[?]</a>
+		<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7063)" title="Hilfe">[?]</a>
   	  </div>
   	  <div class="content">
 
         <!-- LEFT HAND SIDE CONTENT START -->
-        <span class="label"><label for="databaseSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 'Datenbank-Suche')">Datenbank-Suche</label></span>
+        <span class="label"><label for="databaseSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 7064, 'Datenbank-Suche')">Datenbank-Suche</label></span>
         <div class="inputContainer field grey noSpaceBelow">
           <span class="input"><input type="text" mode="textarea" id="databaseSearch" class="w640 h062" dojoType="ingrid:ValidationTextbox" /></span> 
 

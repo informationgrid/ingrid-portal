@@ -361,7 +361,7 @@ scriptScope.reloadPage = function() {
 
 	<div class="contentBlockWhite top wideBlock">
 		<div id="winNavi">
-			<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7065)" title="Hilfe">[?]</a>
 		</div>
 
 		<span class="label" id="qaEditorLoadingZone">
@@ -414,7 +414,7 @@ scriptScope.reloadPage = function() {
 				</div>
 			</div> <!-- inputContainer end -->
 
-			<span class="label"><label>Objekte / Adressen deren Verfallszeitspanne abgelaufen ist</label></span>
+			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7066)">Objekte / Adressen deren Verfallszeitspanne abgelaufen ist</label></span>
 
         	<div id="expDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="expObjContentPane">
         		<div id="expObjContentPane" dojoType="ContentPane" label="Objekte" style="overflow:hidden;">
@@ -470,7 +470,7 @@ scriptScope.reloadPage = function() {
 				</div> <!-- ContentPane end -->
 			</div> <!-- TabContainer end -->
 
-			<span class="label"><label>Objekte / Adressen die sich in von Ihnen derzeit in Bearbeitung befinden</label></span>
+			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7067)">Objekte / Adressen die sich in von Ihnen derzeit in Bearbeitung befinden</label></span>
 
         	<div id="modDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="modObjContentPane">
 
@@ -525,7 +525,7 @@ scriptScope.reloadPage = function() {
 				</div> <!-- ContentPane end -->
 			</div> <!-- TabContainer end -->
 
-			<span class="label"><label>Objekte / Adressen die an die Qualit&auml;tssicherung &uuml;berwiesen bzw. von der Qualit&auml;tssicherung r&uuml;ck&uuml;berwiesen wurden</label></span>
+			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7068)">Objekte / Adressen die an die Qualit&auml;tssicherung &uuml;berwiesen bzw. von der Qualit&auml;tssicherung r&uuml;ck&uuml;berwiesen wurden</label></span>
 
         	<div id="qaDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="qaObjContentPane">
 

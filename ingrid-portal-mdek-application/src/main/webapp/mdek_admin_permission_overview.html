@@ -192,14 +192,14 @@ function addPermissionsToUser(user) {
 
     <div id="contentSection" class="contentBlockWhite top">
       <div id="winNavi">
-        <a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8024)" title="Hilfe">[?]</a>
   	  </div>
   	  <div id="rightsAdmin" class="content">
 
         <!-- CONTENT BLOCK 1 START -->
         <!-- SPLIT CONTAINER START -->
         <div>
-          <span class="label"><label>Berechtigungen f&uuml;r Objekte</label></span>
+          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8025)">Berechtigungen f&uuml;r Objekte</label></span>
           <div dojoType="SplitContainer" id="rightsObjects" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
             <!-- LEFT HAND SIDE CONTENT BLOCK 1 START -->
             <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="24">
@@ -251,7 +251,7 @@ function addPermissionsToUser(user) {
         <!-- CONTENT BLOCK 2 START -->
         <!-- SPLIT CONTAINER START -->
         <div>
-          <span class="label"><label>Berechtigungen f&uuml;r Adressen</label></span>
+          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8026)">Berechtigungen f&uuml;r Adressen</label></span>
           <div dojoType="SplitContainer" id="rightsAddresses" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
             <!-- LEFT HAND SIDE CONTENT BLOCK 2 START -->
             <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="24">

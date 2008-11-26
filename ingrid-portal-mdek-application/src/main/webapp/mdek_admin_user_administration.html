@@ -600,7 +600,7 @@ function hideLoadingZone() {
 
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8011)" title="Hilfe">[?]</a>
 		</div>
 		<div id="userAdmin" class="content">
 
@@ -657,7 +657,7 @@ function hideLoadingZone() {
 	
 		    <!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
 			<div id="userData" class="inputContainer" style="float:right;">
-				<span class="label"><label>Nutzerdaten</label></span>
+				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8012)">Nutzerdaten</label></span>
 <!-- 
 				<span class="functionalLink"><img src="img/ic_fl_new_group.gif" width="14" height="12" alt="Gruppe" /><a href="admin_nutzer_gruppe.html" title="Gruppe">Gruppe</a><img src="img/ic_fl_new_user.gif" width="10" height="12" alt="Nutzer" /><a class="current" title="Nutzer">Nutzer</a></span>
 -->
@@ -676,16 +676,16 @@ function hideLoadingZone() {
 						<div class="fill"></div>
 					</div>
 -->
-					<span class="label"><label for="userDataLogin" onclick="javascript:dialog.showContextHelp(arguments[0], 'Login')">Login</label></span>
+					<span class="label"><label for="userDataLogin" onclick="javascript:dialog.showContextHelp(arguments[0], 8013, 'Login')">Login</label></span>
 					<span class="input spaceBelow"><input type="text" id="userDataLogin" name="userDataLogin" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-					<span class="label"><label for="userDataRole" onclick="javascript:dialog.showContextHelp(arguments[0], 'Rolle')">Rolle</label></span>
+					<span class="label"><label for="userDataRole" onclick="javascript:dialog.showContextHelp(arguments[0], 8014, 'Rolle')">Rolle</label></span>
 					<span class="input spaceBelow"><input type="text" id="userDataRole" name="userDataRole" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 
-					<span class="label required"><label id="userDataAddressLinkLabel" for="userDataAddressLink" onclick="javascript:dialog.showContextHelp(arguments[0], 'Adressverweis')">Adressverweis*</label></span>
+					<span class="label required"><label id="userDataAddressLinkLabel" for="userDataAddressLink" onclick="javascript:dialog.showContextHelp(arguments[0], 8015, 'Adressverweis')">Adressverweis*</label></span>
 					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.searchForAddress();" title="Adresse suchen [Popup]">Adresse suchen</a></span>
 					<span class="input spaceBelow"><input type="text" id="userDataAddressLink" name="userDataAddressLink" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					
-					<span class="label required"><label id="userDataGroupLabel" for="userDataGroup" onclick="javascript:dialog.showContextHelp(arguments[0], 'Gruppe')">Gruppe*</label></span>
+					<span class="label required"><label id="userDataGroupLabel" for="userDataGroup" onclick="javascript:dialog.showContextHelp(arguments[0], 8016, 'Gruppe')">Gruppe*</label></span>
 					<span class="input spaceBelow"><div dojoType="ingrid:Select" autoComplete="false" toggle="plain" style="width:621px;" widgetId="userDataGroup"></div></span>
 			        <div class="fill"></div>
 				</div>
