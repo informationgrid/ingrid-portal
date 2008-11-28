@@ -4,7 +4,6 @@
 package de.ingrid.portal.portlets.mdek;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -15,8 +14,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.security.RoleManager;
-import org.apache.jetspeed.security.UserManager;
 import org.apache.jetspeed.security.SecurityException;
+import org.apache.jetspeed.security.UserManager;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.hibernate.Session;

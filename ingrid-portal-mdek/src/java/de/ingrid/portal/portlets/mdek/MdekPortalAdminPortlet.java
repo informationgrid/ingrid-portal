@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -33,10 +32,10 @@ import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.CatalogBean;
-import de.ingrid.mdek.caller.IMdekCaller;
+import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
-import de.ingrid.mdek.caller.MdekCaller;
+import de.ingrid.mdek.caller.MdekClientCaller;
 import de.ingrid.mdek.caller.MdekCallerCatalog;
 import de.ingrid.mdek.caller.MdekCallerSecurity;
 import de.ingrid.mdek.persistence.db.model.UserData;
@@ -74,7 +73,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     // Parameters set on init
     private UserManager userManager;
     private RoleManager roleManager;
-    private IMdekCaller mdekCaller;
+    private IMdekClientCaller mdekClientCaller;
 
     
     public void init(PortletConfig config) throws PortletException {
@@ -82,7 +81,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
 
     	this.state = STATE.START;
 
-    	this.mdekCaller = MdekCaller.getInstance();
+    	this.mdekClientCaller = MdekClientCaller.getInstance();
     	
         userManager = (UserManager) getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
         if (null == userManager) {
@@ -317,7 +316,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     private List<String> getUnconnectedPlugIdList(javax.portlet.RenderRequest request) throws PortletException {
     	List<String> plugIdList = new ArrayList<String>();
     
-    	for (String plugId : this.mdekCaller.getRegisteredIPlugs()) {
+    	for (String plugId : this.mdekClientCaller.getRegisteredIPlugs()) {
     		if (!hasCatalogAdmin(request, plugId)) {
             	log.debug("Catalog '"+plugId+"' does not have a catAdmin.");
     			plugIdList.add(plugId);
@@ -334,7 +333,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     	Session s = HibernateUtil.currentSession();
     	s.beginTransaction();
 
-    	for (String plugId : this.mdekCaller.getRegisteredIPlugs()) {
+    	for (String plugId : this.mdekClientCaller.getRegisteredIPlugs()) {
         	List<UserData> userDataList = (List<UserData>) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).list();
         	if (userDataList != null && userDataList.size() != 0) {
         		HashMap<String, String> catalogData = new HashMap<String, String>();
