@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
@@ -15,7 +14,7 @@ import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekKeysSecurity;
 import de.ingrid.mdek.MdekUtils.IdcEntityVersion;
 import de.ingrid.mdek.beans.CatalogBean;
-import de.ingrid.mdek.caller.IMdekCaller;
+import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerObject;
@@ -48,7 +47,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 		// 3.3. send the mails
 		// 4. update the expiry state of all objects in the db
 
-		IMdekCaller caller = connectionFacade.getMdekCaller();
+		IMdekClientCaller caller = connectionFacade.getMdekClientCaller();
 		List<String> iplugList = caller.getRegisteredIPlugs();
 		log.debug("Number of iplugs found: "+iplugList.size());
 		for (String plugId : iplugList) {

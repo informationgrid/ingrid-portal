@@ -1,7 +1,6 @@
 package de.ingrid.mdek.handler;
 
 import java.io.File;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -11,19 +10,21 @@ import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
+import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.caller.MdekCaller;
 import de.ingrid.mdek.caller.MdekCallerAddress;
 import de.ingrid.mdek.caller.MdekCallerCatalog;
 import de.ingrid.mdek.caller.MdekCallerObject;
 import de.ingrid.mdek.caller.MdekCallerQuery;
 import de.ingrid.mdek.caller.MdekCallerSecurity;
+import de.ingrid.mdek.caller.MdekClientCaller;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 
 public class ConnectionFacadeImpl implements ConnectionFacade {
 
 	private final static Logger log = Logger.getLogger(ConnectionFacadeImpl.class);
 
-	private IMdekCaller mdekCaller;
+	private IMdekClientCaller mdekClientCaller;
 	private IMdekCallerObject mdekCallerObject;
 	private IMdekCallerAddress mdekCallerAddress;
 	private IMdekCallerQuery mdekCallerQuery;
@@ -33,18 +34,18 @@ public class ConnectionFacadeImpl implements ConnectionFacade {
 	public ConnectionFacadeImpl(File communicationProperties) {
 		if (communicationProperties == null || !(communicationProperties instanceof File)) {
 			throw new IllegalStateException(
-					"Please specify the location of the communication.properties file via the Property 'mdekCaller.properties' in /src/resources/mdek.properties");
+					"Please specify the location of the communication.properties file via the Property 'mdekClientCaller.properties' in /src/resources/mdek.properties");
 		}
 		log.debug("Initializing MdekCaller...");
-		MdekCaller.initialize(communicationProperties);
+		MdekClientCaller.initialize(communicationProperties);
 		log.debug("MdekCaller initialized.");
-		mdekCaller = MdekCaller.getInstance();
+		mdekClientCaller = MdekClientCaller.getInstance();
 
-		MdekCallerObject.initialize(mdekCaller);
-		MdekCallerAddress.initialize(mdekCaller);
-		MdekCallerQuery.initialize(mdekCaller);
-		MdekCallerCatalog.initialize(mdekCaller);
-		MdekCallerSecurity.initialize(mdekCaller);
+		MdekCallerObject.initialize(mdekClientCaller);
+		MdekCallerAddress.initialize(mdekClientCaller);
+		MdekCallerQuery.initialize(mdekClientCaller);
+		MdekCallerCatalog.initialize(mdekClientCaller);
+		MdekCallerSecurity.initialize(mdekClientCaller);
 		
 		mdekCallerObject = MdekCallerObject.getInstance();
 		mdekCallerAddress = MdekCallerAddress.getInstance();
@@ -58,13 +59,13 @@ public class ConnectionFacadeImpl implements ConnectionFacade {
 		log.debug("Shutting down MdekCaller...");
 		MdekCaller.shutdown();
 		log.debug("MdekCaller shut down.");
-		mdekCaller = null;
+		mdekClientCaller = null;
 	}
 
 
 	public String getCurrentPlugId() {
 /*
-		List<String> iPlugs = mdekCaller.getRegisteredIPlugs();
+		List<String> iPlugs = mdekClientCaller.getRegisteredIPlugs();
 		if (iPlugs.size() > 0) {
 			return iPlugs.get(0);
 		} else {
@@ -74,8 +75,8 @@ public class ConnectionFacadeImpl implements ConnectionFacade {
 		return MdekSecurityUtils.getCurrentPortalUserData().getPlugId();
 	}
 
-	public IMdekCaller getMdekCaller() {
-		return mdekCaller;
+	public IMdekClientCaller getMdekClientCaller() {
+		return mdekClientCaller;
 	}
 
 	public IMdekCallerObject getMdekCallerObject() {

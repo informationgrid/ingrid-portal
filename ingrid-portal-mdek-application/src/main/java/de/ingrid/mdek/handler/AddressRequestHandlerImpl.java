@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekError;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekError.MdekErrorType;
@@ -20,9 +19,9 @@ import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressSearchResultBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
-import de.ingrid.mdek.caller.IMdekCaller;
+import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
-import de.ingrid.mdek.caller.IMdekCallerAbstract.FetchQuantity;
+import de.ingrid.mdek.caller.IMdekCaller.FetchQuantity;
 import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekAddressUtils;
@@ -39,7 +38,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 	private ConnectionFacade connectionFacade;
 
 	// Initialized by spring through the init method
-	private IMdekCaller mdekCaller;
+	private IMdekClientCaller mdekClientCaller;
 	private IMdekCallerAddress mdekCallerAddress;
 
 	// Number of object references that are initially loaded from the backend
@@ -47,7 +46,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 
 
 	public void init() {
-		mdekCaller = connectionFacade.getMdekCaller();
+		mdekClientCaller = connectionFacade.getMdekClientCaller();
 		mdekCallerAddress = connectionFacade.getMdekCallerAddress();
 	}
 
@@ -59,10 +58,10 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 
 	public boolean canCutAddress(String uuid) {
 		IngridDocument response = mdekCallerAddress.checkAddressSubTree(connectionFacade.getCurrentPlugId(), uuid, HTTPSessionHelper.getCurrentSessionId());
-		if (mdekCaller.getResultFromResponse(response) == null) {
+		if (mdekClientCaller.getResultFromResponse(response) == null) {
 			MdekErrorUtils.handleError(response);
 		} else {
-			IngridDocument result = mdekCaller.getResultFromResponse(response);
+			IngridDocument result = mdekClientCaller.getResultFromResponse(response);
 			boolean hasWorkingCopy = result.getBoolean(MdekKeys.RESULTINFO_HAS_WORKING_COPY);
 			if (hasWorkingCopy) {
 				// Throw an error. An address that is about to be moved must not have working copies as children

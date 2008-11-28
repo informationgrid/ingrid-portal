@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.VersionInformation;
-import de.ingrid.mdek.caller.IMdekCaller;
+import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
@@ -19,24 +19,24 @@ public class GeneralRequestHandlerImpl implements GeneralRequestHandler {
 	private ConnectionFacade connectionFacade;
 
 	// Initialized by spring through the init method
-	private IMdekCaller mdekCaller;
+	private IMdekClientCaller mdekClientCaller;
 
 	public void init() {
-		mdekCaller = connectionFacade.getMdekCaller();
+		mdekClientCaller = connectionFacade.getMdekClientCaller();
 	}
 	
 	public List<VersionInformation> getVersion() {
-		IngridDocument response = mdekCaller.getVersion(connectionFacade.getCurrentPlugId());
+		IngridDocument response = mdekClientCaller.getVersion(connectionFacade.getCurrentPlugId());
 		return MdekUtils.extractVersionInformationFromResponse(response);
 	}
 	
 	public JobInfoBean getRunningJobInfo() {
-		IngridDocument response = mdekCaller.getRunningJobInfo(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekClientCaller.getRunningJobInfo(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
 		return MdekUtils.extractJobInfoFromResponse(response);
 	}
 
 	public JobInfoBean cancelRunningJob() {
-		IngridDocument response = mdekCaller.cancelRunningJob(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekClientCaller.cancelRunningJob(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
 		return MdekUtils.extractJobInfoFromResponse(response);	
 	}
 

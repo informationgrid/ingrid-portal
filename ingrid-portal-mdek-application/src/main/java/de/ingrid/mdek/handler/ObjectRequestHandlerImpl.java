@@ -19,9 +19,9 @@ import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
-import de.ingrid.mdek.caller.IMdekCaller;
 import de.ingrid.mdek.caller.IMdekCallerObject;
-import de.ingrid.mdek.caller.IMdekCallerAbstract.FetchQuantity;
+import de.ingrid.mdek.caller.IMdekClientCaller;
+import de.ingrid.mdek.caller.IMdekCaller.FetchQuantity;
 import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekEmailUtils;
@@ -39,11 +39,11 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 
 
 	// Initialized by spring through the init method
-	private IMdekCaller mdekCaller;
+	private IMdekClientCaller mdekClientCaller;
 	private IMdekCallerObject mdekCallerObject;
 
 	public void init() {
-		mdekCaller = connectionFacade.getMdekCaller();
+		mdekClientCaller = connectionFacade.getMdekClientCaller();
 		mdekCallerObject = connectionFacade.getMdekCallerObject();
 	}
 
@@ -69,10 +69,10 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 
 	public boolean canCutObject(String uuid) {
 		IngridDocument response = mdekCallerObject.checkObjectSubTree(connectionFacade.getCurrentPlugId(), uuid, HTTPSessionHelper.getCurrentSessionId());
-		if (mdekCaller.getResultFromResponse(response) == null) {
+		if (mdekClientCaller.getResultFromResponse(response) == null) {
 			MdekErrorUtils.handleError(response);
 		} else {
-			IngridDocument result = mdekCaller.getResultFromResponse(response);
+			IngridDocument result = mdekClientCaller.getResultFromResponse(response);
 			boolean hasWorkingCopy = result.getBoolean(MdekKeys.RESULTINFO_HAS_WORKING_COPY);
 			if (hasWorkingCopy) {
 				// Throw an error. A node that is about to be moved must not have working copies as children
@@ -128,7 +128,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 
 	public void moveObjectSubTree(String fromUuid, String oldParentUuid, String newParentUuid, boolean forcePublicationCondition) {
 		IngridDocument response = mdekCallerObject.moveObject(connectionFacade.getCurrentPlugId(), fromUuid, newParentUuid, forcePublicationCondition, HTTPSessionHelper.getCurrentSessionId());
-		if (mdekCaller.getResultFromResponse(response) == null) {
+		if (mdekClientCaller.getResultFromResponse(response) == null) {
 			MdekErrorUtils.handleError(response);
 
 		} else {

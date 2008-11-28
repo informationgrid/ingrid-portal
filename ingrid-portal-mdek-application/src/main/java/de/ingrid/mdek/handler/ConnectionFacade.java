@@ -1,14 +1,14 @@
 package de.ingrid.mdek.handler;
 
-import de.ingrid.mdek.caller.IMdekCaller;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
+import de.ingrid.mdek.caller.IMdekClientCaller;
 
 public interface ConnectionFacade {
-	public IMdekCaller getMdekCaller();
+	public IMdekClientCaller getMdekClientCaller();
 	public IMdekCallerObject getMdekCallerObject();
 	public IMdekCallerAddress getMdekCallerAddress();
 	public IMdekCallerQuery getMdekCallerQuery();
