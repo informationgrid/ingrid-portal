@@ -194,7 +194,7 @@ public class MdekMapper implements DataMapperInterface {
 		// Inspire field
 		mdekObj.setExtraInfoConformityTable((ArrayList<ConformityBean>) mapToExtraInfoConformityTable((List<HashMap<String, Object>>) obj.get(MdekKeys.CONFORMITY_LIST)));
 
-		mdekObj.setExtraInfoPurpose((String) obj.get(MdekKeys.DATASET_INTENSIONS));
+		mdekObj.setExtraInfoPurpose((String) obj.get(MdekKeys.DATASET_INTENTIONS));
 		mdekObj.setExtraInfoUse((String) obj.get(MdekKeys.DATASET_USAGE));
 		mdekObj.setExtraInfoXMLExportTable(mapToExtraInfoXMLExportTable((List<HashMap<String, Object>>) obj.get(MdekKeys.EXPORTS)));
 		mdekObj.setExtraInfoLegalBasicsTable(mapToExtraInfoLegalBasicsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LEGISLATIONS)));
@@ -732,7 +732,7 @@ public class MdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.DATA_LANGUAGE, convertLanguageIdentifierToCode(data.getExtraInfoLangData()));
 		udkObj.put(MdekKeys.PUBLICATION_CONDITION, data.getExtraInfoPublishArea());
 		udkObj.put(MdekKeys.CONFORMITY_LIST, mapFromExtraInfoConformityTable(data.getExtraInfoConformityTable()));
-		udkObj.put(MdekKeys.DATASET_INTENSIONS, data.getExtraInfoPurpose());
+		udkObj.put(MdekKeys.DATASET_INTENTIONS, data.getExtraInfoPurpose());
 		udkObj.put(MdekKeys.DATASET_USAGE, data.getExtraInfoUse());
 		udkObj.put(MdekKeys.EXPORTS, mapFromExtraInfoXMLExportTable(data.getExtraInfoXMLExportTable()));
 		udkObj.put(MdekKeys.LEGISLATIONS, mapFromExtraInfoLegalBasicsTable(data.getExtraInfoLegalBasicsTable()));
