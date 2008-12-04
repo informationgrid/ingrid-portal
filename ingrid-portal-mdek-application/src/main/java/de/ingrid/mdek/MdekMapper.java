@@ -196,7 +196,7 @@ public class MdekMapper implements DataMapperInterface {
 
 		mdekObj.setExtraInfoPurpose((String) obj.get(MdekKeys.DATASET_INTENTIONS));
 		mdekObj.setExtraInfoUse((String) obj.get(MdekKeys.DATASET_USAGE));
-		mdekObj.setExtraInfoXMLExportTable(mapToExtraInfoXMLExportTable((List<HashMap<String, Object>>) obj.get(MdekKeys.EXPORTS)));
+		mdekObj.setExtraInfoXMLExportTable(mapToExtraInfoXMLExportTable((List<HashMap<String, Object>>) obj.get(MdekKeys.EXPORT_CRITERIA)));
 		mdekObj.setExtraInfoLegalBasicsTable(mapToExtraInfoLegalBasicsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LEGISLATIONS)));
 
 		// Availability
@@ -734,7 +734,7 @@ public class MdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.CONFORMITY_LIST, mapFromExtraInfoConformityTable(data.getExtraInfoConformityTable()));
 		udkObj.put(MdekKeys.DATASET_INTENTIONS, data.getExtraInfoPurpose());
 		udkObj.put(MdekKeys.DATASET_USAGE, data.getExtraInfoUse());
-		udkObj.put(MdekKeys.EXPORTS, mapFromExtraInfoXMLExportTable(data.getExtraInfoXMLExportTable()));
+		udkObj.put(MdekKeys.EXPORT_CRITERIA, mapFromExtraInfoXMLExportTable(data.getExtraInfoXMLExportTable()));
 		udkObj.put(MdekKeys.LEGISLATIONS, mapFromExtraInfoLegalBasicsTable(data.getExtraInfoLegalBasicsTable()));
 
 
@@ -1086,9 +1086,9 @@ public class MdekMapper implements DataMapperInterface {
 
 		for (String ref : refList) {
 			IngridDocument result = new IngridDocument();
-			KeyValuePair kvp = mapFromKeyValue(MdekKeys.EXPORT_KEY, ref);
-			result.put(MdekKeys.EXPORT_KEY, kvp.getKey());
-			result.put(MdekKeys.EXPORT_VALUE, kvp.getValue());
+			KeyValuePair kvp = mapFromKeyValue(MdekKeys.EXPORT_CRITERION_KEY, ref);
+			result.put(MdekKeys.EXPORT_CRITERION_KEY, kvp.getKey());
+			result.put(MdekKeys.EXPORT_CRITERION_VALUE, kvp.getValue());
 			resultList.add(result);
 		}
 		return resultList;
@@ -1523,7 +1523,7 @@ public class MdekMapper implements DataMapperInterface {
 			return resultList;
 		
 		for (HashMap<String, Object> ref : refList) {
-			KeyValuePair kvp = mapToKeyValuePair(ref, MdekKeys.EXPORT_KEY, MdekKeys.EXPORT_VALUE);
+			KeyValuePair kvp = mapToKeyValuePair(ref, MdekKeys.EXPORT_CRITERION_KEY, MdekKeys.EXPORT_CRITERION_VALUE);
 			resultList.add(kvp.getValue());
 		}
 		return resultList;
