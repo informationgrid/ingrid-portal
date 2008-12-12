@@ -209,6 +209,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 				ArrayList head = new ArrayList();
 				head.add(messages.getString("object_conformity.specification"));
 				head.add(messages.getString("object_conformity.degree_value"));
+				head.add(messages.getString("object_conformity.publication_date"));
 				element.put("head", head);
 				ArrayList body = new ArrayList();
 				element.put("body", body);
@@ -217,6 +218,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 		    		ArrayList row = new ArrayList();
 		    		row.add(notNull(tableRecord.getString("object_conformity.specification")));
 		    		row.add(notNull(tableRecord.getString("object_conformity.degree_value")));
+		    		row.add(UtilsDate.convertDateString(tableRecord.getString("object_conformity.publication_date").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
 		    		if (!isEmptyRow(row)) {
 		    			body.add(row);
 		    		}
