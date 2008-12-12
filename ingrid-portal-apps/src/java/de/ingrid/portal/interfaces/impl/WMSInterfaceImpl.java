@@ -251,9 +251,10 @@ public class WMSInterfaceImpl implements WMSInterface {
      */
     public String getWMSViewerURL(String sessionId, boolean jsEnabled, Locale language) {
         String viewerURL = "";
-        if (jsEnabled) {
+        if (jsEnabled || !mapBenderVersion.equals(MAPBENDER_VERSION_2_1)) {
             viewerURL = config.getString("display_viewer_url", "http://localhost/mapbender/frames/WMS_Viewer.php");
         } else {
+            // this URL only exists for MapBender 2.1 based Map Viewer
             viewerURL = config.getString("nojs_display_viewer_url",
                     "http://localhost/mapbender/frames/wms_viewer_nojs.php");
         }
