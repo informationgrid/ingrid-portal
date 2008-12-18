@@ -60,14 +60,26 @@ scriptScope.resetImport = function() {
 scriptScope.selectParentDatasetForTreeImport = function() {
 	var selectedNode = dojo.widget.byId("treeImportTree").selectedNode;
 
-	// All nodes allowed except addresses of class 2 & 3 (persons and free addresses))
-	if (selectedNode && !(selectedNode.nodeAppType == "A" && selectedNode.objectClass >= 2)) {
+	if (isValidImportRootNode(selectedNode)) {
 		dojo.widget.byId("importTreeParentDataset").setValue(selectedNode.title);
 		importTreeSelectedParentDataset = selectedNode;
 
 	} else {
 		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie einen g&uuml;ltigen Datensatz aus.", dialog.WARNING);
 	}
+}
+
+function isValidImportRootNode(node) {
+	if (node) {
+		if (node.nodeAppType == "A") {
+			return node.objectClass == 0;
+
+		} else if (node.nodeAppType == "O") {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 scriptScope.selectInfoAddressForTreeImport = function() {
