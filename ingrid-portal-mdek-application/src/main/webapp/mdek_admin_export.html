@@ -11,10 +11,6 @@ _container_.addOnLoad(function() {
 	refreshProcessInfo();
 });
 
-function startExportCatalog() {
-	dojo.debug("Catalog Export not implemented yet.");
-}
-
 function startExportCriteria() {
 	dojo.debug("Criteria Export not implemented yet.");
 }
@@ -26,10 +22,7 @@ function startExportPartial() {
 
 // Button function for 'start export'. Send a request to the backend to start a new export job
 scriptScope.startExport = function() {
-	if (dojo.byId("exportType0").checked) {
-		startExportCatalog();
-
-	} else if (dojo.byId("exportType1").checked) {
+	if (dojo.byId("exportType1").checked) {
 		startExportCriteria();
 
 	} else if (dojo.byId("exportType2").checked) {
@@ -113,10 +106,6 @@ function initSysLists() {
 				<div class="spacer"></div>
 				<div class="inputContainer field grey noSpaceBelow">
 					<div class="checkboxContainer">
-						<span class="input"><input type="radio" name="exportType" id="exportType0" class="radio" /><label class="noRightMargin" for="exportType0" onclick="javascript:dialog.showContextHelp(arguments[0], 'Katalogexport')">Katalogexport</label></span>
-						<div class="fill"></div>
-					</div>
-					<div class="checkboxContainer">
 						<span class="entry first"><input type="radio" name="exportType" id="exportType1" class="radio" /><label class="noRightMargin" for="exportType1" onclick="javascript:dialog.showContextHelp(arguments[0], 'Teilexport')">Teilexport</label></span>
 						<span class="rightAlign marginRight"><div dojoType="ingrid:Combobox" toggle="plain" listId="1370" style="width:485px;" widgetId="exportXMLCriteria"></div></span>
 						<div class="fill"></div>
@@ -128,25 +117,8 @@ function initSysLists() {
 						<span class="rightAlign marginRight"><span class="input w513 leftAlign"><input type="checkbox" name="exportTreeSelectionOnly" id="exportTreeSelectionOnly" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Nur der ausgew&auml;hlte Datensatz')">Nur der ausgew&auml;hlte Datensatz</label></span></span>
 						<div class="fill"></div>
 					</div>
-	
-<!-- 
-          <div class="checkboxContainer">
-            <span class="input"><input type="radio" name="exportType" id="exportType3" class="radio" /><label class="noRightMargin" for="exportType3" onclick="javascript:dialog.showContextHelp(arguments[0], 'Inkrementeller Export')">Inkrementeller Export</label></span>
-            <div class="fill"></div>
-          </div>
-          <span class="checkboxContainer noSpaceBelow insetCheckbox"><label>Es werden alle Objekte/Adressen exportiert, die nach dem tt.mm.jjjj geändert wurden.</label><br />
-            <label>Bereits exportierte Objekte: </label><br />
-            <label>Bereits exportierte Adressen: </label></span>
-          <div class="spacerField"></div>
-    	  </div>
- -->
-	 
+
 				</div> <!-- inputContainer end -->
-<!-- 	
-				<div class="inputContainer">
-					<span class="button w644"><a href="#" class="buttonBlue" title="Export starten">Export starten</a></span>
-				</div>
--->
 				<div class="inputContainer">
 					<span class="button w644" style="height:20px !important;">
 						<span style="float:right;">
