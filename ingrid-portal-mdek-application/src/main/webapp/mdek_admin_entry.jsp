@@ -9,6 +9,7 @@
 <script src='/ingrid-portal-mdek-application/dwr/interface/AddressService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/BackendService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/CatalogService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/ExportService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/HelpService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/ImportService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/QueryService.js'></script>
@@ -344,7 +345,7 @@ function hideSplash(){
   	      <li><a id="page1Menu" onClick="clickMenu('page1')" href="javascript:void(0);" class="current" title="Katalogverwaltung">Katalogverwaltung</a></li>
   	      <li><a id="page2Menu" onClick="clickMenu('page2')" href="javascript:void(0);" title="Nutzerverwaltung">Nutzerverwaltung</a></li>
   	      <li><a id="page3Menu" style="display:none;" onClick="clickMenu('page3')" href="javascript:void(0);" title="Gesamtkatalogmanagement">Gesamtkatalogmanagement</a></li>
-  	      <li><a id="page4Menu" style="display:none;" onClick="clickMenu('page4')" href="javascript:void(0);" title="Import/Export">Import/Export</a></li>
+  	      <li><a id="page4Menu" onClick="clickMenu('page4')" href="javascript:void(0);" title="Import/Export">Import/Export</a></li>
   	    </ul>
   	  </div>
   	  

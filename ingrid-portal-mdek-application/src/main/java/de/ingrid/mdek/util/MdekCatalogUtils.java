@@ -9,6 +9,7 @@ import java.util.Set;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.ExportInfoBean;
 import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.utils.IngridDocument;
 
@@ -100,6 +101,32 @@ public class MdekCatalogUtils {
 				resultCat.setModUuid((String) modUserDoc.get(MdekKeys.UUID));
 
 			return resultCat;
+		} else {
+			MdekErrorUtils.handleError(response);
+			return null;
+		}
+	}
+
+	public static ExportInfoBean extractExportInfoFromResponse(IngridDocument response) {
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		
+		if (result != null) {
+			ExportInfoBean exportInfo = new ExportInfoBean();
+			exportInfo.setDescription(result.getString(MdekKeys.JOBINFO_MESSAGES));
+			exportInfo.setStartTime(MdekUtils.convertTimestampToDate(result.getString(MdekKeys.JOBINFO_START_TIME)));
+			exportInfo.setEndTime(MdekUtils.convertTimestampToDate(result.getString(MdekKeys.JOBINFO_END_TIME)));
+			if (result.get(MdekKeys.JOBINFO_NUM_OBJECTS) != null) {
+				exportInfo.setNumProcessed(result.getInt(MdekKeys.JOBINFO_NUM_OBJECTS));
+				exportInfo.setNumTotal(result.getInt(MdekKeys.JOBINFO_TOTAL_NUM_OBJECTS));
+
+			} else if (result.get(MdekKeys.JOBINFO_NUM_ADDRESSES) != null) {
+				exportInfo.setNumProcessed(result.getInt(MdekKeys.JOBINFO_NUM_ADDRESSES));
+				exportInfo.setNumTotal(result.getInt(MdekKeys.JOBINFO_TOTAL_NUM_ADDRESSES));
+			}
+//			exportInfo.setResult(new byte[0]);
+
+			return exportInfo;
+
 		} else {
 			MdekErrorUtils.handleError(response);
 			return null;

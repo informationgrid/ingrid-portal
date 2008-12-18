@@ -15,9 +15,15 @@ import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
 import org.directwebremoting.io.OutputStreamLoader;
 
+import de.ingrid.mdek.handler.CatalogRequestHandler;
+
 public class ImportServiceImpl {
 
 	private final static Logger log = Logger.getLogger(ImportServiceImpl.class);	
+
+	// Injected by Spring
+	private CatalogRequestHandler catalogRequestHandler;
+
 
 	// Echoes the uploaded file back to the client
 	public FileTransfer uploadFile(FileTransfer fileTransfer) throws IOException {
@@ -106,5 +112,9 @@ public class ImportServiceImpl {
 		while (buffer.hasRemaining()) {
 			dst.write(buffer);
 		}
+	}
+
+	public void setCatalogRequestHandler(CatalogRequestHandler catalogRequestHandler) {
+		this.catalogRequestHandler = catalogRequestHandler;
 	}
 }

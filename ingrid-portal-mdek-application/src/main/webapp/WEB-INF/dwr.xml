@@ -21,6 +21,9 @@
 		<create creator="spring" javascript="HttpService">
 			<param name="beanName" value="httpService" />
 		</create>
+		<create creator="spring" javascript="ExportService">
+			<param name="beanName" value="exportService" />
+		</create>
 		<create creator="spring" javascript="ImportService">
 			<param name="beanName" value="importService" />
 		</create>
@@ -52,6 +55,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.CapabilitiesBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CatalogBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CommentBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.ExportInfoBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.JobInfoBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.KeyValuePair"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.VersionInformation"/>

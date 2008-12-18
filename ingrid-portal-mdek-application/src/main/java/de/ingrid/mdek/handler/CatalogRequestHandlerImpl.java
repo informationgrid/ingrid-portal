@@ -6,7 +6,9 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.ExportInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
+import de.ingrid.mdek.caller.IMdekCaller.AddressArea;
 import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.utils.IngridDocument;
@@ -58,7 +60,37 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		return MdekCatalogUtils.extractCatalogFromResponse(response);
 	}
 
-	
+	public void exportFreeAddresses() {
+		exportAddressBranch(null, false, AddressArea.ALL_FREE_ADDRESSES);
+	}
+
+	public void exportTopAddresses(boolean exportChildren) {
+		exportAddressBranch(null, exportChildren, AddressArea.ALL_ADDRESSES);
+	}
+
+	public void exportAddressBranch(String rootUuid, boolean exportChildren) {
+		exportAddressBranch(rootUuid, exportChildren, null);
+	}
+
+	private void exportAddressBranch(String rootUuid, boolean exportChildren, AddressArea addressArea) {
+		mdekCallerCatalog.exportAddressBranch(
+				connectionFacade.getCurrentPlugId(),
+				rootUuid, !exportChildren,
+				addressArea, HTTPSessionHelper.getCurrentSessionId());
+	}
+
+	public void exportObjectBranch(String rootUuid, boolean exportChildren) {
+		mdekCallerCatalog.exportObjectBranch(
+				connectionFacade.getCurrentPlugId(),
+				rootUuid,
+				!exportChildren, HTTPSessionHelper.getCurrentSessionId());
+	}
+
+	public ExportInfoBean getExportInfo() {
+		IngridDocument response = mdekCallerCatalog.getExportInfo(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
+		return MdekCatalogUtils.extractExportInfoFromResponse(response);
+	}
+
 	public ConnectionFacade getConnectionFacade() {
 		return connectionFacade;
 	}

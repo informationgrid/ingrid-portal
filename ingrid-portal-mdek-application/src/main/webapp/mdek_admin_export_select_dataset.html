@@ -79,6 +79,7 @@ scriptScope.selectDataset = function() {
 		var retVal = {};
 		retVal.uuid = node.uuid;
 		retVal.title = node.title;
+		retVal.nodeAppType = node.nodeAppType;
 
 		_container_.customParams.resultHandler.callback(retVal);
 	}
