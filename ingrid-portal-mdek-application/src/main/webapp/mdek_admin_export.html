@@ -164,11 +164,11 @@ function updateExportInfo(exportInfo) {
 	if (jobFinished(exportInfo)) {
 		dojo.byId("exportInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
 		dojo.html.show(dojo.byId("exportInfoDownload"));
-		dojo.html.show(dojo.byId("exportInfoEndDate"));
+		dojo.html.show(dojo.byId("exportInfoEndDateContainer"));
 	} else {
 		dojo.byId("exportInfoTitle").innerHTML = "Informationen zum laufenden Prozess:";
 		dojo.html.hide(dojo.byId("exportInfoDownload"));
-		dojo.html.hide(dojo.byId("exportInfoEndDate"));
+		dojo.html.hide(dojo.byId("exportInfoEndDateContainer"));
 	}
 
 	dojo.byId("exportInfoNumExportedEntities").innerHTML = exportInfo.numProcessed;
@@ -286,7 +286,7 @@ function initSysLists() {
 								<tr>
 									<td>Gestartet am:</td>
 									<td id="exportInfoBeginDate"></td></tr>
-									<td>Beendet am:</td>
+									<td id="exportInfoEndDateContainer">Beendet am:</td>
 									<td id="exportInfoEndDate"></td></tr>
 									<td>Anzahl Datens&auml;tze:</td>
 									<td id="exportInfoNumExportedEntities"></td></tr>
