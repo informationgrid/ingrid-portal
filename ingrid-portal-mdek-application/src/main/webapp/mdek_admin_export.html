@@ -28,7 +28,7 @@ function startExportPartial() {
 	} else {
 		// TODO add error message
 	}
-	refreshProcessInfo();
+	setTimeout("refreshProcessInfo()", 2000);
 }
 
 function startObjectExport(uuid, exportChildren) {
@@ -165,13 +165,14 @@ function updateExportInfo(exportInfo) {
 		dojo.byId("exportInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
 		dojo.html.show(dojo.byId("exportInfoDownload"));
 		dojo.html.show(dojo.byId("exportInfoEndDateContainer"));
+		dojo.byId("exportInfoNumExportedEntities").innerHTML = exportInfo.numProcessed;
 	} else {
 		dojo.byId("exportInfoTitle").innerHTML = "Informationen zum laufenden Prozess:";
 		dojo.html.hide(dojo.byId("exportInfoDownload"));
 		dojo.html.hide(dojo.byId("exportInfoEndDateContainer"));
+		dojo.byId("exportInfoNumExportedEntities").innerHTML = exportInfo.numProcessed + " / " + exportInfo.numTotal;
 	}
 
-	dojo.byId("exportInfoNumExportedEntities").innerHTML = exportInfo.numProcessed;
 	if (exportInfo.startTime) {
 		dojo.byId("exportInfoBeginDate").innerHTML = exportInfo.startTime.toLocaleString();
 	} else {
