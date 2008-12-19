@@ -4,6 +4,8 @@
 package de.ingrid.portal.scheduler.jobs;
 
 import java.net.URL;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +23,7 @@ import org.quartz.StatefulJob;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.Timer;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -45,8 +48,12 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 
 	public static final String STATUS_CODE_ERROR_TIMEOUT = "component.monitor.general.error.timout";
 
+	public static final String STATUS_CODE_ERROR_NO_IPLUGS = "component.monitor.general.error.no.iplugs";
+	
+	public static final String STATUS_CODE_ERROR_XML_PARSE = "component.monitor.general.error.xml.parse";
+	
 	public static final String STATUS_CODE_NO_ERROR = "component.monitor.general.error.none";
-
+	
 	public static final String PARAM_STATUS = "component.monitor.general.status";
 
 	public static final String PARAM_STATUS_CODE = "component.monitor.general.status.code";
@@ -56,6 +63,8 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 	public static final String PARAM_TIMEOUT = "component.monitor.general.timeout";
 
 	public static final String PARAM_LAST_CHECK = "component.monitor.general.last.check";
+	
+	public static final String PARAM_NEXT_CHECK = "component.monitor.general.next.check";
 
 	public static final String PARAM_CHECK_INTERVAL = "component.monitor.general.check.interval";
 
@@ -76,6 +85,35 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 	public static final String PARAM_COMPONENT_TYPE = "component.monitor.general.type";
 
 	public static final String PARAM_SERVICE_URL = "component.monitor.general.service.url";
+	
+	public static final String PARAM_TIMER_AVERAGE = "component.monitor.general.timer.average";
+
+	public static final String PARAM_TIMER_NUM = "component.monitor.general.timer.num";
+	
+	Timer timer = new Timer();
+	
+	/**
+	 * 
+	 * @param dataMap
+	 * @param newTime
+	 */
+	public static void computeTime(JobDataMap dataMap, long newTime) {
+		long average = 0;
+		int  num 	 = 0;
+		
+		if (dataMap.containsKey(PARAM_TIMER_AVERAGE)) {
+			average = dataMap.getLong(PARAM_TIMER_AVERAGE);
+		}
+		
+		if (dataMap.containsKey(PARAM_TIMER_NUM)) {
+			num = dataMap.getInt(PARAM_TIMER_NUM);
+		}
+		
+		long newAverage = (num*average + newTime) / (num+1);
+		
+		dataMap.put(PARAM_TIMER_AVERAGE, newAverage);
+		dataMap.put(PARAM_TIMER_NUM, num+1);
+	}
 
 	protected void updateJobData(JobExecutionContext context, int status, String statusCode) {
 		JobDataMap dataMap = context.getJobDetail().getJobDataMap();
@@ -125,9 +163,8 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 					int contactEventOccurencesBeforeAlert = ((Integer) contact
 							.get(PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT)).intValue();
 					String contactEmails = (String) contact.get(PARAM_CONTACT_EMAIL);
-					// if the previous number of occurences for this status hits
-					// the
-					// threshhold for the alert
+					// if the previous number of occurrences for this status hits
+					// the threshold for the alert
 					if (log.isDebugEnabled()) {
 						log.debug("Check sending alert email to " + contactEmails + ". (Event " + currentStatusCode + " occured "
 								+ eventOccurences + " times, contact threshold is " + contactEventOccurencesBeforeAlert
@@ -146,6 +183,8 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 				}
 			}
 		}
+		
+		// always send to a default email address
 		if (eventOccurences == 1) {
 			String email = PortalConfig.getInstance().getString(PortalConfig.COMPONENT_MONITOR_DEFAULT_EMAIL, "");
 			if (email.length() > 0) {
@@ -193,7 +232,16 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 		} catch (SchedulerException e) {
 			log.error("Error updating job " + context.getJobDetail().getName());
 		}
-
+	}
+	
+	protected void updateDate( JobDataMap dataMap ) {
+		//Date date = new Date();
+		Calendar cal = Calendar.getInstance();
+		dataMap.put(PARAM_LAST_CHECK, cal.getTime());
+		
+				
+		cal.add(Calendar.SECOND, dataMap.getInt(PARAM_CHECK_INTERVAL));
+		dataMap.put(PARAM_NEXT_CHECK, cal.getTime());
 	}
 
 }

@@ -3,7 +3,6 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
-import java.io.IOException;
 import java.util.Date;
 
 import org.apache.commons.logging.Log;
@@ -13,23 +12,23 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
-import de.ingrid.utils.IngridHits;
-import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.ParseException;
-import de.ingrid.utils.queryparser.QueryStringParser;
+import de.ingrid.utils.PlugDescription;
+
 
 /**
  * TODO Describe your created type (class, etc.) here.
  * 
  * @author joachim@wemove.com
  */
-public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
+public class IngridMonitorIBusJob extends IngridMonitorAbstractJob {
 
-	public static final String STATUS_CODE_ERROR_QUERY_PARSE_EXCEPTION = "component.monitor.iplug.error.query.parse.exception";
+	//public static final String STATUS_CODE_ERROR_QUERY_PARSE_EXCEPTION = "component.monitor.iplug.error.query.parse.exception";
 
-	public static final String COMPONENT_TYPE = "component.monitor.general.type.iplug";
+	public static final String COMPONENT_TYPE = "component.monitor.general.type.ibus";
+	
+	public static final String JOB_ID = "iBus";
 
-	private final static Log log = LogFactory.getLog(IngridMonitorIPlugJob.class);
+	private final static Log log = LogFactory.getLog(IngridMonitorIBusJob.class);
 
 	/**
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -52,7 +51,6 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 			}
 		}
 
-		String query = dataMap.getString(PARAM_QUERY);
 		int timeout;
 		try {
 			timeout = dataMap.getInt(PARAM_TIMEOUT);
@@ -63,37 +61,23 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 			timeout = 30000;
 			dataMap.put(PARAM_TIMEOUT, timeout);
 		}
-		
+
 		updateDate(dataMap);
 
 		int status = 0;
 		String statusCode = null;
 		try {
-			IngridQuery q = QueryStringParser.parse(query);
-			//long beginTime = System.currentTimeMillis();
-			
 			timer.start();
-			IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 0, timeout);
+			PlugDescription[] hits = IBUSInterfaceImpl.getInstance().getAllIPlugs();
 			computeTime(dataMap, timer.stop());
 			
-			//long duration = System.currentTimeMillis() - beginTime;
-			//log.info("Call took " + duration + "ms");
-			if (hits.length() == 0) {
+			if (hits.length == 0) {
 				status = STATUS_ERROR;
-				statusCode = STATUS_CODE_ERROR_NO_HITS;
+				statusCode = STATUS_CODE_ERROR_NO_IPLUGS;
 			} else {
 				status = STATUS_OK;
 				statusCode = STATUS_CODE_NO_ERROR;
 			}
-		} catch (ParseException e) {
-			status = STATUS_ERROR;
-			statusCode = STATUS_CODE_ERROR_QUERY_PARSE_EXCEPTION;
-		} catch (InterruptedException e) {
-			status = STATUS_ERROR;
-			statusCode = STATUS_CODE_ERROR_TIMEOUT;
-		} catch (IOException e) {
-			status = STATUS_ERROR;
-			statusCode = STATUS_CODE_ERROR_TIMEOUT;
 		} catch (Throwable e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;

@@ -104,10 +104,20 @@
     	<br/>
     	<br/>
     	<p>* Pflichtangaben.</p>
+		#if($actionForm.getInput("error_msg")!="component.monitor.general.error.none" && $actionForm.getInput("error_msg")!="")
+		<hr>
+		<p style="color:#ff0000;">
+			<label class="float_left col2left_incr">Fehlermeldung</label>
+			<span>#getFieldValue('error_msg')</span>
+		</p>
+		#end
 	</p>
 	<br/>
 	
 	</div>
+##<div class="float_left">
+##	<input class="btn" type="submit" name="doResetTime" value="Zeit zurücksetzen" />
+##</div>
 #renderDBEditFooter($mode)
 </form>
 <h1>Kurzhilfe</h1>
@@ -128,6 +138,10 @@
 	<td>Bitte nur ein Suchbegriff angeben. z.B. "Wasser"</td></tr>
 	<tr><td>SNS</td>
 	<td>Bitte nur ein Suchbegriff angeben. Es wird die Methode findTopics mit Einschränkung auf Descriptoren ausgeführt.</td></tr>
+	<tr><td>IBus</td>
+	<td>Die IBus-Komponente benötigt nur eine ID und einen Namen. Es wird versucht, die angeschlossenen iPlugs zu erkennen.</td></tr>
+	<tr><td>RSS</td>
+	<td>Bitte unter Service URL den zu überprüfenden RSS-Feed angeben.</td></tr>
 	</tbody></table>
 	
 	</p>

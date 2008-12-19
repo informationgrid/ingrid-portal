@@ -226,6 +226,7 @@ $action.setParameter("id", "$rowId")
 	#elseif ($mode == 'new')
 		#set ($butAction = 'doSave')
 	#end
+	<input class="btn float_left" type="submit" name="doResetTime" value="Zeit zurücksetzen" />
 	<input class="btn" type="submit" name="$butAction" value="Speichern" />
 	<input class="btn" type="submit" name="doCancel" value="Zurück zur Übersicht" />
 </div>

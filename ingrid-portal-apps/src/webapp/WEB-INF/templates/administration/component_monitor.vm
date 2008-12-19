@@ -19,6 +19,96 @@
 	#end
 </tr>
 #end
+
+#macro (createTable $active)
+    		<div class="formbody">
+    		<p>
+    		<table class="border fullwidth">
+	#if ($active == 1)
+		#set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status.code", "component.monitor.general.last.check", "component.monitor.general.next.check", "component.monitor.general.timer.average", "component.monitor.general.check.interval"]) ##, "component.monitor.general.active"])
+		#set ($colTitles = ["Name", "Typ", "Status", "letzte Überprüfung", "nächste Überprüfung", "Ø-Ausf.geschw.", "Prüfintervall [sec]"]) ##, "aktiv"])
+    #else
+		#set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status.code", "component.monitor.general.last.check", "component.monitor.general.timer.average", "component.monitor.general.check.interval"]) ##, "component.monitor.general.active"])
+		#set ($colTitles = ["Name", "Typ", "Status", "letzte Überprüfung", "Ø-Ausf.geschw.", "Prüfintervall [sec]"]) ##, "aktiv"])
+	#end
+	
+	#renderDBBrowserHeader($colNames $colTitles)
+    
+    #set ($action = $renderResponse.createActionURL())
+	#set ($count = 0)
+	
+    $action.setParameter('doEdit','Edit')
+    #foreach ($entry in $model)
+		
+   		#set ($jobId = $entry.name)
+		
+		## for non monitoring jobs
+		#if ($entry.getGroup() != "monitor")
+			#set ($jobStatus = 0)
+			#set ($activeState = 1)
+		#else
+           	#set ($jobData = $entry.getJobDataMap())
+           	#set ($jobStatus = $jobData.getInt("component.monitor.general.status"))
+    		#set ($activeState = $jobData.getInt("component.monitor.general.active"))
+		#end
+		
+		
+		#if($activeState==$active)		
+        	
+            #if ($count % 2 == 0)
+            	#if ($jobStatus == 0)
+        			#set ($rowstyle = "contentRowEven")
+        		#else
+        			#set ($rowstyle = "contentRowEvenError")
+        		#end
+            #else
+            	#if ($jobStatus == 0)
+        			#set ($rowstyle = "contentRowOdd")
+        		#else
+        			#set ($rowstyle = "contentRowOddError")
+        		#end
+			#end
+			#set ($count = $count + 1)
+			<tr class="$rowstyle">
+			## for non monitoring jobs
+			#if ($entry.getGroup() != "monitor")
+				<td></td><td>$jobId</td>
+				<td></td><td></td>
+				<td></td><td></td><td></td><td></td>
+			#else
+            	<td>
+            		<input id="chk_$count" name="id" type="checkbox" value="$jobId" />
+                </td>
+            $action.setParameter("id", "$jobId")
+            	<td><a href="$action" title="$jobId">$jobData.getString("component.monitor.general.title")</a></td>
+            	<td><a href="$action">$MESSAGES.getString($jobData.getString("component.monitor.general.type"))</a></td>
+				#if($jobData.getInt("component.monitor.general.status")==0) 
+					<td><a href="$action">OK</a></td>
+				#else
+					<td><a href="$action">ERROR</a></td>
+				#end
+            	<td><a href="$action">#if($jobData.get("component.monitor.general.last.check"))$date.format('yyyy-MM-dd H:mm:ss',$jobData.get("component.monitor.general.last.check"))#end</a></td>
+				#if($active == 1)
+					<td><a href="$action">#if($jobData.get("component.monitor.general.next.check"))$date.format('yyyy-MM-dd H:mm:ss',$jobData.get("component.monitor.general.next.check"))#end</a></td>
+				#end
+        		## due to new functionality old Jobs do not have this key!
+        		#if ($jobData.containsKey("component.monitor.general.timer.average")) ## && ($jobData.getLong("component.monitor.general.timer.average")!=0))
+        			#set ($execCount = $jobData.getInt("component.monitor.general.timer.num"))
+        			<td><a href="$action" title="von $execCount Ausführungen">$jobData.getLong("component.monitor.general.timer.average")ms</a></td>
+        		#else
+        			<td><a href="$action">n/a</a></td>
+        		#end
+            	<td><a href="$action">$jobData.getInt("component.monitor.general.check.interval")</a></td>
+            	##<td class="$rowstyle"><a href="$action">#if($jobData.getInt("component.monitor.general.active")==0) AUS1#else AN#end</a></td>
+			#end
+            </tr>
+		#end
+    #end
+    		</table>
+    		</p>
+    	</div>
+#end
+
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
 	<input name="modelSize" type="hidden" value="$model.size()" />
@@ -27,49 +117,17 @@
       </ul>
       <br/>
       <br/>
-	<div class="formbody">
-		<p>
-		<table class="border fullwidth">
-#set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status.code", "component.monitor.general.last.check", "component.monitor.general.check.interval", "component.monitor.general.active"])
-#set ($colTitles = ["Komponente", "Typ", "Status", "letzte Überprüfung", "Prüfintervall [sec]", "aktiv"])
-#renderDBBrowserHeader($colNames $colTitles)
-#foreach ($entry in $model)
-	#set ($jobId = $entry.name)
-	#set ($jobData = $entry.getJobDataMap())
-	#set ($jobStatus = $jobData.getInt("component.monitor.general.status"))
-	<tr>
-    #if ($velocityCount % 2 == 0)
-    	#if ($jobStatus == 0)
-			#set ($rowstyle = "contentRowEven")
-		#else
-			#set ($rowstyle = "contentRowEvenError")
-		#end
-    #else
-    	#if ($jobStatus == 0)
-			#set ($rowstyle = "contentRowOdd")
-		#else
-			#set ($rowstyle = "contentRowOddError")
-		#end
-    #end   
-    	<td class="$rowstyle">
-    		<input id="chk_$velocityCount" name="id" type="checkbox" value="$jobId" />
-        </td>
-    #set ($action = $renderResponse.createActionURL())
-    $action.setParameter('doEdit','Edit')
-    $action.setParameter("id", "$jobId")
-    	<td class="$rowstyle"><a href="$action" title="$jobId">$jobData.getString("component.monitor.general.title")</a></td>
-    	<td class="$rowstyle"><a href="$action">$MESSAGES.getString($jobData.getString("component.monitor.general.type"))</a></td>
-    	<td class="$rowstyle"><a href="$action">$MESSAGES.getString($jobData.getString("component.monitor.general.status.code"))</a></td>
-    	<td class="$rowstyle"><a href="$action">#if($jobData.get("component.monitor.general.last.check"))$date.format('yyyy-MM-dd H:m:s',$jobData.get("component.monitor.general.last.check"))#end</a></td>
-    	<td class="$rowstyle"><a href="$action">$jobData.getInt("component.monitor.general.check.interval")</a></td>
-    	<td class="$rowstyle"><a href="$action">#if($jobData.getInt("component.monitor.general.active")==0) AUS#else AN#end</a></td>
-    </tr>
-#end
-		</table>
-		</p>
-	</div>
+	  
 #set ($buttons = ["doDelete", "doRefresh", "doNew"])
+
+<h3>Aktive</h3>
+#createTable(1)
 #renderDBBrowserFooterButtons($buttons)
+
+<h3>Inaktive</h3>
+#createTable(0)
+#renderDBBrowserFooterButtons($buttons)
+
 </form>
 <p/>
 #set ($action = $renderResponse.createActionURL())
@@ -78,14 +136,23 @@
 	<input type="hidden" name="action" value="doImport">
 	<div class="formbody">
 		<p>
-			Importieren Sie alle am iBus angemeldeten iPlugs in die Überwachungskomponente. <b>ACHTUNG!!! Es werden dabei alle Komponenten vom Typ iPlug gelöscht.</b>
+			Importieren Sie alle verfügbaren Jobs in die Überwachungskomponente. Diese beinhalten alle am iBus angemeldeten iPlugs,
+			die RSS-Monitore sowie den iBus-Monitor selbst. Bereits vorhandene Jobs behalten ihre Einstellungen!
 #if($import_message)
 <br/><br/><span class="portlet-msg-error">$import_message</span><br/>
 #end
 		</p>
         <p>
-            <label class="float_left col2left_incr" for="activate">Überwachung sofort aktivieren?</label>
             <input class="" id="activate" name="activate" value="1" type="checkbox">
+			<label class="" for="activate">Überwachung sofort aktivieren?</label>
+        </p>
+		<p>
+            <input class="" id="overwrite" name="overwrite" value="1" type="checkbox">
+			<label class="" for="overwrite">Überschreiben vorhandener Jobs? (Einstellungen gehen dabei verloren!)</label>
+        </p>
+		<p>
+            <label class="" for="std_email">Standard Email Adresse:</label>
+            <input class="" id="std_email" name="std_email" value="" type="text">
         </p>
     	<p class="clearer" />
 	</div>
