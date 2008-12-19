@@ -123,7 +123,7 @@ public class MdekCatalogUtils {
 				exportInfo.setNumProcessed(result.getInt(MdekKeys.JOBINFO_NUM_ADDRESSES));
 				exportInfo.setNumTotal(result.getInt(MdekKeys.JOBINFO_TOTAL_NUM_ADDRESSES));
 			}
-//			exportInfo.setResult(new byte[0]);
+			exportInfo.setResult((byte[]) result.get(MdekKeys.EXPORT_RESULT));
 
 			return exportInfo;
 

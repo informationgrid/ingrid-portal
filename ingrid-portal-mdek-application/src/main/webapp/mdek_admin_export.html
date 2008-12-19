@@ -28,6 +28,7 @@ function startExportPartial() {
 	} else {
 		// TODO add error message
 	}
+	refreshProcessInfo();
 }
 
 function startObjectExport(uuid, exportChildren) {
@@ -136,10 +137,12 @@ scriptScope.selectDataset = function() {
 
 // Reload the process info for the last run from the backend
 refreshProcessInfo = function() {
-	ExportService.getExportInfo({
+	ExportService.getExportInfo(false, {
 		callback: function(exportInfo){
 			updateExportInfo(exportInfo);
-			setTimeout("refreshProcessInfo()", 2000);
+			if (!jobFinished(exportInfo)) {
+				setTimeout("refreshProcessInfo()", 2000);
+			}
 		},
 		timeout: 5000,
 		errorHandler: function(message, err) {
@@ -149,6 +152,16 @@ refreshProcessInfo = function() {
 }
 
 function updateExportInfo(exportInfo) {
+	if (jobFinished(exportInfo)) {
+		dojo.byId("exportInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
+		dojo.html.show(dojo.byId("exportInfoDownload"));
+		dojo.html.show(dojo.byId("exportInfoEndDate"));
+	} else {
+		dojo.byId("exportInfoTitle").innerHTML = "Informationen zum laufenden Prozess:";
+		dojo.html.hide(dojo.byId("exportInfoDownload"));
+		dojo.html.hide(dojo.byId("exportInfoEndDate"));
+	}
+
 	dojo.byId("exportInfoNumExportedEntities").innerHTML = exportInfo.numProcessed;
 	if (exportInfo.startTime) {
 		dojo.byId("exportInfoBeginDate").innerHTML = exportInfo.startTime.toLocaleString();
@@ -162,6 +175,24 @@ function updateExportInfo(exportInfo) {
 		dojo.byId("exportInfoEndDate").innerHTML = "";
 	}
 }
+
+function jobFinished(exportInfo) {
+	return exportInfo.endTime != null;
+}
+
+
+scriptScope.downloadLastExport = function() {
+	ExportService.getLastExportFile({
+		callback: function(exportFile) {
+			dojo.debug(exportFile);
+			dwr.engine.openInDownload(exportFile);
+		},
+		errorHandler: function(errMsg, err) {
+			displayErrorMessage(err);
+		}		
+	});
+}
+
 
 function initSysLists() {
 	var def = new dojo.Deferred();
@@ -237,11 +268,11 @@ function initSysLists() {
 				<div class="inputContainer noSpaceBelow">
 					<div id="processInfo" class="infobox w670">
 						<span class="icon"><img src="img/ic_info_download.gif" width="16" height="16" alt="Info" /></span>
-						<span class="title"><a href="javascript:toggleInfo('processInfo');" title="Info aufklappen">Informationen zum letzten Prozess:
+						<span class="title"><a href="javascript:toggleInfo('processInfo');" title="Info aufklappen" id="exportInfoTitle">Informationen zum letzten Prozess:
 	              			<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a>
 	              		</span>
 						<div id="processInfoContent">
-							<p>Ihre Export-Datei steht Ihnen <a href="#" title="Export-Datei: Bezeichnung">hier</a> zur Verf&uuml;gung.</p>
+							<p id="exportInfoDownload">Ihre Export-Datei steht Ihnen <a href="javascript:void(0);" onclick="javascript:scriptScope.downloadLastExport();" title="Export-Datei">hier</a> zur Verf&uuml;gung.</p>
 							<table cellspacing="0">
 								<tr>
 									<td>Gestartet am:</td>

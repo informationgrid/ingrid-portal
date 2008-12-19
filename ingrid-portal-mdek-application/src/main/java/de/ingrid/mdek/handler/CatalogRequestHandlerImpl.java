@@ -86,8 +86,8 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 				!exportChildren, HTTPSessionHelper.getCurrentSessionId());
 	}
 
-	public ExportInfoBean getExportInfo() {
-		IngridDocument response = mdekCallerCatalog.getExportInfo(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
+	public ExportInfoBean getExportInfo(boolean includeExportData) {
+		IngridDocument response = mdekCallerCatalog.getExportInfo(connectionFacade.getCurrentPlugId(), includeExportData, HTTPSessionHelper.getCurrentSessionId());
 		return MdekCatalogUtils.extractExportInfoFromResponse(response);
 	}
 

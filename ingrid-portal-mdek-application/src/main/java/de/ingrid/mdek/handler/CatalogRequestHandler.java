@@ -17,5 +17,5 @@ public interface CatalogRequestHandler {
 	public void exportTopAddresses(boolean exportChildren);
 	public void exportAddressBranch(String rootUuid, boolean exportChildren);
 	public void exportObjectBranch(String rootUuid, boolean exportChildren);
-	public ExportInfoBean getExportInfo();
+	public ExportInfoBean getExportInfo(boolean includeExportData);
 }
