@@ -32,6 +32,15 @@ function startExportPartial() {
 }
 
 function startObjectExport(uuid, exportChildren) {
+	if (uuid == "objectRoot") {
+		exportObjectBranch(null, exportChildren);
+
+	} else {
+		exportObjectBranch(uuid, exportChildren);
+	}
+}
+
+function exportObjectBranch(uuid, exportChildren) {
 	ExportService.exportObjectBranch(uuid, exportChildren, {
 		callback: function(res){
 			// Nothing to do here. The result is fetched via getExportInfo
