@@ -71,7 +71,6 @@ public class IngridMonitorFacade {
 		ArrayList result = new ArrayList();
 		try {
 			if (scheduler != null && !scheduler.isShutdown()) {
-				/////
 				String[] allJobGroupNames = scheduler.getJobGroupNames();
 				for (int i=0; i<allJobGroupNames.length; i++) {
 					String[] allJobsOfAGroup = scheduler.getJobNames(allJobGroupNames[i]);
@@ -79,11 +78,6 @@ public class IngridMonitorFacade {
 						result.add(scheduler.getJobDetail(allJobsOfAGroup[j], allJobGroupNames[i]));
 					}
 				}
-				/////
-				//String[] jobsInGroup = scheduler.getJobNames(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-				//for (int i = 0; i < jobsInGroup.length; i++) {
-				//	result.add(scheduler.getJobDetail(jobsInGroup[i], IngridMonitorFacade.SCHEDULER_GROUP_NAME));
-				//}
 			}
 		} catch (SchedulerException e) {
 			log.error("Error getting jobs from scheduler.", e);

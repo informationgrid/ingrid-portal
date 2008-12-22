@@ -200,16 +200,12 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			response.setRenderParameter("mode", request.getParameter("mode"));
 			cf.populate(request);
 			if (cf.validate()) {
-				// return if 
 				if (monitorHandler.newJob(cf) == true) {
-					//response.setRenderParameter("action", "");
 					response.setRenderParameter("action", "update");
 					response.setRenderParameter("id", id); //request.getParameter("id"));
 					response.setRenderParameter("mode", "edit");
-					//return; // can be removed due to introduced else part
 				} else {
 					response.setRenderParameter("action", "reshow");
-					//response.setRenderParameter("id", id);
 				}
 			} else {
 				response.setRenderParameter("action", "new");
@@ -246,7 +242,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			
 		} else {
 			// unhandled action
-			// cf.setError();
+			log.error("Action could not be processed, because it's unknown!");
 		}
 	}
 
@@ -316,6 +312,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		
 	}
 
+	
 	/**
 	 * 
 	 * @param request
@@ -360,6 +357,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		}
 	}
 	
+	
 	/**
 	 * 
 	 * @param cf
@@ -368,7 +366,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 	 */
 	private void initActionForm(ActionForm cf, String id, Context context) {
 		
-		JobDataMap dataMap = monitorHandler.getJobDataMap(id); //jobDetail.getJobDataMap();
+		JobDataMap dataMap = monitorHandler.getJobDataMap(id);
 		cf.setInput(AdminComponentMonitorForm.FIELD_ACTIVE, String.valueOf(dataMap
 				.getInt(IngridMonitorIPlugJob.PARAM_ACTIVE)));
 		cf.setInput(AdminComponentMonitorForm.FIELD_ID, monitorHandler.getJobName(id));
@@ -383,7 +381,6 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		cf.setInput(AdminComponentMonitorForm.FIELD_TYPE, dataMap
 				.getString(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE));
 		
-		//cf.setInput(AdminComponentMonitorForm.FIELD_STATUS, dataMap.getString(IngridMonitorAbstractJob.PARAM_STATUS));
 		cf.setInput(AdminComponentMonitorForm.FIELD_ERROR_MSG, dataMap.getString(IngridMonitorAbstractJob.PARAM_STATUS_CODE));
 		
 		ArrayList contacts = (ArrayList) dataMap.get(IngridMonitorIPlugJob.PARAM_CONTACTS);
@@ -401,5 +398,4 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		}
 		context.put("actionForm", cf);
 	}
-
 }

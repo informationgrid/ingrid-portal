@@ -115,9 +115,7 @@
 	<br/>
 	
 	</div>
-##<div class="float_left">
-##	<input class="btn" type="submit" name="doResetTime" value="Zeit zurücksetzen" />
-##</div>
+
 #renderDBEditFooter($mode)
 </form>
 <h1>Kurzhilfe</h1>

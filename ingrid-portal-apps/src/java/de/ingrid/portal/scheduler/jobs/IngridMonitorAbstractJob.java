@@ -5,7 +5,6 @@ package de.ingrid.portal.scheduler.jobs;
 
 import java.net.URL;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -23,7 +22,6 @@ import org.quartz.StatefulJob;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.global.Timer;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -90,7 +88,15 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 
 	public static final String PARAM_TIMER_NUM = "component.monitor.general.timer.num";
 	
-	Timer timer = new Timer();
+	long startTime;
+	
+	public void startTimer() {
+		startTime = System.currentTimeMillis();
+	}
+	
+	public long stopTimer() {
+		return System.currentTimeMillis() - startTime;  
+	}
 	
 	/**
 	 * 

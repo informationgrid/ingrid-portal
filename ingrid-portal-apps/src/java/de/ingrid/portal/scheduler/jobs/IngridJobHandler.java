@@ -17,7 +17,6 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
-import org.quartz.JobListener;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerUtils;
@@ -30,6 +29,12 @@ import de.ingrid.portal.portlets.admin.AdminComponentMonitorPortlet;
 import de.ingrid.portal.scheduler.IngridMonitorFacade;
 import de.ingrid.utils.PlugDescription;
 
+/**
+ * This class takes care of all job relevant things as creating, updating,
+ * importing and setting the scheduler correctly
+ * @author Andre
+ *
+ */
 public class IngridJobHandler {
 	private static final String[] component_types = { "component.monitor.general.type.iplug", "component.monitor.general.type.g2k", "component.monitor.general.type.csw", "component.monitor.general.type.ecs", "component.monitor.general.type.sns", "component.monitor.general.type.ibus", "component.monitor.general.type.rss" };
 	
@@ -37,15 +42,15 @@ public class IngridJobHandler {
 	
 	IngridMonitorFacade monitor = IngridMonitorFacade.instance();
 	
+	
 	/**
 	 * Return the JobDataMap, which is used for storing job relevant data .
-	 * @param id, 
-	 * @return
+	 * @param id, is the job id that contains the data map
+	 * @return the JobDataMap object
 	 */
 	public JobDataMap getJobDataMap(String id) {
 		JobDataMap jobDetailMap = null;
 		try {
-			//IngridMonitorFacade monitor = IngridMonitorFacade.instance();
 			JobDetail jobDetail = monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
 			jobDetailMap = jobDetail.getJobDataMap();
 		} catch (SchedulerException e) {
@@ -55,9 +60,9 @@ public class IngridJobHandler {
 	}
 	
 	/**
-	 * 
-	 * @param id
-	 * @return
+	 * Get the name of a job.
+	 * @param id, is the job id that contains the name
+	 * @return the string of the job name
 	 */
 	public String getJobName( String id ) {
 		String jobName = null;
@@ -71,76 +76,33 @@ public class IngridJobHandler {
 	}
 	
 	/**
-	 * 
-	 * @param plugIds
+	 * Remove one or more jobs from the scheduler
+	 * @param plugIds, is an array of strings containing all to be removed jobs
 	 */
-	public void removeJob(String[] plugIds) {
-		//String[] plugIds = plugIds.getParameterValues("id");
-		for (int i = 0; i < plugIds.length; i++) {
-			String plugId = plugIds[i];
-			monitor.deleteJob(plugId);
+	public void removeJob(String[] jobIds) {
+		for (int i = 0; i < jobIds.length; i++) {
+			String jobId = jobIds[i];
+			monitor.deleteJob(jobId);
 		}
 	}
 	
 
 	/**
-	 * 
+	 * Update the modified content of a job.
+	 * @param id, is the job id
+	 * @param cf, is the action form containing all the (modified) values
 	 */
 	public void updateJob(String id, AdminComponentMonitorForm cf) {
-		
 		try {
 			JobDetail jobDetail = monitor.getScheduler().getJobDetail(id,
 					IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-			JobDataMap dataMap = jobDetail.getJobDataMap();
-			int active = cf.getInputAsInteger(AdminComponentMonitorForm.FIELD_ACTIVE, new Integer(0));
-
-			dataMap.put(IngridMonitorIPlugJob.PARAM_ACTIVE, active);
-			dataMap.put(IngridMonitorIPlugJob.PARAM_CHECK_INTERVAL, cf.getInputAsInteger(
-					AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(30)));
-			dataMap.put(IngridMonitorIPlugJob.PARAM_TIMEOUT, cf.getInputAsInteger(
-					AdminComponentMonitorForm.FIELD_TIMEOUT, new Integer(500)));
-			dataMap.put(IngridMonitorIPlugJob.PARAM_COMPONENT_TITLE, cf
-					.getInput(AdminComponentMonitorForm.FIELD_TITLE));
-			String componentType = cf.getInput(AdminComponentMonitorForm.FIELD_TYPE);
-			dataMap.put(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE, componentType);
-			if (componentType.equals(IngridMonitorIPlugJob.COMPONENT_TYPE)) {
-				jobDetail.setJobClass(IngridMonitorIPlugJob.class);
-			} else if (componentType.equals(IngridMonitorG2KJob.COMPONENT_TYPE)) {
-				jobDetail.setJobClass(IngridMonitorG2KJob.class);
-			} else if (componentType.equals(IngridMonitorECSJob.COMPONENT_TYPE)) {
-				jobDetail.setJobClass(IngridMonitorECSJob.class);
-			} else if (componentType.equals(IngridMonitorCSWJob.COMPONENT_TYPE)) {
-				jobDetail.setJobClass(IngridMonitorCSWJob.class);
-			} else if (componentType.equals(IngridMonitorSNSJob.COMPONENT_TYPE)) {
-				jobDetail.setJobClass(IngridMonitorSNSJob.class);
-			}
-			dataMap.put(IngridMonitorIPlugJob.PARAM_QUERY, cf
-					.getInput(AdminComponentMonitorForm.FIELD_QUERY));
-			dataMap.put(IngridMonitorIPlugJob.PARAM_SERVICE_URL, cf
-					.getInput(AdminComponentMonitorForm.FIELD_SERVICE_URL));
-
-			ArrayList contacts = new ArrayList();
-			String[] emails = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_EMAILS);
-			String[] thresholds = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLDS);
-			for (int i = 0; i < emails.length; i++) {
-				HashMap contact = new HashMap();
-				contact.put(IngridMonitorIPlugJob.PARAM_CONTACT_EMAIL, emails[i]);
-				contact.put(IngridMonitorIPlugJob.PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT, Integer
-						.valueOf(thresholds[i]));
-				contacts.add(contact);
-			}
-			dataMap.put(IngridMonitorIPlugJob.PARAM_CONTACTS, contacts);
+						
+			updateDataFromForm(cf, jobDetail);
 			monitor.getScheduler().addJob(jobDetail, true);
 
 			jobDetail.setRequestsRecovery(false);
 			
-			// trigger removes job?
-			//monitor.getScheduler().removeTriggerListener(id);
-			
-			//monitor.getScheduler().pauseTrigger(id,IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-			
-			// this removes the job also when removing the trigger
-			//monitor.getScheduler().unscheduleJob(id,IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+			int active = jobDetail.getJobDataMap().getInt(IngridMonitorIPlugJob.PARAM_ACTIVE);
 			
 			if (active==1) {
 				
@@ -160,121 +122,63 @@ public class IngridJobHandler {
 					monitor.getScheduler().scheduleJob(trigger);
 				}
 			} else {
-				// remove the trigger id from the job that is called id
-				//Trigger trigger = monitor.getScheduler().getTrigger(id,IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-				/*String[] str = monitor.getScheduler().getTriggerNames(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-				JobListener jl = monitor.getScheduler().getGlobalJobListener(id);
-				String jlName = jl.getName();
-				boolean b1 = monitor.getScheduler().removeGlobalTriggerListener(id);
-				boolean b2 = monitor.getScheduler().removeTriggerListener(id);
-				boolean b3 = monitor.getScheduler().removeJobListener(id);
-				boolean b4 = monitor.getScheduler().removeTriggerListener(id);
-				
-				//boolean b5 = monitor.getScheduler().unscheduleJob(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-				int i;*/
 				monitor.getScheduler().pauseTrigger(id,IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-				
 			}
 		} catch (SchedulerException e) {
 			log.error("Error updating job (" + id + ").", e);
 		}
 	}
 	
+	
 	/**
-	 * 
-	 * @param cf
-	 * @return
+	 * Create a new job that must have an unique id. If it was set to active a trigger will
+	 * be initialized, that starts the job to a specified time.
+	 * @param cf, the action form that contains all the job's information
+	 * @return true, if job could be created
+	 * 		   false, if id already existed 
 	 */
 	public boolean newJob(AdminComponentMonitorForm cf) {
 		String id = cf.getInput(AdminComponentMonitorForm.FIELD_ID);
 		
 		try {
 			// check for existing job id
-			JobDetail detail = monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-			if (detail != null) {
+			JobDetail jobDetail = monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+			if (jobDetail != null) {
 				cf.setError(AdminComponentMonitorForm.FIELD_ID, "component.monitor.form.error.duplicate.id");
 				return false;
 			}
 
-			Class jobClass = null;
-			if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorIPlugJob.COMPONENT_TYPE)) {
-				jobClass = IngridMonitorIPlugJob.class;
-			} else if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorG2KJob.COMPONENT_TYPE)) {
-				jobClass = IngridMonitorG2KJob.class;
-			} else if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorECSJob.COMPONENT_TYPE)) {
-				jobClass = IngridMonitorECSJob.class;
-			} else if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorCSWJob.COMPONENT_TYPE)) {
-				jobClass = IngridMonitorCSWJob.class;
-			} else	if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorSNSJob.COMPONENT_TYPE)) {
-				jobClass = IngridMonitorSNSJob.class;
-			} else	if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorIBusJob.COMPONENT_TYPE)) {
-				jobClass = IngridMonitorIBusJob.class;
-			} else	if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorRSSCheckerJob.COMPONENT_TYPE)) {
-				jobClass = IngridMonitorRSSCheckerJob.class;
+			updateDataFromForm(cf, jobDetail);
+			jobDetail.setRequestsRecovery(false);
+			
+			int active = jobDetail.getJobDataMap().getInt(IngridMonitorIPlugJob.PARAM_ACTIVE);
+			
+			// add the job to the scheduler without a trigger
+			try {
+				monitor.getScheduler().addJob(jobDetail, true);
+			} catch (SchedulerException e) {
+				log.error("Error creating job (" + id + ").", e);
 			}
-			if (jobClass != null) {
-				JobDetail jobDetail = new JobDetail(id,	IngridMonitorFacade.SCHEDULER_GROUP_NAME, jobClass);
 
-				JobDataMap dataMap = jobDetail.getJobDataMap();
-				int active = cf.getInputAsInteger(AdminComponentMonitorForm.FIELD_ACTIVE, new Integer(0));
-
-				dataMap.put(IngridMonitorAbstractJob.PARAM_ACTIVE, active);
-				dataMap.put(IngridMonitorAbstractJob.PARAM_CHECK_INTERVAL, cf.getInputAsInteger(
-						AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(30)));
-				dataMap.put(IngridMonitorAbstractJob.PARAM_TIMEOUT, cf.getInputAsInteger(
-						AdminComponentMonitorForm.FIELD_TIMEOUT, new Integer(500)));
-				dataMap.put(IngridMonitorAbstractJob.PARAM_COMPONENT_TITLE, cf
-						.getInput(AdminComponentMonitorForm.FIELD_TITLE));
-				dataMap.put(IngridMonitorAbstractJob.PARAM_COMPONENT_TYPE, cf
-						.getInput(AdminComponentMonitorForm.FIELD_TYPE));
-				dataMap.put(IngridMonitorAbstractJob.PARAM_QUERY, cf
-						.getInput(AdminComponentMonitorForm.FIELD_QUERY));
-				dataMap.put(IngridMonitorAbstractJob.PARAM_SERVICE_URL, cf
-						.getInput(AdminComponentMonitorForm.FIELD_SERVICE_URL));
-				dataMap.put(IngridMonitorAbstractJob.PARAM_STATUS, IngridMonitorAbstractJob.STATUS_OK);
-				dataMap
-						.put(IngridMonitorAbstractJob.PARAM_STATUS_CODE,
-								IngridMonitorAbstractJob.STATUS_CODE_NO_ERROR);
-				dataMap.put(IngridMonitorAbstractJob.PARAM_EVENT_OCCURENCES, 1);
-
-				ArrayList contacts = new ArrayList();
-				String[] emails = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_EMAILS);
-				String[] thresholds = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLDS);
-				for (int i = 0; i < emails.length; i++) {
-					HashMap contact = new HashMap();
-					contact.put(IngridMonitorAbstractJob.PARAM_CONTACT_EMAIL, emails[i]);
-					contact.put(IngridMonitorAbstractJob.PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT, Integer
-							.valueOf(thresholds[i]));
-					contacts.add(contact);
-				}
-				dataMap.put(IngridMonitorAbstractJob.PARAM_CONTACTS, contacts);
-				jobDetail.setRequestsRecovery(false);
-				
-				// add the job to the scheduler without a trigger
-				try {
-					monitor.getScheduler().addJob(jobDetail, true);
-				} catch (SchedulerException e) {
-					log.error("Error creating job (" + id + ").", e);
-				}
-
-				if (active==1) {
-					Trigger trigger = TriggerUtils.makeSecondlyTrigger(cf.getInputAsInteger(
-							AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(1800)).intValue());
-					trigger.setStartTime(new Date());
-					trigger.setName(id);
-					trigger.setGroup(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-					trigger.setJobName(id);
-					trigger.setJobGroup(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-					if (triggerExists(id)) {
-						monitor.getScheduler().rescheduleJob(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME, trigger);
-					} else {
-						monitor.getScheduler().scheduleJob(trigger);
-					}
+			if (active==1) {
+				Trigger trigger = TriggerUtils.makeSecondlyTrigger(cf.getInputAsInteger(
+						AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(1800)).intValue());
+				trigger.setStartTime(new Date());
+				trigger.setName(id);
+				trigger.setGroup(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+				trigger.setJobName(id);
+				trigger.setJobGroup(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+				if (triggerExists(id)) {
+					monitor.getScheduler().rescheduleJob(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME, trigger);
+					log.warn("added a new job with an existing trigger!!!");
 				} else {
-					// remove the trigger id from the job that is called id ... does not work
-					monitor.getScheduler().removeTriggerListener(id);
+					monitor.getScheduler().scheduleJob(trigger);
 				}
+			} else {
+				// remove the trigger id from the job that is called id ... does not work
+				monitor.getScheduler().removeTriggerListener(id);
 			}
+			
 		} catch (SchedulerException e) {
 			log.error("Error creating job (" + id + ").", e);
 		}
@@ -283,14 +187,17 @@ public class IngridJobHandler {
 	
 	
 	/**
-	 * 
-	 * @param request
+	 * Import all connected iPlugs, available RSS feeds and the iBus as jobs/monitors.
+	 * If "activate" was checked, all new imported jobs will be attached a trigger.
+	 * If "overwrite" was checked, the list will be cleared and all settings of the
+	 * jobs will be removed. If not checked, only new jobs will be imported. In case
+	 * a standard email was given, it is automatically add to the job.
+	 * @param request, contains the parameter from the form
 	 */
 	public void importJobs(ActionRequest request) {
 		boolean activate = (request.getParameter("activate") != null);
 		String stdEmail  = request.getParameter("std_email");
 		ArrayList jobIds = new ArrayList();;
-		
 		
 		// only fill array with present jobs if you don't want to overwrite them
 		if (request.getParameter("overwrite") == null) {
@@ -372,18 +279,18 @@ public class IngridJobHandler {
 						monitor.getScheduler().scheduleJob(trigger);
 					}
 				} catch (SchedulerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.error("Error creating job (" + iPlug.getPlugId() + ").", e);
 				}
 								
 			}
 		}
 	}
 	
+	
 	/**
-	 * 
-	 * @param activate
-	 * @param stdEmail
+	 * Add the iBus component as a monitoring job.
+	 * @param activate, if true the job will be immediately activated
+	 * @param stdEmail, the email for reports, which is added to the job
 	 */
 	private void addIBusJob( boolean activate, String stdEmail ) {
 		JobDetail jobDetail;
@@ -430,17 +337,18 @@ public class IngridJobHandler {
 						monitor.getScheduler().scheduleJob(trigger);
 					}
 				} catch (SchedulerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.error("Error creating iBus job (" + IngridMonitorIBusJob.JOB_ID + ").", e);
 				}
 			}
 		}
 	}
 	
+	
 	/**
-	 * 
-	 * @param activate
-	 * @param stdEmail
+	 * Add an RSS checker component as a monitoring job.
+	 * @param rssSource, contains information about the rss feed
+	 * @param activate, if true the job will be immediately activated
+	 * @param stdEmail, the email for reports, which is added to the job
 	 */
 	private void addRSSCheckerJob( IngridRSSSource rssSource, boolean activate, String stdEmail ) {
 		JobDetail jobDetail;
@@ -486,23 +394,21 @@ public class IngridJobHandler {
 					} else {
 						monitor.getScheduler().scheduleJob(trigger);
 					}
-					//monitor.getScheduler().scheduleJob(jobDetail, trigger);
-					
 				} catch (SchedulerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.error("Error creating rss job (" + rssSource.getUrl() + ").", e);
 				}
 				
 			}
 		}
 	}
 	
+	
 	/**
-	 * 
-	 * @param dataMap
-	 * @param activate
-	 * @param title
-	 * @param stdEmail
+	 * Fill the JobDataMap of a job with standard values.
+	 * @param dataMap, the JobDataMap to be filled
+	 * @param activate, if true the job will be immediately activated
+	 * @param title, the title of the component
+	 * @param stdEmailthe email for reports, which is added to the job
 	 */
 	private void fillJobDataMap( JobDataMap dataMap, boolean activate, String title, String stdEmail ) {
 		if (activate) {
@@ -527,30 +433,32 @@ public class IngridJobHandler {
 		contacts.add(contact);
 		
 		dataMap.put(IngridMonitorAbstractJob.PARAM_CONTACTS, contacts);
-		
 	}
 	
+	
 	/**
-	 * 
-	 * @return
+	 * Return all the types of the components.
+	 * @return the compontent types
 	 */
 	public String[] getComponentTypes() {
 		return component_types;
 	}
 	
+	
 	/**
-	 * 
-	 * @param sortColumn
-	 * @param ascending
-	 * @return
+	 * Return all jobs in a sorted list. 
+	 * @param sortColumn, the property/column the jobs are sorted
+	 * @param ascending, if true the list is sorted ascending
+	 * @return the list of all jobs
 	 */
 	public List getJobs(String sortColumn, boolean ascending) {
 		return monitor.getJobs(sortColumn, ascending);
 	}
 	
+	
 	/**
-	 * 
-	 * @param id
+	 * Reset the average execution time.
+	 * @param id, the job id whose time shall be reseted
 	 */
 	public void resetTime(String id) {
 		try {
@@ -560,40 +468,73 @@ public class IngridJobHandler {
 			
 			// replace existing job with changed values
 			monitor.getScheduler().addJob(detail, true);
-			
-			// test call
-			// getAllJobs();
 		} catch (SchedulerException e) {
 			log.error("Error manipulating job (" + id + ").", e);
 		}
 	}
 	
-	/**
-	 * 
-	 */
-	public void getAllJobs() {
-		try {
-			String[] allJobGroupNames = monitor.getScheduler().getJobGroupNames();
-			for (int i=0; i<allJobGroupNames.length; i++) {
-				String[] allJobsOfAGroup = monitor.getScheduler().getJobNames(allJobGroupNames[i]);
-				for (int j=0; j<allJobsOfAGroup.length; j++) {
-					log.debug(allJobsOfAGroup[j]);
-				}
-			}
-		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
+	/**
+	 * Check if a trigger to a job already exists.
+	 * @param id, the id of the job
+	 * @return true if a trigger exist, otherwise false
+	 */
 	private boolean triggerExists( String id ) {
 		boolean result = false;
 		try {
 			result = (monitor.getScheduler().getTrigger(id,IngridMonitorFacade.SCHEDULER_GROUP_NAME) != null);
 		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Could not get trigger from Scheduler", e);
 		}
 		return result;
+	}
+	
+	
+	/**
+	 * Update the JobDataMap of a job with the values of a form.
+	 * @param cf, is the action form that contains all the values
+	 * @param jobDetail, is the map that contains the job's information
+	 */
+	private void updateDataFromForm(AdminComponentMonitorForm cf,
+			JobDetail jobDetail) {
+		JobDataMap dataMap = jobDetail.getJobDataMap();
+		int active = cf.getInputAsInteger(AdminComponentMonitorForm.FIELD_ACTIVE, new Integer(0));
+
+		dataMap.put(IngridMonitorIPlugJob.PARAM_ACTIVE, active);
+		dataMap.put(IngridMonitorIPlugJob.PARAM_CHECK_INTERVAL, cf.getInputAsInteger(
+				AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(30)));
+		dataMap.put(IngridMonitorIPlugJob.PARAM_TIMEOUT, cf.getInputAsInteger(
+				AdminComponentMonitorForm.FIELD_TIMEOUT, new Integer(500)));
+		dataMap.put(IngridMonitorIPlugJob.PARAM_COMPONENT_TITLE, cf
+				.getInput(AdminComponentMonitorForm.FIELD_TITLE));
+		String componentType = cf.getInput(AdminComponentMonitorForm.FIELD_TYPE);
+		dataMap.put(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE, componentType);
+		if (componentType.equals(IngridMonitorIPlugJob.COMPONENT_TYPE)) {
+			jobDetail.setJobClass(IngridMonitorIPlugJob.class);
+		} else if (componentType.equals(IngridMonitorG2KJob.COMPONENT_TYPE)) {
+			jobDetail.setJobClass(IngridMonitorG2KJob.class);
+		} else if (componentType.equals(IngridMonitorECSJob.COMPONENT_TYPE)) {
+			jobDetail.setJobClass(IngridMonitorECSJob.class);
+		} else if (componentType.equals(IngridMonitorCSWJob.COMPONENT_TYPE)) {
+			jobDetail.setJobClass(IngridMonitorCSWJob.class);
+		} else if (componentType.equals(IngridMonitorSNSJob.COMPONENT_TYPE)) {
+			jobDetail.setJobClass(IngridMonitorSNSJob.class);
+		}
+		dataMap.put(IngridMonitorIPlugJob.PARAM_QUERY, cf
+				.getInput(AdminComponentMonitorForm.FIELD_QUERY));
+		dataMap.put(IngridMonitorIPlugJob.PARAM_SERVICE_URL, cf
+				.getInput(AdminComponentMonitorForm.FIELD_SERVICE_URL));
+
+		ArrayList contacts = new ArrayList();
+		String[] emails = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_EMAILS);
+		String[] thresholds = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLDS);
+		for (int i = 0; i < emails.length; i++) {
+			HashMap contact = new HashMap();
+			contact.put(IngridMonitorIPlugJob.PARAM_CONTACT_EMAIL, emails[i]);
+			contact.put(IngridMonitorIPlugJob.PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT, Integer
+					.valueOf(thresholds[i]));
+			contacts.add(contact);
+		}
+		dataMap.put(IngridMonitorIPlugJob.PARAM_CONTACTS, contacts);
 	}
 }

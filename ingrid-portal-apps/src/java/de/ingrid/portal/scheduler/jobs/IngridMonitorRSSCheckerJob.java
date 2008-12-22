@@ -59,7 +59,6 @@ public class IngridMonitorRSSCheckerJob extends IngridMonitorAbstractJob {
 		String url 			= jobDetail.getJobDataMap().getString(PARAM_SERVICE_URL);
 		
 		updateDate(jobDetail.getJobDataMap());
-		//jobDetail.getJobDataMap().put(PARAM_LAST_CHECK, new Date());
 		
 		int status = 0;
 		String statusCode = null;
@@ -70,9 +69,9 @@ public class IngridMonitorRSSCheckerJob extends IngridMonitorAbstractJob {
             input = new SyndFeedInput();
         	
         	// check if XML behind URL can be parsed correctly
-        	timer.start();
-            feed = input.build(new XmlReader(new URL(url)));                    
-            computeTime(jobDetail.getJobDataMap(), timer.stop());
+        	startTimer();
+            feed = input.build(new XmlReader(new URL(url)));
+            computeTime(jobDetail.getJobDataMap(), stopTimer());
             
             status = STATUS_OK;
 			statusCode = STATUS_CODE_NO_ERROR;

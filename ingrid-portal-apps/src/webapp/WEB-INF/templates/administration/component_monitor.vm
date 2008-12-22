@@ -92,14 +92,13 @@
 					<td><a href="$action">#if($jobData.get("component.monitor.general.next.check"))$date.format('yyyy-MM-dd H:mm:ss',$jobData.get("component.monitor.general.next.check"))#end</a></td>
 				#end
         		## due to new functionality old Jobs do not have this key!
-        		#if ($jobData.containsKey("component.monitor.general.timer.average")) ## && ($jobData.getLong("component.monitor.general.timer.average")!=0))
+        		#if ($jobData.containsKey("component.monitor.general.timer.average") && ($jobData.getInt("component.monitor.general.timer.num")!=0))
         			#set ($execCount = $jobData.getInt("component.monitor.general.timer.num"))
         			<td><a href="$action" title="von $execCount Ausführungen">$jobData.getLong("component.monitor.general.timer.average")ms</a></td>
         		#else
         			<td><a href="$action">n/a</a></td>
         		#end
             	<td><a href="$action">$jobData.getInt("component.monitor.general.check.interval")</a></td>
-            	##<td class="$rowstyle"><a href="$action">#if($jobData.getInt("component.monitor.general.active")==0) AUS1#else AN#end</a></td>
 			#end
             </tr>
 		#end

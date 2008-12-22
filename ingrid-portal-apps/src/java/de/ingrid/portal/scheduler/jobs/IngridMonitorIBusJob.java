@@ -67,9 +67,9 @@ public class IngridMonitorIBusJob extends IngridMonitorAbstractJob {
 		int status = 0;
 		String statusCode = null;
 		try {
-			timer.start();
+			startTimer();
 			PlugDescription[] hits = IBUSInterfaceImpl.getInstance().getAllIPlugs();
-			computeTime(dataMap, timer.stop());
+			computeTime(dataMap, stopTimer());
 			
 			if (hits.length == 0) {
 				status = STATUS_ERROR;

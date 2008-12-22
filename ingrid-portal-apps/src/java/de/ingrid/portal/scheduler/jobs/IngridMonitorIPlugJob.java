@@ -72,9 +72,9 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 			IngridQuery q = QueryStringParser.parse(query);
 			//long beginTime = System.currentTimeMillis();
 			
-			timer.start();
+			startTimer();
 			IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 0, timeout);
-			computeTime(dataMap, timer.stop());
+			computeTime(dataMap, stopTimer());
 			
 			//long duration = System.currentTimeMillis() - beginTime;
 			//log.info("Call took " + duration + "ms");
