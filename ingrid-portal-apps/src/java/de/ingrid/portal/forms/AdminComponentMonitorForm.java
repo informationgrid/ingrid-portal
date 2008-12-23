@@ -58,6 +58,14 @@ public class AdminComponentMonitorForm extends ActionForm {
 	
 	public static final String FIELD_ERROR_MSG = "error_msg";
 	
+	public static final String FIELD_LAST_EXECUTION = "last_execution";
+	
+	public static final String FIELD_NEXT_EXECUTION = "next_execution";
+	
+	public static final String FIELD_NUM_EXECUTIONS = "num_executions";
+	
+	public static final String FIELD_AVERAGE_EXECTIME = "average_exec_time";
+	
 
 	/**
 	 * @see de.ingrid.portal.forms.ActionForm#init()
@@ -81,8 +89,6 @@ public class AdminComponentMonitorForm extends ActionForm {
 		setInput(FIELD_ACTIVE, request.getParameter(FIELD_ACTIVE));
 		setInput(FIELD_CONTACT_EMAIL_NEW, request.getParameter(FIELD_CONTACT_EMAIL_NEW));
 		setInput(FIELD_CONTACT_THRESHOLD_NEW, request.getParameter(FIELD_CONTACT_THRESHOLD_NEW));
-		//setInput(FIELD_STATUS, request.getParameter(FIELD_STATUS));
-		//setInput(FIELD_ERROR_MSG, request.getParameter(FIELD_ERROR_MSG));
 		this.setInput(FIELD_CONTACT_EMAILS, request.getParameterValues(FIELD_CONTACT_EMAILS));
 		this.setInput(FIELD_CONTACT_THRESHOLDS, request.getParameterValues(FIELD_CONTACT_THRESHOLDS));
 	}

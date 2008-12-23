@@ -81,8 +81,6 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 		}
 		String serviceUrl = dataMap.getString(IngridMonitorAbstractJob.PARAM_SERVICE_URL);
 
-		updateDate(dataMap);
-
 		int status = 0;
 		String statusCode = null;
 		try {

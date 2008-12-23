@@ -15,7 +15,12 @@
 		#else
 			$colLink.setParameter("desc", "false")
 		#end
-		<td class="contentColumnHead"><a href="$colLink" class="contentColumnHead">$colTitle</a></td>
+		## set a certain width to the name column so that other (static) columns do not wrap
+		##if ($colTitle == "Name")
+		##	<td class="contentColumnHead" style="width: 40%;"><a href="$colLink" class="contentColumnHead">$colTitle</a></td>
+		##else
+			<td class="contentColumnHead"><a href="$colLink" class="contentColumnHead">$colTitle</a></td>
+		##end		 
 	#end
 </tr>
 #end
@@ -26,10 +31,10 @@
     		<table class="border fullwidth">
 	#if ($active == 1)
 		#set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status.code", "component.monitor.general.last.check", "component.monitor.general.next.check", "component.monitor.general.timer.average", "component.monitor.general.check.interval"]) ##, "component.monitor.general.active"])
-		#set ($colTitles = ["Name", "Typ", "Status", "letzte Überprüfung", "nächste Überprüfung", "Ø-Ausf.geschw.", "Prüfintervall [sec]"]) ##, "aktiv"])
+		#set ($colTitles = ["Name", "Typ", "Status", "letzte Überprüfung", "nächste Überprüfung", "Ø-Ausf.geschw.", "Intervall [sec]"]) ##, "aktiv"])
     #else
 		#set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status.code", "component.monitor.general.last.check", "component.monitor.general.timer.average", "component.monitor.general.check.interval"]) ##, "component.monitor.general.active"])
-		#set ($colTitles = ["Name", "Typ", "Status", "letzte Überprüfung", "Ø-Ausf.geschw.", "Prüfintervall [sec]"]) ##, "aktiv"])
+		#set ($colTitles = ["Name", "Typ", "Status", "letzte Überprüfung", "Ø-Ausf.geschw.", "Intervall [sec]"]) ##, "aktiv"])
 	#end
 	
 	#renderDBBrowserHeader($colNames $colTitles)
@@ -38,16 +43,19 @@
 	#set ($count = 0)
 	
     $action.setParameter('doEdit','Edit')
-    #foreach ($entry in $model)
-		
+	## TODO: sortAsc not working here!!!
+    #set ($model = $jobHandler.getJobs($sortColumn, true))
+	#foreach ($entry in $model)
    		#set ($jobId = $entry.name)
-		
+		#set ($jobData = $entry.getJobDataMap())
+		#set( $prevTime = $jobHandler.getTrigger($entry.getName(), $entry.getGroup()).getPreviousFireTime())
+		#set( $nextTime = $jobHandler.getTrigger($entry.getName(), $entry.getGroup()).getNextFireTime())
+		#set ($interval = $jobHandler.getInterval($entry.getName(), $entry.getGroup()))
 		## for non monitoring jobs
 		#if ($entry.getGroup() != "monitor")
 			#set ($jobStatus = 0)
 			#set ($activeState = 1)
 		#else
-           	#set ($jobData = $entry.getJobDataMap())
            	#set ($jobStatus = $jobData.getInt("component.monitor.general.status"))
     		#set ($activeState = $jobData.getInt("component.monitor.general.active"))
 		#end
@@ -72,9 +80,13 @@
 			<tr class="$rowstyle">
 			## for non monitoring jobs
 			#if ($entry.getGroup() != "monitor")
+				$action.setParameter("id", "$jobId")
 				<td></td><td>$jobId</td>
 				<td></td><td></td>
-				<td></td><td></td><td></td><td></td>
+				<td>$date.format('yyyy-MM-dd H:mm:ss', $prevTime)</td>
+				<td>$date.format('yyyy-MM-dd H:mm:ss', $nextTime)</td>
+				<td>$jobData.getLong("component.monitor.general.timer.average")ms</td>
+				<td>$interval</td>
 			#else
             	<td>
             		<input id="chk_$count" name="id" type="checkbox" value="$jobId" />
@@ -87,9 +99,9 @@
 				#else
 					<td><a href="$action">ERROR</a></td>
 				#end
-            	<td><a href="$action">#if($jobData.get("component.monitor.general.last.check"))$date.format('yyyy-MM-dd H:mm:ss',$jobData.get("component.monitor.general.last.check"))#end</a></td>
+            	<td><a href="$action">#if($jobData.get("component.monitor.general.last.check"))$date.format('yyyy-MM-dd H:mm:ss',$prevTime)#end</a></td>
 				#if($active == 1)
-					<td><a href="$action">#if($jobData.get("component.monitor.general.next.check"))$date.format('yyyy-MM-dd H:mm:ss',$jobData.get("component.monitor.general.next.check"))#end</a></td>
+					<td><a href="$action">#if($jobData.get("component.monitor.general.next.check"))$date.format('yyyy-MM-dd H:mm:ss',$nextTime)#end</a></td>
 				#end
         		## due to new functionality old Jobs do not have this key!
         		#if ($jobData.containsKey("component.monitor.general.timer.average") && ($jobData.getInt("component.monitor.general.timer.num")!=0))
@@ -98,7 +110,7 @@
         		#else
         			<td><a href="$action">n/a</a></td>
         		#end
-            	<td><a href="$action">$jobData.getInt("component.monitor.general.check.interval")</a></td>
+            	<td><a href="$action">$interval</a></td>
 			#end
             </tr>
 		#end

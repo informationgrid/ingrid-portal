@@ -15,9 +15,9 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.quartz.StatefulJob;
 
 import com.sun.syndication.feed.synd.SyndCategoryImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
@@ -33,6 +33,8 @@ import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridRSSSource;
 import de.ingrid.portal.om.IngridRSSStore;
 
+import de.ingrid.portal.scheduler.jobs.IngridAbstractStateJob;
+
 /**
  * Quartz job for fetching all RSS feeds in database table ingrid_rss_source.
  * All RSS entries not older than one month will be added to the database table
@@ -42,17 +44,18 @@ import de.ingrid.portal.om.IngridRSSStore;
  * 
  * @author joachim@wemove.com
  */
-public class RSSFetcherJob implements StatefulJob {
+public class RSSFetcherJob extends IngridAbstractStateJob {
 
     protected final static Log log = LogFactory.getLog(RSSFetcherJob.class);
 
     /**
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
      */
-    public void execute(JobExecutionContext arg0) throws JobExecutionException {
+    public void execute(JobExecutionContext context) throws JobExecutionException {
 
         Session session = HibernateUtil.currentSession();
         Transaction tx = null;
+        JobDataMap dataMap = context.getJobDetail().getJobDataMap();
 
         try {
 
@@ -70,6 +73,10 @@ public class RSSFetcherJob implements StatefulJob {
             List rssSources = session.createCriteria(IngridRSSSource.class).list();
             tx.commit();
             Iterator it = rssSources.iterator();
+            
+            //updateDate(context);
+            // start timer
+        	startTimer();
             while (it.hasNext()) {
                 IngridRSSSource rssSource = (IngridRSSSource) it.next();
                 try {
@@ -229,6 +236,8 @@ public class RSSFetcherJob implements StatefulJob {
             }
             throw new JobExecutionException("Error executing quartz job RSSFetcherJob.", e, false);
         } finally {
+        	computeTime(dataMap, stopTimer());
+        	updateJob(context);
             HibernateUtil.closeSession();
         }
 

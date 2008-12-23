@@ -62,7 +62,7 @@ public class IngridMonitorIBusJob extends IngridMonitorAbstractJob {
 			dataMap.put(PARAM_TIMEOUT, timeout);
 		}
 
-		updateDate(dataMap);
+		//updateDate(context);
 
 		int status = 0;
 		String statusCode = null;

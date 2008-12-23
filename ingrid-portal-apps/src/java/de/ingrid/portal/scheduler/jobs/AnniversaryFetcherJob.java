@@ -13,9 +13,9 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.quartz.StatefulJob;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.portal.hibernate.HibernateUtil;
@@ -29,15 +29,18 @@ import de.ingrid.utils.udk.UtilsDate;
  * 
  * @author joachim@wemove.com
  */
-public class AnniversaryFetcherJob implements StatefulJob {
+public class AnniversaryFetcherJob extends IngridAbstractStateJob {
 
     protected final static Log log = LogFactory.getLog(AnniversaryFetcherJob.class);
 
     /**
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
      */
-    public void execute(JobExecutionContext arg0) throws JobExecutionException {
-
+    public void execute(JobExecutionContext context) throws JobExecutionException {
+    	JobDataMap dataMap = context.getJobDetail().getJobDataMap();
+    	
+    	startTimer();
+    	
         if (log.isDebugEnabled()) {
         	log.debug("start job: AnniversaryFetcherJob.");
         }
@@ -46,7 +49,8 @@ public class AnniversaryFetcherJob implements StatefulJob {
         if (log.isDebugEnabled()) {
         	log.debug("finish job: AnniversaryFetcherJob.");
         }
-
+        computeTime(dataMap, stopTimer());
+    	updateJob(context);
     }
 
     private void insertIntoDB(String lang) throws JobExecutionException {

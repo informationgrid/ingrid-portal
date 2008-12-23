@@ -101,6 +101,26 @@
     	<td><input class="btn" style="font-size:100%" type="submit" name="doAddContact" value="Hinzufügen" /></td>
     	</tr>
     	</table>
+		<p class="clearer" />
+		<p>
+			<label class="float_left col2left_incr" for="">#displayFieldLabel('lastExecution' 'Letzte Ausführung')</label>
+			<span>#getFieldValue('last_execution')</span>
+		</p>
+		<p class="clearer" />
+		<p>
+			<label class="float_left col2left_incr" for="">#displayFieldLabel('nextExecution' 'Nächste Ausführung')</label>
+			<span>#getFieldValue('next_execution')</span>
+		</p>
+		<p class="clearer" />
+		<p>
+			<label class="float_left col2left_incr" for="">#displayFieldLabel('numExecutions' 'Anzahl Ausführungen')</label>
+			<span>#getFieldValue('num_executions')</span>
+		</p>
+		<p class="clearer" />
+		<p>
+			<label class="float_left col2left_incr" for="">#displayFieldLabel('averageExecution' 'Ø-Ausführung')</label>
+			<span>#getFieldValue('average_exec_time')</span>
+		</p>
     	<br/>
     	<br/>
     	<p>* Pflichtangaben.</p>
@@ -108,7 +128,7 @@
 		<hr>
 		<p style="color:#ff0000;">
 			<label class="float_left col2left_incr">Fehlermeldung</label>
-			<span>#getFieldValue('error_msg')</span>
+			<span>$MESSAGES.getString($actionForm.getInput('error_msg'))</span>
 		</p>
 		#end
 	</p>

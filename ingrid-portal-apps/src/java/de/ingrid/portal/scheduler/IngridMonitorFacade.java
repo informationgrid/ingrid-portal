@@ -67,8 +67,8 @@ public class IngridMonitorFacade {
 		return scheduler;
 	}
 
-	public List getJobs(String sortBy, boolean ascending) {
-		ArrayList result = new ArrayList();
+	public List<JobDetail> getJobs(String sortBy, boolean ascending) {
+		ArrayList<JobDetail> result = new ArrayList<JobDetail>();
 		try {
 			if (scheduler != null && !scheduler.isShutdown()) {
 				String[] allJobGroupNames = scheduler.getJobGroupNames();

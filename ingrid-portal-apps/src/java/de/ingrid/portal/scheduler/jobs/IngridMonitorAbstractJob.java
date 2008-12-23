@@ -4,7 +4,6 @@
 package de.ingrid.portal.scheduler.jobs;
 
 import java.net.URL;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -16,8 +15,6 @@ import org.apache.commons.logging.LogFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
-import org.quartz.SchedulerException;
-import org.quartz.StatefulJob;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
@@ -28,11 +25,11 @@ import de.ingrid.portal.global.Utils;
  * 
  * @author joachim@wemove.com
  */
-public abstract class IngridMonitorAbstractJob implements StatefulJob {
+public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
 
 	private final static Log log = LogFactory.getLog(IngridMonitorAbstractJob.class);
 
-	public static final int STATUS_OK = 0;
+/*	public static final int STATUS_OK = 0;
 
 	public static final int STATUS_ERROR = 1;
 
@@ -87,40 +84,8 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 	public static final String PARAM_TIMER_AVERAGE = "component.monitor.general.timer.average";
 
 	public static final String PARAM_TIMER_NUM = "component.monitor.general.timer.num";
+*/
 	
-	long startTime;
-	
-	public void startTimer() {
-		startTime = System.currentTimeMillis();
-	}
-	
-	public long stopTimer() {
-		return System.currentTimeMillis() - startTime;  
-	}
-	
-	/**
-	 * 
-	 * @param dataMap
-	 * @param newTime
-	 */
-	public static void computeTime(JobDataMap dataMap, long newTime) {
-		long average = 0;
-		int  num 	 = 0;
-		
-		if (dataMap.containsKey(PARAM_TIMER_AVERAGE)) {
-			average = dataMap.getLong(PARAM_TIMER_AVERAGE);
-		}
-		
-		if (dataMap.containsKey(PARAM_TIMER_NUM)) {
-			num = dataMap.getInt(PARAM_TIMER_NUM);
-		}
-		
-		long newAverage = (num*average + newTime) / (num+1);
-		
-		dataMap.put(PARAM_TIMER_AVERAGE, newAverage);
-		dataMap.put(PARAM_TIMER_NUM, num+1);
-	}
-
 	protected void updateJobData(JobExecutionContext context, int status, String statusCode) {
 		JobDataMap dataMap = context.getJobDetail().getJobDataMap();
 
@@ -230,24 +195,6 @@ public abstract class IngridMonitorAbstractJob implements StatefulJob {
 		if (log.isDebugEnabled()) {
 			log.debug("Sent alert email to " + to);
 		}
-	}
-
-	protected void updateJob(JobExecutionContext context) {
-		try {
-			context.getScheduler().addJob(context.getJobDetail(), true);
-		} catch (SchedulerException e) {
-			log.error("Error updating job " + context.getJobDetail().getName());
-		}
-	}
-	
-	protected void updateDate( JobDataMap dataMap ) {
-		//Date date = new Date();
-		Calendar cal = Calendar.getInstance();
-		dataMap.put(PARAM_LAST_CHECK, cal.getTime());
-		
-				
-		cal.add(Calendar.SECOND, dataMap.getInt(PARAM_CHECK_INTERVAL));
-		dataMap.put(PARAM_NEXT_CHECK, cal.getTime());
 	}
 
 }

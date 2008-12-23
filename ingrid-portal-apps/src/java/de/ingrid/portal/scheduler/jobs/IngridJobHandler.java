@@ -5,6 +5,7 @@
 package de.ingrid.portal.scheduler.jobs;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -18,6 +19,7 @@ import org.hibernate.Session;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.SchedulerException;
+import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.TriggerUtils;
 
@@ -451,7 +453,7 @@ public class IngridJobHandler {
 	 * @param ascending, if true the list is sorted ascending
 	 * @return the list of all jobs
 	 */
-	public List getJobs(String sortColumn, boolean ascending) {
+	public List<JobDetail> getJobs(String sortColumn, boolean ascending) {
 		return monitor.getJobs(sortColumn, ascending);
 	}
 	
@@ -463,9 +465,11 @@ public class IngridJobHandler {
 	public void resetTime(String id) {
 		try {
 			JobDetail detail = monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+	//		monitor.getScheduler().get
 			detail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_TIMER_AVERAGE, 0L);
 			detail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_TIMER_NUM, 0);
-			
+	//getTrigger("","").getPreviousFireTime()
+	//getNextFireTime()		
 			// replace existing job with changed values
 			monitor.getScheduler().addJob(detail, true);
 		} catch (SchedulerException e) {
@@ -487,6 +491,41 @@ public class IngridJobHandler {
 			log.error("Could not get trigger from Scheduler", e);
 		}
 		return result;
+	}
+	
+	public Trigger getTrigger( String jobName, String jobGroup ) {
+		
+		Trigger trigger = null;
+		
+		try {
+			//trigger = monitor.getScheduler().getTrigger(jobName,jobGroup);
+			
+			Trigger[] triggers = monitor.getScheduler().getTriggersOfJob(jobName, jobGroup);
+			if (triggers.length > 1) {
+				log.error("The job" + jobName + " has more than one trigger!");
+			} 
+			if (triggers.length > 0) {
+				trigger = triggers[0];
+			}
+		} catch (SchedulerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return trigger;
+	}
+	
+	public long getInterval(String jobName, String jobGroup) {
+		long interval = 0;
+		SimpleTrigger t = (SimpleTrigger) getTrigger( jobName, jobGroup );
+		if (t == null) {
+			// use it from dataMap
+			interval = getJobDataMap(jobName).getInt(IngridAbstractStateJob.PARAM_CHECK_INTERVAL);
+			//interval = -1;
+		} else {
+			interval = t.getRepeatInterval();
+		}
+		return interval/1000;
 	}
 	
 	
