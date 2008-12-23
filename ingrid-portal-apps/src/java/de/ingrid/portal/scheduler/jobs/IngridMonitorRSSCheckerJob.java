@@ -58,8 +58,6 @@ public class IngridMonitorRSSCheckerJob extends IngridMonitorAbstractJob {
 		JobDetail jobDetail = context.getJobDetail();
 		String url 			= jobDetail.getJobDataMap().getString(PARAM_SERVICE_URL);
 		
-		updateDate(context);
-		
 		int status = 0;
 		String statusCode = null;
 		SyndFeed feed = null;
