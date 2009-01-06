@@ -185,6 +185,10 @@ $action.setParameter("id", "$rowId")
 	#if($button == "doNew")
 		<input class="btn float_right" type="submit" name="doNew" value="Hinzufügen" />
 	#end
+	#if($button == "doClear")
+		<span class="float_left">&nbsp;</span>
+		<input class="btn float_left" type="submit" name="doClear" value="Leeren" />
+	#end
 #end
 	<p class="clearer"></p>
 </div>
@@ -226,7 +230,7 @@ $action.setParameter("id", "$rowId")
 	#elseif ($mode == 'new')
 		#set ($butAction = 'doSave')
 	#end
-	<input class="btn float_left" type="submit" name="doResetTime" value="Zeit zurücksetzen" />
+##	<input class="btn float_left" type="submit" name="doResetTime" value="Zeit zurücksetzen" />
 	<input class="btn" type="submit" name="$butAction" value="Speichern" />
 	<input class="btn" type="submit" name="doCancel" value="Zurück zur Übersicht" />
 </div>

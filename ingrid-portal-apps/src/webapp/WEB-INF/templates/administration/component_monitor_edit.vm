@@ -138,6 +138,11 @@
 	
 	</div>
 
+#if ($actionForm.getInput('last_execution') != "")
+<div align="left">
+	<input style="margin: 4px 0 0 5px;" class="btn float_left" type="submit" name="doResetTime" value="Zeit zurücksetzen" />
+</div>
+#end
 #renderDBEditFooter($mode)
 </form>
 <h1>Kurzhilfe</h1>

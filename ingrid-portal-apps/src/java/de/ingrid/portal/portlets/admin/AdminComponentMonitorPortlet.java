@@ -35,6 +35,7 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsString;
 
+import de.ingrid.portal.scheduler.IngridMonitorFacade;
 import de.ingrid.portal.scheduler.jobs.IngridJobHandler;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorAbstractJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorIPlugJob;
@@ -128,6 +129,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_EDIT);
 		// ------------------update-------------------------
 		} else if (action.equals("update")) {
+			cf.clear();
 			String id = request.getParameter("id");
 			initActionForm(cf, id, context);
 			context.put("mode", request.getParameter("mode"));
@@ -227,7 +229,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			cf.populate(request);
 			cf.validate();
 			addContact(request, response, cf);
-			addStatusInfo(cf, jobHandler.getJobDataMap(id));
+			addStatusInfo(cf, jobHandler.getJobDataMap(id), id);
 			response.setRenderParameter("action", "addContact");
 		// ------------------doImport-------------------------
 		} else if (request.getParameter("doImport") != null) {
@@ -394,7 +396,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		
 
 		// add information about time execution
-		addStatusInfo(cf, dataMap);
+		addStatusInfo(cf, dataMap, id);
 		
 		ArrayList contacts = (ArrayList) dataMap.get(IngridMonitorIPlugJob.PARAM_CONTACTS);
 		if (contacts != null) {
@@ -412,24 +414,29 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		context.put("actionForm", cf);
 	}
 	
-	private void addStatusInfo(ActionForm cf, JobDataMap dataMap) {
+	private void addStatusInfo(ActionForm cf, JobDataMap dataMap, String id) {
 		// for jobs that never ran there's no information -> return! 
-		if (dataMap.containsKey(IngridMonitorAbstractJob.PARAM_LAST_CHECK) == false) {
+		if (dataMap.containsKey(IngridMonitorAbstractJob.PARAM_TIMER_NUM) == false) {
 			return;
 		}
 		
 		SimpleDateFormat portalFormat = new SimpleDateFormat("yyyy-mm-dd H:mm:ss");
         
         portalFormat.applyPattern("yyyy-MM-dd H:mm:ss");
-        String lastExec = portalFormat.format((Date) dataMap.get(IngridMonitorAbstractJob.PARAM_LAST_CHECK));
-        String nextExec = portalFormat.format((Date) dataMap.get(IngridMonitorAbstractJob.PARAM_NEXT_CHECK));
+        String lastExec = portalFormat.format(jobHandler.getTrigger(id,IngridMonitorFacade.SCHEDULER_GROUP_NAME).getPreviousFireTime());//(Date) dataMap.get(IngridMonitorAbstractJob.PARAM_LAST_CHECK));
+        String nextExec = portalFormat.format(jobHandler.getTrigger(id,IngridMonitorFacade.SCHEDULER_GROUP_NAME).getNextFireTime()); //  portalFormat.format((Date) dataMap.get(IngridMonitorAbstractJob.PARAM_NEXT_CHECK));
 				
 		
 		cf.setInput(AdminComponentMonitorForm.FIELD_LAST_EXECUTION, lastExec);
 		cf.setInput(AdminComponentMonitorForm.FIELD_NEXT_EXECUTION, nextExec);
 		cf.setInput(AdminComponentMonitorForm.FIELD_NUM_EXECUTIONS, String.valueOf(dataMap.getInt(IngridMonitorAbstractJob.PARAM_TIMER_NUM)));
-		cf.setInput(AdminComponentMonitorForm.FIELD_AVERAGE_EXECTIME, String.valueOf(dataMap.getLong(IngridMonitorAbstractJob.PARAM_TIMER_AVERAGE)));
 		cf.setInput(AdminComponentMonitorForm.FIELD_ERROR_MSG, dataMap.getString(IngridMonitorAbstractJob.PARAM_STATUS_CODE));
+		
+		String execTime = "n/a ";
+		if (dataMap.get(IngridMonitorAbstractJob.PARAM_TIMER_AVERAGE) != null) {
+			execTime = String.valueOf(dataMap.getLong(IngridMonitorAbstractJob.PARAM_TIMER_AVERAGE));
+		}
+		cf.setInput(AdminComponentMonitorForm.FIELD_AVERAGE_EXECTIME, execTime);
 		
 	}
 }

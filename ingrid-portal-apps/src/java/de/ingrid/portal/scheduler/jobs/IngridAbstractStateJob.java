@@ -130,16 +130,4 @@ public abstract class IngridAbstractStateJob implements StatefulJob {
 		}
 	}
 	
-/*	protected void updateDate( JobExecutionContext context ) {
-		JobDataMap dataMap = context.getJobDetail().getJobDataMap();
-		
-		
-		//Calendar cal = Calendar.getInstance();
-		dataMap.put(PARAM_LAST_CHECK, context.getFireTime());
-				
-		//cal.add(Calendar.SECOND, interval);
-		dataMap.put(PARAM_NEXT_CHECK, context.getNextFireTime());
-		//dataMap.put(PARAM_CHECK_INTERVAL, context.getTrigger().);
-	}*/
-
 }

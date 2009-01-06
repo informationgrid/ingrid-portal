@@ -62,6 +62,15 @@ public class IngridJobHandler {
 		return jobDetailMap;
 	}
 	
+	public JobDetail getJobDetail( String id ) {
+		try {
+			return monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+		} catch (SchedulerException e) {
+			log.error("Error getting job (" + id + ")", e);
+		}
+		return null;
+	}
+	
 	/**
 	 * Get the name of a job.
 	 * @param id, is the job id that contains the name
@@ -481,8 +490,6 @@ public class IngridJobHandler {
 						} else if (!(allJobs.get(i).getJobDataMap().get(key).equals(filter.get(key))) && inverse) {
 							filteredJobs.add(allJobs.get(i));
 						}
-					//} else if (filter.get(key) == null && !inverse) { // if value is null then key shall not exist 
-					//	filteredJobs.add(allJobs.get(i));
 					} else if (inverse) {
 						filteredJobs.add(allJobs.get(i));
 					}
@@ -499,7 +506,7 @@ public class IngridJobHandler {
 	public void resetTime(String id) {
 		try {
 			JobDetail detail = monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-			detail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_TIMER_AVERAGE, null);
+			detail.getJobDataMap().remove(IngridMonitorIPlugJob.PARAM_TIMER_AVERAGE);
 			detail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_TIMER_NUM, 0);
 			// replace existing job with changed values
 			monitor.getScheduler().addJob(detail, true);
