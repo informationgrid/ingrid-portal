@@ -15,9 +15,11 @@ import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
+import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 
+import de.ingrid.portal.scheduler.jobs.IngridAbstractStateJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorAbstractJob;
 import de.ingrid.portal.servlet.IngridComponentMonitorStartListener;
 
@@ -88,6 +90,40 @@ public class IngridMonitorFacade {
 		return result;
 	}
 	
+	
+	public Trigger getTrigger( String jobName, String jobGroup ) {
+		
+		Trigger trigger = null;
+		
+		try {
+			Trigger[] triggers = scheduler.getTriggersOfJob(jobName, jobGroup);
+			if (triggers.length > 1) {
+				log.error("The job" + jobName + " has more than one trigger!");
+			} 
+			if (triggers.length > 0) {
+				trigger = triggers[0];
+			}
+		} catch (SchedulerException e) {
+			log.error("Error while getting trigger of job " + jobName + "!");
+			e.printStackTrace();			
+		}
+		
+		return trigger;
+	}
+	
+	public long getInterval(JobDetail jobDetail) {
+		long interval = 0;
+		SimpleTrigger t = (SimpleTrigger) getTrigger( jobDetail.getName(), jobDetail.getGroup() );
+		if (t == null) {
+			// use it from dataMap
+			interval = jobDetail.getJobDataMap().getInt(IngridAbstractStateJob.PARAM_CHECK_INTERVAL);
+		} else {
+			interval = t.getRepeatInterval()/1000;
+		}
+		return interval;
+		
+	}
+	
 	public boolean deleteAllJobs(String jobType) {
 		try {
 			if (scheduler != null && !scheduler.isShutdown()) {
@@ -141,6 +177,45 @@ public class IngridMonitorFacade {
 		}
 
 		/**
+		 * 
+		 * @param jobDetail
+		 * @return
+		 */
+		private Object getObject( JobDetail jobDetail ) {
+			Object object = null;
+			
+			try {
+				if (sortBy.equals(IngridAbstractStateJob.PARAM_COMPONENT_TITLE)) {
+					if (jobDetail.getGroup().equals("monitor")) {
+						object = jobDetail.getJobDataMap().get(sortBy);
+					} else {
+						object = jobDetail.getName();
+					}				
+				} else if (sortBy.equals(IngridAbstractStateJob.PARAM_COMPONENT_TYPE)) {
+					object = jobDetail.getJobDataMap().get(sortBy);
+				} else if (sortBy.equals(IngridAbstractStateJob.PARAM_STATUS)) {
+					object = jobDetail.getJobDataMap().get(sortBy);
+				} else if (sortBy.equals(IngridAbstractStateJob.PARAM_LAST_CHECK)) {
+					Trigger trigger = getTrigger(jobDetail.getName(), jobDetail.getGroup());
+					if (trigger != null) 
+						object = trigger.getPreviousFireTime();
+				} else if (sortBy.equals(IngridAbstractStateJob.PARAM_NEXT_CHECK)) {
+					Trigger trigger = getTrigger(jobDetail.getName(), jobDetail.getGroup());
+					if (trigger != null)
+						object = trigger.getNextFireTime();
+				} else if (sortBy.equals(IngridAbstractStateJob.PARAM_TIMER_AVERAGE)) {
+					object = jobDetail.getJobDataMap().get(sortBy);				
+				} else if (sortBy.equals(IngridAbstractStateJob.PARAM_CHECK_INTERVAL)) {
+					object = getInterval(jobDetail);				
+				}
+			} catch (Exception e) {
+				log.error("Couldn't return object when comparing " + jobDetail.getName());
+				return null;
+			}
+			return object;
+		}
+		
+		/**
 		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 		 */
 		public final int compare(Object a, Object b) {
@@ -149,30 +224,46 @@ public class IngridMonitorFacade {
 				JobDetail jobA = (JobDetail) a;
 				JobDetail jobB = (JobDetail) b;
 
-				Object aName = jobA.getJobDataMap().get(sortBy);
-				Object bName = jobB.getJobDataMap().get(sortBy);
-
+				Object aName = getObject(jobA);
+				Object bName = getObject(jobB);
+				
 				if (ascending) {
 					if (aName instanceof String) {
 						return ((String)aName).toLowerCase().compareTo(((String)bName).toLowerCase());
 					} else if (aName instanceof Integer) {
 						return ((Integer)aName).compareTo(((Integer)bName));
+					} else if (aName instanceof Long) {
+						if (bName == null) {
+							return -1;
+						} else {
+							return ((Long)aName).compareTo(((Long)bName)); 
+						}
 					} else if (aName instanceof Date) {
 						if (bName == null) {
 							return -1;
 						}
 						return ((Date)aName).compareTo(((Date)bName));
+					} else if (aName == null) {
+						return 1;
 					}
 				} else {
 					if (aName instanceof String) {
 						return ((String)aName).toLowerCase().compareTo(((String)bName).toLowerCase()) * -1;
 					} else if (aName instanceof Integer) {
 						return ((Integer)aName).compareTo(((Integer)bName)) * -1;
+					} else if (aName instanceof Long) {
+						if (bName == null) {
+							return -1;
+						} else {
+							return ((Long)aName).compareTo(((Long)bName)) * -1;
+						}
 					} else if (aName instanceof Date) {
 						if (bName == null) {
 							return 1;
 						}
 						return ((Date)aName).compareTo(((Date)bName)) * -1;
+					} else if (aName == null) {
+						return 1;
 					}
 				}
 				return 0;

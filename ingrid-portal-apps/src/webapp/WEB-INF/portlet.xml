@@ -78,8 +78,8 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>Komponentenüberwachung</title>
-            <short-title>Komponentenüberwachung</short-title>
+            <title>Jobübersicht</title>
+            <short-title>Jobübersicht</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>

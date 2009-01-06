@@ -89,11 +89,12 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_DEFAULT);
 			String sortColumn = request.getParameter("sortColumn");
 			boolean ascending = request.getParameter("desc") == null || !request.getParameter("desc").equals("true");
-			if (sortColumn != null) {
+			//if (sortColumn != null) {
 				context.put("sortColumn", sortColumn);
 				context.put("sortAsc", new Boolean(ascending));
-			}
+			//}
 			context.put("jobHandler", jobHandler);
+			context.put("filterMap", new HashMap());
 			//context.put("model", jobHandler.getJobs(sortColumn, ascending));
 		// ------------------viewEdit-------------------------
 		} else if (action.equals("viewEdit")) {
@@ -412,6 +413,11 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 	}
 	
 	private void addStatusInfo(ActionForm cf, JobDataMap dataMap) {
+		// for jobs that never ran there's no information -> return! 
+		if (dataMap.containsKey(IngridMonitorAbstractJob.PARAM_LAST_CHECK) == false) {
+			return;
+		}
+		
 		SimpleDateFormat portalFormat = new SimpleDateFormat("yyyy-mm-dd H:mm:ss");
         
         portalFormat.applyPattern("yyyy-MM-dd H:mm:ss");

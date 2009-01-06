@@ -29,63 +29,6 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
 
 	private final static Log log = LogFactory.getLog(IngridMonitorAbstractJob.class);
 
-/*	public static final int STATUS_OK = 0;
-
-	public static final int STATUS_ERROR = 1;
-
-	public static final int ACTIVE_ON = 1;
-
-	public static final int ACTIVE_OFF = 0;
-
-	public static final String STATUS_CODE_ERROR_NO_HITS = "component.monitor.general.error.no.hits";
-
-	public static final String STATUS_CODE_ERROR_UNSPECIFIC = "component.monitor.general.error.unspecific";
-
-	public static final String STATUS_CODE_ERROR_TIMEOUT = "component.monitor.general.error.timout";
-
-	public static final String STATUS_CODE_ERROR_NO_IPLUGS = "component.monitor.general.error.no.iplugs";
-	
-	public static final String STATUS_CODE_ERROR_XML_PARSE = "component.monitor.general.error.xml.parse";
-	
-	public static final String STATUS_CODE_NO_ERROR = "component.monitor.general.error.none";
-	
-	public static final String PARAM_STATUS = "component.monitor.general.status";
-
-	public static final String PARAM_STATUS_CODE = "component.monitor.general.status.code";
-
-	public static final String PARAM_EVENT_OCCURENCES = "component.monitor.general.event.occurences";
-
-	public static final String PARAM_TIMEOUT = "component.monitor.general.timeout";
-
-	public static final String PARAM_LAST_CHECK = "component.monitor.general.last.check";
-	
-	public static final String PARAM_NEXT_CHECK = "component.monitor.general.next.check";
-
-	public static final String PARAM_CHECK_INTERVAL = "component.monitor.general.check.interval";
-
-	public static final String PARAM_ACTIVE = "component.monitor.general.active";
-
-	public static final String PARAM_QUERY = "component.monitor.general.query";
-
-	public static final String PARAM_CONTACTS = "component.monitor.general.contacts";
-
-	public static final String PARAM_CONTACT_EMAIL = "component.monitor.general.contact.email";
-
-	public static final String PARAM_CONTACT_LAST_ALERTED_EVENT = "component.monitor.general.contact.last.alerted.event";
-
-	public static final String PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT = "component.monitor.general.contact.event.occurence.before.alert";
-
-	public static final String PARAM_COMPONENT_TITLE = "component.monitor.general.title";
-
-	public static final String PARAM_COMPONENT_TYPE = "component.monitor.general.type";
-
-	public static final String PARAM_SERVICE_URL = "component.monitor.general.service.url";
-	
-	public static final String PARAM_TIMER_AVERAGE = "component.monitor.general.timer.average";
-
-	public static final String PARAM_TIMER_NUM = "component.monitor.general.timer.num";
-*/
-	
 	protected void updateJobData(JobExecutionContext context, int status, String statusCode) {
 		JobDataMap dataMap = context.getJobDetail().getJobDataMap();
 

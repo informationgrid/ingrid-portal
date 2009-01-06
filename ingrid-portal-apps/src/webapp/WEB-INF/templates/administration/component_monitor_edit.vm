@@ -101,6 +101,7 @@
     	<td><input class="btn" style="font-size:100%" type="submit" name="doAddContact" value="Hinzufügen" /></td>
     	</tr>
     	</table>
+	#if ($actionForm.getInput('last_execution') != "")
 		<p class="clearer" />
 		<p>
 			<label class="float_left col2left_incr" for="">#displayFieldLabel('lastExecution' 'Letzte Ausführung')</label>
@@ -119,8 +120,9 @@
 		<p class="clearer" />
 		<p>
 			<label class="float_left col2left_incr" for="">#displayFieldLabel('averageExecution' 'Ø-Ausführung')</label>
-			<span>#getFieldValue('average_exec_time')</span>
+			<span>#getFieldValue('average_exec_time')ms</span>
 		</p>
+	#end
     	<br/>
     	<br/>
     	<p>* Pflichtangaben.</p>

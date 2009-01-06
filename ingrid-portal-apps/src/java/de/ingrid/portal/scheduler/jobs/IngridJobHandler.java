@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 
@@ -457,6 +458,39 @@ public class IngridJobHandler {
 		return monitor.getJobs(sortColumn, ascending);
 	}
 	
+	/**
+	 * Return all jobs in a sorted list. 
+	 * @param sortColumn, the property/column the jobs are sorted
+	 * @param ascending, if true the list is sorted ascending
+	 * @return the list of all jobs
+	 */
+	public List<JobDetail> getFilteredJobs(String sortColumn, boolean ascending, HashMap filter, boolean inverse) {
+		List<JobDetail> allJobs = monitor.getJobs(sortColumn, ascending);
+		List<JobDetail> filteredJobs = new ArrayList();
+		Set<String> filterSet = filter.keySet();
+		for (int i=0; i<allJobs.size(); i++) {
+			if (filter.isEmpty()) {
+				filteredJobs.add(allJobs.get(i));
+			} else {
+				Iterator<String> filtIter = filterSet.iterator();
+				while (filtIter.hasNext()) {
+					String key = (String)filtIter.next();
+					if (allJobs.get(i).getJobDataMap().containsKey(key)) {
+						if (allJobs.get(i).getJobDataMap().get(key).equals(filter.get(key)) && !inverse) {
+							filteredJobs.add(allJobs.get(i));
+						} else if (!(allJobs.get(i).getJobDataMap().get(key).equals(filter.get(key))) && inverse) {
+							filteredJobs.add(allJobs.get(i));
+						}
+					//} else if (filter.get(key) == null && !inverse) { // if value is null then key shall not exist 
+					//	filteredJobs.add(allJobs.get(i));
+					} else if (inverse) {
+						filteredJobs.add(allJobs.get(i));
+					}
+				}
+			}
+		}
+		return filteredJobs;
+	}
 	
 	/**
 	 * Reset the average execution time.
@@ -465,11 +499,8 @@ public class IngridJobHandler {
 	public void resetTime(String id) {
 		try {
 			JobDetail detail = monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-	//		monitor.getScheduler().get
-			detail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_TIMER_AVERAGE, 0L);
+			detail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_TIMER_AVERAGE, null);
 			detail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_TIMER_NUM, 0);
-	//getTrigger("","").getPreviousFireTime()
-	//getNextFireTime()		
 			// replace existing job with changed values
 			monitor.getScheduler().addJob(detail, true);
 		} catch (SchedulerException e) {
@@ -494,38 +525,11 @@ public class IngridJobHandler {
 	}
 	
 	public Trigger getTrigger( String jobName, String jobGroup ) {
-		
-		Trigger trigger = null;
-		
-		try {
-			//trigger = monitor.getScheduler().getTrigger(jobName,jobGroup);
-			
-			Trigger[] triggers = monitor.getScheduler().getTriggersOfJob(jobName, jobGroup);
-			if (triggers.length > 1) {
-				log.error("The job" + jobName + " has more than one trigger!");
-			} 
-			if (triggers.length > 0) {
-				trigger = triggers[0];
-			}
-		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return trigger;
+		return monitor.getTrigger(jobName, jobGroup);
 	}
 	
-	public long getInterval(String jobName, String jobGroup) {
-		long interval = 0;
-		SimpleTrigger t = (SimpleTrigger) getTrigger( jobName, jobGroup );
-		if (t == null) {
-			// use it from dataMap
-			interval = getJobDataMap(jobName).getInt(IngridAbstractStateJob.PARAM_CHECK_INTERVAL);
-			//interval = -1;
-		} else {
-			interval = t.getRepeatInterval();
-		}
-		return interval/1000;
+	public long getInterval(JobDetail jobDetail) {
+		return monitor.getInterval(jobDetail);
 	}
 	
 	
