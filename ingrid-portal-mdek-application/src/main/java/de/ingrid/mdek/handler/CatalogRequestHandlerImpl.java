@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.ExportInfoBean;
+import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCaller.AddressArea;
 import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
@@ -86,9 +87,31 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 				!exportChildren, HTTPSessionHelper.getCurrentSessionId());
 	}
 
+	public void exportObjectsWithCriteria(String exportCriteria) {
+		mdekCallerCatalog.exportObjects(
+				connectionFacade.getCurrentPlugId(),
+				exportCriteria,
+				HTTPSessionHelper.getCurrentSessionId());
+	}
+
 	public ExportInfoBean getExportInfo(boolean includeExportData) {
 		IngridDocument response = mdekCallerCatalog.getExportInfo(connectionFacade.getCurrentPlugId(), includeExportData, HTTPSessionHelper.getCurrentSessionId());
 		return MdekCatalogUtils.extractExportInfoFromResponse(response);
+	}
+
+	public void importEntities(byte[] importData, String targetObjectUuid, String targetAddressUuid,
+			boolean publishImmediately, boolean doSeparateImport) {
+		mdekCallerCatalog.importEntities(
+				connectionFacade.getCurrentPlugId(),
+				importData,
+				targetObjectUuid, targetAddressUuid,
+				publishImmediately, doSeparateImport,
+				HTTPSessionHelper.getCurrentSessionId());
+	}
+
+	public JobInfoBean getImportInfo() {
+		IngridDocument response = mdekCallerCatalog.getImportInfo(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
+		return MdekCatalogUtils.extractImportInfoFromResponse(response);
 	}
 
 	public ConnectionFacade getConnectionFacade() {

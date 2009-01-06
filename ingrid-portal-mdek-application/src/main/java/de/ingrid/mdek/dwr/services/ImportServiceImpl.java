@@ -5,16 +5,14 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.nio.channels.ReadableByteChannel;
-import java.nio.channels.WritableByteChannel;
-import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
-import org.directwebremoting.io.OutputStreamLoader;
 
+import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 
 public class ImportServiceImpl {
@@ -24,29 +22,60 @@ public class ImportServiceImpl {
 	// Injected by Spring
 	private CatalogRequestHandler catalogRequestHandler;
 
+	public void importEntities(FileTransfer fileTransfer, String targetObjectUuid, String targetAddressUuid,
+			boolean publishImmediately, boolean doSeparateImport) {
 
-	// Echoes the uploaded file back to the client
-	public FileTransfer uploadFile(FileTransfer fileTransfer) throws IOException {
-		log.debug("uploadFile called.");
-		log.debug("fileName: "+fileTransfer.getFilename());
-		log.debug("mimeType: "+fileTransfer.getMimeType());
+		log.debug("File transfer mime type: "+fileTransfer.getMimeType());
 
-		// decompress if zip, otherwise compress
-		if (fileTransfer.getMimeType().equals("application/zip")) {
-			ByteArrayOutputStream baos = decompress(fileTransfer.getOutputStreamLoader()); 
-//			ByteArrayOutputStream baos = decompress(fileTransfer.getInputStream());
-			String fileName = fileTransfer.getFilename().replace(".zip", "");
-			return new FileTransfer(fileName, "application/octet-stream", baos.toByteArray());
+		try {
+			byte[] gzippedData = null;
+			if (fileTransfer.getMimeType().equals("application/x-gzip")) {
+				gzippedData = createByteArrayFromInputStream(fileTransfer.getInputStream());
 
-		} else {
-			ByteArrayOutputStream output = compress(fileTransfer.getOutputStreamLoader()); 
-//			ByteArrayOutputStream output = compress(fileTransfer.getInputStream());
-			return new FileTransfer(fileTransfer.getFilename()+".zip", "application/zip", output.toByteArray());
+			} else if (fileTransfer.getMimeType().equals("application/zip")) {
+				ZipInputStream zipIn = new ZipInputStream(fileTransfer.getInputStream());
+				zipIn.getNextEntry();
+
+				gzippedData = compress(zipIn).toByteArray();
+
+			} else if (fileTransfer.getMimeType().equals("text/xml")) {
+				gzippedData = compress(fileTransfer.getInputStream()).toByteArray();
+			}
+
+			catalogRequestHandler.importEntities(gzippedData, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
+
+		} catch (IOException ex) {
+			log.error("Error creating input data.", ex);
 		}
+		// TODO catch and throw mdek exception (e.g. Parent not set, ...)?
+	}
+
+	public JobInfoBean getImportInfo() {
+		return catalogRequestHandler.getImportInfo();
+	}
+
+	public FileTransfer getLastImportLog() {
+		JobInfoBean jobInfo = catalogRequestHandler.getImportInfo();
+		String log = jobInfo.getDescription();
+
+		return new FileTransfer("log.txt", "text/plain", log.getBytes()); 
+	}
+
+	private byte[] createByteArrayFromInputStream(InputStream in) throws IOException {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+		final int BUFFER = 2048;
+		int count;
+		byte data[] = new byte[BUFFER];
+		while((count = in.read(data, 0, BUFFER)) != -1) {
+			   out.write(data, 0, count);
+		}
+
+		return out.toByteArray();
 	}
 
 	// Compress (zip) any data on InputStream and write it to a ByteArrayOutputStream
-	public static ByteArrayOutputStream compress(InputStream is) throws IOException {
+	private static ByteArrayOutputStream compress(InputStream is) throws IOException {
 		BufferedInputStream bin = new BufferedInputStream(is);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		GZIPOutputStream gzout = new GZIPOutputStream(new BufferedOutputStream(out));
@@ -60,58 +89,6 @@ public class ImportServiceImpl {
 
 		gzout.close();
 		return out;
-	}
-
-	// Compress (zip) any data on OutputStreamLoader and write it to a ByteArrayOutputStream
-	public static ByteArrayOutputStream compress(OutputStreamLoader osl) throws IOException {
-		// TODO Implement
-		log.debug("compress(OutputStreamLoader) not implemented yet.");
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		osl.load(bos);
-
-		return bos;
-	}
-
-	// Decompress (unzip) data on InputStream (has to contain zipped data) and write it to a ByteArrayOutputStream
-	public static ByteArrayOutputStream decompress(InputStream is) throws IOException {
-		GZIPInputStream gzin = new GZIPInputStream(new BufferedInputStream(is));
-		ByteArrayOutputStream baout = new ByteArrayOutputStream();
-		BufferedOutputStream out = new BufferedOutputStream(baout);
-
-		final int BUFFER = 2048;
-		int count;
-		byte data[] = new byte[BUFFER];
-		while((count = gzin.read(data, 0, BUFFER)) != -1) {
-		   out.write(data, 0, count);
-		}
-
-		out.close();
-		return baout;
-	}
-
-	// Decompress (unzip) data on OutputStreamLoader (has to contain zipped data) and write it to a ByteArrayOutputStream
-	public static ByteArrayOutputStream decompress(OutputStreamLoader osl) throws IOException {
-		// TODO Implement
-		log.debug("decompress(OutputStreamLoader) not implemented yet.");
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		osl.load(bos);
-
-		return bos;
-	}
-
-	
-	public static void channelCopy(final ReadableByteChannel src, final WritableByteChannel dst) throws IOException {
-		final ByteBuffer buffer = ByteBuffer.allocateDirect(16 * 1024);
-		while (src.read(buffer) != -1) {
-			buffer.flip();
-			dst.write(buffer);
-			buffer.compact();
-		}
-		buffer.flip();
-
-		while (buffer.hasRemaining()) {
-			dst.write(buffer);
-		}
 	}
 
 	public void setCatalogRequestHandler(CatalogRequestHandler catalogRequestHandler) {

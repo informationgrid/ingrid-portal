@@ -1,11 +1,15 @@
 package de.ingrid.mdek.beans;
 
+import java.util.Date;
+
 
 public class JobInfoBean {
 	String description;
 	Integer numEntities;
 	Integer numProcessedEntities;
-	
+	Date startTime;
+	Date endTime;
+
 	public String getDescription() {
 		return description;
 	}
@@ -23,5 +27,17 @@ public class JobInfoBean {
 	}
 	public void setNumProcessedEntities(Integer numProcessedEntities) {
 		this.numProcessedEntities = numProcessedEntities;
+	}
+	public Date getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+	public Date getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 }

@@ -21,6 +21,10 @@ public class ExportServiceImpl {
 		catalogRequestHandler.exportObjectBranch(rootUuid, exportChildren);
 	}
 
+	public void exportObjectsWithCriteria(String exportCriteria) {
+		catalogRequestHandler.exportObjectsWithCriteria(exportCriteria);
+	}
+
 	public void exportAddressBranch(String rootUuid, boolean exportChildren) {
 		catalogRequestHandler.exportAddressBranch(rootUuid, exportChildren);
 	}

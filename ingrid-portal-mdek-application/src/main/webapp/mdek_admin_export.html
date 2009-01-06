@@ -12,7 +12,13 @@ _container_.addOnLoad(function() {
 });
 
 function startExportCriteria() {
-	dojo.debug("Criteria Export not implemented yet.");
+	var exportCriteria = dojo.widget.byId("exportXMLCriteria").getValue();
+	if (exportCriteria) {
+		exportObjectsWithCriteria(exportCriteria);
+
+	} else {
+		dialog.show(message.get("general.error"), "Der Exportvorgang konnte nicht gestartet werden. Bitte w&auml;hlen Sie ein Exportkriterium aus.", dialog.WARNING);
+	}
 }
 
 function startExportPartial() {
@@ -28,7 +34,6 @@ function startExportPartial() {
 	} else {
 		// TODO add error message
 	}
-	setTimeout("refreshProcessInfo()", 2000);
 }
 
 function startObjectExport(uuid, exportChildren) {
@@ -42,6 +47,21 @@ function startObjectExport(uuid, exportChildren) {
 
 function exportObjectBranch(uuid, exportChildren) {
 	ExportService.exportObjectBranch(uuid, exportChildren, {
+		callback: function(res){
+			// Nothing to do here. The result is fetched via getExportInfo
+		},
+		timeout: 100,
+		errorHandler: function(message, err) {
+			// We expect a timeout error since we (almost) directly return from the call
+			if (message != "Timeout") {
+				dojo.debug("Error: "+ message);
+			}
+		}
+	});
+}
+
+function exportObjectsWithCriteria(exportCriteria) {
+	ExportService.exportObjectsWithCriteria(exportCriteria, {
 		callback: function(res){
 			// Nothing to do here. The result is fetched via getExportInfo
 		},
@@ -125,6 +145,7 @@ scriptScope.startExport = function() {
 		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie einen Exporttyp aus.", dialog.WARNING);
 		dojo.debug("No export type selected.");
 	}
+	setTimeout("refreshProcessInfo()", 2000);
 }
 
 // Button function for the 'select dataset' link.

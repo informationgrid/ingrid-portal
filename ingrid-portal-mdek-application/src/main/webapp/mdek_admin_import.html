@@ -14,25 +14,28 @@ span.universalImport div.dojoButton {
 var scriptScope = this;
 
 var importTreeSelectedParentDataset = null;
-var importTreeSelectedInfoAddress = null;
+var importTreeSelectedParentAddress = null;
 
 
 _container_.addOnLoad(function() {
 	initTree();
+	refreshImportProcessInfo();
 });
 
 
 scriptScope.resetImport = function() {
 	dojo.widget.byId("importTreeParentDataset").setValue("");
-	dojo.widget.byId("importTreeAddress").setValue("");
+	dojo.widget.byId("importTreeParentAddress").setValue("");
+	dojo.widget.byId("publishImportedDatasetsCheckbox").setValue(false);
+	dojo.widget.byId("separateImportCheckbox").setValue(false);
 	importTreeSelectedParentDataset = null;
-	importTreeSelectedInfoAddress = null;
+	importTreeSelectedParentAddress = null;
 }
 
 scriptScope.selectParentDatasetForTreeImport = function() {
 	var selectedNode = dojo.widget.byId("treeImportTree").selectedNode;
 
-	if (isValidImportRootNode(selectedNode)) {
+	if (selectedNode && selectedNode.nodeAppType == "O") {
 		dojo.widget.byId("importTreeParentDataset").setValue(selectedNode.title);
 		importTreeSelectedParentDataset = selectedNode;
 
@@ -41,44 +44,58 @@ scriptScope.selectParentDatasetForTreeImport = function() {
 	}
 }
 
-function isValidImportRootNode(node) {
-	if (node) {
-		if (node.nodeAppType == "A") {
-			return node.objectClass == 0;
-
-		} else if (node.nodeAppType == "O") {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-scriptScope.selectInfoAddressForTreeImport = function() {
+scriptScope.selectParentAddressForTreeImport = function() {
 	var selectedNode = dojo.widget.byId("treeImportTree").selectedNode;
 
-	if (selectedNode && selectedNode.nodeAppType == "A" && selectedNode.uuid != "addressRoot" && selectedNode.uuid != "addressFreeRoot") {
-		dojo.widget.byId("importTreeAddress").setValue(selectedNode.title);
-		importTreeSelectedInfoAddress = selectedNode;
+	if (selectedNode && selectedNode.nodeAppType == "A" && selectedNode.objectClass == 0) {
+		dojo.widget.byId("importTreeParentAddress").setValue(selectedNode.title);
+		importTreeSelectedParentAddress = selectedNode;
 
 	} else {
-		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie eine g&uuml;ltige Adresse aus.", dialog.WARNING);
+		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie eine Institution als &uuml;bergeordnete Adresse aus.", dialog.WARNING);
 	}
+}
+
+scriptScope.downloadImportLog = function() {
+	ImportService.getLastImportLog({
+		callback: function(importLog) {
+			dwr.engine.openInDownload(importLog);
+		},
+		errorHandler: function(errMsg, err) {
+			displayErrorMessage(err);
+		}		
+	});
 }
 
 function startTreeImport() {
-	// TODO Implement
-	dojo.debug("uploadFile called.");
 	var file = dwr.util.getValue("importFile");
+	var parentObjectUuid = (importTreeSelectedParentDataset != null) ? importTreeSelectedParentDataset.uuid : null;
+	var parentAddressUuid = (importTreeSelectedParentAddress != null) ? importTreeSelectedParentAddress.uuid : null;
+	var publishImportedDatasets = dojo.widget.byId("publishImportedDatasetsCheckbox").checked;
+	var separateImport = dojo.widget.byId("separateImportCheckbox").checked;
 
-	ImportService.uploadFile(file, function(data) {
-		dwr.engine.openInDownload(data);
+	dojo.debug("file: "+file);
+	dojo.debug("parent object uuid: "+parentObjectUuid);
+	dojo.debug("parent address uuid: "+parentAddressUuid);
+
+	ImportService.importEntities(file, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, {
+		callback: function(){
+			// Nothing to do here. The result is fetched via getImportInfo
+		},
+		timeout: 100,
+		errorHandler: function(message, err) {
+			// We expect a timeout error since we (almost) directly return from the call
+			if (message != "Timeout") {
+				dojo.debug("Error: "+ message);
+			}
+		}
 	});
+	setTimeout("refreshImportProcessInfo()", 2000);
 }
 
 scriptScope.startImport = function() {
 
-	if (dojo.byId("importFile").value && importTreeSelectedParentDataset != null && importTreeSelectedInfoAddress != null) {
+	if (dojo.byId("importFile").value) {
 		startTreeImport();
 	} else {
 		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie die Importdatei, einen &uuml;bergeordneten Datensatz und eine Auskunftsadresse aus bevor Sie den Importvorgang starten.", dialog.WARNING);
@@ -137,6 +154,52 @@ function initTree() {
 	importTreeController.loadRemote = loadRemote;
 }
 
+//Reload the process info for the last run from the backend
+refreshImportProcessInfo = function() {
+	ImportService.getImportInfo({
+		callback: function(importInfo){
+			updateImportInfo(importInfo);
+			if (!jobFinished(importInfo)) {
+				setTimeout("refreshImportProcessInfo()", 2000);
+			}
+		},
+		timeout: 5000,
+		errorHandler: function(message, err) {
+			dojo.debug("Error: "+ message);
+		}
+	});
+}
+
+function updateImportInfo(importInfo) {
+	if (jobFinished(importInfo)) {
+		dojo.byId("importInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
+		dojo.html.show(dojo.byId("importInfoDownload"));
+		dojo.html.show(dojo.byId("importInfoEndDateContainer"));
+		dojo.byId("importInfoNumImportedEntities").innerHTML = importInfo.numProcessedEntities;
+	} else {
+		dojo.byId("importInfoTitle").innerHTML = "Informationen zum laufenden Prozess:";
+		dojo.html.hide(dojo.byId("importInfoDownload"));
+		dojo.html.hide(dojo.byId("importInfoEndDateContainer"));
+		dojo.byId("importInfoNumImportedEntities").innerHTML = importInfo.numProcessedEntities + " / " + importInfo.numEntities;
+	}
+
+	if (importInfo.startTime) {
+		dojo.byId("importInfoBeginDate").innerHTML = importInfo.startTime.toLocaleString();
+	} else {
+		dojo.byId("importInfoBeginDate").innerHTML = "";
+	}
+
+	if (importInfo.endTime) {
+		dojo.byId("importInfoEndDate").innerHTML = importInfo.endTime.toLocaleString();
+	} else {
+		dojo.byId("importInfoEndDate").innerHTML = "";
+	}
+}
+
+function jobFinished(importInfo) {
+	return importInfo.endTime != null;
+}
+
 // clone an object or array and all it's contents.
 // An array containing only primitive types (no objects) can also be cloned with array.slice(0).
 function cloneObject(obj) {
@@ -177,6 +240,12 @@ function cloneObject(obj) {
 							<input type="file" id="importFile" size="80" />
 						</span>
 					</div>
+					<div class="checkboxContainer">
+						<input type="checkbox" id="publishImportedDatasetsCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Importierte Datens&auml;tze ver&ouml;ffentlichen')">Importierte Datens&auml;tze ver&ouml;ffentlichen</label>
+					</div>
+					<div class="checkboxContainer">
+						<input type="checkbox" id="separateImportCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Importierte Datens&auml;tze ausschliesslich unter dem gew&auml;hlten Importknoten anlegen')">Importierte Datens&auml;tze ausschliesslich unter dem gew&auml;hlten Importknoten anlegen</label>
+					</div>
 				</div>
 
         <!-- IMPORT TEILBAUM START -->
@@ -213,15 +282,15 @@ function cloneObject(obj) {
 				<span class="entry">
 					<span class="buttonCol subtreeImport" style="margin-top:39px;">
 						<button dojoType="ingrid:Button" onClick="javascript:scriptScope.selectParentDatasetForTreeImport();">&nbsp;>&nbsp;</button>
-						<button dojoType="ingrid:Button" onClick="javascript:scriptScope.selectInfoAddressForTreeImport();">&nbsp;>&nbsp;</button>
+						<button dojoType="ingrid:Button" onClick="javascript:scriptScope.selectParentAddressForTreeImport();">&nbsp;>&nbsp;</button>
 					</span>
 				</span>
 
               <div id="importTreeData" class="entry field">
-                <span class="label"><label for="importTreeParentObject" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ausgew&auml;hlter &uuml;bergeordneter Datensatz')">Ausgew&auml;hlter &uuml;bergeordneter Datensatz</label></span>
+                <span class="label"><label for="importTreeParentObject" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ausgew&auml;hltes &uuml;bergeordnetes Objekt')">Ausgew&auml;hltes &uuml;bergeordnetes Objekt</label></span>
                 <span class="input spaceBelow"><input type="text" id="importTreeParentDataset" class="w628" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-                <span class="label"><label for="importTreeAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ausgew&auml;hlte Auskunftsadresse (f&uuml;r Objekte)')">Ausgew&auml;hlte Auskunftsadresse</label></span>
-                <span class="input"><input type="text" id="importTreeAddress" class="w628" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
+                <span class="label"><label for="importTreeParentAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ausgew&auml;hlte &uuml;bergeordnete Adresse')">Ausgew&auml;hlte &uuml;bergeordnete Adresse</label></span>
+                <span class="input"><input type="text" id="importTreeParentAddress" class="w628" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
             	</div>
             </div>
           </div>
@@ -241,29 +310,28 @@ function cloneObject(obj) {
          </div>
         <!-- IMPORT TEILBAUM END -->
 
-        <div id="importProcessInfo" class="inputContainer noSpaceBelow">
-          <div class="infobox w941">
-            <span class="icon"><img src="img/ic_info_download.gif" width="16" height="16" alt="Info" /></span>
-            <span class="title"><a href="javascript:toggleInfo('importProcessInfo');" title="Info aufklappen">Informationen zum letzten Prozess:
-              <img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
-            <div id="importProcessInfoContent">
-              <p>Die <a href="#" title="Logdatei">[Logdatei]</a> des Imports steht Ihnen zur Verf&uuml;gung.</p>
-              <table cellspacing="0">
-                <tr>
-                  <td>Gestartet am:</td>
-                  <td>13.2.2007, 00:02 Uhr</td></tr>
-                  <td>Beendet am:</td>
-                  <td>13.2.2007, 19:32 Uhr</td></tr>
-                  <td>Anzahl Objekte:</td>
-                  <td>132110</td></tr>
-                  <td>Anzahl Adressen:</td>
-                  <td>10</td></tr>
-              </table>
-<!--              <span class="button"><a href="#" class="buttonBlue" title="Prozess abbrechen">Prozess abbrechen</a></span>-->
-        	  </div>
-          </div>
-        </div>
-        
+
+		<div class="inputContainer noSpaceBelow">
+			<div id="processInfo" class="infobox w941">
+				<span class="icon"><img src="img/ic_info_download.gif" width="16" height="16" alt="Info" /></span>
+				<span class="title"><a href="javascript:toggleInfo('processInfo');" title="Info aufklappen" id="importInfoTitle">Informationen zum letzten Prozess:
+             			<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a>
+             		</span>
+				<div id="processInfoContent">
+					<p id="importInfoDownload">Die Logdatei des Imports steht Ihnen <a href="javascript:void(0);" onclick="javascript:scriptScope.downloadImportLog();" title="Import-Logdatei">hier</a> zur Verf&uuml;gung.</p>
+					<table cellspacing="0">
+						<tr>
+							<td>Gestartet am:</td>
+							<td id="importInfoBeginDate"></td></tr>
+							<td id="importInfoEndDateContainer">Beendet am:</td>
+							<td id="importInfoEndDate"></td></tr>
+							<td>Anzahl Datens&auml;tze:</td>
+							<td id="importInfoNumImportedEntities"></td></tr>
+					</table>
+				</div> <!-- processInfoContent end -->
+			</div> <!-- processInfo end -->
+		</div> <!-- inputContainer end -->
+
       </div>
     </div>
   </div>

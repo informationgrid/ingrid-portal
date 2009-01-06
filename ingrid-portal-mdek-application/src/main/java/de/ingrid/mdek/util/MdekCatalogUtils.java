@@ -7,13 +7,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.ExportInfoBean;
+import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.utils.IngridDocument;
 
 public class MdekCatalogUtils {
+
+	private final static Logger log = Logger.getLogger(MdekCatalogUtils.class);	
 
 	private static final String SYS_GUI_ID = "id";
 	private static final String SYS_GUI_MODE = "mode";
@@ -126,6 +131,32 @@ public class MdekCatalogUtils {
 			exportInfo.setResult((byte[]) result.get(MdekKeys.EXPORT_RESULT));
 
 			return exportInfo;
+
+		} else {
+			MdekErrorUtils.handleError(response);
+			return null;
+		}
+	}
+
+	public static JobInfoBean extractImportInfoFromResponse(IngridDocument response) {
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+
+		if (result != null) {
+			// TODO implement
+			log.debug("job info: "+result);
+			JobInfoBean jobInfo = new JobInfoBean();
+			jobInfo.setDescription(result.getString(MdekKeys.JOBINFO_MESSAGES));
+			jobInfo.setStartTime(MdekUtils.convertTimestampToDate(result.getString(MdekKeys.JOBINFO_START_TIME)));
+			jobInfo.setEndTime(MdekUtils.convertTimestampToDate(result.getString(MdekKeys.JOBINFO_END_TIME)));
+			if (result.get(MdekKeys.JOBINFO_NUM_OBJECTS) != null) {
+				jobInfo.setNumProcessedEntities(result.getInt(MdekKeys.JOBINFO_NUM_OBJECTS));
+				jobInfo.setNumEntities(result.getInt(MdekKeys.JOBINFO_TOTAL_NUM_OBJECTS));
+
+			} else if (result.get(MdekKeys.JOBINFO_NUM_ADDRESSES) != null) {
+				jobInfo.setNumProcessedEntities(result.getInt(MdekKeys.JOBINFO_NUM_ADDRESSES));
+				jobInfo.setNumEntities(result.getInt(MdekKeys.JOBINFO_TOTAL_NUM_ADDRESSES));
+			}
+			return jobInfo;
 
 		} else {
 			MdekErrorUtils.handleError(response);
