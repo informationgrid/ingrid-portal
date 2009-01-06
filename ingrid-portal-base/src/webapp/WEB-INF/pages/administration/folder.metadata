@@ -15,7 +15,6 @@
     <options>/administration/admin-statistics.psml</options>
     <options>/administration/admin-portal-profile.psml</options>
     <options>/administration/admin-component-monitor.psml</options>
-    <options>/administration/dwr-test.psml</options>
   </menu>
   
   <security-constraints>
