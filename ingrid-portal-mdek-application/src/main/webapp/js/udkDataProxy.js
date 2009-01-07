@@ -1377,7 +1377,7 @@ udkDataProxy._setAddressData = function(nodeData)
 	dojo.widget.byId("addressOwner").setValue(nodeData.addressOwner);
 
 	var workStateStr = message.get("general.workState."+nodeData.workState);
-	dojo.byId("addressWorkState").innerHTML = (nodeData.isMarkedDeleted ? workStateStr+"<br>("+message.get("general.state.maredDeleted")+")" : workStateStr);
+	dojo.byId("addressWorkState").innerHTML = (nodeData.isMarkedDeleted ? workStateStr+"<br>("+message.get("general.state.markedDeleted")+")" : workStateStr);
 
 	dojo.byId("addressCreationTime").innerHTML = nodeData.creationTime;
 	dojo.byId("addressModificationTime").innerHTML = nodeData.modificationTime;
@@ -1515,7 +1515,7 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("objectClass").setValue("Class"+nodeData.objectClass);
 
   var workStateStr = message.get("general.workState."+nodeData.workState);
-  dojo.byId("workState").innerHTML = (nodeData.isMarkedDeleted ? workStateStr+"<br>("+message.get("general.state.maredDeleted")+")" : workStateStr);
+  dojo.byId("workState").innerHTML = (nodeData.isMarkedDeleted ? workStateStr+"<br>("+message.get("general.state.markedDeleted")+")" : workStateStr);
   dojo.byId("creationTime").innerHTML = nodeData.creationTime;
   dojo.byId("modificationTime").innerHTML = nodeData.modificationTime;
 

@@ -24,7 +24,7 @@
 	"general.userOperation.NEW":"neu angelegt",
 	"general.userOperation.EDITED":"&uuml;berarbeitet",
 	"general.userOperation.DELETED":"als gel&ouml;scht markiert",
-	"general.state.maredDeleted":"als gel&ouml;scht markiert",
+	"general.state.markedDeleted":"als gel&ouml;scht markiert",
 
 	"menu.general.help":"Hilfe",
 	"menu.general.disclaimer":"Impressum",
