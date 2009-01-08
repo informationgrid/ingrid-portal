@@ -65,6 +65,8 @@ public class RSSFetcherJob extends IngridAbstractStateJob {
             Date publishedDate = null;
             SyndEntry entry = null;
             int cnt = 0;
+            int feedEntriesCount = 0;
+            String errorMsg = "";
 
             Calendar cal;
 
@@ -74,7 +76,6 @@ public class RSSFetcherJob extends IngridAbstractStateJob {
             tx.commit();
             Iterator it = rssSources.iterator();
             
-            //updateDate(context);
             // start timer
         	startTimer();
             while (it.hasNext()) {
@@ -185,6 +186,7 @@ public class RSSFetcherJob extends IngridAbstractStateJob {
                                 tx.commit();
 
                                 cnt++;
+                                feedEntriesCount++;
                             } else {
                                 for (int i = 0; i < rssEntries.size(); i++) {
                                     session.evict(rssEntries.get(i));
@@ -193,16 +195,29 @@ public class RSSFetcherJob extends IngridAbstractStateJob {
                             rssEntries = null;
                         }
                     }
+
                     feed = null;
                 } catch (Exception e) {
                     if (log.isInfoEnabled()) {
+                    	errorMsg = e.getMessage();
                         log.info("Error building RSS feed (" + rssSource.getUrl() + "). [" + e.getMessage() + "]");
                     }
                     if (log.isDebugEnabled()) {
                         log.debug("Error building RSS feed (" + rssSource.getUrl() + ").", e);
                     }
                 } finally {
+                	// add information about the fetching of this feed into the RSSSource database
+                    tx = session.beginTransaction();
+                    rssSource.setLastUpdate(new Date());
+                    rssSource.setNumLastCount(feedEntriesCount);
+                    rssSource.setError(errorMsg);
+                    
+                    session.save(rssSource);
+                    tx.commit();
+                    
                     session.evict(rssSource);
+                    feedEntriesCount = 0;
+                    errorMsg = "";
                 }
             }
 

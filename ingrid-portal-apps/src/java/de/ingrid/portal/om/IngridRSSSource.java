@@ -1,5 +1,7 @@
 package de.ingrid.portal.om;
 
+import java.util.Date;
+
 public class IngridRSSSource {
 
     
@@ -9,6 +11,10 @@ public class IngridRSSSource {
     private String language;
     private String url;
     private String categories;
+    
+    private Integer numLastCount;
+    private Date lastUpdate;
+    private String error;
 
     
     /**
@@ -86,6 +92,54 @@ public class IngridRSSSource {
     public void setCategories(String categories) {
         this.categories = categories;
     }    
+    
+    /**
+     * 
+     * @return
+     */
+    public Integer getNumLastCount() {
+    	return numLastCount;
+    }
+    
+    /**
+     * 
+     * @param value
+     */
+    public void setNumLastCount(Integer value) {
+    	this.numLastCount = value;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public Date getLastUpdate() {
+    	return lastUpdate;
+    }
+    
+    /**
+     * 
+     * @param date
+     */
+    public void setLastUpdate(Date date) {
+    	this.lastUpdate = date;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public String getError() {
+    	return error;
+    }
+    
+    /**
+     * 
+     * @param error
+     */
+    public void setError(String error) {
+    	this.error = error;
+    }
 
 
 }

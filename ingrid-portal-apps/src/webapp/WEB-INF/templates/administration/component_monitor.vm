@@ -28,7 +28,7 @@
 		#set ($jobData = $entry.getJobDataMap())
 		#set( $prevTime = $jobHandler.getTrigger($entry.getName(), $entry.getGroup()).getPreviousFireTime())
 		#set( $nextTime = $jobHandler.getTrigger($entry.getName(), $entry.getGroup()).getNextFireTime())
-		#set ($interval = $jobHandler.getInterval($entry))##.getName(), $entry.getGroup()))
+		#set ($interval = $jobHandler.getInterval($entry))
 		## for non monitoring jobs
 		#if ($entry.getGroup() != "monitor")
 			#set ($jobStatus = 0)
@@ -127,17 +127,11 @@
 		##$!filterMap.put("component.monitor.general.active",null)
 		#fillTable($filterMap true)
 		
-		 
-		##$!filterMap.clear()
-		
-		##fillTable($filterMap)
-		
 		<tr><td>&nbsp;</td></tr>
 		<tr><td colspan=2><h3>Inaktive</h3></td></tr>
 		
 		## inaktive
-		##$!filterMap.clear()
-		##$!filterMap.put("component.monitor.general.active",0)
+		## get the inverse results of the filtered jobs
 		#fillTable($filterMap false)
 		</table>
 </div>

@@ -124,21 +124,21 @@ $fieldLabel#end
 #end
 
 #macro (renderDBBrowserRowWithEditLink $rowId $rowValues)
-<tr>
 #if ($velocityCount % 2 == 0)
 	#set ($rowstyle = "contentRowEven")
 #else
 	#set ($rowstyle = "contentRowOdd")
 #end   
-	<td class="$rowstyle">
+<tr class="$rowstyle">
+	<td>
 		<input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
     </td>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('doEdit','Edit')
 $action.setParameter("id", "$rowId")
-	<td class="$rowstyle"><a href="$action">$rowId</a></td>
+	<td><a href="$action">$rowId</a></td>
 #foreach ($rowValue in $rowValues)
-	<td class="$rowstyle"><a href="$action">$rowValue</a></td>
+	<td><a href="$action">$rowValue</a></td>
 #end
 </tr>
 #end

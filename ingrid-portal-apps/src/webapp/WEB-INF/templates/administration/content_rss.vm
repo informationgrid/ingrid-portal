@@ -4,17 +4,18 @@
 #renderDBBrowserNavigation($browser)
 		<p>
 		<table class="border fullwidth">
-#set ($colNames = ["id", "provider", "description", "url", "language", "categories"])
-#set ($colTitles = ["Id", "Anbieter", "Beschreibung", "URL", "Sprache", "Kategorien"])
+#set ($colNames = ["id", "provider", "description", "url", "language", "categories", "numLastCount", "lastUpdate", "error"])
+#set ($colTitles = ["Id", "Anbieter", "Beschreibung", "URL", "Sprache", "Kategorien", "Neue Nachrichten", "Letztes Update", "Fehler"])
 #renderDBBrowserHeader($colNames $colTitles)
 #foreach ($dbEntity in $dbEntities)
 	#set ($rowId = $dbEntity.Id)
-	#set ($rowValues = [$UtilsString.cutString($dbEntity.Provider, 20, 20), $UtilsString.cutString($dbEntity.Description, 85, 85), $UtilsString.cutString($dbEntity.Url, 40, 40), $dbEntity.Language, $UtilsString.cutString($dbEntity.Categories, 20,20)])
+	#set ($rowValues = [$UtilsString.cutString($dbEntity.Provider, 20, 20), $UtilsString.cutString($dbEntity.Description, 85, 85), $UtilsString.cutString($dbEntity.Url, 40, 40), $dbEntity.Language, $UtilsString.cutString($dbEntity.Categories, 20,20), $dbEntity.NumLastCount, $date.format('yyyy-MM-dd H:mm:ss',$dbEntity.LastUpdate), $dbEntity.Error])
+	##set ($colAlign = [-1,0,-1,-1,-1,-1,-1,0])
 	#renderDBBrowserRowWithEditLink($rowId $rowValues)
 #end
 		</table>
 		</p>
 	</div>
-#set ($buttons = ["doDelete", "doRefresh", "doNew"])
+#set ($buttons = ["doDelete", "doClear", "doRefresh", "doNew"])
 #renderDBBrowserFooterButtons($buttons)
 </form>

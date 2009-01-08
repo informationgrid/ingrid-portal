@@ -165,6 +165,10 @@ public class IngridMonitorFacade {
 		}
 	}
 	
+	public void triggerJob(String name, String group) throws SchedulerException {
+		scheduler.triggerJob(name, group);
+	}
+	
 
 	private class JobDetailComparator implements Comparator {
 

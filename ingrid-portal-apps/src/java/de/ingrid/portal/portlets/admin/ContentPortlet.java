@@ -20,9 +20,12 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.quartz.Scheduler;
 
 import de.ingrid.portal.forms.ActionForm;
 import de.ingrid.portal.global.IngridResourceBundle;
@@ -31,6 +34,9 @@ import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateUtil;
+import de.ingrid.portal.om.IngridRSSSource;
+import de.ingrid.portal.om.IngridRSSStore;
+import de.ingrid.portal.scheduler.IngridMonitorFacade;
 
 /**
  * This portlet is the abstract base class of all content portlets. Encapsulates
@@ -95,6 +101,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     protected static String PARAMV_ACTION_DB_DO_DELETE = "doDelete";
 
     protected static String PARAMV_ACTION_DB_DO_CANCEL = "doCancel";
+    
+    protected static String PARAMV_ACTION_DB_DO_CLEAR = "doClear";
 
     // Data to set in Subclasses
     // -------------------------
@@ -413,6 +421,12 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
                 // jump to first page when column sorting was clicked
                 ContentBrowserState state = getBrowserState(request);
                 state.doFirstPage();
+            } else if (request.getParameter(PARAMV_ACTION_DB_DO_CLEAR) != null) {
+            	deleteAllContentOfATable();
+            	
+    	        // TODO: name of "RSSFetcher Job" and Group are hard coded
+            	IngridMonitorFacade monitor = IngridMonitorFacade.instance();
+            	monitor.triggerJob("RSSFetcherJob", "DEFAULT");  
             }
 
             // redirect to render method WITH URL PARAMS
@@ -435,6 +449,35 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      */
     abstract protected Object[] getDBEntities(PortletRequest request);
 
+    
+    private void deleteAllContentOfATable() throws PortletException {
+    	Session session = HibernateUtil.currentSession();
+        Transaction tx = null;
+        List rssEntries = null;
+        
+        try {
+	        tx = session.beginTransaction();
+	        rssEntries = session.createCriteria(IngridRSSStore.class).list();
+
+	        for (int i=0; i<rssEntries.size(); i++) {
+	        	session.delete(rssEntries.get(i));
+	        }
+	        
+	        // another method to clear the table
+	        //Query q = session.createQuery("delete from IngridRSSStore");
+	        //q.executeUpdate();
+
+	        tx.commit();
+	    } catch (Throwable t) {
+	        if (tx != null) {
+	            tx.rollback();
+	        }
+	        throw new PortletException( t.getMessage() );
+	    } finally {
+	        HibernateUtil.closeSession();
+	    }
+    }
+    
     /**
      * Default method for saving entities in DB. Entities are extracted from
      * request via getDBEntities()

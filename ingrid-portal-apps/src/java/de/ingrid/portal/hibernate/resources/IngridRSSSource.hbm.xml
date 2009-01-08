@@ -11,5 +11,8 @@
     	<property name="url" type="java.lang.String"/>
     	<property name="language" column="lang" type="java.lang.String"/>
     	<property name="categories" type="java.lang.String"/>
+    	<property name="numLastCount" type="java.lang.Integer"/>
+    	<property name="lastUpdate" type="timestamp"/>
+    	<property name="error" type="java.lang.String"/>
   </class>
 </hibernate-mapping>
