@@ -94,4 +94,8 @@ public class ImportServiceImpl {
 	public void setCatalogRequestHandler(CatalogRequestHandler catalogRequestHandler) {
 		this.catalogRequestHandler = catalogRequestHandler;
 	}
+
+	public void cancelRunningJob() {
+		catalogRequestHandler.cancelRunningJob();
+	}
 }

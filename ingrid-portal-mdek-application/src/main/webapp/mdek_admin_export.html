@@ -186,11 +186,13 @@ function updateExportInfo(exportInfo) {
 		dojo.byId("exportInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
 		dojo.html.show(dojo.byId("exportInfoDownload"));
 		dojo.html.show(dojo.byId("exportInfoEndDateContainer"));
+		dojo.html.hide(dojo.byId("cancelExportProcessButton"));
 		dojo.byId("exportInfoNumExportedEntities").innerHTML = exportInfo.numProcessed;
 	} else {
 		dojo.byId("exportInfoTitle").innerHTML = "Informationen zum laufenden Prozess:";
 		dojo.html.hide(dojo.byId("exportInfoDownload"));
 		dojo.html.hide(dojo.byId("exportInfoEndDateContainer"));
+		dojo.html.show(dojo.byId("cancelExportProcessButton"));
 		dojo.byId("exportInfoNumExportedEntities").innerHTML = exportInfo.numProcessed + " / " + exportInfo.numTotal;
 	}
 
@@ -224,6 +226,16 @@ scriptScope.downloadLastExport = function() {
 	});
 }
 
+scriptScope.cancelExport = function() {
+	ExportService.cancelRunningJob({
+		callback: function() {
+			// do nothing
+		},
+		errorHandler: function(errMsg, err) {
+			displayErrorMessage(err);
+		}		
+	});
+}
 
 function initSysLists() {
 	var def = new dojo.Deferred();
@@ -313,7 +325,12 @@ function initSysLists() {
 									<td>Anzahl Datens&auml;tze:</td>
 									<td id="exportInfoNumExportedEntities"></td></tr>
 							</table>
-<!--              			<span class="button"><a href="#" class="buttonBlue" title="Prozess abbrechen">Prozess abbrechen</a></span>-->
+							<span id="cancelExportProcessButton" class="button" style="height:20px !important;">
+								<span style="float:right;">
+									<button dojoType="ingrid:Button" title="Prozess abbrechen" onClick="javascript:scriptScope.cancelExport();">Prozess abbrechen</button>
+								</span>
+							</span>
+
 						</div> <!-- processInfoContent end -->
 					</div> <!-- processInfo end -->
 				</div> <!-- inputContainer end -->

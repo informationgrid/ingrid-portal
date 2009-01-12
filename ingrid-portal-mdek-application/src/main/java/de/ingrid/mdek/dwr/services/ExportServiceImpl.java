@@ -46,4 +46,8 @@ public class ExportServiceImpl {
 
 		return new FileTransfer("export.xml.gz", "x-gzip", exportInfo.getResult());
 	}
+
+	public void cancelRunningJob() {
+		catalogRequestHandler.cancelRunningJob();
+	}
 }

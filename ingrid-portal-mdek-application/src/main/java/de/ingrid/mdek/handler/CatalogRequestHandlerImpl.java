@@ -114,6 +114,10 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		return MdekCatalogUtils.extractImportInfoFromResponse(response);
 	}
 
+	public void cancelRunningJob() {
+		mdekCallerCatalog.cancelRunningJob(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
+	}
+
 	public ConnectionFacade getConnectionFacade() {
 		return connectionFacade;
 	}

@@ -22,4 +22,5 @@ public interface CatalogRequestHandler {
 	public ExportInfoBean getExportInfo(boolean includeExportData);
 	public void importEntities(byte[] importData, String targetObjectUuid, String targetAddressUuid, boolean publishImmediately, boolean doSeparateImport);
 	public JobInfoBean getImportInfo();
+	public void cancelRunningJob();
 }

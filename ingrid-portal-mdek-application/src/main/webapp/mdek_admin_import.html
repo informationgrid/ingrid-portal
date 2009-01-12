@@ -102,6 +102,17 @@ scriptScope.startImport = function() {
 	}
 }
 
+scriptScope.cancelImport = function() {
+	ImportService.cancelRunningJob({
+		callback: function() {
+			// do nothing
+		},
+		errorHandler: function(errMsg, err) {
+			displayErrorMessage(err);
+		}		
+	});
+}
+
 function initTree() {
 	// Load initial first level of the tree from the server
 	TreeService.getSubTree(null, null, 1, 
@@ -175,11 +186,13 @@ function updateImportInfo(importInfo) {
 		dojo.byId("importInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
 		dojo.html.show(dojo.byId("importInfoDownload"));
 		dojo.html.show(dojo.byId("importInfoEndDateContainer"));
+		dojo.html.hide(dojo.byId("cancelImportProcessButton"));
 		dojo.byId("importInfoNumImportedEntities").innerHTML = importInfo.numProcessedEntities;
 	} else {
 		dojo.byId("importInfoTitle").innerHTML = "Informationen zum laufenden Prozess:";
 		dojo.html.hide(dojo.byId("importInfoDownload"));
 		dojo.html.hide(dojo.byId("importInfoEndDateContainer"));
+		dojo.html.show(dojo.byId("cancelImportProcessButton"));
 		dojo.byId("importInfoNumImportedEntities").innerHTML = importInfo.numProcessedEntities + " / " + importInfo.numEntities;
 	}
 
@@ -328,6 +341,11 @@ function cloneObject(obj) {
 							<td>Anzahl Datens&auml;tze:</td>
 							<td id="importInfoNumImportedEntities"></td></tr>
 					</table>
+					<span id="cancelImportProcessButton" class="button" style="height:20px !important;">
+						<span style="float:right;">
+							<button dojoType="ingrid:Button" title="Prozess abbrechen" onClick="javascript:scriptScope.cancelImport();">Prozess abbrechen</button>
+						</span>
+					</span>
 				</div> <!-- processInfoContent end -->
 			</div> <!-- processInfo end -->
 		</div> <!-- inputContainer end -->
