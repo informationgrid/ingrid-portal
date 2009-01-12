@@ -95,11 +95,9 @@ dojo.addOnLoad(function() {
 	var spatialRefAltMeasure = dojo.widget.byId("spatialRefAltMeasure");
 	var spatialRefAltVDate = dojo.widget.byId("spatialRefAltVDate");
 	if (spatialRefAltMin) {
-		dojo.debug("connecting spatialRefAltMin");
 		dojo.event.connect(spatialRefAltMin, "update", function(val) {applyRule6();});
 	}
 	if (spatialRefAltMax) {
-		dojo.debug("connecting spatialRefAltMax");
 		dojo.event.connect(spatialRefAltMax, "update", function(val) {applyRule6();});
 	}
 	if (spatialRefAltMeasure) {
