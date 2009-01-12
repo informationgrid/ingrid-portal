@@ -167,7 +167,7 @@
     	<p class="clearer" />
 	</div>
 <div class="formfooter" align="right">
-	<input class="btn" type="submit" name="doImport" value="iPlugs Importieren" />
+	<input class="btn" type="submit" name="doImport" value="Jobs importieren" />
 </div>
 </form>
 

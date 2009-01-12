@@ -14,6 +14,7 @@ public class IngridRSSSource {
     
     private Integer numLastCount;
     private Date lastUpdate;
+    //private Date lastMessageUpdate;
     private String error;
 
     
@@ -124,6 +125,22 @@ public class IngridRSSSource {
     public void setLastUpdate(Date date) {
     	this.lastUpdate = date;
     }
+    
+    /**
+     * 
+     * @return
+     */
+    //public Date getLastMessageUpdate() {
+    //	return lastMessageUpdate;
+    //}
+    
+    /**
+     * 
+     * @param date
+     */
+    //public void setLastMessageUpdate(Date date) {
+    //	this.lastMessageUpdate = date;
+    //}
     
     /**
      * 

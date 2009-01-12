@@ -26,6 +26,12 @@
 	#end
 	<p class="clearer"></p>
 	</br>
+	#if ($dbEntity.Error != "" && $dbEntity.Error != "component.monitor.general.error.none" )
+		<p  style="color:#ff0000;">
+			<label class="float_left col2left_incr">Fehlermeldung</label><span>$!{id}</span>
+			<span>$MESSAGES.getString($dbEntity.Error)</span>
+		</p>
+	#end
 #end
 	</div>
 #renderDBEditFooter($mode)

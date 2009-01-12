@@ -4,29 +4,23 @@
 package de.ingrid.portal.scheduler.jobs;
 
 import java.net.URL;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.quartz.JobDataMap;
+import org.hibernate.criterion.Restrictions;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
 import de.ingrid.portal.hibernate.HibernateUtil;
-import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridRSSSource;
-import de.ingrid.utils.PlugDescription;
 
 
 /**
@@ -35,8 +29,6 @@ import de.ingrid.utils.PlugDescription;
  * @author joachim@wemove.com
  */
 public class IngridMonitorRSSCheckerJob extends IngridMonitorAbstractJob {
-
-	//public static final String STATUS_CODE_ERROR_QUERY_PARSE_EXCEPTION = "component.monitor.iplug.error.query.parse.exception";
 
 	public static final String COMPONENT_TYPE = "component.monitor.general.type.rss";
 	
@@ -49,7 +41,9 @@ public class IngridMonitorRSSCheckerJob extends IngridMonitorAbstractJob {
 	 */
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		long startTime = 0;
-		
+		Session session = HibernateUtil.currentSession();
+        Transaction tx = null;
+        
 		if (log.isDebugEnabled()) {
 			startTime = System.currentTimeMillis();
 			log.debug("Job (" + context.getJobDetail().getName() + ") is executed...");
@@ -62,6 +56,18 @@ public class IngridMonitorRSSCheckerJob extends IngridMonitorAbstractJob {
 		String statusCode = null;
 		SyndFeed feed = null;
 		SyndFeedInput input = null;
+		
+		IngridRSSSource rssSource = null;
+		List rssSources = session.createCriteria(IngridRSSSource.class).add(Restrictions.eq("url", url)).list();
+		
+		if (rssSources.size()==1) {
+			rssSource = (IngridRSSSource)rssSources.get(0);
+		} else {
+			if (log.isInfoEnabled()) {
+                log.info("RSS Source not found in list. List of database objects returned " + rssSources.size() + " objects.");
+            }
+		}
+		
 		
         try {
             input = new SyndFeedInput();
@@ -81,10 +87,16 @@ public class IngridMonitorRSSCheckerJob extends IngridMonitorAbstractJob {
                 log.debug("Error building RSS feed (" + url + ").", e);
             }
             status = STATUS_ERROR;
-			statusCode = e.getMessage(); //STATUS_CODE_ERROR_XML_PARSE;
-            //feed = null;
+			statusCode = e.getMessage();
         } finally {
         	computeTime(jobDetail.getJobDataMap(), stopTimer());
+        }
+        
+        if (rssSource != null) {
+	        tx = session.beginTransaction();
+	        rssSource.setError(statusCode);
+	        session.save(rssSource);
+	        tx.commit();
         }
         
         updateJobData(context, status, statusCode);

@@ -39,7 +39,7 @@ import de.ingrid.utils.PlugDescription;
  *
  */
 public class IngridJobHandler {
-	private static final String[] component_types = { "component.monitor.general.type.iplug", "component.monitor.general.type.g2k", "component.monitor.general.type.csw", "component.monitor.general.type.ecs", "component.monitor.general.type.sns", "component.monitor.general.type.ibus", "component.monitor.general.type.rss" };
+	private static final String[] component_types = { "component.monitor.general.type.iplug", "component.monitor.general.type.g2k", "component.monitor.general.type.csw", "component.monitor.general.type.ecs", "component.monitor.general.type.sns", "component.monitor.general.type.ibus", "component.monitor.general.type.rss", "component.monitor.general.type.rssfetcher" };
 	
 	private final static Log log = LogFactory.getLog(AdminComponentMonitorPortlet.class);
 	
@@ -159,7 +159,82 @@ public class IngridJobHandler {
 				cf.setError(AdminComponentMonitorForm.FIELD_ID, "component.monitor.form.error.duplicate.id");
 				return false;
 			}
+			
+			Class jobClass = null;
+			if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorIPlugJob.COMPONENT_TYPE)) {
+				jobClass = IngridMonitorIPlugJob.class;
+			} else if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorG2KJob.COMPONENT_TYPE)) {
+				jobClass = IngridMonitorG2KJob.class;
+			} else if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorECSJob.COMPONENT_TYPE)) {
+				jobClass = IngridMonitorECSJob.class;
+			} else if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorCSWJob.COMPONENT_TYPE)) {
+				jobClass = IngridMonitorCSWJob.class;
+			} else	if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorSNSJob.COMPONENT_TYPE)) {
+				jobClass = IngridMonitorSNSJob.class;
+			} else	if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorIBusJob.COMPONENT_TYPE)) {
+				jobClass = IngridMonitorIBusJob.class;
+				
+				// IBus shall exist only once
+				if (monitor.jobClassExists(IngridMonitorIBusJob.class)) {
+					cf.setError(AdminComponentMonitorForm.FIELD_TYPE, "component.monitor.form.error.single.job");
+					return false;
+				}
+			} else	if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorRSSCheckerJob.COMPONENT_TYPE)) {
+				jobClass = IngridMonitorRSSCheckerJob.class;
+			} else	if (cf.getInput(AdminComponentMonitorForm.FIELD_TYPE).equals(IngridMonitorRSSFetcherJob.COMPONENT_TYPE)) {
+				jobClass = IngridMonitorRSSFetcherJob.class;
+				
+				// RSSFetcherJob shall exist only once
+				if (monitor.jobClassExists(IngridMonitorRSSFetcherJob.class)) {
+					cf.setError(AdminComponentMonitorForm.FIELD_TYPE, "component.monitor.form.error.single.job");
+					return false;
+				}
+			}
+			if (jobClass != null) {
+				jobDetail = new JobDetail(id,	IngridMonitorFacade.SCHEDULER_GROUP_NAME, jobClass);
 
+				JobDataMap dataMap = jobDetail.getJobDataMap();
+				int active = cf.getInputAsInteger(AdminComponentMonitorForm.FIELD_ACTIVE, new Integer(0));
+
+				dataMap.put(IngridMonitorAbstractJob.PARAM_ACTIVE, active);
+				dataMap.put(IngridMonitorAbstractJob.PARAM_CHECK_INTERVAL, cf.getInputAsInteger(
+						AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(30)));
+				dataMap.put(IngridMonitorAbstractJob.PARAM_TIMEOUT, cf.getInputAsInteger(
+						AdminComponentMonitorForm.FIELD_TIMEOUT, new Integer(500)));
+				dataMap.put(IngridMonitorAbstractJob.PARAM_COMPONENT_TITLE, cf
+						.getInput(AdminComponentMonitorForm.FIELD_TITLE));
+				dataMap.put(IngridMonitorAbstractJob.PARAM_COMPONENT_TYPE, cf
+						.getInput(AdminComponentMonitorForm.FIELD_TYPE));
+				dataMap.put(IngridMonitorAbstractJob.PARAM_QUERY, cf
+						.getInput(AdminComponentMonitorForm.FIELD_QUERY));
+				dataMap.put(IngridMonitorAbstractJob.PARAM_SERVICE_URL, cf
+						.getInput(AdminComponentMonitorForm.FIELD_SERVICE_URL));
+				dataMap.put(IngridMonitorAbstractJob.PARAM_STATUS, IngridMonitorAbstractJob.STATUS_OK);
+				dataMap
+						.put(IngridMonitorAbstractJob.PARAM_STATUS_CODE,
+								IngridMonitorAbstractJob.STATUS_CODE_NO_ERROR);
+				dataMap.put(IngridMonitorAbstractJob.PARAM_EVENT_OCCURENCES, 1);
+
+				ArrayList contacts = new ArrayList();
+				String[] emails = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_EMAILS);
+				String[] thresholds = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLDS);
+				for (int i = 0; i < emails.length; i++) {
+					HashMap contact = new HashMap();
+					contact.put(IngridMonitorAbstractJob.PARAM_CONTACT_EMAIL, emails[i]);
+					contact.put(IngridMonitorAbstractJob.PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT, Integer
+							.valueOf(thresholds[i]));
+					contacts.add(contact);
+				}
+				dataMap.put(IngridMonitorAbstractJob.PARAM_CONTACTS, contacts);
+				jobDetail.setRequestsRecovery(false);
+				
+				// add the job to the scheduler without a trigger
+				try {
+					monitor.getScheduler().addJob(jobDetail, true);
+				} catch (SchedulerException e) {
+					log.error("Error creating job (" + id + ").", e);
+				}
+			/*
 			updateDataFromForm(cf, jobDetail);
 			jobDetail.setRequestsRecovery(false);
 			
@@ -171,24 +246,25 @@ public class IngridJobHandler {
 			} catch (SchedulerException e) {
 				log.error("Error creating job (" + id + ").", e);
 			}
-
-			if (active==1) {
-				Trigger trigger = TriggerUtils.makeSecondlyTrigger(cf.getInputAsInteger(
-						AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(1800)).intValue());
-				trigger.setStartTime(new Date());
-				trigger.setName(id);
-				trigger.setGroup(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-				trigger.setJobName(id);
-				trigger.setJobGroup(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-				if (triggerExists(id)) {
-					monitor.getScheduler().rescheduleJob(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME, trigger);
-					log.warn("added a new job with an existing trigger!!!");
+*/
+				if (active==1) {
+					Trigger trigger = TriggerUtils.makeSecondlyTrigger(cf.getInputAsInteger(
+							AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(1800)).intValue());
+					trigger.setStartTime(new Date());
+					trigger.setName(id);
+					trigger.setGroup(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+					trigger.setJobName(id);
+					trigger.setJobGroup(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+					if (triggerExists(id)) {
+						monitor.getScheduler().rescheduleJob(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME, trigger);
+						log.warn("added a new job with an existing trigger!!!");
+					} else {
+						monitor.getScheduler().scheduleJob(trigger);
+					}
 				} else {
-					monitor.getScheduler().scheduleJob(trigger);
+					// remove the trigger id from the job that is called id ... does not work
+					monitor.getScheduler().removeTriggerListener(id);
 				}
-			} else {
-				// remove the trigger id from the job that is called id ... does not work
-				monitor.getScheduler().removeTriggerListener(id);
 			}
 			
 		} catch (SchedulerException e) {
@@ -224,6 +300,7 @@ public class IngridJobHandler {
 			monitor.deleteAllJobs(IngridMonitorIPlugJob.COMPONENT_TYPE);
 			monitor.deleteAllJobs(IngridMonitorIBusJob.COMPONENT_TYPE);
 			monitor.deleteAllJobs(IngridMonitorRSSCheckerJob.COMPONENT_TYPE);
+			monitor.deleteAllJobs(IngridMonitorRSSFetcherJob.COMPONENT_TYPE);
 		}
 		
 		// *****************************************
@@ -232,7 +309,12 @@ public class IngridJobHandler {
 		addIBusJob(activate, stdEmail);
 		
 		// *****************************************
-		// add RSSCheckerJob
+		// add RSSFetcherJob (Monitor!)
+		// *****************************************
+		addMonitorRSSFetcherJob(activate, stdEmail);
+		
+		// *****************************************
+		// add RSSCheckerJobs
 		// *****************************************
         Session session = HibernateUtil.currentSession();
         List rssSources = session.createCriteria(IngridRSSSource.class).list();
@@ -356,6 +438,58 @@ public class IngridJobHandler {
 	}
 	
 	
+	private void addMonitorRSSFetcherJob( boolean activate, String stdEmail ) {
+		JobDetail jobDetail;
+		
+		// does the component already exists?
+		try {
+			jobDetail = monitor.getScheduler().getJobDetail(IngridMonitorRSSFetcherJob.JOB_ID, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+		} catch (SchedulerException e) {
+			jobDetail = null;
+		}
+		
+		if (jobDetail == null) {
+			jobDetail = new JobDetail(IngridMonitorRSSFetcherJob.JOB_ID, IngridMonitorFacade.SCHEDULER_GROUP_NAME,
+					IngridMonitorRSSFetcherJob.class);
+			
+			// here the ID of the job is also used as the name
+			fillJobDataMap(jobDetail.getJobDataMap(), activate, IngridMonitorRSSFetcherJob.JOB_ID, stdEmail);
+			
+			// add specific data to the dataMap
+			jobDetail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE,
+					IngridMonitorRSSFetcherJob.COMPONENT_TYPE);
+			
+			jobDetail.setRequestsRecovery(false);
+			
+			// add the job to the scheduler without a trigger
+			try {
+				monitor.getScheduler().addJob(jobDetail, true);
+			} catch (SchedulerException e) {
+				log.error("Error creating monitor for RSSFetcher-job (" + IngridMonitorRSSFetcherJob.JOB_ID + ").", e);
+			}
+			
+			if (activate) {
+				Trigger trigger = TriggerUtils.makeSecondlyTrigger(1800);
+				trigger.setStartTime(new Date());
+				trigger.setName(IngridMonitorRSSFetcherJob.JOB_ID);
+				trigger.setGroup(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+				trigger.setJobName(IngridMonitorRSSFetcherJob.JOB_ID);
+				trigger.setJobGroup(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+				
+				try {
+					if (triggerExists(IngridMonitorRSSFetcherJob.JOB_ID)) {
+						monitor.getScheduler().rescheduleJob(IngridMonitorRSSFetcherJob.JOB_ID, IngridMonitorFacade.SCHEDULER_GROUP_NAME, trigger);
+					} else {
+						monitor.getScheduler().scheduleJob(trigger);
+					}
+				} catch (SchedulerException e) {
+					log.error("Error creating iBus job (" + IngridMonitorRSSFetcherJob.JOB_ID + ").", e);
+				}
+			}
+		}
+	}
+	
+	
 	/**
 	 * Add an RSS checker component as a monitoring job.
 	 * @param rssSource, contains information about the rss feed
@@ -365,7 +499,7 @@ public class IngridJobHandler {
 	private void addRSSCheckerJob( IngridRSSSource rssSource, boolean activate, String stdEmail ) {
 		JobDetail jobDetail;
 		
-		// does the iBus component already exists?
+		// does the RSS component already exists?
 		try {
 			jobDetail = monitor.getScheduler().getJobDetail(rssSource.getUrl(), IngridMonitorFacade.SCHEDULER_GROUP_NAME);
 		} catch (SchedulerException e) {
@@ -547,44 +681,62 @@ public class IngridJobHandler {
 	 */
 	private void updateDataFromForm(AdminComponentMonitorForm cf,
 			JobDetail jobDetail) {
-		JobDataMap dataMap = jobDetail.getJobDataMap();
-		int active = cf.getInputAsInteger(AdminComponentMonitorForm.FIELD_ACTIVE, new Integer(0));
-
-		dataMap.put(IngridMonitorIPlugJob.PARAM_ACTIVE, active);
-		dataMap.put(IngridMonitorIPlugJob.PARAM_CHECK_INTERVAL, cf.getInputAsInteger(
-				AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(30)));
-		dataMap.put(IngridMonitorIPlugJob.PARAM_TIMEOUT, cf.getInputAsInteger(
-				AdminComponentMonitorForm.FIELD_TIMEOUT, new Integer(500)));
-		dataMap.put(IngridMonitorIPlugJob.PARAM_COMPONENT_TITLE, cf
-				.getInput(AdminComponentMonitorForm.FIELD_TITLE));
 		String componentType = cf.getInput(AdminComponentMonitorForm.FIELD_TYPE);
-		dataMap.put(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE, componentType);
+		
+		Class jobClass = null;
 		if (componentType.equals(IngridMonitorIPlugJob.COMPONENT_TYPE)) {
-			jobDetail.setJobClass(IngridMonitorIPlugJob.class);
+			jobClass = IngridMonitorIPlugJob.class;
 		} else if (componentType.equals(IngridMonitorG2KJob.COMPONENT_TYPE)) {
-			jobDetail.setJobClass(IngridMonitorG2KJob.class);
+			jobClass = IngridMonitorG2KJob.class;
 		} else if (componentType.equals(IngridMonitorECSJob.COMPONENT_TYPE)) {
-			jobDetail.setJobClass(IngridMonitorECSJob.class);
+			jobClass = IngridMonitorECSJob.class;
 		} else if (componentType.equals(IngridMonitorCSWJob.COMPONENT_TYPE)) {
-			jobDetail.setJobClass(IngridMonitorCSWJob.class);
+			jobClass = IngridMonitorCSWJob.class;
 		} else if (componentType.equals(IngridMonitorSNSJob.COMPONENT_TYPE)) {
-			jobDetail.setJobClass(IngridMonitorSNSJob.class);
+			jobClass = IngridMonitorSNSJob.class;
+		} else if (componentType.equals(IngridMonitorRSSCheckerJob.COMPONENT_TYPE)) {
+			jobClass = IngridMonitorRSSCheckerJob.class;
+		} else	if (componentType.equals(IngridMonitorRSSFetcherJob.COMPONENT_TYPE)) {
+			jobClass = IngridMonitorRSSFetcherJob.class;
+		} else	if (componentType.equals(IngridMonitorIBusJob.COMPONENT_TYPE)) {
+			jobClass = IngridMonitorIBusJob.class;
 		}
-		dataMap.put(IngridMonitorIPlugJob.PARAM_QUERY, cf
-				.getInput(AdminComponentMonitorForm.FIELD_QUERY));
-		dataMap.put(IngridMonitorIPlugJob.PARAM_SERVICE_URL, cf
-				.getInput(AdminComponentMonitorForm.FIELD_SERVICE_URL));
-
-		ArrayList contacts = new ArrayList();
-		String[] emails = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_EMAILS);
-		String[] thresholds = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLDS);
-		for (int i = 0; i < emails.length; i++) {
-			HashMap contact = new HashMap();
-			contact.put(IngridMonitorIPlugJob.PARAM_CONTACT_EMAIL, emails[i]);
-			contact.put(IngridMonitorIPlugJob.PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT, Integer
-					.valueOf(thresholds[i]));
-			contacts.add(contact);
+		
+		if (jobClass != null) {
+			jobDetail.setJobClass(jobClass);
+			JobDataMap dataMap = jobDetail.getJobDataMap();
+			int active = cf.getInputAsInteger(AdminComponentMonitorForm.FIELD_ACTIVE, new Integer(0));
+	
+			dataMap.put(IngridMonitorIPlugJob.PARAM_ACTIVE, active);
+			dataMap.put(IngridMonitorIPlugJob.PARAM_CHECK_INTERVAL, cf.getInputAsInteger(
+					AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(30)));
+			dataMap.put(IngridMonitorIPlugJob.PARAM_TIMEOUT, cf.getInputAsInteger(
+					AdminComponentMonitorForm.FIELD_TIMEOUT, new Integer(500)));
+			dataMap.put(IngridMonitorIPlugJob.PARAM_COMPONENT_TITLE, cf
+					.getInput(AdminComponentMonitorForm.FIELD_TITLE));
+			
+			dataMap.put(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE, componentType);
+			
+			
+			
+			dataMap.put(IngridMonitorIPlugJob.PARAM_QUERY, cf
+					.getInput(AdminComponentMonitorForm.FIELD_QUERY));
+			dataMap.put(IngridMonitorIPlugJob.PARAM_SERVICE_URL, cf
+					.getInput(AdminComponentMonitorForm.FIELD_SERVICE_URL));
+	
+			ArrayList contacts = new ArrayList();
+			String[] emails = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_EMAILS);
+			String[] thresholds = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLDS);
+			for (int i = 0; i < emails.length; i++) {
+				HashMap contact = new HashMap();
+				contact.put(IngridMonitorIPlugJob.PARAM_CONTACT_EMAIL, emails[i]);
+				contact.put(IngridMonitorIPlugJob.PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT, Integer
+						.valueOf(thresholds[i]));
+				contacts.add(contact);
+			}
+			dataMap.put(IngridMonitorIPlugJob.PARAM_CONTACTS, contacts);
+		} else {
+			//throw SchedulerException;
 		}
-		dataMap.put(IngridMonitorIPlugJob.PARAM_CONTACTS, contacts);
 	}
 }

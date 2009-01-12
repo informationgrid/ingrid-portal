@@ -52,6 +52,10 @@ public class RSSFetcherJob extends IngridAbstractStateJob {
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
      */
     public void execute(JobExecutionContext context) throws JobExecutionException {
+    	
+    	if (log.isDebugEnabled()) {
+    		log.info("RSSFetcherJob is started ...");
+    	}
 
         Session session = HibernateUtil.currentSession();
         Transaction tx = null;
@@ -66,7 +70,7 @@ public class RSSFetcherJob extends IngridAbstractStateJob {
             SyndEntry entry = null;
             int cnt = 0;
             int feedEntriesCount = 0;
-            String errorMsg = "";
+            //String errorMsg = "";
 
             Calendar cal;
 
@@ -198,8 +202,8 @@ public class RSSFetcherJob extends IngridAbstractStateJob {
 
                     feed = null;
                 } catch (Exception e) {
-                    if (log.isInfoEnabled()) {
-                    	errorMsg = e.getMessage();
+                	//errorMsg = e.getMessage();
+                    if (log.isInfoEnabled()) {                    	
                         log.info("Error building RSS feed (" + rssSource.getUrl() + "). [" + e.getMessage() + "]");
                     }
                     if (log.isDebugEnabled()) {
@@ -208,16 +212,22 @@ public class RSSFetcherJob extends IngridAbstractStateJob {
                 } finally {
                 	// add information about the fetching of this feed into the RSSSource database
                     tx = session.beginTransaction();
-                    rssSource.setLastUpdate(new Date());
-                    rssSource.setNumLastCount(feedEntriesCount);
-                    rssSource.setError(errorMsg);
+                    
+                    if (feedEntriesCount > 0) {
+                    	rssSource.setLastUpdate(new Date());
+                    	rssSource.setNumLastCount(feedEntriesCount);
+                    }
+                    
+                    //rssSource.setLastMessageUpdate(new Date());
+                    
+                    //rssSource.setError(errorMsg);
                     
                     session.save(rssSource);
                     tx.commit();
                     
                     session.evict(rssSource);
                     feedEntriesCount = 0;
-                    errorMsg = "";
+                    //errorMsg = "";
                 }
             }
 

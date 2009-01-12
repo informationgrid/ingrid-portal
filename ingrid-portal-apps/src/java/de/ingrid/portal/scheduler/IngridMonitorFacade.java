@@ -13,6 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SimpleTrigger;
@@ -169,6 +170,44 @@ public class IngridMonitorFacade {
 		scheduler.triggerJob(name, group);
 	}
 	
+	
+	public boolean isExecuting(String name, String group, JobExecutionContext context) {
+		Scheduler scheduler = context.getScheduler();
+		try {
+			List jobs = scheduler.getCurrentlyExecutingJobs();
+			if (jobs.isEmpty()) {
+				return false;
+			} 
+			for (int i = 0; i < jobs.size(); i++){ 
+				JobExecutionContext jobExecutionContext = (JobExecutionContext) jobs.get(i);
+				if (jobExecutionContext.getJobDetail().getName().equals(context.getJobDetail().getName())) {
+					if (jobExecutionContext.getTrigger().getName().equals(name) ||
+							jobExecutionContext.getTrigger().getGroup().equals(group)) {
+						return true; 
+					}
+				}
+			} 
+		} catch (SchedulerException e) {
+			e.printStackTrace(); 
+		} 
+		return false;
+	} 
+	
+	/**
+	 * 
+	 * @param jobClass
+	 * @return
+	 */
+	public boolean jobClassExists( Class jobClass ) {
+		List jobs = getJobs(null, true);
+		
+		for (int i = 0; i < jobs.size(); i++) {
+			if (((JobDetail)jobs.get(i)).getJobClass() ==  jobClass) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	private class JobDetailComparator implements Comparator {
 

@@ -4,14 +4,50 @@
 #renderDBBrowserNavigation($browser)
 		<p>
 		<table class="border fullwidth">
-#set ($colNames = ["id", "provider", "description", "url", "language", "categories", "numLastCount", "lastUpdate", "error"])
-#set ($colTitles = ["Id", "Anbieter", "Beschreibung", "URL", "Sprache", "Kategorien", "Neue Nachrichten", "Letztes Update", "Fehler"])
+#set ($colNames = ["id", "provider", "description", "language", "categories", "numLastCount", "lastUpdate", "error"])
+#set ($colTitles = ["Id", "Anbieter", "Beschreibung", "Sprache", "Kategorien", "Neue Nachrichten", "Letztes Update", "Fehler"])
 #renderDBBrowserHeader($colNames $colTitles)
 #foreach ($dbEntity in $dbEntities)
 	#set ($rowId = $dbEntity.Id)
-	#set ($rowValues = [$UtilsString.cutString($dbEntity.Provider, 20, 20), $UtilsString.cutString($dbEntity.Description, 85, 85), $UtilsString.cutString($dbEntity.Url, 40, 40), $dbEntity.Language, $UtilsString.cutString($dbEntity.Categories, 20,20), $dbEntity.NumLastCount, $date.format('yyyy-MM-dd H:mm:ss',$dbEntity.LastUpdate), $dbEntity.Error])
-	##set ($colAlign = [-1,0,-1,-1,-1,-1,-1,0])
-	#renderDBBrowserRowWithEditLink($rowId $rowValues)
+	#set ($error = "")
+	#if ($dbEntity.Error != "" && $dbEntity.Error != "component.monitor.general.error.none")
+		#set ($error = "ERROR")
+	#else
+		#set ($error = "OK")
+	#end
+	#set ($rowValues = [$UtilsString.cutString($dbEntity.Provider, 20, 20), $UtilsString.cutString($dbEntity.Description, 85, 85), $dbEntity.Language, $UtilsString.cutString($dbEntity.Categories, 20,20), $dbEntity.NumLastCount, $date.format('yyyy-MM-dd H:mm:ss',$dbEntity.LastUpdate), $error])
+	#if ($velocityCount % 2 == 0)
+		#if ($error == "ERROR")
+			#set ($rowstyle = "contentRowEvenError")
+		#else
+			#set ($rowstyle = "contentRowEven")
+		#end
+    #else
+		#if ($error == "ERROR")
+			#set ($rowstyle = "contentRowOddError")
+		#else
+			#set ($rowstyle = "contentRowOdd")
+		#end
+    #end   
+    <tr class="$rowstyle">
+    	<td>
+    		<input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+        </td>
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter('doEdit','Edit')
+    $action.setParameter("id", "$rowId")
+    	<td><a href="$action">$rowId</a></td>
+    #foreach ($rowValue in $rowValues)
+		#if ($velocityCount == 2)
+			<td><a href="$action">$rowValue</a> (<a target="_blank" href="$dbEntity.Url">link</a>)</td>
+		##elseif ($velocityCount == 7)
+		##	<td><a href="$action">$MESSAGES.getString($rowValue)</a></td>
+		#else
+			<td><a href="$action">$rowValue</a></td>
+		#end
+    #end
+    </tr>
+	
 #end
 		</table>
 		</p>
