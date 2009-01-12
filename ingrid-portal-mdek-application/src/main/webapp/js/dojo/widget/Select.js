@@ -164,6 +164,16 @@ dojo.widget.defineWidget(
 	}
   },
 
+  updateValidState: function() {
+	  var valid = (this.getValueForDisplayValue(this.textInputNode.value) != null);
+	  var empty = this.isEmpty();
+
+	  if (this.required && empty || !valid && !empty) {
+		dojo.html.addClass(this.textInputNode, "fieldInvalid");
+	  } else {
+		dojo.html.removeClass(this.textInputNode, "fieldInvalid");
+	  }
+  },
 
   // Function to check if the input field is empty for validation
   isEmpty: function() {

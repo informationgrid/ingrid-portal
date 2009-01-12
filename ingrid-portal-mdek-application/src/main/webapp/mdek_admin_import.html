@@ -69,7 +69,7 @@ scriptScope.downloadImportLog = function() {
 
 function startTreeImport() {
 	var file = dwr.util.getValue("importFile");
-	var parentObjectUuid = (importTreeSelectedParentDataset != null) ? importTreeSelectedParentDataset.uuid : null;
+	var parentObjectUuid = (importTreeSelectedParentDataset != null && importTreeSelectedParentDataset.uuid != "objectRoot") ? importTreeSelectedParentDataset.uuid : null;
 	var parentAddressUuid = (importTreeSelectedParentAddress != null) ? importTreeSelectedParentAddress.uuid : null;
 	var publishImportedDatasets = dojo.widget.byId("publishImportedDatasetsCheckbox").checked;
 	var separateImport = dojo.widget.byId("separateImportCheckbox").checked;
