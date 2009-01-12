@@ -89,6 +89,26 @@ dojo.addOnLoad(function() {
 
 	// initialize
 	applyRule5();
+
+	var spatialRefAltMin = dojo.widget.byId("spatialRefAltMin");
+	var spatialRefAltMax = dojo.widget.byId("spatialRefAltMax");
+	var spatialRefAltMeasure = dojo.widget.byId("spatialRefAltMeasure");
+	var spatialRefAltVDate = dojo.widget.byId("spatialRefAltVDate");
+	if (spatialRefAltMin) {
+		dojo.debug("connecting spatialRefAltMin");
+		dojo.event.connect(spatialRefAltMin, "update", function(val) {applyRule6();});
+	}
+	if (spatialRefAltMax) {
+		dojo.debug("connecting spatialRefAltMax");
+		dojo.event.connect(spatialRefAltMax, "update", function(val) {applyRule6();});
+	}
+	if (spatialRefAltMeasure) {
+		dojo.event.connect(spatialRefAltMeasure, "onValueChanged", function(val) {applyRule6();});
+	}
+	if (spatialRefAltVDate) {
+		dojo.event.connect(spatialRefAltVDate, "onValueChanged", function(val) {applyRule6();});
+	}
+	applyRule6();
 });
 
 function applyRule1() {
@@ -179,4 +199,29 @@ function applyRule5() {
 
 	setRequiredState(labelNode1, container1, snsHasBB || !freeHasBB);
 	setRequiredState(labelNode2, container2, !snsHasBB);
+}
+
+// If one of the fields contains data, all fields are mandatory
+function applyRule6() {
+	var spatialRefAltMin = dojo.widget.byId("spatialRefAltMin");
+	var spatialRefAltMax = dojo.widget.byId("spatialRefAltMax");
+	var spatialRefAltMeasure = dojo.widget.byId("spatialRefAltMeasure");
+	var spatialRefAltVDate = dojo.widget.byId("spatialRefAltVDate");
+
+
+	if (spatialRefAltMin.getValue() || spatialRefAltMax.getValue() ||
+			spatialRefAltMeasure.getValue() || spatialRefAltVDate.getValue()) {
+		setRequiredState(dojo.byId("spatialRefAltHeightLabel"), dojo.byId("uiElementN010"), true);
+		setRequiredState(dojo.byId("spatialRefAltMinLabel"), dojo.byId("uiElement1130"), true);
+		setRequiredState(dojo.byId("spatialRefAltMaxLabel"), dojo.byId("uiElement5020"), true);
+		setRequiredState(dojo.byId("spatialRefAltMeasureLabel"), dojo.byId("uiElement5021"), true);
+		setRequiredState(dojo.byId("spatialRefAltVDateLabel"), dojo.byId("uiElement5022"), true);
+
+	} else {
+		setRequiredState(dojo.byId("spatialRefAltHeightLabel"), dojo.byId("uiElementN010"), false);
+		setRequiredState(dojo.byId("spatialRefAltMinLabel"), dojo.byId("uiElement1130"), false);
+		setRequiredState(dojo.byId("spatialRefAltMaxLabel"), dojo.byId("uiElement5020"), false);
+		setRequiredState(dojo.byId("spatialRefAltMeasureLabel"), dojo.byId("uiElement5021"), false);
+		setRequiredState(dojo.byId("spatialRefAltVDateLabel"), dojo.byId("uiElement5022"), false);
+	}
 }

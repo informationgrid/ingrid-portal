@@ -43,7 +43,8 @@ var adrClass3UiInputElements = ["headerAddressType3Lastname", "headerAddressType
 var labels = ["objectNameLabel", "objectClassLabel", "objectOwnerLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel",
 			  "extraInfoConformityTableLabel", "availabilityUsageLimitationTableLabel", "ref1BasisTabContainerLabel", "ref1ObjectIdentifierLabel",
 			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "ref3ServiceTypeTableLabel", "generalAddressTableLabel", "timeRefTableLabel",
-			  "thesaurusTermsLabel", "thesaurusTopicsLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel",
+			  "thesaurusTermsLabel", "thesaurusTopicsLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel", "spatialRefAltHeightLabel",
+			  "spatialRefAltMinLabel", "spatialRefAltMaxLabel", "spatialRefAltMeasureLabel", "spatialRefAltVDateLabel",
 			  "thesaurusEnvironmentLabel", "thesaurusEnvTopicsLabel", "thesaurusEnvCatsLabel", "extraInfoPublishAreaLabel",
 			  "addressTypeLabel", "addressOwnerLabel", "headerAddressType0UnitLabel", "headerAddressType1UnitLabel", "headerAddressType2LastnameLabel",
 			  "headerAddressType2StyleLabel", "headerAddressType3LastnameLabel", "headerAddressType3StyleLabel",
@@ -176,15 +177,27 @@ function isObjectPublishable(idcObject) {
 		dojo.debug("At least one 'spatial' table has to contain an entry with a BB.");
 		publishable = false;
 	}
-/*
-	// Check if all the 'Raumbezug' entries have a valid name
-	var freeData = idcObject.spatialRefLocationTable;
-	if (dojo.lang.some(freeData, function(spatialRef) { return (typeof(spatialRef.name) == "undefined" || spatialRef.name == null || dojo.string.trim(spatialRef.name).length == 0); })) {
-		dojo.html.addClass(dojo.byId("spatialRefLocationLabel"), "important");
-		dojo.debug("All spatialRefs must have a valid name");
-		publishable = false;		
+
+	// Check if one of the 'height' fields contains data. In this case, all fields are mandatory 
+	if (idcObject.spatialRefAltMin || idcObject.spatialRefAltMax || idcObject.spatialRefAltMeasure || idcObject.spatialRefAltVDate) {
+		// one of the fields contains data -> All fields must contain data:
+		if (!idcObject.spatialRefAltMin) {
+			dojo.html.addClass(dojo.byId("spatialRefAltMinLabel"), "important");
+			publishable = false;
+		}
+		if (!idcObject.spatialRefAltMax) {
+			dojo.html.addClass(dojo.byId("spatialRefAltMaxLabel"), "important");
+			publishable = false;
+		}
+		if (!idcObject.spatialRefAltMeasure) {
+			dojo.html.addClass(dojo.byId("spatialRefAltMeasureLabel"), "important");
+			publishable = false;
+		}
+		if (!idcObject.spatialRefAltVDate) {
+			dojo.html.addClass(dojo.byId("spatialRefAltVDateLabel"), "important");
+			publishable = false;
+		}
 	}
-*/
 
 	// Check if the thesaurus table has at least three entries
 	if (idcObject.thesaurusTermsTable.length < 3) {

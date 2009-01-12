@@ -1416,29 +1416,29 @@ function hideSplash(){
 				<div class="inputContainer noSpaceBelow notRequired">
 	                <div class="half left">
 						<span id="uiElementN010" type="optional">
-		                  <span class="label"><label for="spatialRefAltMin" onclick="javascript:dialog.showContextHelp(arguments[0], 4520)"><script>document.write(message.get("ui.obj.spatial.height"))</script></label></span>
+		                  <span id="spatialRefAltHeightLabel" class="label"><label for="spatialRefAltMin" onclick="javascript:dialog.showContextHelp(arguments[0], 4520)"><script>document.write(message.get("ui.obj.spatial.height"))</script></label></span>
 		                  <div id="spatialRefAltitude">
 		                    <span class="entry">
 								<span id="uiElement1130" type="optional">
-			                      <span class="label"><label for="spatialRefAltMin" onclick="javascript:dialog.showContextHelp(arguments[0], 1130)"><script>document.write(message.get("ui.obj.spatial.height.min"))</script></label></span>
+			                      <span id="spatialRefAltMinLabel" class="label"><label for="spatialRefAltMin" onclick="javascript:dialog.showContextHelp(arguments[0], 1130)"><script>document.write(message.get("ui.obj.spatial.height.min"))</script></label></span>
 			                      <span class="input"><input type="text" id="spatialRefAltMin" name="spatialRefAltMin" class="w080" dojoType="RealNumberTextBox" /></span>
 								</span>
 		                    </span>
 		                    <span class="entry">
 								<span id="uiElement5020" type="optional">
-			                      <span class="label"><label for="spatialRefAltMax" onclick="javascript:dialog.showContextHelp(arguments[0], 5020)"><script>document.write(message.get("ui.obj.spatial.height.max"))</script></label></span>
+			                      <span id="spatialRefAltMaxLabel" class="label"><label for="spatialRefAltMax" onclick="javascript:dialog.showContextHelp(arguments[0], 5020)"><script>document.write(message.get("ui.obj.spatial.height.max"))</script></label></span>
 			                      <span class="input"><input type="text" id="spatialRefAltMax" name="spatialRefAltMax" class="w080" dojoType="RealNumberTextBox" /></span>
 								</span>
 		                    </span>
 		                    <span class="entry">
 								<span id="uiElement5021" type="optional">
-			                      <span class="label"><label for="spatialRefAltMeasure" onclick="javascript:dialog.showContextHelp(arguments[0], 5021)"><script>document.write(message.get("ui.obj.spatial.height.unit"))</script></label></span>
+			                      <span id="spatialRefAltMeasureLabel" class="label"><label for="spatialRefAltMeasure" onclick="javascript:dialog.showContextHelp(arguments[0], 5021)"><script>document.write(message.get("ui.obj.spatial.height.unit"))</script></label></span>
 			                      <span class="input"><input dojoType="ingrid:Select" style="width:58px;" listId="102" id="spatialRefAltMeasure" /></span>
 								</span>
 		                    </span>
 		                    <span class="entry">
 								<span id="uiElement5022" type="optional">
-			                      <span class="label"><label for="spatialRefAltVDate" onclick="javascript:dialog.showContextHelp(arguments[0], 5022)"><script>document.write(message.get("ui.obj.spatial.height.geodeticSystem"))</script></label></span>
+			                      <span id="spatialRefAltVDateLabel" class="label"><label for="spatialRefAltVDate" onclick="javascript:dialog.showContextHelp(arguments[0], 5022)"><script>document.write(message.get("ui.obj.spatial.height.geodeticSystem"))</script></label></span>
 			                      <span class="input"><input dojoType="ingrid:Select" style="width:266px;" listId="101" id="spatialRefAltVDate" /></span>
 								</span>
 		                    </span>

@@ -7,7 +7,6 @@
  */
 dojo.addOnLoad(function() {
 	addMinMaxValidation("spatialRefAltMin", "spatialRefAltMax", "Minimum", "Maximum");
-	addSpatialRefValidation();
 	addMinMaxDateValidation("timeRefType", "timeRefDate1", "timeRefDate2");
 	addMinMaxBoundingBoxValidation("spatialRefLocation");
 
@@ -81,8 +80,8 @@ function addMinMaxValidation(minWidgetId, maxWidgetId, minCaption, maxCaption) {
 		var minValue = dojo.string.trim(minWidget.textbox.value);
 		var maxValue = dojo.string.trim(maxWidget.textbox.value);
 
-		if (minValue == "")
-			return !this.required;
+		if (minValue == "" || maxValue == "")
+			return true;
 		else
 			return (dojo.validate.isRealNumber(minValue, minWidget.flags) &&
 				dojo.validate.isRealNumber(maxValue, maxWidget.flags) &&
@@ -92,8 +91,8 @@ function addMinMaxValidation(minWidgetId, maxWidgetId, minCaption, maxCaption) {
 		var minValue = dojo.string.trim(minWidget.textbox.value);
 		var maxValue = dojo.string.trim(maxWidget.textbox.value);
 
-		if (maxValue == "")
-			return !this.required;
+		if (minValue == "" || maxValue == "")
+			return true;
 		else
 			return (dojo.validate.isRealNumber(minValue, minWidget.flags) &&
 				dojo.validate.isRealNumber(maxValue, maxWidget.flags) &&
@@ -105,37 +104,6 @@ function addMinMaxValidation(minWidgetId, maxWidgetId, minCaption, maxCaption) {
 
 	dojo.event.connect(minWidget, "setValue", maxWidget, "update");
 	dojo.event.connect(maxWidget, "setValue", minWidget, "update");
-}
-
-function addSpatialRefValidation() {
-	var spatialRefAltMin = dojo.widget.byId("spatialRefAltMin");
-	var spatialRefAltMax = dojo.widget.byId("spatialRefAltMax");
-	var spatialRefAltMeasure = dojo.widget.byId("spatialRefAltMeasure");
-	var spatialRefAltVDate = dojo.widget.byId("spatialRefAltVDate");
-
-	var setSpatialRefRequiredState = function() {
-		if (spatialRefAltMin.getValue() || spatialRefAltMax.getValue() ||
-				spatialRefAltMeasure.getValue() || spatialRefAltVDate.getValue()) {
-			spatialRefAltMin.required = true;
-			spatialRefAltMax.required = true;
-			spatialRefAltMeasure.required = true;
-			spatialRefAltVDate.required = true;
-		} else {
-			spatialRefAltMin.required = false;
-			spatialRefAltMax.required = false;
-			spatialRefAltMeasure.required = false;
-			spatialRefAltVDate.required = false;
-		}
-		spatialRefAltMin.update();
-		spatialRefAltMax.update();
-		spatialRefAltMeasure.updateValidState();
-		spatialRefAltVDate.updateValidState();
-	}
-
-	dojo.event.connect(spatialRefAltMin, "onValueChanged", setSpatialRefRequiredState);
-	dojo.event.connect(spatialRefAltMax, "onValueChanged", setSpatialRefRequiredState);
-	dojo.event.connect(spatialRefAltMeasure, "onValueChanged", setSpatialRefRequiredState);
-	dojo.event.connect(spatialRefAltVDate, "onValueChanged", setSpatialRefRequiredState);
 }
 
 function addMinMaxDateValidation(typeWidgetId, minWidgetId, maxWidgetId) {
