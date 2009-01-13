@@ -29,10 +29,9 @@ function startExportPartial() {
 			startObjectExport(currentSelectedNode.uuid, exportChildren);
 		} else {
 			startAddressExport(currentSelectedNode.uuid, exportChildren);
-			// TODO add address export
 		}
 	} else {
-		// TODO add error message
+		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie einen g&uuml;ltigen Exportknoten aus bevor Sie den Vorgang starten.", dialog.WARNING);
 	}
 }
 
