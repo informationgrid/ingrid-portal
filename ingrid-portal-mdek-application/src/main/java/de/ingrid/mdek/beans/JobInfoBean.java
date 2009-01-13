@@ -9,6 +9,7 @@ public class JobInfoBean {
 	Integer numProcessedEntities;
 	Date startTime;
 	Date endTime;
+	Exception exception;
 
 	public String getDescription() {
 		return description;
@@ -39,5 +40,11 @@ public class JobInfoBean {
 	}
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
+	}
+	public Exception getException() {
+		return exception;
+	}
+	public void setException(Exception exception) {
+		this.exception = exception;
 	}
 }

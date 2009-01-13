@@ -25,7 +25,7 @@ public class ImportServiceImpl {
 	public void importEntities(FileTransfer fileTransfer, String targetObjectUuid, String targetAddressUuid,
 			boolean publishImmediately, boolean doSeparateImport) {
 
-		log.debug("File transfer mime type: "+fileTransfer.getMimeType());
+//		log.debug("File transfer mime type: "+fileTransfer.getMimeType());
 
 		try {
 			byte[] gzippedData = null;

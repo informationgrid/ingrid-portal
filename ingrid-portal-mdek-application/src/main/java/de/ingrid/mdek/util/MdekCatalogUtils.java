@@ -14,6 +14,7 @@ import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.ExportInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.object.LocationBean;
+import de.ingrid.mdek.caller.MdekCaller;
 import de.ingrid.utils.IngridDocument;
 
 public class MdekCatalogUtils {
@@ -139,23 +140,28 @@ public class MdekCatalogUtils {
 	}
 
 	public static JobInfoBean extractImportInfoFromResponse(IngridDocument response) {
-		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		IngridDocument jobInfoDoc = MdekUtils.getResultFromResponse(response);
 
-		if (result != null) {
-			// TODO implement
-			log.debug("job info: "+result);
+		if (jobInfoDoc != null) {
 			JobInfoBean jobInfo = new JobInfoBean();
-			jobInfo.setDescription(result.getString(MdekKeys.JOBINFO_MESSAGES));
-			jobInfo.setStartTime(MdekUtils.convertTimestampToDate(result.getString(MdekKeys.JOBINFO_START_TIME)));
-			jobInfo.setEndTime(MdekUtils.convertTimestampToDate(result.getString(MdekKeys.JOBINFO_END_TIME)));
-			if (result.get(MdekKeys.JOBINFO_NUM_OBJECTS) != null) {
-				jobInfo.setNumProcessedEntities(result.getInt(MdekKeys.JOBINFO_NUM_OBJECTS));
-				jobInfo.setNumEntities(result.getInt(MdekKeys.JOBINFO_TOTAL_NUM_OBJECTS));
+			jobInfo.setDescription(jobInfoDoc.getString(MdekKeys.JOBINFO_MESSAGES));
+			jobInfo.setStartTime(MdekUtils.convertTimestampToDate(jobInfoDoc.getString(MdekKeys.JOBINFO_START_TIME)));
+			jobInfo.setEndTime(MdekUtils.convertTimestampToDate(jobInfoDoc.getString(MdekKeys.JOBINFO_END_TIME)));
+			if (jobInfoDoc.get(MdekKeys.JOBINFO_NUM_OBJECTS) != null) {
+				jobInfo.setNumProcessedEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_NUM_OBJECTS));
+				jobInfo.setNumEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_TOTAL_NUM_OBJECTS));
 
-			} else if (result.get(MdekKeys.JOBINFO_NUM_ADDRESSES) != null) {
-				jobInfo.setNumProcessedEntities(result.getInt(MdekKeys.JOBINFO_NUM_ADDRESSES));
-				jobInfo.setNumEntities(result.getInt(MdekKeys.JOBINFO_TOTAL_NUM_ADDRESSES));
+			} else if (jobInfoDoc.get(MdekKeys.JOBINFO_NUM_ADDRESSES) != null) {
+				jobInfo.setNumProcessedEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_NUM_ADDRESSES));
+				jobInfo.setNumEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_TOTAL_NUM_ADDRESSES));
 			}
+
+			// Check if an exception occured while executing the job and add it to JobInfoBean
+			Exception jobException = MdekCaller.getExceptionFromJobInfo(jobInfoDoc);
+			if (jobException != null) {
+				jobInfo.setException(jobException);
+			}
+
 			return jobInfo;
 
 		} else {
