@@ -309,12 +309,10 @@ function initSysLists() {
 				</div>
 
 				<div class="inputContainer noSpaceBelow">
-					<div id="processInfo" class="infobox w670">
+					<div id="exportProcessInfo" class="infobox w670">
 						<span class="icon"><img src="img/ic_info_download.gif" width="16" height="16" alt="Info" /></span>
-						<span class="title"><a href="javascript:toggleInfo('processInfo');" title="Info aufklappen" id="exportInfoTitle">Informationen zum letzten Prozess:
-	              			<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a>
-	              		</span>
-						<div id="processInfoContent">
+						<span id="exportInfoTitle" class="title">Informationen zum letzten Prozess:</span>
+						<div id="exportProcessInfoContent">
 							<p id="exportInfoDownload">Ihre Export-Datei steht Ihnen <a href="javascript:void(0);" onclick="javascript:scriptScope.downloadLastExport();" title="Export-Datei">hier</a> zur Verf&uuml;gung.</p>
 							<table cellspacing="0">
 								<tr>
