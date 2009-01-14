@@ -6,12 +6,12 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 import org.htmlparser.Node;
 import org.htmlparser.Parser;
 import org.htmlparser.beans.StringBean;
 import org.htmlparser.filters.AndFilter;
-import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.HasParentFilter;
 import org.htmlparser.filters.NodeClassFilter;
 import org.htmlparser.filters.TagNameFilter;
@@ -69,7 +69,7 @@ public class HttpService {
     		SimpleNodeIterator it = nodeList.elements();
     		while (it.hasMoreNodes()) {
     			Node n = it.nextNode();
-    			return n.getText();
+    			return StringEscapeUtils.unescapeXml(n.getText());
     		}
 
     	} catch (ParserException e) {
