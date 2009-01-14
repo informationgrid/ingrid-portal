@@ -16,9 +16,26 @@ var importTreeSelectedParentAddress = null;
 
 _container_.addOnLoad(function() {
 	initTree();
+	initCheckboxBehaviour();
 	refreshImportProcessInfo();
 });
 
+function initCheckboxBehaviour() {
+	// Only one of the checkboxes is allowed to be active
+	var pubImportCheckbox = dojo.widget.byId("publishImportedDatasetsCheckbox");
+	var sepImportCheckbox = dojo.widget.byId("separateImportCheckbox");
+
+	dojo.event.connect(pubImportCheckbox, "onClick", function(){
+		if (sepImportCheckbox.checked) {
+			sepImportCheckbox.setValue(false);
+		}
+	});
+	dojo.event.connect(sepImportCheckbox, "onClick", function(){
+		if (pubImportCheckbox.checked) {
+			pubImportCheckbox.setValue(false);
+		}
+	});
+}
 
 scriptScope.resetImport = function() {
 	dojo.widget.byId("importTreeParentDataset").setValue("");
