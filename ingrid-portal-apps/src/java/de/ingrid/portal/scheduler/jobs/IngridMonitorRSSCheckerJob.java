@@ -81,13 +81,13 @@ public class IngridMonitorRSSCheckerJob extends IngridMonitorAbstractJob {
             
         } catch (Exception e) {
             if (log.isInfoEnabled()) {
-                log.info("Error building RSS feed (" + url + "). [" + e.getMessage() + "]");
+                log.info("Error building RSS feed (" + url + "). [" + e.getClass().getName() + ":" + e.getMessage() + "]");
             }
             if (log.isDebugEnabled()) {
                 log.debug("Error building RSS feed (" + url + ").", e);
             }
             status = STATUS_ERROR;
-			statusCode = e.getMessage();
+			statusCode = e.getClass().getName() + ":" + e.getMessage();
         } finally {
         	computeTime(jobDetail.getJobDataMap(), stopTimer());
         }

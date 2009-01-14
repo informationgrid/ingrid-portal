@@ -4,7 +4,8 @@
 package de.ingrid.portal.scheduler.jobs;
 
 import java.io.IOException;
-import java.util.Date;
+
+import net.weta.components.communication.tcp.TimeoutException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -12,6 +13,7 @@ import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import de.ingrid.ibus.client.BusClient;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
@@ -68,14 +70,11 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 		String statusCode = null;
 		try {
 			IngridQuery q = QueryStringParser.parse(query);
-			//long beginTime = System.currentTimeMillis();
 			
 			startTimer();
-			IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 0, timeout);
+			IngridHits hits = BusClient.instance().getBus().search(q, 10, 1, 0, timeout);
 			computeTime(dataMap, stopTimer());
 			
-			//long duration = System.currentTimeMillis() - beginTime;
-			//log.info("Call took " + duration + "ms");
 			if (hits.length() == 0) {
 				status = STATUS_ERROR;
 				statusCode = STATUS_CODE_ERROR_NO_HITS;
@@ -92,9 +91,13 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 		} catch (IOException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
+		} catch (TimeoutException e) {
+			status = STATUS_ERROR;
+			statusCode = STATUS_CODE_ERROR_TIMEOUT;
 		} catch (Throwable e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
+			e.printStackTrace();
 		}
 		
 		updateJobData(context, status, statusCode);

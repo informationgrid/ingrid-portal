@@ -13,6 +13,7 @@ import de.ingrid.portal.scheduler.jobs.IngridMonitorCSWJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorECSJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorG2KJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorIPlugJob;
+import de.ingrid.portal.scheduler.jobs.IngridMonitorRSSCheckerJob;
 
 /**
  * Form Handler for Content Management of Providers.
@@ -66,6 +67,8 @@ public class AdminComponentMonitorForm extends ActionForm {
 	
 	public static final String FIELD_AVERAGE_EXECTIME = "average_exec_time";
 	
+	public static final String FIELD_EXCLUDED_PROVIDER = "excl_provider";
+	
 
 	/**
 	 * @see de.ingrid.portal.forms.ActionForm#init()
@@ -82,10 +85,13 @@ public class AdminComponentMonitorForm extends ActionForm {
 		setInput(FIELD_TITLE, request.getParameter(FIELD_TITLE));
 		setInput(FIELD_ID, request.getParameter(FIELD_ID));
 		setInput(FIELD_TYPE, request.getParameter(FIELD_TYPE));
-		setInput(FIELD_QUERY, request.getParameter(FIELD_QUERY));
+		//setInput(FIELD_QUERY, request.getParameter(FIELD_QUERY));
 		setInput(FIELD_INTERVAL, request.getParameter(FIELD_INTERVAL));
 		setInput(FIELD_TIMEOUT, request.getParameter(FIELD_TIMEOUT));
+		//setInput(FIELD_SERVICE_URL, request.getParameter(FIELD_SERVICE_URL));
+		setInput(FIELD_QUERY, request.getParameter(FIELD_QUERY));
 		setInput(FIELD_SERVICE_URL, request.getParameter(FIELD_SERVICE_URL));
+		setInput(FIELD_EXCLUDED_PROVIDER, request.getParameter(FIELD_EXCLUDED_PROVIDER));
 		setInput(FIELD_ACTIVE, request.getParameter(FIELD_ACTIVE));
 		setInput(FIELD_CONTACT_EMAIL_NEW, request.getParameter(FIELD_CONTACT_EMAIL_NEW));
 		setInput(FIELD_CONTACT_THRESHOLD_NEW, request.getParameter(FIELD_CONTACT_THRESHOLD_NEW));
@@ -119,10 +125,12 @@ public class AdminComponentMonitorForm extends ActionForm {
 			if (!hasInput(FIELD_SERVICE_URL)
 					&& (getInput(FIELD_TYPE).equals(IngridMonitorG2KJob.COMPONENT_TYPE) 
 					|| getInput(FIELD_TYPE).equals(IngridMonitorECSJob.COMPONENT_TYPE)
-					|| getInput(FIELD_TYPE).equals(IngridMonitorCSWJob.COMPONENT_TYPE))) {
+					|| getInput(FIELD_TYPE).equals(IngridMonitorCSWJob.COMPONENT_TYPE)
+					|| getInput(FIELD_TYPE).equals(IngridMonitorRSSCheckerJob.COMPONENT_TYPE))) {
 				setError(FIELD_SERVICE_URL, "component.monitor.form.error.invalid.serviceurl");
 				allOk = false;
 			}
+			
 			
 			try {
 				int interval = Integer.parseInt(getInput(FIELD_INTERVAL));

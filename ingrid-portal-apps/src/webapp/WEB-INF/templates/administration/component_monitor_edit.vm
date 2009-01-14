@@ -12,14 +12,16 @@
 	#displayFormErrors()
 	
 	<p>
-	#if ($mode == 'edit')
 		<label class="float_left col2left_incr">Komponenten ID</label>
 		<span>#getFieldValue('id')</span>
 		<input type="hidden" name="id" value="#getFieldValue('id')"/>
-	#elseif ($mode == 'new')
-      	<label class="float_left col2left_incr" for="id">#displayFieldLabel('id' 'Komponenten ID')*</label>
-      	<input class="float_left inputstyletext contentInput" id="id" name="id" value="#getFieldValue('id')" type="text">
-	#end
+
+	</p>
+	<p class="clearer" />
+	<p>
+		<label class="float_left col2left_incr" for="type">#displayFieldLabel('type' 'Komponenten Typ')</label>
+		<span>$MESSAGES.getString($actionForm.getInput('type'))</span>
+		<input type="hidden" name="type" value="#getFieldValue('type')"/>
 	</p>
 	<p class="clearer" />
    	<p>
@@ -27,24 +29,23 @@
       	<input class="float_left inputstyletext contentInput" id="title" name="title" value="#getFieldValue('title')" type="text">
   	</p>
 	<p class="clearer" />
-	<p>
-    	<label class="float_left col2left_incr" for="type">#displayFieldLabel('type' 'Komponenten Typ')*</label>
-    	<select class="float_left inputstyletext contentInput" name="type">
-#foreach($type in $componentTypes)
-		<option value="$type"#getSelected('type' $type)>$MESSAGES.getString($type)</option>
-#end			
-		</select>
-	</p>
-	<p class="clearer" />
-	<p>
-      	<label class="float_left col2left_incr" for="query">#displayFieldLabel('query' 'Query String')*</label>
-      	<input class="float_left inputstyletext contentInput" id="query" name="query" value="#getHTMLEscapedFieldValue('query')" type="text">
-  	</p>
-	<p class="clearer" />
-	<p>
-      	<label class="float_left col2left_incr" for="serviceurl">#displayFieldLabel('serviceurl' 'Service URL (nicht für Typ IPLUG benötigt)')</label>
-      	<input class="float_left inputstyletext contentInput" id="serviceurl" name="serviceurl" value="#getHTMLEscapedFieldValue('serviceurl')" type="text">
-  	</p>
+	
+	################ content according to component type ###################
+	
+	#set ($compType = $actionForm.getInput("type"))
+	#if ($compType == "component.monitor.general.type.iplug" || $compType == "component.monitor.general.type.sns")
+		#renderTextField( "Query String" "query" )
+	#elseif ($compType == "component.monitor.general.type.ibus" || $compType == "component.monitor.general.type.rssfetcher")
+		## don't need more information
+	#elseif ($compType == "component.monitor.general.type.rss" || $compType == "component.monitor.general.type.csw" || $compType == "component.monitor.general.type.g2k" || $compType == "component.monitor.general.type.ecs")
+		#renderTextField( "RSS Feed (URL)" "serviceurl" )
+	#elseif ($compType == "component.monitor.general.type.provider.check")
+		#renderTextField( "Exclude Provider" "excl_provider" )
+	#end
+	
+	
+	########################################################################
+	
 	<p class="clearer" />
 	<p>
       	<label class="float_left col2left_incr" for="interval">#displayFieldLabel('interval' 'Überprüfung alle [sec]')*</label>
@@ -143,7 +144,7 @@
 	<input style="margin: 4px 0 0 5px;" class="btn float_left" type="submit" name="doResetTime" value="Zeit zurücksetzen" />
 </div>
 #end
-#renderDBEditFooter($mode)
+#renderDBEditFooter("edit")
 </form>
 <h1>Kurzhilfe</h1>
 <div class="formbody">
@@ -167,6 +168,8 @@
 	<td>Die IBus-Komponente benötigt nur eine ID und einen Namen. Es wird versucht, die angeschlossenen iPlugs zu erkennen.</td></tr>
 	<tr><td>RSS</td>
 	<td>Bitte unter Service URL den zu überprüfenden RSS-Feed angeben.</td></tr>
+	<tr><td>Anbieter</td>
+	<td>Wollen Sie Anbieter bei der Überprüfung ausschließen (Exclude Provider), dann tragen Sie diese in das vorgesehene Feld ein, z.B. "all,kst"</td></tr> 
 	</tbody></table>
 	
 	</p>

@@ -27,6 +27,7 @@ import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.quartz.JobDataMap;
+import org.quartz.Trigger;
 
 import de.ingrid.portal.forms.ActionForm;
 import de.ingrid.portal.forms.AdminComponentMonitorForm;
@@ -55,7 +56,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 
 	private static final String VIEW_EDIT = "/WEB-INF/templates/administration/component_monitor_edit.vm";
 
-	private static final String VIEW_NEW = "/WEB-INF/templates/administration/component_monitor_edit.vm";
+	private static final String VIEW_NEW = "/WEB-INF/templates/administration/component_monitor_new.vm";
 
 	private IngridJobHandler jobHandler;
 
@@ -140,7 +141,32 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			context.put("mode", request.getParameter("mode"));
 			context.put("componentTypes", jobHandler.getComponentTypes());
 			request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_EDIT);
-		// ------------------new-------------------------
+		// ------------------editAfterNew-------------------
+		} else if (action.equals("editAfterNew")) {
+			String id = request.getParameter("id");
+			String type = request.getParameter("type");
+			context.put("mode", "new");
+			cf.setInput(AdminComponentMonitorForm.FIELD_ID, request.getParameter("id"));
+			cf.setInput(AdminComponentMonitorForm.FIELD_TYPE, request.getParameter("type"));
+
+			// setting some standard values
+			cf.setInput(AdminComponentMonitorForm.FIELD_TIMEOUT, "30000");
+			cf.setInput(AdminComponentMonitorForm.FIELD_INTERVAL, "1800");
+			
+			if (jobHandler.jobExists(id)) {
+				cf.setError(AdminComponentMonitorForm.FIELD_ID, "component.monitor.form.error.duplicate.id");
+			} 
+			if (jobHandler.jobTypeOnlyOnce(request.getParameter("type"))) {
+				cf.setError(AdminComponentMonitorForm.FIELD_TYPE, "component.monitor.form.error.single.job");
+			}
+			if (cf.hasErrors()) {
+				context.put("type", type);
+				context.put("componentTypes", jobHandler.getComponentTypes());
+				request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_NEW);
+			} else {
+				request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_EDIT);
+			}
+		// ------------------new----------------------------
 		} else if (action.equals("new")) {
 			String id = request.getParameter("id");
 			if (!cf.hasErrors()) {
@@ -181,14 +207,28 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		// ------------------doUpdate-------------------------
 		} else if (request.getParameter("doUpdate") != null) {
 			id = request.getParameter("id");
-			response.setRenderParameter("mode", request.getParameter("mode"));
+			String mode = request.getParameter("mode"); 
+			response.setRenderParameter("mode", mode);
+			
 			if (id != null) {
 				cf.populate(request);
 				if (cf.validate()) {
-					jobHandler.updateJob(id, cf);
+					if (mode.equals("new")) {
+						if (jobHandler.newJob(cf) == true) {
+							response.setRenderParameter("action", "");
+							response.setRenderParameter("id", id);
+							response.setRenderParameter("mode", "edit");
+						} else {
+							response.setRenderParameter("action", "reshow");
+						}
+					} else {
+						if (jobHandler.updateJob(id, cf) == false) {
+							response.setRenderParameter("action", "reshow");
+						} else {
+							response.setRenderParameter("action", "");
+						}
+					}
 				}
-				response.setRenderParameter("action", "");
-				response.setRenderParameter("id", request.getParameter("id"));
 			}
 		// ------------------doNew-------------------------
 		} else if (request.getParameter("doNew") != null) {
@@ -206,30 +246,24 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		// ------------------doSave-(newJob)------------------	
 		} else if (request.getParameter("doSave") != null) {
 			id = request.getParameter("id");
-			response.setRenderParameter("mode", request.getParameter("mode"));
 			cf.populate(request);
-			if (cf.validate()) {
-				if (jobHandler.newJob(cf) == true) {
-					response.setRenderParameter("action", "");
-					response.setRenderParameter("id", id);
-					response.setRenderParameter("mode", "edit");
-				} else {
-					response.setRenderParameter("action", "reshow");
-				}
-			} else {
-				response.setRenderParameter("action", "new");
-			}
+			response.setRenderParameter("action", "editAfterNew");
+			response.setRenderParameter(AdminComponentMonitorForm.FIELD_ID, id);
+			response.setRenderParameter(AdminComponentMonitorForm.FIELD_TYPE, request.getParameter("type"));
 		// ------------------doAddContact-------------------------
 		} else if (request.getParameter("doAddContact") != null) {
 			id = request.getParameter("id");
+			String mode = request.getParameter("mode");
 			if (id != null) {
 				response.setRenderParameter("id", id);
 			}
-			response.setRenderParameter("mode", request.getParameter("mode"));
+			response.setRenderParameter("mode", mode);
 			cf.populate(request);
 			cf.validate();
 			addContact(request, response, cf);
-			addStatusInfo(cf, jobHandler.getJobDataMap(id), id);
+			if (!mode.equals("new")) {
+				addStatusInfo(cf, jobHandler.getJobDataMap(id), id);
+			}
 			response.setRenderParameter("action", "addContact");
 		// ------------------doImport-------------------------
 		} else if (request.getParameter("doImport") != null) {
@@ -380,19 +414,24 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 	private void initActionForm(ActionForm cf, String id, Context context) {
 		
 		JobDataMap dataMap = jobHandler.getJobDataMap(id);
-		cf.setInput(AdminComponentMonitorForm.FIELD_ACTIVE, String.valueOf(dataMap
-				.getInt(IngridMonitorIPlugJob.PARAM_ACTIVE)));
-		cf.setInput(AdminComponentMonitorForm.FIELD_ID, jobHandler.getJobName(id));
-		cf.setInput(AdminComponentMonitorForm.FIELD_INTERVAL, String.valueOf(dataMap
-				.getInt(IngridMonitorIPlugJob.PARAM_CHECK_INTERVAL)));
-		cf.setInput(AdminComponentMonitorForm.FIELD_TIMEOUT, String.valueOf(dataMap
-				.getInt(IngridMonitorIPlugJob.PARAM_TIMEOUT)));
-		cf.setInput(AdminComponentMonitorForm.FIELD_QUERY, dataMap.getString(IngridMonitorAbstractJob.PARAM_QUERY));
-		cf.setInput(AdminComponentMonitorForm.FIELD_SERVICE_URL, dataMap.getString(IngridMonitorAbstractJob.PARAM_SERVICE_URL));
-		cf.setInput(AdminComponentMonitorForm.FIELD_TITLE, dataMap
-				.getString(IngridMonitorIPlugJob.PARAM_COMPONENT_TITLE));
-		cf.setInput(AdminComponentMonitorForm.FIELD_TYPE, dataMap
-				.getString(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE));
+		cf.setInput(AdminComponentMonitorForm.FIELD_ACTIVE,
+				String.valueOf(dataMap.getInt(IngridMonitorIPlugJob.PARAM_ACTIVE)));
+		cf.setInput(AdminComponentMonitorForm.FIELD_ID,
+				jobHandler.getJobName(id));
+		cf.setInput(AdminComponentMonitorForm.FIELD_INTERVAL,
+				String.valueOf(dataMap.getInt(IngridMonitorIPlugJob.PARAM_CHECK_INTERVAL)));
+		cf.setInput(AdminComponentMonitorForm.FIELD_TIMEOUT,
+				String.valueOf(dataMap.getInt(IngridMonitorIPlugJob.PARAM_TIMEOUT)));
+		cf.setInput(AdminComponentMonitorForm.FIELD_SERVICE_URL,
+				dataMap.getString(IngridMonitorAbstractJob.PARAM_SERVICE_URL));
+		cf.setInput(AdminComponentMonitorForm.FIELD_QUERY,
+				dataMap.getString(IngridMonitorAbstractJob.PARAM_QUERY));
+		cf.setInput(AdminComponentMonitorForm.FIELD_EXCLUDED_PROVIDER,
+				dataMap.getString(IngridMonitorAbstractJob.PARAM_EXCLUDED_PROVIDER));
+		cf.setInput(AdminComponentMonitorForm.FIELD_TITLE,
+				dataMap.getString(IngridMonitorIPlugJob.PARAM_COMPONENT_TITLE));
+		cf.setInput(AdminComponentMonitorForm.FIELD_TYPE,
+				dataMap.getString(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE));
 		
 
 		// add information about time execution
@@ -415,16 +454,24 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 	}
 	
 	private void addStatusInfo(ActionForm cf, JobDataMap dataMap, String id) {
+		String lastExec = "";
+		String nextExec = "";
 		// for jobs that never ran there's no information -> return! 
 		if (dataMap.containsKey(IngridMonitorAbstractJob.PARAM_TIMER_NUM) == false) {
 			return;
 		}
 		
+		Trigger trigger = jobHandler.getTrigger(id,IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+		
 		SimpleDateFormat portalFormat = new SimpleDateFormat("yyyy-mm-dd H:mm:ss");
         
         portalFormat.applyPattern("yyyy-MM-dd H:mm:ss");
-        String lastExec = portalFormat.format(jobHandler.getTrigger(id,IngridMonitorFacade.SCHEDULER_GROUP_NAME).getPreviousFireTime());//(Date) dataMap.get(IngridMonitorAbstractJob.PARAM_LAST_CHECK));
-        String nextExec = portalFormat.format(jobHandler.getTrigger(id,IngridMonitorFacade.SCHEDULER_GROUP_NAME).getNextFireTime()); //  portalFormat.format((Date) dataMap.get(IngridMonitorAbstractJob.PARAM_NEXT_CHECK));
+        
+        if (trigger.getPreviousFireTime()!=null) {
+	        lastExec = portalFormat.format(trigger.getPreviousFireTime());
+        }
+        
+        nextExec = portalFormat.format(trigger.getNextFireTime()); //  portalFormat.format((Date) dataMap.get(IngridMonitorAbstractJob.PARAM_NEXT_CHECK));
 				
 		
 		cf.setInput(AdminComponentMonitorForm.FIELD_LAST_EXECUTION, lastExec);
@@ -437,6 +484,5 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			execTime = String.valueOf(dataMap.getLong(IngridMonitorAbstractJob.PARAM_TIMER_AVERAGE));
 		}
 		cf.setInput(AdminComponentMonitorForm.FIELD_AVERAGE_EXECTIME, execTime);
-		
 	}
 }

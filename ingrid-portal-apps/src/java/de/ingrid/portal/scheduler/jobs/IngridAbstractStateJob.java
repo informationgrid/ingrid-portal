@@ -66,9 +66,11 @@ public abstract class IngridAbstractStateJob implements StatefulJob {
 
 	public static final String PARAM_CHECK_INTERVAL = "component.monitor.general.check.interval";
 
-	public static final String PARAM_ACTIVE = "component.monitor.general.active";
-
+	public static final String PARAM_SERVICE_URL = "component.monitor.general.service.url";
+	
 	public static final String PARAM_QUERY = "component.monitor.general.query";
+	
+	public static final String PARAM_ACTIVE = "component.monitor.general.active";
 
 	public static final String PARAM_CONTACTS = "component.monitor.general.contacts";
 
@@ -82,12 +84,13 @@ public abstract class IngridAbstractStateJob implements StatefulJob {
 
 	public static final String PARAM_COMPONENT_TYPE = "component.monitor.general.type";
 
-	public static final String PARAM_SERVICE_URL = "component.monitor.general.service.url";
-	
 	public static final String PARAM_TIMER_AVERAGE = "component.monitor.general.timer.average";
 
 	public static final String PARAM_TIMER_NUM = "component.monitor.general.timer.num";
 	
+	public static final String PARAM_EXCLUDED_PROVIDER = "component.monitor.general.excluded.provider";
+	
+
 	private long startTime;
 	
 	public void startTimer() {

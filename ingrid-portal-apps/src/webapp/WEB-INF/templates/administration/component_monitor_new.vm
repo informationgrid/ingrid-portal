@@ -1,0 +1,32 @@
+#macro (getInputStyleText $fieldName)#if ($actionForm.hasErrorInField($fieldName)) inputstyleerror#else inputstyletext#end#end
+
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmEditProvider" id="frmEditProvider">
+	<input type="hidden" name="mode" value="$mode"/>
+	<div class="formbody">
+    	#if ($mode == 'edit')
+    		<h2 class="nospace">Überwachung aktualisieren</h2>
+    	#elseif ($mode == 'new')
+    		<h2 class="nospace">Überwachung anlegen</h2>
+    	#end
+    	#displayFormErrors()
+    	
+    	<p>
+    	<label class="float_left col2left_incr" for="id">#displayFieldLabel('id' 'Komponenten ID')*</label>
+       	<input class="float_left inputstyletext contentInput" id="id" name="id" value="#getFieldValue('id')" type="text">
+    	</p>
+    	<p class="clearer" />
+    	<p>
+        	<label class="float_left col2left_incr" for="type">#displayFieldLabel('type' 'Komponenten Typ')*</label>
+        	<select class="float_left inputstyletext contentInput" name="type">
+    		#foreach($type in $componentTypes)
+    			<option value="$type"#getSelected('type' $type)>$MESSAGES.getString($type)</option>
+    		#end			
+    		</select>
+    	</p>
+		<p class="clearer" />
+	</div>
+	#renderDBEditFooter($mode)
+</form>
+
+		
