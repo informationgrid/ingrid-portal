@@ -10,6 +10,8 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
@@ -20,7 +22,10 @@ import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
 import de.ingrid.portal.search.UtilsSearch;
 
 public class ShowMapsPortlet extends GenericVelocityPortlet {
-    public void init(PortletConfig config) throws PortletException {
+
+    private final static Log log = LogFactory.getLog(ShowMapsPortlet.class);
+	
+	public void init(PortletConfig config) throws PortletException {
         super.init(config);
     }
 
@@ -39,7 +44,10 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
         if (hKey != null && hKey.length() > 0) {
             context.put("hKey", hKey);
         }
-
+        
+        if (log.isDebugEnabled()) {
+        	log.debug("Open WMS viewer with the following URL: " + wmsURL);
+        }
         context.put("wmsURL", wmsURL);
 
         // enable the save button if the query was set AND a user is logged on
