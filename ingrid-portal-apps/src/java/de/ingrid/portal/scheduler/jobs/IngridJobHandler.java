@@ -201,13 +201,6 @@ public class IngridJobHandler {
 		String id = cf.getInput(AdminComponentMonitorForm.FIELD_ID);
 		
 		try {
-			// check for existing job id
-			// already checked
-			//if (jobExists(id)) {
-			//	cf.setError(AdminComponentMonitorForm.FIELD_ID, "component.monitor.form.error.duplicate.id");
-			//	return false;
-			//}
-			
 			// get the correct class depending on the monitor type
 			Class jobClass = getClassFromMonitor(cf);
 			
@@ -231,8 +224,6 @@ public class IngridJobHandler {
 						.getInput(AdminComponentMonitorForm.FIELD_TITLE));
 				dataMap.put(IngridMonitorAbstractJob.PARAM_COMPONENT_TYPE, cf
 						.getInput(AdminComponentMonitorForm.FIELD_TYPE));
-				//dataMap.put(IngridMonitorAbstractJob.PARAM_QUERY, cf
-				//		.getInput(AdminComponentMonitorForm.FIELD_QUERY));
 				dataMap.put(IngridMonitorAbstractJob.PARAM_SERVICE_URL, cf
 						.getInput(AdminComponentMonitorForm.FIELD_SERVICE_URL));
 				dataMap.put(IngridMonitorAbstractJob.PARAM_QUERY, cf

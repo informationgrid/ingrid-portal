@@ -6,7 +6,6 @@ package de.ingrid.portal.scheduler.jobs;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
-import java.util.Date;
 
 import org.apache.axis.Message;
 import org.apache.commons.logging.Log;
@@ -17,6 +16,7 @@ import org.quartz.JobExecutionException;
 
 import de.ingrid.iplug.ecs.UDKResultAnalyzer;
 import de.ingrid.iplug.ecs.builder.request.UDKQueryBuilder;
+import de.ingrid.iplug.ecs.exceptions.UDKSOAPException;
 import de.ingrid.iplug.ecs.tools.AxisQuerySender;
 import de.ingrid.iplug.ecs.tools.AxisTools;
 import de.ingrid.utils.IngridHits;
@@ -80,7 +80,7 @@ public class IngridMonitorECSJob extends IngridMonitorAbstractJob {
 		int status = 0;
 		String statusCode = null;
 		try {
-
+			startTimer();
 			UDKQueryBuilder fQueryBuilder = new UDKQueryBuilder();
 			AxisQuerySender fQuerySender = new AxisQuerySender(serviceUrl);
 			PlugDescription plugDescription = new PlugDescription();
@@ -114,11 +114,19 @@ public class IngridMonitorECSJob extends IngridMonitorAbstractJob {
 		} catch (IOException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
+		} catch (UDKSOAPException e) {
+			status = STATUS_ERROR;
+			statusCode = STATUS_CODE_ERROR_SOAP;
 		} catch (Throwable e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
+			if (log.isDebugEnabled()) {
+				e.printStackTrace();
+			}			
 		}
 
+		computeTime(dataMap, stopTimer());
+		
 		updateJobData(context, status, statusCode);
 		sendAlertMail(context);
 		updateJob(context);

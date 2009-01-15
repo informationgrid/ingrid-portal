@@ -89,6 +89,7 @@ public class IngridMonitorG2KJob extends IngridMonitorAbstractJob {
 		int status = 0;
 		String statusCode = null;
 		try {
+			startTimer();
 			G2kQueryBuilder qBuilder = new G2kQueryBuilder();
 			IngridQuery q = QueryStringParser.parse(query);
 			final String answer = sendQuery(qBuilder.createSimpleSearchString(q, "de"), serviceUrl, timeout);
@@ -123,11 +124,17 @@ public class IngridMonitorG2KJob extends IngridMonitorAbstractJob {
 		} catch (IOException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
+		} catch (IllegalArgumentException e) {
+			status = STATUS_ERROR;
+			statusCode = STATUS_CODE_ERROR_ILLEGAL_ARGUMENT;
 		} catch (Throwable e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
+			if (log.isDebugEnabled()) {
+				e.printStackTrace();
+			}	
 		}
-
+		computeTime(dataMap, stopTimer());
 		updateJobData(context, status, statusCode);
 		sendAlertMail(context);
 		updateJob(context);

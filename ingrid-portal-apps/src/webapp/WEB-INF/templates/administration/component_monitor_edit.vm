@@ -34,13 +34,15 @@
 	
 	#set ($compType = $actionForm.getInput("type"))
 	#if ($compType == "component.monitor.general.type.iplug" || $compType == "component.monitor.general.type.sns")
-		#renderTextField( "Query String" "query" )
+		#renderTextField( "Query String*" "query" )
 	#elseif ($compType == "component.monitor.general.type.ibus" || $compType == "component.monitor.general.type.rssfetcher")
 		## don't need more information
-	#elseif ($compType == "component.monitor.general.type.rss" || $compType == "component.monitor.general.type.csw" || $compType == "component.monitor.general.type.g2k" || $compType == "component.monitor.general.type.ecs")
-		#renderTextField( "RSS Feed (URL)" "serviceurl" )
+	#elseif ($compType == "component.monitor.general.type.rss")
+		#renderTextField( "RSS Feed (URL)*" "serviceurl" )
+	#elseif  ($compType == "component.monitor.general.type.csw" || $compType == "component.monitor.general.type.g2k" || $compType == "component.monitor.general.type.ecs")
+		#renderTextField( "Service URL*" "serviceurl" )
 	#elseif ($compType == "component.monitor.general.type.provider.check")
-		#renderTextField( "Exclude Provider" "excl_provider" )
+		#renderTextField( "Anbieter ausschließen" "excl_provider" )
 	#end
 	
 	
@@ -169,7 +171,7 @@
 	<tr><td>RSS</td>
 	<td>Bitte unter Service URL den zu überprüfenden RSS-Feed angeben.</td></tr>
 	<tr><td>Anbieter</td>
-	<td>Wollen Sie Anbieter bei der Überprüfung ausschließen (Exclude Provider), dann tragen Sie diese in das vorgesehene Feld ein, z.B. "all,kst"</td></tr> 
+	<td>Wollen Sie Anbieter bei der Überprüfung ausschließen, dann tragen Sie diese in das vorgesehene Feld ein, z.B. "all,kst"</td></tr> 
 	</tbody></table>
 	
 	</p>

@@ -50,6 +50,10 @@ public abstract class IngridAbstractStateJob implements StatefulJob {
 	
 	public static final String STATUS_CODE_ERROR_XML_PARSE = "component.monitor.general.error.xml.parse";
 	
+	public static final String STATUS_CODE_ERROR_SOAP = "component.monitor.general.error.soap.undefined";
+	
+	public static final String STATUS_CODE_ERROR_ILLEGAL_ARGUMENT = "component.monitor.general.error.illegal.argument";
+	
 	public static final String STATUS_CODE_NO_ERROR = "component.monitor.general.error.none";
 	
 	public static final String PARAM_STATUS = "component.monitor.general.status";

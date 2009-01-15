@@ -237,7 +237,7 @@ $action.setParameter("id", "$rowId")
 
 #macro (renderTextField $label $id)
 <p>
-  	<label class="float_left col2left_incr" for="query">#displayFieldLabel($id $label)*</label>
+  	<label class="float_left col2left_incr" for="query">#displayFieldLabel($id $label)</label>
   	<input class="float_left inputstyletext contentInput" id="$id" name="$id" value="#getHTMLEscapedFieldValue("$id")" type="text">
 </p>
 #end

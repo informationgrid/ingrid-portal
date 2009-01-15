@@ -228,6 +228,8 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 							response.setRenderParameter("action", "");
 						}
 					}
+				} else {
+					response.setRenderParameter("action", "reshow");
 				}
 			}
 		// ------------------doNew-------------------------

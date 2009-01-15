@@ -79,6 +79,7 @@ public class IngridMonitorSNSJob extends IngridMonitorAbstractJob {
 		int status = 0;
 		String statusCode = null;
 		try {
+			startTimer();
 			SNSClient snsClient;
 			if (serviceUrl == null || serviceUrl.length() == 0) {
 				snsClient = new SNSClient(PortalConfig.getInstance().getString(
@@ -128,6 +129,8 @@ public class IngridMonitorSNSJob extends IngridMonitorAbstractJob {
 			log.error("Error checking SNS Interface.", e);
 		}
 
+		computeTime(dataMap, stopTimer());
+		
 		updateJobData(context, status, statusCode);
 		sendAlertMail(context);
 		updateJob(context);

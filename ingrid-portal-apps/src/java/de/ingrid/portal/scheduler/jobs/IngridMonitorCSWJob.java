@@ -84,7 +84,7 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 		int status = 0;
 		String statusCode = null;
 		try {
-
+			startTimer();
 			IngridQuery q = QueryStringParser.parse(query);
 			CSWQueryBuilder qBuilder = new CSWQueryBuilder();
 			AxisQuerySender qSender = new AxisQuerySender(serviceUrl);
@@ -141,9 +141,13 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 		} catch (Throwable e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
-			log.error("Unspecific Error!", e);
+			if (log.isDebugEnabled()) {
+				e.printStackTrace();
+			}	
 		}
 
+		computeTime(dataMap, stopTimer());
+		
 		updateJobData(context, status, statusCode);
 		sendAlertMail(context);
 		updateJob(context);
