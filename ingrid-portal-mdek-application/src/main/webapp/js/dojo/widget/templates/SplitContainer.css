@@ -7,7 +7,7 @@
 .dojoSplitPane{
 	position: absolute;
 	overflow:auto;
-	background:#fff;
+	background:#eee;
 }
 
 .dojoSplitContainerSizerH,
