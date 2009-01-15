@@ -38,6 +38,7 @@ dojo.addOnLoad(function() {
 	  dojo.event.connect(thesaurusEnvCatsTable.store, "onSetData", function() {applyRule2();});
 	}
 	if (thesaurusEnvExtResCheckBox) {
+	  dojo.event.connect(thesaurusEnvExtResCheckBox, "setValue", function(val) {applyRule2();});
 	  dojo.event.connect(thesaurusEnvExtResCheckBox, "onClick", function(obj, field) {applyRule2();});
 	}
 	
