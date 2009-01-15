@@ -6,7 +6,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.GZIPOutputStream;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.apache.log4j.Logger;
@@ -19,6 +18,8 @@ public class ImportServiceImpl {
 
 	private final static Logger log = Logger.getLogger(ImportServiceImpl.class);	
 
+	private enum FileType { GZIP, ZIP, XML, UNKNOWN }
+
 	// Injected by Spring
 	private CatalogRequestHandler catalogRequestHandler;
 
@@ -29,17 +30,26 @@ public class ImportServiceImpl {
 
 		try {
 			byte[] gzippedData = null;
-			if (fileTransfer.getMimeType().equals("application/x-gzip")) {
+			switch (getFileType(fileTransfer.getMimeType())) {
+			case GZIP:
 				gzippedData = createByteArrayFromInputStream(fileTransfer.getInputStream());
+				break;
 
-			} else if (fileTransfer.getMimeType().equals("application/zip")) {
+			case ZIP:
 				ZipInputStream zipIn = new ZipInputStream(fileTransfer.getInputStream());
 				zipIn.getNextEntry();
-
 				gzippedData = compress(zipIn).toByteArray();
+				break;
 
-			} else if (fileTransfer.getMimeType().equals("text/xml")) {
+			case UNKNOWN:
+				log.debug("Unknown file type. Assuming uncompressed xml data.");
+				// Fall through
+			case XML:
 				gzippedData = compress(fileTransfer.getInputStream()).toByteArray();
+				break;
+
+			default:
+				throw new IllegalArgumentException("Error checking input file type. Supported types: GZIP, ZIP, XML");
 			}
 
 			catalogRequestHandler.importEntities(gzippedData, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
@@ -47,8 +57,24 @@ public class ImportServiceImpl {
 		} catch (IOException ex) {
 			log.error("Error creating input data.", ex);
 		}
-		// TODO catch and throw mdek exception (e.g. Parent not set, ...)?
 	}
+
+	private FileType getFileType(String mimeType) {
+		if ("application/x-gzip".equals(mimeType) || "application/gzip".equals(mimeType)) {
+			return FileType.GZIP;
+
+		} else if ("application/zip".equals(mimeType)) {
+			return FileType.ZIP;
+
+		} else if ("text/xml".equals(mimeType)) {
+			return FileType.XML;
+
+		} else {
+			log.debug("Could not determine import file type from mime type: '"+mimeType+"'");
+			return FileType.UNKNOWN;
+		}
+	}
+
 
 	public JobInfoBean getImportInfo() {
 		return catalogRequestHandler.getImportInfo();

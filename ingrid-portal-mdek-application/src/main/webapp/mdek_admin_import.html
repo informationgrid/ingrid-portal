@@ -208,12 +208,13 @@ refreshImportProcessInfo = function() {
 
 function updateImportInfo(importInfo) {
 	if (jobFinished(importInfo)) {
+		dojo.html.hide(dojo.byId("importProgressBarContainer"));
+		dojo.html.hide(dojo.byId("cancelImportProcessButton"));
 		if (importInfo.exception) {
 			dojo.byId("importInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
 			dojo.html.show(dojo.byId("importExceptionMessage"));
 			dojo.html.hide(dojo.byId("importInfoDownload"));
 			dojo.html.hide(dojo.byId("importInfoEndDateContainer"));
-			dojo.html.hide(dojo.byId("cancelImportProcessButton"));
 			dojo.html.hide(dojo.byId("importInfoNumImportedEntitiesContainer"));
 			dojo.byId("importInfoNumImportedEntities").innerHTML = "";
 
@@ -222,7 +223,6 @@ function updateImportInfo(importInfo) {
 			dojo.html.hide(dojo.byId("importExceptionMessage"));
 			dojo.html.show(dojo.byId("importInfoDownload"));
 			dojo.html.show(dojo.byId("importInfoEndDateContainer"));
-			dojo.html.hide(dojo.byId("cancelImportProcessButton"));
 			dojo.html.show(dojo.byId("importInfoNumImportedEntitiesContainer"));
 			dojo.byId("importInfoNumImportedEntities").innerHTML = importInfo.numProcessedEntities;
 		}
@@ -233,7 +233,12 @@ function updateImportInfo(importInfo) {
 		dojo.html.hide(dojo.byId("importInfoEndDateContainer"));
 		dojo.html.show(dojo.byId("cancelImportProcessButton"));
 		dojo.html.show(dojo.byId("importInfoNumImportedEntitiesContainer"));
+		dojo.html.show(dojo.byId("importProgressBarContainer"));
 		dojo.byId("importInfoNumImportedEntities").innerHTML = importInfo.numProcessedEntities + " / " + importInfo.numEntities;
+
+		var progressBar = dojo.widget.byId("importProgressBar");
+		progressBar.setMaxProgressValue(importInfo.numEntities);
+		progressBar.setProgressValue(importInfo.numProcessedEntities);
 	}
 
 	if (importInfo.startTime) {
@@ -257,10 +262,12 @@ function jobFinished(importInfo) {
 function getStackTrace(exception) {
 	var stackTrace = "";
 	stackTrace += exception.message +"<br>";
-	var cause = exception.cause;
-	stackTrace += cause.javaClassName+": "+cause.message +"<br>";
-	for (var i = 0; i < cause.stackTrace.length; ++i) {
-		var ex = cause.stackTrace[i];
+	if (exception.cause) {
+		exception = exception.cause;
+	}
+	stackTrace += exception.javaClassName+": "+exception.message +"<br>";
+	for (var i = 0; i < exception.stackTrace.length; ++i) {
+		var ex = exception.stackTrace[i];
 		if (!ex.nativeMethod) {
 			stackTrace += "&nbsp;&nbsp;at "+ex.className+"."+ex.methodName+"("+ex.fileName+":"+ex.lineNumber+")" +"<br>";
 		} else {
@@ -392,10 +399,11 @@ function cloneObject(obj) {
 						<tr>
 							<td>Gestartet am:</td>
 							<td id="importInfoBeginDate"></td></tr>
-							<td id="importInfoEndDateContainer">Beendet am:</td>
+							<tr><td id="importInfoEndDateContainer">Beendet am:</td>
 							<td id="importInfoEndDate"></td></tr>
-							<td id="importInfoNumImportedEntitiesContainer">Anzahl Datens&auml;tze:</td>
+							<tr><td id="importInfoNumImportedEntitiesContainer">Anzahl Datens&auml;tze:</td>
 							<td id="importInfoNumImportedEntities"></td></tr>
+							<tr><td id="importProgressBarContainer" colspan=2><div dojoType="ProgressBar" id="importProgressBar" width="310" height="10" /></td></tr>
 					</table>
 					<span id="cancelImportProcessButton" class="button" style="height:20px !important;">
 						<span style="float:right;">

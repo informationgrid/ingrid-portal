@@ -186,13 +186,19 @@ function updateExportInfo(exportInfo) {
 		dojo.html.show(dojo.byId("exportInfoDownload"));
 		dojo.html.show(dojo.byId("exportInfoEndDateContainer"));
 		dojo.html.hide(dojo.byId("cancelExportProcessButton"));
+		dojo.html.hide(dojo.byId("exportProgressBarContainer"));
 		dojo.byId("exportInfoNumExportedEntities").innerHTML = exportInfo.numProcessed;
 	} else {
 		dojo.byId("exportInfoTitle").innerHTML = "Informationen zum laufenden Prozess:";
 		dojo.html.hide(dojo.byId("exportInfoDownload"));
 		dojo.html.hide(dojo.byId("exportInfoEndDateContainer"));
 		dojo.html.show(dojo.byId("cancelExportProcessButton"));
+		dojo.html.show(dojo.byId("exportProgressBarContainer"));
 		dojo.byId("exportInfoNumExportedEntities").innerHTML = exportInfo.numProcessed + " / " + exportInfo.numTotal;
+
+		var progressBar = dojo.widget.byId("exportProgressBar");
+		progressBar.setMaxProgressValue(exportInfo.numTotal);
+		progressBar.setProgressValue(exportInfo.numProcessed);
 	}
 
 	if (exportInfo.startTime) {
@@ -317,10 +323,11 @@ function initSysLists() {
 								<tr>
 									<td>Gestartet am:</td>
 									<td id="exportInfoBeginDate"></td></tr>
-									<td id="exportInfoEndDateContainer">Beendet am:</td>
+									<tr><td id="exportInfoEndDateContainer">Beendet am:</td>
 									<td id="exportInfoEndDate"></td></tr>
-									<td>Anzahl Datens&auml;tze:</td>
+									<tr><td>Anzahl Datens&auml;tze:</td>
 									<td id="exportInfoNumExportedEntities"></td></tr>
+									<tr><td id="exportProgressBarContainer" colspan=2><div dojoType="ProgressBar" id="exportProgressBar" width="310" height="10" /></td></tr>
 							</table>
 							<span id="cancelExportProcessButton" class="button" style="height:20px !important;">
 								<span style="float:right;">
