@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.CatalogBean;
-import de.ingrid.mdek.beans.ExportInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.mdek.caller.MdekCaller;
@@ -113,33 +112,7 @@ public class MdekCatalogUtils {
 		}
 	}
 
-	public static ExportInfoBean extractExportInfoFromResponse(IngridDocument response) {
-		IngridDocument result = MdekUtils.getResultFromResponse(response);
-		
-		if (result != null) {
-			ExportInfoBean exportInfo = new ExportInfoBean();
-			exportInfo.setDescription(result.getString(MdekKeys.JOBINFO_MESSAGES));
-			exportInfo.setStartTime(MdekUtils.convertTimestampToDate(result.getString(MdekKeys.JOBINFO_START_TIME)));
-			exportInfo.setEndTime(MdekUtils.convertTimestampToDate(result.getString(MdekKeys.JOBINFO_END_TIME)));
-			if (result.get(MdekKeys.JOBINFO_NUM_OBJECTS) != null) {
-				exportInfo.setNumProcessed(result.getInt(MdekKeys.JOBINFO_NUM_OBJECTS));
-				exportInfo.setNumTotal(result.getInt(MdekKeys.JOBINFO_TOTAL_NUM_OBJECTS));
-
-			} else if (result.get(MdekKeys.JOBINFO_NUM_ADDRESSES) != null) {
-				exportInfo.setNumProcessed(result.getInt(MdekKeys.JOBINFO_NUM_ADDRESSES));
-				exportInfo.setNumTotal(result.getInt(MdekKeys.JOBINFO_TOTAL_NUM_ADDRESSES));
-			}
-			exportInfo.setResult((byte[]) result.get(MdekKeys.EXPORT_RESULT));
-
-			return exportInfo;
-
-		} else {
-			MdekErrorUtils.handleError(response);
-			return null;
-		}
-	}
-
-	public static JobInfoBean extractImportInfoFromResponse(IngridDocument response) {
+	public static JobInfoBean extractJobInfoFromResponse(IngridDocument response) {
 		IngridDocument jobInfoDoc = MdekUtils.getResultFromResponse(response);
 
 		if (jobInfoDoc != null) {
@@ -155,6 +128,7 @@ public class MdekCatalogUtils {
 				jobInfo.setNumProcessedEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_NUM_ADDRESSES));
 				jobInfo.setNumEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_TOTAL_NUM_ADDRESSES));
 			}
+			jobInfo.setResult((byte[]) jobInfoDoc.get(MdekKeys.EXPORT_RESULT));
 
 			// Check if an exception occured while executing the job and add it to JobInfoBean
 			Exception jobException = MdekCaller.getExceptionFromJobInfo(jobInfoDoc);

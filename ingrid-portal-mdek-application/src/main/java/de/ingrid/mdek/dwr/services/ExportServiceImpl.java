@@ -3,8 +3,10 @@ package de.ingrid.mdek.dwr.services;
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
 
-import de.ingrid.mdek.beans.ExportInfoBean;
+import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
+import de.ingrid.mdek.job.MdekException;
+import de.ingrid.mdek.util.MdekErrorUtils;
 
 public class ExportServiceImpl {
 
@@ -18,31 +20,62 @@ public class ExportServiceImpl {
 	}
 
 	public void exportObjectBranch(String rootUuid, boolean exportChildren) {
-		catalogRequestHandler.exportObjectBranch(rootUuid, exportChildren);
+		try {
+			catalogRequestHandler.exportObjectBranch(rootUuid, exportChildren);
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while starting export job.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
 	}
 
 	public void exportObjectsWithCriteria(String exportCriteria) {
-		catalogRequestHandler.exportObjectsWithCriteria(exportCriteria);
+		try {
+			catalogRequestHandler.exportObjectsWithCriteria(exportCriteria);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while starting export job.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
 	}
 
 	public void exportAddressBranch(String rootUuid, boolean exportChildren) {
-		catalogRequestHandler.exportAddressBranch(rootUuid, exportChildren);
+		try {
+			catalogRequestHandler.exportAddressBranch(rootUuid, exportChildren);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while starting export job.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
 	}
 
 	public void exportFreeAddresses() {
-		catalogRequestHandler.exportFreeAddresses();
+		try {
+			catalogRequestHandler.exportFreeAddresses();
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while starting export job.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
 	}
 
 	public void exportTopAddresses(boolean exportChildren) {
-		catalogRequestHandler.exportTopAddresses(exportChildren);
+		try {
+			catalogRequestHandler.exportTopAddresses(exportChildren);
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while starting export job.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
 	}
 
-	public ExportInfoBean getExportInfo(boolean includeExportData) {
+	public JobInfoBean getExportInfo(boolean includeExportData) {
 		return catalogRequestHandler.getExportInfo(includeExportData);
 	}
 
 	public FileTransfer getLastExportFile() {
-		ExportInfoBean exportInfo = catalogRequestHandler.getExportInfo(true);
+		JobInfoBean exportInfo = catalogRequestHandler.getExportInfo(true);
 
 		return new FileTransfer("export.xml.gz", "x-gzip", exportInfo.getResult());
 	}

@@ -146,6 +146,7 @@
 	"operation.error.object.subTreeHasWorkingCopiesError":"One or more subobjects have to be saved before the operation can be carried out.",
 	"operation.error.address.subTreeHasWorkingCopiesError":"One or more subaddresses have to be saved before the operation can be carried out.",
 	"operation.error.parentHasSmallerPublicationConditionError":"It is not possible to publish this node because its parent has a lower publication condition.",
+	"operation.error.userHasRunningJobs":"Please cancel the current running job before starting a new one.",
 	"operation.hint.publicationConditionSaveHint":"The subtree contains objects with an incompatible publication condition. By saving this object all subobjects will be modified. Do you really want to continue?",
 	"operation.hint.publicationConditionMoveHint":"The subtree contains objects with an incompatible publication condition. By moving this object all subobjects will be modified. Do you really want to continue?",
 	"operation.hint.forceDeleteObjectHint":"The object '%{0}' is referenced by other MD-S. Do you really want to delete this object?",

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import de.ingrid.mdek.beans.CatalogBean;
-import de.ingrid.mdek.beans.ExportInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean;
 
 public interface CatalogRequestHandler {
@@ -19,7 +18,7 @@ public interface CatalogRequestHandler {
 	public void exportAddressBranch(String rootUuid, boolean exportChildren);
 	public void exportObjectBranch(String rootUuid, boolean exportChildren);
 	public void exportObjectsWithCriteria(String exportCriteria);
-	public ExportInfoBean getExportInfo(boolean includeExportData);
+	public JobInfoBean getExportInfo(boolean includeExportData);
 	public void importEntities(byte[] importData, String targetObjectUuid, String targetAddressUuid, boolean publishImmediately, boolean doSeparateImport);
 	public JobInfoBean getImportInfo();
 	public void cancelRunningJob();

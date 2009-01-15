@@ -13,6 +13,8 @@ import org.directwebremoting.io.FileTransfer;
 
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
+import de.ingrid.mdek.job.MdekException;
+import de.ingrid.mdek.util.MdekErrorUtils;
 
 public class ImportServiceImpl {
 
@@ -56,6 +58,11 @@ public class ImportServiceImpl {
 
 		} catch (IOException ex) {
 			log.error("Error creating input data.", ex);
+
+		} catch (MdekException ex) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while starting import job.", ex);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(ex));
 		}
 	}
 

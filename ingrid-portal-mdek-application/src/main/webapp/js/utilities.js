@@ -940,3 +940,24 @@ UtilUI.isNewNodeId = function(nodeId) {
 	return nodeId == "newNode";
 }
 
+// General utility functions for converting strings, etc.
+var UtilGeneral = {}
+
+// Returns the stack trace of an exception as string
+UtilGeneral.getStackTrace = function(exception) {
+	var stackTrace = "";
+	stackTrace += exception.message +"<br>";
+	if (exception.cause) {
+		exception = exception.cause;
+	}
+	stackTrace += exception.javaClassName+": "+exception.message +"<br>";
+	for (var i = 0; i < exception.stackTrace.length; ++i) {
+		var ex = exception.stackTrace[i];
+		if (!ex.nativeMethod) {
+			stackTrace += "&nbsp;&nbsp;at "+ex.className+"."+ex.methodName+"("+ex.fileName+":"+ex.lineNumber+")" +"<br>";
+		} else {
+			stackTrace += "&nbsp;&nbsp;at "+ex.className+"."+ex.methodName+"(Native Method)" +"<br>";
+		}
+	}
+	return stackTrace;
+}

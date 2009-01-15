@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.beans.CatalogBean;
-import de.ingrid.mdek.beans.ExportInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCaller.AddressArea;
@@ -62,56 +61,63 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 	}
 
 	public void exportFreeAddresses() {
-		exportAddressBranch(null, false, AddressArea.ALL_FREE_ADDRESSES);
+		IngridDocument response = exportAddressBranch(null, false, AddressArea.ALL_FREE_ADDRESSES);
+		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
 	public void exportTopAddresses(boolean exportChildren) {
-		exportAddressBranch(null, exportChildren, AddressArea.ALL_ADDRESSES);
+		IngridDocument response = exportAddressBranch(null, exportChildren, AddressArea.ALL_ADDRESSES);
+		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
 	public void exportAddressBranch(String rootUuid, boolean exportChildren) {
-		exportAddressBranch(rootUuid, exportChildren, null);
+		IngridDocument response = exportAddressBranch(rootUuid, exportChildren, null);
+		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
-	private void exportAddressBranch(String rootUuid, boolean exportChildren, AddressArea addressArea) {
-		mdekCallerCatalog.exportAddressBranch(
+	private IngridDocument exportAddressBranch(String rootUuid, boolean exportChildren, AddressArea addressArea) {
+		return mdekCallerCatalog.exportAddressBranch(
 				connectionFacade.getCurrentPlugId(),
 				rootUuid, !exportChildren,
 				addressArea, HTTPSessionHelper.getCurrentSessionId());
 	}
 
 	public void exportObjectBranch(String rootUuid, boolean exportChildren) {
-		mdekCallerCatalog.exportObjectBranch(
+		IngridDocument response = mdekCallerCatalog.exportObjectBranch(
 				connectionFacade.getCurrentPlugId(),
 				rootUuid,
 				!exportChildren, HTTPSessionHelper.getCurrentSessionId());
+
+		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
 	public void exportObjectsWithCriteria(String exportCriteria) {
-		mdekCallerCatalog.exportObjects(
+		IngridDocument response = mdekCallerCatalog.exportObjects(
 				connectionFacade.getCurrentPlugId(),
 				exportCriteria,
 				HTTPSessionHelper.getCurrentSessionId());
+		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
-	public ExportInfoBean getExportInfo(boolean includeExportData) {
+	public JobInfoBean getExportInfo(boolean includeExportData) {
 		IngridDocument response = mdekCallerCatalog.getExportInfo(connectionFacade.getCurrentPlugId(), includeExportData, HTTPSessionHelper.getCurrentSessionId());
-		return MdekCatalogUtils.extractExportInfoFromResponse(response);
+		return MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
 	public void importEntities(byte[] importData, String targetObjectUuid, String targetAddressUuid,
 			boolean publishImmediately, boolean doSeparateImport) {
-		mdekCallerCatalog.importEntities(
+		IngridDocument response = mdekCallerCatalog.importEntities(
 				connectionFacade.getCurrentPlugId(),
 				importData,
 				targetObjectUuid, targetAddressUuid,
 				publishImmediately, doSeparateImport,
 				HTTPSessionHelper.getCurrentSessionId());
+		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
 	public JobInfoBean getImportInfo() {
 		IngridDocument response = mdekCallerCatalog.getImportInfo(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
-		return MdekCatalogUtils.extractImportInfoFromResponse(response);
+		return MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
 	public void cancelRunningJob() {

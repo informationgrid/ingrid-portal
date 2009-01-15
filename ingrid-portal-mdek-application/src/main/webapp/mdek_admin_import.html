@@ -13,6 +13,30 @@ var scriptScope = this;
 var importTreeSelectedParentDataset = null;
 var importTreeSelectedParentAddress = null;
 
+//Callback for the dwr calls to ImportService.importEntities
+//Wait for three seconds for the call to return and refresh the process info if it does
+//If we run into a timeout the job is still running and we simply refresh the process info
+//If we detect that the user has running jobs, display an error message that the job could not be started
+var importServiceCallback = {
+	timeout: 3000,
+	preHook: showLoadingZone,
+	postHook: hideLoadingZone,
+	callback: function(res){
+		refreshProcessInfo();
+	},
+	errorHandler: function(msg, err) {
+		hideLoadingZone();
+		// We expect a timeout error
+		if (msg == "Timeout") {
+			refreshProcessInfo();
+		} else {
+			if (msg.indexOf("USER_HAS_RUNNING_JOBS") != -1) {
+				dialog.show(message.get("general.error"), message.get("operation.error.userHasRunningJobs"), dialog.WARNING);
+			}
+		}
+	}
+}
+
 
 _container_.addOnLoad(function() {
 	initTree();
@@ -84,7 +108,7 @@ scriptScope.downloadImportLog = function() {
 scriptScope.showJobException = function() {
 	ImportService.getImportInfo({
 		callback: function(importInfo){
-	    	dialog.show(message.get("general.error"), getStackTrace(importInfo.exception), dialog.INFO, null, 800, 600);
+	    	dialog.show(message.get("general.error"), UtilGeneral.getStackTrace(importInfo.exception), dialog.INFO, null, 800, 600);
 		},
 		errorHandler: function(message, err) {
 			dojo.debug("Error: "+ message);
@@ -103,19 +127,7 @@ function startTreeImport() {
 	dojo.debug("parent object uuid: "+parentObjectUuid);
 	dojo.debug("parent address uuid: "+parentAddressUuid);
 
-	ImportService.importEntities(file, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, {
-		callback: function(){
-			// Nothing to do here. The result is fetched via getImportInfo
-		},
-		timeout: 100,
-		errorHandler: function(message, err) {
-			// We expect a timeout error since we (almost) directly return from the call
-			if (message != "Timeout") {
-				dojo.debug("Error: "+ message);
-			}
-		}
-	});
-	setTimeout("refreshImportProcessInfo()", 2000);
+	ImportService.importEntities(file, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, importServiceCallback);
 }
 
 scriptScope.startImport = function() {
@@ -208,10 +220,10 @@ refreshImportProcessInfo = function() {
 
 function updateImportInfo(importInfo) {
 	if (jobFinished(importInfo)) {
+		dojo.byId("importInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
 		dojo.html.hide(dojo.byId("importProgressBarContainer"));
 		dojo.html.hide(dojo.byId("cancelImportProcessButton"));
 		if (importInfo.exception) {
-			dojo.byId("importInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
 			dojo.html.show(dojo.byId("importExceptionMessage"));
 			dojo.html.hide(dojo.byId("importInfoDownload"));
 			dojo.html.hide(dojo.byId("importInfoEndDateContainer"));
@@ -219,7 +231,6 @@ function updateImportInfo(importInfo) {
 			dojo.byId("importInfoNumImportedEntities").innerHTML = "";
 
 		} else {
-			dojo.byId("importInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
 			dojo.html.hide(dojo.byId("importExceptionMessage"));
 			dojo.html.show(dojo.byId("importInfoDownload"));
 			dojo.html.show(dojo.byId("importInfoEndDateContainer"));
@@ -258,23 +269,12 @@ function jobFinished(importInfo) {
 	return (importInfo.endTime != null || importInfo.exception != null);
 }
 
-// Returns the stack trace of an exception as string
-function getStackTrace(exception) {
-	var stackTrace = "";
-	stackTrace += exception.message +"<br>";
-	if (exception.cause) {
-		exception = exception.cause;
-	}
-	stackTrace += exception.javaClassName+": "+exception.message +"<br>";
-	for (var i = 0; i < exception.stackTrace.length; ++i) {
-		var ex = exception.stackTrace[i];
-		if (!ex.nativeMethod) {
-			stackTrace += "&nbsp;&nbsp;at "+ex.className+"."+ex.methodName+"("+ex.fileName+":"+ex.lineNumber+")" +"<br>";
-		} else {
-			stackTrace += "&nbsp;&nbsp;at "+ex.className+"."+ex.methodName+"(Native Method)" +"<br>";
-		}
-	}
-	return stackTrace;
+function showLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("importLoadingZone"), "visible");
+}
+
+function hideLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("importLoadingZone"), "hidden");
 }
 
 // clone an object or array and all it's contents.
@@ -380,6 +380,9 @@ function cloneObject(obj) {
 					</span>
 					<span style="float:right;">
 						<button dojoType="ingrid:Button" title="Zuordnung zur&uuml;cksetzen" onClick="javascript:scriptScope.resetImport();">Zur&uuml;cksetzen</button>
+					</span>
+					<span id="importLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+						<img src="img/ladekreis.gif" />
 					</span>
 				</span>
 	            <div class="fill"></div>

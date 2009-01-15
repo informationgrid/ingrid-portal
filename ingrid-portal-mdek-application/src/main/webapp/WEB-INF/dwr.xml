@@ -55,7 +55,6 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.CapabilitiesBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CatalogBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CommentBean"/>
-		<convert converter="bean" match="de.ingrid.mdek.beans.ExportInfoBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.JobInfoBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.KeyValuePair"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.VersionInformation"/>
