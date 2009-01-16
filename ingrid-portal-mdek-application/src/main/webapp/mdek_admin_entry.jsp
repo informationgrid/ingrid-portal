@@ -40,11 +40,8 @@
 // click handler for main menus
 var menus = [{menu:"page1", submenus:["page1" , "page1Sub2"]}, 
 			 {menu:"page2", submenus:["page2", "page2Sub2", "page2Sub3"]},
-			 {menu:"page3", submenus:["page3"]},
+			 {menu:"page3", submenus:["page3", "page3Sub2", "page3Sub3", "page3Sub4", "page3Sub5", "page3Sub6", "page3Sub7", "page3Sub8"]},
 			 {menu:"page4", submenus:["page4", "page4Sub2"]}
-
-// The following pages are not implemented yet
-//			 {menu:"page3", submenus:["page3", "page3Sub2", "page3Sub3", "page3Sub4", "page3Sub5", "page3Sub6", "page3Sub7", "page3Sub8"]},
 			];
 var currentMenu = null;
 var currentSubMenu = new Array();
@@ -78,10 +75,11 @@ dojo.addOnLoad(function() {
 });
 
 function initMenu() {
-	// Hide the first menu for all roles except the catAdmin
-	if (currentUser.role != 1) {
-		dojo.byId("page1Menu").style.display = "none";
-		dojo.byId("page4Menu").style.display = "none";
+	// Show menu one, three and four for cat_admin
+	if (currentUser.role == 1) {
+		dojo.byId("page1Menu").style.display = "";
+		dojo.byId("page3Menu").style.display = "";
+		dojo.byId("page4Menu").style.display = "";
 	}
 }
 
@@ -342,10 +340,10 @@ function hideSplash(){
   	  </div>
   	  <div id="navi">
   	    <ul>
-  	      <li><a id="page1Menu" onClick="clickMenu('page1')" href="javascript:void(0);" class="current" title="Katalogverwaltung">Katalogverwaltung</a></li>
+  	      <li><a id="page1Menu" style="display:none;" onClick="clickMenu('page1')" href="javascript:void(0);" class="current" title="Katalogverwaltung">Katalogverwaltung</a></li>
   	      <li><a id="page2Menu" onClick="clickMenu('page2')" href="javascript:void(0);" title="Nutzerverwaltung">Nutzerverwaltung</a></li>
   	      <li><a id="page3Menu" style="display:none;" onClick="clickMenu('page3')" href="javascript:void(0);" title="Gesamtkatalogmanagement">Gesamtkatalogmanagement</a></li>
-  	      <li><a id="page4Menu" onClick="clickMenu('page4')" href="javascript:void(0);" title="Import/Export">Import/Export</a></li>
+  	      <li><a id="page4Menu" style="display:none;" onClick="clickMenu('page4')" href="javascript:void(0);" title="Import/Export">Import/Export</a></li>
   	    </ul>
   	  </div>
   	  
@@ -365,18 +363,6 @@ function hideSplash(){
 	  <div id="page3Subnavi" class="subnavi" style="display:none">
   	    <ul>
   	      <li><a id="page3Subnavi1" onClick="clickMenu('page3', 'page3')" href="javascript:void(0);" title="Analyse">Analyse</a></li>	  
-  	    </ul>
-	  </div>
-	  <div id="page4Subnavi" class="subnavi" style="display:none">
-  	    <ul>
-   	      <li><a id="page4Subnavi1" onClick="clickMenu('page4', 'page4')" href="javascript:void(0);" class="current" title="Export">Export</a></li>
-  	      <li><a id="page4Subnavi2" onClick="clickMenu('page4', 'page4Sub2')" href="javascript:void(0);" title="Import">Import</a></li>
-  	    </ul>
-  	  </div>
-<!-- The following pages are not implemented yet -->
-<!--
-	  <div id="page3Subnavi" class="subnavi" style="display:none">
-  	    <ul>
   	      <li><a id="page3Subnavi2" onClick="clickMenu('page3', 'page3Sub2')" href="javascript:void(0);" title="Dubletten">Dubletten</a></li>	  
   	      <li><a id="page3Subnavi3" onClick="clickMenu('page3', 'page3Sub3')" href="javascript:void(0);" title="URL-Pflege">URL-Pflege</a></li>	  
   	      <li><a id="page3Subnavi4" onClick="clickMenu('page3', 'page3Sub4')" href="javascript:void(0);" title="Auswahl-/ISO-Codelistenpflege">Auswahl-/ISO-Codelistenpflege</a></li>	  
@@ -386,7 +372,12 @@ function hideSplash(){
   	      <li><a id="page3Subnavi8" onClick="clickMenu('page3', 'page3Sub8')" href="javascript:void(0);" title="Raumbez&uuml;ge">Raumbez&uuml;ge</a></li>	  
   	    </ul>
 	  </div>
--->
+	  <div id="page4Subnavi" class="subnavi" style="display:none">
+  	    <ul>
+   	      <li><a id="page4Subnavi1" onClick="clickMenu('page4', 'page4')" href="javascript:void(0);" class="current" title="Export">Export</a></li>
+  	      <li><a id="page4Subnavi2" onClick="clickMenu('page4', 'page4Sub2')" href="javascript:void(0);" title="Import">Import</a></li>
+  	    </ul>
+  	  </div>
     </div>
   
   </div>
@@ -399,12 +390,6 @@ function hideSplash(){
   <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_permission_overview.html" preload="false" executeScripts="true"></div>
 
   <div widgetId="page3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_analysis.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
-
-  <div widgetId="page4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_export.html" preload="false" executeScripts="true"></div>
-  <div widgetId="page4Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_import.html" preload="false" executeScripts="true"></div>
-
-<!-- The following pages are not implemented yet -->
-<!--
   <div widgetId="page3Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
   <div widgetId="page3Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
   <div widgetId="page3Sub4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
@@ -413,7 +398,9 @@ function hideSplash(){
   <div widgetId="page3Sub7" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
   <div widgetId="page3Sub8" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
 
--->
+  <div widgetId="page4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_export.html" preload="false" executeScripts="true"></div>
+  <div widgetId="page4Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_import.html" preload="false" executeScripts="true"></div>
+
 </div>
 
 </body>
