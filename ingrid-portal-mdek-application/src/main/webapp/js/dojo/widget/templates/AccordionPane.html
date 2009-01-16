@@ -4,7 +4,7 @@
     <tr>
       <td valign="middle" style="margin-right:13px; height:26px;"><img src="${this.icon}" width="16" height="16" alt=""></td>
       <td valign="middle" style="width:490px;">${this.label}</td>
-      <td valign="middle" style="padding-right:30px; text-align:right;">${this.itemCount} <a dojoAttachPoint="infoLink" href="${this.infoUrl}" title="Info" style="margin-left:10px; color:#fff">Info</a></td></tr>
+      <td valign="middle" style="padding-right:30px; text-align:right;"><span dojoAttachPoint="itemCountField">${this.itemCount}</span> <a dojoAttachPoint="infoLink" href="javascript:void(0);" onclick="${this.infoUrl}" title="Info" style="margin-left:10px; color:#fff">Info</a></td></tr>
   </table>
 </div>
 <div dojoAttachPoint="containerNode" style="overflow: hidden;" class="${this.containerNodeClass}"></div>

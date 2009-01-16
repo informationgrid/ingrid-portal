@@ -38,6 +38,9 @@ dojo.widget.defineWidget(
 
     if (this.infoUrl.length == 0)
       this.infoLink.style.visibility = "hidden";
-  }
+  },
 
+  setItemCount: function(count) {
+	  this.itemCountField.innerHTML = count;
+  }
 });
