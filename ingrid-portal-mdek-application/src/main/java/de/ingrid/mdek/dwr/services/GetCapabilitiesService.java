@@ -209,7 +209,8 @@ public class GetCapabilitiesService {
     	getCapabilitiesOp.setPlatform(getCapabilitiesOpPlatform);
     	getCapabilitiesOp.setMethodCall("GetCapabilities");
     	ArrayList<String> getCapabilitiesOpAddressList = new ArrayList<String>();
-    	getCapabilitiesOpAddressList.add(xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_CAPABILITIES_HREF"), doc));
+    	String address = xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_CAPABILITIES_HREF"), doc);
+    	getCapabilitiesOpAddressList.add(appendGetCapabilitiesParameterToWmsServiceUrl(address));
     	getCapabilitiesOp.setAddressList(getCapabilitiesOpAddressList);
 
     	ArrayList<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
@@ -286,6 +287,17 @@ public class GetCapabilitiesService {
     	result.setOperations(operations);
     	return result;
     }
+
+    private String appendGetCapabilitiesParameterToWmsServiceUrl(String baseUrl) {
+    	StringBuilder url = new StringBuilder(baseUrl);
+    	if (url.lastIndexOf("?") != url.length() - 1) {
+    		url.append('?');
+    	}
+
+    	url.append("SERVICE=WMS&REQUEST=GetCapabilities");
+    	return url.toString();
+    }
+
 
     public CapabilitiesBean getCapabilitiesWFS(Document doc) throws XPathExpressionException {
     	CapabilitiesBean result = new CapabilitiesBean();
