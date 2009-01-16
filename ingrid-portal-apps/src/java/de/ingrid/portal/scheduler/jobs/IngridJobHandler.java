@@ -154,6 +154,9 @@ public class IngridJobHandler {
 				dataMap.put(IngridMonitorIPlugJob.PARAM_EXCLUDED_PROVIDER, cf
 						.getInput(AdminComponentMonitorForm.FIELD_EXCLUDED_PROVIDER));
 				
+				// event occurences back to zero after job was updated!
+				dataMap.put(IngridMonitorIPlugJob.PARAM_EVENT_OCCURENCES, 0);
+				
 				ArrayList contacts = new ArrayList();
 				String[] emails = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_EMAILS);
 				String[] thresholds = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLDS);

@@ -133,8 +133,8 @@
 		<hr>
 		<p style="color:#ff0000;">
 			<label class="float_left col2left_incr">Fehlermeldung</label>
-			<span>$MESSAGES.getString($actionForm.getInput('error_msg'))</span>
 		</p>
+		<table style="color:#ff0000;"><tr><td>$MESSAGES.getString($actionForm.getInput('error_msg'))</td></tr></table>
 		#end
 	</p>
 	<br/>

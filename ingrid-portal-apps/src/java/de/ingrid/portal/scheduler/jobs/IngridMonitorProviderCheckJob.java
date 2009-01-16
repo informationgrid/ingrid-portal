@@ -6,8 +6,11 @@ package de.ingrid.portal.scheduler.jobs;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.configuration.plist.XMLPropertyListConfiguration.PListNode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
@@ -36,6 +39,10 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 	public static final String JOB_ID 			= "ProviderCheck";
 
 	private final static Log log 				= LogFactory.getLog(IngridMonitorProviderCheckJob.class);
+	
+	private final String NEW_LINE_PLAIN			= "\r\n";
+	
+	private final String NEW_LINE_WEB			= "<br>";
 
 	/**
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -71,10 +78,11 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 
 		int status 					= 0;
 		String statusCode 			= null;
-		ArrayList allProvider 		= new ArrayList();
-		ArrayList missingProvider 	= new ArrayList();
+		HashMap allProvider 		= new HashMap();
+		List<String> exclude		= new ArrayList();
 		Session session 			= HibernateUtil.currentSession();
 		boolean found				= false;
+		String errorMessage			= "";
 //        Transaction tx = null;
         
 		try {
@@ -83,60 +91,43 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 			// get all iPlugs connected to the iBus
 			PlugDescription[] hits = IBUSInterfaceImpl.getInstance().getAllIPlugs();
 			
-			// get from each iPlug the containing provider
+			// get all known provider from the database
+			List<IngridProvider> allIngridProviderInDB = session.createCriteria(IngridProvider.class).list();
+			
+			// list of provider that shall be excluded
+			if (dataMap.containsKey(PARAM_EXCLUDED_PROVIDER)) { // can happen in the beginning
+				exclude = Arrays.asList(dataMap.getString(PARAM_EXCLUDED_PROVIDER).split(","));
+			}
+			
+			List<String> allProviderInDB = new ArrayList();
+			
+			// get the short names of all providers of all iPlugs
+			for (IngridProvider ip : allIngridProviderInDB) {
+				allProviderInDB.add(ip.getIdent());
+			}
+			
+			// get from each iPlug the containing provider and check if their provider
+			// are also in the local DB
 			for (int i=0; i<hits.length; i++) {
-				String[] provider = hits[i].getProviders();
-				for (int j=0; j<provider.length; j++) {
-					allProvider.add(provider[j]);
+				ArrayList missingProvider = new ArrayList();
+				for (String provider : hits[i].getProviders()) {
+					if (!allProviderInDB.contains(provider) && !exclude.contains(provider)) {
+						missingProvider.add(provider);
+					}
+				}
+				if (!missingProvider.isEmpty()) {
+					errorMessage += writeErrorMessage(hits[i], missingProvider);
 				}
 			}
-			
-			List<String> exclude = Arrays.asList(dataMap.getString(PARAM_EXCLUDED_PROVIDER).split(","));
-			
-			// get the provider stored in the local database
-			//tx = session.beginTransaction();
-			IngridProvider providerInDB = null;
-			List allProviderInDB = session.createCriteria(IngridProvider.class).list();
-	        //tx.commit();
-
-			// compare the provider with the ones in the database
-			for (int i=0; i<allProvider.size(); i++) {
-				for (int j=0; j<allProviderInDB.size(); j++) {
-					String ident = ((IngridProvider)allProviderInDB.get(j)).getIdent();
-					if (allProvider.get(i).equals(ident)) {
-						found = true;
-						break;
-					}
-				}
-				if (!found && !exclude.contains(allProvider.get(i))) {
-					missingProvider.add(allProvider.get(i));
-					if (log.isDebugEnabled()) {
-						log.debug("Provider (" + allProvider.get(i) + ") not found in local DB!");
-					}
-				}
-				found = false;
-			}
-			
-			/*
-			// wrong way around ... must iterate through allProvider!
-			for (int j=0; j<allProviderInDB.size(); j++) {
-				String ident = ((IngridProvider)allProviderInDB.get(j)).getIdent();
-				if (!allProvider.contains(ident)) {
-					missingProvider.add(ident);
-					if (log.isDebugEnabled()) {
-						log.debug("Provider (" + ident + ") not found in local DB!");
-					}
-				}
-			}*/
 			
 			computeTime(dataMap, stopTimer());
 			
 			if (hits.length == 0) {
 				status = STATUS_ERROR;
 				statusCode = STATUS_CODE_ERROR_NO_IPLUGS;
-			} else if (!missingProvider.isEmpty()) {
+			} else if (errorMessage != "") {
 				status = STATUS_ERROR;
-				statusCode = missingProvider.toString();
+				statusCode = errorMessage;
 			} else {
 				status = STATUS_OK;
 				statusCode = STATUS_CODE_NO_ERROR;
@@ -147,13 +138,42 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 			e.printStackTrace();
 		}
 		
-		updateJobData(context, status, statusCode);
+		// make the errorMessage more readable in the browser
+		String webErrorMessage = errorMessage.replace(NEW_LINE_PLAIN, NEW_LINE_WEB);
+		
+		// has to be the web version, otherwise event-occurrences wouldn't be counted correctly
+		updateJobData(context, status, webErrorMessage);
+		
+		dataMap.put(PARAM_STATUS_CODE, errorMessage);
 		sendAlertMail(context);
+		
+		// set here finally the status code for the web browser
+		//*************************************
+		dataMap.put(PARAM_STATUS_CODE, webErrorMessage);
+		//*************************************
+		
 		updateJob(context);
 
 		if (log.isDebugEnabled()) {
 			log.debug("Job (" + context.getJobDetail().getName() + ") finished in "
 					+ (System.currentTimeMillis() - startTime) + " ms.");
 		}
+	}
+	
+	private String writeErrorMessage(PlugDescription plugDesc, ArrayList missingProvider ) {
+		String errorMessage = "";
+		
+		if (!missingProvider.isEmpty()) {
+			String newLine = NEW_LINE_PLAIN;
+			
+			errorMessage += plugDesc.getPlugId() + newLine;
+			errorMessage += plugDesc.getPersonSureName() + " " + plugDesc.getPersonName() + newLine;
+			errorMessage += plugDesc.getPersonMail() + newLine;
+			errorMessage += plugDesc.getPlugId() + newLine;
+			errorMessage += "Missing provider: " + missingProvider.toString() + newLine;
+			errorMessage += newLine;
+		}
+		
+		return errorMessage;
 	}
 }
