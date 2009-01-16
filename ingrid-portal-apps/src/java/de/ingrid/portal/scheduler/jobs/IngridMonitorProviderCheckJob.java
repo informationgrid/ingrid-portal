@@ -166,12 +166,12 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 		if (!missingProvider.isEmpty()) {
 			String newLine = NEW_LINE_PLAIN;
 			
-			errorMessage += plugDesc.getPlugId() + newLine;
-			errorMessage += plugDesc.getPersonSureName() + " " + plugDesc.getPersonName() + newLine;
-			errorMessage += plugDesc.getPersonMail() + newLine;
-			errorMessage += plugDesc.getPlugId() + newLine;
-			errorMessage += "Missing provider: " + missingProvider.toString() + newLine;
 			errorMessage += newLine;
+			errorMessage += "iPlug-Name: " + plugDesc.getDataSourceName() + newLine;
+			errorMessage += "Ansprechpartner: " + plugDesc.getPersonSureName() + " " + plugDesc.getPersonName() + newLine;
+			errorMessage += "Email: " + plugDesc.getPersonMail() + newLine;
+			errorMessage += "iPlug-ID: " + plugDesc.getPlugId() + newLine;
+			errorMessage += "Fehlende Anbieter: " + missingProvider.toString() + newLine;
 		}
 		
 		return errorMessage;
