@@ -230,12 +230,20 @@ function updateImportInfo(importInfo) {
 			dojo.html.hide(dojo.byId("importInfoNumImportedEntitiesContainer"));
 			dojo.byId("importInfoNumImportedEntities").innerHTML = "";
 
-		} else {
+		} else if (importInfo.endTime) {
 			dojo.html.hide(dojo.byId("importExceptionMessage"));
 			dojo.html.show(dojo.byId("importInfoDownload"));
 			dojo.html.show(dojo.byId("importInfoEndDateContainer"));
 			dojo.html.show(dojo.byId("importInfoNumImportedEntitiesContainer"));
 			dojo.byId("importInfoNumImportedEntities").innerHTML = importInfo.numProcessedEntities;
+
+		} else {
+			// No job has been started yet
+			dojo.html.hide(dojo.byId("importExceptionMessage"));
+			dojo.html.hide(dojo.byId("importInfoDownload"));
+			dojo.html.hide(dojo.byId("importInfoEndDateContainer"));
+			dojo.html.hide(dojo.byId("importInfoNumImportedEntitiesContainer"));
+			dojo.byId("importInfoNumImportedEntities").innerHTML = "";
 		}
 	} else {
 		dojo.byId("importInfoTitle").innerHTML = "Informationen zum laufenden Prozess:";
@@ -266,7 +274,10 @@ function updateImportInfo(importInfo) {
 }
 
 function jobFinished(importInfo) {
-	return (importInfo.endTime != null || importInfo.exception != null);
+	// endTime != null -> job has an end time means it's done
+	// exception != null -> job has an exception -> done
+	// startTime == null -> no start time means something went wrong (no previous job exists?)
+	return (importInfo.endTime != null || importInfo.exception != null || importInfo.startTime == null);
 }
 
 function showLoadingZone() {

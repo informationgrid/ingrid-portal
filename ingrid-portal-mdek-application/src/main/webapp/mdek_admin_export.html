@@ -160,12 +160,20 @@ function updateExportInfo(exportInfo) {
 			dojo.html.hide(dojo.byId("exportInfoNumExportedEntitiesContainer"));
 			dojo.byId("exportInfoNumExportedEntities").innerHTML = "";
 
-		} else {
+		} else if (exportInfo.endTime) {
 			dojo.html.hide(dojo.byId("exportExceptionMessage"));
 			dojo.html.show(dojo.byId("exportInfoDownload"));
 			dojo.html.show(dojo.byId("exportInfoEndDateContainer"));
 			dojo.html.show(dojo.byId("exportInfoNumExportedEntitiesContainer"));
 			dojo.byId("exportInfoNumExportedEntities").innerHTML = exportInfo.numProcessedEntities;
+
+		} else {
+			// No job has been started yet
+			dojo.html.hide(dojo.byId("exportExceptionMessage"));
+			dojo.html.hide(dojo.byId("exportInfoDownload"));
+			dojo.html.hide(dojo.byId("exportInfoEndDateContainer"));
+			dojo.html.hide(dojo.byId("exportInfoNumExportedEntitiesContainer"));
+			dojo.byId("exportInfoNumExportedEntities").innerHTML = "";
 		}
 	} else {
 		dojo.byId("exportInfoTitle").innerHTML = "Informationen zum laufenden Prozess:";
@@ -196,7 +204,10 @@ function updateExportInfo(exportInfo) {
 }
 
 function jobFinished(exportInfo) {
-	return (exportInfo.endTime != null || exportInfo.exception != null);
+	// endTime != null -> job has an end time means it's done
+	// exception != null -> job has an exception -> done
+	// startTime == null -> no start time means something went wrong (no previous job exists?)
+	return (exportInfo.endTime != null || exportInfo.exception != null || exportInfo.startTime == null);
 }
 
 
