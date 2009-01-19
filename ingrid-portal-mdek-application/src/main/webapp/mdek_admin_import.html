@@ -13,22 +13,23 @@ var scriptScope = this;
 var importTreeSelectedParentDataset = null;
 var importTreeSelectedParentAddress = null;
 
-//Callback for the dwr calls to ImportService.importEntities
-//Wait for three seconds for the call to return and refresh the process info if it does
-//If we run into a timeout the job is still running and we simply refresh the process info
-//If we detect that the user has running jobs, display an error message that the job could not be started
+// Callback for the dwr calls to ImportService.importEntities
+// We don't set a timeout since we don't know how long the fileupload will take.
+// The java method returns when the fileupload is finished. The file is then transferred to the backend and the
+// import job is started. Since we don't know how long this takes, we have to estimate a timespan (3s for now).
+// After that we start querying the backend for information about the current running job
 var importServiceCallback = {
-	timeout: 3000,
 	preHook: showLoadingZone,
 	postHook: hideLoadingZone,
 	callback: function(res){
-		refreshProcessInfo();
+		setTimeout("refreshImportProcessInfo()", 3000);
 	},
 	errorHandler: function(msg, err) {
+		dojo.debugShallow(err);
 		hideLoadingZone();
 		// We expect a timeout error
 		if (msg == "Timeout") {
-			refreshProcessInfo();
+			setTimeout("refreshImportProcessInfo()", 3000);
 		} else {
 			if (msg.indexOf("USER_HAS_RUNNING_JOBS") != -1) {
 				dialog.show(message.get("general.error"), message.get("operation.error.userHasRunningJobs"), dialog.WARNING);

@@ -54,7 +54,9 @@ public class ImportServiceImpl {
 				throw new IllegalArgumentException("Error checking input file type. Supported types: GZIP, ZIP, XML");
 			}
 
-			catalogRequestHandler.importEntities(gzippedData, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
+			// Start the import process in a separate thread
+			ImportEntitiesThread importThread = new ImportEntitiesThread(catalogRequestHandler, gzippedData, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
+			importThread.start();
 
 		} catch (IOException ex) {
 			log.error("Error creating input data.", ex);
@@ -130,5 +132,38 @@ public class ImportServiceImpl {
 
 	public void cancelRunningJob() {
 		catalogRequestHandler.cancelRunningJob();
+	}
+}
+
+// Helper thread which starts an import process
+class ImportEntitiesThread extends Thread {
+
+	private final static Logger log = Logger.getLogger(ImportEntitiesThread.class);	
+
+	private final CatalogRequestHandler catalogRequestHandler;
+	private final byte[] importData;
+	private final String targetObjectUuid;
+	private final String targetAddressUuid;
+	private final boolean publishImmediately;
+	private final boolean doSeparateImport;
+
+	public ImportEntitiesThread(CatalogRequestHandler catalogRequestHandler, byte[] importData, String targetObjectUuid, String targetAddressUuid, boolean publishImmediately, boolean doSeparateImport) {
+		super();
+		this.catalogRequestHandler = catalogRequestHandler;
+		this.importData = importData;
+		this.targetObjectUuid = targetObjectUuid;
+		this.targetAddressUuid = targetAddressUuid;
+		this.publishImmediately = publishImmediately;
+		this.doSeparateImport = doSeparateImport;
+	}
+
+	@Override
+	public void run() {
+		try {
+			catalogRequestHandler.importEntities(importData, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
+
+		} catch(RuntimeException ex) {
+			log.debug("Exception while importing entities.", ex);
+		}
 	}
 }

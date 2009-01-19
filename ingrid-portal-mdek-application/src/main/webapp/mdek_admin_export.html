@@ -14,13 +14,13 @@ var exportServiceCallback = {
 	preHook: showLoadingZone,
 	postHook: hideLoadingZone,
 	callback: function(res){
-		refreshProcessInfo();
+		refreshExportProcessInfo();
 	},
 	errorHandler: function(msg, err) {
 		hideLoadingZone();
 		// We expect a timeout error
 		if (msg == "Timeout") {
-			refreshProcessInfo();
+			refreshExportProcessInfo();
 		} else {
 			if (msg.indexOf("USER_HAS_RUNNING_JOBS") != -1) {
 				dialog.show(message.get("general.error"), message.get("operation.error.userHasRunningJobs"), dialog.WARNING);
@@ -32,7 +32,7 @@ var exportServiceCallback = {
 
 _container_.addOnLoad(function() {
 	initSysLists();
-	refreshProcessInfo();
+	refreshExportProcessInfo();
 });
 
 function startExportCriteria() {
@@ -132,12 +132,12 @@ scriptScope.selectDataset = function() {
 }
 
 // Reload the process info for the last run from the backend
-refreshProcessInfo = function() {
+refreshExportProcessInfo = function() {
 	ExportService.getExportInfo(false, {
 		callback: function(exportInfo){
 			updateExportInfo(exportInfo);
 			if (!jobFinished(exportInfo)) {
-				setTimeout("refreshProcessInfo()", 2000);
+				setTimeout("refreshExportProcessInfo()", 2000);
 			}
 		},
 		timeout: 5000,
