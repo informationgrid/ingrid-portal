@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<script type="text/javascript">
+var scriptScope = this;
+
+scriptScope.replaceAddress = function() {
+	dojo.debug("Function not implemented yet.");
+}
+
+</script>
+</head>
+
+<body>
+
+<!-- CONTENT START -->
+<div dojoType="ContentPane" layoutAlign="client">
+
+	<div id="contentSection" class="contentBlockWhite top">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+		<div id="catalogueAdresses" class="content">
+
+			<!-- LEFT HAND SIDE CONTENT BLOCK 1 START -->
+			<div class="spacer"></div>
+			<div id="addressDeleteTree" class="inputContainer">
+				<span class="label">Zu l&ouml;schende Adresse</span>
+				<div class="inputContainer grey noSpaceBelow w264 h413 scrollable">
+					<div dojoType="ContentPane" id="treeContainerAddressDelete">
+						<!-- tree components -->
+						<div dojoType="ingrid:TreeController" widgetId="treeControllerAddressDelete" RpcUrl="server/treelistener.php"></div>
+						<div dojoType="ingrid:TreeListener" widgetId="treeListenerAddressDelete"></div>	
+						<div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIconsAddressDelete"></div>	
+						<div dojoType="ingrid:TreeDecorator" listener="treeListenerAddressDelete"></div>
+
+						<!-- tree -->
+						<div dojoType="ingrid:Tree" listeners="treeControllerAddressDelete;treeListenerAddressDelete;treeDocIconsAddressDelete" widgetId="treeAddressDelete">
+			              	<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" nodeDocType="Objects" nodeAppType="Objekt"></div>
+			              	<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" nodeDocType="Addresses" nodeAppType="Adresse"></div>
+						</div>
+					</div>
+					<div class="spacer"></div>
+				</div>
+			</div> <!-- LEFT HAND SIDE CONTENT BLOCK 1 END -->
+
+			<!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
+			<div id="addressDeleteData" class="inputContainer">
+				<div class="inputContainer field grey noSpaceBelow h236">
+					<span class="label"><label for="addressDeleteDataUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution/Einheit')">Institution/Einheit</label></span>
+					<span class="input spaceBelow"><textarea id="addressDeleteDataUnit" name="addressDeleteDataUnit" class="w640 h038 noEdit" disabled="disabled">Alfred Toepfer, Akademie f&uuml;r Naturschutz NNA</textarea></span>
+					<div class="inputContainer">
+						<div class="half left">
+							<span class="label"><label for="addressDeleteDataCreationDate" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erstellt am')">Erstellt am</label></span>
+							<span class="input spaceBelow"><input type="text" id="addressDeleteDataCreationDate" name="addressDeleteDataCreationDate" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="01.08.2006" /></span>
+							<span class="label"><label for="addressDeleteDataUser" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verantwortlicher')">Verantwortlicher</label></span>
+							<span class="input spaceBelow"><input type="text" id="addressDeleteDataUser" name="addressDeleteDataUser" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="Gerdes, G&uuml;nther" /></span>
+							<span class="label"><label for="addressDeleteDataID" onclick="javascript:dialog.showContextHelp(arguments[0], 'ID')">ID</label></span>
+							<span class="input"><input type="text" id="addressDeleteDataID" name="addressDeleteDataID" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="6543" /></span>
+						</div>
+						<div class="half">
+							<span class="label"><label for="addressDeleteDataMDQS" onclick="javascript:dialog.showContextHelp(arguments[0], 'Qualit&auml;tssichernder')">Qualit&auml;tssichernder</label></span>
+							<div class="tableContainer headHiddenRows5 w315">
+								<table id="addressDeleteDataMDQS" dojoType="ingrid:FilteringTable" minRows="5" headClass="hidden" cellspacing="0" class="filteringTable">
+									<thead>
+										<tr>
+											<th field="name" dataType="String" width="315">Name</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td>Altm&uuml;ller, Reinhard</td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="addressDeleteDataObjects" class="inputContainer">
+				<span class="label"><label class="inActive" for="objectLists">&Uuml;bersicht der betroffenen Objekte, deren</label></span>
+				<span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Als CSV-Datei speichern">Als CSV-Datei speichern</a></span>
+				<div id="addressDeleteDataObjectsLists" dojoType="ingrid:TabContainer" doLayout="false" class="w684" selectedChild="replaceInfoAddress">
+
+					<!-- TAB 1 START -->
+					<div id="replaceInfoAddress" dojoType="ContentPane" label="Auskunftsadresse ersetzt wird">
+						<div dojoType="ContentPane">
+							<div class="tableContainer rows4 w684">
+								<table id="replaceInfoAddressList" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort">
+									<thead>
+										<tr>
+											<th field="type" dataType="String" width="30">&nbsp;</th>
+											<th field="id" dataType="String" width="254">ID</th>
+											<th field="objectName" dataType="String" width="400">Objektname</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>550e8400-e29b-41d4-a716-446655440000</td>
+											<td>Dokumentation zum Naturschutzgebiet L&uuml;neburger Heide</td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div> <!-- TAB 1 END -->
+  
+					<!-- TAB 2 START -->
+					<div id="replaceUser" dojoType="ContentPane" label="Verantwortlicher durch den Katalogadministrator ersetzt wird">
+						<div dojoType="ContentPane">
+							<div class="tableContainer rows4 w684">
+								<table id="replaceUserList" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort">
+									<thead>
+										<tr>
+											<th field="type" dataType="String" width="30">&nbsp;</th>
+											<th field="id" dataType="String" width="254">ID</th>
+											<th field="objectName" dataType="String" width="400">Objektname</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
+											<td>23zu323-fe1b-56d4-3f43-213800991233</td>
+											<td>WABIS - Altablagerungen</td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div> <!-- TAB 2 END -->
+
+				</div>
+			</div> <!-- RIGHT HAND SIDE CONTENT BLOCK 1 END -->
+
+			<!-- LEFT HAND SIDE CONTENT BLOCK 2 START -->
+			<div id="addressNewTree" class="inputContainer">
+				<span class="label">Neue Auskunftsadresse</span>
+				<div class="inputContainer grey noSpaceBelow w264 h236 scrollable">
+					<div dojoType="ContentPane" id="treeContainerAddressNew">
+						<!-- tree components -->
+						<div dojoType="ingrid:TreeController" widgetId="treeControllerAddressNew" RpcUrl="server/treelistener.php"></div>
+						<div dojoType="ingrid:TreeListener" widgetId="treeListenerAddressNew"></div>	
+						<div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIconsAddressNew"></div>	
+						<div dojoType="ingrid:TreeDecorator" listener="treeListenerAddressNew"></div>
+
+						<!-- tree -->
+						<div dojoType="ingrid:Tree" listeners="treeControllerAddressNew;treeListenerAddressNew;treeDocIconsAddressNew" widgetId="treeAddressNew">
+			              	<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" nodeDocType="Objects" nodeAppType="Objekt"></div>
+			              	<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" nodeDocType="Addresses" nodeAppType="Adresse"></div>
+						</div>
+					</div>
+					<div class="spacer"></div>
+				</div>
+			</div> <!-- LEFT HAND SIDE CONTENT BLOCK 2 END -->
+ 
+			<!-- RIGHT HAND SIDE CONTENT BLOCK 2 START -->
+			<div id="addressNewData" class="inputContainer">
+				<div class="inputContainer field grey noSpaceBelow h220">
+					<div class="inputContainer spaceBelow">
+						<div class="half left">
+							<span class="label"><label for="addressNewDataLastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Nachname')">Nachname</label></span>
+							<span class="input"><input type="text" id="addressNewDataLastname" name="addressNewDataLastname" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="Gerdes" /></span>
+						</div>
+						<div class="half">
+							<span class="label"><label for="addressNewDataFirstname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname</label></span>
+							<span class="input"><input type="text" id="addressNewDataFirstname" name="addressNewDataFirstname" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="G&uuml;nther" /></span>
+						</div>
+						<div class="fill"></div>
+					</div>
+					<div class="inputContainer spaceBelow">
+						<div class="half left">
+							<span class="label"><label for="addressNewDataCreationDate" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erstellt am')">Erstellt am</label></span>
+							<span class="input spaceBelow"><input type="text" id="addressNewDataCreationDate" name="addressNewDataCreationDate" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="01.08.2006" /></span>
+							<span class="label"><label for="addressNewDataUser" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verantwortlicher')">Verantwortlicher</label></span>
+							<span class="input spaceBelow"><input type="text" id="addressNewDataUser" name="addressNewDataUser" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="Backhaus, Hermann" /></span>
+							<span class="label"><label for="addressNewDataID" onclick="javascript:dialog.showContextHelp(arguments[0], 'ID')">ID</label></span>
+							<span class="input"><input type="text" id="addressNewDataID" name="addressNewDataID" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="3424" /></span>
+						</div>
+						<div class="half">
+							<span class="label"><label for="addressNewDataMDQS" onclick="javascript:dialog.showContextHelp(arguments[0], 'Qualit&auml;tssichernder')">Qualit&auml;tssichernder</label></span>
+							<div class="tableContainer headHiddenRows5 w315">
+								<table id="addressNewDataMDQS" dojoType="ingrid:FilteringTable" minRows="5" headClass="hidden" cellspacing="0" class="filteringTable">
+									<thead>
+										<tr>
+											<th field="name" dataType="String" width="315">Name</th>
+										</tr>
+									</thead>
+									<tbody>
+									<tr value="1">
+										<td>Altm&uuml;ller, Reinhard</td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> <!-- RIGHT HAND SIDE CONTENT BLOCK 2 END -->
+
+			<div class="inputContainer">
+				<span class="button w924" style="height:20px !important;">
+					<span style="float:right;">
+						<button dojoType="ingrid:Button" title="Ersetzen" onClick="javascript:scriptScope.replaceAddress();">Ersetzen</button>
+					</span>
+				</span>
+			</div>
+		</div>
+	</div>
+</div> <!-- CONTENT END -->
+
+</body>
+</html>

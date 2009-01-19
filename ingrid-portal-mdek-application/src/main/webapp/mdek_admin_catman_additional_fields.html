@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<script type="text/javascript">
+var scriptScope = this;
+
+scriptScope.saveChanges = function() {
+	dojo.debug("Function not implemented yet.");
+}
+
+scriptScope.addEntry = function() {
+	dojo.debug("Function not implemented yet.");
+}
+
+</script>
+</head>
+
+<body>
+
+<!-- CONTENT START -->
+<div dojoType="ContentPane" layoutAlign="client">
+
+	<div id="contentSection" class="contentBlockWhite top">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+		<div id="catalogueAddFields" class="content">
+
+			<!-- LEFT HAND SIDE CONTENT START -->
+			<div class="spacer"></div>
+			<div class="spacer"></div>
+			<div id="addFields" class="inputContainer w964">
+
+				<div dojoType="ingrid:TableContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="contextMenu1"></div>
+				<div class="tableContainer rows20 w964">
+					<div class="cellEditors" id="addFieldsListEditors">
+						<div dojoType="ingrid:ValidationTextbox" widgetId="nameEditor"></div>
+						<div dojoType="ingrid:ValidationTextbox" widgetId="numCharsEditor"></div>
+						<div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/inputTypes.js" style="width:100px;" widgetId="typeCombobox"></div>
+					</div>
+					<table id="addFieldsList" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable nosort interactive">
+						<thead>
+							<tr>
+								<th field="number" dataType="String" width="50">Nr.</th>
+								<th field="fieldname" dataType="String" width="674" editor="nameEditor">Feldname</th>
+								<th field="numchars" dataType="String" width="50" editor="numCharsEditor" createOnly="true">Zeichen</th>
+								<th field="type" dataType="String" width="140" editor="typeCombobox" createOnly="true">Typ</th>
+								<th field="edit" dataType="String" width="50"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr value="1">
+								<td>1</td>
+								<td>Feldname Test 1</td>
+								<td>120</td>
+								<td>Auswahlliste</td>
+								<td><a href="javascript:dialog.showPage('Zus&auml;tzliche Felder - Auswahlliste', 'admin_g_katalog_zusaetzl_felder_auswahl.html', 502, 245, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Editieren" /></a></td></tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="inputContainer">
+					<span class="button w924" style="height:20px !important;">
+						<span style="float:right;">
+							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveChanges();">&Auml;nderung speichern</button>
+						</span>
+					</span>
+				</div>
+
+				<div class="inputContainer grey h067 w964">
+					<div class="spacer"></div>
+					<div class="entry half left w608" style="margin-right:30px;">
+						<span class="label"><label for="addFieldName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Feldname')">Feldname</label></span>
+						<span class="input"><input type="text" id="addFieldName" name="addFieldName" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
+					</div>
+					<div class="entry half left w116" style="margin-right:30px;">
+						<span class="label"><label for="addFieldNumChars" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeichen')">Zeichen</label></span>
+						<span class="input"><input type="text" id="addFieldNumChars" name="addFieldNumChars" class="w116" dojoType="ingrid:ValidationTextBox" /></span>
+					</div>
+					<div class="entry half w116">
+						<span class="label"><label for="addFieldNumType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Typ')">Typ</label></span>
+						<span class="input">
+							<select dojoType="ingrid:Select" toggle="plain" style="width:108px;" widgetId="addFieldNumType">
+								<option value="Auswahlliste">Auswahlliste</option>
+								<option value="Textfeld">Textfeld</option>
+							</select>
+						</span>
+					</div>
+				</div>
+
+				<div class="inputContainer">
+					<span class="button w924" style="height:20px !important;">
+						<span style="float:right;">
+							<button dojoType="ingrid:Button" title="Hinzuf&uuml;gen" onClick="javascript:scriptScope.addEntry();">Hinzuf&uuml;gen</button>
+						</span>
+					</span>
+				</div>
+
+			</div> <!-- LEFT HAND SIDE CONTENT END -->
+		</div> <!-- CONTENT END -->
+	</div>
+</div>
+
+</body>
+</html>

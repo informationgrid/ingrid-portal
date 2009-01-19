@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<script type="text/javascript">
+var scriptScope = this;
+
+scriptScope.startSearchTermJob = function() {
+	dojo.debug("Function not implemented yet.");
+}
+
+scriptScope.cancelSearchTermJob = function() {
+	dojo.debug("Function not implemented yet.");
+}
+
+</script>
+</head>
+
+<body>
+
+<!-- CONTENT START -->
+<div dojoType="ContentPane" layoutAlign="client">
+
+	<div id="contentSection" class="contentBlockWhite top">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+			<div id="searchTermsContent" class="content">
+	
+				<!-- INFO START -->
+				<div class="spacer"></div>
+				<div class="spacer"></div>
+
+				<div class="inputContainer grey field w948">
+					<span class="label"><label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 'Aktualisierungs-Datensatz ausw&auml;hlen')">Aktualisierungs-Datensatz ausw&auml;hlen</label></span>
+					<span>
+						<input type="file" id="searchTermsDataSet" size="80" />
+					</span>
+				</div>
+
+				<div class="inputContainer w965">
+					<span class="button" style="height:20px !important;">
+						<span style="float:right;">
+							<button dojoType="ingrid:Button" title="Aktualisierung starten" onClick="javascript:scriptScope.startSearchTermJob();">Aktualisierung starten</button>
+						</span>
+					</span>
+				</div>
+
+				<div class="inputContainer noSpaceBelow">
+					<div id="searchTermsInfo" class="infobox w950">
+						<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
+						<span class="title"><a href="javascript:toggleInfo('searchTermsInfo');" title="Info aufklappen">Informationen zum letzten Prozess:
+							<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
+						<span class="processInfo">Der Prozess wird momentan ausgef&uuml;hrt. <a href="#" title="Hilfe">Hilfe</a>?<img src="img/ladekreis.gif" width="20" height="20" alt="Prozess l&auml;uft" /></span>
+						<div id="searchTermsInfoContent">
+							<table cellspacing="0">
+								<tr>
+									<td>Gestartet am:</td>
+									<td>13.2.2007, 00:02 Uhr</td></tr>
+									<td>Beendet am:</td>
+									<td>Noch nicht beendet</td></tr>
+									<td>Anzahl Objekte:</td>
+									<td>132110</td></tr>
+									<td>Anzahl Adressen:</td>
+									<td>10</td></tr>
+							</table>
+							<span id="cancelSearchTermProcessButton" class="button" style="height:20px !important;">
+								<span style="float:right;">
+									<button dojoType="ingrid:Button" title="Prozess abbrechen" onClick="javascript:scriptScope.cancelSearchTermJob();">Prozess abbrechen</button>
+								</span>
+							</span>
+						</div>
+					</div>
+					<div class="spacer"></div>
+				</div> <!-- INFO END -->
+	
+				<!-- LEFT HAND SIDE CONTENT START -->
+				<div id="searchTermsResultContainer" class="inputContainer noSpaceBelow">
+					<span class="functionalLink onTab"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Als CSV-Datei speichern">Als CSV-Datei speichern</a></span>
+					<div id="resultLists" dojoType="ingrid:TabContainer" class="w964 h565" selectedChild="resultListRetroIndex">
+	
+						<!-- TAB 1 START -->
+						<div id="resultListRetroIndex" dojoType="ContentPane" class="blueTopBorder" label="Ergebnisse der Retroindexierung">
+							<div class="inputContainer w964 noSpaceBelow">
+	
+								<div class="listInfo w964">
+									<span class="searchResultsInfo">1-20 von 240 Treffern</span>
+									<span class="searchResultsPaging">(Seite 1 von 24)
+										<em>1</em>
+										<a href="#" title="Seite 2">2</a>
+										<a href="#" title="Seite 3">3</a>
+										<a href="#" title="Seite 4">4</a>
+										<a href="#" title="weiter">></a>
+									</span>
+									<div class="fill"></div>
+								</div>
+	
+								<table id="resultListRetroIndexTable" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable w964 relativePos">
+									<thead>
+										<tr>
+											<th field="thesaurusId" dataType="String" width="104" noSort="true" sort="asc">Thesaurus-ID</th>
+											<th field="oldTerm" dataType="String" width="430" noSort="true">Alter Begriff</th>
+											<th field="newTerm" dataType="String" width="430" noSort="true">Neuer Begriff</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td>5967</td>
+											<td>Me&szlig;stelle</td>
+											<td>Messstellen</td></tr>
+									</tbody>
+								</table>
+	
+								<div class="listInfo w964">
+									<span class="searchResultsInfo">1-20 von 240 Treffern</span>
+									<span class="searchResultsPaging">(Seite 1 von 24)
+										<em>1</em>
+										<a href="#" title="Seite 2">2</a>
+										<a href="#" title="Seite 3">3</a>
+										<a href="#" title="Seite 4">4</a>
+										<a href="#" title="weiter">></a>
+									</span>
+									<div class="fill"></div>
+								</div>
+							</div>
+						</div> <!-- TAB 1 END -->
+	
+						<!-- TAB 2 START -->
+						<div id="resultListThesaurus" dojoType="ContentPane" class="blueTopBorder" label="Ergebnisse der Theasaurus-Aktualisierung">
+							<div class="inputContainer w964 noSpaceBelow">
+	
+								<div class="listInfo w964">
+									<span class="searchResultsInfo">1-20 von 240 Treffern</span>
+									<span class="searchResultsPaging">(Seite 1 von 24)
+										<em>1</em>
+										<a href="#" title="Seite 2">2</a>
+										<a href="#" title="Seite 3">3</a>
+										<a href="#" title="Seite 4">4</a>
+										<a href="#" title="weiter">></a>
+									</span>
+									<div class="fill"></div>
+								</div>
+	
+								<table id="resultListThesaurusTable" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable w964 relativePos">
+									<thead>
+										<tr>
+											<th field="name" dataType="String" width="354" noSort="true" sort="asc">Bezeichnung</th>
+											<th field="type" dataType="String" width="200" noSort="true">Typ</th>
+											<th field="action" dataType="String" width="250" noSort="true">Ergriffene Ma&szlig;nahme</th>
+											<th field="objects" dataType="String" width="80" noSort="true">Objekte</th>
+											<th field="addresses" dataType="String" width="80" noSort="true">Adressen</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td>Abfall (kompostierbar)</td>
+											<td>Freier Suchbegriff</td>
+											<td>Ist jetzt Deskriptor</td>
+											<td>1</td>
+											<td>2</td></tr>
+									</tbody>
+								</table>
+	
+							<div class="listInfo w964">
+								<span class="searchResultsInfo">1-20 von 240 Treffern</span>
+								<span class="searchResultsPaging">(Seite 1 von 24)
+									<em>1</em>
+									<a href="#" title="Seite 2">2</a>
+									<a href="#" title="Seite 3">3</a>
+									<a href="#" title="Seite 4">4</a>
+									<a href="#" title="weiter">></a>
+								</span>
+								<div class="fill"></div>
+							</div>
+						</div>
+	
+					</div> <!-- TAB 2 END -->
+				</div>
+			</div> <!-- LEFT HAND SIDE CONTENT END -->
+		</div>
+	</div> <!-- CONTENT END -->
+</div>
+
+</body>
+</html>

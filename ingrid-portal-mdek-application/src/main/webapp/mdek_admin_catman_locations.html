@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<script type="text/javascript">
+var scriptScope = this;
+/*
+scriptScope.startSearchTermJob = function() {
+	dojo.debug("Function not implemented yet.");
+}
+*/
+</script>
+</head>
+
+<body>
+
+<!-- CONTENT START -->
+<div dojoType="ContentPane" layoutAlign="client">
+
+	<div id="contentSection" class="contentBlockWhite top">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+		<div id="spacialRefContent" class="content">
+
+			<!-- INFO START -->
+			<div class="spacer"></div>
+			<div class="spacer"></div>
+			<div class="inputContainer grey field w948 noSpaceBelow">
+				<span class="label"><label for="spacialRefDataSet" onclick="javascript:dialog.showContextHelp(arguments[0], 'Aktualisierungs-Datensatz ausw&auml;hlen')">Aktualisierungs-Datensatz ausw&auml;hlen</label></span>
+				<span class="input"><input type="text" id="spacialRefDataSet" name="spacialRefDataSet" class="w836" dojoType="ingrid:ValidationTextBox" /><a href="#" class="buttonGrey rightOfInput" title="Ausw&auml;hlen">Ausw&auml;hlen</a></span>
+				<div class="spacerField"></div>
+			</div>
+
+			<div class="inputContainer w965">
+				<span class="button w924"><a href="#" class="buttonBlue" title="Aktualisierung starten">Aktualisierung starten</a></span>
+			</div>
+        
+			<div class="inputContainer noSpaceBelow">
+				<div id="spacialRefInfo" class="infobox w950">
+					<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
+					<span class="title"><a href="javascript:toggleInfo('spacialRefInfo');" title="Info aufklappen">Informationen zum letzten Prozess:
+						<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
+					<span class="processInfo">Der Prozess wird momentan ausgef&uuml;hrt. <a href="#" title="Hilfe">Hilfe</a>?<img src="img/ladekreis.gif" width="20" height="20" alt="Prozess l&auml;uft" /></span>
+					<div id="spacialRefInfoContent">
+						<table cellspacing="0">
+							<tr>
+								<td>Gestartet am:</td>
+								<td>13.2.2007, 00:02 Uhr</td></tr>
+								<td>Beendet am:</td>
+								<td>Noch nicht beendet</td></tr>
+								<td>Anzahl Objekte:</td>
+								<td>132110</td></tr>
+								<td>Anzahl Adressen:</td>
+								<td>10</td></tr>
+						</table>
+						<span class="button"><a href="#" class="buttonBlue" title="Prozess abbrechen">Prozess abbrechen</a></span>
+					</div>
+				</div>
+				<div class="spacer"></div>
+			</div> <!-- INFO END -->
+
+			<div class="spacer"></div>
+
+			<!-- LEFT HAND SIDE CONTENT START -->
+			<div class="inputContainer noSpaceBelow">
+				<div class="inputContainer w964 noSpaceBelow">
+					<span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Als CSV-Datei speichern">Als CSV-Datei speichern</a></span>
+
+					<div class="listInfo w964">
+						<span class="searchResultsInfo">1-20 von 240</span>
+						<span class="searchResultsPaging">(Seite 1 von 24)
+							<em>1</em>
+								<a href="#" title="Seite 2">2</a>
+								<a href="#" title="Seite 3">3</a>
+								<a href="#" title="Seite 4">4</a>
+								<a href="#" title="weiter">></a>
+						</span>
+						<div class="fill"></div>
+					</div>
+
+					<table id="locationsResultTable" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable w964 relativePos">
+						<thead>
+							<tr>
+								<th field="spacialUnit" dataType="String" width="570" noSort="true" sort="asc">Raumeinheit</th>
+								<th field="id" dataType="String" width="80" noSort="true">ID</th>
+								<th field="action" dataType="String" width="254" noSort="true">Ergriffene Ma&szlig;nahme</th>
+								<th field="objects" dataType="String" width="60" noSort="true">Objekte</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr value="1">
+								<td>c</td>
+								<td>xxx</td>
+								<td>neuer Grenzverlauf</td>
+								<td>5</td></tr>
+						</tbody>
+					</table>
+
+					<div class="listInfo w964 noSpaceBelow">
+						<span class="searchResultsInfo">1-20 von 240</span>
+						<span class="searchResultsPaging">(Seite 1 von 24)
+							<em>1</em>
+							<a href="#" title="Seite 2">2</a>
+							<a href="#" title="Seite 3">3</a>
+							<a href="#" title="Seite 4">4</a>
+							<a href="#" title="weiter">></a>
+						</span>
+						<div class="fill"></div>
+					</div>
+				</div>
+			</div> <!-- LEFT HAND SIDE CONTENT END -->
+		</div>
+	</div>
+</div> <!-- CONTENT END -->
+
+</body>
+</html>

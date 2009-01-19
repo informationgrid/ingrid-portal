@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<script type="text/javascript">
+var scriptScope = this;
+
+scriptScope.startDuplicatesJob = function() {
+	dojo.debug("Function not implemented yet.");
+}
+scriptScope.cancelDuplicatesJob = function() {
+	dojo.debug("Function not implemented yet.");
+}
+scriptScope.saveChanges = function() {
+	dojo.debug("Function not implemented yet.");
+}
+</script>
+</head>
+
+<body>
+
+<!-- CONTENT START -->
+<div dojoType="ContentPane" layoutAlign="client">
+
+	<div id="contentSection" class="contentBlockWhite top">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+		<div id="duplicatesContent" class="content">
+	
+			<!-- INFO START -->
+			<div class="spacer"></div>
+			<div class="spacer"></div>
+			<div class="inputContainer w965">
+				<button dojoType="ingrid:Button" title="Pr&uuml;fung starten" onClick="javascript:scriptScope.startDuplicatesJob();">Pr&uuml;fung starten</button>
+			</div>
+
+			<div class="inputContainer noSpaceBelow">
+				<div id="duplicatesInfo" class="infobox w950">
+					<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
+					<span class="title"><a href="javascript:toggleInfo('duplicatesInfo');" title="Info aufklappen">Informationen zum letzten Prozess:
+						<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
+					<span class="processInfo">Der Prozess wird momentan ausgef&uuml;hrt. <a href="#" title="Hilfe">Hilfe</a>?<img src="img/ladekreis.gif" width="20" height="20" alt="Prozess l&auml;uft" /></span>
+					<div id="duplicatesInfoContent">
+						<table cellspacing="0">
+							<tr>
+								<td>Gestartet am:</td>
+								<td>13.2.2007, 00:02 Uhr</td></tr>
+								<tr><td>Beendet am:</td>
+								<td>Noch nicht beendet</td></tr>
+								<tr><td>Anzahl Objekte:</td>
+								<td>132110</td></tr>
+								<tr><td>Anzahl Adressen:</td>
+								<td>10</td></tr>
+						</table>
+						<span id="cancelDuplicatesProcessButton" class="button" style="height:20px !important;">
+							<span style="float:right;">
+								<button dojoType="ingrid:Button" title="Prozess abbrechen" onClick="javascript:scriptScope.cancelDuplicatesJob();">Prozess abbrechen</button>
+							</span>
+						</span>
+					</div>
+				</div>
+			</div>
+	        <!-- INFO END -->
+	
+			<!-- LEFT HAND SIDE CONTENT START -->
+			<div id="duplicatesListContainer" class="inputContainer">
+				<span class="label">Ergebnis der Dubletten-Pr&uuml;fung</span>
+				<div id="duplicatesLists" dojoType="ingrid:TabContainer" class="full w264 h349" selectedChild="duplicatesList1">
+	
+					<!-- TAB 1 START -->
+					<div id="duplicatesList1" dojoType="ContentPane" class="blueTopBorder" label="Liste">
+						<div class="inputContainer w264">
+							<table id="duplicatesListTable" dojoType="ingrid:FilteringTable" minRows="14" multiple="false" headClass="fixedHeader hidden" tbodyClass="scrollContent rows14" cellspacing="0" class="filteringTable interactive readonly w264 relativePos">
+								<thead class="hidden">
+									<tr>
+										<th field="name" dataType="String" width="264">Name</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr value="1">
+										<td>Objektname 1</td></tr>
+									<tr value="2">
+										<td>Objektname 2</td></tr>
+									<tr value="3">
+										<td>Objektname 3</td></tr>
+								</tbody>
+							</table>
+						</div>
+					</div> <!-- TAB 1 END -->
+	
+	        		<!-- TAB 2 START -->
+					<div id="duplicatesList2" dojoType="ContentPane" class="blueTopBorder grey xScroll" label="Hierarchiebaum">
+	
+						<div class="inputContainer grey">
+							<div dojoType="ContentPane" id="treeContainer">
+								<!-- tree components -->
+								<div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIcons"></div>	
+	                  
+								<!-- tree -->
+								<div dojoType="ingrid:Tree" listeners="treeDocIcons" widgetId="duplicatesTree">
+									<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Objects" nodeAppType="Objekt"></div>
+									<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Addresses" nodeAppType="Adresse"></div>
+								</div>
+							</div>
+	
+							<div class="spacer"></div>
+						</div>
+					</div> <!-- TAB 2 END -->
+	   
+	        	</div>
+			</div>
+			<!-- LEFT HAND SIDE CONTENT END -->
+	
+			<!-- RIGHT HAND SIDE CONTENT START -->
+			<div id="duplicatesData" class="inputContainer">
+				<div class="inputContainer field grey noSpaceBelow h313">
+					<span class="label"><label for="duplicatesObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objektname')">Objektname</label></span>
+					<span class="input spaceBelow"><input type="text" id="duplicatesObjectName" name="duplicatesObjectName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
+					<span class="label"><label for="duplicatesObjectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 'Klasse')">Klasse</label></span>
+					<span class="input spaceBelow"><input type="text" id="duplicatesObjectClass" name="duplicatesObjectClass" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" value="Dienst / Anwendung / Informationssystem" /></span>
+					<span class="label"><label for="duplicatesObjectDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objektbeschreibung')">Objektbeschreibung</label></span>
+					<span class="input"><textarea id="duplicatesObjectDescription" name="duplicatesObjectDescription" disabled="disabled" class="w640 h164 noEdit" />Pellentesque tempor, dolor quis vehicula egestas, eros elit accumsan nibh, ac blandit metus quam eget ipsum. Curabitur ullamcorper, sapien vitae venenatis lacinia, purus odio luctus nulla, condimentum mattis orci enim a ipsum. Ut est turpis, fringilla at, viverra nec, placerat scelerisque, nisi.</textarea></span>
+					<div class="fill"></div>
+				</div>
+	
+				<div class="inputContainer">
+					<span class="button w644" style="height:20px !important;">
+						<span style="float:right;">
+							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveChanges();">&Auml;nderung speichern</button>
+						</span>
+						<span id="updateDuplicatesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+							<img src="img/ladekreis.gif" />
+						</span>
+					</span>
+				</div>
+			</div> <!-- RIGHT HAND SIDE CONTENT END -->
+		</div>
+	</div> <!-- CONTENT END -->
+</div>
+</body>
+</html>

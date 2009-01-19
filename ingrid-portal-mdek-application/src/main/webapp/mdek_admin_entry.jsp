@@ -390,13 +390,13 @@ function hideSplash(){
   <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_permission_overview.html" preload="false" executeScripts="true"></div>
 
   <div widgetId="page3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_analysis.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
-  <div widgetId="page3Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
-  <div widgetId="page3Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
-  <div widgetId="page3Sub4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
-  <div widgetId="page3Sub5" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
-  <div widgetId="page3Sub6" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
-  <div widgetId="page3Sub7" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
-  <div widgetId="page3Sub8" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_dummy.html" preload="false" executeScripts="true"></div>
+  <div widgetId="page3Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_duplicates.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
+  <div widgetId="page3Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_urls.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
+  <div widgetId="page3Sub4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_codelists.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
+  <div widgetId="page3Sub5" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_additional_fields.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
+  <div widgetId="page3Sub6" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_delete_address.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
+  <div widgetId="page3Sub7" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_search_terms.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
+  <div widgetId="page3Sub8" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_locations.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
 
   <div widgetId="page4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_export.html" preload="false" executeScripts="true"></div>
   <div widgetId="page4Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_import.html" preload="false" executeScripts="true"></div>

@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<script type="text/javascript">
+var scriptScope = this;
+
+scriptScope.createNewEntry = function() {
+	dojo.debug("Function not implemented yet.");
+}
+
+scriptScope.deleteEntry = function() {
+	dojo.debug("Function not implemented yet.");
+}
+
+scriptScope.addEntry = function() {
+	dojo.debug("Function not implemented yet.");
+}
+
+scriptScope.saveChanges = function() {
+	dojo.debug("Function not implemented yet.");
+}
+
+</script>
+</head>
+
+<body>
+
+<!-- CONTENT START -->
+<div dojoType="ContentPane" layoutAlign="client">
+
+	<div id="contentSection" class="contentBlockWhite top">
+		<div id="winNavi">
+			<a href="#" title="Hilfe">[?]</a>
+		</div>
+		<div id="codeListsContent" class="content">
+
+			<!-- LEFT HAND SIDE CONTENT START -->
+			<div class="spacer"></div>
+			<div class="spacer"></div>
+			<div id="codeLists" class="inputContainer noSpaceBelow">
+				<span class="functionalLink onTab"><img src="img/ic_fl_export.gif" width="11" height="10" alt="Export" /><a href="#" title="Exportieren [Popup]">Exportieren</a><img src="img/ic_fl_import.gif" width="11" height="10" alt="Import" /><a href="#" title="Importieren [Popup]">Importieren</a></span>
+				<div id="lists" dojoType="ingrid:TabContainer" class="w668 h452" selectedChild="selection">
+
+					<!-- TAB 1 START -->
+					<div id="selection" dojoType="ContentPane" class="blueTopBorder grey" label="Auswahllistenpflege">
+						<div class="inputContainer grey field w668 noSpaceBelow">
+							<span class="label"><label for="selectionList" onclick="javascript:dialog.showContextHelp(arguments[0], 'Auswahlliste')">Auswahlliste</label></span>
+							<span class="input spaceBelow"><div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:606px;" widgetId="selectionList"></div></span>
+							<div class="checkboxContainer">
+								<span class="input spaceBelow"><input type="checkbox" onclick="switchTableDisplay('codeListTable12Container', 'codeListTable11Container', dojo.widget.byId('selectionListDefault').checked);" id="selectionListDefault" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Defaultwert einstellbar')">Defaultwert einstellbar</label></span>
+							</div>
+							<div class="tableContainer rows4 w632" id="codeListTable11Container">
+								<div class="cellEditors" id="codeListTable11Editors">
+									<div dojoType="ingrid:ValidationTextbox" widgetId="codeListTable11NameEditor"></div>
+								</div>
+								<table id="codeListTable11" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
+									<thead>
+										<tr>
+											<th field="name" dataType="String" width="634" editor="codeListTable11NameEditor">Name</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td>Eintrag 1</td></tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="tableContainer rows4 w632" id="codeListTable12Container" style="display:none">
+								<div class="cellEditors" id="codeListTable12Editors">
+									<div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="codeListTable12NameEditor"></div>
+								</div>
+								<table id="codeListTable12" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
+									<thead>
+										<tr>
+											<th field="name" dataType="String" width="572" editor="codeListTable12NameEditor">Name</th>
+											<th field="default" dataType="String" width="62" noSort="true">Default</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td>Eintrag 1</td>
+											<td><input type="radio" name="selectListDefault" id="selectListDefault1" class="radio" /></td></tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="fill"></div>
+						</div>
+					</div> <!-- TAB 1 END -->
+
+					<!-- TAB 2 START -->
+					<div dojoType="ContentPane" class="blueTopBorder grey" label="ISO-Codelistenpflege">
+						<div class="inputContainer grey field w668 noSpaceBelow">
+							<span class="label"><label for="isoList" onclick="javascript:dialog.showContextHelp(arguments[0], 'ISO-Codeliste')">ISO-Codeliste</label></span>
+							<span class="input spaceBelow"><div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:606px;" widgetId="isoList"></div></span>
+							<div class="checkboxContainer">
+								<span class="input spaceBelow"><input type="checkbox" onclick="switchTableDisplay('codeListTable22Container', 'codeListTable21Container', dojo.widget.byId('isoListDefault').checked);" id="isoListDefault" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Defaultwert einstellbar')">Defaultwert einstellbar</label></span>
+							</div>
+							<div class="tableContainer rows4 w632" id="codeListTable21Container">
+								<table id="codeListTable21" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable interactive readonly nosort">
+									<thead>
+										<tr>
+											<th field="id" dataType="String" width="32">ID</th>
+											<th field="name_d" dataType="String" width="300">Name in deutsch</th>
+											<th field="name_e" dataType="String" width="300">Name in englisch</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td>101</td>
+											<td>Datensatz</td>
+											<td>dataset</td></tr>
+									</tbody>
+								</table>
+							</div>
+
+							<div class="tableContainer rows4 w632" id="codeListTable22Container" style="display:none">
+								<table id="codeListTable22" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable interactive readonly nosort">
+									<thead>
+										<tr>
+											<th field="id" dataType="String" width="32">ID</th>
+											<th field="name_d" dataType="String" width="269">Name in deutsch</th>
+											<th field="name_e" dataType="String" width="269">Name in englisch</th>
+											<th field="default" dataType="String" width="62" noSort="true">Default</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr value="1">
+											<td>101</td>
+											<td>Datensatz</td>
+											<td>dataset</td>
+											<td><input type="radio" name="selectListDefault" id="selectListDefault2" class="radio" /></td></tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="inputContainer">
+								<span class="button grey w612" style="height:20px !important;">
+									<span style="float:right;">
+										<button dojoType="ingrid:Button" title="Eintrag l&ouml;schen" onClick="javascript:scriptScope.deleteEntry();">Eintrag l&ouml;schen</button>
+									</span>
+									<span style="float:right;">
+										<button dojoType="ingrid:Button" title="Neuer Eintrag" onClick="javascript:scriptScope.createNewEntry();">Neuer Eintrag</button>
+									</span>
+								</span>
+							</div>
+
+							<div class="inputContainer">
+								<div class="first entry w038" style="margin-right:12px;">
+									<span class="label"><label for="isoEntryId" onclick="javascript:dialog.showContextHelp(arguments[0], 'Id')">Id</label></span>
+									<span class="input"><input type="text" id="isoEntryId" name="isoEntryId" class="w038" dojoType="ingrid:ValidationTextBox" /></span>
+								</div>
+								<div class="entry w277" style="margin-right:12px;">
+									<span class="label"><label for="isoEntryGerman" onclick="javascript:dialog.showContextHelp(arguments[0], 'Deutsch')">Deutsch</label></span>
+									<span class="input"><input type="text" id="isoEntryGerman" name="isoEntryGerman" class="w277" dojoType="ingrid:ValidationTextBox" /></span>
+								</div>
+								<div class="entry w277">
+									<span class="label"><label for="isoEntryEnglish" onclick="javascript:dialog.showContextHelp(arguments[0], 'Englisch')">Englisch</label></span>
+									<span class="input"><input type="text" id="isoEntryEnglish" name="isoEntryEnglish" class="w277" dojoType="ingrid:ValidationTextBox" /></span>
+								</div>
+								<div class="fill"></div>
+							</div>
+
+							<div class="inputContainer">
+								<span class="button grey w612" style="height:20px !important;">
+									<span style="float:right;">
+										<button dojoType="ingrid:Button" title="Hinzuf&uuml;gen" onClick="javascript:scriptScope.addEntry();">Hinzuf&uuml;gen</button>
+									</span>
+								</span>
+							</div>
+
+							<div class="fill"></div>
+						</div>
+					</div> <!-- TAB 2 END -->
+				</div>
+			</div>
+
+			<div class="inputContainer">
+				<span class="button w628" style="height:20px !important;">
+					<span style="float:right;">
+						<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveChanges();">Speichern</button>
+					</span>
+					<span id="updateDuplicatesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+						<img src="img/ladekreis.gif" />
+					</span>
+				</span>
+			</div>
+		</div>
+	</div>
+</div> <!-- CONTENT END -->
+
+</body>
+</html>
