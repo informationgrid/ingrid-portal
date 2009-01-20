@@ -27,13 +27,8 @@ var importServiceCallback = {
 	errorHandler: function(msg, err) {
 		dojo.debugShallow(err);
 		hideLoadingZone();
-		// We expect a timeout error
-		if (msg == "Timeout") {
-			setTimeout("refreshImportProcessInfo()", 3000);
-		} else {
-			if (msg.indexOf("USER_HAS_RUNNING_JOBS") != -1) {
-				dialog.show(message.get("general.error"), message.get("operation.error.userHasRunningJobs"), dialog.WARNING);
-			}
+		if (msg.indexOf("USER_HAS_RUNNING_JOBS") != -1) {
+			dialog.show(message.get("general.error"), message.get("operation.error.userHasRunningJobs"), dialog.WARNING);
 		}
 	}
 }

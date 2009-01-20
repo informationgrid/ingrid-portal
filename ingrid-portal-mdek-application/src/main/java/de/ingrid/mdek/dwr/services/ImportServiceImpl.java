@@ -55,8 +55,21 @@ public class ImportServiceImpl {
 			}
 
 			// Start the import process in a separate thread
+			// After the thread is started, we wait on it for three seconds and check if it has finished afterwards
+			// If the thread ended with an exception (probably because another job is already running),
+			// we throw a new MdekException to notify the user
 			ImportEntitiesThread importThread = new ImportEntitiesThread(catalogRequestHandler, gzippedData, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
 			importThread.start();
+			try {
+				importThread.join(3000);
+
+			} catch (InterruptedException ex) {
+				ex.printStackTrace();
+			}
+
+			if (!importThread.isAlive() && importThread.getException() != null) {
+				throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(importThread.getException()));
+			}
 
 		} catch (IOException ex) {
 			log.error("Error creating input data.", ex);
@@ -147,6 +160,9 @@ class ImportEntitiesThread extends Thread {
 	private final boolean publishImmediately;
 	private final boolean doSeparateImport;
 
+	private volatile MdekException exception;
+
+
 	public ImportEntitiesThread(CatalogRequestHandler catalogRequestHandler, byte[] importData, String targetObjectUuid, String targetAddressUuid, boolean publishImmediately, boolean doSeparateImport) {
 		super();
 		this.catalogRequestHandler = catalogRequestHandler;
@@ -162,8 +178,17 @@ class ImportEntitiesThread extends Thread {
 		try {
 			catalogRequestHandler.importEntities(importData, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
 
-		} catch(RuntimeException ex) {
+		} catch(MdekException ex) {
 			log.debug("Exception while importing entities.", ex);
+			setException(ex);
 		}
+	}
+
+	public MdekException getException() {
+		return exception;
+	}
+
+	private void setException(MdekException exception) {
+		this.exception = exception;
 	}
 }
