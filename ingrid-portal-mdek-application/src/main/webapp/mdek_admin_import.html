@@ -69,7 +69,7 @@ scriptScope.resetImport = function() {
 scriptScope.selectParentDatasetForTreeImport = function() {
 	var selectedNode = dojo.widget.byId("treeImportTree").selectedNode;
 
-	if (selectedNode && selectedNode.nodeAppType == "O") {
+	if (selectedNode && selectedNode.nodeAppType == "O" && selectedNode.uuid != "objectRoot") {
 		dojo.widget.byId("importTreeParentDataset").setValue(selectedNode.title);
 		importTreeSelectedParentDataset = selectedNode;
 
