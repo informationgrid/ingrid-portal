@@ -3,11 +3,15 @@
 <head>
 <script type="text/javascript">
 var scriptScope = this;
-/*
-scriptScope.startSearchTermJob = function() {
+
+scriptScope.startLocationsJob = function() {
 	dojo.debug("Function not implemented yet.");
 }
-*/
+
+scriptScope.cancelLocationsJob = function() {
+	dojo.debug("Function not implemented yet.");
+}
+
 </script>
 </head>
 
@@ -25,16 +29,22 @@ scriptScope.startSearchTermJob = function() {
 			<!-- INFO START -->
 			<div class="spacer"></div>
 			<div class="spacer"></div>
-			<div class="inputContainer grey field w948 noSpaceBelow">
-				<span class="label"><label for="spacialRefDataSet" onclick="javascript:dialog.showContextHelp(arguments[0], 'Aktualisierungs-Datensatz ausw&auml;hlen')">Aktualisierungs-Datensatz ausw&auml;hlen</label></span>
-				<span class="input"><input type="text" id="spacialRefDataSet" name="spacialRefDataSet" class="w836" dojoType="ingrid:ValidationTextBox" /><a href="#" class="buttonGrey rightOfInput" title="Ausw&auml;hlen">Ausw&auml;hlen</a></span>
-				<div class="spacerField"></div>
+
+			<div class="inputContainer grey field w948">
+				<span class="label"><label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 'Aktualisierungs-Datensatz ausw&auml;hlen')">Aktualisierungs-Datensatz ausw&auml;hlen</label></span>
+				<span>
+					<input type="file" id="locationsDataSet" size="80" />
+				</span>
 			</div>
 
 			<div class="inputContainer w965">
-				<span class="button w924"><a href="#" class="buttonBlue" title="Aktualisierung starten">Aktualisierung starten</a></span>
+				<span class="button" style="height:20px !important;">
+					<span style="float:right;">
+						<button dojoType="ingrid:Button" title="Aktualisierung starten" onClick="javascript:scriptScope.startLocationsJob();">Aktualisierung starten</button>
+					</span>
+				</span>
 			</div>
-        
+
 			<div class="inputContainer noSpaceBelow">
 				<div id="spacialRefInfo" class="infobox w950">
 					<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
@@ -53,7 +63,11 @@ scriptScope.startSearchTermJob = function() {
 								<td>Anzahl Adressen:</td>
 								<td>10</td></tr>
 						</table>
-						<span class="button"><a href="#" class="buttonBlue" title="Prozess abbrechen">Prozess abbrechen</a></span>
+						<span id="cancelLocationsProcessButton" class="button" style="height:20px !important;">
+							<span style="float:right;">
+								<button dojoType="ingrid:Button" title="Prozess abbrechen" onClick="javascript:scriptScope.cancelLocationsJob();">Prozess abbrechen</button>
+							</span>
+						</span>
 					</div>
 				</div>
 				<div class="spacer"></div>
