@@ -14,7 +14,9 @@ import org.directwebremoting.io.FileTransfer;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.job.MdekException;
+import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekErrorUtils;
+import de.ingrid.mdek.util.MdekSecurityUtils;
 
 public class ImportServiceImpl {
 
@@ -58,7 +60,8 @@ public class ImportServiceImpl {
 			// After the thread is started, we wait on it for three seconds and check if it has finished afterwards
 			// If the thread ended with an exception (probably because another job is already running),
 			// we throw a new MdekException to notify the user
-			ImportEntitiesThread importThread = new ImportEntitiesThread(catalogRequestHandler, gzippedData, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
+			UserData currentUser = MdekSecurityUtils.getCurrentPortalUserData();
+			ImportEntitiesThread importThread = new ImportEntitiesThread(catalogRequestHandler, currentUser, gzippedData, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
 			importThread.start();
 			try {
 				importThread.join(3000);
@@ -154,6 +157,7 @@ class ImportEntitiesThread extends Thread {
 	private final static Logger log = Logger.getLogger(ImportEntitiesThread.class);	
 
 	private final CatalogRequestHandler catalogRequestHandler;
+	private final UserData currentUser;
 	private final byte[] importData;
 	private final String targetObjectUuid;
 	private final String targetAddressUuid;
@@ -163,9 +167,10 @@ class ImportEntitiesThread extends Thread {
 	private volatile MdekException exception;
 
 
-	public ImportEntitiesThread(CatalogRequestHandler catalogRequestHandler, byte[] importData, String targetObjectUuid, String targetAddressUuid, boolean publishImmediately, boolean doSeparateImport) {
+	public ImportEntitiesThread(CatalogRequestHandler catalogRequestHandler, UserData currentUser, byte[] importData, String targetObjectUuid, String targetAddressUuid, boolean publishImmediately, boolean doSeparateImport) {
 		super();
 		this.catalogRequestHandler = catalogRequestHandler;
+		this.currentUser = currentUser;
 		this.importData = importData;
 		this.targetObjectUuid = targetObjectUuid;
 		this.targetAddressUuid = targetAddressUuid;
@@ -176,7 +181,7 @@ class ImportEntitiesThread extends Thread {
 	@Override
 	public void run() {
 		try {
-			catalogRequestHandler.importEntities(importData, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
+			catalogRequestHandler.importEntities(currentUser, importData, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
 
 		} catch(MdekException ex) {
 			log.debug("Exception while importing entities.", ex);

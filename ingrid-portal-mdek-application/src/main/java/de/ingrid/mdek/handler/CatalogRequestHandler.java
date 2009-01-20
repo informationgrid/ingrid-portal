@@ -5,6 +5,7 @@ import java.util.Map;
 
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.persistence.db.model.UserData;
 
 public interface CatalogRequestHandler {
 
@@ -19,7 +20,7 @@ public interface CatalogRequestHandler {
 	public void exportObjectBranch(String rootUuid, boolean exportChildren);
 	public void exportObjectsWithCriteria(String exportCriteria);
 	public JobInfoBean getExportInfo(boolean includeExportData);
-	public void importEntities(byte[] importData, String targetObjectUuid, String targetAddressUuid, boolean publishImmediately, boolean doSeparateImport);
+	public void importEntities(UserData currentUser, byte[] importData, String targetObjectUuid, String targetAddressUuid, boolean publishImmediately, boolean doSeparateImport);
 	public JobInfoBean getImportInfo();
 	public void cancelRunningJob();
 }

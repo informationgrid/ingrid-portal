@@ -10,6 +10,7 @@ import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCaller.AddressArea;
 import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
+import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.utils.IngridDocument;
 
@@ -104,14 +105,14 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		return MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
-	public void importEntities(byte[] importData, String targetObjectUuid, String targetAddressUuid,
+	public void importEntities(UserData currentUser, byte[] importData, String targetObjectUuid, String targetAddressUuid,
 			boolean publishImmediately, boolean doSeparateImport) {
 		IngridDocument response = mdekCallerCatalog.importEntities(
-				connectionFacade.getCurrentPlugId(),
+				currentUser.getPlugId(),
 				importData,
 				targetObjectUuid, targetAddressUuid,
 				publishImmediately, doSeparateImport,
-				HTTPSessionHelper.getCurrentSessionId());
+				currentUser.getAddressUuid());
 		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
