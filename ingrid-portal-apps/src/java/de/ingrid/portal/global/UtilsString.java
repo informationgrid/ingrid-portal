@@ -445,13 +445,15 @@ public class UtilsString {
 
     public static String concatStringsIfNotNull(String[] strings, String separator)  {
     	StringBuffer result = new StringBuffer();
-    	for (int i=0; i < strings.length; i++) {
-    		if (strings[i] != null) {
-    			if (result.length() > 0) {
-    				result.append(separator);
-    			}
-				result.append(strings[i]);
-    		}
+    	if (strings != null) {
+	    	for (int i=0; i < strings.length; i++) {
+	    		if (strings[i] != null) {
+	    			if (result.length() > 0) {
+	    				result.append(separator);
+	    			}
+					result.append(strings[i]);
+	    		}
+	    	}
     	}
     	
     	return result.toString();

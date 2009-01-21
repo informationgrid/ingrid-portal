@@ -10,7 +10,25 @@
         diskPersistent="false"
         diskExpiryThreadIntervalSeconds="120"
         />
+    
+    <cache name="de.ingrid.iplug.plugdescription"
+        maxElementsInMemory="200"
+        eternal="false"
+        timeToIdleSeconds="60"
+        timeToLiveSeconds="3600"
+        overflowToDisk="true"
+        diskPersistent="false"
+        />   
         
+    <cache name="de.ingrid.search.query"
+        maxElementsInMemory="5000"
+        eternal="false"
+        timeToIdleSeconds="100"
+        timeToLiveSeconds="300"
+        overflowToDisk="true"
+        diskPersistent="false"
+        diskExpiryThreadIntervalSeconds="300"
+        /> 
 <!--
     <cache name="de.ingrid.portal.om.IngridProvider.java"
         maxElementsInMemory="300"

@@ -18,6 +18,7 @@ import de.ingrid.portal.global.IngridPersistencePrefs;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.search.net.QueryDescriptor;
+import de.ingrid.utils.IngridQueryTools;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
@@ -461,6 +462,25 @@ public class QueryPreProcessor {
 
             }
         }
+    }
+    
+    /**
+     * Get a key (actually a hash-code) to a query which can be used for caching.
+     * Since the original query contains some data that changes with every new query,
+     * it cannot be compared with an older one. These data will be manipulated
+     * and a hash-code will be created.
+     * @param query, is the original IngridQuery
+     * @param postfix, contains extra data
+     * @return the hash-code of the manipulated query
+     */
+    public static int getQueryCacheKey(IngridQuery query, String postfix) {
+    	IngridQueryTools queryTool = new IngridQueryTools();
+    	String cacheKey = "";
+    	
+    	String stringQuery = UtilsSearch.queryToString(query);
+    	cacheKey = queryTool.getComparableString(stringQuery,postfix);
+    	
+    	return cacheKey.hashCode();    	
     }
     
 }
