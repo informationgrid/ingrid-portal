@@ -54,12 +54,14 @@ detailHelper.renderAddressEntry = function(address) {
 		}
 	}
 	
-	if (this.isValid(address.addressDescription)) {
-		entry += "\n"+address.addressDescription;
+	if (this.isValid(address.task)) {
+		entry += "\n<strong>Aufgaben</strong>";
+		entry += "\n"+address.task+"\n";
 	}
 
-	if (this.isValid(address.task)) {
-		entry += "\n"+address.task;
+	if (this.isValid(address.addressDescription)) {
+		entry += "\n<strong>Notizen</strong>";
+		entry += "\n"+address.addressDescription;
 	}
 
 	return entry;
