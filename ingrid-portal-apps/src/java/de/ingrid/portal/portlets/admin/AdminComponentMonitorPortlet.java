@@ -4,12 +4,9 @@
 package de.ingrid.portal.portlets.admin;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +37,6 @@ import de.ingrid.portal.scheduler.IngridMonitorFacade;
 import de.ingrid.portal.scheduler.jobs.IngridJobHandler;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorAbstractJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorIPlugJob;
-import de.ingrid.utils.udk.UtilsDate;
 
 
 /**

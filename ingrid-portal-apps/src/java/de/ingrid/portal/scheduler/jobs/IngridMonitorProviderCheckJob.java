@@ -3,34 +3,38 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
+import java.io.IOException;
+import java.lang.reflect.UndeclaredThrowableException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.configuration.plist.XMLPropertyListConfiguration.PListNode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import de.ingrid.ibus.client.BusClient;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridProvider;
-import de.ingrid.portal.om.IngridRSSSource;
 import de.ingrid.utils.PlugDescription;
+import de.ingrid.utils.metadata.AbstractIPlugOperatorInjector;
+import de.ingrid.utils.metadata.Metadata;
+import de.ingrid.utils.metadata.AbstractIPlugOperatorInjector.IPlugOperator;
+import de.ingrid.utils.metadata.AbstractIPlugOperatorInjector.Partner;
+import de.ingrid.utils.metadata.AbstractIPlugOperatorInjector.Provider;
 
 
 /**
- * TODO Describe your created type (class, etc.) here.
+ * This job checks all connected iPlugs for their provider and compares them
+ * with the one stored in the local database. If a provider is not found, it
+ * means that the long name isn't available either which will result in an 
+ * incomplete search result display.  
  * 
- * @author joachim@wemove.com
+ * @author andre.wallat@wemove.com
  */
 public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 
@@ -78,10 +82,8 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 
 		int status 					= 0;
 		String statusCode 			= null;
-		HashMap allProvider 		= new HashMap();
-		List<String> exclude		= new ArrayList();
+		List<String> exclude		= new ArrayList<String>();
 		Session session 			= HibernateUtil.currentSession();
-		boolean found				= false;
 		String errorMessage			= "";
 //        Transaction tx = null;
         
@@ -99,7 +101,7 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 				exclude = Arrays.asList(dataMap.getString(PARAM_EXCLUDED_PROVIDER).split(","));
 			}
 			
-			List<String> allProviderInDB = new ArrayList();
+			List<String> allProviderInDB = new ArrayList<String>();
 			
 			// get the short names of all providers of all iPlugs
 			for (IngridProvider ip : allIngridProviderInDB) {
@@ -109,15 +111,36 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 			// get from each iPlug the containing provider and check if their provider
 			// are also in the local DB
 			for (int i=0; i<hits.length; i++) {
-				ArrayList missingProvider = new ArrayList();
-				for (String provider : hits[i].getProviders()) {
-					if (!allProviderInDB.contains(provider) && !exclude.contains(provider)) {
+				ArrayList<Provider> missingProvider = new ArrayList<Provider>();
+				List<Provider> iPlugProvider = getProvider(hits[i]);
+				
+				for (Provider provider : iPlugProvider) {
+					if (!allProviderInDB.contains(provider.getShortName()) && !exclude.contains(provider.getShortName())) {
 						missingProvider.add(provider);
+						/*
+						// ==========================
+						Metadata metadata = BusClient.instance().getBus().getMetadata(hits[i].getPlugId());
+						
+						if (metadata != null) {
+							IPlugOperator plugOperator = (IPlugOperator) metadata.getMetadata(AbstractIPlugOperatorInjector.IPLUG_OPERATOR);
+						
+							// if more data could be found then get the missing long name
+							if (plugOperator != null) {
+								List<Partner> allPartner = plugOperator.getPartners();
+								for (Partner partner: allPartner) {
+									String providerLongName = partner.getProvider(provider).getDisplayName();
+									log.debug(" Long: " + providerLongName);
+								}
+							}
+						}
+						// ==========================
+					 */
 					}
 				}
 				if (!missingProvider.isEmpty()) {
 					errorMessage += writeErrorMessage(hits[i], missingProvider);
 				}
+				
 			}
 			
 			computeTime(dataMap, stopTimer());
@@ -139,12 +162,12 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 		}
 		
 		// make the errorMessage more readable in the browser
-		String webErrorMessage = errorMessage.replace(NEW_LINE_PLAIN, NEW_LINE_WEB);
+		String webErrorMessage = statusCode.replace(NEW_LINE_PLAIN, NEW_LINE_WEB);
 		
 		// has to be the web version, otherwise event-occurrences wouldn't be counted correctly
 		updateJobData(context, status, webErrorMessage);
 		
-		dataMap.put(PARAM_STATUS_CODE, errorMessage);
+		dataMap.put(PARAM_STATUS_CODE, statusCode);
 		sendAlertMail(context);
 		
 		// set here finally the status code for the web browser
@@ -160,18 +183,68 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 		}
 	}
 	
-	private String writeErrorMessage(PlugDescription plugDesc, ArrayList missingProvider ) {
+	private List<Provider> getProvider( PlugDescription plugDescripton ) {
+		List<Provider> allIPlugProvider	= new ArrayList<Provider>();
+		Metadata metadata 				= null;
+		IPlugOperator plugOperator 		= null;
+		
+		try {
+			metadata = BusClient.instance().getBus().getMetadata(plugDescripton.getPlugId());
+		} catch (IOException e) {
+			if (log.isDebugEnabled()) {
+				log.debug("Error getting MetaData from bus for iPlug: " + plugDescripton.getPlugId());
+			}
+		} catch (UndeclaredThrowableException e) {
+			if (log.isDebugEnabled()) {
+				log.debug("Error getting MetaData from bus for iPlug: " + plugDescripton.getPlugId() + 
+					". Does the method exist? (" + e.getLocalizedMessage() + ")");
+			}
+		}
+				
+		if (metadata != null) {
+			plugOperator = (IPlugOperator) metadata.getMetadata(AbstractIPlugOperatorInjector.IPLUG_OPERATOR);
+		
+			// if more data could be found then get the missing long name
+			if (plugOperator != null) {
+				List<Partner> allPartner = plugOperator.getPartners();
+				for (Partner partner: allPartner) {
+					allIPlugProvider.addAll(partner.getProviders());
+				}
+			}
+		} 
+		
+		// backward compatibility
+		// information is stored in plugDescription directly and not in metadata
+		if (metadata == null || plugOperator == null) {
+			String[] provider = plugDescripton.getProviders();
+			for (String p : provider) {
+				Provider newProvider = new Provider();
+				newProvider.setShortName(p);
+				allIPlugProvider.add(newProvider);
+			}
+		}
+		
+		return allIPlugProvider;
+	}
+	
+	private String writeErrorMessage(PlugDescription plugDesc, ArrayList<Provider> missingProvider ) {
 		String errorMessage = "";
 		
 		if (!missingProvider.isEmpty()) {
 			String newLine = NEW_LINE_PLAIN;
 			
-			errorMessage += newLine;
+			//errorMessage += newLine;
 			errorMessage += "iPlug-Name: " + plugDesc.getDataSourceName() + newLine;
 			errorMessage += "Ansprechpartner: " + plugDesc.getPersonSureName() + " " + plugDesc.getPersonName() + newLine;
 			errorMessage += "Email: " + plugDesc.getPersonMail() + newLine;
 			errorMessage += "iPlug-ID: " + plugDesc.getPlugId() + newLine;
-			errorMessage += "Fehlende Anbieter: " + missingProvider.toString() + newLine;
+			errorMessage += "Fehlende Anbieter: ";
+			for (Provider p : missingProvider) {
+				errorMessage += p.getShortName() + ",";
+			}
+			// remove trailing ','
+			errorMessage = errorMessage.substring(0, errorMessage.length()-1);
+			errorMessage += newLine + newLine;
 		}
 		
 		return errorMessage;
