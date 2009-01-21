@@ -1,7 +1,7 @@
 #set($reassignedDS = $map.get("reassignedDataset"))
 #set($DIRECT_LINK = $map.get("directLink"))
 #set($commentList = $map.get("commentList"))
-Dies ist eine Meldung von der Metadatenerfassungskomponente der Ingrid Software.
+Dies ist eine Meldung von der Metadatenerfassungskomponente der Ingrid® Software.
 Der folgende Datensatz wurde Ihnen von der Qualitätssicherung rücküberwiesen: 
 
 Titel: $reassignedDS.title
