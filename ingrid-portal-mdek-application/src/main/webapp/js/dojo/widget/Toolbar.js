@@ -15,12 +15,21 @@ dojo.widget.defineWidget(
    * Caption is given in props["caption"]
    */
 	addChild: function(item, pos, props) {
-	  
-	  var toolbarItem = dojo.widget.Toolbar.prototype.addChild.apply(this, arguments);
+		var toolbarItem = dojo.widget.Toolbar.prototype.addChild.apply(this, arguments);
 
     if (props) {
-      toolbarItem.domNode.onClick = props["onClick"];
-      
+    	toolbarItem.menuFunction = props["onClick"];
+
+		toolbarItem.onClick = function() {
+			// If an element is active, blur it before executing the menu function
+			// This needs to be done so the UI is updated with possible changes 
+			if (!dojo.render.html.ie && document.activeElement && document.activeElement.blur) {
+				document.activeElement.blur();
+			}
+
+			this.menuFunction();
+		}
+
       // add the tooltip
       if (props["caption"]) {
         toolbarItem.domNode.setAttribute('title', props["caption"]);
