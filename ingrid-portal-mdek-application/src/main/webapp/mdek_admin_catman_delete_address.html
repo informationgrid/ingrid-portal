@@ -4,6 +4,169 @@
 <script type="text/javascript">
 var scriptScope = this;
 
+_container_.addOnLoad(function() {
+	initTree();
+	initTreeEventHandler();
+});
+
+function initTree() {
+	// Load initial first level of the tree from the server
+	TreeService.getSubTree(null, null, 1, 
+		function (rootNodeList) {
+			dojo.lang.forEach(rootNodeList, function(rootNode){
+				rootNode.title = dojo.string.escape("html", rootNode.title);
+				rootNode.uuid = rootNode.id;
+				rootNode.id = null;
+			});
+
+			// Only use 'addresses' and drop 'objects' (rootNodeList[1])
+			var addressDeleteTree = dojo.widget.byId("treeAddressDelete");
+			addressDeleteTree.setChildren([rootNodeList[1]]);
+			var addressReplaceTree = dojo.widget.byId("treeAddressNew");
+			addressReplaceTree.setChildren([rootNodeList[1]]);
+	});
+
+	// Function to load children of the node from server
+	var loadRemote = function(node, sync){
+		var _this = this;
+
+		var params = {
+			node: this.getInfo(node),
+			tree: this.getInfo(node.tree)
+		};
+
+		var deferred = new dojo.Deferred();
+
+		deferred.addCallback(function(res) {
+			dojo.lang.forEach(res, function(obj){
+				obj.title = dojo.string.escape("html", obj.title);
+				obj.uuid = obj.id;
+				obj.id = null;
+			});
+			return _this.loadProcessResponse(node,res);
+		});
+		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
+
+		TreeService.getSubTree(node.uuid, node.nodeAppType, 1, {
+  			callback:function(res) { deferred.callback(res); },
+			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
+			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
+  		});
+
+		return deferred;
+	};
+
+	// Attach load remote function to the tree controllers
+	var addressDeleteTreeController = dojo.widget.byId("treeControllerAddressDelete");
+	addressDeleteTreeController.loadRemote = loadRemote;
+	var addressReplaceTreeController = dojo.widget.byId("treeControllerAddressNew");
+	addressReplaceTreeController.loadRemote = loadRemote;
+}
+
+function initTreeEventHandler() {
+	var addressDeleteTreeListener = dojo.widget.byId("treeListenerAddressDelete");
+	dojo.event.topic.subscribe(addressDeleteTreeListener.eventNames.select, function(data) { deleteNodeSelected(data.node); });
+	var addressNewTreeListener = dojo.widget.byId("treeListenerAddressNew");
+	dojo.event.topic.subscribe(addressNewTreeListener.eventNames.select, function(data) { replaceNodeSelected(data.node); });
+}
+
+function deleteNodeSelected(node) {
+	if (isValidAddressNode(node)) {
+		var addressUuid = node.uuid;
+		var addressDetailsDef = getAddressDetailsDef(addressUuid);
+		var responsibleUsersDef = getUsersWithWritePermissionDef(addressUuid);
+
+		var defList = new dojo.DeferredList([addressDetailsDef, responsibleUsersDef], false, false, true);
+		defList.addCallback(function (resultList) {
+			dojo.debug("address details:");
+			var addressDetails = resultList[0][1]; 
+			dojo.debugShallow(addressDetails);
+
+			dojo.debug("responsible users:");
+			var responsibleUserList = resultList[1][1];
+			for (var index = 0; index < responsibleUserList.length; ++index) {
+				dojo.debug(responsibleUserList[index][0]+" - "+responsibleUserList[index][1]+" - "+responsibleUserList[index][2]);
+			}
+
+			dojo.debug("responsible user for current address:");
+			for (var index = 0; index < responsibleUserList.length; ++index) {
+				if (responsibleUserList[index][1] == addressDetails.uuid) {
+					dojo.debug(responsibleUserList[index][0]+" - "+responsibleUserList[index][1]+" - "+responsibleUserList[index][2]);
+				}
+			}
+
+			dojo.debug("responsible users with QA permission:");
+			for (var index = 0; index < responsibleUserList.length; ++index) {
+				if (responsibleUserList[index][2]) {
+					dojo.debug(responsibleUserList[index][0]+" - "+responsibleUserList[index][1]+" - "+responsibleUserList[index][2]);
+				}
+			}
+		});
+
+		defList.addErrback(function(err) {
+			dojo.debug("Error: "+err);
+			dojo.debugShallow(err);
+		});
+	}
+}
+
+function replaceNodeSelected(node) {
+}
+
+// Checks whether a given node is a valid address with an associated uuid (valid) or a container node (invalid)
+function isValidAddressNode(node) {
+	return (node.uuid != null && node.uuid != "addressRoot" && node.uuid != "addressFreeRoot");
+}
+
+function getAddressDetailsDef(addressUuid) {
+	var def = new dojo.Deferred();
+	AddressService.getAddressData(addressUuid, "false", {
+		callback: function(addressDetails){
+			def.callback(addressDetails);
+		},
+		errorHandler: function(message, err) {
+			dojo.debug("Error: "+message);
+			dojo.debugShallow(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
+function getUsersWithWritePermissionDef(addressUuid) {
+	var def = new dojo.Deferred();
+	SecurityService.getUsersWithWritePermissionForAddress(addressUuid, false, true, {
+		callback: function(userList) {
+			var list = [];
+			dojo.lang.forEach(userList, function(user){
+				var title = UtilAddress.createAddressTitle(user.address);
+				var uuid = user.address.uuid;
+				list.push([title, uuid, userHasQAPermission(user)]);
+			});
+
+			def.callback(list);
+		},
+		errorHandler: function(message, err) {
+			dojo.debug("Error: "+message);
+			dojo.debugShallow(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
+function userHasQAPermission(user) {
+	if (user.permissions) {
+		for (var index = 0; index < user.permissions.length; ++index) {
+			if (user.permissions[index] == "QUALITY_ASSURANCE") {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 scriptScope.replaceAddress = function() {
 	dojo.debug("Function not implemented yet.");
 }
@@ -36,8 +199,6 @@ scriptScope.replaceAddress = function() {
 
 						<!-- tree -->
 						<div dojoType="ingrid:Tree" listeners="treeControllerAddressDelete;treeListenerAddressDelete;treeDocIconsAddressDelete" widgetId="treeAddressDelete">
-			              	<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" nodeDocType="Objects" nodeAppType="Objekt"></div>
-			              	<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" nodeDocType="Addresses" nodeAppType="Adresse"></div>
 						</div>
 					</div>
 					<div class="spacer"></div>
@@ -48,15 +209,18 @@ scriptScope.replaceAddress = function() {
 			<div id="addressDeleteData" class="inputContainer">
 				<div class="inputContainer field grey noSpaceBelow h236">
 					<span class="label"><label for="addressDeleteDataUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution/Einheit')">Institution/Einheit</label></span>
-					<span class="input spaceBelow"><textarea id="addressDeleteDataUnit" name="addressDeleteDataUnit" class="w640 h038 noEdit" disabled="disabled">Alfred Toepfer, Akademie f&uuml;r Naturschutz NNA</textarea></span>
+					<span class="input spaceBelow">
+
+					<input type="text" mode="textarea" id="addressDeleteDataUnit" class="w640 h038" disabled="true" dojoType="ingrid:ValidationTextbox" />
+
 					<div class="inputContainer">
 						<div class="half left">
 							<span class="label"><label for="addressDeleteDataCreationDate" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erstellt am')">Erstellt am</label></span>
-							<span class="input spaceBelow"><input type="text" id="addressDeleteDataCreationDate" name="addressDeleteDataCreationDate" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="01.08.2006" /></span>
+							<span class="input spaceBelow"><input type="text" id="addressDeleteDataCreationDate" name="addressDeleteDataCreationDate" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 							<span class="label"><label for="addressDeleteDataUser" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verantwortlicher')">Verantwortlicher</label></span>
-							<span class="input spaceBelow"><input type="text" id="addressDeleteDataUser" name="addressDeleteDataUser" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="Gerdes, G&uuml;nther" /></span>
+							<span class="input spaceBelow"><input type="text" id="addressDeleteDataUser" name="addressDeleteDataUser" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 							<span class="label"><label for="addressDeleteDataID" onclick="javascript:dialog.showContextHelp(arguments[0], 'ID')">ID</label></span>
-							<span class="input"><input type="text" id="addressDeleteDataID" name="addressDeleteDataID" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="6543" /></span>
+							<span class="input"><input type="text" id="addressDeleteDataID" name="addressDeleteDataID" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 						</div>
 						<div class="half">
 							<span class="label"><label for="addressDeleteDataMDQS" onclick="javascript:dialog.showContextHelp(arguments[0], 'Qualit&auml;tssichernder')">Qualit&auml;tssichernder</label></span>
@@ -68,8 +232,6 @@ scriptScope.replaceAddress = function() {
 										</tr>
 									</thead>
 									<tbody>
-										<tr value="1">
-											<td>Altm&uuml;ller, Reinhard</td></tr>
 									</tbody>
 								</table>
 							</div>
@@ -96,10 +258,6 @@ scriptScope.replaceAddress = function() {
 										</tr>
 									</thead>
 									<tbody>
-										<tr value="1">
-											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
-											<td>550e8400-e29b-41d4-a716-446655440000</td>
-											<td>Dokumentation zum Naturschutzgebiet L&uuml;neburger Heide</td></tr>
 									</tbody>
 								</table>
 							</div>
@@ -119,10 +277,6 @@ scriptScope.replaceAddress = function() {
 										</tr>
 									</thead>
 									<tbody>
-										<tr value="1">
-											<td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
-											<td>23zu323-fe1b-56d4-3f43-213800991233</td>
-											<td>WABIS - Altablagerungen</td></tr>
 									</tbody>
 								</table>
 							</div>
@@ -145,8 +299,6 @@ scriptScope.replaceAddress = function() {
 
 						<!-- tree -->
 						<div dojoType="ingrid:Tree" listeners="treeControllerAddressNew;treeListenerAddressNew;treeDocIconsAddressNew" widgetId="treeAddressNew">
-			              	<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" nodeDocType="Objects" nodeAppType="Objekt"></div>
-			              	<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" nodeDocType="Addresses" nodeAppType="Adresse"></div>
 						</div>
 					</div>
 					<div class="spacer"></div>
@@ -159,22 +311,22 @@ scriptScope.replaceAddress = function() {
 					<div class="inputContainer spaceBelow">
 						<div class="half left">
 							<span class="label"><label for="addressNewDataLastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Nachname')">Nachname</label></span>
-							<span class="input"><input type="text" id="addressNewDataLastname" name="addressNewDataLastname" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="Gerdes" /></span>
+							<span class="input"><input type="text" id="addressNewDataLastname" name="addressNewDataLastname" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 						</div>
 						<div class="half">
 							<span class="label"><label for="addressNewDataFirstname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname</label></span>
-							<span class="input"><input type="text" id="addressNewDataFirstname" name="addressNewDataFirstname" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="G&uuml;nther" /></span>
+							<span class="input"><input type="text" id="addressNewDataFirstname" name="addressNewDataFirstname" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 						</div>
 						<div class="fill"></div>
 					</div>
 					<div class="inputContainer spaceBelow">
 						<div class="half left">
 							<span class="label"><label for="addressNewDataCreationDate" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erstellt am')">Erstellt am</label></span>
-							<span class="input spaceBelow"><input type="text" id="addressNewDataCreationDate" name="addressNewDataCreationDate" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="01.08.2006" /></span>
+							<span class="input spaceBelow"><input type="text" id="addressNewDataCreationDate" name="addressNewDataCreationDate" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 							<span class="label"><label for="addressNewDataUser" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verantwortlicher')">Verantwortlicher</label></span>
-							<span class="input spaceBelow"><input type="text" id="addressNewDataUser" name="addressNewDataUser" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="Backhaus, Hermann" /></span>
+							<span class="input spaceBelow"><input type="text" id="addressNewDataUser" name="addressNewDataUser" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 							<span class="label"><label for="addressNewDataID" onclick="javascript:dialog.showContextHelp(arguments[0], 'ID')">ID</label></span>
-							<span class="input"><input type="text" id="addressNewDataID" name="addressNewDataID" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" value="3424" /></span>
+							<span class="input"><input type="text" id="addressNewDataID" name="addressNewDataID" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 						</div>
 						<div class="half">
 							<span class="label"><label for="addressNewDataMDQS" onclick="javascript:dialog.showContextHelp(arguments[0], 'Qualit&auml;tssichernder')">Qualit&auml;tssichernder</label></span>
@@ -186,8 +338,6 @@ scriptScope.replaceAddress = function() {
 										</tr>
 									</thead>
 									<tbody>
-									<tr value="1">
-										<td>Altm&uuml;ller, Reinhard</td></tr>
 									</tbody>
 								</table>
 							</div>
