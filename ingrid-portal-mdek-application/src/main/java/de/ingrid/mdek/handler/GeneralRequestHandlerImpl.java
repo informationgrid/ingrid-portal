@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.VersionInformation;
 import de.ingrid.mdek.caller.IMdekClientCaller;
-import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
+import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
 
@@ -31,12 +31,12 @@ public class GeneralRequestHandlerImpl implements GeneralRequestHandler {
 	}
 	
 	public JobInfoBean getRunningJobInfo() {
-		IngridDocument response = mdekClientCaller.getRunningJobInfo(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekClientCaller.getRunningJobInfo(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
 		return MdekUtils.extractJobInfoFromResponse(response);
 	}
 
 	public JobInfoBean cancelRunningJob() {
-		IngridDocument response = mdekClientCaller.cancelRunningJob(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekClientCaller.cancelRunningJob(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
 		return MdekUtils.extractJobInfoFromResponse(response);	
 	}
 

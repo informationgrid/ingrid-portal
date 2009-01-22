@@ -37,7 +37,6 @@ import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
 import de.ingrid.mdek.caller.IMdekCaller.FetchQuantity;
-import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.jobs.util.ExpiredDataset;
 import de.ingrid.utils.IngridDocument;
@@ -92,7 +91,7 @@ public class MdekEmailUtils {
 		List<String> emailList = getEmailAddressesForUsers(qaUserList);
 		HashMap<String, String> assignedDatasetMap = createDatasetFromObject(data);
 
-		String currentUserTitle = getAddressTitle(HTTPSessionHelper.getCurrentUserUuid());
+		String currentUserTitle = getAddressTitle(MdekSecurityUtils.getCurrentUserUuid());
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_assigned_to_qa_email.vm");
 		String templatePath = url.getPath();
@@ -108,7 +107,7 @@ public class MdekEmailUtils {
 		List<String> emailList = getEmailAddressesForUsers(qaUserList);
 		HashMap<String, String> assignedDatasetMap = createDatasetFromAddress(adr);
 
-		String currentUserTitle = getAddressTitle(HTTPSessionHelper.getCurrentUserUuid());
+		String currentUserTitle = getAddressTitle(MdekSecurityUtils.getCurrentUserUuid());
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_assigned_to_qa_email.vm");
 		String templatePath = url.getPath();
@@ -164,7 +163,7 @@ public class MdekEmailUtils {
 		String srcTitle = (fromUuid == null? "" : getObjectTitle(fromUuid));
 		String dstTitle = (toUuid == null? "" : getObjectTitle(toUuid));
 
-		String currentUserTitle = getAddressTitle(HTTPSessionHelper.getCurrentUserUuid());
+		String currentUserTitle = getAddressTitle(MdekSecurityUtils.getCurrentUserUuid());
 
 		HashMap<String, String> movedDatasetMap = createDatasetFromObject(data);
 		movedDatasetMap.put("oldParent", srcTitle);
@@ -183,7 +182,7 @@ public class MdekEmailUtils {
 		if (!isWorkflowControlEnabled() || isCurrentUserQAForObject(objUuid)) {
 			return;
 		}
-		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, MdekSecurityUtils.getCurrentUserUuid());
 		sendObjectMovedMail(MdekObjectUtils.extractSingleObjectFromResponse(response), oldParentUuid, newParentUuid);
 	}
 	
@@ -196,7 +195,7 @@ public class MdekEmailUtils {
 		String srcTitle = (fromUuid == null? "" : getAddressTitle(fromUuid));
 		String dstTitle = (toUuid == null? "" : getAddressTitle(toUuid));
 
-		String currentUserTitle = getAddressTitle(HTTPSessionHelper.getCurrentUserUuid());
+		String currentUserTitle = getAddressTitle(MdekSecurityUtils.getCurrentUserUuid());
 
 		HashMap<String, String> movedDatasetMap = createDatasetFromAddress(adr);
 		movedDatasetMap.put("oldParent", srcTitle);
@@ -215,12 +214,12 @@ public class MdekEmailUtils {
 		if (!isWorkflowControlEnabled() || isCurrentUserQAForAddress(adrUuid)) {
 			return;
 		}
-		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 1, HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 1, MdekSecurityUtils.getCurrentUserUuid());
 		sendAddressMovedMail(MdekAddressUtils.extractSingleAddressFromResponse(response), oldParentUuid, newParentUuid);	
 	}
 
 	public static void sendObjectMarkedDeletedMail(String objUuid) {
-		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, MdekSecurityUtils.getCurrentUserUuid());
 		sendObjectMarkedDeletedMail(MdekObjectUtils.extractSingleObjectFromResponse(response));
 	}
 
@@ -229,7 +228,7 @@ public class MdekEmailUtils {
 		List<String> emailList = getEmailAddressesForUsers(qaUserList);
 		HashMap<String, String> assignedDatasetMap = createDatasetFromObject(data);
 
-		String currentUserTitle = getAddressTitle(HTTPSessionHelper.getCurrentUserUuid());
+		String currentUserTitle = getAddressTitle(MdekSecurityUtils.getCurrentUserUuid());
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_marked_deleted_email.vm");
 		String templatePath = url.getPath();
@@ -241,7 +240,7 @@ public class MdekEmailUtils {
 	}
 
 	public static void sendAddressMarkedDeletedMail(String adrUuid) {
-		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 1, HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 1, MdekSecurityUtils.getCurrentUserUuid());
 		sendAddressMarkedDeletedMail(MdekAddressUtils.extractSingleAddressFromResponse(response));	
 	}
 
@@ -250,7 +249,7 @@ public class MdekEmailUtils {
 		List<String> emailList = getEmailAddressesForUsers(qaUserList);
 		HashMap<String, String> assignedDatasetMap = createDatasetFromAddress(adr);
 
-		String currentUserTitle = getAddressTitle(HTTPSessionHelper.getCurrentUserUuid());
+		String currentUserTitle = getAddressTitle(MdekSecurityUtils.getCurrentUserUuid());
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_marked_deleted_email.vm");
 		String templatePath = url.getPath();
@@ -385,7 +384,7 @@ public class MdekEmailUtils {
 	private static List<User> getQAUsersForObject(String objUuid) {
 		List<User> qaUserList = new ArrayList<User>();
 
-		IngridDocument doc = mdekCallerSecurity.getUsersWithWritePermissionForObject(connectionFacade.getCurrentPlugId(), objUuid, HTTPSessionHelper.getCurrentUserUuid(), true, true);
+		IngridDocument doc = mdekCallerSecurity.getUsersWithWritePermissionForObject(connectionFacade.getCurrentPlugId(), objUuid, MdekSecurityUtils.getCurrentUserUuid(), true, true);
 		List<User> userList = MdekUtils.extractSecurityUsersFromResponse(doc);
 
 		// Get all users that have qa right on the obj
@@ -406,7 +405,7 @@ public class MdekEmailUtils {
 	private static List<User> getQAUsersForAddress(String adrUuid) {
 		List<User> qaUserList = new ArrayList<User>();
 
-		IngridDocument doc = mdekCallerSecurity.getUsersWithWritePermissionForAddress(connectionFacade.getCurrentPlugId(), adrUuid, HTTPSessionHelper.getCurrentUserUuid(), true, true);
+		IngridDocument doc = mdekCallerSecurity.getUsersWithWritePermissionForAddress(connectionFacade.getCurrentPlugId(), adrUuid, MdekSecurityUtils.getCurrentUserUuid(), true, true);
 		List<User> userList = MdekUtils.extractSecurityUsersFromResponse(doc);
 
 		// Get all users that have qa right on the obj
@@ -430,7 +429,7 @@ public class MdekEmailUtils {
 			" and oNode.objId = obj.id " +
 			" and obj.objMetadataId = oMeta.id";
 
-		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, null, HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, null, MdekSecurityUtils.getCurrentUserUuid());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {
@@ -457,7 +456,7 @@ public class MdekEmailUtils {
 			" and aNode.addrId = adr.id " +
 			" and adr.addrMetadataId = aMeta.id";
 
-		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, null, HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, null, MdekSecurityUtils.getCurrentUserUuid());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {
@@ -495,7 +494,7 @@ public class MdekEmailUtils {
 		}
 		qString = qString.substring(0, qString.length() - 4) + ")";
 
-		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, null, HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, null, MdekSecurityUtils.getCurrentUserUuid());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {
@@ -543,13 +542,13 @@ public class MdekEmailUtils {
 	}
 
 	private static boolean isWorkflowControlEnabled() {
-		IngridDocument response = mdekCallerCatalog.fetchCatalog(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerCatalog.fetchCatalog(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
 		CatalogBean cat = MdekCatalogUtils.extractCatalogFromResponse(response);
 		return (cat.getWorkflowControl() != null && cat.getWorkflowControl().equals(de.ingrid.mdek.MdekUtils.YES));
 	}
 
 	private static boolean isCurrentUserQAForObject(String objUuid) {
-		String userId = HTTPSessionHelper.getCurrentUserUuid();
+		String userId = MdekSecurityUtils.getCurrentUserUuid();
 		List<User> qaUsers = getQAUsersForObject(objUuid);
 		for (User u : qaUsers) {
 			if (u.getAddressUuid().equals(userId)) {
@@ -561,7 +560,7 @@ public class MdekEmailUtils {
 	}
 	
 	private static boolean isCurrentUserQAForAddress(String adrUuid) {
-		String userId = HTTPSessionHelper.getCurrentUserUuid();
+		String userId = MdekSecurityUtils.getCurrentUserUuid();
 		List<User> qaUsers = getQAUsersForAddress(adrUuid);
 		for (User u : qaUsers) {
 			if (u.getAddressUuid().equals(userId)) {
@@ -593,13 +592,13 @@ public class MdekEmailUtils {
 	}
 
 	private static String getObjectTitle(String objUuid) {
-		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, MdekSecurityUtils.getCurrentUserUuid());
 		MdekDataBean data = MdekObjectUtils.extractSingleObjectFromResponse(response);
 		return data.getTitle();
 	}
 
 	private static String getAddressTitle(String adrUuid) {
-		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 0, HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 0, MdekSecurityUtils.getCurrentUserUuid());
 		MdekAddressBean data = MdekAddressUtils.extractSingleAddressFromResponse(response);
 		return MdekAddressUtils.createAddressTitle(data.getOrganisation(), data.getName(), data.getGivenName());
 	}

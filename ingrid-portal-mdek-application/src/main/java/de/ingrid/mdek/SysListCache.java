@@ -16,9 +16,9 @@ import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
-import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.util.MdekCatalogUtils;
+import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.utils.IngridDocument;
 
 public class SysListCache {
@@ -63,7 +63,7 @@ public class SysListCache {
 
 		// Load the catalog data from the backend to extract the catalog language
 		try {
-			IngridDocument response = mdekCallerCatalog.fetchCatalog(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentUserUuid());
+			IngridDocument response = mdekCallerCatalog.fetchCatalog(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
 			CatalogBean b = MdekCatalogUtils.extractCatalogFromResponse(response);
 			languageCode = b.getLanguage();
 
@@ -309,7 +309,7 @@ public class SysListCache {
 	}
 	
 	private Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode) {
-		IngridDocument response = mdekCallerCatalog.getSysLists(connectionFacade.getCurrentPlugId(), listIds, languageCode, HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerCatalog.getSysLists(connectionFacade.getCurrentPlugId(), listIds, languageCode, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractSysListFromResponse(response);
 	}
 

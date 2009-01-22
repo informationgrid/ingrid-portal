@@ -9,9 +9,9 @@ import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCaller.AddressArea;
-import de.ingrid.mdek.dwr.util.HTTPSessionHelper;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekCatalogUtils;
+import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.utils.IngridDocument;
 
 public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
@@ -30,24 +30,24 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 	
 	
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode) {
-		IngridDocument response = mdekCallerCatalog.getSysLists(connectionFacade.getCurrentPlugId(), listIds, languageCode, HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerCatalog.getSysLists(connectionFacade.getCurrentPlugId(), listIds, languageCode, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractSysListFromResponse(response);
 	}
 
 	public List<Map<String, String>> getSysGuis(String[] guiIds) {
-		IngridDocument response = mdekCallerCatalog.getSysGuis(connectionFacade.getCurrentPlugId(), guiIds, HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerCatalog.getSysGuis(connectionFacade.getCurrentPlugId(), guiIds, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractSysGuisFromResponse(response);
 	}
 
 	public List<Map<String, String>> storeSysGuis(List<Map<String, String>> sysGuis, boolean refetchAfterStore) {
 		List<IngridDocument> sysGuiDoc = MdekCatalogUtils.convertFromSysGuiRepresentation(sysGuis);
 
-		IngridDocument response = mdekCallerCatalog.storeSysGuis(connectionFacade.getCurrentPlugId(), sysGuiDoc, refetchAfterStore, HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerCatalog.storeSysGuis(connectionFacade.getCurrentPlugId(), sysGuiDoc, refetchAfterStore, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractSysGuisFromResponse(response);
 	}
 
 	public CatalogBean getCatalogData() {
-		IngridDocument response = mdekCallerCatalog.fetchCatalog(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerCatalog.fetchCatalog(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractCatalogFromResponse(response);
 	}
 
@@ -57,7 +57,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		log.debug("Sending the following catalog for storage:");
 		log.debug(catDoc);
 
-		IngridDocument response = mdekCallerCatalog.storeCatalog(connectionFacade.getCurrentPlugId(), catDoc, true, HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerCatalog.storeCatalog(connectionFacade.getCurrentPlugId(), catDoc, true, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractCatalogFromResponse(response);
 	}
 
@@ -80,14 +80,14 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		return mdekCallerCatalog.exportAddressBranch(
 				connectionFacade.getCurrentPlugId(),
 				rootUuid, !exportChildren,
-				addressArea, HTTPSessionHelper.getCurrentUserUuid());
+				addressArea, MdekSecurityUtils.getCurrentUserUuid());
 	}
 
 	public void exportObjectBranch(String rootUuid, boolean exportChildren) {
 		IngridDocument response = mdekCallerCatalog.exportObjectBranch(
 				connectionFacade.getCurrentPlugId(),
 				rootUuid,
-				!exportChildren, HTTPSessionHelper.getCurrentUserUuid());
+				!exportChildren, MdekSecurityUtils.getCurrentUserUuid());
 
 		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
@@ -96,12 +96,12 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		IngridDocument response = mdekCallerCatalog.exportObjects(
 				connectionFacade.getCurrentPlugId(),
 				exportCriteria,
-				HTTPSessionHelper.getCurrentUserUuid());
+				MdekSecurityUtils.getCurrentUserUuid());
 		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
 	public JobInfoBean getExportInfo(boolean includeExportData) {
-		IngridDocument response = mdekCallerCatalog.getExportInfo(connectionFacade.getCurrentPlugId(), includeExportData, HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerCatalog.getExportInfo(connectionFacade.getCurrentPlugId(), includeExportData, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
@@ -117,12 +117,12 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 	}
 
 	public JobInfoBean getImportInfo() {
-		IngridDocument response = mdekCallerCatalog.getImportInfo(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentUserUuid());
+		IngridDocument response = mdekCallerCatalog.getImportInfo(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
 	public void cancelRunningJob() {
-		mdekCallerCatalog.cancelRunningJob(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentUserUuid());
+		mdekCallerCatalog.cancelRunningJob(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
 	}
 
 	public ConnectionFacade getConnectionFacade() {

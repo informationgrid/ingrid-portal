@@ -1,6 +1,7 @@
 package de.ingrid.mdek.util;
 
 import java.security.Principal;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,6 +28,8 @@ public class MdekSecurityUtils {
 		HttpServletRequest req = wctx.getHttpServletRequest();
 
 		HttpSession ses = wctx.getSession();
+//		log.debug("last accessed time: "+new Date(ses.getLastAccessedTime()));
+//		log.debug("max inactive interval: "+ses.getMaxInactiveInterval());
 
 		Principal userPrincipal = req.getUserPrincipal(); 
 		if (userPrincipal != null) {
@@ -130,6 +133,11 @@ public class MdekSecurityUtils {
 
 	public void setDaoFactory(IDaoFactory daoFactory) {
 		MdekSecurityUtils.daoFactory = daoFactory;
+	}
+
+
+	public static String getCurrentUserUuid() {
+		return getCurrentPortalUserData().getAddressUuid();
 	}
 
 }
