@@ -55,6 +55,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     
     private static final String CACHE_SEARCH = "de.ingrid.search.query";
     
+    private static final String CACHE_RECORD = "de.ingrid.iplug.record";
+    
 
     public static synchronized IBUSInterface getInstance() {
         if (instance == null) {
@@ -133,59 +135,66 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     public IngridHits search(IngridQuery query, int hitsPerPage, int currentPage, int startHit, int timeout)
             throws Exception {
         IngridHits hits = null;
-        String postfix = ", hitsPerPage=" + hitsPerPage + ", startHit=" + startHit;
+        int cacheKey 	= -1;
         
-        // create a cache key from the query
-        QueryPreProcessor preQuery = new QueryPreProcessor();
-        int cacheKey = preQuery.getQueryCacheKey(query, postfix);
-        
-        // it was noticed that if we could get hits out from the cache, then we
-        // also should cache getDetail(s), otherwise the search will be even
-        // slower (assume that Lucene is doing some caching to find details
-        // after a search faster)
-        hits = (IngridHits) getFromCache(CACHE_SEARCH, cacheKey);
+        // only cache when it was switched on in the query
+        if (query.isCacheOn()) {
+	        // create a cache key from the query
+	        QueryPreProcessor preQuery = new QueryPreProcessor();
+	        String postfix 	= ", hitsPerPage=" + hitsPerPage + ", startHit=" + startHit;
+	        cacheKey = preQuery.getQueryCacheKey(query, postfix);
+	        
+	        // it was noticed that if we could get hits out from the cache, then we
+	        // also should cache getDetail(s), otherwise the search will be even
+	        // slower (assume that Lucene is doing some caching to find details
+	        // after a search faster)
+	        hits = (IngridHits) getFromCache(CACHE_SEARCH, cacheKey);
+        }
         
         if (hits == null) {
 	        try {
 	            if (log.isDebugEnabled()) {
-	                log
-	                        .debug("iBus.search: IngridQuery = " + UtilsSearch.queryToString(query) + " / timeout="
-	                                + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage
-	                                + ", startHit=" + startHit);
+	                log.debug("iBus.search: IngridQuery = " + UtilsSearch.queryToString(query)
+	                		+ " / timeout=" + timeout + ", hitsPerPage=" + hitsPerPage 
+	                		+ ", currentPage=" + currentPage + ", startHit=" + startHit);
 	            }
 	            hits = bus.search(query, hitsPerPage, currentPage, startHit, timeout);
 	            
-	            // put result into cache	            
-	            putInCache(CACHE_SEARCH, cacheKey, hits);            
-	            
+	            // put result into cache (if switched on)
+	            if (cacheKey != -1) {
+	            	putInCache(CACHE_SEARCH, cacheKey, hits);            
+	            }
+		            
 	            if (log.isDebugEnabled()) {
 	                log.debug("iBus.search: finished !");
 	            }
 	        } catch (java.io.IOException e) {
 	            if (log.isDebugEnabled()) {
 	                log.debug("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
-	                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", startHit="
-	                        + startHit, e);
+	                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage="
+	                        + currentPage + ", startHit=" + startHit, e);
 	            } else if (log.isInfoEnabled()) {
 	                log.info("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
-	                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", startHit="
-	                        + startHit + "[cause:" + e.getMessage() + "]");
+	                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage="
+	                        + currentPage + ", startHit=" + startHit + "[cause:" + e.getMessage() + "]");
 	            } else {
 	                log.warn("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
-	                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", startHit="
-	                        + startHit + "[cause:" + e.getCause().getMessage() + "]", e);
+	                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage="
+	                        + currentPage + ", startHit=" + startHit + "[cause:" + e.getCause().getMessage() + "]", e);
 	            }
 	        } catch (Throwable t) {
 	            if (log.isErrorEnabled()) {
 	                log.error("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
-	                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage=" + currentPage + ", startHit="
-	                        + startHit, t);
+	                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage="
+	                        + currentPage + ", startHit=" + startHit, t);
 	            }
 	            throw new Exception(t);
 	        }
         } else {
         	if (log.isDebugEnabled()) {
-        		log.debug("Got search hits from cache :-)");
+        		log.debug("iBus.search (cached): IngridQuery = " + UtilsSearch.queryToString(query) + " / timeout="
+        				+ timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage="
+        				+ currentPage + ", startHit=" + startHit);
         	}
         }
         
@@ -193,46 +202,57 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     }
 
     /**
-     * @see de.ingrid.portal.interfaces.IBUSInterface#getDetail(de.ingrid.utils.IngridHit, de.ingrid.utils.query.IngridQuery, java.lang.String[])
+     * @see de.ingrid.portal.interfaces.IBUSInterface#getDetail(de.ingrid.utils.IngridHit,
+     * de.ingrid.utils.query.IngridQuery, java.lang.String[])
      */
     public IngridHitDetail getDetail(IngridHit result, IngridQuery query, String[] requestedFields) {
-        IngridHitDetail detail = null;
+        IngridHitDetail detail 	= null;
+        int cacheKey 			= -1;
         
-        String postfix = "[";
-        
-        QueryPreProcessor preQuery = new QueryPreProcessor();
-        postfix = "[" + UtilsString.concatStringsIfNotNull(requestedFields, ",") + "]";
-        postfix += result.getPlugId() + "," + String.valueOf(result.getDocumentId());
-        int cacheKey = preQuery.getQueryCacheKey(query, postfix);
-        
-        detail = (IngridHitDetail) getFromCache(CACHE_SEARCH, cacheKey);
+        if (query.isCacheOn()) {
+	        String postfix = "[";
+	        
+	        QueryPreProcessor preQuery = new QueryPreProcessor();
+	        postfix = "[" + UtilsString.concatStringsIfNotNull(requestedFields, ",") + "]";
+	        postfix += result.getPlugId() + "," + String.valueOf(result.getDocumentId());
+	        cacheKey = preQuery.getQueryCacheKey(query, postfix);
+	        
+	        detail = (IngridHitDetail) getFromCache(CACHE_SEARCH, cacheKey);
+        }
         
         if (detail == null) {
 	        try {
 	            if (log.isDebugEnabled()) {
-	                log.debug("iBus.getDetail: hit = " + result + ", requestedFields = " + requestedFields);
+	                log.debug("iBus.getDetail: hit = " + result + ", requestedFields = " 
+	                		+ requestedFields);
 	            }
 	            detail = bus.getDetail(result, query, requestedFields);
 	            
-	            // put result into cache	            
-	            putInCache(CACHE_SEARCH, cacheKey, detail); 
+	            if (cacheKey != -1) {
+		            // put result into cache	            
+		            putInCache(CACHE_SEARCH, cacheKey, detail);
+	            }
 	            
 	            if (log.isDebugEnabled()) {
 	                log.debug("iBus.getDetail: finished !");
 	            }
 	        } catch (Throwable t) {
 	            if (log.isDebugEnabled()) {
-	                log.debug("Problems fetching Detail of results: " + result + "[cause:" + t.getCause().getMessage() + "]", t);
+	                log.debug("Problems fetching Detail of results: " + result 
+	                		+ "[cause:" + t.getCause().getMessage() + "]", t);
 	            } else if (log.isInfoEnabled()) {
-	                log.info("Problems fetching Detail of results: " + result + "[cause:" + t.getCause().getMessage() + "]");
+	                log.info("Problems fetching Detail of results: " + result
+	                		+ "[cause:" + t.getCause().getMessage() + "]");
 	            } else {
-	                log.warn("Problems fetching Detail of results: " + result + "[cause:" + t.getCause().getMessage() + "]", t);
+	                log.warn("Problems fetching Detail of results: " + result 
+	                		+ "[cause:" + t.getCause().getMessage() + "]", t);
 	            }
 	        }
         } else {
         	if (log.isDebugEnabled()) {
-        		log.debug("Got detail from cache :-)");
-        	}
+                log.debug("iBus.getDetail (cached): hit = " + result
+                		+ ", requestedFields = " + requestedFields);
+            }
         }
 
         return detail;
@@ -242,21 +262,24 @@ public class IBUSInterfaceImpl implements IBUSInterface {
      * @see de.ingrid.portal.interfaces.IBUSInterface#getDetails(de.ingrid.utils.IngridHit[], de.ingrid.utils.query.IngridQuery, java.lang.String[])
      */
     public IngridHitDetail[] getDetails(IngridHit[] results, IngridQuery query, String[] requestedFields) {
-        IngridHitDetail[] details = null;
+        IngridHitDetail[] details 	= null;
+        int cacheKey 				= -1;
         
-        // make a string out of the requestedFields array
-        String postfix = "";        
-        String docIDs  = "";
-        
-        for (IngridHit iH : results) {
-        	docIDs += iH.getPlugId() + "," + String.valueOf(iH.getDocumentId());
+        if (query.isCacheOn()) {
+	        // make a string out of the requestedFields array
+	        String postfix = "";        
+	        String docIDs  = "";
+	        
+	        for (IngridHit iH : results) {
+	        	docIDs += iH.getPlugId() + "," + String.valueOf(iH.getDocumentId());
+	        }
+	        
+	        QueryPreProcessor preQuery = new QueryPreProcessor();
+	        postfix = "[" + UtilsString.concatStringsIfNotNull(requestedFields, ",") + "]" + docIDs;
+	        cacheKey = preQuery.getQueryCacheKey(query, postfix);
+	        
+	        details = (IngridHitDetail[]) getFromCache(CACHE_SEARCH, cacheKey);
         }
-        
-        QueryPreProcessor preQuery = new QueryPreProcessor();
-        postfix = "[" + UtilsString.concatStringsIfNotNull(requestedFields, ",") + "]" + docIDs;
-        int cacheKey = preQuery.getQueryCacheKey(query, postfix);
-        
-        details = (IngridHitDetail[]) getFromCache(CACHE_SEARCH, cacheKey);
         
         if (details == null) {
 	        try {
@@ -265,25 +288,31 @@ public class IBUSInterfaceImpl implements IBUSInterface {
 	            }
 	            details = bus.getDetails(results, query, requestedFields);
 	            
-	            // put result into cache
-	            putInCache(CACHE_SEARCH, cacheKey, details); 
+	            if (cacheKey != -1) {
+		            // put result into cache
+		            putInCache(CACHE_SEARCH, cacheKey, details); 
+	            }
 	            
 	            if (log.isDebugEnabled()) {
 	                log.debug("iBus.getDetails: finished !");
 	            }
 	        } catch (Throwable t) {
 	            if (log.isDebugEnabled()) {
-	                log.debug("Problems fetching Details of results: " + results + "[cause:" + t.getMessage() + "]", t);
+	                log.debug("Problems fetching Details of results: " + results
+	                		+ "[cause:" + t.getMessage() + "]", t);
 	            } else if (log.isInfoEnabled()) {
-	                log.info("Problems fetching Details of results: " + results + "[cause:" + t.getMessage() + "]");
+	                log.info("Problems fetching Details of results: " + results
+	                		+ "[cause:" + t.getMessage() + "]");
 	            } else {
-	                log.warn("Problems fetching Details of results: " + results + "[cause:" + t.getMessage() + "]", t);
+	                log.warn("Problems fetching Details of results: " + results
+	                		+ "[cause:" + t.getMessage() + "]", t);
 	            }
 	        }
         } else {
         	if (log.isDebugEnabled()) {
-	    		log.debug("Got details from cache :-)");
-	    	}
+                log.debug("iBus.getDetails (cached): hits = " + results
+                		+ ", requestedFields = " + requestedFields);
+            }
 	    }
 
         return details;
@@ -293,17 +322,39 @@ public class IBUSInterfaceImpl implements IBUSInterface {
      * @see de.ingrid.portal.interfaces.IBUSInterface#getRecord(de.ingrid.utils.IngridHit)
      */
     public Record getRecord(IngridHit result) {
-        Record rec = null;
-        try {
-            rec = bus.getRecord(result);
-        } catch (Throwable t) {
-            if (log.isDebugEnabled()) {
-                log.debug("Problems fetching Record of result: " + result + "[cause:" + t.getCause() + "]", t);
-            } else if (log.isInfoEnabled()) {
-                log.info("Problems fetching Record of result: " + result + "[cause:" + t.getCause() + "]");
-            } else {
-                log.warn("Problems fetching Record of result: " + result + "[cause:" + t.getCause() + "]", t);
-            }
+        Record rec 		= null;
+        int cacheKey 	= -1;
+        
+        // TODO AW: add cache
+        String key = result.getPlugId() + "," + String.valueOf(result.getDocumentId());
+        cacheKey = key.hashCode();
+        
+        rec = (Record) getFromCache(CACHE_RECORD, cacheKey);
+        
+        if (rec == null) {
+	        try {
+	            rec = bus.getRecord(result);
+	            
+	            if (cacheKey != -1) {
+		            // put result into cache
+		            putInCache(CACHE_RECORD, cacheKey, rec); 
+	            }
+	        } catch (Throwable t) {
+	            if (log.isDebugEnabled()) {
+	                log.debug("Problems fetching Record of result: " + result
+	                		+ "[cause:" + t.getCause() + "]", t);
+	            } else if (log.isInfoEnabled()) {
+	                log.info("Problems fetching Record of result: " + result
+	                		+ "[cause:" + t.getCause() + "]");
+	            } else {
+	                log.warn("Problems fetching Record of result: " + result
+	                		+ "[cause:" + t.getCause() + "]", t);
+	            }
+	        }
+        } else {
+        	if (log.isDebugEnabled()) {
+        		log.debug("Got record from cache :)");
+        	}
         }
 
         return rec;
@@ -341,6 +392,9 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     public PlugDescription getIPlug(String plugId) {
         PlugDescription pd = null;
         
+        // FIXME AW: cache only when cache is not switched off
+        // only important for monitors!
+        
         // check first the cache
         pd = (PlugDescription) getFromCache(CACHE_IPLUGS, plugId);
         
@@ -367,6 +421,11 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         PlugDescription[] plugs = new PlugDescription[0];
         try {
             plugs = bus.getAllIPlugs();
+            
+            // fill the cache with the iPlugs
+            for (PlugDescription pD : plugs) {
+            	putInCache(CACHE_IPLUGS, pD.getPlugId(), pD);
+            }
         } catch (Throwable t) {
             if (log.isWarnEnabled()) {
                 log.warn("Problems fetching iPlugs from iBus !", t);
@@ -379,6 +438,11 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         PlugDescription[] plugs = new PlugDescription[0];
         try {
             plugs = bus.getAllIPlugsWithoutTimeLimitation();
+            
+            // fill the cache with the iPlugs
+            for (PlugDescription pD : plugs) {
+            	putInCache(CACHE_IPLUGS, pD.getPlugId(), pD);
+            }
         } catch (Throwable t) {
             if (log.isWarnEnabled()) {
                 log.warn("Problems fetching iPlugs from iBus !", t);

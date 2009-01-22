@@ -157,7 +157,7 @@
 	<tr><td>IPLUG</td>
 	<td>Es kann die komplette Query Syntax des Portals verwendet werden. 
 	Um z.B. ein iPlug zu überwachen könnte die Abfrage wie folgt aussehen:<br/>
-	<pre>wasser iplugs:"/kug-ibus:kug-iplug-udk-db_uba" ranking:any</pre></td></tr>
+	<pre>wasser iplugs:"/kug-ibus:kug-iplug-udk-db_uba" ranking:any cache:off</pre></td></tr>
 	<tr><td>CSW</td>
 	<td>Bitte nur ein Suchbegriff angeben. z.B. "Wasser"</td></tr>
 	<tr><td>ECS</td>

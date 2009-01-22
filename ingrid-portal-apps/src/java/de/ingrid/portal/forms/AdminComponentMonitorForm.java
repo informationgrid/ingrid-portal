@@ -117,10 +117,14 @@ public class AdminComponentMonitorForm extends ActionForm {
 				setError(FIELD_TITLE, "component.monitor.form.error.missing.title");
 				allOk = false;
 			}
-			if (!hasInput(FIELD_QUERY)
-					&& (getInput(FIELD_TYPE).equals(IngridMonitorIPlugJob.COMPONENT_TYPE))) {
-				setError(FIELD_QUERY, "component.monitor.form.error.missing.query");
-				allOk = false;
+			if (getInput(FIELD_TYPE).equals(IngridMonitorIPlugJob.COMPONENT_TYPE)) {
+				if (!hasInput(FIELD_QUERY)) {
+					setError(FIELD_QUERY, "component.monitor.form.error.missing.query");
+					allOk = false;
+				} else if (!getInput(FIELD_QUERY).contains("cache:off")) {
+					setError(FIELD_QUERY, "component.monitor.form.error.cache.on");
+					allOk = false;
+				}
 			}
 			if (!hasInput(FIELD_SERVICE_URL)
 					&& (getInput(FIELD_TYPE).equals(IngridMonitorG2KJob.COMPONENT_TYPE) 

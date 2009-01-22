@@ -285,7 +285,7 @@ public class IngridJobHandler {
 		try {
 			jobDetail = monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
 		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
+			// TODO AW: Auto-generated catch block
 			e.printStackTrace();
 		}
 		if (jobDetail != null) {
@@ -431,7 +431,7 @@ public class IngridJobHandler {
 			
 			// add specific data to the dataMap
 			jobDetail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_QUERY,
-					"wasser iplugs:\"" + iPlug.getProxyServiceURL() + "\" ranking:any");
+					"wasser iplugs:\"" + iPlug.getProxyServiceURL() + "\" ranking:any" + "\" cache:off");
 			jobDetail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE,
 					IngridMonitorIPlugJob.COMPONENT_TYPE);
 			
