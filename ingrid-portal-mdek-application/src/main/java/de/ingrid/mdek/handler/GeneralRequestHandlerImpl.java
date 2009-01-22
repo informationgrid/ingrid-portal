@@ -31,12 +31,12 @@ public class GeneralRequestHandlerImpl implements GeneralRequestHandler {
 	}
 	
 	public JobInfoBean getRunningJobInfo() {
-		IngridDocument response = mdekClientCaller.getRunningJobInfo(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekClientCaller.getRunningJobInfo(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentUserUuid());
 		return MdekUtils.extractJobInfoFromResponse(response);
 	}
 
 	public JobInfoBean cancelRunningJob() {
-		IngridDocument response = mdekClientCaller.cancelRunningJob(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekClientCaller.cancelRunningJob(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentUserUuid());
 		return MdekUtils.extractJobInfoFromResponse(response);	
 	}
 

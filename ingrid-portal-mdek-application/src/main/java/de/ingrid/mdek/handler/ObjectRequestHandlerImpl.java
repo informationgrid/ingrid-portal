@@ -48,17 +48,17 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 	}
 
 	public MdekDataBean getObjectDetail(String uuid) {
-		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), uuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), uuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekObjectUtils.extractSingleObjectFromResponse(response);
 	}
 
 	public MdekDataBean getPublishedObjectDetail(String uuid) {
-		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), uuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.PUBLISHED_VERSION, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), uuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.PUBLISHED_VERSION, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekObjectUtils.extractSingleObjectFromResponse(response);
 	}
 	
 	public ArrayList<HashMap<String, Object>> getRootObjects() {
-		IngridDocument response = mdekCallerObject.fetchTopObjects(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.fetchTopObjects(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentUserUuid());
 		return MdekObjectUtils.extractObjectsFromResponse(response);
 	}
 
@@ -68,7 +68,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 	}
 
 	public boolean canCutObject(String uuid) {
-		IngridDocument response = mdekCallerObject.checkObjectSubTree(connectionFacade.getCurrentPlugId(), uuid, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.checkObjectSubTree(connectionFacade.getCurrentPlugId(), uuid, HTTPSessionHelper.getCurrentUserUuid());
 		if (mdekClientCaller.getResultFromResponse(response) == null) {
 			MdekErrorUtils.handleError(response);
 		} else {
@@ -83,12 +83,12 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 	}
 
 	public Map<String, Object> copyObject(String fromUuid, String toUuid, boolean copySubTree) {
-		IngridDocument response = mdekCallerObject.copyObject(connectionFacade.getCurrentPlugId(), fromUuid, toUuid, copySubTree, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.copyObject(connectionFacade.getCurrentPlugId(), fromUuid, toUuid, copySubTree, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekObjectUtils.extractSingleSimpleObjectFromResponse(response);
 	}
 
 	public void deleteObject(String uuid, boolean forceDeleteReferences) {
-		IngridDocument response = mdekCallerObject.deleteObject(connectionFacade.getCurrentPlugId(), uuid, forceDeleteReferences, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.deleteObject(connectionFacade.getCurrentPlugId(), uuid, forceDeleteReferences, HTTPSessionHelper.getCurrentUserUuid());
 		IngridDocument result = MdekUtils.extractAdditionalInformationFromResponse(response);
 
 		boolean markedDeleted = result.getBoolean(MdekKeys.RESULTINFO_WAS_MARKED_DELETED);
@@ -98,7 +98,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 	}
 
 	public boolean deleteObjectWorkingCopy(String uuid, boolean forceDeleteReferences) {
-		IngridDocument response = mdekCallerObject.deleteObjectWorkingCopy(connectionFacade.getCurrentPlugId(), uuid, forceDeleteReferences, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.deleteObjectWorkingCopy(connectionFacade.getCurrentPlugId(), uuid, forceDeleteReferences, HTTPSessionHelper.getCurrentUserUuid());
 
 		IngridDocument result = MdekUtils.extractAdditionalInformationFromResponse(response);
 		return (Boolean) result.get(MdekKeys.RESULTINFO_WAS_FULLY_DELETED);
@@ -108,26 +108,26 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		IngridDocument obj = new IngridDocument();
 		obj.put(MdekKeys.PARENT_UUID, parentUuid);
 
-		IngridDocument response = mdekCallerObject.getInitialObject(connectionFacade.getCurrentPlugId(), obj, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.getInitialObject(connectionFacade.getCurrentPlugId(), obj, HTTPSessionHelper.getCurrentUserUuid());
 
 		// TODO: Set this value in the backend. Temproarily set it here till it gets fixed!
 		MdekDataBean dat = MdekObjectUtils.extractSingleObjectFromResponse(response);
-		dat.setObjectOwner(HTTPSessionHelper.getCurrentSessionId());
+		dat.setObjectOwner(HTTPSessionHelper.getCurrentUserUuid());
 		return dat;
 	}
 
 	public List<String> getPathToObject(String uuid) {
-		IngridDocument response = mdekCallerObject.getObjectPath(connectionFacade.getCurrentPlugId(), uuid, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.getObjectPath(connectionFacade.getCurrentPlugId(), uuid, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekUtils.extractPathFromResponse(response);
 	}
 	
 	public ArrayList<HashMap<String, Object>> getSubObjects(String uuid, int depth) {
-		IngridDocument response = mdekCallerObject.fetchSubObjects(connectionFacade.getCurrentPlugId(), uuid, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.fetchSubObjects(connectionFacade.getCurrentPlugId(), uuid, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekObjectUtils.extractObjectsFromResponse(response);
 	}
 
 	public void moveObjectSubTree(String fromUuid, String oldParentUuid, String newParentUuid, boolean forcePublicationCondition) {
-		IngridDocument response = mdekCallerObject.moveObject(connectionFacade.getCurrentPlugId(), fromUuid, newParentUuid, forcePublicationCondition, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.moveObject(connectionFacade.getCurrentPlugId(), fromUuid, newParentUuid, forcePublicationCondition, HTTPSessionHelper.getCurrentUserUuid());
 		if (mdekClientCaller.getResultFromResponse(response) == null) {
 			MdekErrorUtils.handleError(response);
 
@@ -147,7 +147,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		log.debug("Sending the following object for publishing:");
 		log.debug(obj);
 
-		IngridDocument response = mdekCallerObject.publishObject(connectionFacade.getCurrentPlugId(), obj, true, forcePublicationCondition, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.publishObject(connectionFacade.getCurrentPlugId(), obj, true, forcePublicationCondition, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekObjectUtils.extractSingleObjectFromResponse(response);
 	}
 
@@ -162,7 +162,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		log.debug("Sending the following object for storage:");
 		log.debug(obj);
 
-		IngridDocument response = mdekCallerObject.storeObject(connectionFacade.getCurrentPlugId(), obj, true, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.storeObject(connectionFacade.getCurrentPlugId(), obj, true, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekObjectUtils.extractSingleObjectFromResponse(response);
 	}
 
@@ -177,7 +177,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		log.debug("Sending the following object for publishing to QA:");
 		log.debug(obj);
 
-		IngridDocument response = mdekCallerObject.assignObjectToQA(connectionFacade.getCurrentPlugId(), obj, true, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.assignObjectToQA(connectionFacade.getCurrentPlugId(), obj, true, HTTPSessionHelper.getCurrentUserUuid());
 		MdekDataBean result = MdekObjectUtils.extractSingleObjectFromResponse(response);
 		if (result != null) {
 			MdekEmailUtils.sendObjectAssignedToQAMail(result);
@@ -192,7 +192,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		log.debug("Sending the following object to the author:");
 		log.debug(obj);
 
-		IngridDocument response = mdekCallerObject.reassignObjectToAuthor(connectionFacade.getCurrentPlugId(), obj, true, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.reassignObjectToAuthor(connectionFacade.getCurrentPlugId(), obj, true, HTTPSessionHelper.getCurrentUserUuid());
 		MdekDataBean result = MdekObjectUtils.extractSingleObjectFromResponse(response);
 		if (result != null) {
 			MdekEmailUtils.sendObjectReassignedMail(result);
@@ -202,12 +202,12 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 	}
 
 	public ObjectSearchResultBean getWorkObjects(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
-		IngridDocument response = mdekCallerObject.getWorkObjects(connectionFacade.getCurrentPlugId(), selectionType, orderBy, orderAsc, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.getWorkObjects(connectionFacade.getCurrentPlugId(), selectionType, orderBy, orderAsc, startHit, numHits, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekObjectUtils.extractObjectSearchResultsFromResponse(response);
 	}
 
 	public ObjectSearchResultBean getQAObjects(WorkState workState, IdcQAEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
-		IngridDocument response = mdekCallerObject.getQAObjects(connectionFacade.getCurrentPlugId(), workState, selectionType, orderBy, orderAsc, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.getQAObjects(connectionFacade.getCurrentPlugId(), workState, selectionType, orderBy, orderAsc, startHit, numHits, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekObjectUtils.extractObjectSearchResultsFromResponse(response);
 	}
 
@@ -215,14 +215,14 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		// startHit and numHits parameters are ignored for STATISTICS_CLASSES_AND_STATES
 		int startHit = 0;
 		int numHits = 0;
-		IngridDocument response = mdekCallerObject.getObjectStatistics(connectionFacade.getCurrentPlugId(), objUuid, IdcStatisticsSelectionType.CLASSES_AND_STATES, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.getObjectStatistics(connectionFacade.getCurrentPlugId(), objUuid, IdcStatisticsSelectionType.CLASSES_AND_STATES, startHit, numHits, HTTPSessionHelper.getCurrentUserUuid());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		return MdekObjectUtils.extractObjectStatistics(result);
 	}
 
 	public ThesaurusStatisticsResultBean getObjectThesaurusStatistics(String objUuid, boolean thesaurusTerms, int startHit, int numHits) {
 		IdcStatisticsSelectionType selectionType = thesaurusTerms ? IdcStatisticsSelectionType.SEARCHTERMS_THESAURUS : IdcStatisticsSelectionType.SEARCHTERMS_FREE;
-		IngridDocument response = mdekCallerObject.getObjectStatistics(connectionFacade.getCurrentPlugId(), objUuid, selectionType, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerObject.getObjectStatistics(connectionFacade.getCurrentPlugId(), objUuid, selectionType, startHit, numHits, HTTPSessionHelper.getCurrentUserUuid());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		return MdekUtils.extractThesaurusStatistics(result);
 	}

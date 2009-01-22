@@ -57,7 +57,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 	}
 
 	public boolean canCutAddress(String uuid) {
-		IngridDocument response = mdekCallerAddress.checkAddressSubTree(connectionFacade.getCurrentPlugId(), uuid, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.checkAddressSubTree(connectionFacade.getCurrentPlugId(), uuid, HTTPSessionHelper.getCurrentUserUuid());
 		if (mdekClientCaller.getResultFromResponse(response) == null) {
 			MdekErrorUtils.handleError(response);
 		} else {
@@ -72,12 +72,12 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 	}
 
 	public Map<String, Object> copyAddress(String fromUuid, String toUuid, boolean copySubTree, boolean copyToFreeAddress) {
-		IngridDocument response = mdekCallerAddress.copyAddress(connectionFacade.getCurrentPlugId(), fromUuid, toUuid, copySubTree, copyToFreeAddress, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.copyAddress(connectionFacade.getCurrentPlugId(), fromUuid, toUuid, copySubTree, copyToFreeAddress, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekAddressUtils.extractSingleSimpleAddressFromResponse(response);
 	}
 
 	public void deleteAddress(String uuid, boolean forceDeleteReferences) {
-		IngridDocument response = mdekCallerAddress.deleteAddress(connectionFacade.getCurrentPlugId(), uuid, forceDeleteReferences, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.deleteAddress(connectionFacade.getCurrentPlugId(), uuid, forceDeleteReferences, HTTPSessionHelper.getCurrentUserUuid());
 		IngridDocument result = MdekUtils.extractAdditionalInformationFromResponse(response);
 
 		boolean markedDeleted = result.getBoolean(MdekKeys.RESULTINFO_WAS_MARKED_DELETED);
@@ -87,19 +87,19 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 	}
 
 	public boolean deleteAddressWorkingCopy(String uuid, boolean forceDeleteReferences) {
-		IngridDocument response = mdekCallerAddress.deleteAddressWorkingCopy(connectionFacade.getCurrentPlugId(), uuid, forceDeleteReferences, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.deleteAddressWorkingCopy(connectionFacade.getCurrentPlugId(), uuid, forceDeleteReferences, HTTPSessionHelper.getCurrentUserUuid());
 
 		IngridDocument result = MdekUtils.extractAdditionalInformationFromResponse(response);
 		return (Boolean) result.get(MdekKeys.RESULTINFO_WAS_FULLY_DELETED);
 	}
 
 	public MdekAddressBean getAddressDetail(String uuid) {
-		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), uuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), uuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekAddressUtils.extractSingleAddressFromResponse(response);	
 	}
 
 	public MdekAddressBean getPublishedAddressDetail(String uuid) {
-		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), uuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.PUBLISHED_VERSION, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), uuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.PUBLISHED_VERSION, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekAddressUtils.extractSingleAddressFromResponse(response);	
 	}
 	
@@ -107,31 +107,31 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		IngridDocument adr = new IngridDocument();
 		adr.put(MdekKeys.PARENT_UUID, parentUuid);
 
-		IngridDocument response = mdekCallerAddress.getInitialAddress(connectionFacade.getCurrentPlugId(), adr, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.getInitialAddress(connectionFacade.getCurrentPlugId(), adr, HTTPSessionHelper.getCurrentUserUuid());
 
 		// TODO: Set this value in the backend. Temproarily set it here till it gets fixed!
 		MdekAddressBean dat = MdekAddressUtils.extractSingleAddressFromResponse(response);
-		dat.setAddressOwner(HTTPSessionHelper.getCurrentSessionId());
+		dat.setAddressOwner(HTTPSessionHelper.getCurrentUserUuid());
 		return dat;
 	}
 
 	public List<String> getPathToAddress(String uuid) {
-		IngridDocument response = mdekCallerAddress.getAddressPath(connectionFacade.getCurrentPlugId(), uuid, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.getAddressPath(connectionFacade.getCurrentPlugId(), uuid, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekUtils.extractPathFromResponse(response);
 	}
 
 	public ArrayList<HashMap<String, Object>> getRootAddresses(boolean freeAddressesOnly) {
-		IngridDocument response = mdekCallerAddress.fetchTopAddresses(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId(), freeAddressesOnly);
+		IngridDocument response = mdekCallerAddress.fetchTopAddresses(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentUserUuid(), freeAddressesOnly);
 		return MdekAddressUtils.extractAddressesFromResponse(response);
 	}
 
 	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth) {
-		IngridDocument response = mdekCallerAddress.fetchSubAddresses(connectionFacade.getCurrentPlugId(), uuid, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.fetchSubAddresses(connectionFacade.getCurrentPlugId(), uuid, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekAddressUtils.extractAddressesFromResponse(response);
 	}
 
 	public void moveAddressSubTree(String fromUuid, String oldParentUuid, String newParentUuid, boolean moveToFreeAddress) {
-		IngridDocument response = mdekCallerAddress.moveAddress(connectionFacade.getCurrentPlugId(), fromUuid, newParentUuid, moveToFreeAddress, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.moveAddress(connectionFacade.getCurrentPlugId(), fromUuid, newParentUuid, moveToFreeAddress, HTTPSessionHelper.getCurrentUserUuid());
 		if (MdekUtils.getResultFromResponse(response) == null) {
 			MdekErrorUtils.handleError(response);
 
@@ -151,7 +151,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		log.debug("Sending the following address for publishing:");
 		log.debug(adr);
 
-		IngridDocument response = mdekCallerAddress.publishAddress(connectionFacade.getCurrentPlugId(), adr, true, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.publishAddress(connectionFacade.getCurrentPlugId(), adr, true, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekAddressUtils.extractSingleAddressFromResponse(response);
 	}
 
@@ -166,7 +166,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		log.debug("Sending the following address to QA:");
 		log.debug(adr);
 
-		IngridDocument response = mdekCallerAddress.assignAddressToQA(connectionFacade.getCurrentPlugId(), adr, true, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.assignAddressToQA(connectionFacade.getCurrentPlugId(), adr, true, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentUserUuid());
 		MdekAddressBean result = MdekAddressUtils.extractSingleAddressFromResponse(response);
 		if (result != null) {
 			MdekEmailUtils.sendAddressAssignedToQAMail(result);
@@ -181,7 +181,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		log.debug("Sending the following address to the author:");
 		log.debug(adr);
 
-		IngridDocument response = mdekCallerAddress.reassignAddressToAuthor(connectionFacade.getCurrentPlugId(), adr, true, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.reassignAddressToAuthor(connectionFacade.getCurrentPlugId(), adr, true, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentUserUuid());
 		MdekAddressBean result = MdekAddressUtils.extractSingleAddressFromResponse(response);
 		if (result != null) {
 			MdekEmailUtils.sendAddressReassignedMail(result);
@@ -203,22 +203,22 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		log.debug("Sending the following address for storage:");
 		log.debug(adr);
 
-		IngridDocument response = mdekCallerAddress.storeAddress(connectionFacade.getCurrentPlugId(), adr, true, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.storeAddress(connectionFacade.getCurrentPlugId(), adr, true, 0, NUM_INITIAL_REFERENCES, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekAddressUtils.extractSingleAddressFromResponse(response);
 	}
 
 	public MdekAddressBean fetchAddressObjectReferences(String addrUuid, int startIndex, int numRefs) {
-		IngridDocument response = mdekCallerAddress.fetchAddressObjectReferences(connectionFacade.getCurrentPlugId(), addrUuid, startIndex, numRefs, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.fetchAddressObjectReferences(connectionFacade.getCurrentPlugId(), addrUuid, startIndex, numRefs, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekAddressUtils.extractSingleAddressFromResponse(response);
 	}
 
 	public AddressSearchResultBean getWorkAddresses(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
-		IngridDocument response = mdekCallerAddress.getWorkAddresses(connectionFacade.getCurrentPlugId(), selectionType, orderBy, orderAsc, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.getWorkAddresses(connectionFacade.getCurrentPlugId(), selectionType, orderBy, orderAsc, startHit, numHits, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekAddressUtils.extractAddressSearchResultsFromResponse(response);
 	}
 
 	public AddressSearchResultBean getQAAddresses(WorkState workState, IdcQAEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
-		IngridDocument response = mdekCallerAddress.getQAAddresses(connectionFacade.getCurrentPlugId(), workState, selectionType, orderBy, orderAsc, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.getQAAddresses(connectionFacade.getCurrentPlugId(), workState, selectionType, orderBy, orderAsc, startHit, numHits, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekAddressUtils.extractAddressSearchResultsFromResponse(response);
 	}
 
@@ -226,14 +226,14 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		// The Parameters startHit and numHit are ignored for IdcEntitySelectionType.STATISTICS_CLASSES_AND_STATES
 		int startHit = 0;
 		int numHits = 0;
-		IngridDocument response = mdekCallerAddress.getAddressStatistics(connectionFacade.getCurrentPlugId(), adrUuid, freeAddressesOnly, IdcStatisticsSelectionType.CLASSES_AND_STATES, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.getAddressStatistics(connectionFacade.getCurrentPlugId(), adrUuid, freeAddressesOnly, IdcStatisticsSelectionType.CLASSES_AND_STATES, startHit, numHits, HTTPSessionHelper.getCurrentUserUuid());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		return MdekAddressUtils.extractAddressStatistics(result);
 	}
 
 	public ThesaurusStatisticsResultBean getAddressThesaurusStatistics(String adrUuid, boolean freeAddressesOnly, boolean thesaurusTerms, int startHit, int numHits) {
 		IdcStatisticsSelectionType selectionType = thesaurusTerms ? IdcStatisticsSelectionType.SEARCHTERMS_THESAURUS : IdcStatisticsSelectionType.SEARCHTERMS_FREE;
-		IngridDocument response = mdekCallerAddress.getAddressStatistics(connectionFacade.getCurrentPlugId(), adrUuid, freeAddressesOnly, selectionType, startHit, numHits, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerAddress.getAddressStatistics(connectionFacade.getCurrentPlugId(), adrUuid, freeAddressesOnly, selectionType, startHit, numHits, HTTPSessionHelper.getCurrentUserUuid());
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		return MdekUtils.extractThesaurusStatistics(result);
 	}

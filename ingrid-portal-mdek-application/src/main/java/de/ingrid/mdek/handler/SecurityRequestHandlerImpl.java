@@ -26,80 +26,80 @@ public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 	}
 	
 	public List<Group> getGroups(boolean includeCatAdminGroup) {
-		IngridDocument response = mdekCallerSecurity.getGroups(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId(), includeCatAdminGroup);
+		IngridDocument response = mdekCallerSecurity.getGroups(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentUserUuid(), includeCatAdminGroup);
 		return MdekUtils.extractSecurityGroupsFromResponse(response);
 	}
 
 	public Group getGroupDetails(String name) {
-		IngridDocument response = mdekCallerSecurity.getGroupDetails(connectionFacade.getCurrentPlugId(), name, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerSecurity.getGroupDetails(connectionFacade.getCurrentPlugId(), name, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekUtils.extractSecurityGroupFromResponse(response);
 	}
 
 	public Group createGroup(Group group, boolean refetch) {
 		IngridDocument g = MdekUtils.convertSecurityGroupToIngridDoc(group);
-		IngridDocument response = mdekCallerSecurity.createGroup(connectionFacade.getCurrentPlugId(), g, refetch, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerSecurity.createGroup(connectionFacade.getCurrentPlugId(), g, refetch, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekUtils.extractSecurityGroupFromResponse(response);
 	}
 
 	public Group storeGroup(Group group, boolean refetch) {
 		IngridDocument g = MdekUtils.convertSecurityGroupToIngridDoc(group);
-		IngridDocument response = mdekCallerSecurity.storeGroup(connectionFacade.getCurrentPlugId(), g, refetch, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerSecurity.storeGroup(connectionFacade.getCurrentPlugId(), g, refetch, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekUtils.extractSecurityGroupFromResponse(response);
 	}
 
 	public void deleteGroup(Long groupId) {
 		// TODO: Implement forceDelete param
 		boolean forceDelete = false;
-		IngridDocument response = mdekCallerSecurity.deleteGroup(connectionFacade.getCurrentPlugId(), groupId, forceDelete, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerSecurity.deleteGroup(connectionFacade.getCurrentPlugId(), groupId, forceDelete, HTTPSessionHelper.getCurrentUserUuid());
 		MdekUtils.checkForErrors(response);
 		return;
 	}
 
 	public List<User> getSubUsers(Long userId) {
-		IngridDocument response = mdekCallerSecurity.getSubUsers(connectionFacade.getCurrentPlugId(), userId, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerSecurity.getSubUsers(connectionFacade.getCurrentPlugId(), userId, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekUtils.extractSecurityUsersFromResponse(response);		
 	}
 	
 	public User getUserDetails(String userId) {
-		IngridDocument response = mdekCallerSecurity.getUserDetails(connectionFacade.getCurrentPlugId(), userId, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerSecurity.getUserDetails(connectionFacade.getCurrentPlugId(), userId, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekUtils.extractSecurityUserFromResponse(response);		
 	}
 	
 	public User createUser(User user, boolean refetch) {
 		IngridDocument u = MdekUtils.convertSecurityUserToIngridDoc(user);
-		IngridDocument response = mdekCallerSecurity.createUser(connectionFacade.getCurrentPlugId(), u, refetch, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerSecurity.createUser(connectionFacade.getCurrentPlugId(), u, refetch, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekUtils.extractSecurityUserFromResponse(response);
 	}
 
 	public User storeUser(User user, boolean refetch) {
 		IngridDocument u = MdekUtils.convertSecurityUserToIngridDoc(user);
-		IngridDocument response = mdekCallerSecurity.storeUser(connectionFacade.getCurrentPlugId(), u, refetch, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerSecurity.storeUser(connectionFacade.getCurrentPlugId(), u, refetch, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekUtils.extractSecurityUserFromResponse(response);
 	}
 
 	public void deleteUser(Long userId) {
-		IngridDocument response = mdekCallerSecurity.deleteUser(connectionFacade.getCurrentPlugId(), userId, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerSecurity.deleteUser(connectionFacade.getCurrentPlugId(), userId, HTTPSessionHelper.getCurrentUserUuid());
 		MdekUtils.extractSecurityUserFromResponse(response);
 		return;
 	}
 
 	public User getCatalogAdmin() {
-		IngridDocument response = mdekCallerSecurity.getCatalogAdmin(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerSecurity.getCatalogAdmin(connectionFacade.getCurrentPlugId(), HTTPSessionHelper.getCurrentUserUuid());
 		return MdekUtils.extractSecurityUserFromResponse(response);		
 	}
 
 	public List<User> getUsersWithWritePermissionForObject(String objectUuid, boolean checkWorkflow, boolean detailedPermissions) {
-		IngridDocument response = mdekCallerSecurity.getUsersWithWritePermissionForObject(connectionFacade.getCurrentPlugId(), objectUuid, HTTPSessionHelper.getCurrentSessionId(), checkWorkflow, detailedPermissions);
+		IngridDocument response = mdekCallerSecurity.getUsersWithWritePermissionForObject(connectionFacade.getCurrentPlugId(), objectUuid, HTTPSessionHelper.getCurrentUserUuid(), checkWorkflow, detailedPermissions);
 		return MdekUtils.extractSecurityUsersFromResponse(response);
 	}
 	
 	public List<User> getUsersWithWritePermissionForAddress(String addressUuid, boolean checkWorkflow, boolean detailedPermissions) {
-		IngridDocument response = mdekCallerSecurity.getUsersWithWritePermissionForAddress(connectionFacade.getCurrentPlugId(), addressUuid, HTTPSessionHelper.getCurrentSessionId(), checkWorkflow, detailedPermissions);
+		IngridDocument response = mdekCallerSecurity.getUsersWithWritePermissionForAddress(connectionFacade.getCurrentPlugId(), addressUuid, HTTPSessionHelper.getCurrentUserUuid(), checkWorkflow, detailedPermissions);
 		return MdekUtils.extractSecurityUsersFromResponse(response);
 	}
 
 	public List<User> getUsersOfGroup(String groupName) {
-		IngridDocument response = mdekCallerSecurity.getUsersOfGroup(connectionFacade.getCurrentPlugId(), groupName, HTTPSessionHelper.getCurrentSessionId());
+		IngridDocument response = mdekCallerSecurity.getUsersOfGroup(connectionFacade.getCurrentPlugId(), groupName, HTTPSessionHelper.getCurrentUserUuid());
 		return MdekUtils.extractSecurityUsersFromResponse(response);
 	}
 
