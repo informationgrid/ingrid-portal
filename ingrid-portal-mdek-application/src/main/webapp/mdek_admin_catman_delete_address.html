@@ -73,49 +73,94 @@ function initTreeEventHandler() {
 function deleteNodeSelected(node) {
 	if (isValidAddressNode(node)) {
 		var addressUuid = node.uuid;
-		var addressDetailsDef = getAddressDetailsDef(addressUuid);
-		var responsibleUsersDef = getUsersWithWritePermissionDef(addressUuid);
-
-		var defList = new dojo.DeferredList([addressDetailsDef, responsibleUsersDef], false, false, true);
-		defList.addCallback(function (resultList) {
-			dojo.debug("address details:");
-			var addressDetails = resultList[0][1]; 
-			dojo.debugShallow(addressDetails);
-
-			dojo.debug("responsible users:");
-			var responsibleUserList = resultList[1][1];
-			for (var index = 0; index < responsibleUserList.length; ++index) {
-				dojo.debug(responsibleUserList[index][0]+" - "+responsibleUserList[index][1]+" - "+responsibleUserList[index][2]);
-			}
-
-			dojo.debug("responsible user for current address:");
-			for (var index = 0; index < responsibleUserList.length; ++index) {
-				if (responsibleUserList[index][1] == addressDetails.uuid) {
-					dojo.debug(responsibleUserList[index][0]+" - "+responsibleUserList[index][1]+" - "+responsibleUserList[index][2]);
-				}
-			}
-
-			dojo.debug("responsible users with QA permission:");
-			for (var index = 0; index < responsibleUserList.length; ++index) {
-				if (responsibleUserList[index][2]) {
-					dojo.debug(responsibleUserList[index][0]+" - "+responsibleUserList[index][1]+" - "+responsibleUserList[index][2]);
-				}
-			}
-		});
-
-		defList.addErrback(function(err) {
-			dojo.debug("Error: "+err);
-			dojo.debugShallow(err);
+		var detailedAddressInfoDef = createDetailedAddressInformationDef(addressUuid);
+		detailedAddressInfoDef.addCallback(function(detailedAddressInfo) {
+			updateDeleteAddressInformation(detailedAddressInfo);
 		});
 	}
 }
 
 function replaceNodeSelected(node) {
+	if (isValidAddressNode(node)) {
+		var addressUuid = node.uuid;
+		var detailedAddressInfoDef = createDetailedAddressInformationDef(addressUuid);
+		detailedAddressInfoDef.addCallback(function(detailedAddressInfo) {
+			updateNewAddressInformation(detailedAddressInfo);
+		});
+	}
 }
 
 // Checks whether a given node is a valid address with an associated uuid (valid) or a container node (invalid)
 function isValidAddressNode(node) {
 	return (node.uuid != null && node.uuid != "addressRoot" && node.uuid != "addressFreeRoot");
+}
+
+// Update the fields for 'address to delete'
+// Input parameter is an addressDetails object created by 'createDetailedAddressInformationDef'
+function updateDeleteAddressInformation(detailedAddressInfo) {
+	if (detailedAddressInfo.address) {
+		dojo.widget.byId("addressDeleteDataTitle").setValue(UtilAddress.createAddressTitle(detailedAddressInfo.address));
+		dojo.widget.byId("addressDeleteDataCreationDate").setValue(detailedAddressInfo.address.creationTime);
+		dojo.widget.byId("addressDeleteDataID").setValue(detailedAddressInfo.address.uuid);
+	}
+	if (detailedAddressInfo.responsibleUser) {
+		dojo.widget.byId("addressDeleteDataUser").setValue(detailedAddressInfo.responsibleUser.title);
+	}
+	dojo.widget.byId("addressDeleteDataMDQS").store.setData(detailedAddressInfo.qaUsers);
+}
+
+//Update the fields for 'address to replace'
+//Input parameter is an addressDetails object created by 'createDetailedAddressInformationDef'
+function updateNewAddressInformation(detailedAddressInfo) {
+	if (detailedAddressInfo.address) {
+		dojo.widget.byId("addressNewDataTitle").setValue(UtilAddress.createAddressTitle(detailedAddressInfo.address));
+		dojo.widget.byId("addressNewDataCreationDate").setValue(detailedAddressInfo.address.creationTime);
+		dojo.widget.byId("addressNewDataID").setValue(detailedAddressInfo.address.uuid);
+	}
+	if (detailedAddressInfo.responsibleUser) {
+		dojo.widget.byId("addressNewDataUser").setValue(detailedAddressInfo.responsibleUser.title);
+	}
+	dojo.widget.byId("addressNewDataMDQS").store.setData(detailedAddressInfo.qaUsers);
+}
+
+// Returns a deferred object with the following information on callback:
+// { address: address details for the given uuid,
+//   responsibleUser: {title:address title, uuid:address uuid},
+//   qaUsers: [ {title:address title, uuid:address uuid}, {...}, ...]
+// }
+function createDetailedAddressInformationDef(addressUuid) {
+	var def = new dojo.Deferred();
+	var addressDetailsDef = getAddressDetailsDef(addressUuid);
+	var responsibleUsersDef = getUsersWithWritePermissionDef(addressUuid);
+
+	var defList = new dojo.DeferredList([addressDetailsDef, responsibleUsersDef], false, false, true);
+	defList.addCallback(function (resultList) {
+		var addressDetails = resultList[0][1]; 
+		var responsibleUserList = resultList[1][1];
+		var responsibleUser = null;
+		for (var index = 0; index < responsibleUserList.length; ++index) {
+			if (responsibleUserList[index][1] == addressDetails.addressOwner) {
+				responsibleUser = { title:responsibleUserList[index][0], uuid:responsibleUserList[index][1] };
+			}
+		}
+
+		var qaUsers = [];
+		for (var index = 0; index < responsibleUserList.length; ++index) {
+			if (responsibleUserList[index][2]) {
+				qaUsers.push( { title:responsibleUserList[index][0], uuid:responsibleUserList[index][1] } );
+			}
+		}
+
+		def.callback( { address:addressDetails, responsibleUser:responsibleUser, qaUsers:qaUsers } );
+	});
+
+	defList.addErrback(function(err) {
+		dojo.debug("Error: "+err);
+		dojo.debugShallow(err);
+		def.errback(err);
+	});
+
+	return def;
 }
 
 function getAddressDetailsDef(addressUuid) {
@@ -208,11 +253,10 @@ scriptScope.replaceAddress = function() {
 			<!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
 			<div id="addressDeleteData" class="inputContainer">
 				<div class="inputContainer field grey noSpaceBelow h236">
-					<span class="label"><label for="addressDeleteDataUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution/Einheit')">Institution/Einheit</label></span>
+					<span class="label"><label for="addressDeleteDataTitle" onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')">Titel</label></span>
 					<span class="input spaceBelow">
-
-					<input type="text" mode="textarea" id="addressDeleteDataUnit" class="w640 h038" disabled="true" dojoType="ingrid:ValidationTextbox" />
-
+						<input type="text" id="addressDeleteDataTitle" class="w640" disabled="true" dojoType="ingrid:ValidationTextbox" />
+					</span>
 					<div class="inputContainer">
 						<div class="half left">
 							<span class="label"><label for="addressDeleteDataCreationDate" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erstellt am')">Erstellt am</label></span>
@@ -228,7 +272,7 @@ scriptScope.replaceAddress = function() {
 								<table id="addressDeleteDataMDQS" dojoType="ingrid:FilteringTable" minRows="5" headClass="hidden" cellspacing="0" class="filteringTable">
 									<thead>
 										<tr>
-											<th field="name" dataType="String" width="315">Name</th>
+											<th field="title" dataType="String" width="315">Name</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -309,14 +353,8 @@ scriptScope.replaceAddress = function() {
 			<div id="addressNewData" class="inputContainer">
 				<div class="inputContainer field grey noSpaceBelow h220">
 					<div class="inputContainer spaceBelow">
-						<div class="half left">
-							<span class="label"><label for="addressNewDataLastname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Nachname')">Nachname</label></span>
-							<span class="input"><input type="text" id="addressNewDataLastname" name="addressNewDataLastname" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-						</div>
-						<div class="half">
-							<span class="label"><label for="addressNewDataFirstname" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname</label></span>
-							<span class="input"><input type="text" id="addressNewDataFirstname" name="addressNewDataFirstname" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-						</div>
+						<span class="label"><label for="addressNewDataTitle" onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')">Titel</label></span>
+						<span class="input"><input type="text" id="addressNewDataTitle" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 						<div class="fill"></div>
 					</div>
 					<div class="inputContainer spaceBelow">
@@ -334,7 +372,7 @@ scriptScope.replaceAddress = function() {
 								<table id="addressNewDataMDQS" dojoType="ingrid:FilteringTable" minRows="5" headClass="hidden" cellspacing="0" class="filteringTable">
 									<thead>
 										<tr>
-											<th field="name" dataType="String" width="315">Name</th>
+											<th field="title" dataType="String" width="315">Name</th>
 										</tr>
 									</thead>
 									<tbody>
