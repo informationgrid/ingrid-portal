@@ -117,24 +117,6 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 				for (Provider provider : iPlugProvider) {
 					if (!allProviderInDB.contains(provider.getShortName()) && !exclude.contains(provider.getShortName())) {
 						missingProvider.add(provider);
-						/*
-						// ==========================
-						Metadata metadata = BusClient.instance().getBus().getMetadata(hits[i].getPlugId());
-						
-						if (metadata != null) {
-							IPlugOperator plugOperator = (IPlugOperator) metadata.getMetadata(AbstractIPlugOperatorInjector.IPLUG_OPERATOR);
-						
-							// if more data could be found then get the missing long name
-							if (plugOperator != null) {
-								List<Partner> allPartner = plugOperator.getPartners();
-								for (Partner partner: allPartner) {
-									String providerLongName = partner.getProvider(provider).getDisplayName();
-									log.debug(" Long: " + providerLongName);
-								}
-							}
-						}
-						// ==========================
-					 */
 					}
 				}
 				if (!missingProvider.isEmpty()) {
@@ -233,17 +215,16 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 		if (!missingProvider.isEmpty()) {
 			String newLine = NEW_LINE_PLAIN;
 			
-			//errorMessage += newLine;
 			errorMessage += "iPlug-Name: " + plugDesc.getDataSourceName() + newLine;
 			errorMessage += "Ansprechpartner: " + plugDesc.getPersonSureName() + " " + plugDesc.getPersonName() + newLine;
 			errorMessage += "Email: " + plugDesc.getPersonMail() + newLine;
 			errorMessage += "iPlug-ID: " + plugDesc.getPlugId() + newLine;
 			errorMessage += "Fehlende Anbieter: ";
 			for (Provider p : missingProvider) {
-				errorMessage += p.getShortName() + ",";
+				errorMessage += p.getShortName() + ", ";
 			}
-			// remove trailing ','
-			errorMessage = errorMessage.substring(0, errorMessage.length()-1);
+			// remove trailing ', '
+			errorMessage = errorMessage.substring(0, errorMessage.length()-2);
 			errorMessage += newLine + newLine;
 		}
 		

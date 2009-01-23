@@ -72,7 +72,9 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 			IngridQuery q = QueryStringParser.parse(query);
 			
 			startTimer();
-			IngridHits hits = BusClient.instance().getBus().search(q, 10, 1, 0, timeout);
+			// TODO AW: direct bus communication (NOT via IBUSInterfaceImpl!) or not?
+//			IngridHits hits = BusClient.instance().getBus().search(q, 10, 1, 0, timeout);
+			IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 0, timeout);
 			computeTime(dataMap, stopTimer());
 			
 			if (hits.length() == 0) {

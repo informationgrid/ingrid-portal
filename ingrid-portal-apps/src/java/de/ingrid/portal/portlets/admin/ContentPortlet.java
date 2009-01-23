@@ -424,7 +424,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             } else if (request.getParameter(PARAMV_ACTION_DB_DO_CLEAR) != null) {
             	deleteAllContentOfATable();
             	
-    	        // TODO: name of "RSSFetcher Job" and Group are hard coded
+    	        // TODO AW: name of "RSSFetcher Job" and Group are hard coded
             	IngridMonitorFacade monitor = IngridMonitorFacade.instance();
             	monitor.triggerJob("RSSFetcherJob", "DEFAULT");  
             }

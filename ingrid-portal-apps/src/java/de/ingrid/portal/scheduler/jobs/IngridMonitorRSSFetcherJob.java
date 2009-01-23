@@ -80,7 +80,7 @@ public class IngridMonitorRSSFetcherJob extends IngridMonitorAbstractJob {
 			else
 				return;
             
-			// TODO: is the job executing right now?
+			// TODO AW: is the job executing right now?
 			IngridMonitorFacade monitor = IngridMonitorFacade.instance();
 			if (!monitor.isExecuting("RSSFetcherJob", "DEFAULT", context)) {
 				// if it's the first start

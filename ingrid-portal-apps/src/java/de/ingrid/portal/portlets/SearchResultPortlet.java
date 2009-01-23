@@ -199,6 +199,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         // IngridQuery from state  (set in SimpleSearch Portlet)
         IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
         
+        // FIXME AW: set caching option here!?
+        
         // change datasource dependent from query input
         selectedDS = UtilsSearch.determineFinalPortalDatasource(selectedDS, query);
 
@@ -558,6 +560,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             }
         }
 
+        // FIXME AW: reset caching option here!?
+        
         context.put("rankedPageSelector", rankedPageNavigation);
         context.put("unrankedPageSelector", unrankedPageNavigation);
         context.put("rankedResultList", rankedHits);

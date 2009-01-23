@@ -431,7 +431,7 @@ public class IngridJobHandler {
 			
 			// add specific data to the dataMap
 			jobDetail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_QUERY,
-					"wasser iplugs:\"" + iPlug.getProxyServiceURL() + "\" ranking:any" + "\" cache:off");
+					"wasser iplugs:\"" + iPlug.getProxyServiceURL() + "\" ranking:any cache:off");
 			jobDetail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE,
 					IngridMonitorIPlugJob.COMPONENT_TYPE);
 			
