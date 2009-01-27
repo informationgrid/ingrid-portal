@@ -22,7 +22,7 @@ var importServiceCallback = {
 	preHook: showLoadingZone,
 	postHook: hideLoadingZone,
 	callback: function(res){
-		setTimeout("refreshImportProcessInfo()", 3000);
+		refreshImportProcessInfo();
 	},
 	errorHandler: function(msg, err) {
 		dojo.debugShallow(err);
