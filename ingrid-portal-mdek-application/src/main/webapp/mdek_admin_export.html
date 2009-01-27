@@ -10,7 +10,7 @@ var currentSelectedNode = null;
 // If we run into a timeout the job is still running and we simply refresh the process info
 // If we detect that the user has running jobs, display an error message that the job could not be started
 var exportServiceCallback = {
-	timeout: 3000,
+	timeout: 5000,
 	preHook: showLoadingZone,
 	postHook: hideLoadingZone,
 	callback: function(res){

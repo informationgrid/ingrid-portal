@@ -5,7 +5,15 @@
 var scriptScope = this;
 
 scriptScope.startUrlsJob = function() {
-	dojo.debug("Function not implemented yet.");
+	CatalogManagementService.startUrlValidatorJob({
+		callback: function() {
+			setTimeout("refreshUrlProcessInfo();", 3000);
+		},
+		errorHandler: function(msg, err) {
+			dojo.debug("Error: "+msg);
+			dojo.debugShallow(err);
+		}
+	});
 }
 
 scriptScope.cancelUrlsJob = function() {
@@ -18,6 +26,19 @@ scriptScope.replaceUrl = function() {
 
 scriptScope.saveChanges = function() {
 	dojo.debug("Function not implemented yet.");
+}
+
+refreshUrlProcessInfo = function() {
+	CatalogManagementService.getUrlValidatorInfo({
+		callback: function(res) {
+			dojo.debugShallow(res);
+			setTimeout("refreshUrlProcessInfo();", 3000);
+		},
+		errorHandler: function(msg, err) {
+			dojo.debug("Error: "+msg);
+			dojo.debugShallow(err);
+		}
+	});
 }
 
 </script>

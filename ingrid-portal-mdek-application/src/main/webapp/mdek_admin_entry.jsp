@@ -9,6 +9,7 @@
 <script src='/ingrid-portal-mdek-application/dwr/interface/AddressService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/BackendService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/CatalogService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/CatalogManagementService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/ExportService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/HelpService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/ImportService.js'></script>

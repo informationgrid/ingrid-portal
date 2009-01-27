@@ -127,12 +127,17 @@ function startTreeImport() {
 }
 
 scriptScope.startImport = function() {
-
-	if (dojo.byId("importFile").value) {
+	if (dojo.byId("importFile").value && validImportNodesSelected()) {
 		startTreeImport();
 	} else {
-		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie die Importdatei, einen &uuml;bergeordneten Datensatz und eine Auskunftsadresse aus bevor Sie den Importvorgang starten.", dialog.WARNING);
+		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie die Importdatei, ein &uuml;bergeordnetes Objekte und eine &uuml;bergeordnete Institution aus bevor Sie den Importvorgang starten.", dialog.WARNING);
 	}
+}
+
+function validImportNodesSelected() {
+	return (importTreeSelectedParentDataset != null
+			&& importTreeSelectedParentDataset.uuid != "objectRoot"
+			&& importTreeSelectedParentAddress != null);
 }
 
 scriptScope.cancelImport = function() {
@@ -157,8 +162,6 @@ function initTree() {
 				rootNode.uuid = rootNode.id;
 				rootNode.id = null;
 			});
-
-			var clonedRootNodeList = cloneObject(rootNodeList);
 
 			importTree.setChildren(rootNodeList);
 	});
@@ -282,22 +285,6 @@ function showLoadingZone() {
 
 function hideLoadingZone() {
     dojo.html.setVisibility(dojo.byId("importLoadingZone"), "hidden");
-}
-
-// clone an object or array and all it's contents.
-// An array containing only primitive types (no objects) can also be cloned with array.slice(0).
-function cloneObject(obj) {
-	var newObj = (obj instanceof Array) ? [] : {};
-
-	for (i in obj) {
-		if (obj[i] && typeof obj[i] == "object") {
-			newObj[i] = cloneObject(obj[i]);
-
-		} else {
-			newObj[i] = obj[i];
-		}
-	}
-	return newObj;
 }
 
 </script>

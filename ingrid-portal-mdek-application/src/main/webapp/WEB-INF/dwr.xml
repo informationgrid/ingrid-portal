@@ -12,6 +12,9 @@
 		<create creator="spring" javascript="CatalogService">
 			<param name="beanName" value="catalogService" />
 		</create>
+		<create creator="spring" javascript="CatalogManagementService">
+			<param name="beanName" value="catalogManagementService" />
+		</create>
 		<create creator="spring" javascript="GetCapabilitiesService">
 			<param name="beanName" value="getCapabilitiesService" />
 		</create>

@@ -101,6 +101,13 @@
 			<ref local="catalogRequestHandler" />
 		</property>
 	</bean>
+	<bean id="catalogManagementService"
+		class="de.ingrid.mdek.dwr.services.CatalogManagementServiceImpl">
+		<property name="mdekJobHandler">
+			<ref local="mdekJobHandler" />
+		</property>
+	</bean>
+
 	<bean id="exportService"
 		class="de.ingrid.mdek.dwr.services.ExportServiceImpl">
 		<property name="catalogRequestHandler">
@@ -186,6 +193,17 @@
 		</property>
 	</bean>
 
+<!-- Mdek/Quartz Job handler -->
+	<bean id="mdekJobHandler"
+		class="de.ingrid.mdek.quartz.MdekJobHandler">
+		<property name="scheduler">
+			<ref local="scheduler" />
+		</property>
+		<property name="connectionFacade">
+			<ref local="connectionFacade" />
+		</property>
+	</bean>
+
 <!-- Connection Facade -->
 	<bean id="connectionFacade"
 		class="de.ingrid.mdek.handler.ConnectionFacadeImpl">
@@ -195,7 +213,6 @@
 
 <!-- Quartz Beans -->
 	<!-- Jobs -->
-<!--
 	<bean name="checkForExpiredDatasetsJob" class="org.springframework.scheduling.quartz.JobDetailBean">
 		<property name="jobClass" value="de.ingrid.mdek.quartz.jobs.CheckForExpiredDatasetsJob" />
 		<property name="jobDataAsMap">
@@ -207,23 +224,20 @@
 			</map>
 	  </property>
 	</bean>
- -->
+
 	<!-- Trigger -->
-<!--
 	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
 		<property name="jobDetail" ref="checkForExpiredDatasetsJob" />
 		<property name="startDelay" value="10000" />
 		<property name="repeatInterval" value="600000" />
 	</bean>
--->
 	<!-- Scheduler Factory -->
-<!--
-	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+
+	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
 				<ref bean="simpleTrigger" />
 			</list>
 		</property>
 	</bean>
- -->
  </beans>
