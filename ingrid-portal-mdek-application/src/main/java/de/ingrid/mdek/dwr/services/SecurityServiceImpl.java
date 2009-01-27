@@ -1,32 +1,23 @@
 package de.ingrid.mdek.dwr.services;
 
-import java.security.Permissions;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
-import java.util.prefs.Preferences;
 
 import javax.security.auth.Subject;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.jetspeed.CommonPortletServices;
-import org.apache.jetspeed.security.PermissionManager;
-import org.apache.jetspeed.security.Role;
 import org.apache.jetspeed.security.RoleManager;
-import org.apache.jetspeed.security.UserManager;
-import org.apache.jetspeed.security.UserPrincipal;
 import org.apache.jetspeed.security.SecurityException;
+import org.apache.jetspeed.security.UserManager;
 import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 
-import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.security.Group;
 import de.ingrid.mdek.beans.security.User;
 import de.ingrid.mdek.handler.SecurityRequestHandler;
@@ -34,7 +25,6 @@ import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
-import de.ingrid.portal.security.util.SecurityHelper;
 
 public class SecurityServiceImpl {
 
@@ -258,78 +248,6 @@ public class SecurityServiceImpl {
 	public void setSecurityRequestHandler(
 			SecurityRequestHandler securityRequestHandler) {
 		this.securityRequestHandler = securityRequestHandler;
-	}
-
-	public void testSecurity() {
-		WebContext wctx = WebContextFactory.get();
-		HttpSession session = wctx.getSession();
-		log.debug("HTTPSession ID:"+session.getId());
-
-/*
-		Enumeration e = session.getAttributeNames();
-		log.debug("HTTPSession Attributes:");
-		while (e.hasMoreElements()) {
-			String attrib = (String) e.nextElement();
-			log.debug(attrib+" - "+session.getAttribute(attrib));
-		}
-*/
-
-		ServletContext ctx = session.getServletContext().getContext("/ingrid-portal-mdek");
-		Enumeration e = ctx.getAttributeNames();
-		log.debug("ServletContext (ingrid-portal-apps) Attributes:");
-		while (e.hasMoreElements()) {
-			String attrib = (String) e.nextElement();
-			log.debug(attrib+" - "+ctx.getAttribute(attrib));
-		}
-
-		try {
-			UserManager userManager = (UserManager) ctx.getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
-			RoleManager roleManager = (RoleManager) ctx.getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
-			PermissionManager permissionManager = (PermissionManager) ctx.getAttribute(CommonPortletServices.CPS_PERMISSION_MANAGER);
-
-			Iterator<org.apache.jetspeed.security.User> users = userManager.getUsers("");
-			while (users.hasNext()) {
-				org.apache.jetspeed.security.User user = users.next();
-				Preferences pref = user.getUserAttributes();
-
-				Principal userPrincipal = getPrincipal(user.getSubject(), UserPrincipal.class);
-	            Permissions userPermissions = SecurityHelper.getMergedPermissions(userPrincipal, permissionManager, roleManager);
-
-	            // get the user roles
-	            Collection<Role> userRoles = roleManager.getRolesForUser(userPrincipal.getName());
-
-				log.debug("User Preferences for "+userPrincipal.getName()+":");
-				for (String key : pref.keys()) {
-					log.debug(key+" - "+pref.get(key, ""));
-				}
-
-	            String roleString = "";
-                Iterator<Role> it = userRoles.iterator();
-                while (it.hasNext()) {
-                    Role r = it.next();
-                    roleString = roleString.concat(r.getPrincipal().getName());
-                    if (it.hasNext()) {
-                        roleString = roleString.concat(", ");
-                    }
-                }
-                log.debug("User roles: "+roleString);
-			}
-
-			HttpServletRequest req = wctx.getHttpServletRequest();
-			log.debug("Remote user: "+req.getRemoteUser());
-			if (req.getUserPrincipal() != null)
-				log.debug("User Principal: "+req.getUserPrincipal().getName());
-
-			e = req.getAttributeNames();
-			log.debug("HttpServletRequest Attributes:");
-			while (e.hasMoreElements()) {
-				String attrib = (String) e.nextElement();
-				log.debug(attrib+" - "+req.getAttribute(attrib));
-			}
-
-		} catch (Exception err) {
-			log.error("Exception: ", err);
-		}
 	}
 
 	private void addRoleToUser(String userName, String role) throws SecurityException {

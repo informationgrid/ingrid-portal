@@ -188,11 +188,6 @@ function updateGroup(group, newData) {
 }
 
 
-testSecurity = function() {
-	SecurityService.testSecurity();
-}
-
-
 </script>
 </head>
 
@@ -225,11 +220,6 @@ testSecurity = function() {
 	<button dojoType="Button" onclick="javascript:createCatalogAdmin();">Create Catalog Administrator</button>
 	<button dojoType="Button" onclick="javascript:getCatalogAdmin();">Get Catalog Administrator</button>
 	<button dojoType="Button" onclick="javascript:deleteCatalogAdmin();">Delete Catalog Administrator</button>
-
-<!-- 
-	<h1>Misc test</h1>
-	<button dojoType="Button" onclick="javascript:testSecurity();">Test</button>
- -->
 
 	<table id="catAdminTable" valueField="id" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y %H:%m:%S" minRows="1" cellspacing="0" class="filteringTable interactive readonly">
 		<thead>
