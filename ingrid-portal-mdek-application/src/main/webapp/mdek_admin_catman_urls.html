@@ -4,10 +4,21 @@
 <script type="text/javascript">
 var scriptScope = this;
 
+_container_.addOnLoad(function() {
+	var filterTable = dojo.widget.byId("urlListTable2");
+	filterTable.setFilter("errorCode", function(errorCode) { return ("VALID" != errorCode); });
+
+	var def = getUrlValidatorJobResultDef();
+	def.addCallback(updateUrlTables);
+
+	setTimeout("refreshUrlProcessInfo();", 3000);
+});
+
+
 scriptScope.startUrlsJob = function() {
 	CatalogManagementService.startUrlValidatorJob({
 		callback: function() {
-			setTimeout("refreshUrlProcessInfo();", 3000);
+			setTimeout("refreshUrlProcessInfo();", 2000);
 		},
 		errorHandler: function(msg, err) {
 			dojo.debug("Error: "+msg);
@@ -17,7 +28,12 @@ scriptScope.startUrlsJob = function() {
 }
 
 scriptScope.cancelUrlsJob = function() {
-	dojo.debug("Function not implemented yet.");
+	CatalogManagementService.stopUrlValidatorJob({
+		errorHandler: function(msg, err) {
+			dojo.debug("Error: "+msg);
+			dojo.debugShallow(err);
+		}
+	});
 }
 
 scriptScope.replaceUrl = function() {
@@ -29,16 +45,100 @@ scriptScope.saveChanges = function() {
 }
 
 refreshUrlProcessInfo = function() {
-	CatalogManagementService.getUrlValidatorInfo({
-		callback: function(res) {
-			dojo.debugShallow(res);
+	CatalogManagementService.getUrlValidatorJobInfo({
+		callback: function(jobInfo) {
+			updateUrlJobInfo(jobInfo);
+			if (!jobFinished(jobInfo)) {
+				setTimeout("refreshUrlProcessInfo();", 3000);
+			}
+		},
+		errorHandler: function(msg, err) {
+			dojo.debug("Error: "+msg);
+			// If there's a timeout try again
 			setTimeout("refreshUrlProcessInfo();", 3000);
+		}
+	});
+}
+
+function jobFinished(jobInfo) {
+	return (jobInfo.startTime == null);
+}
+
+function updateUrlJobInfo(jobInfo) {
+	if (jobFinished(jobInfo)) {
+		dojo.byId("urlsInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
+		dojo.html.hide(dojo.byId("urlsProgressBarContainer"));
+		dojo.html.hide(dojo.byId("cancelUrlsProcessButton"));
+
+		if (jobInfo.endTime) {
+			dojo.html.show(dojo.byId("urlsInfoEndDateContainer"));
+			dojo.html.show(dojo.byId("urlsInfoNumProcessedUrlsContainer"));
+			dojo.byId("urlsInfoNumProcessedUrls").innerHTML = jobInfo.numProcessedEntities;
+
+		} else {
+			// No job has been started yet
+			dojo.html.hide(dojo.byId("urlsInfoEndDateContainer"));
+			dojo.html.hide(dojo.byId("urlsInfoNumProcessedUrlsContainer"));
+			dojo.byId("urlsInfoNumProcessedUrls").innerHTML = "";
+		}
+	} else {
+		dojo.byId("urlsInfoTitle").innerHTML = "Informationen zum laufenden Prozess:";
+		dojo.html.hide(dojo.byId("urlsInfoEndDateContainer"));
+		dojo.html.show(dojo.byId("cancelUrlsProcessButton"));
+		dojo.html.show(dojo.byId("urlsInfoNumProcessedUrlsContainer"));
+		dojo.html.show(dojo.byId("urlsProgressBarContainer"));
+		dojo.byId("urlsInfoNumProcessedUrls").innerHTML = jobInfo.numProcessedEntities + " / " + jobInfo.numEntities;
+
+		var progressBar = dojo.widget.byId("urlsProgressBar");
+		progressBar.setMaxProgressValue(jobInfo.numEntities);
+		progressBar.setProgressValue(jobInfo.numProcessedEntities);
+	}
+
+	if (jobInfo.startTime) {
+		dojo.byId("urlsInfoBeginDate").innerHTML = jobInfo.startTime.toLocaleString();
+	} else {
+		dojo.byId("urlsInfoBeginDate").innerHTML = "";
+	}
+
+	if (jobInfo.endTime) {
+		dojo.byId("urlsInfoBeginDate").innerHTML = jobInfo.endTime.toLocaleString();
+	} else {
+		dojo.byId("urlsInfoBeginDate").innerHTML = "";
+	}
+}
+
+
+function getUrlValidatorJobResultDef() {
+	var def = new dojo.Deferred();
+
+	CatalogManagementService.getUrlValidatorJobResult({
+		callback: function(urlObjectReferenceList) {
+			def.callback(urlObjectReferenceList);
 		},
 		errorHandler: function(msg, err) {
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
+			def.errback();
 		}
 	});
+	return def;
+}
+
+function updateUrlTables(urlObjectReferenceList) {
+	for (var i = 0; i < urlObjectReferenceList.length; ++i) {
+		urlObjectReferenceList[i].Id = i;
+		addUrlTableInfo(urlObjectReferenceList[i]);
+	}
+
+	dojo.widget.byId("urlListTable1").store.setData(urlObjectReferenceList);
+	dojo.widget.byId("urlListTable2").store.setData(urlObjectReferenceList);
+	dojo.widget.byId("urlListTable2").applyFilters();
+	dojo.widget.byId("urlListTable2").render();
+}
+
+function addUrlTableInfo(urlObjectReference) {
+	urlObjectReference.url = urlObjectReference.urlState.url;
+	urlObjectReference.errorCode = urlObjectReference.urlState.state;
 }
 
 </script>
@@ -61,31 +161,29 @@ refreshUrlProcessInfo = function() {
 			</div>
 
 			<div class="inputContainer noSpaceBelow">
-				<div id="urlsInfo" class="infobox w950">
-					<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
-					<span class="title"><a href="javascript:toggleInfo('urlsInfo');" title="Info aufklappen">Informationen zum letzten Prozess:
-						<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
-					<span class="processInfo">Der Prozess wird momentan ausgef&uuml;hrt. <a href="#" title="Hilfe">Hilfe</a>?<img src="img/ladekreis.gif" width="20" height="20" alt="Prozess l&auml;uft" /></span>
-					<div id="urlsInfoContent">
+				<div id="urlsProcessInfo" class="infobox w941">
+					<span class="icon"><img src="img/ic_info_download.gif" width="16" height="16" alt="Info" /></span>
+					<span id="urlsInfoTitle" class="title">Informationen zum letzten Prozess:</span>
+					<div id="urlsProcessInfoContent">
 						<table cellspacing="0">
 							<tr>
 								<td>Gestartet am:</td>
-								<td>13.2.2007, 00:02 Uhr</td></tr>
-								<tr><td>Beendet am:</td>
-								<td>Noch nicht beendet</td></tr>
-								<tr><td>Anzahl Objekte:</td>
-								<td>132110</td></tr>
-								<tr><td>Anzahl Adressen:</td>
-								<td>10</td></tr>
+								<td id="urlsInfoBeginDate"></td></tr>
+								<tr><td id="urlsInfoEndDateContainer">Beendet am:</td>
+								<td id="urlsInfoEndDate"></td></tr>
+								<tr><td id="urlsInfoNumProcessedUrlsContainer">Anzahl Datens&auml;tze:</td>
+								<td id="urlsInfoNumProcessedUrls"></td></tr>
+								<tr><td id="urlsProgressBarContainer" colspan=2><div dojoType="ProgressBar" id="urlsProgressBar" width="310" height="10" /></td></tr>
 						</table>
 						<span id="cancelUrlsProcessButton" class="button" style="height:20px !important;">
 							<span style="float:right;">
 								<button dojoType="ingrid:Button" title="Prozess abbrechen" onClick="javascript:scriptScope.cancelUrlsJob();">Prozess abbrechen</button>
 							</span>
 						</span>
-					</div>
-				</div>
-			</div> <!-- INFO END -->
+					</div> <!-- processInfoContent end -->
+				</div> <!-- processInfo end -->
+			</div> <!-- inputContainer end -->
+
 
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div id="urlListContainer" class="inputContainer noSpaceBelow">
@@ -93,104 +191,40 @@ refreshUrlProcessInfo = function() {
 				<div id="urlLists" dojoType="ingrid:TabContainer" class="w964" style="height:555px" selectedChild="urlList1">
 
 					<!-- TAB 1 START -->
-					<div id="urlList1" dojoType="ContentPane" class="blueTopBorder" label="Alle URLs">
+					<div id="urlList1" dojoType="ContentPane" label="Alle URLs">
 						<div class="inputContainer w964 noSpaceBelow">
-
-							<div class="listInfo w964">
-								<span class="searchResultsInfo">1-20 von 240</span>
-								<span class="searchResultsPaging">(Seite 1 von 24)
-								<em>1</em>
-									<a href="#" title="Seite 2">2</a>
-									<a href="#" title="Seite 3">3</a>
-									<a href="#" title="Seite 4">4</a>
-									<a href="#" title="weiter">></a>
-								</span>
-								<div class="fill"></div>
-							</div>
-
 							<table id="urlListTable1" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable interactive w964 relativePos" customContextMenu="true">
 								<thead>
 									<tr>
-										<th field="error" dataType="String" width="100" noSort="true">Fehler</th>
-										<th field="type" dataType="String" width="30" noSort="true"></th>
-										<th field="name" dataType="String" width="361" noSort="true">Name des Objekts</th>
-										<th field="url" dataType="String" width="250" noSort="true" sort="asc">URL</th>
-										<th field="description" dataType="String" width="223" noSort="true">Beschreibung</th>
+										<th field="errorCode" dataType="String" width="100">Fehler</th>
+										<th field="objectClass" dataType="String" width="30"></th>
+										<th field="objectName" dataType="String" width="361">Name des Objekts</th>
+										<th field="url" dataType="String" width="250" sort="asc">URL</th>
+										<th field="urlReferenceDescription" dataType="String" width="223">Beschreibung</th>
 									</tr>
 								</thead>
-							<tbody>
-								<tr value="1">
-									<td>404</td>
-									<td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="Geoinformation / Karte" /></td>
-									<td>Wasserschutzgebiete (G&Ouml;)</td>
-									<td><a href="http://www.hannover.niedersachsen.de" title="http://www.hannover.niedersachsen.de">http://www.hannover.niedersachsen.de</a></td>
-									<td>Wasserschutzgebiete</td></tr>
-							</tbody>
-						</table>
-
-							<div class="listInfo w964 noSpaceBelow">
-								<span class="searchResultsInfo">1-20 von 240</span>
-								<span class="searchResultsPaging">(Seite 1 von 24)
-								<em>1</em>
-									<a href="#" title="Seite 2">2</a>
-									<a href="#" title="Seite 3">3</a>
-									<a href="#" title="Seite 4">4</a>
-									<a href="#" title="weiter">></a>
-								</span>
-								<div class="fill"></div>
-							</div>
-
+								<tbody>
+								</tbody>
+							</table>
 						</div>
 					</div> <!-- TAB 1 END -->
         		
 					<!-- TAB 2 START -->
-					<div id="urlList2" dojoType="ContentPane" class="blueTopBorder" label="Nur fehlerhafte URLs">
+					<div id="urlList2" dojoType="ContentPane" label="Nur fehlerhafte URLs">
 						<div class="inputContainer w964 noSpaceBelow">
-
-							<div class="listInfo w964">
-								<span class="searchResultsInfo">1-20 von 240</span>
-								<span class="searchResultsPaging">(Seite 1 von 24)
-								<em>1</em>
-									<a href="#" title="Seite 2">2</a>
-									<a href="#" title="Seite 3">3</a>
-									<a href="#" title="Seite 4">4</a>
-									<a href="#" title="weiter">></a>
-								</span>
-								<div class="fill"></div>
-							</div>
-
 							<table id="urlListTable2" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable interactive w964 relativePos">
 								<thead>
 									<tr>
-										<th field="error" dataType="String" width="100" noSort="true">Fehler</th>
-										<th field="type" dataType="String" width="30" noSort="true"></th>
-										<th field="name" dataType="String" width="361" noSort="true">Name des Objekts</th>
+										<th field="errorCode" dataType="String" width="100" noSort="true">Fehler</th>
+										<th field="objectClass" dataType="String" width="30" noSort="true"></th>
+										<th field="objectName" dataType="String" width="361" noSort="true">Name des Objekts</th>
 										<th field="url" dataType="String" width="250" noSort="true" sort="asc">URL</th>
-										<th field="description" dataType="String" width="223" noSort="true">Beschreibung</th>
+										<th field="urlReferenceDescription" dataType="String" width="223" noSort="true">Beschreibung</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr value="1">
-										<td>404</td>
-										<td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="Geoinformation / Karte" /></td>
-										<td>Wasserschutzgebiete (G&Ouml;)</td>
-										<td><a href="http://www.hannover.niedersachsen.de" title="http://www.hannover.niedersachsen.de">http://www.hannover.niedersachsen.de</a></td>
-										<td>Wasserschutzgebiete</td></tr>
 								</tbody>
 							</table>
-
-							<div class="listInfo w964 noSpaceBelow">
-								<span class="searchResultsInfo">1-20 von 240</span>
-								<span class="searchResultsPaging">(Seite 1 von 24)
-								<em>1</em>
-									<a href="#" title="Seite 2">2</a>
-									<a href="#" title="Seite 3">3</a>
-									<a href="#" title="Seite 4">4</a>
-									<a href="#" title="weiter">></a>
-								</span>
-								<div class="fill"></div>
-							</div>
-
 						</div>
 					</div> <!-- TAB 2 END -->
 				</div>

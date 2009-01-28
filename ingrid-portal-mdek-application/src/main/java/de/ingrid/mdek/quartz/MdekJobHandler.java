@@ -1,7 +1,9 @@
 package de.ingrid.mdek.quartz;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.quartz.Scheduler;
@@ -11,6 +13,8 @@ import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.jobs.MdekJob;
 import de.ingrid.mdek.quartz.jobs.URLValidatorJob;
+import de.ingrid.mdek.quartz.jobs.util.URLObjectReference;
+import de.ingrid.mdek.quartz.jobs.util.URLState.State;
 
 public class MdekJobHandler {
 
@@ -76,5 +80,22 @@ public class MdekJobHandler {
 		} else {
 			log.debug("Could not stop URL Validation job. It probably is not running.");
 		}
+	}
+
+	public List<URLObjectReference> getUrlValidatorJobResult() {
+		// TODO Implement
+		URLValidatorJob job = new URLValidatorJob(connectionFacade.getMdekCallerQuery(), connectionFacade.getCurrentPlugId());
+		
+		List<URLObjectReference> urlObjectReferences = job.fetchUrls();
+		Random r = new Random();
+		for (URLObjectReference urlObjectReference : urlObjectReferences) {
+			urlObjectReference.getUrlState().setState(getRandomState(r));
+			urlObjectReference.getUrlState().setResponseCode(r.nextInt(1000));
+		}
+		return urlObjectReferences;
+	}
+
+	private State getRandomState(Random r) {
+		return State.values()[r.nextInt(4) + 1];
 	}
 }

@@ -101,7 +101,8 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 	}
 
 
-	private List<URLObjectReference> fetchUrls() {
+	// TODO Change to private
+	public List<URLObjectReference> fetchUrls() {
 		List<URLObjectReference> resultList = new ArrayList<URLObjectReference>();
 
 		// Fetch all URLs for objects that are published and not modified (objIdPub = objId)
