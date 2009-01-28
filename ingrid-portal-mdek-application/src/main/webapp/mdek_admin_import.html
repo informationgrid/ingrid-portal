@@ -210,9 +210,10 @@ refreshImportProcessInfo = function() {
 				setTimeout("refreshImportProcessInfo()", 2000);
 			}
 		},
-		timeout: 5000,
 		errorHandler: function(message, err) {
 			dojo.debug("Error: "+ message);
+			// If there's a timeout try again
+			setTimeout("refreshImportProcessInfo()", 2000);
 		}
 	});
 }
