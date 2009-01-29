@@ -37,11 +37,29 @@ scriptScope.cancelUrlsJob = function() {
 }
 
 scriptScope.replaceUrl = function() {
-	dojo.debug("Function not implemented yet.");
+	var urlTable = getCurrentTable();
+	var selectedData = urlTable.getSelectedData();
+	dojo.debug("selected references:");
+	for (var i = 0; i < selectedData.length; ++i) {
+		dojo.debug(selectedData[i].objectUuid+" - "+selectedData[i].objectName);
+	}
+	dojo.debug("replace url:");
+	dojo.debug(dojo.widget.byId("urlReplace").getValue());
+	// TODO send data to backend
 }
 
-scriptScope.saveChanges = function() {
-	dojo.debug("Function not implemented yet.");
+function getCurrentTable() {
+	var currentTab = dojo.widget.byId("urlLists").selectedChild;
+	if (currentTab == "urlList1") {
+		return dojo.widget.byId("urlListTable1");
+
+	} else if (currentTab == "urlList2") {
+		return dojo.widget.byId("urlListTable2");
+
+	} else {
+		dojo.debug("unknown tab selected: '"+currentTab+"'");
+		return null;
+	}
 }
 
 refreshUrlProcessInfo = function() {
@@ -101,9 +119,9 @@ function updateUrlJobInfo(jobInfo) {
 	}
 
 	if (jobInfo.endTime) {
-		dojo.byId("urlsInfoBeginDate").innerHTML = jobInfo.endTime.toLocaleString();
+		dojo.byId("urlsInfoEndDate").innerHTML = jobInfo.endTime.toLocaleString();
 	} else {
-		dojo.byId("urlsInfoBeginDate").innerHTML = "";
+		dojo.byId("urlsInfoEndDate").innerHTML = "";
 	}
 }
 
@@ -125,6 +143,7 @@ function getUrlValidatorJobResultDef() {
 }
 
 function updateUrlTables(urlObjectReferenceList) {
+	UtilList.addIcons(urlObjectReferenceList);
 	for (var i = 0; i < urlObjectReferenceList.length; ++i) {
 		urlObjectReferenceList[i].Id = i;
 		addUrlTableInfo(urlObjectReferenceList[i]);
@@ -138,7 +157,11 @@ function updateUrlTables(urlObjectReferenceList) {
 
 function addUrlTableInfo(urlObjectReference) {
 	urlObjectReference.url = urlObjectReference.urlState.url;
-	urlObjectReference.errorCode = urlObjectReference.urlState.state;
+	if (urlObjectReference.urlState.state == "HTTP_ERROR") {
+		urlObjectReference.errorCode = urlObjectReference.urlState.state + "("+urlObjectReference.urlState.responseCode+")";
+	} else {
+		urlObjectReference.errorCode = urlObjectReference.urlState.state;
+	}
 }
 
 </script>
@@ -197,7 +220,7 @@ function addUrlTableInfo(urlObjectReference) {
 								<thead>
 									<tr>
 										<th field="errorCode" dataType="String" width="100">Fehler</th>
-										<th field="objectClass" dataType="String" width="30"></th>
+										<th field="icon" dataType="String" width="30"></th>
 										<th field="objectName" dataType="String" width="361">Name des Objekts</th>
 										<th field="url" dataType="String" width="250" sort="asc">URL</th>
 										<th field="urlReferenceDescription" dataType="String" width="223">Beschreibung</th>
@@ -239,17 +262,6 @@ function addUrlTableInfo(urlObjectReference) {
 				</span>
 				<div class="fill"></div>
 			</div>
-
-			<div class="inputContainer">
-				<span class="button w924" style="height:20px !important;">
-					<span style="float:right;">
-						<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveChanges();">&Auml;nderung speichern</button>
-					</span>
-					<span id="updateUrlsLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
-						<img src="img/ladekreis.gif" />
-					</span>
-				</span>
-			</div> <!-- LEFT HAND SIDE CONTENT END -->
 		</div>
 	</div>
 </div> <!-- CONTENT END -->

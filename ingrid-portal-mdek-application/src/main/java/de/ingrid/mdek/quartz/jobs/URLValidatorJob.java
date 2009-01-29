@@ -1,7 +1,6 @@
 package de.ingrid.mdek.quartz.jobs;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +37,7 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 	private static final String JOB_LISTENER_SUFFIX = "_listener";
 	public static final String URL_MAP = "urlMap";
 	public static final String END_TIME = "endTime";
-	public static final int NUM_THREADS = 20;
+	public static final int NUM_THREADS = 10;
 
 	private final String plugId;
 	private final String jobName; 
@@ -143,11 +142,12 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 
 
 	public boolean start(Scheduler scheduler) throws SchedulerException {
+		this.scheduler = scheduler;
+
 		if (!isRunning()) {
 			scheduler.addJob(jobDetail, true);
 			scheduler.addJobListener(jobListener);
 			scheduler.triggerJobWithVolatileTrigger(jobName, Scheduler.DEFAULT_GROUP);
-			this.scheduler = scheduler;
 			return true;
 
 		} else {
@@ -174,7 +174,6 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 			resultFutureList.add(executorService.submit(validator));
 		}
 
-		log.debug("getting results from futures...");
 		for (Future<URLState> future : resultFutureList) {
 			try {
 				if (!cancelJob) {
@@ -229,11 +228,10 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 				}
 			}
 
-			jobInfoResult.setDescription("URL_VALIDATOR");
+			jobInfoResult.setDescription(jobName);
 			jobInfoResult.setNumEntities(totalNumberOfUrls);
 			jobInfoResult.setNumProcessedEntities(numberOfProcessedUrls);
-			jobInfoResult.setStartTime((Date) executionContext.getFireTime());
-			jobInfoResult.setEndTime((Date) executionContext.getMergedJobDataMap().get(URLValidatorJob.END_TIME));
+			jobInfoResult.setStartTime(executionContext.getFireTime());
 
 		} else {
 			// No running job found for the current iplug...

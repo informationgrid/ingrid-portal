@@ -28,6 +28,8 @@ public class URLValidatorJobListener implements JobListener {
 
 	public void jobWasExecuted(JobExecutionContext jobExecutionContext,
 			JobExecutionException jobExecutionException) {
+		// TODO Store result in the backend
+
 		log.debug("job executed successfully. Result:");
 		Map<String, URLState> urlMap = (Map<String, URLState>) jobExecutionContext.getResult();
 		for (Map.Entry<String, URLState> entry : urlMap.entrySet()) {

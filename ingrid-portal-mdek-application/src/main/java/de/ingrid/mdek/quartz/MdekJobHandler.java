@@ -45,9 +45,8 @@ public class MdekJobHandler {
 				log.debug("Could not start URL Validator Job.");
 			}
 
-		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SchedulerException ex) {
+			log.debug("Error starting URL Validator Job.", ex);
 		}
 	}
 
@@ -57,6 +56,7 @@ public class MdekJobHandler {
 			return job.getRunningJobInfo();
 
 		} else {
+			// TODO get result from the backend
 			return new JobInfoBean();
 		}
 	}

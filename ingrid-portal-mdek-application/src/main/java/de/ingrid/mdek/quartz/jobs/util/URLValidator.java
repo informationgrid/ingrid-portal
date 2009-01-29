@@ -38,6 +38,8 @@ public class URLValidator implements Callable<URLState> {
 
 	public URLState call() {
 		URL url = null;
+		log.debug("checking url: "+urlState.getUrl());
+		long startTime = System.currentTimeMillis();
 		try {
 			url = new URL(urlState.getUrl());
 			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -60,6 +62,9 @@ public class URLValidator implements Callable<URLState> {
 		} catch (IOException ex) {
 			urlState.setState(State.HTTP_ERROR);
 		}
+		long endTime = System.currentTimeMillis();
+		log.debug("done after "+(endTime - startTime)+"ms: "+urlState.getUrl());
+		log.debug("returning: "+urlState.getState()+"("+urlState.getResponseCode()+")");
 		return urlState;
 	}
 }
