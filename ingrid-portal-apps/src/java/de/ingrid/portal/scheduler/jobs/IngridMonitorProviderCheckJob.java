@@ -20,7 +20,7 @@ import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import de.ingrid.ibus.client.BusClient;
+import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -196,7 +196,7 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 		IPlugOperator plugOperator 		= null;
 		
 		try {
-			metadata = BusClient.instance().getBus().getMetadata(plugDescripton.getPlugId());
+			metadata = BusClientFactory.createBusClient().getNonCacheableIBus().getMetadata(plugDescripton.getPlugId());
 		} catch (IOException e) {
 			if (log.isDebugEnabled()) {
 				log.debug("Error getting MetaData from bus for iPlug: " + plugDescripton.getPlugId());
@@ -205,6 +205,10 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 			if (log.isDebugEnabled()) {
 				log.debug("Error getting MetaData from bus for iPlug: " + plugDescripton.getPlugId() + 
 					". Does the method exist? (" + e.getLocalizedMessage() + ")");
+			}
+		} catch (Exception e) {
+			if (log.isDebugEnabled()) {
+				log.debug("Error getting MetaData from bus for iPlug: " + plugDescripton.getPlugId());
 			}
 		}
 				
