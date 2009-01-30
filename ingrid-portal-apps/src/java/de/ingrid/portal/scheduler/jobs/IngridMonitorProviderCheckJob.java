@@ -317,7 +317,7 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 	private String writeUpdateSummary( List<Provider> noInfoProvider) {
 		String newLine = NEW_LINE_PLAIN;
 		String summary = newLine + newLine + "-----------------------" + newLine + newLine;
-		summary += "Anbieter, die nicht zur Datenbank hinzugefügt werden konnten: " + newLine;
+		summary += "Anbieter, die nicht zur Datenbank hinzugef\u00FCgt werden konnten: " + newLine;
 		
 		HashSet<String> providerNames = new HashSet<String>();
 
