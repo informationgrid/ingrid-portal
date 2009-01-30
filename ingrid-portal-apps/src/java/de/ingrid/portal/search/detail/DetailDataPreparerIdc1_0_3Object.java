@@ -62,7 +62,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 		HashMap data = new HashMap();
 		HashMap general = new HashMap();
 		general.put("title", record.getString("t01_object.obj_name"));
-		general.put("modTime", UtilsDate.convertDateString(record.getString("t01_object.mod_time").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+		general.put("modTime", UtilsDate.convertDateString(notNull(record.getString("t01_object.mod_time")).trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
 		String objClassStr = record.getString("t01_object.obj_class");
 		if (objClassStr != null) {
 			general.put("udkObjClass", objClassStr);
@@ -498,7 +498,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 	    		HashMap line = new HashMap();
 	        	line.put("type", "textLine");
 	        	String textLine = sysCodeList.getName("502", listRecord.getString("t0113_dataset_reference.type"));
-	        	textLine = textLine.concat(": ").concat(UtilsDate.convertDateString(listRecord.getString("t0113_dataset_reference.reference_date").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+	        	textLine = textLine.concat(": ").concat(UtilsDate.convertDateString(notNull(listRecord.getString("t0113_dataset_reference.reference_date")).trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
 	        	line.put("body", textLine);
 	        	if (!isEmptyLine(line)) {
 	        		lines.add(line);
@@ -1070,6 +1070,9 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     }
 
     private void addCrossReferencedObjects(List elements, String objId) {
+    	if (objId == null) {
+    		return;
+    	}
     	ArrayList<String> referenceList = new ArrayList<String>();
     	ArrayList<IngridHit> result = DetailDataPreparerHelper.getHits("object_reference.obj_from_id:".concat(objId).concat(
         " iplugs:\"").concat(iPlugId).concat("\""), new String[] {Settings.HIT_KEY_OBJ_ID, "object_reference.obj_to_uuid"}, null);
