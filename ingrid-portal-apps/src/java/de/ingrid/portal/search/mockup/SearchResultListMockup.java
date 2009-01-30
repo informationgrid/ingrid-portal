@@ -26,7 +26,7 @@ public class SearchResultListMockup {
             IngridDocument rsr = new IngridDocument();
             rsr.put("title", "BMVEL - Blei und Trinkwasser");
             rsr.put("type", "WEBSITE");
-            rsr.put("abstract", "Problem, Maﬂnahmen, weitere Informationen");
+            rsr.put("abstract", "Problem, Ma\u00dfnahmen, weitere Informationen");
             rsr.put("provider", "Bundesministerium f\u00fcr Verbraucherschutz, Ern\u00e4hrung und Landwirtschaft (BMVEL)");
             rsr.put("source", "Webseiten");
             rsr.put("url", "http://www.verbraucherministerium.de/index-000068C0A9C31E01BB1301A5C0A8E066.html");
