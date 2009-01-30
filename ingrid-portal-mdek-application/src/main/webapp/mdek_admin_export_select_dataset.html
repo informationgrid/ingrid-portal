@@ -54,12 +54,21 @@ function init() {
 		var deferred = new dojo.Deferred();
 
 		deferred.addCallback(function(res) {
+			// Remove all objects from the list which are not published 
+			res = dojo.lang.filter(res, function(obj){
+				return obj.isPublished;
+			});
 			dojo.lang.forEach(res, function(obj){
 				obj.title = dojo.string.escape("html", obj.title);
 				obj.uuid = obj.id;
 				obj.id = null;
 			});
-			return _this.loadProcessResponse(node,res);
+			if (res.length != 0) {
+				return _this.loadProcessResponse(node,res);
+			} else {
+				node.unsetFolder();
+				return;
+			}
 		});
 		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
 
@@ -115,6 +124,9 @@ scriptScope.selectDataset = function() {
         </div>
         <div class="spacer"></div>
       </div>
+		<div class="inputContainer w478">
+		<span>Hinweis: Datens&auml;tze die ausschlie&szlig;lich als Bearbeitungskopie vorliegen werden nicht angezeigt!</span>
+		</div>
       <div class="inputContainer w478">
         <span class="button w442 transparent">
 		  <span style="float:right;"><button dojoType="ingrid:Button" onClick="javascript:scriptScope.selectDataset()">Ausw&auml;hlen</button></span>
