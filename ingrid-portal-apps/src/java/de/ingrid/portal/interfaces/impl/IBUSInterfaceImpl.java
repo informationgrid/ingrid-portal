@@ -20,6 +20,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.cfg.Environment;
 
 import de.ingrid.ibus.client.BusClient;
+import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.search.QueryPreProcessor;
@@ -84,7 +85,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             if (log.isInfoEnabled()) {
                 log.info("SHUT DOWN IBUSInterface!");
             }
-            client.shutdown();
+            client.close();
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems SHUTTING DOWN IBUSInterface", t);
@@ -100,8 +101,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         super();
         try {
 
-            client = BusClient.instance();
-            bus = client.getBus();
+            client = BusClientFactory.createBusClient();
+            bus = client.getNonCacheableIBus();
             if (bus == null) {
                 throw new Exception("FATAL ERROR! iBus == null, FAILED to create bus instance.");
             }
@@ -119,13 +120,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
      * @see de.ingrid.portal.interfaces.IBUSInterface#getConfig()
      */
     public Configuration getConfig() {
-        try {
-			String configFilename = getResourceAsStream(client.getJxtaConfigurationPath());
-			return new PropertiesConfiguration(configFilename);
-		} catch (Exception e) {
-			log.error("Error retrieving configuration.", e);
-			return null;
-		}
+		return null;
     }
 
     /**
