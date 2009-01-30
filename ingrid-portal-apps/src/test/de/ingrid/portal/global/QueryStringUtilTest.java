@@ -29,10 +29,10 @@ public class QueryStringUtilTest extends TestCase {
         assertEquals("name", result);
         result = UtilsQueryString.stripQueryWhitespace("((name))");
         assertEquals("name", result);
-        result = UtilsQueryString.stripQueryWhitespace("((name des schlüssels))");
-        assertEquals("(name des schlüssels)", result);
-        result = UtilsQueryString.stripQueryWhitespace("((name des) OR schlüssels))");
-        assertEquals("((name des) OR schlüssels))", result);
+        result = UtilsQueryString.stripQueryWhitespace("((name des schl\u00fcssels))");
+        assertEquals("(name des schl\u00fcssels)", result);
+        result = UtilsQueryString.stripQueryWhitespace("((name des) OR schl\u00fcssels))");
+        assertEquals("((name des) OR schl\u00fcssels))", result);
     }
 
 }

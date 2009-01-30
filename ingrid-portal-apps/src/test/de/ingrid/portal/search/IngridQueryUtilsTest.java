@@ -16,9 +16,9 @@ public class IngridQueryUtilsTest extends TestCase {
     
     public void testRenderQuery() throws ParseException {
         
-        IngridQuery q = QueryStringParser.parse("(gemüse OR garten T02:test) wemove T01:alles datatype:default ranking:score");
+        IngridQuery q = QueryStringParser.parse("(gem\u00fcse OR garten T02:test) wemove T01:alles datatype:default ranking:score");
         String qStr = UtilsSearch.queryToString(q);
-        assertEquals("wemove (gemüse OR garten t02:test) t01:alles datatype:default ranking:score", qStr);
+        assertEquals("wemove (gem\u00fcse OR garten t02:test) t01:alles datatype:default ranking:score", qStr);
         
     }
 

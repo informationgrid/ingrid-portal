@@ -27,7 +27,7 @@ public class SearchResultListMockup {
             rsr.put("title", "BMVEL - Blei und Trinkwasser");
             rsr.put("type", "WEBSITE");
             rsr.put("abstract", "Problem, Maßnahmen, weitere Informationen");
-            rsr.put("provider", "Bundesministerium für Verbraucherschutz, Ernährung und Landwirtschaft (BMVEL)");
+            rsr.put("provider", "Bundesministerium f\u00fcr Verbraucherschutz, Ern\u00e4hrung und Landwirtschaft (BMVEL)");
             rsr.put("source", "Webseiten");
             rsr.put("url", "http://www.verbraucherministerium.de/index-000068C0A9C31E01BB1301A5C0A8E066.html");
             rsr.put("ranking", "0.99");
@@ -42,7 +42,7 @@ public class SearchResultListMockup {
             rsr
                     .put(
                             "abstract",
-                            "Bundesministerium für Umwelt, Naturschutz und Reaktorsicherheit - Zentrales Dach- und Rahmengesetz im Bereich des Lebensmittelrechts ist das Lebensmittel- und Bedarfsgegenständegesetz (LMBG), dessen Ziel es ist, den Verbraucherinnen und Verbraucher vor Gesundheitsgefährdungen und Täuschungen im Verkehr ...");
+                            "Bundesministerium f\u00fcr Umwelt, Naturschutz und Reaktorsicherheit - Zentrales Dach- und Rahmengesetz im Bereich des Lebensmittelrechts ist das Lebensmittel- und Bedarfsgegenst\u00e4ndegesetz (LMBG), dessen Ziel es ist, den Verbraucherinnen und Verbraucher vor Gesundheitsgef\u00e4hrdungen und T\u00e4uschungen im Verkehr ...");
             rsr.put("provider", "Bundesumweltministerium");
             rsr.put("source", "Webseiten");
             rsr.put("url", "http://www.verbraucherministerium.de/index-000068C0A9C31E01BB1301A5C0A8E066.html");
@@ -54,10 +54,10 @@ public class SearchResultListMockup {
             srs.add(rsr);
 
             rsr = new IngridDocument();
-            rsr.put("title", "K 25 (und Beiblätter) Geologische Karte 1:25 000");
+            rsr.put("title", "K 25 (und Beibl\u00e4tter) Geologische Karte 1:25 000");
             rsr.put("type", "UDK");
             rsr.put("abstract", "Das HLUG erstellt das Geologische Kartenwerk (GK 25) von Hessen.");
-            rsr.put("provider", "Hessisches Landesamt für Umwelt und Geologie (HLUG)");
+            rsr.put("provider", "Hessisches Landesamt f\u00fcr Umwelt und Geologie (HLUG)");
             rsr.put("source", "UDK Umweltdatenkatalog");
             rsr.put("map", "map describing data");
             rsr.put("ranking", "0.97");
