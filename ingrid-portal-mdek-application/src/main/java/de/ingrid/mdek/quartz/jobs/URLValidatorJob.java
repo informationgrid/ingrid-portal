@@ -21,6 +21,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.JobInfoBean.EntityType;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.quartz.jobs.util.URLObjectReference;
 import de.ingrid.mdek.quartz.jobs.util.URLState;
@@ -229,6 +230,7 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 			}
 
 			jobInfoResult.setDescription(jobName);
+			jobInfoResult.setEntityType(EntityType.URL);
 			jobInfoResult.setNumEntities(totalNumberOfUrls);
 			jobInfoResult.setNumProcessedEntities(numberOfProcessedUrls);
 			jobInfoResult.setStartTime(executionContext.getFireTime());

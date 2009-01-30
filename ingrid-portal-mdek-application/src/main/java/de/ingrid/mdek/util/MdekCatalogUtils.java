@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.JobInfoBean.EntityType;
 import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.mdek.caller.MdekCaller;
 import de.ingrid.utils.IngridDocument;
@@ -123,10 +124,12 @@ public class MdekCatalogUtils {
 			if (jobInfoDoc.get(MdekKeys.JOBINFO_NUM_OBJECTS) != null) {
 				jobInfo.setNumProcessedEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_NUM_OBJECTS));
 				jobInfo.setNumEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_TOTAL_NUM_OBJECTS));
+				jobInfo.setEntityType(EntityType.OBJECT);
 
 			} else if (jobInfoDoc.get(MdekKeys.JOBINFO_NUM_ADDRESSES) != null) {
 				jobInfo.setNumProcessedEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_NUM_ADDRESSES));
 				jobInfo.setNumEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_TOTAL_NUM_ADDRESSES));
+				jobInfo.setEntityType(EntityType.ADDRESS);
 			}
 			jobInfo.setResult((byte[]) jobInfoDoc.get(MdekKeys.EXPORT_RESULT));
 

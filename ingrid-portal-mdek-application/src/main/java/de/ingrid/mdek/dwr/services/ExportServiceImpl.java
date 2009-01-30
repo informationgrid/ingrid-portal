@@ -1,8 +1,12 @@
 package de.ingrid.mdek.dwr.services;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
 
+import de.ingrid.mdek.MdekUtils;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.job.MdekException;
@@ -76,8 +80,13 @@ public class ExportServiceImpl {
 
 	public FileTransfer getLastExportFile() {
 		JobInfoBean exportInfo = catalogRequestHandler.getExportInfo(true);
+		return new FileTransfer(createFilename(exportInfo), "x-gzip", exportInfo.getResult());
+	}
 
-		return new FileTransfer("export.xml.gz", "x-gzip", exportInfo.getResult());
+	private static String createFilename(JobInfoBean jobInfo) {
+		Date startTime = jobInfo.getStartTime();
+		String timestamp = MdekUtils.dateToTimestamp(startTime);
+		return (timestamp != null) ? "export"+timestamp+".xml.gz" : "export.xml.gz";
 	}
 
 	public void cancelRunningJob() {

@@ -149,12 +149,21 @@ refreshExportProcessInfo = function() {
 }
 
 function updateExportInfo(exportInfo) {
+	if (exportInfo.entityType == "OBJECT") {
+		dojo.byId("exportInfoNumExportedEntitiesContainer").innerHTML = "Anzahl Objekte:";
+	} else if (exportInfo.entityType == "ADDRESS") {
+		dojo.byId("exportInfoNumExportedEntitiesContainer").innerHTML = "Anzahl Adressen:";
+	} else {
+		dojo.byId("exportInfoNumExportedEntitiesContainer").innerHTML = "Anzahl Datens&auml;tze:";
+	}
+
+
 	if (jobFinished(exportInfo)) {
 		dojo.byId("exportInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
 		dojo.html.hide(dojo.byId("exportProgressBarContainer"));
 		dojo.html.hide(dojo.byId("cancelExportProcessButton"));
-		if (exportInfo.exception) {
 
+		if (exportInfo.exception) {
 			dojo.html.show(dojo.byId("exportExceptionMessage"));
 			dojo.html.hide(dojo.byId("exportInfoDownload"));
 			dojo.html.hide(dojo.byId("exportInfoEndDateContainer"));

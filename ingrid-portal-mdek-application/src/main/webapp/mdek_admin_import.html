@@ -219,10 +219,19 @@ refreshImportProcessInfo = function() {
 }
 
 function updateImportInfo(importInfo) {
+	if (importInfo.entityType == "OBJECT") {
+		dojo.byId("importInfoNumImportedEntitiesContainer").innerHTML = "Anzahl Objekte:";
+	} else if (importInfo.entityType == "ADDRESS") {
+		dojo.byId("importInfoNumImportedEntitiesContainer").innerHTML = "Anzahl Adressen:";
+	} else {
+		dojo.byId("importInfoNumImportedEntitiesContainer").innerHTML = "Anzahl Datens&auml;tze:";
+	}
+
 	if (jobFinished(importInfo)) {
 		dojo.byId("importInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
 		dojo.html.hide(dojo.byId("importProgressBarContainer"));
 		dojo.html.hide(dojo.byId("cancelImportProcessButton"));
+
 		if (importInfo.exception) {
 			dojo.html.show(dojo.byId("importExceptionMessage"));
 			dojo.html.hide(dojo.byId("importInfoDownload"));

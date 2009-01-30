@@ -4,13 +4,17 @@ import java.util.Date;
 
 
 public class JobInfoBean {
-	String description;
-	Integer numEntities;
-	Integer numProcessedEntities;
-	Date startTime;
-	Date endTime;
-	Exception exception;
-	byte[] result;
+
+	public enum EntityType { ADDRESS, OBJECT, URL }
+
+	private String description;
+	private EntityType entityType;
+	private Integer numEntities;
+	private Integer numProcessedEntities;
+	private Date startTime;
+	private Date endTime;
+	private Exception exception;
+	private byte[] result;
 
 	public String getDescription() {
 		return description;
@@ -53,5 +57,11 @@ public class JobInfoBean {
 	}
 	public void setResult(byte[] result) {
 		this.result = result;
+	}
+	public EntityType getEntityType() {
+		return entityType;
+	}
+	public void setEntityType(EntityType entityType) {
+		this.entityType = entityType;
 	}
 }
