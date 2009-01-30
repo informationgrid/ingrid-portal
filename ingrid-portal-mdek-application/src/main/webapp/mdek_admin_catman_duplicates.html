@@ -4,15 +4,189 @@
 <script type="text/javascript">
 var scriptScope = this;
 
+_container_.addOnLoad(function() {
+	initDuplicatesTable();
+	initTree();
+	// Load duplicates info on startup
+	scriptScope.startDuplicatesJob();
+});
+
+function initDuplicatesTable() {
+	var duplicatesTable = dojo.widget.byId("duplicatesListTable");
+	dojo.event.connect(duplicatesTable, "onSelect", function() {
+		var selection = duplicatesTable.getSelectedData();
+		dojo.widget.byId("duplicatesObjectName").setValue(selection.title);
+		dojo.widget.byId("duplicatesObjectDescription").setValue(selection.generalDescription);
+		dojo.widget.byId("duplicatesObjectClass").setValue(message.get("ui.obj.type"+selection.objectClass+".name"));
+	});
+
+    var contextMenu = dojo.widget.createWidget("ingrid:TableContextMenu");
+    contextMenu.addItemObject( { caption:'Im Hierarchiebaum anzeigen', method:selectObjectInTree } );
+    duplicatesTable.setContextMenu(contextMenu);
+}
+
+// Switch to the tree view and select the node referenced by the menu action
+function selectObjectInTree(menuItem) {
+	dojo.widget.byId("duplicatesLists").selectChild("duplicatesList2");
+	var menu = menuItem.parent;
+	var rowData = menu.getRowData();
+	var objUuid = rowData.uuid;
+
+	ObjectService.getPathToObject(objUuid, {
+		callback: function(path){
+			var def = expandPathDef(path);
+			def.addCallback(selectNode);
+		},
+		errorHandler: function(msg, err) {
+			dojo.debug("Error: "+msg);
+			dojo.debugShallow(err);
+			def.errback;
+		}
+	});	
+}
+
+// Expand all nodes along the given path and select the target node
+function expandPathDef(path) {
+	var tree = dojo.widget.byId("duplicatesTree");
+
+	// Start with the root object node and expand the correct children to the target
+	var def = new dojo.Deferred();
+	def.callback(tree.children[0]);
+
+	// Expand nodes along the path
+	for (var index = 0; index < path.length; ++index) {
+		def.addCallback(function(res) { return expandNodeDef(res); });
+		def.addCallback( dojo.lang.curry(scriptScope, scriptScope.getChildFromNode, path[index]) );
+	}
+
+	return def;
+}
+
+// Expand a node in the tree and return it via a deferred obj on completion
+function expandNodeDef(node) {
+	var treeController = dojo.widget.byId("treeDuplicatesController");
+	var def = treeController.expand(node);
+	def.addCallback(function() { return node; });
+	return def;
+}
+
+// Get a child from a node in the tree for the given uuid 
+scriptScope.getChildFromNode = function(childUuid, node) {
+	for (var i = 0; i < node.children.length; ++i) {
+		if (node.children[i].uuid == childUuid) {
+			return node.children[i];
+		}
+	}
+	return null;
+}
+
+function selectNode(node) {
+	var tree = dojo.widget.byId("duplicatesTree");
+	tree.selectNode(node);
+	tree.selectedNode = node;
+	dojo.html.scrollIntoView(node.domNode);
+}
+
+function initTree() {
+	// Load initial first level of the tree from the server
+	TreeService.getSubTree(null, null, 1, 
+		function (rootNodeList) {
+			var duplicatesTree = dojo.widget.byId("duplicatesTree");
+
+			dojo.lang.forEach(rootNodeList, function(rootNode){
+				rootNode.title = dojo.string.escape("html", rootNode.title);
+				rootNode.uuid = rootNode.id;
+				rootNode.id = null;
+			});
+
+			// Only display object root
+			duplicatesTree.setChildren([rootNodeList[0]]);
+	});
+
+	// Function to load children of the node from server
+	var loadRemote = function(node, sync){
+		var _this = this;
+
+		var params = {
+			node: this.getInfo(node),
+			tree: this.getInfo(node.tree)
+		};
+
+		var deferred = new dojo.Deferred();
+
+		deferred.addCallback(function(res) {
+			dojo.lang.forEach(res, function(obj){
+				obj.title = dojo.string.escape("html", obj.title);
+				obj.uuid = obj.id;
+				obj.id = null;
+			});
+			return _this.loadProcessResponse(node,res);
+		});
+		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
+
+		TreeService.getSubTree(node.uuid, node.nodeAppType, 1, {
+  			callback:function(res) { deferred.callback(res); },
+			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
+			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
+  		});
+
+		return deferred;
+	};
+
+	// Attach load remote function to the tree controllers
+	var duplicatesTreeController = dojo.widget.byId("treeDuplicatesController");
+	duplicatesTreeController.loadRemote = loadRemote;
+}
+
+function getDuplicatesDef() {
+	var def = new dojo.Deferred();
+
+	CatalogManagementService.getDuplicateObjects({
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
+		callback: function(duplicateList) {
+			def.callback(duplicateList);
+		},
+		errorHandler: function(msg, err) {
+			hideLoadingZone();
+			dojo.debug("Error: "+msg);
+			dojo.debugShallow(err);
+			def.errback;
+		}
+	});
+
+	return def;
+}
+
 scriptScope.startDuplicatesJob = function() {
-	dojo.debug("Function not implemented yet.");
+	clearInputFields();
+	var def = getDuplicatesDef();
+	def.addCallback(function(duplicatesList) {
+		for (var i = 0; i < duplicatesList.length; ++i) {
+			duplicatesList[i].Id = i;
+		}
+		dojo.widget.byId("duplicatesListTable").store.setData(duplicatesList);
+	});
 }
-scriptScope.cancelDuplicatesJob = function() {
-	dojo.debug("Function not implemented yet.");
+
+function clearInputFields() {
+	dojo.widget.byId("duplicatesObjectName").setValue("");
+	dojo.widget.byId("duplicatesObjectDescription").setValue("");
+	dojo.widget.byId("duplicatesObjectClass").setValue("");
 }
+
 scriptScope.saveChanges = function() {
 	dojo.debug("Function not implemented yet.");
 }
+
+function showLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("duplicatesLoadingZone"), "visible");
+}
+
+function hideLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("duplicatesLoadingZone"), "hidden");
+}
+
 </script>
 </head>
 
@@ -30,38 +204,7 @@ scriptScope.saveChanges = function() {
 			<!-- INFO START -->
 			<div class="spacer"></div>
 			<div class="spacer"></div>
-			<div class="inputContainer w965">
-				<button dojoType="ingrid:Button" title="Pr&uuml;fung starten" onClick="javascript:scriptScope.startDuplicatesJob();">Pr&uuml;fung starten</button>
-			</div>
 
-			<div class="inputContainer noSpaceBelow">
-				<div id="duplicatesInfo" class="infobox w950">
-					<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
-					<span class="title"><a href="javascript:toggleInfo('duplicatesInfo');" title="Info aufklappen">Informationen zum letzten Prozess:
-						<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
-					<span class="processInfo">Der Prozess wird momentan ausgef&uuml;hrt. <a href="#" title="Hilfe">Hilfe</a>?<img src="img/ladekreis.gif" width="20" height="20" alt="Prozess l&auml;uft" /></span>
-					<div id="duplicatesInfoContent">
-						<table cellspacing="0">
-							<tr>
-								<td>Gestartet am:</td>
-								<td>13.2.2007, 00:02 Uhr</td></tr>
-								<tr><td>Beendet am:</td>
-								<td>Noch nicht beendet</td></tr>
-								<tr><td>Anzahl Objekte:</td>
-								<td>132110</td></tr>
-								<tr><td>Anzahl Adressen:</td>
-								<td>10</td></tr>
-						</table>
-						<span id="cancelDuplicatesProcessButton" class="button" style="height:20px !important;">
-							<span style="float:right;">
-								<button dojoType="ingrid:Button" title="Prozess abbrechen" onClick="javascript:scriptScope.cancelDuplicatesJob();">Prozess abbrechen</button>
-							</span>
-						</span>
-					</div>
-				</div>
-			</div>
-	        <!-- INFO END -->
-	
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div id="duplicatesListContainer" class="inputContainer">
 				<span class="label">Ergebnis der Dubletten-Pr&uuml;fung</span>
@@ -73,16 +216,10 @@ scriptScope.saveChanges = function() {
 							<table id="duplicatesListTable" dojoType="ingrid:FilteringTable" minRows="14" multiple="false" headClass="fixedHeader hidden" tbodyClass="scrollContent rows14" cellspacing="0" class="filteringTable interactive readonly w264 relativePos">
 								<thead class="hidden">
 									<tr>
-										<th field="name" dataType="String" width="264">Name</th>
+										<th field="title" dataType="String" width="264">Name</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr value="1">
-										<td>Objektname 1</td></tr>
-									<tr value="2">
-										<td>Objektname 2</td></tr>
-									<tr value="3">
-										<td>Objektname 3</td></tr>
 								</tbody>
 							</table>
 						</div>
@@ -94,12 +231,11 @@ scriptScope.saveChanges = function() {
 						<div class="inputContainer grey">
 							<div dojoType="ContentPane" id="treeContainer">
 								<!-- tree components -->
-								<div dojoType="ingrid:TreeDocIcons" widgetId="treeDocIcons"></div>	
-	                  
+				                <div dojoType="ingrid:TreeController" widgetId="treeDuplicatesController" RpcUrl="server/treelistener.php"></div>
+								<div dojoType="ingrid:TreeDocIcons" widgetId="treeDuplicatesDocIcons"></div>	
+
 								<!-- tree -->
-								<div dojoType="ingrid:Tree" listeners="treeDocIcons" widgetId="duplicatesTree">
-									<div dojoType="ingrid:TreeNode" title="Objekte" objectId="o1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Objects" nodeAppType="Objekt"></div>
-									<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" contextMenu="contextMenu2" nodeDocType="Addresses" nodeAppType="Adresse"></div>
+								<div dojoType="ingrid:Tree" listeners="treeDuplicatesController;treeDuplicatesDocIcons" widgetId="duplicatesTree">
 								</div>
 							</div>
 	
@@ -117,9 +253,9 @@ scriptScope.saveChanges = function() {
 					<span class="label"><label for="duplicatesObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objektname')">Objektname</label></span>
 					<span class="input spaceBelow"><input type="text" id="duplicatesObjectName" name="duplicatesObjectName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
 					<span class="label"><label for="duplicatesObjectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 'Klasse')">Klasse</label></span>
-					<span class="input spaceBelow"><input type="text" id="duplicatesObjectClass" name="duplicatesObjectClass" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" value="Dienst / Anwendung / Informationssystem" /></span>
+					<span class="input spaceBelow"><input type="text" id="duplicatesObjectClass" name="duplicatesObjectClass" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					<span class="label"><label for="duplicatesObjectDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objektbeschreibung')">Objektbeschreibung</label></span>
-					<span class="input"><textarea id="duplicatesObjectDescription" name="duplicatesObjectDescription" disabled="disabled" class="w640 h164 noEdit" />Pellentesque tempor, dolor quis vehicula egestas, eros elit accumsan nibh, ac blandit metus quam eget ipsum. Curabitur ullamcorper, sapien vitae venenatis lacinia, purus odio luctus nulla, condimentum mattis orci enim a ipsum. Ut est turpis, fringilla at, viverra nec, placerat scelerisque, nisi.</textarea></span>
+   	           		<span class="input"><input type="text" mode="textarea" id="duplicatesObjectDescription" class="w640 h164" disabled="true" dojoType="ingrid:ValidationTextbox" /></span> 
 					<div class="fill"></div>
 				</div>
 	
@@ -128,7 +264,10 @@ scriptScope.saveChanges = function() {
 						<span style="float:right;">
 							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveChanges();">&Auml;nderung speichern</button>
 						</span>
-						<span id="updateDuplicatesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+						<span style="float:right;">
+							<button dojoType="ingrid:Button" title="Pr&uuml;fung erneut ausf&uuml;hren" onClick="javascript:scriptScope.startDuplicatesJob();">Pr&uuml;fung erneut ausf&uuml;hren</button>
+						</span>
+						<span id="duplicatesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 							<img src="img/ladekreis.gif" />
 						</span>
 					</span>

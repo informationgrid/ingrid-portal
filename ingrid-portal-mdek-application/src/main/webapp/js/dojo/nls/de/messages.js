@@ -188,7 +188,13 @@
 
     "validation.minmax":"Der Wert des Feldes '%{0}' muß größer sein als der Wert des Feldes '%{1}'.",
 
-	"ui.obj.header.objectName":"Objektname",
+    "ui.obj.type0.name":"Organisationseinheit/Fachaufgabe",
+    "ui.obj.type1.name":"Geo-Information/Karte",
+    "ui.obj.type2.name":"Dokument/Bericht/Literatur",
+    "ui.obj.type3.name":"Dienst/Anwendung/Informationssystem",
+    "ui.obj.type4.name":"Vorhaben/Projekt/Programm",
+    "ui.obj.type5.name":"Datensammlung/Datenbank",
+    "ui.obj.header.objectName":"Objektname",
 	"ui.obj.header.objectClass":"Objektklasse",
 	"ui.obj.header.responsibleUser":"Verantwortlicher",
 	"ui.obj.header.workState":"Status",

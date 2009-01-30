@@ -106,6 +106,9 @@
 		<property name="mdekJobHandler">
 			<ref local="mdekJobHandler" />
 		</property>
+		<property name="connectionFacade">
+			<ref local="connectionFacade" />
+		</property>
 	</bean>
 
 	<bean id="exportService"
