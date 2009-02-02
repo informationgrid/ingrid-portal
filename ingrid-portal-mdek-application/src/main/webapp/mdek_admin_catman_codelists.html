@@ -4,6 +4,126 @@
 <script type="text/javascript">
 var scriptScope = this;
 
+_container_.addOnLoad(function() {
+	initCodelistSelect();
+});
+
+function initCodelistSelect() {
+	// TODO Test code. Use getAllSysLists
+	var listIds = [100, 101, 102, 502, 505, 510, 515, 517, 518, 520, 523, 525, 526, 527, 528, 1100,
+	           	1200, 1230, 1320, 1350, 1370, 1400, 1410, 2000, 2010, 2240, 2251, 3230, 3385, 3535,
+	           	3555, 3561, 3571, 4300, 4305, 4430, 5000, 5100, 5105, 5110, 5120, 5130, 5200, 6000,
+	           	6010, 99999999];
+
+	var selectWidget = dojo.widget.byId("selectionList");
+	var selectWidgetData = [];
+	for (var index = 0; index < listIds.length; ++index) {
+		selectWidgetData.push([listIds[index]+"", listIds[index]+""]);
+	}
+	selectWidget.dataProvider.setData(selectWidgetData);
+
+	// On value changed load the selected sysList from the backend and update the table
+	dojo.event.connect(selectWidget, "onValueChanged", function(value) {
+		if (value) {
+			var germanListDef = getSysListsDef(value, "de");
+			var englishListDef = getSysListsDef(value, "en");
+
+			var defList = new dojo.DeferredList([germanListDef, englishListDef], false, false, true);
+			defList.addCallback(function (resultList) {
+				var germanList = resultList[0][1]; 
+				var englishList = resultList[1][1];
+
+				var germanData = convertSysListToTableData(germanList);
+				var englishData = convertSysListToTableData(englishList);
+
+				var mergedData = mergeTableData(germanData, englishData);
+				updateCodelistTable(mergedData);
+			});
+		}
+	});
+}
+
+// Retrieve the sysList for the given listId and languageCode from the backend
+// A list of the following form is returned:
+// [ [listEntry, entryId, isDefault], [...] ]
+function getSysListsDef(listId, languageCode) {
+	var def = new dojo.Deferred();
+	CatalogService.getSysLists([listId], languageCode, {
+		callback: function(listItems) {
+			def.callback(listItems[listId]);
+		},
+		errorHandler: function(msg, err) {
+			dojo.debug("Error: "+msg);
+			dojo.debugShallow(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
+// Input is a list of string arrays of the following form:
+// [ [listEntry, entryId, isDefault], [...] ]
+// e.g [ ["Inch", "4", "N"], ["Meter", "9001", "N"], ["Fuss", "9002", "N"], ["Kilometer", "9036", "N"] ]
+// The codelist table is being overwritten
+function convertSysListToTableData(listItems) {
+	// Prepare the list items for display
+	var listData = [];
+	for (var index = 0; index < listItems.length; ++index) {
+		listData.push( {
+			name: listItems[index][0],
+			entryId: listItems[index][1],
+			isDefault: listItems[index][2] == "Y"
+		});
+	}
+
+	return listData;
+}
+
+// Merge two lists into one. The lists must have the following format:
+// [ { entryId:entryId, name:entryName isDefault:default }, {...} ]
+// The result is of the format:
+// [ { entryId:entryId, deName:entryName, enName:entryName, isDefault:default }, {...} ]
+function mergeTableData(germanList, englishList) {
+	// Create a hash map referenced by entry ids
+	var idEntryMap = {};
+
+	// Fill the hash map with all german entries
+	for (var index = 0; index < germanList.length; index++) {
+		var currentEntry = germanList[index];
+		idEntryMap[currentEntry.entryId] = { deName: currentEntry.name, entryId: currentEntry.entryId, isDefault: currentEntry.isDefault };
+	}
+
+	// add the english name if the corresponding entry id was found in the hash
+	// otherwise create a new entry
+	for (var index = 0; index < englishList.length; index++) {
+		var currentEntry = englishList[index];
+		if (idEntryMap[currentEntry.entryId]) {
+			// Entry found in hash, only update enName
+			idEntryMap[currentEntry.entryId].enName = currentEntry.name;
+
+		} else {
+			// New entry
+			idEntryMap[currentEntry.entryId] = { enName: currentEntry.name, entryId: currentEntry.entryId, isDefault: currentEntry.isDefault };
+		}
+	}
+
+	// Convert hash map to table
+	var mergedData = [];
+	for (var entry in idEntryMap) {
+		mergedData.push(idEntryMap[entry]);
+	}
+
+	mergedData = mergedData.sort(function(a, b) { return parseInt(a.entryId) - parseInt(b.entryId); });
+	return mergedData;
+}
+
+// Add table indices to the list 'data' and overwrite the codeListTables list entries
+function updateCodelistTable(data) {
+	UtilList.addTableIndices(data);
+	dojo.widget.byId("codeListTable11").store.setData(data);
+	dojo.widget.byId("codeListTable12").store.setData(data);
+}
+
 scriptScope.createNewEntry = function() {
 	dojo.debug("Function not implemented yet.");
 }
@@ -45,41 +165,42 @@ scriptScope.saveChanges = function() {
 					<div id="selection" dojoType="ContentPane" class="blueTopBorder grey" label="Auswahllistenpflege">
 						<div class="inputContainer grey field w668 noSpaceBelow">
 							<span class="label"><label for="selectionList" onclick="javascript:dialog.showContextHelp(arguments[0], 'Auswahlliste')">Auswahlliste</label></span>
-							<span class="input spaceBelow"><div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:606px;" widgetId="selectionList"></div></span>
+							<span class="input spaceBelow"><input dojoType="ingrid:Select" autocomplete="false" style="width:606px;" id="selectionList" /></span>
 							<div class="checkboxContainer">
 								<span class="input spaceBelow"><input type="checkbox" onclick="switchTableDisplay('codeListTable12Container', 'codeListTable11Container', dojo.widget.byId('selectionListDefault').checked);" id="selectionListDefault" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Defaultwert einstellbar')">Defaultwert einstellbar</label></span>
 							</div>
-							<div class="tableContainer rows4 w632" id="codeListTable11Container">
+							<div class="tableContainer rows8 w632" id="codeListTable11Container">
 								<div class="cellEditors" id="codeListTable11Editors">
-									<div dojoType="ingrid:ValidationTextbox" widgetId="codeListTable11NameEditor"></div>
+									<div dojoType="ingrid:ValidationTextbox" widgetId="codeListTable11DeNameEditor"></div>
+									<div dojoType="ingrid:ValidationTextbox" widgetId="codeListTable11EnNameEditor"></div>
 								</div>
-								<table id="codeListTable11" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
+								<table id="codeListTable11" dojoType="ingrid:FilteringTable" minRows="8" cellspacing="0" class="filteringTable nosort interactive">
 									<thead>
 										<tr>
-											<th field="name" dataType="String" width="634" editor="codeListTable11NameEditor">Name</th>
+											<th nosort="true" field="entryId" dataType="String" width="32">ID</th>
+											<th nosort="true" field="deName" dataType="String" width="300" editor="codeListTable11DeNameEditor">Name in Deutsch</th>
+											<th nosort="true" field="enName" dataType="String" width="300" editor="codeListTable11EnNameEditor">Name in Englisch</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr value="1">
-											<td>Eintrag 1</td></tr>
 									</tbody>
 								</table>
 							</div>
-							<div class="tableContainer rows4 w632" id="codeListTable12Container" style="display:none">
+							<div class="tableContainer rows8 w632" id="codeListTable12Container" style="display:none">
 								<div class="cellEditors" id="codeListTable12Editors">
-									<div dojoType="ingrid:ValidationTextbox" templateCssPath="js/dojo/widget/templates/FilteringTable.css" widgetId="codeListTable12NameEditor"></div>
+									<div dojoType="ingrid:ValidationTextbox" widgetId="codeListTable12DeNameEditor"></div>
+									<div dojoType="ingrid:ValidationTextbox" widgetId="codeListTable12EnNameEditor"></div>
 								</div>
-								<table id="codeListTable12" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
+								<table id="codeListTable12" dojoType="ingrid:FilteringTable" minRows="8" cellspacing="0" class="filteringTable nosort interactive">
 									<thead>
 										<tr>
-											<th field="name" dataType="String" width="572" editor="codeListTable12NameEditor">Name</th>
-											<th field="default" dataType="String" width="62" noSort="true">Default</th>
+											<th nosort="true" field="entryId" dataType="String" width="32">ID</th>
+											<th nosort="true" field="deName" dataType="String" width="269" editor="codeListTable12DeNameEditor">Name in Deutsch</th>
+											<th nosort="true" field="enName" dataType="String" width="269" editor="codeListTable12EnNameEditor">Name in Englisch</th>
+											<th nosort="true" field="isDefault" dataType="String" width="62" noSort="true">Default</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr value="1">
-											<td>Eintrag 1</td>
-											<td><input type="radio" name="selectListDefault" id="selectListDefault1" class="radio" /></td></tr>
 									</tbody>
 								</table>
 							</div>
@@ -91,7 +212,7 @@ scriptScope.saveChanges = function() {
 					<div dojoType="ContentPane" class="blueTopBorder grey" label="ISO-Codelistenpflege">
 						<div class="inputContainer grey field w668 noSpaceBelow">
 							<span class="label"><label for="isoList" onclick="javascript:dialog.showContextHelp(arguments[0], 'ISO-Codeliste')">ISO-Codeliste</label></span>
-							<span class="input spaceBelow"><div dojoType="ingrid:ComboBox" toggle="plain" dataUrl="js/data/dummy.js" style="width:606px;" widgetId="isoList"></div></span>
+							<span class="input spaceBelow"><div dojoType="ingrid:ComboBox" toggle="plain" style="width:606px;" widgetId="isoList"></div></span>
 							<div class="checkboxContainer">
 								<span class="input spaceBelow"><input type="checkbox" onclick="switchTableDisplay('codeListTable22Container', 'codeListTable21Container', dojo.widget.byId('isoListDefault').checked);" id="isoListDefault" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Defaultwert einstellbar')">Defaultwert einstellbar</label></span>
 							</div>
@@ -124,11 +245,6 @@ scriptScope.saveChanges = function() {
 										</tr>
 									</thead>
 									<tbody>
-										<tr value="1">
-											<td>101</td>
-											<td>Datensatz</td>
-											<td>dataset</td>
-											<td><input type="radio" name="selectListDefault" id="selectListDefault2" class="radio" /></td></tr>
 									</tbody>
 								</table>
 							</div>
