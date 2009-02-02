@@ -116,18 +116,18 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
 	            
 	            // try to get the result for a objects UUID
-	            if (docUuid != null) {
+	            if (docUuid != null && docUuid.length() > 0) {
 	                String qStr = null;
 	            	if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
-	            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score cache:off";
+	            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT)) {
-	            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score cache:off";
+	            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_OBJECT)) {
-	            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score cache:off";
+	            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_ADDRESS)) {
-	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score cache:off";
+	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
-	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score cache:off";
+	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                } else {
 	            		qStr = docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                }
@@ -139,6 +139,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            	} else {
 	            		hit = hits.getHits()[0];
 	            	}
+	            } else if (altDocumentId != null && altDocumentId.length() > 0) {
+	                hit = new IngridHit();
+                    hit.put("alt_document_id", altDocumentId);
+	                hit.setPlugId(iplugId);
+	                hit.setDocumentId(0);
+	            
 	            } else {
 	                int documentId = Integer.parseInt(request.getParameter("docid"));
 	                hit = new IngridHit();
@@ -150,9 +156,6 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 
             Record record = null;
             if (hit != null) {
-                if (altDocumentId != null) {
-                    hit.put("alt_document_id", altDocumentId);
-                }
 	            record = ibus.getRecord(hit);
             }
             
