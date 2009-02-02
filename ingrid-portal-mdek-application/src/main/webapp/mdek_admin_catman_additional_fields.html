@@ -9,6 +9,7 @@ _container_.addOnLoad(function() {
 
 	CatalogService.getSysAdditionalFields(null, language, {
 		callback: function(additionalFieldList) {
+			additionalFieldList.sort(function(a, b) { return (a.id - b.id); });
 			var tableData = UtilList.addTableIndices(additionalFieldList);
 			dojo.widget.byId("addFieldsList").store.setData(tableData);
 		},
@@ -22,6 +23,14 @@ _container_.addOnLoad(function() {
     var contextMenu = addFieldsList.getContextMenu();
 	contextMenu.addSeparator();
     contextMenu.addItemObject( { caption:'Auswahlliste bearbeiten', method:editListEntries } );
+	dojo.event.connect("after", contextMenu, "open", function(arg) {
+		var rowData = contextMenu.getRowData();
+		if (rowData && rowData.listEntries) {
+			contextMenu.enableItem('Auswahlliste bearbeiten');
+		} else {
+			contextMenu.disableItem('Auswahlliste bearbeiten');
+		} 
+	});
 });
 
 

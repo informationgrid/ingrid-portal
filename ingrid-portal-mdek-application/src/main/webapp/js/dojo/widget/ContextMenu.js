@@ -58,6 +58,15 @@ dojo.widget.defineWidget(
     }
   },
 
+  enableItem: function(caption) {
+	  var subItems = this.getChildrenOfType(dojo.widget.MenuItem2);
+	  for(var i=0; i<subItems.length; i++) {
+		  if (subItems[i].caption == caption) {
+			  subItems[i].setDisabled(false);
+		  }
+	  }
+	},
+
   enableAllItem: function() {
 		var subItems = this.getChildrenOfType(dojo.widget.MenuItem2);
     for(var i=0; i<subItems.length; i++) {
