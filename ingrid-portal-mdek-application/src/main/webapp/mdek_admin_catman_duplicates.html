@@ -176,7 +176,38 @@ function clearInputFields() {
 }
 
 scriptScope.saveChanges = function() {
-	dojo.debug("Function not implemented yet.");
+	// Get the new name from the name input field
+	// Store the new value in the backend
+	// If an error occured -> abort
+	// If it was successful update the table and reset the tree
+	var newObjectName = dojo.string.trim(dojo.widget.byId("duplicatesObjectName").getValue());
+	var selectedObject = dojo.widget.byId("duplicatesListTable").getSelectedData();
+
+	if (newObjectName && selectedObject) {
+		var objectUuid = selectedObject.uuid;
+		var def = storeNewObjectNameDef(objectUuid, newObjectName);
+		def.addCallback(function() {
+			dojo.widget.byId("duplicatesListTable").store.update(selectedObject, "title", newObjectName);
+			var objectRootNode = dojo.widget.byId("duplicatesTree").children[0];
+			var treeController = dojo.widget.byId("treeDuplicatesController");
+			treeController.refreshChildren(objectRootNode);
+
+		});
+		def.addErrback(function(err) {
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err), dialog.WARNING);				
+		});
+
+	} else {
+		dialog.show(message.get("general.error"), message.get("dialog.admin.invalidObjectNameError"), dialog.WARNING);
+	}
+}
+
+function storeNewObjectNameDef(objUuid, objName) {
+	dojo.debug("Function 'storeNewObjectNameDef' not implemented yet.");
+	// TODO Implement
+	var def = new dojo.Deferred();
+	def.callback();
+	return def;
 }
 
 function showLoadingZone() {
