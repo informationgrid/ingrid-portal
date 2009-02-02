@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.beans.AdditionalFieldBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
@@ -44,6 +45,11 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 
 		IngridDocument response = mdekCallerCatalog.storeSysGuis(connectionFacade.getCurrentPlugId(), sysGuiDoc, refetchAfterStore, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractSysGuisFromResponse(response);
+	}
+
+	public List<AdditionalFieldBean> getSysAdditionalFields(Long[] fieldIds, String language) {
+		IngridDocument response = mdekCallerCatalog.getSysAdditionalFields(connectionFacade.getCurrentPlugId(), fieldIds, language, MdekSecurityUtils.getCurrentUserUuid());
+		return MdekCatalogUtils.extractSysAdditionalFieldsFromResponse(response);
 	}
 
 	public CatalogBean getCatalogData() {

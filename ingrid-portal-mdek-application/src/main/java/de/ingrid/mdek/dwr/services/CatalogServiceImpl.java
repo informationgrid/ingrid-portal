@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.beans.AdditionalFieldBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.job.MdekException;
@@ -24,6 +25,10 @@ public class CatalogServiceImpl implements CatalogService {
 
 	public List<Map<String, String>> getSysGuis(String[] guiIds) {
 		return catalogRequestHandler.getSysGuis(guiIds);
+	}
+
+	public List<AdditionalFieldBean> getSysAdditionalFields(Long[] fieldIds, String languageCode) {
+		return catalogRequestHandler.getSysAdditionalFields(fieldIds, languageCode);
 	}
 
 	public List<Map<String, String>> storeSysGuis(List<Map<String, String>> sysGuis, boolean refetchAfterStore) {

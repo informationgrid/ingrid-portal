@@ -1,6 +1,7 @@
 package de.ingrid.mdek.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -9,9 +10,13 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekUtils.AdditionalFieldType;
+import de.ingrid.mdek.beans.AdditionalFieldBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.AdditionalFieldBean.Type;
 import de.ingrid.mdek.beans.JobInfoBean.EntityType;
 import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.mdek.caller.MdekCaller;
@@ -43,6 +48,49 @@ public class MdekCatalogUtils {
 				resultMap.put(listId, resultList);
 			}
 			return resultMap;
+
+		} else {
+			MdekErrorUtils.handleError(response);
+			return null;
+		}
+	}
+
+	public static List<AdditionalFieldBean> extractSysAdditionalFieldsFromResponse(IngridDocument response) {
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		if (result != null) {
+			List<AdditionalFieldBean> resultList = new ArrayList<AdditionalFieldBean>();
+			for (String key : (Set<String>) result.keySet()) {
+				IngridDocument fieldDefinition = (IngridDocument) result.get(key);
+				Long fieldId = fieldDefinition.getLong(MdekKeys.SYS_ADDITIONAL_FIELD_IDENTIFIER);
+				Integer fieldSize = fieldDefinition.getInt(MdekKeys.SYS_ADDITIONAL_FIELD_LENGTH);
+				String fieldName = fieldDefinition.getString(MdekKeys.SYS_ADDITIONAL_FIELD_NAME);
+				String fieldTypeStr = fieldDefinition.getString(MdekKeys.SYS_ADDITIONAL_FIELD_TYPE);
+				AdditionalFieldType dbFieldType = EnumUtil.mapDatabaseToEnumConst(AdditionalFieldType.class, fieldTypeStr);
+				Type fieldType = (AdditionalFieldType.TEXT == dbFieldType)? Type.TEXT : Type.LIST;
+
+				String listLanguage = null;
+				String[] listEntries = null;
+				if (Type.LIST == fieldType) {
+					for (String fieldDefinitionKey : (Set<String>) fieldDefinition.keySet()) {
+						if (fieldDefinitionKey.startsWith(MdekKeys.SYS_ADDITIONAL_FIELD_LIST_ITEMS_KEY_PREFIX)) {
+							listLanguage = fieldDefinitionKey.substring(MdekKeys.SYS_ADDITIONAL_FIELD_LIST_ITEMS_KEY_PREFIX.length());
+							listEntries = (String[]) fieldDefinition.get(fieldDefinitionKey);
+							break;
+						}
+					}
+				}
+
+				AdditionalFieldBean additionalField = new AdditionalFieldBean();
+				additionalField.setId(fieldId);
+				additionalField.setName(fieldName);
+				additionalField.setType(fieldType);
+				additionalField.setSize(fieldSize);
+				additionalField.setListLanguage(listLanguage);
+				List<String> entries = (listEntries != null)? Arrays.asList(listEntries) : null;
+				additionalField.setListEntries(entries);
+				resultList.add(additionalField);
+			}
+			return resultList;
 
 		} else {
 			MdekErrorUtils.handleError(response);
