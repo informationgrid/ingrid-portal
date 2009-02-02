@@ -49,10 +49,13 @@ function initCodelistSelect() {
 function getSysListsDef(listId, languageCode) {
 	var def = new dojo.Deferred();
 	CatalogService.getSysLists([listId], languageCode, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
 		callback: function(listItems) {
 			def.callback(listItems[listId]);
 		},
 		errorHandler: function(msg, err) {
+			hideLoadingZone();
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
 			def.errback(err);
@@ -117,11 +120,33 @@ function mergeTableData(germanList, englishList) {
 	return mergedData;
 }
 
-// Add table indices to the list 'data' and overwrite the codeListTables list entries
+// Prepare the lists for display (add indices and checkboxes) and overwrite the codeListTables list entries
+// Data must be an array containing entries (objects) of the following form:
+// [ { entryId:entryId, deName:entryName, enName:entryName, isDefault:default }, {...} ]
 function updateCodelistTable(data) {
 	UtilList.addTableIndices(data);
+
+	// Add radio buttons
+	for (var index = 0; index < data.length; index++) {
+		
+		data[index].isDefault =
+			createHtmlForRadio(
+					"codeListRadio",
+					"codeListRadio_"+data[index].entryId,
+					data[index].isDefault);
+	}
+
 	dojo.widget.byId("codeListTable11").store.setData(data);
 	dojo.widget.byId("codeListTable12").store.setData(data);
+}
+
+function createHtmlForRadio(name, id, checked) {
+	return "<input type='radio' "+
+		"class='radio' "+
+		"name='"+name+"' "+
+		"id='"+id+"' "+
+		"checked='"+checked+"' "+
+		"/>";
 }
 
 scriptScope.createNewEntry = function() {
@@ -136,9 +161,43 @@ scriptScope.addEntry = function() {
 	dojo.debug("Function not implemented yet.");
 }
 
+// Get the modified data and send it to the server
 scriptScope.saveChanges = function() {
+	var sysListId = dojo.widget.byId("selectionList").getValue();
+	if (sysListId) {
+		var setDefault = dojo.widget.byId("selectionListDefault").checked;
+		var tableId = setDefault? "codeListTable12" : "codeListTable11";
+		var tableData = dojo.widget.byId(tableId).store.getData();
+
+		dojo.debug("sysList id: "+sysListId);
+		for (var index = 0; index < tableData.length; index++) {
+			var currentEntry = tableData[index];
+			var isDefault = isMarkedAsDefaultEntry(currentEntry.entryId);
+
+			dojo.debug("entry id : "+currentEntry.entryId);
+			dojo.debug("name (de): "+currentEntry.deName);
+			dojo.debug("name (en): "+currentEntry.enName);
+			dojo.debug("isDefault: "+isDefault);
+		}
+	}
+
+	// TODO send to server
 	dojo.debug("Function not implemented yet.");
 }
+
+// Returns whether an entry in the table is marked as default
+function isMarkedAsDefaultEntry(entryId) {
+	return dojo.byId("codeListRadio_"+entryId).checked;
+}
+
+function showLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("codelistsLoadingZone"), "visible");
+}
+
+function hideLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("codelistsLoadingZone"), "hidden");
+}
+
 
 </script>
 </head>
@@ -294,7 +353,7 @@ scriptScope.saveChanges = function() {
 					<span style="float:right;">
 						<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveChanges();">Speichern</button>
 					</span>
-					<span id="updateDuplicatesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+					<span id="codelistsLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 						<img src="img/ladekreis.gif" />
 					</span>
 				</span>
