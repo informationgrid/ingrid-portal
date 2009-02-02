@@ -4,12 +4,41 @@
 <script type="text/javascript">
 var scriptScope = this;
 
+_container_.addOnLoad(function() {
+	var language = "de";
+
+	CatalogService.getSysAdditionalFields(null, language, {
+		callback: function(additionalFieldList) {
+			var tableData = UtilList.addTableIndices(additionalFieldList);
+			dojo.widget.byId("addFieldsList").store.setData(tableData);
+		},
+		errorHandler: function(msg, err) {
+			dojo.debug("Error: "+msg);
+			dojo.debugShallow(err);
+		}
+	});
+
+	var addFieldsList = dojo.widget.byId("addFieldsList");
+    var contextMenu = addFieldsList.getContextMenu();
+	contextMenu.addSeparator();
+    contextMenu.addItemObject( { caption:'Auswahlliste bearbeiten', method:editListEntries } );
+});
+
+
 scriptScope.saveChanges = function() {
 	dojo.debug("Function not implemented yet.");
 }
 
 scriptScope.addEntry = function() {
 	dojo.debug("Function not implemented yet.");
+}
+
+function editListEntries(menuItem) {
+	var menu = menuItem.parent;
+	var rowData = menu.getRowData();
+	var listId = rowData.id;
+
+	dojo.debug("editListEntries("+listId+") called.");
 }
 
 </script>
@@ -34,27 +63,20 @@ scriptScope.addEntry = function() {
 				<div dojoType="ingrid:TableContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="contextMenu1"></div>
 				<div class="tableContainer rows20 w964">
 					<div class="cellEditors" id="addFieldsListEditors">
-						<div dojoType="ingrid:ValidationTextbox" widgetId="nameEditor"></div>
+						<div dojoType="ingrid:ValidationTextbox" class="w675" widgetId="nameEditor"></div>
 						<div dojoType="ingrid:ValidationTextbox" widgetId="numCharsEditor"></div>
-						<div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/inputTypes.js" style="width:100px;" widgetId="typeCombobox"></div>
+						<div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/inputtypes.js" style="width:100px;" widgetId="typeCombobox"></div>
 					</div>
 					<table id="addFieldsList" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable nosort interactive">
 						<thead>
 							<tr>
-								<th field="number" dataType="String" width="50">Nr.</th>
-								<th field="fieldname" dataType="String" width="674" editor="nameEditor">Feldname</th>
-								<th field="numchars" dataType="String" width="50" editor="numCharsEditor" createOnly="true">Zeichen</th>
-								<th field="type" dataType="String" width="140" editor="typeCombobox" createOnly="true">Typ</th>
-								<th field="edit" dataType="String" width="50"></th>
+								<th nosort="true" field="id" dataType="String" width="70">Nr.</th>
+								<th nosort="true" field="name" dataType="String" width="724" editor="nameEditor">Feldname</th>
+								<th nosort="true" field="size" dataType="String" width="50" editor="numCharsEditor" createOnly="true">Zeichen</th>
+								<th nosort="true" field="type" dataType="String" width="120" editor="typeCombobox"  createOnly="true">Typ</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr value="1">
-								<td>1</td>
-								<td>Feldname Test 1</td>
-								<td>120</td>
-								<td>Auswahlliste</td>
-								<td><a href="javascript:dialog.showPage('Zus&auml;tzliche Felder - Auswahlliste', 'admin_g_katalog_zusaetzl_felder_auswahl.html', 502, 245, true);"><img src="img/ic_fl_edit.gif" width="16" height="16" alt="Editieren" /></a></td></tr>
 						</tbody>
 					</table>
 				</div>

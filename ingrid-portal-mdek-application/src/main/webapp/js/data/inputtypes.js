@@ -3,6 +3,6 @@
  */
 
 [
-	["Auswahlliste","Auswahlliste"],
-	["Textfeld","Textfeld"]
+	["Auswahlliste","LIST"],
+	["Textfeld","TEXT"]
 ]
