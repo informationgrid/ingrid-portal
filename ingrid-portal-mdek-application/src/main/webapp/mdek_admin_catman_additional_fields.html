@@ -46,8 +46,19 @@ function editListEntries(menuItem) {
 	var menu = menuItem.parent;
 	var rowData = menu.getRowData();
 	var listId = rowData.id;
+	var listEntries = rowData.listEntries;
 
-	dojo.debug("editListEntries("+listId+") called.");
+	var def = new dojo.Deferred();
+	dialog.showPage(
+			"Zus&auml;tzliche Felder - Auswahlliste",
+			"mdek_admin_catman_additional_fields_list_edit.html",
+			502, 245, true,
+			{ resultHandler: def, listEntries: listEntries });
+
+	def.addCallback(function(resultList) {
+		rowData.listEntries = resultList;
+	});
+
 }
 
 </script>
