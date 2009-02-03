@@ -74,7 +74,10 @@ function editListEntries(menuItem) {
 					<div class="cellEditors" id="addFieldsListEditors">
 						<div dojoType="ingrid:ValidationTextbox" class="w675" widgetId="nameEditor"></div>
 						<div dojoType="ingrid:ValidationTextbox" widgetId="numCharsEditor"></div>
-						<div dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/inputtypes.js" style="width:100px;" widgetId="typeCombobox"></div>
+		                <select dojoType="ingrid:Select" autoComplete="false" style="width:100px;" id="typeCombobox">
+		                	<option value="TEXT">Textfeld</option>
+		                	<option value="LIST">Auswahlliste</option>
+		                </select>
 					</div>
 					<table id="addFieldsList" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable nosort interactive">
 						<thead>
