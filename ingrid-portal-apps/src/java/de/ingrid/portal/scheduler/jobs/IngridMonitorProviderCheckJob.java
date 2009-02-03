@@ -3,13 +3,9 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
-import java.io.IOException;
-import java.lang.reflect.UndeclaredThrowableException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -89,7 +85,8 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 		int status 						= 0;
 		String statusCode 				= null;
 		List<String> exclude			= new ArrayList<String>();
-		List<Provider> noInfoProvider	= new ArrayList<Provider>();
+		//List<Provider> noInfoProvider	= new ArrayList<Provider>();
+		Map<String,String> resultsProvider	= new HashMap<String,String>();
 		Session session 				= HibernateUtil.currentSession();
 		String errorMessage				= "";
         
@@ -133,23 +130,21 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 					}
 				}
 				
-				
 				if (!missingProvider.isEmpty()) {
 					errorMessage += writeErrorMessage(hits[i], missingProvider);
 				}
 				
-				noInfoProvider.addAll(addProviderToLocalDB(missingProvider));
-				
+				addProviderToLocalDB(missingProvider, resultsProvider);
 			}
 			
-			errorMessage += writeUpdateSummary(noInfoProvider);
+			errorMessage += writeUpdateSummary(resultsProvider);
 			
 			computeTime(dataMap, stopTimer());
 			
 			if (hits.length == 0) {
 				status = STATUS_ERROR;
 				statusCode = STATUS_CODE_ERROR_NO_IPLUGS;
-			} else if (errorMessage != "") {
+			} else if (!errorMessage.equals("")) {
 				status = STATUS_ERROR;
 				statusCode = errorMessage;
 			} else {
@@ -191,24 +186,17 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 	 * @return
 	 */
 	private Map getProvider( PlugDescription plugDescripton ) {
-		Map allIPlugProvider			= new HashMap();
-		Metadata metadata 				= null;
-		IPlugOperator plugOperator 		= null;
+		Map<String,List> allIPlugProvider	= new HashMap<String,List>();
+		Metadata metadata 					= null;
+		IPlugOperator plugOperator 			= null;
 		
 		try {
-			metadata = BusClientFactory.createBusClient().getNonCacheableIBus().getMetadata(plugDescripton.getPlugId());
-		} catch (IOException e) {
-			if (log.isDebugEnabled()) {
-				log.debug("Error getting MetaData from bus for iPlug: " + plugDescripton.getPlugId());
-			}
-		} catch (UndeclaredThrowableException e) {
+			metadata = BusClientFactory.createBusClient().getNonCacheableIBus().getMetadata(plugDescripton.getProxyServiceURL());
+		} catch (Exception e) {
 			if (log.isDebugEnabled()) {
 				log.debug("Error getting MetaData from bus for iPlug: " + plugDescripton.getPlugId() + 
 					". Does the method exist? (" + e.getLocalizedMessage() + ")");
-			}
-		} catch (Exception e) {
-			if (log.isDebugEnabled()) {
-				log.debug("Error getting MetaData from bus for iPlug: " + plugDescripton.getPlugId());
+				e.printStackTrace();
 			}
 		}
 				
@@ -259,7 +247,7 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 			errorMessage += "iPlug-ID: " + plugDesc.getPlugId() + newLine;
 			errorMessage += "Fehlende Anbieter: ";
 			for (Map.Entry<String, List> entry : missingProvider.entrySet()) {
-				String partner = (String)entry.getKey();
+				//String partner = (String)entry.getKey();
 				List<Provider> providers = (List)entry.getValue();
 		        for (Provider provider : providers) {
 		        	//errorMessage += provider.getShortName() + "(" + partner + ")" + ", ";
@@ -279,15 +267,16 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 	 * @param missingProvider
 	 * @return
 	 */
-	private List<Provider> addProviderToLocalDB(Map<String, List> missingProvider) {
-		ArrayList<Provider> nullProvider = new ArrayList();
-        
-        Iterator it = missingProvider.keySet().iterator();
-		
+	private void addProviderToLocalDB(Map<String, List> missingProvider, Map<String, String> result) {
 		for (Map.Entry<String, List> entry : missingProvider.entrySet()) {
 			String partner = (String)entry.getKey();
 			List<Provider> providers = (List)entry.getValue();
+			
 	        for (Provider provider : providers) {
+	        	// skip this one if it's already occurred
+				if (result.containsKey(provider.getShortName())) {
+					continue;
+				}
 	        	if (provider.getDisplayName() != null) {
 	        		IngridProvider iP = new IngridProvider();
 	        		iP.setIdent(provider.getShortName());
@@ -299,14 +288,13 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 	        		//iP.setId(0L);
 	
 	        		UtilsDB.saveDBObject(iP);
+	        		result.put(provider.getShortName(), provider.getDisplayName());
 	        	} else {
 	        		// add to a list of provider that didn't offer a long name
-	        		nullProvider.add(provider);
+	        		result.put(provider.getShortName(), null);
 	        	}
 	        }
         }        
-
-        return nullProvider;
 	}
 	
 	/**
@@ -314,32 +302,46 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 	 * @param noInfoProvider
 	 * @return
 	 */
-	private String writeUpdateSummary( List<Provider> noInfoProvider) {
-		String newLine = NEW_LINE_PLAIN;
-		String summary = newLine + newLine + "-----------------------" + newLine + newLine;
-		summary += "Anbieter, die nicht zur Datenbank hinzugef\u00FCgt werden konnten: " + newLine;
+	private String writeUpdateSummary( Map<String,String> resultsProvider) {
+		String addedProvider 	= "";
+		String nullProvider  	= "";
+		String newLine 			= NEW_LINE_PLAIN;
+		String summary 			= "";
 		
-		HashSet<String> providerNames = new HashSet<String>();
-
-		// get unique provider names
-		for (Provider provider : noInfoProvider) {
-			providerNames.add(provider.getShortName());
+		// prepare and distinguish between added and not added provider to the DB
+		for (Map.Entry<String,String> entry : resultsProvider.entrySet()) {
+			String shortName = (String)entry.getKey();
+			String longName  = (String)entry.getValue();
+			
+			if (longName == null) {
+				nullProvider += shortName + ", ";
+			} else {
+				addedProvider += shortName + " => " + longName + newLine;
+			}
 		}
 		
-		for (String provider : providerNames) {
-			summary += provider + ", ";
+		if (!nullProvider.isEmpty() || !addedProvider.isEmpty()) {
+			summary = newLine + "-----------------------" + newLine + newLine;
+			summary += "Anbieter, die zur Datenbank hinzugef\u00FCgt werden konnten: " + newLine;
+			summary += addedProvider;
+			
+			if (addedProvider.isEmpty()) {
+				summary += "keine";
+			}
 		}
-
-		summary = summary.substring(0, summary.length()-2);
-		summary += newLine + newLine;
 		
-		if (!noInfoProvider.isEmpty()) {
+		if (!nullProvider.isEmpty()) {
+			summary += newLine + newLine;
+			summary += "Anbieter, die nicht zur Datenbank hinzugef\u00FCgt werden konnten: " + newLine;
+			summary += nullProvider;
+			
+			summary += newLine + newLine;
 			summary += "Grund sind fehlende oder leere MetaDaten!";
 		}
 		
 		return summary;
 	}
-	
+
 	/**
 	 * Return the id of a partner from the database. This is needed to establish
 	 * a connection between provider and partner table.
