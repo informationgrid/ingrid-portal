@@ -76,7 +76,7 @@ function addAdditionalFieldsToDocument(additionalFieldList) {
 		dojo.html.show(afContentBlock);
 		for (var index = 0; index < additionalFieldList.length; ++index) {
 			var currentField = createAdditionalFieldDomNode(additionalFieldList[index]);
-			afContainer.appendChild(uiElementSpan);
+			afContainer.appendChild(currentField);
 		}
 
 	} else {
