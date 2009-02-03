@@ -244,7 +244,7 @@ function hideSplash(){
       <!-- context menus -->
       <div dojoType="ingrid:TreeContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="contextMenu1"></div>
       <div dojoType="ingrid:TreeContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="contextMenu2"></div>
-      
+
       <!-- tree -->
       <div dojoType="ingrid:Tree" listeners="treeController;treeListener;contextMenu1;contextMenu2;treeDocIcons" widgetId="tree">
       </div>
@@ -1981,7 +1981,24 @@ function hideSplash(){
 
 	            </div>
 	          </div>
-	        </div>
+
+
+				<!-- Zusaetzliche Felder -->
+				<div id="additionalFields" class="contentBlock">
+					<div class="titleBar">
+						<div class="titleIcon"><a href="javascript:toggleFields('additionalFields');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+						<div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7007)"><script>document.write(message.get("ui.obj.additionalFields.title"))</script></div>
+						<div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+					</div>
+					<div id="additionalFieldsContent" class="content">
+
+						<div id="additionalFieldsContainer" class="inputContainer notRequired">
+							<!-- Additional fields are attached on init via 'addAdditionalFieldsToDocument' -->
+						</div>
+
+					</div>
+				</div>
+			</div>
 
 	        </form>
 	      </div>   

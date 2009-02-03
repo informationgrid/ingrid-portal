@@ -16,6 +16,7 @@ dojo.addOnLoad(function()
   }
 
   var def = initCatalogData();
+  def.addCallback(initAdditionalFields);
   def.addCallback(initCurrentUser);
   def.addCallback(initCurrentGroup);
   def.addCallback(initGeneralEventListener);
@@ -42,6 +43,106 @@ dojo.addOnLoad(function()
 
   def.addErrback(function(err){ dojo.debug("Error: "+err); dojo.debugShallow(err); });
 });
+
+function initAdditionalFields() {
+	var def = new dojo.Deferred();
+
+	var language = UtilCatalog.getCatalogLanguage();
+	CatalogService.getSysAdditionalFields(null, language, {
+		callback: function(additionalFieldList) {
+			if (additionalFieldList) {
+				additionalFieldList.sort(function(a, b) { return (a.id - b.id); });
+				addAdditionalFieldsToDocument(additionalFieldList);
+			}
+			def.callback();
+		},
+		errorHandler: function(msg, err) {
+			dojo.debug("Error: "+msg);
+			dojo.debugShallow(err);
+			def.errback();
+		}
+	});
+
+	return def;
+}
+
+// Add additional fields from the catalog if they exist
+// Otherwise hide the 'additional fields' header
+function addAdditionalFieldsToDocument(additionalFieldList) {
+	var afContentBlock = dojo.byId("additionalFields");
+	var afContainer = dojo.byId("additionalFieldsContainer");
+
+	if (additionalFieldList && additionalFieldList.length != 0) {
+		dojo.html.show(afContentBlock);
+		for (var index = 0; index < additionalFieldList.length; ++index) {
+			var currentField = createAdditionalFieldDomNode(additionalFieldList[index]);
+			afContainer.appendChild(uiElementSpan);
+		}
+
+	} else {
+		dojo.html.hide(afContentBlock);
+	}
+}
+
+// Create a dom node for an additional field definition (AdditionalFieldBean)
+function createAdditionalFieldDomNode(additionalField) {
+	// Create the following dom structure:
+	// <span id="uiElementAdd${additionalField.id}" type="optional">
+	//   <span class="label">
+	//     <label class="inActive">
+	//       ${additionalField.name}
+	//     </label>
+	//     <span class="input">
+	//       < ingrid:ValidationTextbox or ingrid:Select depending on ${additionalField.type} /> 
+	//     </span>
+	//   </span>
+	// </span>
+
+	// Create dom nodes
+	var uiElementSpan = document.createElement("span");
+	uiElementSpan.id = "uiElementAdd" + additionalField.id;
+	uiElementSpan.setAttribute("type", "optional");
+	var labelSpanElement = document.createElement("span");
+	dojo.html.addClass(labelSpanElement, "label");
+	var labelElement = document.createElement("label");
+	dojo.html.addClass(labelElement, "inActive");
+	labelElement.innerHTML = additionalField.name;
+	var inputSpanElement = document.createElement("span");
+	dojo.html.addClass(inputSpanElement, "input");
+
+	// Create the dojo widget depending on the type
+	var inputWidget;
+	if ("TEXT" == additionalField.type) {
+		inputWidget = dojo.widget.createWidget("ingrid:ValidationTextbox", {
+			id: "additionalField" + additionalField.id,
+			type: "text",
+			maxlength: additionalField.size,
+			class: "w668" });
+
+	} else if ("LIST" == additionalField.type) {
+		inputWidget = dojo.widget.createWidget("ingrid:Select", {
+			id: "additionalField" + additionalField.id,
+			autoComplete: "false" });
+		dojo.html.addClass(inputWidget.textInputNode, "w648");
+		// Set the correct select values via the contained data provider
+		if (additionalField.listEntries) {
+			var data = [];
+			for (var entryIndex = 0; entryIndex < additionalField.listEntries.length; ++entryIndex) {
+				var currentEntry = additionalField.listEntries[entryIndex];
+				data.push([currentEntry, currentEntry]);
+			}
+			inputWidget.dataProvider.setData(data);
+		}
+	}
+
+	// Build the complete structure
+	labelSpanElement.appendChild(labelElement);
+	uiElementSpan.appendChild(labelSpanElement);
+	inputSpanElement.appendChild(inputWidget.domNode);
+	uiElementSpan.appendChild(inputSpanElement);
+	return uiElementSpan;
+}
+
 
 function initMenu() {
 	// Hide page3Subnavi2 if QA is deactivated
@@ -109,6 +210,7 @@ function initForm() {
   // Init the contentBlocks
   var contentBlockIds = ["generalContent", "ref1Content", "ref2Content", "ref3Content", "ref4Content", "ref5Content",
   			"spatialRefContent", "timeRefContent", "extraInfoContent", "availabilityContent", "thesaurusContent", "linksContent",
+  			"additionalFieldsContent",
   			"headerAddressType0Content", "headerAddressType1Content", "headerAddressType2Content", "headerAddressType3Content",
   			"address", "adrThesaurusContent", "associatedObjContent"];
 

@@ -282,6 +282,7 @@
 	"ui.obj.links.linksTo.title":"Verweise zu",
 	"ui.obj.links.linksTo.link":"Verweis anlegen/bearbeiten",
 	"ui.obj.links.linksFrom.title":"Verweise von",
+	"ui.obj.additionalFields.title":"Zusatzfelder",
 	"ui.obj.relevance":"Fachbezug",
 	"ui.obj.type1.identifier":"Identifikator der Datenquelle",
 	"ui.obj.type1.dataset":"Datensatz/Datenserie",
