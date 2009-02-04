@@ -5,7 +5,6 @@ package de.ingrid.portal.search;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,6 +12,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.global.IngridHitWrapper;
+import de.ingrid.portal.global.IngridHitsWrapper;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
@@ -32,14 +33,14 @@ public class QueryResultPostProcessor {
 
     private final static Log log = LogFactory.getLog(QueryResultPostProcessor.class);
 
-    public static IngridHits processRankedHits(IngridHits hits, String ds) {
+    public static IngridHitsWrapper processRankedHits(IngridHitsWrapper hits, String ds) {
         try {
             if (hits == null) {
                 return null;
             }
-            IngridHit[] hitArray = hits.getHits();
+            IngridHitWrapper[] hitArray = hits.getWrapperHits();
 
-            IngridHit hit = null;
+            IngridHitWrapper hit = null;
             IngridHitDetail detail = null;
 
             for (int i = 0; i < hitArray.length; i++) {
@@ -50,7 +51,7 @@ public class QueryResultPostProcessor {
                     processRankedHit(hit, detail, ds);
                     
                     // also process group sub hits !
-                    hit = (IngridHit) hit.get(Settings.RESULT_KEY_SUB_HIT);
+                    hit = (IngridHitWrapper) hit.get(Settings.RESULT_KEY_SUB_HIT);
                     if (hit != null) {
                         detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
 
@@ -72,7 +73,7 @@ public class QueryResultPostProcessor {
         return hits;
     }
 
-    private static void processRankedHit(IngridHit hit, IngridHitDetail detail, String ds) {
+    private static void processRankedHit(IngridHitWrapper hit, IngridHitDetail detail, String ds) {
         // if no detail, skip processing OF THIS HIT !
         if (detail == null) {
             if (log.isErrorEnabled()) {
@@ -107,7 +108,7 @@ public class QueryResultPostProcessor {
         }
     }
 
-    public static IngridHits processUnrankedHits(IngridHits hits, String selectedDS) {
+    public static IngridHitsWrapper processUnrankedHits(IngridHitsWrapper hits, String selectedDS) {
 
         try {
 
@@ -116,13 +117,13 @@ public class QueryResultPostProcessor {
                 return null;
             }
 
-            IngridHit[] hitArray = hits.getHits();
+            IngridHitWrapper[] hitArray = hits.getWrapperHits();
 
             // TODO: Why not fetch all Details at Once like
             // IngridHitDetail[] details = ibus.getDetails(hitArray, query, null); ?????????
 
             String tmpString = null;
-            IngridHit hit = null;
+            IngridHitWrapper hit = null;
             IngridHitDetail detail = null;
             PlugDescription plugDescr = null;
             for (int i = 0; i < hitArray.length; i++) {
@@ -215,7 +216,7 @@ public class QueryResultPostProcessor {
      * @param detail
      * @param ds
      */
-    private static void processDSCHit(IngridHit hit, IngridHitDetail detail, String ds) {
+    private static void processDSCHit(IngridHitWrapper hit, IngridHitDetail detail, String ds) {
         String tmpString = null;
 
         try {

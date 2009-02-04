@@ -22,6 +22,7 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.global.IngridHitsWrapper;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsString;
@@ -212,7 +213,7 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
             // post process ranked hits if exists
             boolean rankedColumnHasMoreGroupedPages = true;
             if (results.containsKey(Settings.MSGV_RANKED_QUERY)) {
-            	rankedHits = QueryResultPostProcessor.processRankedHits((IngridHits) results.get(Settings.MSGV_RANKED_QUERY), selectedDS);
+            	rankedHits = QueryResultPostProcessor.processRankedHits((IngridHitsWrapper) results.get(Settings.MSGV_RANKED_QUERY), selectedDS);
                 SearchState.adaptSearchState(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits, SEARCH_STATE_TOPIC);
                 SearchState.adaptSearchState(request, Settings.MSG_SEARCH_FINISHED_RANKED, Settings.MSGV_TRUE, SEARCH_STATE_TOPIC);
 

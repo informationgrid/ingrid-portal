@@ -25,6 +25,7 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.global.IngridHitsWrapper;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -307,11 +308,11 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         UtilsSearch.addQueryToHistory(request);
 
         // RANKED
-        IngridHits rankedHits = null;
+        IngridHitsWrapper rankedHits = null;
         if (renderResultColumnRanked) {
             // check if query must be executed
             if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_UNRANKED_QUERY)) {
-                rankedHits = (IngridHits) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_RANKED);
+                rankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_RANKED);
                 if (log.isDebugEnabled()) {
                     log.debug("Read RANKED hits from CACHE !!! rankedHits=" + rankedHits);
                 }
@@ -326,12 +327,12 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         }
 
         // UNRANKED
-        IngridHits unrankedHits = null;
+        IngridHitsWrapper unrankedHits = null;
         if (renderResultColumnUnranked) {
             if (!currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
                 // check if query must be executed
                 if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_RANKED_QUERY)) {
-                    unrankedHits = (IngridHits) SearchState.getSearchStateObject(request,
+                    unrankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request,
                             Settings.MSG_SEARCH_RESULT_UNRANKED);
                     if (log.isDebugEnabled()) {
                         log.debug("Read UNRANKED hits from CACHE !!!! unrankedHits=" + unrankedHits);
@@ -370,7 +371,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 } else {
                     queryTypes = queryTypes.concat(key.toString());
                 }
-                IngridHits hits = (IngridHits)results.get(key);
+                IngridHitsWrapper hits = (IngridHitsWrapper)results.get(key);
                 if (hits != null && hits.length() > 0) {
                     noResults = false;
                     break;
@@ -408,7 +409,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             
             // post process ranked hits if exists
             if (results.containsKey("ranked")) {
-                rankedHits = QueryResultPostProcessor.processRankedHits((IngridHits) results.get("ranked"), selectedDS);
+                rankedHits = QueryResultPostProcessor.processRankedHits((IngridHitsWrapper) results.get("ranked"), selectedDS);
                 SearchState.adaptSearchState(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits);
                 SearchState.adaptSearchState(request, Settings.MSG_SEARCH_FINISHED_RANKED, Settings.MSGV_TRUE);
 
@@ -454,7 +455,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             }
             // post process unranked hits if exists
             if (results.containsKey("unranked")) {
-                unrankedHits = QueryResultPostProcessor.processUnrankedHits((IngridHits) results.get("unranked"),
+                unrankedHits = QueryResultPostProcessor.processUnrankedHits((IngridHitsWrapper) results.get("unranked"),
                         selectedDS);
                 SearchState.adaptSearchState(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
                 SearchState.adaptSearchState(request, Settings.MSG_SEARCH_FINISHED_UNRANKED, Settings.MSGV_TRUE);

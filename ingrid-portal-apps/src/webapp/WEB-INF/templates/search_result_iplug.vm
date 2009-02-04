@@ -11,7 +11,7 @@
 #if ($IS_RANKED)
 	## RANKED -> CALLED FROM LEFT COLUMN (where grouped by domain)
     #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
-    	#foreach($rs in $rankedResultList.hits)
+    	#foreach($rs in $rankedResultList.getWrapperHits())
     		#set ($topHit = true)
     		#parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
 			#parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
@@ -22,7 +22,7 @@
 #else
 	## UNRANKED -> CALLED FROM RIGHT COLUMN (where grouped by iplug)
     #if($unrankedResultList && "$unrankedResultList.length()" != "0")
-    	#foreach($rs in $unrankedResultList.hits)
+    	#foreach($rs in $unrankedResultList.getWrapperHits())
     		#if($velocityCount == 1)
     		<div class="resultset_partner_group">
     			<div class="ico_down_black"><span class="title">$rs.dataSourceName</span><br /></div>

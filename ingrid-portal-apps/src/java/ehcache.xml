@@ -20,14 +20,14 @@
         diskPersistent="false"
         />   
         
-    <cache name="de.ingrid.search.query"
+    <cache name="ingrid-cache"
         maxElementsInMemory="5000"
         eternal="false"
         timeToIdleSeconds="100"
-        timeToLiveSeconds="300"
+        timeToLiveSeconds="3000"
         overflowToDisk="true"
         diskPersistent="false"
-        diskExpiryThreadIntervalSeconds="300"
+        diskExpiryThreadIntervalSeconds="3000"
         />
         
     <cache name="de.ingrid.iplug.record"

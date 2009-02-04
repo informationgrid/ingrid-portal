@@ -43,7 +43,7 @@
 #end
       </div>
       <br />
-#foreach($rs in $rankedResultList.hits)
+#foreach($rs in $rankedResultList.getWrapperHits())
 
 	#if($grouping)
       <div class="resultset_partner_group">

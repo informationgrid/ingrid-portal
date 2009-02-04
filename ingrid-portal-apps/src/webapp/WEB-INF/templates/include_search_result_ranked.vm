@@ -18,7 +18,7 @@
       <br />
 
 #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
-	#foreach($rs in $rankedResultList.hits)
+	#foreach($rs in $rankedResultList.getWrapperHits())
         #if($grouping)
 			#parse ('/WEB-INF/templates/include_search_result_group_header.vm')
         #end

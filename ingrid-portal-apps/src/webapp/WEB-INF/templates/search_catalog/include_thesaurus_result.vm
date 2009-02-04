@@ -13,7 +13,7 @@
 <br />
 
 #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
-	#foreach($rs in $rankedResultList.hits)
+	#foreach($rs in $rankedResultList.getWrapperHits())
 
 		  <div class="resultset_partner_group">
 ## With Nr. of Hits

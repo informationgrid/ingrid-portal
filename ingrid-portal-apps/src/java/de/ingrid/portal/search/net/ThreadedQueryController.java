@@ -10,7 +10,7 @@ import java.util.Iterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import de.ingrid.utils.IngridHits;
+import de.ingrid.portal.global.IngridHitsWrapper;
 
 /**
  * Controller class for the threaded search.
@@ -106,7 +106,7 @@ public class ThreadedQueryController {
      * @param hits
      *            The IngridHits (results).
      */
-    protected synchronized void addResultSet(String key, IngridHits hits) {
+    protected synchronized void addResultSet(String key, IngridHitsWrapper hits) {
         ingridResults.put(key, hits);
         if (ingridQueryDescriptors.size() == ingridResults.size()) {
             synchronized (threadMonitor) {

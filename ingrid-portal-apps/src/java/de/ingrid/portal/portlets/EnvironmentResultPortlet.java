@@ -18,6 +18,8 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.EnvironmentSearchForm;
+import de.ingrid.portal.global.IngridHitWrapper;
+import de.ingrid.portal.global.IngridHitsWrapper;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -118,7 +120,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         int HITS_PER_PAGE = Settings.SEARCH_RANKED_HITS_PER_PAGE;
 
         // do search
-        IngridHits hits = null;
+        IngridHitsWrapper hits = null;
         int numberOfHits = 0;
         try {
             hits = doSearch(query, startHit, nextStartHit, HITS_PER_PAGE, messages, request.getLocale());
@@ -197,7 +199,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         actionResponse.sendRedirect(Settings.PAGE_ENVIRONMENT + SearchState.getURLParamsCatalogueSearch(request, af));
     }
 
-    private IngridHits doSearch(IngridQuery query, int startHit, int groupedStartHit, int hitsPerPage,
+    private IngridHitsWrapper doSearch(IngridQuery query, int startHit, int groupedStartHit, int hitsPerPage,
             IngridResourceBundle resources, Locale locale) {
         if (log.isDebugEnabled()) {
             log.debug("Umweltthemen IngridQuery = " + UtilsSearch.queryToString(query));
@@ -210,10 +212,12 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         }
         
         IngridHits hits = null;
+        IngridHitsWrapper hitsWrapper = null;
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             hits = ibus.search(query, hitsPerPage, currentPage, startHit, PortalConfig.getInstance().getInt(
                     PortalConfig.QUERY_TIMEOUT_RANKED, 5000));
+            
             IngridHit[] results = hits.getHits();
             String[] requestedFields = { Settings.RESULT_KEY_TOPIC, Settings.RESULT_KEY_FUNCT_CATEGORY,
                     Settings.RESULT_KEY_PARTNER, Settings.RESULT_KEY_PROVIDER };
@@ -224,24 +228,28 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                 }
             }
 
+            // convert
+            hitsWrapper = new IngridHitsWrapper(hits);
+            IngridHitWrapper[] hitArray = hitsWrapper.getWrapperHits();
+            
             IngridHit[] subHitArray = null;
-            for (int i = 0; i < results.length; i++) {
+            for (int i = 0; i < hitArray.length; i++) {
                 try {
-                    if (results[i] == null) {
+                    if (hitArray[i] == null) {
                         continue;
                     }
                     if (details[i] != null) {
-                        transferDetailData(results[i], details[i], resources);
+                        transferDetailData(hitArray[i], details[i], resources);
                     }
                     // check for grouping and get details of "sub hits"
                     // NO, WE ONLY SHOW ONE HIT !
-                    subHitArray = results[i].getGroupHits();
+                    subHitArray = hitArray[i].getHit().getGroupHits();
                     if (subHitArray.length > 0) {
-                        results[i].putBoolean("moreHits", true);
+                    	hitArray[i].putBoolean("moreHits", true);
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
-                        log.error("Problems processing Hit, hit = " + results[i] + ", detail = " + details[i], t);
+                        log.error("Problems processing Hit, hit = " + hitArray[i] + ", detail = " + details[i], t);
                     }
                 }
 
@@ -280,10 +288,10 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
             }
         }
 
-        return hits;
+        return hitsWrapper;
     }
 
-    private void transferDetailData(IngridHit hit, IngridHitDetail detail, IngridResourceBundle resources) {
+    private void transferDetailData(IngridHitWrapper hit, IngridHitDetail detail, IngridResourceBundle resources) {
         UtilsSearch.transferHitDetails(hit, detail);
         hit.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_TOPIC, resources));
         hit.put(Settings.RESULT_KEY_FUNCT_CATEGORY, UtilsSearch.getDetailValue(detail,

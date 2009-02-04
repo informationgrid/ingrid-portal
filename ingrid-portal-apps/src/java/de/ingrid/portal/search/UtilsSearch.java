@@ -29,6 +29,7 @@ import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchExtEnvAreaSourcesForm;
+import de.ingrid.portal.global.IngridHitWrapper;
 import de.ingrid.portal.global.IngridPersistencePrefs;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
@@ -217,7 +218,7 @@ public class UtilsSearch {
      * @param hit
      * @param detail
      */
-    public static void transferHitDetails(IngridHit result, IngridHitDetail detail) {
+    public static void transferHitDetails(IngridHitWrapper result, IngridHitDetail detail) {
         try {
             // also cuts title: maximum length = 2 Lines, length of first line
             // is shorter because of icon !
@@ -232,7 +233,7 @@ public class UtilsSearch {
             }
             result.put(Settings.RESULT_KEY_ABSTRACT, UtilsString.cutString(summary.replaceAll("\\<.*?\\>",
                     ""), 400));
-            result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getDocumentId()));
+            result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getHit().getDocumentId()));
             result.put(Settings.RESULT_KEY_PROVIDER, detail.getOrganisation());
             result.put(Settings.RESULT_KEY_SOURCE, detail.getDataSourceName());
             result.put(Settings.RESULT_KEY_PLUG_ID, detail.getPlugId());
@@ -282,7 +283,7 @@ public class UtilsSearch {
      * @param result
      * @param plugDescr
      */
-    public static void transferPlugDescription(IngridHit result, PlugDescription plugDescr) {
+    public static void transferPlugDescription(IngridHitWrapper result, PlugDescription plugDescr) {
         try {
             result.put("hasPlugDescr", Settings.MSGV_TRUE);
             result.put(PlugDescription.DATA_SOURCE_NAME, plugDescr.getDataSourceName());

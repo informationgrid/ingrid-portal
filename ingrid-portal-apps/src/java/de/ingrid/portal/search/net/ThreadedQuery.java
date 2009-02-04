@@ -6,6 +6,8 @@ package de.ingrid.portal.search.net;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.ingrid.portal.global.IngridHitWrapper;
+import de.ingrid.portal.global.IngridHitsWrapper;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -48,7 +50,8 @@ public class ThreadedQuery extends Thread {
      */
     public void run() {
 
-        IngridHits hits = null;
+    	IngridHits hits = null;
+        IngridHitsWrapper hitsWrapper = null;
 
         long startTime = System.currentTimeMillis();
 
@@ -58,26 +61,31 @@ public class ThreadedQuery extends Thread {
             hits = ibus.search(qd.getQuery(), qd.getHitsPerPage(), qd.getCurrentPage(), qd.getStartHit(), qd
                     .getTimeout());
             if (qd.isGetDetails() || qd.isGetPlugDescription()) {
-                IngridHit[] hitArray = hits.getHits();
-                IngridHitDetail[] details = null;
+                //IngridHitWrapper[] hitArray = hits.getHits();
+            	IngridHit[] hitArray = hits.getHits();
+            	IngridHitDetail[] details = null;
                 if (qd.isGetDetails()) {
                     details = ibus.getDetails(hitArray, qd.getQuery(), qd.getRequestedFields());
                 }
 
+                hitsWrapper = new IngridHitsWrapper(hits);
+                IngridHitWrapper[] hitArrayWrapper = hitsWrapper.getWrapperHits();
                 IngridHit[] subHitArray = null;
-                for (int i = 0; i < hitArray.length; i++) {
-                	IngridHit topHit = hitArray[i];
-
+                for (int i = 0; i < hitArrayWrapper.length; i++) {
+                	//IngridHit topHit = hitArray[i];
+                	//IngridHitWrapper topHitWrapper = new IngridHitWrapper(hitArray[i]);
+                	IngridHitWrapper topHitWrapper = hitArrayWrapper[i];
+                	
                     // get Plug Description only for top Hits (grouped by iPlugs in right column)
                     if (qd.isGetPlugDescription()) {
-                    	topHit.put("plugDescr", ibus.getIPlug(hitArray[i].getPlugId()));
+                    	topHitWrapper.put("plugDescr", ibus.getIPlug(hitArrayWrapper[i].getHit().getPlugId()));
                     }
                     // get details for all hits to display
                     if (qd.isGetDetails()) {
-                    	topHit.put(Settings.RESULT_KEY_DETAIL, details[i]);
+                    	topHitWrapper.put(Settings.RESULT_KEY_DETAIL, details[i]);
 
                         // check for further hits (grouping)
-                        subHitArray = topHit.getGroupHits();
+                        subHitArray = topHitWrapper.getHit().getGroupHits();
                         if (subHitArray != null && subHitArray.length > 0) {
                         	
                         	// determine number of hits in group
@@ -85,14 +93,14 @@ public class ThreadedQuery extends Thread {
                         	boolean groupLengthException = false;
                         	try {
                         		// set in backend when grouping by domain (datasource)
-                            	groupLength = new Integer(topHit.getGroupTotalHitLength()).toString();
+                            	groupLength = new Integer(topHitWrapper.getHit().getGroupTotalHitLength()).toString();
                         	} catch (Exception ex) {
                         		// EXCEPTION MIGHT OCCUR DEPENDENT HOW HIT WAS SET UP IN BACKEND !
                         		groupLengthException = true;
                         	}
                         	// set in "normal" grouping (partner, provider ...)
                             if (groupLength == null) {
-                                groupLength = (String)topHit.get("no_of_hits");                            	
+                                groupLength = (String)topHitWrapper.get("no_of_hits");                            	
 
                                 if (groupLength == null) {
                                 	groupLength = (String)details[i].get("no_of_hits");
@@ -103,25 +111,26 @@ public class ThreadedQuery extends Thread {
                                 }
                             }
 
-                            topHit.put("no_of_hits", groupLength);
+                            topHitWrapper.put("no_of_hits", groupLength);
                             // default grouping: only top hit is shown, so we always have more hits
-                            topHit.putBoolean("moreHits", true);
+                            topHitWrapper.putBoolean("moreHits", true);
                             
                             // grouping by domain ? -> one sub hit is shown, we need details of first sub hit ...
                             String grouping = (String) qd.getQuery().get(Settings.QFIELD_GROUPED);
                             if (IngridQuery.GROUPED_BY_DATASOURCE.equals(grouping)) {
-                            	IngridHit subHit = subHitArray[0];
-                               	subHit.put("plugDescr", topHit.get("plugDescr"));
-                                IngridHitDetail subDetail = ibus.getDetail(subHit, qd.getQuery(), qd.getRequestedFields());
-                                subHit.put(Settings.RESULT_KEY_DETAIL, subDetail);
-                                topHit.put(Settings.RESULT_KEY_SUB_HIT, subHit);
+                            	//IngridHit subHit = subHitArray[0];
+                            	IngridHitWrapper subHitWrapper = new IngridHitWrapper(subHitArray[0]);
+                            	subHitWrapper.put("plugDescr", topHitWrapper.get("plugDescr"));
+                                IngridHitDetail subDetail = ibus.getDetail(subHitWrapper.getHit(), qd.getQuery(), qd.getRequestedFields());
+                                subHitWrapper.put(Settings.RESULT_KEY_DETAIL, subDetail);
+                                topHitWrapper.put(Settings.RESULT_KEY_SUB_HIT, subHitWrapper);
                                 
                                 // 2 hits already shown, do we have more ?
                                 if (groupLengthException) {
                                 	// problems extracting group length -> assume we have more hits !
-                                	subHit.putBoolean("moreHits", true);
+                                	subHitWrapper.putBoolean("moreHits", true);
                                 } else if (new Integer(groupLength).intValue() > 2) {
-                                	subHit.putBoolean("moreHits", true);
+                                	subHitWrapper.putBoolean("moreHits", true);
                                 }
                             }
                         }
@@ -138,7 +147,7 @@ public class ThreadedQuery extends Thread {
             if (log.isDebugEnabled()) {
                 log.debug("Finished search '" + this.key + "' in " + (System.currentTimeMillis() - startTime) + "ms.");
             }
-            this.controller.addResultSet(this.key, hits);
+            this.controller.addResultSet(this.key, hitsWrapper);
         }
     }
 

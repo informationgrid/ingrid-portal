@@ -50,6 +50,7 @@ public class QueryPreProcessor {
         String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
         IngridQuery query = null;
         try {
+        	log.debug("The QueryString: " + queryString);
             query = QueryStringParser.parse(queryString);
         } catch (ParseException ex) {
             if (log.isErrorEnabled()) {
