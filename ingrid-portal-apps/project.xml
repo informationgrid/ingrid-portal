@@ -604,7 +604,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-communication</artifactId>
-            <version>1.2.0-SNAPSHOT</version>
+            <version>1.2-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
