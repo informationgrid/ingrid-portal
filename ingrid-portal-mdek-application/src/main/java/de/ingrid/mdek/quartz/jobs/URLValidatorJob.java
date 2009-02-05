@@ -23,6 +23,7 @@ import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean.EntityType;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
+import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.jobs.util.URLObjectReference;
 import de.ingrid.mdek.quartz.jobs.util.URLState;
 import de.ingrid.mdek.quartz.jobs.util.URLValidator;
@@ -61,12 +62,12 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 		this.cancelJob = false;
 	}
 
-	public URLValidatorJob(IMdekCallerQuery mdekCallerQuery, String plugId) {
-		this.mdekCallerQuery = mdekCallerQuery;
+	public URLValidatorJob(ConnectionFacade connectionFacade, String plugId) {
+		this.mdekCallerQuery = connectionFacade.getMdekCallerQuery();
 		this.plugId = plugId;
 		jobName = createJobName(plugId);
 		String jobListenerName = createJobListenerName(plugId);
-		jobListener = new URLValidatorJobListener(jobListenerName);
+		jobListener = new URLValidatorJobListener(jobListenerName, connectionFacade.getMdekCallerCatalog(), plugId);
 		jobDetail = createJobDetail();
 	}
 
@@ -120,7 +121,7 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 		if (result != null) {
 			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
 			if (objs != null) {
-				Map<String, URLState> urlStateMap = new HashMap<String, URLState>(); 
+				Map<String, URLState> urlStateMap = new HashMap<String, URLState>();
 				for (IngridDocument objEntity : objs) {
 					URLObjectReference ref = new URLObjectReference();
 					ref.setObjectClass(objEntity.getInt("obj.objClass"));
@@ -216,7 +217,6 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 	}
 
 	public JobInfoBean getRunningJobInfo() {
-		JobInfoBean jobInfoResult = new JobInfoBean();
 		JobExecutionContext executionContext = getJobExecutionContext();
 
 		if (executionContext != null) {
@@ -229,18 +229,17 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 				}
 			}
 
+			JobInfoBean jobInfoResult = new JobInfoBean();
 			jobInfoResult.setDescription(jobName);
 			jobInfoResult.setEntityType(EntityType.URL);
 			jobInfoResult.setNumEntities(totalNumberOfUrls);
 			jobInfoResult.setNumProcessedEntities(numberOfProcessedUrls);
 			jobInfoResult.setStartTime(executionContext.getFireTime());
+			return jobInfoResult;
 
 		} else {
-			// No running job found for the current iplug...
-			// Return an empty jobInfoResult (?)
+			return null;
 		}
-
-		return jobInfoResult;
 	}
 
 

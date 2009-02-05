@@ -20,6 +20,7 @@ import de.ingrid.mdek.beans.AdditionalFieldBean.Type;
 import de.ingrid.mdek.beans.JobInfoBean.EntityType;
 import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.mdek.caller.MdekCaller;
+import de.ingrid.mdek.quartz.jobs.util.URLState;
 import de.ingrid.utils.IngridDocument;
 
 public class MdekCatalogUtils {
@@ -243,5 +244,20 @@ public class MdekCatalogUtils {
 		locDoc.put(MdekKeys.SNS_TOPIC_TYPE, loc.getTopicTypeId());
 
 		return locDoc;
+	}
+
+	public static List<Map<String, Object>> convertFromUrlJobResult(Map<String, URLState> urlStateMap) {
+		List<Map<String, Object>> urlInfoList = new ArrayList<Map<String, Object>>();
+		if (urlStateMap != null) {
+			for (Map.Entry<String, URLState> entry : urlStateMap.entrySet()) {
+				URLState urlState = entry.getValue();
+				Map<String, Object> urlInfo = new HashMap<String, Object>();
+				urlInfo.put(MdekKeys.URL_RESULT_URL, urlState.getUrl());
+				urlInfo.put(MdekKeys.URL_RESULT_STATE, urlState.getState().toString());
+				urlInfo.put(MdekKeys.URL_RESULT_RESPONSE_CODE, urlState.getResponseCode());
+				urlInfoList.add(urlInfo);
+			}
+		}
+		return urlInfoList;
 	}
 }

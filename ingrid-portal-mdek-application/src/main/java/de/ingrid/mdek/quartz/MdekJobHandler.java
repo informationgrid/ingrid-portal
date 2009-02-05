@@ -10,11 +10,14 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.jobs.MdekJob;
 import de.ingrid.mdek.quartz.jobs.URLValidatorJob;
 import de.ingrid.mdek.quartz.jobs.util.URLObjectReference;
 import de.ingrid.mdek.quartz.jobs.util.URLState.State;
+import de.ingrid.mdek.util.MdekSecurityUtils;
+import de.ingrid.utils.IngridDocument;
 
 public class MdekJobHandler {
 
@@ -34,7 +37,7 @@ public class MdekJobHandler {
 	}
 
 	public void startUrlValidatorJob() {
-		MdekJob job = new URLValidatorJob(connectionFacade.getMdekCallerQuery(), connectionFacade.getCurrentPlugId());
+		MdekJob job = new URLValidatorJob(connectionFacade, connectionFacade.getCurrentPlugId());
 
 		try {
 			boolean jobStarted = job.start(scheduler);
@@ -52,11 +55,14 @@ public class MdekJobHandler {
 
 	public JobInfoBean getUrlValidatorJobInfo() {
 		MdekJob job = getUrlValidatorJob();
-		if (job != null) {
+		if (job != null && job.getRunningJobInfo() != null) {
 			return job.getRunningJobInfo();
 
 		} else {
-			// TODO get result from the backend
+			IMdekCallerCatalog mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
+			IngridDocument doc = mdekCallerCatalog.getURLInfo(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
+			log.debug(doc);
+
 			return new JobInfoBean();
 		}
 	}
@@ -84,7 +90,7 @@ public class MdekJobHandler {
 
 	public List<URLObjectReference> getUrlValidatorJobResult() {
 		// TODO Implement
-		URLValidatorJob job = new URLValidatorJob(connectionFacade.getMdekCallerQuery(), connectionFacade.getCurrentPlugId());
+		URLValidatorJob job = new URLValidatorJob(connectionFacade, connectionFacade.getCurrentPlugId());
 		
 		List<URLObjectReference> urlObjectReferences = job.fetchUrls();
 		Random r = new Random();

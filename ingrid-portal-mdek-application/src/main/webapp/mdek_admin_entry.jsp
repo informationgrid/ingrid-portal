@@ -13,6 +13,7 @@
 <script src='/ingrid-portal-mdek-application/dwr/interface/ExportService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/HelpService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/ImportService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/ObjectService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/QueryService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/SecurityService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/SNSService.js'></script>

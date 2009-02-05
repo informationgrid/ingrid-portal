@@ -25,7 +25,7 @@ _container_.addOnLoad(function() {
     contextMenu.addItemObject( { caption:'Auswahlliste bearbeiten', method:editListEntries } );
 	dojo.event.connect("after", contextMenu, "open", function(arg) {
 		var rowData = contextMenu.getRowData();
-		if (rowData && rowData.listEntries) {
+		if (rowData && rowData.type == "LIST") {
 			contextMenu.enableItem('Auswahlliste bearbeiten');
 		} else {
 			contextMenu.disableItem('Auswahlliste bearbeiten');

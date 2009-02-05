@@ -1,5 +1,8 @@
 package de.ingrid.mdek.quartz.jobs;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -7,8 +10,14 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 
+import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekUtils;
+import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.quartz.jobs.util.URLState;
 import de.ingrid.mdek.quartz.jobs.util.URLState.State;
+import de.ingrid.mdek.util.MdekCatalogUtils;
+import de.ingrid.mdek.util.MdekSecurityUtils;
+import de.ingrid.utils.IngridDocument;
 
 
 public class URLValidatorJobListener implements JobListener {
@@ -16,9 +25,13 @@ public class URLValidatorJobListener implements JobListener {
 	private final static Logger log = Logger.getLogger(URLValidatorJobListener.class);	
 
 	private final String listenerName;
+	private final String plugId;
+	private final IMdekCallerCatalog mdekCallerCatalog;
 
-	public URLValidatorJobListener(String listenerName) {
+	public URLValidatorJobListener(String listenerName, IMdekCallerCatalog mdekCallerCatalog, String plugId) {
 		this.listenerName = listenerName;
+		this.mdekCallerCatalog = mdekCallerCatalog;
+		this.plugId = plugId;
 	}
 
 	public String getName() {
@@ -28,20 +41,13 @@ public class URLValidatorJobListener implements JobListener {
 
 	public void jobWasExecuted(JobExecutionContext jobExecutionContext,
 			JobExecutionException jobExecutionException) {
-		// TODO Store result in the backend
 
-		log.debug("job executed successfully. Result:");
 		Map<String, URLState> urlMap = (Map<String, URLState>) jobExecutionContext.getResult();
-		for (Map.Entry<String, URLState> entry : urlMap.entrySet()) {
-			URLState urlState = entry.getValue();
-			log.debug("URL: "+urlState.getUrl());
-			if (urlState.getState() == State.HTTP_ERROR || urlState.getState() == State.VALID) {
-				log.debug("response: "+urlState.getState()+" ("+urlState.getResponseCode()+")");
 
-			} else {
-				log.debug("response: "+urlState.getState());
-			}
-		}
+		IngridDocument jobInfo = new IngridDocument();
+		jobInfo.put(MdekKeys.URL_RESULT, MdekCatalogUtils.convertFromUrlJobResult(urlMap));
+		jobInfo.put(MdekKeys.JOBINFO_START_TIME, MdekUtils.dateToTimestamp(jobExecutionContext.getFireTime()));
+		mdekCallerCatalog.setURLInfo(plugId, jobInfo, MdekSecurityUtils.getCurrentUserUuid());
 	}
 
 	// Do nothing for the following two methods
