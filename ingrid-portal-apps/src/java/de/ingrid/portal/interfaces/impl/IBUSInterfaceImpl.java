@@ -4,6 +4,7 @@
 package de.ingrid.portal.interfaces.impl;
 
 import java.net.URL;
+import java.util.HashMap;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.logging.Log;
@@ -37,6 +38,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     private static IBus bus = null;
 
     static BusClient client = null;
+    
+    private static boolean cache = false;
     
     public static synchronized IBUSInterface getInstance() {
         if (instance == null) {
@@ -78,6 +81,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             PortalConfig config = PortalConfig.getInstance();
             if (config.getBoolean("portal.enable.caching", true) == true) {
             	bus = client.getCacheableIBus();
+            	cache = true;
             } else {
             	bus = client.getNonCacheableIBus();
             }
@@ -110,8 +114,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             throws Exception {
         IngridHits hits = null;
 
-        // FIXME AW: add cache option to query
-        
+        injectCache(query);
         
         try {
             if (log.isDebugEnabled()) {
@@ -161,6 +164,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     public IngridHitDetail getDetail(IngridHit result, IngridQuery query, String[] requestedFields) {
         IngridHitDetail detail 	= null;
         
+        injectCache(query);
+        
         try {
             if (log.isDebugEnabled()) {
                 log.debug("iBus.getDetail: hit = " + result + ", requestedFields = " 
@@ -198,6 +203,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     public IngridHitDetail[] getDetails(IngridHit[] results, IngridQuery query, String[] requestedFields) {
         IngridHitDetail[] details 	= null;
         
+        injectCache(query);
+        
         try {
             if (log.isDebugEnabled()) {
                 log.debug("iBus.getDetails: hits = " + results + ", requestedFields = " + requestedFields);
@@ -231,6 +238,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
      */
     public Record getRecord(IngridHit result) {
         Record rec 		= null;
+        
+        injectCache(result);
         
         if (rec == null) {
 	        try {
@@ -310,9 +319,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     public PlugDescription[] getAllIPlugs() {
         PlugDescription[] plugs = new PlugDescription[0];
         
-        // FIXME AW: caching true here?
-        //IBus bus 				= bus_cached;
-        
         try {
             plugs = bus.getAllIPlugs();
         } catch (Throwable t) {
@@ -326,9 +332,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     public PlugDescription[] getAllIPlugsWithoutTimeLimitation() {
         PlugDescription[] plugs = new PlugDescription[0];
         
-        // FIXME AW: caching true here?
-        //IBus bus 				= bus_cached;
-        
         try {
             plugs = bus.getAllIPlugsWithoutTimeLimitation();
         } catch (Throwable t) {
@@ -337,5 +340,15 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }            
         }
         return plugs;
+    }
+    
+    private void injectCache(HashMap map) {
+    	if (!map.containsKey("cache")) {
+	    	if (cache) {
+	    		map.put("cache", "on");
+	        } else {
+	        	map.put("cache", "off");
+	        }
+    	}
     }
 }
