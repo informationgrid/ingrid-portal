@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
 
 import de.ingrid.mdek.MdekUtils;
+import de.ingrid.mdek.beans.ExportJobInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.job.MdekException;
@@ -79,7 +80,7 @@ public class ExportServiceImpl {
 	}
 
 	public FileTransfer getLastExportFile() {
-		JobInfoBean exportInfo = catalogRequestHandler.getExportInfo(true);
+		ExportJobInfoBean exportInfo = catalogRequestHandler.getExportInfo(true);
 		return new FileTransfer(createFilename(exportInfo), "x-gzip", exportInfo.getResult());
 	}
 

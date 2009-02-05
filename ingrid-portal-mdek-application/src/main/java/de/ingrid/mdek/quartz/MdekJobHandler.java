@@ -10,12 +10,14 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.jobs.MdekJob;
 import de.ingrid.mdek.quartz.jobs.URLValidatorJob;
 import de.ingrid.mdek.quartz.jobs.util.URLObjectReference;
 import de.ingrid.mdek.quartz.jobs.util.URLState.State;
+import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.utils.IngridDocument;
 
@@ -59,9 +61,8 @@ public class MdekJobHandler {
 			return job.getRunningJobInfo();
 
 		} else {
-			IMdekCallerCatalog mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
-			IngridDocument doc = mdekCallerCatalog.getURLInfo(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
-			log.debug(doc);
+			URLJobInfoBean urlJobInfo = new URLJobInfoBean();
+			urlJobInfo.setUrlObjectReferences(getUrlValidatorJobResult());
 
 			return new JobInfoBean();
 		}
@@ -89,19 +90,8 @@ public class MdekJobHandler {
 	}
 
 	public List<URLObjectReference> getUrlValidatorJobResult() {
-		// TODO Implement
-		URLValidatorJob job = new URLValidatorJob(connectionFacade, connectionFacade.getCurrentPlugId());
-		
-		List<URLObjectReference> urlObjectReferences = job.fetchUrls();
-		Random r = new Random();
-		for (URLObjectReference urlObjectReference : urlObjectReferences) {
-			urlObjectReference.getUrlState().setState(getRandomState(r));
-			urlObjectReference.getUrlState().setResponseCode(r.nextInt(1000));
-		}
-		return urlObjectReferences;
-	}
-
-	private State getRandomState(Random r) {
-		return State.values()[r.nextInt(4) + 1];
+		IMdekCallerCatalog mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
+		IngridDocument response = mdekCallerCatalog.getURLInfo(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
+		return MdekCatalogUtils.extractUrlJobResultFromResponse(response);
 	}
 }

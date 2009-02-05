@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.beans.AdditionalFieldBean;
 import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.ExportJobInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCaller.AddressArea;
@@ -106,9 +107,9 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
-	public JobInfoBean getExportInfo(boolean includeExportData) {
+	public ExportJobInfoBean getExportInfo(boolean includeExportData) {
 		IngridDocument response = mdekCallerCatalog.getExportInfo(connectionFacade.getCurrentPlugId(), includeExportData, MdekSecurityUtils.getCurrentUserUuid());
-		return MdekCatalogUtils.extractJobInfoFromResponse(response);
+		return MdekCatalogUtils.extractExportJobInfoFromResponse(response);
 	}
 
 	public void importEntities(UserData currentUser, byte[] importData, String targetObjectUuid, String targetAddressUuid,

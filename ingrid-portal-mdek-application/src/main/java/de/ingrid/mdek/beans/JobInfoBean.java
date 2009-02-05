@@ -14,7 +14,6 @@ public class JobInfoBean {
 	private Date startTime;
 	private Date endTime;
 	private Exception exception;
-	private byte[] result;
 
 	public String getDescription() {
 		return description;
@@ -51,12 +50,6 @@ public class JobInfoBean {
 	}
 	public void setException(Exception exception) {
 		this.exception = exception;
-	}
-	public byte[] getResult() {
-		return result;
-	}
-	public void setResult(byte[] result) {
-		this.result = result;
 	}
 	public EntityType getEntityType() {
 		return entityType;

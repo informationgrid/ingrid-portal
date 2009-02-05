@@ -1,9 +1,6 @@
 package de.ingrid.mdek.quartz.jobs;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
@@ -13,8 +10,7 @@ import org.quartz.JobListener;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtils;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
-import de.ingrid.mdek.quartz.jobs.util.URLState;
-import de.ingrid.mdek.quartz.jobs.util.URLState.State;
+import de.ingrid.mdek.quartz.jobs.util.URLObjectReference;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.utils.IngridDocument;
@@ -42,10 +38,10 @@ public class URLValidatorJobListener implements JobListener {
 	public void jobWasExecuted(JobExecutionContext jobExecutionContext,
 			JobExecutionException jobExecutionException) {
 
-		Map<String, URLState> urlMap = (Map<String, URLState>) jobExecutionContext.getResult();
+		List<URLObjectReference> urlObjectReferences = (List<URLObjectReference>) jobExecutionContext.getResult();
 
 		IngridDocument jobInfo = new IngridDocument();
-		jobInfo.put(MdekKeys.URL_RESULT, MdekCatalogUtils.convertFromUrlJobResult(urlMap));
+		jobInfo.put(MdekKeys.URL_RESULT, MdekCatalogUtils.convertFromUrlJobResult(urlObjectReferences));
 		jobInfo.put(MdekKeys.JOBINFO_START_TIME, MdekUtils.dateToTimestamp(jobExecutionContext.getFireTime()));
 		mdekCallerCatalog.setURLInfo(plugId, jobInfo, MdekSecurityUtils.getCurrentUserUuid());
 	}

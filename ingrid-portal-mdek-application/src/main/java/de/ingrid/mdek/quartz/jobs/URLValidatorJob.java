@@ -38,6 +38,7 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 	private static final String JOB_BASE_NAME = "urlValidatorJob_";
 	private static final String JOB_LISTENER_SUFFIX = "_listener";
 	public static final String URL_MAP = "urlMap";
+	public static final String URL_OBJECT_REFERENCES = "urlObjectReferences";
 	public static final String END_TIME = "endTime";
 	public static final int NUM_THREADS = 10;
 
@@ -80,10 +81,12 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 	}
 
 	private JobDetail createJobDetail() {
-		Map<String, URLState> urlMap = createUrlMap();
+		List<URLObjectReference> urlObjectReferences = fetchUrls();
+		Map<String, URLState> urlMap = createUrlMap(urlObjectReferences);
 
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put(URLValidatorJob.URL_MAP, urlMap);
+		dataMap.put(URLValidatorJob.URL_OBJECT_REFERENCES, urlObjectReferences);
 
 		JobDetail jobDetail = new JobDetail(jobName, Scheduler.DEFAULT_GROUP, URLValidatorJob.class);
 		JobDataMap jobDataMap = new JobDataMap(dataMap);
@@ -93,17 +96,17 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 		return jobDetail;
 	}
 
-	private Map<String, URLState> createUrlMap() {
+
+	private Map<String, URLState> createUrlMap(List<URLObjectReference> urlObjectReferences) {
 		Map<String, URLState> urlMap = new HashMap<String, URLState>();
-		for (URLObjectReference ref : fetchUrls()) {
+		for (URLObjectReference ref : urlObjectReferences) {
 			urlMap.put(ref.getUrlState().getUrl(), ref.getUrlState());
 		}
 		return urlMap;
 	}
 
 
-	// TODO Change to private
-	public List<URLObjectReference> fetchUrls() {
+	private List<URLObjectReference> fetchUrls() {
 		List<URLObjectReference> resultList = new ArrayList<URLObjectReference>();
 
 		// Fetch all URLs for objects that are published and not modified (objIdPub = objId)
@@ -195,7 +198,7 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 		log.debug("URL Validation took "+(endTime - startTime)+" ms.");
 
 		executorService.shutdown();
-		jobExecutionContext.setResult(urlMap);
+		jobExecutionContext.setResult(mergedJobDataMap.get(URL_OBJECT_REFERENCES));
 	}
 
 	// Retrieves the current JobExecutionContext
