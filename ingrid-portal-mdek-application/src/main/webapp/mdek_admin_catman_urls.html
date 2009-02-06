@@ -103,8 +103,6 @@ function updateUrlJobInfo(jobInfo) {
 		dojo.byId("urlsInfoNumProcessedUrls").innerHTML = jobInfo.numProcessedEntities + " / " + jobInfo.numEntities;
 
 		var progressBar = dojo.widget.byId("urlsProgressBar");
-		dojo.debug("numEntities: "+jobInfo.numEntities);
-		dojo.debug("numProcessedEntities: "+jobInfo.numProcessedEntities);
 		progressBar.setMaxProgressValue(jobInfo.numEntities);
 		progressBar.setProgressValue(jobInfo.numProcessedEntities);
 	}
