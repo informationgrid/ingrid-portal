@@ -16,6 +16,7 @@ import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.search.UtilsSearch;
+import de.ingrid.utils.DeepUtil;
 import de.ingrid.utils.IBus;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -123,10 +124,11 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 		+ ", currentPage=" + currentPage + ", startHit=" + startHit);
             }
             long start = System.currentTimeMillis();
+            
             hits = bus.search(query, hitsPerPage, currentPage, startHit, timeout);
-            long duration = System.currentTimeMillis() - start;
             
             if (log.isDebugEnabled()) {
+            	long duration = System.currentTimeMillis() - start;
                 log.debug("iBus.search: finished !");
                 log.debug("in " + duration + "ms");
             }
@@ -166,6 +168,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         
         injectCache(query);
         
+        String s = DeepUtil.deepString(query, 1);
+        
         try {
             if (log.isDebugEnabled()) {
                 log.debug("iBus.getDetail: hit = " + result + ", requestedFields = " 
@@ -173,13 +177,11 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
             long start = System.currentTimeMillis();
             detail = bus.getDetail(result, query, requestedFields);
-            long duration = System.currentTimeMillis() - start;
             
             if (log.isDebugEnabled()) {
+                long duration = System.currentTimeMillis() - start;
                 log.debug("iBus.getDetail: finished !");
                 log.debug("in " + duration + "ms");
-                if (detail==null)
-                	log.debug("DETAIL IS NULL !!!!!!!!!!!");
             }
         } catch (Throwable t) {
             if (log.isDebugEnabled()) {
@@ -205,15 +207,17 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         
         injectCache(query);
         
+        String s = DeepUtil.deepString(query, 1);
+        
         try {
             if (log.isDebugEnabled()) {
                 log.debug("iBus.getDetails: hits = " + results + ", requestedFields = " + requestedFields);
             }
             long start = System.currentTimeMillis();
             details = bus.getDetails(results, query, requestedFields);
-            long duration = System.currentTimeMillis() - start;
             
             if (log.isDebugEnabled()) {
+            	long duration = System.currentTimeMillis() - start;
                 log.debug("iBus.getDetails: finished !");
                 log.debug("in " + duration + "ms");
             }
@@ -299,11 +303,11 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         
         // else ask the bus and store the result inside the cache
         try {
-        	log.debug("get iPlugDescription: start");
-        	long start = System.currentTimeMillis();
+        	//log.debug("get iPlugDescription: start");
+        	//long start = System.currentTimeMillis();
         	pd = bus.getIPlug(plugId);
-        	long duration = System.currentTimeMillis() - start;
-        	log.debug("finished in " + duration + "ms");
+        	//long duration = System.currentTimeMillis() - start;
+        	//log.debug("finished in " + duration + "ms");
 	    } catch (Throwable t) {
 	        if (log.isWarnEnabled()) {
 	            log.warn("Problems fetching iPlug from iBus !", t);

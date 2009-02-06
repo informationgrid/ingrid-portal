@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="communication.xsd">
-        <client name="/torwald-group:awallat-ibus-client">
+        <client name="/torwald-group:username-ibus-client">
                 <connections>
                         <server name="/torwald-group:torwald-ibus">
                                 <socket port="9900" timeout="10" ip="213.144.28.245" />
@@ -11,3 +11,18 @@
         </client>
         <messages queueSize="2000" handleTimeout="120"/>
 </communication>
+<!--  For Harrison -->
+<!-- 
+<communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="communication.xsd">
+        <client name="/torwald-group:harrison-local-ibus-client">
+                <connections>
+                        <server name="/torwald-group:torwald-ibus">
+                                <socket port="9900" timeout="10" ip="192.168.64.34" />
+                                <messages maximumSize="1048576" threadCount="100" />
+                        </server>
+                </connections>
+        </client>
+        <messages queueSize="2000" handleTimeout="120"/>
+</communication>
+-->

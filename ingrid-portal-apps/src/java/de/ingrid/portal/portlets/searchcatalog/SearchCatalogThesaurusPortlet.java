@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.TreeSet;
 
 import javax.portlet.ActionRequest;
@@ -229,7 +231,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 		// Here we extract the TopTerm Topics from the results. The rootHit represents the 'toplevel' node 
 		Topic rootHit = (Topic) results[0];
 		// getSuccessors() returns the nodes at level 1 (TopTerms in this case)
-		List hits = rootHit.getSuccessors();
+		Set<Topic> hits = rootHit.getSuccessors();
 
 		// Sort the List alphabetically. We put it in a set to filter duplicates
 		TreeSet hitSet = new TreeSet(new SNSTopicComparator());
@@ -256,7 +258,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 
             	// -- Check if the Topic has subTopics (is expandable) --
         		// We need a search with depth = 2 for this
-            	List succ = hit.getSuccessors();
+            	Set<Topic> succ = hit.getSuccessors();
         		if (succ.size() == 0)
         			snsNode.put("expandable", new Boolean(false));
         		else
@@ -311,7 +313,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
     		return;			
 		}
 
-		List hits = rootHit.getSuccessors();
+		Set<Topic> hits = rootHit.getSuccessors();
 
         if (hits == null || hits.size() == 0) {
         	nodeToOpen.setLoading(false);
@@ -346,9 +348,9 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
         	DisplayTreeNode snsNode = new DisplayTreeNode(new Integer(rootNode.getNextId()).toString(), hit.getTopicName(), false);
         	
         	// -- Check if the Topic has subTopics (is expandable) --
-    		List succ = hit.getSuccessors();
+    		Set<Topic> succ = hit.getSuccessors();
         	if (nodeType == null) {
-        		succ = new ArrayList();
+        		succ = new HashSet<Topic>();
         	}
     		
     		// Mark the node as 'not expandable' at first
