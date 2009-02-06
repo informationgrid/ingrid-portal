@@ -8,6 +8,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.params.HttpClientParams;
+import org.apache.commons.httpclient.params.HttpConnectionParams;
 import org.apache.log4j.Logger;
 import org.quartz.InterruptableJob;
 import org.quartz.JobDataMap;
@@ -41,6 +45,9 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 	public static final String URL_OBJECT_REFERENCES = "urlObjectReferences";
 	public static final String END_TIME = "endTime";
 	public static final int NUM_THREADS = 10;
+
+	private final static int CONNECTION_TIMEOUT = 5000;
+	private final static int SOCKET_TIMEOUT = 5000;
 
 	private final String plugId;
 	private final String jobName; 
@@ -168,8 +175,16 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 		JobDataMap mergedJobDataMap = jobExecutionContext.getMergedJobDataMap();
 		Map<String, URLState> urlMap = (Map<String, URLState>) mergedJobDataMap.get(URL_MAP);
 		List<URLValidator> validatorTasks = new ArrayList<URLValidator>(urlMap.size());
+
+		HttpClientParams httpClientParams = new HttpClientParams();
+		httpClientParams.setConnectionManagerTimeout(0);
+		httpClientParams.setSoTimeout(SOCKET_TIMEOUT);
+		HttpConnectionParams httpParams = new HttpConnectionParams();
+		httpParams.setConnectionTimeout(CONNECTION_TIMEOUT);
+		httpClientParams.setDefaults(httpParams);
+		HttpClient httpClient = new HttpClient(httpClientParams, new MultiThreadedHttpConnectionManager());
 		for (URLState urlState : urlMap.values()) {
-			validatorTasks.add(new URLValidator(urlState));
+			validatorTasks.add(new URLValidator(httpClient, urlState));
 		}
 
 		log.debug("Starting url validation...");

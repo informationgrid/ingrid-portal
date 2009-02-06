@@ -8,9 +8,6 @@ _container_.addOnLoad(function() {
 	var filterTable = dojo.widget.byId("urlListTable2");
 	filterTable.setFilter("errorCode", function(errorCode) { return ("VALID" != errorCode); });
 
-	var def = getUrlValidatorJobResultDef();
-	def.addCallback(updateUrlTables);
-
 	setTimeout("refreshUrlProcessInfo();", 3000);
 });
 
@@ -68,6 +65,8 @@ refreshUrlProcessInfo = function() {
 			updateUrlJobInfo(jobInfo);
 			if (!jobFinished(jobInfo)) {
 				setTimeout("refreshUrlProcessInfo();", 3000);
+			} else {
+				updateUrlTables(jobInfo.urlObjectReferences);
 			}
 		},
 		errorHandler: function(msg, err) {
@@ -79,7 +78,8 @@ refreshUrlProcessInfo = function() {
 }
 
 function jobFinished(jobInfo) {
-	return (jobInfo.startTime == null);
+	// Job is finished if it has never been started (startTime == null) or it has an end time (endTime != null)
+	return (jobInfo.startTime == null || jobInfo.endTime != null);
 }
 
 function updateUrlJobInfo(jobInfo) {
@@ -87,18 +87,13 @@ function updateUrlJobInfo(jobInfo) {
 		dojo.byId("urlsInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
 		dojo.html.hide(dojo.byId("urlsProgressBarContainer"));
 		dojo.html.hide(dojo.byId("cancelUrlsProcessButton"));
+		dojo.html.hide(dojo.byId("urlsInfoNumProcessedUrlsContainer"));
+		dojo.byId("urlsInfoNumProcessedUrls").innerHTML = "";
 
 		if (jobInfo.endTime) {
 			dojo.html.show(dojo.byId("urlsInfoEndDateContainer"));
-			dojo.html.show(dojo.byId("urlsInfoNumProcessedUrlsContainer"));
-			dojo.byId("urlsInfoNumProcessedUrls").innerHTML = jobInfo.numProcessedEntities;
-
-		} else {
-			// No job has been started yet
-			dojo.html.hide(dojo.byId("urlsInfoEndDateContainer"));
-			dojo.html.hide(dojo.byId("urlsInfoNumProcessedUrlsContainer"));
-			dojo.byId("urlsInfoNumProcessedUrls").innerHTML = "";
 		}
+
 	} else {
 		dojo.byId("urlsInfoTitle").innerHTML = "Informationen zum laufenden Prozess:";
 		dojo.html.hide(dojo.byId("urlsInfoEndDateContainer"));
@@ -108,6 +103,8 @@ function updateUrlJobInfo(jobInfo) {
 		dojo.byId("urlsInfoNumProcessedUrls").innerHTML = jobInfo.numProcessedEntities + " / " + jobInfo.numEntities;
 
 		var progressBar = dojo.widget.byId("urlsProgressBar");
+		dojo.debug("numEntities: "+jobInfo.numEntities);
+		dojo.debug("numProcessedEntities: "+jobInfo.numProcessedEntities);
 		progressBar.setMaxProgressValue(jobInfo.numEntities);
 		progressBar.setProgressValue(jobInfo.numProcessedEntities);
 	}
@@ -126,33 +123,22 @@ function updateUrlJobInfo(jobInfo) {
 }
 
 
-function getUrlValidatorJobResultDef() {
-	var def = new dojo.Deferred();
-
-	CatalogManagementService.getUrlValidatorJobResult({
-		callback: function(urlObjectReferenceList) {
-			def.callback(urlObjectReferenceList);
-		},
-		errorHandler: function(msg, err) {
-			dojo.debug("Error: "+msg);
-			dojo.debugShallow(err);
-			def.errback();
-		}
-	});
-	return def;
-}
-
 function updateUrlTables(urlObjectReferenceList) {
-	UtilList.addIcons(urlObjectReferenceList);
-	for (var i = 0; i < urlObjectReferenceList.length; ++i) {
-		urlObjectReferenceList[i].Id = i;
-		addUrlTableInfo(urlObjectReferenceList[i]);
+	if (urlObjectReferenceList) {
+		UtilList.addIcons(urlObjectReferenceList);
+		for (var i = 0; i < urlObjectReferenceList.length; ++i) {
+			urlObjectReferenceList[i].Id = i;
+			addUrlTableInfo(urlObjectReferenceList[i]);
+		}
+	
+		dojo.widget.byId("urlListTable1").store.setData(urlObjectReferenceList);
+		dojo.widget.byId("urlListTable2").store.setData(urlObjectReferenceList);
+		dojo.widget.byId("urlListTable2").applyFilters();
+		dojo.widget.byId("urlListTable2").render();
+	} else {
+		dojo.widget.byId("urlListTable1").store.clearData();
+		dojo.widget.byId("urlListTable2").store.clearData();
 	}
-
-	dojo.widget.byId("urlListTable1").store.setData(urlObjectReferenceList);
-	dojo.widget.byId("urlListTable2").store.setData(urlObjectReferenceList);
-	dojo.widget.byId("urlListTable2").applyFilters();
-	dojo.widget.byId("urlListTable2").render();
 }
 
 function addUrlTableInfo(urlObjectReference) {
@@ -194,7 +180,7 @@ function addUrlTableInfo(urlObjectReference) {
 								<td id="urlsInfoBeginDate"></td></tr>
 								<tr><td id="urlsInfoEndDateContainer">Beendet am:</td>
 								<td id="urlsInfoEndDate"></td></tr>
-								<tr><td id="urlsInfoNumProcessedUrlsContainer">Anzahl Datens&auml;tze:</td>
+								<tr><td id="urlsInfoNumProcessedUrlsContainer">Anzahl URLs:</td>
 								<td id="urlsInfoNumProcessedUrls"></td></tr>
 								<tr><td id="urlsProgressBarContainer" colspan=2><div dojoType="ProgressBar" id="urlsProgressBar" width="310" height="10" /></td></tr>
 						</table>

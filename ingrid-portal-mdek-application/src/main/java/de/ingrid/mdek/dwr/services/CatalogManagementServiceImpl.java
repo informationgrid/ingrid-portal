@@ -6,12 +6,11 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.MdekKeys;
-import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.MdekJobHandler;
-import de.ingrid.mdek.quartz.jobs.util.URLObjectReference;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
 
@@ -31,12 +30,8 @@ public class CatalogManagementServiceImpl {
 		mdekJobHandler.stopUrlValidatorJob();
 	}
 
-	public JobInfoBean getUrlValidatorJobInfo() {
+	public URLJobInfoBean getUrlValidatorJobInfo() {
 		return mdekJobHandler.getUrlValidatorJobInfo();
-	}
-
-	public List<URLObjectReference> getUrlValidatorJobResult() {
-		return mdekJobHandler.getUrlValidatorJobResult();
 	}
 
 	public List<MdekDataBean> getDuplicateObjects() {

@@ -55,16 +55,14 @@ public class MdekJobHandler {
 		}
 	}
 
-	public JobInfoBean getUrlValidatorJobInfo() {
+	public URLJobInfoBean getUrlValidatorJobInfo() {
 		MdekJob job = getUrlValidatorJob();
 		if (job != null && job.getRunningJobInfo() != null) {
-			return job.getRunningJobInfo();
+			JobInfoBean jobInfo = job.getRunningJobInfo();
+			return new URLJobInfoBean(jobInfo);
 
 		} else {
-			URLJobInfoBean urlJobInfo = new URLJobInfoBean();
-			urlJobInfo.setUrlObjectReferences(getUrlValidatorJobResult());
-
-			return new JobInfoBean();
+			return getUrlValidatorJobResult();
 		}
 	}
 
@@ -89,9 +87,9 @@ public class MdekJobHandler {
 		}
 	}
 
-	public List<URLObjectReference> getUrlValidatorJobResult() {
+	private URLJobInfoBean getUrlValidatorJobResult() {
 		IMdekCallerCatalog mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
 		IngridDocument response = mdekCallerCatalog.getURLInfo(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
-		return MdekCatalogUtils.extractUrlJobResultFromResponse(response);
+		return MdekCatalogUtils.extractUrlJobInfoFromResponse(response);
 	}
 }
