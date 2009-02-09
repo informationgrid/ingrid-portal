@@ -13,8 +13,7 @@ import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import de.ingrid.ibus.client.BusClient;
-import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
@@ -72,9 +71,9 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 			IngridQuery q = QueryStringParser.parse(query);
 			
 			startTimer();
-			// TODO AW: direct bus communication (NOT via IBUSInterfaceImpl!) or not?
-//			IngridHits hits = BusClient.instance().getBus().search(q, 10, 1, 0, timeout);
-			IngridHits hits = IBUSInterfaceImpl.getInstance().search(q, 10, 1, 0, timeout);
+			// Don't use cache!
+			// the cache:off parameter already should be in query 
+			IngridHits hits = BusClientFactory.createBusClient().getNonCacheableIBus().search(q, 10, 1, 0, timeout);
 			computeTime(dataMap, stopTimer());
 			
 			if (hits.length() == 0) {

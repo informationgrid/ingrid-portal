@@ -19,7 +19,6 @@ import org.quartz.JobExecutionException;
 import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.hibernate.HibernateUtil;
-import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridPartner;
 import de.ingrid.portal.om.IngridProvider;
 import de.ingrid.utils.PlugDescription;
@@ -94,7 +93,7 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 			startTimer();
 			
 			// get all iPlugs connected to the iBus
-			PlugDescription[] hits = IBUSInterfaceImpl.getInstance().getAllIPlugs();
+			PlugDescription[] hits = BusClientFactory.createBusClient().getNonCacheableIBus().getAllIPlugs();
 			
 			// get all known provider from the database
 			List<IngridProvider> allIngridProviderInDB = session.createCriteria(IngridProvider.class).list();

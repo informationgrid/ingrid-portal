@@ -3,15 +3,13 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
-import java.util.Date;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.utils.PlugDescription;
 
 
@@ -66,7 +64,8 @@ public class IngridMonitorIBusJob extends IngridMonitorAbstractJob {
 		String statusCode = null;
 		try {
 			startTimer();
-			PlugDescription[] hits = IBUSInterfaceImpl.getInstance().getAllIPlugs();
+			// don't use the cache!
+			PlugDescription[] hits = BusClientFactory.createBusClient().getNonCacheableIBus().getAllIPlugs();
 			computeTime(dataMap, stopTimer());
 			
 			if (hits.length == 0) {
