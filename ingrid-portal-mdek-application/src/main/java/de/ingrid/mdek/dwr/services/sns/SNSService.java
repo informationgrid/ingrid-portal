@@ -4,13 +4,13 @@ import java.net.URL;
 import java.text.Collator;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.axis.AxisFault;
@@ -20,8 +20,6 @@ import com.slb.taxi.webservice.xtm.stubs.FieldsType;
 import com.slb.taxi.webservice.xtm.stubs.SearchType;
 import com.slb.taxi.webservice.xtm.stubs.TopicMapFragment;
 import com.slb.taxi.webservice.xtm.stubs.TopicMapFragmentIndexedDocument;
-import com.slb.taxi.webservice.xtm.stubs.xtm.BaseName;
-import com.slb.taxi.webservice.xtm.stubs.xtm.InstanceOf;
 import com.slb.taxi.webservice.xtm.stubs.xtm.Occurrence;
 
 import de.ingrid.iplug.sns.SNSClient;
@@ -121,12 +119,12 @@ public class SNSService {
         // TODO Build correct tree structure
         // TODO Check Language
         if (topicID.equals(SNS_ROOT_TOPIC)) {
-        	resultList = buildTopicRootStructure(((Topic) hitsArray[0]).getSuccessors());
+        	resultList = buildTopicRootStructure(getSuccessors((Topic) hitsArray[0]));
         } else {
         	for (int i = 0; i < hitsArray.length; i++) {
                 Topic hit = (Topic) hitsArray[i];
                 if (hit.getTopicID().equals(topicID)) {
-	                final List successors = hit.getSuccessors();
+	                final List successors = getSuccessors(hit);
 
 	                // TODO The returned root structure is invalid (?)
 	            	if (includeRootNode) {
@@ -153,7 +151,7 @@ public class SNSService {
     	for (Topic topic : topics) {
     		if (topic.getLanguage().equalsIgnoreCase(THESAURUS_LANGUAGE_FILTER)) {	// Only add 'german' terms
 	    		SNSTopic resultTopic = new SNSTopic(getTypeFromTopic(topic), topic.getTopicID(), topic.getTopicName());
-	    		List<Topic> succ = topic.getSuccessors();
+	    		List<Topic> succ = getSuccessors(topic);
 	
 	    		if (succ != null && !succ.isEmpty())
 	    		{
@@ -665,13 +663,18 @@ public class SNSService {
     private static void printTopic(Topic t) {
     	System.out.println("Title: "+t.getTitle()+" ID: "+t.getTopicID());
     	
-		List<Topic> succList = t.getSuccessors();
+		List<Topic> succList = getSuccessors(t);
 		if (succList != null && !succList.isEmpty()) {
 			for (Topic succ : succList) {
 				System.out.print(" ");
 				printTopic(succ);
 			}
 		}
+    }
+
+    private static List<Topic> getSuccessors(Topic t) {
+    	Set<Topic> successors = t.getSuccessors();
+    	return new ArrayList<Topic>(successors);
     }
 
     static public class TopicComparator implements Comparator<Topic> {
