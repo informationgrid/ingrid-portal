@@ -6,7 +6,7 @@ import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 
 // FIXME AW: extend from IngridDocument!?
-public class IngridHitWrapper extends HashMap {
+public class IngridHitWrapper extends IngridHit {
 	private static final String PARAM_INGRID_HIT = "ingrid_hit";
 	
 	private static final String PARAM_INGRID_DETAIL = "ingrid_hit_detail";
