@@ -32,7 +32,12 @@ function selectObjectInTree(menuItem) {
 	var rowData = menu.getRowData();
 	var objUuid = rowData.uuid;
 
-	ObjectService.getPathToObject(objUuid, {
+	selectObjectInTreeByUuid(objUuid);
+}
+
+// Select the node with uuid in the tree
+function selectObjectInTreeByUuid(uuid) {
+	ObjectService.getPathToObject(uuid, {
 		callback: function(path){
 			var def = expandPathDef(path);
 			def.addCallback(selectNode);
@@ -42,7 +47,7 @@ function selectObjectInTree(menuItem) {
 			dojo.debugShallow(err);
 			def.errback;
 		}
-	});	
+	});
 }
 
 // Expand all nodes along the given path and select the target node
@@ -179,7 +184,7 @@ scriptScope.saveChanges = function() {
 	// Get the new name from the name input field
 	// Store the new value in the backend
 	// If an error occured -> abort
-	// If it was successful update the table and reset the tree
+	// If it was successful update the table, refresh the tree and select the updated node in the tree
 	var newObjectName = dojo.string.trim(dojo.widget.byId("duplicatesObjectName").getValue());
 	var selectedObject = dojo.widget.byId("duplicatesListTable").getSelectedData();
 
@@ -190,11 +195,14 @@ scriptScope.saveChanges = function() {
 			dojo.widget.byId("duplicatesListTable").store.update(selectedObject, "title", newObjectName);
 			var objectRootNode = dojo.widget.byId("duplicatesTree").children[0];
 			var treeController = dojo.widget.byId("treeDuplicatesController");
-			treeController.refreshChildren(objectRootNode);
-
+			var refreshChildrenDef = treeController.refreshChildren(objectRootNode);
+			refreshChildrenDef.addCallback(function() {
+				selectObjectInTreeByUuid(objectUuid);
+			});
 		});
 		def.addErrback(function(err) {
-			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err), dialog.WARNING);				
+			dojo.debug("Error: "+err);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err+""), dialog.WARNING);				
 		});
 
 	} else {
