@@ -42,24 +42,16 @@ function renderTextWithTitle(oldVal, newVal, title) {
 		return;
 	}
 
-	if (!oldVal) {
-		oldVal = "";
-	}
-	if (!newVal) {
-		newVal = "";
-	}
+	oldVal += "";
+	newVal += "";
 	dojo.byId("diffContent").innerHTML += "<strong>" + title + "</strong><p>" + diffString(oldVal, newVal) + "</p>";
 	dojo.byId("oldContent").innerHTML += "<strong>" + title + "</strong><p>" + oldVal.replace(/\n/g, "<br />") + "</p>";
 	dojo.byId("currentContent").innerHTML += "<strong>" + title + "</strong><p>" + newVal.replace(/\n/g, "<br />") + "</p>";
 }
 
 function renderText(oldVal, newVal) {
-	if (!oldVal) {
-		oldVal = "";
-	}
-	if (!newVal) {
-		newVal = "";
-	}
+	oldVal += "";
+	newVal += "";
 	var str = diffString(oldVal, newVal);
 	// Replace newlines with <br /> and remove EOL chars
 	str = str.replace(/\n/g, '<br />').replace(/&para;/g, '');
