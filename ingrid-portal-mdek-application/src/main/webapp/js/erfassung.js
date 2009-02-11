@@ -248,8 +248,8 @@ function toggleButton(btnImage, labelElement, color, mode)
   var toggleTo = "";
   // tool tips & link titles
   var titles = [];
-  titles['required'] = 'Nur Pflichtfelder aufklappen';
-  titles['all'] = 'Alle Felder aufklappen';
+  titles['required'] = message.get("ui.general.openRequiredFieldsTooltip");
+  titles['all'] = message.get("ui.general.openAllFieldsTooltip");
   
   if (mode == "showAll")
     toggleTo = "required";

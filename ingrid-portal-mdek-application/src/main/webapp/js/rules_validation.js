@@ -230,7 +230,7 @@ function addAddressTableInfoValidation() {
 
 	def.addCallback(function(auskunftEntry) {
 	  	var auskunftString = auskunftEntry[0];
-	  	popup.domNode.innerHTML = "Die Addressverweistabelle muss mindestens eine Adresse vom Typ '"+auskunftString+"' beinhalten!";
+	  	popup.domNode.innerHTML = dojo.string.substituteParams(message.get("validation.addressInfoRequired"), auskunftString);
 
 		table._valid = false;
 
@@ -326,8 +326,7 @@ function addCommunicationTableValidation() {
 
 	def.addCallback(function(emailEntry) {
 	  	var email = emailEntry[0];
-	  	popup.domNode.innerHTML = "Die Kommunikationstabelle muss mindestens einen Eintrag vom Typ '"+email+"' beinhalten!";
-	
+	  	popup.domNode.innerHTML = dojo.string.substituteParams(message.get("validation.communicationEmailRequired"), email);
 		dojo.event.connectOnce(table.store, "onAddData", table, "applyValidation");
 	
 		table._valid = false;

@@ -55,12 +55,12 @@ detailHelper.renderAddressEntry = function(address) {
 	}
 	
 	if (this.isValid(address.task)) {
-		entry += "\n<strong>Aufgaben</strong>";
+		entry += "\n<strong>"+message.get("ui.adr.details.tasks")+"</strong>";
 		entry += "\n"+address.task+"\n";
 	}
 
 	if (this.isValid(address.addressDescription)) {
-		entry += "\n<strong>Notizen</strong>";
+		entry += "\n<strong>"+message.get("ui.adr.details.notes")+"</strong>";
 		entry += "\n"+address.addressDescription;
 	}
 

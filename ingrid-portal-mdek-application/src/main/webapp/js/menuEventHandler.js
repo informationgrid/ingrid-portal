@@ -136,10 +136,10 @@ menuEventHandler.handlePreview = function(message) {
 	
 	if (selectedNode.nodeAppType == "O") {
   	dojo.debug('Show object preview.');
-		dialog.showPage("Detail View", "mdek_detail_view_dialog.html", 755, 600, false, params);
+		dialog.showPage(message.get("dialog.object.detailView.title"), "mdek_detail_view_dialog.html", 755, 600, false, params);
 	} else if (selectedNode.nodeAppType == "A") {
   	dojo.debug('Show address preview.');
-		dialog.showPage("Detail View", "mdek_detail_view_address_dialog.html", 755, 600, false, params);
+		dialog.showPage(message.get("dialog.address.detailView.title"), "mdek_detail_view_address_dialog.html", 755, 600, false, params);
 	}
 }
 
@@ -952,7 +952,7 @@ menuEventHandler.handleShowChanges = function(msg) {
 }
 
 menuEventHandler.handleShowComment = function() {
-	dialog.showPage("Kommentar ansehen/hinzufügen", "mdek_comments_dialog.html", 1010, 470, false);
+	dialog.showPage(message.get("dialog.showComments.title"), "mdek_comments_dialog.html", 1010, 470, false);
 /*
 	var nodeId = prompt("Jump to node with uuid", "5CE671D3-5475-11D3-A172-08002B9A1D1D");
  	if (nodeId) {

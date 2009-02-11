@@ -42,21 +42,13 @@ function IndirectPageNavigation(args) {
 		var currentPage = Math.floor(startHit/this.resultsPerPage) + 1;
 		var lastPage = Math.ceil(totalNumHits/this.resultsPerPage);
 	
-/*
-		dojo.debug("totalNumHits: "+totalNumHits);
-		dojo.debug("startHit: "+startHit);
-		dojo.debug("endHit: "+endHit);
-		dojo.debug("currentPage: "+currentPage);
-		dojo.debug("lastPage: "+lastPage);
-*/
-
 		// Update the dom elements
 		if (totalNumHits == 0) {
-			this.infoSpan.innerHTML = "0 Treffer";
+			this.infoSpan.innerHTML = message.get("ui.pageNav.zeroHits");
 		} else if (totalNumHits == 1) {
-			this.infoSpan.innerHTML = ""+(startHit+1)+"-"+(endHit+1)+" von "+totalNumHits+" Treffer";
+			this.infoSpan.innerHTML = dojo.string.substituteParams(message.get("ui.pageNav.beginEndTotalHit"), startHit+1, endHit+1, totalNumHits);
 		} else {
-			this.infoSpan.innerHTML = ""+(startHit+1)+"-"+(endHit+1)+" von "+totalNumHits+" Treffern";
+			this.infoSpan.innerHTML = dojo.string.substituteParams(message.get("ui.pageNav.beginEndTotalHits"), startHit+1, endHit+1, totalNumHits);
 		}
 	
 		// Clear the paging span
@@ -65,9 +57,9 @@ function IndirectPageNavigation(args) {
 	
 		// Add info text to the paging span
 		if (totalNumHits == 0) {
-			this.pagingSpan.appendChild(document.createTextNode("(Seite 1 von 1)"));
+			this.pagingSpan.appendChild(document.createTextNode(dojo.string.substituteParams(message.get("ui.pageNav.currentToLastPages"), 1, 1)));
 		} else {
-			this.pagingSpan.appendChild(document.createTextNode("(Seite "+currentPage+" von "+lastPage+")"));
+			this.pagingSpan.appendChild(document.createTextNode(dojo.string.substituteParams(message.get("ui.pageNav.currentToLastPages"), currentPage, lastPage)));
 		}
 	
 		// Add navigation to the next set of page navigation links
@@ -80,7 +72,7 @@ function IndirectPageNavigation(args) {
 				_this.updateDomNodes();
 			}
 			link.setAttribute("href", "javascript:void(0);");
-			link.setAttribute("title", "Erste Seite");
+			link.setAttribute("title", message.get("ui.pageNav.firstPage"));
 			link.innerHTML = "&lt;&lt;";
 
 			this.pagingSpan.appendChild(link);
@@ -93,7 +85,7 @@ function IndirectPageNavigation(args) {
 				_this.updateDomNodes();
 			}
 			link.setAttribute("href", "javascript:void(0);");
-			link.setAttribute("title", "zurueck");
+			link.setAttribute("title", message.get("ui.pageNav.navBack"));
 			link.innerHTML = "&lt;";
 
 			this.pagingSpan.appendChild(link);
@@ -119,7 +111,7 @@ function IndirectPageNavigation(args) {
 					_this.onPageSelected(this.innerHTML);
 				}
 				link.setAttribute("href", "javascript:void(0);");
-				link.setAttribute("title", "Seite "+i);
+				link.setAttribute("title", dojo.string.substituteParams(message.get("ui.pageNav.pageNum"), i));
 				link.innerHTML = i;
 		
 				this.pagingSpan.appendChild(link);
@@ -135,7 +127,7 @@ function IndirectPageNavigation(args) {
 				_this.updateDomNodes();
 			}
 			link.setAttribute("href", "javascript:void(0);");
-			link.setAttribute("title", "weiter");
+			link.setAttribute("title", message.get("ui.pageNav.navForward"));
 			link.innerHTML = "&gt;";
 			this.pagingSpan.appendChild(link);
 
@@ -148,7 +140,7 @@ function IndirectPageNavigation(args) {
 				_this.updateDomNodes();
 			}
 			link.setAttribute("href", "javascript:void(0);");
-			link.setAttribute("title", "Letzte Seite");
+			link.setAttribute("title", message.get("ui.pageNav.lastPage"));
 			link.innerHTML = "&gt;&gt;";
 			this.pagingSpan.appendChild(link);
 		}
@@ -217,11 +209,11 @@ function PageNavigation(args) {
 
 		// Update the dom elements
 		if (totalNumHits == 0) {
-			this.infoSpan.innerHTML = "0 Treffer";
+			this.infoSpan.innerHTML = message.get("ui.pageNav.zeroHits");
 		} else if (totalNumHits == 1) {
-			this.infoSpan.innerHTML = ""+(startHit+1)+"-"+(endHit+1)+" von "+totalNumHits+" Treffer";
+			this.infoSpan.innerHTML = dojo.string.substituteParams(message.get("ui.pageNav.beginEndTotalHit"), startHit+1, endHit+1, totalNumHits);
 		} else {
-			this.infoSpan.innerHTML = ""+(startHit+1)+"-"+(endHit+1)+" von "+totalNumHits+" Treffern";
+			this.infoSpan.innerHTML = dojo.string.substituteParams(message.get("ui.pageNav.beginEndTotalHits"), startHit+1, endHit+1, totalNumHits);
 		}
 	
 		// Clear the paging span
@@ -230,9 +222,9 @@ function PageNavigation(args) {
 	
 		// Add info text to the paging span
 		if (totalNumHits == 0) {
-			this.pagingSpan.appendChild(document.createTextNode("(Seite 1 von 1)"));
+			this.pagingSpan.appendChild(document.createTextNode(dojo.string.substituteParams(message.get("ui.pageNav.currentToLastPages"), 1, 1)));
 		} else {
-			this.pagingSpan.appendChild(document.createTextNode("(Seite "+currentPage+" von "+lastPage+")"));
+			this.pagingSpan.appendChild(document.createTextNode(dojo.string.substituteParams(message.get("ui.pageNav.currentToLastPages"), currentPage, lastPage)));
 		}
 
 		// Add navigation to the next set of page navigation links
@@ -244,7 +236,7 @@ function PageNavigation(args) {
 				_this.onPageSelected(1);
 			}
 			link.setAttribute("href", "javascript:void(0);");
-			link.setAttribute("title", "Erste Seite");
+			link.setAttribute("title", message.get("ui.pageNav.firstPage"));
 			link.innerHTML = "&lt;&lt;";
 			this.pagingSpan.appendChild(link);
 
@@ -256,7 +248,7 @@ function PageNavigation(args) {
 				_this.onPageSelected(this.previousPage);
 			}
 			link.setAttribute("href", "javascript:void(0);");
-			link.setAttribute("title", "zurueck");
+			link.setAttribute("title", message.get("ui.pageNav.navBack"));
 			link.innerHTML = "&lt;";
 			this.pagingSpan.appendChild(link);
 		}
@@ -284,7 +276,7 @@ function PageNavigation(args) {
 					_this.onPageSelected(this.innerHTML);
 				}
 				link.setAttribute("href", "javascript:void(0);");
-				link.setAttribute("title", "Seite "+i);
+				link.setAttribute("title", dojo.string.substituteParams(message.get("ui.pageNav.pageNum"), i));
 				link.innerHTML = i;
 				this.pagingSpan.appendChild(link);
 			}
@@ -299,7 +291,7 @@ function PageNavigation(args) {
 				_this.onPageSelected(this.nextPage);
 			}
 			link.setAttribute("href", "javascript:void(0);");
-			link.setAttribute("title", "weiter");
+			link.setAttribute("title", message.get("ui.pageNav.navForward"));
 			link.innerHTML = "&gt;";
 			this.pagingSpan.appendChild(link);
 
@@ -310,7 +302,7 @@ function PageNavigation(args) {
 				_this.onPageSelected(this.lastPage);
 			}
 			link.setAttribute("href", "javascript:void(0);");
-			link.setAttribute("title", "Letzte Seite");
+			link.setAttribute("title", message.get("ui.pageNav.lastPage"));
 			link.innerHTML = "&gt;&gt;";
 			this.pagingSpan.appendChild(link);
 		}

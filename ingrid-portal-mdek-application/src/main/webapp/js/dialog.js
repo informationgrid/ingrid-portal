@@ -59,9 +59,9 @@ dialog.showPage = function(caption, url, width, height, /* boolean */modal, /* a
 dialog.showContextHelp = function(e, guiId, caption /* optional */) {
 	// Check if guiId is a string or int
 	// If it's a string (deprecated), display it
-	var errorText = "Der Hilfetext f&uuml;r das Feld mit der ID: '"+guiId+"' konnte nicht gefunden werden.";
+	var errorText = dojo.string.substituteParams(message.get("dialog.help.helpMessageNotFound"), guiId+"");
 	if (caption) {
-		errorText += "<br>Feldname: '"+caption+"'";
+		errorText += "<br>"+ message.get("dialog.help.fieldName") +": '"+caption+"'";
 	}
 
 	if (typeof guiId == "string") {
@@ -157,7 +157,7 @@ dialog.show = function(caption, text, /* dialog.WARNING|dialog.INFO */type, /* a
   div.style.position = "absolute";
   var content = '';
   if (type == dialog.WARNING)
-    content += '<div class="popupWarning">Warnhinweis!</div>';
+    content += "<div class='popupWarning'>"+ message.get("dialog.general.warning") +"!</div>";
   if (type == dialog.INFO)
     text = '<strong>' + text + '</strong>';
   content += '<div class="popupContent xNoScroll yScroll" style="height:'+(height-85)+'px;">' + text + '<span class="buttons" id="'+dlgId+'_buttons"></span></div>';
