@@ -146,7 +146,7 @@ function hideSplash(){
         <div style="width:550px; background-color:#e6f0f5; font-family:Verdana,Helvetica,Arial,sans-serif; font-size:12px; padding: 20px 0px 20px 0px; margin:0px">
           <p style="font-size:24px; font-weight:bold; line-height:16px; margin:16px">InGrid-Editor</p>
 <!--           <p style="font-size:16px; font-weight:bold; line-height:16px; margin:16px">Version 1.0.0</p>  -->
-          <p style="font-size:12px; font-weight:normal; line-height:16px; margin:16px">Die Anwendung wird geladen...</p>
+          <p style="font-size:12px; font-weight:normal; line-height:16px; margin:16px"><script>document.write(message.get("ui.entry.loadingMessage"))</script></p>
         </div>
    </div>
 </div>
@@ -202,8 +202,8 @@ function hideSplash(){
   	  </div>
 	  <div id="page3Subnavi" class="subnavi" style="display:none">
   	    <ul>
-   	      <li><a id="page3Subnavi1" onClick="clickMenu('page3', 'page3')" href="javascript:void(0);" class="current" title="Bearbeitung/Verantwortlich">Bearbeitung/Verantwortlich</a></li>
-  	      <li><a id="page3Subnavi2" onClick="clickMenu('page3', 'page3Sub2')" href="javascript:void(0);" title="Qualit&auml;tssicherung">Qualit&auml;tssicherung</a></li>
+   	      <li><a id="page3Subnavi1" onClick="clickMenu('page3', 'page3')" href="javascript:void(0);" class="current" title="Bearbeitung/Verantwortlich"><script>document.write(message.get("menu.main.qualityAssurance.editor"))</script></a></li>
+  	      <li><a id="page3Subnavi2" onClick="clickMenu('page3', 'page3Sub2')" href="javascript:void(0);" title="Qualit&auml;tssicherung"><script>document.write(message.get("menu.main.qualityAssurance.qa"))</script></a></li>
   	    </ul>
   	  </div>
 	  <div id="page4Subnavi" class="subnavi" style="display:none"></div>
@@ -2012,10 +2012,10 @@ function hideSplash(){
 			<table cellspacing="0">
 		  	<tbody>
 		  		<tr>
-		  		  <td class="label"><label for="addressTitle" onclick="javascript:dialog.showContextHelp(arguments[0], 7044, 'Adresstitel')">Adresstitel</label></td>
+		  		  <td class="label"><label for="addressTitle" onclick="javascript:dialog.showContextHelp(arguments[0], 7044, 'Adresstitel')"><script>document.write(message.get("ui.adr.header.addressTitle"))</script></label></td>
 		  		  <td colspan="2"><input type="text" id="addressTitle" name="addressTitle" class="w550" disabled="true" dojoType="ingrid:ValidationTextBox" /></td></tr>
 		  		<tr>
-		  		  <td id="addressTypeLabel" class="label col1"><label for="addressType" onclick="javascript:dialog.showContextHelp(arguments[0], 7045, 'Adresstyp')">Adresstyp</label></td>
+		  		  <td id="addressTypeLabel" class="label col1"><label for="addressType" onclick="javascript:dialog.showContextHelp(arguments[0], 7045, 'Adresstyp')"><script>document.write(message.get("ui.adr.header.addressType"))</script></label></td>
 		  		  <td class="col2">
 
 				  <input type="text" id="addressType" class="w405" disabled="true" dojoType="ingrid:ValidationTextBox" />
@@ -2030,12 +2030,12 @@ function hideSplash(){
 		        </td>
 		  		  <td class="col3"><img id="permissionAdrLock" src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td></tr>
 		  		<tr>
-		  		  <td id="addressOwnerLabel" class="label required"><label for="addressOwner" onclick="javascript:dialog.showContextHelp(arguments[0], 1030, 'Verantwortlicher')">Verantwortlicher*</label></td>
+		  		  <td id="addressOwnerLabel" class="label required"><label for="addressOwner" onclick="javascript:dialog.showContextHelp(arguments[0], 1030, 'Verantwortlicher')"><script>document.write(message.get("ui.adr.header.responsibleUser"))</script>*</label></td>
 		  		  <td><input dojoType="ingrid:Select" required="true" style="width:386px;" id="addressOwner" /></td>
-	              <td class="note"><strong>Status:</strong> <span id="addressWorkState"></span></td>
+	              <td class="note"><strong><script>document.write(message.get("ui.adr.header.workState"))</script>:</strong> <span id="addressWorkState"></span></td>
 
 		  		<tr>
-	              <td class="note" colspan="3"><strong>Erstellt am:</strong> <span id="addressCreationTime">----------</span> | <strong>Ge&auml;ndert am:</strong> <span id="addressModificationTime">----------</span> | <strong>Von:</strong> <span id="addressLastEditor">---</span></td>
+	              <td class="note" colspan="3"><strong><script>document.write(message.get("ui.adr.header.creationTime"))</script>:</strong> <span id="addressCreationTime">----------</span> | <strong><script>document.write(message.get("ui.adr.header.modificationTime"))</script>:</strong> <span id="addressModificationTime">----------</span> | <strong><script>document.write(message.get("ui.adr.header.modUser"))</script>:</strong> <span id="addressLastEditor">---</span></td>
 				</tr>
 		  	</tbody>
 			</table>
@@ -2060,7 +2060,7 @@ function hideSplash(){
 -->
 			      <div class="inputContainer noSpaceBelow">
 					<span id="uiElement4100" type="required">
-			        	<span id="headerAddressType0UnitLabel" class="label required"><label for="headerAddressType0Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 4100)">Institution*</label></span>
+			        	<span id="headerAddressType0UnitLabel" class="label required"><label for="headerAddressType0Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 4100)"><script>document.write(message.get("ui.adr.general.institution"))</script>*</label></span>
 			        	<span class="input"><input type="text" mode="textarea" maxlength="255" dojoType="ingrid:ValidationTextbox" required="true" id="headerAddressType0Unit" class="w668 h038" /></span>
 			  	  	</span>
 			  	  </div>
@@ -2074,14 +2074,14 @@ function hideSplash(){
 
 			      <div class="inputContainer">
 					<span id="uiElement04210" type="required">
-				        <span class="label"><label for="headerAddressType1Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 4210)">Institution/&uuml;bergeordnete Einheit(en)</label></span>
+				        <span class="label"><label for="headerAddressType1Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 4210)"><script>document.write(message.get("ui.adr.general.parentInstitution"))</script></label></span>
 				        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType1Institution" class="w668 h038" disabled=true" /></span>
 					</span>
 			  	  </div>
 
 			      <div class="inputContainer noSpaceBelow">
 					<span id="uiElement04200" type="required">
-				        <span id="headerAddressType1UnitLabel" class="label required"><label for="headerAddressType1Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 4200)">Einheit*</label></span>
+				        <span id="headerAddressType1UnitLabel" class="label required"><label for="headerAddressType1Unit" onclick="javascript:dialog.showContextHelp(arguments[0], 4200)"><script>document.write(message.get("ui.adr.general.unit"))</script>*</label></span>
 				        <span class="input"><input type="text" mode="textarea" maxlength="255" dojoType="ingrid:ValidationTextbox" required="true" id="headerAddressType1Unit" class="w668 h038" /></span>
 				  	</span>
 			  	  </div>
@@ -2103,14 +2103,14 @@ function hideSplash(){
 			      <div class="inputContainer">
 			        <div class="half left">
 						<span id="uiElement4315" type="required">
-			          		<span id="headerAddressType2LastnameLabel" class="label required"><label for="headerAddressType2Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 4315)">Name*</label></span>
+			          		<span id="headerAddressType2LastnameLabel" class="label required"><label for="headerAddressType2Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 4315)"><script>document.write(message.get("ui.adr.general.surName"))</script>*</label></span>
 			          		<span class="input"><input type="text" maxlength="40" id="headerAddressType2Lastname" required="true" name="headerAddressType2Lastname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 			        	</span>
 			        </div>
 			  
 			        <div class="half">
 						<span id="uiElement4310" type="required">
-			          		<span id="headerAddressType2FirstnameLabel" class="label"><label for="headerAddressType2Firstname" onclick="javascript:dialog.showContextHelp(arguments[0], 4310)">Vorname</label></span>
+			          		<span id="headerAddressType2FirstnameLabel" class="label"><label for="headerAddressType2Firstname" onclick="javascript:dialog.showContextHelp(arguments[0], 4310)"><script>document.write(message.get("ui.adr.general.foreName"))</script></label></span>
 			          		<span class="input"><input type="text" maxlength="40" id="headerAddressType2Firstname" name="headerAddressType2Firstname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 			          	</span>
 			        </div>
@@ -2120,14 +2120,14 @@ function hideSplash(){
 			      <div class="inputContainer noSpaceBelow">
 			        <div class="half left">
 						<span id="uiElement4300" type="required">
-			          		<span id="headerAddressType2StyleLabel" class="label required"><label for="headerAddressType2Style" onclick="javascript:dialog.showContextHelp(arguments[0], 4300)">Anrede*</label></span>
+			          		<span id="headerAddressType2StyleLabel" class="label required"><label for="headerAddressType2Style" onclick="javascript:dialog.showContextHelp(arguments[0], 4300)"><script>document.write(message.get("ui.adr.general.form"))</script>*</label></span>
 			          		<span class="input"><input dojoType="ingrid:ComboBox" maxlength="40" style="width:129px;" listId="4300" id="headerAddressType2Style" /></span>
 			          	</span>
 			        </div>
 			  
 			        <div class="half">
 						<span id="uiElement4305" type="required">
-				        	<span id="headerAddressType2TitleLabel" class="label"><label for="headerAddressType2Title" onclick="javascript:dialog.showContextHelp(arguments[0], 4305)">Titel</label></span>
+				        	<span id="headerAddressType2TitleLabel" class="label"><label for="headerAddressType2Title" onclick="javascript:dialog.showContextHelp(arguments[0], 4305)"><script>document.write(message.get("ui.adr.general.title"))</script></label></span>
 				        	<span class="input"><input dojoType="ingrid:ComboBox" maxlength="40" style="width:129px;" listId="4305" id="headerAddressType2Title" /></span>
 				       	</span>
 			        </div>
@@ -2144,14 +2144,14 @@ function hideSplash(){
 			      <div class="inputContainer">
 			        <div class="half left">
 						<span id="uiElement4000" type="required">
-			          		<span id="headerAddressType3LastnameLabel" class="label required"><label for="headerAddressType3Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 4000)">Name*</label></span>
+			          		<span id="headerAddressType3LastnameLabel" class="label required"><label for="headerAddressType3Lastname" onclick="javascript:dialog.showContextHelp(arguments[0], 4000)"><script>document.write(message.get("ui.adr.general.surName"))</script>*</label></span>
 			            	<span class="input"><input type="text" maxlength="40" id="headerAddressType3Lastname" required="true" name="headerAddressType3Lastname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 			            </span>
 			        </div>
 			  
 			        <div class="half">
 						<span id="uiElement4005" type="required">
-			          		<span id="headerAddressType3FirstnameLabel" class="label"><label for="headerAddressType3Firstname" onclick="javascript:dialog.showContextHelp(arguments[0], 4005)">Vorname</label></span>
+			          		<span id="headerAddressType3FirstnameLabel" class="label"><label for="headerAddressType3Firstname" onclick="javascript:dialog.showContextHelp(arguments[0], 4005)"><script>document.write(message.get("ui.adr.general.foreName"))</script></label></span>
 			            	<span class="input"><input type="text" maxlength="40" id="headerAddressType3Firstname" name="headerAddressType3Firstname" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 			        	</span>
 			        </div>
@@ -2161,14 +2161,14 @@ function hideSplash(){
 			      <div class="inputContainer">
 			        <div class="half left">
 						<span id="uiElement4015" type="required">
-			          		<span id="headerAddressType3StyleLabel" class="label required"><label for="headerAddressType3Style" onclick="javascript:dialog.showContextHelp(arguments[0], 4015)">Anrede*</label></span>
+			          		<span id="headerAddressType3StyleLabel" class="label required"><label for="headerAddressType3Style" onclick="javascript:dialog.showContextHelp(arguments[0], 4015)"><script>document.write(message.get("ui.adr.general.form"))</script>*</label></span>
 			          		<span class="input"><input dojoType="ingrid:ComboBox" maxlength="40" style="width:129px;" listId="4300" id="headerAddressType3Style" /></span>
 			          	</span>
 			        </div>
 			  
 			        <div class="half">
 						<span id="uiElement4020" type="required">
-			          		<span class="label"><label for="headerAddressType3Title" onclick="javascript:dialog.showContextHelp(arguments[0], 4020)">Titel</label></span>
+			          		<span class="label"><label for="headerAddressType3Title" onclick="javascript:dialog.showContextHelp(arguments[0], 4020)"><script>document.write(message.get("ui.adr.general.title"))</script></label></span>
 			          		<span class="input"><input dojoType="ingrid:ComboBox" maxlength="40" style="width:129px;" listId="4305" id="headerAddressType3Title" /></span>
 			          	</span>
 			        </div>
@@ -2189,7 +2189,7 @@ function hideSplash(){
 			  <div id="address" class="contentBlock">
 			  	<div class="titleBar">
 			  	  <div class="titleIcon"><a href="javascript:toggleFields('address');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
-				    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7008)">Adresse und Aufgaben</div>
+				    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7008)"><script>document.write(message.get("ui.adr.details.title"))</script></div>
 				    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 			  	</div>
 				  <div id="addressContent" class="content">
@@ -2197,7 +2197,7 @@ function hideSplash(){
 			      <div class="inputContainer">
 			        <div class="half left">
 						<span id="uiElement4430" type="required">
-				          <span id="addressComLabel" class="label required"><label for="addressCom" onclick="javascript:dialog.showContextHelp(arguments[0], 4430)">Kommunikation*</label></span>
+				          <span id="addressComLabel" class="label required"><label for="addressCom" onclick="javascript:dialog.showContextHelp(arguments[0], 4430)"><script>document.write(message.get("ui.adr.details.communicationTable.title"))</script>*</label></span>
 				          <div class="tableContainer rows5 half">
 				            <div class="cellEditors" id="addressComEditors">
 				              <div dojoType="ingrid:ComboBox" maxlength="20" toggle="plain" style="width:37px;" listId="4430" id="addressComType"></div>
@@ -2206,8 +2206,8 @@ function hideSplash(){
 				      	    <table id="addressCom" dojoType="ingrid:FilteringTable" minRows="5" cellspacing="0" class="filteringTable nosort interactive">
 				      	      <thead>
 				      		      <tr>
-				            			<th nosort="true" field="communicationMedium" dataType="String" width="65" editor="addressComType">Art</th>
-				            			<th nosort="true" field="communicationValue" dataType="String" width="255" editor="addressComConnection">Verbindung</th>
+				            			<th nosort="true" field="communicationMedium" dataType="String" width="65" editor="addressComType"><script>document.write(message.get("ui.adr.details.communicationTable.header.medium"))</script></th>
+				            			<th nosort="true" field="communicationValue" dataType="String" width="255" editor="addressComConnection"><script>document.write(message.get("ui.adr.details.communicationTable.header.value"))</script></th>
 				      		      </tr>
 				      	      </thead>
 				      	      <tbody>
@@ -2219,14 +2219,14 @@ function hideSplash(){
 
 			        <div class="half">
 						<span id="uiElement4400" type="optional">
-			          		<span id="addressStreetLabel" class="label"><label for="addressStreet" onclick="javascript:dialog.showContextHelp(arguments[0], 4400)">Stra&szlig;e/Hausnummer</label></span>
+			          		<span id="addressStreetLabel" class="label"><label for="addressStreet" onclick="javascript:dialog.showContextHelp(arguments[0], 4400)"><script>document.write(message.get("ui.adr.details.street"))</script></label></span>
 							<span class="input spaceBelow"><input type="text" id="addressStreet" maxlength="80" name="addressStreet" class="w320" dojoType="ingrid:ValidationTextBox" /></span>
 						</span>
 
 			          <div id="addressDetails1">
 			            <span class="entry first">
 							<span id="uiElement4405" type="optional">
-			              		<span id="addressCountryLabel" class="label"><label for="addressCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 4405)">Staat</label></span>
+			              		<span id="addressCountryLabel" class="label"><label for="addressCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 4405)"><script>document.write(message.get("ui.adr.details.state"))</script></label></span>
 			              		<span class="input spaceBelow">
 			              			<select dojoType="ingrid:Select" style="width:43px;" id="addressCountry" name="addressCountry">
 			              				<option value="de">DE</option>
@@ -2236,13 +2236,13 @@ function hideSplash(){
 			            </span>
 			            <span class="entry">
 							<span id="uiElement4410" type="optional">
-			              		<span id="addressZipCodeLabel" class="label"><label for="addressZipCode" onclick="javascript:dialog.showContextHelp(arguments[0], 4410)">PLZ</label></span>
+			              		<span id="addressZipCodeLabel" class="label"><label for="addressZipCode" onclick="javascript:dialog.showContextHelp(arguments[0], 4410)"><script>document.write(message.get("ui.adr.details.postCode"))</script></label></span>
 			              		<span class="input spaceBelow"><input type="text" maxlength="10" id="addressZipCode" name="addressZipCode" class="w061" dojoType="ingrid:ValidationTextBox" /></span>
 			              	</span>
 			            </span>
 			            <span class="entry">
 							<span id="uiElement4415" type="optional">
-			              		<span id="addressCityLabel" class="label"><label for="addressCity" onclick="javascript:dialog.showContextHelp(arguments[0], 4415)">Ort</label></span>
+			              		<span id="addressCityLabel" class="label"><label for="addressCity" onclick="javascript:dialog.showContextHelp(arguments[0], 4415)"><script>document.write(message.get("ui.adr.details.city"))</script></label></span>
 			              		<span class="input spaceBelow"><input type="text" maxlength="80" id="addressCity" name="addressCity" class="w148" dojoType="ingrid:ValidationTextBox" /></span>
 			              	</span>
 			            </span>
@@ -2251,13 +2251,13 @@ function hideSplash(){
 			          <div id="addressDetails2">
 			            <span class="entry first">
 							<span id="uiElement4420" type="optional">
-			              		<span id="addressPOBoxLabel" class="label"><label for="addressPOBox" onclick="javascript:dialog.showContextHelp(arguments[0], 4420)">Postfach</label></span>
+			              		<span id="addressPOBoxLabel" class="label"><label for="addressPOBox" onclick="javascript:dialog.showContextHelp(arguments[0], 4420)"><script>document.write(message.get("ui.adr.details.poBox"))</script></label></span>
 			              		<span class="input"><input type="text" id="addressPOBox" maxlength="10" name="addressPOBox" class="w148" dojoType="ingrid:ValidationTextBox" /></span>
 			            	</span>
 			            </span>
 			            <span class="entry">
 							<span id="uiElement4425" type="optional">
-			              		<span id="addressZipPOBoxLabel" class="label"><label for="addressZipPOBox" onclick="javascript:dialog.showContextHelp(arguments[0], 4425)">PLZ (Postfach)</label></span>
+			              		<span id="addressZipPOBoxLabel" class="label"><label for="addressZipPOBox" onclick="javascript:dialog.showContextHelp(arguments[0], 4425)"><script>document.write(message.get("ui.adr.details.poBoxPostCode"))</script></label></span>
 			              		<span class="input"><input type="text" id="addressZipPOBox" maxlength="10" name="addressZipPOBox" class="w061" dojoType="ingrid:ValidationTextBox" /></span>
 			            	</span>
 			            </span>
@@ -2271,14 +2271,14 @@ function hideSplash(){
 
 			        <div class="half left">
 						<span id="uiElement4435" type="optional">
-							<span class="label"><label for="addressNotes" onclick="javascript:dialog.showContextHelp(arguments[0], 4435)">Notizen</label></span>
+							<span class="label"><label for="addressNotes" onclick="javascript:dialog.showContextHelp(arguments[0], 4435)"><script>document.write(message.get("ui.adr.details.notes"))</script></label></span>
 							<span class="input"><input type="text" mode="textarea" maxlength="255" dojoType="ingrid:ValidationTextbox" id="addressNotes" class="w320 h120" /></span>
 						</span>
 			        </div>
 
 			        <div class="half">
 						<span id="uiElement4440" type="optional">
-			          		<span class="label"><label for="addressTasks" onclick="javascript:dialog.showContextHelp(arguments[0], 4440)">Aufgaben</label></span>
+			          		<span class="label"><label for="addressTasks" onclick="javascript:dialog.showContextHelp(arguments[0], 4440)"><script>document.write(message.get("ui.adr.details.tasks"))</script></label></span>
 			          		<span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="addressTasks" class="w320 h120" /></span>
 			          	</span>
 			        </div>
@@ -2292,15 +2292,15 @@ function hideSplash(){
 				<div id="adrThesaurus" class="contentBlock">
 					<div class="titleBar">
 						<div class="titleIcon"><a href="javascript:toggleFields('adrThesaurus');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
-						<div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7009)">Verschlagwortung</div>
+						<div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7009)"><script>document.write(message.get("ui.adr.thesaurus.title"))</script></div>
 						<div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 					</div>
 					<div id="adrThesaurusContent" class="content">
 				  
 						<div class="inputContainer notRequired h088">
 							<span id="uiElement4510" type="optional">
-								<span class="label"><label for="thesaurusTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 4510)">Thesaurus-Suchbegriffe</label></span>
-								<span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true, {dstTable: 'thesaurusTermsAddress'});" title="Thesaurus-Navigator [Popup]">Thesaurus-Navigator</a></span>
+								<span class="label"><label for="thesaurusTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 4510)"><script>document.write(message.get("ui.adr.thesaurus.terms"))</script></label></span>
+								<span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true, {dstTable: 'thesaurusTermsAddress'});" title="Thesaurus-Navigator [Popup]"><script>document.write(message.get("ui.adr.thesaurus.terms.link.navigator"))</script></a></span>
 
 								<div class="tableContainer headHiddenRows3 full">
 									<table id="thesaurusTermsAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
@@ -2319,7 +2319,7 @@ function hideSplash(){
 						<div class="inputContainer notRequired h088">
 							<div class="full">
 								<span id="uiElement4500" type="optional">
-									<span class="label"><label for="thesaurusFreeTermInputAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 4500)">Freie Suchbegriffe</label></span>
+									<span class="label"><label for="thesaurusFreeTermInputAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 4500)"><script>document.write(message.get("ui.adr.thesaurus.terms.custom"))</script></label></span>
 	
 									<div class="fill"></div>
 									<div class="tableContainer headHiddenRows3 full">
@@ -2344,7 +2344,7 @@ function hideSplash(){
 									<span id="uiElementN019" type="optional">
 										<input type="text" maxlength="255" id="thesaurusFreeTermInputAddress" class="w585" dojoType="ingrid:ValidationTextBox" />
 		                  				<div style="position:relative; height:0px; top:-22px; float:right;">
-											<button id="thesaurusFreeTermsAddressAddButton" dojoType="ingrid:Button">Hinzuf&uuml;gen</button>
+											<button id="thesaurusFreeTermsAddressAddButton" dojoType="ingrid:Button"><script>document.write(message.get("ui.adr.thesaurus.terms.custom.buttonAdd"))</script></button>
 						  				</div>
 			          				</span>
 			          			</div>
@@ -2359,7 +2359,7 @@ function hideSplash(){
 			  <div id="associatedObj" class="contentBlock">
 			    <div class="titleBar">
 			  	  <div class="titleIcon"><a href="javascript:toggleFields('associatedObj');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
-				  <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7010)">Zugeordnete Objekte</div>
+				  <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7010)"><script>document.write(message.get("ui.adr.links.title"))</script></div>
 				  <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 			  	</div>
 				<div id="associatedObjContent" class="content" style="clear:both;">

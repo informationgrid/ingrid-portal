@@ -11,6 +11,14 @@
 
 <script>
 
+function localizeLoadingMessage() {
+	var userLocale = '<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>';
+	if (userLocale != "de") {
+		// Assume english if it's not 'de'
+		document.getElementById("loadingMessage").innerHTML = "The application is loading...";
+	}
+}
+
 function loadit() {
 	SecurityService.getCurrentUser({
 		callback: function(userData) {
@@ -60,7 +68,7 @@ function forwardToMdekEntry() {
 </script>
 </head>
 
-<body onload="window.setTimeout('loadit()', 100);">
+<body onload="localizeLoadingMessage(); window.setTimeout('loadit()', 100);">
 
 <div id="splash" style="position: absolute; top: 0px; width: 100%;z-index: 100; height:2000px;background-color:#FFFFFF">
 <div style="position: relative; width: 100%;z-index: 100;top:200px">
@@ -68,8 +76,7 @@ function forwardToMdekEntry() {
         <div style="width:550px; height:20px; background-color:#156496">&nbsp;</div>
         <div style="width:550px; background-color:#e6f0f5; font-family:Verdana,Helvetica,Arial,sans-serif; font-size:12px; padding: 20px 0px 20px 0px; margin:0px">
           <p style="font-size:24px; font-weight:bold; line-height:16px; margin:16px">InGrid-Editor</p>
-<!--        <p style="font-size:16px; font-weight:bold; line-height:16px; margin:16px">Version 1.0.0</p>   -->
-          <p style="font-size:12px; font-weight:normal; line-height:16px; margin:16px">Die Anwendung wird geladen...</p>
+          <p id="loadingMessage" style="font-size:12px; font-weight:normal; line-height:16px; margin:16px">Die Anwendung wird geladen...</p>
         </div>
    </div>
 </div>
