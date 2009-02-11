@@ -961,3 +961,7 @@ UtilGeneral.getStackTrace = function(exception) {
 	}
 	return stackTrace;
 }
+
+UtilGeneral.refreshSession = function() {
+	UtilityService.refreshSession();
+}

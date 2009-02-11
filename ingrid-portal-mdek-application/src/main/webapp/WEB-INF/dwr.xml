@@ -42,6 +42,9 @@
 		<create creator="spring" javascript="TreeService">
 			<param name="beanName" value="treeService" />
 		</create>
+		<create creator="spring" javascript="UtilityService">
+			<param name="beanName" value="utilityService" />
+		</create>
 		<create creator="spring" javascript="SNSService">
 			<param name="beanName" value="snsService" />
 		</create>

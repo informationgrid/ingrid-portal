@@ -740,7 +740,7 @@ public class MdekMapper implements DataMapperInterface {
 
 		// Availability
 		// Only map for object class != 0
-		if (data.getObjectClass() != 0) {
+		if (data.getObjectClass() != null && data.getObjectClass() != 0) {
 			udkObj.put(MdekKeys.ACCESS_LIST, mapFromAvailUsageLimitationTable(data.getAvailabilityUsageLimitationTable()));			
 			udkObj.put(MdekKeys.DATA_FORMATS, mapFromAvailDataFormatTable(data.getAvailabilityDataFormatTable()));
 			udkObj.put(MdekKeys.MEDIUM_OPTIONS, mapFromAvailMediaOptionsTable(data.getAvailabilityMediaOptionsTable()));
@@ -774,7 +774,8 @@ public class MdekMapper implements DataMapperInterface {
 			udkObj.put(MdekKeys.RELATION_TYPE_NAME, data.getRelationTypeName());
 		}
 
-		switch(data.getObjectClass()) {
+		int objClass = data.getObjectClass() != null ? data.getObjectClass() : 0; 
+		switch(objClass) {
 		case 0:	// Object of type 0 doesn't have any special values
 			break;
 		case 1:

@@ -18,6 +18,7 @@
 <script src='/ingrid-portal-mdek-application/dwr/interface/SecurityService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/SNSService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/TreeService.js'></script>
+<script src='/ingrid-portal-mdek-application/dwr/interface/UtilityService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/VersionInformation.js'></script>
 
 <script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
@@ -74,6 +75,7 @@ dojo.addOnLoad(function() {
 	def.addCallback(initCurrentGroup);
 	def.addCallback(initPageHeader);
 	def.addCallback(initMenu);
+	def.addCallback(initSessionKeepalive);
 });
 
 function initMenu() {
@@ -231,6 +233,14 @@ function initGeneralEventListeners() {
 			return message.get("general.closeWindow");
 		}
 	}
+}
+
+//Init session keepalive
+function initSessionKeepalive() {
+	// TODO Get Session keepalive from catalog
+	// default to 10 minutes
+	var keepaliveInterval = 10 * 60 * 1000;
+	setInterval("UtilGeneral.refreshSession();", keepaliveInterval);
 }
 
 

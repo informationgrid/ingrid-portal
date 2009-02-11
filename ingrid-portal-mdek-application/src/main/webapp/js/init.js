@@ -31,6 +31,7 @@ dojo.addOnLoad(function()
   def.addCallback(initOptionalFieldStates);
   def.addCallback(initForm);
   def.addCallback(initMenu);
+  def.addCallback(initSessionKeepalive);
   def.addCallback(hideSplash);	// hide the splash after everything is loaded
   def.addCallback(function() { udkDataProxy.resetDirtyFlag(); });
   def.addCallback(jumpToNodeOnInit);
@@ -1504,6 +1505,18 @@ function initOptionalFieldStates() {
 	});
 
 	return def;
+}
+
+// Init session keepalive and autosave
+function initSessionKeepalive() {
+	// TODO Get Session keepalive from catalog
+	// default to 10 minutes
+	var keepaliveInterval = 10 * 60 * 1000;
+	setInterval("UtilGeneral.refreshSession();", keepaliveInterval);
+
+	// TODO Get autosave interval from catalog
+	var autosaveInterval = 10 * 60 * 1000;
+//	setInterval("menuEventHandler.handleSave();", autosaveInterval);
 }
 
 function jumpToNodeOnInit() {
