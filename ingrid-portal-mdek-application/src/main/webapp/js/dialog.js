@@ -252,7 +252,7 @@ dialog.close = function(/* html element */ node)
 dialog.INDEX = 0;
 dialog.getNextId = function()
 {
-  return 'dialog_'+(dialog.INDEX+1);
+  return 'dialog_'+(dialog.INDEX++);
 }
 
 
@@ -324,4 +324,8 @@ function hideGlassPane()
   {
     dialog.GLASSPANE.style.display = "none";
   }
+}
+
+dialog.isGlassPaneVisible = function() {
+	return (dialog.GLASSPANE != null && dialog.GLASSPANE.style.display == "block");
 }

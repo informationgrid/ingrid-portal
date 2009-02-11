@@ -7,7 +7,7 @@ var mdek = {};
 
 dojo.addOnLoad(function()
 {
-  // initialite debug console if necessary
+  // initialize debug console if necessary
   if (djConfig.isDebug)
   {
     dojo.debug("The current version of dojo is: ", dojo.version.toString());
@@ -1514,9 +1514,45 @@ function initSessionKeepalive() {
 	var keepaliveInterval = 10 * 60 * 1000;
 	setInterval("UtilGeneral.refreshSession();", keepaliveInterval);
 
-	// TODO Get autosave interval from catalog
-	var autosaveInterval = 10 * 60 * 1000;
-//	setInterval("menuEventHandler.handleSave();", autosaveInterval);
+	// TODO Get autosave interval time from catalog
+	var autosaveIntervalTime = 15 * 60 * 1000;
+	var autosaveInterval = null;
+	var autosaveFunction = "dojo.debug('autosave called.'); " +
+								"if (udkDataProxy.dirtyFlag && " +
+								"dojo.widget.byId('tree').selectedNode && " +
+								"dojo.widget.byId('tree').selectedNode.userWritePermission && " +
+								"!dialog.isGlassPaneVisible()) { " +
+									"menuEventHandler.handleSave(); " +
+							"}";
+
+	var clearAutosaveInterval = function() {
+		dojo.debug("clear autosave interval called.");
+		if (autosaveInterval) {
+			clearTimeout(autosaveInterval);
+			autosaveInterval = null;
+		}
+	}
+
+	var setAutosaveInterval = function() {
+		dojo.debug("set autosave interval called.");
+		if (autosaveInterval) {
+			clearAutosaveInterval();
+		}
+		autosaveInterval = setInterval(autosaveFunction, autosaveIntervalTime);
+	}
+
+	var resetAutosaveInterval = function() {
+		dojo.debug("reset autosave interval called.");
+		clearAutosaveInterval();
+		setAutosaveInterval();
+	}
+
+	dojo.event.connect(udkDataProxy, "handleLoadRequest", resetAutosaveInterval);
+	dojo.event.connect(udkDataProxy, "handleSaveRequest", resetAutosaveInterval);
+	dojo.event.connect(udkDataProxy, "handlePublishObjectRequest", resetAutosaveInterval);
+	dojo.event.connect(udkDataProxy, "handleCreateObjectRequest", resetAutosaveInterval);
+	dojo.event.connect(udkDataProxy, "handlePublishAddressRequest", resetAutosaveInterval);
+	dojo.event.connect(udkDataProxy, "handleCreateAddressRequest", resetAutosaveInterval);
 }
 
 function jumpToNodeOnInit() {
