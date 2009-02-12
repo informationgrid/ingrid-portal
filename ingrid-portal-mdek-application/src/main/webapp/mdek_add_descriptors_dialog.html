@@ -4,8 +4,7 @@
 <script type="text/javascript">
 _container_.addOnLoad(function() {
 	var msgDiv = dojo.byId("messageDiv");
-	msgDiv.innerHTML = dojo.string.substituteParams(message.get("dialog.addDescriptorsMessage"), _container_.customParams.descriptorTitle);
-
+	msgDiv.innerHTML = dojo.string.substituteParams(message.get("dialog.addDescriptors.message"), _container_.customParams.descriptorTitle);
 
 	for (var i = 0; i < _container_.customParams.descriptors.length; ++i) {
 		_container_.customParams.descriptors[i].Id = i;

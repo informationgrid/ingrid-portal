@@ -518,9 +518,8 @@ function initFreeTermsButtons() {
 						});
 
 						// Show the dialog
-//						dialog.showPage(message.get("dialog.addDescriptorTitle"), "mdek_add_descriptor_dialog.html", 342, 220, true, {descriptorTitle: term, resultHandler: deferred});
-						var displayText = dojo.string.substituteParams(message.get("dialog.addDescriptorMessage"), term);
-						dialog.show(message.get("dialog.addDescriptorTitle"), displayText, dialog.INFO, [
+						var displayText = dojo.string.substituteParams(message.get("dialog.addDescriptor.message"), term);
+						dialog.show(message.get("dialog.addDescriptor.title"), displayText, dialog.INFO, [
 /*                        	{ caption: message.get("general.no"),  action: function() { deferred.errback(); } },	*/
                         	{ caption: message.get("general.ok"), action: function() { deferred.callback(); } }
 						]);
@@ -544,7 +543,7 @@ function initFreeTermsButtons() {
 						});
 
 						// Show the dialog
-						dialog.showPage(message.get("dialog.addDescriptorsTitle"), "mdek_add_descriptors_dialog.html", 360, 240, true, {descriptorTitle:queryTerm.title, descriptors:descriptors, resultHandler:deferred});
+						dialog.showPage(message.get("dialog.addDescriptors.title"), "mdek_add_descriptors_dialog.html", 360, 240, true, {descriptorTitle:queryTerm.title, descriptors:descriptors, resultHandler:deferred});
 
 						// Also add the queryTerm to the list of free terms
 						var freeTermsStore = _this._freeTermListWidget.store;

@@ -45,7 +45,7 @@ function selectObjectInTreeByUuid(uuid) {
 		errorHandler: function(msg, err) {
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
-			def.errback;
+			def.errback();
 		}
 	});
 }
@@ -156,7 +156,7 @@ function getDuplicatesDef() {
 			hideLoadingZone();
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
-			def.errback;
+			def.errback();
 		}
 	});
 
