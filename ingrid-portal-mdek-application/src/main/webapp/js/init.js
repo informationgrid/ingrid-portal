@@ -995,7 +995,7 @@ var reassignToAuthorButton = null;
 			}
 
 		} else if (message.node.id == "newNode") {
-			enableList = [previewButton, saveButton, discardButton, finalSaveButton, deleteButton, showCommentButton];
+			enableList = [previewButton, saveButton, finalSaveButton, deleteButton, showCommentButton];
 
 		} else {
 			// If a 'normal' node (obj/adr that is not root) is selected, always enable the following nodes
@@ -1012,7 +1012,12 @@ var reassignToAuthorButton = null;
 			}
 			// If the the user has write permission (single or tree), he can discard, save and publish nodes
 			if (hasWritePermission) {
-				enableList = enableList.concat([discardButton, saveButton, finalSaveButton]);				
+				enableList = enableList.concat([saveButton, finalSaveButton]);				
+
+				// The discard button is only enabled if the user has write permission and a published version exists
+				if (isPublished) {
+					enableList.push(discardButton);
+				}
 			}
 			// If the the user has write tree permission (tree), he can delete, move and create new nodes
 			if (hasWriteTreePermission) {
