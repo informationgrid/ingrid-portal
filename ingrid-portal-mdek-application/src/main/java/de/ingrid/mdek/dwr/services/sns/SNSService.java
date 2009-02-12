@@ -26,6 +26,7 @@ import de.ingrid.iplug.sns.SNSClient;
 import de.ingrid.iplug.sns.SNSController;
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.FieldQuery;

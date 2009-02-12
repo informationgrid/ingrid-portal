@@ -104,6 +104,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSEventTopic"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSLocationTopic"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSTopic"/>
+		<convert converter="enum" match="de.ingrid.mdek.dwr.services.sns.SNSTopic$Type"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSTopicMap"/>
 		<convert converter="bean" match="de.ingrid.mdek.persistence.db.model.HelpMessage"/>
 		<convert converter="bean" match="de.ingrid.mdek.persistence.db.model.UserData"/>
@@ -111,13 +112,9 @@
 		<convert converter="bean" match="de.ingrid.mdek.quartz.jobs.util.URLState"/>
 		<convert converter="enum" match="de.ingrid.mdek.quartz.jobs.util.URLState$State"/>
 
-		<convert converter="enum" match="de.ingrid.mdek.dwr.services.cts.SpatialReferenceSystem"/>
-		<convert converter="enum" match="de.ingrid.mdek.dwr.services.sns.Type"/>
+		<convert converter="enum" match="de.ingrid.mdek.dwr.services.cts.CoordinateTransformationService$SpatialReferenceSystem"/>
 
-		<!-- both converters are needed to make dwr happy --> 
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtilsSecurity$IdcPermission"/>
-		<convert converter="enum" match="de.ingrid.mdek.MdekUtilsSecurity.IdcPermission"/>
-
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcEntityOrderBy"/>
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcQAEntitiesSelectionType"/>
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcWorkEntitiesSelectionType"/>

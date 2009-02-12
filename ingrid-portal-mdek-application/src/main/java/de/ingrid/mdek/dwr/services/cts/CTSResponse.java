@@ -1,5 +1,7 @@
 package de.ingrid.mdek.dwr.services.cts;
 
+import de.ingrid.mdek.dwr.services.cts.CoordinateTransformationService.SpatialReferenceSystem;
+
 public class CTSResponse {
 	SpatialReferenceSystem spatialReferenceSystem;
 	Coordinate coordinate;

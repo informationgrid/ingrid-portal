@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class SNSTopic {
 
+	public enum Type {TOP_TERM, NODE_LABEL, DESCRIPTOR, NON_DESCRIPTOR }
+
 	public Type type; 
 	public String topicId;
 	public String title;
@@ -31,7 +33,7 @@ public class SNSTopic {
 		this.synonyms = new ArrayList<SNSTopic>();
 	}
 	
-	public void setTyp(Type type) {
+	public void setType(Type type) {
 		this.type = type;
 	}
 

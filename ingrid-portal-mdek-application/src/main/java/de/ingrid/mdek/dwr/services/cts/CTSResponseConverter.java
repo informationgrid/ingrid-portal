@@ -6,6 +6,8 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
+import de.ingrid.mdek.dwr.services.cts.CoordinateTransformationService.SpatialReferenceSystem;
+
 public class CTSResponseConverter implements Converter {
 
 	public boolean canConvert(Class clazz) {
