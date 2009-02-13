@@ -23,11 +23,11 @@
     <cache name="ingrid-cache"
         maxElementsInMemory="5000"
         eternal="false"
-        timeToIdleSeconds="100"
-        timeToLiveSeconds="3000"
+        timeToIdleSeconds="150"
+        timeToLiveSeconds="300"
         overflowToDisk="true"
         diskPersistent="false"
-        diskExpiryThreadIntervalSeconds="3000"
+        diskExpiryThreadIntervalSeconds="300"
         />
         
     <cache name="de.ingrid.iplug.record"
