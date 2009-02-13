@@ -399,7 +399,7 @@ public class SNSService {
     		}
 	    }
 
-	    SNSTopic result = new SNSTopic(Type.DESCRIPTOR, Source.UMTHES, topicId, null);
+	    SNSTopic result = new SNSTopic(Type.DESCRIPTOR, Source.UMTHES, topicId, null, null);
 	    result.setChildren(children);
 	    result.setParents(parents);
 	    result.setSynonyms(synonyms);
@@ -562,29 +562,54 @@ public class SNSService {
     }
 
     private static SNSTopic convertTopicToSNSTopic(Topic topic) {
-    	return new SNSTopic(getTypeFromTopic(topic), getSourceFromTopic(topic), topic.getTopicID(), topic.getTopicName());
+    	return new SNSTopic(getTypeFromTopic(topic), getSourceFromTopic(topic), topic.getTopicID(), topic.getTopicName(), getGemetTitleFromTopic(topic));
     }
     private static SNSTopic convertTopicToSNSTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
     	String topicName = topic.getBaseName(0).getBaseNameString().get_value();
-    	return new SNSTopic(getTypeFromTopic(topic), getSourceFromTopic(topic), topic.getId(), topicName);
+    	return new SNSTopic(getTypeFromTopic(topic), getSourceFromTopic(topic), topic.getId(), topicName, getGemetTitleFromTopic(topic));
     }
 
     private static Source getSourceFromTopic(Topic topic) {
     	// TODO Implement
     	return Source.UMTHES;
     }
+    private static String getGemetTitleFromTopic(Topic topic) {
+    	// TODO Implement
+    	return null;
+    }
 
     private static Source getSourceFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
+    	Occurrence occ = getOccurrence(topic, "gemet1.0");
+    	if (null != occ) {
+    		return Source.GEMET;
+
+    	} else {
+        	// If there is no occurence of type 'gemet1.0'
+    		return Source.UMTHES;
+    	}
+    }
+
+    private static String getGemetTitleFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
+    	Occurrence occ = getOccurrence(topic, "gemet1.0");
+    	if (null != occ) {
+    		return occ.getResourceData().get_value();
+
+    	} else {
+    		return null;
+    	}
+    }
+
+    private static Occurrence getOccurrence(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic, String occurrenceType) {
     	if (null != topic.getOccurrence()) {
 	    	for (Occurrence occ: topic.getOccurrence()) {
-	    		if (occ.getInstanceOf().getTopicRef().getHref().endsWith("gemet1.0")) {
-	    			return Source.GEMET;
+	    		if (occ.getInstanceOf().getTopicRef().getHref().endsWith(occurrenceType)) {
+	    			return occ;
 	    		}
 	    	}
     	}
 
-    	// If there are no occurrences associated with the given topic or no occurrence is of type 'gemet'
-    	return Source.UMTHES;
+    	// If the occurence was not found
+    	return null;
     }
 
     private Date convertTemporalValueToDate(String dateString) {

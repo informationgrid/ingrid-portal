@@ -203,7 +203,8 @@ applyChanges = function() {
 	if (resultTopics) {
 		dojo.lang.forEach(resultTopics, function(topic) {
 			if (dojo.lang.every(destStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
-				destStore.addData( {Id: UtilStore.getNewKey(destStore), topicId: topic.topicId, title: topic.title, source: topic.source } );
+				topic.Id = UtilStore.getNewKey(destStore);
+				destStore.addData( topic );
 			} else {
 				return;
 			}

@@ -118,11 +118,13 @@ function createAdditionalFieldDomNode(additionalField) {
 			id: "additionalField" + additionalField.id,
 			type: "text",
 			maxlength: additionalField.size,
+			name: additionalField.name,
 			class: "w668" });
 
 	} else if ("LIST" == additionalField.type) {
 		inputWidget = dojo.widget.createWidget("ingrid:Select", {
 			id: "additionalField" + additionalField.id,
+			name: additionalField.name,
 			autoComplete: "false" });
 		dojo.html.addClass(inputWidget.textInputNode, "w648");
 		// Set the correct select values via the contained data provider
@@ -134,6 +136,11 @@ function createAdditionalFieldDomNode(additionalField) {
 			}
 			inputWidget.dataProvider.setData(data);
 		}
+	}
+
+	// Add the widget to the global 'additionalFieldWidgets' list (from udkDataProxy.js)
+	if (additionalFieldWidgets) {
+		additionalFieldWidgets.push(inputWidget);
 	}
 
 	// Build the complete structure
@@ -509,7 +516,8 @@ function initFreeTermsButtons() {
 						deferred.addCallback(function() {
 							if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != queryTerm.topicId; })) {
 								// Topic is new. Add it to the topic list
-								topicStore.addData( {Id: UtilStore.getNewKey(topicStore), topicId: queryTerm.topicId, title: queryTerm.title, source: queryTerm.source } );
+								queryTerm.Id = UtilStore.getNewKey(topicStore);
+								topicStore.addData( queryTerm );
 								// Scroll to the added descriptor
 								var rows = _this._termListWidget.domNode.tBodies[0].rows;
 								if (!dojo.render.html.ie)				
@@ -532,7 +540,8 @@ function initFreeTermsButtons() {
 							dojo.lang.forEach(descriptors, function(topic) {
 								if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
 									// Topic is new. Add it to the topic list
-									topicStore.addData( {Id: UtilStore.getNewKey(topicStore), topicId: topic.topicId, title: topic.title, source: queryTerm.source } );
+									topic.Id = UtilStore.getNewKey(topicStore);
+									topicStore.addData( topic );
 
 									// Scroll to the added descriptor
 									var rows = _this._termListWidget.domNode.tBodies[0].rows;

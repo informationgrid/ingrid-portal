@@ -22,6 +22,7 @@ import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
 import de.ingrid.mdek.beans.CommentBean;
 import de.ingrid.mdek.beans.KeyValuePair;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
+import de.ingrid.mdek.beans.object.AdditionalFieldBean;
 import de.ingrid.mdek.beans.object.ConformityBean;
 import de.ingrid.mdek.beans.object.DBContentBean;
 import de.ingrid.mdek.beans.object.DataFormatBean;
@@ -184,7 +185,7 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setTimeRefPeriodicity((Integer) obj.get(MdekKeys.TIME_PERIOD));
 		mdekObj.setTimeRefIntervalNum((String) obj.get(MdekKeys.TIME_SCALE));
 		mdekObj.setTimeRefIntervalUnit((String) obj.get(MdekKeys.TIME_STEP));
-		mdekObj.setTimeRefTable((ArrayList<TimeReferenceBean>) mapToTimeRefTable((List<HashMap<String, Object>>) obj.get(MdekKeys.DATASET_REFERENCES)));
+		mdekObj.setTimeRefTable(mapToTimeRefTable((List<HashMap<String, Object>>) obj.get(MdekKeys.DATASET_REFERENCES)));
 		mdekObj.setTimeRefExplanation((String) obj.get(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN));
 
 		// ExtraInfo
@@ -194,7 +195,7 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setExtraInfoPublishArea((Integer) obj.get(MdekKeys.PUBLICATION_CONDITION));
 
 		// Inspire field
-		mdekObj.setExtraInfoConformityTable((ArrayList<ConformityBean>) mapToExtraInfoConformityTable((List<HashMap<String, Object>>) obj.get(MdekKeys.CONFORMITY_LIST)));
+		mdekObj.setExtraInfoConformityTable(mapToExtraInfoConformityTable((List<HashMap<String, Object>>) obj.get(MdekKeys.CONFORMITY_LIST)));
 
 		mdekObj.setExtraInfoPurpose((String) obj.get(MdekKeys.DATASET_INTENTIONS));
 		mdekObj.setExtraInfoUse((String) obj.get(MdekKeys.DATASET_USAGE));
@@ -203,7 +204,7 @@ public class MdekMapper implements DataMapperInterface {
 
 		// Availability
 		// Inspire field
-		mdekObj.setAvailabilityUsageLimitationTable((ArrayList<UsageLimitationBean>) mapToAvailUsageLimitationTable((List<HashMap<String, Object>>) obj.get(MdekKeys.ACCESS_LIST)));
+		mdekObj.setAvailabilityUsageLimitationTable(mapToAvailUsageLimitationTable((List<HashMap<String, Object>>) obj.get(MdekKeys.ACCESS_LIST)));
 		
 		mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
 		mdekObj.setAvailabilityDataFormatTable(mapToAvailDataFormatTable((List<HashMap<String, Object>>) obj.get(MdekKeys.DATA_FORMATS)));
@@ -212,7 +213,7 @@ public class MdekMapper implements DataMapperInterface {
 		// Thesaurus
 		mdekObj.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.SUBJECT_TERMS)));
 
-		ArrayList<Integer> intList = (ArrayList<Integer>) obj.get(MdekKeys.TOPIC_CATEGORIES);
+		List<Integer> intList = (List<Integer>) obj.get(MdekKeys.TOPIC_CATEGORIES);
 		if (intList != null)
 			mdekObj.setThesaurusTopicsList(intList);
 
@@ -223,11 +224,11 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setThesaurusEnvExtRes(false);
 		}
 
-		intList = (ArrayList<Integer>) obj.get(MdekKeys.ENV_TOPICS);
+		intList = (List<Integer>) obj.get(MdekKeys.ENV_TOPICS);
 		if (intList != null)
 			mdekObj.setThesaurusEnvTopicsList(intList);
 		
-		intList = (ArrayList<Integer>) obj.get(MdekKeys.ENV_CATEGORIES);
+		intList = (List<Integer>) obj.get(MdekKeys.ENV_CATEGORIES);
 		if (intList != null)
 			mdekObj.setThesaurusEnvCatsList(intList);
 		
@@ -239,6 +240,9 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setRelationType((Integer) obj.get(MdekKeys.RELATION_TYPE_REF));
 		mdekObj.setRelationTypeName((String) obj.get(MdekKeys.RELATION_TYPE_NAME));
 		mdekObj.setRelationDescription((String) obj.get(MdekKeys.RELATION_DESCRIPTION));
+
+		// Additional Fields
+		mdekObj.setAdditionalFields(mapToAdditionalFields((List<IngridDocument>) obj.get(MdekKeys.ADDITIONAL_FIELDS)));
 
 		switch(mdekObj.getObjectClass()) {
 		case 0:	// Object of type 0 doesn't have any special values
@@ -259,11 +263,11 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setRef1BasisText((String) td1Map.get(MdekKeys.TECHNICAL_BASE));
 			mdekObj.setRef1DataBasisText((String) td1Map.get(MdekKeys.DATA));
 			
-			ArrayList<String> strList = (ArrayList<String>) td1Map.get(MdekKeys.FEATURE_TYPE_LIST);
+			List<String> strList = (List<String>) td1Map.get(MdekKeys.FEATURE_TYPE_LIST);
 			if (strList != null)
 				mdekObj.setRef1Data(strList);
 			
-			intList = (ArrayList<Integer>) td1Map.get(MdekKeys.SPATIAL_REPRESENTATION_TYPE_LIST);
+			intList = (List<Integer>) td1Map.get(MdekKeys.SPATIAL_REPRESENTATION_TYPE_LIST);
 			if (intList != null)
 				mdekObj.setRef1Representation(intList);
 			
@@ -306,7 +310,7 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setRef3SystemEnv((String) td3Map.get(MdekKeys.SYSTEM_ENVIRONMENT));
 			mdekObj.setRef3History((String) td3Map.get(MdekKeys.SYSTEM_HISTORY));
 			mdekObj.setRef3BaseDataText((String) td3Map.get(MdekKeys.DATABASE_OF_SYSTEM));
-			mdekObj.setRef3ServiceVersion((ArrayList<String>) td3Map.get(MdekKeys.SERVICE_VERSION_LIST));
+			mdekObj.setRef3ServiceVersion((List<String>) td3Map.get(MdekKeys.SERVICE_VERSION_LIST));
 			mdekObj.setRef3Explanation((String) td3Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
 			mdekObj.setRef3Scale(mapToScaleTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
 			mdekObj.setRef3Operation(mapToOperationTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.SERVICE_OPERATION_LIST), (Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY)));
@@ -772,6 +776,9 @@ public class MdekMapper implements DataMapperInterface {
 			udkObj.put(MdekKeys.RELATION_TYPE_NAME, data.getRelationTypeName());
 		}
 
+		// Additional Fields
+		udkObj.put(MdekKeys.ADDITIONAL_FIELDS, mapFromAdditionalFields(data.getAdditionalFields()));
+
 		int objClass = data.getObjectClass() != null ? data.getObjectClass() : 0; 
 		switch(objClass) {
 		case 0:	// Object of type 0 doesn't have any special values
@@ -924,8 +931,8 @@ public class MdekMapper implements DataMapperInterface {
 		}
 	}
 
-	private ArrayList<IngridDocument> mapFromGeneralAddressTable(ArrayList<MdekAddressBean> adrTable) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromGeneralAddressTable(List<MdekAddressBean> adrTable) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 
 		for (MdekAddressBean address : adrTable) {
 			IngridDocument mappedEntry = new IngridDocument();
@@ -955,8 +962,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<IngridDocument> mapFromCommunicationTable(List<HashMap<String, String>> commMap){
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>(); 
+	private List<IngridDocument> mapFromCommunicationTable(List<HashMap<String, String>> commMap){
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>(); 
 
 		for (HashMap<String, String> comm : commMap) {
 			IngridDocument mappedEntry = new IngridDocument();
@@ -973,8 +980,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;	
 	}
 	
-	private ArrayList<IngridDocument> mapFromObjectLinksTable(ArrayList<MdekDataBean> objList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromObjectLinksTable(List<MdekDataBean> objList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (objList == null)
 			return resultList;
 
@@ -986,8 +993,24 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<IngridDocument> mapFromUrlLinksTable(ArrayList<UrlBean> urlList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromAdditionalFields(List<AdditionalFieldBean> additionalFieldList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (additionalFieldList == null)
+			return resultList;
+
+		for (AdditionalFieldBean additionalField : additionalFieldList) {
+			IngridDocument additionalFieldDoc = new IngridDocument();
+			additionalFieldDoc.putLong(MdekKeys.SYS_ADDITIONAL_FIELD_IDENTIFIER, additionalField.getIdentifier());
+			additionalFieldDoc.put(MdekKeys.SYS_ADDITIONAL_FIELD_NAME, additionalField.getName());
+			additionalFieldDoc.put(MdekKeys.ADDITIONAL_FIELD_VALUE, additionalField.getValue());
+			resultList.add(additionalFieldDoc);
+		}
+
+		return resultList;
+	}
+
+	private List<IngridDocument> mapFromUrlLinksTable(List<UrlBean> urlList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (urlList == null)
 			return resultList;
 
@@ -1012,8 +1035,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 	
-	private ArrayList<IngridDocument> mapFromLocationTables(ArrayList<LocationBean> locationSNS, ArrayList<LocationBean> locationFree) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromLocationTables(List<LocationBean> locationSNS, List<LocationBean> locationFree) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (locationFree != null) {
 			for (LocationBean loc : locationFree) {
 				IngridDocument res = new IngridDocument();
@@ -1049,8 +1072,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<IngridDocument> mapFromTimeRefTable(ArrayList<TimeReferenceBean> refList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromTimeRefTable(List<TimeReferenceBean> refList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (refList == null)
 			return resultList;
 
@@ -1063,8 +1086,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<IngridDocument> mapFromExtraInfoConformityTable(ArrayList<ConformityBean> conList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromExtraInfoConformityTable(List<ConformityBean> conList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (conList == null)
 			return resultList;
 
@@ -1078,8 +1101,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<IngridDocument> mapFromExtraInfoXMLExportTable(ArrayList<String> refList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromExtraInfoXMLExportTable(List<String> refList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (refList == null)
 			return resultList;
 
@@ -1093,8 +1116,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 	
-	private ArrayList<IngridDocument> mapFromExtraInfoLegalBasicsTable(ArrayList<String> refList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromExtraInfoLegalBasicsTable(List<String> refList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (refList == null)
 			return resultList;
 
@@ -1108,8 +1131,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<IngridDocument> mapFromAvailUsageLimitationTable(ArrayList<UsageLimitationBean> ulList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromAvailUsageLimitationTable(List<UsageLimitationBean> ulList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (ulList == null)
 			return resultList;
 
@@ -1123,8 +1146,8 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 	
-	private ArrayList<IngridDocument> mapFromAvailDataFormatTable(ArrayList<DataFormatBean> refList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromAvailDataFormatTable(List<DataFormatBean> refList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (refList == null)
 			return resultList;
 
@@ -1144,8 +1167,8 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private ArrayList<IngridDocument> mapFromAvailMediaOptionsTable(ArrayList<MediaOptionBean> refList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromAvailMediaOptionsTable(List<MediaOptionBean> refList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (refList == null)
 			return resultList;
 
@@ -1160,8 +1183,8 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private ArrayList<IngridDocument> mapFromThesTermTables(ArrayList<SNSTopic> snsList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromThesTermTables(List<SNSTopic> snsList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (snsList != null) {
 			for (SNSTopic t : snsList) {
 				IngridDocument res = new IngridDocument();
@@ -1188,8 +1211,8 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private ArrayList<IngridDocument> mapFromVFormatDetailsTable(ArrayList<VectorFormatDetailsBean> vFormatList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromVFormatDetailsTable(List<VectorFormatDetailsBean> vFormatList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (vFormatList == null)
 			return resultList;
 
@@ -1202,8 +1225,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<IngridDocument> mapFromServiceTypeTable(ArrayList<Integer> serviceTypeList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromServiceTypeTable(List<Integer> serviceTypeList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (serviceTypeList == null) {
 			return resultList;
 		}
@@ -1216,8 +1239,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 	
-	private ArrayList<IngridDocument> mapFromScaleTable(ArrayList<ScaleBean> scaleList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromScaleTable(List<ScaleBean> scaleList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (scaleList == null)
 			return resultList;
 
@@ -1232,8 +1255,8 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private ArrayList<IngridDocument> mapFromSymLinkDataTable(ArrayList<LinkDataBean> linkList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromSymLinkDataTable(List<LinkDataBean> linkList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (linkList == null)
 			return resultList;
 
@@ -1251,8 +1274,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<IngridDocument> mapFromKeyLinkDataTable(ArrayList<LinkDataBean> linkList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromKeyLinkDataTable(List<LinkDataBean> linkList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (linkList == null)
 			return resultList;
 
@@ -1270,8 +1293,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<IngridDocument> mapFromDbContentTable(ArrayList<DBContentBean> dbList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromDbContentTable(List<DBContentBean> dbList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (dbList == null)
 			return resultList;
 
@@ -1285,8 +1308,8 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private ArrayList<IngridDocument> mapFromOperationTable(ArrayList<OperationBean> opList, Integer serviceType) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromOperationTable(List<OperationBean> opList, Integer serviceType) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (opList == null)
 			return resultList;
 
@@ -1311,8 +1334,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<IngridDocument> mapFromOperationParamTable(ArrayList<OperationParameterBean> opList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromOperationParamTable(List<OperationParameterBean> opList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (opList == null)
 			return resultList;
 
@@ -1329,8 +1352,8 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private ArrayList<IngridDocument> mapFromCommentTable(ArrayList<CommentBean> commentList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private List<IngridDocument> mapFromCommentTable(List<CommentBean> commentList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (commentList == null)
 			return resultList;
 
@@ -1365,8 +1388,8 @@ public class MdekMapper implements DataMapperInterface {
 		return new KeyValuePair(k, val);
 	}
 	
-	private ArrayList<MdekAddressBean> mapToGeneralAddressTable(List<HashMap<String, Object>> adrTable) {
-		ArrayList<MdekAddressBean> resultList = new ArrayList<MdekAddressBean>(); 
+	private List<MdekAddressBean> mapToGeneralAddressTable(List<HashMap<String, Object>> adrTable) {
+		List<MdekAddressBean> resultList = new ArrayList<MdekAddressBean>(); 
 		if (adrTable == null)
 			return resultList;
 
@@ -1377,8 +1400,8 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private ArrayList<HashMap<String, String>> mapToCommunicationTable(List<HashMap<String, Object>> commMap){
-		ArrayList<HashMap<String, String>> resultCommMap = new ArrayList<HashMap<String, String>>(); 
+	private List<HashMap<String, String>> mapToCommunicationTable(List<HashMap<String, Object>> commMap){
+		List<HashMap<String, String>> resultCommMap = new ArrayList<HashMap<String, String>>(); 
 		if (commMap == null)
 			return resultCommMap;
 
@@ -1394,8 +1417,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultCommMap;	
 	}
 	
-	private ArrayList<MdekDataBean> mapToObjectLinksTable(List<HashMap<String, Object>> objList) {
-		ArrayList<MdekDataBean> resultList = new ArrayList<MdekDataBean>(); 
+	private List<MdekDataBean> mapToObjectLinksTable(List<HashMap<String, Object>> objList) {
+		List<MdekDataBean> resultList = new ArrayList<MdekDataBean>(); 
 		if (objList == null)
 			return resultList;
 
@@ -1405,8 +1428,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<UrlBean> mapToUrlLinksTable(List<HashMap<String, Object>> objList) {
-		ArrayList<UrlBean> resultList = new ArrayList<UrlBean>(); 
+	private List<UrlBean> mapToUrlLinksTable(List<HashMap<String, Object>> objList) {
+		List<UrlBean> resultList = new ArrayList<UrlBean>(); 
 		if (objList == null)
 			return resultList;
 		
@@ -1427,10 +1450,27 @@ public class MdekMapper implements DataMapperInterface {
 		}
 		return resultList;
 	}
-	
-	
-	private ArrayList<LocationBean> mapToSpatialRefAdminUnitTable(List<HashMap<String, Object>> locList) {
-		ArrayList<LocationBean> resultList = new ArrayList<LocationBean>();
+
+
+	private List<AdditionalFieldBean> mapToAdditionalFields(List<IngridDocument> additionalFieldList) {
+		List<AdditionalFieldBean> resultList = new ArrayList<AdditionalFieldBean>();
+		if (additionalFieldList == null) {
+			return resultList;
+		}
+
+		for (IngridDocument additionalFieldDoc : additionalFieldList) {
+			AdditionalFieldBean additionalField = new AdditionalFieldBean();
+			additionalField.setIdentifier(additionalFieldDoc.getLong(MdekKeys.SYS_ADDITIONAL_FIELD_IDENTIFIER));
+			additionalField.setName(additionalFieldDoc.getString(MdekKeys.SYS_ADDITIONAL_FIELD_NAME));
+			additionalField.setValue(additionalFieldDoc.getString(MdekKeys.ADDITIONAL_FIELD_VALUE));
+			resultList.add(additionalField);
+		}
+		return resultList;
+	}
+
+
+	private List<LocationBean> mapToSpatialRefAdminUnitTable(List<HashMap<String, Object>> locList) {
+		List<LocationBean> resultList = new ArrayList<LocationBean>();
 		if (locList == null)
 			return resultList;
 
@@ -1467,8 +1507,8 @@ public class MdekMapper implements DataMapperInterface {
     	}
 	}
 
-	private ArrayList<LocationBean> mapToSpatialRefLocationTable(List<HashMap<String, Object>> locList) {
-		ArrayList<LocationBean> resultList = new ArrayList<LocationBean>();
+	private List<LocationBean> mapToSpatialRefLocationTable(List<HashMap<String, Object>> locList) {
+		List<LocationBean> resultList = new ArrayList<LocationBean>();
 		if (locList == null)
 			return resultList;
 
@@ -1491,8 +1531,8 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private ArrayList<TimeReferenceBean> mapToTimeRefTable(List<HashMap<String, Object>> refList) {
-		ArrayList<TimeReferenceBean> resultList = new ArrayList<TimeReferenceBean>();
+	private List<TimeReferenceBean> mapToTimeRefTable(List<HashMap<String, Object>> refList) {
+		List<TimeReferenceBean> resultList = new ArrayList<TimeReferenceBean>();
 		if (refList == null)
 			return resultList;
 
@@ -1506,8 +1546,8 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 	
-	private ArrayList<ConformityBean> mapToExtraInfoConformityTable(List<HashMap<String, Object>> conList) {
-		ArrayList<ConformityBean> resultList = new ArrayList<ConformityBean>();
+	private List<ConformityBean> mapToExtraInfoConformityTable(List<HashMap<String, Object>> conList) {
+		List<ConformityBean> resultList = new ArrayList<ConformityBean>();
 		if (conList == null)
 			return resultList;
 
@@ -1521,8 +1561,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<String> mapToExtraInfoXMLExportTable(List<HashMap<String, Object>> refList) {
-		ArrayList<String> resultList = new ArrayList<String>();
+	private List<String> mapToExtraInfoXMLExportTable(List<HashMap<String, Object>> refList) {
+		List<String> resultList = new ArrayList<String>();
 		if (refList == null)
 			return resultList;
 		
@@ -1533,8 +1573,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<String> mapToExtraInfoLegalBasicsTable(List<HashMap<String, Object>> refList) {
-		ArrayList<String> resultList = new ArrayList<String>();
+	private List<String> mapToExtraInfoLegalBasicsTable(List<HashMap<String, Object>> refList) {
+		List<String> resultList = new ArrayList<String>();
 		if (refList == null)
 			return resultList;
 		for (HashMap<String, Object> ref : refList) {
@@ -1544,8 +1584,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<UsageLimitationBean> mapToAvailUsageLimitationTable(List<HashMap<String, Object>> ulList) {
-		ArrayList<UsageLimitationBean> resultList = new ArrayList<UsageLimitationBean>();
+	private List<UsageLimitationBean> mapToAvailUsageLimitationTable(List<HashMap<String, Object>> ulList) {
+		List<UsageLimitationBean> resultList = new ArrayList<UsageLimitationBean>();
 		if (ulList == null)
 			return resultList;
 
@@ -1559,8 +1599,8 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private ArrayList<DataFormatBean> mapToAvailDataFormatTable(List<HashMap<String, Object>> refList) {
-		ArrayList<DataFormatBean> resultList = new ArrayList<DataFormatBean>();
+	private List<DataFormatBean> mapToAvailDataFormatTable(List<HashMap<String, Object>> refList) {
+		List<DataFormatBean> resultList = new ArrayList<DataFormatBean>();
 		if (refList == null)
 			return resultList;
 		for (HashMap<String, Object> ref : refList) {
@@ -1576,8 +1616,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<MediaOptionBean> mapToAvailMediaOptionsTable(List<HashMap<String, Object>> refList) {
-		ArrayList<MediaOptionBean> resultList = new ArrayList<MediaOptionBean>();
+	private List<MediaOptionBean> mapToAvailMediaOptionsTable(List<HashMap<String, Object>> refList) {
+		List<MediaOptionBean> resultList = new ArrayList<MediaOptionBean>();
 		if (refList == null)
 			return resultList;
 		for (HashMap<String, Object> ref : refList) {
@@ -1591,8 +1631,8 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private ArrayList<SNSTopic> mapToThesTermsTable(List<HashMap<String, Object>> topicList) {
-		ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>();
+	private List<SNSTopic> mapToThesTermsTable(List<HashMap<String, Object>> topicList) {
+		List<SNSTopic> resultList = new ArrayList<SNSTopic>();
 		if (topicList == null)
 			return resultList;
 		for (HashMap<String, Object> topic : topicList) {
@@ -1612,8 +1652,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<VectorFormatDetailsBean> mapToVFormatDetailsTable(List<HashMap<String, Object>> vFormatList) {
-		ArrayList<VectorFormatDetailsBean> resultList = new ArrayList<VectorFormatDetailsBean>();
+	private List<VectorFormatDetailsBean> mapToVFormatDetailsTable(List<HashMap<String, Object>> vFormatList) {
+		List<VectorFormatDetailsBean> resultList = new ArrayList<VectorFormatDetailsBean>();
 		if (vFormatList == null)
 			return resultList;
 		for (HashMap<String, Object> vFormat : vFormatList) {
@@ -1626,8 +1666,8 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private ArrayList<Integer> mapToServiceTypeTable(List<HashMap<String, Object>> serviceTypeList) {
-		ArrayList<Integer> resultList = new ArrayList<Integer>();
+	private List<Integer> mapToServiceTypeTable(List<HashMap<String, Object>> serviceTypeList) {
+		List<Integer> resultList = new ArrayList<Integer>();
 		if (serviceTypeList == null) {
 			return resultList;
 		}
@@ -1637,8 +1677,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 	
-	private ArrayList<ScaleBean> mapToScaleTable(List<HashMap<String, Object>> scaleList) {
-		ArrayList<ScaleBean> resultList = new ArrayList<ScaleBean>();
+	private List<ScaleBean> mapToScaleTable(List<HashMap<String, Object>> scaleList) {
+		List<ScaleBean> resultList = new ArrayList<ScaleBean>();
 		if (scaleList == null)
 			return resultList;
 		for (HashMap<String, Object> topic : scaleList) {
@@ -1652,8 +1692,8 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private ArrayList<LinkDataBean> mapToSymLinkDataTable(List<HashMap<String, Object>> linkList) {
-		ArrayList<LinkDataBean> resultList = new ArrayList<LinkDataBean>();
+	private List<LinkDataBean> mapToSymLinkDataTable(List<HashMap<String, Object>> linkList) {
+		List<LinkDataBean> resultList = new ArrayList<LinkDataBean>();
 		if (linkList == null)
 			return resultList;
 		for (HashMap<String, Object> topic : linkList) {
@@ -1667,8 +1707,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private  ArrayList<LinkDataBean> mapToKeyLinkDataTable(List<HashMap<String, Object>> linkList) {
-		ArrayList<LinkDataBean> resultList = new ArrayList<LinkDataBean>();
+	private  List<LinkDataBean> mapToKeyLinkDataTable(List<HashMap<String, Object>> linkList) {
+		List<LinkDataBean> resultList = new ArrayList<LinkDataBean>();
 		if (linkList == null)
 			return resultList;
 		for (HashMap<String, Object> topic : linkList) {
@@ -1682,8 +1722,8 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private ArrayList<DBContentBean> mapToDbContentTable(List<HashMap<String, Object>> dbList) {
-		ArrayList<DBContentBean> resultList = new ArrayList<DBContentBean>();
+	private List<DBContentBean> mapToDbContentTable(List<HashMap<String, Object>> dbList) {
+		List<DBContentBean> resultList = new ArrayList<DBContentBean>();
 		if (dbList == null)
 			return resultList;
 		for (HashMap<String, Object> content : dbList) {
@@ -1696,8 +1736,8 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private ArrayList<OperationBean> mapToOperationTable(List<HashMap<String, Object>> opList, Integer serviceType) {
-		ArrayList<OperationBean> resultList = new ArrayList<OperationBean>();
+	private List<OperationBean> mapToOperationTable(List<HashMap<String, Object>> opList, Integer serviceType) {
+		List<OperationBean> resultList = new ArrayList<OperationBean>();
 		if (opList == null)
 			return resultList;
 		for (HashMap<String, Object> operation : opList) {
@@ -1709,19 +1749,19 @@ public class MdekMapper implements DataMapperInterface {
 				op.setName(val);				
 			}
 			op.setDescription((String) operation.get(MdekKeys.SERVICE_OPERATION_DESCRIPTION));
-			op.setPlatform((ArrayList<String>) operation.get(MdekKeys.PLATFORM_LIST));
+			op.setPlatform((List<String>) operation.get(MdekKeys.PLATFORM_LIST));
 			op.setMethodCall((String) operation.get(MdekKeys.INVOCATION_NAME));
 			op.setParamList(mapToOperationParamTable((List<HashMap<String, Object>>) operation.get(MdekKeys.PARAMETER_LIST)));
-			op.setAddressList((ArrayList<String>) operation.get(MdekKeys.CONNECT_POINT_LIST));
-			op.setDependencies((ArrayList<String>) operation.get(MdekKeys.DEPENDS_ON_LIST));
+			op.setAddressList((List<String>) operation.get(MdekKeys.CONNECT_POINT_LIST));
+			op.setDependencies((List<String>) operation.get(MdekKeys.DEPENDS_ON_LIST));
 			resultList.add(op);
 		}
 		return resultList;
 	}
 
 
-	private ArrayList<OperationParameterBean> mapToOperationParamTable(List<HashMap<String, Object>> opList) {
-		ArrayList<OperationParameterBean> resultList = new ArrayList<OperationParameterBean>();
+	private List<OperationParameterBean> mapToOperationParamTable(List<HashMap<String, Object>> opList) {
+		List<OperationParameterBean> resultList = new ArrayList<OperationParameterBean>();
 		if (opList == null)
 			return resultList;
 		for (HashMap<String, Object> operation : opList) {
@@ -1738,8 +1778,8 @@ public class MdekMapper implements DataMapperInterface {
 
 	
 
-	private ArrayList<CommentBean> mapToCommentTable(List<HashMap<String, Object>> commentList) {
-		ArrayList<CommentBean> resultList = new ArrayList<CommentBean>();
+	private List<CommentBean> mapToCommentTable(List<HashMap<String, Object>> commentList) {
+		List<CommentBean> resultList = new ArrayList<CommentBean>();
 		if (commentList == null)
 			return resultList;
 		for (HashMap<String, Object> comment : commentList) {

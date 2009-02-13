@@ -70,6 +70,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.URLJobInfoBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.VersionInformation"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.address.MdekAddressBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.AdditionalFieldBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.object.ConformityBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.object.DataFormatBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.object.DBContentBean"/>

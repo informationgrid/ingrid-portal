@@ -114,6 +114,9 @@ var currentUser = {};
 // This object holds the current group (See de.ingrid.mdek.beans.security.Group for content)
 var currentGroup = {};
 
+// This list holds all additionalField widgets (if any exist) for easy access
+// The list is initialized in init.js/initAdditionalFields
+var additionalFieldWidgets = [];
 
 // TODO Move Dirty Flag handling to another file? 
 dojo.addOnLoad(function()
@@ -1664,6 +1667,16 @@ udkDataProxy._setObjectData = function(nodeData)
   UtilList.addIcons(linkTable);
   dojo.widget.byId("linksFrom").store.setData(linkTable);
 
+  // Additional Fields
+  var additionalFields = nodeData.additionalFields;
+  if (additionalFields) {
+	  for (var index = 0; index < additionalFields.length; ++index) {
+		  var currentField = additionalFields[index];
+		  var currentFieldWidget = dojo.widget.byId("additionalField"+currentField.identifier);
+		  currentFieldWidget.setValue(currentField.value);
+	  }
+  }
+
   // Clear all object classes
 	udkDataProxy._setObjectDataClass0(nodeData);
 	udkDataProxy._setObjectDataClass1(nodeData);
@@ -1994,6 +2007,17 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.linksToUrlTable = urlLinks;
   nodeData.linksFromObjectTable = udkDataProxy._getTableData("linksFrom");
 
+  // Additional Fields
+  nodeData.additionalFields = [];
+  if (additionalFieldWidgets) {
+	  for (var index = 0; index < additionalFieldWidgets.length; ++index) {
+		  var currentField = additionalFieldWidgets[index];
+		  var identifier = currentField.id.substring("additionalField".length);
+		  var name = currentField.name;
+		  var value = currentField.getValue();
+		  nodeData.additionalFields.push( { identifier: identifier, name: name, value: value } );
+	  }
+  }
 
   // -- Check which object type was received and fill the appropriate fields --
   switch (nodeData.objectClass)

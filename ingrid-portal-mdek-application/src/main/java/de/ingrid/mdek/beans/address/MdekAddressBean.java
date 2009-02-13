@@ -3,6 +3,7 @@ package de.ingrid.mdek.beans.address;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import de.ingrid.mdek.beans.CommentBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
@@ -10,63 +11,63 @@ import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 
 public class MdekAddressBean {
 	
-	public String uuid;
-	public Integer parentClass;
-	public String parentUuid;
-	public String information;
-	public String nodeAppType;
-	public String nodeDocType;
-	public Boolean hasChildren;
-	public Boolean writePermission;
-	public Boolean writeSinglePermission;
-	public Boolean writeTreePermission;
-	public Boolean writeSubTreePermission;
-	public Boolean isPublished;
-	public Boolean isMarkedDeleted;
+	private String uuid;
+	private Integer parentClass;
+	private String parentUuid;
+	private String information;
+	private String nodeAppType;
+	private String nodeDocType;
+	private Boolean hasChildren;
+	private Boolean writePermission;
+	private Boolean writeSinglePermission;
+	private Boolean writeTreePermission;
+	private Boolean writeSubTreePermission;
+	private Boolean isPublished;
+	private Boolean isMarkedDeleted;
 	
 	// QA Fields
-	public MdekAddressBean assignerUser;
-	public Date assignTime;
-	public String userOperation;
+	private MdekAddressBean assignerUser;
+	private Date assignTime;
+	private String userOperation;
 
-	public String addressOwner;
-	public String creationTime;
-	public String modificationTime;
-	public MdekAddressBean lastEditor;
-	public String workState;
+	private String addressOwner;
+	private String creationTime;
+	private String modificationTime;
+	private MdekAddressBean lastEditor;
+	private String workState;
 
-	public Integer addressClass;
-	public String organisation;
-	public String name;
-	public String givenName;
-	public String nameForm;
-	public String titleOrFunction;
-	public String street;
-	public String countryCode;
-	public String postalCode;
-	public String city;
-	public String poboxPostalCode;
-	public String pobox;
-	public String task;
-	public String addressDescription;
+	private Integer addressClass;
+	private String organisation;
+	private String name;
+	private String givenName;
+	private String nameForm;
+	private String titleOrFunction;
+	private String street;
+	private String countryCode;
+	private String postalCode;
+	private String city;
+	private String poboxPostalCode;
+	private String pobox;
+	private String task;
+	private String addressDescription;
 
-	public Integer typeOfRelation;
-	public String nameOfRelation;
-	public Integer refOfRelation;
+	private Integer typeOfRelation;
+	private String nameOfRelation;
+	private Integer refOfRelation;
 	
 	// Comments
-	public ArrayList<CommentBean> commentTable;
+	private List<CommentBean> commentTable;
 	
-	public ArrayList<HashMap<String, String>> communication;
+	private List<HashMap<String, String>> communication;
 
 	// Thesaurus
-	public ArrayList<SNSTopic> thesaurusTermsTable;
+	private List<SNSTopic> thesaurusTermsTable;
 
 	// References
-	public ArrayList<MdekDataBean> linksFromObjectTable;
-	public ArrayList<MdekDataBean> linksFromPublishedObjectTable;
-	public ArrayList<MdekAddressBean> parentInstitutions;
-	public Integer totalNumReferences;
+	private List<MdekDataBean> linksFromObjectTable;
+	private List<MdekDataBean> linksFromPublishedObjectTable;
+	private List<MdekAddressBean> parentInstitutions;
+	private Integer totalNumReferences;
 	
 	
 	public MdekAddressBean() {
@@ -269,11 +270,11 @@ public class MdekAddressBean {
 		this.nameOfRelation = nameOfRelation;
 	}
 
-	public ArrayList<HashMap<String, String>> getCommunication() {
+	public List<HashMap<String, String>> getCommunication() {
 		return communication;
 	}
 
-	public void setCommunication(ArrayList<HashMap<String, String>> communication) {
+	public void setCommunication(List<HashMap<String, String>> communication) {
 		this.communication = communication;
 	}
 
@@ -293,27 +294,27 @@ public class MdekAddressBean {
 		this.parentClass = parentClass;
 	}
 
-	public ArrayList<SNSTopic> getThesaurusTermsTable() {
+	public List<SNSTopic> getThesaurusTermsTable() {
 		return thesaurusTermsTable;
 	}
 
-	public void setThesaurusTermsTable(ArrayList<SNSTopic> thesaurusTermsTable) {
+	public void setThesaurusTermsTable(List<SNSTopic> thesaurusTermsTable) {
 		this.thesaurusTermsTable = thesaurusTermsTable;
 	}
 
-	public ArrayList<MdekDataBean> getLinksFromObjectTable() {
+	public List<MdekDataBean> getLinksFromObjectTable() {
 		return linksFromObjectTable;
 	}
 
-	public void setLinksFromObjectTable(ArrayList<MdekDataBean> linksFromObjectTable) {
+	public void setLinksFromObjectTable(List<MdekDataBean> linksFromObjectTable) {
 		this.linksFromObjectTable = linksFromObjectTable;
 	}
 
-	public ArrayList<MdekAddressBean> getParentInstitutions() {
+	public List<MdekAddressBean> getParentInstitutions() {
 		return parentInstitutions;
 	}
 
-	public void setParentInstitutions(ArrayList<MdekAddressBean> parentInstitutions) {
+	public void setParentInstitutions(List<MdekAddressBean> parentInstitutions) {
 		this.parentInstitutions = parentInstitutions;
 	}
 
@@ -325,11 +326,11 @@ public class MdekAddressBean {
 		this.parentUuid = parentUuid;
 	}
 
-	public ArrayList<CommentBean> getCommentTable() {
+	public List<CommentBean> getCommentTable() {
 		return commentTable;
 	}
 
-	public void setCommentTable(ArrayList<CommentBean> commentTable) {
+	public void setCommentTable(List<CommentBean> commentTable) {
 		this.commentTable = commentTable;
 	}
 
@@ -341,12 +342,12 @@ public class MdekAddressBean {
 		this.refOfRelation = refOfRelation;
 	}
 
-	public ArrayList<MdekDataBean> getLinksFromPublishedObjectTable() {
+	public List<MdekDataBean> getLinksFromPublishedObjectTable() {
 		return linksFromPublishedObjectTable;
 	}
 
 	public void setLinksFromPublishedObjectTable(
-			ArrayList<MdekDataBean> linksFromPublishedObjectTable) {
+			List<MdekDataBean> linksFromPublishedObjectTable) {
 		this.linksFromPublishedObjectTable = linksFromPublishedObjectTable;
 	}
 

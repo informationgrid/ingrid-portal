@@ -2,6 +2,7 @@ package de.ingrid.mdek.beans.object;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import de.ingrid.mdek.beans.CommentBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
@@ -14,161 +15,164 @@ import de.ingrid.mdek.dwr.services.sns.SNSTopic;
  */
 public class MdekDataBean {
 
-	public String uuid;
-	public String parentUuid;
-	public Boolean hasChildren;
-	public String workState;
-	public Integer parentPublicationCondition;
-	public Boolean isPublished;
-	public Boolean isMarkedDeleted;
+	private String uuid;
+	private String parentUuid;
+	private Boolean hasChildren;
+	private String workState;
+	private Integer parentPublicationCondition;
+	private Boolean isPublished;
+	private Boolean isMarkedDeleted;
 
-	public String title;
-	public String nodeDocType;
-	public String nodeAppType;
-	public Boolean writePermission;
-	public Boolean writeSinglePermission;
-	public Boolean writeTreePermission;
-	public Boolean writeSubTreePermission;
+	private String title;
+	private String nodeDocType;
+	private String nodeAppType;
+	private Boolean writePermission;
+	private Boolean writeSinglePermission;
+	private Boolean writeTreePermission;
+	private Boolean writeSubTreePermission;
 
 	// QA Fields
-	public MdekAddressBean assignerUser;
-	public Date assignTime;
-	public String userOperation;
+	private MdekAddressBean assignerUser;
+	private Date assignTime;
+	private String userOperation;
 
 	// Identification 
-	public String objectName;
-	public Integer objectClass;
-	public String objectOwner;
-	public String creationTime;
-	public String modificationTime;
-	public MdekAddressBean lastEditor;
+	private String objectName;
+	private Integer objectClass;
+	private String objectOwner;
+	private String creationTime;
+	private String modificationTime;
+	private MdekAddressBean lastEditor;
 
 	// General
-	public String generalShortDescription;
-	public String generalDescription;
-	public ArrayList<MdekAddressBean> generalAddressTable;
-	public ArrayList<CommentBean> commentTable;
+	private String generalShortDescription;
+	private String generalDescription;
+	private List<MdekAddressBean> generalAddressTable;
+	private List<CommentBean> commentTable;
 
 	// Spatial
-	public ArrayList<LocationBean> spatialRefAdminUnitTable;
-	public ArrayList<LocationBean> spatialRefLocationTable;
-	public Double spatialRefAltMin;
-	public Double spatialRefAltMax;
-	public Integer spatialRefAltMeasure;
-	public Integer spatialRefAltVDate;
-	public String spatialRefExplanation;
+	private List<LocationBean> spatialRefAdminUnitTable;
+	private List<LocationBean> spatialRefLocationTable;
+	private Double spatialRefAltMin;
+	private Double spatialRefAltMax;
+	private Integer spatialRefAltMeasure;
+	private Integer spatialRefAltVDate;
+	private String spatialRefExplanation;
 
 	// Time
-	public String timeRefType;
-	public Date timeRefDate1;
-	public Date timeRefDate2;
-	public Integer timeRefStatus;
-	public Integer timeRefPeriodicity;
-	public String timeRefIntervalNum;
-	public String timeRefIntervalUnit;
-	public ArrayList<TimeReferenceBean> timeRefTable;
-	public String timeRefExplanation;
+	private String timeRefType;
+	private Date timeRefDate1;
+	private Date timeRefDate2;
+	private Integer timeRefStatus;
+	private Integer timeRefPeriodicity;
+	private String timeRefIntervalNum;
+	private String timeRefIntervalUnit;
+	private List<TimeReferenceBean> timeRefTable;
+	private String timeRefExplanation;
 
 	// ExtraInfo
-	public String extraInfoLangMetaData;
-	public String extraInfoLangData;
-	public Integer extraInfoPublishArea;
-	public ArrayList<ConformityBean> extraInfoConformityTable;
-	public ArrayList<String> extraInfoXMLExportTable;
-	public ArrayList<String> extraInfoLegalBasicsTable;
-	public String extraInfoPurpose;
-	public String extraInfoUse;
+	private String extraInfoLangMetaData;
+	private String extraInfoLangData;
+	private Integer extraInfoPublishArea;
+	private List<ConformityBean> extraInfoConformityTable;
+	private List<String> extraInfoXMLExportTable;
+	private List<String> extraInfoLegalBasicsTable;
+	private String extraInfoPurpose;
+	private String extraInfoUse;
 	
 
 	// Availability
-	public ArrayList<UsageLimitationBean> availabilityUsageLimitationTable;
-	public ArrayList<DataFormatBean> availabilityDataFormatTable;
-	public ArrayList<MediaOptionBean> availabilityMediaOptionsTable;
-	public String availabilityOrderInfo;
+	private List<UsageLimitationBean> availabilityUsageLimitationTable;
+	private List<DataFormatBean> availabilityDataFormatTable;
+	private List<MediaOptionBean> availabilityMediaOptionsTable;
+	private String availabilityOrderInfo;
 	
 	// Thesaurus
-	public ArrayList<SNSTopic> thesaurusTermsTable;
-	public ArrayList<Integer> thesaurusTopicsList;
-	public Boolean thesaurusEnvExtRes;
-	public ArrayList<Integer> thesaurusEnvTopicsList;
-	public ArrayList<Integer> thesaurusEnvCatsList;
+	private List<SNSTopic> thesaurusTermsTable;
+	private List<Integer> thesaurusTopicsList;
+	private Boolean thesaurusEnvExtRes;
+	private List<Integer> thesaurusEnvTopicsList;
+	private List<Integer> thesaurusEnvCatsList;
 
 	// Links
-	public ArrayList<MdekDataBean> linksToObjectTable;
-	public ArrayList<MdekDataBean> linksFromObjectTable;
-	public ArrayList<MdekDataBean> linksFromPublishedObjectTable;
-	public ArrayList<UrlBean> linksToUrlTable;
-	public Integer relationType;
-	public String relationTypeName;
-	public String relationDescription;
-	
+	private List<MdekDataBean> linksToObjectTable;
+	private List<MdekDataBean> linksFromObjectTable;
+	private List<MdekDataBean> linksFromPublishedObjectTable;
+	private List<UrlBean> linksToUrlTable;
+	private Integer relationType;
+	private String relationTypeName;
+	private String relationDescription;
+
+	// Additional Fields
+	private List<AdditionalFieldBean> additionalFields;
+
 	// TODO Subclass this?
 	// Object class 1 (Geoinformation/Karte)
-	public String ref1ObjectIdentifier;
-	public Integer ref1DataSet;
-	public Double ref1Coverage;
-	public ArrayList<Integer> ref1Representation;	
-	public Integer ref1VFormatTopology;
-	public ArrayList<VectorFormatDetailsBean> ref1VFormatDetails;
-	public String ref1SpatialSystem;
-	public ArrayList<ScaleBean> ref1Scale;
-	public Double ref1AltAccuracy;
-	public Double ref1PosAccuracy;
-	public ArrayList<LinkDataBean> ref1SymbolsText;
-	public ArrayList<LinkDataBean> ref1KeysText;
-	public String ref1BasisText;
-	public String ref1DataBasisText;
-	public String ref1ProcessText;
-	public ArrayList<String> ref1Data;
+	private String ref1ObjectIdentifier;
+	private Integer ref1DataSet;
+	private Double ref1Coverage;
+	private List<Integer> ref1Representation;	
+	private Integer ref1VFormatTopology;
+	private List<VectorFormatDetailsBean> ref1VFormatDetails;
+	private String ref1SpatialSystem;
+	private List<ScaleBean> ref1Scale;
+	private Double ref1AltAccuracy;
+	private Double ref1PosAccuracy;
+	private List<LinkDataBean> ref1SymbolsText;
+	private List<LinkDataBean> ref1KeysText;
+	private String ref1BasisText;
+	private String ref1DataBasisText;
+	private String ref1ProcessText;
+	private List<String> ref1Data;
 
 
 	// Object class 2 (Dokument/Bericht/Literatur)
-	public String ref2Author;
-	public String ref2Publisher;
-	public String ref2PublishedIn;
-	public String ref2PublishLocation;
-	public String ref2PublishedInIssue;
-	public String ref2PublishedInPages;
-	public String ref2PublishedInYear;
-	public String ref2PublishedISBN;
-	public String ref2PublishedPublisher;
-	public String ref2LocationText;
-	public String ref2DocumentType;
-	public String ref2BaseDataText;
-	public String ref2BibData;
-	public String ref2Explanation;
+	private String ref2Author;
+	private String ref2Publisher;
+	private String ref2PublishedIn;
+	private String ref2PublishLocation;
+	private String ref2PublishedInIssue;
+	private String ref2PublishedInPages;
+	private String ref2PublishedInYear;
+	private String ref2PublishedISBN;
+	private String ref2PublishedPublisher;
+	private String ref2LocationText;
+	private String ref2DocumentType;
+	private String ref2BaseDataText;
+	private String ref2BibData;
+	private String ref2Explanation;
 
 	// Object class 3 (Dienst/Anwendung/Informationssystem)
-	public Integer ref3ServiceType;
-	public ArrayList<Integer> ref3ServiceTypeTable;
-	public ArrayList<String> ref3ServiceVersion;
-	public String ref3SystemEnv;
-	public String ref3History;
-	public String ref3BaseDataText;
-	public String ref3Explanation;
-	public ArrayList<ScaleBean> ref3Scale;
-	public ArrayList<OperationBean> ref3Operation;
+	private Integer ref3ServiceType;
+	private List<Integer> ref3ServiceTypeTable;
+	private List<String> ref3ServiceVersion;
+	private String ref3SystemEnv;
+	private String ref3History;
+	private String ref3BaseDataText;
+	private String ref3Explanation;
+	private List<ScaleBean> ref3Scale;
+	private List<OperationBean> ref3Operation;
 	
 	// Object class 4 (Vorhaben/Projekt/Programm)
-	public String ref4ParticipantsText;
-	public String ref4PMText;
-	public String ref4Explanation;
+	private String ref4ParticipantsText;
+	private String ref4PMText;
+	private String ref4Explanation;
 
 	// Object class 5 (Vorhaben/Projekt/Programm)
-	public ArrayList<DBContentBean> ref5dbContent;
-	public String ref5MethodText;
-	public String ref5Explanation;
+	private List<DBContentBean> ref5dbContent;
+	private String ref5MethodText;
+	private String ref5Explanation;
 
 	
 
-	public ArrayList<DBContentBean> getRef5dbContent() {
+	public List<DBContentBean> getRef5dbContent() {
 		return ref5dbContent;
 	}
 
 
 
 
-	public void setRef5dbContent(ArrayList<DBContentBean> ref5dbContent) {
+	public void setRef5dbContent(List<DBContentBean> ref5dbContent) {
 		this.ref5dbContent = ref5dbContent;
 	}
 
@@ -244,14 +248,14 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<String> getRef3ServiceVersion() {
+	public List<String> getRef3ServiceVersion() {
 		return ref3ServiceVersion;
 	}
 
 
 
 
-	public void setRef3ServiceVersion(ArrayList<String> ref3ServiceVersion) {
+	public void setRef3ServiceVersion(List<String> ref3ServiceVersion) {
 		this.ref3ServiceVersion = ref3ServiceVersion;
 	}
 
@@ -299,14 +303,14 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<OperationBean> getRef3Operation() {
+	public List<OperationBean> getRef3Operation() {
 		return ref3Operation;
 	}
 
 
 
 
-	public void setRef3Operation(ArrayList<OperationBean> ref3Operation) {
+	public void setRef3Operation(List<OperationBean> ref3Operation) {
 		this.ref3Operation = ref3Operation;
 	}
 
@@ -551,33 +555,33 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<Integer> getThesaurusEnvTopicsList() {
+	public List<Integer> getThesaurusEnvTopicsList() {
 		return thesaurusEnvTopicsList;
 	}
 
 
 
-	public void setThesaurusEnvTopicsList(ArrayList<Integer> thesaurusEnvTopicsList) {
+	public void setThesaurusEnvTopicsList(List<Integer> thesaurusEnvTopicsList) {
 		this.thesaurusEnvTopicsList = thesaurusEnvTopicsList;
 	}
 
 
 
-	public ArrayList<Integer> getThesaurusEnvCatsList() {
+	public List<Integer> getThesaurusEnvCatsList() {
 		return thesaurusEnvCatsList;
 	}
 
 
 
-	public void setThesaurusEnvCatsList(ArrayList<Integer> thesaurusEnvCatsList) {
+	public void setThesaurusEnvCatsList(List<Integer> thesaurusEnvCatsList) {
 		this.thesaurusEnvCatsList = thesaurusEnvCatsList;
 	}
 
-	public ArrayList<MdekAddressBean> getGeneralAddressTable() {
+	public List<MdekAddressBean> getGeneralAddressTable() {
 		return generalAddressTable;
 	}
 
-	public void setGeneralAddressTable(ArrayList<MdekAddressBean> generalAddress) {
+	public void setGeneralAddressTable(List<MdekAddressBean> generalAddress) {
 		this.generalAddressTable = generalAddress;
 	}
 
@@ -663,27 +667,27 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<LocationBean> getSpatialRefAdminUnitTable() {
+	public List<LocationBean> getSpatialRefAdminUnitTable() {
 		return spatialRefAdminUnitTable;
 	}
 
 
 
 	public void setSpatialRefAdminUnitTable(
-			ArrayList<LocationBean> spatialRefAdminUnitTable) {
+			List<LocationBean> spatialRefAdminUnitTable) {
 		this.spatialRefAdminUnitTable = spatialRefAdminUnitTable;
 	}
 
 
 
-	public ArrayList<LocationBean> getSpatialRefLocationTable() {
+	public List<LocationBean> getSpatialRefLocationTable() {
 		return spatialRefLocationTable;
 	}
 
 
 
 	public void setSpatialRefLocationTable(
-			ArrayList<LocationBean> spatialRefLocationTable) {
+			List<LocationBean> spatialRefLocationTable) {
 		this.spatialRefLocationTable = spatialRefLocationTable;
 	}
 
@@ -968,12 +972,12 @@ public class MdekDataBean {
 	}
 
 
-	public ArrayList<MdekDataBean> getLinksToObjectTable() {
+	public List<MdekDataBean> getLinksToObjectTable() {
 		return linksToObjectTable;
 	}
 
 
-	public void setLinksToObjectTable(ArrayList<MdekDataBean> linksToObjectTable) {
+	public void setLinksToObjectTable(List<MdekDataBean> linksToObjectTable) {
 		this.linksToObjectTable = linksToObjectTable;
 	}
 
@@ -990,49 +994,49 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<MdekDataBean> getLinksFromObjectTable() {
+	public List<MdekDataBean> getLinksFromObjectTable() {
 		return linksFromObjectTable;
 	}
 
 
 
 
-	public void setLinksFromObjectTable(ArrayList<MdekDataBean> linksFromObjectTable) {
+	public void setLinksFromObjectTable(List<MdekDataBean> linksFromObjectTable) {
 		this.linksFromObjectTable = linksFromObjectTable;
 	}
 
 
 
 
-	public ArrayList<UrlBean> getLinksToUrlTable() {
+	public List<UrlBean> getLinksToUrlTable() {
 		return linksToUrlTable;
 	}
 
 
 
 
-	public void setLinksToUrlTable(ArrayList<UrlBean> linksToUrlTable) {
+	public void setLinksToUrlTable(List<UrlBean> linksToUrlTable) {
 		this.linksToUrlTable = linksToUrlTable;
 	}
 
 
 
 
-	public ArrayList<TimeReferenceBean> getTimeRefTable() {
+	public List<TimeReferenceBean> getTimeRefTable() {
 		return timeRefTable;
 	}
 
 
 
 
-	public void setTimeRefTable(ArrayList<TimeReferenceBean> timeRefTable) {
+	public void setTimeRefTable(List<TimeReferenceBean> timeRefTable) {
 		this.timeRefTable = timeRefTable;
 	}
 
 
 
 
-	public ArrayList<DataFormatBean> getAvailabilityDataFormatTable() {
+	public List<DataFormatBean> getAvailabilityDataFormatTable() {
 		return availabilityDataFormatTable;
 	}
 
@@ -1040,7 +1044,7 @@ public class MdekDataBean {
 
 
 	public void setAvailabilityDataFormatTable(
-			ArrayList<DataFormatBean> availabilityDataFormatTable) {
+			List<DataFormatBean> availabilityDataFormatTable) {
 		this.availabilityDataFormatTable = availabilityDataFormatTable;
 	}
 
@@ -1073,14 +1077,14 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<Integer> getRef1Representation() {
+	public List<Integer> getRef1Representation() {
 		return ref1Representation;
 	}
 
 
 
 
-	public void setRef1Representation(ArrayList<Integer> ref1Representation) {
+	public void setRef1Representation(List<Integer> ref1Representation) {
 		this.ref1Representation = ref1Representation;
 	}
 
@@ -1101,7 +1105,7 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<VectorFormatDetailsBean> getRef1VFormatDetails() {
+	public List<VectorFormatDetailsBean> getRef1VFormatDetails() {
 		return ref1VFormatDetails;
 	}
 
@@ -1109,7 +1113,7 @@ public class MdekDataBean {
 
 
 	public void setRef1VFormatDetails(
-			ArrayList<VectorFormatDetailsBean> ref1VFormatDetails) {
+			List<VectorFormatDetailsBean> ref1VFormatDetails) {
 		this.ref1VFormatDetails = ref1VFormatDetails;
 	}
 
@@ -1117,14 +1121,14 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<ScaleBean> getRef1Scale() {
+	public List<ScaleBean> getRef1Scale() {
 		return ref1Scale;
 	}
 
 
 
 
-	public void setRef1Scale(ArrayList<ScaleBean> ref1Scale) {
+	public void setRef1Scale(List<ScaleBean> ref1Scale) {
 		this.ref1Scale = ref1Scale;
 	}
 
@@ -1159,28 +1163,28 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<LinkDataBean> getRef1SymbolsText() {
+	public List<LinkDataBean> getRef1SymbolsText() {
 		return ref1SymbolsText;
 	}
 
 
 
 
-	public void setRef1SymbolsText(ArrayList<LinkDataBean> ref1SymbolsText) {
+	public void setRef1SymbolsText(List<LinkDataBean> ref1SymbolsText) {
 		this.ref1SymbolsText = ref1SymbolsText;
 	}
 
 
 
 
-	public ArrayList<LinkDataBean> getRef1KeysText() {
+	public List<LinkDataBean> getRef1KeysText() {
 		return ref1KeysText;
 	}
 
 
 
 
-	public void setRef1KeysText(ArrayList<LinkDataBean> ref1KeysText) {
+	public void setRef1KeysText(List<LinkDataBean> ref1KeysText) {
 		this.ref1KeysText = ref1KeysText;
 	}
 
@@ -1215,14 +1219,14 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<String> getRef1Data() {
+	public List<String> getRef1Data() {
 		return ref1Data;
 	}
 
 
 
 
-	public void setRef1Data(ArrayList<String> ref1Data) {
+	public void setRef1Data(List<String> ref1Data) {
 		this.ref1Data = ref1Data;
 	}
 
@@ -1243,21 +1247,21 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<CommentBean> getCommentTable() {
+	public List<CommentBean> getCommentTable() {
 		return commentTable;
 	}
 
 
 
 
-	public void setCommentTable(ArrayList<CommentBean> commentTable) {
+	public void setCommentTable(List<CommentBean> commentTable) {
 		this.commentTable = commentTable;
 	}
 
 
 
 
-	public ArrayList<MediaOptionBean> getAvailabilityMediaOptionsTable() {
+	public List<MediaOptionBean> getAvailabilityMediaOptionsTable() {
 		return availabilityMediaOptionsTable;
 	}
 
@@ -1265,35 +1269,35 @@ public class MdekDataBean {
 
 
 	public void setAvailabilityMediaOptionsTable(
-			ArrayList<MediaOptionBean> availabilityMediaOptionsTable) {
+			List<MediaOptionBean> availabilityMediaOptionsTable) {
 		this.availabilityMediaOptionsTable = availabilityMediaOptionsTable;
 	}
 
 
 
 
-	public ArrayList<SNSTopic> getThesaurusTermsTable() {
+	public List<SNSTopic> getThesaurusTermsTable() {
 		return thesaurusTermsTable;
 	}
 
 
 
 
-	public void setThesaurusTermsTable(ArrayList<SNSTopic> thesaurusTermsTable) {
+	public void setThesaurusTermsTable(List<SNSTopic> thesaurusTermsTable) {
 		this.thesaurusTermsTable = thesaurusTermsTable;
 	}
 
 
 
 
-	public ArrayList<Integer> getThesaurusTopicsList() {
+	public List<Integer> getThesaurusTopicsList() {
 		return thesaurusTopicsList;
 	}
 
 
 
 
-	public void setThesaurusTopicsList(ArrayList<Integer> thesaurusTopicsList) {
+	public void setThesaurusTopicsList(List<Integer> thesaurusTopicsList) {
 		this.thesaurusTopicsList = thesaurusTopicsList;
 	}
 
@@ -1365,21 +1369,21 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<String> getExtraInfoXMLExportTable() {
+	public List<String> getExtraInfoXMLExportTable() {
 		return extraInfoXMLExportTable;
 	}
 
 
 
 
-	public void setExtraInfoXMLExportTable(ArrayList<String> extraInfoXMLExportTable) {
+	public void setExtraInfoXMLExportTable(List<String> extraInfoXMLExportTable) {
 		this.extraInfoXMLExportTable = extraInfoXMLExportTable;
 	}
 
 
 
 
-	public ArrayList<String> getExtraInfoLegalBasicsTable() {
+	public List<String> getExtraInfoLegalBasicsTable() {
 		return extraInfoLegalBasicsTable;
 	}
 
@@ -1387,14 +1391,14 @@ public class MdekDataBean {
 
 
 	public void setExtraInfoLegalBasicsTable(
-			ArrayList<String> extraInfoLegalBasicsTable) {
+			List<String> extraInfoLegalBasicsTable) {
 		this.extraInfoLegalBasicsTable = extraInfoLegalBasicsTable;
 	}
 
 
 
 
-	public ArrayList<MdekDataBean> getLinksFromPublishedObjectTable() {
+	public List<MdekDataBean> getLinksFromPublishedObjectTable() {
 		return linksFromPublishedObjectTable;
 	}
 
@@ -1402,7 +1406,7 @@ public class MdekDataBean {
 
 
 	public void setLinksFromPublishedObjectTable(
-			ArrayList<MdekDataBean> linksFromPublishedObjectTable) {
+			List<MdekDataBean> linksFromPublishedObjectTable) {
 		this.linksFromPublishedObjectTable = linksFromPublishedObjectTable;
 	}
 
@@ -1465,7 +1469,7 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<ConformityBean> getExtraInfoConformityTable() {
+	public List<ConformityBean> getExtraInfoConformityTable() {
 		return extraInfoConformityTable;
 	}
 
@@ -1473,7 +1477,7 @@ public class MdekDataBean {
 
 
 	public void setExtraInfoConformityTable(
-			ArrayList<ConformityBean> extraInfoConformityTable) {
+			List<ConformityBean> extraInfoConformityTable) {
 		this.extraInfoConformityTable = extraInfoConformityTable;
 	}
 
@@ -1494,7 +1498,7 @@ public class MdekDataBean {
 
 
 
-	public ArrayList<UsageLimitationBean> getAvailabilityUsageLimitationTable() {
+	public List<UsageLimitationBean> getAvailabilityUsageLimitationTable() {
 		return availabilityUsageLimitationTable;
 	}
 
@@ -1502,35 +1506,35 @@ public class MdekDataBean {
 
 
 	public void setAvailabilityUsageLimitationTable(
-			ArrayList<UsageLimitationBean> availabilityUsageLimitationTable) {
+			List<UsageLimitationBean> availabilityUsageLimitationTable) {
 		this.availabilityUsageLimitationTable = availabilityUsageLimitationTable;
 	}
 
 
 
 
-	public ArrayList<Integer> getRef3ServiceTypeTable() {
+	public List<Integer> getRef3ServiceTypeTable() {
 		return ref3ServiceTypeTable;
 	}
 
 
 
 
-	public void setRef3ServiceTypeTable(ArrayList<Integer> ref3ServiceTypeTable) {
+	public void setRef3ServiceTypeTable(List<Integer> ref3ServiceTypeTable) {
 		this.ref3ServiceTypeTable = ref3ServiceTypeTable;
 	}
 
 
 
 
-	public ArrayList<ScaleBean> getRef3Scale() {
+	public List<ScaleBean> getRef3Scale() {
 		return ref3Scale;
 	}
 
 
 
 
-	public void setRef3Scale(ArrayList<ScaleBean> ref3Scale) {
+	public void setRef3Scale(List<ScaleBean> ref3Scale) {
 		this.ref3Scale = ref3Scale;
 	}
 
@@ -1616,6 +1620,20 @@ public class MdekDataBean {
 
 	public void setIsMarkedDeleted(Boolean isMarkedDeleted) {
 		this.isMarkedDeleted = isMarkedDeleted;
+	}
+
+
+
+
+	public List<AdditionalFieldBean> getAdditionalFields() {
+		return additionalFields;
+	}
+
+
+
+
+	public void setAdditionalFields(List<AdditionalFieldBean> additionalFields) {
+		this.additionalFields = additionalFields;
 	}
 
 }
