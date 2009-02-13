@@ -166,6 +166,7 @@ function displaySearchResults(resultList) {
 
 				linkElement.setAttribute("title", "Begriff auswaehlen");
 				linkElement.topicId = term.topicId;
+				linkElement.source = term.source;
 			} else {
 				dojo.html.addClass(linkElement, "notSelectable");
 			}
@@ -344,13 +345,13 @@ addSelectedTopic = function() {
 		if (!selectedNode || selectedNode.type != "DESCRIPTOR")
 			return;
 		else
-			descStore.addData( {Id: UtilStore.getNewKey(descStore), topicId: selectedNode.topicId, title: selectedNode.title} );
+			descStore.addData( {Id: UtilStore.getNewKey(descStore), topicId: selectedNode.topicId, title: selectedNode.title, source: selectedNode.source } );
 
 	} else if (selectedTab == "thesResultPane" && selectedTextNode) {
 		if (dojo.lang.some(descStore.getData(), function(item){ return (selectedTextNode.topicId == item.topicId); }))
 			return;
 		else
-			descStore.addData( {Id: UtilStore.getNewKey(descStore), topicId: selectedTextNode.topicId, title: selectedTextNode.innerHTML} );
+			descStore.addData( {Id: UtilStore.getNewKey(descStore), topicId: selectedTextNode.topicId, title: selectedTextNode.innerHTML, source: selectedTextNode.source } );
 	}
 };
 
@@ -365,15 +366,13 @@ closeDialog = function() {
 //
 // This function copies the descriptor list to the main mdek searchtopic list
 acceptTopicList = function() {
-	// TODO store.update()?
 	var srcStore = dojo.widget.byId("thesaurusDescList").store;
-//	var destStore = dojo.widget.byId("thesaurusTerms").store;
 	var destStore = dojo.widget.byId(_container_.customParams.dstTable).store;
 
 	dojo.lang.forEach(srcStore.getData(), function(topic){
 		if (dojo.lang.every(destStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
 			// Topic is new. Add it to the topic list
-			destStore.addData({Id: UtilStore.getNewKey(destStore), topicId: topic.topicId, title: topic.title});
+			destStore.addData({Id: UtilStore.getNewKey(destStore), topicId: topic.topicId, title: topic.title, source: topic.source });
 		} else {
 			// Topic already exists in the destination List
 			return;

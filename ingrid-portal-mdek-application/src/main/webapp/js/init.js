@@ -480,14 +480,14 @@ function initFreeTermsButtons() {
 					// If the term is a top term or node label, add it to the list of free terms without comment
 					if (queryTerm == null || queryTerm.type == "TOP_TERM" || queryTerm.type == "NODE_LABEL") {
 						// The searchTerm was not found. Simply add it to the list of free terms if it doesn't already exist
-						var freeTermsStore = _this._freeTermListWidget.store;
-						if (dojo.lang.every(freeTermsStore.getData(), function(item){ return item.title != term; })) {
+						var topicStore = _this._termListWidget.store;
+						if (dojo.lang.every(topicStore.getData(), function(item){ return item.title != term; })) {
 							// If every term in the store != the entered term add it to the list
-							var identifier = UtilStore.getNewKey(freeTermsStore);							
-							freeTermsStore.addData( {Id: identifier, title: term} );
+							var identifier = UtilStore.getNewKey(topicStore);							
+							topicStore.addData( { Id: identifier, title: term, source: "FREE"} );
 
 							// Scroll to the added descriptor
-							var rows = _this._freeTermListWidget.domNode.tBodies[0].rows;
+							var rows = _this._termListWidget.domNode.tBodies[0].rows;
 							if (!dojo.render.html.ie)				
 								dojo.html.scrollIntoView(rows[rows.length-1]);
 //							dialog.show(message.get("general.hint"), message.get("sns.freeTermAddHint"), dialog.INFO);			
@@ -500,7 +500,7 @@ function initFreeTermsButtons() {
 					} else if (queryTerm.type == "NODE_LABEL") {
 						// A node label can't be added to the free terms list. Show an info dialog and clear the input field
 						dialog.show(message.get("general.hint"), dojo.string.substituteParams(message.get("sns.freeTermAddNodeLabelHint"), term), dialog.INFO);			
-*/				
+*/
 					} else if (queryTerm.type == "DESCRIPTOR") {
 						// The search term is a descriptor. Show a dialog to query the user if the topic should be added to the topic list
 						var topicStore = _this._termListWidget.store;
@@ -509,7 +509,7 @@ function initFreeTermsButtons() {
 						deferred.addCallback(function() {
 							if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != queryTerm.topicId; })) {
 								// Topic is new. Add it to the topic list
-								topicStore.addData( {Id: UtilStore.getNewKey(topicStore), topicId: queryTerm.topicId, title: queryTerm.title} );
+								topicStore.addData( {Id: UtilStore.getNewKey(topicStore), topicId: queryTerm.topicId, title: queryTerm.title, source: queryTerm.source } );
 								// Scroll to the added descriptor
 								var rows = _this._termListWidget.domNode.tBodies[0].rows;
 								if (!dojo.render.html.ie)				
@@ -532,7 +532,7 @@ function initFreeTermsButtons() {
 							dojo.lang.forEach(descriptors, function(topic) {
 								if (dojo.lang.every(topicStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
 									// Topic is new. Add it to the topic list
-									topicStore.addData( {Id: UtilStore.getNewKey(topicStore), topicId: topic.topicId, title: topic.title} );
+									topicStore.addData( {Id: UtilStore.getNewKey(topicStore), topicId: topic.topicId, title: topic.title, source: queryTerm.source } );
 
 									// Scroll to the added descriptor
 									var rows = _this._termListWidget.domNode.tBodies[0].rows;
@@ -546,14 +546,14 @@ function initFreeTermsButtons() {
 						dialog.showPage(message.get("dialog.addDescriptors.title"), "mdek_add_descriptors_dialog.html", 360, 240, true, {descriptorTitle:queryTerm.title, descriptors:descriptors, resultHandler:deferred});
 
 						// Also add the queryTerm to the list of free terms
-						var freeTermsStore = _this._freeTermListWidget.store;
-						if (dojo.lang.every(freeTermsStore.getData(), function(item){ return item.title != queryTerm.title; })) {
+						var topicStore = _this._termListWidget.store;
+						if (dojo.lang.every(topicStore.getData(), function(item){ return item.title != queryTerm.title; })) {
 							// If every term in the store != the entered term add it to the list
-							var identifier = UtilStore.getNewKey(freeTermsStore);							
-							freeTermsStore.addData( {Id: identifier, title: queryTerm.title} );
+							var identifier = UtilStore.getNewKey(topicStore);							
+							topicStore.addData( {Id: identifier, title: queryTerm.title, source: "FREE"} );
 
 							// Scroll to the added descriptor
-							var rows = _this._freeTermListWidget.domNode.tBodies[0].rows;
+							var rows = _this._termListWidget.domNode.tBodies[0].rows;
 							if (!dojo.render.html.ie)				
 								dojo.html.scrollIntoView(rows[rows.length-1]);
 						}
@@ -584,7 +584,6 @@ function initFreeTermsButtons() {
 
 	button._inputFieldWidget = dojo.widget.byId("thesaurusFreeTerms");
 	button._termListWidget = dojo.widget.byId("thesaurusTerms");
-	button._freeTermListWidget = dojo.widget.byId("thesaurusFreeTermsList");
 	button.onClick = executeSearch;
 
 
@@ -601,7 +600,6 @@ function initFreeTermsButtons() {
 
 	button._inputFieldWidget = dojo.widget.byId("thesaurusFreeTermInputAddress");
 	button._termListWidget = dojo.widget.byId("thesaurusTermsAddress");
-	button._freeTermListWidget = dojo.widget.byId("thesaurusFreeTermsListAddress");
 	button.onClick = executeSearch;
 
     dojo.event.connect(udkDataProxy, "onAfterLoad", function() { dojo.widget.byId("thesaurusFreeTerms").setValue(""); });

@@ -1814,12 +1814,33 @@ function hideSplash(){
 		            	      <thead>
 		            		      <tr>
 		                  			<th nosort="true" field="title" dataType="String">&nbsp;</th>
+		                  			<th nosort="true" field="source" dataType="String">&nbsp;</th>
 		            		      </tr>
 		            	      </thead>
+							  <colgroup>
+							    <col width="90%">
+							    <col width="10%">
+							  </colgroup>
+		            	      <tbody>
+		            	      </tbody>
 		            	    </table>
 		                </div>
 					</span>
 	              </div>
+
+					<div class="inputContainer">
+						<div class="full">
+		          			<div class="input">
+								<span id="uiElement1410" type="required">
+									<input type="text" maxlength="255" id="thesaurusFreeTerms" class="w585" dojoType="ingrid:ValidationTextBox" />
+	                  				<div style="position:relative; height:0px; top:-22px; float:right;">
+										<button id="thesaurusFreeTermsAddButton" dojoType="ingrid:Button"><script>document.write(message.get("ui.obj.thesaurus.terms.custom.buttonAdd"))</script></button>
+					  				</div>
+		          				</span>
+		          			</div>
+			        		<div class="fill"></div>
+		        		</div>
+		      		</div>
 
 	              <div class="inputContainer h116">
 	                <div class="half left">
@@ -1842,30 +1863,6 @@ function hideSplash(){
 		                </span>
 	            	  </div>
 
-	                <div class="half">
-					  <span id="uiElement1410" type="optional">
-		                  <span class="label"><label for="thesaurusFreeTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 1410)"><script>document.write(message.get("ui.obj.thesaurus.terms.custom"))</script></label></span>
-		                  <div class="tableContainer spaceBelow headHiddenRows3 half">
-		              	    <table id="thesaurusFreeTermsList" dojoType="ingrid:FilteringTable" minRows="3" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
-		              	      <thead>
-		              		      <tr>
-		                    			<th nosort="true" field="title" dataType="String">Freie Suchbegriffe</th>
-		              		      </tr>
-		              	      </thead>
-		              	      <tbody>
-		              	      </tbody>
-		              	    </table>
-		              	  </div>
-
-		                  <span class="input" style="position:relative; top:-8px; float:left; width:238px;">
-	                  		<input type="text" id="thesaurusFreeTerms" maxlength="255" name="thesaurusFreeTerms" class="w238 nextToButton aboveTable" dojoType="ingrid:ValidationTextBox" />
-						  </span>
-		                  <span style="position:relative; top:-8px; float:right;">
-							<button id="thesaurusFreeTermsAddButton" dojoType="ingrid:Button"><script>document.write(message.get("ui.obj.thesaurus.terms.custom.buttonAdd"))</script></button>
-						  </span>
-	            	  </span>
-	            	</div>
-	                <div class="fill"></div>
 	              </div>
 
 	              <div class="inputContainer noSpaceBelow notRequired h185">
@@ -2307,35 +2304,18 @@ function hideSplash(){
 										<thead>
 											<tr>
 												<th nosort="true" field="title" dataType="String">Term</th>
+												<th nosort="true" field="source" dataType="String">Source</th>
 											</tr>
 										</thead>
-										<tbody>
-										</tbody>
+									  <colgroup>
+									    <col width="90%">
+									    <col width="10%">
+									  </colgroup>
+				            	      <tbody>
+				            	      </tbody>
 									</table>
 								</div>
 							</span>
-			      		</div>
-
-						<div class="inputContainer notRequired h088">
-							<div class="full">
-								<span id="uiElement4500" type="optional">
-									<span class="label"><label for="thesaurusFreeTermInputAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 4500)"><script>document.write(message.get("ui.adr.thesaurus.terms.custom"))</script></label></span>
-	
-									<div class="fill"></div>
-									<div class="tableContainer headHiddenRows3 full">
-				      	    			<table id="thesaurusFreeTermsListAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
-				      	      				<thead>
-				      		      				<tr>
-				            						<th nosort="true" field="title" dataType="String">Freie Suchbegriffe</th>
-				      		      				</tr>
-				      	      				</thead>
-				      	      				<tbody>
-				      	      				</tbody>
-				      	    			</table>
-				      	  			</div>
-				      	  		</span>
-						        <div class="fill"></div>
-							</div>
 			      		</div>
 
 						<div class="inputContainer notRequired">

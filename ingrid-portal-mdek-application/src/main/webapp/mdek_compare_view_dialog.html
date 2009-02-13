@@ -188,7 +188,6 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	renderSectionTitel("Verschlagwortung");
 	renderList(nodeDataOld.thesaurusTermsTable, nodeDataNew.thesaurusTermsTable, "Thesaurus-Suchbegriffe", "title");
 	renderList(nodeDataOld.thesaurusTopicsList, nodeDataNew.thesaurusTopicsList, "Themenkategorie", null, function (val) { return dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(val);});
-	renderList(nodeDataOld.thesaurusFreeTermsTable, nodeDataNew.thesaurusFreeTermsTable, "Freie Suchbegriffe");
 	renderTextWithTitle(nodeDataOld.thesaurusEnvExtRes ? "Ja": "Nein", nodeDataNew.thesaurusEnvExtRes ? "Ja": "Nein", "Als Katalogseite anzeigen");
 	renderList(nodeDataOld.thesaurusEnvTopicsList, nodeDataNew.thesaurusEnvTopicsList, "Umweltthemen - Themen", null, function (val) { return dojo.widget.byId("thesaurusEnvTopicsCombobox")._getDisplayValueForValue(val);});
 	renderList(nodeDataOld.thesaurusEnvCatsList, nodeDataNew.thesaurusEnvCatsList, "Umweltthemen - Kategorien", null, function (val) { return dojo.widget.byId("thesaurusEnvCatsCombobox")._getDisplayValueForValue(val);});

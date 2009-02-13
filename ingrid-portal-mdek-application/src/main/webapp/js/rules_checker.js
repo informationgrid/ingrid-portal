@@ -14,7 +14,7 @@ var timeUiInputElements = ["timeRefType", "timeRefDate1", "timeRefDate2", "timeR
 var extraUiInputElements = ["extraInfoLangMetaData", "extraInfoLangData", "extraInfoPublishArea",
 	"extraInfoXMLExportTable", "extraInfoLegalBasicsTable", "extraInfoPurpose", "extraInfoUse"];
 var availUiInputElements = ["availabilityUsageLimitationTable", "availabilityDataFormat", "availabilityMediaOptions", "availabilityOrderInfo"];
-var thesUiInputElements = ["thesaurusTerms", "thesaurusTopics", "thesaurusFreeTermsList", "thesaurusEnvExtRes",
+var thesUiInputElements = ["thesaurusTerms", "thesaurusTopics", "thesaurusEnvExtRes",
 	"thesaurusEnvTopics", "thesaurusEnvCats", "linksTo"];
 var class0UiInputElements = [];
 var class1UiInputElements = ["ref1ObjectIdentifier", "ref1DataSet", "ref1Coverage", "ref1Representation", "ref1VFormatTopology", "ref1VFormatDetails",
@@ -31,7 +31,7 @@ var class5UiInputElements = ["ref5dbContent", "ref5MethodText", "ref5MethodLink"
 
 // Address Type is not included since the field is filled automatically
 var adrUiInputElements = [/*"addressType",*/ "addressOwner", "addressStreet", "addressCountry", "addressZipCode", "addressCity", "addressPOBox",
-	"addressZipPOBox", "addressNotes", "addressCom", "addressTasks", "thesaurusTermsAddress", "thesaurusFreeTermsListAddress"];
+	"addressZipPOBox", "addressNotes", "addressCom", "addressTasks", "thesaurusTermsAddress"];
 var adrClass0UiInputElements = ["headerAddressType0Unit"];
 var adrClass1UiInputElements = ["headerAddressType1Unit"];
 var adrClass2UiInputElements = ["headerAddressType2Lastname", "headerAddressType2Firstname", "headerAddressType2Style",

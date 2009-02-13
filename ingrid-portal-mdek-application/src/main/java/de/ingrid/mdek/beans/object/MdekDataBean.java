@@ -88,7 +88,6 @@ public class MdekDataBean {
 	
 	// Thesaurus
 	public ArrayList<SNSTopic> thesaurusTermsTable;
-	public ArrayList<String> thesaurusFreeTermsTable;
 	public ArrayList<Integer> thesaurusTopicsList;
 	public Boolean thesaurusEnvExtRes;
 	public ArrayList<Integer> thesaurusEnvTopicsList;
@@ -507,7 +506,6 @@ public class MdekDataBean {
 		this.setAvailabilityDataFormatTable(new ArrayList<DataFormatBean>());
 		this.setAvailabilityMediaOptionsTable(new ArrayList<MediaOptionBean>());
 		this.setThesaurusTermsTable(new ArrayList<SNSTopic>());
-		this.setThesaurusFreeTermsTable(new ArrayList<String>());
 		this.setThesaurusTopicsList(new ArrayList<Integer>());
 		this.setThesaurusEnvTopicsList(new ArrayList<Integer>());
 		this.setThesaurusEnvCatsList(new ArrayList<Integer>());
@@ -1045,21 +1043,6 @@ public class MdekDataBean {
 			ArrayList<DataFormatBean> availabilityDataFormatTable) {
 		this.availabilityDataFormatTable = availabilityDataFormatTable;
 	}
-
-
-
-
-	public ArrayList<String> getThesaurusFreeTermsTable() {
-		return thesaurusFreeTermsTable;
-	}
-
-
-
-
-	public void setThesaurusFreeTermsTable(ArrayList<String> thesaurusFreeTermsTable) {
-		this.thesaurusFreeTermsTable = thesaurusFreeTermsTable;
-	}
-
 
 
 	public Integer getRef1DataSet() {

@@ -61,7 +61,6 @@ public class MdekAddressBean {
 
 	// Thesaurus
 	public ArrayList<SNSTopic> thesaurusTermsTable;
-	public ArrayList<String> thesaurusFreeTermsTable;
 
 	// References
 	public ArrayList<MdekDataBean> linksFromObjectTable;
@@ -73,7 +72,6 @@ public class MdekAddressBean {
 	public MdekAddressBean() {
 		this.communication = new ArrayList<HashMap<String, String>>();
 		this.thesaurusTermsTable = new ArrayList<SNSTopic>();
-		this.thesaurusFreeTermsTable = new ArrayList<String>();
 		this.linksFromObjectTable = new ArrayList<MdekDataBean>();
 		this.linksFromPublishedObjectTable = new ArrayList<MdekDataBean>();
 		this.parentInstitutions = new ArrayList<MdekAddressBean>();
@@ -301,14 +299,6 @@ public class MdekAddressBean {
 
 	public void setThesaurusTermsTable(ArrayList<SNSTopic> thesaurusTermsTable) {
 		this.thesaurusTermsTable = thesaurusTermsTable;
-	}
-
-	public ArrayList<String> getThesaurusFreeTermsTable() {
-		return thesaurusFreeTermsTable;
-	}
-
-	public void setThesaurusFreeTermsTable(ArrayList<String> thesaurusFreeTermsTable) {
-		this.thesaurusFreeTermsTable = thesaurusFreeTermsTable;
 	}
 
 	public ArrayList<MdekDataBean> getLinksFromObjectTable() {

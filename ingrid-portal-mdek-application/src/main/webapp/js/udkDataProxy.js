@@ -1407,7 +1407,6 @@ udkDataProxy._setAddressData = function(nodeData)
 
 	// -- Thesaurus --
 	dojo.widget.byId("thesaurusTermsAddress").store.setData(UtilList.addTableIndices(nodeData.thesaurusTermsTable));
-	dojo.widget.byId("thesaurusFreeTermsListAddress").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusFreeTermsTable)));
 
 	// -- Links --
 	var unpubLinkTable = nodeData.linksFromObjectTable;
@@ -1639,7 +1638,6 @@ udkDataProxy._setObjectData = function(nodeData)
 
   // -- Thesaurus --
   dojo.widget.byId("thesaurusTerms").store.setData(UtilList.addTableIndices(nodeData.thesaurusTermsTable));
-  dojo.widget.byId("thesaurusFreeTermsList").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusFreeTermsTable)));
   dojo.widget.byId("thesaurusTopics").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusTopicsList)));
   dojo.widget.byId("thesaurusEnvTopics").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusEnvTopicsList)));
   dojo.widget.byId("thesaurusEnvCats").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusEnvCatsList)));
@@ -1825,7 +1823,6 @@ udkDataProxy._getAddressData = function(nodeData) {
 
 	// -- Thesaurus --
 	nodeData.thesaurusTermsTable = udkDataProxy._getTableData("thesaurusTermsAddress");
-	nodeData.thesaurusFreeTermsTable = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusFreeTermsListAddress"));
 
 	// -- Links --
 	nodeData.linksFromObjectTable = udkDataProxy._getTableData("associatedObjName");
@@ -1975,7 +1972,6 @@ udkDataProxy._getObjectData = function(nodeData)
 
   // -- Thesaurus --
   nodeData.thesaurusTermsTable = udkDataProxy._getTableData("thesaurusTerms");
-  nodeData.thesaurusFreeTermsTable = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusFreeTermsList"));
   nodeData.thesaurusTopicsList = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusTopics"));
   nodeData.thesaurusEnvTopicsList = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusEnvTopics"));
   nodeData.thesaurusEnvCatsList = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusEnvCats"));

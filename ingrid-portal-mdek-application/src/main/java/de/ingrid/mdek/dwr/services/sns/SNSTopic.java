@@ -4,18 +4,21 @@ import java.util.ArrayList;
 
 public class SNSTopic {
 
-	public enum Type {TOP_TERM, NODE_LABEL, DESCRIPTOR, NON_DESCRIPTOR }
+	public enum Type { TOP_TERM, NODE_LABEL, DESCRIPTOR, NON_DESCRIPTOR }
+	public enum Source { FREE, UMTHES, GEMET }
 
-	public Type type; 
-	public String topicId;
-	public String title;
-	public ArrayList<SNSTopic> children;
-	public ArrayList<SNSTopic> parents;
-	public ArrayList<SNSTopic> synonyms;
+	private Type type; 
+	private Source source;
+	private String topicId;
+	private String title;
+	private ArrayList<SNSTopic> children;
+	private ArrayList<SNSTopic> parents;
+	private ArrayList<SNSTopic> synonyms;
 
 
 	public SNSTopic() {
 		type = Type.TOP_TERM;
+		source = Source.UMTHES;
 		this.topicId = null;
 		this.title = null;
 		this.children = null;
@@ -25,6 +28,8 @@ public class SNSTopic {
 
 	public SNSTopic(Type typ, String id, String title)
 	{
+		// Default to umthes
+		source = Source.UMTHES;
 		this.type = typ;
 		this.topicId = id;
 		this.title = title;
@@ -79,5 +84,13 @@ public class SNSTopic {
 
 	public void setSynonyms(ArrayList<SNSTopic> synonyms) {
 		this.synonyms = synonyms;
+	}
+
+	public Source getSource() {
+		return source;
+	}
+
+	public void setSource(Source source) {
+		this.source = source;
 	}
 }

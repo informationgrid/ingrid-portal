@@ -15,6 +15,8 @@ import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.MdekUtils.SearchtermType;
+import de.ingrid.mdek.MdekUtils.UserOperation;
 import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
 import de.ingrid.mdek.beans.CommentBean;
@@ -35,8 +37,8 @@ import de.ingrid.mdek.beans.object.UrlBean;
 import de.ingrid.mdek.beans.object.UsageLimitationBean;
 import de.ingrid.mdek.beans.object.VectorFormatDetailsBean;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic;
+import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
 import de.ingrid.utils.IngridDocument;
-import de.ingrid.mdek.MdekUtils.UserOperation;
 
 public class MdekMapper implements DataMapperInterface {
 
@@ -209,7 +211,6 @@ public class MdekMapper implements DataMapperInterface {
 		
 		// Thesaurus
 		mdekObj.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.SUBJECT_TERMS)));
-		mdekObj.setThesaurusFreeTermsTable(mapToThesFreeTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.SUBJECT_TERMS)));
 
 		ArrayList<Integer> intList = (ArrayList<Integer>) obj.get(MdekKeys.TOPIC_CATEGORIES);
 		if (intList != null)
@@ -231,8 +232,6 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setThesaurusEnvCatsList(intList);
 		
 		// Links
-//		mdekObj.setLinksToTable((ArrayList<HashMap<String, String>>) mapToLinksToTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
-//		mdekObj.setLinksFromTable((ArrayList<HashMap<String, String>>) mapToLinksFromTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MISSING)));
 		mdekObj.setLinksToObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_REFERENCES_TO)));
 		mdekObj.setLinksFromObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_REFERENCES_FROM)));
 		mdekObj.setLinksFromPublishedObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_REFERENCES_FROM_PUBLISHED_ONLY)));
@@ -434,7 +433,6 @@ public class MdekMapper implements DataMapperInterface {
 
 		// Thesaurus
 		mdekAddress.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) adr.get(MdekKeys.SUBJECT_TERMS)));
-		mdekAddress.setThesaurusFreeTermsTable(mapToThesFreeTermsTable((List<HashMap<String, Object>>) adr.get(MdekKeys.SUBJECT_TERMS)));
 
 		// References
 		mdekAddress.setLinksFromObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) adr.get(MdekKeys.OBJ_REFERENCES_FROM)));
@@ -674,7 +672,7 @@ public class MdekMapper implements DataMapperInterface {
 		udkAdr.put(MdekKeys.COMMUNICATION, mapFromCommunicationTable(data.getCommunication()));
 
 		//Thesaurus
-		udkAdr.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTables(data.getThesaurusTermsTable(), data.getThesaurusFreeTermsTable()));
+		udkAdr.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTables(data.getThesaurusTermsTable()));
 		
 		// Comments
 		udkAdr.put(MdekKeys.COMMENT_LIST, mapFromCommentTable(data.getCommentTable()));
@@ -748,7 +746,7 @@ public class MdekMapper implements DataMapperInterface {
 		}
 
 		//Thesaurus
-		udkObj.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTables(data.getThesaurusTermsTable(), data.getThesaurusFreeTermsTable()));
+		udkObj.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTables(data.getThesaurusTermsTable()));
 		udkObj.put(MdekKeys.TOPIC_CATEGORIES, data.getThesaurusTopicsList());
 		udkObj.put(MdekKeys.ENV_TOPICS, data.getThesaurusEnvTopicsList());
 		udkObj.put(MdekKeys.ENV_CATEGORIES, data.getThesaurusEnvCatsList());
@@ -1162,22 +1160,27 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private ArrayList<IngridDocument> mapFromThesTermTables(ArrayList<SNSTopic> snsList, ArrayList<String> freeList) {
+	private ArrayList<IngridDocument> mapFromThesTermTables(ArrayList<SNSTopic> snsList) {
 		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (snsList != null) {
 			for (SNSTopic t : snsList) {
 				IngridDocument res = new IngridDocument();
-				res.put(MdekKeys.TERM_TYPE, "T");
-				res.put(MdekKeys.TERM_NAME, t.getTitle());
-				res.put(MdekKeys.TERM_SNS_ID, t.getTopicId());
-				resultList.add(res);
-			}
-		}
-		if (freeList != null) {
-			for (String s : freeList) {
-				IngridDocument res = new IngridDocument();
-				res.put(MdekKeys.TERM_TYPE, "F");
-				res.put(MdekKeys.TERM_NAME, s);
+				switch(t.getSource()) {
+					case GEMET:
+						// Fall through for now
+					case UMTHES:
+						res.put(MdekKeys.TERM_TYPE, SearchtermType.THESAURUS.getDbValue());
+						res.put(MdekKeys.TERM_NAME, t.getTitle());
+						res.put(MdekKeys.TERM_SNS_ID, t.getTopicId());
+						break;
+
+					case FREE:
+						res.put(MdekKeys.TERM_TYPE, SearchtermType.FREI.getDbValue());
+						res.put(MdekKeys.TERM_NAME, t.getTitle());
+						break;
+					default:
+						break;
+				}
 				resultList.add(res);
 			}
 		}
@@ -1595,28 +1598,19 @@ public class MdekMapper implements DataMapperInterface {
 		for (HashMap<String, Object> topic : topicList) {
 			SNSTopic t = new SNSTopic();
 			String type = (String) topic.get(MdekKeys.TERM_TYPE);
-			if (type.equalsIgnoreCase("T")) {
+			if (type.equalsIgnoreCase(SearchtermType.THESAURUS.getDbValue())) {
+				t.setSource(Source.UMTHES);
 				t.setTitle((String) topic.get(MdekKeys.TERM_NAME));
 				t.setTopicId((String) topic.get(MdekKeys.TERM_SNS_ID));
-				resultList.add(t);
+
+			} else if (type.equalsIgnoreCase(SearchtermType.FREI.getDbValue())) {
+				t.setSource(Source.FREE);
+				t.setTitle((String) topic.get(MdekKeys.TERM_NAME));
 			}
+			resultList.add(t);
 		}
 		return resultList;
 	}
-
-	private ArrayList<String> mapToThesFreeTermsTable(List<HashMap<String, Object>> topicList) {
-		ArrayList<String> resultList = new ArrayList<String>();
-		if (topicList == null)
-			return resultList;
-		for (HashMap<String, Object> topic : topicList) {
-			String type = (String) topic.get(MdekKeys.TERM_TYPE);
-			if (type.equalsIgnoreCase("F")) {
-				resultList.add((String) topic.get(MdekKeys.TERM_NAME));
-			}
-		}
-		return resultList;
-	}
-
 
 	private ArrayList<VectorFormatDetailsBean> mapToVFormatDetailsTable(List<HashMap<String, Object>> vFormatList) {
 		ArrayList<VectorFormatDetailsBean> resultList = new ArrayList<VectorFormatDetailsBean>();

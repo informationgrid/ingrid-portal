@@ -105,6 +105,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSLocationTopic"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSTopic"/>
 		<convert converter="enum" match="de.ingrid.mdek.dwr.services.sns.SNSTopic$Type"/>
+		<convert converter="enum" match="de.ingrid.mdek.dwr.services.sns.SNSTopic$Source"/>
 		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSTopicMap"/>
 		<convert converter="bean" match="de.ingrid.mdek.persistence.db.model.HelpMessage"/>
 		<convert converter="bean" match="de.ingrid.mdek.persistence.db.model.UserData"/>
