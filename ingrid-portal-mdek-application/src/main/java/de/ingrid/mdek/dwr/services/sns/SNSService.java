@@ -26,6 +26,7 @@ import de.ingrid.iplug.sns.SNSClient;
 import de.ingrid.iplug.sns.SNSController;
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
@@ -151,7 +152,7 @@ public class SNSService {
 
     	for (Topic topic : topics) {
     		if (topic.getLanguage().equalsIgnoreCase(THESAURUS_LANGUAGE_FILTER)) {	// Only add 'german' terms
-	    		SNSTopic resultTopic = new SNSTopic(getTypeFromTopic(topic), topic.getTopicID(), topic.getTopicName());
+	    		SNSTopic resultTopic = convertTopicToSNSTopic(topic);
 	    		List<Topic> succ = getSuccessors(topic);
 	
 	    		if (succ != null && !succ.isEmpty())
@@ -178,7 +179,7 @@ public class SNSService {
     	topics.addAll(topicList);
 
     	for (Topic topic : topics) {
-    		SNSTopic resultTopic = new SNSTopic(getTypeFromTopic(topic), topic.getTopicID(), topic.getTopicName());
+    		SNSTopic resultTopic = convertTopicToSNSTopic(topic);
     		result.add(resultTopic);
     	}
     	return result;
@@ -187,22 +188,15 @@ public class SNSService {
     
     private static Type getTypeFromTopic(Topic t) {
     	String nodeType = t.getSummary();
-
-		if (nodeType.indexOf("topTermType") != -1) 
-			return Type.TOP_TERM;
-		else if (nodeType.indexOf("nodeLabelType") != -1) 
-			return Type.NODE_LABEL;
-		else if (nodeType.indexOf("descriptorType") != -1) 
-			return Type.DESCRIPTOR;
-		else if (nodeType.indexOf("nonDescriptorType") != -1) 
-			return Type.NON_DESCRIPTOR;
-		else
-			return Type.TOP_TERM;
+    	return getTypeForNodeType(nodeType);
     }
     
     private static Type getTypeFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic t) {
     	String nodeType = t.getInstanceOf(0).getTopicRef().getHref();
+    	return getTypeForNodeType(nodeType);
+    }
 
+    private static Type getTypeForNodeType(String nodeType) {
 		if (nodeType.indexOf("topTermType") != -1) 
 			return Type.TOP_TERM;
 		else if (nodeType.indexOf("nodeLabelType") != -1) 
@@ -268,7 +262,7 @@ public class SNSService {
 	            for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
 					String topicName = topic.getBaseName(0).getBaseNameString().get_value();
 	            	if (topicName.equalsIgnoreCase(queryTerm))
-	            		return new SNSTopic(getTypeFromTopic(topic), topic.getId(), topicName);
+	            		return convertTopicToSNSTopic(topic);
 	            }
 	        }
 	    }
@@ -289,8 +283,8 @@ public class SNSService {
 	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
 	        if ((null != topics)) {
 	            for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
-	            	resultList.add(new SNSTopic(getTypeFromTopic(topic), topic.getId(), topic.getBaseName(0).getBaseNameString().get_value()));
-	            	log.debug("Adding: ["+getTypeFromTopic(topic)+", "+topic.getId()+", "+topic.getBaseName(0).getBaseNameString().get_value()+"]");
+	            	resultList.add(convertTopicToSNSTopic(topic));
+	            	log.debug("Adding: ["+getTypeFromTopic(topic)+", "+getSourceFromTopic(topic)+", "+topic.getId()+", "+topic.getBaseName(0).getBaseNameString().get_value()+"]");
 				}
 	        }
 	    }
@@ -319,7 +313,7 @@ public class SNSService {
 
 	    for (Topic topic : topics) {
 	    	if (getTypeFromTopic(topic) == Type.DESCRIPTOR) {
-	    		resultList.add(new SNSTopic(getTypeFromTopic(topic), topic.getTopicID(), topic.getTopicName()));
+	    		resultList.add(convertTopicToSNSTopic(topic));
 	    	}
 	    }
 	    
@@ -362,7 +356,7 @@ public class SNSService {
 
 	    for (Topic topic : topics) {
 	    	if (getTypeFromTopic(topic) == Type.DESCRIPTOR) {
-	    		resultList.add(new SNSTopic(getTypeFromTopic(topic), topic.getTopicID(), topic.getTopicName()));
+	    		resultList.add(convertTopicToSNSTopic(topic));
 	    	}
 	    }
 //	    log.debug("Number of descriptors in the result: "+resultList.size());
@@ -386,8 +380,8 @@ public class SNSService {
     	ArrayList<SNSTopic> children = new ArrayList<SNSTopic>();
 
 	    for (Topic topic : snsResults) {
-    		SNSTopic t = new SNSTopic(getTypeFromTopic(topic), topic.getTopicID(), topic.getTopicName());
-        	log.debug("Found: ["+getAssociationFromTopic(topic)+", "+getTypeFromTopic(topic)+", "+topic.getTopicID()+", "+topic.getTopicName()+"]");
+    		SNSTopic t = convertTopicToSNSTopic(topic);
+        	log.debug("Found: ["+getAssociationFromTopic(topic)+", "+getTypeFromTopic(topic)+", "+getSourceFromTopic(topic)+", "+topic.getTopicID()+", "+topic.getTopicName()+"]");
 
         	String assoc = getAssociationFromTopic(topic);
     		if (assoc.equals("widerTermMember")) {
@@ -405,7 +399,7 @@ public class SNSService {
     		}
 	    }
 
-	    SNSTopic result = new SNSTopic(Type.DESCRIPTOR, topicId, null);
+	    SNSTopic result = new SNSTopic(Type.DESCRIPTOR, Source.UMTHES, topicId, null);
 	    result.setChildren(children);
 	    result.setParents(parents);
 	    result.setSynonyms(synonyms);
@@ -510,7 +504,7 @@ public class SNSService {
 
             		break;
             	case THESA:
-            		thesaTopics.add(createThesaurusTopic(topic));
+            		thesaTopics.add(convertTopicToSNSTopic(topic));
             		break;
             	}
 	    	}
@@ -567,6 +561,23 @@ public class SNSService {
     	return t;
     }
 
+    private static SNSTopic convertTopicToSNSTopic(Topic topic) {
+    	return new SNSTopic(getTypeFromTopic(topic), getSourceFromTopic(topic), topic.getTopicID(), topic.getTopicName());
+    }
+    private static SNSTopic convertTopicToSNSTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
+    	String topicName = topic.getBaseName(0).getBaseNameString().get_value();
+    	return new SNSTopic(getTypeFromTopic(topic), getSourceFromTopic(topic), topic.getId(), topicName);
+    }
+
+    private static Source getSourceFromTopic(Topic topic) {
+    	// TODO Implement
+    	return Source.UMTHES;
+    }
+
+    private static Source getSourceFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
+    	// TODO Implement
+    	return Source.UMTHES;
+    }
 
     private Date convertTemporalValueToDate(String dateString) {
 		SimpleDateFormat standardDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -584,12 +595,6 @@ public class SNSService {
 
     	log.error("Error parsing date: "+dateString);
     	return null;
-    }
-
-
-    private SNSTopic createThesaurusTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
-		String topicName = topic.getBaseName(0).getBaseNameString().get_value();
-		return new SNSTopic(getTypeFromTopic(topic), topic.getId(), topicName);
     }
 
 

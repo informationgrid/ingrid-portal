@@ -26,7 +26,7 @@ public class SNSTopic {
 		this.synonyms = null;
 	}
 
-	public SNSTopic(Type typ, String id, String title)
+	public SNSTopic(Type typ, Source source, String id, String title)
 	{
 		// Default to umthes
 		source = Source.UMTHES;
