@@ -176,7 +176,7 @@ $action.setParameter("id", "$rowId")
     	<span class="float_left">&nbsp;</span>
 	#end
 	#if($button == "doDelete")
-		<input class="btn float_left" type="submit" name="doDelete" onClick="return confirm($MESSAGES.getString('component.forms.text.delete.marked.entries')" value="$MESSAGES.getString('component.forms.buttons.delete')" />
+		<input class="btn float_left" type="submit" name="doDelete" onClick="return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')" value="$MESSAGES.getString('component.forms.buttons.delete')" />
 	#end
 	#if($button == "doRefresh")
     	<input class="btn float_right" type="submit" name="doRefresh" value="$MESSAGES.getString('component.forms.buttons.refresh')" />
