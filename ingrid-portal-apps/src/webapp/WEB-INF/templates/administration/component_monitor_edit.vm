@@ -19,92 +19,97 @@
 
 	</p>
 	<p class="clearer" />
-	<p>
-		<label class="float_left col2left_incr" for="type">#displayFieldLabel('type' $MESSAGES.getString('component.forms.text.component.type'))</label>
-		<span>$MESSAGES.getString($actionForm.getInput('type'))</span>
-		<input type="hidden" name="type" value="#getFieldValue('type')"/>
-	</p>
-	<p class="clearer" />
-   	<p>
-      	<label class="float_left col2left_incr" for="title">#displayFieldLabel('title' $MESSAGES.getString('component.forms.text.component.name'))*</label>
-      	<input class="float_left inputstyletext contentInput" id="title" name="title" value="#getFieldValue('title')" type="text">
-  	</p>
-	<p class="clearer" />
-	
-	################ content according to component type ###################
-	
-	#set ($compType = $actionForm.getInput("type"))
-	#if ($compType == "component.monitor.general.type.iplug" || $compType == "component.monitor.general.type.sns")
-		#renderTextField( "Query String*" "query" )
-	#elseif ($compType == "component.monitor.general.type.ibus" || $compType == "component.monitor.general.type.rssfetcher")
-		## don't need more information
-	#elseif ($compType == "component.monitor.general.type.rss")
-		#renderTextField( "RSS Feed (URL)*" "serviceurl" )
-	#elseif  ($compType == "component.monitor.general.type.csw" || $compType == "component.monitor.general.type.g2k" || $compType == "component.monitor.general.type.ecs")
-		#renderTextField( "Service URL*" "serviceurl" )
-	#elseif ($compType == "component.monitor.general.type.provider.check")
-		#renderTextField( "Anbieter ausschlieﬂen" "excl_provider" )
-	#end
-	
-	
-	########################################################################
-	
-	<p class="clearer" />
-	<p>
-      	<label class="float_left col2left_incr" for="interval">#displayFieldLabel('interval' $MESSAGES.getString('component.forms.text.interval'))*</label>
-      	<input class="float_left inputstyletext contentInput" id="interval" name="interval" value="#getFieldValue('interval')" type="text">
-  	</p>
-	<p class="clearer" />
-	<p>
-      	<label class="float_left col2left_incr" for="timeout">#displayFieldLabel('timeout' $MESSAGES.getString('component.forms.text.timeout'))*</label>
-      	<input class="float_left inputstyletext contentInput" id="timeout" name="timeout" value="#getFieldValue('timeout')" type="text">
-  	</p>
-	<p class="clearer" />
-    <p>
-        <label class="float_left col2left_incr" for="active">#displayFieldLabel('active' $MESSAGES.getString('component.forms.text.active'))</label>
-        <input class="" id="component_active" name="active" value="1" #getChecked('active' '1') type="checkbox">
-    </p>
-	<p class="clearer" />
-    <p>
-        <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.text.email.addresses')</label>
-    	<table class="border">
-    	<tr>
-    		<td class="contentColumnHead" style="text-decoration:none">&nbsp;Email&nbsp;</td>
-    		<td class="contentColumnHead" style="text-decoration:none">&nbsp;Schwellwert&nbsp;</td>
-			<td class="contentColumnHead" style="text-decoration:none">&nbsp;Aktion&nbsp;</td>
-    	</tr>
-    #set($thresholds = $actionForm.getInputAsArray('contact_threshold'))
-	#foreach($email in $actionForm.getInputAsArray('contact_email'))
-		#set($cnt = $velocityCount - 1)
-		#set($threshold = $list.get($thresholds, $cnt))
-		<tr>
-    	#if ($velocityCount % 2 == 0)
-        	#set ($rowstyle = "contentRowEven")
-        #else
-        	#set ($rowstyle = "contentRowOdd")
-        #end   
-    	<td class="$rowstyle">
-    		<input class="inputstyletext" size="50" maxlength="255" id="contact_email$velocityCount" name="contact_email" value="$email" type="text">
-    	</td>
-    	<td class="$rowstyle">
-    		<input class="inputstyletext" size="3" maxlength="3" id="contact_threshhold$velocityCount" name="contact_threshold" value="$threshold" type="text">
-    	</td>
-    	<td><input class="btn" style="font-size:100%" type="submit" name="doDeleteContact_$velocityCount" value="$MESSAGES.getString('component.forms.buttons.delete')" /></td>
-    	</tr>
-    #end
-        <tr>
-    	<td colspan="3">&nbsp;</td>
-		</tr>
-        <tr>
-    	<td>
-    		<input class="#getInputStyleText('contact_email_new')" size="50" maxlength="255" id="contact_email_new" name="contact_email_new" value="#getFieldValue('contact_email_new')" type="text">
-    	</td>
-    	<td>
-    		<input class="#getInputStyleText('contact_threshold_new')" size="3" maxlength="3" id="contact_threshold_new" name="contact_threshold_new" value="#getFieldValue('contact_threshold_new')" type="text">
-    	</td>
-    	<td><input class="btn" style="font-size:100%" type="submit" name="doAddContact" value="$MESSAGES.getString('component.forms.buttons.add')" /></td>
-    	</tr>
+	## for default-jobs
+	#if ($disableSaving == 'true')
+		## nothing
+	#else
+    	<p>
+    		<label class="float_left col2left_incr" for="type">#displayFieldLabel('type' $MESSAGES.getString('component.forms.text.component.type'))</label>
+    		<span>$MESSAGES.getString($actionForm.getInput('type'))</span>
+    		<input type="hidden" name="type" value="#getFieldValue('type')"/>
+    	</p>
+    	<p class="clearer" />
+       	<p>
+          	<label class="float_left col2left_incr" for="title">#displayFieldLabel('title' $MESSAGES.getString('component.forms.text.component.name'))*</label>
+          	<input class="float_left inputstyletext contentInput" id="title" name="title" value="#getFieldValue('title')" type="text">
+      	</p>
+    	<p class="clearer" />
+    	
+    	################ content according to component type ###################
+    	
+    	#set ($compType = $actionForm.getInput("type"))
+    	#if ($compType == "component.monitor.general.type.iplug" || $compType == "component.monitor.general.type.sns")
+    		#renderTextField( "Query String*" "query" )
+    	#elseif ($compType == "component.monitor.general.type.ibus" || $compType == "component.monitor.general.type.rssfetcher")
+    		## don't need more information
+    	#elseif ($compType == "component.monitor.general.type.rss")
+    		#renderTextField( "RSS Feed (URL)*" "serviceurl" )
+    	#elseif  ($compType == "component.monitor.general.type.csw" || $compType == "component.monitor.general.type.g2k" || $compType == "component.monitor.general.type.ecs")
+    		#renderTextField( "Service URL*" "serviceurl" )
+    	#elseif ($compType == "component.monitor.general.type.provider.check")
+    		#renderTextField( "Anbieter ausschlieﬂen" "excl_provider" )
+    	#end
+    	
+    	
+    	########################################################################
+    	
+    	<p class="clearer" />
+    	<p>
+          	<label class="float_left col2left_incr" for="interval">#displayFieldLabel('interval' $MESSAGES.getString('component.forms.text.interval'))*</label>
+          	<input class="float_left inputstyletext contentInput" id="interval" name="interval" value="#getFieldValue('interval')" type="text">
+      	</p>
+    	<p class="clearer" />
+    	<p>
+          	<label class="float_left col2left_incr" for="timeout">#displayFieldLabel('timeout' $MESSAGES.getString('component.forms.text.timeout'))*</label>
+          	<input class="float_left inputstyletext contentInput" id="timeout" name="timeout" value="#getFieldValue('timeout')" type="text">
+      	</p>
+    	<p class="clearer" />
+        <p>
+            <label class="float_left col2left_incr" for="active">#displayFieldLabel('active' $MESSAGES.getString('component.forms.text.active'))</label>
+            <input class="" id="component_active" name="active" value="1" #getChecked('active' '1') type="checkbox">
+        </p>
+    	<p class="clearer" />
+        <p>
+            <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.text.email.addresses')</label>
+        	<table class="border">
+        	<tr>
+        		<td class="contentColumnHead" style="text-decoration:none">&nbsp;Email&nbsp;</td>
+        		<td class="contentColumnHead" style="text-decoration:none">&nbsp;Schwellwert&nbsp;</td>
+    			<td class="contentColumnHead" style="text-decoration:none">&nbsp;Aktion&nbsp;</td>
+        	</tr>
+        #set($thresholds = $actionForm.getInputAsArray('contact_threshold'))
+    	#foreach($email in $actionForm.getInputAsArray('contact_email'))
+    		#set($cnt = $velocityCount - 1)
+    		#set($threshold = $list.get($thresholds, $cnt))
+    		<tr>
+        	#if ($velocityCount % 2 == 0)
+            	#set ($rowstyle = "contentRowEven")
+            #else
+            	#set ($rowstyle = "contentRowOdd")
+            #end   
+        	<td class="$rowstyle">
+        		<input class="inputstyletext" size="50" maxlength="255" id="contact_email$velocityCount" name="contact_email" value="$email" type="text">
+        	</td>
+        	<td class="$rowstyle">
+        		<input class="inputstyletext" size="3" maxlength="3" id="contact_threshhold$velocityCount" name="contact_threshold" value="$threshold" type="text">
+        	</td>
+        	<td><input class="btn" style="font-size:100%" type="submit" name="doDeleteContact_$velocityCount" value="$MESSAGES.getString('component.forms.buttons.delete')" /></td>
+        	</tr>
+        #end
+            <tr>
+        	<td colspan="3">&nbsp;</td>
+    		</tr>
+            <tr>
+        	<td>
+        		<input class="#getInputStyleText('contact_email_new')" size="50" maxlength="255" id="contact_email_new" name="contact_email_new" value="#getFieldValue('contact_email_new')" type="text">
+        	</td>
+        	<td>
+        		<input class="#getInputStyleText('contact_threshold_new')" size="3" maxlength="3" id="contact_threshold_new" name="contact_threshold_new" value="#getFieldValue('contact_threshold_new')" type="text">
+        	</td>
+        	<td><input class="btn" style="font-size:100%" type="submit" name="doAddContact" value="$MESSAGES.getString('component.forms.buttons.add')" /></td>
+        	</tr>
     	</table>
+	#end
 	#if ($actionForm.getInput('last_execution') != "")
 		<p class="clearer" />
 		<p>
