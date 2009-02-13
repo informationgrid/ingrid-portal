@@ -575,7 +575,15 @@ public class SNSService {
     }
 
     private static Source getSourceFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
-    	// TODO Implement
+    	if (null != topic.getOccurrence()) {
+	    	for (Occurrence occ: topic.getOccurrence()) {
+	    		if (occ.getInstanceOf().getTopicRef().getHref().endsWith("gemet1.0")) {
+	    			return Source.GEMET;
+	    		}
+	    	}
+    	}
+
+    	// If there are no occurrences associated with the given topic or no occurrence is of type 'gemet'
     	return Source.UMTHES;
     }
 

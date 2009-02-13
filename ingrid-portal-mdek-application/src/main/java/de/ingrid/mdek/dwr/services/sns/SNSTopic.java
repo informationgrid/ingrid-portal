@@ -17,6 +17,7 @@ public class SNSTopic {
 
 
 	public SNSTopic() {
+		// Default to topterm and umthes
 		type = Type.TOP_TERM;
 		source = Source.UMTHES;
 		this.topicId = null;
@@ -28,8 +29,7 @@ public class SNSTopic {
 
 	public SNSTopic(Type typ, Source source, String id, String title)
 	{
-		// Default to umthes
-		source = Source.UMTHES;
+		this.source = source;
 		this.type = typ;
 		this.topicId = id;
 		this.title = title;
