@@ -100,7 +100,8 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			if (id != null) {
 				context.put("mode", "edit");
 				initActionForm(cf, id, context);
-				context.put("mode", "edit");
+				if (jobHandler.isDefaultJob(id))
+					context.put("disableSaving", "true");
 				context.put("componentTypes", jobHandler.getComponentTypes());
 				request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_EDIT);
 			} else {
@@ -130,11 +131,13 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			String id = request.getParameter("id");
 			initActionForm(cf, id, context);
 			context.put("mode", request.getParameter("mode"));
+			context.put("disableSaving", request.getParameter("disableSaving"));
 			context.put("componentTypes", jobHandler.getComponentTypes());
 			request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_EDIT);
 		// ------------------reshow-------------------------
 		} else if (action.equals("reshow")) {
 			context.put("mode", request.getParameter("mode"));
+			context.put("disableSaving", request.getParameter("disableSaving"));
 			context.put("componentTypes", jobHandler.getComponentTypes());
 			request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_EDIT);
 		// ------------------editAfterNew-------------------
@@ -289,6 +292,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			response.setRenderParameter("id", request.getParameter("id"));
 			response.setRenderParameter("action", "update");
 			response.setRenderParameter("mode", "edit");
+			response.setRenderParameter("disableSaving", request.getParameter("disableSaving"));
 			
 		} else {
 			// unhandled action
@@ -412,23 +416,40 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 	private void initActionForm(ActionForm cf, String id, Context context) {
 		
 		JobDataMap dataMap = jobHandler.getJobDataMap(id);
-		cf.setInput(AdminComponentMonitorForm.FIELD_ACTIVE,
-				String.valueOf(dataMap.getInt(IngridMonitorIPlugJob.PARAM_ACTIVE)));
+		
+		if (dataMap.containsKey(IngridMonitorIPlugJob.PARAM_ACTIVE))		
+			cf.setInput(AdminComponentMonitorForm.FIELD_ACTIVE,
+					String.valueOf(dataMap.getInt(IngridMonitorIPlugJob.PARAM_ACTIVE)));
+		
 		cf.setInput(AdminComponentMonitorForm.FIELD_ID,
 				jobHandler.getJobName(id));
-		cf.setInput(AdminComponentMonitorForm.FIELD_INTERVAL,
+		
+		if (dataMap.containsKey(IngridMonitorIPlugJob.PARAM_CHECK_INTERVAL))
+			cf.setInput(AdminComponentMonitorForm.FIELD_INTERVAL,
 				String.valueOf(dataMap.getInt(IngridMonitorIPlugJob.PARAM_CHECK_INTERVAL)));
-		cf.setInput(AdminComponentMonitorForm.FIELD_TIMEOUT,
+		
+		if (dataMap.containsKey(IngridMonitorIPlugJob.PARAM_TIMEOUT))
+			cf.setInput(AdminComponentMonitorForm.FIELD_TIMEOUT,
 				String.valueOf(dataMap.getInt(IngridMonitorIPlugJob.PARAM_TIMEOUT)));
-		cf.setInput(AdminComponentMonitorForm.FIELD_SERVICE_URL,
+		
+		if (dataMap.containsKey(IngridMonitorIPlugJob.PARAM_SERVICE_URL))
+			cf.setInput(AdminComponentMonitorForm.FIELD_SERVICE_URL,
 				dataMap.getString(IngridMonitorAbstractJob.PARAM_SERVICE_URL));
-		cf.setInput(AdminComponentMonitorForm.FIELD_QUERY,
+		
+		if (dataMap.containsKey(IngridMonitorIPlugJob.PARAM_QUERY))
+			cf.setInput(AdminComponentMonitorForm.FIELD_QUERY,
 				dataMap.getString(IngridMonitorAbstractJob.PARAM_QUERY));
-		cf.setInput(AdminComponentMonitorForm.FIELD_EXCLUDED_PROVIDER,
+		
+		if (dataMap.containsKey(IngridMonitorIPlugJob.PARAM_EXCLUDED_PROVIDER))
+			cf.setInput(AdminComponentMonitorForm.FIELD_EXCLUDED_PROVIDER,
 				dataMap.getString(IngridMonitorAbstractJob.PARAM_EXCLUDED_PROVIDER));
-		cf.setInput(AdminComponentMonitorForm.FIELD_TITLE,
+		
+		if (dataMap.containsKey(IngridMonitorIPlugJob.PARAM_COMPONENT_TITLE))
+			cf.setInput(AdminComponentMonitorForm.FIELD_TITLE,
 				dataMap.getString(IngridMonitorIPlugJob.PARAM_COMPONENT_TITLE));
-		cf.setInput(AdminComponentMonitorForm.FIELD_TYPE,
+		
+		if (dataMap.containsKey(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE))
+			cf.setInput(AdminComponentMonitorForm.FIELD_TYPE,
 				dataMap.getString(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE));
 		
 
@@ -460,6 +481,9 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		}
 		
 		Trigger trigger = jobHandler.getTrigger(id,IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+		
+		if (trigger == null)
+			trigger = jobHandler.getTrigger(id,"DEFAULT");
 		
 		SimpleDateFormat portalFormat = new SimpleDateFormat("yyyy-mm-dd H:mm:ss");
         

@@ -84,7 +84,6 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 		int status 						= 0;
 		String statusCode 				= null;
 		List<String> exclude			= new ArrayList<String>();
-		//List<Provider> noInfoProvider	= new ArrayList<Provider>();
 		Map<String,String> resultsProvider	= new HashMap<String,String>();
 		Session session 				= HibernateUtil.currentSession();
 		String errorMessage				= "";

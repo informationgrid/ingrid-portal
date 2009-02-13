@@ -62,23 +62,20 @@ public class IngridJobHandler {
 	 * @return the JobDataMap object
 	 */
 	public JobDataMap getJobDataMap(String id) {
-		JobDataMap jobDetailMap = null;
-		try {
-			JobDetail jobDetail = monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-			jobDetailMap = jobDetail.getJobDataMap();
-		} catch (SchedulerException e) {
-			log.error("Error getting job (" + id + ")", e);
-		}
-		return jobDetailMap;
+		return getJobDetail(id).getJobDataMap();
 	}
 	
 	public JobDetail getJobDetail( String id ) {
+		JobDetail jobDetail = null;
 		try {
-			return monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+			jobDetail = monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+			if (jobDetail == null) {
+				jobDetail = monitor.getScheduler().getJobDetail(id, "DEFAULT");
+			}
 		} catch (SchedulerException e) {
 			log.error("Error getting job (" + id + ")", e);
 		}
-		return null;
+		return jobDetail;
 	}
 	
 	/**
@@ -87,14 +84,7 @@ public class IngridJobHandler {
 	 * @return the string of the job name
 	 */
 	public String getJobName( String id ) {
-		String jobName = null;
-		try {
-			JobDetail jobDetail = monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-			jobName = jobDetail.getName();
-		} catch (SchedulerException e) {
-			log.error("Error getting job (" + id + ")", e);
-		}
-		return jobName;
+		return getJobDetail(id).getName();
 	}
 	
 	/**
@@ -735,13 +725,13 @@ public class IngridJobHandler {
 	 */
 	public void resetTime(String id) {
 		try {
-			JobDetail detail = monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+			JobDetail detail = getJobDetail(id);
 			detail.getJobDataMap().remove(IngridMonitorIPlugJob.PARAM_TIMER_AVERAGE);
 			detail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_TIMER_NUM, 0);
 			// replace existing job with changed values
 			monitor.getScheduler().addJob(detail, true);
 		} catch (SchedulerException e) {
-			log.error("Error manipulating job (" + id + ").", e);
+			log.error("Error adding job (" + id + ") to scheduler.", e);
 		}
 	}
 	
@@ -834,5 +824,22 @@ public class IngridJobHandler {
 		} else {
 			//throw SchedulerException;
 		}
+	}
+	
+	/**
+	 * Check if a job is from group-type default.
+	 * @param id
+	 * @return
+	 */	
+	public boolean isDefaultJob(String id) {
+		JobDetail jobDetail = null;
+		try {
+			jobDetail = monitor.getScheduler().getJobDetail(id, "DEFAULT");
+		} catch (SchedulerException e) {
+			//
+		}
+		if (jobDetail != null)
+			return true;
+		return false;
 	}
 }

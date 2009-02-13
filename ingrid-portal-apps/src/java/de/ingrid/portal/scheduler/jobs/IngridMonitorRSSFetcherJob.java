@@ -12,14 +12,12 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import de.ingrid.portal.hibernate.HibernateUtil;
-import de.ingrid.portal.om.IngridRSSSource;
 import de.ingrid.portal.om.IngridRSSStore;
 import de.ingrid.portal.scheduler.IngridMonitorFacade;
 

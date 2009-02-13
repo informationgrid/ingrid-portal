@@ -5,7 +5,7 @@
 		<p>
 		<table class="border fullwidth">
 #set ($colNames = ["id", "ident", "name", "url", "sortkey", "sortkeyPartner"])
-#set ($colTitles = ["Id", "Kürzel", "Name", "Link", "Sortierung", "Partner"])
+#set ($colTitles = [$MESSAGES.getString('component.forms.provider.text.id'), $MESSAGES.getString('component.forms.provider.text.short'), $MESSAGES.getString('component.forms.provider.text.name'), $MESSAGES.getString('component.forms.provider.text.link'), $MESSAGES.getString('component.forms.provider.text.sort'), $MESSAGES.getString('component.forms.provider.text.partner')])
 #renderDBBrowserHeader($colNames $colTitles)
 #foreach ($dbEntity in $dbEntities)
 	#set ($rowId = $dbEntity.Id)
@@ -47,8 +47,7 @@
 	<input type="hidden" name="action" value="doImport">
 	<div class="formbody">
 		<p>
-<label for="csvData">Fügen Sie hier die CSV Liste der Anbieter in folgendem Format ein:<br/>
-id&lt;TAB&gt;Anbieterkennung&lt;TAB&gt;Anbietername&lt;TAB&gt;Link zu Anbieter&lt;TAB&gt;Sortierung innerhalb Partner&lt;TAB&gt;Sortierung des Partners
+<label for="csvData">$MESSAGES.getString('component.forms.provider.text.tip')
 </label><br/>
 #if($import_message)
 <br/><span class="portlet-msg-error">$import_message</span><br/>
@@ -57,7 +56,7 @@ id&lt;TAB&gt;Anbieterkennung&lt;TAB&gt;Anbietername&lt;TAB&gt;Link zu Anbieter&l
 		</p>
 	</div>
 <div class="formfooter" align="right">
-	<input class="btn" type="submit" name="doImport" value="Anbieter Importieren" />
+	<input class="btn" type="submit" name="doImport" value="$MESSAGES.getString('component.forms.provider.button.import')" />
 </div>
 </form>
 

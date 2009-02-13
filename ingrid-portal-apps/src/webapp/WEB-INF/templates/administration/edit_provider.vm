@@ -2,13 +2,13 @@
 <form action="$action" method="post" name="frmEditProvider" id="frmEditProvider">
 	<div class="formbody">
 	#if ($mode == 'edit')
-		<h2 class="nospace">Anbieter aktualisieren</h2>
+		<h2 class="nospace">$MESSAGES.getString('component.forms.provider.text.update.provider')</h2>
 	#elseif ($mode == 'new')
-		<h2 class="nospace">Anbieter anlegen</h2>
+		<h2 class="nospace">$MESSAGES.getString('component.forms.provider.text.new.provider')</h2>
 	#end
 	#displayFormErrors()
 #set ($colNames = ["ident", "name", "url", "sortkey", "sortkey_partner"])
-#set ($colLabels = ["Kürzel*", "Name*", "Link", "Sortierung", "Partner"])
+#set ($colLabels = ["$MESSAGES.getString('component.forms.provider.text.short')*", "$MESSAGES.getString('component.forms.provider.text.name')*", "$MESSAGES.getString('component.forms.provider.text.link')", "$MESSAGES.getString('component.forms.provider.text.sort')", "$MESSAGES.getString('component.forms.provider.text.partner')"])
 #foreach ($dbEntity in $dbEntities)
 	<div class="line"><hr /></div>
    	#set ($entityIndex = $velocityCount - 1)

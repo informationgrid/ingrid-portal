@@ -4,20 +4,16 @@
 <form action="$action" method="post" name="frmEditProvider" id="frmEditProvider">
 	<input type="hidden" name="mode" value="$mode"/>
 	<div class="formbody">
-    	#if ($mode == 'edit')
-    		<h2 class="nospace">Überwachung aktualisieren</h2>
-    	#elseif ($mode == 'new')
-    		<h2 class="nospace">Überwachung anlegen</h2>
-    	#end
+   		<h2 class="nospace">$MESSAGES.getString('component.forms.text.new.job')</h2>
     	#displayFormErrors()
     	
     	<p>
-    	<label class="float_left col2left_incr" for="id">#displayFieldLabel('id' 'Komponenten ID')*</label>
+    	<label class="float_left col2left_incr" for="id">#displayFieldLabel('id' $MESSAGES.getString('component.forms.text.component.id'))*</label>
        	<input class="float_left inputstyletext contentInput" id="id" name="id" value="#getFieldValue('id')" type="text">
     	</p>
     	<p class="clearer" />
     	<p>
-        	<label class="float_left col2left_incr" for="type">#displayFieldLabel('type' 'Komponenten Typ')*</label>
+        	<label class="float_left col2left_incr" for="type">#displayFieldLabel('type' $MESSAGES.getString('component.forms.text.component.type'))*</label>
         	<select class="float_left inputstyletext contentInput" name="type">
     		#foreach($type in $componentTypes)
     			<option value="$type"#getSelected('type' $type)>$MESSAGES.getString($type)</option>

@@ -2,13 +2,13 @@
 <form action="$action" method="post" name="frmEditPartner" id="frmEditPartner">
 	<div class="formbody">
 	#if ($mode == 'edit')
-		<h2 class="nospace">Partner aktualisieren</h2>
+		<h2 class="nospace">$MESSAGES.getString('component.forms.partner.text.update.partner')</h2>
 	#elseif ($mode == 'new')
-		<h2 class="nospace">Partner anlegen</h2>
+		<h2 class="nospace">$MESSAGES.getString('component.forms.partner.text.new.partner')</h2>
 	#end
 	#displayFormErrors()
 #set ($colNames = ["ident", "name", "sortkey"])
-#set ($colLabels = ["Kürzel*", "Name*", "Sortierung"])
+#set ($colLabels = ["$MESSAGES.getString('component.forms.partner.text.short')*", "$MESSAGES.getString('component.forms.partner.text.name')*", "$MESSAGES.getString('component.forms.partner.text.sort')"])
 #foreach ($dbEntity in $dbEntities)
 	<div class="line"><hr /></div>
    	#set ($entityIndex = $velocityCount - 1)

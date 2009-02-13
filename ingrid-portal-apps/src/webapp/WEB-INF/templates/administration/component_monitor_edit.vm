@@ -3,29 +3,30 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmEditProvider" id="frmEditProvider">
 	<input type="hidden" name="mode" value="$mode"/>
+	<input type="hidden" name="disableSaving" value="$disableSaving"/>
 	<div class="formbody">
 	#if ($mode == 'edit')
-		<h2 class="nospace">Überwachung aktualisieren</h2>
+		<h2 class="nospace">$MESSAGES.getString('component.forms.text.update.job')</h2>
 	#elseif ($mode == 'new')
-		<h2 class="nospace">Überwachung anlegen</h2>
+		<h2 class="nospace">$MESSAGES.getString('component.forms.text.new.job')</h2>
 	#end
 	#displayFormErrors()
 	
 	<p>
-		<label class="float_left col2left_incr">Komponenten ID</label>
+		<label class="float_left col2left_incr">$MESSAGES.getString('component.forms.text.component.id')</label>
 		<span>#getFieldValue('id')</span>
 		<input type="hidden" name="id" value="#getFieldValue('id')"/>
 
 	</p>
 	<p class="clearer" />
 	<p>
-		<label class="float_left col2left_incr" for="type">#displayFieldLabel('type' 'Komponenten Typ')</label>
+		<label class="float_left col2left_incr" for="type">#displayFieldLabel('type' $MESSAGES.getString('component.forms.text.component.type'))</label>
 		<span>$MESSAGES.getString($actionForm.getInput('type'))</span>
 		<input type="hidden" name="type" value="#getFieldValue('type')"/>
 	</p>
 	<p class="clearer" />
    	<p>
-      	<label class="float_left col2left_incr" for="title">#displayFieldLabel('title' 'Komponentenname')*</label>
+      	<label class="float_left col2left_incr" for="title">#displayFieldLabel('title' $MESSAGES.getString('component.forms.text.component.name'))*</label>
       	<input class="float_left inputstyletext contentInput" id="title" name="title" value="#getFieldValue('title')" type="text">
   	</p>
 	<p class="clearer" />
@@ -50,22 +51,22 @@
 	
 	<p class="clearer" />
 	<p>
-      	<label class="float_left col2left_incr" for="interval">#displayFieldLabel('interval' 'Überprüfung alle [sec]')*</label>
+      	<label class="float_left col2left_incr" for="interval">#displayFieldLabel('interval' $MESSAGES.getString('component.forms.text.interval'))*</label>
       	<input class="float_left inputstyletext contentInput" id="interval" name="interval" value="#getFieldValue('interval')" type="text">
   	</p>
 	<p class="clearer" />
 	<p>
-      	<label class="float_left col2left_incr" for="timeout">#displayFieldLabel('timeout' 'Timeout [ms]')*</label>
+      	<label class="float_left col2left_incr" for="timeout">#displayFieldLabel('timeout' $MESSAGES.getString('component.forms.text.timeout'))*</label>
       	<input class="float_left inputstyletext contentInput" id="timeout" name="timeout" value="#getFieldValue('timeout')" type="text">
   	</p>
 	<p class="clearer" />
     <p>
-        <label class="float_left col2left_incr" for="active">#displayFieldLabel('active' 'Aktiv')</label>
+        <label class="float_left col2left_incr" for="active">#displayFieldLabel('active' $MESSAGES.getString('component.forms.text.active'))</label>
         <input class="" id="component_active" name="active" value="1" #getChecked('active' '1') type="checkbox">
     </p>
 	<p class="clearer" />
     <p>
-        <label class="float_left col2left_incr">Email-Adressen</label>
+        <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.text.email.addresses')</label>
     	<table class="border">
     	<tr>
     		<td class="contentColumnHead" style="text-decoration:none">&nbsp;Email&nbsp;</td>
@@ -88,7 +89,7 @@
     	<td class="$rowstyle">
     		<input class="inputstyletext" size="3" maxlength="3" id="contact_threshhold$velocityCount" name="contact_threshold" value="$threshold" type="text">
     	</td>
-    	<td><input class="btn" style="font-size:100%" type="submit" name="doDeleteContact_$velocityCount" value="Löschen" /></td>
+    	<td><input class="btn" style="font-size:100%" type="submit" name="doDeleteContact_$velocityCount" value="$MESSAGES.getString('component.forms.buttons.delete')" /></td>
     	</tr>
     #end
         <tr>
@@ -101,28 +102,28 @@
     	<td>
     		<input class="#getInputStyleText('contact_threshold_new')" size="3" maxlength="3" id="contact_threshold_new" name="contact_threshold_new" value="#getFieldValue('contact_threshold_new')" type="text">
     	</td>
-    	<td><input class="btn" style="font-size:100%" type="submit" name="doAddContact" value="Hinzufügen" /></td>
+    	<td><input class="btn" style="font-size:100%" type="submit" name="doAddContact" value="$MESSAGES.getString('component.forms.buttons.add')" /></td>
     	</tr>
     	</table>
 	#if ($actionForm.getInput('last_execution') != "")
 		<p class="clearer" />
 		<p>
-			<label class="float_left col2left_incr" for="">#displayFieldLabel('lastExecution' 'Letzte Ausführung')</label>
+			<label class="float_left col2left_incr" for="">#displayFieldLabel('lastExecution' $MESSAGES.getString('component.forms.text.last.check'))</label>
 			<span>#getFieldValue('last_execution')</span>
 		</p>
 		<p class="clearer" />
 		<p>
-			<label class="float_left col2left_incr" for="">#displayFieldLabel('nextExecution' 'Nächste Ausführung')</label>
+			<label class="float_left col2left_incr" for="">#displayFieldLabel('nextExecution' $MESSAGES.getString('component.forms.text.next.check'))</label>
 			<span>#getFieldValue('next_execution')</span>
 		</p>
 		<p class="clearer" />
 		<p>
-			<label class="float_left col2left_incr" for="">#displayFieldLabel('numExecutions' 'Anzahl Ausführungen')</label>
+			<label class="float_left col2left_incr" for="">#displayFieldLabel('numExecutions' $MESSAGES.getString('component.forms.text.num.executions'))</label>
 			<span>#getFieldValue('num_executions')</span>
 		</p>
 		<p class="clearer" />
 		<p>
-			<label class="float_left col2left_incr" for="">#displayFieldLabel('averageExecution' 'Ø-Ausführung')</label>
+			<label class="float_left col2left_incr" for="">#displayFieldLabel('averageExecution' $MESSAGES.getString('component.forms.text.average.exec.time'))</label>
 			<span>#getFieldValue('average_exec_time')ms</span>
 		</p>
 	#end
@@ -132,7 +133,7 @@
 		#if($actionForm.getInput("error_msg")!="component.monitor.general.error.none" && $actionForm.getInput("error_msg")!="")
 		<hr>
 		<p style="color:#ff0000;">
-			<label class="float_left col2left_incr">Fehlermeldung</label>
+			<label class="float_left col2left_incr">$MESSAGES.getString('component.forms.text.error.messages')</label>
 		</p>
 		<table style="color:#ff0000;"><tr><td>$MESSAGES.getString($actionForm.getInput('error_msg'))</td></tr></table>
 		#end
@@ -148,33 +149,31 @@
 #end
 #renderDBEditFooter("edit")
 </form>
-<h1>Kurzhilfe</h1>
+<h1>$MESSAGES.getString('component.forms.help.header')</h1>
 <div class="formbody">
 	<a name="help"></a>
-	<p><b>Komponenten ID</b><br/>Ein eindeutiger Name der Überwachungskomponente.</p>
-	<p><b>Query String</b><br/>Inhalt einer Anfrage, die an die zu überwachende Komponente gesendet wird. Der mögliche Inhalt unterscheidet sich je nach Komponenten Typ:
+	<p>$MESSAGES.getString('component.forms.help.part1')</p>
+	<p>$MESSAGES.getString('component.forms.help.part2')
 	<table><tbody>
-	<tr><td>IPLUG</td>
-	<td>Es kann die komplette Query Syntax des Portals verwendet werden. 
-	Um z.B. ein iPlug zu überwachen könnte die Abfrage wie folgt aussehen:<br/>
-	<pre>wasser iplugs:"/kug-ibus:kug-iplug-udk-db_uba" ranking:any cache:off</pre></td></tr>
-	<tr><td>CSW</td>
-	<td>Bitte nur ein Suchbegriff angeben. z.B. "Wasser"</td></tr>
-	<tr><td>ECS</td>
-	<td>Bitte nur ein Suchbegriff angeben. z.B. "Wasser"</td></tr>
-	<tr><td>G2K</td>
-	<td>Bitte nur ein Suchbegriff angeben. z.B. "Wasser"</td></tr>
-	<tr><td>SNS</td>
-	<td>Bitte nur ein Suchbegriff angeben. Es wird die Methode findTopics mit Einschränkung auf Descriptoren ausgeführt.</td></tr>
-	<tr><td>IBus</td>
-	<td>Die IBus-Komponente benötigt nur eine ID und einen Namen. Es wird versucht, die angeschlossenen iPlugs zu erkennen.</td></tr>
-	<tr><td>RSS</td>
-	<td>Bitte unter Service URL den zu überprüfenden RSS-Feed angeben.</td></tr>
-	<tr><td>Anbieter</td>
-	<td>Wollen Sie Anbieter bei der Überprüfung ausschließen, dann tragen Sie diese in das vorgesehene Feld ein, z.B. "all,kst"</td></tr> 
+	<tr><td>$MESSAGES.getString('component.forms.help.part3')</td>
+	<td>$MESSAGES.getString('component.forms.help.part4')</td></tr>
+	<tr><td>$MESSAGES.getString('component.forms.help.part5')</td>
+	<td>$MESSAGES.getString('component.forms.help.part6')</td></tr>
+	<tr><td>$MESSAGES.getString('component.forms.help.part7')</td>
+	<td>$MESSAGES.getString('component.forms.help.part8')</td></tr>
+	<tr><td>$MESSAGES.getString('component.forms.help.part9')</td>
+	<td>$MESSAGES.getString('component.forms.help.part10')</td></tr>
+	<tr><td>$MESSAGES.getString('component.forms.help.part11')</td>
+	<td>$MESSAGES.getString('component.forms.help.part12')</td></tr>
+	<tr><td>$MESSAGES.getString('component.forms.help.part13')</td>
+	<td>$MESSAGES.getString('component.forms.help.part14')</td></tr>
+	<tr><td>$MESSAGES.getString('component.forms.help.part15')</td>
+	<td>$MESSAGES.getString('component.forms.help.part16')</td></tr>
+	<tr><td>$MESSAGES.getString('component.forms.help.part17')</td>
+	<td>$MESSAGES.getString('component.forms.help.part18')</td></tr> 
 	</tbody></table>
 	
 	</p>
-	<p><b>Schwellwert</b><br/>Gibt an, wie oft ein Ereignis auftreten muss, bis eine Meldung versendet wird. Ein Wert > 1 stellt sicher, dass einmalig auftretende Fehler nicht gemeldet werden.</p>
+	<p>$MESSAGES.getString('component.forms.help.part19')</p>
 </div>
 	

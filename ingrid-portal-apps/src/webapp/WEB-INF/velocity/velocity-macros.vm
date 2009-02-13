@@ -82,7 +82,7 @@ $fieldLabel#end
 	#end
 		&nbsp;
 	</div>
-   	<div class="contentNavigationMiddle">$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() von $browser.getTotalNumRows() Einträgen</div>
+   	<div class="contentNavigationMiddle">$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() $MESSAGES.getString('component.forms.text.of') $browser.getTotalNumRows() $MESSAGES.getString('component.forms.text.entries')</div>
    	<div class="contentNavigationRight">
 		&nbsp;
 	#if ($browser.hasNextPage())
@@ -176,18 +176,18 @@ $action.setParameter("id", "$rowId")
     	<span class="float_left">&nbsp;</span>
 	#end
 	#if($button == "doDelete")
-		<input class="btn float_left" type="submit" name="doDelete" onClick="return confirm('Sollen die markierten Einträge wirklich gelöscht werden ?')" value="Löschen" />
+		<input class="btn float_left" type="submit" name="doDelete" onClick="return confirm($MESSAGES.getString('component.forms.text.delete.marked.entries')" value="$MESSAGES.getString('component.forms.buttons.delete')" />
 	#end
 	#if($button == "doRefresh")
-    	<input class="btn float_right" type="submit" name="doRefresh" value="Neu Laden" />
+    	<input class="btn float_right" type="submit" name="doRefresh" value="$MESSAGES.getString('component.forms.buttons.refresh')" />
     	<span class="float_right">&nbsp;</span>
 	#end
 	#if($button == "doNew")
-		<input class="btn float_right" type="submit" name="doNew" value="Hinzufügen" />
+		<input class="btn float_right" type="submit" name="doNew" value="$MESSAGES.getString('component.forms.buttons.add')" />
 	#end
 	#if($button == "doClear")
 		<span class="float_left">&nbsp;</span>
-		<input class="btn float_left" type="submit" name="doClear" value="Leeren" />
+		<input class="btn float_left" type="submit" name="doClear" value="$MESSAGES.getString('component.forms.buttons.reset')" title="$MESSAGES.getString('component.forms.info.reset')" />
 	#end
 #end
 	<p class="clearer"></p>
@@ -230,8 +230,12 @@ $action.setParameter("id", "$rowId")
 	#elseif ($mode == 'new')
 		#set ($butAction = 'doSave')
 	#end
-	<input class="btn" type="submit" name="$butAction" value="Speichern" />
-	<input class="btn" type="submit" name="doCancel" value="Zurück zur Übersicht" />
+	#if ($disableSaving == 'true')
+		<input class="btn" type="submit" name="$butAction" value="$MESSAGES.getString('component.forms.buttons.no.save')" disabled />
+	#else
+		<input class="btn" type="submit" name="$butAction" value="$MESSAGES.getString('component.forms.buttons.save')" />
+	#end
+	<input class="btn" type="submit" name="doCancel" value="$MESSAGES.getString('component.forms.buttons.back')" />
 </div>
 #end
 

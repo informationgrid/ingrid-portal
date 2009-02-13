@@ -56,16 +56,17 @@
 		$action.setParameter("id", "$jobId")
 		## for non monitoring jobs
 		#if ($entry.getGroup() != "monitor")
-			<td></td><td>$jobId</td>
-			<td></td><td></td>
-			<td>$date.format('yyyy-MM-dd H:mm:ss', $prevTime)</td>
-			<td>$date.format('yyyy-MM-dd H:mm:ss', $nextTime)</td>
+			<td></td><td><a href="$action">$jobId</a></td>
+			<td><a href="$action">DEFAULT</a></td><td></td>
+			<td><a href="$action">$date.format('yyyy-MM-dd H:mm:ss', $prevTime)</a></td>
+			<td><a href="$action">$date.format('yyyy-MM-dd H:mm:ss', $nextTime)</a></td>
 			#if ($jobData.containsKey("component.monitor.general.timer.average") && ($jobData.getInt("component.monitor.general.timer.num")!=0))
-				<td>$jobData.getLong("component.monitor.general.timer.average")ms</td>
+				#set ($execCount = $jobData.getInt("component.monitor.general.timer.num"))
+				<td><a href="$action" title="$MESSAGES.getString('component.forms.text.of') $execCount $MESSAGES.getString('component.forms.text.executions')">$jobData.getLong("component.monitor.general.timer.average")ms</a></td>
 			#else
-				<td>n/a</td>
+				<td><a href="$action">n/a</a></td>
 			#end
-			<td>$interval</td>
+			<td><a href="$action">$interval</a></td>
 		#else
         	<td>
         		<input id="chk_$count" name="id" type="checkbox" value="$jobId" />
@@ -73,9 +74,9 @@
         	<td><a href="$action" title="$jobId">$jobData.getString("component.monitor.general.title")</a></td>
         	<td><a href="$action">$MESSAGES.getString($jobData.getString("component.monitor.general.type"))</a></td>
 			#if($jobData.getInt("component.monitor.general.status")==0) 
-				<td><a href="$action">OK</a></td>
+				<td><a href="$action">$MESSAGES.getString('component.forms.status.ok')</a></td>
 			#else
-				<td><a href="$action">ERROR</a></td>
+				<td><a href="$action">$MESSAGES.getString('component.forms.status.error')</a></td>
 			#end
         	<td><a href="$action">#if($jobData.containsKey("component.monitor.general.timer.num"))$date.format('yyyy-MM-dd H:mm:ss',$prevTime)#end</a></td>
 			<td><a href="$action">#if($jobData.getInt("component.monitor.general.active")==1)$date.format('yyyy-MM-dd H:mm:ss',$nextTime)#end</a></td>
@@ -83,7 +84,7 @@
     		## due to new functionality old Jobs do not have this key!
     		#if ($jobData.containsKey("component.monitor.general.timer.average") && ($jobData.getInt("component.monitor.general.timer.num")!=0))
     			#set ($execCount = $jobData.getInt("component.monitor.general.timer.num"))
-    			<td><a href="$action" title="von $execCount Ausführungen">$jobData.getLong("component.monitor.general.timer.average")ms</a></td>
+    			<td><a href="$action" title="$MESSAGES.getString('component.forms.text.of') $execCount $MESSAGES.getString('component.forms.text.executions')">$jobData.getLong("component.monitor.general.timer.average")ms</a></td>
     		#else
     			<td><a href="$action">n/a</a></td>
     		#end
@@ -97,7 +98,7 @@
 <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
 	<input name="modelSize" type="hidden" value="$model.size()" />
       <ul class="innermenu">
-		<li><a href="portal/administration/admin-component-monitor.psml#import">Import aller angeschlossener iPlugs</a></li>
+		<li><a href="portal/administration/admin-component-monitor.psml#import">$MESSAGES.getString('component.forms.text.import.iplugs')</a></li>
       </ul>
       <br/>
       <br/>
@@ -107,7 +108,7 @@
 <div class="formbody">
 		<table class="border fullwidth">
 		#set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status.code", "component.monitor.general.last.check", "component.monitor.general.next.check", "component.monitor.general.timer.average", "component.monitor.general.check.interval"]) ##, "component.monitor.general.active"])
-		#set ($colTitles = ["Name", "Typ", "Status", "letzte Überprüfung", "nächste Überprüfung", "Ø-Ausf.geschw.", "Intervall [sec]"]) ##, "aktiv"])
+		#set ($colTitles = [$MESSAGES.getString('component.forms.text.name'), $MESSAGES.getString('component.forms.text.type'), $MESSAGES.getString('component.forms.text.status'), $MESSAGES.getString('component.forms.text.last.check'), $MESSAGES.getString('component.forms.text.next.check'), $MESSAGES.getString('component.forms.text.average.exec.time'), $MESSAGES.getString('component.forms.text.interval')]) ##, "aktiv"])
    
 		#renderDBBrowserHeader($colNames $colTitles)
     
@@ -146,28 +147,27 @@
 	<input type="hidden" name="action" value="doImport">
 	<div class="formbody">
 		<p>
-			Importieren Sie alle verfügbaren Jobs in die Jobübersicht. Diese beinhalten alle am iBus angemeldeten iPlugs,
-			die RSS-Monitore sowie den iBus-Monitor selbst. Bereits vorhandene Jobs behalten ihre Einstellungen!
+			$MESSAGES.getString('component.forms.text.import.description')
 #if($import_message)
 <br/><br/><span class="portlet-msg-error">$import_message</span><br/>
 #end
 		</p>
         <p>
             <input class="" id="activate" name="activate" value="1" type="checkbox">
-			<label class="" for="activate">Überwachung sofort aktivieren?</label>
+			<label class="" for="activate">$MESSAGES.getString('component.forms.text.import.activate.job')</label>
         </p>
 		<p>
             <input class="" id="overwrite" name="overwrite" value="1" type="checkbox">
-			<label class="" for="overwrite">Überschreiben vorhandener Jobs? (Einstellungen gehen dabei verloren!)</label>
+			<label class="" for="overwrite">$MESSAGES.getString('component.forms.text.import.overwrite.job')</label>
         </p>
 		<p>
-            <label class="" for="std_email">Standard Email Adresse:</label>
+            <label class="" for="std_email">$MESSAGES.getString('component.forms.text.import.standard.email')</label>
             <input class="" id="std_email" name="std_email" value="" type="text">
         </p>
     	<p class="clearer" />
 	</div>
 <div class="formfooter" align="right">
-	<input class="btn" type="submit" name="doImport" value="Jobs importieren" />
+	<input class="btn" type="submit" name="doImport" value="$MESSAGES.getString('component.forms.buttons.import.jobs')" />
 </div>
 </form>
 

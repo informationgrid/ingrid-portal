@@ -2,15 +2,15 @@
 <form action="$action" method="post" name="frmEditRSS" id="frmEditRSS">
 	<div class="formbody">
 	#if ($mode == 'edit')
-		<h2 class="nospace">RSS Feed(s) aktualisieren</h2>
+		<h2 class="nospace">$MESSAGES.getString('component.forms.rss.text.update.feed')</h2>
 	#elseif ($mode == 'new')
-		<h2 class="nospace">Neuen RSS Feed anlegen</h2>
+		<h2 class="nospace">$MESSAGES.getString('component.forms.rss.text.new.feed')</h2>
 	#end
 	#displayFormErrors()
-	<p>Hinweis: Als Autor der Einträge wird der Inhalt des Felder Beschreibung verwendet. Wenn Sie das Feld leer lassen, wird versucht, den Autor aus dem RSS-Feed zu ermitteln.</p>
+	<p>$MESSAGES.getString('component.forms.rss.text.tip')</p>
 	
 #set ($colNames = ["provider", "description", "url", "language", "categories"])
-#set ($colLabels = ["Anbieter*", "Beschreibung", "URL*", "Sprache*", "Kategorien"])
+#set ($colLabels = ["$MESSAGES.getString('component.forms.rss.text.provider')*", $MESSAGES.getString('component.forms.rss.text.description'), "$MESSAGES.getString('component.forms.rss.text.url')*", "$MESSAGES.getString('component.forms.rss.text.lang')*", $MESSAGES.getString('component.forms.rss.text.category')])
 #foreach ($dbEntity in $dbEntities)
 	<div class="line"><hr /></div>
    	#set ($entityIndex = $velocityCount - 1)
@@ -28,7 +28,7 @@
 	</br>
 	#if ($dbEntity.Error != "" && $dbEntity.Error != "component.monitor.general.error.none" )
 		<p  style="color:#ff0000;">
-			<label class="float_left col2left_incr">Fehlermeldung</label><span>$!{id}</span>
+			<label class="float_left col2left_incr">$MESSAGES.getString('component.forms.text.error.messages')</label><span>$!{id}</span>
 			<span>$MESSAGES.getString($dbEntity.Error)</span>
 		</p>
 	#end
