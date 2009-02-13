@@ -1668,6 +1668,15 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("linksFrom").store.setData(linkTable);
 
   // Additional Fields
+  // -- Clear all fields
+  if (additionalFieldWidgets) {
+	  for (var index = 0; index < additionalFieldWidgets.length; ++index) {
+		  var currentWidget = additionalFieldWidgets[index];
+		  currentWidget.setValue("");
+	  }
+  }
+
+  // -- Set data
   var additionalFields = nodeData.additionalFields;
   if (additionalFields) {
 	  for (var index = 0; index < additionalFields.length; ++index) {
@@ -2015,7 +2024,9 @@ udkDataProxy._getObjectData = function(nodeData)
 		  var identifier = currentField.id.substring("additionalField".length);
 		  var name = currentField.name;
 		  var value = currentField.getValue();
-		  nodeData.additionalFields.push( { identifier: identifier, name: name, value: value } );
+		  if (dojo.string.trim(value).length != 0) {
+			  nodeData.additionalFields.push( { identifier: identifier, name: name, value: value } );
+		  }
 	  }
   }
 
