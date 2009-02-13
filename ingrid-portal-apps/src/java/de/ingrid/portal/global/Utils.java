@@ -3,7 +3,9 @@
  */
 package de.ingrid.portal.global;
 
-import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -383,7 +385,7 @@ public class Utils {
 		StringWriter sw = new StringWriter();
 
 		try {
-			FileReader templateReader = new FileReader(realTemplatePath);
+			BufferedReader templateReader = new BufferedReader(new InputStreamReader(new FileInputStream(realTemplatePath), "UTF8"));
 
 			sw = new StringWriter();
 			Velocity.init();

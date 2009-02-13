@@ -1,7 +1,7 @@
-#set($JOB = $map.get("JOB"))
+ï»¿#set($JOB = $map.get("JOB"))
 #set($MESSAGES = $map.get("MESSAGES"))
 #set($JOB_DATA = $JOB.getJobDataMap())
-Dies ist eine Meldung von der Überwachungskomponente der 
+Dies ist eine Meldung von der Ãœberwachungskomponente der 
 Ingrid Software.
 #if($JOB_DATA.getInt("component.monitor.general.status") == 1)
 WARNUNG !!
@@ -12,7 +12,7 @@ ENTWARNUNG!!
 Komponenten ID: $JOB.name
 Komponententyp: $MESSAGES.getString($JOB_DATA.getString("component.monitor.general.type"))
 Komponentenbeschreibung: $JOB_DATA.getString("component.monitor.general.title")
-Ausgeführte Query: $JOB_DATA.getString("component.monitor.general.query")
+AusgefÃ¼hrte Query: $JOB_DATA.getString("component.monitor.general.query")
 Timeout [ms]: $JOB_DATA.getInt("component.monitor.general.timeout")
 
 Meldung: $MESSAGES.getString($JOB_DATA.getString("component.monitor.general.status.code"))
