@@ -1021,8 +1021,8 @@ var reassignToAuthorButton = null;
 			if (hasWritePermission) {
 				enableList = enableList.concat([saveButton, finalSaveButton]);				
 
-				// The discard button is only enabled if the user has write permission and a published version exists
-				if (isPublished) {
+				// The discard button is only enabled if the user has write permission, a published version exists and an edited version exists
+				if (isPublished && message.node.nodeDocType.search(/_.V/) != -1) {
 					enableList.push(discardButton);
 				}
 			}
