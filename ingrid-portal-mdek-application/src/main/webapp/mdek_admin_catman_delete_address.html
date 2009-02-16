@@ -48,6 +48,8 @@ function initTree() {
 		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
 
 		TreeService.getSubTree(node.uuid, node.nodeAppType, 1, {
+			preHook: showLoadingZone,
+			postHook: hideLoadingZone,
   			callback:function(res) { deferred.callback(res); },
 			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
 			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
@@ -107,6 +109,18 @@ function updateDeleteAddressInformation(detailedAddressInfo) {
 		dojo.widget.byId("addressDeleteDataUser").setValue(detailedAddressInfo.responsibleUser.title);
 	}
 	dojo.widget.byId("addressDeleteDataMDQS").store.setData(detailedAddressInfo.qaUsers);
+
+	if (detailedAddressInfo.objInfoAddressList) {
+		UtilList.addIcons(detailedAddressInfo.objInfoAddressList);
+		var replaceInfoStore = dojo.widget.byId("replaceInfoAddressList").store;
+		replaceInfoStore.setData(detailedAddressInfo.objInfoAddressList);
+	}
+
+	if (detailedAddressInfo.objResponsibleAddressList) {
+		UtilList.addIcons(detailedAddressInfo.objResponsibleAddressList);
+		var replaceInfoStore = dojo.widget.byId("replaceUserList").store;
+		replaceInfoStore.setData(detailedAddressInfo.objResponsibleAddressList);
+	}
 }
 
 //Update the fields for 'address to replace'
@@ -132,11 +146,16 @@ function createDetailedAddressInformationDef(addressUuid) {
 	var def = new dojo.Deferred();
 	var addressDetailsDef = getAddressDetailsDef(addressUuid);
 	var responsibleUsersDef = getUsersWithWritePermissionDef(addressUuid);
+	var objInfoAddressDef = getObjectsWithInfoAddressDef(addressUuid);
+	var objResponsibleAddressDef = getObjectsWithResponsibleUserDef(addressUuid);
 
-	var defList = new dojo.DeferredList([addressDetailsDef, responsibleUsersDef], false, false, true);
+	var defList = new dojo.DeferredList([addressDetailsDef, responsibleUsersDef, objInfoAddressDef, objResponsibleAddressDef], false, false, true);
 	defList.addCallback(function (resultList) {
 		var addressDetails = resultList[0][1]; 
 		var responsibleUserList = resultList[1][1];
+		var objInfoAddressList = resultList[2][1];
+		var objResponsibleAddressList = resultList[3][1];
+
 		var responsibleUser = null;
 		for (var index = 0; index < responsibleUserList.length; ++index) {
 			if (responsibleUserList[index][1] == addressDetails.addressOwner) {
@@ -151,7 +170,13 @@ function createDetailedAddressInformationDef(addressUuid) {
 			}
 		}
 
-		def.callback( { address:addressDetails, responsibleUser:responsibleUser, qaUsers:qaUsers } );
+		def.callback({
+			address:addressDetails,
+			responsibleUser:responsibleUser,
+			qaUsers:qaUsers,
+			objInfoAddressList:objInfoAddressList,
+			objResponsibleAddressList:objResponsibleAddressList
+		});
 	});
 
 	defList.addErrback(function(err) {
@@ -200,6 +225,96 @@ function getUsersWithWritePermissionDef(addressUuid) {
 	return def;
 }
 
+//Fetch objects where given adrUuid is set as the info address
+function getObjectsWithInfoAddressDef(adrUuid) {
+	var queryStr = buildInfoAddressQuery(adrUuid);
+	return getObjectsForHQLQueryDef(queryStr);
+}
+
+// Fetch objects where given adrUuid is set as the responsible user
+function getObjectsWithResponsibleUserDef(adrUuid) {
+	var queryStr = buildResponsibleAddressQuery(adrUuid);
+	return getObjectsForHQLQueryDef(queryStr);
+}
+
+// Fetch objects for the given hql query. The list of objects is returned through the deferred object.
+// If no objects are found, an empty list is returned through the callback
+function getObjectsForHQLQueryDef(query) {
+	var def = new dojo.Deferred();
+
+	QueryService.queryHQL(query, 0, 100, {
+		callback: function(searchResult) {
+			if (searchResult.objectSearchResult) {
+				def.callback(searchResult.objectSearchResult.resultList);
+
+			} else {
+				// No objects found
+				def.callback([]);
+			}
+		},
+		errorHandler: function(message, err) {
+			dojo.debug("Error: "+message);
+			dojo.debugShallow(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
+// opens a download dialog for the search result as csv
+scriptScope.openDownloadResultAsCSVDialog = function() {
+	var selectedChild = dojo.widget.byId("addressDeleteDataObjectsLists").selectedChild;
+	var selectedNode = dojo.widget.byId("treeAddressDelete").selectedNode;
+
+	if (isValidAddressNode(selectedNode)) {
+		var addressUuid = selectedNode.uuid;
+
+		var query;
+		if ("replaceInfoAddress" == selectedChild) {
+			query = buildInfoAddressQuery(addressUuid);
+
+		} else if ("replaceUser" == selectedChild) {
+			query = buildResponsibleAddressQuery(addressUuid);
+		}
+
+		QueryService.queryHQLToCSV(query, {
+			preHook: showLoadingZone,
+			postHook: hideLoadingZone,
+			callback: function(data) {
+				dwr.engine.openInDownload(data);
+			},
+			errorHandler: function(errMsg, err) {
+				dojo.debug("Error: "+message);
+				dojo.debugShallow(err);
+			}		
+		});
+
+	} else {
+		// No node selected
+		dojo.debug("no node selected.");
+	}
+}
+
+// HQL Query to fetch all objects where the given address uuid is set as the info address (Auskunft)
+function buildInfoAddressQuery(addressUuid) {
+	return "from ObjectNode oNode "+
+		"join oNode.t01ObjectPublished obj "+
+		"join obj.t012ObjAdrs objAdr "+
+	"where "+
+		"oNode.objIdPublished = objAdr.objId "+
+		"and objAdr.adrUuid = '"+addressUuid+"' "+
+		"and objAdr.type = 7 "+
+		"and objAdr.specialRef = 505";
+}
+
+//HQL Query to fetch all objects where the given address uuid is set as the responsible user
+function buildResponsibleAddressQuery(addressUuid) {
+	return "from ObjectNode oNode "+
+		"join oNode.t01ObjectPublished obj "+
+	"where "+
+		"obj.responsibleUuid = '"+addressUuid+"'";
+}
+
 function userHasQAPermission(user) {
 	if (user.permissions) {
 		for (var index = 0; index < user.permissions.length; ++index) {
@@ -215,6 +330,15 @@ function userHasQAPermission(user) {
 scriptScope.replaceAddress = function() {
 	dojo.debug("Function not implemented yet.");
 }
+
+function showLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("deleteAddressLoadingZone"), "visible");
+}
+
+function hideLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("deleteAddressLoadingZone"), "hidden");
+}
+
 
 </script>
 </head>
@@ -286,7 +410,7 @@ scriptScope.replaceAddress = function() {
 
 			<div id="addressDeleteDataObjects" class="inputContainer">
 				<span class="label"><label class="inActive" for="objectLists">&Uuml;bersicht der betroffenen Objekte, deren</label></span>
-				<span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Als CSV-Datei speichern">Als CSV-Datei speichern</a></span>
+				<span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.openDownloadResultAsCSVDialog();" title="Als CSV-Datei speichern">Als CSV-Datei speichern</a></span>
 				<div id="addressDeleteDataObjectsLists" dojoType="ingrid:TabContainer" doLayout="false" class="w684" selectedChild="replaceInfoAddress">
 
 					<!-- TAB 1 START -->
@@ -296,9 +420,9 @@ scriptScope.replaceAddress = function() {
 								<table id="replaceInfoAddressList" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort">
 									<thead>
 										<tr>
-											<th field="type" dataType="String" width="30">&nbsp;</th>
-											<th field="id" dataType="String" width="254">ID</th>
-											<th field="objectName" dataType="String" width="400">Objektname</th>
+											<th nosort="true" field="icon" dataType="String" width="30">&nbsp;</th>
+											<th nosort="true" field="uuid" dataType="String" width="254">ID</th>
+											<th nosort="true" field="objectName" dataType="String" width="400">Objektname</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -315,9 +439,9 @@ scriptScope.replaceAddress = function() {
 								<table id="replaceUserList" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort">
 									<thead>
 										<tr>
-											<th field="type" dataType="String" width="30">&nbsp;</th>
-											<th field="id" dataType="String" width="254">ID</th>
-											<th field="objectName" dataType="String" width="400">Objektname</th>
+											<th nosort="true" field="icon" dataType="String" width="30">&nbsp;</th>
+											<th nosort="true" field="uuid" dataType="String" width="254">ID</th>
+											<th nosort="true" field="objectName" dataType="String" width="400">Objektname</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -388,6 +512,9 @@ scriptScope.replaceAddress = function() {
 				<span class="button w924" style="height:20px !important;">
 					<span style="float:right;">
 						<button dojoType="ingrid:Button" title="Ersetzen" onClick="javascript:scriptScope.replaceAddress();">Ersetzen</button>
+					</span>
+					<span id="deleteAddressLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+						<img src="img/ladekreis.gif" />
 					</span>
 				</span>
 			</div>

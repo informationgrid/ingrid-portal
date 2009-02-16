@@ -1,6 +1,5 @@
 package de.ingrid.mdek.beans.query;
 
-import java.util.ArrayList;
 
 public class SearchResultBean {
 	public ObjectSearchResultBean objectSearchResult;
