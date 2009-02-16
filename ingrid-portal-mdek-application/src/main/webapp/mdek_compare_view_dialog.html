@@ -228,6 +228,13 @@ function renderTextWithTitle(oldVal, newVal, title) {
 		return;
 	}
 
+	if (oldVal == null) {
+		oldVal = "";
+	}
+	if (newVal == null) {
+		newVal = "";
+	}
+
 	oldVal += "";
 	newVal += "";
 
@@ -295,6 +302,13 @@ function renderAddressList(oldList, newList) {
 }
 
 function renderText(oldVal, newVal) {
+	if (oldVal == null) {
+		oldVal = "";
+	}
+	if (newVal == null) {
+		newVal = "";
+	}
+
 	oldVal += "";
 	newVal += "";
 

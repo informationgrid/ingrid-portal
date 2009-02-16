@@ -41,6 +41,13 @@ function renderTextWithTitle(oldVal, newVal, title) {
 		return;
 	}
 
+	if (oldVal == null) {
+		oldVal = "";
+	}
+	if (newVal == null) {
+		newVal = "";
+	}
+
 	oldVal += "";
 	newVal += "";
 	dojo.byId("diffContent").innerHTML += "<strong>" + title + "</strong><p>" + diffString(oldVal, newVal) + "</p>";
@@ -49,6 +56,13 @@ function renderTextWithTitle(oldVal, newVal, title) {
 }
 
 function renderText(oldVal, newVal) {
+	if (oldVal == null) {
+		oldVal = "";
+	}
+	if (newVal == null) {
+		newVal = "";
+	}
+
 	oldVal += "";
 	newVal += "";
 	var str = diffString(oldVal, newVal);
