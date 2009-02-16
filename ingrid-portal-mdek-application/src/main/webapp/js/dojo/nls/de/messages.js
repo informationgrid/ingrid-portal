@@ -111,7 +111,7 @@
 	"dialog.help.fieldName":"Feldname",
 	"dialog.general.warning":"Warnhinweis",
 	"dialog.object.detailView.title":"Detailansicht",
-	"dialog.address.detailView.title":"Address-Detailansicht",
+	"dialog.address.detailView.title":"Adress-Detailansicht",
 	"dialog.showComments.title":"Kommentar ansehen/hinzufügen",
 
 	"dialog.inputInvalidError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Bitte &uuml;berpr&uuml;fen sie die Rot unterlegten Felder auf ihre Eingabe.",
@@ -199,7 +199,7 @@
     "table.rowDeleteReference":"Ungültige Verweise in Objekt/Adresse löschen",
 
     "validation.minmax":"Der Wert des Feldes '%{0}' muß größer sein als der Wert des Feldes '%{1}'.",
-    "validation.addressInfoRequired":"Die Addressverweistabelle muss mindestens eine Adresse vom Typ '%{0}' beinhalten!",
+    "validation.addressInfoRequired":"Die Adressverweistabelle muss mindestens eine Adresse vom Typ '%{0}' beinhalten!",
     "validation.communicationEmailRequired":"Die Kommunikationstabelle muss mindestens einen Eintrag vom Typ '%{0}' beinhalten!",
 
 	"ui.entry.loadingMessage":"Die Anwendung wird geladen...",

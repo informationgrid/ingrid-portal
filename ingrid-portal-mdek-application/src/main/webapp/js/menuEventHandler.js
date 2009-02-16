@@ -115,15 +115,15 @@ attachNewNode = function(selectedNode, res) {
 
 
 
-menuEventHandler.handlePreview = function(message) {
+menuEventHandler.handlePreview = function(msg) {
 // Message parameter is the either the Context Menu Item (TreeMenuItemV3) or the Widget (dojo:toolbarbutton)
 //   where the event originated
 
-  var selectedNode = getSelectedNode(message);
+  var selectedNode = getSelectedNode(msg);
   var useDirtyData = false;
   
   // check if the preview was called via the context menu or directly via the menu button
-  if (!(message instanceof dojo.widget.TreeMenuItemV3))  {
+  if (!(msg instanceof dojo.widget.TreeMenuItemV3))  {
     // use the data of the formular instead the data from the database
     useDirtyData = true;
   }
