@@ -22,6 +22,8 @@ public interface ObjectRequestHandler {
 	public MdekDataBean getPublishedObjectDetail(String uuid);
 	public MdekDataBean getInitialObject(String parentUuid);
 	public MdekDataBean saveObject(MdekDataBean data);
+	// Change the title to 'newTitle' for the object with the given 'uuid'
+	public void updateObjectTitle(String uuid, String newTitle);
 	public MdekDataBean publishObject(MdekDataBean data, boolean forcePublicationCondition);
 	public void deleteObject(String uuid, boolean forceDeleteReferences);
 	public boolean deleteObjectWorkingCopy(String uuid, boolean forceDeleteReferences);

@@ -17,6 +17,8 @@ public interface ObjectService {
 	public MdekDataBean getNodeData(String nodeUuid, String nodeType, Boolean useWorkingCopy);
 	public MdekDataBean getPublishedNodeData(String nodeUuid);
 	public MdekDataBean saveNodeData(MdekDataBean data, Boolean useWorkingCopy, Boolean forcePublicationCondition);
+	// Change the title to 'newTitle' for the object with the given 'uuid'
+	public void updateObjectTitle(String uuid, String newTitle);
 	public MdekDataBean assignObjectToQA(MdekDataBean data);
 	public MdekDataBean reassignObjectToAuthor(MdekDataBean data);
 	public ObjectSearchResultBean getWorkObjects(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits);

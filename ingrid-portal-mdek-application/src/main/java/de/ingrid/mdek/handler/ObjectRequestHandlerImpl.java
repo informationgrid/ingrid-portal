@@ -11,6 +11,7 @@ import de.ingrid.mdek.MdekError;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekError.MdekErrorType;
 import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
+import de.ingrid.mdek.MdekUtils.IdcEntityVersion;
 import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcStatisticsSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
@@ -164,6 +165,22 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 
 		IngridDocument response = mdekCallerObject.storeObject(connectionFacade.getCurrentPlugId(), obj, true, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekObjectUtils.extractSingleObjectFromResponse(response);
+	}
+
+	public void updateObjectTitle(String uuid, String newTitle) {
+		IngridDocument objPart = new IngridDocument();
+		objPart.put(MdekKeys.UUID, uuid);
+		objPart.put(MdekKeys.TITLE, newTitle);
+
+		IngridDocument response = mdekCallerObject.updateObjectPart(
+				connectionFacade.getCurrentPlugId(),
+				objPart,
+				IdcEntityVersion.PUBLISHED_VERSION,
+				MdekSecurityUtils.getCurrentUserUuid());
+
+		if (mdekClientCaller.getResultFromResponse(response) == null) {
+			MdekErrorUtils.handleError(response);
+		}
 	}
 
 	public MdekDataBean assignObjectToQA(MdekDataBean data) {

@@ -224,6 +224,17 @@ public class ObjectServiceImpl implements ObjectService {
 		}
 	}
 
+	public void updateObjectTitle(String uuid, String newTitle) {
+		try {
+			objectRequestHandler.updateObjectTitle(uuid, newTitle);
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while updating object title.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
+	}
+
 	public MdekDataBean assignObjectToQA(MdekDataBean data) {
 		log.debug("Assigning node with ID to QA: "+data.getUuid());
 
