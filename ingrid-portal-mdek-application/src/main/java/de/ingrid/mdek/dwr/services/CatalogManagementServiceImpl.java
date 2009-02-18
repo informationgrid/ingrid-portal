@@ -2,15 +2,20 @@ package de.ingrid.mdek.dwr.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
+import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
+import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.MdekJobHandler;
+import de.ingrid.mdek.util.MdekErrorUtils;
+import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
 
@@ -32,6 +37,52 @@ public class CatalogManagementServiceImpl {
 
 	public URLJobInfoBean getUrlValidatorJobInfo() {
 		return mdekJobHandler.getUrlValidatorJobInfo();
+	}
+
+	public void updateDBUrlJobInfo(List<Map<String, String>> sourceUrls, String targetUrl) {
+		List<IngridDocument> urlList = new ArrayList<IngridDocument>();
+
+		for (Map<String, String> map : sourceUrls) {
+			IngridDocument urlDoc = new IngridDocument();
+			urlDoc.put(MdekKeys.UUID, map.get("objectUuid"));
+			urlDoc.put(MdekKeys.LINKAGE_URL, map.get("url"));
+			urlList.add(urlDoc);
+		}
+
+		IMdekCallerCatalog mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
+		IngridDocument response = mdekCallerCatalog.updateURLInfo(
+				connectionFacade.getCurrentPlugId(),
+				urlList,
+				targetUrl,
+				MdekSecurityUtils.getCurrentUserUuid());
+
+		IMdekClientCaller mdekClientCaller = connectionFacade.getMdekClientCaller();
+		if (mdekClientCaller.getResultFromResponse(response) == null) {
+			MdekErrorUtils.handleError(response);
+		}
+	}
+
+	public void replaceUrls(List<Map<String, String>> sourceUrls, String targetUrl) {
+		List<IngridDocument> urlList = new ArrayList<IngridDocument>();
+
+		for (Map<String, String> map : sourceUrls) {
+			IngridDocument urlDoc = new IngridDocument();
+			urlDoc.put(MdekKeys.UUID, map.get("objectUuid"));
+			urlDoc.put(MdekKeys.LINKAGE_URL, map.get("url"));
+			urlList.add(urlDoc);
+		}
+
+		IMdekCallerCatalog mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
+		IngridDocument response = mdekCallerCatalog.replaceURLs(
+				connectionFacade.getCurrentPlugId(),
+				urlList,
+				targetUrl,
+				MdekSecurityUtils.getCurrentUserUuid());
+
+		IMdekClientCaller mdekClientCaller = connectionFacade.getMdekClientCaller();
+		if (mdekClientCaller.getResultFromResponse(response) == null) {
+			MdekErrorUtils.handleError(response);
+		}
 	}
 
 	public List<MdekDataBean> getDuplicateObjects() {
