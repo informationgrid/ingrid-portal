@@ -31,6 +31,18 @@ public class CatalogServiceImpl implements CatalogService {
 		return catalogRequestHandler.getSysAdditionalFields(fieldIds, languageCode);
 	}
 
+	public void storeSysAdditionalFields(List<AdditionalFieldBean> additionalFields, String languageCode) {
+		// TODO store additionalFields in db
+		for (AdditionalFieldBean additionalFieldBean : additionalFields) {
+			log.debug("language: "+additionalFieldBean.getListLanguage());
+			log.debug("id: "+additionalFieldBean.getId());
+			log.debug("name: "+additionalFieldBean.getName());
+			log.debug("type: "+additionalFieldBean.getType());
+			log.debug("size: "+ additionalFieldBean.getSize());
+			log.debug("list entries: "+additionalFieldBean.getListEntries());
+		}
+	}
+
 	public List<Map<String, String>> storeSysGuis(List<Map<String, String>> sysGuis, boolean refetchAfterStore) {
 		try {
 			return catalogRequestHandler.storeSysGuis(sysGuis, refetchAfterStore);

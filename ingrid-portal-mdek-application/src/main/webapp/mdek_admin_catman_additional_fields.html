@@ -5,6 +5,7 @@
 var scriptScope = this;
 
 _container_.addOnLoad(function() {
+	resetInputFields();
 	var language = "de";
 
 	CatalogService.getSysAdditionalFields(null, language, {
@@ -35,11 +36,73 @@ _container_.addOnLoad(function() {
 
 
 scriptScope.saveChanges = function() {
+	// TODO implement
 	dojo.debug("Function not implemented yet.");
+
+	var additionalFields = dojo.widget.byId("addFieldsList").store.getData();
+	var languageCode = "de";
+
+	storeAdditionalFieldsDef(additionalFields, languageCode);
+}
+
+function storeAdditionalFieldsDef(additionalFields, languageCode) {
+	var def = new dojo.Deferred();
+
+	CatalogService.storeSysAdditionalFields(additionalFields, languageCode, {
+		callback: function() {
+			// TODO implement!
+			dojo.debug("success.");
+			def.callback();
+		},
+		errorHandler: function(msg, err) {
+			dojo.debug("Error: "+msg);
+			dojo.debugShallow(err);
+			def.errback();
+		}
+	});
+	return def;
 }
 
 scriptScope.addEntry = function() {
-	dojo.debug("Function not implemented yet.");
+	if (validateInputFields()) {
+		var fieldName = dojo.string.trim(dojo.widget.byId("addFieldName").getValue());
+		var numChars = parseInt(dojo.widget.byId("addFieldNumChars").getValue());
+		var fieldType = dojo.widget.byId("addFieldType").getValue();
+	
+		dojo.debug("name: "+fieldName);
+		dojo.debug("numChars: "+numChars);
+		dojo.debug("fieldType: "+fieldType);
+
+		var store = dojo.widget.byId("addFieldsList").store;
+		var key = UtilStore.getNewKey(store);
+		store.addData({
+			Id: key,
+//			id: "new field",
+			name: fieldName,
+			size: numChars,
+			type: fieldType
+		});
+		resetInputFields();
+
+	} else {
+		dialog.show(message.get("general.error"), "Bitte geben Sie einen Feldnamen, die Anzahl der Zeichen und den Feldtyp an.", dialog.WARNING);
+	}
+}
+
+function validateInputFields() {
+	var fieldName = dojo.string.trim(dojo.widget.byId("addFieldName").getValue());
+	var numCharWidget = dojo.widget.byId("addFieldNumChars");
+	var selectWidget = dojo.widget.byId("addFieldType");
+
+	return fieldName.length != 0
+		&& numCharWidget.isValid() && numCharWidget.isInRange()
+		&& selectWidget._isValidOption();
+}
+
+function resetInputFields() {
+	dojo.widget.byId("addFieldName").setValue("");
+	dojo.widget.byId("addFieldNumChars").setValue("");
+	dojo.widget.byId("addFieldType").setValue("LIST");
 }
 
 function editListEntries(menuItem) {
@@ -116,18 +179,19 @@ function editListEntries(menuItem) {
 					<div class="spacer"></div>
 					<div class="entry half left w608" style="margin-right:30px;">
 						<span class="label"><label for="addFieldName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Feldname')">Feldname</label></span>
-						<span class="input"><input type="text" id="addFieldName" name="addFieldName" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
+						<span class="input"><input type="text" id="addFieldName" required="true" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
 					</div>
 					<div class="entry half left w116" style="margin-right:30px;">
 						<span class="label"><label for="addFieldNumChars" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeichen')">Zeichen</label></span>
-						<span class="input"><input type="text" id="addFieldNumChars" name="addFieldNumChars" class="w116" dojoType="ingrid:ValidationTextBox" /></span>
+						<span class="input"><input id="addFieldNumChars" min="0" max="255" maxlength="3" class="w116" dojoType="IntegerTextbox" /></span>
+
 					</div>
 					<div class="entry half w116">
-						<span class="label"><label for="addFieldNumType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Typ')">Typ</label></span>
+						<span class="label"><label for="addFieldType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Typ')">Typ</label></span>
 						<span class="input">
-							<select dojoType="ingrid:Select" toggle="plain" style="width:108px;" widgetId="addFieldNumType">
-								<option value="Auswahlliste">Auswahlliste</option>
-								<option value="Textfeld">Textfeld</option>
+							<select dojoType="ingrid:Select" toggle="plain" required="true" style="width:108px;" widgetId="addFieldType">
+								<option value="LIST">Auswahlliste</option>
+								<option value="TEXT">Textfeld</option>
 							</select>
 						</span>
 					</div>
