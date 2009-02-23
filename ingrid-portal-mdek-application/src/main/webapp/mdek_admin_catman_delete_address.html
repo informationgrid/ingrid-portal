@@ -79,6 +79,8 @@ function deleteNodeSelected(node) {
 		detailedAddressInfoDef.addCallback(function(detailedAddressInfo) {
 			updateDeleteAddressInformation(detailedAddressInfo);
 		});
+	} else {
+		clearDeleteAddressInformation();
 	}
 }
 
@@ -89,12 +91,14 @@ function replaceNodeSelected(node) {
 		detailedAddressInfoDef.addCallback(function(detailedAddressInfo) {
 			updateNewAddressInformation(detailedAddressInfo);
 		});
+	} else {
+		clearNewAddressInformation();
 	}
 }
 
 // Checks whether a given node is a valid address with an associated uuid (valid) or a container node (invalid)
 function isValidAddressNode(node) {
-	return (node.uuid != null && node.uuid != "addressRoot" && node.uuid != "addressFreeRoot");
+	return (node != null && node.uuid != null && node.uuid != "addressRoot" && node.uuid != "addressFreeRoot");
 }
 
 // Update the fields for 'address to delete'
@@ -123,6 +127,16 @@ function updateDeleteAddressInformation(detailedAddressInfo) {
 	}
 }
 
+function clearDeleteAddressInformation() {
+	dojo.widget.byId("addressDeleteDataTitle").setValue("");
+	dojo.widget.byId("addressDeleteDataCreationDate").setValue("");
+	dojo.widget.byId("addressDeleteDataID").setValue("");
+	dojo.widget.byId("addressDeleteDataUser").setValue("");
+	dojo.widget.byId("addressDeleteDataMDQS").store.clearData();
+	dojo.widget.byId("replaceInfoAddressList").store.clearData();
+	dojo.widget.byId("replaceUserList").store.clearData();
+}
+
 //Update the fields for 'address to replace'
 //Input parameter is an addressDetails object created by 'createDetailedAddressInformationDef'
 function updateNewAddressInformation(detailedAddressInfo) {
@@ -135,6 +149,14 @@ function updateNewAddressInformation(detailedAddressInfo) {
 		dojo.widget.byId("addressNewDataUser").setValue(detailedAddressInfo.responsibleUser.title);
 	}
 	dojo.widget.byId("addressNewDataMDQS").store.setData(detailedAddressInfo.qaUsers);
+}
+
+function clearNewAddressInformation() {
+	dojo.widget.byId("addressNewDataTitle").setValue("");
+	dojo.widget.byId("addressNewDataCreationDate").setValue("");
+	dojo.widget.byId("addressNewDataID").setValue("");
+	dojo.widget.byId("addressNewDataUser").setValue("");
+	dojo.widget.byId("addressNewDataMDQS").store.clearData();
 }
 
 // Returns a deferred object with the following information on callback:
@@ -328,7 +350,25 @@ function userHasQAPermission(user) {
 }
 
 scriptScope.replaceAddress = function() {
-	dojo.debug("Function not implemented yet.");
+	var newNode = dojo.widget.byId("treeAddressDelete").selectedNode;
+	var deleteNode = dojo.widget.byId("treeAddressNew").selectedNode;
+
+	if (isValidAddressNode(deleteNode) && isValidAddressNode(newNode) && deleteNode.uuid != newNode.uuid) {
+		var def = replaceAddressDef(deleteNode.uuid, newNode.uuid);
+		def.addCallback(function() {
+			dialog.show(message.get("general.hint"), "Funktion noch nicht implementiert.");
+		});
+
+	} else {
+		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie zun&auml;chst zwei g&uuml;ltige und unterschiedliche Adressen aus.", dialog.WARNING);
+	}
+}
+
+function replaceAddressDef(delAdrUuid, newAdrUuid) {
+	// TODO implement
+	var def = new dojo.Deferred();
+	def.callback();
+	return def;
 }
 
 function showLoadingZone() {
