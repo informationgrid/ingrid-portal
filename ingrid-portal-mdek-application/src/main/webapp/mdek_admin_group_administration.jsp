@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
@@ -633,7 +634,7 @@ function displayCreateGroupErrorMessage(err) {
 	if (err && err.message) {
 		if (err.message.indexOf("ENTITY_ALREADY_EXISTS") != -1) {
 //			dialog.show(message.get("general.error"), message.get("dialog.noPermissionError"), dialog.WARNING);
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht angelegt werden, da der angegebene Gruppenname bereits existiert!", dialog.WARNING);
+			dialog.show(message.get("general.error"), message.get("dialog.admin.groups.groupAlreadyExistsError"), dialog.WARNING);
 
 		} else {
 			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err.message), dialog.WARNING, null, 350, 350);				
@@ -648,40 +649,40 @@ function displayCreateGroupErrorMessage(err) {
 function displayStoreGroupErrorMessage(err) {
 	if (err && err.message) {
 		if (err.message.indexOf("SINGLE_BELOW_TREE_OBJECT_PERMISSION") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r das Objekt '"+err.invalidObject.title+"' wird bereits implizit von der Schreibberechtigung auf den Teilbaum '"+err.rootObject.title+"' geerbt. Bitte entfernen Sie eines der beiden Objekte aus der Liste der Berechtigungen und versuchen Sie es erneut.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.admin.groups.object.singleBelowTreeError"), err.invalidObject.title, err.rootObject.title), dialog.WARNING, null, 350, 200);
 
 		} else if (err.message.indexOf("TREE_BELOW_TREE_OBJECT_PERMISSION") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r den Teilbaum '"+err.invalidObject.title+"' wird bereits implizit von der Schreibberechtigung auf den Teilbaum '"+err.rootObject.title+"' geerbt. Bitte entfernen Sie eines der beiden Objekte aus der Liste der Berechtigungen und versuchen Sie es erneut.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.admin.groups.object.treeBelowTreeError"), err.invalidObject.title, err.rootObject.title), dialog.WARNING, null, 350, 200);
 
 		} else if (err.message.indexOf("SINGLE_BELOW_TREE_ADDRESS_PERMISSION") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r die Adresse '"+UtilAddress.createAddressTitle(err.invalidAddress)+"' wird bereits implizit von der Schreibberechtigung auf den Teilbaum '"+UtilAddress.createAddressTitle(err.rootAddress)+"' geerbt. Bitte entfernen Sie eine der beiden Adressen aus der Liste der Berechtigungen und versuchen Sie es erneut.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.admin.groups.address.singleBelowTreeError"), UtilAddress.createAddressTitle(err.invalidAddress), UtilAddress.createAddressTitle(err.rootAddress)), dialog.WARNING, null, 350, 200);
 
 		} else if (err.message.indexOf("TREE_BELOW_TREE_ADDRESS_PERMISSION") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r den Teilbaum '"+UtilAddress.createAddressTitle(err.invalidAddress)+"' wird bereits implizit von der Schreibberechtigung auf den Teilbaum '"+UtilAddress.createAddressTitle(err.rootAddress)+"' geerbt. Bitte entfernen Sie eine der beiden Adressen aus der Liste der Berechtigungen und versuchen Sie es erneut.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.admin.groups.address.treeBelowTreeError"), UtilAddress.createAddressTitle(err.invalidAddress), UtilAddress.createAddressTitle(err.rootAddress)), dialog.WARNING, null, 350, 200);
 
 		} else if (err.message.indexOf("USER_EDITING_OBJECT_PERMISSION_MISSING") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r das Objekt '"+err.invalidObject.title+"' darf nicht entfernt werden, da es sich, vom Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"', noch in Bearbeitung befindet.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.admin.groups.object.userEditingError"), err.invalidObject.title, UtilAddress.createAddressTitle(err.rootAddress)), dialog.WARNING, null, 350, 200);
 
 		} else if (err.message.indexOf("USER_RESPONSIBLE_FOR_OBJECT_PERMISSION_MISSING") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r das Objekt '"+err.invalidObject.title+"' darf nicht entfernt werden, da der Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"' aus dieser Gruppe als Verantworliche Person eingetragen ist.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.admin.groups.object.userResponsibleError"), err.invalidObject.title, UtilAddress.createAddressTitle(err.rootAddress)), dialog.WARNING, null, 350, 200);
 
 		} else if (err.message.indexOf("USER_EDITING_ADDRESS_PERMISSION_MISSING") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r die Adresse '"+UtilAddress.createAddressTitle(err.invalidAddress)+"' darf nicht entfernt werden, da sie sich, vom Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"', noch in Bearbeitung befindet.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.admin.groups.address.userEditingError"), UtilAddress.createAddressTitle(err.invalidAddress), UtilAddress.createAddressTitle(err.rootAddress)), dialog.WARNING, null, 350, 200);
 
 		} else if (err.message.indexOf("USER_RESPONSIBLE_FOR_ADDRESS_PERMISSION_MISSING") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r die Adresse '"+UtilAddress.createAddressTitle(err.invalidAddress)+"' darf nicht entfernt werden, da der Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"' aus dieser Gruppe als Verantworliche Person eingetragen ist.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.admin.groups.address.userResponsibleError"), UtilAddress.createAddressTitle(err.invalidAddress), UtilAddress.createAddressTitle(err.rootAddress)), dialog.WARNING, null, 350, 200);
 
 		} else if (err.message.indexOf("NO_RIGHT_TO_REMOVE_OBJECT_PERMISSION") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r das Objekt '"+err.rootObject.title+"' darf nicht entfernt werden, da Sie nicht &uuml;ber die n&ouml;tigen Rechte verf&uuml;gen.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.admin.groups.object.permissionError"), err.rootObject.title), dialog.WARNING, null, 350, 200);
 
 		} else if (err.message.indexOf("NO_RIGHT_TO_REMOVE_ADDRESS_PERMISSION") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Die Schreibberechtigung f&uuml;r die Adresse '"+UtilAddress.createAddressTitle(err.rootAddress)+"' darf nicht entfernt werden, da Sie nicht &uuml;ber die n&ouml;tigen Rechte verf&uuml;gen.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.admin.groups.address.permissionError"), UtilAddress.createAddressTitle(err.rootAddress)), dialog.WARNING, null, 350, 200);
 
 		} else if (err.message.indexOf("NO_RIGHT_TO_REMOVE_USER_PERMISSION") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um die Gruppeneigenschaften zu &auml;ndern.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), message.get("dialog.admin.groups.removePermissionError"), dialog.WARNING, null, 350, 200);
 
 		} else if (err.message.indexOf("NO_RIGHT_TO_ADD_USER_PERMISSION") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gespeichert werden. Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um die Gruppeneigenschaften zu &auml;ndern.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), message.get("dialog.admin.groups.addPermissionError"), dialog.WARNING, null, 350, 200);
 
 		} else {
 			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err.message), dialog.WARNING, null, 350, 350);				
@@ -701,19 +702,19 @@ function displayDeleteGroupError(err) {
 				userList += UtilAddress.createAddressTitle(adr)+"\n";
 			});
 			userList = dojo.string.trim(userList);
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gel&ouml;scht werden, da folgende Benutzer dieser Gruppe zugewiesen sind: '"+userList+"'", dialog.WARNING, null, 350, 200);
-
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.admin.groups.groupHasUsersError"), userList), dialog.WARNING, null, 350, 200);
+			
 		} else if (err.message.indexOf("USER_EDITING_OBJECT_PERMISSION_MISSING") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gel&ouml;scht werden. Die Schreibberechtigung f&uuml;r das Objekt '"+err.invalidObject.title+"' darf nicht entfernt werden, da es sich, vom Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"' aus dieser Gruppe noch in Bearbeitung befindet.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.admin.groups.object.userEditingError"), err.invalidObject.title, UtilAddress.createAddressTitle(err.rootAddress)), dialog.WARNING, null, 350, 200);
 
 		} else if (err.message.indexOf("USER_RESPONSIBLE_FOR_OBJECT_PERMISSION_MISSING") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gel&ouml;scht werden. Die Schreibberechtigung f&uuml;r das Objekt '"+err.invalidObject.title+"' darf nicht entfernt werden, da der Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"' aus dieser Gruppe als Verantworliche Person eingetragen ist.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.admin.groups.object.userResponsibleError"), err.invalidObject.title, UtilAddress.createAddressTitle(err.rootAddress)), dialog.WARNING, null, 350, 200);
 
 		} else if (err.message.indexOf("USER_EDITING_ADDRESS_PERMISSION_MISSING") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gel&ouml;scht werden. Die Schreibberechtigung f&uuml;r die Adresse '"+UtilAddress.createAddressTitle(err.invalidAddress)+"' darf nicht entfernt werden, da sie sich, vom Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"' aus dieser Gruppe noch in Bearbeitung befindet.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.admin.groups.address.userEditingError"), UtilAddress.createAddressTitle(err.invalidAddress), UtilAddress.createAddressTitle(err.rootAddress)), dialog.WARNING, null, 350, 200);
 
 		} else if (err.message.indexOf("USER_RESPONSIBLE_FOR_ADDRESS_PERMISSION_MISSING") != -1) {
-			dialog.show(message.get("general.error"), "Die Gruppe konnte nicht gel&ouml;scht werden. Die Schreibberechtigung f&uuml;r die Adresse '"+UtilAddress.createAddressTitle(err.invalidAddress)+"' darf nicht entfernt werden, da der Benutzer '"+UtilAddress.createAddressTitle(err.rootAddress)+"' aus dieser Gruppe als Verantworliche Person eingetragen ist.", dialog.WARNING, null, 350, 200);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.admin.groups.address.userResponsibleError"), UtilAddress.createAddressTitle(err.invalidAddress), UtilAddress.createAddressTitle(err.rootAddress)), dialog.WARNING, null, 350, 200);
 
 		} else {
 			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err.message), dialog.WARNING, null, 350, 350);				
@@ -768,12 +769,9 @@ function hideLoadingZone() {
 	
 	        <!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
 	        <div id="groupData" class="inputContainer">
-				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8018)">Gruppendaten</label></span>
-<!-- 
-				<span class="functionalLink"><img src="img/ic_fl_new_group.gif" width="14" height="12" alt="Gruppe" /><a class="current" title="Gruppe">Gruppe</a><img src="img/ic_fl_new_user.gif" width="10" height="12" alt="Nutzer" /><a href="admin_nutzer_benutzer.html" title="Nutzer">Nutzer</a></span>
- -->
+				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8018)"><fmt:message key="dialog.admin.groups.data" /></label></span>
 				<div class="inputContainer field grey noSpaceBelow">
-	            	<span class="label"><label for="groupDataName" onclick="javascript:dialog.showContextHelp(arguments[0], 8019, 'Gruppenname')">Gruppenname</label></span>
+	            	<span class="label"><label for="groupDataName" onclick="javascript:dialog.showContextHelp(arguments[0], 8019, 'Gruppenname')"><fmt:message key="dialog.admin.groups.name" /></label></span>
 	            	<span class="input"><input type="text" maxlength="50" id="groupDataName" class="w550" dojoType="ingrid:ValidationTextBox" /></span>
 	            	<div class="spacerField"></div>
 	      	  	</div>
@@ -781,10 +779,10 @@ function hideLoadingZone() {
 				<div class="inputContainer">
 					<span class="button" style="width:556px; height:20px !important;">
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveGroup();">Speichern</button>
+							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveGroup();"><fmt:message key="dialog.admin.groups.save" /></button>
 						</span>
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Neue Gruppe anlegen" onClick="javascript:scriptScope.newGroup();">Neue Gruppe anlegen</button>
+							<button dojoType="ingrid:Button" title="Neue Gruppe anlegen" onClick="javascript:scriptScope.newGroup();"><fmt:message key="dialog.admin.groups.createGroup" /></button>
 						</span>
 						<span id="adminGroupLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 							<img src="img/ladekreis.gif" />
@@ -792,8 +790,8 @@ function hideLoadingZone() {
 					</span>
 				</div>
 				<div id="permissionCheckboxContainer" class="inputContainer grey field checkboxContainer" style="display:none;">
-					<span class="input"><input type="checkbox" id="userDataCreate" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8020, 'Root-Objekte und -Adressen anlegen')">Root-Objekte und -Adressen anlegen</label></span>
-					<span class="input"><input type="checkbox" id="userDataQS" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8021, 'Qualit&auml;tssichernder')">Qualit&auml;tssichernder</label></span>
+					<span class="input"><input type="checkbox" id="userDataCreate" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8020, 'Root-Objekte und -Adressen anlegen')"><fmt:message key="dialog.admin.groups.createRoot" /></label></span>
+					<span class="input"><input type="checkbox" id="userDataQS" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8021, 'Qualit&auml;tssichernder')"><fmt:message key="dialog.admin.groups.qa" /></label></span>
 		        </div>
 			</div>
 			<!-- RIGHT HAND SIDE CONTENT BLOCK 1 END -->
@@ -803,7 +801,7 @@ function hideLoadingZone() {
 			<div id="permissionListObjects" style="display:none;">
 				<div class="spacer"></div>
 				<div class="spacer"></div>
-				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8022)">Berechtigungen f&uuml;r Objekte</label></span>
+				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8022)"><fmt:message key="dialog.admin.groups.objectPermissions" /></label></span>
 				<div dojoType="SplitContainer" id="groupDataObjects" persist="false" orientation="horizontal" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
 		            <!-- LEFT HAND SIDE CONTENT BLOCK 2 START -->
 		            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="38">
@@ -829,11 +827,6 @@ function hideLoadingZone() {
 		
 		            <!-- RIGHT HAND SIDE CONTENT BLOCK 2 START -->
 		            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:hidden;" sizeshare="62">
-<!-- 
-						<div class="selectEntryBtn">
-							<span class="buttonCol"><a href="#" class="buttonGrey" title="Gewählten Eintrag von links nach rechts">></a></span>
-						</div>
- -->
  						<div class="selectEntryBtn">
 							<button dojoType="ingrid:Button" id="addObjectButton" onClick="javascript:scriptScope.addObject();">&nbsp;>&nbsp;</button>
 						</div>
@@ -843,19 +836,12 @@ function hideLoadingZone() {
 								<table id="groupDataRightsObjectsList" dojoType="ingrid:FilteringTable" minRows="7" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort interactive">
 									<thead>
 										<tr>
-											<th nosort="true" field="title" dataType="String" width="358">Name des Objekts</th>
-											<th nosort="true" field="single" dataType="String" width="85">Einzelobjekt</th>
-											<th nosort="true" field="subtree" dataType="String" width="85">Teilbaum</th>
+											<th nosort="true" field="title" dataType="String" width="358"><fmt:message key="dialog.admin.groups.objectName" /></th>
+											<th nosort="true" field="single" dataType="String" width="85"><fmt:message key="dialog.admin.groups.objectSingle" /></th>
+											<th nosort="true" field="subtree" dataType="String" width="85"><fmt:message key="dialog.admin.groups.objectTree" /></th>
 										</tr>
 									</thead>
 									<tbody>
-	<!-- 
-										<tr value="1">
-											<td>Objektname</td>
-											<td><input type="radio" name="groupDataRightsObjectsListSelType0" id="groupDataRightsObjectsListSelType01" class="radio" /></td>
-											<td><input type="radio" name="groupDataRightsObjectsListSelType0" id="groupDataRightsObjectsListSelType02" class="radio" /></td>
-										</tr>
-	 -->
 									</tbody>
 								</table>
 							</div>
@@ -871,7 +857,7 @@ function hideLoadingZone() {
 			<div id="permissionListAddresses" style="display:none;">
 				<div class="spacer"></div>
 				<div class="spacer"></div>
-				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8023)">Berechtigungen f&uuml;r Adressen</label></span>
+				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8023)"><fmt:message key="dialog.admin.groups.addressPermissions" /></label></span>
 				<div dojoType="SplitContainer" id="groupDataAddresses" persist="false" orientation="horizontal" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
 		            <!-- LEFT HAND SIDE CONTENT BLOCK 3 START -->
 		            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="38">
@@ -885,9 +871,6 @@ function hideLoadingZone() {
 		                  
 								<!-- tree -->
 								<div dojoType="ingrid:Tree" listeners="treeControllerAddresses;treeListenerAddresses;treeDocIconsAddresses" widgetId="treeAddresses">
-<!-- 
-									<div dojoType="ingrid:TreeNode" title="Adressen" objectId="a1" isFolder="true" nodeDocType="Addresses" nodeAppType="Adresse"></div>
- -->
 								</div>
 							</div>
 							<div class="spacer"></div>
@@ -897,12 +880,6 @@ function hideLoadingZone() {
 		
 		            <!-- RIGHT HAND SIDE CONTENT BLOCK 3 START -->
 		            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:hidden;" sizeshare="62">
-<!-- 
-						<div class="selectEntryBtn">
-							<span class="buttonCol"><a href="#" class="buttonGrey" title="Gewählten Eintrag von links nach rechts">></a></span>
-						</div>
- -->
-
   						<div class="selectEntryBtn">
 							<button dojoType="ingrid:Button" id="addAddressButton" onClick="javascript:scriptScope.addAddress();">&nbsp;>&nbsp;</button>
 						</div>
@@ -913,9 +890,9 @@ function hideLoadingZone() {
 								<table id="groupDataRightsAddressesList" dojoType="ingrid:FilteringTable" minRows="7" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort interactive">
 									<thead>
 										<tr>
-											<th nosort="true" field="title" dataType="String" width="358">Name der Adresse</th>
-											<th nosort="true" field="single" dataType="String" width="85">Einzeladresse</th>
-											<th nosort="true" field="subtree" dataType="String" width="85">Teilbaum</th>
+											<th nosort="true" field="title" dataType="String" width="358"><fmt:message key="dialog.admin.groups.addressName" /></th>
+											<th nosort="true" field="single" dataType="String" width="85"><fmt:message key="dialog.admin.groups.addressSingle" /></th>
+											<th nosort="true" field="subtree" dataType="String" width="85"><fmt:message key="dialog.admin.groups.addressTree" /></th>
 										</tr>
 									</thead>
 									<tbody>

@@ -1,4 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>Adresse hinzuf&uuml;gen</title>
@@ -261,7 +263,7 @@ function browseSearchResults() {
 			updateResults(res);
 		},
 //		timeout:30000,
-		errorHandler:function(message) {dojo.debug("Error in mdek_address_dialog.html: Error while searching for addresses:"+message); }
+		errorHandler:function(message) {dojo.debug("Error in mdek_address_dialog.jsp: Error while searching for addresses:"+message); }
 	});
 }
 
@@ -279,7 +281,7 @@ startNewSearch = function() {
 			updateResults(res);
 		},
 //		timeout:30000,
-		errorHandler:function(message) {dojo.debug("Error in mdek_address_dialog.html: Error while searching for addresses:"+message); }
+		errorHandler:function(message) {dojo.debug("Error in mdek_address_dialog.jsp: Error while searching for addresses:"+message); }
 	});
 }
 
@@ -301,19 +303,19 @@ startNewSearch = function() {
 		<div id="addressContainer" dojoType="ingrid:TabContainer" class="full h600" selectedChild="addressSearch">
 
 			<!-- TAB 1 START -->
-			<div id="addressSearch" dojoType="ContentPane" class="blueTopBorder" label="Direkte Suche">
+			<div id="addressSearch" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.searchAddress.directSearch" />">
 
 				<div class="inputContainer field grey noSpaceBelow">
 					<div>
-						<span class="label"><label for="addressSearchUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 7017, 'Einheit/Institution')">Einheit/Institution</label></span>
+						<span class="label"><label for="addressSearchUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 7017, 'Einheit/Institution')"><fmt:message key="dialog.searchAddress.unitOrInstitution" /></label></span>
 						<span class="input spaceBelow"><input type="text" id="addressSearchUnit" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
 					</div>
 					<div class="half left">
-						<span class="label"><label for="addressSearchLastname" onclick="javascript:dialog.showContextHelp(arguments[0], 7018, 'Nachname')">Nachname</label></span>
+						<span class="label"><label for="addressSearchLastname" onclick="javascript:dialog.showContextHelp(arguments[0], 7018, 'Nachname')"><fmt:message key="dialog.searchAddress.surName" /></label></span>
 						<span class="input"><input type="text" id="addressSearchLastname" class="w308" dojoType="ingrid:ValidationTextBox" /></span>
 					</div>
 					<div class="half noSpaceBelow">
-						<span class="label"><label for="addressSearchFirstname" onclick="javascript:dialog.showContextHelp(arguments[0], 7019, 'Vorname')">Vorname</label></span>
+						<span class="label"><label for="addressSearchFirstname" onclick="javascript:dialog.showContextHelp(arguments[0], 7019, 'Vorname')"><fmt:message key="dialog.searchAddress.foreName" /></label></span>
 						<span class="input"><input type="text" id="addressSearchFirstname" class="w308" dojoType="ingrid:ValidationTextBox" /></span>
 					</div>
 					<div class="fill"></div>
@@ -322,7 +324,7 @@ startNewSearch = function() {
 
 				<div class="inputContainer w684">
 					<span class="button w684" style="float:right; height:20px !important;">
-						<span style="float:right;"><button dojoType="ingrid:Button" onClick="startNewSearch">Suchen</button></span>
+						<span style="float:right;"><button dojoType="ingrid:Button" onClick="startNewSearch"><fmt:message key="dialog.searchAddress.search" /></button></span>
 						<span id="thesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 							<img id="thesImageZone" src="img/ladekreis.gif" />
 						</span>
@@ -331,7 +333,7 @@ startNewSearch = function() {
 
 				<div id="addressLinkSearchResults" class="inputContainer">
 					<div class="noSpaceBelow">
-						<span class="label">Trefferliste</span>
+						<span class="label"><fmt:message key="dialog.searchAddress.results" /></span>
 						<div class="listInfo full">
 							<span id="addressLinkSearchResultsInfo" class="searchResultsInfo">&nbsp;</span>
 							<span id="addressLinkSearchResultsPaging" class="searchResultsPaging">&nbsp;</span>
@@ -358,7 +360,7 @@ startNewSearch = function() {
 
 					<div class="w684">
 						<span class="button w684" style="height:20px !important; float:right;">
-							<span style="float:right;"><button dojoType="ingrid:Button" onClick="addSelectedAddress">&Uuml;bernehmen</button></span>
+							<span style="float:right;"><button dojoType="ingrid:Button" onClick="addSelectedAddress"><fmt:message key="dialog.searchAddress.selectAddress" /></button></span>
 						</span>
 					</div>
 				</div>	
@@ -366,7 +368,7 @@ startNewSearch = function() {
 	        <!-- TAB 1 END -->
     		
     		<!-- TAB 2 START -->
-			<div id="addressHierarchy" dojoType="ContentPane" class="blueTopBorder" label="Hierarchiebaum">
+			<div id="addressHierarchy" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.searchAddress.treeSearch" />">
 
 				<div class="inputContainer grey full h360 scrollable">
 					<div dojoType="ContentPane" id="addressTreeContainer">
@@ -383,8 +385,8 @@ startNewSearch = function() {
 			</div>
             
 			<div class="inputContainer w684">
-				<span class="button" style="height:20px !important; float:right;">
-					<span style="float:right;"><button dojoType="ingrid:Button" onClick="addSelectedAddressFromTree">&Uuml;bernehmen</button></span>
+				<span class="button w684" style="height:20px !important; float:right;">
+					<span style="float:right;"><button dojoType="ingrid:Button" onClick="addSelectedAddressFromTree"><fmt:message key="dialog.searchAddress.selectAddress" /></button></span>
 				</span>
 			</div>
 		</div>

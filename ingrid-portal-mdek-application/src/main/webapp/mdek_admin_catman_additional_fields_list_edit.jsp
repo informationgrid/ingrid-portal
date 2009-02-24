@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
@@ -79,7 +80,7 @@ scriptScope.saveEntries = function() {
 			</div>
 
 			<span style="float:right;">
-				<button dojoType="ingrid:Button" title="Hinzuf&uuml;gen" onClick="javascript:scriptScope.saveEntries();">Speichern</button>
+				<button dojoType="ingrid:Button" title="Hinzuf&uuml;gen" onClick="javascript:scriptScope.saveEntries();"><fmt:message key="dialog.admin.catalog.management.additionalFields.apply" /></button>
 			</span>
 			<!-- CONTENT END -->
 		</div>

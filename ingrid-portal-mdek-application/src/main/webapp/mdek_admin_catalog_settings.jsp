@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
@@ -78,7 +79,7 @@ scriptScope.saveCatalogData = function() {
 	newCatalogData.workflowControl = dojo.widget.byId("adminCatalogWorkflowControl").checked ? "Y" : "N";
 
 	if (!isValidCatalog(newCatalogData)) {
-		dialog.show(message.get("general.error"), "Es m&uuml;ssen alle Pflichtfelder ausgef&uuml;llt sein, bevor die Katalogdaten gespeichert werden k&ouml;nnen!", dialog.WARNING);
+		dialog.show(message.get("general.error"), message.get("dialog.admin.catalog.requiredFieldsHint"), dialog.WARNING);
 		return;
 	}
 	dojo.debugShallow(newCatalogData);
@@ -90,12 +91,12 @@ scriptScope.saveCatalogData = function() {
 			catalogData = res;
 			currentCatalogData = res;
 			initPageHeader();
-			dialog.show(message.get("general.hint"), "Die Katalogdaten wurden erfolgreich aktualisiert.", dialog.INFO);
+			dialog.show(message.get("general.hint"), message.get("dialog.admin.catalog.saveSuccess"), dialog.INFO);
 
 		},
 		errorHandler:function(errMsg, err){
 			if (errMsg.indexOf("USER_HAS_NO_PERMISSION_ON_ENTITY") != -1) {
-				dialog.show(message.get("general.error"), "Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um Katalogdaten zu &auml;ndern!", dialog.WARNING);				
+				dialog.show(message.get("general.error"), message.get("dialog.admin.catalog.permissionError"), dialog.WARNING);				
 
 			} else {
 				dialog.show(message.get("general.error"), message.get("dialog.storeCatalogError"), dialog.WARNING);
@@ -108,7 +109,7 @@ scriptScope.saveCatalogData = function() {
 
 scriptScope.selectSpatialReference = function() {
 	var def = new dojo.Deferred();
-	dialog.showPage('Raumbezug ausw&auml;hlen', "mdek_admin_catalog_spatial_reference_dialog.html", 530, 230, true, { resultHandler: def });
+	dialog.showPage(message.get("dialog.admin.catalog.selectLocation.title"), "mdek_admin_catalog_spatial_reference_dialog.jsp", 530, 230, true, { resultHandler: def });
 
 	def.addCallback(function(result) {
 		var spatialRefWidget = dojo.widget.byId("adminCatalogSpatialRef");
@@ -142,16 +143,16 @@ function isValidCatalog(cat) {
 				<div class="spacer"></div>
 				<div class="spacer"></div>
 				<div class="inputContainer field grey noSpaceBelow">
-					<span class="label"><label for="adminCatalogName" onclick="javascript:dialog.showContextHelp(arguments[0], 8001, 'Name des Kataloges')">Name des Kataloges</label></span>
+					<span class="label"><label for="adminCatalogName" onclick="javascript:dialog.showContextHelp(arguments[0], 8001, 'Name des Kataloges')"><fmt:message key="dialog.admin.catalog.catalogName" /></label></span>
 					<span class="input spaceBelow"><input type="text" id="adminCatalogName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
 
-					<span class="label"><label for="adminCatalogPartnerName" onclick="javascript:dialog.showContextHelp(arguments[0], 8002, 'Name des Partners')">Name des Partners</label></span>
+					<span class="label"><label for="adminCatalogPartnerName" onclick="javascript:dialog.showContextHelp(arguments[0], 8002, 'Name des Partners')"><fmt:message key="dialog.admin.catalog.partnerName" /></label></span>
 					<span class="input spaceBelow"><input type="text" id="adminCatalogPartnerName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
 		
-					<span class="label"><label for="adminCatalogProviderName" onclick="javascript:dialog.showContextHelp(arguments[0], 8003, 'Name des Anbieters')">Name des Anbieters</label></span>
+					<span class="label"><label for="adminCatalogProviderName" onclick="javascript:dialog.showContextHelp(arguments[0], 8003, 'Name des Anbieters')"><fmt:message key="dialog.admin.catalog.providerName" /></label></span>
 					<span class="input spaceBelow"><input type="text" id="adminCatalogProviderName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
 		
-					<span class="label required"><label for="adminCatalogCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 8004, 'Staat')">Staat*</label></span>
+					<span class="label required"><label for="adminCatalogCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 8004, 'Staat')"><fmt:message key="dialog.admin.catalog.state" />*</label></span>
 					<select class="spaceBelow" dojoType="ingrid:Select" required="true" style="width:622px;" id="adminCatalogCountry" >
 						<option value='af'>Afghanistan</option>
 						<option value='eg'>&Auml;gypten</option>
@@ -394,19 +395,19 @@ function isValidCatalog(cat) {
 						<option value='cy'>Zypern</option>
 					</select>
 
-					<span class="label required"><label for="adminCatalogLanguage" onclick="javascript:dialog.showContextHelp(arguments[0], 8005, 'Katalogsprache')">Katalogsprache*</label></span>
+					<span class="label required"><label for="adminCatalogLanguage" onclick="javascript:dialog.showContextHelp(arguments[0], 8005, 'Katalogsprache')"><fmt:message key="dialog.admin.catalog.language" />*</label></span>
 					<select class="spaceBelow" dojoType="ingrid:Select" required="true" style="width:622px;" disabled="true" id="adminCatalogLanguage" >
 						<option value="de">Deutsch</option>
 						<option value="en">Englisch</option>
 					</select>
 
-					<span class="label required"><label for="adminCatalogSpatialRef" onclick="javascript:dialog.showContextHelp(arguments[0], 8006, 'Raumbezug')">Raumbezug*</label></span>
-					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onClick="javascript:scriptScope.selectSpatialReference();" title="Raumbezug ausw&auml;hlen [Popup]">Raumbezug ausw&auml;hlen</a></span>
+					<span class="label required"><label for="adminCatalogSpatialRef" onclick="javascript:dialog.showContextHelp(arguments[0], 8006, 'Raumbezug')"><fmt:message key="dialog.admin.catalog.location" />*</label></span>
+					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onClick="javascript:scriptScope.selectSpatialReference();" title="Raumbezug ausw&auml;hlen [Popup]"><fmt:message key="dialog.admin.catalog.locationLink" /></a></span>
 					<span class="input spaceBelow"><input type="text" required="true" widgetId="adminCatalogSpatialRef" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					
 					<div class="checkboxContainer">
-						<span class="input"><input type="checkbox" id="adminCatalogWorkflowControl" dojoType="Checkbox" /><label class="inActive">Workflow-Kontrolle aktivieren</label></span>
-						<span class="input"><input type="checkbox" id="adminCatalogExpire" dojoType="Checkbox" /><label class="inActive">&Uuml;berarbeiten nach <input widgetId="adminCatalogExpiryDuration" class="w033" min="1" max="2147483647" maxlength="10" dojoType="IntegerTextbox" /> Tagen</label></span>
+						<span class="input"><input type="checkbox" id="adminCatalogWorkflowControl" dojoType="Checkbox" /><label class="inActive"><fmt:message key="dialog.admin.catalog.activateWorkflowControl" /></label></span>
+						<span class="input"><input type="checkbox" id="adminCatalogExpire" dojoType="Checkbox" /><label class="inActive"><fmt:message key="dialog.admin.catalog.expireAfter" /> <input widgetId="adminCatalogExpiryDuration" class="w033" min="1" max="2147483647" maxlength="10" dojoType="IntegerTextbox" /> <fmt:message key="dialog.admin.catalog.days" /></label></span>
 					</div>
 		
 					<div class="spacerField"></div>
@@ -419,10 +420,10 @@ function isValidCatalog(cat) {
 				<div class="inputContainer">
 					<span class="button w644" style="height:20px !important;">
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveCatalogData();">Speichern</button>
+							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveCatalogData();"><fmt:message key="dialog.admin.catalog.save" /></button>
 						</span>
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Zur&uuml;cksetzen" onClick="javascript:scriptScope.reloadCatalogData();">Zur&uuml;cksetzen</button>
+							<button dojoType="ingrid:Button" title="Zur&uuml;cksetzen" onClick="javascript:scriptScope.reloadCatalogData();"><fmt:message key="dialog.admin.catalog.reset" /></button>
 						</span>
 						<span id="adminCatalogLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 							<img src="img/ladekreis.gif" />

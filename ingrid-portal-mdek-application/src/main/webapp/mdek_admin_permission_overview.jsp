@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
@@ -199,7 +200,7 @@ function addPermissionsToUser(user) {
         <!-- CONTENT BLOCK 1 START -->
         <!-- SPLIT CONTAINER START -->
         <div>
-          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8025)">Berechtigungen f&uuml;r Objekte</label></span>
+          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8025)"><fmt:message key="dialog.admin.permissions.objectPermissions" /></label></span>
           <div dojoType="SplitContainer" id="rightsObjects" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
             <!-- LEFT HAND SIDE CONTENT BLOCK 1 START -->
             <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="24">
@@ -228,11 +229,11 @@ function addPermissionsToUser(user) {
 	          	    <table id="rightsObjectsUserList" dojoType="ingrid:FilteringTable" minRows="10" cellspacing="0" class="filteringTable nosort relativePos">
 	          	      <thead>
 	          		      <tr>
-	                			<th nosort="true" field="title" dataType="String" width="359">Nutzername</th>
-	                			<th nosort="true" field="roleName" dataType="String" width="145">Rolle</th>
-	                			<th nosort="true" field="writeSingle" dataType="String" width="60" style="text-align:center;">Einzelobjekt</th>
-	                			<th nosort="true" field="writeTree" dataType="String" width="60" style="text-align:center;">Teilbaum</th>
-	                			<th nosort="true" field="qa" dataType="String" width="60" style="text-align:center;">QS</th>
+	                			<th nosort="true" field="title" dataType="String" width="359"><fmt:message key="dialog.admin.permissions.userName" /></th>
+	                			<th nosort="true" field="roleName" dataType="String" width="145"><fmt:message key="dialog.admin.permissions.role" /></th>
+	                			<th nosort="true" field="writeSingle" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.single" /></th>
+	                			<th nosort="true" field="writeTree" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.tree" /></th>
+	                			<th nosort="true" field="qa" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.qa" /></th>
 	          		      </tr>
 	          	      </thead>
 	          	      <tbody>
@@ -251,7 +252,7 @@ function addPermissionsToUser(user) {
         <!-- CONTENT BLOCK 2 START -->
         <!-- SPLIT CONTAINER START -->
         <div>
-          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8026)">Berechtigungen f&uuml;r Adressen</label></span>
+          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8026)"><fmt:message key="dialog.admin.permissions.addressPermissions" /></label></span>
           <div dojoType="SplitContainer" id="rightsAddresses" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
             <!-- LEFT HAND SIDE CONTENT BLOCK 2 START -->
             <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="24">
@@ -280,11 +281,11 @@ function addPermissionsToUser(user) {
 	          	    <table id="rightsAddressesUserList" dojoType="ingrid:FilteringTable" minRows="10" cellspacing="0" class="filteringTable nosort relativePos">
 	          	      <thead>
 	          		      <tr>
-	                			<th nosort="true" field="title" dataType="String" width="359">Nutzername</th>
-	                			<th nosort="true" field="roleName" dataType="String" width="145">Rolle</th>
-	                			<th nosort="true" field="writeSingle" dataType="String" width="60" style="text-align:center;">Einzelobjekt</th>
-	                			<th nosort="true" field="writeTree" dataType="String" width="60" style="text-align:center;">Teilbaum</th>
-	                			<th nosort="true" field="qa" dataType="String" width="60" style="text-align:center;">QS</th>
+	                			<th nosort="true" field="title" dataType="String" width="359"><fmt:message key="dialog.admin.permissions.userName" /></th>
+	                			<th nosort="true" field="roleName" dataType="String" width="145"><fmt:message key="dialog.admin.permissions.role" /></th>
+	                			<th nosort="true" field="writeSingle" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.single" /></th>
+	                			<th nosort="true" field="writeTree" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.tree" /></th>
+	                			<th nosort="true" field="qa" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.qa" /></th>
 	          		      </tr>
 	          	      </thead>
 	          	      <tbody>

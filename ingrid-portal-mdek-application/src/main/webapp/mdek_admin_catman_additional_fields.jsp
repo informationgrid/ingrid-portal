@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
@@ -23,13 +24,14 @@ _container_.addOnLoad(function() {
 	var addFieldsList = dojo.widget.byId("addFieldsList");
     var contextMenu = addFieldsList.getContextMenu();
 	contextMenu.addSeparator();
-    contextMenu.addItemObject( { caption:'Auswahlliste bearbeiten', method:editListEntries } );
+	var menuEntryCaption = message.get("dialog.admin.catalog.management.additionalFields.editList");
+    contextMenu.addItemObject( { caption:menuEntryCaption, method:editListEntries } );
 	dojo.event.connect("after", contextMenu, "open", function(arg) {
 		var rowData = contextMenu.getRowData();
 		if (rowData && rowData.type == "LIST") {
-			contextMenu.enableItem('Auswahlliste bearbeiten');
+			contextMenu.enableItem(menuEntryCaption);
 		} else {
-			contextMenu.disableItem('Auswahlliste bearbeiten');
+			contextMenu.disableItem(menuEntryCaption);
 		} 
 	});
 });
@@ -85,7 +87,7 @@ scriptScope.addEntry = function() {
 		resetInputFields();
 
 	} else {
-		dialog.show(message.get("general.error"), "Bitte geben Sie einen Feldnamen, die Anzahl der Zeichen und den Feldtyp an.", dialog.WARNING);
+		dialog.show(message.get("general.error"), message.get("dialog.admin.catalog.management.additionalFields.requiredFieldsHint"), dialog.WARNING);
 	}
 }
 
@@ -113,8 +115,8 @@ function editListEntries(menuItem) {
 
 	var def = new dojo.Deferred();
 	dialog.showPage(
-			"Zus&auml;tzliche Felder - Auswahlliste",
-			"mdek_admin_catman_additional_fields_list_edit.html",
+			message.get("dialog.admin.catalog.management.additionalFields.editList"),
+			"mdek_admin_catman_additional_fields_list_edit.jsp",
 			502, 245, true,
 			{ resultHandler: def, listEntries: listEntries });
 
@@ -149,17 +151,17 @@ function editListEntries(menuItem) {
 						<div dojoType="ingrid:ValidationTextbox" class="w675" widgetId="nameEditor"></div>
 						<div dojoType="ingrid:ValidationTextbox" widgetId="numCharsEditor"></div>
 		                <select dojoType="ingrid:Select" autoComplete="false" style="width:100px;" id="typeCombobox">
-		                	<option value="TEXT">Textfeld</option>
-		                	<option value="LIST">Auswahlliste</option>
+		                	<option value="TEXT"><fmt:message key="dialog.admin.catalog.management.additionalFields.textField" /></option>
+		                	<option value="LIST"><fmt:message key="dialog.admin.catalog.management.additionalFields.list" /></option>
 		                </select>
 					</div>
 					<table id="addFieldsList" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable nosort interactive">
 						<thead>
 							<tr>
 								<th nosort="true" field="id" dataType="String" width="70">Nr.</th>
-								<th nosort="true" field="name" dataType="String" width="724" editor="nameEditor">Feldname</th>
-								<th nosort="true" field="size" dataType="String" width="50" editor="numCharsEditor" createOnly="true">Zeichen</th>
-								<th nosort="true" field="type" dataType="String" width="120" editor="typeCombobox"  createOnly="true">Typ</th>
+								<th nosort="true" field="name" dataType="String" width="724" editor="nameEditor"><fmt:message key="dialog.admin.catalog.management.additionalFields.fieldName" /></th>
+								<th nosort="true" field="size" dataType="String" width="50" editor="numCharsEditor" createOnly="true"><fmt:message key="dialog.admin.catalog.management.additionalFields.numChars" /></th>
+								<th nosort="true" field="type" dataType="String" width="120" editor="typeCombobox"  createOnly="true"><fmt:message key="dialog.admin.catalog.management.additionalFields.type" /></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -170,7 +172,7 @@ function editListEntries(menuItem) {
 				<div class="inputContainer">
 					<span class="button w924" style="height:20px !important;">
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveChanges();">&Auml;nderung speichern</button>
+							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveChanges();"><fmt:message key="dialog.admin.catalog.management.additionalFields.saveChanges" /></button>
 						</span>
 					</span>
 				</div>
@@ -178,20 +180,20 @@ function editListEntries(menuItem) {
 				<div class="inputContainer grey h067 w964">
 					<div class="spacer"></div>
 					<div class="entry half left w608" style="margin-right:30px;">
-						<span class="label"><label for="addFieldName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Feldname')">Feldname</label></span>
+						<span class="label"><label for="addFieldName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Feldname')"><fmt:message key="dialog.admin.catalog.management.additionalFields.fieldName" /></label></span>
 						<span class="input"><input type="text" id="addFieldName" required="true" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
 					</div>
 					<div class="entry half left w116" style="margin-right:30px;">
-						<span class="label"><label for="addFieldNumChars" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeichen')">Zeichen</label></span>
+						<span class="label"><label for="addFieldNumChars" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeichen')"><fmt:message key="dialog.admin.catalog.management.additionalFields.numChars" /></label></span>
 						<span class="input"><input id="addFieldNumChars" min="0" max="255" maxlength="3" class="w116" dojoType="IntegerTextbox" /></span>
 
 					</div>
 					<div class="entry half w116">
-						<span class="label"><label for="addFieldType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Typ')">Typ</label></span>
+						<span class="label"><label for="addFieldType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Typ')"><fmt:message key="dialog.admin.catalog.management.additionalFields.type" /></label></span>
 						<span class="input">
 							<select dojoType="ingrid:Select" toggle="plain" required="true" style="width:108px;" widgetId="addFieldType">
-								<option value="LIST">Auswahlliste</option>
-								<option value="TEXT">Textfeld</option>
+								<option value="LIST"><fmt:message key="dialog.admin.catalog.management.additionalFields.list" /></option>
+								<option value="TEXT"><fmt:message key="dialog.admin.catalog.management.additionalFields.textField" /></option>
 							</select>
 						</span>
 					</div>
@@ -200,7 +202,7 @@ function editListEntries(menuItem) {
 				<div class="inputContainer">
 					<span class="button w924" style="height:20px !important;">
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Hinzuf&uuml;gen" onClick="javascript:scriptScope.addEntry();">Hinzuf&uuml;gen</button>
+							<button dojoType="ingrid:Button" title="Hinzuf&uuml;gen" onClick="javascript:scriptScope.addEntry();"><fmt:message key="dialog.admin.catalog.management.additionalFields.add" /></button>
 						</span>
 					</span>
 				</div>

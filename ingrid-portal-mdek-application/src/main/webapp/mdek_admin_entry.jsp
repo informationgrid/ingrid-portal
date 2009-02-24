@@ -1,7 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Set the locale to the value of parameter 'lang' and init the message bundle messages.properties -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="<%= request.getParameter("lang") %>" scope="session" />
+<fmt:setBundle basename="messages" scope="session"/>
+
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
-<title>InGrid-Editor - Verwaltung und Management</title>
+<title><fmt:message key="ui.entry.admin.title" /></title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
@@ -26,7 +31,8 @@
 
 
 <script type="text/javascript">
-	var djConfig = {isDebug: false, /* use with care, may lead to unexpected errors! */debugAtAllCosts: false, debugContainerId: "dojoDebugOutput"};
+var userLocale = '<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>';
+var djConfig = {locale: userLocale, isDebug: false, /* use with care, may lead to unexpected errors! */debugAtAllCosts: false, debugContainerId: "dojoDebugOutput"};
 </script>
 <script type="text/javascript" src="dojo-0.4.1-ingrid/dojo.js"></script>
 <script type="text/javascript" src="js/config.js"></script>
@@ -286,6 +292,9 @@ function clickMenu(menuName, submenuName) {
 	}
 }
 
+switchLanguage = function() {
+	document.location.href="mdek_admin_entry.jsp?lang="+UtilLanguage.getNextLanguage();
+}
 
 function hideSplash(){
 	dojo.byId("splash").style.display="none";
@@ -311,9 +320,9 @@ function hideSplash(){
    <div align="center" style="line-height:16px">
         <div style="width:550px; height:20px; background-color:#156496">&nbsp;</div>
         <div style="width:550px; background-color:#e6f0f5; font-family:Verdana,Helvetica,Arial,sans-serif; font-size:12px; padding: 20px 0px 20px 0px; margin:0px">
-          <p style="font-size:24px; font-weight:bold; line-height:16px; margin:16px">InGrid-Editor - Verwaltung und Management</p>
+          <p style="font-size:24px; font-weight:bold; line-height:16px; margin:16px"><script>document.write(message.get("ui.entry.admin.title"))</script></p>
 <!--           <p style="font-size:16px; font-weight:bold; line-height:16px; margin:16px">Version 1.0.0</p>  -->
-          <p style="font-size:12px; font-weight:normal; line-height:16px; margin:16px">Die Anwendung wird geladen...</p>
+          <p style="font-size:12px; font-weight:normal; line-height:16px; margin:16px"><script>document.write(message.get("ui.entry.loadingMessage"))</script></p>
         </div>
    </div>
 </div>
@@ -339,55 +348,55 @@ function hideSplash(){
   	    <ul>
   	      <li><span id="currentUserName">Benutzername</span> · <span id="currentUserRole">Rollenbezeichnung</span> · <span id="currentCatalogName">Katalogname</span></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">Hilfe</a></li>
+  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe"><script>document.write(message.get("menu.general.help"))</script></a></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('http://www.portalu.de:80/ingrid-portal/portal/disclaimer.psml', 'impressum', 'width=966,height=994,resizable=yes,scrollbars=yes,locationbar=no');" title="Impressum">Impressum</a></li>
+  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('http://www.portalu.de:80/ingrid-portal/portal/disclaimer.psml', 'impressum', 'width=966,height=994,resizable=yes,scrollbars=yes,locationbar=no');" title="Impressum"><script>document.write(message.get("menu.general.disclaimer"))</script></a></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:void(0);" title="English">English</a></li>
+  	      <li><a href="javascript:void(0);" onclick="javascript:switchLanguage();"><script>document.write(UtilLanguage.getNextLanguageName())</script></a></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:void(0);" onclick="javascript:dialog.showPage('Info', 'mdek_info_dialog.html', 365, 210, false); return false;" title="Info">Info</a></li>
+  	      <li><a href="javascript:void(0);" onclick="javascript:dialog.showPage('Info', 'mdek_info_dialog.html', 365, 210, false); return false;" title="Info"><script>document.write(message.get("menu.general.info"))</script></a></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="#dummyAnchor" onClick="window.location.href='closeWindow.jsp';" title="schlie&szlig;en"><strong>SCHLIESSEN</strong></a></li>
+  	      <li><a href="#dummyAnchor" onClick="window.location.href='closeWindow.jsp';" title="schlie&szlig;en"><strong><script>document.write(message.get("menu.general.closeApplication"))</script></strong></a></li>
   	    </ul>
   	  </div>
   	  <div id="navi">
   	    <ul>
-  	      <li><a id="page1Menu" style="display:none;" onClick="clickMenu('page1')" href="javascript:void(0);" class="current" title="Katalogverwaltung">Katalogverwaltung</a></li>
-  	      <li><a id="page2Menu" onClick="clickMenu('page2')" href="javascript:void(0);" title="Nutzerverwaltung">Nutzerverwaltung</a></li>
-  	      <li><a id="page3Menu" style="display:none;" onClick="clickMenu('page3')" href="javascript:void(0);" title="Gesamtkatalogmanagement">Gesamtkatalogmanagement</a></li>
-  	      <li><a id="page4Menu" style="display:none;" onClick="clickMenu('page4')" href="javascript:void(0);" title="Import/Export">Import/Export</a></li>
+  	      <li><a id="page1Menu" style="display:none;" onClick="clickMenu('page1')" href="javascript:void(0);" class="current" title="Katalogverwaltung"><script>document.write(message.get("menu.admin.main.catalog"))</script></a></li>
+  	      <li><a id="page2Menu" onClick="clickMenu('page2')" href="javascript:void(0);" title="Nutzerverwaltung"><script>document.write(message.get("menu.admin.main.user"))</script></a></li>
+  	      <li><a id="page3Menu" style="display:none;" onClick="clickMenu('page3')" href="javascript:void(0);" title="Gesamtkatalogmanagement"><script>document.write(message.get("menu.admin.main.management"))</script></a></li>
+  	      <li><a id="page4Menu" style="display:none;" onClick="clickMenu('page4')" href="javascript:void(0);" title="Import/Export"><script>document.write(message.get("menu.admin.main.importExport"))</script></a></li>
   	    </ul>
   	  </div>
   	  
 	  <div id="page1Subnavi" class="subnavi" style="display:none">
   	    <ul>
-  	      <li><a id="page1Subnavi1" onClick="clickMenu('page1', 'page1')" href="javascript:void(0);" class="current" title="Katalogeinstellungen">Katalogeinstellungen</a></li>
-  	      <li><a id="page1Subnavi2" onClick="clickMenu('page1', 'page1Sub2')" href="javascript:void(0);" title="Feldeinstellungen">Feldeinstellungen</a></li>
+  	      <li><a id="page1Subnavi1" onClick="clickMenu('page1', 'page1')" href="javascript:void(0);" class="current" title="Katalogeinstellungen"><script>document.write(message.get("menu.admin.main.catalog.settings"))</script></a></li>
+  	      <li><a id="page1Subnavi2" onClick="clickMenu('page1', 'page1Sub2')" href="javascript:void(0);" title="Feldeinstellungen"><script>document.write(message.get("menu.admin.main.catalog.fieldSettings"))</script></a></li>
   	    </ul>	  
 	  </div>
 	  <div id="page2Subnavi" class="subnavi" style="display:none">
   	    <ul>
-  	      <li><a id="page2Subnavi1" onClick="clickMenu('page2', 'page2')" href="javascript:void(0);" class="current" title="Nutzeradministration">Nutzeradministration</a></li>
-  	      <li><a id="page2Subnavi2" onClick="clickMenu('page2', 'page2Sub2')" href="javascript:void(0);" title="Gruppenadministration">Gruppenadministration</a></li>
-  	      <li><a id="page2Subnavi3" onClick="clickMenu('page2', 'page2Sub3')" href="javascript:void(0);" title="Berechtigungsübersicht">Berechtigungsübersicht</a></li>
+  	      <li><a id="page2Subnavi1" onClick="clickMenu('page2', 'page2')" href="javascript:void(0);" class="current" title="Nutzeradministration"><script>document.write(message.get("menu.admin.main.user.userAdmin"))</script></a></li>
+  	      <li><a id="page2Subnavi2" onClick="clickMenu('page2', 'page2Sub2')" href="javascript:void(0);" title="Gruppenadministration"><script>document.write(message.get("menu.admin.main.user.groupAdmin"))</script></a></li>
+  	      <li><a id="page2Subnavi3" onClick="clickMenu('page2', 'page2Sub3')" href="javascript:void(0);" title="Berechtigungsübersicht"><script>document.write(message.get("menu.admin.main.user.permissions"))</script></a></li>
   	    </ul>
   	  </div>
 	  <div id="page3Subnavi" class="subnavi" style="display:none">
   	    <ul>
-  	      <li><a id="page3Subnavi1" onClick="clickMenu('page3', 'page3')" href="javascript:void(0);" title="Analyse">Analyse</a></li>	  
-  	      <li><a id="page3Subnavi2" onClick="clickMenu('page3', 'page3Sub2')" href="javascript:void(0);" title="Dubletten">Dubletten</a></li>	  
-  	      <li><a id="page3Subnavi3" onClick="clickMenu('page3', 'page3Sub3')" href="javascript:void(0);" title="URL-Pflege">URL-Pflege</a></li>	  
-  	      <li><a id="page3Subnavi4" onClick="clickMenu('page3', 'page3Sub4')" href="javascript:void(0);" title="Auswahl-/ISO-Codelistenpflege">Auswahl-/ISO-Codelistenpflege</a></li>	  
-  	      <li><a id="page3Subnavi5" onClick="clickMenu('page3', 'page3Sub5')" href="javascript:void(0);" title="Zus&auml;tzliche Felder">Zus&auml;tzliche Felder</a></li>	  
-  	      <li><a id="page3Subnavi6" onClick="clickMenu('page3', 'page3Sub6')" href="javascript:void(0);" title="Adresse l&ouml;schen">Adresse l&ouml;schen</a></li>	  
-  	      <li><a id="page3Subnavi7" onClick="clickMenu('page3', 'page3Sub7')" href="javascript:void(0);" title="Suchbegriffe">Suchbegriffe</a></li>	  
-  	      <li><a id="page3Subnavi8" onClick="clickMenu('page3', 'page3Sub8')" href="javascript:void(0);" title="Raumbez&uuml;ge">Raumbez&uuml;ge</a></li>	  
+  	      <li><a id="page3Subnavi1" onClick="clickMenu('page3', 'page3')" href="javascript:void(0);" title="Analyse"><script>document.write(message.get("menu.admin.main.management.analysis"))</script></a></li>	  
+  	      <li><a id="page3Subnavi2" onClick="clickMenu('page3', 'page3Sub2')" href="javascript:void(0);" title="Dubletten"><script>document.write(message.get("menu.admin.main.management.duplicates"))</script></a></li>	  
+  	      <li><a id="page3Subnavi3" onClick="clickMenu('page3', 'page3Sub3')" href="javascript:void(0);" title="URL-Pflege"><script>document.write(message.get("menu.admin.main.management.urls"))</script></a></li>	  
+  	      <li><a id="page3Subnavi4" onClick="clickMenu('page3', 'page3Sub4')" href="javascript:void(0);" title="Auswahl-/ISO-Codelistenpflege"><script>document.write(message.get("menu.admin.main.management.codelists"))</script></a></li>	  
+  	      <li><a id="page3Subnavi5" onClick="clickMenu('page3', 'page3Sub5')" href="javascript:void(0);" title="Zus&auml;tzliche Felder"><script>document.write(message.get("menu.admin.main.management.additionalFields"))</script></a></li>	  
+  	      <li><a id="page3Subnavi6" onClick="clickMenu('page3', 'page3Sub6')" href="javascript:void(0);" title="Adresse l&ouml;schen"><script>document.write(message.get("menu.admin.main.management.deleteAddress"))</script></a></li>	  
+  	      <li><a id="page3Subnavi7" onClick="clickMenu('page3', 'page3Sub7')" href="javascript:void(0);" title="Suchbegriffe"><script>document.write(message.get("menu.admin.main.management.searchTerms"))</script></a></li>	  
+  	      <li><a id="page3Subnavi8" onClick="clickMenu('page3', 'page3Sub8')" href="javascript:void(0);" title="Raumbez&uuml;ge"><script>document.write(message.get("menu.admin.main.management.spatialSearchTerms"))</script></a></li>	  
   	    </ul>
 	  </div>
 	  <div id="page4Subnavi" class="subnavi" style="display:none">
   	    <ul>
-   	      <li><a id="page4Subnavi1" onClick="clickMenu('page4', 'page4')" href="javascript:void(0);" class="current" title="Export">Export</a></li>
-  	      <li><a id="page4Subnavi2" onClick="clickMenu('page4', 'page4Sub2')" href="javascript:void(0);" title="Import">Import</a></li>
+   	      <li><a id="page4Subnavi1" onClick="clickMenu('page4', 'page4')" href="javascript:void(0);" class="current" title="Export"><script>document.write(message.get("menu.admin.main.importExport.export"))</script></a></li>
+  	      <li><a id="page4Subnavi2" onClick="clickMenu('page4', 'page4Sub2')" href="javascript:void(0);" title="Import"><script>document.write(message.get("menu.admin.main.importExport.import"))</script></a></li>
   	    </ul>
   	  </div>
     </div>
@@ -395,23 +404,23 @@ function hideSplash(){
   </div>
   <!-- NAVIGATION END -->
   
-  <div widgetId="page1" dojoType="ContentPane" layoutAlign="client" href="mdek_admin_catalog_settings.html" preload="false" executeScripts="true"></div>
-  <div widgetId="page1Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catalog_field_settings.html" preload="false" executeScripts="true"></div>
-  <div widgetId="page2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_user_administration.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
-  <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_group_administration.html" preload="false" executeScripts="true"></div>
-  <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_permission_overview.html" preload="false" executeScripts="true"></div>
+  <div widgetId="page1" dojoType="ContentPane" layoutAlign="client" href="mdek_admin_catalog_settings.jsp" preload="false" executeScripts="true"></div>
+  <div widgetId="page1Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catalog_field_settings.jsp" preload="false" executeScripts="true"></div>
+  <div widgetId="page2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_user_administration.jsp" preload="false" refreshOnShow="true" executeScripts="true"></div>
+  <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_group_administration.jsp" preload="false" executeScripts="true"></div>
+  <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_permission_overview.jsp" preload="false" executeScripts="true"></div>
 
   <div widgetId="page3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_analysis.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
-  <div widgetId="page3Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_duplicates.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
-  <div widgetId="page3Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_urls.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
+  <div widgetId="page3Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_duplicates.jsp" preload="false" refreshOnShow="false" executeScripts="true"></div>
+  <div widgetId="page3Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_urls.jsp" preload="false" refreshOnShow="false" executeScripts="true"></div>
   <div widgetId="page3Sub4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_codelists.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
-  <div widgetId="page3Sub5" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_additional_fields.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
-  <div widgetId="page3Sub6" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_delete_address.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
+  <div widgetId="page3Sub5" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_additional_fields.jsp" preload="false" refreshOnShow="true" executeScripts="true"></div>
+  <div widgetId="page3Sub6" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_delete_address.jsp" preload="false" refreshOnShow="false" executeScripts="true"></div>
   <div widgetId="page3Sub7" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_search_terms.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
   <div widgetId="page3Sub8" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catman_locations.html" preload="false" refreshOnShow="true" executeScripts="true"></div>
 
-  <div widgetId="page4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_export.html" preload="false" executeScripts="true"></div>
-  <div widgetId="page4Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_import.html" preload="false" executeScripts="true"></div>
+  <div widgetId="page4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_export.jsp" preload="false" executeScripts="true"></div>
+  <div widgetId="page4Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_import.jsp" preload="false" executeScripts="true"></div>
 
 </div>
 

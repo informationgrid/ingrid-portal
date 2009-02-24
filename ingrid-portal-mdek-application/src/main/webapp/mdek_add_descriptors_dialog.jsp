@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 
@@ -59,8 +60,8 @@ noButtonFunc = function() {
 			</div>
 
 			<div class="inputContainer grey noSpaceBelow half" style="height:30px;">
-		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Nein" onClick="noButtonFunc">Nein</button></span>
-		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Ja" onClick="yesButtonFunc">Ja</button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="<fmt:message key="general.no" />" onClick="noButtonFunc"><fmt:message key="general.no" /></button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="<fmt:message key="general.yes" />" onClick="yesButtonFunc"><fmt:message key="general.yes" /></button></span>
 			</div>
 	  	</div>
 	</div>

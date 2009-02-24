@@ -552,7 +552,7 @@ function initFreeTermsButtons() {
 						});
 
 						// Show the dialog
-						dialog.showPage(message.get("dialog.addDescriptors.title"), "mdek_add_descriptors_dialog.html", 360, 240, true, {descriptorTitle:queryTerm.title, descriptors:descriptors, resultHandler:deferred});
+						dialog.showPage(message.get("dialog.addDescriptors.title"), "mdek_add_descriptors_dialog.jsp", 360, 240, true, {descriptorTitle:queryTerm.title, descriptors:descriptors, resultHandler:deferred});
 
 						// Also add the queryTerm to the list of free terms
 						var topicStore = _this._termListWidget.store;

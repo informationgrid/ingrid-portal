@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>Raumbezug festlegen</title>
@@ -217,19 +218,19 @@ function showError() {
 			<div class="spacer"></div>
 			<!-- CONTENT START -->
 			<div class="inputContainer w478 noSpaceBelow">
-        		<span class="label"><label for="locationTextBox" onclick="javascript:dialog.showContextHelp(arguments[0], 8008, 'R&auml;umliche Einheit festlegen')">R&auml;umliche Einheit festlegen</label></span>
+        		<span class="label"><label for="locationTextBox" onclick="javascript:dialog.showContextHelp(arguments[0], 8008, 'R&auml;umliche Einheit festlegen')"><fmt:message key="dialog.admin.catalog.selectLocation.setLocation" /></label></span>
        			<div class="input spaceBelow">
        				<span style="position:relative; float:left; width:292px;">
        					<input type="text" id="locationTextBox" size="20" name="locationTextBox" class="w292" dojoType="ingrid:ValidationTextBox" />
 					</span>
 					<span style="float:right;">
-       					<button dojoType="ingrid:Button" title="In Geo-Thesaurus suchen" id="findLocationTopicsButton" onClick="javascript:scriptScope.findLocationTopics();">In Geo-Thesaurus suchen</button>
+       					<button dojoType="ingrid:Button" title="In Geo-Thesaurus suchen" id="findLocationTopicsButton" onClick="javascript:scriptScope.findLocationTopics();"><fmt:message key="dialog.admin.catalog.selectLocation.search" /></button>
        				</span>
         		</div>
 
         		<div>&nbsp</div>
         
-        		<span id="resultLabel" class="label" style="visibility:hidden;">Auswahl</span>
+        		<span id="resultLabel" class="label" style="visibility:hidden;"><fmt:message key="dialog.admin.catalog.selectLocation.selection" /></span>
 
 				<span id="spatialLoadingZone" style="float:right; z-index: 100; visibility:hidden;">
 					<img src="img/ladekreis.gif" />
@@ -239,7 +240,7 @@ function showError() {
         			<div class="checkboxContainer" id="resultList" style="width: 364px; height: 90px; overflow: auto;"></div>
         		</span>
           		<span class="button w085 transparent bottomRight">
-					<button dojoType="ingrid:Button" title="Übernehmen" id="addLocationTopicsButton" onClick="javascript:scriptScope.addLocationTopics();">&Uuml;bernehmen</button>          		
+					<button dojoType="ingrid:Button" title="Übernehmen" id="addLocationTopicsButton" onClick="javascript:scriptScope.addLocationTopics();"><fmt:message key="dialog.admin.catalog.selectLocation.apply" /></button>          		
           		</span>
 			</div>
       		<!-- CONTENT END -->

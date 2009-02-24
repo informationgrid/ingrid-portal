@@ -1,7 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Set the locale to the value of parameter 'lang' and init the message bundle messages.properties -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="<%= request.getParameter("lang") %>" scope="session" />
+<fmt:setBundle basename="messages" scope="session"/>
+
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
-<title>InGrid-Editor</title>
+<title><fmt:message key="ui.entry.title" /></title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
@@ -326,7 +331,7 @@ function hideSplash(){
 
 		                <span id="generalAddressTableLabel" class="label required"><label for="generalAddressTable" onclick="javascript:dialog.showContextHelp(arguments[0], 1000)"><script>document.write(message.get("ui.obj.general.addressTable.title"))</script>*</label></span>
 	
-		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="generalAddressTableLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 580, true);" title="Adresse hinzuf&uuml;gen [Popup]"><script>document.write(message.get("ui.obj.general.addressTable.link"))</script></a></span>
+		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="generalAddressTableLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('general.addAddress'), 'mdek_address_dialog.jsp', 755, 580, true);" title="Adresse hinzuf&uuml;gen [Popup]"><script>document.write(message.get("ui.obj.general.addressTable.link"))</script></a></span>
 		                <div id="generalAddressTable" class="tableContainer headHiddenRows4 full">
 		                    <div class="cellEditors" id="generalAddressEditors">
 		                      <div dojoType="ingrid:Combobox" toggle="plain" style="width:120px;" listId="505" id="generalAddressCombobox"></div>
@@ -806,7 +811,7 @@ function hideSplash(){
 	                <div class="half">
 						<span id="uiElement3360" type="optional">
 							<span class="label"><label for="ref2LocationTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3360)"><script>document.write(message.get("ui.obj.type2.locationTable.title"))</script></label></span>
-	                  		<span id="ref2LocationTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref2AddLocationLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 580, true, {linkType: 3360});" title="Adresse hinzuf&uuml;gen [Popup]"><script>document.write(message.get("ui.obj.type2.locationTable.link"))</script></a></span>
+	                  		<span id="ref2LocationTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref2AddLocationLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('general.addAddress'), 'mdek_address_dialog.jsp', 755, 580, true, {linkType: 3360});" title="Adresse hinzuf&uuml;gen [Popup]"><script>document.write(message.get("ui.obj.type2.locationTable.link"))</script></a></span>
 
 	                		<div id="ref2LocationTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref2LocationTab1">
 								<script>document.write("<div id='ref2LocationTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type2.locationTable.tab.text")+"'>")</script>
@@ -1091,7 +1096,7 @@ function hideSplash(){
 	                <div class="half left">
 	                	<span id="uiElement3410" type="optional">
 		                  <span class="label"><label for="ref4ParticipantsTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3410)"><script>document.write(message.get("ui.obj.type4.participantsTable.title"))</script></label></span>
-		                  <span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddParticipantsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 580, true, {linkType: 3410});" title="Adresse hinzuf&uuml;gen [Popup]"><script>document.write(message.get("ui.obj.type4.participantsTable.link"))</script></a></span>
+		                  <span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddParticipantsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('general.addAddress'), 'mdek_address_dialog.jsp', 755, 580, true, {linkType: 3410});" title="Adresse hinzuf&uuml;gen [Popup]"><script>document.write(message.get("ui.obj.type4.participantsTable.link"))</script></a></span>
 		                	<div id="ref4ParticipantsTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref4ParticipantsTab1">
 								<script>document.write("<div id='ref4ParticipantsTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type4.participantsTable.tab.text")+"'>")</script>
 		                      	<span class="input">
@@ -1123,7 +1128,7 @@ function hideSplash(){
 	                <div class="half">
 	                	<span id="uiElement3400" type="optional">
 							<span class="label"><label for="ref4PMTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3400)"><script>document.write(message.get("ui.obj.type4.projectManagerTable.title"))</script></label></span>
-		                  	<span id="ref4PMTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddPMLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Adresse hinzuf&uuml;gen', 'mdek_address_dialog.html', 755, 580, true, {linkType: 3400});" title="Adresse hinzuf&uuml;gen [Popup]"><script>document.write(message.get("ui.obj.type4.projectManagerTable.link"))</script></a></span>
+		                  	<span id="ref4PMTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddPMLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('general.addAddress'), 'mdek_address_dialog.jsp', 755, 580, true, {linkType: 3400});" title="Adresse hinzuf&uuml;gen [Popup]"><script>document.write(message.get("ui.obj.type4.projectManagerTable.link"))</script></a></span>
 	                		<div id="ref4PMTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref4PMTab1">
 								<script>document.write("<div id='ref4PMTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type4.projectManagerTable.tab.text")+"'>")</script>
 	                      			<span class="input">

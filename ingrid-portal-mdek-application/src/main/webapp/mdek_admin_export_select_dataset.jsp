@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>Objekt zuordnen</title>
@@ -125,11 +126,11 @@ scriptScope.selectDataset = function() {
         <div class="spacer"></div>
       </div>
 		<div class="inputContainer w478">
-		<span>Hinweis: Datens&auml;tze die ausschlie&szlig;lich als Bearbeitungskopie vorliegen werden nicht angezeigt!</span>
+		<span><fmt:message key="dialog.admin.export.selectNode.note" /></span>
 		</div>
       <div class="inputContainer w478">
         <span class="button w442 transparent">
-		  <span style="float:right;"><button dojoType="ingrid:Button" onClick="javascript:scriptScope.selectDataset()">Ausw&auml;hlen</button></span>
+		  <span style="float:right;"><button dojoType="ingrid:Button" onClick="javascript:scriptScope.selectDataset()"><fmt:message key="dialog.admin.export.selectNode.select" /></button></span>
         </span>
   	  </div>
       <!-- CONTENT END -->

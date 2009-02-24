@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
@@ -54,6 +55,7 @@ scriptScope.replaceUrl = function() {
 		var def = replaceUrlDef(sourceUrls, replaceUrl);
 		def.addCallback(function() { return updateDBUrlJobInfoDef(sourceUrls, replaceUrl); });
 		def.addCallback(refreshUrlProcessInfo);
+		def.addCallback(function() { dialog.show(message.get("general.hint"), message.get("dialog.admin.management.urls.success"), dialog.INFO) });
 	}
 }
 
@@ -136,7 +138,7 @@ function jobFinished(jobInfo) {
 
 function updateUrlJobInfo(jobInfo) {
 	if (jobFinished(jobInfo)) {
-		dojo.byId("urlsInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
+		dojo.byId("urlsInfoTitle").innerHTML = message.get("dialog.admin.management.urls.lastProcessInfo");
 		dojo.html.hide(dojo.byId("urlsProgressBarContainer"));
 		dojo.html.hide(dojo.byId("cancelUrlsProcessButton"));
 		dojo.html.hide(dojo.byId("urlsInfoNumProcessedUrlsContainer"));
@@ -147,7 +149,7 @@ function updateUrlJobInfo(jobInfo) {
 		}
 
 	} else {
-		dojo.byId("urlsInfoTitle").innerHTML = "Informationen zum laufenden Prozess:";
+		dojo.byId("urlsInfoTitle").innerHTML = message.get("dialog.admin.management.urls.currentProcessInfo");
 		dojo.html.hide(dojo.byId("urlsInfoEndDateContainer"));
 		dojo.html.show(dojo.byId("cancelUrlsProcessButton"));
 		dojo.html.show(dojo.byId("urlsInfoNumProcessedUrlsContainer"));
@@ -224,27 +226,27 @@ function hideLoadingZone() {
 			<div class="spacer"></div>
 			<div class="spacer"></div>
 			<div class="inputContainer w965">
-				<button dojoType="ingrid:Button" title="Pr&uuml;fung starten" onClick="javascript:scriptScope.startUrlsJob();">Pr&uuml;fung starten</button>
+				<button dojoType="ingrid:Button" title="Pr&uuml;fung starten" onClick="javascript:scriptScope.startUrlsJob();"><fmt:message key="dialog.admin.catalog.management.urls.refresh" /></button>
 			</div>
 
 			<div class="inputContainer noSpaceBelow">
 				<div id="urlsProcessInfo" class="infobox w941">
 					<span class="icon"><img src="img/ic_info_download.gif" width="16" height="16" alt="Info" /></span>
-					<span id="urlsInfoTitle" class="title">Informationen zum letzten Prozess:</span>
+					<span id="urlsInfoTitle" class="title"></span>
 					<div id="urlsProcessInfoContent">
 						<table cellspacing="0">
 							<tr>
-								<td>Gestartet am:</td>
+								<td><fmt:message key="dialog.admin.catalog.management.urls.startTime" /></td>
 								<td id="urlsInfoBeginDate"></td></tr>
-								<tr><td id="urlsInfoEndDateContainer">Beendet am:</td>
+								<tr><td id="urlsInfoEndDateContainer"><fmt:message key="dialog.admin.catalog.management.urls.endTime" /></td>
 								<td id="urlsInfoEndDate"></td></tr>
-								<tr><td id="urlsInfoNumProcessedUrlsContainer">Anzahl URLs:</td>
+								<tr><td id="urlsInfoNumProcessedUrlsContainer"><fmt:message key="dialog.admin.catalog.management.urls.numUrls" /></td>
 								<td id="urlsInfoNumProcessedUrls"></td></tr>
 								<tr><td id="urlsProgressBarContainer" colspan=2><div dojoType="ProgressBar" id="urlsProgressBar" width="310" height="10" /></td></tr>
 						</table>
 						<span id="cancelUrlsProcessButton" class="button" style="height:20px !important;">
 							<span style="float:right;">
-								<button dojoType="ingrid:Button" title="Prozess abbrechen" onClick="javascript:scriptScope.cancelUrlsJob();">Prozess abbrechen</button>
+								<button dojoType="ingrid:Button" title="Prozess abbrechen" onClick="javascript:scriptScope.cancelUrlsJob();"><fmt:message key="dialog.admin.catalog.management.urls.cancel" /></button>
 							</span>
 						</span>
 					</div> <!-- processInfoContent end -->
@@ -254,20 +256,20 @@ function hideLoadingZone() {
 
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div id="urlListContainer" class="inputContainer noSpaceBelow">
-				<span class="label">Ergebnis der URL-Pr&uuml;fung</span>
+				<span class="label"><fmt:message key="dialog.admin.catalog.management.urls.result" /></span>
 				<div id="urlLists" dojoType="ingrid:TabContainer" class="w964" style="height:480px" selectedChild="urlList1">
 
 					<!-- TAB 1 START -->
-					<div id="urlList1" dojoType="ContentPane" label="Alle URLs">
+					<div id="urlList1" dojoType="ContentPane" label="<fmt:message key="dialog.admin.catalog.management.urls.allUrls" />">
 						<div class="inputContainer w964 noSpaceBelow">
 							<table id="urlListTable1" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable interactive w964 relativePos" customContextMenu="true">
 								<thead>
 									<tr>
-										<th field="errorCode" dataType="String" width="100">Fehler</th>
+										<th field="errorCode" dataType="String" width="100"><fmt:message key="dialog.admin.catalog.management.urls.error" /></th>
 										<th field="icon" dataType="String" width="30"></th>
-										<th field="objectName" dataType="String" width="361">Name des Objekts</th>
+										<th field="objectName" dataType="String" width="361"><fmt:message key="dialog.admin.catalog.management.urls.objectName" /></th>
 										<th field="url" dataType="String" width="250" sort="asc">URL</th>
-										<th field="urlReferenceDescription" dataType="String" width="223">Beschreibung</th>
+										<th field="urlReferenceDescription" dataType="String" width="223"><fmt:message key="dialog.admin.catalog.management.urls.description" /></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -277,16 +279,16 @@ function hideLoadingZone() {
 					</div> <!-- TAB 1 END -->
         		
 					<!-- TAB 2 START -->
-					<div id="urlList2" dojoType="ContentPane" label="Nur fehlerhafte URLs">
+					<div id="urlList2" dojoType="ContentPane" label="<fmt:message key="dialog.admin.catalog.management.urls.invalidUrls" />">
 						<div class="inputContainer w964 noSpaceBelow">
 							<table id="urlListTable2" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable interactive w964 relativePos">
 								<thead>
 									<tr>
-										<th field="errorCode" dataType="String" width="100">Fehler</th>
+										<th field="errorCode" dataType="String" width="100"><fmt:message key="dialog.admin.catalog.management.urls.error" /></th>
 										<th field="icon" dataType="String" width="30"></th>
-										<th field="objectName" dataType="String" width="361">Name des Objekts</th>
+										<th field="objectName" dataType="String" width="361"><fmt:message key="dialog.admin.catalog.management.urls.objectName" /></th>
 										<th field="url" dataType="String" width="250" sort="asc">URL</th>
-										<th field="urlReferenceDescription" dataType="String" width="223">Beschreibung</th>
+										<th field="urlReferenceDescription" dataType="String" width="223"><fmt:message key="dialog.admin.catalog.management.urls.description" /></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -297,12 +299,12 @@ function hideLoadingZone() {
 				</div>
 			</div>
 			<div class="inputContainer grey field w948 h058 noSpaceBelow">
-				<span class="label"><label for="urlReplace" onclick="javascript:dialog.showContextHelp(arguments[0], 'Markierte URLs durch folgende URL ersetzen')">Markierte URLs durch folgende URL ersetzen:</label></span>
+				<span class="label"><label for="urlReplace" onclick="javascript:dialog.showContextHelp(arguments[0], 'Markierte URLs durch folgende URL ersetzen')"><fmt:message key="dialog.admin.catalog.management.urls.replaceUrlsWith" /></label></span>
 				<span class="input" style="position:relative;">
 					<input type="text" id="urlReplace" maxlength="255" class="w829 nextToButton" dojoType="ingrid:ValidationTextBox" />
 				</span>
 				<span style="position:relative; top:-1px; margin-right:15px; float:right;">
-					<button dojoType="ingrid:Button" title="Ersetzen" onClick="javascript:scriptScope.replaceUrl();">Ersetzen</button>
+					<button dojoType="ingrid:Button" title="Ersetzen" onClick="javascript:scriptScope.replaceUrl();"><fmt:message key="dialog.admin.catalog.management.urls.replace" /></button>
 				</span>
 				<span id="replaceUrlLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 					<img src="img/ladekreis.gif" />

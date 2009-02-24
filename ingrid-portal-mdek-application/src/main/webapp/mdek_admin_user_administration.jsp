@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
@@ -117,15 +118,15 @@ scriptScope.deleteUser = function() {
 
 	// Can't delete the cat admin. This is also checked in the backend.
 	if (user == null || user.role == 1 || user.isFolder) {
-		dialog.show(message.get("general.error"), "Der markierte Benutzer kann nicht gel&ouml;scht werden.", dialog.WARNING);
+		dialog.show(message.get("general.error"), message.get("dialog.admin.users.canNotDeleteError"), dialog.WARNING);
 		dojo.debug("Can't delete.");
 		return;
 	}
 
 	var deferred = new dojo.Deferred();
 
-	var displayText = "Wollen Sie den Benutzer "+user.title+" wirklich l&ouml;schen?";
-	dialog.show("Benutzer l&ouml;schen", displayText, dialog.INFO, [
+	var displayText = dojo.string.substituteParams(message.get("dialog.admin.users.confirmDelete"), user.title);
+	dialog.show(message.get("dialog.admin.users.deleteUser"), displayText, dialog.INFO, [
 		{ caption: message.get("general.no"),  action: function() { deferred.errback(); } },	
     	{ caption: message.get("general.ok"), action: function() { deferred.callback(); } }
 	]);
@@ -142,7 +143,7 @@ scriptScope.deleteUser = function() {
 			errorHandler: function(errMsg, err) {
 				hideLoadingZone();
 				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1 || errMsg.indexOf("USER_HIERARCHY_WRONG") != -1) {
-					dialog.show(message.get("general.error"), "Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um den Benutzer zu l&ouml;schen!", dialog.WARNING);				
+					dialog.show(message.get("general.error"), message.get("dialog.admin.users.noDeletePermissionError"), dialog.WARNING);				
 				}
 
 				dojo.debug(errMsg);
@@ -157,7 +158,7 @@ scriptScope.importPortalUser = function() {
 	var selectedUser = dojo.widget.byId("treeUser").selectedNode;
 
 	if (currentUser.role == 1 && selectedUser == null) {
-		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie einen Benutzer aus, dem der neue Benutzer zugeordnet werden soll.", dialog.WARNING);
+		dialog.show(message.get("general.error"), message.get("dialog.admin.users.noParentSelectedError"), dialog.WARNING);
 		dojo.debug("No node selected.");
 		return;
 	}
@@ -165,7 +166,7 @@ scriptScope.importPortalUser = function() {
 	// In case a mdAdmin wants to create a new user, we have to check if the mdAdmin is selected in the tree
 	if (currentUser.role == 2) {		
 		if (selectedUser == null || (selectedUser.userId != currentUser.id)) {
-			dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie eine g&uuml;ltige Stelle aus, an die der neue Benutzer angef&uuml;gt werden soll. Sie d&uuml;rfen lediglich Metadaten-Autoren unter Ihrer eigenen Adresse anlegen!", dialog.WARNING);
+			dialog.show(message.get("general.error"), message.get("dialog.admin.users.adminSelectedInvalidUserError"), dialog.WARNING);
 			dojo.debug("Can't create users here. Select the correct mdAdmin.");
 			return;
 		}
@@ -173,21 +174,21 @@ scriptScope.importPortalUser = function() {
 
 	// In case a user with role mdAutor is selected, do nothing and return
 	if (selectedUser.role < 1 || selectedUser.role > 2) {
-		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie eine g&uuml;ltige Stelle aus, an die der neue Benutzer angef&uuml;gt werden soll.", dialog.WARNING);
+		dialog.show(message.get("general.error"), message.get("dialog.admin.users.authorSelectedAsParentError"), dialog.WARNING);
 		dojo.debug("Select a user with role catAdmin or mdAdmin.");
 		return;
 	}
 
 	// In case a newUserNode already exists, return
 	if (selectedUser.id == "newUserNode") {
-		dialog.show(message.get("general.error"), "Sie m&uuml;ssen den neu angelegten Benutzer zun&auml;chst speichern bevor Sie einen neuen Benutzer anlegen.", dialog.WARNING);
+		dialog.show(message.get("general.error"), message.get("dialog.admin.users.newNodeSelectedAsParentError"), dialog.WARNING);
 		dojo.debug("Please save the current user before creating a new one.");
 		return;
 	}
 
 
 	var deferred = new dojo.Deferred();
-	dialog.showPage("Portalbenutzer importieren", "mdek_admin_import_user_dialog.html", 360, 240, true, { resultHandler:deferred });
+	dialog.showPage(message.get("dialog.admin.users.importUser"), "mdek_admin_import_user_dialog.jsp", 360, 240, true, { resultHandler:deferred });
 
 	deferred.addCallback(function(portalUser){
 		var tree = dojo.widget.byId("treeUser");
@@ -213,13 +214,13 @@ scriptScope.saveUser = function() {
 	var login = dojo.widget.byId("userDataLogin").getValue();
 
 	if (dojo.string.trim(login).length == 0) {
-		dialog.show(message.get("general.error"), "Sie m&uuml;ssen zun&auml;chst einen g&uuml;ltigen Portalbenutzer ausw&auml;hlen, bevor Sie den Benutzer speichern k&ouml;nnen.", dialog.WARNING);
+		dialog.show(message.get("general.error"), message.get("dialog.admin.users.noUserSelectedForSaveError"), dialog.WARNING);
 		dojo.debug("No user selected for save/import.");
 		return;
 	}
 
 	if (!isValidUser()) {
-		dialog.show(message.get("general.error"), "Fehlerhafte Eingabe! Bitte &uuml;berpr&uuml;fen Sie alle Eingabefelder.", dialog.WARNING);
+		dialog.show(message.get("general.error"), message.get("dialog.admin.users.requiredFieldsError"), dialog.WARNING);
 		dojo.debug("Invalid information entered.");
 		return;
 	}
@@ -249,19 +250,19 @@ scriptScope.saveUser = function() {
 				tree.selectNode(newNode);
 				tree.selectedNode = newNode;
 				dojo.event.topic.publish(treeListener.eventNames.select, {node: newNode});
-				dialog.show(message.get("general.hint"), "Die Benutzerdaten wurden erfolgreich erstellt.", dialog.INFO);
+				dialog.show(message.get("general.hint"), message.get("dialog.admin.users.createSuccess"), dialog.INFO);
 			
 			},
 			errorHandler: function(errMsg, err) {
 				hideLoadingZone();
 				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1) {
-					dialog.show(message.get("general.error"), "Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um den Benutzer anzulegen!", dialog.WARNING);				
+					dialog.show(message.get("general.error"), message.get("dialog.admin.users.createPermissionError"), dialog.WARNING);				
 
 				} else if (errMsg.indexOf("ENTITY_ALREADY_EXISTS") != -1) {
-					dialog.show(message.get("general.error"), "Die angegebene Adresse ist bereits mit einem existierenden Benutzer verkn&uuml;pft. Die Zuordnung der Adressen zu Benutzern muss eindeutig sein, bitte w&auml;hlen Sie daher eine noch nicht zugewiesene Adresse aus und versuchen Sie es erneut!", dialog.WARNING);				
+					dialog.show(message.get("general.error"), message.get("dialog.admin.users.addressCollisionError"), dialog.WARNING);				
 
 				} else {
-					dialog.show(message.get("general.error"), "Der Benutzer konnte nicht angelegt werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.", dialog.WARNING);
+					dialog.show(message.get("general.error"), message.get("dialog.admin.users.createError"), dialog.WARNING);
 				}
 				dojo.debug(errMsg);
 				dojo.debugShallow(err);
@@ -280,20 +281,20 @@ scriptScope.saveUser = function() {
 			postHook: hideLoadingZone,
 			callback: function(newUser) {
 				updateTreeNode(selectedUser, newUser);
-				dialog.show(message.get("general.hint"), "Die Benutzerdaten wurden erfolgreich aktualisiert.", dialog.INFO);				
+				dialog.show(message.get("general.hint"), message.get("dialog.admin.users.updateSuccess"), dialog.INFO);				
 
 			},
 			errorHandler: function(errMsg, err) {
 				hideLoadingZone();
 				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1) {
-					dialog.show(message.get("general.error"), "Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um den Benutzer zu &auml;ndern!", dialog.WARNING);				
+					dialog.show(message.get("general.error"), message.get("dialog.admin.users.updatePermissionError"), dialog.WARNING);				
 
 				} else if (errMsg.indexOf("ENTITY_ALREADY_EXISTS") != -1) {
-					dialog.show(message.get("general.error"), "Die angegebene Adresse ist bereits mit einem existierenden Benutzer verkn&uuml;pft. Die Zuordnung der Adressen zu Benutzern muss eindeutig sein, bitte w&auml;hlen Sie daher eine noch nicht zugewiesene Adresse aus und versuchen Sie es erneut!", dialog.WARNING);				
+					dialog.show(message.get("general.error"), message.get("dialog.admin.users.addressCollisionError"), dialog.WARNING);				
 
 
 				} else {
-					dialog.show(message.get("general.error"), "Der Benutzer konnte nicht gespeichert werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.", dialog.WARNING);
+					dialog.show(message.get("general.error"), message.get("dialog.admin.users.updateError"), dialog.WARNING);
 				}
 				dojo.debug(errMsg);
 				dojo.debugShallow(err);
@@ -435,7 +436,7 @@ function resetInputFields() {
 
 scriptScope.searchForAddress = function() {
 	var def = new dojo.Deferred();
-	dialog.showPage('Adresse suchen', 'mdek_address_dialog.html', 755, 580, true, { resultHandler: def });
+	dialog.showPage(message.get('general.searchAddress'), 'mdek_address_dialog.jsp', 755, 580, true, { resultHandler: def });
 
 	def.addCallback(getAddressData);
 	def.addCallback(function(addressData) {
@@ -618,37 +619,17 @@ function hideLoadingZone() {
 		
 			        <!-- tree -->
 			        <div dojoType="ingrid:Tree" listeners="treeControllerUser;treeListenerUser;treeDocIconsUser" widgetId="treeUser">
-<!-- 
-		        	<div dojoType="ingrid:TreeNode" title="Root" objectId="root" isFolder="true" nodeDocType="KatalogAdmin"></div>
--->	
-		          <!-- remove the next lines in production -->
-		<!-- 
-		            	<div dojoType="ingrid:TreeNode" title="Bernhart, Hans" widgetId="u1" nodeDocType="KatalogAdmin">
-		              	<div dojoType="ingrid:TreeNode" title="Altm&uuml;ller, Reinhard" widgetId="u2" nodeDocType="MDAdmin">
-		              		<div dojoType="ingrid:TreeNode" title="Backhaus, Hermann" widgetId="u3" nodeDocType="MDAutor"></div>
-		                </div>
-		              	<div dojoType="ingrid:TreeNode" title="Gerdes, G&uuml;nter" widgetId="u4" nodeDocType="MDAdmin">
-		              		<div dojoType="ingrid:TreeNode" title="Schmitt, Walter" widgetId="u5" nodeDocType="MDAutor"></div>
-		                </div>
-		            	</div>
-		 -->
-		          <!-- end of remove -->
 					</div>
 		    	</div>
 				<div class="spacer"></div>
 			</div>
-<!-- 
-			<div class="inputContainer">
-				<span class="button w224"><a href="#" class="buttonBlue" title="Nutzer l&ouml;schen">Nutzer l&ouml;schen</a></span>
-			</div>
- -->
 			<div class="inputContainer">
 				<span class="button w224" style="height:20px !important;">
 					<span style="float:left;">
-						<button dojoType="ingrid:Button" title="Nutzer l&ouml;schen" onClick="javascript:scriptScope.deleteUser();">Nutzer l&ouml;schen</button>
+						<button dojoType="ingrid:Button" title="Nutzer l&ouml;schen" onClick="javascript:scriptScope.deleteUser();"><fmt:message key="dialog.admin.users.delete" /></button>
 					</span>
 					<span style="float:right;">
-						<button dojoType="ingrid:Button" title="Nutzer anlegen" onClick="javascript:scriptScope.importPortalUser();">Nutzer anlegen</button>
+						<button dojoType="ingrid:Button" title="Nutzer anlegen" onClick="javascript:scriptScope.importPortalUser();"><fmt:message key="dialog.admin.users.create" /></button>
 					</span>
 				</span>
 			</div>
@@ -657,35 +638,18 @@ function hideLoadingZone() {
 	
 		    <!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
 			<div id="userData" class="inputContainer" style="float:right;">
-				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8012)">Nutzerdaten</label></span>
-<!-- 
-				<span class="functionalLink"><img src="img/ic_fl_new_group.gif" width="14" height="12" alt="Gruppe" /><a href="admin_nutzer_gruppe.html" title="Gruppe">Gruppe</a><img src="img/ic_fl_new_user.gif" width="10" height="12" alt="Nutzer" /><a class="current" title="Nutzer">Nutzer</a></span>
--->
+				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8012)"><fmt:message key="dialog.admin.users.userData" /></label></span>
 				<div class="inputContainer field grey noSpaceBelow h313">
-
-<!--
-					<div class="inputContainer">
-						<div class="half left">
-							<span class="label required"><label for="userDataLastName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Name')">Name*</label></span>
-							<span class="input"><input type="text" id="userDataLastName" name="userDataLastName" class="w308" dojoType="ingrid:ValidationTextBox" /></span>
-						</div>
-						<div class="half">
-							<span class="label required"><label for="userDataFirstName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Vorname')">Vorname*</label></span>
-							<span class="input"><input type="text" id="userDataFirstName" name="userDataFirstName" class="w308" dojoType="ingrid:ValidationTextBox" /></span>
-						</div>
-						<div class="fill"></div>
-					</div>
--->
-					<span class="label"><label for="userDataLogin" onclick="javascript:dialog.showContextHelp(arguments[0], 8013, 'Login')">Login</label></span>
+					<span class="label"><label for="userDataLogin" onclick="javascript:dialog.showContextHelp(arguments[0], 8013, 'Login')"><fmt:message key="dialog.admin.users.login" /></label></span>
 					<span class="input spaceBelow"><input type="text" id="userDataLogin" name="userDataLogin" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-					<span class="label"><label for="userDataRole" onclick="javascript:dialog.showContextHelp(arguments[0], 8014, 'Rolle')">Rolle</label></span>
+					<span class="label"><label for="userDataRole" onclick="javascript:dialog.showContextHelp(arguments[0], 8014, 'Rolle')"><fmt:message key="dialog.admin.users.role" /></label></span>
 					<span class="input spaceBelow"><input type="text" id="userDataRole" name="userDataRole" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 
-					<span class="label required"><label id="userDataAddressLinkLabel" for="userDataAddressLink" onclick="javascript:dialog.showContextHelp(arguments[0], 8015, 'Adressverweis')">Adressverweis*</label></span>
-					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.searchForAddress();" title="Adresse suchen [Popup]">Adresse suchen</a></span>
+					<span class="label required"><label id="userDataAddressLinkLabel" for="userDataAddressLink" onclick="javascript:dialog.showContextHelp(arguments[0], 8015, 'Adressverweis')"><fmt:message key="dialog.admin.users.address" />*</label></span>
+					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.searchForAddress();" title="Adresse suchen [Popup]"><fmt:message key="dialog.admin.users.searchAddress" /></a></span>
 					<span class="input spaceBelow"><input type="text" id="userDataAddressLink" name="userDataAddressLink" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					
-					<span class="label required"><label id="userDataGroupLabel" for="userDataGroup" onclick="javascript:dialog.showContextHelp(arguments[0], 8016, 'Gruppe')">Gruppe*</label></span>
+					<span class="label required"><label id="userDataGroupLabel" for="userDataGroup" onclick="javascript:dialog.showContextHelp(arguments[0], 8016, 'Gruppe')"><fmt:message key="dialog.admin.users.group" />*</label></span>
 					<span class="input spaceBelow"><div dojoType="ingrid:Select" autoComplete="false" toggle="plain" style="width:621px;" widgetId="userDataGroup"></div></span>
 			        <div class="fill"></div>
 				</div>
@@ -693,7 +657,7 @@ function hideLoadingZone() {
 				<div class="inputContainer">
 					<span class="button w644" style="height:20px !important;">
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveUser();">Speichern</button>
+							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveUser();"><fmt:message key="dialog.admin.users.save" /></button>
 						</span>
 						<span id="adminUserLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 							<img src="img/ladekreis.gif" />

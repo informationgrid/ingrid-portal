@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 
@@ -164,16 +165,16 @@ function hideLoadingZone() {
 			<div class="spacer"></div>
 			<div class="spacer"></div>
 			<div class="inputContainer field grey">
-				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8010)">Folgende Felder auch in der Standard-Ansicht anzeigen</label></span>
+				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8010)"><fmt:message key="dialog.admin.catalog.fields.settings" /></label></span>
 				<div class="tableContainer rows10 w652">
 					<table id="fieldTable" dojoType="ingrid:FilteringTable" minRows="10" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
 						<thead>
 							<tr>
-								<th nosort="true" field="identifier" dataType="String" width="45">Feld ID</th>
-								<th nosort="true" field="name" dataType="String" width="270">Feldname</th>
-								<th nosort="true" field="noModifier" dataType="String" width="105">Standardverhalten</th>
-								<th nosort="true" field="alwaysHide" dataType="String" width="115">Immer ausblenden</th>
-								<th nosort="true" field="alwaysShow" dataType="String" width="110">Immer sichtbar</th>
+								<th nosort="true" field="identifier" dataType="String" width="45"><fmt:message key="dialog.admin.catalog.fields.fieldId" /></th>
+								<th nosort="true" field="name" dataType="String" width="270"><fmt:message key="dialog.admin.catalog.fields.fieldName" /></th>
+								<th nosort="true" field="noModifier" dataType="String" width="105"><fmt:message key="dialog.admin.catalog.fields.standard" /></th>
+								<th nosort="true" field="alwaysHide" dataType="String" width="115"><fmt:message key="dialog.admin.catalog.fields.hide" /></th>
+								<th nosort="true" field="alwaysShow" dataType="String" width="110"><fmt:message key="dialog.admin.catalog.fields.show" /></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -185,7 +186,7 @@ function hideLoadingZone() {
 			<div class="inputContainer">
 				<span class="button w644" style="height:20px !important;">
 					<span style="float:right;">
-						<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveGuiIdList();">Speichern</button>
+						<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveGuiIdList();"><fmt:message key="dialog.admin.catalog.fields.save" /></button>
 					</span>
 					<span id="catalogueFieldSettingsLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 						<img src="img/ladekreis.gif" />

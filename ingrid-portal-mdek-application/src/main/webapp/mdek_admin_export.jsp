@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
@@ -41,7 +42,7 @@ function startExportCriteria() {
 		exportObjectsWithCriteria(exportCriteria);
 
 	} else {
-		dialog.show(message.get("general.error"), "Der Exportvorgang konnte nicht gestartet werden. Bitte w&auml;hlen Sie ein Exportkriterium aus.", dialog.WARNING);
+		dialog.show(message.get("general.error"), message.get("dialog.admin.export.selectExportCriteriaError"), dialog.WARNING);
 	}
 }
 
@@ -55,7 +56,7 @@ function startExportPartial() {
 			startAddressExport(currentSelectedNode.uuid, exportChildren);
 		}
 	} else {
-		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie einen g&uuml;ltigen Exportknoten aus bevor Sie den Vorgang starten.", dialog.WARNING);
+		dialog.show(message.get("general.error"), message.get("dialog.admin.export.selectNodeError"), dialog.WARNING);
 	}
 }
 
@@ -109,7 +110,7 @@ scriptScope.startExport = function() {
 		startExportPartial();
 
 	} else {
-		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie einen Exporttyp aus.", dialog.WARNING);
+		dialog.show(message.get("general.error"), message.get("dialog.admin.export.selectExportTypeError"), dialog.WARNING);
 		dojo.debug("No export type selected.");
 	}
 }
@@ -125,7 +126,7 @@ scriptScope.selectDataset = function() {
 		dojo.byId("exportType2").checked = true;
 	});
 
-	dialog.showPage('Teilbaum ausw&auml;hlen', 'mdek_admin_export_select_dataset.html', 522, 525, true, {
+	dialog.showPage(message.get("dialog.admin.export.selectNode"), 'mdek_admin_export_select_dataset.jsp', 522, 525, true, {
 		// custom parameters
 		resultHandler: deferred	
 	});
@@ -150,16 +151,16 @@ refreshExportProcessInfo = function() {
 
 function updateExportInfo(exportInfo) {
 	if (exportInfo.entityType == "OBJECT") {
-		dojo.byId("exportInfoNumExportedEntitiesContainer").innerHTML = "Anzahl Objekte:";
+		dojo.byId("exportInfoNumExportedEntitiesContainer").innerHTML = message.get("dialog.admin.export.numObjects");
 	} else if (exportInfo.entityType == "ADDRESS") {
-		dojo.byId("exportInfoNumExportedEntitiesContainer").innerHTML = "Anzahl Adressen:";
+		dojo.byId("exportInfoNumExportedEntitiesContainer").innerHTML = message.get("dialog.admin.export.numAddresses");
 	} else {
-		dojo.byId("exportInfoNumExportedEntitiesContainer").innerHTML = "Anzahl Datens&auml;tze:";
+		dojo.byId("exportInfoNumExportedEntitiesContainer").innerHTML = message.get("dialog.admin.export.numDatasets");
 	}
 
 
 	if (jobFinished(exportInfo)) {
-		dojo.byId("exportInfoTitle").innerHTML = "Informationen zum letzten Prozess:";
+		dojo.byId("exportInfoTitle").innerHTML = message.get("dialog.admin.export.lastProcessInfo");
 		dojo.html.hide(dojo.byId("exportProgressBarContainer"));
 		dojo.html.hide(dojo.byId("cancelExportProcessButton"));
 
@@ -186,7 +187,7 @@ function updateExportInfo(exportInfo) {
 			dojo.byId("exportInfoNumExportedEntities").innerHTML = "";
 		}
 	} else {
-		dojo.byId("exportInfoTitle").innerHTML = "Informationen zum laufenden Prozess:";
+		dojo.byId("exportInfoTitle").innerHTML = message.get("dialog.admin.export.currentProcessInfo");
 		dojo.html.hide(dojo.byId("exportExceptionMessage"));
 		dojo.html.hide(dojo.byId("exportInfoDownload"));
 		dojo.html.hide(dojo.byId("exportInfoEndDateContainer"));
@@ -312,15 +313,15 @@ function initSysLists() {
 				<div class="spacer"></div>
 				<div class="inputContainer field grey noSpaceBelow">
 					<div class="checkboxContainer">
-						<span class="entry first"><input type="radio" name="exportType" id="exportType1" class="radio" /><label class="noRightMargin" for="exportType1" onclick="javascript:dialog.showContextHelp(arguments[0], 'Teilexport')">Teilexport</label></span>
+						<span class="entry first"><input type="radio" name="exportType" id="exportType1" class="radio" /><label class="noRightMargin" for="exportType1" onclick="javascript:dialog.showContextHelp(arguments[0], 'Teilexport')"><fmt:message key="dialog.admin.export.partialExport" /></label></span>
 						<span class="rightAlign marginRight"><div dojoType="ingrid:Combobox" toggle="plain" listId="1370" style="width:485px;" widgetId="exportXMLCriteria"></div></span>
 						<div class="fill"></div>
 					</div>
 					<div class="checkboxContainer">
-						<span class="entry first"><input type="radio" name="exportType" id="exportType2" class="radio" /><label class="noRightMargin" for="exportType2" onclick="javascript:dialog.showContextHelp(arguments[0], 'Teilbaumexport')">Teilbaumexport</label></span>
-						<span class="functionalLink marginRight" style="position:relative; top:43px"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:scriptScope.selectDataset()" title="Teilbaum ausw&auml;hlen [Popup]">Teilbaum ausw&auml;hlen</a></span>
+						<span class="entry first"><input type="radio" name="exportType" id="exportType2" class="radio" /><label class="noRightMargin" for="exportType2" onclick="javascript:dialog.showContextHelp(arguments[0], 'Teilbaumexport')"><fmt:message key="dialog.admin.export.treeExport" /></label></span>
+						<span class="functionalLink marginRight" style="position:relative; top:43px"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:scriptScope.selectDataset()" title="Teilbaum ausw&auml;hlen [Popup]"><fmt:message key="dialog.admin.export.selectTree" /></a></span>
 						<span class="rightAlign marginRight"><input type="text" id="exportTreeName" name="exportTreeName" class="w503" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-						<span class="rightAlign marginRight"><span class="input w513 leftAlign"><input type="checkbox" name="exportTreeSelectionOnly" id="exportTreeSelectionOnly" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Nur der ausgew&auml;hlte Datensatz')">Nur der ausgew&auml;hlte Datensatz</label></span></span>
+						<span class="rightAlign marginRight"><span class="input w513 leftAlign"><input type="checkbox" name="exportTreeSelectionOnly" id="exportTreeSelectionOnly" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Nur der ausgew&auml;hlte Datensatz')"><fmt:message key="dialog.admin.export.selectedNodeOnly" /></label></span></span>
 						<div class="fill"></div>
 					</div>
 
@@ -328,7 +329,7 @@ function initSysLists() {
 				<div class="inputContainer">
 					<span class="button w644" style="height:20px !important;">
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Export starten" onClick="javascript:scriptScope.startExport();">Export starten</button>
+							<button dojoType="ingrid:Button" title="Export starten" onClick="javascript:scriptScope.startExport();"><fmt:message key="dialog.admin.export.start" /></button>
 						</span>
 						<span id="exportLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 							<img src="img/ladekreis.gif" />
@@ -340,23 +341,23 @@ function initSysLists() {
 				<div class="inputContainer noSpaceBelow">
 					<div id="exportProcessInfo" class="infobox w670">
 						<span class="icon"><img src="img/ic_info_download.gif" width="16" height="16" alt="Info" /></span>
-						<span id="exportInfoTitle" class="title">Informationen zum letzten Prozess:</span>
+						<span id="exportInfoTitle" class="title"></span>
 						<div id="exportProcessInfoContent">
-							<p id="exportInfoDownload">Ihre Export-Datei steht Ihnen <a href="javascript:void(0);" onclick="javascript:scriptScope.downloadLastExport();" title="Export-Datei">hier</a> zur Verf&uuml;gung.</p>
-							<p id="exportExceptionMessage">Beim letzten Exportvorgang ist ein Fehler aufgetreten. <br> Weitere Informationen gibt es <a href="javascript:void(0);" onclick="javascript:scriptScope.showJobException();" title="Fehlerinformationen">hier</a>.</p>
+							<p id="exportInfoDownload"><fmt:message key="dialog.admin.export.result" /> <a href="javascript:void(0);" onclick="javascript:scriptScope.downloadLastExport();" title="Export-Datei">link</a></p>
+							<p id="exportExceptionMessage"><fmt:message key="dialog.admin.export.error" /> <a href="javascript:void(0);" onclick="javascript:scriptScope.showJobException();" title="Fehlerinformationen">link</a></p>
 							<table cellspacing="0">
 								<tr>
-									<td>Gestartet am:</td>
+									<td><fmt:message key="dialog.admin.export.startTime" /></td>
 									<td id="exportInfoBeginDate"></td></tr>
-									<tr><td id="exportInfoEndDateContainer">Beendet am:</td>
+									<tr><td id="exportInfoEndDateContainer"><fmt:message key="dialog.admin.export.endTime" /></td>
 									<td id="exportInfoEndDate"></td></tr>
-									<tr><td id="exportInfoNumExportedEntitiesContainer">Anzahl Datens&auml;tze:</td>
+									<tr><td id="exportInfoNumExportedEntitiesContainer"></td>
 									<td id="exportInfoNumExportedEntities"></td></tr>
 									<tr><td id="exportProgressBarContainer" colspan=2><div dojoType="ProgressBar" id="exportProgressBar" width="310" height="10" /></td></tr>
 							</table>
 							<span id="cancelExportProcessButton" class="button" style="height:20px !important;">
 								<span style="float:right;">
-									<button dojoType="ingrid:Button" title="Prozess abbrechen" onClick="javascript:scriptScope.cancelExport();">Prozess abbrechen</button>
+									<button dojoType="ingrid:Button" title="Prozess abbrechen" onClick="javascript:scriptScope.cancelExport();"><fmt:message key="dialog.admin.export.cancel" /></button>
 								</span>
 							</span>
 

@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
@@ -199,10 +200,11 @@ scriptScope.saveChanges = function() {
 			refreshChildrenDef.addCallback(function() {
 				selectObjectInTreeByUuid(objectUuid);
 			});
+			dialog.show(message.get("general.hint"), message.get("dialog.admin.management.duplicates.success"), dialog.INFO);
 		});
 		def.addErrback(function(err) {
 			dojo.debug("Error: "+err);
-			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err+""), dialog.WARNING);				
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), err+""), dialog.WARNING);
 		});
 
 	} else {
@@ -258,11 +260,11 @@ function hideLoadingZone() {
 
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div id="duplicatesListContainer" class="inputContainer">
-				<span class="label">Ergebnis der Dubletten-Pr&uuml;fung</span>
+				<span class="label"><fmt:message key="dialog.admin.catalog.management.duplicates.result" /></span>
 				<div id="duplicatesLists" dojoType="ingrid:TabContainer" class="full w264 h349" selectedChild="duplicatesList1">
 	
 					<!-- TAB 1 START -->
-					<div id="duplicatesList1" dojoType="ContentPane" class="blueTopBorder" label="Liste">
+					<div id="duplicatesList1" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.admin.catalog.management.duplicates.list" />">
 						<div class="inputContainer w264">
 							<table id="duplicatesListTable" dojoType="ingrid:FilteringTable" minRows="14" multiple="false" headClass="fixedHeader hidden" tbodyClass="scrollContent rows14" cellspacing="0" class="filteringTable interactive readonly w264 relativePos">
 								<thead class="hidden">
@@ -277,7 +279,7 @@ function hideLoadingZone() {
 					</div> <!-- TAB 1 END -->
 	
 	        		<!-- TAB 2 START -->
-					<div id="duplicatesList2" dojoType="ContentPane" class="blueTopBorder grey xScroll" label="Hierarchiebaum">
+					<div id="duplicatesList2" dojoType="ContentPane" class="blueTopBorder grey xScroll" label="<fmt:message key="dialog.admin.catalog.management.duplicates.tree" />">
 	
 						<div class="inputContainer grey">
 							<div dojoType="ContentPane" id="treeContainer">
@@ -301,11 +303,11 @@ function hideLoadingZone() {
 			<!-- RIGHT HAND SIDE CONTENT START -->
 			<div id="duplicatesData" class="inputContainer">
 				<div class="inputContainer field grey noSpaceBelow h313">
-					<span class="label"><label for="duplicatesObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objektname')">Objektname</label></span>
+					<span class="label"><label for="duplicatesObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objektname')"><fmt:message key="dialog.admin.catalog.management.duplicates.objectName" /></label></span>
 					<span class="input spaceBelow"><input type="text" id="duplicatesObjectName" name="duplicatesObjectName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
-					<span class="label"><label for="duplicatesObjectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 'Klasse')">Klasse</label></span>
+					<span class="label"><label for="duplicatesObjectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 'Klasse')"><fmt:message key="dialog.admin.catalog.management.duplicates.objectClass" /></label></span>
 					<span class="input spaceBelow"><input type="text" id="duplicatesObjectClass" name="duplicatesObjectClass" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-					<span class="label"><label for="duplicatesObjectDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objektbeschreibung')">Objektbeschreibung</label></span>
+					<span class="label"><label for="duplicatesObjectDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objektbeschreibung')"><fmt:message key="dialog.admin.catalog.management.duplicates.objectDescription" /></label></span>
    	           		<span class="input"><input type="text" mode="textarea" id="duplicatesObjectDescription" class="w640 h164" disabled="true" dojoType="ingrid:ValidationTextbox" /></span> 
 					<div class="fill"></div>
 				</div>
@@ -313,10 +315,10 @@ function hideLoadingZone() {
 				<div class="inputContainer">
 					<span class="button w644" style="height:20px !important;">
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveChanges();">&Auml;nderung speichern</button>
+							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveChanges();"><fmt:message key="dialog.admin.catalog.management.duplicates.saveChanges" /></button>
 						</span>
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Pr&uuml;fung erneut ausf&uuml;hren" onClick="javascript:scriptScope.startDuplicatesJob();">Pr&uuml;fung erneut ausf&uuml;hren</button>
+							<button dojoType="ingrid:Button" title="Pr&uuml;fung erneut ausf&uuml;hren" onClick="javascript:scriptScope.startDuplicatesJob();"><fmt:message key="dialog.admin.catalog.management.duplicates.refresh" /></button>
 						</span>
 						<span id="duplicatesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 							<img src="img/ladekreis.gif" />

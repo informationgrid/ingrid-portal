@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
@@ -360,7 +361,7 @@ scriptScope.replaceAddress = function() {
 		});
 
 	} else {
-		dialog.show(message.get("general.error"), "Bitte w&auml;hlen Sie zun&auml;chst zwei g&uuml;ltige und unterschiedliche Adressen aus.", dialog.WARNING);
+		dialog.show(message.get("general.error"), message.get("dialog.admin.catalog.management.deleteAddress.requiredFieldsHint"), dialog.WARNING);
 	}
 }
 
@@ -397,7 +398,7 @@ function hideLoadingZone() {
 			<!-- LEFT HAND SIDE CONTENT BLOCK 1 START -->
 			<div class="spacer"></div>
 			<div id="addressDeleteTree" class="inputContainer">
-				<span class="label">Zu l&ouml;schende Adresse</span>
+				<span class="label"><fmt:message key="dialog.admin.catalog.management.deleteAddress.deleteAddress" /></span>
 				<div class="inputContainer grey noSpaceBelow w264 h413 scrollable">
 					<div dojoType="ContentPane" id="treeContainerAddressDelete">
 						<!-- tree components -->
@@ -417,21 +418,21 @@ function hideLoadingZone() {
 			<!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
 			<div id="addressDeleteData" class="inputContainer">
 				<div class="inputContainer field grey noSpaceBelow h236">
-					<span class="label"><label for="addressDeleteDataTitle" onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')">Titel</label></span>
+					<span class="label"><label for="addressDeleteDataTitle" onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')"><fmt:message key="dialog.admin.catalog.management.deleteAddress.title" /></label></span>
 					<span class="input spaceBelow">
 						<input type="text" id="addressDeleteDataTitle" class="w640" disabled="true" dojoType="ingrid:ValidationTextbox" />
 					</span>
 					<div class="inputContainer">
 						<div class="half left">
-							<span class="label"><label for="addressDeleteDataCreationDate" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erstellt am')">Erstellt am</label></span>
+							<span class="label"><label for="addressDeleteDataCreationDate" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erstellt am')"><fmt:message key="dialog.admin.catalog.management.deleteAddress.creationDate" /></label></span>
 							<span class="input spaceBelow"><input type="text" id="addressDeleteDataCreationDate" name="addressDeleteDataCreationDate" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-							<span class="label"><label for="addressDeleteDataUser" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verantwortlicher')">Verantwortlicher</label></span>
+							<span class="label"><label for="addressDeleteDataUser" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verantwortlicher')"><fmt:message key="dialog.admin.catalog.management.deleteAddress.responsibleUser" /></label></span>
 							<span class="input spaceBelow"><input type="text" id="addressDeleteDataUser" name="addressDeleteDataUser" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 							<span class="label"><label for="addressDeleteDataID" onclick="javascript:dialog.showContextHelp(arguments[0], 'ID')">ID</label></span>
 							<span class="input"><input type="text" id="addressDeleteDataID" name="addressDeleteDataID" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 						</div>
 						<div class="half">
-							<span class="label"><label for="addressDeleteDataMDQS" onclick="javascript:dialog.showContextHelp(arguments[0], 'Qualit&auml;tssichernder')">Qualit&auml;tssichernder</label></span>
+							<span class="label"><label for="addressDeleteDataMDQS" onclick="javascript:dialog.showContextHelp(arguments[0], 'Qualit&auml;tssichernder')"><fmt:message key="dialog.admin.catalog.management.deleteAddress.qa" /></label></span>
 							<div class="tableContainer headHiddenRows5 w315">
 								<table id="addressDeleteDataMDQS" dojoType="ingrid:FilteringTable" minRows="5" headClass="hidden" cellspacing="0" class="filteringTable">
 									<thead>
@@ -449,12 +450,12 @@ function hideLoadingZone() {
 			</div>
 
 			<div id="addressDeleteDataObjects" class="inputContainer">
-				<span class="label"><label class="inActive" for="objectLists">&Uuml;bersicht der betroffenen Objekte, deren</label></span>
-				<span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.openDownloadResultAsCSVDialog();" title="Als CSV-Datei speichern">Als CSV-Datei speichern</a></span>
+				<span class="label"><label class="inActive" for="objectLists"><fmt:message key="dialog.admin.catalog.management.deleteAddress.objectPreview" /></label></span>
+				<span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.openDownloadResultAsCSVDialog();" title="Als CSV-Datei speichern"><fmt:message key="dialog.admin.catalog.management.deleteAddress.saveAsCSV" /></a></span>
 				<div id="addressDeleteDataObjectsLists" dojoType="ingrid:TabContainer" doLayout="false" class="w684" selectedChild="replaceInfoAddress">
 
 					<!-- TAB 1 START -->
-					<div id="replaceInfoAddress" dojoType="ContentPane" label="Auskunftsadresse ersetzt wird">
+					<div id="replaceInfoAddress" dojoType="ContentPane" label="<fmt:message key="dialog.admin.catalog.management.deleteAddress.replaceInfoAddress" />">
 						<div dojoType="ContentPane">
 							<div class="tableContainer rows4 w684">
 								<table id="replaceInfoAddressList" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort">
@@ -462,7 +463,7 @@ function hideLoadingZone() {
 										<tr>
 											<th nosort="true" field="icon" dataType="String" width="30">&nbsp;</th>
 											<th nosort="true" field="uuid" dataType="String" width="254">ID</th>
-											<th nosort="true" field="objectName" dataType="String" width="400">Objektname</th>
+											<th nosort="true" field="objectName" dataType="String" width="400"><fmt:message key="dialog.admin.catalog.management.deleteAddress.objectName" /></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -473,7 +474,7 @@ function hideLoadingZone() {
 					</div> <!-- TAB 1 END -->
   
 					<!-- TAB 2 START -->
-					<div id="replaceUser" dojoType="ContentPane" label="Verantwortlicher durch den Katalogadministrator ersetzt wird">
+					<div id="replaceUser" dojoType="ContentPane" label="<fmt:message key="dialog.admin.catalog.management.deleteAddress.replaceResponsibleAddress" />">
 						<div dojoType="ContentPane">
 							<div class="tableContainer rows4 w684">
 								<table id="replaceUserList" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort">
@@ -481,7 +482,7 @@ function hideLoadingZone() {
 										<tr>
 											<th nosort="true" field="icon" dataType="String" width="30">&nbsp;</th>
 											<th nosort="true" field="uuid" dataType="String" width="254">ID</th>
-											<th nosort="true" field="objectName" dataType="String" width="400">Objektname</th>
+											<th nosort="true" field="objectName" dataType="String" width="400"><fmt:message key="dialog.admin.catalog.management.deleteAddress.objectName" /></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -517,21 +518,21 @@ function hideLoadingZone() {
 			<div id="addressNewData" class="inputContainer">
 				<div class="inputContainer field grey noSpaceBelow h220">
 					<div class="inputContainer spaceBelow">
-						<span class="label"><label for="addressNewDataTitle" onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')">Titel</label></span>
+						<span class="label"><label for="addressNewDataTitle" onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')"><fmt:message key="dialog.admin.catalog.management.deleteAddress.title" /></label></span>
 						<span class="input"><input type="text" id="addressNewDataTitle" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 						<div class="fill"></div>
 					</div>
 					<div class="inputContainer spaceBelow">
 						<div class="half left">
-							<span class="label"><label for="addressNewDataCreationDate" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erstellt am')">Erstellt am</label></span>
+							<span class="label"><label for="addressNewDataCreationDate" onclick="javascript:dialog.showContextHelp(arguments[0], 'Erstellt am')"><fmt:message key="dialog.admin.catalog.management.deleteAddress.creationDate" /></label></span>
 							<span class="input spaceBelow"><input type="text" id="addressNewDataCreationDate" name="addressNewDataCreationDate" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-							<span class="label"><label for="addressNewDataUser" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verantwortlicher')">Verantwortlicher</label></span>
+							<span class="label"><label for="addressNewDataUser" onclick="javascript:dialog.showContextHelp(arguments[0], 'Verantwortlicher')"><fmt:message key="dialog.admin.catalog.management.deleteAddress.responsibleUser" /></label></span>
 							<span class="input spaceBelow"><input type="text" id="addressNewDataUser" name="addressNewDataUser" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 							<span class="label"><label for="addressNewDataID" onclick="javascript:dialog.showContextHelp(arguments[0], 'ID')">ID</label></span>
 							<span class="input"><input type="text" id="addressNewDataID" name="addressNewDataID" class="w308" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 						</div>
 						<div class="half">
-							<span class="label"><label for="addressNewDataMDQS" onclick="javascript:dialog.showContextHelp(arguments[0], 'Qualit&auml;tssichernder')">Qualit&auml;tssichernder</label></span>
+							<span class="label"><label for="addressNewDataMDQS" onclick="javascript:dialog.showContextHelp(arguments[0], 'Qualit&auml;tssichernder')"><fmt:message key="dialog.admin.catalog.management.deleteAddress.qa" /></label></span>
 							<div class="tableContainer headHiddenRows5 w315">
 								<table id="addressNewDataMDQS" dojoType="ingrid:FilteringTable" minRows="5" headClass="hidden" cellspacing="0" class="filteringTable">
 									<thead>
@@ -551,7 +552,7 @@ function hideLoadingZone() {
 			<div class="inputContainer">
 				<span class="button w924" style="height:20px !important;">
 					<span style="float:right;">
-						<button dojoType="ingrid:Button" title="Ersetzen" onClick="javascript:scriptScope.replaceAddress();">Ersetzen</button>
+						<button dojoType="ingrid:Button" title="Ersetzen" onClick="javascript:scriptScope.replaceAddress();"><fmt:message key="dialog.admin.catalog.management.deleteAddress.replace" /></button>
 					</span>
 					<span id="deleteAddressLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 						<img src="img/ladekreis.gif" />
