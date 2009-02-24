@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript" src="js/detail_helper.js"></script>
@@ -11,7 +12,7 @@ _container_.addOnLoad(function() {
 	ObjectService.getPublishedNodeData(nodeOld.id,
 		{
 			callback:function(res) { renderNodeData(res, nodeDataNew); },
-			errorHandler:function(message) {dojo.debug("Error in mdek_compare_view_dialog.html: Error while waiting for published nodeData: " + message); }
+			errorHandler:function(message) {dojo.debug("Error in mdek_compare_view_dialog.jsp: Error while waiting for published nodeData: " + message); }
 		}
 	);
 });
@@ -26,12 +27,12 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 
 	renderText(nodeDataOld.generalShortDescription, nodeDataNew.generalShortDescription);
 	renderTextWithTitle(dojo.widget.byId("objectClass")._getDisplayValueForValue("Class"+nodeDataOld.objectClass),
-						dojo.widget.byId("objectClass")._getDisplayValueForValue("Class"+nodeDataNew.objectClass), "Objektklasse");
-	renderTextWithTitle(nodeDataOld.generalDescription, nodeDataNew.generalDescription, "Beschreibung");
+						dojo.widget.byId("objectClass")._getDisplayValueForValue("Class"+nodeDataNew.objectClass), message.get("ui.obj.header.objectClass"));
+	renderTextWithTitle(nodeDataOld.generalDescription, nodeDataNew.generalDescription, message.get("ui.obj.general.description"));
 
 	UtilList.addAddressTitles(nodeDataOld.generalAddressTable);
 	UtilList.addAddressLinkLabels(nodeDataOld.generalAddressTable);
-	renderTable(nodeDataOld.generalAddressTable, nodeDataNew.generalAddressTable, ["nameOfRelation", "linkLabel"], ["Verweistyp", "Titel"], "Adressen");
+	renderTable(nodeDataOld.generalAddressTable, nodeDataNew.generalAddressTable, ["nameOfRelation", "linkLabel"], [message.get("dialog.compare.object.addressLink.type"), message.get("dialog.compare.object.addressLink.title")], message.get("ui.obj.general.addressTable.title"));
 
 	// technical domains
 	if (nodeDataOld.objectClass != nodeDataNew.objectClass) {
@@ -39,72 +40,71 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	}
 	
 	if (nodeDataNew.objectClass == 1) {
-		renderSectionTitel("Fachbezug");
+		renderSectionTitel(message.get("ui.obj.relevance"));
 		// Objekt, Karte
 		renderTextWithTitle(nodeDataOld.ref1BasisText, nodeDataNew.ref1BasisText, message.get("ui.obj.type1.technicalBasisTable.title"));
 		renderTextWithTitle(nodeDataOld.ref1ObjectIdentifier, nodeDataNew.ref1ObjectIdentifier, message.get("ui.obj.type1.identifier"));
-		renderTextWithTitle(dojo.widget.byId("ref1DataSet")._getDisplayValueForValue(nodeDataOld.ref1DataSet), dojo.widget.byId("ref1DataSet")._getDisplayValueForValue(nodeDataNew.ref1DataSet), "Datensatz/Datenserie");
-		renderList(nodeDataOld.ref1Representation, nodeDataNew.ref1Representation, "Digitale Repr&auml;sentation", null, function(val) { return dojo.widget.byId("ref1RepresentationCombobox")._getDisplayValueForValue(val); });
-		renderTextWithTitle(nodeDataOld.ref1Coverage, nodeDataNew.ref1Coverage, "Erfassungsgrad [%]");
-		renderTextWithTitle(dojo.widget.byId("ref1VFormatTopology")._getDisplayValueForValue(nodeDataOld.ref1VFormatTopology), dojo.widget.byId("ref1VFormatTopology")._getDisplayValueForValue(nodeDataNew.ref1VFormatTopology), "Topologieinformation");
-		renderTable(nodeDataOld.ref1VFormatDetails, nodeDataNew.ref1VFormatDetails, ["geometryType", "numElements"], ["Geometrietyp", "Elementanzahl"], "Vektor Format", [function(val) {return dojo.widget.byId("geometryTypeEditor")._getDisplayValueForValue(val);}, null]);
-		renderTextWithTitle(nodeDataOld.ref1SpatialSystem, nodeDataNew.ref1SpatialSystem, "Raumbezugssytem");
-		renderTable(nodeDataOld.ref1Scale, nodeDataNew.ref1Scale, ["scale", "groundResolution", "scanResolution"], ["Ma&szlig;stab", "Bodenaufl&ouml;sung [m]", "Scanaufl&ouml;sung [DPI]"], "Erstellungsma&szlig;stab");
-		renderTextWithTitle(nodeDataOld.ref1AltAccuracy, nodeDataNew.ref1AltAccuracy, "H&ouml;hengenauigkeit");
-		renderTextWithTitle(nodeDataOld.ref1PosAccuracy, nodeDataNew.ref1PosAccuracy, "Lagegenauigkeit");
-		renderTable(nodeDataOld.ref1SymbolsText, nodeDataNew.ref1SymbolsText, ["title", "date", "version"], ["Titel", "Datum", "Version"], "Symbolkatalog", [null, formatDate, null]);
-		renderTable(nodeDataOld.ref1KeysText, nodeDataNew.ref1KeysText, ["title", "date", "version"], ["Titel", "Datum", "Version"], "Schl&uuml;sselkatalog", [null, formatDate, null]);
-		renderTextWithTitle(nodeDataOld.ref1DataBasisText, nodeDataNew.ref1DataBasisText, "Daten Grundlage");
-		renderTextWithTitle(nodeDataOld.ref1DataBasisText, nodeDataNew.ref1DataBasisText, "Daten Grundlage");
-		renderList(nodeDataOld.ref1Data, nodeDataNew.ref1Data, "Sachdaten/Attributinformation");
-		renderTextWithTitle(nodeDataOld.ref1ProcessText, nodeDataNew.ref1ProcessText, "Herstellungsprozess");
+		renderTextWithTitle(dojo.widget.byId("ref1DataSet")._getDisplayValueForValue(nodeDataOld.ref1DataSet), dojo.widget.byId("ref1DataSet")._getDisplayValueForValue(nodeDataNew.ref1DataSet), message.get("ui.obj.type1.dataset"));
+		renderList(nodeDataOld.ref1Representation, nodeDataNew.ref1Representation, message.get("ui.obj.type1.digitalRepresentation"), null, function(val) { return dojo.widget.byId("ref1RepresentationCombobox")._getDisplayValueForValue(val); });
+		renderTextWithTitle(nodeDataOld.ref1Coverage, nodeDataNew.ref1Coverage, message.get("ui.obj.type1.coverage") + " [%]");
+		renderTextWithTitle(dojo.widget.byId("ref1VFormatTopology")._getDisplayValueForValue(nodeDataOld.ref1VFormatTopology), dojo.widget.byId("ref1VFormatTopology")._getDisplayValueForValue(nodeDataNew.ref1VFormatTopology), message.get("ui.obj.type1.vectorFormat.topology"));
+		renderTable(nodeDataOld.ref1VFormatDetails, nodeDataNew.ref1VFormatDetails, ["geometryType", "numElements"], [message.get("ui.obj.type1.vectorFormat.detailsTable.header.geoType"), message.get("ui.obj.type1.vectorFormat.detailsTable.header.elementCount")], message.get("ui.obj.type1.vectorFormat.title"), [function(val) {return dojo.widget.byId("geometryTypeEditor")._getDisplayValueForValue(val);}, null]);
+		renderTextWithTitle(nodeDataOld.ref1SpatialSystem, nodeDataNew.ref1SpatialSystem, message.get("ui.obj.type1.spatialSystem"));
+		renderTable(nodeDataOld.ref1Scale, nodeDataNew.ref1Scale, ["scale", "groundResolution", "scanResolution"], [message.get("ui.obj.type1.scaleTable.header.scale"), message.get("ui.obj.type1.scaleTable.header.groundResolution"), message.get("ui.obj.type1.scaleTable.header.scanResolution")], message.get("ui.obj.type1.scaleTable.title"));
+		renderTextWithTitle(nodeDataOld.ref1AltAccuracy, nodeDataNew.ref1AltAccuracy, message.get("ui.obj.type1.sizeAccuracy"));
+		renderTextWithTitle(nodeDataOld.ref1PosAccuracy, nodeDataNew.ref1PosAccuracy, message.get("ui.obj.type1.posAccuracy"));
+		renderTable(nodeDataOld.ref1SymbolsText, nodeDataNew.ref1SymbolsText, ["title", "date", "version"], [message.get("ui.obj.type1.symbolCatTable.header.title"), message.get("ui.obj.type1.symbolCatTable.header.date"), message.get("ui.obj.type1.symbolCatTable.header.version")], message.get("ui.obj.type1.symbolCatTable.title"), [null, formatDate, null]);
+		renderTable(nodeDataOld.ref1KeysText, nodeDataNew.ref1KeysText, ["title", "date", "version"], [message.get("ui.obj.type1.keyCatTable.header.title"), message.get("ui.obj.type1.keyCatTable.header.date"), message.get("ui.obj.type1.keyCatTable.header.version")], message.get("ui.obj.type1.keyCatTable.title"), [null, formatDate, null]);
+		renderTextWithTitle(nodeDataOld.ref1DataBasisText, nodeDataNew.ref1DataBasisText, message.get("ui.obj.type1.dataBasisTable.title"));
+		renderList(nodeDataOld.ref1Data, nodeDataNew.ref1Data, message.get("ui.obj.type1.attributes"));
+		renderTextWithTitle(nodeDataOld.ref1ProcessText, nodeDataNew.ref1ProcessText, message.get("ui.obj.type1.processTable.title"));
 	} else if (nodeDataNew.objectClass == 2) {
-		renderSectionTitel("Fachbezug");
+		renderSectionTitel(message.get("ui.obj.relevance"));
 		// Literature
-		renderTextWithTitle(nodeDataOld.ref2Author, nodeDataNew.ref2Author, "Autor");
-		renderTextWithTitle(nodeDataOld.ref2Publisher, nodeDataNew.ref2Publisher, "Herausgeber");
-		renderTextWithTitle(nodeDataOld.ref2PublishedIn, nodeDataNew.ref2PublishedIn, "Erschienen in");
-		renderTextWithTitle(nodeDataOld.ref2PublishLocation, nodeDataNew.ref2PublishLocation, "Erscheinungsort");
-		renderTextWithTitle(nodeDataOld.ref2PublishedInIssue, nodeDataNew.ref2PublishedInIssue, "Band/Heft");
-		renderTextWithTitle(nodeDataOld.ref2PublishedInPages, nodeDataNew.ref2PublishedInPages, "Seiten");
-		renderTextWithTitle(nodeDataOld.ref2PublishedInYear, nodeDataNew.ref2PublishedInYear, "Erscheinungsjahr");
-		renderTextWithTitle(nodeDataOld.ref2PublishedISBN, nodeDataNew.ref2PublishedISBN, "ISBM Nummer");
-		renderTextWithTitle(nodeDataOld.ref2PublishedPublisher, nodeDataNew.ref2PublishedPublisher, "Verlag");
-		renderTextWithTitle(nodeDataOld.ref2LocationText, nodeDataNew.ref2LocationText, "Standort (Text)");
-		renderTextWithTitle(nodeDataOld.ref2DocumentType, nodeDataNew.ref2DocumentType, "Dokumententyp");
-		renderTextWithTitle(nodeDataOld.ref2BaseDataText, nodeDataNew.ref2BaseDataText, "Basisdaten");
-		renderTextWithTitle(nodeDataOld.ref2BibData, nodeDataNew.ref2BibData, "Weitere bibliografische Angaben");
-		renderTextWithTitle(nodeDataOld.ref2Explanation, nodeDataNew.ref2Explanation, "Erl&auml;uterungen");
+		renderTextWithTitle(nodeDataOld.ref2Author, nodeDataNew.ref2Author, message.get("ui.obj.type2.author"));
+		renderTextWithTitle(nodeDataOld.ref2Publisher, nodeDataNew.ref2Publisher, message.get("ui.obj.type2.editor"));
+		renderTextWithTitle(nodeDataOld.ref2PublishedIn, nodeDataNew.ref2PublishedIn, message.get("ui.obj.type2.publishedIn"));
+		renderTextWithTitle(nodeDataOld.ref2PublishLocation, nodeDataNew.ref2PublishLocation, message.get("ui.obj.type2.publishedLocation"));
+		renderTextWithTitle(nodeDataOld.ref2PublishedInIssue, nodeDataNew.ref2PublishedInIssue, message.get("ui.obj.type2.issue"));
+		renderTextWithTitle(nodeDataOld.ref2PublishedInPages, nodeDataNew.ref2PublishedInPages, message.get("ui.obj.type2.pages"));
+		renderTextWithTitle(nodeDataOld.ref2PublishedInYear, nodeDataNew.ref2PublishedInYear, message.get("ui.obj.type2.publishedYear"));
+		renderTextWithTitle(nodeDataOld.ref2PublishedISBN, nodeDataNew.ref2PublishedISBN, message.get("ui.obj.type2.isbn"));
+		renderTextWithTitle(nodeDataOld.ref2PublishedPublisher, nodeDataNew.ref2PublishedPublisher, message.get("ui.obj.type2.publisher"));
+		renderTextWithTitle(nodeDataOld.ref2LocationText, nodeDataNew.ref2LocationText, message.get("ui.obj.type2.locationTable.title"));
+		renderTextWithTitle(nodeDataOld.ref2DocumentType, nodeDataNew.ref2DocumentType, message.get("ui.obj.type2.documentType"));
+		renderTextWithTitle(nodeDataOld.ref2BaseDataText, nodeDataNew.ref2BaseDataText, message.get("ui.obj.type2.generalDataTable.title"));
+		renderTextWithTitle(nodeDataOld.ref2BibData, nodeDataNew.ref2BibData, message.get("ui.obj.type2.additionalBibInfo"));
+		renderTextWithTitle(nodeDataOld.ref2Explanation, nodeDataNew.ref2Explanation, message.get("ui.obj.type2.description"));
 	} else if (nodeDataNew.objectClass == 3) {
-		renderSectionTitel("Fachbezug");
+		renderSectionTitel(message.get("ui.obj.relevance"));
 		// Dienst/Anwendung/Informationssystem
 		renderList(nodeDataOld.ref3ServiceTypeTable, nodeDataNew.ref3ServiceTypeTable, message.get("ui.obj.type3.ref3ServiceTypeTable.title"), null, function(val) { return dojo.widget.byId("ref3ServiceTypeEditor")._getDisplayValueForValue(val); });
-		renderTextWithTitle(dojo.widget.byId("ref3ServiceType")._getDisplayValueForValue(nodeDataOld.ref3ServiceType), dojo.widget.byId("ref3ServiceType")._getDisplayValueForValue(nodeDataNew.ref3ServiceType), "Servicetyp");
-		renderList(nodeDataOld.ref3ServiceVersion, nodeDataNew.ref3ServiceVersion, "Versionen des Service");
-		renderTextWithTitle(nodeDataOld.ref3SystemEnv, nodeDataNew.ref3SystemEnv, "Systemumgebung");
-		renderTextWithTitle(nodeDataOld.ref3History, nodeDataNew.ref3History, "Historie");
-		renderTextWithTitle(nodeDataOld.ref3BaseDataText, nodeDataNew.ref3BaseDataText, "Basisdaten (Text)");
+		renderTextWithTitle(dojo.widget.byId("ref3ServiceType")._getDisplayValueForValue(nodeDataOld.ref3ServiceType), dojo.widget.byId("ref3ServiceType")._getDisplayValueForValue(nodeDataNew.ref3ServiceType), message.get("ui.obj.type3.ref3ServiceTypeTable.title"));
+		renderList(nodeDataOld.ref3ServiceVersion, nodeDataNew.ref3ServiceVersion, message.get("ui.obj.type3.serviceVersion"));
+		renderTextWithTitle(nodeDataOld.ref3SystemEnv, nodeDataNew.ref3SystemEnv, message.get("ui.obj.type3.environment"));
+		renderTextWithTitle(nodeDataOld.ref3History, nodeDataNew.ref3History, message.get("ui.obj.type3.history"));
+		renderTextWithTitle(nodeDataOld.ref3BaseDataText, nodeDataNew.ref3BaseDataText, message.get("ui.obj.type3.generalDataTable.title") + " (" + message.get("ui.obj.type3.generalDataTable.tab.text") + ")");
 		renderTable(nodeDataOld.ref3Scale, nodeDataNew.ref3Scale, ["scale", "groundResolution", "scanResolution"], [message.get("ui.obj.type1.scaleTable.header.scale"), message.get("ui.obj.type1.scaleTable.header.groundResolution"), message.get("ui.obj.type1.scaleTable.header.scanResolution")], message.get("ui.obj.type3.scaleTable.title"));
 //		renderOperations(nodeData.ref3Operation);
 	} else if (nodeDataNew.objectClass == 4) {
-		renderSectionTitel("Fachbezug");
+		renderSectionTitel(message.get("ui.obj.relevance"));
 		// Vorhaben
-		renderTextWithTitle(nodeDataOld.ref4ParticipantsText, nodeDataNew.ref4ParticipantsText, "Beteiligte");
-		renderTextWithTitle(nodeDataOld.ref4PMText, nodeDataNew.ref4PMText, "Projektleiter");
-		renderTextWithTitle(nodeDataOld.ref4Explanation, nodeDataNew.ref4Explanation, "Erkl&auml;rungen");
+		renderTextWithTitle(nodeDataOld.ref4ParticipantsText, nodeDataNew.ref4ParticipantsText, message.get("ui.obj.type4.participantsTable.title"));
+		renderTextWithTitle(nodeDataOld.ref4PMText, nodeDataNew.ref4PMText, message.get("ui.obj.type4.projectManagerTable.title"));
+		renderTextWithTitle(nodeDataOld.ref4Explanation, nodeDataNew.ref4Explanation, message.get("Erl&auml;uterungen"));
 	} else if (nodeDataNew.objectClass == 5) {
-		renderSectionTitel("Fachbezug");
+		renderSectionTitel(message.get("ui.obj.relevance"));
 		// Datensammlung/Datenbank
-		renderTable(nodeDataOld.ref5dbContent, nodeDataNew.ref5dbContent, ["parameter", "additionalData"], ["Parameter", "Erg&auml;nzende Angaben"], "Inhalte der Datensammlung/Datenbank");
-		renderTextWithTitle(nodeDataOld.ref5MethodText, nodeDataNew.ref5MethodText, "Methode/Datengrundlage");
-		renderTextWithTitle(nodeDataOld.ref5Explanation, nodeDataNew.ref5Explanation, "Erkl&auml;rungen");
+		renderTable(nodeDataOld.ref5dbContent, nodeDataNew.ref5dbContent, ["parameter", "additionalData"], [message.get("ui.obj.type5.contentTable.header.parameter"), message.get("ui.obj.type5.contentTable.header.additionalData")], message.get("ui.obj.type5.contentTable.header.additionalData"));
+		renderTextWithTitle(nodeDataOld.ref5MethodText, nodeDataNew.ref5MethodText, message.get("ui.obj.type5.methodTable.title"));
+		renderTextWithTitle(nodeDataOld.ref5Explanation, nodeDataNew.ref5Explanation, message.get("ui.obj.type5.description"));
 	}
 
 	// spatial reference
-	renderSectionTitel("Raumbezug");
+	renderSectionTitel(message.get("ui.obj.spatial.title"));
 	UtilList.addSNSLocationLabels(nodeDataOld.spatialRefAdminUnitTable);
-	renderTable(nodeDataOld.spatialRefAdminUnitTable, nodeDataNew.spatialRefAdminUnitTable, ["label", "nativeKey", "longitude1", "latitude1", "longitude2", "latitude2"], ["Name", "fachlicher Schl&uuml;ssel", "L&auml;nge 1", " Breite 1", "L&auml;nge 2", "Breite 2"], "Administrative Einheiten");
-	renderTable(nodeDataOld.spatialRefLocationTable, nodeDataNew.spatialRefLocationTable, ["name", "longitude1", "latitude1", "longitude2", "latitude2"], ["Name", "L&auml;nge 1", " Breite 1", "L&auml;nge 2", "Breite 2"], "Freier Bezug");
+	renderTable(nodeDataOld.spatialRefAdminUnitTable, nodeDataNew.spatialRefAdminUnitTable, ["label", "nativeKey", "longitude1", "latitude1", "longitude2", "latitude2"], [message.get("ui.obj.spatial.geoThesTable.header.name"), message.get("ui.obj.spatial.geoThesTable.header.nativeKey"), message.get("ui.obj.spatial.geoThesTable.header.longitude1"), message.get("ui.obj.spatial.geoThesTable.header.latitude1"), message.get("ui.obj.spatial.geoThesTable.header.longitude2"), message.get("ui.obj.spatial.geoThesTable.header.latitude2")], message.get("dialog.compare.object.spatialTable.title"));
+	renderTable(nodeDataOld.spatialRefLocationTable, nodeDataNew.spatialRefLocationTable, ["name", "longitude1", "latitude1", "longitude2", "latitude2"], [message.get("ui.obj.spatial.geoTable.header.name"), message.get("ui.obj.spatial.geoTable.header.longitude1"), message.get("ui.obj.spatial.geoTable.header.latitude1"), message.get("ui.obj.spatial.geoTable.header.longitude2"), message.get("ui.obj.spatial.geoTable.header.latitude2")], message.get("ui.obj.spatial.geoTable.title"));
 	var altitudeDataOld = [nodeDataOld];
 	var altitudeDataNew = [nodeDataNew];
 	// create cell render functions
@@ -119,11 +119,11 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	if (altitudeDataOld[0].spatialRefAltMax == null) { altitudeDataOld[0].spatialRefAltMax = ""; }
 	if (altitudeDataOld[0].spatialRefAltMeasure = null) { altitudeDataOld[0].spatialRefAltMeasure = ""; }
 	if (altitudeDataOld[0].spatialRefAltVDate == null) { altitudeDataOld[0].spatialRefAltVDate = ""; }
-	renderTable(altitudeDataOld, altitudeDataNew, ["spatialRefAltMin", "spatialRefAltMax", "spatialRefAltMeasure", "spatialRefAltVDate"], ["Min", "Max", "Ma&szlig;einheit", "Vertikaldatum"], "H&ouml;he", [null, null, lookupSpatialRefAltMeasure, lookupSpatialRefAltVDate]);
-	renderTextWithTitle(nodeDataOld.spatialRefExplanation, nodeDataNew.spatialRefExplanation, "Erl&auml;uterungen");
+	renderTable(altitudeDataOld, altitudeDataNew, ["spatialRefAltMin", "spatialRefAltMax", "spatialRefAltMeasure", "spatialRefAltVDate"], [message.get("ui.obj.spatial.height.min"), message.get("ui.obj.spatial.height.max"), message.get("ui.obj.spatial.height.unit"), message.get("ui.obj.spatial.height.geodeticSystem")], message.get("ui.obj.spatial.height"), [null, null, lookupSpatialRefAltMeasure, lookupSpatialRefAltVDate]);
+	renderTextWithTitle(nodeDataOld.spatialRefExplanation, nodeDataNew.spatialRefExplanation, message.get("ui.obj.spatial.description"));
 
 	// temporal reference
-	renderSectionTitel("Zeitbezug");
+	renderSectionTitel(message.get("ui.obj.time.title"));
 	var timeRefTxtOld;
 	var timeRefTxtNew;
 	if (nodeDataOld.timeRefDate1) {
@@ -141,26 +141,26 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 		}
 	}
 
-	renderTextWithTitle(timeRefTxtOld, timeRefTxtNew, "Zeitbezug des Dateninhaltes");
-	renderTextWithTitle(dojo.widget.byId("timeRefStatus")._getDisplayValueForValue(nodeDataOld.timeRefStatus), dojo.widget.byId("timeRefStatus")._getDisplayValueForValue(nodeDataNew.timeRefStatus), "Status");
-	renderTextWithTitle(dojo.widget.byId("timeRefPeriodicity")._getDisplayValueForValue(nodeDataOld.timeRefPeriodicity), dojo.widget.byId("timeRefPeriodicity")._getDisplayValueForValue(nodeDataNew.timeRefPeriodicity), "Periodizit&auml;t");
+	renderTextWithTitle(timeRefTxtOld, timeRefTxtNew, message.get("ui.obj.time.timeRefContent"));
+	renderTextWithTitle(dojo.widget.byId("timeRefStatus")._getDisplayValueForValue(nodeDataOld.timeRefStatus), dojo.widget.byId("timeRefStatus")._getDisplayValueForValue(nodeDataNew.timeRefStatus), message.get("ui.obj.time.state"));
+	renderTextWithTitle(dojo.widget.byId("timeRefPeriodicity")._getDisplayValueForValue(nodeDataOld.timeRefPeriodicity), dojo.widget.byId("timeRefPeriodicity")._getDisplayValueForValue(nodeDataNew.timeRefPeriodicity), message.get("ui.obj.time.periodicity"));
 	if ((nodeDataOld.timeRefIntervalNum && nodeDataOld.timeRefIntervalUnit) || (nodeDataNew.timeRefIntervalNum && nodeDataNew.timeRefIntervalUnit)) {
-		var textOld = "alle "+nodeDataOld.timeRefIntervalNum+" "+dojo.widget.byId("timeRefIntervalUnit")._getDisplayValueForValue(nodeDataOld.timeRefIntervalUnit);
-		var textNew = "alle "+nodeDataNew.timeRefIntervalNum+" "+dojo.widget.byId("timeRefIntervalUnit")._getDisplayValueForValue(nodeDataNew.timeRefIntervalUnit);
-		renderTextWithTitle(textOld, textNew, "Im Intervall");
+		var textOld = message.get("ui.obj.time.interval.each")+ " "+nodeDataOld.timeRefIntervalNum+" "+dojo.widget.byId("timeRefIntervalUnit")._getDisplayValueForValue(nodeDataOld.timeRefIntervalUnit);
+		var textNew = message.get("ui.obj.time.interval.each")+ " "+nodeDataNew.timeRefIntervalNum+" "+dojo.widget.byId("timeRefIntervalUnit")._getDisplayValueForValue(nodeDataNew.timeRefIntervalUnit);
+		renderTextWithTitle(textOld, textNew, message.get("ui.obj.time.interval"));
 	}
 	// create cell render functions
 	function lookupTimeRefType(val) {
 		return dojo.widget.byId("timeRefTypeCombobox")._getDisplayValueForValue(val);
 	}
-	renderTable(nodeDataOld.timeRefTable, nodeDataNew.timeRefTable, ["date", "type"], ["Datum", "Typ"], "Zeitbezug des Datensatzes", [formatDate, lookupTimeRefType]);
-	renderTextWithTitle(nodeDataOld.timeRefExplanation, nodeDataNew.timeRefExplanation, "Erl&auml;uterungen");
+	renderTable(nodeDataOld.timeRefTable, nodeDataNew.timeRefTable, ["date", "type"], [message.get("ui.obj.time.timeRefTable.header.date"), message.get("ui.obj.time.timeRefTable.header.type")], message.get("ui.obj.time.timeRefTable.title"), [formatDate, lookupTimeRefType]);
+	renderTextWithTitle(nodeDataOld.timeRefExplanation, nodeDataNew.timeRefExplanation, message.get("ui.obj.time.description"));
 	
 	// additional information
-	renderSectionTitel("Zusatzinformationen");
-	renderTextWithTitle(dojo.widget.byId("extraInfoLangMetaData")._getDisplayValueForValue(nodeDataOld.extraInfoLangMetaData), dojo.widget.byId("extraInfoLangMetaData")._getDisplayValueForValue(nodeDataNew.extraInfoLangMetaData), "Sprache des Metadatensatzes");
-	renderTextWithTitle(dojo.widget.byId("extraInfoLangData")._getDisplayValueForValue(nodeDataOld.extraInfoLangData), dojo.widget.byId("extraInfoLangData")._getDisplayValueForValue(nodeDataNew.extraInfoLangData), "Sprache des Datensatzes");
-	renderTextWithTitle(dojo.widget.byId("extraInfoPublishArea")._getDisplayValueForValue(nodeDataOld.extraInfoPublishArea), dojo.widget.byId("extraInfoPublishArea")._getDisplayValueForValue(nodeDataNew.extraInfoPublishArea), "Ver&ouml;ffentlichung");
+	renderSectionTitel(message.get("ui.obj.additionalInfo.title"));
+	renderTextWithTitle(dojo.widget.byId("extraInfoLangMetaData")._getDisplayValueForValue(nodeDataOld.extraInfoLangMetaData), dojo.widget.byId("extraInfoLangMetaData")._getDisplayValueForValue(nodeDataNew.extraInfoLangMetaData), message.get("ui.obj.additionalInfo.language.metadata"));
+	renderTextWithTitle(dojo.widget.byId("extraInfoLangData")._getDisplayValueForValue(nodeDataOld.extraInfoLangData), dojo.widget.byId("extraInfoLangData")._getDisplayValueForValue(nodeDataNew.extraInfoLangData), message.get("ui.obj.additionalInfo.language.data"));
+	renderTextWithTitle(dojo.widget.byId("extraInfoPublishArea")._getDisplayValueForValue(nodeDataOld.extraInfoPublishArea), dojo.widget.byId("extraInfoPublishArea")._getDisplayValueForValue(nodeDataNew.extraInfoPublishArea), message.get("ui.obj.additionalInfo.publicationCondition"));
 	// Table is only displayed for object classes 1 and 3
 	if (nodeDataNew.objectClass == 1 || nodeDataNew.objectClass == 3) {
 		renderTable(nodeDataOld.extraInfoConformityTable, nodeDataNew.extraInfoConformityTable, ["level", "specification", "date"],
@@ -168,41 +168,40 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 					message.get("ui.obj.additionalInfo.conformityTable.title"),
 					[function(val) { return dojo.widget.byId("extraInfoConformityLevelEditor")._getDisplayValueForValue(val); }, null, formatDate]);
 	}
-	renderList(nodeDataOld.extraInfoXMLExportTable, nodeDataNew.extraInfoXMLExportTable, "XML-Export-Kriterium");
-	renderList(nodeDataOld.extraInfoLegalBasicsTable, nodeDataNew.extraInfoLegalBasicsTable, "Rechtliche Grundlagen");
-	renderTextWithTitle(nodeDataOld.extraInfoPurpose, nodeDataNew.extraInfoPurpose, "Herstellungszweck");
-	renderTextWithTitle(nodeDataOld.extraInfoUse, nodeDataNew.extraInfoUse, "Eignung/Nutzung");
+	renderList(nodeDataOld.extraInfoXMLExportTable, nodeDataNew.extraInfoXMLExportTable, message.get("ui.obj.additionalInfo.xmlExportCriteria"));
+	renderList(nodeDataOld.extraInfoLegalBasicsTable, nodeDataNew.extraInfoLegalBasicsTable, message.get("ui.obj.additionalInfo.legalBasis"));
+	renderTextWithTitle(nodeDataOld.extraInfoPurpose, nodeDataNew.extraInfoPurpose, message.get("ui.obj.additionalInfo.purpose"));
+	renderTextWithTitle(nodeDataOld.extraInfoUse, nodeDataNew.extraInfoUse, message.get("ui.obj.additionalInfo.suitability"));
 	
 	// availability
-	renderSectionTitel("Verf&uuml;gbarkeit");
+	renderSectionTitel(message.get("ui.obj.availability.title"));
 	renderTable(nodeDataOld.availabilityUsageLimitationTable, nodeDataNew.availabilityUsageLimitationTable, ["limit", "requirement"],
 					[message.get("ui.obj.availability.usageLimitationTable.header.limit"), message.get("ui.obj.availability.usageLimitationTable.header.requirement")],
 					message.get("ui.obj.availability.usageLimitationTable.title"),
 					[function(val) { return dojo.widget.byId("availabilityUsageLimitationLimitEditor")._getDisplayValueForValue(val); }, null]);
 
-	renderTable(nodeDataOld.availabilityDataFormatTable, nodeDataNew.availabilityDataFormatTable, ["name", "version", "compression", "pixelDepth"], ["Name", "Version", "Kompressionstechnik", "Bildpunkttiefe"], "Datenformat");
-	renderTable(nodeDataOld.availabilityMediaOptionsTable, nodeDataNew.availabilityMediaOptionsTable, ["name", "transferSize", "location"], ["Medium", "Datenvolumen [MB]", "Speicherort"], "Medienoption", [function(val) { return dojo.widget.byId("availabilityMediaOptionsMediumCombobox")._getDisplayValueForValue(val); }, null, null]);
-	renderTextWithTitle(nodeDataOld.availabilityOrderInfo, nodeDataNew.availabilityOrderInfo, "Bestellinformation");
+	renderTable(nodeDataOld.availabilityDataFormatTable, nodeDataNew.availabilityDataFormatTable, ["name", "version", "compression", "pixelDepth"], [message.get("ui.obj.availability.dataFormatTable.header.name"), message.get("ui.obj.availability.dataFormatTable.header.version"), message.get("ui.obj.availability.dataFormatTable.header.compression"), message.get("ui.obj.availability.dataFormatTable.header.depth")], message.get("ui.obj.availability.dataFormatTable.title"));
+	renderTable(nodeDataOld.availabilityMediaOptionsTable, nodeDataNew.availabilityMediaOptionsTable, ["name", "transferSize", "location"], [message.get("ui.obj.availability.mediaOptionTable.header.type"), message.get("ui.obj.availability.mediaOptionTable.header.amount"), message.get("ui.obj.availability.mediaOptionTable.header.location")], message.get("ui.obj.availability.mediaOptionTable.title"), [function(val) { return dojo.widget.byId("availabilityMediaOptionsMediumCombobox")._getDisplayValueForValue(val); }, null, null]);
+	renderTextWithTitle(nodeDataOld.availabilityOrderInfo, nodeDataNew.availabilityOrderInfo, message.get("ui.obj.availability.orderInfo"));
 
 	// indexing
-	renderSectionTitel("Verschlagwortung");
-	renderList(nodeDataOld.thesaurusTermsTable, nodeDataNew.thesaurusTermsTable, "Thesaurus-Suchbegriffe", "title");
-	renderList(nodeDataOld.thesaurusTopicsList, nodeDataNew.thesaurusTopicsList, "Themenkategorie", null, function (val) { return dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(val);});
-	renderTextWithTitle(nodeDataOld.thesaurusEnvExtRes ? "Ja": "Nein", nodeDataNew.thesaurusEnvExtRes ? "Ja": "Nein", "Als Katalogseite anzeigen");
-	renderList(nodeDataOld.thesaurusEnvTopicsList, nodeDataNew.thesaurusEnvTopicsList, "Umweltthemen - Themen", null, function (val) { return dojo.widget.byId("thesaurusEnvTopicsCombobox")._getDisplayValueForValue(val);});
-	renderList(nodeDataOld.thesaurusEnvCatsList, nodeDataNew.thesaurusEnvCatsList, "Umweltthemen - Kategorien", null, function (val) { return dojo.widget.byId("thesaurusEnvCatsCombobox")._getDisplayValueForValue(val);});
+	renderSectionTitel(message.get("ui.obj.thesaurus.title"));
+	renderList(nodeDataOld.thesaurusTermsTable, nodeDataNew.thesaurusTermsTable, message.get("ui.adr.thesaurus.terms"), "title");
+	renderList(nodeDataOld.thesaurusTopicsList, nodeDataNew.thesaurusTopicsList, message.get("ui.obj.thesaurus.terms.category"), null, function (val) { return dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(val);});
+	renderTextWithTitle(nodeDataOld.thesaurusEnvExtRes ? message.get("general.yes"): message.get("general.no"), nodeDataNew.thesaurusEnvExtRes ? message.get("general.yes"): message.get("general.no"), message.get("ui.obj.thesaurus.terms.enviromental.displayCatalogPage"));
+	renderList(nodeDataOld.thesaurusEnvTopicsList, nodeDataNew.thesaurusEnvTopicsList, message.get("ui.obj.thesaurus.terms.enviromental.title")+ " - " + message.get("ui.obj.thesaurus.terms.enviromental.topics"), null, function (val) { return dojo.widget.byId("thesaurusEnvTopicsCombobox")._getDisplayValueForValue(val);});
+	renderList(nodeDataOld.thesaurusEnvCatsList, nodeDataNew.thesaurusEnvCatsList, message.get("ui.obj.thesaurus.terms.enviromental.title")+ " - " + message.get("ui.obj.thesaurus.terms.enviromental.categories"), null, function (val) { return dojo.widget.byId("thesaurusEnvCatsCombobox")._getDisplayValueForValue(val);});
 
 	// references
-	renderSectionTitel("Verweise");
-	renderList(nodeDataOld.linksFromObjectTable, nodeDataNew.linksFromObjectTable, "&Uuml;bergeordnete Objektreferenzen", "title")
-	renderList(nodeDataOld.linksToObjectTable, nodeDataNew.linksToObjectTable, "Untergeordnete Objektreferenzen", "title")
+	renderSectionTitel(message.get("ui.obj.links.title"));
+	renderList(nodeDataOld.linksFromObjectTable, nodeDataNew.linksFromObjectTable, message.get("dialog.compare.object.linksFromTable.title"), "title")
+	renderList(nodeDataOld.linksToObjectTable, nodeDataNew.linksToObjectTable, message.get("dialog.compare.object.linksToTable.title"), "title")
 	renderUrlLinkList(nodeDataOld.linksToUrlTable, nodeDataNew.linksToUrlTable);
 	
 	// administrative data
-	renderSectionTitel("Administrative Angaben");
-	renderTextWithTitle(nodeDataOld.uuid, nodeDataNew.uuid, "Objekt-ID");
-	renderTextWithTitle(catalogData.catalogName, catalogData.catalogName, "Katalog");
-
+	renderSectionTitel(message.get("dialog.compare.object.administrative"));
+	renderTextWithTitle(nodeDataOld.uuid, nodeDataNew.uuid, message.get("dialog.compare.object.id"));
+	renderTextWithTitle(catalogData.catalogName, catalogData.catalogName, message.get("dialog.compare.object.catalog"));
 }
 
 function renderSectionTitel(val) {
@@ -623,21 +622,21 @@ function arrayContains(arr, obj) {
         <div class="spacer"></div>
       	<div id="compareViews" dojoType="ingrid:TabContainer" doLayout="false" class="full" selectedChild="diffView">
           <!-- MAIN TAB 1 START -->
-      		<div id="diffView" dojoType="ContentPane" class="blueTopBorder" label="Differenz-Ansicht">
+      		<div id="diffView" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.compare.compare" />">
               <div id="diffContent" class="inputContainer field grey"></div>
-              <div id="diffContentLegend" class="inputContainer field grey"><span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #009933;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - Eingef&uuml;gter Text<br/>
-			  			<span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - Gel&ouml;schter Text</div>
+              <div id="diffContentLegend" class="inputContainer field grey"><span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #009933;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - <fmt:message key="dialog.compare.insertedText" /><br/>
+			  			<span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - <fmt:message key="dialog.compare.deletedText" /></div>
       		</div>
           <!-- MAIN TAB 1 END -->
       		
           <!-- MAIN TAB 2 START -->
-      		<div id="oldView" dojoType="ContentPane" class="blueTopBorder" label="Ausgangsversion">
+      		<div id="oldView" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.compare.original" />">
               <div id="oldContent" class="inputContainer field grey"></div>
       		</div>
           <!-- MAIN TAB 2 END -->
 
           <!-- MAIN TAB 3 START -->
-      		<div id="currentView" dojoType="ContentPane" class="blueTopBorder" label="Bearbeitungsversion">
+      		<div id="currentView" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.compare.modified" />">
               <div id="currentContent" class="inputContainer field grey"></div>
       		</div>
           <!-- MAIN TAB 3 END -->

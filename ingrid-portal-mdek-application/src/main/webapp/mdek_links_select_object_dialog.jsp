@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>Objekt zuordnen</title>
@@ -182,7 +183,7 @@ assignObject = function() {
       </div>
       <div class="inputContainer w478">
         <span class="button w442 transparent">
-		  <span style="float:right;"><button dojoType="ingrid:Button" onClick="assignObject">Zuweisen</button></span>
+		  <span style="float:right;"><button dojoType="ingrid:Button" onClick="assignObject"><fmt:message key="dialog.links.select.assign" /></button></span>
         </span>
   	  </div>
       <!-- CONTENT END -->

@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
@@ -140,7 +141,7 @@ this.startNewAddressSearch = function() {
 this.toggleContent = function(type){
 	if (type == "obj") {
 		var contentArea = "extContentObj";
-		var contentURL = "mdek_research_ext_obj.html";
+		var contentURL = "mdek_research_ext_obj.jsp";
 
 		var contentAreaNode = dojo.byId("extContentObj");
 		var searchFieldWidget = dojo.widget.byId("objSearchInput");
@@ -149,7 +150,7 @@ this.toggleContent = function(type){
 
 	} else if (type == "adr") {
 		var contentArea = "extContentAdr";
-		var contentURL = "mdek_research_ext_adr.html";
+		var contentURL = "mdek_research_ext_adr.jsp";
 
 		var contentAreaNode = dojo.byId("extContentAdr");
 		var searchFieldWidget = dojo.widget.byId("adrSearchInput");
@@ -221,20 +222,17 @@ function hideAddressLoadingZone() {
         <div class="spacer"></div>
       	<div id="objects" dojoType="ingrid:TabContainer" doLayout="false" class="w845" selectedChild="objSearch">
           <!-- MAIN TAB 1 START -->
-      		<div id="objSearch" dojoType="ContentPane" class="blueTopBorder" label="Objekte">
+      		<div id="objSearch" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.research.objects" />">
               <div class="inputContainer field grey noSpaceBelow w829">
               <span class="input"><input type="text" id="objSearchInput" name="objSearchInput" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
-<!-- 
-              <span class="input"><input type="text" mode="textarea" id="objSearchInput" name="objSearchInput" class="w800 h055" dojoType="ingrid:ValidationTextbox" /></span>
- -->
-              <span class="expandContent"><a href="javascript:void(0);" onclick="javascript:scriptScope.toggleContent('obj');" title="Erweiterte Suche"><img id="extContentObjToggleArrow" src="img/ic_info_expand.gif" width="8" height="8" alt="Pfeil" />Erweiterte Suche</a></span>
+              <span class="expandContent"><a href="javascript:void(0);" onclick="javascript:scriptScope.toggleContent('obj');" title="Erweiterte Suche"><img id="extContentObjToggleArrow" src="img/ic_info_expand.gif" width="8" height="8" alt="Pfeil" /><fmt:message key="dialog.research.extSearch" /></a></span>
               <div class="spacer"></div>
         	  </div>
 
 	         <div id="objectSearchButtonContainer" class="inputContainer" style="display:block;">
 	          <span class="button w805" style="height:20px !important;">
 	            <span style="float:right;">
-	              <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewObjectSearch();">Suchen</button>
+	              <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewObjectSearch();"><fmt:message key="dialog.research.search" /></button>
 	    		</span>
 				<span id="objectSearchLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 					<img src="img/ladekreis.gif" />
@@ -247,10 +245,7 @@ function hideAddressLoadingZone() {
 	        <!-- OBJECT SEARCH RESULT LIST START -->
 	        <div class="spacer"></div>
 	        <div id="objectSearchResultsContainer" class="inputContainer noSpaceBelow w845">
-	          <span class="label">Trefferliste</span>
-<!-- 
-	          <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Trefferliste als CSV-Datei speichern">Trefferliste als CSV-Datei speichern</a></span>
- -->
+	          <span class="label"><fmt:message key="dialog.research.result" /></span>
 	          <div class="listInfo w845">
 	            <span id="objSearchResultsInfo" class="searchResultsInfo">&nbsp;</span>
 	            <span id="objSearchResultsPaging" class="searchResultsPaging">&nbsp;</span>
@@ -262,7 +257,7 @@ function hideAddressLoadingZone() {
 	    	      <thead>
 	    		      <tr>
 	          			<th nosort="true" field="icon" dataType="String" width="23"></th>
-	          			<th nosort="true" field="linkLabel" dataType="String" width="804">Name</th>
+	          			<th nosort="true" field="linkLabel" dataType="String" width="804"><fmt:message key="dialog.research.name" /></th>
 	    		      </tr>
 	    	      </thead>
 			        <colgroup>
@@ -280,7 +275,7 @@ function hideAddressLoadingZone() {
           <!-- MAIN TAB 1 END -->
       		
           <!-- MAIN TAB 2 START -->
-      		<div id="adrSearch" dojoType="ContentPane" class="blueTopBorder" label="Adressen">
+      		<div id="adrSearch" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.research.addresses" />">
   
             <div class="inputContainer field grey noSpaceBelow w829">
               <span class="input"><input type="text" id="adrSearchInput" name="adrSearchInput" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
@@ -304,10 +299,7 @@ function hideAddressLoadingZone() {
 	        <!-- ADDRESS SEARCH RESULT LIST START -->
 	        <div class="spacer"></div>
 	        <div id="addressSearchResultsContainer" class="inputContainer noSpaceBelow w845">
-	          <span class="label">Trefferliste</span>
-<!-- 
-	          <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Trefferliste als CSV-Datei speichern">Trefferliste als CSV-Datei speichern</a></span>
- -->
+	          <span class="label"><fmt:message key="dialog.research.result" /></span>
 	          <div class="listInfo w845">
 	            <span id="adrSearchResultsInfo" class="searchResultsInfo">&nbsp;</span>
 	            <span id="adrSearchResultsPaging" class="searchResultsPaging">&nbsp;</span>
@@ -319,7 +311,7 @@ function hideAddressLoadingZone() {
 	    	      <thead>
 	    		      <tr>
 	          			<th nosort="true" field="icon" dataType="String" width="23"></th>
-	          			<th nosort="true" field="linkLabel" dataType="String" width="804">Name</th>
+	          			<th nosort="true" field="linkLabel" dataType="String" width="804"><fmt:message key="dialog.research.name" /></th>
 	    		      </tr>
 	    	      </thead>
 			        <colgroup>

@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 
@@ -96,7 +97,8 @@ _container_.addOnLoad(function() {
 			dojo.debug("input: "+input);
 */
 			dojo.widget.byId("objTimeRef1From").clearValue();
-			dialog.show(message.get("general.error"), "Das von Ihnen eingegebene Datum '"+input+"' ist ung&uuml;ltig und wird zur&uuml;ckgesetzt.", dialog.WARNING);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.research.ext.obj.invalidDate"), input), dialog.WARNING);
+
 	});
     dojo.event.connect(dojo.widget.byId("objTimeRef1To"), "onInvalidInput",
         function(input) {
@@ -106,7 +108,7 @@ _container_.addOnLoad(function() {
 			dojo.debug("input: "+input);
 */
 			dojo.widget.byId("objTimeRef1To").clearValue();
-			dialog.show(message.get("general.error"), "Das von Ihnen eingegebene Datum '"+input+"' ist ung&uuml;ltig und wird zur&uuml;ckgesetzt.", dialog.WARNING);
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.research.ext.obj.invalidDate"), input), dialog.WARNING);
 	});
 
 
@@ -221,24 +223,7 @@ function readQueryFromInput() {
 		currentQuery.timeBegin = timeFrom;
 		currentQuery.timeEnd = timeTo;
 	}
-/*
-	if (dojo.byId("objTimeRef1").checked) {
-		// 'From-To' checked
-		currentQuery.timeBegin = dojo.widget.byId("objTimeRef1From").getValue();
-		currentQuery.timeEnd = dojo.widget.byId("objTimeRef1To").getValue();
 
-//		Text input fields
-//		currentQuery.timeBegin = dojo.date.parse(dojo.widget.byId("objTimeRef1From").getValue(), {formatLength:"full", datePattern:'dd.MM.yyyy', selector:'dateOnly'});
-//		currentQuery.timeEnd = dojo.date.parse(dojo.widget.byId("objTimeRef1To").getValue(), {formatLength:"full", datePattern:'dd.MM.yyyy', selector:'dateOnly'});
-
-	} else if (dojo.byId("objTimeRef2").checked) {
-		// 'At' checked
-		currentQuery.timeAt = dojo.widget.byId("objTimeRef2On").getValue();
-
-//		Text input field
-//		currentQuery.timeAt = dojo.date.parse(dojo.widget.byId("objTimeRef2On").getValue(), {formatLength:"full", datePattern:'dd.MM.yyyy', selector:'dateOnly'});
-	}
-*/
 	currentQuery.timeIntersects = dojo.widget.byId("objTimeRefExtend1").checked;
 	currentQuery.timeContains = dojo.widget.byId("objTimeRefExtend2").checked;
 
@@ -304,7 +289,7 @@ this.findTopics = function() {
 		postHook: hideLoadingZone,
 		callback:function(topics) {
 			if (dojo.lang.some(topics, function(item) { return item.type == "DESCRIPTOR"} )) {
-				addResultTextElement("\u00c4hnliche Begriffe");
+				addResultTextElement(message.get("dialog.research.ext.obj.similarTerms"));
 				dojo.lang.forEach(topics, function(item){
 	//				if (item.type == "DESCRIPTOR" || item.type == "NON_DESCRIPTOR") {
 					if (item.type == "DESCRIPTOR") {
@@ -403,31 +388,31 @@ function findAssociatedTopics(descriptor) {
 		postHook: hideLoadingZone,
 		callback:function(topic) {
 			if (topic.topicId != descriptor.topicId) {
-				addResultTextElement("Synonym");
+				addResultTextElement(message.get("dialog.research.ext.obj.synonym"));
 				addDescriptorCheckbox(descriptor, true);
-				addResultTextElement("Verwende stattdessen diese Fachbegriffe");
+				addResultTextElement(message.get("dialog.research.ext.obj.userSynonyms"));
 				addDescriptorCheckbox(topic);
 			
 			} else {
-				addResultTextElement("Thesaurus-Schlagwort");
+				addResultTextElement(message.get("dialog.research.ext.obj.descriptor"));
 				addDescriptorCheckbox(descriptor, true);
 	
 				if (topic.synonyms.length > 0) {
-					addResultTextElement("Synonyme");
+					addResultTextElement(message.get("dialog.research.ext.obj.synonyms"));
 					dojo.lang.forEach(topic.synonyms, function(item){
 						addDescriptorCheckbox(item);
 					});
 				}
 	
 				if (topic.parents.length > 0) {
-					addResultTextElement("Oberbegriffe");
+					addResultTextElement(message.get("dialog.research.ext.obj.parentTerms"));
 					dojo.lang.forEach(topic.parents, function(item){
 						addDescriptorCheckbox(item);
 					});
 				}
 	
 				if (topic.children.length > 0) {
-					addResultTextElement("Unterbegriffe");
+					addResultTextElement(message.get("dialog.research.ext.obj.childTerms"));
 					dojo.lang.forEach(topic.children, function(item){
 						addDescriptorCheckbox(item);
 					});
@@ -629,34 +614,34 @@ function hideLoadingZone() {
   <!-- EXTENDED SEARCH TAB CONTAINER START -->
 	<div id="obj" dojoType="ingrid:TabContainer" doLayout="false" class="w845" selectedChild="objTopic">
     <!-- EXTENDED SEARCH TAB 1 START -->
-		<div id="objTopic" dojoType="ContentPane" class="blueTopBorder grey" label="Thema">
+		<div id="objTopic" dojoType="ContentPane" class="blueTopBorder grey" label="<fmt:message key="dialog.research.ext.obj.theme" />">
       <!-- EXTENDED SEARCH TAB 1 SUB 1 START -->
 		<div id="objTopic0">
         <div class="tabContainerSubNavi">
     	    <ul>
-    	      <li><a nohref="nohref" class="current" title="Suchmodus">Suchmodus</a></li>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 1, 3);" title="Objektklassen">Objektklassen</a></li>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 2, 3);" title="Fachw&ouml;rterbuch">Fachw&ouml;rterbuch</a></li>
+    	      <li><a nohref="nohref" class="current" title="Suchmodus"><fmt:message key="dialog.research.ext.obj.mode" /></a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 1, 3);" title="Objektklassen"><fmt:message key="dialog.research.ext.obj.objClasses" /></a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 2, 3);" title="Fachw&ouml;rterbuch"><fmt:message key="dialog.research.ext.obj.thesaurus" /></a></li>
     	    </ul>
     	  </div>
 
         <div class="inputContainer field noSpaceBelow">
-          <span class="note"><b>Bestimmen Sie wie gesucht werden soll:</b></span>
+          <span class="note"><b><fmt:message key="dialog.research.ext.obj.description" /></b></span>
           <div class="spacer"></div>
 
-          <span class="label noSpaceBelow"><label class="inActive" for="objTopicInputBool">Das gesuchte Objekt enth&auml;lt:</label>
+          <span class="label noSpaceBelow"><label class="inActive" for="objTopicInputBool"><fmt:message key="dialog.research.ext.obj.contains" /></label>
             <select dojoType="ingrid:Select" style="width:174px;" id="objTopicInputBool">
               <!-- TODO: fill in jsp -->
-            	<option value="0">Alle diese Begriffe (UND)</option>
-            	<option value="1">Einen dieser Begriffe (ODER)</option>
+            	<option value="0"><fmt:message key="dialog.research.ext.obj.contains.all" /></option>
+            	<option value="1"><fmt:message key="dialog.research.ext.obj.contains.one" /></option>
             </select></span>
 
-          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7046, 'Suchmodus')">Suchmodus</label></span>
+          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7046, 'Suchmodus')"><fmt:message key="dialog.research.ext.obj.mode" /></label></span>
           <div class="checkboxContainer">
             <input type="radio" name="objMode" id="objMode1" class="radio entry first" checked />
-            <label class="inActive entry closer w116" for="objMode1">Ganzes Wort</label>
+            <label class="inActive entry closer w116" for="objMode1"><fmt:message key="dialog.research.ext.obj.full" /></label>
             <input type="radio" name="objMode" id="objMode2" class="radio entry" />
-            <label class="inActive entry closer" for="objMode2">Teilzeichenkette</label>
+            <label class="inActive entry closer" for="objMode2"><fmt:message key="dialog.research.ext.obj.substring" /></label>
           </div>
 	      <div class="fill"></div>
 	      <div class="spacerField"></div>
@@ -668,30 +653,30 @@ function hideLoadingZone() {
 		  <div id="objTopic1">
         <div class="tabContainerSubNavi">
     	    <ul>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="Suchmodus">Suchmodus</a></li>
-    	      <li><a nohref="nohref" class="current" title="Objektklassen">Objektklassen</a></li>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 2, 3);" title="Fachw&ouml;rterbuch">Fachw&ouml;rterbuch</a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="Suchmodus"><fmt:message key="dialog.research.ext.obj.mode" /></a></li>
+    	      <li><a nohref="nohref" class="current" title="Objektklassen"><fmt:message key="dialog.research.ext.obj.objClasses" /></a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 2, 3);" title="Fachw&ouml;rterbuch"><fmt:message key="dialog.research.ext.obj.thesaurus" /></a></li>
     	    </ul>
     	  </div>
         <div class="inputContainer field noSpaceBelow">
           <div class="checkboxContainer half">
-            <span class="input"><input type="checkbox" name="objTopicObjectClass0" id="objTopicObjectClass0" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass0">Organisationseinheit/Fachaufgabe</label></span>
-            <span class="input"><input type="checkbox" name="objTopicObjectClass1" id="objTopicObjectClass1" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass1">Geo-Information/Karte</label></span>
-            <span class="input noSpaceBelow"><input type="checkbox" name="objTopicObjectClass2" id="objTopicObjectClass2" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass2">Dokument/Bericht/Literatur</label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass0" id="objTopicObjectClass0" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass0"><fmt:message key="dialog.research.ext.obj.class0" /></label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass1" id="objTopicObjectClass1" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass1"><fmt:message key="dialog.research.ext.obj.class1" /></label></span>
+            <span class="input noSpaceBelow"><input type="checkbox" name="objTopicObjectClass2" id="objTopicObjectClass2" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass2"><fmt:message key="dialog.research.ext.obj.class2" /></label></span>
           </div>
           <div class="checkboxContainer">
-            <span class="input"><input type="checkbox" name="objTopicObjectClass3" id="objTopicObjectClass3" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass3">Dienst/Anwendung/Informationssystem</label></span>
-            <span class="input"><input type="checkbox" name="objTopicObjectClass4" id="objTopicObjectClass4" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass4">Vorhaben/Projekt/Programm</label></span>
-            <span class="input noSpaceBelow"><input type="checkbox" name="objTopicObjectClass5" id="objTopicObjectClass5" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass5">Datensammlung/Datenbank</label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass3" id="objTopicObjectClass3" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass3"><fmt:message key="dialog.research.ext.obj.class3" /></label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass4" id="objTopicObjectClass4" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass4"><fmt:message key="dialog.research.ext.obj.class4" /></label></span>
+            <span class="input noSpaceBelow"><input type="checkbox" name="objTopicObjectClass5" id="objTopicObjectClass5" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass5"><fmt:message key="dialog.research.ext.obj.class5" /></label></span>
           </div>
     	</div>
         <div class="spacerField" style="height:28px !important;">
 
           <span style="float:left;">
-	        <button dojoType="ingrid:Button" title="Keine ausw&auml;hlen" onClick="javascript:scriptScope.deselectAllObjectClasses();">Keine ausw&auml;hlen</button>
+	        <button dojoType="ingrid:Button" title="Keine ausw&auml;hlen" onClick="javascript:scriptScope.deselectAllObjectClasses();"><fmt:message key="dialog.research.ext.obj.clearSelection" /></button>
 	      </span>
           <span style="float:left;">
-	        <button dojoType="ingrid:Button" title="Alle ausw&auml;hlen" onClick="javascript:scriptScope.selectAllObjectClasses();">Alle ausw&auml;hlen</button>
+	        <button dojoType="ingrid:Button" title="Alle ausw&auml;hlen" onClick="javascript:scriptScope.selectAllObjectClasses();"><fmt:message key="dialog.research.ext.obj.selectAll" /></button>
 	      </span>
 
         </div>
@@ -702,40 +687,37 @@ function hideLoadingZone() {
 	  <div id="objTopic2" style="display:none;">
         <div class="tabContainerSubNavi">
     	  <ul>
-    	    <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="Suchmodus">Suchmodus</a></li>
-    	    <li><a href="javascript:scriptScope.navInnerTab('objTopic', 1, 3);" title="Objektklassen">Objektklassen</a></li>
-    	    <li><a nohref="nohref" class="current" title="Fachw&ouml;rterbuch">Fachw&ouml;rterbuch</a></li>
+    	    <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="Suchmodus"><fmt:message key="dialog.research.ext.obj.mode" /></a></li>
+    	    <li><a href="javascript:scriptScope.navInnerTab('objTopic', 1, 3);" title="Objektklassen"><fmt:message key="dialog.research.ext.obj.objClasses" /></a></li>
+    	    <li><a nohref="nohref" class="current" title="Fachw&ouml;rterbuch"><fmt:message key="dialog.research.ext.obj.thesaurus" /></a></li>
     	  </ul>
     	</div>
 
         <div class="inputContainer field grey noSpaceBelow" style="width:808px;">
-          <span class="label"><label for="objTopicThesaurus" onclick="javascript:dialog.showContextHelp(arguments[0], 7047, 'Thematischer Fachbegriff')">Bitte geben Sie die Thesaurus-Begriffe an, nach denen gesucht werden soll:</label></span>
+          <span class="label"><label for="objTopicThesaurus" onclick="javascript:dialog.showContextHelp(arguments[0], 7047, 'Thematischer Fachbegriff')"><fmt:message key="dialog.research.ext.obj.thesaurusText" /></label></span>
           <div class="input spaceBelow">
             <span style="float:left; width:659px;">
               <input type="text" id="objTopicThesaurus" name="objTopicThesaurus" class="w659" dojoType="ingrid:ValidationTextBox" />
 			</span>
 
             <span style="float:right;">
-              <button dojoType="ingrid:Button" title="In Thesaurus suchen" onClick="javascript:scriptScope.findTopics();">In Thesaurus suchen</button>
+              <button dojoType="ingrid:Button" title="In Thesaurus suchen" onClick="javascript:scriptScope.findTopics();"><fmt:message key="dialog.research.ext.obj.thesaurusSearch" /></button>
             </span>
           </div>
         </div>
 
         <div class="inputContainer field grey" style="width:800px; height:200px;">
 		  <span class="half" style="float:left;">
-<!-- 
-            <span class="label"><label for="objExtSearchThesaurusResults" onclick="javascript:dialog.showContextHelp(arguments[0], 'Thesaurus Begriffe')">Ergebnisliste</label></span>
- -->
 		    <div id="objExtSearchThesaurusResults" class="h205 checkboxContainer" style="overflow: auto;">
 			</div>
 		  </span>
 
 	      <span id="objExtSearchAddTopicButtonSpan" style="float:left; margin-top:95px; display:none;">
-	        <button dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="javascript:scriptScope.addSelectedTopics();">&Uuml;bernehmen -&gt;</button>
+	        <button dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="javascript:scriptScope.addSelectedTopics();"><fmt:message key="dialog.research.ext.obj.apply" /> -&gt;</button>
 		  </span>
 
 		  <span style="float:right;">
-              <span class="label"><label for="objExtSearchThesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 7048, 'Thesaurus Suchbegriffe')">Suchbegriffe</label></span>
+              <span class="label"><label for="objExtSearchThesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 7048, 'Thesaurus Suchbegriffe')"><fmt:message key="dialog.research.ext.obj.searchTerms" /></label></span>
 	          <div class="tableContainer spaceBelow headHiddenRows8 w364">
 	      	    <table id="objExtSearchThesaurusTerms" dojoType="ingrid:FilteringTable" minRows="8" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	      	      <thead>
@@ -749,11 +731,11 @@ function hideLoadingZone() {
 	      	  </div>
 
             <span class="label">
-              <label class="inActive" for="thesaurusTermsRelation">Gesuchtes Objekt enth&auml;lt:</label>
+              <label class="inActive" for="thesaurusTermsRelation"><fmt:message key="dialog.research.ext.obj.contains" /></label>
               <select dojoType="ingrid:Select" style="width:174px;" id="thesaurusTermsRelation">
               <!-- TODO: fill in jsp -->
-                <option value="0">Alle diese Begriffe (UND)</option>
-                <option value="1">Einen dieser Begriffe (ODER)</option>
+                <option value="0"><fmt:message key="dialog.research.ext.obj.contains.all" /></option>
+                <option value="1"><fmt:message key="dialog.research.ext.obj.contains.one" /></option>
               </select>
             </span>
 
@@ -768,13 +750,13 @@ function hideLoadingZone() {
     <!-- EXTENDED SEARCH TAB 1 END -->
 
     <!-- EXTENDED SEARCH TAB 2 START -->
-		<div id="objSpace" dojoType="ContentPane" class="blueTopBorder grey" label="Raum">
+		<div id="objSpace" dojoType="ContentPane" class="blueTopBorder grey" label="<fmt:message key="dialog.research.ext.obj.location" />">
       <!-- EXTENDED SEARCH TAB 2 SUB 1 START -->
 		  <div id="objSpace0">
         <div class="tabContainerSubNavi">
     	    <ul>
-    	      <li><a nohref="nohref" class="current" title="Geothesaurus-Raumbezug">Geothesaurus-Raumbezug</a></li>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 1, 3);" title="Freier Raumbezug">Freier Raumbezug</a></li>
+    	      <li><a nohref="nohref" class="current" title="Geothesaurus-Raumbezug"><fmt:message key="dialog.research.ext.obj.snsLocation" /></a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 1, 3);" title="Freier Raumbezug"><fmt:message key="dialog.research.ext.obj.customLocation" /></a></li>
 <!-- 
     	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 2, 3);" title="Raumeinschr&auml;nkung Karte">Raumeinschr&auml;nkung Karte</a></li>
  -->
@@ -783,14 +765,14 @@ function hideLoadingZone() {
 
 
         <div class="inputContainer field grey noSpaceBelow" style="width:808px;">
-          <span class="label"><label for="objLocationTopic" onclick="javascript:dialog.showContextHelp(arguments[0], 7049, 'Raumbezug')">Bitte geben Sie die Raumbez&uuml;ge an, nach denen gesucht werden soll:</label></span>
+          <span class="label"><label for="objLocationTopic" onclick="javascript:dialog.showContextHelp(arguments[0], 7049, 'Raumbezug')"><fmt:message key="dialog.research.ext.obj.thesaurusLocationText" /></label></span>
           <div class="input spaceBelow">
             <span style="float:left; width:636px;">
               <input type="text" id="objLocationTopic" class="w636" dojoType="ingrid:ValidationTextBox" />
 			</span>
 
             <span style="float:right;">
-              <button dojoType="ingrid:Button" title="In Geo-Thesaurus suchen" onClick="javascript:scriptScope.findLocationTopics();">In Geo-Thesaurus suchen</button>
+              <button dojoType="ingrid:Button" title="In Geo-Thesaurus suchen" onClick="javascript:scriptScope.findLocationTopics();"><fmt:message key="dialog.research.ext.obj.thesaurusLocationSearch" /></button>
             </span>
           </div>
         </div>
@@ -802,11 +784,11 @@ function hideLoadingZone() {
 		  </span>
 
 	      <span id="objExtSearchAddLocationTopicButtonSpan" style="float:left; margin-top:95px; display:none;">
-	        <button dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="javascript:scriptScope.addSelectedLocationTopics();">&Uuml;bernehmen -&gt;</button>
+	        <button dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="javascript:scriptScope.addSelectedLocationTopics();"><fmt:message key="dialog.research.ext.obj.apply" /> -&gt;</button>
 		  </span>
 
 		  <span style="float:right;">
-              <span class="label"><label for="objExtSearchLocationTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 7050, 'Geo-Thesaurus Suchbegriffe')">Suchbegriffe</label></span>
+              <span class="label"><label for="objExtSearchLocationTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 7050, 'Geo-Thesaurus Suchbegriffe')"><fmt:message key="dialog.research.ext.obj.searchTerms" /></label></span>
 	          <div class="tableContainer spaceBelow headHiddenRows8 w364">
 	      	    <table id="objExtSearchLocationTerms" dojoType="ingrid:FilteringTable" minRows="8" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	      	      <thead>
@@ -820,11 +802,11 @@ function hideLoadingZone() {
 	      	  </div>
 
             <span class="label">
-              <label class="inActive" for="geoThesaurusTermsRelation">Gesuchtes Objekt enth&auml;lt:</label>
+              <label class="inActive" for="geoThesaurusTermsRelation"><fmt:message key="dialog.research.ext.obj.contains" /></label>
               <select dojoType="ingrid:Select" style="width:174px;" id="geoThesaurusTermsRelation">
               <!-- TODO: fill in jsp -->
-                <option value="0">Alle diese Begriffe (UND)</option>
-                <option value="1">Einen dieser Begriffe (ODER)</option>
+                <option value="0"><fmt:message key="dialog.research.ext.obj.contains.all" /></option>
+                <option value="1"><fmt:message key="dialog.research.ext.obj.contains.one" /></option>
               </select>
             </span>
 
@@ -840,15 +822,15 @@ function hideLoadingZone() {
 		  <div id="objSpace1">
         <div class="tabContainerSubNavi">
     	    <ul>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 0, 3);" title="Geothesaurus-Raumbezug">Geothesaurus-Raumbezug</a></li>
-    	      <li><a nohref="nohref" class="current" title="Freier Raumbezug">Freier Raumbezug</a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 0, 3);" title="Geothesaurus-Raumbezug"><fmt:message key="dialog.research.ext.obj.snsLocation" /></a></li>
+    	      <li><a nohref="nohref" class="current" title="Freier Raumbezug"><fmt:message key="dialog.research.ext.obj.customLocation" /></a></li>
 <!-- 
     	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 2, 3);" title="Raumeinschr&auml;nkung Karte">Raumeinschr&auml;nkung Karte</a></li>
  -->
     	    </ul>
     	  </div>
         <div class="inputContainer field noSpaceBelow">
-          <span class="label"><label for="objSpaceGeoUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 7051, 'Freier Raumbezug')">Freier Raumbezug:</label></span>
+          <span class="label"><label for="objSpaceGeoUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 7051, 'Freier Raumbezug')"><fmt:message key="dialog.research.ext.obj.customLocation" />:</label></span>
           <span class="input"><input dojoType="ingrid:Select" listId="1100" style="width:782px;" id="objSpaceGeoUnit" /></span>
     	  </div>
         <div class="spacerField"></div>
@@ -859,8 +841,8 @@ function hideLoadingZone() {
 		  <div id="objSpace2">
         <div class="tabContainerSubNavi">
     	    <ul>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 0, 3);" title="Geothesaurus-Raumbezug">Geothesaurus-Raumbezug</a></li>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 1, 3);" title="Freier Raumbezug">Freier Raumbezug</a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 0, 3);" title="Geothesaurus-Raumbezug"><fmt:message key="dialog.research.ext.obj.customLocation" /></a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 1, 3);" title="Freier Raumbezug"><fmt:message key="dialog.research.ext.obj.customLocation" /></a></li>
     	      <li><a nohref="nohref" class="current" title="Raumeinschr&auml;nkung Karte">Raumeinschr&auml;nkung Karte</a></li>
     	    </ul>
     	  </div>
@@ -883,17 +865,17 @@ function hideLoadingZone() {
     <!-- EXTENDED SEARCH TAB 2 END -->
 
     <!-- EXTENDED SEARCH TAB 3 START -->
-		<div id="objTime" dojoType="ContentPane" class="blueTopBorder grey" label="Zeit">
+		<div id="objTime" dojoType="ContentPane" class="blueTopBorder grey" label="<fmt:message key="dialog.research.ext.obj.time" />">
       <!-- EXTENDED SEARCH TAB 3 SUB 1 START -->
 		  <div id="objTime0">
         <div class="tabContainerSubNavi">
     	    <ul>
-    	      <li><a nohref="nohref" class="current" title="Zeiteinschr&auml;nkung">Zeiteinschr&auml;nkung</a></li>
+    	      <li><a nohref="nohref" class="current" title="Zeiteinschr&auml;nkung"><fmt:message key="dialog.research.ext.obj.timeLimit" /></a></li>
     	    </ul>
     	  </div>
         <div class="inputContainer field grey">
-          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7052, 'Zeitbezug')">Zeitbezug:</label></span>
-          <span class="note">Alle Ergebnisse mit Zeitbezug <strong>innerhalb</strong> des eingegebenen Zeitraums werden angezeigt:</span>
+          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7052, 'Zeitbezug')"><fmt:message key="dialog.research.ext.obj.timeRef" />:</label></span>
+          <span class="note"><fmt:message key="dialog.research.ext.obj.timeIn" /></span>
           <div class="spacer"></div>
           <div class="inputContainer spaceBelow">
 
@@ -922,10 +904,10 @@ function hideLoadingZone() {
           </div>
 
           <div class="inputContainer noSpaceBelow">
-            <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7053, 'Erweiterung des Zeitbezuges')">Erweiterung des Zeitbezuges</label></span>
+            <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7053, 'Erweiterung des Zeitbezuges')"><fmt:message key="dialog.research.ext.obj.timeExt" /></label></span>
             <div class="checkboxContainer">
-              <span class="input"><input type="checkbox" name="objTimeRefExtend1" id="objTimeRefExtend1" dojoType="Checkbox" /><label class="inActive" for="objTimeRefExtend1">Der Zeitbezug der Ergebnisse <strong>schneidet</strong> das eingegebene Suchintervall</label></span>
-              <span class="input"><input type="checkbox" name="objTimeRefExtend2" id="objTimeRefExtend2" dojoType="Checkbox" /><label class="inActive" for="objTimeRefExtend2">Der Zeitbezug der Ergebnisse <strong>umschlie&szlig;t</strong> das eingegebene Suchintervall</label></span>
+              <span class="input"><input type="checkbox" name="objTimeRefExtend1" id="objTimeRefExtend1" dojoType="Checkbox" /><label class="inActive" for="objTimeRefExtend1"><fmt:message key="dialog.research.ext.obj.timeIntersect" /></label></span>
+              <span class="input"><input type="checkbox" name="objTimeRefExtend2" id="objTimeRefExtend2" dojoType="Checkbox" /><label class="inActive" for="objTimeRefExtend2"><fmt:message key="dialog.research.ext.obj.timeContains" /></label></span>
             </div>
           </div>
     	  </div>
@@ -940,10 +922,10 @@ function hideLoadingZone() {
   <div class="inputContainer">
     <span class="button w805" style="height:20px !important;">
       <span style="float:right;">
-        <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewSearch();">Suchen</button>
+        <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewSearch();"><fmt:message key="dialog.research.ext.obj.search" /></button>
 	  </span>
       <span style="float:right;">
-        <button dojoType="ingrid:Button" title="Zur&uuml;cksetzen" onClick="javascript:scriptScope.resetInput();">Zur&uuml;cksetzen</button>
+        <button dojoType="ingrid:Button" title="Zur&uuml;cksetzen" onClick="javascript:scriptScope.resetInput();"><fmt:message key="dialog.research.ext.obj.reset" /></button>
 	  </span>
 	  <span id="objectSearchExtLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 		<img src="img/ladekreis.gif" />

@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>Operationen hinzufügen/bearbeiten</title>
@@ -155,7 +156,7 @@ init = function() {
 		}
 		displayOperation(op);
 		currentOperationId = op.Id;
-		dojo.widget.byId("saveButton").setCaption("Speichern");
+		dojo.widget.byId("saveButton").setCaption(message.get("general.save"));
 	});
 
 	dojo.event.connectOnce("after", opList, "onSelect", function(e) {
@@ -166,12 +167,12 @@ init = function() {
 			}
 			displayOperation(op[0]);
 			currentOperationId = op[0].Id;
-			dojo.widget.byId("saveButton").setCaption("Speichern");
+			dojo.widget.byId("saveButton").setCaption(message.get("general.save"));
 		} else {
 			disableInputElements();
 			resetInputElements();
 			currentOperationId = null;
-			dojo.widget.byId("saveButton").setCaption("Hinzuf&uuml;gen");
+			dojo.widget.byId("saveButton").setCaption(message.get("general.add"));
 		}
 	});
 
@@ -248,22 +249,7 @@ isValidOperation = function(op) {
 		dojo.html.addClass(dojo.byId("operationsAddressLabel"), "important");		
 		valid = false;
 	}
-/*
-	if (dojo.string.trim(op.name) == "")
-		return false;
 
-
-	// If we have an entry where a required field equals "", return false
-	if (!dojo.lang.every(op.paramList, function(item) {
-		return (dojo.string.trim(item.name) != ""
-			 && dojo.string.trim(item.optional) != ""
-			 && dojo.string.trim(item.multiple) != "");
-		}))
-		return false;
-
-	if (op.addressList.length == 0)
-		return false;
-*/
 	return valid;
 }
 
@@ -275,7 +261,7 @@ newOperation = function() {
 	dojo.widget.byId("operationsList").resetSelections();
 	dojo.widget.byId("operationsList").renderSelections();
 	currentOperationId = null;
-	dojo.widget.byId("saveButton").setCaption("Hinzuf&uuml;gen");
+	dojo.widget.byId("saveButton").setCaption(message.get("general.add"));
 }
 
 // Save/Add Button onClick function
@@ -330,7 +316,7 @@ closeDialog = function() {
 
   <div id="operations" class="contentBlockWhite top fullBlock">
     <div id="winNavi">
-			<a href="javascript:closeDialog();" title="schlie&szlig;en"><img src="img/ic_close.gif" />schlie&szlig;en</a>
+			<a href="javascript:closeDialog();" title="schlie&szlig;en"><img src="img/ic_close.gif" /><fmt:message key="dialog.operation.close" /></a>
 			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7041)" title="Hilfe">[?]</a>
 	  </div>
 	  <div id="operationsContent" class="content">
@@ -343,8 +329,8 @@ closeDialog = function() {
     	    <table id="operationsList" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
     	      <thead>
     		      <tr>
-          			<th nosort="true" field="name" dataType="String" width="160">Name</th>
-          			<th nosort="true" field="description" dataType="String" width="488">Beschreibung</th>
+          			<th nosort="true" field="name" dataType="String" width="160"><fmt:message key="dialog.operation.name" /></th>
+          			<th nosort="true" field="description" dataType="String" width="488"><fmt:message key="dialog.operation.description" /></th>
     		      </tr>
     	      </thead>
     	      <tbody>
@@ -356,12 +342,12 @@ closeDialog = function() {
 
       <div class="inputContainer full">
         <span class="button w644" style="height:20px !important;">
-        	<span style="float:right;"><button dojoType="ingrid:Button" id="newButton" onClick="newOperation">Neu</button></span>
+        	<span style="float:right;"><button dojoType="ingrid:Button" id="newButton" onClick="newOperation"><fmt:message key="dialog.operation.new" /></button></span>
         </span>
   	  </div>
 
       <div class="inputContainer field grey fullField noSpaceBelow">
-        <span class="label required"><label id="operationsNameLabel" for="operationsName" onclick="javascript:dialog.showContextHelp(arguments[0], 5201, 'Name der Operation')">Name der Operation*</label></span>
+        <span class="label required"><label id="operationsNameLabel" for="operationsName" onclick="javascript:dialog.showContextHelp(arguments[0], 5201, 'Name der Operation')"><fmt:message key="dialog.operation.opName" />*</label></span>
 		<span class="input">
 			<select dojoType="ingrid:Select" class="w616" id="operationsNameSelect" />
 			<input type="text" maxlength="120" id="operationsName" class="w640" dojoType="ingrid:ValidationTextBox" />
@@ -370,13 +356,13 @@ closeDialog = function() {
         
         <div class="inputContainer spaceBelow">
           <span class="entry first">
-            <span class="label"><label for="operationsDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 5202, 'Beschreibung')">Beschreibung</label></span>
+            <span class="label"><label for="operationsDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 5202, 'Beschreibung')"><fmt:message key="dialog.operation.description" /></label></span>
             <span class="input">
 				<input type="text" mode="textarea" id="operationsDescription" class="w308 h041" dojoType="ingrid:ValidationTextbox" />            
             </span>
           </span>
           <span class="entry">
-            <span class="label required"><label id="operationsPlatformLabel" for="operationsPlatform" onclick="javascript:dialog.showContextHelp(arguments[0], 5203, 'Unterst&uuml;tzte Plattformen')">Unterst&uuml;tzte Plattformen*</label></span>
+            <span class="label required"><label id="operationsPlatformLabel" for="operationsPlatform" onclick="javascript:dialog.showContextHelp(arguments[0], 5203, 'Unterst&uuml;tzte Plattformen')"><fmt:message key="dialog.operation.platforms" />*</label></span>
             <div class="tableContainer headHiddenRows2 halfInside">
               <div class="cellEditors" id="operationsPlatformEditors">
                 <div dojoType="ingrid:ValidationTextbox" maxlength="120" class="w277" widgetId="operationsPlatformText"></div>
@@ -384,7 +370,7 @@ closeDialog = function() {
          	    <table id="operationsPlatform" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable interactive">
         	      <thead>
         		      <tr>
-              			<th field="title" dataType="String" editor="operationsPlatformText">Name</th>
+              			<th field="title" dataType="String" editor="operationsPlatformText"><fmt:message key="dialog.operation.name" /></th>
         		      </tr>
         	      </thead>
         	      <tbody>
@@ -395,11 +381,11 @@ closeDialog = function() {
           <div class="fill"></div>
         </div>
 
-        <span class="label"><label for="operationsCall" onclick="javascript:dialog.showContextHelp(arguments[0], 5204, 'Aufruf')">Aufruf</label></span>
+        <span class="label"><label for="operationsCall" onclick="javascript:dialog.showContextHelp(arguments[0], 5204, 'Aufruf')"><fmt:message key="dialog.operation.call" /></label></span>
         <span class="input spaceBelow"><input type="text" maxlength="255" id="operationsCall" name="operationsCall" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
 
         <div class="inputContainer h130">
-          <span class="label"><label id="operationsParameterLabel" for="operationsParameter" onclick="javascript:dialog.showContextHelp(arguments[0], 5205, 'Parameter')">Parameter</label></span>
+          <span class="label"><label id="operationsParameterLabel" for="operationsParameter" onclick="javascript:dialog.showContextHelp(arguments[0], 5205, 'Parameter')"><fmt:message key="dialog.operation.parameter" /></label></span>
           <div class="tableContainer rows4 fullInside">
             <div class="cellEditors" id="operationsParameterEditors">
               <div dojoType="ingrid:ValidationTextbox" maxlength="120" widgetId="operationsParameterName"></div>
@@ -411,11 +397,11 @@ closeDialog = function() {
       	    <table id="operationsParameter" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
       	      <thead>
       		      <tr>
-            			<th nosort="true" field="name" dataType="String" width="105" editor="operationsParameterName">Name*</th>
-            			<th nosort="true" field="direction" dataType="String" width="100" editor="operationsParameterDir">Richtung</th>
-            			<th nosort="true" field="description" dataType="String" width="210" editor="operationsParameterDesc">Beschreibung</th>
-            			<th nosort="true" field="optional" dataType="String" width="65" editor="operationsParameterOpt">Optional*</th>
-            			<th nosort="true" field="multiple" dataType="String" width="110" editor="operationsParameterMulti">Mehrfacheingabe*</th>
+            			<th nosort="true" field="name" dataType="String" width="105" editor="operationsParameterName"><fmt:message key="dialog.operation.name" />*</th>
+            			<th nosort="true" field="direction" dataType="String" width="100" editor="operationsParameterDir"><fmt:message key="dialog.operation.direction" /></th>
+            			<th nosort="true" field="description" dataType="String" width="210" editor="operationsParameterDesc"><fmt:message key="dialog.operation.description" /></th>
+            			<th nosort="true" field="optional" dataType="String" width="65" editor="operationsParameterOpt"><fmt:message key="dialog.operation.optional" />*</th>
+            			<th nosort="true" field="multiple" dataType="String" width="110" editor="operationsParameterMulti"><fmt:message key="dialog.operation.multiplicity" />*</th>
       		      </tr>
       	      </thead>
       	      <tbody>
@@ -427,7 +413,7 @@ closeDialog = function() {
 
         <div class="inputContainer noSpaceBelow h067">
           <span class="half left">
-            <span class="label required"><label id="operationsAddressLabel" for="operationsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 5206, 'Zugriffsadresse')">Zugriffsadresse*</label></span>
+            <span class="label required"><label id="operationsAddressLabel" for="operationsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 5206, 'Zugriffsadresse')"><fmt:message key="dialog.operation.address" />*</label></span>
             <div class="tableContainer headHiddenRows2 halfInside">
               <div class="cellEditors" id="operationsAddressEditors">
                 <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w277" widgetId="operationsAddressText"></div>
@@ -444,7 +430,7 @@ closeDialog = function() {
             </div>
           </span>
           <span class="half">
-            <span class="label"><label for="operationsDependencies" onclick="javascript:dialog.showContextHelp(arguments[0], 5207, 'Abh&auml;ngigkeiten')">Abh&auml;ngigkeiten</label></span>
+            <span class="label"><label for="operationsDependencies" onclick="javascript:dialog.showContextHelp(arguments[0], 5207, 'Abh&auml;ngigkeiten')"><fmt:message key="dialog.operation.dependencies" /></label></span>
             <div class="tableContainer headHiddenRows2 halfInside">
               <div class="cellEditors" id="operationsDependenciesEditors">
                 <div dojoType="ingrid:ValidationTextbox" maxlength="120" class="w277" widgetId="operationsDependenciesText"></div>
@@ -466,8 +452,8 @@ closeDialog = function() {
 
       <div class="inputContainer noSpaceBelow">
         <span class="button w644" style="height:20px !important;">
-        	<span style="float:right;"><button dojoType="ingrid:Button" id="cancelButton" onClick="resetDialog">Abbrechen</button></span>
-        	<span style="float:right;"><button dojoType="ingrid:Button" id="saveButton" onClick="saveOperation">Hinzuf&uuml;gen</button></span>
+        	<span style="float:right;"><button dojoType="ingrid:Button" id="cancelButton" onClick="resetDialog"><fmt:message key="dialog.operation.cancel" /></button></span>
+        	<span style="float:right;"><button dojoType="ingrid:Button" id="saveButton" onClick="saveOperation"><fmt:message key="dialog.operation.add" /></button></span>
         </span>
   	  </div>
       <!-- LEFT HAND SIDE CONTENT END -->

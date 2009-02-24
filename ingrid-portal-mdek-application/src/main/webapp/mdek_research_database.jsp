@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 
@@ -12,15 +13,6 @@ var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo
 var currentQuery = null;
 
 _container_.addOnLoad(function() {
-/*
-    // Pressing 'enter' on the input field is equal to a button click
-    dojo.event.connect(dojo.widget.byId("databaseSearch").domNode, "onkeypress",
-        function(event) {
-            if (event.keyCode == event.KEY_ENTER) {
-                scriptScope.startSearch();
-            }
-	});
-*/
 	dojo.event.connect("after", pageNav, "onPageSelected", function() { startSearch(); });
 });
 
@@ -134,7 +126,7 @@ function hideLoadingZone() {
   	  <div class="content">
 
         <!-- LEFT HAND SIDE CONTENT START -->
-        <span class="label"><label for="databaseSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 7064, 'Datenbank-Suche')">Datenbank-Suche</label></span>
+        <span class="label"><label for="databaseSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 7064, 'Datenbank-Suche')"><fmt:message key="dialog.research.db.title" /></label></span>
         <div class="inputContainer field grey noSpaceBelow">
           <span class="input"><input type="text" mode="textarea" id="databaseSearch" class="w640 h062" dojoType="ingrid:ValidationTextbox" /></span> 
 
@@ -144,7 +136,7 @@ function hideLoadingZone() {
         <div class="inputContainer">
           <span class="button w644" style="height:20px !important;">
             <span style="float:right;">
-              <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewSearch();">Suchen</button>
+              <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewSearch();"><fmt:message key="dialog.research.db.search" /></button>
     		</span>
 			<span id="databaseSearchLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 				<img src="img/ladekreis.gif" />
@@ -155,8 +147,8 @@ function hideLoadingZone() {
         <!-- SEARCH RESULT LIST START -->
         <div class="spacer"></div>
         <div id="results" class="inputContainer noSpaceBelow full">
-          <span class="label">Trefferliste</span>
-          <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.saveAsCSV();" title="Trefferliste als CSV-Datei speichern">Trefferliste als CSV-Datei speichern</a></span>
+          <span class="label"><fmt:message key="dialog.research.db.result" /></span>
+          <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.saveAsCSV();" title="Trefferliste als CSV-Datei speichern"><fmt:message key="dialog.research.db.saveAsCSV" /></a></span>
           <div class="listInfo full">
             <span id="searchDatabaseResultsInfo" class="searchResultsInfo">&nbsp;</span>
             <span id="searchDatabaseResultsPaging" class="searchResultsPaging">&nbsp;</span>

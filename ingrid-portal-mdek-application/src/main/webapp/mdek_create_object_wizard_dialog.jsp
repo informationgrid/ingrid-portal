@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>MDEK Demo V3</title>
@@ -362,8 +363,8 @@ scriptScope.startSearch = function() {
 	
 			if ((topicMap.indexedDocument == null || topicMap.indexedDocument.description == null) && topicMap.thesaTopics == null
 			    && topicMap.locationTopics == null && topicMap.eventTopics == null) {
-					dialog.show(message.get("general.hint"), "Der SNS lieferte keine Ergebnisse zu der von Ihnen angegebenen Webseite. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.", dialog.INFO);
-	
+					dialog.show(message.get("general.hint"), message.get("dialog.wizard.create.snsNoResultError"), dialog.INFO);
+
 			} else {
 				updateInputFields(topicMap);
 				dojo.widget.byId("assistantHtmlContent").setValue(dojo.string.trim(htmlContent));
@@ -394,7 +395,7 @@ function handleError(autoClassifyResult, getHtmlContentResult) {
 			dialog.show(message.get("general.error"), message.get("sns.timeoutError"), dialog.WARNING);
 
 		} else if (err.message.indexOf("SNS_INVALID_URL") != -1) {
-			dialog.show(message.get("general.error"), "Die von Ihnen angegebene Seite konnte vom SNS nicht analysiert werden.", dialog.WARNING);
+			dialog.show(message.get("general.error"), message.get("dialog.wizard.create.snsInvalidPageError"), dialog.WARNING);
 
 		} else {
 			displayErrorMessage(err);
@@ -479,14 +480,14 @@ scriptScope.closeDialog = function() {
 			<div class="spacer"></div>
 			<div class="spacer"></div>
 			<div class="inputContainer field grey noSpaceBelow fullField">
-				<span class="label"><label for="assistantURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'URL der Internetseite')">URL der Internetseite</label></span>
+				<span class="label"><label for="assistantURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'URL der Internetseite')"><fmt:message key="dialog.wizard.create.url" /></label></span>
 				<span class="input spaceBelow"><input type="text" id="assistantURL" name="assistantURL" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
-				<span><label for="assistantNumWords" onclick="javascript:dialog.showContextHelp(arguments[0], 'Anzahl der zu analysierenden W&ouml;rter')">Anzahl der vom SNS zu analysierenden W&ouml;rter:</label></span>
+				<span><label for="assistantNumWords" onclick="javascript:dialog.showContextHelp(arguments[0], 'Anzahl der zu analysierenden W&ouml;rter')"><fmt:message key="dialog.wizard.create.numWords" /></label></span>
 				<span><input dojoType="IntegerTextbox" min="0" max="1000" maxlength="4" id="assistantNumWords" class="w038" /></span>
 
 				<div class="checkboxContainer">
 					<span class="input"><input type="checkbox" name="assistantIncludeMetaTagCheckbox" id="assistantIncludeMetaTagCheckbox" dojoType="Checkbox" checked /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Beschreibung')">Zeige die Beschreibung der &uuml;bergebenen Webseite an</label></span>
-					<span class="input"><input type="checkbox" name="assistantIncludeHtmlContentCheckbox" id="assistantIncludeHtmlContentCheckbox" dojoType="Checkbox" checked /><label style="cursor:default;">Zeige die ersten <input dojoType="IntegerTextbox" min="0" max="10000" maxlength="5" id="assistantHtmlContentNumWords" class="w038" /> Worte der &uuml;bergebenen Webseite an</label></span>
+					<span class="input"><input type="checkbox" name="assistantIncludeHtmlContentCheckbox" id="assistantIncludeHtmlContentCheckbox" dojoType="Checkbox" checked /><label style="cursor:default;"><fmt:message key="dialog.wizard.create.showNumWords.1" /> <input dojoType="IntegerTextbox" min="0" max="10000" maxlength="5" id="assistantHtmlContentNumWords" class="w038" /> <fmt:message key="dialog.wizard.create.showNumWords.2" /></label></span>
 				</div>
 
 				<div class="spacerField"></div>
@@ -495,7 +496,7 @@ scriptScope.closeDialog = function() {
 			<div class="inputContainer">
 				<span class="button w644" style="height:20px !important;">
 					<span style="float:right;">
-						<button id="createObjWizardStartButton" dojoType="ingrid:Button" onClick="javascript:scriptScope.startSearch();" title="Start">Start</button>
+						<button id="createObjWizardStartButton" dojoType="ingrid:Button" onClick="javascript:scriptScope.startSearch();" title="Start"><fmt:message key="dialog.wizard.create.start" /></button>
 					</span>
 					<span id="createObjectWizardLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 						<img src="img/ladekreis.gif" />
@@ -504,10 +505,10 @@ scriptScope.closeDialog = function() {
 			</div>
 
 			<div id="resultContainer" class="inputContainer noSpaceBelow">
-				<span class="label">Ergebnis</span>
+				<span class="label"><fmt:message key="dialog.wizard.create.result" /></span>
 
 					<div class="checkboxContainer">
-						<span class="input"><input type="checkbox" name="assistantHtmlTitleCheckbox" id="assistantHtmlTitleCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')">Titel &uuml;bernehmen</label></span>
+						<span class="input"><input type="checkbox" name="assistantHtmlTitleCheckbox" id="assistantHtmlTitleCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')"><fmt:message key="dialog.wizard.create.addTitle" /></label></span>
 					</div>
 					<div class="inputContainer">
 		           		<span class="input"><input type="text" id="assistantHtmlTitle" class="w676" dojoType="ingrid:ValidationTextbox" /></span> 
@@ -516,7 +517,7 @@ scriptScope.closeDialog = function() {
 
 				<span id="assistantDescriptionContainer">
 					<div class="checkboxContainer">
-						<span class="input"><input type="checkbox" name="assistantDescriptionCheckbox" id="assistantDescriptionCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Beschreibung')">Beschreibung &uuml;bernehmen</label></span>
+						<span class="input"><input type="checkbox" name="assistantDescriptionCheckbox" id="assistantDescriptionCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Beschreibung')"><fmt:message key="dialog.wizard.create.addDescription" /></label></span>
 					</div>
 					<div class="inputContainer">
 		           		<span class="input"><input type="text" mode="textarea" id="assistantDescription" class="w676 h062" dojoType="ingrid:ValidationTextbox" /></span> 
@@ -525,14 +526,14 @@ scriptScope.closeDialog = function() {
 
 				<span id="assistantHtmlContentContainer">
 					<div class="checkboxContainer">
-						<span class="input"><input type="checkbox" name="assistantHtmlContentCheckbox" id="assistantHtmlContentCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Inhalt')">Inhalt der Webseite &uuml;bernehmen</label></span>
+						<span class="input"><input type="checkbox" name="assistantHtmlContentCheckbox" id="assistantHtmlContentCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Inhalt')"><fmt:message key="dialog.wizard.create.addContent" /></label></span>
 					</div>
 					<div class="inputContainer">
 		           		<span class="input"><input type="text" mode="textarea" id="assistantHtmlContent" class="w676 h098" dojoType="ingrid:ValidationTextbox" /></span> 
 					</div>
 				</span>
 
-				<span class="label"><label for="assistantDescriptorTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Deskriptoren')">Deskriptoren</label></span>
+				<span class="label"><label for="assistantDescriptorTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Deskriptoren')"><fmt:message key="dialog.wizard.create.descriptors" /></label></span>
 				<div class="inputContainer">
 	                <div class="tableContainer headHiddenRows4 full">
 	            	    <table id="assistantDescriptorTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort">
@@ -551,21 +552,21 @@ scriptScope.closeDialog = function() {
 				</div>
 
 				<div class="checkboxContainer">
-					<span class="input"><input type="checkbox" name="assistantDescriptorTableCheckbox" id="assistantDescriptorTableCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Alle Deskriptoren ausw&auml;hlen')">Alle Deskriptoren ausw&auml;hlen</label></span>
+					<span class="input"><input type="checkbox" name="assistantDescriptorTableCheckbox" id="assistantDescriptorTableCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Alle Deskriptoren ausw&auml;hlen')"><fmt:message key="dialog.wizard.create.selectAllDescriptors" /></label></span>
 				</div>
 
 	            <div class="inputContainer">
-	                <span class="label"><label for="assistantSpatialRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Geothesaurus-Raumbezug')">Geothesaurus-Raumbezug</label></span>
+	                <span class="label"><label for="assistantSpatialRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Geothesaurus-Raumbezug')"><fmt:message key="dialog.wizard.create.spatial" /></label></span>
 	                <div class="tableContainer rows4 full">
 	            	    <table id="assistantSpatialRefTable" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort">
 	            	      <thead>
 	            		      <tr>
-	                  			<th nosort="true" field="selection" dataType="String" width="30">Auswahl</th>
-	                  			<th nosort="true" field="label" dataType="String" width="285">Geothesaurus-Raumbezug</th>
-	                  			<th nosort="true" field="longitude1" dataType="String" width="90">L&auml;nge 1</th>
-	                  			<th nosort="true" field="latitude1" dataType="String" width="90">Breite 1</th>
-	                  			<th nosort="true" field="longitude2" dataType="String" width="90">L&auml;nge 2</th>
-	                  			<th nosort="true" field="latitude2" dataType="String" width="90">Breite 2</th>
+	                  			<th nosort="true" field="selection" dataType="String" width="30"><fmt:message key="dialog.wizard.create.spatial.select" /></th>
+	                  			<th nosort="true" field="label" dataType="String" width="285"><fmt:message key="dialog.wizard.create.spatial.name" /></th>
+	                  			<th nosort="true" field="longitude1" dataType="String" width="90"><fmt:message key="dialog.wizard.create.spatial.longitude1" /></th>
+	                  			<th nosort="true" field="latitude1" dataType="String" width="90"><fmt:message key="dialog.wizard.create.spatial.latitude1" /></th>
+	                  			<th nosort="true" field="longitude2" dataType="String" width="90"><fmt:message key="dialog.wizard.create.spatial.longitude2" /></th>
+	                  			<th nosort="true" field="latitude2" dataType="String" width="90"><fmt:message key="dialog.wizard.create.spatial.latitude2" /></th>
 	            		      </tr>
 	            	      </thead>
 	            	      <tbody>
@@ -575,20 +576,20 @@ scriptScope.closeDialog = function() {
 				</div>
 
 				<div class="checkboxContainer">
-					<span class="input"><input type="checkbox" name="assistantSpatialRefTableCheckbox" id="assistantSpatialRefTableCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Alle Raumbez&uuml;ge ausw&auml;hlen')">Alle Raumbez&uuml;ge ausw&auml;hlen</label></span>
+					<span class="input"><input type="checkbox" name="assistantSpatialRefTableCheckbox" id="assistantSpatialRefTableCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Alle Raumbez&uuml;ge ausw&auml;hlen')"><fmt:message key="dialog.wizard.create.selectAllSpatialRefs" /></label></span>
 				</div>
 
 				<div class="inputContainer">
-					<span class="label"><label for="assistantTimeRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug')">Zeitbezug</label></span>
+					<span class="label"><label for="assistantTimeRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeitbezug')"><fmt:message key="dialog.wizard.create.time" /></label></span>
 	                <div class="tableContainer rows4 full">
 						<table id="assistantTimeRefTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="4" cellspacing="0" class="filteringTable">
 			    	      <thead>
 			    		      <tr>
-			          			<th nosort="true" field="selection" dataType="String" width="60">Auswahl</th>
-			          			<th nosort="true" field="name" dataType="String" width="346">Bezeichnung</th>
-			          			<th nosort="true" field="date1" dataType="Date" width="100">Datum 1</th>
-			          			<th nosort="true" field="date2" dataType="Date" width="100">Datum 2</th>
-			          			<th nosort="true" field="type" dataType="String" width="100">Typ</th>
+			          			<th nosort="true" field="selection" dataType="String" width="60"><fmt:message key="dialog.wizard.create.time.select" /></th>
+			          			<th nosort="true" field="name" dataType="String" width="346"><fmt:message key="dialog.wizard.create.time.description" /></th>
+			          			<th nosort="true" field="date1" dataType="Date" width="100"><fmt:message key="dialog.wizard.create.time.firstDate" /></th>
+			          			<th nosort="true" field="date2" dataType="Date" width="100"><fmt:message key="dialog.wizard.create.time.secondDate" /></th>
+			          			<th nosort="true" field="type" dataType="String" width="100"><fmt:message key="dialog.wizard.create.time.type" /></th>
 			    		      </tr>
 			    	      </thead>
 			    	      <tbody>
@@ -601,10 +602,10 @@ scriptScope.closeDialog = function() {
 			<div id="resultButtonContainer" class="inputContainer">
 				<span class="button w644" style="height:20px !important;">
 					<span style="float:right;">
-						<button id="createObjWizardAcceptButton" dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="javascript:scriptScope.addValuesToObject();">&Uuml;bernehmen</button>
+						<button id="createObjWizardAcceptButton" dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="javascript:scriptScope.addValuesToObject();"><fmt:message key="dialog.wizard.create.apply" /></button>
 					</span>
 					<span style="float:right;">
-						<button id="createObjWizardCancelButton" dojoType="ingrid:Button" title="Abbrechen" onClick="javascript:scriptScope.closeDialog();">Abbrechen</button>
+						<button id="createObjWizardCancelButton" dojoType="ingrid:Button" title="Abbrechen" onClick="javascript:scriptScope.closeDialog();"><fmt:message key="dialog.wizard.create.cancel" /></button>
 					</span>
 				</span>
 			</div>

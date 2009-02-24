@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>MDEK Demo V3</title>
@@ -121,14 +122,14 @@ function hideLoadingZone() {
 			<div class="spacer"></div>
 			<div class="spacer"></div>
 			<div class="inputContainer field grey noSpaceBelow fullField">
-				<span class="label"><label for="assistantURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'Capabilities URL')">Capabilities-URL des Dienstes</label></span>
+				<span class="label"><label for="assistantURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'Capabilities URL')"><fmt:message key="dialog.wizard.getCap.url" /></label></span>
 				<span class="input"><input type="text" id="assistantURL" name="assistantURL" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
 				<div class="spacerField"></div>
 			</div>
 
 			<div class="inputContainer grey noSpaceBelow full" style="height:30px;">
-		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="javascript:scriptScope.closeDialog();">Abbrechen</button></span>
-		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Start" onClick="javascript:scriptScope.startRequest();">Start</button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="javascript:scriptScope.closeDialog();"><fmt:message key="dialog.wizard.getCap.cancel" /></button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Start" onClick="javascript:scriptScope.startRequest();"><fmt:message key="dialog.wizard.getCap.start" /></button></span>
 				<span id="assistantGetCapLoadingZone" style="float:right; margin-top:6px; z-index: 100; visibility:hidden">
 					<img src="img/ladekreis.gif" />
 				</span>

@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript" src="js/detail_helper.js"></script>
@@ -25,13 +26,13 @@ _container_.addOnLoad(function() {
 });
 
 function renderNodeData(nodeData) {
-	renderSectionTitel("Adresse");
+	renderSectionTitel(message.get("dialog.compare.address.address"));
 	renderText(detailHelper.renderAddressEntry(nodeData).replace(/\n/g, '<br />'));
 	
 	// administrative data
-	renderSectionTitel("Administrative Angaben");
-	renderTextWithTitle(nodeData.uuid, "Adress-ID");
-	renderTextWithTitle(catalogData.catalogName, "Katalog");
+	renderSectionTitel(message.get("dialog.compare.address.administrative"));
+	renderTextWithTitle(nodeData.uuid, message.get("dialog.compare.address.id"));
+	renderTextWithTitle(catalogData.catalogName, message.get("dialog.compare.address.catalog"));
 
 }
 
@@ -67,14 +68,14 @@ function renderText(val) {
   <div dojoType="ContentPane">
     <div id="contentPane" layoutAlign="client" class="contentBlockWhite top">
       <div id="winNavi">
-        <a href="javascript:printDivContent('detailViewContent')" title="Drucken">[Drucken]</a>
+        <a href="javascript:printDivContent('detailViewContent')" title="Drucken">[<fmt:message key="dialog.detail.print" />]</a>
   	  </div>
   	  <div id="dialogContent" class="content">
         <!-- MAIN TAB CONTAINER START -->
         <div class="spacer"></div>
       	<div id="detailViewContainer" dojoType="ingrid:TabContainer" doLayout="false" class="full" selectedChild="detailView">
           <!-- MAIN TAB 1 START -->
-      		<div id="detailView" dojoType="ContentPane" class="blueTopBorder h500" label="Detailansicht">
+      		<div id="detailView" dojoType="ContentPane" class="blueTopBorder h500" label="<fmt:message key="dialog.detail.title" />">
               <div id="detailViewContent" class="detailViewContentContainer w652 grey"></div>
       		</div>
           <!-- MAIN TAB 1 END -->

@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript" src="js/detail_helper.js"></script>
@@ -12,22 +13,22 @@ _container_.addOnLoad(function() {
 		{
 			callback:function(res) { renderNodeData(res, nodeDataNew); },
 //			timeout:5000,
-			errorHandler:function(message) {dojo.debug("Error in mdek_compare_view_address_dialog.html: Error while waiting for published nodeData: " + message); }
+			errorHandler:function(message) {dojo.debug("Error in mdek_compare_view_address_dialog.jsp: Error while waiting for published nodeData: " + message); }
 		}
 	);
 });
 
 function renderNodeData(nodeDataOld, nodeDataNew) {
-	renderSectionTitel("Adresse");
+	renderSectionTitel(message.get("dialog.compare.address.address"));
 	renderText(detailHelper.renderAddressEntry(nodeDataOld), detailHelper.renderAddressEntry(nodeDataNew));
 
-	renderSectionTitel("Verschlagwortung");
-	renderList(nodeDataOld.thesaurusTermsTable, nodeDataNew.thesaurusTermsTable, "Thesaurus-Suchbegriffe", "title");
+	renderSectionTitel(message.get("ui.adr.thesaurus.title"));
+	renderList(nodeDataOld.thesaurusTermsTable, nodeDataNew.thesaurusTermsTable, message.get("ui.adr.thesaurus.terms"), "title");
 
 	// administrative data
-	renderSectionTitel("Administrative Angaben");
-	renderTextWithTitle(nodeDataOld.uuid, nodeDataNew.uuid, "Adress-ID");
-	renderTextWithTitle(catalogData.catalogName, catalogData.catalogName, "Katalog");
+	renderSectionTitel(message.get("dialog.compare.address.administrative"));
+	renderTextWithTitle(nodeDataOld.uuid, nodeDataNew.uuid, message.get("dialog.compare.address.id"));
+	renderTextWithTitle(catalogData.catalogName, catalogData.catalogName, message.get("dialog.compare.address.catalog"));
 }
 
 function renderSectionTitel(val) {
@@ -249,21 +250,21 @@ function arrayContains(arr, obj) {
         <div class="spacer"></div>
       	<div id="compareViews" dojoType="ingrid:TabContainer" doLayout="false" class="full" selectedChild="diffView">
           <!-- MAIN TAB 1 START -->
-      		<div id="diffView" dojoType="ContentPane" class="blueTopBorder" label="Differenz-Ansicht">
+      		<div id="diffView" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.compare.compare" />">
               <div id="diffContent" class="inputContainer field grey"></div>
-              <div id="diffContentLegend" class="inputContainer field grey"><span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #009933;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - Eingef&uuml;gter Text<br/>
-			  			<span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - Gel&ouml;schter Text</div>
+              <div id="diffContentLegend" class="inputContainer field grey"><span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #009933;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - <fmt:message key="dialog.compare.insertedText" /><br/>
+			  			<span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - <fmt:message key="dialog.compare.deletedText" /></div>
       		</div>
           <!-- MAIN TAB 1 END -->
       		
           <!-- MAIN TAB 2 START -->
-      		<div id="oldView" dojoType="ContentPane" class="blueTopBorder" label="Ausgangsversion">
+      		<div id="oldView" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.compare.original" />">
               <div id="oldContent" class="inputContainer field grey"></div>
       		</div>
           <!-- MAIN TAB 2 END -->
 
           <!-- MAIN TAB 3 START -->
-      		<div id="currentView" dojoType="ContentPane" class="blueTopBorder" label="Bearbeitungsversion">
+      		<div id="currentView" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.compare.modified" />">
               <div id="currentContent" class="inputContainer field grey"></div>
       		</div>
           <!-- MAIN TAB 3 END -->

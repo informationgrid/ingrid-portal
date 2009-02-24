@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
@@ -6,7 +7,8 @@ var scriptScope = this;
 
 // display 10 datasets per page
 var resultsPerPage = 10;
-var tableIdList = ["expObjTable", "expAdrTable", "modObjTable", "modAdrTable", "qaObjTable", "qaAdrTable"];
+var tableIdList = ["qaAssignedObjTable", "qaAssignedAdrTable", "qaModifiedObjTable", "qaModifiedAdrTable",
+	"qaExpiredObjTable", "qaExpiredAdrTable"];
 
 _container_.addOnLoad(function() {
 	initTables();
@@ -25,14 +27,14 @@ function initTables() {
 				pagingSpan:dojo.byId(tableId+"Paging") });
 	});
 
-	// Add types to tables
-	dojo.widget.byId("expObjTable").type = "EXPIRED";
-	dojo.widget.byId("expAdrTable").type = "EXPIRED";
-	dojo.widget.byId("modObjTable").type = "MODIFIED";
-	dojo.widget.byId("modAdrTable").type = "MODIFIED";
-	dojo.widget.byId("qaObjTable").type = "IN_QA_WORKFLOW";
-	dojo.widget.byId("qaAdrTable").type = "IN_QA_WORKFLOW";
-	
+	// Add query parameters to tables.
+	dojo.widget.byId("qaAssignedObjTable").queryParameters = { workState: "QS_UEBERWIESEN", selectionType: null } 
+	dojo.widget.byId("qaAssignedAdrTable").queryParameters = { workState: "QS_UEBERWIESEN", selectionType: null }
+	dojo.widget.byId("qaModifiedObjTable").queryParameters = { workState: "IN_BEARBEITUNG", selectionType: null }
+	dojo.widget.byId("qaModifiedAdrTable").queryParameters = { workState: "IN_BEARBEITUNG", selectionType: null }
+	dojo.widget.byId("qaExpiredObjTable").queryParameters = { workState: null, selectionType: "EXPIRED" }
+	dojo.widget.byId("qaExpiredAdrTable").queryParameters = { workState: null, selectionType: "EXPIRED" }
+
 	// Add initial sortParams to tables
 	dojo.lang.forEach(tableIdList, function(tableId) {
 		dojo.widget.byId(tableId).sortParams = { sortBy: "NAME", sortAsc: true }
@@ -86,7 +88,7 @@ function getSortIdentifierFor(field) {
 	} else if (field == "linkLabel") {
 		return "NAME";
 
-	} else if (field == "expiryDate" || field == "date") {
+	} else if (field == "expiryDate" || field == "date" || field == "assignTime") {
 		return "DATE";
 
 	} else if (field == "modUserTitle" || field == "assignerUserTitle") {
@@ -152,20 +154,14 @@ function reloadTables() {
 
 	var l1 = new dojo.DeferredList(defList, false, false, true);
 	l1.addCallback(function (resultList) {
+/*
 		var expObjResult = resultList[0][1];
 		var expAdrResult = resultList[1][1];
 		var modObjResult = resultList[2][1];
 		var modAdrResult = resultList[3][1];
 		var qaObjResult = resultList[4][1];
 		var qaAdrResult = resultList[5][1];
-
-		// Count the number of occurences and set the overview lst
-		var numAdrStateQ = qaAdrResult.additionalData['total-num-qa-assigned'];
-		var numAdrStateR = qaAdrResult.additionalData['total-num-qa-reassigned'];
-		var numObjStateQ = qaObjResult.additionalData['total-num-qa-assigned'];
-		var numObjStateR = qaObjResult.additionalData['total-num-qa-reassigned'];
-		initOverviewTable(expObjResult.totalNumHits, expAdrResult.totalNumHits, numObjStateQ, numObjStateR, numAdrStateQ, numAdrStateR);
-
+*/
 		exitLoadingState();
 	});
 
@@ -184,11 +180,11 @@ function navigateTable(tableId) {
 
 	var def;
 	if (tableId.indexOf("Obj") != -1) {
-		def = getWorkObjects(table.type, table.sortParams.sortBy,
+		def = getQAObjects(table.queryParameters.workState, table.queryParameters.selectionType, table.sortParams.sortBy,
 			table.sortParams.sortAsc, startHit, resultsPerPage);
 
 	} else {
-		def = getWorkAddresses(table.type, table.sortParams.sortBy,
+		def = getQAAddresses(table.queryParameters.workState, table.queryParameters.selectionType, table.sortParams.sortBy,
 			table.sortParams.sortAsc, startHit, resultsPerPage);
 	}
 
@@ -198,6 +194,7 @@ function navigateTable(tableId) {
 
 	return def;
 }
+
 
 // Update a table with new data from SearchResult (see de.ingrid.mdek.beans.query.(Object|Address)SearchResultBean)
 // The connected PageNav is updated automatically
@@ -219,46 +216,46 @@ function updateTable(tableId, searchResult) {
 	table.pageNav.updateDomNodes();
 }
 
-// Get Work Objects from the backend. The result is returned in a deferred object.
-// type - de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType
+// Get QA Objects from the backend. The result is returned in a deferred object.
+// workState - de.ingrid.mdek.MdekUtils.WorkState
+// selectionType - de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType
 // sortBy - de.ingrid.mdek.MdekUtils.IdcEntityOrderBy
 // sortAsc - boolean
 // startHit - int, where to start
 // numHits - int, limit number of results
-function getWorkObjects(type, sortBy, sortAsc, startHit, numHits) {
+function getQAObjects(workState, selectionType, sortBy, sortAsc, startHit, numHits) {
 	var def = new dojo.Deferred();
 
-	ObjectService.getWorkObjects(type, sortBy, sortAsc, startHit, numHits, {
+	ObjectService.getQAObjects(workState, selectionType, sortBy, sortAsc, startHit, numHits, {
 		callback: function(result) {
 			def.callback(result);
 		},
 		errorHandler: function(errMsg, err) {
 			dojo.debug("Error: "+errMsg);
 			dojo.debugShallow(err);
-			displayErrorMessage(err);
 			def.errback(err);
 		}
 	});
 	return def;
 }
 
-// Get Work Addresses from the backend. The result is returned in a deferred object.
-// type - de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType
+// Get QA Addresses from the backend. The result is returned in a deferred object.
+// workState - de.ingrid.mdek.MdekUtils.WorkState
+// selectionType - de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType
 // sortBy - de.ingrid.mdek.MdekUtils.IdcEntityOrderBy
 // sortAsc - boolean
 // startHit - int, where to start
 // numHits - int, limit number of results
-function getWorkAddresses(type, sortBy, sortAsc, startHit, numHits) {
+function getQAAddresses(workState, selectionType, sortBy, sortAsc, startHit, numHits) {
 	var def = new dojo.Deferred();
 
-	AddressService.getWorkAddresses(type, sortBy, sortAsc, startHit, numHits, {
+	AddressService.getQAAddresses(workState, selectionType, sortBy, sortAsc, startHit, numHits, {
 		callback: function(result) {
 			def.callback(result);
 		},
 		errorHandler: function(errMsg, err) {
 			dojo.debug("Error: "+errMsg);
 			dojo.debugShallow(err);
-			displayErrorMessage(err);
 			def.errback(err);
 		}
 	});
@@ -319,15 +316,6 @@ function addAddressTableIdentifiers(adrList) {
 
 }
 
-function initOverviewTable(numExpObj, numExpAdr, numObjStateQ, numObjStateR, numAdrStateQ, numAdrStateR) {
-	var types = [{Id:0, type:"Aktualisierte Raumeinheiten", obj:0, adr:0},
-				 {Id:1, type:"Verfallszeitpunkt erreicht", obj:numExpObj, adr:numExpAdr},
-				 {Id:2, type:"An Qualit&auml;tssicherung &uuml;berwiesen", obj:numObjStateQ, adr:numAdrStateQ},
-				 {Id:3, type:"Von Qualit&auml;tssicherung zur&uuml;ck&uuml;berwiesen", obj:numObjStateR, adr:numAdrStateR}];
-
-	dojo.widget.byId("editorsOverviewTable").store.setData(types);
-}
-
 // Get The localized text for a userOperation (NEW, EDITED, DELETED)
 function getUserOperationText(userOperation) {
 	return message.get("general.userOperation."+userOperation);
@@ -338,17 +326,17 @@ function getWorkStateText(workState) {
 	return message.get("general.workState."+workState);
 }
 
+
 function enterLoadingState() {
-	dojo.byId("qaEditorLoadingZone").style.display = "block";
-	dojo.byId("qaEditorContent").style.visibility = "hidden";
+	dojo.byId("qaLoadingZone").style.display = "block";
+	dojo.byId("qaContent").style.visibility = "hidden";
 }
 
 function exitLoadingState() {
-	dojo.byId("qaEditorLoadingZone").style.display = "none";
-	dojo.byId("qaEditorContent").style.visibility = "visible";
+	dojo.byId("qaLoadingZone").style.display = "none";
+	dojo.byId("qaContent").style.visibility = "visible";
 }
 
-// Button function to reload the page
 scriptScope.reloadPage = function() {
 	reloadTables();
 }
@@ -361,79 +349,43 @@ scriptScope.reloadPage = function() {
 
 	<div class="contentBlockWhite top wideBlock">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7065)" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7069)" title="Hilfe">[?]</a>
 		</div>
 
-		<span class="label" id="qaEditorLoadingZone">
+		<span class="label" id="qaLoadingZone">
 			<div z-index: 100;">
 		        <img src="img/ladekreis.gif" style="background-color:#FFFFFF;" />
 		        <label>&nbsp;Bitte warten, die Daten werden geladen...</label>
 		    </div>
 		</span>
 
-		<div class="content" id="qaEditorContent" style="visibility:hidden;">
-
+		<div class="content" id="qaContent" style="visibility:hidden;">
+        
 			<div class="spacer"></div>
-			<button dojoType="ingrid:Button" title="Seite aktualisieren" onClick="javascript:scriptScope.reloadPage();">Seite aktualisieren</button>
+			<button dojoType="ingrid:Button" title="Seite aktualisieren" onClick="javascript:scriptScope.reloadPage();"><fmt:message key="dialog.qa.refresh" /></button>
 			<div class="spacer"></div>
 
-			<div class="inputContainer noSpaceBelow">
-				<div id="editorsOverview" class="infobox w478">
-					<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
-					<span class="title"><a href="javascript:toggleInfo('editorsOverview');" title="Info aufklappen">&Uuml;bersicht:
-						<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
-					<div id="editorsOverviewContent">
-						<table id="editorsOverviewTable" dojoType="ingrid:FilteringTable" minRows="3" cellspacing="0" class="filteringTableBlue relativePos nosort">
-							<thead>
-								<tr>
-									<th nosort="true" field="type" dataType="String" width="295">Objektzustand</th>
-									<th nosort="true" field="obj" dataType="String" width="92">Objekte</th>
-									<th nosort="true" field="adr" dataType="String" width="92">Adressen</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr value="1">
-									<td>Aktualisierte Raumeinheiten</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td></tr>
-								<tr value="2">
-									<td>Verfallszeitpunkt erreicht</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td></tr>
-								<tr value="3">
-									<td>An Qualit&auml;tssicherung &uuml;berwiesen</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td></tr>
-								<tr value="4">
-									<td>Von Qualit&auml;tssicherung zur&uuml;ck&uuml;berwiesen</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td></tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div> <!-- inputContainer end -->
+			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7070)"><fmt:message key="dialog.qa.assignedObjects" /></label></span>
 
-			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7066)">Objekte / Adressen deren Verfallszeitspanne abgelaufen ist</label></span>
+        	<div id="qaAssignedDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="qaAssignedObjContentPane">
 
-        	<div id="expDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="expObjContentPane">
-        		<div id="expObjContentPane" dojoType="ContentPane" label="Objekte" style="overflow:hidden;">
-
+        		<div id="qaAssignedObjContentPane" dojoType="ContentPane" label="<fmt:message key="dialog.qa.objects" />" style="overflow:hidden;">
 					<div class="inputContainer">
 						<div class="listInfo wide">
-							<span id="expObjTableInfo" class="searchResultsInfo">&nbsp;</span>
-							<span id="expObjTablePaging" class="searchResultsPaging">&nbsp;</span>
+							<span id="qaAssignedObjTableInfo" class="searchResultsInfo">&nbsp;</span>
+							<span id="qaAssignedObjTablePaging" class="searchResultsPaging">&nbsp;</span>
 							<div class="fill"></div>
 						</div>
 		
 				        <div class="tableContainer rows10 wide">
-							<table id="expObjTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
+							<table id="qaAssignedObjTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
 								<thead>
 									<tr>
 										<th field="icon" dataType="String" width="32"></th>
-										<th field="linkLabel" dataType="String" width="700">Name</th>
-										<th field="modUserTitle" dataType="String" width="130">Bearbeiter</th>
-										<th field="expiryDate" dataType="Date" width="100">Abgelaufen am</th>
+										<th field="linkLabel" dataType="String" width="550"><fmt:message key="dialog.qa.name" /></th>
+										<th field="assignerUserTitle" dataType="String" width="130"><fmt:message key="dialog.qa.assignedBy" /></th>
+										<th field="type" dataType="String" width="160"><fmt:message key="dialog.qa.type" /></th>
+										<th field="assignTime" dataType="Date" width="100"><fmt:message key="dialog.qa.assignedAt" /></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -441,55 +393,25 @@ scriptScope.reloadPage = function() {
 							</table>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
-				</div> <!-- ContentPane end -->
+				</div> <!-- ContentPane -->
 
-        		<div id="expAdrContentPane" dojoType="ContentPane" label="Adressen" style="overflow:hidden;">
-
+        		<div id="qaAssignedAdrContentPane" dojoType="ContentPane" label="<fmt:message key="dialog.qa.addresses" />" style="overflow:hidden;">
 					<div class="inputContainer">
 						<div class="listInfo wide">
-							<span id="expAdrTableInfo" class="searchResultsInfo">&nbsp;</span>
-							<span id="expAdrTablePaging" class="searchResultsPaging">&nbsp;</span>
-							<div class="fill"></div>
-						</div>
-
-				        <div class="tableContainer rows10 wide">
-							<table id="expAdrTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
-								<thead>
-									<tr>
-										<th field="icon" dataType="String" width="32"></th>
-										<th field="linkLabel" dataType="String" width="700">Name</th>
-										<th field="modUserTitle" dataType="String" width="130">Bearbeiter</th>
-										<th field="expiryDate" dataType="Date" width="100">Abgelaufen am</th>
-									</tr>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
-						</div> <!-- tableContainer end -->
-					</div> <!-- inputContainer end -->
-				</div> <!-- ContentPane end -->
-			</div> <!-- TabContainer end -->
-
-			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7067)">Objekte / Adressen die sich in von Ihnen derzeit in Bearbeitung befinden</label></span>
-
-        	<div id="modDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="modObjContentPane">
-
-        		<div id="modObjContentPane" dojoType="ContentPane" label="Objekte" style="overflow:hidden;">
-					<div class="inputContainer">
-						<div class="listInfo wide">
-							<span id="modObjTableInfo" class="searchResultsInfo">&nbsp;</span>
-							<span id="modObjTablePaging" class="searchResultsPaging">&nbsp;</span>
+							<span id="qaAssignedAdrTableInfo" class="searchResultsInfo">&nbsp;</span>
+							<span id="qaAssignedAdrTablePaging" class="searchResultsPaging">&nbsp;</span>
 							<div class="fill"></div>
 						</div>
 		
 				        <div class="tableContainer rows10 wide">
-							<table id="modObjTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
+							<table id="qaAssignedAdrTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
 								<thead>
 									<tr>
 										<th field="icon" dataType="String" width="32"></th>
-										<th field="linkLabel" dataType="String" width="550">Name</th>
-										<th field="modUserTitle" dataType="String" width="130">Bearbeiter</th>
-										<th field="type" dataType="String" width="160">Typ</th>
+										<th field="linkLabel" dataType="String" width="550"><fmt:message key="dialog.qa.name" /></th>
+										<th field="assignerUserTitle" dataType="String" width="130"><fmt:message key="dialog.qa.assignedBy" /></th>
+										<th field="type" dataType="String" width="160"><fmt:message key="dialog.qa.type" /></th>
+										<th field="assignTime" dataType="Date" width="100"><fmt:message key="dialog.qa.assignedAt" /></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -497,24 +419,30 @@ scriptScope.reloadPage = function() {
 							</table>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
-				</div> <!-- ContentPane end -->
+				</div> <!-- ContentPane -->
+			</div> <!-- TabContainer -->
 
-        		<div id="modAdrContentPane" dojoType="ContentPane" label="Adressen" style="overflow:hidden;">
+			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7071)"><fmt:message key="dialog.qa.modifiedObjects" /></label></span>
+
+        	<div id="qaModifiedDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="qaModifiedObjContentPane">
+
+        		<div id="qaModifiedObjContentPane" dojoType="ContentPane" label="<fmt:message key="dialog.qa.objects" />" style="overflow:hidden;">
 					<div class="inputContainer">
 						<div class="listInfo wide">
-							<span id="modAdrTableInfo" class="searchResultsInfo">&nbsp;</span>
-							<span id="modAdrTablePaging" class="searchResultsPaging">&nbsp;</span>
+							<span id="qaModifiedObjTableInfo" class="searchResultsInfo">&nbsp;</span>
+							<span id="qaModifiedObjTablePaging" class="searchResultsPaging">&nbsp;</span>
 							<div class="fill"></div>
 						</div>
 		
 				        <div class="tableContainer rows10 wide">
-							<table id="modAdrTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
+							<table id="qaModifiedObjTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
 								<thead>
 									<tr>
 										<th field="icon" dataType="String" width="32"></th>
-										<th field="linkLabel" dataType="String" width="550">Name</th>
-										<th field="modUserTitle" dataType="String" width="130">Bearbeiter</th>
-										<th field="type" dataType="String" width="160">Typ</th>
+										<th field="linkLabel" dataType="String" width="550"><fmt:message key="dialog.qa.name" /></th>
+										<th field="modUserTitle" dataType="String" width="130"><fmt:message key="dialog.qa.modUser" /></th>
+										<th field="type" dataType="String" width="160"><fmt:message key="dialog.qa.type" /></th>
+										<th field="date" dataType="Date" width="100"><fmt:message key="dialog.qa.date" /></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -522,31 +450,25 @@ scriptScope.reloadPage = function() {
 							</table>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
-				</div> <!-- ContentPane end -->
-			</div> <!-- TabContainer end -->
+				</div> <!-- ContentPane -->
 
-			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7068)">Objekte / Adressen die an die Qualit&auml;tssicherung &uuml;berwiesen bzw. von der Qualit&auml;tssicherung r&uuml;ck&uuml;berwiesen wurden</label></span>
-
-        	<div id="qaDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="qaObjContentPane">
-
-        		<div id="qaObjContentPane" dojoType="ContentPane" label="Objekte" style="overflow:hidden;">
+        		<div id="qaModifiedAdrContentPane" dojoType="ContentPane" label="<fmt:message key="dialog.qa.addresses" />" style="overflow:hidden;">
 					<div class="inputContainer">
 						<div class="listInfo wide">
-							<span id="qaObjTableInfo" class="searchResultsInfo">&nbsp;</span>
-							<span id="qaObjTablePaging" class="searchResultsPaging">&nbsp;</span>
+							<span id="qaModifiedAdrTableInfo" class="searchResultsInfo">&nbsp;</span>
+							<span id="qaModifiedAdrTablePaging" class="searchResultsPaging">&nbsp;</span>
 							<div class="fill"></div>
 						</div>
 		
 				        <div class="tableContainer rows10 wide">
-							<table id="qaObjTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
+							<table id="qaModifiedAdrTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
 								<thead>
 									<tr>
 										<th field="icon" dataType="String" width="32"></th>
-										<th field="linkLabel" dataType="String" width="340">Name</th>
-										<th field="assignerUserTitle" dataType="String" width="130">Zugewiesen von</th>
-										<th field="state" dataType="String" width="210">Status</th>
-										<th field="type" dataType="String" width="160">Typ</th>
-										<th field="date" dataType="Date" width="100">Datum</th>
+										<th field="linkLabel" dataType="String" width="550"><fmt:message key="dialog.qa.name" /></th>
+										<th field="modUserTitle" dataType="String" width="130"><fmt:message key="dialog.qa.modUser" /></th>
+										<th field="type" dataType="String" width="160"><fmt:message key="dialog.qa.type" /></th>
+										<th field="date" dataType="Date" width="100"><fmt:message key="dialog.qa.date" /></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -554,26 +476,29 @@ scriptScope.reloadPage = function() {
 							</table>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
-				</div> <!-- ContentPane end -->
+				</div> <!-- ContentPane -->
+			</div> <!-- TabContainer -->
 
-        		<div id="qaAdrContentPane" dojoType="ContentPane" label="Adressen" style="overflow:hidden;">
+			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7072)"><fmt:message key="dialog.qa.expiredObjects" /></label></span>
+
+        	<div id="qaExpiredDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="qaExpiredObjContentPane">
+
+        		<div id="qaExpiredObjContentPane" dojoType="ContentPane" label="<fmt:message key="dialog.qa.objects" />" style="overflow:hidden;">
 					<div class="inputContainer">
 						<div class="listInfo wide">
-							<span id="qaAdrTableInfo" class="searchResultsInfo">&nbsp;</span>
-							<span id="qaAdrTablePaging" class="searchResultsPaging">&nbsp;</span>
+							<span id="qaExpiredObjTableInfo" class="searchResultsInfo">&nbsp;</span>
+							<span id="qaExpiredObjTablePaging" class="searchResultsPaging">&nbsp;</span>
 							<div class="fill"></div>
 						</div>
 		
 				        <div class="tableContainer rows10 wide">
-							<table id="qaAdrTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
+							<table id="qaExpiredObjTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
 								<thead>
 									<tr>
 										<th field="icon" dataType="String" width="32"></th>
-										<th field="linkLabel" dataType="String" width="340">Name</th>
-										<th field="assignerUserTitle" dataType="String" width="130">Zugewiesen von</th>
-										<th field="state" dataType="String" width="210">Status</th>
-										<th field="type" dataType="String" width="160">Typ</th>
-										<th field="date" dataType="Date" width="100">Datum</th>
+										<th field="linkLabel" dataType="String" width="710"><fmt:message key="dialog.qa.name" /></th>
+										<th field="modUserTitle" dataType="String" width="130"><fmt:message key="dialog.qa.modUser" /></th>
+										<th field="expiryDate" dataType="Date" width="100"><fmt:message key="dialog.qa.expiredAt" /></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -581,8 +506,32 @@ scriptScope.reloadPage = function() {
 							</table>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
+				</div> <!-- ContentPane -->
 
-			</div> <!-- TabContainer end -->
+        		<div id="qaExpiredAdrContentPane" dojoType="ContentPane" label="<fmt:message key="dialog.qa.addresses" />" style="overflow:hidden;">
+					<div class="inputContainer">
+						<div class="listInfo wide">
+							<span id="qaExpiredAdrTableInfo" class="searchResultsInfo">&nbsp;</span>
+							<span id="qaExpiredAdrTablePaging" class="searchResultsPaging">&nbsp;</span>
+							<div class="fill"></div>
+						</div>
+		
+				        <div class="tableContainer rows10 wide">
+							<table id="qaExpiredAdrTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
+								<thead>
+									<tr>
+										<th field="icon" dataType="String" width="32"></th>
+										<th field="linkLabel" dataType="String" width="710"><fmt:message key="dialog.qa.name" /></th>
+										<th field="modUserTitle" dataType="String" width="130"><fmt:message key="dialog.qa.modUser" /></th>
+										<th field="expiryDate" dataType="Date" width="100"><fmt:message key="dialog.qa.expiredAt" /></th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div> <!-- tableContainer end -->
+					</div> <!-- inputContainer end -->
+			</div> <!-- TabContainer -->
 
 		</div> <!-- content end -->
 	</div> <!-- contentBlock end -->

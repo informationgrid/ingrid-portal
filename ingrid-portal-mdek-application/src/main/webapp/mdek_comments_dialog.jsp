@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>Kommentarbereich</title>
@@ -81,14 +82,14 @@ addComment = function() {
 
       <!-- CONTENT START -->
       <div class="inputContainer wide">
-        <span id="commentTableLabel" class="label">Kommentare zu diesem Objekt</span>
+        <span id="commentTableLabel" class="label"></span>
   	    <div class="tableContainer rows8 wide">
   	    <table id="commentCommentsTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y %H:%M" minRows="8" cellspacing="0" class="filteringTable interactive nosort relativePos">
   	      <thead>
   		      <tr>
-        			<th nosort="true" field="date" dataType="Date" width="120">Datum</th>
-        			<th nosort="true" field="title" dataType="String" width="185">Nutzer</th>
-        			<th nosort="true" field="comment" dataType="String" width="677">Kommentar</th>
+        			<th nosort="true" field="date" dataType="Date" width="120"><fmt:message key="dialog.comments.date" /></th>
+        			<th nosort="true" field="title" dataType="String" width="185"><fmt:message key="dialog.comments.user" /></th>
+        			<th nosort="true" field="comment" dataType="String" width="677"><fmt:message key="dialog.comments.comment" /></th>
   		      </tr>
   	      </thead>
   	      <tbody>
@@ -97,13 +98,13 @@ addComment = function() {
   	  </div>
 
       <div class="inputContainer wide noSpaceBelow">
-        <span class="label"><label for="commentNewComment" onclick="javascript:dialog.showContextHelp(arguments[0], 7043, 'Neuen Kommentar verfassen')">Neuen Kommentar verfassen</label></span>
+        <span class="label"><label for="commentNewComment" onclick="javascript:dialog.showContextHelp(arguments[0], 7043, 'Neuen Kommentar verfassen')"><fmt:message key="dialog.comments.newComment" /></label></span>
         <span class="input field grey">
 			<input type="text" mode="textarea" id="commentNewComment" class="w915 h085" dojoType="ingrid:ValidationTextbox" />
         </span>
         <span class="button w915" style="height:20px !important;">
 			<span style="float:right;">
-				<button dojoType="ingrid:Button" title="Kommentar eintragen" id="addCommentButton" onClick="addComment">Kommentar eintragen</button>
+				<button dojoType="ingrid:Button" title="Kommentar eintragen" id="addCommentButton" onClick="addComment"><fmt:message key="dialog.comments.addComment" /></button>
 			</span>
         </span>
   	  </div>

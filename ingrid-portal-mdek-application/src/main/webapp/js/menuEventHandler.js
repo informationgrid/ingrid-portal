@@ -136,10 +136,10 @@ menuEventHandler.handlePreview = function(msg) {
 	
 	if (selectedNode.nodeAppType == "O") {
   	dojo.debug('Show object preview.');
-		dialog.showPage(message.get("dialog.object.detailView.title"), "mdek_detail_view_dialog.html", 755, 600, false, params);
+		dialog.showPage(message.get("dialog.object.detailView.title"), "mdek_detail_view_dialog.jsp", 755, 600, false, params);
 	} else if (selectedNode.nodeAppType == "A") {
   	dojo.debug('Show address preview.');
-		dialog.showPage(message.get("dialog.address.detailView.title"), "mdek_detail_view_address_dialog.html", 755, 600, false, params);
+		dialog.showPage(message.get("dialog.address.detailView.title"), "mdek_detail_view_address_dialog.jsp", 755, 600, false, params);
 	}
 }
 
@@ -945,14 +945,14 @@ menuEventHandler.handleShowChanges = function(msg) {
 	};
 
 	if (selectedNode.nodeAppType == "O") {
-		dialog.showPage(message.get("dialog.compareView.title"), "mdek_compare_view_dialog.html", 755, 600, false, params);
+		dialog.showPage(message.get("dialog.compareView.title"), "mdek_compare_view_dialog.jsp", 755, 600, false, params);
 	} else if (selectedNode.nodeAppType == "A") {
-		dialog.showPage(message.get("dialog.compareView.title"), "mdek_compare_view_address_dialog.html", 755, 600, false, params);
+		dialog.showPage(message.get("dialog.compareView.title"), "mdek_compare_view_address_dialog.jsp", 755, 600, false, params);
 	}
 }
 
 menuEventHandler.handleShowComment = function() {
-	dialog.showPage(message.get("dialog.showComments.title"), "mdek_comments_dialog.html", 1010, 470, false);
+	dialog.showPage(message.get("dialog.showComments.title"), "mdek_comments_dialog.jsp", 1010, 470, false);
 /*
 	var nodeId = prompt("Jump to node with uuid", "5CE671D3-5475-11D3-A172-08002B9A1D1D");
  	if (nodeId) {
@@ -1111,15 +1111,6 @@ menuEventHandler.switchLanguage = function() {
 
 menuEventHandler.openCreateObjectWizardDialog = function() {
 	dialog.showPage("Assistent w&auml;hlen", "mdek_select_wizard_dialog.html", 350, 170, true);
-
-/*
-	dialog.show("Erfassungsassistent", "M&ouml;chten Sie den allgemeinen Erfassungsassistenten zur Erstellung des Objektes verwenden?", dialog.INFO, [
-	{ caption: message.get("general.no"), action: function() { return; }},
-	{ caption: message.get("general.yes"), action: function() {
-			dialog.showPage("Allgemeiner Erfassungsassistent", "mdek_create_object_wizard_dialog.html", 755, 600, true);
-		}}
-	]);
-*/
 }
 
 // ------------------------- Helper functions -------------------------

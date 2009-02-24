@@ -4,6 +4,7 @@
     "general.yes":"Yes",
     "general.save":"Save",
     "general.no":"No",
+    "general.add":"Add",
     "general.cancel":"Cancel",
     "general.error":"Error",
     "general.warning":"Warning",
@@ -135,6 +136,7 @@
 	"links.fillRequiredFieldsHint":"Please fill out all required fields.",
 	"links.noLinkToSelfHint":"It is not possible to create a link to the same object.",
 
+	"dialog.compareView.title":"Compare View",
 	"dialog.object.deleteChildrenMessage":"Do you really want to delete the object '%{0}' and all subobjects?",
 	"dialog.address.deleteChildrenMessage":"Do you really want to delete the address '%{0}' and all subaddresses?",
 	"dialog.object.deleteMessage":"Do you really want to delete the object '%{0}'?",
@@ -220,6 +222,11 @@
 	"dialog.admin.users.deleteUser":"Delete user",
 	"dialog.admin.users.importUser":"Import portal user",
 
+	"dialog.compare.address.address":"Address",
+	"dialog.compare.address.administrative":"Administrative settings",
+	"dialog.compare.address.id":"Address-ID",
+	"dialog.compare.address.catalog":"Catalogue",
+
 	"dialog.storeGroupTitle":"Store Group",
 	"dialog.storeGroupSuccess":"The group was saved successfully.",
 	"dialog.browserFunctionDisabled":"This functionality is disabled.",
@@ -231,6 +238,43 @@
 	"dialog.showComments.title":"Show/Edit Comments",
 
 	"dialog.admin.userNotFoundError":"The user could not be found. The user must exist in the portal and must not already have the role 'mdek'.",
+	"dialog.admin.fieldSettingsUpdated":"Settings saved successfully.",
+	"dialog.admin.invalidObjectNameError":"Invalid object name.",
+
+	"dialog.compare.address.address":"Address",
+	"dialog.compare.address.administrative":"Administrative settings",
+	"dialog.compare.address.id":"Adress-ID",
+	"dialog.compare.address.catalog":"Catalogue",
+
+	"dialog.compare.object.addressLink.type":"Link type",
+	"dialog.compare.object.addressLink.title":"Title",
+	"dialog.compare.object.spatialTable.title":"Administrative Units",
+	"dialog.compare.object.linksFromTable.title":"Objects referencing this object",
+	"dialog.compare.object.linksToTable.title":"Objects referenced by this object",
+	"dialog.compare.object.administrative":"Administrative settings",
+	"dialog.compare.object.id":"Object-ID",
+	"dialog.compare.object.catalog":"Catalogue",
+
+	"dialog.links.selectObject.title":"Select object",
+
+	"dialog.qa.spatialRefMod":"Updated Spatial References",
+	"dialog.qa.expired":"Expired",
+	"dialog.qa.assignedToQa":"Assigned to QA",
+	"dialog.qa.reassignedFromQa":"Reassigned from QA",
+
+	"dialog.research.ext.obj.userSynonyms":"Use these descriptors instead",
+	"dialog.research.ext.obj.synonym":"Synonym",
+	"dialog.research.ext.obj.synonyms":"Synonyms",
+	"dialog.research.ext.obj.descriptor":"Descriptor",
+	"dialog.research.ext.obj.parentTerms":"Parent terms",
+	"dialog.research.ext.obj.childTerms":"Child terms",
+	"dialog.research.ext.obj.similarTerms":"Similar terms",
+	"dialog.research.ext.obj.invalidDate":"The date you entered '%{0}' is invalid and will be reset.",
+
+	"dialog.wizard.create.title":"Create object wizard",
+	"dialog.wizard.create.snsNoResultError":"The SNS could not find any results for the given url.",
+	"dialog.wizard.create.snsInvalidPageError":"The given Url could not be analyzed by the SNS.",
+	"dialog.wizard.getCap.title":"getCapabilities wizard",
 
 	"operation.error.object.parentNotPublishedError":"You have to publish the parent objects before publishing the selected object!",
 	"operation.error.address.parentNotPublishedError":"You have to publish the parent addresses before publishing the selected addresses!",

@@ -16,11 +16,11 @@ scriptScope.openWizard = function() {
 
 	scriptScope.closeDialog();
 	if (generalWizardSelected) {
-		dialog.showPage("Allgemeiner Erfassungsassistent", "mdek_create_object_wizard_dialog.html", 755, 600, true);
+		dialog.showPage(message.get("dialog.wizard.create.title"), "mdek_create_object_wizard_dialog.jsp", 755, 600, true);
 
 	} else {
 		_container_.closeWindow();
-		dialog.showPage("getCapabilities Assistent", "mdek_get_capabilities_wizard_dialog.html", 755, 195, true);
+		dialog.showPage(message.get("dialog.wizard.getCap.title"), "mdek_get_capabilities_wizard_dialog.jsp", 755, 195, true);
 	}
 }
 

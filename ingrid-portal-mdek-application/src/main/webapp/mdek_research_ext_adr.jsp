@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 
@@ -178,42 +179,39 @@ function hideLoadingZone() {
 		<div id="addr" dojoType="ingrid:TabContainer" doLayout="false" class="w845" selectedChild="addrTopic">
 	
 	    <!-- EXTENDED SEARCH TAB 1 START -->
-			<div id="addrTopic" dojoType="ContentPane" class="blueTopBorder grey" label="Thema">
+			<div id="addrTopic" dojoType="ContentPane" class="blueTopBorder grey" label="<fmt:message key="dialog.research.ext.adr.theme" />">
 	      <!-- EXTENDED SEARCH TAB 1 SUB 2 START -->
 			<div id="addrTopic0">
 	        <div class="tabContainerSubNavi">
 	    	    <ul>
-<!-- 
-	    	      <li><a href="javascript:scriptScope.navInnerTab(0);" title="Suchbegriffe">Suchbegriffe</a></li>
- -->
-	    	      <li><a nohref="nohref" class="current" title="Suchmodus">Suchmodus</a></li>
+	    	      <li><a nohref="nohref" class="current" title="Suchmodus"><fmt:message key="dialog.research.ext.adr.mode" /></a></li>
 	    	    </ul>
 	    	  </div>
 	        <div class="inputContainer field noSpaceBelow">
-	          <span class="note"><b>Bestimmen Sie wie gesucht werden soll:</b></span>
+	          <span class="note"><b><fmt:message key="dialog.research.ext.adr.description" /></b></span>
 	          <div class="spacer"></div>
 
-	          <span class="label noSpaceBelow"><label class="inActive" for="addrTopicInputBool">Die gesuchte Adresse enth&auml;lt:</label>
+	          <span class="label noSpaceBelow"><label class="inActive" for="addrTopicInputBool"><fmt:message key="dialog.research.ext.adr.contains" /></label>
 	            <select dojoType="ingrid:Select" style="width:174px;" id="addrTopicInputBool">
 	              <!-- TODO: fill in jsp -->
-	            	<option value="0">Alle diese Begriffe (UND)</option>
-	            	<option value="1">Einen dieser Begriffe (ODER)</option>
+	            	<option value="0"><fmt:message key="dialog.research.ext.adr.contains.all" /></option>
+	            	<option value="1"><fmt:message key="dialog.research.ext.adr.contains.one" /></option>
 	            </select></span>
 
-	          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7054, 'Suchmodus')">Suchmodus</label></span>
+	          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7054, 'Suchmodus')"><fmt:message key="dialog.research.ext.adr.mode" /></label></span>
 	          <div class="checkboxContainer">
 	            <input type="radio" name="addrMode" id="addrMode1" class="radio entry first" checked />
-	            <label class="inActive entry closer w116" for="addrMode1">Ganzes Wort</label>
+	            <label class="inActive entry closer w116" for="addrMode1"><fmt:message key="dialog.research.ext.adr.full" /></label>
 	            <input type="radio" name="addrMode" id="addrMode2" class="radio entry" />
-	            <label class="inActive entry closer" for="addrMode2">Teilzeichenkette</label>
+	            <label class="inActive entry closer" for="addrMode2"><fmt:message key="dialog.research.ext.adr.substring" /></label>
 	          </div>
 	          <div class="fill spacer"></div>
-	          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7055, 'Suchmodus')">Suche in folgenden Feldern</label></span>
+	          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7055, 'Suchmodus')"><fmt:message key="dialog.research.ext.adr.fields" /></label></span>
 	          <div class="checkboxContainer">
 	            <input type="radio" name="addrFields" id="addrFields1" class="radio entry first" checked />
-	            <label class="inActive entry closer w116" for="addrFields1">Alle Textfelder</label>
+	            <label class="inActive entry closer w116" for="addrFields1"><fmt:message key="dialog.research.ext.adr.allTextFields" /></label>
 	            <input type="radio" name="addrFields" id="addrFields2" class="radio entry" />
-	            <label class="inActive entry closer" for="addrFields2">Institutionen, Person, Beschreibung, Schlagworte</label>
+	            <label class="inActive entry closer" for="addrFields2"><fmt:message key="dialog.research.ext.adr.specialFields" /></label>
 	          </div>
 	    	  </div>
 	    	</div>
@@ -224,21 +222,21 @@ function hideLoadingZone() {
 	    <!-- EXTENDED SEARCH TAB 1 END -->
 
 	    <!-- EXTENDED SEARCH TAB 2 START -->
-			<div id="addrSpace" dojoType="ContentPane" class="blueTopBorder grey" label="Raum">
+			<div id="addrSpace" dojoType="ContentPane" class="blueTopBorder grey" label="<fmt:message key="dialog.research.ext.adr.location" />">
 	      <!-- EXTENDED SEARCH TAB 2 SUB 1 START -->
 			  <div id="addrSpace0">
 	        <div class="tabContainerSubNavi">
 	    	    <ul>
-	    	      <li><a nohref="nohref" class="current" title="Raumbezug">Raumbezug</a></li>
+	    	      <li><a nohref="nohref" class="current" title="Raumbezug"><fmt:message key="dialog.research.ext.adr.locationRef" /></a></li>
 	    	    </ul>
 	    	  </div>
 	        <div class="inputContainer field grey noSpaceBelow">
-	          <span class="label"><label for="addrSpaceAdminUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 7056, 'Adressinformationen')">F&uuml;gen Sie hier Ihrer Suchanfrage konkrete Adressinformationen zu:</label></span>
-	          <span class="label"><label for="addrSpaceStreet" onclick="javascript:dialog.showContextHelp(arguments[0], 7057, 'Stra&szlig;e')">Stra&szlig;e</label></span>
+	          <span class="label"><label for="addrSpaceAdminUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 7056, 'Adressinformationen')"><fmt:message key="dialog.research.ext.adr.locationDescription" /></label></span>
+	          <span class="label"><label for="addrSpaceStreet" onclick="javascript:dialog.showContextHelp(arguments[0], 7057, 'Stra&szlig;e')"><fmt:message key="dialog.research.ext.adr.street" /></label></span>
 	          <span class="input spaceBelow"><input type="text" id="addrSpaceStreet" name="addrSpaceStreet" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
-	          <span class="label"><label for="addrSpaceZip" onclick="javascript:dialog.showContextHelp(arguments[0], 7058, 'PLZ')">PLZ</label></span>
+	          <span class="label"><label for="addrSpaceZip" onclick="javascript:dialog.showContextHelp(arguments[0], 7058, 'PLZ')"><fmt:message key="dialog.research.ext.adr.postCode" /></label></span>
 	          <span class="input spaceBelow"><input type="text" id="addrSpaceZip" name="addrSpaceZip" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
-	          <span class="label"><label for="addrSpaceCity" onclick="javascript:dialog.showContextHelp(arguments[0], 7059, 'Ort')">Ort</label></span>
+	          <span class="label"><label for="addrSpaceCity" onclick="javascript:dialog.showContextHelp(arguments[0], 7059, 'Ort')"><fmt:message key="dialog.research.ext.adr.city" /></label></span>
 	          <span class="input"><input type="text" id="addrSpaceCity" name="addrSpaceCity" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
 	    	  </div>
 	        <div class="spacerField"></div>
@@ -253,50 +251,16 @@ function hideLoadingZone() {
 	  <div class="inputContainer">
         <span class="button w805" style="height:20px !important;">
           <span style="float:right;">
-            <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewSearch();">Suchen</button>
+            <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewSearch();"><fmt:message key="dialog.research.ext.adr.search" /></button>
 		  </span>
           <span style="float:right;">
-            <button dojoType="ingrid:Button" title="Zur&uuml;cksetzen" onClick="javascript:scriptScope.resetInput();">Zur&uuml;cksetzen</button>
+            <button dojoType="ingrid:Button" title="Zur&uuml;cksetzen" onClick="javascript:scriptScope.resetInput();"><fmt:message key="dialog.research.ext.adr.reset" /></button>
 		  </span>
 		  <span id="addressSearchExtLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 			<img src="img/ladekreis.gif" />
 		  </span>
 	    </span>
 	  </div>
-
-    <!-- ADDRESS SEARCH RESULT LIST START -->
-<!-- 
-    <div class="spacer"></div>
-    <div id="addressSearchExtResultsContainer" class="inputContainer noSpaceBelow w845">
-      <span class="label">Trefferliste</span>
-
-      <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Trefferliste als CSV-Datei speichern">Trefferliste als CSV-Datei speichern</a></span>
-
-      <div class="listInfo w845">
-        <span id="adrSearchExtResultsInfo" class="searchResultsInfo">&nbsp;</span>
-        <span id="adrSearchExtResultsPaging" class="searchResultsPaging">&nbsp;</span>
-    	  <div class="fill"></div>
-      </div>
-
-	  <div class="tableContainer rows10 w845">
-		  <table id="addressSearchExtResults" dojoType="ingrid:FilteringTable" minRows="10" cellspacing="0" class="filteringTable nosort relativePos">
-		    <thead>
-			  <tr>
-	      	    <th nosort="true" field="icon" dataType="String" width="23"></th>
-	      		<th nosort="true" field="linkLabel" dataType="String" width="804">Name</th>
-			  </tr>
-		    </thead>
-	        <colgroup>
-		      <col width="23">
-		      <col width="804">
-	        </colgroup>
-		    <tbody>
-		    </tbody>
-		  </table>
-		</div>
-	</div>
- -->
-    <!-- ADDRESS SEARCH RESULT LIST END -->
 
 	</div>
 	<!-- EXTENDED SEARCH END -->
