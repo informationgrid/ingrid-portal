@@ -1520,50 +1520,70 @@ function initOptionalFieldStates() {
 
 // Init session keepalive and autosave
 function initSessionKeepalive() {
-	// TODO Get Session keepalive from catalog
-	// default to 10 minutes
-	var keepaliveInterval = 10 * 60 * 1000;
-	setInterval("UtilGeneral.refreshSession();", keepaliveInterval);
 
-	// TODO Get autosave interval time from catalog
-	var autosaveIntervalTime = 15 * 60 * 1000;
-	var autosaveInterval = null;
-	var autosaveFunction = "dojo.debug('autosave called.'); " +
-								"if (udkDataProxy.dirtyFlag && " +
-								"dojo.widget.byId('tree').selectedNode && " +
-								"dojo.widget.byId('tree').selectedNode.userWritePermission && " +
-								"!dialog.isGlassPaneVisible()) { " +
-									"menuEventHandler.handleSave(); " +
-							"}";
+	//Init session keepalive
+	var sessionKeepaliveDef = UtilCatalog.getSessionRefreshIntervalDef();
 
-	var clearAutosaveInterval = function() {
-		dojo.debug("clear autosave interval called.");
-		if (autosaveInterval) {
-			clearTimeout(autosaveInterval);
-			autosaveInterval = null;
+	sessionKeepaliveDef.addCallback(function(sessionKeepaliveInterval) {
+		if (sessionKeepaliveInterval > 0) {
+			var interval = sessionKeepaliveInterval * 60 * 1000;
+			setInterval("UtilGeneral.refreshSession();", interval);
 		}
-	}
+	});
 
-	var setAutosaveInterval = function() {
-		dojo.debug("set autosave interval called.");
-		if (autosaveInterval) {
-			clearAutosaveInterval();
+	// Init autosave
+	var autosaveDef = UtilCatalog.getAutosaveIntervalDef();
+
+	autosaveDef.addCallback(function(autosaveInterval) {
+		// If the autosave Interval is set...
+		if (autosaveInterval > 0) {
+			// Calculate the time in milliseconds
+			var autosaveIntervalTime = autosaveInterval * 60 * 1000;
+	
+			// autosaveTimer holds a reference to the 'timeout' object used by the javascript functions setTimeout, clearTimeout, ...
+			var autosaveTimer = null;
+			// autosave function that is executed every n minutes
+			var autosaveFunction = "dojo.debug('autosave called.'); " +
+										"if (udkDataProxy.dirtyFlag && " +
+										"dojo.widget.byId('tree').selectedNode && " +
+										"dojo.widget.byId('tree').selectedNode.userWritePermission && " +
+										"!dialog.isGlassPaneVisible()) { " +
+											"menuEventHandler.handleSave(); " +
+									"}";
+
+			// Functions to manipulate the autosaveTimer.
+			var clearAutosaveInterval = function() {
+				dojo.debug("clear autosave interval called.");
+				if (autosaveTimer) {
+					clearTimeout(autosaveTimer);
+					autosaveTimer = null;
+				}
+			}
+	
+			var setAutosaveInterval = function() {
+				dojo.debug("set autosave interval called.");
+				if (autosaveTimer) {
+					clearAutosaveInterval();
+				}
+				autosaveTimer = setInterval(autosaveFunction, autosaveIntervalTime);
+			}
+	
+			var resetAutosaveInterval = function() {
+				dojo.debug("reset autosave interval called.");
+				clearAutosaveInterval();
+				setAutosaveInterval();
+			}
+
+			// -- Connect the events with the autosaveTimer --
+			// Reset the timer: when a dataset is loaded, stored, published or created
+			dojo.event.connect(udkDataProxy, "handleLoadRequest", resetAutosaveInterval);
+			dojo.event.connect(udkDataProxy, "handleSaveRequest", resetAutosaveInterval);
+			dojo.event.connect(udkDataProxy, "handlePublishObjectRequest", resetAutosaveInterval);
+			dojo.event.connect(udkDataProxy, "handleCreateObjectRequest", resetAutosaveInterval);
+			dojo.event.connect(udkDataProxy, "handlePublishAddressRequest", resetAutosaveInterval);
+			dojo.event.connect(udkDataProxy, "handleCreateAddressRequest", resetAutosaveInterval);
 		}
-		autosaveInterval = setInterval(autosaveFunction, autosaveIntervalTime);
-	}
-
-	var resetAutosaveInterval = function() {
-		dojo.debug("reset autosave interval called.");
-		clearAutosaveInterval();
-		setAutosaveInterval();
-	}
-
-	dojo.event.connect(udkDataProxy, "handleLoadRequest", resetAutosaveInterval);
-	dojo.event.connect(udkDataProxy, "handleSaveRequest", resetAutosaveInterval);
-	dojo.event.connect(udkDataProxy, "handlePublishObjectRequest", resetAutosaveInterval);
-	dojo.event.connect(udkDataProxy, "handleCreateObjectRequest", resetAutosaveInterval);
-	dojo.event.connect(udkDataProxy, "handlePublishAddressRequest", resetAutosaveInterval);
-	dojo.event.connect(udkDataProxy, "handleCreateAddressRequest", resetAutosaveInterval);
+	});
 }
 
 function jumpToNodeOnInit() {

@@ -11,9 +11,7 @@ _container_.addOnLoad(function() {
 
 function loadAndSetGeneralValues() {
 	var def = UtilCatalog.getGenericValuesDef([
-	                                       	UtilCatalog.GENERIC_KEYS.AUTOSAVE_ENABLED,
 	                                       	UtilCatalog.GENERIC_KEYS.AUTOSAVE_INTERVAL,
-	                                       	UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_ENABLED,
 	                                       	UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_INTERVAL
 	                                       	]);
 
@@ -33,8 +31,8 @@ function setGeneralValues(valueMap) {
 }
 
 function setAutosaveValues(valueMap) {
-	if (valueMap[UtilCatalog.GENERIC_KEYS.AUTOSAVE_ENABLED] && valueMap[UtilCatalog.GENERIC_KEYS.AUTOSAVE_INTERVAL]) {
-		var autosaveEnabled = (valueMap[UtilCatalog.GENERIC_KEYS.AUTOSAVE_ENABLED] == "true");
+	if (valueMap[UtilCatalog.GENERIC_KEYS.AUTOSAVE_INTERVAL] && valueMap[UtilCatalog.GENERIC_KEYS.AUTOSAVE_INTERVAL] > 0) {
+		var autosaveEnabled = true;
 		var autosaveInterval = valueMap[UtilCatalog.GENERIC_KEYS.AUTOSAVE_INTERVAL];
 
 		dojo.widget.byId("autosaveCheckbox").setValue(autosaveEnabled);
@@ -47,8 +45,8 @@ function setAutosaveValues(valueMap) {
 }
 
 function setSessionRefreshValues(valueMap) {
-	if (valueMap[UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_ENABLED] && valueMap[UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_INTERVAL]) {
-		var sessionRefreshEnabled = (valueMap[UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_ENABLED] == "true");
+	if (valueMap[UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_INTERVAL] && valueMap[UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_INTERVAL] > 0) {
+		var sessionRefreshEnabled = true;
 		var sessionRefreshInterval = valueMap[UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_INTERVAL];
 
 		dojo.widget.byId("sessionRefreshCheckbox").setValue(sessionRefreshEnabled);
@@ -76,13 +74,21 @@ scriptScope.saveGeneralValues = function() {
 }
 
 function addAutosaveValuesToMap(valueMap) {
-	valueMap[UtilCatalog.GENERIC_KEYS.AUTOSAVE_ENABLED] = dojo.widget.byId("autosaveCheckbox").checked;
-	valueMap[UtilCatalog.GENERIC_KEYS.AUTOSAVE_INTERVAL] = dojo.widget.byId("autosaveInterval").getValue();
+	if (dojo.widget.byId("autosaveCheckbox").checked) {
+		valueMap[UtilCatalog.GENERIC_KEYS.AUTOSAVE_INTERVAL] = dojo.widget.byId("autosaveInterval").getValue();
+
+	} else {
+		valueMap[UtilCatalog.GENERIC_KEYS.AUTOSAVE_INTERVAL] = 0;
+	}
 }
 
 function addSessionRefreshValuesToMap(valueMap) {
-	valueMap[UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_ENABLED] = dojo.widget.byId("sessionRefreshCheckbox").checked;
-	valueMap[UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_INTERVAL] = dojo.widget.byId("sessionRefreshInterval").getValue();
+	if (dojo.widget.byId("sessionRefreshCheckbox").checked) {
+		valueMap[UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_INTERVAL] = dojo.widget.byId("sessionRefreshInterval").getValue();
+
+	} else {
+		valueMap[UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_INTERVAL] = 0;
+	}
 }
 
 function showLoadingZone() {

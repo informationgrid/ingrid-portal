@@ -802,9 +802,7 @@ UtilCatalog.getSysListEntry = function(sysListId, entryId) {
 
 // Constants that should be used by getGenericValuesDef and setGenericValuesDef
 UtilCatalog.GENERIC_KEYS = {};
-UtilCatalog.GENERIC_KEYS.AUTOSAVE_ENABLED = "AUTOSAVE_ENABLED";
 UtilCatalog.GENERIC_KEYS.AUTOSAVE_INTERVAL = "AUTOSAVE_INTERVAL";
-UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_ENABLED = "SESSION_REFRESH_ENABLED";
 UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_INTERVAL = "SESSION_REFRESH_INTERVAL";
 
 // Fetch generic values from the catalog
@@ -851,6 +849,40 @@ UtilCatalog.storeGenericValuesDef = function(valueMap) {
 		}
 	});
 
+	return def;
+}
+
+UtilCatalog.GENERIC_VALUE_CACHE = null;
+
+// Returns the session refresh interval or 0 if no interval has been set
+UtilCatalog.getSessionRefreshIntervalDef = function() {
+	var def = UtilCatalog.getGenericValuesDef([UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_INTERVAL]);
+
+	def.addCallback(function(valueMap) {
+		var refreshInterval = valueMap[UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_INTERVAL];
+		if (refreshInterval && refreshInterval > 0) {
+			return refreshInterval;
+
+		} else {
+			return 0;
+		}
+	});
+	return def;
+}
+
+//Returns the autosave interval or 0 if no interval has been set
+UtilCatalog.getAutosaveIntervalDef = function() {
+	var def = UtilCatalog.getGenericValuesDef([UtilCatalog.GENERIC_KEYS.AUTOSAVE_INTERVAL]);
+
+	def.addCallback(function(valueMap) {
+		var autosaveInterval = valueMap[UtilCatalog.GENERIC_KEYS.AUTOSAVE_INTERVAL];
+		if (autosaveInterval && autosaveInterval > 0) {
+			return autosaveInterval;
+
+		} else {
+			return 0;
+		}
+	});
 	return def;
 }
 

@@ -243,10 +243,14 @@ function initGeneralEventListeners() {
 
 //Init session keepalive
 function initSessionKeepalive() {
-	// TODO Get Session keepalive from catalog
-	// default to 10 minutes
-	var keepaliveInterval = 10 * 60 * 1000;
-	setInterval("UtilGeneral.refreshSession();", keepaliveInterval);
+	var def = UtilCatalog.getSessionRefreshIntervalDef();
+
+	def.addCallback(function(sessionRefreshInterval) {
+		if (sessionRefreshInterval > 0) {
+			var interval = sessionRefreshInterval * 60 * 1000;
+			setInterval("UtilGeneral.refreshSession();", interval);
+		}
+	});
 }
 
 
