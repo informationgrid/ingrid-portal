@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 
@@ -77,9 +78,9 @@ function handleUpdatedJobInfo(jobInfo) {
 
 function updateProgress(jobInfo) {
 	var messageDiv = dojo.byId("messageDiv");
-	messageDiv.innerHTML = "Laufende Operation: "+jobInfo.description+"<br>";
-	messageDiv.innerHTML += "Bearbeitete Objekte: "+jobInfo.numProcessedEntities+"<br>";
-	messageDiv.innerHTML += "Anzahl der Objekte: "+jobInfo.numEntities;
+	messageDiv.innerHTML = message.get("dialog.waitForJob.opName") + " "+jobInfo.description+"<br>";
+	messageDiv.innerHTML += message.get("dialog.waitForJob.objCount") + " "+jobInfo.numProcessedEntities+"<br>";
+	messageDiv.innerHTML += message.get("dialog.waitForJob.numObjects") + " "+jobInfo.numEntities;
 
 	var progressBar = dojo.widget.byId("progressBar");
 	progressBar.setMaxProgressValue(jobInfo.numEntities);
@@ -110,16 +111,12 @@ cancelButtonFunc = function() {
 <div dojoType="ContentPane">
 	<div id="contentPane" layoutAlign="client" class="contentBlockWhite top half">
 		<div id="dialogContent" class="content">
-			<div id="messageDiv" class="field grey">
-				Laufende Operation:<br>
-				Bearbeitete Objekte:<br>
-				Anzahl der Objekte:<br>
-			</div>
+			<div id="messageDiv" class="field grey"></div>
 
 			<div dojoType="ProgressBar" id="progressBar" width="310" height="10" class="field grey" />
 
 	  	</div>
-        <span style="float:right;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="cancelButtonFunc">Abbrechen</button></span>
+        <span style="float:right;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="cancelButtonFunc"><fmt:message key="dialog.waitForJob.cancel" /></button></span>
 	</div>
 </div>
 </body>

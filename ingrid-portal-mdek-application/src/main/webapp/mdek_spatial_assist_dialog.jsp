@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>Raumbezug festlegen</title>
@@ -102,27 +103,27 @@ function hideLoadingZone() {
 			<table cellspacing="0">
 				<tbody>
 					<tr>
-						<td class="label"><label for="spatialAssistRef" onclick="javascript:dialog.showContextHelp(arguments[0], 7023, 'Freier Raumbezug')">Freier Raumbezug: </label></td>
+						<td class="label"><label for="spatialAssistRef" onclick="javascript:dialog.showContextHelp(arguments[0], 7023, 'Freier Raumbezug')"><fmt:message key="dialog.spatialAssist.customLocation" /></label></td>
 						<td colspan="2"><input type="text" dojoType="ingrid:ValidationTextbox" id="spatialAssistRef" class="w248"/></td>
 					</tr>
 					<tr>
-						<td class="label"><label for="spatialAssistLon1" onclick="javascript:dialog.showContextHelp(arguments[0], 7024, 'Unten Links: Rechtswert / L&auml;nge')">Unten Links: Rechtswert / L&auml;nge:</label></td>
+						<td class="label"><label for="spatialAssistLon1" onclick="javascript:dialog.showContextHelp(arguments[0], 7024, 'Unten Links: Rechtswert / L&auml;nge')"><fmt:message key="dialog.spatialAssist.longitude1" /></label></td>
 						<td colspan="2"><input type="text" dojoType="RealNumberTextbox" id="spatialAssistLon1" class="w248"/></td>
 					</tr>
 					<tr>
-						<td class="label"><label for="spatialAssistLat1" onclick="javascript:dialog.showContextHelp(arguments[0], 7025, 'Unten Links: Hochwert / Breite')">Unten Links: Hochwert / Breite:</label></td>
+						<td class="label"><label for="spatialAssistLat1" onclick="javascript:dialog.showContextHelp(arguments[0], 7025, 'Unten Links: Hochwert / Breite')"><fmt:message key="dialog.spatialAssist.latitude1" /></label></td>
 						<td colspan="2"><input type="text" dojoType="RealNumberTextbox" id="spatialAssistLat1" class="w248"/></td>
 					</tr>
 					<tr>
-						<td class="label"><label for="spatialAssistLon2" onclick="javascript:dialog.showContextHelp(arguments[0], 7026, 'Oben Rechts: Rechtswert / L&auml;nge')">Oben Rechts: Rechtswert / L&auml;nge:</label></td>
+						<td class="label"><label for="spatialAssistLon2" onclick="javascript:dialog.showContextHelp(arguments[0], 7026, 'Oben Rechts: Rechtswert / L&auml;nge')"><fmt:message key="dialog.spatialAssist.longitude2" /></label></td>
 						<td colspan="2"><input type="text" dojoType="RealNumberTextbox" id="spatialAssistLon2" class="w248"/></td>
 					</tr>
 					<tr>
-						<td class="label"><label for="spatialAssistLat2" onclick="javascript:dialog.showContextHelp(arguments[0], 7027, 'Oben Rechts: Hochwert / Breite')">Oben Rechts: Hochwert / Breite:</label></td>
+						<td class="label"><label for="spatialAssistLat2" onclick="javascript:dialog.showContextHelp(arguments[0], 7027, 'Oben Rechts: Hochwert / Breite')"><fmt:message key="dialog.spatialAssist.latitude2" /></label></td>
 						<td colspan="2"><input type="text" dojoType="RealNumberTextbox" id="spatialAssistLat2" class="w248"/></td>
 					</tr>
 					<tr>
-						<td class="label"><label for="spatialAssistCS" onclick="javascript:dialog.showContextHelp(arguments[0], 7028, 'Koordinatensystem')">Koordinatensystem: </label></td>
+						<td class="label"><label for="spatialAssistCS" onclick="javascript:dialog.showContextHelp(arguments[0], 7028, 'Koordinatensystem')"><fmt:message key="dialog.spatialAssist.coordSys" /></label></td>
 						<td colspan="2">
 							<div id="spatialAssistCS" dojoType="ingrid:Select" toggle="plain" dataUrl="js/data/spatialReferenceSystems.js" style="width:230px;" />
 						</td>
@@ -131,7 +132,7 @@ function hideLoadingZone() {
 		  	</table>
 
 			<span style="float:right;">
-				<button dojoType="ingrid:Button" title="Hinzuf&uuml;gen" onClick="javascript:scriptScope.addLocation();">Hinzuf&uuml;gen</button>
+				<button dojoType="ingrid:Button" title="Hinzuf&uuml;gen" onClick="javascript:scriptScope.addLocation();"><fmt:message key="dialog.spatialAssist.add" /></button>
 			</span>
 			<span id="ctsLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden;">
 				<img src="img/ladekreis.gif" />

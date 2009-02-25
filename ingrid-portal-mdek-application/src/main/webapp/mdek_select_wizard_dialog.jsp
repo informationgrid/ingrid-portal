@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>MDEK Demo V3</title>
@@ -37,7 +38,7 @@ scriptScope.closeDialog = function() {
 	<div layoutAlign="client" class="contentBlockWhite top">
 		<div class="content">
 			<div class="w296">
-				Bitte w&auml;hlen Sie den Assistenten der zur Erstellung des Objektes verwendet werden soll:
+				<fmt:message key="dialog.wizard.select.title" />
 			</div>
 			<br>
 
@@ -45,29 +46,18 @@ scriptScope.closeDialog = function() {
     			<div class="checkboxContainer" id="resultList" style="width: 320px; height: 35px; overflow: auto;">
 					<div>
 						<input type="radio" name="assistantRadioSelect" id="assistantRadioSelect1" style="margin-right: 3px;" checked />
-						Allgemeiner Erfassungsassistent
+						<fmt:message key="dialog.wizard.select.create" />
 					</div>
 					<div>
 						<input type="radio" name="assistantRadioSelect" id="assistantRadioSelect2" style="margin-right: 3px;">
-							getCapabilities Assistent
+							<fmt:message key="dialog.wizard.select.getCap" />
 						</input>
 					</div>
     			</div>
     		</span>
-
-<!--
-            <div class="checkboxContainer">
-				<input type="radio" name="assistantRadioSelect" id="assistantRadioSelect1" class="radio entry first" checked />
-    	        <label class="inActive entry closer" for="assistantRadioSelect1">Allgemeiner Erfassungsassistent</label><br>
-				<input type="radio" name="assistantRadioSelect" id="assistantRadioSelect2" class="radio entry" />
-	            <label class="inActive entry closer" for="assistantRadioSelect2">getCapabilities Assistent</label>
-            </div>
--->
-
-
 			<div class="inputContainer grey noSpaceBelow half" style="height:30px;">
-		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Ohne Assistent weiter" onClick="javascript:scriptScope.closeDialog();">Ohne Assistent weiter</button></span>
-		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Assistent starten" onClick="javascript:scriptScope.openWizard();">Assistent starten</button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Ohne Assistent weiter" onClick="javascript:scriptScope.closeDialog();"><fmt:message key="dialog.wizard.select.cancel" /></button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Assistent starten" onClick="javascript:scriptScope.openWizard();"><fmt:message key="dialog.wizard.select.continue" /></button></span>
 			</div>
 	  	</div>
 	</div>

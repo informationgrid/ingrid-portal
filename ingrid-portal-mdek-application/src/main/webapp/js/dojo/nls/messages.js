@@ -271,10 +271,21 @@
 	"dialog.research.ext.obj.similarTerms":"Similar terms",
 	"dialog.research.ext.obj.invalidDate":"The date you entered '%{0}' is invalid and will be reset.",
 
+	"dialog.wizard.selectTitle":"Wizard selection",
 	"dialog.wizard.create.title":"Create object wizard",
 	"dialog.wizard.create.snsNoResultError":"The SNS could not find any results for the given url.",
 	"dialog.wizard.create.snsInvalidPageError":"The given Url could not be analyzed by the SNS.",
 	"dialog.wizard.getCap.title":"getCapabilities wizard",
+
+	"dialog.spatialAssist.title":"Add Custom Location",
+	"dialog.spatialNavigator.title":"Geothesaurus-Navigator",
+	"dialog.thesaurusAssist.title":"Thesaurus assistant",
+	"dialog.statistics.numTotal":"Total",
+	"dialog.thesaurusNavigator.title":"Thesaurus-Navigator",
+
+	"dialog.waitForJob.opName":"Current operation:",
+	"dialog.waitForJob.objCount":"Objects processed:",
+	"dialog.waitForJob.numObjects":"Total number of objects:",
 
 	"operation.error.object.parentNotPublishedError":"You have to publish the parent objects before publishing the selected object!",
 	"operation.error.address.parentNotPublishedError":"You have to publish the parent addresses before publishing the selected addresses!",

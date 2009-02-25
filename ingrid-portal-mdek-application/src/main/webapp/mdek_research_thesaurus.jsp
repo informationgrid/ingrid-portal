@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 
@@ -132,7 +133,7 @@ function startSearch() {
 				updateObjectNavigation(res);
 			},
 			timeout:30000,
-			errorHandler:function(message) {dojo.debug("Error in mdek_research_thesaurus.html: Error while searching for objects:"+message); }
+			errorHandler:function(message) {dojo.debug("Error in mdek_research_thesaurus.jsp: Error while searching for objects:"+message); }
 		});
 	} else if (selectedTab == "searchThesaurusNavAddresses" && !adrResultsLoaded){
 //		dojo.debug("Starting address query for "+currentQuery);
@@ -146,7 +147,7 @@ function startSearch() {
 				updateAddressNavigation(res);
 			},
 			timeout:30000,
-			errorHandler:function(message) {dojo.debug("Error in mdek_research_thesaurus.html: Error while searching for addresses:"+message); }
+			errorHandler:function(message) {dojo.debug("Error in mdek_research_thesaurus.jsp: Error while searching for addresses:"+message); }
 		});		
 	}
 }
@@ -421,7 +422,7 @@ function hideLoadingZone() {
   	  <div class="content">
 
         <!-- LEFT HAND SIDE CONTENT START -->
-        <span class="label"><label for="thesaurusSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 7062, 'Thesaurus-Hierarchie')">Einstieg in die Thesaurus-Hierarchie:</label></span>
+        <span class="label"><label for="thesaurusSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 7062, 'Thesaurus-Hierarchie')"><fmt:message key="dialog.research.thes.title" /></label></span>
         <div class="inputContainer field grey noSpaceBelow">
           <span class="input"><input type="text" id="thesaurusSearch" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
           <div class="spacerField"></div>
@@ -430,7 +431,7 @@ function hideLoadingZone() {
         <div class="inputContainer full">
           <span class="button w644" style="height:20px !important;">
             <span style="float:right;">
-              <button dojoType="ingrid:Button" title="In Thesaurus suchen" onClick="javascript:scriptScope.findTopic();">In Thesaurus suchen</button>
+              <button dojoType="ingrid:Button" title="In Thesaurus suchen" onClick="javascript:scriptScope.findTopic();"><fmt:message key="dialog.research.thes.search" /></button>
     		</span>
 			<span id="thesaurusSearchLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 				<img src="img/ladekreis.gif" />
@@ -442,7 +443,7 @@ function hideLoadingZone() {
         <div class="inputContainer w684">
 		<div id="researchThesaurusTabContainer" dojoType="ingrid:TabContainer" class="h500 tabContainerWithBorderTop" selectedChild="thesaurusTreeContainer">
 		  <!-- first tab, tree view -->
-		  <div class="grey" dojoType="ContentPane" id="thesaurusTreeContainer" label="Hierarchiebaum" style="padding-left:5px; padding-top:2px; width: 100%; overflow:auto;">
+		  <div class="grey" dojoType="ContentPane" id="thesaurusTreeContainer" label="<fmt:message key="dialog.research.thes.tree" />" style="padding-left:5px; padding-top:2px; width: 100%; overflow:auto;">
               <!-- tree components -->
               <div dojoType="ingrid:TreeController" widgetId="treeControllerSearchThesaurus"></div>
               <div dojoType="ingrid:TreeListener" widgetId="treeListenerSearchThesaurus"></div>	
@@ -455,7 +456,7 @@ function hideLoadingZone() {
         	  </div>
 
 		    <!-- second tab, associated topics -->
-	        <div class="grey" dojoType="ContentPane" id="thesaurusResultPane" label="Ergebnisliste" style="padding-left:5px; width: 100%;">
+	        <div class="grey" dojoType="ContentPane" id="thesaurusResultPane" label="<fmt:message key="dialog.research.thes.list" />" style="padding-left:5px; width: 100%;">
 			  <span id="thesaurusResultContainer"></span>
 	        </div>
         </div>
@@ -463,12 +464,12 @@ function hideLoadingZone() {
         
         <!-- RIGHT HAND SIDE CONTENT START -->
         <div id="resultsThesaurus" class="inputContainer">
-          <span class="label"><label class="inActive" for="thesaurusDescList">Trefferliste</label></span>
+          <span class="label"><label class="inActive" for="thesaurusDescList"><fmt:message key="dialog.research.thes.result" /></label></span>
         
          	<div id="searchThesaurusNavResultContainer" dojoType="ingrid:TabContainer" doLayout="false" class="w364" selectedChild="searchThesaurusNavObjects">
 
             <!-- TAB 1 START -->
-        	<div id="searchThesaurusNavObjects" dojoType="ContentPane" class="blueTopBorder" label="Objekte">
+        	<div id="searchThesaurusNavObjects" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.research.thes.objects" />">
               <div class="listInfo w364">
                 <span id="searchThesaurusObjResultsInfo" class="searchResultsInfo">&nbsp;</span>
                 <span id="searchThesaurusObjResultsPaging" class="searchResultsPaging">&nbsp;</span>
@@ -480,7 +481,7 @@ function hideLoadingZone() {
           	        <thead>
           		        <tr>
                 		  <th field="icon" dataType="String" width="23" nosort="true"></th>
-                		  <th field="linkLabel" dataType="String" width="323" nosort="true">Name</th>
+                		  <th field="linkLabel" dataType="String" width="323" nosort="true"><fmt:message key="dialog.research.thes.name" /></th>
           		        </tr>
           	        </thead>
 				    <colgroup>
@@ -495,7 +496,7 @@ function hideLoadingZone() {
             <!-- TAB 1 END -->
 
             <!-- TAB 2 START -->
-       		<div id="searchThesaurusNavAddresses" dojoType="ContentPane" class="blueTopBorder" label="Adressen">
+       		<div id="searchThesaurusNavAddresses" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.research.thes.addresses" />">
               <div class="listInfo w364">
                 <span id="searchThesaurusAdrResultsInfo" class="searchResultsInfo">&nbsp;</span>
                 <span id="searchThesaurusAdrResultsPaging" class="searchResultsPaging">&nbsp;</span>
@@ -507,7 +508,7 @@ function hideLoadingZone() {
           	        <thead>
           		        <tr>
                 		  <th field="icon" dataType="String" width="23" nosort="true"></th>
-                		  <th field="linkLabel" dataType="String" width="323" nosort="true">Name</th>
+                		  <th field="linkLabel" dataType="String" width="323" nosort="true"><fmt:message key="dialog.research.thes.name" /></th>
           		        </tr>
           	        </thead>
 				    <colgroup>

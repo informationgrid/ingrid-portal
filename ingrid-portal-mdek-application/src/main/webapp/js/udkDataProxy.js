@@ -1070,7 +1070,7 @@ udkDataProxy.handleCopyObjectRequest = function(msg) {
 						}
 					});
 					onCopyOpFinishedDef.addErrback(function (err) {onCopyDef.errback(err);});
-					dialog.showPage(message.get("general.hint"), "mdek_waitForJob_dialog.html", 350, 155, true, {resultHandler:onCopyOpFinishedDef});
+					dialog.showPage(message.get("general.hint"), "mdek_waitForJob_dialog.jsp", 350, 155, true, {resultHandler:onCopyOpFinishedDef});
 				} else {
 					dojo.debug("Error in js/udkDataProxy.js: Error while copying nodes: " + err);
 					onCopyDef.errback(err);
@@ -1122,7 +1122,7 @@ udkDataProxy.handleCopyAddressRequest = function(msg) {
 						}
 					});
 					onCopyOpFinishedDef.addErrback(function (err) {onCopyDef.errback(err);});
-					dialog.showPage(message.get("general.hint"), "mdek_waitForJob_dialog.html", 350, 155, true, {resultHandler:onCopyOpFinishedDef});
+					dialog.showPage(message.get("general.hint"), "mdek_waitForJob_dialog.jsp", 350, 155, true, {resultHandler:onCopyOpFinishedDef});
 				} else {
 					dojo.debug("Error in js/udkDataProxy.js: Error while copying addresses: " + err);
 					onCopyDef.errback(err);

@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <style>
@@ -408,7 +409,7 @@ acceptTopicList = function() {
       <div class="spacer"></div>
       <div class="inputContainer field grey noSpaceBelow fullField">
 
-        <span class="label"><label for="thesSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 7031, 'Suche nach Deskriptoren und Ordnungsbegriffen')">Suche nach Deskriptoren und Ordnungsbegriffen</label></span>
+        <span class="label"><label for="thesSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 7031, 'Suche nach Deskriptoren und Ordnungsbegriffen')"><fmt:message key="dialog.thesaurusNavigator.title" /></label></span>
         <span class="input"><input type="text" id="thesSearch" name="thesSearch" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
         <div class="spacerField"></div>
   	  </div>
@@ -416,14 +417,14 @@ acceptTopicList = function() {
       <div class="inputContainer full">
         <span class="button w644" style="height:20px !important;">
           <span style="float:right;">
-            <button dojoType="ingrid:Button" id="findTopicButton" class="buttonBlue" title="In Thesaurus suchen" onClick="findTopic">In Thesaurus suchen</button></span>
+            <button dojoType="ingrid:Button" id="findTopicButton" class="buttonBlue" title="In Thesaurus suchen" onClick="findTopic"><fmt:message key="dialog.thesaurusNavigator.search" /></button></span>
    	      </span>
    	  </div>
 
       <div class="inputContainer full noSpaceBelow">
 		<div id="thesResultTabContainer" dojoType="ingrid:TabContainer" class="h199 tabContainerWithBorderTop" selectedChild="thesTreePane">
 
-			<div class="grey" dojoType="ContentPane" id="thesTreePane" label="Hierarchiebaum" style="height: 200px; padding-left:5px; padding-top:2px; width: 100%; overflow: auto;">
+			<div class="grey" dojoType="ContentPane" id="thesTreePane" label="<fmt:message key="dialog.thesaurusNavigator.tree" />" style="height: 200px; padding-left:5px; padding-top:2px; width: 100%; overflow: auto;">
 	          <!-- tree components -->
 				<div dojoType="ingrid:TreeController" widgetId="thesTreeController"></div>
 				<div dojoType="ingrid:TreeListener" widgetId="thesTreeListener"></div>	
@@ -434,7 +435,7 @@ acceptTopicList = function() {
 	           </div>
 	      	</div>
 
-			<div class="grey" dojoType="ContentPane" id="thesResultPane" label="Ergebnisliste" style="height: 200px; padding-left:5px; width: 100%; overflow: auto;">
+			<div class="grey" dojoType="ContentPane" id="thesResultPane" label="<fmt:message key="dialog.thesaurusNavigator.list" />" style="height: 200px; padding-left:5px; width: 100%; overflow: auto;">
 				<span id="thesResultContainer"></span>
 	      	</div>
 
@@ -444,8 +445,8 @@ acceptTopicList = function() {
 
       <div class="inputContainer full">
          <span class="button w644" style="height:20px !important;">
-         	<span style="float:right;"><button dojoType="ingrid:Button" onClick="closeDialog">Abbrechen</button></span>
-         	<span style="float:right; padding-right:10px;"><button dojoType="ingrid:Button" id="addSelectedTopicButton" onClick="addSelectedTopic">Hinzuf&uuml;gen</button></span>
+         	<span style="float:right;"><button dojoType="ingrid:Button" onClick="closeDialog"><fmt:message key="dialog.thesaurusNavigator.cancel" /></button></span>
+         	<span style="float:right; padding-right:10px;"><button dojoType="ingrid:Button" id="addSelectedTopicButton" onClick="addSelectedTopic"><fmt:message key="dialog.thesaurusNavigator.add" /></button></span>
 			
 			<span id="thesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 				<img id="thesImageZone" src="img/ladekreis.gif" />
@@ -458,7 +459,7 @@ acceptTopicList = function() {
 
       <!-- RIGHT HAND SIDE CONTENT START -->
       <div id="listThesaurus" class="inputContainer">
-        <span class="label"><label for="thesaurusDescList" onclick="javascript:dialog.showContextHelp(arguments[0], 7032, 'Liste der Deskriptoren')">Liste der Deskriptoren</label></span>
+        <span class="label"><label for="thesaurusDescList" onclick="javascript:dialog.showContextHelp(arguments[0], 7032, 'Liste der Deskriptoren')"><fmt:message key="dialog.thesaurusNavigator.descriptorList" /></label></span>
         <div class="listInfo third">
       	  <div class="fill"></div>
         </div>
@@ -478,7 +479,7 @@ acceptTopicList = function() {
         </div>
 
         <div class="inputContainer w264 noSpaceBelow">
-          <span class="buttonNoBg w264"><button dojoType="ingrid:Button" id="acceptTopicListButton" class="buttonGrey" onClick="acceptTopicList">&Uuml;bernehmen</button></span>
+          <span class="buttonNoBg w264"><button dojoType="ingrid:Button" id="acceptTopicListButton" class="buttonGrey" onClick="acceptTopicList"><fmt:message key="dialog.thesaurusNavigator.apply" /></button></span>
     	  </div>
     	</div>
       <!-- RIGHT HAND SIDE CONTENT END -->

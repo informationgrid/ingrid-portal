@@ -1110,7 +1110,7 @@ menuEventHandler.switchLanguage = function() {
 }
 
 menuEventHandler.openCreateObjectWizardDialog = function() {
-	dialog.showPage("Assistent w&auml;hlen", "mdek_select_wizard_dialog.html", 350, 170, true);
+	dialog.showPage(message.get("dialog.wizard.selectTitle"), "mdek_select_wizard_dialog.jsp", 350, 170, true);
 }
 
 // ------------------------- Helper functions -------------------------

@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
@@ -154,7 +155,7 @@ function setStatsThesaurusTermsTable(tableId, thesaurusResult) {
 	// Update table data
 	var store = dojo.widget.byId(tableId).store;
 
-	termList.unshift({term:"Gesamt", numOccurences:numTotal, percentage:100});
+	termList.unshift({term:message.get("dialog.statistics.numTotal"), numOccurences:numTotal, percentage:100});
 	UtilList.addTableIndices(termList);
 	store.setData(termList);
 
@@ -650,46 +651,6 @@ scriptScope.print = function() {
 	printDivContent(selectedTab);
 }
 
-function generateRandomObjectData() {
-	var data = [];
-	for (var i = 0; i < 6; ++i) {
-		data.push({v:Math.floor(Math.random()*51), b:Math.floor(Math.random()*51), q:Math.floor(Math.random()*51), r:Math.floor(Math.random()*51)});
-	}
-	return data;
-}
-
-function generateRandomAddressData() {
-	var data = [];
-	for (var i = 0; i < 4; ++i) {
-		data.push({v:Math.floor(Math.random()*51), b:Math.floor(Math.random()*51), q:Math.floor(Math.random()*51), r:Math.floor(Math.random()*51)});
-	}
-	return data;
-}
-
-function generateRandomThesaurusData() {
-	var numEntries = Math.floor(Math.random()*51);
-	var data = [];
-	for (var i = 0; i < numEntries; ++i) {
-		var strLength = Math.floor(Math.random()*21) + 1;
-		var amount = Math.floor(Math.random()*300);
-		data.push({term:generateRandomString(strLength), amount:amount});
-	}
-
-	data.sort(function(a, b){ return b.amount - a.amount; });
-	return data;
-}
-
-function generateRandomString(strLength) {
-	var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-	var string_length = strLength;
-	var str = '';
-	for (var i=0; i<string_length; i++) {
-		var rnum = Math.floor(Math.random() * chars.length);
-		str += chars.substring(rnum,rnum+1);
-	}
-	return str;
-}
-
 function showLoadingZone() {
 	dojo.html.setVisibility(dojo.byId("statisticsLoadingZone"), "visible");
 }
@@ -741,15 +702,15 @@ function hideLoadingZone() {
           <!-- MAIN TAB CONTAINER START -->
         	<div id="statsTable" dojoType="ingrid:TabContainer" doLayout="false" class="full" selectedChild="statsObjectsAdr">
             <!-- MAIN TAB 1 START -->
-        		<div id="statsObjectsAdr" dojoType="ContentPane" label="Objekte/Adressen" style="overflow:hidden;">
+        		<div id="statsObjectsAdr" dojoType="ContentPane" label="<fmt:message key="dialog.statistics.objAdr" />" style="overflow:hidden;">
 				<div class="tableContainer rows7 full">
 	        	    <table id="statsObjectsTable" dojoType="ingrid:FilteringTable" minRows="7" cellspacing="0" class="filteringTable nosort relativePos">
 	        	      <thead>
 	        		      <tr>
 	              			<th nosort="true" field="type" dataType="String" width="40"></th>
-	              			<th nosort="true" field="objectClass" dataType="String" width="364">Objektklasse</th>
-	              			<th nosort="true" field="amount" dataType="String" width="80">Anzahl</th>
-	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
+	              			<th nosort="true" field="objectClass" dataType="String" width="364"><fmt:message key="dialog.statistics.objClass" /></th>
+	              			<th nosort="true" field="amount" dataType="String" width="80"><fmt:message key="dialog.statistics.num" /></th>
+	              			<th nosort="true" field="percentage" dataType="String" width="80"><fmt:message key="dialog.statistics.percentage" /></th>
 	              			<th nosort="true" field="published" dataType="String" width="30">V</th>
 	              			<th nosort="true" field="modified" dataType="String" width="30">B</th>
 	              			<th nosort="true" field="qa" dataType="String" width="30">Q</th>
@@ -759,7 +720,7 @@ function hideLoadingZone() {
 	        	      <tbody>
 	        		      <tr value="0">
 	        		        <td>&nbsp;</td>
-	        		        <td>Gesamt</td>
+	        		        <td><fmt:message key="dialog.statistics.numTotal" /></td>
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -768,7 +729,7 @@ function hideLoadingZone() {
 	        		        <td>0</td></tr>
 	        		      <tr value="1">
 	        		        <td><img src="img/UDK/udk_class0.gif" width="16" height="16" alt="Organisationseinheit / Fachaufgabe" /></td>
-	        		        <td>Organisationseinheit / Fachaufgabe</td>
+	        		        <td><fmt:message key="dialog.statistics.objClass0" /></td>
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -777,7 +738,7 @@ function hideLoadingZone() {
 	        		        <td>0</td></tr>
 	        		      <tr value="2">
 	        		        <td><img src="img/UDK/udk_class1.gif" width="16" height="16" alt="Geo-Information / Karte" /></td>
-	        		        <td>Geo-Information / Karte</td>
+	        		        <td><fmt:message key="dialog.statistics.objClass1" /></td>
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -786,7 +747,7 @@ function hideLoadingZone() {
 	        		        <td>0</td></tr>
 	        		      <tr value="3">
 	        		        <td><img src="img/UDK/udk_class2.gif" width="16" height="16" alt="Dokument / Bericht / Literatur" /></td>
-	        		        <td>Dokument / Bericht / Literatur</td>
+	        		        <td><fmt:message key="dialog.statistics.objClass2" /></td>
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -795,7 +756,7 @@ function hideLoadingZone() {
 	        		        <td>0</td></tr>
 	        		      <tr value="4">
 	        		        <td><img src="img/UDK/udk_class3.gif" width="16" height="16" alt="Dienst / Anwendung / Informationssystem" /></td>
-	        		        <td>Dienst / Anwendung / Informationssystem</td>
+	        		        <td><fmt:message key="dialog.statistics.objClass3" /></td>
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -804,7 +765,7 @@ function hideLoadingZone() {
 	        		        <td>0</td></tr>
 	        		      <tr value="5">
 	        		        <td><img src="img/UDK/udk_class4.gif" width="16" height="16" alt="Vorhaben / Projekt / Programm" /></td>
-	        		        <td>Vorhaben / Projekt / Programm</td>
+	        		        <td><fmt:message key="dialog.statistics.objClass4" /></td>
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -813,7 +774,7 @@ function hideLoadingZone() {
 	        		        <td>0</td></tr>
 	        		      <tr value="6">
 	        		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Datensammlung / Datenbank" /></td>
-	        		        <td>Datensammlung / Datenbank</td>
+	        		        <td><fmt:message key="dialog.statistics.objClass5" /></td>
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -830,9 +791,9 @@ function hideLoadingZone() {
 	        	      <thead>
 	        		      <tr>
 	              			<th nosort="true" field="type" dataType="String" width="40">&nbsp;</th>
-	              			<th nosort="true" field="addressType" dataType="String" width="364">Adresstyp</th>
-	              			<th nosort="true" field="amount" dataType="String" width="80">Anzahl</th>
-	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
+	              			<th nosort="true" field="addressType" dataType="String" width="364"><fmt:message key="dialog.statistics.adrClass" /></th>
+	              			<th nosort="true" field="amount" dataType="String" width="80"><fmt:message key="dialog.statistics.num" /></th>
+	              			<th nosort="true" field="percentage" dataType="String" width="80"><fmt:message key="dialog.statistics.percentage" /></th>
 	              			<th nosort="true" field="published" dataType="String" width="30">V</th>
 	              			<th nosort="true" field="modified" dataType="String" width="30">B</th>
 	              			<th nosort="true" field="qa" dataType="String" width="30">Q</th>
@@ -842,7 +803,7 @@ function hideLoadingZone() {
 	        	      <tbody>
 	        		      <tr value="0">
 	        		        <td>&nbsp</td>
-	        		        <td>Gesamt</td>
+	        		        <td><fmt:message key="dialog.statistics.numTotal" /></td>
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -851,7 +812,7 @@ function hideLoadingZone() {
 	        		        <td>0</td></tr>
 	        		      <tr value="1">
 	        		        <td><img src="img/UDK/addr_institution.gif" width="16" height="16" alt="Institution" /></td>
-	        		        <td>Institution</td>
+	        		        <td><fmt:message key="dialog.statistics.adrClass0" /></td>
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -860,7 +821,7 @@ function hideLoadingZone() {
 	        		        <td>0</td></tr>
 	        		      <tr value="2">
 	        		        <td><img src="img/UDK/addr_unit.gif" width="16" height="16" alt="Einheit" /></td>
-	        		        <td>Einheit</td>
+	        		        <td><fmt:message key="dialog.statistics.adrClass1" /></td>
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -869,7 +830,7 @@ function hideLoadingZone() {
 	        		        <td>0</td></tr>
 	        		      <tr value="3">
 	        		        <td><img src="img/UDK/addr_person.gif" width="16" height="16" alt="Person" /></td>
-	        		        <td>Person</td>
+	        		        <td><fmt:message key="dialog.statistics.adrClass2" /></td>
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -878,7 +839,7 @@ function hideLoadingZone() {
 	        		        <td>0</td></tr>
 	        		      <tr value="4">
 	        		        <td><img src="img/UDK/addr_free.gif" width="16" height="16" alt="Freie Adresse" /></td>
-	        		        <td>Freie Adresse</td>
+	        		        <td><fmt:message key="dialog.statistics.adrClass3" /></td>
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -890,13 +851,13 @@ function hideLoadingZone() {
 				</div> <!-- end tableContainer -->
 
 	          <div class="spacer"></div>
-	          <p class="note">V = Ver&ouml;ffentlicht, B = in Bearbeitung, Q = in Qualit&auml;tssicherung, R = von Qualit&auml;tssicherung an Bearbeiter r&uuml;ck&uuml;berwiesen</p>
+	          <p class="note"><fmt:message key="dialog.statistics.footer" /></p>
 
             </div>
             <!-- MAIN TAB 1 END -->
         		
             <!-- MAIN TAB 2 START -->
-        	<div id="statsFreeTerms" dojoType="ContentPane" label="Freie Suchbegriffe">
+        	<div id="statsFreeTerms" dojoType="ContentPane" label="<fmt:message key="dialog.statistics.customTerms" />">
 
 				<div class="listInfoStatistics">
 					<span id="statsFreeTermsObjTableInfo" class="searchResultsInfo">&nbsp;</span>
@@ -908,9 +869,9 @@ function hideLoadingZone() {
 	        	    <table id="statsFreeTermsObjTable" dojoType="ingrid:FilteringTable" minRows="11" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
 	        	      <thead>
 	        		      <tr>
-	              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriffe f&uuml;r Objekte</th>
-	              			<th nosort="true" field="numOccurences" dataType="String" width="80">Anzahl</th>
-	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
+	              			<th nosort="true" field="term" dataType="String" width="524"><fmt:message key="dialog.statistics.objTerms" /></th>
+	              			<th nosort="true" field="numOccurences" dataType="String" width="80"><fmt:message key="dialog.statistics.num" /></th>
+	              			<th nosort="true" field="percentage" dataType="String" width="80"><fmt:message key="dialog.statistics.percentage" /></th>
 	        		      </tr>
 	        	      </thead>
 	        	      <tbody>
@@ -929,9 +890,9 @@ function hideLoadingZone() {
         	    <table id="statsFreeTermsAdrTable" dojoType="ingrid:FilteringTable" minRows="11" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
         	      <thead>
         		      <tr>
-              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriffe f&uuml;r Adressen</th>
-              			<th nosort="true" field="numOccurences" dataType="String" width="80">Anzahl</th>
-              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
+              			<th nosort="true" field="term" dataType="String" width="524"><fmt:message key="dialog.statistics.adrTerms" /></th>
+              			<th nosort="true" field="numOccurences" dataType="String" width="80"><fmt:message key="dialog.statistics.num" /></th>
+              			<th nosort="true" field="percentage" dataType="String" width="80"><fmt:message key="dialog.statistics.percentage" /></th>
         		      </tr>
         	      </thead>
         	      <tbody>
@@ -942,7 +903,7 @@ function hideLoadingZone() {
             <!-- MAIN TAB 2 END -->
 
             <!-- MAIN TAB 3 START -->
-        		<div id="statsThesaurusTerms" dojoType="ContentPane" label="Thesaurus-Suchbegriffe">
+        		<div id="statsThesaurusTerms" dojoType="ContentPane" label="<fmt:message key="dialog.statistics.thesaurusTerms" />">
 
 				<div class="listInfoStatistics">
 					<span id="statsThesTermsObjTableInfo" class="searchResultsInfo">&nbsp;</span>
@@ -954,9 +915,9 @@ function hideLoadingZone() {
 	        	    <table id="statsThesTermsObjTable" dojoType="ingrid:FilteringTable" minRows="11" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
 	        	      <thead>
 	        		      <tr>
-	              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriffe f&uuml;r Objekte</th>
-	              			<th nosort="true" field="numOccurences" dataType="String" width="80">Anzahl</th>
-	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
+	              			<th nosort="true" field="term" dataType="String" width="524"><fmt:message key="dialog.statistics.objTerms" /></th>
+	              			<th nosort="true" field="numOccurences" dataType="String" width="80"><fmt:message key="dialog.statistics.num" /></th>
+	              			<th nosort="true" field="percentage" dataType="String" width="80"><fmt:message key="dialog.statistics.percentage" /></th>
 	        		      </tr>
 	        	      </thead>
 	        	      <tbody>
@@ -975,9 +936,9 @@ function hideLoadingZone() {
 	        	    <table id="statsThesTermsAdrTable" dojoType="ingrid:FilteringTable" minRows="11" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort relativePos">
 	        	      <thead>
 	        		      <tr>
-	              			<th nosort="true" field="term" dataType="String" width="524">Suchbegriffe f&uuml;r Adressen</th>
-	              			<th nosort="true" field="numOccurences" dataType="String" width="80">Anzahl</th>
-	              			<th nosort="true" field="percentage" dataType="String" width="80">%-Anteil</th>
+	              			<th nosort="true" field="term" dataType="String" width="524"><fmt:message key="dialog.statistics.adrTerms" /></th>
+	              			<th nosort="true" field="numOccurences" dataType="String" width="80"><fmt:message key="dialog.statistics.num" /></th>
+	              			<th nosort="true" field="percentage" dataType="String" width="80"><fmt:message key="dialog.statistics.percentage" /></th>
 	        		      </tr>
 	        	      </thead>
 	        	      <tbody>

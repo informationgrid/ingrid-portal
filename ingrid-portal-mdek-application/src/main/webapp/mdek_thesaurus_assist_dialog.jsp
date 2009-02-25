@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>Verschlagwortungsassistent</title>
@@ -52,40 +53,6 @@ init = function() {
 		["objectName", "generalDesc", "generalShortDesc", "spatialRefExplanation", "timeRefExplanation",
 		 "extraInfoPurpose", "extraInfoUse", "ref5Explanation", "ref3History", "ref3Explanation",
 		 "ref2Explanation", "ref1BasisText", "ref1DataBasisText", "ref4Explanation"];
-
-/*
-	var termList = [];
-	// Load all field contents
-	dojo.lang.forEach(analyzedFields, function(item) {
-			var val = dojo.widget.byId(item).getValue();
-			if (val) {
-				// Split the field content into seperate words
-				val = dojo.string.trim(val);
-				var words = val.split(" ");
-				dojo.lang.forEach(words, function(word) {if (word) this.push(word);}, this);
-			}
-		}, termList);	// Execute in context of termList
-
-	// Start a SNS query for similar terms
-	SNSService.getSimilarTerms(termList, {
-		preHook:disableUiElements,
-		postHook:enableUiElements,
-		callback:function(res) {
-			if (res && res.length > 0) {
-				var keywordTable = dojo.widget.byId("keywordsList");
-				UtilList.addTableIndices(res);
-				keywordTable.store.setData(res);
-				showStatus("");
-				dojo.byId("numberOfTerms").innerHTML = message.get("sns.numberOfTerms")+" "+res.length;
-			} else {
-				// Show status that no results were found?
-				showStatus(message.get("sns.noSimilarTermsHint"));
-			}
-		},
-		timeout:0,
-		errorHandler:function(msg) { showStatus(message.get("sns.connectionError"));}
-	});
-*/
 
 	var queryTerm = "";
 
@@ -232,7 +199,7 @@ applyChanges = function() {
       <div class="inputContainer field grey fullField noSpaceBelow">
 
         <span class="entry first">
-          <span class="label">Vorschlagliste</span>
+          <span class="label"><fmt:message key="dialog.thesaurusAssist.result" /></span>
     	    <div class="tableContainer headHiddenRows10 third">
     	    <table id="keywordsList" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="10" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
     	      <thead>
@@ -256,7 +223,7 @@ applyChanges = function() {
         </span>
 
         <span class="entry">
-          <span class="label">&Uuml;bernehmen</span>
+          <span class="label"><fmt:message key="dialog.thesaurusAssist.apply" /></span>
     	    <div class="tableContainer headHiddenRows10 third">
     	    <table id="resultList" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="10" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
     	      <thead>
@@ -271,13 +238,13 @@ applyChanges = function() {
         </span>
 
         <div class="fill spacer"></div>
-        <span id="numberOfTerms">Anzahl:</span>
+        <span id="numberOfTerms"><fmt:message key="dialog.thesaurusAssist.num" /></span>
         <div class="spacerField"></div>
       </div>
       
       <div class="inputContainer noSpaceBelow">
         <span class="button w644" style="height:20px !important;">
-	        <span style="float:right;"><button dojoType="ingrid:Button" id="applyChangesButton" onClick="applyChanges">&Uuml;bernehmen</button></span>
+	        <span style="float:right;"><button dojoType="ingrid:Button" id="applyChangesButton" onClick="applyChanges"><fmt:message key="dialog.thesaurusAssist.apply" /></button></span>
 
 			<span id="thesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 				<img id="thesImageZone" src="img/ladekreis.gif" />

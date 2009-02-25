@@ -1257,7 +1257,7 @@ function hideSplash(){
 	            <div id="spatialRefAdminUnitContainer" class="inputContainer noSpaceBelow h130">
 					<span id="uiElementN006" type="required">
 		                <span id="spatialRefAdminUnitLabel" class="label required"><label for="spatialRefAdminUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 10006)"><script>document.write(message.get("ui.obj.spatial.geoThesTable.title"))</script>*</label></span>
-		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="spatialRefAdminUnitLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Geothesaurus-Navigator', 'mdek_spatial_navigator.html', 530, 230, true);" title="Geothesaurus-Navigator [Popup]"><script>document.write(message.get("ui.obj.spatial.geoThesTable.link"))</script></a></span>
+		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="spatialRefAdminUnitLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('dialog.spatialNavigator.title'), 'mdek_spatial_navigator.jsp', 530, 230, true);" title="Geothesaurus-Navigator [Popup]"><script>document.write(message.get("ui.obj.spatial.geoThesTable.link"))</script></a></span>
 		                <div class="tableContainer rows4 full">
 		            	    <table id="spatialRefAdminUnit" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 		            	      <thead>
@@ -1334,7 +1334,7 @@ function hideSplash(){
 					<span id="uiElementN008" type="required">
 		                <span id="spatialRefLocationLabel" class="label required"><label for="spatialRefLocation" onclick="javascript:dialog.showContextHelp(arguments[0], 10008)"><script>document.write(message.get("ui.obj.spatial.geoTable.title"))</script>*</label></span>
 		                <span class="functionalLink">
-		                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="spatialRefLocationLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Raumbezug hinzuf&uuml;gen', 'mdek_spatial_assist_dialog.html', 555, 240, true);" title="Raumbezug Assistent [Popup]"><script>document.write(message.get("ui.obj.spatial.geoTable.link"))</script></a>
+		                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="spatialRefLocationLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('dialog.spatialAssist.title'), 'mdek_spatial_assist_dialog.jsp', 555, 240, true);" title="Raumbezug Assistent [Popup]"><script>document.write(message.get("ui.obj.spatial.geoTable.link"))</script></a>
 	<!-- The following feature is not yet implemented -->
 	<!-- 
 		                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" title="Koordinate mit geografischer Suche aussuchen [Popup]">Koordinate mit geografischer Suche aussuchen</a>
@@ -1812,8 +1812,8 @@ function hideSplash(){
 	              <div class="inputContainer h110">
 					<span id="uiElement4510" type="required">
 		                <span id="thesaurusTermsLabel" class="label required"><label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 4510)"><script>document.write(message.get("ui.obj.thesaurus.terms"))</script>*</label></span>
-		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Verschlagwortungsassistent', 'mdek_thesaurus_assist_dialog.html', 735, 430, true);" title="Verschlagwortungsassistent [Popup]"><script>document.write(message.get("ui.obj.thesaurus.terms.link.assistant"))</script></a>
-		                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsNavigatorLink" href="javascript:void(0);" onclick="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true, {dstTable: 'thesaurusTerms'});" title="Thesaurus-Navigator [Popup]"><script>document.write(message.get("ui.obj.thesaurus.terms.link.navigator"))</script></a></span>
+		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('dialog.thesaurusAssist.title'), 'mdek_thesaurus_assist_dialog.jsp', 735, 430, true);" title="Verschlagwortungsassistent [Popup]"><script>document.write(message.get("ui.obj.thesaurus.terms.link.assistant"))</script></a>
+		                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsNavigatorLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('dialog.thesaurusNavigator.title'), 'mdek_thesaurus_dialog.jsp', 1010, 430, true, {dstTable: 'thesaurusTerms'});" title="Thesaurus-Navigator [Popup]"><script>document.write(message.get("ui.obj.thesaurus.terms.link.navigator"))</script></a></span>
 		                <div class="tableContainer headHiddenRows4 full">
 		            	    <table id="thesaurusTerms" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 		            	      <thead>
@@ -2302,7 +2302,7 @@ function hideSplash(){
 						<div class="inputContainer notRequired h088">
 							<span id="uiElement4510" type="optional">
 								<span class="label"><label for="thesaurusTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 4510)"><script>document.write(message.get("ui.adr.thesaurus.terms"))</script></label></span>
-								<span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Thesaurus-Navigator', 'mdek_thesaurus_dialog.html', 1010, 430, true, {dstTable: 'thesaurusTermsAddress'});" title="Thesaurus-Navigator [Popup]"><script>document.write(message.get("ui.adr.thesaurus.terms.link.navigator"))</script></a></span>
+								<span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(message.get('dialog.thesaurusNavigator.title'), 'mdek_thesaurus_dialog.jsp', 1010, 430, true, {dstTable: 'thesaurusTermsAddress'});" title="Thesaurus-Navigator [Popup]"><script>document.write(message.get("ui.adr.thesaurus.terms.link.navigator"))</script></a></span>
 
 								<div class="tableContainer headHiddenRows3 full">
 									<table id="thesaurusTermsAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
@@ -2395,13 +2395,13 @@ function hideSplash(){
   </div>
 
   <div widgetId="page2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_search.jsp" preload="false" executeScripts="true"></div>
-  <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_thesaurus.html" preload="false" executeScripts="true"></div>
+  <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_thesaurus.jsp" preload="false" executeScripts="true"></div>
   <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_research_database.jsp" preload="false" executeScripts="true"></div>
 
   <div widgetId="page3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_editor.jsp" preload="false" executeScripts="true" refreshOnShow="false"></div>
   <div widgetId="page3Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_qa_assurance.jsp" preload="false" executeScripts="true" refreshOnShow="false"></div>
 
-  <div widgetId="page4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_statistics.html" preload="false" executeScripts="true" refreshOnShow="false"></div>
+  <div widgetId="page4" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_statistics.jsp" preload="false" executeScripts="true" refreshOnShow="false"></div>
   </div>
 
 </body>

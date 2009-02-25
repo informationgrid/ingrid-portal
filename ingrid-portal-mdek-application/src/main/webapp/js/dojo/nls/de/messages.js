@@ -249,10 +249,21 @@
 	"dialog.research.ext.obj.similarTerms":"&Auml;hnliche Begriffe",
 	"dialog.research.ext.obj.invalidDate":"Das von Ihnen eingegebene Datum '%{0}' ist ung&uuml;ltig und wird zur&uuml;ckgesetzt.",
 
+	"dialog.wizard.selectTitle":"Assistent w&auml;hlen",
 	"dialog.wizard.create.title":"Allgemeiner Erfassungsassistent",
 	"dialog.wizard.create.snsNoResultError":"Der SNS lieferte keine Ergebnisse zu der von Ihnen angegebenen Webseite. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.",
 	"dialog.wizard.create.snsInvalidPageError":"Die von Ihnen angegebene Seite konnte vom SNS nicht analysiert werden.",
 	"dialog.wizard.getCap.title":"getCapabilities Assistent",
+
+	"dialog.spatialAssist.title":"Raumbezug hinzuf&uuml;gen",
+	"dialog.spatialNavigator.title":"Geothesaurus-Navigator",
+	"dialog.thesaurusAssist.title":"Verschlagwortungsassistent",
+	"dialog.statistics.numTotal":"Gesamt",
+	"dialog.thesaurusNavigator.title":"Thesaurus-Navigator",
+
+	"dialog.waitForJob.opName":"Laufende Operation:",
+	"dialog.waitForJob.objCount":"Bearbeitete Objekte:",
+	"dialog.waitForJob.numObjects":"Anzahl der Objekte:",
 
 	"operation.error.object.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Objekte sind neu angelegt und befinden sich noch in der Bearbeitung. Bitte speichern Sie zun&auml;chst diese Objekte ab!",
 	"operation.error.address.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Adressen sind neu angelegt und befinden sich noch in der Bearbeitung. Bitte speichern Sie zun&auml;chst diese Adressen ab!",
