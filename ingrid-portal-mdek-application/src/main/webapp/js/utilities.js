@@ -800,6 +800,60 @@ UtilCatalog.getSysListEntry = function(sysListId, entryId) {
 	return def;
 }
 
+// Constants that should be used by getGenericValuesDef and setGenericValuesDef
+UtilCatalog.GENERIC_KEYS = {};
+UtilCatalog.GENERIC_KEYS.AUTOSAVE_ENABLED = "AUTOSAVE_ENABLED";
+UtilCatalog.GENERIC_KEYS.AUTOSAVE_INTERVAL = "AUTOSAVE_INTERVAL";
+UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_ENABLED = "SESSION_REFRESH_ENABLED";
+UtilCatalog.GENERIC_KEYS.SESSION_REFRESH_INTERVAL = "SESSION_REFRESH_INTERVAL";
+
+// Fetch generic values from the catalog
+// Input is a list of key identifiers or null for all values: ["keyId1", "keyId2", ...]
+// Returns a map with the key/value entries: { keyId1:value1, keyId2:value2, ... }
+UtilCatalog.getGenericValuesDef = function(keyNames) {
+	var def = new dojo.Deferred();
+
+	CatalogService.getSysGenericValues(keyNames, {
+		callback: function(res) {
+			var genericValueMap = {};
+			for (var index = 0; index < res.length; index++) {
+				genericValueMap[res[index].key] = res[index].value;
+			}
+			def.callback(genericValueMap);
+		},
+		errorHandler:function(msg){
+			dojo.debug("Error: "+msg);
+			def.errback(msg);
+		}
+	});
+
+	return def;
+}
+
+// Store generic values in the backend
+// Input is a map whose key/value pairs should be stored 
+// e.g. valueMap: {keyId1:value1, keyId2:value2, ...}
+UtilCatalog.storeGenericValuesDef = function(valueMap) {
+	var def = new dojo.Deferred();
+
+	var valueList = [];
+	for (var key in valueMap) {
+		valueList.push( { key: key, value: valueMap[key] } );
+	}
+
+	CatalogService.storeSysGenericValues(valueList, {
+		callback: function() {
+			def.callback();
+		},
+		errorHandler:function(msg){
+			dojo.debug("Error: "+msg);
+			def.errback(msg);
+		}
+	});
+
+	return def;
+}
+
 // Security related utility functions
 var UtilSecurity = {}
 
@@ -957,3 +1011,4 @@ UtilGeneral.getStackTrace = function(exception) {
 UtilGeneral.refreshSession = function() {
 	UtilityService.refreshSession();
 }
+

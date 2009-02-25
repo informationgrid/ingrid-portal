@@ -47,7 +47,7 @@ var djConfig = {locale: userLocale, isDebug: false, /* use with care, may lead t
 <script type="text/javascript">
 
 // click handler for main menus
-var menus = [{menu:"page1", submenus:["page1" , "page1Sub2"]}, 
+var menus = [{menu:"page1", submenus:["page1" , "page1Sub2", "page1Sub3"]}, 
 			 {menu:"page2", submenus:["page2", "page2Sub2", "page2Sub3"]},
 			 {menu:"page3", submenus:["page3", "page3Sub2", "page3Sub3", "page3Sub4", "page3Sub5", "page3Sub6", "page3Sub7", "page3Sub8"]},
 			 {menu:"page4", submenus:["page4", "page4Sub2"]}
@@ -372,6 +372,7 @@ function hideSplash(){
   	    <ul>
   	      <li><a id="page1Subnavi1" onClick="clickMenu('page1', 'page1')" href="javascript:void(0);" class="current" title="Katalogeinstellungen"><script>document.write(message.get("menu.admin.main.catalog.settings"))</script></a></li>
   	      <li><a id="page1Subnavi2" onClick="clickMenu('page1', 'page1Sub2')" href="javascript:void(0);" title="Feldeinstellungen"><script>document.write(message.get("menu.admin.main.catalog.fieldSettings"))</script></a></li>
+  	      <li><a id="page1Subnavi3" onClick="clickMenu('page1', 'page1Sub3')" href="javascript:void(0);" title="Generelle Einstellunge"><script>document.write(message.get("menu.admin.main.catalog.generalSettings"))</script></a></li>
   	    </ul>	  
 	  </div>
 	  <div id="page2Subnavi" class="subnavi" style="display:none">
@@ -406,6 +407,7 @@ function hideSplash(){
   
   <div widgetId="page1" dojoType="ContentPane" layoutAlign="client" href="mdek_admin_catalog_settings.jsp" preload="false" executeScripts="true"></div>
   <div widgetId="page1Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_catalog_field_settings.jsp" preload="false" executeScripts="true"></div>
+  <div widgetId="page1Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_general_settings.jsp" preload="false" executeScripts="true"></div>
   <div widgetId="page2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_user_administration.jsp" preload="false" refreshOnShow="true" executeScripts="true"></div>
   <div widgetId="page2Sub2" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_group_administration.jsp" preload="false" executeScripts="true"></div>
   <div widgetId="page2Sub3" dojoType="ContentPane" layoutAlign="client" style="display:none" href="mdek_admin_permission_overview.jsp" preload="false" executeScripts="true"></div>

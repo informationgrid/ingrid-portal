@@ -46,6 +46,7 @@
 	"menu.admin.main.catalog":"Catalogue",
 	"menu.admin.main.catalog.settings":"General settings",
 	"menu.admin.main.catalog.fieldSettings":"Field settings",
+	"menu.admin.main.catalog.generalSettings":"General settings",
 	"menu.admin.main.user":"User management",
 	"menu.admin.main.user.userAdmin":"Users",
 	"menu.admin.main.user.groupAdmin":"Groups",
@@ -239,6 +240,7 @@
 
 	"dialog.admin.userNotFoundError":"The user could not be found. The user must exist in the portal and must not already have the role 'mdek'.",
 	"dialog.admin.fieldSettingsUpdated":"Settings saved successfully.",
+	"dialog.admin.generalSettingsUpdated":"Settings saved successfully.",
 	"dialog.admin.invalidObjectNameError":"Invalid object name.",
 
 	"dialog.compare.address.address":"Address",
