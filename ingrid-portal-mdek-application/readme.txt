@@ -1,10 +1,37 @@
-eclipse wtp integration
------------------------
+Eclipse WTP einrichten
+----------------------
+Die Mdek-Applikation kann separat als Eclipse WTP betrieben werden. Dies vereinfacht die Entwicklung,
+da der Hotdeploy Mechanismus genutzt werden kann. Es muss also nicht immer das gesamte Projekt mit maven
+gebaut werden um kleinen Änderungen zu testen.
 
-mvn eclipse:m2eclipse -Dwtpversion=1.5
+Folgende Schritte sind dazu notwendig:
+- Einrichten eines mdek iplug (siehe ingrid-mdek projekt doku)
+- Einrichten der 'mdek' Datenbank
+- Einrichten eines Servers unter Eclipse (New... Other... Server)
+- Eclipse Projekt erstellen mit 'dev-pom.xml'. Dort werden alle Abhängigkeiten direkt eingebunden.
+ - mvn -f dev-pom.xml eclipse:clean eclipse:eclipse
+- Refresh Project
+- Projekt zum Server hinzufügen (Servers view, rechtsklick auf server, add project...)
+- Server starten
 
+Server root ist: %WORKSPACE_DIR%\.metadata\.plugins\org.eclipse.wst.server.core\tmp0
+Die mdek-Webapp befindet sich in: %WORKSPACE_DIR%\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ingrid-portal-mdek-application
 
-eclipse maven2 plugin
----------------------
+Es werden ausschliesslich libs verwendet, die in der dev-pom.xml angegeben wurden (direkt aus dem maven2 repo).
+Das shared\lib Verzeichnis der normalen Tomcat Installation hat hiermit NICHTS mehr zu tun (falls man sich mal
+nicht sicher ist welche libs verwendet werden :) )!
 
-http://code.google.com/p/m2wtp/
+Da wir das Portal nicht mehr für die Anmeldung verwenden können, müssen wir uns 'manuell' anmelden.
+Dies kann über verschiedene Wege gemacht werden:
+1. Die Klasse de.ingrid.mdek.util.MdekSecurityUtils enthält eine Methode 'public static UserData getCurrentPortalUserData()'.
+   Diese Methode liest das user principal aus und für den gefundenen Namen die Daten aus der mdek Datenbank.
+   Die Methode kann einfach immer ein fixes UserData Objekt zurückliefern: 'return getUserData("mdek");'
+2. Login über dev_login.jsp
+   Die Datei dev_login.jsp setzt den Benutzernamen auf einen beliebigen Wert (über den Parameter 'user') und leitet die Anfrage
+   an die mdek-app weiter (über Parameter 'page') steuerbar. Beispiele:
+   - Anmelden als Benutzer 'mdek'. Standard Ziel ist mdek_entry.jsp:
+     http://localhost:8080/ingrid-portal-mdek-application/dev_login.jsp?user=mdek
+   - Anmelden als Benutzer 'mdek'. Zieladresse ist mdek_admin_entry.jsp:
+     http://localhost:8080/ingrid-portal-mdek-application/dev_login.jsp?user=mdek&page=mdek_admin_entry.jsp
+
+Die zweite Methode ist zu bevorzugen falls man sich häufig mit verschiedenen Benutzernamen anmelden möchte (Testen der Qualitätskontrolle)
