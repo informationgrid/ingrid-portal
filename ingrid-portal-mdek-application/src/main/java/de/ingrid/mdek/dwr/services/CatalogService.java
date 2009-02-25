@@ -5,6 +5,7 @@ import java.util.Map;
 
 import de.ingrid.mdek.beans.AdditionalFieldBean;
 import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.GenericValueBean;
 
 public interface CatalogService {
 
@@ -13,6 +14,8 @@ public interface CatalogService {
 	public List<AdditionalFieldBean> getSysAdditionalFields(Long[] fieldIds, String language);
 	public void storeSysAdditionalFields(List<AdditionalFieldBean> additionalFields, String languageCode);
 	public List<Map<String, String>> storeSysGuis(List<Map<String, String>> sysGuis, boolean refetchAfterStore);
+	public List<GenericValueBean> getSysGenericValues(String[] keyNames);
+	public void storeSysGenericValues(List<GenericValueBean> genericValues);
 	public CatalogBean getCatalogData();
 	public CatalogBean storeCatalogData(CatalogBean cat);
 }

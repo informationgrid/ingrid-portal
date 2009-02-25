@@ -1,5 +1,6 @@
 package de.ingrid.mdek.handler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.apache.log4j.Logger;
 import de.ingrid.mdek.beans.AdditionalFieldBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
+import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCaller.AddressArea;
@@ -51,6 +53,29 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 	public List<AdditionalFieldBean> getSysAdditionalFields(Long[] fieldIds, String language) {
 		IngridDocument response = mdekCallerCatalog.getSysAdditionalFields(connectionFacade.getCurrentPlugId(), fieldIds, language, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractSysAdditionalFieldsFromResponse(response);
+	}
+
+	public List<GenericValueBean> getSysGenericValues(String[] keyNames) {
+		IngridDocument response = mdekCallerCatalog.getSysGenericKeys(connectionFacade.getCurrentPlugId(), keyNames, MdekSecurityUtils.getCurrentUserUuid());
+		return MdekCatalogUtils.extractSysGenericKeysFromResponse(response);
+	}
+
+	public void storeSysGenericValues(List<GenericValueBean> genericValues) {
+		if (genericValues != null) {
+			List<String> keyNames = new ArrayList<String>();
+			List<String> keyValues = new ArrayList<String>();
+	
+			for (GenericValueBean genericValue : genericValues) {
+				keyNames.add(genericValue.getKey());
+				keyValues.add(genericValue.getValue());
+			}
+	
+			IngridDocument response = mdekCallerCatalog.storeSysGenericKeys(
+					connectionFacade.getCurrentPlugId(),
+					keyNames.toArray(new String[]{}),
+					keyValues.toArray(new String[]{}),
+					MdekSecurityUtils.getCurrentUserUuid());
+		}
 	}
 
 	public CatalogBean getCatalogData() {

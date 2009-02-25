@@ -3,7 +3,6 @@ package de.ingrid.mdek.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +16,7 @@ import de.ingrid.mdek.MdekUtils.AdditionalFieldType;
 import de.ingrid.mdek.beans.AdditionalFieldBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
+import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.beans.AdditionalFieldBean.Type;
@@ -136,6 +136,22 @@ public class MdekCatalogUtils {
 			result.add(doc);
 		}
 		return result;
+	}
+
+	public static List<GenericValueBean> extractSysGenericKeysFromResponse(IngridDocument response) {
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		List<GenericValueBean> genericValueList = new ArrayList<GenericValueBean>();
+
+		log.debug(result);
+
+		for (Map.Entry<String, String> genericValueEntry : (Set<Map.Entry<String, String>>) result.entrySet()) {
+			GenericValueBean genericValue = new GenericValueBean();
+			genericValue.setKey(genericValueEntry.getKey());
+			genericValue.setValue(genericValueEntry.getValue());
+			genericValueList.add(genericValue);
+		}
+
+		return genericValueList;
 	}
 
 	public static CatalogBean extractCatalogFromResponse(IngridDocument response) {

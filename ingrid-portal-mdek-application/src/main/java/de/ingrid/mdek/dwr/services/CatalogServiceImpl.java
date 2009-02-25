@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.beans.AdditionalFieldBean;
 import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekErrorUtils;
@@ -50,6 +51,28 @@ public class CatalogServiceImpl implements CatalogService {
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while storing sysGui data.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
+	}
+
+	public List<GenericValueBean> getSysGenericValues(String[] keyNames) {
+		try {
+			return catalogRequestHandler.getSysGenericValues(keyNames);
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while fetching sysGenericKeys data.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
+	}
+
+	public void storeSysGenericValues(List<GenericValueBean> genericValues) {
+		try {
+			catalogRequestHandler.storeSysGenericValues(genericValues);
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while storing sysGenericKeys data.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}
