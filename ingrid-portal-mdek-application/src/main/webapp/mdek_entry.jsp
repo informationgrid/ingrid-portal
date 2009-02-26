@@ -33,10 +33,11 @@
 	var userLocale = '<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>';
 	var initJumpToNodeId = '<%= request.getParameter("nodeId") == null ? "" : request.getParameter("nodeId") %>';
 	var initJumpToNodeType = '<%= request.getParameter("nodeType") == null ? "" : request.getParameter("nodeType")%>';
+	var isDebug = <%= "true".equals(request.getParameter("debug")) %>;
 
 	var djConfig = {
 		locale: userLocale,
-		isDebug: false, // use with care, may lead to unexpected errors!
+		isDebug: isDebug, // use with care, may lead to unexpected errors!
 		debugAtAllCosts: false,
 		debugContainerId: "dojoDebugOutput"
 	};

@@ -32,7 +32,8 @@
 
 <script type="text/javascript">
 var userLocale = '<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>';
-var djConfig = {locale: userLocale, isDebug: false, /* use with care, may lead to unexpected errors! */debugAtAllCosts: false, debugContainerId: "dojoDebugOutput"};
+var isDebug = <%= "true".equals(request.getParameter("debug")) %>;
+var djConfig = {locale: userLocale, isDebug: isDebug, /* use with care, may lead to unexpected errors! */debugAtAllCosts: false, debugContainerId: "dojoDebugOutput"};
 </script>
 <script type="text/javascript" src="dojo-0.4.1-ingrid/dojo.js"></script>
 <script type="text/javascript" src="js/config.js"></script>

@@ -33,5 +33,25 @@ Dies kann über verschiedene Wege gemacht werden:
      http://localhost:8080/ingrid-portal-mdek-application/dev_login.jsp?user=mdek
    - Anmelden als Benutzer 'mdek'. Zieladresse ist mdek_admin_entry.jsp:
      http://localhost:8080/ingrid-portal-mdek-application/dev_login.jsp?user=mdek&page=mdek_admin_entry.jsp
+   - Anmelden als Benutzer 'mdek' an der dwr Testseite:
+     http://localhost:8080/ingrid-portal-mdek-application/dev_login.jsp?user=mdek&page=dwr
+
+   - Mögliche Parameter:
+     - user=mdek -> Als Benutzername wird 'mdek' verwendet. Der Benutzer muss in der mdek Datenbank existieren
+       und mit dem verwendeten iplug korrekt verbunden sein
+     - page=mdek_admin_entry.jsp -> weiterleiten zu mdek_admin_entry.jsp. Default ist mdek_entry.jsp
+     - debug=true -> setze dojo Debug auf true. Default ist false
+     - lang=en -> setze die verwendete Sprache auf Englisch. Default ist Deutsch (de)
 
 Die zweite Methode ist zu bevorzugen falls man sich häufig mit verschiedenen Benutzernamen anmelden möchte (Testen der Qualitätskontrolle)
+
+
+Verwenden von lokalen Projekten an Stelle von jars aus maven repo
+-----------------------------------------------------------------
+Dazu muss folgendes getan werden:
+- Project Properties, Java Build Path:
+  - Projekt bei 'Projects' hinzufügen (z.B. ingrid-iplug-sns)
+  - Entsprechende Library bei 'Libraries' entfernen (M2_REPO/de/ingrid/...)
+- Project Properties, Java EE Module Dependencies:
+  - Projekt als Abhängigkeit selektieren (sollte ganz oben in der Liste erscheinen)
+  - jar als Abhängigkeit deselektieren (var/M2_REPO/...)
