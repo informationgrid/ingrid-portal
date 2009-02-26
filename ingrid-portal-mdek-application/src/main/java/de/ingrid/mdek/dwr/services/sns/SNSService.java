@@ -32,9 +32,8 @@ import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.query.TermQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
-import de.ingrid.utils.queryparser.ParseException;
-import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class SNSService {
 
@@ -99,12 +98,8 @@ public class SNSService {
     	
     	log.debug(" Creating query...");
     	// Create the Query
-    	IngridQuery query = null;
-    	try {
-    		query = QueryStringParser.parse(topicID);
-    	} catch (ParseException e) {log.error(e);}
-    	log.debug("  Adding fields to query...");
-
+    	IngridQuery query = new IngridQuery();
+    	query.addTerm(new TermQuery(true, false, topicID));
     	query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
         query.addField(new FieldQuery(true, false, "lang", "de"));
         query.put("includeSiblings", includeSiblings);
@@ -570,12 +565,11 @@ public class SNSService {
     }
 
     private static Source getSourceFromTopic(Topic topic) {
-    	// TODO Implement
-    	return Source.UMTHES;
+    	return (topic.get(DetailedTopic.GEMET_OCC) != null ? Source.GEMET : Source.UMTHES);
     }
+
     private static String getGemetTitleFromTopic(Topic topic) {
-    	// TODO Implement
-    	return null;
+    	return (String) topic.get(DetailedTopic.GEMET_OCC);
     }
 
     private static Source getSourceFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
