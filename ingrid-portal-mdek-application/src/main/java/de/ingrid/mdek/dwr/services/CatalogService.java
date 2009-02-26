@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.ingrid.mdek.beans.AdditionalFieldBean;
+import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.GenericValueBean;
 
@@ -18,4 +19,5 @@ public interface CatalogService {
 	public void storeSysGenericValues(List<GenericValueBean> genericValues);
 	public CatalogBean getCatalogData();
 	public CatalogBean storeCatalogData(CatalogBean cat);
+	public AnalyzeJobInfoBean analyze();
 }

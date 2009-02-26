@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.ingrid.mdek.beans.AdditionalFieldBean;
+import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
 import de.ingrid.mdek.beans.GenericValueBean;
@@ -29,4 +30,5 @@ public interface CatalogRequestHandler {
 	public void importEntities(UserData currentUser, byte[] importData, String targetObjectUuid, String targetAddressUuid, boolean publishImmediately, boolean doSeparateImport);
 	public JobInfoBean getImportInfo();
 	public void cancelRunningJob();
+	public AnalyzeJobInfoBean analyze();
 }

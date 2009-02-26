@@ -14,6 +14,7 @@ import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtils.AdditionalFieldType;
 import de.ingrid.mdek.beans.AdditionalFieldBean;
+import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
 import de.ingrid.mdek.beans.GenericValueBean;
@@ -26,6 +27,7 @@ import de.ingrid.mdek.caller.MdekCaller;
 import de.ingrid.mdek.quartz.jobs.util.URLObjectReference;
 import de.ingrid.mdek.quartz.jobs.util.URLState;
 import de.ingrid.mdek.quartz.jobs.util.URLState.State;
+import de.ingrid.mdek.services.catalog.dbconsistency.ErrorReport;
 import de.ingrid.utils.IngridDocument;
 
 public class MdekCatalogUtils {
@@ -336,5 +338,34 @@ public class MdekCatalogUtils {
 		addURLJobInfoFromResponse(response, urlJobInfo);
 
 		return urlJobInfo;
+	}
+	
+	public static AnalyzeJobInfoBean extractAnalyzeJobInfoFromResponse(IngridDocument response) {
+		AnalyzeJobInfoBean analyzeJobInfo = new AnalyzeJobInfoBean();
+		addGeneralJobInfoFromResponse(response, analyzeJobInfo);
+		addAnalyzeJobInfoFromResponse(response, analyzeJobInfo);
+
+		return analyzeJobInfo;
+	}
+
+	private static void addAnalyzeJobInfoFromResponse(IngridDocument response,
+			AnalyzeJobInfoBean analyzeJobInfo) {
+		IngridDocument analyzeResult = MdekUtils.getResultFromResponse(response);
+		List<ErrorReport> errorReports = new ArrayList<ErrorReport>();
+		if (analyzeResult != null) {
+			List<IngridDocument> errorReportDocList = analyzeResult.getArrayList(MdekKeys.VALIDATION_RESULT);
+			if (errorReportDocList != null) {
+				for (IngridDocument errorReportDoc : errorReportDocList) {
+					ErrorReport errorReport = new ErrorReport(
+							errorReportDoc.getString(MdekKeys.VALIDATION_MESSAGE),
+							errorReportDoc.getString(MdekKeys.VALIDATION_SOLUTION)); 
+					errorReports.add(errorReport);
+				}
+			}
+			analyzeJobInfo.setErrorReports(errorReports);
+
+		} else {
+			MdekErrorUtils.handleError(response);
+		}
 	}
 }

@@ -60,6 +60,7 @@
 
 		<convert converter="bean" match="de.ingrid.mdek.beans.AdditionalFieldBean"/>
 		<convert converter="enum" match="de.ingrid.mdek.beans.AdditionalFieldBean$Type"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.AnalyzeJobInfoBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CapabilitiesBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CatalogBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CommentBean"/>
@@ -122,5 +123,9 @@
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcQAEntitiesSelectionType"/>
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcWorkEntitiesSelectionType"/>
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$WorkState"/>
+
+		<!-- Dependencies from mdek-service -->
+		<convert converter="bean" match="de.ingrid.mdek.services.catalog.dbconsistency.ErrorReport"/>
+
 	</allow>
 </dwr>

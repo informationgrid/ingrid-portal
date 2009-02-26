@@ -45,6 +45,13 @@ Dies kann über verschiedene Wege gemacht werden:
 
 Die zweite Methode ist zu bevorzugen falls man sich häufig mit verschiedenen Benutzernamen anmelden möchte (Testen der Qualitätskontrolle)
 
+DWR Testseite
+-------------
+Über die DWR Testseite kann getestet werden, ob die verschiedenen Services korrekt eingebunden wurden.
+Die DWR Testseite ist über folgende URL zu erreichen (user ersetzen):
+http://localhost:8080/ingrid-portal-mdek-application/dev_login.jsp?user=mdek&page=dwr
+dev_login, da man für die meissten Funktionen als Benutzer angemeldet sein muss.
+
 
 Verwenden von lokalen Projekten an Stelle von jars aus maven repo
 -----------------------------------------------------------------

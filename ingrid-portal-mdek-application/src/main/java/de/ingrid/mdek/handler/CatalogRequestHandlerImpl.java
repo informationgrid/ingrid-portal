@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.beans.AdditionalFieldBean;
+import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
 import de.ingrid.mdek.beans.GenericValueBean;
@@ -155,6 +156,14 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 
 	public void cancelRunningJob() {
 		mdekCallerCatalog.cancelRunningJob(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
+	}
+
+	public AnalyzeJobInfoBean analyze() {
+		IngridDocument response = mdekCallerCatalog.analyze(
+				connectionFacade.getCurrentPlugId(),
+				MdekSecurityUtils.getCurrentUserUuid());
+
+		return MdekCatalogUtils.extractAnalyzeJobInfoFromResponse(response);
 	}
 
 	public ConnectionFacade getConnectionFacade() {
