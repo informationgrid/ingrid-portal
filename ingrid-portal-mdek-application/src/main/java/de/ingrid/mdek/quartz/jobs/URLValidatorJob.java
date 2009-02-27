@@ -32,6 +32,7 @@ import de.ingrid.mdek.quartz.jobs.util.URLObjectReference;
 import de.ingrid.mdek.quartz.jobs.util.URLState;
 import de.ingrid.mdek.quartz.jobs.util.URLValidator;
 import de.ingrid.mdek.quartz.jobs.util.URLState.State;
+import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
 
@@ -73,9 +74,10 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 	public URLValidatorJob(ConnectionFacade connectionFacade, String plugId) {
 		this.mdekCallerQuery = connectionFacade.getMdekCallerQuery();
 		this.plugId = plugId;
+		String currentUserUuid = MdekSecurityUtils.getCurrentUserUuid();
 		jobName = createJobName(plugId);
 		String jobListenerName = createJobListenerName(plugId);
-		jobListener = new URLValidatorJobListener(jobListenerName, connectionFacade.getMdekCallerCatalog(), plugId);
+		jobListener = new URLValidatorJobListener(jobListenerName, connectionFacade.getMdekCallerCatalog(), currentUserUuid, plugId);
 		jobDetail = createJobDetail();
 	}
 

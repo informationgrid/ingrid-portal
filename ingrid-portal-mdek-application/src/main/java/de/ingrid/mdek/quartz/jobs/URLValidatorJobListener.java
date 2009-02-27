@@ -12,7 +12,6 @@ import de.ingrid.mdek.MdekUtils;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.quartz.jobs.util.URLObjectReference;
 import de.ingrid.mdek.util.MdekCatalogUtils;
-import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.utils.IngridDocument;
 
 
@@ -22,11 +21,15 @@ public class URLValidatorJobListener implements JobListener {
 
 	private final String listenerName;
 	private final String plugId;
+	// We need to store the userUuid since the method 'jobWasExecuted' is invoked by quartz in another thread.
+	// Therefore we can't get the username via MdekSecurityUtils.getCurrentUserUuid().
+	private final String userUuid;
 	private final IMdekCallerCatalog mdekCallerCatalog;
 
-	public URLValidatorJobListener(String listenerName, IMdekCallerCatalog mdekCallerCatalog, String plugId) {
+	public URLValidatorJobListener(String listenerName, IMdekCallerCatalog mdekCallerCatalog, String userUuid, String plugId) {
 		this.listenerName = listenerName;
 		this.mdekCallerCatalog = mdekCallerCatalog;
+		this.userUuid = userUuid;
 		this.plugId = plugId;
 	}
 
@@ -43,7 +46,7 @@ public class URLValidatorJobListener implements JobListener {
 		IngridDocument jobInfo = new IngridDocument();
 		jobInfo.put(MdekKeys.URL_RESULT, MdekCatalogUtils.convertFromUrlJobResult(urlObjectReferences));
 		jobInfo.put(MdekKeys.JOBINFO_START_TIME, MdekUtils.dateToTimestamp(jobExecutionContext.getFireTime()));
-		mdekCallerCatalog.setURLInfo(plugId, jobInfo, MdekSecurityUtils.getCurrentUserUuid());
+		mdekCallerCatalog.setURLInfo(plugId, jobInfo, userUuid);
 		log.debug("URL Validator Job result has been stored in the DB.");
 	}
 
