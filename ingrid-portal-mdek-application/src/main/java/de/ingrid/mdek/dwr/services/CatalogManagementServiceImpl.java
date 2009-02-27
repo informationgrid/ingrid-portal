@@ -14,6 +14,7 @@ import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.MdekJobHandler;
+import de.ingrid.mdek.quartz.jobs.util.URLState;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
@@ -44,8 +45,9 @@ public class CatalogManagementServiceImpl {
 
 		for (Map<String, String> map : sourceUrls) {
 			IngridDocument urlDoc = new IngridDocument();
-			urlDoc.put(MdekKeys.UUID, map.get("objectUuid"));
-			urlDoc.put(MdekKeys.LINKAGE_URL, map.get("url"));
+			urlDoc.put(MdekKeys.URL_RESULT_OBJECT_UUID, map.get("objectUuid"));
+			urlDoc.put(MdekKeys.URL_RESULT_URL, map.get("url"));
+			urlDoc.put(MdekKeys.URL_RESULT_STATE, URLState.State.NOT_CHECKED.toString());
 			urlList.add(urlDoc);
 		}
 
@@ -67,8 +69,8 @@ public class CatalogManagementServiceImpl {
 
 		for (Map<String, String> map : sourceUrls) {
 			IngridDocument urlDoc = new IngridDocument();
-			urlDoc.put(MdekKeys.UUID, map.get("objectUuid"));
-			urlDoc.put(MdekKeys.LINKAGE_URL, map.get("url"));
+			urlDoc.put(MdekKeys.URL_RESULT_OBJECT_UUID, map.get("objectUuid"));
+			urlDoc.put(MdekKeys.URL_RESULT_URL, map.get("url"));
 			urlList.add(urlDoc);
 		}
 
