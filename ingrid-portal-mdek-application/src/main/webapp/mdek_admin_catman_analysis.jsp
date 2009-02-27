@@ -5,6 +5,7 @@
 var scriptScope = this;
 
 _container_.addOnLoad(function() {
+	scriptScope.startAnalysisJob();
 });
 
 
@@ -12,51 +13,48 @@ _container_.addOnLoad(function() {
 scriptScope.startAnalysisJob = function() {
 	var def = analyzeDef();
 
-
-	def.addCallback(setAnalysisResult);
-
-
-/*
 	def.addCallback(function(analyzeJobInfo) {
 		setAnalysisResult(analyzeJobInfo);
 		updateJobInfo(analyzeJobInfo);
 	});
 
+
 	def.addErrback(function(err) {
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
 	});
-*/
 }
 
 
 function setAnalysisResult(analyzeJobInfo) {
-//	dojo.widget.byId("analysisResultTable").store.clearData();
+	dojo.widget.byId("analysisResultTable").store.clearData();
 
 	if (analyzeJobInfo && analyzeJobInfo.errorReports) {
-		var errorReports = analyzeJobInfo.errorReports;
-		dojo.lang.forEach(errorReports, dojo.debugShallow);
-
-//		dojo.widget.byId("analysisResultTable").store.setData(errorReports);
+//		UtilList.addTableIndices(analyzeJobInfo.errorReports);
+		dojo.widget.byId("analysisResultTable").store.setData(analyzeJobInfo.errorReports);
 	}
+
+	return "test";
 }
-/*
+
+
 function updateJobInfo(analyzeJobInfo) {
 	dojo.byId("analysisJobBeginDate").innerHTML = analyzeJobInfo.startTime;
 	dojo.byId("analysisJobEndDate").innerHTML = analyzeJobInfo.endTime;
-	if (analyzeJobInfo.errorReport.length) {
-		dojo.byId("analysisJobNumErrors").innerHTML = analyzeJobInfo.errorReport.length;
+
+	if (analyzeJobInfo.errorReports && analyzeJobInfo.errorReports.length > 0) {
+		dojo.byId("analysisJobNumErrors").innerHTML = analyzeJobInfo.errorReports.length;
 	} else {
 		dojo.byId("analysisJobNumErrors").innerHTML = "Keine Fehler gefunden!";
 	}
-}*/
+}
 
 function analyzeDef() {
 	var def = new dojo.Deferred();
 
 	CatalogService.analyze({
-//		preHook: showLoadingZone,
-//		postHook: hideLoadingZone,
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
 
 		callback: function(result) {
 			def.callback(result);
@@ -69,7 +67,7 @@ function analyzeDef() {
 
 	return def;
 }
-/*
+
 function showLoadingZone() {
     dojo.html.setVisibility(dojo.byId("analysisLoadingZone"), "visible");
 }
@@ -77,7 +75,7 @@ function showLoadingZone() {
 function hideLoadingZone() {
     dojo.html.setVisibility(dojo.byId("analysisLoadingZone"), "hidden");
 }
-*/
+
 </script>
 </head>
 
@@ -109,20 +107,26 @@ function hideLoadingZone() {
 						<div id="analysisInfoContent">
 							<table cellspacing="0">
 								<tr>
-								<td>Gestartet am:</td>
-								<td id="analysisJobBeginDate"></td></tr>
-								<td>Beendet am:</td>
-								<td id="analysisJobEndDate"></td></tr>
-								<td>Anzahl der gefundenen Fehler:</td>
-								<td id="analysisJobNumErrors"></td></tr>
+									<td>Gestartet am:</td>
+									<td id="analysisJobBeginDate"></td>
+								</tr>
+								<tr>
+									<td>Beendet am:</td>
+									<td id="analysisJobEndDate"></td>
+								</tr>
+								<tr>
+									<td>Anzahl der gefundenen Fehler:</td>
+									<td id="analysisJobNumErrors"></td>
+								</tr>
+								<tr>
 							</table>
 						</div>
 					</div>
 				</div>
-<!--
-				<div id="analysisResultContainer" class="inputContainer">
-					<span id="analysisResultTableLabel" class="label"><label class="inActive" for="analysisResultTable">Ergebnis der Pr&uuml;fung</label></span>
-					<div id="analysisResultTableContainer" class="tableContainer rows20 w964">
+
+				<div class="inputContainer">
+					<span class="label"><label class="inActive" for="analysisResultTable">Ergebnis der Pr&uuml;fung</label></span>
+					<div class="tableContainer rows20 w964">
 						<table id="analysisResultTable" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable nosort w964">
 							<thead>
 								<tr>
@@ -135,7 +139,6 @@ function hideLoadingZone() {
 						</table>
 					</div>
 				</div>
- -->
 
 				<!-- LEFT HAND SIDE CONTENT END -->        
 			</div>
