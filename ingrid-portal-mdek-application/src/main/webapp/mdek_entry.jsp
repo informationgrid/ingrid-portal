@@ -2223,7 +2223,7 @@ function hideSplash(){
 				          <div class="tableContainer rows5 half">
 				            <div class="cellEditors" id="addressComEditors">
 				              <div dojoType="ingrid:ComboBox" maxlength="20" toggle="plain" style="width:37px;" listId="4430" id="addressComType"></div>
-				              <div dojoType="ingrid:ValidationTextbox" maxlength="80" widgetId="addressComConnection"></div>
+				              <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w238" widgetId="addressComConnection"></div>
 				            </div>
 				      	    <table id="addressCom" dojoType="ingrid:FilteringTable" minRows="5" cellspacing="0" class="filteringTable nosort interactive">
 				      	      <thead>
