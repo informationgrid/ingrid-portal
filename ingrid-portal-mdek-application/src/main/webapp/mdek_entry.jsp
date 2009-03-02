@@ -1869,6 +1869,25 @@ function hideSplash(){
 		                </span>
 	            	  </div>
 
+	                <div class="half">
+					  <span id="uiElement5064" type="required">
+		                  <span id="thesaurusInspireLabel" class="label required"><label for="thesaurusInspire" onclick="javascript:dialog.showContextHelp(arguments[0], 5064)"><script>document.write(message.get("ui.obj.thesaurus.terms.inspire"))</script>*</label></span>
+		                  <div class="tableContainer headHiddenRows4 half">
+		                    <div class="cellEditors" id="thesaurusInspireEditors">
+		                      <div dojoType="ingrid:Select" toggle="plain" autoComplete="false" style="width:260px;" listId="527" id="thesaurusInspireCombobox"></div>
+		                    </div>
+		              	    <table id="thesaurusInspire" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
+		              	      <thead>
+		              		      <tr>
+		                    			<th nosort="true" field="title" dataType="String" editor="thesaurusInspireCombobox">Inspire Themen</th>
+		              		      </tr>
+		              	      </thead>
+		              	      <tbody>
+		              	      </tbody>
+		              	    </table>
+		                  </div>
+		                </span>
+	            	  </div>
 	              </div>
 
 	              <div class="inputContainer noSpaceBelow notRequired h185">

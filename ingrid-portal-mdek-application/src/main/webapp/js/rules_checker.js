@@ -14,7 +14,7 @@ var timeUiInputElements = ["timeRefType", "timeRefDate1", "timeRefDate2", "timeR
 var extraUiInputElements = ["extraInfoLangMetaData", "extraInfoLangData", "extraInfoPublishArea",
 	"extraInfoXMLExportTable", "extraInfoLegalBasicsTable", "extraInfoPurpose", "extraInfoUse"];
 var availUiInputElements = ["availabilityUsageLimitationTable", "availabilityDataFormat", "availabilityMediaOptions", "availabilityOrderInfo"];
-var thesUiInputElements = ["thesaurusTerms", "thesaurusTopics", "thesaurusEnvExtRes",
+var thesUiInputElements = ["thesaurusTerms", "thesaurusTopics", "thesaurusInspire", "thesaurusEnvExtRes",
 	"thesaurusEnvTopics", "thesaurusEnvCats", "linksTo"];
 var class0UiInputElements = [];
 var class1UiInputElements = ["ref1ObjectIdentifier", "ref1DataSet", "ref1Coverage", "ref1Representation", "ref1VFormatTopology", "ref1VFormatDetails",
@@ -43,7 +43,7 @@ var adrClass3UiInputElements = ["headerAddressType3Lastname", "headerAddressType
 var labels = ["objectNameLabel", "objectClassLabel", "objectOwnerLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel",
 			  "extraInfoConformityTableLabel", "availabilityUsageLimitationTableLabel", "ref1BasisTabContainerLabel", "ref1ObjectIdentifierLabel",
 			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "ref3ServiceTypeTableLabel", "generalAddressTableLabel", "timeRefTableLabel",
-			  "thesaurusTermsLabel", "thesaurusTopicsLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel", "spatialRefAltHeightLabel",
+			  "thesaurusTermsLabel", "thesaurusTopicsLabel", "thesaurusInspireLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel", "spatialRefAltHeightLabel",
 			  "spatialRefAltMinLabel", "spatialRefAltMaxLabel", "spatialRefAltMeasureLabel", "spatialRefAltVDateLabel",
 			  "thesaurusEnvironmentLabel", "thesaurusEnvTopicsLabel", "thesaurusEnvCatsLabel", "extraInfoPublishAreaLabel",
 			  "addressTypeLabel", "addressOwnerLabel", "headerAddressType0UnitLabel", "headerAddressType1UnitLabel", "headerAddressType2LastnameLabel",
@@ -67,7 +67,8 @@ var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"]];
 
 var notEmptyTables = [["generalAddressTable", "generalAddressTableLabel"],
 					  ["timeRefTable", "timeRefTableLabel"],
-					  ["thesaurusTopicsList", "thesaurusTopicsLabel"]];
+					  ["thesaurusTopicsList", "thesaurusTopicsLabel"],
+					  ["thesaurusInspireList", "thesaurusInspireLabel"]];
 
 // TODO Add class 2, 4, 5 to isObjectPublishable when needed
 var notEmptyTablesClass1 = [["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"],

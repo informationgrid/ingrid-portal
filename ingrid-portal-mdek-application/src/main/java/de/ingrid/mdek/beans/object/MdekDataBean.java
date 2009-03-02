@@ -88,11 +88,13 @@ public class MdekDataBean {
 	private String availabilityOrderInfo;
 	
 	// Thesaurus
+	private List<Integer> thesaurusInspireTermsList;
 	private List<SNSTopic> thesaurusTermsTable;
 	private List<Integer> thesaurusTopicsList;
 	private Boolean thesaurusEnvExtRes;
 	private List<Integer> thesaurusEnvTopicsList;
 	private List<Integer> thesaurusEnvCatsList;
+
 
 	// Links
 	private List<MdekDataBean> linksToObjectTable;
@@ -509,6 +511,7 @@ public class MdekDataBean {
 		this.setExtraInfoLegalBasicsTable(new ArrayList<String>());
 		this.setAvailabilityDataFormatTable(new ArrayList<DataFormatBean>());
 		this.setAvailabilityMediaOptionsTable(new ArrayList<MediaOptionBean>());
+		this.setThesaurusInspireTermsList(new ArrayList<Integer>());
 		this.setThesaurusTermsTable(new ArrayList<SNSTopic>());
 		this.setThesaurusTopicsList(new ArrayList<Integer>());
 		this.setThesaurusEnvTopicsList(new ArrayList<Integer>());
@@ -1634,6 +1637,20 @@ public class MdekDataBean {
 
 	public void setAdditionalFields(List<AdditionalFieldBean> additionalFields) {
 		this.additionalFields = additionalFields;
+	}
+
+
+
+
+	public List<Integer> getThesaurusInspireTermsList() {
+		return thesaurusInspireTermsList;
+	}
+
+
+
+
+	public void setThesaurusInspireTermsList(List<Integer> thesaurusInspireTermsList) {
+		this.thesaurusInspireTermsList = thesaurusInspireTermsList;
 	}
 
 }

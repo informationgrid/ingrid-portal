@@ -1642,6 +1642,7 @@ udkDataProxy._setObjectData = function(nodeData)
   // -- Thesaurus --
   dojo.widget.byId("thesaurusTerms").store.setData(UtilList.addTableIndices(nodeData.thesaurusTermsTable));
   dojo.widget.byId("thesaurusTopics").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusTopicsList)));
+  dojo.widget.byId("thesaurusInspire").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusInspireTermsList)));
   dojo.widget.byId("thesaurusEnvTopics").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusEnvTopicsList)));
   dojo.widget.byId("thesaurusEnvCats").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusEnvCatsList)));
   dojo.widget.byId("thesaurusEnvExtRes").setValue(nodeData.thesaurusEnvExtRes);
@@ -1995,6 +1996,7 @@ udkDataProxy._getObjectData = function(nodeData)
   // -- Thesaurus --
   nodeData.thesaurusTermsTable = udkDataProxy._getTableData("thesaurusTerms");
   nodeData.thesaurusTopicsList = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusTopics"));
+  nodeData.thesaurusInspireTermsList = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusInspire"));
   nodeData.thesaurusEnvTopicsList = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusEnvTopics"));
   nodeData.thesaurusEnvCatsList = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusEnvCats"));
   nodeData.thesaurusEnvExtRes = dojo.widget.byId("thesaurusEnvExtRes").checked;

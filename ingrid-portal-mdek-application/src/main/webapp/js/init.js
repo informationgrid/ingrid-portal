@@ -1243,7 +1243,7 @@ function initSysLists() {
 
 	var selectWidgetIDs = ["spatialRefAltVDate", "spatialRefAltMeasure", "timeRefTypeCombobox",
 		"generalAddressCombobox", "geometryTypeEditor", "timeRefPeriodicity", "availabilityMediaOptionsMediumCombobox",
-		"timeRefStatus", "ref1DataSet", "ref1RepresentationCombobox", "thesaurusTopicsCombobox", "ref1VFormatTopology",
+		"timeRefStatus", "ref1DataSet", "ref1RepresentationCombobox", "thesaurusTopicsCombobox", "thesaurusInspireCombobox", "ref1VFormatTopology",
 		"freeReferencesEditor", "timeRefIntervalUnit", "extraInfoLegalBasicsTableEditor", "extraInfoXMLExportTableEditor",
 		"thesaurusEnvCatsCombobox", "thesaurusEnvTopicsCombobox", "ref1SpatialSystem", "ref1SymbolsTitleCombobox", "ref1KeysTitleCombobox",
 		"ref3ServiceType", "ref3ServiceTypeEditor", "extraInfoLangData", "extraInfoLangMetaData", "extraInfoPublishArea", "extraInfoConformityLevelEditor",

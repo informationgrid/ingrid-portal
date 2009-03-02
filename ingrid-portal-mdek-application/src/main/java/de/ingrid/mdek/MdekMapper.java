@@ -211,6 +211,7 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setAvailabilityMediaOptionsTable(mapToAvailMediaOptionsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MEDIUM_OPTIONS)));
 		
 		// Thesaurus
+		mdekObj.setThesaurusInspireTermsList(mapToInspireTermTable((List<HashMap<String, Object>>) obj.get(MdekKeys.SUBJECT_TERMS_INSPIRE)));
 		mdekObj.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.SUBJECT_TERMS)));
 
 		List<Integer> intList = (List<Integer>) obj.get(MdekKeys.TOPIC_CATEGORIES);
@@ -676,7 +677,7 @@ public class MdekMapper implements DataMapperInterface {
 		udkAdr.put(MdekKeys.COMMUNICATION, mapFromCommunicationTable(data.getCommunication()));
 
 		//Thesaurus
-		udkAdr.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTables(data.getThesaurusTermsTable()));
+		udkAdr.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTable(data.getThesaurusTermsTable()));
 		
 		// Comments
 		udkAdr.put(MdekKeys.COMMENT_LIST, mapFromCommentTable(data.getCommentTable()));
@@ -750,7 +751,8 @@ public class MdekMapper implements DataMapperInterface {
 		}
 
 		//Thesaurus
-		udkObj.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTables(data.getThesaurusTermsTable()));
+		udkObj.put(MdekKeys.SUBJECT_TERMS_INSPIRE, mapFromInspireTermTable(data.getThesaurusInspireTermsList()));
+		udkObj.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTable(data.getThesaurusTermsTable()));
 		udkObj.put(MdekKeys.TOPIC_CATEGORIES, data.getThesaurusTopicsList());
 		udkObj.put(MdekKeys.ENV_TOPICS, data.getThesaurusEnvTopicsList());
 		udkObj.put(MdekKeys.ENV_CATEGORIES, data.getThesaurusEnvCatsList());
@@ -1182,8 +1184,21 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
+	private List<IngridDocument> mapFromInspireTermTable(List<Integer> inspireTermList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (inspireTermList != null) {
+			for (Integer identifier : inspireTermList) {
+				IngridDocument res = new IngridDocument();
+				res.put(MdekKeys.TERM_TYPE, SearchtermType.INSPIRE.getDbValue());
+				res.put(MdekKeys.TERM_ENTRY_ID, identifier);
 
-	private List<IngridDocument> mapFromThesTermTables(List<SNSTopic> snsList) {
+				resultList.add(res);
+			}
+		}
+		return resultList;
+	}
+
+	private List<IngridDocument> mapFromThesTermTable(List<SNSTopic> snsList) {
 		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (snsList != null) {
 			for (SNSTopic t : snsList) {
@@ -1632,6 +1647,19 @@ public class MdekMapper implements DataMapperInterface {
 			mo.setTransferSize((Double) ref.get(MdekKeys.MEDIUM_TRANSFER_SIZE));
 			resultList.add(mo);
 		}
+		return resultList;
+	}
+
+
+	private List<Integer> mapToInspireTermTable(List<HashMap<String, Object>> topicList) {
+		List<Integer> resultList = new ArrayList<Integer>();
+
+		if (topicList != null) {
+			for (HashMap<String, Object> topic : topicList) {
+				resultList.add((Integer) topic.get(MdekKeys.TERM_ENTRY_ID));
+			}
+		}
+
 		return resultList;
 	}
 

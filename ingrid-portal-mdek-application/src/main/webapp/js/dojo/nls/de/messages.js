@@ -455,6 +455,7 @@
 	"ui.obj.thesaurus.terms.link.assistant":"Verschlagwortungsassistent",
 	"ui.obj.thesaurus.terms.link.navigator":"Thesaurus-Navigator",
 	"ui.obj.thesaurus.terms.category":"Themenkategorie",
+	"ui.obj.thesaurus.terms.inspire":"Inspire Themen",
 	"ui.obj.thesaurus.terms.custom":"Freie Suchbegriffe",
 	"ui.obj.thesaurus.terms.custom.buttonAdd":"Hinzuf&uuml;gen",
 	"ui.obj.thesaurus.terms.enviromental.title":"Umweltthemen",
