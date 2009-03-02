@@ -557,19 +557,33 @@ public class SNSService {
     }
 
     private static SNSTopic convertTopicToSNSTopic(Topic topic) {
-    	return new SNSTopic(getTypeFromTopic(topic), getSourceFromTopic(topic), topic.getTopicID(), topic.getTopicName(), getGemetTitleFromTopic(topic));
+    	Source topicSource = getSourceFromTopic(topic);
+//    	log.debug("topic source: " + topicSource);
+//    	log.debug("topic type: " + getTypeFromTopic(topic));
+    	if (Source.UMTHES.equals(topicSource)) {
+        	return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getTopicID(), topic.getTopicName(), null);
+
+    	} else {
+    		// GEMET
+    		return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getTopicID(), getGemetTitleFromTopic(topic), getGemetIdFromTopic(topic));
+    	}
     }
+
     private static SNSTopic convertTopicToSNSTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
-    	String topicName = topic.getBaseName(0).getBaseNameString().get_value();
-    	return new SNSTopic(getTypeFromTopic(topic), getSourceFromTopic(topic), topic.getId(), topicName, getGemetTitleFromTopic(topic));
+    	Source topicSource = getSourceFromTopic(topic);
+//    	log.debug("topic source: " + topicSource);
+//    	log.debug("topic type: " + getTypeFromTopic(topic));
+    	if (Source.UMTHES.equals(topicSource)) {
+        	String topicName = topic.getBaseName(0).getBaseNameString().get_value();
+        	return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getId(), topicName, null);
+
+    	} else {
+        	return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getId(), getGemetTitleFromTopic(topic), getGemetIdFromTopic(topic));
+    	}
     }
 
     private static Source getSourceFromTopic(Topic topic) {
     	return (topic.get(DetailedTopic.GEMET_OCC) != null ? Source.GEMET : Source.UMTHES);
-    }
-
-    private static String getGemetTitleFromTopic(Topic topic) {
-    	return (String) topic.get(DetailedTopic.GEMET_OCC);
     }
 
     private static Source getSourceFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
@@ -583,15 +597,62 @@ public class SNSService {
     	}
     }
 
+    private static String getGemetTitleFromTopic(Topic topic) {
+    	String gemetOccurence = (String) topic.get(DetailedTopic.GEMET_OCC);
+    	return getGemetTitleFromOccurenceString(gemetOccurence);
+    }
+
     private static String getGemetTitleFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
     	Occurrence occ = getOccurrence(topic, "gemet1.0");
     	if (null != occ) {
-    		return occ.getResourceData().get_value();
+    		return getGemetTitleFromOccurenceString(occ.getResourceData().get_value());
 
     	} else {
     		return null;
     	}
     }
+
+    private static String getGemetTitleFromOccurenceString(String gemetOccurence) {
+//    	log.debug("gemet occurence string: "+gemetOccurence);
+    	// gemetOccurence consists of: ID@GERMAN_TITLE@ENGLISH_TITLE
+    	// We return the german title
+    	if (gemetOccurence != null) {
+    		String[] gemetParts = gemetOccurence.split("@");
+//        	log.debug("gemet title: "+gemetParts[1]);
+    		return gemetParts[1];
+
+    	} else {
+    		return null;
+    	}
+    }
+
+    private static String getGemetIdFromTopic(Topic topic) {
+    	String gemetOccurence = (String) topic.get(DetailedTopic.GEMET_OCC);
+    	return getGemetIdFromOccurenceString(gemetOccurence);
+    }
+
+    private static String getGemetIdFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
+    	Occurrence occ = getOccurrence(topic, "gemet1.0");
+    	if (null != occ) {
+    		return getGemetIdFromOccurenceString(occ.getResourceData().get_value());
+
+    	} else {
+    		return null;
+    	}
+    }
+
+    private static String getGemetIdFromOccurenceString(String gemetOccurence) {
+//    	log.debug("gemet occurence string: "+gemetOccurence);
+    	if (gemetOccurence != null) {
+    		String[] gemetParts = gemetOccurence.split("@");
+//        	log.debug("gemet id: "+gemetParts[0]);
+    		return gemetParts[0];
+
+    	} else {
+    		return null;
+    	}
+    }
+
 
     private static Occurrence getOccurrence(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic, String occurrenceType) {
     	if (null != topic.getOccurrence()) {

@@ -1190,9 +1190,14 @@ public class MdekMapper implements DataMapperInterface {
 				IngridDocument res = new IngridDocument();
 				switch(t.getSource()) {
 					case GEMET:
-						// Fall through for now
+						res.put(MdekKeys.TERM_TYPE, SearchtermType.GEMET.getDbValue());
+						res.put(MdekKeys.TERM_NAME, t.getTitle());
+						res.put(MdekKeys.TERM_SNS_ID, t.getTopicId());
+						res.put(MdekKeys.TERM_GEMET_ID, t.getGemetId());
+						break;
+
 					case UMTHES:
-						res.put(MdekKeys.TERM_TYPE, SearchtermType.THESAURUS.getDbValue());
+						res.put(MdekKeys.TERM_TYPE, SearchtermType.UMTHES.getDbValue());
 						res.put(MdekKeys.TERM_NAME, t.getTitle());
 						res.put(MdekKeys.TERM_SNS_ID, t.getTopicId());
 						break;
@@ -1638,7 +1643,13 @@ public class MdekMapper implements DataMapperInterface {
 		for (HashMap<String, Object> topic : topicList) {
 			SNSTopic t = new SNSTopic();
 			String type = (String) topic.get(MdekKeys.TERM_TYPE);
-			if (type.equalsIgnoreCase(SearchtermType.THESAURUS.getDbValue())) {
+			if (type.equalsIgnoreCase(SearchtermType.GEMET.getDbValue())) {
+				t.setSource(Source.GEMET);
+				t.setTitle((String) topic.get(MdekKeys.TERM_NAME));
+				t.setTopicId((String) topic.get(MdekKeys.TERM_SNS_ID));
+				t.setGemetId((String) topic.get(MdekKeys.TERM_GEMET_ID));
+
+			} else if (type.equalsIgnoreCase(SearchtermType.UMTHES.getDbValue())) {
 				t.setSource(Source.UMTHES);
 				t.setTitle((String) topic.get(MdekKeys.TERM_NAME));
 				t.setTopicId((String) topic.get(MdekKeys.TERM_SNS_ID));

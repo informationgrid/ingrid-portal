@@ -11,7 +11,7 @@ public class SNSTopic {
 	private Source source;
 	private String topicId;
 	private String title;
-	private String gemetTitle;
+	private String gemetId;
 	private ArrayList<SNSTopic> children;
 	private ArrayList<SNSTopic> parents;
 	private ArrayList<SNSTopic> synonyms;
@@ -22,19 +22,19 @@ public class SNSTopic {
 		type = Type.TOP_TERM;
 		source = Source.UMTHES;
 		this.topicId = null;
-		this.gemetTitle = null;
+		this.gemetId = null;
 		this.title = null;
 		this.children = null;
 		this.parents = null;
 		this.synonyms = null;
 	}
 
-	public SNSTopic(Type typ, Source source, String id, String title, String gemetTitle) {
+	public SNSTopic(Type typ, Source source, String id, String title, String gemetId) {
 		this.source = source;
 		this.type = typ;
 		this.topicId = id;
 		this.title = title;
-		this.gemetTitle = gemetTitle;
+		this.gemetId = gemetId;
 		this.children = new ArrayList<SNSTopic>();
 		this.parents = new ArrayList<SNSTopic>();
 		this.synonyms = new ArrayList<SNSTopic>();
@@ -96,11 +96,11 @@ public class SNSTopic {
 		this.source = source;
 	}
 
-	public String getGemetTitle() {
-		return gemetTitle;
+	public String getGemetId() {
+		return gemetId;
 	}
 
-	public void setGemetTitle(String gemetTitle) {
-		this.gemetTitle = gemetTitle;
+	public void setGemetId(String gemetId) {
+		this.gemetId = gemetId;
 	}
 }
