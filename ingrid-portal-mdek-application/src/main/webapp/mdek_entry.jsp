@@ -1810,9 +1810,51 @@ function hideSplash(){
 	          	</div>
 	        	  <div id="thesaurusContent" class="content">
 	        	  
+	              <div class="inputContainer h116">
+	                <div class="half left">
+					  <span id="uiElement5064" type="required">
+		                  <span id="thesaurusInspireLabel" class="label required"><label for="thesaurusInspire" onclick="javascript:dialog.showContextHelp(arguments[0], 5064)"><script>document.write(message.get("ui.obj.thesaurus.terms.inspire"))</script>*</label></span>
+		                  <div class="tableContainer headHiddenRows4 half">
+		                    <div class="cellEditors" id="thesaurusInspireEditors">
+		                      <div dojoType="ingrid:Select" toggle="plain" autoComplete="false" style="width:260px;" listId="527" id="thesaurusInspireCombobox"></div>
+		                    </div>
+		              	    <table id="thesaurusInspire" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
+		              	      <thead>
+		              		      <tr>
+		                    			<th nosort="true" field="title" dataType="String" editor="thesaurusInspireCombobox">Inspire Themen</th>
+		              		      </tr>
+		              	      </thead>
+		              	      <tbody>
+		              	      </tbody>
+		              	    </table>
+		                  </div>
+		                </span>
+	            	  </div>
+
+	                <div class="half">
+					  <span id="uiElement5060" type="required">
+		                  <span id="thesaurusTopicsLabel" class="label required"><label for="thesaurusTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 5060)"><script>document.write(message.get("ui.obj.thesaurus.terms.category"))</script>*</label></span>
+		                  <div class="tableContainer headHiddenRows4 half">
+		                    <div class="cellEditors" id="thesaurusTopicsEditors">
+		                      <div dojoType="ingrid:Select" toggle="plain" autoComplete="false" style="width:260px;" listId="527" id="thesaurusTopicsCombobox"></div>
+		                    </div>
+		              	    <table id="thesaurusTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
+		              	      <thead>
+		              		      <tr>
+		                    			<th nosort="true" field="title" dataType="String" editor="thesaurusTopicsCombobox">Themenkategorie</th>
+		              		      </tr>
+		              	      </thead>
+		              	      <tbody>
+		              	      </tbody>
+		              	    </table>
+		                  </div>
+		                </span>
+	            	  </div>
+	              </div>
+
 	              <div class="inputContainer h110">
-					<span id="uiElement4510" type="required">
-		                <span id="thesaurusTermsLabel" class="label required"><label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 4510)"><script>document.write(message.get("ui.obj.thesaurus.terms"))</script>*</label></span>
+					<span id="uiElement1409" type="optional">
+		                <span id="thesaurusTermsLabel" class="label"><label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 4510)"><script>document.write(message.get("ui.obj.thesaurus.terms"))</script></label></span>
 		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('dialog.thesaurusAssist.title'), 'mdek_thesaurus_assist_dialog.jsp', 735, 430, true);" title="Verschlagwortungsassistent [Popup]"><script>document.write(message.get("ui.obj.thesaurus.terms.link.assistant"))</script></a>
 		                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsNavigatorLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('dialog.thesaurusNavigator.title'), 'mdek_thesaurus_dialog.jsp', 1010, 430, true, {dstTable: 'thesaurusTerms'});" title="Thesaurus-Navigator [Popup]"><script>document.write(message.get("ui.obj.thesaurus.terms.link.navigator"))</script></a></span>
 		                <div class="tableContainer headHiddenRows4 full">
@@ -1837,7 +1879,7 @@ function hideSplash(){
 					<div class="inputContainer">
 						<div class="full">
 		          			<div class="input">
-								<span id="uiElement1410" type="required">
+								<span id="uiElement1410" type="optional">
 									<input type="text" maxlength="255" id="thesaurusFreeTerms" class="w585" dojoType="ingrid:ValidationTextBox" />
 	                  				<div style="position:relative; height:0px; top:-22px; float:right;">
 										<button id="thesaurusFreeTermsAddButton" dojoType="ingrid:Button"><script>document.write(message.get("ui.obj.thesaurus.terms.custom.buttonAdd"))</script></button>
@@ -1847,48 +1889,6 @@ function hideSplash(){
 			        		<div class="fill"></div>
 		        		</div>
 		      		</div>
-
-	              <div class="inputContainer h116">
-	                <div class="half left">
-					  <span id="uiElement5060" type="required">
-		                  <span id="thesaurusTopicsLabel" class="label required"><label for="thesaurusTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 5060)"><script>document.write(message.get("ui.obj.thesaurus.terms.category"))</script>*</label></span>
-		                  <div class="tableContainer headHiddenRows4 half">
-		                    <div class="cellEditors" id="thesaurusTopicsEditors">
-		                      <div dojoType="ingrid:Select" toggle="plain" autoComplete="false" style="width:260px;" listId="527" id="thesaurusTopicsCombobox"></div>
-		                    </div>
-		              	    <table id="thesaurusTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
-		              	      <thead>
-		              		      <tr>
-		                    			<th nosort="true" field="title" dataType="String" editor="thesaurusTopicsCombobox">Themenkategorie</th>
-		              		      </tr>
-		              	      </thead>
-		              	      <tbody>
-		              	      </tbody>
-		              	    </table>
-		                  </div>
-		                </span>
-	            	  </div>
-
-	                <div class="half">
-					  <span id="uiElement5064" type="required">
-		                  <span id="thesaurusInspireLabel" class="label required"><label for="thesaurusInspire" onclick="javascript:dialog.showContextHelp(arguments[0], 5064)"><script>document.write(message.get("ui.obj.thesaurus.terms.inspire"))</script>*</label></span>
-		                  <div class="tableContainer headHiddenRows4 half">
-		                    <div class="cellEditors" id="thesaurusInspireEditors">
-		                      <div dojoType="ingrid:Select" toggle="plain" autoComplete="false" style="width:260px;" listId="527" id="thesaurusInspireCombobox"></div>
-		                    </div>
-		              	    <table id="thesaurusInspire" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
-		              	      <thead>
-		              		      <tr>
-		                    			<th nosort="true" field="title" dataType="String" editor="thesaurusInspireCombobox">Inspire Themen</th>
-		              		      </tr>
-		              	      </thead>
-		              	      <tbody>
-		              	      </tbody>
-		              	    </table>
-		                  </div>
-		                </span>
-	            	  </div>
-	              </div>
 
 	              <div class="inputContainer noSpaceBelow notRequired h185">
 					<span id="uiElementN014" type="optional">

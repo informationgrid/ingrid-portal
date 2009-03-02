@@ -451,7 +451,7 @@
 	"ui.obj.availability.mediaOptionTable.header.location":"Speicherort",
 	"ui.obj.availability.orderInfo":"Bestellinformation",
 	"ui.obj.thesaurus.title":"Verschlagwortung",
-	"ui.obj.thesaurus.terms":"Thesaurus-Suchbegriffe (mindestens 3)",
+	"ui.obj.thesaurus.terms":"Thesaurus-Suchbegriffe",
 	"ui.obj.thesaurus.terms.link.assistant":"Verschlagwortungsassistent",
 	"ui.obj.thesaurus.terms.link.navigator":"Thesaurus-Navigator",
 	"ui.obj.thesaurus.terms.category":"Themenkategorie",
@@ -610,7 +610,8 @@
 	"ui.1310.description":"Verf&uuml;gbarkeit - Medienoption",
 	"ui.1320.description":"Verf&uuml;gbarkeit - Datenformat",
 	"ui.1350.description":"Zusatzinformation - Rechtliche Grundlagen",
-	"ui.1410.description":"Verschlagwortung - Freie Suchbegriffe",
+	"ui.1409.description":"Verschlagwortung - Thesaurus Suchbegriffe",
+	"ui.1410.description":"Verschlagwortung - Freie Suchbegriffe - hinzuf&uuml;gen",
 	"ui.3100.description":"Datensammlung/Datenbank - Fachbezug - Methode/Datengrundlage",
 	"ui.3110.description":"Datensammlung/Datenbank - Fachbezug - Inhalte der Datensammlung/Datenbank",
 	"ui.3120.description":"Datensammlung/Datenbank - Fachbezug - Erl&auml;uterungen",
@@ -681,7 +682,6 @@
 	"ui.4435.description":"Adresse und Aufgaben - Notizen",
 	"ui.4440.description":"Adresse und Aufgaben - Aufgaben",
 	"ui.4510.description":"Verschlagwortung - Thesaurus-Suchbegriffe",
-	"ui.4500.description":"Verschlagwortung - Freie Suchbegriffe",
 	"ui.N019.description":"Verschlagwortung - Freie Suchbegriffe - hinzuf&uuml;gen",
 	"ui.N020.description":"Zugeordnete Objekte - Verweise von"
   }

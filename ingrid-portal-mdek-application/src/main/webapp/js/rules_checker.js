@@ -68,7 +68,7 @@ var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"]];
 var notEmptyTables = [["generalAddressTable", "generalAddressTableLabel"],
 					  ["timeRefTable", "timeRefTableLabel"],
 					  ["thesaurusTopicsList", "thesaurusTopicsLabel"],
-					  ["thesaurusInspireList", "thesaurusInspireLabel"]];
+					  ["thesaurusInspireTermsList", "thesaurusInspireLabel"]];
 
 // TODO Add class 2, 4, 5 to isObjectPublishable when needed
 var notEmptyTablesClass1 = [["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"],
@@ -198,13 +198,6 @@ function isObjectPublishable(idcObject) {
 			dojo.html.addClass(dojo.byId("spatialRefAltVDateLabel"), "important");
 			publishable = false;
 		}
-	}
-
-	// Check if the thesaurus table has at least three entries
-	if (idcObject.thesaurusTermsTable.length < 3) {
-		dojo.html.addClass(dojo.byId("thesaurusTermsLabel"), "important");		
-		dojo.debug("The thesaurus table needs at least three entries.");
-		publishable = false;
 	}
 
 	// If one of the 'Umweltthemen' contains an entry, both of them need to contain at least one entry
