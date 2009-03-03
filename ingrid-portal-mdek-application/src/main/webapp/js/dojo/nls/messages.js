@@ -184,6 +184,7 @@
 	"dialog.admin.management.urls.lastProcessInfo":"Information about the last process:",
 	"dialog.admin.management.urls.currentProcessInfo":"Information about the current process:",
 	"dialog.admin.management.urls.success":"The selected URLs were replaced successfully.",
+	"dialog.admin.management.analysis.noErrorsFound":"No errors found!",
 	"dialog.admin.export.selectNode":"Select node",
 	"dialog.admin.export.selectExportCriteriaError":"Please select an export criteria before starting the export process.",
 	"dialog.admin.export.selectNodeError":"Please select a valid node to export before starting the process.",

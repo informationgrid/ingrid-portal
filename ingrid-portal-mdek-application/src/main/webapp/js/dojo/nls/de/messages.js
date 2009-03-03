@@ -163,6 +163,7 @@
 	"dialog.admin.management.urls.lastProcessInfo":"Informationen zum letzten Prozess:",
 	"dialog.admin.management.urls.currentProcessInfo":"Informationen zum laufenden Prozess:",
 	"dialog.admin.management.urls.success":"Die markierten URLs wurden erfolgreich ersetzt.",
+	"dialog.admin.management.analysis.noErrorsFound":"Keine Fehler gefunden!",
 	"dialog.admin.export.selectNode":"Teilbaum ausw&auml;hlen",
 	"dialog.admin.export.selectExportCriteriaError":"Der Exportvorgang konnte nicht gestartet werden. Bitte w&auml;hlen Sie ein Exportkriterium aus.",
 	"dialog.admin.export.selectNodeError":"Bitte w&auml;hlen Sie einen g&uuml;ltigen Exportknoten aus bevor Sie den Vorgang starten.",

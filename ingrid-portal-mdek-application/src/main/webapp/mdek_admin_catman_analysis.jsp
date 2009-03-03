@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
@@ -45,7 +46,7 @@ function updateJobInfo(analyzeJobInfo) {
 	if (analyzeJobInfo.errorReports && analyzeJobInfo.errorReports.length > 0) {
 		dojo.byId("analysisJobNumErrors").innerHTML = analyzeJobInfo.errorReports.length;
 	} else {
-		dojo.byId("analysisJobNumErrors").innerHTML = "Keine Fehler gefunden!";
+		dojo.byId("analysisJobNumErrors").innerHTML = message.get("dialog.admin.management.analysis.noErrorsFound");
 	}
 }
 
@@ -95,27 +96,27 @@ function hideLoadingZone() {
 				<div class="spacer"></div>
 				<div class="spacer"></div>
 				<div class="inputContainer">
-					<button dojoType="ingrid:Button" title="Pr&uuml;fung starten" onClick="javascript:scriptScope.startAnalysisJob();">Pr&uuml;fung starten</button>
+					<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.analysis.start" />" onClick="javascript:scriptScope.startAnalysisJob();"><fmt:message key="dialog.admin.catalog.management.analysis.start" /></button>
 				</div>
 
 				<div class="inputContainer noSpaceBelow w964">
 					<div id="analysisInfo" class="infobox w950">
 						<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
-						<span class="title"><a href="javascript:toggleInfo('analysisInfo');" title="Info aufklappen">Informationen zum letzten Prozess:
+						<span class="title"><a href="javascript:toggleInfo('analysisInfo');" title="Info aufklappen"><fmt:message key="dialog.admin.catalog.management.analysis.processInfo" />
 							<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
 						<span id="analysisLoadingZone" style="visibility:hidden;" class="processInfo"><img src="img/ladekreis.gif" width="20" height="20" alt="Prozess l&auml;uft" /></span>
 						<div id="analysisInfoContent">
 							<table cellspacing="0">
 								<tr>
-									<td>Gestartet am:</td>
+									<td><fmt:message key="dialog.admin.catalog.management.analysis.startTime" /></td>
 									<td id="analysisJobBeginDate"></td>
 								</tr>
 								<tr>
-									<td>Beendet am:</td>
+									<td><fmt:message key="dialog.admin.catalog.management.analysis.endTime" /></td>
 									<td id="analysisJobEndDate"></td>
 								</tr>
 								<tr>
-									<td>Anzahl der gefundenen Fehler:</td>
+									<td><fmt:message key="dialog.admin.catalog.management.analysis.numErrors" /></td>
 									<td id="analysisJobNumErrors"></td>
 								</tr>
 								<tr>
@@ -125,13 +126,13 @@ function hideLoadingZone() {
 				</div>
 
 				<div class="inputContainer">
-					<span class="label"><label class="inActive" for="analysisResultTable">Ergebnis der Pr&uuml;fung</label></span>
+					<span class="label"><label class="inActive" for="analysisResultTable"><fmt:message key="dialog.admin.catalog.management.analysis.result" /></label></span>
 					<div class="tableContainer rows20 w964">
 						<table id="analysisResultTable" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable nosort w964">
 							<thead>
 								<tr>
-									<th nosort="true" field="message" dataType="String">Fehlermeldung</th>
-									<th nosort="true" field="solution" dataType="String">L&ouml;sungsvorschlag</th>
+									<th nosort="true" field="message" dataType="String"><fmt:message key="dialog.admin.catalog.management.analysis.error" /></th>
+									<th nosort="true" field="solution" dataType="String"><fmt:message key="dialog.admin.catalog.management.analysis.solution" /></th>
 								</tr>
 							</thead>
 							<tbody>
