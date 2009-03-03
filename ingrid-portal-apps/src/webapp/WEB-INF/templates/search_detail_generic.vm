@@ -24,6 +24,20 @@
 	#end	
 #end
 
+## ***************************
+## include the header here
+## ***************************
+#set($pageTitle = $data.get("general").get("title"))
+#set($pageDescription = $pageTitle + ": ")
+#foreach($e in $data.elements)
+	#if($e.type=="entry" && !$e.title)
+		#set($pageDescription = $e.body)
+	#end
+#end
+#set($pageDescription = $pageDescription.replace('"',"'"))
+#set($pageDescription = $stringTools.cutString($pageDescription))
+#parse('WEB-INF/templates/search_detail_header.vm')
+
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
 
@@ -71,3 +85,8 @@
 	<br/>
 #end	
 </div>
+
+## ***************************
+## include the footer here
+## ***************************
+#parse('WEB-INF/templates/search_detail_footer.vm')

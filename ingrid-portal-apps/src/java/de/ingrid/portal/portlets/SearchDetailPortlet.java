@@ -22,10 +22,10 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.forms.EnvironmentSearchForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -87,6 +87,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 
         // add velocity utils class
         context.put("tool", new UtilsVelocity());
+        context.put("stringTool", new UtilsString());
 
         try {
         	// check whether we come from google (no IngridSessionPreferences)

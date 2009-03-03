@@ -133,10 +133,24 @@
 #end
 
 
+## ***************************
+## include the header here
+## ***************************
+#set($pageTitle = $data.get("general").get("title"))
+#set($pageDescription = $pageTitle + ": ")
+#foreach($e in $data.elements)
+	#if($e.type=="entry" && !$e.title)
+		## does not work!?
+		##set($pageDescription = $pageDescription + $e.body)
+		#set($pageDescription = $e.body)
+	#end
+#end
+#set($pageDescription = $pageDescription.replace('"',"'"))
+#set($pageDescription = $stringTool.cutString($pageDescription,300))
+#parse('WEB-INF/templates/search_detail_header.vm')
 
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
-
 ## render "zurueck" link if no IngridSession (entry via google)
 #if($noIngridSession)
 	<div class="section-header">
@@ -203,3 +217,8 @@
 	<br/>
 #end	
 </div>
+
+## ***************************
+## include the footer here
+## ***************************
+#parse('WEB-INF/templates/search_detail_footer.vm')
