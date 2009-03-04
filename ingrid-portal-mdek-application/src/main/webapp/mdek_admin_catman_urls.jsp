@@ -10,7 +10,7 @@ _container_.addOnLoad(function() {
 	filterTable.setFilter("errorCode", function(errorCode) { return ("VALID" != errorCode); });
 
 	dojo.html.hide(dojo.byId("urlsProgressBarContainer"));
-	setTimeout("refreshUrlProcessInfo();", 3000);
+	refreshUrlProcessInfo();
 });
 
 
