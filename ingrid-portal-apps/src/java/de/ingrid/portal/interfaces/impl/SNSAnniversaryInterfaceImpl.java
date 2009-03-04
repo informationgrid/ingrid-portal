@@ -67,11 +67,9 @@ public class SNSAnniversaryInterfaceImpl implements AnniversaryInterface {
             query.putInt(Topic.REQUEST_TYPE, Topic.ANNIVERSARY_FROM_TOPIC);
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
-
-            hits = iBus.search(query, 10, 1, 0, 10000);
-            IngridHit[] hitsArray = hits.getHits();
-            if (hitsArray.length > 0) {
-                return iBus.getDetails(hitsArray, query, new String[0]);
+            IngridHitDetail[] hitDetails = iBus.searchAndDetail(query, 10, 1, 0, 10000, new String[0]);
+            if (hitDetails.length > 0) {
+                return hitDetails;
             }
             return new DetailedTopic[0];
         } catch (Exception e) {

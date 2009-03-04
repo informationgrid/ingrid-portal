@@ -358,12 +358,10 @@ public class QueryResultPostProcessor {
                 	while (!skipSearch) {
                         IngridQuery query = QueryStringParser.parse("T022_adr_adr.adr_to_id:".concat(currentAddressId)
                                 .concat(" datatype:address ranking:score"));
-                        IngridHits results = IBUSInterfaceImpl.getInstance().search(query, 10, 1, 0,
-                                PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
-                        if (results.getHits().length > 0) {
-                            IngridHitDetail details[] = IBUSInterfaceImpl.getInstance().getDetails(results.getHits(),
-                                    query,
-                                    new String[] { Settings.HIT_KEY_ADDRESS_ADDRID, Settings.HIT_KEY_ADDRESS_CLASS });
+                        IngridHitDetail details[] = IBUSInterfaceImpl.getInstance().searchAndDetail(query, 10, 1, 0,
+                                PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000),
+                                new String[] { Settings.HIT_KEY_ADDRESS_ADDRID, Settings.HIT_KEY_ADDRESS_CLASS });
+                        if (details.length > 0) {
                             // find first parent of the address in the result set
                             for (int j = 0; j < details.length; j++) {
                                 IngridHitDetail addrDetail = (IngridHitDetail) details[j];

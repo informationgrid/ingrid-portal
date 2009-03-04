@@ -43,6 +43,22 @@ public interface IBUSInterface {
             throws Exception;
 
     /**
+     * Performs a search on the iBus. Returns hits with basic properties (not quite usable 
+     * for rendering). Get more details with getDetails() and getRecord(). 
+     * 
+     * @param query The IngridQuery to search for.
+     * @param hitsPerPage The number of hits per page.
+     * @param currentPage The current page requested.
+     * @param startHit The startHit for a new grouped(!) query.
+     * @param timeout The timeout for this query.
+     * @param requestedFields are the requested fields
+     * @return The IngridHitDetail(s) containing the details of this query.
+     * @throws Exception 
+     */
+    IngridHitDetail[] searchAndDetail(IngridQuery query, int hitsPerPage, int currentPage, int startHit, int timeout, String[] reqParameter)
+    	            throws Exception;
+    
+    /**
      * Returns details for a single IngridHit. Details are mainly used
      * to render the search result entries (title, summary, etc.).
      * 

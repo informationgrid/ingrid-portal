@@ -158,6 +158,54 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         
         return hits;
     }
+    
+    /**
+     * Calling the searchAndDetail method at the iBus doing one call to the bus instead of two. Returned
+     * are the IngridHitDetails.
+     */
+    public IngridHitDetail[] searchAndDetail(IngridQuery query, int hitsPerPage, int currentPage, int startHit, int timeout, String[] reqParameter)
+    throws Exception {
+    	IngridHitDetail[] details = null;
+    	try {
+            if (log.isDebugEnabled()) {
+                log.debug("iBus.search: IngridQuery = " + UtilsSearch.queryToString(query)
+                		+ " / timeout=" + timeout + ", hitsPerPage=" + hitsPerPage 
+                		+ ", currentPage=" + currentPage + ", startHit=" + startHit);
+            }
+            long start = System.currentTimeMillis();
+            
+            details = bus.searchAndDetail(query, hitsPerPage, currentPage, startHit, timeout, reqParameter);
+            
+            if (log.isDebugEnabled()) {
+            	long duration = System.currentTimeMillis() - start;
+                log.debug("iBus.search: finished !");
+                log.debug("in " + duration + "ms");
+            }
+        } catch (java.io.IOException e) {
+            if (log.isDebugEnabled()) {
+                log.debug("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
+                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage="
+                        + currentPage + ", startHit=" + startHit, e);
+            } else if (log.isInfoEnabled()) {
+                log.info("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
+                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage="
+                        + currentPage + ", startHit=" + startHit + "[cause:" + e.getMessage() + "]");
+            } else {
+                log.warn("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
+                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage="
+                        + currentPage + ", startHit=" + startHit + "[cause:" + e.getCause().getMessage() + "]", e);
+            }
+        } catch (Throwable t) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
+                        + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage="
+                        + currentPage + ", startHit=" + startHit, t);
+            }
+            throw new Exception(t);
+        }
+
+		return details;
+    }
 
     /**
      * @see de.ingrid.portal.interfaces.IBUSInterface#getDetail(de.ingrid.utils.IngridHit,
