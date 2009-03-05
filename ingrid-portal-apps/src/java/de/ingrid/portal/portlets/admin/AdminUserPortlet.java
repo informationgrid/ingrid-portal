@@ -101,6 +101,10 @@ public class AdminUserPortlet extends ContentPortlet {
 
     private static final String IP_EMAIL_TEMPLATE = "emailTemplate";
 
+    /** limit upon the number of rows to be retrieved */
+    protected static int MAX_ROWS_PER_TABLE = 100;
+    
+    
     private PortalAdministration admin;
 
     private UserManager userManager;
@@ -135,6 +139,24 @@ public class AdminUserPortlet extends ContentPortlet {
         state.setTotalNumRows(getEntitiesFromSession(request).size());
     }
 
+    /**
+     * Get current state of DB Browser. NOTICE: Only ONE state for all DB
+     * Browsers (APPLICATION_SCOPE).
+     * 
+     * @param request
+     * @return
+     */
+    static protected ContentBrowserState getBrowserState(PortletRequest request) {
+        ContentBrowserState state = (ContentBrowserState) request.getPortletSession().getAttribute(KEY_BROWSER_STATE,
+                PortletSession.APPLICATION_SCOPE);
+        if (state == null) {
+            state = new ContentBrowserState();
+            state.setMaxRows(MAX_ROWS_PER_TABLE);
+            setBrowserState(request, state);
+        }
+        return state;
+    }
+    
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
      */
