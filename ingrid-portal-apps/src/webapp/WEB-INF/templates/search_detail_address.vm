@@ -207,13 +207,8 @@
 ## ***************************
 ## include the header here
 ## ***************************
-#set($pageTitle = $data.get("general").get("title"))
-#set($pageDescription = $pageTitle + ": ")
-#foreach($e in $data.elements)
-	#if($e.type=="entry" && !$e.title)
-		#set($pageDescription = $e.body)
-	#end
-#end
+#set($pageTitle = $rec.get("title"))
+#set($pageDescription = $rec.get("summary"))
 #set($pageDescription = $pageDescription.replace('"',"'"))
 #set($pageDescription = $stringTool.cutString($pageDescription,300))
 #parse('WEB-INF/templates/search_detail_header.vm')
