@@ -1816,7 +1816,7 @@ function hideSplash(){
 		                  <span id="thesaurusInspireLabel" class="label required"><label for="thesaurusInspire" onclick="javascript:dialog.showContextHelp(arguments[0], 5064)"><script>document.write(message.get("ui.obj.thesaurus.terms.inspire"))</script>*</label></span>
 		                  <div class="tableContainer headHiddenRows4 half">
 		                    <div class="cellEditors" id="thesaurusInspireEditors">
-		                      <div dojoType="ingrid:Select" toggle="plain" autoComplete="false" style="width:260px;" listId="527" id="thesaurusInspireCombobox"></div>
+		                      <div dojoType="ingrid:Select" toggle="plain" autoComplete="false" style="width:260px;" listId="6100" id="thesaurusInspireCombobox"></div>
 		                    </div>
 		              	    <table id="thesaurusInspire" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 		              	      <thead>
@@ -1880,7 +1880,7 @@ function hideSplash(){
 						<div class="full">
 		          			<div class="input">
 								<span id="uiElement1410" type="optional">
-									<input type="text" maxlength="255" id="thesaurusFreeTerms" class="w585" dojoType="ingrid:ValidationTextBox" />
+									<input type="text" mode="textarea" maxlength="255" id="thesaurusFreeTerms" class="w585 h055" dojoType="ingrid:ValidationTextBox" />
 	                  				<div style="position:relative; height:0px; top:-22px; float:right;">
 										<button id="thesaurusFreeTermsAddButton" dojoType="ingrid:Button"><script>document.write(message.get("ui.obj.thesaurus.terms.custom.buttonAdd"))</script></button>
 					  				</div>
@@ -2347,7 +2347,7 @@ function hideSplash(){
 							<div class="full">
 			          			<div class="input">
 									<span id="uiElementN019" type="optional">
-										<input type="text" maxlength="255" id="thesaurusFreeTermInputAddress" class="w585" dojoType="ingrid:ValidationTextBox" />
+										<input type="text" mode="textarea" maxlength="255" id="thesaurusFreeTermInputAddress" class="w585 h055" dojoType="ingrid:ValidationTextBox" />
 		                  				<div style="position:relative; height:0px; top:-22px; float:right;">
 											<button id="thesaurusFreeTermsAddressAddButton" dojoType="ingrid:Button"><script>document.write(message.get("ui.adr.thesaurus.terms.custom.buttonAdd"))</script></button>
 						  				</div>

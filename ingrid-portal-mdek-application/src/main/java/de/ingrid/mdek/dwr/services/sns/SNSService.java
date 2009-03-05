@@ -242,6 +242,11 @@ public class SNSService {
 	    return hits.getHits();
     }
 
+    /**
+     * find the topic with name 'queryTerm'. If no topic is found with the given name, null is returned
+     * @param queryTerm topic name to search for
+     * @return the SNSTopic if it exists, null otherwise
+     */
     public SNSTopic findTopic(String queryTerm) {
     	TopicMapFragment mapFragment = null;
     	try {
@@ -264,7 +269,12 @@ public class SNSService {
 	    return null;
     }
 
-    public ArrayList<SNSTopic> findTopics(String queryTerm) {
+    /**
+     * Find all topics for a given query string
+     * @param queryTerm topic name to search for
+     * @return All topics returned by the SNS, converted to SNSTopics 
+     */
+    public List<SNSTopic> findTopics(String queryTerm) {
     	ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	TopicMapFragment mapFragment = null;
     	try {
@@ -273,7 +283,7 @@ public class SNSService {
     	} catch (Exception e) {
 	    	log.error(e);
 	    }
-	    
+
 	    if (null != mapFragment) {
 	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
 	        if ((null != topics)) {
@@ -287,6 +297,7 @@ public class SNSService {
 	    Collections.sort(resultList, new SNSTopicComparator());
 	    return resultList;
     }
+
 
     public ArrayList<SNSTopic> getSimilarTerms(String[] queryTerms) {
     	return getSimilarTerms(queryTerms, MAX_NUM_RESULTS);
@@ -311,7 +322,7 @@ public class SNSService {
 	    		resultList.add(convertTopicToSNSTopic(topic));
 	    	}
 	    }
-	    
+
 	    return resultList;
     }
 
