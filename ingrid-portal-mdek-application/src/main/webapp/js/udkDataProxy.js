@@ -2416,6 +2416,7 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 			node.objectClass = objClass,
 			node.id = nodeData.uuid;	
 			// update permissions
+			node.isPublished = nodeData.isPublished;
 			node.userWritePermission = nodeData.writePermission;
 			node.userWriteSinglePermission = nodeData.writeSinglePermission;
 			node.userWriteTreePermission = nodeData.writeTreePermission;

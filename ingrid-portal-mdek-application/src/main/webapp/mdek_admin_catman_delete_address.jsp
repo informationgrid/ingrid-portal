@@ -28,7 +28,7 @@ function initTree() {
 	});
 
 	// Function to load children of the node from server
-	var loadRemote = function(node, sync){
+	var loadRemote = function(pubOnly, node, sync){
 		var _this = this;
 
 		var params = {
@@ -39,6 +39,13 @@ function initTree() {
 		var deferred = new dojo.Deferred();
 
 		deferred.addCallback(function(res) {
+			if (pubOnly) {
+				// Remove all objects from the list which are not published 
+				res = dojo.lang.filter(res, function(adr){
+					return (adr.isPublished || adr.id == "addressFreeRoot");
+				});
+			}
+
 			dojo.lang.forEach(res, function(obj){
 				obj.title = dojo.string.escape("html", obj.title);
 				obj.uuid = obj.id;
@@ -61,9 +68,11 @@ function initTree() {
 
 	// Attach load remote function to the tree controllers
 	var addressDeleteTreeController = dojo.widget.byId("treeControllerAddressDelete");
-	addressDeleteTreeController.loadRemote = loadRemote;
+//	addressDeleteTreeController.loadRemote = loadRemote;
+	addressDeleteTreeController.loadRemote = dojo.lang.curry(addressDeleteTreeController, loadRemote, false);
 	var addressReplaceTreeController = dojo.widget.byId("treeControllerAddressNew");
-	addressReplaceTreeController.loadRemote = loadRemote;
+//	addressReplaceTreeController.loadRemote = loadRemote;
+	addressReplaceTreeController.loadRemote = dojo.lang.curry(addressReplaceTreeController, loadRemote, true);
 }
 
 function initTreeEventHandler() {
@@ -497,7 +506,7 @@ function hideLoadingZone() {
 
 			<!-- LEFT HAND SIDE CONTENT BLOCK 2 START -->
 			<div id="addressNewTree" class="inputContainer">
-				<span class="label">Neue Auskunftsadresse</span>
+				<span class="label">Neue Auskunftsadresse (Es können ausschlie&szlig;lich ver&ouml;ffentliche Adressen ausgew&auml;hlt werden)</span>
 				<div class="inputContainer grey noSpaceBelow w264 h236 scrollable">
 					<div dojoType="ContentPane" id="treeContainerAddressNew">
 						<!-- tree components -->
