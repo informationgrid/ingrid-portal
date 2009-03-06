@@ -16,6 +16,7 @@ import de.ingrid.mdek.MdekUtils.AdditionalFieldType;
 import de.ingrid.mdek.beans.AdditionalFieldBean;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.CodeListJobInfoBean;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
 import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.JobInfoBean;
@@ -368,4 +369,34 @@ public class MdekCatalogUtils {
 			MdekErrorUtils.handleError(response);
 		}
 	}
+	
+	public static CodeListJobInfoBean extractCodeListInfoFromResponse(IngridDocument response) {
+		CodeListJobInfoBean codeListJobInfo = new CodeListJobInfoBean();
+		addGeneralJobInfoFromResponse(response, codeListJobInfo);
+		//addCodeListJobInfoFromResponse(response, codeListJobInfo);
+
+		return codeListJobInfo;
+	}
+	
+	/*
+	private static void addCodeListJobInfoFromResponse(IngridDocument response,
+			AnalyzeJobInfoBean analyzeJobInfo) {
+		IngridDocument codeListResult = MdekUtils.getResultFromResponse(response);
+		List<ErrorReport> errorReports = new ArrayList<ErrorReport>();
+		if (analyzeResult != null) {
+			List<IngridDocument> errorReportDocList = analyzeResult.getArrayList(MdekKeys.VALIDATION_RESULT);
+			if (errorReportDocList != null) {
+				for (IngridDocument errorReportDoc : errorReportDocList) {
+					ErrorReport errorReport = new ErrorReport(
+							errorReportDoc.getString(MdekKeys.VALIDATION_MESSAGE),
+							errorReportDoc.getString(MdekKeys.VALIDATION_SOLUTION)); 
+					errorReports.add(errorReport);
+				}
+			}
+			analyzeJobInfo.setErrorReports(errorReports);
+
+		} else {
+			MdekErrorUtils.handleError(response);
+		}
+	}*/
 }

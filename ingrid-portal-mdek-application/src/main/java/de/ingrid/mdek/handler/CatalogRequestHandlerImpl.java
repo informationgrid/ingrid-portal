@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import de.ingrid.mdek.beans.AdditionalFieldBean;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.CodeListJobInfoBean;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
 import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.JobInfoBean;
@@ -173,5 +174,29 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 
 	public void setConnectionFacade(ConnectionFacade connectionFacade) {
 		this.connectionFacade = connectionFacade;
+	}
+	
+	public CodeListJobInfoBean getObjectsOfAuskunftAddress(String auskunftAddressUuid) {
+		IngridDocument response = mdekCallerCatalog.getObjectsOfAuskunftAddress(
+				connectionFacade.getCurrentPlugId(),
+				auskunftAddressUuid,
+				MdekSecurityUtils.getCurrentUserUuid());
+		return MdekCatalogUtils.extractCodeListInfoFromResponse(response);
+	}
+	
+	public CodeListJobInfoBean getObjectsOfResponsibleUser(String responsibleUserUuid) {
+		IngridDocument response = mdekCallerCatalog.getObjectsOfResponsibleUser(
+				connectionFacade.getCurrentPlugId(),
+				responsibleUserUuid,
+				MdekSecurityUtils.getCurrentUserUuid());
+		return MdekCatalogUtils.extractCodeListInfoFromResponse(response);
+	}
+	
+	public CodeListJobInfoBean getAddressesOfResponsibleUser(String responsibleUserUuid) {
+		IngridDocument response = mdekCallerCatalog.getAddressesOfResponsibleUser(
+				connectionFacade.getCurrentPlugId(),
+				responsibleUserUuid,
+				MdekSecurityUtils.getCurrentUserUuid());
+		return MdekCatalogUtils.extractCodeListInfoFromResponse(response);
 	}
 }

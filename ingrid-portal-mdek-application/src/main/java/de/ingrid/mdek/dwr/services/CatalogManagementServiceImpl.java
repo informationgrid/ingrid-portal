@@ -17,6 +17,7 @@ import org.w3c.dom.NodeList;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
+import de.ingrid.mdek.beans.CodeListJobInfoBean;
 import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
@@ -199,5 +200,16 @@ public class CatalogManagementServiceImpl {
 	public void setCatalogRequestHandler(CatalogRequestHandler catalogRequestHandler) {
 		this.catalogRequestHandler = catalogRequestHandler;
 	}
-
+	
+	public CodeListJobInfoBean getObjectsOfAuskunftAddress(String plugId, String auskunftAddressUuid, String userId) {
+		return catalogRequestHandler.getObjectsOfAuskunftAddress(auskunftAddressUuid);
+	}
+	
+	public CodeListJobInfoBean getObjectsOfResponsibleUser(String plugId, String responsibleUserUuid, String userId) {
+		return catalogRequestHandler.getObjectsOfResponsibleUser(responsibleUserUuid);
+	}
+	
+	public CodeListJobInfoBean getAddressesOfResponsibleUser(String plugId, String responsibleUserUuid, String userId) {
+		return catalogRequestHandler.getAddressesOfResponsibleUser(responsibleUserUuid);
+	}
 }
