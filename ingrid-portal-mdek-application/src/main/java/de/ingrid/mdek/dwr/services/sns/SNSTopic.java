@@ -103,4 +103,8 @@ public class SNSTopic {
 	public void setGemetId(String gemetId) {
 		this.gemetId = gemetId;
 	}
+
+	public String toString() {
+		return "[" + type + ", " + source + ", " + title + ", " + topicId + ", " + gemetId + "]";
+	}
 }

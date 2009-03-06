@@ -1,29 +1,33 @@
 package de.ingrid.mdek.quartz;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
+import de.ingrid.mdek.dwr.services.sns.SNSService;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.jobs.MdekJob;
+import de.ingrid.mdek.quartz.jobs.SNSUpdateJob;
 import de.ingrid.mdek.quartz.jobs.URLValidatorJob;
-import de.ingrid.mdek.quartz.jobs.util.URLObjectReference;
-import de.ingrid.mdek.quartz.jobs.util.URLState.State;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.utils.IngridDocument;
 
-public class MdekJobHandler {
+public class MdekJobHandler implements BeanFactoryAware {
 
 	private final static Logger log = Logger.getLogger(MdekJobHandler.class);
+
+	// Spring Bean Factory for lookup of job specific dependencies
+	private BeanFactory beanFactory;
 
 	private Scheduler scheduler;
 	private ConnectionFacade connectionFacade;
@@ -39,7 +43,7 @@ public class MdekJobHandler {
 	}
 
 	public void startUrlValidatorJob() {
-		MdekJob job = new URLValidatorJob(connectionFacade, connectionFacade.getCurrentPlugId());
+		MdekJob job = new URLValidatorJob(connectionFacade);
 
 		try {
 			boolean jobStarted = job.start(scheduler);
@@ -91,5 +95,30 @@ public class MdekJobHandler {
 		IMdekCallerCatalog mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
 		IngridDocument response = mdekCallerCatalog.getURLInfo(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractUrlJobInfoFromResponse(response);
+	}
+
+
+	public void startSNSUpdateJob(String[] changedTopics, String[] newTopics, String[] expiredTopics) {
+		MdekJob job = new SNSUpdateJob(
+				connectionFacade,
+				(SNSService) beanFactory.getBean("snsService"),
+				changedTopics, newTopics, expiredTopics);
+
+		try {
+			boolean jobStarted = job.start(scheduler);
+			if (jobStarted) {
+				jobMap.put(job.getName(), job);
+
+			} else {
+				log.debug("Could not start SNS Update Job.");
+			}
+
+		} catch (SchedulerException ex) {
+			log.debug("Error starting SNS Update Job.", ex);
+		}
+	}
+
+	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+		this.beanFactory = beanFactory;
 	}
 }

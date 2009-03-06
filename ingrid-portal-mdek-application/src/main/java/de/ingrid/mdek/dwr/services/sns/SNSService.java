@@ -289,7 +289,7 @@ public class SNSService {
 	        if ((null != topics)) {
 	            for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
 	            	resultList.add(convertTopicToSNSTopic(topic));
-	            	log.debug("Adding: ["+getTypeFromTopic(topic)+", "+getSourceFromTopic(topic)+", "+topic.getId()+", "+topic.getBaseName(0).getBaseNameString().get_value()+"]");
+//	            	log.debug("Adding: ["+getTypeFromTopic(topic)+", "+getSourceFromTopic(topic)+", "+topic.getId()+", "+topic.getBaseName(0).getBaseNameString().get_value()+"]");
 				}
 	        }
 	    }
@@ -298,7 +298,34 @@ public class SNSService {
 	    return resultList;
     }
 
+    /**
+     * getPSI for 'topicId'.
+     * @param topicId topic id to search for
+     * @return the SNSTopic if it exists, null otherwise
+     */
+    public SNSTopic getPSI(String topicId) {
+    	TopicMapFragment mapFragment = null;
+    	try {
+    		mapFragment = snsClient.getPSI(topicId, 0, "/thesa");
 
+    	} catch (Exception e) {
+	    	log.error(e);
+	    }
+	    
+	    if (null != mapFragment) {
+	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
+	        if ((null != topics)) {
+	            for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
+	            	if (topic.getId().equals(topicId)) {
+	            		return convertTopicToSNSTopic(topic);
+	            	}
+	            }
+	        }
+	    }
+	    return null;
+    }
+
+    
     public ArrayList<SNSTopic> getSimilarTerms(String[] queryTerms) {
     	return getSimilarTerms(queryTerms, MAX_NUM_RESULTS);
     }

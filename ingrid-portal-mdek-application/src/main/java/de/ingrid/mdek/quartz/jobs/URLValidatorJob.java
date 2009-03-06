@@ -71,9 +71,9 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 		this.cancelJob = false;
 	}
 
-	public URLValidatorJob(ConnectionFacade connectionFacade, String plugId) {
+	public URLValidatorJob(ConnectionFacade connectionFacade) {
 		this.mdekCallerQuery = connectionFacade.getMdekCallerQuery();
-		this.plugId = plugId;
+		this.plugId = connectionFacade.getCurrentPlugId();
 		String currentUserUuid = MdekSecurityUtils.getCurrentUserUuid();
 		jobName = createJobName(plugId);
 		String jobListenerName = createJobListenerName(plugId);
