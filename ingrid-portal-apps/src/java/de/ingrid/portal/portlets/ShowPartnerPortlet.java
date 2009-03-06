@@ -56,7 +56,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
             }
 
             // set up plug list for view, remove plugs with same name !
-            PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
+            PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllActiveIPlugs();
             ArrayList plugDescriptions = new ArrayList();
             String newName = null;
             String oldName = null;

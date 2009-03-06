@@ -103,6 +103,13 @@ public interface IBUSInterface {
     PlugDescription[] getAllIPlugs();
 
     /**
+     * Returns the PlugDescriptions of all active iPlugs.
+     * 
+     * @return
+     */
+    PlugDescription[] getAllActiveIPlugs();
+    
+    /**
      * Returns the PlugDescriptions of all iPlugs without any time limitation.
      * Also inactive iplugs, that failed the heartbeat will be returned.
      * 

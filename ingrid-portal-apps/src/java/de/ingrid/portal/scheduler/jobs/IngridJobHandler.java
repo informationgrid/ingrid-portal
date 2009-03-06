@@ -402,7 +402,7 @@ public class IngridJobHandler {
 		// *****************************************
 		// add IPlugJobs
 		// *****************************************
-		PlugDescription[] iPlugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
+		PlugDescription[] iPlugs = IBUSInterfaceImpl.getInstance().getAllActiveIPlugs();
 		for (int i = 0; i < iPlugs.length; i++) {
 			PlugDescription iPlug = iPlugs[i];
 

@@ -70,7 +70,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         	// set up ECS plug list for view
         	
         	// all iplugs
-            PlugDescription[] allPlugs = IBUSInterfaceImpl.getInstance().getAllIPlugs();
+            PlugDescription[] allPlugs = IBUSInterfaceImpl.getInstance().getAllActiveIPlugs();
             
             // filter types
             String[] plugTypes = new String[]{Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS};

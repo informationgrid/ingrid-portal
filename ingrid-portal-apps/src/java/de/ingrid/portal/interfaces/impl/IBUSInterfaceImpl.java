@@ -4,6 +4,7 @@
 package de.ingrid.portal.interfaces.impl;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.commons.configuration.Configuration;
@@ -380,6 +381,22 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         }
         return plugs;
     }
+    
+    /**
+     * Get all iPlugs that are active.
+     */
+    public PlugDescription[] getAllActiveIPlugs() {
+        PlugDescription[] plugs = getAllIPlugs();
+        ArrayList<PlugDescription> activePlugs = new ArrayList<PlugDescription>();
+        
+        for (PlugDescription plugDescription : plugs) {
+			if (plugDescription.isActivate()) {
+				activePlugs.add(plugDescription);
+			}
+		}
+        
+        return activePlugs.toArray(new PlugDescription[0]);
+    }
 
     public PlugDescription[] getAllIPlugsWithoutTimeLimitation() {
         PlugDescription[] plugs = new PlugDescription[0];
@@ -389,7 +406,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         } catch (Throwable t) {
             if (log.isWarnEnabled()) {
                 log.warn("Problems fetching iPlugs from iBus !", t);
-            }            
+            }
         }
         return plugs;
     }
