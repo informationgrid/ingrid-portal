@@ -183,11 +183,17 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * @return
      */
     static public String getAddressPlugIdFromPlugId(String plugId) {
-        if (plugId != null && plugId.indexOf("udk-db") > -1 && !plugId.endsWith("_addr")) {
-            return plugId.concat("_addr");
-        } else {
-            return plugId;
-        }
+    	String correspondentIPlug = IBUSInterfaceImpl.getInstance().getIPlug(plugId)
+    		.getCorrespondentProxyServiceURL();
+    	
+    	if (correspondentIPlug == null || correspondentIPlug == "") {
+	        if (plugId != null && plugId.indexOf("udk-db") > -1 && !plugId.endsWith("_addr")) {
+	        	correspondentIPlug = plugId.concat("_addr");
+	        } else {
+	        	correspondentIPlug = plugId;
+	        }
+    	}
+    	return correspondentIPlug;
     }
 
     /**
@@ -199,13 +205,20 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * @return
      */
     static public String getPlugIdFromAddressPlugId(String plugId) {
-        if (plugId == null) {
-            return "";
-        } else  if (plugId.endsWith("_addr")) {
-            return plugId.substring(0, plugId.lastIndexOf("_addr"));
-        } else {
-            return plugId;
-        }
+    	String correspondentIPlug = IBUSInterfaceImpl.getInstance().getIPlug(plugId)
+    		.getCorrespondentProxyServiceURL();
+    	
+    	if (correspondentIPlug == null || correspondentIPlug == "") {
+	        if (plugId == null) {
+	        	correspondentIPlug = "";
+	        } else  if (plugId.endsWith("_addr")) {
+	        	correspondentIPlug = plugId.substring(0, plugId.lastIndexOf("_addr"));
+	        } else {
+	        	correspondentIPlug = plugId;
+	        }
+    	}
+    	
+    	return correspondentIPlug;
     }
 
     /**
