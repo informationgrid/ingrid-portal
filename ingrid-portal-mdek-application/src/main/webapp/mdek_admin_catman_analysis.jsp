@@ -53,7 +53,7 @@ function updateJobInfo(analyzeJobInfo) {
 function analyzeDef() {
 	var def = new dojo.Deferred();
 
-	CatalogService.analyze({
+	CatalogManagementService.analyze({
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 

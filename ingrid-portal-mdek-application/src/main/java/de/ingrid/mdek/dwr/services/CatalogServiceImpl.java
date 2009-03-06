@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.beans.AdditionalFieldBean;
-import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
@@ -93,18 +92,6 @@ public class CatalogServiceImpl implements CatalogService {
 		}
 	}
 
-	public AnalyzeJobInfoBean analyze() {
-		try {
-			return catalogRequestHandler.analyze();
-
-		} catch (MdekException e) {
-			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while starting analysis job.", e);
-			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
-		}
-	}
-
-	
 	public CatalogRequestHandler getCatalogRequestHandler() {
 		return catalogRequestHandler;
 	}

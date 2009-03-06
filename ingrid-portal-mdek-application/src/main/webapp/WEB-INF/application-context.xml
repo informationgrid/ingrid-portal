@@ -110,6 +110,9 @@
 		<property name="connectionFacade">
 			<ref local="connectionFacade" />
 		</property>
+		<property name="catalogRequestHandler">
+			<ref local="catalogRequestHandler" />
+		</property>
 	</bean>
 
 	<bean id="exportService"

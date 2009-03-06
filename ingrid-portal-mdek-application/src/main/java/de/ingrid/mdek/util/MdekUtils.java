@@ -165,7 +165,7 @@ public class MdekUtils {
 		if (result != null) {
 //			searchResult.setNumHits(((Long) result.get(MdekKeys.SEARCH_TOTAL_NUM_HITS)));
 			searchResult.setTotalNumHits((Long) result.get(MdekKeys.TOTAL_NUM));
-			searchResult.setData((String) result.get(MdekKeys.CSV_RESULT));
+			searchResult.setData((byte[]) result.get(MdekKeys.CSV_RESULT));
 		} else {
 			MdekErrorUtils.handleError(response);
 		}

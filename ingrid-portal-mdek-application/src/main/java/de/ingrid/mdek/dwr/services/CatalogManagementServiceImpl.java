@@ -16,12 +16,15 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.caller.IMdekClientCaller;
+import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.handler.ConnectionFacade;
+import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.quartz.MdekJobHandler;
 import de.ingrid.mdek.quartz.jobs.util.URLState;
 import de.ingrid.mdek.util.MdekErrorUtils;
@@ -35,6 +38,9 @@ public class CatalogManagementServiceImpl {
 			.getLogger(CatalogManagementServiceImpl.class);
 
 	private MdekJobHandler mdekJobHandler;
+	private CatalogRequestHandler catalogRequestHandler;
+
+	// TODO Move ConnectionFacade (or better: the specific MdekCallers) to a request handler!
 	private ConnectionFacade connectionFacade;
 
 	public void startUrlValidatorJob() {
@@ -170,12 +176,28 @@ public class CatalogManagementServiceImpl {
 		mdekJobHandler.startSNSUpdateJob(changedTopics, newTopics, expiredTopics);
 	}
 
+	public AnalyzeJobInfoBean analyze() {
+		try {
+			return catalogRequestHandler.analyze();
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while starting analysis job.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		}
+	}
+	
+
 	public void setMdekJobHandler(MdekJobHandler mdekJobHandler) {
 		this.mdekJobHandler = mdekJobHandler;
 	}
 
 	public void setConnectionFacade(ConnectionFacade connectionFacade) {
 		this.connectionFacade = connectionFacade;
+	}
+
+	public void setCatalogRequestHandler(CatalogRequestHandler catalogRequestHandler) {
+		this.catalogRequestHandler = catalogRequestHandler;
 	}
 
 }

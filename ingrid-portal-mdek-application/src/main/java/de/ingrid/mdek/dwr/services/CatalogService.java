@@ -19,5 +19,4 @@ public interface CatalogService {
 	public void storeSysGenericValues(List<GenericValueBean> genericValues);
 	public CatalogBean getCatalogData();
 	public CatalogBean storeCatalogData(CatalogBean cat);
-	public AnalyzeJobInfoBean analyze();
 }

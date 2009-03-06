@@ -126,9 +126,10 @@ function mergeTableData(germanList, englishList) {
 function updateCodelistTable(data) {
 	UtilList.addTableIndices(data);
 
+	hasDefaultEntry(data)? showDefaultRadioButtons() : hideDefaultRadioButtons();
+
 	// Add radio buttons
 	for (var index = 0; index < data.length; index++) {
-		
 		data[index].isDefault =
 			createHtmlForRadio(
 					"codeListRadio",
@@ -147,6 +148,25 @@ function createHtmlForRadio(name, id, checked) {
 		"id='"+id+"' "+
 		"checked='"+checked+"' "+
 		"/>";
+}
+
+// Check if the given list of objects contains an object with property 'isDefault' == true
+function hasDefaultEntry(data) {
+	return dojo.lang.some(data, function(item) { return item.isDefault == true; });
+}
+
+function showDefaultRadioButtons() {
+	if (!dojo.widget.byId("selectionListDefault").checked) {
+		dojo.widget.byId("selectionListDefault").setValue(true);
+		switchTableDisplay("codeListTable12Container", "codeListTable11Container", true);
+	}
+}
+
+function hideDefaultRadioButtons() {
+	if (dojo.widget.byId("selectionListDefault").checked) {
+		dojo.widget.byId("selectionListDefault").setValue(false);
+		switchTableDisplay("codeListTable12Container", "codeListTable11Container", false);
+	}
 }
 
 scriptScope.createNewEntry = function() {
@@ -172,7 +192,7 @@ scriptScope.saveChanges = function() {
 		dojo.debug("sysList id: "+sysListId);
 		for (var index = 0; index < tableData.length; index++) {
 			var currentEntry = tableData[index];
-			var isDefault = isMarkedAsDefaultEntry(currentEntry.entryId);
+			var isDefault = setDefault && isMarkedAsDefaultEntry(currentEntry.entryId);
 
 			dojo.debug("entry id : "+currentEntry.entryId);
 			dojo.debug("name (de): "+currentEntry.deName);
@@ -272,77 +292,46 @@ function hideLoadingZone() {
 						<div class="inputContainer grey field w668 noSpaceBelow">
 							<span class="label"><label for="isoList" onclick="javascript:dialog.showContextHelp(arguments[0], 'ISO-Codeliste')">ISO-Codeliste</label></span>
 							<span class="input spaceBelow"><div dojoType="ingrid:ComboBox" toggle="plain" style="width:606px;" widgetId="isoList"></div></span>
-							<div class="checkboxContainer">
-								<span class="input spaceBelow"><input type="checkbox" onclick="switchTableDisplay('codeListTable22Container', 'codeListTable21Container', dojo.widget.byId('isoListDefault').checked);" id="isoListDefault" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Defaultwert einstellbar')">Defaultwert einstellbar</label></span>
-							</div>
-							<div class="tableContainer rows4 w632" id="codeListTable21Container">
-								<table id="codeListTable21" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable interactive readonly nosort">
-									<thead>
-										<tr>
-											<th field="id" dataType="String" width="32">ID</th>
-											<th field="name_d" dataType="String" width="300">Name in deutsch</th>
-											<th field="name_e" dataType="String" width="300">Name in englisch</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr value="1">
-											<td>101</td>
-											<td>Datensatz</td>
-											<td>dataset</td></tr>
-									</tbody>
-								</table>
-							</div>
 
-							<div class="tableContainer rows4 w632" id="codeListTable22Container" style="display:none">
-								<table id="codeListTable22" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable interactive readonly nosort">
-									<thead>
-										<tr>
-											<th field="id" dataType="String" width="32">ID</th>
-											<th field="name_d" dataType="String" width="269">Name in deutsch</th>
-											<th field="name_e" dataType="String" width="269">Name in englisch</th>
-											<th field="default" dataType="String" width="62" noSort="true">Default</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-							</div>
-							<div class="inputContainer">
-								<span class="button grey w612" style="height:20px !important;">
-									<span style="float:right;">
-										<button dojoType="ingrid:Button" title="Eintrag l&ouml;schen" onClick="javascript:scriptScope.deleteEntry();">Eintrag l&ouml;schen</button>
-									</span>
-									<span style="float:right;">
-										<button dojoType="ingrid:Button" title="Neuer Eintrag" onClick="javascript:scriptScope.createNewEntry();">Neuer Eintrag</button>
+							<div class="inputContainer w644 noSpaceBelow">
+								<span class="entry first">
+									<span class="label" style="height:37px;">Eint&auml;ge, die nicht in der Schl&uuml;sseltabelle<br />vorhanden sind</span>
+
+									<table id="legalBasicsLeft" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable interactive w264 relativePos">
+										<thead>
+											<tr>
+												<th field="name" dataType="String">Name</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</span>
+
+								<span class="entry">
+									<span class="buttonCol" style="margin:80px 0px 0px;">
+										<button dojoType="ingrid:Button" onClick="javascript:scriptScope.addFreeEntryToSysList();">&gt; &Uuml;bertragen</button>
+										<button dojoType="ingrid:Button" onClick="addAll">&lt; Ersetzen</button>
+										<button dojoType="ingrid:Button" onClick="removeAll">&gt;&gt; Alle</button>
 									</span>
 								</span>
-							</div>
 
-							<div class="inputContainer">
-								<div class="first entry w038" style="margin-right:12px;">
-									<span class="label"><label for="isoEntryId" onclick="javascript:dialog.showContextHelp(arguments[0], 'Id')">Id</label></span>
-									<span class="input"><input type="text" id="isoEntryId" name="isoEntryId" class="w038" dojoType="ingrid:ValidationTextBox" /></span>
-								</div>
-								<div class="entry w277" style="margin-right:12px;">
-									<span class="label"><label for="isoEntryGerman" onclick="javascript:dialog.showContextHelp(arguments[0], 'Deutsch')">Deutsch</label></span>
-									<span class="input"><input type="text" id="isoEntryGerman" name="isoEntryGerman" class="w277" dojoType="ingrid:ValidationTextBox" /></span>
-								</div>
-								<div class="entry w277">
-									<span class="label"><label for="isoEntryEnglish" onclick="javascript:dialog.showContextHelp(arguments[0], 'Englisch')">Englisch</label></span>
-									<span class="input"><input type="text" id="isoEntryEnglish" name="isoEntryEnglish" class="w277" dojoType="ingrid:ValidationTextBox" /></span>
-								</div>
-								<div class="fill"></div>
-							</div>
-
-							<div class="inputContainer">
-								<span class="button grey w612" style="height:20px !important;">
-									<span style="float:right;">
-										<button dojoType="ingrid:Button" title="Hinzuf&uuml;gen" onClick="javascript:scriptScope.addEntry();">Hinzuf&uuml;gen</button>
-									</span>
+								<span class="entry">
+									<span class="label" style="height:37px;">Inhalte der Schl&uuml;sseltabelle</span>
+									<table id="legalBasicsRight" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable interactive w264 relativePos">
+										<thead>
+											<tr>
+												<th field="name" dataType="String">Name*</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
 								</span>
+
+								<div class="fill spacer"></div>
 							</div>
 
-							<div class="fill"></div>
 						</div>
 					</div> <!-- TAB 2 END -->
 				</div>

@@ -1,8 +1,5 @@
 package de.ingrid.mdek.dwr.services;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
 
@@ -123,19 +120,13 @@ public class QueryServiceImpl implements QueryService {
 		try {
 			SearchResultBean res = queryRequestHandler.queryHQLToCSV(hqlQuery);
 
-	        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-
-	        buffer.write(res.getCsvSearchResult().getData().getBytes());
-
-	        return new FileTransfer("values.csv", "text/comma-separated-values", buffer.toByteArray());
+	        return new FileTransfer("values.csv.gz", "x-gzip", res.getCsvSearchResult().getData());
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while searching for objects.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
-		} catch (IOException e) {
-			log.debug("IOException while converting csv.", e);
-			return null;
+
 		} catch (RuntimeException e) {
 			log.debug("Runtime Exception while loading csv values", e);
 			throw new RuntimeException(e.getCause());

@@ -1,11 +1,10 @@
 package de.ingrid.mdek.beans.query;
 
-import java.util.ArrayList;
 
 public class CSVSearchResultBean {
 	public int numHits;
 	public long totalNumHits;
-	public String data;
+	public byte[] data;
 
 	
 	public CSVSearchResultBean() {
@@ -30,11 +29,11 @@ public class CSVSearchResultBean {
 		this.totalNumHits = totalNumHits;
 	}
 
-	public String getData() {
+	public byte[] getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(byte[] data) {
 		this.data = data;
 	}
 }
