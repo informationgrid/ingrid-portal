@@ -56,6 +56,16 @@ public class MdekObjectUtils {
 		return results;
 	}
 
+	public static ArrayList<MdekDataBean> extractDetailedObjectsFromResponse(IngridDocument response) {
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		if (result != null) {
+			return extractDetailedObjects(result);
+		} else {
+			MdekErrorUtils.handleError(response);
+			return null;
+		}
+	}
+
 	public static ArrayList<HashMap<String, Object>> extractObjectsFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 

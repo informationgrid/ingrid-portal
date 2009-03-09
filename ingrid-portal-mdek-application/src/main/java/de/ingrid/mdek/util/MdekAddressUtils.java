@@ -66,6 +66,16 @@ public class MdekAddressUtils {
 		return results;
 	}
 
+	public static ArrayList<MdekAddressBean> extractDetailedAddressesFromResponse(IngridDocument response) {
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		if (result != null) {
+			return extractDetailedAddresses(result);
+		} else {
+			MdekErrorUtils.handleError(response);
+			return null;
+		}
+	}
+
 	public static ArrayList<HashMap<String, Object>> extractAddressesFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
