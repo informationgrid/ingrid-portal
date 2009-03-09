@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import de.ingrid.mdek.beans.AdditionalFieldBean;
-import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.GenericValueBean;
 
 public interface CatalogService {
 
+	public Integer[] getAllSysListIds();
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode);
 	public List<Map<String, String>> getSysGuis(String[] guiIds);
 	public List<AdditionalFieldBean> getSysAdditionalFields(Long[] fieldIds, String language);

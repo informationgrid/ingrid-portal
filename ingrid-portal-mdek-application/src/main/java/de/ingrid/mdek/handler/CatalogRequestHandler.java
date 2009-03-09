@@ -14,6 +14,7 @@ import de.ingrid.mdek.persistence.db.model.UserData;
 
 public interface CatalogRequestHandler {
 
+	public Integer[] getAllSysListIds();
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode);
 	public List<Map<String, String>> getSysGuis(String[] guiIds);
 	public List<AdditionalFieldBean> getSysAdditionalFields(Long[] fieldIds, String language);

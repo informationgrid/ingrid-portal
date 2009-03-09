@@ -9,24 +9,27 @@ _container_.addOnLoad(function() {
 });
 
 function initCodelistSelect() {
-	// TODO Test code. Use getAllSysLists
-	var listIds = [100, 101, 102, 502, 505, 510, 515, 517, 518, 520, 523, 525, 526, 527, 528, 1100,
-	           	1200, 1230, 1320, 1350, 1370, 1400, 1410, 2000, 2010, 2240, 2251, 3230, 3385, 3535,
-	           	3555, 3561, 3571, 4300, 4305, 4430, 5000, 5100, 5105, 5110, 5120, 5130, 5200, 6000,
-	           	6010, 99999999];
-
 	var selectWidget = dojo.widget.byId("selectionList");
-	var selectWidgetData = [];
-	for (var index = 0; index < listIds.length; ++index) {
-		selectWidgetData.push([listIds[index]+"", listIds[index]+""]);
-	}
-	selectWidget.dataProvider.setData(selectWidgetData);
+
+	var def = getAllSysListIdsDef();
+	def.addCallback(function(listIds) {
+		var selectWidgetData = [];
+		for (var index = 0; index < listIds.length; ++index) {
+			// TODO Localize entries
+			selectWidgetData.push([listIds[index]+"", listIds[index]+""]);
+		}
+		selectWidget.dataProvider.setData(selectWidgetData);
+	});
+	def.addErrback(function(error) {
+		dojo.debug("Error: " + error);
+		dojo.debugShallow(error);
+	});
 
 	// On value changed load the selected sysList from the backend and update the table
 	dojo.event.connect(selectWidget, "onValueChanged", function(value) {
 		if (value) {
-			var germanListDef = getSysListsDef(value, "de");
-			var englishListDef = getSysListsDef(value, "en");
+			var germanListDef = getSysListDef(value, "de");
+			var englishListDef = getSysListDef(value, "en");
 
 			var defList = new dojo.DeferredList([germanListDef, englishListDef], false, false, true);
 			defList.addCallback(function (resultList) {
@@ -43,10 +46,31 @@ function initCodelistSelect() {
 	});
 }
 
+// Retrieve all sysList ids stored in the backend
+// A list of the following form is returned:
+// [ listId1, listId2, ... ]
+function getAllSysListIdsDef() {
+	var def = new dojo.Deferred();
+	CatalogService.getAllSysListIds({
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
+		callback: function(listIds) {
+			def.callback(listIds);
+		},
+		errorHandler: function(msg, err) {
+			hideLoadingZone();
+			dojo.debug("Error: "+msg);
+			dojo.debugShallow(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
 // Retrieve the sysList for the given listId and languageCode from the backend
 // A list of the following form is returned:
 // [ [listEntry, entryId, isDefault], [...] ]
-function getSysListsDef(listId, languageCode) {
+function getSysListDef(listId, languageCode) {
 	var def = new dojo.Deferred();
 	CatalogService.getSysLists([listId], languageCode, {
 		preHook: showLoadingZone,
@@ -250,8 +274,8 @@ function hideLoadingZone() {
 							</div>
 							<div class="tableContainer rows8 w632" id="codeListTable11Container">
 								<div class="cellEditors" id="codeListTable11Editors">
-									<div dojoType="ingrid:ValidationTextbox" widgetId="codeListTable11DeNameEditor"></div>
-									<div dojoType="ingrid:ValidationTextbox" widgetId="codeListTable11EnNameEditor"></div>
+									<div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w277" widgetId="codeListTable11DeNameEditor"></div>
+									<div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w277" widgetId="codeListTable11EnNameEditor"></div>
 								</div>
 								<table id="codeListTable11" dojoType="ingrid:FilteringTable" minRows="8" cellspacing="0" class="filteringTable nosort interactive">
 									<thead>
@@ -267,8 +291,8 @@ function hideLoadingZone() {
 							</div>
 							<div class="tableContainer rows8 w632" id="codeListTable12Container" style="display:none">
 								<div class="cellEditors" id="codeListTable12Editors">
-									<div dojoType="ingrid:ValidationTextbox" widgetId="codeListTable12DeNameEditor"></div>
-									<div dojoType="ingrid:ValidationTextbox" widgetId="codeListTable12EnNameEditor"></div>
+									<div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w248" widgetId="codeListTable12DeNameEditor"></div>
+									<div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w248" widgetId="codeListTable12EnNameEditor"></div>
 								</div>
 								<table id="codeListTable12" dojoType="ingrid:FilteringTable" minRows="8" cellspacing="0" class="filteringTable nosort interactive">
 									<thead>

@@ -38,6 +38,18 @@ public class MdekCatalogUtils {
 	private static final String SYS_GUI_ID = "id";
 	private static final String SYS_GUI_MODE = "mode";
 
+	public static Integer[] extractSysListIdsFromResponse(IngridDocument response) {
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		if (result != null) {
+			return (Integer[]) result.get(MdekKeys.SYS_LIST_IDS);
+
+		} else {
+			MdekErrorUtils.handleError(response);
+			return null;
+		}
+	}
+
+
 	public static Map<Integer, List<String[]>> extractSysListFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		if (result != null) {

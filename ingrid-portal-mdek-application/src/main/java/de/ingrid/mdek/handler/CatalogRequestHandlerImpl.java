@@ -35,6 +35,11 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 	}
 	
 	
+	public Integer[] getAllSysListIds() {
+		IngridDocument response = mdekCallerCatalog.getSysLists(connectionFacade.getCurrentPlugId(), null, null, MdekSecurityUtils.getCurrentUserUuid());
+		return MdekCatalogUtils.extractSysListIdsFromResponse(response);
+	}
+
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode) {
 		IngridDocument response = mdekCallerCatalog.getSysLists(connectionFacade.getCurrentPlugId(), listIds, languageCode, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractSysListFromResponse(response);
@@ -180,6 +185,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		IngridDocument response = mdekCallerCatalog.getObjectsOfAuskunftAddress(
 				connectionFacade.getCurrentPlugId(),
 				auskunftAddressUuid,
+				null,
 				MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractCodeListInfoFromResponse(response);
 	}
@@ -188,6 +194,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		IngridDocument response = mdekCallerCatalog.getObjectsOfResponsibleUser(
 				connectionFacade.getCurrentPlugId(),
 				responsibleUserUuid,
+				null,
 				MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractCodeListInfoFromResponse(response);
 	}
@@ -196,6 +203,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		IngridDocument response = mdekCallerCatalog.getAddressesOfResponsibleUser(
 				connectionFacade.getCurrentPlugId(),
 				responsibleUserUuid,
+				null,
 				MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractCodeListInfoFromResponse(response);
 	}

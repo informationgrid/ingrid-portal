@@ -20,6 +20,10 @@ public class CatalogServiceImpl implements CatalogService {
 	private CatalogRequestHandler catalogRequestHandler;
 
 	
+	public Integer[] getAllSysListIds() {
+		return catalogRequestHandler.getAllSysListIds();
+	}
+
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode) {
 		return catalogRequestHandler.getSysLists(listIds, languageCode);
 	}
