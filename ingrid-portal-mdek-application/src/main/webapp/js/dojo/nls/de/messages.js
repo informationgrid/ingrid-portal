@@ -161,6 +161,7 @@
 	"dialog.admin.catalog.management.additionalFields.editList":"Auswahlliste bearbeiten",
 	"dialog.admin.catalog.management.additionalFields.requiredFieldsHint":"Bitte geben Sie einen Feldnamen, die Anzahl der Zeichen und den Feldtyp an.",
 	"dialog.admin.catalog.management.deleteAddress.requiredFieldsHint":"Bitte w&auml;hlen Sie zun&auml;chst zwei g&uuml;ltige und unterschiedliche Adressen aus.",
+	"dialog.admin.catalog.management.codelist.storeSuccess":"Die sysList wurde erfolgreich gespeichert.",
 	"dialog.admin.management.duplicates.success":"Der Objektname wurde erfolgreich aktualisiert.",
 	"dialog.admin.management.urls.lastProcessInfo":"Informationen zum letzten Prozess:",
 	"dialog.admin.management.urls.currentProcessInfo":"Informationen zum laufenden Prozess:",

@@ -247,6 +247,10 @@ scriptScope.saveChanges = function() {
 		var maintainable = false;
 		var def = storeSysListDef(sysListId, maintainable, defaultIndex, entryIds, entriesGerman, entriesEnglish);
 		def.addCallback(function() {
+			// Show a 'success' message
+			dialog.show(message.get("general.hint"), message.get("dialog.admin.catalog.management.codelist.storeSuccess"), dialog.INFO);
+
+			// Update the frontend after the list has been stored
 			var selectWidget = dojo.widget.byId("selectionList");
 			selectWidget.setValue(sysListId);
 		});

@@ -182,6 +182,7 @@
 	"dialog.admin.catalog.management.additionalFields.editList":"Edit List",
 	"dialog.admin.catalog.management.additionalFields.requiredFieldsHint":"Please fill all required fields before storing the catalog!",
 	"dialog.admin.catalog.management.deleteAddress.requiredFieldsHint":"Please fill all required fields before storing the catalog!",
+	"dialog.admin.catalog.management.codelist.storeSuccess":"The changes were saved successfully.",
 	"dialog.admin.management.duplicates.success":"The object name was updated successfully.",
 	"dialog.admin.management.urls.lastProcessInfo":"Information about the last process:",
 	"dialog.admin.management.urls.currentProcessInfo":"Information about the current process:",

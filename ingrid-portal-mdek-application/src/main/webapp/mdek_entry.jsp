@@ -849,14 +849,7 @@ function hideSplash(){
 						<span id="uiElement3385" type="optional">
 	                  		<span class="label"><label for="ref2DocumentType" onclick="javascript:dialog.showContextHelp(arguments[0], 3385)"><script>document.write(message.get("ui.obj.type2.documentType"))</script></label></span>
 	                  		<span class="input spaceBelow">
-	                  			<select dojoType="ingrid:ComboBox" maxlength="80" style="width:302px;" id="ref2DocumentType" name="ref2DocumentType">
-			                  	  <option value="1">Aufsatz/Artikel/Tagungsbeitrag</option>
-			                  	  <option value="2">Brosch&uuml;re/Bericht</option>
-			                  	  <option value="3">Zeitschrift</option>
-			                  	  <option value="4">Buch/Monographie/Reihe</option>
-			                  	  <option value="5">Tagungsband/Sammelwerk</option>
-			                  	  <option value="6">Fachgutachten</option>
-			                  	</select>
+	                  			<div dojoType="ingrid:ComboBox" maxlength="80" style="width:302px;" id="ref2DocumentType" listId="3385" />
 			                </span>
 						</span>
 					</div>
