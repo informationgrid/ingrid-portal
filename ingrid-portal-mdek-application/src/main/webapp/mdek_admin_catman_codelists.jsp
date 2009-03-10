@@ -4,6 +4,8 @@
 <script type="text/javascript">
 var scriptScope = this;
 
+var MAINTAINABLE_LIST_IDS = [101, 102, 515, 518, 520, 523, 526, 528, 1100, 1320, 1350, 1370, 3385, 3535, 3555];
+
 _container_.addOnLoad(function() {
 	initCodelistSelect();
 	initTables();
@@ -31,6 +33,19 @@ function initCodelistSelect() {
 		if (value) {
 			var germanListDef = getSysListDef(value, "de");
 			var englishListDef = getSysListDef(value, "en");
+
+			if (dojo.lang.some(MAINTAINABLE_LIST_IDS, function(listId) { return listId == parseInt(value); } )) {
+				dojo.debug("enable. ("+parseInt(value)+")");
+				dojo.widget.byId("codeListTable11").enable();
+				dojo.widget.byId("codeListTable12").enable();
+				hideEditDisabledHint();
+
+			} else {
+				dojo.debug("disable. ("+parseInt(value)+")");
+				dojo.widget.byId("codeListTable11").disable();
+				dojo.widget.byId("codeListTable12").disable();
+				showEditDisabledHint();
+			}
 
 			var defList = new dojo.DeferredList([germanListDef, englishListDef], false, false, true);
 			defList.addCallback(function (resultList) {
@@ -299,6 +314,14 @@ function hideLoadingZone() {
     dojo.html.setVisibility(dojo.byId("codelistsLoadingZone"), "hidden");
 }
 
+function showEditDisabledHint() {
+	dojo.html.setVisibility("codeListEditDisabledHint", true);	
+}
+
+function hideEditDisabledHint() {
+	dojo.html.setVisibility("codeListEditDisabledHint", false);	
+}
+
 
 </script>
 </head>
@@ -326,6 +349,7 @@ function hideLoadingZone() {
 						<div class="inputContainer grey field w668 noSpaceBelow">
 							<span class="label"><label for="selectionList" onclick="javascript:dialog.showContextHelp(arguments[0], 'Auswahlliste')">Auswahlliste</label></span>
 							<span class="input spaceBelow"><input dojoType="ingrid:Select" autocomplete="false" style="width:606px;" id="selectionList" /></span>
+							<span id="codeListEditDisabledHint" style="visibility:hidden;" class="label"><label class="inActive">Hinweis: Die selektierte Auswahlliste darf nicht ver&auml;ndert werden.</label></span>
 							<div class="checkboxContainer">
 								<span class="input spaceBelow"><input type="checkbox" onclick="switchTableDisplay('codeListTable12Container', 'codeListTable11Container', dojo.widget.byId('selectionListDefault').checked);" id="selectionListDefault" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Defaultwert einstellbar')">Defaultwert einstellbar</label></span>
 							</div>
