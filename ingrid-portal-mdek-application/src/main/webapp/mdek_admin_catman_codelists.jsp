@@ -190,7 +190,7 @@ function createHtmlForRadio(name, id, checked) {
 		"class='radio' "+
 		"name='"+name+"' "+
 		"id='"+id+"' "+
-		"checked='"+checked+"' "+
+		(checked ? "checked='checked' " : " ") +
 		"/>";
 }
 

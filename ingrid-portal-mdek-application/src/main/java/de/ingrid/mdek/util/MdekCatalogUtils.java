@@ -49,7 +49,12 @@ public class MdekCatalogUtils {
 		}
 	}
 
-
+	// Returns a map containing the mapped sysLists from response:
+	// { listId1 : [ [ entry1Name, entry1Id, entry1Default ],
+	//               [ entry2Name, entry2Id, entry2Default ]
+	//             ],
+	//   listId2 : ...
+	// }
 	public static Map<Integer, List<String[]>> extractSysListFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		if (result != null) {
@@ -60,14 +65,25 @@ public class MdekCatalogUtils {
 				ArrayList<String[]> resultList = new ArrayList<String[]>();
 				Integer listId = (Integer) listDocument.get(MdekKeys.LST_ID);
 
-				List<IngridDocument> entries = (List<IngridDocument>) listDocument.get(MdekKeys.LST_ENTRY_LIST);
-//				resultList.add( new String[] {"", ""} );
-				for (IngridDocument entry : entries) {
-//					resultList.add( new String[] {StringEscapeUtils.escapeJavaScript(entry.getString(MdekKeys.ENTRY_NAME)), ((Integer) entry.get(MdekKeys.ENTRY_ID)).toString()} );
-					resultList.add( new String[] {entry.getString(MdekKeys.ENTRY_NAME), ((Integer) entry.get(MdekKeys.ENTRY_ID)).toString(), (String) entry.get(MdekKeys.IS_DEFAULT) } );
+				Integer[] entryIds = (Integer[]) listDocument.get(MdekKeys.LST_ENTRY_IDS);
+				String[] entryNames = (String[]) (listDocument.get(MdekKeys.LST_ENTRY_NAMES_DE) != null ? listDocument.get(MdekKeys.LST_ENTRY_NAMES_DE) : listDocument.get(MdekKeys.LST_ENTRY_NAMES_EN));
+				Integer defaultIndex = (Integer) listDocument.get(MdekKeys.LST_DEFAULT_ENTRY_INDEX);
+
+				if (entryIds != null && entryNames != null) {
+					for (int index = 0; index < entryIds.length; ++index) {
+						boolean isDefault = defaultIndex != null ? defaultIndex == index : false;
+						
+						resultList.add( new String[] {
+								entryNames[index],
+								entryIds[index].toString(),
+								isDefault ? "Y" : "N"
+						});
+					}
 				}
+
 				resultMap.put(listId, resultList);
 			}
+
 			return resultMap;
 
 		} else {
