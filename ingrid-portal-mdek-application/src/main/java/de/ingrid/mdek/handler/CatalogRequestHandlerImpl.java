@@ -17,7 +17,9 @@ import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCaller.AddressArea;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekCatalogUtils;
+import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
+import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
 
 public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
@@ -34,7 +36,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
 	}
 	
-	
+
 	public Integer[] getAllSysListIds() {
 		IngridDocument response = mdekCallerCatalog.getSysLists(connectionFacade.getCurrentPlugId(), null, null, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractSysListIdsFromResponse(response);
@@ -43,6 +45,21 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode) {
 		IngridDocument response = mdekCallerCatalog.getSysLists(connectionFacade.getCurrentPlugId(), listIds, languageCode, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractSysListFromResponse(response);
+	}
+
+	public void storeSysList(Integer listId, boolean maintainable, Integer defaultEntryIndex, Integer[] entryIds,
+			String[] entriesGerman, String[] entriesEnglish) {
+		IngridDocument response = mdekCallerCatalog.storeSysList(
+				connectionFacade.getCurrentPlugId(),
+				listId,
+				maintainable,
+				defaultEntryIndex, entryIds, entriesGerman, entriesEnglish,
+				MdekSecurityUtils.getCurrentUserUuid());
+
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		if (result == null) {
+			MdekErrorUtils.handleError(response);
+		}
 	}
 
 	public List<Map<String, String>> getSysGuis(String[] guiIds) {

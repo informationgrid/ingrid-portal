@@ -11,6 +11,8 @@ public interface CatalogService {
 
 	public Integer[] getAllSysListIds();
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode);
+	public void storeSysList(Integer listId, boolean maintainable, Integer defaultEntryIndex, Integer[] entryIds,
+			String[] entriesGerman, String[] entriesEnglish);
 	public List<Map<String, String>> getSysGuis(String[] guiIds);
 	public List<AdditionalFieldBean> getSysAdditionalFields(Long[] fieldIds, String language);
 	public void storeSysAdditionalFields(List<AdditionalFieldBean> additionalFields, String languageCode);

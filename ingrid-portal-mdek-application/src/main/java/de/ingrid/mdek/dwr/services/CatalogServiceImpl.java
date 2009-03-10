@@ -28,6 +28,11 @@ public class CatalogServiceImpl implements CatalogService {
 		return catalogRequestHandler.getSysLists(listIds, languageCode);
 	}
 
+	public void storeSysList(Integer listId, boolean maintainable, Integer defaultEntryIndex, Integer[] entryIds,
+			String[] entriesGerman, String[] entriesEnglish) {
+		catalogRequestHandler.storeSysList(listId, maintainable, defaultEntryIndex, entryIds, entriesGerman, entriesEnglish);
+	}
+
 	public List<Map<String, String>> getSysGuis(String[] guiIds) {
 		return catalogRequestHandler.getSysGuis(guiIds);
 	}

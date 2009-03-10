@@ -6,6 +6,7 @@ var scriptScope = this;
 
 _container_.addOnLoad(function() {
 	initCodelistSelect();
+	initTables();
 });
 
 function initCodelistSelect() {
@@ -45,6 +46,24 @@ function initCodelistSelect() {
 		}
 	});
 }
+
+function initTables() {
+	// Use the same store for both tables. The First table has to be reinitialised so the new store
+	// gets registered properly
+	var mainStore = dojo.widget.byId("codeListTable12").store;
+	
+	dojo.widget.byId("codeListTable11").store = mainStore;
+	dojo.widget.byId("codeListTable11").initialize();
+
+	// We need to connect 'before' the function is called so the field is updated properly
+	// by the filteringTable
+	dojo.event.connect("before", mainStore, "onAddData", function(obj) {
+		dojo.debugShallow(obj.src);
+		var radioButton = createHtmlForRadio("codeListRadio", "codeListRadio_" + (new Date()).getTime(), false);
+		obj.src.isDefault = radioButton;
+	});
+}
+
 
 // Retrieve all sysList ids stored in the backend
 // A list of the following form is returned:
@@ -161,8 +180,9 @@ function updateCodelistTable(data) {
 					data[index].isDefault);
 	}
 
+	// Both stores are the same
 	dojo.widget.byId("codeListTable11").store.setData(data);
-	dojo.widget.byId("codeListTable12").store.setData(data);
+//	dojo.widget.byId("codeListTable12").store.setData(data);
 }
 
 function createHtmlForRadio(name, id, checked) {
@@ -193,46 +213,79 @@ function hideDefaultRadioButtons() {
 	}
 }
 
-scriptScope.createNewEntry = function() {
-	dojo.debug("Function not implemented yet.");
-}
-
-scriptScope.deleteEntry = function() {
-	dojo.debug("Function not implemented yet.");
-}
-
-scriptScope.addEntry = function() {
-	dojo.debug("Function not implemented yet.");
-}
-
 // Get the modified data and send it to the server
 scriptScope.saveChanges = function() {
 	var sysListId = dojo.widget.byId("selectionList").getValue();
 	if (sysListId) {
 		var setDefault = dojo.widget.byId("selectionListDefault").checked;
-		var tableId = setDefault? "codeListTable12" : "codeListTable11";
-		var tableData = dojo.widget.byId(tableId).store.getData();
+		var tableData = dojo.widget.byId("codeListTable11").store.getData();
 
 		dojo.debug("sysList id: "+sysListId);
+
+		// Build the required parameters
+		var defaultIndex = null;
+		var entryIds = [];
+		var entriesGerman = [];
+		var entriesEnglish = [];
 		for (var index = 0; index < tableData.length; index++) {
 			var currentEntry = tableData[index];
-			var isDefault = setDefault && isMarkedAsDefaultEntry(currentEntry.entryId);
-
+			var isDefault = setDefault && isMarkedAsDefaultEntry(currentEntry);
 			dojo.debug("entry id : "+currentEntry.entryId);
+			entryIds.push(currentEntry.entryId);
 			dojo.debug("name (de): "+currentEntry.deName);
+			entriesGerman.push(currentEntry.deName);
 			dojo.debug("name (en): "+currentEntry.enName);
+			entriesEnglish.push(currentEntry.enName);
 			dojo.debug("isDefault: "+isDefault);
+			if (isDefault) {
+				defaultIndex = index;
+			}
 		}
-	}
 
-	// TODO send to server
-	dojo.debug("Function not implemented yet.");
+		// Send data to the db
+		// TODO Implement List of maintainable sysLists
+		var maintainable = false;
+		var def = storeSysListDef(sysListId, maintainable, defaultIndex, entryIds, entriesGerman, entriesEnglish);
+		def.addCallback(function() {
+			var selectWidget = dojo.widget.byId("selectionList");
+			selectWidget.setValue(sysListId);
+		});
+	}
 }
 
 // Returns whether an entry in the table is marked as default
-function isMarkedAsDefaultEntry(entryId) {
+function isMarkedAsDefaultEntry(entry) {
+	// Extract the id of the corresponding radio button. In most cases it's equal to entryId
+	// New entries don't have an entryId so we have to locate it another way
+	// Here we get the id from the string used to create the html radio button
+	var isDefaultStr = entry.isDefault;
+	var entryId = isDefaultStr.match(/codeListRadio_(\d+)'/)[1];
+
 	return dojo.byId("codeListRadio_"+entryId).checked;
 }
+
+// Store a modified sysList in the db.
+// listId - Id of the sysList to store
+// maintainable - a boolean flag signaling if the sysList is allowed to be modified
+// defaultIndex - the index of the default entry. Null if no entry should have a default value
+// entryIds - Ids of the entries as Int List. Null if it's a new entry
+// entriesGerman, entriesEnglish - The Entries as String Lists
+function storeSysListDef(listId, maintainable, defaultIndex, entryIds, entriesGerman, entriesEnglish) {
+	var def = new dojo.Deferred();
+	CatalogService.storeSysList(listId, maintainable, defaultIndex, entryIds, entriesGerman, entriesEnglish, {
+		callback: function(res) {
+			dojo.debug("result:" + res);
+			def.callback(res);
+		},
+		errorHandler: function(msg, err) {
+			dojo.debug("Error: "+msg);
+			dojo.debugShallow(err);
+			def.errback();
+		}
+	});
+	return def;
+}
+
 
 function showLoadingZone() {
     dojo.html.setVisibility(dojo.byId("codelistsLoadingZone"), "visible");
@@ -312,9 +365,9 @@ function hideLoadingZone() {
 					</div> <!-- TAB 1 END -->
 
 					<!-- TAB 2 START -->
-					<div dojoType="ContentPane" class="blueTopBorder grey" label="ISO-Codelistenpflege">
+					<div dojoType="ContentPane" class="blueTopBorder grey" label="Liste: gesetzliche Grundlagen">
 						<div class="inputContainer grey field w668 noSpaceBelow">
-							<span class="label"><label for="isoList" onclick="javascript:dialog.showContextHelp(arguments[0], 'ISO-Codeliste')">ISO-Codeliste</label></span>
+							<span class="label"><label for="isoList" onclick="javascript:dialog.showContextHelp(arguments[0], 'Auswahlliste')">Auswahlliste</label></span>
 							<span class="input spaceBelow"><div dojoType="ingrid:ComboBox" toggle="plain" style="width:606px;" widgetId="isoList"></div></span>
 
 							<div class="inputContainer w644 noSpaceBelow">
