@@ -92,6 +92,17 @@ public class MdekCatalogUtils {
 		}
 	}
 
+	public static String[] extractFreeSysListEntriesFromResponse(IngridDocument response) {
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		if (result != null) {
+			return (String[]) result.get(MdekKeys.LST_FREE_ENTRY_NAMES);
+
+		} else {
+			MdekErrorUtils.handleError(response);
+			return null;
+		}
+	}
+
 	public static List<AdditionalFieldBean> extractSysAdditionalFieldsFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		if (result != null) {
@@ -405,6 +416,7 @@ public class MdekCatalogUtils {
 
 		return codeListJobInfo;
 	}
+
 	
 	/*
 	private static void addCodeListJobInfoFromResponse(IngridDocument response,

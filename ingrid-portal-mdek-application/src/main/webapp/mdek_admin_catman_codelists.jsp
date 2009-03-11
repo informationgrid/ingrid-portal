@@ -2,13 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
+
 var scriptScope = this;
 
 var MAINTAINABLE_LIST_IDS = [101, 102, 515, 518, 520, 523, 526, 528, 1100, 1320, 1350, 1370, 3385, 3535, 3555];
 
 _container_.addOnLoad(function() {
 	initCodelistSelect();
-	initTables();
+	initCodelistTables();
+
+	initFreeEntrySelect();
+	initFreeEntryTables();
 });
 
 function initCodelistSelect() {
@@ -18,7 +22,7 @@ function initCodelistSelect() {
 	def.addCallback(function(listIds) {
 		var selectWidgetData = [];
 		for (var index = 0; index < listIds.length; ++index) {
-			// TODO Localize entries
+			// TODO Localize entries?
 			selectWidgetData.push([listIds[index]+"", listIds[index]+""]);
 		}
 		selectWidget.dataProvider.setData(selectWidgetData);
@@ -62,7 +66,7 @@ function initCodelistSelect() {
 	});
 }
 
-function initTables() {
+function initCodelistTables() {
 	// Use the same store for both tables. The First table has to be reinitialised so the new store
 	// gets registered properly
 	var mainStore = dojo.widget.byId("codeListTable12").store;
@@ -230,6 +234,18 @@ function hideDefaultRadioButtons() {
 
 // Get the modified data and send it to the server
 scriptScope.saveChanges = function() {
+	var selectedChild = dojo.widget.byId("codeListTabContainer").selectedChild;
+
+	if ("codeListTab" == selectedChild) {
+		saveChangesCodelist();
+
+	} else if ("freeEntryTab" == selectedChild) {
+		saveChangesFreeEntry();
+	}
+}
+
+
+function saveChangesCodelist() {
 	var sysListId = dojo.widget.byId("selectionList").getValue();
 	if (sysListId) {
 		var setDefault = dojo.widget.byId("selectionListDefault").checked;
@@ -259,7 +275,7 @@ scriptScope.saveChanges = function() {
 
 		// Send data to the db
 		// TODO Implement List of maintainable sysLists
-		var maintainable = false;
+		var maintainable = dojo.lang.some(MAINTAINABLE_LIST_IDS, function(listId) { return listId == parseInt(sysListId); } );
 		var def = storeSysListDef(sysListId, maintainable, defaultIndex, entryIds, entriesGerman, entriesEnglish);
 		def.addCallback(function() {
 			// Show a 'success' message
@@ -271,6 +287,7 @@ scriptScope.saveChanges = function() {
 		});
 	}
 }
+
 
 // Returns whether an entry in the table is marked as default
 function isMarkedAsDefaultEntry(entry) {
@@ -308,10 +325,12 @@ function storeSysListDef(listId, maintainable, defaultIndex, entryIds, entriesGe
 
 function showLoadingZone() {
     dojo.html.setVisibility(dojo.byId("codelistsLoadingZone"), "visible");
+    dojo.html.setVisibility(dojo.byId("codelistsFreeLoadingZone"), "visible");
 }
 
 function hideLoadingZone() {
     dojo.html.setVisibility(dojo.byId("codelistsLoadingZone"), "hidden");
+    dojo.html.setVisibility(dojo.byId("codelistsFreeLoadingZone"), "hidden");
 }
 
 function showEditDisabledHint() {
@@ -320,6 +339,351 @@ function showEditDisabledHint() {
 
 function hideEditDisabledHint() {
 	dojo.html.setVisibility("codeListEditDisabledHint", false);	
+}
+
+
+
+// Functions for the second div. Adding free entries to a list / overwriting free entries with sysList entries
+
+function initFreeEntrySelect() {
+	var selectWidget = dojo.widget.byId("freeEntrySelectionList");
+
+	// Currently the form is restricted to the list with id 1350 - 'gesetzliche Grundlagen'
+	var listIds = [ 1350 ];
+	var selectWidgetData = [];
+	for (var index = 0; index < listIds.length; ++index) {
+		selectWidgetData.push([listIds[index]+"", listIds[index]+""]);
+	}
+	selectWidget.dataProvider.setData( selectWidgetData );
+
+
+	// On value changed load the selected sysList from the backend and update the table
+	dojo.event.connect(selectWidget, "onValueChanged", reloadFreeEntryCodelistsDef);
+
+	// Initially set the select widget value to the first one in the list
+	selectWidget.setValue(listIds[0]);
+}
+
+function reloadFreeEntryCodelistsDef(listId) {
+	var def = new dojo.Deferred();
+
+	if (listId) {
+		var germanListDef = getSysListDef(listId, "de");
+		var englishListDef = getSysListDef(listId, "en");
+		var freeEntryDef = getFreeEntriesDef("LEGIST");
+
+		var defList = new dojo.DeferredList([germanListDef, englishListDef, freeEntryDef], false, false, true);
+		defList.addCallback(function (resultList) {
+			var germanList = resultList[0][1]; 
+			var englishList = resultList[1][1];
+			var freeList = resultList[2][1];
+
+			var germanData = convertSysListToTableData(germanList);
+			var englishData = convertSysListToTableData(englishList);
+	
+			var mergedData = mergeTableData(germanData, englishData);
+			updateFreeEntryCodelistTable(mergedData);
+
+			updateFreeEntryTable(freeList);
+
+			def.callback();
+		});
+		defList.addErrback(function(err) {
+			def.errback();
+		});
+	}
+}
+
+function initFreeEntryTables() {
+	dojo.widget.byId("freeEntryCodelistTable").removeContextMenu();
+	dojo.widget.byId("freeEntryTable").removeContextMenu();
+}
+
+function updateFreeEntryCodelistTable(data) {
+	UtilList.addTableIndices(data);
+	dojo.widget.byId("freeEntryCodelistTable").store.setData(data);
+}
+
+function updateFreeEntryTable(entries) {
+	var data = UtilList.listToTableData(entries);
+	UtilList.addTableIndices(data);
+	dojo.widget.byId("freeEntryTable").store.setData(data);
+}
+
+function getFreeEntriesDef(mdekListName) {
+	var def = new dojo.Deferred();
+	CatalogService.getFreeListEntries(mdekListName, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
+		callback: function(entries) {
+			def.callback(entries);
+		},
+		errorHandler: function(msg, err) {
+			hideLoadingZone();
+			dojo.debug("Error: "+msg);
+			dojo.debugShallow(err);
+			def.errback(err);
+		}
+	});
+	return def;
+}
+
+
+scriptScope.addFreeEntryToSysList = function() {
+	var freeTable = dojo.widget.byId("freeEntryTable");
+	var freeEntry = freeTable.getSelectedData();
+
+	if (freeEntry) {
+		var def = new dojo.Deferred();
+		var displayText = dojo.string.substituteParams(message.get("dialog.admin.catalog.management.codelist.freeEntryToSysListEntry"), freeEntry.title);
+		dialog.show(message.get("general.hint"), displayText, dialog.INFO, [
+	        { caption: message.get("general.no"),  action: function() { def.errback("CANCEL"); } },
+	    	{ caption: message.get("general.ok"), action: function() { def.callback(); } }
+		]);
+
+		def.addCallback(function() {
+			return addFreeEntryToSysListDef(freeEntry);
+		});
+		def.addCallback(function() {
+			// Show a 'success' message
+			dialog.show(message.get("general.hint"), message.get("dialog.admin.catalog.management.codelist.freeEntryToSysListEntrySuccess"), dialog.INFO);
+
+			// Update the frontend after the list has been stored
+			var selectWidget = dojo.widget.byId("freeEntrySelectionList");
+			selectWidget.setValue(selectWidget.getValue());
+		});
+	
+		def.addErrback(function(err) {
+			if (err.message != "CANCEL") {
+				dojo.debug("Error: " + err);
+				dojo.debugShallow(err);
+			}
+		});
+	}
+}
+
+scriptScope.addAllFreeEntriesToSysList = function() {
+	var freeData = dojo.widget.byId("freeEntryTable").store.getData();
+	var sysListId = dojo.widget.byId("freeEntrySelectionList").getValue();
+
+	if (freeData && freeData.length > 0) {
+
+		var freeEntryTitles = [];
+		dojo.lang.forEach(freeData, function(freeEntry) { freeEntryTitles.push(freeEntry.title); });
+		var def = new dojo.Deferred();
+		var displayText = dojo.string.substituteParams(message.get("dialog.admin.catalog.management.codelist.freeEntriesToSysListEntries"), freeEntryTitles.join(", "));
+		dialog.show(message.get("general.hint"), displayText, dialog.INFO, [
+	        { caption: message.get("general.no"),  action: function() { def.errback("CANCEL"); } },
+	    	{ caption: message.get("general.ok"), action: function() { def.callback(); } }
+		]);
+
+		freeData = freeData.reverse();
+		while (freeData.length > 0) {
+			var freeEntry = freeData.pop();
+			(function(entry) {
+				def.addCallback(function() { return addFreeEntryToSysListDef(entry); });
+//				def.addCallback(function() { return reloadFreeEntryCodelistsDef(sysListId); });
+			})(freeEntry)
+		}
+
+		def.addCallback(function() {
+			// Show a 'success' message
+			dialog.show(message.get("general.hint"), message.get("dialog.admin.catalog.management.codelist.freeEntriesToSysListEntriesSuccess"), dialog.INFO);
+
+			// Update the frontend after the list has been stored
+			var selectWidget = dojo.widget.byId("freeEntrySelectionList");
+			selectWidget.setValue(selectWidget.getValue());
+		});
+
+		def.addErrback(function(err) {
+			if (err.message != "CANCEL") {
+				dojo.debug("Error: " + err);
+				dojo.debugShallow(err);
+			}
+		});
+	}
+}
+
+function addFreeEntryToSysListDef(freeEntry) {
+	var addFreeEntryDef = new dojo.Deferred();
+
+	var codelistTable = dojo.widget.byId("freeEntryCodelistTable");
+	var codelistData = codelistTable.store.getData();
+
+	var sysListId = dojo.widget.byId("freeEntrySelectionList").getValue();
+
+	dojo.debug("free entry: " + freeEntry);
+
+	if (freeEntry) {
+		// First add the free entry to the sysList and store the sysList in the db
+		// After that, replace the free entry which was just added to the sysList with the stored sysList entry 
+		var sysListEntry = null;
+		for (var index = 0; index < codelistData.length; ++index) {
+			if (codelistData[index].deName == freeEntry.title) {
+				sysListEntry = codelistData[index];
+				break;
+			}
+		}
+
+		var def = null;
+
+		if (sysListEntry != null) {
+			// If the entry was already found, just replace the free entry with the sysList entry
+			dojo.debug("Entry already exists. Replacing free entry with sysList entry.");
+			def = replaceFreeEntryWithSysListEntryDef(freeEntry.title, sysListEntry.entryId, sysListEntry.deName, "LEGIST");
+
+		} else {
+			// Otherwise add the free entry to the list, store it, and replace afterwards
+			var newEntry = {
+				Id: UtilStore.getNewKey(codelistTable.store),
+				deName: freeEntry.title,
+				enName: "",
+				entryId: null,
+				isDefault: false
+			};
+
+			codelistTable.store.addData(newEntry);
+
+			def = saveChangesFreeEntryDef();
+			def.addCallback(function() {
+				return getSysListEntryDef(sysListId, freeEntry.title);
+			});
+			def.addCallback(function(newSysListEntry) {
+				newEntry.entryId = newSysListEntry[1];
+				return replaceFreeEntryWithSysListEntryDef(freeEntry.title, newSysListEntry[1], newSysListEntry[0], "LEGIST");
+			});
+		}
+
+		def.addCallback(function() {
+			addFreeEntryDef.callback();
+		});
+		def.addErrback(function(err) {
+			addFreeEntryDef.errback(err);
+		})
+
+	} else {
+		addFreeEntryDef.errback("No free entry selected!");
+	}
+
+	return addFreeEntryDef;
+}
+
+
+function getSysListEntryDef(listId, title) {
+	var def = getSysListDef(listId, "de");
+	def.addCallback(function(sysList) {
+		for (var index = 0; index < sysList.length; ++index) {
+			if (sysList[index][0] == title) {
+				return sysList[index];
+			}
+		}
+		return null;
+	});
+
+	return def;
+}
+
+
+function replaceFreeEntryWithSysListEntryDef(freeEntry, sysListEntryId, sysListEntryName, mdekListName) {
+	var def = new dojo.Deferred();
+
+	CatalogService.replaceFreeEntryWithSysListEntry(freeEntry, mdekListName, sysListEntryId, sysListEntryName, {
+		preHook: showLoadingZone,
+		postHook: hideLoadingZone,
+		callback: function() {
+			def.callback();
+		},
+		errorHandler: function(msg, err) {
+			dojo.debug("Error: "+msg);
+			dojo.debugShallow(err);
+			def.errback(err);
+		}
+	});
+
+	return def;
+}
+
+
+scriptScope.replaceFreeEntryWithSysListEntry = function() {
+	var sysListId = dojo.widget.byId("freeEntrySelectionList").getValue();
+
+	var codelistEntry = dojo.widget.byId("freeEntryCodelistTable").getSelectedData();
+	var freeEntry = dojo.widget.byId("freeEntryTable").getSelectedData();
+
+	if (codelistEntry && freeEntry) {
+		var def = new dojo.Deferred();
+		var displayText = dojo.string.substituteParams(message.get("dialog.admin.catalog.management.codelist.replaceFreeEntryWithSysListEntry"), freeEntry.title, codelistEntry.deName);
+		dialog.show(message.get("general.hint"), displayText, dialog.INFO, [
+	        { caption: message.get("general.no"),  action: function() { def.errback("CANCEL"); } },
+	    	{ caption: message.get("general.ok"), action: function() { def.callback(); } }
+		]);
+
+		def.addCallback(function() {
+			return replaceFreeEntryWithSysListEntryDef(freeEntry.title, codelistEntry.entryId, codelistEntry.deName, "LEGIST");
+		});
+
+		def.addCallback(function() {
+			// Show a 'success' message
+			dialog.show(message.get("general.hint"), message.get("dialog.admin.catalog.management.codelist.replaceFreeEntryWithSysListEntrySuccess"), dialog.INFO);
+
+			// Update the frontend after the list has been stored
+			var selectWidget = dojo.widget.byId("freeEntrySelectionList");
+			selectWidget.setValue(selectWidget.getValue());
+		});
+
+		def.addErrback(function(err) {
+			if (err.message != "CANCEL") {
+				dojo.debug("Error: " + err);
+				dojo.debugShallow(err);
+			}
+		});
+
+	} else {
+		dojo.debug("Must select items in both tables!");
+	}
+}
+
+
+
+function saveChangesFreeEntryDef() {
+	var def = new dojo.Deferred();
+
+	var sysListId = dojo.widget.byId("freeEntrySelectionList").getValue();
+	if (sysListId) {
+		var tableData = dojo.widget.byId("freeEntryCodelistTable").store.getData();
+
+		dojo.debug("sysList id: "+sysListId);
+
+		// Build the required parameters
+		var defaultIndex = null;
+		var entryIds = [];
+		var entriesGerman = [];
+		var entriesEnglish = [];
+		for (var index = 0; index < tableData.length; index++) {
+			var currentEntry = tableData[index];
+			var isDefault = currentEntry.isDefault;
+			entryIds.push(currentEntry.entryId);
+			entriesGerman.push(currentEntry.deName);
+			entriesEnglish.push(currentEntry.enName);
+			if (isDefault) {
+				defaultIndex = index;
+			}
+		}
+
+		// Send data to the db
+		var maintainable = dojo.lang.some(MAINTAINABLE_LIST_IDS, function(listId) { return listId == parseInt(sysListId); } );
+		var sysListDef = storeSysListDef(sysListId, maintainable, defaultIndex, entryIds, entriesGerman, entriesEnglish);
+		sysListDef.addCallback(function() {
+			def.callback();
+		});
+		sysListDef.addErrback(function(err) {
+			dojo.debug("Error: " + err);
+			dojo.debugShallow(err);
+			def.errback(err);
+		});
+	}
+
+	return def;
 }
 
 
@@ -342,10 +706,10 @@ function hideEditDisabledHint() {
 			<div class="spacer"></div>
 			<div id="codeLists" class="inputContainer noSpaceBelow">
 				<span class="functionalLink onTab"><img src="img/ic_fl_export.gif" width="11" height="10" alt="Export" /><a href="#" title="Exportieren [Popup]">Exportieren</a><img src="img/ic_fl_import.gif" width="11" height="10" alt="Import" /><a href="#" title="Importieren [Popup]">Importieren</a></span>
-				<div id="lists" dojoType="ingrid:TabContainer" class="w668 h452" selectedChild="selection">
+				<div id="codeListTabContainer" dojoType="ingrid:TabContainer" class="w668 h452" selectedChild="codeListTab">
 
 					<!-- TAB 1 START -->
-					<div id="selection" dojoType="ContentPane" class="blueTopBorder grey" label="Auswahllistenpflege">
+					<div id="codeListTab" dojoType="ContentPane" class="blueTopBorder grey" label="Auswahllistenpflege">
 						<div class="inputContainer grey field w668 noSpaceBelow">
 							<span class="label"><label for="selectionList" onclick="javascript:dialog.showContextHelp(arguments[0], 'Auswahlliste')">Auswahlliste</label></span>
 							<span class="input spaceBelow"><input dojoType="ingrid:Select" autocomplete="false" style="width:606px;" id="selectionList" /></span>
@@ -390,22 +754,31 @@ function hideEditDisabledHint() {
 							</div>
 							<div class="fill"></div>
 						</div>
+						<div style="margin-top:40px; margin-right:14px;" >
+							<span style="height:20px !important;">
+								<span style="float:right;">
+									<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveChanges();">Speichern</button>
+								</span>
+								<span id="codelistsLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden">
+									<img src="img/ladekreis.gif" />
+								</span>
+							</span>
+						</div>
 					</div> <!-- TAB 1 END -->
 
 					<!-- TAB 2 START -->
-					<div dojoType="ContentPane" class="blueTopBorder grey" label="Liste: gesetzliche Grundlagen">
+					<div id="freeEntryTab" dojoType="ContentPane" class="blueTopBorder grey" label="Liste: gesetzliche Grundlagen">
 						<div class="inputContainer grey field w668 noSpaceBelow">
-							<span class="label"><label for="isoList" onclick="javascript:dialog.showContextHelp(arguments[0], 'Auswahlliste')">Auswahlliste</label></span>
-							<span class="input spaceBelow"><div dojoType="ingrid:ComboBox" toggle="plain" style="width:606px;" widgetId="isoList"></div></span>
-
+							<span class="label"><label for="freeEntrySelectionList" onclick="javascript:dialog.showContextHelp(arguments[0], 'Auswahlliste')">Auswahlliste</label></span>
+							<span class="input spaceBelow"><input dojoType="ingrid:Select" autocomplete="false" style="width:606px;" id="freeEntrySelectionList"></div></span>
 							<div class="inputContainer w644 noSpaceBelow">
 								<span class="entry first">
 									<span class="label" style="height:37px;">Eint&auml;ge, die nicht in der Schl&uuml;sseltabelle<br />vorhanden sind</span>
 
-									<table id="legalBasicsLeft" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable interactive w264 relativePos">
+									<table id="freeEntryTable" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" multiple="false" class="filteringTable nosort interactive w264 relativePos">
 										<thead>
 											<tr>
-												<th field="name" dataType="String">Name</th>
+												<th field="title" nosort="true" dataType="String">Name</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -416,17 +789,17 @@ function hideEditDisabledHint() {
 								<span class="entry">
 									<span class="buttonCol" style="margin:80px 0px 0px;">
 										<button dojoType="ingrid:Button" onClick="javascript:scriptScope.addFreeEntryToSysList();">&gt; &Uuml;bertragen</button>
-										<button dojoType="ingrid:Button" onClick="addAll">&lt; Ersetzen</button>
-										<button dojoType="ingrid:Button" onClick="removeAll">&gt;&gt; Alle</button>
+										<button dojoType="ingrid:Button" onClick="javascript:scriptScope.addAllFreeEntriesToSysList();">&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt; Alle&nbsp;&nbsp;&nbsp;&nbsp;</button>
+										<button dojoType="ingrid:Button" onClick="javascript:scriptScope.replaceFreeEntryWithSysListEntry();">&nbsp;&lt; Ersetzen &nbsp;</button>
 									</span>
 								</span>
 
 								<span class="entry">
 									<span class="label" style="height:37px;">Inhalte der Schl&uuml;sseltabelle</span>
-									<table id="legalBasicsRight" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" class="filteringTable interactive w264 relativePos">
+									<table id="freeEntryCodelistTable" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" multiple="false" class="filteringTable nosort interactive w264 relativePos">
 										<thead>
 											<tr>
-												<th field="name" dataType="String">Name*</th>
+												<th field="deName" nosort="true" dataType="String">Name</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -436,21 +809,17 @@ function hideEditDisabledHint() {
 
 								<div class="fill spacer"></div>
 							</div>
+							<div style="margin-top:40px; margin-right:40px;" >
+								<span style="height:20px !important;">
+									<span id="codelistsFreeLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden">
+										<img src="img/ladekreis.gif" />
+									</span>
+								</span>
+							</div>
 
 						</div>
 					</div> <!-- TAB 2 END -->
 				</div>
-			</div>
-
-			<div class="inputContainer">
-				<span class="button w628" style="height:20px !important;">
-					<span style="float:right;">
-						<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveChanges();">Speichern</button>
-					</span>
-					<span id="codelistsLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
-						<img src="img/ladekreis.gif" />
-					</span>
-				</span>
 			</div>
 		</div>
 	</div>

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.beans.AdditionalFieldBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.GenericValueBean;
@@ -28,9 +29,17 @@ public class CatalogServiceImpl implements CatalogService {
 		return catalogRequestHandler.getSysLists(listIds, languageCode);
 	}
 
+	public String[] getFreeListEntries(MdekSysList sysList) {
+		return catalogRequestHandler.getFreeListEntries(sysList);
+	}
+
 	public void storeSysList(Integer listId, boolean maintainable, Integer defaultEntryIndex, Integer[] entryIds,
 			String[] entriesGerman, String[] entriesEnglish) {
 		catalogRequestHandler.storeSysList(listId, maintainable, defaultEntryIndex, entryIds, entriesGerman, entriesEnglish);
+	}
+
+	public void replaceFreeEntryWithSysListEntry(String freeEntry, MdekSysList sysList, Integer sysListEntryId, String sysListEntryName) {
+		catalogRequestHandler.replaceFreeEntryWithSysListEntry(freeEntry, sysList, sysListEntryId, sysListEntryName);
 	}
 
 	public List<Map<String, String>> getSysGuis(String[] guiIds) {

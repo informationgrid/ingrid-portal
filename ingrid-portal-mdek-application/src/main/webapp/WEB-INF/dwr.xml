@@ -122,6 +122,7 @@
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcEntityOrderBy"/>
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcQAEntitiesSelectionType"/>
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcWorkEntitiesSelectionType"/>
+		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$MdekSysList"/>
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$WorkState"/>
 
 		<!-- Dependencies from mdek-service -->

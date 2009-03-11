@@ -3,6 +3,7 @@ package de.ingrid.mdek.handler;
 import java.util.List;
 import java.util.Map;
 
+import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.beans.AdditionalFieldBean;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.CatalogBean;
@@ -18,6 +19,9 @@ public interface CatalogRequestHandler {
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode);
 	public void storeSysList(Integer listId, boolean maintainable, Integer defaultEntryIndex, Integer[] entryIds,
 			String[] entriesGerman, String[] entriesEnglish);
+	public String[] getFreeListEntries(MdekSysList sysList);
+	public void replaceFreeEntryWithSysListEntry(String freeEntry, MdekSysList sysList, Integer sysListEntryId, String sysListEntryName);
+
 	public List<Map<String, String>> getSysGuis(String[] guiIds);
 	public List<AdditionalFieldBean> getSysAdditionalFields(Long[] fieldIds, String language);
 	public List<Map<String, String>> storeSysGuis(List<Map<String, String>> sysGuis, boolean refetchAfterStore);

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.beans.AdditionalFieldBean;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.CatalogBean;
@@ -54,6 +55,30 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 				listId,
 				maintainable,
 				defaultEntryIndex, entryIds, entriesGerman, entriesEnglish,
+				MdekSecurityUtils.getCurrentUserUuid());
+
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		if (result == null) {
+			MdekErrorUtils.handleError(response);
+		}
+	}
+
+	public String[] getFreeListEntries(MdekSysList sysList) {
+		IngridDocument response = mdekCallerCatalog.getFreeListEntries(
+				connectionFacade.getCurrentPlugId(),
+				sysList,
+				MdekSecurityUtils.getCurrentUserUuid());
+
+		return MdekCatalogUtils.extractFreeSysListEntriesFromResponse(response);
+	}
+
+	public void replaceFreeEntryWithSysListEntry(String freeEntry, MdekSysList sysList, Integer sysListEntryId, String sysListEntryName) {
+		IngridDocument response = mdekCallerCatalog.replaceFreeEntryWithSyslistEntry(
+				connectionFacade.getCurrentPlugId(),
+				freeEntry,
+				sysList,
+				sysListEntryId,
+				sysListEntryName,
 				MdekSecurityUtils.getCurrentUserUuid());
 
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
