@@ -849,7 +849,7 @@ function hideSplash(){
 						<span id="uiElement3385" type="optional">
 	                  		<span class="label"><label for="ref2DocumentType" onclick="javascript:dialog.showContextHelp(arguments[0], 3385)"><script>document.write(message.get("ui.obj.type2.documentType"))</script></label></span>
 	                  		<span class="input spaceBelow">
-	                  			<div dojoType="ingrid:ComboBox" maxlength="80" style="width:302px;" id="ref2DocumentType" listId="3385" />
+	                  			<div dojoType="ingrid:ComboBox" maxlength="80" style="width:302px;" id="ref2DocumentType" listId="3385"></div>
 			                </span>
 						</span>
 					</div>
