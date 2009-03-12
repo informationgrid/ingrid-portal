@@ -260,7 +260,7 @@
 	"dialog.research.ext.obj.descriptor":"Thesaurus-Schlagwort",
 	"dialog.research.ext.obj.parentTerms":"Oberbegriffe",
 	"dialog.research.ext.obj.childTerms":"Unterbegriffe",
-	"dialog.research.ext.obj.similarTerms":"&Auml;hnliche Begriffe",
+	"dialog.research.ext.obj.similarTerms":"Ähnliche Begriffe",
 	"dialog.research.ext.obj.invalidDate":"Das von Ihnen eingegebene Datum '%{0}' ist ung&uuml;ltig und wird zur&uuml;ckgesetzt.",
 
 	"dialog.wizard.selectTitle":"Assistent w&auml;hlen",
