@@ -114,7 +114,7 @@ public class MdekCatalogUtils {
 				String fieldName = fieldDefinition.getString(MdekKeys.SYS_ADDITIONAL_FIELD_NAME);
 				String fieldTypeStr = fieldDefinition.getString(MdekKeys.SYS_ADDITIONAL_FIELD_TYPE);
 				AdditionalFieldType dbFieldType = EnumUtil.mapDatabaseToEnumConst(AdditionalFieldType.class, fieldTypeStr);
-				Type fieldType = (AdditionalFieldType.TEXT == dbFieldType)? Type.TEXT : Type.LIST;
+				Type fieldType = (AdditionalFieldType.LIST == dbFieldType)? Type.LIST : Type.TEXT;
 
 				String listLanguage = null;
 				String[] listEntries = null;
@@ -143,6 +143,60 @@ public class MdekCatalogUtils {
 		} else {
 			MdekErrorUtils.handleError(response);
 			return null;
+		}
+	}
+
+	public static List<IngridDocument> convertSysAdditionalFields(List<AdditionalFieldBean> additionalFields) {
+		List<IngridDocument> resultDocs = new ArrayList<IngridDocument>();
+
+		if (additionalFields != null) {
+			for (AdditionalFieldBean additionalField : additionalFields) {
+				IngridDocument additionalFieldDoc = new IngridDocument();
+				additionalFieldDoc.put(MdekKeys.SYS_ADDITIONAL_FIELD_IDENTIFIER, additionalField.getId());
+				additionalFieldDoc.putInt(MdekKeys.SYS_ADDITIONAL_FIELD_LENGTH, additionalField.getSize());
+				additionalFieldDoc.put(MdekKeys.SYS_ADDITIONAL_FIELD_NAME, additionalField.getName());
+				String fieldType = additionalField.getType() == Type.LIST ? AdditionalFieldType.LIST.getDbValue() : AdditionalFieldType.TEXT.getDbValue();
+				additionalFieldDoc.put(MdekKeys.SYS_ADDITIONAL_FIELD_TYPE, fieldType);
+
+				if (Type.LIST == additionalField.getType()) {
+					String listKey = MdekKeys.SYS_ADDITIONAL_FIELD_LIST_ITEMS_KEY_PREFIX + additionalField.getListLanguage();
+					if (additionalField.getListEntries() != null) {
+						String[] entries = additionalField.getListEntries().toArray(new String[0]);
+						additionalFieldDoc.put(listKey, entries);
+					}
+					additionalFieldDoc.put(MdekKeys.SYS_ADDITIONAL_FIELD_LIST_TYPE, "Z");
+				}
+				resultDocs.add(additionalFieldDoc);
+			}
+		}
+
+		return resultDocs;
+	}
+
+	public static void addIdsToSysAdditionalFields(List<AdditionalFieldBean> additionalFields, IngridDocument response) {
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		if (result != null) {
+			Long[] additionalFieldIds = (Long[]) result.get(MdekKeys.SYS_ADDITIONAL_FIELD_IDS);
+			if (additionalFields != null && additionalFieldIds != null) {
+				if (additionalFields.size() != additionalFieldIds.length) {
+					log.error("returned number of IDs does not match the number of additional fields. Can't merge IDs!");
+					return;
+				}
+
+				for (int index = 0; index < additionalFields.size(); ++index) {
+					AdditionalFieldBean additionalField = additionalFields.get(index);
+					if (additionalField.getId() == null) {
+						// New Id has to be stored in the additional field
+						additionalField.setId(additionalFieldIds[index]);
+
+					} else if (additionalField.getId().longValue() != additionalFieldIds[index]) {
+						log.error("returned additional field ID does not match the current additional field ID!");
+					}
+				}
+			}
+
+		} else {
+			MdekErrorUtils.handleError(response);
 		}
 	}
 

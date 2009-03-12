@@ -199,6 +199,8 @@ dojo.widget.defineWidget(
     // add editor to metadata
     this._meta['editor'] = "";
 
+    this.disableNewEntries = dojo.html.hasClass(this.domNode, "disablenewentries");
+
     if(dojo.html.hasClass(this.domNode, 'interactive') && !dojo.html.hasClass(this.domNode, 'readonly')) {
       // connect the couble click event for editing
       dojo.event.connectOnce(this.domNode.tBodies[0], "ondblclick", this, "onDblClick");
@@ -700,6 +702,10 @@ dojo.widget.defineWidget(
       this.origValue = this.editData[this.columns[this.curColumn].getField()];
     }
     else {
+	  if (this.disableNewEntries == true) {
+		return;
+	  }
+
       // new row
       this.editData = null;
       this.curRow = null;

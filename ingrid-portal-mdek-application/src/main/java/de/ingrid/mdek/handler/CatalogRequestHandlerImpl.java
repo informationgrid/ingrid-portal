@@ -108,6 +108,18 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		return MdekCatalogUtils.extractSysAdditionalFieldsFromResponse(response);
 	}
 
+	public List<AdditionalFieldBean> storeAllSysAdditionalFields(List<AdditionalFieldBean> additionalFields) {
+		List<IngridDocument> additionalFieldsDoc = MdekCatalogUtils.convertSysAdditionalFields(additionalFields);
+
+		IngridDocument response = mdekCallerCatalog.storeAllSysAdditionalFields(
+				connectionFacade.getCurrentPlugId(),
+				additionalFieldsDoc,
+				MdekSecurityUtils.getCurrentUserUuid());
+
+		MdekCatalogUtils.addIdsToSysAdditionalFields(additionalFields, response);
+		return additionalFields;
+	}
+
 	public List<GenericValueBean> getSysGenericValues(String[] keyNames) {
 		IngridDocument response = mdekCallerCatalog.getSysGenericKeys(connectionFacade.getCurrentPlugId(), keyNames, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractSysGenericKeysFromResponse(response);

@@ -6,15 +6,15 @@
 <script type="text/javascript">
 var scriptScope = this;
 
+var DEFAULT_LANGUAGE = "de";
+
 _container_.addOnLoad(function() {
 	resetInputFields();
-	var language = "de";
+	var language = DEFAULT_LANGUAGE;
 
 	CatalogService.getSysAdditionalFields(null, language, {
 		callback: function(additionalFieldList) {
-			additionalFieldList.sort(function(a, b) { return (a.id - b.id); });
-			var tableData = UtilList.addTableIndices(additionalFieldList);
-			dojo.widget.byId("addFieldsList").store.setData(tableData);
+			updateAdditionalFields(additionalFieldList);
 		},
 		errorHandler: function(msg, err) {
 			dojo.debug("Error: "+msg);
@@ -37,25 +37,36 @@ _container_.addOnLoad(function() {
 	});
 });
 
+function updateAdditionalFields(additionalFieldList) {
+	additionalFieldList.sort(function(a, b) { return (a.id - b.id); });
+	var tableData = UtilList.addTableIndices(additionalFieldList);
+	dojo.widget.byId("addFieldsList").store.setData(tableData);	
+}
 
 scriptScope.saveChanges = function() {
 	// TODO implement
 	dojo.debug("Function not implemented yet.");
 
 	var additionalFields = dojo.widget.byId("addFieldsList").store.getData();
-	var languageCode = "de";
+	var languageCode = DEFAULT_LANGUAGE;
 
-	storeAdditionalFieldsDef(additionalFields, languageCode);
+	var def = storeAdditionalFieldsDef(additionalFields);
+	def.addCallback(function(additionalFieldList) {
+		dojo.debug("Additional fields stored successfully.");
+		updateAdditionalFields(additionalFieldList);
+	});
+	def.addErrback(function(err) {
+		dojo.debug("Error: " + err);
+		dojo.debugShallow(err);
+	});
 }
 
-function storeAdditionalFieldsDef(additionalFields, languageCode) {
+function storeAdditionalFieldsDef(additionalFields) {
 	var def = new dojo.Deferred();
 
-	CatalogService.storeSysAdditionalFields(additionalFields, languageCode, {
-		callback: function() {
-			// TODO implement!
-			dojo.debug("success.");
-			def.callback();
+	CatalogService.storeAllSysAdditionalFields(additionalFields, {
+		callback: function(res) {
+			def.callback(res);
 		},
 		errorHandler: function(msg, err) {
 			dojo.debug("Error: "+msg);
@@ -83,7 +94,8 @@ scriptScope.addEntry = function() {
 //			id: "new field",
 			name: fieldName,
 			size: numChars,
-			type: fieldType
+			type: fieldType,
+			listLanguage: DEFAULT_LANGUAGE
 		});
 		resetInputFields();
 
@@ -156,7 +168,7 @@ function editListEntries(menuItem) {
 		                	<option value="LIST"><fmt:message key="dialog.admin.catalog.management.additionalFields.list" /></option>
 		                </select>
 					</div>
-					<table id="addFieldsList" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable nosort interactive">
+					<table id="addFieldsList" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable nosort interactive disablenewentries">
 						<thead>
 							<tr>
 								<th nosort="true" field="id" dataType="String" width="70">Nr.</th>

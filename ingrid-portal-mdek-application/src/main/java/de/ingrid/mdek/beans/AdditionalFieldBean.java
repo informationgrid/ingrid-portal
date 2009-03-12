@@ -5,7 +5,7 @@ import java.util.List;
 public class AdditionalFieldBean {
 	public enum Type { TEXT, LIST }
 
-	private long id;
+	private Long id;
 	private String name;
 	private Type type;
 	private int size;
@@ -13,10 +13,10 @@ public class AdditionalFieldBean {
 	private String listLanguage;
 	private List<String> listEntries;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {
