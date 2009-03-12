@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>InGrid-Editor</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
@@ -46,7 +46,7 @@ function loadit() {
 				document.location.href = redirectUrl;
 
 			} else {
-				alert("Die Applikation kann nicht geöffnet werden. Bei der Anmeldung ist folgender Fehler aufgetreten: "+errMsg);
+				alert("Die Applikation kann nicht geÃ¶ffnet werden. Bei der Anmeldung ist folgender Fehler aufgetreten: "+errMsg);
 				document.location.href='closeWindow.jsp';
 			}
 		}

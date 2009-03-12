@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- Set the locale to the value of parameter 'lang' and init the message bundle messages.properties -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>" scope="session" />
@@ -176,7 +177,7 @@ function hideSplash(){
   	  <div id="title"><img src="img/title_erfassung.gif" width="158" height="24" alt="Metadatenerfassung" /></div>
   	  <div id="metaNavi">
   	    <ul>
-  	      <li><span id="currentUserName">Benutzername</span> · <span id="currentUserRole">Rollenbezeichnung</span> · <span id="currentCatalogName">Katalogname</span></li>
+  	      <li><span id="currentUserName">Benutzername</span> Â· <span id="currentUserRole">Rollenbezeichnung</span> Â· <span id="currentCatalogName">Katalogname</span></li>
   	      <li class="seperator">|</li>
   	      <li><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe"><script>document.write(message.get("menu.general.help"))</script></a></li>
   	      <li class="seperator">|</li>
@@ -430,7 +431,7 @@ function hideSplash(){
 								<table id="ref1Representation" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 									<thead>
 										<tr>
-											<th nosort="true" field="title" dataType="String" editor="ref1RepresentationCombobox">Digitale Repräsentation</th>
+											<th nosort="true" field="title" dataType="String" editor="ref1RepresentationCombobox">Digitale ReprÃ¤sentation</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1694,7 +1695,7 @@ function hideSplash(){
 	            </div>
 	          </div>
 
-	          <!-- VERFÜGBARKEIT //-->
+	          <!-- VERFÃœGBARKEIT //-->
 	          <div id="availability" class="contentBlock">
 	          	<div class="titleBar">
 	          	  <div class="titleIcon"><a href="javascript:toggleFields('availability');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>

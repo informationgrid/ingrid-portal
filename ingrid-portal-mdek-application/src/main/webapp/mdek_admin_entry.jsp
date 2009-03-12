@@ -1,5 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- Set the locale to the value of parameter 'lang' and init the message bundle messages.properties -->
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>" scope="session" />
 <fmt:setBundle basename="messages" scope="session"/>
@@ -351,7 +352,7 @@ function hideSplash(){
   	  <div id="title"><img src="img/title_erfassung.gif" width="158" height="24" alt="Metadatenerfassung" /></div>
   	  <div id="metaNavi">
   	    <ul>
-  	      <li><span id="currentUserName">Benutzername</span> · <span id="currentUserRole">Rollenbezeichnung</span> · <span id="currentCatalogName">Katalogname</span></li>
+  	      <li><span id="currentUserName">Benutzername</span> Â· <span id="currentUserRole">Rollenbezeichnung</span> Â· <span id="currentCatalogName">Katalogname</span></li>
   	      <li class="seperator">|</li>
   	      <li><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe"><script>document.write(message.get("menu.general.help"))</script></a></li>
   	      <li class="seperator">|</li>
@@ -384,7 +385,7 @@ function hideSplash(){
   	    <ul>
   	      <li><a id="page2Subnavi1" onClick="clickMenu('page2', 'page2')" href="javascript:void(0);" class="current" title="Nutzeradministration"><script>document.write(message.get("menu.admin.main.user.userAdmin"))</script></a></li>
   	      <li><a id="page2Subnavi2" onClick="clickMenu('page2', 'page2Sub2')" href="javascript:void(0);" title="Gruppenadministration"><script>document.write(message.get("menu.admin.main.user.groupAdmin"))</script></a></li>
-  	      <li><a id="page2Subnavi3" onClick="clickMenu('page2', 'page2Sub3')" href="javascript:void(0);" title="Berechtigungsübersicht"><script>document.write(message.get("menu.admin.main.user.permissions"))</script></a></li>
+  	      <li><a id="page2Subnavi3" onClick="clickMenu('page2', 'page2Sub3')" href="javascript:void(0);" title="BerechtigungsÃ¼bersicht"><script>document.write(message.get("menu.admin.main.user.permissions"))</script></a></li>
   	    </ul>
   	  </div>
 	  <div id="page3Subnavi" class="subnavi" style="display:none">
