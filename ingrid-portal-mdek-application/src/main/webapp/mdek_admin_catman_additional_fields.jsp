@@ -44,20 +44,31 @@ function updateAdditionalFields(additionalFieldList) {
 }
 
 scriptScope.saveChanges = function() {
-	// TODO implement
-	dojo.debug("Function not implemented yet.");
+	var def = new dojo.Deferred();
+
+	// Ask the user if he really wants to store all changes
+	var displayText = message.get("dialog.admin.catalog.management.additionalFields.store");
+	dialog.show(message.get("general.hint"), displayText, dialog.INFO, [
+        { caption: message.get("general.no"),  action: function() { def.errback("CANCEL"); } },
+    	{ caption: message.get("general.ok"), action: function() { def.callback(); } }
+	]);
+
 
 	var additionalFields = dojo.widget.byId("addFieldsList").store.getData();
 	var languageCode = DEFAULT_LANGUAGE;
 
-	var def = storeAdditionalFieldsDef(additionalFields);
+	def.addCallback(function() {
+		return storeAdditionalFieldsDef(additionalFields);
+ 	});
 	def.addCallback(function(additionalFieldList) {
-		dojo.debug("Additional fields stored successfully.");
 		updateAdditionalFields(additionalFieldList);
+		dialog.show(message.get("general.hint"), message.get("dialog.admin.catalog.management.additionalFields.storeSuccess"), dialog.INFO);
 	});
 	def.addErrback(function(err) {
-		dojo.debug("Error: " + err);
-		dojo.debugShallow(err);
+		if (err.message != "CANCEL") {
+			dojo.debug("Error: " + err);
+			dojo.debugShallow(err);
+		}
 	});
 }
 

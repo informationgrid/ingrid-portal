@@ -189,6 +189,8 @@
 	"dialog.admin.catalog.management.codelist.freeEntriesToSysListEntriesSuccess":"The entries were successfully added as sysList entries.",
 	"dialog.admin.catalog.management.codelist.replaceFreeEntryWithSysListEntry":"The entry '%{0}' will be replaced with the following sysList entry: '%{1}'<br>Do you want to continue?",
 	"dialog.admin.catalog.management.codelist.replaceFreeEntryWithSysListEntrySuccess":"The entry was replaced successfully.",
+	"dialog.admin.catalog.management.additionalFields.store":"All changes will be stored. If fields have been deleted, all containing data will be deleted as well<br>Do you want to continue?",
+	"dialog.admin.catalog.management.additionalFields.storeSuccess":"The additional fields were stored successfully.",
 	"dialog.admin.management.duplicates.success":"The object name was updated successfully.",
 	"dialog.admin.management.urls.lastProcessInfo":"Information about the last process:",
 	"dialog.admin.management.urls.currentProcessInfo":"Information about the current process:",

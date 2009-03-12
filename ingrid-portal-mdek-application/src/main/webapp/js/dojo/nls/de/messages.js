@@ -168,6 +168,8 @@
 	"dialog.admin.catalog.management.codelist.freeEntriesToSysListEntriesSuccess":"Die Eintr&auml;ge wurden erfolgreich als sysList Eintr&auml;ge &uuml;bertragen.",
 	"dialog.admin.catalog.management.codelist.replaceFreeEntryWithSysListEntry":"Der freie Eintrag '%{0}' wird mit dem sysList Eintrag '%{1}' ersetzt.<br>M&ouml;chten Sie mit der Aktion fortfahren?",
 	"dialog.admin.catalog.management.codelist.replaceFreeEntryWithSysListEntrySuccess":"Der freie Eintrag wurde erfolgreich mit dem gew&auml;hlten sysList Eintrag ersetzt.",
+	"dialog.admin.catalog.management.additionalFields.store":"Alle &Auml;nderungen werden gespeichert. Falls Felder entfernt wurden, werden auch alle Daten aus diesen Feldern gel&ouml;scht.<br>M&ouml;chten Sie mit der Aktion fortfahren?",
+	"dialog.admin.catalog.management.additionalFields.storeSuccess":"Die zus&auml;tzlichen Felder wurden erfolgreich gespeichert.",
 	"dialog.admin.management.duplicates.success":"Der Objektname wurde erfolgreich aktualisiert.",
 	"dialog.admin.management.urls.lastProcessInfo":"Informationen zum letzten Prozess:",
 	"dialog.admin.management.urls.currentProcessInfo":"Informationen zum laufenden Prozess:",
