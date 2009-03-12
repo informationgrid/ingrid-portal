@@ -16,9 +16,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekUtils.CsvRequestType;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
-import de.ingrid.mdek.beans.CodeListJobInfoBean;
 import de.ingrid.mdek.beans.URLJobInfoBean;
+import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
@@ -201,15 +202,35 @@ public class CatalogManagementServiceImpl {
 		this.catalogRequestHandler = catalogRequestHandler;
 	}
 	
-	public CodeListJobInfoBean getObjectsOfAuskunftAddress(String plugId, String auskunftAddressUuid, String userId) {
-		return catalogRequestHandler.getObjectsOfAuskunftAddress(auskunftAddressUuid);
+	public List<MdekDataBean> getObjectsOfAuskunftAddress(String auskunftAddressUuid, int maxNumHits) {
+		return catalogRequestHandler.getObjectsOfAuskunftAddress(auskunftAddressUuid, maxNumHits);
 	}
 	
-	public CodeListJobInfoBean getObjectsOfResponsibleUser(String plugId, String responsibleUserUuid, String userId) {
-		return catalogRequestHandler.getObjectsOfResponsibleUser(responsibleUserUuid);
+	public List<MdekDataBean> getObjectsOfResponsibleUser(String responsibleUserUuid, int maxNumHits) {
+		return catalogRequestHandler.getObjectsOfResponsibleUser(responsibleUserUuid, maxNumHits);
 	}
 	
-	public CodeListJobInfoBean getAddressesOfResponsibleUser(String plugId, String responsibleUserUuid, String userId) {
-		return catalogRequestHandler.getAddressesOfResponsibleUser(responsibleUserUuid);
+	public List<MdekAddressBean> getAddressesOfResponsibleUser(String responsibleUserUuid, int maxNumHits) {
+		return catalogRequestHandler.getAddressesOfResponsibleUser(responsibleUserUuid, maxNumHits);
+	}
+	
+	public FileTransfer getCsvData( String uuid, CsvRequestType type ) {
+		return new FileTransfer("export.csv.gz", "x-gzip", catalogRequestHandler.getCsvData(uuid, type));
+	}
+	
+	public void replaceAddress(String oldUuid, String newUuid) {
+		try {
+			IngridDocument response = catalogRequestHandler.replaceAddress(oldUuid, newUuid);
+			
+			IMdekClientCaller mdekClientCaller = connectionFacade.getMdekClientCaller();
+			if (mdekClientCaller.getResultFromResponse(response) == null) {
+				MdekErrorUtils.handleError(response);
+			}
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while replacing address.", e);
+			throw MdekErrorUtils.convertToRuntimeException(e);
+		}
 	}
 }

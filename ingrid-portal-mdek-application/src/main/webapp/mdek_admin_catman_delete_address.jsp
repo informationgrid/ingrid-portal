@@ -1,9 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
 var scriptScope = this;
+var MAX_NUM_DATASETS = 100;
 
 _container_.addOnLoad(function() {
 	initTree();
@@ -85,9 +87,11 @@ function initTreeEventHandler() {
 function deleteNodeSelected(node) {
 	if (isValidAddressNode(node)) {
 		var addressUuid = node.uuid;
+		showLoadingZone();
 		var detailedAddressInfoDef = createDetailedAddressInformationDef(addressUuid);
 		detailedAddressInfoDef.addCallback(function(detailedAddressInfo) {
 			updateDeleteAddressInformation(detailedAddressInfo);
+			hideLoadingZone();
 		});
 	} else {
 		clearDeleteAddressInformation();
@@ -97,9 +101,11 @@ function deleteNodeSelected(node) {
 function replaceNodeSelected(node) {
 	if (isValidAddressNode(node)) {
 		var addressUuid = node.uuid;
+		showLoadingZone();
 		var detailedAddressInfoDef = createDetailedAddressInformationDef(addressUuid);
 		detailedAddressInfoDef.addCallback(function(detailedAddressInfo) {
 			updateNewAddressInformation(detailedAddressInfo);
+			hideLoadingZone();
 		});
 	} else {
 		clearNewAddressInformation();
@@ -114,26 +120,47 @@ function isValidAddressNode(node) {
 // Update the fields for 'address to delete'
 // Input parameter is an addressDetails object created by 'createDetailedAddressInformationDef'
 function updateDeleteAddressInformation(detailedAddressInfo) {
+	// Set general information (title, creation date, Id)
 	if (detailedAddressInfo.address) {
 		dojo.widget.byId("addressDeleteDataTitle").setValue(UtilAddress.createAddressTitle(detailedAddressInfo.address));
 		dojo.widget.byId("addressDeleteDataCreationDate").setValue(detailedAddressInfo.address.creationTime);
 		dojo.widget.byId("addressDeleteDataID").setValue(detailedAddressInfo.address.uuid);
 	}
+	// Set responsible user
 	if (detailedAddressInfo.responsibleUser) {
 		dojo.widget.byId("addressDeleteDataUser").setValue(detailedAddressInfo.responsibleUser.title);
 	}
+	// Set qa user list
 	dojo.widget.byId("addressDeleteDataMDQS").store.setData(detailedAddressInfo.qaUsers);
 
+	// Set List of info addresses
 	if (detailedAddressInfo.objInfoAddressList) {
 		UtilList.addIcons(detailedAddressInfo.objInfoAddressList);
 		var replaceInfoStore = dojo.widget.byId("replaceInfoAddressList").store;
 		replaceInfoStore.setData(detailedAddressInfo.objInfoAddressList);
 	}
 
+	// Set List of objects whose responsible user will be replaced
 	if (detailedAddressInfo.objResponsibleAddressList) {
 		UtilList.addIcons(detailedAddressInfo.objResponsibleAddressList);
 		var replaceInfoStore = dojo.widget.byId("replaceUserList").store;
 		replaceInfoStore.setData(detailedAddressInfo.objResponsibleAddressList);
+	}
+	
+	// Set List of addresses whose responsible user will be replaced
+	if (detailedAddressInfo.addrResponsibleUserList) {
+		UtilList.addIcons(detailedAddressInfo.addrResponsibleUserList);
+		UtilList.addAddressTitles(detailedAddressInfo.addrResponsibleUserList);
+		var replaceInfoStore = dojo.widget.byId("replaceAddressList").store;
+		replaceInfoStore.setData(detailedAddressInfo.addrResponsibleUserList);
+	}
+
+	if (detailedAddressInfo.objResponsibleAddressList.length >= MAX_NUM_DATASETS
+		|| detailedAddressInfo.objInfoAddressList.length >= MAX_NUM_DATASETS
+		|| detailedAddressInfo.addrResponsibleUserList.length >= MAX_NUM_DATASETS) {
+		dojo.html.setVisibility("maxNumDatasetsWarning", true);
+	} else {
+		dojo.html.setVisibility("maxNumDatasetsWarning", false);
 	}
 }
 
@@ -145,6 +172,7 @@ function clearDeleteAddressInformation() {
 	dojo.widget.byId("addressDeleteDataMDQS").store.clearData();
 	dojo.widget.byId("replaceInfoAddressList").store.clearData();
 	dojo.widget.byId("replaceUserList").store.clearData();
+	dojo.widget.byId("replaceAddressList").store.clearData();
 }
 
 //Update the fields for 'address to replace'
@@ -172,21 +200,26 @@ function clearNewAddressInformation() {
 // Returns a deferred object with the following information on callback:
 // { address: address details for the given uuid,
 //   responsibleUser: {title:address title, uuid:address uuid},
-//   qaUsers: [ {title:address title, uuid:address uuid}, {...}, ...]
+//   qaUsers: [ {title:address title, uuid:address uuid}, {...}, ...],
+//   objInfoAddressList: [ {obj1}, {obj2}, ... ],
+//   objResponsibleAddressList: [ {obj1}, {obj2}, ... ]
 // }
 function createDetailedAddressInformationDef(addressUuid) {
 	var def = new dojo.Deferred();
 	var addressDetailsDef = getAddressDetailsDef(addressUuid);
 	var responsibleUsersDef = getUsersWithWritePermissionDef(addressUuid);
+
 	var objInfoAddressDef = getObjectsWithInfoAddressDef(addressUuid);
 	var objResponsibleAddressDef = getObjectsWithResponsibleUserDef(addressUuid);
+	var addrResponsibleUserDef = getAddressesWithResponsibleUser(addressUuid);
 
-	var defList = new dojo.DeferredList([addressDetailsDef, responsibleUsersDef, objInfoAddressDef, objResponsibleAddressDef], false, false, true);
+	var defList = new dojo.DeferredList([addressDetailsDef, responsibleUsersDef, objInfoAddressDef, objResponsibleAddressDef, addrResponsibleUserDef], false, false, true);
 	defList.addCallback(function (resultList) {
 		var addressDetails = resultList[0][1]; 
 		var responsibleUserList = resultList[1][1];
 		var objInfoAddressList = resultList[2][1];
 		var objResponsibleAddressList = resultList[3][1];
+		var addrResponsibleUserList = resultList[4][1];
 
 		var responsibleUser = null;
 		for (var index = 0; index < responsibleUserList.length; ++index) {
@@ -207,7 +240,8 @@ function createDetailedAddressInformationDef(addressUuid) {
 			responsibleUser:responsibleUser,
 			qaUsers:qaUsers,
 			objInfoAddressList:objInfoAddressList,
-			objResponsibleAddressList:objResponsibleAddressList
+			objResponsibleAddressList:objResponsibleAddressList,
+			addrResponsibleUserList:addrResponsibleUserList
 		});
 	});
 
@@ -259,30 +293,11 @@ function getUsersWithWritePermissionDef(addressUuid) {
 
 //Fetch objects where given adrUuid is set as the info address
 function getObjectsWithInfoAddressDef(adrUuid) {
-	var queryStr = buildInfoAddressQuery(adrUuid);
-	return getObjectsForHQLQueryDef(queryStr);
-}
-
-// Fetch objects where given adrUuid is set as the responsible user
-function getObjectsWithResponsibleUserDef(adrUuid) {
-	var queryStr = buildResponsibleAddressQuery(adrUuid);
-	return getObjectsForHQLQueryDef(queryStr);
-}
-
-// Fetch objects for the given hql query. The list of objects is returned through the deferred object.
-// If no objects are found, an empty list is returned through the callback
-function getObjectsForHQLQueryDef(query) {
 	var def = new dojo.Deferred();
-
-	QueryService.queryHQL(query, 0, 100, {
-		callback: function(searchResult) {
-			if (searchResult.objectSearchResult) {
-				def.callback(searchResult.objectSearchResult.resultList);
-
-			} else {
-				// No objects found
-				def.callback([]);
-			}
+	
+	CatalogManagementService.getObjectsOfAuskunftAddress(adrUuid, MAX_NUM_DATASETS, {
+		callback: function(objects) {
+			def.callback(objects);
 		},
 		errorHandler: function(message, err) {
 			dojo.debug("Error: "+message);
@@ -290,6 +305,43 @@ function getObjectsForHQLQueryDef(query) {
 			def.errback(err);
 		}
 	});
+	
+	return def;
+}
+
+// Fetch objects where given adrUuid is set as the responsible user
+function getObjectsWithResponsibleUserDef(adrUuid) {
+	var def = new dojo.Deferred();
+
+	CatalogManagementService.getObjectsOfResponsibleUser(adrUuid, MAX_NUM_DATASETS, {
+		callback: function(objects) {
+			def.callback(objects);
+		},
+		errorHandler: function(message, err) {
+			dojo.debug("Error: "+message);
+			dojo.debugShallow(err);
+			def.errback(err);
+		}
+	});
+	
+	return def;
+}
+
+// Fetch objects where given adrUuid is set as the responsible user
+function getAddressesWithResponsibleUser(adrUuid) {
+	var def = new dojo.Deferred();
+
+	CatalogManagementService.getAddressesOfResponsibleUser(adrUuid, MAX_NUM_DATASETS, {
+		callback: function(objects) {
+			def.callback(objects);
+		},
+		errorHandler: function(message, err) {
+			dojo.debug("Error: "+message);
+			dojo.debugShallow(err);
+			def.errback(err);
+		}
+	});
+	
 	return def;
 }
 
@@ -301,50 +353,29 @@ scriptScope.openDownloadResultAsCSVDialog = function() {
 	if (isValidAddressNode(selectedNode)) {
 		var addressUuid = selectedNode.uuid;
 
-		var query;
 		if ("replaceInfoAddress" == selectedChild) {
-			query = buildInfoAddressQuery(addressUuid);
-
+			var tableToExport = "OBJECTS_OF_AUSKUNFT_ADDRESS";
 		} else if ("replaceUser" == selectedChild) {
-			query = buildResponsibleAddressQuery(addressUuid);
+			var tableToExport = "OBJECTS_OF_RESPONSIBLE_USER";
+		} else if ("replaceAddress" == selectedChild) {
+			var tableToExport = "ADDRESSES_OF_RESPONSIBLE_USER";
 		}
 
-		QueryService.queryHQLToCSV(query, {
+		CatalogManagementService.getCsvData(addressUuid, tableToExport, {
 			preHook: showLoadingZone,
 			postHook: hideLoadingZone,
 			callback: function(data) {
 				dwr.engine.openInDownload(data);
 			},
 			errorHandler: function(errMsg, err) {
-				dojo.debug("Error: "+message);
+				dojo.debug("Error: "+errMsg);
 				dojo.debugShallow(err);
-			}		
+			}
 		});
-
 	} else {
 		// No node selected
 		dojo.debug("no node selected.");
 	}
-}
-
-// HQL Query to fetch all objects where the given address uuid is set as the info address (Auskunft)
-function buildInfoAddressQuery(addressUuid) {
-	return "from ObjectNode oNode "+
-		"join oNode.t01ObjectPublished obj "+
-		"join obj.t012ObjAdrs objAdr "+
-	"where "+
-		"oNode.objIdPublished = objAdr.objId "+
-		"and objAdr.adrUuid = '"+addressUuid+"' "+
-		"and objAdr.type = 7 "+
-		"and objAdr.specialRef = 505";
-}
-
-//HQL Query to fetch all objects where the given address uuid is set as the responsible user
-function buildResponsibleAddressQuery(addressUuid) {
-	return "from ObjectNode oNode "+
-		"join oNode.t01ObjectPublished obj "+
-	"where "+
-		"obj.responsibleUuid = '"+addressUuid+"'";
 }
 
 function userHasQAPermission(user) {
@@ -360,33 +391,55 @@ function userHasQAPermission(user) {
 }
 
 scriptScope.replaceAddress = function() {
-	var newNode = dojo.widget.byId("treeAddressDelete").selectedNode;
-	var deleteNode = dojo.widget.byId("treeAddressNew").selectedNode;
+	var deleteNode = dojo.widget.byId("treeAddressDelete").selectedNode;
+	var newNode    = dojo.widget.byId("treeAddressNew").selectedNode;
 
 	if (isValidAddressNode(deleteNode) && isValidAddressNode(newNode) && deleteNode.uuid != newNode.uuid) {
-		var def = replaceAddressDef(deleteNode.uuid, newNode.uuid);
-		def.addCallback(function() {
-			dialog.show(message.get("general.hint"), "Funktion noch nicht implementiert.");
+		CatalogManagementService.replaceAddress(deleteNode.uuid, newNode.uuid, {
+			preHook: showLoadingZone,
+			postHook: hideLoadingZone,
+			callback: function(data) {
+				//initTree();
+				var tree = dojo.widget.byId("treeAddressDelete");
+				var newSelectNode = deleteNode.parent;
+				tree.selectNode(newSelectNode);
+				deleteNodeSelected(newSelectNode);
+				deleteNode.destroy();
+				
+				dojo.debug("address has been replaced!");
+				dialog.show(message.get("general.hint"), "<fmt:message key="dialog.admin.catalog.management.deleteAddress.successfulReplaced" />");
+				
+			},
+			errorHandler: function(errMsg, err) {
+				if (errMsg.indexOf("ADDRESS_IS_IDCUSER_ADDRESS") != -1) {
+					dialog.show(message.get("general.error"), "<fmt:message key="dialog.admin.catalog.management.deleteAddress.addressIsIdcUser" />", dialog.WARNING);
+				} else if (errMsg.indexOf("NODE_HAS_SUBNODES") != -1) {
+					dialog.show(message.get("general.error"), "<fmt:message key="dialog.admin.catalog.management.deleteAddress.nodeHasSubnodes" />", dialog.WARNING);
+				} else {
+					dialog.show(message.get("general.error"), "<fmt:message key="dialog.admin.catalog.management.deleteAddress.error" />: " + errMsg, dialog.WARNING);
+				}
+				dojo.debug("Error: "+errMsg);
+				dojo.debugShallow(err);
+			}
 		});
-
 	} else {
 		dialog.show(message.get("general.error"), message.get("dialog.admin.catalog.management.deleteAddress.requiredFieldsHint"), dialog.WARNING);
 	}
 }
-
+/*
 function replaceAddressDef(delAdrUuid, newAdrUuid) {
 	// TODO implement
 	var def = new dojo.Deferred();
 	def.callback();
 	return def;
 }
-
+*/
 function showLoadingZone() {
-    dojo.html.setVisibility(dojo.byId("deleteAddressLoadingZone"), "visible");
+    dojo.html.setVisibility(dojo.byId("deleteAddressWaitForDataLoadingZone"), "visible");
 }
 
 function hideLoadingZone() {
-    dojo.html.setVisibility(dojo.byId("deleteAddressLoadingZone"), "hidden");
+    dojo.html.setVisibility(dojo.byId("deleteAddressWaitForDataLoadingZone"), "hidden");
 }
 
 
@@ -426,7 +479,10 @@ function hideLoadingZone() {
 
 			<!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
 			<div id="addressDeleteData" class="inputContainer">
-				<div class="inputContainer field grey noSpaceBelow h236">
+				<div class="inputContainer field grey noSpaceBelow h220">
+					<span style="float: right; z-index: 100; visibility: hidden; margin-top: -7px; margin-right: 22px;" id="deleteAddressWaitForDataLoadingZone">
+						<img src="img/ladekreis.gif"/>
+					</span>
 					<span class="label"><label for="addressDeleteDataTitle" onclick="javascript:dialog.showContextHelp(arguments[0], 'Titel')"><fmt:message key="dialog.admin.catalog.management.deleteAddress.title" /></label></span>
 					<span class="input spaceBelow">
 						<input type="text" id="addressDeleteDataTitle" class="w640" disabled="true" dojoType="ingrid:ValidationTextbox" />
@@ -446,7 +502,7 @@ function hideLoadingZone() {
 								<table id="addressDeleteDataMDQS" dojoType="ingrid:FilteringTable" minRows="5" headClass="hidden" cellspacing="0" class="filteringTable">
 									<thead>
 										<tr>
-											<th field="title" dataType="String" width="315">Name</th>
+											<th field="title" dataType="String" width="315">fmt:message key="dialog.admin.catalog.management.deleteAddress.name /></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -460,7 +516,7 @@ function hideLoadingZone() {
 
 			<div id="addressDeleteDataObjects" class="inputContainer">
 				<span class="label"><label class="inActive" for="objectLists"><fmt:message key="dialog.admin.catalog.management.deleteAddress.objectPreview" /></label></span>
-				<span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.openDownloadResultAsCSVDialog();" title="Als CSV-Datei speichern"><fmt:message key="dialog.admin.catalog.management.deleteAddress.saveAsCSV" /></a></span>
+				<span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.openDownloadResultAsCSVDialog();" title="<fmt:message key="dialog.admin.catalog.management.deleteAddress.saveAsCSV" />"><fmt:message key="dialog.admin.catalog.management.deleteAddress.saveAsCSV" /></a></span>
 				<div id="addressDeleteDataObjectsLists" dojoType="ingrid:TabContainer" doLayout="false" class="w684" selectedChild="replaceInfoAddress">
 
 					<!-- TAB 1 START -->
@@ -500,13 +556,35 @@ function hideLoadingZone() {
 							</div>
 						</div>
 					</div> <!-- TAB 2 END -->
+					
+					<!-- TAB 3 START -->
+					<div id="replaceAddress" dojoType="ContentPane" label="<fmt:message key="dialog.admin.catalog.management.deleteAddress.replaceResponsibleAddressFromAddress" />">
+						<div dojoType="ContentPane">
+							<div class="tableContainer rows4 w684">
+								<table id="replaceAddressList" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort">
+									<thead>
+										<tr>
+											<th nosort="true" field="icon" dataType="String" width="30">&nbsp;</th>
+											<th nosort="true" field="uuid" dataType="String" width="254">ID</th>
+											<th nosort="true" field="title" dataType="String" width="400"><fmt:message key="dialog.admin.catalog.management.deleteAddress.objectName" /></th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div> <!-- TAB 3 END -->
 
 				</div>
+
+				<span id="maxNumDatasetsWarning" style="visibility:hidden;"><fmt:message key="dialog.admin.catalog.management.deleteAddress.maxNumHits" /></span>
+
 			</div> <!-- RIGHT HAND SIDE CONTENT BLOCK 1 END -->
 
 			<!-- LEFT HAND SIDE CONTENT BLOCK 2 START -->
 			<div id="addressNewTree" class="inputContainer">
-				<span class="label">Neue Auskunftsadresse (Es können ausschlie&szlig;lich ver&ouml;ffentliche Adressen ausgew&auml;hlt werden)</span>
+				<span class="label"><fmt:message key="dialog.admin.catalog.management.deleteAddress.newInfoAddress" /></span>
 				<div class="inputContainer grey noSpaceBelow w264 h236 scrollable">
 					<div dojoType="ContentPane" id="treeContainerAddressNew">
 						<!-- tree components -->
@@ -561,7 +639,7 @@ function hideLoadingZone() {
 			<div class="inputContainer">
 				<span class="button w924" style="height:20px !important;">
 					<span style="float:right;">
-						<button dojoType="ingrid:Button" title="Ersetzen" onClick="javascript:scriptScope.replaceAddress();"><fmt:message key="dialog.admin.catalog.management.deleteAddress.replace" /></button>
+						<button dojoType="ingrid:Button" title="fmt:message key="dialog.admin.catalog.management.deleteAddress.replace" onClick="javascript:scriptScope.replaceAddress();"><fmt:message key="dialog.admin.catalog.management.deleteAddress.replace" /></button>
 					</span>
 					<span id="deleteAddressLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 						<img src="img/ladekreis.gif" />

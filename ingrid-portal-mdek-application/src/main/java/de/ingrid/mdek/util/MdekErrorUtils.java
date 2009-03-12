@@ -54,9 +54,11 @@ public class MdekErrorUtils {
 
 			} else if (containsErrorType(err, MdekErrorType.GROUP_HAS_USERS)) {
 				handleGroupHasUsersError(err);
-
+			} else if (containsErrorType(err, MdekErrorType.ADDRESS_IS_IDCUSER_ADDRESS)) {
+				handleEntityReferencedByObjectError(err, MdekErrorType.ADDRESS_IS_IDCUSER_ADDRESS);
 			} else {
-				throw new MdekException(err);
+				//throw new MdekException(err);
+				throw convertToRuntimeException(new MdekException(err));
 			}
 		} else if (errorMessage != null){
 			throw new RuntimeException(errorMessage);

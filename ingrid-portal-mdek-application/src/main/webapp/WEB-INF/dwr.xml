@@ -119,6 +119,7 @@
 		<convert converter="enum" match="de.ingrid.mdek.dwr.services.cts.CoordinateTransformationService$SpatialReferenceSystem"/>
 
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtilsSecurity$IdcPermission"/>
+		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$CsvRequestType"/>
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcEntityOrderBy"/>
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcQAEntitiesSelectionType"/>
 		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcWorkEntitiesSelectionType"/>

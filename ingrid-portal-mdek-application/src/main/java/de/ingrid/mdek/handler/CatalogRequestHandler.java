@@ -3,15 +3,18 @@ package de.ingrid.mdek.handler;
 import java.util.List;
 import java.util.Map;
 
+import de.ingrid.mdek.MdekUtils.CsvRequestType;
 import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.beans.AdditionalFieldBean;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.CatalogBean;
-import de.ingrid.mdek.beans.CodeListJobInfoBean;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
 import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.address.MdekAddressBean;
+import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.persistence.db.model.UserData;
+import de.ingrid.utils.IngridDocument;
 
 public interface CatalogRequestHandler {
 
@@ -41,7 +44,9 @@ public interface CatalogRequestHandler {
 	
 	// from CatalogManagementService
 	public AnalyzeJobInfoBean analyze();
-	public CodeListJobInfoBean getObjectsOfAuskunftAddress(String auskunftAddressUuid);
-	public CodeListJobInfoBean getObjectsOfResponsibleUser(String responsibleUserUuid);
-	public CodeListJobInfoBean getAddressesOfResponsibleUser(String responsibleUserUuid);
+	public List<MdekDataBean> getObjectsOfAuskunftAddress(String auskunftAddressUuid, int maxNumHits);
+	public List<MdekDataBean> getObjectsOfResponsibleUser(String responsibleUserUuid, int maxNumHits);
+	public List<MdekAddressBean> getAddressesOfResponsibleUser(String responsibleUserUuid, int maxNumHits);
+	public byte[] getCsvData(String uuid, CsvRequestType type);
+	public IngridDocument replaceAddress(String oldUuid, String newUuid);
 }
