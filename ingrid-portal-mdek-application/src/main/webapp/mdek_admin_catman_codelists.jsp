@@ -193,8 +193,8 @@ function updateCodelistTable(data) {
 	var sysListId = parseInt(dojo.widget.byId("selectionList").getValue());
 
 	if (dojo.lang.some(CAN_SET_DEFAULT_LIST_IDS, function(listId) { return listId == sysListId; })) {
-		hasDefaultEntry(data)? showDefaultRadioButtons() : hideDefaultRadioButtons();
 		enableDefaultCheckbox();
+		hasDefaultEntry(data)? showDefaultRadioButtons() : hideDefaultRadioButtons();
 
 	} else {
 		hideDefaultRadioButtons();
