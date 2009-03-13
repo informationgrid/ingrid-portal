@@ -122,11 +122,10 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
                     // query.addField(new FieldQuery(true, false, Settings.QFIELD_LANG, Settings.QVALUE_LANG_DE));
                     // search in SNS
                     IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-                    IngridHits hits = ibus.search(query, 50, 1, 0, PortalConfig.getInstance().getInt(
-                            PortalConfig.SNS_TIMEOUT_DEFAULT, 30000));
+					IngridHits hits = ibus.searchAndDetail(query, 50, 1, 0, PortalConfig.getInstance().getInt(
+                    		PortalConfig.SNS_TIMEOUT_DEFAULT, 30000), null);
                     IngridHit[] results = hits.getHits();
-                    IngridHitDetail[] details = ibus.getDetails(results, query, null);
-                    if (details == null) {
+                    if (hits == null) {
                         if (log.isErrorEnabled()) {
                             log.error("Problems fetching details of events !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                         }
@@ -138,8 +137,8 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
                         try {
                             topic = (Topic) results[i];
                             detail = null;
-                            if (details != null) {
-                                detail = (DetailedTopic) details[i];
+                            if (results[i].getHitDetail() != null) {
+                                detail = (DetailedTopic) results[i].getHitDetail();
                             }
 
                             if (topic == null) {

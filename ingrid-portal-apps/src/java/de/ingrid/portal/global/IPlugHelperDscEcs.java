@@ -239,13 +239,11 @@ public class IPlugHelperDscEcs extends IPlugHelper {
             int page = 0;
             do {
                 page++;
-                hits = IBUSInterfaceImpl.getInstance().search(query, chunkSize, page, (page-1) * chunkSize,
-                        PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000));
-                IngridHitDetail details[] = IBUSInterfaceImpl.getInstance().getDetails(hits.getHits(), query,
-                        requestedMetaData);
-                for (int j = 0; j < details.length; j++) {
+                hits = IBUSInterfaceImpl.getInstance().searchAndDetail(query, chunkSize, page, (page-1) * chunkSize,
+                		PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000), requestedMetaData);
+                for (int j = 0; j < hits.length(); j++) {
                 	IngridHit hit = hits.getHits()[j];
-                    IngridHitDetail detail = (IngridHitDetail) details[j];
+                    IngridHitDetail detail = (IngridHitDetail) hit.getHitDetail();
 
                     // convert all requested detail fields into string ... -> needed for filters (relation type)
                     for (int i = 0; i < requestedMetaData.length; i++) {

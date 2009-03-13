@@ -58,22 +58,20 @@ public class ThreadedQuery extends Thread {
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
 
-            hits = ibus.search(qd.getQuery(), qd.getHitsPerPage(), qd.getCurrentPage(), qd.getStartHit(), qd
-                    .getTimeout());
+            if (qd.isGetDetails()) {
+            	hits = ibus.searchAndDetail(qd.getQuery(), qd.getHitsPerPage(), qd.getCurrentPage(), qd.getStartHit(), qd
+                        .getTimeout(), qd.getRequestedFields());
+            } else {
+            	hits = ibus.search(qd.getQuery(), qd.getHitsPerPage(), qd.getCurrentPage(), qd.getStartHit(), qd
+                        .getTimeout());
+            }
             if (qd.isGetDetails() || qd.isGetPlugDescription()) {
-                //IngridHitWrapper[] hitArray = hits.getHits();
             	IngridHit[] hitArray = hits.getHits();
-            	IngridHitDetail[] details = null;
-                if (qd.isGetDetails()) {
-                    details = ibus.getDetails(hitArray, qd.getQuery(), qd.getRequestedFields());
-                }
 
                 hitsWrapper = new IngridHitsWrapper(hits);
                 IngridHitWrapper[] hitArrayWrapper = hitsWrapper.getWrapperHits();
                 IngridHit[] subHitArray = null;
                 for (int i = 0; i < hitArrayWrapper.length; i++) {
-                	//IngridHit topHit = hitArray[i];
-                	//IngridHitWrapper topHitWrapper = new IngridHitWrapper(hitArray[i]);
                 	IngridHitWrapper topHitWrapper = hitArrayWrapper[i];
                 	
                     // get Plug Description only for top Hits (grouped by iPlugs in right column)
@@ -82,7 +80,7 @@ public class ThreadedQuery extends Thread {
                     }
                     // get details for all hits to display
                     if (qd.isGetDetails()) {
-                    	topHitWrapper.put(Settings.RESULT_KEY_DETAIL, details[i]);
+                    	topHitWrapper.put(Settings.RESULT_KEY_DETAIL, hitArray[i].getHitDetail());
 
                         // check for further hits (grouping)
                         subHitArray = topHitWrapper.getHit().getGroupHits();
@@ -103,7 +101,7 @@ public class ThreadedQuery extends Thread {
                                 groupLength = (String)topHitWrapper.get("no_of_hits");                            	
 
                                 if (groupLength == null) {
-                                	groupLength = (String)details[i].get("no_of_hits");
+                                	groupLength = (String)hitArray[i].getHitDetail().get("no_of_hits");
 
                                 	if (groupLength == null) {
                                     	groupLength = String.valueOf(subHitArray.length + 1);

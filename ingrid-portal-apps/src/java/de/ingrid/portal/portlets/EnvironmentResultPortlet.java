@@ -215,14 +215,12 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHitsWrapper hitsWrapper = null;
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            hits = ibus.search(query, hitsPerPage, currentPage, startHit, PortalConfig.getInstance().getInt(
-                    PortalConfig.QUERY_TIMEOUT_RANKED, 5000));
-            
-            IngridHit[] results = hits.getHits();
             String[] requestedFields = { Settings.RESULT_KEY_TOPIC, Settings.RESULT_KEY_FUNCT_CATEGORY,
                     Settings.RESULT_KEY_PARTNER, Settings.RESULT_KEY_PROVIDER };
-            IngridHitDetail[] details = ibus.getDetails(results, query, requestedFields);
-            if (details == null) {
+            hits = ibus.searchAndDetail(query, hitsPerPage, currentPage, startHit, PortalConfig.getInstance().getInt(
+                    PortalConfig.QUERY_TIMEOUT_RANKED, 5000), requestedFields);
+            
+            if (hits == null) {
                 if (log.isErrorEnabled()) {
                     log.error("Problems fetching details of hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
@@ -238,8 +236,8 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                     if (hitArray[i] == null) {
                         continue;
                     }
-                    if (details[i] != null) {
-                        transferDetailData(hitArray[i], details[i], resources);
+                    if (hitArray[i].getHitDetail() != null) {
+                        transferDetailData(hitArray[i], hitArray[i].getHitDetail(), resources);
                     }
                     // check for grouping and get details of "sub hits"
                     // NO, WE ONLY SHOW ONE HIT !
@@ -249,7 +247,8 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                     }
                 } catch (Throwable t) {
                     if (log.isErrorEnabled()) {
-                        log.error("Problems processing Hit, hit = " + hitArray[i] + ", detail = " + details[i], t);
+                        log.error("Problems processing Hit, hit = " + hitArray[i] +
+                        		", detail = " + hitArray[i].getHitDetail(), t);
                     }
                 }
 

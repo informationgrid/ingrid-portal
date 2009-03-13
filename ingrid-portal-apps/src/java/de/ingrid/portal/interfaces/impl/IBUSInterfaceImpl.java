@@ -164,9 +164,9 @@ public class IBUSInterfaceImpl implements IBUSInterface {
      * Calling the searchAndDetail method at the iBus doing one call to the bus instead of two. Returned
      * are the IngridHitDetails.
      */
-    public IngridHitDetail[] searchAndDetail(IngridQuery query, int hitsPerPage, int currentPage, int startHit, int timeout, String[] reqParameter)
+    public IngridHits searchAndDetail(IngridQuery query, int hitsPerPage, int currentPage, int startHit, int timeout, String[] reqParameter)
     throws Exception {
-    	IngridHitDetail[] details = null;
+    	IngridHits hits = null;
     	try {
             if (log.isDebugEnabled()) {
                 log.debug("iBus.search: IngridQuery = " + UtilsSearch.queryToString(query)
@@ -175,7 +175,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
             long start = System.currentTimeMillis();
             
-            details = bus.searchAndDetail(query, hitsPerPage, currentPage, startHit, timeout, reqParameter);
+            hits = bus.searchAndDetail(query, hitsPerPage, currentPage, startHit, timeout, reqParameter);
             
             if (log.isDebugEnabled()) {
             	long duration = System.currentTimeMillis() - start;
@@ -205,7 +205,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             throw new Exception(t);
         }
 
-		return details;
+		return hits;
     }
 
     /**

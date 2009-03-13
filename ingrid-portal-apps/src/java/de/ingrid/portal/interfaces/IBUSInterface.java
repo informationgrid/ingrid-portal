@@ -52,10 +52,10 @@ public interface IBUSInterface {
      * @param startHit The startHit for a new grouped(!) query.
      * @param timeout The timeout for this query.
      * @param requestedFields are the requested fields
-     * @return The IngridHitDetail(s) containing the details of this query.
+     * @return The IngridHits containing the details of this query in each IngridHit.
      * @throws Exception 
      */
-    IngridHitDetail[] searchAndDetail(IngridQuery query, int hitsPerPage, int currentPage, int startHit, int timeout, String[] reqParameter)
+    IngridHits searchAndDetail(IngridQuery query, int hitsPerPage, int currentPage, int startHit, int timeout, String[] reqParameter)
     	            throws Exception;
     
     /**
