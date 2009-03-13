@@ -145,29 +145,6 @@ public class SysListCache {
 		return "";
 	}
 
-	public String getInitialValue(String key) {
-		if (sysListCache == null) {
-			this.loadInitialLists();
-		}
-
-		List<String[]> sysList = getSysListForListId(keyCache.get(key));
-		if (sysList == null) {
-			sysList = addSysListToCache(keyCache.get(key));
-		}
-
-		// The third entry in the string marks the default entry.
-		for (String[] entry : sysList) {
-			if (entry.length < 3) { continue; }
-			if (entry[2].equalsIgnoreCase("Y")) {
-				return entry[0];
-			}
-		}
-
-		log.debug("Could not find default syslist entry for: ["+key+"]");
-		return null;
-	}
-
-
 	public String getValueFromListId(Integer listId, Integer entryId) {
 		if (sysListCache == null) {
 			this.loadInitialLists();
@@ -201,7 +178,7 @@ public class SysListCache {
 		// The third entry in the string marks the default entry.
 		for (String[] entry : sysList) {
 			if (entry.length < 3) { continue; }
-			if (entry[2].equalsIgnoreCase("Y")) {
+			if (entry[2].equalsIgnoreCase(MdekUtils.YES)) {
 				return entry[0];
 			}
 		}
@@ -268,7 +245,7 @@ public class SysListCache {
 		// The third entry in the string marks the default entry.
 		for (String[] entry : sysList) {
 			if (entry.length < 3) { continue; }
-			if (entry[2].equalsIgnoreCase("Y")) {
+			if (entry[2].equalsIgnoreCase(MdekUtils.YES)) {
 				return Integer.valueOf(entry[1]);
 			}
 		}

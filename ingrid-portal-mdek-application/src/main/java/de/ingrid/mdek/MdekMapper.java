@@ -15,6 +15,7 @@ import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.MdekUtils.PublishType;
 import de.ingrid.mdek.MdekUtils.SearchtermType;
 import de.ingrid.mdek.MdekUtils.UserOperation;
 import de.ingrid.mdek.MdekUtils.WorkState;
@@ -40,6 +41,7 @@ import de.ingrid.mdek.beans.object.VectorFormatDetailsBean;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
 import de.ingrid.utils.IngridDocument;
+import edu.emory.mathcs.backport.java.util.Arrays;
 
 public class MdekMapper implements DataMapperInterface {
 
@@ -875,40 +877,70 @@ public class MdekMapper implements DataMapperInterface {
 
 	
 	public void setInitialValues(MdekAddressBean addr) {
-		addr.setNameForm(sysListMapper.getInitialValue(MdekKeys.NAME_FORM_KEY));
-		addr.setTitleOrFunction(sysListMapper.getInitialValue(MdekKeys.TITLE_OR_FUNCTION_KEY));
+		if (null == addr.getNameForm()) {
+			addr.setNameForm(sysListMapper.getInitialValueFromListId(4300));
+		}
+		if (null == addr.getTitleOrFunction()) {
+			addr.setTitleOrFunction(sysListMapper.getInitialValueFromListId(4305));
+		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void setInitialValues(MdekDataBean obj) {
-		obj.setSpatialRefAltVDate(sysListMapper.getInitialKeyFromListId(VERTICAL_EXTENT_VDATUM_ID));
-		obj.setSpatialRefAltMeasure(sysListMapper.getInitialKeyFromListId(VERTICAL_EXTENT_UNIT_ID));
-		obj.setTimeRefPeriodicity(sysListMapper.getInitialKeyFromListId(TIME_PERIOD_ID));
-		obj.setTimeRefStatus(sysListMapper.getInitialKeyFromListId(TIME_STATUS_ID));
-		obj.setRef1DataSet(sysListMapper.getInitialKeyFromListId(HIERARCHY_LEVEL_ID));
-		// TODO Check if Ref1VFormatTopology is set properly
-		obj.setRef1VFormatTopology(sysListMapper.getInitialKeyFromListId(VECTOR_TOPOLOGY_LEVEL_ID));
-
-		Integer key = sysListMapper.getInitialKeyFromListId(TIME_SCALE_ID);
-		if (key != null) { obj.setTimeRefIntervalUnit(key.toString()); };
-
-		obj.setRef1SpatialSystem(sysListMapper.getInitialValue(MdekKeys.REFERENCESYSTEM_ID));
-
-		obj.setRef3ServiceType(sysListMapper.getInitialKeyFromListId(SERVICE_TYPE_ID));
-
-		key = sysListMapper.getInitialKeyFromListId(DATA_LANGUAGE_ID);
-		if (key != null) {
-			obj.setExtraInfoLangData(key.toString());
-			obj.setExtraInfoLangMetaData(key.toString());
+		if (null == obj.getRef1SpatialSystem()) {
+			obj.setRef1SpatialSystem(sysListMapper.getInitialValueFromListId(100));
+		}
+		if (null == obj.getTimeRefPeriodicity()) {
+			obj.setTimeRefPeriodicity(sysListMapper.getInitialKeyFromListId(518));
+		}
+		if (null == obj.getTimeRefStatus()) {
+			obj.setTimeRefStatus(sysListMapper.getInitialKeyFromListId(523));
+		}
+		if (null == obj.getRef1DataSet()) {
+			obj.setRef1DataSet(sysListMapper.getInitialKeyFromListId(525));
+		}
+		if (null == obj.getRef1Representation() && null != sysListMapper.getInitialKeyFromListId(526)) {
+			obj.setRef1Representation(Arrays.asList(new Integer[] { sysListMapper.getInitialKeyFromListId(526) }));
+		}
+		if (null == obj.getThesaurusTopicsList() && null != sysListMapper.getInitialKeyFromListId(527)) {
+			obj.setThesaurusTopicsList(Arrays.asList(new Integer[] { sysListMapper.getInitialKeyFromListId(527) }));
+		}
+		if (null == obj.getExtraInfoLegalBasicsTable() && null != sysListMapper.getInitialKeyFromListId(1350)) {
+			obj.setExtraInfoLegalBasicsTable(Arrays.asList(new String[] { sysListMapper.getInitialValueFromListId(1350) }));
+		}
+		if (null == obj.getExtraInfoXMLExportTable() && null != sysListMapper.getInitialKeyFromListId(1370)) {
+			obj.setExtraInfoXMLExportTable(Arrays.asList(new String[] { sysListMapper.getInitialValueFromListId(1370) }));
+		}
+		if (null == obj.getRef2DocumentType()) {
+			obj.setRef2DocumentType(sysListMapper.getInitialValueFromListId(3385));
+		}
+		if (null == obj.getRef3ServiceType()) {
+			obj.setRef3ServiceType(sysListMapper.getInitialKeyFromListId(5100));
+		}
+		if (null == obj.getRef3ServiceTypeTable() && null != sysListMapper.getInitialKeyFromListId(5200)) {
+			obj.setRef3ServiceTypeTable(Arrays.asList(new Integer[] { sysListMapper.getInitialKeyFromListId(5200) }));
 		}
 
-		if (obj.getExtraInfoPublishArea() == null) {
-			Integer pubCondKey = sysListMapper.getInitialKeyFromListId(PUBLICATION_CONDITION_ID);
+		if (null != sysListMapper.getInitialKeyFromListId(99999999)) {
+			if (null == obj.getExtraInfoLangData()) {
+				obj.setExtraInfoLangData(sysListMapper.getInitialKeyFromListId(99999999).toString());
+			}
+			if (null == obj.getExtraInfoLangMetaData()) {
+				obj.setExtraInfoLangMetaData(sysListMapper.getInitialKeyFromListId(99999999).toString());
+			}
+		}
 
-			if (pubCondKey == null) {
-				obj.setExtraInfoPublishArea(1);
+		// The publication condition is usually derived from the parent object. If it is already
+		// set, don't modify it. Otherwise try to set the initial value if it exists. If no intial
+		// value is found, initialize it with publish type 'Internet'
+		if (obj.getExtraInfoPublishArea() == null) {
+			Integer pubCondKey = sysListMapper.getInitialKeyFromListId(3571);
+
+			if (pubCondKey != null) {
+				obj.setExtraInfoPublishArea(pubCondKey);
 
 			} else {
-				obj.setExtraInfoPublishArea(pubCondKey);
+				obj.setExtraInfoPublishArea(PublishType.INTERNET.getDbValue());
 			}
 		}
 	}
