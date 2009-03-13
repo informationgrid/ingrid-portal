@@ -887,6 +887,9 @@ public class MdekMapper implements DataMapperInterface {
 
 	@SuppressWarnings("unchecked")
 	public void setInitialValues(MdekDataBean obj) {
+		// Set default values for a new object.
+		// The default in obj will be set iff the corresponding values are null or empty lists.
+
 		if (null == obj.getRef1SpatialSystem()) {
 			obj.setRef1SpatialSystem(sysListMapper.getInitialValueFromListId(100));
 		}
@@ -899,16 +902,16 @@ public class MdekMapper implements DataMapperInterface {
 		if (null == obj.getRef1DataSet()) {
 			obj.setRef1DataSet(sysListMapper.getInitialKeyFromListId(525));
 		}
-		if (null == obj.getRef1Representation() && null != sysListMapper.getInitialKeyFromListId(526)) {
+		if ((null == obj.getRef1Representation() || obj.getRef1Representation().size() == 0) && null != sysListMapper.getInitialKeyFromListId(526)) {
 			obj.setRef1Representation(Arrays.asList(new Integer[] { sysListMapper.getInitialKeyFromListId(526) }));
 		}
-		if (null == obj.getThesaurusTopicsList() && null != sysListMapper.getInitialKeyFromListId(527)) {
+		if ((null == obj.getThesaurusTopicsList() || obj.getThesaurusTopicsList().size() == 0) && null != sysListMapper.getInitialKeyFromListId(527)) {
 			obj.setThesaurusTopicsList(Arrays.asList(new Integer[] { sysListMapper.getInitialKeyFromListId(527) }));
 		}
-		if (null == obj.getExtraInfoLegalBasicsTable() && null != sysListMapper.getInitialKeyFromListId(1350)) {
+		if ((null == obj.getExtraInfoLegalBasicsTable() || obj.getExtraInfoLegalBasicsTable().size() == 0) && null != sysListMapper.getInitialKeyFromListId(1350)) {
 			obj.setExtraInfoLegalBasicsTable(Arrays.asList(new String[] { sysListMapper.getInitialValueFromListId(1350) }));
 		}
-		if (null == obj.getExtraInfoXMLExportTable() && null != sysListMapper.getInitialKeyFromListId(1370)) {
+		if ((null == obj.getExtraInfoXMLExportTable() || obj.getExtraInfoXMLExportTable().size() == 0) && null != sysListMapper.getInitialKeyFromListId(1370)) {
 			obj.setExtraInfoXMLExportTable(Arrays.asList(new String[] { sysListMapper.getInitialValueFromListId(1370) }));
 		}
 		if (null == obj.getRef2DocumentType()) {
@@ -917,7 +920,7 @@ public class MdekMapper implements DataMapperInterface {
 		if (null == obj.getRef3ServiceType()) {
 			obj.setRef3ServiceType(sysListMapper.getInitialKeyFromListId(5100));
 		}
-		if (null == obj.getRef3ServiceTypeTable() && null != sysListMapper.getInitialKeyFromListId(5200)) {
+		if ((null == obj.getRef3ServiceTypeTable() || obj.getRef3ServiceTypeTable().size() == 0) && null != sysListMapper.getInitialKeyFromListId(5200)) {
 			obj.setRef3ServiceTypeTable(Arrays.asList(new Integer[] { sysListMapper.getInitialKeyFromListId(5200) }));
 		}
 

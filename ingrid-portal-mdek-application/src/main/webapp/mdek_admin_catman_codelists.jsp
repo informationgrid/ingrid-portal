@@ -8,6 +8,7 @@
 var scriptScope = this;
 
 var MAINTAINABLE_LIST_IDS = [101, 102, 515, 518, 520, 523, 526, 528, 1100, 1320, 1350, 1370, 3385, 3535, 3555];
+var CAN_SET_DEFAULT_LIST_IDS = [100, 518, 523, 525, 526, 527, 1350, 1370, 3385, 3571, 4300, 4305, 5100, 5200, 99999999];
 
 _container_.addOnLoad(function() {
 	initCodelistSelect();
@@ -189,8 +190,16 @@ function mergeTableData(germanList, englishList) {
 // [ { entryId:entryId, deName:entryName, enName:entryName, isDefault:default }, {...} ]
 function updateCodelistTable(data) {
 	UtilList.addTableIndices(data);
+	var sysListId = parseInt(dojo.widget.byId("selectionList").getValue());
 
-	hasDefaultEntry(data)? showDefaultRadioButtons() : hideDefaultRadioButtons();
+	if (dojo.lang.some(CAN_SET_DEFAULT_LIST_IDS, function(listId) { return listId == sysListId; })) {
+		hasDefaultEntry(data)? showDefaultRadioButtons() : hideDefaultRadioButtons();
+		enableDefaultCheckbox();
+
+	} else {
+		hideDefaultRadioButtons();
+		disableDefaultCheckbox();
+	}
 
 	// Add radio buttons
 	for (var index = 0; index < data.length; index++) {
@@ -221,17 +230,23 @@ function hasDefaultEntry(data) {
 }
 
 function showDefaultRadioButtons() {
-	if (!dojo.widget.byId("selectionListDefault").checked) {
-		dojo.widget.byId("selectionListDefault").setValue(true);
-		switchTableDisplay("codeListTable12Container", "codeListTable11Container", true);
-	}
+	dojo.widget.byId("selectionListDefault").setValue(true);
+	switchTableDisplay("codeListTable12Container", "codeListTable11Container", true);
 }
 
 function hideDefaultRadioButtons() {
-	if (dojo.widget.byId("selectionListDefault").checked) {
-		dojo.widget.byId("selectionListDefault").setValue(false);
-		switchTableDisplay("codeListTable12Container", "codeListTable11Container", false);
-	}
+	dojo.widget.byId("selectionListDefault").setValue(false);
+	switchTableDisplay("codeListTable12Container", "codeListTable11Container", false);
+}
+
+function enableDefaultCheckbox() {
+	dojo.html.setVisibility("codeListDefaultDisabledHint", false);
+	dojo.widget.byId("selectionListDefault").enable();
+}
+
+function disableDefaultCheckbox() {
+	dojo.html.setVisibility("codeListDefaultDisabledHint", true);
+	dojo.widget.byId("selectionListDefault").disable();	
 }
 
 // Get the modified data and send it to the server
@@ -716,7 +731,8 @@ function saveChangesFreeEntryDef() {
 						<div class="inputContainer grey field w668 noSpaceBelow">
 							<span class="label"><label for="selectionList" onclick="javascript:dialog.showContextHelp(arguments[0], '<fmt:message key="dialog.admin.catalog.management.codelists.codelist" />')"><fmt:message key="dialog.admin.catalog.management.codelists.codelist" /></label></span>
 							<span class="input spaceBelow"><input dojoType="ingrid:Select" autocomplete="false" style="width:606px;" id="selectionList" /></span>
-							<span id="codeListEditDisabledHint" style="visibility:hidden;" class="label"><label class="inActive">Hinweis: Die selektierte Auswahlliste darf nicht ver&auml;ndert werden.</label></span>
+							<span id="codeListEditDisabledHint" style="visibility:hidden;" class="label"><label class="inActive">Hinweis: Die Eintr&auml;ge dieser Auswahlliste k&ouml;nnen nicht ge&auml;ndert werden.</label></span>
+							<span id="codeListDefaultDisabledHint" style="visibility:hidden;" class="label"><label class="inActive">Hinweis: F&uuml;r diese Liste kann kein Defaultwert eingestellt werden.</label></span>
 							<div class="checkboxContainer">
 								<span class="input spaceBelow"><input type="checkbox" onclick="switchTableDisplay('codeListTable12Container', 'codeListTable11Container', dojo.widget.byId('selectionListDefault').checked);" id="selectionListDefault" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], '<fmt:message key="dialog.admin.catalog.management.codelists.setDefault" />')"><fmt:message key="dialog.admin.catalog.management.codelists.setDefault" /></label></span>
 							</div>
