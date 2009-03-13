@@ -23,8 +23,8 @@ function initCodelistSelect() {
 	def.addCallback(function(listIds) {
 		var selectWidgetData = [];
 		for (var index = 0; index < listIds.length; ++index) {
-			// TODO Localize entries?
-			selectWidgetData.push([listIds[index]+"", listIds[index]+""]);
+			var name = UtilCatalog.getNameForSysList(listIds[index]);
+			selectWidgetData.push([name + " (" + listIds[index] + ")", listIds[index]+""]);
 		}
 		selectWidget.dataProvider.setData(selectWidgetData);
 	});
@@ -349,11 +349,12 @@ function hideEditDisabledHint() {
 function initFreeEntrySelect() {
 	var selectWidget = dojo.widget.byId("freeEntrySelectionList");
 
-	// Currently the form is restricted to the list with id 1350 - 'gesetzliche Grundlagen'
+	// Currently the form is restricted to the list with id 1350 - 'rechtliche Grundlagen'
 	var listIds = [ 1350 ];
 	var selectWidgetData = [];
 	for (var index = 0; index < listIds.length; ++index) {
-		selectWidgetData.push([listIds[index]+"", listIds[index]+""]);
+		var name = UtilCatalog.getNameForSysList(listIds[index]);
+		selectWidgetData.push([name + " (" + listIds[index] + ")", listIds[index]+""]);
 	}
 	selectWidget.dataProvider.setData( selectWidgetData );
 
@@ -768,7 +769,7 @@ function saveChangesFreeEntryDef() {
 					</div> <!-- TAB 1 END -->
 
 					<!-- TAB 2 START -->
-					<div id="freeEntryTab" dojoType="ContentPane" class="blueTopBorder grey" label="Liste: gesetzliche Grundlagen">
+					<div id="freeEntryTab" dojoType="ContentPane" class="blueTopBorder grey" label="Liste: Rechtliche Grundlagen">
 						<div class="inputContainer grey field w668 noSpaceBelow">
 							<span class="label"><label for="freeEntrySelectionList" onclick="javascript:dialog.showContextHelp(arguments[0], 'Auswahlliste')">Auswahlliste</label></span>
 							<span class="input spaceBelow"><input dojoType="ingrid:Select" autocomplete="false" style="width:606px;" id="freeEntrySelectionList"></div></span>

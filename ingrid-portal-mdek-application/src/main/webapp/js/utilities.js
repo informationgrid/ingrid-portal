@@ -800,6 +800,15 @@ UtilCatalog.getSysListEntry = function(sysListId, entryId) {
 	return def;
 }
 
+UtilCatalog.getNameForSysList = function(sysListId) {
+	var messageId = "ui.sysList." + sysListId;
+	var name = message.get(messageId);
+
+	// If the name was not found (message.get returned the key), return the default name (unknown)
+	// Otherwise return the name that was found
+	return (name != messageId)? name : message.get("ui.sysList.unknown"); 
+}
+
 // Constants that should be used by getGenericValuesDef and setGenericValuesDef
 UtilCatalog.GENERIC_KEYS = {};
 UtilCatalog.GENERIC_KEYS.AUTOSAVE_INTERVAL = "AUTOSAVE_INTERVAL";
