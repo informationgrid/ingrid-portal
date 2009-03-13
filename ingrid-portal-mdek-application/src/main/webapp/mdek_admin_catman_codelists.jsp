@@ -1,5 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
@@ -707,17 +708,17 @@ function saveChangesFreeEntryDef() {
 			<div class="spacer"></div>
 			<div class="spacer"></div>
 			<div id="codeLists" class="inputContainer noSpaceBelow">
-				<span class="functionalLink onTab"><img src="img/ic_fl_export.gif" width="11" height="10" alt="Export" /><a href="#" title="Exportieren [Popup]">Exportieren</a><img src="img/ic_fl_import.gif" width="11" height="10" alt="Import" /><a href="#" title="Importieren [Popup]">Importieren</a></span>
+				<span class="functionalLink onTab"><img src="img/ic_fl_export.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.export" />" /><a href="#" title="Exportieren [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.export" /></a><img src="img/ic_fl_import.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.import" />" /><a href="#" title="Importieren [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.import" /></a></span>
 				<div id="codeListTabContainer" dojoType="ingrid:TabContainer" class="w668 h452" selectedChild="codeListTab">
 
 					<!-- TAB 1 START -->
-					<div id="codeListTab" dojoType="ContentPane" class="blueTopBorder grey" label="Auswahllistenpflege">
+					<div id="codeListTab" dojoType="ContentPane" class="blueTopBorder grey" label="<fmt:message key="dialog.admin.catalog.management.codelists.codelistTitle" />">
 						<div class="inputContainer grey field w668 noSpaceBelow">
-							<span class="label"><label for="selectionList" onclick="javascript:dialog.showContextHelp(arguments[0], 'Auswahlliste')">Auswahlliste</label></span>
+							<span class="label"><label for="selectionList" onclick="javascript:dialog.showContextHelp(arguments[0], '<fmt:message key="dialog.admin.catalog.management.codelists.codelist" />')"><fmt:message key="dialog.admin.catalog.management.codelists.codelist" /></label></span>
 							<span class="input spaceBelow"><input dojoType="ingrid:Select" autocomplete="false" style="width:606px;" id="selectionList" /></span>
 							<span id="codeListEditDisabledHint" style="visibility:hidden;" class="label"><label class="inActive">Hinweis: Die selektierte Auswahlliste darf nicht ver&auml;ndert werden.</label></span>
 							<div class="checkboxContainer">
-								<span class="input spaceBelow"><input type="checkbox" onclick="switchTableDisplay('codeListTable12Container', 'codeListTable11Container', dojo.widget.byId('selectionListDefault').checked);" id="selectionListDefault" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Defaultwert einstellbar')">Defaultwert einstellbar</label></span>
+								<span class="input spaceBelow"><input type="checkbox" onclick="switchTableDisplay('codeListTable12Container', 'codeListTable11Container', dojo.widget.byId('selectionListDefault').checked);" id="selectionListDefault" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], '<fmt:message key="dialog.admin.catalog.management.codelists.setDefault" />')"><fmt:message key="dialog.admin.catalog.management.codelists.setDefault" /></label></span>
 							</div>
 							<div class="tableContainer rows8 w632" id="codeListTable11Container">
 								<div class="cellEditors" id="codeListTable11Editors">
@@ -727,9 +728,9 @@ function saveChangesFreeEntryDef() {
 								<table id="codeListTable11" dojoType="ingrid:FilteringTable" minRows="8" cellspacing="0" class="filteringTable nosort interactive">
 									<thead>
 										<tr>
-											<th nosort="true" field="entryId" dataType="String" width="32">ID</th>
-											<th nosort="true" field="deName" dataType="String" width="300" editor="codeListTable11DeNameEditor">Name in Deutsch</th>
-											<th nosort="true" field="enName" dataType="String" width="300" editor="codeListTable11EnNameEditor">Name in Englisch</th>
+											<th nosort="true" field="entryId" dataType="String" width="32"><fmt:message key="dialog.admin.catalog.management.codelists.id" /></th>
+											<th nosort="true" field="deName" dataType="String" width="300" editor="codeListTable11DeNameEditor"><fmt:message key="dialog.admin.catalog.management.codelists.germanName" /></th>
+											<th nosort="true" field="enName" dataType="String" width="300" editor="codeListTable11EnNameEditor"><fmt:message key="dialog.admin.catalog.management.codelists.englishName" /></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -744,9 +745,9 @@ function saveChangesFreeEntryDef() {
 								<table id="codeListTable12" dojoType="ingrid:FilteringTable" minRows="8" cellspacing="0" class="filteringTable nosort interactive">
 									<thead>
 										<tr>
-											<th nosort="true" field="entryId" dataType="String" width="32">ID</th>
-											<th nosort="true" field="deName" dataType="String" width="269" editor="codeListTable12DeNameEditor">Name in Deutsch</th>
-											<th nosort="true" field="enName" dataType="String" width="269" editor="codeListTable12EnNameEditor">Name in Englisch</th>
+											<th nosort="true" field="entryId" dataType="String" width="32"><fmt:message key="dialog.admin.catalog.management.codelists.id" /></th>
+											<th nosort="true" field="deName" dataType="String" width="269" editor="codeListTable12DeNameEditor"><fmt:message key="dialog.admin.catalog.management.codelists.germanName" /></th>
+											<th nosort="true" field="enName" dataType="String" width="269" editor="codeListTable12EnNameEditor"><fmt:message key="dialog.admin.catalog.management.codelists.englishName" /></th>
 											<th nosort="true" field="isDefault" dataType="String" width="62" noSort="true">Default</th>
 										</tr>
 									</thead>
@@ -759,7 +760,7 @@ function saveChangesFreeEntryDef() {
 						<div style="margin-top:40px; margin-right:14px;" >
 							<span style="height:20px !important;">
 								<span style="float:right;">
-									<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveChanges();">Speichern</button>
+									<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.codelists.save" />" onClick="javascript:scriptScope.saveChanges();"><fmt:message key="dialog.admin.catalog.management.codelists.save" /></button>
 								</span>
 								<span id="codelistsLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden">
 									<img src="img/ladekreis.gif" />
@@ -769,15 +770,16 @@ function saveChangesFreeEntryDef() {
 					</div> <!-- TAB 1 END -->
 
 					<!-- TAB 2 START -->
-					<div id="freeEntryTab" dojoType="ContentPane" class="blueTopBorder grey" label="Liste: Rechtliche Grundlagen">
+					<div id="freeEntryTab" dojoType="ContentPane" class="blueTopBorder grey" label="<fmt:message key="dialog.admin.catalog.management.codelists.legalBaseTitle" />">
 						<div class="inputContainer grey field w668 noSpaceBelow">
-							<span class="label"><label for="freeEntrySelectionList" onclick="javascript:dialog.showContextHelp(arguments[0], 'Auswahlliste')">Auswahlliste</label></span>
+							<span class="label"><label for="freeEntrySelectionList" onclick="javascript:dialog.showContextHelp(arguments[0], '<fmt:message key="dialog.admin.catalog.management.codelists.codelist" />')"><fmt:message key="dialog.admin.catalog.management.codelists.codelist" /></label></span>
 							<span class="input spaceBelow"><input dojoType="ingrid:Select" autocomplete="false" style="width:606px;" id="freeEntrySelectionList"></div></span>
-							<div class="inputContainer w644 noSpaceBelow">
-								<span class="entry first">
-									<span class="label" style="height:37px;">Eint&auml;ge, die nicht in der Schl&uuml;sseltabelle<br />vorhanden sind</span>
 
-									<table id="freeEntryTable" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" multiple="false" class="filteringTable nosort interactive w264 relativePos">
+							<span class="entry first field">
+								<span class="label" style="height:37px;"><fmt:message key="dialog.admin.catalog.management.codelists.entriesNotInList" /></span>
+
+								<div class="tableContainer headHiddenRows6 third">
+									<table id="freeEntryTable" dojoType="ingrid:FilteringTable" minRows="6" headClass="hidden" cellspacing="0" multiple="false" class="filteringTable nosort interactive">
 										<thead>
 											<tr>
 												<th field="title" nosort="true" dataType="String">Name</th>
@@ -786,31 +788,38 @@ function saveChangesFreeEntryDef() {
 										<tbody>
 										</tbody>
 									</table>
-								</span>
+								</div>
+							</span>
 
-								<span class="entry">
-									<span class="buttonCol" style="margin:80px 0px 0px;">
-										<button dojoType="ingrid:Button" onClick="javascript:scriptScope.addFreeEntryToSysList();">&gt; &Uuml;bertragen</button>
-										<button dojoType="ingrid:Button" onClick="javascript:scriptScope.addAllFreeEntriesToSysList();">&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt; Alle&nbsp;&nbsp;&nbsp;&nbsp;</button>
-										<button dojoType="ingrid:Button" onClick="javascript:scriptScope.replaceFreeEntryWithSysListEntry();">&nbsp;&lt; Ersetzen &nbsp;</button>
-									</span>
+							<span class="entry">
+								<span class="buttonCol" style="margin:80px 0px 0px;">
+									<button dojoType="ingrid:Button" onClick="javascript:scriptScope.addFreeEntryToSysList();">&gt; <fmt:message key="dialog.admin.catalog.management.codelists.move" /></button>
+									<button dojoType="ingrid:Button" onClick="javascript:scriptScope.addAllFreeEntriesToSysList();">&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt; <fmt:message key="dialog.admin.catalog.management.codelists.moveAll" />&nbsp;&nbsp;&nbsp;&nbsp;</button>
+									<button dojoType="ingrid:Button" onClick="javascript:scriptScope.replaceFreeEntryWithSysListEntry();">&nbsp;&lt; <fmt:message key="dialog.admin.catalog.management.codelists.replace" /> &nbsp;</button>
 								</span>
+							</span>
 
-								<span class="entry">
-									<span class="label" style="height:37px;">Inhalte der Schl&uuml;sseltabelle</span>
-									<table id="freeEntryCodelistTable" dojoType="ingrid:FilteringTable" minRows="6" headClass="fixedHeader hidden" tbodyClass="scrollContent rows6" cellspacing="0" multiple="false" class="filteringTable nosort interactive w264 relativePos">
+							<span class="entry field" style="padding-left:0px;">
+								<span class="label" style="height:37px;"><fmt:message key="dialog.admin.catalog.management.codelists.listContent" /></span>
+
+								<div class="tableContainer headHiddenRows6" style="width:284px;">
+									<table id="freeEntryCodelistTable" dojoType="ingrid:FilteringTable" minRows="6" headClass="hidden" cellspacing="0" multiple="false" class="filteringTable nosort interactive">
 										<thead>
 											<tr>
 												<th field="deName" nosort="true" dataType="String">Name</th>
 											</tr>
 										</thead>
+										<colgroup>
+											<col width="50">
+										</colgroup>
 										<tbody>
 										</tbody>
 									</table>
-								</span>
+								</div>
+							</span>
 
-								<div class="fill spacer"></div>
-							</div>
+							<div class="fill spacer"></div>
+
 							<div style="margin-top:40px; margin-right:40px;" >
 								<span style="height:20px !important;">
 									<span id="codelistsFreeLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden">
