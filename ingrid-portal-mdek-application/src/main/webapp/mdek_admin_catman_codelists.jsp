@@ -84,6 +84,26 @@ function initCodelistTables() {
 		var radioButton = createHtmlForRadio("codeListRadio", "codeListRadio_" + (new Date()).getTime(), false);
 		obj.src.isDefault = radioButton;
 	});
+
+
+	// Helper function that displays a simple dialog with 'text' as content. There are two buttons 'yes' and 'no'.
+	// If the user clicks yes, the invocation is triggered. Otherwise nothing happens.
+	var askUserAndInvokeOrCancel = function(text, invocation) {
+		dialog.show(message.get("general.hint"), text, dialog.INFO, [
+	        { caption: message.get("general.no"),  action: function() { ; } },
+	    	{ caption: message.get("general.yes"), action: function() { invocation.proceed(); } }
+		]);
+	}
+	// Register functions 'around' deleteItem and deleteSelectedItems from the table context menu
+	var contextMenu1 = dojo.widget.byId("codeListTable11").getContextMenu();
+	var contextMenu2 = dojo.widget.byId("codeListTable12").getContextMenu();
+	var displayText = message.get("dialog.admin.catalog.management.codelist.deleteSingleHint");
+	dojo.event.connect("around", contextMenu1, "deleteItemClicked", dojo.lang.curry(this, askUserAndInvokeOrCancel, displayText));
+	dojo.event.connect("around", contextMenu2, "deleteItemClicked", dojo.lang.curry(this, askUserAndInvokeOrCancel, displayText));
+
+	displayText = message.get("dialog.admin.catalog.management.codelist.deleteMultipleHint");
+	dojo.event.connect("around", contextMenu1, "deleteSelectedItemsClicked", dojo.lang.curry(this, askUserAndInvokeOrCancel, displayText));
+	dojo.event.connect("around", contextMenu2, "deleteSelectedItemsClicked", dojo.lang.curry(this, askUserAndInvokeOrCancel, displayText));
 }
 
 
@@ -843,9 +863,17 @@ function saveChangesFreeEntryDef() {
 									</span>
 								</span>
 							</div>
+						</div>  <!-- TAB 2 END -->
 
-						</div>
-					</div> <!-- TAB 2 END -->
+						<!-- TAB 3 START -->
+						<div id="reindexTab" dojoType="ContentPane" class="blueTopBorder grey" label="Reindexierung">
+							<div class="inputContainer grey field w668 noSpaceBelow">
+								<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Reindexierung')">Reindexierung</label></span>
+								<div class="fill"></div>
+							</div>
+						</div> <!-- TAB 3 END -->
+
+					</div>
 				</div>
 			</div>
 		</div>

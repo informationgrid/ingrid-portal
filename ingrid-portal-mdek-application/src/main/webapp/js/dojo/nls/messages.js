@@ -182,6 +182,8 @@
 	"dialog.admin.catalog.management.additionalFields.editList":"Edit List",
 	"dialog.admin.catalog.management.additionalFields.requiredFieldsHint":"Please fill all required fields before storing the catalog!",
 	"dialog.admin.catalog.management.deleteAddress.requiredFieldsHint":"Please fill all required fields before storing the catalog!",
+	"dialog.admin.catalog.management.codelist.deleteSingleHint":"The sys list entry will be deleted after saving the list. Do you want to continue?",
+	"dialog.admin.catalog.management.codelist.deleteMultipleHint":"The sys list entries will be deleted after saving the list. Do you want to continue?",
 	"dialog.admin.catalog.management.codelist.storeSuccess":"The changes were saved successfully.",
 	"dialog.admin.catalog.management.codelist.freeEntryToSysListEntry":"The entry '%{0}' will be added as sysList entry.<br>Do you want to continue?",
 	"dialog.admin.catalog.management.codelist.freeEntryToSysListEntrySuccess":"The entry was successfully added as sysList entry.",
