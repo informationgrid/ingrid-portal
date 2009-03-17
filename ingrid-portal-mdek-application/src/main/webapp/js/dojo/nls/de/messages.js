@@ -163,7 +163,7 @@
 	"dialog.admin.catalog.management.deleteAddress.requiredFieldsHint":"Bitte w&auml;hlen Sie zun&auml;chst zwei g&uuml;ltige und unterschiedliche Adressen aus.",
 	"dialog.admin.catalog.management.codelist.deleteSingleHint":"Der Eintrag wird nach dem Speichern aus der Auswahlliste gel&ouml;scht. M&ouml;chten Sie den Eintrag wirklich entfernen?",
 	"dialog.admin.catalog.management.codelist.deleteMultipleHint":"Die gew&auml;hlten Eintr&auml;ge werden nach dem Speichern aus der Auswahlliste gel&ouml;scht. M&ouml;chten Sie die Eintr&auml;ge wirklich entfernen?",
-	"dialog.admin.catalog.management.codelist.storeSuccess":"Die sysList wurde erfolgreich gespeichert.",
+	"dialog.admin.catalog.management.codelist.storeSuccess":"Die sysList wurde erfolgreich gespeichert. Bitte f&uuml;hren Sie eine Reindexierung durch, um die betroffenen Objekte/Adressen zu aktualisieren.",
 	"dialog.admin.catalog.management.codelist.freeEntryToSysListEntry":"Der freie Eintrag '%{0}' wird als sysList Eintrag &uuml;bernommen.<br>M&ouml;chten Sie mit der Aktion fortfahren?",
 	"dialog.admin.catalog.management.codelist.freeEntryToSysListEntrySuccess":"Der Eintrag wurde erfolgreich als sysList Eintrag &uuml;bertragen.",
 	"dialog.admin.catalog.management.codelist.freeEntriesToSysListEntries":"Die freien Einträge '%{0}' werden als sysList Eintr&auml;ge &uuml;bernommen.<br>M&ouml;chten Sie mit der Aktion fortfahren?",
