@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Harrison - extern -->
+<!--
 <communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="communication.xsd">
         <client name="/torwald-group:username-ibus-client">
@@ -11,8 +14,9 @@
         </client>
         <messages queueSize="2000" handleTimeout="120"/>
 </communication>
-<!--  For Harrison -->
-<!-- 
+-->
+<!-- Harrison - intern -->
+<!--
 <communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="communication.xsd">
         <client name="/torwald-group:harrison-local-ibus-client">
@@ -26,3 +30,35 @@
         <messages queueSize="2000" handleTimeout="120"/>
 </communication>
 -->
+
+<!-- LIVE - extern -->
+<!-- 
+<communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="communication.xsd">
+        <client name="/torwald-group:live-extern-kug-ibus">
+                <connections>
+                        <server name="/kug-group:kug-ibus">
+                                <socket port="80" timeout="10" ip="213.144.28.236" />
+                                <messages maximumSize="1048576" threadCount="100" />
+                        </server>
+                </connections>
+        </client>
+        <messages queueSize="2000" handleTimeout="120"/>
+</communication>
+-->
+
+<!-- LIVE - intern -->
+<communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="communication.xsd">
+        <client name="/torwald-group:live-kug-ibus">
+                <connections>
+                        <server name="/kug-group:kug-ibus">
+                                <socket port="80" timeout="10" ip="192.168.64.117" />
+                                <messages maximumSize="1048576" threadCount="100" />
+                        </server>
+                </connections>
+        </client>
+        <messages queueSize="2000" handleTimeout="120"/>
+</communication>
+
+
