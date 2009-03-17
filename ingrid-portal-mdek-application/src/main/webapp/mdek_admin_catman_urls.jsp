@@ -7,6 +7,14 @@
 var scriptScope = this;
 
 _container_.addOnLoad(function() {
+	// Use the same store for both tables. The First table has to be reinitialised so the new store
+	// gets registered properly
+	var mainStore = dojo.widget.byId("urlListTable1").store;
+	
+	dojo.widget.byId("urlListTable2").store = mainStore;
+	dojo.widget.byId("urlListTable2").initialize();
+
+
 	var filterTable = dojo.widget.byId("urlListTable2");
 	filterTable.setFilter("errorCode", function(errorCode) { return ("VALID" != errorCode); });
 
@@ -17,7 +25,7 @@ _container_.addOnLoad(function() {
 
 scriptScope.startUrlsJob = function() {
 	dojo.widget.byId("urlListTable1").store.clearData();
-	dojo.widget.byId("urlListTable2").store.clearData();
+//	dojo.widget.byId("urlListTable2").store.clearData();
 
 	CatalogManagementService.startUrlValidatorJob({
 		preHook: showLoadingZone,
@@ -185,12 +193,12 @@ function updateUrlTables(urlObjectReferenceList) {
 		}
 
 		dojo.widget.byId("urlListTable1").store.setData(urlObjectReferenceList);
-		dojo.widget.byId("urlListTable2").store.setData(urlObjectReferenceList);
+//		dojo.widget.byId("urlListTable2").store.setData(urlObjectReferenceList);
 		dojo.widget.byId("urlListTable2").applyFilters();
 		dojo.widget.byId("urlListTable2").render();
 	} else {
 		dojo.widget.byId("urlListTable1").store.clearData();
-		dojo.widget.byId("urlListTable2").store.clearData();
+//		dojo.widget.byId("urlListTable2").store.clearData();
 	}
 }
 
