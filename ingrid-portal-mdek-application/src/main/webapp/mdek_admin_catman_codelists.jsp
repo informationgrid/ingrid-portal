@@ -73,9 +73,7 @@ function initCodelistTables() {
 	// Use the same store for both tables. The First table has to be reinitialised so the new store
 	// gets registered properly
 	var mainStore = dojo.widget.byId("codeListTable12").store;
-	
-	dojo.widget.byId("codeListTable11").store = mainStore;
-	dojo.widget.byId("codeListTable11").initialize();
+	dojo.widget.byId("codeListTable11").setStore(mainStore);
 
 	// We need to connect 'before' the function is called so the field is updated properly
 	// by the filteringTable

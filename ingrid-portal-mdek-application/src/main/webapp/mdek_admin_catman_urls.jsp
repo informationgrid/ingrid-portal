@@ -10,10 +10,7 @@ _container_.addOnLoad(function() {
 	// Use the same store for both tables. The First table has to be reinitialised so the new store
 	// gets registered properly
 	var mainStore = dojo.widget.byId("urlListTable1").store;
-	
-	dojo.widget.byId("urlListTable2").store = mainStore;
-	dojo.widget.byId("urlListTable2").initialize();
-
+	dojo.widget.byId("urlListTable2").setStore(mainStore);
 
 	var filterTable = dojo.widget.byId("urlListTable2");
 	filterTable.setFilter("errorCode", function(errorCode) { return ("VALID" != errorCode); });

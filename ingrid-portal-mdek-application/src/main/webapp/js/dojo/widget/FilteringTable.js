@@ -111,8 +111,93 @@ dojo.widget.defineWidget(
 		self.save();
 	});
 
-    ingrid.widget.FilteringTable.superclass.initialize.apply(this, arguments);
+	// -- From dojo.widget.FilteringTable --
+	//	summary
+	//	Initializes the widget.
+	//	connect up binding listeners here.
+//	dojo.debug("Init called:");
+//	dojo.debugShallow(this);
+
+
+	dojo.event.connect(this.store, "onSetData", this, "_handleSetData");
+	dojo.event.connect(this.store, "onClearData", this, "_handleClearData");
+	dojo.event.connect(this.store, "onAddData", this, "_handleAddData");
+	dojo.event.connect(this.store, "onAddDataRange", this, "_handleAddDataRange");
+	dojo.event.connect(this.store, "onRemoveData", this, "_handleRemoveData");
+	dojo.event.connect(this.store, "onUpdateField", this, "_handleUpdateField");
   },
+
+
+	_handleSetData: function() {
+		this.store.forEach(function(element){
+			element.isSelected = false;
+		});
+		this.isInitialized=false;
+		var body = this.domNode.tBodies[0];
+		if(body){
+			while(body.childNodes.length>0){
+				body.removeChild(body.childNodes[0]);
+			}
+		}
+		this.render();
+	},
+
+	_handleClearData: function(){
+		this.isInitialized = false;
+		this.render();
+	},
+
+	_handleAddData: function(addedObject){
+		var row=this.createRow(addedObject);
+		this.domNode.tBodies[0].appendChild(row);
+		this.render();
+	},
+
+	_handleAddDataRange: function(arr){
+		for(var i=0; i<arr.length; i++){
+			arr[i].isSelected=false;
+			var row=this.createRow(arr[i]);
+			this.domNode.tBodies[0].appendChild(row);
+		};
+		this.render();
+	},
+
+	_handleRemoveData: function(removedObject){
+		var rows = this.domNode.tBodies[0].rows;
+		for(var i=0; i<rows.length; i++){
+			if(this.getDataByRow(rows[i]) == removedObject.src){
+				rows[i].parentNode.removeChild(rows[i]);
+				break;
+			}
+		}
+		this.render();
+	},
+
+	_handleUpdateField: function(obj, fieldPath, val){
+		var row = this.getRow(obj);
+		var idx = this.getColumnIndex(fieldPath);
+		if(row && row.cells[idx] && this.columns[idx]){
+			this.fillCell(row.cells[idx], this.columns[idx], val);
+		}
+	},
+
+	setStore: function(newStore) {
+		this.disconnectCurrentStore();
+		this.store = newStore;
+		this.initialize();
+	},
+
+	disconnectCurrentStore: function() {
+		if (this.store) {
+			dojo.event.disconnect(this.store, "onSetData", this, "_handleSetData");
+			dojo.event.disconnect(this.store, "onClearData", this, "_handleClearData");
+			dojo.event.disconnect(this.store, "onAddData", this, "_handleAddData");
+			dojo.event.disconnect(this.store, "onAddDataRange", this, "_handleAddDataRange");
+			dojo.event.disconnect(this.store, "onRemoveData", this, "_handleRemoveData");
+			dojo.event.disconnect(this.store, "onUpdateField", this, "_handleUpdateField");
+		}
+	},
+
 
   /*
    * callback when value changes, for user to attach to
