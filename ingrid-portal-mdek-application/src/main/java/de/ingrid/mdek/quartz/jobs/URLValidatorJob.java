@@ -215,7 +215,11 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 		log.debug("URL Validation took "+(endTime - startTime)+" ms.");
 
 		executorService.shutdown();
-		jobExecutionContext.setResult(mergedJobDataMap.get(URL_OBJECT_REFERENCES));
+
+		// Only store if job was not cancelled
+		if (!cancelJob) {
+			jobExecutionContext.setResult(mergedJobDataMap.get(URL_OBJECT_REFERENCES));
+		}
 	}
 
 	// Retrieves the current JobExecutionContext

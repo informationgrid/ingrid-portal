@@ -258,19 +258,19 @@ function hideLoadingZone() {
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div id="urlListContainer" class="inputContainer noSpaceBelow">
 				<span class="label"><fmt:message key="dialog.admin.catalog.management.urls.result" /></span>
-				<div id="urlLists" dojoType="ingrid:TabContainer" class="w964" style="height:480px" selectedChild="urlList1">
+				<div id="urlLists" dojoType="ingrid:TabContainer" style="height:480px; width:1200px;" selectedChild="urlList1">
 
 					<!-- TAB 1 START -->
 					<div id="urlList1" dojoType="ContentPane" label="<fmt:message key="dialog.admin.catalog.management.urls.allUrls" />">
-						<div class="inputContainer w964 noSpaceBelow">
-							<table id="urlListTable1" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable interactive w964 relativePos" customContextMenu="true">
+						<div class="tableContainer rows20">
+							<table id="urlListTable1" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable interactive" customContextMenu="true">
 								<thead>
 									<tr>
-										<th field="errorCode" dataType="String" width="100"><fmt:message key="dialog.admin.catalog.management.urls.error" /></th>
-										<th field="icon" dataType="String" width="30"></th>
-										<th field="objectName" dataType="String" width="361"><fmt:message key="dialog.admin.catalog.management.urls.objectName" /></th>
-										<th field="url" dataType="String" width="250" sort="asc">URL</th>
-										<th field="urlReferenceDescription" dataType="String" width="223"><fmt:message key="dialog.admin.catalog.management.urls.description" /></th>
+										<th field="errorCode" dataType="String" width="106"><fmt:message key="dialog.admin.catalog.management.urls.error" /></th>
+										<th field="icon" dataType="String" width="18"></th>
+										<th field="objectName" dataType="String" width="214"><fmt:message key="dialog.admin.catalog.management.urls.objectName" /></th>
+										<th field="url" dataType="String" width="394" sort="asc">URL</th>
+										<th field="urlReferenceDescription" dataType="String" width="241"><fmt:message key="dialog.admin.catalog.management.urls.description" /></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -281,15 +281,15 @@ function hideLoadingZone() {
         		
 					<!-- TAB 2 START -->
 					<div id="urlList2" dojoType="ContentPane" label="<fmt:message key="dialog.admin.catalog.management.urls.invalidUrls" />">
-						<div class="inputContainer w964 noSpaceBelow">
-							<table id="urlListTable2" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable interactive w964 relativePos">
+						<div class="tableContainer rows20">
+							<table id="urlListTable2" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable interactive" customContextMenu="true">
 								<thead>
 									<tr>
-										<th field="errorCode" dataType="String" width="100"><fmt:message key="dialog.admin.catalog.management.urls.error" /></th>
-										<th field="icon" dataType="String" width="30"></th>
-										<th field="objectName" dataType="String" width="361"><fmt:message key="dialog.admin.catalog.management.urls.objectName" /></th>
-										<th field="url" dataType="String" width="250" sort="asc">URL</th>
-										<th field="urlReferenceDescription" dataType="String" width="223"><fmt:message key="dialog.admin.catalog.management.urls.description" /></th>
+										<th field="errorCode" dataType="String" width="106"><fmt:message key="dialog.admin.catalog.management.urls.error" /></th>
+										<th field="icon" dataType="String" width="18"></th>
+										<th field="objectName" dataType="String" width="214"><fmt:message key="dialog.admin.catalog.management.urls.objectName" /></th>
+										<th field="url" dataType="String" width="394" sort="asc">URL</th>
+										<th field="urlReferenceDescription" dataType="String" width="241"><fmt:message key="dialog.admin.catalog.management.urls.description" /></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -299,7 +299,7 @@ function hideLoadingZone() {
 					</div> <!-- TAB 2 END -->
 				</div>
 			</div>
-			<div class="inputContainer grey field w948 h058 noSpaceBelow">
+			<div class="inputContainer grey field h058 noSpaceBelow" style="width:980px;">
 				<span class="label"><label for="urlReplace" onclick="javascript:dialog.showContextHelp(arguments[0], 'Markierte URLs durch folgende URL ersetzen')"><fmt:message key="dialog.admin.catalog.management.urls.replaceUrlsWith" /></label></span>
 				<span class="input" style="position:relative;">
 					<input type="text" id="urlReplace" maxlength="255" class="w829 nextToButton" dojoType="ingrid:ValidationTextBox" />

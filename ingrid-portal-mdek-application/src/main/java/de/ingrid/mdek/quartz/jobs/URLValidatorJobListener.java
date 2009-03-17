@@ -40,14 +40,19 @@ public class URLValidatorJobListener implements JobListener {
 
 	public void jobWasExecuted(JobExecutionContext jobExecutionContext,
 			JobExecutionException jobExecutionException) {
-		log.debug("sending URL Job result to the backend.");
 		List<URLObjectReference> urlObjectReferences = (List<URLObjectReference>) jobExecutionContext.getResult();
 
-		IngridDocument jobInfo = new IngridDocument();
-		jobInfo.put(MdekKeys.URL_RESULT, MdekCatalogUtils.convertFromUrlJobResult(urlObjectReferences));
-		jobInfo.put(MdekKeys.JOBINFO_START_TIME, MdekUtils.dateToTimestamp(jobExecutionContext.getFireTime()));
-		mdekCallerCatalog.setURLInfo(plugId, jobInfo, userUuid);
-		log.debug("URL Validator Job result has been stored in the DB.");
+		if (urlObjectReferences != null) {
+			log.debug("sending URL Job result to the backend.");
+			IngridDocument jobInfo = new IngridDocument();
+			jobInfo.put(MdekKeys.URL_RESULT, MdekCatalogUtils.convertFromUrlJobResult(urlObjectReferences));
+			jobInfo.put(MdekKeys.JOBINFO_START_TIME, MdekUtils.dateToTimestamp(jobExecutionContext.getFireTime()));
+			mdekCallerCatalog.setURLInfo(plugId, jobInfo, userUuid);
+			log.debug("URL Validator Job result has been stored in the DB.");
+
+		} else {
+			log.debug("URL Validator Job result was null. Job has probably been canceled. Result will not be stored in the DB!");
+		}
 	}
 
 	// Do nothing for the following two methods
