@@ -589,8 +589,8 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 			ArrayList row = new ArrayList();
 			row.add(notNull(record.getString("t01_object.vertical_extent_maximum")));
 			row.add(notNull(record.getString("t01_object.vertical_extent_minimum")));
-			row.add(notNull(record.getString("t01_object.vertical_extent_unit")));
-			row.add(notNull(record.getString("t01_object.vertical_extent_vdatum")));
+			row.add(notNull(sysCodeList.getName("102", record.getString("t01_object.vertical_extent_unit"))));
+			row.add(notNull(sysCodeList.getName("101", record.getString("t01_object.vertical_extent_vdatum"))));
     		if (!isEmptyRow(row)) {
     			body.add(row);
     		}
@@ -718,7 +718,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
         	    	for (int i=0; i<tableRecords.size(); i++) {
         	    		Record tableRecord = (Record)tableRecords.get(i);
         	    		ArrayList row = new ArrayList();
-        	    		row.add(notNull(tableRecord.getString("t011_obj_geo_vector.geometric_object_type")));
+        	    		row.add(notNull(sysCodeList.getName("515", tableRecord.getString("t011_obj_geo_vector.geometric_object_type"))));
         	    		row.add(notNull(tableRecord.getString("t011_obj_geo_vector.geometric_object_count")));
         	    		if (!isEmptyRow(row)) {
         	    			body.add(row);
@@ -1112,8 +1112,12 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
         	HashMap link = new HashMap();
         	link.put("hasLinkIcon", new Boolean(true));
         	link.put("isExtern", new Boolean(true));
-        	link.put("title", refRecord.getString("t017_url_ref.content"));
-        	link.put("href", refRecord.getString("t017_url_ref.url_link"));
+        	if (refRecord.getString("t017_url_ref.content") != null && refRecord.getString("t017_url_ref.content").length() > 0) {
+        		link.put("title", refRecord.getString("t017_url_ref.content"));
+        	} else {
+        		link.put("title", refRecord.getString("t017_url_ref.url_link"));
+        	}
+    		link.put("href", refRecord.getString("t017_url_ref.url_link"));
         	linkList.add(link);
     	}
         if (!linkList.isEmpty()) {
@@ -1136,7 +1140,11 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     private void addAddressType(List elements, Record record) {
     	HashMap element = new HashMap();
     	element.put("type", "multiLine");
-    	element.put("title", record.getString("t012_obj_adr.special_name"));
+    	if (record.getString("t012_obj_adr.type") != null && !record.getString("t012_obj_adr.type").equals("-1")) {
+    		element.put("title", sysCodeList.getName("505", record.getString("t012_obj_adr.type")));
+    	} else {
+        	element.put("title", record.getString("t012_obj_adr.special_name"));
+    	}
     	element.put("elements", new ArrayList());
     	elements.add(element);
     	
@@ -1209,7 +1217,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 		
 		if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.institution")).booleanValue()) {
 			element = new HashMap();
-			if (addressType == 0 || addressType == 3 || addressType == 1) {
+			if ((addressType == 0 || addressType == 3 || addressType == 1) && !addrRecord.getString("t02_address.adr_uuid").equals("undefined")) {
 		    	element.put("type", "linkLine");
 		    	element.put("hasLinkIcon", new Boolean(false));
 		    	element.put("isExtern", new Boolean(false));
@@ -1247,11 +1255,17 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 	    	}
 			
 	    	element = new HashMap();
-	    	element.put("type", "linkLine");
-	    	element.put("hasLinkIcon", new Boolean(false));
-	    	element.put("isExtern", new Boolean(false));
-			element.put("title", textLine);
-			element.put("href", actionUrl.toString());
+			if (!addrRecord.getString("t02_address.adr_uuid").equals("undefined")) {
+		    	element.put("type", "linkLine");
+		    	element.put("hasLinkIcon", new Boolean(false));
+		    	element.put("isExtern", new Boolean(false));
+				element.put("title", textLine);
+				element.put("href", actionUrl.toString());
+	    	} else {
+		    	element.put("type", "textLine");
+				element.put("body", textLine);
+	    	}
+	    	
 			elements.add(element);
 		}
 		// description
@@ -1270,7 +1284,12 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 			if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.postbox_pc")).booleanValue()) {
 				String textLine = addrRecord.getString("t02_address.postbox_pc");
 				if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.country_code")).booleanValue()) {
-					textLine = messages.getString("postal.country.code.".concat(addrRecord.getString("t02_address.country_code"))).concat("-").concat(textLine);
+					String countryCode = messages.getString("postal.country.code.".concat(addrRecord.getString("t02_address.country_code")));
+					if (countryCode.startsWith("postal.country.code.")) {
+						textLine = addrRecord.getString("t02_address.country_code").concat("-").concat(textLine);
+					} else {
+						textLine = messages.getString("postal.country.code.".concat(addrRecord.getString("t02_address.country_code"))).concat("-").concat(textLine);
+					}
 				}
 				if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.city")).booleanValue()) {
 					textLine = textLine.concat(" ").concat(addrRecord.getString("t02_address.city"));
@@ -1295,7 +1314,12 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 			if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.postcode")).booleanValue()) {
 				String textLine = addrRecord.getString("t02_address.postcode");
 				if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.country_code")).booleanValue()) {
-					textLine = messages.getString("postal.country.code.".concat(addrRecord.getString("t02_address.country_code"))).concat("-").concat(textLine);
+					String countryCode = messages.getString("postal.country.code.".concat(addrRecord.getString("t02_address.country_code")));
+					if (countryCode.startsWith("postal.country.code.")) {
+						textLine = addrRecord.getString("t02_address.country_code").concat("-").concat(textLine);
+					} else {
+						textLine = messages.getString("postal.country.code.".concat(addrRecord.getString("t02_address.country_code"))).concat("-").concat(textLine);
+					}
 				}
 				if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.city")).booleanValue()) {
 					textLine = textLine.concat(" ").concat(addrRecord.getString("t02_address.city"));
