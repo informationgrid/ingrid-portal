@@ -22,6 +22,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.mdek.MdekKeysSecurity;
+import de.ingrid.mdek.MdekUtilsSecurity.IdcRole;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
 import de.ingrid.mdek.caller.MdekCallerSecurity;
 import de.ingrid.mdek.persistence.db.model.UserData;
@@ -130,7 +131,7 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
 
 		try {
 			Integer role = (Integer) userDoc.get(MdekKeysSecurity.IDC_ROLE);
-			return (role == 1 || role == 2);
+			return (role == IdcRole.CATALOG_ADMINISTRATOR.getDbValue() || role == IdcRole.METADATA_ADMINISTRATOR.getDbValue());
 
 		} catch (Exception e) {
 			throw new PortletException ("The connection to the iPlug with id '"+userData.getPlugId()+"' could not be established. The user with name '"+userName+"' and addressUuid '"+userData.getAddressUuid()+"' could not be found by the iPlug.", e);
