@@ -31,6 +31,8 @@ public class MdekSecurityUtils {
 //		log.debug("last accessed time: "+new Date(ses.getLastAccessedTime()));
 //		log.debug("max inactive interval: "+ses.getMaxInactiveInterval());
 
+		// Principal is null after the JetSpeed session times out
+		// The session will not be refreshed if the user only operates in the mdek app!
 		Principal userPrincipal = req.getUserPrincipal(); 
 		if (userPrincipal != null) {
 			// userPrincipal found. return the UserData associated with the userName			

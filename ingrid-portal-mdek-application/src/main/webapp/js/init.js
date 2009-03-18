@@ -1165,17 +1165,15 @@ var reassignToAuthorButton = null;
 		// Build the enable list
 		if (message.node.id == "objectRoot" || message.node.id == "addressRoot" || message.node.id == "addressFreeRoot") {
 			if (canCreateRootNodes) {
-				enableList = [newEntityButton];
-			} else {
-				enableList = [];				
+				enableList.push(newEntityButton);
 			}
 
 		} else if (message.node.id == "newNode") {
-			enableList = [previewButton, saveButton, finalSaveButton, deleteButton, showCommentButton];
+			enableList = enableList.concat([previewButton, saveButton, finalSaveButton, deleteButton, showCommentButton]);
 
 		} else {
 			// If a 'normal' node (obj/adr that is not root) is selected, always enable the following nodes
-			enableList = [previewButton, copyEntityButton, showCommentButton];
+			enableList = enableList.concat([previewButton, copyEntityButton, showCommentButton]);
 
 			// Only show the compare view dialog if a published version exists. Otherwise there's nothing to compare to
 			if (isPublished) {
