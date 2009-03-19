@@ -931,7 +931,17 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     	    		// only add getCap urls of WMS services
     	    		if (((serviceTypeKey != null && serviceTypeKey.equals("2")) || (serviceType != null && serviceType.toLowerCase().indexOf("wms") != -1)) && serviceLinkRecords.size() > 0 && refRecord.getString("t011_obj_serv_operation.name_value") != null && refRecord.getString("t011_obj_serv_operation.name_value").toLowerCase().equals("getcapabilities")) {
     	    	    	for (int j=0; j<serviceLinkRecords.size(); j++) {
-    	    	    		wmsServiceLinks.add(((Record)serviceLinkRecords.get(i)).getString("t011_obj_serv_op_connpoint.connect_point"));
+    	    	    		// add getCap if not set
+    	    	    		String serviceUrl = ((Record)serviceLinkRecords.get(i)).getString("t011_obj_serv_op_connpoint.connect_point"); 
+    	    	    		if (serviceUrl.toLowerCase().indexOf("request=getcapabilities") == -1) {
+    	    	    			if (serviceUrl.indexOf("?") == -1) {
+    	    	    				serviceUrl = serviceUrl + "?";
+    	    	    			} else {
+    	    	    				serviceUrl = serviceUrl + "&";
+    	    	    			}
+    	    	    			serviceUrl = serviceUrl + "REQUEST=GetCapabilities&SERVICE=CSW";
+    	    	    		}
+    	    	    		wmsServiceLinks.add(serviceUrl);
     	    	    	}
     	    		}
     	    		if (!isEmptyRow(row)) {
