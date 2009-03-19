@@ -54,4 +54,7 @@ public interface CatalogRequestHandler {
 	public List<MdekAddressBean> getAddressesOfResponsibleUser(String responsibleUserUuid, int maxNumHits);
 	public byte[] getCsvData(String uuid, CsvRequestType type);
 	public IngridDocument replaceAddress(String oldUuid, String newUuid);
+
+	public void rebuildSysListData();
+	public JobInfoBean getRebuildJobInfo();
 }

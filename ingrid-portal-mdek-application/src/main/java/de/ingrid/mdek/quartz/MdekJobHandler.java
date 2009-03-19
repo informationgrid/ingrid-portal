@@ -15,6 +15,7 @@ import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.dwr.services.sns.SNSService;
 import de.ingrid.mdek.handler.ConnectionFacade;
+import de.ingrid.mdek.job.IJob.JobType;
 import de.ingrid.mdek.quartz.jobs.MdekJob;
 import de.ingrid.mdek.quartz.jobs.SNSUpdateJob;
 import de.ingrid.mdek.quartz.jobs.URLValidatorJob;
@@ -93,7 +94,11 @@ public class MdekJobHandler implements BeanFactoryAware {
 
 	private URLJobInfoBean getUrlValidatorJobResult() {
 		IMdekCallerCatalog mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
-		IngridDocument response = mdekCallerCatalog.getURLInfo(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
+		IngridDocument response = mdekCallerCatalog.getJobInfo(
+				connectionFacade.getCurrentPlugId(),
+				JobType.URL,
+				MdekSecurityUtils.getCurrentUserUuid());
+
 		return MdekCatalogUtils.extractUrlJobInfoFromResponse(response);
 	}
 

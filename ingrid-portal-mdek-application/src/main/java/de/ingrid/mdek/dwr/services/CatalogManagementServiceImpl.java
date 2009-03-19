@@ -18,6 +18,7 @@ import org.w3c.dom.NodeList;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtils.CsvRequestType;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
+import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
@@ -230,6 +231,28 @@ public class CatalogManagementServiceImpl {
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while replacing address.", e);
+			throw MdekErrorUtils.convertToRuntimeException(e);
+		}
+	}
+
+	public void rebuildSysListData() {
+		try {
+			catalogRequestHandler.rebuildSysListData();
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while starting 'rebuild sysList' job.", e);
+			throw MdekErrorUtils.convertToRuntimeException(e);
+		}
+	}
+
+	public JobInfoBean getRebuildSysListDataJobInfo() {
+		try {
+			return catalogRequestHandler.getRebuildJobInfo();
+
+		} catch (MdekException e) {
+			// Wrap the MdekException in a RuntimeException so dwr can convert it
+			log.debug("MdekException while fetching 'rebuild sysList' job info.", e);
 			throw MdekErrorUtils.convertToRuntimeException(e);
 		}
 	}

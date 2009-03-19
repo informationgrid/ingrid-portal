@@ -16,6 +16,8 @@ _container_.addOnLoad(function() {
 
 	initFreeEntrySelect();
 	initFreeEntryTables();
+
+	refreshReindexProcessInfo();
 });
 
 function initCodelistSelect() {
@@ -723,6 +725,85 @@ function saveChangesFreeEntryDef() {
 }
 
 
+// -- Reindex Tab Functions --
+scriptScope.startReindexJob = function() {
+	CatalogManagementService.rebuildSysListData({
+		timeout: 5000,
+		preHook: showReindexLoadingZone,
+		callback: function(res) {
+			refreshReindexProcessInfo();
+		},
+		errorHandler: function(err) {
+			if (err == "Timeout") {
+				refreshReindexProcessInfo();
+
+			} else {
+				dojo.debug("Error: " + err);
+			}
+		}
+	});
+}
+
+refreshReindexProcessInfo = function() {
+	CatalogManagementService.getRebuildSysListDataJobInfo( {
+		callback: function(jobInfo){
+			updateReindexJobInfo(jobInfo);
+			if (!jobFinished(jobInfo)) {
+				setTimeout("refreshReindexProcessInfo()", 1000);
+
+			} else {
+				hideReindexLoadingZone();
+			}
+		},
+		errorHandler: function(message, err) {
+			dojo.debug("Error: "+ message);
+			// If there's a timeout try again
+			setTimeout("refreshReindexProcessInfo()", 1000);
+		}
+	});
+}
+
+function jobFinished(jobInfo) {
+	return (jobInfo.startTime == null || jobInfo.endTime != null || jobInfo.exception != null);
+}
+
+function updateReindexJobInfo(jobInfo) {
+	if (jobFinished(jobInfo)) {
+		dojo.byId("reindexJobInfo").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexLastProcessInfo");
+
+		if (jobInfo.startTime == null) {
+			// Job has never been started...
+			dojo.byId("reindexStart").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexStart");
+			dojo.byId("reindexEnd").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexEnd");
+
+		} else {
+			dojo.byId("reindexStart").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexStart") + ": " + jobInfo.startTime;
+			dojo.byId("reindexEnd").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexEnd") + ": " + jobInfo.endTime;
+		}
+		dojo.html.hide("reindexStatus");
+		dojo.html.hide("reindexNumEntities");
+		dojo.html.show("reindexEnd");
+
+	} else {
+		dojo.byId("reindexJobInfo").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexCurrentProcessInfo");
+		dojo.byId("reindexStart").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexStart") + ": " + jobInfo.startTime;
+		dojo.byId("reindexStatus").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexState") + ": " + jobInfo.description;
+		dojo.byId("reindexNumEntities").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexDatasets") + ": " + jobInfo.numProcessedEntities + " / " + jobInfo.numEntities;
+		dojo.html.show("reindexStatus");
+		dojo.html.show("reindexNumEntities");
+		dojo.html.hide("reindexEnd");
+	}
+}
+
+
+function showReindexLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("reindexLoadingZone"), true);
+}
+
+function hideReindexLoadingZone() {
+    dojo.html.setVisibility(dojo.byId("reindexLoadingZone"), false);
+}
+
 </script>
 </head>
 
@@ -864,9 +945,27 @@ function saveChangesFreeEntryDef() {
 						</div>  <!-- TAB 2 END -->
 
 						<!-- TAB 3 START -->
-						<div id="reindexTab" dojoType="ContentPane" class="blueTopBorder grey" label="Reindexierung">
+						<div id="reindexTab" dojoType="ContentPane" class="blueTopBorder grey" label="<fmt:message key="dialog.admin.catalog.management.codelists.reindex" />">
 							<div class="inputContainer grey field w668 noSpaceBelow">
 								<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Reindexierung')">Reindexierung</label></span>
+
+								<div id="reindexJobInfo"></div>
+								<div id="reindexStart"></div>
+								<div id="reindexEnd"></div>
+								<div id="reindexStatus"></div>
+								<div id="reindexNumEntities"></div>
+
+								<div style="margin-top:40px; margin-right:40px;" >
+									<span style="height:20px !important;">
+										<span style="float:right;">
+											<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.codelists.reindexStart" />" onClick="javascript:scriptScope.startReindexJob();"><fmt:message key="dialog.admin.catalog.management.codelists.reindexStart" /></button>
+										</span>
+										<span id="reindexLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden">
+											<img src="img/ladekreis.gif" />
+										</span>
+									</span>
+								</div>
+
 								<div class="fill"></div>
 							</div>
 						</div> <!-- TAB 3 END -->

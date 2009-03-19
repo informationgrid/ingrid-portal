@@ -18,6 +18,7 @@ import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCaller.AddressArea;
+import de.ingrid.mdek.job.IJob.JobType;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekAddressUtils;
 import de.ingrid.mdek.util.MdekCatalogUtils;
@@ -214,7 +215,11 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 	}
 
 	public JobInfoBean getImportInfo() {
-		IngridDocument response = mdekCallerCatalog.getImportInfo(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
+		IngridDocument response = mdekCallerCatalog.getJobInfo(
+				connectionFacade.getCurrentPlugId(),
+				JobType.IMPORT,
+				MdekSecurityUtils.getCurrentUserUuid());
+
 		return MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
@@ -275,5 +280,24 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 
 	public IngridDocument replaceAddress(String oldUuid, String newUuid) {
 		return mdekCallerCatalog.replaceAddress(connectionFacade.getCurrentPlugId(), oldUuid, newUuid, MdekSecurityUtils.getCurrentUserUuid());		
+	}
+
+	public void rebuildSysListData() {
+		IngridDocument response = mdekCallerCatalog.rebuildSyslistData(
+				connectionFacade.getCurrentPlugId(),
+				MdekSecurityUtils.getCurrentUserUuid());
+
+		if (null == MdekUtils.getResultFromResponse(response)) {
+			MdekErrorUtils.handleError(response);
+		}
+	}
+
+	public JobInfoBean getRebuildJobInfo() {
+		IngridDocument response = mdekCallerCatalog.getJobInfo(
+				connectionFacade.getCurrentPlugId(),
+				JobType.REBUILD_SYSLISTS,
+				MdekSecurityUtils.getCurrentUserUuid());
+
+		return MdekCatalogUtils.extractReindexJobInfoFromResponse(response);
 	}
 }

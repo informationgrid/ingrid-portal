@@ -293,6 +293,13 @@ public class MdekCatalogUtils {
 		return exportJobInfo;
 	}
 
+	public static JobInfoBean extractReindexJobInfoFromResponse(IngridDocument response) {
+		JobInfoBean jobInfo = new JobInfoBean();
+		addGeneralJobInfoFromResponse(response, jobInfo);
+		addReindexJobInfoFromResponse(response, jobInfo);
+		return jobInfo;
+	}
+
 	private static void addGeneralJobInfoFromResponse(IngridDocument response, JobInfoBean jobInfo) {
 		IngridDocument jobInfoDoc = MdekUtils.getResultFromResponse(response);
 		if (jobInfoDoc != null) {
@@ -351,6 +358,18 @@ public class MdekCatalogUtils {
 				}
 			}
 			urlJobInfo.setUrlObjectReferences(urlObjectReferences);
+
+		} else {
+			MdekErrorUtils.handleError(response);
+		}
+	}
+
+	private static void addReindexJobInfoFromResponse(IngridDocument response, JobInfoBean jobInfo) {
+		IngridDocument jobInfoDoc = MdekUtils.getResultFromResponse(response);
+		if (jobInfoDoc != null) {
+			jobInfo.setNumProcessedEntities((Integer) jobInfoDoc.get(MdekKeys.JOBINFO_NUM_ENTITIES));
+			jobInfo.setNumEntities((Integer) jobInfoDoc.get(MdekKeys.JOBINFO_TOTAL_NUM_ENTITIES));
+			jobInfo.setDescription((String) jobInfoDoc.get(MdekKeys.JOBINFO_ENTITY_TYPE));
 
 		} else {
 			MdekErrorUtils.handleError(response);
