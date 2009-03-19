@@ -958,7 +958,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 	    	        	link.put("hasLinkIcon", new Boolean(true));
 	    	        	link.put("isExtern", new Boolean(false));
 	    	        	link.put("title", messages.getString("common.result.showMap"));
-	    	        	link.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(wmsServiceLinks.get(i).trim()));
+	    	        	link.put("href", "main-maps.psml?wms_url=" + UtilsVelocity.urlencode(wmsServiceLinks.get(i).trim()));
 	    	        	linkList.add(link);
 	    	    		link = new HashMap();
 	    	        	link.put("hasLinkIcon", new Boolean(true));
