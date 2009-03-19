@@ -5,7 +5,6 @@ package de.ingrid.portal.search.detail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -16,7 +15,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.global.IPlugHelperDscEcs;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
@@ -834,7 +832,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 	
 	
 	private void addReferenceObjectClass3(List elements, Record record) {
-    	List refRecords = getSubRecordsByColumnName(record, "t011_obj_serv.description");
+    	List refRecords = getSubRecordsByColumnName(record, "t011_obj_serv.type");
     	if (refRecords.size() > 0) {
     		Record refRecord = (Record)refRecords.get(0);
     		addElementEntry(elements, refRecord.getString("t011_obj_serv.type_value"), messages.getString("t011_obj_serv.type"));
@@ -931,7 +929,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     	    		row.add(notNull(refRecord.getString("t011_obj_serv_operation.invocation_name")));
     	    		List serviceLinkRecords = getSubRecordsByColumnName(refRecord, "t011_obj_serv_op_connpoint.line");
     	    		// only add getCap urls of WMS services
-    	    		if (serviceTypeKey.equals("2") && serviceLinkRecords.size() > 0 && refRecord.getString("t011_obj_serv_operation.name_value") != null && refRecord.getString("t011_obj_serv_operation.name_value").toLowerCase().equals("getcapabilities")) {
+    	    		if (((serviceTypeKey != null && serviceTypeKey.equals("2")) || (serviceType != null && serviceType.toLowerCase().indexOf("wms") != -1)) && serviceLinkRecords.size() > 0 && refRecord.getString("t011_obj_serv_operation.name_value") != null && refRecord.getString("t011_obj_serv_operation.name_value").toLowerCase().equals("getcapabilities")) {
     	    	    	for (int j=0; j<serviceLinkRecords.size(); j++) {
     	    	    		wmsServiceLinks.add(((Record)serviceLinkRecords.get(i)).getString("t011_obj_serv_op_connpoint.connect_point"));
     	    	    	}
