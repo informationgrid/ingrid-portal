@@ -11,6 +11,7 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.SNSUpdateJobInfoBean;
 import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.dwr.services.sns.SNSService;
@@ -121,6 +122,52 @@ public class MdekJobHandler implements BeanFactoryAware {
 		} catch (SchedulerException ex) {
 			log.debug("Error starting SNS Update Job.", ex);
 		}
+	}
+
+	public SNSUpdateJobInfoBean getSNSUpdateJobInfo() {
+		MdekJob job = getSNSUpdateJob();
+		if (job != null && job.getRunningJobInfo() != null) {
+			JobInfoBean jobInfo = job.getRunningJobInfo();
+			return new SNSUpdateJobInfoBean(jobInfo);
+
+		} else {
+			return getSNSUpdateJobResult();
+		}
+	}
+
+	private SNSUpdateJob getSNSUpdateJob() {
+		String jobName = SNSUpdateJob.createJobName(connectionFacade.getCurrentPlugId());
+		return (SNSUpdateJob) jobMap.get(jobName);
+	}
+
+	private void removeSNSUpdateJob() {
+		String jobName = SNSUpdateJob.createJobName(connectionFacade.getCurrentPlugId());
+		jobMap.remove(jobName);
+	}
+
+	public void stopSNSUpdateJob() {
+		MdekJob job = getSNSUpdateJob();
+		if (job != null) {
+			job.stop();
+			removeSNSUpdateJob();
+
+		} else {
+			log.debug("Could not stop SNS Update job. It probably is not running.");
+		}
+	}
+
+	private SNSUpdateJobInfoBean getSNSUpdateJobResult() {
+/*
+		IMdekCallerCatalog mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
+		IngridDocument response = mdekCallerCatalog.getJobInfo(
+				connectionFacade.getCurrentPlugId(),
+				JobType.,
+				MdekSecurityUtils.getCurrentUserUuid());
+
+		return MdekCatalogUtils.extractUrlJobInfoFromResponse(response);
+*/
+		// TODO Return job info from the backend
+		return new SNSUpdateJobInfoBean();
 	}
 
 	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {

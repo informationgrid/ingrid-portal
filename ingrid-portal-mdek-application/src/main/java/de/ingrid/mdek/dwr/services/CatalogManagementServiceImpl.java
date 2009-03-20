@@ -1,24 +1,29 @@
 package de.ingrid.mdek.dwr.services;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtils.CsvRequestType;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.SNSUpdateJobInfoBean;
 import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
@@ -152,33 +157,47 @@ public class CatalogManagementServiceImpl {
 		return false;
 	}
 
-	public void startSNSUpdateJob(FileTransfer fileTransfer) throws Exception {
-		XPath xpath = XPathFactory.newInstance().newXPath();
-		DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-		Document doc = documentBuilder.parse(fileTransfer.getInputStream());
+	public void startSNSUpdateJob(FileTransfer fileTransfer) throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
+		if (fileTransfer.getFilename() == null || fileTransfer.getFilename().length() == 0) {
+			mdekJobHandler.startSNSUpdateJob(null, null, null);
 
-		NodeList changedList = (NodeList) xpath.evaluate("//changed/@topicID", doc, XPathConstants.NODESET);
-		String[] changedTopics = new String[changedList.getLength()];
-		for (int index = 0; index < changedList.getLength(); ++index) {
-			changedTopics[index] = changedList.item(index).getTextContent();
+		} else {
+			XPath xpath = XPathFactory.newInstance().newXPath();
+			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder documentBuilder;
+			documentBuilder = documentFactory.newDocumentBuilder();
+			Document doc = documentBuilder.parse(fileTransfer.getInputStream());
+	
+			NodeList changedList = (NodeList) xpath.evaluate("//changed/@topicID", doc, XPathConstants.NODESET);
+			String[] changedTopics = new String[changedList.getLength()];
+			for (int index = 0; index < changedList.getLength(); ++index) {
+				changedTopics[index] = changedList.item(index).getTextContent();
+			}
+	
+			NodeList newList = (NodeList) xpath.evaluate("//new/@topicID", doc, XPathConstants.NODESET);
+			String[] newTopics = new String[newList.getLength()];
+			for (int index = 0; index < newList.getLength(); ++index) {
+				newTopics[index] = newList.item(index).getTextContent();
+			}
+	
+			NodeList expiredList = (NodeList) xpath.evaluate("//expired/@topicID", doc, XPathConstants.NODESET);
+			String[] expiredTopics = new String[expiredList.getLength()];
+			for (int index = 0; index < expiredList.getLength(); ++index) {
+				expiredTopics[index] = expiredList.item(index).getTextContent();
+			}
+
+			mdekJobHandler.startSNSUpdateJob(changedTopics, newTopics, expiredTopics);
 		}
-
-		NodeList newList = (NodeList) xpath.evaluate("//new/@topicID", doc, XPathConstants.NODESET);
-		String[] newTopics = new String[newList.getLength()];
-		for (int index = 0; index < newList.getLength(); ++index) {
-			newTopics[index] = newList.item(index).getTextContent();
-		}
-
-		NodeList expiredList = (NodeList) xpath.evaluate("//expired/@topicID", doc, XPathConstants.NODESET);
-		String[] expiredTopics = new String[expiredList.getLength()];
-		for (int index = 0; index < expiredList.getLength(); ++index) {
-			expiredTopics[index] = expiredList.item(index).getTextContent();
-		}
-
-		mdekJobHandler.startSNSUpdateJob(changedTopics, newTopics, expiredTopics);
 	}
 
+	public void stopSNSUpdateJob() {
+		mdekJobHandler.stopSNSUpdateJob();
+	}
+
+	public SNSUpdateJobInfoBean getSNSUpdateJobInfo() {
+		return mdekJobHandler.getSNSUpdateJobInfo();
+	}
+	
 	public AnalyzeJobInfoBean analyze() {
 		try {
 			return catalogRequestHandler.analyze();

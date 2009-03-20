@@ -18,6 +18,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.SNSUpdateJobInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.dwr.services.sns.SNSService;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic;
@@ -97,6 +98,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		SNSService snsService = (SNSService) mergedJobDataMap.get("SNS_SERVICE");
 		ConnectionFacade connectionFacade = (ConnectionFacade) mergedJobDataMap.get("CONNECTION_FACADE");
 		String plugId = mergedJobDataMap.getString("PLUG_ID");
+		List<String> freeTerms = fetchFreeTerms(connectionFacade.getMdekCallerQuery(), plugId);
 
 		log.debug("Starting sns update...");
 		long startTime = System.currentTimeMillis();
@@ -108,47 +110,64 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		List<SNSTopic> snsTopics = fetchSNSTopics(connectionFacade.getMdekCallerQuery(), plugId);
 		List<SNSTopic> snsTopicsToChange = filter(snsTopics, changedTopics);
 
+		jobExecutionContext.put("NUM_PROCESSED", new Integer(0));
+		jobExecutionContext.put("NUM_TOTAL", snsTopicsToChange.size() + freeTerms.size());
+
 
 		// TODO remove. Inserted for testing purpose
-		snsTopicsToChange = snsTopicsToChange.subList(0, 10);
+		if (snsTopicsToChange != null && snsTopicsToChange.size() > 10)
+			snsTopicsToChange = snsTopicsToChange.subList(0, 10);
 
 
-		log.debug("total changed topics: " + changedTopics.length);
+		if (changedTopics != null) {
+			log.debug("total changed topics: " + changedTopics.length);
+		}
 		log.debug("changed topic matches: " + snsTopicsToChange.size());
-		List<SNSTopic> snsTopicsResult = updateChangedTopics(snsService, snsTopicsToChange);
+		List<SNSTopic> snsTopicsResult = updateChangedTopics(snsService, snsTopicsToChange, jobExecutionContext);
 
 		List<SNSTopic> snsTopicsToExpire = filter(snsTopics, expiredTopics);
-		log.debug("total expired topics: " + expiredTopics.length);
+		if (expiredTopics != null) {
+			log.debug("total expired topics: " + expiredTopics.length);
+		}
 		log.debug("expired topic matches: " + snsTopicsToExpire.size());
 		removeExpiredTopics(snsTopicsToExpire);
 
-		// Get the list of free terms and check if any of them are new
-		List<String> freeTerms = fetchFreeTerms(connectionFacade.getMdekCallerQuery(), plugId);
-		log.debug("total free terms: " + freeTerms.size());
 
-		
+		log.debug("total free terms: " + freeTerms.size());
 		// TODO remove. Inserted for testing purpose
-		freeTerms = freeTerms.subList(0, 10);
-		
-		
-		List<SNSTopic> freeTermsResult = updateFreeTerms(snsService, freeTerms);
+		if (freeTerms != null && freeTerms.size() > 10)
+			freeTerms = freeTerms.subList(0, 10);
+
+
+		List<SNSTopic> freeTermsResult = updateFreeTerms(snsService, freeTerms, jobExecutionContext);
 
 		long endTime = System.currentTimeMillis();
 		log.debug("SNS Update took "+(endTime - startTime)+" ms.");
-//		createJobResult(snsTopicsToChange, snsTopicsResult, snsTopicsToExpire, freeTerms, freeTermsResult);
-		// TODO remove. Inserted for testing purpose
-		createJobResult(snsTopicsToChange, snsTopicsResult, snsTopicsToExpire, freeTerms, freeTermsResult);
+
+		if (!cancelJob) {
+			SNSUpdateJobInfoBean jobInfo = createJobResult(snsTopicsToChange, snsTopicsResult, snsTopicsToExpire, freeTerms, freeTermsResult);
+			// TODO Send result to backend
+			jobExecutionContext.setResult(jobInfo);
+		}
 	}
 
-	private static void createJobResult(List<SNSTopic> oldTopics, List<SNSTopic> newTopics,
+	private static SNSUpdateJobInfoBean createJobResult(List<SNSTopic> oldTopics, List<SNSTopic> newTopics,
 			List<SNSTopic> expiredTopics, List<String> freeTerms, List<SNSTopic> descriptorsForFreeTerms) {
 
+		SNSUpdateJobInfoBean jobInfo = new SNSUpdateJobInfoBean();
 		// Check if the newly found topics differ from the old ones
 		removeIdenticalTopics(oldTopics, newTopics);
 		log.debug("number of topics to update: " + oldTopics.size());
+		jobInfo.setOldSNSTopics(oldTopics);
+		jobInfo.setNewSNSTopics(newTopics);
 		log.debug("number of topics to expire: " + expiredTopics.size());
+		jobInfo.setExpiredTopics(expiredTopics);
 		removeUnknownTerms(freeTerms, descriptorsForFreeTerms);
 		log.debug("number of free terms to add as topics: " + freeTerms.size());
+		jobInfo.setFreeTerms(freeTerms);
+		jobInfo.setTopicsForFreeTerms(descriptorsForFreeTerms);
+
+		return jobInfo;
 	}
 
 	private static void removeIdenticalTopics(List<SNSTopic> oldTopics, List<SNSTopic> newTopics) {
@@ -251,23 +270,33 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 
 	
 	private List<SNSTopic> filter(List<SNSTopic> snsTopics, String[] topicIds) {
-		List<SNSTopic> resultList = new ArrayList<SNSTopic>();
-		List<String> topicIdList = Arrays.asList(topicIds);
-		for (SNSTopic topic : snsTopics) {
-			if (topicIdList.contains(topic.getTopicId())) {
-				resultList.add(topic);
+		if (snsTopics != null && topicIds != null) {
+			List<SNSTopic> resultList = new ArrayList<SNSTopic>();
+			List<String> topicIdList = Arrays.asList(topicIds);
+			for (SNSTopic topic : snsTopics) {
+				if (topicIdList.contains(topic.getTopicId())) {
+					resultList.add(topic);
+				}
 			}
+			return resultList;
+
+		} else {
+			return snsTopics;
 		}
-		return resultList;
 	}
 
-	private List<SNSTopic> updateChangedTopics(SNSService snsService, List<SNSTopic> snsTopics) {
+	private List<SNSTopic> updateChangedTopics(SNSService snsService, List<SNSTopic> snsTopics, JobExecutionContext jobExecutionContext) {
 		List<SNSTopic> newTopics = new ArrayList<SNSTopic>(snsTopics.size());
 		for (SNSTopic oldTopic : snsTopics) {
+			if (cancelJob) {
+				break;
+			}
+
 			SNSTopic newTopic = snsService.getPSI(oldTopic.getTopicId());
 			log.debug("old topic: " + oldTopic);
 			log.debug("new topic: " + newTopic);
 			newTopics.add(newTopic);
+			jobExecutionContext.put("NUM_PROCESSED", (Integer) jobExecutionContext.get("NUM_PROCESSED") + 1);
 		}
 		return newTopics;
 	}
@@ -278,9 +307,13 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		}
 	}
 
-	private List<SNSTopic> updateFreeTerms(SNSService snsService, List<String> freeTerms) {
+	private List<SNSTopic> updateFreeTerms(SNSService snsService, List<String> freeTerms, JobExecutionContext jobExecutionContext) {
 		List<SNSTopic> foundTopics = new ArrayList<SNSTopic>();
 		for (String freeTerm : freeTerms) {
+			if (cancelJob) {
+				break;
+			}
+
 			log.debug("Find Topic for '" + freeTerm + "'...");
 			List<SNSTopic> snsTopics = snsService.findTopics(freeTerm);
 			boolean found = false; 
@@ -306,6 +339,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 			if (!found) {
 				foundTopics.add(null);
 			}
+			jobExecutionContext.put("NUM_PROCESSED", (Integer) jobExecutionContext.get("NUM_PROCESSED") + 1);
 		}
 		return foundTopics;
 	}
@@ -335,6 +369,8 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 			JobInfoBean jobInfoResult = new JobInfoBean();
 			jobInfoResult.setDescription(jobName);
 			jobInfoResult.setStartTime(executionContext.getFireTime());
+			jobInfoResult.setNumProcessedEntities((Integer) executionContext.get("NUM_PROCESSED"));
+			jobInfoResult.setNumEntities((Integer) executionContext.get("NUM_TOTAL"));
 			return jobInfoResult;
 
 		} else {
