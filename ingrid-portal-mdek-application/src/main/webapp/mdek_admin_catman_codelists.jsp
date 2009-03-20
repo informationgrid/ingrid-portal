@@ -769,7 +769,7 @@ function jobFinished(jobInfo) {
 
 function updateReindexJobInfo(jobInfo) {
 	if (jobFinished(jobInfo)) {
-		dojo.byId("reindexJobInfo").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexLastProcessInfo");
+		dojo.byId("reindexJobInfo").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexLastProcessInfo") + ":";
 
 		if (jobInfo.startTime == null) {
 			// Job has never been started...
@@ -785,7 +785,7 @@ function updateReindexJobInfo(jobInfo) {
 		dojo.html.show("reindexEnd");
 
 	} else {
-		dojo.byId("reindexJobInfo").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexCurrentProcessInfo");
+		dojo.byId("reindexJobInfo").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexCurrentProcessInfo") + ":";
 		dojo.byId("reindexStart").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexStart") + ": " + jobInfo.startTime;
 		dojo.byId("reindexStatus").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexState") + ": " + jobInfo.description;
 		dojo.byId("reindexNumEntities").innerHTML = message.get("dialog.admin.catalog.management.codelist.reindexDatasets") + ": " + jobInfo.numProcessedEntities + " / " + jobInfo.numEntities;
@@ -947,9 +947,9 @@ function hideReindexLoadingZone() {
 						<!-- TAB 3 START -->
 						<div id="reindexTab" dojoType="ContentPane" class="blueTopBorder grey" label="<fmt:message key="dialog.admin.catalog.management.codelists.reindex" />">
 							<div class="inputContainer grey field w668 noSpaceBelow">
-								<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Reindexierung')">Reindexierung</label></span>
 
 								<div id="reindexJobInfo"></div>
+								<br />
 								<div id="reindexStart"></div>
 								<div id="reindexEnd"></div>
 								<div id="reindexStatus"></div>
