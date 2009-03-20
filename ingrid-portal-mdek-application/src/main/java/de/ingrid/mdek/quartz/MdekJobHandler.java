@@ -133,7 +133,7 @@ public class MdekJobHandler implements BeanFactoryAware {
 	}
 
 	public void stopJob(JobType jobType) {
-		MdekJob job = getJob(JobType.URL_VALIDATOR);
+		MdekJob job = getJob(jobType);
 		if (job != null) {
 			job.stop();
 			removeJob(jobType);

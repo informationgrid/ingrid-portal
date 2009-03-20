@@ -57,9 +57,13 @@ public class SNSLocationTopic {
 		String result = "[";
 		result += "ID: "+this.topicId;
 		result += ", Name: "+this.name;
+		result += ", Type ID: "+this.typeId;
 		result += ", Type: "+this.type;
 		result += ", Qualifier: "+this.qualifier;
-		result += ", WGS84Box: "+this.boundingBox[0]+","+this.boundingBox[1]+" "+this.boundingBox[2]+","+this.boundingBox[3];
+		result += ", Native Key: "+this.nativeKey;
+		if (this.boundingBox != null && this.boundingBox.length == 4) {
+			result += ", WGS84Box: "+this.boundingBox[0]+","+this.boundingBox[1]+" "+this.boundingBox[2]+","+this.boundingBox[3];
+		}
 		result += "]";
 		return result;
 	}
@@ -75,5 +79,4 @@ public class SNSLocationTopic {
 	public void setTypeId(String typeId) {
 		this.typeId = typeId;
 	}
-
 }

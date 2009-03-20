@@ -178,13 +178,17 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 			SNSTopic oldTopic = oldTopicsIt.next();
 			SNSTopic newTopic = newTopicsIt.next();
 
+			if (newTopic == null) {
+				// Keep topics where new topics could not be found (will be changed to free terms)
+				continue;
+			}
+
 			// Comare: type, source, topicId, title, gemetId
-			if (newTopic == null ||
-					(oldTopic.getType() == newTopic.getType() &&
+			if (oldTopic.getType() == newTopic.getType() &&
 					oldTopic.getSource() == newTopic.getSource() &&
 					oldTopic.getTopicId().equals(newTopic.getTopicId()) &&
 					oldTopic.getTitle().equals(newTopic.getTitle()) &&
-					(oldTopic.getGemetId() == null || oldTopic.getGemetId().equals(newTopic.getGemetId())))) {
+					(oldTopic.getGemetId() == null || oldTopic.getGemetId().equals(newTopic.getGemetId()))) {
 				oldTopicsIt.remove();
 				newTopicsIt.remove();
 			}

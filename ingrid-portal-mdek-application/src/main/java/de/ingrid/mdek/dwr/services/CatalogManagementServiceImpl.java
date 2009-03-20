@@ -161,7 +161,7 @@ public class CatalogManagementServiceImpl {
 
 	public void startSNSUpdateJob(FileTransfer fileTransfer) throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
 		if (fileTransfer.getFilename() == null || fileTransfer.getFilename().length() == 0) {
-			mdekJobHandler.startSNSUpdateJob(null, null, null);
+			mdekJobHandler.startSNSUpdateJob(null, null, new String[0]);
 
 		} else {
 			List<String[]> topicIds = extractTopicsFromFile(fileTransfer);
@@ -216,7 +216,7 @@ public class CatalogManagementServiceImpl {
 	
 	public void startSNSLocationUpdateJob(FileTransfer fileTransfer) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
 		if (fileTransfer.getFilename() == null || fileTransfer.getFilename().length() == 0) {
-			mdekJobHandler.startSNSLocationUpdateJob(null, null, null);
+			mdekJobHandler.startSNSLocationUpdateJob(null, null, new String[0]);
 
 		} else {
 			List<String[]> topicIds = extractTopicsFromFile(fileTransfer);

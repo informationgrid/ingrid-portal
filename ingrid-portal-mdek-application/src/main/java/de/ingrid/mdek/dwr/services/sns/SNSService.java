@@ -325,6 +325,32 @@ public class SNSService {
 	    return null;
     }
 
+    /**
+     * getPSI for location topics 'topicId'.
+     * @param topicId topic id to search for
+     * @return the SNSLocationTopic if it exists, null otherwise
+     */
+    public SNSLocationTopic getLocationPSI(String topicId) {
+    	TopicMapFragment mapFragment = null;
+    	try {
+    		mapFragment = snsClient.getPSI(topicId, 0, "/location");
+
+    	} catch (Exception e) {
+	    	log.error(e);
+	    }
+	    
+	    if (null != mapFragment) {
+	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
+	        if ((null != topics)) {
+	            for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
+	            	if (topic.getId().equals(topicId)) {
+		            	return createLocationTopic(topic);
+	            	}
+	            }
+	        }
+	    }
+	    return null;
+    }
     
     public ArrayList<SNSTopic> getSimilarTerms(String[] queryTerms) {
     	return getSimilarTerms(queryTerms, MAX_NUM_RESULTS);
