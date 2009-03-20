@@ -395,30 +395,46 @@ scriptScope.replaceAddress = function() {
 	var newNode    = dojo.widget.byId("treeAddressNew").selectedNode;
 
 	if (isValidAddressNode(deleteNode) && isValidAddressNode(newNode) && deleteNode.uuid != newNode.uuid) {
-		CatalogManagementService.replaceAddress(deleteNode.uuid, newNode.uuid, {
-			preHook: showLoadingZone,
-			postHook: hideLoadingZone,
-			callback: function(data) {
-				//initTree();
-				var tree = dojo.widget.byId("treeAddressDelete");
-				var newSelectNode = deleteNode.parent;
-				tree.selectNode(newSelectNode);
-				deleteNodeSelected(newSelectNode);
-				deleteNode.destroy();
-				
-				dojo.debug("address has been replaced!");
-				dialog.show(message.get("general.hint"), "<fmt:message key="dialog.admin.catalog.management.deleteAddress.successfulReplaced" />");
-				
-			},
-			errorHandler: function(errMsg, err) {
-				if (errMsg.indexOf("ADDRESS_IS_IDCUSER_ADDRESS") != -1) {
-					dialog.show(message.get("general.error"), "<fmt:message key="dialog.admin.catalog.management.deleteAddress.addressIsIdcUser" />", dialog.WARNING);
-				} else if (errMsg.indexOf("NODE_HAS_SUBNODES") != -1) {
-					dialog.show(message.get("general.error"), "<fmt:message key="dialog.admin.catalog.management.deleteAddress.nodeHasSubnodes" />", dialog.WARNING);
-				} else {
-					dialog.show(message.get("general.error"), "<fmt:message key="dialog.admin.catalog.management.deleteAddress.error" />: " + errMsg, dialog.WARNING);
+		var def = new dojo.Deferred();
+		// ask if user really want to replace address
+		dialog.show(message.get("general.hint"), message.get("dialog.admin.catalog.management.deleteAddress.reallyDelete"), dialog.INFO, [
+	    	    { caption: message.get("general.no"),  action: function() { def.errback("CANCEL"); } },
+	    		{ caption: message.get("general.ok"), action: function() { def.callback(); } }
+			]);
+			
+		// call this only if user pressed ok
+		def.addCallback(function() {
+			CatalogManagementService.replaceAddress(deleteNode.uuid, newNode.uuid, {
+				preHook: showLoadingZone,
+				postHook: hideLoadingZone,
+				callback: function(data) {
+					//initTree();
+					var tree = dojo.widget.byId("treeAddressDelete");
+					var newSelectNode = deleteNode.parent;
+					tree.selectNode(newSelectNode);
+					deleteNodeSelected(newSelectNode);
+					deleteNode.destroy();
+					
+					dojo.debug("address has been replaced!");
+					dialog.show(message.get("general.hint"), "<fmt:message key="dialog.admin.catalog.management.deleteAddress.successfulReplaced" />");
+					
+				},
+				errorHandler: function(errMsg, err) {
+					if (errMsg.indexOf("ADDRESS_IS_IDCUSER_ADDRESS") != -1) {
+						dialog.show(message.get("general.error"), "<fmt:message key="dialog.admin.catalog.management.deleteAddress.addressIsIdcUser" />", dialog.WARNING);
+					} else if (errMsg.indexOf("NODE_HAS_SUBNODES") != -1) {
+						dialog.show(message.get("general.error"), "<fmt:message key="dialog.admin.catalog.management.deleteAddress.nodeHasSubnodes" />", dialog.WARNING);
+					} else {
+						dialog.show(message.get("general.error"), "<fmt:message key="dialog.admin.catalog.management.deleteAddress.error" />: " + errMsg, dialog.WARNING);
+					}
+					dojo.debug("Error: "+errMsg);
+					dojo.debugShallow(err);
 				}
-				dojo.debug("Error: "+errMsg);
+			});
+		});
+		def.addErrback(function(err) {
+			if (err.message != "CANCEL") {
+				dojo.debug("Error: " + err);
 				dojo.debugShallow(err);
 			}
 		});
