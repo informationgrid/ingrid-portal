@@ -23,6 +23,7 @@ import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtils.CsvRequestType;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.SNSLocationUpdateJobInfoBean;
 import de.ingrid.mdek.beans.SNSUpdateJobInfoBean;
 import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
@@ -34,6 +35,7 @@ import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.quartz.MdekJobHandler;
+import de.ingrid.mdek.quartz.MdekJobHandler.JobType;
 import de.ingrid.mdek.quartz.jobs.util.URLState;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
@@ -56,11 +58,11 @@ public class CatalogManagementServiceImpl {
 	}
 
 	public void stopUrlValidatorJob() {
-		mdekJobHandler.stopUrlValidatorJob();
+		mdekJobHandler.stopJob(JobType.URL_VALIDATOR);
 	}
 
 	public URLJobInfoBean getUrlValidatorJobInfo() {
-		return mdekJobHandler.getUrlValidatorJobInfo();
+		return (URLJobInfoBean) mdekJobHandler.getJobInfo(JobType.URL_VALIDATOR);
 	}
 
 	public void updateDBUrlJobInfo(List<Map<String, String>> sourceUrls, String targetUrl) {
@@ -162,42 +164,75 @@ public class CatalogManagementServiceImpl {
 			mdekJobHandler.startSNSUpdateJob(null, null, null);
 
 		} else {
-			XPath xpath = XPathFactory.newInstance().newXPath();
-			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder documentBuilder;
-			documentBuilder = documentFactory.newDocumentBuilder();
-			Document doc = documentBuilder.parse(fileTransfer.getInputStream());
-	
-			NodeList changedList = (NodeList) xpath.evaluate("//changed/@topicID", doc, XPathConstants.NODESET);
-			String[] changedTopics = new String[changedList.getLength()];
-			for (int index = 0; index < changedList.getLength(); ++index) {
-				changedTopics[index] = changedList.item(index).getTextContent();
-			}
-	
-			NodeList newList = (NodeList) xpath.evaluate("//new/@topicID", doc, XPathConstants.NODESET);
-			String[] newTopics = new String[newList.getLength()];
-			for (int index = 0; index < newList.getLength(); ++index) {
-				newTopics[index] = newList.item(index).getTextContent();
-			}
-	
-			NodeList expiredList = (NodeList) xpath.evaluate("//expired/@topicID", doc, XPathConstants.NODESET);
-			String[] expiredTopics = new String[expiredList.getLength()];
-			for (int index = 0; index < expiredList.getLength(); ++index) {
-				expiredTopics[index] = expiredList.item(index).getTextContent();
-			}
-
-			mdekJobHandler.startSNSUpdateJob(changedTopics, newTopics, expiredTopics);
+			List<String[]> topicIds = extractTopicsFromFile(fileTransfer);
+			mdekJobHandler.startSNSUpdateJob(topicIds.get(0), topicIds.get(1), topicIds.get(2));
 		}
 	}
 
+	// Extracts the changed, new and expired topics from a given XML file
+	// The entries are returned as String arrays in a List (of size 3)
+	// The first array contains all changed topic IDs, the second all new topic IDs and
+	// the third all expired topic IDs
+	private List<String[]> extractTopicsFromFile(FileTransfer fileTransfer) throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
+		List<String[]> resultList = new ArrayList<String[]>(3);
+
+		XPath xpath = XPathFactory.newInstance().newXPath();
+		DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder documentBuilder;
+		documentBuilder = documentFactory.newDocumentBuilder();
+		Document doc = documentBuilder.parse(fileTransfer.getInputStream());
+
+		NodeList changedList = (NodeList) xpath.evaluate("//changed/@topicID", doc, XPathConstants.NODESET);
+		String[] changedTopics = new String[changedList.getLength()];
+		for (int index = 0; index < changedList.getLength(); ++index) {
+			changedTopics[index] = changedList.item(index).getTextContent();
+		}
+		resultList.add(changedTopics);
+
+		NodeList newList = (NodeList) xpath.evaluate("//new/@topicID", doc, XPathConstants.NODESET);
+		String[] newTopics = new String[newList.getLength()];
+		for (int index = 0; index < newList.getLength(); ++index) {
+			newTopics[index] = newList.item(index).getTextContent();
+		}
+		resultList.add(newTopics);
+
+		NodeList expiredList = (NodeList) xpath.evaluate("//expired/@topicID", doc, XPathConstants.NODESET);
+		String[] expiredTopics = new String[expiredList.getLength()];
+		for (int index = 0; index < expiredList.getLength(); ++index) {
+			expiredTopics[index] = expiredList.item(index).getTextContent();
+		}
+		resultList.add(expiredTopics);
+
+		return resultList;
+	}
+
 	public void stopSNSUpdateJob() {
-		mdekJobHandler.stopSNSUpdateJob();
+		mdekJobHandler.stopJob(JobType.SNS_UPDATE);
 	}
 
 	public SNSUpdateJobInfoBean getSNSUpdateJobInfo() {
-		return mdekJobHandler.getSNSUpdateJobInfo();
+		return (SNSUpdateJobInfoBean) mdekJobHandler.getJobInfo(JobType.SNS_UPDATE);
 	}
 	
+	public void startSNSLocationUpdateJob(FileTransfer fileTransfer) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
+		if (fileTransfer.getFilename() == null || fileTransfer.getFilename().length() == 0) {
+			mdekJobHandler.startSNSLocationUpdateJob(null, null, null);
+
+		} else {
+			List<String[]> topicIds = extractTopicsFromFile(fileTransfer);
+			mdekJobHandler.startSNSLocationUpdateJob(topicIds.get(0), topicIds.get(1), topicIds.get(2));
+		}
+	}
+
+	public void stopSNSLocationUpdateJob() {
+		mdekJobHandler.stopJob(JobType.SNS_LOCATION_UPDATE);
+	}
+
+	public SNSLocationUpdateJobInfoBean getSNSLocationUpdateJobInfo() {
+		return (SNSLocationUpdateJobInfoBean) mdekJobHandler.getJobInfo(JobType.SNS_LOCATION_UPDATE);
+	}
+
+
 	public AnalyzeJobInfoBean analyze() {
 		try {
 			return catalogRequestHandler.analyze();

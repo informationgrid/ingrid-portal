@@ -234,7 +234,7 @@ function generateRandomString(strLength) {
 						<div id="resultListRetroIndex" dojoType="ContentPane" class="blueTopBorder" label="Ergebnisse der Retroindexierung">
 							<div class="inputContainer w964 noSpaceBelow">
 
-								<div class="listInfo wide">
+								<div class="listInfo w964">
 									<span id="snsUpdateResultTab1Info" class="searchResultsInfo">&nbsp;</span>
 									<span id="snsUpdateResultTab1Paging" class="searchResultsPaging">&nbsp;</span>
 									<div class="fill"></div>
@@ -259,7 +259,7 @@ function generateRandomString(strLength) {
 						<div id="resultListThesaurus" dojoType="ContentPane" class="blueTopBorder" label="Ergebnisse der Theasaurus-Aktualisierung">
 							<div class="inputContainer w964 noSpaceBelow">
 	
-								<div class="listInfo wide">
+								<div class="listInfo w964">
 									<span id="snsUpdateResultTab2Info" class="searchResultsInfo">&nbsp;</span>
 									<span id="snsUpdateResultTab2Paging" class="searchResultsPaging">&nbsp;</span>
 									<div class="fill"></div>

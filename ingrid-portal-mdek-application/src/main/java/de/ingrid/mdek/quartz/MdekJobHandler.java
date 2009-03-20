@@ -11,13 +11,14 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.SNSLocationUpdateJobInfoBean;
 import de.ingrid.mdek.beans.SNSUpdateJobInfoBean;
 import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.dwr.services.sns.SNSService;
 import de.ingrid.mdek.handler.ConnectionFacade;
-import de.ingrid.mdek.job.IJob.JobType;
 import de.ingrid.mdek.quartz.jobs.MdekJob;
+import de.ingrid.mdek.quartz.jobs.SNSLocationUpdateJob;
 import de.ingrid.mdek.quartz.jobs.SNSUpdateJob;
 import de.ingrid.mdek.quartz.jobs.URLValidatorJob;
 import de.ingrid.mdek.util.MdekCatalogUtils;
@@ -34,6 +35,8 @@ public class MdekJobHandler implements BeanFactoryAware {
 	private Scheduler scheduler;
 	private ConnectionFacade connectionFacade;
 	private Map<String, MdekJob> jobMap;
+
+	public enum JobType { URL_VALIDATOR, SNS_UPDATE, SNS_LOCATION_UPDATE }
 
 	public void setScheduler(Scheduler scheduler) {
 		this.scheduler = scheduler;
@@ -61,35 +64,82 @@ public class MdekJobHandler implements BeanFactoryAware {
 		}
 	}
 
-	public URLJobInfoBean getUrlValidatorJobInfo() {
-		MdekJob job = getUrlValidatorJob();
+	public JobInfoBean getJobInfo(JobType jobType) {
+		MdekJob job = getJob(jobType);
 		if (job != null && job.getRunningJobInfo() != null) {
 			JobInfoBean jobInfo = job.getRunningJobInfo();
-			return new URLJobInfoBean(jobInfo);
+			return createJobInfo(jobInfo, jobType);
 
 		} else {
-			return getUrlValidatorJobResult();
+			return getJobResult(jobType);
 		}
 	}
 
-	private URLValidatorJob getUrlValidatorJob() {
-		String jobName = URLValidatorJob.createJobName(connectionFacade.getCurrentPlugId());
-		return (URLValidatorJob) jobMap.get(jobName);
+	private MdekJob getJob(JobType jobType) {
+		return jobMap.get(getJobName(jobType));
 	}
 
-	private void removeUrlValidatorJob() {
-		String jobName = URLValidatorJob.createJobName(connectionFacade.getCurrentPlugId());
-		jobMap.remove(jobName);
+	private JobInfoBean createJobInfo(JobInfoBean jobInfo, JobType jobType) {
+		switch (jobType) {
+		case URL_VALIDATOR:
+			return new URLJobInfoBean(jobInfo);
+
+		case SNS_UPDATE:
+			return new SNSUpdateJobInfoBean(jobInfo);
+
+		case SNS_LOCATION_UPDATE:
+			return new SNSLocationUpdateJobInfoBean(jobInfo);
+
+		default:
+			return new JobInfoBean();
+		}
 	}
 
-	public void stopUrlValidatorJob() {
-		MdekJob job = getUrlValidatorJob();
+	private JobInfoBean getJobResult(JobType jobType) {
+		switch (jobType) {
+		case URL_VALIDATOR:
+			return getUrlValidatorJobResult();
+
+		case SNS_UPDATE:
+			return getSNSUpdateJobResult();
+
+		case SNS_LOCATION_UPDATE:
+			return getSNSLocationUpdateJobResult();
+
+		default:
+			return new JobInfoBean();
+		}
+	}
+
+
+	private String getJobName(JobType jobType) {
+		switch (jobType) {
+		case URL_VALIDATOR:
+			return URLValidatorJob.createJobName(connectionFacade.getCurrentPlugId());
+
+		case SNS_UPDATE:
+			return SNSUpdateJob.createJobName(connectionFacade.getCurrentPlugId());
+
+		case SNS_LOCATION_UPDATE:
+			return SNSLocationUpdateJob.createJobName(connectionFacade.getCurrentPlugId());
+
+		default:
+			return null;
+		}
+	}
+
+	private void removeJob(JobType jobType) {
+		jobMap.remove(getJobName(jobType));
+	}
+
+	public void stopJob(JobType jobType) {
+		MdekJob job = getJob(JobType.URL_VALIDATOR);
 		if (job != null) {
 			job.stop();
-			removeUrlValidatorJob();
+			removeJob(jobType);
 
 		} else {
-			log.debug("Could not stop URL Validation job. It probably is not running.");
+			log.debug("Could not stop job of type '" + jobType + "'. It probably is not running.");
 		}
 	}
 
@@ -97,7 +147,7 @@ public class MdekJobHandler implements BeanFactoryAware {
 		IMdekCallerCatalog mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
 		IngridDocument response = mdekCallerCatalog.getJobInfo(
 				connectionFacade.getCurrentPlugId(),
-				JobType.URL,
+				de.ingrid.mdek.job.IJob.JobType.URL,
 				MdekSecurityUtils.getCurrentUserUuid());
 
 		return MdekCatalogUtils.extractUrlJobInfoFromResponse(response);
@@ -124,38 +174,6 @@ public class MdekJobHandler implements BeanFactoryAware {
 		}
 	}
 
-	public SNSUpdateJobInfoBean getSNSUpdateJobInfo() {
-		MdekJob job = getSNSUpdateJob();
-		if (job != null && job.getRunningJobInfo() != null) {
-			JobInfoBean jobInfo = job.getRunningJobInfo();
-			return new SNSUpdateJobInfoBean(jobInfo);
-
-		} else {
-			return getSNSUpdateJobResult();
-		}
-	}
-
-	private SNSUpdateJob getSNSUpdateJob() {
-		String jobName = SNSUpdateJob.createJobName(connectionFacade.getCurrentPlugId());
-		return (SNSUpdateJob) jobMap.get(jobName);
-	}
-
-	private void removeSNSUpdateJob() {
-		String jobName = SNSUpdateJob.createJobName(connectionFacade.getCurrentPlugId());
-		jobMap.remove(jobName);
-	}
-
-	public void stopSNSUpdateJob() {
-		MdekJob job = getSNSUpdateJob();
-		if (job != null) {
-			job.stop();
-			removeSNSUpdateJob();
-
-		} else {
-			log.debug("Could not stop SNS Update job. It probably is not running.");
-		}
-	}
-
 	private SNSUpdateJobInfoBean getSNSUpdateJobResult() {
 /*
 		IMdekCallerCatalog mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
@@ -169,6 +187,31 @@ public class MdekJobHandler implements BeanFactoryAware {
 		// TODO Return job info from the backend
 		return new SNSUpdateJobInfoBean();
 	}
+
+
+	public void startSNSLocationUpdateJob(String[] changedTopics, String[] newTopics, String[] expiredTopics) {
+		MdekJob job = new SNSLocationUpdateJob(
+				connectionFacade,
+				(SNSService) beanFactory.getBean("snsService"),
+				changedTopics, newTopics, expiredTopics);
+
+		try {
+			boolean jobStarted = job.start(scheduler);
+			if (jobStarted) {
+				jobMap.put(job.getName(), job);
+
+			} else {
+				log.debug("Could not start SNS Location Update Job.");
+			}
+
+		} catch (SchedulerException ex) {
+			log.debug("Error starting SNS Location Update Job.", ex);
+		}
+	}
+
+	private SNSLocationUpdateJobInfoBean getSNSLocationUpdateJobResult() {
+		return new SNSLocationUpdateJobInfoBean();
+		}
 
 	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
 		this.beanFactory = beanFactory;
