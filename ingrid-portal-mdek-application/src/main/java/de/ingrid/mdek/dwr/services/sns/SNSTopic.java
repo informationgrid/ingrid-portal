@@ -15,6 +15,8 @@ public class SNSTopic {
 	private ArrayList<SNSTopic> children;
 	private ArrayList<SNSTopic> parents;
 	private ArrayList<SNSTopic> synonyms;
+	
+	private ArrayList<String> inspireList;
 
 
 	public SNSTopic() {
@@ -27,6 +29,7 @@ public class SNSTopic {
 		this.children = null;
 		this.parents = null;
 		this.synonyms = null;
+		this.inspireList = new ArrayList<String>();
 	}
 
 	public SNSTopic(Type typ, Source source, String id, String title, String gemetId) {
@@ -38,6 +41,7 @@ public class SNSTopic {
 		this.children = new ArrayList<SNSTopic>();
 		this.parents = new ArrayList<SNSTopic>();
 		this.synonyms = new ArrayList<SNSTopic>();
+		this.inspireList = new ArrayList<String>();
 	}
 	
 	public void setType(Type type) {
@@ -106,5 +110,13 @@ public class SNSTopic {
 
 	public String toString() {
 		return "[" + type + ", " + source + ", " + title + ", " + topicId + ", " + gemetId + "]";
+	}
+
+	public void setInspireList(ArrayList<String> inspireList) {
+		this.inspireList = inspireList;
+	}
+
+	public ArrayList<String> getInspireList() {
+		return inspireList;
 	}
 }

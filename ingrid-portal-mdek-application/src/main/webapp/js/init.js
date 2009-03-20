@@ -259,6 +259,7 @@ function initTree() {
   contextMenu2.addItem(message.get('tree.nodeNew'), 'addChild', function(menuItem) {createItemClicked(menuItem)});
 */
 
+  // shown when right-cicking on a child node of a root node
   var contextMenu1 = dojo.widget.byId('contextMenu1');
   contextMenu1.treeController = dojo.widget.byId('treeController');
   contextMenu1.addItem(message.get('tree.nodeNew'), 'addChild', menuEventHandler.handleNewEntity);
@@ -268,6 +269,7 @@ function initTree() {
   contextMenu1.addItem(message.get('tree.nodeCopySingle'), 'copy', menuEventHandler.handleCopyEntity);
   contextMenu1.addItem(message.get('tree.nodeCopy'), 'copy', menuEventHandler.handleCopyTree);
   contextMenu1.addItem(message.get('tree.nodePaste'), 'paste', menuEventHandler.handlePaste);
+  contextMenu1.addItem(message.get('tree.subReload'), 'reload', menuEventHandler.reloadSubTree);
   contextMenu1.addSeparator();
   if (UtilQA.isQAActive() && !UtilSecurity.isCurrentUserQA()) {
 	contextMenu1.addItem(message.get('tree.nodeMarkDeleted'), 'detach', menuEventHandler.handleMarkDeleted);
@@ -275,6 +277,7 @@ function initTree() {
 	contextMenu1.addItem(message.get('tree.nodeDelete'), 'detach', menuEventHandler.handleDelete);
   }
 
+  // shown when right-clicking on a root node
   var contextMenu2 = dojo.widget.byId('contextMenu2');
   contextMenu2.treeController = dojo.widget.byId('treeController');
   contextMenu2.addItem(message.get('tree.nodeNew'), 'addChild', menuEventHandler.handleNewEntity);
@@ -463,6 +466,7 @@ function initFreeTermsButtons() {
 		dojo.debug("inspire topics: "+inspireTopics);
 
 		var def = new dojo.Deferred();
+		// add inspire topics to the 
 		if (inspireTopics.length > 0) {
 			addInspireTopics(inspireTopics);
 			var displayText = dojo.string.substituteParams(message.get("dialog.addInspireTopics.message"), inspireTopics.join(", "));
@@ -476,6 +480,7 @@ function initFreeTermsButtons() {
 
 		if (termList && termList.length > 0) {
 			def.addCallback(function() {
+				// search for topics in SNS and put results into findTopicDefList
 				var findTopicDefList = [];
 				for (var i = 0; i < termList.length; ++i) {
 					findTopicDefList.push(findTopicsDef(termList[i]));
@@ -623,11 +628,15 @@ function handleFindTopicsResult(termList, snsTopics, store) {
 					(function(fixedDescs, fixedStore) {
 						def.addCallback(function() { return addNonDescriptorsDef(fixedDescs, fixedStore); });
 					})(snsNonDescriptorsEqualToTerm, store)
-
+					
 				} else {
 					// Found topic is of type TOP_TERM or NODE_LABEL. Simply add it to the list as a free term
 					addFreeTerm(queryTerm, store);
 				}
+				
+				// add synonyms for inspire if available
+				def.addCallback(function() { return addInspireSynonyms(snsTopicsEqualToTerm); });
+				//def.addCallback(function() { return addInspireSynonyms(curSnsTopics); });
 
 			} else {
 				// Results were returned by the SNS that did not contain the queryTerm
@@ -644,16 +653,46 @@ function handleFindTopicsResult(termList, snsTopics, store) {
 	}
 }
 
+// if there's a term that's a synonym to an inspire topic then add it to the list in case the user
+// acjnowledges it
+function addInspireSynonyms(curSnsTopics) {
+	//var inspireList; 
+	//dojo.debug("SNS Topics length: " + curSnsTopics.length);
+	var def = new dojo.Deferred();
+	def.callback();
+	dojo.lang.forEach(curSnsTopics, function(snsTopic) {
+		//dojo.debug("InspireList: " + snsTopic.inspireList.length); 
+		if (snsTopic.inspireList.length > 0) {
+			def.addCallback(function() {
+				var closeDialogDef = new dojo.Deferred();
+				var displayText = dojo.string.substituteParams(message.get("dialog.addInspireTopics.question"), snsTopic.title, snsTopic.inspireList.join(","));
+				dialog.show(message.get("dialog.addInspireTopics.title"), displayText, dialog.INFO, [
+					{ caption: message.get("general.no"),  action: function() { closeDialogDef.callback(); return; } },
+					{ caption: message.get("general.yes"), action: function() { closeDialogDef.callback(); addInspireTopics(snsTopic.inspireList); return; } }
+				]);
+				return closeDialogDef;
+			});
+		}
+	});
+	return def;
+}
+
 //Add inspire topics to the inspire table if they don't already exist
 function addInspireTopics(inspireTopics) {
 	try {
 		var store = dojo.widget.byId("thesaurusInspire").store;
 		dojo.lang.forEach(inspireTopics, function(t) {
 			var inspireEntryId = dojo.widget.byId("thesaurusInspireCombobox").getValueForDisplayValue(t);
-			dojo.debug("adding entry: [" + inspireEntryId + ", " + t + "]");
-			if (dojo.lang.every(store.getData(), function(item) { return item.title != inspireEntryId; })) {
-				var identifier = UtilStore.getNewKey(store);
-				store.addData( { Id: identifier, title: inspireEntryId } );
+			// add it only if there's a valid value (here are NO free entries!)
+			if (inspireEntryId != null) {
+				dojo.debug("adding entry: [" + inspireEntryId + ", " + t + "]");
+				// if item does not already exist in table 
+				if (dojo.lang.every(store.getData(), function(item) { return item.title != inspireEntryId; })) {
+					var identifier = UtilStore.getNewKey(store);
+					store.addData( { Id: identifier, title: inspireEntryId } );
+				}
+			} else {
+				dojo.debug(t + " is not a valid INSPIRE topic!");
 			}
 		});
 	} catch (error) {

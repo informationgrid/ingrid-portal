@@ -87,6 +87,7 @@
     "tree.newNodeName":"Neues Objekt",
     "tree.newAddressName":"Neue Adresse",
     "tree.reload":"Baum neu laden",
+    "tree.subReload":"Teilbaum neu laden",
 
 	"dialog.object.deleteChildrenMessage":"Soll das Objekt '%{0}' und alle untergeordneten Objekte wirklich endg&uuml;ltig gel&ouml;scht werden?",
 	"dialog.address.deleteChildrenMessage":"Soll die Adresse '%{0}' und alle untergeordneten Adressen wirklich endg&uuml;ltig gel&ouml;scht werden?",

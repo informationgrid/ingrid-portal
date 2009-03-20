@@ -71,6 +71,11 @@ init = function() {
 		callback:function(res) {
 			if (res && res.length > 0) {
 				var keywordTable = dojo.widget.byId("keywordsList");
+				
+				// add Inspire Topics
+				var inspireTopics = getInspireTopics(res);
+				res = res.concat(inspireTopics);
+				
 				UtilList.addTableIndices(res);
 				keywordTable.store.setData(res);
 				// showStatus("");
@@ -91,6 +96,21 @@ init = function() {
 	});
 }
 
+// ...
+getInspireTopics = function(topics) {
+	var inspireArray = new Array();
+	dojo.lang.forEach(topics, function(topic) {
+		if (topic.inspireList.length > 0) {
+			dojo.lang.forEach(topic.inspireList, function(inspireTopic) {			
+				var obj = new Object();
+				obj.title = inspireTopic;
+				obj.source = "INSPIRE";
+				inspireArray.push(obj);
+			});
+		}
+	});
+	return inspireArray;
+}
 
 // 'Add selected topics' Button onClick function.
 //
@@ -166,15 +186,18 @@ removeAll = function() {
 applyChanges = function() {
 	var resultTopics = dojo.widget.byId("resultList").getData();
 	var destStore = dojo.widget.byId("thesaurusTerms").store;
-
+	var destInspireStore = dojo.widget.byId("thesaurusInspire").store;
 
 	if (resultTopics) {
 		dojo.lang.forEach(resultTopics, function(topic) {
-			if (dojo.lang.every(destStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
-				topic.Id = UtilStore.getNewKey(destStore);
-				destStore.addData( topic );
+			if (topic.source == "INSPIRE") {
+				addInspireTopics([topic.title]);
 			} else {
-				return;
+				addDescriptors([topic], destStore);
+				/*if (dojo.lang.every(destStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
+					topic.Id = UtilStore.getNewKey(destStore);
+					destStore.addData( topic );
+				}*/
 			}
 		});
 	}
@@ -202,12 +225,17 @@ applyChanges = function() {
         <span class="entry first">
           <span class="label"><fmt:message key="dialog.thesaurusAssist.result" /></span>
     	    <div class="tableContainer headHiddenRows10 third">
-    	    <table id="keywordsList" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="10" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
+    	    <table id="keywordsList" dojoType="ingrid:FilteringTable" minRows="10" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
     	      <thead>
     		      <tr>
           			<th nosort="true" field="title" dataType="String">Name</th>
+          			<th nosort="true" field="source" dataType="String">Typ</th>
     		      </tr>
     	      </thead>
+    	      <colgroup>
+    			<col width="75%">
+    			<col width="25%">
+  			  </colgroup>
     	      <tbody>
     	      </tbody>
     	    </table>
@@ -226,12 +254,17 @@ applyChanges = function() {
         <span class="entry">
           <span class="label"><fmt:message key="dialog.thesaurusAssist.apply" /></span>
     	    <div class="tableContainer headHiddenRows10 third">
-    	    <table id="resultList" valueField="topicId" dojoType="ingrid:FilteringTable" minRows="10" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
+    	    <table id="resultList" dojoType="ingrid:FilteringTable" minRows="10" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
     	      <thead>
     		      <tr>
           			<th nosort="true" field="title" dataType="String">Name</th>
+          			<th nosort="true" field="source" dataType="String">Typ</th>
     		      </tr>
     	      </thead>
+    	      <colgroup>
+    			<col width="75%">
+    			<col width="25%">
+  			  </colgroup>
     	      <tbody>
     	      </tbody>
     	    </table>
