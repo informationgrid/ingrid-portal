@@ -17,14 +17,16 @@ import org.quartz.UnableToInterruptJobException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekUtils.SearchtermType;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.SNSUpdateJobInfoBean;
-import de.ingrid.mdek.caller.IMdekCallerQuery;
+import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.dwr.services.sns.SNSService;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
 import de.ingrid.mdek.handler.ConnectionFacade;
+import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
 
@@ -98,7 +100,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		SNSService snsService = (SNSService) mergedJobDataMap.get("SNS_SERVICE");
 		ConnectionFacade connectionFacade = (ConnectionFacade) mergedJobDataMap.get("CONNECTION_FACADE");
 		String plugId = mergedJobDataMap.getString("PLUG_ID");
-		List<String> freeTerms = fetchFreeTerms(connectionFacade.getMdekCallerQuery(), plugId);
+		List<String> freeTerms = fetchFreeTopics(connectionFacade.getMdekCallerCatalog(), plugId);
 
 		log.debug("Starting sns update...");
 		long startTime = System.currentTimeMillis();
@@ -107,7 +109,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		// Filter the list of sns topics according to the changed/expired lists
 		// Update all topics that were found.
 		// Changed topics are updated, expired topics are removed and added as free terms
-		List<SNSTopic> snsTopics = fetchSNSTopics(connectionFacade.getMdekCallerQuery(), plugId);
+		List<SNSTopic> snsTopics = fetchSNSTopics(connectionFacade.getMdekCallerCatalog(), plugId);
 		List<SNSTopic> snsTopicsToChange = filter(snsTopics, changedTopics);
 
 		jobExecutionContext.put("NUM_PROCESSED", new Integer(0));
@@ -209,67 +211,67 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		}
 	}
 
+	private List<String> fetchFreeTopics(IMdekCallerCatalog mdekCallerCatalog, String plugId) {
+		List<SNSTopic> snsTopics = fetchTopics(mdekCallerCatalog, plugId, new SearchtermType[] { SearchtermType.FREI });
 
-	private List<SNSTopic> fetchSNSTopics(IMdekCallerQuery mdekCallerQuery, String plugId) {
-		// TODO Move method to backend and get ALL sns topics!
-		// This method fetches sns topics for objs only!
+		List<String> topics = new ArrayList<String>();
 
-		List<SNSTopic> snsTopics = new ArrayList<SNSTopic>();
-
-		String qString = "select distinct stv.term, stsns.snsId, stsns.gemetId " +
-			"from ObjectNode oNode " +
-			"join oNode.t01ObjectPublished obj " +
-			"join obj.searchtermObjs st " +
-			"join st.searchtermValue stv " +
-			"join stv.searchtermSns stsns";
-
-		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
-		IngridDocument result = MdekUtils.getResultFromResponse(response);
-
-		if (result != null) {
-			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
-			if (objs != null) {
-				for (IngridDocument objEntity : objs) {
-					
-					Source source = (objEntity.get("stsns.gemetId") != null) ? Source.GEMET : Source.UMTHES;
-					String id = objEntity.getString("stsns.snsId");
-					String title = objEntity.getString("stv.term");
-					String gemetId = objEntity.getString("stsns.gemetId");
-
-					SNSTopic snsTopic = new SNSTopic(Type.DESCRIPTOR, source, id, title, gemetId);
-					snsTopics.add(snsTopic);
-				}
+		if (snsTopics != null) {
+			for (SNSTopic topic : snsTopics) {
+				topics.add(topic.getTitle());
 			}
 		}
-		return snsTopics;
+
+		return topics;
 	}
 
-	private List<String> fetchFreeTerms(IMdekCallerQuery mdekCallerQuery, String plugId) {
-		// TODO Move method to backend and get ALL free terms!
-		// This method fetches free terms for objs only!
+	private List<SNSTopic> fetchSNSTopics(IMdekCallerCatalog mdekCallerCatalog, String plugId) {
+		return fetchTopics(mdekCallerCatalog, plugId, new SearchtermType[] { SearchtermType.UMTHES, SearchtermType.GEMET });
+	}
 
-		List<String> freeTerms = new ArrayList<String>();
-
-		String qString = "select distinct stv.term " +
-			"from ObjectNode oNode " +
-			"join oNode.t01ObjectPublished obj " +
-			"join obj.searchtermObjs st " +
-			"join st.searchtermValue stv " +
-			"where stv.searchtermSnsId is null";
-
-		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
+	private List<SNSTopic> fetchTopics(IMdekCallerCatalog mdekCallerCatalog, String plugId, SearchtermType[] termTypes) {
+		IngridDocument response = mdekCallerCatalog.getSearchTerms(
+				plugId,
+				termTypes,
+				"");
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {
-			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
-			if (objs != null) {
-				freeTerms = new ArrayList<String>(objs.size());
-				for (IngridDocument objEntity : objs) {
-					freeTerms.add(objEntity.getString("stv.term"));
-				}
-			}
+			return mapToSNSTopic((List<IngridDocument>) result.get(MdekKeys.SUBJECT_TERMS));
+
+		} else {
+			MdekErrorUtils.handleError(response);
+			return null;
 		}
-		return freeTerms;
+	}
+
+	private static List<SNSTopic> mapToSNSTopic(List<IngridDocument> subjectTerms) {
+		List<SNSTopic> resultList = new ArrayList<SNSTopic>();
+		if (subjectTerms == null)
+			return resultList;
+
+		for (IngridDocument term : subjectTerms) {
+			SNSTopic t = new SNSTopic();
+			t.setType(Type.DESCRIPTOR);
+			String type = (String) term.get(MdekKeys.TERM_TYPE);
+			if (type.equalsIgnoreCase(SearchtermType.GEMET.getDbValue())) {
+				t.setSource(Source.GEMET);
+				t.setTitle((String) term.get(MdekKeys.TERM_NAME));
+				t.setTopicId((String) term.get(MdekKeys.TERM_SNS_ID));
+				t.setGemetId((String) term.get(MdekKeys.TERM_GEMET_ID));
+
+			} else if (type.equalsIgnoreCase(SearchtermType.UMTHES.getDbValue())) {
+				t.setSource(Source.UMTHES);
+				t.setTitle((String) term.get(MdekKeys.TERM_NAME));
+				t.setTopicId((String) term.get(MdekKeys.TERM_SNS_ID));
+
+			} else if (type.equalsIgnoreCase(SearchtermType.FREI.getDbValue())) {
+				t.setSource(Source.FREE);
+				t.setTitle((String) term.get(MdekKeys.TERM_NAME));
+			}
+			resultList.add(t);
+		}
+		return resultList;
 	}
 
 	
