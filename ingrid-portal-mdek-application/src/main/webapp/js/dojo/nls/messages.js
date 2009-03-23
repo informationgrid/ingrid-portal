@@ -101,8 +101,8 @@
 	"dialog.addDescriptor.message":"'%{0}' is a Descriptor! The topic will be added to the list of SNS-Topics.",
 	"dialog.addDescriptors.title":"Add Descriptors",
 	"dialog.addDescriptors.message":"'%{0}' ist a Synonym! Add the corresponding descriptor '%{1}' to the list of search terms?",
-	"dialog.addInspireTopics.title":"Add Inspire Topics",
-	"dialog.addInspireTopics.message":"The following topics will be added to the list of inspire topics: %{0}",
+	"dialog.addInspireTopics.title":"Add INSPIRE-Topics",
+	"dialog.addInspireTopics.message":"The following topics will be added to the list of INSPIRE-Topics: %{0}",
 	"dialog.saveChangesTitle":"Save changes",
 	"dialog.object.saveChangesHint":"The current Object or its comments were changed. Do you want to save the changes?",
 	"dialog.address.saveChangesHint":"The current Address or its comments were changed. Do you want to save the changes?",
@@ -480,7 +480,7 @@
 	"ui.obj.thesaurus.terms.link.assistant":"Thesaurus-Assistant",
 	"ui.obj.thesaurus.terms.link.navigator":"Thesaurus-Navigator",
 	"ui.obj.thesaurus.terms.category":"Categories",
-	"ui.obj.thesaurus.terms.inspire":"Inspire Topics",
+	"ui.obj.thesaurus.terms.inspire":"INSPIRE-Topics",
 	"ui.obj.thesaurus.terms.custom":"Custom Search Terms",
 	"ui.obj.thesaurus.terms.custom.buttonAdd":"Add",
 	"ui.obj.thesaurus.terms.enviromental.title":"Environmental",
@@ -751,7 +751,7 @@
 	"ui.sysList.5200":"Object class 3 - Service Type",
 	"ui.sysList.6000":"Conformity - Degree of Conformity",
 	"ui.sysList.6010":"Access and Usage limitation - Usage limitation",
-	"ui.sysList.6100":"Inspire Topics",
+	"ui.sysList.6100":"INSPIRE-Topics",
 	"ui.sysList.99999999":"Dataset / Meta-Dataset Language",
 	"ui.sysList.unknown":"Unknown"
   }
