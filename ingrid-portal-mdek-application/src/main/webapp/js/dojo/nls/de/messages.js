@@ -105,6 +105,7 @@
 	"dialog.addInspireTopics.title":"Inspire Themen hinzufügen",
 	"dialog.addInspireTopics.message":"Folgende Begriffe werden in die Liste der Inspire Topics &uuml;bernommen: %{0}",
 	"dialog.addInspireTopics.question":"'%{0}' ist Synonym folgender Inspire-Themen: '%{1}'. Möchten Sie diese als Inspire-Themen hinzufuegen?",
+	"dialog.addInspireTopics.error":"'%{0}' ist ein ungültiges Inspire-Thema und wird nicht übernommen!",
 	"dialog.saveChangesTitle":"&Auml;nderungen speichern",
 	"dialog.object.saveChangesHint":"Es wurden &Auml;nderungen am aktuellen Objekt oder seinem Kommentar vorgenommen. M&ouml;chten Sie die &Auml;nderungen speichern?",
 	"dialog.address.saveChangesHint":"Es wurden &Auml;nderungen an der aktuellen Adresse oder ihrem Kommentar vorgenommen. M&ouml;chten Sie die &Auml;nderungen speichern?",

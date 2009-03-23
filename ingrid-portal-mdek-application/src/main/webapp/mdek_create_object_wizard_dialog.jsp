@@ -49,7 +49,7 @@ _container_.addOnLoad(function() {
 		var data = dojo.widget.byId("assistantDescriptorTable").store.getData();
 		for (var i in data) {
 			// check / uncheck all select boxes
-			dojo.byId("objectWiz_"+data[i].topicId).checked = value;
+				dojo.byId("objectWiz_"+getThesaurusId(data[i])).checked = value;
 		}
 	});
 	
@@ -114,12 +114,22 @@ function updateInputFields(topicMap) {
 	if (indexedDocument.description != null)
 		dojo.widget.byId("assistantDescription").setValue(dojo.string.trim(""+indexedDocument.description));
 
+	//-- test value
+	  //thesaTopicList[0].inspireList[0] = "Adressen";
+	  //thesaTopicList[0].inspireList[1] = "Medien der Umwelt";
+	//--
+	
+	// // Inspire Topics
+	var inspireTopics = getInspireTopics(thesaTopicList);
+	dojo.debug(inspireTopics.length + " inspire topics found");
+	thesaTopicList = thesaTopicList.concat(inspireTopics);
+
 	// Thesaurus Topics
 	if (thesaTopicList != null) {
 		UtilList.addTableIndices(thesaTopicList);
 		for (var i in thesaTopicList) {
 			// Add checkbox to entry
-			thesaTopicList[i].selection = "<input type='checkbox' id='objectWiz_"+thesaTopicList[i].topicId+"'>";
+			thesaTopicList[i].selection = "<input type='checkbox' id='objectWiz_"+getThesaurusId(thesaTopicList[i])+"'>";
 		}
 		dojo.widget.byId("assistantDescriptorTable").store.setData(thesaTopicList);
 	}
@@ -193,11 +203,16 @@ scriptScope.addValuesToObject = function() {
 	var thesaList = dojo.widget.byId("assistantDescriptorTable").store.getData();
 	for (var i in thesaList) {
 		// If checkbox is selected
-		if (dojo.byId("objectWiz_"+thesaList[i].topicId).checked) {
-			// and if the descriptor isn't already in the target list
-			if (dojo.lang.every(descStore.getData(), function(item){ return (thesaList[i].topicId != item.topicId); })) {
-				// add descriptor to store
-				descStore.addData( {Id: UtilStore.getNewKey(descStore), topicId: thesaList[i].topicId, title: thesaList[i].title} );
+		if (dojo.byId("objectWiz_"+getThesaurusId(thesaList[i])).checked) {
+			if (thesaList[i].source == "INSPIRE") {
+				// if it's an Inspire topic that's not already in the list
+				addInspireTopics([thesaList[i].title]);
+			} else {
+				// and if the descriptor isn't already in the target list
+				if (dojo.lang.every(descStore.getData(), function(item){ return (thesaList[i].topicId != item.topicId); })) {
+					// add descriptor to store
+					descStore.addData( {Id: UtilStore.getNewKey(descStore), topicId: thesaList[i].topicId, title: thesaList[i].title, source: thesaList[i].source} );
+				}
 			}
 		}
 	}
@@ -301,6 +316,18 @@ scriptScope.addValuesToObject = function() {
 	dojo.widget.byId("linksTo").store.setData(urlData);
 
 	_container_.closeWindow();
+}
+
+// needed for checkbox-ids
+// distinguish between inspire topics and other ones
+// since it can happen that they have the same name it's important to
+// classify them so that the checkboxes can be identified
+function getThesaurusId(topic) {
+	if (topic.source == "INSPIRE") {
+		return "inspire_"+topic.title;
+	} else {
+		return topic.topicId;
+	}
 }
 
 function createNewUrl() {
@@ -542,11 +569,13 @@ scriptScope.closeDialog = function() {
 	            		      <tr>
 	                  			<th nosort="true" field="selection" dataType="String">&nbsp;</th>
 	                  			<th nosort="true" field="title" dataType="String">&nbsp;</th>
+	                  			<th nosort="true" field="source" dataType="String">&nbsp;</th>
 	            		      </tr>
 	            	      </thead>
 						  <colgroup>
 						    <col width="23">
-						    <col width="500">
+						    <col width="590">
+						    <col width="70">
 						  </colgroup>
 	            	    </table>
 	                </div>

@@ -678,6 +678,7 @@ function addInspireSynonyms(curSnsTopics) {
 }
 
 //Add inspire topics to the inspire table if they don't already exist
+// inspireTopics: Array of Strings
 function addInspireTopics(inspireTopics) {
 	try {
 		var store = dojo.widget.byId("thesaurusInspire").store;
@@ -693,6 +694,8 @@ function addInspireTopics(inspireTopics) {
 				}
 			} else {
 				dojo.debug(t + " is not a valid INSPIRE topic!");
+				var displayText = dojo.string.substituteParams(message.get("dialog.addInspireTopics.error"), t);
+				dialog.show(message.get("dialog.addInspireTopics.title"), displayText, dialog.WARNING);
 			}
 		});
 	} catch (error) {
@@ -701,6 +704,21 @@ function addInspireTopics(inspireTopics) {
 	}
 }
 
+// get an array of Inspire topics
+function getInspireTopics(topics) {
+	var inspireArray = new Array();
+	dojo.lang.forEach(topics, function(topic) {
+		if (topic.inspireList.length > 0) {
+			dojo.lang.forEach(topic.inspireList, function(inspireTopic) {			
+				var obj = new Object();
+				obj.title = inspireTopic;
+				obj.source = "INSPIRE";
+				inspireArray.push(obj);
+			});
+		}
+	});
+	return inspireArray;
+}
 
 // Add a 'free' term to store if it doesn't already exist
 function addFreeTerm(queryTerm, store) {

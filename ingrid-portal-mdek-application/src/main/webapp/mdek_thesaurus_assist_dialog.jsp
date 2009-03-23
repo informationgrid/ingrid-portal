@@ -96,8 +96,8 @@ init = function() {
 	});
 }
 
-// ...
-getInspireTopics = function(topics) {
+// moved to init.js so that it can be called from other methods also
+/*getInspireTopics = function(topics) {
 	var inspireArray = new Array();
 	dojo.lang.forEach(topics, function(topic) {
 		if (topic.inspireList.length > 0) {
@@ -110,7 +110,7 @@ getInspireTopics = function(topics) {
 		}
 	});
 	return inspireArray;
-}
+}*/
 
 // 'Add selected topics' Button onClick function.
 //
