@@ -11,6 +11,8 @@ var MAINTAINABLE_LIST_IDS = [101, 102, 515, 518, 520, 523, 526, 528, 1100, 1320,
 var CAN_SET_DEFAULT_LIST_IDS = [100, 518, 523, 525, 526, 527, 1350, 1370, 3385, 3571, 4300, 4305, 5100, 5200, 99999999];
 
 _container_.addOnLoad(function() {
+	initImportExportLink();
+
 	initCodelistSelect();
 	initCodelistTables();
 
@@ -19,6 +21,21 @@ _container_.addOnLoad(function() {
 
 	refreshReindexProcessInfo();
 });
+
+
+function initImportExportLink() {
+	// Only show the import/export links if the first tab (codeListTab) is selected
+	var tabContainer = dojo.widget.byId("codeListTabContainer");
+	dojo.event.connect(tabContainer, "onSelectChild", function() {
+		var selectedChild = tabContainer.selectedChild;
+		if (selectedChild == "codeListTab") {
+			dojo.html.setVisibility("importExportLink", true);
+
+		} else {			
+			dojo.html.setVisibility("importExportLink", false);
+		}
+	});
+}
 
 function initCodelistSelect() {
 	var selectWidget = dojo.widget.byId("selectionList");
@@ -804,6 +821,17 @@ function hideReindexLoadingZone() {
     dojo.html.setVisibility(dojo.byId("reindexLoadingZone"), false);
 }
 
+// -- Import / Export --
+scriptScope.importCodelist = function() {
+	// TODO Implement
+	dojo.debug("Import not implemented yet.");
+}
+
+scriptScope.exportCodelist = function() {
+	dojo.debug("Export not implemented yet.");
+}
+
+
 </script>
 </head>
 
@@ -822,7 +850,7 @@ function hideReindexLoadingZone() {
 			<div class="spacer"></div>
 			<div class="spacer"></div>
 			<div id="codeLists" class="inputContainer noSpaceBelow">
-				<span class="functionalLink onTab"><img src="img/ic_fl_export.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.export" />" /><a href="#" title="Exportieren [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.export" /></a><img src="img/ic_fl_import.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.import" />" /><a href="#" title="Importieren [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.import" /></a></span>
+				<span id="importExportLink" class="functionalLink onTab"><img src="img/ic_fl_export.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.export" />" /><a href="javascript:void(0);" onclick="javascript:scriptScope.exportCodelist();" title="Exportieren [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.export" /></a><img src="img/ic_fl_import.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.import" />" /><a href="javascript:void(0);" onclick="javascript:scriptScope.importCodelist();" title="Importieren [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.import" /></a></span>
 				<div id="codeListTabContainer" dojoType="ingrid:TabContainer" class="w668 h452" selectedChild="codeListTab">
 
 					<!-- TAB 1 START -->
