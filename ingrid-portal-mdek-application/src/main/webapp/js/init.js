@@ -118,8 +118,8 @@ function createAdditionalFieldDomNode(additionalField) {
 			id: "additionalField" + additionalField.id,
 			type: "text",
 			maxlength: additionalField.size,
-			name: additionalField.name,
-			class: "w668" });
+			name: additionalField.name });
+		dojo.html.addClass(inputWidget.textbox, "w668");
 
 	} else if ("LIST" == additionalField.type) {
 		inputWidget = dojo.widget.createWidget("ingrid:Select", {
