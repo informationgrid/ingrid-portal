@@ -17,12 +17,14 @@ import org.quartz.UnableToInterruptJobException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekUtils.SpatialReferenceType;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.SNSLocationUpdateJobInfoBean;
-import de.ingrid.mdek.caller.IMdekCallerQuery;
+import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.dwr.services.sns.SNSLocationTopic;
 import de.ingrid.mdek.dwr.services.sns.SNSService;
 import de.ingrid.mdek.handler.ConnectionFacade;
+import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
 
@@ -99,7 +101,7 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 
 		log.debug("Starting sns location update...");
 		long startTime = System.currentTimeMillis();
-		List<SNSLocationTopic> snsTopics = fetchSNSLocationTopics(connectionFacade.getMdekCallerQuery(), plugId);
+		List<SNSLocationTopic> snsTopics = fetchSNSLocationTopics(connectionFacade.getMdekCallerCatalog(), plugId);
 		List<SNSLocationTopic> topicsToCheck = filter(snsTopics, changedTopics);
 
 		jobExecutionContext.put("NUM_PROCESSED", new Integer(0));
@@ -131,47 +133,48 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 		}
 	}
 
-	private List<SNSLocationTopic> fetchSNSLocationTopics(IMdekCallerQuery mdekCallerQuery, String plugId) {
-		// TODO Move method to backend!
-
-		List<SNSLocationTopic> snsLocationTopics = new ArrayList<SNSLocationTopic>();
-
-		String qString = "select distinct srsns.snsId, srv.nameValue, srv.nativekey, srv.topicType, srv.x1, srv.y1, srv.x2, srv.y2 " +
-			"from ObjectNode oNode " +
-			"join oNode.t01ObjectPublished obj " +
-			"join obj.spatialReferences sr " +
-			"join sr.spatialRefValue srv " +
-			"join srv.spatialRefSns srsns";
-
-		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
+	private List<SNSLocationTopic> fetchSNSLocationTopics(IMdekCallerCatalog mdekCallerCatalog, String plugId) {
+		IngridDocument response = mdekCallerCatalog.getSpatialReferences(
+				plugId,
+				new SpatialReferenceType[] { SpatialReferenceType.GEO_THESAURUS },
+				"");
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {
-			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
-			if (objs != null) {
-				for (IngridDocument objEntity : objs) {
-					SNSLocationTopic snsLocationTopic = new SNSLocationTopic();
-					snsLocationTopic.setTopicId((String) objEntity.get("srsns.snsId"));
-					snsLocationTopic.setName((String) objEntity.get("srv.nameValue"));
-					snsLocationTopic.setNativeKey((String) objEntity.get("srv.nativekey"));
-//					snsLocationTopic.setQualifier((String) objEntity.get("srsns.snsId"));
-//					snsLocationTopic.setType((String) objEntity.get("srsns.snsId"));
-					snsLocationTopic.setTypeId((String) objEntity.get("srv.topicType"));
-					if (objEntity.get("srv.x1") != null && objEntity.get("srv.y1") != null && objEntity.get("srv.x2") != null && objEntity.get("srv.y2") != null) {
-						snsLocationTopic.setBoundingBox(
-								((Double) objEntity.get("srv.x1")).floatValue(),
-								((Double) objEntity.get("srv.y1")).floatValue(),
-								((Double) objEntity.get("srv.x2")).floatValue(),
-								((Double) objEntity.get("srv.y2")).floatValue());
-					}
+			return mapToSNSLocationTopics((List<IngridDocument>) result.get(MdekKeys.LOCATIONS));
 
-					snsLocationTopics.add(snsLocationTopic);
-				}
-			}
+		} else {
+			MdekErrorUtils.handleError(response);
+			return null;
 		}
-		return snsLocationTopics;
 	}
 
+	private static List<SNSLocationTopic> mapToSNSLocationTopics(List<IngridDocument> topics) {
+		List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
+		if (resultList != null) {
+			for (IngridDocument topic : topics) {
+				SNSLocationTopic t = new SNSLocationTopic();
+				t.setTopicId((String) topic.get(MdekKeys.LOCATION_SNS_ID));
+				t.setName((String) topic.get(MdekKeys.LOCATION_NAME));
+				t.setNativeKey((String) topic.get(MdekKeys.LOCATION_CODE));
+				t.setTypeId((String) topic.get(MdekKeys.SNS_TOPIC_TYPE));
+	
+				if (topic.get(MdekKeys.WEST_BOUNDING_COORDINATE) != null &&
+						topic.get(MdekKeys.SOUTH_BOUNDING_COORDINATE) != null &&
+						topic.get(MdekKeys.EAST_BOUNDING_COORDINATE) != null &&
+						topic.get(MdekKeys.NORTH_BOUNDING_COORDINATE) != null) {
+					t.setBoundingBox(
+							((Double) topic.get(MdekKeys.WEST_BOUNDING_COORDINATE)).floatValue(),
+							((Double) topic.get(MdekKeys.SOUTH_BOUNDING_COORDINATE)).floatValue(),
+							((Double) topic.get(MdekKeys.EAST_BOUNDING_COORDINATE)).floatValue(),
+							((Double) topic.get(MdekKeys.NORTH_BOUNDING_COORDINATE)).floatValue());
+				}
+				resultList.add(t);
+			}
+		}
+
+		return resultList;
+	}
 
 	private List<SNSLocationTopic> filter(List<SNSLocationTopic> snsTopics, String[] topicIds) {
 		if (snsTopics != null && topicIds != null) {

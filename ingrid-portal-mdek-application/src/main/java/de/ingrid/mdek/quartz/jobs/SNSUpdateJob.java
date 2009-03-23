@@ -324,7 +324,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 			List<SNSTopic> snsTopics = snsService.findTopics(freeTerm);
 			boolean found = false; 
 			for (SNSTopic topic : snsTopics) {
-				if (topic.getTitle().equals(freeTerm)) {
+				if (topic.getTitle().equalsIgnoreCase(freeTerm)) {
 					if (topic.getType().equals(Type.DESCRIPTOR)) {
 						log.debug("Found descriptor for free term: " + topic);
 						foundTopics.add(topic);

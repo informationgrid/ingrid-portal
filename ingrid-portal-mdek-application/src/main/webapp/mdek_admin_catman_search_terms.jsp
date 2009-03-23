@@ -67,7 +67,7 @@ function updateSNSUpdateJobInfo(jobInfo) {
 	if (jobFinished(jobInfo)) {
 		hideLoadingZone();
 
-		dojo.byId("snsUpdateProcessInfo").innerHTML = "Informationen zum letzten Prozess:";
+		dojo.byId("snsUpdateProcessInfo").innerHTML = message.get("dialog.admin.catalog.management.searchTerms.updateLastProcessInfo");
 		dojo.html.setVisibility("cancelSNSUpdateProcessButton", false);
 
 		if (jobInfo.startTime == null) {
@@ -109,8 +109,10 @@ function updateSNSUpdateJobInfo(jobInfo) {
 		updateSNSResultTable();
 
 	} else {
+		showLoadingZone();
+
 		dojo.html.setVisibility("cancelSNSUpdateProcessButton", true);
-		dojo.byId("snsUpdateProcessInfo").innerHTML = "Informationen zum laufenden Prozess:";
+		dojo.byId("snsUpdateProcessInfo").innerHTML = message.get("dialog.admin.catalog.management.searchTerms.updateCurrentProcessInfo");
 		dojo.byId("snsUpdateProcessStart").innerHTML = jobInfo.startTime;
 		dojo.byId("snsUpdateProcessEnd").innerHTML = "";
 		dojo.byId("snsUpdateProcessNumEntities").innerHTML = jobInfo.numProcessedEntities + " / " + jobInfo.numEntities;
@@ -175,19 +177,19 @@ function generateRandomString(strLength) {
 				<div class="spacer"></div>
 
 				<div class="inputContainer grey field w948">
-					<span class="label"><label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 'Aktualisierungs-Datensatz ausw&auml;hlen')">Aktualisierungs-Datensatz ausw&auml;hlen</label></span>
+					<span class="label"><label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], '<fmt:message key="dialog.admin.catalog.management.searchTerms.selectUpdateDataset" />')"><fmt:message key="dialog.admin.catalog.management.searchTerms.selectUpdateDataset" /></label></span>
 					<span>
 						<input type="file" id="snsUpdateFile" size="80" />
 					</span>
 					<br />
 					<br />
-					<span>Hinweis: Wird kein Aktualisierungsdatensatz ausgew&auml;hlt, so werden alle Suchbegriffe aktualisiert!</span>
+					<span><fmt:message key="dialog.admin.catalog.management.searchTerms.updateHint" /></span>
 				</div>
 
 				<div class="inputContainer w965">
 					<span class="button" style="height:20px !important;">
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Aktualisierung starten" onClick="javascript:scriptScope.startSNSUpdateJob();">Aktualisierung starten</button>
+							<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.searchTerms.startUpdate" />" onClick="javascript:scriptScope.startSNSUpdateJob();"><fmt:message key="dialog.admin.catalog.management.searchTerms.startUpdate" /></button>
 						</span>
 						<span id="snsUpdateLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden">
 							<img src="img/ladekreis.gif" />
@@ -203,21 +205,21 @@ function generateRandomString(strLength) {
 						<div id="searchTermsInfoContent">
 							<table cellspacing="0">
 								<tr>
-									<td>Gestartet am:</td>
+									<td><fmt:message key="dialog.admin.catalog.management.searchTerms.startTime" /></td>
 									<td id="snsUpdateProcessStart"></td>
 								</tr>
 								<tr>
-									<td>Beendet am:</td>
+									<td><fmt:message key="dialog.admin.catalog.management.searchTerms.endTime" /></td>
 									<td id="snsUpdateProcessEnd"></td>
 								</tr>
 								<tr>
-									<td>Anzahl Suchbegriffe:</td>
+									<td><fmt:message key="dialog.admin.catalog.management.searchTerms.numTerms" /></td>
 									<td id="snsUpdateProcessNumEntities"></td>
 								</tr>
 							</table>
 							<span id="cancelSNSUpdateProcessButton" class="button" style="height:20px !important;">
 								<span style="float:right;">
-									<button dojoType="ingrid:Button" title="Prozess abbrechen" onClick="javascript:scriptScope.cancelSNSUpdateJob();">Prozess abbrechen</button>
+									<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.searchTerms.cancel" />" onClick="javascript:scriptScope.cancelSNSUpdateJob();"><fmt:message key="dialog.admin.catalog.management.searchTerms.cancel" /></button>
 								</span>
 							</span>
 						</div>
@@ -227,11 +229,11 @@ function generateRandomString(strLength) {
 	
 				<!-- LEFT HAND SIDE CONTENT START -->
 				<div id="searchTermsResultContainer" class="inputContainer noSpaceBelow">
-					<span class="functionalLink onTab"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Als CSV-Datei speichern">Als CSV-Datei speichern</a></span>
+					<span class="functionalLink onTab"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="<fmt:message key="dialog.admin.catalog.management.searchTerms.saveAsCSV" />"><fmt:message key="dialog.admin.catalog.management.searchTerms.saveAsCSV" /></a></span>
 					<div id="resultLists" dojoType="ingrid:TabContainer" class="w964 h565" selectedChild="resultListRetroIndex">
 	
 						<!-- TAB 1 START -->
-						<div id="resultListRetroIndex" dojoType="ContentPane" class="blueTopBorder" label="Ergebnisse der Retroindexierung">
+						<div id="resultListRetroIndex" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.admin.catalog.management.searchTerms.retroResult" />">
 							<div class="inputContainer w964 noSpaceBelow">
 
 								<div class="listInfo w964">
@@ -243,9 +245,9 @@ function generateRandomString(strLength) {
 								<table id="resultListRetroIndexTable" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable w964">
 									<thead>
 										<tr>
-											<th field="thesaurusId" dataType="String" width="104" noSort="true" sort="asc">Thesaurus-ID</th>
-											<th field="oldTerm" dataType="String" width="430" noSort="true">Alter Begriff</th>
-											<th field="newTerm" dataType="String" width="430" noSort="true">Neuer Begriff</th>
+											<th field="thesaurusId" dataType="String" width="104" noSort="true" sort="asc"><fmt:message key="dialog.admin.catalog.management.searchTerms.id" /></th>
+											<th field="oldTerm" dataType="String" width="430" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.oldTerm" /></th>
+											<th field="newTerm" dataType="String" width="430" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.newTerm" /></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -256,7 +258,7 @@ function generateRandomString(strLength) {
 						</div> <!-- TAB 1 END -->
 	
 						<!-- TAB 2 START -->
-						<div id="resultListThesaurus" dojoType="ContentPane" class="blueTopBorder" label="Ergebnisse der Theasaurus-Aktualisierung">
+						<div id="resultListThesaurus" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.admin.catalog.management.searchTerms.updateResult" />">
 							<div class="inputContainer w964 noSpaceBelow">
 	
 								<div class="listInfo w964">
@@ -268,11 +270,11 @@ function generateRandomString(strLength) {
 								<table id="resultListThesaurusTable" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable w964 relativePos">
 									<thead>
 										<tr>
-											<th field="name" dataType="String" width="354" noSort="true" sort="asc">Bezeichnung</th>
-											<th field="type" dataType="String" width="200" noSort="true">Typ</th>
-											<th field="action" dataType="String" width="250" noSort="true">Ergriffene Ma&szlig;nahme</th>
-											<th field="objects" dataType="String" width="80" noSort="true">Objekte</th>
-											<th field="addresses" dataType="String" width="80" noSort="true">Adressen</th>
+											<th field="name" dataType="String" width="354" noSort="true" sort="asc"><fmt:message key="dialog.admin.catalog.management.searchTerms.description" /></th>
+											<th field="type" dataType="String" width="200" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.type" /></th>
+											<th field="action" dataType="String" width="250" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.action" /></th>
+											<th field="objects" dataType="String" width="80" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.objects" /></th>
+											<th field="addresses" dataType="String" width="80" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.addresses" /></th>
 										</tr>
 									</thead>
 									<tbody>

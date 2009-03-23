@@ -65,7 +65,7 @@ function updateSNSLocationUpdateJobInfo(jobInfo) {
 	if (jobFinished(jobInfo)) {
 		hideLoadingZone();
 
-		dojo.byId("snsLocationUpdateProcessInfo").innerHTML = "Informationen zum letzten Prozess:";
+		dojo.byId("snsLocationUpdateProcessInfo").innerHTML = message.get("dialog.admin.catalog.management.locations.updateLastProcessInfo");
 		dojo.html.setVisibility("cancelSNSLocationUpdateProcessButton", false);
 
 		if (jobInfo.startTime == null) {
@@ -99,8 +99,9 @@ function updateSNSLocationUpdateJobInfo(jobInfo) {
 		updateSNSLocationTable();
 
 	} else {
+		showLoadingZone();
 		dojo.html.setVisibility("cancelSNSLocationUpdateProcessButton", true);
-		dojo.byId("snsLocationUpdateProcessInfo").innerHTML = "Informationen zum laufenden Prozess:";
+		dojo.byId("snsLocationUpdateProcessInfo").innerHTML = message.get("dialog.admin.catalog.management.locations.updateCurrentProcessInfo");
 		dojo.byId("snsLocationUpdateProcessStart").innerHTML = jobInfo.startTime;
 		dojo.byId("snsLocationUpdateProcessEnd").innerHTML = "";
 		dojo.byId("snsLocationUpdateProcessNumEntities").innerHTML = jobInfo.numProcessedEntities + " / " + jobInfo.numEntities;
@@ -158,19 +159,19 @@ function generateRandomString(strLength) {
 			<div class="spacer"></div>
 
 			<div class="inputContainer grey field w948">
-				<span class="label"><label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 'Aktualisierungs-Datensatz ausw&auml;hlen')">Aktualisierungs-Datensatz ausw&auml;hlen</label></span>
+				<span class="label"><label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], '<fmt:message key="dialog.admin.catalog.management.locations.selectUpdateDataset" />')"><fmt:message key="dialog.admin.catalog.management.locations.selectUpdateDataset" /></label></span>
 				<span>
 					<input type="file" id="snsLocationUpdateFile" size="80" />
 				</span>
 				<br />
 				<br />
-				<span>Hinweis: Wird kein Aktualisierungsdatensatz ausgew&auml;hlt, so werden alle Raumbez&uuml;ge aktualisiert!</span>
+				<span><fmt:message key="dialog.admin.catalog.management.locations.updateHint" /></span>
 			</div>
 
 			<div class="inputContainer w965">
 				<span class="button" style="height:20px !important;">
 					<span style="float:right;">
-						<button dojoType="ingrid:Button" title="Aktualisierung starten" onClick="javascript:scriptScope.startSNSLocationUpdateJob();">Aktualisierung starten</button>
+						<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.locations.startUpdate" />" onClick="javascript:scriptScope.startSNSLocationUpdateJob();"><fmt:message key="dialog.admin.catalog.management.locations.startUpdate" /></button>
 					</span>
 					<span id="snsLocationUpdateLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden">
 						<img src="img/ladekreis.gif" />
@@ -187,21 +188,21 @@ function generateRandomString(strLength) {
 					<div id="spacialRefInfoContent">
 						<table cellspacing="0">
 							<tr>
-								<td>Gestartet am:</td>
+								<td><fmt:message key="dialog.admin.catalog.management.locations.startTime" /></td>
 								<td id="snsLocationUpdateProcessStart"></td>
 							</tr>
 							<tr>
-								<td>Beendet am:</td>
+								<td><fmt:message key="dialog.admin.catalog.management.locations.endTime" /></td>
 								<td id="snsLocationUpdateProcessEnd"></td>
 							</tr>
 							<tr>
-								<td>Anzahl Suchbegriffe:</td>
+								<td><fmt:message key="dialog.admin.catalog.management.locations.numTerms" /></td>
 								<td id="snsLocationUpdateProcessNumEntities"></td>
 							</tr>
 						</table>
 						<span id="cancelSNSLocationUpdateProcessButton" class="button" style="height:20px !important;">
 							<span style="float:right;">
-								<button dojoType="ingrid:Button" title="Prozess abbrechen" onClick="javascript:scriptScope.cancelSNSLocationUpdateJob();">Prozess abbrechen</button>
+								<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.locations.cancel" />" onClick="javascript:scriptScope.cancelSNSLocationUpdateJob();"><fmt:message key="dialog.admin.catalog.management.locations.cancel" /></button>
 							</span>
 						</span>
 					</div>
@@ -214,7 +215,7 @@ function generateRandomString(strLength) {
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div class="inputContainer noSpaceBelow">
 				<div class="inputContainer w964 noSpaceBelow">
-					<span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="Als CSV-Datei speichern">Als CSV-Datei speichern</a></span>
+					<span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="<fmt:message key="dialog.admin.catalog.management.locations.saveAsCSV" />"><fmt:message key="dialog.admin.catalog.management.locations.saveAsCSV" /></a></span>
 
 					<div class="listInfo w964">
 						<span id="snsLocationUpdateResultInfo" class="searchResultsInfo">&nbsp;</span>
@@ -225,10 +226,10 @@ function generateRandomString(strLength) {
 					<table id="locationsResultTable" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable w964 relativePos">
 						<thead>
 							<tr>
-								<th field="spatialUnit" dataType="String" width="570" noSort="true" sort="asc">Raumeinheit</th>
-								<th field="id" dataType="String" width="80" noSort="true">ID</th>
-								<th field="action" dataType="String" width="254" noSort="true">Ergriffene Ma&szlig;nahme</th>
-								<th field="objects" dataType="String" width="60" noSort="true">Objekte</th>
+								<th field="spatialUnit" dataType="String" width="570" noSort="true" sort="asc"><fmt:message key="dialog.admin.catalog.management.locations.spatialRef" /></th>
+								<th field="id" dataType="String" width="80" noSort="true"><fmt:message key="dialog.admin.catalog.management.locations.id" /></th>
+								<th field="action" dataType="String" width="254" noSort="true"><fmt:message key="dialog.admin.catalog.management.locations.action" /></th>
+								<th field="objects" dataType="String" width="60" noSort="true"><fmt:message key="dialog.admin.catalog.management.locations.objects" /></th>
 							</tr>
 						</thead>
 						<tbody>
