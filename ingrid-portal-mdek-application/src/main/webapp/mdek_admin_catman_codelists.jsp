@@ -7,7 +7,7 @@
 
 var scriptScope = this;
 
-var MAINTAINABLE_LIST_IDS = [101, 102, 515, 518, 520, 523, 526, 528, 1100, 1320, 1350, 1370, 3385, 3535, 3555];
+var MAINTAINABLE_LIST_IDS = [100, 101, 102, 515, 518, 520, 523, 526, 528, 1100, 1320, 1350, 1370, 2240, 3385, 3535, 3555];
 var CAN_SET_DEFAULT_LIST_IDS = [100, 518, 523, 525, 526, 527, 1350, 1370, 3385, 3571, 4300, 4305, 5100, 5200, 99999999];
 
 _container_.addOnLoad(function() {
@@ -45,8 +45,19 @@ function initCodelistSelect() {
 		var selectWidgetData = [];
 		for (var index = 0; index < listIds.length; ++index) {
 			var name = UtilCatalog.getNameForSysList(listIds[index]);
-			selectWidgetData.push([name + " (" + listIds[index] + ")", listIds[index]+""]);
+			var editable = dojo.lang.some(MAINTAINABLE_LIST_IDS, function(id) { return id == listIds[index]; });
+			var displayedText = name + " (" + listIds[index] + ")";
+			if (!editable) {
+				displayedText += " [" + message.get("dialog.admin.catalog.management.codelist.notMaintainable") + "]";
+			}
+			selectWidgetData.push([displayedText, listIds[index]+""]);
 		}
+
+		// Sort list by the display values
+		selectWidgetData.sort(function(a, b) {
+			return UtilString.compareIgnoreCase(a[0], b[0]);
+		});
+
 		selectWidget.dataProvider.setData(selectWidgetData);
 	});
 	def.addErrback(function(error) {

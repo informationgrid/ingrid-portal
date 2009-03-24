@@ -176,6 +176,7 @@
 	"dialog.admin.catalog.management.codelist.reindexEnd":"End",
 	"dialog.admin.catalog.management.codelist.reindexState":"State",
 	"dialog.admin.catalog.management.codelist.reindexDatasets":"Datasets",
+	"dialog.admin.catalog.management.codelist.notMaintainable":"not maintainable",
 	"dialog.admin.catalog.management.additionalFields.store":"All changes will be stored. If fields have been deleted, all containing data will be deleted as well<br>Do you want to continue?",
 	"dialog.admin.catalog.management.additionalFields.storeSuccess":"The additional fields were stored successfully.",
 	"dialog.admin.management.duplicates.success":"The object name was updated successfully.",

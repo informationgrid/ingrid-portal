@@ -8,7 +8,10 @@ var scriptScope = this;
 
 // display 10 datasets per page
 var resultsPerPage = 10;
-var tableIdList = ["qaAssignedObjTable", "qaAssignedAdrTable", "qaModifiedObjTable", "qaModifiedAdrTable",
+// TODO Uncomment to add the 'spatial obj' table
+// var tableIdList = ["qaAssignedObjTable", "qaAssignedAdrTable", "qaModifiedObjTable", "qaModifiedAdrTable",
+//	"qaExpiredObjTable", "qaExpiredAdrTable", "qaSpatialObjTable"];
+ var tableIdList = ["qaAssignedObjTable", "qaAssignedAdrTable", "qaModifiedObjTable", "qaModifiedAdrTable",
 	"qaExpiredObjTable", "qaExpiredAdrTable"];
 
 _container_.addOnLoad(function() {
@@ -29,12 +32,13 @@ function initTables() {
 	});
 
 	// Add query parameters to tables.
-	dojo.widget.byId("qaAssignedObjTable").queryParameters = { workState: "QS_UEBERWIESEN", selectionType: null } 
-	dojo.widget.byId("qaAssignedAdrTable").queryParameters = { workState: "QS_UEBERWIESEN", selectionType: null }
-	dojo.widget.byId("qaModifiedObjTable").queryParameters = { workState: "IN_BEARBEITUNG", selectionType: null }
-	dojo.widget.byId("qaModifiedAdrTable").queryParameters = { workState: "IN_BEARBEITUNG", selectionType: null }
-	dojo.widget.byId("qaExpiredObjTable").queryParameters = { workState: null, selectionType: "EXPIRED" }
-	dojo.widget.byId("qaExpiredAdrTable").queryParameters = { workState: null, selectionType: "EXPIRED" }
+	dojo.widget.byId("qaAssignedObjTable").queryParameters = { workState: "QS_UEBERWIESEN", selectionType: null };
+	dojo.widget.byId("qaAssignedAdrTable").queryParameters = { workState: "QS_UEBERWIESEN", selectionType: null };
+	dojo.widget.byId("qaModifiedObjTable").queryParameters = { workState: "IN_BEARBEITUNG", selectionType: null };
+	dojo.widget.byId("qaModifiedAdrTable").queryParameters = { workState: "IN_BEARBEITUNG", selectionType: null };
+	dojo.widget.byId("qaExpiredObjTable").queryParameters = { workState: null, selectionType: "EXPIRED" };
+	dojo.widget.byId("qaExpiredAdrTable").queryParameters = { workState: null, selectionType: "EXPIRED" };
+	dojo.widget.byId("qaSpatialObjTable").queryParameters = { workState: null, selectionType: "SPATIAL_RELATIONS_UPDATED" };
 
 	// Add initial sortParams to tables
 	dojo.lang.forEach(tableIdList, function(tableId) {
@@ -484,7 +488,7 @@ scriptScope.reloadPage = function() {
 
         	<div id="qaExpiredDSTabContainer" dojoType="ingrid:TabContainer" doLayout="false" selectedChild="qaExpiredObjContentPane">
 
-        		<div id="qaExpiredObjContentPane" dojoType="ContentPane" label="<fmt:message key="dialog.qa.objects" />" style="overflow:hidden;">
+				<div id="qaExpiredObjContentPane" dojoType="ContentPane" label="<fmt:message key="dialog.qa.objects" />" style="overflow:hidden;">
 					<div class="inputContainer">
 						<div class="listInfo wide">
 							<span id="qaExpiredObjTableInfo" class="searchResultsInfo">&nbsp;</span>
@@ -509,7 +513,7 @@ scriptScope.reloadPage = function() {
 					</div> <!-- inputContainer end -->
 				</div> <!-- ContentPane -->
 
-        		<div id="qaExpiredAdrContentPane" dojoType="ContentPane" label="<fmt:message key="dialog.qa.addresses" />" style="overflow:hidden;">
+				<div id="qaExpiredAdrContentPane" dojoType="ContentPane" label="<fmt:message key="dialog.qa.addresses" />" style="overflow:hidden;">
 					<div class="inputContainer">
 						<div class="listInfo wide">
 							<span id="qaExpiredAdrTableInfo" class="searchResultsInfo">&nbsp;</span>
@@ -532,7 +536,35 @@ scriptScope.reloadPage = function() {
 							</table>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
+				</div> <!-- ContentPane -->
 			</div> <!-- TabContainer -->
+
+
+			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7073)"><fmt:message key="dialog.qa.spatialObjects" /></label></span>
+
+			<div id="qaSpatialObjContentPane" dojoType="ContentPane" label="<fmt:message key="dialog.qa.objects" />" style="overflow:hidden;">
+				<div class="inputContainer">
+					<div class="listInfo wide">
+						<span id="qaSpatialObjTableInfo" class="searchResultsInfo">&nbsp;</span>
+						<span id="qaSpatialObjTablePaging" class="searchResultsPaging">&nbsp;</span>
+						<div class="fill"></div>
+					</div>
+	
+			        <div class="tableContainer rows10 wide">
+						<table id="qaSpatialObjTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
+							<thead>
+								<tr>
+									<th field="icon" dataType="String" width="32"></th>
+									<th field="linkLabel" dataType="String" width="710"><fmt:message key="dialog.qa.name" /></th>
+									<th field="expiryDate" dataType="Date" width="100"><fmt:message key="dialog.qa.expiredAt" /></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div> <!-- tableContainer end -->
+				</div> <!-- inputContainer end -->
+			</div> <!-- ContentPane -->
 
 		</div> <!-- content end -->
 	</div> <!-- contentBlock end -->

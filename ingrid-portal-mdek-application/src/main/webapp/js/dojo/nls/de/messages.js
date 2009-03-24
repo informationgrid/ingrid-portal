@@ -180,6 +180,7 @@
 	"dialog.admin.catalog.management.codelist.reindexEnd":"Ende",
 	"dialog.admin.catalog.management.codelist.reindexState":"Stand",
 	"dialog.admin.catalog.management.codelist.reindexDatasets":"Datens&auml;tze",
+	"dialog.admin.catalog.management.codelist.notMaintainable":"nicht editierbar",
 	"dialog.admin.catalog.management.additionalFields.store":"Alle &Auml;nderungen werden gespeichert. Falls Felder entfernt wurden, werden auch alle Daten aus diesen Feldern gel&ouml;scht.<br>M&ouml;chten Sie mit der Aktion fortfahren?",
 	"dialog.admin.catalog.management.additionalFields.storeSuccess":"Die zus&auml;tzlichen Felder wurden erfolgreich gespeichert.",
 	"dialog.admin.catalog.management.searchTerms.updateLastProcessInfo":"Informationen zum letzten Prozess:",
