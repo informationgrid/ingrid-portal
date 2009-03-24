@@ -115,11 +115,11 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		jobExecutionContext.put("NUM_PROCESSED", new Integer(0));
 		jobExecutionContext.put("NUM_TOTAL", snsTopicsToChange.size() + freeTerms.size());
 
-
+/*
 		// TODO remove. Inserted for testing purpose
 		if (snsTopicsToChange != null && snsTopicsToChange.size() > 10)
 			snsTopicsToChange = snsTopicsToChange.subList(0, 10);
-
+*/
 
 		if (changedTopics != null) {
 			log.debug("total changed topics: " + changedTopics.length);
@@ -132,14 +132,13 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 			log.debug("total expired topics: " + expiredTopics.length);
 		}
 		log.debug("expired topic matches: " + snsTopicsToExpire.size());
-		removeExpiredTopics(snsTopicsToExpire);
-
 
 		log.debug("total free terms: " + freeTerms.size());
+/*
 		// TODO remove. Inserted for testing purpose
 		if (freeTerms != null && freeTerms.size() > 10)
 			freeTerms = freeTerms.subList(0, 10);
-
+*/
 
 		List<SNSTopic> freeTermsResult = updateFreeTerms(snsService, freeTerms, jobExecutionContext);
 
@@ -298,19 +297,47 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 				break;
 			}
 
-			SNSTopic newTopic = snsService.getPSI(oldTopic.getTopicId());
+			SNSTopic newTopic = getSNSTopicForTopicId(snsService, oldTopic.getTopicId());
 			log.debug("old topic: " + oldTopic);
+
+			if (newTopic == null) {
+				log.debug("topic id not found. Querying as free term...");
+				newTopic = getSNSTopicForFreeTerm(snsService, oldTopic.getTitle());
+			}
 			log.debug("new topic: " + newTopic);
+
 			newTopics.add(newTopic);
 			jobExecutionContext.put("NUM_PROCESSED", (Integer) jobExecutionContext.get("NUM_PROCESSED") + 1);
 		}
 		return newTopics;
 	}
 
-	private void removeExpiredTopics(List<SNSTopic> snsTopics) {
+	// Query the SNS for a given topicId
+	// Returns null if no topic could be found
+	private static SNSTopic getSNSTopicForTopicId(SNSService snsService, String topicId) {
+		return snsService.getPSI(topicId);
+	}
+
+	// Query the SNS for a given term
+	// Returns either a topic with name 'term' or a corresponding descriptor if 'term' is a synonym
+	// Returns null if no descriptor or synonym
+	private static SNSTopic getSNSTopicForFreeTerm(SNSService snsService, String term) {
+		List<SNSTopic> snsTopics = snsService.findTopics(term);
 		for (SNSTopic topic : snsTopics) {
-			log.debug("expired topic: " + topic);
+			if (topic.getTitle().equalsIgnoreCase(term)) {
+				if (topic.getType().equals(Type.DESCRIPTOR)) {
+					log.debug("Found descriptor for free term: " + topic);
+					return topic;
+
+				} else if (topic.getType().equals(Type.NON_DESCRIPTOR)) {
+					log.debug("Found synonym: " + topic);
+					SNSTopic descriptorForSynonym = snsService.getTopicsForTopic(topic.getTopicId());
+					log.debug("Descriptor for synonym: " + descriptorForSynonym);
+					return descriptorForSynonym;
+				}
+			}
 		}
+		return null;
 	}
 
 	private List<SNSTopic> updateFreeTerms(SNSService snsService, List<String> freeTerms, JobExecutionContext jobExecutionContext) {
@@ -321,30 +348,9 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 			}
 
 			log.debug("Find Topic for '" + freeTerm + "'...");
-			List<SNSTopic> snsTopics = snsService.findTopics(freeTerm);
-			boolean found = false; 
-			for (SNSTopic topic : snsTopics) {
-				if (topic.getTitle().equalsIgnoreCase(freeTerm)) {
-					if (topic.getType().equals(Type.DESCRIPTOR)) {
-						log.debug("Found descriptor for free term: " + topic);
-						foundTopics.add(topic);
-						found = true;
-						break;
+			SNSTopic newTopic = getSNSTopicForFreeTerm(snsService, freeTerm);
+			foundTopics.add(newTopic);
 
-					} else if (topic.getType().equals(Type.NON_DESCRIPTOR)) {
-						log.debug("Found synonym: " + topic);
-						SNSTopic descriptorForSynonym = snsService.getTopicsForTopic(topic.getTopicId());
-						log.debug("Descriptor for synonym: " + descriptorForSynonym);
-						foundTopics.add(descriptorForSynonym);
-						found = true;
-						break;
-					}
-				}
-			}
-
-			if (!found) {
-				foundTopics.add(null);
-			}
 			jobExecutionContext.put("NUM_PROCESSED", (Integer) jobExecutionContext.get("NUM_PROCESSED") + 1);
 		}
 		return foundTopics;
