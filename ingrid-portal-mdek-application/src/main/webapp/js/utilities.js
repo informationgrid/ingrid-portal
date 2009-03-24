@@ -731,8 +731,10 @@ UtilList.addTableIndices = function(list) {
 UtilList.addSNSLocationLabels = function(list) {
 	if (list) {
 		dojo.lang.forEach(list, function(entry){
-			entry.label = entry.name + ", ";
-			entry.label += entry.topicType ? entry.topicType : entry.type;
+			entry.label = entry.name;
+			if (entry.topicType) {
+				entry.label += ", " + entry.topicType;
+			}
 		});
 		return list;
 
