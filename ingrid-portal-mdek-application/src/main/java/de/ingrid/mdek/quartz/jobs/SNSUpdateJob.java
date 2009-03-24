@@ -313,9 +313,15 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 	}
 
 	// Query the SNS for a given topicId
-	// Returns null if no topic could be found
+	// Returns null if no DESCRIPTOR could be found
 	private static SNSTopic getSNSTopicForTopicId(SNSService snsService, String topicId) {
-		return snsService.getPSI(topicId);
+		SNSTopic snsTopic = snsService.getPSI(topicId);
+		if (snsTopic.getType().equals(Type.DESCRIPTOR)) {
+			return snsTopic;
+
+		} else {
+			return null;
+		}
 	}
 
 	// Query the SNS for a given term
