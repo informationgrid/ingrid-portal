@@ -286,7 +286,7 @@
         			</p>
         			#if($wmsUrl)
         			<p class="result_link">
-        				<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="portal/main-maps.psml?wms_url=$tool.urlencode($wmsUrl)" target="ingrid_wms" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('common.result.showMap')</a>
+        				<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="portal/main-maps.psml?wms_url=$tool.urlencode($wmsUrl)" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('common.result.showMap')</a>
         			</p>				
         			#end
 				#end

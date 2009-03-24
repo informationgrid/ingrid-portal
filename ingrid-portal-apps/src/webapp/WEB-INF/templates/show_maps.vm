@@ -1,59 +1,40 @@
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 #set ($action = $renderResponse.createActionURL())
-<div id="content_full">
-	<div class="section-header">
-		<h1>$MESSAGES.getString("maps.page.title")</h1>
-	    
-		#if($hKey && $hKey.length() > 0)
-		<span class="portlet_info">
-		#set($hpath = $renderResponse.encodeURL("$contextPath/portal/help.psml?hkey=$hKey"))
-		<script language="JavaScript" type="text/javascript">
-    		document.write("<a href=\"javascript:ingrid_openWindow('$hpath',750,550);\">[?]</a>");
-    	</script>
-    	<noscript>
-    		<a href="$hpath" target="_new">[?]</a>
-    	</noscript>
-		</span>
-		#end
-		<span class="clearer"></span>
-	</div>
-	<span class="clearer"></span>
-	<div class="section">
-		<div class="formbody">
-			<iframe src="$wmsURL" style="width:860px;height:676px;border:0;" name="wms_viewer" marginheight="0" marginwidth="0" frameborder="0">
-				$MESSAGES.getString("maps.error.noframes") 
-			</iframe>
-			<div class="rightmargin" align="right">
+<div class="section">
+	<div class="formbody">
+		<iframe src="$wmsURL" style="width:860px;height:676px;border:0;" name="wms_viewer" marginheight="0" marginwidth="0" frameborder="0">
+			$MESSAGES.getString("maps.error.noframes") 
+		</iframe>
+		<div class="rightmargin" align="right">
 #if($enableLoad)
 	$action.setParameter('action','doLoadWMC')
-		        <span class="iconLink">
-					<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString("common.alt.icon.intern")" />
-					<a href="$action">$MESSAGES.getString("maps.load.wmc")</a>
-				</span>&nbsp;&nbsp;
+	        <span class="iconLink">
+				<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString("common.alt.icon.intern")" />
+				<a href="$action">$MESSAGES.getString("maps.load.wmc")</a>
+			</span>&nbsp;&nbsp;
 #end
 #if($enableSave)
 	#if($mapBenderVersion == "2.1")
-	$action.setParameter('action','doSaveWMSServices')
+$action.setParameter('action','doSaveWMSServices')
+#else
+$action.setParameter('action','doSaveWMC')
+#end
+	        <span class="iconLink">
+				<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString("common.alt.icon.intern")" />
+	#if($mapBenderVersion == "2.1")
+				<a href="$action">$MESSAGES.getString("maps.save.wms.services")</a>
 	#else
-	$action.setParameter('action','doSaveWMC')
+				<a href="$action">$MESSAGES.getString("maps.save.wmc")</a>
 	#end
-		        <span class="iconLink">
-					<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString("common.alt.icon.intern")" />
-		#if($mapBenderVersion == "2.1")
-					<a href="$action">$MESSAGES.getString("maps.save.wms.services")</a>
-		#else
-					<a href="$action">$MESSAGES.getString("maps.save.wmc")</a>
-		#end
-				</span>
+			</span>
 #if($wmsServicesSaved)
 	#if($mapBenderVersion == "2.1")
-				<p class="portlet-msg-success">$MESSAGES.getString("maps.save.wms.services.saved")</p>
-	#else
-				<p class="portlet-msg-success">$MESSAGES.getString("maps.save.wmc.saved")</p>
+			<p class="portlet-msg-success">$MESSAGES.getString("maps.save.wms.services.saved")</p>
+#else
+			<p class="portlet-msg-success">$MESSAGES.getString("maps.save.wmc.saved")</p>
 	#end
 #end					
 #end
 			</div>
-		</div>  
-	</div>
+	</div>  
 </div>
