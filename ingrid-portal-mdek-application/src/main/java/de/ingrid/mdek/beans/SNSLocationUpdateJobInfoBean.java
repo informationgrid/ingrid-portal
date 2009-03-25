@@ -10,8 +10,6 @@ public class SNSLocationUpdateJobInfoBean extends JobInfoBean {
 	private List<SNSLocationTopic> oldSNSTopics;
 	private List<SNSLocationTopic> newSNSTopics;
 
-	private List<SNSLocationTopic> expiredTopics;
-
 	public List<SNSLocationTopic> getOldSNSTopics() {
 		return oldSNSTopics;
 	}
@@ -26,14 +24,6 @@ public class SNSLocationUpdateJobInfoBean extends JobInfoBean {
 
 	public void setNewSNSTopics(List<SNSLocationTopic> newSNSTopics) {
 		this.newSNSTopics = newSNSTopics;
-	}
-
-	public List<SNSLocationTopic> getExpiredTopics() {
-		return expiredTopics;
-	}
-
-	public void setExpiredTopics(List<SNSLocationTopic> expiredTopics) {
-		this.expiredTopics = expiredTopics;
 	}
 
 	public SNSLocationUpdateJobInfoBean() {}

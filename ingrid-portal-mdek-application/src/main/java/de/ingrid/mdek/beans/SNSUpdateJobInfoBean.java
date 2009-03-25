@@ -10,11 +10,6 @@ public class SNSUpdateJobInfoBean extends JobInfoBean {
 	private List<SNSTopic> oldSNSTopics;
 	private List<SNSTopic> newSNSTopics;
 
-	private List<SNSTopic> expiredTopics;
-
-	private List<String> freeTerms;
-	private List<SNSTopic> topicsForFreeTerms;
-
 	public SNSUpdateJobInfoBean() {}
 
 	// Convenience method to copy all data contained in a JobInfoBean into a new URL Info obj
@@ -46,35 +41,5 @@ public class SNSUpdateJobInfoBean extends JobInfoBean {
 
 	public void setNewSNSTopics(List<SNSTopic> newSNSTopics) {
 		this.newSNSTopics = newSNSTopics;
-	}
-
-
-	public List<SNSTopic> getExpiredTopics() {
-		return expiredTopics;
-	}
-
-
-	public void setExpiredTopics(List<SNSTopic> expiredTopics) {
-		this.expiredTopics = expiredTopics;
-	}
-
-
-	public List<String> getFreeTerms() {
-		return freeTerms;
-	}
-
-
-	public void setFreeTerms(List<String> freeTerms) {
-		this.freeTerms = freeTerms;
-	}
-
-
-	public List<SNSTopic> getTopicsForFreeTerms() {
-		return topicsForFreeTerms;
-	}
-
-
-	public void setTopicsForFreeTerms(List<SNSTopic> topicsForFreeTerms) {
-		this.topicsForFreeTerms = topicsForFreeTerms;
 	}
 }

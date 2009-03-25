@@ -120,8 +120,6 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 			log.debug("total expired topics: " + expiredTopics.length);
 		}
 		log.debug("expired topic matches: " + snsTopicsToExpire.size());
-		removeExpiredTopics(snsTopicsToExpire);
-
 
 		long endTime = System.currentTimeMillis();
 		log.debug("SNS Location Update took "+(endTime - startTime)+" ms.");
@@ -217,23 +215,30 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 		return newTopics;
 	}
 
-	private void removeExpiredTopics(List<SNSLocationTopic> snsTopics) {
-		for (SNSLocationTopic topic : snsTopics) {
-			log.debug("expired topic: " + topic);
-		}
-	}
-
-	private static SNSLocationUpdateJobInfoBean createJobResult(List<SNSLocationTopic> oldTopics, List<SNSLocationTopic> newTopics,
+	private static SNSLocationUpdateJobInfoBean createJobResult(List<SNSLocationTopic> modTopics, List<SNSLocationTopic> modResultTopics,
 			List<SNSLocationTopic> expiredTopics) {
 
+		List<SNSLocationTopic> oldTopics = new ArrayList<SNSLocationTopic>();
+		List<SNSLocationTopic> newTopics = new ArrayList<SNSLocationTopic>();
 		SNSLocationUpdateJobInfoBean jobInfo = new SNSLocationUpdateJobInfoBean();
+
 		// Check if the newly found topics differ from the old ones
-		removeIdenticalTopics(oldTopics, newTopics);
-		log.debug("number of topics to update: " + oldTopics.size());
+		removeIdenticalTopics(modTopics, modResultTopics);
+		log.debug("number of topics to update: " + modTopics.size());
+		log.debug("number of topics to expire: " + expiredTopics.size());
+		oldTopics.addAll(modTopics);
+		newTopics.addAll(modResultTopics);
+
+		// Add expired topics
+		for (SNSLocationTopic topic : expiredTopics) {
+			if (!oldTopics.contains(topic)) {
+				oldTopics.add(topic);
+				newTopics.add(null);
+			}
+		}
+
 		jobInfo.setOldSNSTopics(oldTopics);
 		jobInfo.setNewSNSTopics(newTopics);
-		log.debug("number of topics to expire: " + expiredTopics.size());
-		jobInfo.setExpiredTopics(expiredTopics);
 
 		return jobInfo;
 	}

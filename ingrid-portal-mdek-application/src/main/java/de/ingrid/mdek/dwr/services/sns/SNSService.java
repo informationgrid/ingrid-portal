@@ -432,7 +432,7 @@ public class SNSService {
 
 	    for (Topic topic : snsResults) {
     		SNSTopic t = convertTopicToSNSTopic(topic);
-        	log.debug("Found: ["+getAssociationFromTopic(topic)+", "+getTypeFromTopic(topic)+", "+getSourceFromTopic(topic)+", "+topic.getTopicID()+", "+topic.getTopicName()+"]");
+        	log.debug("Found: " + topic);
 
         	String assoc = getAssociationFromTopic(topic);
     		if (assoc.equals("widerTermMember")) {

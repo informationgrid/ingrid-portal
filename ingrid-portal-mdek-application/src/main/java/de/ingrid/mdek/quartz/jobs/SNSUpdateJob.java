@@ -152,22 +152,36 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		}
 	}
 
-	private static SNSUpdateJobInfoBean createJobResult(List<SNSTopic> oldTopics, List<SNSTopic> newTopics,
+	private static SNSUpdateJobInfoBean createJobResult(List<SNSTopic> modTopics, List<SNSTopic> modResultTopics,
 			List<SNSTopic> expiredTopics, List<String> freeTerms, List<SNSTopic> descriptorsForFreeTerms) {
 
+		List<SNSTopic> oldTopics = new ArrayList<SNSTopic>();
+		List<SNSTopic> newTopics = new ArrayList<SNSTopic>();
 		SNSUpdateJobInfoBean jobInfo = new SNSUpdateJobInfoBean();
+
 		// Check if the newly found topics differ from the old ones
-		removeIdenticalTopics(oldTopics, newTopics);
-		log.debug("number of topics to update: " + oldTopics.size());
-		jobInfo.setOldSNSTopics(oldTopics);
-		jobInfo.setNewSNSTopics(newTopics);
+		removeIdenticalTopics(modTopics, modResultTopics);
+		log.debug("number of topics to update: " + modTopics.size());
+		oldTopics.addAll(modTopics);
+		newTopics.addAll(modResultTopics);
+
+		// Add the topics to expire
 		log.debug("number of topics to expire: " + expiredTopics.size());
-		jobInfo.setExpiredTopics(expiredTopics);
+		for (SNSTopic topic : expiredTopics) {
+			if (!oldTopics.contains(topic)) {
+				oldTopics.add(topic);
+				newTopics.add(null);
+			}
+		}
+
+		// Add the free terms
 		removeUnknownTerms(freeTerms, descriptorsForFreeTerms);
 		log.debug("number of free terms to add as topics: " + freeTerms.size());
-		jobInfo.setFreeTerms(freeTerms);
-		jobInfo.setTopicsForFreeTerms(descriptorsForFreeTerms);
+		oldTopics.addAll(convertToSNSTopics(freeTerms));
+		newTopics.addAll(descriptorsForFreeTerms);
 
+		jobInfo.setOldSNSTopics(oldTopics);
+		jobInfo.setNewSNSTopics(newTopics);
 		return jobInfo;
 	}
 
@@ -208,6 +222,18 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 				topicsIt.remove();
 			}
 		}
+	}
+
+	private static List<SNSTopic> convertToSNSTopics(List<String> terms) {
+		List<SNSTopic> topics = new ArrayList<SNSTopic>();
+		for (String term : terms) {
+			SNSTopic topic = new SNSTopic();
+			topic.setSource(Source.FREE);
+			topic.setTitle(term);
+			topic.setType(Type.DESCRIPTOR);
+			topics.add(topic);
+		}
+		return topics;
 	}
 
 	private List<String> fetchFreeTopics(IMdekCallerCatalog mdekCallerCatalog, String plugId) {
