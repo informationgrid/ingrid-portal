@@ -199,7 +199,16 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 				break;
 			}
 
-			SNSLocationTopic newTopic = snsService.getLocationPSI(oldTopic.getTopicId());
+			SNSLocationTopic newTopic;
+			try {
+				newTopic = snsService.getLocationPSI(oldTopic.getTopicId());
+
+			} catch (Exception e) {
+				// If something went wrong, log the exception and set the 'newTopic' as 'oldTopic'
+				// so the topic won't be modified/deleted later on
+				log.error("Error querying the snsService for topic " + oldTopic + ".", e);
+				newTopic = oldTopic;
+			}
 			log.debug("old topic: " + oldTopic);
 			log.debug("new topic: " + newTopic);
 			newTopics.add(newTopic);

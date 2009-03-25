@@ -302,16 +302,12 @@ public class SNSService {
      * getPSI for 'topicId'.
      * @param topicId topic id to search for
      * @return the SNSTopic if it exists, null otherwise
+     * @throws Exception if there was a connection/communication error with the SNS
      */
-    public SNSTopic getPSI(String topicId) {
+    public SNSTopic getPSI(String topicId) throws Exception {
     	TopicMapFragment mapFragment = null;
-    	try {
-    		mapFragment = snsClient.getPSI(topicId, 0, "/thesa");
+   		mapFragment = snsClient.getPSI(topicId, 0, "/thesa");
 
-    	} catch (Exception e) {
-	    	log.error(e);
-	    }
-	    
 	    if (null != mapFragment) {
 	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
 	        if ((null != topics)) {
@@ -329,16 +325,12 @@ public class SNSService {
      * getPSI for location topics 'topicId'.
      * @param topicId topic id to search for
      * @return the SNSLocationTopic if it exists, null otherwise
+     * @throws Exception if there was a connection/communication error with the SNS
      */
-    public SNSLocationTopic getLocationPSI(String topicId) {
+    public SNSLocationTopic getLocationPSI(String topicId) throws Exception {
     	TopicMapFragment mapFragment = null;
-    	try {
-    		mapFragment = snsClient.getPSI(topicId, 0, "/location");
+   		mapFragment = snsClient.getPSI(topicId, 0, "/location");
 
-    	} catch (Exception e) {
-	    	log.error(e);
-	    }
-	    
 	    if (null != mapFragment) {
 	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
 	        if ((null != topics)) {

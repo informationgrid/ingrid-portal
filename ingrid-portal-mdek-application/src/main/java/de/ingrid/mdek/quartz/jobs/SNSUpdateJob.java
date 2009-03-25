@@ -297,15 +297,24 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 				break;
 			}
 
-			SNSTopic newTopic = getSNSTopicForTopicId(snsService, oldTopic.getTopicId());
 			log.debug("old topic: " + oldTopic);
+			SNSTopic newTopic;
+			try {
+				newTopic = getSNSTopicForTopicId(snsService, oldTopic.getTopicId());
+	
+				if (newTopic == null) {
+					log.debug("topic id not found. Querying as free term...");
+					newTopic = getSNSTopicForFreeTerm(snsService, oldTopic.getTitle());
+				}
 
-			if (newTopic == null) {
-				log.debug("topic id not found. Querying as free term...");
-				newTopic = getSNSTopicForFreeTerm(snsService, oldTopic.getTitle());
+			} catch (Exception e) {
+				// If something went wrong, log the exception and set the 'newTopic' as 'oldTopic'
+				// so the topic won't be modified/deleted later on
+				log.error("Error querying the snsService for topic " + oldTopic + ".", e);
+				newTopic = oldTopic;
 			}
-			log.debug("new topic: " + newTopic);
 
+			log.debug("new topic: " + newTopic);
 			newTopics.add(newTopic);
 			jobExecutionContext.put("NUM_PROCESSED", (Integer) jobExecutionContext.get("NUM_PROCESSED") + 1);
 		}
@@ -314,9 +323,10 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 
 	// Query the SNS for a given topicId
 	// Returns null if no DESCRIPTOR could be found
-	private static SNSTopic getSNSTopicForTopicId(SNSService snsService, String topicId) {
+	// Throws an exception if something went wrong while communicating with the sns
+	private static SNSTopic getSNSTopicForTopicId(SNSService snsService, String topicId) throws Exception {
 		SNSTopic snsTopic = snsService.getPSI(topicId);
-		if (snsTopic.getType().equals(Type.DESCRIPTOR)) {
+		if (snsTopic != null && snsTopic.getType().equals(Type.DESCRIPTOR)) {
 			return snsTopic;
 
 		} else {
