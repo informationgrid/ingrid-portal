@@ -24,6 +24,7 @@ import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.dwr.services.sns.SNSLocationTopic;
 import de.ingrid.mdek.dwr.services.sns.SNSService;
 import de.ingrid.mdek.handler.ConnectionFacade;
+import de.ingrid.mdek.util.MdekEmailUtils;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
@@ -128,6 +129,22 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 			SNSLocationUpdateJobInfoBean jobInfo = createJobResult(topicsToCheck, snsTopicsResult, snsTopicsToExpire);
 			// TODO Send result to backend
 			jobExecutionContext.setResult(jobInfo);
+
+			// TODO Send email to responsible users
+			sendExpiryMails(jobInfo.getOldSNSTopics(), jobInfo.getNewSNSTopics());
+		}
+	}
+
+	private static void sendExpiryMails(List<SNSLocationTopic> oldTopics, List<SNSLocationTopic> newTopics) {
+		List<SNSLocationTopic> expiredTopics = new ArrayList<SNSLocationTopic>();
+		for (int index = 0; index < oldTopics.size(); ++index) {
+			if (newTopics.get(index) == null) {
+				expiredTopics.add(oldTopics.get(index));
+			}
+		}
+
+		if (expiredTopics.size() > 0) {
+			MdekEmailUtils.sendSpatialReferencesExpiredMails(expiredTopics);
 		}
 	}
 

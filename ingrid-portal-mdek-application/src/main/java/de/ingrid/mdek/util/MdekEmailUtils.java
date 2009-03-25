@@ -28,6 +28,7 @@ import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.CommentBean;
+import de.ingrid.mdek.beans.SNSLocationUpdateJobInfoBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.security.User;
@@ -37,6 +38,7 @@ import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
 import de.ingrid.mdek.caller.IMdekCaller.FetchQuantity;
+import de.ingrid.mdek.dwr.services.sns.SNSLocationTopic;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.jobs.util.ExpiredDataset;
 import de.ingrid.utils.IngridDocument;
@@ -294,6 +296,21 @@ public class MdekEmailUtils {
 			String text = mergeTemplate(templatePath, mailData, "map");
 			sendEmail(text, MAIL_SENDER, new String[] { recipient } );
 		}
+	}
+
+	public static void sendSpatialReferencesExpiredMails(List<SNSLocationTopic> expiredTopics) {
+		// TODO Implement
+		// The email must contain the following information:
+		// Identifier of the object containing the expired spatial reference (id, name, etc.)
+		// The expired spatial reference
+		// Direct link to the ige
+
+		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/spatial_references_expired_email.vm");
+		String templatePath = url.getPath();
+		HashMap<String, Object> mailData = new HashMap<String, Object>();
+		mailData.put("expiredTopics", expiredTopics);
+		String text = mergeTemplate(templatePath, mailData, "map");
+		sendEmail(text, MAIL_SENDER, new String[] { "michael.benz@wemove.com" } );
 	}
 
 	public static void sendEmail(String content, String from, String[] to) {

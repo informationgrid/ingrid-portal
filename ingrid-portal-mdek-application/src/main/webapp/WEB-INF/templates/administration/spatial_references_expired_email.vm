@@ -1,0 +1,10 @@
+#set($EXP_TOPICS = $map.get("expiredTopics"))
+Dies ist eine Meldung von der Metadatenerfassungskomponente der InGrid® Software.
+Die Raumbezüge folgender Datensätze sind nicht mehr aktuell und müssen aktualisiert werden: 
+
+#foreach($expTopic in $EXP_TOPICS)
+Titel: $expTopic.name
+Uuid: $expTopic.topicId
+
+
+#end
