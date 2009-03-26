@@ -1,14 +1,13 @@
 package de.ingrid.mdek.beans;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 
 
 public class SNSUpdateJobInfoBean extends JobInfoBean {
 
-	private List<SNSTopic> oldSNSTopics;
-	private List<SNSTopic> newSNSTopics;
+	private List<SNSTopicUpdateResult> snsUpdateResults;
+
 
 	public SNSUpdateJobInfoBean() {}
 
@@ -23,23 +22,25 @@ public class SNSUpdateJobInfoBean extends JobInfoBean {
 		this.setStartTime(jobInfo.getStartTime());
 	}
 
-
-	public List<SNSTopic> getOldSNSTopics() {
-		return oldSNSTopics;
+	public List<SNSTopicUpdateResult> getSnsUpdateResults() {
+		return snsUpdateResults;
 	}
 
-
-	public void setOldSNSTopics(List<SNSTopic> oldSNSTopics) {
-		this.oldSNSTopics = oldSNSTopics;
+	public void setSnsUpdateResults(List<SNSTopicUpdateResult> snsUpdateResults) {
+		this.snsUpdateResults = snsUpdateResults;
 	}
 
+	// Retrieve the entries from snsUpdateResults as list of string arrays (for CSV Export)
+	public List<String[]> getEntries() {
+		List<String[]> entries = new ArrayList<String[]>();
 
-	public List<SNSTopic> getNewSNSTopics() {
-		return newSNSTopics;
-	}
+		entries.add(new String[] { "Term", "Typ", "Aktion", "Objekte", "Adressen" });
 
-
-	public void setNewSNSTopics(List<SNSTopic> newSNSTopics) {
-		this.newSNSTopics = newSNSTopics;
+		if (snsUpdateResults != null) {
+			for (SNSTopicUpdateResult snsResult : snsUpdateResults) {
+				entries.add(snsResult.toStringArray());
+			}
+		}
+		return entries;
 	}
 }

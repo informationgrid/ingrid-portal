@@ -7,16 +7,14 @@
 var scriptScope = this;
 
 var resultsPerPage = 20;
-var pageNavTab1 = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("snsUpdateResultTab1Info"), pagingSpan:dojo.byId("snsUpdateResultTab1Paging") });
-var pageNavTab2 = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("snsUpdateResultTab2Info"), pagingSpan:dojo.byId("snsUpdateResultTab2Paging") });
+var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("snsUpdateResultInfo"), pagingSpan:dojo.byId("snsUpdateResultPaging") });
 
 var snsUpdateResult = [];
 
 _container_.addOnLoad(function() {
 	refreshSNSUpdateProcessInfo();
 
-	dojo.event.connect("after", pageNavTab1, "onPageSelected", updateSNSRetroIndexTable);
-	dojo.event.connect("after", pageNavTab2, "onPageSelected", updateSNSResultTable);
+	dojo.event.connect("after", pageNav, "onPageSelected", updateSNSResultTable);
 });
 
 scriptScope.startSNSUpdateJob = function() {
@@ -82,30 +80,11 @@ function updateSNSUpdateJobInfo(jobInfo) {
 			dojo.byId("snsUpdateProcessNumEntities").innerHTML = jobInfo.numEntities;
 		}
 
-		// TODO Remove test code
-		var numTerms = Math.floor((Math.random() * 3000) + 100);
-		var result = [];
-		for (var i = 0; i < numTerms; ++i) {
-			result.push({
-				thesaurusId: generateRandomString(Math.floor(Math.random()*21) + 1),
-				oldTerm: generateRandomString(Math.floor(Math.random()*21) + 1),
-				newTerm: generateRandomString(Math.floor(Math.random()*21) + 1),
-				name: generateRandomString(Math.floor(Math.random()*21) + 1),
-				type: generateRandomString(Math.floor(Math.random()*21) + 1),
-				action: generateRandomString(Math.floor(Math.random()*21) + 1),
-				objects: Math.floor(Math.random()*4000) + 1,
-				addresses: Math.floor(Math.random()*4000) + 1
-			});
-		}
+		var numTerms = jobInfo.snsUpdateResults.length;
+		snsUpdateResult = jobInfo.snsUpdateResults;
 
-		snsUpdateResult = result;
-
-		pageNavTab1.reset();
-		pageNavTab1.setTotalNumHits(numTerms);
-		updateSNSRetroIndexTable();
-
-		pageNavTab2.reset();
-		pageNavTab2.setTotalNumHits(numTerms);
+		pageNav.reset();
+		pageNav.setTotalNumHits(numTerms);
 		updateSNSResultTable();
 
 	} else {
@@ -132,31 +111,20 @@ function hideLoadingZone() {
 }
 
 // Paging
-function updateSNSRetroIndexTable() {
-	var startHit = pageNavTab1.getStartHit();
-	var currentView = snsUpdateResult.slice(startHit, startHit + resultsPerPage);
-	dojo.widget.byId("resultListRetroIndexTable").store.setData(currentView);
-	pageNavTab1.updateDomNodes();
-}
 function updateSNSResultTable() {
-	var startHit = pageNavTab2.getStartHit();
+	var startHit = pageNav.getStartHit();
 	var currentView = snsUpdateResult.slice(startHit, startHit + resultsPerPage);
 	dojo.widget.byId("resultListThesaurusTable").store.setData(currentView);
-	pageNavTab2.updateDomNodes();
+	pageNav.updateDomNodes();
 }
 
-
-function generateRandomString(strLength) {
-	var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-	var string_length = strLength;
-	var str = '';
-	for (var i=0; i<string_length; i++) {
-		var rnum = Math.floor(Math.random() * chars.length);
-		str += chars.substring(rnum,rnum+1);
-	}
-	return str;
+scriptScope.downloadAsCSV = function() {
+	CatalogManagementService.getSNSUpdateResultAsCSV({
+		callback: function(csvFile) {
+			dwr.engine.openInDownload(csvFile);
+		}
+	});
 }
-
 
 </script>
 </head>
@@ -228,64 +196,35 @@ function generateRandomString(strLength) {
 				</div> <!-- INFO END -->
 	
 				<!-- LEFT HAND SIDE CONTENT START -->
-				<div id="searchTermsResultContainer" class="inputContainer noSpaceBelow">
-					<span class="functionalLink onTab"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="<fmt:message key="dialog.admin.catalog.management.searchTerms.saveAsCSV" />"><fmt:message key="dialog.admin.catalog.management.searchTerms.saveAsCSV" /></a></span>
-					<div id="resultLists" dojoType="ingrid:TabContainer" class="w964 h565" selectedChild="resultListRetroIndex">
-	
-						<!-- TAB 1 START -->
-						<div id="resultListRetroIndex" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.admin.catalog.management.searchTerms.retroResult" />">
-							<div class="inputContainer w964 noSpaceBelow">
+				<div class="inputContainer noSpaceBelow">
+					<!-- TABLE START -->
+					<div class="inputContainer w964 noSpaceBelow">
 
-								<div class="listInfo w964">
-									<span id="snsUpdateResultTab1Info" class="searchResultsInfo">&nbsp;</span>
-									<span id="snsUpdateResultTab1Paging" class="searchResultsPaging">&nbsp;</span>
-									<div class="fill"></div>
-								</div>
-
-								<table id="resultListRetroIndexTable" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable w964">
-									<thead>
-										<tr>
-											<th field="thesaurusId" dataType="String" width="104" noSort="true" sort="asc"><fmt:message key="dialog.admin.catalog.management.searchTerms.id" /></th>
-											<th field="oldTerm" dataType="String" width="430" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.oldTerm" /></th>
-											<th field="newTerm" dataType="String" width="430" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.newTerm" /></th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-
-							</div>
-						</div> <!-- TAB 1 END -->
-	
-						<!-- TAB 2 START -->
-						<div id="resultListThesaurus" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.admin.catalog.management.searchTerms.updateResult" />">
-							<div class="inputContainer w964 noSpaceBelow">
-	
-								<div class="listInfo w964">
-									<span id="snsUpdateResultTab2Info" class="searchResultsInfo">&nbsp;</span>
-									<span id="snsUpdateResultTab2Paging" class="searchResultsPaging">&nbsp;</span>
-									<div class="fill"></div>
-								</div>
-
-								<table id="resultListThesaurusTable" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable w964 relativePos">
-									<thead>
-										<tr>
-											<th field="name" dataType="String" width="354" noSort="true" sort="asc"><fmt:message key="dialog.admin.catalog.management.searchTerms.description" /></th>
-											<th field="type" dataType="String" width="200" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.type" /></th>
-											<th field="action" dataType="String" width="250" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.action" /></th>
-											<th field="objects" dataType="String" width="80" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.objects" /></th>
-											<th field="addresses" dataType="String" width="80" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.addresses" /></th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-	
+						<span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.downloadAsCSV();" title="<fmt:message key="dialog.admin.catalog.management.searchTerms.saveAsCSV" />"><fmt:message key="dialog.admin.catalog.management.searchTerms.saveAsCSV" /></a></span>
+						<div class="listInfo w964">
+							<span id="snsUpdateResultInfo" class="searchResultsInfo">&nbsp;</span>
+							<span id="snsUpdateResultPaging" class="searchResultsPaging">&nbsp;</span>
+							<div class="fill"></div>
 						</div>
-	
-					</div> <!-- TAB 2 END -->
-				</div>
-			</div> <!-- LEFT HAND SIDE CONTENT END -->
+
+						<table id="resultListThesaurusTable" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable w964 relativePos">
+							<thead>
+								<tr>
+									<th field="term" dataType="String" width="354" noSort="true" sort="asc"><fmt:message key="dialog.admin.catalog.management.searchTerms.description" /></th>
+									<th field="type" dataType="String" width="200" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.type" /></th>
+									<th field="action" dataType="String" width="250" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.action" /></th>
+									<th field="objects" dataType="String" width="80" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.objects" /></th>
+									<th field="addresses" dataType="String" width="80" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.addresses" /></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div> <!-- TABLE END -->
+
+				</div>  <!-- LEFT HAND SIDE CONTENT END -->
+
+			</div>
 		</div>
 	</div> <!-- CONTENT END -->
 </div>

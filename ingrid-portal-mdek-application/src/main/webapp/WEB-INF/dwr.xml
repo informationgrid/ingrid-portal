@@ -69,6 +69,8 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.JobInfoBean"/>
 		<convert converter="enum" match="de.ingrid.mdek.beans.JobInfoBean$EntityType"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.KeyValuePair"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.SNSTopicUpdateResult"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.SNSUpdateJobInfoBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.URLJobInfoBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.VersionInformation"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.address.MdekAddressBean"/>

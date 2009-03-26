@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
 
 import com.thoughtworks.xstream.XStream;
@@ -23,6 +24,7 @@ import de.ingrid.mdek.beans.CodeListJobInfoBean;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
 import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.SNSTopicUpdateResult;
 import de.ingrid.mdek.beans.SNSUpdateJobInfoBean;
 import de.ingrid.mdek.beans.SysList;
 import de.ingrid.mdek.beans.URLJobInfoBean;
@@ -533,5 +535,36 @@ public class MdekCatalogUtils {
 		//addCodeListJobInfoFromResponse(response, codeListJobInfo);
 
 		return codeListJobInfo;
+	}
+
+	public static SNSUpdateJobInfoBean extractSNSUpdateJobInfoFromResponse(
+			IngridDocument response) {
+
+		SNSUpdateJobInfoBean jobInfo = new SNSUpdateJobInfoBean();
+		jobInfo.setStartTime(new Date((long) (System.currentTimeMillis() - 1000 * 60 * 15 * Math.random())));
+		jobInfo.setEndTime(new Date());
+
+		int numEntities = (int) (4000 * Math.random());
+		jobInfo.setNumEntities(numEntities);
+
+		List<SNSTopicUpdateResult> snsUpdateResults = new ArrayList<SNSTopicUpdateResult>();
+		for (int i = 0; i < numEntities; ++i) {
+			SNSTopicUpdateResult snsUpdateResult = new SNSTopicUpdateResult();
+			snsUpdateResult.setAction(RandomStringUtils.randomAlphabetic((int) (40 * Math.random())));
+			snsUpdateResult.setAddresses((int) (100 * Math.random()));
+			snsUpdateResult.setObjects((int) (100 * Math.random()));
+			snsUpdateResult.setTerm(RandomStringUtils.randomAlphabetic((int) (20 * Math.random())));
+			snsUpdateResult.setType(Math.random() > 0.5 ? Math.random() > 0.5 ? "UMTHES" : "GEMET" : "FREE");
+			snsUpdateResults.add(snsUpdateResult);
+		}
+
+		jobInfo.setSnsUpdateResults(snsUpdateResults);
+		return jobInfo;
+	}
+
+	public static SNSUpdateJobInfoBean extractSNSLocationpUdateJobInfoFromResponse(
+			IngridDocument response) {
+		// Implement
+		return extractSNSUpdateJobInfoFromResponse(response);
 	}
 }

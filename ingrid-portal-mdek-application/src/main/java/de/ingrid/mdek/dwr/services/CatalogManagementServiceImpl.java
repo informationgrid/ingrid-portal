@@ -1,6 +1,8 @@
 package de.ingrid.mdek.dwr.services;
 
 import java.io.IOException;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,11 +21,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import au.com.bytecode.opencsv.CSVWriter;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtils.CsvRequestType;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean;
-import de.ingrid.mdek.beans.SNSLocationUpdateJobInfoBean;
 import de.ingrid.mdek.beans.SNSUpdateJobInfoBean;
 import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
@@ -213,7 +215,16 @@ public class CatalogManagementServiceImpl {
 	public SNSUpdateJobInfoBean getSNSUpdateJobInfo() {
 		return (SNSUpdateJobInfoBean) mdekJobHandler.getJobInfo(JobType.SNS_UPDATE);
 	}
-	
+
+	public FileTransfer getSNSUpdateResultAsCSV() throws UnsupportedEncodingException {
+		StringWriter writer = new StringWriter();
+		CSVWriter csvWriter = new CSVWriter(writer, ';');
+		csvWriter.writeAll( getSNSUpdateJobInfo().getEntries() );
+
+		return new FileTransfer("snsUpdate.csv", "text/comma-separated-values", writer.toString().getBytes("UTF-8"));
+	}
+
+
 	public void startSNSLocationUpdateJob(FileTransfer fileTransfer) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
 		if (fileTransfer.getFilename() == null || fileTransfer.getFilename().length() == 0) {
 			mdekJobHandler.startSNSLocationUpdateJob(null, null, new String[0]);
@@ -228,8 +239,16 @@ public class CatalogManagementServiceImpl {
 		mdekJobHandler.stopJob(JobType.SNS_LOCATION_UPDATE);
 	}
 
-	public SNSLocationUpdateJobInfoBean getSNSLocationUpdateJobInfo() {
-		return (SNSLocationUpdateJobInfoBean) mdekJobHandler.getJobInfo(JobType.SNS_LOCATION_UPDATE);
+	public SNSUpdateJobInfoBean getSNSLocationUpdateJobInfo() {
+		return (SNSUpdateJobInfoBean) mdekJobHandler.getJobInfo(JobType.SNS_LOCATION_UPDATE);
+	}
+
+	public FileTransfer getSNSLocationUpdateResultAsCSV() throws UnsupportedEncodingException {
+		StringWriter writer = new StringWriter();
+		CSVWriter csvWriter = new CSVWriter(writer, ';');
+		csvWriter.writeAll( getSNSLocationUpdateJobInfo().getEntries() );
+
+		return new FileTransfer("snsLocationUpdate.csv", "text/comma-separated-values", writer.toString().getBytes("UTF-8"));
 	}
 
 

@@ -19,7 +19,6 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtils.SearchtermType;
 import de.ingrid.mdek.beans.JobInfoBean;
-import de.ingrid.mdek.beans.SNSUpdateJobInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.dwr.services.sns.SNSService;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic;
@@ -146,18 +145,17 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		log.debug("SNS Update took "+(endTime - startTime)+" ms.");
 
 		if (!cancelJob) {
-			SNSUpdateJobInfoBean jobInfo = createJobResult(snsTopicsToChange, snsTopicsResult, snsTopicsToExpire, freeTerms, freeTermsResult);
+			JobResult jobResult = createJobResult(snsTopicsToChange, snsTopicsResult, snsTopicsToExpire, freeTerms, freeTermsResult);
 			// TODO Send result to backend
-			jobExecutionContext.setResult(jobInfo);
+			jobExecutionContext.setResult(jobResult);
 		}
 	}
 
-	private static SNSUpdateJobInfoBean createJobResult(List<SNSTopic> modTopics, List<SNSTopic> modResultTopics,
+	private static JobResult createJobResult(List<SNSTopic> modTopics, List<SNSTopic> modResultTopics,
 			List<SNSTopic> expiredTopics, List<String> freeTerms, List<SNSTopic> descriptorsForFreeTerms) {
 
 		List<SNSTopic> oldTopics = new ArrayList<SNSTopic>();
 		List<SNSTopic> newTopics = new ArrayList<SNSTopic>();
-		SNSUpdateJobInfoBean jobInfo = new SNSUpdateJobInfoBean();
 
 		// Check if the newly found topics differ from the old ones
 		removeIdenticalTopics(modTopics, modResultTopics);
@@ -180,9 +178,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		oldTopics.addAll(convertToSNSTopics(freeTerms));
 		newTopics.addAll(descriptorsForFreeTerms);
 
-		jobInfo.setOldSNSTopics(oldTopics);
-		jobInfo.setNewSNSTopics(newTopics);
-		return jobInfo;
+		return new JobResult(oldTopics, newTopics);
 	}
 
 	private static void removeIdenticalTopics(List<SNSTopic> oldTopics, List<SNSTopic> newTopics) {
@@ -463,5 +459,23 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 
 	public void interrupt() throws UnableToInterruptJobException {
 		cancelJob = true;
+	}
+
+
+	// Container class for the two result lists
+	private static class JobResult {
+		private List<SNSTopic> oldTopics;
+		private List<SNSTopic> newTopics;
+
+		public JobResult(List<SNSTopic> oldTopics, List<SNSTopic> newTopics) {
+			this.oldTopics = oldTopics;
+			this.newTopics = newTopics;
+		}
+		public List<SNSTopic> getOldTopics() {
+			return oldTopics;
+		}
+		public List<SNSTopic> getNewTopics() {
+			return newTopics;
+		}
 	}
 }

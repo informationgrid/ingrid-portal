@@ -1055,3 +1055,14 @@ UtilGeneral.refreshSession = function() {
 	UtilityService.refreshSession();
 }
 
+UtilGeneral.generateRandomString = function(strLength) {
+	var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+	var string_length = strLength;
+	var str = '';
+	for (var i=0; i<string_length; i++) {
+		var rnum = Math.floor(Math.random() * chars.length);
+		str += chars.substring(rnum,rnum+1);
+	}
+	return str;
+}
+

@@ -185,7 +185,8 @@ public class MdekJobHandler implements BeanFactoryAware {
 		return MdekCatalogUtils.extractUrlJobInfoFromResponse(response);
 */
 		// TODO Return job info from the backend
-		return new SNSUpdateJobInfoBean();
+		IngridDocument response = new IngridDocument();
+		return MdekCatalogUtils.extractSNSUpdateJobInfoFromResponse(response);
 	}
 
 
@@ -209,9 +210,12 @@ public class MdekJobHandler implements BeanFactoryAware {
 		}
 	}
 
-	private SNSLocationUpdateJobInfoBean getSNSLocationUpdateJobResult() {
-		return new SNSLocationUpdateJobInfoBean();
-		}
+	private SNSUpdateJobInfoBean getSNSLocationUpdateJobResult() {
+		// TODO Implement
+		// Query backend for the result and map it to a SNSUpdateJobInfoBean
+		IngridDocument response = new IngridDocument();
+		return MdekCatalogUtils.extractSNSLocationpUdateJobInfoFromResponse(response);
+	}
 
 	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
 		this.beanFactory = beanFactory;

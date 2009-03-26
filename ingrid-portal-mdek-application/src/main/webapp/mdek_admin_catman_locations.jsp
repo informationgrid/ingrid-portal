@@ -81,18 +81,8 @@ function updateSNSLocationUpdateJobInfo(jobInfo) {
 		}
 
 		// TODO Remove test code
-		var numTerms = Math.floor((Math.random() * 3000) + 100);
-		var result = [];
-		for (var i = 0; i < numTerms; ++i) {
-			result.push({
-				spatialUnit: generateRandomString(Math.floor(Math.random()*21) + 1),
-				id: generateRandomString(Math.floor(Math.random()*21) + 1),
-				action: generateRandomString(Math.floor(Math.random()*21) + 1),
-				objects: Math.floor(Math.random()*4000) + 1
-			});
-		}
-
-		snsLocationUpdateResult = result;
+		var numTerms = jobInfo.snsUpdateResults.length;
+		snsLocationUpdateResult = jobInfo.snsUpdateResults;
 
 		pageNav.reset();
 		pageNav.setTotalNumHits(numTerms);
@@ -128,16 +118,12 @@ function updateSNSLocationTable() {
 	pageNav.updateDomNodes();
 }
 
-
-function generateRandomString(strLength) {
-	var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-	var string_length = strLength;
-	var str = '';
-	for (var i=0; i<string_length; i++) {
-		var rnum = Math.floor(Math.random() * chars.length);
-		str += chars.substring(rnum,rnum+1);
-	}
-	return str;
+scriptScope.downloadAsCSV = function() {
+	CatalogManagementService.getSNSLocationUpdateResultAsCSV({
+		callback: function(csvFile) {
+			dwr.engine.openInDownload(csvFile);
+		}
+	});
 }
 
 </script>
@@ -215,7 +201,7 @@ function generateRandomString(strLength) {
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div class="inputContainer noSpaceBelow">
 				<div class="inputContainer w964 noSpaceBelow">
-					<span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="#" title="<fmt:message key="dialog.admin.catalog.management.locations.saveAsCSV" />"><fmt:message key="dialog.admin.catalog.management.locations.saveAsCSV" /></a></span>
+					<span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.downloadAsCSV();" title="<fmt:message key="dialog.admin.catalog.management.locations.saveAsCSV" />"><fmt:message key="dialog.admin.catalog.management.locations.saveAsCSV" /></a></span>
 
 					<div class="listInfo w964">
 						<span id="snsLocationUpdateResultInfo" class="searchResultsInfo">&nbsp;</span>
@@ -226,8 +212,8 @@ function generateRandomString(strLength) {
 					<table id="locationsResultTable" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable w964 relativePos">
 						<thead>
 							<tr>
-								<th field="spatialUnit" dataType="String" width="570" noSort="true" sort="asc"><fmt:message key="dialog.admin.catalog.management.locations.spatialRef" /></th>
-								<th field="id" dataType="String" width="80" noSort="true"><fmt:message key="dialog.admin.catalog.management.locations.id" /></th>
+								<th field="term" dataType="String" width="570" noSort="true" sort="asc"><fmt:message key="dialog.admin.catalog.management.locations.spatialRef" /></th>
+								<th field="type" dataType="String" width="80" noSort="true"><fmt:message key="dialog.admin.catalog.management.locations.id" /></th>
 								<th field="action" dataType="String" width="254" noSort="true"><fmt:message key="dialog.admin.catalog.management.locations.action" /></th>
 								<th field="objects" dataType="String" width="60" noSort="true"><fmt:message key="dialog.admin.catalog.management.locations.objects" /></th>
 							</tr>
