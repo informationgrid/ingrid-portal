@@ -844,6 +844,7 @@ scriptScope.importCodelists = function() {
 					dialog.show(message.get("general.hint"), message.get("dialog.admin.catalog.management.codelist.importSuccess"), dialog.INFO);				
 				},
 				errorHandler: function(errMsg, err) {
+					dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), errMsg), dialog.WARNING, null, 350, 350);				
 					dojo.debug("Error: " + errMsg);
 					dojo.debugShallow(err);
 				}

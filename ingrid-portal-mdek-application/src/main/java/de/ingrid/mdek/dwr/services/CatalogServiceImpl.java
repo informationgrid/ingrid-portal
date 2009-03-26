@@ -46,7 +46,7 @@ public class CatalogServiceImpl implements CatalogService {
 
 	public FileTransfer exportSysLists(Integer[] listIds) throws UnsupportedEncodingException {
 		String xmlDoc = catalogRequestHandler.exportSysLists(listIds);
-		return new FileTransfer("sysList.xml", "text/xml", xmlDoc.getBytes("UTF-8"));
+		return new FileTransfer("sysLists.xml", "text/xml", xmlDoc.getBytes("UTF-8"));
 	}
 
 	public void importSysLists(byte[] data) throws UnsupportedEncodingException {
