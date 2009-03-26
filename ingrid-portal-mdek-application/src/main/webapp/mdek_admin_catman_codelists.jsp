@@ -833,13 +833,41 @@ function hideReindexLoadingZone() {
 }
 
 // -- Import / Export --
-scriptScope.importCodelist = function() {
-	// TODO Implement
-	dojo.debug("Import not implemented yet.");
+scriptScope.importCodelists = function() {
+	var deferred = new dojo.Deferred();
+	
+	deferred.addCallback(function(inputFile) {
+
+		if (inputFile) {
+			CatalogService.importSysLists(inputFile, {
+				callback: function() {
+					dialog.show(message.get("general.hint"), message.get("dialog.admin.catalog.management.codelist.importSuccess"), dialog.INFO);				
+				},
+				errorHandler: function(errMsg, err) {
+					dojo.debug("Error: " + errMsg);
+					dojo.debugShallow(err);
+				}
+			});
+		}
+	});
+
+	dialog.showPage(message.get("dialog.admin.catalog.management.codelist.selectImportFile"), "mdek_select_file_dialog.jsp", 620, 180, true, {
+		// custom parameters
+		resultHandler: deferred	
+	});
+
 }
 
-scriptScope.exportCodelist = function() {
-	dojo.debug("Export not implemented yet.");
+scriptScope.exportCodelists = function() {
+	CatalogService.exportSysLists(null, {
+		callback: function(exportFile) {
+			dwr.engine.openInDownload(exportFile);
+		},
+		errorHandler: function(errMsg, err) {
+			dojo.debug("Error: " + errMsg);
+			dojo.debugShallow(err);
+		}
+	});
 }
 
 
@@ -861,7 +889,7 @@ scriptScope.exportCodelist = function() {
 			<div class="spacer"></div>
 			<div class="spacer"></div>
 			<div id="codeLists" class="inputContainer noSpaceBelow">
-				<span id="importExportLink" class="functionalLink onTab"><img src="img/ic_fl_export.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.export" />" /><a href="javascript:void(0);" onclick="javascript:scriptScope.exportCodelist();" title="Exportieren [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.export" /></a><img src="img/ic_fl_import.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.import" />" /><a href="javascript:void(0);" onclick="javascript:scriptScope.importCodelist();" title="Importieren [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.import" /></a></span>
+				<span id="importExportLink" class="functionalLink onTab"><img src="img/ic_fl_export.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.export" />" /><a href="javascript:void(0);" onclick="javascript:scriptScope.exportCodelists();" title="Exportieren [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.export" /></a><img src="img/ic_fl_import.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.import" />" /><a href="javascript:void(0);" onclick="javascript:scriptScope.importCodelists();" title="Importieren [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.import" /></a></span>
 				<div id="codeListTabContainer" dojoType="ingrid:TabContainer" class="w668 h452" selectedChild="codeListTab">
 
 					<!-- TAB 1 START -->

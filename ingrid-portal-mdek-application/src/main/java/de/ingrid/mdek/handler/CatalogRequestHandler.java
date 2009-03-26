@@ -24,6 +24,8 @@ public interface CatalogRequestHandler {
 			String[] entriesGerman, String[] entriesEnglish);
 	public String[] getFreeListEntries(MdekSysList sysList);
 	public void replaceFreeEntryWithSysListEntry(String freeEntry, MdekSysList sysList, Integer sysListEntryId, String sysListEntryName);
+	public String exportSysLists(Integer[] listIds);
+	public void importSysLists(String xmlDoc);
 
 	public List<AdditionalFieldBean> getSysAdditionalFields(Long[] fieldIds, String language);
 	public List<AdditionalFieldBean> storeAllSysAdditionalFields(List<AdditionalFieldBean> additionalFields);

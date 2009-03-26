@@ -2,6 +2,7 @@ package de.ingrid.mdek.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+
+import com.thoughtworks.xstream.XStream;
 
 import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekKeys;
@@ -20,6 +23,8 @@ import de.ingrid.mdek.beans.CodeListJobInfoBean;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
 import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.SNSUpdateJobInfoBean;
+import de.ingrid.mdek.beans.SysList;
 import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.beans.AdditionalFieldBean.Type;
 import de.ingrid.mdek.beans.JobInfoBean.EntityType;
@@ -37,6 +42,8 @@ public class MdekCatalogUtils {
 
 	private static final String SYS_GUI_ID = "id";
 	private static final String SYS_GUI_MODE = "mode";
+	private static XStream xstream = new XStream();
+
 
 	public static Integer[] extractSysListIdsFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
@@ -102,6 +109,44 @@ public class MdekCatalogUtils {
 			return null;
 		}
 	}
+
+	public static String convertSysListsToXML(IngridDocument result) {
+		Set<String> listKeys = (Set<String>) result.keySet();
+		List<SysList> sysLists = new ArrayList<SysList>();
+
+		for (String listKey : listKeys) {
+			SysList sysList = new SysList();
+
+			IngridDocument listDocument = (IngridDocument) result.get(listKey);
+			Integer listId = (Integer) listDocument.get(MdekKeys.LST_ID);
+
+			Integer[] entryIds = (Integer[]) listDocument.get(MdekKeys.LST_ENTRY_IDS);
+			String[] entryNamesDe = (String[]) listDocument.get(MdekKeys.LST_ENTRY_NAMES_DE);
+			String[] entryNamesEn = (String[]) listDocument.get(MdekKeys.LST_ENTRY_NAMES_EN);
+			Integer defaultIndex = (Integer) listDocument.get(MdekKeys.LST_DEFAULT_ENTRY_INDEX);
+			Boolean maintainable = (de.ingrid.mdek.MdekUtils.YES_INTEGER == ((Integer) listDocument.get(MdekKeys.LST_MAINTAINABLE)));
+
+			sysList.setId(listId);
+			sysList.setDeEntries(entryNamesDe);
+			sysList.setEnEntries(entryNamesEn);
+			sysList.setDefaultIndex(defaultIndex);
+			sysList.setEntryIds(entryIds);
+			sysList.setMaintainable(maintainable);
+
+			sysLists.add(sysList);
+		}
+
+		xstream.alias("sysList", SysList.class);
+		String xmlDoc = xstream.toXML(sysLists);
+		return xmlDoc;
+	}
+
+	public static List<SysList> convertXMLToSysLists(String xmlDoc) {
+		xstream.alias("sysList", SysList.class);
+		List<SysList> sysLists = (List<SysList>) xstream.fromXML(xmlDoc);
+		return sysLists;
+	}
+
 
 	public static List<AdditionalFieldBean> extractSysAdditionalFieldsFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
@@ -489,27 +534,4 @@ public class MdekCatalogUtils {
 
 		return codeListJobInfo;
 	}
-
-	
-	/*
-	private static void addCodeListJobInfoFromResponse(IngridDocument response,
-			AnalyzeJobInfoBean analyzeJobInfo) {
-		IngridDocument codeListResult = MdekUtils.getResultFromResponse(response);
-		List<ErrorReport> errorReports = new ArrayList<ErrorReport>();
-		if (analyzeResult != null) {
-			List<IngridDocument> errorReportDocList = analyzeResult.getArrayList(MdekKeys.VALIDATION_RESULT);
-			if (errorReportDocList != null) {
-				for (IngridDocument errorReportDoc : errorReportDocList) {
-					ErrorReport errorReport = new ErrorReport(
-							errorReportDoc.getString(MdekKeys.VALIDATION_MESSAGE),
-							errorReportDoc.getString(MdekKeys.VALIDATION_SOLUTION)); 
-					errorReports.add(errorReport);
-				}
-			}
-			analyzeJobInfo.setErrorReports(errorReports);
-
-		} else {
-			MdekErrorUtils.handleError(response);
-		}
-	}*/
 }

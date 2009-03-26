@@ -1,7 +1,10 @@
 package de.ingrid.mdek.dwr.services;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
+
+import org.directwebremoting.io.FileTransfer;
 
 import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.beans.AdditionalFieldBean;
@@ -16,6 +19,8 @@ public interface CatalogService {
 			String[] entriesGerman, String[] entriesEnglish);
 	public String[] getFreeListEntries(MdekSysList sysList);
 	public void replaceFreeEntryWithSysListEntry(String freeEntry, MdekSysList sysList, Integer sysListEntryId, String sysListEntryName);
+	public FileTransfer exportSysLists(Integer[] listIds) throws UnsupportedEncodingException;
+	public void importSysLists(byte[] data) throws UnsupportedEncodingException;
 
 	public List<AdditionalFieldBean> getSysAdditionalFields(Long[] fieldIds, String language);
 	public List<AdditionalFieldBean> storeAllSysAdditionalFields(List<AdditionalFieldBean> additionalFields);

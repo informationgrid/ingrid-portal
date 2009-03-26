@@ -1,9 +1,11 @@
 package de.ingrid.mdek.dwr.services;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.directwebremoting.io.FileTransfer;
 
 import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.beans.AdditionalFieldBean;
@@ -42,6 +44,16 @@ public class CatalogServiceImpl implements CatalogService {
 		catalogRequestHandler.replaceFreeEntryWithSysListEntry(freeEntry, sysList, sysListEntryId, sysListEntryName);
 	}
 
+	public FileTransfer exportSysLists(Integer[] listIds) throws UnsupportedEncodingException {
+		String xmlDoc = catalogRequestHandler.exportSysLists(listIds);
+		return new FileTransfer("sysList.xml", "text/xml", xmlDoc.getBytes("UTF-8"));
+	}
+
+	public void importSysLists(byte[] data) throws UnsupportedEncodingException {
+		catalogRequestHandler.importSysLists(new String(data, "UTF-8"));
+	}
+
+	
 	public List<Map<String, String>> getSysGuis(String[] guiIds) {
 		return catalogRequestHandler.getSysGuis(guiIds);
 	}

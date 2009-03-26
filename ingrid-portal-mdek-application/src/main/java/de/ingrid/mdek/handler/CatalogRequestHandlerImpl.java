@@ -14,6 +14,7 @@ import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
 import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.SysList;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
@@ -91,6 +92,50 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 			MdekErrorUtils.handleError(response);
 		}
 	}
+
+
+	// Returns a xml document as string containing the lists for all listIds
+	// If listIds is null, all existing sysLists will be exported
+	public String exportSysLists(Integer[] listIds) {
+		if (listIds == null) {
+			listIds = getAllSysListIds();
+		}
+
+		IngridDocument response = mdekCallerCatalog.getSysLists(
+				connectionFacade.getCurrentPlugId(),
+				listIds,
+				null,
+				MdekSecurityUtils.getCurrentUserUuid());
+
+
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+		if (result != null) {
+			return MdekCatalogUtils.convertSysListsToXML(result);
+
+		} else {
+			MdekErrorUtils.handleError(response);
+			return null;
+		}
+	}
+
+	// Convert the given xml doc to List<SysList> via xstream and store
+	// the sysLists in the db
+	public void importSysLists(String xmlDoc) {
+		List<SysList> sysLists = MdekCatalogUtils.convertXMLToSysLists(xmlDoc);
+		if (sysLists != null) {
+			for (SysList sysList : sysLists) {
+				log.debug("store sysList with id: " + sysList.getId());
+				storeSysList(
+						sysList.getId(),
+						sysList.getMaintainable(),
+						sysList.getDefaultIndex(),
+						sysList.getEntryIds(),
+						sysList.getDeEntries(),
+						sysList.getEnEntries());
+			}
+		}
+	}
+
 
 	public List<Map<String, String>> getSysGuis(String[] guiIds) {
 		IngridDocument response = mdekCallerCatalog.getSysGuis(connectionFacade.getCurrentPlugId(), guiIds, MdekSecurityUtils.getCurrentUserUuid());
