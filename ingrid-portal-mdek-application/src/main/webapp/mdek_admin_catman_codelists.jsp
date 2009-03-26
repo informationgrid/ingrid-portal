@@ -839,17 +839,18 @@ scriptScope.importCodelists = function() {
 	deferred.addCallback(function(inputFile) {
 
 		if (inputFile) {
-			CatalogService.importSysLists(inputFile, {
-				callback: function() {
-					dialog.show(message.get("general.hint"), message.get("dialog.admin.catalog.management.codelist.importSuccess"), dialog.INFO);				
-				},
-				errorHandler: function(errMsg, err) {
-					dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), errMsg), dialog.WARNING, null, 350, 350);				
-					dojo.debug("Error: " + errMsg);
-					dojo.debugShallow(err);
-				}
+			var askUserDef = new dojo.Deferred();
+			var displayText = message.get("dialog.admin.catalog.management.codelist.importHint");
+			dialog.show(message.get("general.hint"), displayText, dialog.INFO, [
+		        { caption: message.get("general.no"),  action: function() { askUserDef.errback("CANCEL"); } },
+		    	{ caption: message.get("general.yes"), action: function() { askUserDef.callback(); } }
+			]);
+
+			askUserDef.addCallback(function() {
+				importSysLists(inputFile);
 			});
 		}
+
 	});
 
 	dialog.showPage(message.get("dialog.admin.catalog.management.codelist.selectImportFile"), "mdek_select_file_dialog.jsp", 620, 180, true, {
@@ -857,6 +858,19 @@ scriptScope.importCodelists = function() {
 		resultHandler: deferred	
 	});
 
+}
+
+function importSysLists(inputFile) {
+	CatalogService.importSysLists(inputFile, {
+		callback: function() {
+			dialog.show(message.get("general.hint"), message.get("dialog.admin.catalog.management.codelist.importSuccess"), dialog.INFO);				
+		},
+		errorHandler: function(errMsg, err) {
+			dialog.show(message.get("general.error"), dojo.string.substituteParams(message.get("dialog.generalError"), errMsg), dialog.WARNING, null, 350, 350);				
+			dojo.debug("Error: " + errMsg);
+			dojo.debugShallow(err);
+		}
+	});
 }
 
 scriptScope.exportCodelists = function() {
