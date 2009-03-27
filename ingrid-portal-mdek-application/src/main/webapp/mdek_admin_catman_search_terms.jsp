@@ -24,6 +24,7 @@ scriptScope.startSNSUpdateJob = function() {
 		preHook: showLoadingZone,
 		callback: function() {
 			setTimeout("refreshSNSUpdateProcessInfo()", 1000);
+			dialog.show(message.get("general.hint"), message.get("dialog.admin.catalog.management.searchTerms.jobStartHint"), dialog.INFO);
 		},
 		errorHandler: function(errMsg, err) {
 			dojo.debug("error: " + errMsg);

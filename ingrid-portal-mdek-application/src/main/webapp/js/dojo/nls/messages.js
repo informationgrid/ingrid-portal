@@ -183,6 +183,7 @@
 	"dialog.admin.catalog.management.additionalFields.store":"All changes will be stored. If fields have been deleted, all containing data will be deleted as well<br>Do you want to continue?",
 	"dialog.admin.catalog.management.additionalFields.storeSuccess":"The additional fields were stored successfully.",
 	"dialog.admin.management.duplicates.success":"The object name was updated successfully.",
+	"dialog.admin.catalog.management.searchTerms.jobStartHint":"SNS Update Job is now running. Please update the index after the job is done (Menu 'Codelists -> Reindex')!",
 	"dialog.admin.catalog.management.searchTerms.updateLastProcessInfo":"Information about the last update process:",
 	"dialog.admin.catalog.management.searchTerms.updateCurrentProcessInfo":"Information about the current update process:",
 	"dialog.admin.catalog.management.searchTerms.stateSNSUpdate":"Query SNS",

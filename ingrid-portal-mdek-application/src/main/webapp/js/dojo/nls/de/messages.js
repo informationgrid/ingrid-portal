@@ -186,6 +186,7 @@
 	"dialog.admin.catalog.management.codelist.importSuccess":"Der Importvorgang wurde erfolgreich abgeschlossen.",
 	"dialog.admin.catalog.management.additionalFields.store":"Alle &Auml;nderungen werden gespeichert. Falls Felder entfernt wurden, werden auch alle Daten aus diesen Feldern gel&ouml;scht.<br>M&ouml;chten Sie mit der Aktion fortfahren?",
 	"dialog.admin.catalog.management.additionalFields.storeSuccess":"Die zus&auml;tzlichen Felder wurden erfolgreich gespeichert.",
+	"dialog.admin.catalog.management.searchTerms.jobStartHint":"Der SNS Update Job wurde gestartet. Bitte f&uuml;hren Sie nach erfolgreichem Update eine Reindexierung durch (Menu 'Auswahl-/ISO-Codelistenpflege -> Reindexierung')!",
 	"dialog.admin.catalog.management.searchTerms.updateLastProcessInfo":"Informationen zum letzten Prozess:",
 	"dialog.admin.catalog.management.searchTerms.updateCurrentProcessInfo":"Informationen zum laufenden Prozess:",
 	"dialog.admin.catalog.management.searchTerms.stateSNSUpdate":"SNS Abfrage",
