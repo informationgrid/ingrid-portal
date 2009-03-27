@@ -94,69 +94,75 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 	@Override
 	protected void executeInternal(JobExecutionContext jobExecutionContext)
 			throws JobExecutionException {
-		
-		JobDataMap mergedJobDataMap = jobExecutionContext.getMergedJobDataMap();
-		String[] changedTopics = (String[]) mergedJobDataMap.get("CHANGED_TOPICS");
-		String[] newTopics = (String[]) mergedJobDataMap.get("NEW_TOPICS");
-		String[] expiredTopics = (String[]) mergedJobDataMap.get("EXPIRED_TOPICS");
-		SNSService snsService = (SNSService) mergedJobDataMap.get("SNS_SERVICE");
-		ConnectionFacade connectionFacade = (ConnectionFacade) mergedJobDataMap.get("CONNECTION_FACADE");
-		String plugId = mergedJobDataMap.getString("PLUG_ID");
-		String userId = mergedJobDataMap.getString("USER_ID");
-		List<String> freeTerms = fetchFreeTopics(connectionFacade.getMdekCallerCatalog(), plugId, userId);
 
-		log.debug("Starting sns update...");
-		long startTime = System.currentTimeMillis();
-
-		// Get the list of SNS Topics from the backend
-		// Filter the list of sns topics according to the changed/expired lists
-		// Update all topics that were found.
-		// Changed topics are updated, expired topics are removed and added as free terms
-		List<SNSTopic> snsTopics = fetchSNSTopics(connectionFacade.getMdekCallerCatalog(), plugId, userId);
-		List<SNSTopic> snsTopicsToChange = filter(snsTopics, changedTopics);
-
-		jobExecutionContext.put("NUM_PROCESSED", new Integer(0));
-		jobExecutionContext.put("NUM_TOTAL", snsTopicsToChange.size() + freeTerms.size());
+		try {
+			JobDataMap mergedJobDataMap = jobExecutionContext.getMergedJobDataMap();
+			String[] changedTopics = (String[]) mergedJobDataMap.get("CHANGED_TOPICS");
+			String[] newTopics = (String[]) mergedJobDataMap.get("NEW_TOPICS");
+			String[] expiredTopics = (String[]) mergedJobDataMap.get("EXPIRED_TOPICS");
+			SNSService snsService = (SNSService) mergedJobDataMap.get("SNS_SERVICE");
+			ConnectionFacade connectionFacade = (ConnectionFacade) mergedJobDataMap.get("CONNECTION_FACADE");
+			String plugId = mergedJobDataMap.getString("PLUG_ID");
+			String userId = mergedJobDataMap.getString("USER_ID");
+			List<String> freeTerms = fetchFreeTopics(connectionFacade.getMdekCallerCatalog(), plugId, userId);
+	
+			log.debug("Starting sns update...");
+			long startTime = System.currentTimeMillis();
+	
+			// Get the list of SNS Topics from the backend
+			// Filter the list of sns topics according to the changed/expired lists
+			// Update all topics that were found.
+			// Changed topics are updated, expired topics are removed and added as free terms
+			List<SNSTopic> snsTopics = fetchSNSTopics(connectionFacade.getMdekCallerCatalog(), plugId, userId);
+			List<SNSTopic> snsTopicsToChange = filter(snsTopics, changedTopics);
+	
+			jobExecutionContext.put("NUM_PROCESSED", new Integer(0));
+			jobExecutionContext.put("NUM_TOTAL", snsTopicsToChange.size() + freeTerms.size());
+	
+/*
+			// TODO remove. Inserted for testing purpose
+			if (snsTopicsToChange != null && snsTopicsToChange.size() > 10)
+				snsTopicsToChange = snsTopicsToChange.subList(0, 10);
+*/
+	
+			if (changedTopics != null) {
+				log.debug("total changed topics: " + changedTopics.length);
+			}
+			log.debug("changed topic matches: " + snsTopicsToChange.size());
+			List<SNSTopic> snsTopicsResult = updateChangedTopics(snsService, snsTopicsToChange, jobExecutionContext);
+	
+			List<SNSTopic> snsTopicsToExpire = filter(snsTopics, expiredTopics);
+			if (expiredTopics != null) {
+				log.debug("total expired topics: " + expiredTopics.length);
+			}
+			log.debug("expired topic matches: " + snsTopicsToExpire.size());
+	
+			log.debug("total free terms: " + freeTerms.size());
 
 /*
-		// TODO remove. Inserted for testing purpose
-		if (snsTopicsToChange != null && snsTopicsToChange.size() > 10)
-			snsTopicsToChange = snsTopicsToChange.subList(0, 10);
+			// TODO remove. Inserted for testing purpose
+			if (freeTerms != null && freeTerms.size() > 10)
+				freeTerms = freeTerms.subList(0, 10);
 */
 
-		if (changedTopics != null) {
-			log.debug("total changed topics: " + changedTopics.length);
-		}
-		log.debug("changed topic matches: " + snsTopicsToChange.size());
-		List<SNSTopic> snsTopicsResult = updateChangedTopics(snsService, snsTopicsToChange, jobExecutionContext);
-
-		List<SNSTopic> snsTopicsToExpire = filter(snsTopics, expiredTopics);
-		if (expiredTopics != null) {
-			log.debug("total expired topics: " + expiredTopics.length);
-		}
-		log.debug("expired topic matches: " + snsTopicsToExpire.size());
-
-		log.debug("total free terms: " + freeTerms.size());
-/*
-		// TODO remove. Inserted for testing purpose
-		if (freeTerms != null && freeTerms.size() > 10)
-			freeTerms = freeTerms.subList(0, 10);
-*/
-
-		List<SNSTopic> freeTermsResult = updateFreeTerms(snsService, freeTerms, jobExecutionContext);
-
-		long endTime = System.currentTimeMillis();
-		log.debug("SNS Update took "+(endTime - startTime)+" ms.");
-
-		if (!cancelJob) {
-			JobResult jobResult = createJobResult(snsTopicsToChange, snsTopicsResult, snsTopicsToExpire, freeTerms, freeTermsResult);
-			jobExecutionContext.setResult(jobResult);
-
-			connectionFacade.getMdekCallerCatalog().updateSearchTerms(
-					plugId,
-					MdekMapper.mapFromThesTermTable(jobResult.getOldTopics()),
-					MdekMapper.mapFromThesTermTable(jobResult.getNewTopics()),
-					userId);
+			List<SNSTopic> freeTermsResult = updateFreeTerms(snsService, freeTerms, jobExecutionContext);
+	
+			long endTime = System.currentTimeMillis();
+			log.debug("SNS Update took "+(endTime - startTime)+" ms.");
+	
+			if (!cancelJob) {
+				JobResult jobResult = createJobResult(snsTopicsToChange, snsTopicsResult, snsTopicsToExpire, freeTerms, freeTermsResult);
+				jobExecutionContext.setResult(jobResult);
+	
+				connectionFacade.getMdekCallerCatalog().updateSearchTerms(
+						plugId,
+						MdekMapper.mapFromThesTermTable(jobResult.getOldTopics()),
+						MdekMapper.mapFromThesTermTable(jobResult.getNewTopics()),
+						userId);
+			}
+		} catch (Exception e) {
+			log.error("Error during SNS Update.", e);
+			throw new JobExecutionException(e);
 		}
 	}
 

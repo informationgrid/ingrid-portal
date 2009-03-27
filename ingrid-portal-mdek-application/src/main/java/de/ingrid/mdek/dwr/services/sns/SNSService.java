@@ -430,32 +430,37 @@ public class SNSService {
     	ArrayList<SNSTopic> parents = new ArrayList<SNSTopic>();
     	ArrayList<SNSTopic> children = new ArrayList<SNSTopic>();
 
-	    for (Topic topic : snsResults) {
-    		SNSTopic t = convertTopicToSNSTopic(topic);
-        	log.debug("Found: " + topic);
+    	if (snsResults != null) {
+		    for (Topic topic : snsResults) {
+	    		SNSTopic t = convertTopicToSNSTopic(topic);
+	        	log.debug("Found: " + topic);
+	
+	        	String assoc = getAssociationFromTopic(topic);
+	    		if (assoc.equals("widerTermMember")) {
+	    			parents.add(t);
+	
+	    		} else if (assoc.equals("narrowerTermMember")) {
+	    			children.add(t);
+	    			
+	    		} else if (assoc.equals("synonymMember")) {
+	    			synonyms.add(t);
+	
+	    		} else if (assoc.equals("descriptorMember")) {
+	    			return t;
+	
+	    		}
+		    }
 
-        	String assoc = getAssociationFromTopic(topic);
-    		if (assoc.equals("widerTermMember")) {
-    			parents.add(t);
+			SNSTopic result = new SNSTopic(Type.DESCRIPTOR, Source.UMTHES, topicId, null, null);
+		    result.setChildren(children);
+		    result.setParents(parents);
+		    result.setSynonyms(synonyms);
+	
+		    return result;
 
-    		} else if (assoc.equals("narrowerTermMember")) {
-    			children.add(t);
-    			
-    		} else if (assoc.equals("synonymMember")) {
-    			synonyms.add(t);
-
-    		} else if (assoc.equals("descriptorMember")) {
-    			return t;
-
-    		}
-	    }
-
-	    SNSTopic result = new SNSTopic(Type.DESCRIPTOR, Source.UMTHES, topicId, null, null);
-	    result.setChildren(children);
-	    result.setParents(parents);
-	    result.setSynonyms(synonyms);
-
-	    return result;
+    	} else {
+    		return null;
+    	}
     }
 
     

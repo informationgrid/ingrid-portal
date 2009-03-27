@@ -1237,27 +1237,30 @@ public class MdekMapper implements DataMapperInterface {
 		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (snsList != null) {
 			for (SNSTopic t : snsList) {
-				IngridDocument res = new IngridDocument();
-				switch(t.getSource()) {
-					case GEMET:
-						res.put(MdekKeys.TERM_TYPE, SearchtermType.GEMET.getDbValue());
-						res.put(MdekKeys.TERM_NAME, t.getTitle());
-						res.put(MdekKeys.TERM_SNS_ID, t.getTopicId());
-						res.put(MdekKeys.TERM_GEMET_ID, t.getGemetId());
-						break;
-
-					case UMTHES:
-						res.put(MdekKeys.TERM_TYPE, SearchtermType.UMTHES.getDbValue());
-						res.put(MdekKeys.TERM_NAME, t.getTitle());
-						res.put(MdekKeys.TERM_SNS_ID, t.getTopicId());
-						break;
-
-					case FREE:
-						res.put(MdekKeys.TERM_TYPE, SearchtermType.FREI.getDbValue());
-						res.put(MdekKeys.TERM_NAME, t.getTitle());
-						break;
-					default:
-						break;
+				IngridDocument res = null;
+				if (t != null) {
+					res = new IngridDocument();
+					switch(t.getSource()) {
+						case GEMET:
+							res.put(MdekKeys.TERM_TYPE, SearchtermType.GEMET.getDbValue());
+							res.put(MdekKeys.TERM_NAME, t.getTitle());
+							res.put(MdekKeys.TERM_SNS_ID, t.getTopicId());
+							res.put(MdekKeys.TERM_GEMET_ID, t.getGemetId());
+							break;
+	
+						case UMTHES:
+							res.put(MdekKeys.TERM_TYPE, SearchtermType.UMTHES.getDbValue());
+							res.put(MdekKeys.TERM_NAME, t.getTitle());
+							res.put(MdekKeys.TERM_SNS_ID, t.getTopicId());
+							break;
+	
+						case FREE:
+							res.put(MdekKeys.TERM_TYPE, SearchtermType.FREI.getDbValue());
+							res.put(MdekKeys.TERM_NAME, t.getTitle());
+							break;
+						default:
+							break;
+					}
 				}
 				resultList.add(res);
 			}
