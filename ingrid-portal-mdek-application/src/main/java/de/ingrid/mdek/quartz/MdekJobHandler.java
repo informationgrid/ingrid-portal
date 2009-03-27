@@ -175,17 +175,12 @@ public class MdekJobHandler implements BeanFactoryAware {
 	}
 
 	private SNSUpdateJobInfoBean getSNSUpdateJobResult() {
-/*
 		IMdekCallerCatalog mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
 		IngridDocument response = mdekCallerCatalog.getJobInfo(
 				connectionFacade.getCurrentPlugId(),
-				JobType.,
+				de.ingrid.mdek.job.IJob.JobType.UPDATE_SEARCHTERMS,
 				MdekSecurityUtils.getCurrentUserUuid());
 
-		return MdekCatalogUtils.extractUrlJobInfoFromResponse(response);
-*/
-		// TODO Return job info from the backend
-		IngridDocument response = new IngridDocument();
 		return MdekCatalogUtils.extractSNSUpdateJobInfoFromResponse(response);
 	}
 

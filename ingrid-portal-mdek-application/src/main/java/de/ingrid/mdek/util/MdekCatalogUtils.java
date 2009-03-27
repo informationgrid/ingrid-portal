@@ -2,14 +2,12 @@ package de.ingrid.mdek.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
 
 import com.thoughtworks.xstream.XStream;
@@ -539,27 +537,34 @@ public class MdekCatalogUtils {
 
 	public static SNSUpdateJobInfoBean extractSNSUpdateJobInfoFromResponse(
 			IngridDocument response) {
-
 		SNSUpdateJobInfoBean jobInfo = new SNSUpdateJobInfoBean();
-		jobInfo.setStartTime(new Date((long) (System.currentTimeMillis() - 1000 * 60 * 15 * Math.random())));
-		jobInfo.setEndTime(new Date());
-
-		int numEntities = (int) (4000 * Math.random());
-		jobInfo.setNumEntities(numEntities);
-
-		List<SNSTopicUpdateResult> snsUpdateResults = new ArrayList<SNSTopicUpdateResult>();
-		for (int i = 0; i < numEntities; ++i) {
-			SNSTopicUpdateResult snsUpdateResult = new SNSTopicUpdateResult();
-			snsUpdateResult.setAction(RandomStringUtils.randomAlphabetic((int) (40 * Math.random())));
-			snsUpdateResult.setAddresses((int) (100 * Math.random()));
-			snsUpdateResult.setObjects((int) (100 * Math.random()));
-			snsUpdateResult.setTerm(RandomStringUtils.randomAlphabetic((int) (20 * Math.random())));
-			snsUpdateResult.setType(Math.random() > 0.5 ? Math.random() > 0.5 ? "UMTHES" : "GEMET" : "FREE");
-			snsUpdateResults.add(snsUpdateResult);
-		}
-
-		jobInfo.setSnsUpdateResults(snsUpdateResults);
+		addGeneralJobInfoFromResponse(response, jobInfo);
+		addSNSUpdateJobInfoFromResponse(response, jobInfo);
 		return jobInfo;
+	}
+
+
+	private static void addSNSUpdateJobInfoFromResponse(IngridDocument response, SNSUpdateJobInfoBean jobInfo) {
+		IngridDocument snsResult = MdekUtils.getResultFromResponse(response);
+		if (snsResult != null) {
+			jobInfo.setNumProcessedEntities((Integer) snsResult.get(MdekKeys.JOBINFO_NUM_ENTITIES));
+			jobInfo.setNumEntities((Integer) snsResult.get(MdekKeys.JOBINFO_TOTAL_NUM_ENTITIES));
+			jobInfo.setDescription((String) snsResult.get(MdekKeys.JOBINFO_ENTITY_TYPE));
+
+			List<Map<String, Object>> updateMessages = (List<Map<String, Object>>) snsResult.get(MdekKeys.JOBINFO_TERMS_UPDATED);
+
+			List<SNSTopicUpdateResult> snsUpdateResults = new ArrayList<SNSTopicUpdateResult>();
+			if (updateMessages != null) {
+				for (Map<String, Object> updateMessage : updateMessages) {
+					snsUpdateResults.add(new SNSTopicUpdateResult(updateMessage));
+				}
+			}
+
+			jobInfo.setSnsUpdateResults(snsUpdateResults);
+
+		} else {
+			MdekErrorUtils.handleError(response);
+		}
 	}
 
 	public static SNSUpdateJobInfoBean extractSNSLocationpUdateJobInfoFromResponse(

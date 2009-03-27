@@ -185,6 +185,7 @@
 	"dialog.admin.management.duplicates.success":"The object name was updated successfully.",
 	"dialog.admin.catalog.management.searchTerms.updateLastProcessInfo":"Information about the last update process:",
 	"dialog.admin.catalog.management.searchTerms.updateCurrentProcessInfo":"Information about the current update process:",
+	"dialog.admin.catalog.management.searchTerms.stateSNSUpdate":"Query SNS",
 	"dialog.admin.catalog.management.locations.updateLastProcessInfo":"Information about the last update process:",
 	"dialog.admin.catalog.management.locations.updateCurrentProcessInfo":"Information about the current update process:",
 	"dialog.admin.management.urls.lastProcessInfo":"Information about the last process:",

@@ -188,6 +188,7 @@
 	"dialog.admin.catalog.management.additionalFields.storeSuccess":"Die zus&auml;tzlichen Felder wurden erfolgreich gespeichert.",
 	"dialog.admin.catalog.management.searchTerms.updateLastProcessInfo":"Informationen zum letzten Prozess:",
 	"dialog.admin.catalog.management.searchTerms.updateCurrentProcessInfo":"Informationen zum laufenden Prozess:",
+	"dialog.admin.catalog.management.searchTerms.stateSNSUpdate":"SNS Abfrage",
 	"dialog.admin.catalog.management.locations.updateLastProcessInfo":"Informationen zum letzten Prozess:",
 	"dialog.admin.catalog.management.locations.updateCurrentProcessInfo":"Informationen zum laufenden Prozess:",
 	"dialog.admin.management.duplicates.success":"Der Objektname wurde erfolgreich aktualisiert.",

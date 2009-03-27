@@ -67,6 +67,7 @@ function updateSNSUpdateJobInfo(jobInfo) {
 
 		dojo.byId("snsUpdateProcessInfo").innerHTML = message.get("dialog.admin.catalog.management.searchTerms.updateLastProcessInfo");
 		dojo.html.setVisibility("cancelSNSUpdateProcessButton", false);
+		dojo.html.setVisibility("snsUpdateProcessStatusRow", false);
 
 		if (jobInfo.startTime == null) {
 			// Job was never executed
@@ -91,7 +92,16 @@ function updateSNSUpdateJobInfo(jobInfo) {
 		showLoadingZone();
 
 		dojo.html.setVisibility("cancelSNSUpdateProcessButton", true);
+		dojo.html.setVisibility("snsUpdateProcessStatusRow", true);
 		dojo.byId("snsUpdateProcessInfo").innerHTML = message.get("dialog.admin.catalog.management.searchTerms.updateCurrentProcessInfo");
+
+		if (jobInfo.description != null && jobInfo.description.indexOf("snsUpdateJob") != -1) { 
+			dojo.byId("snsUpdateProcessStatus").innerHTML = message.get("dialog.admin.catalog.management.searchTerms.stateSNSUpdate");
+
+		} else {
+			dojo.byId("snsUpdateProcessStatus").innerHTML = jobInfo.description;
+		}
+
 		dojo.byId("snsUpdateProcessStart").innerHTML = jobInfo.startTime;
 		dojo.byId("snsUpdateProcessEnd").innerHTML = "";
 		dojo.byId("snsUpdateProcessNumEntities").innerHTML = jobInfo.numProcessedEntities + " / " + jobInfo.numEntities;
@@ -172,6 +182,10 @@ scriptScope.downloadAsCSV = function() {
 						<a href="javascript:toggleInfo('searchTermsInfo');" title="Info aufklappen"><img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a>
 						<div id="searchTermsInfoContent">
 							<table cellspacing="0">
+								<tr id="snsUpdateProcessStatusRow">
+									<td><fmt:message key="dialog.admin.catalog.management.searchTerms.status" /></td>
+									<td id="snsUpdateProcessStatus"></td>
+								</tr>
 								<tr>
 									<td><fmt:message key="dialog.admin.catalog.management.searchTerms.startTime" /></td>
 									<td id="snsUpdateProcessStart"></td>
@@ -210,9 +224,9 @@ scriptScope.downloadAsCSV = function() {
 						<table id="resultListThesaurusTable" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable w964 relativePos">
 							<thead>
 								<tr>
-									<th field="term" dataType="String" width="354" noSort="true" sort="asc"><fmt:message key="dialog.admin.catalog.management.searchTerms.description" /></th>
-									<th field="type" dataType="String" width="200" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.type" /></th>
-									<th field="action" dataType="String" width="250" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.action" /></th>
+									<th field="term" dataType="String" width="254" noSort="true" sort="asc"><fmt:message key="dialog.admin.catalog.management.searchTerms.description" /></th>
+									<th field="type" dataType="String" width="100" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.type" /></th>
+									<th field="action" dataType="String" width="450" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.action" /></th>
 									<th field="objects" dataType="String" width="80" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.objects" /></th>
 									<th field="addresses" dataType="String" width="80" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.addresses" /></th>
 								</tr>

@@ -1233,7 +1233,7 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private List<IngridDocument> mapFromThesTermTable(List<SNSTopic> snsList) {
+	public static List<IngridDocument> mapFromThesTermTable(List<SNSTopic> snsList) {
 		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (snsList != null) {
 			for (SNSTopic t : snsList) {
