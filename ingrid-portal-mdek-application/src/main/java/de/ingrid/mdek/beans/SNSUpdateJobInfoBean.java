@@ -34,7 +34,7 @@ public class SNSUpdateJobInfoBean extends JobInfoBean {
 	public List<String[]> getEntries() {
 		List<String[]> entries = new ArrayList<String[]>();
 
-		entries.add(new String[] { "Term", "Typ", "Aktion", "Objekte", "Adressen" });
+		entries.add(new String[] { "Titel", "Alternativer Titel", "Typ", "Aktion", "Objekte", "Adressen" });
 
 		if (snsUpdateResults != null) {
 			for (SNSTopicUpdateResult snsResult : snsUpdateResults) {

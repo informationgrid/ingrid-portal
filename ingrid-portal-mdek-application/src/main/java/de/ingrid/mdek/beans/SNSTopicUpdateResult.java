@@ -7,7 +7,8 @@ import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtils.SearchtermType;
 
 public class SNSTopicUpdateResult {
-	private String term;
+	private String title;
+	private String alternateTitle;
 	private String type;
 	private String action;
 	private int objects;
@@ -26,14 +27,21 @@ public class SNSTopicUpdateResult {
 		SearchtermType searchTermType = EnumUtil.mapDatabaseToEnumConst(SearchtermType.class, (String) updateMessage.get(MdekKeys.TERM_TYPE));
 		type = searchTermType.toString();
 		action = (String) updateMessage.get(MdekKeys.JOBINFO_MESSAGES);
-		term = (String) updateMessage.get(MdekKeys.TERM_NAME);
+		title = (String) updateMessage.get(MdekKeys.TERM_NAME);
+		alternateTitle = (String) updateMessage.get(MdekKeys.TERM_ALTERNATE_NAME);
 	}
 
-	public String getTerm() {
-		return term;
+	public String getTitle() {
+		return title;
 	}
-	public void setTerm(String term) {
-		this.term = term;
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getAlternateTitle() {
+		return alternateTitle;
+	}
+	public void setAlternateTitle(String alternateTitle) {
+		this.alternateTitle = alternateTitle;
 	}
 	public String getType() {
 		return type;
@@ -61,6 +69,6 @@ public class SNSTopicUpdateResult {
 	}
 
 	public String[] toStringArray() {
-		return new String[] { term, type, action, String.valueOf(objects), String.valueOf(addresses) };
+		return new String[] { title, alternateTitle, type, action, String.valueOf(objects), String.valueOf(addresses) };
 	}
 }

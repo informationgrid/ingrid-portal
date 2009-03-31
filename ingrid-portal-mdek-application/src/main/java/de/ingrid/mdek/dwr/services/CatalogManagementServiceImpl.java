@@ -221,7 +221,7 @@ public class CatalogManagementServiceImpl {
 		CSVWriter csvWriter = new CSVWriter(writer, ';');
 		csvWriter.writeAll( getSNSUpdateJobInfo().getEntries() );
 
-		return new FileTransfer("snsUpdate.csv", "text/comma-separated-values", writer.toString().getBytes("UTF-8"));
+		return new FileTransfer("snsUpdate.csv", "text/comma-separated-values", writer.toString().getBytes("ISO-8859-1"));
 	}
 
 
@@ -248,7 +248,7 @@ public class CatalogManagementServiceImpl {
 		CSVWriter csvWriter = new CSVWriter(writer, ';');
 		csvWriter.writeAll( getSNSLocationUpdateJobInfo().getEntries() );
 
-		return new FileTransfer("snsLocationUpdate.csv", "text/comma-separated-values", writer.toString().getBytes("UTF-8"));
+		return new FileTransfer("snsLocationUpdate.csv", "text/comma-separated-values", writer.toString().getBytes("ISO-8859-1"));
 	}
 
 

@@ -430,7 +430,7 @@ public class SNSService {
     	ArrayList<SNSTopic> parents = new ArrayList<SNSTopic>();
     	ArrayList<SNSTopic> children = new ArrayList<SNSTopic>();
 
-    	if (snsResults != null) {
+    	if (snsResults != null && snsResults.length != 0) {
 		    for (Topic topic : snsResults) {
 	    		SNSTopic t = convertTopicToSNSTopic(topic);
 	        	log.debug("Found: " + topic);

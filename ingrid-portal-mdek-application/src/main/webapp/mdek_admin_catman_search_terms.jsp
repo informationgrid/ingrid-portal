@@ -83,6 +83,7 @@ function updateSNSUpdateJobInfo(jobInfo) {
 		}
 
 		var numTerms = jobInfo.snsUpdateResults.length;
+		UtilList.addSNSTopicLabels(jobInfo.snsUpdateResults);
 		snsUpdateResult = jobInfo.snsUpdateResults;
 
 		pageNav.reset();
@@ -225,7 +226,7 @@ scriptScope.downloadAsCSV = function() {
 						<table id="resultListThesaurusTable" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable w964 relativePos">
 							<thead>
 								<tr>
-									<th field="term" dataType="String" width="254" noSort="true" sort="asc"><fmt:message key="dialog.admin.catalog.management.searchTerms.description" /></th>
+									<th field="label" dataType="String" width="254" noSort="true" sort="asc"><fmt:message key="dialog.admin.catalog.management.searchTerms.description" /></th>
 									<th field="type" dataType="String" width="100" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.type" /></th>
 									<th field="action" dataType="String" width="450" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.action" /></th>
 									<th field="objects" dataType="String" width="80" noSort="true"><fmt:message key="dialog.admin.catalog.management.searchTerms.objects" /></th>
