@@ -2,6 +2,7 @@ package de.ingrid.mdek.quartz.jobs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -209,16 +210,25 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 				continue;
 			}
 
-			// Comare: type, source, topicId, title, gemetId
-			if (oldTopic.getType() == newTopic.getType() &&
-					oldTopic.getSource() == newTopic.getSource() &&
-					oldTopic.getTopicId().equals(newTopic.getTopicId()) &&
-					oldTopic.getTitle().equals(newTopic.getTitle()) &&
-					(oldTopic.getGemetId() == null || oldTopic.getGemetId().equals(newTopic.getGemetId()))) {
+			if (isEqual(oldTopic, newTopic)) {
 				oldTopicsIt.remove();
 				newTopicsIt.remove();
 			}
 		}
+	}
+
+	// Comare: type, source, topicId, title, alternate title, gemetId
+	private static boolean isEqual(SNSTopic topicA, SNSTopic topicB) {
+		return (topicA.getType() == topicB.getType() &&
+				topicA.getSource() == topicB.getSource() &&
+				isEqual(topicA.getTopicId(), topicB.getTopicId()) &&
+				isEqual(topicA.getTitle(), topicB.getTitle()) &&
+				isEqual(topicA.getAlternateTitle(), topicB.getAlternateTitle()) &&
+				isEqual(topicA.getGemetId(), topicB.getGemetId()));
+	}
+
+	private static boolean isEqual(String s1, String s2) {
+		return s1 != null ? s1.equals(s2) : s1 == s2;
 	}
 
 	private static void removeUnknownTerms(List<String> freeTerms, List<SNSTopic> topics) {
@@ -273,7 +283,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {
-			return mapToSNSTopic((List<IngridDocument>) result.get(MdekKeys.SUBJECT_TERMS));
+			return MdekMapper.mapToThesTermsTable((List<HashMap<String, Object>>) result.get(MdekKeys.SUBJECT_TERMS));
 
 		} else {
 			MdekErrorUtils.handleError(response);
@@ -281,36 +291,6 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		}
 	}
 
-	private static List<SNSTopic> mapToSNSTopic(List<IngridDocument> subjectTerms) {
-		List<SNSTopic> resultList = new ArrayList<SNSTopic>();
-		if (subjectTerms == null)
-			return resultList;
-
-		for (IngridDocument term : subjectTerms) {
-			SNSTopic t = new SNSTopic();
-			t.setType(Type.DESCRIPTOR);
-			String type = (String) term.get(MdekKeys.TERM_TYPE);
-			if (type.equalsIgnoreCase(SearchtermType.GEMET.getDbValue())) {
-				t.setSource(Source.GEMET);
-				t.setTitle((String) term.get(MdekKeys.TERM_NAME));
-				t.setTopicId((String) term.get(MdekKeys.TERM_SNS_ID));
-				t.setGemetId((String) term.get(MdekKeys.TERM_GEMET_ID));
-
-			} else if (type.equalsIgnoreCase(SearchtermType.UMTHES.getDbValue())) {
-				t.setSource(Source.UMTHES);
-				t.setTitle((String) term.get(MdekKeys.TERM_NAME));
-				t.setTopicId((String) term.get(MdekKeys.TERM_SNS_ID));
-
-			} else if (type.equalsIgnoreCase(SearchtermType.FREI.getDbValue())) {
-				t.setSource(Source.FREE);
-				t.setTitle((String) term.get(MdekKeys.TERM_NAME));
-			}
-			resultList.add(t);
-		}
-		return resultList;
-	}
-
-	
 	private List<SNSTopic> filter(List<SNSTopic> snsTopics, String[] topicIds) {
 		if (snsTopics != null && topicIds != null) {
 			List<SNSTopic> resultList = new ArrayList<SNSTopic>();

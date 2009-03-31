@@ -40,6 +40,7 @@ import de.ingrid.mdek.beans.object.UsageLimitationBean;
 import de.ingrid.mdek.beans.object.VectorFormatDetailsBean;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
+import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
 import de.ingrid.utils.IngridDocument;
 import edu.emory.mathcs.backport.java.util.Arrays;
 
@@ -1244,6 +1245,7 @@ public class MdekMapper implements DataMapperInterface {
 						case GEMET:
 							res.put(MdekKeys.TERM_TYPE, SearchtermType.GEMET.getDbValue());
 							res.put(MdekKeys.TERM_NAME, t.getTitle());
+							res.put(MdekKeys.TERM_ALTERNATE_NAME, t.getAlternateTitle());
 							res.put(MdekKeys.TERM_SNS_ID, t.getTopicId());
 							res.put(MdekKeys.TERM_GEMET_ID, t.getGemetId());
 							break;
@@ -1702,16 +1704,18 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private List<SNSTopic> mapToThesTermsTable(List<HashMap<String, Object>> topicList) {
+	public static List<SNSTopic> mapToThesTermsTable(List<HashMap<String, Object>> topicList) {
 		List<SNSTopic> resultList = new ArrayList<SNSTopic>();
 		if (topicList == null)
 			return resultList;
 		for (HashMap<String, Object> topic : topicList) {
 			SNSTopic t = new SNSTopic();
+			t.setType(Type.DESCRIPTOR);
 			String type = (String) topic.get(MdekKeys.TERM_TYPE);
 			if (type.equalsIgnoreCase(SearchtermType.GEMET.getDbValue())) {
 				t.setSource(Source.GEMET);
 				t.setTitle((String) topic.get(MdekKeys.TERM_NAME));
+				t.setAlternateTitle((String) topic.get(MdekKeys.TERM_ALTERNATE_NAME));
 				t.setTopicId((String) topic.get(MdekKeys.TERM_SNS_ID));
 				t.setGemetId((String) topic.get(MdekKeys.TERM_GEMET_ID));
 

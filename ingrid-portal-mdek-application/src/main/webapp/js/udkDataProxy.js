@@ -1409,7 +1409,10 @@ udkDataProxy._setAddressData = function(nodeData)
 	dojo.widget.byId("addressCom").store.setData(UtilList.addTableIndices(nodeData.communication));
 
 	// -- Thesaurus --
-	dojo.widget.byId("thesaurusTermsAddress").store.setData(UtilList.addTableIndices(nodeData.thesaurusTermsTable));
+	
+	UtilList.addTableIndices(nodeData.thesaurusTermsTable);
+	UtilList.addSNSTopicLabels(nodeData.thesaurusTermsTable);
+	dojo.widget.byId("thesaurusTermsAddress").store.setData(nodeData.thesaurusTermsTable);
 
 	// -- Links --
 	var unpubLinkTable = nodeData.linksFromObjectTable;
@@ -1640,7 +1643,9 @@ udkDataProxy._setObjectData = function(nodeData)
 
 
   // -- Thesaurus --
-  dojo.widget.byId("thesaurusTerms").store.setData(UtilList.addTableIndices(nodeData.thesaurusTermsTable));
+  UtilList.addTableIndices(nodeData.thesaurusTermsTable);
+  UtilList.addSNSTopicLabels(nodeData.thesaurusTermsTable);
+  dojo.widget.byId("thesaurusTerms").store.setData(nodeData.thesaurusTermsTable);
   dojo.widget.byId("thesaurusTopics").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusTopicsList)));
   dojo.widget.byId("thesaurusInspire").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusInspireTermsList)));
   dojo.widget.byId("thesaurusEnvTopics").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.thesaurusEnvTopicsList)));

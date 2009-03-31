@@ -451,7 +451,7 @@ public class SNSService {
 	    		}
 		    }
 
-			SNSTopic result = new SNSTopic(Type.DESCRIPTOR, Source.UMTHES, topicId, null, null);
+			SNSTopic result = new SNSTopic(Type.DESCRIPTOR, Source.UMTHES, topicId, null, null, null);
 		    result.setChildren(children);
 		    result.setParents(parents);
 		    result.setSynonyms(synonyms);
@@ -622,11 +622,11 @@ public class SNSService {
 //    	log.debug("topic source: " + topicSource);
 //    	log.debug("topic type: " + getTypeFromTopic(topic));
     	if (Source.UMTHES.equals(topicSource)) {
-        	return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getTopicID(), topic.getTopicName(), null);
+        	return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getTopicID(), topic.getTopicName(), null, null);
 
     	} else {
     		// GEMET
-    		return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getTopicID(), getGemetTitleFromTopic(topic), getGemetIdFromTopic(topic));
+    		return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getTopicID(), getGemetTitleFromTopic(topic), topic.getTopicName(), getGemetIdFromTopic(topic));
     	}
     }
 
@@ -634,12 +634,12 @@ public class SNSService {
     	Source topicSource = getSourceFromTopic(topic);
 //    	log.debug("topic source: " + topicSource);
 //    	log.debug("topic type: " + getTypeFromTopic(topic));
+    	String topicName = topic.getBaseName(0).getBaseNameString().get_value();
     	if (Source.UMTHES.equals(topicSource)) {
-        	String topicName = topic.getBaseName(0).getBaseNameString().get_value();
-        	return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getId(), topicName, null);
+        	return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getId(), topicName, null, null);
 
     	} else {
-        	return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getId(), getGemetTitleFromTopic(topic), getGemetIdFromTopic(topic));
+        	return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getId(), getGemetTitleFromTopic(topic), topicName, getGemetIdFromTopic(topic));
     	}
     }
 

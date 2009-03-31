@@ -77,7 +77,9 @@ function initTree() {
   		});
 
   		deferred.addCallback(function(res) {
+			UtilList.addSNSTopicLabels(res);
   			for (i in res) {
+  				res[i].title = res[i].label;
   				res[i].isFolder = (res[i].children.length > 0);
 				res[i].nodeDocType = res[i].type;
   				res[i].children = [];
@@ -219,8 +221,6 @@ function displayAssociatedTopics(resultList) {
 
 	dojo.lang.forEach(resultList, function(term) {
 		if (term.type != "NON_DESCRIPTOR") {
-			var label = term.title;
-
 			var buttonLink = document.createElement("a"); 
 
 			buttonLink.onclick = function() {
@@ -234,7 +234,7 @@ function displayAssociatedTopics(resultList) {
 			var divElement = document.createElement("div");
 
 			var linkElement = document.createElement("a"); 
-			linkElement.innerHTML = term.title;
+			linkElement.innerHTML = term.label;
 
 			if (term.type == "DESCRIPTOR") {
 				dojo.html.addClass(linkElement, "resultText");
@@ -296,6 +296,7 @@ this.findTopic = function() {
 		postHook: hideLoadingZone,
 		callback:function(result) {
 			if (result) {
+				UtilList.addSNSTopicLabels(result);
 				displayAssociatedTopics(result);
 			}},
 		timeout:0,

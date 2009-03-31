@@ -106,6 +106,7 @@ function updateInputFields(topicMap) {
 	var thesaTopicList = topicMap.thesaTopics;
 	var locationTopicList = topicMap.locationTopics;
 	var eventTopicList = topicMap.eventTopics;
+	UtilList.addSNSTopicLabels(thesaTopicList);
 
 	dojo.widget.byId("assistantDescriptionCheckbox").setValue(false);
 	dojo.widget.byId("assistantHtmlContentCheckbox").setValue(false);
@@ -568,7 +569,7 @@ scriptScope.closeDialog = function() {
 	            	      <thead>
 	            		      <tr>
 	                  			<th nosort="true" field="selection" dataType="String">&nbsp;</th>
-	                  			<th nosort="true" field="title" dataType="String">&nbsp;</th>
+	                  			<th nosort="true" field="label" dataType="String">&nbsp;</th>
 	                  			<th nosort="true" field="source" dataType="String">&nbsp;</th>
 	            		      </tr>
 	            	      </thead>

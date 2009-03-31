@@ -74,7 +74,10 @@ function init() {
   		});
 
   		deferred.addCallback(function(res) {
+  			UtilList.addSNSTopicLabels(res);
   			for (i in res) {
+  				res[i]._title = res[i].title;
+  				res[i].title = res[i].label;
   				res[i].isFolder = (res[i].children.length > 0);
 				res[i].nodeDocType = res[i].type;
   				res[i].children = [];
@@ -141,8 +144,6 @@ function displaySearchResults(resultList) {
 
 	dojo.lang.forEach(resultList, function(term) {
 		if (term.type != "NON_DESCRIPTOR") {
-			var label = term.title;
-
 			var buttonLink = document.createElement("a"); 
 			buttonLink.setAttribute("id", "_resultButton_"+term.topicId);
 			buttonLink.onclick = function() {
@@ -156,7 +157,7 @@ function displaySearchResults(resultList) {
 			var divElement = document.createElement("div");
 
 			var linkElement = document.createElement("a"); 
-			linkElement.innerHTML = term.title;
+			linkElement.innerHTML = term.label;
 
 			if (term.type == "DESCRIPTOR") {
 				dojo.html.addClass(linkElement, "resultText");
@@ -320,6 +321,7 @@ findTopic = function() {
 	  	postHook: function() { hideLoadingZone(); enableUiElements(); },
 		callback:function(result) {
 			if (result) {
+				UtilList.addSNSTopicLabels(result);
 				displaySearchResults(result);
 			} else {
 //				showStatus(message.get("sns.noResultHint"));
@@ -379,6 +381,7 @@ acceptTopicList = function() {
 		if (dojo.lang.every(destStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
 			// Topic is new. Add it to the topic list
 			topic.Id = UtilStore.getNewKey(destStore);
+			topic.title = topic._title;
 			destStore.addData( topic );
 		} else {
 			// Topic already exists in the destination List
@@ -470,7 +473,7 @@ acceptTopicList = function() {
     	    <table id="thesaurusDescList" dojoType="ingrid:FilteringTable" minRows="6" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
     	      <thead>
     		      <tr>
-          			<th nosort="true" field="title" dataType="String" width="255" sort="desc">&nbsp;</th>
+          			<th nosort="true" field="label" dataType="String" width="255" sort="desc">&nbsp;</th>
     		      </tr>
     	      </thead>
     	    <tbody>

@@ -1855,7 +1855,7 @@ function hideSplash(){
 		            	    <table id="thesaurusTerms" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 		            	      <thead>
 		            		      <tr>
-		                  			<th nosort="true" field="title" dataType="String">&nbsp;</th>
+		                  			<th nosort="true" field="label" dataType="String">&nbsp;</th>
 		                  			<th nosort="true" field="source" dataType="String">&nbsp;</th>
 		            		      </tr>
 		            	      </thead>
@@ -2322,7 +2322,7 @@ function hideSplash(){
 									<table id="thesaurusTermsAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 										<thead>
 											<tr>
-												<th nosort="true" field="title" dataType="String">Term</th>
+												<th nosort="true" field="label" dataType="String">Term</th>
 												<th nosort="true" field="source" dataType="String">Source</th>
 											</tr>
 										</thead>

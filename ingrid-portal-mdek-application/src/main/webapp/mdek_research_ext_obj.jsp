@@ -289,6 +289,10 @@ this.findTopics = function() {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback:function(topics) {
+			if (topics) {
+				UtilList.addSNSTopicLabels(topics);
+			}
+
 			if (dojo.lang.some(topics, function(item) { return item.type == "DESCRIPTOR"} )) {
 				addResultTextElement(message.get("dialog.research.ext.obj.similarTerms"));
 				dojo.lang.forEach(topics, function(item){
@@ -329,7 +333,7 @@ this.addSelectedTopics = function() {
 				return;
 
 			// Otherwise add the item to the result list
-			resultStore.addData( {Id: UtilStore.getNewKey(resultStore), topicId: checkBox.id, title: checkBox.name} );
+			resultStore.addData( {Id: UtilStore.getNewKey(resultStore), topicId: checkBox.id, label: checkBox.label} );
 		}
 	});
 }
@@ -339,13 +343,13 @@ function addDescriptorCheckbox(descriptor, disableLink) {
 
 	var checkBox = dojo.widget.createWidget("checkbox", {
 			id: descriptor.topicId,
-			name: descriptor.title
+			label: descriptor.label
 		});
 
 	var divElement = document.createElement("div");
 
 	if (disableLink) {
-		var labelElement = document.createTextNode(descriptor.title);
+		var labelElement = document.createTextNode(descriptor.label);
 		resultDiv.appendChild(divElement);
 		divElement.appendChild(checkBox.domNode);
 		divElement.appendChild(labelElement);
@@ -358,7 +362,7 @@ function addDescriptorCheckbox(descriptor, disableLink) {
 	linkElement.onclick = function() {
 		findAssociatedTopics(this.descriptor);
 	}
-	linkElement.innerHTML = descriptor.title;
+	linkElement.innerHTML = descriptor.label;
 
 	resultDiv.appendChild(divElement);
 	divElement.appendChild(checkBox.domNode);
@@ -388,6 +392,13 @@ function findAssociatedTopics(descriptor) {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback:function(topic) {
+			if (topic) {
+				UtilList.addSNSTopicLabels( [topic] );
+				UtilList.addSNSTopicLabels( topic.synonyms );
+				UtilList.addSNSTopicLabels( topic.parents );
+				UtilList.addSNSTopicLabels( topic.children );
+			}
+
 			if (topic.topicId != descriptor.topicId) {
 				addResultTextElement(message.get("dialog.research.ext.obj.synonym"));
 				addDescriptorCheckbox(descriptor, true);
@@ -723,7 +734,7 @@ function hideLoadingZone() {
 	      	    <table id="objExtSearchThesaurusTerms" dojoType="ingrid:FilteringTable" minRows="8" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	      	      <thead>
 	      		      <tr>
-	            			<th nosort="true" field="title" dataType="String">Thesaurus Suchbegriffe</th>
+	            			<th nosort="true" field="label" dataType="String">Thesaurus Suchbegriffe</th>
 	      		      </tr>
 	      	      </thead>
 	      	      <tbody>

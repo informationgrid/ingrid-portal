@@ -11,6 +11,7 @@ public class SNSTopic {
 	private Source source;
 	private String topicId;
 	private String title;
+	private String alternateTitle;
 	private String gemetId;
 	private ArrayList<SNSTopic> children;
 	private ArrayList<SNSTopic> parents;
@@ -26,17 +27,19 @@ public class SNSTopic {
 		this.topicId = null;
 		this.gemetId = null;
 		this.title = null;
+		this.alternateTitle = null;
 		this.children = null;
 		this.parents = null;
 		this.synonyms = null;
 		this.inspireList = new ArrayList<String>();
 	}
 
-	public SNSTopic(Type typ, Source source, String id, String title, String gemetId) {
+	public SNSTopic(Type typ, Source source, String id, String title, String alternateTitle, String gemetId) {
 		this.source = source;
 		this.type = typ;
 		this.topicId = id;
 		this.title = title;
+		this.alternateTitle = alternateTitle;
 		this.gemetId = gemetId;
 		this.children = new ArrayList<SNSTopic>();
 		this.parents = new ArrayList<SNSTopic>();
@@ -109,7 +112,7 @@ public class SNSTopic {
 	}
 
 	public String toString() {
-		return "[" + type + ", " + source + ", " + title + ", " + topicId + ", " + gemetId + "]";
+		return "[" + type + ", " + source + ", " + title + ", " + alternateTitle + ", " + topicId + ", " + gemetId + "]";
 	}
 
 	public void setInspireList(ArrayList<String> inspireList) {
@@ -118,5 +121,13 @@ public class SNSTopic {
 
 	public ArrayList<String> getInspireList() {
 		return inspireList;
+	}
+
+	public String getAlternateTitle() {
+		return alternateTitle;
+	}
+
+	public void setAlternateTitle(String alternateTitle) {
+		this.alternateTitle = alternateTitle;
 	}
 }

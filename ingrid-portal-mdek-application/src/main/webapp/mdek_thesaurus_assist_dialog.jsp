@@ -76,6 +76,7 @@ init = function() {
 				var inspireTopics = getInspireTopics(res);
 				res = res.concat(inspireTopics);
 				
+				UtilList.addSNSTopicLabels(res);
 				UtilList.addTableIndices(res);
 				keywordTable.store.setData(res);
 				// showStatus("");
@@ -228,7 +229,7 @@ applyChanges = function() {
     	    <table id="keywordsList" dojoType="ingrid:FilteringTable" minRows="10" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
     	      <thead>
     		      <tr>
-          			<th nosort="true" field="title" dataType="String">Name</th>
+          			<th nosort="true" field="label" dataType="String">Name</th>
           			<th nosort="true" field="source" dataType="String">Typ</th>
     		      </tr>
     	      </thead>
@@ -257,7 +258,7 @@ applyChanges = function() {
     	    <table id="resultList" dojoType="ingrid:FilteringTable" minRows="10" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
     	      <thead>
     		      <tr>
-          			<th nosort="true" field="title" dataType="String">Name</th>
+          			<th nosort="true" field="label" dataType="String">Name</th>
           			<th nosort="true" field="source" dataType="String">Typ</th>
     		      </tr>
     	      </thead>

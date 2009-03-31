@@ -559,7 +559,10 @@ function isInspireTopic(topic) {
 function findTopicsDef(term) {
 	var def = new dojo.Deferred();
 	SNSService.findTopics(term, {
-		callback: function(res) { def.callback(res); },
+		callback: function(res) {
+			UtilList.addSNSTopicLabels(res);
+			def.callback(res);
+		},
 		errorHandler: function(errMsg, err) {
 			dojo.debug("Error while calling findTopics: " + errMsg);
 			def.errback(err);
@@ -574,7 +577,10 @@ function getTopicsForTopicDef(topicId) {
 	SNSService.getTopicsForTopic(topicId, {
 		preHook: UtilDWR.enterLoadingState,
 		postHook: UtilDWR.exitLoadingState,
-		callback: function(res) { def.callback(res); },
+		callback: function(res) {
+			UtilList.addSNSTopicLabels( [res] );
+			def.callback(res);
+		},
 		errorHandler: function(errMsg, err) {
 			dojo.debug("Error while calling getTopicsForTopic: " + errMsg);
 			def.errback(err);
@@ -726,7 +732,7 @@ function addFreeTerm(queryTerm, store) {
 	if (dojo.lang.every(store.getData(), function(item) { return item.title.toLowerCase() != queryTerm.toLowerCase(); })) {
 		// If every term in store is != to the queryTerm, add it
 		var identifier = UtilStore.getNewKey(store);
-		store.addData( { Id: identifier, title: queryTerm, source: "FREE"} );
+		store.addData( { Id: identifier, label: queryTerm, title: queryTerm, source: "FREE"} );
 	}
 }
 
@@ -751,7 +757,7 @@ function addNonDescriptorsDef(nonDescriptors, store) {
 
 	dojo.lang.forEach(nonDescriptors, function(d) {
 		dojo.debug("add non descriptor: " + snsTopicToString(d));
-		addFreeTerm(d.title, store);
+		addFreeTerm(d.label, store);
 
 		deferred.addCallback(function() { return getTopicsForTopicDef(d.topicId); });
 		deferred.addCallback(function(topic) {
@@ -760,7 +766,7 @@ function addNonDescriptorsDef(nonDescriptors, store) {
 			dojo.debug("Add descriptor for synonym '" + snsTopicToString(d) + "' ? " + snsTopicToString(topic));
 
 			// Show the dialog
-			var displayText = dojo.string.substituteParams(message.get("dialog.addDescriptors.message"), d.title, topic.title);
+			var displayText = dojo.string.substituteParams(message.get("dialog.addDescriptors.message"), d.label, topic.label);
 //			var displayText = "Synonym: " + snsTopicToString(d) + " Deskriptor: " + snsTopicToString(topic);
 			dialog.show(message.get("dialog.addDescriptor.title"), displayText, dialog.INFO, [
 	            { caption: message.get("general.no"),  action: function() { closeDialogDef.callback(); return; } },
@@ -783,7 +789,7 @@ function handleFindTopicsError(err) {
 
 // pretty print a SNSTopic. Convenience function for debugging
 function snsTopicToString(topic) {
-	return "[" + topic.type + ", " + topic.title + ", " + topic.topicId +", " + topic.gemetId + "]";
+	return "[" + topic.type + ", " + topic.title + ", " + topic.alternateTitle + ", " + topic.topicId +", " + topic.gemetId + "]";
 }
 
 // parse a string and extract a list of terms.

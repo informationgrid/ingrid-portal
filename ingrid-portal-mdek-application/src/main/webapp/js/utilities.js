@@ -743,6 +743,22 @@ UtilList.addSNSLocationLabels = function(list) {
 	}
 }
 
+// Add SNS topic labels (entry.label = entry.title + " / " + entry.alternateTitle)
+UtilList.addSNSTopicLabels = function(list) {
+	if (list) {
+		dojo.lang.forEach(list, function(entry) {
+			entry.label = entry.title;
+			if (entry.alternateTitle && entry.alternateTitle != entry.title) {
+				entry.label += " / " + entry.alternateTitle;
+			}
+		});
+		return list;
+
+	} else {
+		return [];
+	}
+}
+
 
 // Util functions for dojo store 
 var UtilStore = {}
