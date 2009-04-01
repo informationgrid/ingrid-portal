@@ -1,5 +1,7 @@
 package de.ingrid.mdek.beans.object;
 
+import java.util.Date;
+
 public class LocationBean {
 	public String name;
 	public String type;
@@ -11,6 +13,7 @@ public class LocationBean {
 	public Double latitude2;
 	public String topicType;
 	public String topicTypeId;
+	public Date locationExpiredAt;
 
 	public String getName() {
 		return name;
@@ -71,6 +74,12 @@ public class LocationBean {
 	}
 	public void setTopicTypeId(String topicTypeId) {
 		this.topicTypeId = topicTypeId;
+	}
+	public Date getLocationExpiredAt() {
+		return locationExpiredAt;
+	}
+	public void setLocationExpiredAt(Date locationExpiredAt) {
+		this.locationExpiredAt = locationExpiredAt;
 	}
 
 }

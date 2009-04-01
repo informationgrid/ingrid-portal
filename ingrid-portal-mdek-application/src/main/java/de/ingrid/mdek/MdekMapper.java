@@ -1549,6 +1549,7 @@ public class MdekMapper implements DataMapperInterface {
 				loc.setLatitude2((Double) location.get(MdekKeys.NORTH_BOUNDING_COORDINATE));
 				loc.setTopicTypeId((String) location.get(MdekKeys.SNS_TOPIC_TYPE));
 				loc.setTopicType(mapFromSNSTopicTypeId((String) location.get(MdekKeys.SNS_TOPIC_TYPE)));
+				loc.setLocationExpiredAt(convertTimestampToDate((String) location.get(MdekKeys.LOCATION_EXPIRED_AT)));
 				resultList.add(loc);
 			}
 		}

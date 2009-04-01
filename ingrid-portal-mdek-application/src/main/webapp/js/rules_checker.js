@@ -179,6 +179,13 @@ function isObjectPublishable(idcObject) {
 		publishable = false;
 	}
 
+	// Check if one of the spatial references is expired
+	if (dojo.lang.some(snsData, function(item) { return item.locationExpiredAt != null } )) {
+		dojo.html.addClass(dojo.byId("spatialRefAdminUnitLabel"), "important");
+		dojo.debug("The spatial reference table must not contain expired entries.");
+		publishable = false;
+	}
+
 	// Check if one of the 'height' fields contains data. In this case, all fields are mandatory 
 	if (idcObject.spatialRefAltMin || idcObject.spatialRefAltMax || idcObject.spatialRefAltMeasure || idcObject.spatialRefAltVDate) {
 		// one of the fields contains data -> All fields must contain data:

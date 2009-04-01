@@ -759,6 +759,21 @@ UtilList.addSNSTopicLabels = function(list) {
 	}
 }
 
+// Mark expired SNS locations
+UtilList.markExpiredSNSLocations = function(list) {
+	if (list) {
+		dojo.lang.forEach(list, function(entry) {
+			if (entry.locationExpiredAt != null) {
+				entry.label = "<span style='color:#FF0000'>" + entry.label + "</span>";
+			}
+		});
+		return list;
+
+	} else {
+		return [];
+	}
+}
+
 
 // Util functions for dojo store 
 var UtilStore = {}

@@ -1589,6 +1589,7 @@ udkDataProxy._setObjectData = function(nodeData)
   // The table containing entries from the sns is indexed by their topicID
   // The label is a combination of 'name' and 'topicType'
   UtilList.addSNSLocationLabels(nodeData.spatialRefAdminUnitTable);
+  UtilList.markExpiredSNSLocations(nodeData.spatialRefAdminUnitTable);
   dojo.widget.byId("spatialRefAdminUnit").store.setData(UtilList.addTableIndices(nodeData.spatialRefAdminUnitTable));
   // The table containing free entries needs generated indices
   dojo.widget.byId("spatialRefLocation").store.setData(UtilList.addTableIndices(nodeData.spatialRefLocationTable));

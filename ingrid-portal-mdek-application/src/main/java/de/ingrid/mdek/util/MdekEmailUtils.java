@@ -404,7 +404,7 @@ public class MdekEmailUtils {
 							data = new ArrayList<MdekDataBean>();
 							emailObjectMap.put(userEmail, data);
 						}
-						if (!data.contains(mdekDataBean)) {
+						if (!contains(data, mdekDataBean)) {
 							data.add(mdekDataBean);
 						}
 					}
@@ -415,6 +415,17 @@ public class MdekEmailUtils {
 		return emailObjectMap;
 	}
 
+	private static boolean contains(List<MdekDataBean> list, MdekDataBean dataBean) {
+		if (list != null && dataBean != null) {
+			for (MdekDataBean listItem : list) {
+				if (listItem != null && listItem.getUuid() != null && listItem.getUuid().equals(dataBean.getUuid())) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 
 	private static String mergeTemplate(String realTemplatePath, Map<String, Object> attributes, String attributesName) {
 		attributes.put("directLink", MDEK_DIRECT_LINK);
