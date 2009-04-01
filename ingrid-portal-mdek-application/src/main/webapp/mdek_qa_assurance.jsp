@@ -8,11 +8,8 @@ var scriptScope = this;
 
 // display 10 datasets per page
 var resultsPerPage = 10;
-// TODO Uncomment to add the 'spatial obj' table
-// var tableIdList = ["qaAssignedObjTable", "qaAssignedAdrTable", "qaModifiedObjTable", "qaModifiedAdrTable",
-//	"qaExpiredObjTable", "qaExpiredAdrTable", "qaSpatialObjTable"];
- var tableIdList = ["qaAssignedObjTable", "qaAssignedAdrTable", "qaModifiedObjTable", "qaModifiedAdrTable",
-	"qaExpiredObjTable", "qaExpiredAdrTable"];
+var tableIdList = ["qaAssignedObjTable", "qaAssignedAdrTable", "qaModifiedObjTable", "qaModifiedAdrTable",
+	"qaExpiredObjTable", "qaExpiredAdrTable", "qaSpatialObjTable"];
 
 _container_.addOnLoad(function() {
 	initTables();
@@ -38,7 +35,7 @@ function initTables() {
 	dojo.widget.byId("qaModifiedAdrTable").queryParameters = { workState: "IN_BEARBEITUNG", selectionType: null };
 	dojo.widget.byId("qaExpiredObjTable").queryParameters = { workState: null, selectionType: "EXPIRED" };
 	dojo.widget.byId("qaExpiredAdrTable").queryParameters = { workState: null, selectionType: "EXPIRED" };
-	dojo.widget.byId("qaSpatialObjTable").queryParameters = { workState: null, selectionType: "SPATIAL_RELATIONS_UPDATED" };
+	dojo.widget.byId("qaSpatialObjTable").queryParameters = { workState: null, selectionType: "SPATIAL_REF_EXPIRED" };
 
 	// Add initial sortParams to tables
 	dojo.lang.forEach(tableIdList, function(tableId) {

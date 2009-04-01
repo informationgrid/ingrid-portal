@@ -8,7 +8,8 @@ var scriptScope = this;
 
 // display 10 datasets per page
 var resultsPerPage = 10;
-var tableIdList = ["expObjTable", "expAdrTable", "modObjTable", "modAdrTable", "qaObjTable", "qaAdrTable"];
+//var tableIdList = ["expObjTable", "expAdrTable", "modObjTable", "modAdrTable", "qaObjTable", "qaAdrTable"];
+var tableIdList = ["expObjTable", "expAdrTable", "modObjTable", "modAdrTable", "qaObjTable", "qaAdrTable", "spatialObjTable"];
 
 _container_.addOnLoad(function() {
 	initTables();
@@ -34,7 +35,8 @@ function initTables() {
 	dojo.widget.byId("modAdrTable").type = "MODIFIED";
 	dojo.widget.byId("qaObjTable").type = "IN_QA_WORKFLOW";
 	dojo.widget.byId("qaAdrTable").type = "IN_QA_WORKFLOW";
-	
+	dojo.widget.byId("spatialObjTable").type = "SPATIAL_REF_EXPIRED";
+
 	// Add initial sortParams to tables
 	dojo.lang.forEach(tableIdList, function(tableId) {
 		dojo.widget.byId(tableId).sortParams = { sortBy: "NAME", sortAsc: true }
@@ -160,13 +162,14 @@ function reloadTables() {
 		var modAdrResult = resultList[3][1];
 		var qaObjResult = resultList[4][1];
 		var qaAdrResult = resultList[5][1];
+		var spatialObjResult = resultList[6][1];
 
 		// Count the number of occurences and set the overview lst
 		var numAdrStateQ = qaAdrResult.additionalData['total-num-qa-assigned'];
 		var numAdrStateR = qaAdrResult.additionalData['total-num-qa-reassigned'];
 		var numObjStateQ = qaObjResult.additionalData['total-num-qa-assigned'];
 		var numObjStateR = qaObjResult.additionalData['total-num-qa-reassigned'];
-		initOverviewTable(expObjResult.totalNumHits, expAdrResult.totalNumHits, numObjStateQ, numObjStateR, numAdrStateQ, numAdrStateR);
+		initOverviewTable(expObjResult.totalNumHits, expAdrResult.totalNumHits, numObjStateQ, numObjStateR, numAdrStateQ, numAdrStateR, spatialObjResult.totalNumHits);
 
 		exitLoadingState();
 	});
@@ -321,8 +324,8 @@ function addAddressTableIdentifiers(adrList) {
 
 }
 
-function initOverviewTable(numExpObj, numExpAdr, numObjStateQ, numObjStateR, numAdrStateQ, numAdrStateR) {
-	var types = [{Id:0, type:message.get("dialog.qa.spatialRefMod"), obj:0, adr:0},
+function initOverviewTable(numExpObj, numExpAdr, numObjStateQ, numObjStateR, numAdrStateQ, numAdrStateR, numSpatialObj) {
+	var types = [{Id:0, type:message.get("dialog.qa.spatialRefMod"), obj:numSpatialObj, adr:0},
 				 {Id:1, type:message.get("dialog.qa.expired"), obj:numExpObj, adr:numExpAdr},
 				 {Id:2, type:message.get("dialog.qa.assignedToQa"), obj:numObjStateQ, adr:numAdrStateQ},
 				 {Id:3, type:message.get("dialog.qa.reassignedFromQa"), obj:numObjStateR, adr:numAdrStateR}];
@@ -567,8 +570,36 @@ scriptScope.reloadPage = function() {
 							</table>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
-
+				</div> <!-- ContentPane end -->
 			</div> <!-- TabContainer end -->
+
+			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7066)"><fmt:message key="dialog.qa.editor.spatial" /></label></span>
+
+    		<div id="spatialObjContentPane" dojoType="ContentPane" label="<fmt:message key="dialog.qa.objects" />" style="overflow:hidden;">
+
+				<div class="inputContainer">
+					<div class="listInfo wide">
+						<span id="spatialObjTableInfo" class="searchResultsInfo">&nbsp;</span>
+						<span id="spatialObjTablePaging" class="searchResultsPaging">&nbsp;</span>
+						<div class="fill"></div>
+					</div>
+	
+			        <div class="tableContainer rows10 wide">
+						<table id="spatialObjTable" dojoType="ingrid:FilteringTable" defaultDateFormat="%d.%m.%Y" minRows="10" cellspacing="0" class="filteringTable">
+							<thead>
+								<tr>
+									<th field="icon" dataType="String" width="32"></th>
+									<th field="linkLabel" dataType="String" width="700"><fmt:message key="dialog.qa.name" /></th>
+									<th field="modUserTitle" dataType="String" width="130"><fmt:message key="dialog.qa.modUser" /></th>
+									<th field="expiryDate" dataType="Date" width="100"><fmt:message key="dialog.qa.expiredAt" /></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div> <!-- tableContainer end -->
+				</div> <!-- inputContainer end -->
+			</div> <!-- ContentPane end -->
 
 		</div> <!-- content end -->
 	</div> <!-- contentBlock end -->
