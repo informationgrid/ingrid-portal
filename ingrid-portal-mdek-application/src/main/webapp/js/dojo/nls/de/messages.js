@@ -190,6 +190,7 @@
 	"dialog.admin.catalog.management.searchTerms.updateLastProcessInfo":"Informationen zum letzten Prozess:",
 	"dialog.admin.catalog.management.searchTerms.updateCurrentProcessInfo":"Informationen zum laufenden Prozess:",
 	"dialog.admin.catalog.management.searchTerms.stateSNSUpdate":"SNS Abfrage",
+	"dialog.admin.catalog.management.locations.jobStartHint":"Der SNS Update Job wurde gestartet. Bitte f&uuml;hren Sie nach erfolgreichem Update eine Reindexierung durch (Menu 'Auswahl-/ISO-Codelistenpflege -> Reindexierung')!",
 	"dialog.admin.catalog.management.locations.updateLastProcessInfo":"Informationen zum letzten Prozess:",
 	"dialog.admin.catalog.management.locations.updateCurrentProcessInfo":"Informationen zum laufenden Prozess:",
 	"dialog.admin.management.duplicates.success":"Der Objektname wurde erfolgreich aktualisiert.",

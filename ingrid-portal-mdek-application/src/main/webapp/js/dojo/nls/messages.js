@@ -187,6 +187,7 @@
 	"dialog.admin.catalog.management.searchTerms.updateLastProcessInfo":"Information about the last update process:",
 	"dialog.admin.catalog.management.searchTerms.updateCurrentProcessInfo":"Information about the current update process:",
 	"dialog.admin.catalog.management.searchTerms.stateSNSUpdate":"Query SNS",
+	"dialog.admin.catalog.management.locations.jobStartHint":"SNS Update Job is now running. Please update the index after the job is done (Menu 'Codelists -> Reindex')!",
 	"dialog.admin.catalog.management.locations.updateLastProcessInfo":"Information about the last update process:",
 	"dialog.admin.catalog.management.locations.updateCurrentProcessInfo":"Information about the current update process:",
 	"dialog.admin.management.urls.lastProcessInfo":"Information about the last process:",

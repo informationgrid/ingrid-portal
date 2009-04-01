@@ -2,12 +2,12 @@ package de.ingrid.mdek.dwr.services.sns;
 
 public class SNSLocationTopic {
 
-	public String topicId;
-	public String type; 
-	public String typeId;	// e.g. use4Type, use6Type, ... 
-	public String name;
-	public String qualifier;
-	public String nativeKey;
+	private String topicId;
+	private String type; 
+	private String typeId;	// e.g. use4Type, use6Type, ... 
+	private String name;
+	private String qualifier;
+	private String nativeKey;
 	
 	// The coordinates are stored as:
 	// 		lower left corner longitude, lower left corner latitude, 

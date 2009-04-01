@@ -24,6 +24,7 @@ scriptScope.startSNSLocationUpdateJob = function() {
 		preHook: showLoadingZone,
 		callback: function() {
 			setTimeout("refreshSNSLocationUpdateProcessInfo()", 1000);
+			dialog.show(message.get("general.hint"), message.get("dialog.admin.catalog.management.locations.jobStartHint"), dialog.INFO);
 		},
 		errorHandler: function(errMsg, err) {
 			dojo.debug("error: " + errMsg);
