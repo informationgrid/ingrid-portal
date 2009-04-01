@@ -1,30 +1,13 @@
 package de.ingrid.mdek.beans;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import de.ingrid.mdek.dwr.services.sns.SNSLocationTopic;
 
 
 public class SNSLocationUpdateJobInfoBean extends JobInfoBean {
 
-	private List<SNSLocationTopic> oldSNSTopics;
-	private List<SNSLocationTopic> newSNSTopics;
+	private List<SNSLocationUpdateResult> snsUpdateResults;
 
-	public List<SNSLocationTopic> getOldSNSTopics() {
-		return oldSNSTopics;
-	}
-
-	public void setOldSNSTopics(List<SNSLocationTopic> oldSNSTopics) {
-		this.oldSNSTopics = oldSNSTopics;
-	}
-
-	public List<SNSLocationTopic> getNewSNSTopics() {
-		return newSNSTopics;
-	}
-
-	public void setNewSNSTopics(List<SNSLocationTopic> newSNSTopics) {
-		this.newSNSTopics = newSNSTopics;
-	}
 
 	public SNSLocationUpdateJobInfoBean() {}
 
@@ -39,4 +22,25 @@ public class SNSLocationUpdateJobInfoBean extends JobInfoBean {
 		this.setStartTime(jobInfo.getStartTime());
 	}
 
+	public List<SNSLocationUpdateResult> getSnsUpdateResults() {
+		return snsUpdateResults;
+	}
+
+	public void setSnsUpdateResults(List<SNSLocationUpdateResult> snsUpdateResults) {
+		this.snsUpdateResults = snsUpdateResults;
+	}
+
+	// Retrieve the entries from snsUpdateResults as list of string arrays (for CSV Export)
+	public List<String[]> getEntries() {
+		List<String[]> entries = new ArrayList<String[]>();
+
+		entries.add(new String[] { "Titel", "Code", "Aktion", "Objekte" });
+
+		if (snsUpdateResults != null) {
+			for (SNSLocationUpdateResult snsResult : snsUpdateResults) {
+				entries.add(snsResult.toStringArray());
+			}
+		}
+		return entries;
+	}
 }

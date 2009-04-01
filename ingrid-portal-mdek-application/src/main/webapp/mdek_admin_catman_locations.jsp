@@ -212,9 +212,9 @@ scriptScope.downloadAsCSV = function() {
 					<table id="locationsResultTable" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable w964 relativePos">
 						<thead>
 							<tr>
-								<th field="term" dataType="String" width="570" noSort="true" sort="asc"><fmt:message key="dialog.admin.catalog.management.locations.spatialRef" /></th>
-								<th field="type" dataType="String" width="80" noSort="true"><fmt:message key="dialog.admin.catalog.management.locations.id" /></th>
-								<th field="action" dataType="String" width="254" noSort="true"><fmt:message key="dialog.admin.catalog.management.locations.action" /></th>
+								<th field="title" dataType="String" width="370" noSort="true" sort="asc"><fmt:message key="dialog.admin.catalog.management.locations.spatialRef" /></th>
+								<th field="code" dataType="String" width="80" noSort="true"><fmt:message key="dialog.admin.catalog.management.locations.id" /></th>
+								<th field="action" dataType="String" width="454" noSort="true"><fmt:message key="dialog.admin.catalog.management.locations.action" /></th>
 								<th field="objects" dataType="String" width="60" noSort="true"><fmt:message key="dialog.admin.catalog.management.locations.objects" /></th>
 							</tr>
 						</thead>

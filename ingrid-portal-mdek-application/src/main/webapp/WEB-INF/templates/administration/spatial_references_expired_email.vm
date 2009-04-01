@@ -1,10 +1,14 @@
-#set($EXP_TOPICS = $map.get("expiredTopics"))
+#set($EXP_DATASETS = $map.get("expiredDatasets"))
+#set($DIRECT_LINK = $map.get("directLink"))
 Dies ist eine Meldung von der Metadatenerfassungskomponente der InGrid® Software.
-Die Raumbezüge folgender Datensätze sind nicht mehr aktuell und müssen aktualisiert werden: 
+Folgende Objekte enthalten abgelaufene Raumbezüge und müssen aktualisiert werden: 
 
-#foreach($expTopic in $EXP_TOPICS)
-Titel: $expTopic.name
-Uuid: $expTopic.topicId
+
+#foreach($expDS in $EXP_DATASETS)
+Titel: $expDS.objectName
+Uuid: $expDS.uuid
+
+Direkter Link: ${DIRECT_LINK}?nodeType=O&nodeId=$expDS.uuid
 
 
 #end

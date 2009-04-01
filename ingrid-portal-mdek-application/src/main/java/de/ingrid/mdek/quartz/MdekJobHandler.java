@@ -205,11 +205,14 @@ public class MdekJobHandler implements BeanFactoryAware {
 		}
 	}
 
-	private SNSUpdateJobInfoBean getSNSLocationUpdateJobResult() {
-		// TODO Implement
-		// Query backend for the result and map it to a SNSUpdateJobInfoBean
-		IngridDocument response = new IngridDocument();
-		return MdekCatalogUtils.extractSNSLocationpUdateJobInfoFromResponse(response);
+	private SNSLocationUpdateJobInfoBean getSNSLocationUpdateJobResult() {
+		IMdekCallerCatalog mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
+		IngridDocument response = mdekCallerCatalog.getJobInfo(
+				connectionFacade.getCurrentPlugId(),
+				de.ingrid.mdek.job.IJob.JobType.UPDATE_SPATIAL_REFERENCES,
+				MdekSecurityUtils.getCurrentUserUuid());
+
+		return MdekCatalogUtils.extractSNSLocationUpdateJobInfoFromResponse(response, false);
 	}
 
 	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {

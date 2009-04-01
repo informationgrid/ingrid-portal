@@ -22,6 +22,8 @@ import de.ingrid.mdek.beans.CodeListJobInfoBean;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
 import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.SNSLocationUpdateJobInfoBean;
+import de.ingrid.mdek.beans.SNSLocationUpdateResult;
 import de.ingrid.mdek.beans.SNSTopicUpdateResult;
 import de.ingrid.mdek.beans.SNSUpdateJobInfoBean;
 import de.ingrid.mdek.beans.SysList;
@@ -567,9 +569,34 @@ public class MdekCatalogUtils {
 		}
 	}
 
-	public static SNSUpdateJobInfoBean extractSNSLocationpUdateJobInfoFromResponse(
-			IngridDocument response) {
-		// Implement
-		return extractSNSUpdateJobInfoFromResponse(response);
+	public static SNSLocationUpdateJobInfoBean extractSNSLocationUpdateJobInfoFromResponse(
+			IngridDocument response, boolean extractObjectEntities) {
+		SNSLocationUpdateJobInfoBean jobInfo = new SNSLocationUpdateJobInfoBean();
+		addGeneralJobInfoFromResponse(response, jobInfo);
+		addSNSLocationUpdateJobInfoFromResponse(response, jobInfo, extractObjectEntities);
+		return jobInfo;
+	}
+
+	private static void addSNSLocationUpdateJobInfoFromResponse(IngridDocument response, SNSLocationUpdateJobInfoBean jobInfo, boolean extractObjectEntities) {
+		IngridDocument snsResult = MdekUtils.getResultFromResponse(response);
+		if (snsResult != null) {
+			jobInfo.setNumProcessedEntities((Integer) snsResult.get(MdekKeys.JOBINFO_NUM_ENTITIES));
+			jobInfo.setNumEntities((Integer) snsResult.get(MdekKeys.JOBINFO_TOTAL_NUM_ENTITIES));
+			jobInfo.setDescription((String) snsResult.get(MdekKeys.JOBINFO_ENTITY_TYPE));
+
+			List<Map<String, Object>> updateMessages = (List<Map<String, Object>>) snsResult.get(MdekKeys.JOBINFO_LOCATIONS_UPDATED);
+
+			List<SNSLocationUpdateResult> snsUpdateResults = new ArrayList<SNSLocationUpdateResult>();
+			if (updateMessages != null) {
+				for (Map<String, Object> updateMessage : updateMessages) {
+					snsUpdateResults.add(new SNSLocationUpdateResult(updateMessage, extractObjectEntities));
+				}
+			}
+
+			jobInfo.setSnsUpdateResults(snsUpdateResults);
+
+		} else {
+			MdekErrorUtils.handleError(response);
+		}
 	}
 }

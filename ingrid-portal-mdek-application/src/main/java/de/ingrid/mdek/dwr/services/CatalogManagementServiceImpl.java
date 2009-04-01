@@ -26,6 +26,7 @@ import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtils.CsvRequestType;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.SNSLocationUpdateJobInfoBean;
 import de.ingrid.mdek.beans.SNSUpdateJobInfoBean;
 import de.ingrid.mdek.beans.URLJobInfoBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
@@ -239,8 +240,8 @@ public class CatalogManagementServiceImpl {
 		mdekJobHandler.stopJob(JobType.SNS_LOCATION_UPDATE);
 	}
 
-	public SNSUpdateJobInfoBean getSNSLocationUpdateJobInfo() {
-		return (SNSUpdateJobInfoBean) mdekJobHandler.getJobInfo(JobType.SNS_LOCATION_UPDATE);
+	public SNSLocationUpdateJobInfoBean getSNSLocationUpdateJobInfo() {
+		return (SNSLocationUpdateJobInfoBean) mdekJobHandler.getJobInfo(JobType.SNS_LOCATION_UPDATE);
 	}
 
 	public FileTransfer getSNSLocationUpdateResultAsCSV() throws UnsupportedEncodingException {

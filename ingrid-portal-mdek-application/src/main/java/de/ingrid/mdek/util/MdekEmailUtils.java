@@ -28,7 +28,7 @@ import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.CommentBean;
-import de.ingrid.mdek.beans.SNSLocationUpdateJobInfoBean;
+import de.ingrid.mdek.beans.SNSLocationUpdateResult;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.security.User;
@@ -38,7 +38,6 @@ import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
 import de.ingrid.mdek.caller.IMdekCaller.FetchQuantity;
-import de.ingrid.mdek.dwr.services.sns.SNSLocationTopic;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.jobs.util.ExpiredDataset;
 import de.ingrid.utils.IngridDocument;
@@ -298,20 +297,24 @@ public class MdekEmailUtils {
 		}
 	}
 
-	public static void sendSpatialReferencesExpiredMails(List<SNSLocationTopic> expiredTopics) {
-		// TODO Implement
-		// The email must contain the following information:
-		// Identifier of the object containing the expired spatial reference (id, name, etc.)
-		// The expired spatial reference
-		// Direct link to the ige
+	public static void sendSpatialReferencesExpiredMails(List<SNSLocationUpdateResult> updateResults, String plugId, String userId) {
+		Map<String, List<MdekDataBean>> emailDatasetMap = createMailDatasetMap(updateResults, plugId, userId);
 
-		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/spatial_references_expired_email.vm");
-		String templatePath = url.getPath();
-		HashMap<String, Object> mailData = new HashMap<String, Object>();
-		mailData.put("expiredTopics", expiredTopics);
-		String text = mergeTemplate(templatePath, mailData, "map");
-		sendEmail(text, MAIL_SENDER, new String[] { "michael.benz@wemove.com" } );
+		// TODO Add the spatial references?
+		Iterator<Map.Entry<String, List<MdekDataBean>>> it = emailDatasetMap.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<String, List<MdekDataBean>> mapEntry = it.next();
+			String recipient = mapEntry.getKey();
+			List<MdekDataBean> expDatasets = mapEntry.getValue();
+			URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/spatial_references_expired_email.vm");
+			String templatePath = url.getPath();
+			HashMap<String, Object> mailData = new HashMap<String, Object>();
+			mailData.put("expiredDatasets", expDatasets);
+			String text = mergeTemplate(templatePath, mailData, "map");
+			sendEmail(text, MAIL_SENDER, new String[] { recipient } );
+		}
 	}
+
 
 	public static void sendEmail(String content, String from, String[] to) {
 		Properties props = (Properties)System.getProperties().clone();
@@ -369,6 +372,49 @@ public class MdekEmailUtils {
 
 		return mailDatasetMap;
 	}
+
+
+	private static Map<String, List<MdekDataBean>> createMailDatasetMap(List<SNSLocationUpdateResult> updateResults, String plugId, String userId) {
+		// Map with the relation 'userUuid -> userEmail'
+		Map<String, String> userEmailMap = new HashMap<String, String>();
+		// Map with the relation 'email -> obj1, obj2, ...'
+		Map<String, List<MdekDataBean>> emailObjectMap = new HashMap<String, List<MdekDataBean>>();
+
+		for (SNSLocationUpdateResult updateResult : updateResults) {
+			List<MdekDataBean> objEntities = updateResult.getObjEntities();
+			if (objEntities != null) {
+				for (MdekDataBean mdekDataBean : objEntities) {
+					String responsibleUserUuid = mdekDataBean.getObjectOwner();
+
+					if (responsibleUserUuid != null) {
+						String userEmail = userEmailMap.get(responsibleUserUuid);
+						if  (userEmail == null) {
+							List<String> responsibleUserAddress = getEmailAddressesForUsers(new String[] { responsibleUserUuid }, plugId, userId);
+							if (responsibleUserAddress != null && responsibleUserAddress.size() > 0) {
+								userEmail = responsibleUserAddress.get(0);
+								userEmailMap.put(responsibleUserUuid, userEmail);
+
+							} else {
+								continue;
+							}
+						}
+
+						List<MdekDataBean> data = emailObjectMap.get(userEmail);
+						if (data == null) {
+							data = new ArrayList<MdekDataBean>();
+							emailObjectMap.put(userEmail, data);
+						}
+						if (!data.contains(mdekDataBean)) {
+							data.add(mdekDataBean);
+						}
+					}
+				}
+			}
+		}
+
+		return emailObjectMap;
+	}
+
 
 	private static String mergeTemplate(String realTemplatePath, Map<String, Object> attributes, String attributesName) {
 		attributes.put("directLink", MDEK_DIRECT_LINK);
@@ -490,7 +536,13 @@ public class MdekEmailUtils {
 		return null;
 	}
 
+
 	private static List<String> getEmailAddressesForUsers(String[] uuidList) {
+		return getEmailAddressesForUsers(uuidList, connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
+	}
+
+
+	private static List<String> getEmailAddressesForUsers(String[] uuidList, String plugId, String userId) {
 		ArrayList<String> emailAddressList = new ArrayList<String>();
 
 		if (uuidList == null || uuidList.length <= 0) {
@@ -511,7 +563,7 @@ public class MdekEmailUtils {
 		}
 		qString = qString.substring(0, qString.length() - 4) + ")";
 
-		IngridDocument response = mdekCallerQuery.queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, null, MdekSecurityUtils.getCurrentUserUuid());
+		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, userId);
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {
@@ -525,7 +577,7 @@ public class MdekEmailUtils {
 
 		return emailAddressList;
 	}
-	
+
 	private static List<String> getEmailAddressesForUsers(List<User> userList) {
 		List<String> uuidList = new ArrayList<String>();
 		if (userList != null) {
