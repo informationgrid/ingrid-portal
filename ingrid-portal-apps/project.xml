@@ -212,7 +212,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-dsc</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
+            <version>1.2-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -230,7 +230,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-se</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
+            <version>1.2-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -257,7 +257,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-tamino</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
+            <version>1.2-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -613,7 +613,7 @@
         <dependency>
             <groupId>de.ingrid.communication</groupId>
             <artifactId>ingrid-communication-authentication</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
+            <version>1.1-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
