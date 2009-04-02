@@ -131,7 +131,7 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
 
 		try {
 			Integer role = (Integer) userDoc.get(MdekKeysSecurity.IDC_ROLE);
-			return (role == IdcRole.CATALOG_ADMINISTRATOR.getDbValue() || role == IdcRole.METADATA_ADMINISTRATOR.getDbValue());
+			return (role.equals(IdcRole.CATALOG_ADMINISTRATOR.getDbValue()) || role.equals(IdcRole.METADATA_ADMINISTRATOR.getDbValue()));
 
 		} catch (Exception e) {
 			throw new PortletException ("The connection to the iPlug with id '"+userData.getPlugId()+"' could not be established. The user with name '"+userName+"' and addressUuid '"+userData.getAddressUuid()+"' could not be found by the iPlug.", e);
