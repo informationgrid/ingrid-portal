@@ -309,7 +309,7 @@ function hideLoadingZone() {
 
 		<div id="contentSection" class="contentBlockWhite top">
 			<div id="winNavi">
-				<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8079)" title="Hilfe">[?]</a>
 			</div>
 			<div id="import" class="content">
 
@@ -318,16 +318,16 @@ function hideLoadingZone() {
 				<div class="spacer"></div>
 				<div class="inputContainer field grey w939">
 					<div class="inputContainer">
-						<span class="label"><label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 'Import-Datei')"><fmt:message key="dialog.admin.import.file" /></label></span>
+						<span class="label"><label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 8074, 'Import-Datei')"><fmt:message key="dialog.admin.import.file" /></label></span>
 						<span>
 							<input type="file" id="importFile" size="80" />
 						</span>
 					</div>
 					<div class="checkboxContainer">
-						<input type="checkbox" id="publishImportedDatasetsCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Importierte Datens&auml;tze ver&ouml;ffentlichen')"><fmt:message key="dialog.admin.import.publish" /></label>
+						<input type="checkbox" id="publishImportedDatasetsCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8075, 'Importierte Datens&auml;tze ver&ouml;ffentlichen')"><fmt:message key="dialog.admin.import.publish" /></label>
 					</div>
 					<div class="checkboxContainer">
-						<input type="checkbox" id="separateImportCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Importierte Datens&auml;tze ausschliesslich unter dem gew&auml;hlten Importknoten anlegen')"><fmt:message key="dialog.admin.import.importToSubtree" /></label>
+						<input type="checkbox" id="separateImportCheckbox" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8076, 'Importierte Datens&auml;tze ausschliesslich unter dem gew&auml;hlten Importknoten anlegen')"><fmt:message key="dialog.admin.import.importToSubtree" /></label>
 					</div>
 				</div>
 
@@ -366,9 +366,9 @@ function hideLoadingZone() {
 				</span>
 
               <div id="importTreeData" class="entry field">
-                <span class="label"><label for="importTreeParentObject" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ausgew&auml;hltes &uuml;bergeordnetes Objekt')"><fmt:message key="dialog.admin.import.parentObject" /></label></span>
+                <span class="label"><label for="importTreeParentObject" onclick="javascript:dialog.showContextHelp(arguments[0], 8077, 'Ausgew&auml;hltes &uuml;bergeordnetes Objekt')"><fmt:message key="dialog.admin.import.parentObject" /></label></span>
                 <span class="input spaceBelow"><input type="text" id="importTreeParentDataset" class="w628" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-                <span class="label"><label for="importTreeParentAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 'Ausgew&auml;hlte &uuml;bergeordnete Adresse')"><fmt:message key="dialog.admin.import.parentAddress" /></label></span>
+                <span class="label"><label for="importTreeParentAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 8078, 'Ausgew&auml;hlte &uuml;bergeordnete Adresse')"><fmt:message key="dialog.admin.import.parentAddress" /></label></span>
                 <span class="input"><input type="text" id="importTreeParentAddress" class="w628" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
             	</div>
             </div>

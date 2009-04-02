@@ -896,7 +896,7 @@ scriptScope.exportCodelists = function() {
 
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8035)" title="Hilfe">[?]</a>
 		</div>
 		<div id="codeListsContent" class="content">
 
@@ -910,12 +910,12 @@ scriptScope.exportCodelists = function() {
 					<!-- TAB 1 START -->
 					<div id="codeListTab" dojoType="ContentPane" class="blueTopBorder grey" label="<fmt:message key="dialog.admin.catalog.management.codelists.codelistTitle" />">
 						<div class="inputContainer grey field w668 noSpaceBelow">
-							<span class="label"><label for="selectionList" onclick="javascript:dialog.showContextHelp(arguments[0], '<fmt:message key="dialog.admin.catalog.management.codelists.codelist" />')"><fmt:message key="dialog.admin.catalog.management.codelists.codelist" /></label></span>
+							<span class="label"><label for="selectionList" onclick="javascript:dialog.showContextHelp(arguments[0], 8036, '<fmt:message key="dialog.admin.catalog.management.codelists.codelist" />')"><fmt:message key="dialog.admin.catalog.management.codelists.codelist" /></label></span>
 							<span class="input spaceBelow"><input dojoType="ingrid:Select" autocomplete="false" style="width:606px;" id="selectionList" /></span>
 							<span id="codeListEditDisabledHint" style="visibility:hidden;" class="label"><label class="inActive">Hinweis: Die Eintr&auml;ge dieser Auswahlliste k&ouml;nnen nicht ge&auml;ndert werden.</label></span>
 							<span id="codeListDefaultDisabledHint" style="visibility:hidden;" class="label"><label class="inActive">Hinweis: F&uuml;r diese Liste kann kein Defaultwert eingestellt werden.</label></span>
 							<div class="checkboxContainer">
-								<span class="input spaceBelow"><input type="checkbox" onclick="switchTableDisplay('codeListTable12Container', 'codeListTable11Container', dojo.widget.byId('selectionListDefault').checked);" id="selectionListDefault" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], '<fmt:message key="dialog.admin.catalog.management.codelists.setDefault" />')"><fmt:message key="dialog.admin.catalog.management.codelists.setDefault" /></label></span>
+								<span class="input spaceBelow"><input type="checkbox" onclick="switchTableDisplay('codeListTable12Container', 'codeListTable11Container', dojo.widget.byId('selectionListDefault').checked);" id="selectionListDefault" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8037, '<fmt:message key="dialog.admin.catalog.management.codelists.setDefault" />')"><fmt:message key="dialog.admin.catalog.management.codelists.setDefault" /></label></span>
 							</div>
 							<div class="tableContainer rows8 w632" id="codeListTable11Container">
 								<div class="cellEditors" id="codeListTable11Editors">
@@ -969,7 +969,7 @@ scriptScope.exportCodelists = function() {
 					<!-- TAB 2 START -->
 					<div id="freeEntryTab" dojoType="ContentPane" class="blueTopBorder grey" label="<fmt:message key="dialog.admin.catalog.management.codelists.legalBaseTitle" />">
 						<div class="inputContainer grey field w668 noSpaceBelow">
-							<span class="label"><label for="freeEntrySelectionList" onclick="javascript:dialog.showContextHelp(arguments[0], '<fmt:message key="dialog.admin.catalog.management.codelists.codelist" />')"><fmt:message key="dialog.admin.catalog.management.codelists.codelist" /></label></span>
+							<span class="label"><label for="freeEntrySelectionList" onclick="javascript:dialog.showContextHelp(arguments[0], 8038, '<fmt:message key="dialog.admin.catalog.management.codelists.codelist" />')"><fmt:message key="dialog.admin.catalog.management.codelists.codelist" /></label></span>
 							<span class="input spaceBelow"><input dojoType="ingrid:Select" autocomplete="false" style="width:606px;" id="freeEntrySelectionList"></div></span>
 
 							<span class="entry first field">

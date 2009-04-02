@@ -2070,7 +2070,7 @@ function hideSplash(){
 <!-- AddressType0 parent institutions must not be displayed (http://jira.media-style.com/browse/INGRIDII-130) -->  
 <!--
 			      <div class="inputContainer">
-			        <span class="label"><label for="headerAddressType0Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 'Institution/&uuml;bergeordnete Einheit(en)')">Institution/&uuml;bergeordnete Einheit(en)</label></span>
+			        <span class="label"><label for="headerAddressType0Institution" onclick="javascript:dialog.showContextHelp(arguments[0], 8062, 'Institution/&uuml;bergeordnete Einheit(en)')">Institution/&uuml;bergeordnete Einheit(en)</label></span>
 			        <span class="input"><input type="text" mode="textarea" dojoType="ingrid:ValidationTextbox" id="headerAddressType0Institution" class="w668 h038" disabled="true" /></span>
 			  	  </div>
 -->

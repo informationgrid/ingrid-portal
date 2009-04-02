@@ -305,7 +305,7 @@ function initSysLists() {
 
 		<div class="contentBlockWhite top">
 			<div id="winNavi">
-				<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8080)" title="Hilfe">[?]</a>
 			</div>
 			<div class="content">
 	
@@ -314,15 +314,15 @@ function initSysLists() {
 				<div class="spacer"></div>
 				<div class="inputContainer field grey noSpaceBelow">
 					<div class="checkboxContainer">
-						<span class="entry first"><input type="radio" name="exportType" id="exportType1" class="radio" /><label class="noRightMargin" for="exportType1" onclick="javascript:dialog.showContextHelp(arguments[0], 'Teilexport')"><fmt:message key="dialog.admin.export.partialExport" /></label></span>
+						<span class="entry first"><input type="radio" name="exportType" id="exportType1" class="radio" /><label class="noRightMargin" for="exportType1" onclick="javascript:dialog.showContextHelp(arguments[0], 8081, 'Teilexport')"><fmt:message key="dialog.admin.export.partialExport" /></label></span>
 						<span class="rightAlign marginRight"><div dojoType="ingrid:Combobox" toggle="plain" listId="1370" style="width:485px;" widgetId="exportXMLCriteria"></div></span>
 						<div class="fill"></div>
 					</div>
 					<div class="checkboxContainer">
-						<span class="entry first"><input type="radio" name="exportType" id="exportType2" class="radio" /><label class="noRightMargin" for="exportType2" onclick="javascript:dialog.showContextHelp(arguments[0], 'Teilbaumexport')"><fmt:message key="dialog.admin.export.treeExport" /></label></span>
+						<span class="entry first"><input type="radio" name="exportType" id="exportType2" class="radio" /><label class="noRightMargin" for="exportType2" onclick="javascript:dialog.showContextHelp(arguments[0], 8082, 'Teilbaumexport')"><fmt:message key="dialog.admin.export.treeExport" /></label></span>
 						<span class="functionalLink marginRight" style="position:relative; top:43px"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:scriptScope.selectDataset()" title="Teilbaum ausw&auml;hlen [Popup]"><fmt:message key="dialog.admin.export.selectTree" /></a></span>
 						<span class="rightAlign marginRight"><input type="text" id="exportTreeName" name="exportTreeName" class="w503" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-						<span class="rightAlign marginRight"><span class="input w513 leftAlign"><input type="checkbox" name="exportTreeSelectionOnly" id="exportTreeSelectionOnly" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 'Nur der ausgew&auml;hlte Datensatz')"><fmt:message key="dialog.admin.export.selectedNodeOnly" /></label></span></span>
+						<span class="rightAlign marginRight"><span class="input w513 leftAlign"><input type="checkbox" name="exportTreeSelectionOnly" id="exportTreeSelectionOnly" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8083, 'Nur der ausgew&auml;hlte Datensatz')"><fmt:message key="dialog.admin.export.selectedNodeOnly" /></label></span></span>
 						<div class="fill"></div>
 					</div>
 

@@ -110,7 +110,7 @@ function hideLoadingZone() {
 
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8027)" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8058)" title="Hilfe">[?]</a>
 		</div>
 		<div class="content">
 	
@@ -118,7 +118,7 @@ function hideLoadingZone() {
 			<div class="spacer"></div>
 			<div class="spacer"></div>
 			<div class="inputContainer field grey">
-				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8010)"><fmt:message key="dialog.admin.catalog.general.settings" /></label></span>
+				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8059)"><fmt:message key="dialog.admin.catalog.general.settings" /></label></span>
 
 				<div class="checkboxContainer">
 					<span class="input"><input type="checkbox" id="autosaveCheckbox" dojoType="Checkbox" /><label class="inActive"><fmt:message key="dialog.admin.catalog.general.autosave" /> <input id="autosaveInterval" class="w033" min="1" max="60" maxlength="10" dojoType="IntegerTextbox" /> <fmt:message key="dialog.admin.catalog.general.minutes" /></label></span>

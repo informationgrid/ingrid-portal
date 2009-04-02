@@ -148,7 +148,7 @@ scriptScope.downloadAsCSV = function() {
 
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8054)" title="Hilfe">[?]</a>
 		</div>
 			<div id="searchTermsContent" class="content">
 	
@@ -157,7 +157,7 @@ scriptScope.downloadAsCSV = function() {
 				<div class="spacer"></div>
 
 				<div class="inputContainer grey field w948">
-					<span class="label"><label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], '<fmt:message key="dialog.admin.catalog.management.searchTerms.selectUpdateDataset" />')"><fmt:message key="dialog.admin.catalog.management.searchTerms.selectUpdateDataset" /></label></span>
+					<span class="label"><label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 8055, '<fmt:message key="dialog.admin.catalog.management.searchTerms.selectUpdateDataset" />')"><fmt:message key="dialog.admin.catalog.management.searchTerms.selectUpdateDataset" /></label></span>
 					<span>
 						<input type="file" id="snsUpdateFile" size="80" />
 					</span>

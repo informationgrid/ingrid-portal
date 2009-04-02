@@ -251,7 +251,7 @@ function hideLoadingZone() {
 
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8029)" title="Hilfe">[?]</a>
 		</div>
 		<div id="duplicatesContent" class="content w964">
 
@@ -304,11 +304,11 @@ function hideLoadingZone() {
 			<!-- RIGHT HAND SIDE CONTENT START -->
 			<div id="duplicatesData" class="inputContainer">
 				<div class="inputContainer field grey noSpaceBelow h313">
-					<span class="label"><label for="duplicatesObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objektname')"><fmt:message key="dialog.admin.catalog.management.duplicates.objectName" /></label></span>
+					<span class="label"><label for="duplicatesObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 8030, 'Objektname')"><fmt:message key="dialog.admin.catalog.management.duplicates.objectName" /></label></span>
 					<span class="input spaceBelow"><input type="text" id="duplicatesObjectName" name="duplicatesObjectName" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
-					<span class="label"><label for="duplicatesObjectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 'Klasse')"><fmt:message key="dialog.admin.catalog.management.duplicates.objectClass" /></label></span>
+					<span class="label"><label for="duplicatesObjectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 8031, 'Klasse')"><fmt:message key="dialog.admin.catalog.management.duplicates.objectClass" /></label></span>
 					<span class="input spaceBelow"><input type="text" id="duplicatesObjectClass" name="duplicatesObjectClass" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-					<span class="label"><label for="duplicatesObjectDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 'Objektbeschreibung')"><fmt:message key="dialog.admin.catalog.management.duplicates.objectDescription" /></label></span>
+					<span class="label"><label for="duplicatesObjectDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 8032, 'Objektbeschreibung')"><fmt:message key="dialog.admin.catalog.management.duplicates.objectDescription" /></label></span>
    	           		<span class="input"><input type="text" mode="textarea" id="duplicatesObjectDescription" class="w640 h164" disabled="true" dojoType="ingrid:ValidationTextbox" /></span> 
 					<div class="fill"></div>
 				</div>

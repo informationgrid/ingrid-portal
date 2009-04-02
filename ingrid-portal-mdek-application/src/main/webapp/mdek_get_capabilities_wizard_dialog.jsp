@@ -115,7 +115,7 @@ function hideLoadingZone() {
 
 	<div class="contentBlockWhite top fullBlock">
 		<div id="winNavi">
-			<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8089)" title="Hilfe">[?]</a>
 		</div>
 		<div class="content">
 
@@ -123,7 +123,7 @@ function hideLoadingZone() {
 			<div class="spacer"></div>
 			<div class="spacer"></div>
 			<div class="inputContainer field grey noSpaceBelow fullField">
-				<span class="label"><label for="assistantURL" onclick="javascript:dialog.showContextHelp(arguments[0], 'Capabilities URL')"><fmt:message key="dialog.wizard.getCap.url" /></label></span>
+				<span class="label"><label for="assistantURL" onclick="javascript:dialog.showContextHelp(arguments[0], 8061, 'Capabilities URL')"><fmt:message key="dialog.wizard.getCap.url" /></label></span>
 				<span class="input"><input type="text" id="assistantURL" name="assistantURL" class="w640" dojoType="ingrid:ValidationTextBox" /></span>
 				<div class="spacerField"></div>
 			</div>

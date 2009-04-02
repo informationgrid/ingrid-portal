@@ -107,7 +107,7 @@ scriptScope.selectDataset = function() {
 
   <div id="catalogueObject" class="contentBlockWhite top w478">
     <div id="winNavi">
-      <a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8085)" title="Hilfe">[?]</a>
 	  </div>
 	  <div id="objectContent" class="content">
 

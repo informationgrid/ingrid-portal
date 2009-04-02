@@ -160,7 +160,7 @@ function editListEntries(menuItem) {
 
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8039)" title="Hilfe">[?]</a>
 		</div>
 		<div id="catalogueAddFields" class="content">
 
@@ -204,16 +204,16 @@ function editListEntries(menuItem) {
 				<div class="inputContainer grey h067 w964">
 					<div class="spacer"></div>
 					<div class="entry half left w608" style="margin-right:30px;">
-						<span class="label"><label for="addFieldName" onclick="javascript:dialog.showContextHelp(arguments[0], 'Feldname')"><fmt:message key="dialog.admin.catalog.management.additionalFields.fieldName" /></label></span>
+						<span class="label"><label for="addFieldName" onclick="javascript:dialog.showContextHelp(arguments[0], 8040, 'Feldname')"><fmt:message key="dialog.admin.catalog.management.additionalFields.fieldName" /></label></span>
 						<span class="input"><input type="text" id="addFieldName" required="true" class="w608" dojoType="ingrid:ValidationTextBox" /></span>
 					</div>
 					<div class="entry half left w116" style="margin-right:30px;">
-						<span class="label"><label for="addFieldNumChars" onclick="javascript:dialog.showContextHelp(arguments[0], 'Zeichen')"><fmt:message key="dialog.admin.catalog.management.additionalFields.numChars" /></label></span>
+						<span class="label"><label for="addFieldNumChars" onclick="javascript:dialog.showContextHelp(arguments[0], 8041, 'Zeichen')"><fmt:message key="dialog.admin.catalog.management.additionalFields.numChars" /></label></span>
 						<span class="input"><input id="addFieldNumChars" min="0" max="255" maxlength="3" class="w116" dojoType="IntegerTextbox" /></span>
 
 					</div>
 					<div class="entry half w116">
-						<span class="label"><label for="addFieldType" onclick="javascript:dialog.showContextHelp(arguments[0], 'Typ')"><fmt:message key="dialog.admin.catalog.management.additionalFields.type" /></label></span>
+						<span class="label"><label for="addFieldType" onclick="javascript:dialog.showContextHelp(arguments[0], 8042, 'Typ')"><fmt:message key="dialog.admin.catalog.management.additionalFields.type" /></label></span>
 						<span class="input">
 							<select dojoType="ingrid:Select" toggle="plain" required="true" style="width:108px;" widgetId="addFieldType">
 								<option value="LIST"><fmt:message key="dialog.admin.catalog.management.additionalFields.list" /></option>

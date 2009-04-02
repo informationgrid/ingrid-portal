@@ -88,7 +88,7 @@ function hideLoadingZone() {
 
 		<div id="contentSection" class="contentBlockWhite top">
 			<div id="winNavi">
-				<a href="#" title="Hilfe">[?]</a>
+				<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8028)" title="Hilfe">[?]</a>
 			</div>
 
 			<div id="analysisContent" class="content">

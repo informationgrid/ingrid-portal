@@ -39,7 +39,7 @@ scriptScope.selectFile = function() {
 
 	<div class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8090)" title="Hilfe">[?]</a>
 		</div>
 		<div class="content">
 
@@ -47,7 +47,7 @@ scriptScope.selectFile = function() {
 			<div class="spacer"></div>
 			<div class="spacer"></div>
 			<div class="inputContainer field grey noSpaceBelow w550">
-				<span class="label"><label for="selectFileInputField" onclick="javascript:dialog.showContextHelp(arguments[0], '<fmt:message key="dialog.file.selectFile" />')"><fmt:message key="dialog.file.selectFile" /></label></span>
+				<span class="label"><label for="selectFileInputField" onclick="javascript:dialog.showContextHelp(arguments[0], 8060, '<fmt:message key="dialog.file.selectFile" />')"><fmt:message key="dialog.file.selectFile" /></label></span>
 					<span>
 						<input type="file" id="selectFileInputField" size="80" />
 					</span>

@@ -224,7 +224,7 @@ function hideLoadingZone() {
 <div dojoType="ContentPane" layoutAlign="client">
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="#" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8033)" title="Hilfe">[?]</a>
 		</div>
 		<div id="urlsContent" class="content">
 
@@ -305,7 +305,7 @@ function hideLoadingZone() {
 				</div>
 			</div>
 			<div class="inputContainer grey field h058 noSpaceBelow" style="width:980px;">
-				<span class="label"><label for="urlReplace" onclick="javascript:dialog.showContextHelp(arguments[0], 'Markierte URLs durch folgende URL ersetzen')"><fmt:message key="dialog.admin.catalog.management.urls.replaceUrlsWith" /></label></span>
+				<span class="label"><label for="urlReplace" onclick="javascript:dialog.showContextHelp(arguments[0], 8034, 'Markierte URLs durch folgende URL ersetzen')"><fmt:message key="dialog.admin.catalog.management.urls.replaceUrlsWith" /></label></span>
 				<span class="input" style="position:relative;">
 					<input type="text" id="urlReplace" maxlength="255" class="w829 nextToButton" dojoType="ingrid:ValidationTextBox" />
 				</span>
