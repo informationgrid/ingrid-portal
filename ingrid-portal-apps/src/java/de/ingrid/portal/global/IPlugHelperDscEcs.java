@@ -183,8 +183,12 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * @return
      */
     static public String getAddressPlugIdFromPlugId(String plugId) {
-    	String correspondentIPlug = IBUSInterfaceImpl.getInstance().getIPlug(plugId)
-    		.getCorrespondentProxyServiceURL();
+    	String correspondentIPlug = null;
+    	PlugDescription cIPlugDescr = IBUSInterfaceImpl.getInstance().getIPlug(plugId);
+    	
+    	if (cIPlugDescr != null) {
+    		correspondentIPlug = cIPlugDescr.getCorrespondentProxyServiceURL();
+    	}
     	
     	if (correspondentIPlug == null || correspondentIPlug == "") {
 	        if (plugId != null && plugId.indexOf("udk-db") > -1 && !plugId.endsWith("_addr")) {
@@ -205,8 +209,12 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * @return
      */
     static public String getPlugIdFromAddressPlugId(String plugId) {
-    	String correspondentIPlug = IBUSInterfaceImpl.getInstance().getIPlug(plugId)
-    		.getCorrespondentProxyServiceURL();
+    	String correspondentIPlug = null;
+    	PlugDescription cIPlugDescr = IBUSInterfaceImpl.getInstance().getIPlug(plugId);
+    	
+    	if (cIPlugDescr != null) {
+    		correspondentIPlug = cIPlugDescr.getCorrespondentProxyServiceURL();
+    	}
     	
     	if (correspondentIPlug == null || correspondentIPlug == "") {
 	        if (plugId == null) {
