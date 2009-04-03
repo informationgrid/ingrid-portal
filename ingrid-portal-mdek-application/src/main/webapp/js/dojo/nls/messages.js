@@ -87,6 +87,7 @@
     "tree.newNodeName":"New Object",
     "tree.newAddressName":"New Address",
     "tree.reload":"Reload",
+    "tree.subReload":"Reload subtree",
 
 	"dialog.object.deleteChildrenMessage":"Do you really want to delete the object '%{0}' and all subobjects?",
 	"dialog.address.deleteChildrenMessage":"Do you really want to delete the address '%{0}' and all subaddresses?",
@@ -103,6 +104,8 @@
 	"dialog.addDescriptors.message":"'%{0}' ist a Synonym! Add the corresponding descriptor '%{1}' to the list of search terms?",
 	"dialog.addInspireTopics.title":"Add INSPIRE-Topics",
 	"dialog.addInspireTopics.message":"The following topics will be added to the list of INSPIRE-Topics: %{0}",
+	"dialog.addInspireTopics.question":"'%{0}' is synonym for INSPIRE-Theme: '%{1}'. Do you want to add the INSPIRE-Theme?",
+	"dialog.addInspireTopics.error":"'%{0}' is an invalid INSPIRE-Thema and will not be added to the list of INSPIRE-Themes!",
 	"dialog.saveChangesTitle":"Save changes",
 	"dialog.object.saveChangesHint":"The current Object or its comments were changed. Do you want to save the changes?",
 	"dialog.address.saveChangesHint":"The current Address or its comments were changed. Do you want to save the changes?",
@@ -161,6 +164,7 @@
 	"dialog.admin.catalog.management.additionalFields.editList":"Edit List",
 	"dialog.admin.catalog.management.additionalFields.requiredFieldsHint":"Please fill all required fields before storing the catalog!",
 	"dialog.admin.catalog.management.deleteAddress.requiredFieldsHint":"Please fill all required fields before storing the catalog!",
+	"dialog.admin.catalog.management.deleteAddress.reallyDelete":"Do you really want to delete this address?",
 	"dialog.admin.catalog.management.codelist.deleteSingleHint":"The sys list entry will be deleted after saving the list. Do you want to continue?",
 	"dialog.admin.catalog.management.codelist.deleteMultipleHint":"The sys list entries will be deleted after saving the list. Do you want to continue?",
 	"dialog.admin.catalog.management.codelist.storeSuccess":"The changes were saved successfully. Please reindex the db to apply the changes.",
@@ -307,7 +311,6 @@
 	"operation.error.deletedAddressIsIdcUser":"Could not delete address. The address is associated with a portal user. Please remove the association via the admin UI and try again!",
 	"operation.error.addressHasNoEmail":"Could not store address. The address must have at lease one email address!",
 	"operation.error.userHasRunningJobs":"Please cancel the current running job before starting a new one.",
-
 	"operation.hint.publicationConditionSaveHint":"The subtree contains objects with an incompatible publication condition. By saving this object all subobjects will be modified. Do you really want to continue?",
 	"operation.hint.publicationConditionMoveHint":"The subtree contains objects with an incompatible publication condition. By moving this object all subobjects will be modified. Do you really want to continue?",
 	"operation.hint.forceDeleteObjectHint":"The object '%{0}' is referenced by other MD-S. Do you really want to delete this object?",
