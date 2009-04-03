@@ -53,9 +53,9 @@ scriptScope.saveChanges = function() {
     	{ caption: message.get("general.ok"), action: function() { def.callback(); } }
 	]);
 
-
 	var additionalFields = dojo.widget.byId("addFieldsList").store.getData();
-	var languageCode = DEFAULT_LANGUAGE;
+	setDefaultLanguage(additionalFields);
+
 
 	def.addCallback(function() {
 		return storeAdditionalFieldsDef(additionalFields);
@@ -71,6 +71,19 @@ scriptScope.saveChanges = function() {
 		}
 	});
 }
+
+// Set the default language for lists if it hasn't been set already
+function setDefaultLanguage(tableData) {
+	dojo.lang.forEach(tableData, function(item) {
+		// If list entries exist and the language is null
+		if (item.type == "LIST" &&
+				item.listEntries != null && item.listEntries.length > 0 &&
+				item.listLanguage == null) {
+			item.listLanguage = DEFAULT_LANGUAGE;
+		}
+	});
+}
+
 
 function storeAdditionalFieldsDef(additionalFields) {
 	var def = new dojo.Deferred();

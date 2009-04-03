@@ -67,10 +67,10 @@ scriptScope.saveEntries = function() {
 					<div class="cellEditors" id="fieldsTableEditors">
 						<div dojoType="ingrid:ValidationTextbox" class="w405" widgetId="fieldEditor"></div>
 					</div>
-					<table id="fieldsTable" dojoType="ingrid:FilteringTable" minRows="6" headClass="hidden" cellspacing="0" class="filteringTable interactive w462">
+					<table id="fieldsTable" dojoType="ingrid:FilteringTable" minRows="6" headClass="hidden" cellspacing="0" class="filteringTable interactive nosort w462">
 						<thead>
 							<tr>
-								<th field="title" dataType="String" width="443" editor="fieldEditor"></th>
+								<th nosort="true" field="title" dataType="String" width="443" editor="fieldEditor"></th>
 							</tr>
 						</thead>
 						<tbody>
