@@ -249,7 +249,28 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 
 			SNSLocationTopic newTopic;
 			try {
-				newTopic = snsService.getLocationPSI(oldTopic.getTopicId());
+				newTopic = findTopicById(snsService, oldTopic.getTopicId());
+
+				// If the topic was not found, query by name and find a 'best match'
+				// 1. a topic with the same name, native key and type id
+				// 2. a topic with the same name
+				if (newTopic == null) {
+					log.debug("no topic found for id '" + oldTopic.getTopicId() + "'");
+					List<SNSLocationTopic> topics = findTopicsByName(snsService, oldTopic.getName());
+
+					// Find a 'best match' from the returned topics
+					for (SNSLocationTopic topic : topics) {
+						newTopic = topic;
+						if (topic.getNativeKey() != null && topic.getNativeKey().equals(oldTopic.getNativeKey()) &&
+								topic.getTypeId() != null && topic.getTypeId().equals(oldTopic.getTypeId())) {
+							log.debug("found topic with same name, type id and native key");
+							break;
+
+						} else {
+							log.debug("found topic with differing name, type id or native key");
+						}
+					}
+				}
 
 			} catch (Exception e) {
 				// If something went wrong, log the exception and set the 'newTopic' as 'oldTopic'
@@ -264,6 +285,29 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 		}
 		return newTopics;
 	}
+
+	// Find a topic by the given topicId
+	// Return null iff no topic for the given id could be found
+	// Throws an Exception if there was an error querying the SNS Service (connection timeout, etc.)
+	private static SNSLocationTopic findTopicById(SNSService snsService, String topicId) throws Exception {
+		return snsService.getLocationPSI(topicId);
+	}
+
+	// Find a topic for the given topicName
+	// Return an empty list if no topics with the given name could be found
+	private static List<SNSLocationTopic> findTopicsByName(SNSService snsService, String topicName) {
+		List<SNSLocationTopic> topics = snsService.getLocationTopics(topicName, null, null);
+
+		for (Iterator<SNSLocationTopic> iterator = topics.iterator(); iterator.hasNext();) {
+			SNSLocationTopic topic = (SNSLocationTopic) iterator.next();
+			if (topic.getName() == null || !topic.getName().equalsIgnoreCase((topicName))) {
+				iterator.remove();
+			}
+		}
+
+		return topics;
+	}
+
 
 	private static JobResult createJobResult(List<SNSLocationTopic> modTopics, List<SNSLocationTopic> modResultTopics,
 			List<SNSLocationTopic> expiredTopics) {
