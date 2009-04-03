@@ -167,6 +167,12 @@ function editListEntries(menuItem) {
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div class="spacer"></div>
 			<div class="spacer"></div>
+
+			<div class="inputContainer">
+				<span class="label"><fmt:message key="dialog.admin.catalog.management.additionalFields.editListHint" /></span>
+			</div>
+
+
 			<div id="addFields" class="inputContainer w964">
 
 				<div dojoType="ingrid:TableContextMenu" toggle="plain" contextMenuForWindow="false" widgetId="contextMenu1"></div>
@@ -230,7 +236,6 @@ function editListEntries(menuItem) {
 						</span>
 					</span>
 				</div>
-
 			</div> <!-- LEFT HAND SIDE CONTENT END -->
 		</div> <!-- CONTENT END -->
 	</div>
