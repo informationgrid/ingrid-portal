@@ -57,7 +57,7 @@
 	"menu.admin.main.management.urls":"URL-Validation",
 	"menu.admin.main.management.codelists":"Codelists",
 	"menu.admin.main.management.additionalFields":"Additional Fields",
-	"menu.admin.main.management.deleteAddress":"Delete Addresses",
+	"menu.admin.main.management.deleteAddress":"Replace Address",
 	"menu.admin.main.management.searchTerms":"Search terms",
 	"menu.admin.main.management.spatialSearchTerms":"Location search terms",
 	"menu.admin.main.importExport":"Import/Export",

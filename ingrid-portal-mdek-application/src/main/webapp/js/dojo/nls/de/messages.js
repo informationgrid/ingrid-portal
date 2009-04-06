@@ -57,7 +57,7 @@
 	"menu.admin.main.management.urls":"URL-Pflege",
 	"menu.admin.main.management.codelists":"Auswahl-/ISO-Codelistenpflege",
 	"menu.admin.main.management.additionalFields":"Zus&auml;tzliche Felder",
-	"menu.admin.main.management.deleteAddress":"Adresse l&ouml;schen",
+	"menu.admin.main.management.deleteAddress":"Adresse ersetzen",
 	"menu.admin.main.management.searchTerms":"Suchbegriffe",
 	"menu.admin.main.management.spatialSearchTerms":"Raumbez&uuml;ge",
 	"menu.admin.main.importExport":"Import/Export",
