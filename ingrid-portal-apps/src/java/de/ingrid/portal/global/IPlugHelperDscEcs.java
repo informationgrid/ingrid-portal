@@ -190,7 +190,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     		correspondentIPlug = cIPlugDescr.getCorrespondentProxyServiceURL();
     	}
     	
-    	if (correspondentIPlug == null || correspondentIPlug == "") {
+    	if (correspondentIPlug == null || correspondentIPlug == "" || correspondentIPlug.equals("null")) {
 	        if (plugId != null && plugId.indexOf("udk-db") > -1 && !plugId.endsWith("_addr")) {
 	        	correspondentIPlug = plugId.concat("_addr");
 	        } else {
@@ -216,7 +216,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     		correspondentIPlug = cIPlugDescr.getCorrespondentProxyServiceURL();
     	}
     	
-    	if (correspondentIPlug == null || correspondentIPlug == "") {
+    	if (correspondentIPlug == null || correspondentIPlug == "" || correspondentIPlug.equals("null")) {
 	        if (plugId == null) {
 	        	correspondentIPlug = "";
 	        } else  if (plugId.endsWith("_addr")) {

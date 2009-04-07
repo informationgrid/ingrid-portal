@@ -58,7 +58,7 @@ public class CatalogTreeDataProvider_IDC_1_0_2 implements CatalogTreeDataProvide
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
         ArrayList result = IPlugHelperDscEcs.getHits("t01_object.id:[0 TO A] -parent.object_node.obj_uuid:[0 TO Z]".concat(
-                " iplugs:\"".concat(IPlugHelperDscEcs.getPlugIdFromAddressPlugId(iPlugId)).concat("\"")), requestedMetadata, null);
+                " iplugs:\"".concat(iPlugId).concat("\"")), requestedMetadata, null);
         return result;
     }
 
@@ -79,7 +79,7 @@ public class CatalogTreeDataProvider_IDC_1_0_2 implements CatalogTreeDataProvide
         };
         
         List result = IPlugHelperDscEcs.getHits("t02_address.id:[0 TO A] -parent.address_node.addr_uuid:[0 TO Z]".concat(
-                " iplugs:\"".concat(IPlugHelperDscEcs.getAddressPlugIdFromPlugId(iPlugId)).concat("\"")), requestedMetadata, null);
+                " iplugs:\"".concat(iPlugId).concat("\"")), requestedMetadata, null);
         return result;
     }
     
