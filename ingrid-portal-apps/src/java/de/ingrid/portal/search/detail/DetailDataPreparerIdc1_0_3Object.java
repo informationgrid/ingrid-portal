@@ -216,7 +216,10 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 		    		ArrayList row = new ArrayList();
 		    		row.add(notNull(tableRecord.getString("object_conformity.specification")));
 		    		row.add(notNull(tableRecord.getString("object_conformity.degree_value")));
-		    		row.add(UtilsDate.convertDateString(tableRecord.getString("object_conformity.publication_date").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+		    		// publication_date should be always there
+		    		if (tableRecord.getString("object_conformity.publication_date") != null) {
+		    			row.add(UtilsDate.convertDateString(tableRecord.getString("object_conformity.publication_date").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+		    		}
 		    		if (!isEmptyRow(row)) {
 		    			body.add(row);
 		    		}
@@ -229,6 +232,37 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
 		    	}
 		    	
 			}
+		}
+		
+
+		// additional fields
+		tableRecords = getSubRecordsByColumnName(record, "t08_attr.data");
+		if (tableRecords.size() > 0) {
+	    	HashMap element = new HashMap();
+	    	element.put("type", "table");
+	    	element.put("title", messages.getString("additional_fields"));
+			ArrayList body = new ArrayList();
+			element.put("body", body);
+			
+			ArrayList lines = new ArrayList();
+			for (int i=0; i<tableRecords.size(); i++) {
+				Record tableRecord = (Record)tableRecords.get(i);
+				Record attrType = (Record)getSubRecordsByColumnName(tableRecord, "t08_attr_type.name").get(0);
+
+				ArrayList row = new ArrayList();
+	    		row.add(notNull(attrType.getString("t08_attr_type.name")));
+	    		row.add(notNull(tableRecord.getString("t08_attr.data")));
+	    		if (!isEmptyRow(row)) {
+	    			body.add(row);
+	    		}
+			}
+			
+			if (body.size() > 0) {
+		    	elements.add(element);
+		    	element = new HashMap();
+		    	element.put("type", "space");
+				elements.add(element);
+	    	}
 		}
 		
 		
