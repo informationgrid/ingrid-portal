@@ -1183,7 +1183,12 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     	HashMap element = new HashMap();
     	element.put("type", "multiLine");
     	if (record.getString("t012_obj_adr.type") != null && !record.getString("t012_obj_adr.type").equals("-1")) {
-    		element.put("title", sysCodeList.getName("505", record.getString("t012_obj_adr.type")));
+    		String translatedString = sysCodeList.getName("505", record.getString("t012_obj_adr.type"));
+    		if (translatedString != null && translatedString.length() > 0) {
+    			element.put("title", sysCodeList.getName("505", record.getString("t012_obj_adr.type")));
+    		} else {
+    			element.put("title", record.getString("t012_obj_adr.special_name"));
+    		}
     	} else {
         	element.put("title", record.getString("t012_obj_adr.special_name"));
     	}
