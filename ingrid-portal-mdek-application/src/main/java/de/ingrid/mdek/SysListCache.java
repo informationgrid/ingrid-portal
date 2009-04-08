@@ -58,7 +58,7 @@ public class SysListCache {
 	// Load the initial lists from the backend for all lists defined in sysList.properties
 	public void loadInitialLists() {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle("sysList");
-		ArrayList<Integer> initialListIds = new ArrayList<Integer>();
+		List<Integer> initialListIds = new ArrayList<Integer>();
 		keyCache = new HashMap<String, Integer>();
 
 		// Load the catalog data from the backend to extract the catalog language

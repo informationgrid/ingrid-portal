@@ -2,6 +2,7 @@ package de.ingrid.mdek.beans.query;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.ingrid.mdek.beans.object.MdekDataBean;
@@ -10,7 +11,7 @@ public class ObjectSearchResultBean {
 	private long numHits;
 	private long totalNumHits;
 
-	private ArrayList<MdekDataBean> resultList;
+	private List<MdekDataBean> resultList;
 	private Map<String, String> additionalData;
 
 	public ObjectSearchResultBean() {
@@ -36,11 +37,11 @@ public class ObjectSearchResultBean {
 		this.totalNumHits = totalNumHits;
 	}
 
-	public ArrayList<MdekDataBean> getResultList() {
+	public List<MdekDataBean> getResultList() {
 		return resultList;
 	}
 
-	public void setResultList(ArrayList<MdekDataBean> resultList) {
+	public void setResultList(List<MdekDataBean> resultList) {
 		this.resultList = resultList;
 	}
 

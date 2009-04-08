@@ -76,24 +76,24 @@ public class SNSService {
     	snsController = new SNSController(snsClient, SNS_NATIVE_KEY_PREFIX);
     }
 	
-    public ArrayList<SNSTopic> getRootTopics() {
+    public List<SNSTopic> getRootTopics() {
     	log.debug("getRootTopics()");
     	return getSubTopics(SNS_ROOT_TOPIC, 1, "down");
     }
     
-    public ArrayList<SNSTopic> getSubTopics(String topicID, long depth, String direction) {
+    public List<SNSTopic> getSubTopics(String topicID, long depth, String direction) {
     	log.debug("getSubTopics("+topicID+", "+depth+", "+direction+")");
     	return getSubTopics(topicID, depth, direction, false, false);
     }
 
 
-    public ArrayList<SNSTopic> getSubTopicsWithRoot(String topicID, long depth, String direction) {
+    public List<SNSTopic> getSubTopicsWithRoot(String topicID, long depth, String direction) {
     	log.debug("getSubTopicsWithRoot("+topicID+", "+depth+", "+direction+")");
     	return getSubTopics(topicID, depth, direction, true, true);
     }
     
-    private ArrayList<SNSTopic> getSubTopics(String topicID, long depth, String direction, boolean includeSiblings, boolean includeRootNode) {
-    	ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
+    private List<SNSTopic> getSubTopics(String topicID, long depth, String direction, boolean includeSiblings, boolean includeRootNode) {
+    	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
     	log.debug("getSubTopics("+topicID+", "+depth+", "+direction+", "+includeSiblings+", "+includeRootNode+")");
     	
     	log.debug(" Creating query...");
@@ -125,7 +125,7 @@ public class SNSService {
 
 	                // TODO The returned root structure is invalid (?)
 	            	if (includeRootNode) {
-	                	ArrayList<Topic> topNode = new ArrayList<Topic>();
+	                	List<Topic> topNode = new ArrayList<Topic>();
 	                	topNode.add(hit);
 	                	resultList = buildTopicStructure(topNode);            	            		
 	            	} else {
@@ -142,8 +142,8 @@ public class SNSService {
     }
 
 
-    private static ArrayList<SNSTopic> buildTopicStructure(List<Topic> topics) {
-    	ArrayList<SNSTopic> result = new ArrayList<SNSTopic>(); 
+    private static List<SNSTopic> buildTopicStructure(List<Topic> topics) {
+    	List<SNSTopic> result = new ArrayList<SNSTopic>(); 
 
     	for (Topic topic : topics) {
     		if (topic.getLanguage().equalsIgnoreCase(THESAURUS_LANGUAGE_FILTER)) {	// Only add 'german' terms
@@ -152,11 +152,11 @@ public class SNSService {
 	
 	    		if (succ != null && !succ.isEmpty())
 	    		{
-	        		ArrayList<SNSTopic> children = buildTopicStructure(succ); 
+	        		List<SNSTopic> children = buildTopicStructure(succ); 
 	    			resultTopic.setChildren(children);
 	
 	    			for (SNSTopic child : children) {
-	        			ArrayList<SNSTopic> parents = new ArrayList<SNSTopic>();
+	        			List<SNSTopic> parents = new ArrayList<SNSTopic>();
 	        			parents.add(resultTopic);
 	    				child.setParents(parents);
 	    			}
@@ -167,8 +167,8 @@ public class SNSService {
     	return result;
     }
 
-    private static ArrayList<SNSTopic> buildTopicRootStructure(List<Topic> topicList) {
-    	ArrayList<SNSTopic> result = new ArrayList<SNSTopic>(); 
+    private static List<SNSTopic> buildTopicRootStructure(List<Topic> topicList) {
+    	List<SNSTopic> result = new ArrayList<SNSTopic>(); 
 
     	TreeSet<Topic> topics = new TreeSet<Topic>(new TopicComparator());
     	topics.addAll(topicList);
@@ -275,7 +275,7 @@ public class SNSService {
      * @return All topics returned by the SNS, converted to SNSTopics 
      */
     public List<SNSTopic> findTopics(String queryTerm) {
-    	ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>();
+    	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	TopicMapFragment mapFragment = null;
     	try {
     		mapFragment = snsClient.findTopics(queryTerm, "/thesa", SearchType.exact,
@@ -344,12 +344,12 @@ public class SNSService {
 	    return null;
     }
     
-    public ArrayList<SNSTopic> getSimilarTerms(String[] queryTerms) {
+    public List<SNSTopic> getSimilarTerms(String[] queryTerms) {
     	return getSimilarTerms(queryTerms, MAX_NUM_RESULTS);
     }
 
-    private ArrayList<SNSTopic> getSimilarTerms(String[] queryTerms, int numResults) {
-    	ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>();
+    private List<SNSTopic> getSimilarTerms(String[] queryTerms, int numResults) {
+    	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	int[] totalSize = new int[] {0};
 	    Topic[] snsResults = new Topic[0];
     	try {
@@ -371,9 +371,9 @@ public class SNSService {
 	    return resultList;
     }
 
-    public ArrayList<SNSTopic> getSimilarDescriptors(String queryTerm) {
+    public List<SNSTopic> getSimilarDescriptors(String queryTerm) {
     	String[] words = queryTerm.split(" ");
-    	ArrayList<SNSTopic> result = new ArrayList<SNSTopic>();
+    	List<SNSTopic> result = new ArrayList<SNSTopic>();
     	
     	for (int i = 0; i < words.length; i+=MAX_ANALYZED_WORDS) {
     		String queryStr = "";
@@ -389,8 +389,8 @@ public class SNSService {
     }
 
 
-    public ArrayList<SNSTopic> getTopicsForText(String queryTerm) {
-    	ArrayList<SNSTopic> resultList = new ArrayList<SNSTopic>();
+    public List<SNSTopic> getTopicsForText(String queryTerm) {
+    	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	int[] totalSize = new int[] {0};
 	    DetailedTopic[] snsResults = new DetailedTopic[0];
     	try {
@@ -426,9 +426,9 @@ public class SNSService {
 	    	log.error("Error calling snsController.getTopicsForTopic", e);
     	}
 
-    	ArrayList<SNSTopic> synonyms = new ArrayList<SNSTopic>();
-    	ArrayList<SNSTopic> parents = new ArrayList<SNSTopic>();
-    	ArrayList<SNSTopic> children = new ArrayList<SNSTopic>();
+    	List<SNSTopic> synonyms = new ArrayList<SNSTopic>();
+    	List<SNSTopic> parents = new ArrayList<SNSTopic>();
+    	List<SNSTopic> children = new ArrayList<SNSTopic>();
 
     	if (snsResults != null && snsResults.length != 0) {
 		    for (Topic topic : snsResults) {
@@ -464,8 +464,8 @@ public class SNSService {
     }
 
     
-    public ArrayList<SNSLocationTopic> getLocationTopics(String queryTerm, String searchTypeStr, String pathStr) {
-    	ArrayList<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
+    public List<SNSLocationTopic> getLocationTopics(String queryTerm, String searchTypeStr, String pathStr) {
+    	List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
     	SearchType searchType = getSearchType(searchTypeStr);
     	String path = (pathStr == null) ? "/location" : pathStr;
 
@@ -491,8 +491,8 @@ public class SNSService {
 	    return resultList;
     }
 
-    public ArrayList<SNSLocationTopic> getLocationTopicsById(String topicID) {
-    	ArrayList<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
+    public List<SNSLocationTopic> getLocationTopicsById(String topicID) {
+    	List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
     	TopicMapFragment mapFragment = null;
     	try {
     		mapFragment = snsClient.getPSI(topicID, 0, "/location");
@@ -542,9 +542,9 @@ public class SNSService {
 	    		return result;
 	    	}
 
-	    	ArrayList<SNSEventTopic> eventTopics = new ArrayList<SNSEventTopic>();
-	    	ArrayList<SNSLocationTopic> locationTopics = new ArrayList<SNSLocationTopic>();
-	    	ArrayList<SNSTopic> thesaTopics = new ArrayList<SNSTopic>();
+	    	List<SNSEventTopic> eventTopics = new ArrayList<SNSEventTopic>();
+	    	List<SNSLocationTopic> locationTopics = new ArrayList<SNSLocationTopic>();
+	    	List<SNSTopic> thesaTopics = new ArrayList<SNSTopic>();
 
 	    	for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
             	switch (getTopicType(topic)) {

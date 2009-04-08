@@ -1,18 +1,18 @@
 package de.ingrid.mdek.beans.query;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ObjectExtSearchParamsBean {
 	private String queryTerm;
 	private Integer searchType;
 	private Integer relation;
-	private ArrayList<Integer> objClasses;
+	private List<Integer> objClasses;
 
-	private ArrayList<String> thesaurusTerms;
+	private List<String> thesaurusTerms;
 	private Integer thesaurusRelation;
 
-	private ArrayList<String> geoThesaurusTerms;
+	private List<String> geoThesaurusTerms;
 	private Integer geoThesaurusRelation;
 
 	private Integer customLocation;
@@ -39,19 +39,19 @@ public class ObjectExtSearchParamsBean {
 		this.relation = relation;
 	}
 
-	public ArrayList<Integer> getObjClasses() {
+	public List<Integer> getObjClasses() {
 		return objClasses;
 	}
 
-	public void setObjClasses(ArrayList<Integer> objClasses) {
+	public void setObjClasses(List<Integer> objClasses) {
 		this.objClasses = objClasses;
 	}
 
-	public ArrayList<String> getThesaurusTerms() {
+	public List<String> getThesaurusTerms() {
 		return thesaurusTerms;
 	}
 
-	public void setThesaurusTerms(ArrayList<String> thesaurusTerms) {
+	public void setThesaurusTerms(List<String> thesaurusTerms) {
 		this.thesaurusTerms = thesaurusTerms;
 	}
 
@@ -63,11 +63,11 @@ public class ObjectExtSearchParamsBean {
 		this.thesaurusRelation = thesaurusRelation;
 	}
 
-	public ArrayList<String> getGeoThesaurusTerms() {
+	public List<String> getGeoThesaurusTerms() {
 		return geoThesaurusTerms;
 	}
 
-	public void setGeoThesaurusTerms(ArrayList<String> geoThesaurusTerms) {
+	public void setGeoThesaurusTerms(List<String> geoThesaurusTerms) {
 		this.geoThesaurusTerms = geoThesaurusTerms;
 	}
 

@@ -14,12 +14,12 @@ import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekKeysSecurity;
 import de.ingrid.mdek.MdekUtils.IdcEntityVersion;
 import de.ingrid.mdek.beans.CatalogBean;
-import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
+import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.jobs.util.ExpiredDataset;
 import de.ingrid.mdek.util.MdekAddressUtils;
@@ -64,8 +64,8 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			expireCal.add(Calendar.DAY_OF_MONTH, -(expiryDuration));
 			notifyCal.add(Calendar.DAY_OF_MONTH, -(expiryDuration-this.notifyDaysBeforeExpiry));
 
-			ArrayList<ExpiredDataset> datasetsWillExpireList = getExpiredDatasets(expireCal.getTime(), notifyCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.INITIAL, plugId);
-			ArrayList<ExpiredDataset> datasetsExpiredList = getExpiredDatasets(null, expireCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
+			List<ExpiredDataset> datasetsWillExpireList = getExpiredDatasets(expireCal.getTime(), notifyCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.INITIAL, plugId);
+			List<ExpiredDataset> datasetsExpiredList = getExpiredDatasets(null, expireCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
 
 			log.debug("Number of datasets to notify found: "+datasetsWillExpireList.size());
 			log.debug("Number of datasets to expire found: "+datasetsExpiredList.size());
@@ -79,7 +79,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 		}
 	}
 
-	private void updateExpiryState(ArrayList<ExpiredDataset> expiredDatasetList, de.ingrid.mdek.MdekUtils.ExpiryState state, String plugId) {
+	private void updateExpiryState(List<ExpiredDataset> expiredDatasetList, de.ingrid.mdek.MdekUtils.ExpiryState state, String plugId) {
 		IMdekCallerObject mdekCallerObject = connectionFacade.getMdekCallerObject();
 		IMdekCallerAddress mdekCallerAddress = connectionFacade.getMdekCallerAddress();
 		String catAdminUuid = getCatAdminUuid(plugId);
@@ -118,19 +118,19 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 		return cat.getExpiryDuration();		
 	}
 
-	private ArrayList<ExpiredDataset> getExpiredDatasets(Date begin, Date end,
+	private List<ExpiredDataset> getExpiredDatasets(Date begin, Date end,
 			de.ingrid.mdek.MdekUtils.ExpiryState state, String plugId) {
 
-		ArrayList<ExpiredDataset> expiredObjs = getExpiredObjects(begin, end, state, plugId);
-		ArrayList<ExpiredDataset> expiredAdrs = getExpiredAddresses(begin, end, state, plugId);
+		List<ExpiredDataset> expiredObjs = getExpiredObjects(begin, end, state, plugId);
+		List<ExpiredDataset> expiredAdrs = getExpiredAddresses(begin, end, state, plugId);
 
 		expiredObjs.addAll(expiredAdrs);
 		return expiredObjs;
 	}
 
-	private ArrayList<ExpiredDataset> getExpiredObjects(Date begin, Date end,
+	private List<ExpiredDataset> getExpiredObjects(Date begin, Date end,
 			de.ingrid.mdek.MdekUtils.ExpiryState state, String plugId) {
-		ArrayList<ExpiredDataset> resultList = new ArrayList<ExpiredDataset>();
+		List<ExpiredDataset> resultList = new ArrayList<ExpiredDataset>();
 		IMdekCallerQuery mdekCallerQuery = connectionFacade.getMdekCallerQuery();
 
 		if (mdekCallerQuery == null) {
@@ -184,9 +184,9 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 	}
 
 	
-	private ArrayList<ExpiredDataset> getExpiredAddresses(Date begin, Date end,
+	private List<ExpiredDataset> getExpiredAddresses(Date begin, Date end,
 			de.ingrid.mdek.MdekUtils.ExpiryState state, String plugId) {
-		ArrayList<ExpiredDataset> resultList = new ArrayList<ExpiredDataset>();
+		List<ExpiredDataset> resultList = new ArrayList<ExpiredDataset>();
 		IMdekCallerQuery mdekCallerQuery = connectionFacade.getMdekCallerQuery();
 
 		if (mdekCallerQuery == null) {

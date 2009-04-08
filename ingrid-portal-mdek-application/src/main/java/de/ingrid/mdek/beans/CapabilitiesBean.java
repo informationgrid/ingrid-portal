@@ -1,6 +1,6 @@
 package de.ingrid.mdek.beans;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import de.ingrid.mdek.beans.object.OperationBean;
 
@@ -9,9 +9,9 @@ public class CapabilitiesBean {
 	private String title;
 	private String description;
 	private String serviceType;
-	private ArrayList<String> versions;
+	private List<String> versions;
 
-	private ArrayList<OperationBean> operations;
+	private List<OperationBean> operations;
 
 	public String getTitle() {
 		return title;
@@ -37,19 +37,19 @@ public class CapabilitiesBean {
 		this.serviceType = serviceType;
 	}
 
-	public ArrayList<OperationBean> getOperations() {
+	public List<OperationBean> getOperations() {
 		return operations;
 	}
 
-	public void setOperations(ArrayList<OperationBean> operations) {
+	public void setOperations(List<OperationBean> operations) {
 		this.operations = operations;
 	}
 
-	public ArrayList<String> getVersions() {
+	public List<String> getVersions() {
 		return versions;
 	}
 
-	public void setVersions(ArrayList<String> versions) {
+	public void setVersions(List<String> versions) {
 		this.versions = versions;
 	}
 

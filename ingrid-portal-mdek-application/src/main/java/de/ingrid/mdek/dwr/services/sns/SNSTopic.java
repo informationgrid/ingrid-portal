@@ -1,24 +1,29 @@
 package de.ingrid.mdek.dwr.services.sns;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SNSTopic {
 
-	public enum Type { TOP_TERM, NODE_LABEL, DESCRIPTOR, NON_DESCRIPTOR }
-	public enum Source { FREE, UMTHES, GEMET }
+	public enum Type {
+		TOP_TERM, NODE_LABEL, DESCRIPTOR, NON_DESCRIPTOR
+	}
 
-	private Type type; 
+	public enum Source {
+		FREE, UMTHES, GEMET
+	}
+
+	private Type type;
 	private Source source;
 	private String topicId;
 	private String title;
 	private String alternateTitle;
 	private String gemetId;
-	private ArrayList<SNSTopic> children;
-	private ArrayList<SNSTopic> parents;
-	private ArrayList<SNSTopic> synonyms;
-	
-	private ArrayList<String> inspireList;
+	private List<SNSTopic> children;
+	private List<SNSTopic> parents;
+	private List<SNSTopic> synonyms;
 
+	private List<String> inspireList;
 
 	public SNSTopic() {
 		// Default to topterm and umthes
@@ -34,7 +39,8 @@ public class SNSTopic {
 		this.inspireList = new ArrayList<String>();
 	}
 
-	public SNSTopic(Type typ, Source source, String id, String title, String alternateTitle, String gemetId) {
+	public SNSTopic(Type typ, Source source, String id, String title,
+			String alternateTitle, String gemetId) {
 		this.source = source;
 		this.type = typ;
 		this.topicId = id;
@@ -46,7 +52,7 @@ public class SNSTopic {
 		this.synonyms = new ArrayList<SNSTopic>();
 		this.inspireList = new ArrayList<String>();
 	}
-	
+
 	public void setType(Type type) {
 		this.type = type;
 	}
@@ -71,27 +77,27 @@ public class SNSTopic {
 		this.title = title;
 	}
 
-	public ArrayList<SNSTopic> getChildren() {
+	public List<SNSTopic> getChildren() {
 		return children;
 	}
 
-	public void setChildren(ArrayList<SNSTopic> children) {
+	public void setChildren(List<SNSTopic> children) {
 		this.children = children;
 	}
 
-	public ArrayList<SNSTopic> getParents() {
+	public List<SNSTopic> getParents() {
 		return parents;
 	}
 
-	public void setParents(ArrayList<SNSTopic> parents) {
+	public void setParents(List<SNSTopic> parents) {
 		this.parents = parents;
 	}
 
-	public ArrayList<SNSTopic> getSynonyms() {
+	public List<SNSTopic> getSynonyms() {
 		return synonyms;
 	}
 
-	public void setSynonyms(ArrayList<SNSTopic> synonyms) {
+	public void setSynonyms(List<SNSTopic> synonyms) {
 		this.synonyms = synonyms;
 	}
 
@@ -112,14 +118,15 @@ public class SNSTopic {
 	}
 
 	public String toString() {
-		return "[" + type + ", " + source + ", " + title + ", " + alternateTitle + ", " + topicId + ", " + gemetId + "]";
+		return "[" + type + ", " + source + ", " + title + ", "
+				+ alternateTitle + ", " + topicId + ", " + gemetId + "]";
 	}
 
-	public void setInspireList(ArrayList<String> inspireList) {
+	public void setInspireList(List<String> inspireList) {
 		this.inspireList = inspireList;
 	}
 
-	public ArrayList<String> getInspireList() {
+	public List<String> getInspireList() {
 		return inspireList;
 	}
 

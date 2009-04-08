@@ -2,6 +2,7 @@ package de.ingrid.mdek.beans.query;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.ingrid.mdek.beans.address.MdekAddressBean;
@@ -10,7 +11,7 @@ public class AddressSearchResultBean {
 	private long numHits;
 	private long totalNumHits;
 
-	private ArrayList<MdekAddressBean> resultList;
+	private List<MdekAddressBean> resultList;
 	private Map<String, String> additionalData;
 
 	public AddressSearchResultBean() {
@@ -36,11 +37,11 @@ public class AddressSearchResultBean {
 		this.totalNumHits = totalNumHits;
 	}
 
-	public ArrayList<MdekAddressBean> getResultList() {
+	public List<MdekAddressBean> getResultList() {
 		return resultList;
 	}
 
-	public void setResultList(ArrayList<MdekAddressBean> resultList) {
+	public void setResultList(List<MdekAddressBean> resultList) {
 		this.resultList = resultList;
 	}
 

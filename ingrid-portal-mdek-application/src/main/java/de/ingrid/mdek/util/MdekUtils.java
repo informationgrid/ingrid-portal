@@ -95,7 +95,7 @@ public class MdekUtils {
 	public static List<VersionInformation> extractVersionInformationFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
-		ArrayList<VersionInformation> verList = new ArrayList<VersionInformation>();
+		List<VersionInformation> verList = new ArrayList<VersionInformation>();
 
 		if (result != null) {
 			// API Version
@@ -176,7 +176,7 @@ public class MdekUtils {
 	public static List<Group> extractSecurityGroupsFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
-		ArrayList<Group> groupList = new ArrayList<Group>();
+		List<Group> groupList = new ArrayList<Group>();
 		
 		if (result != null) {
 			List<IngridDocument> groups = (List<IngridDocument>) result.get(MdekKeysSecurity.GROUPS);
@@ -234,8 +234,8 @@ public class MdekUtils {
 		}
 	}
 
-	private static ArrayList<Permission> getAddressPermissions(ArrayList<IngridDocument> docList) {
-		ArrayList<Permission> resultList = new ArrayList<Permission>();
+	private static List<Permission> getAddressPermissions(List<IngridDocument> docList) {
+		List<Permission> resultList = new ArrayList<Permission>();
 
 		if (docList == null) {
 			return resultList;
@@ -253,8 +253,8 @@ public class MdekUtils {
 		return resultList;
 	}
 	
-	private static ArrayList<Permission> getObjectPermissions(ArrayList<IngridDocument> docList) {
-		ArrayList<Permission> resultList = new ArrayList<Permission>();
+	private static List<Permission> getObjectPermissions(List<IngridDocument> docList) {
+		List<Permission> resultList = new ArrayList<Permission>();
 
 		if (docList == null) {
 			return resultList;
@@ -272,8 +272,8 @@ public class MdekUtils {
 		return resultList;
 	}
 
-	private static ArrayList<IdcPermission> getGroupPermissions(ArrayList<IngridDocument> docList) {
-		ArrayList<IdcPermission> resultList = new ArrayList<IdcPermission>();
+	private static List<IdcPermission> getGroupPermissions(List<IngridDocument> docList) {
+		List<IdcPermission> resultList = new ArrayList<IdcPermission>();
 
 		if (docList == null) {
 			return resultList;
@@ -288,8 +288,8 @@ public class MdekUtils {
 		return resultList;
 	}
 
-	private static ArrayList<IngridDocument> convertGroupPermissionsToIngridDocs(ArrayList<IdcPermission> pList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private static List<IngridDocument> convertGroupPermissionsToIngridDocs(List<IdcPermission> pList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 
 		if (pList == null) {
 			return resultList;
@@ -304,8 +304,8 @@ public class MdekUtils {
 		return resultList;
 	}
 	
-	private static ArrayList<IngridDocument> convertPermissionsToIngridDocs(ArrayList<Permission> pList) {
-		ArrayList<IngridDocument> resultList = new ArrayList<IngridDocument>();
+	private static List<IngridDocument> convertPermissionsToIngridDocs(List<Permission> pList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 
 		if (pList == null) {
 			return resultList;
@@ -375,7 +375,7 @@ public class MdekUtils {
 	public static List<User> extractSecurityUsersFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
-		ArrayList<User> userList = new ArrayList<User>();
+		List<User> userList = new ArrayList<User>();
 		if (result != null) {
 			List<IngridDocument> users = (List<IngridDocument>) result.get(MdekKeysSecurity.IDC_USERS);
 			for (IngridDocument user : users) {
@@ -394,7 +394,7 @@ public class MdekUtils {
 				// Extract optional idc permissions
 				List<IngridDocument> idcPermissions = (List<IngridDocument>) user.get(MdekKeysSecurity.IDC_PERMISSIONS);
 				if (idcPermissions != null) {
-					ArrayList<IdcPermission> pList = new ArrayList<IdcPermission>();
+					List<IdcPermission> pList = new ArrayList<IdcPermission>();
 					for (IngridDocument permissionDoc : idcPermissions) {
 						String pStr = (String) permissionDoc.get(MdekKeysSecurity.IDC_PERMISSION);
 						pList.add(EnumUtil.mapDatabaseToEnumConst(IdcPermission.class, pStr));
@@ -464,7 +464,7 @@ public class MdekUtils {
 
 		result.put(MdekKeys.OBJ_CLASSES, query.getObjClasses());
 
-		ArrayList<IngridDocument> thesaurusTerms = new ArrayList<IngridDocument>();
+		List<IngridDocument> thesaurusTerms = new ArrayList<IngridDocument>();
 		for (String snsId : query.getThesaurusTerms()) {
 			IngridDocument snsTopic = new IngridDocument();
 			snsTopic.put(MdekKeys.TERM_SNS_ID, snsId);
@@ -473,7 +473,7 @@ public class MdekUtils {
 		result.put(MdekKeys.THESAURUS_TERMS, thesaurusTerms);
 		result.put(MdekKeys.THESAURUS_RELATION, query.getThesaurusRelation());
 		
-		ArrayList<IngridDocument> geoThesaurusTerms = new ArrayList<IngridDocument>();
+		List<IngridDocument> geoThesaurusTerms = new ArrayList<IngridDocument>();
 		for (String snsId : query.getGeoThesaurusTerms()) {
 			IngridDocument snsTopic = new IngridDocument();
 			snsTopic.put(MdekKeys.LOCATION_SNS_ID, snsId);

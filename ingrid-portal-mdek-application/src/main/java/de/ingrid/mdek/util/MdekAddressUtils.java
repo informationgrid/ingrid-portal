@@ -53,8 +53,8 @@ public class MdekAddressUtils {
 		}
 	}
 
-	public static ArrayList<MdekAddressBean> extractDetailedAddresses(IngridDocument doc) {
-		ArrayList<MdekAddressBean> results = new ArrayList<MdekAddressBean>();
+	public static List<MdekAddressBean> extractDetailedAddresses(IngridDocument doc) {
+		List<MdekAddressBean> results = new ArrayList<MdekAddressBean>();
 
 		if (doc != null) {
 			List<IngridDocument> adrs = (List<IngridDocument>) doc.get(MdekKeys.ADR_ENTITIES);
@@ -67,7 +67,7 @@ public class MdekAddressUtils {
 		return results;
 	}
 
-	public static ArrayList<MdekAddressBean> extractDetailedAddressesFromResponse(IngridDocument response) {
+	public static List<MdekAddressBean> extractDetailedAddressesFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		if (result != null) {
 			return extractDetailedAddresses(result);
@@ -101,7 +101,7 @@ public class MdekAddressUtils {
 
 		if (result != null) {
 			List<IngridDocument> adrs = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
-			ArrayList<MdekAddressBean> nodeList = new ArrayList<MdekAddressBean>();
+			List<MdekAddressBean> nodeList = new ArrayList<MdekAddressBean>();
 
 			if (adrs == null) {
 				return null;

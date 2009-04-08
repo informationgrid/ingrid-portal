@@ -1,22 +1,23 @@
 package de.ingrid.mdek.exception;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 
 public class GroupDeleteException extends RuntimeException {
 
-	public ArrayList<MdekAddressBean> addresses;
+	private List<MdekAddressBean> addresses;
 
-	public GroupDeleteException(String message) { super(message); }
+	public GroupDeleteException(String message) {
+		super(message);
+	}
 
-	public ArrayList<MdekAddressBean> getAddresses() {
+	public List<MdekAddressBean> getAddresses() {
 		return addresses;
 	}
 
-	public void setAddresses(ArrayList<MdekAddressBean> addresses) {
+	public void setAddresses(List<MdekAddressBean> addresses) {
 		this.addresses = addresses;
 	}
-
 
 }

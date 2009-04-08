@@ -70,15 +70,15 @@ public class MdekErrorUtils {
 	private static void handleEntityReferencedByObjectError(List<MdekError> errorList, MdekErrorType errType) {
 		MdekAddressBean targetAddress = null;
 		MdekDataBean targetObject = null;
-		ArrayList<MdekAddressBean> sourceAddresses = new ArrayList<MdekAddressBean>();
-		ArrayList<MdekDataBean> sourceObjects = new ArrayList<MdekDataBean>();
+		List<MdekAddressBean> sourceAddresses = new ArrayList<MdekAddressBean>();
+		List<MdekDataBean> sourceObjects = new ArrayList<MdekDataBean>();
 
 		for (MdekError mdekError : errorList) {
 			if (mdekError.getErrorType().equals(errType)) {
 				// In the case of this exception, we have to build an MdekAppException containing additional data
 				IngridDocument errorInfo = mdekError.getErrorInfo();
-				ArrayList<MdekDataBean> objs = MdekObjectUtils.extractDetailedObjects(errorInfo);
-				ArrayList<MdekAddressBean> adrs = MdekAddressUtils.extractDetailedAddresses(errorInfo);
+				List<MdekDataBean> objs = MdekObjectUtils.extractDetailedObjects(errorInfo);
+				List<MdekAddressBean> adrs = MdekAddressUtils.extractDetailedAddresses(errorInfo);
 				sourceObjects.addAll(objs);
 				sourceAddresses.addAll(adrs);
 
@@ -110,8 +110,8 @@ public class MdekErrorUtils {
 				// In the case of this exception, we have to build an MdekAppException containing additional data
 				errorType = err;
 				IngridDocument errorInfo = mdekError.getErrorInfo();
-				ArrayList<MdekAddressBean> adrs = MdekAddressUtils.extractDetailedAddresses(errorInfo);
-				ArrayList<MdekDataBean> objs = MdekObjectUtils.extractDetailedObjects(errorInfo);
+				List<MdekAddressBean> adrs = MdekAddressUtils.extractDetailedAddresses(errorInfo);
+				List<MdekDataBean> objs = MdekObjectUtils.extractDetailedObjects(errorInfo);
 				if (adrs != null && adrs.size() == 2) {
 					rootAddress = adrs.get(0);
 					invalidAddress = adrs.get(1);
@@ -128,8 +128,8 @@ public class MdekErrorUtils {
 				errorType = err;
 				IngridDocument errorInfo = mdekError.getErrorInfo();
 				errorInfo.put(MdekKeys.ADR_ENTITIES, errorInfo.remove(MdekKeysSecurity.USER_ADDRESSES));
-				ArrayList<MdekAddressBean> adrs = MdekAddressUtils.extractDetailedAddresses(errorInfo);
-				ArrayList<MdekDataBean> objs = MdekObjectUtils.extractDetailedObjects(errorInfo);
+				List<MdekAddressBean> adrs = MdekAddressUtils.extractDetailedAddresses(errorInfo);
+				List<MdekDataBean> objs = MdekObjectUtils.extractDetailedObjects(errorInfo);
 				rootAddress = adrs.get(0);
 				invalidObject = objs.get(0);
 				break;				
@@ -138,9 +138,9 @@ public class MdekErrorUtils {
 					|| err.equals(MdekErrorType.USER_RESPONSIBLE_FOR_ADDRESS_PERMISSION_MISSING)) {
 				errorType = err;
 				IngridDocument errorInfo = mdekError.getErrorInfo();
-				ArrayList<MdekAddressBean> invalidAdrs = MdekAddressUtils.extractDetailedAddresses(errorInfo);
+				List<MdekAddressBean> invalidAdrs = MdekAddressUtils.extractDetailedAddresses(errorInfo);
 				errorInfo.put(MdekKeys.ADR_ENTITIES, errorInfo.remove(MdekKeysSecurity.USER_ADDRESSES));
-				ArrayList<MdekAddressBean> userAdrs = MdekAddressUtils.extractDetailedAddresses(errorInfo);
+				List<MdekAddressBean> userAdrs = MdekAddressUtils.extractDetailedAddresses(errorInfo);
 				rootAddress = userAdrs.get(0);
 				invalidAddress = invalidAdrs.get(0);
 				break;
@@ -149,8 +149,8 @@ public class MdekErrorUtils {
 					|| err.equals(MdekErrorType.NO_RIGHT_TO_REMOVE_ADDRESS_PERMISSION)) {
 				errorType = err;
 				IngridDocument errorInfo = mdekError.getErrorInfo();
-				ArrayList<MdekAddressBean> adrs = MdekAddressUtils.extractDetailedAddresses(errorInfo);
-				ArrayList<MdekDataBean> objs = MdekObjectUtils.extractDetailedObjects(errorInfo);
+				List<MdekAddressBean> adrs = MdekAddressUtils.extractDetailedAddresses(errorInfo);
+				List<MdekDataBean> objs = MdekObjectUtils.extractDetailedObjects(errorInfo);
 
 				if (adrs != null && adrs.size() > 0) {
 					rootAddress = adrs.get(0);
@@ -176,7 +176,7 @@ public class MdekErrorUtils {
 	}
 
 	private static void handleGroupHasUsersError(List<MdekError> errorList) {
-		ArrayList<MdekAddressBean> addresses = new ArrayList<MdekAddressBean>();
+		List<MdekAddressBean> addresses = new ArrayList<MdekAddressBean>();
 		MdekErrorType errorType = null;
 		
 		for (MdekError mdekError : errorList) {

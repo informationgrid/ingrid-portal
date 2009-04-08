@@ -1,17 +1,12 @@
 package de.ingrid.mdek.dwr.services.cts;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.List;
-import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -81,7 +76,7 @@ public class CoordinateTransformationServiceImpl implements CoordinateTransforma
 		}
 
 		try {
-			ctsConnection = serviceURL.openConnection();	// Proxy parameter?
+			ctsConnection = serviceURL.openConnection();
 
 			// Set general parameters for the connection
 			ctsConnection.setAllowUserInteraction(false);
@@ -94,22 +89,9 @@ public class CoordinateTransformationServiceImpl implements CoordinateTransforma
 	
 			// Start the request
 			ctsConnection.connect();
-	
-	//		log.debug("Content type: "+ctsConnection.getContentType());
+
 			return (CTSResponse) xstream.fromXML(ctsConnection.getInputStream());
 
-/*
-			String testResponse = 
-		    	"<?xml version=\"1.0\"?>"+
-		    	"<CTS_Response version=\"1.0\">"+
-		    	"<SRS name=\"GK3\" />"+
-		    	"<COORDS values=\"3571769.7220 5540886.8658 3640462.9333 5653551.3119 \" />"+
-		    	"</CTS_Response>";		
-	
-			CTSResponse res = (CTSResponse) xstream.fromXML(testResponse);
-			res.setSpatialReferenceSystem(toSRS);
-			return res;
-*/
 		} catch (IOException e) {
 			log.error("Error while communicating with the transformation service", e);
 			throw e;

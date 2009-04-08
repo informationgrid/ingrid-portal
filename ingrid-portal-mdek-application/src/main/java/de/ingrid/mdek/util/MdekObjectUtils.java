@@ -43,8 +43,8 @@ public class MdekObjectUtils {
 		}		
 	}
 
-	public static ArrayList<MdekDataBean> extractDetailedObjects(IngridDocument doc) {
-		ArrayList<MdekDataBean> results = new ArrayList<MdekDataBean>();
+	public static List<MdekDataBean> extractDetailedObjects(IngridDocument doc) {
+		List<MdekDataBean> results = new ArrayList<MdekDataBean>();
 
 		if (doc != null) {
 			List<IngridDocument> objs = (List<IngridDocument>) doc.get(MdekKeys.OBJ_ENTITIES);
@@ -57,7 +57,7 @@ public class MdekObjectUtils {
 		return results;
 	}
 
-	public static ArrayList<MdekDataBean> extractDetailedObjectsFromResponse(IngridDocument response) {
+	public static List<MdekDataBean> extractDetailedObjectsFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		if (result != null) {
 			return extractDetailedObjects(result);
@@ -103,7 +103,7 @@ public class MdekObjectUtils {
 
 		if (result != null) {
 			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
-			ArrayList<MdekDataBean> nodeList = new ArrayList<MdekDataBean>();
+			List<MdekDataBean> nodeList = new ArrayList<MdekDataBean>();
 			if (objs == null) {
 				return null;
 			}

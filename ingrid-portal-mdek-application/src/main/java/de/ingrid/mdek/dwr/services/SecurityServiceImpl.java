@@ -198,7 +198,7 @@ public class SecurityServiceImpl {
 	
 	
 	public List<String> getPortalUsers() {
-		ArrayList<String> userList = new ArrayList<String>();
+		List<String> userList = new ArrayList<String>();
 		
 		WebContext wctx = WebContextFactory.get();
 		HttpSession session = wctx.getSession();

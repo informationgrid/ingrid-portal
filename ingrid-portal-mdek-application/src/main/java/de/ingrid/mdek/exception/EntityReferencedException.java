@@ -1,60 +1,52 @@
 package de.ingrid.mdek.exception;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 
 public class EntityReferencedException extends RuntimeException {
 
-	public MdekDataBean targetObject;
-	public MdekAddressBean targetAddress;
-	
-	public ArrayList<MdekDataBean> sourceObjects;
-	public ArrayList<MdekAddressBean> sourceAddresses;
+	private MdekDataBean targetObject;
+	private MdekAddressBean targetAddress;
 
+	private List<MdekDataBean> sourceObjects;
+	private List<MdekAddressBean> sourceAddresses;
 
-	public EntityReferencedException(String message) { super(message); }
-
+	public EntityReferencedException(String message) {
+		super(message);
+	}
 
 	public MdekDataBean getTargetObject() {
 		return targetObject;
 	}
 
-
 	public void setTargetObject(MdekDataBean targetObject) {
 		this.targetObject = targetObject;
 	}
-
 
 	public MdekAddressBean getTargetAddress() {
 		return targetAddress;
 	}
 
-
 	public void setTargetAddress(MdekAddressBean targetAddress) {
 		this.targetAddress = targetAddress;
 	}
 
-
-	public ArrayList<MdekDataBean> getSourceObjects() {
+	public List<MdekDataBean> getSourceObjects() {
 		return sourceObjects;
 	}
 
-
-	public void setSourceObjects(ArrayList<MdekDataBean> sourceObjects) {
+	public void setSourceObjects(List<MdekDataBean> sourceObjects) {
 		this.sourceObjects = sourceObjects;
 	}
 
-
-	public ArrayList<MdekAddressBean> getSourceAddresses() {
+	public List<MdekAddressBean> getSourceAddresses() {
 		return sourceAddresses;
 	}
 
-
-	public void setSourceAddresses(ArrayList<MdekAddressBean> sourceAddresses) {
+	public void setSourceAddresses(List<MdekAddressBean> sourceAddresses) {
 		this.sourceAddresses = sourceAddresses;
 	}
-	
 
 }

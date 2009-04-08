@@ -90,13 +90,13 @@ public class MdekEmailUtils {
 	public static void sendObjectAssignedToQAMail(MdekDataBean data) {
 		List<User> qaUserList = getQAUsersForObject(data);
 		List<String> emailList = getEmailAddressesForUsers(qaUserList);
-		HashMap<String, String> assignedDatasetMap = createDatasetFromObject(data);
+		Map<String, String> assignedDatasetMap = createDatasetFromObject(data);
 
 		String currentUserTitle = getAddressTitle(MdekSecurityUtils.getCurrentUserUuid());
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_assigned_to_qa_email.vm");
 		String templatePath = url.getPath();
-		HashMap<String, Object> mailData = new HashMap<String, Object>();
+		Map<String, Object> mailData = new HashMap<String, Object>();
 		mailData.put("assignedDataset", assignedDatasetMap);
 		mailData.put("currentUser", currentUserTitle);
 		String text = mergeTemplate(templatePath, mailData, "map");
@@ -106,13 +106,13 @@ public class MdekEmailUtils {
 	public static void sendAddressAssignedToQAMail(MdekAddressBean adr) {
 		List<User> qaUserList = getQAUsersForAddress(adr);
 		List<String> emailList = getEmailAddressesForUsers(qaUserList);
-		HashMap<String, String> assignedDatasetMap = createDatasetFromAddress(adr);
+		Map<String, String> assignedDatasetMap = createDatasetFromAddress(adr);
 
 		String currentUserTitle = getAddressTitle(MdekSecurityUtils.getCurrentUserUuid());
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_assigned_to_qa_email.vm");
 		String templatePath = url.getPath();
-		HashMap<String, Object> mailData = new HashMap<String, Object>();
+		Map<String, Object> mailData = new HashMap<String, Object>();
 		mailData.put("assignedDataset", assignedDatasetMap);
 		mailData.put("currentUser", currentUserTitle);
 		String text = mergeTemplate(templatePath, mailData, "map");
@@ -125,11 +125,11 @@ public class MdekEmailUtils {
 		uuidList.add(getAssignUserUuid(data));
 
 		List<String> emailList = getEmailAddressesForUsers(uuidList.toArray(new String[]{}));
-		HashMap<String, String> reassignedDatasetMap = createDatasetFromObject(data);
+		Map<String, String> reassignedDatasetMap = createDatasetFromObject(data);
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_reassigned_from_qa_email.vm");
 		String templatePath = url.getPath();
-		HashMap<String, Object> mailData = new HashMap<String, Object>();
+		Map<String, Object> mailData = new HashMap<String, Object>();
 		List<String> commentList = extractNewCommentsFromObject(data);
 		mailData.put("commentList", commentList);
 		mailData.put("reassignedDataset", reassignedDatasetMap);
@@ -143,11 +143,11 @@ public class MdekEmailUtils {
 		uuidList.add(getAssignUserUuid(adr));
 
 		List<String> emailList = getEmailAddressesForUsers(uuidList.toArray(new String[]{}));
-		HashMap<String, String> reassignedDatasetMap = createDatasetFromAddress(adr);
+		Map<String, String> reassignedDatasetMap = createDatasetFromAddress(adr);
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_reassigned_from_qa_email.vm");
 		String templatePath = url.getPath();
-		HashMap<String, Object> mailData = new HashMap<String, Object>();
+		Map<String, Object> mailData = new HashMap<String, Object>();
 		List<String> commentList = extractNewCommentsFromAddress(adr);
 		mailData.put("reassignedDataset", reassignedDatasetMap);
 		mailData.put("commentList", commentList);
@@ -166,13 +166,13 @@ public class MdekEmailUtils {
 
 		String currentUserTitle = getAddressTitle(MdekSecurityUtils.getCurrentUserUuid());
 
-		HashMap<String, String> movedDatasetMap = createDatasetFromObject(data);
+		Map<String, String> movedDatasetMap = createDatasetFromObject(data);
 		movedDatasetMap.put("oldParent", srcTitle);
 		movedDatasetMap.put("newParent", dstTitle);
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_moved_email.vm");
 		String templatePath = url.getPath();
-		HashMap<String, Object> mailData = new HashMap<String, Object>();
+		Map<String, Object> mailData = new HashMap<String, Object>();
 		mailData.put("movedDataset", movedDatasetMap);
 		mailData.put("currentUser", currentUserTitle);
 		String text = mergeTemplate(templatePath, mailData, "map");
@@ -198,13 +198,13 @@ public class MdekEmailUtils {
 
 		String currentUserTitle = getAddressTitle(MdekSecurityUtils.getCurrentUserUuid());
 
-		HashMap<String, String> movedDatasetMap = createDatasetFromAddress(adr);
+		Map<String, String> movedDatasetMap = createDatasetFromAddress(adr);
 		movedDatasetMap.put("oldParent", srcTitle);
 		movedDatasetMap.put("newParent", dstTitle);
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_moved_email.vm");
 		String templatePath = url.getPath();
-		HashMap<String, Object> mailData = new HashMap<String, Object>();
+		Map<String, Object> mailData = new HashMap<String, Object>();
 		mailData.put("movedDataset", movedDatasetMap);
 		mailData.put("currentUser", currentUserTitle);
 		String text = mergeTemplate(templatePath, mailData, "map");
@@ -227,13 +227,13 @@ public class MdekEmailUtils {
 	public static void sendObjectMarkedDeletedMail(MdekDataBean data) {
 		List<User> qaUserList = getQAUsersForObject(data);
 		List<String> emailList = getEmailAddressesForUsers(qaUserList);
-		HashMap<String, String> assignedDatasetMap = createDatasetFromObject(data);
+		Map<String, String> assignedDatasetMap = createDatasetFromObject(data);
 
 		String currentUserTitle = getAddressTitle(MdekSecurityUtils.getCurrentUserUuid());
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_marked_deleted_email.vm");
 		String templatePath = url.getPath();
-		HashMap<String, Object> mailData = new HashMap<String, Object>();
+		Map<String, Object> mailData = new HashMap<String, Object>();
 		mailData.put("assignedDataset", assignedDatasetMap);
 		mailData.put("currentUser", currentUserTitle);
 		String text = mergeTemplate(templatePath, mailData, "map");
@@ -248,49 +248,49 @@ public class MdekEmailUtils {
 	public static void sendAddressMarkedDeletedMail(MdekAddressBean adr) {
 		List<User> qaUserList = getQAUsersForAddress(adr);
 		List<String> emailList = getEmailAddressesForUsers(qaUserList);
-		HashMap<String, String> assignedDatasetMap = createDatasetFromAddress(adr);
+		Map<String, String> assignedDatasetMap = createDatasetFromAddress(adr);
 
 		String currentUserTitle = getAddressTitle(MdekSecurityUtils.getCurrentUserUuid());
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/dataset_marked_deleted_email.vm");
 		String templatePath = url.getPath();
-		HashMap<String, Object> mailData = new HashMap<String, Object>();
+		Map<String, Object> mailData = new HashMap<String, Object>();
 		mailData.put("assignedDataset", assignedDatasetMap);
 		mailData.put("currentUser", currentUserTitle);
 		String text = mergeTemplate(templatePath, mailData, "map");
 		sendEmail(text, MAIL_SENDER, emailList.toArray(new String[]{}) );
 	}
 
-	public static void sendExpiryNotificationMails(ArrayList<ExpiredDataset> expiredDatasetList) {
-		Map<String, ArrayList<ExpiredDataset>> emailDatasetMap = createMailDatasetMap(expiredDatasetList);
+	public static void sendExpiryNotificationMails(List<ExpiredDataset> expiredDatasetList) {
+		Map<String, List<ExpiredDataset>> emailDatasetMap = createMailDatasetMap(expiredDatasetList);
 
-		Iterator<Map.Entry<String, ArrayList<ExpiredDataset>>> it = emailDatasetMap.entrySet().iterator();
+		Iterator<Map.Entry<String, List<ExpiredDataset>>> it = emailDatasetMap.entrySet().iterator();
 		while (it.hasNext()) {
-			Map.Entry<String, ArrayList<ExpiredDataset>> mapEntry = it.next();
+			Map.Entry<String, List<ExpiredDataset>> mapEntry = it.next();
 			String recipient = mapEntry.getKey();
-			ArrayList<ExpiredDataset> expDatasets = mapEntry.getValue();
+			List<ExpiredDataset> expDatasets = mapEntry.getValue();
 
 			URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/datasets_will_expire_email.vm");
 			String templatePath = url.getPath();
-			HashMap<String, Object> mailData = new HashMap<String, Object>();
+			Map<String, Object> mailData = new HashMap<String, Object>();
 			mailData.put("expiredDatasetList", expDatasets);
 			String text = mergeTemplate(templatePath, mailData, "map");
 			sendEmail(text, MAIL_SENDER, new String[] { recipient } );
 		}
 	}
 
-	public static void sendExpiryMails(ArrayList<ExpiredDataset> expiredDatasetList) {
-		Map<String, ArrayList<ExpiredDataset>> emailDatasetMap = createMailDatasetMap(expiredDatasetList);
+	public static void sendExpiryMails(List<ExpiredDataset> expiredDatasetList) {
+		Map<String, List<ExpiredDataset>> emailDatasetMap = createMailDatasetMap(expiredDatasetList);
 
-		Iterator<Map.Entry<String, ArrayList<ExpiredDataset>>> it = emailDatasetMap.entrySet().iterator();
+		Iterator<Map.Entry<String, List<ExpiredDataset>>> it = emailDatasetMap.entrySet().iterator();
 		while (it.hasNext()) {
-			Map.Entry<String, ArrayList<ExpiredDataset>> mapEntry = it.next();
+			Map.Entry<String, List<ExpiredDataset>> mapEntry = it.next();
 			String recipient = mapEntry.getKey();
-			ArrayList<ExpiredDataset> expDatasets = mapEntry.getValue();
+			List<ExpiredDataset> expDatasets = mapEntry.getValue();
 
 			URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/datasets_expired_email.vm");
 			String templatePath = url.getPath();
-			HashMap<String, Object> mailData = new HashMap<String, Object>();
+			Map<String, Object> mailData = new HashMap<String, Object>();
 			mailData.put("expiredDatasetList", expDatasets);
 			String text = mergeTemplate(templatePath, mailData, "map");
 			sendEmail(text, MAIL_SENDER, new String[] { recipient } );
@@ -308,7 +308,7 @@ public class MdekEmailUtils {
 			List<MdekDataBean> expDatasets = mapEntry.getValue();
 			URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/spatial_references_expired_email.vm");
 			String templatePath = url.getPath();
-			HashMap<String, Object> mailData = new HashMap<String, Object>();
+			Map<String, Object> mailData = new HashMap<String, Object>();
 			mailData.put("expiredDatasets", expDatasets);
 			String text = mergeTemplate(templatePath, mailData, "map");
 			sendEmail(text, MAIL_SENDER, new String[] { recipient } );
@@ -355,14 +355,14 @@ public class MdekEmailUtils {
 		}		
 	}
 
-	private static Map<String, ArrayList<ExpiredDataset>> createMailDatasetMap(ArrayList<ExpiredDataset> expiredDatasetList) {
-		Map<String, ArrayList<ExpiredDataset>> mailDatasetMap = new HashMap<String, ArrayList<ExpiredDataset>>();
+	private static Map<String, List<ExpiredDataset>> createMailDatasetMap(List<ExpiredDataset> expiredDatasetList) {
+		Map<String, List<ExpiredDataset>> mailDatasetMap = new HashMap<String, List<ExpiredDataset>>();
 
 		for (ExpiredDataset expDataset : expiredDatasetList) {
 			String email = expDataset.getResponsibleUserEmail();
 			if (email == null) { continue; }
 
-			ArrayList<ExpiredDataset> datasetList = mailDatasetMap.get(email);
+			List<ExpiredDataset> datasetList = mailDatasetMap.get(email);
 			if (datasetList == null) {
 				datasetList = new ArrayList<ExpiredDataset>();
 				mailDatasetMap.put(email, datasetList);
@@ -554,7 +554,7 @@ public class MdekEmailUtils {
 
 
 	private static List<String> getEmailAddressesForUsers(String[] uuidList, String plugId, String userId) {
-		ArrayList<String> emailAddressList = new ArrayList<String>();
+		List<String> emailAddressList = new ArrayList<String>();
 
 		if (uuidList == null || uuidList.length <= 0) {
 			return emailAddressList;
@@ -599,8 +599,8 @@ public class MdekEmailUtils {
 		return getEmailAddressesForUsers(uuidList.toArray(new String[]{}));
 	}
 
-	private static HashMap<String, String> createDatasetFromObject(MdekDataBean data) {
-		HashMap<String, String> assignedDatasetMap = new HashMap<String, String>();
+	private static Map<String, String> createDatasetFromObject(MdekDataBean data) {
+		Map<String, String> assignedDatasetMap = new HashMap<String, String>();
 
 		assignedDatasetMap.put("title", data.getObjectName());
 		assignedDatasetMap.put("uuid", data.getUuid());
@@ -610,8 +610,8 @@ public class MdekEmailUtils {
 		return assignedDatasetMap;
 	}
 
-	private static HashMap<String, String> createDatasetFromAddress(MdekAddressBean data) {
-		HashMap<String, String> assignedDatasetMap = new HashMap<String, String>();
+	private static Map<String, String> createDatasetFromAddress(MdekAddressBean data) {
+		Map<String, String> assignedDatasetMap = new HashMap<String, String>();
 
 		assignedDatasetMap.put("title", MdekAddressUtils.createAddressTitle(data.getOrganisation(), data.getName(), data.getGivenName()));
 		assignedDatasetMap.put("uuid", data.getUuid());

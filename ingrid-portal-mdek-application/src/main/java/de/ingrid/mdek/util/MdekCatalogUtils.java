@@ -71,7 +71,7 @@ public class MdekCatalogUtils {
 			Set<String> listKeys = (Set<String>) result.keySet();
 			for (String listKey : listKeys) {
 				IngridDocument listDocument = (IngridDocument) result.get(listKey);
-				ArrayList<String[]> resultList = new ArrayList<String[]>();
+				List<String[]> resultList = new ArrayList<String[]>();
 				Integer listId = (Integer) listDocument.get(MdekKeys.LST_ID);
 
 				Integer[] entryIds = (Integer[]) listDocument.get(MdekKeys.LST_ENTRY_IDS);
