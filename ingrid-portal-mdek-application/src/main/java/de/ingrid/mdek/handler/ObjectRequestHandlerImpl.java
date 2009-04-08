@@ -120,7 +120,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		return MdekUtils.extractPathFromResponse(response);
 	}
 	
-	public List<TreeNodeBean> getSubObjects(String uuid, int depth) {
+	public List<TreeNodeBean> getSubObjects(String uuid) {
 		IngridDocument response = mdekCallerObject.fetchSubObjects(connectionFacade.getCurrentPlugId(), uuid, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekObjectUtils.extractObjectsFromResponse(response);
 	}

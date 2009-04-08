@@ -15,7 +15,7 @@ import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 public interface ObjectRequestHandler {
 
 	public List<TreeNodeBean> getRootObjects();
-	public List<TreeNodeBean> getSubObjects(String uuid, int depth);
+	public List<TreeNodeBean> getSubObjects(String uuid);
 	public MdekDataBean getObjectDetail(String uuid);
 	public MdekDataBean getPublishedObjectDetail(String uuid);
 	public MdekDataBean getInitialObject(String parentUuid);

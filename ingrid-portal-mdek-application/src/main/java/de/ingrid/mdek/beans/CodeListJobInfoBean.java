@@ -1,9 +1,8 @@
 package de.ingrid.mdek.beans;
 
-
 public class CodeListJobInfoBean extends JobInfoBean {
-	private String uuid  = null;
-	private String title = null;
+	private String uuid;
+	private String title;
 
 	public String getTitle() {
 		return title;
@@ -14,11 +13,11 @@ public class CodeListJobInfoBean extends JobInfoBean {
 	}
 
 	public void setUuid(String uuid) {
-		this.uuid  = uuid;
+		this.uuid = uuid;
 	}
 
 	public String getUuid() {
 		return uuid;
 	}
-	
+
 }

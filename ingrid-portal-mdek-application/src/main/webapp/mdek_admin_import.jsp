@@ -155,7 +155,7 @@ scriptScope.cancelImport = function() {
 
 function initTree() {
 	// Load initial first level of the tree from the server
-	TreeService.getSubTree(null, null, 1, 
+	TreeService.getSubTree(null, null, 
 		function (rootNodeList) {
 			var importTree = dojo.widget.byId("treeImportTree");
 
@@ -189,7 +189,7 @@ function initTree() {
 		});
 		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
 
-		TreeService.getSubTree(node.uuid, node.nodeAppType, 1, {
+		TreeService.getSubTree(node.uuid, node.nodeAppType, {
   			callback:function(res) { deferred.callback(res); },
 			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
 			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }

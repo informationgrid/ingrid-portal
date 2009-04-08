@@ -2,9 +2,9 @@ package de.ingrid.mdek.beans.query;
 
 
 public class SearchResultBean {
-	public ObjectSearchResultBean objectSearchResult;
-	public AddressSearchResultBean addressSearchResult;
-	public CSVSearchResultBean csvSearchResult;
+	private ObjectSearchResultBean objectSearchResult;
+	private AddressSearchResultBean addressSearchResult;
+	private CSVSearchResultBean csvSearchResult;
 	
 	
 	public ObjectSearchResultBean getObjectSearchResult() {

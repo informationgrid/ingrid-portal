@@ -3,15 +3,15 @@ package de.ingrid.mdek.beans;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class SNSLocationUpdateJobInfoBean extends JobInfoBean {
 
 	private List<SNSLocationUpdateResult> snsUpdateResults;
 
+	public SNSLocationUpdateJobInfoBean() {
+	}
 
-	public SNSLocationUpdateJobInfoBean() {}
-
-	// Convenience method to copy all data contained in a JobInfoBean into a new URL Info obj
+	// Convenience method to copy all data contained in a JobInfoBean into a new
+	// URL Info obj
 	public SNSLocationUpdateJobInfoBean(JobInfoBean jobInfo) {
 		this.setDescription(jobInfo.getDescription());
 		this.setEndTime(jobInfo.getEndTime());
@@ -26,11 +26,13 @@ public class SNSLocationUpdateJobInfoBean extends JobInfoBean {
 		return snsUpdateResults;
 	}
 
-	public void setSnsUpdateResults(List<SNSLocationUpdateResult> snsUpdateResults) {
+	public void setSnsUpdateResults(
+			List<SNSLocationUpdateResult> snsUpdateResults) {
 		this.snsUpdateResults = snsUpdateResults;
 	}
 
-	// Retrieve the entries from snsUpdateResults as list of string arrays (for CSV Export)
+	// Retrieve the entries from snsUpdateResults as list of string arrays (for
+	// CSV Export)
 	public List<String[]> getEntries() {
 		List<String[]> entries = new ArrayList<String[]>();
 

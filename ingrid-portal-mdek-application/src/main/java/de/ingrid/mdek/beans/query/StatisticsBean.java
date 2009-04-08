@@ -2,14 +2,11 @@ package de.ingrid.mdek.beans.query;
 
 import java.util.Map;
 
-
-
 public class StatisticsBean {
 
 	// Map workstate (WorkState) to number of datasets
-	public Map<String, Long> classMap;
-	public Long numTotal;
-
+	private Map<String, Long> classMap;
+	private Long numTotal;
 
 	public Map<String, Long> getClassMap() {
 		return classMap;

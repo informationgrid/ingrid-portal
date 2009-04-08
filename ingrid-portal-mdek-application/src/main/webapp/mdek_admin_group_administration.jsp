@@ -263,7 +263,7 @@ function initObjectTree() {
 	// initially load data (first hierarchy level) from server if the user is catAdmin
 	if (currentUser.role == 1) {
 		// catAdmin. Display all nodes starting from the rootNode
-		TreeService.getSubTree(null, null, 1, function (str) {
+		TreeService.getSubTree(null, null, function (str) {
 			tree.setChildren([str[0]]);
 		});
 	
@@ -288,7 +288,7 @@ function initObjectTree() {
 
 		var deferred = new dojo.Deferred();
 
-		TreeService.getSubTree(node.id, node.nodeAppType, 1, {
+		TreeService.getSubTree(node.id, node.nodeAppType, {
 //			preHook: UtilDWR.enterLoadingState,
 //			postHook: UtilDWR.exitLoadingState,
   			callback:function(res) { deferred.callback(res); },
@@ -312,7 +312,7 @@ function initAddressTree() {
 	// initially load data (first hierarchy level) from server if the user is catAdmin
 	if (currentUser.role == 1) {
 		// catAdmin. Display all nodes starting from the rootNode
-		TreeService.getSubTree(null, null, 1, function (str) {
+		TreeService.getSubTree(null, null, function (str) {
 			tree.setChildren([str[1]]);
 		});
 	
@@ -339,7 +339,7 @@ function initAddressTree() {
 
 		var deferred = new dojo.Deferred();
 
-		TreeService.getSubTree(node.id, node.nodeAppType, 1, {
+		TreeService.getSubTree(node.id, node.nodeAppType, {
 //			preHook: UtilDWR.enterLoadingState,
 //			postHook: UtilDWR.exitLoadingState,
   			callback:function(res) { deferred.callback(res); },

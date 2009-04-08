@@ -96,7 +96,7 @@ function selectNode(node) {
 
 function initTree() {
 	// Load initial first level of the tree from the server
-	TreeService.getSubTree(null, null, 1, 
+	TreeService.getSubTree(null, null, 
 		function (rootNodeList) {
 			var duplicatesTree = dojo.widget.byId("duplicatesTree");
 
@@ -131,7 +131,7 @@ function initTree() {
 		});
 		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
 
-		TreeService.getSubTree(node.uuid, node.nodeAppType, 1, {
+		TreeService.getSubTree(node.uuid, node.nodeAppType, {
   			callback:function(res) { deferred.callback(res); },
 			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
 			exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }

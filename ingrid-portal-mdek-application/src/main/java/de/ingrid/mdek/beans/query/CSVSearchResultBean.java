@@ -1,18 +1,16 @@
 package de.ingrid.mdek.beans.query;
 
-
 public class CSVSearchResultBean {
-	public int numHits;
-	public long totalNumHits;
-	public byte[] data;
+	private int numHits;
+	private long totalNumHits;
+	private byte[] data;
 
-	
 	public CSVSearchResultBean() {
 		this.numHits = 0;
 		this.totalNumHits = 0;
 		this.data = null;
 	}
-	
+
 	public int getNumHits() {
 		return numHits;
 	}

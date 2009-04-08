@@ -2,12 +2,11 @@ package de.ingrid.mdek.beans.query;
 
 import java.util.List;
 
-
 public class ThesaurusStatisticsResultBean {
-	long numHitsTotal;
-	long numTermsTotal;
+	private long numHitsTotal;
+	private long numTermsTotal;
 
-	List<SearchTermBean> searchTermList;
+	private List<SearchTermBean> searchTermList;
 
 	public long getNumHitsTotal() {
 		return numHitsTotal;

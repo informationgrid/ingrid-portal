@@ -1,6 +1,5 @@
 package de.ingrid.mdek.beans.security;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

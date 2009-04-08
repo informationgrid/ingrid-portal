@@ -1,11 +1,11 @@
 package de.ingrid.mdek.beans.object;
 
 public class OperationParameterBean {
-	String name;
-	String direction;
-	String description;
-	Integer optional;
-	Integer multiple;
+	private String name;
+	private String direction;
+	private String description;
+	private Integer optional;
+	private Integer multiple;
 
 	public OperationParameterBean() {}
 	

@@ -75,7 +75,7 @@ function initTree() {
 
 		var deferred = new dojo.Deferred();
 		
-		TreeService.getSubTree(node.id, node.nodeAppType, 1, {
+		TreeService.getSubTree(node.id, node.nodeAppType, {
   			callback:function(res) { deferred.callback(res); },
 			timeout:5000,
 			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
@@ -200,7 +200,7 @@ var testFunc = function() {
 
 
 // initially load data (first hierachy level) from server 
-TreeService.getSubTree(null, null, 1, 
+TreeService.getSubTree(null, null, 
 	function (str) {
 		var tree = dojo.widget.byId('tree');
 		tree.setChildren(str);

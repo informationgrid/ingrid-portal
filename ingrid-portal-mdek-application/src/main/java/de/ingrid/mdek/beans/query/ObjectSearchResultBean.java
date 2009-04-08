@@ -7,19 +7,19 @@ import java.util.Map;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 
 public class ObjectSearchResultBean {
-	public long numHits;
-	public long totalNumHits;
+	private long numHits;
+	private long totalNumHits;
 
-	public ArrayList<MdekDataBean> resultList;
-	public Map<String, String> additionalData;
-	
+	private ArrayList<MdekDataBean> resultList;
+	private Map<String, String> additionalData;
+
 	public ObjectSearchResultBean() {
 		this.numHits = 0;
 		this.totalNumHits = 0;
 		this.resultList = new ArrayList<MdekDataBean>();
 		this.additionalData = new HashMap<String, String>();
 	}
-	
+
 	public long getNumHits() {
 		return numHits;
 	}

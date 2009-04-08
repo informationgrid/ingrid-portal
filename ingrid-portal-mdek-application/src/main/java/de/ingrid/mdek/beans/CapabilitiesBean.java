@@ -6,13 +6,12 @@ import de.ingrid.mdek.beans.object.OperationBean;
 
 public class CapabilitiesBean {
 
-	public String title;
-	public String description;
-	public String serviceType;
-	public ArrayList<String> versions;
+	private String title;
+	private String description;
+	private String serviceType;
+	private ArrayList<String> versions;
 
-	public ArrayList<OperationBean> operations;
-
+	private ArrayList<OperationBean> operations;
 
 	public String getTitle() {
 		return title;

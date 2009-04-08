@@ -7,19 +7,19 @@ import java.util.Map;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 
 public class AddressSearchResultBean {
-	public long numHits;
-	public long totalNumHits;
+	private long numHits;
+	private long totalNumHits;
 
-	public ArrayList<MdekAddressBean> resultList;
-	public Map<String, String> additionalData;
-	
+	private ArrayList<MdekAddressBean> resultList;
+	private Map<String, String> additionalData;
+
 	public AddressSearchResultBean() {
 		this.numHits = 0;
 		this.totalNumHits = 0;
 		this.resultList = new ArrayList<MdekAddressBean>();
 		this.additionalData = new HashMap<String, String>();
 	}
-	
+
 	public long getNumHits() {
 		return numHits;
 	}

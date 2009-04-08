@@ -95,7 +95,7 @@ init = function() {
 	}
 	
 	// Load initial first level of the tree from the server
-	TreeService.getSubTree(null, null, 1, 
+	TreeService.getSubTree(null, null, 
 		function (str) {
 			for (var i = 0; i < str.length; i++) {
 				str[i].id = "AssignObj_"+str[i].id;
@@ -121,7 +121,7 @@ init = function() {
 
 		var deferred = new dojo.Deferred();
 
-		TreeService.getSubTree(node.id.substring(10, node.id.length), node.nodeAppType, 1, {
+		TreeService.getSubTree(node.id.substring(10, node.id.length), node.nodeAppType, {
   			callback:function(res) { deferred.callback(res); },
 //			timeout:5000,
 			errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },

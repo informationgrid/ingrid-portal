@@ -76,7 +76,7 @@ function initObjectTree() {
 
 	// initially load data (first hierarchy level) from the server
 	// Display all nodes starting from the rootNode
-	TreeService.getSubTree(null, null, 1, function (str) {
+	TreeService.getSubTree(null, null, function (str) {
 		// Setting the uuid as widgetId is bad. This leads to widget collisions if we display multiple trees
 		// Remove the id and use uuid instead
 		str[0].uuid = str[0].id;
@@ -94,7 +94,7 @@ function initObjectTree() {
 
 		var deferred = new dojo.Deferred();
 
-		TreeService.getSubTree(node.uuid, node.nodeAppType, 1, {
+		TreeService.getSubTree(node.uuid, node.nodeAppType, {
   			callback:function(res) {
 				// Setting the uuid as widgetId is bad. This leads to widget collisions if we display multiple trees
 				// Remove the id and use uuid instead
@@ -125,7 +125,7 @@ function initAddressTree() {
 
 	// initially load data (first hierarchy level) from server
 	// Display all address nodes starting from the rootNode
-	TreeService.getSubTree(null, null, 1, function (str) {
+	TreeService.getSubTree(null, null, function (str) {
 		// Setting the uuid as widgetId is bad. This leads to widget collisions if we display multiple trees
 		// Remove the id and use uuid instead
 		str[1].uuid = str[1].id;
@@ -143,7 +143,7 @@ function initAddressTree() {
 
 		var deferred = new dojo.Deferred();
 
-		TreeService.getSubTree(node.uuid, node.nodeAppType, 1, {
+		TreeService.getSubTree(node.uuid, node.nodeAppType, {
   			callback:function(res) {
 				// Setting the uuid as widgetId is bad. This leads to widget collisions if we display multiple trees
 				// Remove the id and use uuid instead

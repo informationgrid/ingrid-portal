@@ -53,7 +53,6 @@ public class CatalogManagementServiceImpl {
 	private MdekJobHandler mdekJobHandler;
 	private CatalogRequestHandler catalogRequestHandler;
 
-	// TODO Move ConnectionFacade (or better: the specific MdekCallers) to a request handler!
 	private ConnectionFacade connectionFacade;
 
 	public void startUrlValidatorJob() {

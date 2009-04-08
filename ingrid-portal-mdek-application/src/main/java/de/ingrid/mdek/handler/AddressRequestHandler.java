@@ -15,7 +15,7 @@ import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 public interface AddressRequestHandler {
 
 	public List<TreeNodeBean> getRootAddresses(boolean freeAddressesOnly);
-	public List<TreeNodeBean> getSubAddresses(String uuid, int depth);
+	public List<TreeNodeBean> getSubAddresses(String uuid);
 	public MdekAddressBean getAddressDetail(String uuid);
 	public MdekAddressBean getPublishedAddressDetail(String uuid);
 	public MdekAddressBean getInitialAddress(String parentUuid);

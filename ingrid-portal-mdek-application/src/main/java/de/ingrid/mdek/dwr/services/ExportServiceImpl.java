@@ -1,6 +1,5 @@
 package de.ingrid.mdek.dwr.services;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.log4j.Logger;

@@ -123,7 +123,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		return MdekAddressUtils.extractAddressesFromResponse(response);
 	}
 
-	public List<TreeNodeBean> getSubAddresses(String uuid, int depth) {
+	public List<TreeNodeBean> getSubAddresses(String uuid) {
 		IngridDocument response = mdekCallerAddress.fetchSubAddresses(connectionFacade.getCurrentPlugId(), uuid, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekAddressUtils.extractAddressesFromResponse(response);
 	}

@@ -38,10 +38,7 @@ public class TreeServiceImpl {
 	private final static String ADDRESS_APPTYPE = "A";
 
 	
-	public List<TreeNodeBean> getSubTree(String nodeUuid, String nodeType, int depth) {
-		// TODO Cleanup
-		// TODO The depth parameter is currently ignored
-
+	public List<TreeNodeBean> getSubTree(String nodeUuid, String nodeType) {
 		if (nodeUuid != null && nodeType == null) {
 			throw new IllegalArgumentException("Wrong arguments on method getSubTree(): nodeType must be set if nodeUuid is set!");
 		}
@@ -57,7 +54,7 @@ public class TreeServiceImpl {
 			if (nodeUuid.equalsIgnoreCase(OBJECT_ROOT))
 				subObjects = objectRequestHandler.getRootObjects();
 			else
-				subObjects = objectRequestHandler.getSubObjects(nodeUuid, depth);
+				subObjects = objectRequestHandler.getSubObjects(nodeUuid);
 	
 			for (TreeNodeBean node : subObjects) {
 				addTreeNodeObjectInfo(node);
@@ -80,7 +77,7 @@ public class TreeServiceImpl {
 				}
 
 			} else {
-				subAddresses = addressRequestHandler.getSubAddresses(nodeUuid, depth);
+				subAddresses = addressRequestHandler.getSubAddresses(nodeUuid);
 
 				for (TreeNodeBean node : subAddresses) {
 					addTreeNodeAddressInfo(node);

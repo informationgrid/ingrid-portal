@@ -14,7 +14,7 @@ _container_.addOnLoad(function() {
 
 function initTree() {
 	// Load initial first level of the tree from the server
-	TreeService.getSubTree(null, null, 1, 
+	TreeService.getSubTree(null, null, 
 		function (rootNodeList) {
 			dojo.lang.forEach(rootNodeList, function(rootNode){
 				rootNode.title = dojo.string.escape("html", rootNode.title);
@@ -57,7 +57,7 @@ function initTree() {
 		});
 		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
 
-		TreeService.getSubTree(node.uuid, node.nodeAppType, 1, {
+		TreeService.getSubTree(node.uuid, node.nodeAppType, {
 			preHook: showLoadingZone,
 			postHook: hideLoadingZone,
   			callback:function(res) { deferred.callback(res); },

@@ -1,10 +1,10 @@
 package de.ingrid.mdek.beans.object;
 
 public class DataFormatBean {
-	public String name;
-	public String version;
-	public String compression;
-	public String pixelDepth;
+	private String name;
+	private String version;
+	private String compression;
+	private String pixelDepth;
 
 	public String getName() {
 		return name;

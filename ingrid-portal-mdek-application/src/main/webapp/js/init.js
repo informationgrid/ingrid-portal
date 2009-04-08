@@ -231,7 +231,7 @@ function initForm() {
 function initTree() {
 
 	// initially load data (first hierarchy level) from server 
-	TreeService.getSubTree(null, null, 1, 
+	TreeService.getSubTree(null, null, 
 		function (str) {
 			var tree = dojo.widget.byId('tree');
 			tree.setChildren(str);
@@ -310,7 +310,7 @@ function initTree() {
 
 		var deferred = new dojo.Deferred();
 
-		TreeService.getSubTree(node.id, node.nodeAppType, 1, {
+		TreeService.getSubTree(node.id, node.nodeAppType, {
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
   			callback:function(res) { deferred.callback(res); },

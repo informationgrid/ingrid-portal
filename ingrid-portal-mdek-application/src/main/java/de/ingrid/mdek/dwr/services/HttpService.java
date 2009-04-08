@@ -1,8 +1,5 @@
 package de.ingrid.mdek.dwr.services;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,42 +21,6 @@ import org.htmlparser.util.SimpleNodeIterator;
 public class HttpService {
 
 	private final static Logger log = Logger.getLogger(HttpService.class);	
-
-    @Deprecated
-	public String getHtmlBody(String urlStr) {
-    	try {
-	    	URL url = new URL(urlStr);
-        	BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-
-        	char[] cbuf = new char[65536];
-        	StringBuffer stringbuf = new StringBuffer();
-
-        	int read_this_time = 0;
-        	while (read_this_time != -1) {
-        		read_this_time = in.read(cbuf, 0, 65536);
-        		if (read_this_time != -1)
-        			stringbuf.append(cbuf, 0, read_this_time);
-        	}
-
-        	String result = stringbuf.toString();
-        	int beginIndex = result.toLowerCase().indexOf("<body");
-        	beginIndex = result.indexOf('>', beginIndex)+1;
-        	int endIndex = result.toLowerCase().indexOf("</body>");
-        	if (beginIndex < 0 || beginIndex >= result.length()) {
-        		beginIndex = 0;
-        	}
-        	if (endIndex < 0 || endIndex >= result.length()) {
-        		endIndex = result.length() - 1;
-        	}
-
-        	result = result.substring(beginIndex, endIndex);
-        	return result;
-        	
-    	} catch (Exception e) {
-			log.error("", e);
-			throw new RuntimeException(e);
-    	}
-	}
 
     public String getHtmlTitle(String url) {
     	try {

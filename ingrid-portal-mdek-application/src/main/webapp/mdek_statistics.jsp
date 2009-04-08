@@ -484,7 +484,7 @@ function initStatsTree() {
 		});
 		deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
 
-		TreeService.getSubTree(node.uuid, node.nodeAppType, 1, {
+		TreeService.getSubTree(node.uuid, node.nodeAppType, {
 			preHook: showLoadingZone,
 			postHook: hideLoadingZone,
   			callback:function(res) { deferred.callback(res); },

@@ -3,36 +3,32 @@ package de.ingrid.mdek.beans;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import org.apache.log4j.Logger;
-
-
 public class VersionInformation {
 
-	private final static Logger log = Logger.getLogger(VersionInformation.class);	
+	private String name;
+	private String version;
+	private String buildNumber;
+	private Date timeStamp;
 
-	String name;
-	String version;
-	String buildNumber;
-	Date timeStamp;
-	
 	// Init Method is called by the Spring Framework on initialization
-    public void init() throws Exception {
+	public void init() throws Exception {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle("general");
 
 		this.name = resourceBundle.getString("build.name");
 		this.version = resourceBundle.getString("build.version");
 		this.buildNumber = resourceBundle.getString("build.number");
 		try {
-			this.timeStamp = new Date(Long.valueOf(resourceBundle.getString("build.timestamp")));
+			this.timeStamp = new Date(Long.valueOf(resourceBundle
+					.getString("build.timestamp")));
 		} catch (NumberFormatException e) {
 			this.timeStamp = new Date();
 		}
-    }
+	}
 
-    // getter for dwr
-    public VersionInformation get() {
-    	return this;
-    }
+	// getter for dwr
+	public VersionInformation get() {
+		return this;
+	}
 
 	public String getName() {
 		return name;
