@@ -2,7 +2,6 @@ package de.ingrid.mdek.quartz.jobs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -283,7 +282,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {
-			return MdekMapper.mapToThesTermsTable((List<HashMap<String, Object>>) result.get(MdekKeys.SUBJECT_TERMS));
+			return MdekMapper.mapToThesTermsTable((List<IngridDocument>) result.get(MdekKeys.SUBJECT_TERMS));
 
 		} else {
 			MdekErrorUtils.handleError(response);

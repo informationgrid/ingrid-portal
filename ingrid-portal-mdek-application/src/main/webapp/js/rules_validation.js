@@ -335,9 +335,9 @@ function addCommunicationTableValidation() {
 			this._valid = false;
 			var data = this.store.getData();
 			for (var i = 0; i < data.length; ++i) {
-				if (data[i].communicationMedium == email
-				      && typeof(data[i].communicationValue) != "undefined"
-				      && dojo.string.trim(data[i].communicationValue).length != 0) {
+				if (data[i].medium == email
+				      && typeof(data[i].value) != "undefined"
+				      && dojo.string.trim(data[i].value).length != 0) {
 					this._valid = true;
 					dojo.html.removeClass(dojo.byId("addressComLabel"), "important");
 				}

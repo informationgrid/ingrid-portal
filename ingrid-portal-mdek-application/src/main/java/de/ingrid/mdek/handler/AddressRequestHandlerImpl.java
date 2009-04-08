@@ -1,9 +1,6 @@
 package de.ingrid.mdek.handler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -15,12 +12,13 @@ import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcStatisticsSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.WorkState;
+import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressSearchResultBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
-import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
+import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.caller.IMdekCaller.FetchQuantity;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekAddressUtils;
@@ -71,7 +69,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		return true;
 	}
 
-	public Map<String, Object> copyAddress(String fromUuid, String toUuid, boolean copySubTree, boolean copyToFreeAddress) {
+	public TreeNodeBean copyAddress(String fromUuid, String toUuid, boolean copySubTree, boolean copyToFreeAddress) {
 		IngridDocument response = mdekCallerAddress.copyAddress(connectionFacade.getCurrentPlugId(), fromUuid, toUuid, copySubTree, copyToFreeAddress, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekAddressUtils.extractSingleSimpleAddressFromResponse(response);
 	}
@@ -120,12 +118,12 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		return MdekUtils.extractPathFromResponse(response);
 	}
 
-	public ArrayList<HashMap<String, Object>> getRootAddresses(boolean freeAddressesOnly) {
+	public List<TreeNodeBean> getRootAddresses(boolean freeAddressesOnly) {
 		IngridDocument response = mdekCallerAddress.fetchTopAddresses(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid(), freeAddressesOnly);
 		return MdekAddressUtils.extractAddressesFromResponse(response);
 	}
 
-	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth) {
+	public List<TreeNodeBean> getSubAddresses(String uuid, int depth) {
 		IngridDocument response = mdekCallerAddress.fetchSubAddresses(connectionFacade.getCurrentPlugId(), uuid, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekAddressUtils.extractAddressesFromResponse(response);
 	}

@@ -10,6 +10,7 @@ import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtils.AddressType;
 import de.ingrid.mdek.MdekUtils.WorkState;
+import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressSearchResultBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
@@ -26,7 +27,7 @@ public class MdekAddressUtils {
 	}
 
 	
-	public static HashMap<String, Object> extractSingleSimpleAddressFromResponse(IngridDocument response) {
+	public static TreeNodeBean extractSingleSimpleAddressFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {
@@ -76,13 +77,13 @@ public class MdekAddressUtils {
 		}
 	}
 
-	public static ArrayList<HashMap<String, Object>> extractAddressesFromResponse(IngridDocument response) {
+	public static List<TreeNodeBean> extractAddressesFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
-		ArrayList<HashMap<String, Object>> nodeList = null;
+		List<TreeNodeBean> nodeList = null;
 
 		if (result != null) {
-			nodeList = new ArrayList<HashMap<String, Object>>();
+			nodeList = new ArrayList<TreeNodeBean>();
 			List<IngridDocument> adrs = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
 			for (IngridDocument adrEntity : adrs) {
 				nodeList.add(dataMapper.getSimpleAddressRepresentation(adrEntity));

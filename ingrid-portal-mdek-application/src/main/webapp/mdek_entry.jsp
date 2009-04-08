@@ -2222,8 +2222,8 @@ function hideSplash(){
 				      	    <table id="addressCom" dojoType="ingrid:FilteringTable" minRows="5" cellspacing="0" class="filteringTable nosort interactive">
 				      	      <thead>
 				      		      <tr>
-				            			<th nosort="true" field="communicationMedium" dataType="String" width="65" editor="addressComType"><script>document.write(message.get("ui.adr.details.communicationTable.header.medium"))</script></th>
-				            			<th nosort="true" field="communicationValue" dataType="String" width="255" editor="addressComConnection"><script>document.write(message.get("ui.adr.details.communicationTable.header.value"))</script></th>
+				            			<th nosort="true" field="medium" dataType="String" width="65" editor="addressComType"><script>document.write(message.get("ui.adr.details.communicationTable.header.medium"))</script></th>
+				            			<th nosort="true" field="value" dataType="String" width="255" editor="addressComConnection"><script>document.write(message.get("ui.adr.details.communicationTable.header.value"))</script></th>
 				      		      </tr>
 				      	      </thead>
 				      	      <tbody>

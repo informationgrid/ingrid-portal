@@ -1,9 +1,6 @@
 package de.ingrid.mdek.handler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -16,6 +13,7 @@ import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcStatisticsSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.WorkState;
+import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
@@ -58,7 +56,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		return MdekObjectUtils.extractSingleObjectFromResponse(response);
 	}
 	
-	public ArrayList<HashMap<String, Object>> getRootObjects() {
+	public List<TreeNodeBean> getRootObjects() {
 		IngridDocument response = mdekCallerObject.fetchTopObjects(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
 		return MdekObjectUtils.extractObjectsFromResponse(response);
 	}
@@ -83,7 +81,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		return true;
 	}
 
-	public Map<String, Object> copyObject(String fromUuid, String toUuid, boolean copySubTree) {
+	public TreeNodeBean copyObject(String fromUuid, String toUuid, boolean copySubTree) {
 		IngridDocument response = mdekCallerObject.copyObject(connectionFacade.getCurrentPlugId(), fromUuid, toUuid, copySubTree, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekObjectUtils.extractSingleSimpleObjectFromResponse(response);
 	}
@@ -122,7 +120,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 		return MdekUtils.extractPathFromResponse(response);
 	}
 	
-	public ArrayList<HashMap<String, Object>> getSubObjects(String uuid, int depth) {
+	public List<TreeNodeBean> getSubObjects(String uuid, int depth) {
 		IngridDocument response = mdekCallerObject.fetchSubObjects(connectionFacade.getCurrentPlugId(), uuid, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekObjectUtils.extractObjectsFromResponse(response);
 	}

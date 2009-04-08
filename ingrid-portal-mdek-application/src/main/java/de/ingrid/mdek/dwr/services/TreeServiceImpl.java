@@ -1,12 +1,11 @@
 package de.ingrid.mdek.dwr.services;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.handler.AddressRequestHandler;
 import de.ingrid.mdek.handler.ObjectRequestHandler;
 
@@ -39,7 +38,7 @@ public class TreeServiceImpl {
 	private final static String ADDRESS_APPTYPE = "A";
 
 	
-	public ArrayList<HashMap<String, Object>> getSubTree(String nodeUuid, String nodeType, int depth) {
+	public List<TreeNodeBean> getSubTree(String nodeUuid, String nodeType, int depth) {
 		// TODO Cleanup
 		// TODO The depth parameter is currently ignored
 
@@ -53,37 +52,37 @@ public class TreeServiceImpl {
 
 
 		if (nodeType.equals(OBJECT_APPTYPE)) {
-			ArrayList<HashMap<String, Object>> subObjects = null; 
+			List<TreeNodeBean> subObjects = null; 
 			
 			if (nodeUuid.equalsIgnoreCase(OBJECT_ROOT))
 				subObjects = objectRequestHandler.getRootObjects();
 			else
 				subObjects = objectRequestHandler.getSubObjects(nodeUuid, depth);
 	
-			for (HashMap<String, Object> node : subObjects) {
+			for (TreeNodeBean node : subObjects) {
 				addTreeNodeObjectInfo(node);
 			}
 			return subObjects;
 
 		} else if (nodeType.equals(ADDRESS_APPTYPE)) {
-			ArrayList<HashMap<String, Object>> subAddresses = null; 
+			List<TreeNodeBean> subAddresses = null; 
 			if (nodeUuid.equalsIgnoreCase(ADDRESS_ROOT)) {
 				subAddresses = addressRequestHandler.getRootAddresses(false);
-				for (HashMap<String, Object> node : subAddresses) {
+				for (TreeNodeBean node : subAddresses) {
 					addTreeNodeAddressInfo(node);
 				}
 				subAddresses.add(0, createFreeAddressRoot());
 
 			} else if (nodeUuid.equalsIgnoreCase(ADDRESS_FREE_ROOT)) {
 				subAddresses = addressRequestHandler.getRootAddresses(true);				
-				for (HashMap<String, Object> node : subAddresses) {
+				for (TreeNodeBean node : subAddresses) {
 					addTreeNodeAddressInfo(node);
 				}
 
 			} else {
 				subAddresses = addressRequestHandler.getSubAddresses(nodeUuid, depth);
 
-				for (HashMap<String, Object> node : subAddresses) {
+				for (TreeNodeBean node : subAddresses) {
 					addTreeNodeAddressInfo(node);
 				}
 			}
@@ -96,61 +95,56 @@ public class TreeServiceImpl {
 	}
 
 	
-	private static ArrayList<HashMap<String, Object>> createTree()
+	private static List<TreeNodeBean> createTree()
 	{
-		ArrayList<HashMap<String, Object>> treeRoot = new ArrayList<HashMap<String, Object>>(); 
+		List<TreeNodeBean> treeRoot = new ArrayList<TreeNodeBean>(); 
 
-		HashMap<String, Object> objectRoot = new HashMap<String, Object>();
-		objectRoot.put("contextMenu", ROOT_MENU_ID);
-		objectRoot.put("isFolder", true);
-		objectRoot.put("nodeDocType", OBJECT_ROOT_DOCTYPE);
-		objectRoot.put("title", OBJECT_ROOT_NAME);
-		objectRoot.put("dojoType", NODE_DOJO_TYPE);
-		objectRoot.put("nodeAppType", OBJECT_APPTYPE);
-		objectRoot.put("id", OBJECT_ROOT);
+		TreeNodeBean objectRoot = new TreeNodeBean();
+		objectRoot.setContextMenu(ROOT_MENU_ID);
+		objectRoot.setIsFolder(true);
+		objectRoot.setNodeDocType(OBJECT_ROOT_DOCTYPE);
+		objectRoot.setTitle(OBJECT_ROOT_NAME);
+		objectRoot.setDojoType(NODE_DOJO_TYPE);
+		objectRoot.setNodeAppType(OBJECT_APPTYPE);
+		objectRoot.setId(OBJECT_ROOT);
 
-		HashMap<String, Object> addressRoot = new HashMap<String, Object>();
-		addressRoot.put("contextMenu", ROOT_MENU_ID);
-		addressRoot.put("isFolder", true);
-		addressRoot.put("nodeDocType", ADDRESS_ROOT_DOCTYPE);
-		addressRoot.put("title", ADDRESS_ROOT_NAME);
-		addressRoot.put("dojoType", NODE_DOJO_TYPE);
-		addressRoot.put("nodeAppType", ADDRESS_APPTYPE);
-		addressRoot.put("id", ADDRESS_ROOT);
+		TreeNodeBean addressRoot = new TreeNodeBean();
+		addressRoot.setContextMenu(ROOT_MENU_ID);
+		addressRoot.setIsFolder(true);
+		addressRoot.setNodeDocType(ADDRESS_ROOT_DOCTYPE);
+		addressRoot.setTitle(ADDRESS_ROOT_NAME);
+		addressRoot.setDojoType(NODE_DOJO_TYPE);
+		addressRoot.setNodeAppType(ADDRESS_APPTYPE);
+		addressRoot.setId(ADDRESS_ROOT);
 
 		treeRoot.add(objectRoot);
 		treeRoot.add(addressRoot);
 		return treeRoot;
 	}
 
-	public static Map<String, Object> addTreeNodeObjectInfo(Map<String, Object> node)
-	{
-		// TODO Do this recursive for all children!
-		node.put("contextMenu", NODE_MENU_ID);
-		node.put("dojoType", NODE_DOJO_TYPE);
-		node.put("nodeAppType", OBJECT_APPTYPE);		
-		return node;
+	public static void addTreeNodeObjectInfo(TreeNodeBean node) {
+		node.setContextMenu(NODE_MENU_ID);
+		node.setDojoType(NODE_DOJO_TYPE);
+		node.setNodeAppType(OBJECT_APPTYPE);		
 	}
 
-	public static Map<String, Object> addTreeNodeAddressInfo(Map<String, Object> node)
-	{
-		node.put("contextMenu", NODE_MENU_ID);
-		node.put("dojoType", NODE_DOJO_TYPE);
-		node.put("nodeAppType", ADDRESS_APPTYPE);		
-		return node;
+	public static void addTreeNodeAddressInfo(TreeNodeBean node) {
+		node.setContextMenu(NODE_MENU_ID);
+		node.setDojoType(NODE_DOJO_TYPE);
+		node.setNodeAppType(ADDRESS_APPTYPE);		
 	}
 
-	private static HashMap<String, Object> createFreeAddressRoot()
+	private static TreeNodeBean createFreeAddressRoot()
 	{
-		HashMap<String, Object> freeAddressRoot = new HashMap<String, Object>(); 
+		TreeNodeBean freeAddressRoot = new TreeNodeBean(); 
 
-		freeAddressRoot.put("contextMenu", ROOT_MENU_ID);
-		freeAddressRoot.put("isFolder", true);
-		freeAddressRoot.put("nodeDocType", ADDRESS_ROOT_DOCTYPE);
-		freeAddressRoot.put("title", ADDRESS_FREE_ROOT_NAME);
-		freeAddressRoot.put("dojoType", NODE_DOJO_TYPE);
-		freeAddressRoot.put("nodeAppType", ADDRESS_APPTYPE);
-		freeAddressRoot.put("id", ADDRESS_FREE_ROOT);
+		freeAddressRoot.setContextMenu(ROOT_MENU_ID);
+		freeAddressRoot.setIsFolder(true);
+		freeAddressRoot.setNodeDocType(ADDRESS_ROOT_DOCTYPE);
+		freeAddressRoot.setTitle(ADDRESS_FREE_ROOT_NAME);
+		freeAddressRoot.setDojoType(NODE_DOJO_TYPE);
+		freeAddressRoot.setNodeAppType(ADDRESS_APPTYPE);
+		freeAddressRoot.setId(ADDRESS_FREE_ROOT);
 
 		return freeAddressRoot;
 	}

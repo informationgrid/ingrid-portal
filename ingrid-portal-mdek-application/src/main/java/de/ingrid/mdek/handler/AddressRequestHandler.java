@@ -1,14 +1,12 @@
 package de.ingrid.mdek.handler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
 import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
+import de.ingrid.mdek.MdekUtils.WorkState;
+import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressSearchResultBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
@@ -16,8 +14,8 @@ import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 
 public interface AddressRequestHandler {
 
-	public ArrayList<HashMap<String, Object>> getRootAddresses(boolean freeAddressesOnly);
-	public ArrayList<HashMap<String, Object>> getSubAddresses(String uuid, int depth);
+	public List<TreeNodeBean> getRootAddresses(boolean freeAddressesOnly);
+	public List<TreeNodeBean> getSubAddresses(String uuid, int depth);
 	public MdekAddressBean getAddressDetail(String uuid);
 	public MdekAddressBean getPublishedAddressDetail(String uuid);
 	public MdekAddressBean getInitialAddress(String parentUuid);
@@ -30,7 +28,7 @@ public interface AddressRequestHandler {
 	public boolean canCutAddress(String uuid);
 	public boolean canCopyAddress(String uuid);
 	public List<String> getPathToAddress(String uuid);
-	public Map<String, Object> copyAddress(String fromUuid, String toUuid, boolean copySubTree, boolean copyToFreeAddress);
+	public TreeNodeBean copyAddress(String fromUuid, String toUuid, boolean copySubTree, boolean copyToFreeAddress);
 	public void moveAddressSubTree(String fromUuid, String oldParentUuid, String newParentUuid, boolean moveToFreeAddress);
 	public MdekAddressBean fetchAddressObjectReferences(String addrUuid, int startIndex, int numRefs);
 	public AddressSearchResultBean getWorkAddresses(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits);

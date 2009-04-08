@@ -10,6 +10,7 @@ import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtils.ObjectType;
 import de.ingrid.mdek.MdekUtils.WorkState;
+import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
@@ -66,13 +67,13 @@ public class MdekObjectUtils {
 		}
 	}
 
-	public static ArrayList<HashMap<String, Object>> extractObjectsFromResponse(IngridDocument response) {
+	public static List<TreeNodeBean> extractObjectsFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
-		ArrayList<HashMap<String, Object>> nodeList = null;
+		List<TreeNodeBean> nodeList = null;
 
 		if (result != null) {
-			nodeList = new ArrayList<HashMap<String, Object>>();
+			nodeList = new ArrayList<TreeNodeBean>();
 			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
 			for (IngridDocument objEntity : objs) {
 				nodeList.add(dataMapper.getSimpleObjectRepresentation(objEntity));
@@ -84,7 +85,7 @@ public class MdekObjectUtils {
 	}
 
 	
-	public static HashMap<String, Object> extractSingleSimpleObjectFromResponse(IngridDocument response) {
+	public static TreeNodeBean extractSingleSimpleObjectFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {

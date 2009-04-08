@@ -50,7 +50,7 @@ detailHelper.renderAddressEntry = function(address) {
 		var c;
 		for (i=0; i<address.communication.length; i++) {
 			c = address.communication[i];
-			entry += c.communicationMedium + ": " + c.communicationValue + "\n"; 
+			entry += c.medium + ": " + c.value + "\n"; 
 		}
 	}
 	

@@ -354,8 +354,8 @@ function isAddressPublishable(idcAddress) {
 
 	// Check if all entries in the address table are valid
 	var addressData = idcAddress.communication;
-	if (dojo.lang.some(addressData, function(adr) { return (typeof(adr.communicationMedium) == "undefined" || adr.communicationMedium == null || dojo.string.trim(adr.communicationMedium).length == 0
-														 || typeof(adr.communicationValue) == "undefined" || adr.communicationValue == null || dojo.string.trim(adr.communicationValue).length == 0); })) {
+	if (dojo.lang.some(addressData, function(adr) { return (typeof(adr.medium) == "undefined" || adr.medium == null || dojo.string.trim(adr.medium).length == 0
+														 || typeof(adr.value) == "undefined" || adr.value == null || dojo.string.trim(adr.value).length == 0); })) {
 		dojo.html.addClass(dojo.byId("addressComLabel"), "important");		
 		dojo.debug("All entries in the addressCom table must contain values.");
 		publishable = false;
@@ -364,7 +364,7 @@ function isAddressPublishable(idcAddress) {
 	// Get the string (from the syslist) that is used to identify email entries
 	var emailString = dojo.widget.byId("addressComType").getDisplayValueForValue(3);
 	// Check if at least one entry exists with type email
-	if (dojo.lang.every(addressData, function(adr) { return ( dojo.string.trim(adr.communicationMedium) != emailString); })) {
+	if (dojo.lang.every(addressData, function(adr) { return ( dojo.string.trim(adr.medium) != emailString); })) {
 		dojo.html.addClass(dojo.byId("addressComLabel"), "important");
 		dojo.debug("At least one entry has to be of type '"+emailString+"'.");
 		publishable = false;

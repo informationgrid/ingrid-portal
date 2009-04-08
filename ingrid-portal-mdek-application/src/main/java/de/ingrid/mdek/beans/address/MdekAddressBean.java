@@ -2,7 +2,6 @@ package de.ingrid.mdek.beans.address;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import de.ingrid.mdek.beans.CommentBean;
@@ -58,7 +57,7 @@ public class MdekAddressBean {
 	// Comments
 	private List<CommentBean> commentTable;
 	
-	private List<HashMap<String, String>> communication;
+	private List<CommunicationBean> communication;
 
 	// Thesaurus
 	private List<SNSTopic> thesaurusTermsTable;
@@ -71,7 +70,7 @@ public class MdekAddressBean {
 	
 	
 	public MdekAddressBean() {
-		this.communication = new ArrayList<HashMap<String, String>>();
+		this.communication = new ArrayList<CommunicationBean>();
 		this.thesaurusTermsTable = new ArrayList<SNSTopic>();
 		this.linksFromObjectTable = new ArrayList<MdekDataBean>();
 		this.linksFromPublishedObjectTable = new ArrayList<MdekDataBean>();
@@ -270,11 +269,11 @@ public class MdekAddressBean {
 		this.nameOfRelation = nameOfRelation;
 	}
 
-	public List<HashMap<String, String>> getCommunication() {
+	public List<CommunicationBean> getCommunication() {
 		return communication;
 	}
 
-	public void setCommunication(List<HashMap<String, String>> communication) {
+	public void setCommunication(List<CommunicationBean> communication) {
 		this.communication = communication;
 	}
 

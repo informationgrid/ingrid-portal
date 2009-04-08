@@ -3,15 +3,10 @@ package de.ingrid.mdek;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 
@@ -22,6 +17,8 @@ import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
 import de.ingrid.mdek.beans.CommentBean;
 import de.ingrid.mdek.beans.KeyValuePair;
+import de.ingrid.mdek.beans.TreeNodeBean;
+import de.ingrid.mdek.beans.address.CommunicationBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.AdditionalFieldBean;
 import de.ingrid.mdek.beans.object.ConformityBean;
@@ -56,47 +53,12 @@ public class MdekMapper implements DataMapperInterface {
     	snsResourceBundle = ResourceBundle.getBundle("sns");
     }
 
-	
-	// -- Dispatch to the local private methods --
-	public MdekDataBean getDetailedObjectRepresentation(Object obj) {
-		if (obj instanceof HashMap)
-			return getDetailedObjectRepresentation((HashMap<String, Object>) obj);
-		else
-			return null;
-	}
-	public HashMap<String, Object> getSimpleObjectRepresentation(Object obj) {
-		if (obj instanceof HashMap)
-			return getSimpleObjectRepresentation((HashMap<String, Object>) obj);
-		else
-			return null;
-	}
 
-	public HashMap<String, Object> getSimpleAddressRepresentation(Object obj) {
-		if (obj instanceof HashMap)
-			return getSimpleAddressRepresentation((HashMap<String, Object>) obj);
-		else
+	@SuppressWarnings("unchecked")
+	public MdekDataBean getDetailedObjectRepresentation(IngridDocument obj) {
+		if (obj == null) {
 			return null;
-	}
-	public MdekAddressBean getDetailedAddressRepresentation(Object obj) {
-		if (obj instanceof HashMap)
-			return getDetailedAddressRepresentation((HashMap<String, Object>) obj);
-		else
-			return null;
-	}
-	// --
-	
-	private MdekDataBean getDetailedObjectRepresentation(
-			HashMap<String, Object> obj) {
-
-		// by default, assertions are disabled at runtime.
-		// Start the server with -ea to enable this method call
-		try { assert testDetailedInputConformity(obj); }
-		catch (AssertionError e) { e.printStackTrace(); }
-
-		// TODO Check if we have to convert an address or object
-
-//		log.debug("Converting the following object:");
-//		printHashMap(obj);
+		}
 
 		MdekDataBean mdekObj = new MdekDataBean();
 
@@ -113,13 +75,13 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setObjectClass(objClass);
 		}
 
-		MdekAddressBean responsibleUser = getDetailedAddressRepresentation(obj.get(MdekKeysSecurity.RESPONSIBLE_USER));
+		MdekAddressBean responsibleUser = getDetailedAddressRepresentation((IngridDocument) obj.get(MdekKeysSecurity.RESPONSIBLE_USER));
 		if (responsibleUser != null) {
 			mdekObj.setObjectOwner(responsibleUser.getUuid());
 		}
 
 		// QA Fields
-		MdekAddressBean assignerUser = getDetailedAddressRepresentation(obj.get(MdekKeys.ASSIGNER_USER));
+		MdekAddressBean assignerUser = getDetailedAddressRepresentation((IngridDocument) obj.get(MdekKeys.ASSIGNER_USER));
 		if (assignerUser != null) {
 			mdekObj.setAssignerUser(assignerUser);
 		}
@@ -140,10 +102,10 @@ public class MdekMapper implements DataMapperInterface {
 
 		mdekObj.setHasChildren((Boolean) obj.get(MdekKeys.HAS_CHILD));
 		mdekObj.setObjectName((String) obj.get(MdekKeys.TITLE));
-		mdekObj.setGeneralAddressTable(mapToGeneralAddressTable((List<HashMap<String, Object>>) obj.get(MdekKeys.ADR_REFERENCES_TO)));
+		mdekObj.setGeneralAddressTable(mapToGeneralAddressTable((List<IngridDocument>) obj.get(MdekKeys.ADR_REFERENCES_TO)));
 		mdekObj.setCreationTime(convertTimestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_CREATION)));
 		mdekObj.setModificationTime(convertTimestampToDisplayDate((String) obj.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
-		mdekObj.setLastEditor(getDetailedAddressRepresentation(obj.get(MdekKeys.MOD_USER)));
+		mdekObj.setLastEditor(getDetailedAddressRepresentation((IngridDocument) obj.get(MdekKeys.MOD_USER)));
 
 		List<IngridDocument> idcPermissions = (List<IngridDocument>) obj.get(MdekKeysSecurity.IDC_PERMISSIONS);
 		mdekObj.setWritePermission(hasWritePermission(idcPermissions));
@@ -156,24 +118,17 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setIsMarkedDeleted(markDeleted != null && markDeleted.equals("Y"));
 
 		// Comments
-		mdekObj.setCommentTable(mapToCommentTable((List<HashMap<String, Object>>) obj.get(MdekKeys.COMMENT_LIST)));
-
-		// Catalogue
-//		Map<String, Object> catDetails = (Map<String, Object>) obj.get(MdekKeys.CATALOG);
-//		if (catDetails != null) {
-//			mdekObj.setCatalogUuid((String) catDetails.get(MdekKeys.UUID));			
-//			mdekObj.setCatalogName((String) catDetails.get(MdekKeys.CATALOG_NAME));
-//		}
+		mdekObj.setCommentTable(mapToCommentTable((List<IngridDocument>) obj.get(MdekKeys.COMMENT_LIST)));
 
 		// Information about the parent object
-		Map<String, Object> parentDetails = (Map<String, Object>) obj.get(MdekKeys.PARENT_INFO);
+		IngridDocument parentDetails = (IngridDocument) obj.get(MdekKeys.PARENT_INFO);
 		if (parentDetails != null) {
 			mdekObj.setParentPublicationCondition((Integer) parentDetails.get(MdekKeys.PUBLICATION_CONDITION));
 		}		
 		
 		// Spatial
-		mdekObj.setSpatialRefAdminUnitTable(mapToSpatialRefAdminUnitTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LOCATIONS)));
-		mdekObj.setSpatialRefLocationTable(mapToSpatialRefLocationTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LOCATIONS)));
+		mdekObj.setSpatialRefAdminUnitTable(mapToSpatialRefAdminUnitTable((List<IngridDocument>) obj.get(MdekKeys.LOCATIONS)));
+		mdekObj.setSpatialRefLocationTable(mapToSpatialRefLocationTable((List<IngridDocument>) obj.get(MdekKeys.LOCATIONS)));
 		mdekObj.setSpatialRefAltMin((Double) obj.get(MdekKeys.VERTICAL_EXTENT_MINIMUM));
 		mdekObj.setSpatialRefAltMax((Double) obj.get(MdekKeys.VERTICAL_EXTENT_MAXIMUM));
 		mdekObj.setSpatialRefAltMeasure((Integer) obj.get(MdekKeys.VERTICAL_EXTENT_UNIT));
@@ -188,7 +143,7 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setTimeRefPeriodicity((Integer) obj.get(MdekKeys.TIME_PERIOD));
 		mdekObj.setTimeRefIntervalNum((String) obj.get(MdekKeys.TIME_SCALE));
 		mdekObj.setTimeRefIntervalUnit((String) obj.get(MdekKeys.TIME_STEP));
-		mdekObj.setTimeRefTable(mapToTimeRefTable((List<HashMap<String, Object>>) obj.get(MdekKeys.DATASET_REFERENCES)));
+		mdekObj.setTimeRefTable(mapToTimeRefTable((List<IngridDocument>) obj.get(MdekKeys.DATASET_REFERENCES)));
 		mdekObj.setTimeRefExplanation((String) obj.get(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN));
 
 		// ExtraInfo
@@ -198,24 +153,24 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setExtraInfoPublishArea((Integer) obj.get(MdekKeys.PUBLICATION_CONDITION));
 
 		// Inspire field
-		mdekObj.setExtraInfoConformityTable(mapToExtraInfoConformityTable((List<HashMap<String, Object>>) obj.get(MdekKeys.CONFORMITY_LIST)));
+		mdekObj.setExtraInfoConformityTable(mapToExtraInfoConformityTable((List<IngridDocument>) obj.get(MdekKeys.CONFORMITY_LIST)));
 
 		mdekObj.setExtraInfoPurpose((String) obj.get(MdekKeys.DATASET_INTENTIONS));
 		mdekObj.setExtraInfoUse((String) obj.get(MdekKeys.DATASET_USAGE));
-		mdekObj.setExtraInfoXMLExportTable(mapToExtraInfoXMLExportTable((List<HashMap<String, Object>>) obj.get(MdekKeys.EXPORT_CRITERIA)));
-		mdekObj.setExtraInfoLegalBasicsTable(mapToExtraInfoLegalBasicsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LEGISLATIONS)));
+		mdekObj.setExtraInfoXMLExportTable(mapToExtraInfoXMLExportTable((List<IngridDocument>) obj.get(MdekKeys.EXPORT_CRITERIA)));
+		mdekObj.setExtraInfoLegalBasicsTable(mapToExtraInfoLegalBasicsTable((List<IngridDocument>) obj.get(MdekKeys.LEGISLATIONS)));
 
 		// Availability
 		// Inspire field
-		mdekObj.setAvailabilityUsageLimitationTable(mapToAvailUsageLimitationTable((List<HashMap<String, Object>>) obj.get(MdekKeys.ACCESS_LIST)));
+		mdekObj.setAvailabilityUsageLimitationTable(mapToAvailUsageLimitationTable((List<IngridDocument>) obj.get(MdekKeys.ACCESS_LIST)));
 		
 		mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
-		mdekObj.setAvailabilityDataFormatTable(mapToAvailDataFormatTable((List<HashMap<String, Object>>) obj.get(MdekKeys.DATA_FORMATS)));
-		mdekObj.setAvailabilityMediaOptionsTable(mapToAvailMediaOptionsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.MEDIUM_OPTIONS)));
+		mdekObj.setAvailabilityDataFormatTable(mapToAvailDataFormatTable((List<IngridDocument>) obj.get(MdekKeys.DATA_FORMATS)));
+		mdekObj.setAvailabilityMediaOptionsTable(mapToAvailMediaOptionsTable((List<IngridDocument>) obj.get(MdekKeys.MEDIUM_OPTIONS)));
 		
 		// Thesaurus
-		mdekObj.setThesaurusInspireTermsList(mapToInspireTermTable((List<HashMap<String, Object>>) obj.get(MdekKeys.SUBJECT_TERMS_INSPIRE)));
-		mdekObj.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) obj.get(MdekKeys.SUBJECT_TERMS)));
+		mdekObj.setThesaurusInspireTermsList(mapToInspireTermTable((List<IngridDocument>) obj.get(MdekKeys.SUBJECT_TERMS_INSPIRE)));
+		mdekObj.setThesaurusTermsTable(mapToThesTermsTable((List<IngridDocument>) obj.get(MdekKeys.SUBJECT_TERMS)));
 
 		List<Integer> intList = (List<Integer>) obj.get(MdekKeys.TOPIC_CATEGORIES);
 		if (intList != null)
@@ -237,10 +192,10 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setThesaurusEnvCatsList(intList);
 		
 		// Links
-		mdekObj.setLinksToObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_REFERENCES_TO)));
-		mdekObj.setLinksFromObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_REFERENCES_FROM)));
-		mdekObj.setLinksFromPublishedObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.OBJ_REFERENCES_FROM_PUBLISHED_ONLY)));
-		mdekObj.setLinksToUrlTable(mapToUrlLinksTable((List<HashMap<String, Object>>) obj.get(MdekKeys.LINKAGES)));
+		mdekObj.setLinksToObjectTable(mapToObjectLinksTable((List<IngridDocument>) obj.get(MdekKeys.OBJ_REFERENCES_TO)));
+		mdekObj.setLinksFromObjectTable(mapToObjectLinksTable((List<IngridDocument>) obj.get(MdekKeys.OBJ_REFERENCES_FROM)));
+		mdekObj.setLinksFromPublishedObjectTable(mapToObjectLinksTable((List<IngridDocument>) obj.get(MdekKeys.OBJ_REFERENCES_FROM_PUBLISHED_ONLY)));
+		mdekObj.setLinksToUrlTable(mapToUrlLinksTable((List<IngridDocument>) obj.get(MdekKeys.LINKAGES)));
 		mdekObj.setRelationType((Integer) obj.get(MdekKeys.RELATION_TYPE_REF));
 		mdekObj.setRelationTypeName((String) obj.get(MdekKeys.RELATION_TYPE_NAME));
 		mdekObj.setRelationDescription((String) obj.get(MdekKeys.RELATION_DESCRIPTION));
@@ -252,7 +207,7 @@ public class MdekMapper implements DataMapperInterface {
 		case 0:	// Object of type 0 doesn't have any special values
 			break;
 		case 1:
-			Map<String, Object> td1Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
+			IngridDocument td1Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
 			if (td1Map == null)
 				break;
 
@@ -275,14 +230,14 @@ public class MdekMapper implements DataMapperInterface {
 			if (intList != null)
 				mdekObj.setRef1Representation(intList);
 			
-			mdekObj.setRef1VFormatDetails(mapToVFormatDetailsTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.GEO_VECTOR_LIST)));
-			mdekObj.setRef1Scale(mapToScaleTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
-			mdekObj.setRef1SymbolsText(mapToSymLinkDataTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.SYMBOL_CATALOG_LIST)));
-			mdekObj.setRef1KeysText(mapToKeyLinkDataTable((List<HashMap<String, Object>>) td1Map.get(MdekKeys.KEY_CATALOG_LIST)));
+			mdekObj.setRef1VFormatDetails(mapToVFormatDetailsTable((List<IngridDocument>) td1Map.get(MdekKeys.GEO_VECTOR_LIST)));
+			mdekObj.setRef1Scale(mapToScaleTable((List<IngridDocument>) td1Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
+			mdekObj.setRef1SymbolsText(mapToSymLinkDataTable((List<IngridDocument>) td1Map.get(MdekKeys.SYMBOL_CATALOG_LIST)));
+			mdekObj.setRef1KeysText(mapToKeyLinkDataTable((List<IngridDocument>) td1Map.get(MdekKeys.KEY_CATALOG_LIST)));
 			mdekObj.setRef1ProcessText((String) td1Map.get(MdekKeys.METHOD_OF_PRODUCTION));
 			break;
 		case 2:
-			Map<String, Object> td2Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_DOCUMENT);
+			IngridDocument td2Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_DOCUMENT);
 			if (td2Map == null)
 				break;
 			mdekObj.setRef2Author((String) td2Map.get(MdekKeys.AUTHOR));
@@ -302,26 +257,24 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setRef2Explanation((String) td2Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
 			break;
 		case 3:
-			Map<String, Object> td3Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
+			IngridDocument td3Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
 			if (td3Map == null)
 				break;
-//			kvp = mapToKeyValuePair(td3Map, MdekKeys.SERVICE_TYPE_KEY, MdekKeys.SERVICE_TYPE);
-//			mdekObj.setRef3ServiceType(kvp.getValue());
-			// INSPIRE: ref3ServiceType changed to Select, was ComboBox
+
 			mdekObj.setRef3ServiceType((Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY));
-			mdekObj.setRef3ServiceTypeTable(mapToServiceTypeTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.SERVICE_TYPE2_LIST)));
+			mdekObj.setRef3ServiceTypeTable(mapToServiceTypeTable((List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_TYPE2_LIST)));
 
 			mdekObj.setRef3SystemEnv((String) td3Map.get(MdekKeys.SYSTEM_ENVIRONMENT));
 			mdekObj.setRef3History((String) td3Map.get(MdekKeys.SYSTEM_HISTORY));
 			mdekObj.setRef3BaseDataText((String) td3Map.get(MdekKeys.DATABASE_OF_SYSTEM));
 			mdekObj.setRef3ServiceVersion((List<String>) td3Map.get(MdekKeys.SERVICE_VERSION_LIST));
 			mdekObj.setRef3Explanation((String) td3Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
-			mdekObj.setRef3Scale(mapToScaleTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
-			mdekObj.setRef3Operation(mapToOperationTable((List<HashMap<String, Object>>) td3Map.get(MdekKeys.SERVICE_OPERATION_LIST), (Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY)));
+			mdekObj.setRef3Scale(mapToScaleTable((List<IngridDocument>) td3Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
+			mdekObj.setRef3Operation(mapToOperationTable((List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_OPERATION_LIST), (Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY)));
 
 			break;
 		case 4:
-			Map<String, Object> td4Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_PROJECT);
+			IngridDocument td4Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_PROJECT);
 			if (td4Map == null)
 				break;
 			mdekObj.setRef4ParticipantsText((String) td4Map.get(MdekKeys.MEMBER_DESCRIPTION));
@@ -329,17 +282,16 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setRef4Explanation((String) td4Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
 			break;
 		case 5:
-			Map<String, Object> td5Map = (Map<String, Object>) obj.get(MdekKeys.TECHNICAL_DOMAIN_DATASET);
+			IngridDocument td5Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_DATASET);
 			if (td5Map == null)
 				break;
 			mdekObj.setRef5Explanation((String) td5Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
 			mdekObj.setRef5MethodText((String) td5Map.get(MdekKeys.METHOD));
-			mdekObj.setRef5dbContent(mapToDbContentTable((List<HashMap<String, Object>>) td5Map.get(MdekKeys.PARAMETERS)));
+			mdekObj.setRef5dbContent(mapToDbContentTable((List<IngridDocument>) td5Map.get(MdekKeys.PARAMETERS)));
 			break;
 		}
 		
 		
-		// TODO Should we move the gui specific settings to another object / to the entry service?
 		mdekObj.setNodeAppType("O");
 		
 		String nodeDocType = getObjectDocType(obj);
@@ -348,28 +300,27 @@ public class MdekMapper implements DataMapperInterface {
 		return mdekObj;
 	}
 	
-	private MdekAddressBean getDetailedAddressRepresentation(
-			HashMap<String, Object> adr) {
-		
-//		log.debug("Converting the following address:");
-//		printHashMap(adr);
+	@SuppressWarnings("unchecked")
+	public MdekAddressBean getDetailedAddressRepresentation(IngridDocument adr) {
+		if (adr == null) {
+			return null;
+		}
 
 		MdekAddressBean mdekAddress = new MdekAddressBean();
 
 		// Information about the parent object
-		Map<String, Object> parentDetails = (Map<String, Object>) adr.get(MdekKeys.PARENT_INFO);
+		IngridDocument parentDetails = (IngridDocument) adr.get(MdekKeys.PARENT_INFO);
 		if (parentDetails != null) {
-//			mdekAddress.setParentPublicationCondition((Integer) parentDetails.get(MdekKeys.PUBLICATION_CONDITION));
 			mdekAddress.setParentClass((Integer) parentDetails.get(MdekKeys.CLASS));
 		}
 
-		MdekAddressBean responsibleUser = getDetailedAddressRepresentation(adr.get(MdekKeysSecurity.RESPONSIBLE_USER));
+		MdekAddressBean responsibleUser = getDetailedAddressRepresentation((IngridDocument) adr.get(MdekKeysSecurity.RESPONSIBLE_USER));
 		if (responsibleUser != null) {
 			mdekAddress.setAddressOwner(responsibleUser.getUuid());
 		}
 
 		// QA Fields
-		MdekAddressBean assignerUser = getDetailedAddressRepresentation(adr.get(MdekKeys.ASSIGNER_USER));
+		MdekAddressBean assignerUser = getDetailedAddressRepresentation((IngridDocument) adr.get(MdekKeys.ASSIGNER_USER));
 		if (assignerUser != null) {
 			mdekAddress.setAssignerUser(assignerUser);
 		}
@@ -415,16 +366,13 @@ public class MdekMapper implements DataMapperInterface {
 		mdekAddress.setHasChildren((Boolean) adr.get(MdekKeys.HAS_CHILD));		
 		mdekAddress.setCreationTime(convertTimestampToDisplayDate((String) adr.get(MdekKeys.DATE_OF_CREATION)));
 		mdekAddress.setModificationTime(convertTimestampToDisplayDate((String) adr.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
-		mdekAddress.setLastEditor(getDetailedAddressRepresentation(adr.get(MdekKeys.MOD_USER)));
+		mdekAddress.setLastEditor(getDetailedAddressRepresentation((IngridDocument) adr.get(MdekKeys.MOD_USER)));
 
 		// Class specific information
 		mdekAddress.setOrganisation((String) adr.get(MdekKeys.ORGANISATION));
 		mdekAddress.setName((String) adr.get(MdekKeys.NAME));
 		mdekAddress.setGivenName((String) adr.get(MdekKeys.GIVEN_NAME));
-/*		
-		mdekAddress.setNameForm(new KeyValuePair((Integer) adr.get(MdekKeys.NAME_FORM_KEY), (String) adr.get(MdekKeys.NAME_FORM)));
-		mdekAddress.setTitleOrFunction(new KeyValuePair((Integer) adr.get(MdekKeys.TITLE_OR_FUNCTION_KEY), (String) adr.get(MdekKeys.TITLE_OR_FUNCTION)));
-*/
+
 		mdekAddress.setNameForm(mapToKeyValuePair(adr, MdekKeys.NAME_FORM_KEY, MdekKeys.NAME_FORM).getValue());
 		mdekAddress.setTitleOrFunction(mapToKeyValuePair(adr, MdekKeys.TITLE_OR_FUNCTION_KEY, MdekKeys.TITLE_OR_FUNCTION).getValue());
 
@@ -437,21 +385,17 @@ public class MdekMapper implements DataMapperInterface {
 		mdekAddress.setPoboxPostalCode((String) adr.get(MdekKeys.POST_BOX_POSTAL_CODE));
 		mdekAddress.setAddressDescription((String) adr.get(MdekKeys.ADDRESS_DESCRIPTION));
 		mdekAddress.setTask((String) adr.get(MdekKeys.FUNCTION));
-		mdekAddress.setCommunication(mapToCommunicationTable((List<HashMap<String, Object>>) adr.get(MdekKeys.COMMUNICATION)));
+		mdekAddress.setCommunication(mapToCommunicationTable((List<IngridDocument>) adr.get(MdekKeys.COMMUNICATION)));
 
 		// Thesaurus
-		mdekAddress.setThesaurusTermsTable(mapToThesTermsTable((List<HashMap<String, Object>>) adr.get(MdekKeys.SUBJECT_TERMS)));
+		mdekAddress.setThesaurusTermsTable(mapToThesTermsTable((List<IngridDocument>) adr.get(MdekKeys.SUBJECT_TERMS)));
 
 		// References
-		mdekAddress.setLinksFromObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) adr.get(MdekKeys.OBJ_REFERENCES_FROM)));
-		mdekAddress.setLinksFromPublishedObjectTable(mapToObjectLinksTable((List<HashMap<String, Object>>) adr.get(MdekKeys.OBJ_REFERENCES_FROM_PUBLISHED_ONLY)));
-		mdekAddress.setParentInstitutions(mapToGeneralAddressTable((List<HashMap<String, Object>>) adr.get(MdekKeys.PATH_ORGANISATIONS)));
+		mdekAddress.setLinksFromObjectTable(mapToObjectLinksTable((List<IngridDocument>) adr.get(MdekKeys.OBJ_REFERENCES_FROM)));
+		mdekAddress.setLinksFromPublishedObjectTable(mapToObjectLinksTable((List<IngridDocument>) adr.get(MdekKeys.OBJ_REFERENCES_FROM_PUBLISHED_ONLY)));
+		mdekAddress.setParentInstitutions(mapToGeneralAddressTable((List<IngridDocument>) adr.get(MdekKeys.PATH_ORGANISATIONS)));
 		mdekAddress.setTotalNumReferences((Integer) adr.get(MdekKeys.OBJ_REFERENCES_FROM_TOTAL_NUM));
-/*
-		mdekAddress.setTypeOfRelation((Integer) adr.get(MdekKeys.RELATION_TYPE_ID));
-		mdekAddress.setNameOfRelation((String) adr.get(MdekKeys.RELATION_TYPE_NAME));
-		mdekAddress.setRefOfRelation((Integer) adr.get(MdekKeys.RELATION_TYPE_REF));
-*/
+
 		Integer relationRef = (Integer) adr.get(MdekKeys.RELATION_TYPE_REF);
 		Integer relationId  = (Integer) adr.get(MdekKeys.RELATION_TYPE_ID);
 
@@ -469,9 +413,8 @@ public class MdekMapper implements DataMapperInterface {
 
 
 		// Comments
-		mdekAddress.setCommentTable(mapToCommentTable((List<HashMap<String, Object>>) adr.get(MdekKeys.COMMENT_LIST)));
+		mdekAddress.setCommentTable(mapToCommentTable((List<IngridDocument>) adr.get(MdekKeys.COMMENT_LIST)));
 		
-		// TODO Should we move the gui specific settings to another object / to the entry service?
 		mdekAddress.setNodeAppType("A");
 
 		adr.put(MdekKeys.CLASS, mdekAddress.getAddressClass());
@@ -481,7 +424,7 @@ public class MdekMapper implements DataMapperInterface {
 		return mdekAddress;
 	}
 		
-	private static String getObjectDocType(Map<String, Object> obj) {
+	private static String getObjectDocType(IngridDocument obj) {
 		String nodeDocType = "Class" + ((Integer) obj.get(MdekKeys.CLASS));
 		String workState = (String) obj.get(MdekKeys.WORK_STATE); 
 		Boolean isPublished = (Boolean) obj.get(MdekKeys.IS_PUBLISHED) == null ? false : (Boolean) obj.get(MdekKeys.IS_PUBLISHED);
@@ -498,7 +441,7 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private static String getAddressDocType(Map<String, Object> adr) {
+	private static String getAddressDocType(IngridDocument adr) {
 		String nodeDocType = null;
 		Integer adrClass = (Integer) adr.get(MdekKeys.CLASS);
 		String workState = (String) adr.get(MdekKeys.WORK_STATE); 
@@ -537,71 +480,69 @@ public class MdekMapper implements DataMapperInterface {
 		return nodeDocType;
 	}
 
-	private HashMap<String, Object> getSimpleObjectRepresentation(
-			HashMap<String, Object> obj) {
-		
-		// by default, assertions are disabled at runtime.
-		// Start the server with -ea to enable this method call
-		try { assert testSimpleInputConformity(obj); }
-		catch (AssertionError e) { e.printStackTrace(); }
+	public TreeNodeBean getSimpleObjectRepresentation(IngridDocument doc) {
+		TreeNodeBean treeNode = getTreeNodeWithCommonParameters(doc);
 
-		HashMap<String, Object> mdekObj = new HashMap<String, Object>();
+		treeNode.setTitle((String) doc.get(MdekKeys.TITLE));
+		String nodeDocType = getObjectDocType(doc);
+		treeNode.setNodeDocType(nodeDocType);
 
-		// The object UUID is used to identify widgets in the gui.
-		// TODO attach the values to the object but don't use them to identify widgets
-		mdekObj.put(MDEK_ID, obj.get(MdekKeys.UUID));
-		mdekObj.put(MDEK_TITLE, obj.get(MdekKeys.TITLE));
-		mdekObj.put(MDEK_HAS_CHILDREN, obj.get(MdekKeys.HAS_CHILD));
-		mdekObj.put(MDEK_IS_PUBLISHED, obj.get(MdekKeys.IS_PUBLISHED));
-		boolean markedDeleted = obj.get(MdekKeys.MARK_DELETED) == null ? false : ((String) obj.get(MdekKeys.MARK_DELETED)).equalsIgnoreCase("Y");
-		mdekObj.put(MDEK_IS_MARKED_DELETED, markedDeleted);
-
-		List<IngridDocument> idcPermissions = (List<IngridDocument>) obj.get(MdekKeysSecurity.IDC_PERMISSIONS);
-		mdekObj.put(MDEK_USER_WRITE_PERMISSION, hasWritePermission(idcPermissions));
-		mdekObj.put(MDEK_USER_WRITE_SINGLE_PERMISSION, hasWriteSinglePermission(idcPermissions));
-		mdekObj.put(MDEK_USER_WRITE_TREE_PERMISSION, hasWriteTreePermission(idcPermissions));
-		mdekObj.put(MDEK_USER_WRITE_SUB_TREE_PERMISSION, hasWriteSubTreePermission(idcPermissions));
-
-		String nodeDocType = getObjectDocType(obj);
-		mdekObj.put(MDEK_DOCTYPE, nodeDocType);
-
-		return mdekObj;
+		return treeNode;
 	}
 
-	private HashMap<String, Object> getSimpleAddressRepresentation(
-			HashMap<String, Object> adr) {
-		
-		// by default, assertions are disabled at runtime.
-		// Start the server with -ea to enable this method call
-//		try { assert testSimpleInputConformity(adr); }
-//		catch (AssertionError e) { e.printStackTrace(); }
+	public TreeNodeBean getSimpleAddressRepresentation(IngridDocument doc) {
+		TreeNodeBean treeNode = getTreeNodeWithCommonParameters(doc);
 
-		HashMap<String, Object> mdekAdr = new HashMap<String, Object>();
+		treeNode.setTitle(buildAddressTitle(doc));
+		Integer adrClass = (Integer) doc.get(MdekKeys.CLASS);
+		treeNode.setObjectClass(adrClass);
+		String adrDocType = getAddressDocType(doc);
+		treeNode.setNodeDocType(adrDocType);
 
-		mdekAdr.put(MDEK_ID, adr.get(MdekKeys.UUID));
+		return treeNode;
+	}
+
+	@SuppressWarnings("unchecked")
+	private TreeNodeBean getTreeNodeWithCommonParameters(IngridDocument doc) {
+		TreeNodeBean treeNode = new TreeNodeBean();
+		treeNode.setId((String) doc.get(MdekKeys.UUID));
+		treeNode.setIsFolder((Boolean) doc.get(MdekKeys.HAS_CHILD));
+		treeNode.setIsPublished((Boolean) doc.get(MdekKeys.IS_PUBLISHED));
+		boolean markedDeleted = doc.get(MdekKeys.MARK_DELETED) == null ? false : ((String) doc.get(MdekKeys.MARK_DELETED)).equalsIgnoreCase("Y");
+		treeNode.setIsMarkedDeleted(markedDeleted);
+		List<IngridDocument> idcPermissions = (List<IngridDocument>) doc.get(MdekKeysSecurity.IDC_PERMISSIONS);
+		treeNode.setUserWritePermission(hasWritePermission(idcPermissions));
+		treeNode.setUserWriteSinglePermission(hasWriteSinglePermission(idcPermissions));
+		treeNode.setUserWriteTreePermission(hasWriteTreePermission(idcPermissions));
+		treeNode.setUserWriteSubTreePermission(hasWriteSubTreePermission(idcPermissions));
+
+		return treeNode;
+	}
+
+
+	private static String buildAddressTitle(IngridDocument adr) {
 		Integer adrClass = (Integer) adr.get(MdekKeys.CLASS);
-		mdekAdr.put(MDEK_CLASS, adrClass);
+		String title = "";
+		switch (adrClass) {
+		case 0:
+			// Fall through
+		case 1:
+			title = (String) adr.get(MdekKeys.ORGANISATION);
+			break;
 
-		if (adrClass == 0 || adrClass == 1)
-			mdekAdr.put(MDEK_TITLE, adr.get(MdekKeys.ORGANISATION));
-
-		else if (adrClass == 2) {
-			String title = "";
-			title += adr.get(MdekKeys.NAME);
+		case 2:
+			title = (String) adr.get(MdekKeys.NAME);
 			String givenName = (String) adr.get(MdekKeys.GIVEN_NAME);
 			if (givenName != null && givenName.trim().length() != 0)
-				title += ", "+givenName;
-			mdekAdr.put(MDEK_TITLE, title);
+				title += ", " + givenName;
+			break;
 
-		} else if (adrClass == 3) {
-			String title = "";
+		case 3:
 			String name = (String) adr.get(MdekKeys.NAME);
-			String givenName = (String) adr.get(MdekKeys.GIVEN_NAME);
+			givenName = (String) adr.get(MdekKeys.GIVEN_NAME);
 			String organisation = (String) adr.get(MdekKeys.ORGANISATION);
 			if (name != null) {
-				name = name.trim();
-				if (name.length() != 0)
-					title += name;
+				title += name.trim();
 			}
 
 			if (givenName != null){
@@ -619,28 +560,15 @@ public class MdekMapper implements DataMapperInterface {
 					title += " ("+organisation+")";
 			}
 
-			mdekAdr.put(MDEK_TITLE, title.trim());
+			title = title.trim();
+			break;
 		}
 
-		mdekAdr.put(MDEK_HAS_CHILDREN, adr.get(MdekKeys.HAS_CHILD));
-		mdekAdr.put(MDEK_IS_PUBLISHED, adr.get(MdekKeys.IS_PUBLISHED));
-
-		boolean markedDeleted = adr.get(MdekKeys.MARK_DELETED) == null ? false : ((String) adr.get(MdekKeys.MARK_DELETED)).equalsIgnoreCase("Y");
-		mdekAdr.put(MDEK_IS_MARKED_DELETED, markedDeleted);
-
-		List<IngridDocument> idcPermissions = (List<IngridDocument>) adr.get(MdekKeysSecurity.IDC_PERMISSIONS);
-		mdekAdr.put(MDEK_USER_WRITE_PERMISSION, hasWritePermission(idcPermissions));
-		mdekAdr.put(MDEK_USER_WRITE_SINGLE_PERMISSION, hasWriteSinglePermission(idcPermissions));
-		mdekAdr.put(MDEK_USER_WRITE_TREE_PERMISSION, hasWriteTreePermission(idcPermissions));
-		mdekAdr.put(MDEK_USER_WRITE_SUB_TREE_PERMISSION, hasWriteSubTreePermission(idcPermissions));
-
-		String adrDocType = getAddressDocType(adr);
-		mdekAdr.put(MDEK_DOCTYPE, adrDocType);
-
-		return mdekAdr;
+		return title;
 	}
 
-	public Object convertFromAddressRepresentation(MdekAddressBean data){
+
+	public IngridDocument convertFromAddressRepresentation(MdekAddressBean data){
 		IngridDocument udkAdr = new IngridDocument();
 
 		// General Information
@@ -685,13 +613,11 @@ public class MdekMapper implements DataMapperInterface {
 		// Comments
 		udkAdr.put(MdekKeys.COMMENT_LIST, mapFromCommentTable(data.getCommentTable()));
 
-//		log.debug("Converted the following address to an IngridDocument:");
-//		printHashMap(udkAdr);
 		cleanUpHashMap(udkAdr);
 		return udkAdr;
 	}
 	
-	public Object convertFromObjectRepresentation(MdekDataBean data){
+	public IngridDocument convertFromObjectRepresentation(MdekDataBean data){
 		IngridDocument udkObj = new IngridDocument();
 
 		// General
@@ -708,7 +634,6 @@ public class MdekMapper implements DataMapperInterface {
 
 		// extrahieren des int Wertes für die Objekt-Klasse
 		udkObj.put(MdekKeys.CLASS, data.getObjectClass());
-//		udkObj.put(MdekKeys.HAS_CHILD, data.getHasChildren());
 		udkObj.put(MdekKeys.ADR_REFERENCES_TO, mapFromGeneralAddressTable(data.getGeneralAddressTable()));
 
 		// Comments
@@ -745,7 +670,6 @@ public class MdekMapper implements DataMapperInterface {
 
 
 		// Availability
-		// Only map for object class != 0
 		if (data.getObjectClass() != null && data.getObjectClass() != 0) {
 			udkObj.put(MdekKeys.ACCESS_LIST, mapFromAvailUsageLimitationTable(data.getAvailabilityUsageLimitationTable()));			
 			udkObj.put(MdekKeys.DATA_FORMATS, mapFromAvailDataFormatTable(data.getAvailabilityDataFormatTable()));
@@ -836,12 +760,6 @@ public class MdekMapper implements DataMapperInterface {
 			break;
 		case 3:
 			IngridDocument td3Map = new IngridDocument();			
-//			kvp = mapFromKeyValue(MdekKeys.SERVICE_TYPE_KEY, data.getRef3ServiceType());
-//			if (kvp.getValue() != null || kvp.getKey() != -1) {
-//				td3Map.put(MdekKeys.SERVICE_TYPE, kvp.getValue());
-//				td3Map.put(MdekKeys.SERVICE_TYPE_KEY, kvp.getKey());
-//			}
-			// INSPIRE: ref3ServiceType changed to Select, was ComboBox
 			td3Map.put(MdekKeys.SERVICE_TYPE_KEY, data.getRef3ServiceType());
 
 			td3Map.put(MdekKeys.SERVICE_TYPE2_LIST, mapFromServiceTypeTable(data.getRef3ServiceTypeTable()));
@@ -870,8 +788,6 @@ public class MdekMapper implements DataMapperInterface {
 			break;
 		}
 
-//		log.debug("Converted the following object to an IngridDocument:");
-//		printHashMap(udkObj);
 		cleanUpHashMap(udkObj);
 		return udkObj;
 	}
@@ -1000,18 +916,18 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private List<IngridDocument> mapFromCommunicationTable(List<HashMap<String, String>> commMap){
+	private List<IngridDocument> mapFromCommunicationTable(List<CommunicationBean> commMap){
 		List<IngridDocument> resultList = new ArrayList<IngridDocument>(); 
 
-		for (HashMap<String, String> comm : commMap) {
+		for (CommunicationBean comm : commMap) {
 			IngridDocument mappedEntry = new IngridDocument();
-			mappedEntry.put(MdekKeys.COMMUNICATION_DESCRIPTION, comm.get(MDEK_ADDRESS_COMM_DESCRIPTION));
-			KeyValuePair kvp = mapFromKeyValue(MdekKeys.COMMUNICATION_MEDIUM_KEY, comm.get(MDEK_ADDRESS_COMM_MEDIUM));
+			mappedEntry.put(MdekKeys.COMMUNICATION_DESCRIPTION, comm.getDescription());
+			KeyValuePair kvp = mapFromKeyValue(MdekKeys.COMMUNICATION_MEDIUM_KEY, comm.getMedium());
 			if (kvp.getValue() != null || kvp.getKey() != -1) {
 				mappedEntry.put(MdekKeys.COMMUNICATION_MEDIUM, kvp.getValue());
 				mappedEntry.put(MdekKeys.COMMUNICATION_MEDIUM_KEY, kvp.getKey());
 			}
-			mappedEntry.put(MdekKeys.COMMUNICATION_VALUE, comm.get(MDEK_ADDRESS_COMM_VALUE));
+			mappedEntry.put(MdekKeys.COMMUNICATION_VALUE, comm.getValue());
 			resultList.add(mappedEntry);
 		}
 
@@ -1434,7 +1350,7 @@ public class MdekMapper implements DataMapperInterface {
 	 * Mapping from the IngridDocument Structure to the Mdek gui representation *
 	 ****************************************************************************/
 
-	private KeyValuePair mapToKeyValuePair(Map<String, Object> obj, String key, String value) {
+	private KeyValuePair mapToKeyValuePair(IngridDocument obj, String key, String value) {
 		Integer k = (Integer) obj.get(key);
 		String val = (String) obj.get(value);
 		if (k != null && k != -1) {
@@ -1448,52 +1364,52 @@ public class MdekMapper implements DataMapperInterface {
 		return new KeyValuePair(k, val);
 	}
 	
-	private List<MdekAddressBean> mapToGeneralAddressTable(List<HashMap<String, Object>> adrTable) {
+	private List<MdekAddressBean> mapToGeneralAddressTable(List<IngridDocument> adrTable) {
 		List<MdekAddressBean> resultList = new ArrayList<MdekAddressBean>(); 
 		if (adrTable == null)
 			return resultList;
 
-		for (HashMap<String, Object> adr : adrTable) {
+		for (IngridDocument adr : adrTable) {
 			resultList.add(getDetailedAddressRepresentation(adr));
 		}
 		return resultList;
 	}
 
 
-	private List<HashMap<String, String>> mapToCommunicationTable(List<HashMap<String, Object>> commMap){
-		List<HashMap<String, String>> resultCommMap = new ArrayList<HashMap<String, String>>(); 
+	private List<CommunicationBean> mapToCommunicationTable(List<IngridDocument> commMap){
+		List<CommunicationBean> resultCommMap = new ArrayList<CommunicationBean>(); 
 		if (commMap == null)
 			return resultCommMap;
 
-		for (HashMap<String, Object> comm : commMap) {
-			HashMap<String, String> resultComm = new HashMap<String, String>();
-			resultComm.put(MDEK_ADDRESS_COMM_DESCRIPTION, (String) comm.get(MdekKeys.COMMUNICATION_DESCRIPTION));
+		for (IngridDocument comm : commMap) {
+			CommunicationBean resultComm = new CommunicationBean();
+			resultComm.setDescription((String) comm.get(MdekKeys.COMMUNICATION_DESCRIPTION));
 			KeyValuePair kvp = mapToKeyValuePair(comm, MdekKeys.COMMUNICATION_MEDIUM_KEY, MdekKeys.COMMUNICATION_MEDIUM);
-			resultComm.put(MDEK_ADDRESS_COMM_MEDIUM, kvp.getValue());
-			resultComm.put(MDEK_ADDRESS_COMM_VALUE, (String) comm.get(MdekKeys.COMMUNICATION_VALUE));
+			resultComm.setMedium(kvp.getValue());
+			resultComm.setValue((String) comm.get(MdekKeys.COMMUNICATION_VALUE));
 			resultCommMap.add(resultComm);
 		}
 
 		return resultCommMap;	
 	}
 	
-	private List<MdekDataBean> mapToObjectLinksTable(List<HashMap<String, Object>> objList) {
+	private List<MdekDataBean> mapToObjectLinksTable(List<IngridDocument> objList) {
 		List<MdekDataBean> resultList = new ArrayList<MdekDataBean>(); 
 		if (objList == null)
 			return resultList;
 
-		for (HashMap<String, Object> obj : objList) {
+		for (IngridDocument obj : objList) {
 			resultList.add(getDetailedObjectRepresentation(obj));
 		}
 		return resultList;
 	}
 
-	private List<UrlBean> mapToUrlLinksTable(List<HashMap<String, Object>> objList) {
+	private List<UrlBean> mapToUrlLinksTable(List<IngridDocument> objList) {
 		List<UrlBean> resultList = new ArrayList<UrlBean>(); 
 		if (objList == null)
 			return resultList;
 		
-		for (HashMap<String, Object> obj : objList) {
+		for (IngridDocument obj : objList) {
 			UrlBean url = new UrlBean();
 			KeyValuePair kvp = mapToKeyValuePair(obj, MdekKeys.LINKAGE_DATATYPE_KEY, MdekKeys.LINKAGE_DATATYPE);
 			url.setDatatype(kvp.getValue());
@@ -1529,12 +1445,12 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private List<LocationBean> mapToSpatialRefAdminUnitTable(List<HashMap<String, Object>> locList) {
+	private List<LocationBean> mapToSpatialRefAdminUnitTable(List<IngridDocument> locList) {
 		List<LocationBean> resultList = new ArrayList<LocationBean>();
 		if (locList == null)
 			return resultList;
 
-		for (HashMap<String, Object> location : locList) {
+		for (IngridDocument location : locList) {
 
 			String locationType = (String) location.get(MdekKeys.LOCATION_TYPE);
 			if (locationType.equals("G")) {
@@ -1568,12 +1484,12 @@ public class MdekMapper implements DataMapperInterface {
     	}
 	}
 
-	private List<LocationBean> mapToSpatialRefLocationTable(List<HashMap<String, Object>> locList) {
+	private List<LocationBean> mapToSpatialRefLocationTable(List<IngridDocument> locList) {
 		List<LocationBean> resultList = new ArrayList<LocationBean>();
 		if (locList == null)
 			return resultList;
 
-		for (HashMap<String, Object> location : locList) {
+		for (IngridDocument location : locList) {
 			String locationType = (String) location.get(MdekKeys.LOCATION_TYPE);
 			if (locationType.equals("F")) {
 				LocationBean loc = new LocationBean(); 
@@ -1592,12 +1508,12 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private List<TimeReferenceBean> mapToTimeRefTable(List<HashMap<String, Object>> refList) {
+	private List<TimeReferenceBean> mapToTimeRefTable(List<IngridDocument> refList) {
 		List<TimeReferenceBean> resultList = new ArrayList<TimeReferenceBean>();
 		if (refList == null)
 			return resultList;
 
-		for (HashMap<String, Object> ref : refList) {
+		for (IngridDocument ref : refList) {
 			TimeReferenceBean tr = new TimeReferenceBean();
 			tr.setDate(convertTimestampToDate((String) ref.get(MdekKeys.DATASET_REFERENCE_DATE)));
 			tr.setType((Integer) ref.get(MdekKeys.DATASET_REFERENCE_TYPE));
@@ -1607,12 +1523,12 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 	
-	private List<ConformityBean> mapToExtraInfoConformityTable(List<HashMap<String, Object>> conList) {
+	private List<ConformityBean> mapToExtraInfoConformityTable(List<IngridDocument> conList) {
 		List<ConformityBean> resultList = new ArrayList<ConformityBean>();
 		if (conList == null)
 			return resultList;
 
-		for (HashMap<String, Object> con : conList) {
+		for (IngridDocument con : conList) {
 			ConformityBean c = new ConformityBean();
 			c.setLevel((Integer) con.get(MdekKeys.CONFORMITY_DEGREE_KEY));
 			c.setSpecification((String) con.get(MdekKeys.CONFORMITY_SPECIFICATION));
@@ -1622,35 +1538,35 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private List<String> mapToExtraInfoXMLExportTable(List<HashMap<String, Object>> refList) {
+	private List<String> mapToExtraInfoXMLExportTable(List<IngridDocument> refList) {
 		List<String> resultList = new ArrayList<String>();
 		if (refList == null)
 			return resultList;
 		
-		for (HashMap<String, Object> ref : refList) {
+		for (IngridDocument ref : refList) {
 			KeyValuePair kvp = mapToKeyValuePair(ref, MdekKeys.EXPORT_CRITERION_KEY, MdekKeys.EXPORT_CRITERION_VALUE);
 			resultList.add(kvp.getValue());
 		}
 		return resultList;
 	}
 
-	private List<String> mapToExtraInfoLegalBasicsTable(List<HashMap<String, Object>> refList) {
+	private List<String> mapToExtraInfoLegalBasicsTable(List<IngridDocument> refList) {
 		List<String> resultList = new ArrayList<String>();
 		if (refList == null)
 			return resultList;
-		for (HashMap<String, Object> ref : refList) {
+		for (IngridDocument ref : refList) {
 			KeyValuePair kvp = mapToKeyValuePair(ref, MdekKeys.LEGISLATION_KEY, MdekKeys.LEGISLATION_VALUE);
 			resultList.add(kvp.getValue());
 		}
 		return resultList;
 	}
 
-	private List<UsageLimitationBean> mapToAvailUsageLimitationTable(List<HashMap<String, Object>> ulList) {
+	private List<UsageLimitationBean> mapToAvailUsageLimitationTable(List<IngridDocument> ulList) {
 		List<UsageLimitationBean> resultList = new ArrayList<UsageLimitationBean>();
 		if (ulList == null)
 			return resultList;
 
-		for (HashMap<String, Object> ul : ulList) {
+		for (IngridDocument ul : ulList) {
 			UsageLimitationBean u = new UsageLimitationBean();
 			u.setLimit((Integer) ul.get(MdekKeys.ACCESS_RESTRICTION_KEY));
 			u.setRequirement((String) ul.get(MdekKeys.ACCESS_TERMS_OF_USE));
@@ -1660,11 +1576,11 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private List<DataFormatBean> mapToAvailDataFormatTable(List<HashMap<String, Object>> refList) {
+	private List<DataFormatBean> mapToAvailDataFormatTable(List<IngridDocument> refList) {
 		List<DataFormatBean> resultList = new ArrayList<DataFormatBean>();
 		if (refList == null)
 			return resultList;
-		for (HashMap<String, Object> ref : refList) {
+		for (IngridDocument ref : refList) {
 			DataFormatBean df = new DataFormatBean();
 			KeyValuePair kvp = mapToKeyValuePair(ref, MdekKeys.FORMAT_NAME_KEY, MdekKeys.FORMAT_NAME);
 			df.setName(kvp.getValue());
@@ -1677,11 +1593,11 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private List<MediaOptionBean> mapToAvailMediaOptionsTable(List<HashMap<String, Object>> refList) {
+	private List<MediaOptionBean> mapToAvailMediaOptionsTable(List<IngridDocument> refList) {
 		List<MediaOptionBean> resultList = new ArrayList<MediaOptionBean>();
 		if (refList == null)
 			return resultList;
-		for (HashMap<String, Object> ref : refList) {
+		for (IngridDocument ref : refList) {
 			MediaOptionBean mo = new MediaOptionBean();
 			mo.setName((Integer) ref.get(MdekKeys.MEDIUM_NAME));
 			mo.setLocation((String) ref.get(MdekKeys.MEDIUM_NOTE));
@@ -1692,11 +1608,11 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private List<Integer> mapToInspireTermTable(List<HashMap<String, Object>> topicList) {
+	private List<Integer> mapToInspireTermTable(List<IngridDocument> topicList) {
 		List<Integer> resultList = new ArrayList<Integer>();
 
 		if (topicList != null) {
-			for (HashMap<String, Object> topic : topicList) {
+			for (IngridDocument topic : topicList) {
 				resultList.add((Integer) topic.get(MdekKeys.TERM_ENTRY_ID));
 			}
 		}
@@ -1705,11 +1621,11 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	public static List<SNSTopic> mapToThesTermsTable(List<HashMap<String, Object>> topicList) {
+	public static List<SNSTopic> mapToThesTermsTable(List<IngridDocument> topicList) {
 		List<SNSTopic> resultList = new ArrayList<SNSTopic>();
 		if (topicList == null)
 			return resultList;
-		for (HashMap<String, Object> topic : topicList) {
+		for (IngridDocument topic : topicList) {
 			SNSTopic t = new SNSTopic();
 			t.setType(Type.DESCRIPTOR);
 			String type = (String) topic.get(MdekKeys.TERM_TYPE);
@@ -1734,11 +1650,11 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private List<VectorFormatDetailsBean> mapToVFormatDetailsTable(List<HashMap<String, Object>> vFormatList) {
+	private List<VectorFormatDetailsBean> mapToVFormatDetailsTable(List<IngridDocument> vFormatList) {
 		List<VectorFormatDetailsBean> resultList = new ArrayList<VectorFormatDetailsBean>();
 		if (vFormatList == null)
 			return resultList;
-		for (HashMap<String, Object> vFormat : vFormatList) {
+		for (IngridDocument vFormat : vFormatList) {
 			VectorFormatDetailsBean v = new VectorFormatDetailsBean();
 			v.setGeometryType((Integer) vFormat.get(MdekKeys.GEOMETRIC_OBJECT_TYPE));
 			v.setNumElements((Integer) vFormat.get(MdekKeys.GEOMETRIC_OBJECT_COUNT));
@@ -1748,22 +1664,22 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private List<Integer> mapToServiceTypeTable(List<HashMap<String, Object>> serviceTypeList) {
+	private List<Integer> mapToServiceTypeTable(List<IngridDocument> serviceTypeList) {
 		List<Integer> resultList = new ArrayList<Integer>();
 		if (serviceTypeList == null) {
 			return resultList;
 		}
-		for (HashMap<String, Object> serviceType : serviceTypeList) {
+		for (IngridDocument serviceType : serviceTypeList) {
 			resultList.add((Integer) serviceType.get(MdekKeys.SERVICE_TYPE2_KEY));
 		}
 		return resultList;
 	}
 	
-	private List<ScaleBean> mapToScaleTable(List<HashMap<String, Object>> scaleList) {
+	private List<ScaleBean> mapToScaleTable(List<IngridDocument> scaleList) {
 		List<ScaleBean> resultList = new ArrayList<ScaleBean>();
 		if (scaleList == null)
 			return resultList;
-		for (HashMap<String, Object> topic : scaleList) {
+		for (IngridDocument topic : scaleList) {
 			ScaleBean s = new ScaleBean();
 			s.setGroundResolution((Double) topic.get(MdekKeys.RESOLUTION_GROUND));
 			s.setScale((Integer) topic.get(MdekKeys.SCALE));
@@ -1774,11 +1690,11 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private List<LinkDataBean> mapToSymLinkDataTable(List<HashMap<String, Object>> linkList) {
+	private List<LinkDataBean> mapToSymLinkDataTable(List<IngridDocument> linkList) {
 		List<LinkDataBean> resultList = new ArrayList<LinkDataBean>();
 		if (linkList == null)
 			return resultList;
-		for (HashMap<String, Object> topic : linkList) {
+		for (IngridDocument topic : linkList) {
 			LinkDataBean l = new LinkDataBean();
 			l.setDate(convertTimestampToDate((String) topic.get(MdekKeys.SYMBOL_DATE)));
 			KeyValuePair kvp = mapToKeyValuePair(topic, MdekKeys.SYMBOL_CAT_KEY, MdekKeys.SYMBOL_CAT);
@@ -1789,11 +1705,11 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private  List<LinkDataBean> mapToKeyLinkDataTable(List<HashMap<String, Object>> linkList) {
+	private  List<LinkDataBean> mapToKeyLinkDataTable(List<IngridDocument> linkList) {
 		List<LinkDataBean> resultList = new ArrayList<LinkDataBean>();
 		if (linkList == null)
 			return resultList;
-		for (HashMap<String, Object> topic : linkList) {
+		for (IngridDocument topic : linkList) {
 			LinkDataBean l = new LinkDataBean();
 			l.setDate(convertTimestampToDate((String) topic.get(MdekKeys.KEY_DATE)));
 			KeyValuePair kvp = mapToKeyValuePair(topic, MdekKeys.SUBJECT_CAT_KEY, MdekKeys.SUBJECT_CAT);
@@ -1804,11 +1720,11 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private List<DBContentBean> mapToDbContentTable(List<HashMap<String, Object>> dbList) {
+	private List<DBContentBean> mapToDbContentTable(List<IngridDocument> dbList) {
 		List<DBContentBean> resultList = new ArrayList<DBContentBean>();
 		if (dbList == null)
 			return resultList;
-		for (HashMap<String, Object> content : dbList) {
+		for (IngridDocument content : dbList) {
 			DBContentBean db = new DBContentBean();
 			db.setParameter((String) content.get(MdekKeys.PARAMETER));
 			db.setAdditionalData((String) content.get(MdekKeys.SUPPLEMENTARY_INFORMATION));
@@ -1818,11 +1734,11 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private List<OperationBean> mapToOperationTable(List<HashMap<String, Object>> opList, Integer serviceType) {
+	private List<OperationBean> mapToOperationTable(List<IngridDocument> opList, Integer serviceType) {
 		List<OperationBean> resultList = new ArrayList<OperationBean>();
 		if (opList == null)
 			return resultList;
-		for (HashMap<String, Object> operation : opList) {
+		for (IngridDocument operation : opList) {
 			OperationBean op = new OperationBean();
 			if (serviceType == null || serviceType == 5 || serviceType == 6) {
 				op.setName((String) operation.get(MdekKeys.SERVICE_OPERATION_NAME));
@@ -1833,7 +1749,7 @@ public class MdekMapper implements DataMapperInterface {
 			op.setDescription((String) operation.get(MdekKeys.SERVICE_OPERATION_DESCRIPTION));
 			op.setPlatform((List<String>) operation.get(MdekKeys.PLATFORM_LIST));
 			op.setMethodCall((String) operation.get(MdekKeys.INVOCATION_NAME));
-			op.setParamList(mapToOperationParamTable((List<HashMap<String, Object>>) operation.get(MdekKeys.PARAMETER_LIST)));
+			op.setParamList(mapToOperationParamTable((List<IngridDocument>) operation.get(MdekKeys.PARAMETER_LIST)));
 			op.setAddressList((List<String>) operation.get(MdekKeys.CONNECT_POINT_LIST));
 			op.setDependencies((List<String>) operation.get(MdekKeys.DEPENDS_ON_LIST));
 			resultList.add(op);
@@ -1842,11 +1758,11 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 
-	private List<OperationParameterBean> mapToOperationParamTable(List<HashMap<String, Object>> opList) {
+	private List<OperationParameterBean> mapToOperationParamTable(List<IngridDocument> opList) {
 		List<OperationParameterBean> resultList = new ArrayList<OperationParameterBean>();
 		if (opList == null)
 			return resultList;
-		for (HashMap<String, Object> operation : opList) {
+		for (IngridDocument operation : opList) {
 			OperationParameterBean op = new OperationParameterBean();
 			op.setName((String) operation.get(MdekKeys.PARAMETER_NAME));
 			op.setDirection((String) operation.get(MdekKeys.DIRECTION));
@@ -1860,11 +1776,11 @@ public class MdekMapper implements DataMapperInterface {
 
 	
 
-	private List<CommentBean> mapToCommentTable(List<HashMap<String, Object>> commentList) {
+	private List<CommentBean> mapToCommentTable(List<IngridDocument> commentList) {
 		List<CommentBean> resultList = new ArrayList<CommentBean>();
 		if (commentList == null)
 			return resultList;
-		for (HashMap<String, Object> comment : commentList) {
+		for (IngridDocument comment : commentList) {
 			CommentBean c = new CommentBean();
 			c.setComment((String) comment.get(MdekKeys.COMMENT));
 			IngridDocument createUserDoc = (IngridDocument) comment.get(MdekKeys.CREATE_USER);
@@ -1875,80 +1791,11 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	
-	 /***********************************************************
-	 * Several Methods for testing Input and Output Conformity *
-	 ***********************************************************/
 
-	private static boolean testDetailedInputConformity(HashMap<String, Object> obj)
-	{
-		Object val = null;
-		Integer valInt = null;
-//		val = obj.get(MdekKeys.ABSTRACT);
-//      assert val != null : "Input HashMap does not contain a key: MdekKeys.ABSTRACT";
-//		assert val instanceof String : "MdekKeys.ABSTRACT";
-
-		val = obj.get(MdekKeys.UUID);
-		assert val != null : "Input HashMap does not contain a key: MdekKeys.UUID";
-		assert val instanceof String : "Input HashMap value for key MdekKeys.UUID is not of type String";
-
-		val = obj.get(MdekKeys.TITLE);
-		assert val != null : "Input HashMap does not contain a key: MdekKeys.TITLE";
-		assert val instanceof String : "Input HashMap value for key MdekKeys.TITLE is not of type String";
-
-		val = obj.get(MdekKeys.CLASS);
-		assert val != null : "Input HashMap does not contain a key: MdekKeys.CLASS";
-		assert val instanceof Integer : "Input HashMap value for key MdekKeys.CLASS is not of type Integer";
-
-		valInt = (Integer) val;
-		assert (valInt >= 0 && valInt <= 5) : "Input HashMap value for key MdekKeys.CLASS is not in the range of 0 and 5";
-
-		return true;
-	}
-
-	private static boolean testSimpleInputConformity(HashMap<String, Object> obj)
-	{
-		Object val = null;
-		Integer valInt = null;
-//		val = obj.get(MdekKeys.ABSTRACT);
-//      assert val != null : "Input HashMap does not contain a key: MdekKeys.ABSTRACT";
-//		assert val instanceof String : "MdekKeys.ABSTRACT";
-
-		val = obj.get(MdekKeys.UUID);
-		assert val != null : "Input HashMap does not contain a key: MdekKeys.UUID";
-		assert val instanceof String : "Input HashMap value for key MdekKeys.UUID is not of type String";
-
-		val = obj.get(MdekKeys.TITLE);
-		assert val != null : "Input HashMap does not contain a key: MdekKeys.TITLE";
-		assert val instanceof String : "Input HashMap value for key MdekKeys.TITLE is not of type String";
-
-		val = obj.get(MdekKeys.CLASS);
-		assert val != null : "Input HashMap does not contain a key: MdekKeys.CLASS";
-		assert val instanceof Integer : "Input HashMap value for key MdekKeys.CLASS is not of type Integer";
-
-		valInt = (Integer) val;
-		assert (valInt >= 0 && valInt <= 5) : "Input HashMap value for key MdekKeys.CLASS is not in the range of 0 and 5";
-
-		val = obj.get(MdekKeys.HAS_CHILD);
-		assert val != null : "Input HashMap does not contain a key: MdekKeys.HAS_CHILD";
-		assert val instanceof Boolean : "Input HashMap value for key MdekKeys.CLASS is not of type Boolean";
-
-		return true;
-	}
-
-	
-	
-	
 	/********************************
 	 * Miscellaneous Helper Methods *
 	 ********************************/
 	private boolean hasWritePermission(List<IngridDocument> permissionList) {
-		// TODO Implement tree and single user permissions
-/*
-		System.out.println("HAS_WRITE_ACCESS: " + MdekUtilsSecurity.hasWritePermission(permissionList));
-		System.out.println("HAS_WRITE_TREE_ACCESS: " + MdekUtilsSecurity.hasWriteTreePermission(permissionList));
-		System.out.println("HAS_WRITE_SINGLE_ACCESS: " + MdekUtilsSecurity.hasWriteSinglePermission(permissionList));
-*/
 		return MdekUtilsSecurity.hasWritePermission(permissionList);
 	}
 
@@ -2005,27 +1852,6 @@ public class MdekMapper implements DataMapperInterface {
 		}
 	}
 
-	
-	private static void printHashMap(HashMap<String, Object> map) {
-		Set<Map.Entry<String, Object>> entrySet = map.entrySet();
-		TreeSet<Map.Entry<String, Object>> treeSet = new TreeSet<Map.Entry<String, Object>>(new MapEntryComparator());
-		treeSet.addAll(entrySet);
-
-		for (Map.Entry<String, Object> entry : treeSet) {
-			log.debug("Key: "+entry.getKey()+" Value: "+entry.getValue());
-		}
-	}
-
-    static public class MapEntryComparator implements Comparator<Map.Entry<String, Object>> {
-    	public final int compare(Map.Entry<String, Object> entryA, Map.Entry<String, Object> entryB) {
-            try {
-            	return entryA.getKey().compareTo(entryB.getKey());
-            } catch (Exception e) {
-                return 0;
-            }
-        }
-    }
-
 	public SysListCache getSysListMapper() {
 		return sysListMapper;
 	}
@@ -2034,7 +1860,7 @@ public class MdekMapper implements DataMapperInterface {
 	}	
 
 
-	public void cleanUpHashMap(IngridDocument doc) {
+	private void cleanUpHashMap(IngridDocument doc) {
 		if (doc == null)
 			return;
 
@@ -2060,7 +1886,7 @@ public class MdekMapper implements DataMapperInterface {
 		}
 	}
 
-	public static String convertLanguageIdentifierToCode(String identifier) {
+	private static String convertLanguageIdentifierToCode(String identifier) {
 		if (identifier == null || identifier.length() == 0) {
 			return identifier;
 		} else if (identifier.equals(LANGUAGE_ID_GERMAN)) {
@@ -2073,7 +1899,7 @@ public class MdekMapper implements DataMapperInterface {
 		}
 	}
 
-	public static String convertLanguageCodeToIdentifier(String code) {
+	private static String convertLanguageCodeToIdentifier(String code) {
 		if (code == null || code.length() == 0) {
 			return code;
 		} else if (code.equals(LANGUAGE_CODE_GERMAN)) {

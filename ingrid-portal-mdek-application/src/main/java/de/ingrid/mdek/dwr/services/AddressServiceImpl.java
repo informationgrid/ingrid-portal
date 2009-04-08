@@ -1,7 +1,6 @@
 package de.ingrid.mdek.dwr.services;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -9,6 +8,7 @@ import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
 import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.WorkState;
+import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressSearchResultBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
@@ -58,17 +58,16 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	
-	public Map<String, Object> copyAddress(String nodeUuid, String dstNodeUuid,
+	public TreeNodeBean copyAddress(String nodeUuid, String dstNodeUuid,
 			Boolean includeChildren, Boolean copyToFreeAddress) {
 		log.debug("Copying address with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
 
 		try {
-			Map<String, Object> copyResult = addressRequestHandler.copyAddress(nodeUuid, dstNodeUuid, includeChildren, copyToFreeAddress);
+			TreeNodeBean copyResult = addressRequestHandler.copyAddress(nodeUuid, dstNodeUuid, includeChildren, copyToFreeAddress);
 			if (copyResult != null) {
-				return TreeServiceImpl.addTreeNodeAddressInfo(copyResult);
-			} else {
-				return null;
+				TreeServiceImpl.addTreeNodeAddressInfo(copyResult);
 			}
+			return copyResult;
 		}
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it

@@ -1,12 +1,12 @@
 package de.ingrid.mdek.dwr.services;
 
 import java.util.List;
-import java.util.Map;
 
-import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
 import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
+import de.ingrid.mdek.MdekUtils.WorkState;
+import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
@@ -23,7 +23,7 @@ public interface ObjectService {
 	public MdekDataBean reassignObjectToAuthor(MdekDataBean data);
 	public ObjectSearchResultBean getWorkObjects(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits);
 	public ObjectSearchResultBean getQAObjects(WorkState workState, IdcQAEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits);
-	public Map<String, Object> copyNode(String nodeUuid, String dstNodeUuid, Boolean includeChildren);
+	public TreeNodeBean copyNode(String nodeUuid, String dstNodeUuid, Boolean includeChildren);
 	public void moveNode(String nodeUuid, String oldParentUuid, String newParentUuString, boolean forcePublicationCondition);
 	public void deleteNode(String nodeUuid, Boolean forceDeleteReferences, Boolean markOnly);
 	public MdekDataBean deleteObjectWorkingCopy(String nodeUuid, Boolean forceDeleteReferences, Boolean markOnly);

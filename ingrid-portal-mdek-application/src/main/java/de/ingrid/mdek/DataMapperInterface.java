@@ -1,9 +1,9 @@
 package de.ingrid.mdek;
 
-import java.util.HashMap;
-
+import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
+import de.ingrid.utils.IngridDocument;
 
 /**
  * @author mbenz
@@ -11,50 +11,25 @@ import de.ingrid.mdek.beans.object.MdekDataBean;
  * The Data Mapper Interface defines the methods needed to map external data to the internal
  * UDK data representation of the Mdek and the other way round.
  * 
- * The static Strings defined in this interface represent the Mdek view of an Udk object
- * 
  */
 public interface DataMapperInterface {
 
-	// TODO Change return type to MdekDataBean?
-	public HashMap<String, Object> getSimpleObjectRepresentation(Object obj);
-	public MdekDataBean getDetailedObjectRepresentation(Object obj);
+	public TreeNodeBean getSimpleObjectRepresentation(IngridDocument doc);
+	public MdekDataBean getDetailedObjectRepresentation(IngridDocument doc);
+	public IngridDocument convertFromObjectRepresentation(MdekDataBean data);
 
-	// We return an Object since we don't know all the possible target types in advance 
-	public Object convertFromObjectRepresentation(MdekDataBean data);
-	public HashMap<String, Object> getSimpleAddressRepresentation(Object obj);
-	public MdekAddressBean getDetailedAddressRepresentation(Object obj);
-	public Object convertFromAddressRepresentation(MdekAddressBean data);
+	public TreeNodeBean getSimpleAddressRepresentation(IngridDocument doc);
+	public MdekAddressBean getDetailedAddressRepresentation(IngridDocument doc);
+	public IngridDocument convertFromAddressRepresentation(MdekAddressBean data);
 
-	// Sets the initial values for the address addr. Initial values are loaded from the backend.
+	// Initialize an adr/obj with default values
 	public void setInitialValues(MdekAddressBean addr);
-	// Sets the initial values for the object obj. Initial values are loaded from the backend.
 	public void setInitialValues(MdekDataBean obj);
+
 
 	// List IDs for key/value lookup
 	public final static int MDEK_ADDRESS_REF_ID = 505;
 	public final static int MDEK_ADDRESS_REF_SPECIAL_ID = 2010;
-
-	// Miscellaneous
-	public final static String MDEK_ID = "id";
-	public final static String MDEK_HAS_CHILDREN = "isFolder";
-	public final static String MDEK_IS_PUBLISHED = "isPublished";
-	public final static String MDEK_IS_MARKED_DELETED = "isMarkedDeleted";
-	public final static String MDEK_USER_WRITE_PERMISSION = "userWritePermission";
-	public final static String MDEK_USER_WRITE_SINGLE_PERMISSION = "userWriteSinglePermission";
-	public final static String MDEK_USER_WRITE_TREE_PERMISSION = "userWriteTreePermission";
-	public final static String MDEK_USER_WRITE_SUB_TREE_PERMISSION = "userWriteSubTreePermission";
-
-	// TODO: Some values are duplicates. Merge them!
-	public final static String MDEK_TITLE = "title";
-	public final static String MDEK_DOCTYPE = "nodeDocType";
-	public final static String MDEK_CLASS = "objectClass";
-
-	// Communication
-	public final static String MDEK_ADDRESS_COMM = "communication";
-	public final static String MDEK_ADDRESS_COMM_MEDIUM = "communicationMedium";
-	public final static String MDEK_ADDRESS_COMM_VALUE = "communicationValue";
-	public final static String MDEK_ADDRESS_COMM_DESCRIPTION = "communicationDescription";
 
 	// Language codes
 	//   Codes are stored in the database
