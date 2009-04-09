@@ -815,8 +815,10 @@ dojo.widget.defineWidget(
 		// On mozilla we can check event.explicitOriginalTarget
 		dojo.event.connectOnce("after", this.curEditor.inputNode, "onblur", this, "onEditorFocusLost");
 	} else if (this.curEditor instanceof ingrid.widget.Select) {
+		this.curEditor.textInputNode.focus();
 		dojo.event.connectOnce("after", this.curEditor.textInputNode, "onblur", this, "onEditorFocusLost");
 	} else if (this.curEditor instanceof ingrid.widget.ComboBox) {
+		this.curEditor.textInputNode.focus();
 		dojo.event.connectOnce("after", this.curEditor.textInputNode, "onblur", this, "onEditorFocusLost");
 	} else if (this.curEditor instanceof dojo.widget.Textbox) {
 		dojo.event.connectOnce("after", this.curEditor.textbox, "onblur", this, "onEditorFocusLost");
@@ -842,6 +844,23 @@ dojo.widget.defineWidget(
 	// if the select box is open during onBlur, this is no EditorLostFocus event
 	// the onBlur event was probabely generated while opening the select box
 	} else if (this.curEditor instanceof ingrid.widget.Select || this.curEditor instanceof ingrid.widget.ComboBox) {
+
+		if (dojo.render.html.ie){
+			var editorRoot = this.curEditor.textInputNode.parentNode.parentNode;
+			if (document.activeElement == editorRoot)
+				return;
+
+		} else {
+			if (e.explicitOriginalTarget) {
+				// Mozilla specific
+				var target = e.explicitOriginalTarget;
+				if (target == this.curEditor.downArrowNode) {
+					return;
+				}
+			}
+		}
+
+
 		if (this.curEditor.popupWidget.isShowingNow) {
 			return;
 		}
