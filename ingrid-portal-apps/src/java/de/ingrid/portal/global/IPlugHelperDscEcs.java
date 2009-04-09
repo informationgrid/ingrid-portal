@@ -249,7 +249,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
                 page++;
                 hits = IBUSInterfaceImpl.getInstance().searchAndDetail(query, chunkSize, page, (page-1) * chunkSize,
                 		PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000), requestedMetaData);
-                for (int j = 0; j < hits.length(); j++) {
+                for (int j = 0; j < hits.getHits().length; j++) {
                 	IngridHit hit = hits.getHits()[j];
                     IngridHitDetail detail = (IngridHitDetail) hit.getHitDetail();
 
