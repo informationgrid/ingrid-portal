@@ -122,7 +122,7 @@ function createAdditionalFieldDomNode(additionalField) {
 		dojo.html.addClass(inputWidget.textbox, "w668");
 
 	} else if ("LIST" == additionalField.type) {
-		inputWidget = dojo.widget.createWidget("ingrid:Select", {
+		inputWidget = dojo.widget.createWidget("ingrid:ComboBox", {
 			id: "additionalField" + additionalField.id,
 			name: additionalField.name,
 			autoComplete: "false" });
@@ -466,7 +466,7 @@ function initFreeTermsButtons() {
 		dojo.debug("inspire topics: "+inspireTopics);
 
 		var def = new dojo.Deferred();
-		// add inspire topics to the 
+		// add inspire topics to the list
 		if (inspireTopics.length > 0) {
 			addInspireTopics(inspireTopics);
 			var displayText = dojo.string.substituteParams(message.get("dialog.addInspireTopics.message"), inspireTopics.join(", "));
