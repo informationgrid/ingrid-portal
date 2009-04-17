@@ -28,6 +28,9 @@
 	"general.userOperation.EDITED":"modified",
 	"general.userOperation.DELETED":"marked for deletion",
 	"general.state.markedDeleted":"marked for deletion",
+	
+	"general.unsupportedBrowser.title":"Unsupported Browser",
+	"general.unsupportedBrowser.solution":"Browser not supported! Please use IE7, Firefox2 or Firefox3!",
 
 	"menu.general.help":"Help",
 	"menu.general.disclaimer":"Disclaimer",
