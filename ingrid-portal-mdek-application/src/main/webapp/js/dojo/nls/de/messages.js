@@ -29,9 +29,6 @@
 	"general.userOperation.DELETED":"als gel&ouml;scht markiert",
 	"general.state.markedDeleted":"als gel&ouml;scht markiert",
 	
-	"general.unsupportedBrowser.title":"Nichtunterstützter Browser",
-	"general.unsupportedBrowser.solution":"Dieser Browser wird nicht unterstützt! Bitte verwenden Sie den IE7, Firefox2 oder Firefox3!",
-
 	"menu.general.help":"Hilfe",
 	"menu.general.disclaimer":"Impressum",
 	"menu.general.info":"Info",
@@ -625,7 +622,7 @@
 	"ui.adr.details.communicationTable.header.medium":"Art",
 	"ui.adr.details.communicationTable.header.value":"Verbindung",
 	"ui.adr.details.street":"Stra&szlig;e/Hausnummer",
-	"ui.adr.details.state":"Staat",
+	"ui.adr.details.state":"Land",
 	"ui.adr.details.postCode":"PLZ",
 	"ui.adr.details.city":"Ort",
 	"ui.adr.details.poBox":"Postfach",

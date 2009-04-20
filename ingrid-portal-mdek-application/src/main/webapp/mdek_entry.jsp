@@ -12,6 +12,15 @@
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
+<script type="text/javascript">
+    // browser check (only IE7, FF2/3)
+	var browser = navigator.appName;
+	var version = navigator.appVersion;
+	if (!(version.indexOf("MSIE 7") != -1 || (browser=="Netscape" && version.indexOf("5.0") != -1 && version.indexOf("Chrome") == -1))) {
+		document.location.href = "not_supported_browser.jsp"
+	}
+</script>
+
 <script src='/ingrid-portal-mdek-application/dwr/interface/AddressService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/BackendService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/CatalogService.js'></script>
@@ -44,6 +53,7 @@
 	};
 </script>
 <script type="text/javascript" src="dojo-0.4.1-ingrid/dojo.js"></script>
+
 <script type="text/javascript" src="js/config.js"></script>
 <script type="text/javascript" src="js/message.js"></script>
 <script type="text/javascript" src="js/includes.js"></script>
@@ -2214,12 +2224,12 @@ function hideSplash(){
 			        <div class="half left">
 						<span id="uiElement4430" type="required">
 				          <span id="addressComLabel" class="label required"><label for="addressCom" onclick="javascript:dialog.showContextHelp(arguments[0], 4430)"><script>document.write(message.get("ui.adr.details.communicationTable.title"))</script>*</label></span>
-				          <div class="tableContainer rows5 half">
+				          <div class="tableContainer rows7 half">
 				            <div class="cellEditors" id="addressComEditors">
 				              <div dojoType="ingrid:ComboBox" maxlength="20" toggle="plain" style="width:37px;" listId="4430" id="addressComType"></div>
 				              <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w238" widgetId="addressComConnection"></div>
 				            </div>
-				      	    <table id="addressCom" dojoType="ingrid:FilteringTable" minRows="5" cellspacing="0" class="filteringTable nosort interactive">
+				      	    <table id="addressCom" dojoType="ingrid:FilteringTable" minRows="7" cellspacing="0" class="filteringTable nosort interactive">
 				      	      <thead>
 				      		      <tr>
 				            			<th nosort="true" field="medium" dataType="String" width="65" editor="addressComType"><script>document.write(message.get("ui.adr.details.communicationTable.header.medium"))</script></th>
@@ -2240,6 +2250,7 @@ function hideSplash(){
 						</span>
 
 			          <div id="addressDetails1">
+			            <!--
 			            <span class="entry first">
 							<span id="uiElement4405" type="optional">
 			              		<span id="addressCountryLabel" class="label"><label for="addressCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 4405)"><script>document.write(message.get("ui.adr.details.state"))</script></label></span>
@@ -2250,7 +2261,8 @@ function hideSplash(){
 			              		</span>
 			            	</span>
 			            </span>
-			            <span class="entry">
+			            -->
+			            <span class="entry first">
 							<span id="uiElement4410" type="optional">
 			              		<span id="addressZipCodeLabel" class="label"><label for="addressZipCode" onclick="javascript:dialog.showContextHelp(arguments[0], 4410)"><script>document.write(message.get("ui.adr.details.postCode"))</script></label></span>
 			              		<span class="input spaceBelow"><input type="text" maxlength="10" id="addressZipCode" name="addressZipCode" class="w061" dojoType="ingrid:ValidationTextBox" /></span>
@@ -2275,6 +2287,18 @@ function hideSplash(){
 							<span id="uiElement4425" type="optional">
 			              		<span id="addressZipPOBoxLabel" class="label"><label for="addressZipPOBox" onclick="javascript:dialog.showContextHelp(arguments[0], 4425)"><script>document.write(message.get("ui.adr.details.poBoxPostCode"))</script></label></span>
 			              		<span class="input"><input type="text" id="addressZipPOBox" maxlength="10" name="addressZipPOBox" class="w061" dojoType="ingrid:ValidationTextBox" /></span>
+			            	</span>
+			            </span>
+			          </div>
+			          <div id="addressDetails3">
+			          	<span class="entry first">
+							<span id="uiElement4405" type="optional">
+			              		<span id="addressCountryLabel" class="label"><label for="addressCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 4405)"><script>document.write(message.get("ui.adr.details.state"))</script></label></span>
+			              		<span class="input spaceBelow">
+			              			<select dojoType="ingrid:Select" id="addressCountry" name="addressCountry">
+			              				<option value="de">Deutschland</option>
+			              			</select>
+			              		</span>
 			            	</span>
 			            </span>
 			          </div>

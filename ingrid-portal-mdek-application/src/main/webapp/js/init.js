@@ -7,13 +7,6 @@ var mdek = {};
 
 dojo.addOnLoad(function()
 {
-	
-  // check if a supported browser is used
-  if (!dojo.render.html.ie70 && !dojo.render.html.mozilla) {
-  	dialog.show(message.get("general.unsupportedBrowser.title"), message.get("general.unsupportedBrowser.solution"), dialog.ERROR);
-  	return;
-  }
-  
   
   // initialize debug console if necessary
   if (djConfig.isDebug)
