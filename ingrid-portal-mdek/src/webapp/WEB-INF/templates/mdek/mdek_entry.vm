@@ -12,10 +12,10 @@
     <a href="../ingrid-portal-mdek-application/test_dwr_security.jsp">/ingrid-portal-mdek-application/test_dwr_security.jsp</a><br>
     <a href="../ingrid-portal-mdek-application/mdek_admin_entry.jsp">/ingrid-portal-mdek-application/mdek_admin_entry.jsp</a>
 -->
-	<input class="btn" type="button" name="Verweis" value="Erfassungskomponente"
+	<input class="btn" type="button" name="Verweis" value="$MESSAGES.getString('entry.button.ige')"
 	  onClick="javaScript:void(window.open('/ingrid-portal-mdek-application/index.jsp', '_erfassung'));">
 #if($showMdekAdmin)
-	<input class="btn" type="button" name="Verweis" value="Verwaltung"
+	<input class="btn" type="button" name="Verweis" value="$MESSAGES.getString('entry.button.administration')"
 	  onClick="javaScript:void(window.open('/ingrid-portal-mdek-application/mdek_admin_entry.jsp', '_verwaltung'));">
 #end
   </div>

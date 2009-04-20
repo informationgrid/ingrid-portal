@@ -4,11 +4,13 @@
 package de.ingrid.portal.portlets.mdek;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -72,6 +74,10 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
     	Context context = getContext(request);
+    	ResourceBundle resourceBundle = getPortletConfig().getResourceBundle(request.getLocale());
+    	context.put("MESSAGES", resourceBundle);
+    	
+        response.setTitle(resourceBundle.getString("entry.page.title"));
     	
     	String userName = request.getRemoteUser();
     	try {
