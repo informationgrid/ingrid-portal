@@ -392,24 +392,25 @@ public class SNSService {
     public List<SNSTopic> getTopicsForText(String queryTerm) {
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	int[] totalSize = new int[] {0};
-	    DetailedTopic[] snsResults = new DetailedTopic[0];
+    	TopicMapFragment mapFragment = null;
+    	
     	try {
-    		snsResults = snsController.getTopicsForText(queryTerm, MAX_ANALYZED_WORDS, "/thesa", "mdek", THESAURUS_LANGUAGE_FILTER, totalSize, false);
-    	} catch (AxisFault f) {
-    		throw new RuntimeException(ERROR_SNS_TIMEOUT);
-    	} catch (Exception e) {
-	    	log.error("Error calling snsController.getTopicsForText", e);
-    	}
-
-	    totalSize[0] = snsResults.length;
-	    IngridHits res = new IngridHits("mdek", totalSize[0], snsResults, false);
-	    Topic[] topics = (Topic[]) res.getHits();
-
-	    for (Topic topic : topics) {
-	    	if (getTypeFromTopic(topic) == Type.DESCRIPTOR) {
-	    		resultList.add(convertTopicToSNSTopic(topic));
-	    	}
+    		mapFragment = snsClient.autoClassify(queryTerm, MAX_ANALYZED_WORDS, "/thesa", false, THESAURUS_LANGUAGE_FILTER);
+	    } catch (Exception e) {
+	    	log.error(e);
 	    }
+	    
+	    if (null != mapFragment) {
+	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
+	        if ((null != topics)) {
+	            for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
+	            	if (getTypeFromTopic(topic) == Type.DESCRIPTOR) {
+	            		resultList.add(convertTopicToSNSTopic(topic));
+	            	}
+				}
+	        }
+	    }
+
 //	    log.debug("Number of descriptors in the result: "+resultList.size());
 	    return resultList;
     }
@@ -632,26 +633,60 @@ public class SNSService {
 
     private static SNSTopic convertTopicToSNSTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
     	Source topicSource = getSourceFromTopic(topic);
+    	
 //    	log.debug("topic source: " + topicSource);
 //    	log.debug("topic type: " + getTypeFromTopic(topic));
     	String topicName = topic.getBaseName(0).getBaseNameString().get_value();
     	if (Source.UMTHES.equals(topicSource)) {
-        	return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getId(), topicName, null, null);
+    		SNSTopic snsTopic = new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getId(), topicName, null, null);
+    		snsTopic.setInspireList(findInspireTopics(topic));
+        	return snsTopic;
 
     	} else {
-        	return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getId(), getGemetTitleFromTopic(topic), topicName, getGemetIdFromTopic(topic));
+    		// if GEMET, then the title is used for the title in SNSTopic and, in case UMTHES is different
+    		// the UMTHES value is stored in alternateTitle
+    		SNSTopic snsTopic = new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getId(), getGemetTitleFromTopic(topic), topicName, getGemetIdFromTopic(topic));
+    		snsTopic.setInspireList(findInspireTopics(topic));
+        	return snsTopic;
     	}
     }
 
-    private static Source getSourceFromTopic(Topic topic) {
+    private static List<String> findInspireTopics(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
+    	List<String> inspireTopics = new ArrayList<String>();
+    	
+    	if (null != topic.getOccurrence()) {
+	    	for (Occurrence occ: topic.getOccurrence()) {
+	    		if (occ.getInstanceOf().getTopicRef().getHref().endsWith("iTheme2007")) {
+	    			inspireTopics.add(getInspireTitleFromOccurenceString(occ.getResourceData().get_value()));
+	    		}
+	    	}
+    	}
+    	
+		return inspireTopics;
+	}
+
+    // TODO AW: ENGLISH also!!!
+	private static String getInspireTitleFromOccurenceString(String inspireOccurence) {
+		if (inspireOccurence != null) {
+    		String[] inspireParts = inspireOccurence.split("@");
+    		return inspireParts[1];
+    	}
+		return null;
+	}
+
+	private static Source getSourceFromTopic(Topic topic) {
     	return (topic.get(DetailedTopic.GEMET_OCC) != null ? Source.GEMET : Source.UMTHES);
     }
 
+    /**
+     * First check if there are any Inspire-Themes and add those to the topic
+     * @param topic
+     * @return
+     */
     private static Source getSourceFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
     	Occurrence occ = getOccurrence(topic, "gemet1.0");
     	if (null != occ) {
     		return Source.GEMET;
-
     	} else {
         	// If there is no occurence of type 'gemet1.0'
     		return Source.UMTHES;

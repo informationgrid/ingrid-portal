@@ -71,8 +71,8 @@ public class MdekDataBean {
 	private String timeRefExplanation;
 
 	// ExtraInfo
-	private String extraInfoLangMetaData;
-	private String extraInfoLangData;
+	private Integer extraInfoLangMetaDataCode;
+	private Integer extraInfoLangDataCode;
 	private Integer extraInfoPublishArea;
 	private List<ConformityBean> extraInfoConformityTable;
 	private List<String> extraInfoXMLExportTable;
@@ -851,29 +851,27 @@ public class MdekDataBean {
 	}
 
 
-
-	public String getExtraInfoLangMetaData() {
-		return extraInfoLangMetaData;
+	public Integer getExtraInfoLangMetaDataCode() {
+		return extraInfoLangMetaDataCode;
 	}
 
 
 
-	public void setExtraInfoLangMetaData(String extraInfoLangMetaData) {
-		this.extraInfoLangMetaData = extraInfoLangMetaData;
+	public void setExtraInfoLangMetaDataCode(Integer extraInfoLangMetaData) {
+		this.extraInfoLangMetaDataCode = extraInfoLangMetaData;
 	}
 
 
 
-	public String getExtraInfoLangData() {
-		return extraInfoLangData;
+	public Integer getExtraInfoLangDataCode() {
+		return extraInfoLangDataCode;
 	}
 
 
 
-	public void setExtraInfoLangData(String extraInfoLangData) {
-		this.extraInfoLangData = extraInfoLangData;
+	public void setExtraInfoLangDataCode(Integer extraInfoLangData) {
+		this.extraInfoLangDataCode = extraInfoLangData;
 	}
-
 
 
 	public Integer getExtraInfoPublishArea() {

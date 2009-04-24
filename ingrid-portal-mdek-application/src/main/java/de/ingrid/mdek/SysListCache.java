@@ -65,7 +65,7 @@ public class SysListCache {
 		try {
 			IngridDocument response = mdekCallerCatalog.fetchCatalog(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
 			CatalogBean b = MdekCatalogUtils.extractCatalogFromResponse(response);
-			languageCode = b.getLanguage();
+			languageCode = b.getLanguageShort();
 
 		} catch (Exception e) {
 			// Could not get the lists from the backend

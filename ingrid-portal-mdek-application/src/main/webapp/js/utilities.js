@@ -743,13 +743,16 @@ UtilList.addSNSLocationLabels = function(list) {
 	}
 }
 
-// Add SNS topic labels (entry.label = entry.title + " / " + entry.alternateTitle)
+// Add SNS topic labels (entry.label = entry.alternateTitle + " / " + entry.title)
 UtilList.addSNSTopicLabels = function(list) {
 	if (list) {
 		dojo.lang.forEach(list, function(entry) {
 			entry.label = entry.title;
+			entry.sourceString = entry.source;
 			if (entry.alternateTitle && entry.alternateTitle != entry.title) {
-				entry.label += " / " + entry.alternateTitle;
+				// if UMTHES and GEMET is different then show "UMTHES/GEMET"
+				entry.label = entry.alternateTitle + " / " + entry.title;
+				entry.sourceString = "UMTHES/GEMET";
 			}
 		});
 		return list;
@@ -795,8 +798,8 @@ var UtilCatalog = {}
 
 // Helper function that returns the catalog language. If no language is specified, "de" is returned
 UtilCatalog.getCatalogLanguage = function() {
-	if (catalogData && typeof(catalogData.language) != "undefined" && catalogData.language != null) {
-		return catalogData.language;
+	if (catalogData && typeof(catalogData.languageShort) != "undefined" && catalogData.languageShort != null) {
+		return catalogData.languageShort;
 	} else {
 		return "de";
 	}

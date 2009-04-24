@@ -230,7 +230,7 @@ applyChanges = function() {
     	      <thead>
     		      <tr>
           			<th nosort="true" field="label" dataType="String">Name</th>
-          			<th nosort="true" field="source" dataType="String">Typ</th>
+          			<th nosort="true" field="sourceString" dataType="String">Typ</th>
     		      </tr>
     	      </thead>
     	      <colgroup>
@@ -259,7 +259,7 @@ applyChanges = function() {
     	      <thead>
     		      <tr>
           			<th nosort="true" field="label" dataType="String">Name</th>
-          			<th nosort="true" field="source" dataType="String">Typ</th>
+          			<th nosort="true" field="sourceString" dataType="String">Typ</th>
     		      </tr>
     	      </thead>
     	      <colgroup>

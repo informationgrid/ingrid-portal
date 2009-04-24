@@ -711,16 +711,31 @@ function addInspireTopics(inspireTopics) {
 	}
 }
 
+// needed for finding duplicated entries in Inspire list
+function inspireArrayContains(array, value) {
+	var i, listed = false;
+	for (i=0; i<array.length; i++) {
+		if (array[i].title === value) {
+			listed = true;
+			break;
+		}
+	}
+	return listed;
+};
+
 // get an array of Inspire topics
 function getInspireTopics(topics) {
 	var inspireArray = new Array();
 	dojo.lang.forEach(topics, function(topic) {
 		if (topic.inspireList.length > 0) {
-			dojo.lang.forEach(topic.inspireList, function(inspireTopic) {			
-				var obj = new Object();
-				obj.title = inspireTopic;
-				obj.source = "INSPIRE";
-				inspireArray.push(obj);
+			dojo.lang.forEach(topic.inspireList, function(inspireTopic) {
+				// exclude multiple same entries
+				if (!inspireArrayContains(inspireArray,inspireTopic)) {			
+					var obj = new Object();
+					obj.title = inspireTopic;
+					obj.source = "INSPIRE";
+					inspireArray.push(obj);
+				}
 			});
 		}
 	});
@@ -733,7 +748,7 @@ function addFreeTerm(queryTerm, store) {
 	if (dojo.lang.every(store.getData(), function(item) { return item.title.toLowerCase() != queryTerm.toLowerCase(); })) {
 		// If every term in store is != to the queryTerm, add it
 		var identifier = UtilStore.getNewKey(store);
-		store.addData( { Id: identifier, label: queryTerm, title: queryTerm, source: "FREE"} );
+		store.addData( { Id: identifier, label: queryTerm, title: queryTerm, source: "FREE", sourceString: "FREE"} );
 	}
 }
 
@@ -1481,7 +1496,7 @@ function initSysLists() {
 		"extraInfoConformityLevelEditor", "availabilityDataFormatName", "availabilityUsageLimitationLimitEditor",
 		// Addresses
 		"headerAddressType2Style", "headerAddressType3Style", "headerAddressType2Title", "headerAddressType3Title",
-		"addressComType"]; 
+		"addressComType","addressCountry"]; 
 
 /*
 	// TODO load the initial language code map from the backend
@@ -1495,7 +1510,8 @@ function initSysLists() {
 */
 	// Setting the language code to "de". Uncomment the previous block to enable language specific settings depending on the browser language
 	var languageCode = UtilCatalog.getCatalogLanguage();
-
+	dojo.debug("LanguageShort is: " + languageCode);
+	
 	var lstIds = [];
 	dojo.lang.forEach(selectWidgetIDs, function(item){
 		lstIds.push(dojo.widget.byId(item).listId);

@@ -44,6 +44,10 @@ public class MdekCatalogUtils {
 
 	private static final String SYS_GUI_ID = "id";
 	private static final String SYS_GUI_MODE = "mode";
+	
+	private static final Integer SYS_GERMAN_CODE = 150;
+	private static final Integer SYS_ENGLISH_CODE = 123;
+	
 	private static XStream xstream = new XStream();
 
 
@@ -303,12 +307,18 @@ public class MdekCatalogUtils {
 		if (result != null) {
 			CatalogBean resultCat = new CatalogBean();
 	
+			log.debug("MDEK KEYS:");
+			log.debug(result.getInt(MdekKeys.LANGUAGE_CODE));
+			log.debug(result.getString(MdekKeys.LANGUAGE_NAME));
+			//log.debug(result.getString(MdekKeys.LANGUAGE_SHORTCUT));
+			
 			resultCat.setUuid(result.getString(MdekKeys.UUID));
 			resultCat.setCatalogName(result.getString(MdekKeys.CATALOG_NAME));
 			resultCat.setPartnerName(result.getString(MdekKeys.PARTNER_NAME));
 			resultCat.setProviderName(result.getString(MdekKeys.PROVIDER_NAME));
-			resultCat.setCountry(result.getString(MdekKeys.COUNTRY));
-			resultCat.setLanguage(result.getString(MdekKeys.LANGUAGE));
+			resultCat.setCountryCode(result.getInt(MdekKeys.COUNTRY_CODE));
+			resultCat.setLanguageCode(result.getInt(MdekKeys.LANGUAGE_CODE));
+			resultCat.setLanguageShort(getLanguageShort(resultCat.getLanguageCode()));
 			resultCat.setWorkflowControl(result.getString(MdekKeys.WORKFLOW_CONTROL));
 			resultCat.setExpiryDuration((Integer) result.get(MdekKeys.EXPIRY_DURATION));
 			resultCat.setDateOfCreation(MdekUtils.convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
@@ -323,6 +333,17 @@ public class MdekCatalogUtils {
 		} else {
 			MdekErrorUtils.handleError(response);
 			return null;
+		}
+	}
+
+	private static String getLanguageShort(Integer languageCode) {
+		if (languageCode == SYS_ENGLISH_CODE)
+			return "en";
+		else if (languageCode == SYS_GERMAN_CODE)
+			return "de";
+		else {
+			log.debug("Language not supported! Using 'de' as default!");
+			return "de";
 		}
 	}
 
@@ -430,8 +451,8 @@ public class MdekCatalogUtils {
 		catDoc.put(MdekKeys.CATALOG_NAME, cat.getCatalogName());
 		catDoc.put(MdekKeys.PARTNER_NAME, cat.getPartnerName());
 		catDoc.put(MdekKeys.PROVIDER_NAME, cat.getProviderName());
-		catDoc.put(MdekKeys.COUNTRY, cat.getCountry());
-		catDoc.put(MdekKeys.LANGUAGE, cat.getLanguage());
+		catDoc.put(MdekKeys.COUNTRY_CODE, cat.getCountryCode());
+		catDoc.put(MdekKeys.LANGUAGE_CODE, cat.getLanguageCode());
 		catDoc.put(MdekKeys.WORKFLOW_CONTROL, cat.getWorkflowControl());
 		catDoc.put(MdekKeys.EXPIRY_DURATION, cat.getExpiryDuration());
 		catDoc.put(MdekKeys.CATALOG_LOCATION, mapLocationBeanToIngridDoc(cat.getLocation()));

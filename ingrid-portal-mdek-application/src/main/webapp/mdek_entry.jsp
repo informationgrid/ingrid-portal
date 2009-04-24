@@ -1866,7 +1866,7 @@ function hideSplash(){
 		            	      <thead>
 		            		      <tr>
 		                  			<th nosort="true" field="label" dataType="String">&nbsp;</th>
-		                  			<th nosort="true" field="source" dataType="String">&nbsp;</th>
+		                  			<th nosort="true" field="sourceString" dataType="String">&nbsp;</th>
 		            		      </tr>
 		            	      </thead>
 							  <colgroup>
@@ -2224,7 +2224,7 @@ function hideSplash(){
 			        <div class="half left">
 						<span id="uiElement4430" type="required">
 				          <span id="addressComLabel" class="label required"><label for="addressCom" onclick="javascript:dialog.showContextHelp(arguments[0], 4430)"><script>document.write(message.get("ui.adr.details.communicationTable.title"))</script>*</label></span>
-				          <div class="tableContainer rows7 half">
+				          <div class="tableContainer rows7 half" style="top: 4px;">
 				            <div class="cellEditors" id="addressComEditors">
 				              <div dojoType="ingrid:ComboBox" maxlength="20" toggle="plain" style="width:37px;" listId="4430" id="addressComType"></div>
 				              <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w238" widgetId="addressComConnection"></div>
@@ -2250,18 +2250,6 @@ function hideSplash(){
 						</span>
 
 			          <div id="addressDetails1">
-			            <!--
-			            <span class="entry first">
-							<span id="uiElement4405" type="optional">
-			              		<span id="addressCountryLabel" class="label"><label for="addressCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 4405)"><script>document.write(message.get("ui.adr.details.state"))</script></label></span>
-			              		<span class="input spaceBelow">
-			              			<select dojoType="ingrid:Select" style="width:43px;" id="addressCountry" name="addressCountry">
-			              				<option value="de">DE</option>
-			              			</select>
-			              		</span>
-			            	</span>
-			            </span>
-			            -->
 			            <span class="entry first">
 							<span id="uiElement4410" type="optional">
 			              		<span id="addressZipCodeLabel" class="label"><label for="addressZipCode" onclick="javascript:dialog.showContextHelp(arguments[0], 4410)"><script>document.write(message.get("ui.adr.details.postCode"))</script></label></span>
@@ -2280,13 +2268,13 @@ function hideSplash(){
 			            <span class="entry first">
 							<span id="uiElement4420" type="optional">
 			              		<span id="addressPOBoxLabel" class="label"><label for="addressPOBox" onclick="javascript:dialog.showContextHelp(arguments[0], 4420)"><script>document.write(message.get("ui.adr.details.poBox"))</script></label></span>
-			              		<span class="input"><input type="text" id="addressPOBox" maxlength="10" name="addressPOBox" class="w148" dojoType="ingrid:ValidationTextBox" /></span>
+			              		<span class="input spaceBelow"><input type="text" id="addressPOBox" maxlength="10" name="addressPOBox" class="w148" dojoType="ingrid:ValidationTextBox" /></span>
 			            	</span>
 			            </span>
 			            <span class="entry">
 							<span id="uiElement4425" type="optional">
 			              		<span id="addressZipPOBoxLabel" class="label"><label for="addressZipPOBox" onclick="javascript:dialog.showContextHelp(arguments[0], 4425)"><script>document.write(message.get("ui.adr.details.poBoxPostCode"))</script></label></span>
-			              		<span class="input"><input type="text" id="addressZipPOBox" maxlength="10" name="addressZipPOBox" class="w061" dojoType="ingrid:ValidationTextBox" /></span>
+			              		<span class="input spaceBelow"><input type="text" id="addressZipPOBox" maxlength="10" name="addressZipPOBox" class="w061" dojoType="ingrid:ValidationTextBox" /></span>
 			            	</span>
 			            </span>
 			          </div>
@@ -2294,11 +2282,7 @@ function hideSplash(){
 			          	<span class="entry first">
 							<span id="uiElement4405" type="optional">
 			              		<span id="addressCountryLabel" class="label"><label for="addressCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 4405)"><script>document.write(message.get("ui.adr.details.state"))</script></label></span>
-			              		<span class="input spaceBelow">
-			              			<select dojoType="ingrid:Select" id="addressCountry" name="addressCountry">
-			              				<option value="de">Deutschland</option>
-			              			</select>
-			              		</span>
+		                  		<span class="input"><input dojoType="ingrid:Select" autoComplete="false" style="width:302px;" listId="6200" id="addressCountry" /></span>
 			            	</span>
 			            </span>
 			          </div>

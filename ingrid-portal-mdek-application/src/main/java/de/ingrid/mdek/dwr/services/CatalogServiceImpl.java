@@ -27,8 +27,8 @@ public class CatalogServiceImpl implements CatalogService {
 		return catalogRequestHandler.getAllSysListIds();
 	}
 
-	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode) {
-		return catalogRequestHandler.getSysLists(listIds, languageCode);
+	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String language) {
+		return catalogRequestHandler.getSysLists(listIds, language);
 	}
 
 	public String[] getFreeListEntries(MdekSysList sysList) {
@@ -58,8 +58,8 @@ public class CatalogServiceImpl implements CatalogService {
 		return catalogRequestHandler.getSysGuis(guiIds);
 	}
 
-	public List<AdditionalFieldBean> getSysAdditionalFields(Long[] fieldIds, String languageCode) {
-		return catalogRequestHandler.getSysAdditionalFields(fieldIds, languageCode);
+	public List<AdditionalFieldBean> getSysAdditionalFields(Long[] fieldIds, String language) {
+		return catalogRequestHandler.getSysAdditionalFields(fieldIds, language);
 	}
 
 	public List<AdditionalFieldBean> storeAllSysAdditionalFields(List<AdditionalFieldBean> additionalFields) {

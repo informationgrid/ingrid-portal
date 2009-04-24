@@ -29,11 +29,16 @@ detailHelper.renderAddressEntry = function(address) {
 		entry += address.street+"\n";
 	}
 	if (this.isValid(address.city)) {
-		if (this.isValid(address.city)) {
+		if (this.isValid(address.postalCode)) {
 			entry += address.postalCode +" ";
 		}
 		entry += address.city+"\n";
 	}
+	dojo.debug("country: " + address.countryName);
+	if (this.isValid(address.countryName)) {
+		entry += address.countryName+"\n";
+	}
+	
 	if (this.isValid(address.pobox)) {
 		entry += "\n Postfach "+address.pobox+"\n";
 		if (this.isValid(address.poboxPostalCode)) {
@@ -41,6 +46,9 @@ detailHelper.renderAddressEntry = function(address) {
 		}
 		if (this.isValid(address.city)) {
 			entry += address.city+"\n";
+		}
+		if (this.isValid(address.countryName)) {
+			entry += address.countryName+"\n";
 		}
 	}
 	

@@ -9,8 +9,10 @@ public class CatalogBean {
 	private String catalogName;
 	private String partnerName;
 	private String providerName;
-	private String country;
-	private String language;
+	private Integer countryCode;
+	private Integer languageCode;
+	private String languageShort;
+
 	private LocationBean location;
 	private String workflowControl;
 	private Integer expiryDuration;
@@ -34,12 +36,12 @@ public class CatalogBean {
 		this.catalogName = catalogName;
 	}
 
-	public String getCountry() {
-		return country;
+	public Integer getCountryCode() {
+		return countryCode;
 	}
 
-	public void setCountry(String country) {
-		this.country = country;
+	public void setCountryCode(Integer countryCode) {
+		this.countryCode = countryCode;
 	}
 
 	public Integer getExpiryDuration() {
@@ -98,12 +100,12 @@ public class CatalogBean {
 		this.providerName = providerName;
 	}
 
-	public String getLanguage() {
-		return language;
+	public Integer getLanguageCode() {
+		return languageCode;
 	}
 
-	public void setLanguage(String language) {
-		this.language = language;
+	public void setLanguageCode(Integer languageCode) {
+		this.languageCode = languageCode;
 	}
 
 	public String getWorkflowControl() {
@@ -112,5 +114,13 @@ public class CatalogBean {
 
 	public void setWorkflowControl(String workflowControl) {
 		this.workflowControl = workflowControl;
+	}
+	
+	public String getLanguageShort() {
+		return languageShort;
+	}
+
+	public void setLanguageShort(String languageShort) {
+		this.languageShort = languageShort;
 	}
 }

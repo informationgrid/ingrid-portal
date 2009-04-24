@@ -371,6 +371,7 @@ udkDataProxy.handleLoadRequest = function(msg)
 					errorHandler:function(message, err) {
 						UtilDWR.exitLoadingState();
 						dojo.debug("Error in js/udkDataProxy.js: Error while waiting for nodeData: " + message);
+						dojo.debugShallow(err);
 						resultHandler.errback(new Error(message));
 					}
 				});
@@ -1627,8 +1628,8 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("timeRefTable").store.setData(UtilList.addTableIndices(nodeData.timeRefTable));
 
   // -- Extra Info --
-  dojo.widget.byId("extraInfoLangMetaData").setValue(nodeData.extraInfoLangMetaData);
-  dojo.widget.byId("extraInfoLangData").setValue(nodeData.extraInfoLangData);
+  dojo.widget.byId("extraInfoLangMetaData").setValue(nodeData.extraInfoLangMetaDataCode);
+  dojo.widget.byId("extraInfoLangData").setValue(nodeData.extraInfoLangDataCode);
   dojo.widget.byId("extraInfoPublishArea").setValue(nodeData.extraInfoPublishArea);
   dojo.widget.byId("extraInfoConformityTable").store.setData(UtilList.addTableIndices(nodeData.extraInfoConformityTable));
   dojo.widget.byId("extraInfoPurpose").setValue(nodeData.extraInfoPurpose);
@@ -1842,6 +1843,7 @@ udkDataProxy._getAddressData = function(nodeData) {
 	// ------------------ Address and Function ------------------
 	nodeData.street = dojo.widget.byId("addressStreet").getValue();
 	nodeData.countryCode = dojo.widget.byId("addressCountry").getValue();
+	nodeData.countryName = dojo.widget.byId("addressCountry").getDisplayValue();
 	nodeData.postalCode = dojo.widget.byId("addressZipCode").getValue();
 	nodeData.city = dojo.widget.byId("addressCity").getValue();
 	nodeData.pobox = dojo.widget.byId("addressPOBox").getValue();
@@ -1983,8 +1985,8 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.timeRefTable = udkDataProxy._getTableData("timeRefTable");
 
   // -- Extra Info --
-  nodeData.extraInfoLangMetaData = dojo.widget.byId("extraInfoLangMetaData").getValue();
-  nodeData.extraInfoLangData = dojo.widget.byId("extraInfoLangData").getValue();
+  nodeData.extraInfoLangMetaDataCode = dojo.widget.byId("extraInfoLangMetaData").getValue();
+  nodeData.extraInfoLangDataCode = dojo.widget.byId("extraInfoLangData").getValue();
   nodeData.extraInfoPublishArea = dojo.widget.byId("extraInfoPublishArea").getValue();
   nodeData.extraInfoConformityTable = udkDataProxy._getTableData("extraInfoConformityTable");
   nodeData.extraInfoPurpose = dojo.widget.byId("extraInfoPurpose").getValue();

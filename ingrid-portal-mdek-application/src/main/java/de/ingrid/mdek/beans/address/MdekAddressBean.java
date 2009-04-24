@@ -42,7 +42,8 @@ public class MdekAddressBean {
 	private String nameForm;
 	private String titleOrFunction;
 	private String street;
-	private String countryCode;
+	private Integer countryCode;
+	private String countryName;
 	private String postalCode;
 	private String city;
 	private String poboxPostalCode;
@@ -205,14 +206,22 @@ public class MdekAddressBean {
 		this.street = street;
 	}
 
-	public String getCountryCode() {
+	public Integer getCountryCode() {
 		return countryCode;
 	}
 
-	public void setCountryCode(String countryCode) {
+	public void setCountryCode(Integer countryCode) {
 		this.countryCode = countryCode;
 	}
 
+	public String getCountryName() {
+		return countryName;
+	}
+
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}
+	
 	public String getPostalCode() {
 		return postalCode;
 	}

@@ -16,8 +16,8 @@ public class SNSTopic {
 	private Type type;
 	private Source source;
 	private String topicId;
-	private String title;
-	private String alternateTitle;
+	private String title;			// UMTHES, if no GEMET OR GEMET
+	private String alternateTitle;  // UMTHES, if GEMET is different
 	private String gemetId;
 	private List<SNSTopic> children;
 	private List<SNSTopic> parents;
@@ -27,30 +27,30 @@ public class SNSTopic {
 
 	public SNSTopic() {
 		// Default to topterm and umthes
-		type = Type.TOP_TERM;
-		source = Source.UMTHES;
-		this.topicId = null;
-		this.gemetId = null;
-		this.title = null;
+		type 				= Type.TOP_TERM;
+		source 				= Source.UMTHES;
+		this.topicId 		= null;
+		this.gemetId 		= null;
+		this.title 			= null;
 		this.alternateTitle = null;
-		this.children = null;
-		this.parents = null;
-		this.synonyms = null;
-		this.inspireList = new ArrayList<String>();
+		this.children 		= null;
+		this.parents 		= null;
+		this.synonyms 		= null;
+		this.inspireList 	= new ArrayList<String>();
 	}
 
 	public SNSTopic(Type typ, Source source, String id, String title,
 			String alternateTitle, String gemetId) {
-		this.source = source;
-		this.type = typ;
-		this.topicId = id;
-		this.title = title;
+		this.source 		= source;
+		this.type 			= typ;
+		this.topicId 		= id;
+		this.title 			= title;
 		this.alternateTitle = alternateTitle;
-		this.gemetId = gemetId;
-		this.children = new ArrayList<SNSTopic>();
-		this.parents = new ArrayList<SNSTopic>();
-		this.synonyms = new ArrayList<SNSTopic>();
-		this.inspireList = new ArrayList<String>();
+		this.gemetId 		= gemetId;
+		this.children 		= new ArrayList<SNSTopic>();
+		this.parents 		= new ArrayList<SNSTopic>();
+		this.synonyms 		= new ArrayList<SNSTopic>();
+		this.inspireList 	= new ArrayList<String>();
 	}
 
 	public void setType(Type type) {

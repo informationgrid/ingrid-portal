@@ -147,8 +147,8 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setTimeRefExplanation((String) obj.get(MdekKeys.DESCRIPTION_OF_TEMPORAL_DOMAIN));
 
 		// ExtraInfo
-		mdekObj.setExtraInfoLangMetaData((String) convertLanguageCodeToIdentifier((String) obj.get(MdekKeys.METADATA_LANGUAGE)));
-		mdekObj.setExtraInfoLangData((String) convertLanguageCodeToIdentifier((String) obj.get(MdekKeys.DATA_LANGUAGE)));
+		mdekObj.setExtraInfoLangMetaDataCode((Integer)obj.get(MdekKeys.METADATA_LANGUAGE_CODE));
+		mdekObj.setExtraInfoLangDataCode((Integer)obj.get(MdekKeys.DATA_LANGUAGE_CODE));
 
 		mdekObj.setExtraInfoPublishArea((Integer) obj.get(MdekKeys.PUBLICATION_CONDITION));
 
@@ -375,10 +375,11 @@ public class MdekMapper implements DataMapperInterface {
 
 		mdekAddress.setNameForm(mapToKeyValuePair(adr, MdekKeys.NAME_FORM_KEY, MdekKeys.NAME_FORM).getValue());
 		mdekAddress.setTitleOrFunction(mapToKeyValuePair(adr, MdekKeys.TITLE_OR_FUNCTION_KEY, MdekKeys.TITLE_OR_FUNCTION).getValue());
+		mdekAddress.setCountryName(mapToKeyValuePair(adr, MdekKeys.COUNTRY_CODE, MdekKeys.COUNTRY_NAME).getValue());
 
 		// Common information
 		mdekAddress.setStreet((String) adr.get(MdekKeys.STREET));
-		mdekAddress.setCountryCode((String) adr.get(MdekKeys.POSTAL_CODE_OF_COUNTRY));
+		mdekAddress.setCountryCode((Integer) adr.get(MdekKeys.COUNTRY_CODE));
 		mdekAddress.setPostalCode((String) adr.get(MdekKeys.POSTAL_CODE));
 		mdekAddress.setCity((String) adr.get(MdekKeys.CITY));
 		mdekAddress.setPobox((String) adr.get(MdekKeys.POST_BOX));
@@ -595,10 +596,15 @@ public class MdekMapper implements DataMapperInterface {
 			udkAdr.put(MdekKeys.TITLE_OR_FUNCTION, kvp.getValue());
 			udkAdr.put(MdekKeys.TITLE_OR_FUNCTION_KEY, kvp.getKey());
 		}
+		kvp = mapFromKeyValue(MdekKeys.COUNTRY_CODE, data.getCountryName());
+		if (kvp.getValue() != null || kvp.getKey() != -1) {
+			udkAdr.put(MdekKeys.COUNTRY_NAME, kvp.getValue());
+			udkAdr.put(MdekKeys.COUNTRY_CODE, kvp.getKey());
+		}
+		
 
 		// Common information
 		udkAdr.put(MdekKeys.STREET, data.getStreet());
-		udkAdr.put(MdekKeys.POSTAL_CODE_OF_COUNTRY, data.getCountryCode());
 		udkAdr.put(MdekKeys.POSTAL_CODE, data.getPostalCode());
 		udkAdr.put(MdekKeys.CITY, data.getCity());
 		udkAdr.put(MdekKeys.POST_BOX, data.getPobox());
@@ -659,8 +665,8 @@ public class MdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.DATASET_REFERENCES, mapFromTimeRefTable(data.getTimeRefTable()));
 
 		// ExtraInfo
-		udkObj.put(MdekKeys.METADATA_LANGUAGE, convertLanguageIdentifierToCode(data.getExtraInfoLangMetaData()));
-		udkObj.put(MdekKeys.DATA_LANGUAGE, convertLanguageIdentifierToCode(data.getExtraInfoLangData()));
+		udkObj.put(MdekKeys.METADATA_LANGUAGE_CODE, data.getExtraInfoLangMetaDataCode());
+		udkObj.put(MdekKeys.DATA_LANGUAGE_CODE, data.getExtraInfoLangDataCode());
 		udkObj.put(MdekKeys.PUBLICATION_CONDITION, data.getExtraInfoPublishArea());
 		udkObj.put(MdekKeys.CONFORMITY_LIST, mapFromExtraInfoConformityTable(data.getExtraInfoConformityTable()));
 		udkObj.put(MdekKeys.DATASET_INTENTIONS, data.getExtraInfoPurpose());
@@ -800,6 +806,9 @@ public class MdekMapper implements DataMapperInterface {
 		if (null == addr.getTitleOrFunction()) {
 			addr.setTitleOrFunction(sysListMapper.getInitialValueFromListId(4305));
 		}
+		if (null == addr.getCountryCode()) {
+			addr.setCountryCode(sysListMapper.getInitialKeyFromListId(6200));
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -842,11 +851,11 @@ public class MdekMapper implements DataMapperInterface {
 		}
 
 		if (null != sysListMapper.getInitialKeyFromListId(99999999)) {
-			if (null == obj.getExtraInfoLangData()) {
-				obj.setExtraInfoLangData(sysListMapper.getInitialKeyFromListId(99999999).toString());
+			if (null == obj.getExtraInfoLangDataCode()) {
+				obj.setExtraInfoLangDataCode(sysListMapper.getInitialKeyFromListId(99999999));
 			}
-			if (null == obj.getExtraInfoLangMetaData()) {
-				obj.setExtraInfoLangMetaData(sysListMapper.getInitialKeyFromListId(99999999).toString());
+			if (null == obj.getExtraInfoLangMetaDataCode()) {
+				obj.setExtraInfoLangMetaDataCode(sysListMapper.getInitialKeyFromListId(99999999));
 			}
 		}
 
@@ -1885,7 +1894,7 @@ public class MdekMapper implements DataMapperInterface {
 			}
 		}
 	}
-
+/*
 	private static String convertLanguageIdentifierToCode(String identifier) {
 		if (identifier == null || identifier.length() == 0) {
 			return identifier;
@@ -1911,4 +1920,5 @@ public class MdekMapper implements DataMapperInterface {
 			return "";
 		}
 	}
+*/
 }
