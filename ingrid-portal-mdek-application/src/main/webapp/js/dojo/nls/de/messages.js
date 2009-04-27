@@ -726,7 +726,9 @@
 	"ui.sysList.102":"Maßeinheit",
 	"ui.sysList.502":"Zeitbezug des Datensatzes - Typ",
 	"ui.sysList.505":"Adresstyp",
+	"ui.sysList.510":"ISO Liste Text-Kodierung",
 	"ui.sysList.515":"Vektorformat - Geometrietyp",
+	"ui.sysList.517":"ISO Liste Thesaurus Typ",
 	"ui.sysList.518":"Periodizität",
 	"ui.sysList.520":"Medienoption - Medium",
 	"ui.sysList.523":"Zeitbezug - Status",
@@ -762,6 +764,7 @@
 	"ui.sysList.6000":"Konformität - Grad der Konformität",
 	"ui.sysList.6010":"Zugangs -und Nutzungsbeschränkungen - Zugangsbeschränkungen",
 	"ui.sysList.6100":"INSPIRE-Themen",
+	"ui.sysList.6200":"ISO Liste der Länder",
 	"ui.sysList.99999999":"Sprache des Datensatzes / Metadatensatzes",
 	"ui.sysList.unknown":"Unbekannt"
   }

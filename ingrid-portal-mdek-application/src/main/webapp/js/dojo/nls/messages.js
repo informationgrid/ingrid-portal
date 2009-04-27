@@ -726,7 +726,9 @@
 	"ui.sysList.102":"Unit of measurement",
 	"ui.sysList.502":"Time reference - Type",
 	"ui.sysList.505":"Addresstype",
+	"ui.sysList.510":"ISO code list text encoding",
 	"ui.sysList.515":"Vector format - Geometry Type",
+	"ui.sysList.517":"ISO code list thesaurus type",
 	"ui.sysList.518":"Periodicity",
 	"ui.sysList.520":"Media option - Medium",
 	"ui.sysList.523":"Time reference - State",
@@ -762,6 +764,7 @@
 	"ui.sysList.6000":"Conformity - Degree of Conformity",
 	"ui.sysList.6010":"Access and Usage limitation - Usage limitation",
 	"ui.sysList.6100":"INSPIRE-Topics",
+	"ui.sysList.6200":"ISO code list countries",
 	"ui.sysList.99999999":"Dataset / Meta-Dataset Language",
 	"ui.sysList.unknown":"Unknown"
   }
