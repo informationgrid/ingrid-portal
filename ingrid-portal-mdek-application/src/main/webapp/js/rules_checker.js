@@ -56,8 +56,8 @@ var notEmptyFields = [["objectName", "objectNameLabel"],
 					  ["objectClass", "objectClassLabel"],
 					  ["objectOwner", "objectOwnerLabel"],
 					  ["generalDescription", "generalDescLabel"],
-					  ["extraInfoLangData", "extraInfoLangDataLabel"],
-					  ["extraInfoLangMetaData", "extraInfoLangMetaDataLabel"],
+					  ["extraInfoLangDataCode", "extraInfoLangDataLabel"],
+					  ["extraInfoLangMetaDataCode", "extraInfoLangMetaDataLabel"],
 					  ["extraInfoPublishArea", "extraInfoPublishAreaLabel"]];
 
 var notEmptyFieldsClass1 = [["ref1BasisText", "ref1BasisTabContainerLabel"],
