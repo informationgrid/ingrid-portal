@@ -73,12 +73,6 @@ function initSysLists() {
 }
 
 function updateInputFields(catalogData) {
-	dojo.debug("Catalog-Information:");
-	dojo.debug(catalogData.catalogName);
-	dojo.debug(catalogData.countryName);
-	dojo.debug(catalogData.countryCode);
-	dojo.debug(catalogData.languageCode);
-	
 	dojo.widget.byId("adminCatalogName").setValue(catalogData.catalogName);
 	dojo.widget.byId("adminCatalogPartnerName").setValue(catalogData.partnerName);
 	dojo.widget.byId("adminCatalogProviderName").setValue(catalogData.providerName);
@@ -122,8 +116,8 @@ scriptScope.saveCatalogData = function() {
 	newCatalogData.catalogName = dojo.widget.byId("adminCatalogName").getValue();
 	newCatalogData.partnerName = dojo.widget.byId("adminCatalogPartnerName").getValue();
 	newCatalogData.providerName = dojo.widget.byId("adminCatalogProviderName").getValue();
-	newCatalogData.country = dojo.widget.byId("adminCatalogCountry").getValue();
-	newCatalogData.language = dojo.widget.byId("adminCatalogLanguage").getValue();
+	newCatalogData.countryCode = dojo.widget.byId("adminCatalogCountry").getValue();
+	newCatalogData.languageCode = dojo.widget.byId("adminCatalogLanguage").getValue();
 	newCatalogData.location = dojo.widget.byId("adminCatalogSpatialRef").location;
 	newCatalogData.expiryDuration = (dojo.widget.byId("adminCatalogExpire").checked ? dojo.widget.byId("adminCatalogExpiryDuration").getValue() : "0");
 	newCatalogData.workflowControl = dojo.widget.byId("adminCatalogWorkflowControl").checked ? "Y" : "N";
@@ -169,8 +163,8 @@ scriptScope.selectSpatialReference = function() {
 }
 
 function isValidCatalog(cat) {
-	return (dojo.string.trim(cat.country).length != 0
-		 && dojo.string.trim(cat.language).length != 0
+	return (dojo.string.trim(cat.countryCode).length != 0
+		 && dojo.string.trim(cat.languageCode).length != 0
 		 && dojo.string.trim(cat.location.name).length != 0
 		 && dojo.validate.isInteger(cat.expiryDuration)
 		 && dojo.validate.isInRange(cat.expiryDuration, { min:0, max:2147483647 }));
