@@ -26,6 +26,9 @@
 </div>
 #end
 
+#if($noBackendUser)
+	
+#else
 
 <div style="margin-top: 20px;" class="section">
 <h2>$MESSAGES.getString('quickView.catalogInfo.title')</h2>
@@ -123,3 +126,4 @@
 #end
 </p>
 </div>
+#end

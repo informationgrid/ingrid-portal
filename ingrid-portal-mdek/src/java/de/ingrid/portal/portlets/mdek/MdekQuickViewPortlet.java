@@ -53,6 +53,8 @@ public class MdekQuickViewPortlet extends GenericVelocityPortlet {
 
     // VIEW TEMPLATES
     private final static String VIEW_TEMPLATE = "/WEB-INF/templates/mdek/mdek_quick_view.vm";
+    
+    //private final static String ERROR_VIEW_TEMPLATE = "/WEB-INF/templates/mdek/mdek_quick_view.vm";
 
     // Parameters set on init
     private RoleManager roleManager;
@@ -93,24 +95,27 @@ public class MdekQuickViewPortlet extends GenericVelocityPortlet {
 
     	UserData userData = getUserData(request);
     	try {
-    		IdcRole role = getRole(userData);
-    		context.put("userRole", role.name());
-
-    		Catalog cat = fetchCatalog(userData);
-	    	context.put("catalogName", cat.getName());
-	    	context.put("catalogLocation", cat.getLocation());
-	    	context.put("numObjects", fetchNumObjects(userData));
-	    	context.put("numAddresses", fetchNumAddresses(userData));
-	    	context.put("numUsers", fetchNumUsers(userData));
-
-	    	TableData objectTableData = fetchObjectQuicklist(userData);
-	    	context.put("objectList", objectTableData.getEntries());
-	    	context.put("totalNumObjects", objectTableData.getTotalNumEntries());
-
-	    	TableData addressTableData = fetchAddressQuicklist(userData);
-	    	context.put("addressList", addressTableData.getEntries());
-	    	context.put("totalNumAddresses", addressTableData.getTotalNumEntries());
-
+    		if (userData == null) {
+    			context.put("noBackendUser", true);
+    		} else {
+	    		IdcRole role = getRole(userData);
+	    		context.put("userRole", role.name());
+	
+	    		Catalog cat = fetchCatalog(userData);
+		    	context.put("catalogName", cat.getName());
+		    	context.put("catalogLocation", cat.getLocation());
+		    	context.put("numObjects", fetchNumObjects(userData));
+		    	context.put("numAddresses", fetchNumAddresses(userData));
+		    	context.put("numUsers", fetchNumUsers(userData));
+	
+		    	TableData objectTableData = fetchObjectQuicklist(userData);
+		    	context.put("objectList", objectTableData.getEntries());
+		    	context.put("totalNumObjects", objectTableData.getTotalNumEntries());
+	
+		    	TableData addressTableData = fetchAddressQuicklist(userData);
+		    	context.put("addressList", addressTableData.getEntries());
+		    	context.put("totalNumAddresses", addressTableData.getTotalNumEntries());
+    		}
     	} catch (Exception e) {
 			throw new PortletException ("Error fetching values from the iPlug with id '"+userData.getPlugId()+"'", e);
     	}

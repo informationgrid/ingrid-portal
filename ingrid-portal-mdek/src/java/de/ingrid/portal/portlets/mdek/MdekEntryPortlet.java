@@ -85,6 +85,9 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
     			context.put("showMdekAdmin", true);    		
     		} else {
     			context.put("showMdekAdmin", false);
+    			if (getUserData(userName) == null) {
+    				context.put("noBackendUser", true);
+    			}
     		}
     	} catch (SecurityException e) {
     		log.debug(e);
@@ -113,16 +116,26 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
             IOException {
     }
     
-    private boolean hasUserAccessToMdekAdmin(String userName) throws SecurityException, PortletException {
-    	if (!roleManager.isUserInRole(userName, "mdek")) {
-    		return false;
-    	}
-
+    private UserData getUserData(String userName) {
     	Session s = HibernateUtil.currentSession();
     	s.beginTransaction();
     	UserData userData = (UserData) s.createCriteria(UserData.class).add(Restrictions.eq("portalLogin", userName)).uniqueResult();
     	s.getTransaction().commit();
     	HibernateUtil.closeSession();
+    	return userData;
+    }
+    
+    private boolean hasUserAccessToMdekAdmin(String userName) throws SecurityException, PortletException {
+    	if (!roleManager.isUserInRole(userName, "mdek")) {
+    		return false;
+    	}
+
+    	UserData userData = getUserData(userName);
+    	
+    	// user couldn't be found in backend
+    	if (userData == null) {
+    		return false;
+    	}
 
     	// Check for the idcRole of the user
     	IngridDocument response = null;

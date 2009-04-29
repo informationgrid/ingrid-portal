@@ -3,7 +3,9 @@
     window.open('/ingrid-portal-mdek-application/index.jsp?${autoStartQueryString}');
  //--></script>
 #end
-
+#if($noBackendUser)
+<p>$MESSAGES.getString('entry.error.noBackendUser')</p>
+#else
 <div class="section">    
   <div class="formbody" style="overflow: auto;">
 <!--
@@ -20,3 +22,4 @@
 #end
   </div>
 </div>
+#end
