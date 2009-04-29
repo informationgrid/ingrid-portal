@@ -86,6 +86,7 @@ function renderNodeData(nodeData) {
 		renderTextWithTitle(nodeData.ref3SystemEnv, message.get("ui.obj.type3.environment"));
 		renderTextWithTitle(nodeData.ref3History, message.get("ui.obj.type3.history"));
 		renderTextWithTitle(nodeData.ref3BaseDataText, message.get("ui.obj.type3.generalDataTable.title") + " (" + message.get("ui.obj.type3.generalDataTable.tab.text") + ")");
+		renderTextWithTitle(nodeData.ref3Explanation, message.get("ui.obj.type3.description"));
 		renderTable(nodeData.ref3Scale, ["scale", "groundResolution", "scanResolution"], [message.get("ui.obj.type1.scaleTable.header.scale"), message.get("ui.obj.type1.scaleTable.header.groundResolution"), message.get("ui.obj.type1.scaleTable.header.scanResolution")], message.get("ui.obj.type3.scaleTable.title"));
 		renderOperations(nodeData.ref3Operation);
 	} else if (nodeData.objectClass == 4) {
@@ -107,13 +108,17 @@ function renderNodeData(nodeData) {
 	UtilList.addSNSLocationLabels(nodeData.spatialRefAdminUnitTable);
 	renderTable(nodeData.spatialRefAdminUnitTable, ["label", "nativeKey", "longitude1", "latitude1", "longitude2", "latitude2"], [message.get("ui.obj.spatial.geoThesTable.header.name"), message.get("ui.obj.spatial.geoThesTable.header.nativeKey"), message.get("ui.obj.spatial.geoThesTable.header.longitude1"), message.get("ui.obj.spatial.geoThesTable.header.latitude1"), message.get("ui.obj.spatial.geoThesTable.header.longitude2"), message.get("ui.obj.spatial.geoThesTable.header.latitude2")], message.get("dialog.compare.object.spatialTable.title"));
 	renderTable(nodeData.spatialRefLocationTable, ["name", "longitude1", "latitude1", "longitude2", "latitude2"], [message.get("ui.obj.spatial.geoTable.header.name"), message.get("ui.obj.spatial.geoTable.header.longitude1"), message.get("ui.obj.spatial.geoTable.header.latitude1"), message.get("ui.obj.spatial.geoTable.header.longitude2"), message.get("ui.obj.spatial.geoTable.header.latitude2")], message.get("ui.obj.spatial.geoTable.title"));
-	var altitudeData = [nodeData];
 	// create cell render functions
 	function lookupSpatialRefAltMeasure(val) {
 		return dojo.widget.byId("spatialRefAltMeasure")._getDisplayValueForValue(val);
 	}
 	function lookupSpatialRefAltVDate(val) {
 		return dojo.widget.byId("spatialRefAltVDate")._getDisplayValueForValue(val);
+	}
+	
+	var altitudeData = []; // empty list means no rendering!
+	if (nodeData.spatialRefAltMin || nodeData.spatialRefAltMax || lookupSpatialRefAltMeasure(nodeData.spatialRefAltMeasure) || lookupSpatialRefAltVDate(nodeData.spatialRefAltVDate) ) {
+		altitudeData = [nodeData]; // add nodeData to the list so that it's rendered with values from it
 	}
 	renderTable(altitudeData, ["spatialRefAltMin", "spatialRefAltMax", "spatialRefAltMeasure", "spatialRefAltVDate"], [message.get("ui.obj.spatial.height.min"), message.get("ui.obj.spatial.height.max"), message.get("ui.obj.spatial.height.unit"), message.get("ui.obj.spatial.height.geodeticSystem")], message.get("ui.obj.spatial.height"), [null, null, lookupSpatialRefAltMeasure, lookupSpatialRefAltVDate]);
 	renderTextWithTitle(nodeData.spatialRefExplanation, message.get("ui.obj.spatial.description"));
@@ -174,7 +179,7 @@ function renderNodeData(nodeData) {
 	renderSectionTitel(message.get("ui.obj.thesaurus.title"));
 	renderList(nodeData.thesaurusTermsTable, message.get("ui.adr.thesaurus.terms"), "title");
 	renderList(nodeData.thesaurusTopicsList, message.get("ui.obj.thesaurus.terms.category"), null, function (val) { return dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(val);});
-	renderList(nodeData.thesaurusInspireList, message.get("ui.obj.thesaurus.terms.inspire"), null, function (val) { return dojo.widget.byId("thesaurusInspireCombobox")._getDisplayValueForValue(val);});
+	renderList(nodeData.thesaurusInspireTermsList, message.get("ui.obj.thesaurus.terms.inspire"), null, function (val) { return dojo.widget.byId("thesaurusInspireCombobox")._getDisplayValueForValue(val);});
 	renderTextWithTitle(nodeData.thesaurusEnvExtRes ? message.get("general.yes"): message.get("general.no"), message.get("ui.obj.thesaurus.terms.enviromental.displayCatalogPage"));
 	renderList(nodeData.thesaurusEnvTopicsList, message.get("ui.obj.thesaurus.terms.enviromental.title")+ " - " + message.get("ui.obj.thesaurus.terms.enviromental.topics"), null, function (val) { return dojo.widget.byId("thesaurusEnvTopicsCombobox")._getDisplayValueForValue(val);});
 	renderList(nodeData.thesaurusEnvCatsList, message.get("ui.obj.thesaurus.terms.enviromental.title")+ " - " + message.get("ui.obj.thesaurus.terms.enviromental.categories"), null, function (val) { return dojo.widget.byId("thesaurusEnvCatsCombobox")._getDisplayValueForValue(val);});
