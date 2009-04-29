@@ -1,13 +1,19 @@
 #parse ('/WEB-INF/templates/include_search_result_filter.vm')
 
 <!-- RESULTS LEFT -->
+#if ($RIGHT_COLUMN_DISABLED)
+  <div id="section">
+#else
   <div id="results_left">
+#end
 #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
   </div>
   
 <!-- RESULTS RIGHT -->
+#if (!$RIGHT_COLUMN_DISABLED)
   <div id="results_right">
 #parse ('/WEB-INF/templates/include_search_result_unranked.vm')
   </div>
+#end
 
   <div class="clearer"></div>

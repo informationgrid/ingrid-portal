@@ -35,7 +35,6 @@ import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.portal.search.net.QueryDescriptor;
 import de.ingrid.portal.search.net.ThreadedQueryController;
-import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
 
 /**
@@ -200,8 +199,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         // IngridQuery from state  (set in SimpleSearch Portlet)
         IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
         
-        // FIXME AW: set caching option here!?
-        
         // change datasource dependent from query input
         selectedDS = UtilsSearch.determineFinalPortalDatasource(selectedDS, query);
 
@@ -228,6 +225,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             // default: right column IS grouped (by plugid)
         	// set in context e.g. to show grouped navigation
         	context.put("grouping_right", new Boolean(true));
+
             if (filter != null) {
             	// set one column result template if "Zeige alle ..." of plug or domain
             	if (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID) ||
@@ -238,6 +236,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             	}
             }
         }
+        // check whether right column is switched OFF and set according context flag
+        boolean rightColumnDisabled =
+        	!PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_RESULTS_RIGHTCOLUMN, true);
+        context.put("RIGHT_COLUMN_DISABLED", rightColumnDisabled);
 
 
         String currentView = getDefaultViewPage();
@@ -249,7 +251,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         // check for Javascript
         boolean hasJavaScript = Utils.isJavaScriptEnabled(request);
 
-        // find out if we have to render only one result column
+        // determine whether we have to render only one result column
         boolean renderResultColumnRanked = true;
         boolean renderResultColumnUnranked = true;
         reqParam = request.getParameter("js_ranked");
@@ -296,6 +298,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     + "&js_ranked=false"));
             super.doView(request, response);
             return;
+        }
+        // finally disable query for right column if switched OFF !
+        if (rightColumnDisabled) {
+        	renderResultColumnUnranked = false;
         }
 
         // create threaded query controller
@@ -511,9 +517,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         Object unrankedSearchFinished = SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
         /*
          // DON'T SHOW separate Template when no results ! This one is never displayed when JS is active and search is performed
-         // initially (cause then always two columns are rendered (via iframes)). Only afterwards, e.g. whene similar terms are
+         // initially (cause then always two columns are rendered (via iframes)). Only afterwards, e.g. when similar terms are
          // clicked, this template is displayed, causing changes of result content (when similar terms are displayed).
-         // WE DON'T WANT TO CHANE RESULTS CONTENT, WHEN SIMILAR TERMS ARE CKLICKED (DO we ???)
+         // WE DON'T WANT TO CHANGE RESULTS CONTENT, WHEN SIMILAR TERMS ARE CKLICKED (DO we ???)
          if (rankedSearchFinished != null && unrankedSearchFinished != null && numberOfRankedHits == 0
          && numberOfUnrankedHits == 0 && (renderOneResultColumnUnranked && renderOneResultColumnRanked)
          && filter.length() == 0) {
@@ -561,8 +567,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             }
         }
 
-        // FIXME AW: reset caching option here!?
-        
         context.put("rankedPageSelector", rankedPageNavigation);
         context.put("unrankedPageSelector", unrankedPageNavigation);
         context.put("rankedResultList", rankedHits);

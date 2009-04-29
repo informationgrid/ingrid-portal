@@ -1,16 +1,25 @@
 #parse ('/WEB-INF/templates/include_search_result_filter.vm')
 
 <!-- RESULTS LEFT -->
+#if ($RIGHT_COLUMN_DISABLED)
+  <div id="section">
+#else
   <div id="results_left">
+#end
 	<p><img style="position: relative; margin-right:18px; float: left;;" src="/ingrid-portal-apps/images/sanduhr.gif" alt="$MESSAGES.getString('common.alt.icon.clock')" width="10" height="17" /><strong>$MESSAGES.getString('searchResult.results.requested')</strong></p>
   </div>
-  
+
+<!-- in this iframe LEFT search is executed ! -->
+<iframe id="frm_ranked" src="$rankedResultUrl" style="display:none"></iframe>
+
 <!-- RESULTS RIGHT -->
+#if (!$RIGHT_COLUMN_DISABLED)
   <div id="results_right">
 	<p><img style="position: relative; margin-right:18px; float: left;;" src="/ingrid-portal-apps/images/sanduhr.gif" alt="$MESSAGES.getString('common.alt.icon.clock')" width="10" height="17" /><strong>$MESSAGES.getString('searchResult.results.requested')</strong></p>
   </div>
 
   <div class="clearer"></div>
-  
-<iframe id="frm_ranked" src="$rankedResultUrl" style="display:none"></iframe>
+
+<!-- in this iframe RIGHT search is executed ! -->
 <iframe id="frm_unranked" src="$unrankedResultUrl" style="display:none"></iframe>
+#end

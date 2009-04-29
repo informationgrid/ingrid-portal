@@ -7,7 +7,11 @@ function isLoaded() {
   if (parent == window) return;
   // no way to obtain id of iframe object doc loaded into? no parentNode or parentElement or ...
   else {
-		var l = parent.document.getElementById? parent.document.getElementById('results_left'): parent.document.all? parent.document.all['results_left']: null;
+  	var resultLayerId = 'results_left';
+	if (${RIGHT_COLUMN_DISABLED}) {
+		resultLayerId = 'section';
+	}
+	var l = parent.document.getElementById ? parent.document.getElementById(resultLayerId): parent.document.all ? parent.document.all[resultLayerId]: null;
     if ( l && typeof l.innerHTML != "undefined" ) {
       l.innerHTML = document.body.innerHTML;
     }
