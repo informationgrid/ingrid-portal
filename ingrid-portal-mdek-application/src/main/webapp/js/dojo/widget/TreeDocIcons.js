@@ -1,13 +1,13 @@
 dojo.provide("ingrid.widget.TreeDocIcons");
 
-dojo.require("dojo.widget.TreeDocIconExtension");
+dojo.require("ingrid.widget.TreeDocIconExtension");
 
 /**
  * TreeDocIcons is a tree extension to show icons on nodes
  */
 dojo.widget.defineWidget(
 	"ingrid.widget.TreeDocIcons",
-	dojo.widget.TreeDocIconExtension,
+	ingrid.widget.TreeDocIconExtension,
 {
   templateCssPath: dojo.uri.moduleUri("ingrid", "widget/templates/TreeDocIcon.css"),
 
