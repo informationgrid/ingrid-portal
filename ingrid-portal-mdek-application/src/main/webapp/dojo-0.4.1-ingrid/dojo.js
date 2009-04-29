@@ -14626,6 +14626,9 @@ node.contentIconNode.appendChild(node.expandNode);
 node.contentIconNode.appendChild(node.iconNode);
 dojo.dom.removeNode(node.contentNode);
 node.contentIconNode.appendChild(node.contentNode);
+if(node.noPortalLogin){
+dojo.html.setStyle(node.contentNode,'color','red');
+}
 },onAfterChangeTree:function(_d54){
 var _d55=this;
 if(!_d54.oldTree||!this.listenedTrees[_d54.oldTree.widgetId]){

@@ -97,6 +97,31 @@ public class MdekSecurityUtils {
 		return userData;
 	}
 
+	public static boolean portalLoginExists(String login) {
+		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
+
+		UserData sampleUser = new UserData();
+		sampleUser.setPortalLogin(login);
+
+		dao.beginTransaction();
+		UserData u = (UserData) dao.findUniqueByExample(sampleUser);
+		
+		return u == null ? false : true;
+	}
+	
+	public static String userFromAddress(String address) {
+		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
+
+		UserData sampleUser = new UserData();
+		sampleUser.setAddressUuid(address);
+
+		dao.beginTransaction();
+		UserData u = (UserData) dao.findUniqueByExample(sampleUser);
+		dao.commitTransaction();
+		
+		return u == null ? null : u.getPortalLogin();
+	}
+	
 	public static UserData storeUserData(UserData userData) {
 		// Update the data in the db via hibernate
 		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
@@ -106,8 +131,23 @@ public class MdekSecurityUtils {
 
 		dao.beginTransaction();
 		UserData u = (UserData) dao.findUniqueByExample(sampleUser);
-		u.setAddressUuid(userData.getAddressUuid());
-		dao.makePersistent(u);
+		
+		// in case portal user association changed
+		if (u == null) {
+			sampleUser.setPortalLogin(null);
+			sampleUser.setAddressUuid(userData.getAddressUuid());
+			u = (UserData) dao.findUniqueByExample(sampleUser);
+			// remove role from old login
+			u.setPortalLogin(userData.getPortalLogin());
+			dao.makePersistent(u);
+			// set user role!
+			// was bei Exceptions?
+		} else {
+			// in case address association changed
+			u.setAddressUuid(userData.getAddressUuid());
+			dao.makePersistent(u);
+		}
+		
 		dao.commitTransaction();
 
 		return userData;

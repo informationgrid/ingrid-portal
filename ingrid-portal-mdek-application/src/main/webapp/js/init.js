@@ -1523,7 +1523,14 @@ function initSysLists() {
 		callback: function(res) {
 			dojo.lang.forEach(selectWidgetIDs, function(widgetId) {
 				var selectWidget = dojo.widget.byId(widgetId);
-				selectWidget.dataProvider.setData(res[selectWidget.listId]);	
+				var selectWidgetData = res[selectWidget.listId];
+				
+				// Sort list by the display values
+				selectWidgetData.sort(function(a, b) {
+					return UtilString.compareIgnoreCase(a[0], b[0]);
+				});
+				
+				selectWidget.dataProvider.setData(selectWidgetData);	
 			});
 			def.callback();
 		},

@@ -213,6 +213,7 @@ scriptScope.importPortalUser = function() {
 scriptScope.saveUser = function() {
 	var selectedUser = dojo.widget.byId("treeUser").selectedNode;
 	var login = dojo.widget.byId("userDataLogin").getValue();
+	selectedUser.portalLogin = login;
 
 	if (dojo.string.trim(login).length == 0) {
 		dialog.show(message.get("general.error"), message.get("dialog.admin.users.noUserSelectedForSaveError"), dialog.WARNING);
@@ -447,6 +448,23 @@ scriptScope.searchForAddress = function() {
 	});
 }
 
+scriptScope.searchForPortalUser = function() {
+	var selectedUser = dojo.widget.byId("treeUser").selectedNode;
+
+	if (currentUser.role == 1 && selectedUser == null) {
+		dialog.show(message.get("general.error"), message.get("dialog.admin.users.noParentSelectedError"), dialog.WARNING);
+		dojo.debug("No node selected.");
+		return;
+	}
+	
+	var deferred = new dojo.Deferred();
+	dialog.showPage(message.get("dialog.admin.users.importUser"), "mdek_admin_import_user_dialog.jsp", 360, 240, true, { resultHandler:deferred });
+	
+	deferred.addCallback(function(portalUser) {
+		dojo.debug("user chosen: " + portalUser);
+		dojo.widget.byId("userDataLogin").setValue(portalUser);
+	});
+}
 
 function getAllGroups(includeCatAdminGroup) {
 	var deferred = new dojo.Deferred();
@@ -540,6 +558,13 @@ function convertUserListToTreeNodes(userList) {
 }
 
 function convertUserToTreeNode(user) {
+	var portalLogin = "?";
+	var notExists = true;
+	if (user.userData != null) {
+		portalLogin = user.userData.portalLogin;
+		notExists = false;
+	}
+	
 	return {
 		userId: user.id,
 		parentUserId: user.parentUserId,
@@ -548,10 +573,11 @@ function convertUserToTreeNode(user) {
 		role: user.role,
 		roleName: user.roleName,
 		groupId: user.groupId,
-		portalLogin: user.userData.portalLogin,
+		portalLogin: portalLogin,
 		nodeDocType: getDocTypeForRole(user.role),
 		isFolder: user.hasChildren,
-		id: "TreeNode_"+user.id
+		id: "TreeNode_"+user.id,
+		noPortalLogin: notExists
 	}
 }
 
@@ -642,6 +668,7 @@ function hideLoadingZone() {
 				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8012)"><fmt:message key="dialog.admin.users.userData" /></label></span>
 				<div class="inputContainer field grey noSpaceBelow h313">
 					<span class="label"><label for="userDataLogin" onclick="javascript:dialog.showContextHelp(arguments[0], 8013, 'Login')"><fmt:message key="dialog.admin.users.login" /></label></span>
+					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.searchForPortalUser();" title="Portalnutzer suchen [Popup]"><fmt:message key="dialog.admin.users.searchPortalUser" /></a></span>
 					<span class="input spaceBelow"><input type="text" id="userDataLogin" name="userDataLogin" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					<span class="label"><label for="userDataRole" onclick="javascript:dialog.showContextHelp(arguments[0], 8014, 'Rolle')"><fmt:message key="dialog.admin.users.role" /></label></span>
 					<span class="input spaceBelow"><input type="text" id="userDataRole" name="userDataRole" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>

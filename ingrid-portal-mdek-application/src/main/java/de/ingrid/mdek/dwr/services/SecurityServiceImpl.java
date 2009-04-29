@@ -156,14 +156,33 @@ public class SecurityServiceImpl {
 			userData.setPortalLogin(portalLogin);
 			userData.setAddressUuid(user.getAddressUuid());
 			userData.setPlugId(MdekSecurityUtils.getCurrentPortalUserData().getPlugId());
+			
+			String oldUser = MdekSecurityUtils.userFromAddress(userData.getAddressUuid());
 
-			MdekSecurityUtils.storeUserData(userData);
+			// change the address of an existing portal user
+			if (MdekSecurityUtils.portalLoginExists(portalLogin)) {
+				MdekSecurityUtils.storeUserData(userData);
+			} else if (oldUser != null) {
+				// change the portal user of an existing address assosciation
+				// does oldUser exist???
+				removeRoleFromUser(oldUser, "mdek");
+				MdekSecurityUtils.storeUserData(userData);
+				addRoleToUser(portalLogin, "mdek");
+			} else {
+				// create a new user since mdek database does not contain portal user or address
+				MdekSecurityUtils.createUserData(userData);
+				addRoleToUser(portalLogin, "mdek");
+				//u.setUserData(userData);
+			}
 			return u;
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while storing user.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		} catch (SecurityException e) {
+			log.debug("SecurityException while creating user.", e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -262,8 +281,11 @@ public class SecurityServiceImpl {
 		WebContext wctx = WebContextFactory.get();
 		HttpSession session = wctx.getSession();
 		ServletContext ctx = session.getServletContext().getContext("/ingrid-portal-mdek");
-		RoleManager roleManager = (RoleManager) ctx.getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
-		roleManager.removeRoleFromUser(userName, role);		
+		UserManager userManager = (UserManager) ctx.getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
+		if (userManager.userExists(userName)) {
+			RoleManager roleManager = (RoleManager) ctx.getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
+			roleManager.removeRoleFromUser(userName, role);
+		}
 	}
 
     private static Principal getPrincipal(Subject subject, Class classe)

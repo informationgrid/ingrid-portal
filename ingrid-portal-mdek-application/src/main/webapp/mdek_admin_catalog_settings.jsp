@@ -57,7 +57,14 @@ function initSysLists() {
 				var selectWidget = dojo.widget.byId(widgetId);
 				dojo.debug("adding syslist-id: ");
 				dojo.debug(selectWidget.listId);
-				selectWidget.dataProvider.setData(res[selectWidget.listId]);	
+				var selectWidgetData = res[selectWidget.listId];
+				
+				// Sort list by the display values
+				selectWidgetData.sort(function(a, b) {
+					return UtilString.compareIgnoreCase(a[0], b[0]);
+				});
+				
+				selectWidget.dataProvider.setData(selectWidgetData);	
 			});
 			def.callback();
 		},

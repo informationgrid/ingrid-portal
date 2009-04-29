@@ -89,7 +89,9 @@ dojo.widget.defineWidget(
 		dojo.dom.removeNode(node.contentNode);
 		node.contentIconNode.appendChild(node.contentNode);
 		
-	
+		if(node.noPortalLogin){
+			dojo.html.setStyle(node.contentNode,'color','red');
+		}	
 		
 		//dojo.html.insertAfter(node.iconNode, node.expandNode);
 		
