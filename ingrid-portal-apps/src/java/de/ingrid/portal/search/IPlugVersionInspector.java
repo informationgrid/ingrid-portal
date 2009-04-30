@@ -22,6 +22,8 @@ public class IPlugVersionInspector {
 
 	public static final String VERSION_IDC_1_0_3_DSC_OBJECT = "VERSION_IDC_1_0_3_DSC_OBJECT";
 	
+	public static final String VERSION_IDC_1_0_5_DSC_OBJECT = "VERSION_IDC_1_0_5_DSC_OBJECT";
+	
 	public static final String VERSION_UDK_5_0_DSC_OBJECT = "VERSION_UDK_5_0_DSC_OBJECT";
 
 	public static final String VERSION_IDC_1_0_2_DSC_ADDRESS = "VERSION_IDC_1_0_2_DSC_ADDRESS";
@@ -38,7 +40,9 @@ public class IPlugVersionInspector {
 		ArrayList fields = (ArrayList)plugDescription.get(PlugDescription.FIELDS);
 		
 		// try to get the right iPlug Type (object/adress/generic)
-		if (fields != null && fields.contains("t01_object.obj_id") && fields.contains("parent.object_node.obj_uuid") && fields.contains("object_access.terms_of_use")) {
+		if (fields != null && fields.contains("t01_object.data_language_key") && fields.contains("t01_object.metadata_language_key") && fields.contains("t02_address.country_key")) {
+			return VERSION_IDC_1_0_5_DSC_OBJECT;
+		} else if (fields != null && fields.contains("t01_object.obj_id") && fields.contains("parent.object_node.obj_uuid") && fields.contains("object_access.terms_of_use")) {
 			return VERSION_IDC_1_0_3_DSC_OBJECT;
 		} else if (fields != null && fields.contains("t01_object.obj_id") && fields.contains("parent.object_node.obj_uuid")) {
 			return VERSION_IDC_1_0_2_DSC_OBJECT;
