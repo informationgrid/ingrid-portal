@@ -44,6 +44,8 @@ public class DetailDataPreparerFactory {
 			return new DetailDataPreparerIdc1_0_3Object(context, iplugId, request, response);
 		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT)) {
 			return new DetailDataPreparerIdc1_0_2Object(context, iplugId, request, response);
+		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_ADDRESS)) {
+			return new DetailDataPreparerIdc1_0_5Address(context, iplugId, request, response);
 		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
 			return new DetailDataPreparerIdc1_0_2Address(context, iplugId, request, response);
 		} else if (version.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_OBJECT)) {

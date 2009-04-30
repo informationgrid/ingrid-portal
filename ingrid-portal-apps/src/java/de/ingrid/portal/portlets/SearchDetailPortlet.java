@@ -39,6 +39,7 @@ import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.QueryStringParser;
+import de.ingrid.utils.udk.UtilsLanguageCodelist;
 
 public class SearchDetailPortlet extends GenericVelocityPortlet {
     private final static Log log = LogFactory.getLog(SearchDetailPortlet.class);
@@ -72,12 +73,23 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     replacementFields.put(translation[0], new HashMap());
                 }
                 Map replacements = (Map)replacementFields.get(translation[0]);
-                replacements.put(translation[1], translation[2]);
+                replacements.put(translation[1], convertLangCode(translation[2]));
             }
         }
     }
 
-    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
+    private String convertLangCode(String oldCode) {
+    	if (oldCode.equals("121"))
+    		return Integer.toString(UtilsLanguageCodelist.getCodeFromShortcut("de"));
+    	else if (oldCode.equals("94"))
+    		return Integer.toString(UtilsLanguageCodelist.getCodeFromShortcut("en"));
+    	else {
+    		log.error("Code from ingrid-portal-apps.properties not supported: " + oldCode);
+    		return Integer.toString(UtilsLanguageCodelist.getCodeFromShortcut("de"));
+    	}		
+	}
+
+	public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
 
@@ -170,18 +182,18 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 HashMap sysLangHashs = new HashMap();
 
                 HashMap sysLangHash = new HashMap();
-                sysLangHash.put("sys_language.lang_id", "121");
+                sysLangHash.put("sys_language.lang_id", Integer.toString(UtilsLanguageCodelist.getCodeFromShortcut("de")));
                 sysLangHash.put("sys_language.name", "Deutsch");
                 sysLangHash.put("sys_language.description", "Deutsch");
                 sysLangHash.put("sys_language.def_lang", "1");
-                sysLangHashs.put("121", sysLangHash);
+                sysLangHashs.put(Integer.toString(UtilsLanguageCodelist.getCodeFromShortcut("de")), sysLangHash);
 
                 sysLangHash = new HashMap();
-                sysLangHash.put("sys_language.lang_id", "94");
+                sysLangHash.put("sys_language.lang_id", Integer.toString(UtilsLanguageCodelist.getCodeFromShortcut("en")));
                 sysLangHash.put("sys_language.name", "English");
                 sysLangHash.put("sys_language.description", "English");
                 sysLangHash.put("sys_language.def_lang", "1");
-                sysLangHashs.put("94", sysLangHash);
+                sysLangHashs.put(Integer.toString(UtilsLanguageCodelist.getCodeFromShortcut("en")), sysLangHash);
 
                 context.put("sysLangList", sysLangHashs);
 

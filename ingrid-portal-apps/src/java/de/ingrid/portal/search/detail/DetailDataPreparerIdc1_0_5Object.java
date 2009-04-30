@@ -20,14 +20,12 @@ import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
-import de.ingrid.portal.portlets.mdek.MdekEntryPortlet;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.udk.UtilsDate;
-import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
 /**
  * @author joachim
