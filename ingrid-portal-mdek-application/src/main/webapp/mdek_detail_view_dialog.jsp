@@ -149,8 +149,8 @@ function renderNodeData(nodeData) {
 	
 	// additional information
 	renderSectionTitel(message.get("ui.obj.additionalInfo.title"));
-	renderTextWithTitle(dojo.widget.byId("extraInfoLangMetaData")._getDisplayValueForValue(nodeData.extraInfoLangMetaData), message.get("ui.obj.additionalInfo.language.metadata"));
-	renderTextWithTitle(dojo.widget.byId("extraInfoLangData")._getDisplayValueForValue(nodeData.extraInfoLangData), message.get("ui.obj.additionalInfo.language.data"));
+	renderTextWithTitle(dojo.widget.byId("extraInfoLangMetaData")._getDisplayValueForValue(nodeData.extraInfoLangMetaDataCode), message.get("ui.obj.additionalInfo.language.metadata"));
+	renderTextWithTitle(dojo.widget.byId("extraInfoLangData")._getDisplayValueForValue(nodeData.extraInfoLangDataCode), message.get("ui.obj.additionalInfo.language.data"));
 	renderTextWithTitle(dojo.widget.byId("extraInfoPublishArea")._getDisplayValueForValue(nodeData.extraInfoPublishArea), message.get("ui.obj.additionalInfo.publicationCondition"));
 	// Table is only displayed for object classes 1 and 3
 	if (nodeData.objectClass == 1 || nodeData.objectClass == 3) {
