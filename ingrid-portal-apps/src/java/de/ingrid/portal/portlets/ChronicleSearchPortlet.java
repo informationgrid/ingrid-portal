@@ -166,6 +166,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             // Check whether topicId from start page (Anniversary Event) in request and prepare query accordingly !
             // HACK: we only want a most simple query to get one Hit !
             // searching Greenpeace seems to be fast ;)
+            // Important: TERM MUST EXIST IN SNS FOR THIS LANGUAGE! 
             String topicId = request.getParameter(Settings.PARAM_TOPIC_ID);
             if (topicId != null) {
                 inputTerm = "Greenpeace";
