@@ -76,11 +76,15 @@ public class ThreadedQuery extends Thread {
                 	
                     // get Plug Description only for top Hits (grouped by iPlugs in right column)
                     if (qd.isGetPlugDescription()) {
-                    	topHitWrapper.put("plugDescr", ibus.getIPlug(hitArrayWrapper[i].getHit().getPlugId()));
+                    	topHitWrapper.put(Settings.RESULT_KEY_PLUG_DESCRIPTION, ibus.getIPlug(hitArrayWrapper[i].getHit().getPlugId()));
                     }
                     // get details for all hits to display
                     if (qd.isGetDetails()) {
                     	topHitWrapper.put(Settings.RESULT_KEY_DETAIL, hitArray[i].getHitDetail());
+                    	// dummy hit if no results, but unranked iPlug should be displayed 
+                    	if (hitArray[i].isDummyHit()) {
+                            topHitWrapper.put(Settings.RESULT_KEY_NO_OF_HITS, 0);
+                    	}
 
                         // check for further hits (grouping)
                         subHitArray = topHitWrapper.getHit().getGroupHits();
@@ -98,10 +102,10 @@ public class ThreadedQuery extends Thread {
                         	}
                         	// set in "normal" grouping (partner, provider ...)
                             if (groupLength == null) {
-                                groupLength = (String)topHitWrapper.get("no_of_hits");                            	
+                                groupLength = (String)topHitWrapper.get(Settings.RESULT_KEY_NO_OF_HITS);                            	
 
                                 if (groupLength == null) {
-                                	groupLength = (String)hitArray[i].getHitDetail().get("no_of_hits");
+                                	groupLength = (String)hitArray[i].getHitDetail().get(Settings.RESULT_KEY_NO_OF_HITS);
 
                                 	if (groupLength == null) {
                                     	groupLength = String.valueOf(subHitArray.length + 1);
@@ -109,7 +113,7 @@ public class ThreadedQuery extends Thread {
                                 }
                             }
 
-                            topHitWrapper.put("no_of_hits", groupLength);
+                            topHitWrapper.put(Settings.RESULT_KEY_NO_OF_HITS, groupLength);
                             // default grouping: only top hit is shown, so we always have more hits
                             topHitWrapper.putBoolean("moreHits", true);
                             
@@ -118,7 +122,7 @@ public class ThreadedQuery extends Thread {
                             if (IngridQuery.GROUPED_BY_DATASOURCE.equals(grouping)) {
                             	//IngridHit subHit = subHitArray[0];
                             	IngridHitWrapper subHitWrapper = new IngridHitWrapper(subHitArray[0]);
-                            	subHitWrapper.put("plugDescr", topHitWrapper.get("plugDescr"));
+                            	subHitWrapper.put(Settings.RESULT_KEY_PLUG_DESCRIPTION, topHitWrapper.get(Settings.RESULT_KEY_PLUG_DESCRIPTION));
                                 IngridHitDetail subDetail = ibus.getDetail(subHitWrapper.getHit(), qd.getQuery(), qd.getRequestedFields());
                                 subHitWrapper.put(Settings.RESULT_KEY_DETAIL, subDetail);
                                 topHitWrapper.put(Settings.RESULT_KEY_SUB_HIT, subHitWrapper);

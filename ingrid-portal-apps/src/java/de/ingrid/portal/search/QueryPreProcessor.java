@@ -232,8 +232,7 @@ public class QueryPreProcessor {
      */
     public static QueryDescriptor createUnrankedQueryDescriptor(PortletRequest request) {
         // create new IngridQuery, so we can manipulate it in ranked search without affecting unranked search
-        // NOTICE: we don't copy it from IngridQuery in state, would be only shallow copy (putAll()), but
-        // we won't complete copy
+        // NOTICE: we don't copy it from IngridQuery in state, would be only shallow copy (putAll())
         String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
         IngridQuery query = null;
         try {
@@ -272,6 +271,11 @@ public class QueryPreProcessor {
         if (!UtilsSearch.containsFieldOrKey(query, IngridQuery.RANKED)) {
             // switch ranking OFF
             query.put(IngridQuery.RANKED, IngridQuery.NOT_RANKED);
+        }
+        // also add flag determining whether iPlugs with no results should be delivered !
+        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_RESULTS_UNRANKED_ALLIPLUGS, false)) {
+            // deliver also dummy hit of iPlugs with no result
+            query.addField(new FieldQuery(true, false, IngridQuery.GET_UNRANKED_IPLUGS_WITH_NO_RESULTS, "true"));
         }
 
         // set filter params. 

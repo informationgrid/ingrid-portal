@@ -220,6 +220,13 @@ public class UtilsSearch {
      */
     public static void transferHitDetails(IngridHitWrapper result, IngridHitDetail detail) {
         try {
+        	// dummy hit if unranked iplug without results should be displayed 
+            result.put(Settings.RESULT_KEY_DUMMY_HIT, false);
+        	if (detail.isDummyHit()) {
+                result.put(Settings.RESULT_KEY_DUMMY_HIT, true);
+        		return;
+        	}
+
             // also cuts title: maximum length = 2 Lines, length of first line
             // is shorter because of icon !
             int ICON_LENGTH = 15;

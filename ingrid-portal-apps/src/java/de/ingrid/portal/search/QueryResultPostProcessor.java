@@ -84,7 +84,7 @@ public class QueryResultPostProcessor {
 
         UtilsSearch.transferHitDetails(hit, detail);
 
-        PlugDescription plugDescr = (PlugDescription) hit.get("plugDescr");
+        PlugDescription plugDescr = (PlugDescription) hit.get(Settings.RESULT_KEY_PLUG_DESCRIPTION);
         if (plugDescr != null) {
             UtilsSearch.transferPlugDescription(hit, plugDescr);
         }
@@ -131,7 +131,7 @@ public class QueryResultPostProcessor {
                     // top hit of group !
                     hit = hitArray[i];
 
-                    plugDescr = (PlugDescription) hit.get("plugDescr");
+                    plugDescr = (PlugDescription) hit.get(Settings.RESULT_KEY_PLUG_DESCRIPTION);
                     if (plugDescr != null) {
                         UtilsSearch.transferPlugDescription(hit, plugDescr);
                     }
@@ -262,7 +262,7 @@ public class QueryResultPostProcessor {
             }
 
             // determine type of hit dependent from plug description !!!
-            PlugDescription plugDescr = (PlugDescription) hit.get("plugDescr");
+            PlugDescription plugDescr = (PlugDescription) hit.get(Settings.RESULT_KEY_PLUG_DESCRIPTION);
             boolean isObject = true;
             if (plugDescr != null) {
             	List typesPlug = Arrays.asList(plugDescr.getDataTypes());

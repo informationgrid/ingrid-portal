@@ -190,6 +190,10 @@ public class Settings {
 
     public static final String RESULT_KEY_SUB_HIT = "subhit";
     public static final String RESULT_KEY_DETAIL = "detail";
+    public static final String RESULT_KEY_PLUG_DESCRIPTION = "plugDescr";
+
+    public static final String RESULT_KEY_NO_OF_HITS = "no_of_hits";
+    public static final String RESULT_KEY_DUMMY_HIT = "dummyHit";
 
     // ===========================================
     // Hit Detail data (get data from hit details)

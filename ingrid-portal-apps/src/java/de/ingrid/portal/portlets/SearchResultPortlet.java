@@ -238,7 +238,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         }
         // check whether right column is switched OFF and set according context flag
         boolean rightColumnDisabled =
-        	!PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_RESULTS_RIGHTCOLUMN, true);
+        	!PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_RESULTS_UNRANKED, true);
         context.put("RIGHT_COLUMN_DISABLED", rightColumnDisabled);
 
 
