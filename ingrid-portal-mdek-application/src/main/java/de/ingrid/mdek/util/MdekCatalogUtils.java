@@ -37,6 +37,7 @@ import de.ingrid.mdek.quartz.jobs.util.URLState;
 import de.ingrid.mdek.quartz.jobs.util.URLState.State;
 import de.ingrid.mdek.services.catalog.dbconsistency.ErrorReport;
 import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.udk.UtilsLanguageCodelist;
 
 public class MdekCatalogUtils {
 
@@ -44,9 +45,6 @@ public class MdekCatalogUtils {
 
 	private static final String SYS_GUI_ID = "id";
 	private static final String SYS_GUI_MODE = "mode";
-	
-	private static final Integer SYS_GERMAN_CODE = 150;
-	private static final Integer SYS_ENGLISH_CODE = 123;
 	
 	private static XStream xstream = new XStream();
 
@@ -337,9 +335,9 @@ public class MdekCatalogUtils {
 	}
 
 	private static String getLanguageShort(Integer languageCode) {
-		if (languageCode == SYS_ENGLISH_CODE)
+		if (languageCode == UtilsLanguageCodelist.getCodeFromShortcut("en"))
 			return "en";
-		else if (languageCode == SYS_GERMAN_CODE)
+		else if (languageCode == UtilsLanguageCodelist.getCodeFromShortcut("de"))
 			return "de";
 		else {
 			log.debug("Language not supported! Using 'de' as default!");
