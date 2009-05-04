@@ -12,6 +12,15 @@
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
+<script type="text/javascript">
+    // browser check (only IE7, FF2/3)
+	var browser = navigator.appName;
+	var version = navigator.appVersion;
+	if (!(version.indexOf("MSIE 7") != -1 || (browser=="Netscape" && version.indexOf("5.0") != -1 && version.indexOf("Chrome") == -1))) {
+		document.location.href = "not_supported_browser.jsp"
+	}
+</script>
+
 <script src='/ingrid-portal-mdek-application/dwr/interface/AddressService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/BackendService.js'></script>
 <script src='/ingrid-portal-mdek-application/dwr/interface/CatalogService.js'></script>
