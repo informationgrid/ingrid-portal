@@ -165,7 +165,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
 
             // Check whether topicId from start page (Anniversary Event) in request and prepare query accordingly !
             // HACK: we only want a most simple query to get one Hit !
-            // searching Tschernobyl seems to be fast ;)
+            // searching Greenpeace seems to be fast ;)
             String topicId = request.getParameter(Settings.PARAM_TOPIC_ID);
             if (topicId != null) {
                 inputTerm = "Greenpeace";
