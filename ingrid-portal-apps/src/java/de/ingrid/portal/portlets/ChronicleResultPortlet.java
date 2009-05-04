@@ -163,18 +163,21 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
 
         IngridHits hits = null;
         IngridHit[] results = null;
+        IngridHitDetail[] details = null;
         try {
             int currentPage = (int) (startHit / hitsPerPage) + 1;
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
 
+            // due to a HACK, it is not possible to use the searchAndDetail-Method
+            // the details are requested with a modified resultSet from a former bus-search
             if (teaserTopicId == null) {
-                hits = ibus.searchAndDetail(query, hitsPerPage, currentPage, startHit, PortalConfig.getInstance().getInt(
-                        PortalConfig.SNS_TIMEOUT_DEFAULT, 30000), null);
+                hits = ibus.search(query, hitsPerPage, currentPage, startHit, PortalConfig.getInstance().getInt(
+                        PortalConfig.SNS_TIMEOUT_DEFAULT, 30000));
             } else {
                 // HACK: we request ONE Hit to have the correct plug ID !
                 // Then we manipulate the Hit and the IngridHits to get the correct Event and Number Of Events !
-                hits = ibus.searchAndDetail(query, 1, 1, 0, PortalConfig.getInstance().getInt(PortalConfig.SNS_TIMEOUT_DEFAULT,
-                        30000), null);
+                hits = ibus.search(query, 1, 1, 0, PortalConfig.getInstance().getInt(PortalConfig.SNS_TIMEOUT_DEFAULT,
+                        30000));
                 results = hits.getHits();
                 if (results != null && results.length > 0) {
                     Topic topic = (Topic) results[0];
@@ -188,9 +191,10 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                 }
             }
             results = hits.getHits();
-            if (hits == null) {
+            details = ibus.getDetails(results, query, null);
+            if (details == null) {
                 if (log.isErrorEnabled()) {
-                    log.error("Problems getting details of hits ! hits = " + results);// + ", details = " + details);
+                    log.error("Problems getting details of hits ! hits = " + results + ", details = " + details);
                 }
             } else {
                 Topic topic = null;
@@ -198,7 +202,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                 for (int i = 0; i < results.length; i++) {
                     try {
                         topic = (Topic) results[i];
-                        detail = (DetailedTopic) results[i].getHitDetail();
+                        detail = (DetailedTopic) details[i];
 
                         topic.put("title", detail.getTopicName());
 
@@ -269,7 +273,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
             }
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
-                log.error("Problems performing SNS Search ! results = " + results);// + ", details = " + details, t);
+                log.error("Problems performing SNS Search ! results = " + results + ", details = " + details, t);
             }
         }
 
