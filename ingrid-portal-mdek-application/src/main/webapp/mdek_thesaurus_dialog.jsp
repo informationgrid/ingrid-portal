@@ -375,13 +375,17 @@ closeDialog = function() {
 // This function copies the descriptor list to the main mdek searchtopic list
 acceptTopicList = function() {
 	var srcStore = dojo.widget.byId("thesaurusDescList").store;
-	var destStore = dojo.widget.byId(_container_.customParams.dstTable).store;
+	var destStore = dojo.widget.byId("thesaurusTerms").store;
 
 	dojo.lang.forEach(srcStore.getData(), function(topic){
 		if (dojo.lang.every(destStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
 			// Topic is new. Add it to the topic list
 			topic.Id = UtilStore.getNewKey(destStore);
-			topic.title = topic._title;
+			if (topic._title) {
+				dojo.debug("Use _title!!!");
+				topic.title = topic._title;
+			}
+			//dojo.debugShallow(topic);
 			destStore.addData( topic );
 		} else {
 			// Topic already exists in the destination List
