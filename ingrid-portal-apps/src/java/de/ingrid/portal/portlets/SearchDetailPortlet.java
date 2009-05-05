@@ -141,7 +141,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_ADDRESS)) {
 	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
-	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
+	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_ADDRESS)) {
+	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+	            	} else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
 	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                } else {
 	            		qStr = docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
@@ -212,6 +214,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 	setDefaultViewPage(TEMPLATE_DETAIL_ECS);
                 } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_ADDRESS)) {
                 	setDefaultViewPage(TEMPLATE_DETAIL_ECS_ADDRESS);
+                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_ADDRESS)) {
+                	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
                 } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
                 	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
                 } else {
