@@ -1,8 +1,8 @@
 package de.ingrid.mdek.util;
 
 import java.security.Principal;
-import java.util.Date;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -26,19 +26,30 @@ public class MdekSecurityUtils {
 	public static UserData getCurrentPortalUserData() {
 		WebContext wctx = WebContextFactory.get();
 		HttpServletRequest req = wctx.getHttpServletRequest();
-
+		
 		HttpSession ses = wctx.getSession();
+		ServletContext ctx = ses.getServletContext().getContext("/ingrid-portal-mdek");
 //		log.debug("last accessed time: "+new Date(ses.getLastAccessedTime()));
 //		log.debug("max inactive interval: "+ses.getMaxInactiveInterval());
 
+		String forcedIgeUser = null;
+		if (ctx != null) {
+			forcedIgeUser = (String) ctx.getAttribute("ige.force.userName");
+		}
+		
 		// Principal is null after the JetSpeed session times out
 		// The session will not be refreshed if the user only operates in the mdek app!
-		Principal userPrincipal = req.getUserPrincipal(); 
+		Principal userPrincipal = req.getUserPrincipal();
 		if (userPrincipal != null) {
 			// userPrincipal found. return the UserData associated with the userName			
-			ses.setAttribute("userName", userPrincipal.getName());
-			return getUserData(userPrincipal.getName());
-
+			// if the portal admin wants to access IGE as a different user
+			if (userPrincipal.getName().equals("admin") && forcedIgeUser != null) {
+				ses.setAttribute("userName", forcedIgeUser);
+				return getUserData(forcedIgeUser);
+			} else {
+				ses.setAttribute("userName", userPrincipal.getName());
+				return getUserData(userPrincipal.getName());
+			}
 		} else {
 			// userPrincipal not found. Check if we have stored the usrName in the session			
 			String userName = (String) ses.getAttribute("userName");
