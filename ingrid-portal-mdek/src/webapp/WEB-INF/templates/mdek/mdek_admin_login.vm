@@ -1,0 +1,48 @@
+<script type="text/javascript">
+	function validate_form() {
+		//alert("Login now!");
+		if (!document.mdek_admin_login.user.value) {
+		  alert("Sie müssen einen Benutzer auswählen!");
+		  return false;
+		}
+		return true;
+	}
+	
+	function catalogChanged() {
+		var index = document.mdek_admin_login.catalog.selectedIndex;
+		document.mdek_admin_login.user.options.length = 0;
+		for (i=0;i<$userLists[index].length;i++) {
+			document.mdek_admin_login.user.options[i] = new Option($userLists[index][i],$userLists[index][i]);
+		}		
+	}
+	
+	function userChanged() {
+		//alert(document.mdek_admin_login.user.value);
+	}
+</script>
+
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="mdek_admin_login" id="mdek_admin_login" onsubmit="return validate_form(this)" target="_blank">
+	<div class="formbody">
+		<table>
+			<tr><td>
+		<h3>$MESSAGES.getString('entry.text.catalog'):</h3>
+		<select size="3" id="catalog" name="catalog" onchange="catalogChanged();" style="min-width:100px;">
+#foreach ($entry in $catalogList)
+	<option value="$entry.plugId">$entry.catName ($entry.plugId)</option>
+#end
+		</select>
+		</td><td>
+		<h3>$MESSAGES.getString('entry.text.user'):</h3> 
+		<select size="3" id="user" name="user" onchange="userChanged();" style="min-width:100px;">
+		</select>
+        </td></tr>
+        </table>
+	</div>
+	<div class="formfooter">
+		<input class="btn float_right" type="submit" name="doLoginAdmin" value="Login - $MESSAGES.getString('entry.button.administration')" />
+		<span class="float_right">&nbsp;</span>
+		<input class="btn float_right" type="submit" name="doLoginIGE" value="Login - $MESSAGES.getString('entry.button.ige')" />
+		<p class="clearer"/>
+    </div>
+</form>

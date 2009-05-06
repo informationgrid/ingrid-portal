@@ -63,5 +63,26 @@
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.MdekResources</resource-bundle>
     </portlet>
+    
+    <portlet id="MdekAdminLoginPortlet">
+        <init-param>
+            <description>SuperAdmin-Login to each Catalog with each User</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/mdek/mdek_admin_login.vm</value>
+        </init-param>
+        <portlet-name>MdekAdminLoginPortlet</portlet-name>
+        <display-name>SuperAdmin-Login</display-name>
+        <portlet-class>de.ingrid.portal.portlets.mdek.MdekAdminLoginPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>SuperAdmin-Login</title>
+            <short-title>SuperAdmin-Login</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.MdekResources</resource-bundle>
+    </portlet>
 
 </portlet-app>
