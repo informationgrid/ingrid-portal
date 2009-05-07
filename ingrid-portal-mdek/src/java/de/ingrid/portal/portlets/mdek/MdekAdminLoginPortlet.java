@@ -5,6 +5,7 @@ package de.ingrid.portal.portlets.mdek;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,32 +18,25 @@ import javax.portlet.PortletException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.jetspeed.CommonPortletServices;
-import org.apache.jetspeed.security.RoleManager;
-import org.apache.jetspeed.security.SecurityException;
-import org.apache.jetspeed.security.UserManager;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
-import de.ingrid.mdek.caller.IMdekCallerSecurity;
 import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.caller.MdekCallerCatalog;
-import de.ingrid.mdek.caller.MdekCallerSecurity;
 import de.ingrid.mdek.caller.MdekClientCaller;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekCatalogUtils;
-import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.utils.IngridDocument;
 
 
 /**
- * This portlet handles the administration processes for the portal admin
+ * This portlet allows the portal admin to login as an arbitrary mdek user to
+ * the IGE without the need of a password.
  *
  * @author michael.benz@wemove.com
  */
@@ -56,7 +50,7 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
     // Possible Actions
     private final static String PARAMV_ACTION_DO_LOGIN_ADMIN 	= "doLoginAdmin";
     private final static String PARAMV_ACTION_DO_LOGIN_IGE 		= "doLoginIGE";
-    private enum ACTION {ADMIN_LOGIN, IGE_LOGIN, RELOAD};
+    private enum ACTION {ADMIN_LOGIN, IGE_LOGIN, UNKNOWN};
 
     
     private final static String CATALOG			= "CATALOG";
@@ -64,8 +58,6 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
     
     
     // Parameters set on init
-    private UserManager userManager;
-    private RoleManager roleManager;
     private IMdekClientCaller mdekClientCaller;
 
     
@@ -74,22 +66,6 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
 
     	this.mdekClientCaller = MdekClientCaller.getInstance();
     	
-        userManager = (UserManager) getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
-        if (null == userManager) {
-            throw new PortletException("Failed to find the User Manager on portlet initialization");
-        }
-        roleManager = (RoleManager) getPortletContext().getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
-        if (null == roleManager) {
-            throw new PortletException("Failed to find the Role Manager on portlet initialization");
-        }
-
-		try {
-			if (!roleManager.roleExists("mdek")) {
-				roleManager.addRole("mdek");
-			}
-		} catch (SecurityException e) {
-			throw new PortletException(e);
-		}
     }
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
@@ -101,9 +77,9 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
         
     	setDefaultViewPage(TEMPLATE_START);
     	
-    	
-        context.put("catalogList", buildConnectedCatalogList().get(CATALOG));
-        context.put("userLists", buildConnectedCatalogList().get(USER_OF_CATALOG));
+    	Map<String, List> catalogInfo = buildConnectedCatalogList();
+        context.put("catalogList", catalogInfo.get(CATALOG));
+        context.put("userLists", catalogInfo.get(USER_OF_CATALOG));
     	super.doView(request, response);
     }
 
@@ -118,14 +94,21 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
     		processActionIgeLogin(request, actionResponse);
     		break;
     	default:
-    		// Redirect to reload
-    		//processActionReload(request, actionResponse);
+    		log.warn("UNKNOWN ACTION in MdekAdminLoginPortlet");
     		break;
     	}
     }    
 
+    /**
+     * Login to the administration page with a chosen mdek user
+     * @param request
+     * @param actionResponse
+     */
     private void processActionAdminLogin(ActionRequest request, ActionResponse actionResponse) {
     	try {
+    		// put the user name of the mdek-user into the context
+    		// this name will be retrieved from mdek-application later
+    		// (this had to be done this way, since sessions are not application wide!)
     		getPortletContext().setAttribute("ige.force.userName", request.getParameter("user"));
 			actionResponse.sendRedirect("/ingrid-portal-mdek-application/mdek_admin_entry.jsp?debug=true");
 		} catch (IOException e) {
@@ -135,8 +118,16 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
 		
 	}
     
+    /**
+     * Login to the IngridEditor page with a chosen mdek user
+     * @param request
+     * @param actionResponse
+     */
     private void processActionIgeLogin(ActionRequest request, ActionResponse actionResponse) {
     	try {
+    		// put the user name of the mdek-user into the context
+    		// this name will be retrieved from mdek-application later
+    		// (this had to be done this way, since sessions are not application wide!)
     		getPortletContext().setAttribute("ige.force.userName", request.getParameter("user"));
 			actionResponse.sendRedirect("/ingrid-portal-mdek-application/mdek_entry.jsp?debug=true");
 		} catch (IOException e) {
@@ -152,10 +143,19 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
     	else if (request.getParameter(PARAMV_ACTION_DO_LOGIN_IGE) != null)
     		return ACTION.IGE_LOGIN;
     	else
-    		return ACTION.RELOAD;
+    		return ACTION.UNKNOWN;
     }
     
 
+	/**
+	 * This function looks for all connected catalogs and its' users and returns them.
+	 * 
+	 * @return a hashmap with
+	 *   CATALOG: contains information of found catalogs
+	 *   USER_OF_CATALOG: contains all users found in each catalog; it's a list of a list
+	 *       and has the same order as the catalogs, which means that the first list contains
+	 *       the users for the first catalog, the second list the users for the second catalog, ...
+	 */
     private Map<String, List> buildConnectedCatalogList() {
     	Map<String,List> dataContainer = new HashMap<String,List>();
     	List<Map<String, String>> catalogList = new ArrayList<Map<String,String>>();
@@ -164,28 +164,27 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
     	Session s = HibernateUtil.currentSession();
     	s.beginTransaction();
 
+    	// query all connected iPlugs/catalogs
     	for (String plugId : this.mdekClientCaller.getRegisteredIPlugs()) {
         	List<UserData> userDataList = (List<UserData>) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).list();
         	List<String> userList = new ArrayList<String>();
         	
+        	// get users that belong to the iPlug (are mdek user)
         	for (UserData userData : userDataList) {
 				userList.add('"' + userData.getPortalLogin() + '"');
 			}
+        	// sort users
+        	Collections.sort(userList, String.CASE_INSENSITIVE_ORDER);
         	userLists.add(userList);        	
         	
         	if (userDataList != null && userDataList.size() != 0) {
         		HashMap<String, String> catalogData = new HashMap<String, String>();
         		
-        		
-        		
         		UserData userData = userDataList.get(0);
         		
         		IMdekCallerCatalog mdekCallerCatalog = MdekCallerCatalog.getInstance();
-        		IMdekCallerSecurity mdekCallerSecurity = MdekCallerSecurity.getInstance();
 
         		IngridDocument cat = mdekCallerCatalog.fetchCatalog(plugId, userData.getAddressUuid());
-        		IngridDocument adm = mdekCallerSecurity.getCatalogAdmin(plugId, userData.getAddressUuid());
-        		String catAdminUuid = extractCatalogAdminUuid(adm);
 
         		CatalogBean catBean = null;
         		try {
@@ -194,75 +193,19 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
         			continue;
         		}
 
-        		UserData catAdminUserData = (UserData) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).add(Restrictions.eq("addressUuid", catAdminUuid)).uniqueResult();
-
-        		if (catAdminUserData == null) {
-        			// The catalog admin was not found in the user table. This should never be the case!
-        			// Possibly the addressUuid has changed. Display the catalog, but also display an error
-            		catalogData.put("plugId", plugId);
-            		catalogData.put("catName", catBean.getCatalogName());
-            		catalogData.put("catAdmin", extractCatalogAdminName(adm));
-            		catalogData.put("portalLogin", "ERROR: portalLogin not found!");
-            		catalogData.put("partner", catBean.getPartnerName());
-            		catalogData.put("provider", catBean.getProviderName());
-            		catalogList.add(catalogData);
-
-        		} else {
-        			// Display the catalogData
-	        		catalogData.put("plugId", plugId);
-	        		catalogData.put("catName", catBean.getCatalogName());
-	        		catalogData.put("catAdmin", extractCatalogAdminName(adm));
-	        		catalogData.put("portalLogin", catAdminUserData.getPortalLogin());
-	        		catalogData.put("partner", catBean.getPartnerName());
-	        		catalogData.put("provider", catBean.getProviderName());
-	        		catalogList.add(catalogData);
-        		}
+    			// Display the catalogData
+        		catalogData.put("plugId", plugId);
+        		catalogData.put("catName", catBean.getCatalogName());
+        		catalogList.add(catalogData);
         	}
     	}
     	
     	s.getTransaction().commit();
     	HibernateUtil.closeSession();
     	
+    	// put all necessary data in another hashmap
     	dataContainer.put(USER_OF_CATALOG, userLists);
     	dataContainer.put(CATALOG, catalogList);
     	return dataContainer;
     }
-
-    private static String extractCatalogAdminUuid(IngridDocument catAdmin) {
-    	IngridDocument result = MdekUtils.getResultFromResponse(catAdmin);
-    	return result == null ? "" : (String) result.get(MdekKeys.UUID);
-    }
-
-
-    private static String extractCatalogAdminName(IngridDocument catAdmin) {
-    	IngridDocument result = MdekUtils.getResultFromResponse(catAdmin);
-    	String title = "";
-    	String organisation = (String) result.get(MdekKeys.ORGANISATION);
-		String name = (String) result.get(MdekKeys.NAME);
-		String givenName = (String) result.get(MdekKeys.GIVEN_NAME);
-
-    	switch((Integer) result.get(MdekKeys.CLASS)) {
-    	case 0:
-    		// Fall through
-    	case 1:
-    		title = organisation;
-    		break;
-    	case 2:
-    		if (name != null)
-    			title += name;
-    		if (givenName != null)
-    			title += ", "+givenName;
-    		break;
-    	case 3:
-    		if (name != null)
-    			title += name;
-    		if (givenName != null)
-    			title += ", "+givenName;
-    		if (organisation != null)
-    			title += " ("+organisation+")";
-    		break;
-    	}
-    	return title;
-    }
-
 }

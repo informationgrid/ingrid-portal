@@ -1,6 +1,5 @@
 <script type="text/javascript">
 	function validate_form() {
-		//alert("Login now!");
 		if (!document.mdek_admin_login.user.value) {
 		  alert("Sie müssen einen Benutzer auswählen!");
 		  return false;
@@ -17,7 +16,6 @@
 	}
 	
 	function userChanged() {
-		//alert(document.mdek_admin_login.user.value);
 	}
 </script>
 
@@ -34,7 +32,7 @@
 		</select>
 		</td><td>
 		<h3>$MESSAGES.getString('entry.text.user'):</h3> 
-		<select size="3" id="user" name="user" onchange="userChanged();" style="min-width:100px;">
+		<select size="3" id="user" name="user" onchange="userChanged();" style="min-width:150px;">
 		</select>
         </td></tr>
         </table>
