@@ -106,6 +106,7 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
      */
     private void processActionAdminLogin(ActionRequest request, ActionResponse actionResponse) {
     	try {
+    		log.info("Portal-Administrator logs into catalog-administration as user: " + request.getParameter("user"));
     		// put the user name of the mdek-user into the context
     		// this name will be retrieved from mdek-application later
     		// (this had to be done this way, since sessions are not application wide!)
@@ -125,6 +126,7 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
      */
     private void processActionIgeLogin(ActionRequest request, ActionResponse actionResponse) {
     	try {
+    		log.info("Portal-Administrator logs into IGE as user: " + request.getParameter("user"));
     		// put the user name of the mdek-user into the context
     		// this name will be retrieved from mdek-application later
     		// (this had to be done this way, since sessions are not application wide!)
