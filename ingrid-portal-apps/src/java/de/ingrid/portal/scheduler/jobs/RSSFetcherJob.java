@@ -110,7 +110,7 @@ public class RSSFetcherJob extends IngridAbstractStateJob {
                                     String categoryStr = category.getName().toLowerCase();
                                     if (categoryStr != null && categoryStr.length() > 0) {
                                         categoryStr = UtilsString.regExEscape(category.getName().toLowerCase());
-                                        if (categoryFilter.matches("^" + categoryStr + ".*|.*," + categoryStr
+                                        if (categoryFilter.toLowerCase().matches("^" + categoryStr + ".*|.*," + categoryStr
                                                 + ",.*|.*," + categoryStr + "$")) {
                                             includeEntry = true;
                                             break;
