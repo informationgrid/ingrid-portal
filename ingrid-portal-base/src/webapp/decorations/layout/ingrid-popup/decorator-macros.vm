@@ -40,7 +40,7 @@
 
 #* Adds ingrid javascript *#
 #macro (decoratorIncludeJavaScriptForHead)
-  <script language="JavaScript" src="decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
+  <script language="JavaScript" src="$request.contextPath/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
 #end
 
 
