@@ -43,7 +43,6 @@ public class IngridJobHandler {
 		"component.monitor.general.type.iplug",
 		"component.monitor.general.type.g2k",
 		"component.monitor.general.type.csw",
-		"component.monitor.general.type.ecs",
 		"component.monitor.general.type.sns",
 		"component.monitor.general.type.ibus",
 		"component.monitor.general.type.rss",
@@ -291,8 +290,6 @@ public class IngridJobHandler {
 			jobClass = IngridMonitorIPlugJob.class;
 		} else if (type.equals(IngridMonitorG2KJob.COMPONENT_TYPE)) {
 			jobClass = IngridMonitorG2KJob.class;
-		} else if (type.equals(IngridMonitorECSJob.COMPONENT_TYPE)) {
-			jobClass = IngridMonitorECSJob.class;
 		} else if (type.equals(IngridMonitorCSWJob.COMPONENT_TYPE)) {
 			jobClass = IngridMonitorCSWJob.class;
 		} else	if (type.equals(IngridMonitorSNSJob.COMPONENT_TYPE)) {

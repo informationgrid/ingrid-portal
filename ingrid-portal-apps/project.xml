@@ -221,7 +221,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-fpn</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
+            <version>1.2-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -248,7 +248,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-g2k</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
+            <version>1.2-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -265,17 +265,8 @@
         </dependency>
         <dependency>
             <groupId>ingrid</groupId>
-            <artifactId>ingrid-iplug-ecs</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
-            <type>jar</type>
-            <properties>
-                <war.bundle>true</war.bundle>
-            </properties>
-        </dependency>
-        <dependency>
-            <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-csw</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
+            <version>1.2-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>

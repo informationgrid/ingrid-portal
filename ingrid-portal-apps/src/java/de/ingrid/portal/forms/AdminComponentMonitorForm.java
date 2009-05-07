@@ -10,7 +10,6 @@ import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorCSWJob;
-import de.ingrid.portal.scheduler.jobs.IngridMonitorECSJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorG2KJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorIPlugJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorRSSCheckerJob;
@@ -128,7 +127,6 @@ public class AdminComponentMonitorForm extends ActionForm {
 			}
 			if (!hasInput(FIELD_SERVICE_URL)
 					&& (getInput(FIELD_TYPE).equals(IngridMonitorG2KJob.COMPONENT_TYPE) 
-					|| getInput(FIELD_TYPE).equals(IngridMonitorECSJob.COMPONENT_TYPE)
 					|| getInput(FIELD_TYPE).equals(IngridMonitorCSWJob.COMPONENT_TYPE)
 					|| getInput(FIELD_TYPE).equals(IngridMonitorRSSCheckerJob.COMPONENT_TYPE))) {
 				setError(FIELD_SERVICE_URL, "component.monitor.form.error.invalid.serviceurl");
