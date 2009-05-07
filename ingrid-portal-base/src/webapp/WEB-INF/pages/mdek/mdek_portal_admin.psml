@@ -10,8 +10,12 @@
     <fragment id="mdek-portal-0" type="portlet" name="ingrid-portal-mdek::MdekPortalAdminPortlet">
       <property layout="OneColumn" name="row" value="0" />
     </fragment>
+    
+    <fragment id="mdek-portal-1" type="portlet" name="ingrid-portal-mdek::MdekAdminLoginPortlet">
+      <property layout="OneColumn" name="row" value="1" />
+    </fragment>
   </fragment>
-
+  
   <security-constraints>
     <security-constraints-ref>admin-portal</security-constraints-ref>
   </security-constraints>
