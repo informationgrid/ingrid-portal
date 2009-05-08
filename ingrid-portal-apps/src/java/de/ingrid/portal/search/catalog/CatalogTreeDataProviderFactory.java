@@ -20,7 +20,11 @@ public class CatalogTreeDataProviderFactory {
 		
 		if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT)) {
 			return new CatalogTreeDataProvider_IDC_1_0_2();
+		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT)) {
+			return new CatalogTreeDataProvider_IDC_1_0_2();
 		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
+			return new CatalogTreeDataProvider_IDC_1_0_2();
+		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_ADDRESS)) {
 			return new CatalogTreeDataProvider_IDC_1_0_2();
 		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
 			return new CatalogTreeDataProvider_IDC_1_0_2();
