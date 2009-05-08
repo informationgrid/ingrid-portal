@@ -13,6 +13,9 @@
     
     <fragment id="mdek-portal-1" type="portlet" name="ingrid-portal-mdek::MdekAdminLoginPortlet">
       <property layout="OneColumn" name="row" value="1" />
+      <security-constraints>
+        <security-constraints-ref>admin</security-constraints-ref>
+      </security-constraints>
     </fragment>
   </fragment>
   
