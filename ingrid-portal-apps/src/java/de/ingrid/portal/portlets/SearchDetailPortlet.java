@@ -84,8 +84,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     	else if (oldCode.equals("94"))
     		return Integer.toString(UtilsLanguageCodelist.getCodeFromShortcut("en"));
     	else {
-    		log.error("Code from ingrid-portal-apps.properties not supported: " + oldCode);
-    		return Integer.toString(UtilsLanguageCodelist.getCodeFromShortcut("de"));
+    		return oldCode;
     	}		
 	}
 
