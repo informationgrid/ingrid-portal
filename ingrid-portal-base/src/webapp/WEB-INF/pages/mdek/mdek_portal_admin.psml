@@ -9,6 +9,9 @@
   <fragment id="mdek-portal" type="layout" name="jetspeed-layouts::IngridOneColumn">
     <fragment id="mdek-portal-0" type="portlet" name="ingrid-portal-mdek::MdekPortalAdminPortlet">
       <property layout="OneColumn" name="row" value="0" />
+      <security-constraints>
+        <security-constraints-ref>admin-portal</security-constraints-ref>
+      </security-constraints>
     </fragment>
     
     <fragment id="mdek-portal-1" type="portlet" name="ingrid-portal-mdek::MdekAdminLoginPortlet">
@@ -17,9 +20,37 @@
         <security-constraints-ref>admin</security-constraints-ref>
       </security-constraints>
     </fragment>
+    
+    <fragment id="mdek-entry-0" type="portlet" name="ingrid-portal-mdek::MdekEntryPortlet">
+      <property layout="OneColumn" name="row" value="2" />
+      <!-- Only mdek users are allowed to view this page -->
+	  <security-constraints>
+	    <security-constraint>
+	      <roles>mdek</roles>
+	      <permissions>view</permissions>
+	    </security-constraint>
+	    <!-- Explicitly exclude the portal-admin and admin -->
+	    <security-constraint>
+	      <roles>admin-portal</roles>
+	      <users>admin</users>
+	    </security-constraint>
+	  </security-constraints>
+    </fragment>
+
+    <fragment id="mdek-quick-view-0" type="portlet" decorator="clear" name="ingrid-portal-mdek::MdekQuickViewPortlet">
+      <property layout="OneColumn" name="row" value="3" />
+      <security-constraints>
+	    <security-constraint>
+	      <roles>mdek</roles>
+	      <permissions>view</permissions>
+	    </security-constraint>
+	    <!-- Explicitly exclude the portal-admin and admin -->
+	    <security-constraint>
+	      <roles>admin-portal</roles>
+	      <users>admin</users>
+	    </security-constraint>
+	  </security-constraints>
+    </fragment>
+    
   </fragment>
-  
-  <security-constraints>
-    <security-constraints-ref>admin-portal</security-constraints-ref>
-  </security-constraints>
 </page>
