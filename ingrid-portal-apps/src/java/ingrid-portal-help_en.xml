@@ -1773,6 +1773,7 @@
                     die ausgewählte Karte angezeigt. Ansonsten wird Ihnen Ihre
                     letzte Einstellung im Menü &#8222;Karten&#8220; präsentiert.</p>
             </content>
+        </section>
             <section help-key="maps-2">
                 <header>Aktive Kartendienste</header>
                 <content>
@@ -2009,7 +2010,6 @@
                         drucken oder als Datei auf Ihrem Rechner speichern.</p>
                 </content>
             </section>
-        </section>
     </chapter>
     <chapter>
         <header>Aktuelles</header>
