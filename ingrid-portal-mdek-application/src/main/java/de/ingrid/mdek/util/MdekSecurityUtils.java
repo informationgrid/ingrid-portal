@@ -43,6 +43,14 @@ public class MdekSecurityUtils {
 		if (userPrincipal != null) {
 			// userPrincipal found. return the UserData associated with the userName			
 			// if the portal admin wants to access IGE as a different user
+			if (log.isDebugEnabled()) {
+				log.debug("User is '"+userPrincipal.getName()+"'; forcedIgeUser: "+forcedIgeUser);
+				if(req.isUserInRole("admin")) {
+					log.debug("User has role admin!");
+				} else {
+					log.debug("User has not role admin!");
+				}
+			}
 			if (userPrincipal.getName().equals("admin") && forcedIgeUser != null) {
 				ses.setAttribute("userName", forcedIgeUser);
 				return getUserData(forcedIgeUser);
