@@ -233,7 +233,7 @@ function readQueryFromInput() {
 
 // Reset-Button function. Reset all the input fields to their initial values and reset 'currentQuery'
 this.resetInput = function() {
-	dojo.byId("objMode1").checked = true;
+	dojo.byId("objMode2").checked = true;
 	dojo.widget.byId("objSearchInput").setValue("");
 	dojo.widget.byId("objTopicInputBool").setValue(0);
 	scriptScope.selectAllObjectClasses();
@@ -650,9 +650,9 @@ function hideLoadingZone() {
 
           <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7046, 'Suchmodus')"><fmt:message key="dialog.research.ext.obj.mode" /></label></span>
           <div class="checkboxContainer">
-            <input type="radio" name="objMode" id="objMode1" class="radio entry first" checked />
+            <input type="radio" name="objMode" id="objMode1" class="radio entry first" />
             <label class="inActive entry closer w116" for="objMode1"><fmt:message key="dialog.research.ext.obj.full" /></label>
-            <input type="radio" name="objMode" id="objMode2" class="radio entry" />
+            <input type="radio" name="objMode" id="objMode2" class="radio entry" checked />
             <label class="inActive entry closer" for="objMode2"><fmt:message key="dialog.research.ext.obj.substring" /></label>
           </div>
 	      <div class="fill"></div>
