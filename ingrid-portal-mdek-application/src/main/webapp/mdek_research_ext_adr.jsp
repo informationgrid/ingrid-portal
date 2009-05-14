@@ -106,7 +106,7 @@ this.startNewSearch = function() {
 
 // Reset-Button function. Reset all the input fields to their initial values and reset 'currentQuery'
 this.resetInput = function() {
-	dojo.byId("addrMode1").checked = true;
+	dojo.byId("addrMode2").checked = true;
 	dojo.byId("addrFields1").checked = true;
 	dojo.widget.byId("adrSearchInput").setValue("");
 	dojo.widget.byId("addrTopicInputBool").setValue(0);
@@ -201,9 +201,9 @@ function hideLoadingZone() {
 
 	          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7054, 'Suchmodus')"><fmt:message key="dialog.research.ext.adr.mode" /></label></span>
 	          <div class="checkboxContainer">
-	            <input type="radio" name="addrMode" id="addrMode1" class="radio entry first" checked />
+	            <input type="radio" name="addrMode" id="addrMode1" class="radio entry first" />
 	            <label class="inActive entry closer w116" for="addrMode1"><fmt:message key="dialog.research.ext.adr.full" /></label>
-	            <input type="radio" name="addrMode" id="addrMode2" class="radio entry" />
+	            <input type="radio" name="addrMode" id="addrMode2" class="radio entry" checked />
 	            <label class="inActive entry closer" for="addrMode2"><fmt:message key="dialog.research.ext.adr.substring" /></label>
 	          </div>
 	          <div class="fill spacer"></div>
