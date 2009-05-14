@@ -221,6 +221,7 @@
 	"dialog.admin.groups.removePermissionError":"Group could not be stored. You don't have the proper permissions to edit the group settings.",
 	"dialog.admin.groups.addPermissionError":"Group could not be stored. You don't have the proper permissions to edit the group settings.",
 	"dialog.admin.groups.groupHasUsersError":"Group could not be deleted. The users '%{0}' are still associated with this group. Please assign them to another group first.",
+	"dialog.admin.groups.confirmDelete":"Do you really want to delete the group '%{0}'?",
 	"dialog.admin.users.selectUser":"Please select a portal user:",
 	"dialog.admin.users.userNotFoundError":"The given user name could not be found. Please check if the user exists and is not already associated with the role 'mdek'!",
 	"dialog.admin.import.selectNodeError":"Please select a valid node.",
@@ -250,6 +251,7 @@
 
 	"dialog.admin.users.deleteUser":"Delete user",
 	"dialog.admin.users.importUser":"Import portal user",
+	"dialog.admin.users.deleteGroup":"Delete group",
 
 	"dialog.admin.userNotFoundError":"The user could not be found. The user must exist in the portal and must not already have the role 'mdek'.",
 	"dialog.admin.fieldSettingsUpdated":"Settings saved successfully.",

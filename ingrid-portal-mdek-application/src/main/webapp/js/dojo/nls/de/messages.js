@@ -221,6 +221,7 @@
 	"dialog.admin.groups.removePermissionError":"Die Gruppe konnte nicht gespeichert werden. Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um die Gruppeneigenschaften zu &auml;ndern.",
 	"dialog.admin.groups.addPermissionError":"Die Gruppe konnte nicht gespeichert werden. Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um die Gruppeneigenschaften zu &auml;ndern.",
 	"dialog.admin.groups.groupHasUsersError":"Die Gruppe konnte nicht gel&ouml;scht werden, da folgende Benutzer dieser Gruppe zugewiesen sind: '%{0}'",
+	"dialog.admin.groups.confirmDelete":"Wollen Sie die Gruppe '%{0}' wirklich l&ouml;schen?",
 	"dialog.admin.users.selectUser":"Bitte w&auml;hlen Sie einen Portal-Benutzer aus:",
 	"dialog.admin.users.userNotFoundError":"Der von Ihnen eingegebene Benutzername konnte nicht gefunden werden. Bitte pr&uuml;fen Sie ob der Benutzer im Portal existiert und nicht bereits die Rolle mdek besitzt!",
 	"dialog.admin.import.selectNodeError":"Bitte w&auml;hlen Sie einen g&uuml;ltigen Datensatz aus.",
@@ -250,6 +251,7 @@
 
 	"dialog.admin.users.deleteUser":"Benutzer l&ouml;schen",
 	"dialog.admin.users.importUser":"Portalbenutzer importieren",
+	"dialog.admin.users.deleteGroup":"Gruppe l&ouml;schen",
 
 	"dialog.admin.userNotFoundError":"Der von Ihnen eingegebene Benutzername konnte nicht gefunden werden. Der Benutzer muss im Portal existieren und darf nicht bereits die Rolle 'mdek' besitzen!",
 	"dialog.admin.fieldSettingsUpdated":"Die Feldeinstellungen wurden erfolgreich gespeichert. Die &Auml;nderungen stehen Ihnen nach erneutem Laden der Erfassungsapplikation zur Verf&uuml;gung.",

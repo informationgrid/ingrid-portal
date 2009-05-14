@@ -36,22 +36,34 @@ _container_.addOnLoad(function() {
 
 function deleteGroup(group) {
 	var def = new dojo.Deferred();
+	var deferred = new dojo.Deferred();
+	
+	var displayText = dojo.string.substituteParams(message.get("dialog.admin.groups.confirmDelete"), group.name);
+	dialog.show(message.get("dialog.admin.users.deleteGroup"), displayText, dialog.INFO, [
+		{ caption: message.get("general.no"),  action: function() { deferred.errback("ABORT"); } },	
+    	{ caption: message.get("general.ok"), action: function() { deferred.callback(); } }
+	]);
 
-	SecurityService.deleteGroup(group.id, {
-		preHook: showLoadingZone,
-		postHook: hideLoadingZone,
-		callback: function() {
-			def.callback();
-		},
-		errorHandler: function(errMsg, err) {
-			hideLoadingZone();
-			displayDeleteGroupError(err);
-/*
-			dojo.debug(errMsg);
-			dojo.debugShallow(err);
-*/
-			def.errback();
-		}
+	deferred.addCallback(function() {
+		SecurityService.deleteGroup(group.id, {
+			preHook: showLoadingZone,
+			postHook: hideLoadingZone,
+			callback: function() {
+				def.callback();
+			},
+			errorHandler: function(errMsg, err) {
+				hideLoadingZone();
+				dojo.debug(errMsg);
+				if (errMsg != "ABORT") {
+					displayDeleteGroupError(err);
+				}
+	/*
+				dojo.debug(errMsg);
+				dojo.debugShallow(err);
+	*/
+				def.errback();
+			}
+		});
 	});
 
 	return def;
