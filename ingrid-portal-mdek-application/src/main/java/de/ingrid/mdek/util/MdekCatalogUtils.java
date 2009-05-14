@@ -335,12 +335,12 @@ public class MdekCatalogUtils {
 	}
 
 	private static String getLanguageShort(Integer languageCode) {
-		if (languageCode == UtilsLanguageCodelist.getCodeFromShortcut("en"))
+		if (languageCode.compareTo(UtilsLanguageCodelist.getCodeFromShortcut("en")) == 0)
 			return "en";
-		else if (languageCode == UtilsLanguageCodelist.getCodeFromShortcut("de"))
+		else if (languageCode.compareTo(UtilsLanguageCodelist.getCodeFromShortcut("de")) == 0)
 			return "de";
 		else {
-			log.debug("Language not supported! Using 'de' as default!");
+			log.debug("Language ("+languageCode+") not supported! Using 'de' as default!");
 			return "de";
 		}
 	}

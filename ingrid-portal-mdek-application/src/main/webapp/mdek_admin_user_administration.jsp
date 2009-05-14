@@ -213,6 +213,7 @@ scriptScope.importPortalUser = function() {
 scriptScope.saveUser = function() {
 	var selectedUser = dojo.widget.byId("treeUser").selectedNode;
 	var login = dojo.widget.byId("userDataLogin").getValue();
+	var oldUser = selectedUser.portalLogin; 
 	selectedUser.portalLogin = login;
 
 	if (dojo.string.trim(login).length == 0) {
@@ -288,18 +289,18 @@ scriptScope.saveUser = function() {
 			},
 			errorHandler: function(errMsg, err) {
 				hideLoadingZone();
-				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1) {
+				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1 || errMsg.indexOf("USER_HIERARCHY_WRONG") != -1) {
 					dialog.show(message.get("general.error"), message.get("dialog.admin.users.updatePermissionError"), dialog.WARNING);				
 
 				} else if (errMsg.indexOf("ENTITY_ALREADY_EXISTS") != -1) {
-					dialog.show(message.get("general.error"), message.get("dialog.admin.users.addressCollisionError"), dialog.WARNING);				
-
-
+					dialog.show(message.get("general.error"), message.get("dialog.admin.users.addressCollisionError"), dialog.WARNING);
 				} else {
 					dialog.show(message.get("general.error"), message.get("dialog.admin.users.updateError"), dialog.WARNING);
 				}
 				dojo.debug(errMsg);
 				dojo.debugShallow(err);
+				selectedUser.portalLogin = oldUser;
+				treeNodeSelected(currentSelectedUser);
 			}
 		});		
 	}
