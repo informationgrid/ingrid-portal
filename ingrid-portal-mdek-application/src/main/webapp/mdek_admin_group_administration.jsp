@@ -40,7 +40,7 @@ function deleteGroup(group) {
 	
 	var displayText = dojo.string.substituteParams(message.get("dialog.admin.groups.confirmDelete"), group.name);
 	dialog.show(message.get("dialog.admin.users.deleteGroup"), displayText, dialog.INFO, [
-		{ caption: message.get("general.no"),  action: function() { deferred.errback("ABORT"); } },	
+		{ caption: message.get("general.no"),  action: function() { deferred.errback(); } },	
     	{ caption: message.get("general.ok"), action: function() { deferred.callback(); } }
 	]);
 
@@ -54,13 +54,7 @@ function deleteGroup(group) {
 			errorHandler: function(errMsg, err) {
 				hideLoadingZone();
 				dojo.debug(errMsg);
-				if (errMsg != "ABORT") {
-					displayDeleteGroupError(err);
-				}
-	/*
-				dojo.debug(errMsg);
-				dojo.debugShallow(err);
-	*/
+				displayDeleteGroupError(err);
 				def.errback();
 			}
 		});
