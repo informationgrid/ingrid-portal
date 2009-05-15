@@ -15,7 +15,7 @@ var dirtyFlag = null;
 
 var inputElements = 
 	["operationsName", "operationsNameSelect", "operationsDescription", "operationsPlatform", "operationsCall",
-	 "operationsParameter", "operationsAddress", "operationsDependencies", "saveButton", "cancelButton"];
+	 "operationsParameter", "operationsAddress", "operationsDependencies", "saveButton"];//, "cancelButton"];
 
 var requiredElements = [/*["operationsName", "operationsNameLabel"],*/	// This element is added when the operation input is initialized
 					    ["operationsPlatform", "operationsPlatformLabel"],
@@ -302,6 +302,7 @@ resetDialog = function() {
 	dojo.widget.byId("operationsList").resetSelections();
 	dojo.widget.byId("operationsList").renderSelections();
 	currentOperationId = null;
+	closeDialog();
 }
 
 closeDialog = function() {
@@ -318,7 +319,7 @@ closeDialog = function() {
   <div id="operations" class="contentBlockWhite top fullBlock">
     <div id="winNavi">
 			<a href="javascript:closeDialog();" title="schlie&szlig;en"><img src="img/ic_close.gif" /><fmt:message key="dialog.operation.close" /></a>
-			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7041)" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-9#maintanance-of-objects-9', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
 	  </div>
 	  <div id="operationsContent" class="content">
 

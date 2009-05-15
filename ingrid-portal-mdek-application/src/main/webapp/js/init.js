@@ -1102,8 +1102,7 @@ function initToolbar() {
                             widgetId:"toggleFieldsBtn"
                           });
   rightToolbar.addChild("img/ic_help.gif", "after", {
-	  						onClick:function() { dialog.showContextHelp(arguments[0], 7016); },
-//                            onClick:function(){},
+	  						onClick:function() { window.open('mdek_help.jsp?hkey=hierarchy-maintenance-1#hierarchy-maintenance-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');},
                             caption:message.get("ui.toolbar.helpCaption")
                           });
   

@@ -617,7 +617,7 @@ function arrayContains(arr, obj) {
   <div dojoType="ContentPane">
     <div id="contentPane" layoutAlign="client" class="contentBlockWhite top">
       <div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8087)" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=hierarchy-maintenance-3#hierarchy-maintenance-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
   	  </div>
   	  <div id="dialogContent" class="content">
         <!-- MAIN TAB CONTAINER START -->

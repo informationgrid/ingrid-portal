@@ -366,7 +366,7 @@ scriptScope.reloadPage = function() {
 
 	<div class="contentBlockWhite top wideBlock">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7065)" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=quality-assurance-1#quality-assurance-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
 		</div>
 
 		<span class="label" id="qaEditorLoadingZone">

@@ -93,7 +93,7 @@ function hideLoadingZone() {
 
 	<div class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7022)" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-4#maintanance-of-objects-4', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
 		</div>
 		<div id="spatialAssistContent" class="content">
 

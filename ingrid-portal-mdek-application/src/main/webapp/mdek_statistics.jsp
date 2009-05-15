@@ -696,7 +696,7 @@ function hideLoadingZone() {
 		        <img src="img/ladekreis.gif" style="background-color:#EEEEEE;" />
 		    </span>
           <a href="javascript:scriptScope.print()" title="drucken"><img src="img/ic_fl_print.gif" width="11" height="11" alt="drucken" />drucken</a>
-			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7073)" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=statistic-1#statistic-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
     	  </div>
     	  <div id="stats" class="content">
           

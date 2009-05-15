@@ -409,7 +409,7 @@ acceptTopicList = function() {
 
   <div id="thesaurus" class="contentBlockWhite top wideBlock">
     <div id="winNavi">
-		<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7030)" title="Hilfe">[?]</a>
+		<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-6#maintanance-of-objects-6', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
 	  </div>
 	  <div id="thesaurusContent" class="content">
 

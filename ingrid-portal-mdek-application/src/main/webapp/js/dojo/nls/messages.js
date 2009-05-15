@@ -427,6 +427,8 @@
 	"ui.obj.general.addressTable.title":"Addresses",
 	"ui.obj.general.addressTable.link":"Add Address",
 	"ui.obj.spatial.title":"Spatial Reference",
+	"ui.obj.spatial.noResultsHint":"No results found!",
+	"ui.obj.spatial.connectionError":"Connection error!",
 	"ui.obj.spatial.geoThesTable.title":"Geothesaurus-Reference",
 	"ui.obj.spatial.geoThesTable.link":"Geothesaurus-Navigator",
 	"ui.obj.spatial.geoThesTable.header.name":"Geothesaurus-Reference",

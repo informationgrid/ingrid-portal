@@ -625,7 +625,7 @@ closeDialog = function() {
 <div id="winNavi"><a href="javascript:closeDialog();"
 	title="schlie&szlig;en"><img src="img/ic_close.gif" /><fmt:message
 	key="dialog.links.close" /></a> <a href="javascript:void(0);"
-	onclick="javascript:dialog.showContextHelp(arguments[0], 7033)"
+	onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-7#maintanance-of-objects-7', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');"
 	title="Hilfe">[?]</a></div>
 <div id="linksContent" class="content"><!-- LEFT HAND SIDE CONTENT START -->
 <div class="spacer"></div>

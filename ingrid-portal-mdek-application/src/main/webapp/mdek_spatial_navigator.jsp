@@ -246,7 +246,7 @@ addLocationTopics = function() {
 
 	<div id="catalogueSpatialRef" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 7020)" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-3#maintanance-of-objects-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
 		</div>
 		<div id="spatialRefContent" class="content">
 

@@ -501,7 +501,7 @@ scriptScope.closeDialog = function() {
 
 	<div id="assistant" class="contentBlockWhite top fullBlock">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:dialog.showContextHelp(arguments[0], 8088)" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=creation-of-objects-2#creation-of-objects-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
 		</div>
 		<div id="assistantContent" class="content">
 

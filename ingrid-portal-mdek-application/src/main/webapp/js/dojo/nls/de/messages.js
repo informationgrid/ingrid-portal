@@ -427,6 +427,8 @@
 	"ui.obj.general.addressTable.title":"Adressen",
 	"ui.obj.general.addressTable.link":"Adresse hinzuf&uuml;gen",
 	"ui.obj.spatial.title":"Raumbezugssystem",
+	"ui.obj.spatial.noResultsHint":"Keine Resultate gefunden",
+	"ui.obj.spatial.connectionError":"Verbindungsproblem!",
 	"ui.obj.spatial.geoThesTable.title":"Geothesaurus-Raumbezug",
 	"ui.obj.spatial.geoThesTable.link":"Geothesaurus-Navigator",
 	"ui.obj.spatial.geoThesTable.header.name":"Geothesaurus-Raumbezug",
