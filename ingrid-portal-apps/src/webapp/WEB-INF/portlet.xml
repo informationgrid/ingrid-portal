@@ -558,6 +558,10 @@
                 <name>cmsKey</name>
                 <value>portalu.teaser.inform</value>
             </preference>
+            <preference>
+                <name>helpKey</name>
+                <value>ingrid-inform-1</value>
+            </preference>
         </portlet-preferences>
     </portlet>
 
@@ -631,6 +635,10 @@
                 <name>titleKey</name>
                 <value>teaser.service.title</value>
             </preference>
+            <preference>
+                <name>helpKey</name>
+                <value>search-service-1</value>
+            </preference>
         </portlet-preferences>
     </portlet>
 
@@ -663,6 +671,10 @@
                 <name>titleKey</name>
                 <value>teaser.measures.title</value>
             </preference>
+            <preference>
+                <name>helpKey</name>
+                <value>search-measure-1</value>
+            </preference>
         </portlet-preferences>
     </portlet>
 
@@ -694,6 +706,10 @@
             <preference>
                 <name>titleKey</name>
                 <value>chronicle.teaser.title</value>
+            </preference>
+            <preference>
+                <name>helpKey</name>
+                <value>search-chronicle-1</value>
             </preference>
         </portlet-preferences>
     </portlet>
