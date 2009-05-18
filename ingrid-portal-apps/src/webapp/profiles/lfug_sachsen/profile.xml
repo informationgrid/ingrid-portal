@@ -364,16 +364,16 @@
     </files>
     <sql>
         <execute>
-            <![CDATA[UPDATE ingrid_cms_item SET item_title="Über SachsenPortalU" WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key="portalu.about") AND item_lang="de";]]>
+            <![CDATA[UPDATE ingrid_cms_item SET item_title='Über SachsenPortalU' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.about') AND item_lang='de';]]>
         </execute>    
         <execute>
-            <![CDATA[UPDATE ingrid_cms_item SET item_title="About SachsenPortalU" WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key="portalu.about") AND item_lang="en";]]>
+            <![CDATA[UPDATE ingrid_cms_item SET item_title='About SachsenPortalU' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.about') AND item_lang='en';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE LINK SET URL="mailto:Poststelle.LfUG@smul.sachsen.de" WHERE NAME="webmaster.link";]]>
+            <![CDATA[UPDATE LINK SET URL='mailto:Poststelle.LfUG@smul.sachsen.de' WHERE NAME='webmaster.link';]]>
         </execute>
         <execute>
-            <![CDATA[DELETE FROM ingrid_measures_rubric WHERE query_value="radiation";]]>
+            <![CDATA[DELETE FROM ingrid_measures_rubric WHERE query_value='radiation';]]>
         </execute>
     </sql>
 </profile>

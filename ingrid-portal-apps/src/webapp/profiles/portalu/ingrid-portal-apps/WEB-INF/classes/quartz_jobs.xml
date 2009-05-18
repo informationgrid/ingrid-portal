@@ -1,10 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
-<quartz>
+<quartz xmlns="http://www.opensymphony.com/quartz/JobSchedulingData"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        overwrite-existing-jobs="true">
     <job>
         <job-detail>
             <name>RSSFetcherJob</name>
             <group>DEFAULT</group>
-            <description>Quartz job for fetching all RSS feeds in database table ingrid_rss_source. All RSS entries not older than one month will be added to the database table ingrid_rss_store. Entries in ingrid_rss_store that are older than one month will be deleted.</description>
+            <description>fetching all RSS feeds in database table ingrid_rss_source. Older entries will be deleted.</description>
             <job-class>de.ingrid.portal.scheduler.jobs.RSSFetcherJob</job-class>
             <volatility>false</volatility>
             <durability>false</durability>
@@ -18,7 +20,6 @@
                 <job-group>DEFAULT</job-group>
                 <repeat-count>-1</repeat-count>
                 <repeat-interval>3600000</repeat-interval>
-                <misfire-instruction>MISFIRE_INSTRUCTION_FIRE_NOW</misfire-instruction>
             </simple>
         </trigger>
     </job>
@@ -40,7 +41,6 @@
                 <job-group>DEFAULT</job-group>
                 <repeat-count>-1</repeat-count>
                 <repeat-interval>3600000</repeat-interval>
-                <misfire-instruction>MISFIRE_INSTRUCTION_FIRE_NOW</misfire-instruction>
             </simple>
         </trigger>
     </job>
