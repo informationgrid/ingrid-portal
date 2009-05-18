@@ -52,7 +52,7 @@ $action.setParameter('action','doChangeDS')
 		<select class="inputstyle" name="provider" id="provider">
 			<option value="all">$MESSAGES.getString('searchSimple.display.provider.all')</option>
 #foreach($provider in $providers)
-#if($selectedProviderIdent == $provider.ident)
+#if($selectedProviderIdent && $selectedProviderIdent == $provider.ident)
 			<option title="$provider.name" value="$provider.ident" selected="selected">$UtilsString.cutString($provider.name, 60)</option>
 #else
 			<option title="$provider.name" value="$provider.ident">$UtilsString.cutString($provider.name, 60)</option>
