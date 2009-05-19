@@ -52,10 +52,10 @@
 
   <!-- LOGO -->
   <div id="logo">
-    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img src="#GetPageResource('images/logo_sachsen.gif')" alt="Logo Sachsen PortalU" /></a>
+    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img src="#GetPageResource('images/logo.gif')" alt="Logo Sachsen PortalU" /></a>
   </div>
 
-  <div style="padding:0.15em 1.2em 0.15em 0.6em; background-color:#FFFFFF; float: left;"><a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img src="#GetPageResource('images/logo_portalu_sachsen.gif')"/></a></div>
+  <div style="padding:0.15em 1.2em 0.15em 0.6em; background-color:#FFFFFF; float: left;"><a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img src="#GetPageResource('images/logo_alt.gif')"/></a></div>
   
   <!-- SERVICE-NAVIGATION -->
   <div id="servicenav"><a name="servicenav"></a>

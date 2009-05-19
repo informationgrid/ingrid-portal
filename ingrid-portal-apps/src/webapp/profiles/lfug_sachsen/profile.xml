@@ -115,11 +115,11 @@
         </file>
         <file>
             <action>copy</action>
-            <src>ingrid-portal/decorations/layout/ingrid/images/logo_sachsen.gif</src>
+            <src>ingrid-portal/decorations/layout/ingrid/images/logo.gif</src>
         </file>
         <file>
             <action>copy</action>
-            <src>ingrid-portal/decorations/layout/ingrid/images/logo_portalu_sachsen.gif</src>
+            <src>ingrid-portal/decorations/layout/ingrid/images/logo_alt.gif</src>
         </file>
         <file>
             <action>copy</action>

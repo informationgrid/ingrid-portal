@@ -236,6 +236,10 @@
         </file>
         <file>
             <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/logo_alt.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid/images/logo_footer.gif</src>
         </file>
         <file>

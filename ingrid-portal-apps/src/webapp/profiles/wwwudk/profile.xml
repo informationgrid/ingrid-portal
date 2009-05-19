@@ -28,10 +28,6 @@
             <hidden>true</hidden>
         </page>
         <page>
-            <name>mdek/mdek_entry.psml</name>
-            <hidden>true</hidden>
-        </page>
-        <page>
             <name>mdek/mdek_portal_admin.psml</name>
             <hidden>true</hidden>
         </page>
@@ -84,6 +80,10 @@
         <file>
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid/images/logo.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/logo_alt.gif</src>
         </file>
         <file>
             <action>copy</action>
