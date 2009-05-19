@@ -3,8 +3,11 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
-  ##<base href="#BaseHref()" />
-  <title>$pageTitle - PortalU</title>
+  #if(!$pageTitle)
+	<title>PortalU</title>
+  #else
+	<title>$pageTitle - PortalU</title>
+  #end
   <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Content-style-type" content="text/css" />   
   <meta http-equiv="content-language" content="DE" />
@@ -13,7 +16,7 @@
   <meta name="keywords" content="" />
   <meta name="copyright" content="wemove digital solutions GmbH" />
   <meta name="robots" content="index,follow" />
-  <link rel="shortcut icon" href="/ingrid-portal/decorations/layout/ingrid-popup/images/favicon.ico" />
+  <link rel="shortcut icon" href="/ingrid-portal/decorations/layout/ingrid/images/favicon.ico" />
 
   #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
   <style type="text/css">
