@@ -13,6 +13,7 @@ import de.ingrid.portal.scheduler.jobs.IngridMonitorCSWJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorG2KJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorIPlugJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorRSSCheckerJob;
+import de.ingrid.portal.scheduler.jobs.IngridMonitorSNSJob;
 
 /**
  * Form Handler for Content Management of Providers.
@@ -116,11 +117,14 @@ public class AdminComponentMonitorForm extends ActionForm {
 				setError(FIELD_TITLE, "component.monitor.form.error.missing.title");
 				allOk = false;
 			}
-			if (getInput(FIELD_TYPE).equals(IngridMonitorIPlugJob.COMPONENT_TYPE)) {
+			if (getInput(FIELD_TYPE).equals(IngridMonitorIPlugJob.COMPONENT_TYPE)
+					|| getInput(FIELD_TYPE).equals(IngridMonitorG2KJob.COMPONENT_TYPE)
+					|| getInput(FIELD_TYPE).equals(IngridMonitorCSWJob.COMPONENT_TYPE)
+					|| getInput(FIELD_TYPE).equals(IngridMonitorSNSJob.COMPONENT_TYPE)) {
 				if (!hasInput(FIELD_QUERY)) {
 					setError(FIELD_QUERY, "component.monitor.form.error.missing.query");
 					allOk = false;
-				} else if (!getInput(FIELD_QUERY).contains("cache:off")) {
+				} else if (getInput(FIELD_TYPE).equals(IngridMonitorIPlugJob.COMPONENT_TYPE) && !getInput(FIELD_QUERY).contains("cache:off")) {
 					setError(FIELD_QUERY, "component.monitor.form.error.cache.on");
 					allOk = false;
 				}
@@ -132,7 +136,6 @@ public class AdminComponentMonitorForm extends ActionForm {
 				setError(FIELD_SERVICE_URL, "component.monitor.form.error.invalid.serviceurl");
 				allOk = false;
 			}
-			
 			
 			try {
 				int interval = Integer.parseInt(getInput(FIELD_INTERVAL));

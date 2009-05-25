@@ -122,7 +122,7 @@
         </page>
         <page>
             <name>search-catalog/search-catalog-hierarchy.psml</name>
-            <hidden>true</hidden>
+            <hidden>false</hidden>
         </page>
       </pages>
     <files>

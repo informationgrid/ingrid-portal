@@ -38,14 +38,16 @@
     	################ content according to component type ###################
     	
     	#set ($compType = $actionForm.getInput("type"))
-    	#if ($compType == "component.monitor.general.type.iplug" || $compType == "component.monitor.general.type.sns")
+    	#if ($compType == "component.monitor.general.type.iplug")
     		#renderTextField( "Query String*" "query" )
     	#elseif ($compType == "component.monitor.general.type.ibus" || $compType == "component.monitor.general.type.rssfetcher")
     		## don't need more information
     	#elseif ($compType == "component.monitor.general.type.rss")
     		#renderTextField( "RSS Feed (URL)*" "serviceurl" )
-    	#elseif  ($compType == "component.monitor.general.type.csw" || $compType == "component.monitor.general.type.g2k" || $compType == "component.monitor.general.type.ecs")
-    		#renderTextField( "Service URL*" "serviceurl" )
+    	#elseif  ($compType == "component.monitor.general.type.csw" || $compType == "component.monitor.general.type.g2k" || $compType == "component.monitor.general.type.sns")
+    		#renderTextField( "Query String*" "query" )
+			<p class="clearer" />
+			#renderTextField( "Service URL*" "serviceurl" )
     	#elseif ($compType == "component.monitor.general.type.provider.check")
     		#renderTextField( "Anbieter ausschlieﬂen" "excl_provider" )
     	#end
@@ -164,8 +166,6 @@
 	<td>$MESSAGES.getString('component.forms.help.part4')</td></tr>
 	<tr><td>$MESSAGES.getString('component.forms.help.part5')</td>
 	<td>$MESSAGES.getString('component.forms.help.part6')</td></tr>
-	<tr><td>$MESSAGES.getString('component.forms.help.part7')</td>
-	<td>$MESSAGES.getString('component.forms.help.part8')</td></tr>
 	<tr><td>$MESSAGES.getString('component.forms.help.part9')</td>
 	<td>$MESSAGES.getString('component.forms.help.part10')</td></tr>
 	<tr><td>$MESSAGES.getString('component.forms.help.part11')</td>
