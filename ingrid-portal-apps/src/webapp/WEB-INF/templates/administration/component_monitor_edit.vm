@@ -170,6 +170,9 @@
 	<td>$MESSAGES.getString('component.forms.help.part10')</td></tr>
 	<tr><td>$MESSAGES.getString('component.forms.help.part11')</td>
 	<td>$MESSAGES.getString('component.forms.help.part12')</td></tr>
+	</tbody></table></p>
+	<p>$MESSAGES.getString('component.forms.help.part12_5')</p>
+	<table><tbody>
 	<tr><td>$MESSAGES.getString('component.forms.help.part13')</td>
 	<td>$MESSAGES.getString('component.forms.help.part14')</td></tr>
 	<tr><td>$MESSAGES.getString('component.forms.help.part15')</td>
