@@ -69,7 +69,7 @@
 
 #foreach ($entry in $catalogList)
 	#set ($rowId = $entry.plugId)
-	#set ($rowValues = [$entry.catName, $entry.partner, $entry.provider, $entry.catAdmin, $entry.portalLogin])
+	#set ($rowValues = ["$!entry.catName", "$!entry.partner", "$!entry.provider", "$!entry.catAdmin", "$!entry.portalLogin"])
 	#renderDBBrowserRow($rowId $rowValues)
 #end
 
