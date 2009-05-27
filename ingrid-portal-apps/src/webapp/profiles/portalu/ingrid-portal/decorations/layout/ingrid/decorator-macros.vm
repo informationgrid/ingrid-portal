@@ -126,8 +126,8 @@
         #if($element.isSelected($site))
 			#set($elemSelected = true)
 		#elseif($element.url=="/main-maps.psml")
-			<li><a href="$tabUrl" title="$MESSAGES.getString('ingrid.page.maps.link.title')" target="ingrid_wms">$tabName</a></li>
-			#set($elemRender = false)
+			##<li><a href="$tabUrl" title="$MESSAGES.getString('ingrid.page.maps.link.title')" target="ingrid_wms">$tabName</a></li>
+			###set($elemRender = false)
 		#elseif($element.url=="/main-search.psml")
 			#if($currentPage.startsWith('/search-'))
 				#set($elemSelected = true)
