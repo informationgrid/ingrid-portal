@@ -91,6 +91,11 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
         if (null == roleManager) {
             throw new PortletException("Failed to find the Role Manager on portlet initialization");
         }
+        
+        // Add the user and role manager to the context
+    	// This has to be done so we can access the jetspeed managers in the mdek app
+        getPortletContext().setAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT, userManager);
+    	getPortletContext().setAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT, roleManager);
 
 		try {
 			if (!roleManager.roleExists("mdek")) {
