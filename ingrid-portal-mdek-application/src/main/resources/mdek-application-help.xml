@@ -1456,20 +1456,20 @@
             <content>
                  <p>Der Menüpunkt <i>Katalogverwaltung</i> ist nur für den Katalogadministrator sichtbar.</p>
 				 <p>Der InGridCatalog ist so strukturiert, dass alle Informationen eines Metadaten-Anbieters 
-				 zu einem sogenannten Katalog zusammen gefasst sind. Unter dem Menüpunkt 
+				 zu einem sogenannten Katalog zusammengefasst sind. Unter dem Menüpunkt 
 				 <i>Katalogverwaltung</i> können grundlegende Einstellungen zu dem aktuellen Katalog 
 				 vorgenommen werden.</p>
 				 <p>Unter dem Untermenüpunkt <i>Katalogeinstellungen</i> kann der Katalogadministrator den 
 				 Namen des Kataloges, des Partners (Bund oder ein Land) und des Anbieters sowie das Land, 
 				 die Katalogsprache und den Raumbezug festlegen. </p>
 				 <p><u>Hinweis:</u> Auch wenn nicht alle Felder verpflichtend auszufüllen sind, so wird 
-				 dringend empfohlen alle Felder auszufüllen.</p>
+				 dringend empfohlen, alle Felder auszufüllen.</p>
 				 <p>Weiterhin kann die Workflow-Kontrolle eingeschaltet sowie festgelegt werden, ob und 
 				 nach wie vielen Tagen ein <i>Überarbeiten</i> der Metadaten-Objekte (Verfallsdatum) 
 				 gefordert wird (siehe auch 
 				 <a href="?hkey=quality-assurance-0">Konzept der Qualitätssicherung (Der Workflow)</a>).</p>
 				 <p>Hinweis: Um ein Minimum an Aktualität eines Metadaten-Katalogs zu gewährleisten, wird 
-				 empfohlen das <i>Überarbeiten</i> einzuschalten und einen Wiedervorlagezeitraum von 
+				 empfohlen, das <i>Überarbeiten</i> einzuschalten und einen Wiedervorlagezeitraum von 
 				 höchstens einem Jahr (365 Tage) anzugeben. </p>
 				 <p>Die Einstellungen müssen über die Schaltfläche <i>Speichern</i> abgeschlossen werden 
 				 und sind dann sofort aktiv.</p>
@@ -1482,10 +1482,10 @@
 				 <a href="?hkey=hierarchy-maintenance-1">Hierarchie u. Erfassung</a>) standardmäßig immer 
 				 eingeblendet. Optionale Felder sind versteckt und können über eine entsprechende Schaltfläche 
 				 eingeblendet werden.</p>
-				 <p>Unter dem Untermenüpunkt Feldeinstellungen ist es möglich die Standardeinstellung für 
+				 <p>Unter dem Untermenüpunkt <i>Feldeinstellungen</i> ist es möglich die Standardeinstellung für 
 				 <b>optionale</b> Felder zu verändern (die Standardeinstellungen für Pflichtfelder können 
 				 <b>nicht</b> geändert werden). </p>
-				 <p>Es gibt die folgenden zwei Möglichkeiten die Standard Einstellung für jedes einzelne 
+				 <p>Es gibt die folgenden zwei Möglichkeiten, die Standard-Einstellung für jedes einzelne 
 				 optionale Feld zu ändern:</p>
 				 <p><b>Immer ausblenden</b></p>
 				 <p>Mit dieser Einstellung wird das optionale Feld ganz ausgeblendet. Es kann damit auch 
@@ -1511,7 +1511,7 @@
 				 eingestellt werden und das Intervall, nach dem diese ausgeführt wird, festgelegt werden. 
 				 Die Zwischenspeicherung verhindert, dass Arbeiten verloren gehen, z.B. durch notwendige 
 				 Unterbrechung der Erfassung aufgrund anderer Dienstgeschäfte. </p>
-				 <p>Beim Zwischenspeichern wird eine Bearbeitungskopie angelegt, bzw. die vorhandene 
+				 <p>Beim Zwischenspeichern wird eine Bearbeitungskopie angelegt bzw. die vorhandene 
 				 Bearbeitungskopie überschrieben. Es wird also automatisch die manuell zur Verfügung 
 				 gestellte Funktion Zwischenspeichern ausgeführt (siehe auch „
 				 <a href="?hkey=hierarchy-maintenance-3">Die Funktionsleiste für Hierarchie und Erfassung</a>
@@ -1523,8 +1523,8 @@
 				 <p>Für den Katalog kann ein automatisches Session-Refresh eingestellt werden und das 
 				 Intervall, nach dem dieses ausgeführt wird, festgelegt werden. Ein Session-Refresh 
 				 verhindert, dass die Sitzung serverseitig beendet wird, solange der Editor im Browser 
-				 des Nutzers geladen ist. Damit wird verhindert, dass Arbeiten verloren gehen, z.B. durch 
-				 notwendige Unterbrechung der Erfassung aufgrund anderer Dienstgeschäfte, oder in einem 
+				 des Nutzers geladen ist. Damit wird verhindert, dass Arbeiten verloren gehen (z.B. durch 
+				 notwendige Unterbrechung der Erfassung aufgrund anderer Dienstgeschäfte) oder in einem 
 				 solchen Fall ein erneutes Aufschalten des Nutzers notwendig wird.</p>
 				 <p><u>Hinweis:</u> Ein automatisches Session-Refresh kann den Server zusätzlich belasten, 
 				 weil alle Sitzungen der Nutzer erhalten bleiben, bis sie explizit den Editor schließen. 
@@ -1550,30 +1550,30 @@
 				 die Rechte bekommt, die ihn gegenüber einem beliebigen Gast-Nutzer des Portals 
 				 auszeichnen. </p>
 				 <p>Die eigentlichen Rechte, die sowohl Schreibrechte als auch das Recht zur 
-				 Qualitätssicherung umfassen werden in der 
+				 Qualitätssicherung umfassen, werden in der 
 				 <a href="?hkey=hierarchy-maintenance-3">Gruppenadministration</a> festgelegt. 
 				 Jedem Nutzer wird eine Gruppe mit entsprechenden Rechten zugeordnet.</p>
 				 <p>Die Rechte bezüglich der Nutzerverwaltung werden durch drei Hierarchieebenen festgelegt:</p>
 				 <ol>
-				 <li>Katalog-Administrator: Es gibt nur einen Nutzer mit diesen Rechten. Er hat das 
+				 <li><b>Katalog-Administrator</b>: Es gibt nur einen Nutzer mit diesen Rechten. Er hat das 
 				 Recht alle Verwaltungsfunktionen bedienen zu dürfen und kann Nutzer auf allen 
 				 darunterliegenden Hierarchieebenen mit Schreibrechten auf beliebige Teilbäume erstellen.</li>
-				 <li>Metadaten-Administrator: Er darf von den Verwaltungsfunktionen nur die Nutzerverwaltung 
+				 <li><b>Metadaten-Administrator</b>: Er darf von den Verwaltungsfunktionen nur die Nutzerverwaltung 
 				 bedienen. Er darf Nutzer mit der Rolle Metadaten-Autor erstellen. Die Rechte dieser Nutzer 
 				 dürfen aber maximal den Rechten des jeweiligen Metadaten-Administrators entsprechen (z.B. 
 				 Schreibrechte nur auf einen Teilbaum des Katalogs).</li>
-				 <li>Metadaten-Autor: Er hat Schreibrechte auf einen Teilbaum des Kataloges, hat aber 
+				 <li><b>Metadaten-Autor</b>: Er hat Schreibrechte auf einen Teilbaum des Kataloges, hat aber 
 				 keinen Zugang zur Nutzerverwaltung oder zu anderen Verwaltungsfunktionen.</li>
 				 </ol>
-				 <p>Der Katalogadministrator kann Metadaten-Autoren unter beliebigen Metadaten-Administratoren 
+				 <p>Der Katalog-Administrator kann Metadaten-Autoren unter beliebigen Metadaten-Administratoren 
 				 einrichten. Ein Metadaten-Administrator hat immer das Recht, die ihm nachgeordneten 
 				 Metadaten-Autoren zu administrieren.</p>
 				 <p><b>Neuanlegen eines Nutzers</b></p>
 				 <p>Folgende Schritte sind notwendig, bevor ein neuer Nutzer und seine Rechte im IGE 
 				 angelegt werden können:</p>
 				 <ol>
-				 <li>Der Benutzer muss sich selbst oder vom Administrator im Portal unter <i>Mein PortalU</i> 
-				 angemeldet werden.</li>
+				 <li>Der Benutzer muss sich selbst anmelden oder vom Administrator im Portal unter 
+				 <i>Mein PortalU</i> angemeldet werden.</li>
 				 <li>Der Benutzer erhält eine Email zur Bestätigung seiner Anmeldung. Er muss die Anmeldung 
 				 über den in ihr vorhanden Link bestätigen.</li>
 				 <li>Der Katalogadministrator muss im IGE unter dem Menüpunkt 
@@ -1583,13 +1583,13 @@
 				 <a href="?hkey=user-administration-2">Gruppenadministration</a> eine Gruppe angelegt haben, 
 				 die die Rechte besitzt, die der Nutzer erhalten soll.</li>
 				 </ol>
-				 <p>Nachdem diese Vorarbeiten erledigt sind gehen Sie bitte wie folgt vor:</p>
+				 <p>Nachdem diese Vorarbeiten erledigt sind, gehen Sie bitte wie folgt vor:</p>
 				 <ol>
 				 <li>Wählen Sie durch Mausklick im Hierarchiebaum der Nutzer auf der linken Seite des 
 				 Fensters einen Administrator aus, unterhalb dessen Sie den Nutzer anlegen wollen. Der 
 				 Name des ausgewählten Nutzers wird <b>rot</b> markiert. 
 				 <br/>Ein Metadaten-Administrator kann nur unterhalb seines eigenen Eintrags einen Nutzer 
-				 anlegen. Ein Katalog-Administrator kann Metadaten-Administrator unterhalb seines eigenen 
+				 anlegen. Ein Katalog-Administrator kann Metadaten-Administratoren unterhalb seines eigenen 
 				 Eintrags anlegen oder Metadaten-Autoren unterhalb eines Metadaten-Administrators. Unterhalb 
 				 von Metadaten-Administratoren können keine weiteren Nutzer angelegt werden.</li>
 				 <li>Klicken Sie auf die Schalfläche <i>Nutzer anlegen</i>. Es öffnet sich ein Dialog. Sie 
@@ -1597,7 +1597,7 @@
 				 Katalog-Nutzer zuordnen.
 				 <br/><u>Hinweis1:</u> Die Auswahlliste lässt sich nicht wie üblich über einen Klick auf das 
 				 Symbol an der rechten Seite der Eingabezeile öffnen. Durch die Eingabe eines oder mehrerer 
-				 Anfangsbuchstaben des Benutzernamens, wird die Auswahlliste mit allen Benutzernamen geöffnet, 
+				 Anfangsbuchstaben des Benutzernamens wird die Auswahlliste mit allen Benutzernamen geöffnet, 
 				 die diesen Anfangsbuchstaben entsprechen. Sie können jetzt den Namen auswählen.
 				 <br/><u>Hinweis2:</u> Jeder Portal-Nutzer kann maximal einem Katalog-Nutzer zugeordnet werden. 
 				 Bereits einem Katalog-Nutzer zugeordnete Namen von Portal-Nutzern werden nicht mehr in der 
@@ -1613,7 +1613,7 @@
 				 und für die Sie die Berechtigung zur Administration besitzen.</li>
 				 <li><i>Speichern</i> Sie den neuen Nutzer. Er kann jetzt verwendet werden.</li>
 				 </ol>
-				 <p><b>Bearbeiten und Löschen eines bereits existierenden Nutzers.</b></p>
+				 <p><b>Bearbeiten und Löschen eines bereits existierenden Nutzers</b></p>
 				 <p>Wählen Sie durch Mausklick im Hierarchiebaum auf der linken Seite des Fensters einen 
 				 Nutzer aus, den Sie bearbeiten oder löschen wollen.</p>
 				 <p>Die Nutzerdaten werden in die Felder auf der rechten Seite des Fensters geladen. Sie 
@@ -1657,9 +1657,9 @@
 				 <p>Sie haben zwei Einstellungsmöglichkeiten für die Berechtigung pro Objekt:</p>
 				 <ul>
 				 <li><u>Teilbaum:</u> Dies ist die Standardeinstellung. Sie haben für dieses und alle 
-				 nachgeordneten Objekte eine Schreibberechtigung. Sie können unterhalb dieses und allen 
-				 nachgeordneten Objekten neue Objekte anlegen.</li>
-				 <li><u>Einzelobjekt:</u> Sie haben nur auf diesem Objekt eine Schreibberechtigung auf 
+				 nachgeordneten Objekte eine Schreibberechtigung. Sie können unterhalb dieses Objektes 
+				 und allen nachgeordneten Objekten neue Objekte anlegen.</li>
+				 <li><u>Einzelobjekt:</u> Sie haben nur auf diesem Objekt eine Schreibberechtigung, auf 
 				 nachgeordnete Objekte nicht. Sie können keine neuen Objekte unterhalb dieses Objektes 
 				 anlegen.</li>
 				 </ul>
@@ -1674,10 +1674,10 @@
 				 Berechtigungen übernehmen.</p>
 				 <p>Sie haben zwei Einstellungsmöglichkeiten für die Berechtigung pro Adresse:</p>
 				 <ul>
-				 <li><u>Teilbaum:</u> Dies ist die Standardeinstellung. Sie haben für diese und alle 
+				 <li><u>Teilbaum:</u> Dies ist die Standardeinstellung. Sie haben für diese Adresse und alle 
 				 nachgeordneten Adressen eine Schreibberechtigung. Sie können unterhalb dieser und allen 
 				 nachgeordneten Adressen neue Adressen anlegen.</li>
-				 <li><u>Einzelobjekt:</u> Sie haben nur auf diese Adresse eine Schreibberechtigung auf 
+				 <li><u>Einzelobjekt:</u> Sie haben nur auf diese Adresse eine Schreibberechtigung, auf 
 				 nachgeordnete Adressen nicht. Sie können keine neuen Adressen unterhalb dieser Adresse 
 				 anlegen.</li>
 				 </ul>
@@ -1693,7 +1693,7 @@
 				 auf schon vorhandene Teilbäume, für die ihr nicht explizit Schreibrechte eingeräumt wurden.</p>
 				 <p><b>Qualitätssichernder</b></p>
 				 <p>Über die Berechtigung <i>Qualitätssichernder</i> werden die Nutzer der Gruppe für alle 
-				 Objekte und Adressen, für die sie ein Schreibrechte besitzen, zu Qualitätssichernden. Sie 
+				 Objekte und Adressen, für die sie ein Schreibrecht besitzen, zu Qualitätssichernden. Sie 
 				 haben also das Recht (und auch die Pflicht), an sie überwiesene Objekte und Adressen zur 
 				 Veröffentlichung freizugeben bzw. endgültig zu löschen oder bei Qualitätsmängeln die 
 				 Objekte bzw. Adressen an den Zuständigen zurück zu überweisen.</p>
@@ -1712,7 +1712,7 @@
         <section help-key="user-administration-3">
             <header>Berechtigungsübersicht</header>
             <content>
-                 <p>In der Berechtigungsübersicht werden alle Nutzer angezeigt, die auf  ein Objekt, eine 
+                 <p>In der Berechtigungsübersicht werden alle Nutzer angezeigt, die auf ein Objekt, eine 
 				 Adresse oder einen Teilbaum Schreibrechte oder das Recht zur Qualitätssicherung haben.</p>
 				 <p>Klicken Sie auf ein beliebiges Objekt unter <i>Berechtigung für Objekte</i> oder auf eine 
 				 beliebige Adresse unter <i>Berechtigung für Adressen</i>. Das ausgewählte Objekt bzw. die 
@@ -1732,49 +1732,337 @@
         <section help-key="overall-catalog-management-1">
             <header>Analyse</header>
             <content>
-                 <p><b><i>Muss noch erstellt werden</i></b></p>
+                 <p>Der Menüpunkt <i>Gesamtkatalogmanagement</i> steht nur dem Katalogadministrator zur 
+				 Verfügung. Er bietet spezielle Funktionen zur Pflege des Kataloges.</p>
+				 <p>Der Untermenüpunkt <i>Analyse</i> bietet eine Reihe von Überprüfungen des Kataloges 
+				 auf interne Konsistenz an.</p>
+				 <p>Die Überprüfung erfolgt auf folgende Mängel:</p>
+				 <ul>
+				 <li>Objekte, die keine Datenauskunftsadresse haben</li>
+				 <li>Objekte, die keine Eltern-Objekte haben</li>
+				 <li>Objekte, die ungültige Adressverweise haben</li>
+				 <li>Adressen, die keine Eltern-Adresse haben</li>
+				 <li>Fehlerhafte Einträge in Objekt-Referenzen</li>
+				 <li>Fehlerhafte Einträge in 1:n - Tabellen</li>
+				 </ul>
+				 <p>Im Normalbetrieb sollte keiner dieser Mängel auftreten, da die internen Prüfmechanismen 
+				 des InGridEditors bei Eingabe, Speicherung und Freigabe der Objekte und Adressen 
+				 Inkonsistenzen verhindert. Allerdings können die aufgeführten Mängel z.B. bei manueller 
+				 Bearbeitung oder Befüllung der Datenbank entstehen.</p>
+				 <p>Über den Button <i>Prüfung starten</i> wird die Überprüfung auf dem Server angestoßen. 
+				 Je nach Umfang des Kataloges und Auslastung des Servers kann die Überprüfung einige 
+				 Minuten dauern.</p>
+				 <p><i>Informationen zum letzten Analyseprozess</i> erhalten Sie im Informationskasten.</p>
+				 <p>Die aufgetretenen Fehler werden einzeln in der Tabelle <i>Ergebnis der Prüfung</i> 
+				 aufgelistet. Es wird Ihnen sowohl die <i>Fehlermeldung</i> als auch ein <i>Lösungsvorschlag</i>
+				 zum Beheben des Fehlers gegeben. Der Fehler muss dann per Hand vom Katalogadministrator 
+				 oder vom für das betroffene Objekt oder die betroffene Adresse Verantwortlichen 
+				 korrigiert werden.</p>
             </content>
         </section>
         <section help-key="overall-catalog-management-2">
             <header>Dubletten</header>
             <content>
-                 <p><b><i>Muss noch erstellt werden</i></b></p>
+                 <p>Unter <i>Dubletten</i> werden unterschiedliche Objekte gleichen Objektnamens verstanden.</p>
+				 <p>Durch die dezentrale Pflege der Objekte an verschiedenen Stellen im Hierarchiebaum ist 
+				 es möglich, dass für inhaltlich unterschiedliche Objekte gleiche Objektnamen vergeben 
+				 werden. Bei dem Standardfall einer Recherche werden dem Nutzer nach einer Suche die 
+				 Objektnamen in der Ergebnisliste angezeigt. Die Informationen über die Lage im 
+				 Hierarchiebaum geht in dieser Anzeige verloren. Um den recherchierenden Nutzern eine 
+				 eindeutige Vorstellungen von dem gefunden Objekt zu vermitteln, sollten daher für alle 
+				 Objekte möglichst unterschiedliche, aussagekräftige Objektnamen vergeben werden.</p>
+				 <p>Beim Aufruf des Untermenüpunkts <i>Dubletten</i> wird eine Prüfung auf Dubletten 
+				 durchgeführt (Sie können diese Prüfung später wiederholen, indem Sie auf den Button 
+				 <i>Prüfung erneut ausführen</i> klicken). Das <i>Ergebnis der Dublettenprüfung</i> wird 
+				 in einer <i>Liste</i> angezeigt. </p>
+				 <p>Klicken Sie mit der rechten Maustaste auf eines der aufgelisteten Objekte und wählen 
+				 <i>Im Hierarchiebaum anzeigen</i>, so wird die Lage des Objekts unter dem Kartenreiter 
+				 <i>Hierarchiebaum</i> angezeigt.</p>
+				 <p>Klicken Sie mit der linken Maustaste auf eines der aufgelisteten Objekte, werden 
+				 der <i>Objektname</i>, die <i>Klasse</i> und die <i>Beschreibung</i> des Objektes 
+				 angezeigt.</p>
+				 <p>Sie können nun den Objektnamen ändern und über den entsprechenden Button die 
+				 <i>Änderung speichern</i>.</p>
             </content>
         </section>
         <section help-key="overall-catalog-management-3">
             <header>URL-Pflege</header>
             <content>
-                 <p><b><i>Muss noch erstellt werden</i></b></p>
+                 <p>Beim Aufruf des Untermenüpunkts <i>URL-Pflege</i> wird eine Prüfung der in allen 
+				 Objekten vorhandenen URLs durchgeführt. Sie können diese Prüfung später wiederholen, 
+				 indem Sie auf den Button <i>Prüfung starten</i> klicken. </p>
+				 <p>Je nach Umfang des Kataloges und Auslastung des Servers kann die Überprüfung einige 
+				 Minuten dauern. Sie kann über <i>Prozess abbrechen</i> gestoppt werden.</p>
+				 <p><i>Informationen zum letzten Prozess</i> erhalten Sie im Informationskasten.</p>
+				 <p>Das Ergebnis der URL-Prüfung wird in der darunter stehenden Tabelle angezeigt. Sie 
+				 können über die Karteireiter auswählen, ob Sie <i>Alle URLs</i> oder <i>Nur fehlerhafte 
+				 URLs</i> sehen wollen.</p>
+				 <p>In der Spalte <i>Status</i> wird die Rückmeldung über die Verfügbarkeit der Webseiten 
+				 dokumentiert. Für Fehler wird ein HTTP-Fehlercode angegeben. </p>
+				 <p>Für jede URL werden neben dem <i>Status</i> die Klasse (als Icon) und der <i>Name 
+				 des Objekts</i> sowie eine <i>Beschreibung</i>, die dem IGC-Feld <i>Bezeichnung des 
+				 Verweises</i> entspricht, gelistet.</p>
+				 <p>Ein oder mehrere URLs können ersetzt werden, indem Sie die zu ersetzenden URLs in der 
+				 Tabelle markieren (Auswahl mehrerer URLs mit Mausklick bei gleichzeitig gedrückter 
+				 Strg-Taste) und in das Eingabefeld unter der Tabelle eine neue URL eingeben. Mit der 
+				 Funktion Ersetzen tauschen Sie die URL aus. Anschließend wird automatisch eine erneute 
+				 Überprüfung ausgeführt.</p>
             </content>
         </section>
         <section help-key="overall-catalog-management-4">
             <header>Auswahl-/ISO-Codelistenpflege</header>
             <content>
-                 <p><b><i>Muss noch erstellt werden</i></b></p>
+                 <p>In dem Untermenü <i>Auswahl-/ISO-Codelistenpflege</i> können sowohl ISO- als auch 
+				 frei definierbare Codelisten gepflegt werden.</p>
+				 <p><b>Auswahllistenpflege</b></p>
+				 <p>Alle im InGridEditor (IGE) benutzten Auswahllisten sind in der Auswahlliste des 
+				 Feldes <i>Auswahlliste</i> hinterlegt (zunächst nicht sichtbar). Wählen Sie die Auswahlliste, 
+				 die Sie bearbeiten wollen aus.</p>
+				 <p>Listen, die nicht geändert werden können, sind mit <i>[nicht editierbar]</i> gekennzeichnet. 
+				 Sie können sich diese Listen dennoch ansehen, indem Sie sie auswählen. In diesem Fall 
+				 wird der Hinweis <i>Die Einträge dieser Auswahlliste können nicht geändert werden</i> oberhalb 
+				 der Listeneinträge angezeigt und die Tabelle ist nicht editierbar.</p>
+				 <p>Um einen Listeneintrag zu ändern, doppelklicken Sie auf den Eintrag in der Tabelle 
+				 und bearbeiten Sie den Eintrag.</p>
+				 <p>Um einen Listeneintrag zu ergänzen, gehen Sie ans Ende der Liste. Die letzte Zeile ist leer. 
+				 Durch einen Doppelklick in das entsprechende Feld öffnet sich ein Eingabefeld, in dem Sie 
+				 den gewünschten Eintag eingeben können.</p>
+				 <p>Um einen Listeneintrag zu löschen, klicken Sie die Zeile an, öffnen mit der rechten 
+				 Maustaste das Kontextmenü und wählen die Funktion <i>Zeile löschen</i>.</p>
+				 <p><u><i>Standardwert setzen</i></u></p>
+				 <p>Für einige Listen kann ein Standardwert eingestellt werden. Listen, für die das nicht 
+				 gilt, erhalten den Hinweis <i>Für diese Liste kann kein Defaultwert eingestellt werden</i> 
+				 und die Option <i>Defaultwert einstellbar</i> lässt sich nicht wählen. Für die anderen 
+				 Listen gilt, dass nachdem die Option <i>Defaultwert einstellbar</i> gewählt wurde, in der 
+				 Liste der Auswahllisteneinträge eine weitere Spalte <i>Default</i> erscheint. Sie können 
+				 jetzt einen Eintrag als Standardwert wählen. Er wird bei der Neuerstellung eines Objektes 
+				 standardmäßig in das zu dieser Auswahlliste zugehörige Feld eingetragen.</p>
+				 <p><u><i>Auswahllisten im- und exportieren</i></u></p>
+				 <p>Die Liste der Auswahllisten kann exportiert und importiert werden. Zum Exportieren 
+				 klicken Sie auf <i>Exportieren</i> und wählen den Ort, an dem Sie die XML-Datei speichern 
+				 möchten. Zum Importieren klicken Sie auf <i>Importieren</i> und wählen die XML-Datei, die 
+				 Sie importieren möchten. Sie muss das gleiche Format wie die Exportdatei haben.</p>
+				 <p><b>Liste: Rechtliche Grundlagen</b></p>
+				 <p>Unter dem Karteireiter <i>Liste: Rechtliche Grundlagen</i> können freie Einträge in dem 
+				 Feld <i>Rechtliche Grundlagen</i> in die Auswahlliste übertragen werden.</p>
+				 <p>Wählen Sie hierzu in der Liste <i>Einträge die nicht in der Schlüsseltabelle vorhanden 
+				 sind</i> den Eintrag aus, den Sie in die Auswahlliste aufnehmen möchten. Über einen Klick 
+				 auf den Button <i>&gt;Übertragen</i> wird er in die Auswahlliste übernommen.</p>
+				 <p>Ein Klick auf den Button <i>&gt;&gt;Alle</i> übernimmt alle freien Einträge in die Auswahlliste.</p>
+				 <p>Sie können auch einzelne freie Einträge im Feld <i>Rechtliche Grundlagen</i> durch 
+				 Auswahllisteneinträge ersetzen, indem Sie den Eintrag, den Sie ersetzen wollen, in der 
+				 Liste <i>Einträge die nicht in der Schlüsseltabelle vorhanden sind</i> auswählen und den 
+				 Eintrag, durch den er ersetzt werden soll, in der Liste <i>Inhalte der Schlüsseltabelle</i> 
+				 auswählen. Ein Klick auf <i>&lt;Ersetzen</i> ersetzt den ausgewählten Eintrag des Feldes 
+				 durch den Auswahllisteneintrag.</p>
+				 <p><b>Reindexierung</b></p>
+				 <p>Im Index sind die Einträge der Felder, die über Codelisten gepflegt werden, natürlich 
+				 nicht als IDs sondern als Text gespeichert. Wurde der Text für einzelne IDs geändert, ist 
+				 der Index nicht mehr konsistent (Bei einer Suche würde der alte Text und nicht der neue 
+				 gefunden werden). Deshalb muss für den Index des IGEs nach erfolgter Änderung der Codeliste 
+				 eine Reindexierung angestoßen werden.</p>
+				 <p>Sie führen diese über einen Klick auf den Button <i>Reindexierung starten</i> durch. Je 
+				 nach Umfang des Kataloges und Auslastung des Servers kann die Reindexierung einige Minuten 
+				 dauern. </p>
             </content>
         </section>
         <section help-key="overall-catalog-management-5">
             <header>Zusätzliche Felder</header>
             <content>
-                 <p><b><i>Muss noch erstellt werden</i></b></p>
+                 <p>Pro Katalog ist es im InGridCatalog möglich, zu den vorgegebenen Feldern <i>Zusätzliche 
+				 Felder</i> zu definieren. Diese Funktionalität ist nur für den Katalogadministrator 
+				 zugänglich.</p>
+				 <p>Als Datenarten stehen Ihnen für Zusätzliche Felder Textfelder beliebiger Länge zur 
+				 Verfügung, wobei Sie wählen können, ob diese Felder eine Auswahlliste erhalten sollen 
+				 oder nicht.</p>
+				 <p><u>Hinweis:</u> Auch bei <i>Zusätzlichen Feldern</i> mit Auswahlliste sind freie 
+				 Einträge möglich.</p>
+				 <p>Neue Zusätzliche Felder können Sie über einen Eintrag unterhalb der Liste der Felder 
+				 erstellen. Sie müssen hierzu einen <i>Feldnamen</i>, die <i>Länge</i> des Feldes 
+				 (maximale Anzahl der in das Feld einzugebenen Zeichen) und den <i>Typ</i> des Feldes 
+				 (Textfeld mit oder ohne Auswahlliste) angeben. Über den Button <i>Hinzufügen</i> wird 
+				 das Feld der Liste der Zusätzlichen Felder hinzugefügt.</p>
+				 <p><u>Hinweis:</u> Die in der Liste angezeigte <i>Nr.</i> wird automatisch generiert, 
+				 aber erst nachdem der Button <i>Änderung speichern</i> angeklickt wurde.</p>
+				 <p>Ein zusätzliches Feld können Sie löschen, indem Sie mit einem rechten Mausklick auf 
+				 die Liste klicken und aus dem Kontextmenü die Funktion <i>Zeile löschen</i> auswählen.</p>
+				 <p><u>Achtung:</u> Beim Löschen eines <i>Zusätzlichen Feldes</i> werden sämtliche 
+				 Einträge in allen Objekten des Kataloges in diesem Feld auch mit gelöscht. Ein 
+				 Rückgängigmachen ist danach nicht mehr möglich. Der Löschvorgang wird aber erst nach 
+				 dem Klicken auf den Button <i>Änderung speichern</i> ausgelöst.</p>
+				 <p>Die Namen bereits erstellter <i>Zusätzlicher Felder</i> können Sie durch einen 
+				 Doppelklick auf die <i>Feldnamen</i> editieren.</p>
+				 <p><u>Achtung:</u> Die <i>Länge</i> eines <i>zusätzlichen Feldes</i> lässt sich 
+				 nachträglich <b>nicht</b> mehr ändern.</p>
+				 <p>Bei Feldern des Typs <i>Auswahlliste</i> können sie über einen Klick mit der 
+				 rechten Maustaste und der Auswahl der Funktion <i>Auswahlliste bearbeiten</i> die 
+				 Auswahlliste zu dem Feld erstellen bzw. bearbeiten.</p>
+				 <p><u>Achtung:</u> Alle Änderungen an den <i>zusätzlichen Feldern</i> werden erst nach 
+				 dem Klick auf den Button <i>Änderung speichern</i> durchgeführt. Sie stehen vorher nicht 
+				 zur Verfügung.</p>
+				 <p><u>Hinweis:</u> Alle gespeicherten Änderungen an den <i>zusätzlichen Feldern</i> stehen 
+				 nach dem nächsten Laden der Erfassungskomponente zur Verfügung.</p>
             </content>
         </section>
         <section help-key="overall-catalog-management-6">
             <header>Adresse ersetzen</header>
             <content>
-                 <p><b><i>Muss noch erstellt werden</i></b></p>
+                 <p>Mit dieser Funktion kann eine Adresse in allen Objekten, in der sie vorkommt, durch eine 
+				 andere ersetzt werden. Sie ist nur dem Katalogadministrator zugänglich.</p>
+				 <p>Grundsätzlich sollte bei einer Änderung von Zuständigkeiten die Adresse, wenn es möglich 
+				 ist, durch eine Änderung der Angaben in der Adressverwaltung in der Erfassung des 
+				 InGridEditors (IGE) geändert werden. Scheidet z.B. der bisher zuständige Bearbeiter 
+				 ‚Meier’ aus und die Zuständigkeiten fallen an seinen Nachfolger ‚Müller’, so ist der 
+				 einfachste und korrekte Weg der Adressänderung, dass <i>Name</i>, <i>Vorname</i>, ggf. 
+				 <i>Telefonnummer</i> etc. in der Adresse ‚Meier’ in die Angaben für ‚Müller’ geändert 
+				 werden.</p>
+				 <p>Manchmal ist das beschriebene Vorgehen aber nicht möglich. Wenn z.B. der bisher für 
+				 einen Teilbaum zuständige ‚Müller’ zusätzlich die Aufgaben des Kollegen ‚Meier’ übernehmen 
+				 muss. In diesem Fall ist die Funktion <i>Adresse ersetzen</i> anzuwenden.</p>
+				 <p>Wählen Sie unter <i>Zulöschender Adresse</i> die Adresse aus, die endgültig gelöscht 
+				 werden soll. Alle Objekte, in denen die gewählte Adresse als Auskunftsadresse auftritt, 
+				 werden angezeigt, ebenso alle Objekte und Adressen, in denen die Adresse als 
+				 Verantwortlicher auftritt.</p>
+				 <p><u>Hinweis:</u> Sie können diese Angaben (reiterweise) <i>Als CSV Datei speichern</i>.</p>
+				 <p>Wählen Sie eine <i>Neue Auskunftsadresse</i>. Es werden zur Information einige Angaben 
+				 zu der Adresse angezeigt.</p>
+				 <p><u>Hinweis:</u> Es können ausschließlich veröffentlichte Adressen ausgewählt werden.</p>
+				 <p>Nach dem Klicken auf den Button <i>Ersetzen &amp; Löschen</i> und anschließendem 
+				 Bestätigen der Sicherheitsabfrage, werden in allen Objekten, die die Adresse als Auskunft 
+				 oder Verantwortlichen enthalten (bzw. in allen Adressen, die die Adresse als 
+				 Verantwortlichen enthalten), mit der <i>Neuen Adresse</i> ersetzt und die <i>Zu löschende 
+				 Adresse</i> aus dem Katalog entfernt.</p>
+				 <p><u>Hinweis:</u> Wenn ein IGE-Nutzer der <i>Zulöschenden Adresse</i> zugeordnet ist, 
+				 werden Sie aufgefordert, diesem IGE-Nutzer eine andere Adresse zuzuordnen. Sie können 
+				 die Funktion <i>Ersetzen &amp; Löschen</i> erst durchführen, nachdem der Nutzer eine 
+				 andere Adresse erhalten hat.</p>
+				 <p><u>Achtung:</u> Alle Einträge der <i>Zulöschenden Adresse</i> in Objekten in dem 
+				 Feld <i>Adressen</i>, die nicht die Funktion <i>Auskunft</i> haben, werden gelöscht, 
+				 ohne durch die neue Adresse ersetzt worden zu sein.</p>
             </content>
         </section>
         <section help-key="overall-catalog-management-7">
             <header>Suchbegriffe</header>
             <content>
-                 <p><b><i>Muss noch erstellt werden</i></b></p>
+                 <p>Der InGridCatalog (IGC) verwendet den Umweltthesaurus (UMTHES) des Umweltbundesamtes 
+				 in Dessau-Rosslau. Er enthält mehr als 30.000 Fachbegriffe aus dem Themengebiet "Umwelt". 
+				 Das Wortgut des europäischen Umweltthesaurus 
+				 <a href="http://www.eionet.europa.eu/gemet" target="SNS">
+				 GEMET (GEneral Multilingual Environmental Thesaurus)</a> 
+				 ist als Untermenge in den UMTHES integriert. </p>
+                 <p>Der UMTHES wird über den 
+				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a> 
+				 vom Umweltbundesamt zur Verfügung gestellt.</p>
+                 <p>Die Thesaurus-Deskriptoren werden im IGC sowohl als SNS-IDs als auch als Begriff 
+				 gespeichert. Sowohl der UMTHES als auch der GEMET werden gepflegt und entwickeln sich 
+				 weiter. Daher erfährt auch der SNS eine regelmäßige Aktualisierung. </p>
+				 <p>Nach jeder Aktualisierung des SNS muss der Datenbestand des IGC auf seine Konsistenz 
+				 mit der neusten Version des SNS überprüft und ggf. angepasst werden. Dies kann der 
+				 Katalogadministrator automatisch über die Funktion <i>Suchbegriffe</i> im Menüpunkt 
+				 <i>Gesamtkatalogmanagement</i> durchführen.</p>
+				 <p>Die Aktualisierung der Suchbegriffe im IGC kann <b>offline</b> über eine vom SNS 
+				 gelieferte Datei durchgeführt werden. Hierzu laden Sie die Datei über den Button 
+				 <i>Durchsuchen</i> und starten den Vorgang über den Button <i>Aktualisierung 
+				 starten</i>.</p>
+				 <p>Alternativ können Sie den Aktualisierungsvorgang auch <b>online</b> durchführen, indem 
+				 Sie den Button <i>Aktualisierung starten</i> anklicken, ohne vorher eine Datei geladen zu 
+				 haben. In diesem Fall wird SNS online über das Netz abgefragt. Diese Methode hat den 
+				 Vorteil, dass vorher keine Datei vom Umweltbundesamt oder der KST PortalU zur Verfügung 
+				 gestellt werden müssen, dauert aber je nach Netzauslastung evtl. etwas länger.</p>
+				 <p>Nach der Aktualisierung werden einige Informationen zum letzten Prozess in dem 
+				 Informationskasten angezeigt.</p>
+				 <p>Detaillierte Informationen zu jeder Veränderung werden in der darunter stehenden 
+				 Tabelle angeboten. In der ersten Spalte wird die ursprüngliche <i>Bezeichnung</i> des 
+				 Suchbegriffs angezeigt. Es folgt der Typ des Begriffs. Es kann sich um folgende Typen 
+				 handeln:</p>
+				 <ul>
+				 <li><u><i>UMTHES Term</i></u>: <br/>Begriff aus dem UMTHES-Thesaurus</li>
+				 <li><u><i>GEMET Term</i></u>: <br/>Begriff aus dem GEMET-Thesaurus</li>
+				 <li><u><i>Freier Term</i></u>: <br/>Freier Suchbegriff (kein Thesaurus Deskriptor)</li>
+				 </ul>
+				 <p>Zu jedem geänderten Begriff wird die <i>Ergriffene Maßnahme</i> angezeigt. Es gibt 
+				 folgende Möglichkeiten:</p>
+				 <ol>
+				 <li><u><i>Deskriptor in freien Suchbegriff überführt</i></u>:
+				 <br/>Ein Thesaurusbegriff ist nicht mehr im SNS als Deskriptor enthalten. Er wird von 
+				 einem Thesaurus-Suchbegriff in einen freien Suchbegriff überführt.</li>
+				 <li><u><i>Freien Suchbegriff ersetzt durch Deskriptor "</i>Suchbegriff<i>" (UMTHES Term)
+				 </i></u>:
+				 <br/>Ein freier Suchbegriff wird als Thesaurus-Deskriptor identifiziert und von einem 
+				 freien Suchbegriff in einen Thesaurus(UMTHES)-Suchbegriff überführt.</li>
+				 <li><u><i>Freien Suchbegriff ergänzt mit Deskriptor "</i>Suchbegriff<i>" 
+				 (UMTHES Term)</i></u>:
+				 <br/>Ein freier Suchbegriff wird als Synonym zu einem Thesaurus-Deskriptor identifiziert. 
+				 Es wird der zugehörige Thesaurus-Deskriptor als Thesaurus-Suchbegriff ergänzt. Der 
+				 freie Suchbegriff bleibt erhalten.</li>
+				 <li><u><i>Deskriptor aktualisiert, ist jetzt "</i>GEMET-Suchbegriff<i>" (GEMET Term), 
+				 "</i>UMTHES-Suchbegriff<i>" (UMTHES)</i></u>:
+				 <br/>Ein UMTHES-Suchbegriff wird als GEMET-Deskriptor mit gleicher SNS-ID aber anderem 
+				 Namen identifiziert. Der GEMET-Name wird hinzugefügt.</li>
+				 <li><u><i>Deskriptor ERSETZT durch Deskriptor "</i>GEMET-Suchbegriff<i>" (GEMET Term), 
+				 "</i>UMTHES-Suchbegriff<i>" (UMTHES)</i></u>:
+				 <br/>Der Name eines Thesaurus-Suchbegriffs wird als GEMET-Deskriptor mit einer anderen 
+				 SNS-ID identifiziert. Die SNS-ID wird ersetzt. Der Name des GEMET-Deskriptors als 
+				 auch der des zugehörigen UMTHES-Deskriptors werden hinzugefügt. </li>
+				 <li><u><i>Deskriptor in freien Suchbegriff überführt
+				 <br/>Deskriptor ERSETZT durch Deskriptor "</i>GEMET-Suchbegriff<i>" (GEMET Term), 
+				 "</i>UMTHES-Suchbegriff<i>" (UMTHES)</i></u>:
+				 <br/>Ein Thesaurus-Term wurde im UMTHES von einem Deskriptor in den Status eines Synonyms 
+				 überführt. Das UMTHES-Synonym ist aber ein GEMET-Deskriptor. Der Thesaurusbegriff wird 
+				 in die freien Suchbegriffe überführt. Die zugehörige GEMET- und UMTHES-Deskriptoren 
+				 werden als Thesaurus-Suchbegriffe ergänzt.</li>
+				 </ol>
+				 <p>Abschließend wird die Anzahl der Objekte und Adressen angezeigt, in denen der 
+				 veränderte Suchbegriff verwendet wurde.</p>
+				 <p>Die Liste der Änderungen können Sie sich über den Button <i>Als CSV-Datei speichern</i>
+				 vom Server herunter laden.</p>
             </content>
         </section>
         <section help-key="overall-catalog-management-8">
             <header>Raumbezüge</header>
             <content>
-                 <p><b><i>Muss noch erstellt werden</i></b></p>
+                 <p>Der InGridCatalog (IGC) nutzt den Geo-Thesaurus Umwelt (GTU). Er wird über den 
+				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a>
+				 des Umweltbundesamtes zur Verfügung gestellt.</p>
+				 <p>Die Geografischen Begriffe des GTU werden im IGC sowohl als SNS-IDs als auch als 
+				 Begriff und - soweit vorhanden - Koordinaten gespeichert. Der GTU wird gepflegt und 
+				 entwickelt sich weiter. Daher erfährt auch der SNS eine regelmäßige Aktualisierung der 
+				 geografischen Begriffe. </p>
+				 <p>Nach jeder Aktualisierung des SNS muss der Datenbestand des IGC auf seine Konsistenz 
+				 mit der neusten Version des SNS überprüft und ggf. angepasst werden. Dies kann der 
+				 Katalogadministrator automatisch über die Funktion <i>Raumbezüge</i> im Menüpunkt 
+				 <i>Gesamtkatalogmanagement</i> durchführen.</p>
+				 <p>Die Aktualisierung der Suchbegriffe im IGC kann <b>offline</b> über eine vom SNS 
+				 gelieferte Datei durchgeführt werden. Hierzu laden Sie die Datei über den Button 
+				 <i>Durchsuchen</i> und starten den Vorgang über den Button <i>Aktualisierung 
+				 starten</i>.</p>
+				 <p>Alternativ können Sie den Aktualisierungsvorgang auch <i>online</i> durchführen, 
+				 indem Sie Button <i>Aktualisierung starten</i> anklicken, ohne vorher eine Datei 
+				 geladen zu haben. In diesem Fall wird SNS online über das Netz abgefragt. Diese 
+				 Methode hat den Vorteil, dass vorher keine Datei vom Umweltbundesamt oder der 
+				 KST PortalU zur Verfügung gestellt werden müssen, dauert aber je nach Netzauslastung 
+				 evtl. etwas länger.</p>
+				 <p>Nach der Aktualisierung werden einige Informationen zum letzten Prozess in dem 
+				 Informationskasten angezeigt.</p>
+				 <p>Detaillierte Informationen zu jeder Veränderung werden in der darunter stehenden 
+				 Tabelle angeboten. In den ersten zwei Spalten werden die ursprüngliche Bezeichnung 
+				 der <i>Raumeinheit</i> und die von SNS gelieferte <i>ID</i> angezeigt.</p>
+				 <p>Zu jedem geänderten Begriff wird die <i>Ergriffene Maßnahme</i> angezeigt. Es gibt 
+				 folgende Möglichkeiten:</p>
+				 <ol>
+				 <li><u><i>entfällt</i></u>:
+				 <br/>Der Raumbezug wurde aus SNS entfernt. Er wird auch aus den Objekten des IGC 
+				 gelöscht.</li>
+				 <li><u><i>neue Bezeichnung "…", neuer Grenzverlauf, neuer Topic-Type "…", neue 
+				 Topic-Id "…"</i></u>:
+				 <br/>Die Bezeichnung, der Grenzverlauf, der Topic-Type oder die Topic-ID haben sich 
+				 verändert. Es können sich einzelne Punkte oder eine Kombination verändert haben. 
+				 Die jeweils neuen Bezeichnungen oder IDs werden angezeigt.</li>
+				 </ol>
+				 <p>Abschließend wird die Anzahl der Objekte angezeigt, in denen der veränderte bzw.
+				 gelöschte geografische Begriff verwendet wurde.</p>
+				 <p>Die Liste der Änderungen können Sie sich über den Button <i>Als CSV-Datei speichern</i>
+				 vom Server herunter laden.</p>
             </content>
         </section>
     </chapter>
@@ -1816,7 +2104,7 @@
 				 angestoßenen Exportvorgang angezeigt. Ist der Vorgang beendet, wird unter 
 				 <i>Download der Exportdatei</i> ein <i>link</i> angezeigt. </p>
 				 <p>Klicken Sie auf den <i>link</i> und laden Sie damit die Exportdatei vom Server herunter. 
-				 Es handelt sich um eine XML-Datei, die im GNU-Zip Format komprimiert wurde. Sie können sie 
+				 Es handelt sich um eine XML-Datei, die im GNU-Zip-Format komprimiert wurde. Sie können sie 
 				 mit entsprechenden Anwendungen auf Ihrem Rechner entpacken und z.B. im Internet-Browser 
 				 betrachten.</p>
             </content>
@@ -1872,7 +2160,7 @@
 				 zum letzten Importprozess</i> ein <i>link</i> angezeigt.</p>
 				 <p>Klicken Sie auf den <i>link</i> und laden Sie damit die Datei log.txt vom Server. In 
 				 ihr sind die Informationen zum Importvorgang (Verlaufsmeldungen, Warnungen und 
-				 Fehlermeldungen) enthalten. Sie können sie mit einem üblichen Editor, wie z.B. WordPad 
+				 Fehlermeldungen) enthalten. Sie können sie mit einem üblichen Editor, wie z.B. WordPad, 
 				 ansehen.</p>
             </content>
         </section>
