@@ -1,0 +1,1 @@
+When importing help_messages.csv use # as a separator and ' as a text delimiter
