@@ -176,7 +176,10 @@ function updateExportInfo(exportInfo) {
 
 		} else if (exportInfo.endTime) {
 			dojo.html.hide(dojo.byId("exportExceptionMessage"));
-			dojo.html.show(dojo.byId("exportInfoDownload"));
+			if (exportInfo.numProcessedEntities > 0)
+				dojo.html.show(dojo.byId("exportInfoDownload"));
+			else
+				dojo.html.hide(dojo.byId("exportInfoDownload"));
 			dojo.html.show(dojo.byId("exportInfoEndDateContainer"));
 			dojo.html.show(dojo.byId("exportInfoNumExportedEntitiesContainer"));
 			dojo.byId("exportInfoNumExportedEntities").innerHTML = exportInfo.numProcessedEntities;
