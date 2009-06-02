@@ -4,7 +4,7 @@
     <artifactId>ingrid-portal</artifactId>
     <name>ingrid-portal</name>
     <groupId>ingrid</groupId>
-    <currentVersion>1.2.0-SNAPSHOT</currentVersion>
+    <currentVersion>1.2.1-SNAPSHOT</currentVersion>
     <inceptionYear>2007</inceptionYear>
     <logo>/images/logo.gif</logo>
     <shortDescription>short description</shortDescription>
