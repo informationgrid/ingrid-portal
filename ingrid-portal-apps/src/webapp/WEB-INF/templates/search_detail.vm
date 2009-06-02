@@ -697,6 +697,8 @@
 #set($pageDescription = $rec.get("summary"))
 #set($pageDescription = $pageDescription.replace('"',"'"))
 #set($pageDescription = $stringTool.cutString($pageDescription,300))
+#set($udkObjClass     = $rec.get("t01_object.obj_class"))
+#set($udkObjClassName = $MESSAGES.getString("udk_obj_class_name_$udkObjClass"))
 #parse('WEB-INF/templates/search_detail_header.vm')
 
 #set ($action = $renderResponse.createActionURL())
@@ -723,11 +725,8 @@
 	<br />
 	<div class="section">
 		<p class="float_left">
-            #set($udkObjClass = $rec.get("t01_object.obj_class"))
-            #set($udkObjClassNameKey = "udk_obj_class_name_$udkObjClass")
-            #set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
-			#if($udkObjClass)
-			<span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" alt="${udkObjClassName}" /></span>&nbsp;<strong>${udkObjClassName}</strong>&nbsp;<span class="smaller">$MESSAGES.getString('search.detail.object.class')</span>
+			#if($udkObjClassName)
+				<span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" alt="${udkObjClassName}" /></span>&nbsp;<strong>${udkObjClassName}</strong>&nbsp;<span class="smaller">$MESSAGES.getString('search.detail.object.class')</span>
 			#end
 		</p>
 		<span class="clearer"></span>
