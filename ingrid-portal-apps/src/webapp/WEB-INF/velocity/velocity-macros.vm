@@ -163,11 +163,6 @@ $action.setParameter("id", "$rowId")
 </tr>
 #end
 
-#macro (renderDBBrowserFooter)
-#set ($buttons = ["doEdit", "doDelete", "doRefresh", "doNew"])
-#renderDBBrowserFooterButtons($buttons)
-#end
-
 #macro (renderDBBrowserFooterButtons $buttons)
 <div class="formfooter">
 #foreach ($button in $buttons)
@@ -192,6 +187,11 @@ $action.setParameter("id", "$rowId")
 #end
 	<p class="clearer"></p>
 </div>
+#end
+
+#macro (renderDBBrowserFooter)
+	#set ($buttons = ["doEdit", "doDelete", "doRefresh", "doNew"])
+	#renderDBBrowserFooterButtons($buttons)
 #end
 
 #macro (renderDBEditId $mode $id)
