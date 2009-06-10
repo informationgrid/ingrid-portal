@@ -126,6 +126,9 @@
 		<property name="catalogRequestHandler">
 			<ref local="catalogRequestHandler" />
 		</property>
+		<property name="dataMapperFactory">
+			<ref local="dataMapperFactory" />
+		</property>
 	</bean>
 	<bean id="objectService"
 		class="de.ingrid.mdek.dwr.services.ObjectServiceImpl">
@@ -247,4 +250,30 @@
 			</list>
 		</property>
 	</bean>
+	
+	<!-- Mapper Factory -->
+	<bean id="dataMapperFactory" class="de.ingrid.mdek.util.DataMapperFactory">
+		<property name="mapperClasses">
+			<map>
+		        <entry>
+		            <key>
+		                <value>igc</value>
+		            </key>
+		            <ref bean="scriptImportDataMapper" />
+		        </entry>
+		        <entry>
+		            <key>
+		                <value>arcgis1</value>
+		            </key>
+		            <ref bean="scriptImportDataMapper" />
+		        </entry>
+		    </map>
+	    </property>
+	</bean>
+	
+	<bean id="scriptImportDataMapper" class="de.ingrid.mdek.util.ScriptImportDataMapper">
+		<property name="mapperScript" value="classpath:import/mapper/ArcGIS_to_ingrid_igc.js" />
+		<property name="template" value="classpath:import/templates/igc_template.xml" />
+	</bean>
+	
  </beans>

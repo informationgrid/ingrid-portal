@@ -2,11 +2,18 @@ package de.ingrid.mdek.dwr.services;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipInputStream;
+
+import javax.script.ScriptEngine;
 
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
@@ -15,6 +22,8 @@ import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.persistence.db.model.UserData;
+import de.ingrid.mdek.util.IngridFileConverter;
+import de.ingrid.mdek.util.DataMapperFactory;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 
@@ -26,21 +35,25 @@ public class ImportServiceImpl {
 
 	// Injected by Spring
 	private CatalogRequestHandler catalogRequestHandler;
-
-	public void importEntities(FileTransfer fileTransfer, String targetObjectUuid, String targetAddressUuid,
+	private DataMapperFactory dataMapperFactory;
+	
+	public void importEntities(FileTransfer fileTransfer, String fileType, String targetObjectUuid, String targetAddressUuid,
 			boolean publishImmediately, boolean doSeparateImport) {
 
 //		log.debug("File transfer mime type: "+fileTransfer.getMimeType());
-
+		
 		try {
+			// map source file into icg-target format
+			InputStream preparedImportData = dataMapperFactory.getMapper(fileType).convert(fileTransfer.getInputStream());
+			
 			byte[] gzippedData = null;
 			switch (getFileType(fileTransfer.getMimeType())) {
 			case GZIP:
-				gzippedData = createByteArrayFromInputStream(fileTransfer.getInputStream());
+				gzippedData = createByteArrayFromInputStream(preparedImportData);//fileTransfer.getInputStream());
 				break;
 
 			case ZIP:
-				ZipInputStream zipIn = new ZipInputStream(fileTransfer.getInputStream());
+				ZipInputStream zipIn = new ZipInputStream(preparedImportData);//fileTransfer.getInputStream());
 				zipIn.getNextEntry();
 				gzippedData = compress(zipIn).toByteArray();
 				break;
@@ -49,7 +62,7 @@ public class ImportServiceImpl {
 				log.debug("Unknown file type. Assuming uncompressed xml data.");
 				// Fall through
 			case XML:
-				gzippedData = compress(fileTransfer.getInputStream()).toByteArray();
+				gzippedData = compress(preparedImportData/*fileTransfer.getInputStream()*/).toByteArray();
 				break;
 
 			default:
@@ -61,7 +74,8 @@ public class ImportServiceImpl {
 			// If the thread ended with an exception (probably because another job is already running),
 			// we throw a new MdekException to notify the user
 			UserData currentUser = MdekSecurityUtils.getCurrentPortalUserData();
-			ImportEntitiesThread importThread = new ImportEntitiesThread(catalogRequestHandler, currentUser, gzippedData, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
+			
+			ImportEntitiesThread importThread = new ImportEntitiesThread(catalogRequestHandler, currentUser, gzippedData, fileType, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
 			importThread.start();
 			try {
 				importThread.join(3000);
@@ -149,6 +163,10 @@ public class ImportServiceImpl {
 	public void cancelRunningJob() {
 		catalogRequestHandler.cancelRunningJob();
 	}
+	
+	public void setDataMapperFactory(DataMapperFactory mapperFactory) {
+		this.dataMapperFactory = mapperFactory;
+	}
 }
 
 // Helper thread which starts an import process
@@ -163,11 +181,11 @@ class ImportEntitiesThread extends Thread {
 	private final String targetAddressUuid;
 	private final boolean publishImmediately;
 	private final boolean doSeparateImport;
+	private final String fileDataType;
 
 	private volatile MdekException exception;
-
-
-	public ImportEntitiesThread(CatalogRequestHandler catalogRequestHandler, UserData currentUser, byte[] importData, String targetObjectUuid, String targetAddressUuid, boolean publishImmediately, boolean doSeparateImport) {
+	
+	public ImportEntitiesThread(CatalogRequestHandler catalogRequestHandler, UserData currentUser, byte[] importData, String fileDataType, String targetObjectUuid, String targetAddressUuid, boolean publishImmediately, boolean doSeparateImport) {
 		super();
 		this.catalogRequestHandler = catalogRequestHandler;
 		this.currentUser = currentUser;
@@ -176,19 +194,19 @@ class ImportEntitiesThread extends Thread {
 		this.targetAddressUuid = targetAddressUuid;
 		this.publishImmediately = publishImmediately;
 		this.doSeparateImport = doSeparateImport;
+		this.fileDataType = fileDataType;
 	}
 
 	@Override
 	public void run() {
 		try {
 			catalogRequestHandler.importEntities(currentUser, importData, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
-
 		} catch(MdekException ex) {
 			log.debug("Exception while importing entities.", ex);
 			setException(ex);
 		}
 	}
-
+	
 	public MdekException getException() {
 		return exception;
 	}

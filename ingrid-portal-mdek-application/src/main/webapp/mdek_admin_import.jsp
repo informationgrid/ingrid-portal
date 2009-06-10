@@ -116,6 +116,7 @@ scriptScope.showJobException = function() {
 
 function startTreeImport() {
 	var file = dwr.util.getValue("importFile");
+	var fileType = dojo.widget.byId("importFileType").getValue();
 	var parentObjectUuid = (importTreeSelectedParentDataset != null && importTreeSelectedParentDataset.uuid != "objectRoot") ? importTreeSelectedParentDataset.uuid : null;
 	var parentAddressUuid = (importTreeSelectedParentAddress != null) ? importTreeSelectedParentAddress.uuid : null;
 	var publishImportedDatasets = dojo.widget.byId("publishImportedDatasetsCheckbox").checked;
@@ -125,7 +126,7 @@ function startTreeImport() {
 	dojo.debug("parent object uuid: "+parentObjectUuid);
 	dojo.debug("parent address uuid: "+parentAddressUuid);
 
-	ImportService.importEntities(file, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, importServiceCallback);
+	ImportService.importEntities(file, fileType, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, importServiceCallback);
 }
 
 scriptScope.startImport = function() {
@@ -318,9 +319,17 @@ function hideLoadingZone() {
 				<div class="spacer"></div>
 				<div class="inputContainer field grey w939">
 					<div class="inputContainer">
-						<span class="label"><label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 8074, 'Import-Datei')"><fmt:message key="dialog.admin.import.file" /></label></span>
-						<span>
-							<input type="file" id="importFile" size="80" />
+						<span class="label"><label style="position:absolute;" for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 8074, 'Import-Datei')"><fmt:message key="dialog.admin.import.file" />:</label>
+							<input type="file" id="importFile" size="80" style="position:absolute;margin-left:90px;" />
+						</span>
+					</div>
+					<div>
+						<span class="label" style="margin-bottom:10.5px;"><label for="importFileType" style="position:absolute;" onclick="javascript:dialog.showContextHelp(arguments[0], 8074, 'Import-Datei')"><fmt:message key="dialog.admin.import.file.type" />:</label>
+							<select dojoType="ingrid:Select" id="importFileType" style="position:absolute;margin-left:90px;">
+								<option value="igc">InGrid Catalog</option>
+								<option value="arcgis1" selected>ArcGIS 1</option>
+								<option value="arcgis2">ArcGIS 2</option>
+							</select>
 						</span>
 					</div>
 					<div class="checkboxContainer">

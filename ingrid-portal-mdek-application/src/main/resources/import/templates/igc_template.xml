@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<igc xmlns="http://www.portalu.de" exchange-format="1.0.5">
+	<data-sources>
+		<data-source>
+			<general>
+				<object-identifier>F139D6DB-E677-4E66-82B9-F2894D8FAA6B</object-identifier>
+				<catalogue-identifier>7419</catalogue-identifier>
+				<modificator-identifier>DB30502C-9180-4B68-B881-2A7CB84869DF</modificator-identifier>
+				<responsible-identifier>DB30502C-9180-4B68-B881-2A7CB84869DF</responsible-identifier>
+				<object-class id="0"/>
+				<title>Minimal Published Object</title>
+				<abstract>.</abstract>
+				<date-of-last-modification>20090608155709140</date-of-last-modification>
+				<date-of-creation>20090608155709140</date-of-creation>
+				<topic-categories>
+					<topic-category id="4"/>
+				</topic-categories>
+				<env-information>
+					<is-catalog>N</is-catalog>
+				</env-information>
+			</general>
+			<additional-information>
+				<data-language id="150">Deutsch</data-language>
+				<metadata-language id="150">Deutsch</metadata-language>
+				<publication-condition>1</publication-condition>
+				<conformity>
+					<conformity-specification>INSPIRE-Richtlinie</conformity-specification>
+					<conformity-degree id="3">nicht evaluiert</conformity-degree>
+					<conformity-publication-date>20090608155624640</conformity-publication-date>
+				</conformity>
+			</additional-information>
+			<spatial-domain>
+				<geo-location>
+					<controlled-location>
+						<location-name id="BUNDESLAND03">Niedersachsen</location-name>
+						<location-code>03000000</location-code>
+					</controlled-location>
+					<bounding-coordinates>
+						<west-bounding-coordinate>6.5801826</west-bounding-coordinate>
+						<east-bounding-coordinate>11.5355914</east-bounding-coordinate>
+						<north-bounding-coordinate>53.8485506</north-bounding-coordinate>
+						<south-bounding-coordinate>51.2874388</south-bounding-coordinate>
+					</bounding-coordinates>
+				</geo-location>
+			</spatial-domain>
+			<temporal-domain>
+				<dataset-reference>
+					<dataset-reference-date>20090608000000000</dataset-reference-date>
+					<dataset-reference-type iso-code="1"/>
+				</dataset-reference>
+			</temporal-domain>
+			<subject-terms>
+				<controlled-term id="105" source="INSPIRE">Adressen</controlled-term>
+			</subject-terms>
+			<related-address>
+				<type-of-relation list-id="505" entry-id="7">Auskunft</type-of-relation>
+				<address-identifier>DB30502C-9180-4B68-B881-2A7CB84869DF</address-identifier>
+			</related-address>
+		</data-source>
+	</data-sources>
+	<data-model-extensions>
+		<general-additional-field-definition>
+			<field-identifier>167243</field-identifier>
+			<field-name>Test 2</field-name>
+			<field-length>80</field-length>
+			<field-type>1</field-type>
+			<field-list-type>Z</field-list-type>
+			<field-list-items language-code="de">
+				<field-list-item>Eintrag 1</field-list-item>
+				<field-list-item>Eintrag 2</field-list-item>
+			</field-list-items>
+		</general-additional-field-definition>
+		<general-additional-field-definition>
+			<field-identifier>167242</field-identifier>
+			<field-name>Test 1</field-name>
+			<field-length>40</field-length>
+			<field-type>0</field-type>
+		</general-additional-field-definition>
+	</data-model-extensions>
+</igc>

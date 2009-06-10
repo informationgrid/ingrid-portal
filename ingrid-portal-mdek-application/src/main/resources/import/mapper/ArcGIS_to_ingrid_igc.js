@@ -1,0 +1,1 @@
+log.debug("Starting to map from ArcGIS to IGC");
