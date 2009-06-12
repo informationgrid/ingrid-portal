@@ -2,18 +2,11 @@ package de.ingrid.mdek.dwr.services;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Hashtable;
-import java.util.Map;
 import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipInputStream;
-
-import javax.script.ScriptEngine;
 
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
@@ -22,7 +15,6 @@ import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.persistence.db.model.UserData;
-import de.ingrid.mdek.util.IngridFileConverter;
 import de.ingrid.mdek.util.DataMapperFactory;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
