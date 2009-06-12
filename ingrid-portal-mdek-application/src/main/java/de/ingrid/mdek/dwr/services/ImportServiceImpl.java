@@ -14,8 +14,8 @@ import org.directwebremoting.io.FileTransfer;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.job.MdekException;
+import de.ingrid.mdek.mapping.DataMapperFactory;
 import de.ingrid.mdek.persistence.db.model.UserData;
-import de.ingrid.mdek.util.DataMapperFactory;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 

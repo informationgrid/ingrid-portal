@@ -252,14 +252,14 @@
 	</bean>
 	
 	<!-- Mapper Factory -->
-	<bean id="dataMapperFactory" class="de.ingrid.mdek.util.DataMapperFactory">
+	<bean id="dataMapperFactory" class="de.ingrid.mdek.mapping.DataMapperFactory">
 		<property name="mapperClasses">
 			<map>
 		        <entry>
 		            <key>
 		                <value>igc</value>
 		            </key>
-		            <ref bean="scriptImportDataMapper" />
+		            <ref bean="dummyImportDataMapper" />
 		        </entry>
 		        <entry>
 		            <key>
@@ -271,9 +271,11 @@
 	    </property>
 	</bean>
 	
-	<bean id="scriptImportDataMapper" class="de.ingrid.mdek.util.ScriptImportDataMapper">
+	<bean id="scriptImportDataMapper" class="de.ingrid.mdek.mapping.ScriptImportDataMapper">
 		<property name="mapperScript" value="classpath:import/mapper/ArcGIS_to_ingrid_igc.js" />
 		<property name="template" value="classpath:import/templates/igc_template.xml" />
 	</bean>
+	
+	<bean id="dummyImportDataMapper" class="de.ingrid.mdek.mapping.DummyImportDataMapper"></bean>
 	
  </beans>

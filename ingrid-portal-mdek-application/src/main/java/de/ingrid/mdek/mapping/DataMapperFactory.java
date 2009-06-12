@@ -1,4 +1,4 @@
-package de.ingrid.mdek.util;
+package de.ingrid.mdek.mapping;
 
 import java.util.HashMap;
 
