@@ -250,7 +250,7 @@ function hideSplash(){
 
     </div>
   <!-- SPLIT CONTAINER START -->
-  <div dojoType="SplitContainer" id="contentSection" class="contentSection" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
+  <div dojoType="ingrid:SplitContainer" id="contentSection" class="contentSection" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
     <!-- LEFT CONTENT PANE START -->
   	<div dojoType="ContentPane" id="treeContainer" class="treeContainer">
       <!-- tree components -->

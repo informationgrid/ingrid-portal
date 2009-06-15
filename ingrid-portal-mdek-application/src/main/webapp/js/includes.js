@@ -32,5 +32,6 @@ dojo.require("ingrid.widget.Button");
 dojo.require("ingrid.widget.ContextMenu");
 dojo.require("ingrid.widget.AccordionPane");
 dojo.require("ingrid.widget.TreeDocIconExtension");
+dojo.require("ingrid.widget.SplitContainer");
 
 dojo.hostenv.writeIncludes();
