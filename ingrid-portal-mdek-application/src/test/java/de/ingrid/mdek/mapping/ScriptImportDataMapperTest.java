@@ -17,6 +17,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import de.ingrid.utils.xml.XPathUtils;
+
 public class ScriptImportDataMapperTest extends TestCase {
 	
 	private ScriptImportDataMapper mapper;
@@ -70,6 +72,28 @@ public class ScriptImportDataMapperTest extends TestCase {
 		
 		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "xxxTEMPLATExxx"));
 	}
+	
+	public final void testConvertDepmstAbgas() {
+		
+		exampleXml = "/de/ingrid/mdek/mapping/depmst_abgas.shp.xml";
+		
+		initClassVariables(mapperScriptArcGIS, templateIGC);
+		
+		InputStream data 		= null;
+		try {
+			// get example file from test resource directory
+			data = (new ClassPathResource(exampleXml)).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		InputStream result = mapper.convert(data);
+		
+		Document doc = getDomFromSourceData(result);
+		
+		assertEquals("Deponie-Messtellen: Abgas", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
+		assertEquals("{CD2A5009-D1E1-4D58-B6E1-FA4B870724BE}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
+	}	
 	
 	/*
 	private byte[] inputStreamToBytes(InputStream in) {

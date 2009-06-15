@@ -62,6 +62,9 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 			doMap(parameters);
 	
 			String targetString = toString(docTarget);
+			if (log.isDebugEnabled()) {
+				log.debug("Resulting XML:" + targetString);
+			}
 			targetStream = new ByteArrayInputStream(targetString.getBytes());
 		} catch (TransformerException e) {
 			log.error("Error while transforming Document to String!");
