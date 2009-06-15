@@ -502,6 +502,9 @@ function initFreeTermsButtons() {
 				});
 			});
 		}
+		
+		// empty field with user added entries
+		this._inputFieldWidget.setValue("");
 	}
 
 	// Add the function(s) to the button in the object form
@@ -840,19 +843,19 @@ function parseQueryTerm(queryTerm) {
 	var currentTerm = "";
 	var readingCompositeTerm = false;
 	for (var index = 0; index < queryTerm.length; index++) {
-	    if (queryTerm[index] == "\n" || (queryTerm[index] == " " && !readingCompositeTerm)) {
+	    if (queryTerm.substr(index,1) == "\n" || (queryTerm.substr(index,1) == " " && !readingCompositeTerm)) {
 			addTermToResultList(currentTerm);
 	        currentTerm = "";
-
-	    } else if (queryTerm[index] == "\"") {
+	    } else if (queryTerm.substr(index,1) == "\"") {
 			if (readingCompositeTerm) {
 				addTermToResultList(currentTerm);
 		        currentTerm = "";
 			}
 			readingCompositeTerm = !readingCompositeTerm;
-
+	    } else if (queryTerm.substr(index,1) == "," && !readingCompositeTerm) {
+	    	// ignore comma if it's not within a phrase
 	    } else {
-	    	currentTerm += queryTerm[index];
+	    	currentTerm += queryTerm.substr(index,1);
 	    }
 	}
 	addTermToResultList(currentTerm);
