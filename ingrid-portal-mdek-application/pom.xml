@@ -205,6 +205,12 @@
 		<artifactId>ingrid-mdek-api</artifactId>
 		<version>1.1.0-SNAPSHOT</version>
     	<scope>provided</scope>
+    	<exclusions>
+    	<exclusion>
+            <groupId>ingrid</groupId>
+            <artifactId>ingrid-utils</artifactId>
+    	</exclusion>
+    	</exclusions>
     </dependency>
      <dependency>
 		<groupId>de.ingrid.mdek</groupId>
@@ -318,6 +324,12 @@
 	</dependencies>
 
 	<repositories>
+		<repository>
+			<snapshots />
+			<id>ingrid-repository</id>
+			<name>ingrid-repository</name>
+			<url>http://harrison.its-technidata.de/ingrid/maven2</url>
+		</repository>
 		<repository>
 			<snapshots/>
 			<id>ingrid-repository</id>
