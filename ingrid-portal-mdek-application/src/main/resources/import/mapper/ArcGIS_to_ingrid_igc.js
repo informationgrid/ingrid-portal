@@ -24,35 +24,41 @@ if (log.isDebugEnabled()) {
 
 var mappingDescription = {"mappings":[
 		{	
-			"node":"/igc/data-sources/data-source/general/title",
-  			"xpath":"/metadata/dataIdInfo/idCitation/resTitle"
+  			"srcXpath":"/metadata/dataIdInfo/idCitation/resTitle",
+			"targetNode":"/igc/data-sources/data-source/general/title"
   		},
   		{	
-  			"node":"/igc/data-sources/data-source/general/original-control-identifier",
-  			"xpath":"/metadata/Esri/MetaID"
+  			"srcXpath":"/metadata/Esri/MetaID",
+  			"targetNode":"/igc/data-sources/data-source/general/original-control-identifier"
   		},
-		{	
-			"node":"igc/data-sources/data-source/general/abstract",
-  			"multipleXpath":[
-  			    {
-  			    	"xpath":"/metadata/dataIdInfo/idAbs"
-  			    },
-  			    {
-  			    	"xpath":"/metadata/dataIdInfo/idCitation/resEd",
-  			    	"prefix":"Nummer der Ausgabe/Version: "
-  			    },
-  			    {
-  			    	"xpath":"/metadata/dataIdInfo/idCitation/resEdDate",
-  			    	"prefix":"Datum der Ausgabe/Version: "
-  			    },
-  			    {
-  			    	"xpath":"/metadata/dataIdInfo/dataLang/languageCode/@value",
-  			    	"prefix":"Folgende Sprachen werden im beschriebenen Datensatz verwendet: "
-  			    }
-  			    
-  			]
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/idAbs",
+  			"targetNode":"/igc/data-sources/data-source/general/abstract"
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/idCitation/resEd",
+  			"targetNode":"/igc/data-sources/data-source/general/abstract",
+  			"appendWith":"\n\n",
+  			"prefix":"Nummer der Ausgabe/Version: "
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/idCitation/resEdDate",
+  			"targetNode":"/igc/data-sources/data-source/general/abstract",
+  			"appendWith":"\n\n",
+  			"prefix":"Datum der Ausgabe/Version: "
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/dataLang/languageCode/@value",
+  			"targetNode":"/igc/data-sources/data-source/general/abstract",
+  			"appendWith":"\n\n",
+  			"concatEntriesWith":", ",
+  			"prefix":"Folgende Sprachen werden im beschriebenen Datensatz verwendet: "
+  		},
+  		{	
+  			"srcXpath":"/metadata/idinfo/descript/purpose",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/dataset-intentions"
   		}
-		]};
+	]};
 
 mapToTarget(mappingDescription, source, target);
   	
@@ -61,58 +67,34 @@ function mapToTarget(mapping, source, target) {
 		// iterate over all mapping descriptions
 		for (var i in mapping.mappings) {
 			var m = mapping.mappings[i];
-			if (m.multipleXpath) {
-				for (var j in m.multipleXpath) {
-					var mx = m.multipleXpath[j];
-					log.debug("Working on " + m.node + " with mulipleXpath:'" + mx.xpath + "'")
-					var sourceNodeList = XPathUtils.getNodeList(source, mx.xpath);
-					for (k=0; k<sourceNodeList.getLength(); k++ ) {
-						var value = sourceNodeList.item(k).getTextContent()
-						log.debug("found value: '" + value + '"');
-						// check for transformation
-						if (hasValue(value)) {
-							if (hasValue(mx.transform)) {
-								var args = new Array(value);
-								if (hasValue(mx.transform.params)) {
-									args = args.concat(mx.transform.params);
-								}
-								value = call_f(mx.transform.funct,args);
-							}
-							// select/create target node
-							var node = XPathUtils.createElementFromXPath(target.getDocumentElement(), m.node);
-							var nodeText = "";
-							// make sure that the original content in the target is overwritten
-							if (j > 0) {
-								nodeText = node.getTextContent();
-							}
-							log.debug("found text node: '" + nodeText + "'");
-							if (k > 0) {
-								// if multiple results of the source xpath has been found, separate with ','
-								nodeText += ", ";
-							} else {
-								// separate different xpaths with new lines
-								if (nodeText != "") {
-									nodeText += "\n\n";
-								}
-								// is a prefix has been defined with the xpath? 
-								if (mx.prefix) {
-									nodeText += mx.prefix;
-								}
-							}
-							nodeText += value;
-							log.debug("new text node: '" + nodeText + "'");
-							XMLUtils.createOrReplaceTextNode(node, nodeText);
-							log.debug("adding '" + m.node + "' = '" + nodeText + "'.");
+			log.debug("Working on " + m.targetNode + " with xpath:'" + m.srcXpath + "'")
+			// iterate over all xpath results
+			var sourceNodeList = XPathUtils.getNodeList(source, m.srcXpath);
+			for (j=0; j<sourceNodeList.getLength(); j++ ) {
+				var value = sourceNodeList.item(j).getTextContent()
+				if (hasValue(value) && !value.startsWith("REQUIRED:")) {
+					var nodeText = "";
+					var node = XPathUtils.createElementFromXPath(target.getDocumentElement(), m.targetNode);
+					log.debug("Found node with content: '" + node.getTextContent() + "'")
+					if (j==0) { 
+						// append content to target nodes content?
+						if (m.appendWith && node.getTextContent()) {
+							log.debug("Append to target node...")
+							nodeText = node.getTextContent() + m.appendWith;
+						}
+						// is a prefix has been defined with the xpath? 
+						if (m.prefix) {
+							log.debug("Append prefix...")
+							nodeText += m.prefix;
+						}
+					} else {
+						// concat multiple entries?
+						if (m.concatEntriesWith) {
+							log.debug("concat entries... ")
+							nodeText += m.concatEntriesWith;
 						}
 					}
-				}
-			// presume default simple xpath behaviour
-			} else {
-				log.debug("Working on " + m.node + " with xpath:'" + m.xpath + "'")
-				// iterate over all xpath results
-				var sourceNodeList = XPathUtils.getNodeList(source, m.xpath);
-				for (j=0; j<sourceNodeList.getLength(); j++ ) {
-					var value = sourceNodeList.item(j).getTextContent()
+					
 					// check for transformation
 					if (hasValue(m.transform)) {
 						var args = new Array(value);
@@ -121,11 +103,11 @@ function mapToTarget(mapping, source, target) {
 						}
 						value = call_f(m.transform.funct,args);
 					}
-					if (hasValue(value)) {
-						node = XPathUtils.createElementFromXPath(target.getDocumentElement(), m.node);
-						XMLUtils.createOrReplaceTextNode(node, value);
-						log.debug("adding '" + m.node + "' = '" + value + "'.");
-					}
+					
+					nodeText += value;
+					
+					XMLUtils.createOrReplaceTextNode(node, nodeText);
+					log.debug("adding '" + m.targetNode + "' = '" + nodeText + "'.");
 				}
 			}
 		}

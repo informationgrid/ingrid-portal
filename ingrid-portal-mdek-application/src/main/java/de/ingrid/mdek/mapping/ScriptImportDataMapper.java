@@ -65,7 +65,6 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 			doMap(parameters);
 	
 			String targetString = toString(docTarget);
-			targetString = XMLUtils.stripNonValidXMLCharacters(targetString);
 			if (log.isDebugEnabled()) {
 				log.debug("Resulting XML:" + targetString);
 			}

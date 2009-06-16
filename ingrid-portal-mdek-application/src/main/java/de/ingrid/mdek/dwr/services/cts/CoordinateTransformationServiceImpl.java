@@ -1,7 +1,6 @@
 package de.ingrid.mdek.dwr.services.cts;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -91,7 +90,7 @@ public class CoordinateTransformationServiceImpl implements CoordinateTransforma
 			// Start the request
 			ctsConnection.connect();
 
-			return (CTSResponse) xstream.fromXML(new InputStreamReader(ctsConnection.getInputStream()));
+			return (CTSResponse) xstream.fromXML(ctsConnection.getInputStream());
 
 		} catch (IOException e) {
 			log.error("Error while communicating with the transformation service", e);

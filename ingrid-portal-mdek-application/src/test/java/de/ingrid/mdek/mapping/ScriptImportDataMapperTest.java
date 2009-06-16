@@ -93,6 +93,10 @@ public class ScriptImportDataMapperTest extends TestCase {
 		
 		assertEquals("Deponie-Messtellen: Abgas", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
 		assertEquals("{CD2A5009-D1E1-4D58-B6E1-FA4B870724BE}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
+		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Folgende Sprachen werden im beschriebenen Datensatz verwendet") > -1);
+		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Datum der Ausgabe/Version") > -1);
+		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Deponiegasverwertung") > -1);
+		
 	}	
 	
 	/*
