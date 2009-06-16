@@ -30,7 +30,29 @@ var mappingDescription = {"mappings":[
   		{	
   			"node":"/igc/data-sources/data-source/general/original-control-identifier",
   			"xpath":"/metadata/Esri/MetaID"
-		}]};
+  		},
+		{	
+			"node":"igc/data-sources/data-source/general/abstract",
+  			"multipleXpath":[
+  			    {
+  			    	"xpath":"/metadata/dataIdInfo/idAbs"
+  			    },
+  			    {
+  			    	"xpath":"/metadata/dataIdInfo/idCitation/resEd",
+  			    	"prefix":"Nummer der Ausgabe/Version: "
+  			    },
+  			    {
+  			    	"xpath":"/metadata/dataIdInfo/idCitation/resEdDate",
+  			    	"prefix":"Datum der Ausgabe/Version: "
+  			    },
+  			    {
+  			    	"xpath":"/metadata/dataIdInfo/dataLang/languageCode/@value",
+  			    	"prefix":"Folgende Sprachen werden im beschriebenen Datensatz verwendet: "
+  			    }
+  			    
+  			]
+  		}
+		]};
 
 mapToTarget(mappingDescription, source, target);
   	
@@ -39,23 +61,71 @@ function mapToTarget(mapping, source, target) {
 		// iterate over all mapping descriptions
 		for (var i in mapping.mappings) {
 			var m = mapping.mappings[i];
-			log.debug("Working on " + m.node + " with xpath:'" + m.xpath + "'")
-			// iterate over all xpath results
-			var sourceNodeList = XPathUtils.getNodeList(source, m.xpath);
-			for (j=0; j<sourceNodeList.getLength(); j++ ) {
-				var value = sourceNodeList.item(j).getTextContent()
-				// check for transformation
-				if (hasValue(m.transform)) {
-					var args = new Array(value);
-					if (hasValue(m.transform.params)) {
-						args = args.concat(m.transform.params);
+			if (m.multipleXpath) {
+				for (var j in m.multipleXpath) {
+					var mx = m.multipleXpath[j];
+					log.debug("Working on " + m.node + " with mulipleXpath:'" + mx.xpath + "'")
+					var sourceNodeList = XPathUtils.getNodeList(source, mx.xpath);
+					for (k=0; k<sourceNodeList.getLength(); k++ ) {
+						var value = sourceNodeList.item(k).getTextContent()
+						log.debug("found value: '" + value + '"');
+						// check for transformation
+						if (hasValue(value)) {
+							if (hasValue(mx.transform)) {
+								var args = new Array(value);
+								if (hasValue(mx.transform.params)) {
+									args = args.concat(mx.transform.params);
+								}
+								value = call_f(mx.transform.funct,args);
+							}
+							// select/create target node
+							var node = XPathUtils.createElementFromXPath(target.getDocumentElement(), m.node);
+							var nodeText = "";
+							// make sure that the original content in the target is overwritten
+							if (j > 0) {
+								nodeText = node.getTextContent();
+							}
+							log.debug("found text node: '" + nodeText + "'");
+							if (k > 0) {
+								// if multiple results of the source xpath has been found, separate with ','
+								nodeText += ", ";
+							} else {
+								// separate different xpaths with new lines
+								if (nodeText != "") {
+									nodeText += "\n\n";
+								}
+								// is a prefix has been defined with the xpath? 
+								if (mx.prefix) {
+									nodeText += mx.prefix;
+								}
+							}
+							nodeText += value;
+							log.debug("new text node: '" + nodeText + "'");
+							XMLUtils.createOrReplaceTextNode(node, nodeText);
+							log.debug("adding '" + m.node + "' = '" + nodeText + "'.");
+						}
 					}
-					value = call_f(m.transform.funct,args);
 				}
-				if (hasValue(value)) {
-					node = XPathUtils.createElementFromXPath(target.getDocumentElement(), m.node);
-					XMLUtils.createOrReplaceTextNode(node, value);
-					log.debug("adding '" + m.node + "' = '" + value + "'.");
+			// presume default simple xpath behaviour
+			} else {
+				log.debug("Working on " + m.node + " with xpath:'" + m.xpath + "'")
+				// iterate over all xpath results
+				var sourceNodeList = XPathUtils.getNodeList(source, m.xpath);
+				for (j=0; j<sourceNodeList.getLength(); j++ ) {
+					var value = sourceNodeList.item(j).getTextContent()
+					// check for transformation
+					if (hasValue(m.transform)) {
+						var args = new Array(value);
+						if (hasValue(m.transform.params)) {
+							args = args.concat(m.transform.params);
+						}
+						value = call_f(m.transform.funct,args);
+					}
+					if (hasValue(value)) {
+						node = XPathUtils.createElementFromXPath(target.getDocumentElement(), m.node);
+						XMLUtils.createOrReplaceTextNode(node, value);
+						log.debug("adding '" + m.node + "' = '" + value + "'.");
+					}
 				}
 			}
 		}
