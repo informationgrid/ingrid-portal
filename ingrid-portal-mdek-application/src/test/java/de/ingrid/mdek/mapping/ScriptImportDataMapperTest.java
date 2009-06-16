@@ -97,7 +97,31 @@ public class ScriptImportDataMapperTest extends TestCase {
 		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Datum der Ausgabe/Version") > -1);
 		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Deponiegasverwertung") > -1);
 		
-	}	
+	}
+	
+	public final void testTgr02068wat() {
+		
+		exampleXml = "/de/ingrid/mdek/mapping/tgr02068wat.xml";
+		
+		initClassVariables(mapperScriptArcGIS, templateIGC);
+		
+		InputStream data = null;
+		try {
+			// get example file from test resource directory
+			data = (new ClassPathResource(exampleXml)).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		InputStream result = mapper.convert(data);
+		
+		Document doc = getDomFromSourceData(result);
+		
+		assertEquals("[ISO ed. Titel] Wasserkörper Polygone", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
+		assertEquals("{606D692B-004D-4BD1-9364-B18A75614B89}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
+		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("[ISO ed. Nummer der Ausgabe/Version]") > -1);
+		
+	}		
 	
 	/*
 	private byte[] inputStreamToBytes(InputStream in) {

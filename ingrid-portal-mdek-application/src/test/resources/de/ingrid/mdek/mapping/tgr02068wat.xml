@@ -1,0 +1,857 @@
+<?xml version="1.0"?>
+<!--<!DOCTYPE metadata SYSTEM "http://www.esri.com/metadata/esriprof80.dtd">-->
+<metadata xml:lang="de">
+	<Esri>
+		<MetaID>{606D692B-004D-4BD1-9364-B18A75614B89}</MetaID>
+		<CreaDate>20090611</CreaDate>
+		<CreaTime>10302900</CreaTime>
+		<SyncOnce>FALSE</SyncOnce>
+		<SyncDate>20090611</SyncDate>
+		<SyncTime>14421700</SyncTime>
+		<ModDate>20090611</ModDate>
+		<ModTime>14421700</ModTime>
+	</Esri>
+	<idinfo>
+		<native Sync="TRUE">
+			Microsoft Windows XP Version 5.1 (Build 2600) Service Pack
+			3; ESRI ArcCatalog 9.3.1.1850
+		</native>
+		<descript>
+			<langdata Sync="TRUE">de</langdata>
+			<abstract>
+				REQUIRED: A brief narrative summary of the data set.
+			</abstract>
+			<purpose>
+				REQUIRED: A summary of the intentions with which the
+				data set was developed.
+			</purpose>
+		</descript>
+		<citation>
+			<citeinfo>
+				<origin>
+					REQUIRED: The name of an organization or individual
+					that developed the data set.
+				</origin>
+				<pubdate>
+					REQUIRED: The date when the data set is published or
+					otherwise made available for release.
+				</pubdate>
+				<title Sync="TRUE">tgr02068wat</title>
+				<ftname Sync="TRUE">tgr02068wat</ftname>
+				<geoform Sync="TRUE">vector digital data</geoform>
+				<onlink Sync="TRUE">
+					\\KLENKE-DESKTOP\C$\mart\arcgis\tgr02068wat.shp
+				</onlink>
+			</citeinfo>
+		</citation>
+		<timeperd>
+			<current>
+				REQUIRED: The basis on which the time period of content
+				information is determined.
+			</current>
+			<timeinfo>
+				<sngdate>
+					<caldate>
+						REQUIRED: The year (and optionally month, or
+						month and day) for which the data set
+						corresponds to the ground.
+					</caldate>
+				</sngdate>
+			</timeinfo>
+		</timeperd>
+		<status>
+			<progress>REQUIRED: The state of the data set.</progress>
+			<update>
+				REQUIRED: The frequency with which changes and additions
+				are made to the data set after the initial data set is
+				completed.
+			</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc Sync="TRUE">
+					REQUIRED: Western-most coordinate of the limit of
+					coverage expressed in longitude.
+				</westbc>
+				<eastbc Sync="TRUE">
+					REQUIRED: Eastern-most coordinate of the limit of
+					coverage expressed in longitude.
+				</eastbc>
+				<northbc Sync="TRUE">
+					REQUIRED: Northern-most coordinate of the limit of
+					coverage expressed in latitude.
+				</northbc>
+				<southbc Sync="TRUE">
+					REQUIRED: Southern-most coordinate of the limit of
+					coverage expressed in latitude.
+				</southbc>
+			</bounding>
+			<lboundng>
+				<leftbc Sync="TRUE">-152.739533</leftbc>
+				<rightbc Sync="TRUE">-148.607063</rightbc>
+				<bottombc Sync="TRUE">62.846780</bottombc>
+				<topbc Sync="TRUE">64.358878</topbc>
+			</lboundng>
+		</spdom>
+		<keywords>
+			<theme>
+				<themekt>
+					REQUIRED: Reference to a formally registered
+					thesaurus or a similar authoritative source of theme
+					keywords.
+				</themekt>
+				<themekey>
+					REQUIRED: Common-use word or phrase used to describe
+					the subject of the data set.
+				</themekey>
+			</theme>
+		</keywords>
+		<accconst>
+			REQUIRED: Restrictions and legal prerequisites for accessing
+			the data set.
+		</accconst>
+		<useconst>
+			REQUIRED: Restrictions and legal prerequisites for using the
+			data set after access is granted.
+		</useconst>
+		<natvform Sync="TRUE">Shapefile</natvform>
+	</idinfo>
+	<dataIdInfo>
+		<envirDesc Sync="TRUE">
+			Microsoft Windows XP Version 5.1 (Build 2600) Service Pack
+			3; ESRI ArcCatalog 9.3.1.1850
+		</envirDesc>
+		<idCitation>
+			<resTitle>[ISO ed. Titel] Wasserkörper Polygone</resTitle>
+			<presForm>
+				<PresFormCd Sync="TRUE" value="005"></PresFormCd>
+			</presForm>
+			<resEd>[ISO ed. Nummer der Ausgabe/Version]</resEd>
+			<resAltTitle>[ISO ed. Alternativitel] 1</resAltTitle>
+			<resAltTitle>[ISO ed. Alternativitel] 2</resAltTitle>
+			<resAltTitle>[ISO ed. Alternativitel] n</resAltTitle>
+			<resEdDate>20090601</resEdDate>
+			<resRefDate>
+				<refDate>20080101</refDate>
+				<refDateType>
+					<DateTypCd value="001"></DateTypCd>
+				</refDateType>
+			</resRefDate>
+			<citRespParty>
+				<rpIndName>[ISO Ed. Ihr Nahme] Martin Klenke</rpIndName>
+				<rpOrgName>
+					[ISO Ed. Ihre Organisation] Koordinierungsstelle
+					PortalU
+				</rpOrgName>
+				<rpPosName>
+					[ISO Ed. Ihre Position] Technischer Projektleiter
+				</rpPosName>
+				<role>
+					<RoleCd value="003"></RoleCd>
+				</role>
+				<rpCntInfo>
+					<cntAddress>
+						<delPoint>
+							[ISO Ed. Auslieferungsort] Hannover
+							Langenhagen
+						</delPoint>
+						<city>[ISO Ed. Stadt] Hannover</city>
+						<adminArea>
+							[ISO Ed. Land] Niedersachsen
+						</adminArea>
+						<postCode>[ISO Ed. PLZ] 30169</postCode>
+						<eMailAdd>
+							[ISO Ed. E-Mailadr.] kst@portalu.de
+						</eMailAdd>
+						<country>de</country>
+					</cntAddress>
+					<cntPhone>
+						<voiceNum>
+							[ISO Ed. Tel] +49 (0)511 120 3407
+						</voiceNum>
+						<faxNum>
+							[ISO Ed. Fax] +40 (0)511 120 0000
+						</faxNum>
+					</cntPhone>
+				</rpCntInfo>
+			</citRespParty>
+			<citRespParty>
+				<rpIndName>
+					[ISO Ed. Anlaufstelle 2-Name der Anl.stelle] KSt
+					PortalU
+				</rpIndName>
+				<rpOrgName>
+					[ISO Ed. Anlaufstelle 2-Name der Org. d. Anl.stelle]
+					Niedersächsisches Umweltministerium
+				</rpOrgName>
+				<rpPosName>
+					[ISO Ed. Anlaufstelle 2-Position der Anl.stelle
+					innerh. d. Org.] Referat
+				</rpPosName>
+				<rpCntInfo>
+					<cntAddress>
+						<delPoint>
+							[ISO Ed. Anlaufstelle 2-Auslieferungsort]
+							abc
+						</delPoint>
+						<city>[ISO Ed. Anlaufstelle 2-Stadt] def</city>
+						<adminArea>
+							[ISO Ed. Anlaufstelle 2-Land] ghi
+						</adminArea>
+						<postCode>
+							[ISO Ed. Anlaufstelle 2-PLZ] 123
+						</postCode>
+						<eMailAdd>
+							[ISO Ed. Anlaufstelle 2-E-Mail] a@b.c
+						</eMailAdd>
+						<country>it</country>
+					</cntAddress>
+					<cntPhone>
+						<voiceNum>
+							[ISO Ed. Anlaufstelle 2-Tel.] 456
+						</voiceNum>
+						<faxNum>
+							[ISO Ed. Anlaufstelle 2-Fax] 789
+						</faxNum>
+					</cntPhone>
+				</rpCntInfo>
+				<role>
+					<RoleCd value="010"></RoleCd>
+				</role>
+			</citRespParty>
+			<resRefDate>
+				<refDate>20080505</refDate>
+				<refDateType>
+					<DateTypCd value="003"></DateTypCd>
+				</refDateType>
+			</resRefDate>
+			<resRefDate>
+				<refDate>19661004</refDate>
+				<refDateType>
+					<DateTypCd value="002"></DateTypCd>
+				</refDateType>
+			</resRefDate>
+		</idCitation>
+		<spatRpType>
+			<SpatRepTypCd Sync="TRUE" value="001"></SpatRepTypCd>
+		</spatRpType>
+		<dataExt>
+			<geoEle>
+				<GeoBndBox esriExtentType="native">
+					<westBL Sync="TRUE">-152.739533</westBL>
+					<eastBL Sync="TRUE">-148.607063</eastBL>
+					<northBL Sync="TRUE">64.358878</northBL>
+					<southBL Sync="TRUE">62.84678</southBL>
+					<exTypeCode Sync="TRUE">1</exTypeCode>
+				</GeoBndBox>
+			</geoEle>
+			<tempEle>
+				<TempExtent>
+					<exTemp>
+						<TM_GeometricPrimitive>
+							<TM_Period>
+								<begin>20000404T000001</begin>
+								<end>20010405T223344</end>
+							</TM_Period>
+						</TM_GeometricPrimitive>
+					</exTemp>
+				</TempExtent>
+			</tempEle>
+			<vertEle>
+				<vertMinVal>2,2</vertMinVal>
+				<vertMaxVal>100,6</vertMaxVal>
+				<vertUoM>
+					<uomName>Meter</uomName>
+					<conversionToISOstandardUnit>
+						1 Meter = 1 m
+					</conversionToISOstandardUnit>
+				</vertUoM>
+				<vertDatum>
+					<datumID>
+						<identCode>
+							European Vertical Reference Frame 2000
+						</identCode>
+					</datumID>
+				</vertDatum>
+			</vertEle>
+		</dataExt>
+		<dataLang>
+			<languageCode value="de"></languageCode>
+		</dataLang>
+		<dataLang>
+			<languageCode value="ar"></languageCode>
+		</dataLang>
+		<dataLang>
+			<languageCode value="be"></languageCode>
+		</dataLang>
+		<idAbs>[ISO Ed.] Kurzfassung Datensatz Inhalt</idAbs>
+		<tpCat>
+			<TopicCatCd value="004"></TopicCatCd>
+		</tpCat>
+		<tpCat>
+			<TopicCatCd value="015"></TopicCatCd>
+		</tpCat>
+		<tpCat>
+			<TopicCatCd value="007"></TopicCatCd>
+		</tpCat>
+		<resMaint>
+			<maintFreq>
+				<MaintFreqCd value="007"></MaintFreqCd>
+			</maintFreq>
+			<dateNext>20100501</dateNext>
+		</resMaint>
+		<resConst>
+			<Consts>
+				<useLimit>
+					[ISO Ed. Verwendungsbeschränkung 1] abc
+				</useLimit>
+				<useLimit>
+					[ISO Ed. Verwendungsbeschränkung 2] def
+				</useLimit>
+			</Consts>
+			<LegConsts>
+				<accessConsts>
+					<RestrictCd value="001"></RestrictCd>
+				</accessConsts>
+				<accessConsts>
+					<RestrictCd value="004"></RestrictCd>
+				</accessConsts>
+				<accessConsts>
+					<RestrictCd value="007"></RestrictCd>
+				</accessConsts>
+				<useConsts>
+					<RestrictCd value="002"></RestrictCd>
+				</useConsts>
+				<useConsts>
+					<RestrictCd value="005"></RestrictCd>
+				</useConsts>
+				<useConsts>
+					<RestrictCd value="006"></RestrictCd>
+				</useConsts>
+				<othConsts>
+					[ISO Ed. weitere gesetzl. Beschr.] Beschr. 1
+				</othConsts>
+				<othConsts>
+					[ISO Ed. weitere gesetzl. Beschr.] Beschr. 2
+				</othConsts>
+				<othConsts>
+					[ISO Ed. weitere gesetzl. Beschr.] Beschr. n
+				</othConsts>
+				<accessConsts>
+					<RestrictCd value="008"></RestrictCd>
+				</accessConsts>
+				<useConsts>
+					<RestrictCd value="008"></RestrictCd>
+				</useConsts>
+			</LegConsts>
+			<SecConsts>
+				<class>
+					<ClasscationCd value="005"></ClasscationCd>
+				</class>
+			</SecConsts>
+		</resConst>
+		<dataScale>
+			<equScale>
+				<rfDenom>10.000/20.000</rfDenom>
+			</equScale>
+		</dataScale>
+		<dataScale>
+			<scaleDist>
+				<value>444</value>
+				<uom>
+					<UomScale>
+						<uomName>Fuß (US Survey)</uomName>
+						<conversionToISOstandardUnit>
+							1 Fuß = 0.304801 m
+						</conversionToISOstandardUnit>
+					</UomScale>
+				</uom>
+			</scaleDist>
+		</dataScale>
+		<descKeys KeyTypCd="005">
+			<keyTyp>
+				<KeyTypCd value="005"></KeyTypCd>
+			</keyTyp>
+			<keyword>[ISO Ed. Themenschlagwort] 1</keyword>
+			<keyword>[ISO Ed. Themenschlagwort] 2</keyword>
+			<keyword>[ISO Ed. Themenschlagwort] n</keyword>
+			<thesaName>
+				<resTitle>UMTHES</resTitle>
+				<resRefDate>
+					<refDate>20000101</refDate>
+					<refDateType>
+						<DateTypCd value="001"></DateTypCd>
+					</refDateType>
+				</resRefDate>
+			</thesaName>
+		</descKeys>
+		<descKeys KeyTypCd="005">
+			<keyTyp>
+				<KeyTypCd value="005"></KeyTypCd>
+			</keyTyp>
+			<keyword>[ISO Ed. Thema Schlagwörter 2] x</keyword>
+			<keyword>[ISO Ed. Thema Schlagwörter 2] y</keyword>
+			<keyword>[ISO Ed. Thema Schlagwörter 2] z</keyword>
+			<thesaName>
+				<resTitle>GEMET</resTitle>
+				<resRefDate>
+					<refDate>19730205</refDate>
+					<refDateType>
+						<DateTypCd value="001"></DateTypCd>
+					</refDateType>
+				</resRefDate>
+			</thesaName>
+		</descKeys>
+		<descKeys KeyTypCd="002">
+			<keyTyp>
+				<KeyTypCd value="002"></KeyTypCd>
+			</keyTyp>
+			<keyword>[ISO Ed. Orts-Schlagwöretr 1] Eime</keyword>
+			<keyword>[ISO Ed. Orts-Schlagwöretr 1] Külf</keyword>
+			<keyword>[ISO Ed. Orts-Schlagwöretr 1] Sonnenberg</keyword>
+			<thesaName>
+				<resTitle>WFS GN-DE</resTitle>
+				<resRefDate>
+					<refDate>20000429</refDate>
+					<refDateType>
+						<DateTypCd value="002"></DateTypCd>
+					</refDateType>
+				</resRefDate>
+			</thesaName>
+		</descKeys>
+		<descKeys KeyTypCd="002">
+			<keyTyp>
+				<KeyTypCd value="002"></KeyTypCd>
+			</keyTyp>
+			<keyword>[ISO Ed. Orts-Schlagwöretr 2] Hannover</keyword>
+			<keyword>[ISO Ed. Orts-Schlagwöretr 2] Langenhagen</keyword>
+			<keyword>[ISO Ed. Orts-Schlagwöretr 2] Sarstedt</keyword>
+			<thesaName>
+				<resTitle>UMTHES Geothesaurus</resTitle>
+				<resRefDate>
+					<refDate>18780813</refDate>
+				</resRefDate>
+			</thesaName>
+		</descKeys>
+		<descKeys KeyTypCd="004">
+			<keyTyp>
+				<KeyTypCd value="004"></KeyTypCd>
+			</keyTyp>
+			<keyword>[ISO Ed. Zeit-Schlagwörter 1] Gotik</keyword>
+			<keyword>[ISO Ed. Zeit-Schlagwörter 1] Moderne</keyword>
+			<keyword>[ISO Ed. Zeit-Schlagwörter 1] Romantik</keyword>
+			<thesaName>
+				<resTitle>Kruse's Epochenthesaurus</resTitle>
+				<resRefDate>
+					<refDate>19990401</refDate>
+					<refDateType>
+						<DateTypCd value="003"></DateTypCd>
+					</refDateType>
+				</resRefDate>
+			</thesaName>
+		</descKeys>
+		<descKeys KeyTypCd="004">
+			<keyTyp>
+				<KeyTypCd value="004"></KeyTypCd>
+			</keyTyp>
+			<keyword>[ISO Ed. Zeit-Schlagwörter 2] Archaikum</keyword>
+			<keyword>[ISO Ed. Zeit-Schlagwörter 2] Kreide</keyword>
+			<keyword>[ISO Ed. Zeit-Schlagwörter 2] Basilikum</keyword>
+			<thesaName>
+				<resTitle>SNS Umweltchronik</resTitle>
+				<resRefDate>
+					<refDate>20000403</refDate>
+					<refDateType>
+						<DateTypCd value="003"></DateTypCd>
+					</refDateType>
+				</resRefDate>
+			</thesaName>
+		</descKeys>
+		<descKeys KeyTypCd="003">
+			<keyTyp>
+				<KeyTypCd value="003"></KeyTypCd>
+			</keyTyp>
+			<keyword>[ISO Ed. Stratum-Schlagwörter 1] aaa</keyword>
+			<keyword>[ISO Ed. Stratum-Schlagwörter 1] bbb</keyword>
+			<keyword>[ISO Ed. Stratum-Schlagwörter 1] ccc</keyword>
+			<thesaName>
+				<resTitle>stratum thesaurus 1</resTitle>
+			</thesaName>
+		</descKeys>
+		<descKeys KeyTypCd="003">
+			<keyTyp>
+				<KeyTypCd value="003"></KeyTypCd>
+			</keyTyp>
+			<keyword>[ISO Ed. Stratum-Schlagwörter 2] jjj</keyword>
+			<keyword>[ISO Ed. Stratum-Schlagwörter 2] kkk</keyword>
+			<keyword>[ISO Ed. Stratum-Schlagwörter 2] mmm</keyword>
+			<thesaName>
+				<resRefDate>
+					<refDate>20000702</refDate>
+					<refDateType>
+						<DateTypCd value="001"></DateTypCd>
+					</refDateType>
+				</resRefDate>
+			</thesaName>
+		</descKeys>
+		<descKeys KeyTypCd="001">
+			<keyTyp>
+				<KeyTypCd value="001"></KeyTypCd>
+			</keyTyp>
+			<keyword>[ISO Ed. Disziplin-Schlagwörter 1] a</keyword>
+			<keyword>[ISO Ed. Disziplin-Schlagwörter 1] b</keyword>
+			<keyword>[ISO Ed. Disziplin-Schlagwörter 1] c</keyword>
+			<keyword>[ISO Ed. Disziplin-Schlagwörter 1] d</keyword>
+			<thesaName>
+				<resTitle>Disziplinen-Thesaurus</resTitle>
+			</thesaName>
+		</descKeys>
+		<descKeys KeyTypCd="001">
+			<keyTyp>
+				<KeyTypCd value="001"></KeyTypCd>
+			</keyTyp>
+			<keyword>[ISO Ed. Disziplin-Schlagwörter 2]</keyword>
+			<keyword>[ISO Ed. Disziplin-Schlagwörter 2]</keyword>
+			<thesaName>
+				<resTitle>Disziplinthesaurus 2</resTitle>
+				<resRefDate>
+					<refDate>20010203</refDate>
+					<refDateType>
+						<DateTypCd value="001"></DateTypCd>
+					</refDateType>
+				</resRefDate>
+			</thesaName>
+		</descKeys>
+		<geoBox>
+			<northBL>53,2</northBL>
+			<westBL>7,9</westBL>
+			<eastBL>8.2</eastBL>
+			<southBL>50,7</southBL>
+		</geoBox>
+	</dataIdInfo>
+	<metainfo>
+		<langmeta Sync="TRUE">de</langmeta>
+		<metstdn Sync="TRUE">
+			FGDC Content Standards for Digital Geospatial Metadata
+		</metstdn>
+		<metstdv Sync="TRUE">FGDC-STD-001-1998</metstdv>
+		<mettc Sync="TRUE">local time</mettc>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntper>
+						REQUIRED: The person responsible for the
+						metadata information.
+					</cntper>
+					<cntorg>
+						REQUIRED: The organization responsible for the
+						metadata information.
+					</cntorg>
+				</cntorgp>
+				<cntaddr>
+					<addrtype>
+						REQUIRED: The mailing and/or physical address
+						for the organization or individual.
+					</addrtype>
+					<city>REQUIRED: The city of the address.</city>
+					<state>
+						REQUIRED: The state or province of the address.
+					</state>
+					<postal>
+						REQUIRED: The ZIP or other postal code of the
+						address.
+					</postal>
+				</cntaddr>
+				<cntvoice>
+					REQUIRED: The telephone number by which individuals
+					can speak to the organization or individual.
+				</cntvoice>
+			</cntinfo>
+		</metc>
+		<metd Sync="TRUE">20090611</metd>
+		<metextns>
+			<onlink Sync="TRUE">
+				http://www.esri.com/metadata/esriprof80.html
+			</onlink>
+			<metprof Sync="TRUE">ESRI Metadata Profile</metprof>
+		</metextns>
+	</metainfo>
+	<mdLang>
+		<languageCode Sync="TRUE" value="de"></languageCode>
+	</mdLang>
+	<mdStanName Sync="TRUE">
+		ISO 19115 Geographic Information - Metadata
+	</mdStanName>
+	<mdStanVer Sync="TRUE"># 11108</mdStanVer>
+	<mdChar>
+		<CharSetCd Sync="TRUE" value="# 11111"></CharSetCd>
+	</mdChar>
+	<mdHrLv>
+		<ScopeCd Sync="TRUE" value="# 11109"></ScopeCd>
+	</mdHrLv>
+	<mdHrLvName Sync="TRUE"># 11110</mdHrLvName>
+	<distinfo>
+		<resdesc Sync="TRUE">Downloadable Data</resdesc>
+		<stdorder>
+			<digform>
+				<digtinfo>
+					<transize Sync="TRUE">0,044</transize>
+					<dssize Sync="TRUE">0,044</dssize>
+				</digtinfo>
+			</digform>
+		</stdorder>
+	</distinfo>
+	<distInfo>
+		<distributor>
+			<distorTran>
+				<onLineSrc>
+					<orDesc Sync="TRUE">002</orDesc>
+					<linkage Sync="TRUE">
+						file://\\KLENKE-DESKTOP\C$\mart\arcgis\tgr02068wat.shp
+					</linkage>
+					<protocol Sync="TRUE">Local Area Network</protocol>
+					<orFunct>
+						<OnFunctCd value="002"></OnFunctCd>
+					</orFunct>
+				</onLineSrc>
+				<transSize Sync="TRUE">0,023</transSize>
+				<offLineMed>
+					<medName>
+						<MedNameCd value="001"></MedNameCd>
+					</medName>
+				</offLineMed>
+				<onLineSrc>
+					<linkage>Server=xxx</linkage>
+					<protocol>Zugreifen</protocol>
+					<orFunct>
+						<OnFunctCd value="005"></OnFunctCd>
+					</orFunct>
+					<orDesc>Genauere Beschreibung des Zugriffs</orDesc>
+				</onLineSrc>
+			</distorTran>
+			<distorFormat>
+				<formatName>
+					[ISO Ed. Veröffentlichungsformat 1 Name des Formats]
+					Shapefile
+				</formatName>
+				<formatVer>
+					[ISO Ed. Veröffentlichungsformat 1Version des
+					Datenformats] 1.1.1
+				</formatVer>
+			</distorFormat>
+			<distorCont>
+				<rpIndName>
+					[ISO Ed. Verteiler] Name des Verteilers
+				</rpIndName>
+				<rpOrgName>
+					[ISO Ed. Verteiler] Institution des Verteilers
+				</rpOrgName>
+				<rpPosName>
+					[ISO Ed. Verteiler] Position des Verteilers innerh.
+					d. Inst.
+				</rpPosName>
+				<rpCntInfo>
+					<cntAddress>
+						<delPoint>
+							[ISO Ed. Verteiler] Auslieferungsort
+						</delPoint>
+						<city>[ISO Ed. Verteiler] Stadt</city>
+						<adminArea>[ISO Ed. Verteiler] Land</adminArea>
+						<postCode>[ISO Ed. Verteiler] PLZ</postCode>
+						<eMailAdd>[ISO Ed. Verteiler] x@y.z</eMailAdd>
+						<country>dz</country>
+					</cntAddress>
+					<cntPhone>
+						<voiceNum>[ISO Ed. Verteiler] 123</voiceNum>
+						<faxNum>[ISO Ed. Verteiler] 456</faxNum>
+					</cntPhone>
+				</rpCntInfo>
+				<role>
+					<RoleCd value="001"></RoleCd>
+				</role>
+			</distorCont>
+			<distorFormat>
+				<formatName>
+					[ISO Ed. Veröffentlichungsformat 2 Name des Formats]
+					E00
+				</formatName>
+				<formatVer>
+					[ISO Ed. Veröffentlichungsformat 2 Version des
+					Datenformats] 9.9.9
+				</formatVer>
+			</distorFormat>
+			<distorOrdPrc>
+				<ordInstr>
+					[ISO Ed. Bestellvorgang 1 Bestellhinweise] abc
+				</ordInstr>
+				<resFees>
+					[ISO Ed. Bestellvorgang 1 Gebühren/Bedingungen] abc
+				</resFees>
+				<ordTurn>
+					[ISO Ed. Bestellvorgang 1 Dauer] 5 Wochen
+				</ordTurn>
+			</distorOrdPrc>
+			<distorOrdPrc>
+				<ordInstr>
+					[ISO Ed. Bestellvorgang 2 Bestellhinweise] ghj
+				</ordInstr>
+				<resFees>
+					[ISO Ed. Bestellvorgang 2 Gebühren/Bedingungen] löä
+				</resFees>
+				<ordTurn>
+					[ISO Ed. Bestellvorgang 2 Dauer] 1 Tag
+				</ordTurn>
+			</distorOrdPrc>
+		</distributor>
+	</distInfo>
+	<spdoinfo>
+		<direct Sync="TRUE">Vector</direct>
+		<ptvctinf>
+			<esriterm Name="tgr02068wat">
+				<efeatyp Sync="TRUE">Simple</efeatyp>
+				<efeageom Sync="TRUE">Polygon</efeageom>
+				<esritopo Sync="TRUE">FALSE</esritopo>
+				<efeacnt Sync="TRUE">29</efeacnt>
+				<spindex Sync="TRUE">FALSE</spindex>
+				<linrefer Sync="TRUE">FALSE</linrefer>
+			</esriterm>
+			<sdtsterm Name="tgr02068wat">
+				<sdtstype Sync="TRUE">G-polygon</sdtstype>
+				<ptvctcnt Sync="TRUE">29</ptvctcnt>
+			</sdtsterm>
+		</ptvctinf>
+	</spdoinfo>
+	<spatRepInfo>
+		<VectSpatRep>
+			<topLvl>
+				<TopoLevCd Sync="TRUE" value="001"></TopoLevCd>
+			</topLvl>
+			<geometObjs Name="tgr02068wat">
+				<geoObjTyp>
+					<GeoObjTypCd Sync="TRUE" value="001"></GeoObjTypCd>
+				</geoObjTyp>
+				<geoObjCnt Sync="TRUE">29</geoObjCnt>
+			</geometObjs>
+		</VectSpatRep>
+	</spatRepInfo>
+	<eainfo>
+		<detailed Name="tgr02068wat">
+			<enttyp>
+				<enttypl Sync="TRUE">tgr02068wat</enttypl>
+				<enttypt Sync="TRUE">Feature Class</enttypt>
+				<enttypc Sync="TRUE">29</enttypc>
+			</enttyp>
+			<attr>
+				<attrlabl Sync="TRUE">FID</attrlabl>
+				<attalias Sync="TRUE">FID</attalias>
+				<attrtype Sync="TRUE">OID</attrtype>
+				<attwidth Sync="TRUE">4</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+				<attrdef Sync="TRUE">Internal feature number.</attrdef>
+				<attrdefs Sync="TRUE">ESRI</attrdefs>
+				<attrdomv>
+					<udom Sync="TRUE">
+						Sequential unique whole numbers that are
+						automatically generated.
+					</udom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">Shape</attrlabl>
+				<attalias Sync="TRUE">Shape</attalias>
+				<attrtype Sync="TRUE">Geometry</attrtype>
+				<attwidth Sync="TRUE">0</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+				<attrdef Sync="TRUE">Feature geometry.</attrdef>
+				<attrdefs Sync="TRUE">ESRI</attrdefs>
+				<attrdomv>
+					<udom Sync="TRUE">
+						Coordinates defining the features.
+					</udom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">ID</attrlabl>
+				<attalias Sync="TRUE">ID</attalias>
+				<attrtype Sync="TRUE">Number</attrtype>
+				<attwidth Sync="TRUE">8</attwidth>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">COUNTY</attrlabl>
+				<attalias Sync="TRUE">COUNTY</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">5</attwidth>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">CFCC</attrlabl>
+				<attalias Sync="TRUE">CFCC</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">3</attwidth>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">LANDNAME</attrlabl>
+				<attalias Sync="TRUE">LANDNAME</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">30</attwidth>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">LANDPOLY</attrlabl>
+				<attalias Sync="TRUE">LANDPOLY</attalias>
+				<attrtype Sync="TRUE">Number</attrtype>
+				<attwidth Sync="TRUE">10</attwidth>
+			</attr>
+		</detailed>
+	</eainfo>
+	<mdDateSt Sync="TRUE">20090611</mdDateSt>
+	<mdContact>
+		<rpIndName>[ISO Ed. Ihr Nahme] Martin Klenke</rpIndName>
+		<rpOrgName>
+			[ISO Ed. Ihre Organisation] Koordinierungsstelle PortalU
+		</rpOrgName>
+		<rpPosName>
+			[ISO Ed. Ihre Position] Technischer Projektleiter
+		</rpPosName>
+		<rpCntInfo>
+			<cntAddress>
+				<delPoint>
+					[ISO Ed. Auslieferungsort] Hannover Langenhagen
+				</delPoint>
+				<city>[ISO Ed. Stadt] Hannover</city>
+				<adminArea>[ISO Ed. Land] Niedersachsen</adminArea>
+				<postCode>[ISO Ed. PLZ] 30169</postCode>
+				<eMailAdd>[ISO Ed. E-Mailadr.] kst@portalu.de</eMailAdd>
+				<country>de</country>
+			</cntAddress>
+			<cntPhone>
+				<voiceNum>[ISO Ed. Tel] +49 (0)511 120 3407</voiceNum>
+				<faxNum>[ISO Ed. Fax] +40 (0)511 120 0000</faxNum>
+			</cntPhone>
+		</rpCntInfo>
+		<role>
+			<RoleCd value="003"></RoleCd>
+		</role>
+	</mdContact>
+	<dqInfo>
+		<dataLineage>
+			<statement>
+				[ISO Ed. Geschichte des datasets] xyz Zeilenumbruch
+
+				Doppelter Zeilenumbruch
+			</statement>
+		</dataLineage>
+		<dqScope>
+			<scpLvl>
+				<ScopeCd value="005"></ScopeCd>
+			</scpLvl>
+		</dqScope>
+	</dqInfo>
+	<refSysInfo>
+		<RefSystem>
+			<refSysID>
+				<identCode>Gauss -Kruger</identCode>
+			</refSysID>
+		</RefSystem>
+	</refSysInfo>
+</metadata>
