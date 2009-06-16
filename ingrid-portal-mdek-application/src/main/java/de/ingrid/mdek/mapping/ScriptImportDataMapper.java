@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -21,6 +22,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
+
+import de.ingrid.utils.xml.XMLUtils;
 
 public class ScriptImportDataMapper implements ImportDataMapper {
 	
@@ -62,11 +65,15 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 			doMap(parameters);
 	
 			String targetString = toString(docTarget);
+			targetString = XMLUtils.stripNonValidXMLCharacters(targetString);
 			if (log.isDebugEnabled()) {
 				log.debug("Resulting XML:" + targetString);
 			}
-			targetStream = new ByteArrayInputStream(targetString.getBytes());
+			targetStream = new ByteArrayInputStream(targetString.getBytes("UTF-8"));
 		} catch (TransformerException e) {
+			log.error("Error while transforming Document to String!");
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
 			log.error("Error while transforming Document to String!");
 			e.printStackTrace();
 		}
