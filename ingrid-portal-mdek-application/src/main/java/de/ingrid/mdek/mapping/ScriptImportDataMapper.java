@@ -1,11 +1,14 @@
 package de.ingrid.mdek.mapping;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 import javax.script.ScriptEngine;
@@ -13,16 +16,15 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
+import de.ingrid.mdek.MdekUtils;
+import de.ingrid.mdek.xml.XMLKeys;
 import de.ingrid.utils.xml.XMLUtils;
 
 public class ScriptImportDataMapper implements ImportDataMapper {
@@ -36,7 +38,11 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 	
 	// Injected by Spring
 	private InputStream template;
-	
+
+	// Injected by Spring
+	private ImportDataProvider dataProvider;
+
+
 	public InputStream convert(InputStream data) {
 		Map<String, Object> parameters = new Hashtable<String, Object>();
 		InputStream targetStream = null;
@@ -44,27 +50,29 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 		try {
 			// get DOM-tree from XML-file
 			Document doc = getDomFromSourceData(data);
+			// close the input file after it was read
+			data.close();
 			
 			// get DOM-tree from template-file
 			Document docTarget = getDomFromSourceData(template);
+			// reset the template file for further usage
+			// since it is injected by Spring you shouldn't close it because it
+			// will be used for further imports
+			template.reset();
 			
-					//*****************
-					/*
-					XPath xpath = XPathFactory.newInstance().newXPath();
-					Node node = null;
-					try {
-						node = (Node) xpath.evaluate("//igc/data-sources/data-source/general/title", doc, XPathConstants.NODE);
-					} catch (XPathExpressionException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
-					//*****************
+			preProcessMapping(docTarget);
 			
 		    parameters.put("source", doc);
 		    parameters.put("target", docTarget);
+		    // the template represents only one object!
+		    // Better if docTarget is only header and footer where
+		    // new objects made from template will be put into?
+		    //parameters.put("template", template);
 			doMap(parameters);
-	
-			String targetString = toString(docTarget);
+			// reset mapper script ... see explanation for template.reset()!
+			mapperScript.reset();
+			
+			String targetString = XMLUtils.toString(docTarget);
 			if (log.isDebugEnabled()) {
 				log.debug("Resulting XML:" + targetString);
 			}
@@ -75,11 +83,113 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 		} catch (UnsupportedEncodingException e) {
 			log.error("Error while transforming Document to String!");
 			e.printStackTrace();
+		} catch (Exception e) {
+			log.error("Error while converting!");
+			e.printStackTrace();
 		}
 		
 		return targetStream;
 	}
 	
+	/**
+	 * After the mapping the document will be checked for importan information
+	 * that have to be available for saving it.
+	 * @param docTarget, the mapped document
+	 */
+	private void preProcessMapping(Document docTarget) {
+//		String title = XPathUtils.getString(docTarget, "/igc/data-sources/data-source/general/title");
+		
+		// generate uuid for each object (here only one for each import)
+		// written in backend already
+		//NodeList nodeList = docTarget.getElementsByTagName(XMLKeys.OBJECT_IDENTIFIER);
+		//setValueInNodeList(nodeList, EntityHelper.getInstance().generateUuid());
+		
+		// generate dates for certain fields
+		// written in backend already
+		//setDocumentDates(docTarget);
+		
+		// write language information
+		setDocumentLanguage(docTarget);
+		
+		// write responsible information
+		// written in backend already
+		//setDocumentUuids(docTarget);
+		
+		
+		
+	}
+
+	private void setDocumentLanguage(Document docTarget) {
+		List<NodeList> langNodesList = new ArrayList<NodeList>();
+		langNodesList.add(docTarget.getElementsByTagName(XMLKeys.DATA_LANGUAGE));
+		langNodesList.add(docTarget.getElementsByTagName(XMLKeys.METADATA_LANGUAGE));
+
+		// receive the default values for a syslist ... here language
+		String langId = dataProvider.getInitialKeyFromListId(99999999).toString();
+		String langString = dataProvider.getInitialValueFromListId(99999999);
+		
+		for (NodeList nodeList : langNodesList) {
+			setValueInNodeList(nodeList, langString);
+			setAttributesInNodeList(nodeList, "id", langId.toString());
+		}
+		
+	}
+
+	/**
+	 * Set one value in all tags of the given node list.
+	 * @param nodeList
+	 * @param value
+	 */
+	private void setValueInNodeList(NodeList nodeList, String value) {
+		for (int i=0; i<nodeList.getLength(); i++) {
+			XMLUtils.createOrReplaceTextNode(nodeList.item(i), value);
+		}
+	}
+	
+	/**
+	 * Set one value in all attribute of tags of the given node list.
+	 * @param nodeList
+	 * @param attr
+	 * @param value
+	 */
+	private void setAttributesInNodeList(NodeList nodeList, String attr, String value) {
+		for (int i=0; i<nodeList.getLength(); i++) {
+			XMLUtils.createOrReplaceAttribute(nodeList.item(i), attr, value);
+		}
+	}
+	
+	private void setDocumentDates(Document docTarget) {
+		String timestamp = MdekUtils.dateToTimestamp(new Date());
+		List<NodeList> datesNodesList = new ArrayList<NodeList>();
+		datesNodesList.add(docTarget.getElementsByTagName(XMLKeys.DATE_OF_LAST_MODIFICATION));
+		datesNodesList.add(docTarget.getElementsByTagName(XMLKeys.DATE_OF_CREATION));
+		datesNodesList.add(docTarget.getElementsByTagName(XMLKeys.CONFORMITY_PUBLICATION_DATE));
+		datesNodesList.add(docTarget.getElementsByTagName(XMLKeys.DATASET_REFERENCE_DATE));
+		
+		for (NodeList nodeList : datesNodesList) {
+			setValueInNodeList(nodeList, timestamp);
+		}
+		
+	}
+	
+	private void setDocumentUuids(Document docTarget) {
+		// not possible with JUnit tests since it needs to access user information!
+		String userUuid = dataProvider.getCurrentUserUuid();//MdekSecurityUtils.getCurrentUserUuid();
+		List<NodeList> userNodesList = new ArrayList<NodeList>();
+		// is already set by backend!!!
+		userNodesList.add(docTarget.getElementsByTagName(XMLKeys.MODIFICATOR_IDENTIFIER));
+		userNodesList.add(docTarget.getElementsByTagName(XMLKeys.RESPONSIBLE_IDENTIFIER));
+		
+		for (NodeList nodeList : userNodesList) {
+			setValueInNodeList(nodeList, userUuid);
+		}
+		
+		// set AddressUuid
+		//NodeList nodeList = docTarget.getElementsByTagName(XMLKeys.ADDRESS_IDENTIFIER);
+		//setValueInNodeList(nodeList, MdekSecurityUtils.getCurrentPortalUserData().getAddressUuid());
+	}
+	
+
 	private void doMap(Map<String, Object> parameters) {
         try {
 	        ScriptEngine engine = this.getScriptEngine();
@@ -102,7 +212,7 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 
 	private Document getDomFromSourceData(InputStream data) {
 		Document doc = null;
-		try { 
+		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			//dbf.setNamespaceAware(true);
 			//dbf.setValidating(true);
@@ -136,16 +246,12 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 		this.template = tpl;
 	}
 	
-	 public static String toString(Document document) throws TransformerException { 
-	        StringWriter stringWriter = new StringWriter(); 
-	        StreamResult streamResult = new StreamResult(stringWriter); 
-	        TransformerFactory transformerFactory = TransformerFactory.newInstance(); 
-	        Transformer transformer = transformerFactory.newTransformer(); 
-	        //transformer.setOutputProperty(OutputKeys.INDENT, "yes"); 
-	        //transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2"); 
-	        //transformer.setOutputProperty(OutputKeys.METHOD, "xml"); 
-	        transformer.transform(new DOMSource(document.getDocumentElement()), streamResult); 
-	        return stringWriter.toString(); 
-	     } 
+	public ImportDataProvider getDataProvider() {
+		return dataProvider;
+	}
+
+	public void setDataProvider(ImportDataProvider dataProvider) {
+		this.dataProvider = dataProvider;
+	}
 
 }

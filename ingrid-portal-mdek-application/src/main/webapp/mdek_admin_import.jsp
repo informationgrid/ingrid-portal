@@ -46,6 +46,7 @@ function initCheckboxBehaviour() {
 	// Only one of the checkboxes is allowed to be active
 	var pubImportCheckbox = dojo.widget.byId("publishImportedDatasetsCheckbox");
 	var sepImportCheckbox = dojo.widget.byId("separateImportCheckbox");
+	var importFileType    = dojo.widget.byId("importFileType");
 
 	dojo.event.connect(pubImportCheckbox, "onClick", function(){
 		if (sepImportCheckbox.checked) {
@@ -57,6 +58,8 @@ function initCheckboxBehaviour() {
 			pubImportCheckbox.setValue(false);
 		}
 	});
+	
+	importFileType.setValue("igc");
 }
 
 scriptScope.resetImport = function() {
@@ -64,6 +67,7 @@ scriptScope.resetImport = function() {
 	dojo.widget.byId("importTreeParentAddress").setValue("");
 	dojo.widget.byId("publishImportedDatasetsCheckbox").setValue(false);
 	dojo.widget.byId("separateImportCheckbox").setValue(false);
+	dojo.widget.byId("importFileType").setValue("igc");
 	importTreeSelectedParentDataset = null;
 	importTreeSelectedParentAddress = null;
 }
@@ -327,7 +331,7 @@ function hideLoadingZone() {
 						<span class="label" style="margin-bottom:10.5px;"><label for="importFileType" style="position:absolute;" onclick="javascript:dialog.showContextHelp(arguments[0], 8074, 'Import-Datei')"><fmt:message key="dialog.admin.import.file.type" />:</label>
 							<select dojoType="ingrid:Select" id="importFileType" style="position:absolute;margin-left:90px;">
 								<option value="igc">InGrid Catalog</option>
-								<option value="arcgis1" selected>ArcGIS 1</option>
+								<option value="arcgis1">ArcGIS 1</option>
 								<option value="arcgis2">ArcGIS 2</option>
 							</select>
 						</span>

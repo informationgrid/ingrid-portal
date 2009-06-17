@@ -2,7 +2,6 @@ package de.ingrid.mdek.handler;
 
 import java.util.List;
 
-import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.security.Group;
 import de.ingrid.mdek.beans.security.User;
 

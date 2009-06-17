@@ -3,59 +3,35 @@
 	<data-sources>
 		<data-source>
 			<general>
-				<object-identifier>xxx</object-identifier>
-				<catalogue-identifier>0</catalogue-identifier>
+        <!-- a new object uuid will be generated -->
+				<object-identifier></object-identifier>
+        <!-- the current user will be used here -->
 				<modificator-identifier>xxx</modificator-identifier>
 				<responsible-identifier>xxx</responsible-identifier>
 				<object-class id="0"/>
 				<title>xxxTEMPLATExxx</title>
-				<abstract>.</abstract>
+				<abstract></abstract>
+        <!-- dates will be set automatically during the import -->
 				<date-of-last-modification>xxx</date-of-last-modification>
 				<date-of-creation>xxx</date-of-creation>
-				<topic-categories>
-					<topic-category id="4"/>
-				</topic-categories>
 				<env-information>
 					<is-catalog>N</is-catalog>
 				</env-information>
 			</general>
 			<additional-information>
-				<data-language id="150">Deutsch</data-language>
-				<metadata-language id="150">Deutsch</metadata-language>
-				<publication-condition>1</publication-condition>
-				<conformity>
-					<conformity-specification>INSPIRE-Richtlinie</conformity-specification>
-					<conformity-degree id="3">nicht evaluiert</conformity-degree>
-					<conformity-publication-date>xxx</conformity-publication-date>
-				</conformity>
+        <!-- default language will be set -->
+				<data-language id="x">xxx</data-language>
+				<metadata-language id="x">xxx</metadata-language>
+        <!-- will be set according to import setting -->
+				<publication-condition>0</publication-condition>
 			</additional-information>
-			<spatial-domain>
-				<geo-location>
-					<controlled-location>
-						<location-name id="BUNDESLAND03">xxx</location-name>
-						<location-code>0</location-code>
-					</controlled-location>
-					<bounding-coordinates>
-						<west-bounding-coordinate>0</west-bounding-coordinate>
-						<east-bounding-coordinate>0</east-bounding-coordinate>
-						<north-bounding-coordinate>0</north-bounding-coordinate>
-						<south-bounding-coordinate>0</south-bounding-coordinate>
-					</bounding-coordinates>
-				</geo-location>
-			</spatial-domain>
-			<temporal-domain>
-				<dataset-reference>
-					<dataset-reference-date>xxx</dataset-reference-date>
-					<dataset-reference-type iso-code="1"/>
-				</dataset-reference>
-			</temporal-domain>
-			<subject-terms>
-				<controlled-term id="105" source="INSPIRE">Adressen</controlled-term>
-			</subject-terms>
-			<related-address>
-				<type-of-relation list-id="505" entry-id="7">Auskunft</type-of-relation>
-				<address-identifier>DB30502C-9180-4B68-B881-2A7CB84869DF</address-identifier>
-			</related-address>
+			<spatial-domain></spatial-domain>
+			<subject-terms></subject-terms>
+<!--			<related-address>-->
+        <!-- set address of current user as info address -->
+				<!--<type-of-relation list-id="505" entry-id="7">Auskunft</type-of-relation>
+				<address-identifier>xxx</address-identifier>
+			</related-address>-->
 		</data-source>
 	</data-sources>
 </igc>

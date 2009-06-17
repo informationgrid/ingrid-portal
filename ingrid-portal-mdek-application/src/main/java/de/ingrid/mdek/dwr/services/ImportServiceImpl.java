@@ -32,8 +32,6 @@ public class ImportServiceImpl {
 	public void importEntities(FileTransfer fileTransfer, String fileType, String targetObjectUuid, String targetAddressUuid,
 			boolean publishImmediately, boolean doSeparateImport) {
 
-//		log.debug("File transfer mime type: "+fileTransfer.getMimeType());
-		
 		try {
 			// map source file into icg-target format
 			InputStream preparedImportData = dataMapperFactory.getMapper(fileType).convert(fileTransfer.getInputStream());

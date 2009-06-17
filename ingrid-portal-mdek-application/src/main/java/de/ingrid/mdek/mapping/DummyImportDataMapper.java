@@ -9,4 +9,8 @@ public class DummyImportDataMapper implements ImportDataMapper {
 		return in;
 	}
 
+	public void setDataProvider(ImportDataProvider provider) {
+		// nothing to do here		
+	}
+
 }

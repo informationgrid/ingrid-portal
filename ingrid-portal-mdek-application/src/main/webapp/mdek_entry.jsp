@@ -326,7 +326,7 @@ function hideSplash(){
 	              <div class="inputContainer notRequired">
 	                <span id="uiElement5000" type="optional">
 	                	<span class="label"><label for="generalShortDesc" onclick="javascript:dialog.showContextHelp(arguments[0], 5000)"><script>document.write(message.get("ui.obj.general.shortDescription"))</script></label></span>
-	                	<span class="input"><input type="text" maxlength="40" id="generalShortDesc" name="generalShortDesc" class="w668" dojoType="ingrid:ValidationTextBox" /></span>
+	                	<span class="input"><input type="text" maxlength="255" id="generalShortDesc" name="generalShortDesc" class="w668" dojoType="ingrid:ValidationTextBox" /></span>
 	                </span>
 	          	  </div>
 
