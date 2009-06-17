@@ -66,7 +66,6 @@ var mappingDescription = {"mappings":[
   			"targetNode":"/igc/data-sources/data-source/additional-information/dataset-intentions"
   		},
   		{	
-  			"srcXpath":"/metadata/dataIdInfo/dataExt/tempEle/TempExtent/exTemp/TM_GeometricPrimitive",
   			"execute":{
 				"funct":mapTimeConstraints
 			}
@@ -87,12 +86,12 @@ var mappingDescription = {"mappings":[
   			"srcXpath":"/metadata/dataIdInfo/resMaint/maintFreq/MaintFreqCd/@value",
   			"targetNode":"/igc/data-sources/data-source/temporal-domain/time-period",
   			"transform":{
-				"funct":parseInt
+				"funct":parseToInt
 			}
   		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/idCitation/resAltTitle",
-  			"targetNode":"igc/data-sources/data-source/general/dataset-alternate-name",
+  			"targetNode":"/igc/data-sources/data-source/general/dataset-alternate-name",
   			"concatEntriesWith":", "
   		},
   		{	
@@ -132,13 +131,366 @@ var mappingDescription = {"mappings":[
   			"transform":{
 				"funct":UtilsLanguageCodelist.getCodeFromShortcut
 			}
-  		}
+  		},
+  		{	
+  			// set the obj_class to a fixed value
+  			"defaultValue":"3",
+  			"targetNode":"/igc/data-sources/data-source/general/object-class",
+  			"targetAttribute":"id"
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/dataExt/vertEle/vertMinVal",
+  			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-minimum"
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/dataExt/vertEle/vertMaxVal",
+  			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-maximum"
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/dataExt/vertEle/vertUoM/uomName",
+  			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-unit",
+  			"targetAttribute":"id",
+  			"transform":{
+				"funct":transformGeneric,
+				"params":[{"Fuﬂ":"9002", "Kilometer":"9036", "Meter":"9001", "Zoll":"4"}, false, "Could not map vertical-extent uom name: "]
+			}						    					
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/dataExt/vertEle/vertDatum/datumID/identCode",
+  			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-vdatum",
+  			"targetAttribute":"id",
+  			// check for german (150) name in the code list 101
+  			"transform":{
+				"funct":transformToIgcDomainId,
+				"params":[101, 150, "Could not map vertical-extent vdatum name: "]
+			}						    					
+  		},
+  		{	
+  			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/ordInstr",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions"
+  		},
+  		{	
+  			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/resFees",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
+  			"appendWith":"\n\n"
+  		},
+  		{	
+  			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/ordTurn",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
+  			"appendWith":"\n\n"
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/resConst/Consts/useLimit",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
+  			"appendWith":"\n\n",
+  			"concatEntriesWith":", ",
+  			"prefix":"Verwendungsbeschr‰nkungen: "
+  		},
+  		{	
+  			"execute":{
+				"funct":mapCreateDateTime
+			}
+  		},
+  		{	
+  			"srcXpath":"/metadata/dqInfo/dataLineage/statement",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/technical-base"
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataqual/lineage/procstep/procdesc",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production"
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/envirDesc",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production",
+  			"appendWith":"\n\n"
+  		},
+  		{	
+  			"srcXpath":"/metadata/refSysInfo/RefSystem/refSysID/identCode",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/coordinate-system"
+  		},
+  		{
+  			"srcXpath":"/metadata/refSysInfo/RefSystem/refSysID/identCode",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/coordinate-system",
+  			"targetAttribute":"id",
+  			"transform":{
+				"funct":transformToIgcDomainId,
+				"params":[100, 150, "Could not map vertical-extent vdatum name: "]
+			}						    					
+  		},
+  		{	
+  			"srcXpath":"/metadata/dqInfo/dqScope/scpLvl/ScopeCd/@value",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/hierarchy-level",
+  			"targetAttribute":"iso-code",
+  			"transform":{
+				"funct":parseToInt
+			}
+  		},
+  		{	
+  			"srcXpath":"/metadata/spatRepInfo/VectSpatRep/topLvl/TopoLevCd/@value",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format/vector-topology-level",
+  			"targetAttribute":"iso-code",
+  			"transform":{
+				"funct":parseToInt
+			}
+  		},
+  		{
+  			"execute":{
+				"funct":mapDataScale
+			}
+  		},
+  		{
+  			"srcXpath":"/metadata/dataIdInfo/spatRpType",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
+  			"newNodeName":"spatial-representation-type",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":"SpatRepTypCd/@value",
+			  			"targetNode":"",
+			  			"targetAttribute":"iso-code",
+			  			"transform":{
+							"funct":parseToInt
+						}
+			  		}
+			  	]
+			}
+  		},
+  		{
+  			"srcXpath":"/metadata/eainfo/detailed/attr",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
+  			"newNodeName":"feature-type",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":"attrlabl",
+			  			"targetNode":""
+			  		}
+			  	]
+			}
+  		},
+  		{
+  			"srcXpath":"/metadata/spatRepInfo/VectSpatRep/geometObjs",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format",
+  			"newNodeName":"geo-vector",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":"geoObjTyp/GeoObjTypCd/@value",
+			  			"targetNode":"geometric-object-type",
+			  			"targetAttribute":"iso-code",
+			  			"transform":{
+							"funct":parseToInt
+						}
+			  		},
+	  				{
+			  			"srcXpath":"geoObjCnt",
+			  			"targetNode":"geometric-object-count"
+			  		}
+			  	]
+			}
+  		},
+  		{
+  			"srcXpath":"/metadata/dataIdInfo/tpCat/TopicCatCd",
+  			"targetNode":"/igc/data-sources/data-source/general/topic-categories",
+  			"newNodeName":"topic-category",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":"./@value",
+			  			"targetNode":"",
+			  			"targetAttribute":"id",
+			  			"transform":{
+							"funct":parseToInt
+						}
+			  		}
+			  	]
+			}
+		}	
   		
+/*
+  		,{	
+  			"srcXpath":"/metadata/distInfo/distributor/distorCont",
+  			"targetNode":"/igc/addresses",
+  			"newNodeName":"address",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"defaultValue":"3",
+			  			"targetNode":"/igc/addresses/address/type-of-address",
+			  			"targetAttribute":"id"
+			  		},
+	  				{
+			  			"srcXpath":"rpOrgName",
+			  			"targetNode":"organisation"
+			  		},
+	  				{
+			  			"srcXpath":"rpIndName",
+			  			"targetNode":"name"
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/delPoint",
+			  			"targetNode":"street"
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/postCode",
+			  			"targetNode":"postal-code"
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/city",
+			  			"targetNode":"city"
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/country",
+			  			"targetNode":"country",
+			  			"targetAttribute":"id",
+			  			"transform":{
+							"funct":UtilsCountryCodelist.getCodeFromShortcut2
+						}
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/country",
+			  			"targetNode":"country",
+			  			"transform":{
+							"funct":UtilsCountryCodelist.getNameFromShortcut2,
+							"params":"de"
+						}
+			  		},
+	  				{
+			  			"srcXpath":"rpPosName",
+			  			"targetNode":"function"
+			  		},
+			  		{	
+			  			"execute":{
+							"funct":mapCommunicationData
+						}
+			  		}
+  				]
+  			}
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/idCitation/citRespParty",
+  			"targetNode":"/igc/addresses",
+  			"newNodeName":"address",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"defaultValue":"3",
+			  			"targetNode":"/igc/addresses/address/type-of-address",
+			  			"targetAttribute":"id"
+			  		},
+	  				{
+			  			"srcXpath":"rpOrgName",
+			  			"targetNode":"organisation"
+			  		},
+	  				{
+			  			"srcXpath":"rpIndName",
+			  			"targetNode":"name"
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/delPoint",
+			  			"targetNode":"street"
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/postCode",
+			  			"targetNode":"postal-code"
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/city",
+			  			"targetNode":"city"
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/country",
+			  			"targetNode":"country",
+			  			"targetAttribute":"id",
+			  			"transform":{
+							"funct":UtilsCountryCodelist.getCodeFromShortcut2
+						}
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/country",
+			  			"targetNode":"country",
+			  			"transform":{
+							"funct":UtilsCountryCodelist.getNameFromShortcut2,
+							"params":"de"
+						}
+			  		},
+	  				{
+			  			"srcXpath":"rpPosName",
+			  			"targetNode":"function"
+			  		},
+			  		{	
+			  			"execute":{
+							"funct":mapCommunicationData
+						}
+			  		}
+  				]
+  			}
+  		},
+  		{	
+  			"srcXpath":"/metadata/mdContact",
+  			"targetNode":"/igc/addresses",
+  			"newNodeName":"address",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"defaultValue":"3",
+			  			"targetNode":"/igc/addresses/address/type-of-address",
+			  			"targetAttribute":"id"
+			  		},
+	  				{
+			  			"srcXpath":"rpOrgName",
+			  			"targetNode":"organisation"
+			  		},
+	  				{
+			  			"srcXpath":"rpIndName",
+			  			"targetNode":"name"
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/delPoint",
+			  			"targetNode":"street"
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/postCode",
+			  			"targetNode":"postal-code"
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/city",
+			  			"targetNode":"city"
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/country",
+			  			"targetNode":"country",
+			  			"targetAttribute":"id",
+			  			"transform":{
+							"funct":UtilsCountryCodelist.getCodeFromShortcut2
+						}
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/country",
+			  			"targetNode":"country",
+			  			"transform":{
+							"funct":UtilsCountryCodelist.getNameFromShortcut2,
+							"params":"de"
+						}
+			  		},
+	  				{
+			  			"srcXpath":"rpPosName",
+			  			"targetNode":"function"
+			  		},
+			  		{	
+			  			"execute":{
+							"funct":mapCommunicationData
+						}
+			  		}
+  				]
+  			}  			
+   		}
+*/   		
 	]};
 
 validateSource(source);
 
-mapToTarget(mappingDescription, source, target);
+mapToTarget(mappingDescription, source, target.getDocumentElement());
   	
 function mapToTarget(mapping, source, target) {
 	
@@ -153,57 +505,97 @@ function mapToTarget(mapping, source, target) {
 					args = args.concat(m.execute.params);
 				}
 				call_f(m.execute.funct, args)
-			} else {
-				log.debug("Working on " + m.targetNode + " with xpath:'" + m.srcXpath + "'")
+			} else if (m.subMappings) {
 				// iterate over all xpath results
 				var sourceNodeList = XPathUtils.getNodeList(source, m.srcXpath);
-				var nodeText = "";
-				for (j=0; j<sourceNodeList.getLength(); j++ ) {
-					var value = sourceNodeList.item(j).getTextContent()
-					if (m.defaultValue && (!hasValue(value) || value.startsWith("REQUIRED:"))) {
-						log.debug("Setting value to default '" + m.defaultValue + "'")
-						value = m.defaultValue;
-					}
-					if (hasValue(value) && !value.startsWith("REQUIRED:")) {
-						var node = XPathUtils.createElementFromXPath(target.getDocumentElement(), m.targetNode);
-						log.debug("Found node with content: '" + node.getTextContent() + "'")
-						if (j==0) { 
-							// append content to target nodes content?
-							if (m.appendWith && node.getTextContent()) {
-								log.debug("Append to target node...")
-								nodeText = node.getTextContent() + m.appendWith;
-							}
-							// is a prefix has been defined with the xpath? 
-							if (m.prefix) {
-								log.debug("Append prefix...")
-								nodeText += m.prefix;
-							}
-						} else {
-							// concat multiple entries?
-							if (m.concatEntriesWith) {
-								log.debug("concat entries... ")
-								nodeText += m.concatEntriesWith;
-							}
+				log.debug("found sub mapping sources: " + m.srcXpath + "; count: " + sourceNodeList.getLength())
+				for (var j=0; j<sourceNodeList.getLength(); j++ ) {
+					log.debug("handle sub mapping: " + sourceNodeList.item(j))
+					var node = XPathUtils.createElementFromXPath(target, m.targetNode);
+					node = node.appendChild(node.getOwnerDocument().createElement(m.newNodeName));
+					mapToTarget(m.subMappings, sourceNodeList.item(j), node);
+				}
+			} else {
+				if (m.srcXpath) {
+					log.debug("Working on " + m.targetNode + " with xpath:'" + m.srcXpath + "'")
+					// iterate over all xpath results
+					var sourceNodeList = XPathUtils.getNodeList(source, m.srcXpath);
+					var nodeText = "";
+					for (var j=0; j<sourceNodeList.getLength(); j++ ) {
+						var value = sourceNodeList.item(j).getTextContent()
+						if (hasValue(value)) {
+							// trim
+							value = value.trim();
 						}
-						
+						if (m.defaultValue && (!hasValue(value) || value.startsWith("REQUIRED:"))) {
+							log.debug("Setting value to default '" + m.defaultValue + "'")
+							value = m.defaultValue;
+						}
 						// check for transformation
 						if (hasValue(m.transform)) {
+							log.debug("Transform value '" + value + "'")
 							var args = new Array(value);
 							if (hasValue(m.transform.params)) {
 								args = args.concat(m.transform.params);
 							}
 							value = call_f(m.transform.funct,args);
 						}
-						
-						nodeText += value;
-						
-						if (m.targetAttribute) {
-							log.debug("adding '" + m.targetNode + "/@" + m.targetAttribute + "' = '" + nodeText + "'.");
-							XMLUtils.createOrReplaceAttribute(node, m.targetAttribute, nodeText);
-						} else {
-							log.debug("adding '" + m.targetNode + "' = '" + nodeText + "'.");
-							XMLUtils.createOrReplaceTextNode(node, nodeText);
+						if (hasValue(value) && !(value instanceof String && value.startsWith("REQUIRED:"))) {
+							var node = XPathUtils.createElementFromXPath(target, m.targetNode);
+							log.debug("Found node with content: '" + node.getTextContent() + "'")
+							if (j==0) { 
+								// append content to target nodes content?
+								if (m.appendWith && node.getTextContent()) {
+									log.debug("Append to target node...")
+									nodeText = node.getTextContent() + m.appendWith;
+								}
+								// is a prefix has been defined with the xpath? 
+								if (m.prefix) {
+									log.debug("Append prefix...")
+									nodeText += m.prefix;
+								}
+							} else {
+								// concat multiple entries?
+								if (m.concatEntriesWith) {
+									log.debug("concat entries... ")
+									nodeText += m.concatEntriesWith;
+								}
+							}
+							
+							nodeText += value;
+							
+							if (m.targetAttribute) {
+								log.debug("adding '" + m.targetNode + "/@" + m.targetAttribute + "' = '" + nodeText + "'.");
+								XMLUtils.createOrReplaceAttribute(node, m.targetAttribute, nodeText);
+							} else {
+								log.debug("adding '" + m.targetNode + "' = '" + nodeText + "'.");
+								XMLUtils.createOrReplaceTextNode(node, nodeText);
+							}
 						}
+					}
+				// check if a default value and a target node were supplied
+				// -> set a target node to a default value
+				} else if (m.defaultValue && m.targetNode) {
+					var nodeText = "";
+					var value = m.defaultValue;
+					var node = XPathUtils.createElementFromXPath(target, m.targetNode);
+					// check for transformation
+					if (hasValue(m.transform)) {
+						var args = new Array(value);
+						if (hasValue(m.transform.params)) {
+							args = args.concat(m.transform.params);
+						}
+						value = call_f(m.transform.funct,args);
+					}
+					
+					nodeText += value;
+					
+					if (m.targetAttribute) {
+						log.debug("adding '" + m.targetNode + "/@" + m.targetAttribute + "' = '" + nodeText + "'.");
+						XMLUtils.createOrReplaceAttribute(node, m.targetAttribute, nodeText);
+					} else {
+						log.debug("adding '" + m.targetNode + "' = '" + nodeText + "'.");
+						XMLUtils.createOrReplaceTextNode(node, nodeText);
 					}
 				}
 			}
@@ -227,6 +619,78 @@ function validateSource(source) {
 }
 
 
+function mapDataScale(source, target) {
+	var refNoms = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/dataScale/equScale/rfDenom");
+	log.debug("Found " + refNoms.getLength() + " refNom records.");
+	for (var i=0; i<refNoms.getLength(); i++ ) {
+		var refNom = refNoms.item(i).getTextContent()
+		if (hasValue(refNom)) {
+			var refNomSplitted = refNom.split("/");
+			for (var j=0; j<refNomSplitted.length; j++ ) {
+				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/technical-domain/map");
+				node = node.appendChild(target.getOwnerDocument().createElement("publication-scale"));
+				node = node.appendChild(target.getOwnerDocument().createElement("scale"));
+				XMLUtils.createOrReplaceTextNode(node, refNomSplitted[j]);
+			}
+		}
+	}
+	var scaleDists = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/dataScale/scaleDist/value");
+	log.debug("Found " + scaleDists.getLength() + " scaleDist records.");
+	for (var i=0; i<scaleDists.getLength(); i++ ) {
+		var scaleDist = scaleDists.item(i).getTextContent()
+		if (hasValue(scaleDist)) {
+			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/technical-domain/map");
+			node = node.appendChild(target.getOwnerDocument().createElement("publication-scale"));
+			node = node.appendChild(target.getOwnerDocument().createElement("resolution-ground"));
+			XMLUtils.createOrReplaceTextNode(node, scaleDist);
+		}
+	}
+	
+}
+
+
+function mapCommunicationData(source, target) {
+	var email = XPathUtils.getString(source, "rpCntInfo/cntAddress/eMailAdd");
+	log.debug("found email:" + email)
+	if (hasValue(email)) {
+		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
+		var node = XPathUtils.createElementFromXPath(communication, "communication-medium");
+		XMLUtils.createOrReplaceTextNode(node, "Email");
+		XMLUtils.createOrReplaceAttribute(node, "id", "3");
+		node = XPathUtils.createElementFromXPath(communication, "communication-value");
+		XMLUtils.createOrReplaceTextNode(node, email);
+	}
+	var phone = XPathUtils.getString(source, "rpCntInfo/cntPhone/voiceNum");
+	if (hasValue(phone)) {
+		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
+		var node = XPathUtils.createElementFromXPath(communication, "communication-medium");
+		XMLUtils.createOrReplaceTextNode(node, "Telefon");
+		XMLUtils.createOrReplaceAttribute(node, "id", "1");
+		node = XPathUtils.createElementFromXPath(communication, "communication-value");
+		XMLUtils.createOrReplaceTextNode(node, phone);
+	}
+	var fax = XPathUtils.getString(source, "rpCntInfo/cntPhone/faxNum");
+	if (hasValue(fax)) {
+		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
+		var node = XPathUtils.createElementFromXPath(communication, "communication-medium");
+		XMLUtils.createOrReplaceTextNode(node, "Fax");
+		XMLUtils.createOrReplaceAttribute(node, "id", "2");
+		node = XPathUtils.createElementFromXPath(communication, "communication-value");
+		XMLUtils.createOrReplaceTextNode(node, fax);
+	}
+}
+
+
+function mapCreateDateTime(source, target) {
+	var dateStr = XPathUtils.getString(source, "/metadata/Esri/CreaDate");
+	var timeStr = XPathUtils.getString(source, "/metadata/Esri/CreaTime");
+	if (hasValue(dateStr) && hasValue(dateStr)) {
+		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/general/date-of-creation");
+		XMLUtils.createOrReplaceTextNode(node, dateStr + timeStr + "000");
+	}
+}
+
+
 function mapTimeConstraints(source, target) {
 	
 	var timePeriods = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/dataExt/tempEle/TempExtent/exTemp/TM_GeometricPrimitive/TM_Period");
@@ -236,29 +700,29 @@ function mapTimeConstraints(source, target) {
 		var endPosition = XPathUtils.getString(timePeriods.item(0), "end");
 		if (hasValue(beginPosition) && hasValue(endPosition)) {
 			if (beginPosition.equals(endPosition)) {
-				var node = XPathUtils.createElementFromXPath(target.getDocumentElement(), "/igc/data-sources/data-source/temporal-domain/beginning-date");
+				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
 				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(beginPosition));
-				node = XPathUtils.createElementFromXPath(target.getDocumentElement(), "/igc/data-sources/data-source/temporal-domain/ending-date");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/ending-date");
 				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(endPosition));
-				node = XPathUtils.createElementFromXPath(target.getDocumentElement(), "/igc/data-sources/data-source/temporal-domain/time-type");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "am");
 			} else {
-				var node = XPathUtils.createElementFromXPath(target.getDocumentElement(), "/igc/data-sources/data-source/temporal-domain/beginning-date");
+				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
 				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(beginPosition));
-				node = XPathUtils.createElementFromXPath(target.getDocumentElement(), "/igc/data-sources/data-source/temporal-domain/ending-date");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/ending-date");
 				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(endPosition));
-				node = XPathUtils.createElementFromXPath(target.getDocumentElement(), "/igc/data-sources/data-source/temporal-domain/time-type");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "von");
 			}
 		} else if (hasValue(beginPosition)) {
-				var node = XPathUtils.createElementFromXPath(target.getDocumentElement(), "/igc/data-sources/data-source/temporal-domain/beginning-date");
+				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
 				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(beginPosition));
-				node = XPathUtils.createElementFromXPath(target.getDocumentElement(), "/igc/data-sources/data-source/temporal-domain/time-type");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "seit");
 		} else if (hasValue(endPosition)) {
-				node = XPathUtils.createElementFromXPath(target.getDocumentElement(), "/igc/data-sources/data-source/temporal-domain/ending-date");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/ending-date");
 				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(endPosition));
-				node = XPathUtils.createElementFromXPath(target.getDocumentElement(), "/igc/data-sources/data-source/temporal-domain/time-type");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "bis");
 		}
 	} else {
@@ -268,12 +732,92 @@ function mapTimeConstraints(source, target) {
 			var calDate = XPathUtils.getString(timePositions.item(0), "calDate");
 			var clkTime = XPathUtils.getString(timePositions.item(0), "clkTime");
 			var dateTime = calDate + clkTime;
-			var node = XPathUtils.createElementFromXPath(target.getDocumentElement(), "/igc/data-sources/data-source/temporal-domain/beginning-date");
+			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
 			XMLUtils.createOrReplaceTextNode(node, dateTime);
-			node = XPathUtils.createElementFromXPath(target.getDocumentElement(), "/igc/data-sources/data-source/temporal-domain/ending-date");
+			node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/ending-date");
 			XMLUtils.createOrReplaceTextNode(node, dateTime);
-			node = XPathUtils.createElementFromXPath(target.getDocumentElement(), "/igc/data-sources/data-source/temporal-domain/time-type");
+			node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
 			XMLUtils.createOrReplaceTextNode(node, "am");
+		}
+	}
+}
+
+function parseToInt(val) {
+	return java.lang.Integer.parseInt(val);
+}
+
+
+
+function transformGeneric(val, mappings, caseSensitive, logErrorOnNotFound) {
+	for (var key in mappings) {
+		if (caseSensitive) {
+			if (key == val) {
+				return mappings[key];
+			}
+		} else {
+			if (key.toLowerCase() == val.toLowerCase()) {
+				return mappings[key];
+			}
+		}
+	}
+	if (logErrorOnNotFound) {
+		log.error(logErrorOnNotFound + val);
+	}
+	return null;
+}
+
+function transformToIgcDomainId(val, codeListId, languageId, logErrorOnNotFound) {
+	if (hasValue(val)) {
+		// transform to IGC domain id
+		var idcCode = null;
+		try {
+			idcCode = UtilsUDKCodeLists.getCodeListDomainId(codeListId, val, languageId);
+		} catch (e) {
+			if (log.isInfoEnabled()) {
+				log.info("Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
+			}
+			if (logErrorOnNotFound) {
+				log.error(logErrorOnNotFound + val);
+			}
+		}
+		if (hasValue(idcCode)) {
+			return idcCode;
+		} else {
+			if (log.isInfoEnabled()) {
+				log.info("Domain code '" + val + "' unknown in code list " + codeListId + ".");
+			}
+			if (logErrorOnNotFound) {
+				log.error(logErrorOnNotFound + val);
+			}
+			return -1;
+		}
+	}
+}
+
+function transformISOToIgcDomainId(val, codeListId, logErrorOnNotFound) {
+	if (hasValue(val)) {
+		// transform to IGC domain id
+		var idcCode = null;
+		try {
+			idcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(codeListId, val);
+		} catch (e) {
+			if (log.isInfoEnabled()) {
+				log.info("Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
+			}
+			if (logErrorOnNotFound) {
+				log.error(logErrorOnNotFound + val);
+			}
+		}
+		if (hasValue(idcCode)) {
+			return idcCode;
+		} else {
+			if (log.isInfoEnabled()) {
+				log.info("Domain code '" + val + "' unknown in code list " + codeListId + ".");
+			}
+			if (logErrorOnNotFound) {
+				log.error(logErrorOnNotFound + val);
+			}
+			return -1;
 		}
 	}
 }
@@ -281,9 +825,11 @@ function mapTimeConstraints(source, target) {
 function hasValue(val) {
 	if (typeof val == "undefined") {
 		return false; 
+	} else if (!val) {
+		return false; 
 	} else if (val == null) {
 		return false; 
-	} else if (typeof val == "string" && val == "") {
+	} else if (val instanceof String && val == "") {
 		return false;
 	} else {
 	  return true;
