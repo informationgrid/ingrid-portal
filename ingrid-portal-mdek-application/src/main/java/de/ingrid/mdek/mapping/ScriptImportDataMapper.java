@@ -1,7 +1,7 @@
 package de.ingrid.mdek.mapping;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -20,6 +20,7 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.core.io.Resource;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -34,15 +35,19 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 	private ScriptEngine engine = null;
 
 	// Injected by Spring
-	private InputStream mapperScript;
+	private Resource mapperScript;
 	
 	// Injected by Spring
-	private InputStream template;
+	private Resource template;
 
 	// Injected by Spring
 	private ImportDataProvider dataProvider;
 
 
+	public ScriptImportDataMapper() {
+		
+	}
+	
 	public InputStream convert(InputStream data) {
 		Map<String, Object> parameters = new Hashtable<String, Object>();
 		InputStream targetStream = null;
@@ -54,11 +59,7 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 			data.close();
 			
 			// get DOM-tree from template-file
-			Document docTarget = getDomFromSourceData(template);
-			// reset the template file for further usage
-			// since it is injected by Spring you shouldn't close it because it
-			// will be used for further imports
-			template.reset();
+			Document docTarget = getDomFromSourceData(template.getInputStream());
 			
 			preProcessMapping(docTarget);
 			
@@ -69,9 +70,7 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 		    // new objects made from template will be put into?
 		    //parameters.put("template", template);
 			doMap(parameters);
-			// reset mapper script ... see explanation for template.reset()!
-			mapperScript.reset();
-			
+
 			String targetString = XMLUtils.toString(docTarget);
 			if (log.isDebugEnabled()) {
 				log.debug("Resulting XML:" + targetString);
@@ -201,10 +200,13 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 	
 			// execute the mapping
 	    	log.debug("Mapping with script: " + mapperScript);
-	        engine.eval(new InputStreamReader(mapperScript));
+	        engine.eval(new InputStreamReader(mapperScript.getInputStream()));
 	        
 		} catch (ScriptException e) {
 			log.error("Error while evaluating the script!");
+			e.printStackTrace();
+		} catch (IOException e) {
+			log.error("Error while accessing the mapper script!");
 			e.printStackTrace();
 		}
 
@@ -238,11 +240,11 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 		return engine;
 	}
 	
-	public void setMapperScript(InputStream script) {
+	public void setMapperScript(Resource script) {
 		this.mapperScript = script;
 	}
 	
-	public void setTemplate(InputStream tpl) {
+	public void setTemplate(Resource tpl) {
 		this.template = tpl;
 	}
 	

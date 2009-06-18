@@ -1,8 +1,8 @@
 package de.ingrid.mdek.mapping;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,6 +14,7 @@ import javax.xml.xpath.XPathFactory;
 import junit.framework.TestCase;
 
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.DefaultResourceLoader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -23,46 +24,40 @@ public class ScriptImportDataMapperTest extends TestCase {
 	
 	private ScriptImportDataMapper mapper;
 	
-	private String mapperScriptArcGIS 	= "/import/mapper/ArcGIS_to_ingrid_igc.js";//"/de/ingrid/mdek/mapping/ArcGIS_to_ingrid_igc.js";
+	private String mapperScriptArcGIS 	= "/import/mapper/ArcGIS_to_ingrid_igc.js";
 	
-	private String templateIGC 			= "/import/templates/igc_template.xml";//"/de/ingrid/mdek/mapping/igc_template.xml";
+	private String templateIGC 			= "/import/templates/igc_template.xml";
 	
 	private String exampleXml 			= "/de/ingrid/mdek/mapping/sourceExample.xml";
+	
 	
 	public void setUp() {
 		mapper = new ScriptImportDataMapper();
 	}
 	
-	
 	private void initClassVariables(String mapperScript, String template) {
 		// use files in main resource directory
-		InputStream scriptIn = this.getClass().getResourceAsStream(mapperScript);
-		InputStream templateIn = this.getClass().getResourceAsStream(template);	
+		//InputStream scriptIn = this.getClass().getResourceAsStream(mapperScript);
+		//InputStream templateIn = this.getClass().getResourceAsStream(template);	
 
-		mapper.setMapperScript(scriptIn);
-		mapper.setTemplate(templateIn);
+		DefaultResourceLoader drl = new DefaultResourceLoader();
+		drl.getResource(mapperScript);
+
+		mapper.setMapperScript(drl.getResource(mapperScript));
+		mapper.setTemplate(drl.getResource(template));
+		
+		mapper.setDataProvider(initDataProvider());	
 		
 	}
 
-	public final void testConvertEqual() {
-		initClassVariables(mapperScriptArcGIS, templateIGC);
-		
-		InputStream data 		= null;
-		
-		data 		= this.getClass().getResourceAsStream(templateIGC);//(new ClassPathResource(templateIGC)).getInputStream();
-		//expected 	= this.getClass().getResourceAsStream(templateIGC);//(new ClassPathResource(templateIGC)).getInputStream();
-		
-		InputStream result = mapper.convert(data);
-		
-		//assertEquals(inputStreamToBytes(expected), inputStreamToBytes(result));
-	}
-	
 	public final void testConvertOne() {
+		// set variables that are needed for running correctly
 		initClassVariables(mapperScriptArcGIS, templateIGC);
 		
-		InputStream data 		= null;
+		InputStream data = null;
 		try {
 			// get example file from test resource directory
+			// spring-dependency is used to access test-resources (search from every class path!)
 			data = (new ClassPathResource(exampleXml)).getInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -71,6 +66,21 @@ public class ScriptImportDataMapperTest extends TestCase {
 		InputStream result = mapper.convert(data);
 		
 		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "xxxTEMPLATExxx"));
+	}
+
+
+	private ImportDataProvider initDataProvider() {
+		MockImportDataProviderImpl dataProvider = new MockImportDataProviderImpl();
+		HashMap<Integer, Integer> mapKeys = new HashMap<Integer, Integer>();
+		mapKeys.put(99999999, 178);
+		HashMap<Integer, String> mapValues = new HashMap<Integer, String>();
+		mapValues.put(99999999, "Klingonisch");
+		
+		dataProvider.setUserId("12345678910");
+		dataProvider.setInitialKeys(mapKeys);
+		dataProvider.setInitialValues(mapValues);
+		
+		return dataProvider;
 	}
 	
 	public final void testConvertDepmstAbgas() {
