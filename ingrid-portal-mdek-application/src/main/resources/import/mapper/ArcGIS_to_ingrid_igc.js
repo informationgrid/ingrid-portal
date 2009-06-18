@@ -193,7 +193,7 @@ var mappingDescription = {"mappings":[
   			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
   			"appendWith":"\n\n",
   			"concatEntriesWith":", ",
-  			"prefix":"Verwendungsbeschr√§nkungen: "
+  			"prefix":"Verwendungsbeschr‰nkungen: "
   		},
   		{	
   			"execute":{
@@ -481,6 +481,11 @@ var mappingDescription = {"mappings":[
 			  	]
 			}		
   		},
+  		{	
+  			"execute":{
+				"funct":mapAccessConstraints
+			}
+  		},
   		{
   			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='001' or @KeyTypCd='003' or @KeyTypCd='005']",
   			"targetNode":"/igc/data-sources/data-source/subject-terms",
@@ -723,6 +728,35 @@ function validateSource(source) {
 }
 
 
+function mapAccessConstraints(source, target) {
+	log.debug("mapAccessConstraints");
+	var accessConsts = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/resConst/LegConsts/accessConsts/RestrictCd/@value");
+	var useConsts = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/resConst/LegConsts/useConsts/RestrictCd/@value");
+	if (!hasValue(accessConsts) && !hasValue(useConsts)) {
+		
+		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/restriction");
+		XMLUtils.createOrReplaceTextNode(node, "keine");
+		XMLUtils.createOrReplaceAttribute(node, "id", "1");
+		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/terms-of-use");
+		XMLUtils.createOrReplaceTextNode(node, "keine Einschr‰nkungen");
+	
+	} else if (hasValue(accessConsts) && accessConsts.getLength() == 1 && accessConsts.item(0).getTextContent() == "006") {
+		
+		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/restriction");
+		XMLUtils.createOrReplaceTextNode(node, "aufgrund der Rechte des geistigen Eigentums");
+		XMLUtils.createOrReplaceAttribute(node, "id", "6");
+		var useConst = "";
+		for (var i=0; i<useConsts.getLength(); i++ ) {
+			if (i > 0) {
+				useConst += ", ";
+			}
+			useConst += transformToIgcDomainValue(524, parseToInt(useConsts.item(i).getTextContent()), 150);
+		}
+		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/terms-of-use");
+		XMLUtils.createOrReplaceTextNode(node, useConst);
+	}
+}
+
 function mapDataScale(source, target) {
 	var refNoms = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/dataScale/equScale/rfDenom");
 	log.debug("Found " + refNoms.getLength() + " refNom records.");
@@ -898,6 +932,35 @@ function transformToIgcDomainId(val, codeListId, languageId, logErrorOnNotFound)
 		}
 		if (hasValue(idcCode)) {
 			return idcCode;
+		} else {
+			if (log.isInfoEnabled()) {
+				log.info("Domain code '" + val + "' unknown in code list " + codeListId + ".");
+			}
+			if (logErrorOnNotFound) {
+				log.error(logErrorOnNotFound + val);
+			}
+			return -1;
+		}
+	}
+}
+
+
+function transformToIgcDomainValue(val, codeListId, languageId, logErrorOnNotFound) {
+	if (hasValue(val)) {
+		// transform to IGC domain id
+		var idcValue = null;
+		try {
+			idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, val, languageId);
+		} catch (e) {
+			if (log.isInfoEnabled()) {
+				log.info("Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
+			}
+			if (logErrorOnNotFound) {
+				log.error(logErrorOnNotFound + val);
+			}
+		}
+		if (hasValue(idcValue)) {
+			return idcValue;
 		} else {
 			if (log.isInfoEnabled()) {
 				log.info("Domain code '" + val + "' unknown in code list " + codeListId + ".");
