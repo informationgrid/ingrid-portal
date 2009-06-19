@@ -82,8 +82,32 @@ public class ScriptImportDataMapperTest extends TestCase {
 		
 		return dataProvider;
 	}
+
+	public final void testConvertDepmstAbgasLyr() {
+		
+		exampleXml = "/de/ingrid/mdek/mapping/depmst_abgas.lyr.xml";
+		
+		initClassVariables(mapperScriptArcGIS, templateIGC);
+		
+		InputStream data 		= null;
+		try {
+			// get example file from test resource directory
+			data = (new ClassPathResource(exampleXml)).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		InputStream result = mapper.convert(data);
+		
+		Document doc = getDomFromSourceData(result);
+		
+		assertEquals("depmst_abgas.lyr", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
+		assertEquals("{29A18127-C648-463B-9146-B16A07D99514}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
+		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Deutsch") > -1);
+		
+	}	
 	
-	public final void testConvertDepmstAbgas() {
+	public final void testConvertDepmstAbgasShp() {
 		
 		exampleXml = "/de/ingrid/mdek/mapping/depmst_abgas.shp.xml";
 		
@@ -131,28 +155,79 @@ public class ScriptImportDataMapperTest extends TestCase {
 		assertEquals("{606D692B-004D-4BD1-9364-B18A75614B89}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
 		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("[ISO ed. Nummer der Ausgabe/Version]") > -1);
 		
-	}		
+	}	
 	
-	/*
-	private byte[] inputStreamToBytes(InputStream in) {
-	
-		ByteArrayOutputStream out = new ByteArrayOutputStream(1024);
-		byte[] buffer = new byte[1024];
-		int len;
+	public final void testConvertDepmstGwShp() {
 		
+		exampleXml = "/de/ingrid/mdek/mapping/depmst_gw.shp.xml";
+		
+		initClassVariables(mapperScriptArcGIS, templateIGC);
+		
+		InputStream data = null;
 		try {
-		
-			while((len = in.read(buffer)) >= 0)
-			out.write(buffer, 0, len);
-		
-			in.close();
-			out.close();
+			// get example file from test resource directory
+			data = (new ClassPathResource(exampleXml)).getInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		return out.toByteArray();
-	} */
+		InputStream result = mapper.convert(data);
+		
+		Document doc = getDomFromSourceData(result);
+		
+		assertEquals("Grundwassermessstellen an Deponien", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
+		assertEquals("{CD2A5009-D1E1-4D58-B6E1-FA4B870724BE}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
+		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Der Datenbestand enthält die Lageinforamtionen (Punkte) der Grundwasser") > -1);
+		
+	}		
+
+	public final void testConvertDepmstSiwaShp() {
+		
+		exampleXml = "/de/ingrid/mdek/mapping/depmst_siwa.shp.xml";
+		
+		initClassVariables(mapperScriptArcGIS, templateIGC);
+		
+		InputStream data = null;
+		try {
+			// get example file from test resource directory
+			data = (new ClassPathResource(exampleXml)).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		InputStream result = mapper.convert(data);
+		
+		Document doc = getDomFromSourceData(result);
+		
+		assertEquals("Deponie-Messtellen: Sickerwasser", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
+		assertEquals("{CD2A5009-D1E1-4D58-B6E1-FA4B870724BE}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
+		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Der Datenbestand enthält die Lageinforamtionen (Punkte) der Sickerwasser-Messstellen der Deponien in NRW.") > -1);
+		
+	}		
+	
+	public final void testConvertISHK500Metadata() {
+		
+		exampleXml = "/de/ingrid/mdek/mapping/ISHK500_Metadata.xml";
+		
+		initClassVariables(mapperScriptArcGIS, templateIGC);
+		
+		InputStream data = null;
+		try {
+			// get example file from test resource directory
+			data = (new ClassPathResource(exampleXml)).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		InputStream result = mapper.convert(data);
+		
+		Document doc = getDomFromSourceData(result);
+		
+		assertEquals("tgd.gd.HK500", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
+		assertEquals("{B50413B9-323A-40A2-AD0B-EAF0D84319CA}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
+		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Folgende Sprachen werden im beschriebenen") > -1);
+		
+	}		
 	
 	private boolean xpathExists(InputStream in, String path, String value) {
 		boolean found = false;

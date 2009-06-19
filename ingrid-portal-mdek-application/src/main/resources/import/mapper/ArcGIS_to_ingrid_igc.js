@@ -483,13 +483,13 @@ var mappingDescription = {"mappings":[
 			}
   		},
   		{
-  			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='001' or @KeyTypCd='003' or @KeyTypCd='005']",
+  			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='001' or @KeyTypCd='003' or @KeyTypCd='005']/keyword",
   			"targetNode":"/igc/data-sources/data-source/subject-terms",
   			"newNodeName":"uncontrolled-term",
   			"subMappings":{
   				"mappings": [
 	  				{
-			  			"srcXpath":"keyword",
+			  			"srcXpath":".",
 			  			"targetNode":""
 			  		}
 			  	]
@@ -913,11 +913,15 @@ function mapCommunicationData(source, target) {
 
 
 function mapCreateDateTime(source, target) {
-	var dateStr = XPathUtils.getString(source, "/metadata/Esri/CreaDate").trim();
-	var timeStr = XPathUtils.getString(source, "/metadata/Esri/CreaTime").trim();
-	if (hasValue(dateStr) && hasValue(dateStr)) {
-		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/general/date-of-creation");
-		XMLUtils.createOrReplaceTextNode(node, dateStr + timeStr + "000");
+	var dateStr = XPathUtils.getString(source, "/metadata/Esri/CreaDate");
+	var timeStr = XPathUtils.getString(source, "/metadata/Esri/CreaTime");
+	if (dateStr instanceof String && timeStr instanceof String) {
+		dateStr = dateStr.trim();
+		timeStr = timeStr.trim();
+		if (hasValue(dateStr) && hasValue(dateStr)) {
+			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/general/date-of-creation");
+			XMLUtils.createOrReplaceTextNode(node, dateStr + timeStr + "000");
+		}
 	}
 }
 
