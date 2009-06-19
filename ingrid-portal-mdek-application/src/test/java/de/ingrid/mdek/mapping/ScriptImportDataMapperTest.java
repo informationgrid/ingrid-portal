@@ -4,8 +4,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -17,6 +23,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
 import de.ingrid.utils.xml.XPathUtils;
 
@@ -133,7 +140,7 @@ public class ScriptImportDataMapperTest extends TestCase {
 		
 	}
 	
-	public final void testTgr02068wat() {
+	public final void testTgr02068wat() throws IOException, SAXException {
 		
 		exampleXml = "/de/ingrid/mdek/mapping/tgr02068wat.xml";
 		
@@ -148,6 +155,8 @@ public class ScriptImportDataMapperTest extends TestCase {
 		}
 		
 		InputStream result = mapper.convert(data);
+		
+//		assertTrue(validateIgcImportXML(result));
 		
 		Document doc = getDomFromSourceData(result);
 		
@@ -260,4 +269,21 @@ public class ScriptImportDataMapperTest extends TestCase {
 		}
 		return doc;
 	}
+	
+	private boolean validateIgcImportXML(InputStream in) throws IOException, SAXException {
+
+		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI );
+		Source schemaFile = new StreamSource((new ClassPathResource("IGC_Semantisches-XML.xsd")).getInputStream());
+		
+		Schema schema = schemaFactory.newSchema(schemaFile );
+		Validator validator = schema.newValidator();
+		
+		StreamSource streamSource = new StreamSource( in );
+
+		validator.validate( streamSource );
+		
+		return true;
+		
+	}
+	
 }
