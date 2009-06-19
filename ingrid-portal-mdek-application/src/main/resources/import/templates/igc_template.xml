@@ -4,34 +4,41 @@
 		<data-source>
 			<general>
         <!-- a new object uuid will be generated -->
-				<object-identifier></object-identifier>
+				<object-identifier/>
+				<catalogue-identifier/>
         <!-- the current user will be used here -->
-				<modificator-identifier>xxx</modificator-identifier>
-				<responsible-identifier>xxx</responsible-identifier>
+				<modificator-identifier/>
+				<responsible-identifier/>
 				<object-class id="0"/>
 				<title>xxxTEMPLATExxx</title>
-				<abstract></abstract>
+				<abstract/>
         <!-- dates will be set automatically during the import -->
-				<date-of-last-modification>xxx</date-of-last-modification>
-				<date-of-creation>xxx</date-of-creation>
+				<date-of-last-modification/>
+				<date-of-creation/>
+				<original-control-identifier/>
+				<general-additional-values/>
+				<metadata/>
+				<dataset-alternate-name/>
+				<dataset-character-set iso-code=""/>
+				<topic-categories/>
 				<env-information>
 					<is-catalog>N</is-catalog>
 				</env-information>
 			</general>
+			<technical-domain>
+				<map>
+                    <hierarchy-level iso-code=""/>
+            	</map>
+            </technical-domain>
 			<additional-information>
         <!-- default language will be set -->
-				<data-language id="x">xxx</data-language>
-				<metadata-language id="x">xxx</metadata-language>
-        <!-- will be set according to import setting -->
-				<publication-condition>0</publication-condition>
+				<data-language id="x"/>
+				<metadata-language id="x"/>
 			</additional-information>
-			<spatial-domain></spatial-domain>
-			<subject-terms></subject-terms>
-<!--			<related-address>-->
-        <!-- set address of current user as info address -->
-				<!--<type-of-relation list-id="505" entry-id="7">Auskunft</type-of-relation>
-				<address-identifier>xxx</address-identifier>
-			</related-address>-->
+			<spatial-domain>
+			</spatial-domain>
+			<temporal-domain/>
+			<subject-terms/>
 		</data-source>
 	</data-sources>
 </igc>

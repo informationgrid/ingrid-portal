@@ -156,7 +156,7 @@ public class ScriptImportDataMapperTest extends TestCase {
 		
 		InputStream result = mapper.convert(data);
 		
-//		assertTrue(validateIgcImportXML(result));
+		assertTrue(validateIgcImportXML(result));
 		
 		Document doc = getDomFromSourceData(result);
 		

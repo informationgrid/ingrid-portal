@@ -27,13 +27,22 @@ if (log.isDebugEnabled()) {
 }
 
 var mappingDescription = {"mappings":[
+  		
+  		
+  		// ****************************************************
+  		//
+  		// /igc/data-sources/data-source/general
+  		//
+  		// ****************************************************
+  		{	
+  			// set the obj_class to a fixed value "Geoinformation/Karte"
+  			"defaultValue":"1",
+  			"targetNode":"/igc/data-sources/data-source/general/object-class",
+  			"targetAttribute":"id"
+  		},
 		{	
   			"srcXpath":"/metadata/dataIdInfo/idCitation/resTitle",
 			"targetNode":"/igc/data-sources/data-source/general/title"
-  		},
-  		{	
-  			"srcXpath":"/metadata/Esri/MetaID",
-  			"targetNode":"/igc/data-sources/data-source/general/original-control-identifier"
   		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/idAbs",
@@ -57,9 +66,190 @@ var mappingDescription = {"mappings":[
   			"appendWith":"\n\n",
   			"prefix":"Folgende Sprachen werden im beschriebenen Datensatz verwendet: ",
   			"concatEntriesWith":", ",
-  			  			"transform":{
+  			"transform":{
 				"funct":UtilsLanguageCodelist.getNameFromShortcut,
 				"params":['de']
+			}
+  		},
+  		{	
+  			"execute":{
+				"funct":mapCreateDateTime
+			}
+  		},
+  		{	
+  			"srcXpath":"/metadata/Esri/MetaID",
+  			"targetNode":"/igc/data-sources/data-source/general/original-control-identifier"
+  		},
+  		{	
+  			"srcXpath":"/metadata/mdStanName",
+  			"targetNode":"/igc/data-sources/data-source/general/metadata/metadata-standard-name"
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/idCitation/resAltTitle",
+  			"targetNode":"/igc/data-sources/data-source/general/dataset-alternate-name",
+  			"concatEntriesWith":", "
+  		},
+  		{
+  			"srcXpath":"/metadata/dataIdInfo/tpCat/TopicCatCd",
+  			"targetNode":"/igc/data-sources/data-source/general/topic-categories",
+  			"newNodeName":"topic-category",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":"./@value",
+			  			"targetNode":"",
+			  			"targetAttribute":"id",
+			  			"transform":{
+							"funct":parseToInt
+						}
+			  		}
+			  	]
+			}
+  		},
+
+
+  		// ****************************************************
+  		//
+  		// /igc/data-sources/data-source/technical-domain/map
+  		//
+  		// ****************************************************
+  		{	
+  			"srcXpath":"/metadata/dqInfo/dqScope/scpLvl/ScopeCd/@value",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/hierarchy-level",
+  			"targetAttribute":"iso-code",
+  			"transform":{
+				"funct":parseToInt
+			}
+  		},
+  		{	
+  			"srcXpath":"/metadata/refSysInfo/RefSystem/refSysID/identCode",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/coordinate-system"
+  		},
+  		{
+  			"srcXpath":"/metadata/refSysInfo/RefSystem/refSysID/identCode",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/coordinate-system",
+  			"targetAttribute":"id",
+  			"transform":{
+				"funct":transformToIgcDomainId,
+				"params":[100, 150, "Could not map vertical-extent vdatum name: "]
+			}						    					
+  		},
+  		{
+  			"execute":{
+				"funct":mapDataScale
+			}
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataqual/lineage/procstep/procdesc",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production"
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/envirDesc",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production",
+  			"appendWith":"\n\n"
+  		},
+  		{	
+  			"srcXpath":"/metadata/dqInfo/dataLineage/statement",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/technical-base"
+  		},
+  		{
+  			"srcXpath":"/metadata/dataIdInfo/spatRpType",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
+  			"newNodeName":"spatial-representation-type",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":"SpatRepTypCd/@value",
+			  			"targetNode":"",
+			  			"targetAttribute":"iso-code",
+			  			"transform":{
+							"funct":parseToInt
+						}
+			  		}
+			  	]
+			}
+  		},
+  		{	
+  			"srcXpath":"/metadata/spatRepInfo/VectSpatRep/topLvl/TopoLevCd/@value",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format/vector-topology-level",
+  			"targetAttribute":"iso-code",
+  			"transform":{
+				"funct":parseToInt
+			}
+  		},
+  		{
+  			"srcXpath":"/metadata/spatRepInfo/VectSpatRep/geometObjs",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format",
+  			"newNodeName":"geo-vector",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":"geoObjTyp/GeoObjTypCd/@value",
+			  			"targetNode":"geometric-object-type",
+			  			"targetAttribute":"iso-code",
+			  			"transform":{
+							"funct":parseToInt
+						}
+			  		},
+	  				{
+			  			"srcXpath":"geoObjCnt",
+			  			"targetNode":"geometric-object-count"
+			  		}
+			  	]
+			}
+  		},
+  		{
+  			"srcXpath":"/metadata/eainfo/detailed/attr",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
+  			"newNodeName":"feature-type",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":"attrlabl",
+			  			"targetNode":""
+			  		}
+			  	]
+			}
+  		},
+  		
+  		
+  		// ****************************************************
+  		//
+  		// /igc/data-sources/data-source/additional-information
+  		//
+  		// ****************************************************
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/dataLang[1]/languageCode/@value",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/data-language",
+  			"targetAttribute":"id",
+  			"transform":{
+				"funct":UtilsLanguageCodelist.getCodeFromShortcut
+			}
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/dataLang[1]/languageCode/@value",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/data-language",
+  			"transform":{
+				"funct":UtilsLanguageCodelist.getNameFromShortcut,
+				"params":['de']
+			}
+  		},
+  		{	
+  			"srcXpath":"/metadata/mdLang/languageCode/@value",
+  			"defaultValue":"de",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/metadata-language",
+  			"transform":{
+				"funct":UtilsLanguageCodelist.getNameFromShortcut,
+				"params":['de']
+			}
+  		},
+  		{	
+  			"srcXpath":"/metadata/mdLang/languageCode/@value",
+  			"defaultValue":"de",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/metadata-language",
+  			"targetAttribute":"id",
+  			"transform":{
+				"funct":UtilsLanguageCodelist.getCodeFromShortcut
 			}
   		},
   		{	
@@ -68,77 +258,103 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"execute":{
-				"funct":mapTimeConstraints
+				"funct":mapAccessConstraints
+			}
+  		},
+  		{
+  			"srcXpath":"/metadata/distInfo/distributor/distorTran",
+  			"targetNode":"/igc/data-sources/data-source/additional-information",
+  			"newNodeName":"medium-option",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":"offLineMed/medName/MedNameCd/@value",
+			  			"targetNode":"medium-name",
+			  			"targetAttribute":"iso-code",
+			  			"transform":{
+							"funct":parseToInt
+						}
+			  		},
+	  				{
+			  			"srcXpath":"transSize",
+			  			"targetNode":"transfer-size",
+			  			"transform":{
+							"funct":transformNumberStrToIGCNumber
+						}
+			  		}
+			  	]
+			}
+  		},
+  		{
+  			"srcXpath":"/metadata/distInfo/distributor/distorFormat",
+  			"targetNode":"/igc/data-sources/data-source/additional-information",
+  			"newNodeName":"data-format",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":"formatName",
+			  			"targetNode":"format-name"
+			  		},
+	  				{
+			  			"srcXpath":"formatName",
+			  			"targetNode":"format-name",
+			  			"targetAttribute":"id",
+			  			"transform":{
+							"funct":transformToIgcDomainId,
+							"params":[1320, 150]
+						}
+			  		}
+			  	]
 			}
   		},
   		{	
-  			"srcXpath":"/metadata/dataIdInfo/resMaint/dateNext",
-  			"targetNode":"/igc/data-sources/data-source/temporal-domain/description-of-temporal-domain",
-  			"prefix":"Nächste Überarbeitung: "
+  			"defaultValue":"1",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/publication-condition"
   		},
   		{	
-  			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='004']/keyword",
-  			"targetNode":"/igc/data-sources/data-source/temporal-domain/description-of-temporal-domain",
-  			"appendWith":"\n\n",
-  			"concatEntriesWith":", ",
-  			"prefix":"Schlagworte: "
-  		},
-  		{	
-  			"srcXpath":"/metadata/dataIdInfo/resMaint/maintFreq/MaintFreqCd/@value",
-  			"targetNode":"/igc/data-sources/data-source/temporal-domain/time-period",
-  			"transform":{
-				"funct":parseToInt
-			}
-  		},
-  		{	
-  			"srcXpath":"/metadata/dataIdInfo/idCitation/resAltTitle",
-  			"targetNode":"/igc/data-sources/data-source/general/dataset-alternate-name",
+  			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/ordInstr",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
   			"concatEntriesWith":", "
   		},
   		{	
-  			"srcXpath":"/metadata/dataIdInfo/dataLang[1]/languageCode/@value",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/data-language",
-  			"targetAttribute":"id",
-  			"transform":{
-				"funct":UtilsLanguageCodelist.getCodeFromShortcut
-			}
+  			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/resFees",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
+  			"concatEntriesWith":", ",
+  			"appendWith":"\n\n",
+  			"prefix":"Gebühren/Bedingungen: "
   		},
   		{	
-  			"srcXpath":"/metadata/dataIdInfo/dataLang[1]/languageCode/@value",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/data-language",
-  			"transform":{
-				"funct":UtilsLanguageCodelist.getNameFromShortcut,
-				"params":['de']
-			}
+  			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/ordTurn",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
+  			"concatEntriesWith":", ",
+  			"appendWith":"\n\n",
+  			"prefix":"Dauer des Bestellvorganges: "
   		},
   		{	
-  			"srcXpath":"/metadata/mdStanName",
-  			"targetNode":"/igc/data-sources/data-source/general/metadata/metadata-standard-name"
+  			"defaultValue":"INSPIRE-Richtlinie",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-specification"
   		},
   		{	
-  			"srcXpath":"/metadata/mdLang/languageCode/@value",
-  			"defaultValue":"de",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/metadata-language",
-  			"transform":{
-				"funct":UtilsLanguageCodelist.getNameFromShortcut,
-				"params":['de']
-			}
+  			"defaultValue":"nicht evaluiert",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-degree"
   		},
   		{	
-  			"srcXpath":"/metadata/mdLang/languageCode/@value",
-  			"defaultValue":"de",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/metadata-language",
-  			"targetAttribute":"id",
-  			"transform":{
-				"funct":UtilsLanguageCodelist.getCodeFromShortcut
-			}
-  		},
-  		{	
-  			// set the obj_class to a fixed value "Geoinformation/Karte"
-  			"defaultValue":"1",
-  			"targetNode":"/igc/data-sources/data-source/general/object-class",
+  			"defaultValue":"3",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-degree",
   			"targetAttribute":"id"
   		},
+  		{	
+  			"defaultValue":"20081001000000000",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-publication-date"
+  		},
+
+
+
+  		// ****************************************************
+  		//
+  		// /igc/data-sources/data-source/spatial-domain
+  		//
+  		// ****************************************************
   		{	
   			"srcXpath":"/metadata/dataIdInfo/dataExt/vertEle/vertMinVal",
   			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-minimum",
@@ -172,207 +388,101 @@ var mappingDescription = {"mappings":[
 				"params":[101, 150, "Could not map vertical-extent vdatum name: "]
 			}						    					
   		},
-  		{	
-  			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/ordInstr",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
-  			"concatEntriesWith":", "
-  		},
-  		{	
-  			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/resFees",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
-  			"concatEntriesWith":", ",
-  			"appendWith":"\n\n",
-  			"prefix":"Gebühren/Bedingungen: "
-  		},
-  		{	
-  			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/ordTurn",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
-  			"concatEntriesWith":", ",
-  			"appendWith":"\n\n",
-  			"prefix":"Dauer des Bestellvorganges: "
-  		},
-  		{	
-  			"execute":{
-				"funct":mapCreateDateTime
-			}
-  		},
-  		{	
-  			"srcXpath":"/metadata/dqInfo/dataLineage/statement",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/technical-base"
-  		},
-  		{	
-  			"srcXpath":"/metadata/dataqual/lineage/procstep/procdesc",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production"
-  		},
-  		{	
-  			"srcXpath":"/metadata/dataIdInfo/envirDesc",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production",
-  			"appendWith":"\n\n"
-  		},
-  		{	
-  			"srcXpath":"/metadata/refSysInfo/RefSystem/refSysID/identCode",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/coordinate-system"
-  		},
   		{
-  			"srcXpath":"/metadata/refSysInfo/RefSystem/refSysID/identCode",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/coordinate-system",
-  			"targetAttribute":"id",
-  			"transform":{
-				"funct":transformToIgcDomainId,
-				"params":[100, 150, "Could not map vertical-extent vdatum name: "]
-			}						    					
-  		},
-  		{	
-  			"srcXpath":"/metadata/dqInfo/dqScope/scpLvl/ScopeCd/@value",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/hierarchy-level",
-  			"targetAttribute":"iso-code",
-  			"transform":{
-				"funct":parseToInt
-			}
-  		},
-  		{	
-  			"srcXpath":"/metadata/spatRepInfo/VectSpatRep/topLvl/TopoLevCd/@value",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format/vector-topology-level",
-  			"targetAttribute":"iso-code",
-  			"transform":{
-				"funct":parseToInt
-			}
-  		},
-  		{
-  			"execute":{
-				"funct":mapDataScale
-			}
-  		},
-  		{
-  			"srcXpath":"/metadata/dataIdInfo/spatRpType",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
-  			"newNodeName":"spatial-representation-type",
+  			"srcXpath":"/metadata/dataIdInfo/geoBox",
+  			"targetNode":"/igc/data-sources/data-source/spatial-domain",
+  			"newNodeName":"geo-location",
   			"subMappings":{
   				"mappings": [
 	  				{
-			  			"srcXpath":"SpatRepTypCd/@value",
-			  			"targetNode":"",
-			  			"targetAttribute":"iso-code",
-			  			"transform":{
-							"funct":parseToInt
-						}
-			  		}
-			  	]
-			}
-  		},
-  		{
-  			"srcXpath":"/metadata/eainfo/detailed/attr",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
-  			"newNodeName":"feature-type",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"srcXpath":"attrlabl",
-			  			"targetNode":""
-			  		}
-			  	]
-			}
-  		},
-  		{
-  			"srcXpath":"/metadata/spatRepInfo/VectSpatRep/geometObjs",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format",
-  			"newNodeName":"geo-vector",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"srcXpath":"geoObjTyp/GeoObjTypCd/@value",
-			  			"targetNode":"geometric-object-type",
-			  			"targetAttribute":"iso-code",
-			  			"transform":{
-							"funct":parseToInt
-						}
-			  		},
-	  				{
-			  			"srcXpath":"geoObjCnt",
-			  			"targetNode":"geometric-object-count"
-			  		}
-			  	]
-			}
-  		},
-  		{
-  			"srcXpath":"/metadata/dataIdInfo/tpCat/TopicCatCd",
-  			"targetNode":"/igc/data-sources/data-source/general/topic-categories",
-  			"newNodeName":"topic-category",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"srcXpath":"./@value",
-			  			"targetNode":"",
-			  			"targetAttribute":"id",
-			  			"transform":{
-							"funct":parseToInt
-						}
-			  		}
-			  	]
-			}
-  		},
-  		{
-  			"srcXpath":"/metadata/distInfo/distributor/distorTran/onLineSrc",
-  			"targetNode":"/igc/data-sources/data-source",
-  			"newNodeName":"available-linkage",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"srcXpath":"linkage",
-			  			"targetNode":"linkage-url"
+			  			"defaultValue":"Raumbezug des Datensatzes",
+			  			"targetNode":"uncontrolled-location/location-name"
 			  		},
 	  				{
 			  			"defaultValue":"-1",
-			  			"targetNode":"linkage-reference",
+			  			"targetNode":"uncontrolled-location/location-name",
 			  			"targetAttribute":"id"
 			  		},
 	  				{
-			  			"srcXpath":"orFunct/OnFunctCd/@value",
-			  			"targetNode":"linkage-reference",
+			  			"srcXpath":"westBL",
+			  			"targetNode":"bounding-coordinates/west-bounding-coordinate",
 			  			"transform":{
-							"funct":transformGeneric,
-							"params":[{"001":"download", "002":"information", "003":"offlineAccess", "004":"order", "005":"search"}, false, "Could not map linkage function: "]
+							"funct":transformNumberStrToIGCNumber
 						}
 			  		},
 	  				{
-			  			"srcXpath":"orDesc",
-			  			"targetNode":"linkage-name",
+			  			"srcXpath":"eastBL",
+			  			"targetNode":"bounding-coordinates/east-bounding-coordinate",
 			  			"transform":{
-							"funct":transformGeneric,
-							"params":[{"001":"Live Data and Maps", "002":"Downloadable Data", "003":"Offline Data", "004":"Images of Static Maps", "005":"Other Documents", "006":"Applications", "007":"Geographic Services", "008":"Clearinghouses", "009":"Map Files", "010":"Geographic Activities"}, false]
+							"funct":transformNumberStrToIGCNumber
 						}
 			  		},
 	  				{
-			  			"srcXpath":"protocol",
-			  			"targetNode":"linkage-name",
-			  			"appendWith":"\n\n",
-			  			"prefix":"Verbindungsprotokoll: "
-			  		}
-			  	]
-			}
-  		},
-  		{
-  			"srcXpath":"/metadata/distInfo/distributor/distorTran",
-  			"targetNode":"/igc/data-sources/data-source/additional-information",
-  			"newNodeName":"medium-option",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"srcXpath":"offLineMed/medName/MedNameCd/@value",
-			  			"targetNode":"medium-name",
-			  			"targetAttribute":"iso-code",
+			  			"srcXpath":"northBL",
+			  			"targetNode":"bounding-coordinates/north-bounding-coordinate",
 			  			"transform":{
-							"funct":parseToInt
+							"funct":transformNumberStrToIGCNumber
 						}
 			  		},
 	  				{
-			  			"srcXpath":"transSize",
-			  			"targetNode":"transfer-size",
+			  			"srcXpath":"southBL",
+			  			"targetNode":"bounding-coordinates/south-bounding-coordinate",
 			  			"transform":{
 							"funct":transformNumberStrToIGCNumber
 						}
 			  		}
 			  	]
+			}
+  		},
+  		{
+  			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='002']/keyword",
+  			"targetNode":"/igc/data-sources/data-source/spatial-domain",
+  			"newNodeName":"geo-location",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":".",
+			  			"targetNode":"uncontrolled-location/location-name"
+			  		},
+	  				{
+			  			"defaultValue":"-1",
+			  			"targetNode":"uncontrolled-location/location-name",
+			  			"targetAttribute":"id"
+			  		}
+			  	]
+			}		
+  		},
+
+
+
+  		// ****************************************************
+  		//
+  		// /igc/data-sources/data-source/temporal-domain
+  		//
+  		// ****************************************************
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/resMaint/dateNext",
+  			"targetNode":"/igc/data-sources/data-source/temporal-domain/description-of-temporal-domain",
+  			"prefix":"Nächste Überarbeitung: "
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='004']/keyword",
+  			"targetNode":"/igc/data-sources/data-source/temporal-domain/description-of-temporal-domain",
+  			"appendWith":"\n\n",
+  			"concatEntriesWith":", ",
+  			"prefix":"Schlagworte: "
+  		},
+  		{	
+  			"execute":{
+				"funct":mapTimeConstraints
+			}
+  		},
+  		{	
+  			"srcXpath":"/metadata/dataIdInfo/resMaint/maintFreq/MaintFreqCd/@value",
+  			"targetNode":"/igc/data-sources/data-source/temporal-domain/time-period",
+  			"targetAttribute":"iso-code",
+  			"transform":{
+				"funct":parseToInt
 			}
   		},
   		{
@@ -400,97 +510,13 @@ var mappingDescription = {"mappings":[
 			  	]
 			}
   		},
-  		{
-  			"srcXpath":"/metadata/distInfo/distributor/distorFormat",
-  			"targetNode":"/igc/data-sources/data-source/additional-information",
-  			"newNodeName":"data-format",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"srcXpath":"formatName",
-			  			"targetNode":"format-name"
-			  		},
-	  				{
-			  			"srcXpath":"formatName",
-			  			"targetNode":"format-name",
-			  			"targetAttribute":"id",
-			  			"transform":{
-							"funct":transformToIgcDomainId,
-							"params":[1320, 150]
-						}
-			  		}
-			  	]
-			}
-  		},
-  		{
-  			"srcXpath":"/metadata/dataIdInfo/geoBox",
-  			"targetNode":"/igc/data-sources/data-source/spatial-domain",
-  			"newNodeName":"geo-location",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"defaultValue":"Raumbezug des Datensatzes",
-			  			"targetNode":"uncontrolled-location/location-name"
-			  		},
-	  				{
-			  			"defaultValue":"-1",
-			  			"targetNode":"uncontrolled-location/location-name",
-			  			"targetAttribute":"id"
-			  		},
-	  				{
-			  			"srcXpath":"westBL",
-			  			"targetNode":"bounding-coordinates/west-bounding-coordinate",
-			  			"transform":{
-							"funct":transformNumberStrToIGCNumber
-						}
-			  		},
-	  				{
-			  			"srcXpath":"southBL",
-			  			"targetNode":"bounding-coordinates/south-bounding-coordinate",
-			  			"transform":{
-							"funct":transformNumberStrToIGCNumber
-						}
-			  		},
-	  				{
-			  			"srcXpath":"eastBL",
-			  			"targetNode":"bounding-coordinates/east-bounding-coordinate",
-			  			"transform":{
-							"funct":transformNumberStrToIGCNumber
-						}
-			  		},
-	  				{
-			  			"srcXpath":"northBL",
-			  			"targetNode":"bounding-coordinates/north-bounding-coordinate",
-			  			"transform":{
-							"funct":transformNumberStrToIGCNumber
-						}
-			  		}
-			  	]
-			}
-  		},
-  		{
-  			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='002']/keyword",
-  			"targetNode":"/igc/data-sources/data-source/spatial-domain",
-  			"newNodeName":"geo-location",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"srcXpath":".",
-			  			"targetNode":"uncontrolled-location/location-name"
-			  		},
-	  				{
-			  			"defaultValue":"-1",
-			  			"targetNode":"uncontrolled-location/location-name",
-			  			"targetAttribute":"id"
-			  		}
-			  	]
-			}		
-  		},
-  		{	
-  			"execute":{
-				"funct":mapAccessConstraints
-			}
-  		},
+
+
+  		// ****************************************************
+  		//
+  		// /igc/data-sources/data-source/subject-terms
+  		//
+  		// ****************************************************
   		{
   			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='001' or @KeyTypCd='003' or @KeyTypCd='005']/keyword",
   			"targetNode":"/igc/data-sources/data-source/subject-terms",
@@ -503,9 +529,61 @@ var mappingDescription = {"mappings":[
 			  		}
 			  	]
 			}		
-  		}	
+  		},		
+
+  		// ****************************************************
+  		//
+  		// /igc/data-sources/data-source/available-linkage
+  		//
+  		// ****************************************************
+
+  		{
+  			"srcXpath":"/metadata/distInfo/distributor/distorTran/onLineSrc",
+  			"targetNode":"/igc/data-sources/data-source",
+  			"newNodeName":"available-linkage",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":"orDesc",
+			  			"targetNode":"linkage-name",
+			  			"transform":{
+							"funct":transformGeneric,
+							"params":[{"001":"Live Data and Maps", "002":"Downloadable Data", "003":"Offline Data", "004":"Images of Static Maps", "005":"Other Documents", "006":"Applications", "007":"Geographic Services", "008":"Clearinghouses", "009":"Map Files", "010":"Geographic Activities"}, false]
+						}
+			  		},
+	  				{
+			  			"srcXpath":"protocol",
+			  			"targetNode":"linkage-name",
+			  			"appendWith":"\n\n",
+			  			"prefix":"Verbindungsprotokoll: "
+			  		},
+	  				{
+			  			"srcXpath":"linkage",
+			  			"targetNode":"linkage-url"
+			  		},
+	  				{
+			  			"defaultValue":"1",
+			  			"targetNode":"linkage-url-type"
+			  		},
+	  				{
+			  			"defaultValue":"-1",
+			  			"targetNode":"linkage-reference",
+			  			"targetAttribute":"id"
+			  		},
+	  				{
+			  			"srcXpath":"orFunct/OnFunctCd/@value",
+			  			"targetNode":"linkage-reference",
+			  			"transform":{
+							"funct":transformGeneric,
+							"params":[{"001":"download", "002":"information", "003":"offlineAccess", "004":"order", "005":"search"}, false, "Could not map linkage function: "]
+						}
+			  		}
+			  	]
+			}
+  		},
+
   		
-  		,{	
+  		{	
   			"srcXpath":"/metadata/distInfo/distributor/distorCont | /metadata/dataIdInfo/idCitation/citRespParty | /metadata/mdContact",
   			"targetNode":"/igc/addresses",
   			"newNodeName":"address",
@@ -519,6 +597,14 @@ var mappingDescription = {"mappings":[
 			  			"targetNode":"address-identifier"
 			  		},
 	  				{
+			  			"defaultValue":"xxx",
+			  			"targetNode":"modificator-identifier"
+			  		},
+	  				{
+			  			"defaultValue":"xxx",
+			  			"targetNode":"responsible-identifier"
+			  		},
+	  				{
 			  			"defaultValue":"3",
 			  			"targetNode":"type-of-address",
 			  			"targetAttribute":"id"
@@ -530,18 +616,6 @@ var mappingDescription = {"mappings":[
 	  				{
 			  			"srcXpath":"rpIndName",
 			  			"targetNode":"name"
-			  		},
-	  				{
-			  			"srcXpath":"rpCntInfo/cntAddress/delPoint",
-			  			"targetNode":"street"
-			  		},
-	  				{
-			  			"srcXpath":"rpCntInfo/cntAddress/postCode",
-			  			"targetNode":"postal-code"
-			  		},
-	  				{
-			  			"srcXpath":"rpCntInfo/cntAddress/city",
-			  			"targetNode":"city"
 			  		},
 	  				{
 			  			"srcXpath":"rpCntInfo/cntAddress/country",
@@ -560,13 +634,25 @@ var mappingDescription = {"mappings":[
 						}
 			  		},
 	  				{
-			  			"srcXpath":"rpPosName",
-			  			"targetNode":"function"
+			  			"srcXpath":"rpCntInfo/cntAddress/postCode",
+			  			"targetNode":"postal-code"
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/delPoint",
+			  			"targetNode":"street"
+			  		},
+	  				{
+			  			"srcXpath":"rpCntInfo/cntAddress/city",
+			  			"targetNode":"city"
 			  		},
 			  		{	
 			  			"execute":{
 							"funct":mapCommunicationData
 						}
+			  		},
+	  				{
+			  			"srcXpath":"rpPosName",
+			  			"targetNode":"function"
 			  		},
 			  		{
 				  		"srcXpath":".",
@@ -575,12 +661,29 @@ var mappingDescription = {"mappings":[
 			  			"subMappings":{
 			  				"mappings": [
 				  				{
-						  			"setUUID":"true",
-						  			"targetNode":"address-identifier"
+						  			"srcXpath":"role/RoleCd/@value",
+						  			"targetNode":"type-of-relation",
+						  			"targetAttribute":"entry-id",
+						  			"transform":{
+										"funct":parseToInt
+									}
+						  		},
+				  				{
+						  			"defaultValue":"505",
+						  			"targetNode":"type-of-relation",
+						  			"targetAttribute":"list-id"
 						  		},
 				  				{
 						  			"srcXpath":"role/RoleCd/@value",
-						  			"targetNode":"type-of-relation"
+						  			"targetNode":"type-of-relation",
+						  			"transform":{
+										"funct":transformToIgcDomainValue,
+										"params":[505, 150, "Could not address role code: "]
+									}
+						  		},
+				  				{
+						  			"setUUID":"true",
+						  			"targetNode":"address-identifier"
 						  		}
 						  	]
 						}
@@ -858,6 +961,7 @@ function mapAccessConstraints(source, target) {
 }
 
 function mapDataScale(source, target) {
+	
 	var refNoms = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/dataScale/equScale/rfDenom");
 	log.debug("Found " + refNoms.getLength() + " refNom records.");
 	for (var i=0; i<refNoms.getLength(); i++ ) {
@@ -880,6 +984,8 @@ function mapDataScale(source, target) {
 		if (hasValue(scaleDist)) {
 			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/technical-domain/map");
 			node = node.appendChild(target.getOwnerDocument().createElement("publication-scale"));
+			// must be created to satisfy schema
+			node.appendChild(target.getOwnerDocument().createElement("scale"));
 			node = node.appendChild(target.getOwnerDocument().createElement("resolution-ground"));
 			scaleDist = replaceString(scaleDist, "\,", ".");
 			XMLUtils.createOrReplaceTextNode(node, transformNumberStrToIGCNumber(scaleDist));
@@ -1057,7 +1163,7 @@ function transformToIgcDomainValue(val, codeListId, languageId, logErrorOnNotFou
 		// transform to IGC domain id
 		var idcValue = null;
 		try {
-			idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, val, languageId);
+			idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(val), languageId);
 		} catch (e) {
 			if (log.isInfoEnabled()) {
 				log.info("Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
