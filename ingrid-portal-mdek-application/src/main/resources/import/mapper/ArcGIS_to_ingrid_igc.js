@@ -435,7 +435,7 @@ var mappingDescription = {"mappings":[
 	  				{
 			  			"defaultValue":"-1",
 			  			"targetNode":"uncontrolled-location/location-name",
-			  			"targetNodeAttribute":"id"
+			  			"targetAttribute":"id"
 			  		},
 	  				{
 			  			"srcXpath":"westBL",
