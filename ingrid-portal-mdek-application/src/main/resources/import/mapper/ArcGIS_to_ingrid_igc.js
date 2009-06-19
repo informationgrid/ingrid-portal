@@ -460,14 +460,19 @@ var mappingDescription = {"mappings":[
 			}
   		},
   		{
-  			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='002']",
+  			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='002']/keyword",
   			"targetNode":"/igc/data-sources/data-source/spatial-domain",
   			"newNodeName":"geo-location",
   			"subMappings":{
   				"mappings": [
 	  				{
-			  			"srcXpath":"keyword",
+			  			"srcXpath":".",
 			  			"targetNode":"uncontrolled-location/location-name"
+			  		},
+	  				{
+			  			"defaultValue":"-1",
+			  			"targetNode":"uncontrolled-location/location-name",
+			  			"targetAttribute":"id"
 			  		}
 			  	]
 			}		
