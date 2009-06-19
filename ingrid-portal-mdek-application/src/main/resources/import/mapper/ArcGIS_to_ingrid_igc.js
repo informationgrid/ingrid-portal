@@ -134,8 +134,8 @@ var mappingDescription = {"mappings":[
 			}
   		},
   		{	
-  			// set the obj_class to a fixed value
-  			"defaultValue":"3",
+  			// set the obj_class to a fixed value "Geoinformation/Karte"
+  			"defaultValue":"1",
   			"targetNode":"/igc/data-sources/data-source/general/object-class",
   			"targetAttribute":"id"
   		},
@@ -159,7 +159,7 @@ var mappingDescription = {"mappings":[
   			"targetAttribute":"id",
   			"transform":{
 				"funct":transformGeneric,
-				"params":[{"Fuß":"9002", "Kilometer":"9036", "Meter":"9001", "Zoll":"4"}, false, "Could not map vertical-extent uom name: "]
+				"params":[{"Fuï¿½":"9002", "Kilometer":"9036", "Meter":"9001", "Zoll":"4"}, false, "Could not map vertical-extent uom name: "]
 			}						    					
   		},
   		{	
@@ -729,7 +729,7 @@ function mapAccessConstraints(source, target) {
 		XMLUtils.createOrReplaceTextNode(node, "keine");
 		XMLUtils.createOrReplaceAttribute(node, "id", "1");
 		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/terms-of-use");
-		XMLUtils.createOrReplaceTextNode(node, "keine Einschränkungen");
+		XMLUtils.createOrReplaceTextNode(node, "keine Einschrï¿½nkungen");
 	
 	} else if (hasValue(accessConsts) && accessConsts.getLength() == 1 && accessConsts.item(0).getTextContent() == "006") {
 		
@@ -768,7 +768,7 @@ function mapAccessConstraints(source, target) {
 			if (node.getTextContent()) {
 				nodeText = node.getTextContent() + "\n\n";
 			}
-			nodeText += "Daten-Zugriffsbeschränkungen: " + accessConst;
+			nodeText += "Daten-Zugriffsbeschrï¿½nkungen: " + accessConst;
 			XMLUtils.createOrReplaceTextNode(node, nodeText);
 		}
 		if (hasValue(useConst)) {
@@ -777,7 +777,7 @@ function mapAccessConstraints(source, target) {
 			if (node.getTextContent()) {
 				nodeText = node.getTextContent() + "\n\n";
 			}
-			nodeText += "Daten-Verwendungsbeschränkungen: " + useConst;
+			nodeText += "Daten-Verwendungsbeschrï¿½nkungen: " + useConst;
 			XMLUtils.createOrReplaceTextNode(node, nodeText);
 		}
 	}
@@ -797,7 +797,7 @@ function mapAccessConstraints(source, target) {
 		} else {
 			nodeText = "";
 		}
-		nodeText += "Verwendungsbeschränkungen: " + useLimit;
+		nodeText += "Verwendungsbeschrï¿½nkungen: " + useLimit;
 		XMLUtils.createOrReplaceTextNode(node, nodeText);
 	}
 	
@@ -817,7 +817,7 @@ function mapAccessConstraints(source, target) {
 		} else {
 			nodeText = "";
 		}
-		nodeText += "Weitere gesetzl. Beschränkungen: " + othConst;
+		nodeText += "Weitere gesetzl. Beschrï¿½nkungen: " + othConst;
 		XMLUtils.createOrReplaceTextNode(node, nodeText);
 	}
 
