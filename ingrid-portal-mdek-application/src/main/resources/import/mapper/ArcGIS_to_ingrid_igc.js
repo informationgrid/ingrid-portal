@@ -159,7 +159,7 @@ var mappingDescription = {"mappings":[
   			"targetAttribute":"id",
   			"transform":{
 				"funct":transformGeneric,
-				"params":[{"Fu�":"9002", "Kilometer":"9036", "Meter":"9001", "Zoll":"4"}, false, "Could not map vertical-extent uom name: "]
+				"params":[{"Fuß":"9002", "Kilometer":"9036", "Meter":"9001", "Zoll":"4"}, false, "Could not map vertical-extent uom name: "]
 			}						    					
   		},
   		{	
@@ -640,7 +640,7 @@ function mapToTarget(mapping, source, target) {
 							log.debug("Found node with content: '" + node.getTextContent() + "'")
 							if (j==0) { 
 								// append content to target nodes content?
-								if (m.appendWith && node.getTextContent()) {
+								if (m.appendWith && hasValue(node.getTextContent())) {
 									log.debug("Append to target node...")
 									nodeText = node.getTextContent() + m.appendWith;
 								}
