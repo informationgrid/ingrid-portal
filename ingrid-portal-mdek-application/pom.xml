@@ -206,10 +206,10 @@
 		<version>1.1.0-SNAPSHOT</version>
     	<scope>provided</scope>
     	<exclusions>
-    	<exclusion>
-            <groupId>ingrid</groupId>
-            <artifactId>ingrid-utils</artifactId>
-    	</exclusion>
+	    	<exclusion>
+	            <groupId>ingrid</groupId>
+	            <artifactId>ingrid-utils</artifactId>
+	    	</exclusion>
     	</exclusions>
     </dependency>
      <dependency>
@@ -217,11 +217,11 @@
 		<artifactId>ingrid-mdek-services</artifactId>
 		<version>1.1.0-SNAPSHOT</version>
 		<exclusions>
-			<exclusion>
-				<artifactId>ingrid</artifactId>
-				<groupId>ingrid-utils</groupId>
-			</exclusion>
-		</exclusions>
+	    	<exclusion>
+	            <groupId>ingrid</groupId>
+	            <artifactId>ingrid-utils</artifactId>
+	    	</exclusion>
+    	</exclusions>
     </dependency>
     <dependency>
         <groupId>ingrid</groupId>
@@ -246,6 +246,14 @@
             <artifactId>dom4j</artifactId>
             <version>1.4</version>
             <type>jar</type>
+            <exclusions>
+            	<!--  xml-apis already included in java 1.6 -->
+            	<!-- leads to eclipse compiler problems -->
+	      		<exclusion>
+	      			<groupId>xml-apis</groupId>
+	      			<artifactId>xml-apis</artifactId>
+	      		</exclusion>
+	      	</exclusions>
         </dependency>
         <dependency>
             <groupId>velocity</groupId>
@@ -337,7 +345,7 @@
 
 	<repositories>
 		<repository>
-			<snapshots />
+			<snapshots/>
 			<id>ingrid-repository</id>
 			<name>ingrid-repository</name>
 			<url>http://harrison.its-technidata.de/ingrid/maven2</url>
