@@ -429,6 +429,15 @@ var mappingDescription = {"mappings":[
   			"subMappings":{
   				"mappings": [
 	  				{
+			  			"defaultValue":"Raumbezug des Datensatzes",
+			  			"targetNode":"uncontrolled-location/location-name"
+			  		},
+	  				{
+			  			"defaultValue":"-1",
+			  			"targetNode":"uncontrolled-location/location-name",
+			  			"targetNodeAttribute":"id"
+			  		},
+	  				{
 			  			"srcXpath":"westBL",
 			  			"targetNode":"bounding-coordinates/west-bounding-coordinate",
 			  			"transform":{
