@@ -143,16 +143,14 @@ var mappingDescription = {"mappings":[
   			"srcXpath":"/metadata/dataIdInfo/dataExt/vertEle/vertMinVal",
   			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-minimum",
   			"transform":{
-				"funct":replaceString,
-				"params":["\,", "."]
+				"funct":transformNumberStrToIGCNumber
 			}
   		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/dataExt/vertEle/vertMaxVal",
   			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-maximum",
   			"transform":{
-				"funct":replaceString,
-				"params":["\,", "."]
+				"funct":transformNumberStrToIGCNumber
 			}
   		},
   		{	
@@ -161,7 +159,7 @@ var mappingDescription = {"mappings":[
   			"targetAttribute":"id",
   			"transform":{
 				"funct":transformGeneric,
-				"params":[{"FuÃŸ":"9002", "Kilometer":"9036", "Meter":"9001", "Zoll":"4"}, false, "Could not map vertical-extent uom name: "]
+				"params":[{"Fuß":"9002", "Kilometer":"9036", "Meter":"9001", "Zoll":"4"}, false, "Could not map vertical-extent uom name: "]
 			}						    					
   		},
   		{	
@@ -176,24 +174,22 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/ordInstr",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions"
+  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
+  			"concatEntriesWith":", "
   		},
   		{	
   			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/resFees",
   			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
-  			"appendWith":"\n\n"
+  			"concatEntriesWith":", ",
+  			"appendWith":"\n\n",
+  			"prefix":"GebÃ¼hren/Bedingungen: "
   		},
   		{	
   			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/ordTurn",
   			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
-  			"appendWith":"\n\n"
-  		},
-  		{	
-  			"srcXpath":"/metadata/dataIdInfo/resConst/Consts/useLimit",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
-  			"appendWith":"\n\n",
   			"concatEntriesWith":", ",
-  			"prefix":"Verwendungsbeschränkungen: "
+  			"appendWith":"\n\n",
+  			"prefix":"Dauer des Bestellvorganges: "
   		},
   		{	
   			"execute":{
@@ -373,8 +369,7 @@ var mappingDescription = {"mappings":[
 			  			"srcXpath":"transSize",
 			  			"targetNode":"transfer-size",
 			  			"transform":{
-							"funct":replaceString,
-							"params":["\,", "."]
+							"funct":transformNumberStrToIGCNumber
 						}
 			  		}
 			  	]
@@ -437,32 +432,28 @@ var mappingDescription = {"mappings":[
 			  			"srcXpath":"westBL",
 			  			"targetNode":"bounding-coordinates/west-bounding-coordinate",
 			  			"transform":{
-							"funct":replaceString,
-							"params":["\,", "."]
+							"funct":transformNumberStrToIGCNumber
 						}
 			  		},
 	  				{
 			  			"srcXpath":"southBL",
 			  			"targetNode":"bounding-coordinates/south-bounding-coordinate",
 			  			"transform":{
-							"funct":replaceString,
-							"params":["\,", "."]
+							"funct":transformNumberStrToIGCNumber
 						}
 			  		},
 	  				{
 			  			"srcXpath":"eastBL",
 			  			"targetNode":"bounding-coordinates/east-bounding-coordinate",
 			  			"transform":{
-							"funct":replaceString,
-							"params":["\,", "."]
+							"funct":transformNumberStrToIGCNumber
 						}
 			  		},
 	  				{
 			  			"srcXpath":"northBL",
 			  			"targetNode":"bounding-coordinates/north-bounding-coordinate",
 			  			"transform":{
-							"funct":replaceString,
-							"params":["\,", "."]
+							"funct":transformNumberStrToIGCNumber
 						}
 			  		}
 			  	]
@@ -750,11 +741,106 @@ function mapAccessConstraints(source, target) {
 			if (i > 0) {
 				useConst += ", ";
 			}
-			useConst += transformToIgcDomainValue(524, parseToInt(useConsts.item(i).getTextContent()), 150);
+			useConst += transformToIgcDomainValue(parseToInt(useConsts.item(i).getTextContent().trim()), 524, 150);
 		}
 		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/terms-of-use");
 		XMLUtils.createOrReplaceTextNode(node, useConst);
+	} else {
+		var accessConst = "";
+		for (var i=0; i<accessConsts.getLength(); i++ ) {
+			if (i > 0) {
+				accessConst += ", ";
+			}
+			accessConst += transformToIgcDomainValue(parseToInt(accessConsts.item(i).getTextContent().trim()), 524, 150);
+		}
+		var useConst = "";
+		for (var i=0; i<useConsts.getLength(); i++ ) {
+			if (i > 0) {
+				useConst += ", ";
+			}
+			useConst += transformToIgcDomainValue(parseToInt(useConsts.item(i).getTextContent().trim()), 524, 150);
+		}
+		var nodeText = "";
+		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/ordering-instructions");
+		if (hasValue(accessConst)) {
+			nodeText = "";
+			// append content to target nodes content?
+			if (node.getTextContent()) {
+				nodeText = node.getTextContent() + "\n\n";
+			}
+			nodeText += "Daten-Zugriffsbeschränkungen: " + accessConst;
+			XMLUtils.createOrReplaceTextNode(node, nodeText);
+		}
+		if (hasValue(useConst)) {
+			nodeText = "";
+			// append content to target nodes content?
+			if (node.getTextContent()) {
+				nodeText = node.getTextContent() + "\n\n";
+			}
+			nodeText += "Daten-Verwendungsbeschränkungen: " + useConst;
+			XMLUtils.createOrReplaceTextNode(node, nodeText);
+		}
 	}
+	var useLimits = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/resConst/Consts/useLimit");
+	var useLimit = "";
+	for (var i=0; i<useLimits.getLength(); i++ ) {
+		if (i > 0) {
+			useLimit += ", ";
+		}
+		useLimit += useLimits.item(i).getTextContent().trim();
+	}
+	if (hasValue(useLimit)) {
+		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/ordering-instructions");
+		// append content to target nodes content?
+		if (node.getTextContent()) {
+			nodeText = node.getTextContent() + "\n\n";
+		} else {
+			nodeText = "";
+		}
+		nodeText += "Verwendungsbeschränkungen: " + useLimit;
+		XMLUtils.createOrReplaceTextNode(node, nodeText);
+	}
+	
+	var othConsts = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/resConst/LegConsts/othConsts");
+	var othConst = "";
+	for (var i=0; i<othConsts.getLength(); i++ ) {
+		if (i > 0) {
+			othConst += ", ";
+		}
+		othConst += othConsts.item(i).getTextContent().trim();
+	}
+	if (hasValue(othConst)) {
+		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/ordering-instructions");
+		// append content to target nodes content?
+		if (node.getTextContent()) {
+			nodeText = node.getTextContent() + "\n\n";
+		} else {
+			nodeText = "";
+		}
+		nodeText += "Weitere gesetzl. Beschränkungen: " + othConst;
+		XMLUtils.createOrReplaceTextNode(node, nodeText);
+	}
+
+	var secConsts = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/resConst/SecConsts/class/ClasscationCd/@value");
+	var secConst = "";
+	for (var i=0; i<secConsts.getLength(); i++ ) {
+		if (i > 0) {
+			secConst += ", ";
+		}
+		secConst += transformToIgcDomainValue(parseToInt(secConsts.item(i).getTextContent().trim()), 511, 150);
+	}
+	if (hasValue(secConst)) {
+		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/ordering-instructions");
+		// append content to target nodes content?
+		if (node.getTextContent()) {
+			nodeText = node.getTextContent() + "\n\n";
+		} else {
+			nodeText = "";
+		}
+		nodeText += "Sicherheitseinstufung: " + secConst;
+		XMLUtils.createOrReplaceTextNode(node, nodeText);
+	}
+	
 }
 
 function mapDataScale(source, target) {
@@ -769,7 +855,7 @@ function mapDataScale(source, target) {
 				node = node.appendChild(target.getOwnerDocument().createElement("publication-scale"));
 				node = node.appendChild(target.getOwnerDocument().createElement("scale"));
 				refNomSplitted[j] = replaceString(refNomSplitted[j], "\,", ".");
-				XMLUtils.createOrReplaceTextNode(node, refNomSplitted[j]);
+				XMLUtils.createOrReplaceTextNode(node, transformNumberStrToIGCNumber(refNomSplitted[j]));
 			}
 		}
 	}
@@ -782,7 +868,7 @@ function mapDataScale(source, target) {
 			node = node.appendChild(target.getOwnerDocument().createElement("publication-scale"));
 			node = node.appendChild(target.getOwnerDocument().createElement("resolution-ground"));
 			scaleDist = replaceString(scaleDist, "\,", ".");
-			XMLUtils.createOrReplaceTextNode(node, scaleDist);
+			XMLUtils.createOrReplaceTextNode(node, transformNumberStrToIGCNumber(scaleDist));
 		}
 	}
 	
@@ -790,7 +876,7 @@ function mapDataScale(source, target) {
 
 
 function mapCommunicationData(source, target) {
-	var email = XPathUtils.getString(source, "rpCntInfo/cntAddress/eMailAdd");
+	var email = XPathUtils.getString(source, "rpCntInfo/cntAddress/eMailAdd").trim();
 	log.debug("found email:" + email)
 	if (hasValue(email)) {
 		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
@@ -800,7 +886,7 @@ function mapCommunicationData(source, target) {
 		node = XPathUtils.createElementFromXPath(communication, "communication-value");
 		XMLUtils.createOrReplaceTextNode(node, email);
 	}
-	var phone = XPathUtils.getString(source, "rpCntInfo/cntPhone/voiceNum");
+	var phone = XPathUtils.getString(source, "rpCntInfo/cntPhone/voiceNum").trim();
 	if (hasValue(phone)) {
 		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
 		var node = XPathUtils.createElementFromXPath(communication, "communication-medium");
@@ -809,7 +895,7 @@ function mapCommunicationData(source, target) {
 		node = XPathUtils.createElementFromXPath(communication, "communication-value");
 		XMLUtils.createOrReplaceTextNode(node, phone);
 	}
-	var fax = XPathUtils.getString(source, "rpCntInfo/cntPhone/faxNum");
+	var fax = XPathUtils.getString(source, "rpCntInfo/cntPhone/faxNum").trim();
 	if (hasValue(fax)) {
 		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
 		var node = XPathUtils.createElementFromXPath(communication, "communication-medium");
@@ -822,8 +908,8 @@ function mapCommunicationData(source, target) {
 
 
 function mapCreateDateTime(source, target) {
-	var dateStr = XPathUtils.getString(source, "/metadata/Esri/CreaDate");
-	var timeStr = XPathUtils.getString(source, "/metadata/Esri/CreaTime");
+	var dateStr = XPathUtils.getString(source, "/metadata/Esri/CreaDate").trim();
+	var timeStr = XPathUtils.getString(source, "/metadata/Esri/CreaTime").trim();
 	if (hasValue(dateStr) && hasValue(dateStr)) {
 		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/general/date-of-creation");
 		XMLUtils.createOrReplaceTextNode(node, dateStr + timeStr + "000");
@@ -896,6 +982,9 @@ function parseToInt(val) {
 	return java.lang.Integer.parseInt(val);
 }
 
+function transformNumberStrToIGCNumber(val) {
+	return UtilsString.transformNumberStrToIGCNumber(val);		
+}
 
 
 function transformGeneric(val, mappings, caseSensitive, logErrorOnNotFound) {
