@@ -984,8 +984,6 @@ function mapDataScale(source, target) {
 		if (hasValue(scaleDist)) {
 			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/technical-domain/map");
 			node = node.appendChild(target.getOwnerDocument().createElement("publication-scale"));
-			// must be created to satisfy schema
-			node.appendChild(target.getOwnerDocument().createElement("scale"));
 			node = node.appendChild(target.getOwnerDocument().createElement("resolution-ground"));
 			scaleDist = replaceString(scaleDist, "\,", ".");
 			XMLUtils.createOrReplaceTextNode(node, transformNumberStrToIGCNumber(scaleDist));
