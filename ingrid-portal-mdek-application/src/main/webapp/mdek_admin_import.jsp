@@ -324,15 +324,14 @@ function hideLoadingZone() {
 				<div class="inputContainer field grey w939">
 					<div class="inputContainer">
 						<span class="label"><label style="position:absolute;" for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 8074, 'Import-Datei')"><fmt:message key="dialog.admin.import.file" />:</label>
-							<input type="file" id="importFile" size="80" style="position:absolute;margin-left:90px;" />
+							<input type="file" id="importFile" size="80" style="position:absolute;margin-left:90px;height: 21px;" />
 						</span>
 					</div>
 					<div>
 						<span class="label" style="margin-bottom:10.5px;"><label for="importFileType" style="position:absolute;" onclick="javascript:dialog.showContextHelp(arguments[0], 8074, 'Import-Datei')"><fmt:message key="dialog.admin.import.file.type" />:</label>
 							<select dojoType="ingrid:Select" id="importFileType" style="position:absolute;margin-left:90px;">
 								<option value="igc">InGrid Catalog</option>
-								<option value="arcgis1">ArcGIS 1</option>
-								<option value="arcgis2">ArcGIS 2</option>
+								<option value="arcgis1">ArcGIS ISO-Editor</option>
 							</select>
 						</span>
 					</div>

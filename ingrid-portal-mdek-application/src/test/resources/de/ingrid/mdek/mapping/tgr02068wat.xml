@@ -159,7 +159,7 @@
 						<adminArea>
 							[ISO Ed. Land] Niedersachsen
 						</adminArea>
-						<postCode>[ISO Ed. PLZ] 30169</postCode>
+						<postCode>30169</postCode>
 						<eMailAdd>
 							[ISO Ed. E-Mailadr.] kst@portalu.de
 						</eMailAdd>
@@ -177,8 +177,7 @@
 			</citRespParty>
 			<citRespParty>
 				<rpIndName>
-					[ISO Ed. Anlaufstelle 2-Name der Anl.stelle] KSt
-					PortalU
+					KSt PortalU
 				</rpIndName>
 				<rpOrgName>
 					[ISO Ed. Anlaufstelle 2-Name der Org. d. Anl.stelle]
@@ -199,7 +198,7 @@
 							[ISO Ed. Anlaufstelle 2-Land] ghi
 						</adminArea>
 						<postCode>
-							[ISO Ed. Anlaufstelle 2-PLZ] 123
+							123
 						</postCode>
 						<eMailAdd>
 							[ISO Ed. Anlaufstelle 2-E-Mail] a@b.c
@@ -657,7 +656,7 @@
 						</delPoint>
 						<city>[ISO Ed. Verteiler] Stadt</city>
 						<adminArea>[ISO Ed. Verteiler] Land</adminArea>
-						<postCode>[ISO Ed. Verteiler] PLZ</postCode>
+						<postCode>PLZ</postCode>
 						<eMailAdd>[ISO Ed. Verteiler] x@y.z</eMailAdd>
 						<country>dz</country>
 					</cntAddress>
@@ -820,7 +819,7 @@
 				</delPoint>
 				<city>[ISO Ed. Stadt] Hannover</city>
 				<adminArea>[ISO Ed. Land] Niedersachsen</adminArea>
-				<postCode>[ISO Ed. PLZ] 30169</postCode>
+				<postCode>30169</postCode>
 				<eMailAdd>[ISO Ed. E-Mailadr.] kst@portalu.de</eMailAdd>
 				<country>de</country>
 			</cntAddress>
