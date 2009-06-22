@@ -809,7 +809,7 @@ function hideLoadingZone() {
 				<div class="spacer"></div>
 				<div class="spacer"></div>
 				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8022)"><fmt:message key="dialog.admin.groups.objectPermissions" /></label></span>
-				<div dojoType="SplitContainer" id="groupDataObjects" persist="false" orientation="horizontal" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
+				<div dojoType="ingrid:SplitContainer" id="groupDataObjects" persist="false" orientation="horizontal" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
 		            <!-- LEFT HAND SIDE CONTENT BLOCK 2 START -->
 		            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="38">
 						<div class="inputContainer grey noSpaceBelow">
@@ -865,7 +865,7 @@ function hideLoadingZone() {
 				<div class="spacer"></div>
 				<div class="spacer"></div>
 				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8023)"><fmt:message key="dialog.admin.groups.addressPermissions" /></label></span>
-				<div dojoType="SplitContainer" id="groupDataAddresses" persist="false" orientation="horizontal" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
+				<div dojoType="ingrid:SplitContainer" id="groupDataAddresses" persist="false" orientation="horizontal" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
 		            <!-- LEFT HAND SIDE CONTENT BLOCK 3 START -->
 		            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="38">
 						<div class="inputContainer grey noSpaceBelow">

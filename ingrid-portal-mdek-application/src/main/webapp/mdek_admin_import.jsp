@@ -347,7 +347,7 @@ function hideLoadingZone() {
         <!-- SPLIT CONTAINER START -->
         <div id="importTree">
           <span class="label"><label><fmt:message key="dialog.admin.import.tree" /></label></span>
-          <div dojoType="SplitContainer" id="importTreeContainer" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
+          <div dojoType="ingrid:SplitContainer" id="importTreeContainer" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
             <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="22.5">
               <!-- LEFT HAND SIDE CONTENT IMPORT TEILBAUM START -->
               <div class="inputContainer grey noSpaceBelow">

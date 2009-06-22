@@ -668,7 +668,7 @@ function hideLoadingZone() {
 <div dojoType="LayoutContainer" id="statisticsLayout" class="layout" layoutChildPriority="top-bottom">
 
 	<!-- SPLIT CONTAINER START -->
-	<div dojoType="SplitContainer" id="statisticsContentSection" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
+	<div dojoType="ingrid:SplitContainer" id="statisticsContentSection" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
 		<!-- LEFT CONTENT PANE START -->
 		<div dojoType="ContentPane" id="statisticsTreeContainer">
 			<!-- tree components -->

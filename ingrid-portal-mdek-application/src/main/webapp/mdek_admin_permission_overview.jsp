@@ -202,7 +202,7 @@ function addPermissionsToUser(user) {
         <!-- SPLIT CONTAINER START -->
         <div>
           <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8025)"><fmt:message key="dialog.admin.permissions.objectPermissions" /></label></span>
-          <div dojoType="SplitContainer" id="rightsObjects" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
+          <div dojoType="ingrid:SplitContainer" id="rightsObjects" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
             <!-- LEFT HAND SIDE CONTENT BLOCK 1 START -->
             <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="24">
               <div class="inputContainer grey noSpaceBelow">
@@ -254,7 +254,7 @@ function addPermissionsToUser(user) {
         <!-- SPLIT CONTAINER START -->
         <div>
           <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8026)"><fmt:message key="dialog.admin.permissions.addressPermissions" /></label></span>
-          <div dojoType="SplitContainer" id="rightsAddresses" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
+          <div dojoType="ingrid:SplitContainer" id="rightsAddresses" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
             <!-- LEFT HAND SIDE CONTENT BLOCK 2 START -->
             <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="24">
               <div class="inputContainer grey noSpaceBelow">
