@@ -41,7 +41,8 @@ menuEventHandler.handleNewEntity = function(mes) {
 			// If the selected node if is 'addressFreeRoot' we can directly create the address without presenting the dialog
 			if (selectedNode.id == "addressFreeRoot") {
 				menuEventHandler._createNewAddress(3, selectedNode);				
-
+			} else if (selectedNode.id == "addressRoot") {
+				menuEventHandler._createNewAddress(0, selectedNode);
 			} else {
 				var selectClassDef = new dojo.Deferred();
 				selectClassDef.addCallback(function(addressClass){ menuEventHandler._createNewAddress(addressClass, selectedNode); });
@@ -1215,7 +1216,7 @@ function handleEntityReferencedException(err) {
 
 function alertNotImplementedYet()
 {
-  alert("Diese Funktionalität ist noch nicht implementiert.");
+  alert("Diese Funktionalitï¿½t ist noch nicht implementiert.");
 }
 
 function getSelectedNode(message) {
