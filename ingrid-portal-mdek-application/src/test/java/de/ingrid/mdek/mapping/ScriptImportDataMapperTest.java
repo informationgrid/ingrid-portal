@@ -160,7 +160,7 @@ public class ScriptImportDataMapperTest extends TestCase {
 		
 		Document doc = getDomFromSourceData(result);
 		
-		assertEquals("[ISO ed. Titel] Wasserkörper Polygone", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
+		assertEquals("[ISO ed. Titel] Wasserk\u00f6rper Polygone", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
 		assertEquals("{606D692B-004D-4BD1-9364-B18A75614B89}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
 		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("[ISO ed. Nummer der Ausgabe/Version]") > -1);
 		
@@ -186,7 +186,7 @@ public class ScriptImportDataMapperTest extends TestCase {
 		
 		assertEquals("Grundwassermessstellen an Deponien", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
 		assertEquals("{CD2A5009-D1E1-4D58-B6E1-FA4B870724BE}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
-		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Der Datenbestand enthält die Lageinforamtionen (Punkte) der Grundwasser") > -1);
+		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Der Datenbestand enth\u00e4lt die Lageinforamtionen (Punkte) der Grundwasser") > -1);
 		
 	}		
 
@@ -210,7 +210,7 @@ public class ScriptImportDataMapperTest extends TestCase {
 		
 		assertEquals("Deponie-Messtellen: Sickerwasser", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
 		assertEquals("{CD2A5009-D1E1-4D58-B6E1-FA4B870724BE}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
-		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Der Datenbestand enthält die Lageinforamtionen (Punkte) der Sickerwasser-Messstellen der Deponien in NRW.") > -1);
+		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Der Datenbestand enth\u00e4lt die Lageinforamtionen (Punkte) der Sickerwasser-Messstellen der Deponien in NRW.") > -1);
 		
 	}		
 	
