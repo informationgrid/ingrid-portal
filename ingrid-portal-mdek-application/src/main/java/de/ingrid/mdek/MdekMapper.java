@@ -638,7 +638,7 @@ public class MdekMapper implements DataMapperInterface {
 		responsibleUser.put(MdekKeys.UUID, data.getObjectOwner());
 		udkObj.put(MdekKeys.RESPONSIBLE_USER, responsibleUser);
 
-		// extrahieren des int Wertes für die Objekt-Klasse
+		// extrahieren des int Wertes fÃ¼r die Objekt-Klasse
 		udkObj.put(MdekKeys.CLASS, data.getObjectClass());
 		udkObj.put(MdekKeys.ADR_REFERENCES_TO, mapFromGeneralAddressTable(data.getGeneralAddressTable()));
 

@@ -515,7 +515,7 @@ public class GetCapabilitiesService {
     	paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
     	paramList.add(new OperationParameterBean("ACCEPTVERSIONS=1.0.0,0.8.3", "Comma-separated prioritized sequence of one or more specification versions accepted by client, with preferred versions listed first", "", true, false));
     	paramList.add(new OperationParameterBean("SECTIONS=Contents", "Comma-separated unordered list of zero or more names of sections of service metadata document to be returned in service metadata document", "", true, false));
-    	paramList.add(new OperationParameterBean("UPDATESEQUENCE=XXX (where XXX is character string previously provided by server)", "Service metadata document version, value is ìincreasedî whenever any change is made in complete service metadata document", "", true, false));
+    	paramList.add(new OperationParameterBean("UPDATESEQUENCE=XXX (where XXX is character string previously provided by server)", "Service metadata document version, value is ‚Äúincreased‚Äù whenever any change is made in complete service metadata document", "", true, false));
     	paramList.add(new OperationParameterBean("ACCEPTFORMATS= text/xml", "Comma-separated prioritized sequence of zero or more response formats desired by client, with preferred formats listed first", "", true, false));
     	getCapabilitiesOp.setParamList(paramList);
     	operations.add(getCapabilitiesOp);
@@ -623,7 +623,7 @@ public class GetCapabilitiesService {
     	paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
     	paramList.add(new OperationParameterBean("ACCEPTVERSIONS=1.0.0,0.8.3", "Comma-separated prioritized sequence of one or more specification versions accepted by client, with preferred versions listed first", "", true, false));
     	paramList.add(new OperationParameterBean("SECTIONS=Contents", "Comma-separated unordered list of zero or more names of sections of service metadata document to be returned in service metadata document", "", true, false));
-    	paramList.add(new OperationParameterBean("UPDATESEQUENCE=XXX (where XXX is character string previously provided by server)", "Service metadata document version, value is ìincreasedî whenever any change is made in complete service metadata document", "", true, false));
+    	paramList.add(new OperationParameterBean("UPDATESEQUENCE=XXX (where XXX is character string previously provided by server)", "Service metadata document version, value is ‚Äúincreased‚Äù whenever any change is made in complete service metadata document", "", true, false));
     	paramList.add(new OperationParameterBean("ACCEPTFORMATS= text/xml", "Comma-separated prioritized sequence of zero or more response formats desired by client, with preferred formats listed first", "", true, false));
     	getCapabilitiesOp.setParamList(paramList);
     	operations.add(getCapabilitiesOp);
@@ -822,7 +822,7 @@ public class GetCapabilitiesService {
     	paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
     	paramList.add(new OperationParameterBean("ACCEPTVERSIONS=1.0.0,0.8.3", "Comma-separated prioritized sequence of one or more specification versions accepted by client, with preferred versions listed first", "", true, false));
     	paramList.add(new OperationParameterBean("SECTIONS=Contents", "Comma-separated unordered list of zero or more names of sections of service metadata document to be returned in service metadata document", "", true, false));
-    	paramList.add(new OperationParameterBean("UPDATESEQUENCE=XXX (where XXX is character string previously provided by server)", "Service metadata document version, value is ìincreasedî whenever any change is made in complete service metadata document", "", true, false));
+    	paramList.add(new OperationParameterBean("UPDATESEQUENCE=XXX (where XXX is character string previously provided by server)", "Service metadata document version, value is ‚Äúincreased‚Äù whenever any change is made in complete service metadata document", "", true, false));
     	paramList.add(new OperationParameterBean("ACCEPTFORMATS= text/xml", "Comma-separated prioritized sequence of zero or more response formats desired by client, with preferred formats listed first", "", true, false));
     	getCapabilitiesOp.setParamList(paramList);
     	operations.add(getCapabilitiesOp);
