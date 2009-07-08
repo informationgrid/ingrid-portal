@@ -8,9 +8,9 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ingrid</groupId>
   <artifactId>ingrid-portal-mdek-application</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>ingrid-portal-mdek-application Maven Webapp</name>
+  <name>Ingrid Portal MDEK Application</name>
   <scm>
     <connection>${scmConnectionBase}/ingrid-portal/trunk/ingrid-portal-mdek-application</connection>
   </scm>
@@ -126,22 +126,10 @@
       <groupId>de.ingrid.mdek</groupId>
       <artifactId>ingrid-mdek-api</artifactId>
       <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>ingrid</groupId>
-          <artifactId>ingrid-utils</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.ingrid.mdek</groupId>
       <artifactId>ingrid-mdek-services</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>ingrid</groupId>
-          <artifactId>ingrid-utils</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
@@ -161,6 +149,52 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug-sns</artifactId>
+      <exclusions>
+        <exclusion>
+            <groupId>jetty</groupId>
+            <artifactId>servlet-api</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>de.ingrid</groupId>
+            <artifactId>ingrid-iplug</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>de.ingrid</groupId>
+            <artifactId>ingrid-iplug-admin-step1-webservice</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>jetty</groupId>
+            <artifactId>org.mortbay.jetty</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>tomcat</groupId>
+            <artifactId>jasper-compiler</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>tomcat</groupId>
+            <artifactId>jasper-runtime</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>ant</groupId>
+            <artifactId>ant</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>commons-el</groupId>
+            <artifactId>commons-el</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>de.ingrid</groupId>
+            <artifactId>ingrid-installer</artifactId>
+          </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -181,7 +215,6 @@
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-api</artifactId>
-      <version>2.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -213,6 +246,11 @@
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
       <version>2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
@@ -250,16 +288,9 @@
   <repositories>
     <repository>
       <snapshots />
-      <id>de.ingrid.m1</id>
-      <name>InGrid Repo Maven1</name>
-      <url>http://harrison.its-technidata.de/ingrid/maven</url>
-      <layout>legacy</layout>
-    </repository>
-    <repository>
-      <snapshots />
       <id>de.ingrid.m2</id>
       <name>InGrid Repo Maven2</name>
-      <url>http://harrison.its-technidata.de/ingrid/maven2</url>
+      <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
     </repository>
     <repository>
       <snapshots />
