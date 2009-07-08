@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
     Copyright 2004 The Apache Software Foundation
     
@@ -17,72 +17,68 @@
     $Id$
 -->
 <project>
-    <extend>full-portal.xml</extend>
-    <pomVersion>3</pomVersion>
-    <groupId>ingrid</groupId>
-    <artifactId>ingrid-portal</artifactId>
-    <name>Ingrid Portal</name>
-    <currentVersion>1.3.0-SNAPSHOT</currentVersion>
-	<dependencies>
+  <extend>full-portal.xml</extend>
+  <pomVersion>3</pomVersion>
+  <groupId>ingrid</groupId>
+  <artifactId>ingrid-portal</artifactId>
+  <name>Ingrid Portal</name>
+  <currentVersion>1.3.0-SNAPSHOT</currentVersion>
+  <dependencies>
     <dependency>
-        <id>commons-logging</id>
-        <version>1.0.3</version>
-        <type>jar</type>
-        <properties>
-            <war.bundle>true</war.bundle>
-        </properties>
+      <id>commons-logging</id>
+      <version>1.0.4</version>
+      <type>jar</type>
+      <properties>
+        <war.bundle>true</war.bundle>
+      </properties>
     </dependency>
     <dependency>
-        <id>commons-lang</id>
-        <version>2.1</version>
-        <type>jar</type>
-        <properties>
-            <war.bundle>true</war.bundle>
-        </properties>
+      <id>commons-lang</id>
+      <version>2.1</version>
+      <type>jar</type>
+      <properties>
+        <war.bundle>true</war.bundle>
+      </properties>
     </dependency>
     <dependency>
-        <id>junit</id>
-        <version>3.8.1</version>
-        <properties>
-            <war.bundle>false</war.bundle>
-        </properties>
-    </dependency>
-
-    <dependency>
-		<groupId>ingrid</groupId>
-		<artifactId>ingrid-jetspeed-portal</artifactId>
-		<version>1.1.0-SNAPSHOT</version>
-        <properties>
-            <war.bundle>true</war.bundle>
-        </properties>
-    </dependency>
-    <dependency>
-      <groupId>ingrid</groupId>
-      <artifactId>ingrid-portal-utils</artifactId>
-      <version>1.1.0-SNAPSHOT</version>
-	  <properties>
+      <id>junit</id>
+      <version>3.8.1</version>
+      <properties>
         <war.bundle>false</war.bundle>
       </properties>
     </dependency>
-
-	</dependencies>
-    <build>
-        <sourceDirectory>src/java</sourceDirectory>
-        <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
-        <unitTest>
-            <includes>
-                <include>**/*Test.java</include>
-            </includes>
-        </unitTest>
-        <resources>
-          <resource>
-            <directory>${basedir}/src/java</directory>
-              <excludes>
-                <exclude>**/*.java</exclude>
-              </excludes>
-          </resource>
-        </resources>
-    </build>
-	
+    <dependency>
+      <groupId>de.ingrid</groupId>
+      <artifactId>ingrid-jetspeed-portal</artifactId>
+      <version>1.2.1-SNAPSHOT</version>
+      <properties>
+        <war.bundle>true</war.bundle>
+      </properties>
+    </dependency>
+    <dependency>
+      <groupId>de.ingrid</groupId>
+      <artifactId>ingrid-portal-utils</artifactId>
+      <version>1.2.1-SNAPSHOT</version>
+      <properties>
+        <war.bundle>false</war.bundle>
+      </properties>
+    </dependency>
+  </dependencies>
+  <build>
+    <sourceDirectory>src/java</sourceDirectory>
+    <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
+    <unitTest>
+      <includes>
+        <include>**/*Test.java</include>
+      </includes>
+    </unitTest>
+    <resources>
+      <resource>
+        <directory>${basedir}/src/java</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+  </build>
 </project>
-
