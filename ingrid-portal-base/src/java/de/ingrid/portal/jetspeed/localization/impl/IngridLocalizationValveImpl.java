@@ -20,7 +20,7 @@ import org.apache.jetspeed.request.RequestContext;
  * Ingrid Valve handling ingrid localization for Jetspeed Pipeline.
  * 
  * @author Martin Maidhof
- * @author Joachim Müller
+ * @author Joachim MÃ¼ller
  */
 public class IngridLocalizationValveImpl extends AbstractValve implements LocalizationValve {
     private static final Log log = LogFactory.getLog(IngridLocalizationValveImpl.class);
