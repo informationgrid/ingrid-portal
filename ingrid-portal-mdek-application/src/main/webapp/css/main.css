@@ -22,19 +22,26 @@ h2 { margin:0; padding:0; font:bold 12px/16px Verdana, Helvetica, Arial, sans-se
 *********************************************************************/
 
 #headSection { margin-bottom:0px; }
-#logo { position:relative; padding-right:10px; display:inline; }
-#title { position:relative; display:inline; }
+#logo { float:left; position:relative; padding-right:10px; display:inline; }
+#title { float:left; position:relative; display:inline; }
 
 #metaNavi { float:right; }
-#metaNavi ul { position:relative; top:-16.5px; margin:-0.5px 10px 0 0; padding:0; list-style:none; line-height:10px; display:block; }
+#metaNavi ul { position:relative; margin:0 10px 0 0; padding:9px 0 12px 0; list-style:none; line-height:10px; display:block; }
 #metaNavi ul li { display:inline; font:normal 10px/11px Verdana, Helvetica, Arial, sans-serif; color:#c2e3fc; }
 #metaNavi ul li.seperator { color:#fff; }
 #metaNavi ul li strong { color:#fff; font-weight:bold; }
 #metaNavi ul li a { font:normal 10px/11px Verdana, Helvetica, Arial, sans-serif; color:#c2e3fc; text-decoration:none; }
 #metaNavi ul li a:hover { color:#fff; }
 
-#navi { clear:both; position:relative; top:-8px; left:18px; }
-#navi ul { margin:0; padding:2px 0 0 0; list-style:none; }
+/* fix for FF3 background-image(?) is misplaced by one pixel */
+html>/**/body, x:-moz-any-link, x:default { position:relative; top:-0.1px; }
+
+/* fix for IE7 where menu is misplaced by 1 pixel
+   an attribute with * will be interpreted only by IE7 and lower   
+*/
+#navi { clear:both; position:relative; top:0px; *top:1px; left:18px; }
+
+#navi ul { margin:0; padding:0; list-style:none; }
 #navi ul li { margin:0; padding:0; display:inline; font:bold 11px/13px Verdana, Helvetica, Arial, sans-serif; color:#fff; }
 #navi ul li a { font:bold 11px/12px Verdana, Helvetica, Arial, sans-serif; color:#fff; text-decoration:none; padding:3px 7px 2px 7px; }
 #navi ul li a:hover, #navi ul li a.current { background:#b3dcfa; border-bottom:1px solid #fff; color:#000; }
