@@ -195,6 +195,12 @@ function renderNodeData(nodeData) {
 	renderTextWithTitle(nodeData.uuid, message.get("dialog.compare.object.id"));
 	renderTextWithTitle(catalogData.catalogName, message.get("dialog.compare.object.catalog"));
 
+	// additional fields
+	renderSectionTitel(message.get("ui.obj.additionalFields.title"));
+	var addFields = nodeData.additionalFields;
+	for(var i=0; i<addFields.length; i++) {
+		renderTextWithTitle(addFields[i].value, addFields[i].name);
+	}
 }
 
 function renderYesNo(val) {
