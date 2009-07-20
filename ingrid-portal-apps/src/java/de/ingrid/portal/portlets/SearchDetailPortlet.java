@@ -129,6 +129,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            
 	            // try to get the result for a objects UUID
 	            if (docUuid != null && docUuid.length() > 0) {
+	            	// remove possible invalid characters
+	            	docUuid = docUuid.replaceAll("\\{([a-zA-Z0-9-]+)\\}", "$1");
 	                String qStr = null;
 	                if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT)) {
 	            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
