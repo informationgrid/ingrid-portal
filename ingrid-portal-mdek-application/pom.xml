@@ -59,12 +59,6 @@
         <version>1.2.14</version>
         <scope>provided</scope>
       </dependency>
-	<dependency>
-	  <groupId>junit</groupId>
-	  <artifactId>junit</artifactId>
-	  <version>4.5</version>
-	  <scope>test</scope>
-	</dependency>
       <dependency>
         <groupId>dom4j</groupId>
         <artifactId>dom4j</artifactId>
@@ -290,6 +284,12 @@
       <groupId>uba</groupId>
       <artifactId>xtmStubs</artifactId>
     </dependency>
+	<dependency>
+	  <groupId>junit</groupId>
+	  <artifactId>junit</artifactId>
+	  <version>4.5</version>
+	  <scope>test</scope>
+	</dependency>
   </dependencies>
   <repositories>
     <repository>
