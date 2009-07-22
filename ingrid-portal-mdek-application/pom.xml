@@ -12,7 +12,8 @@
   <packaging>war</packaging>
   <name>Ingrid Portal MDEK Application</name>
   <scm>
-    <connection>${scmConnectionBase}/ingrid-portal/trunk/ingrid-portal-mdek-application</connection>
+    <connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek-application</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek-application</developerConnection>
   </scm>
   <build>
     <finalName>ingrid-portal-mdek-application</finalName>
@@ -141,10 +142,6 @@
           <artifactId>xstream</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid.mdek</groupId>
-      <artifactId>ingrid-mdek-services</artifactId>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>

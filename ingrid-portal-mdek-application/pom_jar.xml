@@ -6,13 +6,14 @@
     <version>1.0.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>ingrid</groupId>
+  <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-mdek-application</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Ingrid Portal MDEK Application Jar</name>
   <scm>
-    <connection>${scmConnectionBase}/ingrid-portal/trunk/ingrid-portal-mdek-application</connection>
+    <connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek-application</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek-application</developerConnection>
   </scm>
   <build>
     <finalName>ingrid-portal-mdek-application</finalName>
@@ -30,77 +31,7 @@
       </resource>
     </resources>
   </build>
-  <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.14</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>dom4j</groupId>
-        <artifactId>dom4j</artifactId>
-        <version>1.4</version>
-        <exclusions>
-          <!--  xml-apis already included in java 1.6 -->
-          <!-- leads to eclipse compiler problems -->
-          <exclusion>
-            <groupId>xml-apis</groupId>
-            <artifactId>xml-apis</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>net.sf.ehcache</groupId>
-        <artifactId>ehcache</artifactId>
-        <version>1.4.1</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.hibernate</groupId>
-        <artifactId>hibernate-annotations</artifactId>
-        <version>3.2.1.ga</version>
-        <exclusions>
-          <exclusion>
-            <groupId>asm</groupId>
-            <artifactId>asm-attrs</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>asm</groupId>
-            <artifactId>asm</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.hibernate</groupId>
-        <artifactId>hibernate</artifactId>
-        <version>3.2.5.ga</version>
-        <!-- Because of asm version conflicts with cglib spring, we can't use the normal cglib dependency of hibernate
-                Rather we use the cglib-nodep lib, which has its own implementation of asm. -->
-        <exclusions>
-          <exclusion>
-            <groupId>asm</groupId>
-            <artifactId>asm-attrs</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>asm</groupId>
-            <artifactId>asm</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-  <!-- ==================== DEPENDENCIES ==================== -->
+   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
     <dependency>
       <groupId>de.ingrid.mdek</groupId>
@@ -108,73 +39,19 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>de.ingrid.mdek</groupId>
-      <artifactId>ingrid-mdek-services</artifactId>
+      <groupId>org.directwebremoting</groupId>
+      <artifactId>dwr</artifactId>
+      <version>3.0.dev</version>
     </dependency>
     <dependency>
-      <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-utils</artifactId>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>xstream</groupId>
-          <artifactId>xstream</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>opensymphony</groupId>
+      <artifactId>quartz</artifactId>
+      <version>1.6.0</version>
     </dependency>
     <dependency>
-      <groupId>de.ingrid.mdek</groupId>
-      <artifactId>ingrid-mdek-services</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-iplug-sns</artifactId>
-      <exclusions>
-        <exclusion>
-            <groupId>jetty</groupId>
-            <artifactId>servlet-api</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>de.ingrid</groupId>
-            <artifactId>ingrid-iplug</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>de.ingrid</groupId>
-            <artifactId>ingrid-iplug-admin-step1-webservice</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>jetty</groupId>
-            <artifactId>org.mortbay.jetty</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>tomcat</groupId>
-            <artifactId>jasper-compiler</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>tomcat</groupId>
-            <artifactId>jasper-runtime</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>ant</groupId>
-            <artifactId>ant</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>commons-el</groupId>
-            <artifactId>commons-el</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>de.ingrid</groupId>
-            <artifactId>ingrid-installer</artifactId>
-          </exclusion>
-      </exclusions>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+      <version>3.1-rc1</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -183,14 +60,12 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.2</version>
+      <groupId>de.ingrid</groupId>
+      <artifactId>ingrid-iplug-sns</artifactId>
     </dependency>
     <dependency>
-      <groupId>taglibs</groupId>
-      <artifactId>standard</artifactId>
-      <version>1.1.2</version>
+      <groupId>de.ingrid.mdek</groupId>
+      <artifactId>ingrid-mdek-services</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
@@ -198,9 +73,9 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>opensymphony</groupId>
-      <artifactId>quartz</artifactId>
-      <version>1.6.0</version>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring</artifactId>
+      <version>2.0.5</version>
     </dependency>
     <dependency>
       <groupId>javax.mail</groupId>
@@ -211,40 +86,6 @@
       <groupId>org.htmlparser</groupId>
       <artifactId>htmlparser</artifactId>
       <version>1.6</version>
-    </dependency>
-    <dependency>
-      <groupId>org.directwebremoting</groupId>
-      <artifactId>dwr</artifactId>
-      <version>3.0.dev</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring</artifactId>
-      <version>2.0.5</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.2</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>commons-fileupload</groupId>
-      <artifactId>commons-fileupload</artifactId>
-      <version>1.2.1</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-httpclient</groupId>
-      <artifactId>commons-httpclient</artifactId>
-      <version>3.1-rc1</version>
     </dependency>
     <dependency>
       <groupId>net.sf.opencsv</groupId>
@@ -261,8 +102,15 @@
       <version>1.4</version>
     </dependency>
     <dependency>
-      <groupId>uba</groupId>
-      <artifactId>xtmStubs</artifactId>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.5</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
   <repositories>
