@@ -189,7 +189,7 @@
       </properties>
     </dependency>
     <dependency>
-      <groupId>ingrid</groupId>
+      <groupId>de.ingrid.portal</groupId>
       <artifactId>ingrid-portal-mdek-application</artifactId>
       <version>1.0.0</version>
       <type>jar</type>
