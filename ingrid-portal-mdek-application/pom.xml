@@ -52,6 +52,27 @@
           <classesClassifier />
         </configuration>
       </plugin>
+      <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+      <!-- HACK: Upload JAR file WITHOUT "-classes" in name, so MAVEN1 can load if from archiva (no classifier "classes" possible in maven1) !!! -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>wagon-maven-plugin</artifactId>
+        <version>1.0-beta-1</version>
+        <executions>
+          <execution>
+            <id>upload-jar</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>upload-single</goal>
+            </goals>
+            <configuration>
+              <fromFile>target/${project.artifactId}-classes.jar</fromFile>
+              <url>file:///srv/www/htdocs/ingrid/maven2/de/ingrid/portal/${project.artifactId}/${project.version}</url>
+              <toFile>${project.artifactId}-${project.version}.jar</toFile>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
