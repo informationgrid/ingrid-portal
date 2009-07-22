@@ -8,12 +8,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-mdek-application</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>war</packaging>
   <name>Ingrid Portal MDEK Application</name>
   <scm>
-    <connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek-application</connection>
-    <developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek-application</developerConnection>
+    <connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-portal/tags/ingrid-portal-mdek-application-1.0.0</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-portal/tags/ingrid-portal-mdek-application-1.0.0</developerConnection>
   </scm>
   <build>
     <finalName>ingrid-portal-mdek-application</finalName>
@@ -49,7 +49,7 @@
           <packagingExcludes>**/ingrid-utils*.jar,**/ingrid-mdek-api*.jar,**/log4j*.jar,**/ehcache*.jar,**/servlet-api*.jar,**/jetspeed-api*.jar</packagingExcludes>
           <!-- ALSO CREATE JAR !!! NO WAY TO ADD NO CLASSIFIER TO NAME OF JAR, DEFAULT IS "classes" -> WILL BE ADDED -->
           <attachClasses>true</attachClasses>
-          <classesClassifier></classesClassifier>
+          <classesClassifier />
         </configuration>
       </plugin>
     </plugins>
