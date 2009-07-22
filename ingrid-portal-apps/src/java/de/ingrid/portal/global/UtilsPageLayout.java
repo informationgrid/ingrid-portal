@@ -163,6 +163,12 @@ public class UtilsPageLayout {
         return cnt;
     }
 
+    public static void positionPortletOnPage(PageManager pageManager, Page page, Fragment parentFragment,
+            String portletUniqueName, int x, int y) {
+    	List dummy = new ArrayList(); 
+    	positionPortletOnPage(pageManager, page, parentFragment, portletUniqueName, x, y, dummy);
+    }
+    
     /**
      * Positions a Portlet an the page. If a portlet already exists on a page,
      * move it to the new position. If a portlet does not exists, add it.
