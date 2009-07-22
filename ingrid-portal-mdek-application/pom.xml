@@ -47,6 +47,9 @@
         <configuration>
           <warSourceExcludes>test_*.*,dev_*.*</warSourceExcludes>
           <packagingExcludes>**/ingrid-utils*.jar,**/ingrid-mdek-api*.jar,**/log4j*.jar,**/ehcache*.jar,**/servlet-api*.jar,**/jetspeed-api*.jar</packagingExcludes>
+          <!-- ALSO CREATE JAR !!! NO WAY TO ADD NO CLASSIFIER TO NAME OF JAR, DEFAULT IS "classes" -> WILL BE ADDED -->
+          <attachClasses>true</attachClasses>
+          <classesClassifier></classesClassifier>
         </configuration>
       </plugin>
     </plugins>
@@ -148,49 +151,49 @@
       <artifactId>ingrid-iplug-sns</artifactId>
       <exclusions>
         <exclusion>
-            <groupId>jetty</groupId>
-            <artifactId>servlet-api</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>de.ingrid</groupId>
-            <artifactId>ingrid-iplug</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>de.ingrid</groupId>
-            <artifactId>ingrid-iplug-admin-step1-webservice</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>jetty</groupId>
-            <artifactId>org.mortbay.jetty</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>tomcat</groupId>
-            <artifactId>jasper-compiler</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>tomcat</groupId>
-            <artifactId>jasper-runtime</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>ant</groupId>
-            <artifactId>ant</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>commons-el</groupId>
-            <artifactId>commons-el</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>de.ingrid</groupId>
-            <artifactId>ingrid-installer</artifactId>
-          </exclusion>
+          <groupId>jetty</groupId>
+          <artifactId>servlet-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>de.ingrid</groupId>
+          <artifactId>ingrid-iplug</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>de.ingrid</groupId>
+          <artifactId>ingrid-iplug-admin-step1-webservice</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>jetty</groupId>
+          <artifactId>org.mortbay.jetty</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-beans</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>tomcat</groupId>
+          <artifactId>jasper-compiler</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>tomcat</groupId>
+          <artifactId>jasper-runtime</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>ant</groupId>
+          <artifactId>ant</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-el</groupId>
+          <artifactId>commons-el</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>de.ingrid</groupId>
+          <artifactId>ingrid-installer</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -281,12 +284,12 @@
       <groupId>uba</groupId>
       <artifactId>xtmStubs</artifactId>
     </dependency>
-	<dependency>
-	  <groupId>junit</groupId>
-	  <artifactId>junit</artifactId>
-	  <version>4.5</version>
-	  <scope>test</scope>
-	</dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.5</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <repositories>
     <repository>
