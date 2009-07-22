@@ -25,6 +25,7 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.IBUSInterface;
@@ -130,7 +131,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            // try to get the result for a objects UUID
 	            if (docUuid != null && docUuid.length() > 0) {
 	            	// remove possible invalid characters
-	            	docUuid = docUuid.replaceAll("\\{([a-zA-Z0-9-]+)\\}", "$1");
+	            	docUuid = UtilsQueryString.normalizeUuid(docUuid);
 	                String qStr = null;
 	                if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT)) {
 	            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";

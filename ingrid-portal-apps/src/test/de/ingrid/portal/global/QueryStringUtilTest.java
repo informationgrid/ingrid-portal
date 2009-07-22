@@ -35,4 +35,9 @@ public class QueryStringUtilTest extends TestCase {
         assertEquals("((name des) OR schl\u00fcssels))", result);
     }
 
+    public void testEscapeQueryToken() {
+        assertEquals("abcde-33445545", UtilsQueryString.normalizeUuid("{abcde-33445545}"));
+        assertEquals("APA 2009", UtilsQueryString.normalizeUuid("APA 2009"));
+    }
+    
 }

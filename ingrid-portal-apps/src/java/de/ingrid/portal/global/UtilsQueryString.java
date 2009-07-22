@@ -264,5 +264,9 @@ public class UtilsQueryString {
         }
         return result.toString();
     }
+    
+    public static String normalizeUuid(String token) {
+    	return token.replaceAll("^\\{(.+)\\}$", "$1");
+    }
 
 }
