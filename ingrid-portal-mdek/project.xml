@@ -191,7 +191,7 @@
     <dependency>
       <groupId>ingrid</groupId>
       <artifactId>ingrid-portal-mdek-application</artifactId>
-      <version>1.0.1-SNAPSHOT-classes</version>
+      <version>1.0.0-classes</version>
       <type>jar</type>
       <properties>
         <war.bundle>true</war.bundle>
