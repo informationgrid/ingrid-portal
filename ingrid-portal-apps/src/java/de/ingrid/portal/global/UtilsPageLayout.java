@@ -121,10 +121,12 @@ public class UtilsPageLayout {
      *            The destination column.
      */
     public static void addPortletToPosition(PageManager pageManager, Fragment parentFragment, String portletUniqueName,
-            int x, int y) {
+            int x, int y, List portletPrefs) {
         try {
             Fragment fragment = pageManager.newPortletFragment();
             fragment.setName(portletUniqueName);
+            if (portletPrefs.size()>0)
+            	fragment.setPreferences(portletPrefs);
             if (y == 0) {
                 fragment.setDecorator("ingrid-teaser");
             } else {
@@ -179,7 +181,7 @@ public class UtilsPageLayout {
      *            The destination column.
      */
     public static void positionPortletOnPage(PageManager pageManager, Page page, Fragment parentFragment,
-            String portletUniqueName, int x, int y) {
+            String portletUniqueName, int x, int y, List portletPrefs) {
         // if 'none' remove the fragment with this position from the page
         if (portletUniqueName.equals("none")) {
             UtilsPageLayout.removeFragmentByPosition(page, parentFragment, x, y);
@@ -191,12 +193,14 @@ public class UtilsPageLayout {
                 f = (Fragment) fragments.get(0);
             }
             if (f != null) {
+            	if (portletPrefs.size()>0)
+            		f.setPreferences(portletPrefs);
                 // move the portlet to the configured position
                 UtilsPageLayout.moveFragmentToPosition(parentFragment, f, x, y);
             } else {
                 // if not found add the portlet to the fragmenet at
                 // the specified position
-                UtilsPageLayout.addPortletToPosition(pageManager, parentFragment, portletUniqueName, x, y);
+                UtilsPageLayout.addPortletToPosition(pageManager, parentFragment, portletUniqueName, x, y, portletPrefs);
             }
         }
     }

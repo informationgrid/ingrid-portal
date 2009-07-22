@@ -22,9 +22,6 @@
                         <a href="help.psml?hkey=search-measure-1">Messwerte</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-chronicle-1">Umweltchronik</a>
-                    </li>
-                    <li>
                         <a href="help.psml?hkey=rss-news-1">Aktuelles</a>
                     </li>
                     <li>
@@ -32,9 +29,6 @@
                     </li>
                     <li>
                         <a href="help.psml?hkey=myingrid-1">Mein SachsenPortalU</a>
-                    </li>
-                    <li>
-                        <a href="help.psml?hkey=ingrid-newsletter-1">Newsletter</a>
                     </li>
                 </ul>
             </content>
@@ -67,7 +61,7 @@
                     Informationen in einer klar verständlichen und einfach
                     zugänglichen Form bereitzustellen. PortalU und die eigens
                     zum Aufbau des Portals entwickelte Software
-                    &#8222;InGrid 1.0&#8220; wurden speziell als
+                    &#8222;InGrid&#8220; wurden speziell als
                     Werkzeuge zur Unterstützung der Behörden bei der Umsetzung
                     der Richtlinien konzipiert. </p>
             </content>
@@ -150,13 +144,13 @@
         <section help-key="about-6">
             <header>InGrid &#8211; Die Software hinter PortalU</header>
             <content>
-                <p>Zur Umsetzung von PortalU wurde das Softwarepaket InGrid 1.0
-                    entwickelt. InGrid 1.0 setzt auf eine modulare und flexible
+                <p>Zur Umsetzung von PortalU wurde das Softwarepaket InGrid
+                    entwickelt. InGrid setzt auf eine modulare und flexible
                     Systemarchitektur auf der Basis lizenzfreier OpenSource
                     Produkte. Dadurch wird es möglich, die technische Struktur
                     des Umweltinformationsnetzes an sich wandelnde
                     organisatorische Vorgaben anzupassen. So können mit InGrid
-                    1.0 bei Bedarf regionale Umweltportale, z.B. für einzelne
+                    bei Bedarf regionale Umweltportale, z.B. für einzelne
                     Länder oder Kommunen, mit geringem technischen Aufwand
                     erstellt werden. Dank OpenSource ist die Nachnutzung der
                     Software für die Partner der VwV UDK/GEIN lizenzfrei.</p>
@@ -1631,50 +1625,6 @@
         </section>
     </chapter>
     <chapter>
-        <header>Umweltchronik</header>
-        <section help-key="search-chronicle-1">
-            <header>Umweltchronik</header>
-            <content>
-                <p>Die Umweltchronik ist eine Sammlung aktueller und
-                    historischer Ereignisse, die unsere Umweltsituation
-                    wesentlich beeinflusst haben. Neben den Eckdaten liefert die
-                    Umweltchronik eine  kurze Beschreibung der Ereignisse.</p>
-                <p>Die Umweltchronik wird über den <a
-                        href="http://www.semantic-network.de/"
-                        target="_new">Semantic Network Service (SNS)</a> des
-                    Umweltbundesamtes zur Verfügung gestellt.</p>
-                <p>Sie können gezielt nach Ereignissen suchen, in dem Sie eine
-                    Suche in der Umweltchronik über Suchbegriff, Zeitbezug und
-                    Ereignistyp über den Button &#8222;Anzeigen&#8220; absenden.</p>
-            </content>
-        </section>
-        <section help-key="search-chronicle-2">
-            <header>Ereignistypen</header>
-            <content>
-                <p>Die Umweltchronik verzeichnet verschiedene Ereignistypen. Sie
-                    können in diesem Bereich wählen, nach welchen Ereignistypen
-                    Sie suchen.</p>
-            </content>
-        </section>
-        <section help-key="search-chronicle-3">
-            <header>Zeitbezug</header>
-            <content>
-                <p>Die Umweltchronik verzeichnet zu jedem Ereignis das Datum, an
-                    dem es sich ereignet hat. In diesem Bereich Sie können den
-                    Zeitpunkt oder den Zeitraum angeben, in dem Sie nach
-                    umweltrelevanten Ereignissen suchen.</p>
-            </content>
-        </section>
-        <section help-key="search-chronicle-4">
-            <header>Suchbegriff</header>
-            <content>
-                <p>In diesem Bereich können Sie einen Suchbegriff eingeben. Es
-                    wird nach Ereignissen gesucht, die den Suchbegriff im Titel
-                    oder in der Beschreibung enthalten.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
         <header>Karten</header>
         <section help-key="maps-1">
             <header>Karten</header>
@@ -2041,12 +1991,6 @@
                     ausgefüllt werden müssen. Alle anderen Angaben sind freiwillig.</p>
                 <p>Alle Angaben werden strikt vertraulich behandelt und dienen
                     nur der anonymisierten statistischen Auswertung.</p>
-                <p>Wenn Sie immer die neuesten Nachrichten aus dem Umfeld von
-                    PortalU erhalten möchten, können Sie den <a
-                    href="help.psml?hkey=ingrid-newsletter-1">PortalU-Newsletter</a>
-                    abbonieren. Kreuzen Sie einfach am Ende des Formulars
-                    &#8222;Ich möchte den Newsletter abonnieren&#8220;
-                    an (Hinweis: Sie können ihn jederzeit wieder abbestellen).</p>
             </content>
         </section>
         <section help-key="myingrid-8">
@@ -2151,37 +2095,6 @@
             <content>
                 <p>Über das Logout verlassen Sie den personalisierten Bereich
                     und kommen zurück auf die Startseite von SachsenPortalU mit seinen Standard-Voreinstellungen.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Newsletter</header>
-        <section help-key="ingrid-newsletter-1">
-            <header>Newsletter</header>
-            <content>
-                <p>Sie können sich über Neuigkeiten und aktuelle Entwicklungen
-                    im Umfeld von PortalU über unseren Newsletter per e-mail
-                    informieren lassen. Der Bezug des Newsletters ist kostenlos.
-                    Ihre e-mail Adresse wird nicht weitergegeben oder zu anderen
-                    Zwecken als zur Zustellung des Newsletters genutzt.</p>
-            </content>
-        </section>
-        <section help-key="ingrid-newsletter-2">
-            <header>Anmeldung für neue Leser</header>
-            <content>
-                <p>Füllen Sie bitte die Felder des Anmeldeformulars aus und
-                    senden sie die Angaben ab. Alle mit Sternchen *
-                    gekennzeichneten Felder sind Pflichtfelder.</p>
-                <p>Ab der nächsten Ausgabe erhalten Sie dann den PortalU-Newsletter.</p>
-            </content>
-        </section>
-        <section help-key="ingrid-newsletter-3">
-            <header>Newsletter abbestellen</header>
-            <content>
-                <p>Wenn Sie kein Interesse mehr an dem PortalU-Newsletter haben,
-                    tragen Sie bitte Ihre Email-Adresse in das Formular ein und
-                    senden es ab. Sie werden dann keine weiteren
-                    PortalU-Newsletter mehr erhalten.</p>
             </content>
         </section>
     </chapter>

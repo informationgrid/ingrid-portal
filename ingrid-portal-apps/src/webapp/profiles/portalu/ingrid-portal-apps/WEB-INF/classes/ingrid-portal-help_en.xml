@@ -63,7 +63,7 @@
                 make their data and information publicly available in a structured, understandable and highly accessible way.      
                 </p>
                 <p>
-                To set up PortalU, a new software -  &#8222;InGrid 1.0&#8220; - was created. InGrid is a modular, flexible portal-software built on OpenSource basis. Both PortalU and InGrid 
+                To set up PortalU, a new software -  &#8222;InGrid&#8220; - was created. InGrid is a modular, flexible portal-software built on OpenSource basis. Both PortalU and InGrid 
                 are tools dedicated to help public agencies in Germany (and elsewhere) to improve public access to environmental information and thus implement the new EU regulations. 
                      </p>
             </content>
@@ -132,7 +132,7 @@
         <section help-key="about-6">
             <header>InGrid &#8211; The Software Behind PortalU</header>
             <content>
-                <p>To build PortalU, a new software - InGrid 1.0 - was developed. InGrid implements a modular
+                <p>To build PortalU, a new software - InGrid - was developed. InGrid implements a modular
                 and flexible system architecture on the basis of advanced OpenSource technology. 
                 This system architecture allows us to adapt the environmental information infrastructure to changing
                 organizational needs. If necessary, InGrid can be used to build regional and/or communal environmental

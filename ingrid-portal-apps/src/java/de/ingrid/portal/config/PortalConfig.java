@@ -104,6 +104,8 @@ public class PortalConfig extends PropertiesConfiguration {
 	public static final String PORTAL_ENABLE_SEARCH_RESULTS_UNRANKED = "portal.enable.search.results.unranked";
 
 	public static final String PORTAL_ENABLE_SEARCH_RESULTS_UNRANKED_ALLIPLUGS = "portal.enable.search.results.unranked.alliplugs";
+	
+	public static final String PORTAL_ENABLE_NEWSLETTER = "enable.newsletter.registration";
 
 	public static final String COMPONENT_MONITOR_ALERT_EMAIL_SUBJECT = "component.monitor.alert.email.subject";
     

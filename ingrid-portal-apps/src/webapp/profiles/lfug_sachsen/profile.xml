@@ -91,6 +91,19 @@
             <name>search-catalog/search-catalog-hierarchy.psml</name>
             <hidden>false</hidden>
         </page>
+        <page>
+            <name>service-contact-newsletter.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>service-contact.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::Contact</name>
+                </portlet>
+            </portlets>
+        </page>
       </pages>
     <files>
         <file>

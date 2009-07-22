@@ -142,11 +142,13 @@ $MESSAGES.setMsgParam($MESSAGES.getString('common.tooltip.link.extern'))
 					<a href="$link">$MESSAGES.getString("sitemap.area.service.contact")</a>
 					<p>$MESSAGES.getString("sitemap.area.service.contact.description")</p>
 					<ul>
+#if ($enableNewsletter)						
 						<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-contact-newsletter.psml"))
 							<a href="$link">$MESSAGES.getString("sitemap.area.service.newsletter")</a>
 							<p>$MESSAGES.getString("sitemap.area.service.newsletter.description")</p>
-						</li>          
+						</li>
+#end
 					</ul>
 				</li>
 			  </ul>

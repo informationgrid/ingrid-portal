@@ -58,13 +58,15 @@ $contactIntroPostEmail
 				<option value="priv" #getSelected('interest' 'priv')>$MESSAGES.getString('contact.report.email.interest.in.enviroment.info.priv')</option>
 			</select>  
 			<span class="clearer"></span>
-		</p>        	    
+		</p>
+#if ($enableNewsletter)		
 		<p>
 			<label class="float_left col2left_incr">$MESSAGES.getString('contact.form.newsletter')</label>
 			<input type="checkbox" id="chk1" name="newsletter" value="1" #getChecked('newsletter' '1')/>&nbsp;
 			<label for="chk1">$MESSAGES.getString('contact.form.newsletter.label')</label>
 			<span class="clearer"></span>
 		</p>
+#end
 	</div>
 	<div class="formfooter">
 		<div align="right">

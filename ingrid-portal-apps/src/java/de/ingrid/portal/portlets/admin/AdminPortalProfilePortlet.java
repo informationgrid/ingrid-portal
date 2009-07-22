@@ -25,8 +25,10 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.CommonPortletServices;
+import org.apache.jetspeed.components.portletregistry.PortletRegistry;
 import org.apache.jetspeed.om.folder.Folder;
 import org.apache.jetspeed.om.page.Page;
+import org.apache.jetspeed.om.preference.FragmentPreference;
 import org.apache.jetspeed.page.PageManager;
 import org.apache.jetspeed.page.PageNotFoundException;
 import org.apache.jetspeed.page.document.NodeException;
@@ -50,6 +52,8 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
 
     private PageManager pageManager;
 
+    private PortletRegistry portletRegistry;
+    
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
      */
@@ -58,6 +62,10 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
         pageManager = (PageManager) getPortletContext().getAttribute(CommonPortletServices.CPS_PAGE_MANAGER_COMPONENT);
         if (null == pageManager) {
             throw new PortletException("Failed to find the Page Manager on portlet initialization");
+        }
+        portletRegistry = (PortletRegistry) getPortletContext().getAttribute(CommonPortletServices.CPS_REGISTRY_COMPONENT);
+        if (null == portletRegistry) {
+            throw new PortletException("Failed to find the PortletRegistry Manager on portlet initialization");
         }
     }
 
@@ -132,11 +140,30 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                         UtilsPageLayout.removeAllFragmentsInColumn(p, p.getRootFragment(), 1);
                         for (int j = 0; j < portletNames.size(); j++) {
                             String portletName = (String) portletNames.get(j);
+                            //portletRegistry.getPortletDefinitionByIdentifier("IngridInformPortlet").getPreferenceSet();//portletRegistry.getAllPortletDefinitions();
                             try {
+                            	List portletPrefsNames  = null;
+                            	List<FragmentPreference> prefs = new ArrayList<FragmentPreference>();
+                            	
                                 int row = profile.getInt("pages.page(" + i + ").portlets.portlet(" + j + ")[@row]");
                                 int col = profile.getInt("pages.page(" + i + ").portlets.portlet(" + j + ")[@col]");
+                                try {
+                                	// get the hidden information if it is available
+                                	portletPrefsNames = profile.getList("pages.page(" + i + ").portlets.portlet("+j+").preference[@name]");
+                                	for (int k = 0; k < portletPrefsNames.size(); k++) {
+                                		FragmentPreference f = pageManager.newFragmentPreference();
+                                		// set the name of the preference
+                                		f.setName((String)portletPrefsNames.get(k));
+                                		// get the values for this preference
+                                		List<String> pl = profile.getList("pages.page(" + i + ").portlets.portlet("+j+").preference("+k+").value");
+                                		f.setValueList(pl);
+                                		prefs.add(f);
+                                	}
+                                } catch (Exception e) {
+                                	log.error(e);
+                                }
                                 UtilsPageLayout.positionPortletOnPage(pageManager, p, p.getRootFragment(), portletName,
-                                        row, col);
+                                        row, col, prefs);
                             } catch (ConversionException e) {
                                 log.warn("No 'x' or 'y' attribute found for portlet '" + portletName + "' on page '"
                                         + pageName + "'", e);
