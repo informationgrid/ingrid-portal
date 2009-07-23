@@ -63,6 +63,7 @@ import org.hibernate.criterion.Restrictions;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ActionForm;
 import de.ingrid.portal.forms.AdminUserForm;
+import de.ingrid.portal.forms.ContactForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -549,6 +550,7 @@ public class AdminUserPortlet extends ContentPortlet {
             userAttributes.put("user.custom.ingrid.user.subscribe.newsletter", f
                     .getInput(AdminUserForm.FIELD_SUBSCRIBE_NEWSLETTER));
 
+
             // generate login id
             String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
                     Long.toString(System.currentTimeMillis())));
@@ -1026,7 +1028,11 @@ public class AdminUserPortlet extends ContentPortlet {
                                 .getProvidersFromPartnerKey(f.getInput(AdminUserForm.FIELD_PARTNER)));
             }
 
+            // show newsletter option if configured that way
+            context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, Boolean.TRUE));
+
             setDefaultViewPage(viewEdit);
+            
             return true;
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
@@ -1052,6 +1058,9 @@ public class AdminUserPortlet extends ContentPortlet {
         }
 
         context.put("actionForm", f);
+
+        // show newsletter option if configured that way
+        context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, Boolean.TRUE));
 
         setDefaultViewPage(viewNew);
         return true;

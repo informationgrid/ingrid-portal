@@ -127,9 +127,11 @@
 			</select>  
 			<span class="clearer"></span>
 		</p>
+#if ($enableNewsletter)		
 		<p>
 			<label class="float_left col2left alignleft">$MESSAGES.getString('account.edit.label.newsletter1')</label>
 			<input type="checkbox" id="subscribe_newsletter" name="subscribe_newsletter" value="1" #getChecked('subscribe_newsletter' '1') />&nbsp;<label for="subscribe_newsletter">$MESSAGES.getString('account.edit.label.newsletter2')</label>
 			<span class="clearer"></span>
 		</p>
+#end		
 	</div>

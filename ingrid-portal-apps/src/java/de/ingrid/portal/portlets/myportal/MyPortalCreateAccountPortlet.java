@@ -191,6 +191,9 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
                 request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_DONE);
             }
         }
+        
+        // show newsletter option if configured that way
+        context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, Boolean.TRUE));
 
         context.put("actionForm", f);
         super.doView(request, response);

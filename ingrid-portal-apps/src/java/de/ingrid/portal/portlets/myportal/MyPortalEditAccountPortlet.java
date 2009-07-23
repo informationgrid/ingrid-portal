@@ -27,6 +27,7 @@ import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.EditAccountForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
@@ -118,6 +119,10 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
         }
 
         context.put("actionForm", f);
+        
+        // show newsletter option if configured that way
+        context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, Boolean.TRUE));
+        
         super.doView(request, response);
     }
 
