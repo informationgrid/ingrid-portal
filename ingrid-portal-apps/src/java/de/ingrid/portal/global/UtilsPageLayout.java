@@ -11,6 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.om.page.Fragment;
 import org.apache.jetspeed.om.page.Page;
+import org.apache.jetspeed.om.preference.FragmentPreference;
 import org.apache.jetspeed.page.PageManager;
 
 /**
@@ -165,7 +166,8 @@ public class UtilsPageLayout {
 
     public static void positionPortletOnPage(PageManager pageManager, Page page, Fragment parentFragment,
             String portletUniqueName, int x, int y) {
-    	List dummy = new ArrayList(); 
+    	List<FragmentPreference> dummy = new ArrayList<FragmentPreference>();
+    	//dummy.add(pageManager.newFragmentPreference());
     	positionPortletOnPage(pageManager, page, parentFragment, portletUniqueName, x, y, dummy);
     }
     

@@ -1,5 +1,7 @@
 package de.ingrid.portal.global;
 
+import java.util.ArrayList;
+
 import junit.framework.TestCase;
 
 import org.apache.jetspeed.om.folder.Folder;
@@ -12,6 +14,7 @@ import org.apache.jetspeed.om.page.Page;
 import org.apache.jetspeed.om.page.PageSecurity;
 import org.apache.jetspeed.om.page.psml.FragmentImpl;
 import org.apache.jetspeed.om.page.psml.PageImpl;
+import org.apache.jetspeed.om.preference.FragmentPreference;
 import org.apache.jetspeed.page.AbstractPageManager;
 import org.apache.jetspeed.page.FolderNotRemovedException;
 import org.apache.jetspeed.page.FolderNotUpdatedException;
@@ -159,7 +162,7 @@ public class UtilsPageLayoutTest extends TestCase {
      */
     public void testAddPortletToPosition() throws Exception {
         this.setUp();
-        UtilsPageLayout.addPortletToPosition(pageManager, page.getRootFragment(), "new-portlet", 1, 0);
+        UtilsPageLayout.addPortletToPosition(pageManager, page.getRootFragment(), "new-portlet", 1, 0, new ArrayList<FragmentPreference>());
         assertNotNull(UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 0, 0));
         assertEquals("p-0-0", UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 0, 0).getName());
         assertNotNull(UtilsPageLayout.getFragmentFromPosition(page.getRootFragment(), 3, 0));
