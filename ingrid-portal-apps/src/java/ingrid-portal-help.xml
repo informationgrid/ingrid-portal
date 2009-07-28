@@ -70,7 +70,7 @@
                     Informationen in einer klar verständlichen und einfach
                     zugänglichen Form bereitzustellen. PortalU und die eigens
                     zum Aufbau des Portals entwickelte Software
-                    &#8222;InGrid 1.0&#8220; wurden speziell als
+                    &#8222;InGrid&#8220; wurden speziell als
                     Werkzeuge zur Unterstützung der Behörden bei der Umsetzung
                     der Richtlinien konzipiert. </p>
             </content>
@@ -153,13 +153,13 @@
         <section help-key="about-6">
             <header>InGrid &#8211; Die Software hinter PortalU</header>
             <content>
-                <p>Zur Umsetzung von PortalU wurde das Softwarepaket InGrid 1.0
-                    entwickelt. InGrid 1.0 setzt auf eine modulare und flexible
+                <p>Zur Umsetzung von PortalU wurde das Softwarepaket InGrid
+                    entwickelt. InGrid setzt auf eine modulare und flexible
                     Systemarchitektur auf der Basis lizenzfreier OpenSource
                     Produkte. Dadurch wird es möglich, die technische Struktur
                     des Umweltinformationsnetzes an sich wandelnde
                     organisatorische Vorgaben anzupassen. So können mit InGrid
-                    1.0 bei Bedarf regionale Umweltportale, z.B. für einzelne
+                    bei Bedarf regionale Umweltportale, z.B. für einzelne
                     Länder oder Kommunen, mit geringem technischen Aufwand
                     erstellt werden. Dank OpenSource ist die Nachnutzung der
                     Software für die Partner der VwV UDK/GEIN lizenzfrei.</p>
