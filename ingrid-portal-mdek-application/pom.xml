@@ -319,6 +319,7 @@
       <name>InGrid Repo Maven2</name>
       <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
     </repository>
+<!--
     <repository>
       <snapshots />
       <id>jetspeed-repository</id>
@@ -326,5 +327,6 @@
       <url>http://www.bluesunrise.com/maven</url>
       <layout>legacy</layout>
     </repository>
+-->
   </repositories>
 </project>
