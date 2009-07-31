@@ -172,6 +172,10 @@
       <artifactId>ingrid-iplug-sns</artifactId>
       <exclusions>
         <exclusion>
+          <groupId>de.ingrid</groupId>
+          <artifactId>ingrid-iplug-admin-step1-sns</artifactId>
+        </exclusion>
+        <exclusion>
           <groupId>jetty</groupId>
           <artifactId>servlet-api</artifactId>
         </exclusion>
