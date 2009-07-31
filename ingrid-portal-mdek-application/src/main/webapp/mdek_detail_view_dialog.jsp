@@ -8,13 +8,21 @@
 _container_.addOnLoad(function() {
 	if (_container_.customParams.useDirtyData == true) {
 		// get dirty data from proxy
-		renderNodeData(udkDataProxy._getData());
+		var nodeData = udkDataProxy._getData();
+		// extract uuids from all addresses within the object
+		var uuids = getAddressUuids(nodeData.generalAddressTable);
+		enrichNodeDataWithInstitutions(uuids, nodeData);
+		
 	} else {
 		// Construct an MdekDataBean from the available data
 		var node = dojo.widget.byId(_container_.customParams.selectedNodeId);
 		ObjectService.getNodeData(node.id, node.nodeAppType, "false",
 			{
-				callback:function(res) { renderNodeData(res); },
+				callback:function(res) {
+				    var uuids = getAddressUuids(res.generalAddressTable);
+				    enrichNodeDataWithInstitutions(uuids, res);
+				    //renderNodeData(res); 
+				},
 //				timeout:5000,
 				errorHandler:function(message) {
 					displayErrorMessage(new Error(message));
@@ -24,6 +32,29 @@ _container_.addOnLoad(function() {
 		);
 	}
 });
+
+function getAddressUuids(addressTable){
+    var uuids = new Array();
+    for (var i = 0; i < addressTable.length; i++) {
+        uuids[i] = addressTable[i].uuid;
+    }
+    return uuids;
+}
+
+function enrichNodeDataWithInstitutions(uuids, nodeData) {
+    AddressService.getAddressInstitutions(uuids, {
+        callback:function(res){ 
+                dojo.debug("enrich node");
+                for (var i = 0; i < res.length; i++) {
+                    nodeData.generalAddressTable[i].organisation = res[i];
+                }
+                renderNodeData(nodeData);
+            },
+            errorHandler:function(message) {
+                displayErrorMessage(new Error(message));
+            }
+    });
+}
 
 function renderNodeData(nodeData) {
 //	dojo.debugShallow(nodeData);
@@ -185,10 +216,12 @@ function renderNodeData(nodeData) {
 	renderList(nodeData.thesaurusEnvCatsList, message.get("ui.obj.thesaurus.terms.enviromental.title")+ " - " + message.get("ui.obj.thesaurus.terms.enviromental.categories"), null, function (val) { return dojo.widget.byId("thesaurusEnvCatsCombobox")._getDisplayValueForValue(val);});
 
 	// references
-	renderSectionTitel(message.get("ui.obj.links.title"));
-	renderList(nodeData.linksFromObjectTable, message.get("dialog.compare.object.linksFromTable.title"), "title")
-	renderList(nodeData.linksToObjectTable, message.get("dialog.compare.object.linksToTable.title"), "title")
-	renderUrlLinkList(nodeData.linksToUrlTable);
+	if (nodeData.linksFromObjectTable.length > 0 || nodeData.linksToObjectTable.length > 0 || nodeData.linksToUrlTable.length > 0) {
+    	renderSectionTitel(message.get("ui.obj.links.title"));
+    	renderList(nodeData.linksFromObjectTable, message.get("dialog.compare.object.linksFromTable.title"), "title")
+    	renderList(nodeData.linksToObjectTable, message.get("dialog.compare.object.linksToTable.title"), "title")
+    	renderUrlLinkList(nodeData.linksToUrlTable);
+    }
 	
 	// administrative data
 	renderSectionTitel(message.get("dialog.compare.object.administrative"));
@@ -196,10 +229,12 @@ function renderNodeData(nodeData) {
 	renderTextWithTitle(catalogData.catalogName, message.get("dialog.compare.object.catalog"));
 
 	// additional fields
-	renderSectionTitel(message.get("ui.obj.additionalFields.title"));
 	var addFields = nodeData.additionalFields;
-	for(var i=0; i<addFields.length; i++) {
-		renderTextWithTitle(addFields[i].value, addFields[i].name);
+	if (addFields.length > 0) {
+    	renderSectionTitel(message.get("ui.obj.additionalFields.title"));
+    	for(var i=0; i<addFields.length; i++) {
+    		renderTextWithTitle(addFields[i].value, addFields[i].name);
+    	}
 	}
 }
 

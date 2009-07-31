@@ -34,7 +34,6 @@ detailHelper.renderAddressEntry = function(address) {
 		}
 		entry += address.city+"\n";
 	}
-	dojo.debug("country: " + address.countryName);
 	if (this.isValid(address.countryName)) {
 		entry += address.countryName+"\n";
 	}

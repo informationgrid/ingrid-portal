@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-base-pom</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -323,7 +323,6 @@
       <name>InGrid Repo Maven2</name>
       <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
     </repository>
-<!--
     <repository>
       <snapshots />
       <id>jetspeed-repository</id>
@@ -331,6 +330,5 @@
       <url>http://www.bluesunrise.com/maven</url>
       <layout>legacy</layout>
     </repository>
--->
   </repositories>
 </project>

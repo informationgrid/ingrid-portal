@@ -15,6 +15,7 @@ import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 public interface AddressService {
 
 	public MdekAddressBean getAddressData(String nodeUuid, Boolean useWorkingCopy);
+	public List<String> getAddressInstitutions(List<String> uuid);
 	public MdekAddressBean getPublishedAddressData(String nodeUuid);
 	public MdekAddressBean saveAddressData(MdekAddressBean data, Boolean useWorkingCopy);
 	public MdekAddressBean assignAddressToQA(MdekAddressBean data);

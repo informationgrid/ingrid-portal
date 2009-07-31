@@ -1878,6 +1878,7 @@ udkDataProxy._getAddressData = function(nodeData) {
 			nodeData.givenName = dojo.widget.byId("headerAddressType2Firstname").getValue();
 			nodeData.nameForm = dojo.widget.byId("headerAddressType2Style").getValue();
 			nodeData.titleOrFunction = dojo.widget.byId("headerAddressType2Title").getValue();
+			nodeData.organisation = dojo.widget.byId("headerAddressType2Institution").getValue();
 			break;
 		case 3:
 			nodeData.name = dojo.widget.byId("headerAddressType3Lastname").getValue();

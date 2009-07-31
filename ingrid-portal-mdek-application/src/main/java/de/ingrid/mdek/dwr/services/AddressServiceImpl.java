@@ -1,5 +1,6 @@
 package de.ingrid.mdek.dwr.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -135,6 +136,8 @@ public class AddressServiceImpl implements AddressService {
 
 		try {
 			address = addressRequestHandler.getAddressDetail(nodeUuid);
+			String organisations = extractInstitutions(address);
+			address.setOrganisation(organisations.trim());
 		} catch (RuntimeException e) {
 			log.debug("Error while getting address data.", e);
 			throw e;
@@ -146,7 +149,38 @@ public class AddressServiceImpl implements AddressService {
 
 		return address;
 	}
-
+	
+	public List<String> getAddressInstitutions(List<String> uuidList) {
+		MdekAddressBean address 	= null;
+		List<String> institutions 	= new ArrayList<String>();
+		
+		for (String uuid : uuidList) {
+			address = getAddressData(uuid, false);
+			institutions.add(address.getOrganisation());
+		}		
+		
+		return institutions;
+	}
+	
+	private String extractInstitutions(MdekAddressBean address) {
+		String organisations = "";
+		if (address.getParentInstitutions().size() > 0) {
+			for (int i = address.getParentInstitutions().size()-1; i >= 0; --i) {
+				if (address.getParentInstitutions().get(i).getAddressClass() == 0) {
+					// Only display the first institution we encounter and break
+					organisations = address.getParentInstitutions().get(i).getOrganisation()+"\n"+organisations;
+					break;
+	
+				} else if (address.getParentInstitutions().get(i).getAddressClass() == 1) {
+					organisations = "\t"+address.getParentInstitutions().get(i).getOrganisation()+"\n"+organisations;
+				}
+			}
+		} else {
+			organisations = address.getOrganisation();
+		}
+		return organisations;
+	}
+	
 	public MdekAddressBean getPublishedAddressData(String nodeUuid) {
 		MdekAddressBean address = null; 
 
