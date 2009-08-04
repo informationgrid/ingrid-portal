@@ -73,6 +73,9 @@ public class LanguageSwitchPortlet extends GenericVelocityPortlet {
      */
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
+    	// when the language is switched the variable "lang" will be submitted as a 
+    	// get-value. The real language switch is done by IngridLocalizationValveImpl
+    	// which checks for the submitted variable.
     }
 
    
