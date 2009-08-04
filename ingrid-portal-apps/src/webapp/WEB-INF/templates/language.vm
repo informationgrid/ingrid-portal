@@ -11,4 +11,7 @@
             #set($i=$i+1)
         #end
     </select>
+    <noscript>
+        <input class="btn" type="submit" style="padding:0;vertical-align:top;margin-top:1px;font-size:80%;" value=">" />
+    </noscript>
 </form>
