@@ -5,7 +5,7 @@
 		<p>
 		<table class="border fullwidth">
 #set ($colNames = ["id", "provider", "description", "language", "categories", "numLastCount", "lastUpdate", "error"])
-#set ($colTitles = ["Id", "Anbieter", "Beschreibung", "Sprache", "Kategorien", "Neue Nachrichten", "Letztes Update", "Fehler"])
+#set ($colTitles = [$MESSAGES.getString('component.forms.rss.text.id'), $MESSAGES.getString('component.forms.rss.text.provider'), $MESSAGES.getString('component.forms.rss.text.description'), $MESSAGES.getString('component.forms.rss.text.lang'), $MESSAGES.getString('component.forms.rss.text.category'), $MESSAGES.getString('component.forms.rss.text.new.messages'), $MESSAGES.getString('component.forms.rss.text.last.update'), $MESSAGES.getString('component.forms.rss.text.error')])
 #renderDBBrowserHeader($colNames $colTitles)
 #foreach ($dbEntity in $dbEntities)
 	#set ($rowId = $dbEntity.Id)

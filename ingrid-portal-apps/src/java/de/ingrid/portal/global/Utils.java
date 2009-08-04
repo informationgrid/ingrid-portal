@@ -536,5 +536,23 @@ public class Utils {
 		}
 		return key.toLowerCase();
 	}
+	
+	/**
+	 * Get all languages as short version (e.g. ["de","en"]
+	 * @return an array of Strings with short language names
+	 */
+	public static String[] getLanguagesShortAsArray() {
+		String langShort = PortalConfig.getInstance().getString(PortalConfig.LANGUAGES_SHORT);
+        return langShort.split(";");
+	}
+	
+	/**
+	 * Get all languages in full length in the given language (e.g. ["German","English"]
+	 * @return an array of Strings with complete language names
+	 */
+	public static String[] getLanguagesFullAsArray(String lang) {
+		String langNames = PortalConfig.getInstance().getString(PortalConfig.LANGUAGES_NAMES + lang);
+        return langNames.split(";");
+	}
 
 }

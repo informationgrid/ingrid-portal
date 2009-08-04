@@ -117,6 +117,12 @@ public class PortalConfig extends PropertiesConfiguration {
 
 	public static final String COMPONENT_MONITOR_SNS_PASSWORD = "component.monitor.sns.password";
 	
+	// contains the short version of all supported languages
+	public static final String LANGUAGES_SHORT = "languages.short";
+	
+	// the specific language is added after this variable (e.g. languages.names.de) 
+	public static final String LANGUAGES_NAMES = "languages.names.";
+	
 	// private stuff
     private static PortalConfig instance = null;
 

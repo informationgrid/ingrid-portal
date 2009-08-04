@@ -19,6 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
+import org.apache.velocity.tools.generic.ListTool;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -134,6 +135,9 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             Context context = getContext(request);
             context.put("MESSAGES", messages);
             context.put(CONTEXT_UTILS_STRING, new UtilsString());
+            
+            // set localized title for this page
+            response.setTitle(messages.getString("admin.cms.title"));
 
             // reset state ? may be necessary on initial call (e.g. called from
             // other page)
@@ -205,6 +209,13 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
                 context.put(CONTEXT_MODE, CONTEXTV_MODE_EDIT);
                 context.put(CONTEXT_ENTITIES, rssSources);
                 setDefaultViewPage(viewEdit);
+                
+                // add the velocity tool to access arrays
+                ListTool listTool = new ListTool();
+                context.put("ListTool", listTool);
+                context.put("languagesNames", Utils.getLanguagesFullAsArray(request.getLocale().getLanguage()));
+                context.put("languagesShort", Utils.getLanguagesShortAsArray());
+                
                 return true;
             }
         } catch (Exception ex) {

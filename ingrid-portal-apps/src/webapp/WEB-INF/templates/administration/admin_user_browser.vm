@@ -1,12 +1,12 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
 	<div class="formbody">
-	<p>Klicken Sie auf einen Benutzer um dessen Einstellungen zu ändern.</p>
+	<p>$MESSAGES.getString('account.view.tip')</p>
 #renderDBBrowserNavigation($browser)
 	<p>
 		<table class="border fullwidth">
 #set ($colNames = ["id", "firstName", "lastName", "email", "roles"])
-#set ($colTitles = ["Id", "Vorname", "Nachname", "Email", "Rollen"])
+#set ($colTitles = [$MESSAGES.getString('account.view.id'), $MESSAGES.getString('account.view.first.name'), $MESSAGES.getString('account.view.last.name'), $MESSAGES.getString('account.view.email'), $MESSAGES.getString('account.view.roles')])
 #renderDBBrowserHeader($colNames $colTitles)
 #foreach ($dbEntity in $dbEntities)
 	#set ($rowId = $dbEntity.id)

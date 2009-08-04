@@ -152,6 +152,10 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue("titleKey", TITLE_KEY_SEARCH);
         context.put("titleKey", titleKey);
+        
+        // set the help Tooltip which cannot be transported through the context when nested fragments are used in a psml-file
+        //prefs.setValue("helpToolTip", messages.getString("ingrid.page.help.link.title"));
+        //prefs.setValue("helpToolTip", "bla");
 
         // set view template, we use the same portlet for Simple- and Extended
         // Search, just

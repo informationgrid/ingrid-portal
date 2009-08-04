@@ -32,6 +32,9 @@ public class AdminStatisticsPortlet extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
+        
+        // set localized title for this page
+        response.setTitle(messages.getString("admin.statistics.headline"));
 
         context
                 .put("apacheStatisticsURL", PortalConfig.getInstance()

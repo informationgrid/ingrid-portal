@@ -81,6 +81,9 @@ public class AdminHomepagePortlet extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
+        
+        // set localized title for this page
+        response.setTitle(messages.getString("personalize.home.title"));
 
         try {
             // get all portlets from the portlet registry

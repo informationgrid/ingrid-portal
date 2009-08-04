@@ -77,6 +77,9 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		Context context = getContext(request);
 		context.put("MESSAGES", messages);
 		context.put("UtilsString", new UtilsString());
+		
+        // set localized title for this page
+        response.setTitle(messages.getString("component.monitor.title"));
 
 		AdminComponentMonitorForm cf = (AdminComponentMonitorForm) Utils.getActionForm(request,
 				AdminComponentMonitorForm.SESSION_KEY, AdminComponentMonitorForm.class);

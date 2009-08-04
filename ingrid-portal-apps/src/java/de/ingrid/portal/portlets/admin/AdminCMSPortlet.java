@@ -18,6 +18,7 @@ import javax.portlet.RenderRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.context.Context;
+import org.apache.velocity.tools.generic.ListTool;
 import org.hibernate.Session;
 
 import de.ingrid.portal.forms.ActionForm;
@@ -78,20 +79,17 @@ public class AdminCMSPortlet extends ContentPortlet {
             dbEntities[0].setItemKey(af.getInput(AdminCMSForm.FIELD_KEY));
 
             HashSet localizedItems = new HashSet();
-            IngridCMSItem item = new IngridCMSItem();
-            item.setItemLang("de");
-            item.setItemTitle(af.getInput(AdminCMSForm.FIELD_TITLE_DE));
-            item.setItemValue(af.getInput(AdminCMSForm.FIELD_VALUE_DE));
-            item.setItemChanged(new Date());
-            item.setItemChangedBy(request.getUserPrincipal().getName());
-            localizedItems.add(item);
-            item = new IngridCMSItem();
-            item.setItemLang("en");
-            item.setItemTitle(af.getInput(AdminCMSForm.FIELD_TITLE_EN));
-            item.setItemValue(af.getInput(AdminCMSForm.FIELD_VALUE_EN));
-            item.setItemChanged(new Date());
-            item.setItemChangedBy(request.getUserPrincipal().getName());
-            localizedItems.add(item);
+            
+            String[] languages = Utils.getLanguagesShortAsArray();
+            for (String lang : languages) {
+            	IngridCMSItem item = new IngridCMSItem();	            
+	            item.setItemLang(lang);
+	            item.setItemTitle(af.getInput(AdminCMSForm.FIELD_TITLE + lang));
+	            item.setItemValue(af.getInput(AdminCMSForm.FIELD_VALUE + lang));
+	            item.setItemChanged(new Date());
+	            item.setItemChangedBy(request.getUserPrincipal().getName());
+	            localizedItems.add(item);
+            }
             dbEntities[0].setLocalizedItems(localizedItems);
         }
 
@@ -119,17 +117,19 @@ public class AdminCMSPortlet extends ContentPortlet {
         cmsEntry.setItemDescription(af.getInput(AdminCMSForm.FIELD_DESCRIPTION));
         cmsEntry.setItemKey(af.getInput(AdminCMSForm.FIELD_KEY));
 
-        IngridCMSItem item = cmsEntry.getLocalizedEntry("de");
-        item.setItemTitle(af.getInput(AdminCMSForm.FIELD_TITLE_DE));
-        item.setItemValue(af.getInput(AdminCMSForm.FIELD_VALUE_DE));
-        item.setItemChanged(new Date());
-        item.setItemChangedBy(request.getUserPrincipal().getName());
-
-        item = cmsEntry.getLocalizedEntry("en");
-        item.setItemTitle(af.getInput(AdminCMSForm.FIELD_TITLE_EN));
-        item.setItemValue(af.getInput(AdminCMSForm.FIELD_VALUE_EN));
-        item.setItemChanged(new Date());
-        item.setItemChangedBy(request.getUserPrincipal().getName());
+        String[] languages = Utils.getLanguagesShortAsArray();
+        for (String lang : languages) {
+        	IngridCMSItem item = cmsEntry.getLocalizedEntry(lang);
+        	if (item == null) {
+        		item = new IngridCMSItem();
+        		item.setItemLang(lang);
+        		cmsEntry.getLocalizedItems().add(item);
+        	}
+	        item.setItemTitle(af.getInput(AdminCMSForm.FIELD_TITLE + lang));
+	        item.setItemValue(af.getInput(AdminCMSForm.FIELD_VALUE + lang));
+	        item.setItemChanged(new Date());
+	        item.setItemChangedBy(request.getUserPrincipal().getName());
+		}
 
         UtilsDB.updateDBObject(cmsEntry);
 
@@ -197,6 +197,13 @@ public class AdminCMSPortlet extends ContentPortlet {
         Context context = getContext(request);
         context.put("actionForm", af);
         context.put(CONTEXT_MODE, CONTEXTV_MODE_EDIT);
+        
+        // add the velocity tool to access arrays
+        ListTool listTool = new ListTool();
+        context.put("ListTool", listTool);
+        context.put("languagesNames", Utils.getLanguagesFullAsArray(request.getLocale().getLanguage()));
+        context.put("languagesShort", Utils.getLanguagesShortAsArray());
+        
         Object[] entities = getDBEntities(request);
         context.put(CONTEXT_ENTITIES, entities);
         return false;
@@ -267,20 +274,18 @@ public class AdminCMSPortlet extends ContentPortlet {
         cmsEntry.setItemKey(af.getInput(AdminCMSForm.FIELD_KEY));
 
         HashSet localizedItems = new HashSet();
-        IngridCMSItem item = new IngridCMSItem();
-        item.setItemLang("de");
-        item.setItemTitle(af.getInput(AdminCMSForm.FIELD_TITLE_DE));
-        item.setItemValue(af.getInput(AdminCMSForm.FIELD_VALUE_DE));
-        item.setItemChanged(new Date());
-        item.setItemChangedBy(request.getUserPrincipal().getName());
-        localizedItems.add(item);
-        item = new IngridCMSItem();
-        item.setItemLang("en");
-        item.setItemTitle(af.getInput(AdminCMSForm.FIELD_TITLE_EN));
-        item.setItemValue(af.getInput(AdminCMSForm.FIELD_VALUE_EN));
-        item.setItemChanged(new Date());
-        item.setItemChangedBy(request.getUserPrincipal().getName());
-        localizedItems.add(item);
+        
+        String[] languages = Utils.getLanguagesShortAsArray();
+        for (String lang : languages) {
+	        IngridCMSItem item = new IngridCMSItem();
+	        item.setItemLang(lang);
+	        item.setItemTitle(af.getInput(AdminCMSForm.FIELD_TITLE + lang));
+	        item.setItemValue(af.getInput(AdminCMSForm.FIELD_VALUE + lang));
+	        item.setItemChanged(new Date());
+	        item.setItemChangedBy(request.getUserPrincipal().getName());
+	        localizedItems.add(item);
+        }
+        
         cmsEntry.setLocalizedItems(localizedItems);
 
         UtilsDB.saveDBObject(cmsEntry);

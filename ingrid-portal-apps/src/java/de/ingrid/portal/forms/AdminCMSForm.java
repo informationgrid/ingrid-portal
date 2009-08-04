@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridCMS;
 
@@ -32,14 +33,12 @@ public class AdminCMSForm extends ActionForm {
 
     public static final String FIELD_DESCRIPTION = "item_description";
 
-    public static final String FIELD_TITLE_DE = "title_de";
+    // this is the new generic field title where any language can be appended
+    public static final String FIELD_TITLE = "title_";
 
-    public static final String FIELD_TITLE_EN = "title_en";
-
-    public static final String FIELD_VALUE_DE = "value_de";
-
-    public static final String FIELD_VALUE_EN = "value_en";
-
+    // this is the new generic field value where any language can be appended
+    public static final String FIELD_VALUE = "value_";
+    
     public static final String FIELD_MODE = "mode";
 
     public static final String PARAM_ID = "id";
@@ -60,10 +59,11 @@ public class AdminCMSForm extends ActionForm {
         setInput(PARAM_ID, request.getParameter(PARAM_ID));
         setInput(FIELD_KEY, request.getParameter(FIELD_KEY));
         setInput(FIELD_DESCRIPTION, request.getParameter(FIELD_DESCRIPTION));
-        setInput(FIELD_TITLE_DE, request.getParameter(FIELD_TITLE_DE));
-        setInput(FIELD_TITLE_EN, request.getParameter(FIELD_TITLE_EN));
-        setInput(FIELD_VALUE_DE, request.getParameter(FIELD_VALUE_DE));
-        setInput(FIELD_VALUE_EN, request.getParameter(FIELD_VALUE_EN));
+        String[] languages = Utils.getLanguagesShortAsArray();
+        for (String lang : languages) {
+        	setInput(FIELD_TITLE + lang, request.getParameter(FIELD_TITLE + lang));
+        	setInput(FIELD_VALUE + lang, request.getParameter(FIELD_VALUE + lang));
+        }
         setInput(FIELD_MODE, request.getParameter(FIELD_MODE));
     }
 
@@ -77,8 +77,8 @@ public class AdminCMSForm extends ActionForm {
             setError(FIELD_KEY, "admin.cms.error.noKey");
             allOk = false;
         }
-        if (!hasInput(FIELD_VALUE_DE)) {
-            setError(FIELD_VALUE_DE, "admin.cms.error.noValueDE");
+        if (!hasInput(FIELD_VALUE + "de")) {
+            setError(FIELD_VALUE + "de", "admin.cms.error.noValueDE");
             allOk = false;
         }
         if (hasInput(FIELD_MODE) && getInput(FIELD_MODE).equals("new")) {

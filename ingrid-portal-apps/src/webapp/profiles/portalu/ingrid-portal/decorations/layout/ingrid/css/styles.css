@@ -125,7 +125,7 @@ div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { color: #1
   service navigation styles
 *********************************************************************/
 
-div#servicenav { padding:0.1em 1.2em 0.1em 1.5em; background-color:#FFFFFF; float: right; }
+div#servicenav { padding:0.1em 0em 0.1em 1.5em; background-color:#FFFFFF; float: right; }
 #servicenav { font-size: 70%; }
 div#servicenav ul { list-style: none; padding: 0; margin: 0; }
 div#servicenav ul li { display:inline; }
@@ -215,8 +215,8 @@ div#content_full .clearer { clear:both; display:block; height:1px; line-height:0
 *********************************************************************/
 
 .iconLink { margin:0px 0px 5px 0px; font-size:70%;}
-/* ich will all die beknackten Abhängigkeiten unterhalb der Klasse .iconLink nicht (a styles etc. s.u.)
-deshalb definier ich mir jetzt das Gleiche unter anderem Namen,da hab ich keine Abhängigkeiten, mm */
+/* ich will all die beknackten Abhï¿½ngigkeiten unterhalb der Klasse .iconLink nicht (a styles etc. s.u.)
+deshalb definier ich mir jetzt das Gleiche unter anderem Namen,da hab ich keine Abhï¿½ngigkeiten, mm */
 .iconLink2 { margin:0px 0px 5px 0px; font-size:70%;}
 
 div.left { float:left; width:15.75em; padding:0; }
@@ -230,10 +230,10 @@ div.section div p a { text-decoration:none; }
 div.section-header { margin-top:0; padding:0; }
 div.section-header h1 { display:inline; float:left; padding-top:0.2em; padding-bottom:0.2em; }
 div.section-header span.portlet_info { float:right; font-size:80%}
-/* nötig für Firefox, sonst zerreissts Überschrift ! */
+/* nï¿½tig fï¿½r Firefox, sonst zerreissts ï¿½berschrift ! */
 div.section-header span.clearer { display:block; }
 
-/* nötig fuer IE: sonst springt in Erweiterter Suche "Suche" Button */
+/* nï¿½tig fuer IE: sonst springt in Erweiterter Suche "Suche" Button */
 div.portal-layout-column-1 .clearer { clear:both; display:block; height:1px; line-height:0px; font-size:1px; margin:0; padding:0; }
 
 div.section p.iconLink span.icon { margin: 7px 0 0 0; }
@@ -353,7 +353,7 @@ div.portlet p { font-size:70%; line-height:140%;}
 div.portlet p.hitrow { font-size:83%; line-height:140%;}
 div.portlet ul { margin: 0 0 -5px 14px;}
 
-/* nötig fuer Firefox: sonst fällt Link aus Portlet, vgl. Einstellungen */
+/* nï¿½tig fuer Firefox: sonst fï¿½llt Link aus Portlet, vgl. Einstellungen */
 div.portlet .clearer { clear:both; display:block; height:1px; line-height: 0px; font-size: 1px; margin:0; padding:0; }
 
 div.portlet .iconLink a { float:left; line-height:140%}
@@ -394,7 +394,7 @@ div.formheader span.portlet_info { float:right; color: #FFFFFF; line-height:100%
 div.formheader span.portlet_info a { color: #FFFFFF; }
 
 div.formbody {padding: 4px 12px 8px 12px; margin:1px 0px 1px 0px; border: 1px solid #111111; background-color: #F4F4F4;}
-/* Sonderbehandlung für IE: dieser übernimmt die Farbe des übergeordneten divs nicht für rollover Link Auszeichnungen 
+/* Sonderbehandlung fï¿½r IE: dieser ï¿½bernimmt die Farbe des ï¿½bergeordneten divs nicht fï¿½r rollover Link Auszeichnungen 
    siehe auch http://jira.media-style.com/browse/INGRID-192
 */
 div.formbody div {background-color: #F4F4F4;}

@@ -12,11 +12,11 @@
 <form action="$action" method="post" name="frmAdminUserMigrationImport" id="frmAdminUserMigrationImport">
 	<div class="formbody">
 		<p>
-		Bitte geben Sie den Pfad zu Ihrem Importfile an.<br/><br/>
+		$MESSAGES.getString('account.view.path.file')<br/><br/>
 		<input type="text" id="path" name="path" size="100"></input>
 		</p>
 		#if($sqlStatements)
-    		<p>Bitte führen Sie nach dem Import folgende SQL Statements auf der Zieldatenbank aus:</p>
+    		<p>$MESSAGES.getString('account.view.sql.tip')</p>
     		<p>
 			#foreach ($sql in $sqlStatements)
     			$!sql<br/>

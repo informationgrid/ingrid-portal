@@ -79,6 +79,9 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
+        
+        // set localized title for this page
+        response.setTitle(messages.getString("admin.portal.profile.title"));
 
         String[] portalProfiles = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_PROFILES);
         ArrayList profiles = new ArrayList();

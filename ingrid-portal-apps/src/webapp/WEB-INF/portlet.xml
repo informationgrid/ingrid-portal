@@ -1787,5 +1787,27 @@
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
     </portlet>
+    
+    <portlet id="LanguageSwitch">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/language.vm</value>
+        </init-param>
+        <portlet-name>LanguageSwitch</portlet-name>
+        <display-name>Sprachauswahl</display-name>
+        <description>This portlet displayes a combo box containing different languages.</description>
+        <portlet-class>de.ingrid.portal.portlets.LanguageSwitchPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>SprachUmsteller</title>
+            <short-title>LangSwitch</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+    </portlet>
 
 </portlet-app>

@@ -243,6 +243,8 @@
 	<noscript>
 		<li><a href="$linkUrl" target="_new" title="$MESSAGES.getString('ingrid.page.help.link.title')">${linkName}</a>$postfix</li>
 	</noscript>
+  #elseif($linkTitle == "ingrid.page.language")
+    $jetspeed.renderPortletEntity("LanguageSwitch", "ingrid-portal-apps::LanguageSwitch")
   #else
     <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
   #end  
@@ -271,12 +273,7 @@
 ## NOTICE: defaultTitle is from "psml" or "link" file !
         #set($defaultTitle = $element.getTitle())
         #if($defaultTitle == "ingrid.page.language")
-			#set($newLocale = 'de')
-			#if($preferedLocale.toString().startsWith('de'))
-				#set($newLocale = 'en')
-			#end
-			#set($linkUrl = "${element.url}?lang=${newLocale}")
-			#set($linkUrl = $jetspeed.getAbsoluteUrl($linkUrl))
+			#set($linkTitle = $defaultTitle)
         #end
       #elseif($element.elementType == "separator")
         #set($separatorTitle = $element.getTitle($preferedLocale))

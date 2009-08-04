@@ -73,6 +73,9 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
+        
+        // set localized title for this page
+        response.setTitle(messages.getString("admin.iplug.title"));
 
         PlugDescription[] plugs = IBUSInterfaceImpl.getInstance().getAllIPlugsWithoutTimeLimitation();
         
