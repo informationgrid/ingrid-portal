@@ -44,7 +44,7 @@ import de.ingrid.portal.scheduler.jobs.IngridAbstractStateJob;
  * 
  * @author joachim@wemove.com
  */
-public class RSSFetcherJob extends IngridAbstractStateJob {
+public class RSSFetcherJob extends IngridMonitorAbstractJob {
 
     protected final static Log log = LogFactory.getLog(RSSFetcherJob.class);
 
@@ -57,19 +57,21 @@ public class RSSFetcherJob extends IngridAbstractStateJob {
     		log.info("RSSFetcherJob is started ...");
     	}
 
-        Session session = HibernateUtil.currentSession();
-        Transaction tx = null;
-        JobDataMap dataMap = context.getJobDetail().getJobDataMap();
+        Session session 	= HibernateUtil.currentSession();
+        Transaction tx 		= null;
+        JobDataMap dataMap 	= context.getJobDetail().getJobDataMap();
 
+        int status 			= STATUS_OK;
+		String statusCode 	= STATUS_CODE_NO_ERROR;
         try {
 
-            SyndFeed feed = null;
-            URL feedUrl = null;
-            SyndFeedInput input = null;
-            Date publishedDate = null;
-            SyndEntry entry = null;
-            int cnt = 0;
-            int feedEntriesCount = 0;
+            SyndFeed feed 			= null;
+            URL feedUrl 			= null;
+            SyndFeedInput input 	= null;
+            Date publishedDate 		= null;
+            SyndEntry entry 		= null;
+            int cnt 				= 0;
+            int feedEntriesCount 	= 0;
             //String errorMsg = "";
 
             Calendar cal;
@@ -86,8 +88,8 @@ public class RSSFetcherJob extends IngridAbstractStateJob {
                 IngridRSSSource rssSource = (IngridRSSSource) it.next();
                 try {
                     feedUrl = new URL(rssSource.getUrl());
-                    input = new SyndFeedInput();
-                    feed = input.build(new XmlReader(feedUrl));
+                    input 	= new SyndFeedInput();
+                    feed 	= input.build(new XmlReader(feedUrl));
                     if (feed.getLanguage() == null) {
                         feed.setLanguage(rssSource.getLanguage());
                     }
@@ -209,6 +211,8 @@ public class RSSFetcherJob extends IngridAbstractStateJob {
                     if (log.isDebugEnabled()) {
                         log.debug("Error building RSS feed (" + rssSource.getUrl() + ").", e);
                     }
+                    status 		= STATUS_ERROR;
+        			statusCode 	= STATUS_CODE_ERROR_UNSPECIFIC;
                 } finally {
                 	// add information about the fetching of this feed into the RSSSource database
                     tx = session.beginTransaction();
@@ -259,9 +263,12 @@ public class RSSFetcherJob extends IngridAbstractStateJob {
             if (log.isErrorEnabled()) {
                 log.error("Error executing quartz job RSSFetcherJob.", e);
             }
+            status 		= STATUS_ERROR;
+			statusCode 	= STATUS_CODE_ERROR_UNSPECIFIC;
             throw new JobExecutionException("Error executing quartz job RSSFetcherJob.", e, false);
         } finally {
         	computeTime(dataMap, stopTimer());
+        	updateJobData(context, status, statusCode);
         	updateJob(context);
             HibernateUtil.closeSession();
         }

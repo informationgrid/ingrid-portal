@@ -57,12 +57,17 @@
 		## for non monitoring jobs
 		#if ($entry.getGroup() != "monitor")
 			<td></td><td><a href="$action">$jobId</a></td>
-			<td><a href="$action">DEFAULT</a></td><td></td>
-			<td><a href="$action">$date.format('yyyy-MM-dd H:mm:ss', $prevTime)</a></td>
-			<td><a href="$action">$date.format('yyyy-MM-dd H:mm:ss', $nextTime)</a></td>
+			<td><a href="$action">DEFAULT</a></td>
+            #if($jobData.getInt("component.monitor.general.status")==0) 
+                <td><a href="$action">$MESSAGES.getString('component.forms.status.ok')</a></td>
+            #else
+                <td><a href="$action">$MESSAGES.getString('component.forms.status.error')</a></td>
+            #end
+			<td><a href="$action">$!date.format('yyyy-MM-dd H:mm:ss', $prevTime)</a></td>
+			<td><a href="$action">$!date.format('yyyy-MM-dd H:mm:ss', $nextTime)</a></td>
 			#if ($jobData.containsKey("component.monitor.general.timer.average") && ($jobData.getInt("component.monitor.general.timer.num")!=0))
 				#set ($execCount = $jobData.getInt("component.monitor.general.timer.num"))
-				<td><a href="$action" title="$MESSAGES.getString('component.forms.text.of') $execCount $MESSAGES.getString('component.forms.text.executions')">$jobData.getLong("component.monitor.general.timer.average")ms</a></td>
+				<td><a href="$action" title="$MESSAGES.getString('component.forms.text.of') $execCount $MESSAGES.getString('component.forms.text.executions')">$!jobData.getLong("component.monitor.general.timer.average")ms</a></td>
 			#else
 				<td><a href="$action">n/a</a></td>
 			#end

@@ -32,6 +32,9 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
 	protected void updateJobData(JobExecutionContext context, int status, String statusCode) {
 		JobDataMap dataMap = context.getJobDetail().getJobDataMap();
 
+		// verify JobDataMap
+		checkJobDataMap(dataMap);
+		
 		int eventOccurences;
 		try {
 			eventOccurences = dataMap.getInt(PARAM_EVENT_OCCURENCES);
@@ -57,6 +60,20 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
 		dataMap.put(PARAM_STATUS, status);
 		dataMap.put(PARAM_STATUS_CODE, statusCode);
 		dataMap.put(PARAM_EVENT_OCCURENCES, eventOccurences);
+	}
+	
+	/**
+	 * Checks if certain parameters inside the jobmap are set. If not then those 
+	 * values will be set to default values.
+	 * This is necessary for DefaultJobs where some parameters are not initially set!
+	 * 
+	 * @param map is the JobDataMap of the running job
+	 */
+	private void checkJobDataMap(JobDataMap map) {
+		if (!map.containsKey(PARAM_STATUS))
+			map.put(PARAM_STATUS, STATUS_OK);
+		if (!map.containsKey(PARAM_STATUS_CODE))
+			map.put(PARAM_STATUS_CODE, STATUS_CODE_NO_ERROR);
 	}
 
 	protected void sendAlertMail(JobExecutionContext context) {

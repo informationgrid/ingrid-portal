@@ -18,6 +18,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.interfaces.impl.SNSAnniversaryInterfaceImpl;
 import de.ingrid.portal.om.IngridAnniversary;
@@ -29,7 +30,7 @@ import de.ingrid.utils.udk.UtilsDate;
  * 
  * @author joachim@wemove.com
  */
-public class AnniversaryFetcherJob extends IngridAbstractStateJob {
+public class AnniversaryFetcherJob extends IngridMonitorAbstractJob {
 
     protected final static Log log = LogFactory.getLog(AnniversaryFetcherJob.class);
 
@@ -44,15 +45,26 @@ public class AnniversaryFetcherJob extends IngridAbstractStateJob {
         if (log.isDebugEnabled()) {
         	log.debug("start job: AnniversaryFetcherJob.");
         }
-    	insertIntoDB("de");
-        insertIntoDB("en");
+        
+        int status = 0;
+		String statusCode = null;
+        try {
+        	insertIntoDB("de");
+        	insertIntoDB("en");
+        	status = STATUS_OK;
+        	statusCode = STATUS_CODE_NO_ERROR;
+        } catch (JobExecutionException e) {
+        	status = STATUS_ERROR;
+			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
+        }
         if (log.isDebugEnabled()) {
         	log.debug("finish job: AnniversaryFetcherJob.");
         }
         computeTime(dataMap, stopTimer());
+        updateJobData(context, status, statusCode);
     	updateJob(context);
     }
-
+    
     private void insertIntoDB(String lang) throws JobExecutionException {
 
         Session session = HibernateUtil.currentSession();
