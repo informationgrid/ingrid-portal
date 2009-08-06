@@ -208,9 +208,12 @@ function renderNodeData(nodeData) {
 
 	// indexing
 	renderSectionTitel(message.get("ui.obj.thesaurus.title"));
-	renderList(nodeData.thesaurusTermsTable, message.get("ui.adr.thesaurus.terms"), "title");
-	renderList(nodeData.thesaurusTopicsList, message.get("ui.obj.thesaurus.terms.category"), null, function (val) { return dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(val);});
-	renderList(nodeData.thesaurusInspireTermsList, message.get("ui.obj.thesaurus.terms.inspire"), null, function (val) { return dojo.widget.byId("thesaurusInspireCombobox")._getDisplayValueForValue(val);});
+	var sortedList = nodeData.thesaurusTermsTable.sort(function(a,b) {return (b.title<a.title)-(a.title<b.title);});
+	renderList(sortedList, message.get("ui.adr.thesaurus.terms"), "title");
+	sortedList = nodeData.thesaurusTopicsList.sort(function(a,b) {return (dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(b)<dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(a))-(dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(a)<dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(b));});
+	renderList(sortedList, message.get("ui.obj.thesaurus.terms.category"), null, function (val) { return dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(val);});
+	sortedList = nodeData.thesaurusInspireTermsList.sort(function(a,b) {return (dojo.widget.byId("thesaurusInspireCombobox")._getDisplayValueForValue(b)<dojo.widget.byId("thesaurusInspireCombobox")._getDisplayValueForValue(a))-(dojo.widget.byId("thesaurusInspireCombobox")._getDisplayValueForValue(a)<dojo.widget.byId("thesaurusInspireCombobox")._getDisplayValueForValue(b));});
+	renderList(sortedList, message.get("ui.obj.thesaurus.terms.inspire"), null, function (val) { return dojo.widget.byId("thesaurusInspireCombobox")._getDisplayValueForValue(val);});
 	renderTextWithTitle(nodeData.thesaurusEnvExtRes ? message.get("general.yes"): message.get("general.no"), message.get("ui.obj.thesaurus.terms.enviromental.displayCatalogPage"));
 	renderList(nodeData.thesaurusEnvTopicsList, message.get("ui.obj.thesaurus.terms.enviromental.title")+ " - " + message.get("ui.obj.thesaurus.terms.enviromental.topics"), null, function (val) { return dojo.widget.byId("thesaurusEnvTopicsCombobox")._getDisplayValueForValue(val);});
 	renderList(nodeData.thesaurusEnvCatsList, message.get("ui.obj.thesaurus.terms.enviromental.title")+ " - " + message.get("ui.obj.thesaurus.terms.enviromental.categories"), null, function (val) { return dojo.widget.byId("thesaurusEnvCatsCombobox")._getDisplayValueForValue(val);});
@@ -218,8 +221,10 @@ function renderNodeData(nodeData) {
 	// references
 	if (nodeData.linksFromObjectTable.length > 0 || nodeData.linksToObjectTable.length > 0 || nodeData.linksToUrlTable.length > 0) {
     	renderSectionTitel(message.get("ui.obj.links.title"));
-    	renderList(nodeData.linksFromObjectTable, message.get("dialog.compare.object.linksFromTable.title"), "title")
-    	renderList(nodeData.linksToObjectTable, message.get("dialog.compare.object.linksToTable.title"), "title")
+    	sortedList = nodeData.linksFromObjectTable.sort(function(a,b) {return (b.title<a.title)-(a.title<b.title);});
+    	renderList(sortedList, message.get("dialog.compare.object.linksFromTable.title"), "title")
+    	sortedList = nodeData.linksToObjectTable.sort(function(a,b) {return (b.title<a.title)-(a.title<b.title);});
+    	renderList(sortedList, message.get("dialog.compare.object.linksToTable.title"), "title")
     	renderUrlLinkList(nodeData.linksToUrlTable);
     }
 	
