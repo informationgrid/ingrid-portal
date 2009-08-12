@@ -491,26 +491,26 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             }
         }
 
-        int numberOfRankedHits = 0;
+        int totalNumberOfRankedHits = 0;
         if (rankedHits != null) {
-            numberOfRankedHits = (int) rankedHits.length();
+            totalNumberOfRankedHits = (int) rankedHits.length();
         }
         // adapt settings of ranked page navigation
         HashMap rankedPageNavigation = UtilsSearch.getPageNavigation(rankedStartHit,
-                Settings.SEARCH_RANKED_HITS_PER_PAGE, numberOfRankedHits,
+                Settings.SEARCH_RANKED_HITS_PER_PAGE, totalNumberOfRankedHits,
                 Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
-        int numberOfUnrankedHits = 0;
+        int totalNumberOfUnrankedHits = 0;
         if (unrankedHits != null) {
             if (filter != null && filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
-                numberOfUnrankedHits = (int) unrankedHits.length();
+                totalNumberOfUnrankedHits = (int) unrankedHits.length();
             } else {
-                numberOfUnrankedHits = unrankedHits.getInVolvedPlugs();
+                totalNumberOfUnrankedHits = unrankedHits.getInVolvedPlugs();
             }
         }
         // adapt settings of unranked page navigation
         HashMap unrankedPageNavigation = UtilsSearch.getPageNavigation(unrankedStartHit,
-                Settings.SEARCH_UNRANKED_HITS_PER_PAGE, numberOfUnrankedHits,
+                Settings.SEARCH_UNRANKED_HITS_PER_PAGE, totalNumberOfUnrankedHits,
                 Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
 
         Object rankedSearchFinished = SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
@@ -541,7 +541,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         if (renderResultColumnRanked) {
             if (grouping != null && !grouping.equals(IngridQuery.GROUPED_OFF)) {
             	UtilsSearch.adaptRankedPageNavigationToGrouping(
-               		rankedPageNavigation, currentSelectorPage, rankedColumnHasMoreGroupedPages, numberOfRankedHits, request);
+               		rankedPageNavigation, currentSelectorPage, rankedColumnHasMoreGroupedPages, totalNumberOfRankedHits, request);
 
                 if (grouping.equals(IngridQuery.GROUPED_BY_PARTNER)) {
                     context.put("grouping", "partner");
@@ -557,13 +557,13 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             unrankedPageNavigation.put(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, new Integer(
                     currentSelectorPageUnranked));
             // check if we have more results to come
-            if (unrankedHits != null && unrankedHits.getGoupedHitsLength() > 0 && numberOfUnrankedHits > 0) {
-                if (numberOfUnrankedHits <= unrankedHits.getGoupedHitsLength()) {
+            int groupedHitsLength = unrankedHits.getGoupedHitsLength();
+            if (unrankedHits != null && groupedHitsLength > 0 && totalNumberOfUnrankedHits > 0) {
+                if (totalNumberOfUnrankedHits <= groupedHitsLength) {
                     unrankedPageNavigation.put("selectorHasNextPage", new Boolean(false));
                 } else {
                     unrankedPageNavigation.put("selectorHasNextPage", new Boolean(true));
                 }
-
             }
         }
 
