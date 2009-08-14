@@ -1204,6 +1204,7 @@ public class DetailDataPreparerIdc1_0_5Object implements DetailDataPreparer {
     private void addAddressType(List elements, Record record) {
     	HashMap element = new HashMap();
     	element.put("type", "multiLine");
+    	element.put("sort", "false");
     	if (record.getString("t012_obj_adr.type") != null && !record.getString("t012_obj_adr.type").equals("-1")) {
     		String translatedString = sysCodeList.getName("505", record.getString("t012_obj_adr.type"));
     		if (translatedString != null && translatedString.length() > 0) {

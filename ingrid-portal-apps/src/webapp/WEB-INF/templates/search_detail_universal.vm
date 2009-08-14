@@ -32,7 +32,7 @@
 #macro (renderLinkList $entry)
 	#if($tool.hasContent($entry.get("linkList")))
 		<p>#if($tool.hasContent($entry.title))<strong>$entry.title:</strong><br />#end
-		#foreach($link in $entry.linkList)
+		#foreach($link in $sorter.sort($entry.linkList,"title"))
 			#renderLinkLine($link)
 		#end
 		</p>
@@ -113,7 +113,12 @@
 #macro (renderMultiLine $entry)
 	#if($tool.hasContent($entry.elements))
 		<p>#if($tool.hasContent($entry.title))<strong>$entry.title:</strong><br />#end
-		#foreach($e in $entry.elements)
+        #if($entry.sort=="false")
+            #set($elements = $entry.elements)
+        #else
+            #set($elements = $sorter.sort($entry.elements,"body"))
+        #end
+		#foreach($e in $elements)
 			#if($e.type=="multiLine")
 				#renderMultiLine($e)
 			#elseif($e.type=="textLine")

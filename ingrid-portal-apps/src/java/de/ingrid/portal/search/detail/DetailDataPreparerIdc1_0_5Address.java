@@ -193,6 +193,7 @@ public class DetailDataPreparerIdc1_0_5Address implements DetailDataPreparer {
     	List innerElements = new ArrayList();
     	
     	element.put("type", "multiLine");
+    	element.put("sort", "false");
     	element.put("title", record.getString("t012_obj_adr.special_name"));
     	element.put("elements", innerElements);
     	elements.add(element);

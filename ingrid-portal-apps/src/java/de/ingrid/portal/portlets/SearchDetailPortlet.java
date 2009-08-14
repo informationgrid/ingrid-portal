@@ -19,6 +19,7 @@ import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
+import org.apache.velocity.tools.generic.SortTool;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
@@ -100,6 +101,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         // add velocity utils class
         context.put("tool", new UtilsVelocity());
         context.put("stringTool", new UtilsString());
+        context.put("sorter", new SortTool()); 
 
         try {
         	// check whether we come from google (no IngridSessionPreferences)

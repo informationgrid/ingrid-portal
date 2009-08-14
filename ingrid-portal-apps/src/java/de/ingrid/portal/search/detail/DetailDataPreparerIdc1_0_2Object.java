@@ -1006,6 +1006,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     private void addAddressType(List elements, Record record) {
     	HashMap element = new HashMap();
     	element.put("type", "multiLine");
+    	element.put("sort", "false");
     	element.put("title", record.getString("t012_obj_adr.special_name"));
     	element.put("elements", new ArrayList());
     	elements.add(element);
