@@ -103,6 +103,9 @@ public class QueryResultPostProcessor {
         } else if (tmpString.equals("de.ingrid.iplug.tamino.TaminoSearcher")) {
             hit.put(Settings.RESULT_KEY_URL_TYPE, "dsc");
             hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
+        } else if (tmpString.equals("de.ingrid.iplug.opensearch.OpenSearchPlug")){
+        	hit.put(Settings.RESULT_KEY_URL_TYPE, "dsc");
+            hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
         } else {
             hit.put(Settings.RESULT_KEY_TYPE, "unknown-style");
         }
