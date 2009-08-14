@@ -349,14 +349,21 @@ public class IBUSInterfaceImpl implements IBUSInterface {
      */
     public PlugDescription getIPlug(String plugId) {
         PlugDescription pd 	= null;
+        long start 			= 0;
         
         // else ask the bus and store the result inside the cache
         try {
-        	//log.debug("get iPlugDescription: start");
-        	//long start = System.currentTimeMillis();
+        	if (log.isDebugEnabled()) {
+        		log.debug("get iPlugDescription ("+plugId+"): start");
+        		start = System.currentTimeMillis();
+        	}
+        	
         	pd = bus.getIPlug(plugId);
-        	//long duration = System.currentTimeMillis() - start;
-        	//log.debug("finished in " + duration + "ms");
+        	
+        	if (log.isDebugEnabled()) {
+        		long duration = System.currentTimeMillis() - start;
+        		log.debug("finished in " + duration + "ms");
+        	}
 	    } catch (Throwable t) {
 	        if (log.isWarnEnabled()) {
 	            log.warn("Problems fetching iPlug from iBus !", t);
