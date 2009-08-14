@@ -36,7 +36,7 @@
 #macro (includeIdentityArea)
   #set($currentPage = $site.getPage().url)
   #set($langCode = '')
-  #if($preferedLocale.toString() == 'en')
+  #if($preferedLocale.toString().startsWith('en'))
 	#set($langCode = "en_")
   #end
   <div id="identity">
@@ -62,7 +62,7 @@
       <h2 class="hide">Servicemenu</h2>
       <ul>
 #set($serviceMenu = $site.getMenu("service-menu"))
-#if(!$serviceMenu.empty)
+#if($serviceMenu && !$serviceMenu.empty)
   #includeServiceNavigation($serviceMenu)
 #end
       </ul>
@@ -189,6 +189,10 @@
             #set($linkName = $MESSAGES.getString($linkName))
 		#end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
+        ## obfuscate email addresse (webmaster)
+        #if($linkUrl && $linkUrl.contains("@"))
+        	#set($linkUrl = $jetspeed.htmlescapeAll($linkUrl))
+        #end
         #if($velocityCount > 1)
            | 
         #end
@@ -206,25 +210,26 @@
   #if($isSelected)
     <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a>$postfix</li>
   #elseif($el=="/service-contact.psml")
-	#if($currentPage.indexOf('service-contact') != -1)
-	<li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a>$postfix</li>
-	#else
-	<li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
-	#end
+    #if($currentPage.indexOf('service-contact') != -1)
+    <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a>$postfix</li>
+    #else
+    <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
+    #end
   #elseif($el=="/service-myportal.psml")
-	#if($currentPage.indexOf('myportal') != -1)
-	<li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a>$postfix</li>
-	#else
-	<li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
-	#end
+    #if($currentPage.indexOf('myportal') != -1)
+    <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a>$postfix</li>
+    #else
+    <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
+    #end
   #elseif($el=="/service-myportal.psml")
-	#if($currentPage.indexOf('myportal') != -1)
-	<li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a>$postfix</li>
-	#else
-	<li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
-	#end
-  #elseif($el.title=="ingrid.page.language")
-	## do not render the language selector  
+    #if($currentPage.indexOf('myportal') != -1)
+    <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a>$postfix</li>
+    #else
+    <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
+    #end
+  #elseif($linkTitle == "ingrid.page.language")
+    ## do not render the language selector
+    ##$jetspeed.renderPortletEntity("LanguageSwitch", "ingrid-portal-apps::LanguageSwitch")
   #else
     <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
   #end  
@@ -235,8 +240,8 @@
 	#set($currentPage = $site.getPage().url)
 	#foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
-        #if($lastType != "separator")
-		  #renderServiceLink($element $currentPage $linkUrl $linkTitle $linkName "")
+        #if($lastType && $lastType != "separator")
+		  #renderServiceLink($element.url $currentPage $linkUrl $linkTitle $linkName "")
         #end 
         #set($lastType = $element.type)
         #set($linkTitle = $element.getTitle($preferedLocale))
@@ -253,18 +258,13 @@
 ## NOTICE: defaultTitle is from "psml" or "link" file !
         #set($defaultTitle = $element.getTitle())
         #if($defaultTitle == "ingrid.page.language")
-			#set($newLocale = 'de')
-			#if($preferedLocale.toString().startsWith('de'))
-				#set($newLocale = 'en')
-			#end
-			#set($linkUrl = "${element.url}?lang=${newLocale}")
-			#set($linkUrl = $jetspeed.getAbsoluteUrl($linkUrl))
+          #set($linkTitle = $defaultTitle)
         #end
       #elseif($element.elementType == "separator")
         #set($separatorTitle = $element.getTitle($preferedLocale))
         #set($separatorText = $element.getText($preferedLocale))
         #if ($separatorText == "separator1")
-		  #if($lastType != "separator")
+          #if($lastType != "separator")
             #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "&nbsp;&nbsp;|&nbsp;&nbsp;")
           #else
             &nbsp;&nbsp;|&nbsp;&nbsp;
@@ -284,6 +284,6 @@
       #end
 	#end
     #if($lastType != "separator")
-	  #renderServiceLink($element $currentPage $linkUrl $linkTitle $linkName "")
+	  #renderServiceLink($element.url $currentPage $linkUrl $linkTitle $linkName "")
     #end 
 #end

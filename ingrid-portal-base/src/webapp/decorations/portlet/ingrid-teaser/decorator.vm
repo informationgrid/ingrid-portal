@@ -14,11 +14,17 @@
 		#set($hkey = $jetspeed.getPreferenceFirstValue($f, "helpKey")) 
 		#if($hkey && $hkey.length() > 0)
 			#set($hpath = "${jetspeed.basePath}/help.psml?hkey=$hkey")
+			#if($MESSAGES)
+				#set($hTitle = $MESSAGES.getString('ingrid.page.help.link.title'))
+			#else
+				## try to get it form the preferences as it was done with the titleKey and helpKey
+				#set($hTitle = $jetspeed.getPreferenceFirstValue($f, "helpToolTip"))
+			#end
 		<script language="JavaScript" type="text/javascript">
-    		document.write("<a href=\"javascript:ingrid_openWindow('$hpath',750,550);\" title=\"$MESSAGES.getString('ingrid.page.help.link.title')\">[?]</a>");
+    		document.write("<a href=\"javascript:ingrid_openWindow('$hpath',750,550);\" title=\"$hTitle\">[?]</a>");
     	</script>
     	<noscript>
-    		<a href="$hpath" target="_new" title="$MESSAGES.getString('ingrid.page.help.link.title')">[?]</a>
+    		<a href="$hpath" target="_new" title="$hTitle">[?]</a>
     	</noscript>
 		#end
 		</span>
