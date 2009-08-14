@@ -36,6 +36,8 @@ public class ContactForm extends ActionForm {
     public static final String FIELD_INTEREST = "interest";
 
     public static final String FIELD_NEWSLETTER = "newsletter";
+    
+    public static final String FIELD_JCAPTCHA = "jcaptcha";
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
@@ -59,7 +61,8 @@ public class ContactForm extends ActionForm {
         setInput(FIELD_ACTIVITY, request.getParameter(FIELD_ACTIVITY));
         setInput(FIELD_INTEREST, request.getParameter(FIELD_INTEREST));
         setInput(FIELD_NEWSLETTER, request.getParameter(FIELD_NEWSLETTER));
-    }
+        setInput(FIELD_JCAPTCHA, request.getParameter(FIELD_JCAPTCHA));
+       }
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#validate()
@@ -80,6 +83,7 @@ public class ContactForm extends ActionForm {
             setError(FIELD_LASTNAME, "contact.error.noLastName");
             allOk = false;
         }
+                
         if (!hasInput(FIELD_EMAIL)) {
             setError(FIELD_EMAIL, "contact.error.noEmail");
             allOk = false;
@@ -91,6 +95,17 @@ public class ContactForm extends ActionForm {
             }
         }
 
+        if (!hasInput(FIELD_JCAPTCHA)) {
+            setError(FIELD_JCAPTCHA, "contact.error.noJCapture");
+            allOk = false;
+        }
+        
         return allOk;
     }
+    
+    public void setErrorCaptcha(){
+    	clearErrors();
+    	setError(FIELD_JCAPTCHA, "contact.jcaptcha.error");
+    }
+    
 }

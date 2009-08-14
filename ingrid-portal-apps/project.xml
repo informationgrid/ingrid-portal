@@ -372,7 +372,7 @@
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
-            <version>3.1</version>
+            <version>3.2</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -600,6 +600,15 @@
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-communication-authentication</artifactId>
             <version>1.2.1</version>
+            <type>jar</type>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+        <dependency>
+            <groupId>com.octo.captcha</groupId>
+            <artifactId>jcaptcha</artifactId>
+            <version>1.0</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
