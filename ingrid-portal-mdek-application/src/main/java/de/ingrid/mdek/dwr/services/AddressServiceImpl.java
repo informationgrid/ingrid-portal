@@ -137,7 +137,9 @@ public class AddressServiceImpl implements AddressService {
 		try {
 			address = addressRequestHandler.getAddressDetail(nodeUuid);
 			String organisations = extractInstitutions(address);
-			address.setOrganisation(organisations.trim());
+			if (organisations != null) {
+				address.setOrganisation(organisations.trim());
+			}
 		} catch (RuntimeException e) {
 			log.debug("Error while getting address data.", e);
 			throw e;
