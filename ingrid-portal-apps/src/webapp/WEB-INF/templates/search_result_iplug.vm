@@ -53,7 +53,12 @@
     		    #end
               #else
     			  <span class="result_title"><strong><a href="$rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title)</a></strong></span>
-    		  #end
+              #end
+              #if ($rs.abstract)
+                <p class="result_description">
+                $!rs.abstract 
+                </p>
+              #end
     		</div>
     	#end
     #else
