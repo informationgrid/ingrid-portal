@@ -175,6 +175,11 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
         	for (UserData userData : userDataList) {
 				userList.add('"' + userData.getPortalLogin() + '"');
 			}
+        	
+        	if (log.isDebugEnabled()) {
+        		log.debug("Total users found: " + userList.size() + " ("+plugId+")");
+        	}
+        	
         	// sort users
         	Collections.sort(userList, String.CASE_INSENSITIVE_ORDER);
         	userLists.add(userList);        	
