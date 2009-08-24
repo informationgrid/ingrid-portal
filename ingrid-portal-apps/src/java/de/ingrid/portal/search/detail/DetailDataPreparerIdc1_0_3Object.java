@@ -26,7 +26,6 @@ import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.udk.UtilsDate;
-import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
 /**
  * @author joachim
