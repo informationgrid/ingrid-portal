@@ -40,11 +40,11 @@ $action.setParameter('tab','2')
 	<p>
 		<label class="float_left col2left alignleft" for="salutation">#displayFieldLabel('salutation' $MESSAGES.getString('account.edit.label.salutation'))</label>
 		<select class="float_left inputstyle" name="salutation" id="salutation" size="1">
-			<option value="0" #getSelected('salutation' '0')>---</option>
-			<option value="1" #getSelected('salutation' '1')>$MESSAGES.getString('account.edit.salutation.option1')</option>
-			<option value="2" #getSelected('salutation' '2')>$MESSAGES.getString('account.edit.salutation.option2')</option>
-			<option value="3" #getSelected('salutation' '3')>$MESSAGES.getString('account.edit.salutation.option3')</option>
-			<option value="4" #getSelected('salutation' '4')>$MESSAGES.getString('account.edit.salutation.option4')</option>
+			<option value="0" #getSelectedFlag('salutation' '0')>---</option>
+			<option value="1" #getSelectedFlag('salutation' '1')>$MESSAGES.getString('account.edit.salutation.option1')</option>
+			<option value="2" #getSelectedFlag('salutation' '2')>$MESSAGES.getString('account.edit.salutation.option2')</option>
+			<option value="3" #getSelectedFlag('salutation' '3')>$MESSAGES.getString('account.edit.salutation.option3')</option>
+			<option value="4" #getSelectedFlag('salutation' '4')>$MESSAGES.getString('account.edit.salutation.option4')</option>
 		</select>
 		<p class="clearer"></p>
 	</p>  
@@ -111,37 +111,37 @@ $action.setParameter('tab','2')
 	<p>
 		<label class="float_left col2left alignleft" for="age">#displayFieldLabel('age' $MESSAGES.getString('account.edit.label.age'))</label>
 		<select class="float_left inputstyle" name="age" size="1" id="age">
-			<option value="0" #getSelected('age' '0')>---</option>
-			<option value="1" #getSelected('age' '1')>&lt; 20</option>
-			<option value="2" #getSelected('age' '2')>20 - 30</option>
-			<option value="3" #getSelected('age' '3')>30 - 40</option>
-			<option value="4" #getSelected('age' '4')>40 - 50</option>
-			<option value="5" #getSelected('age' '5')>60 - 70</option>
-			<option value="6" #getSelected('age' '6')>&gt; 70</option>
+			<option value="0" #getSelectedFlag('age' '0')>---</option>
+			<option value="1" #getSelectedFlag('age' '1')>&lt; 20</option>
+			<option value="2" #getSelectedFlag('age' '2')>20 - 30</option>
+			<option value="3" #getSelectedFlag('age' '3')>30 - 40</option>
+			<option value="4" #getSelectedFlag('age' '4')>40 - 50</option>
+			<option value="5" #getSelectedFlag('age' '5')>60 - 70</option>
+			<option value="6" #getSelectedFlag('age' '6')>&gt; 70</option>
 		</select>
 		<p class="clearer"></p>
 	</p>
 	<p>
 		<label class="float_left col2left alignleft" for="interest">#displayFieldLabel('interest' $MESSAGES.getString('account.edit.label.interest'))</label>
 		<select class="float_left inputstyle" name="interest" id="interest" size="1">
-			<option value="0" #getSelected('interest' '0')>---</option>
-			<option value="1" #getSelected('interest' '1')>$MESSAGES.getString('account.edit.interest.option1')</option>
-			<option value="2" #getSelected('interest' '2')>$MESSAGES.getString('account.edit.interest.option2')</option>
+			<option value="0" #getSelectedFlag('interest' '0')>---</option>
+			<option value="1" #getSelectedFlag('interest' '1')>$MESSAGES.getString('account.edit.interest.option1')</option>
+			<option value="2" #getSelectedFlag('interest' '2')>$MESSAGES.getString('account.edit.interest.option2')</option>
 		</select>
 		<p class="clearer"></p>
 	</p>
 	<p>
 		<label class="float_left col2left alignleft" for="profession">#displayFieldLabel('profession' $MESSAGES.getString('account.edit.label.profession'))</label>
 		<select class="float_left inputstyle" size="1" id="profession" name="profession">
-			<option value="0" #getSelected('profession' '0')>---</option>
-			<option value="1" #getSelected('profession' '1')>$MESSAGES.getString('account.edit.profession.option1')</option>
-			<option value="2" #getSelected('profession' '2')>$MESSAGES.getString('account.edit.profession.option2')</option>
-			<option value="3" #getSelected('profession' '3')>$MESSAGES.getString('account.edit.profession.option3')</option>
-			<option value="4" #getSelected('profession' '4')>$MESSAGES.getString('account.edit.profession.option4')</option>
-			<option value="5" #getSelected('profession' '5')>$MESSAGES.getString('account.edit.profession.option5')</option>
-			<option value="6" #getSelected('profession' '6')>$MESSAGES.getString('account.edit.profession.option6')</option>
-			<option value="7" #getSelected('profession' '7')>$MESSAGES.getString('account.edit.profession.option7')</option>
-			<option value="8" #getSelected('profession' '8')>$MESSAGES.getString('account.edit.profession.option8')</option>
+			<option value="0" #getSelectedFlag('profession' '0')>---</option>
+			<option value="1" #getSelectedFlag('profession' '1')>$MESSAGES.getString('account.edit.profession.option1')</option>
+			<option value="2" #getSelectedFlag('profession' '2')>$MESSAGES.getString('account.edit.profession.option2')</option>
+			<option value="3" #getSelectedFlag('profession' '3')>$MESSAGES.getString('account.edit.profession.option3')</option>
+			<option value="4" #getSelectedFlag('profession' '4')>$MESSAGES.getString('account.edit.profession.option4')</option>
+			<option value="5" #getSelectedFlag('profession' '5')>$MESSAGES.getString('account.edit.profession.option5')</option>
+			<option value="6" #getSelectedFlag('profession' '6')>$MESSAGES.getString('account.edit.profession.option6')</option>
+			<option value="7" #getSelectedFlag('profession' '7')>$MESSAGES.getString('account.edit.profession.option7')</option>
+			<option value="8" #getSelectedFlag('profession' '8')>$MESSAGES.getString('account.edit.profession.option8')</option>
 		</select>  
 		<p class="clearer"></p>
 	</p>
@@ -171,9 +171,10 @@ $action.setParameter('tab','2')
 	<p>
 		<label class="float_left col2left alignleft" for="partner">#displayFieldLabel('partner' 'zugeordneter Partner')</label>
 		<select class="float_left inputstyle" size="1" id="partner" name="partner">
-		<option value="" #getSelected('partner' '')>---</option>
+		<option value="" #getSelectedFlag('partner' '')>---</option>
 		#foreach ($partner in $partnerlist)
-			<option value="$partner.ident" #getSelected('partner' $partner.ident)>$partner.name</option>
+            #set($pident = $partner.ident)
+			<option value="$pident" #getSelectedFlag("partner" "$pident")>$partner.name</option>
 		#end	
 		</select>
 	</p>
@@ -202,9 +203,9 @@ $action.setParameter('tab','2')
 		<label class="float_left col2left alignleft" for="provider">#displayFieldLabel('provider' 'zugeordnete Anbieter')</label>
 #if($actionForm.hasInput('partner'))
 		<select class="float_left inputstyle" size="10" id="provider" name="provider" multiple="multiple">
-		<option value="*" #getSelected('provider' '*')>Alle</option>
+		<option value="*" #getSelectedFlag('provider' '*')>Alle</option>
 		#foreach ($provider in $providerlist)
-			<option value="$provider.ident" #getSelected('provider' $provider.ident) title="$provider.name">$UtilsString.cutString($provider.name, 50, 50)</option>
+			<option value="$provider.ident" #getSelectedFlag('provider' $provider.ident) title="$provider.name">$UtilsString.cutString($provider.name, 50, 50)</option>
 		#end	
 		</select>
 #else

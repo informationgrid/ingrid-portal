@@ -7,20 +7,20 @@
         <p class="topmargin">
           <label class="float_left col2left" for="sort_by">$MESSAGES.getString('personalize.settings.label.ranking')</label>
           <select id="ranking" class="group_by inputstyle" name="ranking" size="1">
-            <option value="score" #getSelected('ranking' 'score')>$MESSAGES.getString('personalize.settings.ranking.option.score')</option>
-            <option value="date" #getSelected('ranking' 'date')>$MESSAGES.getString('personalize.settings.ranking.option.date')</option>
+            <option value="score" #getSelectedFlag('ranking' 'score')>$MESSAGES.getString('personalize.settings.ranking.option.score')</option>
+            <option value="date" #getSelectedFlag('ranking' 'date')>$MESSAGES.getString('personalize.settings.ranking.option.date')</option>
           </select>
           <span class="clearer"></span>
         </p>
         <p>
           <label class="float_left col2left" for="group_by">$MESSAGES.getString('personalize.settings.label.grouping')</label>
           <select id="grouping" class="group_by inputstyle" name="grouping" size="1">
-            <option value="none" #getSelected('grouping' 'none')>$MESSAGES.getString('common.form.grouping.no')</option>
+            <option value="none" #getSelectedFlag('grouping' 'none')>$MESSAGES.getString('common.form.grouping.no')</option>
 #if($onePartnerOnly != "true" || !$onePartnerOnly)
-            <option value="partner" #getSelected('grouping' 'partner')>$MESSAGES.getString('common.form.grouping.partner')</option>
+            <option value="partner" #getSelectedFlag('grouping' 'partner')>$MESSAGES.getString('common.form.grouping.partner')</option>
 #end
-			<option value="provider" #getSelected('grouping' 'provider')>$MESSAGES.getString('common.form.grouping.provider')</option>
-			<option value="domain" #getSelected('grouping' 'domain')>$MESSAGES.getString('common.form.grouping.domain')</option>
+			<option value="provider" #getSelectedFlag('grouping' 'provider')>$MESSAGES.getString('common.form.grouping.provider')</option>
+			<option value="domain" #getSelectedFlag('grouping' 'domain')>$MESSAGES.getString('common.form.grouping.domain')</option>
           </select>
           <span class="clearer"></span>
         </p>

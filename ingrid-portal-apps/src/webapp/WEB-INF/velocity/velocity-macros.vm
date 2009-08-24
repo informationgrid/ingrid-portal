@@ -15,7 +15,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 #if ($actionForm.isCurrentInput($field, $value)) checked="checked"#end
 #end
 
-#macro (getSelected $field $value)
+#macro (getSelectedFlag $field $value)
 #if ($actionForm.isCurrentInput($field, $value))selected="selected"#end
 #end
 
@@ -63,9 +63,9 @@ $fieldLabel#end
 ## display content
 ## ------------------------------
 #macro (displayPartner)
-<option value="all" #getSelected('partner' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
+<option value="all" #get#getSelectedFlagrtner' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
 #foreach ($partner in $partnerList)
-<option value="$partner.Ident" #getSelected('partner' "$partner.Ident") title="$partner.Name">$UtilsString.cutString($partner.Name, 50)</option>
+<option value="$partner.Ident" #get#getSelectedFlagrtner' "$partner.Ident") title="$partner.Name">$UtilsString.cutString($partner.Name, 50)</option>
 #end
 #end
 

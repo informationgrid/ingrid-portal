@@ -16,7 +16,7 @@
         	<label class="float_left col2left_incr" for="type">#displayFieldLabel('type' $MESSAGES.getString('component.forms.text.component.type'))*</label>
         	<select class="float_left inputstyletext contentInput" name="type">
     		#foreach($type in $componentTypes)
-    			<option value="$type"#getSelected('type' $type)>$MESSAGES.getString($type)</option>
+    			<option value="$type"#getSelectedFlag('type' $type)>$MESSAGES.getString($type)</option>
     		#end			
     		</select>
     	</p>

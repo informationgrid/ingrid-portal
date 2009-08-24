@@ -7,18 +7,18 @@
 		<div class="float_left">
 			<h3><label for="xx2">#displayFieldLabel('rubric' $MESSAGES.getString('envSearch.form.themes'))</label></h3>
 			<select class="env_themes inputstyle" name="rubric" id="xx2" size="5" multiple="multiple">
-				<option value="all" #getSelected('rubric' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
+				<option value="all" #getSelectedFlag('rubric' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
 #foreach ($topic in $topicList)
-<option value="$topic.FormValue" #getSelected('rubric' "$topic.FormValue")>$MESSAGES.getString("$topic.QueryValue")</option>
+<option value="$topic.FormValue" #getSelectedFlag('rubric' "$topic.FormValue")>$MESSAGES.getString("$topic.QueryValue")</option>
 #end
 			</select>
 		</div>
 		<div class="float_left marginleft">
 			<h3><label for="xx3">#displayFieldLabel('category' $MESSAGES.getString('envSearch.form.category'))</label></h3>
 			<select class="funct_class inputstyle" name="category" id="xx3" size="5" multiple="multiple">
-				<option value="all" #getSelected('category' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
+				<option value="all" #getSelectedFlag('category' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
 #foreach ($category in $categoryList)
-<option value="$category.FormValue" #getSelected('category' "$category.FormValue")>$category.QueryValue</option>
+<option value="$category.FormValue" #getSelectedFlag('category' "$category.FormValue")>$category.QueryValue</option>
 #end
 			</select>
 		</div>  
