@@ -4,6 +4,23 @@
 <!--
 <communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="communication.xsd">
+        <client name="/ingrid-group:jm-ibus-client">
+                <connections>
+                        <server name="/ingrid-group:ibus-vm">
+                                <socket port="9900" timeout="10" ip="192.168.0.248" />
+                                <messages maximumSize="1048576" threadCount="100" />
+                        </server>
+                </connections>
+        </client>
+        <messages queueSize="2000" handleTimeout="120"/>
+</communication>
+-->
+
+
+<!-- Harrison - extern -->
+<!--
+<communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="communication.xsd">
         <client name="/torwald-group:username-ibus-client">
                 <connections>
                         <server name="/torwald-group:torwald-ibus">
@@ -32,10 +49,9 @@
 -->
 
 <!-- LIVE - extern -->
-<!-- 
 <communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="communication.xsd">
-        <client name="/torwald-group:live-extern-kug-ibus">
+        <client name="/torwald-group:live-extern-kug-ibus-jm">
                 <connections>
                         <server name="/kug-group:kug-ibus">
                                 <socket port="80" timeout="10" ip="213.144.28.236" />
@@ -45,9 +61,11 @@
         </client>
         <messages queueSize="2000" handleTimeout="120"/>
 </communication>
+<!-- 
 -->
 
 <!-- LIVE - intern -->
+<!-- 
 <communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="communication.xsd">
         <client name="/torwald-group:live-kug-ibus">
@@ -60,5 +78,6 @@
         </client>
         <messages queueSize="2000" handleTimeout="120"/>
 </communication>
+-->
 
 

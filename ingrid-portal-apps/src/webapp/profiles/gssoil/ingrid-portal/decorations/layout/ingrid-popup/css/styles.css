@@ -127,7 +127,7 @@ div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { color: #3
   service navigation styles
 *********************************************************************/
 
-div#servicenav { padding:0.1em 1.2em 0.2em 1.5em; background-color:#FFFFFF; float: right; }
+div#servicenav { padding:0.1em 0 0.2em 1.5em; background-color:#FFFFFF; float: right; }
 #servicenav { font-size: 75%; }
 div#servicenav ul { list-style: none; padding: 0; margin: 0; }
 div#servicenav ul li { display:inline; }

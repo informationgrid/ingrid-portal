@@ -523,6 +523,13 @@
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid/css/styles.css</src>
         </file>
+        
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/portlet/ingrid-teaser/decorator.vm</src>
+        </file>
+
+
         <file>
             <action>copy</action>
             <src>ingrid-portal/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources_de.properties</src>
