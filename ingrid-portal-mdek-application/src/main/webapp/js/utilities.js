@@ -1024,6 +1024,8 @@ UtilLanguage.getNextLanguageName = function() {
 var UtilString = {}
 
 UtilString.compare = function(a, b) {
+    a = a.replace("ö","oe").replace("ä","ae").replace("ü","ue").replace("ß","ss");
+    b = b.replace("ö","oe").replace("ä","ae").replace("ü","ue").replace("ß","ss");
 	return a == b ? 0 : (a < b ? -1 : 1);
 }
 

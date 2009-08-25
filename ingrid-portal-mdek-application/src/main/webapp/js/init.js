@@ -1191,7 +1191,7 @@ var reassignToAuthorButton = null;
   if (isQAActive && isUserQA) {
 	removeDeleteFlagButton = leftToolbar.addChild("img/ic_delete_undo.gif", "after", {
                             onClick:menuEventHandler.handleUnmarkDeleted,
-                            caption:"Löschen aufheben"
+                            caption:"Lï¿½schen aufheben"
                           });
   }
 */
@@ -1527,7 +1527,7 @@ function initSysLists() {
 				var selectWidget = dojo.widget.byId(widgetId);
 				var selectWidgetData = res[selectWidget.listId];
 				
-				// Sort list by the display values
+				// Sort list by the display values (array[0])
 				selectWidgetData.sort(function(a, b) {
 					return UtilString.compareIgnoreCase(a[0], b[0]);
 				});
