@@ -567,6 +567,12 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             }
         }
 
+        boolean showAdminContent = false;
+        if (request.getUserPrincipal() != null) {
+        	showAdminContent = request.getUserPrincipal().getName().equals("admin");
+        }
+        
+        context.put("adminContent", showAdminContent);
         context.put("rankedPageSelector", rankedPageNavigation);
         context.put("unrankedPageSelector", unrankedPageNavigation);
         context.put("rankedResultList", rankedHits);

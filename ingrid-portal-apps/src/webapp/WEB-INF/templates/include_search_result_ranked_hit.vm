@@ -72,6 +72,9 @@ $MESSAGES.setMsgParam('DOC')
 					$MESSAGES.getString('common.result.provider'): $!rs.provider<br />
 				#end
 				$MESSAGES.getString('common.result.source'): $!rs.source<br />
+                #if($adminContent)
+                Score: $rs.getScore()
+                #end
 				</p>
 ##			#end
 			#if($rs.wms_url)
