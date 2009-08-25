@@ -14,9 +14,14 @@ public class CaptchaServiceSingleton {
 		return instance;
 	}
 
+	
+	/**
+	 * 
+	 * @return Returns the ImageCaptchaService instance
+	 */
 	private static ImageCaptchaService initializeService() {
 
-		// Wir brauchen eine Instanz unser eigenen Engine
+		// We need a instance of a own engine
 		ListImageCaptchaEngine engine = new CustomCaptchaEngine();
 
 		CaptchaStore captchaStore = new FastHashMapCaptchaStore();

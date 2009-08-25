@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="de.ingrid.portal.om.IngridTinyUrlSource" table="ingrid_tiny_url">
+		<id name="id">
+			<generator class="native" />
+		</id>
+		<property name="tinyUserRef" 	column="user_ref"		type="java.lang.String" />
+		<property name="tinyKey" 		column="tiny_key"		type="java.lang.String" />
+		<property name="tinyName" 		column="tiny_name"		type="java.lang.String" />
+		<property name="tinyDate" 	 	column="tiny_date"		type="timestamp" />
+		<property name="tinyConfig"		column="tiny_config"	type="java.lang.String" />
+	</class>
+</hibernate-mapping>

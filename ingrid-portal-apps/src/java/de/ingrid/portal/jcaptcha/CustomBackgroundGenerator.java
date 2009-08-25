@@ -25,6 +25,7 @@ public class CustomBackgroundGenerator extends UniColorBackgroundGenerator {
 		this.colorGenerator = new SingleColorGenerator(color);
 	}
 
+	
 	public CustomBackgroundGenerator(Integer width, Integer height,
 			ColorGenerator colorGenerator) {
 		super(width, height);
@@ -32,6 +33,9 @@ public class CustomBackgroundGenerator extends UniColorBackgroundGenerator {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see com.octo.captcha.component.image.backgroundgenerator.UniColorBackgroundGenerator#getBackground()
+	 */
 	public BufferedImage getBackground() {
 		backround = new BufferedImage(getImageWidth(), getImageHeight(),
 				BufferedImage.TYPE_INT_ARGB);

@@ -12,64 +12,69 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
+
 import com.octo.captcha.service.CaptchaServiceException;
 
 import de.ingrid.portal.jcaptcha.CaptchaServiceSingleton;
 
-public class CaptchaImageServlet extends HttpServlet{
-	
-	private static final long serialVersionUID = -9167034970446594129L;
+public class CaptchaImageServlet extends HttpServlet {
 
+	private static final long serialVersionUID = -9167034970446594129L;
+	private Cache captchaCache = null;
 
 	public void init(ServletConfig servletConfig) throws ServletException {
 
-        super.init(servletConfig);
+		super.init(servletConfig);
+		captchaCache = CacheManager.create().getCache("de.ingrid.portal.servlet.jcaptcha");
+	}
 
-    }
+	protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException,
+			IOException {
 
+		byte[] captchaChallengeAsPng = null;
+		BufferedImage challenge = null;
 
-    protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+		String sessionId = httpServletRequest.getSession().getId();
 
-       byte[] captchaChallengeAsPng = null;
-       // the output stream to render the captcha image as jpeg into
-        ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
-        try {
-        // get the session id that will identify the generated captcha.
-        //the same id must be used to validate the response, the session id is a good candidate!
-        String captchaId = httpServletRequest.getSession().getId();
-        // call the ImageCaptchaService getChallenge method
-            BufferedImage challenge =
-                    CaptchaServiceSingleton.getInstance().getImageChallengeForID(captchaId,
-                            httpServletRequest.getLocale());
+		if (httpServletRequest.getParameter("keep") != null) {
+			if (captchaCache.isKeyInCache(sessionId)) {
+				challenge = (BufferedImage) captchaCache.get(sessionId).getObjectValue();
+			}
+		}
 
-            // a jpeg encoder
-            /*   JPEGImageEncoder jpegEncoder =
-                    JPEGCodec.createJPEGEncoder(jpegOutputStream);
-            jpegEncoder.encode(challenge);
-        	
-            */
-            // a png
-            
-           ImageIO.write(challenge, "png", pngOutputStream);
-        } catch (IllegalArgumentException e) {
-            httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
-            return;
-        } catch (CaptchaServiceException e) {
-            httpServletResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            return;
-        }
+		if (challenge == null) {
+			// call the ImageCaptchaService getChallenge method
+			challenge = CaptchaServiceSingleton.getInstance().getImageChallengeForID(sessionId, httpServletRequest.getLocale());
+		}
+		
+		Element cacheElement = new Element(sessionId, challenge);
+		captchaCache.put(cacheElement);
 
-        captchaChallengeAsPng = pngOutputStream.toByteArray();
+		// the output stream to render the captcha image as jpeg into
+		ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
+		try {
+			ImageIO.write(challenge, "png", pngOutputStream);
+		} catch (IllegalArgumentException e) {
+			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
+			return;
+		} catch (CaptchaServiceException e) {
+			httpServletResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			return;
+		}
 
-        // flush it in the response
-        httpServletResponse.setHeader("Cache-Control", "no-store");
-        httpServletResponse.setHeader("Pragma", "no-cache");
-        httpServletResponse.setDateHeader("Expires", 0);
-        httpServletResponse.setContentType("image/png");
-        ServletOutputStream responseOutputStream =
-                httpServletResponse.getOutputStream();
-        responseOutputStream.write(captchaChallengeAsPng);
-        responseOutputStream.flush();
-        responseOutputStream.close();
-    }	
+		captchaChallengeAsPng = pngOutputStream.toByteArray();
+
+		// flush it in the response
+		httpServletResponse.setHeader("Cache-Control", "no-store");
+		httpServletResponse.setHeader("Pragma", "no-cache");
+		httpServletResponse.setDateHeader("Expires", 0);
+		httpServletResponse.setContentType("image/png");
+		ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();
+		responseOutputStream.write(captchaChallengeAsPng);
+		responseOutputStream.flush();
+		responseOutputStream.close();
+	}
 }

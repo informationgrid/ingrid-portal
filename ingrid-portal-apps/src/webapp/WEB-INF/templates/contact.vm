@@ -72,7 +72,11 @@ $contactIntroPostEmail
 			<table border="0">
   				<tr>
     				<th class="float_left col2left_incr"></th>
+#if ($actionForm.hasErrors() && !$actionForm.hasErrorInField("jcaptcha"))
+    				<th><image src="/ingrid-portal-apps/jcaptcha?keep"></th>
+#else
     				<th><image src="/ingrid-portal-apps/jcaptcha"></th>
+#end    				
   				</tr>
   			</table>
   			<span class="clearer"></span>

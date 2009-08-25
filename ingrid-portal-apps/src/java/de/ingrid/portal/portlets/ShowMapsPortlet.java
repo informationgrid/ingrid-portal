@@ -2,7 +2,7 @@ package de.ingrid.portal.portlets;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Collection;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -14,30 +14,39 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
-import de.ingrid.portal.global.IngridPersistencePrefs;
 import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
+import de.ingrid.portal.om.IngridTinyUrlSource;
 import de.ingrid.portal.search.UtilsSearch;
 
 public class ShowMapsPortlet extends GenericVelocityPortlet {
 
-    private final static Log log = LogFactory.getLog(ShowMapsPortlet.class);
-	
-	public void init(PortletConfig config) throws PortletException {
-        super.init(config);
-    }
+	private final static Log log = LogFactory.getLog(ShowMapsPortlet.class);
 
-    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
+	public void init(PortletConfig config) throws PortletException {
+		super.init(config);
+	}
+
+	public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
 
-        String wmsURL = UtilsSearch.getWMSURL(request, request.getParameter("wms_url"), true);
+        response.setTitle(messages.getString("maps.page.title"));
 
+        String wmsURL = UtilsSearch.getWMSURL(request, request.getParameter("wms_url"), true);
+        Principal principal = request.getUserPrincipal();
+    	
         // read preferences
         PortletPreferences prefs = request.getPreferences();
         String hKey = prefs.getValue("helpKey", null);
@@ -50,46 +59,40 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
         }
         context.put("wmsURL", wmsURL);
 
-        // enable the save button if the query was set AND a user is logged on
-        if (Utils.getLoggedOn(request)) {
-            context.put("enableSave", "true");
-            context.put("wmsServicesSaved", request.getParameter("wmsServicesSaved"));
-            String wmc = (String)IngridPersistencePrefs.getPref(request.getUserPrincipal().getName(), IngridPersistencePrefs.WMC_DOCUMENT);
-            if (wmc != null && wmc.length() > 0) {
-            	context.put("enableLoad", "true");
-            }
-            context.put("mapBenderVersion", WMSInterfaceImpl.getInstance().getMapbenderVersion());
+        
+        if(request.getParameter("t") != null && principal.getName()!= null){
+        	try {
+        		Session session = HibernateUtil.currentSession();
+            	ProjectionList projList = Projections.projectionList();
+            	projList.add(Projections.groupProperty("tinyConfig"));
+            	Criteria crit =session.createCriteria(IngridTinyUrlSource.class)
+                .setProjection(projList)
+                .add(Restrictions.eq("tinyKey", request.getParameter("t")))
+                .add(Restrictions.eq("tinyUserRef", principal.getName()));
+               
+        		List foundData = UtilsDB.getValuesFromDB(crit, session, null, true);
+        		
+        		if (foundData.size() > 0) {
+                    String entry = (String) foundData.get(0);
+                    if (entry != null && entry.length() > 0) {
+        				WMSInterfaceImpl.getInstance().setWMCDocument(entry, request.getPortletSession().getId());
+        			}
+                }
+        		
+        		
+    		} catch (Exception ex) {
+    			if (log.isErrorEnabled()) {
+    				log.error("Problems processing default view:", ex);
+    			}
+    		}
 
+    		
         }
-
         super.doView(request, response);
     }
 
-    public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
-            IOException {
-        String action = request.getParameter("action");
-
-        if (action != null && action.equals("doSaveWMC") && Utils.getLoggedOn(request)) {
-            Principal principal = request.getUserPrincipal();
-        	// get the WMC from mapbender
-        	String wmc = WMSInterfaceImpl.getInstance().getWMCDocument(request.getPortletSession().getId());
-            IngridPersistencePrefs.setPref(principal.getName(), IngridPersistencePrefs.WMC_DOCUMENT, wmc);
-            actionResponse.setRenderParameter("wmsServicesSaved", "1");
-        } else if (action != null && action.equals("doSaveWMSServices") && Utils.getLoggedOn(request)) {
-            Principal principal = request.getUserPrincipal();
-            // get the WMS Services
-            Collection c = WMSInterfaceImpl.getInstance().getWMSServices(request.getPortletSession().getId());
-            IngridPersistencePrefs.setPref(principal.getName(), IngridPersistencePrefs.WMS_SERVICES, c);
-            actionResponse.setRenderParameter("wmsServicesSaved", "1");
-        	
-        } else if (action != null && action.equals("doLoadWMC") && Utils.getLoggedOn(request)) {
-            // set the WMC in mapbender
-            Principal principal = request.getUserPrincipal();
-            String wmc = (String)IngridPersistencePrefs.getPref(principal.getName(), IngridPersistencePrefs.WMC_DOCUMENT);
-            if (wmc != null && wmc.length() > 0) {
-            	WMSInterfaceImpl.getInstance().setWMCDocument(wmc, request.getPortletSession().getId());
-            }
-        }
-    }
+	public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException {
+		
+	}
 
 }

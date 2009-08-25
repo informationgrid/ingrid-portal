@@ -117,12 +117,12 @@ public class ContactPortlet extends GenericVelocityPortlet {
         }
 
         //remenber that we need an id to validate!
-        String captchaId = request.getPortletSession().getId();
+        String sessionId = request.getPortletSession().getId();
         //retrieve the response
         String response = request.getParameter("jcaptcha");
         // Call the Service method
          try {
-             isResponseCorrect = CaptchaServiceSingleton.getInstance().validateResponseForID(captchaId,
+             isResponseCorrect = CaptchaServiceSingleton.getInstance().validateResponseForID(sessionId,
                      response);
          } catch (CaptchaServiceException e) {
               //should not happen, may be thrown if the id is not valid
