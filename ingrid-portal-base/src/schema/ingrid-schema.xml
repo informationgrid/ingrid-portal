@@ -195,4 +195,13 @@ limitations under the License.
         </index>
     </table>
     
+    <table name="ingrid_tiny_url" idMethod="native">
+        <column name="id" type="INTEGER" primaryKey="true" required="true" autoIncrement="true"/>
+        <column name="user_ref" size="254" type="VARCHAR" required="true"/>
+        <column name="tiny_key" size="254" type="VARCHAR" required="true"/>
+        <column name="tiny_name" size="254" type="VARCHAR" required="true"/>
+        <column name="tiny_config" type="CLOB"/>
+        <column name="tiny_date" type="TIMESTAMP"/>
+    </table>
+    
 </database>
