@@ -60,7 +60,7 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
         context.put("wmsURL", wmsURL);
 
         
-        if(request.getParameter("t") != null && principal.getName()!= null){
+        if(request.getParameter("t") != null && principal != null && principal.getName()!= null){
         	try {
         		Session session = HibernateUtil.currentSession();
             	ProjectionList projList = Projections.projectionList();
