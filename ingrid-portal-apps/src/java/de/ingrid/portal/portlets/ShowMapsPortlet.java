@@ -1,7 +1,6 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -45,8 +44,7 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
         response.setTitle(messages.getString("maps.page.title"));
 
         String wmsURL = UtilsSearch.getWMSURL(request, request.getParameter("wms_url"), true);
-        Principal principal = request.getUserPrincipal();
-    	
+        
         // read preferences
         PortletPreferences prefs = request.getPreferences();
         String hKey = prefs.getValue("helpKey", null);
@@ -60,15 +58,14 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
         context.put("wmsURL", wmsURL);
 
         
-        if(request.getParameter("t") != null && principal != null && principal.getName()!= null){
+        if(request.getParameter("t") != null){
         	try {
         		Session session = HibernateUtil.currentSession();
             	ProjectionList projList = Projections.projectionList();
             	projList.add(Projections.groupProperty("tinyConfig"));
             	Criteria crit =session.createCriteria(IngridTinyUrlSource.class)
                 .setProjection(projList)
-                .add(Restrictions.eq("tinyKey", request.getParameter("t")))
-                .add(Restrictions.eq("tinyUserRef", principal.getName()));
+                .add(Restrictions.eq("tinyKey", request.getParameter("t")));
                
         		List foundData = UtilsDB.getValuesFromDB(crit, session, null, true);
         		
