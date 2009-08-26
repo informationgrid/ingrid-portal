@@ -59,11 +59,27 @@
 		#else
 			<td>$rowValue</td>
 		#end
-    #end
+	#end
     </tr>
 	
 #end
-		</table>
+	
+	#if ($rowstyle == "contentRowOdd")
+		#set ($rowstyle = "contentRowEven")
+	#else
+		#set ($rowstyle = "contentRowOdd")
+	#end
+
+	<tr class="$rowstyle">
+		<td>
+    		<input name="all" type="checkbox" onclick="selectAll(this)"/>
+        </td>
+		<td colspan="3">
+    		<label>$MESSAGES.getString('maps.save.url.useall')</label>
+        </td>
+    </tr>
+		
+	</table>
 		</p>
 		<div class="formfooter">
 			<div align="right">
@@ -72,3 +88,12 @@
 	    </div>
 	</p>	
 </form>
+
+<script type="text/javascript">
+		function selectAll(x) {
+		for(var i=0,l=x.form.length; i<l; i++)
+			if(x.form[i].type == 'checkbox' && x.form[i].name != 'all')
+				x.form[i].checked=x.form[i].checked?false:true
+		}
+</script>
+

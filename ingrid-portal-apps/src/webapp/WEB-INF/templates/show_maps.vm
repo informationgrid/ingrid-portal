@@ -6,8 +6,7 @@
 			$MESSAGES.getString("maps.error.noframes") 
 		</iframe>
 	</div>
-	<div class="formfooter">
-		<p>
-        </p>
-	</div>
+	<p>
+		<span class="clearer"></span>
+	</p>
 </div>
