@@ -5,7 +5,6 @@
 package de.ingrid.portal.scheduler.jobs;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,8 +18,8 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
 import org.quartz.SchedulerException;
-import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.TriggerUtils;
 
@@ -692,7 +691,7 @@ public class IngridJobHandler {
 	 */
 	public List<JobDetail> getFilteredJobs(String sortColumn, boolean ascending, HashMap filter, boolean inverse) {
 		List<JobDetail> allJobs = monitor.getJobs(sortColumn, ascending);
-		List<JobDetail> filteredJobs = new ArrayList();
+		List<JobDetail> filteredJobs = new ArrayList<JobDetail>();
 		Set<String> filterSet = filter.keySet();
 		for (int i=0; i<allJobs.size(); i++) {
 			if (filter.isEmpty()) {
@@ -838,5 +837,22 @@ public class IngridJobHandler {
 		if (jobDetail != null)
 			return true;
 		return false;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<JobDetail> getRunningJobs(String sortColumn, boolean ascending) {
+		List<JobDetail> runningJobs = new ArrayList<JobDetail>();
+		List<JobExecutionContext> runningJobContexts = null;
+		try {
+			runningJobContexts = monitor.getScheduler().getCurrentlyExecutingJobs();
+			
+			for (JobExecutionContext jobExecutionContext : runningJobContexts) {
+				runningJobs.add(jobExecutionContext.getJobDetail());				
+			}
+		} catch (SchedulerException e) {
+			log.error("Cannot get currently executing jobs from scheduler!");
+			e.printStackTrace();
+		}
+		return runningJobs;
 	}
 }

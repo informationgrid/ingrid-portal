@@ -20,9 +20,15 @@
 </tr>
 #end
 
-#macro (fillTable $filterMap $inverse)
-
-    #set ($model = $jobHandler.getFilteredJobs($sortColumn, $sortAsc, $filterMap, $inverse))
+#macro (fillTable $filterMap $inverse $running)
+    #if($running)
+        #set ($model = $jobHandler.getRunningJobs($sortColumn, $sortAsc))
+        #if($model.size() > 0)
+            <tr><td colspan=2><h3>Running</h3></td></tr>
+        #end
+    #else
+        #set ($model = $jobHandler.getFilteredJobs($sortColumn, $sortAsc, $filterMap, $inverse))
+    #end
 	#foreach ($entry in $model)
    		#set ($jobId = $entry.name)
 		#set ($jobData = $entry.getJobDataMap())
@@ -54,15 +60,28 @@
 		#set ($count = $count + 1)
 		<tr class="$rowstyle">
 		$action.setParameter("id", "$jobId")
+        <td>
+            #if($running)
+                ##<input id="stop_$count" name="id" type="button" value="x" title="Stop running job" class="btn" style="background-color:red; height:15px; width:15px; padding:0;" />
+            #elseif($entry.getGroup() == "monitor")
+                <input id="chk_$count" name="id" type="checkbox" value="$jobId" />
+            #end
+        </td>
 		## for non monitoring jobs
 		#if ($entry.getGroup() != "monitor")
-			<td></td><td><a href="$action">$jobId</a></td>
+			<td><a href="$action">$jobId</a></td>
 			<td><a href="$action">DEFAULT</a></td>
-            #if($jobData.getInt("component.monitor.general.status")==0) 
-                <td><a href="$action">$MESSAGES.getString('component.forms.status.ok')</a></td>
+            <td>
+            #if($running)
+                <a href="$action">RUNNING</a>
+            #elseif(!$jobData.containsKey("component.monitor.general.status")) 
+                <a href="$action">UNKNOWN</a>
+            #elseif($jobData.getInt("component.monitor.general.status")==0) 
+                <a href="$action">$MESSAGES.getString('component.forms.status.ok')</a>
             #else
-                <td><a href="$action">$MESSAGES.getString('component.forms.status.error')</a></td>
+                <a href="$action">$MESSAGES.getString('component.forms.status.error')</a>
             #end
+            </td>
 			<td><a href="$action">$!date.format('yyyy-MM-dd H:mm:ss', $prevTime)</a></td>
 			<td><a href="$action">$!date.format('yyyy-MM-dd H:mm:ss', $nextTime)</a></td>
 			#if ($jobData.containsKey("component.monitor.general.timer.average") && ($jobData.getInt("component.monitor.general.timer.num")!=0))
@@ -73,16 +92,17 @@
 			#end
 			<td><a href="$action">$interval</a></td>
 		#else
-        	<td>
-        		<input id="chk_$count" name="id" type="checkbox" value="$jobId" />
-            </td>
         	<td><a href="$action" title="$jobId">$jobData.getString("component.monitor.general.title")</a></td>
         	<td><a href="$action">$MESSAGES.getString($jobData.getString("component.monitor.general.type"))</a></td>
-			#if($jobData.getInt("component.monitor.general.status")==0) 
-				<td><a href="$action">$MESSAGES.getString('component.forms.status.ok')</a></td>
+			<td>
+            #if($running)
+                <a href="$action">RUNNING</a>
+            #elseif($jobData.getInt("component.monitor.general.status")==0) 
+				<a href="$action">$MESSAGES.getString('component.forms.status.ok')</a>
 			#else
-				<td><a href="$action">$MESSAGES.getString('component.forms.status.error')</a></td>
-			#end
+				<a href="$action">$MESSAGES.getString('component.forms.status.error')</a>
+            #end
+            </td>
         	<td><a href="$action">#if($jobData.containsKey("component.monitor.general.timer.num"))$date.format('yyyy-MM-dd H:mm:ss',$prevTime)#end</a></td>
 			<td><a href="$action">#if($jobData.getInt("component.monitor.general.active")==1)$date.format('yyyy-MM-dd H:mm:ss',$nextTime)#end</a></td>
 
@@ -121,9 +141,14 @@
 		#set ($count = 0)
 	
 		$action.setParameter('doEdit','Edit')
+        
+        ## running jobs
+        ## there can be only one job at a time be running, because of a StateJob-restriction
+        ## the title will only be rendered if there's any running job
+        $!filterMap.clear()
+        #fillTable($filterMap true true)
 
 		<tr><td colspan=2><h3>Aktive</h3></td></tr>
-		
 		## aktive
 		## clear is important here otherwise the old value would be returned
 		## to the html output
@@ -131,14 +156,14 @@
 		$!filterMap.put("component.monitor.general.active",0)
 		## other jobs (they don't have the "active"-key in the map
 		##$!filterMap.put("component.monitor.general.active",null)
-		#fillTable($filterMap true)
+		#fillTable($filterMap true false)
 		
 		<tr><td>&nbsp;</td></tr>
 		<tr><td colspan=2><h3>Inaktive</h3></td></tr>
 		
 		## inaktive
 		## get the inverse results of the filtered jobs
-		#fillTable($filterMap false)
+		#fillTable($filterMap false false)
 		</table>
 </div>
 		
