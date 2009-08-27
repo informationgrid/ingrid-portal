@@ -480,6 +480,8 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		String nextExec = "";
 		// for jobs that never ran there's no information -> return! 
 		if (dataMap.containsKey(IngridMonitorAbstractJob.PARAM_TIMER_NUM) == false) {
+			// write at least the error message
+			cf.setInput(AdminComponentMonitorForm.FIELD_ERROR_MSG, dataMap.getString(IngridMonitorAbstractJob.PARAM_STATUS_CODE));
 			return;
 		}
 		
