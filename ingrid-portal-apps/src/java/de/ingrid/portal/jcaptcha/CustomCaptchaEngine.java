@@ -30,8 +30,8 @@ public class CustomCaptchaEngine extends ListImageCaptchaEngine {
 		Color backgroundColor = new Color(0xff, 0xff, 0xff, 0);
 
 		// CustomBackgroundGenerator with ARGB
-		BackgroundGenerator bgGenerator = new CustomBackgroundGenerator(250,
-				80, backgroundColor);
+		BackgroundGenerator bgGenerator = new CustomBackgroundGenerator(210,
+				70, backgroundColor);
 
 		// font (min word length, max word length, font color)
 		TextPaster paster = new RandomTextPaster(6, 6, colors);

@@ -1,92 +1,65 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="formSaveMapUrl" id="formSaveMapUrl">
-	<div class="formbody">
+	<div class="formbody" style="width: 65%;">
 	#displayFormErrors()
 	<h3>
 		<label>$MESSAGES.getString('maps.save.url.inputtitle')</label>
 	</h3>
 	<p>
-		<input size="80" maxlength="80" type="text" name="mapurl" value=""/>
+		<input size="100%" maxlength="250" type="text" name="mapurl" value=""/>
 	</p>
 	</div>
-	<div class="formfooter">
+	<div class="formfooter" style="width:65%;">
 		<div align="right">
-			<input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.save')" name="doSave"/>
+			<input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.save')" name="doSave" />
 		</div>
 	</div>
-	
-	
-	<p>
-		<table class="border fullwidth">
-#set ($colNames = ["tinyName", "tinyDate", "tinyConfig"])
-#set ($colTitles = [$MESSAGES.getString('maps.save.url.name'), $MESSAGES.getString('maps.save.url.date'), $MESSAGES.getString('maps.save.url.webadresse')])
-#renderDBBrowserHeader($colNames $colTitles)
-#foreach ($dbEntity in $dbEntities)
-	#set ($rowId = $dbEntity.Id)
-	#set ($error = "")
-	#if ($dbEntity.Error != "" && $dbEntity.Error != "component.monitor.general.error.none")
-		#set ($error = "ERROR")
-	#else
-		#set ($error = "OK")
-	#end
-	#set ($rowValues = [$dbEntity.tinyName, $date.format('dd.MM.yyyy HH:mm:ss',$dbEntity.tinyDate), $UtilsString.cutString($dbEntity.tinyKey, 40,40)])
-	#if ($velocityCount % 2 == 0)
-		#if ($error == "ERROR")
-			#set ($rowstyle = "contentRowEvenError")
-		#else
-			#set ($rowstyle = "contentRowEven")
-		#end
-    #else
-		#if ($error == "ERROR")
-			#set ($rowstyle = "contentRowOddError")
-		#else
-			#set ($rowstyle = "contentRowOdd")
-		#end
-    #end   
-    <tr class="$rowstyle">
-    	<td>
-    		<input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
-        </td>
-    $action.setParameter("id", "$rowId")
-    $action.setParameter("doUpdate",  $dbEntity.tinyKey)
-    #foreach ($rowValue in $rowValues)
-		#if ($velocityCount == 3)
-			<td><a href="${request.scheme}://${request.serverName}:${request.serverPort}/ingrid-portal/portal/main-maps.psml?t=$dbEntity.tinyKey" name="doUpdate">$UtilsString.getShortURLStr("${request.scheme}://${request.serverName}:${request.serverPort}/ingrid-portal/portal/main-maps.psml?t=$dbEntity.tinyKey", 50)</a></td>
-		#elseif ($velocityCount == 2)
-			<td WIDTH=150>$rowValue</td>
-		#elseif ($velocityCount == 1)
-			<td WIDTH=300>$rowValue</td>
-		#else
-			<td>$rowValue</td>
-		#end
-	#end
-    </tr>
-	
-#end
-	
-	#if ($rowstyle == "contentRowOdd")
-		#set ($rowstyle = "contentRowEven")
-	#else
-		#set ($rowstyle = "contentRowOdd")
-	#end
-
-	<tr class="$rowstyle">
-		<td>
-    		<input name="all" type="checkbox" onclick="selectAll(this)"/>
-        </td>
-		<td colspan="3">
-    		<label>$MESSAGES.getString('maps.save.url.useall')</label>
-        </td>
-    </tr>
+	<br></br>
+	<table class="border fullwidth">
+    #set ($colNames = ["tinyName", "tinyDate", "tinyConfig"])
+    #set ($colTitles = [$MESSAGES.getString('maps.save.url.name'), $MESSAGES.getString('maps.save.url.date'), $MESSAGES.getString('maps.save.url.webadresse')])
+    #renderDBHeader($colNames $colTitles)
+    	#foreach ($dbEntity in $dbEntities)
+    		#set ($rowId = $dbEntity.Id)
+    		#set ($error = "")
+    		
+    		#if ($dbEntity.Error != "" && $dbEntity.Error != "component.monitor.general.error.none")
+    			#set ($error = "ERROR")
+    		#else
+    				#set ($error = "OK")
+    		#end
+    		
+    		#set ($rowValues = [$dbEntity.tinyName, $date.format('dd.MM.yyyy',$dbEntity.tinyDate), $UtilsString.cutString($dbEntity.tinyKey, 80,80)])
+    	
+            <tr height=50 style="border-bottom:1px groove grey;">
+            	<td style="vertical-align:middle;" width=3%>
+            		<input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+                </td>
+            $action.setParameter("id", "$rowId")
+            $action.setParameter("doUpdate",  $dbEntity.tinyKey)
+            #foreach ($rowValue in $rowValues)
+        		#if ($velocityCount == 3)
+        			<td style="vertical-align:middle;" width=55%><a href="${request.scheme}://${request.serverName}:${request.serverPort}/ingrid-portal/portal/main-maps.psml?t=$dbEntity.tinyKey" name="doUpdate">$UtilsString.getShortURLStr("${request.scheme}://${request.serverName}:${request.serverPort}/ingrid-portal/portal/main-maps.psml?t=$dbEntity.tinyKey", 50)</a></td>
+        		#elseif ($velocityCount == 2)
+        			<td style="vertical-align:middle;" width=10%>$rowValue</td>
+        		#elseif ($velocityCount == 1)
+        			<td style="font-weight:bold;vertical-align:middle;color:#176798" width=32%>$rowValue</td>
+        		#else
+        		#end
+        	#end
+            </tr>
+    	#end
+		<tr height=50>
+    		<td style="vertical-align:middle;">
+        		<input name="all" type="checkbox" onclick="selectAll(this)"/>
+            </td>
+    		<td colspan="3" style="vertical-align:middle;color:#176798">
+        		<label>$MESSAGES.getString('maps.save.url.useall')</label>
+            </td>
+        </tr>
 		
 	</table>
-		</p>
-		<div class="formfooter">
-			<div align="right">
-				<input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.delete')" name="doDelete" />
-			</div>
-	    </div>
-	</p>	
+	<input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.delete')" name="doDelete" />	
 </form>
 
 <script type="text/javascript">

@@ -69,25 +69,24 @@ $contactIntroPostEmail
 #end
 
 		<p>
-			<table border="0">
-  				<tr>
-    				<th class="float_left col2left_incr"></th>
+            <label class="float_left col2left_incr"><br></label>
 #if ($actionForm.hasErrors() && !$actionForm.hasErrorInField("jcaptcha"))
-    				<th><image src="/ingrid-portal-apps/jcaptcha?keep"></th>
+    		<image width=210px height=70px class="float_left" src="/ingrid-portal-apps/jcaptcha?keep">
 #else
-    				<th><image src="/ingrid-portal-apps/jcaptcha"></th>
-#end    				
-  				</tr>
-  			</table>
-  			<span class="clearer"></span>
+    		<image width=210px height=70px class="float_left" src="/ingrid-portal-apps/jcaptcha">
+#end    			
+	        <span class="clearer"></span>
+        </p>
+			
+		<p>
+            <label class="float_left col2left_incr"><br></label>
+			<input style="margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:90%; line-height: 130%; font-weight:bold; border: solid 1px #000000; background-color: #176798; cursor: pointer;" type="submit" name="doRefresh" value="$MESSAGES.getString('common.form.button.reload')" />	
 		</p>
 		$action.setParameter("doRefresh",  "Refresh")
     	<p>
 			<label class="float_left col2left_incr" for="xx7">#displayFieldLabel('jcaptcha' "$MESSAGES.getString('contact.jcaptcha.title')")</label>
 			<input class="float_left col2right inputstyletext" type="text" id="xx7" name="jcaptcha" value="#getFieldValue('jcaptcha')"/>
-			<div align="right">
-				<input class="btn" type="submit" name="doRefresh" value="$MESSAGES.getString('common.form.button.reload')" />	
-			</div>
+			
 			<span class="clearer"></span>
 		</p>
 		
