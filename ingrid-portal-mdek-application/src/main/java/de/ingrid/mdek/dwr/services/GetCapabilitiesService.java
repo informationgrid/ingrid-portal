@@ -51,8 +51,8 @@ public class GetCapabilitiesService {
 	private final static String XPATH_EXP_WMS_1_3_0_ABSTRACT = "/WMS_Capabilities/Service[1]/Abstract[1]";
 	private final static String XPATH_EXP_WMS_1_3_0_VERSION = "/WMS_Capabilities/@version";
 	private final static String XPATH_EXP_WMS_1_3_0_OP_GET_CAPABILITIES_HREF = "/WMS_Capabilities/Capability[1]/Request[1]/GetCapabilities[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
-	private final static String XPATH_EXP_WMS_1_3_0_OP_GET_MAP_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetMap[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
-	private final static String XPATH_EXP_WMS_1_3_0_OP_GET_FEATURE_INFO_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetFeatureInfo[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
+	private final static String XPATH_EXP_WMS_1_3_0_OP_GET_MAP_HREF = "/WMS_Capabilities/Capability[1]/Request[1]/GetMap[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
+	private final static String XPATH_EXP_WMS_1_3_0_OP_GET_FEATURE_INFO_HREF = "/WMS_Capabilities/Capability[1]/Request[1]/GetFeatureInfo[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
 
 	private final static String XPATH_EXP_WFS_TITLE = "/WFS_Capabilities/ServiceIdentification[1]/Title[1]";
 	private final static String XPATH_EXP_WFS_ABSTRACT = "/WFS_Capabilities/ServiceIdentification[1]/Abstract[1]";
@@ -211,11 +211,11 @@ public class GetCapabilitiesService {
     	getCapabilitiesOp.setMethodCall("GetCapabilities");
     	List<String> getCapabilitiesOpAddressList = new ArrayList<String>();
     	String address = xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_CAPABILITIES_HREF"), doc);
-    	getCapabilitiesOpAddressList.add(appendGetCapabilitiesParameterToWmsServiceUrl(address));
+    	getCapabilitiesOpAddressList.add(appendGetCapabilitiesParameterToWmsServiceUrl(address,version));
     	getCapabilitiesOp.setAddressList(getCapabilitiesOpAddressList);
 
     	List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
-    	paramList.add(new OperationParameterBean("VERSION=version", "Request version", "", true, false));
+    	paramList.add(new OperationParameterBean("VERSION="+version, "Request version", "", true, false));
     	paramList.add(new OperationParameterBean("SERVICE=WMS", "Service type", "", false, false));
     	paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Request name", "", false, false));
     	paramList.add(new OperationParameterBean("UPDATESEQUENCE=number", "Sequence number for cache control", "", true, false));
@@ -230,11 +230,11 @@ public class GetCapabilitiesService {
     	getMapOp.setPlatform(getMapOpPlatform);
     	getMapOp.setMethodCall("GetMap");
     	List<String> getMapOpAddressList = new ArrayList<String>();
-    	getMapOpAddressList.add(xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_MAP_HREF"), doc));
+    	getMapOpAddressList.add(appendVersionParameterToWmsServiceUrl(xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_MAP_HREF"), doc),version));
     	getMapOp.setAddressList(getMapOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
-    	paramList.add(new OperationParameterBean("VERSION=version", "Request version", "", false, false));
+    	paramList.add(new OperationParameterBean("VERSION="+version, "Request version", "", false, false));
     	paramList.add(new OperationParameterBean("REQUEST=GetMap", "Request name", "", false, false));
     	paramList.add(new OperationParameterBean("LAYERS=layer_list", "Comma-separated list of one or more map layers. Optional if SLD parameter is present", "", false, false));
     	paramList.add(new OperationParameterBean("STYLES=style_list", "Comma-separated list of one rendering style per requested layer. Optional if SLD parameter is present", "", false, false));
@@ -257,7 +257,7 @@ public class GetCapabilitiesService {
     	operations.add(getMapOp);
 
     	// Operation - GetFeatureInfo - optional
-    	String getFeatureInfoAddress = xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_FEATURE_INFO_HREF"), doc);
+    	String getFeatureInfoAddress = appendVersionParameterToWmsServiceUrl(xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_FEATURE_INFO_HREF"), doc),version);
     	if (getFeatureInfoAddress != null && getFeatureInfoAddress.length() != 0) {
 	    	OperationBean getFeatureInfoOp = new OperationBean();
 	    	getFeatureInfoOp.setName("GetFeatureInfo");
@@ -270,7 +270,7 @@ public class GetCapabilitiesService {
 	    	getFeatureInfoOp.setAddressList(getFeatureInfoOpAddressList);
 	
 	    	paramList = new ArrayList<OperationParameterBean>();
-	    	paramList.add(new OperationParameterBean("VERSION=version", "Request version", "", false, false));
+	    	paramList.add(new OperationParameterBean("VERSION="+version, "Request version", "", false, false));
 	    	paramList.add(new OperationParameterBean("REQUEST=GetFeatureInfo", "Request name", "", false, false));
 	    	paramList.add(new OperationParameterBean("<map_request_copy>", "Partial copy of the Map request parameters that generated the map for which information is desired", "", false, false));
 	    	paramList.add(new OperationParameterBean("QUERY_LAYERS=layer_list", "Comma-separated list of one or more layers to be queried", "", false, false));
@@ -289,13 +289,23 @@ public class GetCapabilitiesService {
     	return result;
     }
 
-    private String appendGetCapabilitiesParameterToWmsServiceUrl(String baseUrl) {
+    private String appendVersionParameterToWmsServiceUrl(String baseUrl, String version) {
     	StringBuilder url = new StringBuilder(baseUrl);
     	if (url.lastIndexOf("?") != url.length() - 1) {
     		url.append('?');
     	}
 
-    	url.append("SERVICE=WMS&REQUEST=GetCapabilities");
+    	url.append("version="+version);
+    	return url.toString();
+	}
+
+	private String appendGetCapabilitiesParameterToWmsServiceUrl(String baseUrl, String version) {
+    	StringBuilder url = new StringBuilder(baseUrl);
+    	if (url.lastIndexOf("?") != url.length() - 1) {
+    		url.append('?');
+    	}
+
+    	url.append("SERVICE=WMS&REQUEST=GetCapabilities&version="+version);
     	return url.toString();
     }
 

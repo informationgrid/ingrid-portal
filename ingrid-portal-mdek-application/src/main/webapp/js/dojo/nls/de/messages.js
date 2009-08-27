@@ -293,6 +293,7 @@
 	"dialog.wizard.create.snsNoResultError":"Der SNS lieferte keine Ergebnisse zu der von Ihnen angegebenen Webseite. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe und versuchen Sie es erneut.",
 	"dialog.wizard.create.snsInvalidPageError":"Die von Ihnen angegebene Seite konnte vom SNS nicht analysiert werden.",
 	"dialog.wizard.getCap.title":"getCapabilities Assistent",
+	"dialog.wizard.getCap.version.warning":"Diese Version '%{0}' wird derzeit nicht unterstützt! M&ouml;chten Sie das Objekt trotzdem erstellen?",
 
 	"dialog.spatialAssist.title":"Raumbezug hinzuf&uuml;gen",
 	"dialog.spatialNavigator.title":"Geothesaurus-Navigator",

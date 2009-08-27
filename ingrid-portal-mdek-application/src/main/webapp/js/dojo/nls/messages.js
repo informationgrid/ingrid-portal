@@ -293,6 +293,7 @@
 	"dialog.wizard.create.snsNoResultError":"The SNS could not find any results for the given url.",
 	"dialog.wizard.create.snsInvalidPageError":"The given Url could not be analyzed by the SNS.",
 	"dialog.wizard.getCap.title":"getCapabilities wizard",
+	"dialog.wizard.getCap.version.warning":"This version '%{0}' is not supported yet! Would you like to create the object anyway?",
 
 	"dialog.spatialAssist.title":"Add Custom Location",
 	"dialog.spatialNavigator.title":"Geothesaurus-Navigator",

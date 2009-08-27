@@ -84,7 +84,14 @@ scriptScope.startRequest = function() {
 	GetCapabilitiesService.getCapabilities(url, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
-		callback: function(res) { setOperationValues(res); },
+		callback: function(res) {
+		    if (res.versions == "1.3.0") {
+		        dialog.show(message.get("general.warning"), dojo.string.substituteParams(message.get("dialog.wizard.getCap.version.warning"),res.versions), dialog.WARNING, [
+		            { caption: message.get("general.no"),  action: function() { def.errback("CANCEL"); } },
+                    { caption: message.get("general.ok"), action: function() { setOperationValues(res); } }
+		        ]);
+		    }
+		},
 		errorHandler:function(errMsg, err) {
 			hideLoadingZone();
 			dojo.debug("Error: "+errMsg);
