@@ -1668,11 +1668,22 @@
             <section help-key="maps-3">
                 <header>Kartendienste speichern</header>
                 <content>
-                    <p>Wenn Sie eine Nutzerin oder ein eingeloggter Nutzer sind,
-                        können Sie die Einstellungen unter &#8222;aktive
-                        Kartendienste&#8220; in die Personalisierung
-                        übernehmen, in dem Sie auf den Button
-                        &#8222;Kartendienste speichern&#8220; klicken.</p>
+                     <p>
+                     Wenn Sie eine eingeloggte Nutzerin oder Nutzer sind, 
+                     können Sie diverse Kartenansichten mit Ihren 
+                     eingestellten Konfigurationen unter einem beliebigen 
+                     Namen abspeichern, in dem Sie die Karte nach Ihren 
+                     Wünschen konfigurieren, in das untere Textfeld den 
+                     zugehörigen Namen für die Kartenansicht eintragen und 
+                     zur Speicherung auf den Button &#8222;Speichern&#8220; 
+                     klicken. Die Verwaltung der gespeicherten Kartenansichten 
+                     werden tabellarisch dargestellt. Hierbei ist zu beachten, 
+					 dass die Karten-Webadressen verkürzt abgespeichert werden, 
+                     aber trotzdem zum Weiterversenden geeignet sind. Zum Löschen 
+                     von gespeicherten Kartenansichten selektieren Sie die 
+                     jeweiligen Kartenansichten in der unteren Tabelle 
+                     und bestätigen das Löschen mit dem Button &#8222;Löschen&#8220;.
+                     </p>
                 </content>
             </section>
             <section help-key="maps-4">

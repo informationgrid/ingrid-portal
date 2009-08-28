@@ -6,7 +6,7 @@
 		<label>$MESSAGES.getString('maps.save.url.inputtitle')</label>
 	</h3>
 	<p>
-		<input size="100%" maxlength="250" type="text" name="mapurl" value=""/>
+		<input size="80" maxlength="250" type="text" name="mapurl" value=""/>
 	</p>
 	</div>
 	<div class="formfooter" style="width:65%;">
@@ -63,10 +63,23 @@
 </form>
 
 <script type="text/javascript">
-		function selectAll(x) {
-		for(var i=0,l=x.form.length; i<l; i++)
-			if(x.form[i].type == 'checkbox' && x.form[i].name != 'all')
-				x.form[i].checked=x.form[i].checked?false:true
+	function selectAll(x) {
+		a = new Boolean();
+		for(var i=0,l=x.form.length; i<l; i++){
+			if(x.form[i].name == 'all' && x.form[i].checked){
+				a = true;
+			}else if (x.form[i].name == 'all' && !x.form[i].checked){
+				a = false;
+			}
+			
 		}
+		
+		for(var i=0,l=x.form.length; i<l; i++){
+			if(x.form[i].type == 'checkbox' && x.form[i].name != 'all'){
+				x.form[i].checked=a;
+			}
+		}
+								
+	}
 </script>
 
