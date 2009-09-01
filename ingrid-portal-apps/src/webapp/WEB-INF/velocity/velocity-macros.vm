@@ -63,9 +63,9 @@ $fieldLabel#end
 ## display content
 ## ------------------------------
 #macro (displayPartner)
-<option value="all" #get#getSelectedFlagrtner' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
+<option value="all" #getSelectedFlag('partner' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
 #foreach ($partner in $partnerList)
-<option value="$partner.Ident" #get#getSelectedFlagrtner' "$partner.Ident") title="$partner.Name">$UtilsString.cutString($partner.Name, 50)</option>
+<option value="$partner.Ident" #getSelectedFlag('partner' "$partner.Ident") title="$partner.Name">$UtilsString.cutString($partner.Name, 50)</option>
 #end
 #end
 
