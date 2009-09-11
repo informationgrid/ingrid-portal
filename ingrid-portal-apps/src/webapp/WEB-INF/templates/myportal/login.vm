@@ -11,10 +11,10 @@
 		<br />
 #displayFormErrors()
 		<p>
-			<label class="hide" for="login">$MESSAGES.getString('login.form.username'): </label><input class="inputstyletext" type="text" id="login" name="${loginConstants.USERNAME}" value="#getFieldValue($loginConstants.USERNAME)" onclick="clearUser()" />
+			<label class="hide" for="login">$MESSAGES.getString('login.form.username'): </label><input class="inputstyletext" type="text" id="login" name="${loginConstants.USERNAME}" value="#getFieldValue($loginConstants.USERNAME)" onFocus="clearUser()" />
 		</p>
 	    <p>
-			<label class="hide" for="passwd">$MESSAGES.getString('login.form.passwd'): </label><input class="inputstyletext" type="password" id="passwd" name="${loginConstants.PASSWORD}" value="#getFieldValue($loginConstants.PASSWORD)" onclick="clearPasswd()" />
+			<label class="hide" for="passwd">$MESSAGES.getString('login.form.passwd'): </label><input class="inputstyletext" type="password" id="passwd" name="${loginConstants.PASSWORD}" value="#getFieldValue($loginConstants.PASSWORD)"  onFocus="clearPasswd()" />
 	    </p>
 		<span class="clearer"></span>
 		<br />
