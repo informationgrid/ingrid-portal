@@ -552,7 +552,12 @@ public class Utils {
 	 */
 	public static String[] getLanguagesFullAsArray(String lang) {
 		String langNames = PortalConfig.getInstance().getString(PortalConfig.LANGUAGES_NAMES + lang);
-        return langNames.split(";");
+       
+		if(langNames == null){
+			langNames = PortalConfig.getInstance().getString(PortalConfig.LANGUAGES_NAMES + PortalConfig.getInstance().getString(PortalConfig.LANGUAGE_DEFAULT));
+		}
+		
+		return langNames.split(";");
 	}
 
 }

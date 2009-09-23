@@ -241,7 +241,7 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
 
             // remove old entries
             cal = Calendar.getInstance();
-            cal.add(Calendar.MONTH, -1);
+            cal.add(Calendar.DATE, -1 * PortalConfig.getInstance().getInt(PortalConfig.RSS_HISTORY_DAYS));
 
             tx = session.beginTransaction();
             List deleteEntries = session.createCriteria(IngridRSSStore.class).add(
