@@ -563,16 +563,18 @@ public class Utils {
 	 */
 	public static String checkSupportedLanguage(String lang){ 
 		String [] languagesShort = getLanguagesShortAsArray();
-		String supportedLanguage = "";
+		String supportedLanguage = null;
 		
 		for(int i = 0; i < languagesShort.length; i++){
         	if(languagesShort[i].equals(lang)){
         		supportedLanguage = lang;
             	break;
-        	}else{
-        		supportedLanguage = PortalConfig.getInstance().getString(PortalConfig.LANGUAGE_DEFAULT);
-            }     	
+        	}   	
         }
+		
+		if (supportedLanguage == null){
+    		supportedLanguage = PortalConfig.getInstance().getString(PortalConfig.LANGUAGE_DEFAULT);
+        }  
 		
 		return supportedLanguage;
 	}
