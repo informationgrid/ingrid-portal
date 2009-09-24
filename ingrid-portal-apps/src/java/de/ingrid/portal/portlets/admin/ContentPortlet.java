@@ -203,7 +203,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
                 Session session = HibernateUtil.currentSession();
                 Criteria crit = session.createCriteria(dbEntityClass).add(Restrictions.in("id", ids));
                 List rssSources = UtilsDB.getValuesFromDB(crit, session, null, true);
-
+                String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
+                
                 // put to render context and switch view
                 Context context = getContext(request);
                 context.put(CONTEXT_MODE, CONTEXTV_MODE_EDIT);
@@ -213,7 +214,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
                 // add the velocity tool to access arrays
                 ListTool listTool = new ListTool();
                 context.put("ListTool", listTool);
-                context.put("languagesNames", Utils.getLanguagesFullAsArray(request.getLocale().getLanguage()));
+                context.put("languagesNames", Utils.getLanguagesFullAsArray(lang));
                 context.put("languagesShort", Utils.getLanguagesShortAsArray());
                 
                 return true;

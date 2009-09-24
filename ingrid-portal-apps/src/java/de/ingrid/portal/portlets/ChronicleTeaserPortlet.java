@@ -17,6 +17,7 @@ import org.apache.velocity.context.Context;
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.interfaces.impl.DBAnniversaryInterfaceImpl;
 import de.ingrid.portal.search.SearchState;
@@ -42,7 +43,7 @@ public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
         response.setTitle(messages.getString(titleKey));
 
         // NOTICE: WE FETCH FROM DATABASE AND DON'T HAVE ALL DETAILS !!!
-        String lang = request.getLocale().getLanguage();
+        String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
         IngridHitDetail[] details = DBAnniversaryInterfaceImpl.getInstance().getAnniversaries(new Date(), lang);
 
         HashMap result = new HashMap();

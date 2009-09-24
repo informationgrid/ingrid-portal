@@ -18,6 +18,7 @@ import org.apache.velocity.context.Context;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.search.UtilsSearch;
@@ -351,7 +352,8 @@ public class DetailDataPreparerIdc1_0_5Object implements DetailDataPreparer {
     		ArrayList lines = new ArrayList();
 	    	for (int i=0; i<listRecords.size(); i++) {
 	    		Record listRecord = (Record)listRecords.get(i);
-	    		if (listRecord != null && listRecord.get("syslist.lang_id") != null && listRecord.get("syslist.lang_id").equals(request.getLocale().getLanguage())) {
+	    		String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
+	            if (listRecord != null && listRecord.get("syslist.lang_id") != null && listRecord.get("syslist.lang_id").equals(lang)) {
 		    		HashMap line = new HashMap();
 		        	line.put("type", "textLine");
 		        	line.put("body", listRecord.get("syslist.name"));
@@ -375,7 +377,8 @@ public class DetailDataPreparerIdc1_0_5Object implements DetailDataPreparer {
     		ArrayList lines = new ArrayList();
 	    	for (int i=0; i<listRecords.size(); i++) {
 	    		Record listRecord = (Record)listRecords.get(i);
-	    		if (listRecord != null && listRecord.get("syslist.lang_id") != null && listRecord.get("syslist.lang_id").equals(request.getLocale().getLanguage())) {
+	    		String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
+	            if (listRecord != null && listRecord.get("syslist.lang_id") != null && listRecord.get("syslist.lang_id").equals(lang)) {
 		    		HashMap line = new HashMap();
 		        	line.put("type", "textLine");
 		        	line.put("body", listRecord.get("syslist.name"));

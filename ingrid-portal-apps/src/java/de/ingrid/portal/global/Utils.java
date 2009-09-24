@@ -552,12 +552,28 @@ public class Utils {
 	 */
 	public static String[] getLanguagesFullAsArray(String lang) {
 		String langNames = PortalConfig.getInstance().getString(PortalConfig.LANGUAGES_NAMES + lang);
-       
-		if(langNames == null){
-			langNames = PortalConfig.getInstance().getString(PortalConfig.LANGUAGES_NAMES + PortalConfig.getInstance().getString(PortalConfig.LANGUAGE_DEFAULT));
-		}
-		
 		return langNames.split(";");
 	}
 
+	
+	/**
+	 * Check if a language is support or return the default language
+	 * @param lang
+	 * @return a supported string
+	 */
+	public static String checkSupportedLanguage(String lang){ 
+		String [] languagesShort = getLanguagesShortAsArray();
+		String supportedLanguage = "";
+		
+		for(int i = 0; i < languagesShort.length; i++){
+        	if(languagesShort[i].equals(lang)){
+        		supportedLanguage = lang;
+            	break;
+        	}else{
+        		supportedLanguage = PortalConfig.getInstance().getString(PortalConfig.LANGUAGE_DEFAULT);
+            }     	
+        }
+		
+		return supportedLanguage;
+	}
 }

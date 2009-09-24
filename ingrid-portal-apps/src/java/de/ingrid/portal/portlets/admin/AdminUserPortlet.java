@@ -604,7 +604,7 @@ public class AdminUserPortlet extends ContentPortlet {
             }
 
             // send confirmation email
-            String language = request.getLocale().getLanguage();
+            String language = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
             String localizedTemplatePath = this.emailTemplate;
             if (localizedTemplatePath == null) {
                 log.error("email template not available");

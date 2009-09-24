@@ -47,7 +47,8 @@ public class HelpPortlet extends GenericVelocityPortlet {
         context.put("MESSAGES", messages);
 
         // find help file according to the language
-        String fileName = "ingrid-portal-help_" + request.getLocale().getLanguage() + ".xml";
+        String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
+        String fileName = "ingrid-portal-help_" + lang + ".xml";
         String filePath = null;
         try {
             filePath = Utils.getResourceAsStream(fileName);

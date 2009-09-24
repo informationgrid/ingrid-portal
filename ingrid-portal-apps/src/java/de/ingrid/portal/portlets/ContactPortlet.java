@@ -79,7 +79,8 @@ public class ContactPortlet extends GenericVelocityPortlet {
                 Restrictions.eq("itemKey", "portalu.contact.intro.postEmail")), session, null, true);
         if (entities.size() > 0) {
             IngridCMS entry = (IngridCMS) entities.get(0);
-            IngridCMSItem localizedItem = entry.getLocalizedEntry(request.getLocale().getLanguage());
+            String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
+            IngridCMSItem localizedItem = entry.getLocalizedEntry(lang);
             context.put("contactIntroPostEmail", localizedItem.getItemValue());
         }
         

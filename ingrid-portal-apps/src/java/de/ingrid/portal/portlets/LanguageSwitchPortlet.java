@@ -14,6 +14,7 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.generic.ListTool;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Utils;
 
 /**
@@ -51,17 +52,17 @@ public class LanguageSwitchPortlet extends GenericVelocityPortlet {
             throws PortletException, IOException {
         Context context = getContext(request);
         Locale loc = request.getLocale();
-
+        String lang = Utils.checkSupportedLanguage(loc.getLanguage());
+        
         setDefaultViewPage(TEMPLATE_LANGUAGE_SWITCH);
         
         // add the velocity tool to access arrays
         ListTool listTool = new ListTool();
         context.put("ListTool", listTool);
         
-        context.put("languagesNames", Utils.getLanguagesFullAsArray(loc.getLanguage()));
+        context.put("languagesNames", Utils.getLanguagesFullAsArray(lang));
         context.put("languagesShort", Utils.getLanguagesShortAsArray());
-        context.put("selectedLang", loc.getLanguage());
-
+        context.put("selectedLang", lang);
         super.doView(request, response);
     }
 

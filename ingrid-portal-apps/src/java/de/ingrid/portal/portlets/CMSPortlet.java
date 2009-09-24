@@ -17,6 +17,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridCMS;
@@ -61,7 +62,8 @@ public class CMSPortlet extends GenericVelocityPortlet {
 
         if (entities.size() > 0) {
             IngridCMS entry = (IngridCMS) entities.get(0);
-            IngridCMSItem localizedItem = entry.getLocalizedEntry(request.getLocale().getLanguage());
+            String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
+            IngridCMSItem localizedItem = entry.getLocalizedEntry(lang);
             if (localizedItem == null) {
                 response.setTitle("");
                 context.put("cmsItemTitle", "");

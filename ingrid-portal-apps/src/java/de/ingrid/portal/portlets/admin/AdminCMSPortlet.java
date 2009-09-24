@@ -197,11 +197,12 @@ public class AdminCMSPortlet extends ContentPortlet {
         Context context = getContext(request);
         context.put("actionForm", af);
         context.put(CONTEXT_MODE, CONTEXTV_MODE_EDIT);
+        String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
         
         // add the velocity tool to access arrays
         ListTool listTool = new ListTool();
         context.put("ListTool", listTool);
-        context.put("languagesNames", Utils.getLanguagesFullAsArray(request.getLocale().getLanguage()));
+        context.put("languagesNames", Utils.getLanguagesFullAsArray(lang));
         context.put("languagesShort", Utils.getLanguagesShortAsArray());
         
         Object[] entities = getDBEntities(request);
