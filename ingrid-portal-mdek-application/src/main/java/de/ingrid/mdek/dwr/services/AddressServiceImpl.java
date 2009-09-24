@@ -136,10 +136,6 @@ public class AddressServiceImpl implements AddressService {
 
 		try {
 			address = addressRequestHandler.getAddressDetail(nodeUuid);
-			String organisations = extractInstitutions(address);
-			if (organisations != null) {
-				address.setOrganisation(organisations.trim());
-			}
 		} catch (RuntimeException e) {
 			log.debug("Error while getting address data.", e);
 			throw e;
@@ -158,7 +154,8 @@ public class AddressServiceImpl implements AddressService {
 		
 		for (String uuid : uuidList) {
 			address = getAddressData(uuid, false);
-			institutions.add(address.getOrganisation());
+			
+			institutions.add(extractInstitutions(address));
 		}		
 		
 		return institutions;
@@ -180,7 +177,7 @@ public class AddressServiceImpl implements AddressService {
 		} else {
 			organisations = address.getOrganisation();
 		}
-		return organisations;
+		return organisations.trim();
 	}
 	
 	public MdekAddressBean getPublishedAddressData(String nodeUuid) {

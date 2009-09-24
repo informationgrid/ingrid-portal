@@ -323,7 +323,11 @@ function initTree() {
   		});
 		
 		deferred.addCallback(function(res) {
-			dojo.lang.forEach(res, function(obj){ obj.title = dojo.string.escape("html", obj.title); });
+			dojo.lang.forEach(res, function(obj){
+				if (obj.title != null) {
+					obj.title = dojo.string.escape("html", obj.title); 
+				}
+			});
 			return _this.loadProcessResponse(node,res);
 		});
 		deferred.addErrback(function(err) {

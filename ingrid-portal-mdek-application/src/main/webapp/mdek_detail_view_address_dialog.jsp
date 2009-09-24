@@ -28,6 +28,7 @@ _container_.addOnLoad(function() {
 
 function renderNodeData(nodeData) {
 	renderSectionTitel(message.get("dialog.compare.address.address"));
+	nodeData.organisation = getOrganisations(nodeData);
 	renderText(detailHelper.renderAddressEntry(nodeData).replace(/\n/g, '<br />'));
 	
 	// administrative data
@@ -35,6 +36,19 @@ function renderNodeData(nodeData) {
 	renderTextWithTitle(nodeData.uuid, message.get("dialog.compare.address.id"));
 	renderTextWithTitle(catalogData.catalogName, message.get("dialog.compare.address.catalog"));
 
+}
+
+function getOrganisations(nodeData) {
+    if (nodeData.addressClass == 0) {
+        id = "headerAddressType0Unit";
+    } else if (nodeData.addressClass == 1) {
+        return dojo.widget.byId("headerAddressType1Institution").getValue() + "\n" + dojo.widget.byId("headerAddressType1Unit").getValue();
+    } else if (nodeData.addressClass == 2) {
+        id = "headerAddressType2Institution";
+    } else if (nodeData.addressClass == 3) {
+        id = "headerAddressType3Institution";
+    }
+    return dojo.widget.byId(id).getValue();
 }
 
 function renderSectionTitel(val) {
