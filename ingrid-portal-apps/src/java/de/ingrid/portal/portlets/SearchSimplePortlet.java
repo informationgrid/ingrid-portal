@@ -138,7 +138,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
      */
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
-        Context context = getContext(request);
+    	Context context = getContext(request);
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);

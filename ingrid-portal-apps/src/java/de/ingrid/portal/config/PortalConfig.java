@@ -123,9 +123,6 @@ public class PortalConfig extends PropertiesConfiguration {
 	// the specific language is added after this variable (e.g. languages.names.de) 
 	public static final String LANGUAGES_NAMES = "languages.names.";
 	
-	// set language to default (languages.names.default) 
-	public static final String LANGUAGE_DEFAULT = "language.default";
-	
 	// private stuff
     private static PortalConfig instance = null;
 

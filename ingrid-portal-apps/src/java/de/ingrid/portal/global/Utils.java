@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -573,7 +574,7 @@ public class Utils {
         }
 		
 		if (supportedLanguage == null){
-    		supportedLanguage = PortalConfig.getInstance().getString(PortalConfig.LANGUAGE_DEFAULT);
+    		supportedLanguage = Locale.getDefault().getLanguage();
         }  
 		
 		return supportedLanguage;

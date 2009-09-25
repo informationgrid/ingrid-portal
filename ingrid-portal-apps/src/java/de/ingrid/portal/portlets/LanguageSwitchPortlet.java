@@ -14,7 +14,6 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.generic.ListTool;
 
-import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Utils;
 
 /**
