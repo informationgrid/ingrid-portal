@@ -5,6 +5,7 @@ package de.ingrid.portal.portlets;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -64,15 +65,14 @@ public class CMSPortlet extends GenericVelocityPortlet {
             IngridCMS entry = (IngridCMS) entities.get(0);
             String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
             IngridCMSItem localizedItem = entry.getLocalizedEntry(lang);
-            if (localizedItem == null) {
-                response.setTitle("");
-                context.put("cmsItemTitle", "");
-                context.put("cmsItemValue", "");
-            } else {
-                response.setTitle(localizedItem.getItemTitle());
-                context.put("cmsItemTitle", localizedItem.getItemTitle());
-                context.put("cmsItemValue", localizedItem.getItemValue());
+            
+            if(localizedItem == null ||localizedItem.getItemTitle().length() < 1 || localizedItem.getItemValue().length() < 1){
+            	localizedItem = entry.getLocalizedEntry(Locale.getDefault().getLanguage());
             }
+            
+            response.setTitle(localizedItem.getItemTitle());
+            context.put("cmsItemTitle", localizedItem.getItemTitle());
+            context.put("cmsItemValue", localizedItem.getItemValue());
         }
 
         super.doView(request, response);

@@ -81,7 +81,11 @@ public class ContactPortlet extends GenericVelocityPortlet {
             IngridCMS entry = (IngridCMS) entities.get(0);
             String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
             IngridCMSItem localizedItem = entry.getLocalizedEntry(lang);
-            context.put("contactIntroPostEmail", localizedItem.getItemValue());
+            
+            if(localizedItem == null){
+            	localizedItem = entry.getLocalizedEntry(Locale.getDefault().getLanguage());
+            }
+        	context.put("contactIntroPostEmail", localizedItem.getItemValue());
         }
         
         // show newsletter option if configured that way

@@ -1784,12 +1784,14 @@
                      <p>
                      Wenn Sie eine eingeloggte Nutzerin oder Nutzer sind, 
                      können Sie diverse Kartenansichten mit Ihren 
-                     eingestellten Konfigurationen unter einem beliebigen 
-                     Namen abspeichern, in dem Sie die Karte nach Ihren 
-                     Wünschen konfigurieren, in das untere Textfeld den 
-                     zugehörigen Namen für die Kartenansicht eintragen und 
-                     zur Speicherung auf den Button &#8222;Speichern&#8220; 
-                     klicken. Die Verwaltung der gespeicherten Kartenansichten 
+                     eingestellten Karten-Konfigurationen unter einem beliebigen 
+                     Namen abspeichern. Der Dienst zur Kartenspeicherung 
+                     steht unterhalb der Karte nur für eingeloggte Benutzer 
+                     zur Verfügung. Konfigurieren Sie die 
+                     Karte nach Ihren Wünschen, tragen Sie in das untere 
+                     Textfeld den zugehörigen Namen für die Kartenansicht ein und 
+                     verwenden Sie zur Speicherung den Button &#8222;
+                     Speichern&#8220;. Die Verwaltung der gespeicherten Kartenansichten 
                      werden tabellarisch dargestellt. Hierbei ist zu beachten, 
 					 dass die Karten-Webadressen verkürzt abgespeichert werden, 
                      aber trotzdem zum Weiterversenden geeignet sind. Zum Löschen 
