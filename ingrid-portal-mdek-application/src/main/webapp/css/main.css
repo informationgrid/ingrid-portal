@@ -22,10 +22,10 @@ h2 { margin:0; padding:0; font:bold 12px/16px Verdana, Helvetica, Arial, sans-se
 *********************************************************************/
 
 #headSection { margin-bottom:0px; }
-#logo { float:left; position:relative; padding-right:10px; display:inline; }
-#title { float:left; position:relative; display:inline; }
+#logo { float:left; position:absolute; padding-right:10px; display:inline; }
+#title { float:left; position:absolute; display:inline; left:125px; }
 
-#metaNavi { float:right; }
+#metaNavi { float:right; white-space:nowrap; }
 #metaNavi ul { position:relative; margin:0 10px 0 0; padding:9px 0 12px 0; list-style:none; line-height:10px; display:block; }
 #metaNavi ul li { display:inline; font:normal 10px/11px Verdana, Helvetica, Arial, sans-serif; color:#c2e3fc; }
 #metaNavi ul li.seperator { color:#fff; }
@@ -39,7 +39,7 @@ html>/**/body, x:-moz-any-link, x:default { position:relative; top:-0.1px; }
 /* fix for IE7 where menu is misplaced by 1 pixel
    an attribute with * will be interpreted only by IE7 and lower   
 */
-#navi { clear:both; position:relative; top:0px; *top:1px; left:18px; }
+#navi { clear:both; position:relative; top:0px; *top:1px; left:18px; white-space:nowrap; }
 
 #navi ul { margin:0; padding:0; list-style:none; }
 #navi ul li { margin:0; padding:0; display:inline; font:bold 11px/13px Verdana, Helvetica, Arial, sans-serif; color:#fff; }
