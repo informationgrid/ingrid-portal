@@ -4,6 +4,7 @@
 package de.ingrid.portal.search.detail;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -835,8 +836,17 @@ public class DetailDataPreparerIdc1_0_5Object implements DetailDataPreparer {
     		
     		listRecords = getSubRecordsByColumnName(record, "t011_obj_geo_supplinfo.line");
     		if (listRecords.size() > 0 && !(listRecords.size() == 1 && ((Record)(listRecords.get(0))).getString("t011_obj_geo_supplinfo.feature_type") == null)) {
+    			// sort the list
+    			Object[] sortedListRecords = new Record[listRecords.size()];
+        		for (Object object : listRecords) {
+        			sortedListRecords[(Integer.valueOf((String)((Record)object).get("t011_obj_geo_supplinfo.line")))-1] = object;
+    			}
+        		// write sorted records as a list again
+        		listRecords = Arrays.asList(sortedListRecords);
+        		
     	    	HashMap element = new HashMap();
     	    	element.put("type", "multiLine");
+    	    	element.put("sort", "false");
     	    	element.put("title", messages.getString("t011_obj_geo_supplinfo.feature_type"));
     	    	ArrayList lines = new ArrayList();
     	    	element.put("elements", lines);
@@ -1087,7 +1097,8 @@ public class DetailDataPreparerIdc1_0_5Object implements DetailDataPreparer {
 			HashMap element = new HashMap();
 			element.put("type", "entry");
 			element.put("title", title);
-			element.put("body", body);
+			// show line breaks correctly in HTML
+			element.put("body", body.replaceAll("\n", "<br />"));
 			elements.add(element);
 		}
 	}

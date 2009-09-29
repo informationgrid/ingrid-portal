@@ -90,6 +90,9 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                     feedUrl = new URL(rssSource.getUrl());
                     input 	= new SyndFeedInput();
                     feed 	= input.build(new XmlReader(feedUrl));
+                    
+                    log.debug("fetched " + rssSource.getUrl());
+                    
                     if (feed.getLanguage() == null) {
                         feed.setLanguage(rssSource.getLanguage());
                     }
