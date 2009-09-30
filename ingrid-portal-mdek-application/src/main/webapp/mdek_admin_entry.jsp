@@ -13,10 +13,10 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
 <script type="text/javascript">
-    // browser check (only IE7, FF2/3)
+    // browser check (only IE7/8, FF2/3)
 	var browser = navigator.appName;
 	var version = navigator.appVersion;
-	if (!(version.indexOf("MSIE 7") != -1 || (browser=="Netscape" && version.indexOf("5.0") != -1 && version.indexOf("Chrome") == -1))) {
+	if (!(version.indexOf("MSIE 7") != -1 || version.indexOf("MSIE 8") != -1 || (browser=="Netscape" && version.indexOf("5.0") != -1 && version.indexOf("Chrome") == -1))) {
 		document.location.href = "not_supported_browser.jsp"
 	}
 </script>

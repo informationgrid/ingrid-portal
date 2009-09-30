@@ -57,7 +57,7 @@ so I have to remove TreeExpand and process this one specifically
 }
 
 .TreeIEContent {
-  	height: 16px;
+  	/*height: 16px;*/
     padding-bottom: 5px;
 }
  

@@ -26,9 +26,9 @@
 			</general>
 			<technical-domain>
 				<map>
-                    <hierarchy-level iso-code=""/>
-            	</map>
-            </technical-domain>
+          <hierarchy-level iso-code=""/>
+        </map>
+      </technical-domain>
 			<additional-information>
         <!-- default language will be set -->
 				<data-language id="x"/>
@@ -40,4 +40,6 @@
 			<subject-terms/>
 		</data-source>
 	</data-sources>
+  <data-model-extensions>
+  </data-model-extensions>
 </igc>

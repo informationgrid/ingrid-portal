@@ -324,7 +324,9 @@ function initTree() {
 		
 		deferred.addCallback(function(res) {
 			dojo.lang.forEach(res, function(obj){
-				if (obj.title != null) {
+				if (obj.title == null) {
+					obj.title = "???";
+				} else {
 					obj.title = dojo.string.escape("html", obj.title); 
 				}
 			});
