@@ -377,6 +377,14 @@ acceptTopicList = function() {
 	var srcStore = dojo.widget.byId("thesaurusDescList").store;
 	var destStore = dojo.widget.byId("thesaurusTerms").store;
 
+    // get the correct store from the parameter of this widget
+    // since the id of this widget changes we have to search for it	
+	var floatingPanes = dojo.widget.byType("FloatingPane");
+    for(var x in floatingPanes){
+        if (floatingPanes[x].customParams != null && floatingPanes[x].customParams.dstTable != null) {
+            destStore = dojo.widget.byId(floatingPanes[x].customParams.dstTable).store;
+        }        
+    }	
 	dojo.lang.forEach(srcStore.getData(), function(topic){
 		if (dojo.lang.every(destStore.getData(), function(item){ return item.topicId != topic.topicId; })) {
 			// Topic is new. Add it to the topic list

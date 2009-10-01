@@ -2331,7 +2331,7 @@ function hideSplash(){
 										<thead>
 											<tr>
 												<th nosort="true" field="label" dataType="String">Term</th>
-												<th nosort="true" field="source" dataType="String">Source</th>
+												<th nosort="true" field="sourceString" dataType="String">Source</th>
 											</tr>
 										</thead>
 									  <colgroup>
