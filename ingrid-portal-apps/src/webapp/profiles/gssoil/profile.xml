@@ -47,6 +47,9 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::IngridWelcomePortlet</name>
+                </portlet>
+                <portlet col="0" row="2">
                     <name>ingrid-portal-apps::RssNewsTeaser</name>
                 </portlet>
                 <portlet col="1" row="0">
@@ -137,6 +140,32 @@
             <action>copy</action>
             <src>ingrid-portal-apps/WEB-INF/classes/quartz_jobs.xml</src>
         </file>
+
+
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/01_motiv_start-gssoil.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/logo.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/logo_alt.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/logo_footer.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/corner_sub_nav.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/icn_linkintern.gif</src>
+        </file>
         <file>
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid/images/button-bg.png</src>
@@ -157,10 +186,65 @@
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid/css/styles.css</src>
         </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/footer.vm</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/header.vm</src>
+        </file>
+
         
         <file>
             <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/css/styles.css</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/logo.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/logo_footer.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/corner_sub_nav.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/01_motiv_start-gssoil.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/icn_linkextern.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/icn_linkintern.gif</src>
+        </file>
+
+
+        <file>
+            <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid-popup/css/styles.css</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/logo.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/logo_footer.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/corner_sub_nav.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/01_motiv_start-gssoil.gif</src>
         </file>
         <file>
             <action>copy</action>
@@ -179,6 +263,7 @@
             <src>ingrid-portal/decorations/layout/ingrid-popup/images/portlet-content.png</src>
         </file>
 
+
         <file>
             <action>copy</action>
             <src>ingrid-portal/decorations/portlet/ingrid-teaser/decorator.vm</src>
@@ -188,20 +273,132 @@
             <src>ingrid-portal/decorations/portlet/ingrid-teaser/images/icon-help.png</src>
         </file>
 
+
         <file>
             <action>copy</action>
-            <src>ingrid-portal/decorations/layout/ingrid-help/css/styles.css</src>
+            <src>ingrid-portal/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources_de.properties</src>
         </file>
         <file>
             <action>copy</action>
-            <src>ingrid-portal/decorations/layout/ingrid-help/images/icn_linkextern.gif</src>
+            <src>ingrid-portal/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources_en.properties</src>
         </file>
         <file>
             <action>copy</action>
-            <src>ingrid-portal/decorations/layout/ingrid-help/images/icn_linkintern.gif</src>
+            <src>ingrid-portal/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources.properties</src>
         </file>
 
-
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/AdminPortalResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/AdminPortalResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/AdminPortalResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchExtendedResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchExtendedResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchExtendedResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ContactNewsletterResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ContactNewsletterResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ContactNewsletterResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ContactResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ContactResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ContactResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/InfoPortletResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/InfoPortletResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/InfoPortletResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/MyPortalResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/MyPortalResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/MyPortalResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchResultResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchResultResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchResultResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchSimpleResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchSimpleResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/SearchSimpleResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ServiceSearchResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ServiceSearchResources_en.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ServiceSearchResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/images/icn_down.gif</src>
+        </file>
         <file>
             <action>copy</action>
             <src>ingrid-portal-apps/images/icn_linkextern.gif</src>
@@ -209,10 +406,6 @@
         <file>
             <action>copy</action>
             <src>ingrid-portal-apps/images/icn_linkintern.gif</src>
-        </file>
-        <file>
-            <action>copy</action>
-            <src>ingrid-portal-apps/images/ico_down_black.gif</src>
         </file>
     </files>
     <sql>

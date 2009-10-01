@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <help>
     <chapter>
-        <header>Hilfe zu PortalU</header>
+        <header>Hilfe zu GS Soil</header>
         <section help-key="index">
             <header>Hilfethemen</header>
             <content>
                 <ul>
                     <li>
-                        <a href="help.psml?hkey=about-1">Über PortalU</a>
+                        <a href="help.psml?hkey=about-1">Über GS Soil</a>
                     </li>
                     <li>
                         <a href="help.psml?hkey=search-1">Suche</a>
@@ -31,10 +31,10 @@
                         <a href="help.psml?hkey=rss-news-1">Aktuelles</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=ingrid-inform-1">PortalU informiert</a>
+                        <a href="help.psml?hkey=ingrid-inform-1">GS Soil informiert</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=myingrid-1">Mein PortalU</a>
+                        <a href="help.psml?hkey=myingrid-1">Mein GS Soil</a>
                     </li>
                     <li>
                         <a href="help.psml?hkey=ingrid-newsletter-1">Newsletter</a>
@@ -44,22 +44,22 @@
         </section>
     </chapter>
     <chapter>
-        <header>Über PortalU</header>
+        <header>Über GS Soil</header>
         <section help-key="about-1">
-            <header>Konzept und Aufgabe von PortalU</header>
+            <header>Konzept und Aufgabe von GS Soil</header>
             <content>
-                <p>PortalU, das Umweltportal Deutschland, bietet einen zentralen
+                <p>GS Soil, das Umweltportal Deutschland, bietet einen zentralen
                     Zugriff auf mehrere hunderttausend Internetseiten und
                     Datenbankeinträge von öffentlichen Institutionen und
                     Organisationen in Bund und Ländern. Mit einem Mix aus
                     aktuellen Nachrichten, Umweltmesswerten (z.B. aktuelle
                     Ozonkonzentration in der Luft), Hintergrundinformationen,
-                    und historischen Umweltereignissen richtet sich PortalU
+                    und historischen Umweltereignissen richtet sich GS Soil
                     sowohl an interessierte Laien als auch an Fachpublikum. Das
                     Informationsangebot wird kontinuierlich ausgebaut mit dem
                     Ziel, langfristig möglichst alle behördlichen Anbieter von
                     Umweltinformationen zu erfassen.</p>
-                <p>Bei der Konzeption von PortalU spielten die
+                <p>Bei der Konzeption von GS Soil spielten die
                     EU-Umweltinformationsrichtlinie von 2003 und die geplante
                     INSPIRE Richtlinie eine wichtige Rolle. Diese Richtlinien
                     setzen neue Maßstäbe für die öffentliche Verbreitung
@@ -68,7 +68,7 @@
                     Zukünftig sind wesentlich mehr Behörden und Organisationen
                     als bisher dazu verpflichtet, umweltrelevante Daten und
                     Informationen in einer klar verständlichen und einfach
-                    zugänglichen Form bereitzustellen. PortalU und die eigens
+                    zugänglichen Form bereitzustellen. GS Soil und die eigens
                     zum Aufbau des Portals entwickelte Software
                     &#8222;InGrid&#8220; wurden speziell als
                     Werkzeuge zur Unterstützung der Behörden bei der Umsetzung
@@ -76,16 +76,16 @@
             </content>
         </section>
         <section help-key="about-2">
-            <header>Die Betreiber von PortalU</header>
+            <header>Die Betreiber von GS Soil</header>
             <content>
                 <p>Als Nachfolgeprojekt des Umweltdatenkatalogs (UDK) und des
                     German Environmental Information Network (gein) wurde
-                    PortalU im Rahmen der Bund-Länder Verwaltungsvereinbarung
+                    GS Soil im Rahmen der Bund-Länder Verwaltungsvereinbarung
                     UDK/GEIN entwickelt. An der Verwaltungsvereinbarung sind
                     u.a. das Umweltbundesministerium (BMU) und die
-                    Umweltministerien von 15 Ländern beteiligt.  PortalU wird
+                    Umweltministerien von 15 Ländern beteiligt.  GS Soil wird
                     technisch und inhaltlich von der Koordinierungsstelle
-                    PortalU im Niedersächsischen Umweltministerium in
+                    GS Soil im Niedersächsischen Umweltministerium in
                     Hannover betreut.</p>
             </content>
         </section>
@@ -94,7 +94,7 @@
             <content>
                 <p>
                     <b>Suche:</b> Zentrale Funktion des Portals ist die
-                    PortalU-Suche (<a href="help.psml?hkey=search-1">Suche</a>)
+                    GS Soil-Suche (<a href="help.psml?hkey=search-1">Suche</a>)
                     mit deren Hilfe Webseiten und Datenbankeinträge über eine
                     herkömmliche Volltextsuche (<a
                         href="help.psml?hkey=search-1">Einfache Suche</a>), aber
@@ -105,9 +105,9 @@
                     <b>Karten:</b> Ein Kartenviewer bietet die Möglichkeit,
                     Raumbezüge für die Suche über interaktive Karten einzugeben
                     oder aber digitale Karten aus der Such-Ergebnisliste direkt
-                    in PortalU anzuzeigen.</p>
+                    in GS Soil anzuzeigen.</p>
                 <p>
-                    <b>Themenseiten:</b> Die PortalU Themenseiten  bieten einen
+                    <b>Themenseiten:</b> Die GS Soil Themenseiten  bieten einen
                     themenbezogenen Zugang zu ausgewählten, besonders
                     interessanten Informationen und Daten.</p>
                 <p>
@@ -119,7 +119,7 @@
                     Informationen über Veranstaltungen und aktuelle
                     Publikationen im Umweltbereich.</p>
                 <p>
-                    <b>Messwerte</b>: PortalU informiert Sie rund um die Uhr
+                    <b>Messwerte</b>: GS Soil informiert Sie rund um die Uhr
                     über den aktuellen Zustand Ihrer Umwelt.</p>
                 <p>
                     <b>Umweltchronik</b>: Wann trat das Kyoto-Protokoll in
@@ -128,32 +128,32 @@
             </content>
         </section>
         <section help-key="about-4">
-            <header>Informationsquellen in PortalU</header>
+            <header>Informationsquellen in GS Soil</header>
             <content>
-                <p>PortalU ist ein komfortables und benutzerfreudliches Tor zu
+                <p>GS Soil ist ein komfortables und benutzerfreudliches Tor zu
                     Umweltinformationen im Internet. Im Gegensatz zu den meisten
-                    Portalen und Suchmaschinen erfasst PortalU nicht nur
+                    Portalen und Suchmaschinen erfasst GS Soil nicht nur
                     Webseiten, Textdokumente und andere Internetformate, sondern
                     kann auch auf Datenbanken und Fachinformationssysteme
                     zugreifen, selbst wenn diese nicht online sind.</p>
             </content>
         </section>
         <section help-key="about-5">
-            <header>Bedingungen für Nutzung und Beteiligung an PortalU</header>
+            <header>Bedingungen für Nutzung und Beteiligung an GS Soil</header>
             <content>
-                <p>Der Kreis der Informationsanbieter in PortalU beschränkt sich
+                <p>Der Kreis der Informationsanbieter in GS Soil beschränkt sich
                     vorwiegend auf Behörden und behördennahen Organisationen in
                     Deutschland, wird aber kontinuierlich erweitert. Wenn Ihre
                     Organisation ebenfalls umweltrelevante Informationen über
-                    PortalU bereitstellen möchte wenden Sie sich bitte an die <a
+                    GS Soil bereitstellen möchte wenden Sie sich bitte an die <a
                         href="http://www.kst.portalu.de/"
-                        target="_new">Koordinierungsstelle PortalU</a>.</p>
+                        target="_new">Koordinierungsstelle GS Soil</a>.</p>
             </content>
         </section>
         <section help-key="about-6">
-            <header>InGrid &#8211; Die Software hinter PortalU</header>
+            <header>InGrid &#8211; Die Software hinter GS Soil</header>
             <content>
-                <p>Zur Umsetzung von PortalU wurde das Softwarepaket InGrid
+                <p>Zur Umsetzung von GS Soil wurde das Softwarepaket InGrid
                     entwickelt. InGrid setzt auf eine modulare und flexible
                     Systemarchitektur auf der Basis lizenzfreier OpenSource
                     Produkte. Dadurch wird es möglich, die technische Struktur
@@ -316,7 +316,7 @@
                         (Unterbegriffe) oder anders ausdrücken (Synonyme) lässt.
                         Thesauri werden z.B. zum Verschlagworten und Auffinden
                         von Dokumenten genutzt.</p>
-                    <p>PortalU verwendet den Umweltthesaurus
+                    <p>GS Soil verwendet den Umweltthesaurus
                         (UMTHES<sup>®</sup>) des Umweltbundesamtes in Dessau. Er
                         enthält mehr als 30.000 Fachbegriffe aus dem
                         Themengebiet &quot;Umwelt&quot;.</p>
@@ -417,13 +417,13 @@
         <section help-key="ext-search-spacial-1">
             <header>Raum</header>
             <content>
-                <p>PortalU analysiert über den <a
+                <p>GS Soil analysiert über den <a
                         href="http://www.semantic-network.de/"
                         target="_new">Semantic Network Service (SNS)</a> des
                     Umweltbundesamtes in Dessau die Web-Seiten der
                     angeschlossenen Server und ermittelt einen Raumbezug für
                     jede Seite. Bei der räumlichen Suche nach Webseiten wird in
-                    PortalU dieser Raumbezug genutzt. Die räumliche Suche ist
+                    GS Soil dieser Raumbezug genutzt. Die räumliche Suche ist
                     also nicht, wie in den meisten anderen Suchmaschinen, eine
                     Volltext-Suche nach räumlichen Begriffen.</p>
                 <p>Bei der räumlichen Suche in den angeschlossenen Datenbanken
@@ -506,9 +506,9 @@
                     zugeordnet sind, verglichen. Innerhalb der Datenbanken wird
                     direkt nach dem Suchrechteck gesucht.</p>
                 <p>Zur Orientierung und Spezifikation eines Suchrechtecks können
-                    Sie die Standard-Hintergrundkarten in PortalU nutzen oder
+                    Sie die Standard-Hintergrundkarten in GS Soil nutzen oder
                     aber eigene Hintergrundkarten über den Web-Mapping-Service
-                    (WMS) des PortalU hinzu laden.</p>
+                    (WMS) des GS Soil hinzu laden.</p>
             </content>
             <section help-key="ext-search-spacial-7">
                 <header>Aktive Kartendienste</header>
@@ -610,7 +610,7 @@
                         alt="*"/> Nach dem Klick auf diesen Button werden alle
                         bereits eingefügten Dienste angezeigt. Sie können sie
                         wieder aus der Auswahl (Aktive Kartendienste) entfernen.
-                        (Hinweis: Der WMS-Service von PortalU ist der
+                        (Hinweis: Der WMS-Service von GS Soil ist der
                         voreingestellte Standard-Service. Er kann nicht entfernt
                         werden und wird daher auch nicht angezeigt.)</p>
                     <p>
@@ -657,7 +657,7 @@
                         auswählen können, welche Ebene der Verwaltungseinheit
                         (Land, Regierungsbezirk, Kreis oder Gemeinde) ausgewählt
                         werden soll. Die auswählbaren Verwaltungseinheiten
-                        beziehen sich immer auf die Standard-Layer von PortalU (Verwaltungsgrenzen).</p>
+                        beziehen sich immer auf die Standard-Layer von GS Soil (Verwaltungsgrenzen).</p>
                     <p>Nach der Auswahl wird die selektierte Verwaltungseinheit
                         unterhalb der Karte angezeigt. Durch einen Klick auf den
                         Button &#8222;Zur Suche hinzufügen&#8220; wird
@@ -805,7 +805,7 @@
         <section help-key="ext-search-time-1">
             <header>Zeit</header>
             <content>
-                <p>PortalU ist in der Lage nach den Zeitbezügen der
+                <p>GS Soil ist in der Lage nach den Zeitbezügen der
                     angeschlossenen Systeme zu suchen. Hierzu werden einerseits
                     die Daten genutzt, die der <a
                         href="http://www.semantic-network.de/"
@@ -897,7 +897,7 @@
         <section help-key="ext-search-area-2">
             <header>Datenquellen</header>
             <content>
-                <p>An PortalU sind neben Web-Servern auch Metadaten- und
+                <p>An GS Soil sind neben Web-Servern auch Metadaten- und
                     Fachdatensysteme angeschlossen. Sie können wählen, ob Sie in
                     all diesen Systemen suchen wollen (Standard), oder ob Sie
                     ihre Suche gezielt auf eine oder mehrere Arten von
@@ -919,7 +919,7 @@
         <section help-key="ext-search-area-3">
             <header>Bund/Länder</header>
             <content>
-                <p>Die Datenangebote in PortalU stammen von Behörden und
+                <p>Die Datenangebote in GS Soil stammen von Behörden und
                     behördennahen Organisationen aus Bund und Ländern der
                     Bundesrepublik Deutschland. Sie können für Ihre Suche das
                     Angebot auf den Bund oder einzelne Länder einschränken. Eine
@@ -939,10 +939,10 @@
         <section help-key="search-history-1">
             <header>Suchhistorie</header>
             <content>
-                <p>PortalU speichert eine Historie Ihrer Suchanfragen. Neben
+                <p>GS Soil speichert eine Historie Ihrer Suchanfragen. Neben
                     dieser Historie, die automatisch für eine Sitzung mitgeführt
                     wird, können Sie als eingeloggter Nutzer (siehe <a
-                        href="help.psml?hkey=myingrid-1">Mein PortalU</a>) auch
+                        href="help.psml?hkey=myingrid-1">Mein GS Soil</a>) auch
                     Suchanfragen permanent speichern.</p>
                 <p>Beide Formen gespeicherter Suchanfragen können Sie über die
                     Funktion &#8222;Suchhistorie&#8220; erneut aufrufen.</p>
@@ -993,7 +993,7 @@
         <section help-key="search-settings-3">
             <header>Ähnliche Begriffe in die Suche einbeziehen</header>
             <content>
-                <p>PortalU führt nicht nur die bei Suchmaschinen übliche
+                <p>GS Soil führt nicht nur die bei Suchmaschinen übliche
                     Indexierung der Seiten durch, sondern lässt den Seiteninhalt
                     auch über den <a href="http://www.semantic-network.de/"
                         target="_new">Semantic Network Service (SNS)</a> des
@@ -1021,7 +1021,7 @@
                         die Option &#8222;Ähnliche Begriffe in die Suche
                         einbeziehen&#8220; an. Sie können diese
                         Einstellungen auch dauerhaft vornehmen (siehe <a
-                            href="help.psml?hkey=myingrid-1">Mein PortalU</a>).</li>
+                            href="help.psml?hkey=myingrid-1">Mein GS Soil</a>).</li>
                     <li>Vor einer Suche erweitern Sie Ihren Suchausdruck um
                         ähnliche Begriffe, indem Sie die die Funktionalität
                             &#8222;<a
@@ -1059,17 +1059,17 @@
                     können. Sie können im Suchbereich neben einem Land auch die
                     Bundesinformationen einstellen.</p>
                 <p>Sie können diese Einstellungen auch dauerhaft vornehmen
-                    (siehe <a href="help.psml?hkey=myingrid-1">Mein PortalU</a>).</p>
+                    (siehe <a href="help.psml?hkey=myingrid-1">Mein GS Soil</a>).</p>
             </content>
         </section>
         <section help-key="search-tipps-4">
             <header>Sie haben eine spezielle Suchanfrage, die sie nicht über die
                 erweiterte Suche formulieren können?</header>
             <content>
-                <p>PortalU erlaubt komplexe Suchanfragen  durchzuführen, die
+                <p>GS Soil erlaubt komplexe Suchanfragen  durchzuführen, die
                     über die Möglichkeiten der erweiterten Suche hinausgehen
                     (z.B. Gruppierung über Klammerung oder Ähnlichkeitssuchen
-                    usw.). Lesen Sie hierzu in der Hilfe zu PortalU den
+                    usw.). Lesen Sie hierzu in der Hilfe zu GS Soil den
                     Abschnitt &#8222;<a
                     href="help.psml?hkey=search-expert-1">Expertensuche</a>&#8220;
                     und geben Sie Ihren Suchausdruck in das Suchfeld ein.</p>
@@ -1179,7 +1179,7 @@
             <content>
                 <p>Nach dem Ausführen einer Suchanfrage haben die eingeloggten
                     Nutzer (siehe <a href="help.psml?hkey=myingrid-1">Mein
-                    PortalU</a>) die Möglichkeit den verwendeten Suchausdruck
+                    GS Soil</a>) die Möglichkeit den verwendeten Suchausdruck
                     dauerhaft zu speichern. Dies geschieht über die Funktion
                     &#8222;Suche speichern&#8220;.</p>
                 <p>Hinweis: Die zuletzt verwendeten Suchanfragen sind auch ohne
@@ -1322,14 +1322,14 @@
         <section help-key="search-expert-9">
             <header>Suche in speziellen Feldern</header>
             <content>
-                <p>Der PortalU Volltextindex gliedert sich in verschiedene
-                    Felder. Alle in PortalU verwendeten Felder lassen sich
+                <p>Der GS Soil Volltextindex gliedert sich in verschiedene
+                    Felder. Alle in GS Soil verwendeten Felder lassen sich
                     gezielt einzeln durchsuchen. Dazu wird die Syntax
                     &#8218;Feldname:Wert&#8217; verwandt.</p>
                 <p>Beispiel: &#8218;location:Berlin&#8217; (Es wird nach
                     Dokumenten gesucht, die den Raumbezug
                     &#8218;Berlin&#8217; haben.)</p>
-                <p>Folgende Felder sind in PortalU durchsuchbar:</p>
+                <p>Folgende Felder sind in GS Soil durchsuchbar:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1376,7 +1376,7 @@
         <section help-key="search-expert-11">
             <header>Sonderzeichen</header>
             <content>
-                <p>Die folgenden Zeichen haben im Suchausdruck von PortalU eine
+                <p>Die folgenden Zeichen haben im Suchausdruck von GS Soil eine
                     spezielle Bedeutung (z.B. in Form von Operatoren):</p>
                 <p>+ - &amp;&amp; || ! ( ) { } [ ] ^ &quot; ~ * ? : \</p>
                 <p>Sollen sie dennoch als einfache Zeichen innerhalb eines
@@ -1425,7 +1425,7 @@
                     Originalseite geführt. In den Fällen, in denen eine Karte
                     hinterlegt ist, bekommen sie einen Link &#8222;Zeige
                     Karte&#8220; angeboten, über den Sie die Karte in der
-                    Kartenansicht von PortalU öffnen können.</p>
+                    Kartenansicht von GS Soil öffnen können.</p>
             </content>
         </section>
         <section help-key="search-results-3">
@@ -1433,7 +1433,7 @@
             <content>
                 <p>Neben den in der Hauptergebnisliste eingebunden Meta- und
                     Fachinformationssystemen werden auch weitere
-                    Umweltinformationssysteme über PortalU abgefragt. Die
+                    Umweltinformationssysteme über GS Soil abgefragt. Die
                     Schnittstellen dieser Systeme erlauben keine Einbindung der
                     Suchergebnisse in die gewichtete Hauptergebnisliste. Die
                     Suchergebnisse werden daher in einer getrennten Liste nach
@@ -1447,7 +1447,7 @@
         <section help-key="search-results-4">
             <header>Ähnliche Begriffe</header>
             <content>
-                <p>PortalU bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
+                <p>GS Soil bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
                     ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen
                     eingegebene Suchausdruck durch den <a
                         href="http://www.semantic-network.de/"
@@ -1508,7 +1508,7 @@
             <header>Umweltthemen</header>
             <content>
                 <p>Die Informationen, die als &#8222;Umweltthemen&#8220;
-                    in PortalU bereitgestellt werden, sind Web-Seiten und
+                    in GS Soil bereitgestellt werden, sind Web-Seiten und
                     UDK-Metadatenobjekte die für ein bestimmtes Umweltthema
                     besonders relevant und interessant sind . Neben dem
                     eigentlichen Thema (wie z.B. Wasser oder Abfall) können Sie
@@ -1833,7 +1833,7 @@
                         alt="*"/> Nach dem Klick auf diesen Button werden alle
                         bereits eingefügten Dienste angezeigt. Sie können sie
                         wieder aus der Auswahl (Aktive Kartendienste) entfernen.
-                        (Hinweis: Der WMS-Service von PortalU ist der
+                        (Hinweis: Der WMS-Service von GS Soil ist der
                         voreingestellte Standard-Service. Er kann nicht entfernt
                         werden und wird daher auch nicht angezeigt.)</p>
                     <p>
@@ -2009,23 +2009,23 @@
         </section>
     </chapter>
     <chapter>
-        <header>PortalU informiert</header>
+        <header>GS Soil informiert</header>
         <section help-key="ingrid-inform-1">
-            <header>PortalU informiert</header>
+            <header>GS Soil informiert</header>
             <content>
                 <p>In diesem Bereich finden Sie Meldungen, die durch den
-                    Betreiber von PortalU, die <a href="http://www.kst.portalu.de/"
-                        target="_new">Koordinierungsstelle PortalU</a>,
+                    Betreiber von GS Soil, die <a href="http://www.kst.portalu.de/"
+                        target="_new">Koordinierungsstelle GS Soil</a>,
                     bereitgestellt werden.</p>
             </content>
         </section>
     </chapter>
     <chapter>
-        <header>Mein PortalU</header>
+        <header>Mein GS Soil</header>
         <section help-key="myingrid-1">
-            <header>Mein PortalU</header>
+            <header>Mein GS Soil</header>
             <content>
-                <p>PortalU bietet Ihnen die Möglichkeit, eigene Einstellungen
+                <p>GS Soil bietet Ihnen die Möglichkeit, eigene Einstellungen
                     dauerhaft vorzunehmen. Sie können darüber:</p>
                 <ul>
                     <li>die Startseite an Ihre Bedürfnisse anpassen</li>
@@ -2056,8 +2056,8 @@
                     <p>Alle Angaben werden strikt vertraulich behandelt und
                         dienen nur der anonymisierten statistischen Auswertung.</p>
                     <p>Wenn Sie immer die neusten Nachrichten aus dem Umfeld von
-                        PortalU erhalten möchten, so bestellen Sie den <a
-                        href="#_Newsletter">PortalU-Newsletter</a>, indem Sie am
+                        GS Soil erhalten möchten, so bestellen Sie den <a
+                        href="#_Newsletter">GS Soil-Newsletter</a>, indem Sie am
                         Ende des Formulars &#8222;ich möchte den Newsletter
                         abonnieren&#8220; ankreuzen (Hinweis: Sie können ihn
                         jederzeit wieder abbestellen).</p>
@@ -2105,8 +2105,8 @@
                 <p>Alle Angaben werden strikt vertraulich behandelt und dienen
                     nur der anonymisierten statistischen Auswertung.</p>
                 <p>Wenn Sie immer die neuesten Nachrichten aus dem Umfeld von
-                    PortalU erhalten möchten, können Sie den <a
-                    href="help.psml?hkey=ingrid-newsletter-1">PortalU-Newsletter</a>
+                    GS Soil erhalten möchten, können Sie den <a
+                    href="help.psml?hkey=ingrid-newsletter-1">GS Soil-Newsletter</a>
                     abbonieren. Kreuzen Sie einfach am Ende des Formulars
                     &#8222;Ich möchte den Newsletter abonnieren&#8220;
                     an (Hinweis: Sie können ihn jederzeit wieder abbestellen).</p>
@@ -2151,7 +2151,7 @@
             <section help-key="myingrid-11">
                 <header>Filterung nach Typen und Datenquellen</header>
                 <content>
-                    <p>An PortalU sind neben den üblichen Web-Servern auch
+                    <p>An GS Soil sind neben den üblichen Web-Servern auch
                         Metadaten- und Fachdatensysteme angeschlossen. Sie
                         können nun wählen, ob Sie in allen Datenquellen suchen
                         wollen (Standard) oder ob Sie ihre Suche gezielt auf
@@ -2188,7 +2188,7 @@
                     <p>
                         <b>Ähnliche Begriffe in die Suche einbeziehen</b>
                     </p>
-                    <p>PortalU führt nicht nur die bei Suchmaschinen übliche
+                    <p>GS Soil führt nicht nur die bei Suchmaschinen übliche
                         Indizierung  der Seiten durch, sondern lässt den
                         Seiteninhalt auch über den <a
                             href="http://www.semantic-network.de/"
@@ -2214,7 +2214,7 @@
             <header>Logout</header>
             <content>
                 <p>Über das Logout verlassen Sie den personalisierten Bereich
-                    und kommen zurück auf die Startseite von PortalU mit seinen Standard-Voreinstellungen.</p>
+                    und kommen zurück auf die Startseite von GS Soil mit seinen Standard-Voreinstellungen.</p>
             </content>
         </section>
     </chapter>
@@ -2224,7 +2224,7 @@
             <header>Newsletter</header>
             <content>
                 <p>Sie können sich über Neuigkeiten und aktuelle Entwicklungen
-                    im Umfeld von PortalU über unseren Newsletter per e-mail
+                    im Umfeld von GS Soil über unseren Newsletter per e-mail
                     informieren lassen. Der Bezug des Newsletters ist kostenlos.
                     Ihre e-mail Adresse wird nicht weitergegeben oder zu anderen
                     Zwecken als zur Zustellung des Newsletters genutzt.</p>
@@ -2236,16 +2236,16 @@
                 <p>Füllen Sie bitte die Felder des Anmeldeformulars aus und
                     senden sie die Angaben ab. Alle mit Sternchen *
                     gekennzeichneten Felder sind Pflichtfelder.</p>
-                <p>Ab der nächsten Ausgabe erhalten Sie dann den PortalU-Newsletter.</p>
+                <p>Ab der nächsten Ausgabe erhalten Sie dann den GS Soil-Newsletter.</p>
             </content>
         </section>
         <section help-key="ingrid-newsletter-3">
             <header>Newsletter abbestellen</header>
             <content>
-                <p>Wenn Sie kein Interesse mehr an dem PortalU-Newsletter haben,
+                <p>Wenn Sie kein Interesse mehr an dem GS Soil-Newsletter haben,
                     tragen Sie bitte Ihre Email-Adresse in das Formular ein und
                     senden es ab. Sie werden dann keine weiteren
-                    PortalU-Newsletter mehr erhalten.</p>
+                    GS Soil-Newsletter mehr erhalten.</p>
             </content>
         </section>
     </chapter>

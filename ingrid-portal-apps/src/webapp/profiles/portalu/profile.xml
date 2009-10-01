@@ -164,6 +164,8 @@
             <action>copy</action>
             <src>ingrid-portal-apps/WEB-INF/classes/quartz_jobs.xml</src>
         </file>
+
+
         <file>
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid/images/01_motiv_blank.gif</src>
@@ -322,13 +324,24 @@
         </file>
         <file>
             <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/favicon.ico</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/css/styles.css</src>
+        </file>        
+        <file>
+            <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid/decorator-macros.vm</src>
         </file>
         <file>
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid/footer.vm</src>
         </file>
-        
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/header.vm</src>
+        </file>
         
 
         <file>
@@ -411,6 +424,8 @@
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid-help/header.vm</src>
         </file>
+
+
         <file>
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid-popup/footer.vm</src>
@@ -419,8 +434,6 @@
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid-popup/header.vm</src>
         </file>
-
-
         <file>
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid-popup/css/styles.css</src>
@@ -517,15 +530,6 @@
 
         <file>
             <action>copy</action>
-            <src>ingrid-portal/decorations/layout/ingrid/images/favicon.ico</src>
-        </file>
-        <file>
-            <action>copy</action>
-            <src>ingrid-portal/decorations/layout/ingrid/css/styles.css</src>
-        </file>
-        
-        <file>
-            <action>copy</action>
             <src>ingrid-portal/decorations/portlet/ingrid-teaser/decorator.vm</src>
         </file>
 
@@ -541,6 +545,14 @@
         <file>
             <action>copy</action>
             <src>ingrid-portal/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/AdminPortalResources_de.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/AdminPortalResources_en.properties</src>
         </file>
         <file>
             <action>copy</action>
