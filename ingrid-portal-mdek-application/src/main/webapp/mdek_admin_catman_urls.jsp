@@ -31,6 +31,7 @@ scriptScope.startUrlsJob = function() {
 			setTimeout("refreshUrlProcessInfo();", 2000);
 		},
 		errorHandler: function(msg, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
 		}
@@ -40,6 +41,7 @@ scriptScope.startUrlsJob = function() {
 scriptScope.cancelUrlsJob = function() {
 	CatalogManagementService.stopUrlValidatorJob({
 		errorHandler: function(msg, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
 		}
@@ -75,6 +77,7 @@ function replaceUrlDef(sourceUrls, targetUrl) {
 			def.callback();
 		},
 		errorHandler: function(msg, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
 			def.errback();
@@ -94,6 +97,7 @@ function updateDBUrlJobInfoDef(sourceUrls, targetUrl) {
 			def.callback();
 		},
 		errorHandler: function(msg, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
 			def.errback();
@@ -130,9 +134,12 @@ refreshUrlProcessInfo = function() {
 			}
 		},
 		errorHandler: function(msg, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+msg);
 			// If there's a timeout try again
-			setTimeout("refreshUrlProcessInfo();", 3000);
+			if (err.message != "USER_LOGIN_ERROR") {
+			    setTimeout("refreshUrlProcessInfo();", 3000);
+			}
 		}
 	});
 }

@@ -145,6 +145,8 @@ scriptScope.deleteUser = function() {
 				hideLoadingZone();
 				if (errMsg.indexOf("USER_HAS_WRONG_ROLE") != -1 || errMsg.indexOf("USER_HIERARCHY_WRONG") != -1) {
 					dialog.show(message.get("general.error"), message.get("dialog.admin.users.noDeletePermissionError"), dialog.WARNING);				
+				} else {
+				    displayErrorMessage(err);
 				}
 
 				dojo.debug(errMsg);
@@ -478,6 +480,7 @@ function getAllGroups(includeCatAdminGroup) {
 		},
 		errorHandler: function(errMsg, err) {
 			hideLoadingZone();
+			displayErrorMessage(err);
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 			deferred.errback(err);			
@@ -498,6 +501,7 @@ function getUserDataForAddress(adrUuid) {
 		},
 		errorHandler: function(errMsg, err) {
 			hideLoadingZone();
+			displayErrorMessage(err);
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 			deferred.errback(err);
@@ -518,6 +522,7 @@ function getAddressData(adrUuid) {
 		},
 		errorHandler: function(errMsg, err) {
 			hideLoadingZone();
+			displayErrorMessage(err);
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 			deferred.errback(err);
@@ -538,6 +543,7 @@ function getCatalogAdmin() {
 		},
 		errorHandler: function(errMsg, err) {
 			hideLoadingZone();
+			displayErrorMessage(err);
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 			deferred.errback(err);

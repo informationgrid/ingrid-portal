@@ -14,8 +14,8 @@ _container_.addOnLoad(function() {
 
 function initTree() {
 	// Load initial first level of the tree from the server
-	TreeService.getSubTree(null, null, 
-		function (rootNodeList) {
+	TreeService.getSubTree(null, null, { 
+		callback: function (rootNodeList) {
 			dojo.lang.forEach(rootNodeList, function(rootNode){
 				rootNode.title = dojo.string.escape("html", rootNode.title);
 				rootNode.uuid = rootNode.id;
@@ -27,6 +27,12 @@ function initTree() {
 			addressDeleteTree.setChildren([rootNodeList[1]]);
 			var addressReplaceTree = dojo.widget.byId("treeAddressNew");
 			addressReplaceTree.setChildren([rootNodeList[1]]);
+	      },
+	    errorHandler: function(errMsg, err) {
+            displayErrorMessage(err);
+            dojo.debug(errMsg);
+            dojo.debugShallow(err);
+        }
 	});
 
 	// Function to load children of the node from server
@@ -246,6 +252,7 @@ function createDetailedAddressInformationDef(addressUuid) {
 	});
 
 	defList.addErrback(function(err) {
+	    displayErrorMessage(err);
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
 		def.errback(err);
@@ -261,6 +268,7 @@ function getAddressDetailsDef(addressUuid) {
 			def.callback(addressDetails);
 		},
 		errorHandler: function(message, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+message);
 			dojo.debugShallow(err);
 			def.errback(err);
@@ -283,6 +291,7 @@ function getUsersWithWritePermissionDef(addressUuid) {
 			def.callback(list);
 		},
 		errorHandler: function(message, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+message);
 			dojo.debugShallow(err);
 			def.errback(err);
@@ -300,6 +309,7 @@ function getObjectsWithInfoAddressDef(adrUuid) {
 			def.callback(objects);
 		},
 		errorHandler: function(message, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+message);
 			dojo.debugShallow(err);
 			def.errback(err);
@@ -318,6 +328,7 @@ function getObjectsWithResponsibleUserDef(adrUuid) {
 			def.callback(objects);
 		},
 		errorHandler: function(message, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+message);
 			dojo.debugShallow(err);
 			def.errback(err);
@@ -336,6 +347,7 @@ function getAddressesWithResponsibleUser(adrUuid) {
 			def.callback(objects);
 		},
 		errorHandler: function(message, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+message);
 			dojo.debugShallow(err);
 			def.errback(err);
@@ -368,6 +380,7 @@ scriptScope.openDownloadResultAsCSVDialog = function() {
 				dwr.engine.openInDownload(data);
 			},
 			errorHandler: function(errMsg, err) {
+			    displayErrorMessage(err);
 				dojo.debug("Error: "+errMsg);
 				dojo.debugShallow(err);
 			}
@@ -434,6 +447,7 @@ scriptScope.replaceAddress = function() {
 		});
 		def.addErrback(function(err) {
 			if (err.message != "CANCEL") {
+			    displayErrorMessage(err);
 				dojo.debug("Error: " + err);
 				dojo.debugShallow(err);
 			}

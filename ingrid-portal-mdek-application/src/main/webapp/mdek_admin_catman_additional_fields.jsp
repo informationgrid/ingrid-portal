@@ -17,6 +17,7 @@ _container_.addOnLoad(function() {
 			updateAdditionalFields(additionalFieldList);
 		},
 		errorHandler: function(msg, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
 		}
@@ -93,6 +94,7 @@ function storeAdditionalFieldsDef(additionalFields) {
 			def.callback(res);
 		},
 		errorHandler: function(msg, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
 			def.errback();

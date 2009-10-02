@@ -144,9 +144,12 @@ refreshExportProcessInfo = function() {
 			}
 		},
 		errorHandler: function(message, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+ message);
 			// If there's a timeout try again
-			setTimeout("refreshExportProcessInfo()", 2000);
+			if (err.message != "USER_LOGIN_ERROR") {
+			    setTimeout("refreshExportProcessInfo()", 2000);
+			}
 		}
 	});
 }
@@ -257,6 +260,7 @@ scriptScope.showJobException = function() {
 	    	dialog.show(message.get("general.error"), UtilGeneral.getStackTrace(exportInfo.exception), dialog.INFO, null, 800, 600);
 		},
 		errorHandler: function(message, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+ message);
 		}
 	});

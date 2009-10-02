@@ -31,6 +31,8 @@ var importServiceCallback = {
 		hideLoadingZone();
 		if (msg.indexOf("USER_HAS_RUNNING_JOBS") != -1) {
 			dialog.show(message.get("general.error"), message.get("operation.error.userHasRunningJobs"), dialog.WARNING);
+		} else {
+		    displayErrorMessage(err);
 		}
 	}
 }
@@ -113,6 +115,7 @@ scriptScope.showJobException = function() {
 	    	dialog.show(message.get("general.error"), UtilGeneral.getStackTrace(importInfo.exception), dialog.INFO, null, 800, 600);
 		},
 		errorHandler: function(message, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+ message);
 		}
 	});
@@ -218,9 +221,12 @@ refreshImportProcessInfo = function() {
 			}
 		},
 		errorHandler: function(message, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+ message);
 			// If there's a timeout try again
-			setTimeout("refreshImportProcessInfo()", 2000);
+			if (err.message != "USER_LOGIN_ERROR") {
+			    setTimeout("refreshImportProcessInfo()", 2000);
+			}
 		}
 	});
 }

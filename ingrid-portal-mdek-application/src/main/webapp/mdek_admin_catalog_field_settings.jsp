@@ -87,6 +87,7 @@ function getGuiIdList() {
 			deferred.callback(sysGuiList);
 		},
 		errorHandler: function(errMsg, err) {
+		    displayErrorMessage(err);
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 			deferred.errback(err);			
@@ -108,6 +109,7 @@ function storeGuiIdList(guiIdList, refetchAfterStore) {
 		},
 		errorHandler: function(errMsg, err) {
 			hideLoadingZone();
+			displayErrorMessage(err);
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 			deferred.errback(err);			

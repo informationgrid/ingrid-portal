@@ -27,6 +27,7 @@ scriptScope.startSNSUpdateJob = function() {
 			dialog.show(message.get("general.hint"), message.get("dialog.admin.catalog.management.searchTerms.jobStartHint"), dialog.INFO);
 		},
 		errorHandler: function(errMsg, err) {
+		    displayErrorMessage(err);
 			dojo.debug("error: " + errMsg);
 			dojo.debugShallow(err);
 		}
@@ -39,6 +40,7 @@ scriptScope.cancelSNSUpdateJob = function() {
 			dojo.debug("Job stopped.");
 		},
 		errorHandler: function(errMsg, err) {
+		    displayErrorMessage(err);
 			dojo.debug("error: " + errMsg);
 			dojo.debugShallow(err);
 		}
@@ -55,9 +57,12 @@ refreshSNSUpdateProcessInfo = function() {
 			}
 		},
 		errorHandler: function(message, err) {
+		    displayErrorMessage(err);
 			console.log("Error: "+ message);
 			// If there's a timeout try again
-			setTimeout("refreshSNSUpdateProcessInfo()", 1000);
+			if (err.message != "USER_LOGIN_ERROR") {
+			    setTimeout("refreshSNSUpdateProcessInfo()", 1000);
+			}
 		}
 	});
 };

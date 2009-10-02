@@ -34,6 +34,7 @@ scriptScope.displayPermissionsForObject = function(event) {
 			}
 		},
 		errorHandler: function(errMsg, err) {
+		    displayErrorMessage(err);
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 		}
@@ -63,6 +64,7 @@ scriptScope.displayPermissionsForAddress = function(event) {
 			}
 		},
 		errorHandler: function(errMsg, err) {
+		    displayErrorMessage(err);
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 		}

@@ -69,7 +69,8 @@ function initSysLists() {
 			def.callback();
 		},
 		errorHandler:function(mes){
-//			UtilDWR.exitLoadingState();
+            //UtilDWR.exitLoadingState();
+            //displayErrorMessage(err);
 			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
 			dojo.debug("Error: "+mes);
 			def.errback(mes);

@@ -61,6 +61,7 @@ function initCodelistSelect() {
 		selectWidget.dataProvider.setData(selectWidgetData);
 	});
 	def.addErrback(function(error) {
+	    displayErrorMessage(error);
 		dojo.debug("Error: " + error);
 		dojo.debugShallow(error);
 	});
@@ -148,6 +149,7 @@ function getAllSysListIdsDef() {
 		},
 		errorHandler: function(msg, err) {
 			hideLoadingZone();
+			displayErrorMessage(err);
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
 			def.errback(err);
@@ -169,6 +171,7 @@ function getSysListDef(listId, languageCode) {
 		},
 		errorHandler: function(msg, err) {
 			hideLoadingZone();
+			displayErrorMessage(err);
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
 			def.errback(err);
@@ -379,6 +382,7 @@ function storeSysListDef(listId, maintainable, defaultIndex, entryIds, entriesGe
 			def.callback(res);
 		},
 		errorHandler: function(msg, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
 			def.errback();
@@ -486,6 +490,7 @@ function getFreeEntriesDef(mdekListName) {
 		},
 		errorHandler: function(msg, err) {
 			hideLoadingZone();
+			displayErrorMessage(err);
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
 			def.errback(err);
@@ -521,6 +526,7 @@ scriptScope.addFreeEntryToSysList = function() {
 	
 		def.addErrback(function(err) {
 			if (err.message != "CANCEL") {
+			    displayErrorMessage(err);
 				dojo.debug("Error: " + err);
 				dojo.debugShallow(err);
 			}
@@ -563,6 +569,7 @@ scriptScope.addAllFreeEntriesToSysList = function() {
 
 		def.addErrback(function(err) {
 			if (err.message != "CANCEL") {
+			    displayErrorMessage(err);
 				dojo.debug("Error: " + err);
 				dojo.debugShallow(err);
 			}
@@ -660,6 +667,7 @@ function replaceFreeEntryWithSysListEntryDef(freeEntry, sysListEntryId, sysListE
 			def.callback();
 		},
 		errorHandler: function(msg, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
 			def.errback(err);
@@ -699,6 +707,7 @@ scriptScope.replaceFreeEntryWithSysListEntry = function() {
 
 		def.addErrback(function(err) {
 			if (err.message != "CANCEL") {
+			    displayErrorMessage(err);
 				dojo.debug("Error: " + err);
 				dojo.debugShallow(err);
 			}
@@ -743,6 +752,7 @@ function saveChangesFreeEntryDef() {
 			def.callback();
 		});
 		sysListDef.addErrback(function(err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: " + err);
 			dojo.debugShallow(err);
 			def.errback(err);
@@ -766,6 +776,7 @@ scriptScope.startReindexJob = function() {
 				refreshReindexProcessInfo();
 
 			} else {
+			    displayErrorMessage(err);
 				dojo.debug("Error: " + err);
 			}
 		}
@@ -784,9 +795,12 @@ refreshReindexProcessInfo = function() {
 			}
 		},
 		errorHandler: function(message, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+ message);
 			// If there's a timeout try again
-			setTimeout("refreshReindexProcessInfo()", 1000);
+			if (err.message != "USER_LOGIN_ERROR") {
+			    setTimeout("refreshReindexProcessInfo()", 1000);
+			}
 		}
 	});
 }
@@ -879,6 +893,7 @@ scriptScope.exportCodelists = function() {
 			dwr.engine.openInDownload(exportFile);
 		},
 		errorHandler: function(errMsg, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: " + errMsg);
 			dojo.debugShallow(err);
 		}

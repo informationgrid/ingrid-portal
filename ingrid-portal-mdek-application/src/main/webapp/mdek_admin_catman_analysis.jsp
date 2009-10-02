@@ -22,6 +22,7 @@ scriptScope.startAnalysisJob = function() {
 
 
 	def.addErrback(function(err) {
+	    displayErrorMessage(err);
 		dojo.debug("Error: "+err);
 		dojo.debugShallow(err);
 	});
@@ -62,6 +63,7 @@ function analyzeDef() {
 			def.callback(result);
 		},
 		errorHandler: function(error) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+error);
 			def.errback(error);
 		}

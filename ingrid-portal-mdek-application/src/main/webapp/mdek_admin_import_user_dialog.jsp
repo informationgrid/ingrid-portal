@@ -33,6 +33,7 @@ function initUserList() {
 			dojo.widget.byId("userList").dataProvider.setData(list);
 		},
 		errorHandler: function(errMsg, err) {
+		    displayErrorMessage(err);
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 		}

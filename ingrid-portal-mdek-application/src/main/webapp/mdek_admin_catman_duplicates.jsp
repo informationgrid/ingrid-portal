@@ -45,6 +45,7 @@ function selectObjectInTreeByUuid(uuid) {
 			def.addCallback(selectNode);
 		},
 		errorHandler: function(msg, err) {
+		    displayErrorMessage(err);
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
 			def.errback();
@@ -156,6 +157,7 @@ function getDuplicatesDef() {
 		},
 		errorHandler: function(msg, err) {
 			hideLoadingZone();
+			displayErrorMessage(err);
 			dojo.debug("Error: "+msg);
 			dojo.debugShallow(err);
 			def.errback();

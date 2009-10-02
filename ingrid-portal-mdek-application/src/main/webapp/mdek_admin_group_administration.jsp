@@ -53,6 +53,7 @@ function deleteGroup(group) {
 			},
 			errorHandler: function(errMsg, err) {
 				hideLoadingZone();
+				displayErrorMessage(err);
 				dojo.debug(errMsg);
 				displayDeleteGroupError(err);
 				def.errback();
@@ -435,6 +436,7 @@ function getAllGroups() {
 		},
 		errorHandler: function(errMsg, err) {
 			hideLoadingZone();
+			displayErrorMessage(err);
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 			deferred.errback(err);			
@@ -588,6 +590,7 @@ function getGroupDetails(groupName) {
 		},
 		errorHandler: function(errMsg, err) {
 			hideLoadingZone();
+			displayErrorMessage(err);
 			dojo.debug(errMsg);
 			dojo.debugShallow(err);
 			deferred.errback(err);
