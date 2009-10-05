@@ -80,7 +80,7 @@ $contactIntroPostEmail
 			
 		<p>
             <label class="float_left col2left_incr"><br></label>
-			<input style="margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:90%; line-height: 130%; font-weight:bold; border: solid 1px #000000; background-color: #176798; cursor: pointer;" type="submit" name="doRefresh" value="$MESSAGES.getString('common.form.button.reload')" />	
+			<input class="btn" style="font-size:90%;" type="submit" name="doRefresh" value="$MESSAGES.getString('common.form.button.reload')" />	
 		</p>
 		$action.setParameter("doRefresh",  "Refresh")
     	<p>
