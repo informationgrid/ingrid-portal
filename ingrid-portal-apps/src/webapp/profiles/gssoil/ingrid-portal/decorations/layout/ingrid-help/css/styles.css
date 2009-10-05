@@ -291,7 +291,7 @@ div.tabs ul li { padding: 2px 0px 2px 0; margin: 0px 2px 0px 0px; border: 0; flo
 div.tabs ul li a.selected,
 div.tabs ul li a.selected:link, 
 div.tabs ul li a.selected:visited 
-  { position:relative; top: -2px; text-decoration:none; color:#383028; background-color:#b4a497; margin:0; padding:3px 7px 5px 5px; border-bottom: solid #FFFFFF 0px; }  
+  { position:relative; top: -2px; text-decoration:none; color:#FFFFFF; background-color:#8D8078; margin:0; padding:3px 7px 5px 7px; border-bottom: solid #FFFFFF 0px; }  
 
 /* Commented Backslash Hack hides rule from IE5-Mac \*/
 div.tabs ul li a {float:none;}
@@ -300,26 +300,25 @@ div.tabs ul li a {float:none;}
 div.tabs ul li a,  
 div.tabs ul li a:link, 
 div.tabs ul li a:visited 
- { text-decoration:none; color:#8D8078; background-color: #EBE6DC; margin-right:7px; padding:3px 7px 5px 7px; border-bottom:0px; margin:0; font-size: 95%;}  
-/* { text-decoration:none; color:#FFFFFF; background-color: #99471f; margin-right:7px; padding:3px 7px 5px 7px; border-bottom:0px; margin:0; font-size: 95%;} */ 
+ { text-decoration:none; color:#FFFFFF; background-color: #CC7A52; margin-right:7px; padding:3px 7px 5px 7px; border-bottom:0px; margin:0; font-size: 95%;}  
 
 div.tabs ul li a:hover,
 div.tabs ul li a:active, 
-div.tabs ul li a:focus { color:#383028; text-decoration:none; background-color:#cc7a52; padding:3px 7px 5px 7px; border-bottom: solid #383028 0px; margin:0; font-size: 95%;}
+div.tabs ul li a:focus { color:#FFFFFF; text-decoration:none; background-color:#8D8078; padding:3px 7px 5px 7px; border-bottom: solid #383028 0px; margin:0; font-size: 95%;}
 
 /* TAB MENU, EXTENDED SEARCH */
 
-div.tabmenu {position:relative; background-color:#b4a497; padding: 6px 0px 6px 0px; width:100%; margin:1px 0px 1px 0px;font-size:100%;z-index:12;}
-div.tabmenu ul { list-style:none; padding: 0px 7px 0px 6px; margin:0; font-size:80%; line-height:130%; color:#383028; }
+div.tabmenu {position:relative; background-color:#8D8078; padding: 6px 0px 6px 0px; width:100%; margin:1px 0px 1px 0px;font-size:100%;z-index:12;}
+div.tabmenu ul { list-style:none; padding: 0px 7px 0px 6px; margin:0; font-size:80%; line-height:130%; color:#FFFFFF; }
 div.tabmenu ul li { display:inline; }
 
-div.tabmenu ul li a.selected { text-decoration:none; color:#383028; font-weight:bold; }
+div.tabmenu ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:bold; }
 div.tabmenu ul li a,
 div.tabmenu ul li a:link,
 div.tabmenu ul li a:visited,
-div.tabmenu ul li a:active { text-decoration:none; color:#383028; }  
+div.tabmenu ul li a:active { text-decoration:none; color:#FFFFFF; }  
 div.tabmenu ul li a:hover, 
-div.tabmenu ul li a:focus { color:#383028; text-decoration:underline;}
+div.tabmenu ul li a:focus { color:#FFFFFF; text-decoration:underline;}
 
 
 /* SEARCH DETAILS */
@@ -416,7 +415,7 @@ div.formbody .spacer_search_form {margin-top: 15px}
 .col2left_incr { width:14em; }
 .col2right { width:15em; }
 
-div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px; border: 1px solid #e5dfd3; background-color: #f0ede7; }
+div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px; border: 1px solid #e5dfd3; background-color: #ebe6dc; }
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:75%; }
 
 input.btn { margin-top:0px; padding: 3px 10px 3px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border-bottom: solid 1px #99471f; border-top: solid 1px #cc7a52; border-right: solid 1px #cc7a52; border-left: solid 1px #cc7a52; background-color: #99471f; cursor: pointer; background-image: url("../images/button-bg.png");}

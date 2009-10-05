@@ -288,7 +288,7 @@ div.tabs ul li { padding: 2px 0px 2px 0; margin: 0px 2px 0px 0px; border: 0; flo
 div.tabs ul li a.selected,
 div.tabs ul li a.selected:link, 
 div.tabs ul li a.selected:visited 
-  { position:relative; top: -2px; text-decoration:none; color:#111111; background-color:#DDE9BD; margin:0; padding:3px 7px 5px 5px; border-bottom: solid #FFFFFF 0px; }  
+  { position:relative; top: -2px; text-decoration:none; color:#111111; background-color:#DDE9BD; margin:0; padding:3px 7px 5px 7px; border-bottom: solid #FFFFFF 0px; }  
 
 /* Commented Backslash Hack hides rule from IE5-Mac \*/
 div.tabs ul li a {float:none;}
