@@ -4,9 +4,8 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>WMS</title>
-  <metadata name="title" xml:lang="en">WMS</metadata>
-
+  <title>ingrid.page.admin.wms</title>
+  
   <fragment id="admin-wms" type="layout" name="jetspeed-layouts::IngridOneColumn">
     <fragment id="admin-wms-0" type="portlet" name="ingrid-portal-apps::AdminWMSPortlet">
       <property layout="OneColumn" name="row" value="0" />

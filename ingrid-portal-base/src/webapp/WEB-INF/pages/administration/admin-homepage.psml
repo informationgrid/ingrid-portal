@@ -4,9 +4,8 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Startseite</title>
-  <metadata name="title" xml:lang="en">Homepage</metadata>
-
+  <title>ingrid.page.admin.homepage</title>
+  
   <fragment id="admin-homepage" type="layout" name="jetspeed-layouts::IngridOneColumn">
     <fragment id="admin-homepage-0" type="portlet" name="ingrid-portal-apps::AdminHomepagePortlet">
       <property layout="OneColumn" name="row" value="0" />

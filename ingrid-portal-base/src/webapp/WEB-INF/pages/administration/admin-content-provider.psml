@@ -4,9 +4,8 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Anbieter</title>
-  <metadata name="title" xml:lang="en">Provider</metadata>
-
+  <title>ingrid.page.admin.provider</title>
+  
   <fragment id="admin-content-provider" type="layout" name="jetspeed-layouts::IngridOneColumn">
     <fragment id="admin-content-provider-0" type="portlet" name="ingrid-portal-apps::ContentProviderPortlet">
       <property layout="OneColumn" name="row" value="1"/>

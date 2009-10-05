@@ -12,8 +12,7 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Jobs</title>
-  <metadata name="title" xml:lang="en">Jobs</metadata>
+  <title>ingrid.page.admin.monitor</title>
 
   <fragment id="admin-component-monitor" type="layout" name="jetspeed-layouts::IngridOneColumn">
     <fragment id="admin-component-monitor-0" type="portlet" name="ingrid-portal-apps::AdminComponentMonitorPortlet">
