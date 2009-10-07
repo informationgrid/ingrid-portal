@@ -6,25 +6,25 @@
 
 #macro (renderFooter)
 <div class="formfooter" align="right">
-	<input class="btn" type="submit" name="doCreateCatalog" value="Katalog anlegen" />
-	<input class="btn" type="submit" name="doCancel" value="Zurück zur Übersicht" />
+	<input class="btn" type="submit" name="doCreateCatalog" value="$MESSAGES.getString('mdek.portaladmin.catalog.create')" />
+	<input class="btn" type="submit" name="doCancel" value="$MESSAGES.getString('mdek.portaladmin.catalog.back')" />
 </div>
 #end
 
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="GET" name="mdek_portal_admin" id="mdek_portal_admin">
 	<div class="formbody" style="overflow: auto;">
-		<h2 class="nospace">Neuen Katalog anlegen</h2>
+		<h2 class="nospace">$MESSAGES.getString('mdek.portaladmin.catalog.new')</h2>
 		<br />
 
 		<div class="float_left">
-			<h3>Angeschlossene Kataloge</h3>
+			<h3>$MESSAGES.getString('mdek.portaladmin.catalog.exist')</h3>
 			<select class="inputstyle" style="width:15em;" name="plugId" size="5">
 #displayListItems($plugIdList)
 			</select>
 		</div>
 		<div class="float_left marginleft">
-			<h3>Katalogadministrator</h3>
+			<h3>$MESSAGES.getString('mdek.portaladmin.administrator')</h3>
 			<select class="inputstyle" style="width:15em;" name="userName" size="5">
 #displayListItems($userNameList)
 			</select>

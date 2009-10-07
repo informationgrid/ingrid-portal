@@ -12,11 +12,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -113,6 +115,14 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     	
     	Context context = getContext(request);
         context.put("catalogList", buildConnectedCatalogList());
+        
+        ResourceBundle resourceBundle = getPortletConfig().getResourceBundle(request.getLocale());
+    	context.put("MESSAGES", resourceBundle);
+    	
+		PortletPreferences prefs = request.getPreferences();
+    	String myTitleKey = prefs.getValue("titleKey", "mdek.title.portaladmin");
+    	response.setTitle(resourceBundle.getString(myTitleKey));
+    	
     }
 
 
@@ -120,12 +130,20 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     throws PortletException, IOException {
 		setDefaultViewPage(TEMPLATE_NEW);
 
-    	Context context = getContext(request);
+		Context context = getContext(request);
         List<String> plugIdList = getUnconnectedPlugIdList(request);
         List<String> userNameList = getUnconnectedUserList();
         Collections.sort(plugIdList);
         Collections.sort(userNameList, Collator.getInstance(Locale.GERMAN));
 
+        ResourceBundle resourceBundle = getPortletConfig().getResourceBundle(request.getLocale());
+    	context.put("MESSAGES", resourceBundle);
+    	
+		PortletPreferences prefs = request.getPreferences();
+    	String myTitleKey = prefs.getValue("titleKey", "mdek.title.portaladmin");
+    	response.setTitle(resourceBundle.getString(myTitleKey));
+    	
+        
         context.put("plugIdList", plugIdList);
         context.put("userNameList", userNameList);
     }

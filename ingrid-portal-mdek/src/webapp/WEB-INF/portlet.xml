@@ -15,11 +15,13 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <portlet-info>
-            <title>Zugang zur Metadaten-Erfassungskomponente</title>
-            <short-title>Zugang zur Metadaten-Erfassungskomponente</short-title>
-        </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.MdekResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>titleKey</name>
+                <value>mdek.title.entry</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
 
 	<portlet id="MdekQuickViewPortlet">
@@ -36,11 +38,13 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <portlet-info>
-            <title>Informationen zum ausgewählten Katalog</title>
-            <short-title>Übersicht</short-title>
-        </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.MdekResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>titleKey</name>
+                <value>mdek.title.quickview</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
 
 	<portlet id="MdekPortalAdminPortlet">
@@ -57,11 +61,13 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <portlet-info>
-            <title>Kataloge administrieren</title>
-            <short-title>Kataloge administrieren</short-title>
-        </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.MdekResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>titleKey</name>
+                <value>mdek.title.portaladmin</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
     
     <portlet id="MdekAdminLoginPortlet">
@@ -78,11 +84,13 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <portlet-info>
-            <title>SuperAdmin-Login</title>
-            <short-title>SuperAdmin-Login</short-title>
-        </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.MdekResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>titleKey</name>
+                <value>mdek.title.adminlogin</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
 
 </portlet-app>

@@ -10,6 +10,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -93,6 +94,10 @@ public class MdekQuickViewPortlet extends GenericVelocityPortlet {
     	ResourceBundle resourceBundle = getPortletConfig().getResourceBundle(request.getLocale());
     	context.put("MESSAGES", resourceBundle);
 
+    	PortletPreferences prefs = request.getPreferences();
+    	String myTitleKey = prefs.getValue("titleKey", "mdek.title.quickview");
+    	response.setTitle(resourceBundle.getString(myTitleKey));    	
+    	
     	UserData userData = getUserData(request);
     	try {
     		if (userData == null) {

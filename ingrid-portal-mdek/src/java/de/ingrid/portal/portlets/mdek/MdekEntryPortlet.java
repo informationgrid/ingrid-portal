@@ -77,7 +77,9 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
     	ResourceBundle resourceBundle = getPortletConfig().getResourceBundle(request.getLocale());
     	context.put("MESSAGES", resourceBundle);
     	
-        response.setTitle(resourceBundle.getString("entry.page.title"));
+    	PortletPreferences prefs = request.getPreferences();
+    	String myTitleKey = prefs.getValue("titleKey", "mdek.title.entry");
+    	response.setTitle(resourceBundle.getString(myTitleKey));
     	
     	String userName = request.getRemoteUser();
     	try {

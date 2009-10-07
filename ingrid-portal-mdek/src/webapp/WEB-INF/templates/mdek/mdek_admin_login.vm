@@ -1,7 +1,7 @@
 <script type="text/javascript">
-	function validate_form() {
+	function validate_form(msg) {
 		if (!document.mdek_admin_login.user.value) {
-		  alert("Sie müssen einen Benutzer auswählen!");
+		  alert(msg);
 		  return false;
 		}
 		return true;
@@ -20,7 +20,7 @@
 </script>
 
 #set ($action = $renderResponse.createActionURL())
-<form action="$action" method="post" name="mdek_admin_login" id="mdek_admin_login" onsubmit="return validate_form(this)" target="_blank">
+<form action="$action" method="post" name="mdek_admin_login" id="mdek_admin_login" onsubmit="return validate_form('$MESSAGES.getString('mdek.admin.login.alert')')" target="_blank">
 	<div class="formbody">
 		<table>
 			<tr><td>

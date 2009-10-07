@@ -15,6 +15,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -76,6 +77,10 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
         context.put("MESSAGES", resourceBundle);
         
     	setDefaultViewPage(TEMPLATE_START);
+    	
+    	PortletPreferences prefs = request.getPreferences();
+    	String myTitleKey = prefs.getValue("titleKey", "mdek.title.adminlogin");
+    	response.setTitle(resourceBundle.getString(myTitleKey));
     	
     	Map<String, List> catalogInfo = buildConnectedCatalogList();
         context.put("catalogList", catalogInfo.get(CATALOG));

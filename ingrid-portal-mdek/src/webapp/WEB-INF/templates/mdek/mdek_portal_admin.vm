@@ -2,7 +2,7 @@
 <div class="contentNavigation">
    	<div class="contentNavigationLeft">
 	</div>
-   	<div class="contentNavigationMiddle">Angeschlossene Kataloge</div>
+   	<div class="contentNavigationMiddle">$MESSAGES.getString('mdek.portaladmin.catalog.exist')</div>
    	<div class="contentNavigationRight">
 		&nbsp;
 	</div>
@@ -39,18 +39,18 @@
 <div class="formfooter">
 #foreach ($button in $buttons)
 	#if($button == "doEdit")
-    	<input class="btn float_left" type="submit" name="doEdit" value="Edit" />
+    	<input class="btn float_left" type="submit" name="doEdit" value="$MESSAGES.getString('mdek.portal.admin.edit')"/>
     	<span class="float_left">&nbsp;</span>
 	#end
 	#if($button == "doDelete")
-		<input class="btn float_left" type="submit" name="doDelete" onClick="return confirm('Sollen die markierten Einträge wirklich gelöscht werden ?')" value="Löschen" />
+		<input class="btn float_left" type="submit" name="doDelete" onClick="return confirm('$MESSAGES.getString('mdek.portal.admin.delete.message')')" value=$MESSAGES.getString('mdek.portal.admin.delete') />
 	#end
 	#if($button == "doRefresh")
-    	<input class="btn float_right" type="submit" name="doRefresh" value="Neu Laden" />
+    	<input class="btn float_right" type="submit" name="doRefresh" value="$MESSAGES.getString('mdek.portal.admin.reload')" />
     	<span class="float_right">&nbsp;</span>
 	#end
 	#if($button == "doNew")
-		<input class="btn float_right" type="submit" name="doNew" value="Hinzufügen" />
+		<input class="btn float_right" type="submit" name="doNew" value="$MESSAGES.getString('mdek.portal.admin.add')" />
 	#end
 #end
 	<p class="clearer"></p>
@@ -64,7 +64,7 @@
 		<p>
 		<table class="border fullwidth">
 #set ($colNames = ["plugId", "catName", "partner", "provider", "catAdmin", "portalLogin"])
-#set ($colTitles = ["Id", "Katalogname", "Partner", "Anbieter", "Administrator", "Portal Login"])
+#set ($colTitles = [$MESSAGES.getString('mdek.portal.admin.id'), $MESSAGES.getString('mdek.portal.admin.catalogname'), $MESSAGES.getString('mdek.portal.admin.partner'), $MESSAGES.getString('mdek.portal.admin.provider'), $MESSAGES.getString('mdek.portal.admin.administrator'), $MESSAGES.getString('mdek.portal.admin.login')])
 #renderDBBrowserHeader($colNames $colTitles)
 
 #foreach ($entry in $catalogList)
