@@ -2016,7 +2016,7 @@ function hideSplash(){
 				<div id="additionalFields" class="contentBlock">
 					<div class="titleBar">
 						<div class="titleIcon"><a href="javascript:toggleFields('additionalFields');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
-						<div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7007)"><script>document.write(message.get("ui.obj.additionalFields.title"))</script></div>
+						<div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7075)"><script>document.write(message.get("ui.obj.additionalFields.title"))</script></div>
 						<div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 					</div>
 					<div id="additionalFieldsContent" class="content">
