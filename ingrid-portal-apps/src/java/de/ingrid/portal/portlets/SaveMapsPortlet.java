@@ -185,8 +185,7 @@ public class SaveMapsPortlet extends GenericVelocityPortlet {
 					crit.addOrder(Order.desc(sortColumn));
 				}
 				crit.setFirstResult(state.getFirstRow());
-				crit.setMaxResults(state.getMaxRows());
-
+				
 				List tinySources = UtilsDB.getValuesFromDB(crit, session, null, true);
 
 				// put to render context
