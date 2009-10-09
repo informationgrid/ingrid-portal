@@ -9,11 +9,18 @@ var scriptScope = this;
 _container_.addOnLoad(function() {
 	// Use the same store for both tables. The First table has to be reinitialised so the new store
 	// gets registered properly
-	var mainStore = dojo.widget.byId("urlListTable1").store;
-	dojo.widget.byId("urlListTable2").setStore(mainStore);
+	//var mainStore = dojo.widget.byId("urlListTable1").store;
+	//dojo.widget.byId("urlListTable2").setStore(mainStore);
 
-	var filterTable = dojo.widget.byId("urlListTable2");
-	filterTable.setFilter("errorCode", function(errorCode) { return ("VALID" != errorCode); });
+    // ATTENTION: use two stores again since older/slower browser (IE7/FF2) have problems with big tables
+    //            only show first 100 entries so do a prefiltering on the data
+	
+	//var filterTable = dojo.widget.byId("urlListTable2");
+	//filterTable.setFilter("errorCode", function(errorCode) { return ("VALID" != errorCode); });
+
+    // script global variables to remember tab names where the number of read URLs will be attached
+    allUrlsTitle = dojo.widget.byId("urlList1").label;
+    allErrorUrlsTitle = dojo.widget.byId("urlList2").label;
 
 	dojo.html.hide(dojo.byId("urlsProgressBarContainer"));
 	refreshUrlProcessInfo();
@@ -22,7 +29,7 @@ _container_.addOnLoad(function() {
 
 scriptScope.startUrlsJob = function() {
 	dojo.widget.byId("urlListTable1").store.clearData();
-//	dojo.widget.byId("urlListTable2").store.clearData();
+	dojo.widget.byId("urlListTable2").store.clearData();
 
 	CatalogManagementService.startUrlValidatorJob({
 		preHook: showLoadingZone,
@@ -190,19 +197,52 @@ function updateUrlJobInfo(jobInfo) {
 
 function updateUrlTables(urlObjectReferenceList) {
 	if (urlObjectReferenceList) {
+	    dojo.debug("list-size: " + urlObjectReferenceList.length);
 		UtilList.addIcons(urlObjectReferenceList);
+		
+		// show the first 100 entries and first 100 errors
+		var maxListSize   = 100;
+		var errors        = 0;
+		var allErrors     = 0;
+		var numUrls       = 0;
+		
+		var objList      = new Array();
+		var objErrorList = new Array();
+		
 		for (var i = 0; i < urlObjectReferenceList.length; ++i) {
-			urlObjectReferenceList[i].Id = i;
-			addUrlTableInfo(urlObjectReferenceList[i]);
+		    if (i<maxListSize) {
+			    urlObjectReferenceList[i].Id = i;
+			    addUrlTableInfo(urlObjectReferenceList[i]);
+			    objList.push(urlObjectReferenceList[i]);
+			    numUrls++;
+		    }
+		    // just show in error table those who are not valid but have been checked for invalidity
+		    if (urlObjectReferenceList[i].urlState.state != "VALID" && urlObjectReferenceList[i].urlState.state != "NOT_CHECKED") {
+		        allErrors++;
+		        if (errors < 100) {		        
+    		        if (i >= maxListSize) {
+    		            urlObjectReferenceList[i].Id = i;
+                        addUrlTableInfo(urlObjectReferenceList[i]);
+    		        }
+    		        objErrorList.push(urlObjectReferenceList[i]);
+    		        errors++;
+		        }
+		    }
 		}
+		
 
-		dojo.widget.byId("urlListTable1").store.setData(urlObjectReferenceList);
-//		dojo.widget.byId("urlListTable2").store.setData(urlObjectReferenceList);
+        var t1 = dojo.widget.byId("urlList1");
+        dojo.widget.byId("urlLists").tablist.pane2button[t1].titleNode.innerHTML = allUrlsTitle + " (" + numUrls + "/" + urlObjectReferenceList.length + ")";
+        var t2 = dojo.widget.byId("urlList2");
+        dojo.widget.byId("urlLists").tablist.pane2button[t2].titleNode.innerHTML = allErrorUrlsTitle + " (" + errors + "/" + allErrors + ")";
+        
+		dojo.widget.byId("urlListTable1").store.setData(objList);//urlObjectReferenceList);
+		dojo.widget.byId("urlListTable2").store.setData(objErrorList);//urlObjectReferenceList);
 		dojo.widget.byId("urlListTable2").applyFilters();
 		dojo.widget.byId("urlListTable2").render();
 	} else {
 		dojo.widget.byId("urlListTable1").store.clearData();
-//		dojo.widget.byId("urlListTable2").store.clearData();
+		dojo.widget.byId("urlListTable2").store.clearData();
 	}
 }
 
