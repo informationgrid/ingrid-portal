@@ -120,7 +120,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     /** The Hibernate Mapping class of the database entity */
     protected Class dbEntityClass = null;
 
-    /** The Hibernate Mapping class of the database entity */
+    /** The view title template for adding new title */
     protected String viewTitleKey = null;
 
     
