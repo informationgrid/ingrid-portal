@@ -547,7 +547,7 @@ a.contentColumnHeadLight, a.contentColumnHeadLight:link, a.contentColumnHeadLigh
 .contentRowEvenError { background-color: #F4D4D4; }
 .contentRowOdd { background-color: #E0E0E0; }
 .contentRowOddError { background-color: #E0C0C0; }
-.contentRowDark { background-color: white; }
+.contentRowDark { background-color: #F4F4F4; }
 .contentRowLight { background-color: white; }
-.contentRowLine {border-bottom: 1px solid grey; }
+.contentRowLine {border-bottom: 1px solid #176798; }
 .contentInput { width:50em; }
