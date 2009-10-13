@@ -21,12 +21,10 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.generic.ListTool;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.quartz.Scheduler;
 
 import de.ingrid.portal.forms.ActionForm;
 import de.ingrid.portal.global.IngridResourceBundle;
@@ -35,7 +33,6 @@ import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateUtil;
-import de.ingrid.portal.om.IngridRSSSource;
 import de.ingrid.portal.om.IngridRSSStore;
 import de.ingrid.portal.scheduler.IngridMonitorFacade;
 
@@ -123,6 +120,10 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     /** The Hibernate Mapping class of the database entity */
     protected Class dbEntityClass = null;
 
+    /** The Hibernate Mapping class of the database entity */
+    protected String viewTitleKey = null;
+
+    
     /**
      * @see javax.portlet.GenericPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
@@ -137,8 +138,12 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             context.put(CONTEXT_UTILS_STRING, new UtilsString());
             
             // set localized title for this page
-            response.setTitle(messages.getString("admin.cms.title"));
-
+            if(viewTitleKey == null){
+            	response.setTitle(messages.getString("admin.cms.title"));
+            }else{
+            	response.setTitle(messages.getString(viewTitleKey));
+            }
+            
             // reset state ? may be necessary on initial call (e.g. called from
             // other page)
             checkInitialEnter(request);
@@ -188,6 +193,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
         super.doView(request, response);
     }
 
+    
     /**
      * Default method for editing entities. NOTICE: "viewEdit" and
      * "dbEntityClass" have to be set in this class.

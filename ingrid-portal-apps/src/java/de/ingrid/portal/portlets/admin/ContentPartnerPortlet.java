@@ -35,6 +35,7 @@ public class ContentPartnerPortlet extends ContentPortlet {
         viewEdit = "/WEB-INF/templates/administration/edit_partner.vm";
         viewNew = "/WEB-INF/templates/administration/edit_partner.vm";
         dbEntityClass = IngridPartner.class;
+        viewTitleKey = "admin.title.partner";
     }
 
     /**

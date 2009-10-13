@@ -21,45 +21,56 @@
     #renderDBHeader($colNames $colTitles)
     	#foreach ($dbEntity in $dbEntities)
     		#set ($rowId = $dbEntity.Id)
-    		#set ($error = "")
-    		
-    		#if ($dbEntity.Error != "" && $dbEntity.Error != "component.monitor.general.error.none")
-    			#set ($error = "ERROR")
-    		#else
-    				#set ($error = "OK")
-    		#end
     		
     		#set ($rowValues = [$dbEntity.tinyName, $date.format('dd.MM.yyyy',$dbEntity.tinyDate), $UtilsString.cutString($dbEntity.tinyKey, 80,80)])
-    	
-            <tr height=50 style="border-bottom:1px groove grey;">
-            	<td style="vertical-align:middle;" width=3%>
+			
+			#if ($velocityCount % 2 == 0)
+				#set ($rowstyle = "contentRowLight")
+			#else
+				#set ($rowstyle = "contentRowDark")
+			#end   
+
+			<tr class ="$rowstyle" height=50>
+            	<td class="contentRowLine" style="vertical-align:middle;" width=3%>
             		<input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
                 </td>
             $action.setParameter("id", "$rowId")
             $action.setParameter("doUpdate",  $dbEntity.tinyKey)
             #foreach ($rowValue in $rowValues)
         		#if ($velocityCount == 3)
-        			<td style="vertical-align:middle;" width=55%><a href="${request.scheme}://${request.serverName}:${request.serverPort}/ingrid-portal/portal/main-maps.psml?t=$dbEntity.tinyKey" name="doUpdate">$UtilsString.getShortURLStr("${request.scheme}://${request.serverName}:${request.serverPort}/ingrid-portal/portal/main-maps.psml?t=$dbEntity.tinyKey", 50)</a></td>
+        			<td class="contentRowLine" style="vertical-align:middle;" width=55%><a href="${request.scheme}://${request.serverName}:${request.serverPort}/ingrid-portal/portal/main-maps.psml?t=$dbEntity.tinyKey" name="doUpdate">$UtilsString.getShortURLStr("${request.scheme}://${request.serverName}:${request.serverPort}/ingrid-portal/portal/main-maps.psml?t=$dbEntity.tinyKey", 50)</a></td>
         		#elseif ($velocityCount == 2)
-        			<td style="vertical-align:middle;" width=10%>$rowValue</td>
+        			<td class="contentRowLine" style="vertical-align:middle;" width=10%>$rowValue</td>
         		#elseif ($velocityCount == 1)
-        			<td style="font-weight:bold;vertical-align:middle;color:#176798" width=32%>$rowValue</td>
+        			<td class="fontcolor contentRowLine" style="vertical-align:middle;font-weight:bold;" width=32%>$rowValue</td>
         		#else
         		#end
         	#end
             </tr>
-    	#end
-		<tr height=50>
+		#end
+		
+		#if ($rowstyle == "contentRowDark")
+			#set ($rowstyle = "contentRowLight")
+		#else
+			#set ($rowstyle = "contentRowDark")
+		#end  
+			
+		<tr class ="$rowstyle" height=50>
     		<td style="vertical-align:middle;">
         		<input name="all" type="checkbox" onclick="selectAll(this)"/>
             </td>
-    		<td colspan="3" style="vertical-align:middle;color:#176798">
+    		<td colspan="3" class="fontcolor" style="vertical-align:middle;">
         		<label>$MESSAGES.getString('maps.save.url.useall')</label>
             </td>
         </tr>
 		
 	</table>
-	<input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.delete')" name="doDelete" />	
+	<div class="formfooter">
+		<div align="left">
+			<input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.delete')" name="doDelete" />
+		</div>
+	</div>
+		
 </form>
 
 <script type="text/javascript">

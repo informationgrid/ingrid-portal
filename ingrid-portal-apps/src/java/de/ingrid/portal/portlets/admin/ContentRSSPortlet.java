@@ -36,6 +36,7 @@ public class ContentRSSPortlet extends ContentPortlet {
         viewEdit = "/WEB-INF/templates/administration/edit_rss.vm";
         viewNew = "/WEB-INF/templates/administration/edit_rss.vm";
         dbEntityClass = IngridRSSSource.class;
+        viewTitleKey = "admin.title.rss";
     }
 
     /**

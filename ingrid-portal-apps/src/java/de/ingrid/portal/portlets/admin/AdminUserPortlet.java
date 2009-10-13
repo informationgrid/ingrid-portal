@@ -217,7 +217,7 @@ public class AdminUserPortlet extends ContentPortlet {
         viewDefault = "/WEB-INF/templates/administration/admin_user_browser.vm";
         viewEdit = "/WEB-INF/templates/administration/admin_user_edit.vm";
         viewNew = "/WEB-INF/templates/administration/admin_user_new.vm";
-
+        viewTitleKey = "admin.title.user";
     }
 
     /**

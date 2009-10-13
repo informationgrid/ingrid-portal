@@ -52,6 +52,7 @@ public class AdminCMSPortlet extends ContentPortlet {
         viewEdit = "/WEB-INF/templates/administration/admin_cms_edit.vm";
         viewNew = "/WEB-INF/templates/administration/admin_cms_edit.vm";
         dbEntityClass = IngridCMS.class;
+        viewTitleKey = "admin.title.content";
     }
 
     /**

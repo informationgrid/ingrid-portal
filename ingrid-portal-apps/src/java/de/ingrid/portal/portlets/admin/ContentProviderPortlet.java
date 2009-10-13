@@ -51,6 +51,7 @@ public class ContentProviderPortlet extends ContentPortlet {
         viewEdit = "/WEB-INF/templates/administration/edit_provider.vm";
         viewNew = "/WEB-INF/templates/administration/edit_provider.vm";
         dbEntityClass = IngridProvider.class;
+        viewTitleKey = "admin.title.provider";
     }
 
     /**

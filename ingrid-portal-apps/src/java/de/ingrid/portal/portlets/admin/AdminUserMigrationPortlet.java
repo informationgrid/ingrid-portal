@@ -136,6 +136,8 @@ public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
                 request.getLocale()));
         context.put("MESSAGES", messages);
 
+        response.setTitle(messages.getString("admin.title.migration"));
+        
         String action = request.getParameter("action");
         if (action != null && action.equals("doExport")) {
             try {

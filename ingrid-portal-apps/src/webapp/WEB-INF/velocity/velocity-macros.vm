@@ -108,12 +108,12 @@ $fieldLabel#end
 
 #macro (renderDBHeader $colNames $colTitles)
 <tr height=30>
-	<td style="background-color:#d1e4f1; font-weight:bold; vertical-align:middle; color:black;"></td>
+	<td class="contentColumnHeadLight" style="font-weight:bold; vertical-align:middle;"></td>
 	#foreach ($colTitle in $colTitles)
 		#set ($colLink = $renderResponse.createActionURL())
 		#set ($colIndex = $velocityCount - 1)
 		$colLink.setParameter("sortColumn", $colNames.get($colIndex))
-   		<td style="background-color:#d1e4f1; font-weight:bold; vertical-align:middle; color:black;"><a href="$colLink" style="color:black">$colTitle</a></td>
+   		<td class="contentColumnHeadLight" style="font-weight:bold; vertical-align:middle;"><a href="$colLink" class="contentColumnHeadLight">$colTitle</a></td>
 	#end
 </tr>
 #end

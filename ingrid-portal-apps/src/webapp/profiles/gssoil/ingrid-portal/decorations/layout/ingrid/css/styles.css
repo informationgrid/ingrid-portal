@@ -50,8 +50,7 @@ td {font-size: 80%; vertical-align:top; padding-left:3px;}
 table.formtable td {font-size: 80%; vertical-align:middle; margin:0;}
 td.iconwidth { width:9px; }
 table.layout td {font-size: 100%}
-
-
+td.fontcolor {color: #99471f;}
 
 /********************************************************************
   helper styles 
@@ -542,11 +541,18 @@ div.helpcontent li a { font-size:80%; }
 .contentNavigationMiddle { float:left; font-size:80%; width:300px; text-align:center; }
 .contentNavigationRight { float:right; width:110px; text-align:right; }
 .contentColumnHead { text-decoration:underline; background-color:#99471f; color:white; }
+.contentColumnHeadLight { text-decoration:none; background-color:#8D8078; color:white; }
 
 a.contentColumnHead, a.contentColumnHead:link, a.contentColumnHead:visited { text-decoration:underline; background-color:#99471f; color: white; }
+a.contentColumnHeadLight, a.contentColumnHeadLight:link, a.contentColumnHeadLight:visited { text-decoration:none; background-color:#8D8078; color: white; }
 
 .contentRowEven { background-color: #f0ede7; }
 .contentRowEvenError { background-color: #F4D4D4; }
 .contentRowOdd { background-color: #f0ede7; }
 .contentRowOddError { background-color: #f4d4d4; }
+.contentRowDark { background-color: #F0EDE7; }
+.contentRowLight { background-color: white; }
+.contentRowLine {border-bottom: 1px solid #E5DFD3; }
 .contentInput { width:50em; }
+
+.verticalTabs { background-color:#CC7A52 !important;}

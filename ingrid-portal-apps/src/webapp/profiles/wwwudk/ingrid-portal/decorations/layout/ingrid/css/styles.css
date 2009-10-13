@@ -48,7 +48,7 @@ td {font-size: 75%; vertical-align:top; padding-left:3px;}
 table.formtable td {font-size: 75%; vertical-align:middle; margin:0;}
 td.iconwidth { width:9px; }
 table.layout td {font-size: 100%}
-
+td.fontcolor {color: #176798;}
 
 
 /********************************************************************
@@ -538,11 +538,16 @@ div.helpcontent li a { font-size:75%; }
 .contentNavigationMiddle { float:left; font-size:75%; width:300px; text-align:center; }
 .contentNavigationRight { float:right; width:110px; text-align:right; }
 .contentColumnHead { text-decoration:underline; background-color:#176798; color:white; }
+.contentColumnHeadLight { text-decoration:none; background-color:#d1e4f1; color:black; }
 
 a.contentColumnHead, a.contentColumnHead:link, a.contentColumnHead:visited { text-decoration:underline; background-color:#176798; color: white; }
+a.contentColumnHeadLight, a.contentColumnHeadLight:link, a.contentColumnHeadLight:visited { text-decoration:none; background-color:#d1e4f1; color: black; }
 
 .contentRowEven { background-color: #F4F4F4; }
 .contentRowEvenError { background-color: #F4D4D4; }
 .contentRowOdd { background-color: #E0E0E0; }
 .contentRowOddError { background-color: #E0C0C0; }
+.contentRowDark { background-color: white; }
+.contentRowLight { background-color: white; }
+.contentRowLine {border-bottom: 1px solid grey; }
 .contentInput { width:50em; }
