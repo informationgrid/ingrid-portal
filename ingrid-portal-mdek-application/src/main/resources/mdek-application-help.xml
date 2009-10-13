@@ -1794,7 +1794,8 @@
 				 <p>Je nach Umfang des Kataloges und Auslastung des Servers kann die Überprüfung einige 
 				 Minuten dauern. Sie kann über <i>Prozess abbrechen</i> gestoppt werden.</p>
 				 <p><i>Informationen zum letzten Prozess</i> erhalten Sie im Informationskasten.</p>
-				 <p>Das Ergebnis der URL-Prüfung wird in der darunter stehenden Tabelle angezeigt. Sie 
+				 <p>Das Ergebnis der URL-Prüfung wird in der darunter stehenden Tabelle angezeigt. Aus 
+                 Performanzgründen werden jeweils nur die ersten 100 Einträge in der Tabelle dargestellt. Sie 
 				 können über die Karteireiter auswählen, ob Sie <i>Alle URLs</i> oder <i>Nur fehlerhafte 
 				 URLs</i> sehen wollen.</p>
 				 <p>In der Spalte <i>Status</i> wird die Rückmeldung über die Verfügbarkeit der Webseiten 

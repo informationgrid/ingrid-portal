@@ -50,9 +50,9 @@ div.tableContainer {
 	position: relative;
 }
 
-/* Disable overflow in firefox */
+/* Disable overflow in firefox - but needed in IE8 since it's not shown behind last column! */
 html>/**/body div.tableContainer {
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 
 /* The different widths below are due to the way the scroll bar is implamented

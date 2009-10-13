@@ -219,7 +219,7 @@ function updateUrlTables(urlObjectReferenceList) {
 		    // just show in error table those who are not valid but have been checked for invalidity
 		    if (urlObjectReferenceList[i].urlState.state != "VALID" && urlObjectReferenceList[i].urlState.state != "NOT_CHECKED") {
 		        allErrors++;
-		        if (errors < 100) {		        
+		        if (errors < maxListSize) {		        
     		        if (i >= maxListSize) {
     		            urlObjectReferenceList[i].Id = i;
                         addUrlTableInfo(urlObjectReferenceList[i]);
