@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <help>
     <chapter>
-        <header>GS Soil Help</header>
+        <header>Hilfe zu GS Soil</header>
         <section help-key="index">
-            <header>Topics</header>
+            <header>Hilfethemen</header>
             <content>
                 <ul>
                     <li>
-                        <a href="help.psml?hkey=about-1">About GS Soil</a>
+                        <a href="help.psml?hkey=about-1">Über GS Soil</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-1">Search</a>
+                        <a href="help.psml?hkey=search-1">Suche</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-topics-1">Environmental Topics</a>
+                        <a href="help.psml?hkey=search-topics-1">Umweltthemen</a>
                     </li>
                     <li>
                         <a href="help.psml?hkey=search-service-1">Service</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-measure-1">Environmental Monitoring Data</a>
+                        <a href="help.psml?hkey=search-measure-1">Messwerte</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-chronicle-1">Environmental Almanac</a>
+                        <a href="help.psml?hkey=search-chronicle-1">Umweltchronik</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=maps-1">Maps</a>
+                        <a href="help.psml?hkey=maps-1">Karten</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=rss-news-1">News</a>
+                        <a href="help.psml?hkey=rss-news-1">Aktuelles</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=ingrid-inform-1">GS Soil informs</a>
+                        <a href="help.psml?hkey=ingrid-inform-1">GS Soil informiert</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=myingrid-1">My GS Soil</a>
+                        <a href="help.psml?hkey=myingrid-1">Mein GS Soil</a>
                     </li>
                     <li>
                         <a href="help.psml?hkey=ingrid-newsletter-1">Newsletter</a>
@@ -44,102 +44,125 @@
         </section>
     </chapter>
     <chapter>
-        <header>About GS Soil</header>
+        <header>Über GS Soil</header>
         <section help-key="about-1">
-            <header>Concept and Objectives of GS Soil</header>
+            <header>Konzept und Aufgabe von GS Soil</header>
             <content>
-                <p>GS Soil is the central environmental Information portal for Germany. GS Soil offers
-                access to several 100.000 web-pages and database records from public authorities and institutions 
-                in the German Federal States and the Federal Government. With a mix of current environmental news,
-                up-to-the-hour environmental monitoring data (e.g., Ozone pollution), and in-depth background information, GS Soil targets 
-                experts as well as the "average" citizen. GS Soil is expanded continuously with the goal to ultimately integrate all 
-                public providers of environmental information.     
-                 </p>
-                <p>
-                The concept of GS Soil  was stronly influenced by a new EU-Directive on public
-                access to environmental information. Directive 2003/4/EC sets new standards for the 
-                distribution of government-owned environmental information in the EU-member states 
-                The Directive extends the circle of public agencies and insititutions that have to 
-                make their data and information publicly available in a structured, understandable and highly accessible way.      
-                </p>
-                <p>
-                To set up GS Soil, a new software -  &#8222;InGrid&#8220; - was created. InGrid is a modular, flexible portal-software built on OpenSource basis. Both GS Soil and InGrid 
-                are tools dedicated to help public agencies in Germany (and elsewhere) to improve public access to environmental information and thus implement the new EU regulations. 
-                     </p>
+                <p>GS Soil, das Umweltportal Deutschland, bietet einen zentralen
+                    Zugriff auf mehrere hunderttausend Internetseiten und
+                    Datenbankeinträge von öffentlichen Institutionen und
+                    Organisationen in Bund und Ländern. Mit einem Mix aus
+                    aktuellen Nachrichten, Umweltmesswerten (z.B. aktuelle
+                    Ozonkonzentration in der Luft), Hintergrundinformationen,
+                    und historischen Umweltereignissen richtet sich GS Soil
+                    sowohl an interessierte Laien als auch an Fachpublikum. Das
+                    Informationsangebot wird kontinuierlich ausgebaut mit dem
+                    Ziel, langfristig möglichst alle behördlichen Anbieter von
+                    Umweltinformationen zu erfassen.</p>
+                <p>Bei der Konzeption von GS Soil spielten die
+                    EU-Umweltinformationsrichtlinie von 2003 und die geplante
+                    INSPIRE Richtlinie eine wichtige Rolle. Diese Richtlinien
+                    setzen neue Maßstäbe für die öffentliche Verbreitung
+                    behördlicher Umweltinformationen bzw. den Aufbau der dafür
+                    notwendigen informationstechnischen Infrastrukturen.
+                    Zukünftig sind wesentlich mehr Behörden und Organisationen
+                    als bisher dazu verpflichtet, umweltrelevante Daten und
+                    Informationen in einer klar verständlichen und einfach
+                    zugänglichen Form bereitzustellen. GS Soil und die eigens
+                    zum Aufbau des Portals entwickelte Software
+                    &#8222;InGrid&#8220; wurden speziell als
+                    Werkzeuge zur Unterstützung der Behörden bei der Umsetzung
+                    der Richtlinien konzipiert. </p>
             </content>
         </section>
         <section help-key="about-2">
-            <header>Who runs GS Soil?</header>
+            <header>Die Betreiber von GS Soil</header>
             <content>
-                <p>Like it's predecessors UDK (Environmental Data Catalog) and gein (German Environmental Information Network),
-                GS Soil is financed through a formal agreement between the German Federal States ("Länder") and the 
-                Federal Administration ("Bund"). The agreement was signed, among others, by the Federal Ministry for the Environment, Nature 		   Conservation and Nuclear Safety (BMU) and the 
-                environment ministries of 15 Federal States. 
-                    The maintenance and technical development of  GS Soil is in the hands of the Coordination Center GS Soil, a small 
-                    group of environmental and IT specialists located at the Environmental Ministry of Lower Saxony in Hannover. .</p>
+                <p>Als Nachfolgeprojekt des Umweltdatenkatalogs (UDK) und des
+                    German Environmental Information Network (gein) wurde
+                    GS Soil im Rahmen der Bund-Länder Verwaltungsvereinbarung
+                    UDK/GEIN entwickelt. An der Verwaltungsvereinbarung sind
+                    u.a. das Umweltbundesministerium (BMU) und die
+                    Umweltministerien von 15 Ländern beteiligt.  GS Soil wird
+                    technisch und inhaltlich von der Koordinierungsstelle
+                    GS Soil im Niedersächsischen Umweltministerium in
+                    Hannover betreut.</p>
             </content>
         </section>
         <section help-key="about-3">
-            <header>Functionality Overview</header>
+            <header>Funktionsüberblick</header>
             <content>
                 <p>
-                    <b>Search:</b> The central functionality of GS Soil is the 
-                    GS Soil-Search (<a href="help.psml?hkey=search-1">GS Soil Search</a>) engine.
-                    It allows to perfom fulltext-searches (<a
-                        href="help.psml?hkey=search-1">GS Soil Search</a>) on web-pages and database records.
-                    It also features advanced search functions (<a
-                        href="help.psml?hkey=ext-search-1">Advanced Search</a>), among others 
-                        using an extensive environmental thesaurus.
-                         </p>
+                    <b>Suche:</b> Zentrale Funktion des Portals ist die
+                    GS Soil-Suche (<a href="help.psml?hkey=search-1">Suche</a>)
+                    mit deren Hilfe Webseiten und Datenbankeinträge über eine
+                    herkömmliche Volltextsuche (<a
+                        href="help.psml?hkey=search-1">Einfache Suche</a>), aber
+                    auch über ein differenziertes Fachvokabular (<a
+                        href="help.psml?hkey=ext-search-1">Erweiterte Suche</a>)
+                    durchsucht werden können. </p>
                 <p>
-                    <b>Maps:</b> A map-viewer allows to specify spatial queries and to 
-                    visualize digital maps that were retrieved through GS Soil Search.</p>
+                    <b>Karten:</b> Ein Kartenviewer bietet die Möglichkeit,
+                    Raumbezüge für die Suche über interaktive Karten einzugeben
+                    oder aber digitale Karten aus der Such-Ergebnisliste direkt
+                    in GS Soil anzuzeigen.</p>
                 <p>
-                    <b>Topics Pages:</b> The GS Soil Environmental Topics pages offer a catalog-like, theme-based 
-                    access to particularly interesting information and data. </p>
+                    <b>Themenseiten:</b> Die GS Soil Themenseiten  bieten einen
+                    themenbezogenen Zugang zu ausgewählten, besonders
+                    interessanten Informationen und Daten.</p>
                 <p>
-                    <b>News</b>: Environmental news are published "hot-off-the-presses" straight from the 
-                    news-rooms of the participating federal and state agencies. </p>
+                    <b>Aktuelles</b>: Tagesaktuelle Meldungen werden direkt aus
+                    den Pressestellen der beteiligten Behörden und
+                    Organisationen eingeblendet.</p>
                 <p>
-                    <b>Service</b>: The Service section leads you to lists with current news, events and publications. </p>
+                    <b>Service</b>: Hier finden Sie Nachrichten und
+                    Informationen über Veranstaltungen und aktuelle
+                    Publikationen im Umweltbereich.</p>
                 <p>
-                    <b>Environmental Monitoring Data</b>: GS Soil informs you 24 hours a day, 7 days a week about the state of your environment.</p>
+                    <b>Messwerte</b>: GS Soil informiert Sie rund um die Uhr
+                    über den aktuellen Zustand Ihrer Umwelt.</p>
                 <p>
-                    <b>Environmental Almanac</b>: When was the Kyoto-Treaty ratified? The answer to this and many other questions about past environmental events can be found in the Environmental Almanack.</p>
+                    <b>Umweltchronik</b>: Wann trat das Kyoto-Protokoll in
+                    Kraft? Eine Antwort auf diese und viele andere Fragen zu
+                    historischen Umweltereignissen finden Sie in der Umweltchronik.</p>
             </content>
         </section>
         <section help-key="about-4">
-            <header>GS Soil Information Sources</header>
+            <header>Informationsquellen in GS Soil</header>
             <content>
-                <p>GS Soil is a central and user-friendly entry-point to government-owned 
-                environmental information in the Internet. In contrast to most other portals and search engines,
-                GS Soil does not only register text documents and web-pages. The GS Soil search engine is also 
-                able to index database records and specialized information applications (even if they are not part of the public Internet). 
-                  </p>
+                <p>GS Soil ist ein komfortables und benutzerfreudliches Tor zu
+                    Umweltinformationen im Internet. Im Gegensatz zu den meisten
+                    Portalen und Suchmaschinen erfasst GS Soil nicht nur
+                    Webseiten, Textdokumente und andere Internetformate, sondern
+                    kann auch auf Datenbanken und Fachinformationssysteme
+                    zugreifen, selbst wenn diese nicht online sind.</p>
             </content>
         </section>
         <section help-key="about-5">
-            <header>GS Soil Participation Policy</header>
+            <header>Bedingungen für Nutzung und Beteiligung an GS Soil</header>
             <content>
-                <p>Information providers in GS Soil are public authorities in Germany. Private firms that act on behalf of 
-                public authorities may be accepted as well. The pool of information providers in GS Soil is 
-                enlarged continuously. If your organization wants to 
-                publish environmentally relevant information through GS Soil, please contact the <a
+                <p>Der Kreis der Informationsanbieter in GS Soil beschränkt sich
+                    vorwiegend auf Behörden und behördennahen Organisationen in
+                    Deutschland, wird aber kontinuierlich erweitert. Wenn Ihre
+                    Organisation ebenfalls umweltrelevante Informationen über
+                    GS Soil bereitstellen möchte wenden Sie sich bitte an die <a
                         href="http://www.kst.portalu.de/"
-                        target="_new">Coordination Center GS Soil</a>.</p>
+                        target="_new">Koordinierungsstelle GS Soil</a>.</p>
             </content>
         </section>
         <section help-key="about-6">
-            <header>InGrid &#8211; The Software Behind GS Soil</header>
+            <header>InGrid &#8211; Die Software hinter GS Soil</header>
             <content>
-                <p>To build GS Soil, a new software - InGrid - was developed. InGrid implements a modular
-                and flexible system architecture on the basis of advanced OpenSource technology. 
-                This system architecture allows us to adapt the environmental information infrastructure to changing
-                organizational needs. If necessary, InGrid can be used to build regional and/or communal environmental
-                portals that can be interlinked with GS Soil to a Germany-wide information infrastructure. 
-                Because InGrid is a modular and adaptable system that uses no propriretary third-party software, 
-                new portals may be set-up with little effort and at low cost.    
-                    </p>
+                <p>Zur Umsetzung von GS Soil wurde das Softwarepaket InGrid
+                    entwickelt. InGrid setzt auf eine modulare und flexible
+                    Systemarchitektur auf der Basis lizenzfreier OpenSource
+                    Produkte. Dadurch wird es möglich, die technische Struktur
+                    des Umweltinformationsnetzes an sich wandelnde
+                    organisatorische Vorgaben anzupassen. So können mit InGrid
+                    bei Bedarf regionale Umweltportale, z.B. für einzelne
+                    Länder oder Kommunen, mit geringem technischen Aufwand
+                    erstellt werden. Dank OpenSource ist die Nachnutzung der
+                    Software für die Partner der VwV UDK/GEIN lizenzfrei.</p>
             </content>
         </section>
     </chapter>
