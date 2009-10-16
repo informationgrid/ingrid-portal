@@ -89,6 +89,13 @@ var mappingDescription = {"mappings":[
 			  	]
 			}
   		},
+
+  		// ****************************************************
+  		//
+  		// /igc/data-sources/data-source/technical-domain/map
+  		//
+  		// ****************************************************
+
   		{	
   			"srcXpath":"//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue",
   			"targetNode":"/igc/data-sources/data-source/technical-domain/map/hierarchy-level",
@@ -128,96 +135,80 @@ var mappingDescription = {"mappings":[
   			"srcXpath":"//gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description/gco:CharacterString",
   			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production"
   		},
-
-  	
-  		
-// ArcGIS mappings  		
-  		
-  		
-
-
-  		// ****************************************************
-  		//
-  		// /igc/data-sources/data-source/technical-domain/map
-  		//
-  		// ****************************************************
   		{	
-  			"srcXpath":"/metadata/dataIdInfo/envirDesc",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production",
-  			"appendWith":"\n\n"
-  		},
-  		{	
-  			"srcXpath":"/metadata/dqInfo/dataLineage/statement",
+  			"srcXpath":"//gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString",
   			"targetNode":"/igc/data-sources/data-source/technical-domain/map/technical-base"
   		},
   		{
-  			"srcXpath":"/metadata/dataIdInfo/spatRpType",
+  			"srcXpath":"//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialRepresentationType",
   			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
   			"newNodeName":"spatial-representation-type",
   			"subMappings":{
   				"mappings": [
 	  				{
-			  			"srcXpath":"SpatRepTypCd/@value",
+			  			"srcXpath":"gmd:MD_SpatialRepresentationTypeCode/@codeListValue",
 			  			"targetNode":"",
 			  			"targetAttribute":"iso-code",
 			  			"transform":{
-							"funct":parseToInt
-						}
+    						"funct":transformToIgcDomainId,
+    						"params":[526]
+    					}
 			  		}
 			  	]
 			}
   		},
   		{	
-  			"srcXpath":"/metadata/spatRepInfo/VectSpatRep/topLvl/TopoLevCd/@value",
+  			"srcXpath":"//gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue",
   			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format/vector-topology-level",
   			"targetAttribute":"iso-code",
   			"transform":{
-				"funct":parseToInt
+				"funct":transformToIgcDomainId,
+				"params":[528]
 			}
   		},
   		{
-  			"srcXpath":"/metadata/spatRepInfo/VectSpatRep/geometObjs",
+  			"srcXpath":"//gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects",
   			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format",
   			"newNodeName":"geo-vector",
   			"subMappings":{
   				"mappings": [
 	  				{
-			  			"srcXpath":"geoObjTyp/GeoObjTypCd/@value",
+			  			"srcXpath":"gmd:MD_GeometricObjects/gmd:geometricObjectType/gmd:MD_GeometricObjectTypeCode/@codeListValue",
 			  			"targetNode":"geometric-object-type",
 			  			"targetAttribute":"iso-code",
 			  			"transform":{
-							"funct":parseToInt
+							"funct":transformToIgcDomainId,
+							"params":[515]
 						}
 			  		},
 	  				{
-			  			"srcXpath":"geoObjCnt",
+			  			"srcXpath":"gmd:MD_GeometricObjects/gmd:geometricObjectCount/gco:Integer",
 			  			"targetNode":"geometric-object-count"
 			  		}
 			  	]
 			}
   		},
   		{
-  			"srcXpath":"/metadata/eainfo/detailed/attr",
+  			"srcXpath":"//gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes",
   			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
   			"newNodeName":"feature-type",
   			"subMappings":{
   				"mappings": [
 	  				{
-			  			"srcXpath":"attrlabl",
+			  			"srcXpath":"gco:LocalName",
 			  			"targetNode":""
 			  		}
 			  	]
 			}
   		},
-  		
-  		
+
   		// ****************************************************
   		//
   		// /igc/data-sources/data-source/additional-information
   		//
   		// ****************************************************
   		{	
-  			"srcXpath":"/metadata/dataIdInfo/dataLang[1]/languageCode/@value",
+  			"srcXpath":"//gmd:identificationInfo//gmd:language/gmd:LanguageCode/@codeListValue",
   			"targetNode":"/igc/data-sources/data-source/additional-information/data-language",
   			"targetAttribute":"id",
   			"transform":{
@@ -225,7 +216,7 @@ var mappingDescription = {"mappings":[
 			}
   		},
   		{	
-  			"srcXpath":"/metadata/dataIdInfo/dataLang[1]/languageCode/@value",
+  			"srcXpath":"//gmd:identificationInfo//gmd:language/gmd:LanguageCode/@codeListValue",
   			"targetNode":"/igc/data-sources/data-source/additional-information/data-language",
   			"transform":{
 				"funct":UtilsLanguageCodelist.getNameFromShortcut,
@@ -233,16 +224,7 @@ var mappingDescription = {"mappings":[
 			}
   		},
   		{	
-  			"srcXpath":"/metadata/mdLang/languageCode/@value",
-  			"defaultValue":"de",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/metadata-language",
-  			"transform":{
-				"funct":UtilsLanguageCodelist.getNameFromShortcut,
-				"params":['de']
-			}
-  		},
-  		{	
-  			"srcXpath":"/metadata/mdLang/languageCode/@value",
+  			"srcXpath":"gmd:MD_Metadata/gmd:language/gmd:LanguageCode/@codeListValue",
   			"defaultValue":"de",
   			"targetNode":"/igc/data-sources/data-source/additional-information/metadata-language",
   			"targetAttribute":"id",
@@ -251,30 +233,65 @@ var mappingDescription = {"mappings":[
 			}
   		},
   		{	
-  			"srcXpath":"/metadata/idinfo/descript/purpose",
+  			"srcXpath":"gmd:MD_Metadata/gmd:language/gmd:LanguageCode/@codeListValue",
+  			"defaultValue":"de",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/metadata-language",
+  			"transform":{
+				"funct":UtilsLanguageCodelist.getNameFromShortcut,
+				"params":['de']
+			}
+  		},
+  		{	
+  			"srcXpath":"//gmd:identificationInfo//gmd:purpose/gco:CharacterString",
   			"targetNode":"/igc/data-sources/data-source/additional-information/dataset-intentions"
   		},
-  		{	
-  			"execute":{
-				"funct":mapAccessConstraints
+  		{
+  			"srcXpath":"//gmd:identificationInfo//gmd:resourceConstraints",
+  			"targetNode":"/igc/data-sources/data-source/additional-information",
+  			"newNodeName":"access-constraint",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":"//gmd:otherConstraints/gco:CharacterString",
+			  			"targetNode":"restriction",
+			  			"targetAttribute":"id",
+			  			"transform":{
+    						"funct":transformToIgcDomainId,
+    						"params":[6010]
+    					}
+			  		},
+	  				{
+			  			"srcXpath":"//gmd:otherConstraints/gco:CharacterString",
+			  			"targetNode":"restriction"
+			  		},
+	  				{
+			  			"srcXpath":"//gmd:useLimitation/gco:CharacterString",
+			  			"targetNode":"terms-of-use"
+			  		}
+			  	]
 			}
   		},
   		{
-  			"srcXpath":"/metadata/distInfo/distributor/distorTran",
+  			"srcXpath":"//gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:offLine/gmd:MD_Medium",
   			"targetNode":"/igc/data-sources/data-source/additional-information",
   			"newNodeName":"medium-option",
   			"subMappings":{
   				"mappings": [
+					{
+						"srcXpath":"gmd:mediumNote/gco:CharacterString",
+						"targetNode":"medium-note",
+					},
 	  				{
-			  			"srcXpath":"offLineMed/medName/MedNameCd/@value",
+			  			"srcXpath":"gmd:name/gmd:MD_MediumNameCode/@codeListValue",
 			  			"targetNode":"medium-name",
 			  			"targetAttribute":"iso-code",
 			  			"transform":{
-							"funct":parseToInt
+							"funct":transformToIgcDomainId,
+							"params":[520]
 						}
 			  		},
 	  				{
-			  			"srcXpath":"transSize",
+			  			"srcXpath":"../../gmd:transferSize/gco:CharacterString",
 			  			"targetNode":"transfer-size",
 			  			"transform":{
 							"funct":transformNumberStrToIGCNumber
@@ -284,23 +301,35 @@ var mappingDescription = {"mappings":[
 			}
   		},
   		{
-  			"srcXpath":"/metadata/distInfo/distributor/distorFormat",
+  			"srcXpath":"//gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format",
   			"targetNode":"/igc/data-sources/data-source/additional-information",
   			"newNodeName":"data-format",
   			"subMappings":{
   				"mappings": [
 	  				{
-			  			"srcXpath":"formatName",
+			  			"srcXpath":"gmd:name/gco:CharacterString",
 			  			"targetNode":"format-name"
 			  		},
 	  				{
-			  			"srcXpath":"formatName",
+			  			"srcXpath":"gmd:name/gco:CharacterString",
 			  			"targetNode":"format-name",
 			  			"targetAttribute":"id",
 			  			"transform":{
 							"funct":transformToIgcDomainId,
 							"params":[1320, 150]
 						}
+			  		},
+	  				{
+			  			"srcXpath":"gmd:version/gco:CharacterString",
+			  			"targetNode":"version"
+			  		},
+	  				{
+			  			"srcXpath":"gmd:fileDecompressionTechnique/gco:CharacterString",
+			  			"targetNode":"file-decompression-technique"
+			  		},
+	  				{
+			  			"srcXpath":"gmd:specification/gco:CharacterString",
+			  			"targetNode":"specification"
 			  		}
 			  	]
 			}
@@ -309,6 +338,17 @@ var mappingDescription = {"mappings":[
   			"defaultValue":"1",
   			"targetNode":"/igc/data-sources/data-source/additional-information/publication-condition"
   		},
+
+  	
+  		
+// ArcGIS mappings  		
+  		
+  		
+  		
+  		
+  		
+
+
   		{	
   			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/ordInstr",
   			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
@@ -1224,6 +1264,22 @@ function transformISOToIgcDomainId(val, codeListId, logErrorOnNotFound) {
 		}
 	}
 }
+
+function transformISO639_2ToISO639_1(val) {
+	var ISO639_2ToISO639_1 = {
+		"deu":"de",
+		"ger":"de",
+		"ger":"de",
+		"eng":"en"
+	}
+	for(iso639_2 in ISO639_2ToISO639_1) {
+		if (val == iso639_2) {
+			return ISO639_2ToISO639_1[iso639_2];
+		}
+		return val;
+	}
+} 
+
 
 function hasValue(val) {
 	if (typeof val == "undefined") {
