@@ -23,7 +23,7 @@ importPackage(Packages.org.w3c.dom);
 
 
 if (log.isDebugEnabled()) {
-	log.debug("Mapping ArcCatalog ISO-Editor Export document to IGC import document.");
+	log.debug("Mapping CSW 2.0.2 AP ISO 1.0 document to IGC import document.");
 }
 
 var mappingDescription = {"mappings":[
@@ -34,78 +34,106 @@ var mappingDescription = {"mappings":[
   		// /igc/data-sources/data-source/general
   		//
   		// ****************************************************
-  		{	
+  		{
   			// set the obj_class to a fixed value "Geoinformation/Karte"
-  			"defaultValue":"1",
+  			"srcXpath":"//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue",
   			"targetNode":"/igc/data-sources/data-source/general/object-class",
-  			"targetAttribute":"id"
+  			"targetAttribute":"id",
+  			"transform":{
+				"funct":getObjectClassFromHierarchyLevel
+			}
   		},
-		{	
-  			"srcXpath":"/metadata/dataIdInfo/idCitation/resTitle",
+		{
+  			"srcXpath":"//gmd:fileIdentifier/gco:CharacterString",
 			"targetNode":"/igc/data-sources/data-source/general/title"
   		},
-  		{	
-  			"srcXpath":"/metadata/dataIdInfo/idAbs",
+  		{
+  			"srcXpath":"//gmd:identificationInfo//gmd:abstract/gco:CharacterString",
   			"targetNode":"/igc/data-sources/data-source/general/abstract"
   		},
-  		{	
-  			"srcXpath":"/metadata/dataIdInfo/idCitation/resEd",
-  			"targetNode":"/igc/data-sources/data-source/general/abstract",
-  			"appendWith":"\n\n",
-  			"prefix":"Nummer der Ausgabe/Version: "
-  		},
-  		{	
-  			"srcXpath":"/metadata/dataIdInfo/idCitation/resEdDate",
-  			"targetNode":"/igc/data-sources/data-source/general/abstract",
-  			"appendWith":"\n\n",
-  			"prefix":"Datum der Ausgabe/Version: "
-  		},
-  		{	
-  			"srcXpath":"/metadata/dataIdInfo/dataLang/languageCode/@value",
-  			"targetNode":"/igc/data-sources/data-source/general/abstract",
-  			"appendWith":"\n\n",
-  			"prefix":"Folgende Sprachen werden im beschriebenen Datensatz verwendet: ",
-  			"concatEntriesWith":", ",
-  			"transform":{
-				"funct":UtilsLanguageCodelist.getNameFromShortcut,
-				"params":['de']
+		{
+			"srcXpath":"//gmd:dateStamp/gco:DateTime | //gmd:dateStamp/gco:Date[not(../gco:DateTime)]",
+			"targetNode":"/igc/data-sources/data-source/general/date-of-creation"
+			"transform":{
+				"funct":UtilsCSWDate.mapDateFromIso8601ToIndex
 			}
-  		},
+		},
   		{	
-  			"execute":{
-				"funct":mapCreateDateTime
-			}
-  		},
-  		{	
-  			"srcXpath":"/metadata/Esri/MetaID",
+  			"srcXpath":"//gmd:fileIdentifier/gco:CharacterString",
   			"targetNode":"/igc/data-sources/data-source/general/original-control-identifier"
   		},
   		{	
-  			"srcXpath":"/metadata/mdStanName",
+  			"srcXpath":"//gmd:metadataStandardName/gco:CharacterString",
   			"targetNode":"/igc/data-sources/data-source/general/metadata/metadata-standard-name"
   		},
   		{	
-  			"srcXpath":"/metadata/dataIdInfo/idCitation/resAltTitle",
+  			"srcXpath":"//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:alternateTitle/gco:CharacterString",
   			"targetNode":"/igc/data-sources/data-source/general/dataset-alternate-name",
   			"concatEntriesWith":", "
   		},
   		{
-  			"srcXpath":"/metadata/dataIdInfo/tpCat/TopicCatCd",
+  			"srcXpath":"//gmd:identificationInfo//gmd:topicCategory",
   			"targetNode":"/igc/data-sources/data-source/general/topic-categories",
   			"newNodeName":"topic-category",
   			"subMappings":{
   				"mappings": [
 	  				{
-			  			"srcXpath":"./@value",
+			  			"srcXpath":"gmd:MD_TopicCategoryCode",
 			  			"targetNode":"",
 			  			"targetAttribute":"id",
 			  			"transform":{
-							"funct":parseToInt
+							"funct":transformToIgcDomainId,
+							"params":[527]
 						}
 			  		}
 			  	]
 			}
   		},
+  		{	
+  			"srcXpath":"//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/hierarchy-level",
+  			"targetAttribute":"iso-code",
+			"transform":{
+				"funct":transformGeneric,
+				"params":[{"dataset":"5", "series":"6"}, false, "Could not map hierarchyLevel (only 'dataset' and 'series' are supported) : "]
+  			}
+  		},
+  		{
+  			"execute":{
+  				"funct":mapReferenceSystemInfo
+  			}
+		},
+  		{
+  			"srcXpath":"//gmd:identificationInfo/gmd:MD_DataIdentification",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
+  			"newNodeName":"publication-scale",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":"gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer",
+			  			"targetNode":"scale"
+			  		},
+	  				{
+			  			"srcXpath":"gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gmd:Distance[@uom='meter']",
+			  			"targetNode":"resolution-ground"
+			  		},
+	  				{
+			  			"srcXpath":"gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gmd:Distance[@uom='dpi']",
+			  			"targetNode":"resolution-scan"
+			  		}
+			  	]
+			}
+  		},
+  		{	
+  			"srcXpath":"//gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description/gco:CharacterString",
+  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production"
+  		},
+
+  	
+  		
+// ArcGIS mappings  		
+  		
+  		
 
 
   		// ****************************************************
@@ -113,36 +141,6 @@ var mappingDescription = {"mappings":[
   		// /igc/data-sources/data-source/technical-domain/map
   		//
   		// ****************************************************
-  		{	
-  			"srcXpath":"/metadata/dqInfo/dqScope/scpLvl/ScopeCd/@value",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/hierarchy-level",
-  			"targetAttribute":"iso-code",
-  			"transform":{
-				"funct":parseToInt
-			}
-  		},
-  		{	
-  			"srcXpath":"/metadata/refSysInfo/RefSystem/refSysID/identCode",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/coordinate-system"
-  		},
-  		{
-  			"srcXpath":"/metadata/refSysInfo/RefSystem/refSysID/identCode",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/coordinate-system",
-  			"targetAttribute":"id",
-  			"transform":{
-				"funct":transformToIgcDomainId,
-				"params":[100, 150, "Could not map reference system name to IGC codelist: "]
-			}						    					
-  		},
-  		{
-  			"execute":{
-				"funct":mapDataScale
-			}
-  		},
-  		{	
-  			"srcXpath":"/metadata/dataqual/lineage/procstep/procdesc",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production"
-  		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/envirDesc",
   			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production",
@@ -821,6 +819,27 @@ function mapToTarget(mapping, source, target) {
 		return target;
 }
 
+
+
+function getObjectClassFromHierarchyLevel(val) {
+	// default to "Geo-Information / Karte"
+	var result = "1"; 
+	if (hasValue(val) && val.toLowerCase() == "service") {
+		// "Dienst / Anwendung / Informationssystem"
+		result = "3";
+	}
+	return result;
+}
+
+
+
+
+
+
+
+
+// functions from ARCGIS import
+
 function validateSource(source) {
 	var title = XPathUtils.getString(source.getDocumentElement(), "/metadata/dataIdInfo/idCitation/resTitle");
 	var uuid = XPathUtils.getString(source.getDocumentElement(), "/metadata/Esri/MetaID");
@@ -834,6 +853,32 @@ function validateSource(source) {
 	}
 	return true;
 }
+
+function mapReferenceSystemInfo(source, target) {
+	var rsIdentifiers = XPathUtils.getNodeList(source, "//gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier");
+	if (hasValue(rsIdentifiers)) {
+		for (i=0; i<rsIdentifiers.getLength(); i++ ) {
+			var code = XPathUtils.getString(rsIdentifiers.item(i), "gmd:code/gco:CharacterString");
+			var codeSpace = XPathUtils.getString(rsIdentifiers.item(i), "gmd:codeSpace/gco:CharacterString");
+			var coordinateSystem;
+			if (hasValue(codeSpace) && hasValue(code)) {
+				coordinateSystem = codeSpace+":"+code; 
+			} else if (hasValue(code)) {
+				coordinateSystem = code;
+			}
+			log.debug("adding '" + "/igc/data-sources/data-source/technical-domain/map/coordinate-system" + "' = '" + coordinateSystem + "' to target document.");
+			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/technical-domain/map/coordinate-system");
+			XMLUtils.createOrReplaceTextNode(node, coordinateSystem);
+			var coordinateSystemId = transformToIgcDomainId(coordinateSystem, 100, 150, "Could not map coordinate-system: ");
+			if (hasValue(coordinateSystemId)) {
+				XMLUtils.createOrReplaceAttribute(node, "id", coordinateSystemId);
+			}
+		}
+	}
+}
+
+
+
 
 
 function mapAccessConstraints(source, target) {
@@ -960,38 +1005,6 @@ function mapAccessConstraints(source, target) {
 	
 }
 
-function mapDataScale(source, target) {
-	
-	var refNoms = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/dataScale/equScale/rfDenom");
-	log.debug("Found " + refNoms.getLength() + " refNom records.");
-	for (var i=0; i<refNoms.getLength(); i++ ) {
-		var refNom = refNoms.item(i).getTextContent()
-		if (hasValue(refNom)) {
-			var refNomSplitted = refNom.split("/");
-			for (var j=0; j<refNomSplitted.length; j++ ) {
-				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/technical-domain/map");
-				node = node.appendChild(target.getOwnerDocument().createElement("publication-scale"));
-				node = node.appendChild(target.getOwnerDocument().createElement("scale"));
-				refNomSplitted[j] = replaceString(refNomSplitted[j], "\,", ".");
-				XMLUtils.createOrReplaceTextNode(node, transformNumberStrToIGCNumber(refNomSplitted[j]));
-			}
-		}
-	}
-	var scaleDists = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/dataScale/scaleDist/value");
-	log.debug("Found " + scaleDists.getLength() + " scaleDist records.");
-	for (var i=0; i<scaleDists.getLength(); i++ ) {
-		var scaleDist = scaleDists.item(i).getTextContent()
-		if (hasValue(scaleDist)) {
-			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/technical-domain/map");
-			node = node.appendChild(target.getOwnerDocument().createElement("publication-scale"));
-			node = node.appendChild(target.getOwnerDocument().createElement("resolution-ground"));
-			scaleDist = replaceString(scaleDist, "\,", ".");
-			XMLUtils.createOrReplaceTextNode(node, transformNumberStrToIGCNumber(scaleDist));
-		}
-	}
-	
-}
-
 
 function mapCommunicationData(source, target) {
 	var email = XPathUtils.getString(source, "rpCntInfo/cntAddress/eMailAdd").trim();
@@ -1026,7 +1039,7 @@ function mapCommunicationData(source, target) {
 
 
 function mapCreateDateTime(source, target) {
-	var dateStr = XPathUtils.getString(source, "/metadata/Esri/CreaDate");
+	var dateStr = XPathUtils.getString(source, "gmd:MD_Metadata/dateStamp/gco:Date");
 	var timeStr = XPathUtils.getString(source, "/metadata/Esri/CreaTime");
 	if (dateStr instanceof String && timeStr instanceof String) {
 		dateStr = dateStr.trim();

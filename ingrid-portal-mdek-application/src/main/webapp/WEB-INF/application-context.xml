@@ -267,6 +267,13 @@
 		            </key>
 		            <ref bean="scriptImportDataMapper" />
 		        </entry>
+<!--                <entry>
+                    <key>
+                        <value>csw202</value>
+                    </key>
+                    <ref bean="csw202ScriptImportDataMapper" />
+                </entry>
+-->                
 		    </map>
 	    </property>
 	</bean>
@@ -278,6 +285,15 @@
 			<ref local="importDataProvider" />
 		</property>
 	</bean>
+
+    <bean id="csw202ScriptImportDataMapper" class="de.ingrid.mdek.mapping.ScriptImportDataMapper">
+        <property name="mapperScript" value="classpath:import/mapper/csw202_to_ingrid_igc.js" />
+        <property name="template" value="classpath:import/templates/igc_template.xml" />
+        <property name="dataProvider">
+            <ref local="importDataProvider" />
+        </property>
+    </bean>
+
 	
 	<bean id="dummyImportDataMapper" class="de.ingrid.mdek.mapping.DummyImportDataMapper"></bean>
 	
