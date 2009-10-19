@@ -5,9 +5,11 @@ package de.ingrid.portal.global;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -37,9 +39,39 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     static private final String KEY_RELATION_FILTER_FROM_OBJ_ID = "RELATION_FILTER_FROM_OBJ_ID";
     static private final String KEY_RELATION_FILTER_TYPE = "RELATION_FILTER_TYPE";
     static private final String KEY_RELATION_FILTER_TO_OBJ_ID = "RELATION_FILTER_TO_OBJ_ID";
+    
+	static final String FIELD_OBJECT_ROOT = "t01_object.root";
+	static final String FIELD_ADDRESS_ROOT = "T02_address.root";
+
+	/** Check whether UDK_5_0 plug description is "corrupt" so no top entities can be fetched ! */
+	static public boolean isCorrupt(PlugDescription plug) {
+		boolean isCorrupt = true;
+
+		// check needed fields to determine top entities !
+    	String[] fields = plug.getFields();
+    	if (fields != null && fields.length > 0) {
+    		List fieldList = Arrays.asList(fields);
+
+    		if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
+    			if (fieldList.contains(FIELD_OBJECT_ROOT)) {
+                	isCorrupt = false;
+    			}
+            } else if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
+    			if (fieldList.contains(FIELD_ADDRESS_ROOT)) {
+                	isCorrupt = false;
+    			}
+            }
+    	}
+
+    	if (isCorrupt) {
+			log.warn("CORRUPT PlugDescription ! We skip this plug: " + plug);
+    	}
+
+		return isCorrupt;
+	}
 
     /**
-     * Get top ECS Objects as a List of IngridHits (containing metadata ID and UDK_CLASS)
+     * Get top UDK_5_0 ECS Objects as a List of IngridHits (containing metadata ID and UDK_CLASS)
      *  
      * @param objId parent object
      * @param iPlugId plug id
@@ -49,7 +81,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
         String[] requestedMetadata = new String[2];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
-        ArrayList result = getHits("t01_object.root:1".concat(
+        ArrayList result = getHits(FIELD_OBJECT_ROOT + ":1".concat(
                 " iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")), requestedMetadata, null);
         return result;
     }
@@ -95,7 +127,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     }
 
     /**
-     * Get top ECS Addresses as a List of IngridHits (containing metadata ID and UDK_CLASS)
+     * Get top UDK_5_0 ECS Addresses as a List of IngridHits (containing metadata ID and UDK_CLASS)
      *  
      * @param objId parent object
      * @param iPlugId plug id
@@ -110,7 +142,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
         requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
         requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
         requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
-        ArrayList result = getHits("T02_address.root:1".concat(
+        ArrayList result = getHits(FIELD_ADDRESS_ROOT + ":1".concat(
         	" iplugs:\"".concat(getAddressPlugIdFromPlugId(iPlugId)).concat("\"")),
             requestedMetadata, null);
         return result;
@@ -460,7 +492,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
                     plugSortCriteria[i] = sortString.toString();
             	}
 
-            	// Get the collator for the German Locale (for correct sorting of ä,ö,ü ...)  
+            	// Get the collator for the German Locale (for correct sorting of ï¿½,ï¿½,ï¿½ ...)  
             	Collator germanCollator = Collator.getInstance(Locale.GERMAN);
             	return germanCollator.compare(plugSortCriteria[0], plugSortCriteria[1]);
             } catch (Exception e) {

@@ -76,6 +76,9 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             String[] plugTypes = new String[]{Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS};
             PlugDescription[] plugs = IPlugHelper.filterIPlugsByType(allPlugs, plugTypes);
 
+            // filter corrupt ones
+            plugs = IPlugHelper.filterCorruptECSIPlugs(plugs);
+
         	// filter partners
             String partnerRestriction = PortalConfig.getInstance().getString(
                     PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);

@@ -9,6 +9,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import de.ingrid.portal.search.IPlugVersionInspector;
+import de.ingrid.portal.search.catalog.CatalogTreeDataProvider;
+import de.ingrid.portal.search.catalog.CatalogTreeDataProviderFactory;
 import de.ingrid.utils.PlugDescription;
 
 /**
@@ -91,6 +94,38 @@ public class IPlugHelper {
             		break;
                 }
             }
+        }
+
+        return (PlugDescription[]) result.toArray(new PlugDescription[result.size()]);
+    }
+
+    /**
+     * Remove all ECS iPlugs where plug description is corrupt, meaning field mapping is invalid.  
+     * 
+     * @param iPlugs iPlugs to be filtered, can be of all types
+     * @return Array containing filtered iPlugs or empty
+     */
+    public static PlugDescription[] filterCorruptECSIPlugs(PlugDescription[] iPlugs) {
+        ArrayList result = new ArrayList();
+
+        String[] ecsPlugTypes = new String[]{Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS};
+        for (int i = 0; i < iPlugs.length; i++) {
+            PlugDescription plug = iPlugs[i];
+            boolean isECSPlug = false;
+            for (int j = 0; j < ecsPlugTypes.length; j++) {
+            	if (hasDataType(plug, ecsPlugTypes[j])) {
+            		isECSPlug = true;
+            		break;
+                }
+            }
+            if (isECSPlug) {
+                CatalogTreeDataProvider ctdp = CatalogTreeDataProviderFactory.getDetailDataPreparer(IPlugVersionInspector.getIPlugVersion(plug));
+            	if (ctdp.isCorrupt(plug)) {
+            		continue;
+            	}
+            }
+
+            result.add(plug);	
         }
 
         return (PlugDescription[]) result.toArray(new PlugDescription[result.size()]);
