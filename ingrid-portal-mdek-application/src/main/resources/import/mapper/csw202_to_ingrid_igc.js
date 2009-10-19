@@ -1,8 +1,8 @@
 /**
  * Copyright (c) 2009 wemove digital solutions. All rights reserved.
  * 
- * ArcCatalog import script. This script translates an input xml from
- * the export of an ArcCatalog ISO-Editor (Format "XML") into a IGC 
+ * CSW 2.0.2 AP ISO 1.0 import script. This script translates an input xml from
+ * the CSW 2.0.2 format structure into a IGC 
  * import format structure.
  * 
  * It uses a template that provides a basic IGC import format structure.
@@ -83,7 +83,7 @@ var mappingDescription = {"mappings":[
 			  			"targetAttribute":"id",
 			  			"transform":{
 							"funct":transformToIgcDomainId,
-							"params":[527]
+							"params":[527, 150, "Could not tranform topic category: "]
 						}
 			  		}
 			  	]
@@ -150,8 +150,8 @@ var mappingDescription = {"mappings":[
 			  			"targetNode":"",
 			  			"targetAttribute":"iso-code",
 			  			"transform":{
-    						"funct":transformToIgcDomainId,
-    						"params":[526]
+    						"funct":transformISOToIgcDomainId,
+    						"params":[526, "Could not transform spatial representation type: "]
     					}
 			  		}
 			  	]
@@ -162,8 +162,8 @@ var mappingDescription = {"mappings":[
   			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format/vector-topology-level",
   			"targetAttribute":"iso-code",
   			"transform":{
-				"funct":transformToIgcDomainId,
-				"params":[528]
+				"funct":transformISOToIgcDomainId,
+				"params":[528, "Could not transform vector topology level: "]
 			}
   		},
   		{
@@ -177,8 +177,8 @@ var mappingDescription = {"mappings":[
 			  			"targetNode":"geometric-object-type",
 			  			"targetAttribute":"iso-code",
 			  			"transform":{
-							"funct":transformToIgcDomainId,
-							"params":[515]
+							"funct":transformISOToIgcDomainId,
+							"params":[515, "Could not transform geometric object type code: "]
 						}
 			  		},
 	  				{
@@ -255,9 +255,10 @@ var mappingDescription = {"mappings":[
 			  			"srcXpath":"//gmd:otherConstraints/gco:CharacterString",
 			  			"targetNode":"restriction",
 			  			"targetAttribute":"id",
+			  			"defaultValue":"-1";
 			  			"transform":{
     						"funct":transformToIgcDomainId,
-    						"params":[6010]
+    						"params":[6010, 150]
     					}
 			  		},
 	  				{
@@ -286,8 +287,8 @@ var mappingDescription = {"mappings":[
 			  			"targetNode":"medium-name",
 			  			"targetAttribute":"iso-code",
 			  			"transform":{
-							"funct":transformToIgcDomainId,
-							"params":[520]
+							"funct":transformISOToIgcDomainId,
+							"params":[520, "Could not transform meduim name code: "]
 						}
 			  		},
 	  				{
@@ -314,6 +315,7 @@ var mappingDescription = {"mappings":[
 			  			"srcXpath":"gmd:name/gco:CharacterString",
 			  			"targetNode":"format-name",
 			  			"targetAttribute":"id",
+			  			"defaultValue":"-1",
 			  			"transform":{
 							"funct":transformToIgcDomainId,
 							"params":[1320, 150]
@@ -338,86 +340,80 @@ var mappingDescription = {"mappings":[
   			"defaultValue":"1",
   			"targetNode":"/igc/data-sources/data-source/additional-information/publication-condition"
   		},
-
-  	
-  		
-// ArcGIS mappings  		
-  		
-  		
-  		
-  		
-  		
-
-
   		{	
-  			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/ordInstr",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
-  			"concatEntriesWith":", "
+  			"srcXpath":"//gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions/gco:CharacterString",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions"
   		},
-  		{	
-  			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/resFees",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
-  			"concatEntriesWith":", ",
-  			"appendWith":"\n\n",
-  			"prefix":"Gebühren/Bedingungen: "
-  		},
-  		{	
-  			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/ordTurn",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
-  			"concatEntriesWith":", ",
-  			"appendWith":"\n\n",
-  			"prefix":"Dauer des Bestellvorganges: "
-  		},
-  		{	
-  			"defaultValue":"INSPIRE-Richtlinie",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-specification"
-  		},
-  		{	
-  			"defaultValue":"nicht evaluiert",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-degree"
-  		},
-  		{	
-  			"defaultValue":"3",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-degree",
-  			"targetAttribute":"id"
-  		},
-  		{	
-  			"defaultValue":"20081001000000000",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-publication-date"
+  		{
+  			"srcXpath":"//gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult",
+  			"targetNode":"/igc/data-sources/data-source/additional-information",
+  			"newNodeName":"conformity",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":"gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString",
+			  			"targetNode":"conformity-specification"
+			  		},
+	  				{
+			  			"srcXpath":"gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date",
+			  			"targetNode":"conformity-publication-date",
+			  			"transform":{
+							"funct":UtilsCSWDate.mapDateFromIso8601ToIndex
+						}
+			  		},
+	  				{
+			  			"srcXpath":"gmd:pass/gco:Boolean",
+			  			"targetNode":"conformity-degree",
+			  			"targetAttribute":"id",
+			  			"transform":{
+							"funct":transformGeneric,
+							"params":[{"true":"1", "false":"2"}, false]
+						}
+			  		},
+	  				{
+			  			"srcXpath":"gmd:pass/gco:Boolean",
+			  			"targetNode":"conformity-degree",
+			  			"targetAttribute":"id",
+			  			"transform":{
+							"funct":transformGeneric,
+							"params":[{"true":"konform", "false":"nicht konform"}, false]
+						}
+			  		}
+			  	]
+			}
   		},
 
-
-
+  		
   		// ****************************************************
   		//
   		// /igc/data-sources/data-source/spatial-domain
   		//
   		// ****************************************************
   		{	
-  			"srcXpath":"/metadata/dataIdInfo/dataExt/vertEle/vertMinVal",
+  			"srcXpath":"//gmd:identificationInfo//gmd:extent/gmd:EX_Extent/gmd:verticalElement/gmd:EX_VerticalExtent/gmd:minimumValue/gco:Real",
   			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-minimum",
   			"transform":{
 				"funct":transformNumberStrToIGCNumber
 			}
   		},
   		{	
-  			"srcXpath":"/metadata/dataIdInfo/dataExt/vertEle/vertMaxVal",
+  			"srcXpath":"//gmd:identificationInfo//gmd:extent/gmd:EX_Extent/gmd:verticalElement/gmd:EX_VerticalExtent/gmd:maximumValue/gco:Real",
   			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-maximum",
   			"transform":{
 				"funct":transformNumberStrToIGCNumber
 			}
   		},
   		{	
-  			"srcXpath":"/metadata/dataIdInfo/dataExt/vertEle/vertUoM/uomName",
+  			"srcXpath":"//gmd:identificationInfo//gmd:EX_Extent/gmd:verticalElement/gmd:EX_VerticalExtent/gmd:verticalCRS/gmd:VerticalCRS/gmd:verticalCS/gml:VerticalCS/gml:axis/gml:CoordinateSystemAxis/@uom",
   			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-unit",
   			"targetAttribute":"id",
   			"transform":{
-				"funct":transformGeneric,
-				"params":[{"Fuß":"9002", "Kilometer":"9036", "Meter":"9001", "Zoll":"4"}, false, "Could not map vertical-extent uom name: "]
+				"funct":transformToIgcDomainId,
+				"params":[102, 150, "Could not map vertical-extent unit:"]
 			}						    					
   		},
   		{	
-  			"srcXpath":"/metadata/dataIdInfo/dataExt/vertEle/vertDatum/datumID/identCode",
+  			"srcXpath":"//gmd:identificationInfo//gmd:EX_Extent/gmd:verticalElement/gmd:EX_VerticalExtent/gmd:verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:identifier",
   			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-vdatum",
   			"targetAttribute":"id",
   			// check for german (150) name in the code list 101
@@ -427,13 +423,14 @@ var mappingDescription = {"mappings":[
 			}						    					
   		},
   		{
-  			"srcXpath":"/metadata/dataIdInfo/geoBox",
+  			"srcXpath":"//gmd:identificationInfo//gmd:extent/gmd:EX_Extent/gmd:geographicElement",
   			"targetNode":"/igc/data-sources/data-source/spatial-domain",
   			"newNodeName":"geo-location",
   			"subMappings":{
   				"mappings": [
 	  				{
-			  			"defaultValue":"Raumbezug des Datensatzes",
+			  			"srcXpath":"gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString",
+	  					"defaultValue":"Raumbezug des Datensatzes",
 			  			"targetNode":"uncontrolled-location/location-name"
 			  		},
 	  				{
@@ -442,28 +439,28 @@ var mappingDescription = {"mappings":[
 			  			"targetAttribute":"id"
 			  		},
 	  				{
-			  			"srcXpath":"westBL",
+			  			"srcXpath":"gmd:EX_GeographicBoundingBox/gmd:westBoundLongitude/gco:Decimal",
 			  			"targetNode":"bounding-coordinates/west-bounding-coordinate",
 			  			"transform":{
 							"funct":transformNumberStrToIGCNumber
 						}
 			  		},
 	  				{
-			  			"srcXpath":"eastBL",
+			  			"srcXpath":"gmd:EX_GeographicBoundingBox/gmd:eastBoundLongitude/gco:Decimal",
 			  			"targetNode":"bounding-coordinates/east-bounding-coordinate",
 			  			"transform":{
 							"funct":transformNumberStrToIGCNumber
 						}
 			  		},
 	  				{
-			  			"srcXpath":"northBL",
+			  			"srcXpath":"gmd:EX_GeographicBoundingBox/gmd:northBoundLatitude/gco:Decimal",
 			  			"targetNode":"bounding-coordinates/north-bounding-coordinate",
 			  			"transform":{
 							"funct":transformNumberStrToIGCNumber
 						}
 			  		},
 	  				{
-			  			"srcXpath":"southBL",
+			  			"srcXpath":"gmd:EX_GeographicBoundingBox/gmd:southBoundLatitude/gco:Decimal",
 			  			"targetNode":"bounding-coordinates/south-bounding-coordinate",
 			  			"transform":{
 							"funct":transformNumberStrToIGCNumber
@@ -472,26 +469,7 @@ var mappingDescription = {"mappings":[
 			  	]
 			}
   		},
-  		{
-  			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='002']/keyword",
-  			"targetNode":"/igc/data-sources/data-source/spatial-domain",
-  			"newNodeName":"geo-location",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"srcXpath":".",
-			  			"targetNode":"uncontrolled-location/location-name"
-			  		},
-	  				{
-			  			"defaultValue":"-1",
-			  			"targetNode":"uncontrolled-location/location-name",
-			  			"targetAttribute":"id"
-			  		}
-			  	]
-			}		
-  		},
-
-
+  	
 
   		// ****************************************************
   		//
@@ -499,16 +477,8 @@ var mappingDescription = {"mappings":[
   		//
   		// ****************************************************
   		{	
-  			"srcXpath":"/metadata/dataIdInfo/resMaint/dateNext",
-  			"targetNode":"/igc/data-sources/data-source/temporal-domain/description-of-temporal-domain",
-  			"prefix":"Nächste Überarbeitung: "
-  		},
-  		{	
-  			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='004']/keyword",
-  			"targetNode":"/igc/data-sources/data-source/temporal-domain/description-of-temporal-domain",
-  			"appendWith":"\n\n",
-  			"concatEntriesWith":", ",
-  			"prefix":"Schlagworte: "
+  			"srcXpath":"//gmd:identificationInfo//gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceNote/gco:CharacterString",
+  			"targetNode":"/igc/data-sources/data-source/temporal-domain/description-of-temporal-domain"
   		},
   		{	
   			"execute":{
@@ -516,47 +486,115 @@ var mappingDescription = {"mappings":[
 			}
   		},
   		{	
-  			"srcXpath":"/metadata/dataIdInfo/resMaint/maintFreq/MaintFreqCd/@value",
+  			"srcXpath":"//gmd:identificationInfo//gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue",
   			"targetNode":"/igc/data-sources/data-source/temporal-domain/time-period",
   			"targetAttribute":"iso-code",
   			"transform":{
-				"funct":parseToInt
+				"funct":transformISOToIgcDomainId,
+				"params":[518, "Could not map time-period to ISO code: "]
+			}
+  		},
+  		{	
+  			"srcXpath":"//gmd:identificationInfo//gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency/gmd:TM_PeriodDuration",
+  			"targetNode":"/igc/data-sources/data-source/temporal-domain/time-step",
+  			"transform":{
+				"funct":new TM_PeriodDurationToTimeInterval().parse
+			}
+  		},
+  		{	
+  			"srcXpath":"//gmd:identificationInfo//gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency/gmd:TM_PeriodDuration",
+  			"targetNode":"/igc/data-sources/data-source/temporal-domain/time-step",
+  			"transform":{
+				"funct":new TM_PeriodDurationToTimeAlle().parse
 			}
   		},
   		{
-  			"srcXpath":"/metadata/dataIdInfo/idCitation/resRefDate",
+  			"srcXpath":"//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date",
   			"targetNode":"/igc/data-sources/data-source/temporal-domain",
   			"newNodeName":"dataset-reference",
   			"subMappings":{
   				"mappings": [
 	  				{
-			  			"srcXpath":"refDate",
+			  			"srcXpath":"gmd:date/gco:Date",
 			  			"targetNode":"dataset-reference-date",
 			  			"transform":{
-							"funct":padString,
-							"params":["000000000"]
+							"funct":UtilsCSWDate.mapDateFromIso8601ToIndex
 						}
 			  		},
 	  				{
-			  			"srcXpath":"refDateType/DateTypCd/@value",
+			  			"srcXpath":"gmd:dateType/gmd:CI_DateTypeCode/@codeListValue",
 			  			"targetNode":"dataset-reference-type",
 			  			"targetAttribute":"iso-code",
 			  			"transform":{
-							"funct":parseToInt
-						}
+    						"funct":transformISOToIgcDomainId,
+    						"params":[502, "Could not map date role: "]
+    					}
 			  		}
 			  	]
 			}
   		},
-
-
+  		
   		// ****************************************************
   		//
   		// /igc/data-sources/data-source/subject-terms
   		//
   		// ****************************************************
   		{
-  			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='001' or @KeyTypCd='003' or @KeyTypCd='005']/keyword",
+  			"srcXpath":"//gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='GEMET - INSPIRE themes, version 1.0']/gmd:keyword/gco:CharacterString",
+  			"targetNode":"/igc/data-sources/data-source/subject-terms",
+  			"newNodeName":"controlled-term",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":".",
+			  			"targetNode":""
+			  		},
+	  				{
+			  			"defaultValue":"INSPIRE",
+			  			"targetNode":"",
+			  			"targetAttribute":"source"
+			  		}
+			  	]
+			}		
+  		},		
+  		{
+  			"srcXpath":"//gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='GEMET - Concepts, version 2.1']/gmd:keyword/gco:CharacterString",
+  			"targetNode":"/igc/data-sources/data-source/subject-terms",
+  			"newNodeName":"controlled-term",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":".",
+			  			"targetNode":""
+			  		},
+	  				{
+			  			"defaultValue":"GEMET",
+			  			"targetNode":"",
+			  			"targetAttribute":"source"
+			  		}
+			  	]
+			}		
+  		},		
+  		{
+  			"srcXpath":"//gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='UMTHES Thesaurus']/gmd:keyword/gco:CharacterString",
+  			"targetNode":"/igc/data-sources/data-source/subject-terms",
+  			"newNodeName":"controlled-term",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":".",
+			  			"targetNode":""
+			  		},
+	  				{
+			  			"defaultValue":"UMTHES",
+			  			"targetNode":"",
+			  			"targetAttribute":"source"
+			  		}
+			  	]
+			}		
+  		},		
+  		{
+  			"srcXpath":"//gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString!='GEMET - INSPIRE themes, version 1.0' | gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='GEMET - Concepts, version 2.1' | gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='UMTHES Thesaurus']/gmd:keyword/gco:CharacterString",
   			"targetNode":"/igc/data-sources/data-source/subject-terms",
   			"newNodeName":"uncontrolled-term",
   			"subMappings":{
@@ -576,27 +614,17 @@ var mappingDescription = {"mappings":[
   		// ****************************************************
 
   		{
-  			"srcXpath":"/metadata/distInfo/distributor/distorTran/onLineSrc",
+  			"srcXpath":"//gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource",
   			"targetNode":"/igc/data-sources/data-source",
   			"newNodeName":"available-linkage",
   			"subMappings":{
   				"mappings": [
 	  				{
-			  			"srcXpath":"orDesc",
-			  			"targetNode":"linkage-name",
-			  			"transform":{
-							"funct":transformGeneric,
-							"params":[{"001":"Live Data and Maps", "002":"Downloadable Data", "003":"Offline Data", "004":"Images of Static Maps", "005":"Other Documents", "006":"Applications", "007":"Geographic Services", "008":"Clearinghouses", "009":"Map Files", "010":"Geographic Activities"}, false]
-						}
+			  			"srcXpath":"gmd:name/gco:CharacterString",
+			  			"targetNode":"linkage-name"
 			  		},
 	  				{
-			  			"srcXpath":"protocol",
-			  			"targetNode":"linkage-name",
-			  			"appendWith":"\n\n",
-			  			"prefix":"Verbindungsprotokoll: "
-			  		},
-	  				{
-			  			"srcXpath":"linkage",
+			  			"srcXpath":"gmd:linkage/gmd:URL",
 			  			"targetNode":"linkage-url"
 			  		},
 	  				{
@@ -604,25 +632,26 @@ var mappingDescription = {"mappings":[
 			  			"targetNode":"linkage-url-type"
 			  		},
 	  				{
+			  			"srcXpath":"gmd:description/gco:CharacterString",
+			  			"targetNode":"linkage-description"
+			  		},
+	  				{
 			  			"defaultValue":"-1",
 			  			"targetNode":"linkage-reference",
 			  			"targetAttribute":"id"
-			  		},
-	  				{
-			  			"srcXpath":"orFunct/OnFunctCd/@value",
-			  			"targetNode":"linkage-reference",
-			  			"transform":{
-							"funct":transformGeneric,
-							"params":[{"001":"download", "002":"information", "003":"offlineAccess", "004":"order", "005":"search"}, false, "Could not map linkage function: "]
-						}
 			  		}
 			  	]
 			}
   		},
 
+  		// ****************************************************
+  		//
+  		// /igc/addresses
+  		//
+  		// ****************************************************
   		
   		{	
-  			"srcXpath":"/metadata/distInfo/distributor/distorCont | /metadata/dataIdInfo/idCitation/citRespParty | /metadata/mdContact",
+  			"srcXpath":"//*/gmd:CI_ResponsibleParty",
   			"targetNode":"/igc/addresses",
   			"newNodeName":"address",
   			"subMappings":{
@@ -648,39 +677,36 @@ var mappingDescription = {"mappings":[
 			  			"targetAttribute":"id"
 			  		},
 	  				{
-			  			"srcXpath":"rpOrgName",
+			  			"srcXpath":"gmd:organisationName/gco:CharacterString",
 			  			"targetNode":"organisation"
 			  		},
 	  				{
-			  			"srcXpath":"rpIndName",
+			  			"srcXpath":"gmd:individualName/gco:CharacterString",
 			  			"targetNode":"name"
 			  		},
 	  				{
-			  			"srcXpath":"rpCntInfo/cntAddress/country",
+			  			"srcXpath":"gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country/gco:CharacterString",
 			  			"targetNode":"country",
 			  			"targetAttribute":"id",
+			  			"defaultValue":"-1",
 			  			"transform":{
-							"funct":UtilsCountryCodelist.getCodeFromShortcut2
+							"funct":UtilsCountryCodelist.getCodeFromShortcut3
 						}
 			  		},
 	  				{
-			  			"srcXpath":"rpCntInfo/cntAddress/country",
-			  			"targetNode":"country",
-			  			"transform":{
-							"funct":UtilsCountryCodelist.getNameFromShortcut2,
-							"params":"de"
-						}
+			  			"srcXpath":"gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country/gco:CharacterString",
+			  			"targetNode":"country"
 			  		},
 	  				{
-			  			"srcXpath":"rpCntInfo/cntAddress/postCode",
+			  			"srcXpath":"gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:postalCode/gco:CharacterString",
 			  			"targetNode":"postal-code"
 			  		},
 	  				{
-			  			"srcXpath":"rpCntInfo/cntAddress/delPoint",
+			  			"srcXpath":"gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint/gco:CharacterString",
 			  			"targetNode":"street"
 			  		},
 	  				{
-			  			"srcXpath":"rpCntInfo/cntAddress/city",
+			  			"srcXpath":"gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city/gco:CharacterString",
 			  			"targetNode":"city"
 			  		},
 			  		{	
@@ -689,7 +715,7 @@ var mappingDescription = {"mappings":[
 						}
 			  		},
 	  				{
-			  			"srcXpath":"rpPosName",
+			  			"srcXpath":"gmd:positionName/gco:CharacterString",
 			  			"targetNode":"function"
 			  		},
 			  		{
@@ -699,11 +725,12 @@ var mappingDescription = {"mappings":[
 			  			"subMappings":{
 			  				"mappings": [
 				  				{
-						  			"srcXpath":"role/RoleCd/@value",
+						  			"srcXpath":"gmd:role/gmd:CI_RoleCode/@codeListValue",
 						  			"targetNode":"type-of-relation",
 						  			"targetAttribute":"entry-id",
 						  			"transform":{
-										"funct":parseToInt
+										"funct":transformISOToIgcDomainId,
+										"params":[505, "Could not transform ISO address role code to IGC id: "]
 									}
 						  		},
 				  				{
@@ -712,12 +739,13 @@ var mappingDescription = {"mappings":[
 						  			"targetAttribute":"list-id"
 						  		},
 				  				{
-						  			"srcXpath":"role/RoleCd/@value",
+						  			"srcXpath":"gmd:role/gmd:CI_RoleCode/@codeListValue",
 						  			"targetNode":"type-of-relation",
-						  			"transform":{
-										"funct":transformToIgcDomainValue,
-										"params":[505, 150, "Could not address role code: "]
+							  		"transform":{
+										"funct":transformISOToIgcDomainValue,
+										"params":[505, "Could not transform ISO address role code to IGC codelist value: "]
 									}
+						  				
 						  		},
 				  				{
 						  			"setUUID":"true",
@@ -777,10 +805,6 @@ function mapToTarget(mapping, source, target) {
 							// trim
 							value = value.trim();
 						}
-						if (m.defaultValue && (!hasValue(value) || value.startsWith("REQUIRED:"))) {
-							log.debug("Setting value to default '" + m.defaultValue + "'")
-							value = m.defaultValue;
-						}
 						// check for transformation
 						if (hasValue(m.transform)) {
 							log.debug("Transform value '" + value + "'")
@@ -790,7 +814,11 @@ function mapToTarget(mapping, source, target) {
 							}
 							value = call_f(m.transform.funct,args);
 						}
-						if (hasValue(value) && !(value instanceof String && value.startsWith("REQUIRED:"))) {
+						if (m.defaultValue && !hasValue(value)) {
+							log.debug("Setting value to default '" + m.defaultValue + "'")
+							value = m.defaultValue;
+						}
+						if (hasValue(value)) {
 							var node = XPathUtils.createElementFromXPath(target, m.targetNode);
 							log.debug("Found node with content: '" + node.getTextContent() + "'")
 							if (j==0) { 
@@ -873,24 +901,8 @@ function getObjectClassFromHierarchyLevel(val) {
 
 
 
-
-
-
-
-
-// functions from ARCGIS import
-
 function validateSource(source) {
-	var title = XPathUtils.getString(source.getDocumentElement(), "/metadata/dataIdInfo/idCitation/resTitle");
-	var uuid = XPathUtils.getString(source.getDocumentElement(), "/metadata/Esri/MetaID");
-	var metadataLanguage = XPathUtils.getString(source.getDocumentElement(), "/metadata/mdLang/languageCode/@value");
-	var requiredMetadataLanguage = "de";
-	if (!metadataLanguage) {
-		metadataLanguage = requiredMetadataLanguage;
-	} else if (metadataLanguage != requiredMetadataLanguage) {
-		log.error("Dataset '" + title + "' (" + uuid + ") has the wrong matadata language '" + metadataLanguage + "'. Must be '" + requiredMetadataLanguage + "'");
-		throw "Dataset '" + title + "' (" + uuid + ") has the wrong matadata language '" + metadataLanguage + "'. Must be '" + requiredMetadataLanguage + "'";
-	}
+	// pre check source if required
 	return true;
 }
 
@@ -918,137 +930,8 @@ function mapReferenceSystemInfo(source, target) {
 }
 
 
-
-
-
-function mapAccessConstraints(source, target) {
-	log.debug("mapAccessConstraints");
-	var accessConsts = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/resConst/LegConsts/accessConsts/RestrictCd/@value");
-	var useConsts = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/resConst/LegConsts/useConsts/RestrictCd/@value");
-	if (!hasValue(accessConsts) && !hasValue(useConsts)) {
-		
-		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/restriction");
-		XMLUtils.createOrReplaceTextNode(node, "keine");
-		XMLUtils.createOrReplaceAttribute(node, "id", "1");
-		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/terms-of-use");
-		XMLUtils.createOrReplaceTextNode(node, "keine Einschr�nkungen");
-	
-	} else if (hasValue(accessConsts) && accessConsts.getLength() == 1 && accessConsts.item(0).getTextContent() == "006") {
-		
-		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/restriction");
-		XMLUtils.createOrReplaceTextNode(node, "aufgrund der Rechte des geistigen Eigentums");
-		XMLUtils.createOrReplaceAttribute(node, "id", "6");
-		var useConst = "";
-		for (var i=0; i<useConsts.getLength(); i++ ) {
-			if (i > 0) {
-				useConst += ", ";
-			}
-			useConst += transformToIgcDomainValue(parseToInt(useConsts.item(i).getTextContent().trim()), 524, 150);
-		}
-		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/terms-of-use");
-		XMLUtils.createOrReplaceTextNode(node, useConst);
-	} else {
-		var accessConst = "";
-		for (var i=0; i<accessConsts.getLength(); i++ ) {
-			if (i > 0) {
-				accessConst += ", ";
-			}
-			accessConst += transformToIgcDomainValue(parseToInt(accessConsts.item(i).getTextContent().trim()), 524, 150);
-		}
-		var useConst = "";
-		for (var i=0; i<useConsts.getLength(); i++ ) {
-			if (i > 0) {
-				useConst += ", ";
-			}
-			useConst += transformToIgcDomainValue(parseToInt(useConsts.item(i).getTextContent().trim()), 524, 150);
-		}
-		var nodeText = "";
-		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/ordering-instructions");
-		if (hasValue(accessConst)) {
-			nodeText = "";
-			// append content to target nodes content?
-			if (node.getTextContent()) {
-				nodeText = node.getTextContent() + "\n\n";
-			}
-			nodeText += "Daten-Zugriffsbeschr�nkungen: " + accessConst;
-			XMLUtils.createOrReplaceTextNode(node, nodeText);
-		}
-		if (hasValue(useConst)) {
-			nodeText = "";
-			// append content to target nodes content?
-			if (node.getTextContent()) {
-				nodeText = node.getTextContent() + "\n\n";
-			}
-			nodeText += "Daten-Verwendungsbeschr�nkungen: " + useConst;
-			XMLUtils.createOrReplaceTextNode(node, nodeText);
-		}
-	}
-	var useLimits = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/resConst/Consts/useLimit");
-	var useLimit = "";
-	for (var i=0; i<useLimits.getLength(); i++ ) {
-		if (i > 0) {
-			useLimit += ", ";
-		}
-		useLimit += useLimits.item(i).getTextContent().trim();
-	}
-	if (hasValue(useLimit)) {
-		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/ordering-instructions");
-		// append content to target nodes content?
-		if (node.getTextContent()) {
-			nodeText = node.getTextContent() + "\n\n";
-		} else {
-			nodeText = "";
-		}
-		nodeText += "Verwendungsbeschr�nkungen: " + useLimit;
-		XMLUtils.createOrReplaceTextNode(node, nodeText);
-	}
-	
-	var othConsts = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/resConst/LegConsts/othConsts");
-	var othConst = "";
-	for (var i=0; i<othConsts.getLength(); i++ ) {
-		if (i > 0) {
-			othConst += ", ";
-		}
-		othConst += othConsts.item(i).getTextContent().trim();
-	}
-	if (hasValue(othConst)) {
-		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/ordering-instructions");
-		// append content to target nodes content?
-		if (node.getTextContent()) {
-			nodeText = node.getTextContent() + "\n\n";
-		} else {
-			nodeText = "";
-		}
-		nodeText += "Weitere gesetzl. Beschr�nkungen: " + othConst;
-		XMLUtils.createOrReplaceTextNode(node, nodeText);
-	}
-
-	var secConsts = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/resConst/SecConsts/class/ClasscationCd/@value");
-	var secConst = "";
-	for (var i=0; i<secConsts.getLength(); i++ ) {
-		if (i > 0) {
-			secConst += ", ";
-		}
-		secConst += transformToIgcDomainValue(parseToInt(secConsts.item(i).getTextContent().trim()), 511, 150);
-	}
-	if (hasValue(secConst)) {
-		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/ordering-instructions");
-		// append content to target nodes content?
-		if (node.getTextContent()) {
-			nodeText = node.getTextContent() + "\n\n";
-		} else {
-			nodeText = "";
-		}
-		nodeText += "Sicherheitseinstufung: " + secConst;
-		XMLUtils.createOrReplaceTextNode(node, nodeText);
-	}
-	
-}
-
-
 function mapCommunicationData(source, target) {
-	var email = XPathUtils.getString(source, "rpCntInfo/cntAddress/eMailAdd").trim();
-	log.debug("found email:" + email)
+	var email = XPathUtils.getString(source, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString").trim();
 	if (hasValue(email)) {
 		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
 		var node = XPathUtils.createElementFromXPath(communication, "communication-medium");
@@ -1057,7 +940,7 @@ function mapCommunicationData(source, target) {
 		node = XPathUtils.createElementFromXPath(communication, "communication-value");
 		XMLUtils.createOrReplaceTextNode(node, email);
 	}
-	var phone = XPathUtils.getString(source, "rpCntInfo/cntPhone/voiceNum").trim();
+	var phone = XPathUtils.getString(source, "gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString").trim();
 	if (hasValue(phone)) {
 		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
 		var node = XPathUtils.createElementFromXPath(communication, "communication-medium");
@@ -1066,7 +949,7 @@ function mapCommunicationData(source, target) {
 		node = XPathUtils.createElementFromXPath(communication, "communication-value");
 		XMLUtils.createOrReplaceTextNode(node, phone);
 	}
-	var fax = XPathUtils.getString(source, "rpCntInfo/cntPhone/faxNum").trim();
+	var fax = XPathUtils.getString(source, "gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:facsimile/gco:CharacterString").trim();
 	if (hasValue(fax)) {
 		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
 		var node = XPathUtils.createElementFromXPath(communication, "communication-medium");
@@ -1075,30 +958,24 @@ function mapCommunicationData(source, target) {
 		node = XPathUtils.createElementFromXPath(communication, "communication-value");
 		XMLUtils.createOrReplaceTextNode(node, fax);
 	}
-}
-
-
-function mapCreateDateTime(source, target) {
-	var dateStr = XPathUtils.getString(source, "gmd:MD_Metadata/dateStamp/gco:Date");
-	var timeStr = XPathUtils.getString(source, "/metadata/Esri/CreaTime");
-	if (dateStr instanceof String && timeStr instanceof String) {
-		dateStr = dateStr.trim();
-		timeStr = timeStr.trim();
-		if (hasValue(dateStr) && hasValue(dateStr)) {
-			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/general/date-of-creation");
-			XMLUtils.createOrReplaceTextNode(node, dateStr + timeStr + "000");
-		}
+	var fax = XPathUtils.getString(source, "gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL").trim();
+	if (hasValue(fax)) {
+		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
+		var node = XPathUtils.createElementFromXPath(communication, "communication-medium");
+		XMLUtils.createOrReplaceTextNode(node, "URL");
+		XMLUtils.createOrReplaceAttribute(node, "id", "4");
+		node = XPathUtils.createElementFromXPath(communication, "communication-value");
+		XMLUtils.createOrReplaceTextNode(node, fax);
 	}
 }
 
 
 function mapTimeConstraints(source, target) {
-	
-	var timePeriods = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/dataExt/tempEle/TempExtent/exTemp/TM_GeometricPrimitive/TM_Period");
+	var timePeriods = XPathUtils.getNodeList(source, "//gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gmd:TimePeriod");
 	log.debug("Found " + timePeriods.getLength() + " TimePeriod records.");
 	if (hasValue(timePeriods) && timePeriods.getLength() > 0) {
-		var beginPosition = XPathUtils.getString(timePeriods.item(0), "begin");
-		var endPosition = XPathUtils.getString(timePeriods.item(0), "end");
+		var beginPosition = XPathUtils.getString(timePeriods.item(0), "gmd:beginPosition");
+		var endPosition = XPathUtils.getString(timePeriods.item(0), "gmd:endPosition");
 		if (hasValue(beginPosition) && hasValue(endPosition)) {
 			if (beginPosition.equals(endPosition)) {
 				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
@@ -1126,31 +1003,7 @@ function mapTimeConstraints(source, target) {
 				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "bis");
 		}
-	} else {
-		var timePositions = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/dataExt/tempEle/TempExtent/exTemp/TM_GeometricPrimitive/TM_Instant/tmPosition/TM_DateAndTime");
-		log.debug("Found " + timePositions.getLength() + " tmPosition records.");
-		if (hasValue(timePositions)) {
-			var calDate = XPathUtils.getString(timePositions.item(0), "calDate");
-			var clkTime = XPathUtils.getString(timePositions.item(0), "clkTime");
-			var dateTime = calDate + clkTime;
-			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
-			XMLUtils.createOrReplaceTextNode(node, dateTime);
-			node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/ending-date");
-			XMLUtils.createOrReplaceTextNode(node, dateTime);
-			node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
-			XMLUtils.createOrReplaceTextNode(node, "am");
-		}
 	}
-}
-
-function replaceString(val, regExpr, replaceWith) {
-	result =  val.replaceAll(regExpr, replaceWith)
-	log.debug("Replaced String '" + val + "' to '" + result + "'")
-	return result
-}
-
-function padString(val, padding) {
-	return val+padding;
 }
 
 function parseToInt(val) {
@@ -1232,7 +1085,7 @@ function transformToIgcDomainValue(val, codeListId, languageId, logErrorOnNotFou
 			if (logErrorOnNotFound) {
 				log.error(logErrorOnNotFound + val);
 			}
-			return -1;
+			return "";
 		}
 	}
 }
@@ -1264,6 +1117,36 @@ function transformISOToIgcDomainId(val, codeListId, logErrorOnNotFound) {
 		}
 	}
 }
+
+function transformISOToIgcDomainValue(val, codeListId, languageId, logErrorOnNotFound) {
+	if (hasValue(val)) {
+		// transform ISO code to IGC domain value
+		var idcValue = null;
+		try {
+			var idcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(codeListId, val);
+			idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(idcCode), languageId);
+		} catch (e) {
+			if (log.isInfoEnabled()) {
+				log.info("Error tranforming ISO value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
+			}
+			if (logErrorOnNotFound) {
+				log.error(logErrorOnNotFound + val);
+			}
+		}
+		if (hasValue(idcValue)) {
+			return idcValue;
+		} else {
+			if (log.isInfoEnabled()) {
+				log.info("ISO code '" + val + "' unknown in code list " + codeListId + ".");
+			}
+			if (logErrorOnNotFound) {
+				log.error(logErrorOnNotFound + val);
+			}
+			return "";
+		}
+	}
+}
+
 
 function transformISO639_2ToISO639_1(val) {
 	var ISO639_2ToISO639_1 = {
