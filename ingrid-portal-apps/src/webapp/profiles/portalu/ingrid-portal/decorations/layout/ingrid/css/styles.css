@@ -555,5 +555,3 @@ a.contentColumnHeadLight, a.contentColumnHeadLight:link, a.contentColumnHeadLigh
 .contentRowLight { background-color: white; }
 .contentRowLine {border-bottom: 1px solid #176798; }
 .contentInput { width:50em; }
-
-.verticalTabs { background-color:#FFFFFF !important; }
