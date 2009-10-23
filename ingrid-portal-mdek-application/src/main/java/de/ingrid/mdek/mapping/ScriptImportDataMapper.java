@@ -54,12 +54,13 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 		
 		try {
 			// get DOM-tree from XML-file
-			Document doc = getDomFromSourceData(data);
+			Document doc = getDomFromSourceData(data, true);
 			// close the input file after it was read
 			data.close();
+			String sourcetString = XMLUtils.toString(doc);
 			
 			// get DOM-tree from template-file
-			Document docTarget = getDomFromSourceData(template.getInputStream());
+			Document docTarget = getDomFromSourceData(template.getInputStream(), false);
 			
 			preProcessMapping(docTarget);
 			
@@ -212,11 +213,11 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 
 	}
 
-	private Document getDomFromSourceData(InputStream data) {
+	private Document getDomFromSourceData(InputStream data, boolean isNameSpaceAware) {
 		Document doc = null;
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			//dbf.setNamespaceAware(true);
+			dbf.setNamespaceAware(isNameSpaceAware);
 			//dbf.setValidating(true);
 			DocumentBuilder db = dbf.newDocumentBuilder();
 	

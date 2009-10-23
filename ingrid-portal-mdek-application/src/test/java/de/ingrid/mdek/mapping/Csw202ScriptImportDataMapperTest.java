@@ -27,15 +27,15 @@ import org.xml.sax.SAXException;
 
 import de.ingrid.utils.xml.XPathUtils;
 
-public class ScriptImportDataMapperTest extends TestCase {
+public class Csw202ScriptImportDataMapperTest extends TestCase {
 	
 	private ScriptImportDataMapper mapper;
 	
-	private String mapperScriptArcGIS 	= "/import/mapper/ArcGIS_to_ingrid_igc.js";
+	private String mapperScriptArcGIS 	= "/import/mapper/csw202_to_ingrid_igc.js";
 	
 	private String templateIGC 			= "/import/templates/igc_template.xml";
 	
-	private String exampleXml 			= "/de/ingrid/mdek/mapping/sourceExample.xml";
+	private String exampleXml 			= "/de/ingrid/mdek/mapping/csw202_Naturschutzgebiete_Sachsen-Anhalt.xml";
 	
 	
 	public void setUp() {
@@ -72,7 +72,7 @@ public class ScriptImportDataMapperTest extends TestCase {
 		
 		InputStream result = mapper.convert(data);
 		
-		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "xxxTEMPLATExxx"));
+		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
 	}
 
 
@@ -90,7 +90,8 @@ public class ScriptImportDataMapperTest extends TestCase {
 		return dataProvider;
 	}
 
-	public final void testConvertDepmstAbgasLyr() {
+	/*
+	 * 	public final void testConvertDepmstAbgasLyr() {
 		
 		exampleXml = "/de/ingrid/mdek/mapping/depmst_abgas.lyr.xml";
 		
@@ -237,7 +238,7 @@ public class ScriptImportDataMapperTest extends TestCase {
 		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Folgende Sprachen werden im beschriebenen") > -1);
 		
 	}		
-	
+*/	
 	private boolean xpathExists(InputStream in, String path, String value) {
 		boolean found = false;
 		XPath xpath = XPathFactory.newInstance().newXPath();

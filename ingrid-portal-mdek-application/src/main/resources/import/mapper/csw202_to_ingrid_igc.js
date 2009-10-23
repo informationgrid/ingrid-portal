@@ -44,7 +44,7 @@ var mappingDescription = {"mappings":[
 			}
   		},
 		{
-  			"srcXpath":"//gmd:fileIdentifier/gco:CharacterString",
+  			"srcXpath":"//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString",
 			"targetNode":"/igc/data-sources/data-source/general/title"
   		},
   		{
@@ -53,7 +53,7 @@ var mappingDescription = {"mappings":[
   		},
 		{
 			"srcXpath":"//gmd:dateStamp/gco:DateTime | //gmd:dateStamp/gco:Date[not(../gco:DateTime)]",
-			"targetNode":"/igc/data-sources/data-source/general/date-of-creation"
+			"targetNode":"/igc/data-sources/data-source/general/date-of-creation",
 			"transform":{
 				"funct":UtilsCSWDate.mapDateFromIso8601ToIndex
 			}
@@ -82,8 +82,8 @@ var mappingDescription = {"mappings":[
 			  			"targetNode":"",
 			  			"targetAttribute":"id",
 			  			"transform":{
-							"funct":transformToIgcDomainId,
-							"params":[527, 150, "Could not tranform topic category: "]
+							"funct":transformISOToIgcDomainId,
+							"params":[527, "Could not tranform topic category: "]
 						}
 			  		}
 			  	]
@@ -212,14 +212,14 @@ var mappingDescription = {"mappings":[
   			"targetNode":"/igc/data-sources/data-source/additional-information/data-language",
   			"targetAttribute":"id",
   			"transform":{
-				"funct":UtilsLanguageCodelist.getCodeFromShortcut
+				"funct":transformISOToIGCLanguageCode
 			}
   		},
   		{	
   			"srcXpath":"//gmd:identificationInfo//gmd:language/gmd:LanguageCode/@codeListValue",
   			"targetNode":"/igc/data-sources/data-source/additional-information/data-language",
   			"transform":{
-				"funct":UtilsLanguageCodelist.getNameFromShortcut,
+				"funct":transformISOToLanguage,
 				"params":['de']
 			}
   		},
@@ -229,7 +229,7 @@ var mappingDescription = {"mappings":[
   			"targetNode":"/igc/data-sources/data-source/additional-information/metadata-language",
   			"targetAttribute":"id",
   			"transform":{
-				"funct":UtilsLanguageCodelist.getCodeFromShortcut
+				"funct":transformISOToIGCLanguageCode
 			}
   		},
   		{	
@@ -237,7 +237,7 @@ var mappingDescription = {"mappings":[
   			"defaultValue":"de",
   			"targetNode":"/igc/data-sources/data-source/additional-information/metadata-language",
   			"transform":{
-				"funct":UtilsLanguageCodelist.getNameFromShortcut,
+				"funct":transformISOToLanguage,
 				"params":['de']
 			}
   		},
@@ -255,7 +255,7 @@ var mappingDescription = {"mappings":[
 			  			"srcXpath":"//gmd:otherConstraints/gco:CharacterString",
 			  			"targetNode":"restriction",
 			  			"targetAttribute":"id",
-			  			"defaultValue":"-1";
+			  			"defaultValue":"-1",
 			  			"transform":{
     						"funct":transformToIgcDomainId,
     						"params":[6010, 150]
@@ -373,7 +373,6 @@ var mappingDescription = {"mappings":[
 	  				{
 			  			"srcXpath":"gmd:pass/gco:Boolean",
 			  			"targetNode":"conformity-degree",
-			  			"targetAttribute":"id",
 			  			"transform":{
 							"funct":transformGeneric,
 							"params":[{"true":"konform", "false":"nicht konform"}, false]
@@ -594,7 +593,7 @@ var mappingDescription = {"mappings":[
 			}		
   		},		
   		{
-  			"srcXpath":"//gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString!='GEMET - INSPIRE themes, version 1.0' | gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='GEMET - Concepts, version 2.1' | gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='UMTHES Thesaurus']/gmd:keyword/gco:CharacterString",
+  			"srcXpath":"//gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString!='GEMET - INSPIRE themes, version 1.0' and gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString!='GEMET - Concepts, version 2.1' and gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString!='UMTHES Thesaurus']/gmd:keyword/gco:CharacterString",
   			"targetNode":"/igc/data-sources/data-source/subject-terms",
   			"newNodeName":"uncontrolled-term",
   			"subMappings":{
@@ -769,6 +768,7 @@ function mapToTarget(mapping, source, target) {
 		// iterate over all mapping descriptions
 		for (var i in mapping.mappings) {
 			var m = mapping.mappings[i];
+			log.debug("start working on mapping: " + m);
 			// check for execution (special function)
 			if (hasValue(m.execute)) {
 				log.debug("Execute function: " + m.execute.funct.name + "...")
@@ -851,9 +851,9 @@ function mapToTarget(mapping, source, target) {
 							}
 						}
 					}
-				// check if a default value and a target node were supplied
+				// check if a default value was supplied
 				// -> set a target node to a default value
-				} else if ((m.defaultValue || m.setUUID) && m.targetNode) {
+				} else if (m.defaultValue || m.setUUID) {
 					var nodeText = "";
 					var value;
 					if (m.setUUID) {
@@ -926,46 +926,48 @@ function mapReferenceSystemInfo(source, target) {
 				XMLUtils.createOrReplaceAttribute(node, "id", coordinateSystemId);
 			}
 		}
+	} else {
+		log.debug("No referenceSystemInfo has been found!");
 	}
 }
 
 
 function mapCommunicationData(source, target) {
-	var email = XPathUtils.getString(source, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString").trim();
+	var email = XPathUtils.getString(source, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString");
 	if (hasValue(email)) {
 		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
 		var node = XPathUtils.createElementFromXPath(communication, "communication-medium");
 		XMLUtils.createOrReplaceTextNode(node, "Email");
 		XMLUtils.createOrReplaceAttribute(node, "id", "3");
 		node = XPathUtils.createElementFromXPath(communication, "communication-value");
-		XMLUtils.createOrReplaceTextNode(node, email);
+		XMLUtils.createOrReplaceTextNode(node, email.trim());
 	}
-	var phone = XPathUtils.getString(source, "gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString").trim();
+	var phone = XPathUtils.getString(source, "gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString");
 	if (hasValue(phone)) {
 		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
 		var node = XPathUtils.createElementFromXPath(communication, "communication-medium");
 		XMLUtils.createOrReplaceTextNode(node, "Telefon");
 		XMLUtils.createOrReplaceAttribute(node, "id", "1");
 		node = XPathUtils.createElementFromXPath(communication, "communication-value");
-		XMLUtils.createOrReplaceTextNode(node, phone);
+		XMLUtils.createOrReplaceTextNode(node, phone.trim());
 	}
-	var fax = XPathUtils.getString(source, "gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:facsimile/gco:CharacterString").trim();
+	var fax = XPathUtils.getString(source, "gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:facsimile/gco:CharacterString");
 	if (hasValue(fax)) {
 		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
 		var node = XPathUtils.createElementFromXPath(communication, "communication-medium");
 		XMLUtils.createOrReplaceTextNode(node, "Fax");
 		XMLUtils.createOrReplaceAttribute(node, "id", "2");
 		node = XPathUtils.createElementFromXPath(communication, "communication-value");
-		XMLUtils.createOrReplaceTextNode(node, fax);
+		XMLUtils.createOrReplaceTextNode(node, fax.trim());
 	}
-	var fax = XPathUtils.getString(source, "gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL").trim();
-	if (hasValue(fax)) {
+	var url = XPathUtils.getString(source, "gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL");
+	if (hasValue(url)) {
 		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
 		var node = XPathUtils.createElementFromXPath(communication, "communication-medium");
 		XMLUtils.createOrReplaceTextNode(node, "URL");
 		XMLUtils.createOrReplaceAttribute(node, "id", "4");
 		node = XPathUtils.createElementFromXPath(communication, "communication-value");
-		XMLUtils.createOrReplaceTextNode(node, fax);
+		XMLUtils.createOrReplaceTextNode(node, url.trim());
 	}
 }
 
@@ -1147,21 +1149,25 @@ function transformISOToIgcDomainValue(val, codeListId, languageId, logErrorOnNot
 	}
 }
 
+function transformISOToIGCLanguageCode(val) {
+	var code = UtilsLanguageCodelist.getCodeFromIso639_2(val);
+	if (!hasValue(code)) {
+		code = UtilsLanguageCodelist.getCodeFromShortcut(val);
+	}
+	return code;
+}
 
-function transformISO639_2ToISO639_1(val) {
-	var ISO639_2ToISO639_1 = {
-		"deu":"de",
-		"ger":"de",
-		"ger":"de",
-		"eng":"en"
+function transformISOToLanguage(val, iso639_1) {
+	var code = UtilsLanguageCodelist.getCodeFromIso639_2(val);
+	if (!hasValue(code)) {
+		code = UtilsLanguageCodelist.getCodeFromShortcut(val);
 	}
-	for(iso639_2 in ISO639_2ToISO639_1) {
-		if (val == iso639_2) {
-			return ISO639_2ToISO639_1[iso639_2];
-		}
-		return val;
+	if (!hasValue(iso639_1)) {
+		return UtilsLanguageCodelist.getNameFromCode(code, "de");
+	} else {
+		return UtilsLanguageCodelist.getNameFromCode(code, iso639_1);
 	}
-} 
+}
 
 
 function hasValue(val) {
