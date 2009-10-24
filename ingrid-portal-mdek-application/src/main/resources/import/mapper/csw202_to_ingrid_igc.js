@@ -23,7 +23,7 @@ importPackage(Packages.org.w3c.dom);
 
 
 if (log.isDebugEnabled()) {
-	log.debug("Mapping CSW 2.0.2 AP ISO 1.0 document to IGC import document.");
+	log.debug("mapping CSW 2.0.2 AP ISO 1.0 document to IGC import document.");
 }
 
 var mappingDescription = {"mappings":[
@@ -59,7 +59,10 @@ var mappingDescription = {"mappings":[
 			}
 		},
   		{	
-  			"srcXpath":"//gmd:fileIdentifier/gco:CharacterString",
+  			
+			"srcXpath":"//gmd:fileIdentifier/gco:CharacterString",
+			// make sure we always have a UUID 
+			"defaultValue":createUUID,
   			"targetNode":"/igc/data-sources/data-source/general/original-control-identifier"
   		},
   		{	
@@ -758,8 +761,10 @@ var mappingDescription = {"mappings":[
   		}
 	]};
 
+log.debug("validate source");
 validateSource(source);
 
+log.debug("map to target");
 mapToTarget(mappingDescription, source, target.getDocumentElement());
 
 var uuid;
@@ -768,7 +773,6 @@ function mapToTarget(mapping, source, target) {
 		// iterate over all mapping descriptions
 		for (var i in mapping.mappings) {
 			var m = mapping.mappings[i];
-			log.debug("start working on mapping: " + m);
 			// check for execution (special function)
 			if (hasValue(m.execute)) {
 				log.debug("Execute function: " + m.execute.funct.name + "...")
@@ -799,65 +803,123 @@ function mapToTarget(mapping, source, target) {
 					// iterate over all xpath results
 					var sourceNodeList = XPathUtils.getNodeList(source, m.srcXpath);
 					var nodeText = "";
-					for (var j=0; j<sourceNodeList.getLength(); j++ ) {
-						var value = sourceNodeList.item(j).getTextContent()
-						if (hasValue(value)) {
-							// trim
-							value = value.trim();
-						}
-						// check for transformation
-						if (hasValue(m.transform)) {
-							log.debug("Transform value '" + value + "'")
-							var args = new Array(value);
-							if (hasValue(m.transform.params)) {
-								args = args.concat(m.transform.params);
-							}
-							value = call_f(m.transform.funct,args);
-						}
-						if (m.defaultValue && !hasValue(value)) {
-							log.debug("Setting value to default '" + m.defaultValue + "'")
-							value = m.defaultValue;
-						}
-						if (hasValue(value)) {
-							var node = XPathUtils.createElementFromXPath(target, m.targetNode);
-							log.debug("Found node with content: '" + node.getTextContent() + "'")
-							if (j==0) { 
-								// append content to target nodes content?
-								if (m.appendWith && hasValue(node.getTextContent())) {
-									log.debug("Append to target node...")
-									nodeText = node.getTextContent() + m.appendWith;
-								}
-								// is a prefix has been defined with the xpath? 
-								if (m.prefix) {
-									log.debug("Append prefix...")
-									nodeText += m.prefix;
-								}
-							} else {
-								// concat multiple entries?
-								if (m.concatEntriesWith) {
-									log.debug("concat entries... ")
-									nodeText += m.concatEntriesWith;
-								}
+					if (sourceNodeList && sourceNodeList.getLength() > 0) {
+						for (var j=0; j<sourceNodeList.getLength(); j++ ) {
+							var value = sourceNodeList.item(j).getTextContent()
+							log.debug("Found value: '" + value + "' hasValue:" + hasValue(value));
+							if (hasValue(value)) {
+								// trim
+								value = value.trim();
 							}
 							
-							nodeText += value;
-							
-							if (m.targetAttribute) {
-								log.debug("adding '" + m.targetNode + "/@" + m.targetAttribute + "' = '" + nodeText + "'.");
-								XMLUtils.createOrReplaceAttribute(node, m.targetAttribute, nodeText);
-							} else {
-								log.debug("adding '" + m.targetNode + "' = '" + nodeText + "'.");
-								XMLUtils.createOrReplaceTextNode(node, nodeText);
+							// check for transformation
+							if (hasValue(m.transform)) {
+								log.debug("Transform value '" + value + "'")
+								var args = new Array(value);
+								if (hasValue(m.transform.params)) {
+									args = args.concat(m.transform.params);
+								}
+								value = call_f(m.transform.funct,args);
+							}
+							if (m.defaultValue && !hasValue(value)) {
+								log.debug("typeof m.defaultValue:" + typeof m.defaultValue);
+								if (typeof m.defaultValue == "function" ) {
+									var args = new Array(value);
+									value = call_f(m.transform.funct,args);
+								} else {
+									value = m.defaultValue;
+								}
+								log.debug("Setting value to default '" + m.defaultValue + "'")
+								value = m.defaultValue;
+							}
+							if (hasValue(value)) {
+								var node = XPathUtils.createElementFromXPath(target, m.targetNode);
+								log.debug("Found node with content: '" + node.getTextContent() + "'")
+								if (j==0) { 
+									// append content to target nodes content?
+									if (m.appendWith && hasValue(node.getTextContent())) {
+										log.debug("Append to target node...")
+										nodeText = node.getTextContent() + m.appendWith;
+									}
+									// is a prefix has been defined with the xpath? 
+									if (m.prefix) {
+										log.debug("Append prefix...")
+										nodeText += m.prefix;
+									}
+								} else {
+									// concat multiple entries?
+									if (m.concatEntriesWith) {
+										log.debug("concat entries... ")
+										nodeText += m.concatEntriesWith;
+									}
+								}
+								
+								nodeText += value;
+								
+								if (m.targetAttribute) {
+									log.debug("adding '" + m.targetNode + "/@" + m.targetAttribute + "' = '" + nodeText + "'.");
+									XMLUtils.createOrReplaceAttribute(node, m.targetAttribute, nodeText);
+								} else {
+									log.debug("adding '" + m.targetNode + "' = '" + nodeText + "'.");
+									XMLUtils.createOrReplaceTextNode(node, nodeText);
+								}
 							}
 						}
+					} else {
+						// nothing found in srcPath, check for default values
+						if (m.defaultValue) {
+							var value;
+							if (typeof m.defaultValue == "function" ) {
+								var args = new Array(value);
+								value = call_f(m.defaultValue,args);
+							} else {
+								value = m.defaultValue;
+							}
+							if (hasValue(value)) {
+								var node = XPathUtils.createElementFromXPath(target, m.targetNode);
+								log.debug("Found node with content: '" + node.getTextContent() + "'")
+								if (j==0) { 
+									// append content to target nodes content?
+									if (m.appendWith && hasValue(node.getTextContent())) {
+										log.debug("Append to target node...")
+										nodeText = node.getTextContent() + m.appendWith;
+									}
+									// is a prefix has been defined with the xpath? 
+									if (m.prefix) {
+										log.debug("Append prefix...")
+										nodeText += m.prefix;
+									}
+								} else {
+									// concat multiple entries?
+									if (m.concatEntriesWith) {
+										log.debug("concat entries... ")
+										nodeText += m.concatEntriesWith;
+									}
+								}
+								
+								nodeText += value;
+								
+								if (m.targetAttribute) {
+									log.debug("adding '" + m.targetNode + "/@" + m.targetAttribute + "' = '" + nodeText + "'.");
+									XMLUtils.createOrReplaceAttribute(node, m.targetAttribute, nodeText);
+								} else {
+									log.debug("adding '" + m.targetNode + "' = '" + nodeText + "'.");
+									XMLUtils.createOrReplaceTextNode(node, nodeText);
+								}
+							}
+						}	
 					}
 				// check if a default value was supplied
 				// -> set a target node to a default value
 				} else if (m.defaultValue || m.setUUID) {
 					var nodeText = "";
 					var value;
+					log.debug("typeof m.defaultValue:" + typeof m.defaultValue)
 					if (m.setUUID) {
 						value = uuid;
+					} else if (typeof m.defaultValue == "function" ) {
+						var args = new Array(value);
+						value = call_f(m.transform.funct,args);
 					} else {
 						value = m.defaultValue;
 					}

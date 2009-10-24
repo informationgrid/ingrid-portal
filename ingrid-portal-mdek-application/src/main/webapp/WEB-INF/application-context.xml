@@ -267,13 +267,12 @@
 		            </key>
 		            <ref bean="scriptImportDataMapper" />
 		        </entry>
-<!--                <entry>
+                <entry>
                     <key>
                         <value>csw202</value>
                     </key>
                     <ref bean="csw202ScriptImportDataMapper" />
                 </entry>
--->                
 		    </map>
 	    </property>
 	</bean>

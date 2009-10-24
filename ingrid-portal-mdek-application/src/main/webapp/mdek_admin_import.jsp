@@ -337,6 +337,7 @@ function hideLoadingZone() {
 						<span class="label" style="margin-bottom:10.5px;"><label for="importFileType" style="position:absolute;" onclick="javascript:dialog.showContextHelp(arguments[0], 8074, 'Import-Datei')"><fmt:message key="dialog.admin.import.file.type" />:</label>
 							<select dojoType="ingrid:Select" id="importFileType" style="position:absolute;margin-left:90px;">
 								<option value="igc">InGrid Catalog</option>
+                                <option value="csw202">CSW 2.0.2 AP ISO 1.0 (Single Metadata file)</option>
 								<option value="arcgis1">ArcGIS ISO-Editor</option>
 							</select>
 						</span>

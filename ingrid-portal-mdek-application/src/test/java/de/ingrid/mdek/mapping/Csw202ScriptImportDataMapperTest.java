@@ -8,6 +8,7 @@ import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -25,7 +26,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-import de.ingrid.utils.xml.XPathUtils;
+import de.ingrid.utils.xml.XMLUtils;
 
 public class Csw202ScriptImportDataMapperTest extends TestCase {
 	
@@ -57,7 +58,8 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		
 	}
 
-	public final void testConvertOne() {
+	public final void testConvertOne() throws TransformerException {
+		System.out.println("testConvertOne");
 		// set variables that are needed for running correctly
 		initClassVariables(mapperScriptArcGIS, templateIGC);
 		
@@ -69,7 +71,8 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println(data.toString());
+		// System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
 		InputStream result = mapper.convert(data);
 		
 		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
