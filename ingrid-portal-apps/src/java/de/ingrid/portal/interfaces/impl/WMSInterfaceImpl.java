@@ -3,11 +3,8 @@
  */
 package de.ingrid.portal.interfaces.impl;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -349,7 +346,8 @@ public class WMSInterfaceImpl implements WMSInterface {
                     if (mapBenderVersion.equals(MAPBENDER_VERSION_2_1)) {
                     	serviceURL.replace('&', ',');
                     }
-                    resultB.append("&wms" + (i + 1) + "=" + URLEncoder.encode(serviceURL, "UTF-8"));
+                    resultB.append("&wms" + (i + 1) + "=" + URLEncoder.encode(serviceURL, "UTF-8")+ "&addwms_zoomToExtent=1&addwms_showWMS=100");
+                
                 }
             }
         } catch (UnsupportedEncodingException e) {
