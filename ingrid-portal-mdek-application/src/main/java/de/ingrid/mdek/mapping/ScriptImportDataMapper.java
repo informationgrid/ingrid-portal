@@ -57,7 +57,10 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 			Document doc = getDomFromSourceData(data, true);
 			// close the input file after it was read
 			data.close();
-			String sourcetString = XMLUtils.toString(doc);
+			if (log.isDebugEnabled()) {
+				String sourceString = XMLUtils.toString(doc);
+				log.debug("Resulting XML:" + sourceString);
+			}
 			
 			// get DOM-tree from template-file
 			Document docTarget = getDomFromSourceData(template.getInputStream(), false);
