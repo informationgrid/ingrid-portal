@@ -346,7 +346,7 @@ public class WMSInterfaceImpl implements WMSInterface {
                     if (mapBenderVersion.equals(MAPBENDER_VERSION_2_1)) {
                     	serviceURL.replace('&', ',');
                     }
-                    resultB.append("&wms" + (i + 1) + "=" + URLEncoder.encode(serviceURL, "UTF-8")+ "&addwms_zoomToExtent=1&addwms_showWMS=100");
+                    resultB.append("&wms" + (i + 1) + "=" + URLEncoder.encode(serviceURL, "UTF-8")+ "&addwms_zoomToExtent=1&addwms_showWMS=10");
                 
                 }
             }
