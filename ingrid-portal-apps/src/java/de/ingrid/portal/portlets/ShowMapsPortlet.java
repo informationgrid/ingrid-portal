@@ -20,6 +20,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
@@ -50,6 +51,10 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
         String hKey = prefs.getValue("helpKey", null);
         if (hKey != null && hKey.length() > 0) {
             context.put("hKey", hKey);
+        }
+        
+        if(Utils.getLoggedOn(request)){
+        	context.put("logged", "true");        	
         }
         
         if (log.isDebugEnabled()) {
