@@ -391,7 +391,7 @@ public class DisplayTreeFactory {
                 String aName = ((DisplayTreeNode) a).getName().toLowerCase();
                 String bName = ((DisplayTreeNode) b).getName().toLowerCase();
 
-            	// Get the collator for the German Locale (for correct sorting of ä,ö,ü ...)  
+            	// Get the collator for the German Locale (for correct sorting of Ã¤,Ã¶,Ã¼ ...)  
             	Collator germanCollator = Collator.getInstance(Locale.GERMAN);
             	return germanCollator.compare(aName, bName);
             } catch (Exception e) {
