@@ -134,7 +134,7 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         if (numberOfHits == 0) {
-            // TODO Katalog keine Einträge, WAS ANZEIGEN ??? -> Layouten
+            // TODO Katalog keine EintrÃ¤ge, WAS ANZEIGEN ??? -> Layouten
             setDefaultViewPage(TEMPLATE_NO_RESULT);
             super.doView(request, response);
             return;
