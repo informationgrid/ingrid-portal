@@ -172,6 +172,10 @@
         </file>
         <file>
             <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/icn_down.gif</src>
+        </file>
+        <file>
+            <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid/images/button-bg.png</src>
         </file>
         <file>
