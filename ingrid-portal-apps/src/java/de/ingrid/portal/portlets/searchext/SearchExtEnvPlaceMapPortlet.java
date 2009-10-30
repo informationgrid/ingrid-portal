@@ -57,12 +57,13 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
         String wmsURL = UtilsSearch.getWMSURL(request, request.getParameter("wms_url"), false);
         context.put("wmsURL", wmsURL);
 
+        /*
         // enable the save button if the query was set AND a user is logged on
         if (Utils.getLoggedOn(request)) {
             context.put("enableSave", "true");
             context.put("wmsServicesSaved", request.getParameter("wmsServicesSaved"));
         }
-
+        */
         super.doView(request, response);
     }
 
