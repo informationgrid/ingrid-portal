@@ -5,7 +5,7 @@
 	## NOTICE: NO FLOATS IN VELOCITY MATHs ! Use e.g. (3/2) instead ! :-(
 	#set ($leftMargin = ($node.level - 1) * 25)
 	#set ($iconLayerWidth = 40)
-	#set ($textLayerWidth = 870 - $leftMargin - $iconLayerWidth)
+	#set ($textLayerWidth = 863 - $leftMargin - $iconLayerWidth)
 	<p style="margin-left:${leftMargin}px; clear:left; overflow:hidden">	
 	## UDK Object/Address render params
 	#set($nodeTitle = $MESSAGES.getString($node.getName()))
