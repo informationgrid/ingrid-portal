@@ -8,7 +8,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title><fmt:message key="ui.entry.not.supported.browser" /></title>
+<title><fmt:message key="ui.entry.session.expired" /></title>
 <link rel="shortcut icon" href="/ingrid-portal/decorations/layout/ingrid-popup/images/favicon.ico" />
   <style type="text/css">
 	
