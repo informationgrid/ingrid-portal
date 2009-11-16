@@ -14,6 +14,7 @@ import java.util.Map;
 import de.ingrid.portal.global.IPlugHelperDscEcs;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.UtilsFileHelper;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -135,27 +136,29 @@ public class DetailDataPreparerHelper {
             }
 
             for (int j = 0; j < columns.length; j++) {
-                if (columns[j].toIndex()) {
-                    String columnName = columns[j].getTargetName();
-                    columnName = columnName.toLowerCase();
-                    
-                    if (dateFields.contains(columnName)) {
-                        subRecordMap.put(columnName, UtilsDate.parseDateToLocale(subRecords[i].getValueAsString(
-                                columns[j]).trim(), locale));
-                    } else if (replacementFields.containsKey(columnName)) {
-                        // replace value according to translation config
-                        Map transMap = (Map) replacementFields.get(columnName);
-                        String src = subRecords[i].getValueAsString(columns[j]).trim();
-                        if (transMap.containsKey(src)) {
-                            subRecordMap.put(columnName, transMap.get(src));
-                        } else {
-                            subRecordMap.put(columnName, src);
-                        }
-                    } else {
-                        subRecordMap.put(columnName, subRecords[i].getValueAsString(columns[j]).trim().replaceAll("\n",
-                                "<br />"));
-                    }
-                }
+				if (!columns[j].getType().equals(Column.BINARY)) {
+					if (columns[j].toIndex()) {
+						String columnName = columns[j].getTargetName();
+						if (!columnName.equals(UtilsFileHelper.FILE_TITLE) && !columnName.equals(UtilsFileHelper.MIME)){
+							columnName = columnName.toLowerCase();
+							
+							if (dateFields.contains(columnName)) {
+								subRecordMap.put(columnName, UtilsDate.parseDateToLocale(subRecords[i].getValueAsString(columns[j]).trim(), locale));
+							} else if (replacementFields.containsKey(columnName)) {
+								// replace value according to translation config
+								Map transMap = (Map) replacementFields.get(columnName);
+								String src = subRecords[i].getValueAsString(columns[j]).trim();
+								if (transMap.containsKey(src)) {
+									subRecordMap.put(columnName, transMap.get(src));
+								} else {
+									subRecordMap.put(columnName, src);
+								}
+							} else {
+								subRecordMap.put(columnName, subRecords[i].getValueAsString(columns[j]).trim().replaceAll("\n", "<br />"));
+							}
+						}
+					}
+				}
             }
             if (readableColumns) {
                 targetName = targetName.replace('_', ' ');

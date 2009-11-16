@@ -18,6 +18,7 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.UtilsFileHelper;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
@@ -96,6 +97,15 @@ public class DetailDataPreparerGeneric implements DetailDataPreparer {
 
          //myHash2.put("t011_obj_literatur.autor", "mm");
          */
+        
+        
+        if(record.getSubRecords() != null){
+        	List fileList = new ArrayList();
+        	
+        	fileList = UtilsFileHelper.handle(record, fileList);
+        	context.put("fileList", fileList);
+        }
+        
         DetailDataPreparerHelper.addSubRecords(record, recordMap, request.getLocale(), true, (IngridResourceBundle)context.get("MESSAGES"), dateFields, replacementFields);
 
         // Replace all occurrences of <*> except the specified ones (<b>, </b>, <i>, ... are the ones NOT replaced)
