@@ -98,7 +98,7 @@
     <!-- HelperImage -->
     <servlet>
         <servlet-name>filehelper</servlet-name>
-        <servlet-class>de.ingrid.portal.servlet.HelperFileServlet</servlet-class>
+        <servlet-class>de.ingrid.portal.servlet.FileHelperServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
     

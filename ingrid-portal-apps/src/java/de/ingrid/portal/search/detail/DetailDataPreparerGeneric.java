@@ -102,7 +102,7 @@ public class DetailDataPreparerGeneric implements DetailDataPreparer {
         if(record.getSubRecords() != null){
         	List fileList = new ArrayList();
         	
-        	fileList = UtilsFileHelper.handle(record, fileList);
+        	fileList = UtilsFileHelper.extractBinaryData(record, fileList);
         	context.put("fileList", fileList);
         }
         

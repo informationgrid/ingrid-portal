@@ -13,7 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import de.ingrid.portal.global.UtilsFileHelper;
 
-public class HelperFileServlet extends HttpServlet {
+/**
+ * FileHelperServlet prepare files for web.
+ * (to display or as download) 
+ * 
+ * @author ktt
+ *
+ */
+public class FileHelperServlet extends HttpServlet {
 	
 	private static final long	serialVersionUID	= -9167034970446594129L;
 	
@@ -43,10 +50,5 @@ public class HelperFileServlet extends HttpServlet {
 		responseOutputStream.write(UtilsFileHelper.getBytesFromFile(file));
 		responseOutputStream.flush();
 		responseOutputStream.close();
-	
 	}
-	
-	
-	
-
 }
