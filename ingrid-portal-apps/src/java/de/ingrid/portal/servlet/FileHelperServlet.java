@@ -3,7 +3,6 @@ package de.ingrid.portal.servlet;
 import java.io.File;
 import java.io.IOException;
 
-import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import de.ingrid.portal.global.UtilsFileHelper;
+import de.ingrid.portal.global.UtilsMimeType;
 
 /**
  * FileHelperServlet prepare files for web.
@@ -45,7 +45,7 @@ public class FileHelperServlet extends HttpServlet {
 		httpServletResponse.setHeader("Content-Disposition", type.toString());
 		httpServletResponse.setDateHeader("Expires", 0);
 		httpServletResponse.setContentLength((int) file.length());
- 		httpServletResponse.setContentType(new MimetypesFileTypeMap().getContentType(file));
+ 		httpServletResponse.setContentType(UtilsMimeType.getMimeTypByFile(file));
 		ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();
 		responseOutputStream.write(UtilsFileHelper.getBytesFromFile(file));
 		responseOutputStream.flush();

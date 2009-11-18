@@ -1,5 +1,6 @@
 package de.ingrid.portal.global;
 
+import java.io.File;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,11 +18,11 @@ import org.apache.commons.logging.LogFactory;
  */
 public class UtilsMimeType {
 	
+	private static final Log			log					= LogFactory.getLog(UtilsFileHelper.class);
 	private static final String			MIME_TYP_BUNDLE		= "mimetype";
 	
 	private static Map<String, String>	mimeTypeToExtension	= null;
-	
-	private final static Log			log					= LogFactory.getLog(UtilsFileHelper.class);
+	private static Map<String, String>	fileMimeType		= null;
 	
 	/**
 	 * Get the Extension of a file by checking of MIME type
@@ -51,6 +52,7 @@ public class UtilsMimeType {
 			return;
 		
 		mimeTypeToExtension = new HashMap<String, String>();
+		fileMimeType = new HashMap<String, String>();
 		
 		ResourceBundle bundle = ResourceBundle.getBundle(MIME_TYP_BUNDLE);
 		for (Enumeration e = bundle.getKeys(); e.hasMoreElements();) {
@@ -61,6 +63,15 @@ public class UtilsMimeType {
 				if (mimeTypeToExtension.get(type) == null) {
 					mimeTypeToExtension.put(type, extensions[0]);
 				}
+				
+				for (int i = 0; i < extensions.length; i++)
+                {
+					if (fileMimeType.get (extensions[i]) == null)
+					{
+						fileMimeType.put (extensions[i], type);
+					}
+                }
+				
 			}
 			catch (MissingResourceException ex) {
 				log.error("ERROR while reading MIME Type" + MIME_TYP_BUNDLE + " with type " + type, ex);
@@ -96,5 +107,41 @@ public class UtilsMimeType {
 		temp = mimetyp.split(delimiter);
 		
 		return temp[0];
+	}
+	
+	/**
+	 * Get MIME Type by file extension 
+	 * 
+	 * @param file
+	 * @return MIME type of file
+	 * 
+	 */
+	public static String getMimeTypByFile(File file){
+		String mimeType = null;
+        
+        // Check ours first.
+        readMimeTypeBundle();
+
+        String extension = getExtensionOfFile(file.getName());
+        mimeType = (String) fileMimeType.get(extension);
+
+        return mimeType;
+	}
+	
+	
+	/**
+	 * Splitting of extension from filename
+	 * 
+	 * @param filename
+	 * @return file extension
+	 * 
+	 */
+	private static String getExtensionOfFile(String filename){
+		String[] temp;
+		
+		String delimiter = "\\.";
+		temp = filename.split(delimiter);
+		
+		return temp[1];
 	}
 }
