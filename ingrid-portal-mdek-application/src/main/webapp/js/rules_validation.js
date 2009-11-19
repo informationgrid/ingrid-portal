@@ -65,6 +65,7 @@ dojo.addOnLoad(function() {
 	dojo.event.connect(intervalUnitWidget, "setValue", function() {
 		intervalNumWidget.onkeyup();
 		intervalNumWidget.isValid();
+		intervalNumWidget.update();
 	});
 });
 
