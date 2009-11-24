@@ -149,6 +149,11 @@ function hideSplash(){
 
 <style type="text/css">
 	@import url(css/scrolling_table.css);
+	
+	/** correct IE bug where button not floating correctly **/
+	#uiElement1410 span {
+	  float: left !important;
+	}
 </style>
 
 </head>
@@ -1290,7 +1295,7 @@ function hideSplash(){
 							<span class="title"><a href="javascript:toggleInfo('spatialRefCoordsAdminUnit');" title="Info aufklappen"><script>document.write(message.get("ui.obj.spatial.transformedCoordinates"))</script>
 								<img id="spatialRefCoordsAdminUnitToggle" src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a>
 							</span>
-							<div id="spatialRefCoordsAdminUnitContent" style="display:block;">
+							<div id="spatialRefCoordsAdminUnitContent" style="display:block; height: 44px;">
 								<div class="left" style="float:left; margin-top:10px;">
 									<select id="spatialRefAdminUnitSelect" dojoType="ingrid:Select" toggle="plain" style="width:250px;">
 			                    		<option value="GEO84">Bezugssystem WGS84</option>
@@ -1307,7 +1312,7 @@ function hideSplash(){
 			                    	</select>
 			                    </div>
 	
-								<div class="headHiddenRows1 thirdInside3">
+								<div class="headHiddenRows1" style="float: right;">
 				              	    <table id="spatialRefAdminUnitCoords" dojoType="ingrid:FilteringTable" headClass="hidden" cellspacing="0" class="filteringTable nosort relativePos">
 					              	    <thead>
 					              	      <tr>
@@ -1379,7 +1384,7 @@ function hideSplash(){
 							<span class="title"><a href="javascript:toggleInfo('spatialRefCoordsLocation');" title="Info aufklappen"><script>document.write(message.get("ui.obj.spatial.transformedCoordinates"))</script>
 								<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a>
 							</span>
-							<div id="spatialRefCoordsLocationContent" style="display:block;">
+							<div id="spatialRefCoordsLocationContent" style="display:block; height: 44px;">
 		                    	<div class="left" style="float:left; margin-top:10px;">
 		                    		<select id="spatialRefLocationSelect" dojoType="ingrid:Select" toggle="plain" style="width:250px;">
 			                    		<option value="GEO84">Bezugssystem WGS84</option>
@@ -1396,7 +1401,7 @@ function hideSplash(){
 			                    	</select>
 			                    </div>
 	
-								<div class="headHiddenRows1 thirdInside3">
+								<div class="headHiddenRows1" style="float: right;">
 				              	    <table id="spatialRefLocationCoords" dojoType="ingrid:FilteringTable" headClass="hidden" cellspacing="0" class="filteringTable nosort relativePos">
 				              	      <thead>
 				              		      <tr>
@@ -1886,8 +1891,8 @@ function hideSplash(){
 						<div class="full">
 		          			<div class="input">
 								<span id="uiElement1410" type="optional">
-									<input type="text" mode="textarea" maxlength="255" id="thesaurusFreeTerms" class="w585 h055" dojoType="ingrid:ValidationTextBox" />
-	                  				<div style="position:relative; height:0px; top:-22px; float:right;">
+									<input type="text" mode="textarea" maxlength="255" id="thesaurusFreeTerms" class="w585 h055" style="float: left !important;" dojoType="ingrid:ValidationTextBox" />
+	                  				<div style="position:relative; height:0px; top: 38px; width:78px; float:right;">
 										<button id="thesaurusFreeTermsAddButton" dojoType="ingrid:Button"><script>document.write(message.get("ui.obj.thesaurus.terms.custom.buttonAdd"))</script></button>
 					  				</div>
 		          				</span>
