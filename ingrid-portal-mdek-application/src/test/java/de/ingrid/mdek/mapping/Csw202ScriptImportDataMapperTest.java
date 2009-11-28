@@ -36,7 +36,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 	
 	private String templateIGC 			= "/import/templates/igc_template.xml";
 	
-	private String exampleXml 			= "/de/ingrid/mdek/mapping/csw202_Naturschutzgebiete_Sachsen-Anhalt.xml";
+	private String exampleXml 			= "/de/ingrid/mdek/mapping/inspire_datasetkomplett.xml";
 	
 	
 	public void setUp() {
@@ -76,6 +76,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		InputStream result = mapper.convert(data);
 		
 		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
+		
 	}
 
 

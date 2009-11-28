@@ -261,7 +261,7 @@ var mappingDescription = {"mappings":[
 			  			"defaultValue":"-1",
 			  			"transform":{
     						"funct":transformToIgcDomainId,
-    						"params":[6010, 150]
+    						"params":[6010, 123]
     					}
 			  		},
 	  				{
@@ -321,7 +321,7 @@ var mappingDescription = {"mappings":[
 			  			"defaultValue":"-1",
 			  			"transform":{
 							"funct":transformToIgcDomainId,
-							"params":[1320, 150]
+							"params":[1320, 123]
 						}
 			  		},
 	  				{
@@ -411,7 +411,7 @@ var mappingDescription = {"mappings":[
   			"targetAttribute":"id",
   			"transform":{
 				"funct":transformToIgcDomainId,
-				"params":[102, 150, "Could not map vertical-extent unit:"]
+				"params":[102, 123, "Could not map vertical-extent unit:"]
 			}						    					
   		},
   		{	
@@ -421,7 +421,7 @@ var mappingDescription = {"mappings":[
   			// check for german (150) name in the code list 101
   			"transform":{
 				"funct":transformToIgcDomainId,
-				"params":[101, 150, "Could not map vertical-extent vdatum name: "]
+				"params":[101, 123, "Could not map vertical-extent vdatum name: "]
 			}						    					
   		},
   		{
@@ -471,7 +471,24 @@ var mappingDescription = {"mappings":[
 			  	]
 			}
   		},
-  	
+  		{
+  			"srcXpath":"//gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:type/gmd:MD_KeywordTypeCode/@codeListValue='place']/gmd:keyword/gco:CharacterString",
+  			"targetNode":"/igc/data-sources/data-source/spatial-domain",
+  			"newNodeName":"geo-location",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":".",
+			  			"targetNode":"uncontrolled-location/location-name"
+			  		},
+	  				{
+			  			"defaultValue":"-1",
+			  			"targetNode":"uncontrolled-location/location-name",
+			  			"targetAttribute":"id"
+			  		}
+			  	]
+			}
+  		},  	
 
   		// ****************************************************
   		//
@@ -552,6 +569,15 @@ var mappingDescription = {"mappings":[
 			  			"targetNode":""
 			  		},
 	  				{
+			  			"srcXpath":".",
+			  			"targetNode":"",
+			  			"targetAttribute":"id",
+			  			"transform":{
+							"funct":transformToIgcDomainId,
+							"params":[6100, 123, "Could not map INSPIRE theme:"]
+						}
+			  		},
+	  				{
 			  			"defaultValue":"INSPIRE",
 			  			"targetNode":"",
 			  			"targetAttribute":"source"
@@ -560,43 +586,7 @@ var mappingDescription = {"mappings":[
 			}		
   		},		
   		{
-  			"srcXpath":"//gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='GEMET - Concepts, version 2.1']/gmd:keyword/gco:CharacterString",
-  			"targetNode":"/igc/data-sources/data-source/subject-terms",
-  			"newNodeName":"controlled-term",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"srcXpath":".",
-			  			"targetNode":""
-			  		},
-	  				{
-			  			"defaultValue":"GEMET",
-			  			"targetNode":"",
-			  			"targetAttribute":"source"
-			  		}
-			  	]
-			}		
-  		},		
-  		{
-  			"srcXpath":"//gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='UMTHES Thesaurus']/gmd:keyword/gco:CharacterString",
-  			"targetNode":"/igc/data-sources/data-source/subject-terms",
-  			"newNodeName":"controlled-term",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"srcXpath":".",
-			  			"targetNode":""
-			  		},
-	  				{
-			  			"defaultValue":"UMTHES",
-			  			"targetNode":"",
-			  			"targetAttribute":"source"
-			  		}
-			  	]
-			}		
-  		},		
-  		{
-  			"srcXpath":"//gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString!='GEMET - INSPIRE themes, version 1.0' and gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString!='GEMET - Concepts, version 2.1' and gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString!='UMTHES Thesaurus']/gmd:keyword/gco:CharacterString",
+  			"srcXpath":"//gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords[not(gmd:type/gmd:MD_KeywordTypeCode/@codeListValue='place') and (not(gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString) or (gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString!='GEMET - INSPIRE themes, version 1.0'))]/gmd:keyword/gco:CharacterString",
   			"targetNode":"/igc/data-sources/data-source/subject-terms",
   			"newNodeName":"uncontrolled-term",
   			"subMappings":{
@@ -623,6 +613,7 @@ var mappingDescription = {"mappings":[
   				"mappings": [
 	  				{
 			  			"srcXpath":"gmd:name/gco:CharacterString",
+			  			"defaultValue":"new link",
 			  			"targetNode":"linkage-name"
 			  		},
 	  				{
@@ -658,13 +649,13 @@ var mappingDescription = {"mappings":[
   			"newNodeName":"address",
   			"subMappings":{
   				"mappings": [
-	  				{
-			  			"createUUID":"true"
-			  		},
-	  				{
-			  			"setUUID":"true",
-			  			"targetNode":"address-identifier"
-			  		},
+		     		{	
+			  			"srcXpath":"./@uuid",
+			  			// make sure we always have a UUID 
+			  			"defaultValue":createUUIDFromAddress,
+			  			"storeValue":"uuid",
+			    		"targetNode":"address-identifier"
+		    		},
 	  				{
 			  			"defaultValue":"xxx",
 			  			"targetNode":"modificator-identifier"
@@ -750,7 +741,7 @@ var mappingDescription = {"mappings":[
 						  				
 						  		},
 				  				{
-						  			"setUUID":"true",
+						  			"setStoredValue":"uuid",
 						  			"targetNode":"address-identifier"
 						  		}
 						  	]
@@ -764,12 +755,15 @@ var mappingDescription = {"mappings":[
 log.debug("validate source");
 validateSource(source);
 
+var storedValues = new Object();
+
+
 log.debug("map to target");
 mapToTarget(mappingDescription, source, target.getDocumentElement());
 
-var uuid;
 
 function mapToTarget(mapping, source, target) {
+		
 		// iterate over all mapping descriptions
 		for (var i in mapping.mappings) {
 			var m = mapping.mappings[i];
@@ -795,8 +789,6 @@ function mapToTarget(mapping, source, target) {
 				} else {
 					log.debug("found sub mapping sources: " + m.srcXpath + "; count: 0")
 				}
-			} else if (m.createUUID) {
-				uuid = createUUID();
 			} else {
 				if (m.srcXpath) {
 					log.debug("Working on " + m.targetNode + " with xpath:'" + m.srcXpath + "'")
@@ -824,7 +816,8 @@ function mapToTarget(mapping, source, target) {
 							if (m.defaultValue && !hasValue(value)) {
 								log.debug("typeof m.defaultValue:" + typeof m.defaultValue);
 								if (typeof m.defaultValue == "function" ) {
-									var args = new Array(value);
+									log.debug("Call function with value:" +source);
+									var args = new Array(source);
 									value = call_f(m.transform.funct,args);
 								} else {
 									value = m.defaultValue;
@@ -856,6 +849,11 @@ function mapToTarget(mapping, source, target) {
 								
 								nodeText += value;
 								
+								if (m.storeValue) {
+									log.debug("stored '" + value + "' as '" + m.storeValue + "' in store:" + storedValues + ".");
+									storedValues[""+m.storeValue] = value;
+								}
+								
 								if (m.targetAttribute) {
 									log.debug("adding '" + m.targetNode + "/@" + m.targetAttribute + "' = '" + nodeText + "'.");
 									XMLUtils.createOrReplaceAttribute(node, m.targetAttribute, nodeText);
@@ -870,7 +868,7 @@ function mapToTarget(mapping, source, target) {
 						if (m.defaultValue) {
 							var value;
 							if (typeof m.defaultValue == "function" ) {
-								var args = new Array(value);
+								var args = new Array(source);
 								value = call_f(m.defaultValue,args);
 							} else {
 								value = m.defaultValue;
@@ -899,6 +897,11 @@ function mapToTarget(mapping, source, target) {
 								
 								nodeText += value;
 								
+								if (m.storeValue) {
+									log.debug("stored '" + value + "' as '" + m.storeValue + "'.");
+									storedValues[m.storeValue] = value;
+								}
+								
 								if (m.targetAttribute) {
 									log.debug("adding '" + m.targetNode + "/@" + m.targetAttribute + "' = '" + nodeText + "'.");
 									XMLUtils.createOrReplaceAttribute(node, m.targetAttribute, nodeText);
@@ -911,14 +914,15 @@ function mapToTarget(mapping, source, target) {
 					}
 				// check if a default value was supplied
 				// -> set a target node to a default value
-				} else if (m.defaultValue || m.setUUID) {
+				} else if (m.defaultValue || m.setStoredValue) {
 					var nodeText = "";
 					var value;
 					log.debug("typeof m.defaultValue:" + typeof m.defaultValue)
-					if (m.setUUID) {
-						value = uuid;
+					if (m.setStoredValue) {
+						log.debug("get value '" + value + "' from stored value '" + m.setStoredValue + "'.");
+						value = storedValues[m.setStoredValue];
 					} else if (typeof m.defaultValue == "function" ) {
-						var args = new Array(value);
+						var args = new Array(source);
 						value = call_f(m.transform.funct,args);
 					} else {
 						value = m.defaultValue;
@@ -983,7 +987,7 @@ function mapReferenceSystemInfo(source, target) {
 			log.debug("adding '" + "/igc/data-sources/data-source/technical-domain/map/coordinate-system" + "' = '" + coordinateSystem + "' to target document.");
 			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/technical-domain/map/coordinate-system");
 			XMLUtils.createOrReplaceTextNode(node, coordinateSystem);
-			var coordinateSystemId = transformToIgcDomainId(coordinateSystem, 100, 150, "Could not map coordinate-system: ");
+			var coordinateSystemId = transformToIgcDomainId(coordinateSystem, 100, 123, "Could not map coordinate-system: ");
 			if (hasValue(coordinateSystemId)) {
 				XMLUtils.createOrReplaceAttribute(node, "id", coordinateSystemId);
 			}
@@ -1266,6 +1270,43 @@ function call_f(f,args)
 
   return f.call_self(args);
 }
+
+function createUUIDFromAddress(source) {
+	log.debug("create UUID from address node: " + source);
+	var organisationName = XPathUtils.getString(source, "gmd:organisationName/gco:CharacterString");
+	var individualName = XPathUtils.getString(source, "gmd:individualName/gco:CharacterString");
+	var email = XPathUtils.getString(source, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString");
+	
+	var idString = "";
+	if (hasValue(organisationName)) {
+		idString += organisationName;
+	}
+	if (hasValue(individualName)) {
+		idString += individualName;
+	}
+	if (hasValue(email)) {
+		idString += email;
+	}
+	
+	var uuid;
+	if (idString != "" && (hasValue(email) || (hasValue(organisationName) && hasValue(individualName)))) {
+		uuid = java.util.UUID.nameUUIDFromBytes((new java.lang.String(idString.toString())).getBytes());
+		var idcUuid = new java.lang.StringBuffer(uuid.toString().toUpperCase());
+		while (idcUuid.length() < 36) {
+			idcUuid.append("0");
+		}
+		uuid = idcUuid.toString();
+	} else {
+		log.warn("Insufficient data for UUID creation (no 'email' or only one of 'individualName' or 'organisationName' has been set for this address: email='" + email + "', individualName='" + individualName + "', organisationName='" + organisationName + "'!)");
+		log.warn("A new random UUID will be created!");
+		uuid = createUUID();
+	}
+	log.debug("Created UUID from Address:" + uuid);
+	
+	return uuid;
+}
+
+
 
 function createUUID() {
 	var uuid = java.util.UUID.randomUUID();

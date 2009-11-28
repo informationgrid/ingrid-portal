@@ -59,7 +59,7 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 			data.close();
 			if (log.isDebugEnabled()) {
 				String sourceString = XMLUtils.toString(doc);
-				log.debug("Resulting XML:" + sourceString);
+				log.debug("Input XML:" + sourceString);
 			}
 			
 			// get DOM-tree from template-file
