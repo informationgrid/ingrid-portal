@@ -33,7 +33,8 @@
    		#set ($jobId = $entry.name)
 		#set ($jobData = $entry.getJobDataMap())
 		#set( $prevTime = $jobHandler.getTrigger($entry.getName(), $entry.getGroup()).getPreviousFireTime())
-		#set( $nextTime = $jobHandler.getTrigger($entry.getName(), $entry.getGroup()).getNextFireTime())
+		##set( $nextTime = $jobHandler.getTrigger($entry.getName(), $entry.getGroup()).getNextFireTime())
+        #set( $lastOkTime = "$!jobData.get('component.monitor.general.last.errorfree.run')")
 		#set ($interval = $jobHandler.getInterval($entry))
 		## for non monitoring jobs
 		#if ($entry.getGroup() != "monitor")
@@ -83,7 +84,8 @@
             #end
             </td>
 			<td><a href="$action">$!date.format('yyyy-MM-dd H:mm:ss', $prevTime)</a></td>
-			<td><a href="$action">$!date.format('yyyy-MM-dd H:mm:ss', $nextTime)</a></td>
+			##<td><a href="$action">$!date.format('yyyy-MM-dd H:mm:ss', $nextTime)</a></td>
+            <td><a href="$action">$lastOkTime</a></td>
 			#if ($jobData.containsKey("component.monitor.general.timer.average") && ($jobData.getInt("component.monitor.general.timer.num")!=0))
 				#set ($execCount = $jobData.getInt("component.monitor.general.timer.num"))
 				<td><a href="$action" title="$MESSAGES.getString('component.forms.text.of') $execCount $MESSAGES.getString('component.forms.text.executions')">$!jobData.getLong("component.monitor.general.timer.average")ms</a></td>
@@ -104,7 +106,8 @@
             #end
             </td>
         	<td><a href="$action">#if($jobData.containsKey("component.monitor.general.timer.num"))$date.format('yyyy-MM-dd H:mm:ss',$prevTime)#end</a></td>
-			<td><a href="$action">#if($jobData.getInt("component.monitor.general.active")==1)$date.format('yyyy-MM-dd H:mm:ss',$nextTime)#end</a></td>
+			##<td><a href="$action">#if($jobData.getInt("component.monitor.general.active")==1)$date.format('yyyy-MM-dd H:mm:ss',$nextTime)#end</a></td>
+            <td><a href="$action">$lastOkTime</a></td>
 
     		## due to new functionality old Jobs do not have this key!
     		#if ($jobData.containsKey("component.monitor.general.timer.average") && ($jobData.getInt("component.monitor.general.timer.num")!=0))
@@ -132,8 +135,8 @@
 
 <div class="formbody">
 		<table class="border fullwidth">
-		#set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status.code", "component.monitor.general.last.check", "component.monitor.general.next.check", "component.monitor.general.timer.average", "component.monitor.general.check.interval"]) ##, "component.monitor.general.active"])
-		#set ($colTitles = [$MESSAGES.getString('component.forms.text.name'), $MESSAGES.getString('component.forms.text.type'), $MESSAGES.getString('component.forms.text.status'), $MESSAGES.getString('component.forms.text.last.check'), $MESSAGES.getString('component.forms.text.next.check'), $MESSAGES.getString('component.forms.text.average.exec.time'), $MESSAGES.getString('component.forms.text.interval')]) ##, "aktiv"])
+		#set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status.code", "component.monitor.general.last.check", "component.monitor.general.last.errorfree.run", "component.monitor.general.timer.average", "component.monitor.general.check.interval"]) ##, "component.monitor.general.active"])
+		#set ($colTitles = [$MESSAGES.getString('component.forms.text.name'), $MESSAGES.getString('component.forms.text.type'), $MESSAGES.getString('component.forms.text.status'), $MESSAGES.getString('component.forms.text.last.check'), $MESSAGES.getString('component.forms.text.last.errorfree.run'), $MESSAGES.getString('component.forms.text.average.exec.time'), $MESSAGES.getString('component.forms.text.interval')]) ##, "aktiv"])
    
 		#renderDBBrowserHeader($colNames $colTitles)
     

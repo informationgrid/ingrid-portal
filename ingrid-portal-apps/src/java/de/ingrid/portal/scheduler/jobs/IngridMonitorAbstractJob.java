@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobDataMap;
@@ -55,6 +56,10 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
 			eventOccurences++;
 		} else {
 			eventOccurences = 1;
+		}
+		
+		if (status == STATUS_OK) {
+		    dataMap.put(PARAM_LAST_ERRORFREE_RUN, DateFormatUtils.format(System.currentTimeMillis(), "yyyy-MM-dd H:mm:ss"));
 		}
 
 		dataMap.put(PARAM_STATUS, status);

@@ -63,6 +63,8 @@ public class AdminComponentMonitorForm extends ActionForm {
 	
 	public static final String FIELD_NEXT_EXECUTION = "next_execution";
 	
+	public static final String FIELD_LAST_OK_EXECUTION = "last_ok_execution";
+	
 	public static final String FIELD_NUM_EXECUTIONS = "num_executions";
 	
 	public static final String FIELD_AVERAGE_EXECTIME = "average_exec_time";

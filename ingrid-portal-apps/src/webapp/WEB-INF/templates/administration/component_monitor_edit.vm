@@ -49,7 +49,7 @@
 			<p class="clearer" />
 			#renderTextField( "Service URL*" "serviceurl" )
     	#elseif ($compType == "component.monitor.general.type.provider.check")
-    		#renderTextField( "Anbieter ausschließen" "excl_provider" )
+    		#renderTextField( "Anbieter ausschlieï¿½en" "excl_provider" )
     	#end
     	
     	
@@ -120,10 +120,15 @@
 		</p>
 		<p class="clearer" />
 		<p>
-			<label class="float_left col2left_incr" for="">#displayFieldLabel('nextExecution' $MESSAGES.getString('component.forms.text.next.check'))</label>
-			<span>#getFieldValue('next_execution')</span>
+			<label class="float_left col2left_incr" for="">#displayFieldLabel('lastOkExecution' $MESSAGES.getString('component.forms.text.last.errorfree.run'))</label>
+			<span>#getFieldValue('last_ok_execution')</span>
 		</p>
 		<p class="clearer" />
+        <p>
+            <label class="float_left col2left_incr" for="">#displayFieldLabel('nextExecution' $MESSAGES.getString('component.forms.text.next.check'))</label>
+            <span>#getFieldValue('next_execution')</span>
+        </p>
+        <p class="clearer" />
 		<p>
 			<label class="float_left col2left_incr" for="">#displayFieldLabel('numExecutions' $MESSAGES.getString('component.forms.text.num.executions'))</label>
 			<span>#getFieldValue('num_executions')</span>
@@ -151,7 +156,7 @@
 
 #if ($actionForm.getInput('last_execution') != "")
 <div align="left">
-	<input style="margin: 4px 0 0 5px;" class="btn float_left" type="submit" name="doResetTime" value="Zeit zurücksetzen" />
+	<input style="margin: 4px 0 0 5px;" class="btn float_left" type="submit" name="doResetTime" value="$MESSAGES.getString("component.forms.buttons.reset.time")" />
 </div>
 #end
 #renderDBEditFooter("edit")

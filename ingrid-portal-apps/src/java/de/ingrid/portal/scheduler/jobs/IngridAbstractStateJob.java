@@ -94,6 +94,8 @@ public abstract class IngridAbstractStateJob implements StatefulJob {
 	
 	public static final String PARAM_EXCLUDED_PROVIDER = "component.monitor.general.excluded.provider";
 	
+	public static final String PARAM_LAST_ERRORFREE_RUN = "component.monitor.general.last.errorfree.run";
+	
 
 	private long startTime;
 	

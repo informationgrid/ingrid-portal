@@ -553,4 +553,4 @@ a.contentColumnHeadLight, a.contentColumnHeadLight:link, a.contentColumnHeadLigh
 .contentRowDark { background-color: #F4F4F4; }
 .contentRowLight { background-color: white; }
 .contentRowLine {border-bottom: 1px solid #176798; }
-.contentInput { width:50em; }
+.contentInput { width:49em; }

@@ -550,4 +550,4 @@ a.contentColumnHead, a.contentColumnHead:link, a.contentColumnHead:visited { tex
 .contentRowEvenError { background-color: #F4D4D4; }
 .contentRowOdd { background-color: #f0ede7; }
 .contentRowOddError { background-color: #f4d4d4; }
-.contentInput { width:50em; }
+.contentInput { width:49em; }

@@ -34,6 +34,7 @@ import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsString;
 
 import de.ingrid.portal.scheduler.IngridMonitorFacade;
+import de.ingrid.portal.scheduler.jobs.IngridAbstractStateJob;
 import de.ingrid.portal.scheduler.jobs.IngridJobHandler;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorAbstractJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorIPlugJob;
@@ -476,8 +477,10 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 	}
 	
 	private void addStatusInfo(ActionForm cf, JobDataMap dataMap, String id) {
-		String lastExec = "";
-		String nextExec = "";
+		String lastExec   = "";
+		String nextExec   = "";
+		String lastOkExec = "";
+		
 		// for jobs that never ran there's no information -> return! 
 		if (dataMap.containsKey(IngridMonitorAbstractJob.PARAM_TIMER_NUM) == false) {
 			// write at least the error message
@@ -496,13 +499,14 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
         
         if (trigger.getPreviousFireTime()!=null) {
 	        lastExec = portalFormat.format(trigger.getPreviousFireTime());
+	        lastOkExec = dataMap.getString(IngridAbstractStateJob.PARAM_LAST_ERRORFREE_RUN);
         }
         
         nextExec = portalFormat.format(trigger.getNextFireTime()); //  portalFormat.format((Date) dataMap.get(IngridMonitorAbstractJob.PARAM_NEXT_CHECK));
-				
 		
 		cf.setInput(AdminComponentMonitorForm.FIELD_LAST_EXECUTION, lastExec);
 		cf.setInput(AdminComponentMonitorForm.FIELD_NEXT_EXECUTION, nextExec);
+		cf.setInput(AdminComponentMonitorForm.FIELD_LAST_OK_EXECUTION, lastOkExec);
 		cf.setInput(AdminComponentMonitorForm.FIELD_NUM_EXECUTIONS, String.valueOf(dataMap.getInt(IngridMonitorAbstractJob.PARAM_TIMER_NUM)));
 		cf.setInput(AdminComponentMonitorForm.FIELD_ERROR_MSG, dataMap.getString(IngridMonitorAbstractJob.PARAM_STATUS_CODE));
 		

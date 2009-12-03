@@ -33,8 +33,6 @@ import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridRSSSource;
 import de.ingrid.portal.om.IngridRSSStore;
 
-import de.ingrid.portal.scheduler.jobs.IngridAbstractStateJob;
-
 /**
  * Quartz job for fetching all RSS feeds in database table ingrid_rss_source.
  * All RSS entries not older than one month will be added to the database table
