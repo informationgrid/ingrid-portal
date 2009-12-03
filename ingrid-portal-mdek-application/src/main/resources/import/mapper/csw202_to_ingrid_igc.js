@@ -650,7 +650,6 @@ var mappingDescription = {"mappings":[
   			"subMappings":{
   				"mappings": [
 		     		{	
-			  			"srcXpath":"./@uuid",
 			  			// make sure we always have a UUID 
 			  			"defaultValue":createUUIDFromAddress,
 			  			"storeValue":"uuid",
@@ -818,7 +817,7 @@ function mapToTarget(mapping, source, target) {
 								if (typeof m.defaultValue == "function" ) {
 									log.debug("Call function with value:" +source);
 									var args = new Array(source);
-									value = call_f(m.transform.funct,args);
+									value = call_f(m.defaultValue,args);
 								} else {
 									value = m.defaultValue;
 								}
@@ -923,7 +922,7 @@ function mapToTarget(mapping, source, target) {
 						value = storedValues[m.setStoredValue];
 					} else if (typeof m.defaultValue == "function" ) {
 						var args = new Array(source);
-						value = call_f(m.transform.funct,args);
+						value = call_f(m.defaultValue,args);
 					} else {
 						value = m.defaultValue;
 					}
@@ -938,6 +937,11 @@ function mapToTarget(mapping, source, target) {
 					}
 					
 					nodeText += value;
+					
+					if (m.storeValue) {
+						log.debug("stored '" + value + "' as '" + m.storeValue + "'.");
+						storedValues[m.storeValue] = value;
+					}
 					
 					if (m.targetAttribute) {
 						log.debug("adding '" + m.targetNode + "/@" + m.targetAttribute + "' = '" + nodeText + "'.");
@@ -1273,6 +1277,7 @@ function call_f(f,args)
 
 function createUUIDFromAddress(source) {
 	log.debug("create UUID from address node: " + source);
+	var isoUuid = XPathUtils.getString(source, "./@uuid");
 	var organisationName = XPathUtils.getString(source, "gmd:organisationName/gco:CharacterString");
 	var individualName = XPathUtils.getString(source, "gmd:individualName/gco:CharacterString");
 	var email = XPathUtils.getString(source, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString");
@@ -1296,6 +1301,8 @@ function createUUIDFromAddress(source) {
 			idcUuid.append("0");
 		}
 		uuid = idcUuid.toString();
+	} else if (isoUuid != "") {
+		uuid = isoUuid;
 	} else {
 		log.warn("Insufficient data for UUID creation (no 'email' or only one of 'individualName' or 'organisationName' has been set for this address: email='" + email + "', individualName='" + individualName + "', organisationName='" + organisationName + "'!)");
 		log.warn("A new random UUID will be created!");
