@@ -176,6 +176,8 @@ public class AddressServiceImpl implements AddressService {
 			}
 		} else {
 			organisations = address.getOrganisation();
+			if (organisations == null)
+			    return null;
 		}
 		return organisations.trim();
 	}
