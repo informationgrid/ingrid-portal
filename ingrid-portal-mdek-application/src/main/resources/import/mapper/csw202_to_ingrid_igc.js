@@ -636,6 +636,33 @@ var mappingDescription = {"mappings":[
 			  	]
 			}
   		},
+  		{
+  			"srcXpath":"//gmd:identificationInfo//gmd:graphicOverview/gmd:MD_BrowseGraphic",
+  			"targetNode":"/igc/data-sources/data-source",
+  			"newNodeName":"available-linkage",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"srcXpath":"gmd:fileDescription/gco:CharacterString",
+			  			"defaultValue":"grafische Darstellung",
+			  			"targetNode":"linkage-name"
+			  		},
+	  				{
+			  			"srcXpath":"gmd:fileName/gco:CharacterString",
+			  			"targetNode":"linkage-url"
+			  		},
+	  				{
+			  			"defaultValue":"1",
+			  			"targetNode":"linkage-url-type"
+			  		},
+	  				{
+			  			"defaultValue":"-1",
+			  			"targetNode":"linkage-reference",
+			  			"targetAttribute":"id"
+			  		}
+			  	]
+			}
+  		},
 
   		// ****************************************************
   		//
@@ -664,7 +691,8 @@ var mappingDescription = {"mappings":[
 			  			"targetNode":"responsible-identifier"
 			  		},
 	  				{
-			  			"defaultValue":"3",
+			  			// map to address type: person
+			  			"defaultValue":"2",
 			  			"targetNode":"type-of-address",
 			  			"targetAttribute":"id"
 			  		},

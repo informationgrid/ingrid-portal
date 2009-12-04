@@ -605,7 +605,7 @@ var mappingDescription = {"mappings":[
 			  			"targetNode":"responsible-identifier"
 			  		},
 	  				{
-			  			"defaultValue":"3",
+			  			"defaultValue":"2",
 			  			"targetNode":"type-of-address",
 			  			"targetAttribute":"id"
 			  		},
