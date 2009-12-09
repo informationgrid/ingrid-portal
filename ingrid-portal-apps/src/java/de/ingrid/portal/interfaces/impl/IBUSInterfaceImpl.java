@@ -77,7 +77,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         super();
         try {
             client = BusClientFactory.createBusClient();
-            
             // check caching properties
             // associate a bus with and without cache form the client
             PortalConfig config = PortalConfig.getInstance();
@@ -294,25 +293,19 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         
         injectCache(result);
         
-        if (rec == null) {
-	        try {
-	            rec = bus.getRecord(result);
-	        } catch (Throwable t) {
-	            if (log.isDebugEnabled()) {
-	                log.debug("Problems fetching Record of result: " + result
-	                		+ "[cause:" + t.getCause() + "]", t);
-	            } else if (log.isInfoEnabled()) {
-	                log.info("Problems fetching Record of result: " + result
-	                		+ "[cause:" + t.getCause() + "]");
-	            } else {
-	                log.warn("Problems fetching Record of result: " + result
-	                		+ "[cause:" + t.getCause() + "]", t);
-	            }
-	        }
-        } else {
-        	if (log.isDebugEnabled()) {
-        		log.debug("Got record from cache :)");
-        	}
+        try {
+            rec = bus.getRecord(result);
+        } catch (Throwable t) {
+            if (log.isDebugEnabled()) {
+                log.debug("Problems fetching Record of result: " + result
+                		+ "[cause:" + t.getCause() + "]", t);
+            } else if (log.isInfoEnabled()) {
+                log.info("Problems fetching Record of result: " + result
+                		+ "[cause:" + t.getCause() + "]");
+            } else {
+                log.warn("Problems fetching Record of result: " + result
+                		+ "[cause:" + t.getCause() + "]", t);
+            }
         }
 
         return rec;

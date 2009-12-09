@@ -21,6 +21,7 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
+import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridRSSSource;
 
@@ -87,7 +88,7 @@ public class IngridMonitorRSSCheckerJob extends IngridMonitorAbstractJob {
             // work on all rss items of the feed and check the title length
             while (it.hasNext()) {
                 entry = it.next();
-                if (entry.getTitle().length()>256) {
+                if (UtilsString.stripHTMLTagsAndHTMLEncode(entry.getTitle()).length()>256) {
                 	status = STATUS_ERROR;
                 	statusCode = ERROR_CODE;
                 	break;

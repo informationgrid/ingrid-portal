@@ -180,7 +180,10 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                                 entry.setAuthors(authors);
 
                                 IngridRSSStore rssEntry = new IngridRSSStore();
-                                rssEntry.setTitle(UtilsString.stripHTMLTagsAndHTMLEncode(entry.getTitle()));
+                                String title = UtilsString.stripHTMLTagsAndHTMLEncode(entry.getTitle());
+                                if (title.length() > 256)
+                                    title = title.substring(0, 255);
+                                rssEntry.setTitle(title);
                                 rssEntry.setDescription(UtilsString.stripHTMLTagsAndHTMLEncode(entry.getDescription()
                                         .getValue()));
                                 rssEntry.setLink(entry.getLink());
