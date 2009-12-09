@@ -139,6 +139,10 @@
         </file>
         <file>
             <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/footer.vm</src>
+        </file>
+        <file>
+            <action>copy</action>
             <src>ingrid-portal/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources_de.properties</src>
         </file>
         <file>

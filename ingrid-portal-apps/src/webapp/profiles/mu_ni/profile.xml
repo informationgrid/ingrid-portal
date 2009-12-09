@@ -211,6 +211,10 @@
         </file>
         <file>
             <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/footer.vm</src>
+        </file>
+        <file>
+            <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid/images/arrow_up.gif</src>
         </file>
         <file>
