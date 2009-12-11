@@ -9,7 +9,8 @@
 		#else
 			<div class="resultset" style="margin-left:${subHitLeftMargin}px;">
 		#end
-	#end
+    #end
+    #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 		  #if ($rs.title)
 ##		    #if ($rs.type == "www-style")
 			#if($rs.url)
@@ -40,9 +41,9 @@ $MESSAGES.setMsgParam('DOC')
 				#set($udkObjClassNameKey = "udk_obj_class_name_$rs.udk_class")
 				#set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
 				#if($rs.docuuid && $rs.docuuid.length() > 0)
-				<span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><strong><a href="portal/search-detail.psml?docuuid=$rs.docuuid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#renderTitle($rs.title) </a></strong></span>
+				<span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><strong><a href="$contextPath/portal/search-detail.psml?docuuid=$rs.docuuid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#renderTitle($rs.title) </a></strong></span>
 				#else	
-				<span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#renderTitle($rs.title) </a></strong></span>
+				<span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><strong><a href="$contextPath/portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#renderTitle($rs.title) </a></strong></span>
 				#end	
 			  #else
     			#if ($rs.url_type && $rs.url_type == "dsc")
@@ -51,9 +52,9 @@ $MESSAGES.setMsgParam('DOC')
 					#set($iconImage = 'icn_linkextern.gif')
 				#end
 				#if($rs.docuuid && $rs.docuuid.length() > 0)
-					<span class="result_title"><strong><a href="portal/search-detail.psml?docid=$rs.docid&docuuid=$rs.docuuid&plugid=$rs.plugid" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/$iconImage" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title) </a></strong></span>
+					<span class="result_title"><strong><a href="$contextPath/portal/search-detail.psml?docid=$rs.docid&docuuid=$rs.docuuid&plugid=$rs.plugid" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/$iconImage" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title) </a></strong></span>
 				#else	
-					<span class="result_title"><strong><a href="portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/$iconImage" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title) </a></strong></span>
+					<span class="result_title"><strong><a href="$contextPath/portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/$iconImage" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title) </a></strong></span>
 				#end	
 			  #end
 			#else
@@ -69,7 +70,8 @@ $MESSAGES.setMsgParam('DOC')
 					#set ($showProvider = false)
 				#end
 				#if($showProvider)
-					$MESSAGES.getString('common.result.provider'): $!rs.provider<br />
+					##$MESSAGES.getString('common.result.provider'): $providerMap.get($!rs.provider)<br />
+                    $MESSAGES.getString('common.result.provider'): $!rs.provider<br />
 				#end
 				$MESSAGES.getString('common.result.source'): $!rs.source<br />
                 #if($adminContent)
@@ -79,7 +81,7 @@ $MESSAGES.setMsgParam('DOC')
 ##			#end
 			#if($rs.wms_url)
 			<p class="result_link">
-				<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="portal/main-maps.psml?wms_url=$rs.wms_url" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('common.result.showMap')</a>
+				<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$contextPath/portal/main-maps.psml?wms_url=$rs.wms_url" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('common.result.showMap')</a>
 			</p>				
 			#end
 			#if($rs.url)
