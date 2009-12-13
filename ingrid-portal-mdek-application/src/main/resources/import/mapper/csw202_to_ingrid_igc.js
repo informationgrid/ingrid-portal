@@ -101,6 +101,7 @@ var mappingDescription = {"mappings":[
 
   		{	
   			"srcXpath":"//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue",
+  			"defaultValue":"5"; // default to "dataset", if no hierarchyLevel is supplied
   			"targetNode":"/igc/data-sources/data-source/technical-domain/map/hierarchy-level",
   			"targetAttribute":"iso-code",
 			"transform":{
