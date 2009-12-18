@@ -207,8 +207,14 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     }
 
     /**
-     * Returns the address plug id of the corresponding plug id, by adding the postfix
-     * "_addr" to the plug id. Only plug id's that contain the string "udk-db" and do
+     * Returns the corresponding address plug id of the iPlug identified by <em>plugId</em>. 
+     * If the iPlug identified by <em>plugId</em> has the datatype "address" set, 
+     * the parameter <em>plugId</em> will be returned unchanged. 
+     * 
+     * Otherwise it tries to obtain the corresponding object iPlug from the plugdescription. 
+     * If this fails it will fall back to a convention:
+     * 
+     * It adds the postfix "_addr" to the plug id. Only plug id's that contain the string "udk-db" and do
      * not contain the postfix "_addr" will be changed.
      * 
      * @param plugId
@@ -217,12 +223,15 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     static public String getAddressPlugIdFromPlugId(String plugId) {
     	String correspondentIPlug = null;
     	PlugDescription cIPlugDescr = IBUSInterfaceImpl.getInstance().getIPlug(plugId);
-    	
     	if (cIPlugDescr != null) {
-    		correspondentIPlug = cIPlugDescr.getCorrespondentProxyServiceURL();
+        	if (cIPlugDescr.containsDataType("address")) {
+        		correspondentIPlug = plugId;
+        	} else {
+        		correspondentIPlug = cIPlugDescr.getCorrespondentProxyServiceURL();
+        	}
     	}
     	
-    	if (correspondentIPlug == null || correspondentIPlug == "" || correspondentIPlug.equals("null")) {
+    	if (correspondentIPlug == null || correspondentIPlug.trim().length() == 0 || correspondentIPlug.equals("null")) {
 	        if (plugId != null && plugId.indexOf("udk-db") > -1 && !plugId.endsWith("_addr")) {
 	        	correspondentIPlug = plugId.concat("_addr");
 	        } else {
@@ -233,7 +242,14 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     }
 
     /**
-     * Returns the plug id of the corresponding address plug id. Address plug
+     * Returns the corresponding object plug id of the iPlug identified by <em>plugId</em>. 
+     * If the iPlug identified by <em>plugId</em> has NOT the datatype "address" set, 
+     * the parameter <em>plugId</em> will be returned unchanged. 
+     * 
+     * Otherwise it tries to obtain the corresponding address iPlug from the plugdescription. 
+     * If this fails it will fall back to a convention:
+     * 
+     * Returns the objects plug id of the corresponding address plug id. Address plug
      * id's are detected from the postfix "_addr". The postfix will be stripped.
      * Plug id's without this postfix remain unchanged.
      * 
@@ -245,13 +261,18 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     	PlugDescription cIPlugDescr = IBUSInterfaceImpl.getInstance().getIPlug(plugId);
     	
     	if (cIPlugDescr != null) {
+        	if (!cIPlugDescr.containsDataType("address")) {
+        		correspondentIPlug = plugId;
+        	} else {
+        		correspondentIPlug = cIPlugDescr.getCorrespondentProxyServiceURL();
+        	}
     		correspondentIPlug = cIPlugDescr.getCorrespondentProxyServiceURL();
     	}
     	
-    	if (correspondentIPlug == null || correspondentIPlug == "" || correspondentIPlug.equals("null")) {
+    	if (correspondentIPlug == null || correspondentIPlug.trim().length() == 0 || correspondentIPlug.equals("null")) {
 	        if (plugId == null) {
 	        	correspondentIPlug = "";
-	        } else  if (plugId.endsWith("_addr")) {
+	        } else if (plugId.endsWith("_addr")) {
 	        	correspondentIPlug = plugId.substring(0, plugId.lastIndexOf("_addr"));
 	        } else {
 	        	correspondentIPlug = plugId;
