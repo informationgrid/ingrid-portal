@@ -36,7 +36,8 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 	
 	private String templateIGC 			= "/import/templates/igc_template.xml";
 	
-	private String exampleXml 			= "/de/ingrid/mdek/mapping/inspire_datasetkomplett.xml";
+	private String exampleXmlObjectComplete 			= "/de/ingrid/mdek/mapping/inspire_datasetkomplett.xml";
+	private String exampleXmlServiceComplete 			= "/de/ingrid/mdek/mapping/inspire_servicekomplett.xml";
 	
 	
 	public void setUp() {
@@ -58,8 +59,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		
 	}
 
-	public final void testConvertOne() throws TransformerException {
-		System.out.println("testConvertOne");
+	public final void testConvertObjectComplete() throws TransformerException {
 		// set variables that are needed for running correctly
 		initClassVariables(mapperScriptArcGIS, templateIGC);
 		
@@ -67,7 +67,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		try {
 			// get example file from test resource directory
 			// spring-dependency is used to access test-resources (search from every class path!)
-			data = (new ClassPathResource(exampleXml)).getInputStream();
+			data = (new ClassPathResource(exampleXmlObjectComplete)).getInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -76,10 +76,28 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		InputStream result = mapper.convert(data);
 		
 		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
-		
 	}
 
+	public final void testConvertServiceComplete() throws TransformerException {
+		// set variables that are needed for running correctly
+		initClassVariables(mapperScriptArcGIS, templateIGC);
+		
+		InputStream data = null;
+		try {
+			// get example file from test resource directory
+			// spring-dependency is used to access test-resources (search from every class path!)
+			data = (new ClassPathResource(exampleXmlServiceComplete)).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println(data.toString());
+		// System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
+		InputStream result = mapper.convert(data);
+		
+		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Test_Schutzgebiete"));
+	}
 
+	
 	private ImportDataProvider initDataProvider() {
 		MockImportDataProviderImpl dataProvider = new MockImportDataProviderImpl();
 		HashMap<Integer, Integer> mapKeys = new HashMap<Integer, Integer>();

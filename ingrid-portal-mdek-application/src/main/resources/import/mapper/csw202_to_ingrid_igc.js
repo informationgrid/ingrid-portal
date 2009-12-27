@@ -39,6 +39,7 @@ var mappingDescription = {"mappings":[
   			"srcXpath":"//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue",
   			"targetNode":"/igc/data-sources/data-source/general/object-class",
   			"targetAttribute":"id",
+  			"storeValue":"objectClass",
   			"transform":{
 				"funct":getObjectClassFromHierarchyLevel
 			}
@@ -98,113 +99,283 @@ var mappingDescription = {"mappings":[
   		// /igc/data-sources/data-source/technical-domain/map
   		//
   		// ****************************************************
+  		{
+  			"conditional": {
+  				"storedValue": {
+  					"name":"objectClass",
+  					"value":"1"
+  				}
+  			},
+  			"subMappings": {
+  			    "mappings": [
+	         		{	
+	        			"srcXpath":"//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue",
+	        			"defaultValue":"5", // default to "dataset", if no hierarchyLevel is supplied
+	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map/hierarchy-level",
+	        			"targetAttribute":"iso-code",
+		      			"transform":{
+		      				"funct":transformGeneric,
+		      				"params":[{"dataset":"5", "series":"6"}, false, "Could not map hierarchyLevel (only 'dataset' and 'series' are supported) : "]
+		        			}
+		        	},
+		        	{
+		        		"execute":{
+		        			"funct":mapReferenceSystemInfo
+		        		}
+		      		},
+	        		{
+	        			"srcXpath":"//gmd:identificationInfo/gmd:MD_DataIdentification",
+	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
+	        			"newNodeName":"publication-scale",
+	        			"subMappings":{
+	        				"mappings": [
+		      	  				{
+		      			  			"srcXpath":"gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer",
+		      			  			"targetNode":"scale"
+		      			  		},
+		      	  				{
+		      			  			"srcXpath":"gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gmd:Distance[@uom='meter']",
+		      			  			"targetNode":"resolution-ground"
+		      			  		},
+		      	  				{
+		      			  			"srcXpath":"gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gmd:Distance[@uom='dpi']",
+		      			  			"targetNode":"resolution-scan"
+		      			  		}
+	      			  		]
+		      			}
+		        	},
+		        	{	
+	        			"srcXpath":"//gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description/gco:CharacterString",
+	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production"
+	        		},
+	        		{	
+	        			"srcXpath":"//gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString",
+	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map/technical-base"
+	        		},
+	        		{
+	        			"srcXpath":"//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialRepresentationType",
+	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
+	        			"newNodeName":"spatial-representation-type",
+	        			"subMappings":{
+	        				"mappings": [
+		      	  				{
+		      			  			"srcXpath":"gmd:MD_SpatialRepresentationTypeCode/@codeListValue",
+		      			  			"targetNode":"",
+		      			  			"targetAttribute":"iso-code",
+		      			  			"transform":{
+		          						"funct":transformISOToIgcDomainId,
+		          						"params":[526, "Could not transform spatial representation type: "]
+		          					}
+		      			  		}
+		      			  	]
+		      			}
+		        	},
+	        		{	
+	        			"srcXpath":"//gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue",
+	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format/vector-topology-level",
+	        			"targetAttribute":"iso-code",
+	        			"transform":{
+		      				"funct":transformISOToIgcDomainId,
+		      				"params":[528, "Could not transform vector topology level: "]
+	      				}
+	        		},
+	        		{
+	        			"srcXpath":"//gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects",
+	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format",
+	        			"newNodeName":"geo-vector",
+	        			"subMappings":{
+	        				"mappings": [
+		      	  				{
+		      			  			"srcXpath":"gmd:MD_GeometricObjects/gmd:geometricObjectType/gmd:MD_GeometricObjectTypeCode/@codeListValue",
+		      			  			"targetNode":"geometric-object-type",
+		      			  			"targetAttribute":"iso-code",
+		      			  			"transform":{
+		      							"funct":transformISOToIgcDomainId,
+		      							"params":[515, "Could not transform geometric object type code: "]
+		      						}
+		      			  		},
+		      	  				{
+		      			  			"srcXpath":"gmd:MD_GeometricObjects/gmd:geometricObjectCount/gco:Integer",
+		      			  			"targetNode":"geometric-object-count"
+		      			  		}
+	      			  		]
+	      				}
+	        		},
+	        		{
+	        			"srcXpath":"//gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes",
+	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
+	        			"newNodeName":"feature-type",
+	        			"subMappings":{
+	        				"mappings": [
+		      	  				{
+		      			  			"srcXpath":"gco:LocalName",
+		      			  			"targetNode":""
+		      			  		}
+	      	  				]
+	      				}
+	        		}
+  			    ]
+  			}
+  		},
 
-  		{	
-  			"srcXpath":"//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue",
-  			"defaultValue":"5"; // default to "dataset", if no hierarchyLevel is supplied
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/hierarchy-level",
-  			"targetAttribute":"iso-code",
-			"transform":{
-				"funct":transformGeneric,
-				"params":[{"dataset":"5", "series":"6"}, false, "Could not map hierarchyLevel (only 'dataset' and 'series' are supported) : "]
+  		// ****************************************************
+  		//
+  		// /igc/data-sources/data-source/technical-domain/service
+  		//
+  		// ****************************************************
+  		{
+  			"conditional": {
+  				"storedValue": {
+  					"name":"objectClass",
+  					"value":"3"
+  				}
+  			},
+  			"subMappings": {
+  			    "mappings": [
+	         		{	
+	        			"srcXpath":"//gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName",
+	        			"targetNode":"/igc/data-sources/data-source/technical-domain/service/service-classification",
+	        			"targetAttribute":"id",
+		      			"transform":{
+		      				"funct":transformGeneric,
+		      				"params":[{"discovery":"1", "view":"2", "download":"3", "transformation":"4", "invoke":"5", "other":"6"}, false, "Could not map serviceType : "]
+		        		}
+		        	},
+	         		{	
+		      			"srcXpath":"//gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='Service Classification, version 1.0']/gmd:keyword/gco:CharacterString",
+		      			"targetNode":"/igc/data-sources/data-source/technical-domain/service",
+		      			"newNodeName":"service-type",
+		      			"subMappings":{
+		      				"mappings": [
+		    	  				{
+		    			  			"srcXpath":".",
+		    			  			"targetNode":""
+		    			  		},
+		    	  				{
+		    			  			"srcXpath":".",
+		    			  			"targetNode":"",
+		    			  			"targetAttribute":"id",
+		    			  			"defaultValue": -1,
+		    			  			"transform":{
+		    							"funct":transformToIgcDomainId,
+		    							"params":[6200, 123, "Could not map INSPIRE theme:"]
+		    						}
+		    			  		}
+		    			  	]
+		    			}		
+		        	},
+		        	{	
+	        			"srcXpath":"//gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description/gco:CharacterString",
+	        			"targetNode":"/igc/data-sources/data-source/technical-domain/service/database-of-system"
+	        		},
+	         		{	
+		      			"srcXpath":"//gmd:identificationInfo//srv:serviceTypeVersion/gco:CharacterString",
+		      			"targetNode":"/igc/data-sources/data-source/technical-domain/service",
+		      			"newNodeName":"service-version",
+		      			"subMappings":{
+		      				"mappings": [
+		    	  				{
+		    			  			"srcXpath":".",
+		    			  			"targetNode":""
+		    			  		}
+		    			  	]
+		    			}
+		        	},
+	         		{	
+		      			"srcXpath":"//gmd:identificationInfo//srv:containsOperations/srv:SV_OperationMetadata",
+		      			"targetNode":"/igc/data-sources/data-source/technical-domain/service",
+		      			"newNodeName":"service-operation",
+		      			"subMappings":{
+		      				"mappings": [
+		    	  				{
+		    			  			"srcXpath":"srv:operationName/gco:CharacterString",
+		    			  			"targetNode":"operation-name"
+		    			  		},
+		    	  				{
+		    			  			"srcXpath":"srv:operationDescription/gco:CharacterString",
+		    			  			"targetNode":"description-of-operation"
+		    			  		},
+		    	  				{
+		    			  			"srcXpath":"srv:invocationName/gco:CharacterString",
+		    			  			"targetNode":"invocation-name"
+		    			  		},
+		    	  				{
+		    			  			"srcXpath":"srv:DCP/srv:DCPList",
+		    			  			"targetNode":"",
+	    			      			"newNodeName":"platform",
+	    			      			"subMappings":{
+					      				"mappings": [
+					    	  				{
+					    			  			"srcXpath":"./@codeListValue",
+					    			  			"targetNode":""
+					    			  		}
+					    	  			]
+		    			  			}	
+		    			  		},
+		    	  				{
+		    			  			"srcXpath":"srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL",
+		    			  			"targetNode":"",
+	    			      			"newNodeName":"connection-point",
+	    			      			"subMappings":{
+					      				"mappings": [
+					    	  				{
+					    			  			"srcXpath":".",
+					    			  			"targetNode":""
+					    			  		}
+					    	  			]
+		    			  			}	
+		    			  		},
+		    	         		{	
+		    		      			"srcXpath":"srv:parameters/srv:SV_Parameter",
+		    		      			"targetNode":"",
+		    		      			"newNodeName":"parameter-of-operation",
+		    		      			"subMappings":{
+		    		      				"mappings": [
+		    		    	  				{
+		    		    			  			"srcXpath":"srv:name/gmd:aName/gco:CharacterString",
+		    		    			  			"targetNode":"name"
+		    		    			  		},
+		    		    	  				{
+		    		    			  			"srcXpath":"srv:optionality/gco:CharacterString",
+		    		    			  			"targetNode":"optional",
+		    		    			  			"defaultValue":"1",
+		    		    		      			"transform":{
+			    				      				"funct":transformGeneric,
+			    				      				"params":[{"optional":"1", "mandatory":"0"}, false, "Could not map srv:optionality : "]
+			    				        		}
+		    		    			  		},
+		    		    	  				{
+		    		    			  			"srcXpath":"srv:repeatability/gco:Boolean",
+		    		    			  			"targetNode":"repeatability",
+		    		    			  			"defaultValue":"0",
+		    		    		      			"transform":{
+			    				      				"funct":transformGeneric,
+			    				      				"params":[{"true":"1", "false":"0"}, false, "Could not map srv:repeatability : "]
+			    				        		}
+		    		    			  		},
+		    		    	  				{
+		    		    			  			"srcXpath":"srv:direction/srv:SV_ParameterDirection",
+		    		    			  			"targetNode":"direction",
+		    		    			  			"defaultValue":"Ein -und Ausgabe",
+		    		    		      			"transform":{
+			    				      				"funct":transformGeneric,
+			    				      				"params":[{"in/out":"Ein -und Ausgabe", "in":"Eingabe", "out":"Ausgabe"}, false, "Could not map srv:direction : "]
+			    				        		}
+		    		    			  		},
+		    		    	  				{
+		    		    			  			"srcXpath":"srv:description/gco:CharacterString",
+		    		    			  			"targetNode":"description-of-parameter"
+		    		    			  		}
+		    		    			   ] // service operation parameter submappings
+		    			  		   }
+		    	         		}
+		    			  	] // service operation submappings
+		    			}		
+		        	}
+  			    ] // conditional submappings
   			}
   		},
-  		{
-  			"execute":{
-  				"funct":mapReferenceSystemInfo
-  			}
-		},
-  		{
-  			"srcXpath":"//gmd:identificationInfo/gmd:MD_DataIdentification",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
-  			"newNodeName":"publication-scale",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"srcXpath":"gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer",
-			  			"targetNode":"scale"
-			  		},
-	  				{
-			  			"srcXpath":"gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gmd:Distance[@uom='meter']",
-			  			"targetNode":"resolution-ground"
-			  		},
-	  				{
-			  			"srcXpath":"gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gmd:Distance[@uom='dpi']",
-			  			"targetNode":"resolution-scan"
-			  		}
-			  	]
-			}
-  		},
-  		{	
-  			"srcXpath":"//gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description/gco:CharacterString",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production"
-  		},
-  		{	
-  			"srcXpath":"//gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/technical-base"
-  		},
-  		{
-  			"srcXpath":"//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialRepresentationType",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
-  			"newNodeName":"spatial-representation-type",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"srcXpath":"gmd:MD_SpatialRepresentationTypeCode/@codeListValue",
-			  			"targetNode":"",
-			  			"targetAttribute":"iso-code",
-			  			"transform":{
-    						"funct":transformISOToIgcDomainId,
-    						"params":[526, "Could not transform spatial representation type: "]
-    					}
-			  		}
-			  	]
-			}
-  		},
-  		{	
-  			"srcXpath":"//gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format/vector-topology-level",
-  			"targetAttribute":"iso-code",
-  			"transform":{
-				"funct":transformISOToIgcDomainId,
-				"params":[528, "Could not transform vector topology level: "]
-			}
-  		},
-  		{
-  			"srcXpath":"//gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format",
-  			"newNodeName":"geo-vector",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"srcXpath":"gmd:MD_GeometricObjects/gmd:geometricObjectType/gmd:MD_GeometricObjectTypeCode/@codeListValue",
-			  			"targetNode":"geometric-object-type",
-			  			"targetAttribute":"iso-code",
-			  			"transform":{
-							"funct":transformISOToIgcDomainId,
-							"params":[515, "Could not transform geometric object type code: "]
-						}
-			  		},
-	  				{
-			  			"srcXpath":"gmd:MD_GeometricObjects/gmd:geometricObjectCount/gco:Integer",
-			  			"targetNode":"geometric-object-count"
-			  		}
-			  	]
-			}
-  		},
-  		{
-  			"srcXpath":"//gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
-  			"newNodeName":"feature-type",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"srcXpath":"gco:LocalName",
-			  			"targetNode":""
-			  		}
-			  	]
-			}
-  		},
+
 
   		// ****************************************************
   		//
@@ -804,19 +975,30 @@ function mapToTarget(mapping, source, target) {
 				}
 				call_f(m.execute.funct, args)
 			} else if (m.subMappings) {
-				// iterate over all xpath results
-				var sourceNodeList = XPathUtils.getNodeList(source, m.srcXpath);
-				if (sourceNodeList) {
-					log.debug("found sub mapping sources: " + m.srcXpath + "; count: " + sourceNodeList.getLength())
-					for (var j=0; j<sourceNodeList.getLength(); j++ ) {
-						log.debug("handle sub mapping: " + sourceNodeList.item(j))
-						var node = XPathUtils.createElementFromXPath(target, m.targetNode);
-						node = node.appendChild(node.getOwnerDocument().createElement(m.newNodeName));
-						mapToTarget(m.subMappings, sourceNodeList.item(j), node);
+				if (m.conditional) {
+					log.debug("found sub mapping with conditional.");
+					if (m.conditional.storedValue) {
+						log.debug("found sub mapping with stored value conditional: " + m.conditional.storedValue.name + " ? " + storedValues[m.conditional.storedValue.name] + " == " + m.conditional.storedValue.value);
+						if (storedValues[m.conditional.storedValue.name] == m.conditional.storedValue.value) {
+							log.debug("handle sub mapping with stored value conditional: " + m.conditional.storedValue.name + "=" + m.conditional.storedValue.value);
+							mapToTarget(m.subMappings, source, target);
+						}
 					}
-				} else {
-					log.debug("found sub mapping sources: " + m.srcXpath + "; count: 0")
-				}
+				} else if (m.srcXpath) {
+					// iterate over all xpath results
+					var sourceNodeList = XPathUtils.getNodeList(source, m.srcXpath);
+					if (sourceNodeList) {
+						log.debug("found sub mapping sources: " + m.srcXpath + "; count: " + sourceNodeList.getLength())
+						for (var j=0; j<sourceNodeList.getLength(); j++ ) {
+							log.debug("handle sub mapping: " + sourceNodeList.item(j))
+							var node = XPathUtils.createElementFromXPath(target, m.targetNode);
+							node = node.appendChild(node.getOwnerDocument().createElement(m.newNodeName));
+							mapToTarget(m.subMappings, sourceNodeList.item(j), node);
+						}
+					} else {
+						log.debug("found sub mapping sources: " + m.srcXpath + "; count: 0")
+					}
+				}	
 			} else {
 				if (m.srcXpath) {
 					log.debug("Working on " + m.targetNode + " with xpath:'" + m.srcXpath + "'")
