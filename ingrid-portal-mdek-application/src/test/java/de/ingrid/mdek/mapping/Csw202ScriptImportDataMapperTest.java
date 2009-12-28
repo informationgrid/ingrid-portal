@@ -34,7 +34,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 	
 	private String mapperScriptArcGIS 	= "/import/mapper/csw202_to_ingrid_igc.js";
 	
-	private String templateIGC 			= "/import/templates/igc_template.xml";
+	private String templateIGC 			= "/import/templates/igc_template_csw202.xml";
 	
 	private String exampleXmlObjectComplete 			= "/de/ingrid/mdek/mapping/inspire_datasetkomplett.xml";
 	private String exampleXmlServiceComplete 			= "/de/ingrid/mdek/mapping/inspire_servicekomplett.xml";
