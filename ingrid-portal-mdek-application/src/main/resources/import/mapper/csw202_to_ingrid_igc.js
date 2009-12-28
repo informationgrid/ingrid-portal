@@ -455,6 +455,7 @@ var mappingDescription = {"mappings":[
 			  		},
 	  				{
 			  			"srcXpath":"./*/gmd:useLimitation/gco:CharacterString",
+			  			"defaultValue":"no conditions apply",
 			  			"targetNode":"terms-of-use"
 			  		}
 			  	]
