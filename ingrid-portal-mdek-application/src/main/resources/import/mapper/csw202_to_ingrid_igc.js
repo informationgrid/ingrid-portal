@@ -71,6 +71,19 @@ var mappingDescription = {"mappings":[
   			"targetNode":"/igc/data-sources/data-source/general/metadata/metadata-standard-name"
   		},
   		{	
+  			"srcXpath":"//gmd:metadataStandardVersion/gco:CharacterString",
+  			"targetNode":"/igc/data-sources/data-source/general/metadata/metadata-standard-version"
+  		},
+  		{	
+  			"srcXpath":"//gmd:characterSet/gmd:MD_CharacterSetCode/@codeListValue",
+  			"targetNode":"/igc/data-sources/data-source/general/metadata/metadata-character-set",
+  			"targetAttribute":"iso-code",
+  			"transform":{
+				"funct":transformISOToIgcDomainId,
+				"params":[510, "Could not tranform gmd:MD_CharacterSetCode: "]
+			}
+  		},
+  		{	
   			"srcXpath":"//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:alternateTitle/gco:CharacterString",
   			"targetNode":"/igc/data-sources/data-source/general/dataset-alternate-name",
   			"concatEntriesWith":", "
@@ -427,7 +440,7 @@ var mappingDescription = {"mappings":[
   			"subMappings":{
   				"mappings": [
 	  				{
-			  			"srcXpath":"//gmd:otherConstraints/gco:CharacterString",
+			  			"srcXpath":"./*/gmd:otherConstraints/gco:CharacterString",
 			  			"targetNode":"restriction",
 			  			"targetAttribute":"id",
 			  			"defaultValue":"-1",
@@ -437,11 +450,11 @@ var mappingDescription = {"mappings":[
     					}
 			  		},
 	  				{
-			  			"srcXpath":"//gmd:otherConstraints/gco:CharacterString",
+			  			"srcXpath":"./*/gmd:otherConstraints/gco:CharacterString",
 			  			"targetNode":"restriction"
 			  		},
 	  				{
-			  			"srcXpath":"//gmd:useLimitation/gco:CharacterString",
+			  			"srcXpath":"./*/gmd:useLimitation/gco:CharacterString",
 			  			"targetNode":"terms-of-use"
 			  		}
 			  	]
@@ -564,14 +577,14 @@ var mappingDescription = {"mappings":[
   		//
   		// ****************************************************
   		{	
-  			"srcXpath":"//gmd:identificationInfo//gmd:extent/gmd:EX_Extent/gmd:verticalElement/gmd:EX_VerticalExtent/gmd:minimumValue/gco:Real",
+  			"srcXpath":"//gmd:identificationInfo//gmd:EX_Extent/gmd:verticalElement/gmd:EX_VerticalExtent/gmd:minimumValue/gco:Real",
   			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-minimum",
   			"transform":{
 				"funct":transformNumberStrToIGCNumber
 			}
   		},
   		{	
-  			"srcXpath":"//gmd:identificationInfo//gmd:extent/gmd:EX_Extent/gmd:verticalElement/gmd:EX_VerticalExtent/gmd:maximumValue/gco:Real",
+  			"srcXpath":"//gmd:identificationInfo//gmd:EX_Extent/gmd:verticalElement/gmd:EX_VerticalExtent/gmd:maximumValue/gco:Real",
   			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-maximum",
   			"transform":{
 				"funct":transformNumberStrToIGCNumber
@@ -597,7 +610,7 @@ var mappingDescription = {"mappings":[
 			}						    					
   		},
   		{
-  			"srcXpath":"//gmd:identificationInfo//gmd:extent/gmd:EX_Extent/gmd:geographicElement",
+  			"srcXpath":"//gmd:identificationInfo//gmd:EX_Extent/gmd:geographicElement",
   			"targetNode":"/igc/data-sources/data-source/spatial-domain",
   			"newNodeName":"geo-location",
   			"subMappings":{
@@ -683,6 +696,15 @@ var mappingDescription = {"mappings":[
   			"transform":{
 				"funct":transformISOToIgcDomainId,
 				"params":[518, "Could not map time-period to ISO code: "]
+			}
+  		},
+  		{	
+  			"srcXpath":"//gmd:identificationInfo//gmd:status/gmd:MD_ProgressCode/@codeListValue",
+  			"targetNode":"/igc/data-sources/data-source/temporal-domain/time-status",
+  			"targetAttribute":"iso-code",
+  			"transform":{
+				"funct":transformISOToIgcDomainId,
+				"params":[523, "Could not map time-status to ISO code: "]
 			}
   		},
   		{	
@@ -821,6 +843,32 @@ var mappingDescription = {"mappings":[
 			  		},
 	  				{
 			  			"srcXpath":"gmd:fileName/gco:CharacterString",
+			  			"targetNode":"linkage-url"
+			  		},
+	  				{
+			  			"defaultValue":"1",
+			  			"targetNode":"linkage-url-type"
+			  		},
+	  				{
+			  			"defaultValue":"-1",
+			  			"targetNode":"linkage-reference",
+			  			"targetAttribute":"id"
+			  		}
+			  	]
+			}
+  		},
+  		{
+  			"srcXpath":"//gmd:identificationInfo//srv:operatesOn",
+  			"targetNode":"/igc/data-sources/data-source",
+  			"newNodeName":"available-linkage",
+  			"subMappings":{
+  				"mappings": [
+	  				{
+			  			"defaultValue":"operates on",
+			  			"targetNode":"linkage-name"
+			  		},
+	  				{
+			  			"srcXpath":"./@xlink:href",
 			  			"targetNode":"linkage-url"
 			  		},
 	  				{
@@ -1254,11 +1302,11 @@ function mapCommunicationData(source, target) {
 
 
 function mapTimeConstraints(source, target) {
-	var timePeriods = XPathUtils.getNodeList(source, "//gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gmd:TimePeriod");
+	var timePeriods = XPathUtils.getNodeList(source, "//gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod");
 	log.debug("Found " + timePeriods.getLength() + " TimePeriod records.");
 	if (hasValue(timePeriods) && timePeriods.getLength() > 0) {
-		var beginPosition = XPathUtils.getString(timePeriods.item(0), "gmd:beginPosition");
-		var endPosition = XPathUtils.getString(timePeriods.item(0), "gmd:endPosition");
+		var beginPosition = XPathUtils.getString(timePeriods.item(0), "gml:beginPosition");
+		var endPosition = XPathUtils.getString(timePeriods.item(0), "gml:endPosition");
 		if (hasValue(beginPosition) && hasValue(endPosition)) {
 			if (beginPosition.equals(endPosition)) {
 				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
