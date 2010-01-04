@@ -104,8 +104,7 @@ public class QueryResultPostProcessor {
             hit.put(Settings.RESULT_KEY_URL_TYPE, "dsc");
             hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
         } else if (tmpString.equals("de.ingrid.iplug.opensearch.OpenSearchPlug")) {
-        	hit.put(Settings.RESULT_KEY_URL_TYPE, "dsc");
-            hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
+            hit.put(Settings.RESULT_KEY_URL_TYPE, "opensearch");
         } else if (plugDescr.containsDataType("dsc_other")){
             hit.put(Settings.RESULT_KEY_URL_TYPE, "dsc");
             hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
