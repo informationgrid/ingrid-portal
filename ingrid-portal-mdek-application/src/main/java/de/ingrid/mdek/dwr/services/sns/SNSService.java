@@ -102,7 +102,7 @@ public class SNSService {
     	orderedTreeTerms.addAll(Arrays.asList(treeTerms));
 
     	for (TreeTerm treeTerm : orderedTreeTerms) {
-    		// NO ADDING OF CHILDREN !!!!!!!!!
+    		// NO ADDING OF CHILDREN !!!!!!!!! Otherwise wrong behavior in JSP !
     		SNSTopic resultTopic = convertTermToSNSTopic(treeTerm);
     		resultList.add(resultTopic);
     	}
@@ -120,7 +120,7 @@ public class SNSService {
     	orderedTreeTerms.addAll(Arrays.asList(treeTerms));
 
     	for (TreeTerm treeTerm : orderedTreeTerms) {
-    		// ADDING OF CHILDREN !!!!!!!!!
+    		// ADDING OF CHILDREN !!!!!!!!! For right behavior in JSP !
     		SNSTopic resultTopic = convertTreeTermToSNSTopic(treeTerm);
     		resultList.add(resultTopic);
     	}
@@ -132,30 +132,31 @@ public class SNSService {
     	log.debug("getSubTopicsWithRoot("+topicID+", "+depth+", "+direction+")");
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
     	
-    	TreeTerm[] treeTerms = thesaurusService.getHierarchyPathToTop(topicID, Locale.GERMAN);
+    	TreeTerm lastTerm = thesaurusService.getHierarchyPathToTop(topicID, Locale.GERMAN);
 
     	// Notice we have to build different structure for return list !
-    	// if topnode then empty list is returned
-    	// if subnode then parent is encapsulated in child list !
-    	if (treeTerms.length > 1) {
-    		SNSTopic lastTopic = null;
-        	for (TreeTerm treeTerm : treeTerms) {
-        		SNSTopic currentTopic = convertTermToSNSTopic(treeTerm);
-        		if (lastTopic == null) {
-            		resultList.add(currentTopic);
-        		} else {
-        			// set last topic as parent in current topic (but is child in hierarchy !)
-        			List<SNSTopic> parents = new ArrayList<SNSTopic>();
-        			parents.add(lastTopic);
-        			currentTopic.setParents(parents);
+    	// parent is encapsulated in CHILD list on every level
+    	if (lastTerm != null) {
+    		SNSTopic lastTopic = convertTermToSNSTopic(lastTerm);
+    		resultList.add(lastTopic);
 
-        			// set current topic as child in last topic (but is parent in hierarchy !)
-        			List<SNSTopic> children = new ArrayList<SNSTopic>();
-        			children.add(currentTopic);
-        			lastTopic.setChildren(children);
-        		}
-        		lastTopic = currentTopic;
-        	}
+    		// we use first parent on every level for hierarchy path ! 
+    		while (lastTerm.getParents() != null) {
+    			lastTerm = lastTerm.getParents().get(0);
+    			SNSTopic currentTopic = convertTermToSNSTopic(lastTerm);
+
+    			// set last topic as parent in current topic (but is child in hierarchy !)
+    			List<SNSTopic> parents = new ArrayList<SNSTopic>();
+    			parents.add(lastTopic);
+    			currentTopic.setParents(parents);
+
+    			// set current topic as child in last topic (but is parent in hierarchy !)
+    			List<SNSTopic> children = new ArrayList<SNSTopic>();
+    			children.add(currentTopic);
+    			lastTopic.setChildren(children);
+    			
+    			lastTopic = currentTopic;
+    		}
     	}
 
     	return resultList;
@@ -187,7 +188,7 @@ public class SNSService {
     private static Type getTypeFromTerm(Term term) {
     	// first check whether we have a tree term ! Only then we can determine whether top node !
 		if (TreeTerm.class.isAssignableFrom(term.getClass())) {
-	    	if (((TreeTerm)term).getParent() == null) {
+	    	if (((TreeTerm)term).getParents() == null) {
 	    		return Type.TOP_TERM;
 	    	}    	
 		}
@@ -674,7 +675,7 @@ public class SNSService {
     private static SNSTopic convertTreeTermToSNSTopic(TreeTerm treeTerm) {
     	SNSTopic resultTopic = convertTermToSNSTopic(treeTerm);
 
-    	List<Term> childTerms = treeTerm.getChildren();
+    	List<TreeTerm> childTerms = treeTerm.getChildren();
 		if (childTerms != null) {
 			// set up list of mapped children
 			List<SNSTopic> childTopics = new ArrayList<SNSTopic>();
