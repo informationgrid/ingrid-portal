@@ -4,6 +4,7 @@ import java.net.URL;
 import java.text.Collator;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -22,6 +23,12 @@ import com.slb.taxi.webservice.xtm.stubs.TopicMapFragment;
 import com.slb.taxi.webservice.xtm.stubs.TopicMapFragmentIndexedDocument;
 import com.slb.taxi.webservice.xtm.stubs.xtm.Occurrence;
 
+import de.ingrid.external.FullClassifyService;
+import de.ingrid.external.GazetteerService;
+import de.ingrid.external.ThesaurusService;
+import de.ingrid.external.om.Term;
+import de.ingrid.external.om.TreeTerm;
+import de.ingrid.external.om.Term.TermType;
 import de.ingrid.iplug.sns.SNSClient;
 import de.ingrid.iplug.sns.SNSController;
 import de.ingrid.iplug.sns.utils.DetailedTopic;
@@ -30,16 +37,11 @@ import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
-import de.ingrid.utils.query.FieldQuery;
-import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.query.TermQuery;
-import de.ingrid.utils.queryparser.IDataTypes;
 
 public class SNSService {
 
 	private final static Logger log = Logger.getLogger(SNSService.class);	
 
-	private static final String SNS_ROOT_TOPIC = "toplevel"; 
 	// Switch to "rs:" when the native key changes
 	// private static final String SNS_NATIVE_KEY_PREFIX = "rs:"; 
 	private static final String SNS_NATIVE_KEY_PREFIX = "ags:"; 
@@ -59,6 +61,10 @@ public class SNSService {
     private SNSController snsController;
     private SNSClient snsClient;
 
+    private ThesaurusService thesaurusService;
+    private GazetteerService gazetteerService;
+    private FullClassifyService fullClassifyService;
+
     // The three main SNS topic types
     private enum TopicType {EVENT, LOCATION, THESA}
 
@@ -74,113 +80,87 @@ public class SNSService {
         		new URL(resourceBundle.getString("sns.serviceURL")));
     	snsClient.setTimeout(SNS_TIMEOUT);
     	snsController = new SNSController(snsClient, SNS_NATIVE_KEY_PREFIX);
-    }
-	
-    public List<SNSTopic> getRootTopics() {
-    	log.debug("getRootTopics()");
-    	return getSubTopics(SNS_ROOT_TOPIC, 1, "down");
-    }
-    
-    public List<SNSTopic> getSubTopics(String topicID, long depth, String direction) {
-    	log.debug("getSubTopics("+topicID+", "+depth+", "+direction+")");
-    	return getSubTopics(topicID, depth, direction, false, false);
+
+    	de.ingrid.external.sns.SNSService snsService = new de.ingrid.external.sns.SNSService();
+		try {
+			snsService.init();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		thesaurusService = snsService;
+		gazetteerService = snsService;
+		fullClassifyService = snsService;
     }
 
+    public List<SNSTopic> getRootTopics() {
+    	log.debug("getRootTopics()");
+    	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
+    	
+    	TreeTerm[] treeTerms = thesaurusService.getHierarchyNextLevel(null, Locale.GERMAN);
+
+    	TreeSet<TreeTerm> orderedTreeTerms = new TreeSet<TreeTerm>(new TermComparator());
+    	orderedTreeTerms.addAll(Arrays.asList(treeTerms));
+
+    	for (TreeTerm treeTerm : orderedTreeTerms) {
+    		// NO ADDING OF CHILDREN !!!!!!!!!
+    		SNSTopic resultTopic = convertTermToSNSTopic(treeTerm);
+    		resultList.add(resultTopic);
+    	}
+
+    	return resultList;
+    }
+
+    public List<SNSTopic> getSubTopics(String topicID, long depth, String direction) {
+    	log.debug("getSubTopics("+topicID+", "+depth+", "+direction+")");
+    	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
+    	
+    	TreeTerm[] treeTerms = thesaurusService.getHierarchyNextLevel(topicID, Locale.GERMAN);
+
+    	TreeSet<TreeTerm> orderedTreeTerms = new TreeSet<TreeTerm>(new TermComparator());
+    	orderedTreeTerms.addAll(Arrays.asList(treeTerms));
+
+    	for (TreeTerm treeTerm : orderedTreeTerms) {
+    		// ADDING OF CHILDREN !!!!!!!!!
+    		SNSTopic resultTopic = convertTreeTermToSNSTopic(treeTerm);
+    		resultList.add(resultTopic);
+    	}
+
+    	return resultList;
+    }
 
     public List<SNSTopic> getSubTopicsWithRoot(String topicID, long depth, String direction) {
     	log.debug("getSubTopicsWithRoot("+topicID+", "+depth+", "+direction+")");
-    	return getSubTopics(topicID, depth, direction, true, true);
-    }
-    
-    private List<SNSTopic> getSubTopics(String topicID, long depth, String direction, boolean includeSiblings, boolean includeRootNode) {
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
-    	log.debug("getSubTopics("+topicID+", "+depth+", "+direction+", "+includeSiblings+", "+includeRootNode+")");
     	
-    	log.debug(" Creating query...");
-    	// Create the Query
-    	IngridQuery query = new IngridQuery();
-    	query.addTerm(new TermQuery(true, false, topicID));
-    	query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
-        query.addField(new FieldQuery(true, false, "lang", "de"));
-        query.put("includeSiblings", includeSiblings);
-        query.put("association", "narrowerTermAssoc");
-        query.put("depth", depth);
-        query.put("direction", direction);
-        query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_HIERACHY);
+    	TreeTerm[] treeTerms = thesaurusService.getHierarchyPathToTop(topicID, Locale.GERMAN);
 
-    	log.debug(" calling getHierarchy(...)");        
-        IngridHit[] hitsArray = getHierarchy(topicID, depth, direction, includeSiblings);
-    	log.debug(" getHierarchy() call returned.");        
+    	// Notice we have to build different structure for return list !
+    	// if topnode then empty list is returned
+    	// if subnode then parent is encapsulated in child list !
+    	if (treeTerms.length > 1) {
+    		SNSTopic lastTopic = null;
+        	for (TreeTerm treeTerm : treeTerms) {
+        		SNSTopic currentTopic = convertTermToSNSTopic(treeTerm);
+        		if (lastTopic == null) {
+            		resultList.add(currentTopic);
+        		} else {
+        			// set last topic as parent in current topic (but is child in hierarchy !)
+        			List<SNSTopic> parents = new ArrayList<SNSTopic>();
+        			parents.add(lastTopic);
+        			currentTopic.setParents(parents);
 
-    	log.debug(" creating return values...");        
-        // TODO Build correct tree structure
-        // TODO Check Language
-        if (topicID.equals(SNS_ROOT_TOPIC)) {
-        	resultList = buildTopicRootStructure(getSuccessors((Topic) hitsArray[0]));
-        } else {
-        	for (int i = 0; i < hitsArray.length; i++) {
-                Topic hit = (Topic) hitsArray[i];
-                if (hit.getTopicID().equals(topicID)) {
-	                final List successors = getSuccessors(hit);
-
-	                // TODO The returned root structure is invalid (?)
-	            	if (includeRootNode) {
-	                	List<Topic> topNode = new ArrayList<Topic>();
-	                	topNode.add(hit);
-	                	resultList = buildTopicStructure(topNode);            	            		
-	            	} else {
-	            		resultList = buildTopicStructure(successors);
-	            	}
-	            	log.debug("  done creating return values. getSubTopics() returning values.");
-	                Collections.sort(resultList, new SNSTopicComparator());
-	            	return resultList;
-                }
-            }
-        }
-
-        return resultList;
-    }
-
-
-    private static List<SNSTopic> buildTopicStructure(List<Topic> topics) {
-    	List<SNSTopic> result = new ArrayList<SNSTopic>(); 
-
-    	for (Topic topic : topics) {
-    		if (topic.getLanguage().equalsIgnoreCase(THESAURUS_LANGUAGE_FILTER)) {	// Only add 'german' terms
-	    		SNSTopic resultTopic = convertTopicToSNSTopic(topic);
-	    		List<Topic> succ = getSuccessors(topic);
-	
-	    		if (succ != null && !succ.isEmpty())
-	    		{
-	        		List<SNSTopic> children = buildTopicStructure(succ); 
-	    			resultTopic.setChildren(children);
-	
-	    			for (SNSTopic child : children) {
-	        			List<SNSTopic> parents = new ArrayList<SNSTopic>();
-	        			parents.add(resultTopic);
-	    				child.setParents(parents);
-	    			}
-	    		}
-	    		result.add(resultTopic);
-    		}
+        			// set current topic as child in last topic (but is parent in hierarchy !)
+        			List<SNSTopic> children = new ArrayList<SNSTopic>();
+        			children.add(currentTopic);
+        			lastTopic.setChildren(children);
+        		}
+        		lastTopic = currentTopic;
+        	}
     	}
-    	return result;
+
+    	return resultList;
     }
 
-    private static List<SNSTopic> buildTopicRootStructure(List<Topic> topicList) {
-    	List<SNSTopic> result = new ArrayList<SNSTopic>(); 
-
-    	TreeSet<Topic> topics = new TreeSet<Topic>(new TopicComparator());
-    	topics.addAll(topicList);
-
-    	for (Topic topic : topics) {
-    		SNSTopic resultTopic = convertTopicToSNSTopic(topic);
-    		result.add(resultTopic);
-    	}
-    	return result;
-    }
-
-    
     private static Type getTypeFromTopic(Topic t) {
     	String nodeType = t.getSummary();
     	return getTypeForNodeType(nodeType);
@@ -202,6 +182,24 @@ public class SNSService {
 			return Type.NON_DESCRIPTOR;
 		else
 			return Type.TOP_TERM;
+    }
+
+    private static Type getTypeFromTerm(Term term) {
+    	// first check whether we have a tree term ! Only then we can determine whether top node !
+		if (TreeTerm.class.isAssignableFrom(term.getClass())) {
+	    	if (((TreeTerm)term).getParent() == null) {
+	    		return Type.TOP_TERM;
+	    	}    	
+		}
+
+    	TermType termType = term.getType();
+    	if (termType == TermType.NODE_LABEL) 
+			return Type.NODE_LABEL;
+		if (termType == TermType.DESCRIPTOR) 
+			return Type.DESCRIPTOR;
+		if (termType == TermType.NON_DESCRIPTOR) 
+			return Type.NON_DESCRIPTOR;
+		return Type.TOP_TERM;
     }
 
     private static String getAssociationFromTopic(Topic t) {
@@ -651,6 +649,53 @@ public class SNSService {
     	}
     }
 
+    /** NO adding of children ! */
+    private static SNSTopic convertTermToSNSTopic(Term term) {
+    	Type type = getTypeFromTerm(term);
+    	String id = term.getId();
+    	String name = term.getName();
+    	Source topicSource = getSourceFromTerm(term);
+
+    	SNSTopic resultTopic;
+    	if (Source.UMTHES.equals(topicSource)) {
+    		resultTopic = new SNSTopic(type, topicSource, id, name, null, null);
+
+    	} else {
+    		// GEMET
+    		resultTopic = new SNSTopic(type, topicSource, id, name, term.getAlternateName(), term.getAlternateId());
+    	}
+
+		resultTopic.setInspireList(term.getInspireThemes());
+		
+    	return resultTopic;
+    }
+
+    /** Also adds children ! */
+    private static SNSTopic convertTreeTermToSNSTopic(TreeTerm treeTerm) {
+    	SNSTopic resultTopic = convertTermToSNSTopic(treeTerm);
+
+    	List<Term> childTerms = treeTerm.getChildren();
+		if (childTerms != null) {
+			// set up list of mapped children
+			List<SNSTopic> childTopics = new ArrayList<SNSTopic>();
+			for (Term childTerm : childTerms) {
+				SNSTopic childTopic = convertTermToSNSTopic(childTerm);
+
+				// set parent in child
+    			List<SNSTopic> parents = new ArrayList<SNSTopic>();
+    			parents.add(resultTopic);
+    			childTopic.setParents(parents);
+				
+				childTopics.add(childTopic);
+			}
+			
+			// set children in result
+			resultTopic.setChildren(childTopics);
+		}
+
+    	return resultTopic;
+    }
+
     private static List<String> findInspireTopics(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
     	List<String> inspireTopics = new ArrayList<String>();
     	
@@ -678,17 +723,20 @@ public class SNSService {
     	return (topic.get(DetailedTopic.GEMET_OCC) != null ? Source.GEMET : Source.UMTHES);
     }
 
-    /**
-     * First check if there are any Inspire-Themes and add those to the topic
-     * @param topic
-     * @return
-     */
     private static Source getSourceFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
     	Occurrence occ = getOccurrence(topic, "gemet1.0");
     	if (null != occ) {
     		return Source.GEMET;
     	} else {
         	// If there is no occurence of type 'gemet1.0'
+    		return Source.UMTHES;
+    	}
+    }
+
+    private static Source getSourceFromTerm(Term term) {
+    	if (term.getAlternateId() != null) {
+    		return Source.GEMET;
+    	} else {
     		return Source.UMTHES;
     	}
     }
@@ -867,6 +915,17 @@ public class SNSService {
     	return new ArrayList<Topic>(successors);
     }
 
+    static public class TermComparator implements Comparator<Term> {
+    	public final int compare(Term termA, Term termB) {
+            try {
+            	// Get the collator for the German Locale 
+            	Collator gerCollator = Collator.getInstance(Locale.GERMAN);
+            	return gerCollator.compare(termA.getName(), termB.getName());
+            } catch (Exception e) {
+                return 0;
+            }
+        }
+    }
     static public class TopicComparator implements Comparator<Topic> {
     	public final int compare(Topic topicA, Topic topicB) {
             try {
