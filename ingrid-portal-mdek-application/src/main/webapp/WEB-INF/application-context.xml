@@ -18,6 +18,7 @@
 <beans default-init-method="init" default-destroy-method="destroy">
 	<!-- Import hibernate bean definitions -->
 	<import resource="core-services.xml"/>
+    <import resource="external-services.xml"/>
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" id="configuration">
 		<property name="locations">
@@ -36,7 +37,17 @@
 		</property>
  	</bean>
 
-	<bean id="snsService" class="de.ingrid.mdek.dwr.services.sns.SNSService" />
+    <bean id="snsService" class="de.ingrid.mdek.dwr.services.sns.SNSService">
+        <property name="thesaurusService">
+            <ref bean="thesaurusService" />
+        </property>
+        <property name="gazetteerService">
+            <ref bean="gazetteerService" />
+        </property>
+        <property name="fullClassifyService">
+            <ref bean="fullClassifyService" />
+        </property>
+    </bean>
 	<bean id="ctService" class="de.ingrid.mdek.dwr.services.cts.CoordinateTransformationServiceImpl" />
 	<bean id="getCapabilitiesService" class="de.ingrid.mdek.dwr.services.GetCapabilitiesService" />
 	<bean id="httpService" class="de.ingrid.mdek.dwr.services.HttpService" />

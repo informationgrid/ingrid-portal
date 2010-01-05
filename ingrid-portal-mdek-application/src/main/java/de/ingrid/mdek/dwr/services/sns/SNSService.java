@@ -79,17 +79,17 @@ public class SNSService {
         		new URL(resourceBundle.getString("sns.serviceURL")));
     	snsClient.setTimeout(SNS_TIMEOUT);
     	snsController = new SNSController(snsClient, SNS_NATIVE_KEY_PREFIX);
-
-    	de.ingrid.external.sns.SNSService snsService = new de.ingrid.external.sns.SNSService();
-		try {
-			snsService.init();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		thesaurusService = snsService;
-		gazetteerService = snsService;
-		fullClassifyService = snsService;
     }
+
+	public void setThesaurusService(ThesaurusService thesaurusService) {
+		this.thesaurusService = thesaurusService;
+	}
+	public void setGazetteerService(GazetteerService gazetteerService) {
+		this.gazetteerService = gazetteerService;
+	}
+	public void setFullClassifyService(FullClassifyService fullClassifyService) {
+		this.fullClassifyService = fullClassifyService;
+	}
 
     public List<SNSTopic> getRootTopics() {
     	log.debug("getRootTopics()");
