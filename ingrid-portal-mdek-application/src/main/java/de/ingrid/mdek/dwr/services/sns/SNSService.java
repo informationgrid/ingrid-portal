@@ -35,7 +35,6 @@ import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
-import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
 
 public class SNSService {
@@ -110,6 +109,8 @@ public class SNSService {
     	return resultList;
     }
 
+    /** This one is only called with direction "down" in JSPs !!!
+     * So we call thesaurusService.getHierarchyNextLevel() */
     public List<SNSTopic> getSubTopics(String topicID, long depth, String direction) {
     	log.debug("getSubTopics("+topicID+", "+depth+", "+direction+")");
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
@@ -128,6 +129,8 @@ public class SNSService {
     	return resultList;
     }
 
+    /** This one is only called with direction "up" in JSPs !!!
+     * So we call thesaurusService.getHierarchyPathToTop() */
     public List<SNSTopic> getSubTopicsWithRoot(String topicID, long depth, String direction) {
     	log.debug("getSubTopicsWithRoot("+topicID+", "+depth+", "+direction+")");
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
@@ -206,39 +209,6 @@ public class SNSService {
     private static String getAssociationFromTopic(Topic t) {
     	String assoc = t.getTopicAssoc();
     	return assoc.split("#")[1];
-    }
-
-    
-    public void testIncludeSiblings(boolean includeSiblings) {
-        // getHierarchy?root=uba_thes_27118&user=ingrid_test&password=ingrid_test&depth=2&direction=up&includeSiblings=true
-    	// false liefert drei Knoten
-    	// true liefert 10 Knoten
-    
-        IngridHit[] hitsArray = getHierarchy("uba_thes_27118", 2, "up", includeSiblings);
-
-        for (IngridHit hit : hitsArray) {
-        	printTopic((Topic) hit);
-        	
-        }
-    }
-
-    private IngridHit[] getHierarchy(String topicID, long depth, String direction, boolean includeSiblings) {
-    	log.debug("getHierarchy("+topicID+", "+depth+", "+direction+", "+includeSiblings+")");
-    	
-    	int[] totalSize = new int[1];
-	    totalSize[0] = 0;
-	    Topic[] snsResults = new Topic[0];
-	    try {
-	    	log.debug(" calling snsController.getTopicHierarchy("+totalSize+", \"narrowerTermAssoc\", "+depth+", "+direction+", "+includeSiblings+", \"de\", "+topicID+", false, \"mdek\")");
-	    	snsResults = snsController.getTopicHierachy(totalSize, "narrowerTermAssoc", depth, direction, includeSiblings, "de", topicID, false, "mdek");
-	    	log.debug(" call snsController.getTopicHierarchy() returned successfully");
-	    }
-	    catch (Exception e) {log.error(e);}
-	
-	    totalSize[0] = snsResults.length;
-	    IngridHits hits = new IngridHits("mdek", totalSize[0], snsResults, false);
-
-	    return hits.getHits();
     }
 
     /**
