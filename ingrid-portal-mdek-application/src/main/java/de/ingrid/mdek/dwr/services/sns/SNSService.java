@@ -35,7 +35,6 @@ import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
-import de.ingrid.utils.IngridHits;
 
 public class SNSService {
 
@@ -43,7 +42,8 @@ public class SNSService {
 
 	// Switch to "rs:" when the native key changes
 	// private static final String SNS_NATIVE_KEY_PREFIX = "rs:"; 
-	private static final String SNS_NATIVE_KEY_PREFIX = "ags:"; 
+	private static final String SNS_NATIVE_KEY_PREFIX = "ags:";
+	// TODO: get language from session or as parameter !
     private static final String THESAURUS_LANGUAGE_FILTER = "de";
     private static final int MAX_NUM_RESULTS = 100;
     private static final int MAX_ANALYZED_WORDS = 1000;
@@ -318,26 +318,24 @@ public class SNSService {
     }
 
     private List<SNSTopic> getSimilarTerms(String[] queryTerms, int numResults) {
+    	log.debug("getSimilarTerms()");
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
-    	int[] totalSize = new int[] {0};
-	    Topic[] snsResults = new Topic[0];
-    	try {
-    		snsResults = snsController.getSimilarTermsFromTopic(queryTerms, numResults, "mdek", totalSize, THESAURUS_LANGUAGE_FILTER);
-    	} catch (Exception e) {
-	    	log.error(e);
-	    }
+    	
+    	Term[] terms = thesaurusService.getSimilarTermsFromNames(queryTerms, true, Locale.GERMAN);
 
-	    totalSize[0] = snsResults.length;
-	    IngridHits res = new IngridHits("mdek", totalSize[0], snsResults, false);
-	    Topic[] topics = (Topic[]) res.getHits();
+    	int count = 0;
+    	for (Term term : terms) {
+    		if (term.getType() == TermType.DESCRIPTOR) {
+        		SNSTopic resultTopic = convertTermToSNSTopic(term);
+        		resultList.add(resultTopic);
+        		count++;
+        		if (count == numResults) {
+        			break;
+        		}
+    		}
+    	}
 
-	    for (Topic topic : topics) {
-	    	if (getTypeFromTopic(topic) == Type.DESCRIPTOR) {
-	    		resultList.add(convertTopicToSNSTopic(topic));
-	    	}
-	    }
-
-	    return resultList;
+    	return resultList;
     }
 
     public List<SNSTopic> getSimilarDescriptors(String queryTerm) {
