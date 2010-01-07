@@ -355,33 +355,24 @@ public class SNSService {
     	return result;
     }
 
-
     public List<SNSTopic> getTopicsForText(String queryTerm) {
+    	log.debug("getTopicsForText: " + queryTerm);
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
-    	int[] totalSize = new int[] {0};
-    	TopicMapFragment mapFragment = null;
     	
-    	try {
-    		mapFragment = snsClient.autoClassify(queryTerm, MAX_ANALYZED_WORDS, "/thesa", false, THESAURUS_LANGUAGE_FILTER);
-	    } catch (Exception e) {
-	    	log.error(e);
-	    }
-	    
-	    if (null != mapFragment) {
-	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
-	        if ((null != topics)) {
-	            for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
-	            	if (getTypeFromTopic(topic) == Type.DESCRIPTOR) {
-	            		resultList.add(convertTopicToSNSTopic(topic));
-	            	}
-				}
-	        }
-	    }
+    	Term[] terms = thesaurusService.getTermsFromText(queryTerm, MAX_ANALYZED_WORDS,
+    			false, Locale.GERMAN);
+
+    	for (Term term : terms) {
+    		if (term.getType() == TermType.DESCRIPTOR) {
+        		SNSTopic resultTopic = convertTermToSNSTopic(term);
+        		resultList.add(resultTopic);
+    		}
+    	}
 
 //	    log.debug("Number of descriptors in the result: "+resultList.size());
-	    return resultList;
+    	return resultList;
     }
-    
+
     // Returns the topicID encapsulated in a SNSTopic with the parents, children and synonyms attached
     public SNSTopic getTopicsForTopic(String topicId) {
     	int[] totalSize = new int[] {0};
