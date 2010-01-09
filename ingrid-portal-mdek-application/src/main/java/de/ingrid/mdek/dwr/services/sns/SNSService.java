@@ -92,7 +92,7 @@ public class SNSService {
 	}
 
     public List<SNSTopic> getRootTopics() {
-    	log.debug("getRootTopics()");
+    	log.debug("     !!!!!!!!!! thesaurusService.getHierarchyNextLevel() from null (toplevel)");
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
     	
     	TreeTerm[] treeTerms = thesaurusService.getHierarchyNextLevel(null, Locale.GERMAN);
@@ -112,7 +112,7 @@ public class SNSService {
     /** This one is only called with direction "down" in JSPs !!!
      * So we call thesaurusService.getHierarchyNextLevel() */
     public List<SNSTopic> getSubTopics(String topicID, long depth, String direction) {
-    	log.debug("getSubTopics("+topicID+", "+depth+", "+direction+")");
+    	log.debug("     !!!!!!!!!! thesaurusService.getHierarchyNextLevel() from "+topicID+", "+depth+", "+direction+")");
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
     	
     	TreeTerm[] treeTerms = thesaurusService.getHierarchyNextLevel(topicID, Locale.GERMAN);
@@ -132,7 +132,7 @@ public class SNSService {
     /** This one is only called with direction "up" in JSPs !!!
      * So we call thesaurusService.getHierarchyPathToTop() */
     public List<SNSTopic> getSubTopicsWithRoot(String topicID, long depth, String direction) {
-    	log.debug("getSubTopicsWithRoot("+topicID+", "+depth+", "+direction+")");
+    	log.debug("     !!!!!!!!!! thesaurusService.getHierarchyPathToTop() from "+topicID+", "+depth+", "+direction+")");
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
     	
     	TreeTerm lastTerm = thesaurusService.getHierarchyPathToTop(topicID, Locale.GERMAN);
@@ -268,26 +268,22 @@ public class SNSService {
     }
 
     /**
-     * getPSI for 'topicId'.
+     * getPSI for 'topicId'. Returns the SNSTopic of given id !
      * @param topicId topic id to search for
      * @return the SNSTopic if it exists, null otherwise
      * @throws Exception if there was a connection/communication error with the SNS
      */
     public SNSTopic getPSI(String topicId) throws Exception {
-    	TopicMapFragment mapFragment = null;
-   		mapFragment = snsClient.getPSI(topicId, 0, "/thesa");
+    	log.debug("     !!!!!!!!!! thesaurusService.getTerm() from " + topicId);
+    	
+    	Term term = thesaurusService.getTerm(topicId, Locale.GERMAN);
 
-	    if (null != mapFragment) {
-	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
-	        if ((null != topics)) {
-	            for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
-	            	if (topic.getId().equals(topicId)) {
-	            		return convertTopicToSNSTopic(topic);
-	            	}
-	            }
-	        }
-	    }
-	    return null;
+    	SNSTopic result = null;
+		if (term != null) {
+    		result = convertTermToSNSTopic(term);
+		}
+
+    	return result;
     }
 
     /**
@@ -318,7 +314,7 @@ public class SNSService {
     }
 
     private List<SNSTopic> getSimilarTerms(String[] queryTerms, int numResults) {
-    	log.debug("getSimilarTerms()");
+    	log.debug("     !!!!!!!!!! thesaurusService.getSimilarTermsFromNames()");
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	
     	Term[] terms = thesaurusService.getSimilarTermsFromNames(queryTerms, true, Locale.GERMAN);
@@ -356,7 +352,7 @@ public class SNSService {
     }
 
     public List<SNSTopic> getTopicsForText(String queryTerm) {
-    	log.debug("getTopicsForText: " + queryTerm);
+    	log.debug("     !!!!!!!!!! thesaurusService.getTermsFromText()");
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	
     	Term[] terms = thesaurusService.getTermsFromText(queryTerm, MAX_ANALYZED_WORDS,
