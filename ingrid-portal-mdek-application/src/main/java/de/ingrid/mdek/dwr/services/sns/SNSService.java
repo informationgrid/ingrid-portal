@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.axis.AxisFault;
@@ -26,12 +25,12 @@ import com.slb.taxi.webservice.xtm.stubs.xtm.Occurrence;
 import de.ingrid.external.FullClassifyService;
 import de.ingrid.external.GazetteerService;
 import de.ingrid.external.ThesaurusService;
+import de.ingrid.external.om.RelatedTerm;
 import de.ingrid.external.om.Term;
 import de.ingrid.external.om.TreeTerm;
+import de.ingrid.external.om.RelatedTerm.RelationType;
 import de.ingrid.external.om.Term.TermType;
 import de.ingrid.iplug.sns.SNSClient;
-import de.ingrid.iplug.sns.SNSController;
-import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
@@ -57,7 +56,6 @@ public class SNSService {
 
     // Settings and language specific values
     private ResourceBundle resourceBundle; 
-    private SNSController snsController;
     private SNSClient snsClient;
 
     private ThesaurusService thesaurusService;
@@ -78,7 +76,6 @@ public class SNSService {
     			resourceBundle.getString("sns.language"),
         		new URL(resourceBundle.getString("sns.serviceURL")));
     	snsClient.setTimeout(SNS_TIMEOUT);
-    	snsController = new SNSController(snsClient, SNS_NATIVE_KEY_PREFIX);
     }
 
 	public void setThesaurusService(ThesaurusService thesaurusService) {
@@ -165,11 +162,6 @@ public class SNSService {
     	return resultList;
     }
 
-    private static Type getTypeFromTopic(Topic t) {
-    	String nodeType = t.getSummary();
-    	return getTypeForNodeType(nodeType);
-    }
-    
     private static Type getTypeFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic t) {
     	String nodeType = t.getInstanceOf(0).getTopicRef().getHref();
     	return getTypeForNodeType(nodeType);
@@ -204,11 +196,6 @@ public class SNSService {
 		if (termType == TermType.NON_DESCRIPTOR) 
 			return Type.NON_DESCRIPTOR;
 		return Type.TOP_TERM;
-    }
-
-    private static String getAssociationFromTopic(Topic t) {
-    	String assoc = t.getTopicAssoc();
-    	return assoc.split("#")[1];
     }
 
     /**
@@ -371,54 +358,46 @@ public class SNSService {
 
     // Returns the topicID encapsulated in a SNSTopic with the parents, children and synonyms attached
     public SNSTopic getTopicsForTopic(String topicId) {
-    	int[] totalSize = new int[] {0};
-	    Topic[] snsResults = new Topic[0];
-    	try {
-    		snsResults = snsController.getTopicsForTopic(topicId, MAX_NUM_RESULTS, "mdek", totalSize, false);
-    	} catch (AxisFault f) {
-    		throw new RuntimeException(ERROR_SNS_TIMEOUT);
-    	} catch (Exception e) {
-	    	log.error("Error calling snsController.getTopicsForTopic", e);
-    	}
+    	log.debug("     !!!!!!!!!! thesaurusService.getRelatedTermsFromTerm()");
+    	
+    	RelatedTerm[] relatedTerms = thesaurusService.getRelatedTermsFromTerm(topicId, Locale.GERMAN);
 
-    	List<SNSTopic> synonyms = new ArrayList<SNSTopic>();
-    	List<SNSTopic> parents = new ArrayList<SNSTopic>();
-    	List<SNSTopic> children = new ArrayList<SNSTopic>();
+    	SNSTopic result = null;
+    	if (relatedTerms.length > 0) {
+        	List<SNSTopic> synonyms = new ArrayList<SNSTopic>();
+        	List<SNSTopic> parents = new ArrayList<SNSTopic>();
+        	List<SNSTopic> children = new ArrayList<SNSTopic>();
 
-    	if (snsResults != null && snsResults.length != 0) {
-		    for (Topic topic : snsResults) {
-	    		SNSTopic t = convertTopicToSNSTopic(topic);
-	        	log.debug("Found: " + topic);
-	
-	        	String assoc = getAssociationFromTopic(topic);
-	    		if (assoc.equals("widerTermMember")) {
+        	for (RelatedTerm relatedTerm : relatedTerms) {
+        		SNSTopic t = convertTermToSNSTopic(relatedTerm);
+            	RelationType relationType = relatedTerm.getRelationType();
+            	if (relationType == RelationType.CHILD) {
+            		children.add(t);
+            	} else if (relationType == RelationType.PARENT) {
 	    			parents.add(t);
-	
-	    		} else if (assoc.equals("narrowerTermMember")) {
-	    			children.add(t);
-	    			
-	    		} else if (assoc.equals("synonymMember")) {
-	    			synonyms.add(t);
-	
-	    		} else if (assoc.equals("descriptorMember")) {
-	    			return t;
-	
-	    		}
-		    }
-
-			SNSTopic result = new SNSTopic(Type.DESCRIPTOR, Source.UMTHES, topicId, null, null, null);
-		    result.setChildren(children);
-		    result.setParents(parents);
-		    result.setSynonyms(synonyms);
-	
-		    return result;
-
-    	} else {
-    		return null;
+            	} else if (relationType == RelationType.RELATIVE) {
+            		// check type of term !
+            		if (relatedTerm.getType() == TermType.DESCRIPTOR) {
+            			// !!!!!!!
+    	    			result = t;
+    	    			break;
+            		} else {
+    	    			synonyms.add(t);
+            		}
+            	}
+        	}
+        	
+        	if (result == null) {
+    			result = new SNSTopic(Type.DESCRIPTOR, Source.UMTHES, topicId, null, null, null);
+    		    result.setChildren(children);
+    		    result.setParents(parents);
+    		    result.setSynonyms(synonyms);        		
+        	}
     	}
+
+    	return result;
     }
 
-    
     public List<SNSLocationTopic> getLocationTopics(String queryTerm, String searchTypeStr, String pathStr) {
     	List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
     	SearchType searchType = getSearchType(searchTypeStr);
@@ -572,19 +551,6 @@ public class SNSService {
     	return t;
     }
 
-    private static SNSTopic convertTopicToSNSTopic(Topic topic) {
-    	Source topicSource = getSourceFromTopic(topic);
-//    	log.debug("topic source: " + topicSource);
-//    	log.debug("topic type: " + getTypeFromTopic(topic));
-    	if (Source.UMTHES.equals(topicSource)) {
-        	return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getTopicID(), topic.getTopicName(), null, null);
-
-    	} else {
-    		// GEMET
-    		return new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getTopicID(), getGemetTitleFromTopic(topic), topic.getTopicName(), getGemetIdFromTopic(topic));
-    	}
-    }
-
     private static SNSTopic convertTopicToSNSTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
     	Source topicSource = getSourceFromTopic(topic);
     	
@@ -675,10 +641,6 @@ public class SNSService {
 		return null;
 	}
 
-	private static Source getSourceFromTopic(Topic topic) {
-    	return (topic.get(DetailedTopic.GEMET_OCC) != null ? Source.GEMET : Source.UMTHES);
-    }
-
     private static Source getSourceFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
     	Occurrence occ = getOccurrence(topic, "gemet1.0");
     	if (null != occ) {
@@ -695,11 +657,6 @@ public class SNSService {
     	} else {
     		return Source.UMTHES;
     	}
-    }
-
-    private static String getGemetTitleFromTopic(Topic topic) {
-    	String gemetOccurence = (String) topic.get(DetailedTopic.GEMET_OCC);
-    	return getGemetTitleFromOccurenceString(gemetOccurence);
     }
 
     private static String getGemetTitleFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
@@ -724,11 +681,6 @@ public class SNSService {
     	} else {
     		return null;
     	}
-    }
-
-    private static String getGemetIdFromTopic(Topic topic) {
-    	String gemetOccurence = (String) topic.get(DetailedTopic.GEMET_OCC);
-    	return getGemetIdFromOccurenceString(gemetOccurence);
     }
 
     private static String getGemetIdFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
@@ -853,23 +805,6 @@ public class SNSService {
     	}
     }
 
-
-    private static void printTopic(Topic t) {
-    	System.out.println("Title: "+t.getTitle()+" ID: "+t.getTopicID());
-    	
-		List<Topic> succList = getSuccessors(t);
-		if (succList != null && !succList.isEmpty()) {
-			for (Topic succ : succList) {
-				System.out.print(" ");
-				printTopic(succ);
-			}
-		}
-    }
-
-    private static List<Topic> getSuccessors(Topic t) {
-    	Set<Topic> successors = t.getSuccessors();
-    	return new ArrayList<Topic>(successors);
-    }
 
     static public class TermComparator implements Comparator<Term> {
     	public final int compare(Term termA, Term termB) {
