@@ -25,6 +25,7 @@ import com.slb.taxi.webservice.xtm.stubs.xtm.Occurrence;
 import de.ingrid.external.FullClassifyService;
 import de.ingrid.external.GazetteerService;
 import de.ingrid.external.ThesaurusService;
+import de.ingrid.external.ThesaurusService.MatchingType;
 import de.ingrid.external.om.RelatedTerm;
 import de.ingrid.external.om.Term;
 import de.ingrid.external.om.TreeTerm;
@@ -180,6 +181,7 @@ public class SNSService {
 			return Type.TOP_TERM;
     }
 
+    /** NOTICE: Type.TOP_TERM can only be determined if term is TreeTerm !!!!!! */
     private static Type getTypeFromTerm(Term term) {
     	// first check whether we have a tree term ! Only then we can determine whether top node !
 		if (TreeTerm.class.isAssignableFrom(term.getClass())) {
@@ -204,25 +206,19 @@ public class SNSService {
      * @return the SNSTopic if it exists, null otherwise
      */
     public SNSTopic findTopic(String queryTerm) {
-    	TopicMapFragment mapFragment = null;
-    	try {
-    		mapFragment = snsClient.findTopics(queryTerm, "/thesa", SearchType.exact,
-    	            FieldsType.names, 0, THESAURUS_LANGUAGE_FILTER, true);
-    	} catch (Exception e) {
-	    	log.error(e);
-	    }
-	    
-	    if (null != mapFragment) {
-	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
-	        if ((null != topics)) {
-	            for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
-					String topicName = topic.getBaseName(0).getBaseNameString().get_value();
-	            	if (topicName.equalsIgnoreCase(queryTerm))
-	            		return convertTopicToSNSTopic(topic);
-	            }
-	        }
-	    }
-	    return null;
+    	log.debug("     !!!!!!!!!! thesaurusService.findTermsFromQueryTerm() from " + queryTerm);
+    	
+    	Term[] terms = thesaurusService.findTermsFromQueryTerm(queryTerm, MatchingType.EXACT, true, Locale.GERMAN);
+
+    	SNSTopic result = null;
+    	for (Term term : terms) {
+    		if (queryTerm.equalsIgnoreCase(term.getName())) {
+        		result = convertTermToSNSTopic(term);
+        		break;
+    		}
+    	}
+
+    	return result;
     }
 
     /**
@@ -231,24 +227,14 @@ public class SNSService {
      * @return All topics returned by the SNS, converted to SNSTopics 
      */
     public List<SNSTopic> findTopics(String queryTerm) {
-    	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
-    	TopicMapFragment mapFragment = null;
-    	try {
-    		mapFragment = snsClient.findTopics(queryTerm, "/thesa", SearchType.exact,
-    	            FieldsType.captors, 0, THESAURUS_LANGUAGE_FILTER, true);
-    	} catch (Exception e) {
-	    	log.error(e);
-	    }
+    	log.debug("     !!!!!!!!!! thesaurusService.findTermsFromQueryTerm() from " + queryTerm);
+    	
+    	Term[] terms = thesaurusService.findTermsFromQueryTerm(queryTerm, MatchingType.EXACT, true, Locale.GERMAN);
 
-	    if (null != mapFragment) {
-	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
-	        if ((null != topics)) {
-	            for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
-	            	resultList.add(convertTopicToSNSTopic(topic));
-//	            	log.debug("Adding: ["+getTypeFromTopic(topic)+", "+getSourceFromTopic(topic)+", "+topic.getId()+", "+topic.getBaseName(0).getBaseNameString().get_value()+"]");
-				}
-	        }
-	    }
+    	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
+    	for (Term term : terms) {
+    		resultList.add(convertTermToSNSTopic(term));
+    	}
 
 	    Collections.sort(resultList, new SNSTopicComparator());
 	    return resultList;
@@ -571,7 +557,8 @@ public class SNSService {
     	}
     }
 
-    /** NO adding of children ! */
+    /** NO adding of children !
+    /* NOTICE: Type.TOP_TERM can only be determined if term is TreeTerm !!!!!! */
     private static SNSTopic convertTermToSNSTopic(Term term) {
     	Type type = getTypeFromTerm(term);
     	String id = term.getId();
