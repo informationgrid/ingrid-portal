@@ -16,8 +16,6 @@ import java.util.TreeSet;
 import org.apache.axis.AxisFault;
 import org.apache.log4j.Logger;
 
-import com.slb.taxi.webservice.xtm.stubs.FieldsType;
-import com.slb.taxi.webservice.xtm.stubs.SearchType;
 import com.slb.taxi.webservice.xtm.stubs.TopicMapFragment;
 import com.slb.taxi.webservice.xtm.stubs.TopicMapFragmentIndexedDocument;
 import com.slb.taxi.webservice.xtm.stubs.xtm.Occurrence;
@@ -25,7 +23,8 @@ import com.slb.taxi.webservice.xtm.stubs.xtm.Occurrence;
 import de.ingrid.external.FullClassifyService;
 import de.ingrid.external.GazetteerService;
 import de.ingrid.external.ThesaurusService;
-import de.ingrid.external.ThesaurusService.MatchingType;
+import de.ingrid.external.GazetteerService.QueryType;
+import de.ingrid.external.om.Location;
 import de.ingrid.external.om.RelatedTerm;
 import de.ingrid.external.om.Term;
 import de.ingrid.external.om.TreeTerm;
@@ -208,7 +207,8 @@ public class SNSService {
     public SNSTopic findTopic(String queryTerm) {
     	log.debug("     !!!!!!!!!! thesaurusService.findTermsFromQueryTerm() from " + queryTerm);
     	
-    	Term[] terms = thesaurusService.findTermsFromQueryTerm(queryTerm, MatchingType.EXACT, true, Locale.GERMAN);
+    	Term[] terms = thesaurusService.findTermsFromQueryTerm(queryTerm,
+    			de.ingrid.external.ThesaurusService.MatchingType.EXACT, true, Locale.GERMAN);
 
     	SNSTopic result = null;
     	for (Term term : terms) {
@@ -229,7 +229,8 @@ public class SNSService {
     public List<SNSTopic> findTopics(String queryTerm) {
     	log.debug("     !!!!!!!!!! thesaurusService.findTermsFromQueryTerm() from " + queryTerm);
     	
-    	Term[] terms = thesaurusService.findTermsFromQueryTerm(queryTerm, MatchingType.EXACT, true, Locale.GERMAN);
+    	Term[] terms = thesaurusService.findTermsFromQueryTerm(queryTerm,
+    			de.ingrid.external.ThesaurusService.MatchingType.EXACT, true, Locale.GERMAN);
 
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	for (Term term : terms) {
@@ -385,29 +386,21 @@ public class SNSService {
     }
 
     public List<SNSLocationTopic> getLocationTopics(String queryTerm, String searchTypeStr, String pathStr) {
-    	List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
-    	SearchType searchType = getSearchType(searchTypeStr);
-    	String path = (pathStr == null) ? "/location" : pathStr;
+    	de.ingrid.external.GazetteerService.MatchingType matching =
+    		getGazetteerMatchingType(searchTypeStr);
+    	QueryType queryType = getGazetteerQueryType(pathStr);
 
-    	TopicMapFragment mapFragment = null;
-    	try {
-    		mapFragment = snsClient.findTopics(queryTerm, path, searchType,
-    	            FieldsType.captors, 0, THESAURUS_LANGUAGE_FILTER, false);
-    	} catch (Exception e) {
-	    	log.error(e);
-	    }
-	    
-	    if (null != mapFragment) {
-	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
-	        if ((null != topics)) {
-	            for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
-	            	SNSLocationTopic t = createLocationTopic(topic);
-	            	if (t != null) {
-	            		resultList.add(t);
-	            	}
-				}
-	        }
-	    }
+    	log.debug("     !!!!!!!!!! gazetteerService.findLocationsFromQueryTerm() " + queryTerm +
+    			" " + queryType + " " + matching);
+
+    	Location[] locations = gazetteerService.findLocationsFromQueryTerm(queryTerm, queryType,
+    			matching, Locale.GERMAN);
+
+    	List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
+    	for (Location location : locations) {
+    		resultList.add(convertLocationToSNSLocation(location));
+    	}
+
 	    return resultList;
     }
 
@@ -559,7 +552,7 @@ public class SNSService {
 
     /** NO adding of children !
     /* NOTICE: Type.TOP_TERM can only be determined if term is TreeTerm !!!!!! */
-    private static SNSTopic convertTermToSNSTopic(Term term) {
+    private SNSTopic convertTermToSNSTopic(Term term) {
     	Type type = getTypeFromTerm(term);
     	String id = term.getId();
     	String name = term.getName();
@@ -580,7 +573,7 @@ public class SNSService {
     }
 
     /** Also adds children ! */
-    private static SNSTopic convertTreeTermToSNSTopic(TreeTerm treeTerm) {
+    private SNSTopic convertTreeTermToSNSTopic(TreeTerm treeTerm) {
     	SNSTopic resultTopic = convertTermToSNSTopic(treeTerm);
 
     	List<TreeTerm> childTerms = treeTerm.getChildren();
@@ -777,21 +770,48 @@ public class SNSService {
     	return result;
     }
 
-    private SearchType getSearchType(String searchTypeStr) {
-    	if (searchTypeStr == null) {
-    		return SearchType.exact;
-    		
-    	} else if (searchTypeStr.equalsIgnoreCase("exact")) {
-    		return SearchType.exact;
+    private SNSLocationTopic convertLocationToSNSLocation(Location location) {
+    	SNSLocationTopic result = new SNSLocationTopic();
 
-    	} else if (searchTypeStr.equalsIgnoreCase("contains")) {
-    		return SearchType.contains;
-
-    	} else {
-    		return SearchType.beginsWith;
-    	}
+    	result.setTopicId(location.getId());
+    	result.setName(location.getName());
+    	
+    	// null if not set !
+    	result.setTypeId(location.getTypeId());
+    	result.setType(location.getTypeName());
+    	result.setBoundingBox(location.getBoundingBox());
+   		result.setQualifier(location.getQualifier());
+   		result.setNativeKey(location.getNativeKey());
+		
+    	return result;
     }
 
+	/** Determine Gazetteer MatchingType from passed SNS search type string. */
+	private de.ingrid.external.GazetteerService.MatchingType getGazetteerMatchingType(String searchTypeStr) {
+		de.ingrid.external.GazetteerService.MatchingType matching;
+		if (searchTypeStr == null) {
+			matching = de.ingrid.external.GazetteerService.MatchingType.EXACT;
+    	} else if ("exact".equalsIgnoreCase(searchTypeStr)) {
+    		matching = de.ingrid.external.GazetteerService.MatchingType.EXACT;
+    	} else if ("contains".equalsIgnoreCase(searchTypeStr)) {
+    		matching = de.ingrid.external.GazetteerService.MatchingType.CONTAINS;
+    	} else {
+    		matching = de.ingrid.external.GazetteerService.MatchingType.BEGINS_WITH;    		
+    	}
+		
+    	return matching;
+	}
+
+	/** Determine Gazetteer QueryType from passed SNS search path. */
+	private QueryType getGazetteerQueryType(String pathStr) {
+
+		QueryType queryType = QueryType.ALL_LOCATIONS;
+		if ("/location/admin".equals(pathStr)) {
+			queryType = QueryType.ONLY_ADMINISTRATIVE_LOCATIONS;
+    	}
+		
+    	return queryType;
+	}
 
     static public class TermComparator implements Comparator<Term> {
     	public final int compare(Term termA, Term termB) {
