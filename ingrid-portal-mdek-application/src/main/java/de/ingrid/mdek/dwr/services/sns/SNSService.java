@@ -42,8 +42,6 @@ public class SNSService {
 	// Switch to "rs:" when the native key changes
 	// private static final String SNS_NATIVE_KEY_PREFIX = "rs:"; 
 	private static final String SNS_NATIVE_KEY_PREFIX = "ags:";
-	// TODO: get language from session or as parameter !
-    private static final String THESAURUS_LANGUAGE_FILTER = "de";
     private static final int MAX_NUM_RESULTS = 100;
     private static final int MAX_ANALYZED_WORDS = 1000;
     private static final int SNS_TIMEOUT = 30000;
@@ -267,22 +265,18 @@ public class SNSService {
      * @throws Exception if there was a connection/communication error with the SNS
      */
     public SNSLocationTopic getLocationPSI(String topicId) throws Exception {
-    	TopicMapFragment mapFragment = null;
-   		mapFragment = snsClient.getPSI(topicId, 0, "/location");
+    	log.debug("     !!!!!!!!!! gazetteerService.getLocation() from " + topicId);
+    	
+    	Location location = gazetteerService.getLocation(topicId, Locale.GERMAN);
 
-	    if (null != mapFragment) {
-	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
-	        if ((null != topics)) {
-	            for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
-	            	if (topic.getId().equals(topicId)) {
-		            	return createLocationTopic(topic);
-	            	}
-	            }
-	        }
-	    }
-	    return null;
+    	SNSLocationTopic result = null;
+		if (location != null) {
+    		result = convertLocationToSNSLocation(location);
+		}
+
+    	return result;
     }
-    
+
     public List<SNSTopic> getSimilarTerms(String[] queryTerms) {
     	return getSimilarTerms(queryTerms, MAX_NUM_RESULTS);
     }
