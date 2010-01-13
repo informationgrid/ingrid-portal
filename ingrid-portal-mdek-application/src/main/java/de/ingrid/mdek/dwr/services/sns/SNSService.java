@@ -337,9 +337,9 @@ public class SNSService {
     	return resultList;
     }
 
-    // Returns the topicID encapsulated in a SNSTopic with the parents, children and synonyms attached
+    /** Returns the topicID encapsulated in a SNSTopic with the parents, children and synonyms attached */
     public SNSTopic getTopicsForTopic(String topicId) {
-    	log.debug("     !!!!!!!!!! thesaurusService.getRelatedTermsFromTerm()");
+    	log.debug("     !!!!!!!!!! thesaurusService.getRelatedTermsFromTerm() from " + topicId);
     	
     	RelatedTerm[] relatedTerms = thesaurusService.getRelatedTermsFromTerm(topicId, Locale.GERMAN);
 
@@ -398,27 +398,18 @@ public class SNSService {
 	    return resultList;
     }
 
+    /** Returns all related locations including the one with passed id ! */
     public List<SNSLocationTopic> getLocationTopicsById(String topicID) {
-    	List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
-    	TopicMapFragment mapFragment = null;
-    	try {
-    		mapFragment = snsClient.getPSI(topicID, 0, "/location");
-	    } catch (Exception e) {
-	    	log.error(e);
-	    }
+    	log.debug("     !!!!!!!!!! gazetteerService.getRelatedLocationsFromLocation() from " + topicID);
+    	
+    	Location[] locations = gazetteerService.getRelatedLocationsFromLocation(topicID, true, Locale.GERMAN);
 
-	    if (null != mapFragment) {
-	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
-	    	for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
-            	SNSLocationTopic t = createLocationTopic(topic);
-            	if (t != null) {
-            		resultList.add(t);
-            	} else {
-            		// log.debug("Couldn't create location topic for result: "+topic.getId());
-            	}
-	        }
-	    }
-    	return resultList;
+    	List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
+    	for (Location location : locations) {
+    		resultList.add(convertLocationToSNSLocation(location));
+    	}
+
+	    return resultList;
     }
 
     // SNS autoClassify operation for URLs
