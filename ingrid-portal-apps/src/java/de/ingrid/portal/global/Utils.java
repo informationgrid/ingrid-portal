@@ -552,7 +552,15 @@ public class Utils {
 	 * @return an array of Strings with complete language names
 	 */
 	public static String[] getLanguagesFullAsArray(String lang) {
-		String langNames = PortalConfig.getInstance().getString(PortalConfig.LANGUAGES_NAMES + lang);
+		
+		String language = lang.replace("\"", "" );
+		
+		if(log.isDebugEnabled()){
+			log.debug("getLanguagesFullAsArray language: " + language);
+		}
+		
+		String langNames = PortalConfig.getInstance().getString(PortalConfig.LANGUAGES_NAMES + language);
+		
 		return langNames.split(";");
 	}
 
@@ -576,6 +584,12 @@ public class Utils {
 		if (supportedLanguage == null){
     		supportedLanguage = Locale.getDefault().getLanguage();
         }  
+		
+		supportedLanguage = supportedLanguage.replace("\"", "" );
+		
+		if(log.isDebugEnabled()){
+			log.debug("checkSupportedLanguage language: " + supportedLanguage);
+			}
 		
 		return supportedLanguage;
 	}

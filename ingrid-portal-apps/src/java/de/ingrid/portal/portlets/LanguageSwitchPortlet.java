@@ -52,7 +52,9 @@ public class LanguageSwitchPortlet extends GenericVelocityPortlet {
         Context context = getContext(request);
         Locale loc = request.getLocale();
         String lang = Utils.checkSupportedLanguage(loc.getLanguage());
-        
+        if(log.isDebugEnabled()){
+    		log.debug("LanguageSwitchPortlet language: " + lang);
+        }
         setDefaultViewPage(TEMPLATE_LANGUAGE_SWITCH);
         
         // add the velocity tool to access arrays
