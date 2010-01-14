@@ -90,6 +90,8 @@ scriptScope.startRequest = function() {
 		            { caption: message.get("general.no"),  action: function() { def.errback("CANCEL"); } },
                     { caption: message.get("general.ok"), action: function() { setOperationValues(res); } }
 		        ]);
+		    } else {
+		    	setOperationValues(res);
 		    }
 		},
 		errorHandler:function(errMsg, err) {
