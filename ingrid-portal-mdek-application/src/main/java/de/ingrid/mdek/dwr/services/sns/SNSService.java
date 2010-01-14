@@ -261,7 +261,7 @@ public class SNSService {
     /**
      * getPSI for location topics 'topicId'.
      * @param topicId topic id to search for
-     * @return the SNSLocationTopic if it exists, null otherwise
+     * @return null if location is EXPIRED or not found, otherwise the SNSLocationTopic
      * @throws Exception if there was a connection/communication error with the SNS
      */
     public SNSLocationTopic getLocationPSI(String topicId) throws Exception {
@@ -271,6 +271,7 @@ public class SNSService {
 
     	SNSLocationTopic result = null;
 		if (location != null) {
+			// NULL if expired !
     		result = convertLocationToSNSLocation(location);
 		}
 
@@ -392,7 +393,10 @@ public class SNSService {
 
     	List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
     	for (Location location : locations) {
-    		resultList.add(convertLocationToSNSLocation(location));
+        	SNSLocationTopic t = convertLocationToSNSLocation(location);
+        	if (t != null) {
+        		resultList.add(t);
+        	}
     	}
 
 	    return resultList;
@@ -406,7 +410,10 @@ public class SNSService {
 
     	List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
     	for (Location location : locations) {
-    		resultList.add(convertLocationToSNSLocation(location));
+        	SNSLocationTopic t = convertLocationToSNSLocation(location);
+        	if (t != null) {
+        		resultList.add(t);
+        	}
     	}
 
 	    return resultList;
@@ -755,7 +762,14 @@ public class SNSService {
     	return result;
     }
 
+    /**
+     * @return NULL if location is Expired !!!
+     */
     private SNSLocationTopic convertLocationToSNSLocation(Location location) {
+    	if (location.getIsExpired()) {
+    		return null;
+    	}
+
     	SNSLocationTopic result = new SNSLocationTopic();
 
     	result.setTopicId(location.getId());
