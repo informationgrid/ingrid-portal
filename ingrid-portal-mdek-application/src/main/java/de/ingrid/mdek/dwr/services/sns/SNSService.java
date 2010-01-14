@@ -30,7 +30,7 @@ import de.ingrid.external.om.Term;
 import de.ingrid.external.om.TreeTerm;
 import de.ingrid.external.om.RelatedTerm.RelationType;
 import de.ingrid.external.om.Term.TermType;
-import de.ingrid.iplug.sns.SNSClient;
+import de.ingrid.external.sns.SNSClient;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
