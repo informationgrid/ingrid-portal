@@ -53,9 +53,10 @@ public class IPlugVersionInspector {
 			return VERSION_IDC_1_0_5_DSC_ADDRESS;
 		} else if (fields != null && fields.contains("t02_address.adr_id") && fields.contains("parent.address_node.addr_uuid")) {
 			return VERSION_IDC_1_0_2_DSC_ADDRESS;
-		} else if (IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)
+		} else if (fields != null && fields.contains("t01_object.obj_id") && 
+				(IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)
                 || IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_ECS)
-                || IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_CSW)) {		
+                || IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_CSW)) ) {		
 			return VERSION_UDK_5_0_DSC_OBJECT;
 		} else if (IPlugHelper.hasDataType(plugDescription, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
 				return VERSION_UDK_5_0_DSC_ADDRESS;
