@@ -59,4 +59,8 @@ public class SNSEventTopic {
 		this.to = to;
 	}
 
+	public String toString() {
+		return "[" + topicId + ", " + name + ", " + description + ", "
+				+ at + ", " + from + ", " + to + "]";
+	}
 }

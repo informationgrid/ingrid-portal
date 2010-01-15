@@ -2,36 +2,28 @@ package de.ingrid.mdek.dwr.services.sns;
 
 import java.net.URL;
 import java.text.Collator;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.TreeSet;
 
-import org.apache.axis.AxisFault;
 import org.apache.log4j.Logger;
-
-import com.slb.taxi.webservice.xtm.stubs.TopicMapFragment;
-import com.slb.taxi.webservice.xtm.stubs.TopicMapFragmentIndexedDocument;
-import com.slb.taxi.webservice.xtm.stubs.xtm.Occurrence;
 
 import de.ingrid.external.FullClassifyService;
 import de.ingrid.external.GazetteerService;
 import de.ingrid.external.ThesaurusService;
 import de.ingrid.external.GazetteerService.QueryType;
+import de.ingrid.external.om.Event;
+import de.ingrid.external.om.FullClassifyResult;
 import de.ingrid.external.om.Location;
 import de.ingrid.external.om.RelatedTerm;
 import de.ingrid.external.om.Term;
 import de.ingrid.external.om.TreeTerm;
 import de.ingrid.external.om.RelatedTerm.RelationType;
 import de.ingrid.external.om.Term.TermType;
-import de.ingrid.external.sns.SNSClient;
-import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
 
@@ -39,42 +31,18 @@ public class SNSService {
 
 	private final static Logger log = Logger.getLogger(SNSService.class);	
 
-	// Switch to "rs:" when the native key changes
-	// private static final String SNS_NATIVE_KEY_PREFIX = "rs:"; 
-	private static final String SNS_NATIVE_KEY_PREFIX = "ags:";
     private static final int MAX_NUM_RESULTS = 100;
     private static final int MAX_ANALYZED_WORDS = 1000;
-    private static final int SNS_TIMEOUT = 30000;
 
     // Error string for the frontend
-    private static String ERROR_SNS_TIMEOUT = "SNS_TIMEOUT";
     private static String ERROR_SNS_INVALID_URL = "SNS_INVALID_URL";
     
-    private static final SimpleDateFormat expiredDateParser = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-
-    // Settings and language specific values
-    private ResourceBundle resourceBundle; 
-    private SNSClient snsClient;
-
     private ThesaurusService thesaurusService;
     private GazetteerService gazetteerService;
     private FullClassifyService fullClassifyService;
 
-    // The three main SNS topic types
-    private enum TopicType {EVENT, LOCATION, THESA}
-
-
     // Init Method is called by the Spring Framework on initialization
-    public void init() throws Exception {
-		resourceBundle = ResourceBundle.getBundle("sns");
-
-    	snsClient = new SNSClient(
-    			resourceBundle.getString("sns.username"),
-    			resourceBundle.getString("sns.password"),
-    			resourceBundle.getString("sns.language"),
-        		new URL(resourceBundle.getString("sns.serviceURL")));
-    	snsClient.setTimeout(SNS_TIMEOUT);
-    }
+    public void init() throws Exception {}
 
 	public void setThesaurusService(ThesaurusService thesaurusService) {
 		this.thesaurusService = thesaurusService;
@@ -160,43 +128,6 @@ public class SNSService {
     	return resultList;
     }
 
-    private static Type getTypeFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic t) {
-    	String nodeType = t.getInstanceOf(0).getTopicRef().getHref();
-    	return getTypeForNodeType(nodeType);
-    }
-
-    private static Type getTypeForNodeType(String nodeType) {
-		if (nodeType.indexOf("topTermType") != -1) 
-			return Type.TOP_TERM;
-		else if (nodeType.indexOf("nodeLabelType") != -1) 
-			return Type.NODE_LABEL;
-		else if (nodeType.indexOf("descriptorType") != -1) 
-			return Type.DESCRIPTOR;
-		else if (nodeType.indexOf("nonDescriptorType") != -1) 
-			return Type.NON_DESCRIPTOR;
-		else
-			return Type.TOP_TERM;
-    }
-
-    /** NOTICE: Type.TOP_TERM can only be determined if term is TreeTerm !!!!!! */
-    private static Type getTypeFromTerm(Term term) {
-    	// first check whether we have a tree term ! Only then we can determine whether top node !
-		if (TreeTerm.class.isAssignableFrom(term.getClass())) {
-	    	if (((TreeTerm)term).getParents() == null) {
-	    		return Type.TOP_TERM;
-	    	}    	
-		}
-
-    	TermType termType = term.getType();
-    	if (termType == TermType.NODE_LABEL) 
-			return Type.NODE_LABEL;
-		if (termType == TermType.DESCRIPTOR) 
-			return Type.DESCRIPTOR;
-		if (termType == TermType.NON_DESCRIPTOR) 
-			return Type.NON_DESCRIPTOR;
-		return Type.TOP_TERM;
-    }
-
     /**
      * find the topic with name 'queryTerm'. If no topic is found with the given name, null is returned
      * @param queryTerm topic name to search for
@@ -272,7 +203,7 @@ public class SNSService {
     	SNSLocationTopic result = null;
 		if (location != null) {
 			// NULL if expired !
-    		result = convertLocationToSNSLocation(location);
+    		result = convertLocationToSNSLocationTopic(location);
 		}
 
     	return result;
@@ -393,7 +324,7 @@ public class SNSService {
 
     	List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
     	for (Location location : locations) {
-        	SNSLocationTopic t = convertLocationToSNSLocation(location);
+        	SNSLocationTopic t = convertLocationToSNSLocationTopic(location);
         	if (t != null) {
         		resultList.add(t);
         	}
@@ -410,7 +341,7 @@ public class SNSService {
 
     	List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
     	for (Location location : locations) {
-        	SNSLocationTopic t = convertLocationToSNSLocation(location);
+        	SNSLocationTopic t = convertLocationToSNSLocationTopic(location);
         	if (t != null) {
         		resultList.add(t);
         	}
@@ -419,127 +350,50 @@ public class SNSService {
 	    return resultList;
     }
 
-    // SNS autoClassify operation for URLs
-    public SNSTopicMap autoClassifyURL(String url, int analyzeMaxWords, String filter, boolean ignoreCase, String lang) {
-    	SNSTopicMap result = new SNSTopicMap();
-    	TopicMapFragment mapFragment = null;
-
+    /** SNS autoClassify operation for URLs */
+    public SNSTopicMap autoClassifyURL(String urlStr, int analyzeMaxWords, String filter, boolean ignoreCase, String lang) {   	
+    	URL url;
     	try {
-    		mapFragment = snsClient.autoClassifyToUrl(url, analyzeMaxWords, filter, ignoreCase, lang);
-
-    	} catch (AxisFault f) {
-    		log.debug("Error while calling autoClassifyToUrl.", f);
-    		if (f.getFaultString().contains("Timeout"))
-    			throw new RuntimeException(ERROR_SNS_TIMEOUT);
-    		else
-    			throw new RuntimeException(ERROR_SNS_INVALID_URL);
-
-    	} catch (Exception e) {
-	    	log.error("Error calling snsClient.autoClassifyToUrl", e);
+    		url = new URL(urlStr);
+    	} catch (Exception ex) {
+    		log.warn("Error building URL " + urlStr, ex);
+   			throw new RuntimeException(ERROR_SNS_INVALID_URL);
     	}
+		de.ingrid.external.FullClassifyService.FilterType filterType = getFullClassifyFilterType(filter);
 
-    	if (null != mapFragment) {
-    		TopicMapFragmentIndexedDocument indexedDocument = mapFragment.getIndexedDocument();
-    		result.setIndexedDocument(new IndexedDocument(indexedDocument));
+    	log.debug("     !!!!!!!!!! fullClassifyService.autoClassifyURL() " + url + " " + filter + " " + lang);
+    	FullClassifyResult classifyResult =
+    		fullClassifyService.autoClassifyURL(url, analyzeMaxWords, ignoreCase, filterType, Locale.GERMAN);
 
-	    	com.slb.taxi.webservice.xtm.stubs.xtm.Topic[] topics = mapFragment.getTopicMap().getTopic();
-	    	if (null == topics) {
-	    		return result;
-	    	}
+    	SNSTopicMap result = new SNSTopicMap();
+		result.setIndexedDocument(new IndexedDocument(classifyResult.getIndexedDocument()));
 
-	    	List<SNSEventTopic> eventTopics = new ArrayList<SNSEventTopic>();
-	    	List<SNSLocationTopic> locationTopics = new ArrayList<SNSLocationTopic>();
-	    	List<SNSTopic> thesaTopics = new ArrayList<SNSTopic>();
-
-	    	for (com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic : topics) {
-            	switch (getTopicType(topic)) {
-            	case EVENT:
-            		eventTopics.add(createEventTopic(topic));
-            		break;
-            	case LOCATION:
-            		SNSLocationTopic locTopic = createLocationTopic(topic);
-            		// createLocationTopic returns null for expired topics
-            		if (null != locTopic) {
-            			locationTopics.add(locTopic);
-            		}
-
-            		break;
-            	case THESA:
-            		thesaTopics.add(convertTopicToSNSTopic(topic));
-            		break;
-            	}
-	    	}
-        	result.setEventTopics(eventTopics);
-        	result.setLocationTopics(locationTopics);
-        	result.setThesaTopics(thesaTopics);
+		// terms
+    	List<SNSTopic> thesaTopics = new ArrayList<SNSTopic>();
+    	for(Term term : classifyResult.getTerms()) {
+    		thesaTopics.add(convertTermToSNSTopic(term));
     	}
-    	return result;
-    }
+    	result.setThesaTopics(thesaTopics);
 
-    private TopicType getTopicType(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
-		String instance = topic.getInstanceOf()[0].getTopicRef().getHref();
-//		log.debug("InstanceOf: "+instance);
-		if (instance.indexOf("topTermType") != -1 || instance.indexOf("nodeLabelType") != -1
-		 || instance.indexOf("descriptorType") != -1 || instance.indexOf("nonDescriptorType") != -1) {
-			return TopicType.THESA;
-
-		} else if (instance.indexOf("activityType") != -1 || instance.indexOf("anniversaryType") != -1
-				 || instance.indexOf("conferenceType") != -1 || instance.indexOf("disasterType") != -1
-				 || instance.indexOf("historicalType") != -1 || instance.indexOf("interYearType") != -1
-				 || instance.indexOf("legalType") != -1 || instance.indexOf("observationType") != -1
-				 || instance.indexOf("natureOfTheYearType") != -1 || instance.indexOf("publicationType") != -1) {
-			return TopicType.EVENT;
-
-		} else { // if instance.indexOf("nationType") != -1 || ...
-			return TopicType.LOCATION;
-		}
-    }
-
-    private SNSEventTopic createEventTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
-    	SNSEventTopic t = new SNSEventTopic();
-    	t.setTopicId(topic.getId());
-    	t.setName(topic.getBaseName()[0].getBaseNameString().get_value());
-
-    	for (Occurrence occ: topic.getOccurrence()) {
-    		if (occ.getInstanceOf().getTopicRef().getHref().endsWith("descriptionOcc")) {
-    			if (occ.getScope().getTopicRef()[0].getHref().endsWith("de") && occ.getResourceData() != null)
-    				t.setDescription(occ.getResourceData().get_value());
-
-    		} else if (occ.getInstanceOf().getTopicRef().getHref().endsWith("temporalAtOcc")) {        		
-    			log.debug("Temporal at: "+occ.getResourceData().get_value());
-    			t.setAt(convertTemporalValueToDate(occ.getResourceData().get_value()));
-
-    		} else if (occ.getInstanceOf().getTopicRef().getHref().endsWith("temporalFromOcc")) {        		
-    			log.debug("Temporal from: "+occ.getResourceData().get_value());
-    			t.setFrom(convertTemporalValueToDate(occ.getResourceData().get_value()));
-
-    		} else if (occ.getInstanceOf().getTopicRef().getHref().endsWith("temporalToOcc")) {        		
-    			log.debug("Temporal to: "+occ.getResourceData().get_value());
-    			t.setTo(convertTemporalValueToDate(occ.getResourceData().get_value()));
+    	// locations
+    	List<SNSLocationTopic> locationTopics = new ArrayList<SNSLocationTopic>();
+    	for(Location location : classifyResult.getLocations()) {
+        	SNSLocationTopic t = convertLocationToSNSLocationTopic(location);
+    		// returns null for expired locations
+        	if (t != null) {
+        		locationTopics.add(t);
         	}
     	}
+    	result.setLocationTopics(locationTopics);
 
-    	return t;
-    }
-
-    private static SNSTopic convertTopicToSNSTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
-    	Source topicSource = getSourceFromTopic(topic);
-    	
-//    	log.debug("topic source: " + topicSource);
-//    	log.debug("topic type: " + getTypeFromTopic(topic));
-    	String topicName = topic.getBaseName(0).getBaseNameString().get_value();
-    	if (Source.UMTHES.equals(topicSource)) {
-    		SNSTopic snsTopic = new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getId(), topicName, null, null);
-    		snsTopic.setInspireList(findInspireTopics(topic));
-        	return snsTopic;
-
-    	} else {
-    		// if GEMET, then the title is used for the title in SNSTopic and, in case UMTHES is different
-    		// the UMTHES value is stored in alternateTitle
-    		SNSTopic snsTopic = new SNSTopic(getTypeFromTopic(topic), topicSource, topic.getId(), getGemetTitleFromTopic(topic), topicName, getGemetIdFromTopic(topic));
-    		snsTopic.setInspireList(findInspireTopics(topic));
-        	return snsTopic;
+    	// events
+    	List<SNSEventTopic> eventTopics = new ArrayList<SNSEventTopic>();
+    	for(Event event : classifyResult.getEvents()) {
+    		eventTopics.add(convertEventToSNSEventTopic(event));
     	}
+    	result.setEventTopics(eventTopics);
+
+	    return result;
     }
 
     /** NO adding of children !
@@ -590,182 +444,10 @@ public class SNSService {
     	return resultTopic;
     }
 
-    private static List<String> findInspireTopics(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
-    	List<String> inspireTopics = new ArrayList<String>();
-    	
-    	if (null != topic.getOccurrence()) {
-	    	for (Occurrence occ: topic.getOccurrence()) {
-	    		if (occ.getInstanceOf().getTopicRef().getHref().endsWith("iTheme2007")) {
-	    			inspireTopics.add(getInspireTitleFromOccurenceString(occ.getResourceData().get_value()));
-	    		}
-	    	}
-    	}
-    	
-		return inspireTopics;
-	}
-
-    // TODO AW: ENGLISH also!!!
-	private static String getInspireTitleFromOccurenceString(String inspireOccurence) {
-		if (inspireOccurence != null) {
-    		String[] inspireParts = inspireOccurence.split("@");
-    		return inspireParts[1];
-    	}
-		return null;
-	}
-
-    private static Source getSourceFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
-    	Occurrence occ = getOccurrence(topic, "gemet1.0");
-    	if (null != occ) {
-    		return Source.GEMET;
-    	} else {
-        	// If there is no occurence of type 'gemet1.0'
-    		return Source.UMTHES;
-    	}
-    }
-
-    private static Source getSourceFromTerm(Term term) {
-    	if (term.getAlternateId() != null) {
-    		return Source.GEMET;
-    	} else {
-    		return Source.UMTHES;
-    	}
-    }
-
-    private static String getGemetTitleFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
-    	Occurrence occ = getOccurrence(topic, "gemet1.0");
-    	if (null != occ) {
-    		return getGemetTitleFromOccurenceString(occ.getResourceData().get_value());
-
-    	} else {
-    		return null;
-    	}
-    }
-
-    private static String getGemetTitleFromOccurenceString(String gemetOccurence) {
-//    	log.debug("gemet occurence string: "+gemetOccurence);
-    	// gemetOccurence consists of: ID@GERMAN_TITLE@ENGLISH_TITLE
-    	// We return the german title
-    	if (gemetOccurence != null) {
-    		String[] gemetParts = gemetOccurence.split("@");
-//        	log.debug("gemet title: "+gemetParts[1]);
-    		return gemetParts[1];
-
-    	} else {
-    		return null;
-    	}
-    }
-
-    private static String getGemetIdFromTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
-    	Occurrence occ = getOccurrence(topic, "gemet1.0");
-    	if (null != occ) {
-    		return getGemetIdFromOccurenceString(occ.getResourceData().get_value());
-
-    	} else {
-    		return null;
-    	}
-    }
-
-    private static String getGemetIdFromOccurenceString(String gemetOccurence) {
-//    	log.debug("gemet occurence string: "+gemetOccurence);
-    	if (gemetOccurence != null) {
-    		String[] gemetParts = gemetOccurence.split("@");
-//        	log.debug("gemet id: "+gemetParts[0]);
-    		return gemetParts[0];
-
-    	} else {
-    		return null;
-    	}
-    }
-
-
-    private static Occurrence getOccurrence(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic, String occurrenceType) {
-    	if (null != topic.getOccurrence()) {
-	    	for (Occurrence occ: topic.getOccurrence()) {
-	    		if (occ.getInstanceOf().getTopicRef().getHref().endsWith(occurrenceType)) {
-	    			return occ;
-	    		}
-	    	}
-    	}
-
-    	// If the occurence was not found
-    	return null;
-    }
-
-    private Date convertTemporalValueToDate(String dateString) {
-		SimpleDateFormat standardDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat yearMonthDateFormat = new SimpleDateFormat("yyyy-MM");
-		SimpleDateFormat yearDateFormat = new SimpleDateFormat("yyyy");
-
-    	try { return standardDateFormat.parse(dateString); }
-    	catch (java.text.ParseException pe) { log.debug(pe); }
-
-    	try { return yearMonthDateFormat.parse(dateString); }
-    	catch (java.text.ParseException pe) { log.debug(pe); }
-
-    	try { return yearDateFormat.parse(dateString); }
-    	catch (java.text.ParseException pe) { log.debug(pe); }
-
-    	log.error("Error parsing date: "+dateString);
-    	return null;
-    }
-
-
-    private SNSLocationTopic createLocationTopic(com.slb.taxi.webservice.xtm.stubs.xtm.Topic topic) {
-    	SNSLocationTopic result = new SNSLocationTopic();
-    	result.setTopicId(topic.getId());
-    	result.setName(topic.getBaseName(0).getBaseNameString().get_value());
-    	String type = topic.getInstanceOf(0).getTopicRef().getHref();
-    	type = type.substring(type.lastIndexOf("#")+1);
-    	result.setTypeId(type);
-    	result.setType(resourceBundle.getString("sns.topic.ref."+type));
-
-    	// If the topic doesn't contain any more information return the basic info
-    	if (topic.getOccurrence() == null) {
-    		return result;
-    	}
-
-
-    	// Iterate over all occurrences and extract the relevant information (bounding box wgs84 coords and the qualifier)
-    	for(int i = 0; i < topic.getOccurrence().length; ++i) {
-//    		log.debug(topic.getOccurrence(i).getInstanceOf().getTopicRef().getHref());
-    		if (topic.getOccurrence(i).getInstanceOf().getTopicRef().getHref().endsWith("wgs84BoxOcc")) {
-//    			log.debug("WGS84 Coordinates: "+topic.getOccurrence(i).getResourceData().get_value());        	            			
-        		String coords = topic.getOccurrence(i).getResourceData().get_value();
-        		String[] ar = coords.split("\\s|,");
-        		if (ar.length == 4) {
-        			result.setBoundingBox(new Float(ar[0]), new Float(ar[1]), new Float(ar[2]), new Float(ar[3]));
-        		}
-    		} else if (topic.getOccurrence(i).getInstanceOf().getTopicRef().getHref().endsWith("qualifier")) {
-//    			log.debug("Qualifier: "+topic.getOccurrence(i).getResourceData().get_value());        	            			
-        		result.setQualifier(topic.getOccurrence(i).getResourceData().get_value());
-    		} else if (topic.getOccurrence(i).getInstanceOf().getTopicRef().getHref().endsWith("nativeKeyOcc")) {
-    			String nativeKeyOcc = topic.getOccurrence(i).getResourceData().get_value();
-    			String[] keys = nativeKeyOcc.split(" ");
-    			for (String nativeKey : keys) {
-    				if (nativeKey.startsWith(SNS_NATIVE_KEY_PREFIX)) {
-    					result.setNativeKey(nativeKey.substring(SNS_NATIVE_KEY_PREFIX.length()));
-    				}
-    			}
-    		} else if (topic.getOccurrence(i).getInstanceOf().getTopicRef().getHref().endsWith("expiredOcc")) {
-                try {
-                    Date expiredDate = expiredDateParser.parse(topic.getOccurrence(i).getResourceData().get_value());
-                    if ((null != expiredDate) && expiredDate.before(new Date())) {
-                        return null;
-                    }
-                } catch (java.text.ParseException e) {
-                    log.error("Not expected date format in sns expiredOcc.", e);
-                }
-    		}
-    	}
-    	if (result.getQualifier() == null)
-    		result.setQualifier(result.getType());
-    	return result;
-    }
-
     /**
      * @return NULL if location is Expired !!!
      */
-    private SNSLocationTopic convertLocationToSNSLocation(Location location) {
+    private SNSLocationTopic convertLocationToSNSLocationTopic(Location location) {
     	if (location.getIsExpired()) {
     		return null;
     	}
@@ -783,6 +465,45 @@ public class SNSService {
    		result.setNativeKey(location.getNativeKey());
 		
     	return result;
+    }
+
+    private SNSEventTopic convertEventToSNSEventTopic(Event event) {
+    	SNSEventTopic t = new SNSEventTopic();
+    	t.setTopicId(event.getId());
+    	t.setName(event.getTitle());
+    	t.setDescription(event.getDescription());
+    	t.setAt(event.getTimeAt());
+    	t.setFrom(event.getTimeRangeFrom());
+    	t.setTo(event.getTimeRangeTo());
+		
+    	return t;
+    }
+
+    private static Source getSourceFromTerm(Term term) {
+    	if (term.getAlternateId() != null) {
+    		return Source.GEMET;
+    	} else {
+    		return Source.UMTHES;
+    	}
+    }
+
+    /** NOTICE: Type.TOP_TERM can only be determined if term is TreeTerm !!!!!! */
+    private static Type getTypeFromTerm(Term term) {
+    	// first check whether we have a tree term ! Only then we can determine whether top node !
+		if (TreeTerm.class.isAssignableFrom(term.getClass())) {
+	    	if (((TreeTerm)term).getParents() == null) {
+	    		return Type.TOP_TERM;
+	    	}    	
+		}
+
+    	TermType termType = term.getType();
+    	if (termType == TermType.NODE_LABEL) 
+			return Type.NODE_LABEL;
+		if (termType == TermType.DESCRIPTOR) 
+			return Type.DESCRIPTOR;
+		if (termType == TermType.NON_DESCRIPTOR) 
+			return Type.NON_DESCRIPTOR;
+		return Type.TOP_TERM;
     }
 
 	/** Determine Gazetteer MatchingType from passed SNS search type string. */
@@ -812,6 +533,20 @@ public class SNSService {
     	return queryType;
 	}
 
+	/** Determine FullClassifyService.FilterType from passed SNS filter. */
+	private de.ingrid.external.FullClassifyService.FilterType getFullClassifyFilterType(String filterStr) {
+		de.ingrid.external.FullClassifyService.FilterType filterType = null;
+		if ("/thesa".equals(filterStr)) {
+			filterType = de.ingrid.external.FullClassifyService.FilterType.ONLY_TERMS;
+    	} else if ("/location".equals(filterStr)) {
+			filterType = de.ingrid.external.FullClassifyService.FilterType.ONLY_LOCATIONS;
+    	} else  if ("/event".equals(filterStr)) {
+			filterType = de.ingrid.external.FullClassifyService.FilterType.ONLY_EVENTS;
+    	} 
+
+    	return filterType;
+	}
+
     static public class TermComparator implements Comparator<Term> {
     	public final int compare(Term termA, Term termB) {
             try {
@@ -823,36 +558,12 @@ public class SNSService {
             }
         }
     }
-    static public class TopicComparator implements Comparator<Topic> {
-    	public final int compare(Topic topicA, Topic topicB) {
-            try {
-            	// Get the collator for the German Locale 
-            	Collator gerCollator = Collator.getInstance(Locale.GERMAN);
-            	return gerCollator.compare(topicA.getTopicName(), topicB.getTopicName());
-            } catch (Exception e) {
-                return 0;
-            }
-        }
-    }
     static public class SNSTopicComparator implements Comparator<SNSTopic> {
     	public final int compare(SNSTopic topicA, SNSTopic topicB) {
             try {
             	// Get the collator for the German Locale 
             	Collator gerCollator = Collator.getInstance(Locale.GERMAN);
             	return gerCollator.compare(topicA.getTitle(), topicB.getTitle());
-            } catch (Exception e) {
-                return 0;
-            }
-        }
-    }
-    static public class SNSLocationTopicComparator implements Comparator<SNSLocationTopic> {
-    	public final int compare(SNSLocationTopic topicA, SNSLocationTopic topicB) {
-            try {
-            	// Get the collator for the German Locale 
-            	Collator gerCollator = Collator.getInstance(Locale.GERMAN);
-            	String labelA = topicA.getName()+" "+topicA.getQualifier();
-            	String labelB = topicB.getName()+" "+topicB.getQualifier();
-            	return gerCollator.compare(labelA, labelB);
             } catch (Exception e) {
                 return 0;
             }
