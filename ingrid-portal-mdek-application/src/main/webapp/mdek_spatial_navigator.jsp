@@ -55,7 +55,7 @@ var checkboxArray = new Array();
 function showNoResults() {
 	var resultDiv = dojo.byId("resultList");
 	if (resultDiv) {
-		resultDiv.innerHTML = message.get("spatial.noResultsHint");
+		resultDiv.innerHTML = message.get("ui.obj.spatial.noResultsHint");
 	}	
 	dojo.byId("resultLabel").style.visibility = "hidden";
 }

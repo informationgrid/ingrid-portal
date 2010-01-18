@@ -4,8 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import javax.servlet.jsp.jstl.core.Config;
 
 import org.apache.log4j.Logger;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
 
 import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekKeys;
@@ -510,5 +514,10 @@ public class MdekUtils {
 		res.setSearchTermList(searchTermList);
 
 		return res;
+	}
+	
+	public static Locale getLocaleFromSession() {
+	    WebContext wctx = WebContextFactory.get();
+        return (Locale)wctx.getSession().getAttribute(Config.FMT_LOCALE + ".session");
 	}
 }
