@@ -352,11 +352,8 @@ public class SNSService {
 
     /** SNS autoClassify operation for URLs */
     public SNSTopicMap autoClassifyURL(String urlStr, int analyzeMaxWords, String filter, boolean ignoreCase, String lang) {   	
-    	URL url;
-    	try {
-    		url = new URL(urlStr);
-    	} catch (Exception ex) {
-    		log.warn("Error building URL " + urlStr, ex);
+    	URL url = createURL(urlStr);
+    	if (url == null) {
    			throw new RuntimeException(ERROR_SNS_INVALID_URL);
     	}
 		de.ingrid.external.FullClassifyService.FilterType filterType = getFullClassifyFilterType(filter);
@@ -545,6 +542,18 @@ public class SNSService {
     	} 
 
     	return filterType;
+	}
+
+	/** Create URL from url String. Returns null if problems !!! */
+	private URL createURL(String urlStr) {
+    	URL url = null;
+    	try {
+    		url = new URL(urlStr);
+    	} catch (Exception ex) {
+    		log.warn("Error building URL " + urlStr, ex);
+    	}
+    	
+    	return url;
 	}
 
     static public class TermComparator implements Comparator<Term> {
