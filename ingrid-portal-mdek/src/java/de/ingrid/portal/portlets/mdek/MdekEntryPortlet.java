@@ -109,6 +109,7 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
 			autoStartQueryString = autoStartQueryString + "nodeId=" + nodeId;
     	}
     	context.put("autoStartQueryString", autoStartQueryString);
+    	context.put("language", request.getLocale().getLanguage());
 
     	setDefaultViewPage(TEMPLATE_START);
         super.doView(request, response);
