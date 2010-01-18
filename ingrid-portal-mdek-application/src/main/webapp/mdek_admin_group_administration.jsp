@@ -103,6 +103,29 @@ function addAddressToPermissionTable(adr) {
 	}
 }
 
+function addFreeRootToPermissionTable(node) {
+	var deferred = new dojo.Deferred();
+
+	dojo.debug("Getting all free addresses");
+    TreeService.getSubTree(node.id, node.nodeAppType, {
+        callback:function(res) { deferred.callback(res); },
+        errorHandler:function(message) {
+            deferred.errback(new dojo.RpcError(message, this));
+        }
+    });
+
+    deferred.addCallback(
+    	function(res) {
+    		dojo.debug("Adding free addresses to permission table"); 
+    		dojo.lang.forEach(res, function(adr){
+    		    addAddressToPermissionTable(adr);
+    		});        	 
+        }
+    );
+    deferred.addErrback(function(res) { dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING); dojo.debug(res); return res;});
+    return deferred;
+}
+
 // 'Create new group' button function.
 // If a group is selected, reset the input fields and deselect any selected groups
 // Otherwise create a new group
@@ -218,9 +241,10 @@ scriptScope.addObject = function() {
 scriptScope.addAddress = function() {
 	var adr = dojo.widget.byId("treeAddresses").selectedNode;
 
-	if (adr == null || adr.id == "addressRoot" || adr.id == "addressFreeRoot") {
+	if (adr == null || adr.id == "addressRoot") {
 		return;
-
+	} else if (adr.id == "addressFreeRoot") {
+		addFreeRootToPermissionTable(adr);
 	} else {
 		addAddressToPermissionTable(adr);
 	}
