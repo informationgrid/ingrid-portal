@@ -64,7 +64,9 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     	}
 
     	if (isCorrupt) {
-			log.warn("CORRUPT PlugDescription ! We skip this plug: " + plug);
+    		if (log.isDebugEnabled()) {
+    				log.debug("CORRUPT PlugDescription ! We skip this plug: " + plug);    			
+    		}
     	}
 
 		return isCorrupt;
