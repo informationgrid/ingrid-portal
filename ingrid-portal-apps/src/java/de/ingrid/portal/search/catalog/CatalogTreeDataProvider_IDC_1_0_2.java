@@ -51,7 +51,9 @@ public class CatalogTreeDataProvider_IDC_1_0_2 implements CatalogTreeDataProvide
     	}
     	
     	if (isCorrupt) {
-			log.warn("CORRUPT PlugDescription ! We skip this plug: " + plug);
+    		if (log.isDebugEnabled()) {
+    			log.debug("CORRUPT PlugDescription ! We skip this plug: " + plug);    			
+    		}
     	}
 
 		return isCorrupt;
