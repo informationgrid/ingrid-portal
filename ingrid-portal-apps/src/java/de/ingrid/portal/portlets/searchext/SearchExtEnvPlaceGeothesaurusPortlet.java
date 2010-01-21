@@ -109,7 +109,8 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
             f.clearErrors();
             f.populate(request);
             if (f.validate()) {
-                IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromText(f.getInput(SearchExtEnvPlaceGeothesaurusForm.FIELD_SEARCH_TERM), "/location");
+                IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromText(f.getInput(SearchExtEnvPlaceGeothesaurusForm.FIELD_SEARCH_TERM), "/location",
+                		request.getLocale());
                 if (hits != null && hits.length > 0) {
                     for (int i=0; i<hits.length; i++) {
                         String href = UtilsSearch.getDetailValue(hits[i], "href");

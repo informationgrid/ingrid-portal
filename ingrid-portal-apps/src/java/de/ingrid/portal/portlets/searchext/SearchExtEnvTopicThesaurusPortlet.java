@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -186,7 +187,8 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
                         if (similarRoot.getChildren().size() > 0) {
                             session.setAttribute("similarRoot", similarRoot);
                             if (similarRoot.getChildren().size() == 1) {
-                                openNode(similarRoot, ((DisplayTreeNode) similarRoot.getChildren().get(0)).getId());
+                                openNode(similarRoot, ((DisplayTreeNode) similarRoot.getChildren().get(0)).getId(),
+                                		request.getLocale());
                             }
                         } else {
                             f.setError("", "searchExtEnvTopicThesaurus.error.no_term_found");
@@ -203,7 +205,7 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
         } else if (action.equalsIgnoreCase("doOpenNode")) {
             similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
             if (similarRoot != null) {
-                openNode(similarRoot, request.getParameter("nodeId"));
+                openNode(similarRoot, request.getParameter("nodeId"), request.getLocale());
                 ps.put("similarRoot", similarRoot);
             }
             // redirect to same page with view param setting view !
@@ -293,7 +295,7 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             String topicID = request.getParameter("topicID");
             Topic currentTopic = getTopicFromTree(similarRoot, topicID);
             request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSessionImpl.PORTLET_SCOPE);
-            IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID);
+            IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID, request.getLocale());
             request.getPortletSession().setAttribute(ASSOCIATED_TOPICS, Arrays.asList(assocTopics), PortletSessionImpl.PORTLET_SCOPE);
 
             // redirect to same page with view param setting view !
@@ -312,9 +314,9 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             hit.setPlugId(plugID);
             hit.setTopicID(topicID);
             
-            Topic currentTopic = (Topic)SNSSimilarTermsInterfaceImpl.getInstance().getDetailsTopic(hit);
+            Topic currentTopic = (Topic)SNSSimilarTermsInterfaceImpl.getInstance().getDetailsTopic(hit, "/thesa", request.getLocale());
             request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSessionImpl.PORTLET_SCOPE);
-            IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID);
+            IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID, request.getLocale());
             request.getPortletSession().setAttribute(ASSOCIATED_TOPICS, Arrays.asList(assocTopics), PortletSessionImpl.PORTLET_SCOPE);
 
             // redirect to same page with view param setting view !
@@ -333,9 +335,9 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             hit.setPlugId(plugID);
             hit.setTopicID(topicID);
             
-            Topic currentTopic = (Topic)SNSSimilarTermsInterfaceImpl.getInstance().getDetailsTopic(hit);
+            Topic currentTopic = (Topic)SNSSimilarTermsInterfaceImpl.getInstance().getDetailsTopic(hit, "/thesa", request.getLocale());
             request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSessionImpl.PORTLET_SCOPE);
-            IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID);
+            IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID, request.getLocale());
             ArrayList descriptors = new ArrayList();
             for (int i=0; i<assocTopics.length; i++) {
                 Topic t = (Topic)assocTopics[i];
@@ -375,13 +377,13 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
         return ps;
     }
     
-    private void openNode(DisplayTreeNode rootNode, String nodeId) {
+    private void openNode(DisplayTreeNode rootNode, String nodeId, Locale language) {
         DisplayTreeNode node = rootNode.getChild(nodeId);
         node.setOpen(true);
         if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().size() == 0
                 && !node.isLoading()) {
             node.setLoading(true);
-            IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromText(node.getName(), "/thesa");
+            IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromText(node.getName(), "/thesa", language);
             if (hits != null && hits.length > 0) {
                 for (int i=0; i<hits.length; i++) {
                     Topic hit = (Topic) hits[i];

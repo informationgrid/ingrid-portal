@@ -40,9 +40,10 @@ public interface SimilarTermsInterface {
      * 
      * @param term The term to classify.
      * @param filter The filter to apply to the query (i.e. "/location" or "/event")
+     * @param language in which language, pass null if default language
      * @return Array of topics found for term.
      */
-    IngridHit[] getTopicsFromText(String term, String filter);
+    IngridHit[] getTopicsFromText(String term, String filter, Locale language);
 
     /**
      * Get detailed topics from a given term, the hits and a querytype.
@@ -68,18 +69,20 @@ public interface SimilarTermsInterface {
      * 
      * @param term
      *            The given topic id to search similar topics for.
+     * @param language in which language, pass null if default language
      * @return Array of associated topics for topic.
      */
-    IngridHit[] getTopicsFromTopic(String topicId);
+    IngridHit[] getTopicsFromTopic(String topicId, Locale language);
 
     /**
      * Get detail from hit.
      * 
-     * 
      * @param hit The hit to get the detail from.
+     * @param filter The filter to apply to the query (i.e. "/location" or "/thesa")
+     * @param language in which language, pass null if default language
      * @return The detail of the hit.
      */
-    IngridHitDetail getDetailsTopic(IngridHit hit);
+    IngridHitDetail getDetailsTopic(IngridHit hit, String filter, Locale language);
 
     
     /**
@@ -95,7 +98,9 @@ public interface SimilarTermsInterface {
      *            Search depth.
      * @param direction
      *            "up" or "down", search direction.
+     * @param language in which language, pass null if default language
      * @return Array representing the resulting hierarchy.
      */
-    IngridHit[] getHierarchy(String topicId, String includeSiblings, String association, String depth, String direction);
+    IngridHit[] getHierarchy(String topicId, String includeSiblings, String association,
+    		String depth, String direction, Locale language);
 }

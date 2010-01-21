@@ -5,11 +5,9 @@ package de.ingrid.portal.portlets.searchcatalog;
 
 import java.io.IOException;
 import java.text.Collator;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
@@ -50,7 +48,6 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 //    private final static String THESAURUS_START_TOPIC_ID = "uba_thes_40282";
 	private final static String THESAURUS_START_TOPIC_ID = "toplevel";
 	// Only show 'german' topics
-	private final static String THESAURUS_LANGUAGE_FILTER = "de";
 	private final static String SNS_TOPTERM = "topTermType";
     private final static String SNS_NODELABEL = "nodeLabelType";
     private final static String SNS_DESCRIPTOR = "descriptorType";
@@ -103,7 +100,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
             thesRoot.setType(DisplayTreeNode.ROOT);
 
             session.setAttribute("thesRoot", thesRoot);
-			initTree(thesRoot);
+			initTree(thesRoot, request.getLocale());
 
             ps.put("thesRoot", thesRoot);
         }
@@ -152,7 +149,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
                 DisplayTreeNode node = root.getChild(request.getParameter("nodeId"));
             	
                 try {
-                	openNode(root, node);
+                	openNode(root, node, request.getLocale());
                 }
                 catch (Exception e) {
                 	node.setLoading(false);
@@ -217,11 +214,12 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
     }
 
 
-    private void initTree(DisplayTreeNode rootNode) {
+    private void initTree(DisplayTreeNode rootNode, Locale language) {
         rootNode.put("level", new Integer(0));
 
         // Get the initial list of TopTerm Topics
-		IngridHit[] results = SNSSimilarTermsInterfaceImpl.getInstance().getHierarchy(THESAURUS_START_TOPIC_ID, "false", "narrowerTermAssoc", "1", "down");
+		IngridHit[] results = SNSSimilarTermsInterfaceImpl.getInstance().
+			getHierarchy(THESAURUS_START_TOPIC_ID, "false", "narrowerTermAssoc", "1", "down", language);
 
 		// If we don't get any results (or multiple results) there's a problem with the SNS service
 		if (results.length != 1) {
@@ -246,11 +244,11 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
             String nodeLanguage = hit.getLanguage();
 
             if (nodeLanguage == null) {
-            	nodeLanguage = THESAURUS_LANGUAGE_FILTER;
+            	nodeLanguage = language.getLanguage();
             }
             
-            // Only add TopTerms as entry nodes (initial nodes at level 1) if topterm && german
-            if (nodeType.indexOf(SNS_TOPTERM) != -1 && nodeLanguage.equalsIgnoreCase(THESAURUS_LANGUAGE_FILTER))
+            // Only add TopTerms as entry nodes (initial nodes at level 1) if topterm && matches queried language !
+            if (nodeType.indexOf(SNS_TOPTERM) != -1 && nodeLanguage.equalsIgnoreCase(language.getLanguage()))
             {
             	// Create new TreeNode
             	// TODO Do we set the id right? Are multiple nodes with the same id allowed?
@@ -281,7 +279,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
     }
 
     
-    private void openNode(DisplayTreeNode rootNode, DisplayTreeNode nodeToOpen) {
+    private void openNode(DisplayTreeNode rootNode, DisplayTreeNode nodeToOpen, Locale language) {
 		if (nodeToOpen == null)
 			return;
 
@@ -295,7 +293,8 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 		nodeToOpen.setLoading(true);
 
         // Get the hierarchy of subNodes starting from node
-        IngridHit[] results = SNSSimilarTermsInterfaceImpl.getInstance().getHierarchy((String) nodeToOpen.get("topicID"), "false", "narrowerTermAssoc", "2", "down");
+        IngridHit[] results = SNSSimilarTermsInterfaceImpl.getInstance().
+        	getHierarchy((String) nodeToOpen.get("topicID"), "false", "narrowerTermAssoc", "2", "down", language);
 
 		// If we don't get any results (or multiple results) there's a problem with the SNS service
         if (results.length != 1) {
@@ -331,11 +330,11 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 
         	String nodeLanguage = hit.getLanguage();
             if (nodeLanguage == null) {
-            	nodeLanguage = THESAURUS_LANGUAGE_FILTER;
+            	nodeLanguage = language.getLanguage();
             }
 
-            // Only handle german topics
-        	if (!nodeLanguage.equalsIgnoreCase(THESAURUS_LANGUAGE_FILTER)) {
+            // Only handle queried language topics
+        	if (!nodeLanguage.equalsIgnoreCase(language.getLanguage())) {
         		continue;
         	}
 
@@ -360,10 +359,10 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 	        	Topic topic = (Topic) listIt.next();
 	        	String topicLanguage = topic.getLanguage();
 	            if (topicLanguage == null) {
-	            	topicLanguage = THESAURUS_LANGUAGE_FILTER;
+	            	topicLanguage = language.getLanguage();
 	            }
 
-	        	if (topicLanguage.equalsIgnoreCase(THESAURUS_LANGUAGE_FILTER)) {
+	        	if (topicLanguage.equalsIgnoreCase(language.getLanguage())) {
 	        		snsNode.put("expandable", new Boolean(true));
 	        	}
     		}

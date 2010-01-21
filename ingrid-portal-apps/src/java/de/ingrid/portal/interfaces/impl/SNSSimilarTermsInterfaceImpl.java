@@ -21,6 +21,7 @@ import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
 import de.ingrid.utils.queryparser.QueryStringParser;
+import de.ingrid.utils.tool.SNSUtil;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -52,7 +53,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
     /**
      * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getTopicsFromText(java.lang.String, java.lang.String)
      */
-    public IngridHit[] getTopicsFromText(String term, String filter) {
+    public IngridHit[] getTopicsFromText(String term, String filter, Locale language) {
         try {
         	// enclose term in '"' if the term has a space, otherwise no results will be returned from SNS
         	if (term.indexOf(" ") != -1 && !term.startsWith("\"") && !term.endsWith("\"")) {
@@ -64,6 +65,9 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
                 query.put("filter", filter);
             }
             query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_FROM_TEXT);
+
+            // Language
+            UtilsSearch.processLanguage(query, language);
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
@@ -157,11 +161,16 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         }
     }
 
-    public IngridHit[] getTopicsFromTopic(String topicId) {
+    public IngridHit[] getTopicsFromTopic(String topicId, Locale language) {
         try {
-            IngridQuery query = QueryStringParser.parse(topicId);
+    		String marshalledTopicId = SNSUtil.marshallTopicId(topicId);
+
+            IngridQuery query = QueryStringParser.parse(marshalledTopicId);
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_FROM_TOPIC);
+
+            // Language
+            UtilsSearch.processLanguage(query, language);
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
@@ -175,14 +184,17 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         }
     }
 
-    public IngridHit[] getHierarchy(String topicId, String includeSiblings, String association, String depth, String direction) {
+    public IngridHit[] getHierarchy(String topicId, String includeSiblings, String association, String depth,
+    		String direction, Locale language) {
     	// We set the number of hits large enough to get all hits in one query.
     	// If not we have to query the SNS multiple times which is VERY costly! 
     	final int CHUNK_SIZE = 1500;
     	
     	ArrayList result = new ArrayList();
     	try {
-            IngridQuery query = QueryStringParser.parse(topicId);
+    		String marshalledTopicId = SNSUtil.marshallTopicId(topicId);
+
+            IngridQuery query = QueryStringParser.parse(marshalledTopicId);
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.addField(new FieldQuery(true, false, "lang", "de"));
             query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_HIERACHY);
@@ -190,6 +202,9 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
             query.put("association", association);
             query.put("depth", depth);
             query.put("direction", direction);
+
+            // Language
+            UtilsSearch.processLanguage(query, language);
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
@@ -220,11 +235,17 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
     }
 
     
-    public IngridHitDetail getDetailsTopic(IngridHit hit) {
+    public IngridHitDetail getDetailsTopic(IngridHit hit, String filter, Locale language) {
         try {
             IngridQuery query = new IngridQuery();
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, Topic.TOPIC_FROM_TOPIC);
+            if (filter != null) {
+                query.put("filter", filter);
+            }
+
+            // Language
+            UtilsSearch.processLanguage(query, language);
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
