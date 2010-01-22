@@ -90,6 +90,16 @@ public class TreeServiceImpl {
 			throw new IllegalArgumentException("Unknown node type: "+nodeType); 
 		}
 	}
+	
+	public List<TreeNodeBean> getAllSubTreeChildren(String nodeUuid, String nodeType) {
+	    List<TreeNodeBean> allChildren = new ArrayList<TreeNodeBean>();
+	    List<TreeNodeBean> children = getSubTree(nodeUuid, nodeType);
+	    for (TreeNodeBean child : children) {
+	        allChildren.addAll(getAllSubTreeChildren(child.getId(), child.getNodeAppType()));
+        }
+	    allChildren.addAll(children);
+	    return allChildren;
+	}
 
 	
 	private static List<TreeNodeBean> createTree()

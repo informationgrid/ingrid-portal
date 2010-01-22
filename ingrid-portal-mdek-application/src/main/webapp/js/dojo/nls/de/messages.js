@@ -425,6 +425,8 @@
 	"ui.obj.general.title":"Allgemeines",
 	"ui.obj.general.shortDescription":"Kurzbezeichnung",
 	"ui.obj.general.description":"Beschreibung",
+	"ui.obj.general.superior.objects":"Übergeordnete Objekte",
+	"ui.obj.general.subordinated.objects":"Untergeordnete Objekte",
 	"ui.obj.general.addressTable.title":"Adressen",
 	"ui.obj.general.addressTable.link":"Adresse hinzuf&uuml;gen",
 	"ui.obj.spatial.title":"Raumbezugssystem",

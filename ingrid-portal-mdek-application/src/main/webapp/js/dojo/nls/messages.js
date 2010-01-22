@@ -425,6 +425,8 @@
 	"ui.obj.general.title":"General",
 	"ui.obj.general.shortDescription":"Short Description",
 	"ui.obj.general.description":"Description",
+	"ui.obj.general.superior.objects":"Superior Objects",
+    "ui.obj.general.subordinated.objects":"Subordinated Objects",
 	"ui.obj.general.addressTable.title":"Addresses",
 	"ui.obj.general.addressTable.link":"Add Address",
 	"ui.obj.spatial.title":"Spatial Reference",
