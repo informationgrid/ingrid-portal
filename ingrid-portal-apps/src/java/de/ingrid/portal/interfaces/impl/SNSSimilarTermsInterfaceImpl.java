@@ -50,9 +50,6 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         super();
     }
 
-    /**
-     * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getTopicsFromText(java.lang.String, java.lang.String)
-     */
     public IngridHit[] getTopicsFromText(String term, String filter, Locale language) {
         try {
         	// enclose term in '"' if the term has a space, otherwise no results will be returned from SNS
@@ -81,9 +78,6 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         }
     }
 
-    /**
-     * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getSimilarTerms(java.lang.String)
-     */
     public IngridHit[] getSimilarTerms(String term, Locale language) {
         try {
             IngridQuery query = QueryStringParser.parse(term);
@@ -105,9 +99,6 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         }
     }
 
-    /**
-     * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getSimilarDetailedTerms(java.lang.String, de.ingrid.utils.IngridHit[])
-     */
     public IngridHitDetail[] getSimilarDetailedTerms(String term, IngridHit[] hits) {
         try {
             IngridQuery query = QueryStringParser.parse(term);
@@ -123,9 +114,6 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         }
     }
 
-    /**
-     * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getDetailedTopics(java.lang.String, de.ingrid.utils.IngridHit[], int)
-     */
     public IngridHitDetail[] getDetailedTopics(String term, IngridHit[] hits, int queryType) {
         try {
             IngridQuery query = QueryStringParser.parse(term);
@@ -140,14 +128,14 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
         }
     }
 
-    /**
-     * @see de.ingrid.portal.interfaces.SimilarTermsInterface#getTopicSimilarLocationsFromTopic(java.lang.String)
-     */
-    public IngridHit[] getTopicSimilarLocationsFromTopic(String topicId) {
+    public IngridHit[] getTopicSimilarLocationsFromTopic(String topicId, Locale language) {
         try {
         	IngridQuery query = QueryStringParser.parse(topicId);
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, Topic.SIMILARLOCATIONS_FROM_TOPIC);
+
+            // Language
+            UtilsSearch.processLanguage(query, language);
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 

@@ -32,7 +32,9 @@ public class UtilsVelocity {
         
         if (obj instanceof String) {
             if (((String)obj).length() > 0) {
-                return new Boolean(true);
+            	if (!((String)obj).equals("null")) {
+                    return new Boolean(true);            		
+            	}
             }
         }
         

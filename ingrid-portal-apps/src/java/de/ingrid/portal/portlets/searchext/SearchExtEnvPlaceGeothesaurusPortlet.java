@@ -13,15 +13,14 @@ import org.apache.pluto.core.impl.PortletSessionImpl;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.forms.SearchExtEnvPlaceGeothesaurusForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsQueryString;
+import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.tool.SNSUtil;
 
 /**
  * This portlet handles the fragment of the geothesaurus input in the extended search.
@@ -53,6 +52,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
+        context.put("tool", new UtilsVelocity());
 
         // set positions in main and sub tab
         context.put(VAR_MAIN_TAB, PARAMV_TAB_PLACE);
@@ -142,7 +142,13 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
                     if (subTerm.length() > 0) {
                         subTerm = subTerm.concat(" OR ");
                     }
-                    subTerm = subTerm.concat("areaid:").concat(SNSUtil.transformSpacialReference(null, chkVal));
+                    // NOTICE: we DO NOT transform native Key anymore ! should have happened in backend !
+                    // This can be the topic id if set so and maybe topic id contains spaces (GSSoil), so we escape if necessary !
+//                    subTerm = subTerm.concat("areaid:").concat(SNSUtil.transformSpacialReference(null, chkVal));
+                	if (chkVal.indexOf(' ') != -1) {
+                		chkVal = "\"" + chkVal + "\"";
+                	}                   
+                    subTerm = subTerm.concat("areaid:").concat(chkVal);
                 }
             }
             if (subTerm.length() > 0) {
@@ -181,7 +187,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
                     String tid = UtilsSearch.getDetailValue(hits[i], "topicID");
                     if (tid != null && tid.equals(topicId)) {
                         request.getPortletSession().setAttribute(CURRENT_TOPIC, hits[i], PortletSessionImpl.PORTLET_SCOPE);
-                        IngridHit[] similarHits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicSimilarLocationsFromTopic(topicId);
+                        IngridHit[] similarHits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicSimilarLocationsFromTopic(topicId, request.getLocale());
                         if (similarHits == null) {
                             SearchExtEnvPlaceGeothesaurusForm f = (SearchExtEnvPlaceGeothesaurusForm) Utils.getActionForm(request, SearchExtEnvPlaceGeothesaurusForm.SESSION_KEY, SearchExtEnvPlaceGeothesaurusForm.class);
                             f.setError("", "searchExtEnvPlaceGeothesaurus.error.no_term_found");

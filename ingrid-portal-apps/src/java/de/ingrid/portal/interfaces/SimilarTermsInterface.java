@@ -57,12 +57,11 @@ public interface SimilarTermsInterface {
 
     /**
      * Get similar location topics from a given topic id.
-     * 
-     * @param term
-     *            The given topic id to search similar topics for.
+     * @param term The given topic id to search similar topics for.
+     * @param language in which language, pass null if default language
      * @return Array of similar topics for topic.
      */
-    IngridHit[] getTopicSimilarLocationsFromTopic(String topicId);
+    IngridHit[] getTopicSimilarLocationsFromTopic(String topicId, Locale language);
 
     /**
      * Get associated topics from a given topic id.

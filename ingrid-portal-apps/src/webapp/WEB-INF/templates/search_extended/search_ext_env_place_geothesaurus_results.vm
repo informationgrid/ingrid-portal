@@ -1,3 +1,18 @@
+## check topic ref and set msg to render accordingly (location type)
+#macro (setMsgTopicType $topicRef)
+    #if ($tool.hasContent($topicRef))
+        #set($msgTopicRef = $MESSAGES.getString("sns.topic.ref.${topicRef}"))
+        #if ($msgTopicRef.startsWith("sns.topic"))
+            #set($msgTopicRef = ${topicRef})
+        #end
+    #end
+#end
+
+## render location type if set
+#macro (renderMsgTopicType)
+#if($tool.hasContent($msgTopicRef)), <span class="smaller">$msgTopicRef</span>#end
+#end
+
 <div class="section">    
 #parse ('/WEB-INF/templates/search_extended/include_env_tabs.vm')
 #parse ('/WEB-INF/templates/search_extended/include_env_place_tabs.vm')
@@ -15,14 +30,14 @@ $action.setParameter('action','doBrowse')
 <input type="hidden" name="list_size" value="$list_size"/>
 #foreach($topic in $topics)
 	#set($topicId = $topic.topicID)
-	#set($topicRef = $topic.topic_ref)
+    #setMsgTopicType($topic.topic_ref)
 	#if ($topic.topicNativeKey && $topic.topicNativeKey != "")
 		#set($nativeKey = $topic.topicNativeKey)
 	#else
 		#set($nativeKey = $topicId)
 	#end
 	$action.setParameter("topic_id", "$topicId")
-	<input type="checkbox" name="chk$velocityCount" value="$nativeKey"#if(!$nativeKey || $nativeKey == "") disabled="disabled"#end />&nbsp;<a href="$action">$topic.title</a>, <span class="smaller">$MESSAGES.getString("sns.topic.ref.${topicRef}")</span><br />
+	<input type="checkbox" name="chk$velocityCount" value="$nativeKey"#if(!$tool.hasContent($nativeKey)) disabled="disabled"#end />&nbsp;<a href="$action">$topic.title</a>#renderMsgTopicType()<br />
 #end
             </p>
           </div>
