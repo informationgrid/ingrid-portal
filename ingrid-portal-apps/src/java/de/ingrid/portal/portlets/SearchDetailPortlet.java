@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -19,13 +20,13 @@ import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
-import org.apache.velocity.tools.generic.SortTool;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.UniversalSorter;
 import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
@@ -101,7 +102,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         // add velocity utils class
         context.put("tool", new UtilsVelocity());
         context.put("stringTool", new UtilsString());
-        context.put("sorter", new SortTool()); 
+        context.put("sorter", new UniversalSorter(Locale.GERMAN) );
 
         try {
         	// check whether we come from google (no IngridSessionPreferences)

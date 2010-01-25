@@ -555,10 +555,6 @@ public class Utils {
 		
 		String language = lang.replace("\"", "" );
 		
-		if(log.isDebugEnabled()){
-			log.debug("getLanguagesFullAsArray language: " + language);
-		}
-		
 		String langNames = PortalConfig.getInstance().getString(PortalConfig.LANGUAGES_NAMES + language);
 		
 		return langNames.split(";");
@@ -594,3 +590,5 @@ public class Utils {
 		return supportedLanguage;
 	}
 }
+
+
