@@ -1888,6 +1888,7 @@ function hideSplash(){
 	              </div>
 
 					<div class="inputContainer">
+					    <span id="thesaurusTermsAddLabel" class="label"><label for="thesaurusFreeTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 1410)"><script>document.write(message.get("ui.obj.thesaurus.terms.add.label"))</script></label></span>
 						<div class="full">
 		          			<div class="input">
 								<span id="uiElement1410" type="optional">

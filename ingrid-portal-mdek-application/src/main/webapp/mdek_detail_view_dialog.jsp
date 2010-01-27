@@ -73,7 +73,7 @@ function renderNodeData(nodeData) {
 	// add subordinated elements
 	var deferred = renderSubordinatedElements(dojo.widget.byId("tree").selectedNode);
 	deferred.addCallback(function(res) {
-		var sortedList = res.split("@@").sort(function(a,b) {return UtilString.compare(a,b);});
+		var sortedList = res.split("@@").sort(function(a,b) {return UtilString.compareIgnoreCase(a,b);});
 		renderList(sortedList, message.get("ui.obj.general.subordinated.objects"));
 	});
 
@@ -221,11 +221,11 @@ function renderNodeData(nodeData) {
 	
 		// indexing
 		renderSectionTitel(message.get("ui.obj.thesaurus.title"));
-		var sortedList = nodeData.thesaurusTermsTable.sort(function(a,b) {return UtilString.compare(a.title,b.title);});
+		var sortedList = nodeData.thesaurusTermsTable.sort(function(a,b) {return UtilString.compareIgnoreCase(a.title,b.title);});
 		renderList(sortedList, message.get("ui.adr.thesaurus.terms"), "title");
-		sortedList = nodeData.thesaurusTopicsList.sort(function(a,b) {return UtilString.compare(dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(a),dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(b));}); 
+		sortedList = nodeData.thesaurusTopicsList.sort(function(a,b) {return UtilString.compareIgnoreCase(dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(a),dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(b));}); 
 		renderList(sortedList, message.get("ui.obj.thesaurus.terms.category"), null, function (val) { return dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(val);});
-		sortedList = nodeData.thesaurusInspireTermsList.sort(function(a,b) {return UtilString.compare(dojo.widget.byId("thesaurusInspireCombobox")._getDisplayValueForValue(a),dojo.widget.byId("thesaurusInspireCombobox")._getDisplayValueForValue(b));});
+		sortedList = nodeData.thesaurusInspireTermsList.sort(function(a,b) {return UtilString.compareIgnoreCase(dojo.widget.byId("thesaurusInspireCombobox")._getDisplayValueForValue(a),dojo.widget.byId("thesaurusInspireCombobox")._getDisplayValueForValue(b));});
 		renderList(sortedList, message.get("ui.obj.thesaurus.terms.inspire"), null, function (val) { return dojo.widget.byId("thesaurusInspireCombobox")._getDisplayValueForValue(val);});
 		renderTextWithTitle(nodeData.thesaurusEnvExtRes ? message.get("general.yes"): message.get("general.no"), message.get("ui.obj.thesaurus.terms.enviromental.displayCatalogPage"));
 		renderList(nodeData.thesaurusEnvTopicsList, message.get("ui.obj.thesaurus.terms.enviromental.title")+ " - " + message.get("ui.obj.thesaurus.terms.enviromental.topics"), null, function (val) { return dojo.widget.byId("thesaurusEnvTopicsCombobox")._getDisplayValueForValue(val);});

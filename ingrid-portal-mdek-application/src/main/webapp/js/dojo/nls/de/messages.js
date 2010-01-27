@@ -494,6 +494,7 @@
 	"ui.obj.availability.orderInfo":"Bestellinformation",
 	"ui.obj.thesaurus.title":"Verschlagwortung",
 	"ui.obj.thesaurus.terms":"Optionale Schlagworte",
+	"ui.obj.thesaurus.terms.add.label":"Freie Schlagworte eintragen",
 	"ui.obj.thesaurus.terms.link.assistant":"Verschlagwortungsassistent",
 	"ui.obj.thesaurus.terms.link.navigator":"Thesaurus-Navigator",
 	"ui.obj.thesaurus.terms.category":"ISO-Themenkategorie",

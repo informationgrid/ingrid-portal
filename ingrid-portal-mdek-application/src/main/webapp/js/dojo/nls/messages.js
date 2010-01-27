@@ -494,6 +494,7 @@
 	"ui.obj.availability.orderInfo":"Order Info",
 	"ui.obj.thesaurus.title":"Thesaurus",
 	"ui.obj.thesaurus.terms":"Optional Topics",
+	"ui.obj.thesaurus.terms.add.label":"Add Free Optional Topics",
 	"ui.obj.thesaurus.terms.link.assistant":"Thesaurus-Assistant",
 	"ui.obj.thesaurus.terms.link.navigator":"Thesaurus-Navigator",
 	"ui.obj.thesaurus.terms.category":"Categories",

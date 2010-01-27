@@ -33,8 +33,9 @@ dojo.widget.defineWidget(
 	},
 	
 	getValueForDisplayValue: function(dispValue) {
+	    if (dispValue == null) return;
 		for (var i=0; i<this.dataProvider._data.length; i++) {
-			if (this.dataProvider._data[i][0] == dispValue) {
+			if (this.dataProvider._data[i][0].toLowerCase() == dispValue.toLowerCase()) {
 				return this.dataProvider._data[i][1];
 			}
 		}
