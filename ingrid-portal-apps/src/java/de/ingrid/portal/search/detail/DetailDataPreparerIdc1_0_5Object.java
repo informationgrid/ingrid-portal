@@ -420,7 +420,7 @@ public class DetailDataPreparerIdc1_0_5Object implements DetailDataPreparer {
 	    		Record listRecord = (Record)listRecords.get(i);
 	    		HashMap line = new HashMap();
 	        	line.put("type", "textLine");
-	        	line.put("body", listRecord.getString("t0113_dataset_reference.legist_value"));
+	        	line.put("body", listRecord.getString("t015_legist.legist_value"));
 	        	if (!isEmptyLine(line)) {
 	        		lines.add(line);
 	        	}
@@ -433,6 +433,29 @@ public class DetailDataPreparerIdc1_0_5Object implements DetailDataPreparer {
 	    	    elements.add(element);
 	    	}
     	}
+    	
+    	// XML-export-criteria
+        List listXMLRecords = getSubRecordsByColumnName(record, "t014_info_impart.impart_value");
+        if (listXMLRecords.size() > 0) {
+            ArrayList lines = new ArrayList();
+            for (int i=0; i<listXMLRecords.size(); i++) {
+                Record listRecord = (Record)listXMLRecords.get(i);
+                HashMap line = new HashMap();
+                line.put("type", "textLine");
+                line.put("body", listRecord.getString("t014_info_impart.impart_value"));
+                if (!isEmptyLine(line)) {
+                    lines.add(line);
+                }
+            }
+            if (lines.size() > 0) {
+                HashMap element = new HashMap();
+                element.put("type", "multiLine");
+                element.put("title", messages.getString("t014_info_impart.name"));
+                element.put("elements", lines);
+                elements.add(element);
+            }
+        }
+        
    		
     	addElementEntry(elements, record.getString("t01_object.dataset_usage"), messages.getString("t01_object.dataset_usage"));
    		addElementEntry(elements, record.getString("t01_object.info_note"), messages.getString("t01_object.info_note"));
@@ -828,7 +851,7 @@ public class DetailDataPreparerIdc1_0_5Object implements DetailDataPreparer {
     			addElementEntry(elements, refRecord.getString("t011_obj_geo.pos_accuracy_vertical").concat(" m"), messages.getString("t011_obj_geo.pos_accuracy_vertical"));
     		}
     		if (refRecord.getString("t011_obj_geo.rec_exact") != null) {
-    			addElementEntry(elements, refRecord.getString("t011_obj_geo.rec_exact").concat(" %"), messages.getString("t011_obj_geo.rec_exact"));
+    			addElementEntry(elements, refRecord.getString("t011_obj_geo.rec_exact").concat(" m"), messages.getString("t011_obj_geo.rec_exact"));
     		}
     		if (refRecord.getString("t011_obj_geo.data_base") != null) {
     			addElementEntry(elements, refRecord.getString("t011_obj_geo.data_base"), messages.getString("t011_obj_geo.data_base"));
