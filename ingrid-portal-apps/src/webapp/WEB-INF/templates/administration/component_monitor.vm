@@ -33,7 +33,7 @@
    		#set ($jobId = $entry.name)
 		#set ($jobData = $entry.getJobDataMap())
 		#set( $prevTime = $jobHandler.getTrigger($entry.getName(), $entry.getGroup()).getPreviousFireTime())
-		##set( $nextTime = $jobHandler.getTrigger($entry.getName(), $entry.getGroup()).getNextFireTime())
+		#set( $nextTime = $jobHandler.getTrigger($entry.getName(), $entry.getGroup()).getNextFireTime())
         #set( $lastOkTime = "$!jobData.get('component.monitor.general.last.errorfree.run')")
 		#set ($interval = $jobHandler.getInterval($entry))
 		## for non monitoring jobs
@@ -83,7 +83,7 @@
                 <a href="$action">$MESSAGES.getString('component.forms.status.error')</a>
             #end
             </td>
-			<td><a href="$action">$!date.format('yyyy-MM-dd H:mm:ss', $prevTime)</a></td>
+			<td><a href="$action" title="$MESSAGES.getString('component.forms.text.next.check'): $!date.format('yyyy-MM-dd H:mm:ss', $nextTime)">$!date.format('yyyy-MM-dd H:mm:ss', $prevTime)</a></td>
 			##<td><a href="$action">$!date.format('yyyy-MM-dd H:mm:ss', $nextTime)</a></td>
             <td><a href="$action">$lastOkTime</a></td>
 			#if ($jobData.containsKey("component.monitor.general.timer.average") && ($jobData.getInt("component.monitor.general.timer.num")!=0))
@@ -105,7 +105,7 @@
 				<a href="$action">$MESSAGES.getString('component.forms.status.error')</a>
             #end
             </td>
-        	<td><a href="$action">#if($jobData.containsKey("component.monitor.general.timer.num"))$date.format('yyyy-MM-dd H:mm:ss',$prevTime)#end</a></td>
+        	<td><a href="$action" title="$MESSAGES.getString('component.forms.text.next.check'): $!date.format('yyyy-MM-dd H:mm:ss', $nextTime)">#if($jobData.containsKey("component.monitor.general.timer.num"))$date.format('yyyy-MM-dd H:mm:ss',$prevTime)#end</a></td>
 			##<td><a href="$action">#if($jobData.getInt("component.monitor.general.active")==1)$date.format('yyyy-MM-dd H:mm:ss',$nextTime)#end</a></td>
             <td><a href="$action">$lastOkTime</a></td>
 
@@ -127,6 +127,8 @@
 	<input name="modelSize" type="hidden" value="$model.size()" />
       <ul class="innermenu">
 		<li><a href="portal/administration/admin-component-monitor.psml#import">$MESSAGES.getString('component.forms.text.import.iplugs')</a></li>
+        $action.setParameter("doShowUpdates", "true")
+        <li><a href="$action">$MESSAGES.getString('component.forms.text.upgrade')</a></li>
       </ul>
       <br/>
       <br/>

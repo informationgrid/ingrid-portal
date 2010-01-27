@@ -257,3 +257,19 @@ $action.setParameter("id", "$rowId")
   	<input class="float_left inputstyletext contentInput" id="$id" name="$id" value="#getHTMLEscapedFieldValue("$id")" type="text">
 </p>
 #end
+
+#macro (getRowStyle $count $state)
+    #if ($count % 2 == 0)
+        #if ($state == 0)
+            #set ($rowstyle = "contentRowEven")
+        #else
+            #set ($rowstyle = "contentRowEvenError")
+        #end
+    #else
+        #if ($state == 0)
+            #set ($rowstyle = "contentRowOdd")
+        #else
+            #set ($rowstyle = "contentRowOddError")
+        #end
+    #end
+#end

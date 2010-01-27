@@ -29,6 +29,8 @@ import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridRSSSource;
 import de.ingrid.portal.portlets.admin.AdminComponentMonitorPortlet;
 import de.ingrid.portal.scheduler.IngridMonitorFacade;
+import de.ingrid.portal.upgradeclient.IngridComponent;
+import de.ingrid.portal.upgradeclient.UpgradeTools;
 import de.ingrid.utils.PlugDescription;
 
 /**
@@ -64,16 +66,20 @@ public class IngridJobHandler {
 	}
 	
 	public JobDetail getJobDetail( String id ) {
-		JobDetail jobDetail = null;
-		try {
-			jobDetail = monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-			if (jobDetail == null) {
-				jobDetail = monitor.getScheduler().getJobDetail(id, "DEFAULT");
-			}
-		} catch (SchedulerException e) {
-			log.error("Error getting job (" + id + ")", e);
-		}
-		return jobDetail;
+	    return getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+	}
+	
+	public JobDetail getJobDetail( String id, String group ) {
+       JobDetail jobDetail = null;
+        try {
+            jobDetail = monitor.getScheduler().getJobDetail(id, group);
+            if (jobDetail == null) {
+                jobDetail = monitor.getScheduler().getJobDetail(id, "DEFAULT");
+            }
+        } catch (SchedulerException e) {
+            log.error("Error getting job (" + id + ")", e);
+        }
+        return jobDetail;
 	}
 	
 	/**
@@ -170,7 +176,7 @@ public class IngridJobHandler {
 			
 			if (active==1) {
 				int interval = cf.getInputAsInteger(AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(30)).intValue();
-				createTrigger(id, interval);
+				createTrigger(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME, interval);
 			} else {
 				monitor.getScheduler().pauseTrigger(id,IngridMonitorFacade.SCHEDULER_GROUP_NAME);
 			}
@@ -178,6 +184,22 @@ public class IngridJobHandler {
 			log.error("Error updating job (" + id + ").", e);
 		}
 		return true;
+	}
+	
+	public void addUpgradeClientJob() {
+	    try {
+	        JobDetail jobDetail = new JobDetail(UpgradeTools.JOB_NAME, UpgradeTools.JOB_GROUP, UpgradeClientJob.class);
+	        
+	        JobDataMap datamap = jobDetail.getJobDataMap();
+	        datamap.put(UpgradeTools.INSTALLED_COMPONENTS, new ArrayList<IngridComponent>());
+	        
+            monitor.getScheduler().addJob(jobDetail, true);
+            monitor.getScheduler().getJobNames(UpgradeTools.JOB_GROUP);
+    	    int interval = 120;//86400; // one day in seconds
+            createTrigger(UpgradeTools.JOB_NAME, UpgradeTools.JOB_GROUP, interval);
+        } catch (SchedulerException e) {
+            log.error("Couldn't create UpgradeClientJob! " + e.getMessage());
+        }
 	}
 	
 	
@@ -249,7 +271,7 @@ public class IngridJobHandler {
 
 				if (active==1) {
 					int interval = cf.getInputAsInteger(AdminComponentMonitorForm.FIELD_INTERVAL, new Integer(1800)).intValue();
-					createTrigger(id, interval);
+					createTrigger(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME, interval);
 				} else {
 					// remove the trigger id from the job that is called id ... does not work
 					monitor.getScheduler().removeTriggerListener(id);
@@ -269,17 +291,21 @@ public class IngridJobHandler {
 	 * @throws SchedulerException
 	 */
 	public boolean jobExists(String id) {
-		JobDetail jobDetail = null;
-		try {
-			jobDetail = monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
-		} catch (SchedulerException e) {
-			// TODO AW: Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (jobDetail != null) {
-			return true;
-		}
-		return false;
+	    return jobExists(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+	}
+	
+	public boolean jobExists(String id, String group) {
+        JobDetail jobDetail = null;
+        try {
+            jobDetail = monitor.getScheduler().getJobDetail(id, group);
+        } catch (SchedulerException e) {
+            // TODO AW: Auto-generated catch block
+            e.printStackTrace();
+        }
+        if (jobDetail != null) {
+            return true;
+        }
+        return false;
 	}
 
 	private Class getClassFromMonitor(AdminComponentMonitorForm cf) {
@@ -432,7 +458,7 @@ public class IngridJobHandler {
 			}
 
 			if (activate) {
-				createTrigger(iPlug.getPlugId(), 1800);
+				createTrigger(iPlug.getPlugId(), IngridMonitorFacade.SCHEDULER_GROUP_NAME, 1800);
 			}
 		}
 	}
@@ -475,7 +501,7 @@ public class IngridJobHandler {
 			}
 			
 			if (activate) {
-				createTrigger(jobId, 1800);
+				createTrigger(jobId, IngridMonitorFacade.SCHEDULER_GROUP_NAME, 1800);
 			}
 		}
 	}
@@ -517,7 +543,7 @@ public class IngridJobHandler {
 			}
 			
 			if (activate) {
-				createTrigger(jobId, 1800);
+				createTrigger(jobId, IngridMonitorFacade.SCHEDULER_GROUP_NAME, 1800);
 			}
 		}
 	}
@@ -559,7 +585,7 @@ public class IngridJobHandler {
 			}
 			
 			if (activate) {
-				createTrigger(jobId, 1800);
+				createTrigger(jobId, IngridMonitorFacade.SCHEDULER_GROUP_NAME, 1800);
 			}
 		}
 	}
@@ -604,26 +630,28 @@ public class IngridJobHandler {
 			}
 			
 			if (activate) {
-				createTrigger(jobId, 1800);
+				createTrigger(jobId, IngridMonitorFacade.SCHEDULER_GROUP_NAME, 1800);
 			}
 		}
 	}
+	
+	
 	
 	/**
 	 * 
 	 * @param jobId
 	 */
-	private void createTrigger(String jobId, int interval) {
+	private void createTrigger(String jobId, String group, int interval) {
 		Trigger trigger = TriggerUtils.makeSecondlyTrigger(interval);
 		trigger.setStartTime(new Date());
 		trigger.setName(jobId);
-		trigger.setGroup(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+		trigger.setGroup(group);
 		trigger.setJobName(jobId);
-		trigger.setJobGroup(IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+		trigger.setJobGroup(group);
 		
 		try {
 			if (triggerExists(jobId)) {
-				monitor.getScheduler().rescheduleJob(jobId, IngridMonitorFacade.SCHEDULER_GROUP_NAME, trigger);
+				monitor.getScheduler().rescheduleJob(jobId, group, trigger);
 			} else {
 				monitor.getScheduler().scheduleJob(trigger);
 			}

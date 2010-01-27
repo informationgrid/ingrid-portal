@@ -4,6 +4,7 @@
 package de.ingrid.portal.scheduler.jobs;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -20,6 +21,7 @@ import org.quartz.JobExecutionContext;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.upgradeclient.IngridComponent;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -133,7 +135,7 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
 		if (log.isDebugEnabled()) {
 			log.debug("Try to sent alert email to " + email);
 		}
-		HashMap mailData = new HashMap();
+		HashMap<String, Object> mailData = new HashMap<String, Object>();
 		mailData.put("JOB", job);
 		ResourceBundle resources = ResourceBundle.getBundle("de.ingrid.portal.resources.AdminPortalResources",
 				Locale.GERMAN);
@@ -161,5 +163,55 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
 			log.debug("Sent alert email to " + to);
 		}
 	}
+	
+	protected void sendEmailOnUpdate(List<IngridComponent> components) {
+	    boolean wasSent = true;
+	    for (IngridComponent component : components) {
+            if (component.getStatus().equals(STATUS_UPDATE_AVAILABLE) && !component.hasBeenSent()) {
+                for (String email : component.getEmails()) {
+                    wasSent = wasSent && sendUpdateEmail(email, component);
+                }
+                if (component.getEmails().size()>0) {
+                    if (wasSent) {
+                        component.setEmailSentDate(new Date());//Long.toString(System.currentTimeMillis()));
+                        component.setHasBeenSent(true);
+                    } else {
+                        // TODO: set an error!? or hide it inside Date object
+                        component.setEmailSentDate(null);
+                    }
+                }
+            } else if (component.getStatus().equals(STATUS_NO_UPDATE_AVAILABLE)) {
+                // reset for sending an update email when an update is available again
+                component.setHasBeenSent(false);
+            }
+        }
+	}
+
+    private boolean sendUpdateEmail(String email, IngridComponent component) {
+        String from = PortalConfig.getInstance().getString(
+                PortalConfig.COMPONENT_MONITOR_ALERT_EMAIL_SENDER,
+                "foo@bar.com");
+        
+        String emailSubject = PortalConfig.getInstance().getString(
+                PortalConfig.COMPONENT_MONITOR_UPDATE_ALERT_EMAIL_SUBJECT,
+                "ingrid component monitor update alert");
+        emailSubject = emailSubject.concat(" [").concat(component.getName()).concat("]");
+        
+        URL url = Thread.currentThread().getContextClassLoader().getResource(
+                "../templates/administration/monitor_update_alert_email.vm");
+        String templatePath = url.getPath();
+        
+        HashMap<String, Object> mailData = new HashMap<String, Object>();
+        mailData.put("COMPONENT", component);
+        ResourceBundle resources = ResourceBundle.getBundle(
+                "de.ingrid.portal.resources.AdminPortalResources",
+                Locale.GERMAN);
+        mailData.put("MESSAGES", new IngridResourceBundle(resources));
+        
+        String text = Utils.mergeTemplate(templatePath, mailData, "map");
+        
+        return Utils.sendEmail(from, emailSubject, new String[] { email }, text, null);
+        
+    }
 
 }

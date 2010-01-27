@@ -1,0 +1,83 @@
+<style type="text/css">
+    td { vertical-align: middle; }
+</style>
+
+#macro (getSpecialRowStyle $count $component)
+    #if ($component.status == "component.update.component.not.available")
+        #getRowStyle($count 1)    
+    #elseif ($component.emails.size() == 0)
+        #if ($count % 2 == 0)
+            #set ($rowstyle = "contentRowEvenYellow")
+        #else
+            #set ($rowstyle = "contentRowOddYellow")
+        #end
+    #else
+        #getRowStyle($count 0)
+    #end
+#end
+
+#macro (writeTypeHeader $newType $previousType $currentVersion)
+    #if ($newType != $previousType)
+        <tr class="contentRowTitle">
+            <td colspan="3">$newType</td>
+            <td colspan="2" style="text-align: right;">
+        #if ($currentVersion != "")
+                <a href="$!component.downloadLink">$MESSAGES.getString('component.forms.update.component.download.version') $currentVersion</a>
+        #end
+            </td>
+        </tr>
+    #end
+#end
+
+
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmUpdate" id="frmUpdate">
+<div class="formbody">
+    <h3>$MESSAGES.getString('Updates')</h3>
+    <table class="border" style="width:100%;">
+        <tr style="border-bottom:1px solid #F4F4F4; font-weight:bold;">
+            <td class="contentColumnHead" style="text-decoration:none;"></td>
+            <td class="contentColumnHead" style="text-decoration:none; width:40%;">$MESSAGES.getString('component.forms.update.component.name')</td>
+            <td class="contentColumnHead" style="text-decoration:none;">$MESSAGES.getString('component.forms.update.component.installed.version')</td>
+            <!--<td class="contentColumnHead" style="text-decoration:none;">verfügbare Version</td>-->
+            <td class="contentColumnHead" style="text-decoration:none">$MESSAGES.getString('component.forms.update.component.email.sent')</td>
+            <td class="contentColumnHead" style="text-decoration:none">&nbsp;</td>
+        </tr>
+#set ($count = 0)
+$action.setParameter("doUpdateEdit", "updateEdit")
+## first sort by name
+#set($sortedComponents = $sorter.sort($components,"name"))
+## and then sort by type
+#set($sortedComponents = $sorter.sort($sortedComponents,"type"))
+#set ($previousType = "")
+#foreach($component in $sortedComponents)
+    #writeTypeHeader($component.type $previousType $!component.versionAvailable)
+    #set ($previousType = $component.type)
+    #set ($count = $count + 1)
+    #getSpecialRowStyle($count $component)
+    $action.setParameter("id", "$component.id")
+        <tr class="$rowstyle">
+            <td><input type="checkbox" id="component_$count" name="id" value="$component.id"></td>
+            <td><a href="$action">$!component.name</a></td>
+            <td>$!component.version</td>
+            <!--<td>$!component.versionAvailable</td>-->
+            #set ($sentDate = "$!date.format('yyyy-MM-dd H:mm:ss', $component.getEmailSentDate())")
+            <td>$!sentDate</td>
+            <td>
+    #if ($component.status == "component.update.new.version")
+                <a href="$!component.downloadLink"><img src='/ingrid-portal-apps/images/icn_download.gif' alt="Update" /></a>
+    #else
+                &nbsp;
+    #end
+            
+            </td>
+        </tr>
+#end
+    </table>
+</div>
+<div class="formfooter" align="right">
+    <input class="btn float_left" type="submit" name="doUpdateRemove" value="$MESSAGES.getString('component.forms.update.component.delete')" /><span class="float_left">&nbsp;</span>
+    <input class="btn float_left" type="submit" name="doUpdateAdd"    value="$MESSAGES.getString('component.forms.update.component.add')" />
+    <input class="btn"            type="submit" name="doUpdateImport" value="$MESSAGES.getString('component.forms.update.component.import')" />
+</div>
+</form>

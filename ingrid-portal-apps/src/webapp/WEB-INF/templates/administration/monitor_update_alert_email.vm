@@ -1,0 +1,17 @@
+﻿#set($component = $map.get("COMPONENT"))
+
+Dies ist eine Meldung von der Überwachungskomponente der 
+Ingrid Software.
+
+Es ist eine neue Version für die folgende Komponente verfügbar:
+
+Komponentenname: $component.name
+Komponententyp: $component.type
+Installierte Version: $component.version
+Verfügbare Version: $component.versionAvailable
+
+Sie können diese über die Updateseite des Portals oder direkt
+über den folgenden Link herunterladen:
+
+Downloadlink: $component.downloadLink 
+

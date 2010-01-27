@@ -3,25 +3,12 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
-import java.net.URL;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobDataMap;
-import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.SchedulerException;
 import org.quartz.StatefulJob;
-
-import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.Utils;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -56,6 +43,16 @@ public abstract class IngridAbstractStateJob implements StatefulJob {
 	
 	public static final String STATUS_CODE_NO_ERROR = "component.monitor.general.error.none";
 	
+	public static final String STATUS_NOT_AVAILABLE = "component.update.component.not.available";
+	
+	public static final String STATUS_IS_AVAILABLE = "component.update.component.is.available";
+	
+	public static final String STATUS_IS_MANUALLY_CONNECTED = "component.update.component.manual";
+    
+    public static final String STATUS_UPDATE_AVAILABLE = "component.update.new.version";
+
+    public static final String STATUS_NO_UPDATE_AVAILABLE = "component.update.same.version";
+    
 	public static final String PARAM_STATUS = "component.monitor.general.status";
 
 	public static final String PARAM_STATUS_CODE = "component.monitor.general.status.code";

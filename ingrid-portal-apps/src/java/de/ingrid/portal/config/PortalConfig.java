@@ -119,11 +119,16 @@ public class PortalConfig extends PropertiesConfiguration {
 
 	public static final String COMPONENT_MONITOR_SNS_PASSWORD = "component.monitor.sns.password";
 	
+	public static final String COMPONENT_MONITOR_UPDATE_ALERT_EMAIL_SUBJECT = "component.monitor.update.alert.email.subject";
+	
 	// contains the short version of all supported languages
 	public static final String LANGUAGES_SHORT = "languages.short";
 	
 	// the specific language is added after this variable (e.g. languages.names.de) 
 	public static final String LANGUAGES_NAMES = "languages.names.";
+	
+	// the url to the upgrade server
+    public static final String UPGRADE_SERVER_URL = "upgrade.server.url";
 	
 	// private stuff
     private static PortalConfig instance = null;
