@@ -20,6 +20,7 @@ import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsQueryString;
@@ -96,6 +97,9 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
             session.removeAttribute("similarRoot");
         }
         context.put("ps", ps);
+
+        context.put("enableSnsLogo", PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_SNS_LOGO, Boolean.TRUE));
 
         super.doView(request, response);
     }

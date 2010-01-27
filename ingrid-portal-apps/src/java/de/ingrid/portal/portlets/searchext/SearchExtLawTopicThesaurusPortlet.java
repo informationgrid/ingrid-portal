@@ -20,6 +20,7 @@ import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchExtLawTopicThesaurusForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -139,6 +140,9 @@ public class SearchExtLawTopicThesaurusPortlet extends SearchExtLawTopic {
             }
             setDefaultViewPage(TEMPLATE_SYNONYM);
         }
+
+        context.put("enableSnsLogo", PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_SNS_LOGO, Boolean.TRUE));
 
         super.doView(request, response);
     }

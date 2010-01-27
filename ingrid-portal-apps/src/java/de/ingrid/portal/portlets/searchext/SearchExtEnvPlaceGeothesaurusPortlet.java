@@ -13,6 +13,7 @@ import org.apache.pluto.core.impl.PortletSessionImpl;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchExtEnvPlaceGeothesaurusForm;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -83,6 +84,9 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
             context.put("similar_topics", request.getPortletSession().getAttribute(SIMILAR_TOPICS));
             context.put("list_size", new Integer(((IngridHit[])request.getPortletSession().getAttribute(SIMILAR_TOPICS)).length));
         }
+
+        context.put("enableSnsLogo", PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_SNS_LOGO, Boolean.TRUE));
 
         super.doView(request, response);
     }

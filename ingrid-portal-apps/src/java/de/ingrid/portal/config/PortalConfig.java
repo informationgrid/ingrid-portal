@@ -107,6 +107,8 @@ public class PortalConfig extends PropertiesConfiguration {
 	
 	public static final String PORTAL_ENABLE_NEWSLETTER = "enable.newsletter.registration";
 
+	public static final String PORTAL_ENABLE_SNS_LOGO = "portal.enable.sns.logo";
+
 	public static final String COMPONENT_MONITOR_ALERT_EMAIL_SUBJECT = "component.monitor.alert.email.subject";
     
 	public static final String COMPONENT_MONITOR_ALERT_EMAIL_SENDER = "component.monitor.alert.email.sender";
