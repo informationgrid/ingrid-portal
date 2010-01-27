@@ -2040,6 +2040,9 @@ udkDataProxy._getObjectData = function(nodeData)
 		  }
 	  }
   }
+  
+  // last modified date
+  nodeData.modificationTime = dojo.byId("modificationTime").innerHTML;
 
   // -- Check which object type was received and fill the appropriate fields --
   switch (nodeData.objectClass)

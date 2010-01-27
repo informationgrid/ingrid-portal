@@ -125,7 +125,7 @@ function renderNodeData(nodeData) {
 			renderSectionTitel(message.get("ui.obj.relevance"));
 			// Dienst/Anwendung/Informationssystem
 			renderList(nodeData.ref3ServiceTypeTable, message.get("ui.obj.type3.ref3ServiceTypeTable.title"), null, function(val) { return dojo.widget.byId("ref3ServiceTypeEditor")._getDisplayValueForValue(val); });
-			renderTextWithTitle(dojo.widget.byId("ref3ServiceType")._getDisplayValueForValue(nodeData.ref3ServiceType), message.get("ui.obj.type3.ref3ServiceTypeTable.title"));
+			renderTextWithTitle(dojo.widget.byId("ref3ServiceType")._getDisplayValueForValue(nodeData.ref3ServiceType), message.get("ui.obj.type3.serviceType"));
 			renderList(nodeData.ref3ServiceVersion, message.get("ui.obj.type3.serviceVersion"));
 			renderTextWithTitle(nodeData.ref3SystemEnv, message.get("ui.obj.type3.environment"));
 			renderTextWithTitle(nodeData.ref3History, message.get("ui.obj.type3.history"));
@@ -182,7 +182,7 @@ function renderNodeData(nodeData) {
 		renderTextWithTitle(dojo.widget.byId("timeRefStatus")._getDisplayValueForValue(nodeData.timeRefStatus), message.get("ui.obj.time.state"));
 		renderTextWithTitle(dojo.widget.byId("timeRefPeriodicity")._getDisplayValueForValue(nodeData.timeRefPeriodicity), message.get("ui.obj.time.periodicity"));
 		if (nodeData.timeRefIntervalNum && nodeData.timeRefIntervalUnit) {
-			renderTextWithTitle(message.get("ui.obj.time.interval.each") + " "+nodeData.timeRefIntervalNum+" "+dojo.widget.byId("timeRefIntervalUnit")._getDisplayValueForValue(nodeData.timeRefIntervalUnit), message.get("ui.obj.time.interval"));
+			renderTextWithTitle(message.get("ui.obj.time.interval.each") + " "+nodeData.timeRefIntervalNum+" "+dojo.widget.byId("timeRefIntervalUnit").selectedResult[0], message.get("ui.obj.time.interval")); //_getDisplayValueForValue(nodeData.timeRefIntervalUnit)
 		}
 		// create cell render functions
 		function lookupTimeRefType(val) {
@@ -254,6 +254,9 @@ function renderNodeData(nodeData) {
 	    		renderTextWithTitle(addFields[i].value, addFields[i].name);
 	    	}
 		}
+
+		// modification time
+		renderText(message.get("ui.obj.header.modificationTime") + ": " + nodeData.modificationTime);
 	}); // deferred callback handler
 }
 
