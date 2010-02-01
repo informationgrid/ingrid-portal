@@ -549,9 +549,29 @@ a.contentColumnHeadLight, a.contentColumnHeadLight:link, a.contentColumnHeadLigh
 
 .contentRowEven { background-color: #f0ede7; }
 .contentRowEvenError { background-color: #F4D4D4; }
+.contentRowEvenYellow { background-color: #FfFfa0; }
 .contentRowOdd { background-color: #f0ede7; }
 .contentRowOddError { background-color: #f4d4d4; }
+.contentRowOddYellow { background-color: #FfFf74; }
 .contentRowDark { background-color: #F0EDE7; }
 .contentRowLight { background-color: white; }
 .contentRowLine {border-bottom: 1px solid #E5DFD3; }
+.contentRowTitle {background-color:#176798; color:white;}
 .contentInput { width:49em; }
+
+a.tooltip {position: relative; }
+a.tooltip span
+{     visibility: hidden;
+      position: absolute;
+      top:13px; right:0;
+      width:32em;
+      padding:1em;
+      color:#226600;
+      font-size:80%;
+      background: #ffffdd;
+      border: 1px solid #aaaaaa;
+      padding: 7px;
+      z-index: 99;
+}
+
+a.tooltip:hover span { visibility: visible; }

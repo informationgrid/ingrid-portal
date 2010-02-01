@@ -24,7 +24,11 @@ public class IngridComponent implements Serializable {
     private String type;
     private String version;
     private String versionAvailable;
+    // Build extracted only in components from Server
+    // components managed by the client have build information inside version already
+    private String versionAvailableBuild;
     private String downloadLink;
+    private String changelogLink;
     
     private Date emailSent;
     private String infoText;
@@ -33,6 +37,8 @@ public class IngridComponent implements Serializable {
     private boolean isIPlug;
     private boolean wasUnknown;
     private String status;
+    private String errorStatus;
+    private String connected;
     
     private Map<String, Object> extraInfo = new HashMap<String, Object>();
     
@@ -42,9 +48,10 @@ public class IngridComponent implements Serializable {
         this.setType(type);
         
         this.emails = new ArrayList<String>();
-        setStatus(IngridAbstractStateJob.STATUS_IS_MANUALLY_CONNECTED);
+        setConnected(IngridAbstractStateJob.STATUS_IS_MANUALLY_CONNECTED);
         setIPlug(false);
         setHasBeenSent(false);
+        setWasUnknown(true);
         //this.setVersion(version);
         //this.setVersionAvailable(versionAvailable);
         //this.setDate(date);
@@ -178,5 +185,37 @@ public class IngridComponent implements Serializable {
     
     public void removeExtraInfo(String key) {
         extraInfo.remove(key);
+    }
+
+    public void setChangelogLink(String changelogLink) {
+        this.changelogLink = changelogLink;
+    }
+
+    public String getChangelogLink() {
+        return changelogLink;
+    }
+
+    public void setConnected(String connected) {
+        this.connected = connected;
+    }
+
+    public String getConnected() {
+        return connected;
+    }
+
+    public void setErrorStatus(String status) {
+        this.errorStatus = status;        
+    }
+    
+    public String getErrorStatus() {
+        return errorStatus;
+    }
+
+    public void setVersionAvailableBuild(String versionAvailableBuild) {
+        this.versionAvailableBuild = versionAvailableBuild;
+    }
+
+    public String getVersionAvailableBuild() {
+        return versionAvailableBuild;
     }
 }

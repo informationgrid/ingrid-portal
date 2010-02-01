@@ -3,7 +3,7 @@
 </style>
 
 #macro (getSpecialRowStyle $count $component)
-    #if ($component.status == "component.update.component.not.available")
+    #if ($component.connected == "component.update.component.not.available")
         #getRowStyle($count 1)    
     #elseif ($component.emails.size() == 0)
         #if ($count % 2 == 0)
@@ -20,20 +20,57 @@
     #if ($newType != $previousType)
         <tr class="contentRowTitle">
             <td colspan="3">$newType</td>
-            <td colspan="2" style="text-align: right;">
+            <td colspan="2" style="text-align: right; ">
         #if ($currentVersion != "")
-                <a href="$!component.downloadLink">$MESSAGES.getString('component.forms.update.component.download.version') $currentVersion</a>
+                <a style="color:lightSteelBlue;font-size:10px;" href="$!component.downloadLink" title="#printVersion($component)">$MESSAGES.getString('component.forms.update.component.download.version') $currentVersion</a>
         #end
             </td>
         </tr>
     #end
 #end
 
+#macro (setInfoText $component)
+    <h1>Informationen</h1>
+    #if ($component.connected == "component.update.component.not.available")
+        <p style="color:red;">$MESSAGES.getString('component.forms.update.component.not.connected')</p>
+    #end
+    #if ($component.emails.size() == 0)
+        <p style="color:red;">$MESSAGES.getString('component.forms.update.component.no.email')</p>
+    #end
+    #if ($component.getExtraInfo("PARTNER_INFO"))
+        <h1>$MESSAGES.getString('component.forms.update.component.partner')</h1>
+        #foreach($partner in $component.getExtraInfo("PARTNER_INFO"))
+            $partner<br />
+        #end
+    #end
+    #if ($component.getExtraInfo("PROVIDER_INFO"))
+        <h1>$MESSAGES.getString('component.forms.update.component.provider')</h1>
+        #foreach($provider in $component.getExtraInfo("PROVIDER_INFO"))
+            $provider<br />
+        #end
+    #end
+    <br />
+    #if ($component.changelogLink != "")
+        $MESSAGES.getString('component.forms.update.component.more.info')
+    #else
+        $MESSAGES.getString('component.forms.update.component.no.more.info')
+    #end
+#end
+
+#macro (printVersion $component)
+    #if ($!component.versionAvailableBuild != "")
+        #set ($build = "Build:$component.versionAvailableBuild")
+    #end
+    $component.versionAvailable $!build    
+#end
+
 
 #set ($action = $renderResponse.createActionURL())
+$action.setParameter("doRestartUpgradeJob", "true")
 <form action="$action" method="post" name="frmUpdate" id="frmUpdate">
 <div class="formbody">
-    <h3>$MESSAGES.getString('Updates')</h3>
+    <p class="float_right"><a href="$action" title="$MESSAGES.getString('Fragt den UpgradeServer an und aktualisiert alle Komponenten.')">$MESSAGES.getString('component.forms.update.component.trigger.job')</a></p>
+    <!--<h3>$MESSAGES.getString('Updates')</h3>-->
     <table class="border" style="width:100%;">
         <tr style="border-bottom:1px solid #F4F4F4; font-weight:bold;">
             <td class="contentColumnHead" style="text-decoration:none;"></td>
@@ -41,7 +78,7 @@
             <td class="contentColumnHead" style="text-decoration:none;">$MESSAGES.getString('component.forms.update.component.installed.version')</td>
             <!--<td class="contentColumnHead" style="text-decoration:none;">verfügbare Version</td>-->
             <td class="contentColumnHead" style="text-decoration:none">$MESSAGES.getString('component.forms.update.component.email.sent')</td>
-            <td class="contentColumnHead" style="text-decoration:none">&nbsp;</td>
+            <td class="contentColumnHead" style="text-decoration:none;width: 49px;">&nbsp;</td>
         </tr>
 #set ($count = 0)
 $action.setParameter("doUpdateEdit", "updateEdit")
@@ -54,22 +91,45 @@ $action.setParameter("doUpdateEdit", "updateEdit")
     #writeTypeHeader($component.type $previousType $!component.versionAvailable)
     #set ($previousType = $component.type)
     #set ($count = $count + 1)
-    #getSpecialRowStyle($count $component)
+    ##getSpecialRowStyle($count $component)
+    #getRowStyle($count 0)
     $action.setParameter("id", "$component.id")
         <tr class="$rowstyle">
             <td><input type="checkbox" id="component_$count" name="id" value="$component.id"></td>
-            <td><a href="$action">$!component.name</a></td>
+            <td><a href="$action" title="">$!component.name</a></td>
             <td>$!component.version</td>
             <!--<td>$!component.versionAvailable</td>-->
             #set ($sentDate = "$!date.format('yyyy-MM-dd H:mm:ss', $component.getEmailSentDate())")
-            <td>$!sentDate</td>
             <td>
+            #if ($component.errorStatus == "component.monitor.update.error.sending.email")
+                $MESSAGES.getString('component.monitor.update.error.sending.email')
+            #else
+                $!sentDate</td>
+            #end
+            <td style="text-align:right;">
     #if ($component.status == "component.update.new.version")
-                <a href="$!component.downloadLink"><img src='/ingrid-portal-apps/images/icn_download.gif' alt="Update" /></a>
-    #else
-                &nbsp;
+                <a class="tooltip" href="$!component.downloadLink">
+                    <img src='/ingrid-portal-apps/images/icn_download.gif' alt="Update" />
+                    <span>$MESSAGES.getString('component.forms.update.component.tooltip.download'): #printVersion($component)</span>
+                </a>
     #end
-            
+    #if ($component.changelogLink != "")
+                <a class="tooltip" href="$!component.changelogLink">
+    #else
+                <a class="tooltip" href="$action">
+    #end
+                    #if ($component.emails.size() == 0)
+                        <img src='/ingrid-portal-apps/images/icn_info_warn.gif' alt="info" />
+                    #elseif ($component.connected == "component.update.component.not.available")
+                        <img src='/ingrid-portal-apps/images/icn_info_error.gif' alt="info" />
+                    #else
+                        <img src='/ingrid-portal-apps/images/icn_info.gif' alt="info" />                        
+                    #end
+                    <span>#setInfoText($component)</span>
+                </a>
+    ##else
+                ##&nbsp;
+    ##end
             </td>
         </tr>
 #end

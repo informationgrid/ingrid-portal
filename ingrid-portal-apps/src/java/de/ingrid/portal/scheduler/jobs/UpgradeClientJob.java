@@ -26,6 +26,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Session;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -35,14 +36,13 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.om.IngridPartner;
+import de.ingrid.portal.om.IngridProvider;
 import de.ingrid.portal.upgradeclient.IngridComponent;
 import de.ingrid.portal.upgradeclient.UpgradeTools;
 import de.ingrid.utils.PlugDescription;
-import de.ingrid.utils.metadata.AbstractIPlugOperatorInjector;
-import de.ingrid.utils.metadata.AbstractIPlugOperatorInjector.IPlugOperator;
-import de.ingrid.utils.metadata.AbstractIPlugOperatorInjector.Partner;
-import de.ingrid.utils.metadata.AbstractIPlugOperatorInjector.Provider;
 
 /**
  *  
@@ -61,12 +61,8 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
         // start timer
         startTimer();
         
-    	if (log.isDebugEnabled()) {
-    		log.info("UpgradeClientJob is started ...");
-    	}
+   		log.info("UpgradeClientJob is started ...");
 
-        //Session session 	= HibernateUtil.currentSession();
-        //Transaction tx 		= null;
         JobDataMap dataMap 	= context.getJobDetail().getJobDataMap();
         List<IngridComponent> installedComponents = (List<IngridComponent>)dataMap.get(UpgradeTools.INSTALLED_COMPONENTS);
 
@@ -80,31 +76,11 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
 		    
 		    // get atom feed with all information about available components
 		    Map<String,IngridComponent> serverComponents = getComponentsFromUpgrader(url);
-		    //Map<String,InGridComponent> serverComponents = new HashMap<String, InGridComponent>();
 		    
-		    //////////////////////////
-	        // TEST_DATA
-		    /*serverComponents.put("IPLUG_SNS", new InGridComponent("My SNS-iPlug", "IPLUG_SNS"));
-		    serverComponents.get("IPLUG_SNS").setVersionAvailable("1.4.0");
-		    serverComponents.get("IPLUG_SNS").setDownloadLink("http://my.download.link.de/SNS");
-		    serverComponents.put("IPLUG_DSC", new InGridComponent("My DSC-iPlug", "IPLUG_DSC"));
-		    serverComponents.get("IPLUG_DSC").setVersionAvailable("1.3.1");
-		    serverComponents.get("IPLUG_DSC").setDownloadLink("http://my.download.link.de/DSC");
-		    */
-	        //////////////////////////
-		    
-	        /////////////////////////
-	        // FIX: TEST_DATA
-		    /*installedComponents = new ArrayList<InGridComponent>();
-	        installedComponents.add(new InGridComponent("My SNS-iPlug","SNS-iPlug"));
-	        installedComponents.get(-1).setVersion("1.4.0");//"SNS-iPlug", "1.4.0", null, "10.10.1978"));
-	        installedComponents.add(new InGridComponent("My DSC-iPlug","DSC-iPlug"));
-	        installedComponents.get(-1).setVersion("1.3.0");//, null, "15.10.1985"));
-	        
-	        installedComponents.get(0).setIPlug(true);
-	        installedComponents.get(1).setIPlug(true);*/
-	        
-	        ////////////////////////
+		    if (serverComponents.isEmpty()) {
+		        status = STATUS_ERROR;
+		        statusCode = STATUS_CODE_ERROR_NOT_AVAILABLE_OR_EMPTY;
+		    }
 		    
 		    // update installed components for any changes
 		    updateInstalledComponents(installedComponents);
@@ -147,6 +123,10 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
             return;
         
         //PlugDescription[] pds = IBUSInterfaceImpl.getInstance().getAllIPlugsWithoutTimeLimitation();
+        // get all partner and provider from db to get the long name later
+        Session session = HibernateUtil.currentSession();
+        List<IngridProvider> allIngridProviderInDB = session.createCriteria(IngridProvider.class).list();
+        List<IngridPartner> allIngridPartnerInDB = session.createCriteria(IngridPartner.class).list();
         
         for (IngridComponent component : installedComponents) {
             // if component is an iPlug then try to find out its version
@@ -158,34 +138,12 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
                     component.removeExtraInfo(IngridComponent.PARTNER_INFO);
                     component.removeExtraInfo(IngridComponent.PROVIDER_INFO);
                     
-                    component.addExtraInfo(IngridComponent.PARTNER_INFO, pd.getPartners());
-                    component.addExtraInfo(IngridComponent.PROVIDER_INFO, pd.getProviders());
+                    component.addExtraInfo(IngridComponent.PARTNER_INFO, getTranslatedPartner(allIngridPartnerInDB, pd.getPartners()));
+                    component.addExtraInfo(IngridComponent.PROVIDER_INFO, getTranslatedProvider(allIngridProviderInDB, pd.getProviders()));
                     
-                    if (pd.getMetadata() != null && !pd.getMetadata().getVersion().toLowerCase().equals("unknown")) {
-                        component.setVersion(pd.getMetadata().getVersion());
-                        IPlugOperator plugOperator = (IPlugOperator) pd.getMetadata().getMetadata(AbstractIPlugOperatorInjector.IPLUG_OPERATOR);
-                        // if more data could be found then get the missing long name
-                        if (plugOperator != null) {
-                            component.removeExtraInfo(IngridComponent.PARTNER_INFO);
-                            component.removeExtraInfo(IngridComponent.PROVIDER_INFO);
-                            List<Partner> allPartner = plugOperator.getPartners();
-                            List<String> partners = new ArrayList<String>();
-                            List<String> providers = new ArrayList<String>();
-                            for (Partner partner: allPartner) {
-                                partners.add(partner.getDisplayName());
-                                for (Provider provider : partner.getProviders()) {
-                                    providers.add(provider.getDisplayName());                                    
-                                }
-                                
-                            }
-                            component.addExtraInfo(IngridComponent.PARTNER_INFO, partners);
-                            component.addExtraInfo(IngridComponent.PROVIDER_INFO, providers);
-                        }
-                    }
-                    
-                    component.setStatus(STATUS_IS_AVAILABLE);
+                    component.setConnected(STATUS_IS_AVAILABLE);
                 } else {
-                    component.setStatus(STATUS_NOT_AVAILABLE);
+                    component.setConnected(STATUS_NOT_AVAILABLE);
                 }
             } else {
                 // TODO: try to get information from the location of the installed distribution
@@ -194,14 +152,60 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
             
         }        
     }
+    
+    private List<String> getTranslatedPartner(List<IngridPartner> allIngridPartnerInDB, String[] partnerFromPD) {
+        List<String> partners = new ArrayList<String>();
+        boolean added = false;
+        for (String partner : partnerFromPD) {
+            added = false;
+            for (IngridPartner dbPartner : allIngridPartnerInDB) {
+                if (partner.equals(dbPartner.getIdent())) {
+                    partners.add(dbPartner.getName());
+                    added = true;
+                    break;
+                }
+            }
+            if (!added)
+                partners.add(partner);
+        }
+        return partners;
+    }
+    
+    private List<String> getTranslatedProvider(List<IngridProvider> allIngridProviderInDB, String[] providerFromPD) {
+        List<String> providers = new ArrayList<String>();
+        boolean added = false;
+        for (String provider : providerFromPD) {
+            added = false;
+            for (IngridProvider dbProvider : allIngridProviderInDB) {
+                if (provider.equals(dbProvider.getIdent())) {
+                    providers.add(dbProvider.getName());
+                    added = true;
+                    break;
+                }
+            }
+            // if provider cannot be found in DB use at least the identifier
+            if (!added)
+                providers.add(provider);
+        }
+        return providers;
+        
+    }
 
     private void updateUpgradeStatus(List<IngridComponent> installedComponents, Map<String, IngridComponent> serverComponents) {
         try {
             for (IngridComponent component : installedComponents) {
-                if (serverComponents.containsKey(component.getType())) { // or getId()?
+                if (serverComponents.containsKey(component.getType())) {
                     component.setVersionAvailable(serverComponents.get(component.getType()).getVersionAvailable());
+                    component.setVersionAvailableBuild(serverComponents.get(component.getType()).getVersionAvailableBuild());
                     component.setDownloadLink(serverComponents.get(component.getType()).getDownloadLink());
-                    if (component.getVersion().equals(component.getVersionAvailable())) {
+                    component.setChangelogLink(serverComponents.get(component.getType()).getChangelogLink());
+                    // compare using build number only if it is provided in the version info of the managed component
+                    // (on the client side)
+                    String serverVersion = component.getVersionAvailable();
+                    if (component.getVersionAvailableBuild() != "") {
+                        serverVersion += " Build:" + component.getVersionAvailableBuild(); 
+                    }
+                    if (component.getVersion().compareToIgnoreCase(serverVersion) >= 0) {
                         component.setStatus(STATUS_NO_UPDATE_AVAILABLE);
                     } else {
                         component.setStatus(STATUS_UPDATE_AVAILABLE);
@@ -216,7 +220,12 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
     public Map<String,IngridComponent> getComponentsFromUpgrader(String url) {
         Map<String,IngridComponent> components = new HashMap<String,IngridComponent>();
         
-        Document document = buildDocument(getFeed(url));
+        InputStream feed = getFeed(url);
+        // return empty map if upgrade server couldn't be reached
+        if (feed == null)
+            return components;
+        
+        Document document = buildDocument(feed);
         
         NodeList entryNodes  = document.getElementsByTagName("entry");
         
@@ -228,11 +237,19 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
             }
             IngridComponent component = new IngridComponent(
                     findSubNode("title", entryNodes.item(i)).getTextContent(),
-                    findSubNode("type", entryNodes.item(i)).getTextContent());
+                    type);
             
             component.setVersionAvailable(findSubNode("version", entryNodes.item(i)).getTextContent());
+            component.setVersionAvailableBuild(findSubNode("build", entryNodes.item(i)).getTextContent());
             component.setDownloadLink(findSubNode("link", entryNodes.item(i)).getAttributes().getNamedItem("href").getTextContent());
-            components.put(component.getType(), component);
+            component.setChangelogLink(findSubNode("changelogLink", entryNodes.item(i)).getTextContent());
+            
+            // only add newer version of a component
+            if ((components.get(component.getType()) == null) || 
+                    ((components.get(type) != null)
+                    && (components.get(type).getVersionAvailable().compareToIgnoreCase(component.getVersionAvailable()) < 0))) {
+                components.put(component.getType(), component);
+            }
         }
         
         return components;

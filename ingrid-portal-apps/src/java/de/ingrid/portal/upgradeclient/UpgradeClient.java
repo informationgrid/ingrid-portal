@@ -87,7 +87,10 @@ public class UpgradeClient {
         if (!form.getInput(AdminComponentUpdateForm.FIELD_TITLE).isEmpty())
             component.setName(form.getInput(AdminComponentUpdateForm.FIELD_TITLE));
         component.setId(newId);
-        component.setType(form.getInput(AdminComponentUpdateForm.FIELD_TYPE));
+        
+        // do not set the type if an empty one was chosen (recognized by "OTHER")
+        if (!form.getInput(AdminComponentUpdateForm.FIELD_TYPE).equals("OTHER"))
+            component.setType(form.getInput(AdminComponentUpdateForm.FIELD_TYPE));
         component.setInfo(form.getInput(AdminComponentUpdateForm.FIELD_INFO));
         component.setVersion(form.getInput(AdminComponentUpdateForm.FIELD_VERSION));
         
@@ -183,8 +186,9 @@ public class UpgradeClient {
             IngridComponent component = new IngridComponent(pd.getPlugId(), type);
             
             if (type == null || type.equals("OTHER")) {
-                component.setWasUnknown(true);
                 component.setType("OTHER");
+            } else {
+                component.setWasUnknown(false);
             }
             
             // add a suffix for address-iPlugs (DSCs)

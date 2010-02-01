@@ -8,6 +8,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -29,6 +30,8 @@ import de.ingrid.portal.global.IngridHitsWrapper;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.om.IngridProvider;
 import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.QueryResultPostProcessor;
 import de.ingrid.portal.search.SearchState;
@@ -579,8 +582,23 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("unrankedResultList", unrankedHits);
         context.put("rankedSearchFinished", rankedSearchFinished);
         context.put("unrankedSearchFinished", unrankedSearchFinished);
+        //context.put("providerMap", getProviderMap());
 
         super.doView(request, response);
+    }
+
+    /**
+     * Get provider to be able to map them from their abbreviation. 
+     * @return a map of short:long values of the provider
+     */
+    private HashMap<String, String> getProviderMap() {
+        HashMap<String, String> providerMap = new HashMap<String, String>();
+        List<IngridProvider> providers = UtilsDB.getProviders();
+        
+        for (IngridProvider ingridProvider : providers) {
+            providerMap.put(ingridProvider.getIdent(), ingridProvider.getName());
+        }
+        return providerMap;
     }
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,

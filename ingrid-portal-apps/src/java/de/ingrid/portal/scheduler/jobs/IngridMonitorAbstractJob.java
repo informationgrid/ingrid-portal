@@ -173,11 +173,11 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
                 }
                 if (component.getEmails().size()>0) {
                     if (wasSent) {
-                        component.setEmailSentDate(new Date());//Long.toString(System.currentTimeMillis()));
+                        component.setEmailSentDate(new Date());
                         component.setHasBeenSent(true);
                     } else {
-                        // TODO: set an error!? or hide it inside Date object
                         component.setEmailSentDate(null);
+                        component.setErrorStatus(STATUS_CODE_ERROR_SENDING_EMAIL);
                     }
                 }
             } else if (component.getStatus().equals(STATUS_NO_UPDATE_AVAILABLE)) {

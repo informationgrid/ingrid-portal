@@ -1,3 +1,5 @@
+#macro (getInputStyleText $fieldName)#if ($actionForm.hasErrorInField($fieldName)) inputstyleerror#else inputstyletext#end#end
+
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmUpdate" id="frmUpdate">
 <div class="formbody">
@@ -28,47 +30,47 @@ COMPONENT_TITLE
         <input class="inputstyletext contentInput" type="text" id="componentTitle" name="componentTitle" value="#getFieldValue('componentTitle')">
     </p>
     <p class="clearer" />
-    <p>
+    
 #if ($component.isIPlug())
 <!--
 PARTNER
 -->
-    <label class="float_left col2left_incr" for="componentPartner">#displayFieldLabel('componentPartner' $MESSAGES.getString('component.forms.update.component.partner'))</label>
-    <span>
+    <p>
+        <div class="float_left" style="font-size:75%;"><label class="float_left col2left_incr" for="componentPartner">#displayFieldLabel('componentPartner' $MESSAGES.getString('component.forms.update.component.partner'))</label></div>
+        <div class="float_left" style="font-size:75%;">
         #foreach($partner in $component.getExtraInfo("PARTNER_INFO"))
             $partner<br />
         #end
-        </span>
+        </div>
     </p>
     <p class="clearer" />
     <p>
 <!--
 PROVIDER
 -->
-    <label class="float_left col2left_incr" for="componentProvider">#displayFieldLabel('componentProvider' $MESSAGES.getString('component.forms.update.component.provider'))</label>
-    <span>
+    <div class="float_left" style="font-size:75%;"><label class="float_left col2left_incr" for="componentProvider">#displayFieldLabel('componentProvider' $MESSAGES.getString('component.forms.update.component.provider'))</label></div>
+        <div class="float_left" style="font-size:75%;">
         #foreach($provider in $component.getExtraInfo("PROVIDER_INFO"))
             $provider<br />
         #end
-    </span>
+        </div>
     </p>
     <p class="clearer" />
-    <p>
 #end
-
+    <p>
 <!--
 COMPONENT_TYPE
 -->
         <label class="float_left col2left_incr" for="componentType">#displayFieldLabel('componentType' $MESSAGES.getString('component.forms.update.component.type'))</label>
 #if ($component.wasUnknown() || !$component.isIPlug())
-        <select class="float_left inputstyletext" name="componentType">
-            <option value="unknown">&nbsp;</option>
+        <select class="float_left #getInputStyleText('componentType')" name="componentType">
+            <option value="OTHER">&nbsp;</option>
         #foreach($type in $componentTypes)
             <option value="$type" #getSelectedFlag("componentType" $type)>$MESSAGES.getString($type)</option>
         #end
         </select>
         #if ($componentTypes.size() == 0)
-            Auf dem UpgradeServer wurden noch keine Distributionspakete gefunden!
+            <span style="color:red;">$MESSAGES.getString('component.forms.update.component.error.no.distributions')</span>
         #end
 #else
         <span>#getFieldValue('componentType')</span>
@@ -81,7 +83,7 @@ COMPONENT_TYPE
 COMPONENT_VERSION
 -->
     <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.update.component.version')</label>
-#if ($component.isIPlug() && $component.version.toLowerCase() != "unknown")    
+#if ($component.isIPlug() && !$component.wasUnknown()) ##$component.version.toLowerCase() != "unknown")    
     <span>#getFieldValue('componentVersion')</span>
     <input type="hidden" name="componentVersion" value="#getFieldValue('componentVersion')"/>
 #else    
@@ -93,7 +95,7 @@ COMPONENT_VERSION
 COMPONENT_AVAILABLE
 -->
     <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.update.component.availability')</label>
-    <span>$MESSAGES.getString($component.getStatus())</span>
+    <span>$MESSAGES.getString($component.connected)</span>
     <p class="clearer" />
     <p>
 <!--
@@ -121,8 +123,8 @@ COMPONENT_EMAILS
     ##set($threshold = $list.get($thresholds, $cnt))
         #getRowStyle($count 0)##$component.isIplug)
         <tr class="$rowstyle">
-            <td><input type="checkbox" id="component_$count" name="contact_email" value="$email"></td>
-            <td>$email</td>
+            <td><input type="checkbox" id="component_$count" name="contact_email_marked" value="$email"></td>
+            <td>$email<input type="hidden" name="contact_email" value="$email"/></td>
         </tr>
     #end
         <tr>
@@ -138,10 +140,7 @@ COMPONENT_EMAILS
 <!--
 COMPONENT_EMAIL_NEW
 -->
-#if ($actionForm.getInput('contact_email_new') != "")
-    #set ($emailError = "color:red;")
-#end
-    <td><input class="inputstyletext" id="newEmail" name="contact_email_new" value="#getFieldValue('contact_email_new')" type="text" style="width:95%; $!emailError"></td>
+    <td><input class="#getInputStyleText('contact_email_new')" id="newEmail" name="contact_email_new" value="#getFieldValue('contact_email_new')" type="text" style="width:95%;"></td>
     <td style="width:10px;"><input class="btn" type="submit" name="doUpdateAddEmail" value="$MESSAGES.getString('component.forms.update.component.add.new.email')" style="font-size:100%;" /></td>
     </tr>
     </table>

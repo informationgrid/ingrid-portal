@@ -110,6 +110,11 @@ public class AdminComponentUpdateForm extends ActionForm {
                     allOk = false;
                 }
 			}
+			
+			if (getInput(FIELD_TYPE).equals("OTHER")) {
+			    setError(FIELD_TYPE, "component.monitor.form.error.missing.type");
+                allOk = false;
+			}
             
 			/*String[] emails = this.getInputAsArray(FIELD_CONTACT_EMAILS);
 			if (emails != null) {

@@ -62,7 +62,10 @@ public class IngridJobHandler {
 	 * @return the JobDataMap object
 	 */
 	public JobDataMap getJobDataMap(String id) {
-		return getJobDetail(id).getJobDataMap();
+	    if (getJobDetail(id)!=null)
+	        return getJobDetail(id).getJobDataMap();
+	    else
+	        return getJobDetail(id, UpgradeTools.JOB_GROUP).getJobDataMap();
 	}
 	
 	public JobDetail getJobDetail( String id ) {
@@ -88,7 +91,10 @@ public class IngridJobHandler {
 	 * @return the string of the job name
 	 */
 	public String getJobName( String id ) {
-		return getJobDetail(id).getName();
+	    if (getJobDetail(id) != null)
+	        return getJobDetail(id).getName();
+	    else
+	        return getJobDetail(id, UpgradeTools.JOB_GROUP).getName();
 	}
 	
 	/**
@@ -860,6 +866,9 @@ public class IngridJobHandler {
 		JobDetail jobDetail = null;
 		try {
 			jobDetail = monitor.getScheduler().getJobDetail(id, "DEFAULT");
+			if (jobDetail == null)
+			    jobDetail = monitor.getScheduler().getJobDetail(id, UpgradeTools.JOB_GROUP);
+			    
 		} catch (SchedulerException e) {
 			//
 		}
@@ -867,6 +876,18 @@ public class IngridJobHandler {
 			return true;
 		return false;
 	}
+	
+	public boolean isMonitorJob(String id) {
+        JobDetail jobDetail = null;
+        try {
+            jobDetail = monitor.getScheduler().getJobDetail(id, IngridMonitorFacade.SCHEDULER_GROUP_NAME);
+        } catch (SchedulerException e) {
+            //
+        }
+        if (jobDetail != null)
+            return true;
+        return false;
+    }
 	
 	@SuppressWarnings("unchecked")
 	public List<JobDetail> getRunningJobs(String sortColumn, boolean ascending) {

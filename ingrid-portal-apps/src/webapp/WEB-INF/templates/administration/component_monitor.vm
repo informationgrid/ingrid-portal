@@ -125,10 +125,12 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
 	<input name="modelSize" type="hidden" value="$model.size()" />
-      <ul class="innermenu">
-		<li><a href="portal/administration/admin-component-monitor.psml#import">$MESSAGES.getString('component.forms.text.import.iplugs')</a></li>
+      <ul class="internlinklist" style="margin:0;">
         $action.setParameter("doShowUpdates", "true")
-        <li><a href="$action">$MESSAGES.getString('component.forms.text.upgrade')</a></li>
+        <li><a style="font-weight:bold;" href="$action">$MESSAGES.getString('component.forms.text.upgrade')</a></li>
+      </ul>
+      <ul class="innermenu">
+        <li><a href="portal/administration/admin-component-monitor.psml#import">$MESSAGES.getString('component.forms.text.import.iplugs')</a></li>
       </ul>
       <br/>
       <br/>

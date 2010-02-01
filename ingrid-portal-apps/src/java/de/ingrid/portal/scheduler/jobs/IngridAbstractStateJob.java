@@ -41,6 +41,10 @@ public abstract class IngridAbstractStateJob implements StatefulJob {
 	
 	public static final String STATUS_CODE_ERROR_ILLEGAL_ARGUMENT = "component.monitor.general.error.illegal.argument";
 	
+	public static final String STATUS_CODE_ERROR_NOT_AVAILABLE_OR_EMPTY = "component.monitor.update.error.not.available";
+	
+	public static final String STATUS_CODE_ERROR_SENDING_EMAIL = "component.monitor.update.error.sending.email";
+	
 	public static final String STATUS_CODE_NO_ERROR = "component.monitor.general.error.none";
 	
 	public static final String STATUS_NOT_AVAILABLE = "component.update.component.not.available";

@@ -187,7 +187,7 @@ public class Utils {
 			// check for name and email
 			String[] tokens = aEmailAddress.split("@");
 			boolean hasNameAndDomain = (tokens.length == 2) && (tokens[0].trim().length() > 0)
-					&& tokens[1].trim().length() > 0;
+					&& tokens[1].trim().length() > 0 && tokens[1].contains(".");
 
 			if (!hasNameAndDomain) {
 				result = false;
