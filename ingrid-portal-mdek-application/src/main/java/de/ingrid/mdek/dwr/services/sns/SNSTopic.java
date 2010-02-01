@@ -22,6 +22,7 @@ public class SNSTopic {
 	private List<SNSTopic> children;
 	private List<SNSTopic> parents;
 	private List<SNSTopic> synonyms;
+	private List<SNSTopic> descriptors;
 
 	private List<String> inspireList;
 
@@ -36,6 +37,7 @@ public class SNSTopic {
 		this.children 		= null;
 		this.parents 		= null;
 		this.synonyms 		= null;
+		this.descriptors	= null;
 		this.inspireList 	= new ArrayList<String>();
 	}
 
@@ -50,6 +52,7 @@ public class SNSTopic {
 		this.children 		= new ArrayList<SNSTopic>();
 		this.parents 		= new ArrayList<SNSTopic>();
 		this.synonyms 		= new ArrayList<SNSTopic>();
+		this.descriptors	= new ArrayList<SNSTopic>();
 		this.inspireList 	= new ArrayList<String>();
 	}
 
@@ -99,6 +102,14 @@ public class SNSTopic {
 
 	public void setSynonyms(List<SNSTopic> synonyms) {
 		this.synonyms = synonyms;
+	}
+
+	public List<SNSTopic> getDescriptors() {
+		return descriptors;
+	}
+
+	public void setDescriptors(List<SNSTopic> descriptors) {
+		this.descriptors = descriptors;
 	}
 
 	public Source getSource() {

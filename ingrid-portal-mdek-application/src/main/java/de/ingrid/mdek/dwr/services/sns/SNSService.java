@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
@@ -259,10 +258,17 @@ public class SNSService {
     	Term[] terms = thesaurusService.getTermsFromText(queryTerm, MAX_ANALYZED_WORDS,
     			false, MdekUtils.getLocaleFromSession());
 
+    	// TODO: pass max num as parameter !?
+    	int maxNum = 100;
+    	int num = 0;
     	for (Term term : terms) {
     		if (term.getType() == TermType.DESCRIPTOR) {
         		SNSTopic resultTopic = convertTermToSNSTopic(term);
         		resultList.add(resultTopic);
+        		num++;
+        		if (num == maxNum) {
+        			break;
+        		}
     		}
     	}
 
@@ -281,6 +287,7 @@ public class SNSService {
         	List<SNSTopic> synonyms = new ArrayList<SNSTopic>();
         	List<SNSTopic> parents = new ArrayList<SNSTopic>();
         	List<SNSTopic> children = new ArrayList<SNSTopic>();
+        	List<SNSTopic> descriptors = new ArrayList<SNSTopic>();
 
         	for (RelatedTerm relatedTerm : relatedTerms) {
         		SNSTopic t = convertTermToSNSTopic(relatedTerm);
@@ -292,21 +299,19 @@ public class SNSService {
             	} else if (relationType == RelationType.RELATIVE) {
             		// check type of term !
             		if (relatedTerm.getType() == TermType.DESCRIPTOR) {
-            			// !!!!!!!
-    	    			result = t;
-    	    			break;
+            			descriptors.add(t);
             		} else {
     	    			synonyms.add(t);
             		}
             	}
         	}
         	
-        	if (result == null) {
-    			result = new SNSTopic(Type.DESCRIPTOR, Source.UMTHES, topicId, null, null, null);
-    		    result.setChildren(children);
-    		    result.setParents(parents);
-    		    result.setSynonyms(synonyms);        		
-        	}
+        	// create topic containing lists ! use default type UMTHES ...
+			result = new SNSTopic(Type.DESCRIPTOR, Source.UMTHES, topicId, null, null, null);
+		    result.setChildren(children);
+		    result.setParents(parents);
+		    result.setSynonyms(synonyms);        		
+		    result.setDescriptors(descriptors);        		
     	}
 
     	return result;
@@ -411,7 +416,12 @@ public class SNSService {
     		resultTopic = new SNSTopic(type, topicSource, id, name, term.getAlternateName(), term.getAlternateId());
     	}
 
-		resultTopic.setInspireList(term.getInspireThemes());
+    	// always set Inspire themes list in result, never null !
+    	if (term.getInspireThemes() != null) {
+    		resultTopic.setInspireList(term.getInspireThemes());
+    	} else {
+    		resultTopic.setInspireList(new ArrayList<String>());
+    	}
 		
     	return resultTopic;
     }

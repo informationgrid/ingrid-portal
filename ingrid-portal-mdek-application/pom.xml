@@ -46,10 +46,10 @@
         <version>2.1-alpha-2</version>
         <configuration>
           <warSourceExcludes>test_*.*,dev_*.*</warSourceExcludes>
-          <packagingExcludes>**/ingrid-utils*.jar,**/ingrid-mdek-api*.jar,**/log4j*.jar,**/ehcache*.jar,**/servlet-api*.jar,**/jetspeed-api*.jar</packagingExcludes>
+          <packagingExcludes>**/ingrid-utils*.jar,**/ingrid-mdek-api*.jar,**/ehcache*.jar,**/servlet-api*.jar,**/jetspeed-api*.jar</packagingExcludes>
           <!-- ALSO CREATE JAR !!! NO WAY TO ADD NO CLASSIFIER TO NAME OF JAR, DEFAULT IS "classes" -> WILL BE ADDED -->
           <attachClasses>true</attachClasses>
-          <!-- CONFIG-FILES needed on runtime in classes-path-->
+          <!-- CONFIG-FILES needed at runtime in classes-path-->
           <archiveClasses>false</archiveClasses>
           <classesClassifier />
         </configuration>
@@ -80,12 +80,6 @@
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.14</version>
-        <scope>provided</scope>
-      </dependency>
       <dependency>
         <groupId>dom4j</groupId>
         <artifactId>dom4j</artifactId>
@@ -221,11 +215,6 @@
       <version>2.2</version>
     </dependency>
     <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
     </dependency>
@@ -269,4 +258,47 @@
       <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
     </repository>
   </repositories>
+  <profiles>
+    <profile>
+      <id>gssoil</id>
+      <build>
+        <plugins>
+      <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+      <!-- unzip all GSSoil Thesaurus Gazetteer resources and libs to target -->
+      <!-- USE THIS IF YOU SUPPLY IGE FOR GS SOIL -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-gssoil</id>
+            <phase>package</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>gssoil</groupId>
+                  <artifactId>thesaurus-gazetteer-resources</artifactId>
+                  <version>1.0.0-SNAPSHOT</version>
+                  <type>zip</type>
+                  <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/classes</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>gssoil</groupId>
+                  <artifactId>thesaurus-gazetteer-libs</artifactId>
+                  <version>1.0.0-SNAPSHOT</version>
+                  <type>zip</type>
+                  <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/lib</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
