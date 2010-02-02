@@ -9,6 +9,10 @@
 #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
 
 <div class="resultset_nav" style="text-align:center; margin-top:5px"><strong>$ps.queryTerm</strong></div>
+<div class="resultset_show_partner" style="text-align:center; margin-top:5px">
+        <img alt="interner Link" src="/ingrid-portal-apps/images/icn_linkintern.gif">
+        <a href="/ingrid-portal/portal/main-search.psml?action=doSearch&q=$ps.queryTerm&ds=1&grouping=domain">Suche nach $ps.queryTerm</a>
+</div>
 
 <br />
 
