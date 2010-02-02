@@ -9,6 +9,7 @@ package de.ingrid.portal.search;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author joachim
@@ -107,12 +108,26 @@ public class DisplayTreeNode extends HashMap {
         return getChild(this, nodeId);
     }
     
+    public DisplayTreeNode getChildByField(String nodeId, String field) {
+        return getChild(this, nodeId, field);
+    }
+    
     private static DisplayTreeNode getChild(DisplayTreeNode node, String nodeId) {
+        return getChild(node, nodeId, null);
+    }
+    
+    private static DisplayTreeNode getChild(DisplayTreeNode node, String nodeId, String field) {
         ArrayList c = node.getChildren();
         for (int i=0; i<c.size(); i++) {
             DisplayTreeNode aNode = (DisplayTreeNode)c.get(i);
-            if (!aNode.getId().equals(nodeId)) {
-                aNode = getChild(aNode, nodeId);
+            if (field == null) {
+                if (!aNode.getId().equals(nodeId)) {
+                    aNode = getChild(aNode, nodeId);
+                }
+            } else {
+                if (!aNode.get(field).equals(nodeId)) {
+                    aNode = getChild(aNode, nodeId, field);
+                }
             }
             if (aNode != null) {
                 return aNode;
@@ -141,7 +156,38 @@ public class DisplayTreeNode extends HashMap {
     public DisplayTreeNode getParent() {
         return (DisplayTreeNode)this.get("parent");
     }
+    
+    public String getAllParentsAsString() {
+        StringBuilder parentsAsString = new StringBuilder();
+        List<String> parents = getAllParents();
+        for (String parent : parents) {
+            parentsAsString.append(parent + ",");            
+        }
+        return parentsAsString.toString();
+    }
+    
+    /**
+     * @return Returns all parents.
+     */
+    public List<String> getAllParents() {
+        if (this.getParent() == null)
+            return getAllParents(this);
+        else
+            return getAllParents(this.getParent());
+    }
 
+    /**
+     * @return Returns all parents.
+     */
+    public List<String> getAllParents(DisplayTreeNode node) {
+        while (!node.getId().equals("root")) {
+            List<String> parents = getAllParents(node.getParent());
+            parents.add((String)node.get("topicID"));
+            return parents;
+        }
+        return new ArrayList<String>();
+    }
+    
     /**
      * @param parent The parent to set.
      */

@@ -43,10 +43,13 @@
     	#elseif ($node.type == 1) ## NodeLabel Type
     	    <strong>$node.name</strong>
     	#elseif ($node.type == 2) ## Descriptor Type
+          #set ($url = "/ingrid-portal/portal/search-catalog/search-catalog-thesaurus.psml")
     	  #if ($node.name == $ps.currentQueryTerm)
-    	    <strong><a href="$action"><span style="text-decoration:underline">$node.name</span></a></strong>
+            <strong><a href="$url?action=doSearch&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()"><span style="text-decoration:underline">$node.name</span></a></strong>
+    	    <!--<strong><a href="$action"><span style="text-decoration:underline">$node.name</span></a></strong>-->
     	  #else
-    	    <strong><a href="$action">$node.name</a></strong>
+            <strong><a href="$url?action=doSearch&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()">$node.name</a></strong>
+    	    <!--<strong><a href="$action">$node.name</a></strong>-->
     	  #end
     	#elseif ($node.type == -1) ## SNS Error Type
     		<strong>$MESSAGES.getString('searchCatThesaurus.tree.snsErrorText')</strong>

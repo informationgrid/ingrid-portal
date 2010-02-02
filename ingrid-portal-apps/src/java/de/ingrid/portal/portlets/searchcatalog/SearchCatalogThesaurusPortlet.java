@@ -104,6 +104,17 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 
             ps.put("thesRoot", thesRoot);
         }
+        
+        // open tree up to specified node and search for results
+        if (request.getParameter("nodeId") != null) {
+            DisplayTreeNode root = (DisplayTreeNode) session.getAttribute("thesRoot");
+            if (root != null) {
+                String[] parentNodes = ((String)request.getParameter("parentNodes")).split(",");
+                for (String nodeId : parentNodes) {
+                    openNode(root, root.getChildByField(nodeId, "topicID"), request.getLocale());
+                }
+            }
+        }
 
         // Put the current query term in the search state so we can highlight it in the tree
         String queryThesaurusTerm = request.getParameter(Settings.PARAM_QUERY_STRING);
