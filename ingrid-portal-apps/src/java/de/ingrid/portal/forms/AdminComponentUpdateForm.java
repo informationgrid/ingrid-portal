@@ -39,6 +39,8 @@ public class AdminComponentUpdateForm extends ActionForm {
 	
 	public static final String FIELD_VERSION        = "componentVersion";
 	
+	public static final String FIELD_ANY_DISTRIBUTIONS = "anyDistributions";
+	
 	public static final String FIELD_CONTACT_EMAILS = "contact_email";
 	
 	public static final String FIELD_CONTACT_EMAILS_NEW = "contact_email_new";
@@ -71,6 +73,7 @@ public class AdminComponentUpdateForm extends ActionForm {
 		setInput(FIELD_VERSION,               request.getParameter(FIELD_VERSION));
 		setInput(FIELD_CONTACT_EMAILS,        request.getParameterValues(FIELD_CONTACT_EMAILS));
 		setInput(FIELD_CONTACT_EMAILS_NEW,    request.getParameterValues(FIELD_CONTACT_EMAILS_NEW));
+		setInput(FIELD_ANY_DISTRIBUTIONS,     request.getParameterValues(FIELD_ANY_DISTRIBUTIONS));
 	}
 	
 	public void initialize(IngridComponent component) {
@@ -111,7 +114,7 @@ public class AdminComponentUpdateForm extends ActionForm {
                 }
 			}
 			
-			if (getInput(FIELD_TYPE).equals("OTHER")) {
+			if (getInput(FIELD_TYPE).equals("OTHER") && !getInput(FIELD_ANY_DISTRIBUTIONS).equals("false")) {
 			    setError(FIELD_TYPE, "component.monitor.form.error.missing.type");
                 allOk = false;
 			}

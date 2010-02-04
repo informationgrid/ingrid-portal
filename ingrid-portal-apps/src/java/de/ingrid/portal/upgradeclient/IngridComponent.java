@@ -52,6 +52,7 @@ public class IngridComponent implements Serializable {
         setIPlug(false);
         setHasBeenSent(false);
         setWasUnknown(true);
+        setStatus(IngridAbstractStateJob.STATUS_NO_UPDATE_AVAILABLE);
         //this.setVersion(version);
         //this.setVersionAvailable(versionAvailable);
         //this.setDate(date);

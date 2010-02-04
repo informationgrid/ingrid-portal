@@ -21,7 +21,7 @@
         <tr class="contentRowTitle">
             <td colspan="3">$newType</td>
             <td colspan="2" style="text-align: right; ">
-        #if ($currentVersion != "")
+        #if ($currentVersion)
                 <a style="color:lightSteelBlue;font-size:10px;" href="$!component.downloadLink" title="#printVersion($component)">$MESSAGES.getString('component.forms.update.component.download.version') $currentVersion</a>
         #end
             </td>
@@ -31,7 +31,7 @@
 
 #macro (setInfoText $component)
     <h1>Informationen</h1>
-    #if ($component.connected == "component.update.component.not.available")
+    #if ($component.connected && $component.connected == "component.update.component.not.available")
         <p style="color:red;">$MESSAGES.getString('component.forms.update.component.not.connected')</p>
     #end
     #if ($component.emails.size() == 0)
@@ -50,7 +50,7 @@
         #end
     #end
     <br />
-    #if ($component.changelogLink != "")
+    #if ($component.changelogLink)
         $MESSAGES.getString('component.forms.update.component.more.info')
     #else
         $MESSAGES.getString('component.forms.update.component.no.more.info')
@@ -58,7 +58,7 @@
 #end
 
 #macro (printVersion $component)
-    #if ($!component.versionAvailableBuild != "")
+    #if ($component.versionAvailableBuild)
         #set ($build = "Build:$component.versionAvailableBuild")
     #end
     $component.versionAvailable $!build    
@@ -101,7 +101,7 @@ $action.setParameter("doUpdateEdit", "updateEdit")
             <!--<td>$!component.versionAvailable</td>-->
             #set ($sentDate = "$!date.format('yyyy-MM-dd H:mm:ss', $component.getEmailSentDate())")
             <td>
-            #if ($component.errorStatus == "component.monitor.update.error.sending.email")
+            #if ($component.errorStatus && $component.errorStatus == "component.monitor.update.error.sending.email")
                 $MESSAGES.getString('component.monitor.update.error.sending.email')
             #else
                 $!sentDate</td>
@@ -113,15 +113,15 @@ $action.setParameter("doUpdateEdit", "updateEdit")
                     <span>$MESSAGES.getString('component.forms.update.component.tooltip.download'): #printVersion($component)</span>
                 </a>
     #end
-    #if ($component.changelogLink != "")
+    #if ($component.changelogLink)
                 <a class="tooltip" href="$!component.changelogLink">
     #else
                 <a class="tooltip" href="$action">
     #end
-                    #if ($component.emails.size() == 0)
-                        <img src='/ingrid-portal-apps/images/icn_info_warn.gif' alt="info" />
-                    #elseif ($component.connected == "component.update.component.not.available")
+                    #if ($component.connected == "component.update.component.not.available")
                         <img src='/ingrid-portal-apps/images/icn_info_error.gif' alt="info" />
+                    #elseif ($component.emails.size() == 0)
+                        <img src='/ingrid-portal-apps/images/icn_info_warn.gif' alt="info" />
                     #else
                         <img src='/ingrid-portal-apps/images/icn_info.gif' alt="info" />                        
                     #end

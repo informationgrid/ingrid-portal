@@ -210,9 +210,10 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
         } else if (action.equals("updateAddComponent")) {
             response.setTitle(messages.getString("component.monitor.update.title"));
             request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_UPDATES_EDIT);
+            IngridComponent component = new IngridComponent("manualComponent", "");
             cfUpdate.clear();
             context.put("actionForm", cfUpdate);
-            IngridComponent component = new IngridComponent("new", "");
+            
             component.setIPlug(false);
             context.put("component", component);
             context.put("componentTypes", upgradeClient.getComponentTypes());

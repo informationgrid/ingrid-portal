@@ -10,12 +10,12 @@ COMPONENT_ID
 -->
         <label class="float_left col2left_incr" for="componentId">#displayFieldLabel('componentId' $MESSAGES.getString('component.forms.update.component.id'))</label>
         <input type="hidden" name="oldComponentId" value="#getFieldValue('componentId')"/>
-#if ($component.isIPlug())
+##if ($component.isIPlug())
     <span>#getFieldValue('componentId')</span>
     <input type="hidden" name="componentId" value="#getFieldValue('componentId')"/>
-#else
-    <input class="inputstyletext contentInput" type="text" id="componentId" name="componentId" value="#getFieldValue('componentId')">
-#end
+##else
+##   <input class="inputstyletext contentInput" type="text" id="componentId" name="componentId" value="#getFieldValue('componentId')">
+##end
     </p>
     <p class="clearer" />
     <p>
@@ -71,6 +71,7 @@ COMPONENT_TYPE
         </select>
         #if ($componentTypes.size() == 0)
             <span style="color:red;">$MESSAGES.getString('component.forms.update.component.error.no.distributions')</span>
+            <input type="hidden" name="anyDistributions" value="false"/>
         #end
 #else
         <span>#getFieldValue('componentType')</span>

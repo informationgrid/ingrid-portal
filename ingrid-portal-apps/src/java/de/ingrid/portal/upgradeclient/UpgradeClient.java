@@ -18,7 +18,7 @@ import de.ingrid.utils.PlugDescription;
 public class UpgradeClient {
     private final static Log log = LogFactory.getLog(UpgradeClient.class);
 
-    private static final String UNKNOWN_COMPONENT_ID = "NO_COMPONENT_ID";
+    private static final String UNKNOWN_COMPONENT_ID = "MANUAL_COMPONENT_ID";
     
     private IngridJobHandler jobHandler;
 

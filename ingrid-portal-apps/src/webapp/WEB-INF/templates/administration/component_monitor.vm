@@ -23,7 +23,7 @@
 #macro (fillTable $filterMap $inverse $running)
     #if($running)
         #set ($model = $jobHandler.getRunningJobs($sortColumn, $sortAsc))
-        #if($model.size() > 0)
+        #if($model && $model.size() > 0)
             <tr><td colspan=2><h3>Running</h3></td></tr>
         #end
     #else
@@ -32,8 +32,10 @@
 	#foreach ($entry in $model)
    		#set ($jobId = $entry.name)
 		#set ($jobData = $entry.getJobDataMap())
-		#set( $prevTime = $jobHandler.getTrigger($entry.getName(), $entry.getGroup()).getPreviousFireTime())
-		#set( $nextTime = $jobHandler.getTrigger($entry.getName(), $entry.getGroup()).getNextFireTime())
+        #if($jobData.containsKey("component.monitor.general.timer.num"))
+    		#set( $prevTime = $jobHandler.getTrigger($entry.getName(), $entry.getGroup()).getPreviousFireTime())
+    		#set( $nextTime = $jobHandler.getTrigger($entry.getName(), $entry.getGroup()).getNextFireTime())
+        #end
         #set( $lastOkTime = "$!jobData.get('component.monitor.general.last.errorfree.run')")
 		#set ($interval = $jobHandler.getInterval($entry))
 		## for non monitoring jobs
@@ -124,7 +126,7 @@
 
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
-	<input name="modelSize" type="hidden" value="$model.size()" />
+	<input name="modelSize" type="hidden" value="#if ($model) $model.size() #end" />
       <ul class="internlinklist" style="margin:0;">
         $action.setParameter("doShowUpdates", "true")
         <li><a style="font-weight:bold;" href="$action">$MESSAGES.getString('component.forms.text.upgrade')</a></li>
