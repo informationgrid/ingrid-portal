@@ -196,10 +196,10 @@ public class UpgradeClient {
                 component.setName(pd.getDataSourceName() + "(address)");
             else
                 component.setName(pd.getDataSourceName());
-            //component.setDate(date);
             component.setVersion(version);
             component.setIPlug(true);
-            component.setStatus(IngridAbstractStateJob.STATUS_IS_AVAILABLE);
+            //component.setStatus();
+            component.setConnected(IngridAbstractStateJob.STATUS_IS_AVAILABLE);
             
             addComponent(component);
         }

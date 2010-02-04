@@ -201,7 +201,7 @@ public class IngridJobHandler {
 	        
             monitor.getScheduler().addJob(jobDetail, true);
             monitor.getScheduler().getJobNames(UpgradeTools.JOB_GROUP);
-    	    int interval = 120;//86400; // one day in seconds
+    	    int interval = 86400; // one day in seconds
             createTrigger(UpgradeTools.JOB_NAME, UpgradeTools.JOB_GROUP, interval);
         } catch (SchedulerException e) {
             log.error("Couldn't create UpgradeClientJob! " + e.getMessage());

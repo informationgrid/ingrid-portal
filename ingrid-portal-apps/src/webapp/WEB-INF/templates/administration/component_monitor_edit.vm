@@ -20,7 +20,7 @@
 	</p>
 	<p class="clearer" />
 	## for default-jobs
-	#if ($disableSaving == 'true')
+	#if ($disableSaving && $disableSaving == 'true')
 		## nothing
 	#else
     	<p>

@@ -97,6 +97,8 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
         } catch (Exception e) {
             status 		= STATUS_ERROR;
 			statusCode 	= STATUS_CODE_ERROR_UNSPECIFIC;
+			log.error("An exception occured: " + e.getMessage());
+			e.printStackTrace();
         } finally {
             computeTime(dataMap, stopTimer());
             sendEmailOnUpdate(installedComponents);
@@ -104,6 +106,7 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
             //context.getScheduler().addJob(context.getJobDetail(), true);
             updateJob(context);
         }
+        log.info("UpgradeClientJob finished");
 
     }
 
@@ -242,7 +245,9 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
             component.setVersionAvailable(findSubNode("version", entryNodes.item(i)).getTextContent());
             component.setVersionAvailableBuild(findSubNode("build", entryNodes.item(i)).getTextContent());
             component.setDownloadLink(findSubNode("link", entryNodes.item(i)).getAttributes().getNamedItem("href").getTextContent());
-            component.setChangelogLink(findSubNode("changelogLink", entryNodes.item(i)).getTextContent());
+            Node changeLogLink = findSubNode("changelogLink", entryNodes.item(i));
+            if (changeLogLink != null)
+                component.setChangelogLink(findSubNode("changelogLink", entryNodes.item(i)).getTextContent());
             
             // only add newer version of a component
             if ((components.get(component.getType()) == null) || 
