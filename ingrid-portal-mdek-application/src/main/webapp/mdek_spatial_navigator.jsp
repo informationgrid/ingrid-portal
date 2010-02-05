@@ -98,7 +98,11 @@ setResultList = function(topicList)
 		for (var i in topicList) {
 			var checkboxDiv = dojo.byId("resultList");
 			if (checkboxDiv) {
-				var label = topicList[i].name+", "+topicList[i].type;
+				var label = topicList[i].name;
+				if (label == null) continue;
+				if (topicList[i].type != null) {
+				    label += ", "+topicList[i].type;
+				}
 				var checkBox = dojo.widget.createWidget("checkbox", {
 						id: topicList[i].topicId,
 						name: label,

@@ -60,7 +60,11 @@ function setResultList(topicList)
 		var checkboxDiv = dojo.byId("resultList");
 
 		for (var i in topicList) {
-			var label = topicList[i].name+", "+topicList[i].type;
+			var label = topicList[i].name;
+            if (label == null) continue;
+            if (topicList[i].type != null) {
+                label += ", "+topicList[i].type;
+            }
 			var radioButton = document.createElement("input");
 			radioButton.setAttribute("type", "radio");
 			radioButton.setAttribute("name", "spatialReference");

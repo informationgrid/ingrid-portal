@@ -397,6 +397,7 @@ function findAssociatedTopics(descriptor) {
 				UtilList.addSNSTopicLabels( topic.synonyms );
 				UtilList.addSNSTopicLabels( topic.parents );
 				UtilList.addSNSTopicLabels( topic.children );
+				UtilList.addSNSTopicLabels( topic.descriptors );
 			}
 
 			if (topic.topicId != descriptor.topicId) {
@@ -429,6 +430,13 @@ function findAssociatedTopics(descriptor) {
 						addDescriptorCheckbox(item);
 					});
 				}
+
+				if (topic.descriptors.length > 0) {
+                    addResultTextElement(message.get("dialog.research.ext.obj.descriptors"));
+                    dojo.lang.forEach(topic.descriptors, function(item){
+                        addDescriptorCheckbox(item);
+                    });
+                }
 			}
 			
 			dojo.html.show(dojo.byId("objExtSearchAddTopicButtonSpan"));
@@ -495,8 +503,11 @@ function setLocationResultList(topicList) {
 
 function addLocationTopicCheckbox(topic) {
 	var checkboxDiv = dojo.byId("objExtSearchLocationResults");
-
-	var label = topic.name+", "+topic.type;
+	var label = topic.name;
+    if (label == null) return;
+    if (topic.type != null) {
+        label += ", "+topic.type;
+    }
 	var checkBox = dojo.widget.createWidget("checkbox", {
 			id: topic.topicId,
 			name: label,
