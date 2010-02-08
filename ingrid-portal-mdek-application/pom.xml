@@ -257,48 +257,61 @@
       <name>InGrid Repo Maven2</name>
       <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
     </repository>
+    <repository>
+      <snapshots />
+      <id>ibiblio</id>
+      <name>iBiblio.or.</name>
+      <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+    </repository>
   </repositories>
   <profiles>
     <profile>
       <id>gssoil</id>
       <build>
         <plugins>
-      <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-      <!-- unzip all GSSoil Thesaurus Gazetteer resources and libs to target -->
-      <!-- USE THIS IF YOU SUPPLY IGE FOR GS SOIL -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>unpack-gssoil</id>
-            <phase>package</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>gssoil</groupId>
-                  <artifactId>thesaurus-gazetteer-resources</artifactId>
-                  <version>1.0.0-SNAPSHOT</version>
-                  <type>zip</type>
-                  <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/classes</outputDirectory>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>gssoil</groupId>
-                  <artifactId>thesaurus-gazetteer-libs</artifactId>
-                  <version>1.0.0-SNAPSHOT</version>
-                  <type>zip</type>
-                  <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/lib</outputDirectory>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+          <!-- unzip all GSSoil Thesaurus Gazetteer resources and libs to target -->
+          <!-- USE THIS IF YOU SUPPLY IGE FOR GS SOIL -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>unpack-gssoil</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>gssoil</groupId>
+                      <artifactId>thesaurus-gazetteer-resources</artifactId>
+                      <version>1.0.0-SNAPSHOT</version>
+                      <type>zip</type>
+                      <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/classes</outputDirectory>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>gssoil</groupId>
+                      <artifactId>thesaurus-gazetteer-libs</artifactId>
+                      <version>1.0.0-SNAPSHOT</version>
+                      <type>zip</type>
+                      <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/lib</outputDirectory>
+                    </artifactItem>
+                  </artifactItems>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
         </plugins>
       </build>
+      <dependencies>
+        <dependency>
+          <groupId>net.htmlparser.jericho</groupId>
+          <artifactId>jericho-html</artifactId>
+          <version>3.1</version>
+        </dependency>
+      </dependencies>
     </profile>
   </profiles>
 </project>
