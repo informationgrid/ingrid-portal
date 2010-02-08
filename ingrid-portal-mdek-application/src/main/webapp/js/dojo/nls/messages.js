@@ -284,7 +284,7 @@
 	"dialog.research.ext.obj.synonyms":"Synonyms",
 	"dialog.research.ext.obj.descriptor":"Descriptor",
 	"dialog.research.ext.obj.parentTerms":"Parent terms",
-	"dialog.research.ext.obj.descriptors":"Descriptors",
+	"dialog.research.ext.obj.descriptors":"Related-Terms",
 	"dialog.research.ext.obj.childTerms":"Child terms",
 	"dialog.research.ext.obj.similarTerms":"Similar terms",
 	"dialog.research.ext.obj.invalidDate":"The date you entered '%{0}' is invalid and will be reset.",
