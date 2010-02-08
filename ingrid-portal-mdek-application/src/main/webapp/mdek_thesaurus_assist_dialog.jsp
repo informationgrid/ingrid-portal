@@ -65,7 +65,7 @@ init = function() {
 	});
 
 //	SNSService.getSimilarDescriptors(queryTerm, {
-	SNSService.getTopicsForText(queryTerm, {
+	SNSService.getTopicsForText(queryTerm, 100, {
 		preHook:disableUiElements,
 		postHook:enableUiElements,
 		callback:function(res) {

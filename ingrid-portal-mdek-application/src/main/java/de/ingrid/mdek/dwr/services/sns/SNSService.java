@@ -245,21 +245,19 @@ public class SNSService {
 
         	log.debug("sns query for words starting at: "+i);
     		log.debug("Query String: "+queryStr);
-        	result.addAll(getTopicsForText(queryStr));
+        	result.addAll(getTopicsForText(queryStr, 100));
     	}
 
     	return result;
     }
 
-    public List<SNSTopic> getTopicsForText(String queryTerm) {
+    public List<SNSTopic> getTopicsForText(String queryTerm, int maxNum) {
     	log.debug("     !!!!!!!!!! thesaurusService.getTermsFromText()");
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	
     	Term[] terms = thesaurusService.getTermsFromText(queryTerm, MAX_ANALYZED_WORDS,
     			false, MdekUtils.getLocaleFromSession());
 
-    	// TODO: pass max num as parameter !?
-    	int maxNum = 100;
     	int num = 0;
     	for (Term term : terms) {
     		if (term.getType() == TermType.DESCRIPTOR) {

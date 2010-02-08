@@ -257,12 +257,6 @@
       <name>InGrid Repo Maven2</name>
       <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
     </repository>
-    <repository>
-      <snapshots />
-      <id>ibiblio</id>
-      <name>iBiblio.or.</name>
-      <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
-    </repository>
   </repositories>
   <profiles>
     <profile>
@@ -312,6 +306,14 @@
           <version>3.1</version>
         </dependency>
       </dependencies>
+      <repositories>
+        <repository>
+          <snapshots />
+          <id>ibiblio</id>
+          <name>iBiblio.or.</name>
+          <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+        </repository>
+      </repositories>
     </profile>
   </profiles>
 </project>
