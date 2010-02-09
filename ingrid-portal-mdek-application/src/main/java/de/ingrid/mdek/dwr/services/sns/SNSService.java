@@ -451,17 +451,27 @@ public class SNSService {
     }
 
     /**
-     * @return NULL if location is Expired !!!
+     * @return NULL if location is Expired !!! OR IF ID OR NAME IS NULL (happens with GSSoil gazetteer ?)
      */
     private SNSLocationTopic convertLocationToSNSLocationTopic(Location location) {
     	if (location.getIsExpired()) {
     		return null;
     	}
+    	
+    	// also check id and name ! GS Soil gazetteer returns null results ?
+    	String locId = location.getId();
+    	String locName = location.getName();
+    	if (locId == null || locName == null) {
+    		if (log.isDebugEnabled()) {
+    			log.debug("Location with NULL value ! we skip this one: id=" + locId + ", name=" + locName);
+    		}
+    		return null;
+    	}
 
     	SNSLocationTopic result = new SNSLocationTopic();
 
-    	result.setTopicId(location.getId());
-    	result.setName(location.getName());
+    	result.setTopicId(locId);
+    	result.setName(locName);
     	
     	// null if not set !
     	result.setTypeId(location.getTypeId());
