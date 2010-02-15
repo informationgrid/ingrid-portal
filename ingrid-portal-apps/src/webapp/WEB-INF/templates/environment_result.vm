@@ -1,7 +1,15 @@
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 #macro (renderHit $rs $grouping)
 		  <div class="resultset">
 		  #if ($rs.title)
-			<span class="result_title"><strong><a href="$!rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#if ($rs.title == "")$MESSAGES.getString('common.result.noTitle')#else$rs.title#end </a></strong></span>
+			<span class="result_title"><strong>
+                #if ($rs.url)
+                    <a href="$!rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">
+                #else
+                    <a href="$contextPath/portal/search-detail.psml?docid=$rs.docid&docuuid=$rs.docuuid&plugid=$rs.plugid" title="$MESSAGES.getString('common.tooltip.link.extern')" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">
+                #end
+                        <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#if ($rs.title == "")$MESSAGES.getString('common.result.noTitle')#else$rs.title#end </a>
+            </strong></span>
             <p class="result_description">
 ##            $!rs.abstract 
             </p>

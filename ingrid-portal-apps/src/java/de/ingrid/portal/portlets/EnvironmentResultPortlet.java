@@ -70,6 +70,9 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
             super.doView(request, response);
             return;
         }
+        
+        // set ranking to score since "date" is not supported by IGCs
+        query.put(IngridQuery.RANKED, IngridQuery.SCORE_RANKED);
 
         // if query assume we have results
         setDefaultViewPage(TEMPLATE_RESULT);
@@ -134,7 +137,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         if (numberOfHits == 0) {
-            // TODO Katalog keine Einträge, WAS ANZEIGEN ??? -> Layouten
+            // TODO Katalog keine Eintrï¿½ge, WAS ANZEIGEN ??? -> Layouten
             setDefaultViewPage(TEMPLATE_NO_RESULT);
             super.doView(request, response);
             return;
@@ -216,7 +219,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             String[] requestedFields = { Settings.RESULT_KEY_TOPIC, Settings.RESULT_KEY_FUNCT_CATEGORY,
-                    Settings.RESULT_KEY_PARTNER, Settings.RESULT_KEY_PROVIDER };
+                    Settings.RESULT_KEY_PARTNER, Settings.RESULT_KEY_PROVIDER, Settings.HIT_KEY_OBJ_ID };
             hits = ibus.searchAndDetail(query, hitsPerPage, currentPage, startHit, PortalConfig.getInstance().getInt(
                     PortalConfig.QUERY_TIMEOUT_RANKED, 5000), requestedFields);
             
@@ -225,7 +228,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                     log.error("Problems fetching details of hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
             }
-
+            
             // convert
             hitsWrapper = new IngridHitsWrapper(hits);
             IngridHitWrapper[] hitArray = hitsWrapper.getWrapperHits();
@@ -295,6 +298,9 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         hit.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_TOPIC, resources));
         hit.put(Settings.RESULT_KEY_FUNCT_CATEGORY, UtilsSearch.getDetailValue(detail,
                 Settings.RESULT_KEY_FUNCT_CATEGORY, resources));
+        // add detail url if needed
+        if (hit.get("url") == null)
+            hit.put(Settings.RESULT_KEY_DOC_UUID, ((String[])detail.get(Settings.HIT_KEY_OBJ_ID))[0]);
     }
 
 }

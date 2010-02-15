@@ -192,9 +192,11 @@ public class QueryResultPostProcessor {
                     } else if (tmpString.equals("de.ingrid.iplug.csw.CSWPlug")) {
                         processDSCHit(hit, detail, selectedDS);
 
-                        // JUST FOR TESTING, SHOULD NEVER BE UNRANKED !
-                        //                    } else if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
-                        //                        processDSCHit(hit, detail, selectedDS);
+                    // JUST FOR TESTING, SHOULD NEVER BE UNRANKED !
+                    // Times have changed!!!
+                    // Customer wants to show DSC-results in unranked column
+                    } else if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher")) {
+                        processDSCHit(hit, detail, selectedDS);
 
                     } else {
                         hit.put(Settings.RESULT_KEY_TYPE, "www-style");

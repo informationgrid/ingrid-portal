@@ -361,9 +361,15 @@ public class QueryPreProcessor {
                 IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
         UtilsSearch.processRestrictingProvider(query, (String)sessionPrefs.get(IngridSessionPreferences.RESTRICTING_PROVIDER));
 
+        // need at least the docuuid to create a correct link if igc is connected
+        String[] requestedMetadata = new String[] {
+                // udk object metadata
+                Settings.HIT_KEY_OBJ_ID,
+        };
+        
         // TODO If no query should be submitted, return null
         return new QueryDescriptor(query, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, currentPage, newStartHit,
-                PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_UNRANKED, 120000), true, true, null);
+                PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_UNRANKED, 120000), true, true, requestedMetadata);
     }
 
     private static void processQuerySources(PortletRequest request, String ds, IngridQuery query) {
