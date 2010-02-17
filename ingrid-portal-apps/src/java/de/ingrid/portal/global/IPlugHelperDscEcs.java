@@ -268,7 +268,6 @@ public class IPlugHelperDscEcs extends IPlugHelper {
         	} else {
         		correspondentIPlug = cIPlugDescr.getCorrespondentProxyServiceURL();
         	}
-    		correspondentIPlug = cIPlugDescr.getCorrespondentProxyServiceURL();
     	}
     	
     	if (correspondentIPlug == null || correspondentIPlug.trim().length() == 0 || correspondentIPlug.equals("null")) {
