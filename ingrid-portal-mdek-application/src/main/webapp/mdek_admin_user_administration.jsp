@@ -197,12 +197,14 @@ scriptScope.importPortalUser = function() {
 		var tree = dojo.widget.byId("treeUser");
 		var treeController = dojo.widget.byId("treeControllerUser");
 		var treeListener = dojo.widget.byId("treeListenerUser");
-		treeController.expand(selectedUser);
-		var def = treeController.createChild(selectedUser, "last", createNewUserNode(selectedUser, portalUser));
+		var def = treeController.expand(selectedUser);
+
+		def.addCallback(function(deferred){
+			treeController.createChild(selectedUser, "last", createNewUserNode(selectedUser, portalUser));
+		});
 
 		def.addBoth(function(data){
 			resetInputFields();
-			treeController.expand(selectedUser);
 			var newNode = dojo.widget.byId("newUserNode");
 			tree.selectNode(newNode);
 			tree.selectedNode = newNode;
@@ -281,12 +283,17 @@ scriptScope.saveUser = function() {
 		user.role = currentSelectedUser.role;
 		user.parentUserId = currentSelectedUser.parentUserId;
 
-		SecurityService.storeUser(user, login, true, {
+		SecurityService.storeUser(oldUser, user, login, true, {
 			preHook: showLoadingZone,
 			postHook: hideLoadingZone,
 			callback: function(newUser) {
-				updateTreeNode(selectedUser, newUser);
-				dialog.show(message.get("general.hint"), message.get("dialog.admin.users.updateSuccess"), dialog.INFO);				
+			    // if cat-admin was changed then user must be logged out
+			    if (user.role == 1 && (oldUser != login)) {
+			    	dialog.show(message.get("general.hint"), message.get("dialog.admin.users.updateCatAdmin"), dialog.WARNING);
+			    } else {
+			        updateTreeNode(selectedUser, newUser);
+			        dialog.show(message.get("general.hint"), message.get("dialog.admin.users.updateSuccess"), dialog.INFO);
+			    }				
 
 			},
 			errorHandler: function(errMsg, err) {

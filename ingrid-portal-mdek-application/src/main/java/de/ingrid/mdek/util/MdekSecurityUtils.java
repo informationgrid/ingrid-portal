@@ -141,32 +141,24 @@ public class MdekSecurityUtils {
 		return u == null ? null : u.getPortalLogin();
 	}
 	
-	public static UserData storeUserData(UserData userData) {
+	public static UserData storeUserData(String oldUserLogin, UserData userData) {
 		// Update the data in the db via hibernate
 		IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
 
 		UserData sampleUser = new UserData();
-		sampleUser.setPortalLogin(userData.getPortalLogin());
+		sampleUser.setPortalLogin(oldUserLogin);
 
 		dao.beginTransaction();
 		UserData u = (UserData) dao.findUniqueByExample(sampleUser);
 		
-		// in case portal user association changed
+		// there always should be returned a user entry!
 		if (u == null) {
-			sampleUser.setPortalLogin(null);
-			sampleUser.setAddressUuid(userData.getAddressUuid());
-			u = (UserData) dao.findUniqueByExample(sampleUser);
-			// remove role from old login
-			u.setPortalLogin(userData.getPortalLogin());
-			dao.makePersistent(u);
-			// set user role!
-			// was bei Exceptions?
+		    log.error("OldUserLogin "+oldUserLogin+" not found in database!");
 		} else {
-			// in case address association changed
+			u.setPortalLogin(userData.getPortalLogin());
 			u.setAddressUuid(userData.getAddressUuid());
 			dao.makePersistent(u);
 		}
-		
 		dao.commitTransaction();
 
 		return userData;

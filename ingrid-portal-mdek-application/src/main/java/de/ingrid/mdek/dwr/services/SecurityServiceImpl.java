@@ -149,30 +149,31 @@ public class SecurityServiceImpl {
 		}
 	}
 
-	public User storeUser(User user, String portalLogin, boolean refetch) {
+	public User storeUser(String oldUserLogin, User user, String portalLogin, boolean refetch) {
 		try {
+		    boolean loginDoesNotExist = false;
 			User u = securityRequestHandler.storeUser(user, refetch);
-			UserData userData = new UserData();
+			UserData userData = MdekSecurityUtils.getUserData(oldUserLogin);
+			if (userData == null) {
+			    userData = new UserData();
+			    loginDoesNotExist = true;
+			}
 			userData.setPortalLogin(portalLogin);
 			userData.setAddressUuid(user.getAddressUuid());
 			userData.setPlugId(MdekSecurityUtils.getCurrentPortalUserData().getPlugId());
 			
-			String oldUser = MdekSecurityUtils.userFromAddress(userData.getAddressUuid());
-
-			// change the address of an existing portal user
-			if (MdekSecurityUtils.portalLoginExists(portalLogin)) {
-				MdekSecurityUtils.storeUserData(userData);
-			} else if (oldUser != null) {
-				// change the portal user of an existing address assosciation
-				// does oldUser exist???
-				removeRoleFromUser(oldUser, "mdek");
-				MdekSecurityUtils.storeUserData(userData);
-				addRoleToUser(portalLogin, "mdek");
+			// create user-portal-connection if user only exists in IGC
+			if (loginDoesNotExist) {
+			    MdekSecurityUtils.createUserData(userData);
+                addRoleToUser(portalLogin, "mdek");
+			} else if (userData.getPortalLogin().equals(oldUserLogin)) {
+			    // store the user if the portal-login association did not change
+				MdekSecurityUtils.storeUserData(oldUserLogin, userData);
 			} else {
-				// create a new user since mdek database does not contain portal user or address
-				MdekSecurityUtils.createUserData(userData);
+				// store the user and set and cancel mdek-roles
+				removeRoleFromUser(oldUserLogin, "mdek");
+				MdekSecurityUtils.storeUserData(oldUserLogin, userData);
 				addRoleToUser(portalLogin, "mdek");
-				//u.setUserData(userData);
 			}
 			return u;
 

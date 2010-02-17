@@ -248,6 +248,7 @@
 	"dialog.admin.users.confirmDelete":"Do you really want to delete the user '%{0}'?",
 	"dialog.admin.users.createSuccess":"User created successfully.",
 	"dialog.admin.users.updateSuccess":"User updated successfully.",
+	"dialog.admin.users.updateCatAdmin":"The catalog administrator was changed! Please login again.",
 
 	"dialog.admin.users.deleteUser":"Delete user",
 	"dialog.admin.users.importUser":"Import portal user",

@@ -248,6 +248,7 @@
 	"dialog.admin.users.confirmDelete":"Wollen Sie den Benutzer '%{0}' wirklich l&ouml;schen?",
 	"dialog.admin.users.createSuccess":"Die Benutzerdaten wurden erfolgreich erstellt.",
 	"dialog.admin.users.updateSuccess":"Die Benutzerdaten wurden erfolgreich aktualisiert.",
+	"dialog.admin.users.updateCatAdmin":"Es wurde der Katalogadministrator geändert! Bitte loggen Sie sich neu ein.",
 
 	"dialog.admin.users.deleteUser":"Benutzer l&ouml;schen",
 	"dialog.admin.users.importUser":"Portalbenutzer importieren",

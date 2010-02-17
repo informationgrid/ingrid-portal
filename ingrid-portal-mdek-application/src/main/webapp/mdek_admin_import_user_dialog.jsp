@@ -31,6 +31,9 @@ function initUserList() {
 			}
 
 			dojo.widget.byId("userList").dataProvider.setData(list);
+
+			// make sure that nothing is selected (or appears to be) 
+			dojo.widget.byId("userList").setLabel("");
 		},
 		errorHandler: function(errMsg, err) {
 		    displayErrorMessage(err);
