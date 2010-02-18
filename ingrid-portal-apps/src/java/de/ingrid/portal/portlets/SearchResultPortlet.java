@@ -560,12 +560,14 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             unrankedPageNavigation.put(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, new Integer(
                     currentSelectorPageUnranked));
             // check if we have more results to come
-            int groupedHitsLength = unrankedHits.getGoupedHitsLength();
-            if (unrankedHits != null && groupedHitsLength > 0 && totalNumberOfUnrankedHits > 0) {
-                if (totalNumberOfUnrankedHits <= groupedHitsLength) {
-                    unrankedPageNavigation.put("selectorHasNextPage", new Boolean(false));
-                } else {
-                    unrankedPageNavigation.put("selectorHasNextPage", new Boolean(true));
+            if (unrankedHits != null) {
+                int groupedHitsLength = unrankedHits.getGoupedHitsLength();
+                if (groupedHitsLength > 0 && totalNumberOfUnrankedHits > 0) {
+                    if (totalNumberOfUnrankedHits <= groupedHitsLength) {
+                        unrankedPageNavigation.put("selectorHasNextPage", new Boolean(false));
+                    } else {
+                        unrankedPageNavigation.put("selectorHasNextPage", new Boolean(true));
+                    }
                 }
             }
         }

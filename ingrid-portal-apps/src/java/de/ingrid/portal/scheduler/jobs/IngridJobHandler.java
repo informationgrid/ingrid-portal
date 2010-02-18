@@ -615,7 +615,8 @@ public class IngridJobHandler {
 		}
 		
 		if (jobDetail == null) {
-			jobDetail = new JobDetail(jobId, IngridMonitorFacade.SCHEDULER_GROUP_NAME,
+		    // restrict the length of the JobName to the size of the column in DB, which is 80
+			jobDetail = new JobDetail(jobId.substring(0, 80), IngridMonitorFacade.SCHEDULER_GROUP_NAME,
 					IngridMonitorRSSCheckerJob.class);
 			
 			// here the ID of the job is also used as the name
