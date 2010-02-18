@@ -390,7 +390,7 @@
         <dependency>
             <groupId>opensymphony</groupId>
             <artifactId>quartz</artifactId>
-            <version>1.6.6</version>
+            <version>1.7.1</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
