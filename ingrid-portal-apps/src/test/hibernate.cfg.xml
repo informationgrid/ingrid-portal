@@ -36,7 +36,7 @@
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridRSSSource.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridAnniversary.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridNewsletterData.hbm.xml"/>
-        <mapping resource="de/ingrid/portal/hibernate/resources/IngridSysCodelistDomain.hbm.xml"/>
+        <!--<mapping resource="de/ingrid/portal/hibernate/resources/IngridSysCodelistDomain.hbm.xml"/>-->
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridPrincipalPreferences.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
