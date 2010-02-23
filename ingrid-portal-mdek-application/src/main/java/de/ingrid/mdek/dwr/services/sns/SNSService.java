@@ -355,7 +355,8 @@ public class SNSService {
     }
 
     /** SNS autoClassify operation for URLs */
-    public SNSTopicMap autoClassifyURL(String urlStr, int analyzeMaxWords, String filter, boolean ignoreCase, String lang) {   	
+    public SNSTopicMap autoClassifyURL(String urlStr, int analyzeMaxWords, String filter, boolean ignoreCase, String lang,
+    		int maxNum) {   	
     	URL url = createURL(urlStr);
     	if (url == null) {
    			throw new RuntimeException(ERROR_SNS_INVALID_URL);
@@ -371,18 +372,28 @@ public class SNSService {
 
 		// terms
     	List<SNSTopic> thesaTopics = new ArrayList<SNSTopic>();
+    	int num = 0;
     	for(Term term : classifyResult.getTerms()) {
     		thesaTopics.add(convertTermToSNSTopic(term));
+    		num++;
+    		if (num == maxNum) {
+    			break;
+    		}
     	}
     	result.setThesaTopics(thesaTopics);
 
     	// locations
     	List<SNSLocationTopic> locationTopics = new ArrayList<SNSLocationTopic>();
+    	num = 0;
     	for(Location location : classifyResult.getLocations()) {
         	SNSLocationTopic t = convertLocationToSNSLocationTopic(location);
     		// returns null for expired locations
         	if (t != null) {
         		locationTopics.add(t);
+        		num++;
+        		if (num == maxNum) {
+        			break;
+        		}
         	}
     	}
     	result.setLocationTopics(locationTopics);
