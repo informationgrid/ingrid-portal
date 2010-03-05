@@ -267,7 +267,12 @@ public class QueryResultPostProcessor {
                     }
                 }
             }
-
+            
+            
+            if(detail.get(Settings.RESULT_KEY_WMS_TMP_COORD_X) != null){
+            	hit.put(Settings.RESULT_KEY_WMS_COORD, "action=doTmpService&" + Settings.RESULT_KEY_PLUG_ID + "=" + hit.getPlugId() + "&" + Settings.RESULT_KEY_DOC_ID + "=" + hit.getDocumentId() + "&title=" + detail.getTitle());
+            }
+            
             // determine type of hit dependent from plug description !!!
             PlugDescription plugDescr = (PlugDescription) hit.get(Settings.RESULT_KEY_PLUG_DESCRIPTION);
             boolean isObject = true;

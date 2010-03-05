@@ -3,12 +3,15 @@ package de.ingrid.portal.global;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -16,10 +19,10 @@ import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 
 /**
- * Utils class for transform byte array as file.
+ * Utils class for transform byte array as file and create map service files.
  * 
  * @author ktt
- *
+ * 
  */
 public class UtilsFileHelper {
 	
@@ -27,6 +30,8 @@ public class UtilsFileHelper {
 	
 	public static String		MIME		= "mime";
 	public static String		FILE_TITLE	= "file_title";
+	public static String		MAP			= "map";
+	public static String		GML			= "gml";
 	
 	/**
 	 * Convert a byte array to file
@@ -41,8 +46,8 @@ public class UtilsFileHelper {
 	public static HashMap<String, String> getByteAsFile(byte[] byteFile, String title, String mimetyp) throws IOException {
 		
 		HashMap<String, String> fileDetails = null;
+		File directory = null;
 		File file = null;
-		File newFile = null;
 		String typ = null;
 		String parentTyp = null;
 		
@@ -53,44 +58,128 @@ public class UtilsFileHelper {
 			parentTyp = UtilsMimeType.getMimeTypeParent(mimetyp);
 			
 			if (typ != null) {
-				file = new File(System.getProperty("java.io.tmpdir") + "/ingrid-portal-apps/details/" + parentTyp + "/");
-				file.mkdirs();
+				directory = new File(System.getProperty("java.io.tmpdir") + "/ingrid-portal-apps/details/" + parentTyp + "/");
+				directory.mkdirs();
 				
-				newFile = new File(file.getAbsolutePath() + "/" + generateFilename(parentTyp, title, new String(byteFile).hashCode(), typ));
-				newFile.createNewFile();
+				file = new File(directory.getAbsolutePath() + "/" + generateFilename(parentTyp, title, new String(byteFile).hashCode(), typ));
+				file.createNewFile();
 				
-				FileOutputStream fos = new FileOutputStream(newFile);
+				FileOutputStream fos = new FileOutputStream(file);
 				fos.write(byteFile);
 				fos.close();
 				if (log.isDebugEnabled()) {
-					log.debug("Create file: " + newFile.getAbsolutePath());
+					log.debug("Create file: " + file.getAbsolutePath());
 				}
 				
 				fileDetails.put("mimetyp", mimetyp);
-				fileDetails.put("filename", newFile.getName());
+				fileDetails.put("filename", file.getName());
 				fileDetails.put("title", title);
-				fileDetails.put("path", newFile.getAbsolutePath());
+				fileDetails.put("path", file.getAbsolutePath());
 				fileDetails.put("parenttyp", parentTyp);
 			}
-			
 		}
 		return fileDetails;
 	}
 	
 	/**
-	 * Generate a unique filename
+	 * Create mapfile and GML file for temporary map services
+	 * 
+	 * @param fileTitle
+	 * @return path of mapfile
+	 * @throws Exception
+	 * @throws ConfigurationException
+	 */
+	public static String createNewMapService(String fileTitle, String typ) throws ConfigurationException, Exception {
+		File directory;
+		File file;
+		
+		directory = new File(UtilsServiceManager.tmp_directory);
+		directory.mkdirs();
+		
+		file = new File(directory.getAbsolutePath() + "/" + generateFilename(Integer.toString(fileTitle.hashCode()), typ));
+		if(file.exists()){
+			if (log.isDebugEnabled()) {
+				log.debug("File: " + file.getName() + " already exist!");
+			}
+		}else{
+			file.createNewFile();
+			if (log.isDebugEnabled()) {
+				log.debug("Create " + typ + " File: " + file.getAbsolutePath());
+			}
+		}
+		return file.getName();
+	}
+	
+	/**
+	 * Write String into file
+	 * 
+	 * @param path
+	 * @param content
+	 * @throws IOException
+	 */
+	public static void writeContentIntoFile(String path, String content) throws IOException {
+		if(path != null){
+			File file = new File(path);
+			if(file.length() < 1){
+				if (content != null) {
+					Writer writer = null;
+					writer = new FileWriter(path);
+					writer.write(content);
+					writer.close();		
+				}else{
+					if (log.isErrorEnabled()) {
+						log.error("Content is null!");
+					}
+				}
+			}		
+		}
+	}
+	
+	/**
+	 * Generate a unique filename for binary data
 	 * 
 	 * @param parentTyp
 	 * @param title
 	 * @param byteHashCode
-	 * @param typ
-	 * @return filename 
+	 * @param type
+	 * @return filename
 	 */
-	public static String generateFilename(String parentTyp, String title, int byteHashCode, String typ) {
+	public static String generateFilename(String parentTyp, String title, int byteHashCode, String type) {
+		String filename;
 		
-		return parentTyp + "_" + title + "_" + byteHashCode + ".".concat(typ);
+		filename = parentTyp + "_" + title + "_" + byteHashCode + ".".concat(type);
+		
+		if (title == null || type == null|| parentTyp == null) {
+			if (log.isErrorEnabled()) {
+				log.error("Title: " + title + "or Type: " + type + "or parentTyp: " + parentTyp + " is null!");
+			}
+		}
+		
+		return filename;
 	}
 	
+	/**
+	 * Generate a filename with type and title
+	 * 
+	 * @param date
+	 * @param title
+	 * @param type
+	 * @return filename
+	 */
+	public static String generateFilename(String title, String type) {
+		
+		String filename;
+	
+		filename = title.concat(".").concat(type);
+		
+		if (title == null || type == null) {
+			if (log.isErrorEnabled()) {
+				log.error("Title: " + title + "or Type: " + type + " is null!");
+			}
+		}
+		return filename;
+	}
+			
 	/**
 	 * Check if record include binary data
 	 * 
@@ -170,4 +259,25 @@ public class UtilsFileHelper {
 		return bytes;
 	}
 	
+	/**
+	 * Sort long values in ArrayList
+	 * 
+	 * @param fileArray
+	 */
+	public static void sortFileByDate(ArrayList<Long> fileArray) {
+		boolean unsort = true;
+		long temp;
+		
+		while (unsort) {
+			unsort = false;
+			for (int i = 0; i < fileArray.size() - 1; i++)
+				if (fileArray.get(i) > fileArray.get(i + 1)) {
+					temp = fileArray.get(i);
+					fileArray.set(i, fileArray.get(i + 1));
+					fileArray.set(i + 1, temp);
+					unsort = true;
+				}
+		}
+		
+	}
 }

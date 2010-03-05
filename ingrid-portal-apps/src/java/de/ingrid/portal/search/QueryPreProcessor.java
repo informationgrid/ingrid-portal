@@ -105,7 +105,8 @@ public class QueryPreProcessor {
         		// both
         		Settings.HIT_KEY_WMS_URL,
         		Settings.RESULT_KEY_PARTNER,
-        		Settings.RESULT_KEY_PROVIDER
+        		Settings.RESULT_KEY_PROVIDER,
+        		Settings.RESULT_KEY_WMS_TMP_COORD_X
         };
         
         // set properties according to the session preferences

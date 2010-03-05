@@ -179,6 +179,13 @@ public class Settings {
     public final static String RESULT_KEY_DOC_UUID = "docuuid";
 
     public final static String RESULT_KEY_WMS_URL = "wms_url";
+    public final static String RESULT_KEY_WMS_COORD = "wms_coord";
+    public final static String RESULT_KEY_WMS_COORD_CHECK = "wms_check";
+    public final static String RESULT_KEY_WMS_TMP_COORD_X = "coord_x";
+    public final static String RESULT_KEY_WMS_TMP_COORD_Y = "coord_y";
+    public final static String RESULT_KEY_WMS_TMP_COORD_CLASS = "coord_class";
+    public final static String RESULT_KEY_WMS_TMP_COORD_TITLE = "coord_title";
+    public final static String RESULT_KEY_WMS_TMP_COORD_DESCR = "coord_descr";
 
     public final static String RESULT_KEY_UDK_IS_ADDRESS = "is_address";
     public final static String RESULT_KEY_UDK_CLASS = "udk_class";
