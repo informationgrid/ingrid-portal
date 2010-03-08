@@ -35,8 +35,14 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 	
 	private String templateIGC 			= "/import/templates/igc_template.xml";
 	
-	private String exampleXml 			= "/de/ingrid/mdek/mapping/sourceExample.xml";
-	
+	// CHOOSE YOUR EXAMPLE !
+
+//	private String exampleXml 			= "/de/ingrid/mdek/mapping/sourceExample.xml";
+//	private String exampleTitle 		= "xxxTEMPLATExxx";
+
+	private String exampleXml 			= "/de/ingrid/mdek/mapping/HB_Amtlicher_Stadtplan.xml";
+	private String exampleTitle 		= "Amtlicher Stadtplan Bremerhaven";
+
 	
 	public void setUp() {
 		mapper = new ScriptImportDataMapper();
@@ -72,7 +78,7 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 		
 		InputStream result = mapper.convert(data);
 		
-		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "xxxTEMPLATExxx"));
+		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", exampleTitle));
 	}
 
 
