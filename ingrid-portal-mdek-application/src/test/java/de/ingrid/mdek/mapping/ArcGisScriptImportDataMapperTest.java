@@ -37,11 +37,11 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 	
 	// CHOOSE YOUR EXAMPLE !
 
-//	private String exampleXml 			= "/de/ingrid/mdek/mapping/sourceExample.xml";
-//	private String exampleTitle 		= "xxxTEMPLATExxx";
+	private String exampleXml 			= "/de/ingrid/mdek/mapping/sourceExample.xml";
+	private String exampleTitle 		= "xxxTEMPLATExxx";
 
-	private String exampleXml 			= "/de/ingrid/mdek/mapping/HB_Amtlicher_Stadtplan.xml";
-	private String exampleTitle 		= "Amtlicher Stadtplan Bremerhaven";
+//	private String exampleXml 			= "/de/ingrid/mdek/mapping/HB_Amtlicher_Stadtplan.xml";
+//	private String exampleTitle 		= "Amtlicher Stadtplan Bremerhaven";
 
 	
 	public void setUp() {
