@@ -35,15 +35,9 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 	
 	private String templateIGC 			= "/import/templates/igc_template.xml";
 	
-	// CHOOSE YOUR EXAMPLE !
-
 	private String exampleXml 			= "/de/ingrid/mdek/mapping/sourceExample.xml";
 	private String exampleTitle 		= "xxxTEMPLATExxx";
 
-//	private String exampleXml 			= "/de/ingrid/mdek/mapping/HB_Amtlicher_Stadtplan.xml";
-//	private String exampleTitle 		= "Amtlicher Stadtplan Bremerhaven";
-
-	
 	public void setUp() {
 		mapper = new ScriptImportDataMapper();
 	}
@@ -242,6 +236,28 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 		assertEquals("{B50413B9-323A-40A2-AD0B-EAF0D84319CA}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
 		assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Folgende Sprachen werden im beschriebenen") > -1);
 		
+	}		
+	
+	public final void testConvertHBAmtlicherStadtplan() {
+		
+		exampleXml = "/de/ingrid/mdek/mapping/HB_Amtlicher_Stadtplan.xml";
+		
+		initClassVariables(mapperScriptArcGIS, templateIGC);
+		
+		InputStream data = null;
+		try {
+			// get example file from test resource directory
+			data = (new ClassPathResource(exampleXml)).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		InputStream result = mapper.convert(data);
+
+		Document doc = getDomFromSourceData(result);
+		
+		assertEquals("Amtlicher Stadtplan Bremerhaven", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
+		assertTrue(5 == XPathUtils.getInt(doc, "/igc/data-sources/data-source/technical-domain/map/hierarchy-level/@iso-code"));
 	}		
 	
 	private boolean xpathExists(InputStream in, String path, String value) {

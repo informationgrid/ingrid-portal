@@ -114,6 +114,8 @@ var mappingDescription = {"mappings":[
   		//
   		// ****************************************************
   		{	
+            // set default to dataset
+            "defaultValue":"5",
   			"srcXpath":"/metadata/dqInfo/dqScope/scpLvl/ScopeCd/@value",
   			"targetNode":"/igc/data-sources/data-source/technical-domain/map/hierarchy-level",
   			"targetAttribute":"iso-code",
@@ -728,6 +730,7 @@ function mapToTarget(mapping, source, target) {
 			} else if (m.createUUID) {
 				uuid = createUUID();
 			} else {
+			    var valueAdded = false;
 				if (m.srcXpath) {
 					log.debug("Working on " + m.targetNode + " with xpath:'" + m.srcXpath + "'")
 					// iterate over all xpath results
@@ -783,11 +786,15 @@ function mapToTarget(mapping, source, target) {
 								log.debug("adding '" + m.targetNode + "' = '" + nodeText + "'.");
 								XMLUtils.createOrReplaceTextNode(node, nodeText);
 							}
+							
+							valueAdded = true;
 						}
 					}
-				// check if a default value and a target node were supplied
-				// -> set a target node to a default value
-				} else if ((m.defaultValue || m.setUUID) && m.targetNode) {
+				}
+
+                // check if a default value and a target node were supplied
+                // -> set a target node to a default value
+				if (!valueAdded && (m.defaultValue || m.setUUID) && m.targetNode) {
 					var nodeText = "";
 					var value;
 					if (m.setUUID) {
@@ -994,7 +1001,10 @@ function mapDataScale(source, target) {
 
 
 function mapCommunicationData(source, target) {
-	var email = XPathUtils.getString(source, "rpCntInfo/cntAddress/eMailAdd").trim();
+	var email = XPathUtils.getString(source, "rpCntInfo/cntAddress/eMailAdd");
+    if (hasValue(email)) {
+        email = email.trim();
+	}
 	log.debug("found email:" + email)
 	if (hasValue(email)) {
 		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
@@ -1004,7 +1014,10 @@ function mapCommunicationData(source, target) {
 		node = XPathUtils.createElementFromXPath(communication, "communication-value");
 		XMLUtils.createOrReplaceTextNode(node, email);
 	}
-	var phone = XPathUtils.getString(source, "rpCntInfo/cntPhone/voiceNum").trim();
+	var phone = XPathUtils.getString(source, "rpCntInfo/cntPhone/voiceNum");
+    if (hasValue(phone)) {
+        phone = phone.trim();
+    }
 	if (hasValue(phone)) {
 		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
 		var node = XPathUtils.createElementFromXPath(communication, "communication-medium");
@@ -1013,7 +1026,10 @@ function mapCommunicationData(source, target) {
 		node = XPathUtils.createElementFromXPath(communication, "communication-value");
 		XMLUtils.createOrReplaceTextNode(node, phone);
 	}
-	var fax = XPathUtils.getString(source, "rpCntInfo/cntPhone/faxNum").trim();
+	var fax = XPathUtils.getString(source, "rpCntInfo/cntPhone/faxNum");
+    if (hasValue(fax)) {
+        fax = fax.trim();
+    }
 	if (hasValue(fax)) {
 		var communication = target.appendChild(target.getOwnerDocument().createElement("communication"));
 		var node = XPathUtils.createElementFromXPath(communication, "communication-medium");
