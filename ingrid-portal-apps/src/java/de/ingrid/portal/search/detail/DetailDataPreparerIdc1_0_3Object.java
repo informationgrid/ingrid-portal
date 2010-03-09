@@ -603,7 +603,7 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     	}
 
     	// geo thesaurus references
-		refRecords = getSubRecordsByColumnName(record, "spatial_ref_value.name_value");
+		refRecords = getSubRecordsByColumnName(record, "location");
     	if (refRecords.size() > 0) {
 	    	ArrayList lines = new ArrayList();
 	    	for (int i=0; i<refRecords.size(); i++) {
