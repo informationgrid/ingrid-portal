@@ -116,9 +116,14 @@
         #if($entry.sort=="false")
             #set($elements = $entry.elements)
         #else
-            #set($elements = $sorter.sort($entry.elements,"body"))
-        #end
-		#foreach($e in $elements)
+			#set ($hasBody = $sorter.sort($entry.elements,"body"))
+			#if ($hasBody)
+				#set($elements = $hasBody)
+			#else
+				#set($elements = $entry.elements)
+			#end
+		#end
+        #foreach($e in $elements)
 			#if($e.type=="multiLine")
 				#renderMultiLine($e)
 			#elseif($e.type=="textLine")
