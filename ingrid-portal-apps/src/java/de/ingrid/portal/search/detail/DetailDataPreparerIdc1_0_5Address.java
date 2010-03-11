@@ -642,20 +642,28 @@ public class DetailDataPreparerIdc1_0_5Address implements DetailDataPreparer {
                 }
         	}
         	List linkList = new ArrayList();
+        	List objIdList = new ArrayList();
         	for (int i=0; i<subordiantedObjectReferences.size(); i++) {
+        		boolean inObjList = false;
         		IngridHit hit = (IngridHit)subordiantedObjectReferences.get(i);
         		IngridHitDetail detail = (IngridHitDetail)hit.get("detail");
-            	HashMap link = new HashMap();
-            	link.put("hasLinkIcon", new Boolean(true));
-            	link.put("iconImage", "icn_udk_obj_" + detail.getString(Settings.HIT_KEY_UDK_CLASS) + ".gif");
-            	link.put("iconImageAltText", messages.getString("udk_obj_class_name_".concat(detail.getString(Settings.HIT_KEY_UDK_CLASS))));
-            	link.put("title", detail.getString("title"));
-            	PortletURL actionUrl = response.createActionURL();
-            	actionUrl.setParameter("cmd", "doShowObjectDetail");
-        		actionUrl.setParameter("objId", detail.getString(Settings.HIT_KEY_OBJ_ID));
-        		actionUrl.setParameter("plugid", DetailDataPreparerHelper.getPlugIdFromAddressPlugId(iPlugId));
-            	link.put("href", actionUrl.toString());
-            	linkList.add(link);
+        	
+        		inObjList = objIdList.contains(detail.getString(Settings.HIT_KEY_OBJ_ID));
+        		
+        		if(!inObjList){
+        			objIdList.add(detail.getString(Settings.HIT_KEY_OBJ_ID));
+        			HashMap link = new HashMap();
+                	link.put("hasLinkIcon", new Boolean(true));
+                	link.put("iconImage", "icn_udk_obj_" + detail.getString(Settings.HIT_KEY_UDK_CLASS) + ".gif");
+                	link.put("iconImageAltText", messages.getString("udk_obj_class_name_".concat(detail.getString(Settings.HIT_KEY_UDK_CLASS))));
+                	link.put("title", detail.getString("title"));
+                	PortletURL actionUrl = response.createActionURL();
+                	actionUrl.setParameter("cmd", "doShowObjectDetail");
+            		actionUrl.setParameter("objId", detail.getString(Settings.HIT_KEY_OBJ_ID));
+            		actionUrl.setParameter("plugid", DetailDataPreparerHelper.getPlugIdFromAddressPlugId(iPlugId));
+                	link.put("href", actionUrl.toString());
+                	linkList.add(link);
+        		}      		
         	}
             Collections.sort(linkList, new LinkListComparator());
     		
