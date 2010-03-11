@@ -199,7 +199,7 @@ public class UtilsFileHelper {
 		String mime = null;
 		String fileTitle = "unknown";
 		for (Column column : columns) {
-			if (column.getType().equals(Column.BINARY)) {
+			if (column.getType() != null && column.getType().equals(Column.BINARY)) {
 				bytes = record.getValueBytes(column);
 			} else if (column.getTargetName().equals(MIME)) {
 				mime = record.getValueAsString(column);
