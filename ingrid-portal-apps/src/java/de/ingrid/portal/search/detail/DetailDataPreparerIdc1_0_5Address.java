@@ -4,6 +4,7 @@
 package de.ingrid.portal.search.detail;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -588,7 +589,7 @@ public class DetailDataPreparerIdc1_0_5Address implements DetailDataPreparer {
     			// encapsulate in multiLine element to guarantee <p> rendering
 		    	element = new HashMap();
 		    	element.put("type", "multiLine");
-		    	element.put("elements", new HashMap[] { link });
+		    	element.put("elements", new ArrayList(Arrays.asList(new HashMap[] { link })));
 	    	    elements.add(element);
             }
     	}
@@ -692,7 +693,7 @@ public class DetailDataPreparerIdc1_0_5Address implements DetailDataPreparer {
     			// encapsulate in multiLine element to guarantee <p> rendering
 		    	element = new HashMap();
 		    	element.put("type", "multiLine");
-		    	element.put("elements", new HashMap[] { link });
+		    	element.put("elements", new ArrayList(Arrays.asList(new HashMap[] { link })));
 	    	    elements.add(element);
             }
     	}
