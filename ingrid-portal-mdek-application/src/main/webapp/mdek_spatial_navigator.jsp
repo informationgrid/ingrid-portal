@@ -194,7 +194,11 @@ addLocationTopics = function() {
 		if (storedTopic) {
 			// Element is already in the table. Update the topic.
 			// Update elements that are displayed in the table
-			store.update(storedTopic, "label", topic.name+", "+topic.type);
+			if (topic.type != null) {
+			    store.update(storedTopic, "label", topic.name+", "+topic.type);
+			} else {
+				store.update(storedTopic, "label", topic.name);
+			}
 			if (topic.boundingBox) {
 				store.update(storedTopic, "longitude1", topic.boundingBox[0]);
 				store.update(storedTopic, "latitude1", topic.boundingBox[1]);
