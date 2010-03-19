@@ -93,7 +93,7 @@ public class UtilsFileHelper {
 		File directory;
 		File file;
 		
-		directory = new File(UtilsServiceManager.tmp_directory);
+		directory = new File(UtilsServiceManager.getTmp_directory());
 		directory.mkdirs();
 		
 		file = new File(directory.getAbsolutePath() + "/" + generateFilename(Integer.toString(fileTitle.hashCode()), typ));

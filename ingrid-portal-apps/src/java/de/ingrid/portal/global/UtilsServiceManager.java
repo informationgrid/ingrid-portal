@@ -28,9 +28,28 @@ import de.ingrid.utils.dsc.Record;
 
 public class UtilsServiceManager {
 	private static final Log		log	= LogFactory.getLog(UtilsServiceManager.class);
+	private static final String COORDS_WGS84 = "COORDS_WGS84";
+	private static final String COORDS_UTM31 = "COORDS_ETRS89_UTM31N";
+	private static final String COORDS_UTM32 = "COORDS_ETRS89_UTM32N";
+	private static final String COORDS_UTM33 = "COORDS_ETRS89_UTM33N";
+	private static final String COORDS_UTM34 = "COORDS_ETRS89_UTM34N";
+	private static final String COORDS_GK2 = "COORDS_GK2";
+	private static final String COORDS_GK3 = "COORDS_GK3";
+	private static final String COORDS_GK4 = "COORDS_GK4";
+	private static final String COORDS_GK5 = "COORDS_GK4";
 	
-	private static Configuration	config;
-	public static String tmp_directory;	
+	private static final String COORDS_WGS84_CODE = "4326";
+	private static final String COORDS_UTM31_CODE = "25831";
+	private static final String COORDS_UTM32_CODE = "25832";
+	private static final String COORDS_UTM33_CODE = "25833";
+	private static final String COORDS_UTM34_CODE = "25834";
+	private static final String COORDS_GK2_CODE = "31466";
+	private static final String COORDS_GK3_CODE = "31467";
+	private static final String COORDS_GK4_CODE = "31468";
+	private static final String COORDS_GK5_CODE = "31469";
+
+	private static Configuration 	config;
+	private static String tmp_directory;	
 	
 	/**
 	 * Delete oldest map and gml files if limit is arrives
@@ -39,8 +58,8 @@ public class UtilsServiceManager {
 	 * @throws Exception
 	 */
 	public static void countTempServiceNumber() throws ConfigurationException, Exception {
-		tmp_directory = System.getProperty("java.io.tmpdir").concat(getConfig().getString("temp_service_path", null)).concat("/");
-		File path = new File(tmp_directory);
+		
+		File path = new File(getTmp_directory());
 		ArrayList<Long> fileArray = new ArrayList<Long>();
 		if (path.exists()) {
 			if (path.list().length > Integer.parseInt(getConfig().getString("temp_service_limit", null))) {
@@ -73,11 +92,12 @@ public class UtilsServiceManager {
 	 * 
 	 * @param hitTitle
 	 * @param pointCoords
+	 * @param coordTypeForMapFile
 	 * @return path to map or gml file
 	 * @throws ConfigurationException
 	 * @throws Exception
 	 */
-	public static String createTemporaryMapService(String hitTitle, String fileTitle, List<HashMap<String, String>> pointCoords) throws ConfigurationException, Exception {
+	public static String createTemporaryMapService(String hitTitle, String fileTitle, List<HashMap<String, String>> pointCoords, String coordTypeForMapFile) throws ConfigurationException, Exception {
 		String mapFileName = null;
 		ArrayList<HashMap<String, String>> coordClasses;
 		coordClasses = new ArrayList<HashMap<String, String>>();
@@ -93,8 +113,31 @@ public class UtilsServiceManager {
 		// Put Map data to file
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/temporary_service_map.vm");
 		String templatePath = url.getPath();
+		String coordTypeNumberCode;
 		
-		UtilsFileHelper.writeContentIntoFile(tmp_directory.concat(mapFileName), mergeTemplateMap(templatePath, pointCoords, hitTitle, coordClasses, mapFileName, ""));
+		if(coordTypeForMapFile.equals(COORDS_WGS84)){
+			coordTypeNumberCode = COORDS_WGS84_CODE;
+		}else if(coordTypeForMapFile.equals(COORDS_UTM31)){
+			coordTypeNumberCode = COORDS_UTM31_CODE;
+		}else if(coordTypeForMapFile.equals(COORDS_UTM32)){
+			coordTypeNumberCode = COORDS_UTM32_CODE;
+		}else if(coordTypeForMapFile.equals(COORDS_UTM33)){
+			coordTypeNumberCode = COORDS_UTM33_CODE;
+		}else if(coordTypeForMapFile.equals(COORDS_UTM34)){
+			coordTypeNumberCode = COORDS_UTM34_CODE;
+		}else if(coordTypeForMapFile.equals(COORDS_GK2)){
+			coordTypeNumberCode = COORDS_GK2_CODE;
+		}else if(coordTypeForMapFile.equals(COORDS_GK3)){
+			coordTypeNumberCode = COORDS_GK3_CODE;
+		}else if(coordTypeForMapFile.equals(COORDS_GK4)){
+			coordTypeNumberCode = COORDS_GK4_CODE;
+		}else if(coordTypeForMapFile.equals(COORDS_GK5)){
+			coordTypeNumberCode = COORDS_GK5_CODE;
+		}else{
+			coordTypeNumberCode = COORDS_WGS84_CODE;
+		}
+		
+		UtilsFileHelper.writeContentIntoFile(getTmp_directory().concat(mapFileName), mergeTemplateMap(templatePath, pointCoords, hitTitle, coordClasses, mapFileName, coordTypeNumberCode));
 		
 		// Put GML data to file
 		for (int i = 0; i < coordClasses.size(); i++) {
@@ -131,6 +174,29 @@ public class UtilsServiceManager {
 		}
 		
 		return config;
+	}
+		
+	/**
+	 * Get tmp directory
+	 * 
+	 * @return tmp directory
+	 * @throws ConfigurationException
+	 * @throws Exception
+	 */
+	public static String getTmp_directory() throws ConfigurationException, Exception {
+		if(tmp_directory == null){
+			setTmp_directory(System.getProperty("java.io.tmpdir").concat(getConfig().getString("temp_service_path", null)).concat("/"));
+		}
+		return tmp_directory;
+	}
+
+	/**
+	 * Set tmp directory
+	 * 
+	 * @param tmp_directory
+	 */
+	public static void setTmp_directory(String tmp_directory) {
+		UtilsServiceManager.tmp_directory = tmp_directory;
 	}
 	
 	/**
@@ -170,7 +236,7 @@ public class UtilsServiceManager {
 				coordClassDetail = new HashMap<String, String>();
 				coordClassDetail.put("coordClassName", coordClassName);
 				coordClassDetail.put("coordClassColor", getConfig().getString("temp_service_color_" + colorCount, null));
-				coordClassDetail.put("coordGMLPath", tmp_directory.concat(UtilsFileHelper.createNewMapService(Integer.toString(mapFile.concat(coordClassName).hashCode()), UtilsFileHelper.GML)));
+				coordClassDetail.put("coordGMLPath", getTmp_directory().concat(UtilsFileHelper.createNewMapService(Integer.toString(mapFile.concat(coordClassName).hashCode()), UtilsFileHelper.GML)));
 				coordClassesDetail.add(coordClassDetail);
 				if (colorCount > 15) {
 					colorCount = 0;
@@ -207,27 +273,27 @@ public class UtilsServiceManager {
 	 * @param hitTitle
 	 * @param coordClasses
 	 * @param mapFileName
-	 * @param coordClassForGML
+	 * @param coordClassOrCoordType
 	 * @return string value to create map or gml file
 	 * @throws ConfigurationException
 	 * @throws Exception
 	 */
 	public static String mergeTemplateMap(String pathToTemplateFile, List<HashMap<String, String>> coordPointDetails, String hitTitle, ArrayList<HashMap<String, String>> coordClasses,
-			String mapFileName, String coordClassForGML) throws ConfigurationException, Exception {
+			String mapFileName, String coordClassOrCoordType) throws ConfigurationException, Exception {
 		
 		StringWriter sw;
 		String templatePath;
 		
 		VelocityContext context = new VelocityContext();
 		context.put("hitTitle", hitTitle);
-		context.put("coordClass", coordClassForGML);
+		context.put("coordClass", coordClassOrCoordType);
 		context.put("coordClasses", coordClasses);
 		context.put("coordPointDetails", coordPointDetails);
 		context.put("pathToSymbolDirectory", UtilsServiceManager.getConfig().getString("temp_service_symbol", null));
 		context.put("pathToFontDirectory", UtilsServiceManager.getConfig().getString("temp_service_font", null));
 		context.put("pathToMapServer", UtilsServiceManager.getConfig().getString("temp_service_server", null));
 		context.put("pathToHTMLTemplate", UtilsServiceManager.getConfig().getString("temp_service_html_temp", null));
-		context.put("pathToMapFile", tmp_directory.concat(mapFileName));
+		context.put("pathToMapFile", getTmp_directory().concat(mapFileName));
 		
 		sw = new StringWriter();
 		templatePath = pathToTemplateFile;

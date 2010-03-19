@@ -88,6 +88,7 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
        
         if(request.getParameter("action") != null){
         	if(request.getParameter("action").equals("doTmpService")){
+        		String coordType = request.getParameter("coordType");
         		ArrayList<HashMap<String, String>> wms_coords;
         		wms_coords = new ArrayList<HashMap<String,String>>();
         		wms_coords = UtilsServiceManager.getCoordinatesDetails(request.getParameter(Settings.RESULT_KEY_PLUG_ID), Integer.parseInt(request.getParameter(Settings.RESULT_KEY_DOC_ID)), messages.getString("common.result.showCoord.unknown"));
@@ -96,7 +97,7 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
         			try {
         				String mapFileURL;
         				String mapFilePath;
-        				mapFilePath = UtilsServiceManager.tmp_directory.concat(UtilsServiceManager.createTemporaryMapService(request.getParameter("title"),request.getParameter(Settings.RESULT_KEY_PLUG_ID).concat(request.getParameter(Settings.RESULT_KEY_DOC_ID)), wms_coords));
+        				mapFilePath = UtilsServiceManager.getTmp_directory().concat(UtilsServiceManager.createTemporaryMapService(request.getParameter("title"),request.getParameter(Settings.RESULT_KEY_PLUG_ID).concat(request.getParameter(Settings.RESULT_KEY_DOC_ID)), wms_coords, coordType));
         				mapFileURL = UtilsServiceManager.getConfig().getString("temp_service_server").concat(mapFilePath).concat("&REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1");
 						wmsURL =  UtilsSearch.getWMSURL(request, mapFileURL, true);
 					} catch (ConfigurationException e) {

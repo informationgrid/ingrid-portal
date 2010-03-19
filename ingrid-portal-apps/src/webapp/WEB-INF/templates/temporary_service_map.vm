@@ -14,8 +14,8 @@ MAP
 
 	WEB
 		METADATA
-			"WMS_ACCESSCONSTRAINTS" "none"
-  			"WMS_SRS" "epsg:31466 epsg:31467 epsg:4326"
+			"WMS_ACCESSCONSTRAINTS" "PortalU temporary service"
+  			"WMS_SRS" "epsg:31466 epsg:31467 epsg:4326 epsg:25832 epsg:25833 epsg:31468 epsg:31469"
   			"WMS_ONLINERESOURCE" "$pathToMapServer$pathToMapFile&"
   			"WMS_TITLE" "$hitTitle"
   			"WMS_FEATURE_INFO_MIME_TYPE" "text/html"
@@ -61,13 +61,13 @@ MAP
 		CONNECTIONTYPE OGR
 		CONNECTION "$item.get("coordGMLPath")"
 		METADATA
-			"WMS_SRS"    "epsg:4326"
+			"WMS_SRS"    "epsg:$coordClass"
 			"WMS_TITLE"	"$item.get("coordClassName")"
 			"WMS_FEATURE_INFO_MIME_TYPE"    "text/html"
 		END
 		
 		PROJECTION
-			"init=epsg:4326"
+			"init=epsg:$coordClass"
 		END
 		
 		LABELITEM "COORDTITLE"
