@@ -26,7 +26,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
-import de.ingrid.portal.global.UtilsServiceManager;
+import de.ingrid.portal.global.UtilsMapServiceManager;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
 import de.ingrid.portal.om.IngridTinyUrlSource;
@@ -91,14 +91,14 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
         		String coordType = request.getParameter("coordType");
         		ArrayList<HashMap<String, String>> wms_coords;
         		wms_coords = new ArrayList<HashMap<String,String>>();
-        		wms_coords = UtilsServiceManager.getCoordinatesDetails(request.getParameter(Settings.RESULT_KEY_PLUG_ID), Integer.parseInt(request.getParameter(Settings.RESULT_KEY_DOC_ID)), messages.getString("common.result.showCoord.unknown"));
+        		wms_coords = UtilsMapServiceManager.getCoordinatesDetails(request.getParameter(Settings.RESULT_KEY_PLUG_ID), Integer.parseInt(request.getParameter(Settings.RESULT_KEY_DOC_ID)), messages.getString("common.result.showCoord.unknown"));
         		
         		if(wms_coords.size() > 0){
         			try {
         				String mapFileURL;
         				String mapFilePath;
-        				mapFilePath = UtilsServiceManager.getTmp_directory().concat(UtilsServiceManager.createTemporaryMapService(request.getParameter("title"),request.getParameter(Settings.RESULT_KEY_PLUG_ID).concat(request.getParameter(Settings.RESULT_KEY_DOC_ID)), wms_coords, coordType));
-        				mapFileURL = UtilsServiceManager.getConfig().getString("temp_service_server").concat(mapFilePath).concat("&REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1");
+        				mapFilePath = UtilsMapServiceManager.getTmpDirectory().concat(UtilsMapServiceManager.createTemporaryMapService(request.getParameter("title"),request.getParameter(Settings.RESULT_KEY_PLUG_ID).concat(request.getParameter(Settings.RESULT_KEY_DOC_ID)), wms_coords, coordType));
+        				mapFileURL = UtilsMapServiceManager.getConfig().getString("temp_service_server").concat(mapFilePath).concat("&REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1");
 						wmsURL =  UtilsSearch.getWMSURL(request, mapFileURL, true);
 					} catch (ConfigurationException e) {
 						if(log.isErrorEnabled()){
