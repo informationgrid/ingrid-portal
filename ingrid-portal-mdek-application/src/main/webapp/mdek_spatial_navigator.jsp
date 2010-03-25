@@ -191,14 +191,15 @@ addLocationTopics = function() {
 			}
 		}
 
+        var myTopicLabel = topic.name;
+        if (topic.type != null) {
+            myTopicLabel = myTopicLabel + ", " + topic.type;
+        }
+
 		if (storedTopic) {
 			// Element is already in the table. Update the topic.
 			// Update elements that are displayed in the table
-			if (topic.type != null) {
-			    store.update(storedTopic, "label", topic.name+", "+topic.type);
-			} else {
-				store.update(storedTopic, "label", topic.name);
-			}
+			store.update(storedTopic, "label", myTopicLabel);
 			if (topic.boundingBox) {
 				store.update(storedTopic, "longitude1", topic.boundingBox[0]);
 				store.update(storedTopic, "latitude1", topic.boundingBox[1]);
@@ -219,7 +220,7 @@ addLocationTopics = function() {
 				store.addData({
 						Id: key,
 						topicId: topic.topicId,
-						label: topic.name+", "+topic.type,
+						label: myTopicLabel,
 						name: topic.name,
 						longitude1: topic.boundingBox[0],
 						latitude1: topic.boundingBox[1],
@@ -233,7 +234,7 @@ addLocationTopics = function() {
 				store.addData({
 						Id: key,
 						topicId: topic.topicId,
-						label: topic.name+", "+topic.type,
+						label: myTopicLabel,
 						name: topic.name,
 						nativeKey: topic.nativeKey,
 						topicType: topic.type,
