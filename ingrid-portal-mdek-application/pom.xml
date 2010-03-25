@@ -281,14 +281,14 @@
                     <artifactItem>
                       <groupId>gssoil</groupId>
                       <artifactId>thesaurus-gazetteer-resources</artifactId>
-                      <version>1.0.0-SNAPSHOT</version>
+                      <version>1.0.2</version>
                       <type>zip</type>
                       <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/classes</outputDirectory>
                     </artifactItem>
                     <artifactItem>
                       <groupId>gssoil</groupId>
                       <artifactId>thesaurus-gazetteer-libs</artifactId>
-                      <version>1.0.0-SNAPSHOT</version>
+                      <version>1.0.2</version>
                       <type>zip</type>
                       <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/lib</outputDirectory>
                     </artifactItem>
