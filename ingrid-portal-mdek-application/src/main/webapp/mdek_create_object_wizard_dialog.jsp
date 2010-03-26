@@ -515,7 +515,7 @@ scriptScope.closeDialog = function() {
 				<span><input dojoType="IntegerTextbox" min="0" max="1000" maxlength="4" id="assistantNumWords" class="w038" /></span>
 
 				<div class="checkboxContainer">
-					<span class="input"><input type="checkbox" name="assistantIncludeMetaTagCheckbox" id="assistantIncludeMetaTagCheckbox" dojoType="Checkbox" checked /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8065, 'Beschreibung')">Zeige die Beschreibung der &uuml;bergebenen Webseite an</label></span>
+					<span class="input"><input type="checkbox" name="assistantIncludeMetaTagCheckbox" id="assistantIncludeMetaTagCheckbox" dojoType="Checkbox" checked /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8065, 'Beschreibung')"><fmt:message key="dialog.wizard.create.showDescription" /></label></span>
 					<span class="input"><input type="checkbox" name="assistantIncludeHtmlContentCheckbox" id="assistantIncludeHtmlContentCheckbox" dojoType="Checkbox" checked /><label style="cursor:default;"><fmt:message key="dialog.wizard.create.showNumWords.1" /> <input dojoType="IntegerTextbox" min="0" max="10000" maxlength="5" id="assistantHtmlContentNumWords" class="w038" /> <fmt:message key="dialog.wizard.create.showNumWords.2" /></label></span>
 				</div>
 
