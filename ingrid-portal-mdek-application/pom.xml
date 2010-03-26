@@ -272,7 +272,7 @@
             <executions>
               <execution>
                 <id>unpack-gssoil</id>
-                <phase>package</phase>
+                <phase>prepare-package</phase>
                 <goals>
                   <goal>unpack</goal>
                 </goals>
