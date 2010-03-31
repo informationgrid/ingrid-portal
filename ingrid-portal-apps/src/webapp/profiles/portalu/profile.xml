@@ -154,6 +154,10 @@
         </file>
         <file>
             <action>copy</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/wms_interface.properties</src>
+        </file>
+        <file>
+            <action>copy</action>
             <src>ingrid-portal-apps/WEB-INF/classes/ingrid-portal-help.xml</src>
         </file>
         <file>
