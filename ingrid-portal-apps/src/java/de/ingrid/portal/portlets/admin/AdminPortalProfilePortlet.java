@@ -180,20 +180,25 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                 List fileActions = profile.getList("files.file.action");
                 for (int i = 0; i < fileActions.size(); i++) {
                     String actionName = (String) fileActions.get(i);
+                    String src = profile.getString("files.file(" + i + ").src");
+                    String dst = profile.getString("files.file(" + i + ").dst");
+                    if (dst == null) {
+                        dst = src;
+                    }
+                    String srcFileName = getPortletConfig().getPortletContext().getRealPath(
+                            "/profiles/" + profileName + "/" + src);
+                    String dstContext = dst.substring(0, dst.indexOf("/"));
+                    String dstPath = dst.substring(dst.indexOf("/") + 1);
+                    String dstFileName = ((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV))
+                            .getConfig().getServletContext().getContext("/" + dstContext).getRealPath(dstPath);
+                    
                     if (actionName.equalsIgnoreCase("copy")) {
-                        String src = profile.getString("files.file(" + i + ").src");
-                        String dst = profile.getString("files.file(" + i + ").dst");
-                        if (dst == null) {
-                            dst = src;
-                        }
-                        String srcFileName = getPortletConfig().getPortletContext().getRealPath(
-                                "/profiles/" + profileName + "/" + src);
-                        String dstContext = dst.substring(0, dst.indexOf("/"));
-                        String dstPath = dst.substring(dst.indexOf("/") + 1);
-                        String dstFileName = ((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV))
-                                .getConfig().getServletContext().getContext("/" + dstContext).getRealPath(dstPath);
                         if (!srcFileName.equals(dstFileName)) {
                             copy(srcFileName, dstFileName);
+                        }
+                    }else if(actionName.equalsIgnoreCase("copy-dir")){
+                    	if (!srcFileName.equals(dstFileName)) {
+                    		copyDir(srcFileName, dstFileName);
                         }
                     }
                 }
@@ -254,4 +259,18 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
         }
     }
 
+    /**
+     * @param source
+     * @param dest
+     * @throws IOException
+     */
+    private static void copyDir(String source, String dest) throws IOException {
+        File sourceDir = new File(source);
+        File[] sourceFiles = sourceDir.listFiles();
+        
+    	for (int i = 0; i < sourceFiles.length; i++) {
+    		File destFile = new File(dest.concat("/").concat(sourceFiles[i].getName()));
+    		copy(sourceFiles[i], destFile);
+    	}
+    }
 }

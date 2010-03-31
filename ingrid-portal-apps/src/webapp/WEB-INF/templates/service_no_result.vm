@@ -5,7 +5,10 @@
               <li>$MESSAGES.getString('service.result.noResult2')</li>
               <li>$MESSAGES.getString('service.result.noResult3')</li>
               <li>$MESSAGES.getString('service.result.noResult4')</li>
-              <li>$MESSAGES.getString('service.result.noResult5')</li>
+			  #set($value = $MESSAGES.getString('service.result.noResult5'))
+			  #if($value !="service.result.noResult5")
+				<li>$value</li>
+			  #end
             </ul>
         </div>
       </div>
