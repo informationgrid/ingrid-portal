@@ -260,6 +260,8 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
     }
 
     /**
+     * Copy directory to file system.
+     * 
      * @param source
      * @param dest
      * @throws IOException
