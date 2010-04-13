@@ -15,7 +15,6 @@ import java.util.Locale;
 
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.global.IPlugHelper;
-import de.ingrid.portal.global.IPlugHelperDscEcs;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsString;
@@ -95,17 +94,19 @@ public class DisplayTreeFactory {
             root.addChild(partnerNode);
 
             LinkedHashMap providerMaps = (LinkedHashMap) partnerMap.get("providers");
-            Iterator keysProviderMaps = providerMaps.keySet().iterator();
+            if (providerMaps != null) {
+                Iterator keysProviderMaps = providerMaps.keySet().iterator();
 
-            // process all providers
-            while (keysProviderMaps.hasNext()) {
-                LinkedHashMap providerMap = (LinkedHashMap) providerMaps.get(keysProviderMaps.next());
-                IngridProvider provider = (IngridProvider) providerMap.get("provider");
+                // process all providers
+                while (keysProviderMaps.hasNext()) {
+                    LinkedHashMap providerMap = (LinkedHashMap) providerMaps.get(keysProviderMaps.next());
+                    IngridProvider provider = (IngridProvider) providerMap.get("provider");
 
-                DisplayTreeNode providerNode = new DisplayTreeNode(provider.getIdent(), provider.getName(), false);
-                providerNode.setType(DisplayTreeNode.GENERIC);
-                providerNode.setParent(partnerNode);
-                partnerNode.addChild(providerNode);
+                    DisplayTreeNode providerNode = new DisplayTreeNode(provider.getIdent(), provider.getName(), false);
+                    providerNode.setType(DisplayTreeNode.GENERIC);
+                    providerNode.setParent(partnerNode);
+                    partnerNode.addChild(providerNode);
+                }
             }
         }
 
