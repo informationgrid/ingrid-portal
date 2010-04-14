@@ -201,6 +201,55 @@ $action.setParameter("id", "$rowId")
 </div>
 #end
 
+#macro (renderDBBrowserFooterButtonDisable $button)
+	#if($button == "doEdit")
+    	<input class="btn_disable float_left" type="submit" name="doEdit" value="Edit" disabled/>
+	#end
+	#if($button == "doDelete")
+		<input class="btn_disable float_left" type="submit" name="doDelete" onClick="return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')" value="$MESSAGES.getString('component.forms.buttons.delete')" disabled/>
+	#end
+	#if($button == "doRefresh")
+    	<input class="btn_disable float_right" type="submit" name="doRefresh" value="$MESSAGES.getString('component.forms.buttons.refresh')" disabled/>
+    #end
+	#if($button == "doNew")
+		<input class="btn_disable float_right" type="submit" name="doNew" value="$MESSAGES.getString('component.forms.buttons.add')" disabled/>
+	#end
+	#if($button == "doClear")
+		<span class="float_left">&nbsp;</span>
+	#end
+#end
+
+#macro (renderDBBrowserFooterDeleteButtonsDisable $buttons $disableDeleteButton)
+<div class="formfooter">
+#foreach ($button in $buttons)
+	#if($button == "doEdit")
+		<input class="btn float_left" type="submit" name="doEdit" value="Edit"/>
+		<span class="float_left">&nbsp;</span>
+	#end
+	#if($button == "doDelete")
+		#if($disableDeleteButton == "true")
+			#renderDBBrowserFooterButtonDisable ($button)
+		#else
+			<input class="btn float_left" type="submit" name="doDelete" onClick="return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')" value="$MESSAGES.getString('component.forms.buttons.delete')" />
+		#end
+	#end
+	#if($button == "doRefresh")
+    	<input class="btn float_right" type="submit" name="doRefresh" value="$MESSAGES.getString('component.forms.buttons.refresh')" />
+		<span class="float_right">&nbsp;</span>
+	#end
+	#if($button == "doNew")
+		<input class="btn float_right" type="submit" name="doNew" value="$MESSAGES.getString('component.forms.buttons.add')" />
+	#end
+	#if($button == "doClear")
+		<span class="float_left">&nbsp;</span>
+		<input class="btn float_left" type="submit" name="doClear" value="$MESSAGES.getString('component.forms.buttons.reset')" title="$MESSAGES.getString('component.forms.info.reset')" />
+	#end
+#end
+	<p class="clearer"></p>
+</div>
+#end
+
+
 #macro (renderDBBrowserFooter)
 	#set ($buttons = ["doEdit", "doDelete", "doRefresh", "doNew"])
 	#renderDBBrowserFooterButtons($buttons)
@@ -231,6 +280,14 @@ $action.setParameter("id", "$rowId")
 <p>
 	<label class="float_left col2left_incr" for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
 	<input class="float_left inputstyletext contentInput" type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue"/>
+   	<span class="clearer"></span>
+</p>
+#end
+
+#macro (renderDBEditTextFieldDisable $index $colName $colLabel $colValue)
+<p>
+	<label class="float_left col2left_incr" for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
+	<input class="float_left inputstyletext contentInput" type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue" disabled/>
    	<span class="clearer"></span>
 </p>
 #end

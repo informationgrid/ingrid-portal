@@ -196,6 +196,18 @@
         </file>
         <file>
             <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/favicon.ico</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/favicon.ico</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal-/decorations/layout/ingrid-popup/images/favicon.ico</src>
+        </file>
+        <file>
+            <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid/css/styles.css</src>
         </file>
         <file>
@@ -206,8 +218,19 @@
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid/header.vm</src>
         </file>
-
-        
+		<file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/header.vm</src>
+        </file>
+		<file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/header.vm</src>
+        </file>
+		<file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/footer.vm</src>
+        </file>
+		
         <file>
             <action>copy</action>
             <src>ingrid-portal/decorations/layout/ingrid-help/css/styles.css</src>

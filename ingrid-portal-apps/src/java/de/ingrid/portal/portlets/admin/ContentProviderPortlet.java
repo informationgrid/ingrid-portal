@@ -22,6 +22,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.AdminContentPartnerForm;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
@@ -52,6 +53,7 @@ public class ContentProviderPortlet extends ContentPortlet {
         viewNew = "/WEB-INF/templates/administration/edit_provider.vm";
         dbEntityClass = IngridProvider.class;
         viewTitleKey = "admin.title.provider";
+        disablePartnerProviderEdit = PortalConfig.DISABLE_PARTNER_PROVIDER_EDIT;
     }
 
     /**

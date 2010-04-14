@@ -407,6 +407,7 @@ div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 
 input.btn { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border: solid 1px #000000; background-color: #176798; cursor: pointer; }
+input.btn_disable { margin:0; padding: 2px 10px 2px 10px; color:#000000; font-size:70%; line-height: 130%; font-weight:bold; border: solid 1px #000000; }
 
 label.left {width:5.5em; float:left;}
 label.login {width:8em; float:left;}

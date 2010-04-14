@@ -10,6 +10,7 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.AdminContentPartnerForm;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.om.IngridPartner;
@@ -36,6 +37,7 @@ public class ContentPartnerPortlet extends ContentPortlet {
         viewNew = "/WEB-INF/templates/administration/edit_partner.vm";
         dbEntityClass = IngridPartner.class;
         viewTitleKey = "admin.title.partner";
+        disablePartnerProviderEdit = PortalConfig.DISABLE_PARTNER_PROVIDER_EDIT;
     }
 
     /**

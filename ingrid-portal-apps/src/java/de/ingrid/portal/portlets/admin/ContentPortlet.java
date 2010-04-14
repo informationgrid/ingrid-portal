@@ -26,6 +26,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ActionForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
@@ -123,6 +124,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     /** The view title template for adding new title */
     protected String viewTitleKey = null;
 
+    protected String disablePartnerProviderEdit = null;
     
     /**
      * @see javax.portlet.GenericPortlet#doView(javax.portlet.RenderRequest,
@@ -136,6 +138,10 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             Context context = getContext(request);
             context.put("MESSAGES", messages);
             context.put(CONTEXT_UTILS_STRING, new UtilsString());
+            if(disablePartnerProviderEdit != null){
+            	context.put("disablePartnerProviderEdit", PortalConfig.getInstance().getString(disablePartnerProviderEdit));
+            }
+            
             
             // set localized title for this page
             if(viewTitleKey == null){

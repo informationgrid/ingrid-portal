@@ -440,6 +440,7 @@ div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:75%; }
 
 input.btn { margin-top:0px; padding: 3px 10px 3px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border-bottom: solid 1px #99471f; border-top: solid 1px #cc7a52; border-right: solid 1px #cc7a52; border-left: solid 1px #cc7a52; background-color: #99471f; cursor: pointer; background-image: url("../images/button-bg.png");}
+input.btn_disable { margin-top:0px; padding: 3px 10px 3px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border-bottom: solid 1px #99471f; border-top: solid 1px #cc7a52; border-right: solid 1px #cc7a52; border-left: solid 1px #cc7a52; }
 
 label.left {width:5.5em; float:left;}
 label.login {width:8em; float:left;}

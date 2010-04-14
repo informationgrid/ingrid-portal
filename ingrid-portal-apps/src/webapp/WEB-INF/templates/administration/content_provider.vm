@@ -39,7 +39,7 @@
 		</p>
 	</div>
 #set ($buttons = ["doDelete", "doRefresh", "doNew"])
-#renderDBBrowserFooterButtons($buttons)
+#renderDBBrowserFooterDeleteButtonsDisable($buttons $disablePartnerProviderEdit)
 </form>
 <p/>
 #set ($action = $renderResponse.createActionURL())

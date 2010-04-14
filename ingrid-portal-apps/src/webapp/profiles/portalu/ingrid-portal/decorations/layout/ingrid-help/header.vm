@@ -17,7 +17,7 @@
   <meta name="keywords" content="" />
   <meta name="copyright" content="wemove digital solutions GmbH" />
   <meta name="robots" content="index,follow" />
-  <link rel="shortcut icon" href="#BaseHref()#GetPageResource('images/favicon.ico')" />
+  <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
 
   #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
   #foreach($style in $theme.styleSheets)        
