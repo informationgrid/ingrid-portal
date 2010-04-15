@@ -176,7 +176,12 @@ $action.setParameter("id", "$rowId")
 #end
 
 #macro (renderDBBrowserFooterButtons $buttons)
-	#renderDBBrowserFooterDeleteButtonsDisable ($button "false")
+	<div class="formfooter">
+		#foreach ($button in $buttons)
+			#renderDBBrowserFooterDeleteButtonsDisable ($button "false")
+		#end
+	<p class="clearer"></p>
+	</div>
 #end
 
 #macro (renderDBBrowserFooterButtonDisable $button)
