@@ -21,7 +21,7 @@
 		#else
 			#if($colName == 'ident')			
 				#if($disablePartnerProviderEdit == 'true')
-					#renderDBEditTextFieldDisable($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
+					#renderDBEditTextFieldDisable($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex) $disablePartnerProviderEdit)
 				#else
 					#renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
 				#end
