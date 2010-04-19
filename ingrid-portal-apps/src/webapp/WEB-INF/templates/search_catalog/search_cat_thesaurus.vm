@@ -11,22 +11,23 @@
 	## render +/- and icon
 	#set($nodeIcon = "ico_tree_folder_close.gif")
 	#set($nodeAlt = "$MESSAGES.getString('common.alt.icon.folder')")
+    #set ($url = "/ingrid-portal/portal/search-catalog/search-catalog-thesaurus.psml")
 
 	## render +/- and icon
 	<span style="float:left; width:${iconLayerWidth}px;">
 	#if($node.isOpen())
 		#set ($renderSubNodes = true)
 		## render "-" and icon WITH ACTION -> node can be closed
-		$action.setParameter('action','doCloseNode')
-		<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>
-   		<a href="$action"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
+		##$action.setParameter('action','doCloseNode')
+		<a href="$url?action=doCloseNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>
+   		<a href="$url?action=doCloseNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
 	#else
 		#set ($renderSubNodes = false)
 		#if ($node.expandable)
 			## render "+" and icon WITH ACTION -> node not opened yet and can be expanded 
-			$action.setParameter('action','doOpenNode')
-			<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>
-			<a href="$action"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
+			##$action.setParameter('action','doOpenNode')
+			<a href="$url?action=doOpenNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>
+			<a href="$url?action=doOpenNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
 		#else
 			## render nothing
 			&nbsp;
@@ -36,14 +37,13 @@
 
 	## render node text differently depending on the type and if it's currently selected
 	<span id="$node.id" style="float:left; width:${textLayerWidth}px;">
-    	$action.setParameter('action','doSearch')
+    	##$action.setParameter('action','doSearch')
         ##	<a href="$action">$node.name (Node Level: $node.level, numChildren: $node.getChildren().size())</a>
     	#if ($node.type == 0) ## TopTerm Type
     	    <strong>$node.name</strong>
     	#elseif ($node.type == 1) ## NodeLabel Type
     	    <strong>$node.name</strong>
     	#elseif ($node.type == 2) ## Descriptor Type
-          #set ($url = "/ingrid-portal/portal/search-catalog/search-catalog-thesaurus.psml")
     	  #if ($node.name == $ps.currentQueryTerm)
             <strong><a href="$url?action=doSearch&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()"><span style="text-decoration:underline">$node.name</span></a></strong>
     	    <!--<strong><a href="$action"><span style="text-decoration:underline">$node.name</span></a></strong>-->

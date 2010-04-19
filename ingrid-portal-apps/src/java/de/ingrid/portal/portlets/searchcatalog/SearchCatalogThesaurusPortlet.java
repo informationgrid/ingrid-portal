@@ -109,9 +109,28 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
         if (request.getParameter("nodeId") != null) {
             DisplayTreeNode root = (DisplayTreeNode) session.getAttribute("thesRoot");
             if (root != null) {
+                // open up all parent nodes
                 String[] parentNodes = ((String)request.getParameter("parentNodes")).split(",");
                 for (String nodeId : parentNodes) {
                     openNode(root, root.getChildByField(nodeId, "topicID"), request.getLocale());
+                }
+                
+                // do open node here since command has to be delivered as a normal link, otherwise
+                // search engines won't be able to open the node during a later crawl and so
+                // they wouldn't be able to get the underlying links
+                DisplayTreeNode node = root.getChildByField(request.getParameter("nodeId"), "topicID");
+                if (request.getParameter("action").equals("doOpenNode")) {
+                    try {
+                        openNode(root, node, request.getLocale());
+                    } catch (Exception e) {
+                        node.setLoading(false);
+                        if (log.isWarnEnabled())
+                            log.warn(e);
+                    }
+                } else if (action.equalsIgnoreCase("doCloseNode")) {
+                    if (node != null) {
+                        node.setOpen(false);
+                    }
                 }
             }
         }
@@ -153,41 +172,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
         if (submittedReload != null) {
             initPageState(ps);
         	actionResponse.sendRedirect(redirectPage + "?action=reload");
-
-        } else if (action.equalsIgnoreCase("doOpenNode")) {
-        	DisplayTreeNode root = (DisplayTreeNode) session.getAttribute("thesRoot");
-            if (root != null) {
-                DisplayTreeNode node = root.getChild(request.getParameter("nodeId"));
-            	
-                try {
-                	openNode(root, node, request.getLocale());
-                }
-                catch (Exception e) {
-                	node.setLoading(false);
-                	if (log.isWarnEnabled()) {
-                    	log.warn(e);                		
-                	}
-                }
-
-                // NOTICE: also Action is encoded as Param + further stuff (so bookmarking or back button works)
-                String urlParams = SearchState.getURLParamsMainSearch(request, SEARCH_STATE_TOPIC);
-            	actionResponse.sendRedirect(redirectPage + urlParams + "#" + request.getParameter("nodeId"));
-            }
-
-        } else if (action.equalsIgnoreCase("doCloseNode")) {
-        	DisplayTreeNode root = (DisplayTreeNode) ps.get("thesRoot");
-            if (root != null) {
-                DisplayTreeNode node = root.getChild(request.getParameter("nodeId"));
-                if (node != null) {
-                    node.setOpen(false);
-
-                    // NOTICE: also Action is encoded as Param + further stuff (so bookmarking or back button works)
-                    String urlParams = SearchState.getURLParamsMainSearch(request, SEARCH_STATE_TOPIC);
-                	actionResponse.sendRedirect(redirectPage + urlParams + "#" + request.getParameter("nodeId"));
-                }
-            }
-
-        } else if (action.equalsIgnoreCase("doSearch")) {
+        /*} else if (action.equalsIgnoreCase("doSearch")) {
         	DisplayTreeNode root = (DisplayTreeNode) ps.get("thesRoot");
             if (root != null) {
                 DisplayTreeNode node = root.getChild(request.getParameter("nodeId"));
@@ -211,7 +196,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
                 	actionResponse.sendRedirect(redirectPage + urlParams);
                 }
             }
-
+        */
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             // changed main or sub tab
             String newTab = request.getParameter(Settings.PARAM_TAB);
