@@ -18,5 +18,5 @@
 
 
 #set ($buttons = ["doDelete", "doRefresh", "doNew"])
-#renderDBBrowserFooterDeleteButtonsDisable($buttons $disablePartnerProviderEdit)
+#renderDBBrowserFooterButtonsDisable($buttons $disablePartnerProviderEdit)
 </form>
