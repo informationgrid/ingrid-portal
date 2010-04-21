@@ -48,16 +48,27 @@ public class IngridResourceBundle {
     }
 
     /**
-     * Get a message from encapsulated resource, also takes CommonResources into account
+     * Try to get a message first from a special profile resource bundle and if it 
+     * couldn't be found then try the encapsulated resource. Also takes CommonResources into account.
      * @param key
      * @return
      */
     public String getString(String key) {
         try {
-            return r.getString(key);
+            return getProfileString(key);
         } catch (Exception e) {
-            return getCommonString(key);
+            try {
+                return r.getString(key);
+            } catch (Exception ex) {
+                return getCommonString(key);
+            }
         }
+    }
+
+    public String getProfileString(String key) {
+        ResourceBundle profileRes = ResourceBundle.getBundle("de.ingrid.portal.resources.ProfileResources", r
+                .getLocale());
+        return profileRes.getString(key);
     }
 
     /**
