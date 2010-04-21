@@ -23,6 +23,8 @@
             <td colspan="2" style="text-align: right; ">
         #if ($currentVersion)
                 <a style="color:lightSteelBlue;font-size:10px;" href="$!component.downloadLink" title="#printVersion($component)">$MESSAGES.getString('component.forms.update.component.download.version') $currentVersion</a>
+        #else
+                <span style="color:lightSlateGray;font-size:10px;">$MESSAGES.getString('component.forms.update.component.download.version.not.available')</span>
         #end
             </td>
         </tr>
@@ -33,6 +35,14 @@
     <h1>Informationen</h1>
     #if ($component.connected && $component.connected == "component.update.component.not.available")
         <p style="color:red;">$MESSAGES.getString('component.forms.update.component.not.connected')</p>
+    #else
+        ## if it's a manual component say that here and if it's an iPlug say this also
+        ## so show at least some information here if there are no errors
+        #if ($component.connected == "component.update.component.is.available")
+            $MESSAGES.getString('component.forms.update.component.is.connected')
+        #else
+            $MESSAGES.getString('component.forms.update.component.is.manual')
+        #end
     #end
     #if ($component.emails.size() == 0)
         <p style="color:red;">$MESSAGES.getString('component.forms.update.component.no.email')</p>
@@ -49,19 +59,13 @@
             $provider<br />
         #end
     #end
-    <br />
-    #if ($component.changelogLink)
-        $MESSAGES.getString('component.forms.update.component.more.info')
-    #else
-        $MESSAGES.getString('component.forms.update.component.no.more.info')
-    #end
 #end
 
 #macro (printVersion $component)
     #if ($component.versionAvailableBuild)
         #set ($build = "Build:$component.versionAvailableBuild")
     #end
-    $component.versionAvailable $!build    
+    Download: $component.versionAvailable $!build    
 #end
 
 
@@ -69,7 +73,7 @@
 $action.setParameter("doRestartUpgradeJob", "true")
 <form action="$action" method="post" name="frmUpdate" id="frmUpdate">
 <div class="formbody">
-    <p class="float_right"><a href="$action" title="$MESSAGES.getString('Fragt den UpgradeServer an und aktualisiert alle Komponenten.')">$MESSAGES.getString('component.forms.update.component.trigger.job')</a></p>
+    <p class="float_right"><a href="$action" title="$MESSAGES.getString('component.forms.update.component.tooltip.start.job')">$MESSAGES.getString('component.forms.update.component.trigger.job')</a></p>
     <!--<h3>$MESSAGES.getString('Updates')</h3>-->
     <table class="border" style="width:100%;">
         <tr style="border-bottom:1px solid #F4F4F4; font-weight:bold;">
@@ -110,13 +114,14 @@ $action.setParameter("doUpdateEdit", "updateEdit")
     #if ($component.status == "component.update.new.version")
                 <a class="tooltip" href="$!component.downloadLink">
                     <img src='/ingrid-portal-apps/images/icn_download.gif' alt="Update" />
-                    <span>$MESSAGES.getString('component.forms.update.component.tooltip.download'): #printVersion($component)</span>
+                    <span>$MESSAGES.getString('component.forms.update.component.tooltip.download')<br />#printVersion($component)</span>
                 </a>
     #end
-    #if ($component.changelogLink)
+    
+    #if ($!component.changelogLink)
                 <a class="tooltip" href="$!component.changelogLink">
     #else
-                <a class="tooltip" href="$action">
+                <a class="tooltip">
     #end
                     #if ($component.connected == "component.update.component.not.available")
                         <img src='/ingrid-portal-apps/images/icn_info_error.gif' alt="info" />
@@ -127,9 +132,6 @@ $action.setParameter("doUpdateEdit", "updateEdit")
                     #end
                     <span>#setInfoText($component)</span>
                 </a>
-    ##else
-                ##&nbsp;
-    ##end
             </td>
         </tr>
 #end

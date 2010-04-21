@@ -28,6 +28,7 @@ COMPONENT_TITLE
         <input type="hidden" name="componentTitle" value="#getFieldValue('componentTitle')"/>
         -->
         <input class="inputstyletext contentInput" type="text" id="componentTitle" name="componentTitle" value="#getFieldValue('componentTitle')">
+        <div class="comment">$MESSAGES.getString('component.forms.update.component.help.title')</div>
     </p>
     <p class="clearer" />
     
@@ -73,6 +74,7 @@ COMPONENT_TYPE
             <span style="color:red;">$MESSAGES.getString('component.forms.update.component.error.no.distributions')</span>
             <input type="hidden" name="anyDistributions" value="false"/>
         #end
+        <p style="clear:both"><div class="comment">$MESSAGES.getString('component.forms.update.component.help.type')</div></p>
 #else
         <span>#getFieldValue('componentType')</span>
         <input type="hidden" name="componentType" value="#getFieldValue('componentType')"/>
@@ -89,6 +91,7 @@ COMPONENT_VERSION
     <input type="hidden" name="componentVersion" value="#getFieldValue('componentVersion')"/>
 #else    
     <input class="inputstyletext contentInput" type="text" id="componentVersion" name="componentVersion" value="#getFieldValue('componentVersion')">
+    <div class="comment">$MESSAGES.getString('component.forms.update.component.help.version')</div>
 #end
     <p class="clearer" />
     <p>
@@ -104,6 +107,7 @@ COMPONENT_INFO
 -->
     <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.update.component.info')</label>
     <textarea cols="125" rows="3" id="componentInfo" name="componentInfo">#getFieldValue('componentInfo')</textarea>
+    <div class="comment">$MESSAGES.getString('component.forms.update.component.help.info')</div>
     <p class="clearer" />
     <p>
 <!--
@@ -145,6 +149,7 @@ COMPONENT_EMAIL_NEW
     <td style="width:10px;"><input class="btn" type="submit" name="doUpdateAddEmail" value="$MESSAGES.getString('component.forms.update.component.add.new.email')" style="font-size:100%;" /></td>
     </tr>
     </table>
+    <p><div class="comment">$MESSAGES.getString('component.forms.update.component.help.add.new.email')</div></p>
     
 </div>
 <div class="formfooter" align="right">

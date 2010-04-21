@@ -219,4 +219,11 @@ public class IngridComponent implements Serializable {
     public String getVersionAvailableBuild() {
         return versionAvailableBuild;
     }
+
+    public void reset() {
+        setVersionAvailable(null);
+        setVersionAvailableBuild(null);
+        setChangelogLink(null);
+        setDownloadLink(null);
+    }
 }

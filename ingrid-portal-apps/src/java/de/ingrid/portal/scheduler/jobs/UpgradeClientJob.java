@@ -213,6 +213,10 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
                     } else {
                         component.setStatus(STATUS_UPDATE_AVAILABLE);
                     }
+                // if component is not available on the server (anymore?)
+                } else {
+                    component.reset();
+                    component.setStatus(STATUS_NO_UPDATE_AVAILABLE);
                 }
             }
         } catch (Exception e) {

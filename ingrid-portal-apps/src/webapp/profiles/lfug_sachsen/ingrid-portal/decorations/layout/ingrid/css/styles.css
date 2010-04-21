@@ -576,3 +576,9 @@ a.tooltip span
 }
 
 a.tooltip:hover span { visibility: visible; }
+
+.comment {
+    color:gray;
+    font-size:65%;
+    padding-left:185px;
+}
