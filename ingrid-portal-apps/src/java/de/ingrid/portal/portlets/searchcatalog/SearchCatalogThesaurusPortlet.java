@@ -218,7 +218,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 			getHierarchy(THESAURUS_START_TOPIC_ID, "false", "narrowerTermAssoc", "1", "down", language);
 
 		// If we don't get any results (or multiple results) there's a problem with the SNS service
-		if (results.length != 1) {
+		if (results == null || results.length != 1) {
 			return;
 		}
 
