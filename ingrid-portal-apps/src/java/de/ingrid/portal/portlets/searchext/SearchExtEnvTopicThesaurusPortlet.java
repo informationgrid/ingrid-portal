@@ -192,7 +192,7 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
                             session.setAttribute("similarRoot", similarRoot);
                             if (similarRoot.getChildren().size() == 1) {
                                 openNode(similarRoot, ((DisplayTreeNode) similarRoot.getChildren().get(0)).getId(),
-                                		request.getLocale());
+                                		request.getLocale(), false);
                             }
                         } else {
                             f.setError("", "searchExtEnvTopicThesaurus.error.no_term_found");
@@ -209,7 +209,7 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
         } else if (action.equalsIgnoreCase("doOpenNode")) {
             similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
             if (similarRoot != null) {
-                openNode(similarRoot, request.getParameter("nodeId"), request.getLocale());
+                openNode(similarRoot, request.getParameter("nodeId"), request.getLocale(), false);
                 ps.put("similarRoot", similarRoot);
             }
             // redirect to same page with view param setting view !
@@ -381,7 +381,7 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
         return ps;
     }
     
-    private void openNode(DisplayTreeNode rootNode, String nodeId, Locale language) {
+    private void openNode(DisplayTreeNode rootNode, String nodeId, Locale language, boolean filterEqualSubNode) {
         DisplayTreeNode node = rootNode.getChild(nodeId);
         node.setOpen(true);
         if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().size() == 0
@@ -391,14 +391,20 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             if (hits != null && hits.length > 0) {
                 for (int i=0; i<hits.length; i++) {
                     Topic hit = (Topic) hits[i];
-                    if (!hit.getTopicName().equalsIgnoreCase(node.getName())) {
-                        DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + i, hit.getTopicName(), false);
-                        snsNode.setType(DisplayTreeNode.SNS_TERM);
-                        snsNode.setParent(node);
-                        snsNode.put("topicID", hit.getTopicID());
-                        snsNode.put("topic", hit);
-                        node.addChild(snsNode);
+                    if (hit.getTopicName().equalsIgnoreCase(node.getName())) {
+                    	// node name (e.g. initial query term) occurs as sub node (sns topic with equal name)
+                    	// include as sub node or not
+                    	if (filterEqualSubNode) {
+                    		continue;
+                    	}
                     }
+
+                    DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + i, hit.getTopicName(), false);
+                    snsNode.setType(DisplayTreeNode.SNS_TERM);
+                    snsNode.setParent(node);
+                    snsNode.put("topicID", hit.getTopicID());
+                    snsNode.put("topic", hit);
+                    node.addChild(snsNode);
                 }
             } else {
                 // TODO remove node from display tree
