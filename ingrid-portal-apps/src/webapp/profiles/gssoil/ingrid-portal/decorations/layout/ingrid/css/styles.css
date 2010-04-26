@@ -18,8 +18,8 @@ span.icon_udk { margin-right:6px; margin-top:2px; float:left; width:21px; height
 span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px; }
 span.normaltext { font-weight:normal; text-transform:none; }
 span.smaller {font-size: 88%}
-ul { list-style-type:square; padding-left:0; margin: 0 0 1em 30px; }
-p { margin-top:0; margin-bottom:1em; font-size: 80%}
+ul { list-style-type:square; padding-left:0; margin: 0 0 1em 30px; font-size:100% }
+p { margin-top:0; margin-bottom:1em; font-size: 1em;}
 strong {font-weight:bold}
 .green {color:#598046;}
 .red {color: #cc7a52;}
@@ -248,8 +248,8 @@ div.section ul.catalog span.separator { background: url(../images/list_dot.gif) 
 div.section ul.catalog li a { white-space:nowrap; padding-left:1em; padding-right:0.5em; background: url(../images/list_dot.gif) no-repeat top left; }
 div.section ul.catalog li { border:1px solid red; background: url(../images/list_dot.gif) no-repeat bottom left; display: inline; padding-left:1em; padding-right:0.5em}
 
-div.section ul li { font-size:88%}
-div.section ol li { font-size:88%}
+div.section ul li { font-size:80%}
+div.section ol li { font-size:80%}
 */
 div.section ul.innermenu {list-style: none; margin: 0 0 0 0.0em;}
 div.section ul.innermenu li { margin: 0 0 0.3em 0;padding-left: 20px;background-image:url("../images/icn_down.gif");background-repeat: no-repeat;background-position: 0 .15em; }
@@ -380,8 +380,9 @@ div.portlet div.section-header a { color: #FFFFFF;}
 div#marginal_header a:hover, div#marginal_header a:focus { text-decoration: none; }
 div#marginal_header a:hover, div#marginal_header a:focus, div#marginal_header a:active, div#marginal_header a:visited { background:#5988046; }
 
-div.portlet div.portlet-section-body { position:relative;padding: 0.625em 0.875em; margin:0; border-top: solid #e5dfd3 1px; border-left: solid #e5dfd3 1px; border-bottom: solid #e5dfd3 1px; border-right: solid #e5dfd3 1px; background-color:#ffffff; background-image: url("../images/portlet-content.png"); background-repeat:repeat-x;}
+div.portlet div.portlet-section-body { position:relative;padding: 0.625em 0.875em; margin:0; border-top: solid #e5dfd3 1px; border-left: solid #e5dfd3 1px; border-bottom: solid #e5dfd3 1px; border-right: solid #e5dfd3 1px; background-color:#ffffff; background-image: url("../images/portlet-content.png"); background-repeat:repeat-x; font-size:1em;}
 
+div.portlet-section-body ul li { font-size:1em; }
 
 /********************************************************************
   form block styles  
