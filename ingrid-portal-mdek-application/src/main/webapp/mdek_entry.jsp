@@ -1039,7 +1039,7 @@ function hideSplash(){
 		                	<div id="ref3BaseDataTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref3BaseDataTab1">
 								<script>document.write("<div id='ref3BaseDataTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type3.generalDataTable.tab.text")+"'>")</script>
 		                      		<span class="input">
-		                      			<input type="text" maxlength="255" mode="textarea" id="ref3BaseDataText" name="ref3BaseDataText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
+		                      			<input type="text" mode="textarea" id="ref3BaseDataText" name="ref3BaseDataText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
 		                      		</span>
 	                			</div>
 								<script>document.write("<div id='ref3MethodTab2' dojoType='ContentPane' label='"+message.get("ui.obj.type3.generalDataTable.tab.links")+"'>")</script>
