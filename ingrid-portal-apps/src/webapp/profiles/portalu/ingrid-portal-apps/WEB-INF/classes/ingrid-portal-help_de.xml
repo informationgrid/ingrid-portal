@@ -713,9 +713,6 @@
 					<p> Dabei können Sie per Check-Box wählen, ob Sie die Ebenen des hinzugefügten Dienstes 
 						gleich aktivieren wollen und ob Sie auf den Kartenausschnitt zoomen wollen, der die Ausdehnung 
 						des geladenen Dienstes zeigt.</p>
-					<p>
-						<b>Button &#8222;Dienst entfernen&#8220;</b>
-                    </p>
                     <p>
                         <b>Button &#8222;Datenabfrage&#8220;</b>
                     </p>
@@ -1348,7 +1345,7 @@
                 <p>Beispiel: &#8218;{Aller TO Elbe}&#8217; (Es wird nach Dokumenten gesucht, die
 					Worte enthalten die im Alphabet bei Aller beginnen und bei Elbe enden. Die Worte 
 					&#8218;Aller&#8217;&#8218;Elbe&#8217; sind dabei im Suchbereich nicht enthalten.</p>
-					Der Suchbereich kann aber innerhalb eines Suchwortes angegeben werden.
+				<p>Der Suchbereich kann aber auch innerhalb eines Suchwortes angegeben werden.</p>
                 <p>Beispiel: &#8218;te[i TO x]t&#8217; (Es wird nach Dokumenten gesucht, die
                     z.B. die Worte Teil, Test oder Text enthalten)</p>
 				<p> Alternativ zu dem Operator TO kann auch ein Bindestrich - verwendet werden </p>
@@ -2174,9 +2171,6 @@
 					<p> Dabei können Sie per Check-Box wählen, ob Sie die Ebenen des hinzugefügten Dienstes 
 						gleich aktivieren wollen und ob Sie auf den Kartenausschnitt zoomen wollen, der die Ausdehnung 
 						des geladenen Dienstes zeigt.</p>
-					<p>
-						<b>Button &#8222;Dienst entfernen&#8220;</b>
-                    </p>
                     <p>
                         <b>Button &#8222;Datenabfrage&#8220;</b>
                     </p>
