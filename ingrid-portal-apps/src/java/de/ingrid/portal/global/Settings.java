@@ -243,6 +243,10 @@ public class Settings {
     // Address address relations
     public static final String HIT_KEY_ADDR_ADDR_RELATION = "T022_adr_adr";
 
+    // UDK Objects category and topic in environment catalog (Umweltthemen = datatype:topics)
+    public static final String HIT_KEY_OBJ_ENV_CATEGORY_KEY = "t0114_env_category.cat_key";
+    public static final String HIT_KEY_OBJ_ENV_TOPIC_KEY = "t0114_env_topic.topic_key";
+
     // ===========================================
     // PORTLET MESSAGING
     // NOTICE: Request Parameter (see next section) ARE USED AS MESSAGE KEYS AND VALUES whenever possible !

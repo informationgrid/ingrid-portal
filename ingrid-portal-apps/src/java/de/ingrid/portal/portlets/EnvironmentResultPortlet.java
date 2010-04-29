@@ -33,6 +33,7 @@ import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
 public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
 
@@ -219,7 +220,9 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             String[] requestedFields = { Settings.RESULT_KEY_TOPIC, Settings.RESULT_KEY_FUNCT_CATEGORY,
-                    Settings.RESULT_KEY_PARTNER, Settings.RESULT_KEY_PROVIDER, Settings.HIT_KEY_OBJ_ID };
+                    Settings.RESULT_KEY_PARTNER, Settings.RESULT_KEY_PROVIDER,
+            		Settings.HIT_KEY_UDK_CLASS, Settings.HIT_KEY_OBJ_ID,
+            		Settings.HIT_KEY_OBJ_ENV_TOPIC_KEY, Settings.HIT_KEY_OBJ_ENV_CATEGORY_KEY };
             hits = ibus.searchAndDetail(query, hitsPerPage, currentPage, startHit, PortalConfig.getInstance().getInt(
                     PortalConfig.QUERY_TIMEOUT_RANKED, 5000), requestedFields);
             
@@ -298,9 +301,44 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         hit.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_TOPIC, resources));
         hit.put(Settings.RESULT_KEY_FUNCT_CATEGORY, UtilsSearch.getDetailValue(detail,
                 Settings.RESULT_KEY_FUNCT_CATEGORY, resources));
-        // add detail url if needed
-        if (hit.get("url") == null)
-            hit.put(Settings.RESULT_KEY_DOC_UUID, ((String[])detail.get(Settings.HIT_KEY_OBJ_ID))[0]);
+
+        // process IGC Object (no url) !
+        if (hit.get("url") == null) {
+            hit.put(Settings.RESULT_KEY_DOC_UUID, UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_OBJ_ID));
+            hit.put(Settings.RESULT_KEY_UDK_CLASS, UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_UDK_CLASS));
+
+            // process topics: map ids from index to query values to resource names !
+            String ids = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_OBJ_ENV_TOPIC_KEY);
+            if (ids != null && ids.trim().length() > 0) {
+            	String[] idList = ids.split(",");
+                StringBuffer displayValues = new StringBuffer();
+            	for (int i=0; i < idList.length; i++) {
+                    if (i != 0) {
+                    	displayValues.append(UtilsSearch.DETAIL_VALUES_SEPARATOR);
+                    }
+                    String resourceKey = UtilsUDKCodeLists.getCodeListEntryName(UtilsUDKCodeLists.SYSLIST_ID_ENV_TOPICS,
+            			new Long(idList[i].trim()), UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE);
+                    displayValues.append(resources.getString(resourceKey.toLowerCase()));
+            	}
+                hit.put(Settings.RESULT_KEY_TOPIC, displayValues.toString());
+            }
+
+            // process topics: map ids from index to query values to resource names !
+            ids = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_OBJ_ENV_CATEGORY_KEY);
+            if (ids != null && ids.trim().length() > 0) {
+                StringBuffer displayValues = new StringBuffer();
+            	String[] idList = ids.split(",");
+            	for (int i=0; i < idList.length; i++) {
+                    if (i != 0) {
+                    	displayValues.append(UtilsSearch.DETAIL_VALUES_SEPARATOR);
+                    }
+                    String resourceKey = UtilsUDKCodeLists.getCodeListEntryName(UtilsUDKCodeLists.SYSLIST_ID_ENV_FUNCT_CATEGORY,
+            			new Long(idList[i].trim()), UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE);
+                    displayValues.append(resources.getString(resourceKey.toLowerCase()));
+            	}
+                hit.put(Settings.RESULT_KEY_FUNCT_CATEGORY, displayValues.toString());
+            }
+        }
     }
 
 }
