@@ -116,7 +116,7 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
     		// this name will be retrieved from mdek-application later
     		// (this had to be done this way, since sessions are not application wide!)
     		getPortletContext().setAttribute("ige.force.userName", request.getParameter("user"));
-			actionResponse.sendRedirect("/ingrid-portal-mdek-application/mdek_admin_entry.jsp?debug=true");
+			actionResponse.sendRedirect("/ingrid-portal-mdek-application/mdek_admin_entry.jsp?debug=true&lang="+ request.getLocale().getLanguage());
 		} catch (IOException e) {
 			log.error("Could not redirect to page: /ingrid-portal-mdek-application/mdek_admin_entry.jsp?debug=true");
 			e.printStackTrace();
@@ -136,7 +136,7 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
     		// this name will be retrieved from mdek-application later
     		// (this had to be done this way, since sessions are not application wide!)
     		getPortletContext().setAttribute("ige.force.userName", request.getParameter("user"));
-			actionResponse.sendRedirect("/ingrid-portal-mdek-application/mdek_entry.jsp?debug=true");
+			actionResponse.sendRedirect("/ingrid-portal-mdek-application/mdek_entry.jsp?debug=true&lang=" + request.getLocale().getLanguage());
 		} catch (IOException e) {
 			log.error("Could not redirect to page: /ingrid-portal-mdek-application/mdek_entry.jsp?debug=true");
 			e.printStackTrace();
