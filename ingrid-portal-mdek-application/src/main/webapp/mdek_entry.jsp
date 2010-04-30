@@ -1298,17 +1298,17 @@ function hideSplash(){
 							<div id="spatialRefCoordsAdminUnitContent" style="display:block; height: 44px;">
 								<div class="left" style="float:left; margin-top:10px;">
 									<select id="spatialRefAdminUnitSelect" dojoType="ingrid:Select" toggle="plain" style="width:250px;">
-			                    		<option value="GEO84">Bezugssystem WGS84</option>
-			                    		<option value="GEO_BESSEL_POTSDAM">Bezugssystem Bessel/Potsdam</option>
-			                    		<option value="GK2">GK-Abbildung im 2. Meridianstreifen</option>
-			                    		<option value="GK3">GK-Abbildung im 3. Meridianstreifen</option>
-			                    		<option value="GK4">GK-Abbildung im 4. Meridianstreifen</option>
-			                    		<option value="GK5">GK-Abbildung im 5. Meridianstreifen</option>
-			                    		<option value="UTM32W">UTM-32 mit f&uuml;hrender Zonenangabe</option>
-			                    		<option value="UTM33W">UTM-33 mit f&uuml;hrender Zonenangabe</option>
-			                    		<option value="UTM32S">UTM-32 ohne f&uuml;hrender Zonenangabe</option>
-			                    		<option value="UTM33S">UTM-33 ohne f&uuml;hrender Zonenangabe</option>
-			                    		<option value="LAMGW">Lambert-Abbildung</option>
+			                    		<option value="GEO84"><fmt:message key="dialog.research.ext.obj.coordinates.wgs84" /></option>
+			                    		<option value="GEO_BESSEL_POTSDAM"><fmt:message key="dialog.research.ext.obj.coordinates.geobp" /></option>
+			                    		<option value="GK2"><fmt:message key="dialog.research.ext.obj.coordinates.gk2" /></option>
+			                    		<option value="GK3"><fmt:message key="dialog.research.ext.obj.coordinates.gk3" /></option>
+			                    		<option value="GK4"><fmt:message key="dialog.research.ext.obj.coordinates.gk4" /></option>
+			                    		<option value="GK5"><fmt:message key="dialog.research.ext.obj.coordinates.gk5" /></option>
+			                    		<option value="UTM32W"><fmt:message key="dialog.research.ext.obj.coordinates.utm32w" /></option>
+			                    		<option value="UTM33W"><fmt:message key="dialog.research.ext.obj.coordinates.utm33w" /></option>
+			                    		<option value="UTM32S"><fmt:message key="dialog.research.ext.obj.coordinates.utm32s" /></option>
+			                    		<option value="UTM33S"><fmt:message key="dialog.research.ext.obj.coordinates.utm33s" /></option>
+			                    		<option value="LAMGW"><fmt:message key="dialog.research.ext.obj.coordinates.lamgw" /></option>
 			                    	</select>
 			                    </div>
 	
@@ -1387,17 +1387,17 @@ function hideSplash(){
 							<div id="spatialRefCoordsLocationContent" style="display:block; height: 44px;">
 		                    	<div class="left" style="float:left; margin-top:10px;">
 		                    		<select id="spatialRefLocationSelect" dojoType="ingrid:Select" toggle="plain" style="width:250px;">
-			                    		<option value="GEO84">Bezugssystem WGS84</option>
-			                    		<option value="GEO_BESSEL_POTSDAM">Bezugssystem Bessel/Potsdam</option>
-			                    		<option value="GK2">GK-Abbildung im 2. Meridianstreifen</option>
-			                    		<option value="GK3">GK-Abbildung im 3. Meridianstreifen</option>
-			                    		<option value="GK4">GK-Abbildung im 4. Meridianstreifen</option>
-			                    		<option value="GK5">GK-Abbildung im 5. Meridianstreifen</option>
-			                    		<option value="UTM32W">UTM-32 mit f&uuml;hrender Zonenangabe</option>
-			                    		<option value="UTM33W">UTM-33 mit f&uuml;hrender Zonenangabe</option>
-			                    		<option value="UTM32S">UTM-32 ohne f&uuml;hrender Zonenangabe</option>
-			                    		<option value="UTM33S">UTM-33 ohne f&uuml;hrender Zonenangabe</option>
-			                    		<option value="LAMGW">Lambert-Abbildung</option>
+			                    		<option value="GEO84"><fmt:message key="dialog.research.ext.obj.coordinates.wgs84" /></option>
+			                    		<option value="GEO_BESSEL_POTSDAM"><fmt:message key="dialog.research.ext.obj.coordinates.geo_bessel_potsdam" /></option>
+			                    		<option value="GK2"><fmt:message key="dialog.research.ext.obj.coordinates.gk2" /></option>
+			                    		<option value="GK3"><fmt:message key="dialog.research.ext.obj.coordinates.gk3" /></option>
+			                    		<option value="GK4"><fmt:message key="dialog.research.ext.obj.coordinates.gk4" /></option>
+			                    		<option value="GK5"><fmt:message key="dialog.research.ext.obj.coordinates.gk5" /></option>
+			                    		<option value="UTM32W"><fmt:message key="dialog.research.ext.obj.coordinates.utm32w" /></option>
+			                    		<option value="UTM33W"><fmt:message key="dialog.research.ext.obj.coordinates.utm33w" /></option>
+			                    		<option value="UTM32S"><fmt:message key="dialog.research.ext.obj.coordinates.utm32s" /></option>
+			                    		<option value="UTM33S"><fmt:message key="dialog.research.ext.obj.coordinates.utm33s" /></option>
+			                    		<option value="LAMGW"><fmt:message key="dialog.research.ext.obj.coordinates.lamgw" /></option>
 			                    	</select>
 			                    </div>
 	
@@ -1529,10 +1529,10 @@ function hideSplash(){
 		                      <span class="label hidden"><label for="timeRefType">Typ</label></span>
 	                		  <span class="input">
 	                		  	<select dojoType="ingrid:Select" autoComplete="false" style="width:61px;" id="timeRefType">
-	                		  	<option value="am">am</option>
-	                		  	<option value="seit">seit</option>
-	                		  	<option value="bis">bis</option>
-	                		  	<option value="von">von - bis</option>
+	                		  	<option value="am"><fmt:message key="dialog.research.ext.obj.content.time.at" /></option>
+	                		  	<option value="seit"><fmt:message key="dialog.research.ext.obj.content.time.since" /></option>
+	                		  	<option value="bis"><fmt:message key="dialog.research.ext.obj.content.time.until" /></option>
+	                		  	<option value="von"><fmt:message key="dialog.research.ext.obj.content.time.fromto" /></option>
 	                		  	</select>
 	                		  </span>
 		                    </span>
