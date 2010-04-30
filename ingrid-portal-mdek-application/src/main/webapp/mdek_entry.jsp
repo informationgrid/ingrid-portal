@@ -291,12 +291,12 @@ function hideSplash(){
 	              <td class="col2">
 	                <!-- autoComplete=false because of 'weird' SelectBox behaviour (Click on Box Arrow adds wrong text to the selection) -->
 	                <select dojoType="ingrid:Select" autoComplete="false" required="true" style="width:386px;" id="objectClass">
-	                	<option value="Class0">Organisationseinheit/Fachaufgabe</option>
-	                	<option value="Class1">Geo-Information/Karte</option>
-	                	<option value="Class2">Dokument/Bericht/Literatur</option>
-	                	<option value="Class3">Dienst/Anwendung/Informationssystem</option>
-	                	<option value="Class4">Vorhaben/Projekt/Programm</option>
-	                	<option value="Class5">Datensammlung/Datenbank</option>
+	                	<option value="Class0"><fmt:message key="dialog.research.ext.obj.class0" /></option>
+	                	<option value="Class1"><fmt:message key="dialog.research.ext.obj.class1" /></option>
+	                	<option value="Class2"><fmt:message key="dialog.research.ext.obj.class2" /></option>
+	                	<option value="Class3"><fmt:message key="dialog.research.ext.obj.class3" /></option>
+	                	<option value="Class4"><fmt:message key="dialog.research.ext.obj.class4" /></option>
+	                	<option value="Class5"><fmt:message key="dialog.research.ext.obj.class5" /></option>
 	                </select>
  	              </td>
 	              <td class="col3"><img id="permissionObjLock" src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td>
