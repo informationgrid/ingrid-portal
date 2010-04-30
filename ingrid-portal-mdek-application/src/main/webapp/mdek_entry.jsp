@@ -1388,7 +1388,7 @@ function hideSplash(){
 		                    	<div class="left" style="float:left; margin-top:10px;">
 		                    		<select id="spatialRefLocationSelect" dojoType="ingrid:Select" toggle="plain" style="width:250px;">
 			                    		<option value="GEO84"><fmt:message key="dialog.research.ext.obj.coordinates.wgs84" /></option>
-			                    		<option value="GEO_BESSEL_POTSDAM"><fmt:message key="dialog.research.ext.obj.coordinates.geo_bessel_potsdam" /></option>
+			                    		<option value="GEO_BESSEL_POTSDAM"><fmt:message key="dialog.research.ext.obj.coordinates.geobp" /></option>
 			                    		<option value="GK2"><fmt:message key="dialog.research.ext.obj.coordinates.gk2" /></option>
 			                    		<option value="GK3"><fmt:message key="dialog.research.ext.obj.coordinates.gk3" /></option>
 			                    		<option value="GK4"><fmt:message key="dialog.research.ext.obj.coordinates.gk4" /></option>
