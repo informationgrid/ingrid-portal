@@ -215,7 +215,7 @@ function showError() {
 
 	<div id="catalogueSpatialRef" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-3#maintanance-of-objects-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-3#maintanance-of-objects-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 		<div id="spatialRefContent" class="content">
 
@@ -229,7 +229,7 @@ function showError() {
        					<input type="text" id="locationTextBox" size="20" name="locationTextBox" class="w292" dojoType="ingrid:ValidationTextBox" />
 					</span>
 					<span style="float:right;">
-       					<button dojoType="ingrid:Button" title="In Geo-Thesaurus suchen" id="findLocationTopicsButton" onClick="javascript:scriptScope.findLocationTopics();"><fmt:message key="dialog.admin.catalog.selectLocation.search" /></button>
+       					<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.selectLocation.search" />" id="findLocationTopicsButton" onClick="javascript:scriptScope.findLocationTopics();"><fmt:message key="dialog.admin.catalog.selectLocation.search" /></button>
        				</span>
         		</div>
 
@@ -245,7 +245,7 @@ function showError() {
         			<div class="checkboxContainer" id="resultList" style="width: 364px; height: 90px; overflow: auto;"></div>
         		</span>
           		<span class="button w085 transparent bottomRight">
-					<button dojoType="ingrid:Button" title="Übernehmen" id="addLocationTopicsButton" onClick="javascript:scriptScope.addLocationTopics();"><fmt:message key="dialog.admin.catalog.selectLocation.apply" /></button>          		
+					<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.selectLocation.apply" />" id="addLocationTopicsButton" onClick="javascript:scriptScope.addLocationTopics();"><fmt:message key="dialog.admin.catalog.selectLocation.apply" /></button>          		
           		</span>
 			</div>
       		<!-- CONTENT END -->

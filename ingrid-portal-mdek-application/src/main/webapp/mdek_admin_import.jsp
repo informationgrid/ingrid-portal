@@ -320,7 +320,7 @@ function hideLoadingZone() {
 
 		<div id="contentSection" class="contentBlockWhite top">
 			<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=import-export-2#import-export-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=import-export-2#import-export-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 			</div>
 			<div id="import" class="content">
 
@@ -397,10 +397,10 @@ function hideLoadingZone() {
 			<div class="inputContainer">
 				<span class="button w915" style="height:20px !important;">
 					<span style="float:right;">
-						<button dojoType="ingrid:Button" title="Import starten" onClick="javascript:scriptScope.startImport();"><fmt:message key="dialog.admin.import.start" /></button>
+						<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.import.start" />" onClick="javascript:scriptScope.startImport();"><fmt:message key="dialog.admin.import.start" /></button>
 					</span>
 					<span style="float:right;">
-						<button dojoType="ingrid:Button" title="Zuordnung zur&uuml;cksetzen" onClick="javascript:scriptScope.resetImport();"><fmt:message key="dialog.admin.import.reset" /></button>
+						<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.import.reset" />" onClick="javascript:scriptScope.resetImport();"><fmt:message key="dialog.admin.import.reset" /></button>
 					</span>
 					<span id="importLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 						<img src="img/ladekreis.gif" />
@@ -417,8 +417,8 @@ function hideLoadingZone() {
 				<span class="icon"><img src="img/ic_info_download.gif" width="16" height="16" alt="Info" /></span>
 				<span id="importInfoTitle" class="title"></span>
 				<div id="ImportProcessInfoContent">
-					<p id="importInfoDownload"><fmt:message key="dialog.admin.import.result" /> <a href="javascript:void(0);" onclick="javascript:scriptScope.downloadImportLog();" title="Import-Logdatei">link</a></p>
-					<p id="importExceptionMessage"><fmt:message key="dialog.admin.import.error" /> <a href="javascript:void(0);" onclick="javascript:scriptScope.showJobException();" title="Fehlerinformationen">link</a></p>
+					<p id="importInfoDownload"><fmt:message key="dialog.admin.import.result" /> <a href="javascript:void(0);" onclick="javascript:scriptScope.downloadImportLog();" title="<fmt:message key="dialog.admin.import.log" />">link</a></p>
+					<p id="importExceptionMessage"><fmt:message key="dialog.admin.import.error" /> <a href="javascript:void(0);" onclick="javascript:scriptScope.showJobException();" title="<fmt:message key="dialog.admin.import.errorinfo" />">link</a></p>
 					<table cellspacing="0">
 						<tr>
 							<td><fmt:message key="dialog.admin.import.startTime" /></td>
@@ -431,7 +431,7 @@ function hideLoadingZone() {
 					</table>
 					<span id="cancelImportProcessButton" class="button" style="height:20px !important;">
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Prozess abbrechen" onClick="javascript:scriptScope.cancelImport();"><fmt:message key="dialog.admin.import.cancel" /></button>
+							<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.import.cancel" />" onClick="javascript:scriptScope.cancelImport();"><fmt:message key="dialog.admin.import.cancel" /></button>
 						</span>
 					</span>
 				</div> <!-- processInfoContent end -->

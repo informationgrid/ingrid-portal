@@ -57,8 +57,8 @@ scriptScope.closeDialog = function() {
     			</div>
     		</span>
 			<div class="inputContainer grey noSpaceBelow half" style="height:30px;">
-		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Ohne Assistent weiter" onClick="javascript:scriptScope.closeDialog();"><fmt:message key="dialog.wizard.select.cancel" /></button></span>
-		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Assistent starten" onClick="javascript:scriptScope.openWizard();"><fmt:message key="dialog.wizard.select.continue" /></button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="<fmt:message key="dialog.wizard.select.cancel" />" onClick="javascript:scriptScope.closeDialog();"><fmt:message key="dialog.wizard.select.cancel" /></button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="<fmt:message key="dialog.wizard.select.continue" />" onClick="javascript:scriptScope.openWizard();"><fmt:message key="dialog.wizard.select.continue" /></button></span>
 			</div>
 	  	</div>
 	</div>

@@ -55,7 +55,7 @@ scriptScope.saveEntries = function() {
 
 	<div class="contentBlockWhite top w478">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-5#overall-catalog-management-5', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-5#overall-catalog-management-5', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 		<div id="userContent" class="content h135">
 
@@ -81,7 +81,7 @@ scriptScope.saveEntries = function() {
 			</div>
 
 			<span style="float:right;">
-				<button dojoType="ingrid:Button" title="Hinzuf&uuml;gen" onClick="javascript:scriptScope.saveEntries();"><fmt:message key="dialog.admin.catalog.management.additionalFields.apply" /></button>
+				<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.additionalFields.apply" />" onClick="javascript:scriptScope.saveEntries();"><fmt:message key="dialog.admin.catalog.management.additionalFields.apply" /></button>
 			</span>
 			<!-- CONTENT END -->
 		</div>

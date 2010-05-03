@@ -318,8 +318,8 @@ closeDialog = function() {
 
   <div id="operations" class="contentBlockWhite top fullBlock">
     <div id="winNavi">
-			<a href="javascript:closeDialog();" title="schlie&szlig;en"><img src="img/ic_close.gif" /><fmt:message key="dialog.operation.close" /></a>
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-9#maintanance-of-objects-9', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:closeDialog();" title="<fmt:message key="dialog.operation.close" />"><img src="img/ic_close.gif" /><fmt:message key="dialog.operation.close" /></a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-9#maintanance-of-objects-9', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 	  </div>
 	  <div id="operationsContent" class="content">
 

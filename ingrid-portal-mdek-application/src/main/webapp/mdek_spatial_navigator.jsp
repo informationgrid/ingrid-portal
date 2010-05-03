@@ -255,7 +255,7 @@ addLocationTopics = function() {
 
 	<div id="catalogueSpatialRef" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-3#maintanance-of-objects-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-3#maintanance-of-objects-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 		<div id="spatialRefContent" class="content">
 
@@ -269,7 +269,7 @@ addLocationTopics = function() {
        					<input type="text" id="locationTextBox" size="20" name="locationTextBox" class="w292" dojoType="ingrid:ValidationTextBox" />
 					</span>
 					<span style="float:right;">
-       					<button dojoType="ingrid:Button" title="In Geo-Thesaurus suchen" id="findLocationTopicsButton" onClick="findLocationTopics"><fmt:message key="dialog.spatialNavigator.search" /></button>
+       					<button dojoType="ingrid:Button" title="<fmt:message key="dialog.spatialNavigator.search" />" id="findLocationTopicsButton" onClick="findLocationTopics"><fmt:message key="dialog.spatialNavigator.search" /></button>
        				</span>
         		</div>
 
@@ -285,7 +285,7 @@ addLocationTopics = function() {
         			<div class="checkboxContainer" id="resultList" style="width: 364px; height: 90px; overflow: auto;"></div>
         		</span>
           		<span class="button w085 transparent bottomRight">
-					<button dojoType="ingrid:Button" title="Übernehmen" id="addLocationTopicsButton" onClick="addLocationTopics"><fmt:message key="dialog.spatialNavigator.apply" /></button>          		
+					<button dojoType="ingrid:Button" title="<fmt:message key="dialog.spatialNavigator.apply" />" id="addLocationTopicsButton" onClick="addLocationTopics"><fmt:message key="dialog.spatialNavigator.apply" /></button>          		
           		</span>
 			</div>
       		<!-- CONTENT END -->

@@ -28,6 +28,7 @@
 	"general.userOperation.EDITED":"modified",
 	"general.userOperation.DELETED":"marked for deletion",
 	"general.state.markedDeleted":"marked for deletion",
+	"general.loading.mask":"Loading mask...",
 	
 	"menu.general.help":"Help",
 	"menu.general.disclaimer":"Disclaimer",
@@ -44,7 +45,7 @@
 	"menu.main.statistics":"Statistics",
 
 	"menu.admin.main.catalog":"Catalogue",
-	"menu.admin.main.catalog.settings":"General settings",
+	"menu.admin.main.catalog.settings":"Catalogue settings",
 	"menu.admin.main.catalog.fieldSettings":"Field settings",
 	"menu.admin.main.catalog.generalSettings":"General settings",
 	"menu.admin.main.user":"User management",

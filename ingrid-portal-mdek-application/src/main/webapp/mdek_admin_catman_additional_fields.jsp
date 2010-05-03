@@ -175,7 +175,7 @@ function editListEntries(menuItem) {
 
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-5#overall-catalog-management-5', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-5#overall-catalog-management-5', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 		<div id="catalogueAddFields" class="content">
 
@@ -217,7 +217,7 @@ function editListEntries(menuItem) {
 				<div class="inputContainer">
 					<span class="button w924" style="height:20px !important;">
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveChanges();"><fmt:message key="dialog.admin.catalog.management.additionalFields.saveChanges" /></button>
+							<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.additionalFields.saveChanges" />" onClick="javascript:scriptScope.saveChanges();"><fmt:message key="dialog.admin.catalog.management.additionalFields.saveChanges" /></button>
 						</span>
 					</span>
 				</div>
@@ -247,7 +247,7 @@ function editListEntries(menuItem) {
 				<div class="inputContainer">
 					<span class="button w924" style="height:20px !important;">
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Hinzuf&uuml;gen" onClick="javascript:scriptScope.addEntry();"><fmt:message key="dialog.admin.catalog.management.additionalFields.add" /></button>
+							<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.additionalFields.add" />" onClick="javascript:scriptScope.addEntry();"><fmt:message key="dialog.admin.catalog.management.additionalFields.add" /></button>
 						</span>
 					</span>
 				</div>

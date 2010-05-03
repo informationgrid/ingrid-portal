@@ -160,7 +160,7 @@ function hideLoadingZone() {
 
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=catalog-administration-2#catalog-administration-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=catalog-administration-2#catalog-administration-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 		<div id="catalogueAdminFields" class="content">
 	
@@ -189,7 +189,7 @@ function hideLoadingZone() {
 			<div class="inputContainer">
 				<span class="button w644" style="height:20px !important;">
 					<span style="float:right;">
-						<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveGuiIdList();"><fmt:message key="dialog.admin.catalog.fields.save" /></button>
+						<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.fields.save" />" onClick="javascript:scriptScope.saveGuiIdList();"><fmt:message key="dialog.admin.catalog.fields.save" /></button>
 					</span>
 					<span id="catalogueFieldSettingsLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 						<img src="img/ladekreis.gif" />

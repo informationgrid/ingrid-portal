@@ -124,7 +124,7 @@ function hideLoadingZone() {
 
 	<div class="contentBlockWhite top fullBlock">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=creation-of-objects-3#creation-of-objects-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=creation-of-objects-3#creation-of-objects-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 		<div class="content">
 
@@ -138,8 +138,8 @@ function hideLoadingZone() {
 			</div>
 
 			<div class="inputContainer grey noSpaceBelow full" style="height:30px;">
-		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="javascript:scriptScope.closeDialog();"><fmt:message key="dialog.wizard.getCap.cancel" /></button></span>
-		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Start" onClick="javascript:scriptScope.startRequest();"><fmt:message key="dialog.wizard.getCap.start" /></button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="<fmt:message key="dialog.wizard.getCap.cancel" />" onClick="javascript:scriptScope.closeDialog();"><fmt:message key="dialog.wizard.getCap.cancel" /></button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="<fmt:message key="dialog.wizard.getCap.start" />" onClick="javascript:scriptScope.startRequest();"><fmt:message key="dialog.wizard.getCap.start" /></button></span>
 				<span id="assistantGetCapLoadingZone" style="float:right; margin-top:6px; z-index: 100; visibility:hidden">
 					<img src="img/ladekreis.gif" />
 				</span>

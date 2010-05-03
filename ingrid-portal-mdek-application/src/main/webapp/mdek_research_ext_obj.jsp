@@ -642,9 +642,9 @@ function hideLoadingZone() {
 		<div id="objTopic0">
         <div class="tabContainerSubNavi">
     	    <ul>
-    	      <li><a nohref="nohref" class="current" title="Suchmodus"><fmt:message key="dialog.research.ext.obj.mode" /></a></li>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 1, 3);" title="Objektklassen"><fmt:message key="dialog.research.ext.obj.objClasses" /></a></li>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 2, 3);" title="Fachw&ouml;rterbuch"><fmt:message key="dialog.research.ext.obj.thesaurus" /></a></li>
+    	      <li><a nohref="nohref" class="current" title="<fmt:message key="dialog.research.ext.obj.mode" />"><fmt:message key="dialog.research.ext.obj.mode" /></a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 1, 3);" title="<fmt:message key="dialog.research.ext.obj.objClasses" />"><fmt:message key="dialog.research.ext.obj.objClasses" /></a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 2, 3);" title="<fmt:message key="dialog.research.ext.obj.thesaurus" />"><fmt:message key="dialog.research.ext.obj.thesaurus" /></a></li>
     	    </ul>
     	  </div>
 
@@ -676,9 +676,9 @@ function hideLoadingZone() {
 		  <div id="objTopic1">
         <div class="tabContainerSubNavi">
     	    <ul>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="Suchmodus"><fmt:message key="dialog.research.ext.obj.mode" /></a></li>
-    	      <li><a nohref="nohref" class="current" title="Objektklassen"><fmt:message key="dialog.research.ext.obj.objClasses" /></a></li>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 2, 3);" title="Fachw&ouml;rterbuch"><fmt:message key="dialog.research.ext.obj.thesaurus" /></a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="<fmt:message key="dialog.research.ext.obj.mode" />"><fmt:message key="dialog.research.ext.obj.mode" /></a></li>
+    	      <li><a nohref="nohref" class="current" title="<fmt:message key="dialog.research.ext.obj.objClasses" />"><fmt:message key="dialog.research.ext.obj.objClasses" /></a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objTopic', 2, 3);" title="<fmt:message key="dialog.research.ext.obj.thesaurus" />"><fmt:message key="dialog.research.ext.obj.thesaurus" /></a></li>
     	    </ul>
     	  </div>
         <div class="inputContainer field noSpaceBelow">
@@ -696,10 +696,10 @@ function hideLoadingZone() {
         <div class="spacerField" style="height:28px !important;">
 
           <span style="float:left;">
-	        <button dojoType="ingrid:Button" title="Keine ausw&auml;hlen" onClick="javascript:scriptScope.deselectAllObjectClasses();"><fmt:message key="dialog.research.ext.obj.clearSelection" /></button>
+	        <button dojoType="ingrid:Button" title="<fmt:message key="dialog.research.ext.obj.clearSelection" />" onClick="javascript:scriptScope.deselectAllObjectClasses();"><fmt:message key="dialog.research.ext.obj.clearSelection" /></button>
 	      </span>
           <span style="float:left;">
-	        <button dojoType="ingrid:Button" title="Alle ausw&auml;hlen" onClick="javascript:scriptScope.selectAllObjectClasses();"><fmt:message key="dialog.research.ext.obj.selectAll" /></button>
+	        <button dojoType="ingrid:Button" title="<fmt:message key="dialog.research.ext.obj.selectAll" />" onClick="javascript:scriptScope.selectAllObjectClasses();"><fmt:message key="dialog.research.ext.obj.selectAll" /></button>
 	      </span>
 
         </div>
@@ -710,9 +710,9 @@ function hideLoadingZone() {
 	  <div id="objTopic2" style="display:none;">
         <div class="tabContainerSubNavi">
     	  <ul>
-    	    <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="Suchmodus"><fmt:message key="dialog.research.ext.obj.mode" /></a></li>
-    	    <li><a href="javascript:scriptScope.navInnerTab('objTopic', 1, 3);" title="Objektklassen"><fmt:message key="dialog.research.ext.obj.objClasses" /></a></li>
-    	    <li><a nohref="nohref" class="current" title="Fachw&ouml;rterbuch"><fmt:message key="dialog.research.ext.obj.thesaurus" /></a></li>
+    	    <li><a href="javascript:scriptScope.navInnerTab('objTopic', 0, 3);" title="<fmt:message key="dialog.research.ext.obj.mode" />"><fmt:message key="dialog.research.ext.obj.mode" /></a></li>
+    	    <li><a href="javascript:scriptScope.navInnerTab('objTopic', 1, 3);" title="<fmt:message key="dialog.research.ext.obj.objClasses" />"><fmt:message key="dialog.research.ext.obj.objClasses" /></a></li>
+    	    <li><a nohref="nohref" class="current" title="<fmt:message key="dialog.research.ext.obj.thesaurus" />"><fmt:message key="dialog.research.ext.obj.thesaurus" /></a></li>
     	  </ul>
     	</div>
 
@@ -724,7 +724,7 @@ function hideLoadingZone() {
 			</span>
 
             <span style="float:right;">
-              <button dojoType="ingrid:Button" title="In Thesaurus suchen" onClick="javascript:scriptScope.findTopics();"><fmt:message key="dialog.research.ext.obj.thesaurusSearch" /></button>
+              <button dojoType="ingrid:Button" title="<fmt:message key="dialog.research.ext.obj.thesaurusSearch" />" onClick="javascript:scriptScope.findTopics();"><fmt:message key="dialog.research.ext.obj.thesaurusSearch" /></button>
             </span>
           </div>
         </div>
@@ -736,7 +736,7 @@ function hideLoadingZone() {
 		  </span>
 
 	      <span id="objExtSearchAddTopicButtonSpan" style="float:left; margin-top:95px; display:none;">
-	        <button dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="javascript:scriptScope.addSelectedTopics();"><fmt:message key="dialog.research.ext.obj.apply" /> -&gt;</button>
+	        <button dojoType="ingrid:Button" title="<fmt:message key="dialog.research.ext.obj.apply" />" onClick="javascript:scriptScope.addSelectedTopics();"><fmt:message key="dialog.research.ext.obj.apply" /> -&gt;</button>
 		  </span>
 
 		  <span style="float:right;">
@@ -778,10 +778,10 @@ function hideLoadingZone() {
 		  <div id="objSpace0">
         <div class="tabContainerSubNavi">
     	    <ul>
-    	      <li><a nohref="nohref" class="current" title="Geothesaurus-Raumbezug"><fmt:message key="dialog.research.ext.obj.snsLocation" /></a></li>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 1, 3);" title="Freier Raumbezug"><fmt:message key="dialog.research.ext.obj.customLocation" /></a></li>
+    	      <li><a nohref="nohref" class="current" title="<fmt:message key="dialog.research.ext.obj.snsLocation" />"><fmt:message key="dialog.research.ext.obj.snsLocation" /></a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 1, 3);" title="<fmt:message key="dialog.research.ext.obj.customLocation" />"><fmt:message key="dialog.research.ext.obj.customLocation" /></a></li>
 <!-- 
-    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 2, 3);" title="Raumeinschr&auml;nkung Karte">Raumeinschr&auml;nkung Karte</a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 2, 3);" title="<fmt:message key="dialog.research.ext.obj.restrictmap" />"><fmt:message key="dialog.research.ext.obj.restrictmap" /></a></li>
  -->
     	    </ul>
     	  </div>
@@ -795,7 +795,7 @@ function hideLoadingZone() {
 			</span>
 
             <span style="float:right;">
-              <button dojoType="ingrid:Button" title="In Geo-Thesaurus suchen" onClick="javascript:scriptScope.findLocationTopics();"><fmt:message key="dialog.research.ext.obj.thesaurusLocationSearch" /></button>
+              <button dojoType="ingrid:Button" title="<fmt:message key="dialog.research.ext.obj.thesaurusLocationSearch" />" onClick="javascript:scriptScope.findLocationTopics();"><fmt:message key="dialog.research.ext.obj.thesaurusLocationSearch" /></button>
             </span>
           </div>
         </div>
@@ -807,7 +807,7 @@ function hideLoadingZone() {
 		  </span>
 
 	      <span id="objExtSearchAddLocationTopicButtonSpan" style="float:left; margin-top:95px; display:none;">
-	        <button dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="javascript:scriptScope.addSelectedLocationTopics();"><fmt:message key="dialog.research.ext.obj.apply" /> -&gt;</button>
+	        <button dojoType="ingrid:Button" title="<fmt:message key="dialog.research.ext.obj.apply" />" onClick="javascript:scriptScope.addSelectedLocationTopics();"><fmt:message key="dialog.research.ext.obj.apply" /> -&gt;</button>
 		  </span>
 
 		  <span style="float:right;">
@@ -845,10 +845,10 @@ function hideLoadingZone() {
 		  <div id="objSpace1">
         <div class="tabContainerSubNavi">
     	    <ul>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 0, 3);" title="Geothesaurus-Raumbezug"><fmt:message key="dialog.research.ext.obj.snsLocation" /></a></li>
-    	      <li><a nohref="nohref" class="current" title="Freier Raumbezug"><fmt:message key="dialog.research.ext.obj.customLocation" /></a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 0, 3);" title="<fmt:message key="dialog.research.ext.obj.snsLocation" />"><fmt:message key="dialog.research.ext.obj.snsLocation" /></a></li>
+    	      <li><a nohref="nohref" class="current" title="<fmt:message key="dialog.research.ext.obj.customLocation" />"><fmt:message key="dialog.research.ext.obj.customLocation" /></a></li>
 <!-- 
-    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 2, 3);" title="Raumeinschr&auml;nkung Karte">Raumeinschr&auml;nkung Karte</a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 2, 3);" title="<fmt:message key="dialog.research.ext.obj.restrictmap" />"><fmt:message key="dialog.research.ext.obj.restrictmap" /></a></li>
  -->
     	    </ul>
     	  </div>
@@ -864,9 +864,9 @@ function hideLoadingZone() {
 		  <div id="objSpace2">
         <div class="tabContainerSubNavi">
     	    <ul>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 0, 3);" title="Geothesaurus-Raumbezug"><fmt:message key="dialog.research.ext.obj.customLocation" /></a></li>
-    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 1, 3);" title="Freier Raumbezug"><fmt:message key="dialog.research.ext.obj.customLocation" /></a></li>
-    	      <li><a nohref="nohref" class="current" title="Raumeinschr&auml;nkung Karte">Raumeinschr&auml;nkung Karte</a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 0, 3);" title="<fmt:message key="dialog.research.ext.obj.customLocation" />"><fmt:message key="dialog.research.ext.obj.customLocation" /></a></li>
+    	      <li><a href="javascript:scriptScope.navInnerTab('objSpace', 1, 3);" title="<fmt:message key="dialog.research.ext.obj.customLocation" />"><fmt:message key="dialog.research.ext.obj.customLocation" /></a></li>
+    	      <li><a nohref="nohref" class="current" title="<fmt:message key="dialog.research.ext.obj.restrictmap" />"><fmt:message key="dialog.research.ext.obj.restrictmap" /></a></li>
     	    </ul>
     	  </div>
         <div class="inputContainer field noSpaceBelow xScroll yNoScroll w829">
@@ -893,7 +893,7 @@ function hideLoadingZone() {
 		  <div id="objTime0">
         <div class="tabContainerSubNavi">
     	    <ul>
-    	      <li><a nohref="nohref" class="current" title="Zeiteinschr&auml;nkung"><fmt:message key="dialog.research.ext.obj.timeLimit" /></a></li>
+    	      <li><a nohref="nohref" class="current" title="<fmt:message key="dialog.research.ext.obj.timeLimit" />"><fmt:message key="dialog.research.ext.obj.timeLimit" /></a></li>
     	    </ul>
     	  </div>
         <div class="inputContainer field grey">
@@ -945,10 +945,10 @@ function hideLoadingZone() {
   <div class="inputContainer">
     <span class="button w805" style="height:20px !important;">
       <span style="float:right;">
-        <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewSearch();"><fmt:message key="dialog.research.ext.obj.search" /></button>
+        <button dojoType="ingrid:Button" title="<fmt:message key="dialog.research.ext.obj.search" />" onClick="javascript:scriptScope.startNewSearch();"><fmt:message key="dialog.research.ext.obj.search" /></button>
 	  </span>
       <span style="float:right;">
-        <button dojoType="ingrid:Button" title="Zur&uuml;cksetzen" onClick="javascript:scriptScope.resetInput();"><fmt:message key="dialog.research.ext.obj.reset" /></button>
+        <button dojoType="ingrid:Button" title="<fmt:message key="dialog.research.ext.obj.reset" />" onClick="javascript:scriptScope.resetInput();"><fmt:message key="dialog.research.ext.obj.reset" /></button>
 	  </span>
 	  <span id="objectSearchExtLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 		<img src="img/ladekreis.gif" />

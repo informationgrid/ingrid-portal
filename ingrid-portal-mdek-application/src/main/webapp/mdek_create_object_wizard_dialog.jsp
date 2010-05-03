@@ -501,7 +501,7 @@ scriptScope.closeDialog = function() {
 
 	<div id="assistant" class="contentBlockWhite top fullBlock">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=creation-of-objects-2#creation-of-objects-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=creation-of-objects-2#creation-of-objects-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 		<div id="assistantContent" class="content">
 
@@ -525,7 +525,7 @@ scriptScope.closeDialog = function() {
 			<div class="inputContainer">
 				<span class="button w644" style="height:20px !important;">
 					<span style="float:right;">
-						<button id="createObjWizardStartButton" dojoType="ingrid:Button" onClick="javascript:scriptScope.startSearch();" title="Start"><fmt:message key="dialog.wizard.create.start" /></button>
+						<button id="createObjWizardStartButton" dojoType="ingrid:Button" onClick="javascript:scriptScope.startSearch();" title="<fmt:message key="dialog.wizard.create.start" />"><fmt:message key="dialog.wizard.create.start" /></button>
 					</span>
 					<span id="createObjectWizardLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 						<img src="img/ladekreis.gif" />
@@ -633,10 +633,10 @@ scriptScope.closeDialog = function() {
 			<div id="resultButtonContainer" class="inputContainer">
 				<span class="button w644" style="height:20px !important;">
 					<span style="float:right;">
-						<button id="createObjWizardAcceptButton" dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="javascript:scriptScope.addValuesToObject();"><fmt:message key="dialog.wizard.create.apply" /></button>
+						<button id="createObjWizardAcceptButton" dojoType="ingrid:Button" title="<fmt:message key="dialog.wizard.create.apply" />" onClick="javascript:scriptScope.addValuesToObject();"><fmt:message key="dialog.wizard.create.apply" /></button>
 					</span>
 					<span style="float:right;">
-						<button id="createObjWizardCancelButton" dojoType="ingrid:Button" title="Abbrechen" onClick="javascript:scriptScope.closeDialog();"><fmt:message key="dialog.wizard.create.cancel" /></button>
+						<button id="createObjWizardCancelButton" dojoType="ingrid:Button" title="<fmt:message key="dialog.wizard.create.cancel" />" onClick="javascript:scriptScope.closeDialog();"><fmt:message key="dialog.wizard.create.cancel" /></button>
 					</span>
 				</span>
 			</div>

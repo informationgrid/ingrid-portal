@@ -253,7 +253,7 @@ function hideLoadingZone() {
 
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-2#overall-catalog-management-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-2#overall-catalog-management-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 		<div id="duplicatesContent" class="content w964">
 
@@ -318,10 +318,10 @@ function hideLoadingZone() {
 				<div class="inputContainer">
 					<span class="button w644" style="height:20px !important;">
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveChanges();"><fmt:message key="dialog.admin.catalog.management.duplicates.saveChanges" /></button>
+							<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.duplicates.saveChanges" />" onClick="javascript:scriptScope.saveChanges();"><fmt:message key="dialog.admin.catalog.management.duplicates.saveChanges" /></button>
 						</span>
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Pr&uuml;fung erneut ausf&uuml;hren" onClick="javascript:scriptScope.startDuplicatesJob();"><fmt:message key="dialog.admin.catalog.management.duplicates.refresh" /></button>
+							<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.duplicates.refresh" />" onClick="javascript:scriptScope.startDuplicatesJob();"><fmt:message key="dialog.admin.catalog.management.duplicates.refresh" /></button>
 						</span>
 						<span id="duplicatesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 							<img src="img/ladekreis.gif" />

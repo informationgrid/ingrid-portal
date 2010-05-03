@@ -365,56 +365,56 @@ function hideSplash(){
   	    <ul>
   	      <li><span id="currentUserName">Benutzername</span> · <span id="currentUserRole">Rollenbezeichnung</span> · <span id="currentCatalogName">Katalogname</span></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe"><script>document.write(message.get("menu.general.help"))</script></a></li>
+  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />"><script>document.write(message.get("menu.general.help"))</script></a></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('http://www.portalu.de:80/ingrid-portal/portal/disclaimer.psml', 'impressum', 'width=966,height=994,resizable=yes,scrollbars=yes,locationbar=no');" title="Impressum"><script>document.write(message.get("menu.general.disclaimer"))</script></a></li>
+  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('http://www.portalu.de:80/ingrid-portal/portal/disclaimer.psml', 'impressum', 'width=966,height=994,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.imprint" />"><script>document.write(message.get("menu.general.disclaimer"))</script></a></li>
   	      <li class="seperator">|</li>
   	      <li><a href="javascript:void(0);" onclick="javascript:switchLanguage();"><script>document.write(UtilLanguage.getNextLanguageName())</script></a></li>
   	      <li class="seperator">|</li>
   	      <li><a href="javascript:void(0);" onclick="javascript:dialog.showPage('Info', 'mdek_info_dialog.html', 365, 210, false); return false;" title="Info"><script>document.write(message.get("menu.general.info"))</script></a></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="#dummyAnchor" onClick="window.location.href='closeWindow.jsp';" title="schlie&szlig;en"><strong><script>document.write(message.get("menu.general.closeApplication"))</script></strong></a></li>
+  	      <li><a href="#dummyAnchor" onClick="window.location.href='closeWindow.jsp';" title="<fmt:message key="dialog.links.close" />"><strong><script>document.write(message.get("menu.general.closeApplication"))</script></strong></a></li>
   	    </ul>
   	  </div>
   	  <div id="navi">
   	    <ul>
-  	      <li><a id="page1Menu" style="display:none;" onClick="clickMenu('page1')" href="javascript:void(0);" class="current" title="Katalogverwaltung"><script>document.write(message.get("menu.admin.main.catalog"))</script></a></li>
-  	      <li><a id="page2Menu" onClick="clickMenu('page2')" href="javascript:void(0);" title="Nutzerverwaltung"><script>document.write(message.get("menu.admin.main.user"))</script></a></li>
-  	      <li><a id="page3Menu" style="display:none;" onClick="clickMenu('page3')" href="javascript:void(0);" title="Gesamtkatalogmanagement"><script>document.write(message.get("menu.admin.main.management"))</script></a></li>
-  	      <li><a id="page4Menu" style="display:none;" onClick="clickMenu('page4')" href="javascript:void(0);" title="Import/Export"><script>document.write(message.get("menu.admin.main.importExport"))</script></a></li>
+  	      <li><a id="page1Menu" style="display:none;" onClick="clickMenu('page1')" href="javascript:void(0);" class="current" title="<fmt:message key="menu.admin.main.catalog" />"><script>document.write(message.get("menu.admin.main.catalog"))</script></a></li>
+  	      <li><a id="page2Menu" onClick="clickMenu('page2')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.user.admin.user" />"><script>document.write(message.get("menu.admin.main.user"))</script></a></li>
+  	      <li><a id="page3Menu" style="display:none;" onClick="clickMenu('page3')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.management" />"><script>document.write(message.get("menu.admin.main.management"))</script></a></li>
+  	      <li><a id="page4Menu" style="display:none;" onClick="clickMenu('page4')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.importexport" />"><script>document.write(message.get("menu.admin.main.importExport"))</script></a></li>
   	    </ul>
   	  </div>
   	  
 	  <div id="page1Subnavi" class="subnavi" style="display:none">
   	    <ul>
-  	      <li><a id="page1Subnavi1" onClick="clickMenu('page1', 'page1')" href="javascript:void(0);" class="current" title="Katalogeinstellungen"><script>document.write(message.get("menu.admin.main.catalog.settings"))</script></a></li>
-  	      <li><a id="page1Subnavi2" onClick="clickMenu('page1', 'page1Sub2')" href="javascript:void(0);" title="Feldeinstellungen"><script>document.write(message.get("menu.admin.main.catalog.fieldSettings"))</script></a></li>
-  	      <li><a id="page1Subnavi3" onClick="clickMenu('page1', 'page1Sub3')" href="javascript:void(0);" title="Generelle Einstellunge"><script>document.write(message.get("menu.admin.main.catalog.generalSettings"))</script></a></li>
+  	      <li><a id="page1Subnavi1" onClick="clickMenu('page1', 'page1')" href="javascript:void(0);" class="current" title="<fmt:message key="menu.admin.main.catalog.settings" />"><script>document.write(message.get("menu.admin.main.catalog.settings"))</script></a></li>
+  	      <li><a id="page1Subnavi2" onClick="clickMenu('page1', 'page1Sub2')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.catalog.settings.field" />"><script>document.write(message.get("menu.admin.main.catalog.fieldSettings"))</script></a></li>
+  	      <li><a id="page1Subnavi3" onClick="clickMenu('page1', 'page1Sub3')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.catalog.settings.general" />"><script>document.write(message.get("menu.admin.main.catalog.generalSettings"))</script></a></li>
   	    </ul>	  
 	  </div>
 	  <div id="page2Subnavi" class="subnavi" style="display:none">
   	    <ul>
-  	      <li><a id="page2Subnavi1" onClick="clickMenu('page2', 'page2')" href="javascript:void(0);" class="current" title="Nutzeradministration"><script>document.write(message.get("menu.admin.main.user.userAdmin"))</script></a></li>
-  	      <li><a id="page2Subnavi2" onClick="clickMenu('page2', 'page2Sub2')" href="javascript:void(0);" title="Gruppenadministration"><script>document.write(message.get("menu.admin.main.user.groupAdmin"))</script></a></li>
-  	      <li><a id="page2Subnavi3" onClick="clickMenu('page2', 'page2Sub3')" href="javascript:void(0);" title="Berechtigungsübersicht"><script>document.write(message.get("menu.admin.main.user.permissions"))</script></a></li>
+  	      <li><a id="page2Subnavi1" onClick="clickMenu('page2', 'page2')" href="javascript:void(0);" class="current" title="<fmt:message key="menu.admin.main.user.admin.user" />"><script>document.write(message.get("menu.admin.main.user.userAdmin"))</script></a></li>
+  	      <li><a id="page2Subnavi2" onClick="clickMenu('page2', 'page2Sub2')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.user.admin.group" />"><script>document.write(message.get("menu.admin.main.user.groupAdmin"))</script></a></li>
+  	      <li><a id="page2Subnavi3" onClick="clickMenu('page2', 'page2Sub3')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.user.permissions" />"><script>document.write(message.get("menu.admin.main.user.permissions"))</script></a></li>
   	    </ul>
   	  </div>
 	  <div id="page3Subnavi" class="subnavi" style="display:none">
   	    <ul>
-  	      <li><a id="page3Subnavi1" onClick="clickMenu('page3', 'page3')" href="javascript:void(0);" title="Analyse"><script>document.write(message.get("menu.admin.main.management.analysis"))</script></a></li>	  
-  	      <li><a id="page3Subnavi2" onClick="clickMenu('page3', 'page3Sub2')" href="javascript:void(0);" title="Dubletten"><script>document.write(message.get("menu.admin.main.management.duplicates"))</script></a></li>	  
-  	      <li><a id="page3Subnavi3" onClick="clickMenu('page3', 'page3Sub3')" href="javascript:void(0);" title="URL-Pflege"><script>document.write(message.get("menu.admin.main.management.urls"))</script></a></li>	  
-  	      <li><a id="page3Subnavi4" onClick="clickMenu('page3', 'page3Sub4')" href="javascript:void(0);" title="Auswahl-/ISO-Codelistenpflege"><script>document.write(message.get("menu.admin.main.management.codelists"))</script></a></li>	  
-  	      <li><a id="page3Subnavi5" onClick="clickMenu('page3', 'page3Sub5')" href="javascript:void(0);" title="Zus&auml;tzliche Felder"><script>document.write(message.get("menu.admin.main.management.additionalFields"))</script></a></li>	  
-  	      <li><a id="page3Subnavi6" onClick="clickMenu('page3', 'page3Sub6')" href="javascript:void(0);" title="Adresse l&ouml;schen"><script>document.write(message.get("menu.admin.main.management.deleteAddress"))</script></a></li>	  
-  	      <li><a id="page3Subnavi7" onClick="clickMenu('page3', 'page3Sub7')" href="javascript:void(0);" title="Suchbegriffe"><script>document.write(message.get("menu.admin.main.management.searchTerms"))</script></a></li>	  
-  	      <li><a id="page3Subnavi8" onClick="clickMenu('page3', 'page3Sub8')" href="javascript:void(0);" title="Raumbez&uuml;ge"><script>document.write(message.get("menu.admin.main.management.spatialSearchTerms"))</script></a></li>	  
+  	      <li><a id="page3Subnavi1" onClick="clickMenu('page3', 'page3')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.management.analysis" />"><script>document.write(message.get("menu.admin.main.management.analysis"))</script></a></li>	  
+  	      <li><a id="page3Subnavi2" onClick="clickMenu('page3', 'page3Sub2')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.management.duplicates" />"><script>document.write(message.get("menu.admin.main.management.duplicates"))</script></a></li>	  
+  	      <li><a id="page3Subnavi3" onClick="clickMenu('page3', 'page3Sub3')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.management.urls" />"><script>document.write(message.get("menu.admin.main.management.urls"))</script></a></li>	  
+  	      <li><a id="page3Subnavi4" onClick="clickMenu('page3', 'page3Sub4')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.management.codelists" />"><script>document.write(message.get("menu.admin.main.management.codelists"))</script></a></li>	  
+  	      <li><a id="page3Subnavi5" onClick="clickMenu('page3', 'page3Sub5')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.management.additionalfields" />"><script>document.write(message.get("menu.admin.main.management.additionalFields"))</script></a></li>	  
+  	      <li><a id="page3Subnavi6" onClick="clickMenu('page3', 'page3Sub6')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.management.deleteadress" />"><script>document.write(message.get("menu.admin.main.management.deleteAddress"))</script></a></li>	  
+  	      <li><a id="page3Subnavi7" onClick="clickMenu('page3', 'page3Sub7')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.management.searchterms" />"><script>document.write(message.get("menu.admin.main.management.searchTerms"))</script></a></li>	  
+  	      <li><a id="page3Subnavi8" onClick="clickMenu('page3', 'page3Sub8')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.management.searchterms.spatial" />"><script>document.write(message.get("menu.admin.main.management.spatialSearchTerms"))</script></a></li>	  
   	    </ul>
 	  </div>
 	  <div id="page4Subnavi" class="subnavi" style="display:none">
   	    <ul>
-   	      <li><a id="page4Subnavi1" onClick="clickMenu('page4', 'page4')" href="javascript:void(0);" class="current" title="Export"><script>document.write(message.get("menu.admin.main.importExport.export"))</script></a></li>
-  	      <li><a id="page4Subnavi2" onClick="clickMenu('page4', 'page4Sub2')" href="javascript:void(0);" title="Import"><script>document.write(message.get("menu.admin.main.importExport.import"))</script></a></li>
+   	      <li><a id="page4Subnavi1" onClick="clickMenu('page4', 'page4')" href="javascript:void(0);" class="current" title="<fmt:message key="menu.admin.main.importexport.export" />"><script>document.write(message.get("menu.admin.main.importExport.export"))</script></a></li>
+  	      <li><a id="page4Subnavi2" onClick="clickMenu('page4', 'page4Sub2')" href="javascript:void(0);" title="<fmt:message key="menu.admin.main.importexport.import" />"><script>document.write(message.get("menu.admin.main.importExport.import"))</script></a></li>
   	    </ul>
   	  </div>
     </div>

@@ -215,7 +215,7 @@ function hideAddressLoadingZone() {
   
     <div id="researchSearchContentSection" class="contentBlockWhite top">
       <div id="winNavi">
-		<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=search-1#search-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+		<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=search-1#search-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
   	  </div>
   	  <div id="search" class="content">
 
@@ -226,14 +226,14 @@ function hideAddressLoadingZone() {
       		<div id="objSearch" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.research.objects" />">
               <div class="inputContainer field grey noSpaceBelow w829">
               <span class="input"><input type="text" id="objSearchInput" name="objSearchInput" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
-              <span class="expandContent"><a href="javascript:void(0);" onclick="javascript:scriptScope.toggleContent('obj');" title="Erweiterte Suche"><img id="extContentObjToggleArrow" src="img/ic_info_expand.gif" width="8" height="8" alt="Pfeil" /><fmt:message key="dialog.research.extSearch" /></a></span>
+              <span class="expandContent"><a href="javascript:void(0);" onclick="javascript:scriptScope.toggleContent('obj');" title="<fmt:message key="dialog.research.extSearch" />"><img id="extContentObjToggleArrow" src="img/ic_info_expand.gif" width="8" height="8" alt="Pfeil" /><fmt:message key="dialog.research.extSearch" /></a></span>
               <div class="spacer"></div>
         	  </div>
 
 	         <div id="objectSearchButtonContainer" class="inputContainer" style="display:block;">
 	          <span class="button w805" style="height:20px !important;">
 	            <span style="float:right;">
-	              <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewObjectSearch();"><fmt:message key="dialog.research.search" /></button>
+	              <button dojoType="ingrid:Button" title="<fmt:message key="dialog.research.search" />" onClick="javascript:scriptScope.startNewObjectSearch();"><fmt:message key="dialog.research.search" /></button>
 	    		</span>
 				<span id="objectSearchLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 					<img src="img/ladekreis.gif" />
@@ -280,14 +280,14 @@ function hideAddressLoadingZone() {
   
             <div class="inputContainer field grey noSpaceBelow w829">
               <span class="input"><input type="text" id="adrSearchInput" name="adrSearchInput" class="w800" dojoType="ingrid:ValidationTextBox" /></span>
-              <span class="expandContent"><a href="javascript:void(0);" onclick="javascript:scriptScope.toggleContent('adr');" title="Erweiterte Suche"><img id="extContentAdrToggleArrow" src="img/ic_info_expand.gif" width="8" height="8" alt="Pfeil" />Erweiterte Suche</a></span>
+              <span class="expandContent"><a href="javascript:void(0);" onclick="javascript:scriptScope.toggleContent('adr');" title="<fmt:message key="dialog.research.extSearch" />"><img id="extContentAdrToggleArrow" src="img/ic_info_expand.gif" width="8" height="8" alt="Pfeil" /><fmt:message key="dialog.research.extSearch" /></a></span>
               <div class="spacer"></div>
         	  </div>
 
 	         <div id="addressSearchButtonContainer" class="inputContainer" style="display:block;">
 	          <span class="button w805" style="height:20px !important;">
 	            <span style="float:right;">
-	              <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewAddressSearch();">Suchen</button>
+	              <button dojoType="ingrid:Button" title="<fmt:message key="dialog.research.search" />" onClick="javascript:scriptScope.startNewAddressSearch();"><fmt:message key="dialog.research.search" /></button>
 	    		</span>
 				<span id="addressSearchLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 					<img src="img/ladekreis.gif" />
@@ -295,7 +295,7 @@ function hideAddressLoadingZone() {
 	    	  </span>
 	    	</div>
 
-            <div dojoType="ContentPane" widgetId="extContentAdr" id="extContentAdr" style="margin-top:5px;" executeScripts="true" loadingMessage="Lade Daten ..."></div>
+            <div dojoType="ContentPane" widgetId="extContentAdr" id="extContentAdr" style="margin-top:5px;" executeScripts="true" loadingMessage="<fmt:message key="general.loading.data" />"></div>
 
 	        <!-- ADDRESS SEARCH RESULT LIST START -->
 	        <div class="spacer"></div>

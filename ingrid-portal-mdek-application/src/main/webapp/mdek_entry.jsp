@@ -196,38 +196,38 @@ function hideSplash(){
   	    <ul>
   	      <li><span id="currentUserName">Benutzername</span> · <span id="currentUserRole">Rollenbezeichnung</span> · <span id="currentCatalogName">Katalogname</span></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe"><script>document.write(message.get("menu.general.help"))</script></a></li>
+  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />"><script>document.write(message.get("menu.general.help"))</script></a></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('http://www.portalu.de:80/ingrid-portal/portal/disclaimer.psml', 'impressum', 'width=966,height=994,resizable=yes,scrollbars=yes,locationbar=no');" title="Impressum"><script>document.write(message.get("menu.general.disclaimer"))</script></a></li>
+  	      <li><a href="javascript:void(0);" onclick="javascript:window.open('http://www.portalu.de:80/ingrid-portal/portal/disclaimer.psml', 'impressum', 'width=966,height=994,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.imprint" />"><script>document.write(message.get("menu.general.disclaimer"))</script></a></li>
   	      <li class="seperator">|</li>
   	      <li><a href="javascript:void(0);" onclick="javascript:menuEventHandler.switchLanguage();"><script>document.write(UtilLanguage.getNextLanguageName())</script></a></li>
   	      <li class="seperator">|</li>
   	      <li><a href="javascript:void(0);" onclick="javascript:dialog.showPage('Info', 'mdek_info_dialog.html', 365, 210, false); return false;" title="Info"><script>document.write(message.get("menu.general.info"))</script></a></li>
   	      <li class="seperator">|</li>
-  	      <li><a href="#dummyAnchor" onClick="window.location.href='closeWindow.jsp';" title="schlie&szlig;en"><strong><script>document.write(message.get("menu.general.closeApplication"))</script></strong></a></li>
+  	      <li><a href="#dummyAnchor" onClick="window.location.href='closeWindow.jsp';" title="<fmt:message key="dialog.links.close" />"><strong><script>document.write(message.get("menu.general.closeApplication"))</script></strong></a></li>
   	    </ul>
   	  </div>
   	  <div id="navi">
   	    <ul>
-  	      <li><a id="page1Menu" onClick="clickMenu('page1')" href="javascript:void(0);" class="current" title="Hierarchie & Erfassung"><script>document.write(message.get("menu.main.hierarchyAcquisition"))</script></a></li>
-  	      <li><a id="page2Menu" onClick="clickMenu('page2')" href="javascript:void(0);" title="Recherche"><script>document.write(message.get("menu.main.research"))</script></a></li>
-  	      <li><a id="page3Menu" onClick="clickMenu('page3')" href="javascript:void(0);" title="Qualit&auml;tssicherung"><script>document.write(message.get("menu.main.qualityAssurance"))</script></a></li>
-  	      <li><a id="page4Menu" onClick="clickMenu('page4')" href="javascript:void(0);" title="Statistik"><script>document.write(message.get("menu.main.statistics"))</script></a></li>
+  	      <li><a id="page1Menu" onClick="clickMenu('page1')" href="javascript:void(0);" class="current" title="<fmt:message key="dialog.menu.hierachy" />"><script>document.write(message.get("menu.main.hierarchyAcquisition"))</script></a></li>
+  	      <li><a id="page2Menu" onClick="clickMenu('page2')" href="javascript:void(0);" title="<fmt:message key="dialog.menu.research" />"><script>document.write(message.get("menu.main.research"))</script></a></li>
+  	      <li><a id="page3Menu" onClick="clickMenu('page3')" href="javascript:void(0);" title="<fmt:message key="dialog.menu.qualityassurance" />"><script>document.write(message.get("menu.main.qualityAssurance"))</script></a></li>
+  	      <li><a id="page4Menu" onClick="clickMenu('page4')" href="javascript:void(0);" title="<fmt:message key="dialog.menu.statistics" />"><script>document.write(message.get("menu.main.statistics"))</script></a></li>
   	    </ul>
   	  </div>
   	  
 	  <div id="page1Subnavi" class="subnavi" style="display:none"></div>
 	  <div id="page2Subnavi" class="subnavi" style="display:none">
   	    <ul>
-  	      <li><a id="page2Subnavi1" onClick="clickMenu('page2', 'page2')" href="javascript:void(0);" class="current" title="Suche"><script>document.write(message.get("menu.main.research.search"))</script></a></li>
-  	      <li><a id="page2Subnavi2" onClick="clickMenu('page2', 'page2Sub2')" href="javascript:void(0);" title="Thesaurus-Navigator"><script>document.write(message.get("menu.main.research.thesaurusNavigator"))</script></a></li>
-  	      <li><a id="page2Subnavi3" onClick="clickMenu('page2', 'page2Sub3')" href="javascript:void(0);" title="Datenbank-Suche"><script>document.write(message.get("menu.main.research.databaseSearch"))</script></a></li>
+  	      <li><a id="page2Subnavi1" onClick="clickMenu('page2', 'page2')" href="javascript:void(0);" class="current" title="<fmt:message key="dialog.menu.search" />"><script>document.write(message.get("menu.main.research.search"))</script></a></li>
+  	      <li><a id="page2Subnavi2" onClick="clickMenu('page2', 'page2Sub2')" href="javascript:void(0);" title="<fmt:message key="dialog.menu.thesaurus" />"><script>document.write(message.get("menu.main.research.thesaurusNavigator"))</script></a></li>
+  	      <li><a id="page2Subnavi3" onClick="clickMenu('page2', 'page2Sub3')" href="javascript:void(0);" title="<fmt:message key="dialog.menu.databasesearch" />"><script>document.write(message.get("menu.main.research.databaseSearch"))</script></a></li>
   	    </ul>
   	  </div>
 	  <div id="page3Subnavi" class="subnavi" style="display:none">
   	    <ul>
-   	      <li><a id="page3Subnavi1" onClick="clickMenu('page3', 'page3')" href="javascript:void(0);" class="current" title="Bearbeitung/Verantwortlich"><script>document.write(message.get("menu.main.qualityAssurance.editor"))</script></a></li>
-  	      <li><a id="page3Subnavi2" onClick="clickMenu('page3', 'page3Sub2')" href="javascript:void(0);" title="Qualit&auml;tssicherung"><script>document.write(message.get("menu.main.qualityAssurance.qa"))</script></a></li>
+   	      <li><a id="page3Subnavi1" onClick="clickMenu('page3', 'page3')" href="javascript:void(0);" class="current" title="<fmt:message key="dialog.menu.editor" />"><script>document.write(message.get("menu.main.qualityAssurance.editor"))</script></a></li>
+  	      <li><a id="page3Subnavi2" onClick="clickMenu('page3', 'page3Sub2')" href="javascript:void(0);" title="<fmt:message key="dialog.menu.qualityassurance" />"><script>document.write(message.get("menu.main.qualityAssurance.qa"))</script></a></li>
   	    </ul>
   	  </div>
 	  <div id="page4Subnavi" class="subnavi" style="display:none"></div>
@@ -324,9 +324,9 @@ function hideSplash(){
 	          <!-- ALLGEMEINES //-->
 	          <div id="general" class="contentBlock firstBlock">
 	          	<div class="titleBar">
-	          	  <div class="titleIcon"><a href="javascript:toggleFields('general');" title="Nur Pflichtfelder aufklappen"><img id="generalRequiredToggle" src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('general');" title="<fmt:message key="general.open.required.field" />"><img id="generalRequiredToggle" src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7011)"><script>document.write(message.get("ui.obj.general.title"))</script></div>
-	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	  <div id="generalContent" class="content">
 
@@ -350,7 +350,7 @@ function hideSplash(){
 
 		                <span id="generalAddressTableLabel" class="label required"><label for="generalAddressTable" onclick="javascript:dialog.showContextHelp(arguments[0], 1000)"><script>document.write(message.get("ui.obj.general.addressTable.title"))</script>*</label></span>
 	
-		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="generalAddressTableLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('general.addAddress'), 'mdek_address_dialog.jsp', 755, 580, true);" title="Adresse hinzuf&uuml;gen [Popup]"><script>document.write(message.get("ui.obj.general.addressTable.link"))</script></a></span>
+		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="generalAddressTableLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('general.addAddress'), 'mdek_address_dialog.jsp', 755, 580, true);" title="<fmt:message key="dialog.popup.addressTable.link" /> [Popup]"><script>document.write(message.get("ui.obj.general.addressTable.link"))</script></a></span>
 		                <div id="generalAddressTable" class="tableContainer headHiddenRows4 full">
 		                    <div class="cellEditors" id="generalAddressEditors">
 		                      <div dojoType="ingrid:Combobox" toggle="plain" style="width:120px;" listId="505" id="generalAddressCombobox"></div>
@@ -381,16 +381,16 @@ function hideSplash(){
 	          <!-- FACHBEZUG CLASS 1 - GEO-INFORMATION/KARTE //-->
 	          <div id="refClass1" class="contentBlock">
 	          	<div class="titleBar">
-	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass1');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass1');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7000)"><script>document.write(message.get("ui.obj.relevance"))</script></div>
-	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	  <div id="ref1Content" class="content">
 
 	              <div class="inputContainer required">
                 	<span id="uiElement3520" type="required">
 		                <span id="ref1BasisTabContainerLabel" class="label required"><label for="ref1BasisTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3520)"><script>document.write(message.get("ui.obj.type1.technicalBasisTable.title"))</script>*</label></span>
-		                <span id="ref1BasisTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddBasisLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3520});" title="Verweis anlegen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type1.technicalBasisTable.link"))</script></a></span>
+		                <span id="ref1BasisTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddBasisLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3520});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><script>document.write(message.get("ui.obj.type1.technicalBasisTable.link"))</script></a></span>
 		              	<div id="ref1BasisTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1BasisTab1">
 							<script>document.write("<div id='ref1BasisTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type1.technicalBasisTable.tab.text")+"'>")</script>
 		                    <span class="input">
@@ -548,7 +548,7 @@ function hideSplash(){
 	              <div class="inputContainer notRequired h126">
                 	  <span id="uiElement3555" type="optional">
 		                <span class="label"><label for="ref1SymbolsTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3555)"><script>document.write(message.get("ui.obj.type1.symbolCatTable.title"))</script></label></span>
-		                <span id="ref1SymbolsTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddSymbolsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3555});" title="Verweis anlegen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type1.symbolCatTable.link"))</script></a></span>
+		                <span id="ref1SymbolsTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddSymbolsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3555});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><script>document.write(message.get("ui.obj.type1.symbolCatTable.link"))</script></a></span>
 		              	<div id="ref1SymbolsTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1SymbolsTab1">
 							<script>document.write("<div id='ref1SymbolsTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type1.symbolCatTable.tab.text")+"'>")</script>
 		               		<!-- Need to use document.write here since the titel 'label' is set directly in the div
@@ -596,7 +596,7 @@ function hideSplash(){
 	              <div class="inputContainer notRequired h126">
 					<span id="uiElement3535" type="optional">
 		                <span class="label"><label for="ref1KeysTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3535)"><script>document.write(message.get("ui.obj.type1.keyCatTable.title"))</script></label></span>
-		                <span id="ref1KeysTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddKeysLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3535});" title="Verweis anlegen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type1.keyCatTable.link"))</script></a></span>
+		                <span id="ref1KeysTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddKeysLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3535});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><script>document.write(message.get("ui.obj.type1.keyCatTable.link"))</script></a></span>
 		              	<div id="ref1KeysTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1KeysTab1">
 							<script>document.write("<div id='ref1KeysTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type1.keyCatTable.tab.text")+"'>")</script>
 		                    <div class="tableContainer rows3 full">
@@ -641,7 +641,7 @@ function hideSplash(){
 	              <div class="inputContainer notRequired h108">
                 	<span id="uiElementN003" type="optional">
 	                	<span class="label"><label for="ref1ServiceLink" onclick="javascript:dialog.showContextHelp(arguments[0], 5066)"><script>document.write(message.get("ui.obj.type1.serviceLink.title"))</script></label></span>
-		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddServiceLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 5066});" title="Verweis anlegen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type1.serviceLink.link"))</script></a></span>
+		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddServiceLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 5066});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><script>document.write(message.get("ui.obj.type1.serviceLink.link"))</script></a></span>
 	                		<div class="tableContainer headHiddenRows4 full">
 		            	    	<table id="ref1ServiceLink" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 									<thead>
@@ -664,7 +664,7 @@ function hideSplash(){
 	              <div class="inputContainer notRequired">
                 	<span id="uiElement3570" type="optional">
 		                <span class="label"><label for="ref1DataBasisTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3570)"><script>document.write(message.get("ui.obj.type1.dataBasisTable.title"))</script></label></span>
-		                <span id="ref1DataBasisTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddDataBasisLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3570});" title="Verweis anlegen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type1.dataBasisTable.link"))</script></a></span>
+		                <span id="ref1DataBasisTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddDataBasisLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3570});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><script>document.write(message.get("ui.obj.type1.dataBasisTable.link"))</script></a></span>
 		              	<div id="ref1DataBasisTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1DataBasisTab1">
 							<script>document.write("<div id='ref1DataBasisTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type1.dataBasisTable.tab.text")+"'>")</script>
 		                    <span class="input">
@@ -716,7 +716,7 @@ function hideSplash(){
 	              <div class="inputContainer noSpaceBelow notRequired">
 					<span id="uiElement3515" type="optional">
 		                <span class="label"><label for="ref1ProcessTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3515)"><script>document.write(message.get("ui.obj.type1.processTable.title"))</script></label></span>
-		                <span id="ref1ProcessTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddProcessLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3515});" title="Verweis anlegen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type1.processTable.link"))</script></a></span>
+		                <span id="ref1ProcessTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddProcessLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3515});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><script>document.write(message.get("ui.obj.type1.processTable.link"))</script></a></span>
 						<div id="ref1ProcessTabContainer" dojoType="ingrid:TabContainer" class="h108" selectedChild="ref1ProcessTab1">
 							<script>document.write("<div id='ref1ProcessTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type1.processTable.tab.text")+"'>")</script>
 								<span class="input">
@@ -751,9 +751,9 @@ function hideSplash(){
 	          <!-- FACHBEZUG CLASS 2 - DOKUMENT/BERICHT/LITERATUR //-->
 	          <div id="refClass2" class="contentBlock">
 	          	<div class="titleBar">
-	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass2');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass2');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7000)"><script>document.write(message.get("ui.obj.relevance"))</script></div>
-	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	  <div id="ref2Content" class="content">
 
@@ -830,7 +830,7 @@ function hideSplash(){
 	                <div class="half">
 						<span id="uiElement3360" type="optional">
 							<span class="label"><label for="ref2LocationTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3360)"><script>document.write(message.get("ui.obj.type2.locationTable.title"))</script></label></span>
-	                  		<span id="ref2LocationTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref2AddLocationLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('general.addAddress'), 'mdek_address_dialog.jsp', 755, 580, true, {linkType: 3360});" title="Adresse hinzuf&uuml;gen [Popup]"><script>document.write(message.get("ui.obj.type2.locationTable.link"))</script></a></span>
+	                  		<span id="ref2LocationTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref2AddLocationLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('general.addAddress'), 'mdek_address_dialog.jsp', 755, 580, true, {linkType: 3360});" title="<fmt:message key="dialog.popup.addressTable.link" /> [Popup]"><script>document.write(message.get("ui.obj.type2.locationTable.link"))</script></a></span>
 
 	                		<div id="ref2LocationTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref2LocationTab1">
 								<script>document.write("<div id='ref2LocationTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type2.locationTable.tab.text")+"'>")</script>
@@ -875,7 +875,7 @@ function hideSplash(){
 	                <div class="half">
 						<span id="uiElement3210" type="optional">
 							<span class="label"><label for="ref2BaseDataTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3210)"><script>document.write(message.get("ui.obj.type2.generalDataTable.title"))</script></label></span>
-							<span id="ref2BaseDataTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref2AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3345});" title="Verweis anlegen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type2.generalDataTable.link"))</script></a></span>
+							<span id="ref2BaseDataTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref2AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3345});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><script>document.write(message.get("ui.obj.type2.generalDataTable.link"))</script></a></span>
 							<div id="ref2BaseDataTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref2BaseDataTab1">
 								<script>document.write("<div id='ref2BaseDataTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type2.generalDataTable.tab.text")+"'>")</script>
 		                     		<span class="input">
@@ -928,9 +928,9 @@ function hideSplash(){
 	          <!-- FACHBEZUG CLASS 3 - DIENST/ANWENDUNG/INFORMATIONSSYSTEM //-->
 	          <div id="refClass3" class="contentBlock">
 	          	<div class="titleBar">
-	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass3');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass3');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7000)"><script>document.write(message.get("ui.obj.relevance"))</script></div>
-	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	  <div id="ref3Content" class="content">
 
@@ -960,7 +960,7 @@ function hideSplash(){
 	                	<span id="uiElement3220" type="required">
 							<span id="ref3ServiceTypeLabel" class="label required"><label for="ref3ServiceType" onclick="javascript:dialog.showContextHelp(arguments[0], 3220)"><script>document.write(message.get("ui.obj.type3.serviceType"))</script>*</label></span>
 <!-- 
-							<span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Assistent', 'erfassung_assistent_capabilities.html', 755, 195, true);" title="Assistent [Popup]">Assistent</a></span>
+							<span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Assistent', 'erfassung_assistent_capabilities.html', 755, 195, true);" title="<fmt:message key="general.assistant" /> [Popup]"><fmt:message key="dialog.popup.serviceLink.link" /></a></span>
  -->
 							<span class="input spaceBelow">
 								<div dojoType="ingrid:Select" maxlength="255" autoComplete="false" class="w308" listId="5100" id="ref3ServiceType"></div>
@@ -1035,7 +1035,7 @@ function hideSplash(){
 	                <div class="half left">
 						<span id="uiElement3345" type="optional">
 							<span class="label"><label for="ref3BaseDataTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3345)"><script>document.write(message.get("ui.obj.type3.generalDataTable.title"))</script></label></span>
-		                  	<span id="ref3MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref3AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3210});" title="Verweis anlegen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type3.generalDataTable.link"))</script></a></span>
+		                  	<span id="ref3MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref3AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3210});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><script>document.write(message.get("ui.obj.type3.generalDataTable.link"))</script></a></span>
 		                	<div id="ref3BaseDataTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref3BaseDataTab1">
 								<script>document.write("<div id='ref3BaseDataTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type3.generalDataTable.tab.text")+"'>")</script>
 		                      		<span class="input">
@@ -1076,7 +1076,7 @@ function hideSplash(){
 	              <div class="inputContainer noSpaceBelow notRequired h130">
 					<span id="uiElementN004" type="optional">
 		                <span class="label"><label for="ref3Operation" onclick="javascript:dialog.showContextHelp(arguments[0], 7015)"><script>document.write(message.get("ui.obj.type3.operationTable.title"))</script></label></span>
-		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(message.get('dialog.operations.title'), 'mdek_operation_dialog.jsp', 735, 745, true);" title="Operation hinzuf&uuml;gen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type3.operationTable.link"))</script></a></span>
+		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(message.get('dialog.operations.title'), 'mdek_operation_dialog.jsp', 735, 745, true);" title="<fmt:message key="dialog.popup.operationTable.link" /> [Popup]"><script>document.write(message.get("ui.obj.type3.operationTable.link"))</script></a></span>
 		                <div class="tableContainer rows4 full">
 		            	    <table id="ref3Operation" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort">
 		            	      <thead>
@@ -1098,9 +1098,9 @@ function hideSplash(){
 	          <!-- FACHBEZUG CLASS 4 - VORHABEN/PROJEKT/PROGRAMM //-->
 	          <div id="refClass4" class="contentBlock">
 	          	<div class="titleBar">
-	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass4');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass4');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7000)"><script>document.write(message.get("ui.obj.relevance"))</script></div>
-	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	  <div id="ref4Content" class="content">
 
@@ -1108,7 +1108,7 @@ function hideSplash(){
 	                <div class="half left">
 	                	<span id="uiElement3410" type="optional">
 		                  <span class="label"><label for="ref4ParticipantsTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3410)"><script>document.write(message.get("ui.obj.type4.participantsTable.title"))</script></label></span>
-		                  <span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddParticipantsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('general.addAddress'), 'mdek_address_dialog.jsp', 755, 580, true, {linkType: 3410});" title="Adresse hinzuf&uuml;gen [Popup]"><script>document.write(message.get("ui.obj.type4.participantsTable.link"))</script></a></span>
+		                  <span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddParticipantsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('general.addAddress'), 'mdek_address_dialog.jsp', 755, 580, true, {linkType: 3410});" title="<fmt:message key="dialog.popup.addressTable.link" /> [Popup]"><script>document.write(message.get("ui.obj.type4.participantsTable.link"))</script></a></span>
 		                	<div id="ref4ParticipantsTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref4ParticipantsTab1">
 								<script>document.write("<div id='ref4ParticipantsTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type4.participantsTable.tab.text")+"'>")</script>
 		                      	<span class="input">
@@ -1140,7 +1140,7 @@ function hideSplash(){
 	                <div class="half">
 	                	<span id="uiElement3400" type="optional">
 							<span class="label"><label for="ref4PMTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3400)"><script>document.write(message.get("ui.obj.type4.projectManagerTable.title"))</script></label></span>
-		                  	<span id="ref4PMTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddPMLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('general.addAddress'), 'mdek_address_dialog.jsp', 755, 580, true, {linkType: 3400});" title="Adresse hinzuf&uuml;gen [Popup]"><script>document.write(message.get("ui.obj.type4.projectManagerTable.link"))</script></a></span>
+		                  	<span id="ref4PMTab2Header" class="functionalLink onTab marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddPMLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('general.addAddress'), 'mdek_address_dialog.jsp', 755, 580, true, {linkType: 3400});" title="<fmt:message key="dialog.popup.addressTable.link" /> [Popup]"><script>document.write(message.get("ui.obj.type4.projectManagerTable.link"))</script></a></span>
 	                		<div id="ref4PMTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref4PMTab1">
 								<script>document.write("<div id='ref4PMTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type4.projectManagerTable.tab.text")+"'>")</script>
 	                      			<span class="input">
@@ -1184,9 +1184,9 @@ function hideSplash(){
 	          <!-- FACHBEZUG CLASS 5 - DATENSAMMLUNG/DATENBANK //-->
 	          <div id="refClass5" class="contentBlock">
 	          	<div class="titleBar">
-	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass5');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass5');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7000)"><script>document.write(message.get("ui.obj.relevance"))</script></div>
-	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	  <div id="ref5Content" class="content">
 
@@ -1216,7 +1216,7 @@ function hideSplash(){
 	                <div class="half left">
 						<span id="uiElement3100" type="optional">
 							<span class="label"><label for="ref5MethodTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3100)"><script>document.write(message.get("ui.obj.type5.methodTable.title"))</script></label></span>
-		                  	<span id="ref5MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref5AddMethodLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3100});" title="Verweis anlegen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.type5.methodTable.link"))</script></a></span>
+		                  	<span id="ref5MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref5AddMethodLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3100});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><script>document.write(message.get("ui.obj.type5.methodTable.link"))</script></a></span>
 	                		<div id="ref5MethodTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref5MethodTab1">
 								<script>document.write("<div id='ref5MethodTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type5.methodTable.tab.text")+"'>")</script>
 	                      			<span class="input">
@@ -1260,16 +1260,16 @@ function hideSplash(){
 	          <!-- RAUMBEZUG //-->
 	          <div id="spatialRef" class="contentBlock">
 	          	<div class="titleBar">
-	          	  <div class="titleIcon"><a href="javascript:toggleFields('spatialRef');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('spatialRef');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7001)"><script>document.write(message.get("ui.obj.spatial.title"))</script></div>
-	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	<div id="spatialRefContent" class="content">
 
 	            <div id="spatialRefAdminUnitContainer" class="inputContainer noSpaceBelow h130">
 					<span id="uiElementN006" type="required">
 		                <span id="spatialRefAdminUnitLabel" class="label required"><label for="spatialRefAdminUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 10006)"><script>document.write(message.get("ui.obj.spatial.geoThesTable.title"))</script>*</label></span>
-		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="spatialRefAdminUnitLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('dialog.spatialNavigator.title'), 'mdek_spatial_navigator.jsp', 530, 230, true);" title="Geothesaurus-Navigator [Popup]"><script>document.write(message.get("ui.obj.spatial.geoThesTable.link"))</script></a></span>
+		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="spatialRefAdminUnitLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('dialog.spatialNavigator.title'), 'mdek_spatial_navigator.jsp', 530, 230, true);" title="<fmt:message key="dialog.popup.geoThesTable.link" /> [Popup]"><script>document.write(message.get("ui.obj.spatial.geoThesTable.link"))</script></a></span>
 		                <div class="tableContainer rows4 full">
 		            	    <table id="spatialRefAdminUnit" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 		            	      <thead>
@@ -1292,7 +1292,7 @@ function hideSplash(){
 					<span id="uiElementN007" type="optional">
 						<div id="spatialRefCoordsAdminUnit" class="infobox">
 							<span class="icon" onclick="javascript:dialog.showContextHelp(arguments[0], 7012)"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
-							<span class="title"><a href="javascript:toggleInfo('spatialRefCoordsAdminUnit');" title="Info aufklappen"><script>document.write(message.get("ui.obj.spatial.transformedCoordinates"))</script>
+							<span class="title"><a href="javascript:toggleInfo('spatialRefCoordsAdminUnit');" title="<fmt:message key="general.info.open" />"><script>document.write(message.get("ui.obj.spatial.transformedCoordinates"))</script>
 								<img id="spatialRefCoordsAdminUnitToggle" src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a>
 							</span>
 							<div id="spatialRefCoordsAdminUnitContent" style="display:block; height: 44px;">
@@ -1346,10 +1346,10 @@ function hideSplash(){
 					<span id="uiElementN008" type="required">
 		                <span id="spatialRefLocationLabel" class="label required"><label for="spatialRefLocation" onclick="javascript:dialog.showContextHelp(arguments[0], 10008)"><script>document.write(message.get("ui.obj.spatial.geoTable.title"))</script>*</label></span>
 		                <span class="functionalLink">
-		                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="spatialRefLocationLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('dialog.spatialAssist.title'), 'mdek_spatial_assist_dialog.jsp', 555, 240, true);" title="Raumbezug Assistent [Popup]"><script>document.write(message.get("ui.obj.spatial.geoTable.link"))</script></a>
+		                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="spatialRefLocationLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('dialog.spatialAssist.title'), 'mdek_spatial_assist_dialog.jsp', 555, 240, true);" title="<fmt:message key="dialog.popup.geoTable.link" /> [Popup]"><script>document.write(message.get("ui.obj.spatial.geoTable.link"))</script></a>
 	<!-- The following feature is not yet implemented -->
 	<!-- 
-		                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" title="Koordinate mit geografischer Suche aussuchen [Popup]">Koordinate mit geografischer Suche aussuchen</a>
+		                	<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" title="<fmt:message key="dialog.popup.geoSearch.link" /> [Popup]"><fmt:message key="dialog.popup.geoSearch.link" /></a>
 	 -->
 		                </span>
 		                <div class="tableContainer rows4 full">
@@ -1381,7 +1381,7 @@ function hideSplash(){
 					<span id="uiElementN009" type="optional">
 						<div id="spatialRefCoordsLocation" class="infobox">
 							<span class="icon" onclick="javascript:dialog.showContextHelp(arguments[0], 7013)"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
-							<span class="title"><a href="javascript:toggleInfo('spatialRefCoordsLocation');" title="Info aufklappen"><script>document.write(message.get("ui.obj.spatial.transformedCoordinates"))</script>
+							<span class="title"><a href="javascript:toggleInfo('spatialRefCoordsLocation');" title="<fmt:message key="general.info.open" />"><script>document.write(message.get("ui.obj.spatial.transformedCoordinates"))</script>
 								<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a>
 							</span>
 							<div id="spatialRefCoordsLocationContent" style="display:block; height: 44px;">
@@ -1480,9 +1480,9 @@ function hideSplash(){
 	          <!-- ZEITBEZUG //-->
 	          <div id="timeRef" class="contentBlock">
 	          	<div class="titleBar">
-	          	  <div class="titleIcon"><a href="javascript:toggleFields('timeRef');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('timeRef');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7002)"><script>document.write(message.get("ui.obj.time.title"))</script></div>
-	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	  <div id="timeRefContent" class="content">
 
@@ -1585,9 +1585,9 @@ function hideSplash(){
 	          <!-- ZUSATZINFORMATION //-->
 	          <div id="extraInfo" class="contentBlock">
 	          	<div class="titleBar">
-	          	  <div class="titleIcon"><a href="javascript:toggleFields('extraInfo');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('extraInfo');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7003)"><script>document.write(message.get("ui.obj.additionalInfo.title"))</script></div>
-	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	  <div id="extraInfoContent" class="content">
 	        	  
@@ -1715,9 +1715,9 @@ function hideSplash(){
 	          <!-- VERFÜGBARKEIT //-->
 	          <div id="availability" class="contentBlock">
 	          	<div class="titleBar">
-	          	  <div class="titleIcon"><a href="javascript:toggleFields('availability');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('availability');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7004)"><script>document.write(message.get("ui.obj.availability.title"))</script></div>
-	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	  <div id="availabilityContent" class="content">
 
@@ -1815,9 +1815,9 @@ function hideSplash(){
 	          <!-- VERSCHLAGWORTUNG //-->
 	          <div id="thesaurus" class="contentBlock">
 	          	<div class="titleBar">
-	          	  <div class="titleIcon"><a href="javascript:toggleFields('thesaurus');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('thesaurus');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7005)"><script>document.write(message.get("ui.obj.thesaurus.title"))</script></div>
-	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	  <div id="thesaurusContent" class="content">
 	        	  
@@ -1866,8 +1866,8 @@ function hideSplash(){
 	              <div class="inputContainer h110">
 					<span id="uiElement1409" type="optional">
 		                <span id="thesaurusTermsLabel" class="label"><label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 4510)"><script>document.write(message.get("ui.obj.thesaurus.terms"))</script></label></span>
-		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('dialog.thesaurusAssist.title'), 'mdek_thesaurus_assist_dialog.jsp', 735, 430, true);" title="Verschlagwortungsassistent [Popup]"><script>document.write(message.get("ui.obj.thesaurus.terms.link.assistant"))</script></a>
-		                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsNavigatorLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('dialog.thesaurusNavigator.title'), 'mdek_thesaurus_dialog.jsp', 1010, 430, true, {dstTable: 'thesaurusTerms'});" title="Thesaurus-Navigator [Popup]"><script>document.write(message.get("ui.obj.thesaurus.terms.link.navigator"))</script></a></span>
+		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('dialog.thesaurusAssist.title'), 'mdek_thesaurus_assist_dialog.jsp', 735, 430, true);" title="<fmt:message key="dialog.popup.thesaurus.terms.link.assistant" /> [Popup]"><script>document.write(message.get("ui.obj.thesaurus.terms.link.assistant"))</script></a>
+		                  <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsNavigatorLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('dialog.thesaurusNavigator.title'), 'mdek_thesaurus_dialog.jsp', 1010, 430, true, {dstTable: 'thesaurusTerms'});" title="<fmt:message key="dialog.popup.thesaurus.terms.link.navigator" /> [Popup]"><script>document.write(message.get("ui.obj.thesaurus.terms.link.navigator"))</script></a></span>
 		                <div class="tableContainer headHiddenRows4 full">
 		            	    <table id="thesaurusTerms" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 		            	      <thead>
@@ -1960,9 +1960,9 @@ function hideSplash(){
 	          <!-- VERWEISE //-->
 	          <div id="links" class="contentBlock">
 	          	<div class="titleBar">
-	          	  <div class="titleIcon"><a href="javascript:toggleFields('links');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('links');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7007)"><script>document.write(message.get("ui.obj.links.title"))</script></div>
-	        	    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 	          	</div>
 	        	  <div id="linksContent" class="content">
 
@@ -1970,7 +1970,7 @@ function hideSplash(){
 	                <div class="half left">
 						<span id="uiElementN017" type="optional">
 	                  		<span class="label"><label for="linksTo" onclick="javascript:dialog.showContextHelp(arguments[0], 1500)"><script>document.write(message.get("ui.obj.links.linksTo.title"))</script></label></span>
-	                  		<span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true);" title="Verweis anlegen/bearbeiten [Popup]"><script>document.write(message.get("ui.obj.links.linksTo.link"))</script></a></span>
+	                  		<span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true);" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><script>document.write(message.get("ui.obj.links.linksTo.link"))</script></a></span>
 	                  		<div class="tableContainer headHiddenRows6 half">
 	              	    		<table id="linksTo" dojoType="ingrid:FilteringTable" minRows="6" headClass="hidden" cellspacing="0" class="filteringTable nosort">
 	              	      			<thead>
@@ -2021,9 +2021,9 @@ function hideSplash(){
 				<!-- Zusaetzliche Felder -->
 				<div id="additionalFields" class="contentBlock">
 					<div class="titleBar">
-						<div class="titleIcon"><a href="javascript:toggleFields('additionalFields');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+						<div class="titleIcon"><a href="javascript:toggleFields('additionalFields');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 						<div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7075)"><script>document.write(message.get("ui.obj.additionalFields.title"))</script></div>
-						<div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+						<div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 					</div>
 					<div id="additionalFieldsContent" class="content">
 
@@ -2222,9 +2222,9 @@ function hideSplash(){
 			  <!-- ADRESSE UND AUFGABEN //-->
 			  <div id="address" class="contentBlock">
 			  	<div class="titleBar">
-			  	  <div class="titleIcon"><a href="javascript:toggleFields('address');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+			  	  <div class="titleIcon"><a href="javascript:toggleFields('address');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 				    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7008)"><script>document.write(message.get("ui.adr.details.title"))</script></div>
-				    <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+				    <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 			  	</div>
 				  <div id="addressContent" class="content">
 
@@ -2323,16 +2323,16 @@ function hideSplash(){
 			  	<!-- VERSCHLAGWORTUNG //-->
 				<div id="adrThesaurus" class="contentBlock">
 					<div class="titleBar">
-						<div class="titleIcon"><a href="javascript:toggleFields('adrThesaurus');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+						<div class="titleIcon"><a href="javascript:toggleFields('adrThesaurus');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 						<div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7009)"><script>document.write(message.get("ui.adr.thesaurus.title"))</script></div>
-						<div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+						<div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 					</div>
 					<div id="adrThesaurusContent" class="content">
 				  
 						<div class="inputContainer notRequired h088">
 							<span id="uiElement4510" type="optional">
 								<span class="label"><label for="thesaurusTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 4510)"><script>document.write(message.get("ui.adr.thesaurus.terms"))</script></label></span>
-								<span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(message.get('dialog.thesaurusNavigator.title'), 'mdek_thesaurus_dialog.jsp', 1010, 430, true, {dstTable: 'thesaurusTermsAddress'});" title="Thesaurus-Navigator [Popup]"><script>document.write(message.get("ui.adr.thesaurus.terms.link.navigator"))</script></a></span>
+								<span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(message.get('dialog.thesaurusNavigator.title'), 'mdek_thesaurus_dialog.jsp', 1010, 430, true, {dstTable: 'thesaurusTermsAddress'});" title="<fmt:message key="dialog.popup.thesaurus.terms.link.navigator" /> [Popup]"><script>document.write(message.get("ui.adr.thesaurus.terms.link.navigator"))</script></a></span>
 
 								<div class="tableContainer headHiddenRows3 full">
 									<table id="thesaurusTermsAddress" dojoType="ingrid:FilteringTable" minRows="3" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
@@ -2373,9 +2373,9 @@ function hideSplash(){
 			  <!-- ZUGEORDNETE OBJEKTE //-->
 			  <div id="associatedObj" class="contentBlock">
 			    <div class="titleBar">
-			  	  <div class="titleIcon"><a href="javascript:toggleFields('associatedObj');" title="Nur Pflichtfelder aufklappen"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+			  	  <div class="titleIcon"><a href="javascript:toggleFields('associatedObj');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
 				  <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7010)"><script>document.write(message.get("ui.adr.links.title"))</script></div>
-				  <div class="titleUp"><a href="#sectionBottomContent" title="nach oben"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+				  <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
 			  	</div>
 				<div id="associatedObjContent" class="content" style="clear:both;">
 

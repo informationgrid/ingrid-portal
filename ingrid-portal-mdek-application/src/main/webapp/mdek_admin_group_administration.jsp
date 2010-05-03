@@ -778,7 +778,7 @@ function hideLoadingZone() {
   
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=user-administration-2#user-administration-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=user-administration-2#user-administration-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 		<div id="groupAdmin" class="content">
 
@@ -813,10 +813,10 @@ function hideLoadingZone() {
 				<div class="inputContainer">
 					<span class="button" style="width:556px; height:20px !important;">
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveGroup();"><fmt:message key="dialog.admin.groups.save" /></button>
+							<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.groups.save" />" onClick="javascript:scriptScope.saveGroup();"><fmt:message key="dialog.admin.groups.save" /></button>
 						</span>
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Neue Gruppe anlegen" onClick="javascript:scriptScope.newGroup();"><fmt:message key="dialog.admin.groups.createGroup" /></button>
+							<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.groups.createGroup" />" onClick="javascript:scriptScope.newGroup();"><fmt:message key="dialog.admin.groups.createGroup" /></button>
 						</span>
 						<span id="adminGroupLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 							<img src="img/ladekreis.gif" />

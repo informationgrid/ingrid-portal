@@ -83,7 +83,7 @@ function renderText(val) {
   <div dojoType="ContentPane">
     <div id="contentPane" layoutAlign="client" class="contentBlockWhite top">
       <div id="winNavi">
-        <a href="javascript:printDivContent('detailViewContent')" title="Drucken">[<fmt:message key="dialog.detail.print" />]</a>
+        <a href="javascript:printDivContent('detailViewContent')" title="<fmt:message key="dialog.detail.print" />">[<fmt:message key="dialog.detail.print" />]</a>
   	  </div>
   	  <div id="dialogContent" class="content">
         <!-- MAIN TAB CONTAINER START -->

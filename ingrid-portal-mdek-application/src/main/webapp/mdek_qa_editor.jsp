@@ -366,7 +366,7 @@ scriptScope.reloadPage = function() {
 
 	<div class="contentBlockWhite top wideBlock">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=quality-assurance-1#quality-assurance-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=quality-assurance-1#quality-assurance-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 
 		<span class="label" id="qaEditorLoadingZone">
@@ -379,13 +379,13 @@ scriptScope.reloadPage = function() {
 		<div class="content" id="qaEditorContent" style="visibility:hidden;">
 
 			<div class="spacer"></div>
-			<button dojoType="ingrid:Button" title="Seite aktualisieren" onClick="javascript:scriptScope.reloadPage();"><fmt:message key="dialog.qa.refresh" /></button>
+			<button dojoType="ingrid:Button" title="<fmt:message key="dialog.qa.refresh" />" onClick="javascript:scriptScope.reloadPage();"><fmt:message key="dialog.qa.refresh" /></button>
 			<div class="spacer"></div>
 
 			<div class="inputContainer noSpaceBelow">
 				<div id="editorsOverview" class="infobox w478">
 					<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
-					<span class="title"><a href="javascript:toggleInfo('editorsOverview');" title="Info aufklappen"><fmt:message key="dialog.qa.editor.overview" />
+					<span class="title"><a href="javascript:toggleInfo('editorsOverview');" title="<fmt:message key="dialog.qa.editor.overview" />"><fmt:message key="dialog.qa.editor.overview" />
 						<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
 					<div id="editorsOverviewContent">
 						<table id="editorsOverviewTable" dojoType="ingrid:FilteringTable" minRows="3" cellspacing="0" class="filteringTableBlue relativePos nosort">

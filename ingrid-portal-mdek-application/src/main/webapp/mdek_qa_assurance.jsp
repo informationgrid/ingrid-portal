@@ -351,7 +351,7 @@ scriptScope.reloadPage = function() {
 
 	<div class="contentBlockWhite top wideBlock">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=quality-assurance-0#quality-assurance-0', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=quality-assurance-0#quality-assurance-0', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 
 		<span class="label" id="qaLoadingZone">
@@ -364,7 +364,7 @@ scriptScope.reloadPage = function() {
 		<div class="content" id="qaContent" style="visibility:hidden;">
         
 			<div class="spacer"></div>
-			<button dojoType="ingrid:Button" title="Seite aktualisieren" onClick="javascript:scriptScope.reloadPage();"><fmt:message key="dialog.qa.refresh" /></button>
+			<button dojoType="ingrid:Button" title="<fmt:message key="dialog.qa.refresh" />" onClick="javascript:scriptScope.reloadPage();"><fmt:message key="dialog.qa.refresh" /></button>
 			<div class="spacer"></div>
 
 			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7070)"><fmt:message key="dialog.qa.assignedObjects" /></label></span>

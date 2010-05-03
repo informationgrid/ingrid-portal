@@ -71,9 +71,9 @@
 <div id="footercontainer">
   <div id="footercontent">
     <!-- portlets go here -->
-	<a href="/ingrid-portal/portal/disclaimer.psml" title="Impressum">Impressum</a>
-	<a href="/ingrid-portal/portal/privacy.psml" title="Datenschutzbestimmung">Datenschutzbestimmung</a>
-	<a href="mailto:webmaster@portalu.de" title="Webmaster">Webmaster</a>
+	<a href="/ingrid-portal/portal/disclaimer.psml" title="<fmt:message key="general.imprint" />"><fmt:message key="general.imprint" /></a>
+	<a href="/ingrid-portal/portal/privacy.psml" title="<fmt:message key="general.privacy.policy" />"><fmt:message key="general.privacy.policy" /></a>
+	<a href="mailto:webmaster@portalu.de" title="<fmt:message key="general.webmaster" />"><fmt:message key="general.webmaster" /></a>
 	<br />
     Copyright &copy; Koordinierungsstelle PortalU im Nds. Ministerium f&uuml;r Umwelt und Klimaschutz<br />
 

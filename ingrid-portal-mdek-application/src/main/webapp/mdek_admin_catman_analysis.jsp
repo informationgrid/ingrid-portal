@@ -90,7 +90,7 @@ function hideLoadingZone() {
 
 		<div id="contentSection" class="contentBlockWhite top">
 			<div id="winNavi">
-				<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-1#overall-catalog-management-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+				<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-1#overall-catalog-management-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 			</div>
 
 			<div id="analysisContent" class="content">
@@ -105,7 +105,7 @@ function hideLoadingZone() {
 				<div class="inputContainer noSpaceBelow w964">
 					<div id="analysisInfo" class="infobox w950">
 						<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
-						<span class="title"><a href="javascript:toggleInfo('analysisInfo');" title="Info aufklappen"><fmt:message key="dialog.admin.catalog.management.analysis.processInfo" />
+						<span class="title"><a href="javascript:toggleInfo('analysisInfo');" title="<fmt:message key="general.info.open" />"><fmt:message key="dialog.admin.catalog.management.analysis.processInfo" />
 							<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
 						<span id="analysisLoadingZone" style="visibility:hidden;" class="processInfo"><img src="img/ladekreis.gif" width="20" height="20" alt="Prozess l&auml;uft" /></span>
 						<div id="analysisInfoContent">

@@ -623,10 +623,10 @@ closeDialog = function() {
 
 <div id="links" class="contentBlockWhite top wideBlock">
 <div id="winNavi"><a href="javascript:closeDialog();"
-	title="schlie&szlig;en"><img src="img/ic_close.gif" /><fmt:message
+	title="<fmt:message	key="dialog.links.close" />"><img src="img/ic_close.gif" /><fmt:message
 	key="dialog.links.close" /></a> <a href="javascript:void(0);"
 	onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-7#maintanance-of-objects-7', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');"
-	title="Hilfe">[?]</a></div>
+	title="<fmt:message key="general.help" />">[?]</a></div>
 <div id="linksContent" class="content"><!-- LEFT HAND SIDE CONTENT START -->
 <div class="spacer"></div>
 <div class="inputContainer field grey noSpaceBelow fullField"><span
@@ -673,7 +673,7 @@ closeDialog = function() {
 	src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a
 	id="assignObjectDialogLink" href="javascript:void(0);"
 	onClick="javascript:showAssignObjectDialog();"
-	title="Objekt ausw&auml;hlen [Popup]"><fmt:message
+	title="<fmt:message	key="dialog.links.selectObject" /> [Popup]"><fmt:message
 	key="dialog.links.selectObject" /></a></span> <span class="input spaceBelow"><input
 	type="text" id="linksToObjectName" name="linksToObjectName"
 	class="w608" disabled="true" dojoType="ingrid:ValidationTextBox" /></span> <span

@@ -79,8 +79,8 @@ scriptScope.noButtonFunc = function() {
 				<span class="input" style="margin-left:20px;"><input dojoType="ingrid:Select" style="width:250px;" id="userList" /></span>
 			</div>
 			<div class="inputContainer grey noSpaceBelow half" style="height:30px;">
-		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="javascript:scriptScope.noButtonFunc();"><fmt:message key="general.cancel" /></button></span>
-		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="&Uuml;bernehmen" onClick="javascript:scriptScope.yesButtonFunc();"><fmt:message key="general.apply" /></button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="<fmt:message key="general.cancel" />" onClick="javascript:scriptScope.noButtonFunc();"><fmt:message key="general.cancel" /></button></span>
+		        <span style="float:right; margin-top:5px;"><button dojoType="ingrid:Button" title="<fmt:message key="general.apply" />" onClick="javascript:scriptScope.yesButtonFunc();"><fmt:message key="general.apply" /></button></span>
 			</div>
 	  	</div>
 	</div>

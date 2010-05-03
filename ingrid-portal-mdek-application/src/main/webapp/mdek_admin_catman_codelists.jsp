@@ -911,7 +911,7 @@ scriptScope.exportCodelists = function() {
 
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-4#overall-catalog-management-4', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-4#overall-catalog-management-4', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 		<div id="codeListsContent" class="content">
 
@@ -919,7 +919,7 @@ scriptScope.exportCodelists = function() {
 			<div class="spacer"></div>
 			<div class="spacer"></div>
 			<div id="codeLists" class="inputContainer noSpaceBelow">
-				<span id="importExportLink" class="functionalLink onTab"><img src="img/ic_fl_export.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.export" />" /><a href="javascript:void(0);" onclick="javascript:scriptScope.exportCodelists();" title="Exportieren [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.export" /></a><img src="img/ic_fl_import.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.import" />" /><a href="javascript:void(0);" onclick="javascript:scriptScope.importCodelists();" title="Importieren [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.import" /></a></span>
+				<span id="importExportLink" class="functionalLink onTab"><img src="img/ic_fl_export.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.export" />" /><a href="javascript:void(0);" onclick="javascript:scriptScope.exportCodelists();" title="<fmt:message key="dialog.admin.catalog.management.codelists.export" /> [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.export" /></a><img src="img/ic_fl_import.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.import" />" /><a href="javascript:void(0);" onclick="javascript:scriptScope.importCodelists();" title="Importieren [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.import" /></a></span>
 				<div id="codeListTabContainer" dojoType="ingrid:TabContainer" class="w668 h452" selectedChild="codeListTab">
 
 					<!-- TAB 1 START -->

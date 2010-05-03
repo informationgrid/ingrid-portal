@@ -28,6 +28,7 @@
 	"general.userOperation.EDITED":"&uuml;berarbeitet",
 	"general.userOperation.DELETED":"als gel&ouml;scht markiert",
 	"general.state.markedDeleted":"als gel&ouml;scht markiert",
+	"general.loading.mask":"Lade Maske...",
 	
 	"menu.general.help":"Hilfe",
 	"menu.general.disclaimer":"Impressum",

@@ -187,7 +187,7 @@ function isValidCatalog(cat) {
 	
 		<div id="contentSection" class="contentBlockWhite top">
 			<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=catalog-administration-1#catalog-administration-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=catalog-administration-1#catalog-administration-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 			</div>
 			<div id="adminCatalog" class="content">
 
@@ -211,7 +211,7 @@ function isValidCatalog(cat) {
 					<span class="input"><input class="spaceBelow" dojoType="ingrid:Select" required="true" style="width:622px;" disabled="true" listId="99999999" id="adminCatalogLanguage" /></span>
 
 					<span class="label required"><label for="adminCatalogSpatialRef" onclick="javascript:dialog.showContextHelp(arguments[0], 8006, 'Raumbezug')"><fmt:message key="dialog.admin.catalog.location" />*</label></span>
-					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onClick="javascript:scriptScope.selectSpatialReference();" title="Raumbezug ausw&auml;hlen [Popup]"><fmt:message key="dialog.admin.catalog.locationLink" /></a></span>
+					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onClick="javascript:scriptScope.selectSpatialReference();" title="<fmt:message key="dialog.admin.catalog.locationLink" /> [Popup]"><fmt:message key="dialog.admin.catalog.locationLink" /></a></span>
 					<span class="input spaceBelow"><input type="text" required="true" widgetId="adminCatalogSpatialRef" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					
 					<div class="checkboxContainer">
@@ -223,16 +223,16 @@ function isValidCatalog(cat) {
 				</div>
 		<!-- 
 						<div class="inputContainer">
-		          			<span class="button w644"><a href="#" class="buttonBlue" title="Speichern">Speichern</a><a href="#" class="buttonBlue" title="Abbrechen">Abbrechen</a></span>
+		          			<span class="button w644"><a href="#" class="buttonBlue" title="<fmt:message key="dialog.admin.catalog.save" />"><fmt:message key="dialog.admin.catalog.save" /></a><a href="#" class="buttonBlue" title="<fmt:message key="dialog.wizard.create.cancel" />"><fmt:message key="dialog.wizard.create.cancel" /></a></span>
 						</div>
 		 -->
 				<div class="inputContainer">
 					<span class="button w644" style="height:20px !important;">
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveCatalogData();"><fmt:message key="dialog.admin.catalog.save" /></button>
+							<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.save" />" onClick="javascript:scriptScope.saveCatalogData();"><fmt:message key="dialog.admin.catalog.save" /></button>
 						</span>
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Zur&uuml;cksetzen" onClick="javascript:scriptScope.reloadCatalogData();"><fmt:message key="dialog.admin.catalog.reset" /></button>
+							<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.reset" />" onClick="javascript:scriptScope.reloadCatalogData();"><fmt:message key="dialog.admin.catalog.reset" /></button>
 						</span>
 						<span id="adminCatalogLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 							<img src="img/ladekreis.gif" />

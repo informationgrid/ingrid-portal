@@ -642,7 +642,7 @@ function hideLoadingZone() {
 
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=user-administration-1#user-administration-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=user-administration-1#user-administration-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 		<div id="userAdmin" class="content">
 
@@ -667,10 +667,10 @@ function hideLoadingZone() {
 			<div class="inputContainer">
 				<span class="button w224" style="height:20px !important;">
 					<span style="float:left;">
-						<button dojoType="ingrid:Button" title="Nutzer l&ouml;schen" onClick="javascript:scriptScope.deleteUser();"><fmt:message key="dialog.admin.users.delete" /></button>
+						<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.users.delete" />" onClick="javascript:scriptScope.deleteUser();"><fmt:message key="dialog.admin.users.delete" /></button>
 					</span>
 					<span style="float:right;">
-						<button dojoType="ingrid:Button" title="Nutzer anlegen" onClick="javascript:scriptScope.importPortalUser();"><fmt:message key="dialog.admin.users.create" /></button>
+						<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.users.create" />" onClick="javascript:scriptScope.importPortalUser();"><fmt:message key="dialog.admin.users.create" /></button>
 					</span>
 				</span>
 			</div>
@@ -682,13 +682,13 @@ function hideLoadingZone() {
 				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8012)"><fmt:message key="dialog.admin.users.userData" /></label></span>
 				<div class="inputContainer field grey noSpaceBelow h313">
 					<span class="label"><label for="userDataLogin" onclick="javascript:dialog.showContextHelp(arguments[0], 8013, 'Login')"><fmt:message key="dialog.admin.users.login" /></label></span>
-					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.searchForPortalUser();" title="Portalnutzer suchen [Popup]"><fmt:message key="dialog.admin.users.searchPortalUser" /></a></span>
+					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.searchForPortalUser();" title="<fmt:message key="dialog.admin.users.searchPortalUser" /> [Popup]"><fmt:message key="dialog.admin.users.searchPortalUser" /></a></span>
 					<span class="input spaceBelow"><input type="text" id="userDataLogin" name="userDataLogin" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					<span class="label"><label for="userDataRole" onclick="javascript:dialog.showContextHelp(arguments[0], 8014, 'Rolle')"><fmt:message key="dialog.admin.users.role" /></label></span>
 					<span class="input spaceBelow"><input type="text" id="userDataRole" name="userDataRole" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 
 					<span class="label required"><label id="userDataAddressLinkLabel" for="userDataAddressLink" onclick="javascript:dialog.showContextHelp(arguments[0], 8015, 'Adressverweis')"><fmt:message key="dialog.admin.users.address" />*</label></span>
-					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.searchForAddress();" title="Adresse suchen [Popup]"><fmt:message key="dialog.admin.users.searchAddress" /></a></span>
+					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.searchForAddress();" title="<fmt:message key="dialog.admin.users.searchAddress" /> [Popup]"><fmt:message key="dialog.admin.users.searchAddress" /></a></span>
 					<span class="input spaceBelow"><input type="text" id="userDataAddressLink" name="userDataAddressLink" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					
 					<span class="label required"><label id="userDataGroupLabel" for="userDataGroup" onclick="javascript:dialog.showContextHelp(arguments[0], 8016, 'Gruppe')"><fmt:message key="dialog.admin.users.group" />*</label></span>
@@ -699,7 +699,7 @@ function hideLoadingZone() {
 				<div class="inputContainer">
 					<span class="button w644" style="height:20px !important;">
 						<span style="float:right;">
-							<button dojoType="ingrid:Button" title="Speichern" onClick="javascript:scriptScope.saveUser();"><fmt:message key="dialog.admin.users.save" /></button>
+							<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.users.save" />" onClick="javascript:scriptScope.saveUser();"><fmt:message key="dialog.admin.users.save" /></button>
 						</span>
 						<span id="adminUserLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 							<img src="img/ladekreis.gif" />

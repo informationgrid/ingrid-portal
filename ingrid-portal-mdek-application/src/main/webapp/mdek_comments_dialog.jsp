@@ -77,7 +77,7 @@ addComment = function() {
 
   <div id="comment" class="contentBlockWhite top wideBlock">
     <div id="winNavi">
-		<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-10#maintanance-of-objects-10', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+		<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-10#maintanance-of-objects-10', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 	  </div>
 	  <div id="commentContent" class="content">
 
@@ -105,7 +105,7 @@ addComment = function() {
         </span>
         <span class="button w915" style="height:20px !important;">
 			<span style="float:right;">
-				<button dojoType="ingrid:Button" title="Kommentar eintragen" id="addCommentButton" onClick="addComment"><fmt:message key="dialog.comments.addComment" /></button>
+				<button dojoType="ingrid:Button" title="<fmt:message key="dialog.comments.addComment" />" id="addCommentButton" onClick="addComment"><fmt:message key="dialog.comments.addComment" /></button>
 			</span>
         </span>
   	  </div>

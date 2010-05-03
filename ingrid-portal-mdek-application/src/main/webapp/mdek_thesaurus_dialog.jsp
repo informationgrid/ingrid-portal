@@ -417,7 +417,7 @@ acceptTopicList = function() {
 
   <div id="thesaurus" class="contentBlockWhite top wideBlock">
     <div id="winNavi">
-		<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-6#maintanance-of-objects-6', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+		<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-6#maintanance-of-objects-6', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 	  </div>
 	  <div id="thesaurusContent" class="content">
 
@@ -433,7 +433,7 @@ acceptTopicList = function() {
       <div class="inputContainer full">
         <span class="button w644" style="height:20px !important;">
           <span style="float:right;">
-            <button dojoType="ingrid:Button" id="findTopicButton" class="buttonBlue" title="In Thesaurus suchen" onClick="findTopic"><fmt:message key="dialog.thesaurusNavigator.search" /></button></span>
+            <button dojoType="ingrid:Button" id="findTopicButton" class="buttonBlue" title="<fmt:message key="dialog.thesaurusNavigator.search" />" onClick="findTopic"><fmt:message key="dialog.thesaurusNavigator.search" /></button></span>
    	      </span>
    	  </div>
 

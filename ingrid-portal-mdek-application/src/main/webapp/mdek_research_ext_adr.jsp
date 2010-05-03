@@ -185,7 +185,7 @@ function hideLoadingZone() {
 			<div id="addrTopic0">
 	        <div class="tabContainerSubNavi">
 	    	    <ul>
-	    	      <li><a nohref="nohref" class="current" title="Suchmodus"><fmt:message key="dialog.research.ext.adr.mode" /></a></li>
+	    	      <li><a nohref="nohref" class="current" title="<fmt:message key="dialog.research.ext.adr.mode" />"><fmt:message key="dialog.research.ext.adr.mode" /></a></li>
 	    	    </ul>
 	    	  </div>
 	        <div class="inputContainer field noSpaceBelow">
@@ -228,7 +228,7 @@ function hideLoadingZone() {
 			  <div id="addrSpace0">
 	        <div class="tabContainerSubNavi">
 	    	    <ul>
-	    	      <li><a nohref="nohref" class="current" title="Raumbezug"><fmt:message key="dialog.research.ext.adr.locationRef" /></a></li>
+	    	      <li><a nohref="nohref" class="current" title="<fmt:message key="dialog.research.ext.adr.locationRef" />"><fmt:message key="dialog.research.ext.adr.locationRef" /></a></li>
 	    	    </ul>
 	    	  </div>
 	        <div class="inputContainer field grey noSpaceBelow">
@@ -252,10 +252,10 @@ function hideLoadingZone() {
 	  <div class="inputContainer">
         <span class="button w805" style="height:20px !important;">
           <span style="float:right;">
-            <button dojoType="ingrid:Button" title="Suchen" onClick="javascript:scriptScope.startNewSearch();"><fmt:message key="dialog.research.ext.adr.search" /></button>
+            <button dojoType="ingrid:Button" title="<fmt:message key="dialog.research.ext.adr.search" />" onClick="javascript:scriptScope.startNewSearch();"><fmt:message key="dialog.research.ext.adr.search" /></button>
 		  </span>
           <span style="float:right;">
-            <button dojoType="ingrid:Button" title="Zur&uuml;cksetzen" onClick="javascript:scriptScope.resetInput();"><fmt:message key="dialog.research.ext.adr.reset" /></button>
+            <button dojoType="ingrid:Button" title="<fmt:message key="dialog.research.ext.adr.reset" />" onClick="javascript:scriptScope.resetInput();"><fmt:message key="dialog.research.ext.adr.reset" /></button>
 		  </span>
 		  <span id="addressSearchExtLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 			<img src="img/ladekreis.gif" />

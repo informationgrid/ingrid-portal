@@ -419,7 +419,7 @@ function hideLoadingZone() {
   
     <div id="researchThesaurusContentSection" class="contentBlockWhite top">
       <div id="winNavi">
-		<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=search-2#search-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+		<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=search-2#search-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
   	  </div>
   	  <div class="content">
 
@@ -433,7 +433,7 @@ function hideLoadingZone() {
         <div class="inputContainer full">
           <span class="button w644" style="height:20px !important;">
             <span style="float:right;">
-              <button dojoType="ingrid:Button" title="In Thesaurus suchen" onClick="javascript:scriptScope.findTopic();"><fmt:message key="dialog.research.thes.search" /></button>
+              <button dojoType="ingrid:Button" title="<fmt:message key="dialog.research.thes.search" />" onClick="javascript:scriptScope.findTopic();"><fmt:message key="dialog.research.thes.search" /></button>
     		</span>
 			<span id="thesaurusSearchLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 				<img src="img/ladekreis.gif" />

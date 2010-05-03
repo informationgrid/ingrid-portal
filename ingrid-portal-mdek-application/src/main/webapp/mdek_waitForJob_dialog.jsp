@@ -117,7 +117,7 @@ cancelButtonFunc = function() {
 			<div dojoType="ProgressBar" id="progressBar" width="310" height="10" class="field grey" />
 
 	  	</div>
-        <span style="float:right;"><button dojoType="ingrid:Button" title="Abbrechen" onClick="cancelButtonFunc"><fmt:message key="dialog.waitForJob.cancel" /></button></span>
+        <span style="float:right;"><button dojoType="ingrid:Button" title="<fmt:message key="dialog.waitForJob.cancel" />" onClick="cancelButtonFunc"><fmt:message key="dialog.waitForJob.cancel" /></button></span>
 	</div>
 </div>
 </body>

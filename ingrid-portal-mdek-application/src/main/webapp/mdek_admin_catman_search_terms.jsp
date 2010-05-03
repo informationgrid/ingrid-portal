@@ -153,7 +153,7 @@ scriptScope.downloadAsCSV = function() {
 
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-7#overall-catalog-management-7', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-7#overall-catalog-management-7', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 			<div id="searchTermsContent" class="content">
 	
@@ -186,7 +186,7 @@ scriptScope.downloadAsCSV = function() {
 					<div id="searchTermsInfo" class="infobox w950">
 						<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
 						<span class="title" id="snsUpdateProcessInfo"></span>
-						<a href="javascript:toggleInfo('searchTermsInfo');" title="Info aufklappen"><img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a>
+						<a href="javascript:toggleInfo('searchTermsInfo');" title="<fmt:message key="general.info.open" />"><img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a>
 						<div id="searchTermsInfoContent">
 							<table cellspacing="0">
 								<tr id="snsUpdateProcessStatusRow">

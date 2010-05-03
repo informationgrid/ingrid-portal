@@ -483,7 +483,7 @@ function hideLoadingZone() {
 
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-6#overall-catalog-management-6', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-6#overall-catalog-management-6', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 		<div id="catalogueAdresses" class="content">
 
@@ -532,7 +532,7 @@ function hideLoadingZone() {
 								<table id="addressDeleteDataMDQS" dojoType="ingrid:FilteringTable" minRows="5" headClass="hidden" cellspacing="0" class="filteringTable">
 									<thead>
 										<tr>
-											<th field="title" dataType="String" width="315">fmt:message key="dialog.admin.catalog.management.deleteAddress.name /></th>
+											<th field="title" dataType="String" width="315"><fmt:message key="dialog.admin.catalog.management.deleteAddress.name" /></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -669,7 +669,7 @@ function hideLoadingZone() {
 			<div class="inputContainer">
 				<span class="button w924" style="height:20px !important;">
 					<span style="float:right;">
-						<button dojoType="ingrid:Button" title="fmt:message key="dialog.admin.catalog.management.deleteAddress.replace" onClick="javascript:scriptScope.replaceAddress();"><fmt:message key="dialog.admin.catalog.management.deleteAddress.replace" /></button>
+						<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.deleteAddress.replace" />" onClick="javascript:scriptScope.replaceAddress();"><fmt:message key="dialog.admin.catalog.management.deleteAddress.replace" /></button>
 					</span>
 					<span id="deleteAddressLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 						<img src="img/ladekreis.gif" />

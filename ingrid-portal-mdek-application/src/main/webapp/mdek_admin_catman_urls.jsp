@@ -271,7 +271,7 @@ function hideLoadingZone() {
 <div dojoType="ContentPane" layoutAlign="client">
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-3#overall-catalog-management-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="Hilfe">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-3#overall-catalog-management-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 		<div id="urlsContent" class="content">
 
@@ -279,7 +279,7 @@ function hideLoadingZone() {
 			<div class="spacer"></div>
 			<div class="spacer"></div>
 			<div class="inputContainer w965">
-				<button dojoType="ingrid:Button" title="Pr&uuml;fung starten" onClick="javascript:scriptScope.startUrlsJob();"><fmt:message key="dialog.admin.catalog.management.urls.refresh" /></button>
+				<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.urls.refresh" />" onClick="javascript:scriptScope.startUrlsJob();"><fmt:message key="dialog.admin.catalog.management.urls.refresh" /></button>
 			</div>
 
 			<div class="inputContainer noSpaceBelow">
@@ -299,7 +299,7 @@ function hideLoadingZone() {
 						</table>
 						<span id="cancelUrlsProcessButton" class="button" style="height:20px !important;">
 							<span style="float:right;">
-								<button dojoType="ingrid:Button" title="Prozess abbrechen" onClick="javascript:scriptScope.cancelUrlsJob();"><fmt:message key="dialog.admin.catalog.management.urls.cancel" /></button>
+								<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.urls.cancel" />" onClick="javascript:scriptScope.cancelUrlsJob();"><fmt:message key="dialog.admin.catalog.management.urls.cancel" /></button>
 							</span>
 						</span>
 					</div> <!-- processInfoContent end -->
@@ -357,7 +357,7 @@ function hideLoadingZone() {
 					<input type="text" id="urlReplace" maxlength="255" class="w829 nextToButton" dojoType="ingrid:ValidationTextBox" />
 				</span>
 				<span style="position:relative; top:-1px; margin-right:15px; float:right;">
-					<button dojoType="ingrid:Button" title="Ersetzen" onClick="javascript:scriptScope.replaceUrl();"><fmt:message key="dialog.admin.catalog.management.urls.replace" /></button>
+					<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.urls.replace" />" onClick="javascript:scriptScope.replaceUrl();"><fmt:message key="dialog.admin.catalog.management.urls.replace" /></button>
 				</span>
 				<span id="replaceUrlLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 					<img src="img/ladekreis.gif" />
