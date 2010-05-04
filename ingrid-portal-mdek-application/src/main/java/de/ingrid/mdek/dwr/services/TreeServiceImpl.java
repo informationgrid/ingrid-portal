@@ -2,12 +2,17 @@ package de.ingrid.mdek.dwr.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.beans.TreeNodeBean;
+import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.handler.AddressRequestHandler;
 import de.ingrid.mdek.handler.ObjectRequestHandler;
+import de.ingrid.mdek.util.MdekObjectUtils;
+import de.ingrid.utils.udk.UtilsLanguageCodelist;
 
 public class TreeServiceImpl {
 
@@ -17,11 +22,10 @@ public class TreeServiceImpl {
 	private ObjectRequestHandler objectRequestHandler;
 	private AddressRequestHandler addressRequestHandler;
 
-
 	// OBJECT_ROOT specifies the uuid for the object root node. 
 	private final static String OBJECT_ROOT = "objectRoot"; 
 	// TODO Load from a cfg file -> localization 
-	private final static String OBJECT_ROOT_NAME = "Objekte";
+	private final static String OBJECT_ROOT_NAME = "general.objects";
 
 	private final static String OBJECT_ROOT_DOCTYPE = "Objects";
 	private final static String ROOT_MENU_ID = "contextMenu2";
@@ -32,15 +36,20 @@ public class TreeServiceImpl {
 
 	private final static String ADDRESS_ROOT = "addressRoot"; 
 	private final static String ADDRESS_FREE_ROOT = "addressFreeRoot"; 
-	private final static String ADDRESS_ROOT_NAME = "Adressen";
-	private final static String ADDRESS_FREE_ROOT_NAME = "Freie Adressen";
+	private final static String ADDRESS_ROOT_NAME = "general.addresses";
+	private final static String ADDRESS_FREE_ROOT_NAME = "general.addresses.free";
 	private final static String ADDRESS_ROOT_DOCTYPE = "Addresses";
 	private final static String ADDRESS_APPTYPE = "A";
 
+	private static Locale loc;
 	
 	public List<TreeNodeBean> getSubTree(String nodeUuid, String nodeType) {
 		if (nodeUuid != null && nodeType == null) {
 			throw new IllegalArgumentException("Wrong arguments on method getSubTree(): nodeType must be set if nodeUuid is set!");
+		}
+		
+		if(loc == null){
+			loc = setCatalogLocale();
 		}
 
 		if (nodeUuid == null) {
@@ -104,13 +113,14 @@ public class TreeServiceImpl {
 	
 	private static List<TreeNodeBean> createTree()
 	{
+		ResourceBundle res = ResourceBundle.getBundle("messages", loc);
 		List<TreeNodeBean> treeRoot = new ArrayList<TreeNodeBean>(); 
 
 		TreeNodeBean objectRoot = new TreeNodeBean();
 		objectRoot.setContextMenu(ROOT_MENU_ID);
 		objectRoot.setIsFolder(true);
 		objectRoot.setNodeDocType(OBJECT_ROOT_DOCTYPE);
-		objectRoot.setTitle(OBJECT_ROOT_NAME);
+		objectRoot.setTitle(res.getString(OBJECT_ROOT_NAME));
 		objectRoot.setDojoType(NODE_DOJO_TYPE);
 		objectRoot.setNodeAppType(OBJECT_APPTYPE);
 		objectRoot.setId(OBJECT_ROOT);
@@ -119,7 +129,7 @@ public class TreeServiceImpl {
 		addressRoot.setContextMenu(ROOT_MENU_ID);
 		addressRoot.setIsFolder(true);
 		addressRoot.setNodeDocType(ADDRESS_ROOT_DOCTYPE);
-		addressRoot.setTitle(ADDRESS_ROOT_NAME);
+		addressRoot.setTitle(res.getString(ADDRESS_ROOT_NAME));
 		addressRoot.setDojoType(NODE_DOJO_TYPE);
 		addressRoot.setNodeAppType(ADDRESS_APPTYPE);
 		addressRoot.setId(ADDRESS_ROOT);
@@ -143,12 +153,13 @@ public class TreeServiceImpl {
 
 	private static TreeNodeBean createFreeAddressRoot()
 	{
+		ResourceBundle res = ResourceBundle.getBundle("messages", loc);
 		TreeNodeBean freeAddressRoot = new TreeNodeBean(); 
 
 		freeAddressRoot.setContextMenu(ROOT_MENU_ID);
 		freeAddressRoot.setIsFolder(true);
 		freeAddressRoot.setNodeDocType(ADDRESS_ROOT_DOCTYPE);
-		freeAddressRoot.setTitle(ADDRESS_FREE_ROOT_NAME);
+		freeAddressRoot.setTitle(res.getString(ADDRESS_FREE_ROOT_NAME));
 		freeAddressRoot.setDojoType(NODE_DOJO_TYPE);
 		freeAddressRoot.setNodeAppType(ADDRESS_APPTYPE);
 		freeAddressRoot.setId(ADDRESS_FREE_ROOT);
@@ -173,5 +184,25 @@ public class TreeServiceImpl {
 
 	public void setAddressRequestHandler(AddressRequestHandler addressRequestHandler) {
 		this.addressRequestHandler = addressRequestHandler;
+	}
+	
+	
+	public Locale setCatalogLocale(){
+		MdekDataBean data = null; 		try {
+			data = objectRequestHandler.getInitialObject(null);
+		} catch (RuntimeException e) {
+			log.debug("Error while getting node data.", e);
+			throw e;
+		}
+		MdekObjectUtils.setInitialValues(data);
+		Integer languageCode = data.getExtraInfoLangDataCode();
+		if (languageCode.compareTo(UtilsLanguageCodelist.getCodeFromShortcut("en")) == 0)
+			return new Locale("en");
+		else if (languageCode.compareTo(UtilsLanguageCodelist.getCodeFromShortcut("de")) == 0)
+			return new Locale("de");
+		else {
+			log.debug("Language ("+languageCode+") not supported! Using 'de' as default!");
+			return new Locale("de");
+		} 
 	}
 }
