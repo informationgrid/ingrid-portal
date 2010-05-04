@@ -188,7 +188,8 @@ public class TreeServiceImpl {
 	
 	
 	public Locale setCatalogLocale(){
-		MdekDataBean data = null; 		try {
+		MdekDataBean data = null; 		
+		try {
 			data = objectRequestHandler.getInitialObject(null);
 		} catch (RuntimeException e) {
 			log.debug("Error while getting node data.", e);
