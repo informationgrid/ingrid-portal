@@ -377,7 +377,12 @@
     "validation.minmax":"The Value of field '%{0}' must be larger than the value of field '%{1}'.",
     "validation.addressInfoRequired":"The address table must contain at least one entry of type '%{0}'!",
     "validation.communicationEmailRequired":"The communication table must contain at least one entry of type '%{0}'!",
-
+	"validation.titleDate":"Please enter the value for '%{0}' and '%{1}'.",
+	"validation.latLon1":"Longitude/Latitude 1",
+	"validation.latLon2":"Longitude/Latitude 2",
+	"validation.begin":"from",
+	"validation.end":"to",
+	
 	"ui.entry.loadingMessage":"The application is loading...",
 	"ui.entry.admin.title":"InGrid-Editor - Administration",
 	"ui.general.openAllFieldsTooltip":"Show all fields",

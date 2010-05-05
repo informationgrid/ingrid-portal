@@ -9,7 +9,9 @@ dojo.addOnLoad(function() {
 	addMinMaxValidation("spatialRefAltMin", "spatialRefAltMax", "Minimum", "Maximum");
 	addMinMaxDateValidation("timeRefType", "timeRefDate1", "timeRefDate2");
 	addMinMaxBoundingBoxValidation("spatialRefLocation");
-
+	addTitleDateValidation("ref1SymbolsText");	
+	addTitleDateValidation("ref1KeysText");	
+	
 	addAddressTableInfoValidation();
 	addCommunicationTableValidation();
 
@@ -113,7 +115,7 @@ function addMinMaxDateValidation(typeWidgetId, minWidgetId, maxWidgetId) {
 	var maxWidget = dojo.widget.byId(maxWidgetId);
 
 	var popup = dojo.widget.createWidget("PopupContainer");
-  	popup.domNode.innerHTML = dojo.string.substituteParams(message.get("validation.minmax"), "bis", "von");
+  	popup.domNode.innerHTML = dojo.string.substituteParams(message.get("validation.minmax"), message.get("validation.to"), message.get("validation.from"));
 
 	minWidget.isValid = function() { return !dojo.html.hasClass(this.inputNode, "fieldInvalid"); };
 	maxWidget.isValid = function() { return !dojo.html.hasClass(this.inputNode, "fieldInvalid"); };
@@ -142,7 +144,7 @@ function addMinMaxDateValidation(typeWidgetId, minWidgetId, maxWidgetId) {
 function addMinMaxBoundingBoxValidation(tableId) {
 	var table = dojo.widget.byId(tableId);
 	var popup = dojo.widget.createWidget("PopupContainer");
-  	popup.domNode.innerHTML = dojo.string.substituteParams(message.get("validation.minmax"), "L&auml;nge/Breite 2", "L&auml;nge/Breite 1");
+  	popup.domNode.innerHTML = dojo.string.substituteParams(message.get("validation.minmax"), message.get("validation.latLon2"), message.get("validation.latLon1"));
 
 	table._valid = true;
 
@@ -216,6 +218,65 @@ function addMinMaxBoundingBoxValidation(tableId) {
 	}
 
 	table.isValid = function() { return this.store.getData().length == 0 || this._valid; }
+}
+
+function addTitleDateValidation(tableId){
+	var table = dojo.widget.byId(tableId);
+	var popup = dojo.widget.createWidget("PopupContainer");
+  	popup.domNode.innerHTML = dojo.string.substituteParams(message.get("validation.titleDate"), message.get("ui.obj.type1.symbolCatTable.header.title"), message.get("ui.obj.type1.symbolCatTable.header.date"));
+
+	table._valid = true;
+
+	table.applyValidation = function() {
+		var rows = this.domNode.tBodies[0].rows;
+		// Iterate over all the rows in the table
+		for (var i = 0; i < rows.length; i++) {
+			var row = rows[i];
+			var rowData = this.getDataByRow(row);
+			// If we have a valid row continue. rowData can be null since we also display empty rows
+			if (rowData) {
+				var title = this.store.getField(rowData, "title");
+				var date = this.store.getField(rowData, "date");
+				var titleIdx = this.getColumnIndex("title");
+				var dateIdx = this.getColumnIndex("date");
+				
+				if ((title == null || title == "")
+				 && (date == null || date == "")){
+					dojo.html.removeClass(row.cells[titleIdx], this.fieldInvalidClass);
+					dojo.html.removeClass(row.cells[dateIdx], this.fieldInvalidClass);		
+					this._valid = true;
+					popup.close();
+					return;
+				}
+
+				this._valid = false;
+				var titleValid = false;
+				var dateValid = false;
+				dojo.html.addClass(row.cells[titleIdx], this.fieldInvalidClass);
+				dojo.html.addClass(row.cells[dateIdx], this.fieldInvalidClass);		
+				
+				if (title != null && dojo.string.trim(title).length != 0) {
+					titleValid = true;
+					dojo.html.removeClass(row.cells[titleIdx], this.fieldInvalidClass);
+				}
+				
+				if (date != null && dojo.string.trim(date).length != 0) {
+					dateValid = true;
+					dojo.html.removeClass(row.cells[dateIdx], this.fieldInvalidClass);
+					dojo.html.removeClass(row.cells[dateIdx], this.fieldInvalidClass);		
+				}
+				
+				if (titleValid && dateValid) {
+					popup.close();
+					this._valid = true;
+				} else {
+					popup.open(this.domNode, this);
+				}
+			}
+		}
+	}
+
+	table.isValid = function() { return this.store.getData().length == 0 || this._valid;}
 }
 
 function addAddressTableInfoValidation() {
@@ -333,7 +394,7 @@ function addCommunicationTableValidation() {
 		table._valid = false;
 	
 		table.applyValidation = function() {
-			this._valid = false;
+			this._valid = false;	
 			var data = this.store.getData();
 			for (var i = 0; i < data.length; ++i) {
 				if (data[i].medium == email

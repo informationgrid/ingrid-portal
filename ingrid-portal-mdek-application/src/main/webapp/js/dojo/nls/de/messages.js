@@ -377,7 +377,12 @@
     "validation.minmax":"Der Wert des Feldes '%{0}' muß größer sein als der Wert des Feldes '%{1}'.",
     "validation.addressInfoRequired":"Die Adressverweistabelle muss mindestens eine Adresse vom Typ '%{0}' beinhalten!",
     "validation.communicationEmailRequired":"Die Kommunikationstabelle muss mindestens einen Eintrag vom Typ '%{0}' beinhalten!",
-
+	"validation.titleDate":"Der '%{0}' sowie das '%{1}' muss angegeben werden.",
+	"validation.latLon1":"L&auml;nge/Breite 1",
+	"validation.latLon2":"L&auml;nge/Breite 2",
+	"validation.begin":"von",
+	"validation.end":"bis",
+	
 	"ui.entry.loadingMessage":"Die Anwendung wird geladen...",
 	"ui.entry.admin.title":"InGrid-Editor - Verwaltung und Management",
 	"ui.general.openAllFieldsTooltip":"Alle Felder aufklappen",
