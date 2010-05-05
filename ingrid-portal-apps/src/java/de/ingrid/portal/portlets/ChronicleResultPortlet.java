@@ -115,7 +115,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         if (numberOfHits == 0) {
-            // TODO Chronik keine Einträge, WAS ANZEIGEN ??? -> Layouten
+            // TODO Chronik keine Eintrï¿½ge, WAS ANZEIGEN ??? -> Layouten
             setDefaultViewPage(TEMPLATE_NO_RESULT);
             super.doView(request, response);
             return;
@@ -203,6 +203,11 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                     try {
                         topic = (Topic) results[i];
                         detail = (DetailedTopic) details[i];
+                        
+                        // skip NULL entries
+                        if (detail == null || topic == null) {
+                        	continue;
+                        }
 
                         topic.put("title", detail.getTopicName());
 
