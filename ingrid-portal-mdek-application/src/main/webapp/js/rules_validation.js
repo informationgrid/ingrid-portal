@@ -237,11 +237,13 @@ function addTitleDateValidation(tableId){
 			if (rowData) {
 				var title = this.store.getField(rowData, "title");
 				var date = this.store.getField(rowData, "date");
+				var version = this.store.getField(rowData, "version");
 				var titleIdx = this.getColumnIndex("title");
 				var dateIdx = this.getColumnIndex("date");
 				
 				if ((title == null || title == "")
-				 && (date == null || date == "")){
+				 && (date == null || date == "")
+				 && (version == null || version == "")){
 					dojo.html.removeClass(row.cells[titleIdx], this.fieldInvalidClass);
 					dojo.html.removeClass(row.cells[dateIdx], this.fieldInvalidClass);		
 					this._valid = true;
@@ -252,6 +254,7 @@ function addTitleDateValidation(tableId){
 				this._valid = false;
 				var titleValid = false;
 				var dateValid = false;
+				var versionValid = false;
 				dojo.html.addClass(row.cells[titleIdx], this.fieldInvalidClass);
 				dojo.html.addClass(row.cells[dateIdx], this.fieldInvalidClass);		
 				
@@ -263,12 +266,20 @@ function addTitleDateValidation(tableId){
 				if (date != null && dojo.string.trim(date).length != 0) {
 					dateValid = true;
 					dojo.html.removeClass(row.cells[dateIdx], this.fieldInvalidClass);
-					dojo.html.removeClass(row.cells[dateIdx], this.fieldInvalidClass);		
 				}
+				
+				if (version != null && dojo.string.trim(version).length != 0) {
+					versionValid = true;
+				}
+				
 				
 				if (titleValid && dateValid) {
 					popup.close();
 					this._valid = true;
+				} else if (versionValid){
+					if(!titleValid || !dateValid){
+						popup.open(this.domNode, this);	
+					}
 				} else {
 					popup.open(this.domNode, this);
 				}
