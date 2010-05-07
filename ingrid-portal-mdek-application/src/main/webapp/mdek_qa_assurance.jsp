@@ -357,7 +357,7 @@ scriptScope.reloadPage = function() {
 		<span class="label" id="qaLoadingZone">
 			<div z-index: 100;">
 		        <img src="img/ladekreis.gif" style="background-color:#FFFFFF;" />
-		        <label>&nbsp;Bitte warten, die Daten werden geladen...</label>
+		        <label><fmt:message key="general.loading.data.long" /> ...</label>
 		    </div>
 		</span>
 
