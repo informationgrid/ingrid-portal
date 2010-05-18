@@ -82,7 +82,7 @@ scriptScope.selectParentDatasetForTreeImport = function() {
 		importTreeSelectedParentDataset = selectedNode;
 
 	} else {
-		dialog.show(message.get("general.error"), message.get("dialog.admin.împort.selectNodeError"), dialog.WARNING);
+		dialog.show(message.get("general.error"), message.get("dialog.admin.import.selectNodeError"), dialog.WARNING);
 	}
 }
 
