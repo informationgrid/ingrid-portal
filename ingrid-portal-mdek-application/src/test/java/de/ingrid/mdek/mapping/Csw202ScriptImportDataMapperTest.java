@@ -97,6 +97,64 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Test_Schutzgebiete"));
 	}
 
+	public final void testConvertSTObjectsComplete() throws TransformerException {
+		// set variables that are needed for running correctly
+		initClassVariables(mapperScriptArcGIS, templateIGC);
+		
+		InputStream data = null;
+		try {
+			// get example file from test resource directory
+			// spring-dependency is used to access test-resources (search from every class path!)
+			data = (new ClassPathResource("/de/ingrid/mdek/mapping/st_xml19115.xml")).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
+		InputStream result = mapper.convert(data);
+		
+		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
+		
+		// set variables that are needed for running correctly
+		initClassVariables(mapperScriptArcGIS, templateIGC);
+		
+		data = null;
+		try {
+			// get example file from test resource directory
+			// spring-dependency is used to access test-resources (search from every class path!)
+			data = (new ClassPathResource("/de/ingrid/mdek/mapping/st_xml19119.xml")).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		result = mapper.convert(data);
+//		System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
+		
+		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
+		
+	}
+	
+
+	public final void testConvertHHObjectsComplete() throws TransformerException, IOException {
+		// set variables that are needed for running correctly
+		initClassVariables(mapperScriptArcGIS, templateIGC);
+		
+		InputStream data = null;
+		try {
+			// get example file from test resource directory
+			// spring-dependency is used to access test-resources (search from every class path!)
+			data = (new ClassPathResource("/de/ingrid/mdek/mapping/csw202apIso10_dataset_Gewaesser_Muensterland.xml")).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
+		InputStream result = mapper.convert(data);
+		
+		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Gewässerflächen im Münsterland nach INSPIRE DataSpecification Hydrography"));
+		result.reset();
+		System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
+		
+	}
+	
+	
 	
 	private ImportDataProvider initDataProvider() {
 		MockImportDataProviderImpl dataProvider = new MockImportDataProviderImpl();

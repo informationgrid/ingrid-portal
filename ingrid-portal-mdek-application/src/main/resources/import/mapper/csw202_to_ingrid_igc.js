@@ -984,7 +984,7 @@ var mappingDescription = {"mappings":[
 						  			"targetNode":"type-of-relation",
 							  		"transform":{
 										"funct":transformISOToIgcDomainValue,
-										"params":[505, "Could not transform ISO address role code to IGC codelist value: "]
+										"params":[505, transformISOToIGCLanguageCode('de'), "Could not transform ISO address role code to IGC codelist value: "]
 									}
 						  				
 						  		},
@@ -1430,7 +1430,7 @@ function transformISOToIgcDomainId(val, codeListId, logErrorOnNotFound) {
 			idcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(codeListId, val);
 		} catch (e) {
 			if (log.isInfoEnabled()) {
-				log.info("Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
+				log.info("Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist? ");
 			}
 			if (logErrorOnNotFound) {
 				log.error(logErrorOnNotFound + val);
@@ -1456,10 +1456,10 @@ function transformISOToIgcDomainValue(val, codeListId, languageId, logErrorOnNot
 		var idcValue = null;
 		try {
 			var idcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(codeListId, val);
-			idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(idcCode), languageId);
+			idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(idcCode), parseToInt(languageId));
 		} catch (e) {
 			if (log.isInfoEnabled()) {
-				log.info("Error tranforming ISO value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
+				log.info("Error tranforming ISO value '" + val + "' with code list " + codeListId + " and language id '" + languageId + "'. Does the codeList exist?"  + e.toString());
 			}
 			if (logErrorOnNotFound) {
 				log.error(logErrorOnNotFound + val);
@@ -1568,7 +1568,7 @@ function createUUIDFromAddress(source) {
 		log.warn("A new random UUID will be created!");
 		uuid = createUUID();
 	}
-	log.debug("Created UUID from Address:" + uuid);
+	log.info("Created UUID from Address:" + uuid);
 	
 	return uuid;
 }

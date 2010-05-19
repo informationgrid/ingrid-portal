@@ -258,7 +258,28 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 		
 		assertEquals("Amtlicher Stadtplan Bremerhaven", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
 		assertTrue(5 == XPathUtils.getInt(doc, "/igc/data-sources/data-source/technical-domain/map/hierarchy-level/@iso-code"));
+	}
+	
+	public final void testConvertCusoShp() {
+		
+		exampleXml = "/de/ingrid/mdek/mapping/cuso.shp.xml";
+		
+		initClassVariables(mapperScriptArcGIS, templateIGC);
+		
+		InputStream data = null;
+		try {
+			// get example file from test resource directory
+			data = (new ClassPathResource(exampleXml)).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		InputStream result = mapper.convert(data);
+		Document doc = getDomFromSourceData(result);
+		// Portugese is not supported,  check for template String
+		assertEquals("xxxTEMPLATExxx", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
 	}		
+	
 	
 	private boolean xpathExists(InputStream in, String path, String value) {
 		boolean found = false;
