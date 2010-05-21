@@ -1,6 +1,8 @@
 <project default="java:jar"
          xmlns:j="jelly:core" 
-         xmlns:define="jelly:define">
+         xmlns:define="jelly:define"
+		 xmlns:maven="jelly:maven"
+		 xmlns:ant="jelly:ant">
 
  
   <!-- ================================================================ -->
@@ -34,5 +36,16 @@
       
     </copy>
   </goal>
+
+  <!-- MANIFEST Stuff -->
+  <preGoal name="war:war">
+	<ant:tstamp/>
+	<j:set var="manifestFile" value="${maven.build.dir}/${pom.artifactId}/META-INF/MANIFEST.MF"/>
+	<!-- delete file="${manifestFile}"/ -->
+	<ant:manifest file="${manifestFile}">
+		<attribute name="Build-Timestamp" value="${DSTAMP}${TSTAMP}" />
+	</ant:manifest>
+	<maven:set plugin="maven-war-plugin" property="maven.war.manifest" value="${manifestFile}" />
+  </preGoal>
 
 </project>

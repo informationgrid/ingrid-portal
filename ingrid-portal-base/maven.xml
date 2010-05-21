@@ -1,4 +1,15 @@
-<project xmlns:j="jelly:core" xmlns:ant="jelly:ant" xmlns:util="jelly:util">
+<project xmlns:j="jelly:core" xmlns:ant="jelly:ant" xmlns:util="jelly:util" xmlns:maven="jelly:maven">
+
+  <!-- MANIFEST Stuff -->
+  <preGoal name="war:war">
+	<ant:tstamp/>
+	<j:set var="manifestFile" value="${maven.build.dir}/${pom.artifactId}/META-INF/MANIFEST.MF"/>
+	<!-- delete file="${manifestFile}"/ -->
+	<ant:manifest file="${manifestFile}">
+		<attribute name="Build-Timestamp" value="${DSTAMP}${TSTAMP}" />
+	</ant:manifest>
+	<maven:set plugin="maven-war-plugin" property="maven.war.manifest" value="${manifestFile}" />
+  </preGoal>
 
   <!--==================================================================-->
   <!-- copy local webapp over default j2 webapp                         -->
