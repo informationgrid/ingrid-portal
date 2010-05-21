@@ -226,7 +226,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     	String correspondentIPlug = null;
     	PlugDescription cIPlugDescr = IBUSInterfaceImpl.getInstance().getIPlug(plugId);
     	if (cIPlugDescr != null) {
-        	if (cIPlugDescr.containsDataType("address")) {
+        	if (IPlugHelper.hasDataType(cIPlugDescr, "address")) {
         		correspondentIPlug = plugId;
         	} else {
         		correspondentIPlug = cIPlugDescr.getCorrespondentProxyServiceURL();
@@ -263,7 +263,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     	PlugDescription cIPlugDescr = IBUSInterfaceImpl.getInstance().getIPlug(plugId);
     	
     	if (cIPlugDescr != null) {
-        	if (!cIPlugDescr.containsDataType("address")) {
+        	if (!IPlugHelper.hasDataType(cIPlugDescr, "address")) {
         		correspondentIPlug = plugId;
         	} else {
         		correspondentIPlug = cIPlugDescr.getCorrespondentProxyServiceURL();
