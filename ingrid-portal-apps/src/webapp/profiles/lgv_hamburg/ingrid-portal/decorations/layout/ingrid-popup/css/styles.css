@@ -36,6 +36,7 @@ a:visited { color: #176798; }
 a:hover, a:focus { color: #111111; text-decoration: underline; }
 a:active { color: #111111; text-decoration: none; }
 a.selected { font-weight:bold; }
+a.download_link { font-size:83%; color: #176798; text-decoration: none; }
 
 h1 { font-family: Verdana, Arial, Helvetica, sans-serif ; font-size:105%; font-weight:bold; line-height:120%; margin-top:0; margin-bottom:0em; }
 h2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:90%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
@@ -412,6 +413,7 @@ div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 
 input.btn { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border: solid 1px #000000; background-color: #176798; cursor: pointer; }
+input.btn_disable { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border: solid 1px #000000;}
 
 label.left {width:5.5em; float:left;}
 label.login {width:8em; float:left;}
