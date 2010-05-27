@@ -4,11 +4,35 @@
     <description>Portal-Profile für LGV Hamburg</description>
     <pages>
         <page>
-            <name>main-maps.psml</name>
+            <name>main-measures.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-service.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-environment.psml</name>
             <hidden>false</hidden>
         </page>
         <page>
             <name>main-chronicle.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-maps.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>service-sitemap.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>administration/admin-content-rss.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>administration/admin-homepage.psml</name>
             <hidden>false</hidden>
         </page>
         <page>
@@ -37,6 +61,9 @@
                 <portlet col="1" row="2">
                     <name>ingrid-portal-apps::MeasuresTeaser</name>
                 </portlet>
+				<portlet col="1" row="3">
+                    <name>ingrid-portal-apps::ChronicleTeaser</name>
+                </portlet>
             </portlets>
         </page>
         <page>
@@ -60,6 +87,9 @@
                 </portlet>
                 <portlet col="1" row="2">
                     <name>ingrid-portal-apps::MeasuresTeaser</name>
+                </portlet>
+				<portlet col="1" row="3">
+                    <name>ingrid-portal-apps::ChronicleTeaser</name>
                 </portlet>
             </portlets>
         </page>
@@ -85,6 +115,9 @@
                 <portlet col="1" row="2">
                     <name>ingrid-portal-apps::MeasuresTeaser</name>
                 </portlet>
+				<portlet col="1" row="3">
+                    <name>ingrid-portal-apps::ChronicleTeaser</name>
+                </portlet>
             </portlets>
         </page>
         <page>
@@ -101,6 +134,15 @@
             <portlets>
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::Contact</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::InfoPortlet</name>
+                    <preference name="infoTemplate">
+                    	<value>/WEB-INF/templates/newsletter_teaser.vm</value>
+                    </preference>
+                    <preference name="titleKey">
+                    	<value>teaser.newsletter.title</value>
+                    </preference>
                 </portlet>
             </portlets>
         </page>

@@ -185,8 +185,10 @@ div#subnav ul li a:hover,
 div#subnav ul li a:active
  { color:#4179a1; text-decoration:none; background-color:#FFFFFF; padding:3px 6px 5px 6px; border-bottom: solid #333333 0px; margin:0; font-size: 95%;}
 
+/*
 div.subnav_corner {vertical-align:bottom;float:right; width:21px; height: 100%;background-color:#DDE9BD}
 div.subnav_corner_img {vertical-align:bottom;width: 21px; height:100%;background:url(../images/corner_sub_nav.gif) no-repeat;background-position:bottom; background-color:#DDE9BD}
+*/
 
 /********************************************************************
   content block styles
