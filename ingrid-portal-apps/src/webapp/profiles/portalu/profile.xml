@@ -707,16 +707,8 @@
             <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ServiceSearchResources.properties</src>
         </file>
         <file>
-            <action>copy</action>
-            <src>ingrid-portal-apps/images/icn_down.gif</src>
-        </file>
-        <file>
-            <action>copy</action>
-            <src>ingrid-portal-apps/images/icn_linkextern.gif</src>
-        </file>
-        <file>
-            <action>copy</action>
-            <src>ingrid-portal-apps/images/icn_linkintern.gif</src>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/images/</src>
         </file>
         <file>
             <action>copy-dir</action>
