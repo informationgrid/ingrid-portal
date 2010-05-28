@@ -584,7 +584,7 @@
 	"ui.obj.type2.additionalBibInfo":"Additional bibliographic data",
 	"ui.obj.type2.description":"Description",
 	"ui.obj.type3.serviceType":"Service-Type",
-	"ui.obj.type3.ref3ServiceTypeTable.title":"Service-Type",
+	"ui.obj.type3.ref3ServiceTypeTable.title":"Service-Classification",
 	"ui.obj.type3.serviceVersion":"Service Version",
 	"ui.obj.type3.environment":"Environment",
 	"ui.obj.type3.history":"History",
