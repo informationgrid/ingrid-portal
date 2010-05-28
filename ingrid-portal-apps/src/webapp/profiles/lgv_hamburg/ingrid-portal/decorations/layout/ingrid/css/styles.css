@@ -9,7 +9,7 @@
   standard styles 
 *********************************************************************/
 
-body {position: absolute; width: 952px; left: 50%; margin-left: -476px; margin-top: 50px; color: #333333; background-color: #dae4f1; border: 10px solid #ffffff; font: normal 100% Verdana, Arial, sans-serif; line-height: 120%; }
+body {padding: 0; margin: 0px; margin-top: 45px; margin-bottom: 0.833em; color: #111111; background: url(../images/blauerhintergrund.png) repeat-x fixed; font: normal 100% Arial, sans-serif; line-height: 120%; }
 
 img { border:0; }
 span.icon { margin-right:4px; margin-top:5px; float:left; }
@@ -23,7 +23,7 @@ p { margin-top:0; margin-bottom:1em; font-size:75%}
 strong {font-weight:bold}
 
 /*Trennlinien*/
-div.line { border: 0; background-color: #cccccc; height: 1px; margin:10px 0 0 0; padding:0 }
+div.line { border: 0; background-color: #c2d8ee; height: 1px; margin:10px 0 0 0; padding:0 }
 div.line_form { border: 0; background-color: #CCCCCC; height: 1px; margin:10px 0 10px 0; padding:0}
 /* for CSS1 browsers */ 
 div.line hr { display: none;}
@@ -32,15 +32,15 @@ div.line_form hr { display: none;}
 div.line * { display: none;}
 div.line_form * { display: none;}
 
-a, a:link { color: #4179a1; text-decoration: none; }
-a:visited { color: #4179a1; }
-a:hover, a:focus { color: #4179A1; text-decoration: none; }
-a:active { color: #4179A1; text-decoration: none; }
+a, a:link { color: #4179A1; text-decoration: none; }
+a:visited { color: #4179A1; }
+a:hover, a:focus { color: #4179A1; text-decoration: underline; }
+a:active { color: #111111; text-decoration: none; }
 a.selected { font-weight:bold; }
 
-h1 { font-family: Verdana, Arial, Helvetica, sans-serif ; font-size:105%; font-weight:bold; line-height:120%; margin-top:0; margin-bottom:1em; }
-h2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:90%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
-h3 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:80%; line-height:120%; font-weight:bold; margin-top:0.4em; margin-bottom:0.3em; }
+h1 { font-family: Arial, sans-serif ; font-size:110%; font-weight:bold; line-height:120%; margin-top:0; margin-bottom:1em; }
+h2 { font-family: Arial, sans-serif; font-size:95%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
+h3 { font-family: Arial, sans-serif; font-size:80%; line-height:120%; font-weight:bold; margin-top:0.4em; margin-bottom:0.3em; }
 
 table.border { border-collapse:collapse; }
 table.fullwidth { width:100%; }
@@ -51,6 +51,10 @@ td.iconwidth { width:9px; }
 table.layout td {font-size: 100%}
 td.fontcolor {color: #176798;}
 
+/*********************************************************************
+   Weißer Hintergrund, mittige Platzierung
+**********************************************************************/
+div.layout-tigris {width: 59.5em; background-color: #FFFFFF; border: 11px solid #FFFFFF; margin-left: auto; margin-right: auto;}
 
 /********************************************************************
   helper styles 
@@ -83,7 +87,7 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
   identity area styles
 *********************************************************************/
 
-div#identity { padding:0; margin:0; height: 130px; width:59.5em; background-color:#68A5D2; overflow:visible; }
+div#identity { padding:0; margin:0; height: 130px; width:59.5em; background-color:#FFFFFF; overflow:visible; }
 div.motiv_blank { background-image:url(../images/Banner_HMDK.jpg); background-repeat:no-repeat; }
 div.motiv_start { background-image:url(../images/Banner_HMDK.jpg); background-repeat:no-repeat; }
 div.motiv_suche { background-image:url(../images/Banner_HMDK.jpg); background-repeat:no-repeat; }
@@ -118,20 +122,20 @@ div#logo { float: left; }
   logged on styles 
 *********************************************************************/
 
-div#logged_on {float: right; clear:right; font-size: 65%; padding:3.5em 1.2em 0 0; color:#FFFFFF;}
-div#logged_on a, div#logged_on a:link, div#logged_on a:visited {color:#FFFFFF; text-decoration: none}
-div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { color: #bd021b; text-decoration: none; }
+div#logged_on {float: right; clear:right; font-size: 75%; padding:3.5em 1.2em 0 0; color:#C7E7FF;}
+div#logged_on a, div#logged_on a:link, div#logged_on a:visited {color:#C7E7FF; text-decoration: none}
+div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { color: #BD021B; text-decoration: underline; }
 
 /********************************************************************
   service navigation styles
 *********************************************************************/
 
 div#servicenav { padding:0.1em 1.2em 0.1em 1.5em; background-color:#FFFFFF; float: right; }
-#servicenav { font-size: 70%; }
+#servicenav { font-size: 75%; }
 div#servicenav ul { list-style: none; padding: 0; margin: 0; }
 div#servicenav ul li { display:inline; }
-div#servicenav ul li a.selected { text-decoration:none; color:#4179A1; font-weight:normal;}
-div#servicenav ul li a.selected:hover { text-decoration:none; color:#bd021b; font-weight:normal; }
+div#servicenav ul li a.selected { text-decoration:none; color:#111111; font-weight:normal;}
+div#servicenav ul li a.selected:hover { text-decoration:underline; color:#111111; font-weight:normal; }
 
 /********************************************************************
   main navigation styles
@@ -142,8 +146,8 @@ html body div#mainnav { height: 1%; }
 /* End Hack */
 
 div#mainnav { background-color:#FFFFFF; margin:0; padding:0; width:59.5em; height:2.0625em; }  
-div#mainnav ul { list-style: none; padding: 7px 0 4px 0px; margin: 0;}
-div#mainnav ul li { padding: 2px 0px 6px 0; margin: 0px 2px 0px 0px; border: 0; float: left;font-size: 75%; font-weight:bold;}
+div#mainnav ul { list-style: none; padding: 2px 0 4px 0px; margin: 0;}
+div#mainnav ul li { padding: 0px 0px 6px 0; margin: 0px 2px 0px 0px; border: 0; float: left;font-size: 80%; font-weight:bold;}
 
 /* Commented Backslash Hack hides rule from IE5-Mac \*/
 div#mainnav ul li a {float:none;}
@@ -152,24 +156,24 @@ div#mainnav ul li a {float:none;}
 div#mainnav ul li a,  
 div#mainnav ul li a:link, 
 div#mainnav ul li a:visited 
- { text-transform: uppercase; color:#4179a1; margin-right:7px; padding:3px 7px 6px 7px; border-bottom:solid #759FC5; margin:0; font-size: 95%; }  
+ { text-transform:uppercase; color:#4179a1; margin-right:7px; padding:3px 10.5px 1px 10.5px; border-bottom: solid #759FC5; margin:0 4px; font-size: 95%; }  
 
 div#mainnav ul li a.selected,
 div#mainnav ul li a.selected:link, 
 div#mainnav ul li a.selected:visited 
- { text-transform: uppercase; color:#bd021b; margin:0; padding:3px 7px 6px 7px; border-bottom: solid #759FC5; font-size: 95%; }  
+ { text-transform:uppercase; color:#bd021b; margin:0 3px; padding:3px 10.5px 1px 10.5px; border-bottom: solid #759FC5;  margin:0 4px; font-size: 95%; }  
 
 div#mainnav ul li a:hover,
 div#mainnav ul li a:active
- { text-decoration:none; color:#bd021b; background-color:#FFFFFF; padding:3px 7px 6px 7px; border-bottom-color:#759FC5; border-bottom-style:solid; margin:0; font-size: 95%;}
+ { color:#bd021b; text-decoration:none; background-color:#FFFFFF; padding:3px 10.5px 1px 10.5px; border-bottom: solid #759FC5; margin:0 4px; font-size: 95%;}
 
 /********************************************************************
   sub navigation styles
 *********************************************************************/
 
 div#subnav { position:relative; border-top: solid #FFFFFF 1px; background-color:#FFFFFF; width:59.5em; height:1.375em; z-index:12;}
-div#subnav ul { list-style:none; padding: 0px 7px 1px 0px; margin:0; line-height:120%; color:#333333; }
-div#subnav ul li { display:inline; font-size: 65%; }
+div#subnav ul { list-style:none; padding: 0px 7px 1px 0px; margin:0; line-height:120%; color:#4179A1; }
+div#subnav ul li { display:inline; font-size: 75%; }
 
 div#subnav ul li a,  
 div#subnav ul li a:link, 
@@ -184,28 +188,22 @@ div#subnav ul li a.selected:visited
 div#subnav ul li a:hover,
 div#subnav ul li a:active
  { color:#4179a1; text-decoration:none; background-color:#FFFFFF; padding:3px 6px 5px 6px; border-bottom: solid #333333 0px; margin:0; font-size: 95%;}
-
-/*
-div.subnav_corner {vertical-align:bottom;float:right; width:21px; height: 100%;background-color:#DDE9BD}
-div.subnav_corner_img {vertical-align:bottom;width: 21px; height:100%;background:url(../images/corner_sub_nav.gif) no-repeat;background-position:bottom; background-color:#DDE9BD}
-*/
-
+ 
 /********************************************************************
   content block styles
   base layout for content area and marginal column  
 *********************************************************************/
 
-div#container {background-color: #FFFFFF; width:56em; margin:22px 0 0 63px; }
+div#container { width:56em; margin:22px 0 0 10px; }
 
 /*** alt ***/
 div#content { float:left; width:37.1875em; }
 div#marginal { float:left; width:15.75em; margin: 0px 0px 0 2.625em; }
 
 /*** portlat column styles, replacing div#content and div#marginal ***/
-div.portal-layout-column-1 { background-color: #FFFFFF; float:left; width:37.1875em; }
-div.portal-layout-column-2 { background-color: #FFFFFF; float:left; width:15.75em; margin: 0px 0px 0 2.625em; }
+div.portal-layout-column-1 { float:left; width:37.1875em; }
+div.portal-layout-column-2 { float:left; width:15.75em; margin: 0px 0px 0 2.625em; }
 
-div.layout-tigris {width: 59.5em; background-color: #FFFFFF; margin-left: auto; margin-right: auto;}
 
 /*** Ergebnis-Spalten: 2/3 zu 1/3 ***/
 div#results_left { float:left; width:35.2917em; }
@@ -227,8 +225,8 @@ div.portal-layout-OneColumn {width: 55.57em}
 *********************************************************************/
 
 .iconLink { margin:0px 0px 5px 0px; font-size:70%;}
-/* ich will all die beknackten Abh�ngigkeiten unterhalb der Klasse .iconLink nicht (a styles etc. s.u.)
-deshalb definier ich mir jetzt das Gleiche unter anderem Namen,da hab ich keine Abh�ngigkeiten, mm */
+/* ich will all die beknackten Abhängigkeiten unterhalb der Klasse .iconLink nicht (a styles etc. s.u.)
+deshalb definier ich mir jetzt das Gleiche unter anderem Namen,da hab ich keine Abhängigkeiten, mm */
 .iconLink2 { margin:0px 0px 5px 0px; font-size:70%;}
 
 div.left { float:left; width:15.75em; padding:0; }
@@ -236,16 +234,16 @@ div.right { float:left; margin-left:2.625em; width:15.75em; padding:0; }
 div.whole { width:34.125em; padding:0; }
 div.themen_image { margin:0; padding:4px 14px 0 0; float:left; }
 
-div.section {background-color: #FFFFFF; margin: 0 0 0px 0; padding:0; }
+div.section { margin: 0 0 0px 0; padding:0; }
 div.section p a { text-decoration:underline; }
 div.section div p a { text-decoration:none; }
 div.section-header { margin-top:0; padding:0; }
 div.section-header h1 { display:inline; float:left; padding-top:0.2em; padding-bottom:0.2em; }
 div.section-header span.portlet_info { float:right; font-size:80%}
-/* n�tig f�r Firefox, sonst zerreissts �berschrift ! */
+/* nötig für Firefox, sonst zerreissts Überschrift ! */
 div.section-header span.clearer { display:block; }
 
-/* n�tig fuer IE: sonst springt in Erweiterter Suche "Suche" Button */
+/* nötig fuer IE: sonst springt in Erweiterter Suche "Suche" Button */
 div.portal-layout-column-1 .clearer { clear:both; display:block; height:1px; line-height:0px; font-size:1px; margin:0; padding:0; }
 
 div.section p.iconLink span.icon { margin: 7px 0 0 0; }
@@ -258,8 +256,8 @@ div.section ul.catalog span.separator { background: url(../images/list_dot.gif) 
 div.section ul.catalog li a { white-space:nowrap; padding-left:1em; padding-right:0.5em; background: url(../images/list_dot.gif) no-repeat top left; }
 div.section ul.catalog li { border:1px solid red; background: url(../images/list_dot.gif) no-repeat bottom left; display: inline; padding-left:1em; padding-right:0.5em}
 */
-div.section ul li { font-size:83%}
-div.section ol li { font-size:83%}
+div.section ul li { font-size:80%}
+div.section ol li { font-size:80%}
 
 div.section ul.innermenu {list-style: none; margin: 0 0 0 0.0em;}
 div.section ul.innermenu li { margin: 0 0 0.3em 0;padding-left: 20px;background-image:url("../images/icn_down.gif");background-repeat: no-repeat;background-position: 0 .15em; }
@@ -286,24 +284,24 @@ div.section div.indent {margin-left: 1em}
 div.noresult { margin-top:20px; }
 div.noresult ul { line-height:2em; }
 
-div.resultset_nav { text-align:right; background-color:#edf3f9; padding:0px 4px 0px 4px; font-size:75%; }
+div.resultset_nav { text-align:right; background-color:#DAE4F1; padding:0px 4px 0px 4px; font-size:75%; }
 div.resultset_nav a { text-decoration:underline; font-weight: bold;}
 
 div.resultset { padding:4px 4px 4px 0px; font-size:100%; margin: 5px 0px 5px 0px; }
-div.resultset a { text-decoration:none; font-size:100%;color: #4179a1;line-height:140%}
-div.resultset a:hover { text-decoration:underline;color: #333333;}
+div.resultset a { text-decoration:none; font-size:100%;color: #4179A1;line-height:140%}
+div.resultset a:hover { text-decoration:underline;color: #4179A1;}
 div.resultset p.result_title { font-size:90%; margin: 10px 0px 10px 0px; }
-div.resultset p.result_description { font-size:65%;margin: 5px 0px 0px 0px; line-height:120%}
+div.resultset p.result_description { font-size:75%;margin: 5px 0px 0px 0px; line-height:140%}
 div.resultset p.event_description { margin: 10px 0px 10px 0px; line-height:120%}
 div.resultset p.result_metadata { font-size:65%; color:#999999; margin:0; line-height:120%}
 div.resultset p.result_metadata_adress { font-size:65%; color:#999999; margin:7px 0 8px 0; line-height:120%}
-div.resultset p.result_link { font-size:65%; color:#999999; margin:3px 0 8px 0; }
+div.resultset p.result_link { font-size:75%; color:#999999; margin:3px 0 8px 0; }
 div.resultset p.result_link img { position:relative; top:1px; }
 div.resultset p.result_link a { text-decoration:none; }
 div.resultset p.result_link a:hover { text-decoration:underline; }
 div.resultset span.result_title { font-size:75%;}
 div.resultset span.inquiry { margin-left:20px; font-size:83%}
-div.resultset em.date { font-style:normal; font-size: 83%; color:#333333; }
+div.resultset em.date { font-style:normal; font-size: 83%; color:#111111; }
 
 div.resultset_partner_group {background-color:#D1E4F1; margin: 0 0 10px 0;padding: 0.25em 0.875em 0.05em 0.7em;}
 div.resultset_partner_group span.title {font-size:67.5%; font-weight:bold; line-height:100%; text-transform:uppercase;}
@@ -317,11 +315,11 @@ div.resultset_show_partner {text-decoration:none;font-size:75%;margin: 10px 0px 
 
 /* TAB, EXTENDED SEARCH */
 div.tabs ul { list-style: none; padding: 7px 0 0px 0px; margin: 0;}
-div.tabs ul li { padding: 2px 0px 2px 0; margin: 0px 2px 0px 0px; border: 0; float: left; font-weight: bold;font-size: 80%;}
+div.tabs ul li { padding: 2px 0px 2px 0; margin: 0px 0px 0px 0px; border: 0; float: left; font-weight: bold;font-size: 80%;}
 div.tabs ul li a.selected,
 div.tabs ul li a.selected:link, 
 div.tabs ul li a.selected:visited 
-  { position:relative; top: 0px; text-decoration:none; color:#DAE4F1; background-color:#4179a1; margin:0; padding:3px 7px 5px 5px; border-bottom: solid #FFFFFF 0px; }  
+  { position:relative; text-decoration:none; color:#BD021b; background-color:#FFFFFF; margin:0; padding:3px 7px 5px 7px; border-bottom: solid #FFFFFF 0px; }  
 
 /* Commented Backslash Hack hides rule from IE5-Mac \*/
 div.tabs ul li a {float:none;}
@@ -330,25 +328,25 @@ div.tabs ul li a {float:none;}
 div.tabs ul li a,  
 div.tabs ul li a:link, 
 div.tabs ul li a:visited 
- { text-decoration:none; color:#4179a1; background-color: #DAE4F1; margin-right:7px; padding:3px 7px 5px 7px; border-bottom:0px; margin:0; font-size: 90%;}  
+ { text-decoration:none; color:#4179A1; background-color: #FFFFFF; margin-right:7px; padding:3px 7px 5px 7px; border-bottom:0px; margin:0; font-size: 90%;}  
 
 div.tabs ul li a:hover,
 div.tabs ul li a:active, 
-div.tabs ul li a:focus { color:#4179a1; text-decoration:none; background-color:#BFD7EE; padding:3px 7px 5px 7px; border-bottom: solid #333333 0px; margin:0; font-size: 90%;}
+div.tabs ul li a:focus { color:#4179A1; text-decoration:none; background-color:#FFFFFF; padding:3px 7px 5px 7px; margin:0; font-size: 90%;}
 
 /* TAB MENU, EXTENDED SEARCH */
 
-div.tabmenu {position:relative; background-color:#DAE4F1; padding: 0px 0px 0px 0px; width:100%; margin:1px 0px 1px 0px;font-size:0%;z-index:12;}
-div.tabmenu ul { list-style:none; padding: 0px 7px 0px 6px; margin:0; font-size:75%; line-height:130%; color:#333333; }
+div.tabmenu {position:relative; background-color:#FFFFFF; padding: 0px; width:100%; margin:1px 0px 5px 0px;font-size:100%;z-index:12;}
+div.tabmenu ul { list-style:none; padding: 0px 7px 0px 6px; margin:0; font-size:75%; line-height:130%; color:#4179A1; }
 div.tabmenu ul li { display:inline; }
 
-div.tabmenu ul li a.selected { text-decoration:none; color:#333333; font-weight:bold; }
+div.tabmenu ul li a.selected { text-decoration:none; color:#bd021b; font-weight:bold; }
 div.tabmenu ul li a,
 div.tabmenu ul li a:link,
 div.tabmenu ul li a:visited,
-div.tabmenu ul li a:active { text-decoration:none; color:#333333; }  
+div.tabmenu ul li a:active { text-decoration:none; color:#4179A1; }  
 div.tabmenu ul li a:hover, 
-div.tabmenu ul li a:focus { color:#333333; text-decoration:underline;}
+div.tabmenu ul li a:focus { color:#4179A1; text-decoration:none;}
 
 
 /* SEARCH DETAILS */
@@ -361,11 +359,11 @@ h3#search_detail {  text-decoration:underline; margin-top:1em; }
 *********************************************************************/
 
 div.portlet { margin-bottom:10px; padding:0;}
-div.portlet p { font-size:70%; line-height:140%;}
-div.portlet p.hitrow { font-size:83%; line-height:140%;}
+div.portlet p { font-size:75%; line-height:140%;}
+div.portlet p.hitrow { font-size:75%; line-height:140%;}
 div.portlet ul { margin: 0 0 -5px 14px;}
 
-/* n�tig fuer Firefox: sonst f�llt Link aus Portlet, vgl. Einstellungen */
+/* nötig fuer Firefox: sonst fällt Link aus Portlet, vgl. Einstellungen */
 div.portlet .clearer { clear:both; display:block; height:1px; line-height: 0px; font-size: 1px; margin:0; padding:0; }
 
 div.portlet .iconLink a { float:left; line-height:140%}
@@ -378,19 +376,19 @@ div.portlet div.resultset p.result_link {  font-size:65%; margin:3px 0 8px 0;}
    min-height statt height, sonst Probleme in firefox.
    padding rechts 0 lassen, sonst fliegt in IE das marginal portlet nach l.u. wenn Titel zu lang
 */
-div.portlet div.section-header { min-height:1em; padding: 0.175em 0em 0.05em 0.5em; background:#DAE4F1; }
+div.portlet div.section-header { min-height:1em; padding: 0.175em 0em 0.05em 0.5em; background:#dae4f1; }
 
 /* IE6, 5 bugfix. sets hasLayout property and fixes http://jira.media-style.com/browse/INGRID-1468 */
 * html div.portlet div.section-header {height:1%;}
 
-div.portlet div.section-header h1 { display:inline; color:#333333; font-size:70%; font-weight:bold; line-height:120%; margin:0; text-transform:uppercase; }
+div.portlet div.section-header h1 { display:inline; color:#333333; font-size:75%; font-weight:bold; line-height:120%; margin:0; text-transform:uppercase; }
 div.portlet div.section-header span.portlet_info { float:right; color: #FFFFFF;font-size:75%; font-weight:bold; line-height:100%; margin: 0 0 0 0;}
 div.portlet div.section-header a { color: #333333;}
 /* because of problems in IE rendering underline and background ! */
 div#marginal_header a:hover, div#marginal_header a:focus { text-decoration: none; }
-div#marginal_header a:hover, div#marginal_header a:focus, div#marginal_header a:active, div#marginal_header a:visited { background:#4179a1; }
+div#marginal_header a:hover, div#marginal_header a:focus, div#marginal_header a:active, div#marginal_header a:visited { background:#DAE4F1; }
 
-div.portlet div.portlet-section-body { position:relative; padding: 0.625em 0.875em; margin:0; border-left: solid #DAE4F1 1px; border-bottom: solid #DAE4F1 1px; border-right: solid #DAE4F1 1px; }
+div.portlet div.portlet-section-body { position:relative;padding: 0.625em 0.875em; margin:0; border-left: solid #dae4f1 1px; border-bottom: solid #dae4f1 1px; border-right: solid #dae4f1 1px; }
 
 
 /********************************************************************
@@ -400,16 +398,16 @@ div.portlet div.portlet-section-body { position:relative; padding: 0.625em 0.875
 form, input { padding:0; margin:0; }
 select { padding:0; margin:0; border: 0px inset #FFFFFF;}
 
-div.formheader {height: 1em; padding: 4px 14px 2px 8px; color: #FFFFFF; font-size: 75%; line-height: 120%; text-transform: uppercase; border-bottom: 1px solid #13547d; background-color: #4179a1;}
+div.formheader {height: 1em; padding: 4px 14px 2px 8px; color: #FFFFFF; font-size: 75%; line-height: 120%; text-transform: uppercase; border-bottom: 1px solid #13547d; background-color: #176798;}
 
 div.formheader span.portlet_info { float:right; color: #FFFFFF; line-height:100%; margin: 0 0 0 0;}
 div.formheader span.portlet_info a { color: #FFFFFF; }
 
-div.formbody {padding: 4px 12px 8px 12px; margin:1px 0px 1px 0px; border: 1px solid #333333; background-color: #edf3f9;}
-/* Sonderbehandlung f�r IE: dieser �bernimmt die Farbe des �bergeordneten divs nicht f�r rollover Link Auszeichnungen 
+div.formbody {padding: 4px 12px 8px 12px; margin:1px 0px 1px 0px; border: 1px solid #111111; background-color: #DAE4F1;}
+/* Sonderbehandlung für IE: dieser übernimmt die Farbe des übergeordneten divs nicht für rollover Link Auszeichnungen 
    siehe auch http://jira.media-style.com/browse/INGRID-192
 */
-div.formbody div {background-color: #edf3f9;}
+div.formbody div {background-color: #dae4f1;}
 div.formbody div.line {background-color: #CCCCCC;}
 div.formbody div.line_form {background-color: #CCCCCC;}
 div.formbody p { padding:0; margin: 0.5em  0.0em; }
@@ -433,7 +431,7 @@ div.formbody .inputstyleerror {border: 1px solid #FF0000; padding: 2px 4px 2px 4
 div.formbody .inputstyletext {border: 1px inset #FFFFFF; padding: 2px 4px 2px 4px; margin-right:6px;}
 div.formbody input.large {width:15em;}
 
-div.formbody textarea {font: normal 83% Verdana, Arial, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:4px; }
+div.formbody textarea {font: normal 83% Arial, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:4px; }
 
 div.formbody label { margin: 0px 10px 0px 0px; padding: 0px 4px 0px 4px; line-height: 130%; }
 div.formbody label.alignleft { padding: 0px 4px 0px 0px;}
@@ -445,17 +443,18 @@ div.formbody .spacer_search_form {margin-top: 15px}
 .col2left_incr { width:14em; }
 .col2right { width:15em; }
 
-div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px; border: 1px solid #333333; background-color: #edf3f9; }
+div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px; border: 1px solid #111111; background-color: #DAE4F1; }
+/*div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px; border-right: 1px solid #111111; border-left: 1px solid #111111; border-top: 0px solid #DAE4F1; border-bottom: 1px solid #111111; background-color: #DAE4F1; }*/
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 
-input.btn { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border: solid 1px #000000; background-color: #4179a1; cursor: pointer; }
+input.btn { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:75%; line-height: 130%; font-weight:bold; border: solid 1px #000000; background-color: #4179A1; cursor: pointer; }
 input.btn_disable { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border: solid 1px #000000;}
 
 label.left {width:5.5em; float:left;}
 label.login {width:8em; float:left;}
 div.optional-links { margin:5px 0 0 0 ; padding:0; }
 div.optional-links img, ul.optional-links img { margin:0; padding:0; }
-div.optional-links a, ul.optional-links a, div.optional-links span { margin-right:1em; font-size:65%; }
+div.optional-links a, ul.optional-links a, div.optional-links span { margin-right:1em; font-size:70%; }
 
 ul.optional-links ul.optional-links { margin: 0 0 0 12px; padding:0; }
 ul.optional-links { list-style:none; margin: 0 0 1.2em 0; }
@@ -465,10 +464,10 @@ ul.optional-links { list-style:none; margin: 0 0 1.2em 0; }
 div.sitemap ul {list-style: none; margin: 0.5em 0 0 0.5em;}
 div.sitemap li { margin: 0 0 0.3em 0;padding-left: 15px;background-image:url("../images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .45em; }
 div.sitemap li a { font-size:75%; }
-div.sitemap li p { margin: 0 0 0 0; font-size:70%; line-height:110%; color:#333333}
+div.sitemap li p { margin: 0 0 0 0; font-size:75%; line-height:110%; color:#111111}
 div.sitemap li p a { font-size:100%;}
 div.sitemap li li a { font-size:75%;}
-div.sitemap li li p { margin: 0 0 0 0; font-size:70%; line-height:110%; color:#333333}
+div.sitemap li li p { margin: 0 0 0 0; font-size:70%; line-height:110%; color:#111111}
 
 /*** Formular Anmeldung ***/
 
@@ -487,14 +486,14 @@ div.formbody input.qrystr {width: 30em; font-size: 83%; line-height: 100%;}
 /*** Formular Erweiterte Suche ***/
 
 div.formbody div.qrytxt {width:34.5em; padding: 5px 5px 5px 5px;text-align:right;}
-div.formbody textarea.qrytxt { width: 100%;font: normal 83% Verdana, Arial, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:2px; margin:0 0 5px 0; }
+div.formbody textarea.qrytxt { width: 100%;font: normal 83% Arial, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:2px; margin:0 0 5px 0; }
 div.formbody input.search_term { height:auto;width: 100%;font-size: 83%;}
 div.formbody div.innerform {width:34.5em;}
 div.formbody input.thesaurus_term {width: 45%;font-size: 83%; line-height: 120%;}
 div.formbody input.address_space {width: 55%;}
 
 div.formbody td label {font-size: 100%;}
-div.formbody input.btn_show_provider {margin: 3em 0 0 0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:80%; line-height: 130%; font-weight:bold; border: solid 1px #000; background-color: #4179a1; cursor: pointer; }
+div.formbody input.btn_show_provider {margin: 3em 0 0 0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:80%; line-height: 130%; font-weight:bold; border: solid 1px #000; background-color: #176798; cursor: pointer; }
 div.formbody p.event_description { margin-left: 20px; font-size:100%; line-height:120%}
 
 div.intend {margin:0 0 0 2em}
@@ -515,13 +514,13 @@ div.formbody .snslogo_margin {margin-top: 8px; }
   footer block styles  
 *********************************************************************/
 
-div#footercontainer {margin: 0px 0 0px 28px; background: url(../images/logo_footer.gif) no-repeat; padding: 0px 0px 30px 112px;}
-#footercontent { background: #FFFFFF; font-size: 65%; line-height: 120% }
+div#footercontainer { margin: 0px 0 0px 28px; background: url(../images/logo_footer.gif) no-repeat; padding: 0px 0px 0px 112px; }
+#footercontent { font-size: 70%; line-height: 140% }
 
-div#footermarginalcontainer {background-color: #FFFFFF; width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF;}
-div#footermarginal { background: #FFFFFF; width: 19em; padding-right: 10px; text-align:right; font-size: 65%; line-height: 100%; width:100%;}
+div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF;}
+div#footermarginal { background: #FFFFFF; width: 19em; text-align:right; font-size: 65%; line-height: 100%; width:100%;}
 
-div#finalfootercontainer {background-color: #FFFFFF; float: left; width: 59.5em; }
+div#finalfootercontainer { float: left; width: 59.5em; }
 div#finalfooter { padding-left:112px; padding-bottom:20px; padding-top:0px; height:11px; font-size:65%; line-height:120%; color:#000000; }
 
 /********************************************************************
@@ -529,18 +528,19 @@ div#finalfooter { padding-left:112px; padding-bottom:20px; padding-top:0px; heig
 *********************************************************************/
 
 div#popupheader { padding:0; margin:0; height: 80px; width:100%; background-color:#68A5D2; overflow: visible; }  
-div#popupContent, div#popupOverview { margin:27px 0 27px 56px; overflow: auto;}
+div#popupContent, div#popupOverview { margin:27px 0 27px 56px; }
 div#popupContent div.left { float:left;  width:196px; margin: 0 28px 0 0; background-color:#EFEFEF; }
 div#popupContent div.right { float:left; width:25em; margin:0 0 42px; padding:0; }
 
 div#popupContent h1, div#popupOverview h1, div#overview h1 { margin-top:0.4em;; margin-bottom:1.7em; }
 div#popupContent div.left h3, div#popupContent div.left p, div#popupContent div.left ul { padding-left:8px; padding-right:8px; }
 
-div#popupOverview h2, div#overview h2 { height:auto; padding: 2px 14px 2px 8px; margin:0 0 10px 0; border-bottom: 1px solid #13547D; background:#4179a1; color:#FFF; font-size:70%; font-weight:bold; line-height:140%; text-transform:uppercase; }
+div#popupOverview h2, div#overview h2 { height:auto; padding: 2px 14px 2px 8px; margin:0 0 10px 0; background:#4179A1; color:#FFF; font-size:70%; font-weight:bold; line-height:140%; text-transform:uppercase; }
 
 div.helpcontent ul {list-style: none; margin: 0.0em 0 0 0.5em; padding:0;}
 div.helpcontent li { margin: 0 0 0.0em 0;padding: 0 0 0 15px;background-image:url("images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .45em; }
 div.helpcontent li a { font-size:75%; }
+
 
 /********************************************************************
   administration styles
@@ -548,21 +548,21 @@ div.helpcontent li a { font-size:75%; }
 
 /*** content database browser ***/
 
-.contentNavigation { padding:2px 170px 2px 170px; margin:0px 0px 10px 0px; border:1px solid #4179a1; }
+.contentNavigation { padding:2px 170px 2px 170px; margin:0px 0px 10px 0px; border:1px solid #4179A1; }
 .contentNavigationLeft { float:left;  width:110px; }
 .contentNavigationMiddle { float:left; font-size:75%; width:300px; text-align:center; }
 .contentNavigationRight { float:right; width:110px; text-align:right; }
-.contentColumnHead { text-decoration:underline; background-color:#4179a1; color:white; }
+.contentColumnHead { text-decoration:underline; background-color:#4179A1; color:white; }
 .contentColumnHeadLight { text-decoration:none; background-color:#d1e4f1; color:black; }
 
-a.contentColumnHead, a.contentColumnHead:link, a.contentColumnHead:visited { text-decoration:underline; background-color:#4179a1; color: white; }
+a.contentColumnHead, a.contentColumnHead:link, a.contentColumnHead:visited { text-decoration:underline; background-color:#4179A1; color: white; }
 a.contentColumnHeadLight, a.contentColumnHeadLight:link, a.contentColumnHeadLight:visited { text-decoration:none; background-color:#d1e4f1; color: black; }
 
-.contentRowEven { background-color: #edf3f9; }
-.contentRowEvenError { background-color: #edf3f9; }
+.contentRowEven { background-color: #F4F4F4; }
+.contentRowEvenError { background-color: #F4D4D4; }
 .contentRowEvenYellow { background-color: #FfFfa0; }
-.contentRowOdd { background-color: #E0E0E0; }
-.contentRowOddError { background-color: #E0C0C0; }
+.contentRowOdd { background-color: #DAE4F1; }
+.contentRowOddError { background-color: #DAE4F1; }
 .contentRowOddYellow { background-color: #FfFf74; }
 .contentRowDark { background-color: #F4F4F4; }
 .contentRowLight { background-color: white; }

@@ -9,7 +9,7 @@
   standard styles 
 *********************************************************************/
 
-body { padding: 0; margin-top: 50px; margin-bottom: 50px; color: #111111; background: url(../images/blauerhintergrund.png) repeat-x fixed; font: normal 100% Verdana, Arial, sans-serif; line-height: 120%; }
+body { padding: 0; margin-top: 50px; margin-bottom: 50px; color: #111111; background: url(../images/blauerhintergrund.png) repeat-x fixed; font: normal 100% Arial, sans-serif; line-height: 120%; }
 
 img { border:0; }
 span.icon { margin-right:4px; margin-top:5px; float:left; width:12px; }
@@ -37,9 +37,9 @@ a:hover, a:focus { color: #4179A1; text-decoration: underline; }
 a:active { color: #111111; text-decoration: none; }
 a.selected { font-weight:bold; }
 
-h1 { font-family: Verdana, Arial, Helvetica, sans-serif ; font-size:105%; font-weight:bold; line-height:120%; margin-top:0; margin-bottom:0em; }
-h2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:90%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
-h3 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:80%; line-height:120%; font-weight:bold; margin-top:0.4em; margin-bottom:0.3em; }
+h1 { font-family: Arial, sans-serif; font-size:110%; font-weight:bold; line-height:120%; margin-top:0; margin-bottom:0em; }
+h2 { font-family: Arial, sans-serif; font-size:95%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
+h3 { font-family: Arial, sans-serif; font-size:80%; line-height:120%; font-weight:bold; margin-top:0.4em; margin-bottom:0.3em; }
 
 table.border { border-collapse:collapse; }
 table.fullwidth { width:100%; }
@@ -49,9 +49,9 @@ table.formtable td {font-size: 75%; vertical-align:middle; margin:0;}
 td.iconwidth { width:9px; }
 
 /*********************************************************************
-   Wei�er Hintergrund, mittige Platzierung
+   Weißer Hintergrund, mittige Platzierung
 **********************************************************************/
-div.layout-tigris {height: auto; width: 60.0em; background-color: #FFFFFF; border: 11px solid #FFFFFF; margin-left: auto; margin-right: auto;}
+div.layout-tigris {width: 60.0em; background-color: #FFFFFF; border: 11px solid #FFFFFF; margin-left: auto; margin-right: auto;}
 
 /********************************************************************
   helper styles 
@@ -197,8 +197,8 @@ div#content_full .clearer { clear:both; display:block; height:1px; line-height:0
 *********************************************************************/
 
 .iconLink { margin:0px 0px 5px 0px; font-size:70%;}
-/* ich will all die beknackten Abh�ngigkeiten unterhalb der Klasse .iconLink nicht (a styles etc. s.u.)
-deshalb definier ich mir jetzt das Gleiche unter anderem Namen,da hab ich keine Abh�ngigkeiten, mm */
+/* ich will all die beknackten Abhängigkeiten unterhalb der Klasse .iconLink nicht (a styles etc. s.u.)
+deshalb definier ich mir jetzt das Gleiche unter anderem Namen,da hab ich keine Abhängigkeiten, mm */
 .iconLink2 { margin:0px 0px 5px 0px; font-size:70%;}
 
 div.left { float:left; width:15.75em; padding:0; }
@@ -212,10 +212,10 @@ div.section div p a { text-decoration:none; }
 div.section-header { margin-top:0; padding:0; }
 div.section-header h1 { display:inline; float:left; padding-top:0.2em; padding-bottom:0.2em; }
 div.section-header span.portlet_info { float:right; font-size:80%}
-/* n�tig f�r Firefox, sonst zerreissts �berschrift ! */
+/* nötig für Firefox, sonst zerreissts Überschrift ! */
 div.section-header span.clearer { display:block; }
 
-/* n�tig fuer IE: sonst springt in Erweiterter Suche "Suche" Button */
+/* nötig fuer IE: sonst springt in Erweiterter Suche "Suche" Button */
 div.portal-layout-column-1 .clearer { clear:both; display:block; height:1px; line-height:0px; font-size:1px; margin:0; padding:0; }
 
 div.section p.iconLink span.icon { margin: 7px 0 0 0; }
@@ -336,7 +336,7 @@ div.portlet p { font-size:70%; line-height:140%;}
 div.portlet p.hitrow { font-size:83%; line-height:140%;}
 div.portlet ul { margin: 0 0 -5px 14px;}
 
-/* n�tig fuer Firefox: sonst f�llt Link aus Portlet, vgl. Einstellungen */
+/* nötig fuer Firefox: sonst fällt Link aus Portlet, vgl. Einstellungen */
 div.portlet .clearer { clear:both; display:block; height:1px; line-height: 0px; font-size: 1px; margin:0; padding:0; }
 
 div.portlet .iconLink a { float:left; line-height:140%}
@@ -370,7 +370,7 @@ div.formheader span.portlet_info { float:right; color: #FFFFFF; line-height:100%
 div.formheader span.portlet_info a { color: #FFFFFF; }
 
 div.formbody {padding: 4px 12px 8px 12px; margin:1px 0px 1px 0px; border: 1px solid #111111; background-color: #F4F4F4;}
-/* Sonderbehandlung f�r IE: dieser �bernimmt die Farbe des �bergeordneten divs nicht f�r rollover Link Auszeichnungen 
+/* Sonderbehandlung für IE: dieser übernimmt die Farbe des übergeordneten divs nicht für rollover Link Auszeichnungen 
    siehe auch http://jira.media-style.com/browse/INGRID-192
 */
 div.formbody div {background-color: #F4F4F4;}
@@ -396,7 +396,7 @@ div.formbody .inputstyle {border: 1px inset #FFFFFF;}
 div.formbody .inputstyletext {border: 1px inset #FFFFFF; padding: 2px 4px 2px 4px; margin-right:6px;}
 div.formbody input.large {width:15em;}
 
-div.formbody textarea {font: normal 83% Verdana, Arial, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:4px; }
+div.formbody textarea {font: normal 83% Arial, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:4px; }
 
 div.formbody label { margin: 0px 10px 0px 0px; padding: 0px 4px 0px 4px; line-height: 130%; }
 div.formbody label.alignleft { padding: 0px 4px 0px 0px;}
@@ -491,7 +491,7 @@ div#finalfooter { padding-left:112px; padding-bottom:20px; padding-top:0px; heig
 *********************************************************************/
 
 div#popupheader { padding:0; margin:0; height: 130px; width:100%; background-color:#FFFFFF; overflow: visible; }  
-div#popupContent, div#popupOverview { margin:27px 0 27px 56px; overflow: auto;}
+div#popupContent, div#popupOverview { margin:27px 0 27px 56px; overflow: auto}
 div#popupContent div.left { float:left;  width:196px; margin: 0 28px 0 0; background-color:#DAE4F1; }
 div#popupContent div.right { float:left; width:25em; margin:0 0 42px; padding:0; }
 

@@ -204,6 +204,14 @@
             <action>copy-dir</action>
             <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/</src>
         </file>
+		<file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/WEB-INF/templates/</src>
+        </file>
+		<file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/WEB-INF/templates/search_extended/</src>
+        </file>
     </files>
     <sql>
         <execute>
