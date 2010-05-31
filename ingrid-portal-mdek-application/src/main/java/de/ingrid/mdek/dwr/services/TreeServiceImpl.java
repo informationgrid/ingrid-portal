@@ -187,7 +187,7 @@ public class TreeServiceImpl {
 	}
 	
 	
-	public Locale setCatalogLocale(){
+	private Locale setCatalogLocale(){
 		MdekDataBean data = null; 		
 		try {
 			data = objectRequestHandler.getInitialObject(null);
