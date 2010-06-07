@@ -9,7 +9,7 @@
   standard styles 
 *********************************************************************/
 
-body { padding: 0; margin-top: 50px; margin-bottom: 50px; color: #111111; background: url(../images/blauerhintergrund.jpg) repeat-x fixed; font: normal 100% Arial, sans-serif; line-height: 120%; }
+body { padding: 0; margin-top: 50px; margin-bottom: 50px; color: #111111; background: url(../images/blauerhintergrund.png) repeat-x fixed; font: normal 100% Arial, sans-serif; line-height: 120%; }
 
 img { border:0; }
 span.icon { margin-right:4px; margin-top:5px; float:left; width:12px; }
