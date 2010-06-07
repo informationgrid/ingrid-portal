@@ -49,7 +49,7 @@ public class TreeServiceImpl {
 		}
 		
 		if(loc == null){
-			loc = setCatalogLocale();
+			loc = getCatalogLocale();
 		}
 
 		if (nodeUuid == null) {
@@ -187,7 +187,7 @@ public class TreeServiceImpl {
 	}
 	
 	
-	private Locale setCatalogLocale(){
+	private Locale getCatalogLocale(){
 		MdekDataBean data = null; 		
 		try {
 			data = objectRequestHandler.getInitialObject(null);
