@@ -544,5 +544,10 @@
             <action>copy</action>
             <src>ingrid-portal-apps/images/icn_linkintern.gif</src>
         </file>
+		
+		<file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/WEB-INF/templates/</src>
+        </file>
     </files>
 </profile>

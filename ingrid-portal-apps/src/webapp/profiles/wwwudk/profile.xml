@@ -153,6 +153,10 @@
             <action>copy</action>
             <src>ingrid-portal/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources.properties</src>
         </file>
+		<file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/WEB-INF/templates/</src>
+        </file>
     </files>
     <sql>
         <execute>

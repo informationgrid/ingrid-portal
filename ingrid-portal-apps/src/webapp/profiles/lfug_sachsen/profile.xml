@@ -371,8 +371,8 @@
             <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/ServiceSearchResources.properties</src>
         </file>
         <file>
-            <action>copy</action>
-            <src>ingrid-portal-apps/WEB-INF/templates/search_settings_info.vm</src>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/WEB-INF/templates/</src>
         </file>
     </files>
     <sql>

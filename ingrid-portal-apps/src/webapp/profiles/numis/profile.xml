@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile>
+    <name>numis</name>
+    <description>Portal-Profile für NUMIS</description>
+    <pages>
+        <page>
+            <name>main-measures.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-service.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-environment.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-chronicle.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-maps.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>service-sitemap.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>administration/admin-content-rss.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>administration/admin-homepage.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>mdek/mdek_portal_admin.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::ServiceTeaser</name>
+                </portlet>
+                <portlet col="1" row="2">
+                    <name>ingrid-portal-apps::MeasuresTeaser</name>
+                </portlet>
+				<portlet col="1" row="3">
+                    <name>ingrid-portal-apps::ChronicleTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_role/user/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::ServiceTeaser</name>
+                </portlet>
+                <portlet col="1" row="2">
+                    <name>ingrid-portal-apps::MeasuresTeaser</name>
+                </portlet>
+				<portlet col="1" row="3">
+                    <name>ingrid-portal-apps::ChronicleTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_user/template/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::ServiceTeaser</name>
+                </portlet>
+                <portlet col="1" row="2">
+                    <name>ingrid-portal-apps::MeasuresTeaser</name>
+                </portlet>
+				<portlet col="1" row="3">
+                    <name>ingrid-portal-apps::ChronicleTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>search-catalog/search-catalog-hierarchy.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>service-contact-newsletter.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>service-contact.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::Contact</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::InfoPortlet</name>
+                    <preference name="infoTemplate">
+                    	<value>/WEB-INF/templates/newsletter_teaser.vm</value>
+                    </preference>
+                    <preference name="titleKey">
+                    	<value>teaser.newsletter.title</value>
+                    </preference>
+                </portlet>
+            </portlets>
+        </page>
+      </pages>
+    <files>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/css/styles.css</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal/decorations/layout/ingrid/images/</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid/header.vm</src>
+        </file>
+        
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/css/styles.css</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/images/</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/header.vm</src>
+        </file>
+
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/css/styles.css</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/images/</src>
+        </file>
+        <file>
+            <action>copy</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/header.vm</src>
+        </file>
+        
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal/WEB-INF/classes/de/ingrid/portal/resources/</src>
+        </file>
+
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/images/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/</src>
+        </file>
+    </files>
+    <sql>
+        <execute>
+            <![CDATA[UPDATE ingrid_cms_item SET item_title='Über NUMIS' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.about') AND item_lang='de';]]>
+        </execute>    
+        <execute>
+            <![CDATA[UPDATE ingrid_cms_item SET item_title='About NUMIS' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.about') AND item_lang='en';]]>
+        </execute>
+        
+		<execute>
+            <![CDATA[UPDATE ingrid_cms_item SET item_title='<span style=''text-transform: none;''>NUMIS INFORMIERT</span>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.teaser.inform') AND item_lang='de';]]>
+        </execute>    
+        <execute>
+            <![CDATA[UPDATE ingrid_cms_item SET item_title='<span style=''text-transform: none;''>NUMIS INFORMIERT</span>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.teaser.inform') AND item_lang='en';]]>
+        </execute>    
+        
+		<execute>
+            <![CDATA[UPDATE LINK SET URL='mailto:webmaster@portalu.de' WHERE NAME='webmaster.link';]]>
+        </execute>
+        <execute>
+            <![CDATA[DELETE FROM ingrid_measures_rubric WHERE query_value='radiation';]]>
+        </execute>
+    </sql>
+</profile>
