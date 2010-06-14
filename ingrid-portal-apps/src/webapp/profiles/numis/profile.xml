@@ -161,8 +161,8 @@
             <src>ingrid-portal/decorations/layout/ingrid/images/</src>
         </file>
         <file>
-            <action>copy</action>
-            <src>ingrid-portal/decorations/layout/ingrid/header.vm</src>
+            <action>copy-dir</action>
+            <src>ingrid-portal/decorations/layout/ingrid/</src>
         </file>
         
         <file>
@@ -174,8 +174,8 @@
             <src>ingrid-portal/decorations/layout/ingrid-help/images/</src>
         </file>
         <file>
-            <action>copy</action>
-            <src>ingrid-portal/decorations/layout/ingrid-help/header.vm</src>
+            <action>copy-dir</action>
+            <src>ingrid-portal/decorations/layout/ingrid-help/</src>
         </file>
 
         <file>
@@ -187,16 +187,32 @@
             <src>ingrid-portal/decorations/layout/ingrid-popup/images/</src>
         </file>
         <file>
-            <action>copy</action>
-            <src>ingrid-portal/decorations/layout/ingrid-popup/header.vm</src>
+            <action>copy-dir</action>
+            <src>ingrid-portal/decorations/layout/ingrid-popup/</src>
         </file>
         
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal/WEB-INF/classes/de/ingrid/portal/resources/</src>
         </file>
-
         <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal/decorations/portlet/ingrid-teaser/images/</src>
+        </file>		
+		<file>
+            <action>copy-dir</action>
+            <src>ingrid-portal/decorations/portlet/ingrid-teaser/</src>
+        </file>
+		<file>
+            <action>copy-dir</action>
+            <src>ingrid-portal/decorations/portlet/ingrid-marginal-teaser/images/</src>
+        </file>		
+		<file>
+            <action>copy-dir</action>
+            <src>ingrid-portal/decorations/portlet/ingrid-marginal-teaser/</src>
+        </file>
+		
+		<file>
             <action>copy-dir</action>
             <src>ingrid-portal-apps/images/</src>
         </file>
@@ -204,6 +220,19 @@
             <action>copy-dir</action>
             <src>ingrid-portal-apps/WEB-INF/classes/de/ingrid/portal/resources/</src>
         </file>
+		<file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/WEB-INF/templates/</src>
+        </file>
+		<file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/WEB-INF/templates/search_extended/</src>
+        </file>
+		<file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/WEB-INF/templates/myportal/</src>
+        </file>
+				
     </files>
     <sql>
         <execute>

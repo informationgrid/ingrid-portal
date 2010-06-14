@@ -1,0 +1,63 @@
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="get" name="environment_search" id="environment_search">
+   	<input type="hidden" name="action" value="doSearch"/>
+	<div class="formbody" style="border-bottom:0px solid #FFFFFF">
+		<h2 class="nospace">$MESSAGES.getString('common.form.criteria')</h2>
+		#displayFormErrors()
+		<div class="float_left">
+			<h3><label for="xx2">#displayFieldLabel('rubric' $MESSAGES.getString('envSearch.form.themes'))</label></h3>
+			<select class="env_themes inputstyle" name="rubric" id="xx2" size="5" multiple="multiple">
+				<option value="all" #getSelectedFlag('rubric' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
+#foreach ($topic in $topicList)
+<option value="$topic.FormValue" #getSelectedFlag('rubric' "$topic.FormValue")>$MESSAGES.getString("$topic.QueryValue")</option>
+#end
+			</select>
+		</div>
+		<div class="float_left marginleft">
+			<h3><label for="xx3">#displayFieldLabel('category' $MESSAGES.getString('envSearch.form.category'))</label></h3>
+			<select class="funct_class inputstyle" name="category" id="xx3" size="5" multiple="multiple">
+				<option value="all" #getSelectedFlag('category' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
+#foreach ($category in $categoryList)
+<option value="$category.FormValue" #getSelectedFlag('category' "$category.FormValue")>$category.QueryValue</option>
+#end
+			</select>
+		</div>  
+		<span class="clearer"></span>
+		<br style="line-height:10px" />
+		<div class="float_left">
+			<h3><label for="xx4">#displayFieldLabel('partner' $MESSAGES.getString('common.form.partner'))</label></h3>
+			<select class="spacial_relation inputstyle" name="partner" id="xx4" size="5" multiple="multiple">
+				#displayPartner()
+			</select>
+		</div>
+		<div class="float_left marginleft">
+			<h3>#displayFieldLabel('grouping' $MESSAGES.getString('common.form.grouping'))</h3>
+			<input type="radio" id="grouping_no" name="grouping" value="none" #getChecked('grouping' 'none')/>
+			<label class="radiogroup" for="grouping_no">$MESSAGES.getString('common.form.grouping.no')</label>
+			<br />
+#if($onePartnerOnly != "true" || !$onePartnerOnly)
+			<input type="radio" id="grouping_partner" name="grouping" value="partner" #getChecked('grouping' 'partner')/>
+			<label class="radiogroup" for="grouping_partner">$MESSAGES.getString('common.form.grouping.partner')</label>
+			<br />
+#end
+			<input type="radio" id="grouping_info" name="grouping" value="provider" #getChecked('grouping' 'provider')/>
+			<label class="radiogroup" for="grouping_info">$MESSAGES.getString('common.form.grouping.provider')</label>
+			<br />
+		</div>
+#if($enable_searchterm)
+		<br style="line-height:10px" />
+		<span class="clearer"></span>
+		<div class="float_left">
+			<h3><label for="q">#displayFieldLabel('q' $MESSAGES.getString('common.form.querystring'))</label></h3>
+			<input class="qrystr inputstyletext" type="text" id="q" name="q" value="#getHTMLEscapedFieldValue('q')" />
+		</div>
+#end
+		<span class="clearer"></span>
+		<br />
+	</div>
+	<div class="formfooter">
+		<div align="right">
+			<input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.show')" />
+		</div>
+	</div>
+</form>

@@ -1,0 +1,44 @@
+#set ($action = $renderResponse.createActionURL())
+
+<form action="$action" method="post" id="frm_login">
+<input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
+<input type="hidden" name="cmd" value="doLogin" />
+<div class="formbody" style="border-bottom:0px solid #FFFFFF">
+		<div class="optional-links">
+			&nbsp;<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="$MESSAGES.getString('login.alt.icon.key')" /><a href="portal/myportal-create-account.psml">$MESSAGES.getString('login.form.newUser')</a>&nbsp;&nbsp;  
+			<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="$MESSAGES.getString('login.alt.icon.key')" /><a href="portal/myportal-password-forgotten.psml">$MESSAGES.getString('login.form.passwdForgotten')</a>
+		</div>
+		<br />
+#displayFormErrors()
+		<p>
+			<label class="hide" for="login">$MESSAGES.getString('login.form.username'): </label><input class="inputstyletext" type="text" id="login" name="${loginConstants.USERNAME}" value="#getFieldValue($loginConstants.USERNAME)" onFocus="clearUser()" />
+		</p>
+	    <p>
+			<label class="hide" for="passwd">$MESSAGES.getString('login.form.passwd'): </label><input class="inputstyletext" type="password" id="passwd" name="${loginConstants.PASSWORD}" value="#getFieldValue($loginConstants.PASSWORD)"  onFocus="clearPasswd()" />
+	    </p>
+		<span class="clearer"></span>
+		<br />
+##		<table cellpadding="0" cellspacing="0" class="formtable">
+##		<tr>
+##			<td><input id="auto_login" name="xx" type="checkbox" /></td>
+##			<td><label for="auto_login"><strong>$MESSAGES.getString('login.form.autoLogin')</strong></label></td>
+##	    </tr>
+##	    <tr>
+##	      <td></td>
+##	      <td><span style="padding-left:4px; display:block;">$MESSAGES.getString('login.form.autoLogin.text')</span></td>
+##	    </tr>
+##		</table>
+##		<span class="clearer"></span>
+</div>
+<div class="formfooter">
+	<div align="right">
+		<input class="btn" type="submit" value="$MESSAGES.getString('login.form.button.subscribe')" />
+    </div>
+</div>
+</form>
+<!-- BESCHREIBUNG -->
+<p></p>
+<h2>$MESSAGES.getString('login.description.title')</h2>
+<ul class="anmeldung">
+$MESSAGES.getString('login.description.content')
+</ul>

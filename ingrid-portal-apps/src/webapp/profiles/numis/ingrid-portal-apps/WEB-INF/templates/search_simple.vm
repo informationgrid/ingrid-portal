@@ -1,0 +1,96 @@
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doSearch')
+<div class="formbody">
+    <form action="$action" method="get" name="SearchForm" id="SearchForm" onSubmit='if (this.q.value == "$MESSAGES.getString('searchSimple.query.initial')") this.q.value=""'>
+    	<input type="hidden" name="ds" value="$ds"/>
+    	<input type="hidden" name="action" value="doSearch"/>
+		<p class="datasource_selection">
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doChangeDS')
+#if($ds=="1")
+	<strong>$MESSAGES.getString('searchSimple.area.envInfos')</strong>
+#else
+    $action.setParameter('ds','1')
+	<a href="$action">$MESSAGES.getString('searchSimple.area.envInfos')</a>	
+#end
+#if($enableDatasourceLaws)
+<a style="color:#999999;">&nbsp;|&nbsp</a>
+#if($ds=="4")
+	<strong>$MESSAGES.getString('searchSimple.area.laws')</strong>
+#else
+    $action.setParameter('ds','4')
+	<a href="$action">$MESSAGES.getString('searchSimple.area.laws')</a>	
+#end
+#end
+#if($enableDatasourceResearch)
+<a style="color:#999999;">&nbsp;|&nbsp</a>
+#if($ds=="3")
+	<strong>$MESSAGES.getString('searchSimple.area.research')</strong>
+#else
+    $action.setParameter('ds','3')
+	<a href="$action">$MESSAGES.getString('searchSimple.area.research')</a>	
+#end
+#end
+#if($enableDatasourceAddresses)
+<a style="color:#999999;">&nbsp;|&nbsp</a>
+#if($ds=="2")
+	<strong>$MESSAGES.getString('searchSimple.area.addresses')</strong>
+#else
+    $action.setParameter('ds','2')
+	<a href="$action">$MESSAGES.getString('searchSimple.area.addresses')</a>	
+#end
+#end
+    	</p>
+#displayFormErrors()
+      <label class="hide" for="qrystr">$MESSAGES.getString('searchSimple.query.search'): </label><input class="qrystr inputstyletext" type="text" id="qrystr" name="q" value="#getHTMLEscapedFieldValue('q')" 
+		onfocus='if (this.value == "$MESSAGES.getString('searchSimple.query.initial')") this.value=""' onblur='if (this.value == "") this.value="$MESSAGES.getString('searchSimple.query.initial')"' />
+		<input class="btn" type="submit" value="$MESSAGES.getString('searchSimple.query.submit')" />
+          <span class="clearer"></span>
+#if($displayProviders)
+		<h3><label for="providers">$MESSAGES.getString('searchsimple.title.select.provider')</label></h3>
+		<select class="inputstyle" name="provider" id="provider">
+			<option value="all">$MESSAGES.getString('searchSimple.display.provider.all')</option>
+#foreach($provider in $providers)
+#if($selectedProviderIdent && $selectedProviderIdent == $provider.ident)
+			<option title="$provider.name" value="$provider.ident" selected="selected">$UtilsString.cutString($provider.name, 60)</option>
+#else
+			<option title="$provider.name" value="$provider.ident">$UtilsString.cutString($provider.name, 60)</option>
+#end
+#end
+		</select>
+#end
+    </form>
+    <div class="optional-links">
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doSearchExtended')
+      <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchSimple.extended')</a>
+#if ($titleKey=="searchSimple.title.history")
+      <img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.active')" />&nbsp;<span>$MESSAGES.getString('searchSimple.history')</span>
+#else
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doSearchHistory')
+      <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchSimple.history')</a>
+#end
+#if ($titleKey=="searchSimple.title.settings")
+	  <img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.active')" />&nbsp;<span>$MESSAGES.getString('searchSimple.settings')</span>
+#else
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doSearchSettings')
+	  <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchSimple.settings')</a>
+#end
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/help.psml?hkey=search-tipps-1"))
+<script language="JavaScript" type="text/javascript">
+	document.write("<img src=\"/ingrid-portal-apps/images/icn_linkintern.gif\" alt=\"$MESSAGES.getString('common.alt.icon.intern')\" /><a href=\"javascript:ingrid_openWindow('$link',750,550);\">$MESSAGES.getString('searchSimple.search.tips')</a>");
+</script>
+<noscript>
+	<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$link" target="_new">$MESSAGES.getString('searchSimple.search.tips')</a>
+</noscript>
+#if($enableSave && $enableSave == "true")
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doSaveQuery')
+<!-- only for logged on users -->
+    <img src="/ingrid-portal-apps/images/ico_save_search.gif" alt="$MESSAGES.getString('common.alt.icon.save')" /><a href="$action">$MESSAGES.getString('searchSimple.search.save')</a>
+#end
+    </div>
+</div>

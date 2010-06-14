@@ -1,0 +1,20 @@
+#set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" name="xx" id="extsearch">
+      <div class="formbody" style="border-bottom:0px solid #FFFFFF">
+          <p><label class="alignleft" for="search_term">$MESSAGES.getString('searchExtEnvTopicTerms.label.terms')</label></p>
+          <div class="innerform">
+            <input class="search_term inputstyletext" type="text" name="search_term" id="search_term" />
+            <p>
+              <label class="alignleft" for="adding_type">$MESSAGES.getString('searchExtEnvTopicTerms.label.logic')</label>
+              <select size="1" id="adding_type" name="adding_type" class="inputstyle">
+                <option value="1">$MESSAGES.getString('searchExtEnvTopicTerms.logic.AND')</option>
+                <option value="2">$MESSAGES.getString('searchExtEnvTopicTerms.logic.OR')</option>
+                <option value="3">$MESSAGES.getString('searchExtEnvTopicTerms.logic.EXACT')</option>
+                <option value="4">$MESSAGES.getString('searchExtEnvTopicTerms.logic.NOT')</option>
+              </select>
+            </p>
+            <span class="clearer"></span>
+          </div>  
+      </div>      
+#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
+    </form>

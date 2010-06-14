@@ -1,0 +1,42 @@
+  <div class="section">    
+#set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" name="settings_form" id="settings_form">
+      <input type="hidden" name="action" value="doSubmit"/>
+      <div class="formbody" style="border-bottom:0px solid #FFFFFF">
+		#displayFormErrors()
+        <h3>$MESSAGES.getString('searchSettings.title.rankingAndGrouping')</h3>
+        <p class="topmargin">
+          <label class="float_left col2left" for="sort_by">$MESSAGES.getString('searchSettings.label.ranking')</label>
+          <select id="ranking" class="group_by inputstyle" name="ranking" size="1">
+            <option value="score" #getSelectedFlag('ranking' 'score')>$MESSAGES.getString('searchSettings.ranking.option.score')</option>
+            <option value="date" #getSelectedFlag('ranking' 'date')>$MESSAGES.getString('searchSettings.ranking.option.date')</option>
+          </select>
+          <span class="clearer"></span>
+        </p>
+        <p>
+		<label class="float_left col2left" for="group_by">$MESSAGES.getString('searchSettings.label.grouping')</label>
+          <select id="grouping" class="group_by inputstyle" name="grouping" size="1">
+            <option value="none" #getSelectedFlag('grouping' 'none')>$MESSAGES.getString('common.form.grouping.no')</option>
+
+#if($onePartnerOnly != "true" || !$onePartnerOnly)
+			<option value="partner" #getSelectedFlag('grouping' 'partner')>$MESSAGES.getString('common.form.grouping.partner')</option>
+#end
+			<option value="provider" #getSelectedFlag('grouping' 'provider')>$MESSAGES.getString('common.form.grouping.provider')</option>
+			<option value="domain" #getSelectedFlag('grouping' 'domain')>$MESSAGES.getString('common.form.grouping.domain')</option>
+          </select>
+          <span class="clearer"></span>
+        </p>
+        <div class="line_form"><hr /></div>
+        <p>
+          <input type="checkbox" name="incl_meta" id="incl_meta" #getChecked('incl_meta' 'on') /><label for="incl_meta"> $MESSAGES.getString('searchSettings.label.activateSNSTerms')</label>
+        </p>
+      </div>
+      <div class="formfooter">
+        <div align="right">
+$action.setParameter('action','doOriginalSettings')
+          <span class="iconLink"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchSettings.action.reset')</a></span>
+          <input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.save')" />
+        </div>
+      </div>
+    </form>
+  </div>    
