@@ -153,16 +153,16 @@ div#mainnav ul li a {float:none;}
 div#mainnav ul li a,  
 div#mainnav ul li a:link, 
 div#mainnav ul li a:visited 
- { text-decoration:none; color:#FFFFFF; margin-right:7px; padding:3px 6px 5px 6px; border-bottom:1px; margin:0; font-size: 95%; height:26px;}  
+ { text-decoration:none; color:#FFFFFF; margin-right:7px; padding:3px 6px 5px 6px; border-bottom:1px; margin:0; font-size: 100%; height:26px;}  
 
 div#mainnav ul li a.selected,
 div#mainnav ul li a.selected:link, 
 div#mainnav ul li a.selected:visited 
- { color:#FFFFFF; text-decoration:none; background-color:#999999; border-bottom: solid #999999 10px; margin:0; font-size: 95%;}  
+ { color:#FFFFFF; text-decoration:none; background-color:#999999; border-bottom: solid #999999 10px; margin:0; font-size: 100%;}  
 
 div#mainnav ul li a:hover,
 div#mainnav ul li a:active
- { color:#FFFFFF; text-decoration:none; background:url(../images/background_mainnav_hover.png); font-size: 95%; height:26px;}
+ { color:#FFFFFF; text-decoration:none; background:url(../images/background_mainnav_hover.png); font-size: 100%; height:26px;}
 
 /********************************************************************
   sub navigation styles
@@ -408,7 +408,7 @@ div.formbody p { padding:0; margin: 0.5em  0.0em; }
 div.formbody .nospace { padding-bottom:0; margin-bottom:0; }
 div.formbody h3 { font-weight:bold; margin: 0.7em 0; }
 div.formbody h2 { font-weight:bold; margin-top: 0.8em; }
-div.formbody p.datasource_selection {font-size:65%}
+div.formbody p.datasource_selection {font-size:70%}
 div.formbody div.marginleft {margin-left:4em}
 div.formbody .indent1_checkbox {margin-left:2em}
 div.formbody .indent2_checkbox {margin-left:4em}
@@ -448,7 +448,7 @@ label.left {width:5.5em; float:left;}
 label.login {width:8em; float:left;}
 div.optional-links { margin:5px 0 0 0 ; padding:0; }
 div.optional-links img, ul.optional-links img { margin:0; padding:0; }
-div.optional-links a, ul.optional-links a, div.optional-links span { margin-right:1em; font-size:65%; }
+div.optional-links a, ul.optional-links a, div.optional-links span { margin-right:1em; font-size:70%; }
 
 ul.optional-links ul.optional-links { margin: 0 0 0 12px; padding:0; }
 ul.optional-links { list-style:none; margin: 0 0 1.2em 0; }
