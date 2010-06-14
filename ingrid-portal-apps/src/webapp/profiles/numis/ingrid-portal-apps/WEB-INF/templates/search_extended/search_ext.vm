@@ -15,7 +15,7 @@ $action.setParameter('action','doChangeDS')
     $action.setParameter('ds','1')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.envInfos')</a>	
 #end
-<a style="color:#CCCCCC;">&nbsp;|&nbsp</a>
+<a style="color:#999999;">&nbsp;|&nbsp</a>
 #if($enableDatasourceLaws)
 #if($ds=="4")
 	<strong>$MESSAGES.getString('searchSimple.area.laws')</strong>
@@ -23,7 +23,7 @@ $action.setParameter('action','doChangeDS')
     $action.setParameter('ds','4')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.laws')</a>	
 #end
-<a style="color:#CCCCCC;">&nbsp;|&nbsp</a>
+<a style="color:#999999;">&nbsp;|&nbsp</a>
 #end
 #if($enableDatasourceResearch)
 #if($ds=="3")
@@ -32,7 +32,7 @@ $action.setParameter('action','doChangeDS')
     $action.setParameter('ds','3')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.research')</a>	
 #end
-<a style="color:#CCCCCC;">&nbsp;|&nbsp</a>
+<a style="color:#999999;">&nbsp;|&nbsp</a>
 #end
 #if($enableDatasourceAddresses)
 #if($ds=="2")

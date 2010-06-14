@@ -33,7 +33,7 @@ div.line_form * { display: none;}
 
 a,a:link { color: #e0003c; text-decoration: none; }
 a:visited { color: #e0003c; }
-a:hover { color: #e0003c; background:url(../images/background_servicenav_hover.png);}
+a:hover { color: #111111; text-decoration: none; }
 a:focus { color: #111111; text-decoration: none; }
 a:active { color: #111111; text-decoration: none; }
 a.selected { font-weight:bold; }
@@ -83,29 +83,29 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
 *********************************************************************/
 
 div#identity { padding:0; margin:0; height: 80px; width:59.5em; background-color:#FFFFFF; overflow:visible; }
-div.motiv_blank { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.motiv_start { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.motiv_suche { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.motiv_service { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.motiv_messwerte { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.motiv_umweltthemen { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.motiv_karten { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.motiv_umweltchronik { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.motiv_topnavi { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.motiv_hilfe { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.motiv_admin { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
+div.motiv_blank { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.motiv_start { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.motiv_suche { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.motiv_service { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.motiv_messwerte { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.motiv_umweltthemen { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.motiv_karten { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.motiv_umweltchronik { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.motiv_topnavi { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.motiv_hilfe { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.motiv_admin { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
 
-div.en_motiv_blank { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.en_motiv_start { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.en_motiv_suche { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.en_motiv_service { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.en_motiv_messwerte { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.en_motiv_umweltthemen { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.en_motiv_karten { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.en_motiv_umweltchronik { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.en_motiv_topnavi { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.en_motiv_hilfe { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
-div.en_motiv_admin { background-image:url(../images/numis_logo_wappen-01.png); background-repeat:no-repeat; }
+div.en_motiv_blank { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.en_motiv_start { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.en_motiv_suche { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.en_motiv_service { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.en_motiv_messwerte { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.en_motiv_umweltthemen { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.en_motiv_karten { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.en_motiv_umweltchronik { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.en_motiv_topnavi { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.en_motiv_hilfe { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.en_motiv_admin { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
 
 /********************************************************************
   logo styles 
@@ -129,8 +129,10 @@ div#servicenav { padding:0.1em 0em 0.1em 1.5em; background:url(../images/backgro
 #servicenav { font-size: 70%; }
 div#servicenav ul { list-style: none; padding: 0; margin: 0; }
 div#servicenav ul li { display:inline; }
+div#servicenav ul li a:link { text-decoration:none; color:#FFFFFF; font-weight:normal;}
+div#servicenav ul li a:visited { text-decoration:none; color:#FFFFFF; font-weight:normal;}
 div#servicenav ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:normal;}
-div#servicenav ul li a.selected:hover { text-decoration:none; color:#111111; font-weight:normal; }
+div#servicenav ul li a:hover { text-decoration:none; color:#111111; background:url(../images/background_servicenav_hover.png); font-weight:normal; }
 
 /********************************************************************
   main navigation styles
@@ -140,8 +142,8 @@ div#servicenav ul li a.selected:hover { text-decoration:none; color:#111111; fon
 html body div#mainnav { height: 1%; }
 /* End Hack */
 
-div#mainnav { background:url(../images/background_mainnav.png); margin:0; padding:0; width:59.5em; height:27px; }  
-div#mainnav ul { list-style: none; padding: 7px 0 4px 56px; margin: 0;}
+div#mainnav { background:url(../images/background_mainnav.png); margin:0; padding:0; width:59.5em;}  
+div#mainnav ul { list-style: none; padding: 0px 0 0px 56px; margin: 0; height:29px}
 div#mainnav ul li { padding: 2px 0px 6px 0; margin: 0px 2px 0px 0px; border: 0; float: left;font-size: 75%; font-weight:bold;}
 
 /* Commented Backslash Hack hides rule from IE5-Mac \*/
@@ -151,7 +153,7 @@ div#mainnav ul li a {float:none;}
 div#mainnav ul li a,  
 div#mainnav ul li a:link, 
 div#mainnav ul li a:visited 
- { text-decoration:none; color:#FFFFFF; margin-right:7px; padding:3px 6px 5px 6px; border-bottom:3px; margin:0; font-size: 95%; height:26px;}  
+ { text-decoration:none; color:#FFFFFF; margin-right:7px; padding:3px 6px 5px 6px; border-bottom:1px; margin:0; font-size: 95%; height:26px;}  
 
 div#mainnav ul li a.selected,
 div#mainnav ul li a.selected:link, 
@@ -160,14 +162,14 @@ div#mainnav ul li a.selected:visited
 
 div#mainnav ul li a:hover,
 div#mainnav ul li a:active
- { color:#FFFFFF; text-decoration:none; background:url(../images/background_mainnav_hover.png); margin:0; font-size: 95%; height:26px}
+ { color:#FFFFFF; text-decoration:none; background:url(../images/background_mainnav_hover.png); font-size: 95%; height:26px;}
 
 /********************************************************************
   sub navigation styles
 *********************************************************************/
 
 div#subnav { position:relative; border-top: solid #FFFFFF 1px; background:url(../images/background_subnav.png); width:59.5em; height:27px; z-index:12;}
-div#subnav ul { list-style:none; padding: 0px 7px 1px 63px; margin:0; line-height:140%; color:#FFFFFF;}
+div#subnav ul { list-style:none; padding: 0px 0px 0px 63px; margin:0; line-height:140%; color:#FFFFFF; height:27px;}
 div#subnav ul li { display:inline; font-size: 12px; }
 
 div#subnav ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:bold; }
@@ -176,7 +178,7 @@ div#subnav ul li a:link,
 div#subnav ul li a:visited,
 div#subnav ul li a:active {text-decoration:none; color:#FFFFFF;}  
 div#subnav ul li a:hover, 
-div#subnav ul li a:focus {color:#FFFFFF;text-decoration:none; background:url(../images/background_subnav_hover.png);}
+div#subnav ul li a:focus {color:#FFFFFF;text-decoration:none; background:url(../images/background_subnav_hover.png); padding:5px 0px 5px 0px; margin:2px 2px 2px 2px;}
 
 div.subnav_corner {vertical-align:bottom;float:right; width:21px; height: 100%;background-color:#999}
 div.subnav_corner_img {vertical-align:bottom;width: 21px; height:100%;background:url(../images/corner_sub_nav.png) no-repeat;background-position:bottom; background-color:#DDE9BD}
@@ -325,12 +327,12 @@ div.tabs ul li a:visited
 
 div.tabs ul li a:hover,
 div.tabs ul li a:active, 
-div.tabs ul li a:focus { color:#FFFFFF; text-decoration:none; background-color:#999999; padding:3px 7px 5px 7px; border-bottom: solid #FFFFFF 3px; margin:0; font-size: 90%;}
+div.tabs ul li a:focus { color:#FFFFFF; text-decoration:none; background-color:#999999; padding:3px 7px 3px 7px; border-bottom: solid #FFFFFF 1px; margin:0; font-size: 90%;}
 
 /* TAB MENU, EXTENDED SEARCH */
 
 div.tabmenu {position:relative; background-color:#999999; padding: 6px 0px 6px 0px; width:100%; font-size:100%;z-index:12;}
-div.tabmenu ul { list-style:none; padding: 0px 7px 0px 6px; margin:0; font-size:75%; line-height:130%; color:#111111; }
+div.tabmenu ul { list-style:none; padding: 0px 7px 0px 6px; margin:0; font-size:75%; line-height:130%; color:#FFFFFF; }
 div.tabmenu ul li { display:inline; }
 
 div.tabmenu ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:bold; }
@@ -339,7 +341,7 @@ div.tabmenu ul li a:link,
 div.tabmenu ul li a:visited,
 div.tabmenu ul li a:active { text-decoration:none; color:#FFFFFF; }  
 div.tabmenu ul li a:hover, 
-div.tabmenu ul li a:focus { color:#FFFFFF; text-decoration:none;}
+div.tabmenu ul li a:focus { color:#111111; text-decoration:none;}
 
 
 /* SEARCH DETAILS */
@@ -369,7 +371,7 @@ div.portlet div.resultset p.result_link {  font-size:65%; margin:3px 0 8px 0;}
    min-height statt height, sonst Probleme in firefox.
    padding rechts 0 lassen, sonst fliegt in IE das marginal portlet nach l.u. wenn Titel zu lang
 */
-div.portlet div.section-header { min-height:1em; padding: 0.175em 0em 0.05em 0.5em; border: 1px solid #ccc; background:url(../images/background_portlet_header.png); height:29px;}
+div.portlet div.section-header { min-height:1em; padding: 0.175em 0em 0.05em 0.5em; border: 1px solid #CCCCCC; background:url(../images/background_portlet_header.png); height:26px;}
 
 /* IE6, 5 bugfix. sets hasLayout property and fixes http://jira.media-style.com/browse/INGRID-1468 */
 * html div.portlet div.section-header {height:1%;}
@@ -381,7 +383,7 @@ div.portlet div.section-header a { color: #FFFFFF;}
 div#marginal_header a:hover, div#marginal_header a:focus { text-decoration: none; }
 div#marginal_header a:hover, div#marginal_header a:focus, div#marginal_header a:active, div#marginal_header a:visited { }
 
-div.portlet div.portlet-section-body { position:relative;padding: 0.625em 0.875em; margin:0; border: 1px solid #aaa; }
+div.portlet div.portlet-section-body { position:relative;padding: 0.625em 0.875em; margin:0; border: 1px solid #AAAAAA; }
 
 /********************************************************************
   form block styles  
@@ -439,6 +441,7 @@ div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 
 input.btn { color: #fff; border: 1px solid #e0003c; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; height:24px; margin:16px 0px 11px 0px; padding:0px 19px 0px 19px}
+input.btn:hover { color: #fff; border: 1px solid #e0003c; background:url(../images/background_btn_hover.png); font-size: 12px; font-weight:bold; height:24px; margin:16px 0px 11px 0px; padding:0px 19px 0px 19px}
 input.btn_disable { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border: solid 1px #000000;}
 
 label.left {width:5.5em; float:left;}
