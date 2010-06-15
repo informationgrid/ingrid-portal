@@ -140,6 +140,12 @@
           </exclusion>
         </exclusions>
       </dependency>
+      <!-- NEEDED FOR GS Soil, older version not accepted by GS Soil jar -->
+      <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.13</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <!-- ==================== DEPENDENCIES ==================== -->
@@ -282,14 +288,14 @@
                     <artifactItem>
                       <groupId>gssoil</groupId>
                       <artifactId>thesaurus-gazetteer-resources</artifactId>
-                      <version>1.0.2</version>
+                      <version>2.0.0</version>
                       <type>zip</type>
                       <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/classes</outputDirectory>
                     </artifactItem>
                     <artifactItem>
                       <groupId>gssoil</groupId>
                       <artifactId>thesaurus-gazetteer-libs</artifactId>
-                      <version>1.0.2</version>
+                      <version>2.0.0</version>
                       <type>zip</type>
                       <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/lib</outputDirectory>
                     </artifactItem>
