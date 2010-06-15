@@ -232,7 +232,14 @@
             <action>copy-dir</action>
             <src>ingrid-portal-apps/WEB-INF/templates/myportal/</src>
         </file>
-				
+		<file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/WEB-INF/templates/administration/</src>
+        </file>
+		<file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/WEB-INF/velocity/</src>
+        </file>
     </files>
     <sql>
         <execute>

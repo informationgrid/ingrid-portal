@@ -1,0 +1,28 @@
+#macro (getInputStyleText $fieldName)#if ($actionForm.hasErrorInField($fieldName)) inputstyleerror#else inputstyletext#end#end
+
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmEditProvider" id="frmEditProvider">
+	<input type="hidden" name="mode" value="$mode"/>
+	<div class="formbody" style="border-bottom:0px solid #FFFFFF">
+   		<h2 class="nospace">$MESSAGES.getString('component.forms.text.new.job')</h2>
+    	#displayFormErrors()
+    	
+    	<p>
+    	<label class="float_left col2left_incr" for="id">#displayFieldLabel('id' $MESSAGES.getString('component.forms.text.component.id'))*</label>
+       	<input class="float_left inputstyletext contentInput" id="id" name="id" value="#getFieldValue('id')" type="text">
+    	</p>
+    	<p class="clearer" />
+    	<p>
+        	<label class="float_left col2left_incr" for="type">#displayFieldLabel('type' $MESSAGES.getString('component.forms.text.component.type'))*</label>
+        	<select class="float_left inputstyletext contentInput" name="type">
+    		#foreach($type in $componentTypes)
+    			<option value="$type"#getSelectedFlag('type' $type)>$MESSAGES.getString($type)</option>
+    		#end			
+    		</select>
+    	</p>
+		<p class="clearer" />
+	</div>
+	#renderDBEditFooter($mode)
+</form>
+
+		

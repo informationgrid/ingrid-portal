@@ -1,0 +1,21 @@
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
+	<div class="formbody" style="border-bottom:0px solid #FFFFFF">
+	<p>$MESSAGES.getString('account.view.tip')</p>
+#renderDBBrowserNavigation($browser)
+	<p>
+		<table class="border fullwidth">
+#set ($colNames = ["id", "firstName", "lastName", "email", "roles"])
+#set ($colTitles = [$MESSAGES.getString('account.view.id'), $MESSAGES.getString('account.view.first.name'), $MESSAGES.getString('account.view.last.name'), $MESSAGES.getString('account.view.email'), $MESSAGES.getString('account.view.roles')])
+#renderDBBrowserHeader($colNames $colTitles)
+#foreach ($dbEntity in $dbEntities)
+	#set ($rowId = $dbEntity.id)
+	#set ($rowValues = [$UtilsString.cutString($dbEntity.firstName, 20, 20), $UtilsString.cutString($dbEntity.lastName, 20, 20), $UtilsString.cutString($dbEntity.email, 40, 40), $dbEntity.roles])
+	#renderDBBrowserRowWithEditLink($rowId $rowValues)
+#end
+		</table>
+		</p>
+	</div>
+#set ($buttons = ["doDelete", "doRefresh", "doNew"])
+#renderDBBrowserFooterButtons($buttons)
+</form>
