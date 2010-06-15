@@ -508,8 +508,8 @@ div.formbody .snslogo_margin {margin-top: 8px; }
   footer block styles  
 *********************************************************************/
 
-div#footercontainer { margin: 0px 0 0px 28px; background: url(../images/logo-numis_footer.png) no-repeat; padding: 0px 0px 30px 112px; }
-#footercontent { font-size: 11px; }
+div#footercontainer { margin: 0px 0 0px 0px; background: url(../images/logo-numis_footer.png) no-repeat scroll 30px 26px transparent; padding: 0px 0px 0px 112px; }
+#footercontent { font-size: 11px; width:75.5em; border-left:1px solid #999999; padding-left:22px;}
 
 div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF;}
 div#footermarginal { background: #999999; width: 19em; padding-right: 14px; text-align:right; font-size: 65%; line-height: 1px; width:100%;}

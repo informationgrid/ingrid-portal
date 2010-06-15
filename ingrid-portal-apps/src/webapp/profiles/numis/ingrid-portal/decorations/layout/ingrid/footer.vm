@@ -1,0 +1,45 @@
+</div>
+<div class="clearer"></div>
+<div id="footermarginalcontainer">
+  <div id="footermarginal">
+    <!-- portlets go here -->
+#defineUrlParams()
+##    <img src="#GetPageResource('images/arrow_up.gif')" alt="Pfeil nach oben" />&nbsp;<a href="${jetspeed.getAbsoluteUrl(${site.getPage().url})}${urlParams}">nach oben</a>
+  &nbsp;
+  </div>
+</div>
+<div class="clearer"></div>
+
+<!-- footer block -->
+<div id="footercontainer">
+  <div id="footercontent">
+    <!-- portlets go here -->
+#set($footerMenu = $site.getMenu("footer-menu"))
+#if(!$footerMenu.empty)
+  #includeFooterNavigation($footerMenu)
+#end
+<br>
+    Copyright &copy; Koordinierungsstelle PortalU im Nds. Umweltministerium <img align="right" src="#GetPageResource('images/logo-niedersachsen.png')" alt="Niedersachsen" /></br><br />
+
+    Alle Rechte vorbehalten<br /><br />
+  
+</div>
+</div>
+</div>
+<!--  END: layout/html/portalu/decorator.vm -->
+<!-- Piwik -->
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://portalu.de/piwik/" : "http://portalu.de/piwik/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+piwikTracker.trackPageView();
+piwikTracker.enableLinkTracking();
+} catch( err ) {}
+</script><noscript><p><img src="http://portalu.de/piwik/piwik.php?idsite=1" style="border:0" alt=""/></p></noscript>
+<!-- End Piwik Tag -->
+
+
+</body>
+</html>
