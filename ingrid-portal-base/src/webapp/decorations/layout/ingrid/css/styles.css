@@ -395,6 +395,9 @@ div.formheader span.portlet_info { float:right; color: #FFFFFF; line-height:100%
 div.formheader span.portlet_info a { color: #FFFFFF; }
 
 div.formbody {padding: 4px 12px 8px 12px; margin:1px 0px 1px 0px; border: 1px solid #111111; background-color: #F4F4F4;}
+/* use formbody_border_style if need to change border style*/
+div.formbody_border_style {}
+
 /* Sonderbehandlung f�r IE: dieser �bernimmt die Farbe des �bergeordneten divs nicht f�r rollover Link Auszeichnungen 
    siehe auch http://jira.media-style.com/browse/INGRID-192
 */
