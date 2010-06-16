@@ -72,7 +72,7 @@
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter("doRestartUpgradeJob", "true")
 <form action="$action" method="post" name="frmUpdate" id="frmUpdate">
-<div class="formbody">
+<div class="formbody formbody_border_style">
     <p class="float_right"><a href="$action" title="$MESSAGES.getString('component.forms.update.component.tooltip.start.job')">$MESSAGES.getString('component.forms.update.component.trigger.job')</a></p>
     <!--<h3>$MESSAGES.getString('Updates')</h3>-->
     <table class="border" style="width:100%;">

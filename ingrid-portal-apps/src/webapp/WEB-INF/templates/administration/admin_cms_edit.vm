@@ -1,6 +1,6 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmEditCMS" id="frmEditCMS">
-	<div class="formbody">
+	<div class="formbody formbody_border_style">
 	<input type="hidden" name="mode" value="$mode"/>
 	
 	#if ($mode == 'edit')

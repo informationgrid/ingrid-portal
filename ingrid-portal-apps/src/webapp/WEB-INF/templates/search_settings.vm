@@ -2,7 +2,7 @@
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" name="settings_form" id="settings_form">
       <input type="hidden" name="action" value="doSubmit"/>
-      <div class="formbody">
+      <div class="formbody formbody_border_style">
 		#displayFormErrors()
         <h3>$MESSAGES.getString('searchSettings.title.rankingAndGrouping')</h3>
         <p class="topmargin">

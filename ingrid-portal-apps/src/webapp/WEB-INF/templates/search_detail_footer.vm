@@ -23,11 +23,13 @@
 <br />
     Copyright &copy; Koordinierungsstelle PortalU im Nds. Ministerium f&uuml;r Umwelt und Klimaschutz<br />
 
-    Alle Rechte vorbehalten<br /><br />
+    Alle Rechte vorbehalten $piwik<br /><br />
   </div>
 </div>
 
 </div>
+
+#if($piwik=="false")
 <!--  END: layout/html/portalu/decorator.vm -->
 <!-- Piwik -->
 <script type="text/javascript">
@@ -51,6 +53,7 @@
 	</p>
 </noscript>
 <!-- End Piwik Tag -->
+#end
 
 </body>
 </html>

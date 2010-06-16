@@ -139,7 +139,7 @@
 	  
 #set ($buttons = ["doDelete", "doRefresh", "doNew"])
 
-<div class="formbody">
+<div class="formbody formbody_border_style">
 		<table class="border fullwidth">
 		#set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status.code", "component.monitor.general.last.check", "component.monitor.general.last.errorfree.run", "component.monitor.general.timer.average", "component.monitor.general.check.interval"]) ##, "component.monitor.general.active"])
 		#set ($colTitles = [$MESSAGES.getString('component.forms.text.name'), $MESSAGES.getString('component.forms.text.type'), $MESSAGES.getString('component.forms.text.status'), $MESSAGES.getString('component.forms.text.last.check'), $MESSAGES.getString('component.forms.text.last.errorfree.run'), $MESSAGES.getString('component.forms.text.average.exec.time'), $MESSAGES.getString('component.forms.text.interval')]) ##, "aktiv"])
@@ -184,7 +184,7 @@
 <a name="import"></a>
 <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
 	<input type="hidden" name="action" value="doImport">
-	<div class="formbody">
+	<div class="formbody formbody_border_style">
 		<p>
 			$MESSAGES.getString('component.forms.text.import.description')
 #if($import_message)

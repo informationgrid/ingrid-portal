@@ -1,6 +1,6 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmAdminUserMigration" id="frmAdminUserMigration">
-	<div class="formbody">
+	<div class="formbody formbody_border_style">
 		<p>
 		<textarea rows="30" cols="125" id="xmlData" name="xmlData">$!xmlData</textarea>
 		</p>
@@ -10,7 +10,7 @@
 </div>
 </form>
 <form action="$action" method="post" name="frmAdminUserMigrationImport" id="frmAdminUserMigrationImport">
-	<div class="formbody">
+	<div class="formbody formbody_border_style">
 		<p>
 		$MESSAGES.getString('account.view.path.file')<br/><br/>
 		<input type="text" id="path" name="path" size="100"></input>

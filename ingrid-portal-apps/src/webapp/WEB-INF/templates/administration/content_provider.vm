@@ -1,6 +1,6 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
-	<div class="formbody">
+	<div class="formbody formbody_border_style">
 #renderDBBrowserNavigation($browser)
 		<p>
 		<table class="border fullwidth">
@@ -45,7 +45,7 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
 	<input type="hidden" name="action" value="doImport">
-	<div class="formbody">
+	<div class="formbody formbody_border_style">
 		<p>
 <label for="csvData">$MESSAGES.getString('component.forms.provider.text.tip')
 </label><br/>

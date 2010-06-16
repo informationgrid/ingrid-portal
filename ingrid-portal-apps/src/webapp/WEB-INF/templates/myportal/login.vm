@@ -3,7 +3,7 @@
 <form action="$action" method="post" id="frm_login">
 <input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
 <input type="hidden" name="cmd" value="doLogin" />
-<div class="formbody">
+<div class="formbody formbody_border_style">
 		<div class="optional-links">
 			&nbsp;<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="$MESSAGES.getString('login.alt.icon.key')" /><a href="portal/myportal-create-account.psml">$MESSAGES.getString('login.form.newUser')</a>&nbsp;&nbsp;  
 			<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="$MESSAGES.getString('login.alt.icon.key')" /><a href="portal/myportal-password-forgotten.psml">$MESSAGES.getString('login.form.passwdForgotten')</a>

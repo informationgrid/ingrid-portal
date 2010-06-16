@@ -2,7 +2,7 @@
 
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmUpdate" id="frmUpdate">
-<div class="formbody">
+<div class="formbody formbody_border_style">
     <h3>$MESSAGES.getString('component.forms.update.component.edit.title')</h3>
     <p>
 <!--

@@ -83,29 +83,29 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
 *********************************************************************/
 
 div#identity { padding:0; margin:0; height: 80px; width:59.5em; background-color:#FFFFFF; overflow:visible; }
-div.motiv_blank { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.motiv_start { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.motiv_suche { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.motiv_service { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.motiv_messwerte { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.motiv_umweltthemen { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.motiv_karten { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.motiv_umweltchronik { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.motiv_topnavi { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.motiv_hilfe { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.motiv_admin { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.motiv_blank { background-image:url(../images/header_startseite.png); background-repeat:no-repeat; }
+div.motiv_start { background-image:url(../images/header_startseite.png); background-repeat:no-repeat; }
+div.motiv_suche { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
+div.motiv_service { background-image:url(../images/header_service.png); background-repeat:no-repeat; }
+div.motiv_messwerte { background-image:url(../images/header_messwerte.png); background-repeat:no-repeat; }
+div.motiv_umweltthemen { background-image:url(../images/header_umweltthemen.png); background-repeat:no-repeat; }
+div.motiv_karten { background-image:url(../images/header_karten.png); background-repeat:no-repeat; }
+div.motiv_umweltchronik { background-image:url(../images/header_chronik.png); background-repeat:no-repeat; }
+div.motiv_topnavi { background-image:url(../images/header_sonstiges.png); background-repeat:no-repeat; }
+div.motiv_hilfe { background-image:url(../images/header_sonstiges.png); background-repeat:no-repeat; }
+div.motiv_admin { background-image:url(../images/header_sonstiges.png); background-repeat:no-repeat; }
 
-div.en_motiv_blank { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.en_motiv_start { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.en_motiv_suche { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.en_motiv_service { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.en_motiv_messwerte { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.en_motiv_umweltthemen { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.en_motiv_karten { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.en_motiv_umweltchronik { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.en_motiv_topnavi { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.en_motiv_hilfe { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.en_motiv_admin { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.en_motiv_blank { background-image:url(../images/header_startseite.png); background-repeat:no-repeat; }
+div.en_motiv_start { background-image:url(../images/header_startseite.png); background-repeat:no-repeat; }
+div.en_motiv_suche { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
+div.en_motiv_service { background-image:url(../images/header_service.png); background-repeat:no-repeat; }
+div.en_motiv_messwerte { background-image:url(../images/header_messwerte.png); background-repeat:no-repeat; }
+div.en_motiv_umweltthemen { background-image:url(../images/header_umweltthemen.png); background-repeat:no-repeat; }
+div.en_motiv_karten { background-image:url(../images/header_karten.png); background-repeat:no-repeat; }
+div.en_motiv_umweltchronik { background-image:url(../images/header_chronik.png); background-repeat:no-repeat; }
+div.en_motiv_topnavi { background-image:url(../images/header_sonstiges.png); background-repeat:no-repeat; }
+div.en_motiv_hilfe { background-image:url(../images/header_sonstiges.png); background-repeat:no-repeat; }
+div.en_motiv_admin { background-image:url(../images/header_sonstiges.png); background-repeat:no-repeat; }
 
 /********************************************************************
   logo styles 
@@ -398,6 +398,7 @@ div.formheader span.portlet_info { float:right; color: #FFFFFF; line-height:100%
 div.formheader span.portlet_info a { color: #FFFFFF; }
 
 div.formbody {padding: 4px 12px 8px 12px; margin:0px 0px 0px 0px; border: 1px solid #999999; background-color: #f6f6f6;}
+div.formbody_border_style {border-bottom: 0px solid #999999;}
 /* Sonderbehandlung f�r IE: dieser �bernimmt die Farbe des �bergeordneten divs nicht f�r rollover Link Auszeichnungen 
    siehe auch http://jira.media-style.com/browse/INGRID-192
 */

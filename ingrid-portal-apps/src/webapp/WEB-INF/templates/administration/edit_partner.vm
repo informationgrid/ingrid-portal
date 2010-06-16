@@ -1,6 +1,6 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmEditPartner" id="frmEditPartner">
-	<div class="formbody">
+	<div class="formbody formbody_border_style">
 	#if ($mode == 'edit')
 		<h2 class="nospace">$MESSAGES.getString('component.forms.partner.text.update.partner')</h2>
 	#elseif ($mode == 'new')

@@ -3,7 +3,7 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmEditProvider" id="frmEditProvider">
 	<input type="hidden" name="mode" value="$mode"/>
-	<div class="formbody">
+	<div class="formbody formbody_border_style">
    		<h2 class="nospace">$MESSAGES.getString('component.forms.text.new.job')</h2>
     	#displayFormErrors()
     	

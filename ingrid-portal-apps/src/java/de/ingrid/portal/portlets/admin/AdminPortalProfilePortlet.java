@@ -271,8 +271,14 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
         File[] sourceFiles = sourceDir.listFiles();
         
     	for (int i = 0; i < sourceFiles.length; i++) {
-    		File destFile = new File(dest.concat("/").concat(sourceFiles[i].getName()));
-    		copy(sourceFiles[i], destFile);
-    	}
+    		File sourceFile = sourceFiles[i];
+    		File destFile = new File(dest.concat("/").concat(sourceFile.getName()));
+			
+    		if(sourceFile.isDirectory()){
+    			copyDir(sourceFile.getAbsolutePath(), destFile.getAbsolutePath());
+    		}else{
+    			copy(sourceFile, destFile);
+    		}
+		}
     }
 }

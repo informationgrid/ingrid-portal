@@ -133,6 +133,8 @@ public class PortalConfig extends PropertiesConfiguration {
     // disable button and textfield for edit partner/provider 
     public static final String DISABLE_PARTNER_PROVIDER_EDIT = "portal.disable.partner.provider.edit";
     
+    // disable piwik
+    public static final String ENABLE_PIWIK = "portal.enable.piwik";
     
 	// private stuff
     private static PortalConfig instance = null;

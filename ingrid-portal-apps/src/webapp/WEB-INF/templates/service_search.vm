@@ -1,7 +1,7 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="GET" name="service_search" id="service_search">
    	<input type="hidden" name="action" value="doSearch"/>
-	<div class="formbody">
+	<div class="formbody formbody_border_style">
 		<h2 class="nospace">$MESSAGES.getString("common.form.criteria")</h2>
 		#displayFormErrors()
 		<div class="float_left">

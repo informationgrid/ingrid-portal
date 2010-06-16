@@ -3,7 +3,7 @@ $MESSAGES.getString('contact.intro.praeEmail')
 $contactIntroPostEmail
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="contact" id="contact">
-	<div class="formbody">
+	<div class="formbody formbody_border_style">
 #displayFormErrors()
 		<h3>
 			<label for="bemerkungen">#displayFieldLabel('message' "$MESSAGES.getString('contact.form.message')")</label>

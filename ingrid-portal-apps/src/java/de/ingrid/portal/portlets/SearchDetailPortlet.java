@@ -103,7 +103,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put("tool", new UtilsVelocity());
         context.put("stringTool", new UtilsString());
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
-
+        context.put("piwik", PortalConfig.getInstance().getBoolean(PortalConfig.ENABLE_PIWIK, false));
+        
         try {
         	// check whether we come from google (no IngridSessionPreferences)
         	boolean noIngridSession = false;

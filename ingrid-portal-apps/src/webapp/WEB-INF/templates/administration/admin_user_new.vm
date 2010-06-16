@@ -3,7 +3,7 @@
 <form action="$action" method="post" name="frmCreateUser" id="frmCreateUser">
 	<input type="hidden" name="layoutPermission" value="$actionForm.getInput('layoutPermission')"/>
 	<input type="hidden" name="mode" value="new"/>
-	<div class="formbody">
+	<div class="formbody formbody_border_style">
 #displayFormErrors()
 #displayFormMessages()
 	<h2 class="nospace">Neuen Benutzer anlegen</h2>
