@@ -3,8 +3,8 @@
 #end
 
 #set ($action = $renderResponse.createActionURL())
-<form action="$action" method="get" name="LanguageForm" id="LanguageForm" style="display:inline;">
-    <select name="lang" onchange="this.form.submit();" style="font-size:100%;">
+<form action="$action" method="get" name="LanguageForm" id="LanguageForm" style="display:inline; ">
+    <select name="lang" onchange="this.form.submit();" class="language_switch_style">
         #set($i=0)
         #foreach($lang in $languagesShort)
             <option value="$lang" #getSelected($lang)>$ListTool.get($languagesNames, $i)</option>

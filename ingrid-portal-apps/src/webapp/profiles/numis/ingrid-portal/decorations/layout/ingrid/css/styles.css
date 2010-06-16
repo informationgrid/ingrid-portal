@@ -134,6 +134,8 @@ div#servicenav ul li a:visited { text-decoration:none; color:#FFFFFF; font-weigh
 div#servicenav ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:normal;}
 div#servicenav ul li a:hover { text-decoration:none; color:#111111; background:url(../images/background_servicenav_hover.png); font-weight:normal; }
 
+select.language_switch_style {font-size:100%; background-color:#0066cc; color:#FFFFFF;}
+
 /********************************************************************
   main navigation styles
 *********************************************************************/
