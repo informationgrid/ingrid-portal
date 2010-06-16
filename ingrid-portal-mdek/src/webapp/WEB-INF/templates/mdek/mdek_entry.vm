@@ -7,7 +7,7 @@
 <p>$MESSAGES.getString('entry.error.noBackendUser')</p>
 #else
 <div class="section">    
-  <div class="formbody" style="overflow: auto;">
+  <div class="formbody formbody_border_style" style="overflow: auto;">
 <!--
 	<a href="../ingrid-portal-mdek/dump_session.jsp">/ingrid-portal-mdek/dump_session.jsp</a> <br>
     <a href="../ingrid-portal-mdek-application/dump_session.jsp">/ingrid-portal-mdek-application/dump_session.jsp</a> <br>

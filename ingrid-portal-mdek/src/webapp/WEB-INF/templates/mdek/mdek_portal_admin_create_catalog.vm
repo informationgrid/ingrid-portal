@@ -13,7 +13,7 @@
 
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="GET" name="mdek_portal_admin" id="mdek_portal_admin">
-	<div class="formbody" style="overflow: auto;">
+	<div class="formbody formbody_border_style" style="overflow: auto;">
 		<h2 class="nospace">$MESSAGES.getString('mdek.portaladmin.catalog.new')</h2>
 		<br />
 

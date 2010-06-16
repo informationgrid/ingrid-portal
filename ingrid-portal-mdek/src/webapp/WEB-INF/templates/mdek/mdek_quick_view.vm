@@ -66,7 +66,7 @@
 #if ( $objectList.isEmpty() )
 <span class="smaller">$MESSAGES.getString('quickView.table.obj.noHits')</span><br />
 #else
-<div class="formbody">
+<div class="formbody formbody_border_style">
 <table class="border fullwidth">
 	#set ($colNames = ["icon", "name", "status", "modDate"])
 	#set ($colTitles = [$MESSAGES.getString('quickView.table.header.class'), $MESSAGES.getString('quickView.table.header.name'), $MESSAGES.getString('quickView.table.header.state'), $MESSAGES.getString('quickView.table.header.modDate')])
