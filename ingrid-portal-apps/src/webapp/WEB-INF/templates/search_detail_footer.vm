@@ -29,22 +29,21 @@
 
 </div>
 
-#if($piwik=="false")
+#if($piwik != "")
 <!--  END: layout/html/portalu/decorator.vm -->
 <!-- Piwik -->
 <script type="text/javascript">
-	var pkBaseURL;
+	var pkBaseURL = ${piwik};
 	var piwikTracker;
 	var host = location.host; 
-	if(host=="www.portalu.de" || host=="portalu.de"){
-		pkBaseURL = (("https:" == document.location.protocol) ? "https://portalu.de/piwik/" : "http://portalu.de/piwik/");
-		document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-		try {
-			piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
-			piwikTracker.trackPageView();
-			piwikTracker.enableLinkTracking();
-		} catch( err ) {
-		}
+		
+	document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+	
+	try {
+		piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+		piwikTracker.trackPageView();
+		piwikTracker.enableLinkTracking();
+	} catch( err ) {
 	}
 </script>
 <noscript>
