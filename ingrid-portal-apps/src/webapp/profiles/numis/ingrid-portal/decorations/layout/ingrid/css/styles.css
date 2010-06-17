@@ -132,7 +132,7 @@ div#servicenav ul li { display:inline; }
 div#servicenav ul li a:link { text-decoration:none; color:#FFFFFF; font-weight:normal;}
 div#servicenav ul li a:visited { text-decoration:none; color:#FFFFFF; font-weight:normal;}
 div#servicenav ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:normal;}
-div#servicenav ul li a:hover { text-decoration:none; color:#111111; background:url(../images/background_servicenav_hover.png); font-weight:normal; }
+div#servicenav ul li a:hover { text-decoration:none; color:#FFFFFF; background:url(../images/background_servicenav_hover.png); font-weight:normal; padding:5px 0px 7px 0px; height:22px}
 
 select.language_switch_style {font-size:100%; background-color:#0066cc; color:#FFFFFF;}
 
@@ -145,8 +145,8 @@ html body div#mainnav { height: 1%; }
 /* End Hack */
 
 div#mainnav { background:url(../images/background_mainnav.png); margin:0; padding:0; width:59.5em;}  
-div#mainnav ul { list-style: none; padding: 0px 0 0px 56px; margin: 0; height:29px}
-div#mainnav ul li { padding: 2px 0px 6px 0; margin: 0px 2px 0px 0px; border: 0; float: left;font-size: 75%; font-weight:bold;}
+div#mainnav ul { list-style: none; padding: 0px 0px 0px 56px; margin: 0; }
+div#mainnav ul li { margin: 0px 2px 0px 0px; float: left;font-size: 75%; font-weight:bold;}
 
 /* Commented Backslash Hack hides rule from IE5-Mac \*/
 div#mainnav ul li a {float:none;}
@@ -155,16 +155,16 @@ div#mainnav ul li a {float:none;}
 div#mainnav ul li a,  
 div#mainnav ul li a:link, 
 div#mainnav ul li a:visited 
- { text-decoration:none; color:#FFFFFF; margin-right:7px; padding:3px 6px 5px 6px; border-bottom:1px; margin:0; font-size: 100%; height:26px;}  
+ { text-decoration:none; color:#FFFFFF; padding:10px 5px 5px 5px; font-size: 100%;}  
 
 div#mainnav ul li a.selected,
 div#mainnav ul li a.selected:link, 
 div#mainnav ul li a.selected:visited 
- { color:#FFFFFF; text-decoration:none; background-color:#999999; border-bottom: solid #999999 10px; margin:0; font-size: 100%;}  
+ { color:#FFFFFF; text-decoration:none; background-color:#999999; margin:0; font-size: 100%;}  
 
 div#mainnav ul li a:hover,
 div#mainnav ul li a:active
- { color:#FFFFFF; text-decoration:none; background:url(../images/background_mainnav_hover.png); font-size: 100%; height:26px;}
+ { color:#FFFFFF; text-decoration:none; font-size: 100%;background:url(../images/background_mainnav_hover.png); height:100px}
 
 /********************************************************************
   sub navigation styles
@@ -180,7 +180,7 @@ div#subnav ul li a:link,
 div#subnav ul li a:visited,
 div#subnav ul li a:active {text-decoration:none; color:#FFFFFF;}  
 div#subnav ul li a:hover, 
-div#subnav ul li a:focus {color:#FFFFFF;text-decoration:none; background:url(../images/background_subnav_hover.png); padding:5px 0px 5px 0px; margin:2px 2px 2px 2px;}
+div#subnav ul li a:focus {color:#FFFFFF;text-decoration:none; background:url(../images/background_subnav_hover.png); padding:5px 0px 5px 0px;}
 
 div.subnav_corner {vertical-align:bottom;float:right; width:21px; height: 100%;background-color:#999}
 div.subnav_corner_img {vertical-align:bottom;width: 21px; height:100%;background:url(../images/corner_sub_nav.png) no-repeat;background-position:bottom; background-color:#DDE9BD}
@@ -443,8 +443,8 @@ div.formbody .spacer_search_form {margin-top: 15px}
 div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px; border-bottom:1px solid #999999; border-left:1px solid #999999; border-right:1px solid #999999; background-color: #f6f6f6; }
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 
-input.btn { color: #fff; border: 1px solid #e0003c; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; height:24px; margin:16px 0px 11px 0px; padding:0px 19px 0px 19px}
-input.btn:hover { color: #fff; border: 1px solid #e0003c; background:url(../images/background_btn_hover.png); font-size: 12px; font-weight:bold; height:24px; margin:16px 0px 11px 0px; padding:0px 19px 0px 19px}
+input.btn { color: #fff; border: 1px solid #e0003c; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px}
+input.btn:hover { color: #fff; border: 1px solid #e0003c; background:url(../images/background_btn_hover.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px}
 input.btn_disable { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border: solid 1px #000000;}
 
 label.left {width:5.5em; float:left;}
@@ -511,8 +511,8 @@ div.formbody .snslogo_margin {margin-top: 8px; }
   footer block styles  
 *********************************************************************/
 
-div#footercontainer { margin: 0px 0 0px 0px; background: url(../images/logo-numis_footer.png) no-repeat scroll 30px 26px transparent; padding: 0px 0px 0px 112px; }
-#footercontent { font-size: 11px; width:75.5em; border-left:1px solid #999999; padding-left:22px;}
+div#footercontainer { background: url(../images/logo-numis_footer.png) no-repeat scroll 10px 10px transparent; padding: 0px 0px 0px 112px; }
+#footercontent { font-size: 11px; width:75.5em; padding-left:46px;}
 
 div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF;}
 div#footermarginal { background: #999999; width: 19em; padding-right: 14px; text-align:right; font-size: 65%; line-height: 1px; width:100%;}

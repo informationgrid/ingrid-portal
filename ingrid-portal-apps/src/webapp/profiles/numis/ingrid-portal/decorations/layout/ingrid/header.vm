@@ -90,7 +90,7 @@ if (xmlhttp) {
 #includeIdentityArea()
 
 <!-- MAIN-NAVIGATION -->
-<div id="mainnav">
+<div id="mainnav" style="height:29px;">
   <h2 class="hide">Hauptmenu</h2>
   <ul>
 #set($mainMenu = $site.getMenu("main-menu"))

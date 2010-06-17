@@ -140,10 +140,16 @@
 		## render menue item dependent from flags
 		#if ($elemRender)
     		#if ($elemSelected)
-              <li><a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a></li>
+              <li>
+				<a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a>
+				<img src="#GetPageResource('images/mainnav_seperator.png')">
+			  </li>
             #else
-              <li><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
-    		#end
+              <li>
+				<a href="$tabUrl" title="$tabTitle">$tabName</a>
+				<img src="#GetPageResource('images/mainnav_seperator.png')">
+			  </li>
+			#end
 		#end
       #end
     #end
@@ -280,25 +286,25 @@
         #set($separatorText = $element.getText($preferedLocale))
         #if ($separatorText == "separator1")
 		  #if($lastType != "separator")
-            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "&nbsp;&nbsp;|&nbsp;&nbsp;")
+            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "&nbsp;|&nbsp;")
           #else
             &nbsp;&nbsp;|&nbsp;&nbsp;
           #end
         #elseif($separatorText == "separator2")
           #if($lastType != "separator")
-            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName " - ")
+            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "&nbsp;|&nbsp;")
           #else
              - 
           #end
         #else
           #if($lastType != "separator")
-            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "")
+            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "&nbsp;|&nbsp;")
           #end 
         #end
         #set($lastType = "separator")
       #end
 	#end
     #if($lastType != "separator")
-	  #renderServiceLink($element.url $currentPage $linkUrl $linkTitle $linkName "")
+	  #renderServiceLink($element.url $currentPage $linkUrl $linkTitle $linkName "&nbsp;|&nbsp;")
     #end 
 #end
