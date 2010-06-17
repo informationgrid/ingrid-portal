@@ -1,0 +1,9 @@
+/* Help icon with hover */
+a.help 
+{ display: block; }
+
+a.help:link, a.help:visited 
+{ width: 21px; height: 20px; background-image: url(../images/icon-help.png); }
+
+a.help:hover 
+{ width: 21px;  max-height: 20px; background-image: url(../images/icon-help-hover.png); }

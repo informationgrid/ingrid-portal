@@ -26,7 +26,7 @@
 			image_over = new Image();
 			image_over.src = "$request.contextPath$decoration.getBasePath("images")/icon-help-hover.png";
 			
-			document.write("<a href=\"javascript:ingrid_openWindow('$hpath',750,550);\" title=\"$hTitle\" onMouseOver=\"HelpImage.src='"+image_over.src+"';\" onMouseOut=\"HelpImage.src='"+image.src+"';\"><img src=\"$request.contextPath$decoration.getBasePath("images")/icon-help.png\"	 name=\"HelpImage\"  alt=\"$hTitle\" /></a>");
+			document.write("<a class=\"help\" href=\"javascript:ingrid_openWindow('$hpath',750,550);\" title=\"$hTitle\"><img src=\"$request.contextPath$decoration.getBasePath("images")/icon-help-blank.png\" alt=\"$hTitle\" /></a>");
     	</script>
     	<noscript>
     		<a href="$hpath" target="_new" title="$hTitle"><img src="$request.contextPath$decoration.getBasePath("images")/icon-help.png" alt="$hTitle" /></a>
