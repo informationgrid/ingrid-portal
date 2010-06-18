@@ -446,7 +446,7 @@ div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 
 input.btn { color: #fff; border: 1px solid #e0003c; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px}
 input.btn:hover { color: #fff; border: 1px solid #e0003c; background:url(../images/background_btn_hover.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px}
-input.btn_disable { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border: solid 1px #000000;}
+input.btn_disable { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border: solid 1px #e0003c;}
 
 label.left {width:5.5em; float:left;}
 label.login {width:8em; float:left;}
@@ -513,7 +513,7 @@ div.formbody .snslogo_margin {margin-top: 8px; }
 *********************************************************************/
 
 div#footercontainer { background: url(../images/logo-numis_footer.png) no-repeat scroll 30px 20px transparent; padding: 0px 0px 0px 112px; }
-#footercontent { font-size: 11px; width:75.5em; padding-left:46px;}
+#footercontent { font-size: 11px; width:73em; padding-left:46px;}
 
 div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF;}
 div#footermarginal { background: #999999; width: 19em; padding-right: 14px; text-align:right; font-size: 65%; line-height: 1px; width:100%;}
