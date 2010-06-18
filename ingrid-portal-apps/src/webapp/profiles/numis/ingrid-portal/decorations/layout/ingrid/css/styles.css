@@ -125,14 +125,15 @@ div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { color: #1
   service navigation styles
 *********************************************************************/
 
-div#servicenav { padding:0.1em 0em 0.1em 1.5em; background:url(../images/background_servicenav.png); float: right; height:24px; color:#FFFFFF}
+div#servicenav { padding:0em 0em 0em 1em; background:url(../images/background_servicenav.png); float: right; height:24px; color:#FFFFFF}
 #servicenav { font-size: 70%; }
-div#servicenav ul { list-style: none; padding: 0; margin: 0; }
+div#servicenav ul { list-style: none; padding:0 ; margin: 0; }
 div#servicenav ul li { display:inline; }
-div#servicenav ul li a:link { text-decoration:none; color:#FFFFFF; font-weight:normal;}
-div#servicenav ul li a:visited { text-decoration:none; color:#FFFFFF; font-weight:normal;}
-div#servicenav ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:normal;}
-div#servicenav ul li a:hover { text-decoration:none; color:#FFFFFF; background:url(../images/background_servicenav_hover.png); font-weight:normal; padding:5px 0px 7px 0px; height:22px}
+div#servicenav ul li a { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
+div#servicenav ul li a:link { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
+div#servicenav ul li a:visited { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
+div#servicenav ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
+div#servicenav ul li a:hover { text-decoration:none; color:#FFFFFF; background:url(../images/background_servicenav_hover.png); font-weight:normal; padding:1px 5px 6px 5px; }
 
 select.language_switch_style {font-size:100%; background-color:#0066cc; color:#FFFFFF;}
 
@@ -155,16 +156,16 @@ div#mainnav ul li a {float:none;}
 div#mainnav ul li a,  
 div#mainnav ul li a:link, 
 div#mainnav ul li a:visited 
- { text-decoration:none; color:#FFFFFF; padding:10px 5px 5px 5px; font-size: 100%;}  
+ { text-decoration:none; color:#FFFFFF; padding:5px 5px 9px; vertical-align:super; font-size: 100%;}  
 
 div#mainnav ul li a.selected,
 div#mainnav ul li a.selected:link, 
 div#mainnav ul li a.selected:visited 
- { color:#FFFFFF; text-decoration:none; background-color:#999999; margin:0; font-size: 100%;}  
+ { color:#FFFFFF; text-decoration:none; background-color:#999999; font-size: 100%; padding:5px 5px 9px; vertical-align:super;}  
 
 div#mainnav ul li a:hover,
 div#mainnav ul li a:active
- { color:#FFFFFF; text-decoration:none; font-size: 100%;background:url(../images/background_mainnav_hover.png); height:100px}
+ { color:#FFFFFF; text-decoration:none; font-size: 100%;background:url(../images/background_mainnav_hover.png);padding:5px 5px 5px 5px; vertical-align:super;}
 
 /********************************************************************
   sub navigation styles
@@ -178,9 +179,9 @@ div#subnav ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:b
 div#subnav ul li a,
 div#subnav ul li a:link,
 div#subnav ul li a:visited,
-div#subnav ul li a:active {text-decoration:none; color:#FFFFFF;}  
+div#subnav ul li a:active {text-decoration:none; color:#FFFFFF; padding:5px 5px 5px 5px;}  
 div#subnav ul li a:hover, 
-div#subnav ul li a:focus {color:#FFFFFF;text-decoration:none; background:url(../images/background_subnav_hover.png); padding:5px 0px 5px 0px;}
+div#subnav ul li a:focus {color:#FFFFFF;text-decoration:none; background:url(../images/background_subnav_hover.png); padding:5px 5px 5px 5px; }
 
 div.subnav_corner {vertical-align:bottom;float:right; width:21px; height: 100%;background-color:#999}
 div.subnav_corner_img {vertical-align:bottom;width: 21px; height:100%;background:url(../images/corner_sub_nav.png) no-repeat;background-position:bottom; background-color:#DDE9BD}
@@ -511,7 +512,7 @@ div.formbody .snslogo_margin {margin-top: 8px; }
   footer block styles  
 *********************************************************************/
 
-div#footercontainer { background: url(../images/logo-numis_footer.png) no-repeat scroll 10px 10px transparent; padding: 0px 0px 0px 112px; }
+div#footercontainer { background: url(../images/logo-numis_footer.png) no-repeat scroll 30px 20px transparent; padding: 0px 0px 0px 112px; }
 #footercontent { font-size: 11px; width:75.5em; padding-left:46px;}
 
 div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF;}
