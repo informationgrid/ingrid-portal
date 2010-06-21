@@ -179,7 +179,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         	
         if(rootNodeLevel != null)
 	        for(int i=0; i < list.size();i++){
-	        	if(rootNode.get("level").equals(rootNodeLevel)){
+	        	if(rootNode.get("level").toString().equals(rootNodeLevel)){
 	           	   break;
 	           	}
 	        	DisplayTreeNode subNode = (DisplayTreeNode)list.get(i);
