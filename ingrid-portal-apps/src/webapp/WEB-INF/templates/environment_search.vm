@@ -55,7 +55,7 @@
 		<span class="clearer"></span>
 		<br />
 	</div>
-	<div class="formfooter">
+	<div class="formfooter formfooter_border_style">
 		<div align="right">
 			<input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.show')" />
 		</div>

@@ -442,6 +442,7 @@ div.formbody .spacer_search_form {margin-top: 15px}
 .col2right { width:15em; }
 
 div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px; border-bottom:1px solid #999999; border-left:1px solid #999999; border-right:1px solid #999999; background-color: #f6f6f6; }
+div.formfooter_border_style {border-top: 0px solid #999999;}
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 
 input.btn { color: #fff; border: 1px solid #e0003c; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px}

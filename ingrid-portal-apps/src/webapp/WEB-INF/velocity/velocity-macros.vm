@@ -186,7 +186,7 @@ $action.setParameter("id", "$rowId")
 #end
 
 #macro (renderDBBrowserFooterButtonsDisable $buttons $disableDeleteButton)
-<div class="formfooter">
+<div class="formfooter formfooter_border_style">
 #foreach ($button in $buttons)
 	#if($button == "doEdit")
 		<input class="btn float_left" type="submit" name="doEdit" value="Edit"/>
@@ -260,7 +260,7 @@ $action.setParameter("id", "$rowId")
 #end
 
 #macro (renderDBEditFooter $mode)
-<div class="formfooter" align="right">
+<div class="formfooter formfooter_border_style" align="right">
 	#if ($mode == 'edit')
 		#set ($butAction = 'doUpdate')
 	#elseif ($mode == 'new')

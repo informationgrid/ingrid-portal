@@ -205,7 +205,7 @@
         </p>
     	<p class="clearer" />
 	</div>
-<div class="formfooter" align="right">
+<div class="formfooter formfooter_border_style" align="right">
 	<input class="btn" type="submit" name="doImport" value="$MESSAGES.getString('component.forms.buttons.import.jobs')" />
 </div>
 </form>

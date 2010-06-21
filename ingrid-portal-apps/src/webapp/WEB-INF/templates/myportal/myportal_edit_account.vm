@@ -3,7 +3,7 @@
 	<input type="hidden" name="cmd" value="form_sent" />
 #set ($formType = 'edit')
 #parse ('/WEB-INF/templates/myportal/include_account_form.vm')
-	<div class="formfooter">
+	<div class="formfooter formfooter_border_style">
 		<div align="right">
 			<input class="btn" type="submit" value="$MESSAGES.getString('account.edit.submit')" />
 		</div>

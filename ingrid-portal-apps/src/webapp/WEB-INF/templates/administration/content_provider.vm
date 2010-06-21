@@ -55,7 +55,7 @@
 	<textarea rows="30" cols="125" id="csvData" name="csvData"></textarea>
 		</p>
 	</div>
-<div class="formfooter" align="right">
+<div class="formfooter formfooter_border_style" align="right">
 	<input class="btn" type="submit" name="doImport" value="$MESSAGES.getString('component.forms.provider.button.import')" />
 </div>
 </form>

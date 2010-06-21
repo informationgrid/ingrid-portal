@@ -1,4 +1,4 @@
-      <div class="formfooter">
+      <div class="formfooter formfooter_border_style">
         <div align="right">
 $action.setParameter('action','doOriginalSettings')
           <span class="iconLink"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('personalize.action.reset')</a></span>

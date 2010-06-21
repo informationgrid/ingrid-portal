@@ -49,7 +49,7 @@
 #end	
       </div>
 #if($ps.isSimilarOpen)
-	  <div class="formfooter">
+	  <div class="formfooter formfooter_border_style">
         <div align="right">
           <input class="btn" type="submit" value="$MESSAGES.getString('searchSimilar.add.to.query')" />
         </div>

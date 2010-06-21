@@ -25,7 +25,7 @@ $MESSAGES.getString('contact.newsletter.intro')
                 <span class="clearer"></span>
         	    </p>
             </div>
-	        <div class="formfooter">
+	        <div class="formfooter formfooter_border_style">
               <div align="right">
               <input class="btn" type="submit" value="$MESSAGES.getString('contact.newsletter.form.button.subscribe')" />
               </div>
@@ -53,7 +53,7 @@ $MESSAGES.getString('contact.newsletter.intro')
     			  </p>
         </div>
 
-	      <div class="formfooter">
+	      <div class="formfooter formfooter_border_style">
             <div align="right">
             <input class="btn" type="submit" value="$MESSAGES.getString('contact.newsletter.form2.button.unsubscribe')" />
             </div>

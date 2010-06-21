@@ -1,4 +1,4 @@
-    <div class="formfooter">
+    <div class="formfooter formfooter_border_style">
       <div align="right">
         <input class="btn" type="submit" name="submitAddToQuery" value="$MESSAGES.getString('searchExt.submit.addToQuery')" />
       </div>

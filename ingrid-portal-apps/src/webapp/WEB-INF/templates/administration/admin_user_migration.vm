@@ -5,7 +5,7 @@
 		<textarea rows="30" cols="125" id="xmlData" name="xmlData">$!xmlData</textarea>
 		</p>
 	</div>
-<div class="formfooter" align="right">
+<div class="formfooter formfooter_border_style" align="right">
 	<input class="btn" type="submit" name="doExport" value="Export" />
 </div>
 </form>
@@ -25,7 +25,7 @@
 		#end	
 			
 	</div>
-<div class="formfooter" align="right">
+<div class="formfooter formfooter_border_style" align="right">
 	<input class="btn" type="submit" name="doImport" value="Import" />
 </div>
 </form>

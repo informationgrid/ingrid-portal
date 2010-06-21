@@ -69,14 +69,14 @@
 <div class="section">    
   #parse ('/WEB-INF/templates/search_catalog/include_tabs_cat.vm')
   #parse ('/WEB-INF/templates/search_catalog/include_tabs_cat_thesaurus.vm')
-  <div class="formbody">
+  <div class="formbody formbody_border_style">
 	#foreach($termNode in $ps.thesRoot.getChildren())
 	  #renderNode($termNode)
     #end
   </div>
   #set ($action = $renderResponse.createActionURL())
   <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
-    <div class="formfooter">
+    <div class="formfooter formfooter_border_style">
       <div align="right">
         <input class="btn" type="submit" name="submitReload" value="$MESSAGES.getString('searchCatHierarchy.submit.reload')" />
       </div>
