@@ -94,7 +94,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             DisplayTreeNode plugsRoot = DisplayTreeFactory.getTreeFromECSIPlugs(plugs);
             String restrictPartner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
             if(restrictPartner!= null && restrictPartner.length() > 0){
-            	openAllNodes(plugsRoot);
+            	openNodesUntilHierarchyLevel(plugsRoot);
             }
             ps.put("plugsRoot", plugsRoot);
         }
@@ -166,7 +166,13 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         }
     }
     
-    private void openAllNodes(DisplayTreeNode rootNode){
+    /**
+     * Open nodes if restrict partner and restrict partner level
+     * is set.
+     * 
+     * @param rootNode
+     */
+    private void openNodesUntilHierarchyLevel(DisplayTreeNode rootNode){
     	ArrayList list = new ArrayList();
         list = rootNode.getChildren();
         String rootNodeLevel = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER_LEVEL);
@@ -185,7 +191,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
 	            		DisplayTreeFactory.openECSNode(rootNode, subNode);
 	               		subNode.setLoading(false);
 	               	}
-	        		openAllNodes(subNode);
+	        		openNodesUntilHierarchyLevel(subNode);
         		}
 	        }
     	}
