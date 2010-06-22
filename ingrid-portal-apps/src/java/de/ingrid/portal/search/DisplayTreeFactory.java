@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IPlugHelper;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsDB;
@@ -209,6 +210,9 @@ public class DisplayTreeFactory {
         DisplayTreeNode partnerNode = null;
         DisplayTreeNode catalogNode = null;
 
+        String partnerRestriction = PortalConfig.getInstance().getString(
+                PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
+        
         for (int i = 0; i < plugs.length; i++) {
         	PlugDescription plug = plugs[i];
 
@@ -227,10 +231,13 @@ public class DisplayTreeFactory {
                 partnerNode.put(NODE_LEVEL, new Integer(1));
                 partnerNode.put(NODE_EXPANDABLE, new Boolean(true));
                 // no "plugid", no "docid" !
-                partnerNode.setParent(root);
-                root.addChild(partnerNode);
+                if(partnerRestriction == null || partnerRestriction.length() < 1){
+                	partnerNode.setParent(root);
+                    root.addChild(partnerNode);
+                }
+                
             }
-
+            
             // catalog node
             String catalogName = plug.getDataSourceName();
             if (catalogNode == null || 
@@ -240,8 +247,14 @@ public class DisplayTreeFactory {
             	catalogNode.put(NODE_LEVEL, new Integer(2));
             	catalogNode.put(NODE_EXPANDABLE, new Boolean(true));
                 // no "plugid", no "docid" !
-            	catalogNode.setParent(partnerNode);
-            	partnerNode.addChild(catalogNode);
+            	 if(partnerRestriction != null && partnerRestriction.length() > 0){
+             		catalogNode.setParent(root);
+             		root.addChild(catalogNode);
+                 }else{
+                	catalogNode.setParent(partnerNode);
+                 	partnerNode.addChild(catalogNode);
+                 }
+            	
             }
 
             // iPlug Node
