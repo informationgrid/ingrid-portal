@@ -241,7 +241,14 @@ public class UtilsSearch {
             result.put(Settings.RESULT_KEY_ABSTRACT, UtilsString.cutString(summary.replaceAll("\\<.*?\\>",
                     ""), 400));
             result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getHit().getDocumentId()));
-            result.put(Settings.RESULT_KEY_PROVIDER, detail.getOrganisation());
+            
+            // use internal provider instead of one set in plugdescription
+            // e.g. results from Opensearch might support partner and provider
+            if (detail.get("provider") != null) {
+                result.put(Settings.RESULT_KEY_PROVIDER, detail.get("provider"));
+            } else {
+                result.put(Settings.RESULT_KEY_PROVIDER, detail.getOrganisation());
+            }
             result.put(Settings.RESULT_KEY_SOURCE, detail.getDataSourceName());
             result.put(Settings.RESULT_KEY_PLUG_ID, detail.getPlugId());
 
@@ -298,6 +305,10 @@ public class UtilsSearch {
                     "\\<.*?\\>", ""));
             result.put(PlugDescription.DATA_TYPE, plugDescr.getDataTypes());
             result.put(PlugDescription.ORGANISATION, plugDescr.getOrganisation());
+            // FIXME: is this correct? should be taken from the detail only?
+            //result.put(PlugDescription.PROVIDER, plugDescr.getOrganisationAbbr());
+            if (plugDescr.containsKey("domainGroupingSupport"))
+                result.put("domainGroupingSupport", plugDescr.get("domainGroupingSupport"));
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems taking over PlugDescription into result:" + result, t);
