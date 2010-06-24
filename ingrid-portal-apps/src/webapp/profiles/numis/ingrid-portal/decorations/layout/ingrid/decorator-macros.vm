@@ -69,7 +69,7 @@
 
   <!-- LOGO -->
   <div id="logo">
-    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img src="#GetPageResource('images/logo.gif')" width="100%" height="100%" alt="Logo PortalU" /></a>
+    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img style="padding:16px 4px 0px 0px" src="#GetPageResource('images/logo.gif')" alt="Logo PortalU" /><img style="padding: 0px 0px 8px;" src="#GetPageResource('images/tagline.png')" alt="Logo PortalU" /></a>
   </div>
   
   <!-- SERVICE-NAVIGATION -->
@@ -142,12 +142,20 @@
     		#if ($elemSelected)
               <li>
 				<a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a>
-				<img src="#GetPageResource('images/mainnav_seperator.png')">
+				#if($velocityCount != $_menu.elements.size())
+					<img style="padding:2px 0px 0px 0px" src="#GetPageResource('images/mainnav_seperator.png')">
+				#else
+					<img style="padding:2px 0px 0px 0px" src="#GetPageResource('images/mainnav_seperator_blank.png')">
+				#end
 			  </li>
             #else
               <li>
 				<a href="$tabUrl" title="$tabTitle">$tabName</a>
-				<img src="#GetPageResource('images/mainnav_seperator.png')">
+				#if($velocityCount != $_menu.elements.size())
+					<img style="padding:2px 0px 0px 0px" src="#GetPageResource('images/mainnav_seperator.png')">
+				#else
+					<img style="padding:2px 0px 0px 0px" src="#GetPageResource('images/mainnav_seperator_blank.png')">
+				#end
 			  </li>
 			#end
 		#end

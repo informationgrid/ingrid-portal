@@ -3,7 +3,7 @@ a.help
 { display: block; }
 
 a.help:link, a.help:visited 
-{ width: 21px; height: 20px; background-image: url(../images/icon-help.png); }
+{ width: 21px; height: 20px; background-image: url(../images/icon-help.png); margin:3px 5px 2px 2px; }
 
 a.help:hover 
 { width: 21px;  max-height: 20px; background-image: url(../images/icon-help-hover.png); }

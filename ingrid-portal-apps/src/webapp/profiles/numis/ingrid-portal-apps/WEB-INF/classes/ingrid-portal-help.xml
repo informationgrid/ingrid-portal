@@ -7,7 +7,7 @@
             <content>
                 <ul>
                     <li>
-                        <a href="help.psml?hkey=about-1">Über den NUMIS</a>
+                        <a href="help.psml?hkey=about-1">Über NUMIS</a>
                     </li>
                     <li>
                         <a href="help.psml?hkey=search-1">Suche</a>
@@ -44,9 +44,9 @@
         </section>
     </chapter>
     <chapter>
-        <header>Über den NUMIS</header>
+        <header>Über NUMIS</header>
         <section help-key="about-1">
-            <header>Über den NUMIS</header>
+            <header>Über NUMIS</header>
             <content>
                
             <p>Willkommen beim NUMIS®, dem Metadatenportal der Freien und Hansestadt Hamburg. Wer im Bereich der hamburgischen Verwaltung nach Daten sucht, hat mit dem NUMIS® heute ein praktisches, umfassendes Hilfsmittel, mit dem Antworten auf viele Fragen zu finden sind: </p>
@@ -827,7 +827,7 @@
                 <p>Die Datenangebote im NUMIS stammen von Behörden und
                     Dienststellen der Freien und Hansestadt Hamburg.  
                     Theoretisch besteht die Möglichkeit, weitere Datenangebote
-                    anderer Bundesländer und/oder die des Bundes in den NUMIS zu integrieren. 
+                    anderer Bundesländer und/oder die des Bundes in NUMIS zu integrieren. 
                     Dieses ist jedoch zurzeit nicht gewollt. Insofern ist die
                     Einschränkung der Suche auf bestimmte Länder bzw. den Bund für den 
                     NUMIS nutzlos.</p>
@@ -1321,7 +1321,7 @@
             <content>
                 <p>Neben den in der Hauptergebnisliste eingebunden Meta- und
                     Fachinformationssystemen können auch weitere
-                    Informationssysteme über den NUMIS abgefragt werden. Die
+                    Informationssysteme über NUMIS abgefragt werden. Die
                     Schnittstellen dieser Systeme erlauben keine Einbindung der
                     Suchergebnisse in die gewichtete Hauptergebnisliste. Die
                     Suchergebnisse werden daher in einer getrennten Liste nach

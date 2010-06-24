@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<folder>
+  <title>Root Folder</title>  
+  <metadata name="title" xml:lang="fr">Répertoire racine</metadata>
+  <metadata name="title" xml:lang="es">Carpeta raiz</metadata>
+
+  <menu name="service-menu">
+    <options>/default-page.psml</options>
+    <separator>
+      <text>separator1</text>
+    </separator>
+    <options>/service-myportal.psml</options>
+    <separator>
+      <text>separator2</text>
+    </separator>
+    <options>/service-sitemap.psml</options>
+    <separator>
+      <text>separator2</text>
+    </separator>
+    <options>/help.psml</options>
+    <separator>
+      <text>separator2</text>
+    </separator>
+    <options>/service-contact.psml</options> 
+    <separator>
+      <text>separator1</text>
+    </separator>
+    <options>/language.link</options>
+  </menu>
+
+  <menu name="footer-menu">
+    <options>/disclaimer.psml</options>
+    <separator>
+      <text>separator1</text>
+    </separator>
+    <options>/privacy.psml</options>
+    <separator>
+      <text>separator1</text>
+    </separator>
+    <options>/webmaster.link</options>
+  </menu>
+
+
+  <menu name="main-menu">
+    <options>/main-search.psml</options>
+    <options>/main-environment.psml</options>
+    <options>/main-measures.psml</options>
+    <options>/main-service.psml</options>
+    <options>/main-maps.psml</options>
+    <options>/main-chronicle.psml</options>
+    <options>/main-about.psml</options>
+    <options>/administration</options>
+    <options>/mdek</options>
+<!--
+    <options>/Administrative</options>
+-->
+  </menu>
+
+  <menu name="sub-menu-search">
+    <options>/main-search.psml</options>
+    <options>/search-catalog/search-catalog-hierarchy.psml</options>
+  </menu>
+  
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</folder>
