@@ -3,7 +3,7 @@
 
 <div class="section">
 	<div class="optional-links" style="margin: 0 0 0 8px">
-		<img alt="aktiver Link" src="/ingrid-portal-apps/images/icn_down.gif"/>
+		<img alt="aktiver Link" src="/ingrid-portal-apps/images/icn_maps_save.gif"/>
 			#if($logged)
 				#set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-maps.psml#formSaveMapUrl"))
 				<a href="$link">$MESSAGES.getString("maps.save.wmc")</a>
