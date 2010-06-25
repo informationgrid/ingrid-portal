@@ -35,7 +35,9 @@
     		</div>
     		#end
     		<div class="resultset">
-    		  #if($rs.type == "detail-style")
+			  #if($rs.url)
+    			  <span class="result_title"><strong><a href="$rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title)</a></strong></span>
+    		  #elseif($rs.type == "detail-style")
     		    #if($rs.udk_class)
     		      #set($udkObjClassNameKey = "udk_obj_class_name_$rs.udk_class")
     		      #set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
@@ -52,7 +54,7 @@
     			  #end
     		    #end
               #else
-    			  <span class="result_title"><strong><a href="$rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title)</a></strong></span>
+    			  <span class="result_title"><strong>#renderTitle($rs.title)</strong></span>
               #end
               #if ($rs.abstract)
                 <p class="result_description">

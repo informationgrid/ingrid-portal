@@ -191,6 +191,8 @@ public class QueryResultPostProcessor {
                         processDSCHit(hit, detail, selectedDS);
                     } else if (tmpString.equals("de.ingrid.iplug.csw.CSWPlug")) {
                         processDSCHit(hit, detail, selectedDS);
+                    } else if (tmpString.equals("de.ingrid.iplug.csw.dsc.index.DSCSearcher")) {
+                        processDSCHit(hit, detail, selectedDS);
 
                     // JUST FOR TESTING, SHOULD NEVER BE UNRANKED !
                     // Times have changed!!!
