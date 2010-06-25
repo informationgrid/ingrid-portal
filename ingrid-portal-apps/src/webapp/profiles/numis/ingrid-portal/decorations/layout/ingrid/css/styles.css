@@ -9,7 +9,7 @@
   standard styles 
 *********************************************************************/
 
-body { padding: 0; margin: 0; color: #333333; background-color: #FFFFFF; font-family: Arial, Verdana, Helvetica, sans-serif; line-height: 100%; }
+body { padding: 0; margin: 0; color: #333333; background-color: #FFFFFF; font-family: Arial, Verdana, Helvetica, sans-serif; }
 
 img { border:0; }
 span.icon { margin-right:4px; margin-top:5px; float:left; }
@@ -19,7 +19,7 @@ span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px
 span.normaltext { font-weight:normal; text-transform:none; }
 span.smaller {font-size: 83%}
 ul { list-style-type:square; padding-left:0; margin: 0 0 1em 30px; }
-p { margin-top:0; margin-bottom:1em; font-size:70%}
+p { margin-top:0; margin-bottom:1em; font-size:75%}
 strong {font-weight:bold}
 
 div.line { border: 0; background-color: #CCCCCC; height: 1px; margin:10px 0 0 0; padding:0 }
@@ -33,7 +33,7 @@ div.line_form * { display: none;}
 
 a,a:link { color: #e0003c; text-decoration: none; }
 a:visited { color: #e0003c; }
-a:hover { color: #111111; text-decoration: none; }
+a:hover { color: #333333; text-decoration: none; }
 a:focus { color: #111111; text-decoration: none; }
 a:active { color: #111111; text-decoration: none; }
 a.selected { font-weight:bold; }
@@ -179,7 +179,7 @@ div#subnav ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:b
 div#subnav ul li a,
 div#subnav ul li a:link,
 div#subnav ul li a:visited,
-div#subnav ul li a:active {text-decoration:none; color:#FFFFFF; padding:5px 5px 5px 5px;}  
+div#subnav ul li a:active {color:#FFFFFF; padding:5px 5px 5px 5px;vertical-align:middle;}  
 div#subnav ul li a:hover, 
 div#subnav ul li a:focus {color:#FFFFFF;text-decoration:none; background:url(../images/background_subnav_hover.png); padding:5px 5px 5px 5px; }
 
@@ -234,7 +234,7 @@ div.themen_image { margin:0; padding:4px 14px 0 0; float:left; }
 
 div.section { margin: 0 0 0px 0; padding:0; }
 div.section p a { text-decoration:none; }
-div.section div p a { text-decoration:none; }
+div.section div p a { font-size: 12px; }
 div.section-header { margin-top:0; padding:0; }
 div.section-header h1 { float:left;}
 div.section-header span.portlet_info { float:right; font-size:80%}
@@ -254,8 +254,8 @@ div.section ul.catalog span.separator { background: url(../images/list_dot.gif) 
 div.section ul.catalog li a { white-space:nowrap; padding-left:1em; padding-right:0.5em; background: url(../images/list_dot.gif) no-repeat top left; }
 div.section ul.catalog li { border:1px solid red; background: url(../images/list_dot.gif) no-repeat bottom left; display: inline; padding-left:1em; padding-right:0.5em}
 */
-div.section ul li { font-size:83%}
-div.section ol li { font-size:83%}
+div.section ul li { font-size:100%}
+div.section ol li { font-size:100%}
 
 div.section ul.innermenu {list-style: none; margin: 0 0 0 0.0em;}
 div.section ul.innermenu li { margin: 0 0 0.3em 0;padding-left: 20px;background-image:url("../images/icn_down.gif");background-repeat: no-repeat;background-position: 0 .15em; }
@@ -357,14 +357,14 @@ h3#search_detail {  text-decoration:underline; margin-top:1em; }
 *********************************************************************/
 
 div.portlet { margin-bottom:10px; padding:0; font-size: 12px; }
-div.portlet p { font-size:80%; line-height:140%;}
+div.portlet p { font-size:100%; line-height:140%;}
 div.portlet p.hitrow { font-size:83%; line-height:140%;}
 div.portlet ul { margin: 0 0 -5px 14px;}
 
 /* n�tig fuer Firefox: sonst f�llt Link aus Portlet, vgl. Einstellungen */
 div.portlet .clearer { clear:both; display:block; height:1px; line-height: 0px; font-size: 1px; margin:0; padding:0; }
 
-div.portlet .iconLink a { float:left; line-height:170%	}
+div.portlet .iconLink a { float:left; line-height:140%	}
 div.portlet .link_descr { margin:0px 0px 0px 15px; }
 
 div.portlet div.resultset p.result_description { font-size:65%; margin: 10px 0px 0px 0px; line-height:120%;}
@@ -379,7 +379,7 @@ div.portlet div.section-header { min-height:1em; padding: 0.175em 0em 0.05em 0.5
 /* IE6, 5 bugfix. sets hasLayout property and fixes http://jira.media-style.com/browse/INGRID-1468 */
 * html div.portlet div.section-header {height:1%;}
 
-div.portlet div.section-header h1 { color: #555; font-size: 12px; text-transform: uppercase; }
+div.portlet div.section-header h1 { color: #555555; font-size: 12px; text-transform: uppercase; }
 div.portlet div.section-header span.portlet_info { float:right; color: #FFFFFF;font-size:75%; font-weight:bold; line-height:100%; margin: 0 0 0 0;}
 div.portlet div.section-header a { color: #FFFFFF;}
 /* because of problems in IE rendering underline and background ! */
@@ -400,7 +400,7 @@ div.formheader {height: 1em; padding: 4px 14px 2px 8px; color: #FFFFFF; font-siz
 div.formheader span.portlet_info { float:right; color: #FFFFFF; line-height:100%; margin: 0 0 0 0;}
 div.formheader span.portlet_info a { color: #FFFFFF; }
 
-div.formbody {padding: 4px 12px 8px 12px; margin:0px 0px 0px 0px; border: 1px solid #e4e4e2; background-color: #f6f6f6;}
+div.formbody {padding: 4px 12px 8px 12px; margin-bottom:0px; border: 1px solid #e4e4e2; background-color: #f6f6f6;}
 div.formbody_border_style {border-bottom: 0px solid #e4e4e2;}
 /* Sonderbehandlung f�r IE: dieser �bernimmt die Farbe des �bergeordneten divs nicht f�r rollover Link Auszeichnungen 
    siehe auch http://jira.media-style.com/browse/INGRID-192
@@ -412,7 +412,7 @@ div.formbody p { padding:0; margin: 0.5em  0.0em; }
 div.formbody .nospace { padding-bottom:0; margin-bottom:0; }
 div.formbody h3 { font-weight:bold; margin: 0.7em 0; }
 div.formbody h2 { font-weight:bold; margin-top: 0.8em; }
-div.formbody p.datasource_selection {font-size:70%}
+div.formbody p.datasource_selection {font-size:75%}
 div.formbody div.marginleft {margin-left:4em}
 div.formbody .indent1_checkbox {margin-left:2em}
 div.formbody .indent2_checkbox {margin-left:4em}
@@ -424,9 +424,9 @@ div.formbody select.info_provider  { width:22em; border: 0px inset #FFFFFF; padd
 div.formbody select.group_by { width:15em;}
 
 div.formbody input.radio {margin: 10px 0px 10px 0px; padding: 4px 4px 4px 4px; line-height: 130%; }
-div.formbody .inputstyle {border: 1px inset #FFFFFF;}
+div.formbody .inputstyle {border: 1px solid #AAAAAA;}
 div.formbody .inputstyleerror {border: 1px solid #FF0000; padding: 2px 4px 2px 4px; margin-right:6px;}
-div.formbody .inputstyletext {border: 1px inset #FFFFFF; padding: 2px 4px 2px 4px; margin-right:6px;}
+div.formbody .inputstyletext {border: 1px solid #AAAAAA; padding: 2px 4px 2px 4px; margin-right:6px;}
 div.formbody input.large {width:15em;}
 
 div.formbody textarea {font: normal 83% Verdana, Arial, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:4px; }
@@ -445,15 +445,15 @@ div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px
 div.formfooter_border_style {border-top: 0px solid #E4E4E2;}
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 
-input.btn { color: #fff; border: 1px solid #e0003c; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px}
+input.btn { color: #fff; border: 1px solid #e0003c; background:url(../images/background_btn.png); font-size: 11px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px}
 input.btn:hover { color: #fff; border: 1px solid #e0003c; background:url(../images/background_btn_hover.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px}
 input.btn_disable { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border: solid 1px #e0003c;}
 
 label.left {width:5.5em; float:left;}
 label.login {width:8em; float:left;}
-div.optional-links { margin:5px 0 0 0 ; padding:0; }
+div.optional-links { margin:0; padding:0; }
 div.optional-links img, ul.optional-links img { margin:0; padding:0; }
-div.optional-links a, ul.optional-links a, div.optional-links span { margin-right:1em; font-size:70%; }
+div.optional-links a, ul.optional-links a, div.optional-links span { margin-right:1em; font-size: 11px; }
 
 ul.optional-links ul.optional-links { margin: 0 0 0 12px; padding:0; }
 ul.optional-links { list-style:none; margin: 0 0 1.2em 0; }
@@ -484,8 +484,8 @@ div.formbody input.qrystr {width: 30em; font-size: 83%; line-height: 100%;}
 
 /*** Formular Erweiterte Suche ***/
 
-div.formbody div.qrytxt {width:34.5em; padding: 5px 5px 5px 5px;text-align:right;}
-div.formbody textarea.qrytxt { width: 100%;font: normal 83% Verdana, Arial, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:2px; margin:0 0 5px 0; }
+div.formbody div.qrytxt {width:34.5em; padding-top:7px; text-align:right;}
+div.formbody textarea.qrytxt { width: 100%;font: normal 83% Verdana, Arial, sans-serif; line-height: 130%; border: 1px solid #AAAAAA; padding:2px; margin:0 0 5px 0; }
 div.formbody input.search_term { height:auto;width: 100%;font-size: 83%;}
 div.formbody div.innerform {width:34.5em;}
 div.formbody input.thesaurus_term {width: 45%;font-size: 83%; line-height: 120%;}
@@ -513,11 +513,11 @@ div.formbody .snslogo_margin {margin-top: 8px; }
   footer block styles  
 *********************************************************************/
 
-div#footercontainer { background: url(../images/logo-numis_footer.png) no-repeat scroll 30px 20px transparent; padding: 0px 0px 0px 112px; }
-#footercontent { font-size: 11px; width:72em; padding-left:46px;}
+div#footercontainer { background: url(../images/logo-numis_footer.png) no-repeat scroll 20px 0px transparent; }
+#footercontent { font-size: 11px; width:76.4em; margin-left:108px;}
 
-div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF;}
-div#footermarginal { background: #999999; padding-right: 14px; text-align:right; font-size: 65%; line-height: 1px;}
+div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0px; background: #FFFFFF;}
+div#footermarginal { background:url("../images/footer_doppellinie.png") repeat scroll 0 0 transparent; height:2px; }
 
 div#finalfootercontainer { float: left; width: 59.5em; }
 div#finalfooter { padding-left:112px; padding-bottom:20px; padding-top:0px; height:11px; font-size:65%; line-height:120%; color:#000000; }

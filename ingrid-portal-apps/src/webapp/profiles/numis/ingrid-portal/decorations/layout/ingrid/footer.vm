@@ -19,10 +19,11 @@
   #includeFooterNavigation($footerMenu)
 #end
 <br>
-    Copyright &copy; Niedersächsisches Ministerium für Umwelt und Klimaschutz<img align="right" src="#GetPageResource('images/logo-niedersachsen.png')" alt="Niedersachsen" /></br><br />
-
-    Alle Rechte vorbehalten<br /><br />
-  
+    Copyright &copy; Niedersächsisches Ministerium für Umwelt und Klimaschutz
+	<img align="right" src="#GetPageResource('images/logo-niedersachsen.png')" alt="Niedersachsen" />
+</br><br />
+    Alle Rechte vorbehalten
+	<br /><br />
 </div>
 </div>
 </div>
