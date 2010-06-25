@@ -129,11 +129,11 @@ div#servicenav { padding:0em 0em 0em 1em; background:url(../images/background_se
 #servicenav { font-size: 70%; }
 div#servicenav ul { list-style: none; padding:0; margin:0; }
 div#servicenav ul li { display:inline; }
-div#servicenav ul li a { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 11px 5px; }
+div#servicenav ul li a { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
 div#servicenav ul li a:link { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
 div#servicenav ul li a:visited { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
 div#servicenav ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
-div#servicenav ul li a:hover { text-decoration:none; color:#FFFFFF; background:url(../images/background_servicenav_hover.png); font-weight:normal; padding:1px 5px 6px 5px; }
+div#servicenav ul li a:hover { text-decoration:none; color:#FFFFFF; background:url(../images/background_servicenav_hover.png); font-weight:normal; padding:3px 5px 4px 5px; }
 
 select.language_switch_style {font-size:100%; background-color:#0066cc; color:#FFFFFF; }
 
