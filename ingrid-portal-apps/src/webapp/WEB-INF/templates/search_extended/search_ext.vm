@@ -41,6 +41,15 @@ $action.setParameter('action','doChangeDS')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.addresses')</a>	
 #end
 #end
+#if($enableDatasourceCatalog)
+&nbsp;
+#if($ds=="5")
+	<strong>$MESSAGES.getString('searchSimple.area.catalog')</strong>
+#else
+    $action.setParameter('ds','5')
+	<a href="$action">$MESSAGES.getString('searchSimple.area.catalog')</a>	
+#end
+#end
     	</p>
 		<div class="qrytxt">
 			<label class="hide" for="qrytxt">Suche: </label><textarea class="qrytxt" id="qrytxt" cols="20" rows="3" name="q" 

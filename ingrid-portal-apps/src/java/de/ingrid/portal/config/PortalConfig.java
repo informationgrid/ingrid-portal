@@ -79,6 +79,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
 	public static final String PORTAL_ENABLE_DATASOURCE_LAWS = "portal.enable.datasource.laws";
     
+	public static final String PORTAL_ENABLE_DATASOURCE_CATALOG = "portal.enable.datasource.catalog";
+
     public static final String PORTAL_SEARCH_RESTRICT_PARTNER = "portal.search.restrict.partner";
     
     public static final String PORTAL_SEARCH_RESTRICT_PARTNER_LEVEL = "portal.search.restrict.partner.level";

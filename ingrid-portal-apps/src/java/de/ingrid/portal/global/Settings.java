@@ -109,7 +109,8 @@ public class Settings {
     public final static String QVALUE_DATATYPE_AREA_ENVINFO = "default";
     public final static String QVALUE_DATATYPE_AREA_ADDRESS = "address";
     public final static String QVALUE_DATATYPE_AREA_RESEARCH = "research";
-	public static final String QVALUE_DATATYPE_AREA_LAW = "law";
+    public static final String QVALUE_DATATYPE_AREA_LAW = "law";
+    public static final String QVALUE_DATATYPE_AREA_CATALOG = "metadata";
     public final static String[] QVALUES_DATATYPE_AREAS_BASIC = new String[] {
     	QVALUE_DATATYPE_AREA_ENVINFO,
     	QVALUE_DATATYPE_AREA_ADDRESS,
@@ -347,6 +348,7 @@ public class Settings {
     public final static String PARAMV_DATASOURCE_ADDRESS = "2";
     public final static String PARAMV_DATASOURCE_RESEARCH = "3";
 	public final static String PARAMV_DATASOURCE_LAW = "4";
+	public final static String PARAMV_DATASOURCE_CATALOG = "5";
 
     // GROUPING VALUES
     public final static String PARAMV_GROUPING_OFF = "none";

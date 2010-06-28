@@ -15,26 +15,35 @@ $action.setParameter('action','doChangeDS')
     $action.setParameter('ds','1')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.envInfos')</a>	
 #end
+#if($enableDatasourceCatalog)
 <a style="color:#999999;">&nbsp;|&nbsp</a>
+#if($ds=="5")
+	<strong>$MESSAGES.getString('searchSimple.area.catalog')</strong>
+#else
+    $action.setParameter('ds','5')
+	<a href="$action">$MESSAGES.getString('searchSimple.area.catalog')</a>	
+#end
+#end
 #if($enableDatasourceLaws)
+<a style="color:#999999;">&nbsp;|&nbsp</a>
 #if($ds=="4")
 	<strong>$MESSAGES.getString('searchSimple.area.laws')</strong>
 #else
     $action.setParameter('ds','4')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.laws')</a>	
 #end
-<a style="color:#999999;">&nbsp;|&nbsp</a>
 #end
 #if($enableDatasourceResearch)
+<a style="color:#999999;">&nbsp;|&nbsp</a>
 #if($ds=="3")
 	<strong>$MESSAGES.getString('searchSimple.area.research')</strong>
 #else
     $action.setParameter('ds','3')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.research')</a>	
 #end
-<a style="color:#999999;">&nbsp;|&nbsp</a>
 #end
 #if($enableDatasourceAddresses)
+<a style="color:#999999;">&nbsp;|&nbsp</a>
 #if($ds=="2")
 	<strong>$MESSAGES.getString('searchSimple.area.addresses')</strong>
 #else

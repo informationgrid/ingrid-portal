@@ -41,6 +41,15 @@ $action.setParameter('action','doChangeDS')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.addresses')</a>	
 #end
 #end
+#if($enableDatasourceCatalog)
+&nbsp;
+#if($ds=="5")
+	<strong>$MESSAGES.getString('searchSimple.area.catalog')</strong>
+#else
+    $action.setParameter('ds','5')
+	<a href="$action">$MESSAGES.getString('searchSimple.area.catalog')</a>	
+#end
+#end
     	</p>
 #displayFormErrors()
       <label class="hide" for="qrystr">$MESSAGES.getString('searchSimple.query.search'): </label><input class="qrystr inputstyletext" type="text" id="qrystr" name="q" value="#getHTMLEscapedFieldValue('q')" 

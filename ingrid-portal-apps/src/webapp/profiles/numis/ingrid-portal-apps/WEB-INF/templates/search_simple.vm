@@ -14,6 +14,15 @@ $action.setParameter('action','doChangeDS')
     $action.setParameter('ds','1')
 	<a href="$action">$MESSAGES.getString('searchSimple.area.envInfos')</a>	
 #end
+#if($enableDatasourceCatalog)
+<a style="color:#999999;">&nbsp;|&nbsp</a>
+#if($ds=="5")
+	<strong>$MESSAGES.getString('searchSimple.area.catalog')</strong>
+#else
+    $action.setParameter('ds','5')
+	<a href="$action">$MESSAGES.getString('searchSimple.area.catalog')</a>	
+#end
+#end
 #if($enableDatasourceLaws)
 <a style="color:#999999;">&nbsp;|&nbsp</a>
 #if($ds=="4")

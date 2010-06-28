@@ -751,6 +751,9 @@ public class UtilsSearch {
             
             } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_LAW)) {
             	basicDatatypeForQuery = Settings.QVALUE_DATATYPE_AREA_LAW;
+            
+            } else if (selectedDS.equals(Settings.PARAMV_DATASOURCE_CATALOG)) {
+            	basicDatatypeForQuery = Settings.QVALUE_DATATYPE_AREA_CATALOG;
             }        	
         }
 

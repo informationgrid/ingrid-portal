@@ -324,6 +324,8 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                 PortalConfig.PORTAL_ENABLE_DATASOURCE_ADDRESSES, Boolean.TRUE));
         context.put("enableDatasourceLaws", PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_ENABLE_DATASOURCE_LAWS, Boolean.TRUE));
+        context.put("enableDatasourceCatalog", PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_DATASOURCE_CATALOG, Boolean.FALSE));
         
         super.doView(request, response);
     }
