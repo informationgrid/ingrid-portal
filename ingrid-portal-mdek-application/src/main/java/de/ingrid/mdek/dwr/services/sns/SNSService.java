@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
@@ -55,10 +56,11 @@ public class SNSService {
 	}
 
     public List<SNSTopic> getRootTopics() {
-    	log.debug("     !!!!!!!!!! thesaurusService.getHierarchyNextLevel() from null (toplevel)");
+    	Locale sessionLocale = MdekUtils.getLocaleFromSession();
+    	log.debug("     !!!!!!!!!! thesaurusService.getHierarchyNextLevel() from null (toplevel), " + sessionLocale.getLanguage());
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
     	
-    	TreeTerm[] treeTerms = thesaurusService.getHierarchyNextLevel(null, MdekUtils.getLocaleFromSession());
+    	TreeTerm[] treeTerms = thesaurusService.getHierarchyNextLevel(null, sessionLocale);
 
     	TreeSet<TreeTerm> orderedTreeTerms = new TreeSet<TreeTerm>(new TermComparator());
     	orderedTreeTerms.addAll(Arrays.asList(treeTerms));
@@ -75,10 +77,12 @@ public class SNSService {
     /** This one is only called with direction "down" in JSPs !!!
      * So we call thesaurusService.getHierarchyNextLevel() */
     public List<SNSTopic> getSubTopics(String topicID, long depth, String direction) {
-    	log.debug("     !!!!!!!!!! thesaurusService.getHierarchyNextLevel() from "+topicID+", "+depth+", "+direction+")");
+    	Locale sessionLocale = MdekUtils.getLocaleFromSession();
+    	log.debug("     !!!!!!!!!! thesaurusService.getHierarchyNextLevel() from "
+    		+topicID+", "+depth+", "+direction+", " + sessionLocale.getLanguage());
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
     	
-    	TreeTerm[] treeTerms = thesaurusService.getHierarchyNextLevel(topicID, MdekUtils.getLocaleFromSession());
+    	TreeTerm[] treeTerms = thesaurusService.getHierarchyNextLevel(topicID, sessionLocale);
 
     	TreeSet<TreeTerm> orderedTreeTerms = new TreeSet<TreeTerm>(new TermComparator());
     	orderedTreeTerms.addAll(Arrays.asList(treeTerms));
@@ -95,10 +99,12 @@ public class SNSService {
     /** This one is only called with direction "up" in JSPs !!!
      * So we call thesaurusService.getHierarchyPathToTop() */
     public List<SNSTopic> getSubTopicsWithRoot(String topicID, long depth, String direction) {
-    	log.debug("     !!!!!!!!!! thesaurusService.getHierarchyPathToTop() from "+topicID+", "+depth+", "+direction+")");
+    	Locale sessionLocale = MdekUtils.getLocaleFromSession();
+    	log.debug("     !!!!!!!!!! thesaurusService.getHierarchyPathToTop() from "
+    		+topicID+", "+depth+", "+direction+", " + sessionLocale.getLanguage());
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
     	
-    	TreeTerm lastTerm = thesaurusService.getHierarchyPathToTop(topicID, MdekUtils.getLocaleFromSession());
+    	TreeTerm lastTerm = thesaurusService.getHierarchyPathToTop(topicID, sessionLocale);
 
     	// Notice we have to build different structure for return list !
     	// parent is encapsulated in CHILD list on every level
@@ -134,10 +140,12 @@ public class SNSService {
      * @return the SNSTopic if it exists, null otherwise
      */
     public SNSTopic findTopic(String queryTerm) {
-    	log.debug("     !!!!!!!!!! thesaurusService.findTermsFromQueryTerm() from " + queryTerm);
+    	Locale sessionLocale = MdekUtils.getLocaleFromSession();
+    	log.debug("     !!!!!!!!!! thesaurusService.findTermsFromQueryTerm() from "
+    		+ queryTerm + ", EXACT, true, " + sessionLocale.getLanguage());
     	
     	Term[] terms = thesaurusService.findTermsFromQueryTerm(queryTerm,
-    			de.ingrid.external.ThesaurusService.MatchingType.EXACT, true, MdekUtils.getLocaleFromSession());
+    			de.ingrid.external.ThesaurusService.MatchingType.EXACT, true, sessionLocale);
 
     	SNSTopic result = null;
     	for (Term term : terms) {
@@ -156,10 +164,12 @@ public class SNSService {
      * @return All topics returned by the SNS, converted to SNSTopics 
      */
     public List<SNSTopic> findTopics(String queryTerm) {
-    	log.debug("     !!!!!!!!!! thesaurusService.findTermsFromQueryTerm() from " + queryTerm);
+    	Locale sessionLocale = MdekUtils.getLocaleFromSession();
+    	log.debug("     !!!!!!!!!! thesaurusService.findTermsFromQueryTerm() from "
+    		+ queryTerm + ", EXACT, true, " + sessionLocale.getLanguage());
     	
     	Term[] terms = thesaurusService.findTermsFromQueryTerm(queryTerm,
-    			de.ingrid.external.ThesaurusService.MatchingType.EXACT, true, MdekUtils.getLocaleFromSession());
+    			de.ingrid.external.ThesaurusService.MatchingType.EXACT, true, sessionLocale);
 
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	for (Term term : terms) {
@@ -177,9 +187,10 @@ public class SNSService {
      * @throws Exception if there was a connection/communication error with the SNS
      */
     public SNSTopic getPSI(String topicId) throws Exception {
-    	log.debug("     !!!!!!!!!! thesaurusService.getTerm() from " + topicId);
+    	Locale sessionLocale = MdekUtils.getLocaleFromSession();
+    	log.debug("     !!!!!!!!!! thesaurusService.getTerm() from " + topicId + ", " + sessionLocale.getLanguage());
     	
-    	Term term = thesaurusService.getTerm(topicId, MdekUtils.getLocaleFromSession());
+    	Term term = thesaurusService.getTerm(topicId, sessionLocale);
 
     	SNSTopic result = null;
 		if (term != null) {
@@ -196,9 +207,10 @@ public class SNSService {
      * @throws Exception if there was a connection/communication error with the SNS
      */
     public SNSLocationTopic getLocationPSI(String topicId) throws Exception {
-    	log.debug("     !!!!!!!!!! gazetteerService.getLocation() from " + topicId);
+    	Locale sessionLocale = MdekUtils.getLocaleFromSession();
+    	log.debug("     !!!!!!!!!! gazetteerService.getLocation() from " + topicId + ", " + sessionLocale.getLanguage());
     	
-    	Location location = gazetteerService.getLocation(topicId, MdekUtils.getLocaleFromSession());
+    	Location location = gazetteerService.getLocation(topicId, sessionLocale);
 
     	SNSLocationTopic result = null;
 		if (location != null) {
@@ -214,10 +226,12 @@ public class SNSService {
     }
 
     private List<SNSTopic> getSimilarTerms(String[] queryTerms, int numResults) {
-    	log.debug("     !!!!!!!!!! thesaurusService.getSimilarTermsFromNames()");
+    	Locale sessionLocale = MdekUtils.getLocaleFromSession();
+    	log.debug("     !!!!!!!!!! thesaurusService.getSimilarTermsFromNames() from " +
+    			queryTerms + ", true, " + sessionLocale.getLanguage());
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	
-    	Term[] terms = thesaurusService.getSimilarTermsFromNames(queryTerms, true, MdekUtils.getLocaleFromSession());
+    	Term[] terms = thesaurusService.getSimilarTermsFromNames(queryTerms, true, sessionLocale);
 
     	int count = 0;
     	for (Term term : terms) {
@@ -252,11 +266,13 @@ public class SNSService {
     }
 
     public List<SNSTopic> getTopicsForText(String queryTerm, int maxNum) {
-    	log.debug("     !!!!!!!!!! thesaurusService.getTermsFromText()");
+    	Locale sessionLocale = MdekUtils.getLocaleFromSession();
+    	log.debug("     !!!!!!!!!! thesaurusService.getTermsFromText() from " +
+    			queryTerm + ", " + MAX_ANALYZED_WORDS + ", false, " + sessionLocale.getLanguage());
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	
     	Term[] terms = thesaurusService.getTermsFromText(queryTerm, MAX_ANALYZED_WORDS,
-    			false, MdekUtils.getLocaleFromSession());
+    			false, sessionLocale);
 
     	int num = 0;
     	for (Term term : terms) {
@@ -276,9 +292,11 @@ public class SNSService {
 
     /** Returns the topicID encapsulated in a SNSTopic with the parents, children and synonyms attached */
     public SNSTopic getTopicsForTopic(String topicId) {
-    	log.debug("     !!!!!!!!!! thesaurusService.getRelatedTermsFromTerm() from " + topicId);
+    	Locale sessionLocale = MdekUtils.getLocaleFromSession();
+    	log.debug("     !!!!!!!!!! thesaurusService.getRelatedTermsFromTerm() from "
+    			+ topicId + ", " + sessionLocale.getLanguage());
     	
-    	RelatedTerm[] relatedTerms = thesaurusService.getRelatedTermsFromTerm(topicId, MdekUtils.getLocaleFromSession());
+    	RelatedTerm[] relatedTerms = thesaurusService.getRelatedTermsFromTerm(topicId, sessionLocale);
 
     	SNSTopic result = null;
     	if (relatedTerms.length > 0) {
@@ -319,12 +337,13 @@ public class SNSService {
     	de.ingrid.external.GazetteerService.MatchingType matching =
     		getGazetteerMatchingType(searchTypeStr);
     	QueryType queryType = getGazetteerQueryType(pathStr);
-
+    	Locale sessionLocale = MdekUtils.getLocaleFromSession();
+    	
     	log.debug("     !!!!!!!!!! gazetteerService.findLocationsFromQueryTerm() " + queryTerm +
-    			" " + queryType + " " + matching);
+    			" " + queryType + " " + matching+ ", " + sessionLocale.getLanguage());
 
     	Location[] locations = gazetteerService.findLocationsFromQueryTerm(queryTerm, queryType,
-    			matching, MdekUtils.getLocaleFromSession());
+    			matching, sessionLocale);
 
     	List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
     	for (Location location : locations) {
@@ -339,9 +358,11 @@ public class SNSService {
 
     /** Returns all related locations including the one with passed id ! */
     public List<SNSLocationTopic> getLocationTopicsById(String topicID) {
-    	log.debug("     !!!!!!!!!! gazetteerService.getRelatedLocationsFromLocation() from " + topicID);
+    	Locale sessionLocale = MdekUtils.getLocaleFromSession();
+    	log.debug("     !!!!!!!!!! gazetteerService.getRelatedLocationsFromLocation() from "
+    			+ topicID + ", true, " + sessionLocale.getLanguage());
     	
-    	Location[] locations = gazetteerService.getRelatedLocationsFromLocation(topicID, true, MdekUtils.getLocaleFromSession());
+    	Location[] locations = gazetteerService.getRelatedLocationsFromLocation(topicID, true, sessionLocale);
 
     	List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
     	for (Location location : locations) {
@@ -362,46 +383,53 @@ public class SNSService {
    			throw new RuntimeException(ERROR_SNS_INVALID_URL);
     	}
 		de.ingrid.external.FullClassifyService.FilterType filterType = getFullClassifyFilterType(filter);
+    	Locale sessionLocale = MdekUtils.getLocaleFromSession();
 
-    	log.debug("     !!!!!!!!!! fullClassifyService.autoClassifyURL() " + url + " " + filter + " " + lang);
+    	log.debug("     !!!!!!!!!! fullClassifyService.autoClassifyURL() " + url + ", " + filter + ", " + sessionLocale.getLanguage());
     	FullClassifyResult classifyResult =
-    		fullClassifyService.autoClassifyURL(url, analyzeMaxWords, ignoreCase, filterType, MdekUtils.getLocaleFromSession());
+    		fullClassifyService.autoClassifyURL(url, analyzeMaxWords, ignoreCase, filterType, sessionLocale);
 
     	SNSTopicMap result = new SNSTopicMap();
 		result.setIndexedDocument(new IndexedDocument(classifyResult.getIndexedDocument()));
 
 		// terms
     	List<SNSTopic> thesaTopics = new ArrayList<SNSTopic>();
-    	int num = 0;
-    	for(Term term : classifyResult.getTerms()) {
-    		thesaTopics.add(convertTermToSNSTopic(term));
-    		num++;
-    		if (num == maxNum) {
-    			break;
-    		}
+    	if (classifyResult.getTerms() != null) {
+        	int num = 0;
+        	for (Term term : classifyResult.getTerms()) {
+        		thesaTopics.add(convertTermToSNSTopic(term));
+        		num++;
+        		if (num == maxNum) {
+        			break;
+        		}
+        	}    		
     	}
     	result.setThesaTopics(thesaTopics);
 
     	// locations
     	List<SNSLocationTopic> locationTopics = new ArrayList<SNSLocationTopic>();
-    	num = 0;
-    	for(Location location : classifyResult.getLocations()) {
-        	SNSLocationTopic t = convertLocationToSNSLocationTopic(location);
-    		// returns null for expired locations
-        	if (t != null) {
-        		locationTopics.add(t);
-        		num++;
-        		if (num == maxNum) {
-        			break;
-        		}
-        	}
+    	if (classifyResult.getLocations() != null) {
+        	int num = 0;
+        	for (Location location : classifyResult.getLocations()) {
+            	SNSLocationTopic t = convertLocationToSNSLocationTopic(location);
+        		// returns null for expired locations
+            	if (t != null) {
+            		locationTopics.add(t);
+            		num++;
+            		if (num == maxNum) {
+            			break;
+            		}
+            	}
+        	}    		
     	}
     	result.setLocationTopics(locationTopics);
 
     	// events
     	List<SNSEventTopic> eventTopics = new ArrayList<SNSEventTopic>();
-    	for(Event event : classifyResult.getEvents()) {
-    		eventTopics.add(convertEventToSNSEventTopic(event));
+    	if (classifyResult.getEvents() != null) {
+        	for (Event event : classifyResult.getEvents()) {
+        		eventTopics.add(convertEventToSNSEventTopic(event));
+        	}    		
     	}
     	result.setEventTopics(eventTopics);
 
