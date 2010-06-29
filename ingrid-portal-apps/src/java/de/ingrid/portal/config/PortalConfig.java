@@ -125,6 +125,8 @@ public class PortalConfig extends PropertiesConfiguration {
 	
 	public static final String COMPONENT_MONITOR_UPDATE_ALERT_EMAIL_SUBJECT = "component.monitor.update.alert.email.subject";
 	
+	public static final String PORTAL_ENABLE_SEARCH_SEPERATOR = "portal.enable.search.seperator";
+	
 	// contains the short version of all supported languages
 	public static final String LANGUAGES_SHORT = "languages.short";
 	

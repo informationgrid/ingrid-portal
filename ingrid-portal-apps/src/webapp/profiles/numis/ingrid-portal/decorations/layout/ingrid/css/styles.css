@@ -37,6 +37,8 @@ a:hover { color: #333333; text-decoration: none; }
 a:focus { color: #111111; text-decoration: none; }
 a:active { color: #111111; text-decoration: none; }
 a.selected { font-weight:bold; }
+/*search_seperator style used at profile NUMIS*/
+a.search_seperator{ color:#999999; }
 
 h1 { color: #999; font-size: 21px; font-weight: normal; line-height: 27px; margin: 0 0 0.5em 0; text-transform:uppercase; }
 h2 { font-family: Arial, Verdana, Helvetica, sans-serif; font-size:90%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
