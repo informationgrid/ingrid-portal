@@ -46,8 +46,9 @@
         <version>2.1-alpha-2</version>
         <configuration>
           <warSourceExcludes>test_*.*,dev_*.*</warSourceExcludes>
-          <!-- NOTICE: EXCLUDE log4j.jar and commons-logging.jar in war ! has to be provided by tomcat (tomcat logging) ! -->
-          <packagingExcludes>**/ingrid-utils*.jar,**/ingrid-mdek-api*.jar,**/log4j*.jar,**/commons-logging*.jar,**/ehcache*.jar,**/servlet-api*.jar,**/jetspeed-api*.jar</packagingExcludes>
+          <!-- NOTICE: EXCLUDE log4j.jar in war ! has to be provided by tomcat (tomcat logging) ! -->
+          <!-- BUT INCLUDE commons-logging, so log4j.props are read from webapp ! -->
+          <packagingExcludes>**/ingrid-utils*.jar,**/ingrid-mdek-api*.jar,**/log4j*.jar,**/ehcache*.jar,**/servlet-api*.jar,**/jetspeed-api*.jar</packagingExcludes>
           <!-- ALSO CREATE JAR !!! NO WAY TO ADD NO CLASSIFIER TO NAME OF JAR, DEFAULT IS "classes" -> WILL BE ADDED -->
           <attachClasses>true</attachClasses>
           <!-- CONFIG-FILES needed at runtime in classes-path-->
