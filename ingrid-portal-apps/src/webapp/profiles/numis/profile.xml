@@ -178,5 +178,11 @@
         <execute>
             <![CDATA[DELETE FROM ingrid_measures_rubric WHERE query_value='radiation';]]>
         </execute>
+		<execute>
+            <![CDATA[UPDATE folder_menu SET ELEMENT_ORDER='3' WHERE OPTIONS='/main-service.psml';]]>
+        </execute>
+		<execute>
+            <![CDATA[UPDATE folder_menu SET ELEMENT_ORDER='1' WHERE OPTIONS='/main-environment.psml';]]>
+        </execute>
     </sql>
 </profile>

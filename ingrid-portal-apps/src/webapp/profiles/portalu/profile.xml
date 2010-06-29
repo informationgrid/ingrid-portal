@@ -176,5 +176,11 @@
         <execute>
             <![CDATA[INSERT INTO ingrid_measures_rubric (id\, form_value\, query_value\, sortkey) VALUES (1\, 'str'\, 'radiation'\, 1);]]>
         </execute>
+		<execute>
+            <![CDATA[UPDATE folder_menu SET ELEMENT_ORDER='1' WHERE OPTIONS='/main-service.psml';]]>
+        </execute>
+		<execute>
+            <![CDATA[UPDATE folder_menu SET ELEMENT_ORDER='3' WHERE OPTIONS='/main-environment.psml';]]>
+        </execute>
     </sql>
 </profile>
