@@ -36,6 +36,8 @@ a:visited { color: #176798; }
 a:hover, a:focus { color: #111111; text-decoration: underline; }
 a:active { color: #111111; text-decoration: none; }
 a.selected { font-weight:bold; }
+/*search_seperator style used at profile NUMIS*/
+a.search_seperator{ }
 
 h1 { font-family: Verdana, Arial, Helvetica, sans-serif ; font-size:105%; font-weight:bold; line-height:120%; margin-top:0; margin-bottom:1em; }
 h2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:90%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
@@ -82,7 +84,7 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
   identity area styles
 *********************************************************************/
 
-div#identity { padding:0; margin:0; height: 80px; width:59.5em; background-color:#68A5D2; overflow:visible; }
+div#identity { padding:0; margin:0; height:5em; width:59.5em; background-color:#68A5D2; overflow:visible; }
 div.motiv_blank { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
 div.motiv_start { background-image:url(../images/01_motiv_start.gif); background-repeat:no-repeat; }
 div.motiv_suche { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
@@ -131,6 +133,9 @@ div#servicenav ul { list-style: none; padding: 0; margin: 0; }
 div#servicenav ul li { display:inline; }
 div#servicenav ul li a.selected { text-decoration:none; color:#111111; font-weight:normal;}
 div#servicenav ul li a.selected:hover { text-decoration:underline; color:#111111; font-weight:normal; }
+
+/*style to change language switch style (use in profiles)*/
+select.language_switch_style {}
 
 /********************************************************************
   main navigation styles
@@ -395,6 +400,9 @@ div.formheader span.portlet_info { float:right; color: #FFFFFF; line-height:100%
 div.formheader span.portlet_info a { color: #FFFFFF; }
 
 div.formbody {padding: 4px 12px 8px 12px; margin:1px 0px 1px 0px; border: 1px solid #111111; background-color: #F4F4F4;}
+/* use formbody_border_style if need to change border style in profile (e.g. NUMIS)*/
+div.formbody_border_style {}
+
 /* Sonderbehandlung f�r IE: dieser �bernimmt die Farbe des �bergeordneten divs nicht f�r rollover Link Auszeichnungen 
    siehe auch http://jira.media-style.com/browse/INGRID-192
 */
@@ -420,6 +428,8 @@ div.formbody input.radio {margin: 10px 0px 10px 0px; padding: 4px 4px 4px 4px; l
 div.formbody .inputstyle {border: 1px inset #FFFFFF;}
 div.formbody .inputstyleerror {border: 1px solid #FF0000; padding: 2px 4px 2px 4px; margin-right:6px;}
 div.formbody .inputstyletext {border: 1px inset #FFFFFF; padding: 2px 4px 2px 4px; margin-right:6px;}
+/*IE: Add font-family to get same width for user and password input at login page*/
+div.formbody .inputtextfont {font-family:Verdana, Arial, sans-serif;}
 div.formbody input.large {width:15em;}
 
 div.formbody textarea {font: normal 83% Verdana, Arial, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:4px; }
@@ -439,6 +449,9 @@ div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 
 input.btn { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border: solid 1px #000000; background-color: #176798; cursor: pointer; }
 input.btn_disable { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border: solid 1px #000000;}
+/*Use only at profile NUMIS*/
+input.btn_admin { }
+input.btn_admin:hover { }
 
 label.left {width:5.5em; float:left;}
 label.login {width:8em; float:left;}

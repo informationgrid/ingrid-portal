@@ -428,6 +428,8 @@ div.formbody input.radio {margin: 10px 0px 10px 0px; padding: 4px 4px 4px 4px; l
 div.formbody .inputstyle {border: 1px inset #FFFFFF;}
 div.formbody .inputstyleerror {border: 1px solid #FF0000; padding: 2px 4px 2px 4px; margin-right:6px;}
 div.formbody .inputstyletext {border: 1px inset #FFFFFF; padding: 2px 4px 2px 4px; margin-right:6px;}
+/*IE: Add font-family to get same width for user and password input at login page*/
+div.formbody .inputtextfont {font-family:Verdana, Arial, sans-serif;}
 div.formbody input.large {width:15em;}
 
 div.formbody textarea {font: normal 83% Verdana, Arial, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:4px; }

@@ -145,7 +145,7 @@
 				#if($velocityCount != $_menu.elements.size())
 					<img style="padding:2px 0px 0px 0px" src="#GetPageResource('images/mainnav_seperator.png')">
 				#else
-					<img style="padding:2px 0px 0px 0px" src="#GetPageResource('images/mainnav_seperator_blank.png')">
+					<img style="padding:2px 0px 0px 0px; height:25px" src="#GetPageResource('images/background_mainnav.png')">
 				#end
 			  </li>
             #else
@@ -154,7 +154,7 @@
 				#if($velocityCount != $_menu.elements.size())
 					<img style="padding:2px 0px 0px 0px" src="#GetPageResource('images/mainnav_seperator.png')">
 				#else
-					<img style="padding:2px 0px 0px 0px" src="#GetPageResource('images/mainnav_seperator_blank.png')">
+					<img style="padding:2px 0px 0px 0px; height:25px" src="#GetPageResource('images/background_mainnav.png')">
 				#end
 			  </li>
 			#end
