@@ -1500,16 +1500,15 @@ function transformISOToLanguage(val, iso639_1) {
 }
 
 function getTypeOfAddress(source, target) {
-	log.debug("Enter getTypeOfAddress");
 	var organisationName = XPathUtils.getString(source, "gmd:organisationName/gco:CharacterString");
 	var individualName = XPathUtils.getString(source, "gmd:individualName/gco:CharacterString");
 	var node = XPathUtils.createElementFromXPath(target, "type-of-address");
-	if (hasValue(organisationName) && !hasValue(individualName)) {
+	if (hasValue(organisationName)) {
 		XMLUtils.createOrReplaceAttribute(node, "id", "0");
-	} else if (!hasValue(organisationName) && hasValue(individualName)) {
+	} else if (hasValue(individualName)) {
 		XMLUtils.createOrReplaceAttribute(node, "id", "2");
 	} else {
-		XMLUtils.createOrReplaceAttribute(node, "id", "3");
+		XMLUtils.createOrReplaceAttribute(node, "id", "0");
 	}		
 }
 
