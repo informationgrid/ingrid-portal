@@ -454,6 +454,7 @@ input.btn:hover { color: #FFFFFF; border: 1px solid #e0003c; background:url(../i
 input.btn_disable { color:#FFFFFF; border: solid 1px #e0003c; font-size: 11px; line-height: 130%; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px; }
 /*Use only at profile NUMIS*/
 input.btn_admin { margin:0px; }
+input.btn_admin:hover { margin:0px; }
 
 label.left {width:5.5em; float:left;}
 label.login {width:8em; float:left;}
