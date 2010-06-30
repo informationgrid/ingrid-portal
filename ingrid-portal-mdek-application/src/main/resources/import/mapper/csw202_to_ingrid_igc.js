@@ -912,10 +912,10 @@ var mappingDescription = {"mappings":[
 			  			"targetNode":"responsible-identifier"
 			  		},
 	  				{
-			  			// map to address type: person
-			  			"defaultValue":"2",
-			  			"targetNode":"type-of-address",
-			  			"targetAttribute":"id"
+			  			// map to address type: person getTypeOfAddress
+			  			"execute":{
+							"funct":getTypeOfAddress
+						}
 			  		},
 	  				{
 			  			"srcXpath":"gmd:organisationName/gco:CharacterString",
@@ -1497,6 +1497,20 @@ function transformISOToLanguage(val, iso639_1) {
 	} else {
 		return UtilsLanguageCodelist.getNameFromCode(code, iso639_1);
 	}
+}
+
+function getTypeOfAddress(source, target) {
+	log.debug("Enter getTypeOfAddress");
+	var organisationName = XPathUtils.getString(source, "gmd:organisationName/gco:CharacterString");
+	var individualName = XPathUtils.getString(source, "gmd:individualName/gco:CharacterString");
+	var node = XPathUtils.createElementFromXPath(target, "type-of-address");
+	if (hasValue(organisationName) && !hasValue(individualName)) {
+		XMLUtils.createOrReplaceAttribute(node, "id", "0");
+	} else if (!hasValue(organisationName) && hasValue(individualName)) {
+		XMLUtils.createOrReplaceAttribute(node, "id", "2");
+	} else {
+		XMLUtils.createOrReplaceAttribute(node, "id", "3");
+	}		
 }
 
 
