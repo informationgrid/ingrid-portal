@@ -77,8 +77,8 @@ $fieldLabel#end
 <div class="contentNavigation">
    	<div class="contentNavigationLeft">
 	#if ($browser.hasPreviousPage())
-       	<input class="btn" type="submit" name="doFirst" value="<<" />
-       	<input class="btn" type="submit" name="doPrev" value="<" />
+       	<input class="btn btn_admin" type="submit" name="doFirst" value="<<" />
+       	<input class="btn btn_admin" type="submit" name="doPrev" value="<" />
 	#end
 		&nbsp;
 	</div>
@@ -86,8 +86,8 @@ $fieldLabel#end
    	<div class="contentNavigationRight">
 		&nbsp;
 	#if ($browser.hasNextPage())
-			<input class="btn" type="submit" name="doNext" value=">" />
-			<input class="btn" type="submit" name="doLast" value=">>" />
+			<input class="btn btn_admin" type="submit" name="doNext" value=">" />
+			<input class="btn btn_admin" type="submit" name="doLast" value=">>" />
 	#end
 	</div>
 	<p class="clearer"></p>
