@@ -3,7 +3,7 @@
 #parse ('/WEB-INF/templates/search_extended/include_res_topic_tabs.vm')
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" enctype="" name="xx" id="extsearch1">
-      <div class="formbody">
+      <div class="formbody formbody_border_style">
 		  #displayFormErrors()
           <p><span class="smaller">$MESSAGES.getString('searchExtResTopicAttributes.explanation')</span></p>
           <div class="line_form"><hr /></div>
