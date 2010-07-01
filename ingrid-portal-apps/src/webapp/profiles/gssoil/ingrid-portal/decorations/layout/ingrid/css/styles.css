@@ -5,11 +5,15 @@
 @import url("./PLT.C.All.css");
 
 
+/** special styles ***/
+
+ul li ul  { padding-bottom:4px;}
+
 /********************************************************************
   standard styles 
 *********************************************************************/
 
-body { padding: 0; margin: 0; color: #383028; background-color: #FFFFFF; font: normal 100% Helvetica, Arial, Verdana, sans-serif; line-height: 125%; }
+body { padding: 0; margin: 0; color: #383028; background-color: #FFFFFF; font: normal 100% Verdana, Arial, Verdana, sans-serif; line-height: 120%; }
 
 img { border:0; }
 span.icon { margin-right:4px; margin-top:5px; float:left; }
@@ -18,8 +22,8 @@ span.icon_udk { margin-right:6px; margin-top:2px; float:left; width:21px; height
 span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px; }
 span.normaltext { font-weight:normal; text-transform:none; }
 span.smaller {font-size: 88%}
-ul { list-style-type:square; padding-left:0; margin: 0 0 1em 30px; font-size:100% }
-p { margin-top:0; margin-bottom:1em; font-size: 1em;}
+ul { list-style-type:square; padding-left:0; margin: 0 0 1em 30px; }
+p { margin-top:0; margin-bottom:1em; font-size: 75%}
 strong {font-weight:bold}
 .green {color:#598046;}
 .red {color: #cc7a52;}
@@ -39,15 +43,15 @@ a:hover, a:focus { color: #383028; text-decoration: underline; }
 a:active { color: #383028; text-decoration: none; }
 a.selected { font-weight:bold; }
 
-h1 { font-family: Arial, Helvetica, sans-serif; font-size:130%; line-height:130%; margin-top:0em; margin-bottom:0.5em; color: #8d8078; text-transform:uppercase; font-weight:500; }
-h2 { font-family: Geneva, Verdana, Lucida Sans, Lucida Grande, Lucida Sans Unicode, sans-serif; font-size:95%; line-height:125%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
-h3 { font-family: Geneva, Lucida Sans, Lucida Grande, Lucida Sans Unicode, Verdana, sans-serif; font-size:85%; line-height:125%; font-weight:bold; margin-top:0.4em; margin-bottom:0.3em; }
+h1 { font-family: Verdana, Arial, Helvetica, sans-serif ; font-size:105%; font-weight:bold; line-height:120%; margin-top:0; margin-bottom:1em; }
+h2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:90%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
+h3 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:80%; line-height:120%; font-weight:bold; margin-top:0.4em; margin-bottom:0.3em; }
 
 table.border { border-collapse:collapse; }
 table.fullwidth { width:100%; }
-th {font-size: 80%; vertical-align:top; padding:3px;}
-td {font-size: 80%; vertical-align:top; padding-left:3px;}
-table.formtable td {font-size: 80%; vertical-align:middle; margin:0;}
+th {font-size: 75%; vertical-align:top; padding:3px;}
+td {font-size: 75%; vertical-align:top; padding-left:3px;}
+table.formtable td {font-size: 75%; vertical-align:middle; margin:0;}
 td.iconwidth { width:9px; }
 table.layout td {font-size: 100%}
 td.fontcolor {color: #99471f;}
@@ -77,7 +81,7 @@ div.ico_down_black {margin: 0 0 0.3em 0;padding-left: 10px; background-image:url
   breadcrumb styles 
 *********************************************************************/
 
-div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; background-color:#FFFFFF; font-size: 80%; }
+div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; background-color:#FFFFFF; font-size: 75%; }
 
 /********************************************************************
   identity area styles
@@ -143,7 +147,7 @@ html body div#mainnav { height: 1%; }
 
 div#mainnav { background-color:#8d8078; margin:0; padding:0; width:59.5em; height:2.0625em; }  
 div#mainnav ul { list-style: none; padding: 7px 0 4px 51px; margin: 0;}
-div#mainnav ul li { padding: 2px 0px 6px 0; margin: 0px 2px 0px 0px; border: 0; float: left;font-size: 85%; font-weight:bold; /*text-transform: uppercase;*/}
+div#mainnav ul li { padding: 2px 0px 6px 0; margin: 0px 2px 0px 0px; border: 0; float: left;font-size: 75%; font-weight:bold; /*text-transform: uppercase;*/}
 
 /* Commented Backslash Hack hides rule from IE5-Mac \*/
 div#mainnav ul li a {float:none;}
@@ -169,7 +173,7 @@ div#mainnav ul li a:active
 
 div#subnav { position:relative; border-top: solid #FFFFFF 1px; background-color:#ebe6dc; width:59.5em; height:1.375em; z-index:12;}
 div#subnav ul { list-style:none; padding: 0px 7px 1px 58px; margin:0; line-height:125%; color:#383028; }
-div#subnav ul li { display:inline; font-size: 75%; padding: 0 5px 0 5px;}
+div#subnav ul li { display:inline; font-size: 65%; padding: 0 5px 0 5px;}
 
 div#subnav ul li a.selected { text-decoration:none; color:#383028; font-weight:bold; }
 div#subnav ul li a,
@@ -216,10 +220,10 @@ div.portal-layout-OneColumn {width: 55.57em}
   main block styles  
 *********************************************************************/
 
-.iconLink { margin:0px 0px 5px 0px; font-size:75%;}
+.iconLink { margin:0px 0px 5px 0px; font-size:70%;}
 /* ich will all die beknackten Abh�ngigkeiten unterhalb der Klasse .iconLink nicht (a styles etc. s.u.)
 deshalb definier ich mir jetzt das Gleiche unter anderem Namen,da hab ich keine Abh�ngigkeiten, mm */
-.iconLink2 { margin:0px 0px 5px 0px; font-size:75%;}
+.iconLink2 { margin:0px 0px 5px 0px; font-size:70%;}
 
 div.left { float:left; width:15.75em; padding:0; }
 div.right { float:left; margin-left:2.625em; width:15.75em; padding:0; }
@@ -231,7 +235,7 @@ div.section p a { text-decoration:underline; }
 div.section div p a { text-decoration:none; }
 div.section-header { margin-top:0; padding:0; }
 div.section-header h1 { display:inline; float:left; padding-top:0em; padding-bottom:0em; }
-div.section-header span.portlet_info { float:right; font-size:85%; padding-top:3px;}
+div.section-header span.portlet_info { float:right; font-size:80%; padding-top:3px;}
 /* n�tig f�r Firefox, sonst zerreissts �berschrift ! */
 div.section-header span.clearer { display:block; }
 
@@ -247,10 +251,10 @@ div.section ul.catalog span.separator { background: url(../images/list_dot.gif) 
 /*
 div.section ul.catalog li a { white-space:nowrap; padding-left:1em; padding-right:0.5em; background: url(../images/list_dot.gif) no-repeat top left; }
 div.section ul.catalog li { border:1px solid red; background: url(../images/list_dot.gif) no-repeat bottom left; display: inline; padding-left:1em; padding-right:0.5em}
-
-div.section ul li { font-size:80%}
-div.section ol li { font-size:80%}
 */
+div.section ul li { font-size:83%}
+div.section ol li { font-size:83%}
+
 div.section ul.innermenu {list-style: none; margin: 0 0 0 0.0em;}
 div.section ul.innermenu li { margin: 0 0 0.3em 0;padding-left: 20px;background-image:url("../images/icn_down.gif");background-repeat: no-repeat;background-position: 0 .15em; }
 
@@ -260,7 +264,7 @@ div.section ul.extlinklist {list-style: none; margin: 0 0 0 0.0em;}
 div.section ul.extlinklist li { margin: 0 0 0.3em 0;padding-left: 20px;background-image:url("../images/icn_linkextern.gif");background-repeat: no-repeat;background-position: 0 .45em; }
 
 div.section ul.internlinklist {list-style: none; margin: 0 0 0 .5em;}
-div.section ul.internlinklist li { font-size:75%;margin: 0 0 0.3em 0;padding-left: 15px;background-image:url("../images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .5em; }
+div.section ul.internlinklist li { font-size:70%;margin: 0 0 0.3em 0;padding-left: 15px;background-image:url("../images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .5em; }
 
 div.section ul.internlinklist2 {list-style: none; margin: 0 0 0 .5em;}
 div.section ul.internlinklist2 li { margin: 0 0 0.3em 0;padding-left: 15px;background-image:url("../images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .5em; }
@@ -276,7 +280,7 @@ div.section div.indent {margin-left: 1em}
 div.noresult { margin-top:20px; }
 div.noresult ul { line-height:2em; }
 
-div.resultset_nav { text-align:left; background-color:white; padding:0em 0em 0em 0em; font-size:80%; }
+div.resultset_nav { text-align:left; background-color:white; padding:0em 0em 0em 0em; font-size:75%; }
 div.resultset_nav a { text-decoration:underline; font-weight: bold;}
 
 div.resultset { padding:4px 4px 4px 0px; font-size:100%; margin: 5px 0px 5px 0px; }
@@ -307,7 +311,7 @@ div.resultset_show_partner {text-decoration:none;font-size:80%;margin: 10px 0px 
 
 /* TAB, EXTENDED SEARCH */
 div.tabs ul { list-style: none; padding: 7px 0 0px 0px; margin: 0;}
-div.tabs ul li { padding: 2px 0px 2px 0; margin: 0px 2px 0px 0px; border: 0; float: left; font-weight: bold;font-size: 85%;}
+div.tabs ul li { padding: 2px 0px 2px 0; margin: 0px 2px 0px 0px; border: 0; float: left; font-weight: bold;font-size: 80%;}
 div.tabs ul li a.selected,
 div.tabs ul li a.selected:link, 
 div.tabs ul li a.selected:visited 
@@ -373,16 +377,16 @@ div.portlet div.section-header { min-height:1em; padding: 0.175em 0em 0.4em 0.5e
 /* IE6, 5 bugfix. sets hasLayout property and fixes http://jira.media-style.com/browse/INGRID-1468 */
 * html div.portlet div.section-header {height:1%;}
 
-div.portlet div.section-header h1 { display:inline; color:#FFFFFF; font: bold 75% Helvetica, Arial, Verdana, sans-serif; line-height:125%; margin:0.15em 0 0 0; text-transform:uppercase; }
+div.portlet div.section-header h1 { display:inline; color:#FFFFFF; font: bold 75%  Verdana, sans-serif; line-height:125%; margin:0.15em 0 0 0; text-transform:uppercase; }
 div.portlet div.section-header span.portlet_info { float:right; color: #FFFFFF; font-size:76%; font-weight:bold; line-height:100%; margin: 0 5px 0 0; }
 div.portlet div.section-header a { color: #FFFFFF;}
 /* because of problems in IE rendering underline and background ! */
 div#marginal_header a:hover, div#marginal_header a:focus { text-decoration: none; }
 div#marginal_header a:hover, div#marginal_header a:focus, div#marginal_header a:active, div#marginal_header a:visited { background:#5988046; }
 
-div.portlet div.portlet-section-body { position:relative;padding: 0.625em 0.875em; margin:0; border-top: solid #e5dfd3 1px; border-left: solid #e5dfd3 1px; border-bottom: solid #e5dfd3 1px; border-right: solid #e5dfd3 1px; background-color:#ffffff; background-image: url("../images/portlet-content.png"); background-repeat:repeat-x; font-size:1em;}
+div.portlet div.portlet-section-body { position:relative;padding: 0.625em 0.875em; margin:0; border-top: solid #e5dfd3 1px; border-left: solid #e5dfd3 1px; border-bottom: solid #e5dfd3 1px; border-right: solid #e5dfd3 1px; background-color:#ffffff; background-image: url("../images/portlet-content.png"); background-repeat:repeat-x;}
 
-div.portlet-section-body ul li { font-size:1em; }
+div.portlet-section-body ul li {}
 
 /********************************************************************
   form block styles  
@@ -426,7 +430,7 @@ div.formbody .inputstyletext {border: 1px inset #FFFFFF; padding: 1px 4px 3px 4p
 div.formbody .inputtextfont {font-family:Helvetica, Arial, Verdana, sans-serif;}
 div.formbody input.large {width:15em;}
 
-div.formbody textarea {font: normal 83% Tahoma, Verdana, Arial, Helvetice, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:4px; }
+div.formbody textarea {font: normal 83% Verdana, Arial,  sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:4px; }
 
 div.formbody label { margin: 0px 10px 0px 0px; padding: 0px 4px 0px 4px; line-height: 130%; }
 div.formbody label.alignleft { padding: 0px 4px 0px 0px;}
@@ -480,7 +484,7 @@ div.formbody input.qrystr {width: 30em; font-size: 88%; line-height: 100%;}
 /*** Formular Erweiterte Suche ***/
 
 div.formbody div.qrytxt {width:34.5em; padding: 5px 5px 5px 5px;text-align:right;}
-div.formbody textarea.qrytxt { width: 100%;font: normal 83% Tahoma, Verdana, Arial, Helvetice, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:2px; margin:0 0 5px 0; }
+div.formbody textarea.qrytxt { width: 100%;font: normal 83% Verdana, Arial,  sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:2px; margin:0 0 5px 0; }
 div.formbody input.search_term { height:auto;width: 100%;font-size: 88%;}
 div.formbody div.innerform {width:34.5em;}
 div.formbody input.thesaurus_term {width: 45%;font-size: 88%; line-height: 120%;}
@@ -580,8 +584,4 @@ a.tooltip span
 
 a.tooltip:hover span { visibility: visible; }
 
-.comment {
-	color:gray;
-	font-size:65%;
-	padding-left:185px;
-}
+.comment {}
