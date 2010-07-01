@@ -113,6 +113,8 @@ var mappingDescription = {"mappings":[
   		//
   		// ****************************************************
   		{
+  			"srcXpath":"/",
+  			"targetNode":"/",
   			"conditional": {
   				"storedValue": {
   					"name":"objectClass",
@@ -237,6 +239,8 @@ var mappingDescription = {"mappings":[
   		//
   		// ****************************************************
   		{
+  			"srcXpath":"/",
+  			"targetNode":"/",
   			"conditional": {
   				"storedValue": {
   					"name":"objectClass",
@@ -249,6 +253,7 @@ var mappingDescription = {"mappings":[
 	        			"srcXpath":"//gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName",
 	        			"targetNode":"/igc/data-sources/data-source/technical-domain/service/service-classification",
 	        			"targetAttribute":"id",
+	        			"storeValue":"serviceType",
 		      			"transform":{
 		      				"funct":transformGeneric,
 		      				"params":[{"discovery":"1", "view":"2", "download":"3", "transformation":"4", "invoke":"5", "other":"6"}, false, "Could not map serviceType : "]
@@ -303,6 +308,66 @@ var mappingDescription = {"mappings":[
 		    	  				{
 		    			  			"srcXpath":"srv:operationName/gco:CharacterString",
 		    			  			"targetNode":"operation-name"
+		    			  		},
+		    	  				{
+		    			  			"conditional": {
+			    		  				"storedValue": {
+			    		  					"name":"serviceType",
+			    		  					"value":"1" // CSW
+			    		  				}
+		    			  			},
+		    			  			"srcXpath":"srv:operationName/gco:CharacterString",
+		    			  			"targetNode":"operation-name",
+		    			  			"targetAttribute":"id",
+		    			  			"transform":{
+		        						"funct":transformToIgcDomainId,
+		        						"params":[5105, 123]
+		        					}
+		    			  		},
+		    	  				{
+		    			  			"conditional": {
+			    		  				"storedValue": {
+			    		  					"name":"serviceType",
+			    		  					"value":"2" // WMS
+			    		  				}
+		    			  			},
+		    			  			"srcXpath":"srv:operationName/gco:CharacterString",
+		    			  			"targetNode":"operation-name",
+		    			  			"targetAttribute":"id",
+		    			  			"transform":{
+		        						"funct":transformToIgcDomainId,
+		        						"params":[5110, 123]
+		        					}
+		    			  		},
+		    	  				{
+		    			  			"conditional": {
+			    		  				"storedValue": {
+			    		  					"name":"serviceType",
+			    		  					"value":"3" // WFS
+			    		  				}
+		    			  			},
+		    			  			"srcXpath":"srv:operationName/gco:CharacterString",
+		    			  			"targetNode":"operation-name",
+		    			  			"targetAttribute":"id",
+		    			  			"transform":{
+		        						"funct":transformToIgcDomainId,
+		        						"params":[5120, 123]
+		        					}
+		    			  		},
+		    	  				{
+		    			  			"conditional": {
+			    		  				"storedValue": {
+			    		  					"name":"serviceType",
+			    		  					"value":"4" // WCTS
+			    		  				}
+		    			  			},
+		    			  			"srcXpath":"srv:operationName/gco:CharacterString",
+		    			  			"targetNode":"operation-name",
+		    			  			"targetAttribute":"id",
+		    			  			"transform":{
+		        						"funct":transformToIgcDomainId,
+		        						"params":[5130, 123]
+		        					}
 		    			  		},
 		    	  				{
 		    			  			"srcXpath":"srv:operationDescription/gco:CharacterString",
@@ -1015,6 +1080,20 @@ function mapToTarget(mapping, source, target) {
 		// iterate over all mapping descriptions
 		for (var i in mapping.mappings) {
 			var m = mapping.mappings[i];
+			// check for conditional mapping
+			if (m.conditional) {
+				log.debug("found conditional mapping for: " + m.conditional.storedValue.name + "==" + m.conditional.storedValue.value);
+				if (m.conditional.storedValue) {
+					log.debug("found mapping with stored value conditional: " + m.conditional.storedValue.name + " ? " + storedValues[m.conditional.storedValue.name] + " == " + m.conditional.storedValue.value);
+					if (storedValues[m.conditional.storedValue.name] != m.conditional.storedValue.value) {
+						log.debug("Skip mapping because: " + m.conditional.storedValue.name + "!=" + m.conditional.storedValue.value);
+						continue;
+					} else {
+						log.debug("Execute mapping because: " + m.conditional.storedValue.name + "==" + m.conditional.storedValue.value);
+					}
+				}
+			}
+			
 			// check for execution (special function)
 			if (hasValue(m.execute)) {
 				log.debug("Execute function: " + m.execute.funct.name + "...")
@@ -1024,16 +1103,7 @@ function mapToTarget(mapping, source, target) {
 				}
 				call_f(m.execute.funct, args)
 			} else if (m.subMappings) {
-				if (m.conditional) {
-					log.debug("found sub mapping with conditional.");
-					if (m.conditional.storedValue) {
-						log.debug("found sub mapping with stored value conditional: " + m.conditional.storedValue.name + " ? " + storedValues[m.conditional.storedValue.name] + " == " + m.conditional.storedValue.value);
-						if (storedValues[m.conditional.storedValue.name] == m.conditional.storedValue.value) {
-							log.debug("handle sub mapping with stored value conditional: " + m.conditional.storedValue.name + "=" + m.conditional.storedValue.value);
-							mapToTarget(m.subMappings, source, target);
-						}
-					}
-				} else if (m.srcXpath) {
+				if (m.srcXpath) {
 					// iterate over all xpath results
 					var sourceNodeList = XPathUtils.getNodeList(source, m.srcXpath);
 					if (sourceNodeList) {
@@ -1041,7 +1111,9 @@ function mapToTarget(mapping, source, target) {
 						for (var j=0; j<sourceNodeList.getLength(); j++ ) {
 							log.debug("handle sub mapping: " + sourceNodeList.item(j))
 							var node = XPathUtils.createElementFromXPath(target, m.targetNode);
-							node = node.appendChild(node.getOwnerDocument().createElement(m.newNodeName));
+							if (m.newNodeName) {
+								node = node.appendChild(node.getOwnerDocument().createElement(m.newNodeName));
+							}
 							mapToTarget(m.subMappings, sourceNodeList.item(j), node);
 						}
 					} else {
