@@ -33,12 +33,9 @@
 	</noscript>
 	#end
 	</span>
-    <span class="clearer"></span>
   </div>
     #if (!$jetspeed.isHidden($f) || $jetspeed.WindowState != "minimized")
     $f.renderedContent
     #end
 </div>
 <!-- END: Fragment: ${f.id} Decoration: ${decoratorId} -->
-
-
