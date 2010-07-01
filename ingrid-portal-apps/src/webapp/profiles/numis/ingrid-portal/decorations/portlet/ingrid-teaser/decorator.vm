@@ -21,20 +21,20 @@
 				#set($hTitle = $jetspeed.getPreferenceFirstValue($f, "helpToolTip"))
 			#end
 		<script language="JavaScript" type="text/javascript" >
-			imageDefault = new Image(); 
-			imageDefault.src = "$request.contextPath$decoration.getBasePath("images")/icon-help.png";
-			imageHover = new Image();
-			imageHover.src = "$request.contextPath$decoration.getBasePath("images")/icon-help-hover.png";
+			imageDefaultTeaser = new Image(); 
+			imageDefaultTeaser.src = "$request.contextPath$decoration.getBasePath("images")/icon-help.png";
+			imageHoverTeaser = new Image();
+			imageHoverTeaser.src = "$request.contextPath$decoration.getBasePath("images")/icon-help-hover.png";
 			
-			function imageOn(image) {
-				image.src=imageHover.src;
+			function imageOnTeaser(image) {
+				image.src=imageHoverTeaser.src;
 			}
 			
-			function imageOut(image) {
-				image.src=imageDefault.src;
+			function imageOutTeaser(image) {
+				image.src=imageDefaultTeaser.src;
 			}
 			
-			document.write("<a class=\"help\" href=\"javascript:ingrid_openWindow('$hpath',750,550);\" title=\"$hTitle\"><image name=\"image-teaser\" src=\"$request.contextPath$decoration.getBasePath("images")/icon-help.png\" onMouseover=\"imageOn(this)\" onMouseout=\"imageOut(this)\"/></a>");
+			document.write("<a class=\"help\" href=\"javascript:ingrid_openWindow('$hpath',750,550);\" title=\"$hTitle\"><image src=\"$request.contextPath$decoration.getBasePath("images")/icon-help.png\" onMouseover=\"imageOnTeaser(this)\" onMouseout=\"imageOutTeaser(this)\"/></a>");
     	</script>
     	<noscript>
     		<a href="$hpath" target="_new" title="$hTitle"><img src="$request.contextPath$decoration.getBasePath("images")/icon-help.png" alt="$hTitle" /></a>

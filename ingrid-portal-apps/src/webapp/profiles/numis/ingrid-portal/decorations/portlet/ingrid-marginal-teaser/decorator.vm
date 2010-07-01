@@ -13,20 +13,20 @@
 	#if($hkey && $hkey != "")
 		#set($hpath = "${jetspeed.basePath}/help.psml?hkey=$hkey")
 	<script language="JavaScript" type="text/javascript">
-		imageDefault = new Image(); 
-			imageDefault.src = "$request.contextPath$decoration.getBasePath("images")/icon-help.png";
-			imageHover = new Image();
-			imageHover.src = "$request.contextPath$decoration.getBasePath("images")/icon-help-hover.png";
-			
-			function imageOn(image) {
-				image.src=imageHover.src;
-			}
-			
-			function imageOut(image) {
-				image.src=imageDefault.src;
-			}
-			
-			document.write("<a class=\"help\" href=\"javascript:ingrid_openWindow('$hpath',750,550);\" title=\"$hTitle\"><image name=\"image-teaser\" src=\"$request.contextPath$decoration.getBasePath("images")/icon-help.png\" onMouseover=\"imageOn(this)\" onMouseout=\"imageOut(this)\"/></a>");
+		imageDefaultMarginalTeaser = new Image(); 
+		imageDefaultMarginalTeaser.src = "$request.contextPath$decoration.getBasePath("images")/icon-help.png";
+		imageHoverMarginalTeaser = new Image();
+		imageHoverMarginalTeaser.src = "$request.contextPath$decoration.getBasePath("images")/icon-help-hover.png";
+		
+		function imageOnMarginalTeaser(image) {
+			image.src=imageHoverMarginalTeaser.src;
+		}
+		
+		function imageOutMarginalTeaser(image) {
+			image.src=imageDefaultMarginalTeaser.src;
+		}
+		
+		document.write("<a class=\"help\" href=\"javascript:ingrid_openWindow('$hpath',750,550);\" title=\"$hTitle\"><image src=\"$request.contextPath$decoration.getBasePath("images")/icon-help.png\" onMouseover=\"imageOnMarginalTeaser(this)\" onMouseout=\"imageOutMarginalTeaser(this)\"/></a>");
 	</script>
     <noscript>
 		<a href="$hpath" target="_new" title="$MESSAGES.getString('ingrid.page.help.link.title')">?</a>&nbsp;
