@@ -360,8 +360,8 @@ h3#search_detail {  text-decoration:underline; margin-top:1em; }
   marginal portlet block styles  
 *********************************************************************/
 
-div.portlet { margin-bottom:10px; padding:0; font-size: 12px; }
-div.portlet p { font-size:100%; line-height:140%;}
+div.portlet { margin-bottom:10px; padding:0;}
+div.portlet p { font-size:75%; line-height:140%;}
 div.portlet p.hitrow { font-size:83%; line-height:140%;}
 div.portlet ul { margin: 0 0 -5px 14px;}
 
