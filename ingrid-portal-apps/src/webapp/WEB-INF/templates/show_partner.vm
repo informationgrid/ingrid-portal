@@ -35,6 +35,18 @@
 <h3>$MESSAGES.getString("showpartner.connected.databases"):</h3>
 <ul>
 #foreach($plug in $plugs)
-	<li>$plug.getDataSourceName()</li>
+	#set($hideId = "false")
+	#foreach($hideIPlugId in $hideIPlugIdList)
+		#if($hideId != "true")
+			#if($plug.getPlugId() == $hideIPlugId)
+				#set($hideId = "true")
+			#else
+				#set($hideId  = "false")
+			#end
+		#end
+	#end
+	#if($hideId == "false")
+		<li>$plug.getDataSourceName()</li>
+	#end
 #end
 </ul>

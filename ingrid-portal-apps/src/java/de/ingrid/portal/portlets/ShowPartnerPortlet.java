@@ -44,6 +44,11 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                 request.getLocale()));
         context.put("MESSAGES", messages);
 
+        String[] hideIPlugIdList = PortalConfig.getInstance().getStringArray(PortalConfig.HIDE_IPLUG_ID_LIST);
+        if(hideIPlugIdList != null){
+        	context.put("hideIPlugIdList", hideIPlugIdList);
+        }
+               
         try {
             String partnerRestriction = PortalConfig.getInstance().getString(
                     PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
