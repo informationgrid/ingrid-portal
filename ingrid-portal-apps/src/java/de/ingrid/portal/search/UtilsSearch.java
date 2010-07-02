@@ -308,7 +308,7 @@ public class UtilsSearch {
             // FIXME: is this correct? should be taken from the detail only?
             //result.put(PlugDescription.PROVIDER, plugDescr.getOrganisationAbbr());
             if (plugDescr.containsKey("domainGroupingSupport"))
-                result.put("domainGroupingSupport", plugDescr.get("domainGroupingSupport"));
+                result.put("domainGroupingSupport", plugDescr.getBoolean("domainGroupingSupport"));
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems taking over PlugDescription into result:" + result, t);

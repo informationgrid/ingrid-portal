@@ -257,7 +257,7 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
             UtilsSearch.processGrouping(query, af.getInput(MeasuresSearchForm.FIELD_GROUPING));
 
             // RANKING
-            query.put(IngridQuery.RANKED, IngridQuery.DATE_RANKED);
+            query.put(IngridQuery.RANKED, IngridQuery.SCORE_RANKED);
 
             // personalized values
 
