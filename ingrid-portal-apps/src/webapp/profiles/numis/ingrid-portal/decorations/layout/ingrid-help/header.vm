@@ -56,7 +56,7 @@
 <div id="popupheader" class="${langCode}motiv_hilfe">
 	<!-- LOGO -->
   <div id="logo">
-    <img style="padding:25px 16px 0px" src="#GetPageResource('images/logo.gif')" alt="Logo NUMIS" />
+    <img style="padding:26px 16px 0px" src="#GetPageResource('images/logo.gif')" alt="Logo NUMIS" />
   </div>
 </div>
 

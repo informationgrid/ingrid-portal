@@ -452,9 +452,9 @@ div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px
 div.formfooter_border_style {border-top: 0px solid #E4E4E2;}
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 
-input.btn { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 15px 0px 15px; }
-input.btn:hover { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn_hover.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 15px 0px 15px; }
-input.btn_disable { color:#FFFFFF; border: solid 1px #e0003c; font-size: 11px; line-height: 130%; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px; }
+input.btn { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn.png) repeat-x; font-size: 12px; font-weight:bold; margin:15px 0px 11px 0px; padding:3px 15px 3px 15px; }
+input.btn:hover { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn_hover.png)repeat-x; font-size: 12px; font-weight:bold; margin:15px 0px 11px 0px; padding:3px 15px 3px 15px; }
+input.btn_disable { color:#FFFFFF; border: solid 1px #e0003c; font-size: 11px; line-height: 130%; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:3px 15px 3px 15px; }
 /*Use only at profile NUMIS*/
 input.btn_admin { margin:0px; }
 input.btn_admin:hover { margin:0px; }

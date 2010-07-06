@@ -13,7 +13,7 @@ body { padding: 0; margin: 0; color: #333333; background-color: #FFFFFF; font-fa
 
 img { border:0; }
 /*Need for NUMIS profile*/
-img.image_alt {padding:25px 0px 0px 16px}
+img.image_alt {padding:26px 0px 0px 16px; }
 span.icon { margin-right:4px; margin-top:5px; float:left; }
 span.icon_udk { margin-right:6px; margin-top:2px; float:left; width:21px; height:14px; }
 /* no float for detail page in OPERA */
