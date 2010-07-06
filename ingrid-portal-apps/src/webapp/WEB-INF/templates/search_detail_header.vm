@@ -127,7 +127,7 @@ self.focus();
 ###end
   <!-- LOGO -->
   <div id="logo">
-    <a href="/ingrid-portal/portal/default-page.psml"><img src="/ingrid-portal/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo PortalU" /></a>
+    <a href="/ingrid-portal/portal/default-page.psml"><img class="image_alt" src="/ingrid-portal/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo PortalU" /></a>
   </div>
 </div>
 

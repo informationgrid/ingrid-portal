@@ -158,16 +158,16 @@ div#mainnav ul li a {float:none;}
 div#mainnav ul li a,  
 div#mainnav ul li a:link, 
 div#mainnav ul li a:visited 
- { color:#FFFFFF; padding:6px 8px 9px; vertical-align:super; }  
+ { color:#FFFFFF; padding:6px 11px 9px; vertical-align:super; }  
 
 div#mainnav ul li a.selected,
 div#mainnav ul li a.selected:link, 
 div#mainnav ul li a.selected:visited 
- { color:#FFFFFF; text-decoration:none; background-color:#999999; padding:6px 8px 9px; vertical-align:super; background:#999999; }  
+ { color:#FFFFFF; text-decoration:none; background-color:#999999; padding:6px 11px 9px; vertical-align:super; background:#999999; }  
 
 div#mainnav ul li a:hover,
 div#mainnav ul li a:active
- { color:#FFFFFF; text-decoration:none; font-size: 100%;background:url(../images/background_mainnav_hover.png);padding:6px 8px 4px; vertical-align:super; }
+ { color:#FFFFFF; text-decoration:none; font-size: 100%;background:url(../images/background_mainnav_hover.png);padding:6px 11px 4px; vertical-align:super; }
 
 /********************************************************************
   sub navigation styles
@@ -234,6 +234,7 @@ div.left { float:left; width:15.75em; padding:0; }
 div.right { float:left; margin-left:2.625em; width:15.75em; padding:0; }
 div.whole { width:34.125em; padding:0; }
 div.themen_image { margin:0; padding:4px 14px 0 0; float:left; }
+div img.themen_image_style{width:140px; height:90px;}
 
 div.section { margin: 0 0 0px 0; padding:0; }
 div.section p a { text-decoration:none; }
@@ -251,7 +252,7 @@ div.section p.iconLink span.icon { margin: 7px 0 0 0; }
 
 div.section ul.catalog { margin:0; padding:0; }
 div.section ul.catalog li { display:inline; }
-div.section ul.catalog li a { display:inline; margin-right:0.2em; }
+div.section ul.catalog li a { display:inline; }
 div.section ul.catalog span.separator { background: url(../images/list_dot.gif) no-repeat center center; margin-right:0.1em; margin-left:0.2em; }
 /*
 div.section ul.catalog li a { white-space:nowrap; padding-left:1em; padding-right:0.5em; background: url(../images/list_dot.gif) no-repeat top left; }
@@ -383,7 +384,7 @@ div.portlet div.section-header { background:url("../images/background_portlet_he
 /* IE6, 5 bugfix. sets hasLayout property and fixes http://jira.media-style.com/browse/INGRID-1468 */
 * html div.portlet div.section-header {height:1%;}
 
-div.portlet div.section-header h1 { color: #555555; font-size: 12px; text-transform: uppercase; }
+div.portlet div.section-header h1 { color: #555555; font-size: 12px; text-transform: uppercase; font-weight:bold; }
 div.portlet div.section-header span.portlet_info { float:right; color: #FFFFFF;font-size:75%; font-weight:bold; line-height:100%; margin: 0 0 0 0;}
 div.portlet div.section-header a { color: #FFFFFF;}
 /* because of problems in IE rendering underline and background ! */
@@ -451,8 +452,8 @@ div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px
 div.formfooter_border_style {border-top: 0px solid #E4E4E2;}
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 
-input.btn { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn.png); font-size: 11px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px; }
-input.btn:hover { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn_hover.png); font-size: 11px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px; }
+input.btn { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 15px 0px 15px; }
+input.btn:hover { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn_hover.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 15px 0px 15px; }
 input.btn_disable { color:#FFFFFF; border: solid 1px #e0003c; font-size: 11px; line-height: 130%; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px; }
 /*Use only at profile NUMIS*/
 input.btn_admin { margin:0px; }
@@ -463,6 +464,7 @@ label.login {width:8em; float:left;}
 div.optional-links { margin:0; padding:0; }
 div.optional-links img, ul.optional-links img { margin:0; padding:0; }
 div.optional-links a, ul.optional-links a, div.optional-links span { margin-right:1em; font-size: 11px; }
+div.optional-links span.selected { font-weight:bold; }
 
 ul.optional-links ul.optional-links { margin: 0 0 0 12px; padding:0; }
 ul.optional-links { list-style:none; margin: 0 0 1.2em 0; }

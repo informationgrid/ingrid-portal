@@ -90,7 +90,7 @@ $action.setParameter('action','doChangeDS')
 #end
     </form>
     <div class="optional-links">
-      <img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.active')" />&nbsp;<span>$MESSAGES.getString('searchSimple.extended')</span>
+      <img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.active')" />&nbsp;<span class="selected">$MESSAGES.getString('searchSimple.extended')</span>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doSearchHistory')
       <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchSimple.history')</a>

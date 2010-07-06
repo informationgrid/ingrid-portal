@@ -81,9 +81,9 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
 *********************************************************************/
 
 div#identity { padding:0; margin:0; height: 80px; width:59.5em; background-color:#FFFFFF; overflow:visible; }
-div.motiv_hilfe { background-image:url(../images/header_help.png); background-repeat:no-repeat; }
+div.motiv_hilfe { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
 
-div.en_motiv_hilfe { background-image:url(../images/header_help.png); background-repeat:no-repeat; }
+div.en_motiv_hilfe { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
 
 /********************************************************************
   logo styles 

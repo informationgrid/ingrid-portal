@@ -91,14 +91,14 @@ $action.setParameter('action','doChangeDS')
 $action.setParameter('action','doSearchExtended')
       <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchSimple.extended')</a>
 #if ($titleKey=="searchSimple.title.history")
-      <img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.active')" />&nbsp;<span>$MESSAGES.getString('searchSimple.history')</span>
+      <img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.active')" />&nbsp;<span class="selected">$MESSAGES.getString('searchSimple.history')</span>
 #else
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doSearchHistory')
       <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchSimple.history')</a>
 #end
 #if ($titleKey=="searchSimple.title.settings")
-	  <img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.active')" />&nbsp;<span>$MESSAGES.getString('searchSimple.settings')</span>
+	  <img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.active')" />&nbsp;<span class="selected">$MESSAGES.getString('searchSimple.settings')</span>
 #else
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doSearchSettings')

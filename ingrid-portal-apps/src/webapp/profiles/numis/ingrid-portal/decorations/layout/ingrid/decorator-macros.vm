@@ -69,7 +69,7 @@
 
   <!-- LOGO -->
   <div id="logo">
-    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img style="padding:16px 4px 0px 0px" src="#GetPageResource('images/logo.png')" alt="Logo NUMIS" /><img style="padding: 0px 0px 8px;" src="#GetPageResource('images/tagline.png')" alt="Logo NUMIS" /></a>
+    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img style="padding:25px 16px 0px;" src="#GetPageResource('images/logo.gif')" alt="Logo NUMIS" /></a>
   </div>
   
   <!-- SERVICE-NAVIGATION -->

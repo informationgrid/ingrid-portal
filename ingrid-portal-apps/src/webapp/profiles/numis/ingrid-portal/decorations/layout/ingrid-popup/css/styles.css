@@ -9,9 +9,11 @@
   standard styles 
 *********************************************************************/
 
-body { padding: 0; margin: 0; color: #111111; background-color: #FFFFFF; font: normal 100% Verdana, Arial, sans-serif; line-height: 120%; }
+body { padding: 0; margin: 0; color: #333333; background-color: #FFFFFF; font-family: Arial, Verdana, Helvetica, sans-serif; }
 
 img { border:0; }
+/*Need for NUMIS profile*/
+img.image_alt {padding:25px 0px 0px 16px}
 span.icon { margin-right:4px; margin-top:5px; float:left; }
 span.icon_udk { margin-right:6px; margin-top:2px; float:left; width:21px; height:14px; }
 /* no float for detail page in OPERA */
@@ -19,7 +21,7 @@ span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px
 span.normaltext { font-weight:normal; text-transform:none; }
 span.smaller {font-size: 83%}
 ul { list-style-type:square; padding-left:0; margin: 0 0 1em 30px; }
-p { margin-top:0; margin-bottom:1em; font-size:70%}
+p { margin-top:0; margin-bottom:1em; font-size:75%}
 strong {font-weight:bold}
 
 div.line { border: 0; background-color: #CCCCCC; height: 1px; margin:10px 0 0 0; padding:0 }
@@ -33,15 +35,16 @@ div.line_form * { display: none;}
 
 a,a:link { color: #e0003c; text-decoration: none; }
 a:visited { color: #e0003c; }
-a:hover { color: #111111; text-decoration: none; }
+a:hover { color: #333333; text-decoration: none; }
 a:focus { color: #111111; text-decoration: none; }
 a:active { color: #111111; text-decoration: none; }
 a.selected { font-weight:bold; }
-a.download_link { font-size:83%; color: #e0003c; text-decoration: none; }
+/*search_seperator style used at profile NUMIS*/
+a.search_seperator{ color:#999999; }
 
-h1 { font-family: Verdana, Arial, Helvetica, sans-serif ; font-size:105%; font-weight:bold; line-height:120%; margin-top:0; margin-bottom:1em; text-transform:uppercase;}
-h2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:90%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
-h3 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:80%; line-height:120%; font-weight:bold; margin-top:0.4em; margin-bottom:0.3em; }
+h1 { color: #999; font-size: 21px; font-weight: normal; line-height: 27px; margin: 0 0 0.5em 0; text-transform:uppercase; }
+h2 { font-family: Arial, Verdana, Helvetica, sans-serif; font-size:90%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
+h3 { font-family: Arial, Verdana, Helvetica, sans-serif; font-size:80%; line-height:120%; font-weight:bold; margin-top:0.4em; margin-bottom:0.3em; }
 
 table.border { border-collapse:collapse; }
 table.fullwidth { width:100%; }
@@ -84,13 +87,13 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
 *********************************************************************/
 
 div#identity { padding:0; margin:0; height: 80px; width:59.5em; background-color:#FFFFFF; overflow:visible; }
-div.motiv_blank { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.motiv_suche { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.motiv_karten { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.motiv_blank { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
+div.motiv_suche { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
+div.motiv_karten { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
 
-div.en_motiv_blank { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.en_motiv_suche { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.en_motiv_karten { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.en_motiv_blank { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
+div.en_motiv_suche { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
+div.en_motiv_karten { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
 
 /********************************************************************
   logo styles 
@@ -110,14 +113,17 @@ div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { color: #1
   service navigation styles
 *********************************************************************/
 
-div#servicenav { padding:0.1em 0em 0.1em 1.5em; background:url(../images/background_servicenav.png); float: right; height:24px; color:#FFFFFF}
+div#servicenav { padding:0em 0em 0em 1em; background:url(../images/background_servicenav.png) repeat-x; float: right; height:24px; color:#6798da; font-size:12px; }
 #servicenav { font-size: 70%; }
-div#servicenav ul { list-style: none; padding: 0; margin: 0; }
+div#servicenav ul { list-style: none; padding:0; margin:0; }
 div#servicenav ul li { display:inline; }
-div#servicenav ul li a:link { text-decoration:none; color:#FFFFFF; font-weight:normal;}
-div#servicenav ul li a:visited { text-decoration:none; color:#FFFFFF; font-weight:normal;}
-div#servicenav ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:normal;}
-div#servicenav ul li a:hover { text-decoration:none; color:#111111; background:url(../images/background_servicenav_hover.png); font-weight:normal; }
+div#servicenav ul li a { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
+div#servicenav ul li a:link { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
+div#servicenav ul li a:visited { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
+div#servicenav ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
+div#servicenav ul li a:hover { text-decoration:none; color:#FFFFFF; background:url(../images/background_servicenav_hover.png) repeat-x; font-weight:normal; padding:3px 5px 4px 5px; }
+
+select.language_switch_style {font-size:100%; background-color:#0066cc; color:#FFFFFF; }
 
 /********************************************************************
   main navigation styles
@@ -128,8 +134,8 @@ html body div#mainnav { height: 1%; }
 /* End Hack */
 
 div#mainnav { background:url(../images/background_mainnav.png); margin:0; padding:0; width:59.5em;}  
-div#mainnav ul { list-style: none; padding: 0px 0 0px 56px; margin: 0; height:29px}
-div#mainnav ul li { padding: 2px 0px 6px 0; margin: 0px 2px 0px 0px; border: 0; float: left;font-size: 75%; font-weight:bold;}
+div#mainnav ul { list-style: none; padding: 0px 0px 0px 56px; margin: 0; }
+div#mainnav ul li { margin: 0px 2px 0px 0px; float: left;font-size: 13px; font-weight:bold;}
 
 /* Commented Backslash Hack hides rule from IE5-Mac \*/
 div#mainnav ul li a {float:none;}
@@ -138,32 +144,33 @@ div#mainnav ul li a {float:none;}
 div#mainnav ul li a,  
 div#mainnav ul li a:link, 
 div#mainnav ul li a:visited 
- { text-decoration:none; color:#FFFFFF; margin-right:7px; padding:3px 6px 5px 6px; border-bottom:1px; margin:0; font-size: 100%; height:26px;}  
+ { color:#FFFFFF; padding:6px 11px 9px; vertical-align:super; }  
 
 div#mainnav ul li a.selected,
 div#mainnav ul li a.selected:link, 
 div#mainnav ul li a.selected:visited 
- { color:#FFFFFF; text-decoration:none; background-color:#999999; border-bottom: solid #999999 10px; margin:0; font-size: 100%;}  
+ { color:#FFFFFF; text-decoration:none; background-color:#999999; padding:6px 11px 9px; vertical-align:super; background:#999999; }  
 
 div#mainnav ul li a:hover,
 div#mainnav ul li a:active
- { color:#FFFFFF; text-decoration:none; background:url(../images/background_mainnav_hover.png); font-size: 95%; height:26px;}
+ { color:#FFFFFF; text-decoration:none; font-size: 100%;background:url(../images/background_mainnav_hover.png);padding:6px 11px 4px; vertical-align:super; }
 
 /********************************************************************
   sub navigation styles
 *********************************************************************/
 
-div#subnav { position:relative; border-top: solid #FFFFFF 1px; background:url(../images/background_subnav.png); width:59.5em; height:27px; z-index:12;}
-div#subnav ul { list-style:none; padding: 0px 0px 0px 63px; margin:0; line-height:140%; color:#FFFFFF; height:27px;}
+div#subnav { position:relative; border-top: solid #FFFFFF 0px; background:url(../images/background_subnav.png); width:59.5em; height:27px; z-index:12; margin-top:1px}
+div#subnav ul { list-style:none; padding: 0px 0px 0px 63px; margin:0; line-height:140%; color:#CCCCCC; height:27px; float:left; }
 div#subnav ul li { display:inline; font-size: 12px; }
 
 div#subnav ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:bold; }
 div#subnav ul li a,
 div#subnav ul li a:link,
 div#subnav ul li a:visited,
-div#subnav ul li a:active {text-decoration:none; color:#FFFFFF;}  
+div#subnav ul li a:active {color:#FFFFFF; padding:4px 5px 5px 5px;vertical-align:baseline;}
+  
 div#subnav ul li a:hover, 
-div#subnav ul li a:focus {color:#FFFFFF;text-decoration:none; background:url(../images/background_subnav_hover.png); padding:5px 0px 5px 0px; margin:2px 2px 2px 2px;}
+div#subnav ul li a:focus {color:#FFFFFF;text-decoration:none; background:url(../images/background_subnav_hover.png); padding:4px 5px 5px 5px; width:10px }
 
 div.subnav_corner {vertical-align:bottom;float:right; width:21px; height: 100%;background-color:#999}
 div.subnav_corner_img {vertical-align:bottom;width: 21px; height:100%;background:url(../images/corner_sub_nav.png) no-repeat;background-position:bottom; background-color:#DDE9BD}
@@ -213,12 +220,13 @@ div.left { float:left; width:15.75em; padding:0; }
 div.right { float:left; margin-left:2.625em; width:15.75em; padding:0; }
 div.whole { width:34.125em; padding:0; }
 div.themen_image { margin:0; padding:4px 14px 0 0; float:left; }
+div img.themen_image_style{width:140px; height:90px;}
 
 div.section { margin: 0 0 0px 0; padding:0; }
 div.section p a { text-decoration:none; }
-div.section div p a { text-decoration:none; }
+div.section div p a { font-size: 12px; }
 div.section-header { margin-top:0; padding:0; }
-div.section-header h1 { display:inline; float:left; padding-top:0.2em; padding-bottom:0.2em; }
+div.section-header h1 { float:left;}
 div.section-header span.portlet_info { float:right; font-size:80%}
 /* n�tig f�r Firefox, sonst zerreissts �berschrift ! */
 div.section-header span.clearer { display:block; }
@@ -230,14 +238,14 @@ div.section p.iconLink span.icon { margin: 7px 0 0 0; }
 
 div.section ul.catalog { margin:0; padding:0; }
 div.section ul.catalog li { display:inline; }
-div.section ul.catalog li a { display:inline; margin-right:0.2em; }
+div.section ul.catalog li a { display:inline; }
 div.section ul.catalog span.separator { background: url(../images/list_dot.gif) no-repeat center center; margin-right:0.1em; margin-left:0.2em; }
 /*
 div.section ul.catalog li a { white-space:nowrap; padding-left:1em; padding-right:0.5em; background: url(../images/list_dot.gif) no-repeat top left; }
 div.section ul.catalog li { border:1px solid red; background: url(../images/list_dot.gif) no-repeat bottom left; display: inline; padding-left:1em; padding-right:0.5em}
 */
-div.section ul li { font-size:83%}
-div.section ol li { font-size:83%}
+div.section ul li { font-size:90%}
+div.section ol li { font-size:100%}
 
 div.section ul.innermenu {list-style: none; margin: 0 0 0 0.0em;}
 div.section ul.innermenu li { margin: 0 0 0.3em 0;padding-left: 20px;background-image:url("../images/icn_down.gif");background-repeat: no-repeat;background-position: 0 .15em; }
@@ -283,7 +291,7 @@ div.resultset span.result_title { font-size:75%;}
 div.resultset span.inquiry { margin-left:20px; font-size:83%}
 div.resultset em.date { font-style:normal; font-size: 83%; color:#111111; }
 
-div.resultset_partner_group {background-color:#D1E4F1; margin: 0 0 10px 0;padding: 0.25em 0.875em 0.05em 0.7em;}
+div.resultset_partner_group {background: #EAEAEA url(../images/bg_resultset_partner_group.png) left top repeat-x; margin: 0 0 10px 0;padding: 0.25em 0.875em 0.05em 0.7em;}
 div.resultset_partner_group span.title {font-size:67.5%; font-weight:bold; line-height:100%; text-transform:uppercase;}
 div.resultset_partner_group p.result_description { font-size:65%;margin: 5px 0px 0px 0px; line-height:120%}
 div.resultset_partner_group p.result_metadata { font-size:65%; color:#999999; margin:0; line-height:120%; margin-bottom:2px;}
@@ -298,8 +306,9 @@ div.tabs ul { list-style: none; padding: 7px 0 0px 0px; margin: 0;}
 div.tabs ul li { padding: 2px 0px 2px 0; margin: 0px 2px 0px 0px; border: 0; float: left; font-weight: bold;font-size: 80%;}
 div.tabs ul li a.selected,
 div.tabs ul li a.selected:link, 
-div.tabs ul li a.selected:visited 
-  { position:relative; text-decoration:none; color:#FFFFFF; background-color:#999999; margin:0; padding:3px 7px 5px 7px; border-bottom: solid #FFFFFF 0px; }  
+div.tabs ul li a.selected:visited,
+div.tabs ul li a.selected:hover 
+  { text-decoration:none; color:#FFFFFF; background-color:#999999; margin:0; padding:8px 7px 5px 7px; border-bottom: solid #FFFFFF 0px; }  
 
 /* Commented Backslash Hack hides rule from IE5-Mac \*/
 div.tabs ul li a {float:none;}
@@ -308,16 +317,16 @@ div.tabs ul li a {float:none;}
 div.tabs ul li a,  
 div.tabs ul li a:link, 
 div.tabs ul li a:visited 
- { text-decoration:none; color:#111111; background-color: #CCCCCC; margin-right:7px; padding:3px 7px 5px 7px; border-bottom:0px; margin:0; font-size: 90%;}  
+ { text-decoration:none; color:#585858; background-color: #CCCCCC; margin-right:7px; padding:6px 7px 5px 7px; border-bottom:0px; margin:0; }  
 
 div.tabs ul li a:hover,
 div.tabs ul li a:active, 
-div.tabs ul li a:focus { color:#FFFFFF; text-decoration:none; background-color:#999999; padding:3px 7px 3px 7px; border-bottom: solid #FFFFFF 1px; margin:0; font-size: 90%;}
+div.tabs ul li a:focus { color:#FFFFFF; text-decoration:none; background-color:#999999; padding:6px 7px 1px 7px; border-bottom: solid #FFFFFF 1px; margin:0; }
 
 /* TAB MENU, EXTENDED SEARCH */
 
 div.tabmenu {position:relative; background-color:#999999; padding: 6px 0px 6px 0px; width:100%; font-size:100%;z-index:12;}
-div.tabmenu ul { list-style:none; padding: 0px 7px 0px 6px; margin:0; font-size:75%; line-height:130%; color:#FFFFFF; }
+div.tabmenu ul { list-style:none; padding: 0px 7px 0px 6px; margin:0; font-size:75%; line-height:130%; color:#CCCCCC; }
 div.tabmenu ul li { display:inline; }
 
 div.tabmenu ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:bold; }
@@ -338,15 +347,15 @@ h3#search_detail {  text-decoration:underline; margin-top:1em; }
   marginal portlet block styles  
 *********************************************************************/
 
-div.portlet { margin-bottom:10px; padding:0; font-size: 12px; }
-div.portlet p { font-size:80%; line-height:140%;}
+div.portlet { margin-bottom:10px; padding:0;}
+div.portlet p { font-size:75%; line-height:140%;}
 div.portlet p.hitrow { font-size:83%; line-height:140%;}
 div.portlet ul { margin: 0 0 -5px 14px;}
 
 /* n�tig fuer Firefox: sonst f�llt Link aus Portlet, vgl. Einstellungen */
 div.portlet .clearer { clear:both; display:block; height:1px; line-height: 0px; font-size: 1px; margin:0; padding:0; }
 
-div.portlet .iconLink a { float:left; line-height:140%}
+div.portlet .iconLink a { float:left; line-height:140%	}
 div.portlet .link_descr { margin:0px 0px 0px 15px; }
 
 div.portlet div.resultset p.result_description { font-size:65%; margin: 10px 0px 0px 0px; line-height:120%;}
@@ -356,44 +365,45 @@ div.portlet div.resultset p.result_link {  font-size:65%; margin:3px 0 8px 0;}
    min-height statt height, sonst Probleme in firefox.
    padding rechts 0 lassen, sonst fliegt in IE das marginal portlet nach l.u. wenn Titel zu lang
 */
-div.portlet div.section-header { min-height:1em; padding: 0.175em 0em 0.05em 0.5em; border: 1px solid #CCCCCC; background:url(../images/background_portlet_header.png); height:26px;}
+div.portlet div.section-header { background:url("../images/background_portlet_header.png") repeat-x transparent; border:1px solid #CCCCCC; height:25px; min-height:1em; padding:0em 0 0 0.5em; }
 
 /* IE6, 5 bugfix. sets hasLayout property and fixes http://jira.media-style.com/browse/INGRID-1468 */
 * html div.portlet div.section-header {height:1%;}
 
-div.portlet div.section-header h1 { color: #555; font-size: 12px; text-transform: uppercase; }
+div.portlet div.section-header h1 { color: #555555; font-size: 12px; text-transform: uppercase; font-weight:bold; }
 div.portlet div.section-header span.portlet_info { float:right; color: #FFFFFF;font-size:75%; font-weight:bold; line-height:100%; margin: 0 0 0 0;}
 div.portlet div.section-header a { color: #FFFFFF;}
 /* because of problems in IE rendering underline and background ! */
 div#marginal_header a:hover, div#marginal_header a:focus { text-decoration: none; }
 div#marginal_header a:hover, div#marginal_header a:focus, div#marginal_header a:active, div#marginal_header a:visited { }
 
-div.portlet div.portlet-section-body { position:relative;padding: 0.625em 0.875em; margin:0; border: 1px solid #AAAAAA; }
+div.portlet div.portlet-section-body { position:relative;padding: 0.625em 0.875em; margin:0; border: 1px solid #e4e4e2; }
 
 /********************************************************************
   form block styles  
 *********************************************************************/
 
 form, input { padding:0; margin:0; }
-select { padding:0; margin:0; border: 0px inset #FFFFFF;}
+select { padding:3px 0 0; margin:0; border: 0px inset #FFFFFF;}
 
 div.formheader {height: 1em; padding: 4px 14px 2px 8px; color: #FFFFFF; font-size: 75%; line-height: 120%; text-transform: uppercase; border-bottom: 1px solid #13547d; background-color: #176798;}
 
 div.formheader span.portlet_info { float:right; color: #FFFFFF; line-height:100%; margin: 0 0 0 0;}
 div.formheader span.portlet_info a { color: #FFFFFF; }
 
-div.formbody {padding: 4px 12px 8px 12px; margin:0px 0px 0px 0px; border: 1px solid #999999; background-color: #CCCCCC;}
+div.formbody {padding: 4px 12px 8px 12px; margin-bottom:0px; border: 1px solid #e4e4e2; background-color: #f6f6f6;}
+div.formbody_border_style {border-bottom: 0px solid #e4e4e2;}
 /* Sonderbehandlung f�r IE: dieser �bernimmt die Farbe des �bergeordneten divs nicht f�r rollover Link Auszeichnungen 
    siehe auch http://jira.media-style.com/browse/INGRID-192
 */
-div.formbody div {background-color: #CCCCCC;}
+div.formbody div {background-color: #f6f6f6;}
 div.formbody div.line {background-color: #CCCCCC;}
 div.formbody div.line_form {background-color: #CCCCCC;}
 div.formbody p { padding:0; margin: 0.5em  0.0em; }
 div.formbody .nospace { padding-bottom:0; margin-bottom:0; }
 div.formbody h3 { font-weight:bold; margin: 0.7em 0; }
 div.formbody h2 { font-weight:bold; margin-top: 0.8em; }
-div.formbody p.datasource_selection {font-size:70%}
+div.formbody p.datasource_selection {font-size:75%}
 div.formbody div.marginleft {margin-left:4em}
 div.formbody .indent1_checkbox {margin-left:2em}
 div.formbody .indent2_checkbox {margin-left:4em}
@@ -405,9 +415,11 @@ div.formbody select.info_provider  { width:22em; border: 0px inset #FFFFFF; padd
 div.formbody select.group_by { width:15em;}
 
 div.formbody input.radio {margin: 10px 0px 10px 0px; padding: 4px 4px 4px 4px; line-height: 130%; }
-div.formbody .inputstyle {border: 1px inset #FFFFFF;}
+div.formbody .inputstyle {border: 1px solid #AAAAAA;}
 div.formbody .inputstyleerror {border: 1px solid #FF0000; padding: 2px 4px 2px 4px; margin-right:6px;}
-div.formbody .inputstyletext {border: 1px inset #FFFFFF; padding: 2px 4px 2px 4px; margin-right:6px;}
+div.formbody .inputstyletext {border: 1px solid #AAAAAA; padding: 2px 4px 2px 4px; margin-right:6px;}
+/*IE: Add font-family to get same width for user and password input at login page*/
+div.formbody .inputtextfont {font-family:Arial, Verdana, Helvetica, sans-serif;}
 div.formbody input.large {width:15em;}
 
 div.formbody textarea {font: normal 83% Verdana, Arial, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:4px; }
@@ -422,18 +434,23 @@ div.formbody .spacer_search_form {margin-top: 15px}
 .col2left_incr { width:14em; }
 .col2right { width:15em; }
 
-div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px; border-bottom:1px solid #999999; border-left:1px solid #999999; border-right:1px solid #999999; background-color: #CCCCCC; }
+div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px; border:1px solid #E4E4E2; background-color: #f6f6f6; }
+div.formfooter_border_style {border-top: 0px solid #E4E4E2;}
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 
-input.btn { color: #fff; border: 1px solid #e0003c; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; height:24px; margin:16px 0px 11px 0px; padding:0px 19px 0px 19px}
-input.btn:hover { color: #fff; border: 1px solid #e0003c; background:url(../images/background_btn_hover.png); font-size: 12px; font-weight:bold; height:24px; margin:16px 0px 11px 0px; padding:0px 19px 0px 19px}
-input.btn_disable { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-size:70%; line-height: 130%; font-weight:bold; border: solid 1px #000000;}
+input.btn { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 15px 0px 15px; }
+input.btn:hover { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn_hover.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 15px 0px 15px; }
+input.btn_disable { color:#FFFFFF; border: solid 1px #e0003c; font-size: 11px; line-height: 130%; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px; }
+/*Use only at profile NUMIS*/
+input.btn_admin { margin:0px; }
+input.btn_admin:hover { margin:0px; }
 
 label.left {width:5.5em; float:left;}
 label.login {width:8em; float:left;}
-div.optional-links { margin:5px 0 0 0 ; padding:0; }
+div.optional-links { margin:0; padding:0; }
 div.optional-links img, ul.optional-links img { margin:0; padding:0; }
-div.optional-links a, ul.optional-links a, div.optional-links span { margin-right:1em; font-size:70%; }
+div.optional-links a, ul.optional-links a, div.optional-links span { margin-right:1em; font-size: 11px; }
+div.optional-links span.selected { font-weight:bold; }
 
 ul.optional-links ul.optional-links { margin: 0 0 0 12px; padding:0; }
 ul.optional-links { list-style:none; margin: 0 0 1.2em 0; }
@@ -464,8 +481,8 @@ div.formbody input.qrystr {width: 30em; font-size: 83%; line-height: 100%;}
 
 /*** Formular Erweiterte Suche ***/
 
-div.formbody div.qrytxt {width:34.5em; padding: 5px 5px 5px 5px;text-align:right;}
-div.formbody textarea.qrytxt { width: 100%;font: normal 83% Verdana, Arial, sans-serif; line-height: 130%; border: 1px inset #FFFFFF; padding:2px; margin:0 0 5px 0; }
+div.formbody div.qrytxt {width:34.5em; padding-top:7px; text-align:right;}
+div.formbody textarea.qrytxt { width: 100%;font: normal 83% Verdana, Arial, sans-serif; line-height: 130%; border: 1px solid #AAAAAA; padding:2px; margin:0 0 5px 0; }
 div.formbody input.search_term { height:auto;width: 100%;font-size: 83%;}
 div.formbody div.innerform {width:34.5em;}
 div.formbody input.thesaurus_term {width: 45%;font-size: 83%; line-height: 120%;}
@@ -493,11 +510,11 @@ div.formbody .snslogo_margin {margin-top: 8px; }
   footer block styles  
 *********************************************************************/
 
-div#footercontainer { margin: 0px 0 0px 28px; background: url(../images/logo-numis_footer.png) no-repeat; padding: 0px 0px 30px 112px; }
-#footercontent { font-size: 11px; }
+div#footercontainer { background: url(../images/logo-numis_footer.png) no-repeat scroll 20px 0px transparent; }
+#footercontent { font-size: 11px; width:76.4em; margin-left:108px;}
 
-div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF;}
-div#footermarginal { background: #999999; width: 19em; padding-right: 14px; text-align:right; font-size: 65%; line-height: 1px; width:100%;}
+div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0px; background: #FFFFFF;}
+div#footermarginal { background:url("../images/footer_doppellinie.png") repeat-x scroll 0 0 transparent; height:2px; }
 
 div#finalfootercontainer { float: left; width: 59.5em; }
 div#finalfooter { padding-left:112px; padding-bottom:20px; padding-top:0px; height:11px; font-size:65%; line-height:120%; color:#000000; }
@@ -520,3 +537,53 @@ div.helpcontent ul {list-style: none; margin: 0.0em 0 0 0.5em; padding:0;}
 div.helpcontent li { margin: 0 0 0.0em 0;padding: 0 0 0 15px;background-image:url("images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .45em; }
 div.helpcontent li a { font-size:75%; }
 
+/********************************************************************
+  administration styles
+*********************************************************************/
+
+/*** content database browser ***/
+
+.contentNavigation { padding:2px 170px 2px 170px; margin:0px 0px 10px 0px; border:1px solid #999999; }
+.contentNavigationLeft { float:left;  width:110px; }
+.contentNavigationMiddle { float:left; font-size:75%; width:275px; text-align:center; }
+.contentNavigationRight { float:right; width:134px; text-align:right; }
+.contentColumnHead { text-decoration:underline; background-color:#999999; color:white; }
+.contentColumnHeadLight { text-decoration:none; background-color:#CCCCCC; color:black; }
+
+a.contentColumnHead, a.contentColumnHead:link, a.contentColumnHead:visited { text-decoration:none; background-color:#99999; color: white; }
+a.contentColumnHeadLight, a.contentColumnHeadLight:link, a.contentColumnHeadLight:visited { text-decoration:none; background-color:#CCCCCC; color: black; }
+
+.contentRowEven { background-color: #F4F4F4; }
+.contentRowEvenError { background-color: #F4D4D4; }
+.contentRowEvenYellow { background-color: #FfFfa0; }
+.contentRowOdd { background-color: #E0E0E0; }
+.contentRowOddError { background-color: #E0C0C0; }
+.contentRowOddYellow { background-color: #FfFf74; }
+.contentRowDark { background-color: #F4F4F4; }
+.contentRowLight { background-color: white; }
+.contentRowLine {border-bottom: 1px solid #e0003c; }
+.contentRowTitle {background-color:#176798; color:white;}
+.contentInput { width:49em; }
+
+a.tooltip {position: relative; }
+a.tooltip span
+{     visibility: hidden;
+      position: absolute;
+      top:13px; right:0;
+      width:32em;
+      padding:1em;
+      color:#226600;
+      font-size:80%;
+      background: #ffffdd;
+      border: 1px solid #aaaaaa;
+      padding: 7px;
+      z-index: 99;
+}
+
+a.tooltip:hover span { visibility: visible; }
+
+.comment {
+    color:gray;
+    font-size:65%;
+    padding-left:185px;
+}

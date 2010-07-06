@@ -1,7 +1,9 @@
 #* include service navigation component *#
 #macro (includeFooterNavigation)
 	<a href="/ingrid-portal/portal/disclaimer.psml" title="Impressum">Impressum</a>
+	|
 	<a href="/ingrid-portal/portal/privacy.psml" title="Datenschutzbestimmung">Datenschutzbestimmung</a>
+	|
 	<a href="mailto:webmaster@portalu.de" title="Webmaster">Webmaster</a>
 #end
 
@@ -20,10 +22,12 @@
   <div id="footercontent">
     <!-- portlets go here -->
 #includeFooterNavigation()
-<br />
-    Copyright &copy; Koordinierungsstelle PortalU im Nds. Ministerium f&uuml;r Umwelt und Klimaschutz<br />
-
-    Alle Rechte vorbehalten<br /><br />
+	<img align="right" src="/ingrid-portal/decorations/layout/ingrid-popup/images/logo-niedersachsen.png" alt="Niedersachsen" />
+	<br>
+		Copyright &copy; Nieders&auml;chsisches Ministerium f&uuml;r Umwelt und Klimaschutz
+	<br>
+		Alle Rechte vorbehalten
+	<br /><br />
   </div>
 </div>
 

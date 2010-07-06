@@ -229,6 +229,8 @@ div.left { float:left; width:15.75em; padding:0; }
 div.right { float:left; margin-left:2.625em; width:15.75em; padding:0; }
 div.whole { width:34.125em; padding:0; }
 div.themen_image { margin:0; padding:4px 14px 0 0; float:left; }
+/*Need for profile NUMIS*/
+div img.themen_image_style{}
 
 div.section { margin: 0 0 0px 0; padding:0; }
 div.section p a { text-decoration:underline; }
@@ -458,6 +460,8 @@ label.login {width:8em; float:left;}
 div.optional-links { margin:5px 0 0 0 ; padding:0; }
 div.optional-links img, ul.optional-links img { margin:0; padding:0; }
 div.optional-links a, ul.optional-links a, div.optional-links span { margin-right:1em; font-size:65%; }
+/*Need for profile NUMIS*/
+div.optional-links span.selected {}
 
 ul.optional-links ul.optional-links { margin: 0 0 0 12px; padding:0; }
 ul.optional-links { list-style:none; margin: 0 0 1.2em 0; }
