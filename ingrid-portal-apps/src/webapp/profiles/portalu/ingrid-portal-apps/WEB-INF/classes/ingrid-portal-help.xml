@@ -499,322 +499,284 @@
         <section help-key="ext-search-spacial-6">
             <header>Raumeinschränkung Karte</header>
             <content>
-                <p>Neben der begrifflichen räumlichen Suche ist auch eine Suche
-                    über eine Karte möglich. Hierbei wird ein Suchrechteck
-                    (Bounding-Box) an die Suche übergeben.</p>
-                <p>Bei Web-Seiten wird die Bounding-Box mit den umschließenden
-                    Rechtecken der geografischen Begriffe, die der Web-Seite
-                    zugeordnet sind, verglichen. Innerhalb der Datenbanken wird
-                    direkt nach dem Suchrechteck gesucht.</p>
-                <p>Zur Orientierung und Spezifikation eines Suchrechtecks können
-                    Sie die Standard-Hintergrundkarten in PortalU nutzen oder
-                    aber eigene Hintergrundkarten über den Web-Mapping-Service
-                    (WMS) des PortalU hinzu laden.</p>
+                <p>Die räumliche Einschränkung der PortalU-Suche ist sowohl über 
+				Begriffe als auch die Auswahl eines Kartenausschnitts (Bounding-Box) 
+				möglich. Wenn Sie eine entsprechende Bounding-Box definiert haben, 
+				wird in den über PortalU verfügbarem Webangebot gezielt nach räumlichen 
+				Begriffen (wie z.B. Städten, Gebirgen usw.) gesucht, die sich im 
+				Kartenausschnitt befinden. In den über PortalU verfügbaren Datenbanken 
+				wird hingegen direkt nach dem Kartenausschnitt (Suchrechteck) gesucht.</p>
+                <p>Zur Orientierung und Spezifikation eines Kartenausschnitts können 
+				Sie die Hintergrundkartendienst (Web Map Service) von PortalU, die in 
+				PortalU verfügbare Kartendienste oder externe Kartendienste nutzen.</p>
             </content>
             <section help-key="ext-search-spacial-7">
 				<header>Akkordeon-Menü</header>
                 <content>
-                    <p>Die Steuerung der Anzeige einzelner Layer und ganzer Dienste sowie 
-						die Anzeige der Legende wird über ein Menü links neben der Karte gesteuert. 
-						Das Menü ist im sogenannten Akkordeon-Stil aufgebaut, wobei durch einen 
-						Klick auf den gewünschten Menüpunkt, die Informationen unterhalb von diesem 
-						angezeigt werden. Darunter stehende Menüpunkte werden nach unten verschoben. 
-						Es können immer nur Informationen zu einem Menüpunkt angezeigt werden.</p>
-                    <p>Die verwendeten Symbole haben die folgende Bedeutung:</p>
+                    <p>Verfügbare sowie aktivierte Kartendienste, Legenden und eine Metadatensuche 
+					werden in einem Akkordeon-Menü angeboten, das sich links neben der Karte befindet. 
+					Durch einen Klick auf eine Menüüberschrift wird der jeweilige Menüpunkt aufgeklappt.</p>
+					<p><img border="0" width="130" height="111"
+                            src="../decorations/layout/ingrid-help/images/image201.jpg"
+                        alt="*"/> </p>		
                     <p><b>Legende</b></p>
-                    <p>Die Legende zu den aktiven Layern (siehe Aktive Dienste) wird angezeigt. 
-						Sie können anhand der Legendenbeschreibungen erkennen, mit welchen Symbolen 
-						und/oder Farben die unterschiedlichen Informationen in der Karte dargestellt 
-						werden.</p>
+                    <p>Im Menüpunkt „Legende“ werden alle verfügbaren Legenden der Kartenebenen (Layer) 
+					   dargestellt, die unter „Aktive Dienste“ aktiviert sind und im Viewer dargestellt 
+					   werden. Die Legendenbeschreibung gibt darüber Aufschluss mit welchen Symbolen und/oder 
+					   Farben die unterschiedlichen Informationen in der Karte dargestellt werden.</p>
                    <p><b>Aktive Kartendienste</b></p>
-                    <p>Alle geladenen Dienste werden in einer Baumstruktur gelistet. Unterhalb jedes 
-					Dienstes werden alle vorhandenen Layer angegeben. </p>
-					<p>Die verwendeten Symbole haben die folgende Bedeutung:</p>
+                    <p>Alle Kartendienste, die sich unter „Aktive Dienste“ befinden, können durch einen Klick 
+					   im Kartenviewer aktiviert bzw. deaktiviert werden. Die Kartendienste mit ihren Layern 
+					   werden in einer Baumstruktur wiedergegeben.</p>
+					<p><img border="0" width="255" height="119"
+                            src="../decorations/layout/ingrid-help/images/image202.jpg"
+                        alt="*"/> </p>					   
+					<p>Die einzelnen Symbole haben die folgende Bedeutung:</p>
 
-                    <p> <img border="0" width="14" height="14"
+                    <p> <img border="0" width="16" height="16"
                             src="../decorations/layout/ingrid-help/images/image101.jpg"
-                        alt="*"/> Der markierte Dienst bzw. der markierte Layer wird um eine Position 
-						nach oben verschoben. Bevor sie auf dieses Symbol klicken, müssen Sie entweder 
-						einen Dienst oder aber einen einzelnen Layer durch einen Klick auf den Namen 
-						markiert haben. Umso später ein Dienst bzw. ein Layer in der Reihenfolge auftritt, 
-						umso höher liegt er in der Karte und überdeckt damit evtl. darunterliegende Layer.</p>
-
-                    <p> <img border="0" width="14" height="14"
+                        alt="*"/> Rauf: Ein markierter Dienst bzw. eine markierte Layer wird um eine Ebene nach 
+						oben verschoben. Ein Dienst bzw. eine Layer kann durch einen Klick mit der linken Maustaste 
+						auf den Namen markiert werden. Für die Darstellung in der Karte gilt: Layer, die in der 
+						Baumstruktur weiter unten gelistet sind, überlagern Layer, die weiter oben gelistet sind.</p>								
+                    <p> <img border="0" width="16" height="16"
                             src="../decorations/layout/ingrid-help/images/image102.jpg"
-                        alt="*"/> Der markierte Dienst bzw. der markierte Layer wird um eine Position 
-						nach unten verschoben. Bevor sie auf dieses Symbol klicken, müssen Sie entweder 
-						einen Dienst oder aber einen einzelnen Layer durch einen Klick auf den Namen 
-						markiert haben. Umso später ein Dienst bzw. ein Layer in der Reihenfolge auftritt, 
-						umso höher liegt er in der Karte und überdeckt damit evtl. darunterliegende Layer.</p>
+                        alt="*"/> Runter: Ein markierter Dienst bzw. eine markierte Layer wird um eine Ebene nach unten 
+						verschoben. Ein Dienst bzw. eine Layer kann durch einen Klick mit der linken Maustaste auf den 
+						Namen markiert werden. Wenn eine Layer durch eine andere überlagert wird, kann diese durch ein 
+						verschieben nach unten sichtbar gemacht werden. Die Layer, die sich am unteren Ende der Liste 
+						befindet, wird immer als oberste Ebene in der Karte dargestellt.</p>
 
-                    <p> <img border="0" width="14" height="14"
+                    <p> <img border="0" width="16" height="16"
                             src="../decorations/layout/ingrid-help/images/image103.jpg"
-                        alt="*"/> Der markierte Dienst wird aus den aktiven Diensten gelöscht. Bevor sie 
-						auf dieses Symbol klicken, müssen Sie einen Dienst einen Klick auf den Namen markiert 
-						haben. Ein Löschen einzelner Layer ist nicht möglich.</p>
+                        alt="*"/> Dienst entfernen: Ein markierter Dienst wird aus den Bereich „Aktive Dienste“ gelöscht. 
+						Ein Dienst kann durch einen Klick mit der linken Maustaste auf den Namen markiert werden. Das 
+						Entfernen von einzelnen Layer ist nicht möglich.</p>
 
-                    <p> <img border="0" width="14" height="14"
-                            src="../decorations/layout/ingrid-help/images/image104.jpg"
-                        alt="*"/> Ein Klick auf dieses Symbol zeigt Informationen über einen Dienst bzw. einen 
-						einzelnen Layer an.</p>
-
-                    <p> <img border="0" width="14" height="14"
-                            src="../decorations/layout/ingrid-help/images/image105.jpg"
-                        alt="*"/> Durch einen Klick auf dieses Symbol wird auf die Ebene des entsprechenden 
-						Layers gezoomt. Diese Funktion steht nur über das Submenü zur Verfügung (siehe unten).</p>
-
-                    <p> <img border="0" width="14" height="14"
+                    <p> <img border="0" width="20" height="17"
                             src="../decorations/layout/ingrid-help/images/image106.jpg"
-                        alt="*"/> Das Ordnersymbol steht in der Kartenkomponente für einen Dienst. Hinter der 
-						darunterliegenden Baumstruktur verbergen sich die einzelnen Layer. Ein Klick auf 
-						dieses Symbol öffnet ein Submenü, dass die Funktionen  <img border="0" width="14" height="14"
-                            src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"/>, <img border="0" width="14" height="14"
-                            src="../decorations/layout/ingrid-help/images/image102.jpg" alt="*"/> und  
-							<img border="0" width="14" height="14" 
-							src="../decorations/layout/ingrid-help/images/image103.jpg" alt="*"/> bezogen auf den 
-						Dienst zur Verfügung stellt.</p>
+                        alt="*"/> Das Ordnersymbol wird zur Anzeige der Kartendienste verwendet. In den einzelnen Ordnern 
+						sind die entsprechenden Layer eines Dienstes zu finden. Mit einem Klick (linke Maustaste) auf das 
+						Ordnersymbol können Sie den Dienst verschieben, entfernen oder dessen Transparenz ändern.</p>
 
-                    <p> <img border="0" width="14" height="14"
+                    <p> <img border="0" width="16" height="16"
                             src="../decorations/layout/ingrid-help/images/image107.jpg"
-                        alt="*"/> Dieses Symbol steht in der Kartenkomponente für einen Layer. Ein Klick auf 
-						dieses Symbol öffnet ein Submenü, dass die Funktionen  
-						<img border="0" width="14" height="14"
-                            src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"/>, 
-							<img border="0" width="14" height="14"
-                            src="../decorations/layout/ingrid-help/images/image102.jpg" alt="*"/>,  
-							<img border="0" width="14" height="14" 
-							src="../decorations/layout/ingrid-help/images/image103.jpg" alt="*"/>,
-							<img border="0" width="14" height="14"
-                            src="../decorations/layout/ingrid-help/images/image104.jpg" alt="*"/> und  
-							<img border="0" width="14" height="14" 
-							src="../decorations/layout/ingrid-help/images/image105.jpg" alt="*"/>
-						bezogen auf den Layer zur Verfügung stellt.</p>
+                        alt="*"/> Dieses Symbol wird zur Anzeige einer Layer verwendet. Mit einem Klick (linke Maustaste) 
+						auf das Symbol können Sie den Dienst verschieben, auf die Ebene des Dienstes zoomen oder Informationen 
+						abrufen.</p>
 
-					<p> <img border="0" width="14" height="14"
+                    <p> <img border="0" width="17" height="17"
                             src="../decorations/layout/ingrid-help/images/image108.jpg"
-                        alt="*"/> Die Anzeige jedes Layers kann aktiviert werden, indem er ausgewählt wird. 
-						Wählen sie einen ganzen Dienst aus, so werden alle Layer ausgewählt. Löschen sie die 
-						Auswahl eines ganzen Dienstes, so wird die Auswahl aller Layer des Dienstes gelöscht.</p>
+                        alt="*"/> (links) Dienst / Layer in Karte aktivieren: Wenn die linke Checkbox für einen Dienst oder 
+						eine Layer angehakt ist, wird der Dienst bzw. die Layer in der Karte aktiviert und in der Karte dargestellt,
+						wenn die entsprechende Zoomstufe (vordefinierter Maßstab der Layer) eingestellt ist. Befindet sich der 
+						dargestellte Kartenausschnitt außerhalb der Zoomstufe der Layer, wird die Layer in der Karte nicht angezeigt 
+						und der Layertitel grau dargestellt. Wird ein Dienst angehakt, so werden alle Layer des Dienstes aktiviert. 
+						Wird das Häkchen eines Dienstes entfernt, so werden alle Layer des Dienstes deaktiviert. </p>
 
-                    <p> <img border="0" width="14" height="14"
+                    <p> <img border="0" width="17" height="17"
                             src="../decorations/layout/ingrid-help/images/image108.jpg"
-                        alt="*"/> Über eine zweite Check-Box (nur Layer) können sie die Anzeige von Informationen 
-						zu den einzelnen Layern an- und abschalten (siehe unten Button „Datenabfrage“).</p>
+                        alt="*"/> (rechts) Infoabfrage in Karte aktivieren: Wenn die rechte Checkbox für eine Layer angehakt ist, können in 
+						der Karte entsprechende Layer-Informationen über den Button „Infoabfrage“ (Werkzeugleiste) aufgerufen werden. </p>
+
+					<p> <img border="0" width="18" height="16"
+                            src="../decorations/layout/ingrid-help/images/image104.jpg"
+                        alt="*"/> Informationen: Weiterführende Informationen (Metadaten) über einen Dienst bzw. eine Layer werden angezeigt.</p>
 
 					<p><b>Themen</b></p>
-                    <p>Eine Vielzahl von Diensten sind nach Umweltthemen geordnet in PortalU eingebunden. 
-						Sie sind unter dem Menüpunkt Themen aufgelistet. </p>
-					<p>Die verwendeten Symbole haben die folgende Bedeutung:</p>
+                    <p>Unter Themen finden Sie verschiedene nach Umweltthemen sortierte Kartendienste von Bund und Ländern, die in 
+					   den PortalU-Kartenviewer reingeladen werden können.</p>
+                    <p> <img border="0" width="334" height="251"
+                            src="../decorations/layout/ingrid-help/images/image203.jpg"				   
+					     alt="*"/> </p> 
+					   
+					<p>Die einzelnen Symbole haben die folgende Bedeutung:</p>
 
-                    <p> <img border="0" width="14" height="14"
+                    <p> <img border="0" width="17" height="17"
                             src="../decorations/layout/ingrid-help/images/image109.jpg"
-                        alt="*"/> Dieses Symbol für ein Thema unter dem zugehörige Dienste sortiert sind.</p>
+                        alt="*"/> Das Ordnersymbol wird für die Anzeige der einzelnen Umweltthemen verwendet. 
+						In den Ordnern finden Sie die entsprechenden Kartendienste.</p>
 
-                    <p> <img border="0" width="14" height="14"
+                    <p> <img border="0" width="15" height="16"
                             src="../decorations/layout/ingrid-help/images/image110.jpg"
-                        alt="*"/> Dieses Symbol steht für einen Dienst. Ein Klick auf das Symbol lädt ihn 
-						in die Kartenkomponente. Alle in dem Dienst enthaltenen Layer werden angezeigt, 
-						soweit ihre Anzahl nicht 10 Layer übersteigt. Enthält der Dienst mehr als 10 Layer, 
-						wird der Dienst zwar zu den aktiven Diensten geladen, die Layer aber nicht automatisch 
-						angezeigt.</p>
+                        alt="*"/> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende 
+						Dienst zu den aktiven Diensten hinzugefügt. Wenn der Dienst weniger als 11 Layer enthält, 
+						werden alle Layer direkt in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, 
+						werden diese nicht automatisch aktiviert, um die Ladezeit gering zu halten.</p>
 
-                    <p> <img border="0" width="14" height="14"
+                    <p> <img border="0" width="18" height="22"
                             src="../decorations/layout/ingrid-help/images/image111.jpg"
-                        alt="*"/> Über einen Klick auf dieses Symbol wird der Dienst nicht nur in die 
-						Kartenkomponente geladen, sondern zusätzlich auch auf den vom Dienst beschriebenen 
-						Kartenausschnitt gezoomt. Alle in dem Dienst enthaltenen Layer werden angezeigt, soweit 
-						ihre Anzahl nicht 10 Layer übersteigt. Enthält der Dienst mehr als 10 Layer, wird der 
-						Dienst zwar zu den aktiven Diensten geladen, die Layer aber nicht automatisch angezeigt.</p>
+                        alt="*"/> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende Dienst 
+						zu den aktiven Diensten hinzugefügt und in der Karte auf den vom Dienst beschriebenen Kartenausschnitt 
+						gezoomt. Auch hier gilt: Wenn der Dienst weniger als 11 Layer enthält, werden alle Layer direkt 
+						in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, werden die Layer nicht automatisch aktiviert, 
+						um die Ladezeit gering zu halten.</p>
 
-                    <p> <img border="0" width="14" height="14"
+                    <p> <img border="0" width="18" height="16"
                             src="../decorations/layout/ingrid-help/images/image104.jpg"
-                        alt="*"/> Ein Klick auf dieses Symbol zeigt Informationen über den Dienst an.</p>
+                        alt="*"/> Informationen: Weiterführende Informationen (Metadaten) über einen Dienst werden angezeigt.</p>
 
                     <p><b>Bund/Länder</b></p>
-                    <p>Die Dienste, die von den Ministerien und Ämtern von Bund und Ländern zur Verfügung gestellt 
-						werden, sind nach Bund und Ländern sortiert unter diesem Menüpunkt aufgelistet. </p>
-					<p>Die verwendeten Symbole haben die gleiche Bedeutung wie unter dem Menüpunkt „Themen“ 
-					beschrieben (siehe oben).</p>
+                    <p>Unter Bund/Länder finden Sie umweltrelevante Kartendienste verschiedener Institutionen und Organisationen 
+					von Bund und Ländern, die regional (nach Bund und Ländern) sortiert sind.</p>
+                    <p> <img border="0" width="307" height="158"
+                            src="../decorations/layout/ingrid-help/images/image204.jpg"
+                        alt="*"/> </p> 
+					<p>Die Bedeutung der einzelnen Symbole werden unter dem Menüpunkt „Themen“ beschrieben (siehe oben).</p>
 						
                     <p><b>Metadatensuche</b></p>
-                    <p>Über die Eingabe eines Suchbegriffs in das Textfeld und Klicken auf den Button „OK“ können 
-						Sie in den Diensten von Bund und Ländern nach dem Suchbegriff suchen.</p>
-					<p>Die Ergebnisse werden als Liste dargestellt. Dabei sind dem Namen der Dienste und Layer die 
-					folgenden Symbole vorangestellt:</p>
+                    <p>In der Metadatensuche können Sie nach Kartendiensten von Bund und Ländern suchen, die im PortalU-Kartenviewer 
+					eingebunden sind. Geben Sie hierfür einen Suchbegriff ein und klicken Sie auf „ok“. </p>
+                    <p> <img border="0" width="353" height="191"
+                            src="../decorations/layout/ingrid-help/images/image205.jpg"
+                        alt="*"/> </p> 					
+					
+					<p>In der Suchergebnisliste werden die folgenden Symbole verwendet:</p>
 
-                    <p> <img border="0" width="14" height="14"
+                    <p> <img border="0" width="20" height="18"
                             src="../decorations/layout/ingrid-help/images/image112.jpg"
-                        alt="*"/> Dieses Symbol steht für einen Dienst. Ein Klick auf das Symbol lädt ihn in 
-						die Kartenkomponente. Alle in dem Dienst enthaltenen Layer werden angezeigt, soweit ihre 
-						Anzahl nicht 10 Layer übersteigt. Enthält der Dienst mehr als 10 Layer, wird der Dienst 
-						zwar zu den aktiven Diensten geladen, die Layer aber nicht automatisch angezeigt.</p>
+                        alt="*"/> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende Dienst 
+						zu den aktiven Diensten hinzugefügt. Wenn der Dienst weniger als 11 Layer enthält, werden zudem alle Layer 
+						direkt in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, werden die Layer nicht automatisch 
+						aktiviert, um die Ladezeit gering zu halten.</p>
 
-                    <p> <img border="0" width="14" height="14"
+                    <p> <img border="0" width="19" height="19"
                             src="../decorations/layout/ingrid-help/images/image113.jpg"
-                        alt="*"/> Über einen Klick auf dieses Symbol wird der Dienst nicht nur in die 
-						Kartenkomponente geladen, sondern zusätzlich auch auf den vom Dienst beschriebenen 
-						Kartenausschnitt gezoomt. Alle in dem Dienst enthaltenen Layer werden angezeigt, soweit 
-						ihre Anzahl nicht 10 Layer übersteigt. Enthält der Dienst mehr als 10 Layer, wird der 
-						Dienst zwar zu den aktiven Diensten geladen, die Layer aber nicht automatisch angezeigt.</p>
+                        alt="*"/> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende Dienst zu 
+						den aktiven Diensten hinzugefügt und in der Karte auf den vom Dienst beschriebenen Kartenausschnitt 
+						gezoomt. Auch hier gilt: Wenn der Dienst weniger als 11 Layer enthält, werden zudem alle Layer direkt 
+						in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, werden die Layer nicht automatisch 
+						aktiviert, um die Ladezeit gering zu halten.</p>
 
-                    <p> <img border="0" width="14" height="14"
+                    <p> <img border="0" width="15" height="16"
                             src="../decorations/layout/ingrid-help/images/image110.jpg"
-                        alt="*"/> Dieses Symbol steht für einen Layer. Ein Klick auf das Symbol lädt ihn in die 
-						Kartenkomponente und schaltet ihn aktiv.</p>
+                        alt="*"/> Mit einem Klick (linke Maustaste) auf dieses Symbol wird die entsprechende Layer zu den aktiven 
+						Diensten hinzugefügt.</p>
 
-                    <p> <img border="0" width="14" height="14"
+                    <p> <img border="0" width="18" height="22"
                             src="../decorations/layout/ingrid-help/images/image111.jpg"
-                        alt="*"/> Über einen Klick auf dieses Symbol wird der Layer nicht nur in die Kartenkomponente 
-						geladen, sondern zusätzlich auch auf den vom Layer beschriebenen Kartenausschnitt gezoomt.</p>
-					<p>Über einen Klick auf den Namen des Dienstes bzw. des Layers werden die Daten über den 
-						Dienst bzw. den Layer angezeigt.</p>
-
+                        alt="*"/> Mit einem Klick (linke Maustaste) auf dieses Symbol wird die entsprechende Layer zu den aktiven 
+						Diensten hinzugefügt und in der Karte auf den vom Dienst beschriebenen Kartenausschnitt gezoomt.</p>
+						
                  </content>
             </section>
             <section help-key="ext-search-spacial-8">
                 <header>Karte speichern</header>
                 <content>
-                    <p>Wenn Sie eine eingeloggte Nutzerin oder ein eingeloggter Nutzer sind, können Sie die 
-					Einstellungen unter „Aktive Dienste“ in die Personalisierung übernehmen, indem Sie auf 
-					den Button „Karte speichern“ klicken.</p>
+                    <p>Wenn Sie sich mit ihrem PortalU-Account unter „Mein PortalU“ angemeldet haben, können Sie ihre Einstellungen unter 
+					„Aktive Dienste“ speichern.</p>
+                    <p> <img border="0" width="371" height="135"
+                            src="../decorations/layout/ingrid-help/images/image206.jpg"
+                        alt="*"/></p>					
                 </content>
             </section>
             <section help-key="ext-search-spacial-9">
                 <header>Art der Einschränkung</header>
                 <content>
-                    <p>Hier können Sie wählen, wie das ausgewählte Suchrechteck
-                        auf Ihre Suche wirken soll. Es werden je nach Auswahl
-                        nur Ergebnisse gefunden für die folgendes gilt:</p>
+                    <p>Wenn Sie einen Kartenausschnitt gewählt haben, können Sie wählen, in welcher Form die räumliche Einschränkung für die 
+					PortalU-Suche verwendet werden soll. Folgende Optionen sind hierbei möglich:</p>
                     <ul>
-                        <li>Der Raumbezug der Ergebnisse liegt innerhalb des
-                            gewählten Kartenausschnittes</li>
-                        <li>Der Raumbezug der Ergebnisse schneidet den gewählten Kartenausschnitt</li>
-                        <li>Der Raumbezug der Ergebnisse umschließt den
-                            gewählten Kartenausschnitt</li>
+                        <li>1.	Der Raumbezug der Suchergebnisse liegt innerhalb des Kartenausschnittes.</li>
+                        <li>2.	Der Raumbezug der Suchergebnisse schneidet den Kartenausschnitt.</li>
+                        <li>3.	Der Raumbezug der Suchergebnisse umschließt den Kartenausschnitt.</li>
                     </ul>
+					                    <p> <img border="0" width="455" height="252"
+                            src="../decorations/layout/ingrid-help/images/image208.jpg"
+                        alt="*"/></p>
                 </content>
             </section>
             <section help-key="ext-search-spacial-10">
-                <header>Kartendienste Werkzeugleiste</header>
+                <header>Werkzeugleiste</header>
                 <content>
-                    <p>Über die Werkzeugleiste können entweder direkt Aktionen
-                        ausgelöst werden, oder die Funktion der Maus wird so
-                        geschaltet, dass die Funktionalität beim nächsten Klick
-                        in die Karte ausgelöst wird.</p>
+                   <p>Über die Werkzeugleiste können Sie verschiedene Aktionen
+                        direkt oder durch einen Klick in die Karte ausführen.</p>
+                   <p> <img border="0" width="354" height="46"
+                            src="../decorations/layout/ingrid-help/images/image209.jpg"
+                        alt="*"/></p>			
                     <p>
-                        <b>Button &#8222;Kartendienst hinzufügen&#8220;</b>
+                        <b>Externen Dienst hinzufügen</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image024.jpg"
-                        alt="*"/>Nach dem Klick auf diesen Button wird ein Fenster geöffnet. Sie können 
-						nun die Capabilities-URL eines Ihnen bekannten Dienstes in das Textfeld eintragen und 
-						über den Button &#8222;WMS hinzufügen&#8220; zu den Aktiven Diensten hinzufügen.</p>
-					<p> Dabei können Sie per Check-Box wählen, ob Sie die Ebenen des hinzugefügten Dienstes 
-						gleich aktivieren wollen und ob Sie auf den Kartenausschnitt zoomen wollen, der die Ausdehnung 
-						des geladenen Dienstes zeigt.</p>
+                        alt="*"/> Über diesen Button können Sie eine beliebige GetCapabilities-URL (externer Dienst) 
+						hinzufügen. Mit dem Button „WMS hinzufügen“ wird der Dienst zu den aktiven Diensten hinzufügen 
+						und im Kartenviewer dargestellt. </p>
+					<p> Sie können hierbei wählen (Checkbox), ob die Layer des Dienstes direkt aktiviert und ob auf den 
+					Kartenausschnitt des Dienstes direkt gezoomt werden soll.</p>
                     <p>
-                        <b>Button &#8222;Datenabfrage&#8220;</b>
+                        <b>Infoabfrage</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image026.jpg"
-                        alt="*"/> Dieser Button schaltet die Funktion der Maus
-                        auf die Informationsabfrage um. Über einen Klick in die
-                        Karte erhalten Sie Informationen zu dem Punkt der Karte,
-                        auf den Sie geklickt haben.</p>
-                    <p> Welche Informationen Ihnen zur Verfügung stehen, hängt davon ab, 
-						bei welchen Layern unter &#8222;Aktive Kartendienste&#8220; 
-						Sie die zweite Check-Box &#8222;Infoabfrage an/aus&#8220; aktiviert haben 
-						(siehe oben).</p>
+                        alt="*"/> Über diesen Button wird die Informationsabfrage in der Karte aktiviert. Über einen Klick 
+						in die Karte erhalten Sie standortspezifische Informationen der dargestellten Layer. </p>
+                    <p> Welche Informationen angezeigt werden, hängt davon ab, bei welcher Layer unter „Aktive Dienste“ die 
+					rechte Check-Box (Infoabfrage in Karte) aktiviert ist (siehe oben). Derzeit unterstützen nicht 
+					alle Dienste diese Funktion.</p>
                     <p>
-                        <b>Button &#8222;Koordinaten anzeigen&#8220;</b>
+                        <b>Koordinaten anzeigen</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image027.jpg"
-                        alt="*"/> Über diesen Button wird die Funktion der Maus auf das Anzeigen einer 
-						Punktkoordinate umgeschaltet. Es wird jeweils die Position der Maus in 
-						geografischen Koordinaten unterhalb der Karte angezeigt. Ebenso wird die Position 
-						der Maus beim letzten Klick in die Karte angezeigt.</p>
-                    <p>
-                        <b>Button &#8222;Raumeinschränkung: Verwaltungsgebiet selektieren&#8220;</b>
+                        alt="*"/> Über diesen Button können Punktkoordinate in der Karte aufgerufen werden. Die Position der 
+						Maus wird in geografischen Koordinaten unterhalb der Karte angezeigt. Zudem werden die Koordinaten des 
+						letzten Klicks in der Karte angezeigt.</p>
+					<p>
+                        <b>Raumeinschränkung: Verwaltungsgebiet selektieren</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image028.jpg"
-                        alt="*"/> Über diesen Button wird die Funktion der Maus
-                        auf das Selektieren einer Verwaltungseinheit
-                        umgeschaltet. Nach dem Klick auf einen Punkt in der
-                        Karte öffnet sich ein neues Fenster, über das Sie
-                        auswählen können, welche Ebene der Verwaltungseinheit
-                        (Land, Regierungsbezirk, Kreis oder Gemeinde) ausgewählt
-                        werden soll. Die auswählbaren Verwaltungseinheiten
-                        beziehen sich immer auf die Standard-Layer von PortalU (Verwaltungsgrenzen).</p>
-                    <p>Nach der Auswahl wird die selektierte Verwaltungseinheit
-                        unterhalb der Karte angezeigt. Durch einen Klick auf den
-                        Button &#8222;Zur Suche hinzufügen&#8220; wird
-                        sie als Raumeinschränkung zum Suchausdruck hinzugefügt.</p>
+                        alt="*"/> Über diesen Button kann eine Verwaltungseinheit in der Karte selektiert werden. Durch einem 
+						Klick (linke Maustaste) auf die Karte, kann in einer Dialogbox die Verwaltungseinheit (Land, 
+						Regierungsbezirk, Kreis oder Gemeinde) des Standorts ausgewählt werden soll. Die Verwaltungseinheiten 
+						sind Bestandteil des Hintergrundkartendienstes von PortalU.</p>
+                    <p>Nach der Auswahl wird die selektierte Verwaltungseinheit unterhalb der Karte angezeigt. Durch einen Klick 
+					auf den Button „Zur Suche hinzufügen“ wird die Einheit als Raumeinschränkung zum Suchausdruck hinzugefügt.</p>
                     <p>
-                        <b>Button &#8222;Raumeinschränkung: Suchgebiet selektieren&#8220;</b>
+                        <b>Raumeinschränkung: Suchgebiet selektieren</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image029.jpg"
-                        alt="*"/> Über diesen Button wird die Funktion der Maus
-                        auf die Auswahl eines Suchgebietes umgeschaltet. Nach
-                        dem Klick auf einen Punkt in der Karte können Sie durch
-                        Festhalten der linken Maustaste und Ziehen der Maus über
-                        die Karte mit anschließendem Loslassen der linken
-                        Maustaste ein Suchrechteck definieren.</p>
-                    <p>Die Koordinaten des ausgewählten Gebietes werden
-                        unterhalb der Karte angezeigt und die Kartenansicht
-                        darauf gezoomt.</p>
-                    <p>Durch einen Klick auf den Button &#8222;Zur Suche
-                        hinzufügen&#8220; werden die Koordinaten des
-                        selektierten Gebietes als Raumeinschränkung zum
-                        Suchausdruck hinzugefügt.</p>
+                        alt="*"/> Über diesen Button kann eine Kartenausschnitt (Bounding-Box) selektiert werden. Nach der Aktivierung 
+						des Buttons können Sie in der Karte mit der linken Maustaste auf einen Punkt klicken und durch Festhalten der 
+						Taste ein Rechteck aufziehen. Nach dem anschließendem Loslassen der Taste werden die Koordinaten der Bounding-Box 
+						unterhalb der Karte angezeigt.</p>
+                    <p>Über den Button „Zur Suche hinzufügen“ werden die Koordinaten des selektierten Kartenausschnitts als Raumeinschränkung 
+					zum Suchausdruck hinzugefügt.</p>
                     <p>
-                        <b>Button &#8222;Ausschnitt auswählen&#8220;</b>
+                        <b>Vergrößern</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image031.jpg"
-                        alt="*"/> Über diesen Button wird die Funktion der Maus
-                        auf das Hineinzoomen in die Karte umgeschaltet. Über das
-                        Klicken auf einen Punkt in der Karte, festhalten der
-                        linken Maustaste, ziehen der Maus über die Karte und
-                        anschließendes Loslassen der linken Maustaste können Sie
-                        das Zoomgebiet definieren.</p>
-                    <p>Die Karte wird auf dieses Gebiet zentriert und soweit
-                        vergrößert, dass Sie gerade noch in den dargestellten
-                        Bereich hinein passt.</p>
+                        alt="*"/> Mit diesem Button kann in die Karte hineingezoomt werden. Sie können einen beliebigen 
+						Kartenausschnitt aufziehen, indem Sie mit gedrückter linker Maustaste ein Quadrat aufziehen. Die Karte 
+						wird auf dieses Ausschnitt zentriert und entsprechend vergrößert.</p>
                     <p>
-                        <b>Button &#8222;Aus der Karte herauszoomen&#8220;</b>
+                        <b>Verkleinern</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image032.jpg"
                         alt="*"/> Durch einen Klick auf diesen Button wird die
-                        Karten um die Hälfte verkleinert.</p>
+                        Karte um die Hälfte verkleinert.</p>
                     <p>
-                        <b>Button &#8222;Kartenausschnitt verschieben&#8220;</b>
+                        <b>Verschieben</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image033.jpg"
-                        alt="*"/> Über diesen Button wird die Funktion der Maus
-                        auf das Verschieben des Kartenausschnittes umgeschaltet.
-                        Nach dem Klick auf einen Punkt in der Karte, Festhalten
-                        der linken Maustaste und Ziehen der Maus über die Karte,
-                        können Sie den Kartenausschnitt verschieben. Der Punkt
-                        der Karte auf den geklickt wurde befindet sich nach dem
-                        Vorgang dort, wo Sie die linke Maustaste wieder
-                        losgelassen haben.</p>
-                    <p>Die Karte wird so nachgeladen, dass Sie den dargestellten
-                        Bereich wieder ausfüllt.</p>
+                        alt="*"/> Mit diesem Button kann die Karte verschoben werden. Zum Verschieben: 
+						klicken Sie mit der linken Maustaste auf einen Punkt in der Karte, halten Sie 
+						die Taste und ziehen Sie die Maus über die Karte. Der Punkt der Karte, auf den 
+						geklickt wurde, befindet sich nach dem Vorgang dort, wo Sie die Taste loslassen.</p>
                     <p>
-                        <b>Button &#8222;Zurück&#8220;</b>
+                        <b>Zurück</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
@@ -824,21 +786,18 @@
                         wurde, wieder hergestellt.</p>
                     <p>Die Aktion kann mehrfach hintereinander ausgeführt werden.</p>
                     <p>
-                        <b>Button &#8222;Nach vorne&#8220;</b>
+                        <b>Vor</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image035.jpg"
-                        alt="*"/> Wurde über den Button &#8222;Zurück&#8220; zu einem Kartenausschnitt
-                        zurück gesprungen, der eine oder mehrere Aktionen
-                        zurückliegt, kann über den Button
-                        &#8222;Nach vorne&#8220;
-                        wieder zu den danach ausgeführten Aktionen
-                        &#8222;vorgeblättert&#8220; werden.</p>
+                        alt="*"/> Wurde über den Button „Zurück“ zu einem Kartenausschnitt zurück gesprungen, der 
+						eine oder mehrere Aktionen zurückliegt, kann über den Button „Vor“ wieder zu den danach 
+						ausgeführten Aktionen „vorgeblättert“ werden</p>
                     <p>Die Aktion kann so häufig ausgeführt werden wie vorher
                         die Aktion &#8222;Zurück&#8220; ausgeführt wurde.</p>
                     <p>
-                        <b>Button &#8222;Zoom auf Ausgangskarte&#8220;</b>
+                        <b>Zoom auf Ausgangskarte</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
@@ -846,17 +805,14 @@
                         alt="*"/> Bei dem Klick auf diesen Button wird der Zoombereich der 
 						Ausgangskarte wieder hergestellt.</p>
                     <p>
-                        <b>Button &#8222;Druck&#8220;</b>
+                        <b>Druck</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image039.jpg"
-                        alt="*"/> Bei einem Klick auf diesen Button wird ein Menü geöffnet, in dem Sie angeben 
-						können, in welchem Format und welcher Ausrichtung ein PDF-Dokument erstellt werden 
-						soll. Ebenso können ein Titel für das Dokument und ein Kommentar eingegeben werden. 
-						Weiterhin kann ausgewählt werden, ob die Legende ebenfalls gedruckt werden soll. </p>
-					<p> Sie können das Dokument über die übliche PDF-Funktionalität drucken oder als Datei auf 
-						Ihrem Rechner speichern.</p>
+                        alt="*"/> Über diesen Button wird ein PDF-Dokument der Karte mit oder ohne Legende erzeugt. 
+						Sie können die Ausrichtung der Karte wählen und zudem einen Titel und Kommentare zur Karte 
+						einfügen. Das Dokument können Sie über die übliche PDF-Funktionalität drucken oder speichern.</p>
 						
                 </content>
             </section>
