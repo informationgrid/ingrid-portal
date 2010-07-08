@@ -42,7 +42,7 @@ a.selected { font-weight:bold; }
 /*search_seperator style used at profile NUMIS*/
 a.search_seperator{ color:#999999; }
 
-h1 { color: #999; font-size: 21px; font-weight: normal; line-height: 27px; margin: 0 0 0.5em 0; text-transform:uppercase; }
+h1 { color: #999; font-size: 21px; font-weight: normal; line-height: 27px; margin: 1.0em 0 1.25em 0; text-transform:uppercase; }
 h2 { font-family: Arial, Verdana, Helvetica, sans-serif; font-size:90%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
 h3 { font-family: Arial, Verdana, Helvetica, sans-serif; font-size:80%; line-height:120%; font-weight:bold; margin-top:0.4em; margin-bottom:0.3em; }
 
@@ -201,7 +201,7 @@ div#results_right { float:left; width:26.6458em; margin: 0px 0px 0 2.625em; }
 ***/
 
 /* full width content area styles */
-div#content_full { float:left; width:55.5625em; }
+div#content_full { float:left; width:792px; }
 div#content_full .clearer { clear:both; display:block; height:1px; line-height:0px; font-size:1px; margin:0; padding:0; }
 
 div.portal-layout-OneColumn {width: 55.57em}
@@ -511,9 +511,9 @@ div.formbody .snslogo_margin {margin-top: 8px; }
 *********************************************************************/
 
 div#footercontainer { background: url(../images/logo-numis_footer.png) no-repeat scroll 20px 0px transparent; }
-#footercontent { font-size: 11px; width:76.4em; margin-left:108px;}
+#footercontent { font-size: 11px; width:747px; margin-left:108px;}
 
-div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0px; background: #FFFFFF;}
+div#footermarginalcontainer { width: 855px; margin-top: 25px; margin-bottom: 20px; padding: 0px; background: #FFFFFF;}
 div#footermarginal { background:url("../images/footer_doppellinie.png") repeat-x scroll 0 0 transparent; height:2px; }
 
 div#finalfootercontainer { float: left; width: 59.5em; }
