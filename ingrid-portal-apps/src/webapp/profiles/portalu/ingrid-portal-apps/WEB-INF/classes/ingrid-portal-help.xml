@@ -507,8 +507,8 @@
 				Kartenausschnitt befinden. In den über PortalU verfügbaren Datenbanken 
 				wird hingegen direkt nach dem Kartenausschnitt (Suchrechteck) gesucht.</p>
                 <p>Zur Orientierung und Spezifikation eines Kartenausschnitts können 
-				Sie die Hintergrundkartendienst (Web Map Service) von PortalU, die in 
-				PortalU verfügbare Kartendienste oder externe Kartendienste nutzen.</p>
+				Sie den Hintergrundkartendienst (Web Map Service) von PortalU, die in 
+				PortalU verfügbaren Kartendienste oder externe Kartendienste nutzen.</p>
             </content>
             <section help-key="ext-search-spacial-7">
 				<header>Akkordeon-Menü</header>
@@ -690,7 +690,7 @@
                 <content>
                    <p>Über die Werkzeugleiste können Sie verschiedene Aktionen
                         direkt oder durch einen Klick in die Karte ausführen.</p>
-                   <p> <img border="0" width="354" height="46"
+                   <p> <img border="0" width="354" height="36"
                             src="../decorations/layout/ingrid-help/images/image209.jpg"
                         alt="*"/></p>			
                     <p>
@@ -721,7 +721,7 @@
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image027.jpg"
-                        alt="*"/> Über diesen Button können Punktkoordinate in der Karte aufgerufen werden. Die Position der 
+                        alt="*"/> Über diesen Button können Punktkoordinaten in der Karte aufgerufen werden. Die Position der 
 						Maus wird in geografischen Koordinaten unterhalb der Karte angezeigt. Zudem werden die Koordinaten des 
 						letzten Klicks in der Karte angezeigt.</p>
 					<p>
@@ -742,7 +742,7 @@
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image029.jpg"
-                        alt="*"/> Über diesen Button kann eine Kartenausschnitt (Bounding-Box) selektiert werden. Nach der Aktivierung 
+                        alt="*"/> Über diesen Button kann ein Kartenausschnitt (Bounding-Box) selektiert werden. Nach der Aktivierung 
 						des Buttons können Sie in der Karte mit der linken Maustaste auf einen Punkt klicken und durch Festhalten der 
 						Taste ein Rechteck aufziehen. Nach dem anschließendem Loslassen der Taste werden die Koordinaten der Bounding-Box 
 						unterhalb der Karte angezeigt.</p>
@@ -2135,7 +2135,7 @@
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image027.jpg"
-                        alt="*"/> Über diesen Button können Punktkoordinate in der Karte aufgerufen werden. Die Position der 
+                        alt="*"/> Über diesen Button können Punktkoordinaten in der Karte aufgerufen werden. Die Position der 
 						Maus wird in geografischen Koordinaten unterhalb der Karte angezeigt. Zudem werden die Koordinaten des 
 						letzten Klicks in der Karte angezeigt.</p>
                     <p>
