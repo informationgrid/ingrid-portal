@@ -406,7 +406,7 @@ div.formheader {height: 1em; padding: 4px 14px 2px 8px; color: #FFFFFF; font-siz
 div.formheader span.portlet_info { float:right; color: #FFFFFF; line-height:100%; margin: 0 0 0 0;}
 div.formheader span.portlet_info a { color: #FFFFFF; }
 
-div.formbody {padding: 4px 12px 8px 12px; margin-bottom:20px; border: 1px solid #e4e4e2; background-color: #f6f6f6;}
+div.formbody {padding: 4px 12px 8px 12px; margin-bottom:0px; border: 1px solid #e4e4e2; background-color: #f6f6f6;}
 div.formbody_border_style {border-bottom: 0px solid #e4e4e2;}
 /* Sonderbehandlung f�r IE: dieser �bernimmt die Farbe des �bergeordneten divs nicht f�r rollover Link Auszeichnungen 
    siehe auch http://jira.media-style.com/browse/INGRID-192
