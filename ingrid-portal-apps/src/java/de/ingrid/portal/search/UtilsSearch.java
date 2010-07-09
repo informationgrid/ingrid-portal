@@ -862,23 +862,33 @@ public class UtilsSearch {
      * @param partners
      */
     public static void processProvider(IngridQuery query, String[] providers) {
+        boolean added  = false;
+        
         if (providers != null && providers.length > 0 && Utils.getPosInArray(providers, Settings.PARAMV_ALL) == -1) {
             for (int i = 0; i < providers.length; i++) {
                 if (providers[i] != null && providers[i].length() > 0) {
                     query.addToList("provider", new FieldQuery(true, false, Settings.QFIELD_PROVIDER, providers[i]));
+                    added = true;
                 }
             }
+        }
+        
+        // remove grouped-field
+        if (added && IngridQuery.GROUPED_BY_ORGANISATION.equals(query.get(Settings.QFIELD_GROUPED))) {
+            query.remove(Settings.QFIELD_GROUPED);
         }
     }
 
     /**
-     * Add partner(s) to query
+     * Add partner(s) to query and remove grouped-field if it was set to partner.
+     * Otherwise the already grouped results will be grouped again
      * 
      * @param query
      * @param partners
      */
     public static void processPartner(IngridQuery query, String[] partners) {
         ClauseQuery cq = null;
+        boolean added  = false;
 
         // don't set anything if "all" is selected
         if (partners != null && Utils.getPosInArray(partners, Settings.PARAMV_ALL) == -1) {
@@ -886,9 +896,15 @@ public class UtilsSearch {
             for (int i = 0; i < partners.length; i++) {
                 if (partners[i] != null && partners[i].length() > 0) {
                     cq.addField(new FieldQuery(false, false, Settings.QFIELD_PARTNER, partners[i]));
+                    added = true;
                 }
             }
             query.addClause(cq);
+        }
+        
+        // remove grouped-field
+        if (added && IngridQuery.GROUPED_BY_PARTNER.equals(query.get(Settings.QFIELD_GROUPED))) {
+            query.remove(Settings.QFIELD_GROUPED);
         }
     }
 
