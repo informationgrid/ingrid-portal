@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="ingrid-portal-help.xsl" ?>
 <help>
     <chapter>
-        <header>Hilfe zu NUMIS</header>
+        <header>Hilfe zum NUMIS-Portal</header>
         <section help-key="index">
             <header>Hilfethemen</header>
             <content>
@@ -1087,7 +1087,7 @@
                 <p>NUMIS erlaubt komplexe Suchanfragen  durchzuführen, die
                     über die Möglichkeiten der erweiterten Suche hinausgehen
                     (z.B. Gruppierung über Klammerung oder Ähnlichkeitssuchen
-                    usw.). Lesen Sie hierzu in der Hilfe zu NUMIS den
+                    usw.). Lesen Sie hierzu in der Hilfe zum NUMIS-Portal den
                     Abschnitt &#8222;<a
                     href="help.psml?hkey=search-expert-1">Expertensuche</a>&#8220;
                     und geben Sie Ihren Suchausdruck in das Suchfeld ein.</p>

@@ -546,7 +546,7 @@ div#popupContent div.right { float:left; width:25em; margin:0 0 42px; padding:0;
 div#popupContent h1, div#popupOverview h1, div#overview h1 { margin-top:0.4em;; margin-bottom:1.7em; }
 div#popupContent div.left h3, div#popupContent div.left p, div#popupContent div.left ul { padding-left:8px; padding-right:8px; }
 
-div#popupOverview h2, div#overview h2 { height:auto; padding: 2px 14px 2px 8px; margin:0 0 10px 0; border-bottom: 1px solid #13547D; background:#176798; color:#FFF; font-size:70%; font-weight:bold; line-height:140%; text-transform:uppercase; }
+div#popupOverview h2, div#overview h2 { background:url("../images/background_portlet_header.png") repeat-x scroll 0 0 transparent; border:1px solid #CCCCCC; font-size:70%; font-weight:bold; height:auto; line-height:140%; margin:0 0 10px; padding:2px 14px 2px 8px; text-transform:uppercase; }
 
 div.helpcontent ul {list-style: none; margin: 0.0em 0 0 0.5em; padding:0;}
 div.helpcontent li { margin: 0 0 0.0em 0;padding: 0 0 0 15px;background-image:url("images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .45em; }
