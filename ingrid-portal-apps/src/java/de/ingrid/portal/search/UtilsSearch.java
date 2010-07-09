@@ -915,6 +915,7 @@ public class UtilsSearch {
      * @param domain
      */
     public static void processDomain(IngridQuery query, String subject) {
+        boolean added = false;
         if (subject != null && subject.trim().length() > 0) {
         	// domain subject already contains key, e.g. "site:..." or "plugid:..."
         	String[] keyValuePair = getDomainKeyValuePair(subject);
@@ -927,8 +928,14 @@ public class UtilsSearch {
         	} else {
         		if (!UtilsSearch.containsFieldOrKey(query, domainKey)) {
                 	query.addField(new FieldQuery(true, false, domainKey, domainValue));
+                	added = true;
                 }        		
         	}
+        }
+        
+        // remove grouped-field
+        if (added && IngridQuery.GROUPED_BY_DATASOURCE.equals(query.get(Settings.QFIELD_GROUPED))) {
+            query.remove(Settings.QFIELD_GROUPED);
         }
     }
 
