@@ -244,7 +244,7 @@ public class UtilsSearch {
             
             // use internal provider instead of one set in plugdescription
             // e.g. results from Opensearch might support partner and provider
-            if (detail.get("provider") != null) {
+            if (detail.get("provider") != null && ((String[])detail.get("provider")).length != 0) {
                 result.put(Settings.RESULT_KEY_PROVIDER, detail.get("provider"));
             } else {
                 result.put(Settings.RESULT_KEY_PROVIDER, detail.getOrganisation());
