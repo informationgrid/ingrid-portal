@@ -395,7 +395,7 @@ div.portlet div.section-header a { color: #FFFFFF;}
 div#marginal_header a:hover, div#marginal_header a:focus { text-decoration: none; }
 div#marginal_header a:hover, div#marginal_header a:focus, div#marginal_header a:active, div#marginal_header a:visited { }
 
-div.portlet div.portlet-section-body { position:relative;padding: 0.625em 0.875em; margin:0; border: 1px solid #e4e4e2; }
+div.portlet div.portlet-section-body { position:relative;padding: 0.625em 0.7em; margin:0; border: 1px solid #e4e4e2; }
 
 /********************************************************************
   form block styles  
