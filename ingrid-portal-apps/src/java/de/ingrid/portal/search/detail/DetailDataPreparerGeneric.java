@@ -52,7 +52,8 @@ public class DetailDataPreparerGeneric implements DetailDataPreparer {
 	public void prepare(Record record) throws Throwable {
         context.put("record", record);
         HashMap recordMap = new LinkedHashMap();
-
+        String valuesForColumn = "";
+        
         // search for column
         Column[] columns = record.getColumns();
         for (int i = 0; i < columns.length; i++) {
@@ -74,8 +75,12 @@ public class DetailDataPreparerGeneric implements DetailDataPreparer {
                         recordMap.put(columnName, src);
                     }
                 } else {
-                    recordMap.put(columnName, record.getValueAsString(columns[i]).trim().replaceAll("\n",
-                            "<br />"));
+                	if(recordMap!= null && recordMap.get(columnName) != null){
+                		valuesForColumn = valuesForColumn.concat(record.getValues().get(i).toString().concat("\n")); 
+                		recordMap.put(columnName, valuesForColumn);
+                	}else{
+                		recordMap.put(columnName, record.getValueAsString(columns[i]).trim().replaceAll("\n","<br />"));
+                	}
                 }
             }
         }

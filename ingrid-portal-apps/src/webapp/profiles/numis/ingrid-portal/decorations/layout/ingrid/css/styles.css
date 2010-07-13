@@ -13,6 +13,9 @@ body { padding: 0; margin: 0; color: #333333; background-color: #FFFFFF; font-fa
 
 img { border:0; }
 span.icon { margin-right:4px; margin-top:2px; float:left; }
+/*Need for IE6*/
+* html span.icon { margin-right:4px; margin-top:7px; float:left; }
+
 span.icon_udk { margin-right:6px; margin-top:2px; float:left; width:21px; height:14px; }
 /* no float for detail page in OPERA */
 span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px; }
@@ -453,9 +456,14 @@ div.formfooter {height: auto;padding: 2px 9px 2px 9px; margin:0px 0px 20px 0px; 
 div.formfooter_border_style {border-top: 0px solid #E4E4E2;}
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 
-input.btn { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn.png) repeat-x; font-size: 11px; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 14px 5px 14px; height:24px; cursor: pointer; }
-input.btn:hover { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn_hover.png)repeat-x; font-size: 11px; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 14px 5px 14px; height:24px; cursor: pointer; }
+input.btn { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn.png); font-size: 11px; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 14px 5px 14px; height:24px; cursor: pointer; }
+input.btn:hover { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn_hover.png); font-size: 11px; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 14px 5px 14px; height:24px; cursor: pointer; }
 input.btn_disable { color:#FFFFFF; border: solid 1px #e0003c; font-size: 11px; line-height: 130%; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 14px 5px 14px; height:24px; }
+/*Need for IE6*/
+* html input.btn { color: #FFFFFF; border: 0px solid #FFFFFF; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 6px 5px 6px; height:24px; cursor: pointer; }
+* html input.btn:hover { color: #FFFFFF; border: 0px solid #FFF; background:url(../images/background_btn_hover.png); font-size: 12px; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 6px 5px 6px; height:24px; cursor: pointer; }
+* html input.btn_disable { color:#FFFFFF; border: solid 1px #e0003c; font-size: 12px; line-height: 130%; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 6px 5px 6px; height:24px; }
+
 /*Use only at profile NUMIS*/
 input.btn_admin { margin:0px; }
 input.btn_admin:hover { margin:0px; }
@@ -493,10 +501,12 @@ div.formbody input.qry_chronic {width: 25em; font-size: 83%; line-height: 100%;}
 /*** Formular Einfache Suche Start Seite ***/
 
 div.formbody input.qrystr {width: 30em; font-size: 83%; line-height: 100%;}
+/*Need for IE6*/
+* html div.formbody input.qrystr {width: 30em; font-size: 83%; line-height: 100%; margin:10px 0px 11px 0px}
 
 /*** Formular Erweiterte Suche ***/
 
-div.formbody div.qrytxt {width:558px; padding-top:7px; text-align:right;}
+div.formbody div.qrytxt {width:99%; padding-top:7px; text-align:right;}
 div.formbody textarea.qrytxt { width: 100%;font: normal 83% Verdana, Arial, sans-serif; line-height: 130%; border: 1px solid #AAAAAA; padding:2px; margin:0 0 5px 0; }
 div.formbody input.search_term { height:auto;width: 100%;font-size: 83%;}
 div.formbody div.innerform {width:34.5em;}
@@ -527,7 +537,8 @@ div.formbody .snslogo_margin {margin-top: 8px; }
 
 div#footercontainer { background: url(../images/logo-numis_footer.png) no-repeat scroll 20px 0px transparent; }
 #footercontent { font-size: 11px; width:76.4em; margin-left:108px;}
-
+/*Need for IE6*/
+* html #footercontent { font-size: 11px; width:90.4em; margin-left:108px;}
 div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0px; background: #FFFFFF;}
 div#footermarginal { background:url("../images/footer_doppellinie.png") repeat-x scroll 0 0 transparent; height:2px; }
 

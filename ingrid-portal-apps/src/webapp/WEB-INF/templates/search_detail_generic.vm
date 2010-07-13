@@ -1,7 +1,7 @@
 #macro (renderUDKEntry $r $entryName)
 	#if($tool.hasContent($r.get($entryName)))
 		<p><strong>$entryName:</strong><br>
-		$r.get($entryName)
+		$r.get($entryName).replaceAll("\n","<br>")
 		</p>
     #end
 #end
