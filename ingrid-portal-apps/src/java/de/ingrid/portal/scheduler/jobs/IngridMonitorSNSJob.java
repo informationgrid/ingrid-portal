@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
-import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,7 +19,7 @@ import com.slb.taxi.webservice.xtm.stubs.SearchType;
 import com.slb.taxi.webservice.xtm.stubs.TopicMapFragment;
 import com.slb.taxi.webservice.xtm.stubs.xtm.Topic;
 
-import de.ingrid.iplug.sns.SNSClient;
+import de.ingrid.external.sns.SNSClient;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.utils.queryparser.ParseException;
 

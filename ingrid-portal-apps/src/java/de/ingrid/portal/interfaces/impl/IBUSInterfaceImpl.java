@@ -60,7 +60,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             if (log.isInfoEnabled()) {
                 log.info("SHUT DOWN IBUSInterface!");
             }
-            client.close();
+            client.shutdown();
             
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
