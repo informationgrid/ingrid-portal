@@ -3,12 +3,12 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-base-pom</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.1.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-mdek-application</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.1.0</version>
   <packaging>war</packaging>
   <name>Ingrid Portal MDEK Application</name>
   <scm>
@@ -79,22 +79,10 @@
       </plugin>
     </plugins>
   </build>
+
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>dom4j</groupId>
-        <artifactId>dom4j</artifactId>
-        <version>1.4</version>
-        <exclusions>
-          <!--  xml-apis already included in java 1.6 -->
-          <!-- leads to eclipse compiler problems -->
-          <exclusion>
-            <groupId>xml-apis</groupId>
-            <artifactId>xml-apis</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
       <dependency>
         <groupId>net.sf.ehcache</groupId>
         <artifactId>ehcache</artifactId>
@@ -120,10 +108,70 @@
           </exclusion>
         </exclusions>
       </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <!-- ==================== DEPENDENCIES ==================== -->
+  <dependencies>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <!-- LOG4J PROVIDED to avoid classloader conflicts ! Tomcat logging has to be configured (log4j.jar in common/lib) -->
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.ingrid.mdek</groupId>
+      <artifactId>ingrid-mdek-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.ingrid</groupId>
+      <artifactId>ingrid-utils</artifactId>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>xstream</groupId>
+          <artifactId>xstream</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>de.ingrid</groupId>
+      <artifactId>ingrid-external-service-sns</artifactId>
+    </dependency>
+
+<!-- ======================================================= -->
+<!-- WHY USE MDEK BACKEND SERVICES ??? Just used for GenericHibernateDao etc. stuff ! should be separated ! -->
+    <dependency>
+      <groupId>de.ingrid.mdek</groupId>
+      <artifactId>ingrid-mdek-services</artifactId>
+        <exclusions>
+          <exclusion>
+            <groupId>ojdbc</groupId>
+            <artifactId>ojdbc</artifactId>
+          </exclusion>
+        </exclusions>
+    </dependency>
+<!-- also included via transitive dependencies from ingrid-mdek-services, BUT KEEP HERE TO USE WHEN services sparated (see above) -->
+    <dependency>
+      <groupId>de.ingrid.mdek</groupId>
+      <artifactId>ingrid-import-export</artifactId>
+    </dependency>
+      <dependency>
+        <groupId>dom4j</groupId>
+        <artifactId>dom4j</artifactId>
+        <exclusions>
+          <!--  xml-apis already included in java 1.6 -->
+          <!-- leads to eclipse compiler problems -->
+          <exclusion>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
       <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate</artifactId>
-        <version>3.2.5.ga</version>
         <!-- Because of asm version conflicts with cglib spring, we can't use the normal cglib dependency of hibernate
                 Rather we use the cglib-nodep lib, which has its own implementation of asm. -->
         <exclusions>
@@ -141,45 +189,12 @@
           </exclusion>
         </exclusions>
       </dependency>
-    </dependencies>
-  </dependencyManagement>
-  <!-- ==================== DEPENDENCIES ==================== -->
-  <dependencies>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <!-- LOG4J PROVIDED to avoid classloader conflicts ! Tomcat logging has to be configured (log4j.jar in common/lib) -->
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid.mdek</groupId>
-      <artifactId>ingrid-mdek-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid.mdek</groupId>
-      <artifactId>ingrid-mdek-services</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-utils</artifactId>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>xstream</groupId>
-          <artifactId>xstream</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-external-service-sns</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
-    </dependency>
+
+<!-- ======================================================= -->
+
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
-      <version>2.4</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -234,12 +249,10 @@
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
-      <version>1.2.1</version>
     </dependency>
     <dependency>
       <groupId>commons-httpclient</groupId>
       <artifactId>commons-httpclient</artifactId>
-      <version>3.1-rc1</version>
     </dependency>
     <dependency>
       <groupId>net.sf.opencsv</groupId>
@@ -260,9 +273,8 @@
   </dependencies>
   <repositories>
     <repository>
-      <snapshots />
-      <id>de.ingrid.m2</id>
-      <name>InGrid Repo Maven2</name>
+      <id>de.ingrid.all</id>
+      <name>InGrid Repo Maven</name>
       <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
     </repository>
   </repositories>
@@ -318,7 +330,6 @@ SO WE CAN JUST UPDATE LIBS FROM EDISOFT DELIVERIES !
       </dependencies>
       <repositories>
         <repository>
-          <snapshots />
           <id>ibiblio</id>
           <name>iBiblio.or.</name>
           <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
