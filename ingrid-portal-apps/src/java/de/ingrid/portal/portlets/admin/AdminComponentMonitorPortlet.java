@@ -117,6 +117,12 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			context.put("jobHandler", jobHandler);
 			context.put("filterMap", new HashMap());
 			//context.put("model", jobHandler.getJobs(sortColumn, ascending));
+			
+			// show a dialog for downloading the exported file
+			if ("exportCSV".equals(request.getParameter("mode"))) {
+			    context.put("exportLink", "/ingrid-portal-apps/filehelper/file?" + jobHandler.csvExportDir + "/" + jobHandler.csvExportFile);
+			}
+			
 		// ------------------viewEdit-------------------------
 		} else if (action.equals("viewEdit")) {
 			String id = request.getParameter("id");
@@ -333,6 +339,13 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		} else if (request.getParameter("doImport") != null) {
 			// set all imported jobs to active!?
 			jobHandler.importJobs(request);
+		// ------------------doExport-------------------------
+        } else if (request.getParameter("doExport") != null) {
+            IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                    request.getLocale()));
+            // export jobs to a csv file
+            jobHandler.exportJobs(request, messages);
+            response.setRenderParameter("mode", "exportCSV");
 		// ------------------doRefresh-------------------------
 		} else if (request.getParameter("doRefresh") != null) {
 			// do nothing, but set action to null

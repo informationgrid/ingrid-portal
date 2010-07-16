@@ -4,11 +4,17 @@
 
 package de.ingrid.portal.scheduler.jobs;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -24,6 +30,7 @@ import org.quartz.Trigger;
 import org.quartz.TriggerUtils;
 
 import de.ingrid.portal.forms.AdminComponentMonitorForm;
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridRSSSource;
@@ -54,6 +61,10 @@ public class IngridJobHandler {
 	private final static Log log = LogFactory.getLog(AdminComponentMonitorPortlet.class);
 	
 	IngridMonitorFacade monitor = IngridMonitorFacade.instance();
+	
+	// the location for the export file
+	public String csvExportDir  = System.getProperty("java.io.tmpdir") + "/ingrid-portal-apps/export";
+	public String csvExportFile = "job_export.csv";
 	
 	
 	/**
@@ -615,8 +626,11 @@ public class IngridJobHandler {
 		}
 		
 		if (jobDetail == null) {
+		    String jobName = jobId;
 		    // restrict the length of the JobName to the size of the column in DB, which is 80
-			jobDetail = new JobDetail(jobId.substring(0, 80), IngridMonitorFacade.SCHEDULER_GROUP_NAME,
+		    if (jobId.length() > 80)
+		        jobName = jobId.substring(0, 80);
+			jobDetail = new JobDetail(jobName, IngridMonitorFacade.SCHEDULER_GROUP_NAME,
 					IngridMonitorRSSCheckerJob.class);
 			
 			// here the ID of the job is also used as the name
@@ -688,15 +702,17 @@ public class IngridJobHandler {
 				IngridMonitorAbstractJob.STATUS_CODE_NO_ERROR);
 		dataMap.put(IngridMonitorAbstractJob.PARAM_EVENT_OCCURENCES, 1);
 		
-		// add standard email
-		ArrayList contacts = new ArrayList();
-					
-		HashMap contact = new HashMap();
-		contact.put(IngridMonitorAbstractJob.PARAM_CONTACT_EMAIL, stdEmail);
-		contact.put(IngridMonitorAbstractJob.PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT, 1);
-		contacts.add(contact);
-		
-		dataMap.put(IngridMonitorAbstractJob.PARAM_CONTACTS, contacts);
+		// add standard email if set
+		if (!stdEmail.isEmpty()) {
+    		ArrayList contacts = new ArrayList();
+    					
+    		HashMap contact = new HashMap();
+    		contact.put(IngridMonitorAbstractJob.PARAM_CONTACT_EMAIL, stdEmail);
+    		contact.put(IngridMonitorAbstractJob.PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT, 1);
+    		contacts.add(contact);
+    		
+    		dataMap.put(IngridMonitorAbstractJob.PARAM_CONTACTS, contacts);
+		}
 	}
 	
 	
@@ -906,4 +922,101 @@ public class IngridJobHandler {
 		}
 		return runningJobs;
 	}
+
+	/**
+	 * Export all jobs into CSV format:
+	 *     active; id; name; type; queryString; serviceUrl; excludedProvider; 
+	 *     interval; timeout; status; lastExecution; nextExecution;
+	 *     lastSuccessfulExecution; numExecutions; averageExecution; email1 threshold1 email2 thr...\n
+	 * @param request
+	 * @throws FileNotFoundException 
+	 */
+    public void exportJobs(ActionRequest request, IngridResourceBundle messages) {
+        // get all jobs without sorting
+        List<JobDetail> jobs = getJobs(null, false);
+        
+        try {
+            // init file
+            File directory = new File(this.csvExportDir);
+            directory.mkdirs();
+            FileOutputStream fos = new FileOutputStream(directory.getAbsolutePath() + "/" + this.csvExportFile);
+            OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+            BufferedWriter bw = new BufferedWriter(osw);
+            
+            // write each job as a line into the file
+            String line;
+            for (JobDetail jobDetail : jobs) {
+                line = convertJobDetail(jobDetail, messages);
+                bw.append(line + "\n");
+            }
+            
+            // close the handles
+            bw.flush();
+            osw.flush();
+            osw.close();
+            fos.flush();
+            fos.close();
+            
+            // offer file as a download
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    private String convertJobDetail(JobDetail jobDetail, IngridResourceBundle messages) {
+        JobDataMap dataMap = jobDetail.getJobDataMap();
+        String job = "";
+        String separator = ";";
+        
+        // active?
+        if (dataMap.get(IngridMonitorIPlugJob.PARAM_ACTIVE) != null)
+            job += dataMap.getInt(IngridMonitorIPlugJob.PARAM_ACTIVE) == 1 ? "true" : "false";
+        else
+            job += "false";
+        job += separator;
+        // id
+        job += jobDetail.getName() + separator;
+        // name
+        job += dataMap.getString(IngridMonitorIPlugJob.PARAM_COMPONENT_TITLE) + separator;
+        // type
+        job += messages.getString((String)dataMap.getString(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE)) + separator;
+        // queryString
+        job += dataMap.getString(IngridMonitorIPlugJob.PARAM_QUERY) + separator;
+        // service url
+        job += dataMap.getString(IngridMonitorIPlugJob.PARAM_SERVICE_URL) + separator;
+        // excluded provider
+        job += dataMap.getString(IngridMonitorIPlugJob.PARAM_EXCLUDED_PROVIDER) + separator;
+        // interval
+        job += String.valueOf(dataMap.get(IngridMonitorIPlugJob.PARAM_CHECK_INTERVAL)) + separator;
+        // timeout
+        job += String.valueOf(dataMap.get(IngridMonitorIPlugJob.PARAM_TIMEOUT)) + separator;
+        // status
+        job += String.valueOf(messages.getString((String)dataMap.get(IngridMonitorIPlugJob.PARAM_STATUS_CODE))) + separator;
+        // lastExecution;nextExecution
+        if (getTrigger(jobDetail.getName(), jobDetail.getGroup()) == null)
+            job += "null;null;";
+        else {
+            job += String.valueOf(getTrigger(jobDetail.getName(), jobDetail.getGroup()).getPreviousFireTime()) + separator;
+            job += String.valueOf(getTrigger(jobDetail.getName(), jobDetail.getGroup()).getNextFireTime()) + separator;
+        }
+        // lastSuccessfulExecution
+        job += String.valueOf(dataMap.get(IngridMonitorIPlugJob.PARAM_LAST_ERRORFREE_RUN)) + separator;
+        // numExecutions
+        job += String.valueOf(dataMap.get(IngridMonitorIPlugJob.PARAM_TIMER_NUM)) + separator;
+        // averageExecution
+        job += String.valueOf(dataMap.get(IngridMonitorIPlugJob.PARAM_TIMER_AVERAGE)) + separator;
+        // emails
+        List<Map> contacts = (List<Map>) dataMap.get(IngridMonitorIPlugJob.PARAM_CONTACTS);
+        if (contacts != null) {
+            for (Map contact : contacts) {
+                job += contact.get(IngridMonitorAbstractJob.PARAM_CONTACT_EMAIL) + " ";
+                job += contact.get(IngridMonitorAbstractJob.PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT) + " ";
+            }
+        } else {
+            job += "null";
+        }
+        
+        return job;
+    }
 }
