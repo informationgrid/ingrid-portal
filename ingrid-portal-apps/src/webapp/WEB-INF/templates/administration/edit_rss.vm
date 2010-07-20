@@ -26,7 +26,7 @@
 	#end
 	<p class="clearer"></p>
 	</br>
-	#if ($dbEntity.Error != "" && $dbEntity.Error != "component.monitor.general.error.none" )
+	#if ($dbEntity.Error && $dbEntity.Error != "" && $dbEntity.Error != "component.monitor.general.error.none" )
 		<p  style="color:#ff0000;">
 			<label class="float_left col2left_incr">$MESSAGES.getString('component.forms.text.error.messages')</label><span>$!{id}</span>
 			<span>$MESSAGES.getString($dbEntity.Error)</span>

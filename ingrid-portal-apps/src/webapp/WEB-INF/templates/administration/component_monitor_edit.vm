@@ -3,7 +3,9 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmEditProvider" id="frmEditProvider">
 	<input type="hidden" name="mode" value="$mode"/>
-	<input type="hidden" name="disableSaving" value="$disableSaving"/>
+	#if($disableSaving)
+		<input type="hidden" name="disableSaving" value="$disableSaving"/>
+	#end
 	<div class="formbody formbody_border_style">
 	#if ($mode == 'edit')
 		<h2 class="nospace">$MESSAGES.getString('component.forms.text.update.job')</h2>

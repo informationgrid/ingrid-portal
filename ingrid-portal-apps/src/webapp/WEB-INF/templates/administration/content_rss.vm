@@ -10,7 +10,7 @@
 #foreach ($dbEntity in $dbEntities)
 	#set ($rowId = $dbEntity.Id)
 	#set ($error = "")
-	#if ($dbEntity.Error != "" && $dbEntity.Error != "component.monitor.general.error.none")
+	#if ($dbEntity.Error && $dbEntity.Error != "" && $dbEntity.Error != "component.monitor.general.error.none")
 		#set ($error = "ERROR")
 	#else
 		#set ($error = "OK")

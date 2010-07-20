@@ -266,7 +266,7 @@ $action.setParameter("id", "$rowId")
 	#elseif ($mode == 'new')
 		#set ($butAction = 'doSave')
 	#end
-	#if ($disableSaving == 'true')
+	#if ($disableSaving && $disableSaving == 'true')
 		## do nothing
 	#else
 		<input class="btn" type="submit" name="$butAction" value="$MESSAGES.getString('component.forms.buttons.save')" />

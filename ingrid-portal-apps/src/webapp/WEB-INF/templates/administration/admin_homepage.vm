@@ -18,7 +18,13 @@
 					<select class="inputstyle" size="1" id="c1r$velocityCount" name="c1r$velocityCount">
 					<option value="none">$MESSAGES.getString('admin.homepage.entry.empty')</option>
 	#foreach($f in $leftColumnPortlets)
-					<option value="$f.portlet.getUniqueName()"#if(${fragment.getName()}==${f.portlet.getUniqueName()}) selected="selected"#end>$f.title</option>
+					<option value="$f.portlet.getUniqueName()"
+						#if($fragment.getName())
+							#if($fragment.getName()==$f.portlet.getUniqueName()) 
+								selected="selected"
+							#end
+						#end
+					>$f.title</option>
 	#end
 					</select>
 				</p>
@@ -38,7 +44,13 @@
 					<select class="inputstyle" size="1" id="c2r$velocityCount" name="c2r$velocityCount">
 					<option value="none">$MESSAGES.getString('admin.homepage.entry.empty')</option>
 	#foreach($f in $rightColumnPortlets)
-					<option value="$f.portlet.getUniqueName()"#if(${fragment.getName()}==${f.portlet.getUniqueName()}) selected="selected"#end>$f.title</option>
+					<option value="$f.portlet.getUniqueName()"
+						#if($fragment.getName())
+							#if($fragment.getName()==$f.portlet.getUniqueName()) 
+								selected="selected"
+							#end
+						#end
+						>$f.title</option>
 	#end
 					</select>
 				</p>
