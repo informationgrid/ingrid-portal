@@ -957,7 +957,7 @@ var mappingDescription = {"mappings":[
   		// ****************************************************
   		
   		{	
-  			"srcXpath":"//*/gmd:CI_ResponsibleParty",
+  			"srcXpath":"//*/gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue!='']",
   			"targetNode":"/igc/addresses",
   			"newNodeName":"address",
   			"subMappings":{
@@ -1082,7 +1082,6 @@ function mapToTarget(mapping, source, target) {
 			var m = mapping.mappings[i];
 			// check for conditional mapping
 			if (m.conditional) {
-				log.debug("found conditional mapping for: " + m.conditional.storedValue.name + "==" + m.conditional.storedValue.value);
 				if (m.conditional.storedValue) {
 					log.debug("found mapping with stored value conditional: " + m.conditional.storedValue.name + " ? " + storedValues[m.conditional.storedValue.name] + " == " + m.conditional.storedValue.value);
 					if (storedValues[m.conditional.storedValue.name] != m.conditional.storedValue.value) {

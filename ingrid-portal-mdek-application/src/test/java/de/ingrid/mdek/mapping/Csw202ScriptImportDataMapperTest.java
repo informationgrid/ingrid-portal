@@ -24,6 +24,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import de.ingrid.utils.xml.XMLUtils;
@@ -154,6 +155,27 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		
 	}
 	
+
+	public final void testConvertTHObjectsComplete() throws TransformerException, IOException {
+		// set variables that are needed for running correctly
+		initClassVariables(mapperScriptArcGIS, templateIGC);
+		
+		InputStream data = null;
+		try {
+			// get example file from test resource directory
+			// spring-dependency is used to access test-resources (search from every class path!)
+			data = (new ClassPathResource("/de/ingrid/mdek/mapping/th_20052010095904_iso19115.xml")).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
+		InputStream result = mapper.convert(data);
+		
+		assertEquals(2, xpathCount(result, "//igc/addresses/address"));
+		result.reset();
+		System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
+		
+	}
 	
 	
 	private ImportDataProvider initDataProvider() {
@@ -337,6 +359,23 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		
 		return found;
 	}
+
+	private int xpathCount(InputStream in, String path) {
+		XPath xpath = XPathFactory.newInstance().newXPath();
+		NodeList nodeList = null;
+		try {
+			nodeList = (NodeList) xpath.evaluate(path, getDomFromSourceData(in), XPathConstants.NODESET);
+			if (nodeList != null) {
+				return nodeList.getLength();
+			}
+		} catch (XPathExpressionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
+	
 	
 	private Document getDomFromSourceData(InputStream data) {
 		Document doc = null;
