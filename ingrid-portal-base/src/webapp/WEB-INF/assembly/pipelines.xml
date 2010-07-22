@@ -229,7 +229,14 @@ limitations under the License.
         class="org.apache.jetspeed.pipeline.valve.impl.CleanupValveImpl"
         init-method="initialize"
   >
-  </bean> 
+  </bean>
+  
+  <bean id="ingridCleanUpValve"
+        class="de.ingrid.portal.jetspeed.pipeline.valve.impl.InGridCleanupValveImpl"
+        init-method="initialize"
+  >
+  </bean>
+  
 
   <bean id="AJAXValve"
         class="org.apache.jetspeed.ajax.AJAXValve"
@@ -293,7 +300,7 @@ limitations under the License.
       <ref bean="DecorationValve" />
       <ref bean="headerAggregatorValvePortal"/>  
       <ref bean="aggregatorValve"/>
-      <ref bean="cleanUpValve"/>
+	  <ref bean="ingridCleanUpValve"/> <!-- <ref bean="cleanUpValve"/> -->
     </list>
     </constructor-arg>
   </bean> 

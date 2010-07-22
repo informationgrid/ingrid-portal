@@ -109,6 +109,11 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
         if (request.getParameter("nodeId") != null) {
             DisplayTreeNode root = (DisplayTreeNode) session.getAttribute("thesRoot");
             if (root != null) {
+                // close first hierarchy to make sure only one branch is open
+            	// this is a fix to prevent too large pages as observed in Portal HEAP
+            	for (Object child : root.getChildren()) {
+                	((DisplayTreeNode)child).setOpen(false);
+                }
                 // open up all parent nodes
                 String[] parentNodes = ((String)request.getParameter("parentNodes")).split(",");
                 for (String nodeId : parentNodes) {
@@ -324,6 +329,25 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
         for (Iterator it = hitSet.iterator(); it.hasNext();) {
         	Topic hit = (Topic) it.next();
 
+    		// filter entries with duplicate topic IDs in path to break circular dependencies
+        	boolean isDuplicate = false;
+			if (hit.getTopicID().equals(nodeToOpen.get("topicID"))) {
+				log.warn("Duplicat SNS node detected: " + hit.getTopicName() + " (TOPICID: +" + hit.getTopicID() + "). This node will be ignored.");
+				isDuplicate = true;
+			} else {
+	        	for (String child : nodeToOpen.getAllParents()) {
+	    			if (hit.getTopicID().equals(child)) {
+	    				log.warn("Duplicat SNS node detected: " + hit.getTopicName() + " (TOPICID: +" + hit.getTopicID() + "). This node will be ignored.");
+	    				isDuplicate = true;
+	    				break;
+	    			}
+	    		}
+			}
+        	if (isDuplicate) {
+        		continue;
+        	}
+        	
+        	
         	String nodeLanguage = hit.getLanguage();
             if (nodeLanguage == null) {
             	nodeLanguage = language.getLanguage();
@@ -380,6 +404,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
             int nodeLevel = ((Integer) nodeToOpen.get("level")).intValue();
     		snsNode.put("level", new Integer(nodeLevel+1));
     		// --
+    		
 
     		nodeToOpen.addChild(snsNode);
         }
