@@ -19,7 +19,7 @@
         		#elseif($grouping == 'domain')
         			#set ($detailAction = "showAllForDomain")
 					#set ($showGroupHeader = false)
-        			#if($rs.url_type && ($rs.url_type == "dsc") || ($rs.domainGroupingSupport == false))
+        			#if($rs.url_type && ($rs.url_type == "dsc") || ($rs.domainGroupingSupport && $rs.domainGroupingSupport == false))
 						#set ($groupSubject = $!rs.source)
 						#set ($groupSubjectKey = "plugid::$!rs.plugid")
 					#else
