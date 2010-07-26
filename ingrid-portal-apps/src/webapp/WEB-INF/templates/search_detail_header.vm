@@ -114,7 +114,7 @@ self.focus();
 
 <!-- IDENTITY AREA -->
 #set($langCode = '')
-#if($preferedLocale.toString() == 'en')
+#if($preferedLocale && $preferedLocale.toString() == 'en')
 	#set($langCode = "en_")
 #end
 #set($currentPage = $site.getPage().url)
