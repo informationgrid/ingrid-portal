@@ -18,7 +18,7 @@
           <select id="grouping" class="group_by inputstyle" name="grouping" size="1">
             <option value="none" #getSelectedFlag('grouping' 'none')>$MESSAGES.getString('common.form.grouping.no')</option>
 
-#if($onePartnerOnly && $onePartnerOnly != "true")
+#if(!$onePartnerOnly || $onePartnerOnly != "true")
 			<option value="partner" #getSelectedFlag('grouping' 'partner')>$MESSAGES.getString('common.form.grouping.partner')</option>
 #end
 			<option value="provider" #getSelectedFlag('grouping' 'provider')>$MESSAGES.getString('common.form.grouping.provider')</option>
