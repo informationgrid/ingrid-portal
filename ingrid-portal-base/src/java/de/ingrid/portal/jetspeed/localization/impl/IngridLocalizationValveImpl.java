@@ -27,6 +27,8 @@ public class IngridLocalizationValveImpl extends AbstractValve implements Locali
 
     private static final String INGRID_LOCALE__REQUEST_KEY = "lang";
 
+    private static String portalLanguage = null;
+    
     private JetspeedCache contentCache;
 
     public IngridLocalizationValveImpl() {
@@ -41,9 +43,13 @@ public class IngridLocalizationValveImpl extends AbstractValve implements Locali
 
         try {
             String language = request.getRequestParameter(INGRID_LOCALE__REQUEST_KEY);
-
-            if (language != null && language.length() > 0) {
-
+            if(language != null){
+            	portalLanguage = language;
+            }
+            if ((language != null && language.length() > 0) || portalLanguage != null) {
+            	if(language == null){
+            		language = portalLanguage;
+            	}
                 // invalidate portlet content cache
                 contentCache.clear();
 
