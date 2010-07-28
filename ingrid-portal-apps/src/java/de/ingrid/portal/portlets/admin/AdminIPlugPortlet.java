@@ -123,7 +123,7 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
             for (int i = 0; i < plugs.length; i++) {
                 PlugDescription plug = plugs[i];
                 // do not include search engine iplugs
-                if (plug.getIPlugClass().equals("de.ingrid.iplug.se.IndexIPlug")) {
+                if (plug.getIPlugClass().equals("de.ingrid.iplug.se.IndexIPlug") || plug.getIPlugClass().equals("de.ingrid.admin.object.IndexSePlug")) {
                     result.add(plug);
                 }
             }
