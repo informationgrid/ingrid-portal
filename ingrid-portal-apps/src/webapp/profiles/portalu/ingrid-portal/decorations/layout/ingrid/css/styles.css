@@ -135,7 +135,7 @@ div#servicenav ul li a.selected { text-decoration:none; color:#111111; font-weig
 div#servicenav ul li a.selected:hover { text-decoration:underline; color:#111111; font-weight:normal; }
 
 /*style to change language switch style (use in profiles)*/
-select.language_switch_style {}
+select.language_switch_style { font-size:100% }
 
 /********************************************************************
   main navigation styles
