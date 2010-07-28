@@ -866,7 +866,7 @@ var mappingDescription = {"mappings":[
   		// ****************************************************
 
   		{
-  			"srcXpath":"//gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource",
+  			"srcXpath":"//gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource[gmd:linkage/gmd:URL!='']",
   			"targetNode":"/igc/data-sources/data-source",
   			"newNodeName":"available-linkage",
   			"subMappings":{
@@ -897,7 +897,7 @@ var mappingDescription = {"mappings":[
 			}
   		},
   		{
-  			"srcXpath":"//gmd:identificationInfo//gmd:graphicOverview/gmd:MD_BrowseGraphic",
+  			"srcXpath":"//gmd:identificationInfo//gmd:graphicOverview/gmd:MD_BrowseGraphic[gmd:fileName/gco:CharacterString != '']",
   			"targetNode":"/igc/data-sources/data-source",
   			"newNodeName":"available-linkage",
   			"subMappings":{
