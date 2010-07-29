@@ -174,6 +174,9 @@ public class AddressServiceImpl implements AddressService {
 					organisations = "\t"+address.getParentInstitutions().get(i).getOrganisation()+"\n"+organisations;
 				}
 			}
+			// also check if we (as an institution or unit!) have an organisation set
+			if (address.getAddressClass() == 1 || address.getAddressClass() == 0 && address.getOrganisation() != null)
+			    organisations += address.getOrganisation();
 		} else {
 			organisations = address.getOrganisation();
 			if (organisations == null)
