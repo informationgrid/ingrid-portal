@@ -943,6 +943,13 @@ public class IngridJobHandler {
             OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
             BufferedWriter bw = new BufferedWriter(osw);
             
+            // write header of csv
+            String header = "#active; id; name; type; queryString; serviceUrl;" +
+            		" excludedProvider; interval(s); timeout(ms); status; lastExecution;" +
+            		" nextExecution; lastSuccessfulExecution; numExecutions;" +
+            		" averageExecution; email1 threshold1 ...";
+            bw.append(header + "\n");
+            
             // write each job as a line into the file
             String line;
             for (JobDetail jobDetail : jobs) {
