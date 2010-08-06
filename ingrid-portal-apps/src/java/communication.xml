@@ -48,6 +48,8 @@
 -->
 
 <!-- LIVE - intern -->
+<!-- 
+-->
 <communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="communication.xsd">
         <client name="/torwald-group:live-kug-ibus">
