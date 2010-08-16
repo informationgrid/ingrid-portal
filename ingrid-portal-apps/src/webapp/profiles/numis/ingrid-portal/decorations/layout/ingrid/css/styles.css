@@ -255,15 +255,15 @@ div.portal-layout-column-1 .clearer { clear:both; display:block; height:1px; lin
 div.section p.iconLink span.icon { margin: 7px 0 0 0; }
 
 div.section ul.catalog { margin:0; padding:0; }
-div.section ul.catalog li { display:inline; }
+div.section ul.catalog li { display:inline; font-size:90%; }
 div.section ul.catalog li a { display:inline; }
 div.section ul.catalog span.separator { background: url(../images/list_dot.gif) no-repeat center center; margin-right:0.1em; margin-left:0.2em; }
 /*
 div.section ul.catalog li a { white-space:nowrap; padding-left:1em; padding-right:0.5em; background: url(../images/list_dot.gif) no-repeat top left; }
 div.section ul.catalog li { border:1px solid red; background: url(../images/list_dot.gif) no-repeat bottom left; display: inline; padding-left:1em; padding-right:0.5em}
 */
-div.section ul li { font-size:90%}
-div.section ol li { font-size:100%}
+div.section ul li { font-size:75%}
+div.section ol li { font-size:75%}
 
 div.section ul.innermenu {list-style: none; margin: 0 0 0 0.0em;}
 div.section ul.innermenu li { margin: 0 0 0.3em 0;padding-left: 20px;background-image:url("../images/icn_down.gif");background-repeat: no-repeat;background-position: 0 .15em; }
