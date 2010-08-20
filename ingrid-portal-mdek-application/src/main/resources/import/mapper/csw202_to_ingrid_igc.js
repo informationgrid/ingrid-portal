@@ -1683,7 +1683,7 @@ function createUUIDFromAddress(source) {
 		uuid = isoUuid;
 	} else {
 		protocol(WARN, "Insufficient data for UUID creation (no 'email' or only one of 'individualName' or 'organisationName' has been set for this address: email='" + email + "', individualName='" + individualName + "', organisationName='" + organisationName + "'!)")
-		protocol(WARN, "A new random UUID will be created!"")
+		protocol(WARN, "A new random UUID will be created!")
 		log.warn("Insufficient data for UUID creation (no 'email' or only one of 'individualName' or 'organisationName' has been set for this address: email='" + email + "', individualName='" + individualName + "', organisationName='" + organisationName + "'!)");
 		log.warn("A new random UUID will be created!");
 		uuid = createUUID();
