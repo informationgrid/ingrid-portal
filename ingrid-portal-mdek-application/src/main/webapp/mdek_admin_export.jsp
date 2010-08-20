@@ -313,13 +313,39 @@ function initSysLists() {
 	<div dojoType="ContentPane" layoutAlign="client">
 
 		<div class="contentBlockWhite top">
+			<div class="spacer"></div>
+			<div class="spacer"></div>
 			<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=import-export-1#import-export-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+				<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=import-export-1#import-export-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 			</div>
 			<div class="content">
-	
+				<div class="inputContainer noSpaceBelow">
+					<div id="exportProcessInfo" class="infobox w670">
+						<span class="icon"><img src="img/ic_info_download.gif" width="16" height="16" alt="Info" /></span>
+						<span id="exportInfoTitle" class="title"></span>
+						<div id="exportProcessInfoContent">
+							<p id="exportInfoDownload"><fmt:message key="dialog.admin.export.result" /> <a href="javascript:void(0);" onclick="javascript:scriptScope.downloadLastExport();" title="<fmt:message key="dialog.admin.export.log" />">link</a></p>
+							<p id="exportExceptionMessage"><fmt:message key="dialog.admin.export.error" /> <a href="javascript:void(0);" onclick="javascript:scriptScope.showJobException();" title="<fmt:message key="dialog.admin.export.errorinfo" />">link</a></p>
+							<table cellspacing="0">
+								<tr>
+									<td><fmt:message key="dialog.admin.export.startTime" /></td>
+									<td id="exportInfoBeginDate"></td></tr>
+									<tr><td id="exportInfoEndDateContainer"><fmt:message key="dialog.admin.export.endTime" /></td>
+									<td id="exportInfoEndDate"></td></tr>
+									<tr><td id="exportInfoNumExportedEntitiesContainer"></td>
+									<td id="exportInfoNumExportedEntities"></td></tr>
+									<tr><td id="exportProgressBarContainer" colspan=2><div dojoType="ProgressBar" id="exportProgressBar" width="310" height="10" /></td></tr>
+							</table>
+							<span id="cancelExportProcessButton" class="button" style="height:20px !important;">
+								<span style="float:right;">
+									<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.export.cancel" />" onClick="javascript:scriptScope.cancelExport();"><fmt:message key="dialog.admin.export.cancel" /></button>
+								</span>
+							</span>
+
+						</div> <!-- processInfoContent end -->
+					</div> <!-- processInfo end -->
+				</div> <!-- inputContainer end -->
 				<!-- LEFT HAND SIDE CONTENT START -->
-				<div class="spacer"></div>
 				<div class="spacer"></div>
 				<div class="inputContainer field grey noSpaceBelow">
 					<div class="checkboxContainer">
@@ -347,33 +373,6 @@ function initSysLists() {
 					</span>
 		            <div class="fill"></div>
 				</div>
-
-				<div class="inputContainer noSpaceBelow">
-					<div id="exportProcessInfo" class="infobox w670">
-						<span class="icon"><img src="img/ic_info_download.gif" width="16" height="16" alt="Info" /></span>
-						<span id="exportInfoTitle" class="title"></span>
-						<div id="exportProcessInfoContent">
-							<p id="exportInfoDownload"><fmt:message key="dialog.admin.export.result" /> <a href="javascript:void(0);" onclick="javascript:scriptScope.downloadLastExport();" title="<fmt:message key="dialog.admin.export.log" />">link</a></p>
-							<p id="exportExceptionMessage"><fmt:message key="dialog.admin.export.error" /> <a href="javascript:void(0);" onclick="javascript:scriptScope.showJobException();" title="<fmt:message key="dialog.admin.export.errorinfo" />">link</a></p>
-							<table cellspacing="0">
-								<tr>
-									<td><fmt:message key="dialog.admin.export.startTime" /></td>
-									<td id="exportInfoBeginDate"></td></tr>
-									<tr><td id="exportInfoEndDateContainer"><fmt:message key="dialog.admin.export.endTime" /></td>
-									<td id="exportInfoEndDate"></td></tr>
-									<tr><td id="exportInfoNumExportedEntitiesContainer"></td>
-									<td id="exportInfoNumExportedEntities"></td></tr>
-									<tr><td id="exportProgressBarContainer" colspan=2><div dojoType="ProgressBar" id="exportProgressBar" width="310" height="10" /></td></tr>
-							</table>
-							<span id="cancelExportProcessButton" class="button" style="height:20px !important;">
-								<span style="float:right;">
-									<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.export.cancel" />" onClick="javascript:scriptScope.cancelExport();"><fmt:message key="dialog.admin.export.cancel" /></button>
-								</span>
-							</span>
-
-						</div> <!-- processInfoContent end -->
-					</div> <!-- processInfo end -->
-				</div> <!-- inputContainer end -->
 				<!-- LEFT HAND SIDE CONTENT END -->
 			</div> <!-- content end -->
 		</div> <!-- contentBlockWhite end -->

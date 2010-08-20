@@ -35,9 +35,9 @@ var ERROR = 4;
 
 
 if (log.isDebugEnabled()) {
-	log.debug("mapping CSW 2.0.2 AP ISO 1.0 document " + protocol.getCurrentFilename() + " to IGC import document.");
+	log.debug("mapping CSW 2.0.2 AP ISO 1.0 document " + protocolHandler.getCurrentFilename() + " to IGC import document.");
 }
-protocol(INFO, "Start transformation of: " + protocol.getCurrentFilename());
+protocol(INFO, "Start transformation of: " + protocolHandler.getCurrentFilename());
 protocol(INFO, "-------------------------------------------------");
 protocol(INFO, "\n");
 
@@ -1708,14 +1708,14 @@ function createUUID() {
 
 function protocol(level, msg) {
 
-	if (level==DEBUG && protocol.isDebugEnabled()){
-		protocol.addMessage(msg + "\n");
-	} else if (level==INFO && protocol.isInfoEnabled()){
-		protocol.addMessage(msg + "\n");
-	} else if (level==WARN && protocol.isWarnEnabled()){
-		protocol.addMessage("<span style=\"font-style:bold\">" + msg + "</span>\n");
-	} else if (level==ERROR && protocol.isErrorEnabled()){
-		protocol.addMessage("<span style=\"font-color:red;font-style:bold\">" + msg + "</span>\n");
+	if (level==DEBUG){
+		protocolHandler.addMessage(msg + "\n");
+	} else if (level==INFO){
+		protocolHandler.addMessage(msg + "\n");
+	} else if (level==WARN){
+		protocolHandler.addMessage("<span style=\"font-style:bold\">" + msg + "</span>\n");
+	} else if (level==ERROR){
+		protocolHandler.addMessage("<span style=\"font-color:red;font-style:bold\">" + msg + "</span>\n");
 	}
 }
 

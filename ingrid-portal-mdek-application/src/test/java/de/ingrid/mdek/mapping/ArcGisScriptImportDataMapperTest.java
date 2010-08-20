@@ -25,6 +25,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import de.ingrid.mdek.handler.ProtocolHashMapHandlerImpl;
 import de.ingrid.utils.xml.XPathUtils;
 
 public class ArcGisScriptImportDataMapperTest extends TestCase {
@@ -70,7 +71,8 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			e.printStackTrace();
 		}
 		
-		InputStream result = mapper.convert(data);
+		ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename("sourceExample.xml");
+		InputStream result = mapper.convert(data, ProtocolHashMapHandlerImpl.getInstance());
 		
 		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", exampleTitle));
 	}
@@ -104,7 +106,8 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			e.printStackTrace();
 		}
 		
-		InputStream result = mapper.convert(data);
+		ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename("depmst_abgas.lyr.xml");
+		InputStream result = mapper.convert(data, ProtocolHashMapHandlerImpl.getInstance());
 		
 		Document doc = getDomFromSourceData(result);
 		
@@ -128,7 +131,8 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			e.printStackTrace();
 		}
 		
-		InputStream result = mapper.convert(data);
+		ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename("depmst_abgas.lyr.xml");
+		InputStream result = mapper.convert(data, ProtocolHashMapHandlerImpl.getInstance());
 		
 		Document doc = getDomFromSourceData(result);
 		
@@ -154,7 +158,8 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			e.printStackTrace();
 		}
 		
-		InputStream result = mapper.convert(data);
+		ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename("tgr02068wat.xml");
+		InputStream result = mapper.convert(data, ProtocolHashMapHandlerImpl.getInstance());
 		
 //		assertTrue(validateIgcImportXML(result));
 		
@@ -180,7 +185,8 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			e.printStackTrace();
 		}
 		
-		InputStream result = mapper.convert(data);
+		ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename("depmst_gw.shp.xml");
+		InputStream result = mapper.convert(data, ProtocolHashMapHandlerImpl.getInstance());
 		
 		Document doc = getDomFromSourceData(result);
 		
@@ -204,7 +210,8 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			e.printStackTrace();
 		}
 		
-		InputStream result = mapper.convert(data);
+		ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename("depmst_siwa.shp.xml");
+		InputStream result = mapper.convert(data, ProtocolHashMapHandlerImpl.getInstance());
 		
 		Document doc = getDomFromSourceData(result);
 		
@@ -228,7 +235,8 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			e.printStackTrace();
 		}
 		
-		InputStream result = mapper.convert(data);
+		ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename("ISHK500_Metadata.xml");
+		InputStream result = mapper.convert(data, ProtocolHashMapHandlerImpl.getInstance());
 		
 		Document doc = getDomFromSourceData(result);
 		
@@ -252,7 +260,8 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			e.printStackTrace();
 		}
 		
-		InputStream result = mapper.convert(data);
+		ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename("HB_Amtlicher_Stadtplan.xml");
+		InputStream result = mapper.convert(data, ProtocolHashMapHandlerImpl.getInstance());
 
 		Document doc = getDomFromSourceData(result);
 		
@@ -274,7 +283,8 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			e.printStackTrace();
 		}
 		
-		InputStream result = mapper.convert(data);
+		ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename("cuso.shp.xml");
+		InputStream result = mapper.convert(data, ProtocolHashMapHandlerImpl.getInstance());
 		Document doc = getDomFromSourceData(result);
 		// Portugese is not supported,  check for template String
 		assertEquals("xxxTEMPLATExxx", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));

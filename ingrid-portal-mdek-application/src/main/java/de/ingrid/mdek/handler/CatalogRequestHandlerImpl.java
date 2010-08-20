@@ -206,17 +206,17 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 
 	public void exportFreeAddresses() {
 		IngridDocument response = exportAddressBranch(null, false, AddressArea.ALL_FREE_ADDRESSES);
-		MdekCatalogUtils.extractJobInfoFromResponse(response);
+		MdekCatalogUtils.extractJobInfoFromResponse(response, JobType.EXPORT);
 	}
 
 	public void exportTopAddresses(boolean exportChildren) {
 		IngridDocument response = exportAddressBranch(null, exportChildren, AddressArea.ALL_ADDRESSES);
-		MdekCatalogUtils.extractJobInfoFromResponse(response);
+		MdekCatalogUtils.extractJobInfoFromResponse(response, JobType.EXPORT);
 	}
 
 	public void exportAddressBranch(String rootUuid, boolean exportChildren) {
 		IngridDocument response = exportAddressBranch(rootUuid, exportChildren, null);
-		MdekCatalogUtils.extractJobInfoFromResponse(response);
+		MdekCatalogUtils.extractJobInfoFromResponse(response, JobType.EXPORT);
 	}
 
 	private IngridDocument exportAddressBranch(String rootUuid, boolean exportChildren, AddressArea addressArea) {
@@ -232,7 +232,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 				rootUuid,
 				!exportChildren, MdekSecurityUtils.getCurrentUserUuid());
 
-		MdekCatalogUtils.extractJobInfoFromResponse(response);
+		MdekCatalogUtils.extractJobInfoFromResponse(response, JobType.EXPORT);
 	}
 
 	public void exportObjectsWithCriteria(String exportCriteria) {
@@ -240,15 +240,15 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 				connectionFacade.getCurrentPlugId(),
 				exportCriteria,
 				MdekSecurityUtils.getCurrentUserUuid());
-		MdekCatalogUtils.extractJobInfoFromResponse(response);
+		MdekCatalogUtils.extractJobInfoFromResponse(response, JobType.EXPORT);
 	}
 
 	public ExportJobInfoBean getExportInfo(boolean includeExportData) {
 		IngridDocument response = mdekCallerCatalog.getExportInfo(connectionFacade.getCurrentPlugId(), includeExportData, MdekSecurityUtils.getCurrentUserUuid());
-		return MdekCatalogUtils.extractExportJobInfoFromResponse(response);
+		return MdekCatalogUtils.extractExportJobInfoFromResponse(response, JobType.EXPORT);
 	}
 
-	public void importEntities(UserData currentUser, byte[] importData, String targetObjectUuid, String targetAddressUuid,
+	public void importEntities(UserData currentUser, ArrayList <byte[]> importData, String targetObjectUuid, String targetAddressUuid,
 			boolean publishImmediately, boolean doSeparateImport) {
 		IngridDocument response = mdekCallerCatalog.importEntities(
 				currentUser.getPlugId(),
@@ -256,7 +256,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 				targetObjectUuid, targetAddressUuid,
 				publishImmediately, doSeparateImport,
 				currentUser.getAddressUuid());
-		MdekCatalogUtils.extractJobInfoFromResponse(response);
+		MdekCatalogUtils.extractJobInfoFromResponse(response, JobType.IMPORT);
 	}
 
 	public JobInfoBean getImportInfo() {
@@ -265,7 +265,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 				JobType.IMPORT,
 				MdekSecurityUtils.getCurrentUserUuid());
 
-		return MdekCatalogUtils.extractJobInfoFromResponse(response);
+		return MdekCatalogUtils.extractJobInfoFromResponse(response, JobType.IMPORT);
 	}
 
 	public void cancelRunningJob() {
@@ -277,7 +277,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 				connectionFacade.getCurrentPlugId(),
 				MdekSecurityUtils.getCurrentUserUuid());
 
-		return MdekCatalogUtils.extractAnalyzeJobInfoFromResponse(response);
+		return MdekCatalogUtils.extractAnalyzeJobInfoFromResponse(response, JobType.ANALYZE);
 	}
 
 	public ConnectionFacade getConnectionFacade() {
@@ -343,6 +343,6 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 				JobType.REBUILD_SYSLISTS,
 				MdekSecurityUtils.getCurrentUserUuid());
 
-		return MdekCatalogUtils.extractReindexJobInfoFromResponse(response);
+		return MdekCatalogUtils.extractReindexJobInfoFromResponse(response, JobType.REBUILD_SYSLISTS);
 	}
 }

@@ -10,7 +10,11 @@ public class JobInfoBean {
 	private String description;
 	private EntityType entityType;
 	private Integer numEntities;
+	private Integer numObjects;
+	private Integer numAddresses;
 	private Integer numProcessedEntities;
+	private Integer numProcessedObjects;
+	private Integer numProcessedAddresses;
 	private Date startTime;
 	private Date endTime;
 	private Exception exception;
@@ -27,11 +31,35 @@ public class JobInfoBean {
 	public void setNumEntities(Integer numEntities) {
 		this.numEntities = numEntities;
 	}
+	public Integer getNumObjects() {
+		return numObjects;
+	}
+	public void setNumObjects(Integer numObj) {
+		this.numObjects = numObj;
+	}
+	public Integer getNumAddresses() {
+		return numAddresses;
+	}
+	public void setNumAddresses(Integer numAddresses) {
+		this.numAddresses = numAddresses;
+	}
 	public Integer getNumProcessedEntities() {
 		return numProcessedEntities;
 	}
 	public void setNumProcessedEntities(Integer numProcessedEntities) {
 		this.numProcessedEntities = numProcessedEntities;
+	}
+	public Integer getNumProcessedObjects() {
+		return numProcessedObjects;
+	}
+	public void setNumProcessedObjects(Integer numProcessedObjects) {
+		this.numProcessedObjects = numProcessedObjects;
+	}
+	public Integer getNumProcessedAddresses() {
+		return numProcessedAddresses;
+	}
+	public void setNumProcessedAddresses(Integer numProcessedAddresses) {
+		this.numProcessedAddresses = numProcessedAddresses;
 	}
 	public Date getStartTime() {
 		return startTime;

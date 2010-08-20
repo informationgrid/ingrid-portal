@@ -383,6 +383,11 @@
 	"validation.begin":"von",
 	"validation.end":"bis",
 	
+	"protocol.import":"Importieren",
+	"protocol.cancel":"Abbrechen",
+	"protocol.title":"Import Protokoll",
+	"protocol.empty":"Keine Protokoll-Nachrichten vorhanden.",
+	
 	"ui.entry.loadingMessage":"Die Anwendung wird geladen...",
 	"ui.entry.admin.title":"InGrid-Editor - Verwaltung und Management",
 	"ui.general.openAllFieldsTooltip":"Alle Felder aufklappen",

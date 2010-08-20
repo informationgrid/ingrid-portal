@@ -7,6 +7,7 @@ var dialog={};
 // different dialog types
 dialog.WARNING = "warning";
 dialog.INFO = "info";
+dialog.Message = "message";
 
 // different dialog actions
 dialog.CLOSE_ACTION = "closeDlg";
@@ -160,6 +161,8 @@ dialog.show = function(caption, text, /* dialog.WARNING|dialog.INFO */type, /* a
     content += "<div class='popupWarning'>"+ message.get("dialog.general.warning") +"!</div>";
   if (type == dialog.INFO)
     text = '<strong>' + text + '</strong>';
+  if (type == dialog.MESSAGE)
+    text = text;
   content += '<div class="popupContent xNoScroll yScroll" style="height:'+(height-85)+'px;">' + text + '<span class="buttons" id="'+dlgId+'_buttons"></span></div>';
   div.innerHTML = content;
   document.body.appendChild(div);

@@ -25,6 +25,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.mdek.MdekUtils;
+import de.ingrid.mdek.handler.ProtocolHandler;
 import de.ingrid.mdek.xml.XMLKeys;
 import de.ingrid.utils.xml.XMLUtils;
 
@@ -48,7 +49,7 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 		
 	}
 	
-	public InputStream convert(InputStream data) {
+	public InputStream convert(InputStream data, ProtocolHandler protocolHandler) {
 		Map<String, Object> parameters = new Hashtable<String, Object>();
 		InputStream targetStream = null;
 		
@@ -69,6 +70,7 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 			
 		    parameters.put("source", doc);
 		    parameters.put("target", docTarget);
+		    parameters.put("protocolHandler", protocolHandler);
 		    // the template represents only one object!
 		    // Better if docTarget is only header and footer where
 		    // new objects made from template will be put into?

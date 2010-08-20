@@ -27,6 +27,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import de.ingrid.mdek.handler.ProtocolHashMapHandlerImpl;
 import de.ingrid.utils.xml.XMLUtils;
 
 public class Csw202ScriptImportDataMapperTest extends TestCase {
@@ -74,7 +75,8 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		}
 		System.out.println(data.toString());
 		// System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
-		InputStream result = mapper.convert(data);
+		ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename("inspire_datasetkomplett.xml");
+		InputStream result = mapper.convert(data, ProtocolHashMapHandlerImpl.getInstance());
 		
 		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
 	}
@@ -93,7 +95,8 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		}
 		System.out.println(data.toString());
 		// System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
-		InputStream result = mapper.convert(data);
+		ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename("inspire_servicekomplett.xml");
+		InputStream result = mapper.convert(data, ProtocolHashMapHandlerImpl.getInstance());
 		
 		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Test_Schutzgebiete"));
 	}
@@ -111,7 +114,8 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 			e.printStackTrace();
 		}
 		//System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
-		InputStream result = mapper.convert(data);
+		ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename("st_xml19115.xml");
+		InputStream result = mapper.convert(data, ProtocolHashMapHandlerImpl.getInstance());
 		
 		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
 		
@@ -126,7 +130,8 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		result = mapper.convert(data);
+		ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename("st_xml19119.xml");
+		result = mapper.convert(data, ProtocolHashMapHandlerImpl.getInstance());
 //		System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
 		
 		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
@@ -147,7 +152,8 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 			e.printStackTrace();
 		}
 		//System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
-		InputStream result = mapper.convert(data);
+		ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename("csw202apIso10_dataset_Gewaesser_Muensterland.xml");
+		InputStream result = mapper.convert(data, ProtocolHashMapHandlerImpl.getInstance());
 		
 		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Gewässerflächen im Münsterland nach INSPIRE DataSpecification Hydrography"));
 		result.reset();
@@ -169,7 +175,8 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 			e.printStackTrace();
 		}
 		//System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
-		InputStream result = mapper.convert(data);
+		ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename("th_20052010095904_iso19115.xml");
+		InputStream result = mapper.convert(data, ProtocolHashMapHandlerImpl.getInstance());
 		
 		assertEquals(2, xpathCount(result, "//igc/addresses/address"));
 		result.reset();

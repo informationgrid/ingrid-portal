@@ -383,6 +383,11 @@
 	"validation.begin":"from",
 	"validation.end":"to",
 	
+	"protocol.import":"Import",
+	"protocol.cancel":"Cancel",
+	"protocol.title":"Import Protocol",
+	"protocol.empty":"No protocol messages available.",
+	
 	"ui.entry.loadingMessage":"The application is loading...",
 	"ui.entry.admin.title":"InGrid-Editor - Administration",
 	"ui.general.openAllFieldsTooltip":"Show all fields",

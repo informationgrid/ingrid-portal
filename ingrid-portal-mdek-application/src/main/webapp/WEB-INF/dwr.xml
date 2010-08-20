@@ -66,6 +66,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.CommentBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.ExportJobInfoBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.GenericValueBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.ProtocolInfoBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.JobInfoBean"/>
 		<convert converter="enum" match="de.ingrid.mdek.beans.JobInfoBean$EntityType"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.KeyValuePair"/>
