@@ -16,7 +16,13 @@
  * @param target A org.w3c.dom.Document instance, that defines the output, based on the IGC import format template.
  * @param log A Log instance
  *
+ *
+ * Example to set debug message for protocol:
+ * if(protocol.isDebugEnable()){
+ *		protocol.addMessage(protocol.getCurrentFilename() + ": Debug message");
+ * }
  */
+
 importPackage(Packages.de.ingrid.utils.udk);
 importPackage(Packages.de.ingrid.utils.xml);
 importPackage(Packages.org.w3c.dom);
