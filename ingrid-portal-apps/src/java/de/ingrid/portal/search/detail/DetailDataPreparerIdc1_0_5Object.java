@@ -1031,7 +1031,7 @@ public class DetailDataPreparerIdc1_0_5Object implements DetailDataPreparer {
     	    	    			} else {
     	    	    				serviceUrl = serviceUrl + "&";
     	    	    			}
-    	    	    			serviceUrl = serviceUrl + "REQUEST=GetCapabilities&SERVICE=CSW";
+    	    	    			serviceUrl = serviceUrl + "REQUEST=GetCapabilities&SERVICE=WMS";
     	    	    		}
     	    	    		wmsServiceLinks.add(serviceUrl);
     	    	    	}
