@@ -1713,9 +1713,9 @@ function protocol(level, msg) {
 	} else if (level==INFO){
 		protocolHandler.addMessage(msg + "\n");
 	} else if (level==WARN){
-		protocolHandler.addMessage("<span style=\"font-style:bold\">" + msg + "</span>\n");
+		protocolHandler.addMessage("<span style=\"font-weight:bold;\">" + msg + "</span>\n");
 	} else if (level==ERROR){
-		protocolHandler.addMessage("<span style=\"font-color:red;font-style:bold\">" + msg + "</span>\n");
+		protocolHandler.addMessage("<span style=\"color:red;font-weight:bold;\">" + msg + "</span>\n");
 	}
 }
 

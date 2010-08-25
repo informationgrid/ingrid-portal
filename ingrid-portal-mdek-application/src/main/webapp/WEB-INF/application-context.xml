@@ -140,6 +140,9 @@
 		<property name="dataMapperFactory">
 			<ref local="dataMapperFactory" />
 		</property>
+		<property name="protocolFactory">
+			<ref local="protocolFactory" />
+		</property>
 	</bean>
 	<bean id="objectService"
 		class="de.ingrid.mdek.dwr.services.ObjectServiceImpl">
@@ -287,6 +290,8 @@
 		    </map>
 	    </property>
 	</bean>
+	
+	<bean id="protocolFactory" class="de.ingrid.mdek.mapping.HashMapProtocolFactory"/>
 	
 	<bean id="scriptImportDataMapper" class="de.ingrid.mdek.mapping.ScriptImportDataMapper">
 		<property name="mapperScript" value="classpath:import/mapper/ArcGIS_to_ingrid_igc.js" />

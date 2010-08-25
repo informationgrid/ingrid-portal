@@ -1,6 +1,5 @@
 package de.ingrid.mdek.handler;
 
-import java.util.ArrayList;
 
 
 
@@ -11,7 +10,6 @@ public interface ProtocolHandler {
 	public void clearProtocol();
 	public String getProtocol();
 	public void addMessage(String protocolMessage);
-	public ArrayList<String> getProtocolMessages();
 	public boolean isDebugEnabled();
 	public boolean isErrorEnabled();
 	public boolean isInfoEnabled();

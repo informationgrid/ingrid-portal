@@ -7,7 +7,7 @@ var dialog={};
 // different dialog types
 dialog.WARNING = "warning";
 dialog.INFO = "info";
-dialog.Message = "message";
+dialog.MESSAGE = "message";
 
 // different dialog actions
 dialog.CLOSE_ACTION = "closeDlg";

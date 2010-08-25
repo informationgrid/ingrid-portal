@@ -279,7 +279,7 @@ checkImportTransformationStatus = function() {
 function showProtocol(controlMap) {
 	if(controlMap.inputType != "igc"){
 		var protocolMessageToHtml = returnToBr(controlMap.protocol);
-		if(protocolMessageToHtml != null){
+		if(protocolMessageToHtml != null && protocolMessageToHtml.length > 0){
 			dialog.show(message.get("protocol.title"), protocolMessageToHtml, dialog.MESSAGE, [{caption:message.get("protocol.import"),action:function(){startTreeImport()}}, {caption:message.get("protocol.cancel"),action:dialog.CLOSE_ACTION}], 500, 500);
 		}else{
 			dialog.show(message.get("protocol.title"), message.get("protocol.empty"), dialog.MESSAGE, [{caption:message.get("protocol.import"),action:function(){startTreeImport()}}, {caption:message.get("protocol.cancel"),action:dialog.CLOSE_ACTION}], 500, 500);

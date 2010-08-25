@@ -24,9 +24,10 @@ import org.directwebremoting.io.FileTransfer;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.ProtocolInfoBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
-import de.ingrid.mdek.handler.ProtocolHashMapHandlerImpl;
+import de.ingrid.mdek.handler.ProtocolHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.mapping.DataMapperFactory;
+import de.ingrid.mdek.mapping.ProtocolFactory;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
@@ -34,32 +35,35 @@ import de.ingrid.mdek.util.MdekSecurityUtils;
 public class ImportServiceImpl {
 
 	private final static Logger log = Logger.getLogger(ImportServiceImpl.class);	
+	private static final int buffer = 4096;
 	
 	private enum FileType { GZIP, ZIP, XML, UNKNOWN }
 
 	// Injected by Spring
 	private CatalogRequestHandler catalogRequestHandler;
 	private DataMapperFactory dataMapperFactory;
-	private ArrayList<byte[]> importData;
+	private ProtocolFactory protocolFactory;
+	
 	private static Map<String,ProtocolInfoBean> controlMap = new ConcurrentHashMap<String, ProtocolInfoBean>();
 	
 	public void importEntities(FileTransfer fileTransfer, String fileType, String targetObjectUuid, String targetAddressUuid,
 			boolean publishImmediately, boolean doSeparateImport) {
 
 		// Define bean for protocol
-		ProtocolInfoBean protocolInfo = new ProtocolInfoBean();
-		setProtocolStatus(protocolInfo, false);
-		setProtocolInputType(protocolInfo, fileType);
+		ProtocolInfoBean protocolBean = new ProtocolInfoBean();
+		setProtocolStatus(protocolBean, false);
+		setProtocolInputType(protocolBean, fileType);
 		
 		//Start protocol
-		ProtocolHashMapHandlerImpl.getInstance().startProtocol();
+		ProtocolHandler protocolHandler = protocolFactory.getProtocolHandler();
+		setProtocolHandler(protocolBean, protocolHandler);
+		controlMap.get(getCurrentUserId()).getProtocolHandler().startProtocol();
 		
 		// Initiate a list of bytes for each file
-		importData = new ArrayList<byte[]>();
+		ArrayList<byte[]> importData = new ArrayList<byte[]>();
 		try {
 			// map source file into icg-target format
 			InputStream preparedImportData;
-			final int buffer = 4096;
 			
 			switch (getFileType(fileTransfer.getMimeType())) {
 			case GZIP:
@@ -69,37 +73,21 @@ public class ImportServiceImpl {
 				preparedImportData = fileTransfer.getInputStream();
 				
 				// Create tmp file for GZIP 
-				File tmpFile = File.createTempFile(getCurrentUserId(), ".txt", dirGZIP);
-				OutputStream src = new FileOutputStream(tmpFile);
-				src.write(createByteArrayFromInputStream(preparedImportData));
-				src.close();
-
+				File tmpFile = createTemporaryFile(preparedImportData, dirGZIP); 
+				
 				// Save GZIP file on temp directory
-				byte[] bufGZIP = new byte[buffer];
 				FileInputStream gzipInputStream = new FileInputStream(tmpFile);
-				File fileGZIP = new File (rootDirGZIP + "\\" + fileTransfer.getFilename());
-				FileOutputStream outGZIP = new FileOutputStream(fileGZIP);
-				int lenGzip;
-				while ((lenGzip = gzipInputStream.read(bufGZIP)) > 0) {
-					outGZIP.write(bufGZIP, 0, lenGzip);
-				}
+				File fileGZIP = createFilebyInputStream(gzipInputStream, rootDirGZIP + "\\" + fileTransfer.getFilename());
 				gzipInputStream.close();
-				outGZIP.close();
-		        
+				
 				// Extract GZIP file
 				FileInputStream inXML = new FileInputStream(fileGZIP);
 			    GZIPInputStream gzipInXML = new GZIPInputStream(inXML);
-			    FileOutputStream outXML = new FileOutputStream(rootDirGZIP + "\\" + fileTransfer.getFilename()+".xml");
-			    int length;
-			    while ((length = gzipInXML.read(bufGZIP, 0, buffer)) != -1)
-			    	outXML.write(bufGZIP, 0, length);
-			    outXML.close();
+			    File outXML = createFilebyInputStream(gzipInXML, rootDirGZIP + "\\" + fileTransfer.getFilename()+".xml");
 			    gzipInXML.close();
 				
 			    // Import file data
-			    File importFile = new File (rootDirGZIP + "\\" + fileTransfer.getFilename()+".xml");
-			    importData.add(compress(importXMLData(new FileInputStream(importFile), importFile.getName(),fileType)).toByteArray());
-			    
+			    importData.add(compress(importXMLData(new FileInputStream(outXML), outXML.getName(),fileType)).toByteArray());
 			    deleteUserImportDirectory(dirGZIP);
 			    break;
 
@@ -108,26 +96,18 @@ public class ImportServiceImpl {
 				File dirZIP = createFileDirectory("zip");
 				String rootDirZIP = dirZIP.getAbsolutePath();
 
-				byte[] buf = new byte[buffer];
 				ZipInputStream zipIn = new ZipInputStream(preparedImportData);
 				while (true){
 					ZipEntry entry = zipIn.getNextEntry();
 					if (entry == null){
 						break;
 					}
-					File file = new File (rootDirZIP + "\\" + entry.getName());
-					FileOutputStream out = new FileOutputStream(file);
-					int len;
-					while ((len = zipIn.read(buf)) > 0) {
-						out.write(buf, 0, len);
-					}
-					out.close();
+					File file = createFilebyInputStream(zipIn, rootDirZIP + "\\" + entry.getName());
 					zipIn.closeEntry();
 					
 					importData.add(compress(importXMLData(new FileInputStream(file),file.getName(), fileType)).toByteArray());
 				}
 				zipIn.close();
-				
 				deleteUserImportDirectory(dirZIP);
 				break;
 
@@ -143,9 +123,8 @@ public class ImportServiceImpl {
 				throw new IllegalArgumentException("Error checking input file type. Supported types: GZIP, ZIP, XML");
 			}
 			
-			if(ProtocolHashMapHandlerImpl.getInstance().getHashMapImportProtocol() != null){
-				setProtocolMessage(protocolInfo, ProtocolHashMapHandlerImpl.getInstance().getProtocol());
-				ProtocolHashMapHandlerImpl.getInstance().clearProtocol();
+			if(controlMap.get(getCurrentUserId()).getProtocolHandler().getProtocol() != null){
+				setProtocolMessage(protocolBean, controlMap.get(getCurrentUserId()).getProtocolHandler().getProtocol());
 			}
 		} catch (IOException ex) {
 			log.error("Error creating input data.", ex);
@@ -154,7 +133,8 @@ public class ImportServiceImpl {
 			log.debug("MdekException while starting import job.", ex);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(ex));
 		}finally{
-			setProtocolStatus(protocolInfo, true);
+			setProtocolImportData(protocolBean, importData);
+			setProtocolStatus(protocolBean, true);
 		}
 		
 	}
@@ -168,7 +148,7 @@ public class ImportServiceImpl {
 		UserData currentUser = MdekSecurityUtils.getCurrentPortalUserData();
 		
 		ImportEntitiesThread importThread;
-		importThread = new ImportEntitiesThread(catalogRequestHandler, currentUser, importData, fileType, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
+		importThread = new ImportEntitiesThread(catalogRequestHandler, currentUser, controlMap.get(getCurrentUserId()).getImportData(), fileType, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
 		importThread.start();
 		try {
 			importThread.join(3000);
@@ -201,8 +181,8 @@ public class ImportServiceImpl {
 		if(inputFileType.equals("igc")){
 			return inputFileStream;
 		}else{
-			ProtocolHashMapHandlerImpl.getInstance().setCurrentFilename(inputFileName);
-			return dataMapperFactory.getMapper(inputFileType).convert(inputFileStream, ProtocolHashMapHandlerImpl.getInstance());
+			controlMap.get(getCurrentUserId()).getProtocolHandler().setCurrentFilename(inputFileName);
+			return dataMapperFactory.getMapper(inputFileType).convert(inputFileStream, controlMap.get(getCurrentUserId()).getProtocolHandler());
 		}
 	}
 	
@@ -224,7 +204,29 @@ public class ImportServiceImpl {
 		}
 		file.delete();
 	}
+	
+	private File createFilebyInputStream(InputStream input, String filePath) throws IOException{
+		File file = new File(filePath);
+		FileOutputStream out = new FileOutputStream(file);
+		int len;
+		byte[] buf = new byte[buffer];
+		while ((len = input.read(buf)) > 0) {
+			out.write(buf, 0, len);
+		}
+		out.close();
+		
+		return file;
+	}
 
+	private File createTemporaryFile(InputStream inputStream, File dir) throws IOException{
+		File tmpFile = File.createTempFile(getCurrentUserId(), ".txt", dir);
+		OutputStream src = new FileOutputStream(tmpFile);
+		src.write(createByteArrayFromInputStream(inputStream));
+		src.close();
+		
+		return tmpFile;
+	}
+	
 	public JobInfoBean getImportInfo() {
 		return catalogRequestHandler.getImportInfo();
 	}
@@ -270,6 +272,10 @@ public class ImportServiceImpl {
 		this.catalogRequestHandler = catalogRequestHandler;
 	}
 
+	public void setProtocolFactory(ProtocolFactory protocolFactory) {
+		this.protocolFactory = protocolFactory;
+	}
+	
 	public void cancelRunningJob() {
 		catalogRequestHandler.cancelRunningJob();
 	}
@@ -299,6 +305,16 @@ public class ImportServiceImpl {
 		
 	private void setProtocolMessage(ProtocolInfoBean protocolBean, String protocol) {
 		protocolBean.setProtocol(protocol);
+		controlMap.put(getCurrentUserId(), protocolBean);
+	}
+	
+	private void setProtocolImportData(ProtocolInfoBean protocolBean, ArrayList <byte[]> importData) {
+		protocolBean.setImportData(importData);
+		controlMap.put(getCurrentUserId(), protocolBean);
+	}
+	
+	private void setProtocolHandler(ProtocolInfoBean protocolBean, ProtocolHandler protocolHandler) {
+		protocolBean.setProtocolHandler(protocolHandler);
 		controlMap.put(getCurrentUserId(), protocolBean);
 	}
 }
