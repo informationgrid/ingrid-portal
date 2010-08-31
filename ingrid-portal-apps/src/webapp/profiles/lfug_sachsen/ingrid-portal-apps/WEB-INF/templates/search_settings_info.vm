@@ -1,24 +1,12 @@
       <div class="portlet-section-body">
-        <ul>
-          <li>
-            <p>
-              $MESSAGES.getString('searchSettings.info.text1')
-            </p>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <p>
-              $MESSAGES.getString('searchSettings.info.text2')
-            </p>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <p>
-			  $MESSAGES.getString('searchSettings.info.text3')
-            </p>
-          </li>
-        </ul>
+		<p>
+			$MESSAGES.getString('searchSettings.info.text1')
+        </p>
+        <p>
+			$MESSAGES.getString('searchSettings.info.text2')
+        </p>
+        <p>
+			$MESSAGES.getString('searchSettings.info.text3')
+        </p>
       </div>
 		

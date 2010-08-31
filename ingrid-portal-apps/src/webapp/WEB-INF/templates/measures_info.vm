@@ -1,4 +1,4 @@
 <div class="portlet-section-body">
-$MESSAGES.getString('measuresSearch.info.content')
+	$MESSAGES.getString('measuresSearch.info.content')
 </div>
 		

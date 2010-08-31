@@ -1,10 +1,6 @@
 <div class="portlet-section-body">
-    <ul>
-      <li>
-        <p>
-          $MESSAGES.getString('searchSimple.info.text')
-        </p>
-      </li>
-    </ul>
+    <p>
+		$MESSAGES.getString('searchSimple.info.text')
+    </p>
 </div>
 		

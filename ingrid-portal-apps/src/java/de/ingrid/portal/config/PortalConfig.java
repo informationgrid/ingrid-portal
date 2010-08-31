@@ -69,6 +69,10 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_ENABLE_SEARCH_TOPICS_SEARCHTERM = "portal.enable.search.topics.searchterm";
     
+    public static final String PORTAL_ENABLE_SEARCH_MEASURES_SEARCHTERM = "portal.enable.search.measures.searchterm";
+    
+    public static final String PORTAL_ENABLE_SEARCH_SERVICES_SEARCHTERM = "portal.enable.search.services.searchterm";
+    
     public static final String PORTAL_ENABLE_SEARCH_CATALOG = "portal.enable.search.catalog";
 
     public static final String PORTAL_ENABLE_SEARCH_CATALOG_THESAURUS = "portal.enable.search.catalog.thesaurus";

@@ -1,9 +1,5 @@
 <div class="portlet-section-body">
-	<ul>
-		<li>
-			<p>$MESSAGES.getString('about.partner.text')</p>
-		</li>
-	</ul>
+	<p>$MESSAGES.getString('about.partner.text')</p>
 	<p class="iconLink">
 		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
 		<span><a href="portal/main-about-partner.psml">$MESSAGES.getString('about.partner.link')</a></span>

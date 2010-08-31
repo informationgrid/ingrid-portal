@@ -8,6 +8,7 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 
 import de.ingrid.portal.global.Settings;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * Form Handler for Service page. Stores and validates form input.
@@ -34,6 +35,8 @@ public class ServiceSearchForm extends ActionForm {
      * is NO FIELD in form */
     public static final String STORAGE_PROVIDER = Settings.PARAM_SUBJECT;
 
+    public static final String FIELD_QUERY_STRING = Settings.PARAM_QUERY_STRING;
+    
     /** WHEN MULTIPLE VALUES USE "''" TO SEPARATE VALUES !!!!!!!!! */
     protected static String INITIAL_RUBRIC = "";
 
@@ -49,6 +52,7 @@ public class ServiceSearchForm extends ActionForm {
         setInput(FIELD_RUBRIC, INITIAL_RUBRIC);
         setInput(FIELD_PARTNER, INITIAL_PARTNER);
         setInput(FIELD_GROUPING, INITIAL_GROUPING);
+        setInput(FIELD_QUERY_STRING, "");
     }
 
     /**
@@ -69,6 +73,9 @@ public class ServiceSearchForm extends ActionForm {
         if (request.getParameterValues(FIELD_GROUPING) != null) {
             setInput(FIELD_GROUPING, request.getParameter(FIELD_GROUPING));
         }
+        if (request.getParameterValues(FIELD_QUERY_STRING) != null) {
+            setInput(FIELD_QUERY_STRING, request.getParameter(FIELD_QUERY_STRING));
+        }
     }
 
     /**
@@ -87,7 +94,14 @@ public class ServiceSearchForm extends ActionForm {
             setError(FIELD_PARTNER, "serviceSearch.error.noPartner");
             allOk = false;
         }
-
+        if (hasInput(FIELD_QUERY_STRING)) {
+            try {
+                QueryStringParser.parse(this.getInput(FIELD_QUERY_STRING));
+            } catch (Throwable e) {
+                setError(FIELD_QUERY_STRING, "serviceSearch.error.invalidSearchTerm");
+                allOk = false;
+            }
+        }
         return allOk;
     }
 

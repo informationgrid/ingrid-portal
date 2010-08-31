@@ -332,7 +332,7 @@
                 <content>
                     <p>Nach der Analyse Ihres Suchbegriffs durch den SNS werden
                         &#8222;ähnliche&#8220; Begriffe aus dem
-                        Thesaurus angezeigt . Sie haben die Möglichkeit, einen
+                        Thesaurus angezeigt. Sie haben die Möglichkeit, einen
                         oder mehrere dieser Begriffe zu markieren und in Ihren
                         Suchausdruck zu übernehmen (&#8222;Zur Suchanfrage hinzufügen&#8220;).</p>
                     <p>Sie haben aber auch die Möglichkeit einen
@@ -418,67 +418,46 @@
         <section help-key="ext-search-spacial-1">
             <header>Raum</header>
             <content>
-                <p>PortalU analysiert über den <a
-                        href="http://www.semantic-network.de/"
-                        target="_new">Semantic Network Service (SNS)</a> des
-                    Umweltbundesamtes in Dessau die Web-Seiten der
-                    angeschlossenen Server und ermittelt einen Raumbezug für
-                    jede Seite. Bei der räumlichen Suche nach Webseiten wird in
-                    PortalU dieser Raumbezug genutzt. Die räumliche Suche ist
+                <p>PortalU ermittelt über den <a
+                    href="#ext-search-spacial-3">Geo-Thesaurus Umwelt</a> des
+                    Umweltbundesamtes (Dessau) für jede Webseite, die über PortalU
+                    verfügbar ist, entsprechende Raumbezüge. Bei der räumlichen Suche in
+                    PortalU wird dieser Raumbezug genutzt. Die räumliche Suche ist
                     also nicht, wie in den meisten anderen Suchmaschinen, eine
-                    Volltext-Suche nach räumlichen Begriffen.</p>
-                <p>Bei der räumlichen Suche in den angeschlossenen Datenbanken
-                    werden ausschließlich die dort eingetragenen räumlichen
-                    Attribute durchsucht.</p>
+                    Volltext-Suche nach räumlichen Begriffen. In den angeschlossenen Datenbanken
+                    erfolgt die räumliche Suche über die dort eingetragenen räumlichen
+                    Attribute.</p>
             </content>
         </section>
         <section help-key="ext-search-spacial-2">
             <header>Raumeinschränkung begrifflich</header>
             <content>
-                <p>Über die begriffliche Raumeinschränkung können Sie gezielt
-                    geografische Begriffe Ihrem Suchausdruck hinzufügen. Dazu
-                    geben Sie einen beliebigen Begriff in das Eingabefeld ein
-                    und senden eine Anfrage an den <a
-                    href="#ext-search-spacial-3">Geo-Thesaurus</a> (Button:
-                    &#8222;Geografische Namen suchen&#8220;).</p>
-                <p>Sie erhalten dann eine Reihe <a
-                        href="#ext-search-spacial-4">geografischer Namen</a>,
-                    die Sie dem Suchausdruck hinzufügen können oder über deren
-                    Verlinkung Sie ihren Suchbegriff weiter spezifizieren können.</p>
+                <p>Über die begriffliche Raumeinschränkung können Sie zu Ihrem Suchausdruck gezielt
+                    geografische Begriffe hinzufügen. Geben Sie hierfür einen beliebigen Begriff in 
+					das Eingabefeld ein und klicken Sie anschließend auf dem Button "Geografische Namen 
+					suchen". Dadurch wird eine Suchanfrage an den <a
+                    href="#ext-search-spacial-3">Geo-Thesaurus</a> gestartet. Als Ergebnis erhalten Sie
+					eine Liste geografischer Namen, die Sie zu Ihrem Suchausdruck hinzufügen können.</p>                
+				<p>Wenn Sie Ihren Suchausdruck weiter spezifizieren möchten, klicken Sie auf einen
+				    geografischen Namen in der Ergebnisliste. Die nun erscheinende Liste beinhaltet weitere 
+					geografischen Namen, die zum ursprünglichen Suchergebnis eine Lagebeziehung aufweisen.</p>
             </content>
             <section help-key="ext-search-spacial-3">
                 <header>Was ist ein Geo-Thesaurus?</header>
                 <content>
                     <p>Ähnlich wie das Ortsverzeichnis eines Atlanten beschreibt
-                        der Geo-Thesaurus Umwelt (GTU) die Namen von Gemeinden,
+                        der Geo-Thesaurus Umwelt die Namen von Gemeinden,
                         Flüssen, Bergen, Landschaften und anderen geografischen
                         Objekten in Deutschland. Dabei gibt der GTU die genaue
-                        Schreibweise ebenso wie die geografische Position
+                        Schreibweise als auch die geografische Position
                         (Koordinaten) eines Orts an.</p>
-                    <p>Der GTU beschränkt sich aus praktischen Gründen auf Orte,
+                    <p>Der Geo-Thesaurus beschränkt sich aus praktischen Gründen auf Orte,
                         die üblicherweise auf Karten ab dem Maßstab 1:250.000
                         verzeichnet sind. Derzeit sind ca. 50.000 geografische
-                        Objekte in ihm verzeichnet.</p>
-                    <p>Der Geo-Thesaurus Umwelt wird über den <a
+                        Objekte im Thesaurus verzeichnet. Der Geo-Thesaurus Umwelt wird über den <a
                             href="http://www.semantic-network.de/"
                             target="_new">Semantic Network Service (SNS)</a> des
                         Umweltbundesamtes zur Verfügung gestellt.</p>
-                </content>
-            </section>
-            <section help-key="ext-search-spacial-4">
-                <header>Was ist ein Geo-Thesaurus?</header>
-                <content>
-                    <p>Der Suchausdruck, den Sie über den Button
-                        &#8222;Geografische Namen suchen&#8220;
-                        abgeschickt haben, wird durch den SNS analysiert und Sie
-                        erhalten eine Reihe geografischer Namen zurück. Sie
-                        können diese jetzt ankreuzen und Ihrem Suchausdruck
-                        hinzufügen. Die geografischen Namen werden zur
-                        räumlichen Suche in den räumlichen Informationen der
-                        Web-Seiten und der Datenbanken genutzt.</p>
-                    <p>Wollen Sie Ihre räumlichen Suchbegriffe weiter
-                        verfeinern, können Sie sich die Lagebeziehungen durch
-                        einen Klick auf den jeweiligen Begriff ansehen.</p>
                 </content>
             </section>
             <section help-key="ext-search-spacial-5">
@@ -528,7 +507,7 @@
                     <p>Alle Kartendienste, die sich unter „Aktive Dienste“ befinden, können durch einen Klick 
 					   im Kartenviewer aktiviert bzw. deaktiviert werden. Die Kartendienste mit ihren Layern 
 					   werden in einer Baumstruktur wiedergegeben.</p>
-					<p><img border="0" width="255" height="119"
+					<p><img border="0" width="163" height="92"
                             src="../decorations/layout/ingrid-help/images/image202.jpg"
                         alt="*"/> </p>					   
 					<p>Die einzelnen Symbole haben die folgende Bedeutung:</p>
@@ -547,9 +526,9 @@
 						verschieben nach unten sichtbar gemacht werden. Die Layer, die sich am unteren Ende der Liste 
 						befindet, wird immer als oberste Ebene in der Karte dargestellt.</p>
 
-                    <p> <img border="0" width="16" height="16"
-                            src="../decorations/layout/ingrid-help/images/image103.jpg"
-                        alt="*"/> Dienst entfernen: Ein markierter Dienst wird aus den Bereich „Aktive Dienste“ gelöscht. 
+                    <p> <img border="0" width="18" height="17"
+                            src="../decorations/layout/ingrid-help/images/image114.jpg"
+                        alt="*"/> Entfernen: Ein markierter Dienst wird aus dem Bereich „Aktive Dienste“ gelöscht. 
 						Ein Dienst kann durch einen Klick mit der linken Maustaste auf den Namen markiert werden. Das 
 						Entfernen von einzelnen Layer ist nicht möglich.</p>
 
@@ -567,26 +546,26 @@
 
                     <p> <img border="0" width="17" height="17"
                             src="../decorations/layout/ingrid-help/images/image108.jpg"
-                        alt="*"/> (links) Dienst / Layer in Karte aktivieren: Wenn die linke Checkbox für einen Dienst oder 
+                        alt="*"/> Dienst / Layer in Karte aktivieren: Wenn die Checkbox für einen Dienst oder 
 						eine Layer angehakt ist, wird der Dienst bzw. die Layer in der Karte aktiviert und in der Karte dargestellt,
-						wenn die entsprechende Zoomstufe (vordefinierter Maßstab der Layer) eingestellt ist. Befindet sich der 
-						dargestellte Kartenausschnitt außerhalb der Zoomstufe der Layer, wird die Layer in der Karte nicht angezeigt 
-						und der Layertitel grau dargestellt. Wird ein Dienst angehakt, so werden alle Layer des Dienstes aktiviert. 
-						Wird das Häkchen eines Dienstes entfernt, so werden alle Layer des Dienstes deaktiviert. </p>
-
-                    <p> <img border="0" width="17" height="17"
-                            src="../decorations/layout/ingrid-help/images/image108.jpg"
-                        alt="*"/> (rechts) Infoabfrage in Karte aktivieren: Wenn die rechte Checkbox für eine Layer angehakt ist, können in 
-						der Karte entsprechende Layer-Informationen über den Button „Infoabfrage“ (Werkzeugleiste) aufgerufen werden. </p>
+						wenn die entsprechende Zoomstufe (vordefinierter Maßstab der Layer) eingestellt ist. . Zudem können für die 
+						aktivierten Dienste bzw. Layer entsprechende Layer-Informationen über den Button „Infoabfrage“ (Werkzeugleiste) 
+						aufgerufen werden. Befindet sich der dargestellte Kartenausschnitt außerhalb der Zoomstufe der Layer, wird die 
+						Layer in der Karte nicht angezeigt und der Layertitel grau dargestellt. Wird ein Dienst angehakt, so werden alle 
+						Layer des Dienstes aktiviert. Wird das Häkchen eines Dienstes entfernt, so werden alle Layer des Dienstes deaktiviert. </p>
 
 					<p> <img border="0" width="18" height="16"
                             src="../decorations/layout/ingrid-help/images/image104.jpg"
-                        alt="*"/> Informationen: Weiterführende Informationen (Metadaten) über einen Dienst bzw. eine Layer werden angezeigt.</p>
+                        alt="*"/> Informationen: Weiterführende Informationen (Metadaten) über einen Dienst bzw. eine Layer können für 
+						Kartendienste angezeigt werden, die unter Themen bzw. Bund/Länder eingebunden sind. Die Informationen, die aus 
+						der jeweiligen GetCapabilities-URL stammen, werden aus einer Datenbank des PortalU-Kartenviewers ausgelesen. Wenn 
+						in der GetCapabilities-URL bestimmte Angaben wie z.B. zur Organisation oder Anschrift fehlen, können einige Felder 
+						nicht befüllt werden.</p>
 
 					<p><b>Themen</b></p>
                     <p>Unter Themen finden Sie verschiedene nach Umweltthemen sortierte Kartendienste von Bund und Ländern, die in 
 					   den PortalU-Kartenviewer reingeladen werden können.</p>
-                    <p> <img border="0" width="334" height="251"
+                    <p> <img border="0" width="319" height="144"
                             src="../decorations/layout/ingrid-help/images/image203.jpg"				   
 					     alt="*"/> </p> 
 					   
@@ -597,29 +576,25 @@
                         alt="*"/> Das Ordnersymbol wird für die Anzeige der einzelnen Umweltthemen verwendet. 
 						In den Ordnern finden Sie die entsprechenden Kartendienste.</p>
 
-                    <p> <img border="0" width="15" height="16"
-                            src="../decorations/layout/ingrid-help/images/image110.jpg"
-                        alt="*"/> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende 
-						Dienst zu den aktiven Diensten hinzugefügt. Wenn der Dienst weniger als 11 Layer enthält, 
-						werden alle Layer direkt in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, 
-						werden diese nicht automatisch aktiviert, um die Ladezeit gering zu halten.</p>
-
                     <p> <img border="0" width="18" height="22"
                             src="../decorations/layout/ingrid-help/images/image111.jpg"
                         alt="*"/> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende Dienst 
 						zu den aktiven Diensten hinzugefügt und in der Karte auf den vom Dienst beschriebenen Kartenausschnitt 
-						gezoomt. Auch hier gilt: Wenn der Dienst weniger als 11 Layer enthält, werden alle Layer direkt 
+						gezoomt. Wenn der Dienst weniger als 11 Layer enthält, werden alle Layer direkt 
 						in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, werden die Layer nicht automatisch aktiviert, 
 						um die Ladezeit gering zu halten.</p>
 
                     <p> <img border="0" width="18" height="16"
                             src="../decorations/layout/ingrid-help/images/image104.jpg"
-                        alt="*"/> Informationen: Weiterführende Informationen (Metadaten) über einen Dienst werden angezeigt.</p>
+                        alt="*"/> Informationen: Weiterführende Informationen (Metadaten) über einen Dienst können für Kartendienste angezeigt 
+						 werden, die unter Themen bzw. Bund/Länder eingebunden sind. Die Informationen, die aus der jeweiligen GetCapabilities-URL 
+						 stammen, werden aus einer Datenbank des PortalU-Kartenviewers ausgelesen. Wenn in der GetCapabilities-URL bestimmte Angaben 
+						 wie z.B. zur Organisation oder Anschrift fehlen, können einige Felder nicht befüllt werden.</p>
 
                     <p><b>Bund/Länder</b></p>
                     <p>Unter Bund/Länder finden Sie umweltrelevante Kartendienste verschiedener Institutionen und Organisationen 
 					von Bund und Ländern, die regional (nach Bund und Ländern) sortiert sind.</p>
-                    <p> <img border="0" width="307" height="158"
+                    <p> <img border="0" width="204" height="132"
                             src="../decorations/layout/ingrid-help/images/image204.jpg"
                         alt="*"/> </p> 
 					<p>Die Bedeutung der einzelnen Symbole werden unter dem Menüpunkt „Themen“ beschrieben (siehe oben).</p>
@@ -665,7 +640,7 @@
                 <content>
                     <p>Wenn Sie sich mit ihrem PortalU-Account unter „Mein PortalU“ angemeldet haben, können Sie ihre Einstellungen unter 
 					„Aktive Dienste“ speichern.</p>
-                    <p> <img border="0" width="371" height="135"
+                    <p> <img border="0" width="363" height="67"
                             src="../decorations/layout/ingrid-help/images/image206.jpg"
                         alt="*"/></p>					
                 </content>
@@ -690,9 +665,33 @@
                 <content>
                    <p>Über die Werkzeugleiste können Sie verschiedene Aktionen
                         direkt oder durch einen Klick in die Karte ausführen.</p>
-                   <p> <img border="0" width="354" height="36"
+                   <p> <img border="0" width="356" height="36"
                             src="../decorations/layout/ingrid-help/images/image209.jpg"
-                        alt="*"/></p>			
+                        alt="*"/></p>
+                    <p>
+                        <b>Raumeinschränkung: Suchgebiet selektieren</b>
+                    </p>
+                    <p>
+                        <img border="0" width="24" height="23"
+                            src="../decorations/layout/ingrid-help/images/image029.jpg"
+                        alt="*"/> Über diesen Button kann ein Kartenausschnitt (Bounding-Box) selektiert werden. Nach der Aktivierung 
+						des Buttons können Sie in der Karte mit der linken Maustaste auf einen Punkt klicken und durch Festhalten der 
+						Taste ein Rechteck aufziehen. Nach dem anschließenden Loslassen der Taste werden die Koordinaten der Bounding-Box 
+						unterhalb der Karte angezeigt.</p>
+                    <p>Über den Button „Zur Suche hinzufügen“ werden die Koordinaten des selektierten Kartenausschnitts als Raumeinschränkung 
+					zum Suchausdruck hinzugefügt.</p>
+					<p>
+                        <b>Raumeinschränkung: Verwaltungsgebiet selektieren</b>
+                    </p>
+                    <p>
+                        <img border="0" width="24" height="23"
+                            src="../decorations/layout/ingrid-help/images/image028.jpg"
+                        alt="*"/> Über diesen Button kann eine Verwaltungseinheit in der Karte selektiert werden. Durch einem 
+						Klick (linke Maustaste) auf die Karte, kann in einer Dialogbox die Verwaltungseinheit (Land, 
+						Regierungsbezirk, Kreis oder Gemeinde) des Standorts ausgewählt werden soll. Die Verwaltungseinheiten 
+						sind Bestandteil des Hintergrundkartendienstes von PortalU.</p>
+                    <p>Nach der Auswahl wird die selektierte Verwaltungseinheit unterhalb der Karte angezeigt. Durch einen Klick 
+					auf den Button „Zur Suche hinzufügen“ wird die Einheit als Raumeinschränkung zum Suchausdruck hinzugefügt.</p>					
                     <p>
                         <b>Externen Dienst hinzufügen</b>
                     </p>
@@ -710,9 +709,10 @@
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image026.jpg"
-                        alt="*"/> Über diesen Button wird die Informationsabfrage in der Karte aktiviert. Über einen Klick 
+                        alt="*"/> Über diesen Button können Sachdaten in der Karte abgefragt werden. Die Informationen 
+						werden über einen Web Feature Service (WFS) bereitgestellt. Über einen Klick 
 						in die Karte erhalten Sie standortspezifische Informationen der dargestellten Layer. </p>
-                    <p> Welche Informationen angezeigt werden, hängt davon ab, bei welcher Layer unter „Aktive Dienste“ die 
+                    <p> Welche Sachdaten angezeigt werden, hängt davon ab, bei welcher Layer unter „Aktive Dienste“ die 
 					rechte Check-Box (Infoabfrage in Karte) aktiviert ist (siehe oben). Derzeit unterstützen nicht 
 					alle Dienste diese Funktion.</p>
                     <p>
@@ -724,30 +724,6 @@
                         alt="*"/> Über diesen Button können Punktkoordinaten in der Karte aufgerufen werden. Die Position der 
 						Maus wird in geografischen Koordinaten unterhalb der Karte angezeigt. Zudem werden die Koordinaten des 
 						letzten Klicks in der Karte angezeigt.</p>
-					<p>
-                        <b>Raumeinschränkung: Verwaltungsgebiet selektieren</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image028.jpg"
-                        alt="*"/> Über diesen Button kann eine Verwaltungseinheit in der Karte selektiert werden. Durch einem 
-						Klick (linke Maustaste) auf die Karte, kann in einer Dialogbox die Verwaltungseinheit (Land, 
-						Regierungsbezirk, Kreis oder Gemeinde) des Standorts ausgewählt werden soll. Die Verwaltungseinheiten 
-						sind Bestandteil des Hintergrundkartendienstes von PortalU.</p>
-                    <p>Nach der Auswahl wird die selektierte Verwaltungseinheit unterhalb der Karte angezeigt. Durch einen Klick 
-					auf den Button „Zur Suche hinzufügen“ wird die Einheit als Raumeinschränkung zum Suchausdruck hinzugefügt.</p>
-                    <p>
-                        <b>Raumeinschränkung: Suchgebiet selektieren</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image029.jpg"
-                        alt="*"/> Über diesen Button kann ein Kartenausschnitt (Bounding-Box) selektiert werden. Nach der Aktivierung 
-						des Buttons können Sie in der Karte mit der linken Maustaste auf einen Punkt klicken und durch Festhalten der 
-						Taste ein Rechteck aufziehen. Nach dem anschließendem Loslassen der Taste werden die Koordinaten der Bounding-Box 
-						unterhalb der Karte angezeigt.</p>
-                    <p>Über den Button „Zur Suche hinzufügen“ werden die Koordinaten des selektierten Kartenausschnitts als Raumeinschränkung 
-					zum Suchausdruck hinzugefügt.</p>
                     <p>
                         <b>Vergrößern</b>
                     </p>
@@ -828,7 +804,7 @@
                     die Daten genutzt, die der <a
                         href="http://www.semantic-network.de/"
                         target="_new">Semantic Network Service (SNS)</a> des
-                    Umweltbundesamtes aus den Web-Seiten als Zeitbezüge
+                    Umweltbundesamtes aus den Webseiten als Zeitbezüge
                     analysiert hat. Andererseits wird auf die Zeitbezüge in den
                     Datenbanken zugegriffen.</p>
             </content>
@@ -1016,7 +992,7 @@
                     auch über den <a href="http://www.semantic-network.de/"
                         target="_new">Semantic Network Service (SNS)</a> des
                     Umweltbundesamtes analysieren. Als Ergebnis dieser Analyse
-                    werden den Web-Seiten Fachbegriffe aus dem  <a
+                    werden den Webseiten Fachbegriffe aus dem  <a
                     href="help.psml?hkey=ext-search-subject-4#ext-search-subject-4">Umwelt-Thesaurus</a> zugeordnet.</p>
                 <p>Wenn Sie durch Ankreuzen die Einstellung &#8222;Ähnliche
                     Begriffe in die Suche einbeziehen&#8220; wählen werden
@@ -1611,21 +1587,21 @@
             <header>Hauptergebnisliste</header>
             <content>
                 <p>In der Hauptergebnisliste werden Ihnen die Ergebnisse aus der
-                    Suche in den Web-Seiten der angeschlossenen Server, sowie in
+                    Suche in den Webseiten der angeschlossenen Server, sowie in
                     den Meta- und Fachinformationssystemen in einer nach
                     Relevanz gewichteten Liste angezeigt.</p>
                 <p>Anstatt der einfachen gewichteten Liste können Sie sich die
                     Ergebnisse auch nach Bund und Ländern oder nach Anbietern <a
                     href="help.psml?hkey=search-settings-2#search-settings-2">gruppiert</a>
                     anzeigen lassen oder sie nach Aktualität <a href="help.psml?hkey=search-settings-2#search-settings-2">sortieren</a>.</p>
-                <p>Ist die Fundstelle eine Web-Seite, erhalten Sie neben einer
+                <p>Ist die Fundstelle eine Webseite, erhalten Sie neben einer
                     Reihe von Informationen (z.B. Titel, Beschreibung und
                     Anbieter) einen Link über den Sie direkt auf die
                     Originalseite geführt werden.</p>
                 <p>Ist die Fundstelle eine Meta- oder Fachinformation werden Sie
                     über den Link auf die Detaildarstellung der Fachinformation
                     geführt. In den Fällen, in denen ein direkter Link zu einer
-                    Web-Seite in den Meta- oder Fachinformationen vorhanden ist,
+                    Webseite in den Meta- oder Fachinformationen vorhanden ist,
                     bekommen sie diesen angeboten und werden über ihn auf die
                     Originalseite geführt. In den Fällen, in denen eine Karte
                     hinterlegt ist, bekommen sie einen Link &#8222;Zeige
@@ -1713,11 +1689,11 @@
             <header>Umweltthemen</header>
             <content>
                 <p>Die Informationen, die als &#8222;Umweltthemen&#8220;
-                    in PortalU bereitgestellt werden, sind Web-Seiten und
+                    in PortalU bereitgestellt werden, sind Webseiten und
                     UDK-Metadatenobjekte die für ein bestimmtes Umweltthema
-                    besonders relevant und interessant sind . Neben dem
+                    besonders relevant und interessant sind. Neben dem
                     eigentlichen Thema (wie z.B. Wasser oder Abfall) können Sie
-                    auch den Type der gewünschten Themenseite (z.B. Daten und
+                    auch funktionale Kategorien der gewünschten Themenseite (z.B. Daten und
                     Karten) auswählen.</p>
                 <p>Wenn Sie über den Klick auf ein Thema direkt von der
                     Startseite zu den Umweltthemen gekommen sind, ist das
@@ -1740,7 +1716,7 @@
         <section help-key="search-topics-3">
             <header>Kategorien</header>
             <content>
-                <p>In diesem Bereich können Sie die Kategorie bzw. den Typ der
+                <p>In diesem Bereich können Sie die funktionale Kategorie bzw. den Typ der
                     gewünschten Themenseite auswählen.</p>
                 <p>Sie können Mehrfachselektionen durchführen, indem Sie die
                     Strg- bzw. Ctrl-Taste gedrückt halten und dann auf die
@@ -1836,7 +1812,7 @@
         <section help-key="search-measure-1">
             <header>Messwerte</header>
             <content>
-                <p>Unter diesem Menüpunkt werden Ihnen die Web-Seiten und
+                <p>Unter diesem Menüpunkt werden Ihnen die Webseiten und
                     Informationssysteme zu Messdaten von Bund- und Ländern angezeigt.</p>
                 <p>Wenn Sie über den Klick auf eine Rubrik direkt von der
                     Startseite zu den Umweltthemen gekommen sind, ist die
@@ -1931,7 +1907,7 @@
         <section help-key="maps-1">
             <header>Karten</header>
             <content>
-                <p>Im Kartenviewer können Sie sich umweltrelevanten Karten ansehen. Wählen Sie 
+                <p>Im Kartenviewer können Sie sich umweltrelevante Karten ansehen. Wählen Sie 
 				   einen Kartendienst aus der Rubrik „Themen“ oder der Rubrik „Bund/Länder“ aus 
 				   oder fügen Sie einen externen Dienst hinzu. Wenn Sie über ein PortalU-Suchergebnis 
 				   („Zeige Karte“) auf den Kartenviewer gelangt sind, wird Ihnen die entsprechende 
@@ -1957,7 +1933,7 @@
                     <p>Alle Kartendienste, die sich unter „Aktive Dienste“ befinden, können durch einen Klick 
 					   im Kartenviewer aktiviert bzw. deaktiviert werden. Die Kartendienste mit ihren Layern 
 					   werden in einer Baumstruktur wiedergegeben.</p>
-					<p><img border="0" width="255" height="119"
+					<p><img border="0" width="163" height="92"
                             src="../decorations/layout/ingrid-help/images/image202.jpg"
                         alt="*"/> </p>					   
 					<p>Die einzelnen Symbole haben die folgende Bedeutung:</p>
@@ -1976,9 +1952,9 @@
 						verschieben nach unten sichtbar gemacht werden. Die Layer, die sich am unteren Ende der Liste 
 						befindet, wird immer als oberste Ebene in der Karte dargestellt.</p>
 
-                    <p> <img border="0" width="16" height="16"
-                            src="../decorations/layout/ingrid-help/images/image103.jpg"
-                        alt="*"/> Dienst entfernen: Ein markierter Dienst wird aus den Bereich „Aktive Dienste“ gelöscht. 
+                    <p> <img border="0" width="18" height="17"
+                            src="../decorations/layout/ingrid-help/images/image114.jpg"
+                        alt="*"/> Entfernen: Ein markierter Dienst wird aus dem Bereich „Aktive Dienste“ gelöscht. 
 						Ein Dienst kann durch einen Klick mit der linken Maustaste auf den Namen markiert werden. Das 
 						Entfernen von einzelnen Layer ist nicht möglich.</p>
 
@@ -1996,26 +1972,27 @@
 
                     <p> <img border="0" width="17" height="17"
                             src="../decorations/layout/ingrid-help/images/image108.jpg"
-                        alt="*"/> (links) Dienst / Layer in Karte aktivieren: Wenn die linke Checkbox für einen Dienst oder 
+                        alt="*"/> Dienst / Layer in Karte aktivieren: Wenn die Checkbox für einen Dienst oder 
 						eine Layer angehakt ist, wird der Dienst bzw. die Layer in der Karte aktiviert und in der Karte dargestellt,
-						wenn die entsprechende Zoomstufe (vordefinierter Maßstab der Layer) eingestellt ist. Befindet sich der 
-						dargestellte Kartenausschnitt außerhalb der Zoomstufe der Layer, wird die Layer in der Karte nicht angezeigt 
-						und der Layertitel grau dargestellt. Wird ein Dienst angehakt, so werden alle Layer des Dienstes aktiviert. 
-						Wird das Häkchen eines Dienstes entfernt, so werden alle Layer des Dienstes deaktiviert. </p>
-
-                    <p> <img border="0" width="17" height="17"
-                            src="../decorations/layout/ingrid-help/images/image108.jpg"
-                        alt="*"/> (rechts) Infoabfrage in Karte aktivieren: Wenn die rechte Checkbox für eine Layer angehakt ist, können in 
-						der Karte entsprechende Layer-Informationen über den Button „Infoabfrage“ (Werkzeugleiste) aufgerufen werden. </p>
-
+						wenn die entsprechende Zoomstufe (vordefinierter Maßstab der Layer) eingestellt ist. Zudem können für die 
+						aktivierten Dienste bzw. Layer entsprechende Layer-Informationen über den Button „Infoabfrage“ (Werkzeugleiste) 
+						aufgerufen werden. Befindet sich der dargestellte Kartenausschnitt außerhalb der Zoomstufe der Layer, wird die 
+						Layer in der Karte nicht angezeigt und der Layertitel grau dargestellt. Wird ein Dienst angehakt, so werden 
+						alle Layer des Dienstes aktiviert. Wird das Häkchen eines Dienstes entfernt, so werden alle Layer des Dienstes 
+						deaktiviert. </p>
+          
 					<p> <img border="0" width="18" height="16"
                             src="../decorations/layout/ingrid-help/images/image104.jpg"
-                        alt="*"/> Informationen: Weiterführende Informationen (Metadaten) über einen Dienst bzw. eine Layer werden angezeigt.</p>
+                        alt="*"/> Informationen: Weiterführende Informationen (Metadaten) über einen Dienst bzw. eine Layer können für 
+						 Kartendienste angezeigt werden die unter Themen bzw. Bund/Länder eingebunden sind. Die Informationen, die aus der 
+						 jeweiligen GetCapabilities-URL stammen, werden aus einer Datenbank des PortalU-Kartenviewers ausgelesen. Wenn in der 
+						 GetCapabilities-URL bestimmte Angaben wie z.B. zur Organisation oder Anschrift fehlen, können einige Felder nicht 
+						 befüllt werden.</p>
 
 					<p><b>Themen</b></p>
                     <p>Unter Themen finden Sie verschiedene nach Umweltthemen sortierte Kartendienste von Bund und Ländern, die in 
 					   den PortalU-Kartenviewer reingeladen werden können.</p>
-                    <p> <img border="0" width="334" height="251"
+                    <p> <img border="0" width="319" height="144"
                             src="../decorations/layout/ingrid-help/images/image203.jpg"				   
 					     alt="*"/> </p> 
 					   
@@ -2025,30 +2002,27 @@
                             src="../decorations/layout/ingrid-help/images/image109.jpg"
                         alt="*"/> Das Ordnersymbol wird für die Anzeige der einzelnen Umweltthemen verwendet. 
 						In den Ordnern finden Sie die entsprechenden Kartendienste.</p>
-
-                    <p> <img border="0" width="15" height="16"
-                            src="../decorations/layout/ingrid-help/images/image110.jpg"
-                        alt="*"/> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende 
-						Dienst zu den aktiven Diensten hinzugefügt. Wenn der Dienst weniger als 11 Layer enthält, 
-						werden alle Layer direkt in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, 
-						werden diese nicht automatisch aktiviert, um die Ladezeit gering zu halten.</p>
-
+ 
                     <p> <img border="0" width="18" height="22"
                             src="../decorations/layout/ingrid-help/images/image111.jpg"
                         alt="*"/> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende Dienst 
 						zu den aktiven Diensten hinzugefügt und in der Karte auf den vom Dienst beschriebenen Kartenausschnitt 
-						gezoomt. Auch hier gilt: Wenn der Dienst weniger als 11 Layer enthält, werden alle Layer direkt 
+						gezoomt. Wenn der Dienst weniger als 11 Layer enthält, werden alle Layer direkt 
 						in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, werden die Layer nicht automatisch aktiviert, 
 						um die Ladezeit gering zu halten.</p>
 
                     <p> <img border="0" width="18" height="16"
                             src="../decorations/layout/ingrid-help/images/image104.jpg"
-                        alt="*"/> Informationen: Weiterführende Informationen (Metadaten) über einen Dienst werden angezeigt.</p>
+                        alt="*"/> Informationen: Weiterführende Informationen (Metadaten) über einen Dienst können für Kartendienste angezeigt 
+						 werden, die unter Themen bzw. Bund/Länder eingebunden sind. Die Informationen, die aus der jeweiligen GetCapabilities-URL 
+						 stammen, werden aus einer Datenbank des PortalU-Kartenviewers ausgelesen. Wenn in der 
+						 GetCapabilities-URL bestimmte Angaben wie z.B. zur Organisation oder Anschrift fehlen, können einige Felder nicht 
+						 befüllt werden.</p>
 
                     <p><b>Bund/Länder</b></p>
                     <p>Unter Bund/Länder finden Sie umweltrelevante Kartendienste verschiedener Institutionen und Organisationen 
 					von Bund und Ländern, die regional (nach Bund und Ländern) sortiert sind.</p>
-                    <p> <img border="0" width="307" height="158"
+                    <p> <img border="0" width="321" height="132"
                             src="../decorations/layout/ingrid-help/images/image204.jpg"
                         alt="*"/> </p> 
 					<p>Die Bedeutung der einzelnen Symbole werden unter dem Menüpunkt „Themen“ beschrieben (siehe oben).</p>
@@ -2094,7 +2068,7 @@
                 <content>
                     <p>Wenn Sie sich mit ihrem PortalU-Account unter „Mein PortalU“ angemeldet haben, können Sie ihre Einstellungen unter 
 					„Aktive Dienste“ speichern.</p>
-                    <p> <img border="0" width="371" height="135"
+                    <p> <img border="0" width="363" height="67"
                             src="../decorations/layout/ingrid-help/images/image206.jpg"
                         alt="*"/></p>					
                 </content>
@@ -2124,9 +2098,10 @@
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image026.jpg"
-                        alt="*"/> Über diesen Button wird die Informationsabfrage in der Karte aktiviert. Über einen Klick 
+                        alt="*"/> Über diesen Button können Sachdaten in der Karte abgefragt werden. Die Informationen 
+						werden über einen Web Feature Service (WFS) bereitgestellt. Über einen Klick 
 						in die Karte erhalten Sie standortspezifische Informationen der dargestellten Layer. </p>
-                    <p> Welche Informationen angezeigt werden, hängt davon ab, bei welcher Layer unter „Aktive Dienste“ die 
+                    <p> Welche Sachdaten angezeigt werden, hängt davon ab, bei welcher Layer unter „Aktive Dienste“ die 
 					rechte Check-Box (Infoabfrage in Karte) aktiviert ist (siehe oben). Derzeit unterstützen nicht 
 					alle Dienste diese Funktion.</p>
                     <p>
@@ -2418,7 +2393,7 @@
                         Umweltbundesamtes analysieren. Als Ergebnis dieser
                         Analyse werden geeignete Fachbegriffe aus dem <a
                         href="help.psml?hkey=ext-search-subject-4#ext-search-subject-4">Umwelt-Thesaurus</a>
-                        den Web-Seiten zugeordnet.</p>
+                        den Webseiten zugeordnet.</p>
                     <p>Wenn Sie durch Ankreuzen die Einstellung
                         &#8222;Ähnliche Begriffe in die Suche
                         einbeziehen&#8220; auswählen, werden diese

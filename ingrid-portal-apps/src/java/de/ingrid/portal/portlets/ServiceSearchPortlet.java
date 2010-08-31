@@ -17,7 +17,6 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.forms.EnvironmentSearchForm;
 import de.ingrid.portal.forms.ServiceSearchForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
@@ -30,6 +29,7 @@ import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
 
@@ -50,6 +50,10 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         context.put("MESSAGES", messages);
         
         context.put("UtilsString", new UtilsString());
+
+        // check for enabled search term field
+        context.put("enable_searchterm", PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_SEARCH_SERVICES_SEARCHTERM, Boolean.FALSE));
 
         // ----------------------------------
         // check for passed URL PARAMETERS (for bookmarking)
@@ -201,9 +205,15 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
 
         IngridQuery query = null;
         try {
-            query = new IngridQuery();
-            query
-                    .addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
+        	// create query
+            // add search term if exist
+            if (af.hasInput(ServiceSearchForm.FIELD_QUERY_STRING)) {
+                query = QueryStringParser.parse(af.getInput(ServiceSearchForm.FIELD_QUERY_STRING));
+            } else {
+                query = new IngridQuery();
+            }
+            
+            query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
                             Settings.QVALUE_DATATYPE_AREA_SERVICE));
 
             // Language

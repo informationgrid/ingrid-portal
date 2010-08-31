@@ -100,17 +100,17 @@ div.motiv_topnavi { background-image:url(../images/header_sonstiges.png); backgr
 div.motiv_hilfe { background-image:url(../images/header_sonstiges.png); background-repeat:no-repeat; }
 div.motiv_admin { background-image:url(../images/header_sonstiges.png); background-repeat:no-repeat; }
 
-div.en_motiv_blank { background-image:url(../images/header_startseite.png); background-repeat:no-repeat; }
-div.en_motiv_start { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
-div.en_motiv_suche { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
-div.en_motiv_service { background-image:url(../images/header_service.png); background-repeat:no-repeat; }
-div.en_motiv_messwerte { background-image:url(../images/header_messwerte.png); background-repeat:no-repeat; }
-div.en_motiv_umweltthemen { background-image:url(../images/header_umweltthemen.png); background-repeat:no-repeat; }
-div.en_motiv_karten { background-image:url(../images/header_karten.png); background-repeat:no-repeat; }
-div.en_motiv_umweltchronik { background-image:url(../images/header_chronik.png); background-repeat:no-repeat; }
-div.en_motiv_topnavi { background-image:url(../images/header_sonstiges.png); background-repeat:no-repeat; }
-div.en_motiv_hilfe { background-image:url(../images/header_sonstiges.png); background-repeat:no-repeat; }
-div.en_motiv_admin { background-image:url(../images/header_sonstiges.png); background-repeat:no-repeat; }
+div.en_motiv_blank { background-image:url(../images/en/header_suche-en.png); background-repeat:no-repeat; }
+div.en_motiv_start { background-image:url(../images/en/header_suche-en.png); background-repeat:no-repeat; }
+div.en_motiv_suche { background-image:url(../images/en/header_suche-en.png); background-repeat:no-repeat; }
+div.en_motiv_service { background-image:url(../images/en/header_service-en.png); background-repeat:no-repeat; }
+div.en_motiv_messwerte { background-image:url(../images/en/header_messwerte-en.png); background-repeat:no-repeat; }
+div.en_motiv_umweltthemen { background-image:url(../images/en/header_umweltthemen-en.png); background-repeat:no-repeat; }
+div.en_motiv_karten { background-image:url(../images/en/header_karten-en.png); background-repeat:no-repeat; }
+div.en_motiv_umweltchronik { background-image:url(../images/en/header_chronik-en.png); background-repeat:no-repeat; }
+div.en_motiv_topnavi { background-image:url(../images/en/header_sonstiges-en.png); background-repeat:no-repeat; }
+div.en_motiv_hilfe { background-image:url(../images/en/header_sonstiges-en.png); background-repeat:no-repeat; }
+div.en_motiv_admin { background-image:url(../images/en/header_sonstiges-en.png); background-repeat:no-repeat; }
 
 /********************************************************************
   logo styles 

@@ -1,7 +1,6 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
