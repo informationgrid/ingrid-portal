@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
 import org.apache.commons.logging.Log;
@@ -107,7 +108,7 @@ public class DetailDataPreparerGeneric implements DetailDataPreparer {
         if(record.getSubRecords() != null){
         	List fileList = new ArrayList();
         	
-        	fileList = UtilsFileHelper.extractBinaryData(record, fileList);
+        	fileList = UtilsFileHelper.extractBinaryData(record, fileList, request);
         	context.put("fileList", fileList);
         }
         

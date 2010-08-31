@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
+
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -43,7 +46,7 @@ public class UtilsFileHelper {
 	 * @return HashMap with file details
 	 * @throws IOException
 	 */
-	public static HashMap<String, String> getByteAsFile(byte[] byteFile, String title, String mimetyp) throws IOException {
+	public static HashMap<String, String> getByteAsFile(byte[] byteFile, String title, String mimetyp, RenderRequest request) throws IOException {
 		
 		HashMap<String, String> fileDetails = null;
 		File directory = null;
@@ -76,6 +79,9 @@ public class UtilsFileHelper {
 				fileDetails.put("title", title);
 				fileDetails.put("path", file.getAbsolutePath());
 				fileDetails.put("parenttyp", parentTyp);
+				
+				// Set file into servlet session
+				request.getPortletSession().setAttribute(file.getName(), file.getAbsolutePath(), PortletSession.APPLICATION_SCOPE);
 			}
 		}
 		return fileDetails;
@@ -188,7 +194,7 @@ public class UtilsFileHelper {
 	 * @return a ArrayList of files
 	 * @throws IOException
 	 */
-	public static List<Object> extractBinaryData(Record record, List<Object> fileList) throws IOException {
+	public static List<Object> extractBinaryData(Record record, List<Object> fileList, RenderRequest request) throws IOException {
 		
 		if (fileList == null) {
 			fileList = new ArrayList<Object>();
@@ -209,11 +215,11 @@ public class UtilsFileHelper {
 		}
 		if (bytes != null) {
 			// handle bytes with mime type and optional title
-			fileList.add(getByteAsFile(bytes, fileTitle, mime));
+			fileList.add(getByteAsFile(bytes, fileTitle, mime, request));
 		}
 		Record[] subRecords = record.getSubRecords();
 		for (Record record2 : subRecords) {
-			extractBinaryData(record2, fileList);
+			extractBinaryData(record2, fileList, request);
 		}
 		
 		return fileList;

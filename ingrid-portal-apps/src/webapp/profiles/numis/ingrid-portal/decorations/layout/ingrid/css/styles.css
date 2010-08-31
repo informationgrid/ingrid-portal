@@ -297,9 +297,9 @@ div.resultset { padding:4px 4px 4px 0px; font-size:100%; margin: 5px 0px 5px 0px
 div.resultset a { text-decoration:none; font-size:100%;color: #e0003c;line-height:140%}
 div.resultset a:hover { text-decoration:underline;color: #111111;}
 div.resultset p.result_title { font-size:90%; margin: 10px 0px 10px 0px; }
-div.resultset p.result_description { font-size:65%;margin: 5px 0px 0px 0px; line-height:120%}
+div.resultset p.result_description { font-size:70%;margin: 5px 0px 0px 0px; line-height:120%}
 div.resultset p.event_description { margin: 10px 0px 10px 0px; line-height:120%}
-div.resultset p.result_metadata { font-size:65%; color:#999999; margin:0; line-height:120%}
+div.resultset p.result_metadata { font-size:70%; color:#999999; margin:0; line-height:120%}
 div.resultset p.result_metadata_adress { font-size:65%; color:#999999; margin:7px 0 8px 0; line-height:120%}
 div.resultset p.result_link { font-size:65%; color:#999999; margin:3px 0 8px 0; }
 div.resultset p.result_link img { position:relative; top:1px; }

@@ -86,7 +86,7 @@
 			<strong>$file.title</strong>
         </p>
 		<p>
-			<img src="/ingrid-portal-apps/filehelper/file?$file.path" alt="$file.filename" title="$file.filename"></a>
+			<img src="/ingrid-portal-apps/filehelper/file?$file.filename" alt="$file.filename" title="$file.filename"></a>
 		</p>
 	#else
 		<p>
@@ -94,7 +94,7 @@
         </p>
 		<p>
 			<img alt="interner Link" src="/ingrid-portal-apps/images/icn_linkintern.gif"/>
-			<a href="/ingrid-portal-apps/filehelper/file?$file.path" class="download_link" type="$file.mimetyp" title="$file.filename">$MESSAGES.getString('search.detail.download'): $file.filename</a><br>
+			<a href="/ingrid-portal-apps/filehelper/file?$file.filename" class="download_link" type="$file.mimetyp" title="$file.filename">$MESSAGES.getString('search.detail.download'): $file.filename</a><br>
 		</p>
 		##<p><embed src="/ingrid-portal-apps/filehelper/file?$file.path" autostart="false" type="$file.typ" pluginspage="http://www.apple.com/quicktime/download/"></p>
 	#end

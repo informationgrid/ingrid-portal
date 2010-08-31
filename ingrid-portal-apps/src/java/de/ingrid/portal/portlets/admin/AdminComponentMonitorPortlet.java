@@ -120,7 +120,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			
 			// show a dialog for downloading the exported file
 			if ("exportCSV".equals(request.getParameter("mode"))) {
-			    context.put("exportLink", "/ingrid-portal-apps/filehelper/file?" + jobHandler.csvExportDir + "/" + jobHandler.csvExportFile);
+			    context.put("exportLink", "/ingrid-portal-apps/filehelper/file?" + jobHandler.csvExportFile);
 			}
 			
 		// ------------------viewEdit-------------------------

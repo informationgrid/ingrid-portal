@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,6 +32,7 @@ import org.quartz.TriggerUtils;
 
 import de.ingrid.portal.forms.AdminComponentMonitorForm;
 import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridRSSSource;
@@ -964,6 +966,8 @@ public class IngridJobHandler {
             fos.flush();
             fos.close();
             
+            // Set file into servlet session
+            request.getPortletSession().setAttribute(csvExportFile, new File(directory.getAbsolutePath() + "/" + this.csvExportFile), PortletSession.APPLICATION_SCOPE);  
             // offer file as a download
         } catch (Exception e) {
             // TODO Auto-generated catch block
