@@ -33,14 +33,6 @@ var INFO = 2;
 var WARN = 3;
 var ERROR = 4;
 
-
-if (log.isDebugEnabled()) {
-	log.debug("mapping CSW 2.0.2 AP ISO 1.0 document " + protocolHandler.getCurrentFilename() + " to IGC import document.");
-}
-protocol(INFO, "Start transformation of: " + protocolHandler.getCurrentFilename());
-protocol(INFO, "-------------------------------------------------");
-protocol(INFO, "\n");
-
 var mappingDescription = {"mappings":[
   		
   		
@@ -1085,8 +1077,27 @@ var mappingDescription = {"mappings":[
   		}
 	]};
 
+if (log.isDebugEnabled()) {
+	log.debug("mapping CSW 2.0.2 AP ISO 1.0 document " + protocolHandler.getCurrentFilename() + " to IGC import document.");
+}
+protocol(INFO, "Start transformation of: " + protocolHandler.getCurrentFilename());
+protocol(INFO, "-------------------------------------------------");
+protocol(INFO, "\n");
+
+
 log.debug("validate source");
 validateSource(source);
+
+
+var uuid = XPathUtils.getString(source, "//gmd:fileIdentifier/gco:CharacterString");
+if (hasValue(uuid)) {
+	protocol(INFO, "fileIdentifier: " + uuid);
+}
+
+var title = XPathUtils.getString(source, "//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString");
+if (hasValue(title)) {
+	protocol(INFO, "title: " + uuid);
+}
 
 var storedValues = new Object();
 
@@ -1326,6 +1337,13 @@ function getObjectClassFromHierarchyLevel(val) {
 
 function validateSource(source) {
 	// pre check source if required
+	var metadataNodes = XPathUtils.getNodeList(source, "//gmd:MD_Metadata");
+	if (!hasValue(metadataNodes) || metadataNodes.getLength() == 0) {
+		log.error("No valid ISO metadata record.");
+		protocol(ERROR, "No valid ISO metadata record.");
+		throw "No valid ISO metadata record.";
+	}
+	
 	return true;
 }
 
@@ -1476,7 +1494,8 @@ function transformGeneric(val, mappings, caseSensitive, logErrorOnNotFound) {
 		}
 	}
 	if (logErrorOnNotFound) {
-		log.error(logErrorOnNotFound + val);
+		log.warn(logErrorOnNotFound + val);
+		protocol(WARN, logErrorOnNotFound + val)
 	}
 	return val;
 }
@@ -1488,25 +1507,25 @@ function transformToIgcDomainId(val, codeListId, languageId, logErrorOnNotFound)
 		try {
 			idcCode = UtilsUDKCodeLists.getCodeListDomainId(codeListId, val, languageId);
 		} catch (e) {
-			if (log.isErrorEnabled()) {
-				log.error("Error tranforming code '" + val + "' with code list " + codeListId + " with language " + languageId + " to IGC id. Does the codeList exist?");
+			if (log.isWarnEnabled()) {
+				log.warn("Error tranforming code '" + val + "' with code list " + codeListId + " with language " + languageId + " to IGC id. Does the codeList exist?");
 			}
-			protocol(ERROR, "Error tranforming code '" + val + "' with code list " + codeListId + " with language " + languageId + " to IGC id. Does the codeList exist?")
+			protocol(WARN, "Error tranforming code '" + val + "' with code list " + codeListId + " with language " + languageId + " to IGC id. Does the codeList exist?")
 			if (logErrorOnNotFound) {
-				log.error(logErrorOnNotFound + val);
-				protocol(ERROR, logErrorOnNotFound + val)
+				log.warn(logErrorOnNotFound + val);
+				protocol(WARN, logErrorOnNotFound + val)
 			}
 		}
 		if (hasValue(idcCode)) {
 			return idcCode;
 		} else {
-			if (log.isErrorEnabled()) {
-				log.error("Domain code '" + val + "' unknown in code list " + codeListId + " for language " + languageId + ".");
-				protocol(ERROR, "Domain code '" + val + "' unknown in code list " + codeListId + " for language " + languageId + ".")
+			if (log.isWarnEnabled()) {
+				log.warn("Domain code '" + val + "' unknown in code list " + codeListId + " for language " + languageId + ".");
+				protocol(WARN, "Domain code '" + val + "' unknown in code list " + codeListId + " for language " + languageId + ".")
 			}
 			if (logErrorOnNotFound) {
-				log.error(logErrorOnNotFound + val);
-				protocol(ERROR, logErrorOnNotFound + val)
+				log.warn(logErrorOnNotFound + val);
+				protocol(WARN, logErrorOnNotFound + val)
 			}
 			return -1;
 		}
@@ -1521,25 +1540,25 @@ function transformToIgcDomainValue(val, codeListId, languageId, logErrorOnNotFou
 		try {
 			idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(val), languageId);
 		} catch (e) {
-			if (log.isErrorEnabled()) {
-				log.error("Error tranforming id '" + val + "' with code list " + codeListId + " with language " + languageId + ". Does the codeList exist?");
+			if (log.isWarnEnabled()) {
+				log.warn("Error tranforming id '" + val + "' with code list " + codeListId + " with language " + languageId + ". Does the codeList exist?");
 			}
-			protocol(ERROR, "Error tranforming id '" + val + "' with code list " + codeListId + " with language " + languageId + ". Does the codeList exist?")
+			protocol(WARN, "Error tranforming id '" + val + "' with code list " + codeListId + " with language " + languageId + ". Does the codeList exist?")
 			if (logErrorOnNotFound) {
-				log.error(logErrorOnNotFound + val);
-				protocol(ERROR, logErrorOnNotFound + val)
+				log.warn(logErrorOnNotFound + val);
+				protocol(WARN, logErrorOnNotFound + val)
 			}
 		}
 		if (hasValue(idcValue)) {
 			return idcValue;
 		} else {
-			if (log.isErrorEnabled()) {
-				log.error("Domain id '" + val + "' unknown in code list " + codeListId + " for language " + languageId + ".");
-				protocol(ERROR, "Domain id '" + val + "' unknown in code list " + codeListId + " for language " + languageId + ".")
+			if (log.isWarnEnabled()) {
+				log.warn("Domain id '" + val + "' unknown in code list " + codeListId + " for language " + languageId + ".");
+				protocol(WARN, "Domain id '" + val + "' unknown in code list " + codeListId + " for language " + languageId + ".")
 			}
 			if (logErrorOnNotFound) {
-				log.error(logErrorOnNotFound + val);
-				protocol(ERROR, logErrorOnNotFound + val)
+				log.warn(logErrorOnNotFound + val);
+				protocol(WARN, logErrorOnNotFound + val)
 			}
 			return "";
 		}
@@ -1553,25 +1572,25 @@ function transformISOToIgcDomainId(val, codeListId, logErrorOnNotFound) {
 		try {
 			idcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(codeListId, val);
 		} catch (e) {
-			if (log.isErrorEnabled()) {
-				log.error("Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC id. Does the codeList exist?");
+			if (log.isWarnEnabled()) {
+				log.warn("Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC id. Does the codeList exist?");
 			}
-			protocol(ERROR, "Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC id. Does the codeList exist?")
+			protocol(WARN, "Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC id. Does the codeList exist?")
 			if (logErrorOnNotFound) {
-				log.error(logErrorOnNotFound + val);
-				protocol(ERROR, logErrorOnNotFound + val)
+				log.warn(logErrorOnNotFound + val);
+				protocol(WARN, logErrorOnNotFound + val)
 			}
 		}
 		if (hasValue(idcCode)) {
 			return idcCode;
 		} else {
-			if (log.isErrorEnabled()) {
-				log.error("ISO code '" + val + "' unknown in code list " + codeListId + ".");
-				protocol(ERROR, "ISO code '" + val + "' unknown in code list " + codeListId + ".")
+			if (log.isWarnEnabled()) {
+				log.warn("ISO code '" + val + "' unknown in code list " + codeListId + ".");
+				protocol(WARN, "ISO code '" + val + "' unknown in code list " + codeListId + ".")
 			}
 			if (logErrorOnNotFound) {
-				log.error(logErrorOnNotFound + val);
-				protocol(ERROR, logErrorOnNotFound + val)
+				log.warn(logErrorOnNotFound + val);
+				protocol(WARN, logErrorOnNotFound + val)
 			}
 			return -1;
 		}
@@ -1586,25 +1605,25 @@ function transformISOToIgcDomainValue(val, codeListId, languageId, logErrorOnNot
 			var idcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(codeListId, val);
 			idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(idcCode), parseToInt(languageId));
 		} catch (e) {
-			if (log.isErrorEnabled()) {
-				log.error("Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC value with language " + languageId + ". Does the codeList exist?"  + e.toString());
+			if (log.isWarnEnabled()) {
+				log.warn("Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC value with language " + languageId + ". Does the codeList exist?"  + e.toString());
 			}
-			protocol(ERROR, "Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC value with language " + languageId + ". Does the codeList exist?")
+			protocol(WARN, "Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC value with language " + languageId + ". Does the codeList exist?")
 			if (logErrorOnNotFound) {
-				log.error(logErrorOnNotFound + val);
-				protocol(ERROR, logErrorOnNotFound + val)
+				log.warn(logErrorOnNotFound + val);
+				protocol(WARN, logErrorOnNotFound + val)
 			}
 		}
 		if (hasValue(idcValue)) {
 			return idcValue;
 		} else {
-			if (log.isErrorEnabled()) {
-				log.error("ISO code '" + val + "' unknown in code list " + codeListId + ".");
-				protocol(ERROR, "ISO code '" + val + "' unknown in code list " + codeListId + ".")
+			if (log.isWarnEnabled()) {
+				log.warn("ISO code '" + val + "' unknown in code list " + codeListId + ".");
+				protocol(WARN, "ISO code '" + val + "' unknown in code list " + codeListId + ".")
 			}
 			if (logErrorOnNotFound) {
-				log.error(logErrorOnNotFound + val);
-				protocol(ERROR, logErrorOnNotFound + val)
+				log.warn(logErrorOnNotFound + val);
+				protocol(WARN, logErrorOnNotFound + val)
 			}
 			return "";
 		}
@@ -1709,10 +1728,10 @@ function createUUIDFromAddress(source) {
 	} else if (isoUuid != "") {
 		uuid = isoUuid;
 	} else {
-		protocol(WARN, "Insufficient data for UUID creation (no 'email' or only one of 'individualName' or 'organisationName' has been set for this address: email='" + email + "', individualName='" + individualName + "', organisationName='" + organisationName + "'!)")
-		protocol(WARN, "A new random UUID will be created!")
-		log.warn("Insufficient data for UUID creation (no 'email' or only one of 'individualName' or 'organisationName' has been set for this address: email='" + email + "', individualName='" + individualName + "', organisationName='" + organisationName + "'!)");
-		log.warn("A new random UUID will be created!");
+		protocol(INFO, "Insufficient data for UUID creation (no 'email' or only one of 'individualName' or 'organisationName' has been set for this address: email='" + email + "', individualName='" + individualName + "', organisationName='" + organisationName + "'!)")
+		protocol(INFO, "A new random UUID will be created!")
+		log.info("Insufficient data for UUID creation (no 'email' or only one of 'individualName' or 'organisationName' has been set for this address: email='" + email + "', individualName='" + individualName + "', organisationName='" + organisationName + "'!)");
+		log.info("A new random UUID will be created!");
 		uuid = createUUID();
 	}
 	log.info("Created UUID from Address:" + uuid);

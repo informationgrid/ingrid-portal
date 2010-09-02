@@ -22,9 +22,11 @@ importPackage(Packages.de.ingrid.utils.xml);
 importPackage(Packages.org.w3c.dom);
 
 
-if (log.isDebugEnabled()) {
-	log.debug("Mapping ArcCatalog ISO-Editor Export document to IGC import document.");
-}
+var DEBUG = 1;
+var INFO = 2;
+var WARN = 3;
+var ERROR = 4;
+
 
 var mappingDescription = {"mappings":[
   		
@@ -695,6 +697,14 @@ var mappingDescription = {"mappings":[
   		}
 	]};
 
+if (log.isDebugEnabled()) {
+	log.debug("Mapping ARC GIS document " + protocolHandler.getCurrentFilename() + " to IGC import document.");
+}
+protocol(INFO, "Start ArcGis transformation of: " + protocolHandler.getCurrentFilename());
+protocol(INFO, "-------------------------------------------------");
+protocol(INFO, "\n");
+
+
 validateSource(source);
 
 mapToTarget(mappingDescription, source, target.getDocumentElement());
@@ -829,6 +839,12 @@ function mapToTarget(mapping, source, target) {
 }
 
 function validateSource(source) {
+	var metadataNodes = XPathUtils.getNodeList(source, "/metadata");
+	if (!hasValue(metadataNodes) || metadataNodes.getLength() == 0) {
+		log.error("No valid ARC GIS metadata record.");
+		protocol(ERROR, "No valid ARC GIS metadata record.");
+		throw "No valid ARC GIS metadata record.";
+	}
 	var title = XPathUtils.getString(source.getDocumentElement(), "/metadata/dataIdInfo/idCitation/resTitle");
 	var uuid = XPathUtils.getString(source.getDocumentElement(), "/metadata/Esri/MetaID");
 	var metadataLanguage = XPathUtils.getString(source.getDocumentElement(), "/metadata/mdLang/languageCode/@value");
@@ -836,8 +852,9 @@ function validateSource(source) {
 	if (!metadataLanguage) {
 		metadataLanguage = requiredMetadataLanguage;
 	} else if (metadataLanguage != requiredMetadataLanguage) {
-		log.error("Dataset '" + title + "' (" + uuid + ") has the wrong matadata language '" + metadataLanguage + "'. Must be '" + requiredMetadataLanguage + "'");
-		throw "Dataset '" + title + "' (" + uuid + ") has the wrong matadata language '" + metadataLanguage + "'. Must be '" + requiredMetadataLanguage + "'";
+		log.error("Dataset '" + title + "' (" + uuid + ") has the wrong metadata language '" + metadataLanguage + "'. Must be '" + requiredMetadataLanguage + "'");
+		protocol(ERROR, "Dataset '" + title + "' (" + uuid + ") has the wrong metadata language '" + metadataLanguage + "'. Must be '" + requiredMetadataLanguage + "'");
+		throw "Dataset '" + title + "' (" + uuid + ") has the wrong metadata language '" + metadataLanguage + "'. Must be '" + requiredMetadataLanguage + "'";
 	}
 	return true;
 }
@@ -1108,7 +1125,6 @@ function mapTimeConstraints(source, target) {
 
 function replaceString(val, regExpr, replaceWith) {
 	result =  val.replaceAll(regExpr, replaceWith)
-	log.debug("Replaced String '" + val + "' to '" + result + "'")
 	return result
 }
 
@@ -1150,21 +1166,26 @@ function transformToIgcDomainId(val, codeListId, languageId, logErrorOnNotFound)
 		try {
 			idcCode = UtilsUDKCodeLists.getCodeListDomainId(codeListId, val, languageId);
 		} catch (e) {
-			if (log.isInfoEnabled()) {
-				log.info("Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
+			if (log.isWarnEnabled()) {
+				log.warn("Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
+				protocol(WARN, "Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
+
 			}
 			if (logErrorOnNotFound) {
-				log.error(logErrorOnNotFound + val);
+				log.warn(logErrorOnNotFound + val);
+				protocol(WARN, logErrorOnNotFound + val);
 			}
 		}
 		if (hasValue(idcCode)) {
 			return idcCode;
 		} else {
-			if (log.isInfoEnabled()) {
-				log.info("Domain code '" + val + "' unknown in code list " + codeListId + ".");
+			if (log.isWarnEnabled()) {
+				log.warn("Domain code '" + val + "' unknown in code list " + codeListId + ".");
+				protocol(WARN, "Domain code '" + val + "' unknown in code list " + codeListId + ".");
 			}
 			if (logErrorOnNotFound) {
-				log.error(logErrorOnNotFound + val);
+				log.warn(logErrorOnNotFound + val);
+				protocol(WARN, logErrorOnNotFound + val);
 			}
 			return -1;
 		}
@@ -1179,21 +1200,25 @@ function transformToIgcDomainValue(val, codeListId, languageId, logErrorOnNotFou
 		try {
 			idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(val), languageId);
 		} catch (e) {
-			if (log.isInfoEnabled()) {
-				log.info("Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
+			if (log.isWarnEnabled()) {
+				log.warn("Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
+				protocol(WARN, "Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
 			}
 			if (logErrorOnNotFound) {
 				log.error(logErrorOnNotFound + val);
+				protocol(WARN, logErrorOnNotFound + val);
 			}
 		}
 		if (hasValue(idcValue)) {
 			return idcValue;
 		} else {
-			if (log.isInfoEnabled()) {
-				log.info("Domain code '" + val + "' unknown in code list " + codeListId + ".");
+			if (log.isWarnEnabled()) {
+				log.warn("Domain code '" + val + "' unknown in code list " + codeListId + ".");
+				protocol(WARN, "Domain code '" + val + "' unknown in code list " + codeListId + ".");
 			}
 			if (logErrorOnNotFound) {
-				log.error(logErrorOnNotFound + val);
+				log.warn(logErrorOnNotFound + val);
+				protocol(WARN, logErrorOnNotFound + val);
 			}
 			return -1;
 		}
@@ -1207,21 +1232,25 @@ function transformISOToIgcDomainId(val, codeListId, logErrorOnNotFound) {
 		try {
 			idcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(codeListId, val);
 		} catch (e) {
-			if (log.isInfoEnabled()) {
-				log.info("Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
+			if (log.isWarnEnabled()) {
+				log.warn("Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
+				protocol(WARN, "Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
 			}
 			if (logErrorOnNotFound) {
-				log.error(logErrorOnNotFound + val);
+				log.warn(logErrorOnNotFound + val);
+				protocol(WARN, logErrorOnNotFound + val);
 			}
 		}
 		if (hasValue(idcCode)) {
 			return idcCode;
 		} else {
-			if (log.isInfoEnabled()) {
-				log.info("Domain code '" + val + "' unknown in code list " + codeListId + ".");
+			if (log.isWarnEnabled()) {
+				log.warn("Domain code '" + val + "' unknown in code list " + codeListId + ".");
+				protocol(WARN, "Domain code '" + val + "' unknown in code list " + codeListId + ".");
 			}
 			if (logErrorOnNotFound) {
-				log.error(logErrorOnNotFound + val);
+				protocol(WARN, logErrorOnNotFound + val);
+				log.warn(logErrorOnNotFound + val);
 			}
 			return -1;
 		}
@@ -1269,8 +1298,21 @@ function createUUID() {
 	while (idcUuid.length() < 36) {
 		idcUuid.append("0");
 	}
-	log.error("Created UUID:" + idcUuid.toString());
 
 	return idcUuid.toString();
+}
+
+
+function protocol(level, msg) {
+
+	if (level==DEBUG){
+		protocolHandler.addMessage(msg + "\n");
+	} else if (level==INFO){
+		protocolHandler.addMessage(msg + "\n");
+	} else if (level==WARN){
+		protocolHandler.addMessage("<span style=\"font-weight:bold;\">" + msg + "</span>\n");
+	} else if (level==ERROR){
+		protocolHandler.addMessage("<span style=\"color:red;font-weight:bold;\">" + msg + "</span>\n");
+	}
 }
 

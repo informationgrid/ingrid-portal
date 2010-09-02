@@ -81,8 +81,8 @@ public class ImportServiceImpl {
                 gzipInXML.close();
                 
                 // Import file data
-                importData.add(compress(importXMLData(new FileInputStream(outXML),
-                        outXML.getName(), fileType, protocolBean.getProtocolHandler())).toByteArray());
+                addImportData(importData, new FileInputStream(outXML), outXML.getName(), fileType, protocolBean.getProtocolHandler());
+
                 deleteUserImportDirectory(dirGZIP);
                 break;
 
@@ -104,9 +104,9 @@ public class ImportServiceImpl {
                     File file = createFilebyInputStream(zipIn, rootDirZIP + "\\" + entry.getName());
                     zipIn.closeEntry();
                     
-                    importData.add(compress(importXMLData(new FileInputStream(file),
-                            file.getName(), fileType, protocolBean.getProtocolHandler())).toByteArray());
-                    protocolBean.setDataProcessed((int) (100-importDataStream.available()*totalNumQuotient));
+                   	addImportData(importData, new FileInputStream(file), file.getName(), fileType, protocolBean.getProtocolHandler());
+                	
+                   	protocolBean.setDataProcessed((int) (100-importDataStream.available()*totalNumQuotient));
                 }
                 zipIn.close();
                 deleteUserImportDirectory(dirZIP);                
@@ -116,9 +116,9 @@ public class ImportServiceImpl {
                 log.debug("Unknown file type. Assuming uncompressed xml data.");
                 // Fall through
             case XML:
-                importDataStream = importXMLData(fileTransfer.getInputStream(), 
-                        fileTransfer.getFilename(), fileType, protocolBean.getProtocolHandler());
-                importData.add(compress(importDataStream).toByteArray());
+                
+            	addImportData(importData, fileTransfer.getInputStream(), fileTransfer.getFilename(), fileType, protocolBean.getProtocolHandler());
+            	
                 break;
 
             default:
@@ -137,7 +137,8 @@ public class ImportServiceImpl {
             protocolBean.setFinished(true);
         }
 	}
-	
+        
+        
     public void startImportThread(FileTransfer fileTransfer, String fileType, String targetObjectUuid, String targetAddressUuid,
                 boolean publishImmediately, boolean doSeparateImport){
         // Start the import process in a separate thread
@@ -212,7 +213,29 @@ public class ImportServiceImpl {
         }
     }
 
-    private InputStream importXMLData (InputStream inputFileStream, String inputFileName, String inputFileType, ProtocolHandler protocolHandler) throws FileNotFoundException, IOException{
+    /**
+     * Add a import file as compressed IGC import format to the importdata 
+     * list. Transforms the file if necessary. If an error occurs during the 
+     * transformation process, the file will not be added to the list. The error 
+     * messages are still available through the protocolHandler.
+     * 
+     * 
+     * @param importData The import data list. Contains compressed imput data byte[].
+     * @param input The input stream.
+     * @param fileName The file name of the source data.
+     * @param fileType The file type of the source data.
+     * @param protocolHandler The protocol handler.
+     */
+    private void addImportData(List <byte[]> importData, InputStream input, String fileName, String fileType, ProtocolHandler protocolHandler) {
+        try {
+			importData.add(compress(importXMLData(input, fileName, fileType, protocolHandler)).toByteArray());
+		} catch (Exception e) {
+			log.error("Error adding import data from file: " + fileName, e);
+		}
+    }
+    
+    
+    private InputStream importXMLData (InputStream inputFileStream, String inputFileName, String inputFileType, ProtocolHandler protocolHandler) throws Exception{
         if(inputFileType.equals("igc")){
             return inputFileStream;
         }else{

@@ -34,13 +34,9 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 	
 	private ScriptImportDataMapper mapper;
 	
-	private String mapperScriptArcGIS 	= "/import/mapper/csw202_to_ingrid_igc.js";
+	private String mapperScript 	= "/import/mapper/csw202_to_ingrid_igc.js";
 	
 	private String templateIGC 			= "/import/templates/igc_template_csw202.xml";
-	
-	private String exampleXmlObjectComplete 			= "/de/ingrid/mdek/mapping/inspire_datasetkomplett.xml";
-	private String exampleXmlServiceComplete 			= "/de/ingrid/mdek/mapping/inspire_servicekomplett.xml";
-	
 	
 	public void setUp() {
 		mapper = new ScriptImportDataMapper();
@@ -63,13 +59,15 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 
 	public final void testConvertObjectComplete() throws TransformerException, IOException {
 		// set variables that are needed for running correctly
-		initClassVariables(mapperScriptArcGIS, templateIGC);
+		initClassVariables(mapperScript, templateIGC);
+		
+		String exampleXml = "/de/ingrid/mdek/mapping/inspire_datasetkomplett.xml";
 		
 		InputStream data = null;
 		try {
 			// get example file from test resource directory
 			// spring-dependency is used to access test-resources (search from every class path!)
-			data = (new ClassPathResource(exampleXmlObjectComplete)).getInputStream();
+			data = (new ClassPathResource(exampleXml)).getInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -77,22 +75,29 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		// System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
 		HashMapProtocolHandler protocolHandler = new HashMapProtocolHandler();
 		protocolHandler.setCurrentFilename("inspire_datasetkomplett.xml");
-		InputStream result = mapper.convert(data, protocolHandler);
+		InputStream result;
+		try {
+			result = mapper.convert(data, protocolHandler);
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
+			result.reset();
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/technical-domain/map/datasource-identificator", "866EF2B4-33C5-436E-A4E3-BA59DDAF0703"));
+		} catch (Exception e) {
+			fail("Error transforming: " + exampleXml);
+		}
 		
-		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
-		result.reset();
-		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/technical-domain/map/datasource-identificator", "866EF2B4-33C5-436E-A4E3-BA59DDAF0703"));
 	}
 
 	public final void testConvertServiceComplete() throws TransformerException {
 		// set variables that are needed for running correctly
-		initClassVariables(mapperScriptArcGIS, templateIGC);
+		initClassVariables(mapperScript, templateIGC);
+		
+		String exampleXml = "/de/ingrid/mdek/mapping/inspire_servicekomplett.xml";
 		
 		InputStream data = null;
 		try {
 			// get example file from test resource directory
 			// spring-dependency is used to access test-resources (search from every class path!)
-			data = (new ClassPathResource(exampleXmlServiceComplete)).getInputStream();
+			data = (new ClassPathResource(exampleXml)).getInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -100,98 +105,148 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		// System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
 		HashMapProtocolHandler protocolHandler = new HashMapProtocolHandler();
 		protocolHandler.setCurrentFilename("inspire_servicekomplett.xml");
-		InputStream result = mapper.convert(data, protocolHandler);
+		InputStream result;
+		try {
+			result = mapper.convert(data, protocolHandler);
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Test_Schutzgebiete"));
+		} catch (Exception e) {
+			fail("Error transforming: " + exampleXml);
+		}
 		
-		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Test_Schutzgebiete"));
 	}
 
 	public final void testConvertSTObjectsComplete() throws TransformerException {
 		// set variables that are needed for running correctly
-		initClassVariables(mapperScriptArcGIS, templateIGC);
+		initClassVariables(mapperScript, templateIGC);
+		
+		String exampleXml = "/de/ingrid/mdek/mapping/st_xml19115.xml";
 		
 		InputStream data = null;
 		try {
 			// get example file from test resource directory
 			// spring-dependency is used to access test-resources (search from every class path!)
-			data = (new ClassPathResource("/de/ingrid/mdek/mapping/st_xml19115.xml")).getInputStream();
+			data = (new ClassPathResource(exampleXml)).getInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		//System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
 		HashMapProtocolHandler protocolHandler1 = new HashMapProtocolHandler();
 		protocolHandler1.setCurrentFilename("st_xml19115.xml");
-		InputStream result = mapper.convert(data, protocolHandler1);
+		InputStream result;
+		try {
+			result = mapper.convert(data, protocolHandler1);
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
+		} catch (Exception e1) {
+			fail("Error transforming: " + exampleXml);
+		}
 		
-		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
 		
 		// set variables that are needed for running correctly
-		initClassVariables(mapperScriptArcGIS, templateIGC);
+		initClassVariables(mapperScript, templateIGC);
+		
+		exampleXml = "/de/ingrid/mdek/mapping/st_xml19119.xml";
 		
 		data = null;
 		try {
 			// get example file from test resource directory
 			// spring-dependency is used to access test-resources (search from every class path!)
-			data = (new ClassPathResource("/de/ingrid/mdek/mapping/st_xml19119.xml")).getInputStream();
+			data = (new ClassPathResource(exampleXml)).getInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		HashMapProtocolHandler protocolHandler2 = new HashMapProtocolHandler();
 		protocolHandler2.setCurrentFilename("st_xml19119.xml");
-		result = mapper.convert(data, protocolHandler2);
-//		System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
-		
-		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
-		
+		try {
+			result = mapper.convert(data, protocolHandler2);
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
+		} catch (Exception e) {
+			fail("Error transforming: " + exampleXml);
+		}
 	}
 	
 
 	public final void testConvertHHObjectsComplete() throws TransformerException, IOException {
 		// set variables that are needed for running correctly
-		initClassVariables(mapperScriptArcGIS, templateIGC);
+		initClassVariables(mapperScript, templateIGC);
+		
+		String exampleXml = "/de/ingrid/mdek/mapping/csw202apIso10_dataset_Gewaesser_Muensterland.xml";
 		
 		InputStream data = null;
 		try {
 			// get example file from test resource directory
 			// spring-dependency is used to access test-resources (search from every class path!)
-			data = (new ClassPathResource("/de/ingrid/mdek/mapping/csw202apIso10_dataset_Gewaesser_Muensterland.xml")).getInputStream();
+			data = (new ClassPathResource(exampleXml)).getInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		//System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
 		HashMapProtocolHandler protocolHandler = new HashMapProtocolHandler();
 		protocolHandler.setCurrentFilename("csw202apIso10_dataset_Gewaesser_Muensterland.xml");
-		InputStream result = mapper.convert(data, protocolHandler);
-		
-		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Gewässerflächen im Münsterland nach INSPIRE DataSpecification Hydrography"));
-		result.reset();
-		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/technical-domain/map/datasource-identificator", "http://www.bkg.de#_6D115576E-4813-3C7D-786C2-563760A88D8"));
-		result.reset();
-		System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
-		
+		InputStream result;
+		try {
+			result = mapper.convert(data, protocolHandler);
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Gewässerflächen im Münsterland nach INSPIRE DataSpecification Hydrography"));
+			result.reset();
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/technical-domain/map/datasource-identificator", "http://www.bkg.de#_6D115576E-4813-3C7D-786C2-563760A88D8"));
+			result.reset();
+			System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
+		} catch (Exception e) {
+			fail("Error transforming: " + exampleXml);
+		}
 	}
 	
 
 	public final void testConvertTHObjectsComplete() throws TransformerException, IOException {
 		// set variables that are needed for running correctly
-		initClassVariables(mapperScriptArcGIS, templateIGC);
+		initClassVariables(mapperScript, templateIGC);
+		
+		String exampleXml = "/de/ingrid/mdek/mapping/th_20052010095904_iso19115.xml";
 		
 		InputStream data = null;
 		try {
 			// get example file from test resource directory
 			// spring-dependency is used to access test-resources (search from every class path!)
-			data = (new ClassPathResource("/de/ingrid/mdek/mapping/th_20052010095904_iso19115.xml")).getInputStream();
+			data = (new ClassPathResource(exampleXml)).getInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		//System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
 		HashMapProtocolHandler protocolHandler = new HashMapProtocolHandler();
 		protocolHandler.setCurrentFilename("th_20052010095904_iso19115.xml");
-		InputStream result = mapper.convert(data, protocolHandler);
+		InputStream result;
+		try {
+			result = mapper.convert(data, protocolHandler);
+			assertEquals(2, xpathCount(result, "//igc/addresses/address"));
+			result.reset();
+			System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
+		} catch (Exception e) {
+			fail("Error transforming: " + exampleXml);
+		}
+	}
+	
+	public final void testConvertInvalidFile() {
+		// set variables that are needed for running correctly
+		initClassVariables(mapperScript, templateIGC);
 		
-		assertEquals(2, xpathCount(result, "//igc/addresses/address"));
-		result.reset();
-		System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
+		String exampleXml = "/de/ingrid/mdek/mapping/depmst_abgas.lyr.xml";
 		
+		InputStream data = null;
+		try {
+			// get example file from test resource directory
+			// spring-dependency is used to access test-resources (search from every class path!)
+			data = (new ClassPathResource("/de/ingrid/mdek/mapping/depmst_abgas.lyr.xml")).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
+		HashMapProtocolHandler protocolHandler = new HashMapProtocolHandler();
+		protocolHandler.setCurrentFilename("depmst_abgas.lyr.xml");
+		try {
+			InputStream result = mapper.convert(data, protocolHandler);
+			fail("Transformation should fail.");
+		} catch (Exception e) {
+			assertTrue(protocolHandler.getProtocol().indexOf("No valid ISO metadata record.") > -1);
+		}
 	}
 	
 	

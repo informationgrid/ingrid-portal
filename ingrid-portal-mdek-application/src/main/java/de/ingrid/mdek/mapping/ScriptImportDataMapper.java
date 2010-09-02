@@ -49,7 +49,7 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 		
 	}
 	
-	public InputStream convert(InputStream data, ProtocolHandler protocolHandler) {
+	public InputStream convert(InputStream data, ProtocolHandler protocolHandler) throws Exception {
 		Map<String, Object> parameters = new Hashtable<String, Object>();
 		InputStream targetStream = null;
 		
@@ -84,13 +84,13 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 			targetStream = new ByteArrayInputStream(targetString.getBytes("UTF-8"));
 		} catch (TransformerException e) {
 			log.error("Error while transforming Document to String!");
-			e.printStackTrace();
+			throw e;
 		} catch (UnsupportedEncodingException e) {
 			log.error("Error while transforming Document to String!");
-			e.printStackTrace();
+			throw e;
 		} catch (Exception e) {
-			log.error("Error while converting!");
-			e.printStackTrace();
+			log.error("Error while converting the input data!");
+			throw e;
 		}
 		
 		return targetStream;
@@ -195,7 +195,7 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 	}
 	
 
-	private void doMap(Map<String, Object> parameters) {
+	private void doMap(Map<String, Object> parameters) throws Exception {
         try {
 	        ScriptEngine engine = this.getScriptEngine();
 			
@@ -209,11 +209,11 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 	        engine.eval(new InputStreamReader(mapperScript.getInputStream()));
 	        
 		} catch (ScriptException e) {
-			log.error("Error while evaluating the script!");
-			e.printStackTrace();
+			log.error("Error while evaluating the script!", e);
+			throw e;
 		} catch (IOException e) {
-			log.error("Error while accessing the mapper script!");
-			e.printStackTrace();
+			log.error("Error while accessing the mapper script!", e);
+			throw e;
 		}
 
 	}
