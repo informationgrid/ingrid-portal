@@ -709,6 +709,8 @@ validateSource(source);
 
 mapToTarget(mappingDescription, source, target.getDocumentElement());
 
+protocol(INFO, "\n\n");
+
 var uuid;
 
 function mapToTarget(mapping, source, target) {
@@ -842,7 +844,7 @@ function validateSource(source) {
 	var metadataNodes = XPathUtils.getNodeList(source, "/metadata");
 	if (!hasValue(metadataNodes) || metadataNodes.getLength() == 0) {
 		log.error("No valid ARC GIS metadata record.");
-		protocol(ERROR, "No valid ARC GIS metadata record.");
+		protocol(ERROR, "No valid ARC GIS metadata record.\n\n");
 		throw "No valid ARC GIS metadata record.";
 	}
 	var title = XPathUtils.getString(source.getDocumentElement(), "/metadata/dataIdInfo/idCitation/resTitle");
@@ -853,7 +855,7 @@ function validateSource(source) {
 		metadataLanguage = requiredMetadataLanguage;
 	} else if (metadataLanguage != requiredMetadataLanguage) {
 		log.error("Dataset '" + title + "' (" + uuid + ") has the wrong metadata language '" + metadataLanguage + "'. Must be '" + requiredMetadataLanguage + "'");
-		protocol(ERROR, "Dataset '" + title + "' (" + uuid + ") has the wrong metadata language '" + metadataLanguage + "'. Must be '" + requiredMetadataLanguage + "'");
+		protocol(ERROR, "Dataset '" + title + "' (" + uuid + ") has the wrong metadata language '" + metadataLanguage + "'. Must be '" + requiredMetadataLanguage + "'\n\n");
 		throw "Dataset '" + title + "' (" + uuid + ") has the wrong metadata language '" + metadataLanguage + "'. Must be '" + requiredMetadataLanguage + "'";
 	}
 	return true;

@@ -1340,7 +1340,7 @@ function validateSource(source) {
 	var metadataNodes = XPathUtils.getNodeList(source, "//gmd:MD_Metadata");
 	if (!hasValue(metadataNodes) || metadataNodes.getLength() == 0) {
 		log.error("No valid ISO metadata record.");
-		protocol(ERROR, "No valid ISO metadata record.");
+		protocol(ERROR, "No valid ISO metadata record.\n\n");
 		throw "No valid ISO metadata record.";
 	}
 	
