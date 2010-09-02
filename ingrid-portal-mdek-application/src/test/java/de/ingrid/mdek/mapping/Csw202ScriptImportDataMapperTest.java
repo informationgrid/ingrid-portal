@@ -61,7 +61,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		
 	}
 
-	public final void testConvertObjectComplete() throws TransformerException {
+	public final void testConvertObjectComplete() throws TransformerException, IOException {
 		// set variables that are needed for running correctly
 		initClassVariables(mapperScriptArcGIS, templateIGC);
 		
@@ -80,6 +80,8 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		InputStream result = mapper.convert(data, protocolHandler);
 		
 		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
+		result.reset();
+		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/technical-domain/map/datasource-identificator", "866EF2B4-33C5-436E-A4E3-BA59DDAF0703"));
 	}
 
 	public final void testConvertServiceComplete() throws TransformerException {
@@ -161,6 +163,8 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		InputStream result = mapper.convert(data, protocolHandler);
 		
 		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Gewässerflächen im Münsterland nach INSPIRE DataSpecification Hydrography"));
+		result.reset();
+		assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/technical-domain/map/datasource-identificator", "http://www.bkg.de#_6D115576E-4813-3C7D-786C2-563760A88D8"));
 		result.reset();
 		System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
 		

@@ -243,6 +243,11 @@ var mappingDescription = {"mappings":[
 		      			  		}
 	      	  				]
 	      				}
+	        		},
+	        		{
+	        			"execute":{
+	        				"funct":mapRSIdentifier
+	        			}
 	        		}
   			    ]
   			}
@@ -1426,6 +1431,28 @@ function mapTimeConstraints(source, target) {
 		}
 	}
 }
+
+function mapRSIdentifier(source, target)  {
+	log.debug("Map RS_Identifier.");
+	var rsIdentifiers = XPathUtils.getNodeList(source, "//gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier");
+	if (hasValue(rsIdentifiers) && rsIdentifiers.getLength() > 0) {
+		log.debug("Found " + rsIdentifiers.getLength() + " RS_Identifier records.");
+		var codeSpace = XPathUtils.getString(rsIdentifiers.item(0), "gmd:codeSpace/gco:CharacterString");
+		var code = XPathUtils.getString(rsIdentifiers.item(0), "gmd:code/gco:CharacterString");
+		if (hasValue(code)) {
+			log.debug("Found RS_Identifier: " + code);
+			var dataSourceID = "";
+			if (hasValue(codeSpace)) {
+				dataSourceID = codeSpace + "#" + code;
+			} else {
+				dataSourceID = code;
+			}
+			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/technical-domain/map/datasource-identificator");
+			XMLUtils.createOrReplaceTextNode(node, dataSourceID);
+		}
+	}
+}
+
 
 function parseToInt(val) {
 	return java.lang.Integer.parseInt(val);
