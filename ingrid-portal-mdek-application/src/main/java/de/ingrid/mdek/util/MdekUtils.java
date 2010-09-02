@@ -139,6 +139,7 @@ public class MdekUtils {
 			JobInfoBean job = new JobInfoBean();
 			job.setDescription(result.getString(MdekKeys.RUNNINGJOB_TYPE));
 			job.setNumEntities((Integer) result.get(MdekKeys.RUNNINGJOB_NUMBER_TOTAL_ENTITIES));
+			job.setNumProcessedEntities((Integer) result.get(MdekKeys.RUNNINGJOB_NUMBER_PROCESSED_ENTITIES));
 			job.setNumProcessedObjects((Integer) result.get(MdekKeys.RUNNINGJOB_NUMBER_PROCESSED_OBJECTS));
 			job.setNumProcessedAddresses((Integer) result.get(MdekKeys.RUNNINGJOB_NUMBER_PROCESSED_ADDRESSES));
 			job.setNumObjects((Integer) result.get(MdekKeys.RUNNINGJOB_NUMBER_TOTAL_OBJECTS));

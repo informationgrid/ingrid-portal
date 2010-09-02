@@ -1,6 +1,5 @@
 package de.ingrid.mdek.handler;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +45,7 @@ public interface CatalogRequestHandler {
 	public void exportObjectBranch(String rootUuid, boolean exportChildren);
 	public void exportObjectsWithCriteria(String exportCriteria);
 	public ExportJobInfoBean getExportInfo(boolean includeExportData);
-	public void importEntities(UserData currentUser, ArrayList <byte[]> importData, String targetObjectUuid, String targetAddressUuid, boolean publishImmediately, boolean doSeparateImport);
+	public void importEntities(UserData currentUser, List<byte[]> importData, String targetObjectUuid, String targetAddressUuid, String frontendProtocol, boolean publishImmediately, boolean doSeparateImport);
 	public JobInfoBean getImportInfo();
 	public void cancelRunningJob();
 	

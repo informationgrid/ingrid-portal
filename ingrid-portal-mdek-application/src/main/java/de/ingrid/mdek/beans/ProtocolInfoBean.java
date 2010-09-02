@@ -1,44 +1,62 @@
 package de.ingrid.mdek.beans;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import de.ingrid.mdek.handler.ProtocolHandler;
 
 public class ProtocolInfoBean {
 
-	private String inputType;
-	private boolean status;
-	private String protocol;
-	private ArrayList<byte[]> importData;
-	private ProtocolHandler protocolHandler;
+	private String             inputType;
+	private boolean            finished;
+	//private String             protocol;
+	private List<byte[]>       importData;
+	private ProtocolHandler    protocolHandler;
+	private int                dataProcessed;
 	
-	public String getInputType() {
+	public ProtocolInfoBean(ProtocolHandler protocolHandler) {
+	    this.protocolHandler = protocolHandler;
+	    this.finished = false;
+	}
+	
+	public int getDataProcessed() {
+        return dataProcessed;
+    }
+    public void setDataProcessed(int value) {
+        this.dataProcessed = value;
+    }
+    public String getInputType() {
 		return inputType;
 	}
 	public void setInputType(String inputType) {
 		this.inputType = inputType;
 	}
-	public boolean getStatus() {
-		return status;
+	public boolean getFinished() {
+		return finished;
 	}
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setFinished(boolean status) {
+		this.finished = status;
 	}
 	public String getProtocol() {
-		return protocol;
+	    if (protocolHandler != null)
+	        return protocolHandler.getProtocol();
+	    return null;
 	}
-	public void setProtocol(String protocol) {
+	/*public void setProtocol(String protocol) {
 		this.protocol = protocol;
-	}
-	public ArrayList<byte[]> getImportData() {
+	}*/
+	
+	public List<byte[]> getImportData() {
 		return importData;
 	}
-	public void setImportData(ArrayList<byte[]> importData) {
+	
+	public void setImportData(List<byte[]> importData) {
 		this.importData = importData;
 	}
+	
 	public ProtocolHandler getProtocolHandler() {
 		return protocolHandler;
 	}
+	
 	public void setProtocolHandler(ProtocolHandler protocolHandler) {
 		this.protocolHandler = protocolHandler;
 	}

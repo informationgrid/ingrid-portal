@@ -149,7 +149,21 @@ function startTreeImport() {
 	dojo.debug("parent object uuid: "+parentObjectUuid);
 	dojo.debug("parent address uuid: "+parentAddressUuid);
 
-	ImportService.startImportThread(file, fileType, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, importServiceCallback);
+	ImportService.startImportThread(file, fileType, parentObjectUuid, parentAddressUuid,
+		publishImportedDatasets, separateImport, {
+			callback: function(res) {
+				refreshImportProcessInfo();
+			},
+			errorHandler: function(msg, err){
+				dojo.debugShallow(err);
+				hideLoadingZone();
+				if (msg.indexOf("USER_HAS_RUNNING_JOBS") != -1) {
+					dialog.show(message.get("general.error"), message.get("operation.error.userHasRunningJobs"), dialog.WARNING);
+				} else {
+				    displayErrorMessage(err);
+				}
+			}
+		});
 }
 
 function startTreeImportProtocol() {
@@ -164,8 +178,16 @@ function startTreeImportProtocol() {
 	dojo.debug("parent object uuid: "+parentObjectUuid);
 	dojo.debug("parent address uuid: "+parentAddressUuid);
 
-	ImportService.importEntities(file, fileType, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, importTransformationCallback);
+	ImportService.importEntities(file, fileType, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, {
+		errorHandler: function(msg, err){
+			dojo.debugShallow(err);
+			hideLoadingZone();
+		    displayErrorMessage(err);
+		}
+	});
 	
+	//dojo.debug("check periodically status");
+	setTimeout("checkImportTransformationStatus()", 2000);
 }
 
 scriptScope.startImportProtocol = function() {
@@ -265,34 +287,73 @@ refreshImportProcessInfo = function() {
 
 //Check for transformation status
 checkImportTransformationStatus = function() {
-	ImportService.getControlMap({
-		callback: function(controlMap){
-			if (controlMap.status != true) {
+	dojo.debug("check protocol now");
+	ImportService.getProtocolInfo({
+		callback: function(infoBean){
+			updateReadInputInfo(infoBean);
+			dojo.debug("Status: " + infoBean.finished);
+			if (infoBean.finished != true) {
+				dojo.debug("call again later");
 				setTimeout("checkImportTransformationStatus()", 2000);
-			}else{
-				showProtocol(controlMap);
+			} else {
+				showProtocol(infoBean);
 			}
 		}
 	});
 }
 
-function showProtocol(controlMap) {
-	if(controlMap.inputType != "igc"){
-		var protocolMessageToHtml = returnToBr(controlMap.protocol);
+function showProtocol(infoBean) {
+	if(infoBean.inputType != "igc"){
+		var protocolMessageToHtml = returnToBr(infoBean.protocol);
 		if(protocolMessageToHtml != null && protocolMessageToHtml.length > 0){
 			dialog.show(message.get("protocol.title"), protocolMessageToHtml, dialog.MESSAGE, [{caption:message.get("protocol.import"),action:function(){startTreeImport()}}, {caption:message.get("protocol.cancel"),action:dialog.CLOSE_ACTION}], 500, 500);
 		}else{
 			dialog.show(message.get("protocol.title"), message.get("protocol.empty"), dialog.MESSAGE, [{caption:message.get("protocol.import"),action:function(){startTreeImport()}}, {caption:message.get("protocol.cancel"),action:dialog.CLOSE_ACTION}], 500, 500);
 		}
-	}else{
+	} else {
 		startTreeImport();
 	}
+}
+
+function updateReadInputInfo(infoBean) {
+	dojo.html.hide(dojo.byId("importExceptionMessage"));
+	dojo.html.hide(dojo.byId("importInfoDownload"));
+	dojo.html.hide(dojo.byId("importInfoStartDateContainer"));
+	dojo.html.hide(dojo.byId("importInfoBeginDate"));
+	dojo.html.hide(dojo.byId("importInfoEndDateContainer"));
+	dojo.html.hide(dojo.byId("importInfoEndDate"));
+	dojo.html.hide(dojo.byId("importInfoNumImportedAddressContainer"));
+	dojo.html.hide(dojo.byId("importInfoNumImportedAddresses"));
 	
+	dojo.byId("importInfoNumImportedObjectContainer").innerHTML = message.get("dialog.admin.import.progress");
+	
+	// conversion is finished
+	if (infoBean.finished == true) {
+		dojo.widget.byId('importButton').disabled = false;
+		dojo.byId("importInfoTitle").innerHTML = message.get("dialog.admin.import.lastProcessInfo");
+		dojo.html.hide(dojo.byId("importProgressBarContainer"));
+		dojo.byId("importInfoNumImportedObjects").innerHTML = infoBean.dataProcessed + "%";
+	// conversion is still in progress
+	} else {
+		dojo.widget.byId('importButton').disabled = true;
+		dojo.byId("importInfoTitle").innerHTML = message.get("dialog.admin.import.currentProcessInfo");
+		dojo.html.show(dojo.byId("importInfoNumImportedObjectContainer"));
+		dojo.html.show(dojo.byId("importProgressBarContainer"));
+		
+		dojo.byId("importInfoNumImportedObjects").innerHTML = infoBean.dataProcessed + " / 100%";
+		
+		var progressBar = dojo.widget.byId("importProgressBar");
+		progressBar.setMaxProgressValue(100);
+		progressBar.setProgressValue(infoBean.dataProcessed);
+	}
 }
 
 function updateImportInfo(importInfo) {
 	dojo.byId("importInfoNumImportedObjectContainer").innerHTML = message.get("dialog.admin.import.numObjects");
 	dojo.byId("importInfoNumImportedAddressContainer").innerHTML = message.get("dialog.admin.import.numAddresses");
+	dojo.html.show(dojo.byId("importInfoStartDateContainer"));
+	dojo.html.show(dojo.byId("importInfoBeginDate"));
+	dojo.html.show(dojo.byId("importInfoNumImportedAddresses"));
 	
 	if (jobFinished(importInfo)) {
 		dojo.byId("importInfoTitle").innerHTML = message.get("dialog.admin.import.lastProcessInfo");
@@ -312,6 +373,7 @@ function updateImportInfo(importInfo) {
 			dojo.html.hide(dojo.byId("importExceptionMessage"));
 			dojo.html.show(dojo.byId("importInfoDownload"));
 			dojo.html.show(dojo.byId("importInfoEndDateContainer"));
+			dojo.html.show(dojo.byId("importInfoEndDate"));
 			dojo.html.show(dojo.byId("importInfoNumImportedObjectContainer"));
 			dojo.html.show(dojo.byId("importInfoNumImportedAddressContainer"));
 			dojo.byId("importInfoNumImportedObjects").innerHTML = importInfo.numProcessedObjects;
@@ -405,7 +467,7 @@ function returnToBr(string) {
 							<p id="importExceptionMessage"><fmt:message key="dialog.admin.import.error" /> <a href="javascript:void(0);" onclick="javascript:scriptScope.showJobException();" title="<fmt:message key="dialog.admin.import.errorinfo" />">link</a></p>
 							<table cellspacing="0">
 								<tr>
-									<td><fmt:message key="dialog.admin.import.startTime" /></td>
+									<td id="importInfoStartDateContainer"><fmt:message key="dialog.admin.import.startTime" /></td>
 									<td id="importInfoBeginDate"></td></tr>
 									<tr><td id="importInfoEndDateContainer"><fmt:message key="dialog.admin.import.endTime" /></td>
 									<td id="importInfoEndDate"></td></tr>
@@ -448,69 +510,69 @@ function returnToBr(string) {
 					</div>
 				</div>
 
-		        <!-- IMPORT TEILBAUM START -->
-		        <!-- SPLIT CONTAINER START -->
-		        <div id="importTree">
-		          <span class="label"><label><fmt:message key="dialog.admin.import.tree" /></label></span>
-		          <div dojoType="ingrid:SplitContainer" id="importTreeContainer" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
-		            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="22.5">
-		              <!-- LEFT HAND SIDE CONTENT IMPORT TEILBAUM START -->
-		              <div class="inputContainer grey noSpaceBelow">
-		              	<div dojoType="ContentPane" id="treeImportTreeContent">
-		                  <!-- tree components -->
-		                  <div dojoType="ingrid:TreeController" widgetId="treeImportTreeController" RpcUrl="server/treelistener.php"></div>
-		                  <div dojoType="ingrid:TreeListener" widgetId="treeImportTreeListener"></div>	
-		                  <div dojoType="ingrid:TreeDocIcons" widgetId="treeImportTreeDocIcons"></div>	
-		                  <div dojoType="ingrid:TreeDecorator" listener="treeImportTreeListener"></div>
-		                  
-		                  <!-- tree -->
-		                  <div dojoType="ingrid:Tree" listeners="treeImportTreeController;treeImportTreeListener;treeImportTreeDocIcons" widgetId="treeImportTree">
-		                  </div>
-		                  <div class="spacer"></div>
-		                </div>
-		              </div>
-		            </div>
-		            <!-- LEFT HAND SIDE CONTENT IMPORT TEILBAUM END -->
-		
-		            <!-- RIGHT HAND SIDE CONTENT IMPORT TEILBAUM START -->
-		            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:hidden;" sizeshare="77.5">
-		
-						<span class="entry">
-							<span class="buttonCol subtreeImport" style="margin-top:39px;">
-								<button dojoType="ingrid:Button" onClick="javascript:scriptScope.selectParentDatasetForTreeImport();">&nbsp;>&nbsp;</button>
-								<button dojoType="ingrid:Button" onClick="javascript:scriptScope.selectParentAddressForTreeImport();">&nbsp;>&nbsp;</button>
-							</span>
-						</span>
-		
-		              <div id="importTreeData" class="entry field">
-		                <span class="label"><label for="importTreeParentObject" onclick="javascript:dialog.showContextHelp(arguments[0], 8077, 'Ausgew&auml;hltes &uuml;bergeordnetes Objekt')"><fmt:message key="dialog.admin.import.parentObject" /></label></span>
-		                <span class="input spaceBelow"><input type="text" id="importTreeParentDataset" class="w628" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-		                <span class="label"><label for="importTreeParentAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 8078, 'Ausgew&auml;hlte &uuml;bergeordnete Adresse')"><fmt:message key="dialog.admin.import.parentAddress" /></label></span>
-		                <span class="input"><input type="text" id="importTreeParentAddress" class="w628" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
-		            	</div>
-		            </div>
-		          </div>
-		          <!-- RIGHT HAND SIDE CONTENT IMPORT TEILBAUM END -->
-		
-					<div class="inputContainer">
-						<span class="button w915" style="height:20px !important;">
-							<span style="float:right;">
-								<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.import.start" />" onClick="javascript:scriptScope.startImportProtocol();"><fmt:message key="dialog.admin.import.start" /></button>
-							</span>
-							<span style="float:right;">
-								<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.import.reset" />" onClick="javascript:scriptScope.resetImport();"><fmt:message key="dialog.admin.import.reset" /></button>
-							</span>
-							<span id="importLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
-								<img src="img/ladekreis.gif" />
-							</span>
-						</span>
-			            <div class="fill"></div>
-					</div>
-		         </div>
-		        <!-- IMPORT TEILBAUM END -->
-      		</div>
-    	</div>
-  	</div>
+        <!-- IMPORT TEILBAUM START -->
+        <!-- SPLIT CONTAINER START -->
+        <div id="importTree">
+          <span class="label"><label><fmt:message key="dialog.admin.import.tree" /></label></span>
+          <div dojoType="ingrid:SplitContainer" id="importTreeContainer" orientation="horizontal" sizerWidth="15" layoutAlign="client" templateCssPath="js/dojo/widget/templates/SplitContainer.css">
+            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:auto;" sizeShare="22.5">
+              <!-- LEFT HAND SIDE CONTENT IMPORT TEILBAUM START -->
+              <div class="inputContainer grey noSpaceBelow">
+              	<div dojoType="ContentPane" id="treeImportTreeContent">
+                  <!-- tree components -->
+                  <div dojoType="ingrid:TreeController" widgetId="treeImportTreeController" RpcUrl="server/treelistener.php"></div>
+                  <div dojoType="ingrid:TreeListener" widgetId="treeImportTreeListener"></div>	
+                  <div dojoType="ingrid:TreeDocIcons" widgetId="treeImportTreeDocIcons"></div>	
+                  <div dojoType="ingrid:TreeDecorator" listener="treeImportTreeListener"></div>
+                  
+                  <!-- tree -->
+                  <div dojoType="ingrid:Tree" listeners="treeImportTreeController;treeImportTreeListener;treeImportTreeDocIcons" widgetId="treeImportTree">
+                  </div>
+                  <div class="spacer"></div>
+                </div>
+              </div>
+            </div>
+            <!-- LEFT HAND SIDE CONTENT IMPORT TEILBAUM END -->
+
+            <!-- RIGHT HAND SIDE CONTENT IMPORT TEILBAUM START -->
+            <div dojoType="ContentPane" class="inputContainer noSpaceBelow" style="overflow:hidden;" sizeshare="77.5">
+
+				<span class="entry">
+					<span class="buttonCol subtreeImport" style="margin-top:39px;">
+						<button dojoType="ingrid:Button" onClick="javascript:scriptScope.selectParentDatasetForTreeImport();">&nbsp;>&nbsp;</button>
+						<button dojoType="ingrid:Button" onClick="javascript:scriptScope.selectParentAddressForTreeImport();">&nbsp;>&nbsp;</button>
+					</span>
+				</span>
+
+              <div id="importTreeData" class="entry field">
+                <span class="label"><label for="importTreeParentObject" onclick="javascript:dialog.showContextHelp(arguments[0], 8077, 'Ausgew&auml;hltes &uuml;bergeordnetes Objekt')"><fmt:message key="dialog.admin.import.parentObject" /></label></span>
+                <span class="input spaceBelow"><input type="text" id="importTreeParentDataset" class="w628" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
+                <span class="label"><label for="importTreeParentAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 8078, 'Ausgew&auml;hlte &uuml;bergeordnete Adresse')"><fmt:message key="dialog.admin.import.parentAddress" /></label></span>
+                <span class="input"><input type="text" id="importTreeParentAddress" class="w628" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
+            	</div>
+            </div>
+          </div>
+          <!-- RIGHT HAND SIDE CONTENT IMPORT TEILBAUM END -->
+
+			<div class="inputContainer">
+				<span class="button w915" style="height:20px !important;">
+					<span style="float:right;">
+								<button id="importButton" dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.import.start" />" onClick="javascript:scriptScope.startImportProtocol();"><fmt:message key="dialog.admin.import.start" /></button>
+					</span>
+					<span style="float:right;">
+						<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.import.reset" />" onClick="javascript:scriptScope.resetImport();"><fmt:message key="dialog.admin.import.reset" /></button>
+					</span>
+					<span id="importLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+						<img src="img/ladekreis.gif" />
+					</span>
+				</span>
+	            <div class="fill"></div>
+			</div>
+         </div>
+        <!-- IMPORT TEILBAUM END -->
+      </div>
+    </div>
+  </div>
   <!-- CONTENT END -->
 
 </body>

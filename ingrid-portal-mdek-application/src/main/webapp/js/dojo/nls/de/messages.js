@@ -233,6 +233,7 @@
 	"dialog.admin.import.numDatasets":"Anzahl Datens&auml;tze:",
 	"dialog.admin.import.lastProcessInfo":"Informationen zum letzten Prozess:",
 	"dialog.admin.import.currentProcessInfo":"Informationen zum laufenden Prozess:",
+	"dialog.admin.import.progress":"Fortschritt (Aufbereitung der Daten):",
 	"dialog.admin.users.canNotDeleteError":"Der markierte Benutzer kann nicht gel&ouml;scht werden.",
 	"dialog.admin.users.noDeletePermissionError":"Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tigen Rechte um den Benutzer zu l&ouml;schen!",
 	"dialog.admin.users.noParentSelectedError":"Bitte w&auml;hlen Sie einen Benutzer aus, dem der neue Benutzer zugeordnet werden soll.",
@@ -386,7 +387,7 @@
 	"protocol.import":"Importieren",
 	"protocol.cancel":"Abbrechen",
 	"protocol.title":"Import Protokoll",
-	"protocol.empty":"Keine Protokoll-Nachrichten vorhanden.",
+	"protocol.empty":"Während der Konvertierung der Daten in das InGrid-Format sind keine Protokoll-Nachrichten entstanden.",
 	
 	"ui.entry.loadingMessage":"Die Anwendung wird geladen...",
 	"ui.entry.admin.title":"InGrid-Editor - Verwaltung und Management",

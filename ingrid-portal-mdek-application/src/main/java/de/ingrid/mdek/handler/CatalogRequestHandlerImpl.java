@@ -206,17 +206,17 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 
 	public void exportFreeAddresses() {
 		IngridDocument response = exportAddressBranch(null, false, AddressArea.ALL_FREE_ADDRESSES);
-		MdekCatalogUtils.extractJobInfoFromResponse(response, JobType.EXPORT);
+		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
 	public void exportTopAddresses(boolean exportChildren) {
 		IngridDocument response = exportAddressBranch(null, exportChildren, AddressArea.ALL_ADDRESSES);
-		MdekCatalogUtils.extractJobInfoFromResponse(response, JobType.EXPORT);
+		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
 	public void exportAddressBranch(String rootUuid, boolean exportChildren) {
 		IngridDocument response = exportAddressBranch(rootUuid, exportChildren, null);
-		MdekCatalogUtils.extractJobInfoFromResponse(response, JobType.EXPORT);
+		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
 	private IngridDocument exportAddressBranch(String rootUuid, boolean exportChildren, AddressArea addressArea) {
@@ -232,7 +232,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 				rootUuid,
 				!exportChildren, MdekSecurityUtils.getCurrentUserUuid());
 
-		MdekCatalogUtils.extractJobInfoFromResponse(response, JobType.EXPORT);
+		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
 	public void exportObjectsWithCriteria(String exportCriteria) {
@@ -240,23 +240,24 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 				connectionFacade.getCurrentPlugId(),
 				exportCriteria,
 				MdekSecurityUtils.getCurrentUserUuid());
-		MdekCatalogUtils.extractJobInfoFromResponse(response, JobType.EXPORT);
+		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
 	public ExportJobInfoBean getExportInfo(boolean includeExportData) {
 		IngridDocument response = mdekCallerCatalog.getExportInfo(connectionFacade.getCurrentPlugId(), includeExportData, MdekSecurityUtils.getCurrentUserUuid());
-		return MdekCatalogUtils.extractExportJobInfoFromResponse(response, JobType.EXPORT);
+		return MdekCatalogUtils.extractExportJobInfoFromResponse(response);
 	}
 
-	public void importEntities(UserData currentUser, ArrayList <byte[]> importData, String targetObjectUuid, String targetAddressUuid,
-			boolean publishImmediately, boolean doSeparateImport) {
+	public void importEntities(UserData currentUser, List<byte[]> importData, String targetObjectUuid, String targetAddressUuid,
+	        String frontendProtocol, boolean publishImmediately, boolean doSeparateImport) {
 		IngridDocument response = mdekCallerCatalog.importEntities(
 				currentUser.getPlugId(),
 				importData,
 				targetObjectUuid, targetAddressUuid,
 				publishImmediately, doSeparateImport,
+				frontendProtocol,
 				currentUser.getAddressUuid());
-		MdekCatalogUtils.extractJobInfoFromResponse(response, JobType.IMPORT);
+		MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
 	public JobInfoBean getImportInfo() {
@@ -265,7 +266,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 				JobType.IMPORT,
 				MdekSecurityUtils.getCurrentUserUuid());
 
-		return MdekCatalogUtils.extractJobInfoFromResponse(response, JobType.IMPORT);
+		return MdekCatalogUtils.extractJobInfoFromResponse(response);
 	}
 
 	public void cancelRunningJob() {
@@ -277,7 +278,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 				connectionFacade.getCurrentPlugId(),
 				MdekSecurityUtils.getCurrentUserUuid());
 
-		return MdekCatalogUtils.extractAnalyzeJobInfoFromResponse(response, JobType.ANALYZE);
+		return MdekCatalogUtils.extractAnalyzeJobInfoFromResponse(response);
 	}
 
 	public ConnectionFacade getConnectionFacade() {
@@ -343,6 +344,6 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 				JobType.REBUILD_SYSLISTS,
 				MdekSecurityUtils.getCurrentUserUuid());
 
-		return MdekCatalogUtils.extractReindexJobInfoFromResponse(response, JobType.REBUILD_SYSLISTS);
+		return MdekCatalogUtils.extractReindexJobInfoFromResponse(response);
 	}
 }

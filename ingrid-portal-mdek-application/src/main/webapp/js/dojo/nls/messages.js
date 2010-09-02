@@ -233,6 +233,7 @@
 	"dialog.admin.import.numDatasets":"Number of Datasets:",
 	"dialog.admin.import.lastProcessInfo":"Information about the last process:",
 	"dialog.admin.import.currentProcessInfo":"Information about the current process:",
+	"dialog.admin.import.progress":"Progress (Preparation of data):",
 	"dialog.admin.users.canNotDeleteError":"The selected user can not be deleted.",
 	"dialog.admin.users.noDeletePermissionError":"You don't have the proper permission to delete the selected user!",
 	"dialog.admin.users.noParentSelectedError":"Please select a valid parent before creating a new user.",
@@ -386,7 +387,7 @@
 	"protocol.import":"Import",
 	"protocol.cancel":"Cancel",
 	"protocol.title":"Import Protocol",
-	"protocol.empty":"No protocol messages available.",
+	"protocol.empty":"During the conversion to the InGrid-format no protocol messages were produced.",
 	
 	"ui.entry.loadingMessage":"The application is loading...",
 	"ui.entry.admin.title":"InGrid-Editor - Administration",

@@ -25,7 +25,6 @@ import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.dwr.services.sns.SNSLocationTopic;
 import de.ingrid.mdek.dwr.services.sns.SNSService;
 import de.ingrid.mdek.handler.ConnectionFacade;
-import de.ingrid.mdek.job.IJob.JobType;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekEmailUtils;
 import de.ingrid.mdek.util.MdekErrorUtils;
@@ -142,7 +141,7 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 					mapFromSNSLocationTopics(jobResult.getNewTopics()),
 					userId);
 
-			SNSLocationUpdateJobInfoBean jobInfo = MdekCatalogUtils.extractSNSLocationUpdateJobInfoFromResponse(response, true, de.ingrid.mdek.job.IJob.JobType.UPDATE_SPATIAL_REFERENCES);
+			SNSLocationUpdateJobInfoBean jobInfo = MdekCatalogUtils.extractSNSLocationUpdateJobInfoFromResponse(response, true);
 			sendExpiryMails(jobInfo.getSnsUpdateResults(), plugId, userId);
 		}
 	}
@@ -466,4 +465,4 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 			return newTopics;
 		}
 	}
-}
+} 

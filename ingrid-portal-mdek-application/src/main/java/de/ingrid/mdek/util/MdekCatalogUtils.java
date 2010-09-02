@@ -32,7 +32,6 @@ import de.ingrid.mdek.beans.AdditionalFieldBean.Type;
 import de.ingrid.mdek.beans.JobInfoBean.EntityType;
 import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.mdek.caller.MdekCaller;
-import de.ingrid.mdek.job.IJob.JobType;
 import de.ingrid.mdek.quartz.jobs.util.URLObjectReference;
 import de.ingrid.mdek.quartz.jobs.util.URLState;
 import de.ingrid.mdek.quartz.jobs.util.URLState.State;
@@ -346,62 +345,55 @@ public class MdekCatalogUtils {
 		}
 	}
 
-	public static JobInfoBean extractJobInfoFromResponse(IngridDocument response, JobType type) {
+	public static JobInfoBean extractJobInfoFromResponse(IngridDocument response) {
 		JobInfoBean jobInfo = new JobInfoBean();
-		addGeneralJobInfoFromResponse(response, jobInfo, type);
+		addGeneralJobInfoFromResponse(response, jobInfo);
 		return jobInfo;
 	}
 
-	public static ExportJobInfoBean extractExportJobInfoFromResponse(IngridDocument response, JobType type) {
+	public static ExportJobInfoBean extractExportJobInfoFromResponse(IngridDocument response) {
 		ExportJobInfoBean exportJobInfo = new ExportJobInfoBean();
-		addGeneralJobInfoFromResponse(response, exportJobInfo, type);
+		addGeneralJobInfoFromResponse(response, exportJobInfo);
 		addExportJobInfoFromResponse(response, exportJobInfo);
 
 		return exportJobInfo;
 	}
 
-	public static JobInfoBean extractReindexJobInfoFromResponse(IngridDocument response, JobType type) {
+	public static JobInfoBean extractReindexJobInfoFromResponse(IngridDocument response) {
 		JobInfoBean jobInfo = new JobInfoBean();
-		addGeneralJobInfoFromResponse(response, jobInfo, type);
+		addGeneralJobInfoFromResponse(response, jobInfo);
 		addReindexJobInfoFromResponse(response, jobInfo);
 		return jobInfo;
 	}
 
-	private static void addGeneralJobInfoFromResponse(IngridDocument response, JobInfoBean jobInfo, JobType type) {
+	private static void addGeneralJobInfoFromResponse(IngridDocument response, JobInfoBean jobInfo) {
 		IngridDocument jobInfoDoc = MdekUtils.getResultFromResponse(response);
 		if (jobInfoDoc != null) {
 			jobInfo.setDescription(jobInfoDoc.getString(MdekKeys.JOBINFO_MESSAGES));
 			jobInfo.setStartTime(MdekUtils.convertTimestampToDate(jobInfoDoc.getString(MdekKeys.JOBINFO_START_TIME)));
 			jobInfo.setEndTime(MdekUtils.convertTimestampToDate(jobInfoDoc.getString(MdekKeys.JOBINFO_END_TIME)));
-		
-			if(type.equals(JobType.IMPORT)){
-				if (jobInfoDoc.get(MdekKeys.JOBINFO_NUM_OBJECTS) != null) {
-					jobInfo.setNumProcessedObjects(jobInfoDoc.getInt(MdekKeys.JOBINFO_NUM_OBJECTS));
-					jobInfo.setNumObjects(jobInfoDoc.getInt(MdekKeys.JOBINFO_TOTAL_NUM_OBJECTS));
-				} 
-				if (jobInfoDoc.get(MdekKeys.JOBINFO_NUM_ADDRESSES) != null) {
-					jobInfo.setNumProcessedAddresses(jobInfoDoc.getInt(MdekKeys.JOBINFO_NUM_ADDRESSES));
-					jobInfo.setNumAddresses(jobInfoDoc.getInt(MdekKeys.JOBINFO_TOTAL_NUM_ADDRESSES));
-				}
-			}else{
-				if (jobInfoDoc.get(MdekKeys.JOBINFO_NUM_OBJECTS) != null) {
-					jobInfo.setNumProcessedEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_NUM_OBJECTS));
-					jobInfo.setNumEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_TOTAL_NUM_OBJECTS));
-					jobInfo.setEntityType(EntityType.OBJECT);
-	
-				} else if (jobInfoDoc.get(MdekKeys.JOBINFO_NUM_ADDRESSES) != null) {
-					jobInfo.setNumProcessedEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_NUM_ADDRESSES));
-					jobInfo.setNumEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_TOTAL_NUM_ADDRESSES));
-					jobInfo.setEntityType(EntityType.ADDRESS);
-				}
+			if (jobInfoDoc.get(MdekKeys.JOBINFO_NUM_OBJECTS) != null) {
+				jobInfo.setNumProcessedEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_NUM_OBJECTS));
+				jobInfo.setNumEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_TOTAL_NUM_OBJECTS));
+				jobInfo.setEntityType(EntityType.OBJECT);
+				jobInfo.setNumProcessedObjects(jobInfoDoc.getInt(MdekKeys.JOBINFO_NUM_OBJECTS));
+                jobInfo.setNumObjects(jobInfoDoc.getInt(MdekKeys.JOBINFO_TOTAL_NUM_OBJECTS));
 			}
-	
+			if (jobInfoDoc.get(MdekKeys.JOBINFO_NUM_ADDRESSES) != null) {
+				jobInfo.setNumProcessedEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_NUM_ADDRESSES));
+				jobInfo.setNumEntities(jobInfoDoc.getInt(MdekKeys.JOBINFO_TOTAL_NUM_ADDRESSES));
+				jobInfo.setEntityType(EntityType.ADDRESS);
+                jobInfo.setNumProcessedAddresses(jobInfoDoc.getInt(MdekKeys.JOBINFO_NUM_ADDRESSES));
+                jobInfo.setNumAddresses(jobInfoDoc.getInt(MdekKeys.JOBINFO_TOTAL_NUM_ADDRESSES));
+			}
+
 			// Check if an exception occured while executing the job and add it to JobInfoBean
 			Exception jobException = MdekCaller.getExceptionFromJobInfo(jobInfoDoc);
 			if (jobException != null) {
 				jobInfo.setException(jobException);
 			}
-		}else{
+
+		} else {
 			MdekErrorUtils.handleError(response);
 		}
 	}
@@ -523,17 +515,17 @@ public class MdekCatalogUtils {
 		return urlInfoList;
 	}
 
-	public static URLJobInfoBean extractUrlJobInfoFromResponse(IngridDocument response, JobType type) {
+	public static URLJobInfoBean extractUrlJobInfoFromResponse(IngridDocument response) {
 		URLJobInfoBean urlJobInfo = new URLJobInfoBean();
-		addGeneralJobInfoFromResponse(response, urlJobInfo, type);
+		addGeneralJobInfoFromResponse(response, urlJobInfo);
 		addURLJobInfoFromResponse(response, urlJobInfo);
 
 		return urlJobInfo;
 	}
 	
-	public static AnalyzeJobInfoBean extractAnalyzeJobInfoFromResponse(IngridDocument response, JobType type) {
+	public static AnalyzeJobInfoBean extractAnalyzeJobInfoFromResponse(IngridDocument response) {
 		AnalyzeJobInfoBean analyzeJobInfo = new AnalyzeJobInfoBean();
-		addGeneralJobInfoFromResponse(response, analyzeJobInfo, type);
+		addGeneralJobInfoFromResponse(response, analyzeJobInfo);
 		addAnalyzeJobInfoFromResponse(response, analyzeJobInfo);
 
 		return analyzeJobInfo;
@@ -560,18 +552,18 @@ public class MdekCatalogUtils {
 		}
 	}
 	
-	public static CodeListJobInfoBean extractCodeListInfoFromResponse(IngridDocument response, JobType type) {
+	public static CodeListJobInfoBean extractCodeListInfoFromResponse(IngridDocument response) {
 		CodeListJobInfoBean codeListJobInfo = new CodeListJobInfoBean();
-		addGeneralJobInfoFromResponse(response, codeListJobInfo, type);
+		addGeneralJobInfoFromResponse(response, codeListJobInfo);
 		//addCodeListJobInfoFromResponse(response, codeListJobInfo);
 
 		return codeListJobInfo;
 	}
 
 	public static SNSUpdateJobInfoBean extractSNSUpdateJobInfoFromResponse(
-			IngridDocument response, JobType type) {
+			IngridDocument response) {
 		SNSUpdateJobInfoBean jobInfo = new SNSUpdateJobInfoBean();
-		addGeneralJobInfoFromResponse(response, jobInfo, type);
+		addGeneralJobInfoFromResponse(response, jobInfo);
 		addSNSUpdateJobInfoFromResponse(response, jobInfo);
 		return jobInfo;
 	}
@@ -601,9 +593,9 @@ public class MdekCatalogUtils {
 	}
 
 	public static SNSLocationUpdateJobInfoBean extractSNSLocationUpdateJobInfoFromResponse(
-			IngridDocument response, boolean extractObjectEntities, JobType type) {
+			IngridDocument response, boolean extractObjectEntities) {
 		SNSLocationUpdateJobInfoBean jobInfo = new SNSLocationUpdateJobInfoBean();
-		addGeneralJobInfoFromResponse(response, jobInfo, type);
+		addGeneralJobInfoFromResponse(response, jobInfo);
 		addSNSLocationUpdateJobInfoFromResponse(response, jobInfo, extractObjectEntities);
 		return jobInfo;
 	}

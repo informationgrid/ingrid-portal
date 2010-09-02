@@ -150,7 +150,7 @@ public class MdekJobHandler implements BeanFactoryAware {
 				de.ingrid.mdek.job.IJob.JobType.URL,
 				MdekSecurityUtils.getCurrentUserUuid());
 
-		return MdekCatalogUtils.extractUrlJobInfoFromResponse(response, de.ingrid.mdek.job.IJob.JobType.URL);
+		return MdekCatalogUtils.extractUrlJobInfoFromResponse(response);
 	}
 
 
@@ -181,7 +181,7 @@ public class MdekJobHandler implements BeanFactoryAware {
 				de.ingrid.mdek.job.IJob.JobType.UPDATE_SEARCHTERMS,
 				MdekSecurityUtils.getCurrentUserUuid());
 
-		return MdekCatalogUtils.extractSNSUpdateJobInfoFromResponse(response, de.ingrid.mdek.job.IJob.JobType.UPDATE_SEARCHTERMS);
+		return MdekCatalogUtils.extractSNSUpdateJobInfoFromResponse(response);
 	}
 
 
@@ -212,10 +212,10 @@ public class MdekJobHandler implements BeanFactoryAware {
 				de.ingrid.mdek.job.IJob.JobType.UPDATE_SPATIAL_REFERENCES,
 				MdekSecurityUtils.getCurrentUserUuid());
 
-		return MdekCatalogUtils.extractSNSLocationUpdateJobInfoFromResponse(response, false, de.ingrid.mdek.job.IJob.JobType.UPDATE_SPATIAL_REFERENCES);
+		return MdekCatalogUtils.extractSNSLocationUpdateJobInfoFromResponse(response, false);
 	}
 
 	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
 		this.beanFactory = beanFactory;
 	}
-}
+} 

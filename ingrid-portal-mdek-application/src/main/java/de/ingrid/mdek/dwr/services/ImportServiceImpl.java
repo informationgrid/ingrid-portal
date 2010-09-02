@@ -9,8 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.GZIPInputStream;
@@ -35,10 +35,11 @@ import de.ingrid.mdek.util.MdekSecurityUtils;
 public class ImportServiceImpl {
 
 	private final static Logger log = Logger.getLogger(ImportServiceImpl.class);	
-	private static final int buffer = 4096;
-	
-	private enum FileType { GZIP, ZIP, XML, UNKNOWN }
 
+	private enum FileType { GZIP, ZIP, XML, UNKNOWN }
+    
+    byte[] buffer = new byte[2048];
+    
 	// Injected by Spring
 	private CatalogRequestHandler catalogRequestHandler;
 	private DataMapperFactory dataMapperFactory;
@@ -49,184 +50,116 @@ public class ImportServiceImpl {
 	public void importEntities(FileTransfer fileTransfer, String fileType, String targetObjectUuid, String targetAddressUuid,
 			boolean publishImmediately, boolean doSeparateImport) {
 
+	    String userId = getCurrentUserId();
+	    
 		// Define bean for protocol
-		ProtocolInfoBean protocolBean = new ProtocolInfoBean();
-		setProtocolStatus(protocolBean, false);
-		setProtocolInputType(protocolBean, fileType);
+		ProtocolInfoBean protocolBean = new ProtocolInfoBean(protocolFactory.getProtocolHandler());
+		protocolBean.setInputType(fileType);
+		controlMap.put(userId, protocolBean);
 		
 		//Start protocol
-		ProtocolHandler protocolHandler = protocolFactory.getProtocolHandler();
-		setProtocolHandler(protocolBean, protocolHandler);
-		controlMap.get(getCurrentUserId()).getProtocolHandler().startProtocol();
+		protocolBean.getProtocolHandler().startProtocol();
+		protocolBean.setDataProcessed(0);
 		
-		// Initiate a list of bytes for each file
-		ArrayList<byte[]> importData = new ArrayList<byte[]>();
-		try {
-			// map source file into icg-target format
-			InputStream preparedImportData;
-			
-			switch (getFileType(fileTransfer.getMimeType())) {
-			case GZIP:
-				File dirGZIP = createFileDirectory("gzip");
-				String rootDirGZIP = dirGZIP.getAbsolutePath();
-				
-				preparedImportData = fileTransfer.getInputStream();
-				
-				// Create tmp file for GZIP 
-				File tmpFile = createTemporaryFile(preparedImportData, dirGZIP); 
-				
-				// Save GZIP file on temp directory
-				FileInputStream gzipInputStream = new FileInputStream(tmpFile);
-				File fileGZIP = createFilebyInputStream(gzipInputStream, rootDirGZIP + "\\" + fileTransfer.getFilename());
-				gzipInputStream.close();
-				
-				// Extract GZIP file
-				FileInputStream inXML = new FileInputStream(fileGZIP);
-			    GZIPInputStream gzipInXML = new GZIPInputStream(inXML);
-			    File outXML = createFilebyInputStream(gzipInXML, rootDirGZIP + "\\" + fileTransfer.getFilename()+".xml");
-			    gzipInXML.close();
-				
-			    // Import file data
-			    importData.add(compress(importXMLData(new FileInputStream(outXML), outXML.getName(),fileType)).toByteArray());
-			    deleteUserImportDirectory(dirGZIP);
-			    break;
+		List<byte[]> importData = new ArrayList<byte[]>();
+        try {
+            // map source file into icg-target format
+            InputStream importDataStream;
+            
+            switch (getFileType(fileTransfer.getMimeType())) {
+            case GZIP:
+                File dirGZIP = createFileDirectory("gzip\\" + userId);
+                String rootDirGZIP = dirGZIP.getAbsolutePath();
+                
+                importDataStream = fileTransfer.getInputStream();
 
-			case ZIP:
-				preparedImportData = fileTransfer.getInputStream();
-				File dirZIP = createFileDirectory("zip");
-				String rootDirZIP = dirZIP.getAbsolutePath();
+                // Extract GZIP file
+                //FileInputStream inXML = new FileInputStream(fileGZIP);
+                GZIPInputStream gzipInXML = new GZIPInputStream(importDataStream);//inXML);
+                
+                File outXML = createFilebyInputStream(gzipInXML, rootDirGZIP + "\\" + fileTransfer.getFilename()+".xml");
+                gzipInXML.close();
+                
+                // Import file data
+                importData.add(compress(importXMLData(new FileInputStream(outXML),
+                        outXML.getName(), fileType, protocolBean.getProtocolHandler())).toByteArray());
+                deleteUserImportDirectory(dirGZIP);
+                break;
 
-				ZipInputStream zipIn = new ZipInputStream(preparedImportData);
-				while (true){
-					ZipEntry entry = zipIn.getNextEntry();
-					if (entry == null){
-						break;
-					}
-					File file = createFilebyInputStream(zipIn, rootDirZIP + "\\" + entry.getName());
-					zipIn.closeEntry();
-					
-					importData.add(compress(importXMLData(new FileInputStream(file),file.getName(), fileType)).toByteArray());
-				}
-				zipIn.close();
-				deleteUserImportDirectory(dirZIP);
-				break;
+            case ZIP:
+                importDataStream = fileTransfer.getInputStream();
+                File dirZIP = createFileDirectory("zip\\" + userId);
+                String rootDirZIP = dirZIP.getAbsolutePath();
 
-			case UNKNOWN:
-				log.debug("Unknown file type. Assuming uncompressed xml data.");
-				// Fall through
-			case XML:
-				preparedImportData = importXMLData(fileTransfer.getInputStream(), fileTransfer.getFilename(), fileType);
-				importData.add(compress(preparedImportData).toByteArray());
-				break;
+                ZipInputStream zipIn = new ZipInputStream(importDataStream);
+                // It's not so easy to use an InputStream twice since we need
+                // it to find out how many files are inside in the first step
+                // and afterwards do the conversion (can only be received easily
+                // when using ZipFile()!)
+                // Instead we use the available bytes to read shown in percent!
+                float totalNumQuotient = 100.0F/importDataStream.available();
 
-			default:
-				throw new IllegalArgumentException("Error checking input file type. Supported types: GZIP, ZIP, XML");
-			}
-			
-			if(controlMap.get(getCurrentUserId()).getProtocolHandler().getProtocol() != null){
-				setProtocolMessage(protocolBean, controlMap.get(getCurrentUserId()).getProtocolHandler().getProtocol());
-			}
-		} catch (IOException ex) {
-			log.error("Error creating input data.", ex);
-		} catch (MdekException ex) {
-			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while starting import job.", ex);
-			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(ex));
-		}finally{
-			setProtocolImportData(protocolBean, importData);
-			setProtocolStatus(protocolBean, true);
-		}
-		
-	}
+                ZipEntry entry;
+                while ((entry = zipIn.getNextEntry()) != null) {
+                    File file = createFilebyInputStream(zipIn, rootDirZIP + "\\" + entry.getName());
+                    zipIn.closeEntry();
+                    
+                    importData.add(compress(importXMLData(new FileInputStream(file),
+                            file.getName(), fileType, protocolBean.getProtocolHandler())).toByteArray());
+                    protocolBean.setDataProcessed((int) (100-importDataStream.available()*totalNumQuotient));
+                }
+                zipIn.close();
+                deleteUserImportDirectory(dirZIP);                
+                break;
 
-	public void startImportThread(FileTransfer fileTransfer, String fileType, String targetObjectUuid, String targetAddressUuid,
-			boolean publishImmediately, boolean doSeparateImport){
-		// Start the import process in a separate thread
-		// After the thread is started, we wait on it for three seconds and check if it has finished afterwards
-		// If the thread ended with an exception (probably because another job is already running),
-		// we throw a new MdekException to notify the user
-		UserData currentUser = MdekSecurityUtils.getCurrentPortalUserData();
-		
-		ImportEntitiesThread importThread;
-		importThread = new ImportEntitiesThread(catalogRequestHandler, currentUser, controlMap.get(getCurrentUserId()).getImportData(), fileType, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
-		importThread.start();
-		try {
-			importThread.join(3000);
-		} catch (InterruptedException ex) {
-			ex.printStackTrace();
-		}
-		if (!importThread.isAlive() && importThread.getException() != null) {
-			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(importThread.getException()));
-		}
-	}
+            case UNKNOWN:
+                log.debug("Unknown file type. Assuming uncompressed xml data.");
+                // Fall through
+            case XML:
+                importDataStream = importXMLData(fileTransfer.getInputStream(), 
+                        fileTransfer.getFilename(), fileType, protocolBean.getProtocolHandler());
+                importData.add(compress(importDataStream).toByteArray());
+                break;
 
-
-	private FileType getFileType(String mimeType) {
-		if ("application/x-gzip".equals(mimeType) || "application/gzip".equals(mimeType)) {
-			return FileType.GZIP;
-
-		} else if ("application/zip".equals(mimeType)) {
-			return FileType.ZIP;
-
-		} else if ("text/xml".equals(mimeType)) {
-			return FileType.XML;
-
-		} else {
-			log.debug("Could not determine import file type from mime type: '"+mimeType+"'");
-			return FileType.UNKNOWN;
-		}
-	}
-
-	private InputStream importXMLData (InputStream inputFileStream, String inputFileName, String inputFileType) throws FileNotFoundException, IOException{
-		if(inputFileType.equals("igc")){
-			return inputFileStream;
-		}else{
-			controlMap.get(getCurrentUserId()).getProtocolHandler().setCurrentFilename(inputFileName);
-			return dataMapperFactory.getMapper(inputFileType).convert(inputFileStream, controlMap.get(getCurrentUserId()).getProtocolHandler());
-		}
+            default:
+                throw new IllegalArgumentException("Error checking input file type. Supported types: GZIP, ZIP, XML");
+            }
+            // conversion finished -> set progress to 100%
+            protocolBean.setDataProcessed(100);
+        } catch (IOException ex) {
+            log.error("Error creating input data.", ex);
+        } catch (MdekException ex) {
+            // Wrap the MdekException in a RuntimeException so dwr can convert it
+            log.debug("MdekException while starting import job.", ex);
+            throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(ex));
+        } finally {
+            protocolBean.setImportData(importData);
+            protocolBean.setFinished(true);
+        }
 	}
 	
-	private File createFileDirectory(String dirname){
-		File dirGZIP = new File(System.getProperty("java.io.tmpdir") + "\\ingrid-ige\\import\\" + dirname + "\\" + getCurrentUserId());
-		dirGZIP.mkdirs();
-		
-		return dirGZIP;
-	}
-	
-	private void deleteUserImportDirectory(File file){
-		File[] listFiles = file.listFiles();
-		for (int i=0; i < listFiles.length; i++){
-			if(listFiles[i].listFiles() != null && listFiles[i].listFiles().length > 1){
-				deleteUserImportDirectory(listFiles[i]);
-			}else{
-				listFiles[i].delete();	
-			}
-		}
-		file.delete();
-	}
-	
-	private File createFilebyInputStream(InputStream input, String filePath) throws IOException{
-		File file = new File(filePath);
-		FileOutputStream out = new FileOutputStream(file);
-		int len;
-		byte[] buf = new byte[buffer];
-		while ((len = input.read(buf)) > 0) {
-			out.write(buf, 0, len);
-		}
-		out.close();
-		
-		return file;
-	}
+    public void startImportThread(FileTransfer fileTransfer, String fileType, String targetObjectUuid, String targetAddressUuid,
+                boolean publishImmediately, boolean doSeparateImport){
+        // Start the import process in a separate thread
+        // After the thread is started, we wait on it for three seconds and check if it has finished afterwards
+        // If the thread ended with an exception (probably because another job is already running),
+        // we throw a new MdekException to notify the user
+        UserData currentUser = MdekSecurityUtils.getCurrentPortalUserData();
+        
+        ImportEntitiesThread importThread;
+        ProtocolInfoBean infoBean = controlMap.get(getCurrentUserId());
+        importThread = new ImportEntitiesThread(catalogRequestHandler, currentUser, infoBean.getImportData(), fileType, targetObjectUuid, targetAddressUuid, infoBean.getProtocol(), publishImmediately, doSeparateImport);
+        importThread.start();
+        try {
+            importThread.join(3000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        if (!importThread.isAlive() && importThread.getException() != null) {
+            throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(importThread.getException()));
+        }
+    }
 
-	private File createTemporaryFile(InputStream inputStream, File dir) throws IOException{
-		File tmpFile = File.createTempFile(getCurrentUserId(), ".txt", dir);
-		OutputStream src = new FileOutputStream(tmpFile);
-		src.write(createByteArrayFromInputStream(inputStream));
-		src.close();
-		
-		return tmpFile;
-	}
-	
 	public JobInfoBean getImportInfo() {
 		return catalogRequestHandler.getImportInfo();
 	}
@@ -236,36 +169,6 @@ public class ImportServiceImpl {
 		String log = jobInfo.getDescription();
 
 		return new FileTransfer("log.txt", "text/plain", log.getBytes()); 
-	}
-
-	private byte[] createByteArrayFromInputStream(InputStream in) throws IOException {
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-		final int BUFFER = 2048;
-		int count;
-		byte data[] = new byte[BUFFER];
-		while((count = in.read(data, 0, BUFFER)) != -1) {
-			   out.write(data, 0, count);
-		}
-
-		return out.toByteArray();
-	}
-
-	// Compress (zip) any data on InputStream and write it to a ByteArrayOutputStream
-	private static ByteArrayOutputStream compress(InputStream is) throws IOException {
-		BufferedInputStream bin = new BufferedInputStream(is);
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		GZIPOutputStream gzout = new GZIPOutputStream(new BufferedOutputStream(out));
-
-		final int BUFFER = 2048;
-		int count;
-		byte data[] = new byte[BUFFER];
-		while((count = bin.read(data, 0, BUFFER)) != -1) {
-		   gzout.write(data, 0, count);
-		}
-
-		gzout.close();
-		return out;
 	}
 
 	public void setCatalogRequestHandler(CatalogRequestHandler catalogRequestHandler) {
@@ -284,7 +187,7 @@ public class ImportServiceImpl {
 		this.dataMapperFactory = mapperFactory;
 	}
 
-	public ProtocolInfoBean getControlMap() {
+	public ProtocolInfoBean getProtocolInfo() {
 		return controlMap.get(getCurrentUserId());
 	}
 	
@@ -292,31 +195,107 @@ public class ImportServiceImpl {
 		UserData user = MdekSecurityUtils.getCurrentPortalUserData();
 		return user.getAddressUuid();
 	}
-	
-	private void setProtocolInputType(ProtocolInfoBean protocolBean, String type) {
-		protocolBean.setInputType(type);
-		controlMap.put(getCurrentUserId(), protocolBean);
-	}
+    
+    private FileType getFileType(String mimeType) {
+        if ("application/x-gzip".equals(mimeType) || "application/gzip".equals(mimeType)) {
+            return FileType.GZIP;
 
-	private void setProtocolStatus(ProtocolInfoBean protocolBean, boolean status) {
-		protocolBean.setStatus(status);
-		controlMap.put(getCurrentUserId(), protocolBean);
-	}
-		
-	private void setProtocolMessage(ProtocolInfoBean protocolBean, String protocol) {
-		protocolBean.setProtocol(protocol);
-		controlMap.put(getCurrentUserId(), protocolBean);
-	}
-	
-	private void setProtocolImportData(ProtocolInfoBean protocolBean, ArrayList <byte[]> importData) {
-		protocolBean.setImportData(importData);
-		controlMap.put(getCurrentUserId(), protocolBean);
-	}
-	
-	private void setProtocolHandler(ProtocolInfoBean protocolBean, ProtocolHandler protocolHandler) {
-		protocolBean.setProtocolHandler(protocolHandler);
-		controlMap.put(getCurrentUserId(), protocolBean);
-	}
+        } else if ("application/zip".equals(mimeType)) {
+            return FileType.ZIP;
+
+        } else if ("text/xml".equals(mimeType)) {
+            return FileType.XML;
+
+        } else {
+            log.debug("Could not determine import file type from mime type: '"+mimeType+"'");
+            return FileType.UNKNOWN;
+        }
+    }
+
+    private InputStream importXMLData (InputStream inputFileStream, String inputFileName, String inputFileType, ProtocolHandler protocolHandler) throws FileNotFoundException, IOException{
+        if(inputFileType.equals("igc")){
+            return inputFileStream;
+        }else{
+            protocolHandler.setCurrentFilename(inputFileName);
+            return dataMapperFactory.getMapper(inputFileType).convert(inputFileStream, protocolHandler);
+        }
+    }
+    
+    private File createFileDirectory(String dirname){
+        File dirGZIP = new File(System.getProperty("java.io.tmpdir") + "\\ingrid-ige\\import\\" + dirname);
+        dirGZIP.mkdirs();
+        
+        return dirGZIP;
+    }
+
+    private void deleteUserImportDirectory(File file){
+        File[] listFiles = file.listFiles();
+        for (int i=0; i < listFiles.length; i++){
+            if(listFiles[i].listFiles() != null && listFiles[i].listFiles().length > 1){
+                deleteUserImportDirectory(listFiles[i]);
+            }else{
+                listFiles[i].delete();  
+            }
+        }
+        file.delete();
+    }
+    
+    private File createFilebyInputStream(InputStream input, String filePath) throws IOException{
+        File file = new File(filePath);
+        FileOutputStream output = null;
+        try {
+            output = new FileOutputStream(file);
+            int len = 0;
+            while ((len = input.read(buffer)) > 0) {
+                output.write(buffer, 0, len);
+            }
+        } finally {
+            // we must always close the output file
+            if(output!=null) output.close();
+        }
+        
+        return file;
+    }
+
+    /*
+    private File createTemporaryFile(InputStream inputStream, File dir, String prefix) throws IOException{
+        File tmpFile = File.createTempFile(prefix, ".txt", dir);
+        OutputStream src = new FileOutputStream(tmpFile);
+        src.write(createByteArrayFromInputStream(inputStream));
+        src.close();
+        
+        return tmpFile;
+    }*/
+    
+    private byte[] createByteArrayFromInputStream(InputStream in) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        final int BUFFER = 2048;
+        int count;
+        byte data[] = new byte[BUFFER];
+        while((count = in.read(data, 0, BUFFER)) != -1) {
+               out.write(data, 0, count);
+        }
+
+        return out.toByteArray();
+    }
+
+    // Compress (zip) any data on InputStream and write it to a ByteArrayOutputStream
+    private static ByteArrayOutputStream compress(InputStream is) throws IOException {
+        BufferedInputStream bin = new BufferedInputStream(is);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        GZIPOutputStream gzout = new GZIPOutputStream(new BufferedOutputStream(out));
+
+        final int BUFFER = 2048;
+        int count;
+        byte data[] = new byte[BUFFER];
+        while((count = bin.read(data, 0, BUFFER)) != -1) {
+           gzout.write(data, 0, count);
+        }
+
+        gzout.close();
+        return out;
+    }
 }
 
 // Helper thread which starts an import process
@@ -326,16 +305,20 @@ class ImportEntitiesThread extends Thread {
 
 	private final CatalogRequestHandler catalogRequestHandler;
 	private final UserData currentUser;
-	private final ArrayList<byte[]> importData;
+	private final List<byte[]> importData;
 	private final String targetObjectUuid;
 	private final String targetAddressUuid;
 	private final boolean publishImmediately;
 	private final boolean doSeparateImport;
-	private final String fileDataType;
+	//private final String fileDataType;
+	private final String protocol;
 
 	private volatile MdekException exception;
 	
-	public ImportEntitiesThread(CatalogRequestHandler catalogRequestHandler, UserData currentUser, ArrayList<byte[]> importData, String fileDataType, String targetObjectUuid, String targetAddressUuid, boolean publishImmediately, boolean doSeparateImport) {
+	public ImportEntitiesThread(CatalogRequestHandler catalogRequestHandler, 
+	        UserData currentUser, List<byte[]> importData, String fileDataType, 
+	        String targetObjectUuid, String targetAddressUuid, String protocol, 
+	        boolean publishImmediately, boolean doSeparateImport) {
 		super();
 		this.catalogRequestHandler = catalogRequestHandler;
 		this.currentUser = currentUser;
@@ -344,13 +327,14 @@ class ImportEntitiesThread extends Thread {
 		this.targetAddressUuid = targetAddressUuid;
 		this.publishImmediately = publishImmediately;
 		this.doSeparateImport = doSeparateImport;
-		this.fileDataType = fileDataType;
+		//this.fileDataType = fileDataType;
+		this.protocol = protocol;
 	}
 
 	@Override
 	public void run() {
 		try {
-			catalogRequestHandler.importEntities(currentUser, importData, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport);
+			catalogRequestHandler.importEntities(currentUser, importData, targetObjectUuid, targetAddressUuid, protocol, publishImmediately, doSeparateImport);
 		} catch(MdekException ex) {
 			log.debug("Exception while importing entities.", ex);
 			setException(ex);
