@@ -344,7 +344,7 @@ div.tabs ul li a:focus { color:#FFFFFF; text-decoration:none; background-color:#
 /* TAB MENU, EXTENDED SEARCH */
 
 div.tabmenu {position:relative; background-color:#999999; padding: 6px 0px 6px 0px; width:100%; font-size:100%;z-index:12;}
-div.tabmenu ul { list-style:none; padding: 0px 7px 0px 6px; margin:0; font-size:75%; line-height:130%; color:#CCCCCC; }
+div.tabmenu ul { list-style:none; padding: 0px 7px 0px 6px; margin:0; font-size:90%; line-height:130%; color:#CCCCCC; }
 div.tabmenu ul li { display:inline; }
 
 div.tabmenu ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:bold; }
