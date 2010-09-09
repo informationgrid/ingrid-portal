@@ -10,7 +10,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
 import org.apache.commons.logging.Log;

@@ -9,7 +9,7 @@ MAP
 	FONTSET 	"$pathToFontDirectory/fonts.txt"
 
 	PROJECTION
-		"init=epsg:4326"
+		"init=epsg:$coordType"
 	END
 
 	WEB
@@ -61,13 +61,13 @@ MAP
 		CONNECTIONTYPE OGR
 		CONNECTION "$item.get("coordGMLPath")"
 		METADATA
-			"WMS_SRS"    "epsg:$coordClass"
+			"WMS_SRS"    "epsg:$coordType"
 			"WMS_TITLE"	"$item.get("coordClassName")"
 			"WMS_FEATURE_INFO_MIME_TYPE"    "text/html"
 		END
 		
 		PROJECTION
-			"init=epsg:$coordClass"
+			"init=epsg:$coordType"
 		END
 		
 		LABELITEM "COORDTITLE"

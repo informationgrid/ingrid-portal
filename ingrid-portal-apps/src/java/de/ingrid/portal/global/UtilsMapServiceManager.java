@@ -107,7 +107,7 @@ public class UtilsMapServiceManager {
 			templatePath = url.getPath();
 			
 			UtilsFileHelper.writeContentIntoFile(coordClasses.get(i).get("coordGMLPath"), mergeTemplateMap(templatePath, pointCoords, hitTitle, coordClasses, mapFileName, coordClasses.get(i).get(
-					"coordClassName")));
+					"coordClassName"), coordTypeForMapFile));
 		}
 		
 		return mapFileName;
@@ -228,27 +228,53 @@ public class UtilsMapServiceManager {
 	}
 	
 	/**
+	 * Merge values only to map template
+	 * 
+	 * @param pathToTemplateFile
+	 * @param coordPointDetails
+	 * @param hitTitle - title of search hit
+	 * @param coordClasses - coords classifications
+	 * @param mapFileName - mapfile name
+	 * @param coordType - EPSG code
+	 * @return string value to create only map file
+	 * @throws ConfigurationException
+	 * @throws Exception
+	 */
+	
+	public static String mergeTemplateMap(String pathToTemplateFile, List<HashMap<String, String>> coordPointDetails, String hitTitle, ArrayList<HashMap<String, String>> coordClasses,
+			String mapFileName, String coordType) throws ConfigurationException, Exception {
+		
+		return mergeTemplateMap(pathToTemplateFile, coordPointDetails, hitTitle, coordClasses, mapFileName, null, coordType);
+	}
+	
+	/**
+	 * 
 	 * Merge values to gml or map template (velocity macro)
 	 * 
 	 * @param pathToTemplateFile
 	 * @param coordPointDetails
-	 * @param hitTitle
-	 * @param coordClasses
-	 * @param mapFileName
-	 * @param coordClassOrCoordType
+	 * @param hitTitle - title of search hit
+	 * @param coordClasses - coords classifications
+	 * @param mapFileName - mapfile name
+	 * @param coordClass - null if merge map
+	 * @param coordType - EPSG code
 	 * @return string value to create map or gml file
+	 * @throws ConfigurationException
 	 * @throws ConfigurationException
 	 * @throws Exception
 	 */
 	public static String mergeTemplateMap(String pathToTemplateFile, List<HashMap<String, String>> coordPointDetails, String hitTitle, ArrayList<HashMap<String, String>> coordClasses,
-			String mapFileName, String coordClassOrCoordType) throws ConfigurationException, Exception {
+			String mapFileName, String coordClass, String coordType) throws ConfigurationException, Exception {
 		
 		StringWriter sw;
 		String templatePath;
 		
 		VelocityContext context = new VelocityContext();
 		context.put("hitTitle", hitTitle);
-		context.put("coordClass", coordClassOrCoordType);
+		context.put("coordType", coordType);
+		if(coordClass != null){
+			context.put("coordClass", coordClass);
+		}
 		context.put("coordClasses", coordClasses);
 		context.put("coordPointDetails", coordPointDetails);
 		context.put("pathToSymbolDirectory", UtilsMapServiceManager.getConfig().getString("temp_service_symbol", null));
@@ -283,79 +309,81 @@ public class UtilsMapServiceManager {
 		IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
 		IngridHit ingridHit = new IngridHit();
 		ArrayList<HashMap<String, String>> coordList = new ArrayList<HashMap<String, String>>();
-		HashMap<String, String> coords;
 		Record record;
-		Record[] records;
-		Column[] columns;
 		
 		ingridHit.setDocumentId(documentId);
 		ingridHit.setPlugId(iPlugId);
 		record = ibus.getRecord(ingridHit);
 		
 		if (record != null) {
-			records = record.getSubRecords();
-			
-			for (int i = 0; i <= records.length - 1; i++) {
-				String coordX = null;
-				String coordY = null;
-				String coordClass = null;
-				String coordTitle = null;
-				String coordDescr = null;
-				
-				columns = records[i].getColumns();
-				for (Column column : columns) {
-					if (column.getTargetName().equals(Settings.RESULT_KEY_WMS_TMP_COORD_X)) {
-						coordX = records[i].getValueAsString(column);
-					}
-
-					else if (column.getTargetName().equals(Settings.RESULT_KEY_WMS_TMP_COORD_Y)) {
-						coordY = records[i].getValueAsString(column);
-					}
-
-					else if (column.getTargetName().equals(Settings.RESULT_KEY_WMS_TMP_COORD_CLASS)) {
-						coordClass = records[i].getValueAsString(column);
-					}
-
-					else if (column.getTargetName().equals(Settings.RESULT_KEY_WMS_TMP_COORD_TITLE)) {
-						coordTitle = records[i].getValueAsString(column);
-					}
-
-					else if (column.getTargetName().equals(Settings.RESULT_KEY_WMS_TMP_COORD_DESCR)) {
-						coordDescr = records[i].getValueAsString(column);
-					}
-				}
-				
-				if (coordX != null && coordY != null) {
-					coords = new HashMap<String, String>();
-					coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_X, coordX);
-					coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_Y, coordY);
-					
-					if (coordClass != null && !coordClass.equals("")) {
-						coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_CLASS, coordClass);
-					} else {
-						coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_CLASS, unknown);
-					}
-					
-					if (coordTitle != null && !coordTitle.equals("")) {
-						coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_TITLE, coordTitle);
-					} else {
-						coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_TITLE, unknown);
-					}
-					
-					if (coordDescr != null && !coordDescr.equals("")) {
-						coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_DESCR, coordDescr);
-					} else {
-						coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_DESCR, unknown);
-					}
-					coordList.add(coords);
-				}
-			}
-		}else{
-			if(log.isDebugEnabled()){
-				log.debug("Record is null!");
-			}
+			getCoordinatesDetailsFromRecord(record, coordList, unknown);
 		}
 		return coordList;
 	}
-	
+
+	/**
+	 * get coordinates details from record and fill coordList if coordinates exist
+	 * 
+	 * @param record 
+	 * @param coordList
+	 * @param unknown
+	 */
+	public static void getCoordinatesDetailsFromRecord(Record record, ArrayList<HashMap<String, String>> coordList, String unknown){
+		HashMap<String, String> coords;
+		Column[] columns;
+		Record[] subRecords;
+		
+		String coordX = null;
+		String coordY = null;
+		String coordClass = null;
+		String coordTitle = null;
+		String coordDescr = null;
+				
+		columns = record.getColumns();
+		for (Column column : columns) {
+			if (column.getTargetName().equals(Settings.RESULT_KEY_WMS_TMP_COORD_X)) {
+				coordX = record.getValueAsString(column);
+			}else if (column.getTargetName().equals(Settings.RESULT_KEY_WMS_TMP_COORD_Y)) {
+				coordY = record.getValueAsString(column);
+			}else if (column.getTargetName().equals(Settings.RESULT_KEY_WMS_TMP_COORD_CLASS)) {
+				coordClass = record.getValueAsString(column);
+			}else if (column.getTargetName().equals(Settings.RESULT_KEY_WMS_TMP_COORD_TITLE)) {
+				coordTitle = record.getValueAsString(column);
+			}else if (column.getTargetName().equals(Settings.RESULT_KEY_WMS_TMP_COORD_DESCR)) {
+				coordDescr = record.getValueAsString(column);
+			}
+		}
+				
+		if (coordX != null && coordY != null) {
+			coords = new HashMap<String, String>();
+			coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_X, coordX);
+			coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_Y, coordY);
+				
+			if (coordClass != null && !coordClass.equals("")) {
+				coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_CLASS, coordClass);
+			}else{
+				coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_CLASS, unknown);
+			}
+				
+			if (coordTitle != null && !coordTitle.equals("")) {
+				coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_TITLE, coordTitle);
+			}else{
+				coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_TITLE, unknown);
+			}
+				
+			if (coordDescr != null && !coordDescr.equals("")) {
+				coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_DESCR, coordDescr);
+			}else{
+				coords.put(Settings.RESULT_KEY_WMS_TMP_COORD_DESCR, unknown);
+			}
+			coordList.add(coords);
+		}
+		
+		subRecords = record.getSubRecords();
+		if(subRecords != null){
+			for(int i = 0; i < subRecords.length; i++){
+				getCoordinatesDetailsFromRecord(subRecords[i], coordList, unknown);	
+			}
+		}
+	}
 }
