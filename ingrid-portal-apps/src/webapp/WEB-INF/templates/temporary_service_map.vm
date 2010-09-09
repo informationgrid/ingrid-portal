@@ -2,7 +2,7 @@
 MAP
 	NAME "point_map"
 	STATUS ON
-	EXTENT 5.7 47.2 15.2 55.1
+	EXTENT $extentValue
 	UNITS METERS
 
 	SYMBOLSET 	"$pathToSymbolDirectory/symbols.sym"

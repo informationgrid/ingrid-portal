@@ -29,6 +29,27 @@ import de.ingrid.utils.dsc.Record;
 public class UtilsMapServiceManager {
 	private static final Log		log	= LogFactory.getLog(UtilsMapServiceManager.class);
 	
+	private static final String EPSG_WGS84 = "4326";
+	private static final String EPSG_GK2 = "31466";
+	private static final String EPSG_GK3 = "31467";
+	private static final String EPSG_GK4 = "31468";
+	private static final String EPSG_GK5 = "31469";
+	private static final String EPSG_ETRS89_UTM31N = "25831";
+	private static final String EPSG_ETRS89_UTM32N = "25832";
+	private static final String EPSG_ETRS89_UTM33N = "25833";
+	private static final String EPSG_ETRS89_UTM34N = "25834";
+	
+	// Extent values for map file (look: temporary_service_map.vm -> $extentValue)
+	private static final String EXTENT_MAP_VALUE_WGS84 = "5.7 47.2 15.2 55.1";
+	private static final String EXTENT_MAP_VALUE_GK2 = "2477313.9769 5229085.1837 3086438.5573 6146679.8967";
+	private static final String EXTENT_MAP_VALUE_GK3 = "3250040.4269 5234325.3069 3895577.6631 6125505.7752";
+	private static final String EXTENT_MAP_VALUE_GK4 = "4022820.1798 5248326.7032 4704335.6598 6112602.4899";
+	private static final String EXTENT_MAP_VALUE_GK5 = "4795707.7336 5271157.5756 5512899.2999 6107936.0574";
+	private static final String EXTENT_MAP_VALUE_ETRS89_UTM31N = "-204149.4531 5269499.1171 512761.8588 6105937.6815";
+	private static final String EXTENT_MAP_VALUE_ETRS89_UTM32N = "32250063.8076 5232673.7266 32895350.5034 6123491.3426";
+	private static final String EXTENT_MAP_VALUE_ETRS89_UTM33N = "32795850.5469 5269499.1171 33512761.8588 6105937.6815";
+	private static final String EXTENT_MAP_VALUE_ETRS89_UTM34N = "250063.8076 5269499.1171 895350.5034 6123491.3426";
+	
 	private static Configuration 	config;
 	private static String tmpDirectory;	
 	
@@ -282,6 +303,7 @@ public class UtilsMapServiceManager {
 		context.put("pathToMapServer", UtilsMapServiceManager.getConfig().getString("temp_service_server", null));
 		context.put("pathToHTMLTemplate", UtilsMapServiceManager.getConfig().getString("temp_service_html_temp", null));
 		context.put("pathToMapFile", getTmpDirectory().concat(mapFileName));
+		context.put("extentValue", getExtentValueForEPSG(coordType));
 		
 		sw = new StringWriter();
 		templatePath = pathToTemplateFile;
@@ -385,5 +407,39 @@ public class UtilsMapServiceManager {
 				getCoordinatesDetailsFromRecord(subRecords[i], coordList, unknown);	
 			}
 		}
+	}
+	
+	/**
+	 * Get extent value for map file in used EPSG Code
+	 * 
+	 * @param epsg
+	 * 
+	 * @return extent value
+	 */
+	public static String getExtentValueForEPSG(String epsg){
+		String extentValue;
+		
+		if (epsg.equals(EPSG_WGS84)) {
+			extentValue = EXTENT_MAP_VALUE_WGS84;
+		}else if (epsg.equals(EPSG_GK2)) {
+			extentValue = EXTENT_MAP_VALUE_GK2;
+		}else if (epsg.equals(EPSG_GK3)) {
+			extentValue = EXTENT_MAP_VALUE_GK3;
+		}else if (epsg.equals(EPSG_GK4)) {
+			extentValue = EXTENT_MAP_VALUE_GK4;
+		}else if (epsg.equals(EPSG_GK5)) {
+			extentValue = EXTENT_MAP_VALUE_GK5;
+		}else if (epsg.equals(EPSG_ETRS89_UTM31N)) {
+			extentValue = EXTENT_MAP_VALUE_ETRS89_UTM31N;
+		}else if (epsg.equals(EPSG_ETRS89_UTM32N)) {
+			extentValue = EXTENT_MAP_VALUE_ETRS89_UTM32N;
+		}else if (epsg.equals(EPSG_ETRS89_UTM33N)) {
+			extentValue = EXTENT_MAP_VALUE_ETRS89_UTM33N;
+		}else if (epsg.equals(EPSG_ETRS89_UTM34N)) {
+			extentValue = EXTENT_MAP_VALUE_ETRS89_UTM34N;
+		}else{
+			extentValue = EXTENT_MAP_VALUE_WGS84;
+		}
+		return extentValue;
 	}
 }
