@@ -3,6 +3,7 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -211,6 +212,15 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                     }
 
                     feed = null;
+                } catch (SocketTimeoutException e) {
+                    if (log.isInfoEnabled()) {                    	
+                        log.info("Error building RSS feed (" + rssSource.getUrl() + "). [" + e.getMessage() + "]");
+                    }
+                    if (log.isDebugEnabled()) {
+                        log.debug("Error building RSS feed (" + rssSource.getUrl() + ").", e);
+                    }
+                    status 		= STATUS_ERROR;
+        			statusCode 	= STATUS_CODE_ERROR_TIMEOUT;
                 } catch (Throwable t) {
                 	//errorMsg = e.getMessage();
                     if (log.isInfoEnabled()) {                    	
