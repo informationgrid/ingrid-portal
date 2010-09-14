@@ -4,6 +4,7 @@
 package de.ingrid.portal.scheduler.jobs;
 
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -86,8 +87,11 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                 IngridRSSSource rssSource = (IngridRSSSource) it.next();
                 try {
                     feedUrl = new URL(rssSource.getUrl());
+                    URLConnection urlCon = feedUrl.openConnection();
+                    urlCon.setConnectTimeout(10000);
+                    urlCon.setReadTimeout(10000);
                     input 	= new SyndFeedInput();
-                    feed 	= input.build(new XmlReader(feedUrl));
+                    feed 	= input.build(new XmlReader(urlCon));
                     
                     log.debug("fetched " + rssSource.getUrl());
                     
@@ -207,13 +211,13 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                     }
 
                     feed = null;
-                } catch (Exception e) {
+                } catch (Throwable t) {
                 	//errorMsg = e.getMessage();
                     if (log.isInfoEnabled()) {                    	
-                        log.info("Error building RSS feed (" + rssSource.getUrl() + "). [" + e.getMessage() + "]");
+                        log.info("Error building RSS feed (" + rssSource.getUrl() + "). [" + t.getMessage() + "]");
                     }
                     if (log.isDebugEnabled()) {
-                        log.debug("Error building RSS feed (" + rssSource.getUrl() + ").", e);
+                        log.debug("Error building RSS feed (" + rssSource.getUrl() + ").", t);
                     }
                     status 		= STATUS_ERROR;
         			statusCode 	= STATUS_CODE_ERROR_UNSPECIFIC;
@@ -260,16 +264,16 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
             }
             tx.commit();
             deleteEntries.clear();
-        } catch (Exception e) {
+        } catch (Exception t) {
             if (tx != null) {
                 tx.rollback();
             }
             if (log.isErrorEnabled()) {
-                log.error("Error executing quartz job RSSFetcherJob.", e);
+                log.error("Error executing quartz job RSSFetcherJob.", t);
             }
             status 		= STATUS_ERROR;
 			statusCode 	= STATUS_CODE_ERROR_UNSPECIFIC;
-            throw new JobExecutionException("Error executing quartz job RSSFetcherJob.", e, false);
+            throw new JobExecutionException("Error executing quartz job RSSFetcherJob.", t, false);
         } finally {
         	computeTime(dataMap, stopTimer());
         	updateJobData(context, status, statusCode);
