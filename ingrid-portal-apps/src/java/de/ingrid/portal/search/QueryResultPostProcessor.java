@@ -242,6 +242,10 @@ public class QueryResultPostProcessor {
             
             // WMS, only process if Viewer is specified !
             Object obj = detail.get(Settings.HIT_KEY_WMS_URL);
+            if (obj == null) {
+            	// there has been a change in the case of this key
+            	obj = detail.get(Settings.HIT_KEY_WMS_URL.toLowerCase());
+            }
             if (obj != null && WMSInterfaceImpl.getInstance().hasWMSViewer()) {
                 tmpString = "";
                 if (obj instanceof String[]) {
