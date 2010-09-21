@@ -19,9 +19,9 @@
 			#renderDBEditTextField($entityIndex "ident" $colLabels.get($colIndex) $colValues.get($colIndex))
 		#else
 			#if($disablePartnerProviderEdit == 'true')
-				#renderDBEditTextFieldDisable($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex) $disablePartnerProviderEdit)
+				#renderDBEditTextFieldDisable($entityIndex "ident" $colLabels.get($colIndex) $colValues.get($colIndex) $disablePartnerProviderEdit)
 			#else
-				#renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
+				#renderDBEditTextField($entityIndex "ident" $colLabels.get($colIndex) $colValues.get($colIndex))
 			#end
 		#end
  	#set ($colIndex = 1)
