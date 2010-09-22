@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-mdek-application</artifactId>
-  <version>1.2.0-SNAPSHOT</version>
+  <version>1.1.4</version>
   <packaging>war</packaging>
   <name>Ingrid Portal MDEK Application</name>
   <scm>
@@ -46,9 +46,9 @@
         <version>2.1-alpha-2</version>
         <configuration>
           <warSourceExcludes>test_*.*,dev_*.*</warSourceExcludes>
-          <!-- NOTICE: EXCLUDE log4j.jar in war ! has to be provided by tomcat (tomcat logging) ! -->
-          <!-- BUT INCLUDE commons-logging, so log4j.props are read from webapp ! -->
-          <packagingExcludes>**/ingrid-utils*.jar,**/ingrid-mdek-api*.jar,**/log4j*.jar,**/ehcache*.jar,**/servlet-api*.jar,**/jetspeed-api*.jar</packagingExcludes>
+          <!-- NOTICE: supply log4j.jar and commons-logging.jar in war, SO log4j.properties IS READ FROM WEBAPP !!!! -->
+          <!-- Tomcat is configured for log4j, so if NO log4j.jar is supplied in war, log4j.properties is read from tomcat/common/classes, ignoring the one in the war !!! -->
+          <packagingExcludes>**/ingrid-utils*.jar,**/ingrid-mdek-api*.jar,**/ehcache*.jar,**/servlet-api*.jar,**/jetspeed-api*.jar</packagingExcludes>
           <!-- ALSO CREATE JAR !!! NO WAY TO ADD NO CLASSIFIER TO NAME OF JAR, DEFAULT IS "classes" -> WILL BE ADDED -->
           <attachClasses>true</attachClasses>
           <!-- CONFIG-FILES needed at runtime in classes-path-->
@@ -132,7 +132,8 @@
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <!-- LOG4J PROVIDED to avoid classloader conflicts ! Tomcat logging has to be configured (log4j.jar in common/lib) -->
-      <scope>provided</scope>
+      <!-- NO !!! LOG4J has to be in webapp, otherwise log4j.properties is read from tomcat/common/classes !!! no classloader conflicts ! -->
+      <!-- scope>provided</scope-->
     </dependency>
     <dependency>
       <groupId>de.ingrid.mdek</groupId>
