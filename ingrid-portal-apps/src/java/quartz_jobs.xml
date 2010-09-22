@@ -1,10 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<quartz xmlns="http://www.opensymphony.com/quartz/JobSchedulingData"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.opensymphony.com/quartz/JobSchedulingData
-        webapps/ingrid-portal-apps/WEB-INF/classes/job_scheduling_data_1_5.xsd"
-        version="1.5"
-        overwrite-existing-jobs="true">
+<quartz version="1.5" overwrite-existing-jobs="true">
     <job>
         <job-detail>
             <name>RSSFetcherJob</name>
