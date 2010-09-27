@@ -1721,33 +1721,47 @@ function hideSplash(){
 	          	</div>
 	        	  <div id="availabilityContent" class="content">
 
+                  <div class="inputContainer h116">
+                    <div class="half left">
+                      <span id="uiElementN025" type="required">
+                          <span id="availabilityAccessConstraintsLabel" class="label required"><label for="availabilityAccessConstraints" onclick="javascript:dialog.showContextHelp(arguments[0], 10025)"><script>document.write(message.get("ui.obj.availability.accessConstraints"))</script>*</label></span>
+                          <div class="tableContainer headHiddenRows4 half">
+                            <div class="cellEditors" id="availabilityAccessConstraintsEditors">
+                              <div dojoType="ingrid:Select" toggle="plain" style="width:260px;" listId="6010" id="availabilityAccessConstraintsEditor"></div>
+                            </div>
+                            <table id="availabilityAccessConstraints" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
+                              <thead>
+                                  <tr>
+                                        <th nosort="true" field="title" dataType="String" editor="availabilityAccessConstraintsEditor">Zugangsbeschr&auml;nkungen</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                              </tbody>
+                            </table>
+                          </div>
+                        </span>
+                      </div>
 
-	              <div class="inputContainer">
-					<span id="uiElementN025" type="required">
-		                <span id="availabilityUsageLimitationTableLabel" class="label required"><label for="availabilityUsageLimitationTable" onclick="javascript:dialog.showContextHelp(arguments[0], 10025)"><script>document.write(message.get("ui.obj.availability.usageLimitationTable.title"))</script>*</label></span>
-	
-		                <div class="tableContainer rows4 full">
-		                    <div class="cellEditors" id="availabilityUsageLimitationTableEditors">
-		                      <div dojoType="ingrid:Select" toggle="plain" style="width:425px;" listId="6010" id="availabilityUsageLimitationLimitEditor"></div>
-		                      <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w320" widgetId="availabilityUsageLimitationRequirementEditor"></div>
-		                    </div>
-		            	    <table id="availabilityUsageLimitationTable" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
-		            	      <thead>
-		            		      <tr>
-		                  			<th nosort="true" field="limit" dataType="String" editor="availabilityUsageLimitationLimitEditor"><script>document.write(message.get("ui.obj.availability.usageLimitationTable.header.limit"))</script></th>
-		                  			<th nosort="true" field="requirement" dataType="String" editor="availabilityUsageLimitationRequirementEditor"><script>document.write(message.get("ui.obj.availability.usageLimitationTable.header.requirement"))</script></th>
-		            		      </tr>
-		            	      </thead>
-							  <colgroup>
-							    <col width="332">
-							    <col width="332">
- 							  </colgroup>
-		            	      <tbody>
-		            	      </tbody>
-		            	    </table>
-		                </div>
-					</span>
-	          	  </div>
+                    <div class="half">
+                      <span id="uiElementN026" type="required">
+                          <span id="availabilityUseConstraintsLabel" class="label required"><label for="availabilityUseConstraints" onclick="javascript:dialog.showContextHelp(arguments[0], 10026)"><script>document.write(message.get("ui.obj.availability.useConstraints"))</script>*</label></span>
+                          <div class="tableContainer headHiddenRows4 half">
+                            <div class="cellEditors" id="availabilityUseConstraintsEditors">
+                              <div dojoType="ingrid:ValidationTextbox" class="w296" widgetId="availabilityUseConstraintsEditor"></div>
+                            </div>
+                            <table id="availabilityUseConstraints" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
+                              <thead>
+                                  <tr>
+                                        <th nosort="true" field="title" dataType="String" editor="availabilityUseConstraintsEditor">Nutzungsbedingungen</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                              </tbody>
+                            </table>
+                          </div>
+                        </span>
+                      </div>
+                  </div>
 
 	              <div class="inputContainer notRequired h130">
 					<span id="uiElement1320" type="optional">

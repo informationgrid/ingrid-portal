@@ -510,33 +510,24 @@ var mappingDescription = {"mappings":[
   			"srcXpath":"//gmd:identificationInfo//gmd:purpose/gco:CharacterString",
   			"targetNode":"/igc/data-sources/data-source/additional-information/dataset-intentions"
   		},
-  		{
-  			"srcXpath":"//gmd:identificationInfo//gmd:resourceConstraints",
-  			"targetNode":"/igc/data-sources/data-source/additional-information",
-  			"newNodeName":"access-constraint",
-  			"subMappings":{
-  				"mappings": [
-	  				{
-			  			"srcXpath":"./*/gmd:otherConstraints/gco:CharacterString",
-			  			"targetNode":"restriction",
-			  			"targetAttribute":"id",
-			  			"defaultValue":"-1",
-			  			"transform":{
-    						"funct":transformToIgcDomainId,
-    						"params":[6010, 123]
-    					}
-			  		},
-	  				{
-			  			"srcXpath":"./*/gmd:otherConstraints/gco:CharacterString",
-			  			"targetNode":"restriction"
-			  		},
-	  				{
-			  			"srcXpath":"./*/gmd:useLimitation/gco:CharacterString",
-			  			"defaultValue":"no conditions apply",
-			  			"targetNode":"terms-of-use"
-			  		}
-			  	]
-			}
+        {   
+            "execute":{
+                "funct":mapAccessConstraints
+            }
+        },
+        {
+            "srcXpath":"//gmd:identificationInfo//gmd:resourceConstraints/*/gmd:useLimitation/gco:CharacterString",
+            "targetNode":"/igc/data-sources/data-source/additional-information",
+            "newNodeName":"use-constraint",
+            "subMappings":{
+                "mappings": [
+                    {
+                        "srcXpath":".",
+                        "defaultValue":"no conditions apply",
+                        "targetNode":"terms-of-use"
+                    }
+                ]
+            }
   		},
   		{
   			"srcXpath":"//gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:offLine/gmd:MD_Medium",
@@ -1471,6 +1462,27 @@ function mapRSIdentifier(source, target)  {
 	}
 }
 
+function mapAccessConstraints(source, target) {
+    var accConstraints = XPathUtils.getNodeList(source, "//gmd:identificationInfo//gmd:resourceConstraints/*/gmd:otherConstraints/gco:CharacterString");
+    if (hasValue(accConstraints)) {
+        for (i=0; i<accConstraints.getLength(); i++ ) {
+            var accConstraint = XPathUtils.getString(accConstraints.item(i), ".");
+            if (hasValue(accConstraint)) {
+                var accConstraintId = transformToIgcDomainId(accConstraint, 6010, 123, "Could not map access-constraint: ");
+                if (accConstraintId != -1) {
+                    log.debug("adding '" + "/igc/data-sources/data-source/additional-information/access-constraint/restriction" + "' = '" + accConstraint + "' to target document.");
+                    var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/restriction");
+                    XMLUtils.createOrReplaceTextNode(node, accConstraint);
+                    XMLUtils.createOrReplaceAttribute(node, "id", accConstraintId);                 
+                } else {
+				    var msg = "Could not map value to MANDATORY field 'access-constraint', value='" + accConstraint + "'. Ignore value.";
+                    log.error(msg);
+                    protocol(ERROR, msg)
+				}
+			}
+        }
+    }
+}
 
 function parseToInt(val) {
 	return java.lang.Integer.parseInt(val);

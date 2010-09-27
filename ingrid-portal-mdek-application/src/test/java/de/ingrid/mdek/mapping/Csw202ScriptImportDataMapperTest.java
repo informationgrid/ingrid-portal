@@ -81,6 +81,10 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
 			result.reset();
 			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/technical-domain/map/datasource-identificator", "866EF2B4-33C5-436E-A4E3-BA59DDAF0703"));
+			result.reset();
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/additional-information/access-constraint/restriction", "no conditions apply"));
+			result.reset();
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/additional-information/use-constraint/terms-of-use", "no conditions apply"));
 		} catch (Exception e) {
 			fail("Error transforming: " + exampleXml);
 		}

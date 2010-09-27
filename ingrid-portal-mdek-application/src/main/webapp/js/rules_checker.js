@@ -13,7 +13,7 @@ var timeUiInputElements = ["timeRefType", "timeRefDate1", "timeRefDate2", "timeR
 	"timeRefIntervalUnit", "timeRefTable", "timeRefExplanation"];
 var extraUiInputElements = ["extraInfoLangMetaData", "extraInfoLangData", "extraInfoPublishArea",
 	"extraInfoXMLExportTable", "extraInfoLegalBasicsTable", "extraInfoPurpose", "extraInfoUse"];
-var availUiInputElements = ["availabilityUsageLimitationTable", "availabilityDataFormat", "availabilityMediaOptions", "availabilityOrderInfo"];
+var availUiInputElements = ["availabilityAccessConstraints", "availabilityUseConstraints", "availabilityDataFormat", "availabilityMediaOptions", "availabilityOrderInfo"];
 var thesUiInputElements = ["thesaurusTerms", "thesaurusTopics", "thesaurusInspire", "thesaurusEnvExtRes",
 	"thesaurusEnvTopics", "thesaurusEnvCats", "linksTo"];
 var class0UiInputElements = [];
@@ -41,7 +41,7 @@ var adrClass3UiInputElements = ["headerAddressType3Lastname", "headerAddressType
 
 
 var labels = ["objectNameLabel", "objectClassLabel", "objectOwnerLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel",
-			  "extraInfoConformityTableLabel", "availabilityUsageLimitationTableLabel", "ref1BasisTabContainerLabel", "ref1ObjectIdentifierLabel",
+			  "extraInfoConformityTableLabel", "availabilityAccessConstraintsLabel", "availabilityUseConstraintsLabel", "ref1BasisTabContainerLabel", "ref1ObjectIdentifierLabel",
 			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "ref3ServiceTypeTableLabel", "generalAddressTableLabel", "timeRefTableLabel",
 			  "thesaurusTermsLabel", "thesaurusTopicsLabel", "thesaurusInspireLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel", "spatialRefAltHeightLabel",
 			  "spatialRefAltMinLabel", "spatialRefAltMaxLabel", "spatialRefAltMeasureLabel", "spatialRefAltVDateLabel",
@@ -71,14 +71,19 @@ var notEmptyTables = [["generalAddressTable", "generalAddressTableLabel"],
 					  ["thesaurusInspireTermsList", "thesaurusInspireLabel"]];
 
 // TODO Add class 2, 4, 5 to isObjectPublishable when needed
-var notEmptyTablesClass1 = [["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"],
+var notEmptyTablesClass1 = [["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
+                            ["availabilityUseConstraints", "availabilityUseConstraintsLabel"],
 							["extraInfoConformityTable", "extraInfoConformityTableLabel"]];
-var notEmptyTablesClass2 = [["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"]];
+var notEmptyTablesClass2 = [["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
+                            ["availabilityUseConstraints", "availabilityUseConstraintsLabel"]];
 var notEmptyTablesClass3 = [["ref3ServiceTypeTable", "ref3ServiceTypeTableLabel"],
 							["extraInfoConformityTable", "extraInfoConformityTableLabel"],
-							["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"]];
-var notEmptyTablesClass4 = [["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"]];
-var notEmptyTablesClass5 = [["availabilityUsageLimitationTable", "availabilityUsageLimitationTableLabel"]];
+                            ["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
+                            ["availabilityUseConstraints", "availabilityUseConstraintsLabel"]];
+var notEmptyTablesClass4 = [["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
+                            ["availabilityUseConstraints", "availabilityUseConstraintsLabel"]];
+var notEmptyTablesClass5 = [["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
+                            ["availabilityUseConstraints", "availabilityUseConstraintsLabel"]];
 
 
 // INSPIRE changes. Only one email address is required 
@@ -137,16 +142,22 @@ function isObjectPublishable(idcObject) {
 		publishable = false;
 	}
 
-	// Check if the availabilityUsageLimitation table contains valid input (both fields contain data)
+	// Check if the availability access and useConstraints contains valid input (both fields contain data)
 	if (""+idcObject.objectClass != '0') {
-		var usageLimitData = idcObject.availabilityUsageLimitationTable;
-		if (dojo.lang.some(usageLimitData, function(ul) {
-				return (typeof(ul.limit) == "undefined" || ul.limit == null || dojo.string.trim(ul.limit).length == 0
-				     || typeof(ul.requirement) == "undefined" || ul.requirement == null || dojo.string.trim(ul.requirement).length == 0); })) {
-			dojo.html.addClass(dojo.byId("availabilityUsageLimitationTableLabel"), "important");		
-			dojo.debug("All entries in the availabilityUsageLimitation table must contain data.");
-			publishable = false;
-		}
+        var accessData = idcObject.availabilityAccessConstraints;
+        if (dojo.lang.some(accessData, function(ad) {
+                return (typeof(ad) == "undefined" || ad == null || dojo.string.trim(ad).length == 0); })) {
+            dojo.html.addClass(dojo.byId("availabilityAccessConstraintsLabel"), "important");
+            dojo.debug("All entries in the availabilityAccessConstraints table must contain data.");
+            publishable = false;
+        }
+        var useData = idcObject.availabilityUseConstraints;
+        if (dojo.lang.some(useData, function(ud) {
+                return (typeof(ud) == "undefined" || ud == null || dojo.string.trim(ud).length == 0); })) {
+            dojo.html.addClass(dojo.byId("availabilityUseConstraintsLabel"), "important");
+            dojo.debug("All entries in the availabilityUseConstraints table must contain data.");
+            publishable = false;
+        }
 	}
 
 	// Check if all entries in the address table have valid reference types

@@ -82,7 +82,8 @@ public class MdekDataBean {
 	
 
 	// Availability
-	private List<UsageLimitationBean> availabilityUsageLimitationTable;
+	private List<Integer> availabilityAccessConstraints;
+	private List<String> availabilityUseConstraints;
 	private List<DataFormatBean> availabilityDataFormatTable;
 	private List<MediaOptionBean> availabilityMediaOptionsTable;
 	private String availabilityOrderInfo;
@@ -1499,16 +1500,31 @@ public class MdekDataBean {
 
 
 
-	public List<UsageLimitationBean> getAvailabilityUsageLimitationTable() {
-		return availabilityUsageLimitationTable;
+	public List<Integer> getAvailabilityAccessConstraints() {
+		return availabilityAccessConstraints;
 	}
 
 
 
 
-	public void setAvailabilityUsageLimitationTable(
-			List<UsageLimitationBean> availabilityUsageLimitationTable) {
-		this.availabilityUsageLimitationTable = availabilityUsageLimitationTable;
+	public void setAvailabilityAccessConstraints(
+			List<Integer> availabilityAccessConstraints) {
+		this.availabilityAccessConstraints = availabilityAccessConstraints;
+	}
+
+
+
+
+	public List<String> getAvailabilityUseConstraints() {
+		return availabilityUseConstraints;
+	}
+
+
+
+
+	public void setAvailabilityUseConstraints(
+			List<String> availabilityUseConstraints) {
+		this.availabilityUseConstraints = availabilityUseConstraints;
 	}
 
 

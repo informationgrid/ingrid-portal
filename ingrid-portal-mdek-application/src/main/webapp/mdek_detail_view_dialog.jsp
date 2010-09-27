@@ -182,7 +182,9 @@ function renderNodeData(nodeData) {
 		renderTextWithTitle(dojo.widget.byId("timeRefStatus")._getDisplayValueForValue(nodeData.timeRefStatus), message.get("ui.obj.time.state"));
 		renderTextWithTitle(dojo.widget.byId("timeRefPeriodicity")._getDisplayValueForValue(nodeData.timeRefPeriodicity), message.get("ui.obj.time.periodicity"));
 		if (nodeData.timeRefIntervalNum && nodeData.timeRefIntervalUnit) {
-			renderTextWithTitle(message.get("ui.obj.time.interval.each") + " "+nodeData.timeRefIntervalNum+" "+dojo.widget.byId("timeRefIntervalUnit").selectedResult[0], message.get("ui.obj.time.interval")); //_getDisplayValueForValue(nodeData.timeRefIntervalUnit)
+		    // Do NOT use selectedResult[...] !!! selectedResult IS NULL !!! only not null if once selected by user interaction !!!  
+			// renderTextWithTitle(message.get("ui.obj.time.interval.each") + " "+nodeData.timeRefIntervalNum+" "+dojo.widget.byId("timeRefIntervalUnit").selectedResult[0], message.get("ui.obj.time.interval")); //_getDisplayValueForValue(nodeData.timeRefIntervalUnit)
+            renderTextWithTitle(message.get("ui.obj.time.interval.each") + " "+nodeData.timeRefIntervalNum+" "+dojo.widget.byId("timeRefIntervalUnit")._getDisplayValueForValue(nodeData.timeRefIntervalUnit), message.get("ui.obj.time.interval"));
 		}
 		// create cell render functions
 		function lookupTimeRefType(val) {
@@ -210,10 +212,8 @@ function renderNodeData(nodeData) {
 		
 		// availability
 		renderSectionTitel(message.get("ui.obj.availability.title"));
-		renderTable(nodeData.availabilityUsageLimitationTable, ["limit", "requirement"],
-						[message.get("ui.obj.availability.usageLimitationTable.header.limit"), message.get("ui.obj.availability.usageLimitationTable.header.requirement")],
-						message.get("ui.obj.availability.usageLimitationTable.title"),
-						[function(val) { return dojo.widget.byId("availabilityUsageLimitationLimitEditor")._getDisplayValueForValue(val); }, null]);
+        renderList(nodeData.availabilityAccessConstraints, message.get("ui.obj.availability.accessConstraints"), null, function (val) { return dojo.widget.byId("availabilityAccessConstraintsEditor")._getDisplayValueForValue(val);});
+        renderList(nodeData.availabilityUseConstraints, message.get("ui.obj.availability.useConstraints"));
 	
 		renderTable(nodeData.availabilityDataFormatTable, ["name", "version", "compression", "pixelDepth"], [message.get("ui.obj.availability.dataFormatTable.header.name"), message.get("ui.obj.availability.dataFormatTable.header.version"), message.get("ui.obj.availability.dataFormatTable.header.compression"), message.get("ui.obj.availability.dataFormatTable.header.depth")], message.get("ui.obj.availability.dataFormatTable.title"));
 		renderTable(nodeData.availabilityMediaOptionsTable, ["name", "transferSize", "location"], [message.get("ui.obj.availability.mediaOptionTable.header.type"), message.get("ui.obj.availability.mediaOptionTable.header.amount"), message.get("ui.obj.availability.mediaOptionTable.header.location")], message.get("ui.obj.availability.mediaOptionTable.title"), [function(val) { return dojo.widget.byId("availabilityMediaOptionsMediumCombobox")._getDisplayValueForValue(val); }, null, null]);

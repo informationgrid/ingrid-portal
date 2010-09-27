@@ -1638,7 +1638,8 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("extraInfoLegalBasicsTable").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.extraInfoLegalBasicsTable)));
 
   // -- Availability --
-  dojo.widget.byId("availabilityUsageLimitationTable").store.setData(UtilList.addTableIndices(nodeData.availabilityUsageLimitationTable));
+  dojo.widget.byId("availabilityAccessConstraints").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.availabilityAccessConstraints)));
+  dojo.widget.byId("availabilityUseConstraints").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.availabilityUseConstraints)));
   dojo.widget.byId("availabilityOrderInfo").setValue(nodeData.availabilityOrderInfo);
   dojo.widget.byId("availabilityDataFormat").store.setData(UtilList.addTableIndices(nodeData.availabilityDataFormatTable));
   dojo.widget.byId("availabilityMediaOptions").store.setData(UtilList.addTableIndices(nodeData.availabilityMediaOptionsTable));
@@ -1997,7 +1998,8 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.extraInfoLegalBasicsTable = UtilList.tableDataToList(udkDataProxy._getTableData("extraInfoLegalBasicsTable"));
 
   // -- Availability --
-  nodeData.availabilityUsageLimitationTable = udkDataProxy._getTableData("availabilityUsageLimitationTable");
+  nodeData.availabilityAccessConstraints = UtilList.tableDataToList(udkDataProxy._getTableData("availabilityAccessConstraints"));
+  nodeData.availabilityUseConstraints = UtilList.tableDataToList(udkDataProxy._getTableData("availabilityUseConstraints"));
   nodeData.availabilityOrderInfo = dojo.widget.byId("availabilityOrderInfo").getValue();
   nodeData.availabilityDataFormatTable = udkDataProxy._getTableData("availabilityDataFormat");
   nodeData.availabilityMediaOptionsTable = udkDataProxy._getTableData("availabilityMediaOptions");

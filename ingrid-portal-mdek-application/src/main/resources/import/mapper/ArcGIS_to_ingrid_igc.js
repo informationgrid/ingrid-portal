@@ -867,11 +867,12 @@ function mapAccessConstraints(source, target) {
 	var accessConsts = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/resConst/LegConsts/accessConsts/RestrictCd/@value");
 	var useConsts = XPathUtils.getNodeList(source, "/metadata/dataIdInfo/resConst/LegConsts/useConsts/RestrictCd/@value");
 	if (!hasValue(accessConsts) && !hasValue(useConsts)) {
+        log.debug("No access- and no use constraints, create default values !");
 		
 		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/restriction");
 		XMLUtils.createOrReplaceTextNode(node, "keine");
 		XMLUtils.createOrReplaceAttribute(node, "id", "1");
-		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/terms-of-use");
+		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/use-constraint/terms-of-use");
 		XMLUtils.createOrReplaceTextNode(node, "keine Einschr�nkungen");
 	
 	} else if (hasValue(accessConsts) && accessConsts.getLength() == 1 && accessConsts.item(0).getTextContent() == "006") {
@@ -886,7 +887,7 @@ function mapAccessConstraints(source, target) {
 			}
 			useConst += transformToIgcDomainValue(parseToInt(useConsts.item(i).getTextContent().trim()), 524, 150);
 		}
-		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/terms-of-use");
+		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/use-constraint/terms-of-use");
 		XMLUtils.createOrReplaceTextNode(node, useConst);
 	} else {
 		var accessConst = "";

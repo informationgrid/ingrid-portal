@@ -33,7 +33,6 @@ import de.ingrid.mdek.beans.object.OperationParameterBean;
 import de.ingrid.mdek.beans.object.ScaleBean;
 import de.ingrid.mdek.beans.object.TimeReferenceBean;
 import de.ingrid.mdek.beans.object.UrlBean;
-import de.ingrid.mdek.beans.object.UsageLimitationBean;
 import de.ingrid.mdek.beans.object.VectorFormatDetailsBean;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
@@ -162,7 +161,8 @@ public class MdekMapper implements DataMapperInterface {
 
 		// Availability
 		// Inspire field
-		mdekObj.setAvailabilityUsageLimitationTable(mapToAvailUsageLimitationTable((List<IngridDocument>) obj.get(MdekKeys.ACCESS_LIST)));
+		mdekObj.setAvailabilityAccessConstraints(mapToAvailAccessConstraintsTable((List<IngridDocument>) obj.get(MdekKeys.ACCESS_LIST)));
+		mdekObj.setAvailabilityUseConstraints(mapToAvailUseConstraintsTable((List<IngridDocument>) obj.get(MdekKeys.USE_LIST)));
 		
 		mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
 		mdekObj.setAvailabilityDataFormatTable(mapToAvailDataFormatTable((List<IngridDocument>) obj.get(MdekKeys.DATA_FORMATS)));
@@ -677,7 +677,8 @@ public class MdekMapper implements DataMapperInterface {
 
 		// Availability
 		if (data.getObjectClass() != null && data.getObjectClass() != 0) {
-			udkObj.put(MdekKeys.ACCESS_LIST, mapFromAvailUsageLimitationTable(data.getAvailabilityUsageLimitationTable()));			
+			udkObj.put(MdekKeys.ACCESS_LIST, mapFromAvailAccessConstraintsTable(data.getAvailabilityAccessConstraints()));			
+			udkObj.put(MdekKeys.USE_LIST, mapFromAvailUseConstraintsTable(data.getAvailabilityUseConstraints()));			
 			udkObj.put(MdekKeys.DATA_FORMATS, mapFromAvailDataFormatTable(data.getAvailabilityDataFormatTable()));
 			udkObj.put(MdekKeys.MEDIUM_OPTIONS, mapFromAvailMediaOptionsTable(data.getAvailabilityMediaOptionsTable()));
 			udkObj.put(MdekKeys.ORDERING_INSTRUCTIONS, data.getAvailabilityOrderInfo());
@@ -1094,20 +1095,32 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private List<IngridDocument> mapFromAvailUsageLimitationTable(List<UsageLimitationBean> ulList) {
+	private List<IngridDocument> mapFromAvailAccessConstraintsTable(List<Integer> acList) {
 		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
-		if (ulList == null)
-			return resultList;
-
-		for (UsageLimitationBean ul : ulList) {
-			IngridDocument result = new IngridDocument();
-			result.put(MdekKeys.ACCESS_RESTRICTION_KEY, ul.getLimit());
-			result.put(MdekKeys.ACCESS_TERMS_OF_USE, ul.getRequirement());
-			resultList.add(result);
+		
+		if (acList != null) {
+			for (Integer ac : acList) {
+				IngridDocument result = new IngridDocument();
+				result.put(MdekKeys.ACCESS_RESTRICTION_KEY, ac);
+				resultList.add(result);
+			}			
 		}
+
 		return resultList;
 	}
+	
+	private List<IngridDocument> mapFromAvailUseConstraintsTable(List<String> ucList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (ucList != null) {
+			for (String uc : ucList) {
+				IngridDocument result = new IngridDocument();
+				result.put(MdekKeys.USE_TERMS_OF_USE, uc);
+				resultList.add(result);
+			}			
+		}
 
+		return resultList;
+	}
 	
 	private List<IngridDocument> mapFromAvailDataFormatTable(List<DataFormatBean> refList) {
 		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
@@ -1570,20 +1583,29 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private List<UsageLimitationBean> mapToAvailUsageLimitationTable(List<IngridDocument> ulList) {
-		List<UsageLimitationBean> resultList = new ArrayList<UsageLimitationBean>();
-		if (ulList == null)
-			return resultList;
+	private List<Integer> mapToAvailAccessConstraintsTable(List<IngridDocument> docList) {
+		List<Integer> resultList = new ArrayList<Integer>();
 
-		for (IngridDocument ul : ulList) {
-			UsageLimitationBean u = new UsageLimitationBean();
-			u.setLimit((Integer) ul.get(MdekKeys.ACCESS_RESTRICTION_KEY));
-			u.setRequirement((String) ul.get(MdekKeys.ACCESS_TERMS_OF_USE));
-			resultList.add(u);
+		if (docList != null) {
+			for (IngridDocument doc : docList) {
+				resultList.add((Integer) doc.get(MdekKeys.ACCESS_RESTRICTION_KEY));
+			}
 		}
+
 		return resultList;
 	}
 
+	private List<String> mapToAvailUseConstraintsTable(List<IngridDocument> docList) {
+		List<String> resultList = new ArrayList<String>();
+
+		if (docList != null) {
+			for (IngridDocument doc : docList) {
+				resultList.add((String) doc.get(MdekKeys.USE_TERMS_OF_USE));
+			}			
+		}
+
+		return resultList;
+	}
 
 	private List<DataFormatBean> mapToAvailDataFormatTable(List<IngridDocument> refList) {
 		List<DataFormatBean> resultList = new ArrayList<DataFormatBean>();
