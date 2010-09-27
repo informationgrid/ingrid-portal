@@ -183,9 +183,6 @@
 		<execute>
             <![CDATA[UPDATE LINK SET URL='mailto:fg_uis@numis.niedersachsen.de' WHERE NAME='webmaster.link';]]>
         </execute>
-        <execute>
-            <![CDATA[DELETE FROM ingrid_measures_rubric WHERE query_value='radiation';]]>
-        </execute>
 		<!-- MainMenu position-->		
 		<execute>
             <![CDATA[UPDATE folder_menu SET ELEMENT_ORDER='3' WHERE OPTIONS='/main-service.psml';]]>
