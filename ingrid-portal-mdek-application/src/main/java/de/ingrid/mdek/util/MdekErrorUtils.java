@@ -29,9 +29,9 @@ public class MdekErrorUtils {
 
 	public static void handleError(IngridDocument response) throws RuntimeException {
 		String errorMessage = getErrorMsgFromResponse(response);
-		log.debug(errorMessage);
+		log.error(errorMessage);
 		List<MdekError> err = getErrorsFromResponse(response);
-		if (err != null) {
+		if (err != null && err.size() > 0) {
 			if (containsErrorType(err, MdekErrorType.ENTITY_REFERENCED_BY_OBJ)) {
 				handleEntityReferencedByObjectError(err, MdekErrorType.ENTITY_REFERENCED_BY_OBJ);
 			

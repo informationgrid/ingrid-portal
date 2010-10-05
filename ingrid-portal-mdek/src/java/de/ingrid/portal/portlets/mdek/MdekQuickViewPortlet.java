@@ -34,6 +34,7 @@ import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.ObjectType;
 import de.ingrid.mdek.MdekUtils.UserOperation;
 import de.ingrid.mdek.MdekUtilsSecurity.IdcRole;
+import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerObject;
@@ -44,6 +45,7 @@ import de.ingrid.mdek.caller.MdekCallerObject;
 import de.ingrid.mdek.caller.MdekCallerSecurity;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekAddressUtils;
+import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.utils.IngridDocument;
@@ -106,9 +108,9 @@ public class MdekQuickViewPortlet extends GenericVelocityPortlet {
 	    		IdcRole role = getRole(userData);
 	    		context.put("userRole", role.name());
 	
-	    		Catalog cat = fetchCatalog(userData);
-		    	context.put("catalogName", cat.getName());
-		    	context.put("catalogLocation", cat.getLocation());
+	    		CatalogBean cat = fetchCatalog(userData);
+		    	context.put("catalogName", cat.getCatalogName());
+		    	context.put("catalogLocation", cat.getLocation().getName());
 		    	context.put("numObjects", fetchNumObjects(userData));
 		    	context.put("numAddresses", fetchNumAddresses(userData));
 		    	context.put("numUsers", fetchNumUsers(userData));
@@ -122,7 +124,10 @@ public class MdekQuickViewPortlet extends GenericVelocityPortlet {
 		    	context.put("totalNumAddresses", addressTableData.getTotalNumEntries());
     		}
     	} catch (Exception e) {
-			throw new PortletException ("Error fetching values from the iPlug with id '"+userData.getPlugId()+"'", e);
+    		String errMsg = "Error fetching values from the iPlug with id '"+userData.getPlugId() + "'\n" + e.getMessage();
+    		PortletException exc = new PortletException (errMsg, e);
+    		log.error("Problems fetching data from catalog.", exc);
+			throw exc;
     	}
 
     	super.doView(request, response);
@@ -142,20 +147,11 @@ public class MdekQuickViewPortlet extends GenericVelocityPortlet {
     	return userData;
     }
 
-    private Catalog fetchCatalog(UserData userData) {
-    	Catalog catalog = new Catalog();
+    private CatalogBean fetchCatalog(UserData userData) {
     	IngridDocument response = mdekCallerCatalog.fetchCatalog(userData.getPlugId(), userData.getAddressUuid());
-    	IngridDocument catalogDoc = MdekUtils.getResultFromResponse(response);
-
-    	if (catalogDoc != null) {
-        	catalog.setName(catalogDoc.getString(MdekKeys.CATALOG_NAME));
-        	IngridDocument locationDoc = (IngridDocument) catalogDoc.get(MdekKeys.CATALOG_LOCATION);
-        	if (locationDoc != null) {
-        		catalog.setLocation(locationDoc.getString(MdekKeys.LOCATION_NAME));
-        	}
-    	}
-
-    	return catalog;
+    	CatalogBean catBean = MdekCatalogUtils.extractCatalogFromResponse(response);
+    	
+    	return catBean;
     }
 
     private long fetchNumObjects(UserData userData) {
@@ -304,25 +300,6 @@ public class MdekQuickViewPortlet extends GenericVelocityPortlet {
     }
 }
 
-
-// Simple Container class holding the catalog fields needed by the quickview portlet
-class Catalog {
-	private String name;
-	private String location;
-
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
-}
 
 //Simple Container class holding the data required for the displayed tables
 class TableData {

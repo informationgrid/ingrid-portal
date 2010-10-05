@@ -373,6 +373,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
         		try {
         			catBean = MdekCatalogUtils.extractCatalogFromResponse(cat);
         		} catch (Exception e) {
+            		log.error("Problems extracting catalog data for iPlug " + plugId, e);
         			continue;
         		}
 
