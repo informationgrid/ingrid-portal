@@ -49,8 +49,12 @@ function setBackendVersionInformation(verList) {
 */
 		displayText += "Build name: "+verList[i].name+"<br>";
 		displayText += "Build version: "+verList[i].version+"<br>";
-		displayText += "Build number: "+verList[i].buildNumber+"<br>";
-		displayText += "Build timestamp: "+dojo.date.format(verList[i].timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
+		if (verList[i].buildNumber) {
+            displayText += "Build number: "+verList[i].buildNumber+"<br>";
+		}
+		if (verList[i].timeStamp) {
+            displayText += "Build timestamp: "+dojo.date.format(verList[i].timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
+		}
 		displayText += "<br>";
 	}
 

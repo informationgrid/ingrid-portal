@@ -48,6 +48,7 @@ import de.ingrid.mdek.util.MdekAddressUtils;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.portal.hibernate.HibernateUtil;
+import de.ingrid.portal.portlets.mdek.utils.MdekPortletUtils;
 import de.ingrid.utils.IngridDocument;
 
 public class MdekQuickViewPortlet extends GenericVelocityPortlet {
@@ -107,6 +108,9 @@ public class MdekQuickViewPortlet extends GenericVelocityPortlet {
     		} else {
 	    		IdcRole role = getRole(userData);
 	    		context.put("userRole", role.name());
+	    		
+	    		// check conflicts between IGE frontend and backend !
+	    		MdekPortletUtils.checkIGCCompatibility(userData.getPlugId(), mdekCallerCatalog);
 	
 	    		CatalogBean cat = fetchCatalog(userData);
 		    	context.put("catalogName", cat.getCatalogName());
@@ -123,8 +127,8 @@ public class MdekQuickViewPortlet extends GenericVelocityPortlet {
 		    	context.put("addressList", addressTableData.getEntries());
 		    	context.put("totalNumAddresses", addressTableData.getTotalNumEntries());
     		}
-    	} catch (Exception e) {
-    		String errMsg = "Error fetching values from the iPlug with id '"+userData.getPlugId() + "'\n" + e.getMessage();
+		} catch (Throwable e) {
+    		String errMsg = "Error fetching values from the iPlug with id '"+userData.getPlugId() + "'. \n" + e.getMessage();
     		PortletException exc = new PortletException (errMsg, e);
     		log.error("Problems fetching data from catalog.", exc);
 			throw exc;

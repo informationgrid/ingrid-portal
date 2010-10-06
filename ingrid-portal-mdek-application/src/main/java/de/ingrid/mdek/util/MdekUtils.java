@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
 import javax.servlet.jsp.jstl.core.Config;
 
 import org.apache.log4j.Logger;
@@ -125,12 +126,41 @@ public class MdekUtils {
 				v.setTimeStamp(new Date());
 			}
 			verList.add(v);
+			
+			// check whether we have version of IGC schema and add if present !
+			String igcVersion = extractIGCVersionFromResponse(response);
+			if (igcVersion != null) {
+				v = new VersionInformation();
+				v.setName("IGC version (schema in database)");
+				v.setVersion(igcVersion);
+//				v.setBuildNumber("");
+//				v.setTimeStamp(new Date());
+				verList.add(v);
+			}
 
 		} else {
 			MdekErrorUtils.handleError(response);
 			return null;
 		}
 		return verList;		
+	}
+
+	/** Return IGC version (schema in database) from backend response. Returns null if not found. */
+	public static String extractIGCVersionFromResponse(IngridDocument response) {
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
+
+		String igcVersion = null;
+
+		if (result != null) {
+			String[] sysValues = (String[]) result.get(MdekKeys.SYS_GENERIC_KEY_VALUES);
+			if (sysValues != null && sysValues.length > 0) {
+				igcVersion = sysValues[0];
+			}
+		} else {
+			MdekErrorUtils.handleError(response);
+		}
+		
+		return igcVersion;		
 	}
 
 	public static JobInfoBean extractJobInfoFromResponse(IngridDocument response) {

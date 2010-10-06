@@ -34,12 +34,12 @@ import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.CatalogBean;
-import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
-import de.ingrid.mdek.caller.MdekClientCaller;
+import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.caller.MdekCallerCatalog;
 import de.ingrid.mdek.caller.MdekCallerSecurity;
+import de.ingrid.mdek.caller.MdekClientCaller;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekUtils;
@@ -369,12 +369,17 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
         		IngridDocument adm = mdekCallerSecurity.getCatalogAdmin(plugId, userData.getAddressUuid());
         		String catAdminUuid = extractCatalogAdminUuid(adm);
 
-        		CatalogBean catBean = null;
+        		String catName = ""; 
+        		String catPartnerName = ""; 
+        		String catProviderName = ""; 
         		try {
-        			catBean = MdekCatalogUtils.extractCatalogFromResponse(cat);
+        			CatalogBean catBean = MdekCatalogUtils.extractCatalogFromResponse(cat);
+        			catName = catBean.getCatalogName();
+        			catPartnerName = catBean.getPartnerName();
+        			catProviderName = catBean.getProviderName();
         		} catch (Exception e) {
             		log.error("Problems extracting catalog data for iPlug " + plugId, e);
-        			continue;
+            		catName = "ERROR, see log !";
         		}
 
         		UserData catAdminUserData = (UserData) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).add(Restrictions.eq("addressUuid", catAdminUuid)).uniqueResult();
@@ -383,21 +388,21 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
         			// The catalog admin was not found in the user table. This should never be the case!
         			// Possibly the addressUuid has changed. Display the catalog, but also display an error
             		catalogData.put("plugId", plugId);
-            		catalogData.put("catName", catBean.getCatalogName());
+            		catalogData.put("catName", catName);
             		catalogData.put("catAdmin", extractCatalogAdminName(adm));
             		catalogData.put("portalLogin", "ERROR: portalLogin not found!");
-            		catalogData.put("partner", catBean.getPartnerName());
-            		catalogData.put("provider", catBean.getProviderName());
+            		catalogData.put("partner", catPartnerName);
+            		catalogData.put("provider", catProviderName);
             		catalogList.add(catalogData);
 
         		} else {
         			// Display the catalogData
 	        		catalogData.put("plugId", plugId);
-	        		catalogData.put("catName", catBean.getCatalogName());
+	        		catalogData.put("catName", catName);
 	        		catalogData.put("catAdmin", extractCatalogAdminName(adm));
 	        		catalogData.put("portalLogin", catAdminUserData.getPortalLogin());
-	        		catalogData.put("partner", catBean.getPartnerName());
-	        		catalogData.put("provider", catBean.getProviderName());
+	        		catalogData.put("partner", catPartnerName);
+	        		catalogData.put("provider", catProviderName);
 	        		catalogList.add(catalogData);
         		}
         	}

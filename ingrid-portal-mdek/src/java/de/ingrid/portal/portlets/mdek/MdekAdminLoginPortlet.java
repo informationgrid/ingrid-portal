@@ -32,6 +32,7 @@ import de.ingrid.mdek.caller.MdekClientCaller;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.portal.hibernate.HibernateUtil;
+import de.ingrid.portal.portlets.mdek.utils.MdekPortletUtils;
 import de.ingrid.utils.IngridDocument;
 
 
@@ -60,13 +61,14 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
     
     // Parameters set on init
     private IMdekClientCaller mdekClientCaller;
+    private IMdekCallerCatalog mdekCallerCatalog;
 
     
     public void init(PortletConfig config) throws PortletException {
     	super.init(config);
 
     	this.mdekClientCaller = MdekClientCaller.getInstance();
-    	
+		this.mdekCallerCatalog = MdekCallerCatalog.getInstance();
     }
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
@@ -81,7 +83,14 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
     	PortletPreferences prefs = request.getPreferences();
     	String myTitleKey = prefs.getValue("titleKey", "mdek.title.adminlogin");
     	response.setTitle(resourceBundle.getString(myTitleKey));
-    	
+
+		String error = (String) getPortletContext().getAttribute("ige.error");
+		if (error != null) {
+	        context.put("igeError", error);
+    		// clear error !
+    		getPortletContext().removeAttribute("ige.error");
+		}
+
     	Map<String, List> catalogInfo = buildConnectedCatalogList();
         context.put("catalogList", catalogInfo.get(CATALOG));
         context.put("userLists", catalogInfo.get(USER_OF_CATALOG));
@@ -111,17 +120,27 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
      */
     private void processActionAdminLogin(ActionRequest request, ActionResponse actionResponse) {
     	try {
-    		log.info("Portal-Administrator logs into catalog-administration as user: " + request.getParameter("user"));
+    		String plugId = request.getParameter("catalog");
+
+    		// first check compatibility
+    		try {
+        		MdekPortletUtils.checkIGCCompatibility(plugId, mdekCallerCatalog);    			
+    		} catch (Throwable e) {
+    			log.error("Problems login IGE catalog-administration", e);
+        		getPortletContext().setAttribute("ige.error", e.getMessage());
+                return;
+    		}
+    		
+    		log.info("Portal-Administrator logs into catalog-administration of catalog " + plugId +
+    			"as user: " + request.getParameter("user"));
     		// put the user name of the mdek-user into the context
     		// this name will be retrieved from mdek-application later
     		// (this had to be done this way, since sessions are not application wide!)
     		getPortletContext().setAttribute("ige.force.userName", request.getParameter("user"));
 			actionResponse.sendRedirect("/ingrid-portal-mdek-application/mdek_admin_entry.jsp?debug=true&lang="+ request.getLocale().getLanguage());
 		} catch (IOException e) {
-			log.error("Could not redirect to page: /ingrid-portal-mdek-application/mdek_admin_entry.jsp?debug=true");
-			e.printStackTrace();
+			log.error("Could not redirect to page: /ingrid-portal-mdek-application/mdek_admin_entry.jsp?debug=true", e);
 		}
-		
 	}
     
     /**
@@ -131,17 +150,27 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
      */
     private void processActionIgeLogin(ActionRequest request, ActionResponse actionResponse) {
     	try {
-    		log.info("Portal-Administrator logs into IGE as user: " + request.getParameter("user"));
+    		String plugId = request.getParameter("catalog");
+
+    		// first check compatibility
+    		try {
+        		MdekPortletUtils.checkIGCCompatibility(plugId, mdekCallerCatalog);    			
+    		} catch (Throwable e) {
+    			log.error("Problems login IGE", e);
+        		getPortletContext().setAttribute("ige.error", e.getMessage());
+                return;
+    		}
+
+    		log.info("Portal-Administrator logs into IGE of catalog " + plugId +
+    			" as user: " + request.getParameter("user"));
     		// put the user name of the mdek-user into the context
     		// this name will be retrieved from mdek-application later
     		// (this had to be done this way, since sessions are not application wide!)
     		getPortletContext().setAttribute("ige.force.userName", request.getParameter("user"));
 			actionResponse.sendRedirect("/ingrid-portal-mdek-application/mdek_entry.jsp?debug=true&lang=" + request.getLocale().getLanguage());
 		} catch (IOException e) {
-			log.error("Could not redirect to page: /ingrid-portal-mdek-application/mdek_entry.jsp?debug=true");
-			e.printStackTrace();
+			log.error("Could not redirect to page: /ingrid-portal-mdek-application/mdek_entry.jsp?debug=true", e);
 		}
-		
 	}
 
 	private static ACTION getAction(ActionRequest request) {
@@ -198,17 +227,18 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
 
         		IngridDocument cat = mdekCallerCatalog.fetchCatalog(plugId, userData.getAddressUuid());
 
-        		CatalogBean catBean = null;
+        		String catName = "";
         		try {
-        			catBean = MdekCatalogUtils.extractCatalogFromResponse(cat);
+        			CatalogBean catBean = MdekCatalogUtils.extractCatalogFromResponse(cat);
+        			catName = catBean.getCatalogName();
         		} catch (Exception e) {
             		log.error("Problems extracting catalog data for iPlug " + plugId, e);
-        			continue;
+            		catName = "ERROR, see log !";
         		}
 
     			// Display the catalogData
         		catalogData.put("plugId", plugId);
-        		catalogData.put("catName", catBean.getCatalogName());
+        		catalogData.put("catName", catName);
         		catalogList.add(catalogData);
         	}
     	}
