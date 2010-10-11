@@ -94,7 +94,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             DisplayTreeNode plugsRoot = DisplayTreeFactory.getTreeFromECSIPlugs(plugs);
             String restrictPartner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
             if(restrictPartner!= null && restrictPartner.length() > 0){
-            	openNodesUntilHierarchyLevel(plugsRoot);
+            	openNodesUntilHierarchyLevel(plugsRoot, plugsRoot);
             }
             ps.put("plugsRoot", plugsRoot);
         }
@@ -170,28 +170,25 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
      * Open nodes if restrict partner and restrict partner level
      * is set.
      * 
+     * @param node
+     * 			to check for sub nodes 
      * @param rootNode
+     * 			need for open sub nodes by node ID (must always be root node)
      */
-    private void openNodesUntilHierarchyLevel(DisplayTreeNode rootNode){
+    private void openNodesUntilHierarchyLevel(DisplayTreeNode node, DisplayTreeNode rootNode){
     	ArrayList list = new ArrayList();
-        list = rootNode.getChildren();
+        list = node.getChildren();
         String rootNodeLevel = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER_LEVEL);
         	
         if(rootNodeLevel != null)
 	        for(int i=0; i < list.size();i++){
-	        	if(rootNode.get("level").toString().equals(rootNodeLevel)){
+	        	if(node.get("level").toString().equals(rootNodeLevel)){
 	           	   break;
 	           	}
 	        	DisplayTreeNode subNode = (DisplayTreeNode)list.get(i);
         		if((Boolean) subNode.get("expandable")){
-        			subNode.setOpen(true);
-	        		if (!subNode.isLoading() && subNode.getChildren().size() == 0) {
-	            		subNode.setLoading(true);
-	            		// handles all stuff
-	            		DisplayTreeFactory.openECSNode(rootNode, subNode);
-	               		subNode.setLoading(false);
-	               	}
-	        		openNodesUntilHierarchyLevel(subNode);
+        			openNode(rootNode, subNode.getId());
+	        		openNodesUntilHierarchyLevel(subNode, rootNode);
         		}
 	        }
     	}
