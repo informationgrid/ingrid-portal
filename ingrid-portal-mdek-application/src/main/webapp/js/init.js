@@ -891,6 +891,7 @@ function initObjectReferenceTables() {
 //		 {tableId: "ref2LocationLink", 		filterId: 3360},		// 3360 - Single Address
 		 {tableId: "ref2BaseDataLink", 		filterId: 3345},		// 3345
 		 {tableId: "ref3BaseDataLink", 		filterId: 3210},		// 3210
+		 {tableId: "ref6BaseDataLink", 		filterId: 3210},		// 3210
 //		 {tableId: "ref4ParticipantsLink", 	filterId: 3410},		// 3410 - Single Address
 //		 {tableId: "ref4PMLink", 			filterId: 3400},		// 3400 - Single Address
 		 {tableId: "ref5MethodLink", 		filterId: 3100}];		// 3100
@@ -1500,7 +1501,7 @@ function initSysLists() {
 		"timeRefStatus", "ref1DataSet", "ref1RepresentationCombobox", "thesaurusTopicsCombobox", "thesaurusInspireCombobox", "ref1VFormatTopology",
 		"freeReferencesEditor", "timeRefIntervalUnit", "extraInfoLegalBasicsTableEditor", "extraInfoXMLExportTableEditor",
 		"thesaurusEnvCatsCombobox", "thesaurusEnvTopicsCombobox", "ref1SpatialSystem", "ref1SymbolsTitleCombobox", "ref1KeysTitleCombobox",
-		"ref2DocumentType", "ref3ServiceType", "ref3ServiceTypeEditor", "extraInfoLangData", "extraInfoLangMetaData", "extraInfoPublishArea",
+		"ref2DocumentType", "ref3ServiceType", "ref3ServiceTypeEditor", "ref6ServiceType", "extraInfoLangData", "extraInfoLangMetaData", "extraInfoPublishArea",
 		"extraInfoConformityLevelEditor", "availabilityDataFormatName", "availabilityAccessConstraintsEditor",
 		// Addresses
 		"headerAddressType2Style", "headerAddressType3Style", "headerAddressType2Title", "headerAddressType3Title",
@@ -1708,6 +1709,7 @@ function disableInputOnWrongPermission() {
 				dojo.lang.forEach(class3UiInputElements, _enableInputElement);
 				dojo.lang.forEach(class4UiInputElements, _enableInputElement);
 				dojo.lang.forEach(class5UiInputElements, _enableInputElement);
+				dojo.lang.forEach(class6UiInputElements, _enableInputElement);
 			
 				dojo.lang.forEach(adrUiInputElements, _enableInputElement);
 				dojo.lang.forEach(adrClass0UiInputElements, _enableInputElement);
@@ -1738,6 +1740,7 @@ function disableInputOnWrongPermission() {
 				dojo.lang.forEach(class3UiInputElements, _disableInputElement);
 				dojo.lang.forEach(class4UiInputElements, _disableInputElement);
 				dojo.lang.forEach(class5UiInputElements, _disableInputElement);
+				dojo.lang.forEach(class6UiInputElements, _disableInputElement);
 			
 				dojo.lang.forEach(adrUiInputElements, _disableInputElement);
 				dojo.lang.forEach(adrClass0UiInputElements, _disableInputElement);

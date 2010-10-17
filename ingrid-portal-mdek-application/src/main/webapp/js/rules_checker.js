@@ -25,9 +25,13 @@ var class2UiInputElements = ["ref2Author", "ref2Publisher", "ref2PublishedIn", "
 	"ref2PublishedInPages", "ref2PublishedInYear", "ref2PublishedISBN", "ref2PublishedPublisher", "ref2LocationText", 
 	"ref2LocationLink", "ref2DocumentType", "ref2BaseDataText", "ref2BaseDataLink", "ref2BibData", "ref2Explanation"];
 var class3UiInputElements = ["ref3ServiceType", "ref3ServiceTypeTable", "ref3ServiceVersion", "ref3SystemEnv", "ref3History", "ref3BaseDataText",
-	"ref3BaseDataLink", "ref3Explanation", "ref3Scale", "ref3Operation", "extraInfoConformityTable"];
+	"ref3BaseDataLink", "ref3Explanation", "ref3Scale", "ref3Operation", "extraInfoConformityTable", "ref3HasAccessConstraint"];
 var class4UiInputElements = ["ref4ParticipantsText", "ref4ParticipantsLink", "ref4PMText", "ref4PMLink", "ref4Explanation"];
 var class5UiInputElements = ["ref5dbContent", "ref5MethodText", "ref5MethodLink", "ref5Explanation"];
+var class3UiInputElements = ["ref3ServiceType", "ref3ServiceTypeTable", "ref3ServiceVersion", "ref3SystemEnv", "ref3History", "ref3BaseDataText",
+                         	"ref3BaseDataLink", "ref3Explanation", "ref3Scale", "ref3Operation", "extraInfoConformityTable"];
+var class6UiInputElements = ["ref6ServiceType", "ref6ServiceVersion", "ref6SystemEnv", "ref6History", "ref6BaseDataText",
+                         	"ref6BaseDataLink", "ref6Explanation", "ref6Name", "ref6UrlList" ];
 
 // Address Type is not included since the field is filled automatically
 var adrUiInputElements = [/*"addressType",*/ "addressOwner", "addressStreet", "addressCountry", "addressZipCode", "addressCity", "addressPOBox",
@@ -65,6 +69,8 @@ var notEmptyFieldsClass1 = [["ref1BasisText", "ref1BasisTabContainerLabel"],
                             ["ref1DataSet", "ref1DataSetLabel"]]; 
 var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"]];
 
+var notEmptyFieldsClass6 = [["ref6ServiceType"]];
+
 var notEmptyTables = [["generalAddressTable", "generalAddressTableLabel"],
 					  ["timeRefTable", "timeRefTableLabel"],
 					  ["thesaurusTopicsList", "thesaurusTopicsLabel"],
@@ -83,6 +89,8 @@ var notEmptyTablesClass3 = [["ref3ServiceTypeTable", "ref3ServiceTypeTableLabel"
 var notEmptyTablesClass4 = [["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
                             ["availabilityUseConstraints", "availabilityUseConstraintsLabel"]];
 var notEmptyTablesClass5 = [["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
+                            ["availabilityUseConstraints", "availabilityUseConstraintsLabel"]];
+var notEmptyTablesClass6 = [["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
                             ["availabilityUseConstraints", "availabilityUseConstraintsLabel"]];
 
 
@@ -332,6 +340,23 @@ function isObjectPublishable(idcObject) {
 					dojo.debug("Object class five required table '"+notEmptyTablesClass5[i][0]+"' empty.");				
 				}
 			}
+			break;
+		case '6':
+			for (var i in notEmptyFieldsClass3) {
+				if (!idcObject[notEmptyFieldsClass6[i][0]] || idcObject[notEmptyFieldsClass6[i][0]] == "") {
+					dojo.html.addClass(dojo.byId(notEmptyFieldsClass6[i][1]), "important");
+					publishable = false;
+					dojo.debug("Object class three required field empty.");				
+				}
+			}
+			for (var i in notEmptyTablesClass3) {
+				if (idcObject[notEmptyTablesClass6[i][0]].length == 0) {
+					dojo.html.addClass(dojo.byId(notEmptyTablesClass6[i][1]), "important");
+					publishable = false;
+					dojo.debug("Object class six required table '"+notEmptyTablesClass6[i][0]+"' empty.");				
+				}
+			}
+
 			break;
 		default:
 			break;

@@ -297,6 +297,7 @@ function hideSplash(){
 	                	<option value="Class3"><fmt:message key="dialog.research.ext.obj.class3" /></option>
 	                	<option value="Class4"><fmt:message key="dialog.research.ext.obj.class4" /></option>
 	                	<option value="Class5"><fmt:message key="dialog.research.ext.obj.class5" /></option>
+	                	<option value="Class6"><fmt:message key="dialog.research.ext.obj.class6" /></option>
 	                </select>
  	              </td>
 	              <td class="col3"><img id="permissionObjLock" src="img/lock.gif" width="9" height="14" alt="gesperrt" /></td>
@@ -925,7 +926,7 @@ function hideSplash(){
 	            </div>
 	          </div>
 
-	          <!-- FACHBEZUG CLASS 3 - DIENST/ANWENDUNG/INFORMATIONSSYSTEM //-->
+	          <!-- FACHBEZUG CLASS 3 - Geodatendienst //-->
 	          <div id="refClass3" class="contentBlock">
 	          	<div class="titleBar">
 	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass3');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
@@ -944,7 +945,7 @@ function hideSplash(){
 	               	    <table id="ref3ServiceTypeTable" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 	              	      <thead>
 	              		      <tr>
-	                    			<th nosort="true" field="title" dataType="String" editor="ref3ServiceTypeEditor">Typ des Dienstes</th>
+	                    			<th nosort="true" field="title" dataType="String" editor="ref3ServiceTypeEditor">Art des Dienstes</th>
 	              		      </tr>
 	              	      </thead>
 	              	      <tbody>
@@ -1063,7 +1064,7 @@ function hideSplash(){
 	                		</div>
 	                	</span>
 	                </div>
-
+	                
 	                <div class="half">
 						<span id="uiElement3250" type="optional">
 	                  		<span class="label"><label for="ref3Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 3250)"><script>document.write(message.get("ui.obj.type3.description"))</script></label></span>
@@ -1092,6 +1093,13 @@ function hideSplash(){
 		          	</span>
 	          	  </div>
 
+                  <div class="inputContainer notRequired">
+					<span id="uiElement3260" type="optional">
+                    <div class="checkboxContainer">
+                      <span class="input"><input type="checkbox" name="ref3HasAccessConstraint" id="ref3HasAccessConstraint" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 7006)"><script>document.write(message.get("ui.obj.type3.ref3HasAccessConstraint"))</script></label></span>
+                    </div>
+                  </div>
+	          	  
 	            </div>
 	          </div>
 
@@ -1252,6 +1260,138 @@ function hideSplash(){
                			</span> 
   	                </div>
 	                <div class="fill"></div>
+	          	  </div>
+	          	  
+	            </div>
+	          </div>
+
+	          <!-- FACHBEZUG CLASS 6 - DIENST/ANWENDUNG/INFORMATIONSSYSTEM //-->
+	          <div id="refClass6" class="contentBlock">
+	          	<div class="titleBar">
+	          	  <div class="titleIcon"><a href="javascript:toggleFields('refClass6');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+	        	    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7000)"><script>document.write(message.get("ui.obj.relevance"))</script></div>
+	        	    <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+	          	</div>
+	        	  <div id="ref6Content" class="content">
+
+	              <div class="inputContainer required">
+	                <div class="half left">
+	                	<span id="uiElement3620" type="required">
+							<span id="ref6ServiceTypeLabel" class="label required"><label for="ref6ServiceType" onclick="javascript:dialog.showContextHelp(arguments[0], 3620)"><script>document.write(message.get("ui.obj.type6.serviceType"))</script>*</label></span>
+							<span class="input spaceBelow">
+								<div dojoType="ingrid:Select" maxlength="255" autoComplete="false" class="w308" listId="5300" id="ref6ServiceType"></div>
+				  			</span>
+						</span>
+            		</div>
+
+	                <div class="half">
+                	  <span id="uiElement3630" type="optional">
+		                  <span class="label"><label for="ref6ServiceVersion" onclick="javascript:dialog.showContextHelp(arguments[0], 3630)"><script>document.write(message.get("ui.obj.type6.serviceVersion"))</script></label></span>
+		                  <div class="tableContainer headHiddenRows4 half">
+		                    <div class="cellEditors" id="ref6ServiceVersionEditors">
+		                      <div dojoType="ingrid:ValidationTextbox" maxlength="80" widgetId="ref6ServiceVersionServiceType"></div>
+		                    </div>
+		               	    <table id="ref6ServiceVersion" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
+		              	      <thead>
+		              		      <tr>
+		                    			<th nosort="true" field="title" dataType="String" editor="ref6ServiceVersionServiceType">Version</th>
+		              		      </tr>
+		              	      </thead>
+		              	      <tbody>
+		              	      </tbody>
+		              	    </table>
+		                  </div>
+		                </span>
+	            	  </div>
+	            	  <div class="fill"></div>
+	              </div>
+
+	              <div class="inputContainer notRequired">
+	                <div class="half left">
+                	  <span id="uiElement3600" type="optional">
+		                  <span class="label"><label for="ref6SystemEnv" onclick="javascript:dialog.showContextHelp(arguments[0], 3600)"><script>document.write(message.get("ui.obj.type6.environment"))</script></label></span>
+	               		  <span class="input"><input type="text" mode="textarea" id="ref6SystemEnv" name="ref6SystemEnv" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span>
+	                  </span> 
+ 	                </div>
+	          
+	                <div class="half">
+                	  <span id="uiElement3640" type="optional">
+		                  <span class="label"><label for="ref6History" onclick="javascript:dialog.showContextHelp(arguments[0], 3640)"><script>document.write(message.get("ui.obj.type6.history"))</script></label></span>
+    		        	  <span class="input"><input type="text" mode="textarea" id="ref6History" name="ref6History" class="w320 h038" dojoType="ingrid:ValidationTextbox" /></span> 
+  	              	  </span>
+  	                </div>
+	                <div class="fill"></div>
+	              </div>
+
+	              <div class="inputContainer notRequired">
+	                <div class="half left">
+						<span id="uiElement3645" type="optional">
+							<span class="label"><label for="ref6BaseDataTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3645)"><script>document.write(message.get("ui.obj.type6.generalDataTable.title"))</script></label></span>
+		                  	<span id="ref6MethodTab2Header" class="functionalLink onTab marginRightColumn"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref6AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('ui.obj.links.linksTo.link'), 'mdek_links_dialog.jsp', 1010, 680, true, {filter: 3210});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><script>document.write(message.get("ui.obj.type6.generalDataTable.link"))</script></a></span>
+		                	<div id="ref6BaseDataTabContainer" dojoType="ingrid:TabContainer" class="h088" selectedChild="ref6BaseDataTab1">
+								<script>document.write("<div id='ref6BaseDataTab1' dojoType='ContentPane' label='"+message.get("ui.obj.type6.generalDataTable.tab.text")+"'>")</script>
+		                      		<span class="input">
+		                      			<input type="text" mode="textarea" id="ref6BaseDataText" name="ref6BaseDataText" class="w320 h038" dojoType="ingrid:ValidationTextbox" />
+		                      		</span>
+	                			</div>
+								<script>document.write("<div id='ref6MethodTab2' dojoType='ContentPane' label='"+message.get("ui.obj.type6.generalDataTable.tab.links")+"'>")</script>
+		                      		<div class="tableContainer headHiddenRows2 half">
+			                  	    	<table id="ref6BaseDataLink" width="320" dojoType="ingrid:FilteringTable" minRows="2" headClass="hidden" cellspacing="0" class="filteringTable nosort">
+			                  	      		<thead>
+				              		      		<tr>
+					                    			<th nosort="true" field="icon" dataType="String" width="30"></th>
+					                    			<th nosort="true" field="linkLabel" dataType="String" width="290">Objekte</th>
+												</tr>
+			    	              	      	</thead>
+									  		<colgroup>
+									    		<col width="23">
+									    		<col width="297">
+									  		</colgroup>
+			                  	      		<tbody>
+			                  	      		</tbody>
+			                  	    	</table>
+			                      	</div>
+	                			</div>
+	                		</div>
+	                	</span>
+	                </div>
+
+	                <div class="half">
+						<span id="uiElement3650" type="optional">
+	                  		<span class="label"><label for="ref6Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 3650)"><script>document.write(message.get("ui.obj.type6.description"))</script></label></span>
+               				<span class="input"><input type="text" mode="textarea" id="ref6Explanation" name="ref6Explanation" class="w320 h055" dojoType="ingrid:ValidationTextbox" /></span>
+               			</span> 
+	                </div>
+	                <div class="fill"></div>
+	          	  </div>
+
+	              <div class="inputContainer notRequired">
+	                <span id="uiElement3660" type="optional">
+	                	<span class="label"><label for="ref6Name" onclick="javascript:dialog.showContextHelp(arguments[0], 3660)"><script>document.write(message.get("ui.obj.type6.name"))</script></label></span>
+	                	<span class="input"><input type="text" maxlength="255" id="ref6Name" name="ref6Name" class="w668" dojoType="ingrid:ValidationTextBox" /></span>
+	                </span>
+	          	  </div>
+
+	              <div class="inputContainer notRequired h130">
+					<span id="uiElement3670" type="optional">
+		                <span class="label"><label for="ref6UrlList" onclick="javascript:dialog.showContextHelp(arguments[0], 3670)"><script>document.write(message.get("ui.obj.type6.urlList"))</script></label></span>
+		                <div class="tableContainer rows4 full">
+		                  <div class="cellEditors" id="ref6UrlListEditors">
+		                    <div dojoType="ingrid:ValidationTextbox" maxlength="2048" widgetId="ref6Url"></div>
+		                    <div dojoType="ingrid:ValidationTextbox" maxlength="2048" widgetId="ref6UrlDescription"></div>
+		                  </div>
+		            	    <table id="ref6UrlList" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
+		            	      <thead>
+		            		      <tr>
+		                  			<th nosort="true" field="url" dataType="String" width="337" editor="ref6Url"><script>document.write(message.get("ui.obj.type6.urlList.header.url"))</script></th>
+		                  			<th nosort="true" field="urlDescription" dataType="String" width="338" editor="ref6UrlDescription"><script>document.write(message.get("ui.obj.type6.urlList.header.urlDescription"))</script></th>
+		            		      </tr>
+		            	      </thead>
+		            	      <tbody>
+		            	      </tbody>
+		            	    </table>
+		                </div>
+					</span>
 	          	  </div>
 	          	  
 	            </div>

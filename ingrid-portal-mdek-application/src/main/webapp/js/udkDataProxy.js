@@ -195,6 +195,7 @@ dojo.addOnLoad(function()
 	dojo.lang.forEach(class3UiInputElements, _connectWidgetWithDirtyFlag);
 	dojo.lang.forEach(class4UiInputElements, _connectWidgetWithDirtyFlag);
 	dojo.lang.forEach(class5UiInputElements, _connectWidgetWithDirtyFlag);
+	dojo.lang.forEach(class6UiInputElements, _connectWidgetWithDirtyFlag);
 
 	dojo.lang.forEach(adrUiInputElements, _connectWidgetWithDirtyFlag);
 	dojo.lang.forEach(adrClass0UiInputElements, _connectWidgetWithDirtyFlag);
@@ -1702,6 +1703,7 @@ udkDataProxy._setObjectData = function(nodeData)
 	udkDataProxy._setObjectDataClass3(nodeData);
 	udkDataProxy._setObjectDataClass4(nodeData);
 	udkDataProxy._setObjectDataClass5(nodeData);
+	udkDataProxy._setObjectDataClass6(nodeData);
 
 //  dojo.debug("ContentFormObject after setting values: " + dojo.json.serialize(formWidget.getValues()));
 
@@ -1797,7 +1799,19 @@ udkDataProxy._setObjectDataClass5 = function(nodeData) {
 	dojo.widget.byId("ref5dbContent").store.setData(UtilList.addTableIndices(nodeData.ref5dbContent));
 }
 
+udkDataProxy._setObjectDataClass6 = function(nodeData) {
+	dojo.widget.byId("ref6ServiceType").setValue(nodeData.ref6ServiceType);
+	dojo.widget.byId("ref6SystemEnv").setValue(nodeData.ref6SystemEnv);
+	dojo.widget.byId("ref6History").setValue(nodeData.ref6History);
+	dojo.widget.byId("ref6BaseDataText").setValue(nodeData.ref6BaseDataText);
+	dojo.widget.byId("ref6Explanation").setValue(nodeData.ref6Explanation);
 
+//	dojo.debug("Setting service version to: "+UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref3ServiceVersion)));
+	dojo.widget.byId("ref6ServiceVersion").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref6ServiceVersion)));
+
+	dojo.widget.byId("ref6Name").setValue(nodeData.ref6Name);
+	dojo.widget.byId("ref6UrlList").store.setData(UtilList.addTableIndices(nodeData.ref6UrlList));
+}
 
 
 /*******************************************
@@ -2157,6 +2171,8 @@ udkDataProxy._getObjectDataClass3 = function(nodeData) {
 			nodeData.ref3Operation.push(operationData);
 		}
 	}	
+	nodeData.ref3Explanation = dojo.widget.byId("ref3Explanation").getValue();
+    nodeData.ref3HasAccessConstraint = dojo.widget.byId("ref3HasAccessConstraint").checked;
 };
 
 udkDataProxy._getObjectDataClass4 = function(nodeData) {
@@ -2170,6 +2186,19 @@ udkDataProxy._getObjectDataClass5 = function(nodeData) {
 	nodeData.ref5Explanation = dojo.widget.byId("ref5Explanation").getValue();
 
 	nodeData.ref5dbContent = udkDataProxy._getTableData("ref5dbContent");
+};
+
+udkDataProxy._getObjectDataClass6 = function(nodeData) {
+	nodeData.ref6ServiceType = dojo.widget.byId("ref6ServiceType").getValue();
+	nodeData.ref6SystemEnv = dojo.widget.byId("ref6SystemEnv").getValue();
+	nodeData.ref6History = dojo.widget.byId("ref6History").getValue();
+	nodeData.ref6BaseDataText = dojo.widget.byId("ref6BaseDataText").getValue();
+	nodeData.ref6Explanation = dojo.widget.byId("ref6Explanation").getValue();
+
+	nodeData.ref6ServiceVersion = UtilList.tableDataToList(udkDataProxy._getTableData("ref6ServiceVersion"));
+
+	nodeData.ref6Name = dojo.widget.byId("ref6Name").getValue();
+    nodeData.ref6UrlList = udkDataProxy._getTableData("ref6UrlList");
 };
 
 

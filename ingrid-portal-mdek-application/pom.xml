@@ -38,6 +38,7 @@
         <configuration>
           <wtpversion>1.5</wtpversion>
           <downloadSources>1.5</downloadSources>
+          <useProjectReferences>true</useProjectReferences>
         </configuration>
       </plugin>
       <plugin>

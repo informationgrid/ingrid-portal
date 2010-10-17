@@ -57,7 +57,7 @@ function refreshTabContainers() {
 	// size and display the container
 	var tabContainerIds = ["ref1SymbolsTabContainer", "ref1KeysTabContainer", "ref1BasisTabContainer", "ref1DataBasisTabContainer",
   						 "ref1ProcessTabContainer", "ref2LocationTabContainer", "ref2BaseDataTabContainer", "ref3BaseDataTabContainer",
-  						 "ref4ParticipantsTabContainer", "ref4PMTabContainer", "ref5MethodTabContainer"];
+  						 "ref4ParticipantsTabContainer", "ref4PMTabContainer", "ref5MethodTabContainer", "ref6BaseDataTabContainer"];
 
 	// Helper function that determines if a node is displayed or not. All the dojo.html functions that should
 	// give this information (dojo.html.isDisplayed, ...) don't work. Also the widgets 'onShow' Method is never fired

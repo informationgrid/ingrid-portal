@@ -8,11 +8,26 @@ Folgende Schritte sind dazu notwendig:
 - Einrichten eines mdek iplug (siehe ingrid-mdek projekt doku)
 - Einrichten der 'mdek' Datenbank
 - Einrichten eines Servers unter Eclipse (New... Other... Server)
+- pom.xml nach dev-pom.xml kopieren
+- in <groupId>org.apache.maven.plugins</groupId>
+  
+  in der configuration muss Schlüssel
+  
+  <useProjectReferences>false</useProjectReferences>
+  
+  eingetragen werden.
+
 - Eclipse Projekt erstellen mit 'dev-pom.xml'. Dort werden alle Abhängigkeiten direkt eingebunden.
  - mvn -f dev-pom.xml eclipse:clean eclipse:eclipse
 - Refresh Project
 - Projekt zum Server hinzufügen (Servers view, rechtsklick auf server, add project...)
+- In Server Launch Config (Doppelklick auf Tomcat Server Eintrag in server View -> Open launch config..)
+
+  -Djava.endorsed.dirs="C:\Programme\Apache\apache-tomcat-6.0.29\endorsed"
+  
+  als Start-Argument eintragen.
 - Server starten
+
 
 Server root ist: %WORKSPACE_DIR%\.metadata\.plugins\org.eclipse.wst.server.core\tmp0
 Die mdek-Webapp befindet sich in: %WORKSPACE_DIR%\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ingrid-portal-mdek-application
@@ -44,6 +59,10 @@ Dies kann über verschiedene Wege gemacht werden:
      - lang=en -> setze die verwendete Sprache auf Englisch. Default ist Deutsch (de)
 
 Die zweite Methode ist zu bevorzugen falls man sich häufig mit verschiedenen Benutzernamen anmelden möchte (Testen der Qualitätskontrolle)
+
+Achtung, es muss ein entsprechender Eintrag in der mdek Datenbank vorhanden sein, der den user mit der Adresse im ige-iPlug verbindet.
+
+z.B. INSERT INTO `mdek`.`user_data` (`id`, `version`, `addr_uuid`, `portal_login`, `plug_id`) VALUES ('1', '1', 'BF9FD87B-6D67-4B7A-B554-AB30BB2A0863', 'mdek', 'ige-iplug-test');
 
 DWR Testseite
 -------------
