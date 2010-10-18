@@ -145,7 +145,7 @@ public class MdekDataBean {
 	private String ref2BibData;
 	private String ref2Explanation;
 
-	// Object class 3 (Dienst/Anwendung/Informationssystem)
+	// Object class 3 (Geodatendienst)
 	private Integer ref3ServiceType;
 	private List<Integer> ref3ServiceTypeTable;
 	private List<String> ref3ServiceVersion;
@@ -155,6 +155,7 @@ public class MdekDataBean {
 	private String ref3Explanation;
 	private List<ScaleBean> ref3Scale;
 	private List<OperationBean> ref3Operation;
+	private Boolean ref3HasAccessConstraint;
 	
 	// Object class 4 (Vorhaben/Projekt/Programm)
 	private String ref4ParticipantsText;
@@ -166,6 +167,15 @@ public class MdekDataBean {
 	private String ref5MethodText;
 	private String ref5Explanation;
 
+	// Object class 6 (Dienst/Anwendung/Informationssystem)
+	private Integer ref6ServiceType;
+	private List<String> ref6ServiceVersion;
+	private String ref6SystemEnv;
+	private String ref6History;
+	private String ref6BaseDataText;
+	private String ref6Explanation;
+	private String ref6Name;
+	private List<ApplicationUrlBean> ref6UrlList;
 	
 
 	public List<DBContentBean> getRef5dbContent() {
@@ -1667,4 +1677,128 @@ public class MdekDataBean {
 		this.thesaurusInspireTermsList = thesaurusInspireTermsList;
 	}
 
+	
+	public Boolean getRef3HasAccessConstraint() {
+		return ref3HasAccessConstraint;
+	}
+
+
+	public void setRef3HasAccessConstraint(Boolean ref3HasAccessConstraint) {
+		this.ref3HasAccessConstraint = ref3HasAccessConstraint;
+	}
+
+
+
+
+	public Integer getRef6ServiceType() {
+		return ref6ServiceType;
+	}
+
+
+
+
+	public void setRef6ServiceType(Integer ref6ServiceType) {
+		this.ref6ServiceType = ref6ServiceType;
+	}
+
+
+
+
+	public List<String> getRef6ServiceVersion() {
+		return ref6ServiceVersion;
+	}
+
+
+
+
+	public void setRef6ServiceVersion(List<String> ref6ServiceVersion) {
+		this.ref6ServiceVersion = ref6ServiceVersion;
+	}
+
+
+
+
+	public String getRef6SystemEnv() {
+		return ref6SystemEnv;
+	}
+
+
+
+
+	public void setRef6SystemEnv(String ref6SystemEnv) {
+		this.ref6SystemEnv = ref6SystemEnv;
+	}
+
+
+
+
+	public String getRef6History() {
+		return ref6History;
+	}
+
+
+
+
+	public void setRef6History(String ref6History) {
+		this.ref6History = ref6History;
+	}
+
+
+
+
+	public String getRef6BaseDataText() {
+		return ref6BaseDataText;
+	}
+
+
+
+
+	public void setRef6BaseDataText(String ref6BaseDataText) {
+		this.ref6BaseDataText = ref6BaseDataText;
+	}
+
+
+
+
+	public String getRef6Explanation() {
+		return ref6Explanation;
+	}
+
+
+
+
+	public void setRef6Explanation(String ref6Explanation) {
+		this.ref6Explanation = ref6Explanation;
+	}
+
+
+
+
+	public String getRef6Name() {
+		return ref6Name;
+	}
+
+
+
+
+	public void setRef6Name(String ref6Name) {
+		this.ref6Name = ref6Name;
+	}
+
+
+
+
+	public List<ApplicationUrlBean> getRef6UrlList() {
+		return ref6UrlList;
+	}
+
+
+
+
+	public void setRef6UrlList(List<ApplicationUrlBean> ref6UrlList) {
+		this.ref6UrlList = ref6UrlList;
+	}
+
+	
+	
 }

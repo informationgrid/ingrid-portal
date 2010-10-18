@@ -1784,6 +1784,8 @@ udkDataProxy._setObjectDataClass3 = function(nodeData) {
 		}
 	}	
 	dojo.widget.byId("ref3Operation").store.setData(UtilList.addTableIndices(nodeData.ref3Operation));
+	dojo.widget.byId("ref3HasAccessConstraint").setValue(nodeData.ref3HasAccessConstraint);
+	
 }
 
 udkDataProxy._setObjectDataClass4 = function(nodeData) {
@@ -2080,6 +2082,9 @@ udkDataProxy._getObjectData = function(nodeData)
       break;
     case '5':
       udkDataProxy._getObjectDataClass5(nodeData);
+      break;
+    case '6':
+      udkDataProxy._getObjectDataClass6(nodeData);
       break;
     default:
       dojo.debug("Error in udkDataProxy._getObjectData - Object Class must be 0...5!");

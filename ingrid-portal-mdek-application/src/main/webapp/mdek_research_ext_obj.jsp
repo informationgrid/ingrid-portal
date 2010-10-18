@@ -177,7 +177,7 @@ function readQueryFromInput() {
 	
 	// Read obj class checkboxes
 	currentQuery.objClasses = [];
-	for (var i = 0; i < 6; ++i) {
+	for (var i = 0; i < 7; ++i) {
 		if (dojo.widget.byId("objTopicObjectClass" + i).checked)
 			currentQuery.objClasses.push(i);
 	}
@@ -603,7 +603,7 @@ function addLocationResultTextElement(text) {
 this.selectAllObjectClasses = function() {
 	var checkBoxId = "objTopicObjectClass";
 
-	for (var i = 0; i < 6; ++i) {
+	for (var i = 0; i < 7; ++i) {
 		dojo.widget.byId(checkBoxId + i).setValue(true);
 	}
 }
@@ -612,7 +612,7 @@ this.selectAllObjectClasses = function() {
 this.deselectAllObjectClasses = function() {
 	var checkBoxId = "objTopicObjectClass";
 
-	for (var i = 0; i < 6; ++i) {
+	for (var i = 0; i < 7; ++i) {
 		dojo.widget.byId(checkBoxId + i).setValue(false);
 	}
 }
@@ -688,9 +688,10 @@ function hideLoadingZone() {
             <span class="input noSpaceBelow"><input type="checkbox" name="objTopicObjectClass2" id="objTopicObjectClass2" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass2"><fmt:message key="dialog.research.ext.obj.class2" /></label></span>
           </div>
           <div class="checkboxContainer">
-            <span class="input"><input type="checkbox" name="objTopicObjectClass3" id="objTopicObjectClass3" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass3"><fmt:message key="dialog.research.ext.obj.class3" /></label></span>
+          	<span class="input"><input type="checkbox" name="objTopicObjectClass3" id="objTopicObjectClass3" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass3"><fmt:message key="dialog.research.ext.obj.class3" /></label></span>
             <span class="input"><input type="checkbox" name="objTopicObjectClass4" id="objTopicObjectClass4" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass4"><fmt:message key="dialog.research.ext.obj.class4" /></label></span>
-            <span class="input noSpaceBelow"><input type="checkbox" name="objTopicObjectClass5" id="objTopicObjectClass5" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass5"><fmt:message key="dialog.research.ext.obj.class5" /></label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass5" id="objTopicObjectClass5" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass5"><fmt:message key="dialog.research.ext.obj.class5" /></label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass6" id="objTopicObjectClass6" checked="true" dojoType="Checkbox" /><label class="inActive" for="objTopicObjectClass6"><fmt:message key="dialog.research.ext.obj.class6" /></label></span>
           </div>
     	</div>
         <div class="spacerField" style="height:28px !important;">

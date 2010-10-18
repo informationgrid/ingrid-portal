@@ -21,6 +21,7 @@ import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.address.CommunicationBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.AdditionalFieldBean;
+import de.ingrid.mdek.beans.object.ApplicationUrlBean;
 import de.ingrid.mdek.beans.object.ConformityBean;
 import de.ingrid.mdek.beans.object.DBContentBean;
 import de.ingrid.mdek.beans.object.DataFormatBean;
@@ -271,6 +272,12 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setRef3Explanation((String) td3Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
 			mdekObj.setRef3Scale(mapToScaleTable((List<IngridDocument>) td3Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
 			mdekObj.setRef3Operation(mapToOperationTable((List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_OPERATION_LIST), (Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY)));
+			String ref3HasAccessConstraint = (String) obj.get(MdekKeys.HAS_ACCESS_CONSTRAINT);
+			if (ref3HasAccessConstraint != null && ref3HasAccessConstraint.equalsIgnoreCase("Y")) {
+				mdekObj.setRef3HasAccessConstraint(true);
+			} else {
+				mdekObj.setRef3HasAccessConstraint(false);
+			}
 
 			break;
 		case 4:
@@ -288,6 +295,22 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setRef5Explanation((String) td5Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
 			mdekObj.setRef5MethodText((String) td5Map.get(MdekKeys.METHOD));
 			mdekObj.setRef5dbContent(mapToDbContentTable((List<IngridDocument>) td5Map.get(MdekKeys.PARAMETERS)));
+			break;
+		case 6:
+			IngridDocument td6Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
+			if (td6Map == null)
+				break;
+
+			mdekObj.setRef6ServiceType((Integer) td6Map.get(MdekKeys.SERVICE_TYPE_KEY));
+
+			mdekObj.setRef6SystemEnv((String) td6Map.get(MdekKeys.SYSTEM_ENVIRONMENT));
+			mdekObj.setRef6History((String) td6Map.get(MdekKeys.SYSTEM_HISTORY));
+			mdekObj.setRef6BaseDataText((String) td6Map.get(MdekKeys.DATABASE_OF_SYSTEM));
+			mdekObj.setRef6ServiceVersion((List<String>) td6Map.get(MdekKeys.SERVICE_VERSION_LIST));
+			mdekObj.setRef6Explanation((String) td6Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
+			mdekObj.setRef6Name((String) td6Map.get(MdekKeys.NAME));
+			mdekObj.setRef6UrlList(mapToUrlList((List<IngridDocument>)td6Map.get(MdekKeys.URL_LIST)));
+
 			break;
 		}
 		
@@ -777,6 +800,13 @@ public class MdekMapper implements DataMapperInterface {
 			td3Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef3Explanation());
 			td3Map.put(MdekKeys.PUBLICATION_SCALE_LIST, mapFromScaleTable(data.getRef3Scale()));
 			td3Map.put(MdekKeys.SERVICE_OPERATION_LIST, mapFromOperationTable(data.getRef3Operation(), data.getRef3ServiceType()));
+			if (data.getRef3HasAccessConstraint() != null) {
+				if (data.getRef3HasAccessConstraint().booleanValue()) {
+					td3Map.put(MdekKeys.HAS_ACCESS_CONSTRAINT, "Y");
+				} else {
+					td3Map.put(MdekKeys.HAS_ACCESS_CONSTRAINT, "N");
+				}
+			}
 			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_SERVICE, td3Map);
 			break;
 		case 4:
@@ -793,6 +823,20 @@ public class MdekMapper implements DataMapperInterface {
 			td5Map.put(MdekKeys.PARAMETERS, mapFromDbContentTable(data.getRef5dbContent()));
 			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_DATASET, td5Map);
 			break;
+		case 6:
+			IngridDocument td6Map = new IngridDocument();			
+			td6Map.put(MdekKeys.SERVICE_TYPE_KEY, data.getRef6ServiceType());
+
+			td6Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef6SystemEnv());
+			td6Map.put(MdekKeys.SYSTEM_HISTORY, data.getRef6History());
+			td6Map.put(MdekKeys.DATABASE_OF_SYSTEM, data.getRef6BaseDataText());
+			td6Map.put(MdekKeys.SERVICE_VERSION_LIST, data.getRef6ServiceVersion());
+			td6Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef6Explanation());
+			td6Map.put(MdekKeys.URL_LIST, mapFromUrlListTable(data.getRef6UrlList()));
+			td6Map.put(MdekKeys.NAME, data.getRef6Name());
+			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_DATASET, td6Map);
+			break;
+			
 		}
 
 		cleanUpHashMap(udkObj);
@@ -1368,6 +1412,21 @@ public class MdekMapper implements DataMapperInterface {
 	}
 
 	
+	private List<IngridDocument> mapFromUrlListTable(List<ApplicationUrlBean> urlList) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (urlList == null)
+			return resultList;
+
+		for (ApplicationUrlBean b : urlList) {
+			IngridDocument result = new IngridDocument();
+			result.put(MdekKeys.URL, b.getUrl());
+			result.put(MdekKeys.DESCRIPTION, b.getUrlDescription());
+			resultList.add(result);
+		}
+		return resultList;
+	}
+	
+	
 	/****************************************************************************
 	 * Mapping from the IngridDocument Structure to the Mdek gui representation *
 	 ****************************************************************************/
@@ -1821,6 +1880,20 @@ public class MdekMapper implements DataMapperInterface {
 		}
 		return resultList;
 	}
+	
+	private List<ApplicationUrlBean> mapToUrlList(List<IngridDocument> urlList) {
+		List<ApplicationUrlBean> resultList = new ArrayList<ApplicationUrlBean>();
+		if (urlList == null)
+			return resultList;
+		for (IngridDocument entry : urlList) {
+			ApplicationUrlBean b = new ApplicationUrlBean();
+			b.setUrl((String)entry.get(MdekKeys.URL));
+			b.setUrlDescription((String)entry.get(MdekKeys.DESCRIPTION));
+			resultList.add(b);
+		}
+		return resultList;
+	}
+	
 
 
 	/********************************
