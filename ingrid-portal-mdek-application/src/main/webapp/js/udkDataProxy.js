@@ -1809,6 +1809,9 @@ udkDataProxy._setObjectDataClass6 = function(nodeData) {
 	dojo.widget.byId("ref6Explanation").setValue(nodeData.ref6Explanation);
 
 //	dojo.debug("Setting service version to: "+UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref3ServiceVersion)));
+	dojo.debug("nodeData.ref6ServiceVersion: " + nodeData.ref6ServiceVersion);
+	dojo.debug("UtilList.listToTableData(nodeData.ref6ServiceVersion): " + UtilList.listToTableData(nodeData.ref6ServiceVersion));
+	dojo.debug("UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref6ServiceVersion)): " + UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref6ServiceVersion)));
 	dojo.widget.byId("ref6ServiceVersion").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref6ServiceVersion)));
 
 	dojo.widget.byId("ref6Name").setValue(nodeData.ref6Name);
@@ -2200,7 +2203,9 @@ udkDataProxy._getObjectDataClass6 = function(nodeData) {
 	nodeData.ref6BaseDataText = dojo.widget.byId("ref6BaseDataText").getValue();
 	nodeData.ref6Explanation = dojo.widget.byId("ref6Explanation").getValue();
 
+	dojo.debug("ref6ServiceVersion tabledata: " + udkDataProxy._getTableData("ref6ServiceVersion"))
 	nodeData.ref6ServiceVersion = UtilList.tableDataToList(udkDataProxy._getTableData("ref6ServiceVersion"));
+	dojo.debug("nodeData.ref6ServiceVersion: " + nodeData.ref6ServiceVersion);
 
 	nodeData.ref6Name = dojo.widget.byId("ref6Name").getValue();
     nodeData.ref6UrlList = udkDataProxy._getTableData("ref6UrlList");

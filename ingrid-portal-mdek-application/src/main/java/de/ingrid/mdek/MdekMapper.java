@@ -824,7 +824,7 @@ public class MdekMapper implements DataMapperInterface {
 			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_DATASET, td5Map);
 			break;
 		case 6:
-			IngridDocument td6Map = new IngridDocument();			
+			IngridDocument td6Map = new IngridDocument();
 			td6Map.put(MdekKeys.SERVICE_TYPE_KEY, data.getRef6ServiceType());
 
 			td6Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef6SystemEnv());
@@ -834,7 +834,7 @@ public class MdekMapper implements DataMapperInterface {
 			td6Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef6Explanation());
 			td6Map.put(MdekKeys.URL_LIST, mapFromUrlListTable(data.getRef6UrlList()));
 			td6Map.put(MdekKeys.NAME, data.getRef6Name());
-			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_DATASET, td6Map);
+			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_SERVICE, td6Map);
 			break;
 			
 		}

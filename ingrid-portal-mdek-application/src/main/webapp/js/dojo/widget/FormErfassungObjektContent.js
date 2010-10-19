@@ -38,7 +38,7 @@ dojo.widget.defineWidget(
   /*
    * The toggle containers contained in the page
    */
-  toggleContainer: ["refClass1", "refClass2", "refClass3", "refClass4", "refClass5"],
+  toggleContainer: ["refClass1", "refClass2", "refClass3", "refClass4", "refClass5", "refClass6"],
   
   /*
    * The toggle container prefix
@@ -48,7 +48,7 @@ dojo.widget.defineWidget(
   setSelectedClass: function(/* name of the object class/address type */clazz) {
     ingrid.widget.Form.prototype.setSelectedClass.apply(this, arguments);
     
-    // hide section 'Verfügbarkeit' if 'Organisationseinheit/Fachaufgabe' (Class0) is selected
+    // hide section 'Verfï¿½gbarkeit' if 'Organisationseinheit/Fachaufgabe' (Class0) is selected
     var availabilityContainer = document.getElementById('availability');
     if (availabilityContainer) {
       if(this.selectedClass == "Class0")
