@@ -174,7 +174,6 @@ public class MdekDataBean {
 	private String ref6History;
 	private String ref6BaseDataText;
 	private String ref6Explanation;
-	private String ref6Name;
 	private List<ApplicationUrlBean> ref6UrlList;
 	
 
@@ -542,6 +541,7 @@ public class MdekDataBean {
 		this.setRef3Scale(new ArrayList<ScaleBean>());
 		this.setRef3Operation(new ArrayList<OperationBean>());
 		this.setRef5dbContent(new ArrayList<DBContentBean>());
+		this.setRef6ServiceVersion(new ArrayList<String>());
 	}
 	
 	
@@ -1769,20 +1769,6 @@ public class MdekDataBean {
 
 	public void setRef6Explanation(String ref6Explanation) {
 		this.ref6Explanation = ref6Explanation;
-	}
-
-
-
-
-	public String getRef6Name() {
-		return ref6Name;
-	}
-
-
-
-
-	public void setRef6Name(String ref6Name) {
-		this.ref6Name = ref6Name;
 	}
 
 

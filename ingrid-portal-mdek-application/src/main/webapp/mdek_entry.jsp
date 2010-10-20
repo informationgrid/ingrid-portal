@@ -1096,7 +1096,7 @@ function hideSplash(){
                   <div class="inputContainer notRequired">
 					<span id="uiElement3260" type="optional">
                     <div class="checkboxContainer">
-                      <span class="input"><input type="checkbox" name="ref3HasAccessConstraint" id="ref3HasAccessConstraint" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 7006)"><script>document.write(message.get("ui.obj.type3.ref3HasAccessConstraint"))</script></label></span>
+                      <span class="input"><input type="checkbox" name="ref3HasAccessConstraint" id="ref3HasAccessConstraint" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 3260)"><script>document.write(message.get("ui.obj.type3.ref3HasAccessConstraint"))</script></label></span>
                     </div>
                   </div>
 	          	  
@@ -1365,26 +1365,21 @@ function hideSplash(){
 	                <div class="fill"></div>
 	          	  </div>
 
-	              <div class="inputContainer notRequired">
-	                <span id="uiElement3660" type="optional">
-	                	<span class="label"><label for="ref6Name" onclick="javascript:dialog.showContextHelp(arguments[0], 3660)"><script>document.write(message.get("ui.obj.type6.name"))</script></label></span>
-	                	<span class="input"><input type="text" maxlength="255" id="ref6Name" name="ref6Name" class="w668" dojoType="ingrid:ValidationTextBox" /></span>
-	                </span>
-	          	  </div>
-
 	              <div class="inputContainer notRequired h130">
 					<span id="uiElement3670" type="optional">
 		                <span class="label"><label for="ref6UrlList" onclick="javascript:dialog.showContextHelp(arguments[0], 3670)"><script>document.write(message.get("ui.obj.type6.urlList"))</script></label></span>
 		                <div class="tableContainer rows4 full">
 		                  <div class="cellEditors" id="ref6UrlListEditors">
-		                    <div dojoType="ingrid:ValidationTextbox" maxlength="2048" widgetId="ref6Url"></div>
+		                    <div dojoType="ingrid:ValidationTextbox" maxlength="1024" widgetId="ref6Name"></div>
+		                    <div dojoType="ingrid:ValidationTextbox" maxlength="1024" widgetId="ref6Url"></div>
 		                    <div dojoType="ingrid:ValidationTextbox" maxlength="2048" widgetId="ref6UrlDescription"></div>
 		                  </div>
 		            	    <table id="ref6UrlList" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort interactive">
 		            	      <thead>
 		            		      <tr>
-		                  			<th nosort="true" field="url" dataType="String" width="337" editor="ref6Url"><script>document.write(message.get("ui.obj.type6.urlList.header.url"))</script></th>
-		                  			<th nosort="true" field="urlDescription" dataType="String" width="338" editor="ref6UrlDescription"><script>document.write(message.get("ui.obj.type6.urlList.header.urlDescription"))</script></th>
+		                  			<th nosort="true" field="name" dataType="String" width="225" editor="ref6Name"><script>document.write(message.get("ui.obj.type6.urlList.header.name"))</script></th>
+		                  			<th nosort="true" field="url" dataType="String" width="225" editor="ref6Url"><script>document.write(message.get("ui.obj.type6.urlList.header.url"))</script></th>
+		                  			<th nosort="true" field="urlDescription" dataType="String" width="225" editor="ref6UrlDescription"><script>document.write(message.get("ui.obj.type6.urlList.header.urlDescription"))</script></th>
 		            		      </tr>
 		            	      </thead>
 		            	      <tbody>

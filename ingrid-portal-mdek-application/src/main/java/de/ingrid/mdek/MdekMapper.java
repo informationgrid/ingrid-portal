@@ -308,7 +308,6 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setRef6BaseDataText((String) td6Map.get(MdekKeys.DATABASE_OF_SYSTEM));
 			mdekObj.setRef6ServiceVersion((List<String>) td6Map.get(MdekKeys.SERVICE_VERSION_LIST));
 			mdekObj.setRef6Explanation((String) td6Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
-			mdekObj.setRef6Name((String) td6Map.get(MdekKeys.NAME));
 			mdekObj.setRef6UrlList(mapToUrlList((List<IngridDocument>)td6Map.get(MdekKeys.URL_LIST)));
 
 			break;
@@ -833,7 +832,6 @@ public class MdekMapper implements DataMapperInterface {
 			td6Map.put(MdekKeys.SERVICE_VERSION_LIST, data.getRef6ServiceVersion());
 			td6Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef6Explanation());
 			td6Map.put(MdekKeys.URL_LIST, mapFromUrlListTable(data.getRef6UrlList()));
-			td6Map.put(MdekKeys.NAME, data.getRef6Name());
 			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_SERVICE, td6Map);
 			break;
 			
@@ -1419,6 +1417,7 @@ public class MdekMapper implements DataMapperInterface {
 
 		for (ApplicationUrlBean b : urlList) {
 			IngridDocument result = new IngridDocument();
+			result.put(MdekKeys.NAME, b.getName());
 			result.put(MdekKeys.URL, b.getUrl());
 			result.put(MdekKeys.DESCRIPTION, b.getUrlDescription());
 			resultList.add(result);
@@ -1887,6 +1886,7 @@ public class MdekMapper implements DataMapperInterface {
 			return resultList;
 		for (IngridDocument entry : urlList) {
 			ApplicationUrlBean b = new ApplicationUrlBean();
+			b.setName((String)entry.get(MdekKeys.NAME));
 			b.setUrl((String)entry.get(MdekKeys.URL));
 			b.setUrlDescription((String)entry.get(MdekKeys.DESCRIPTION));
 			resultList.add(b);

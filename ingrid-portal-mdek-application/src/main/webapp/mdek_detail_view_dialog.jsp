@@ -123,7 +123,7 @@ function renderNodeData(nodeData) {
 			renderTextWithTitle(nodeData.ref2Explanation, message.get("ui.obj.type2.description"));
 		} else if (nodeData.objectClass == 3) {
 			renderSectionTitel(message.get("ui.obj.relevance"));
-			// Dienst/Anwendung/Informationssystem
+			// Geodatendienst
 			renderList(nodeData.ref3ServiceTypeTable, message.get("ui.obj.type3.ref3ServiceTypeTable.title"), null, function(val) { return dojo.widget.byId("ref3ServiceTypeEditor")._getDisplayValueForValue(val); });
 			renderTextWithTitle(dojo.widget.byId("ref3ServiceType")._getDisplayValueForValue(nodeData.ref3ServiceType), message.get("ui.obj.type3.serviceType"));
 			renderList(nodeData.ref3ServiceVersion, message.get("ui.obj.type3.serviceVersion"));
@@ -133,6 +133,7 @@ function renderNodeData(nodeData) {
 			renderTextWithTitle(nodeData.ref3Explanation, message.get("ui.obj.type3.description"));
 			renderTable(nodeData.ref3Scale, ["scale", "groundResolution", "scanResolution"], [message.get("ui.obj.type1.scaleTable.header.scale"), message.get("ui.obj.type1.scaleTable.header.groundResolution"), message.get("ui.obj.type1.scaleTable.header.scanResolution")], message.get("ui.obj.type3.scaleTable.title"));
 			renderOperations(nodeData.ref3Operation);
+		    renderTextWithTitle(nodeData.ref3HasAccessConstraint ? message.get("general.yes"): message.get("general.no"), message.get("ui.obj.type3.ref3HasAccessConstraint.title"));
 		} else if (nodeData.objectClass == 4) {
 			renderSectionTitel(message.get("ui.obj.relevance"));
 			// Vorhaben
@@ -145,6 +146,14 @@ function renderNodeData(nodeData) {
 			renderTable(nodeData.ref5dbContent, ["parameter", "additionalData"], [message.get("ui.obj.type5.contentTable.header.parameter"), message.get("ui.obj.type5.contentTable.header.additionalData")], message.get("ui.obj.type5.contentTable.header.additionalData"));
 			renderTextWithTitle(nodeData.ref5MethodText, message.get("ui.obj.type5.methodTable.title"));
 			renderTextWithTitle(nodeData.ref5Explanation, message.get("ui.obj.type5.description"));
+		} else if (nodeData.objectClass == 6) {
+			// Dienst/Anwendung/Informationssystem
+			renderTextWithTitle(dojo.widget.byId("ref6ServiceType")._getDisplayValueForValue(nodeData.ref6ServiceType), message.get("ui.obj.type6.serviceType"));
+			renderList(nodeData.ref6ServiceVersion, message.get("ui.obj.type6.serviceVersion"));
+			renderTextWithTitle(nodeData.ref6SystemEnv, message.get("ui.obj.type6.environment"));
+			renderTextWithTitle(nodeData.ref6History, message.get("ui.obj.type6.history"));
+			renderTextWithTitle(nodeData.ref6BaseDataText, message.get("ui.obj.type6.generalDataTable.title") + " (" + message.get("ui.obj.type6.generalDataTable.tab.text") + ")");
+			renderTable(nodeData.ref6UrlList, ["name", "url", "urlDescription"], [message.get("ui.obj.type6.urlList.header.name"), message.get("ui.obj.type6.urlList.header.url"), message.get("ui.obj.type6.urlList.header.urlDescription")], message.get("ui.obj.type6.urlList"));
 		}
 		
 		// spatial reference

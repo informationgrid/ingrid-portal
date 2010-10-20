@@ -1814,7 +1814,6 @@ udkDataProxy._setObjectDataClass6 = function(nodeData) {
 	dojo.debug("UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref6ServiceVersion)): " + UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref6ServiceVersion)));
 	dojo.widget.byId("ref6ServiceVersion").store.setData(UtilList.addTableIndices(UtilList.listToTableData(nodeData.ref6ServiceVersion)));
 
-	dojo.widget.byId("ref6Name").setValue(nodeData.ref6Name);
 	dojo.widget.byId("ref6UrlList").store.setData(UtilList.addTableIndices(nodeData.ref6UrlList));
 }
 
@@ -2207,7 +2206,6 @@ udkDataProxy._getObjectDataClass6 = function(nodeData) {
 	nodeData.ref6ServiceVersion = UtilList.tableDataToList(udkDataProxy._getTableData("ref6ServiceVersion"));
 	dojo.debug("nodeData.ref6ServiceVersion: " + nodeData.ref6ServiceVersion);
 
-	nodeData.ref6Name = dojo.widget.byId("ref6Name").getValue();
     nodeData.ref6UrlList = udkDataProxy._getTableData("ref6UrlList");
 };
 

@@ -634,10 +634,10 @@
 	"ui.obj.type6.generalDataTable.tab.text":"Text",
 	"ui.obj.type6.generalDataTable.tab.links":"Verweise",
 	"ui.obj.type6.description":"Erl&auml;uterungen",
-	"ui.obj.type6.name":"Name",
 	"ui.obj.type6.urlList":"Service-Urls",
-	"ui.obj.type6.urlList.header.url":"Urls",
-	"ui.obj.type6.urlList.header.urlDescription":"Erl&auml;uterungen",
+	"ui.obj.type6.urlList.header.name":"Name",
+	"ui.obj.type6.urlList.header.url":"Url",
+	"ui.obj.type6.urlList.header.urlDescription":"Erl&auml;uterung",
 	
 
 	"ui.adr.header.addressTitle":"Adresstitel",

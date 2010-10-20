@@ -31,7 +31,7 @@ var class5UiInputElements = ["ref5dbContent", "ref5MethodText", "ref5MethodLink"
 var class3UiInputElements = ["ref3ServiceType", "ref3ServiceTypeTable", "ref3ServiceVersion", "ref3SystemEnv", "ref3History", "ref3BaseDataText",
                          	"ref3BaseDataLink", "ref3Explanation", "ref3Scale", "ref3Operation", "extraInfoConformityTable"];
 var class6UiInputElements = ["ref6ServiceType", "ref6ServiceVersion", "ref6SystemEnv", "ref6History", "ref6BaseDataText",
-                         	"ref6BaseDataLink", "ref6Explanation", "ref6Name", "ref6UrlList" ];
+                         	"ref6BaseDataLink", "ref6Explanation", "ref6UrlList" ];
 
 // Address Type is not included since the field is filled automatically
 var adrUiInputElements = [/*"addressType",*/ "addressOwner", "addressStreet", "addressCountry", "addressZipCode", "addressCity", "addressPOBox",
