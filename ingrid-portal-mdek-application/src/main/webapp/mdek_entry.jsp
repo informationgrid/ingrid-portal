@@ -1074,7 +1074,7 @@ function hideSplash(){
 	                <div class="fill"></div>
 	          	  </div>
 
-	              <div class="inputContainer noSpaceBelow notRequired h130">
+	              <div class="inputContainer notRequired h130">
 					<span id="uiElementN004" type="optional">
 		                <span class="label"><label for="ref3Operation" onclick="javascript:dialog.showContextHelp(arguments[0], 7015)"><script>document.write(message.get("ui.obj.type3.operationTable.title"))</script></label></span>
 		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(message.get('dialog.operations.title'), 'mdek_operation_dialog.jsp', 735, 745, true);" title="<fmt:message key="dialog.popup.operationTable.link" /> [Popup]"><script>document.write(message.get("ui.obj.type3.operationTable.link"))</script></a></span>
@@ -1093,7 +1093,7 @@ function hideSplash(){
 		          	</span>
 	          	  </div>
 
-                  <div class="inputContainer notRequired">
+                  <div class="inputContainer noSpaceBelow notRequired">
 					<span id="uiElement3260" type="optional">
                     <div class="checkboxContainer">
                       <span class="input"><input type="checkbox" name="ref3HasAccessConstraint" id="ref3HasAccessConstraint" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 3260)"><script>document.write(message.get("ui.obj.type3.ref3HasAccessConstraint"))</script></label></span>

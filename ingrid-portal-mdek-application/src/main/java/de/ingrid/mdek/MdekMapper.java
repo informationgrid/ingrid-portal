@@ -272,7 +272,7 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setRef3Explanation((String) td3Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
 			mdekObj.setRef3Scale(mapToScaleTable((List<IngridDocument>) td3Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
 			mdekObj.setRef3Operation(mapToOperationTable((List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_OPERATION_LIST), (Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY)));
-			String ref3HasAccessConstraint = (String) obj.get(MdekKeys.HAS_ACCESS_CONSTRAINT);
+			String ref3HasAccessConstraint = (String) td3Map.get(MdekKeys.HAS_ACCESS_CONSTRAINT);
 			if (ref3HasAccessConstraint != null && ref3HasAccessConstraint.equalsIgnoreCase("Y")) {
 				mdekObj.setRef3HasAccessConstraint(true);
 			} else {
