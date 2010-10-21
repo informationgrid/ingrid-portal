@@ -383,6 +383,7 @@
 	"validation.latLon2":"Longitude/Latitude 2",
 	"validation.begin":"from",
 	"validation.end":"to",
+	"validation.serviceUrl":"Please enter a value for '%{0}' and '%{1}'.",
 	
 	"protocol.import":"Import",
 	"protocol.cancel":"Cancel",

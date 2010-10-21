@@ -383,6 +383,7 @@
 	"validation.latLon2":"L&auml;nge/Breite 2",
 	"validation.begin":"von",
 	"validation.end":"bis",
+	"validation.serviceUrl":"Der '%{0}' sowie die '%{1}' muss angegeben werden.",
 	
 	"protocol.import":"Importieren",
 	"protocol.cancel":"Abbrechen",

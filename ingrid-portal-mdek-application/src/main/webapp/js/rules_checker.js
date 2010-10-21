@@ -46,7 +46,7 @@ var adrClass3UiInputElements = ["headerAddressType3Lastname", "headerAddressType
 
 var labels = ["objectNameLabel", "objectClassLabel", "objectOwnerLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel",
 			  "extraInfoConformityTableLabel", "availabilityAccessConstraintsLabel", "availabilityUseConstraintsLabel", "ref1BasisTabContainerLabel", "ref1ObjectIdentifierLabel",
-			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "ref3ServiceTypeTableLabel", "generalAddressTableLabel", "timeRefTableLabel",
+			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "ref3ServiceTypeTableLabel", "ref6ServiceTypeLabel", "generalAddressTableLabel", "timeRefTableLabel",
 			  "thesaurusTermsLabel", "thesaurusTopicsLabel", "thesaurusInspireLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel", "spatialRefAltHeightLabel",
 			  "spatialRefAltMinLabel", "spatialRefAltMaxLabel", "spatialRefAltMeasureLabel", "spatialRefAltVDateLabel",
 			  "thesaurusEnvironmentLabel", "thesaurusEnvTopicsLabel", "thesaurusEnvCatsLabel", "extraInfoPublishAreaLabel",
@@ -69,7 +69,7 @@ var notEmptyFieldsClass1 = [["ref1BasisText", "ref1BasisTabContainerLabel"],
                             ["ref1DataSet", "ref1DataSetLabel"]]; 
 var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"]];
 
-var notEmptyFieldsClass6 = [["ref6ServiceType"]];
+var notEmptyFieldsClass6 = [["ref6ServiceType", "ref6ServiceTypeLabel"]];
 
 var notEmptyTables = [["generalAddressTable", "generalAddressTableLabel"],
 					  ["timeRefTable", "timeRefTableLabel"],
@@ -342,14 +342,14 @@ function isObjectPublishable(idcObject) {
 			}
 			break;
 		case '6':
-			for (var i in notEmptyFieldsClass3) {
+			for (var i in notEmptyFieldsClass6) {
 				if (!idcObject[notEmptyFieldsClass6[i][0]] || idcObject[notEmptyFieldsClass6[i][0]] == "") {
 					dojo.html.addClass(dojo.byId(notEmptyFieldsClass6[i][1]), "important");
 					publishable = false;
-					dojo.debug("Object class three required field empty.");				
+					dojo.debug("Object class six required field empty.");				
 				}
 			}
-			for (var i in notEmptyTablesClass3) {
+			for (var i in notEmptyTablesClass6) {
 				if (idcObject[notEmptyTablesClass6[i][0]].length == 0) {
 					dojo.html.addClass(dojo.byId(notEmptyTablesClass6[i][1]), "important");
 					publishable = false;

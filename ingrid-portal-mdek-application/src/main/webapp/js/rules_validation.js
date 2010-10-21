@@ -11,6 +11,7 @@ dojo.addOnLoad(function() {
 	addMinMaxBoundingBoxValidation("spatialRefLocation");
 	addTitleDateValidation("ref1SymbolsText");	
 	addTitleDateValidation("ref1KeysText");	
+	addServiceUrlValidation("ref6UrlList");
 	
 	addAddressTableInfoValidation();
 	addCommunicationTableValidation();
@@ -435,3 +436,75 @@ function getAuskunftString() {
 	var def = UtilCatalog.getSysListEntry(dojo.widget.byId("generalAddressCombobox").listId, 7);
 	return def;
 }
+
+function addServiceUrlValidation(tableId){
+	var table = dojo.widget.byId(tableId);
+	var popup = dojo.widget.createWidget("PopupContainer");
+  	popup.domNode.innerHTML = dojo.string.substituteParams(message.get("validation.serviceUrl"), message.get("ui.obj.type6.urlList.header.name"), message.get("ui.obj.type6.urlList.header.url"));
+
+	table._valid = true;
+
+	table.applyValidation = function() {
+		var rows = this.domNode.tBodies[0].rows;
+		// Iterate over all the rows in the table
+		for (var i = 0; i < rows.length; i++) {
+			var row = rows[i];
+			var rowData = this.getDataByRow(row);
+			// If we have a valid row continue. rowData can be null since we also display empty rows
+			if (rowData) {
+				var name = this.store.getField(rowData, "name");
+				var url = this.store.getField(rowData, "url");
+				var urlDescription = this.store.getField(rowData, "urlDescription");
+				var nameIdx = this.getColumnIndex("name");
+				var urlIdx = this.getColumnIndex("url");
+				var urlDescriptionIdx = this.getColumnIndex("urlDescription");
+				
+				if ((name == null || name == "")
+				 && (url == null || url == "")
+				 && (urlDescription == null || urlDescription == "")){
+					dojo.html.removeClass(row.cells[nameIdx], this.fieldInvalidClass);
+					dojo.html.removeClass(row.cells[urlIdx], this.fieldInvalidClass);		
+					this._valid = true;
+					popup.close();
+					return;
+				}
+
+				this._valid = false;
+				var nameValid = false;
+				var urlValid = false;
+				var urlDescriptionValid = false;
+				dojo.html.addClass(row.cells[nameIdx], this.fieldInvalidClass);
+				dojo.html.addClass(row.cells[urlIdx], this.fieldInvalidClass);		
+				
+				if (name != null && dojo.string.trim(name).length != 0) {
+					nameValid = true;
+					dojo.html.removeClass(row.cells[nameIdx], this.fieldInvalidClass);
+				}
+				
+				if (url != null && dojo.string.trim(url).length != 0) {
+					urlValid = true;
+					dojo.html.removeClass(row.cells[urlIdx], this.fieldInvalidClass);
+				}
+				
+				if (urlDescription != null && dojo.string.trim(urlDescription).length != 0) {
+					urlDescriptionValid = true;
+				}
+				
+				
+				if (nameValid && urlValid) {
+					popup.close();
+					this._valid = true;
+				} else if (urlDescriptionValid){
+					if(!nameValid || !urlValid){
+						popup.open(this.domNode, this);	
+					}
+				} else {
+					popup.open(this.domNode, this);
+				}
+			}
+		}
+	}
+
+	table.isValid = function() { return this.store.getData().length == 0 || this._valid;}
+}
+

@@ -56,7 +56,7 @@ function setStatsObjectsTableContent(stats) {
 	var numTotal = 0;
 	var numObjs = {v:0,b:0,q:0,r:0};
 
-	for (var i = 0; i < 6; ++i) {
+	for (var i = 0; i < 7; ++i) {
 		var classMap = stats[i].classMap;
 		amounts.push(classMap.V + classMap.B + classMap.Q + classMap.R);
 		numObjs.v += classMap.V;
@@ -704,8 +704,8 @@ function hideLoadingZone() {
         	<div id="statsTable" dojoType="ingrid:TabContainer" doLayout="false" class="full" selectedChild="statsObjectsAdr">
             <!-- MAIN TAB 1 START -->
         		<div id="statsObjectsAdr" dojoType="ContentPane" label="<fmt:message key="dialog.statistics.objAdr" />" style="overflow:hidden;">
-				<div class="tableContainer rows7 full">
-	        	    <table id="statsObjectsTable" dojoType="ingrid:FilteringTable" minRows="7" cellspacing="0" class="filteringTable nosort relativePos">
+				<div class="tableContainer rows8 full">
+	        	    <table id="statsObjectsTable" dojoType="ingrid:FilteringTable" minRows="8" cellspacing="0" class="filteringTable nosort relativePos">
 	        	      <thead>
 	        		      <tr>
 	              			<th nosort="true" field="type" dataType="String" width="40"></th>
@@ -756,7 +756,7 @@ function hideLoadingZone() {
 	        		        <td>0</td>
 	        		        <td>0</td></tr>
 	        		      <tr value="4">
-	        		        <td><img src="img/UDK/udk_class3.gif" width="16" height="16" alt="Dienst / Anwendung / Informationssystem" /></td>
+	        		        <td><img src="img/UDK/udk_class3.gif" width="16" height="16" alt="Geodatendienst" /></td>
 	        		        <td><fmt:message key="dialog.statistics.objClass3" /></td>
 	        		        <td>0</td>
 	        		        <td>0</td>
@@ -776,6 +776,15 @@ function hideLoadingZone() {
 	        		      <tr value="6">
 	        		        <td><img src="img/UDK/udk_class5.gif" width="16" height="16" alt="Datensammlung / Datenbank" /></td>
 	        		        <td><fmt:message key="dialog.statistics.objClass5" /></td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td>
+	        		        <td>0</td></tr>
+	        		      <tr value="7">
+	        		        <td><img src="img/UDK/udk_class6.gif" width="16" height="16" alt="Dienst / Anwendung / Informationssystem" /></td>
+	        		        <td><fmt:message key="dialog.statistics.objClass6" /></td>
 	        		        <td>0</td>
 	        		        <td>0</td>
 	        		        <td>0</td>
