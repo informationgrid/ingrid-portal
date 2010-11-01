@@ -113,6 +113,9 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		try {
 			result = mapper.convert(data, protocolHandler);
 			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Test_Schutzgebiete"));
+			// service-type set as attribute in node !
+			result.reset();
+			assertEquals(1, xpathCount(result, "//igc/data-sources/data-source/technical-domain/service/service-type"));
 		} catch (Exception e) {
 			fail("Error transforming: " + exampleXml);
 		}

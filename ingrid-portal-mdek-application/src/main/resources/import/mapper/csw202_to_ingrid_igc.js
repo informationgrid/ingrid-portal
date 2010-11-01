@@ -263,7 +263,7 @@ var mappingDescription = {"mappings":[
   			    "mappings": [
 	         		{	
 	        			"srcXpath":"//gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName",
-	        			"targetNode":"/igc/data-sources/data-source/technical-domain/service/service-classification",
+	        			"targetNode":"/igc/data-sources/data-source/technical-domain/service/service-type",
 	        			"targetAttribute":"id",
 	        			"storeValue":"serviceType",
 		      			"transform":{
@@ -274,7 +274,7 @@ var mappingDescription = {"mappings":[
 	         		{	
 		      			"srcXpath":"//gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='Service Classification, version 1.0']/gmd:keyword/gco:CharacterString",
 		      			"targetNode":"/igc/data-sources/data-source/technical-domain/service",
-		      			"newNodeName":"service-type",
+		      			"newNodeName":"service-classification",
 		      			"subMappings":{
 		      				"mappings": [
 		    	  				{
@@ -288,7 +288,7 @@ var mappingDescription = {"mappings":[
 		    			  			"defaultValue": -1,
 		    			  			"transform":{
 		    							"funct":transformToIgcDomainId,
-		    							"params":[6200, 123, "Could not map INSPIRE theme:"]
+		    							"params":[5200, 123, "Could not map Service classification:"]
 		    						}
 		    			  		}
 		    			  	]

@@ -26,6 +26,7 @@ import org.w3c.dom.NodeList;
 
 import de.ingrid.mdek.MdekUtils;
 import de.ingrid.mdek.handler.ProtocolHandler;
+import de.ingrid.mdek.xml.Versioning;
 import de.ingrid.mdek.xml.XMLKeys;
 import de.ingrid.utils.xml.XMLUtils;
 
@@ -102,6 +103,9 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 	 * @param docTarget, the mapped document
 	 */
 	private void preProcessMapping(Document docTarget) {
+		// write current exchange format from jar !
+		setDocumentExchangeFormat(docTarget);
+		
 //		String title = XPathUtils.getString(docTarget, "/igc/data-sources/data-source/general/title");
 		
 		// generate uuid for each object (here only one for each import)
@@ -124,6 +128,15 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 		
 	}
 
+	/** Set current xml exchange format from Versioning in import-export.jar ! */
+	private void setDocumentExchangeFormat(Document docTarget) {
+		NodeList nodeList = docTarget.getElementsByTagName(XMLKeys.IGC);
+
+		String exchangeFormat = Versioning.CURRENT_IMPORT_EXPORT_VERSION;
+		
+		setAttributesInNodeList(nodeList, XMLKeys.EXCHANGE_FORMAT, exchangeFormat);
+	}
+
 	private void setDocumentLanguage(Document docTarget) {
 		List<NodeList> langNodesList = new ArrayList<NodeList>();
 		langNodesList.add(docTarget.getElementsByTagName(XMLKeys.DATA_LANGUAGE));
@@ -135,7 +148,7 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 		
 		for (NodeList nodeList : langNodesList) {
 			setValueInNodeList(nodeList, langString);
-			setAttributesInNodeList(nodeList, "id", langId.toString());
+			setAttributesInNodeList(nodeList, XMLKeys.ID, langId.toString());
 		}
 		
 	}

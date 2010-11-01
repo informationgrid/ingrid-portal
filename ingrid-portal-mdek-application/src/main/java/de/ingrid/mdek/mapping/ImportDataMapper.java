@@ -2,8 +2,6 @@ package de.ingrid.mdek.mapping;
 
 import java.io.InputStream;
 
-import javax.xml.transform.TransformerException;
-
 import de.ingrid.mdek.handler.ProtocolHandler;
 
 
