@@ -592,7 +592,7 @@
 	"ui.obj.type2.description":"Erl&auml;uterungen",
 	"ui.obj.type3.serviceType":"Art des Dienstes",
 	"ui.obj.type3.ref3ServiceTypeTable.title":"Klassifikation des Dienstes",
-	"ui.obj.type3.serviceVersion":"Version des Services",
+	"ui.obj.type3.serviceVersion":"Version",
 	"ui.obj.type3.environment":"Systemumgebung",
 	"ui.obj.type3.history":"Historie",
 	"ui.obj.type3.generalDataTable.title":"Basisdaten",
