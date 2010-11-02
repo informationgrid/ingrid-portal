@@ -1,1 +1,1 @@
-When importing help_messages.csv use # as a separator and ' as a text delimiter
+When importing help_messages.csv in Open Office use # as a separator and ' as a text delimiter
