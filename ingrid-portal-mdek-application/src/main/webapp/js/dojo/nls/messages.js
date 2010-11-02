@@ -804,7 +804,7 @@
 	"ui.sysList.5120":"Object class 3 - Operation Name - WFS",
 	"ui.sysList.5130":"Object class 3 - Operation Name - WCTS",
 	"ui.sysList.5200":"Object class 3 - Service-Classification",
-    "ui.sysList.5300":"Object class 6 - Service Type",
+    "ui.sysList.5300":"Object class 6 - Type of Service",
 	"ui.sysList.6000":"Conformity - Degree of Conformity",
 	"ui.sysList.6010":"Access and Usage limitation - Usage limitation",
 	"ui.sysList.6100":"INSPIRE-Topics",
