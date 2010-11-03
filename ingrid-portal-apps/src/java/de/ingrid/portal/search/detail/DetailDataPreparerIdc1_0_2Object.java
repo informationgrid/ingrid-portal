@@ -74,7 +74,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 		int previousElementsSize = elements.size();
 
 		// alternate name
-		addElementEntry(elements, record.getString("t01_object.dataset_alternate_name"), null);
+		String alternateName = record.getString("t01_object.dataset_alternate_name");
 		// udk class
 		addElementUdkClass(elements, record.getString("t01_object.obj_class"));
 		// description
@@ -83,7 +83,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 			description = description.replaceAll("\n", "<br/>");
 			description = description.replaceAll("<(?!b>|/b>|i>|/i>|u>|/u>|p>|/p>|br>|br/>|br />|strong>|/strong>|ul>|/ul>|ol>|/ol>|li>|/li>)[^>]*>", "");
         }
-		addElementEntry(elements, description, null);
+		addElementEntry(elements, description, null, alternateName);
 		
 		if (previousElementsSize < elements.size()) {
 			// add horizontal line
@@ -187,21 +187,21 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	// index references
 		List listRecords = getSubRecordsByColumnName(record, "t04_search.type");
     	if (listRecords.size() > 0) {
-	    	ArrayList lines = new ArrayList();
+	    	ArrayList textListEntries = new ArrayList();
 	    	for (int i=0; i<listRecords.size(); i++) {
 	    		Record listRecord = (Record)listRecords.get(i);
-	    		HashMap line = new HashMap();
-	        	line.put("type", "textLine");
-	        	line.put("body", listRecord.getString("searchterm_value.term"));
-	        	if (!isEmptyLine(line)) {
-	        		lines.add(line);
+	    		HashMap listEntry = new HashMap();
+	    		listEntry.put("type", "textList");
+	    		listEntry.put("body", listRecord.getString("searchterm_value.term"));
+	        	if (!isEmptyList(listEntry)) {
+	        		textListEntries.add(listEntry);
 	        	}
 	    	}
-	    	if (lines.size() > 0) {
+	    	if (textListEntries.size() > 0) {
 		    	HashMap element = new HashMap();
-		    	element.put("type", "multiLine");
+		    	element.put("type", "textList");
 		    	element.put("title", messages.getString("search_terms"));
-		    	element.put("elements", lines);
+		    	element.put("textList", textListEntries);
 	    	    elements.add(element);
 	    	}
     	}
@@ -209,21 +209,21 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	// topic categories
 		listRecords = getSubRecordsByColumnName(record, "t011_obj_topic_cat.line");
     	if (listRecords.size() > 0) {
-	    	ArrayList lines = new ArrayList();
+	    	ArrayList textListEntries = new ArrayList();
 	    	for (int i=0; i<listRecords.size(); i++) {
 	    		Record listRecord = (Record)listRecords.get(i);
-	    		HashMap line = new HashMap();
-	        	line.put("type", "textLine");
-	        	line.put("body", sysCodeList.getName("527", listRecord.getString("t011_obj_topic_cat.topic_category")));
-	        	if (!isEmptyLine(line)) {
-	        		lines.add(line);
+	    		HashMap listEntry = new HashMap();
+	    		listEntry.put("type", "textLine");
+	    		listEntry.put("body", sysCodeList.getName("527", listRecord.getString("t011_obj_topic_cat.topic_category")));
+	        	if (!isEmptyList(listEntry)) {
+	        		textListEntries.add(listEntry);
 	        	}
 	    	}
-	    	if (lines.size() > 0) {
+	    	if (textListEntries.size() > 0) {
 		    	HashMap element = new HashMap();
-		    	element.put("type", "multiLine");
+		    	element.put("type", "textLine");
 		    	element.put("title", messages.getString("t011_obj_geo_topic_cat.topic_category"));
-		    	element.put("elements", lines);
+		    	element.put("textLine", textListEntries);
 	    	    elements.add(element);
 	    	}
     	}
@@ -453,9 +453,8 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 	    		Record listRecord = (Record)listRecords.get(i);
 	    		HashMap line = new HashMap();
 	        	line.put("type", "textLine");
-	        	String textLine = sysCodeList.getName("502", listRecord.getString("t0113_dataset_reference.type"));
-	        	textLine = textLine.concat(": ").concat(UtilsDate.convertDateString(listRecord.getString("t0113_dataset_reference.reference_date").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
-	        	line.put("body", textLine);
+	        	line.put("title", sysCodeList.getName("502", listRecord.getString("t0113_dataset_reference.type")).concat(":"));
+	        	line.put("body", UtilsDate.convertDateString(notNull(listRecord.getString("t0113_dataset_reference.reference_date")).trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
 	        	if (!isEmptyLine(line)) {
 	        		lines.add(line);
 	        	}
@@ -918,13 +917,22 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	}
 	}
 	
-	
-	
 	private void addElementEntry(List elements, String body, String title) {
+		addElementEntry(elements, body, title, null);
+	}
+	
+	private void addElementEntry(List elements, String body, String title, String alternateName) {
 		if (UtilsVelocity.hasContent(body).booleanValue()) {
 			HashMap element = new HashMap();
 			element.put("type", "entry");
-			element.put("title", title);
+			if(title == null){
+				element.put("header", messages.getString("detail_description"));
+			}
+			if(alternateName == null){
+				element.put("title", title);
+			}else {
+				element.put("title", alternateName);
+			}
 			// show line breaks correctly in HTML
 			element.put("body", body.replaceAll("\n", "<br />"));
 			elements.add(element);
@@ -1351,6 +1359,14 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	return true;
     }
     
+    private boolean isEmptyList(HashMap listEntry) {
+    	if (listEntry.get("type") != null && listEntry.get("type").equals("textList")) {
+        	if (listEntry.get("body") != null && listEntry.get("body") instanceof String && ((String)listEntry.get("body")).length() > 0) {
+        		return false;
+        	}
+    	}
+    	return true;
+    }
     
     private String notNull(String in) {
     	if (in == null) {

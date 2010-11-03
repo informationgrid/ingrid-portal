@@ -147,32 +147,33 @@ public class DetailDataPreparerIdc1_0_5Address implements DetailDataPreparer {
     	// index references
 		List listRecords = getSubRecordsByColumnName(record, "t04_search.searchterm");
     	if (listRecords.size() > 0) {
-	    	ArrayList lines = new ArrayList();
+	    	ArrayList textListEntries = new ArrayList();
 	    	for (int i=0; i<listRecords.size(); i++) {
 	    		Record listRecord = (Record)listRecords.get(i);
-	    		HashMap line = new HashMap();
-	        	line.put("type", "textLine");
-	        	line.put("body", listRecord.getString("searchterm_value.term"));
-	        	if (!isEmptyLine(line)) {
-	        		lines.add(line);
+	    		HashMap listEntry = new HashMap();
+	    		listEntry.put("type", "textLine");
+	    		listEntry.put("body", listRecord.getString("searchterm_value.term"));
+	        	if (!isEmptyList(listEntry)) {
+	        		textListEntries.add(listEntry);
 	        	}
 	    	}
-	    	if (lines.size() > 0) {
+	    	if (textListEntries.size() > 0) {
 		    	HashMap element = new HashMap();
-		    	element.put("type", "multiLine");
+		    	element.put("type", "textList");
 		    	element.put("title", messages.getString("search_terms"));
-		    	element.put("elements", lines);
+		    	element.put("textList", textListEntries);
 	    	    elements.add(element);
 	    	}
     	}
-    	
-	}
-	
+    }
 	
 	private void addElementEntry(List elements, String body, String title) {
 		if (UtilsVelocity.hasContent(body).booleanValue()) {
 			HashMap element = new HashMap();
 			element.put("type", "entry");
+			if(title == null){
+				element.put("header", messages.getString("detail_description"));
+			}
 			element.put("title", title);
 			element.put("body", body);
 			elements.add(element);
@@ -509,6 +510,14 @@ public class DetailDataPreparerIdc1_0_5Address implements DetailDataPreparer {
     	return true;
     }
     
+    private boolean isEmptyList(HashMap listEntry) {
+    	if (listEntry.get("type") != null && listEntry.get("type").equals("textList")) {
+        	if (listEntry.get("body") != null && listEntry.get("body") instanceof String && ((String)listEntry.get("body")).length() > 0) {
+        		return false;
+        	}
+    	}
+    	return true;
+    }
     
     private String addStrWithSeparator(String base, String str, String separator) {
 		if (UtilsVelocity.hasContent(str).booleanValue()) {

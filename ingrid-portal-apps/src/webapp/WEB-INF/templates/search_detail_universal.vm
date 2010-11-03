@@ -581,18 +581,11 @@
     ##	<div dojoType="TabContainer" doLayout="false" class="mainTabContainer" >
 	##		<div dojoType="ContentPane" label="Themen 1">
 				#if($data)
-				## Remove for new detail view
-					<div class="section-header">
-						<h1>$data.get("general").get("title")</h1>
-						#if($data.get("general").get("modTime"))<p class="float_right"><span class="smaller">$MESSAGES.getString('search.detail.last.changed') $data.get("general").get("modTime")</span></p>#end
-					</div>
-					<span class="clearer"></span>
-				##
-    ##               	<div id="detail_background" >
+	##               	<div id="detail_background" >
     ##                	#renderNoScriptTitle("Themen 1")
 	##					#renderClearer()
                 		## Title header
-    ##           		#renderDetailHeader($data)
+						#renderDetailHeader($data)
     ##            			<div dojoType="TabContainer"  doLayout="false" class="subTabContainer">
 	##							<div dojoType="ContentPane" label="Allgemeines">
 	##								<div id="detail_background">
@@ -612,17 +605,11 @@
                                     				#renderEntryInLine($e)
                                     			#elseif($e.type=="linkList")
                                     				#renderLinkList($e)
-    ##                                			#elseif($e.type=="textList")
-    ##                                				#renderTextList($e)
+                                    			#elseif($e.type=="textList")
+                                    				#renderTextList($e)
                                     			#elseif($e.type=="table")
                                     				#renderTable($e)
-    ## Remove for new detail view "udkClass"
-												#elseif($e.type=="udkClass")
-													#renderUdkClass($e)
-	## Remove for new detail view "addressType"
-												#elseif($e.type=="addressType")
-													#renderAddressType($e)
-												#elseif($e.type=="textLine")
+    											#elseif($e.type=="textLine")
                                     				#renderTextLine($e)
                                     			#elseif($e.type=="linkLine")
                                     				#renderLinkLine($e)
