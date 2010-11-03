@@ -1115,6 +1115,7 @@ function hideSplash(){
                     <div class="checkboxContainer">
                       <span class="input"><input type="checkbox" name="ref3HasAccessConstraint" id="ref3HasAccessConstraint" dojoType="Checkbox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 3260)"><script>document.write(message.get("ui.obj.type3.ref3HasAccessConstraint"))</script></label></span>
                     </div>
+                    </span>
                   </div>
 	          	  
 	            </div>
