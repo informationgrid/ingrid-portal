@@ -38,7 +38,9 @@ public class DetailDataPreparerFactory {
 	
 	public DetailDataPreparer getDetailDataPreparer(String version) {
 		
-		if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_8_DSC_OBJECT)) {
+		if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_9_DSC_OBJECT)) {
+			return new DetailDataPreparerIdc1_0_9Object(context, iplugId, request, response);
+		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_8_DSC_OBJECT)) {
 			return new DetailDataPreparerIdc1_0_8Object(context, iplugId, request, response);
 		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT)) {
 			return new DetailDataPreparerIdc1_0_5Object(context, iplugId, request, response);
