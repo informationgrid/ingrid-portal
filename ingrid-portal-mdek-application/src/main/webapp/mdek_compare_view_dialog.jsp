@@ -35,6 +35,8 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	UtilList.addAddressLinkLabels(nodeDataOld.generalAddressTable);
 	renderTable(nodeDataOld.generalAddressTable, nodeDataNew.generalAddressTable, ["nameOfRelation", "linkLabel"], [message.get("dialog.compare.object.addressLink.type"), message.get("dialog.compare.object.addressLink.title")], message.get("ui.obj.general.addressTable.title"));
 
+    renderList(nodeDataOld.thesaurusInspireTermsList, nodeDataNew.thesaurusInspireTermsList, message.get("ui.obj.thesaurus.terms.inspire"), null, function (val) { return dojo.widget.byId("thesaurusInspireCombobox")._getDisplayValueForValue(val);});
+
 	// technical domains
 	if (nodeDataOld.objectClass != nodeDataNew.objectClass) {
 		// TODO Don't display class specific data when the objects have different classes?
@@ -197,7 +199,6 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	renderSectionTitel(message.get("ui.obj.thesaurus.title"));
 	renderList(nodeDataOld.thesaurusTermsTable, nodeDataNew.thesaurusTermsTable, message.get("ui.adr.thesaurus.terms"), "title");
 	renderList(nodeDataOld.thesaurusTopicsList, nodeDataNew.thesaurusTopicsList, message.get("ui.obj.thesaurus.terms.category"), null, function (val) { return dojo.widget.byId("thesaurusTopicsCombobox")._getDisplayValueForValue(val);});
-	renderList(nodeDataOld.thesaurusInspireList, nodeDataNew.thesaurusInspireList, message.get("ui.obj.thesaurus.terms.inspire"), null, function (val) { return dojo.widget.byId("thesaurusInspireCombobox")._getDisplayValueForValue(val);});
 	renderTextWithTitle(nodeDataOld.thesaurusEnvExtRes ? message.get("general.yes"): message.get("general.no"), nodeDataNew.thesaurusEnvExtRes ? message.get("general.yes"): message.get("general.no"), message.get("ui.obj.thesaurus.terms.enviromental.displayCatalogPage"));
 	renderList(nodeDataOld.thesaurusEnvTopicsList, nodeDataNew.thesaurusEnvTopicsList, message.get("ui.obj.thesaurus.terms.enviromental.title")+ " - " + message.get("ui.obj.thesaurus.terms.enviromental.topics"), null, function (val) { return dojo.widget.byId("thesaurusEnvTopicsCombobox")._getDisplayValueForValue(val);});
 	renderList(nodeDataOld.thesaurusEnvCatsList, nodeDataNew.thesaurusEnvCatsList, message.get("ui.obj.thesaurus.terms.enviromental.title")+ " - " + message.get("ui.obj.thesaurus.terms.enviromental.categories"), null, function (val) { return dojo.widget.byId("thesaurusEnvCatsCombobox")._getDisplayValueForValue(val);});

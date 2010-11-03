@@ -345,12 +345,9 @@ function hideSplash(){
 	                </span>
 	          	  </div>
 
-	              <div class="inputContainer noSpaceBelow">
-					
+	              <div class="inputContainer">
 					<span id="uiElement1000" type="required">
-
 		                <span id="generalAddressTableLabel" class="label required"><label for="generalAddressTable" onclick="javascript:dialog.showContextHelp(arguments[0], 1000)"><script>document.write(message.get("ui.obj.general.addressTable.title"))</script>*</label></span>
-	
 		                <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="generalAddressTableLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(message.get('general.addAddress'), 'mdek_address_dialog.jsp', 755, 580, true);" title="<fmt:message key="dialog.popup.addressTable.link" /> [Popup]"><script>document.write(message.get("ui.obj.general.addressTable.link"))</script></a></span>
 		                <div id="generalAddressTable" class="tableContainer headHiddenRows4 full">
 		                    <div class="cellEditors" id="generalAddressEditors">
@@ -375,6 +372,26 @@ function hideSplash(){
 		                </div>
 					</span>
 	          	  </div>
+
+                    <div class="inputContainer noSpaceBelow">
+                      <span id="uiElement5064" type="required">
+                          <span id="thesaurusInspireLabel" class="label required"><label for="thesaurusInspire" onclick="javascript:dialog.showContextHelp(arguments[0], 5064)"><script>document.write(message.get("ui.obj.thesaurus.terms.inspire"))</script>*</label></span>
+                          <div class="tableContainer headHiddenRows4 full">
+                            <div class="cellEditors" id="thesaurusInspireEditors">
+                              <div dojoType="ingrid:Select" toggle="plain" autoComplete="false" style="width:600px;" listId="6100" id="thesaurusInspireCombobox"></div>
+                            </div>
+                            <table id="thesaurusInspire" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
+                              <thead>
+                                  <tr>
+                                        <th nosort="true" field="title" dataType="String" editor="thesaurusInspireCombobox">Inspire Themen</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                              </tbody>
+                            </table>
+                          </div>
+                        </span>
+                      </div>
 
 	            </div>
 	          </div>
@@ -1971,32 +1988,11 @@ function hideSplash(){
 	        	  <div id="thesaurusContent" class="content">
 	        	  
 	              <div class="inputContainer h116">
-	                <div class="half left">
-					  <span id="uiElement5064" type="required">
-		                  <span id="thesaurusInspireLabel" class="label required"><label for="thesaurusInspire" onclick="javascript:dialog.showContextHelp(arguments[0], 5064)"><script>document.write(message.get("ui.obj.thesaurus.terms.inspire"))</script>*</label></span>
-		                  <div class="tableContainer headHiddenRows4 half">
-		                    <div class="cellEditors" id="thesaurusInspireEditors">
-		                      <div dojoType="ingrid:Select" toggle="plain" autoComplete="false" style="width:260px;" listId="6100" id="thesaurusInspireCombobox"></div>
-		                    </div>
-		              	    <table id="thesaurusInspire" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
-		              	      <thead>
-		              		      <tr>
-		                    			<th nosort="true" field="title" dataType="String" editor="thesaurusInspireCombobox">Inspire Themen</th>
-		              		      </tr>
-		              	      </thead>
-		              	      <tbody>
-		              	      </tbody>
-		              	    </table>
-		                  </div>
-		                </span>
-	            	  </div>
-
-	                <div class="half">
 					  <span id="uiElement5060" type="required">
 		                  <span id="thesaurusTopicsLabel" class="label required"><label for="thesaurusTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 5060)"><script>document.write(message.get("ui.obj.thesaurus.terms.category"))</script>*</label></span>
-		                  <div class="tableContainer headHiddenRows4 half">
+		                  <div class="tableContainer headHiddenRows4 full">
 		                    <div class="cellEditors" id="thesaurusTopicsEditors">
-		                      <div dojoType="ingrid:Select" toggle="plain" autoComplete="false" style="width:260px;" listId="527" id="thesaurusTopicsCombobox"></div>
+		                      <div dojoType="ingrid:Select" toggle="plain" autoComplete="false" style="width:600px;" listId="527" id="thesaurusTopicsCombobox"></div>
 		                    </div>
 		              	    <table id="thesaurusTopics" dojoType="ingrid:FilteringTable" minRows="4" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive">
 		              	      <thead>
@@ -2009,7 +2005,6 @@ function hideSplash(){
 		              	    </table>
 		                  </div>
 		                </span>
-	            	  </div>
 	              </div>
 
 	              <div class="inputContainer h110">
