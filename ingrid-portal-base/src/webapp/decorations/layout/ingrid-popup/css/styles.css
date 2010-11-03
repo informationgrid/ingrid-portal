@@ -509,8 +509,8 @@ div.helpcontent li { margin: 0 0 0.0em 0;padding: 0 0 0 15px;background-image:ur
 div.helpcontent li a { font-size:75%; }
 
 /*****************************
- New detail view
-******************************/
+*New detail view
+*******************************/
 
 span.clearer_blue { background:none repeat scroll 0 0 #1B78B1; clear:both; height:2px; line-height: 0px; font-size: 1px; display:block; }
 span.clearer_dark_blue{ background:none repeat scroll 0 0 #ACCDE6; clear:both; height:4px; line-height: 0px; font-size: 1px; display:block; }
@@ -584,7 +584,7 @@ li.detail_li { color:#68A5D2; }
 li.detail_li p { font-size:100%; color:#000000; }
  
 /******************************************
-  Dojo Tabs CSS style 
+* Dojo Tabs CSS style 
 *******************************************/
 
 div.dojoTab:hover { color:#000000; font-weight:bold; text-decoration: underline; background:none repeat scroll 0 0 #DDE9BD; }

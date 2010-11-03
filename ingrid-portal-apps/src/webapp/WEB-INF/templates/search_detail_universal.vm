@@ -565,6 +565,7 @@
 
 <div id="content_full">
 ## render "zurueck" link if no IngridSession (entry via google)
+## Remove for new detail view
 #if($noIngridSession)
 	<div class="section-header">
 		<p class="iconLink">
@@ -574,15 +575,19 @@
 		</p>
 	</div>
 #end
+##
+	## Remove comment for new detail view
 	##<div class="detail_block">
     ##	<div dojoType="TabContainer" doLayout="false" class="mainTabContainer" >
 	##		<div dojoType="ContentPane" label="Themen 1">
 				#if($data)
+				## Remove for new detail view
 					<div class="section-header">
 						<h1>$data.get("general").get("title")</h1>
 						#if($data.get("general").get("modTime"))<p class="float_right"><span class="smaller">$MESSAGES.getString('search.detail.last.changed') $data.get("general").get("modTime")</span></p>#end
 					</div>
 					<span class="clearer"></span>
+				##
     ##               	<div id="detail_background" >
     ##                	#renderNoScriptTitle("Themen 1")
 	##					#renderClearer()
@@ -607,12 +612,14 @@
                                     				#renderEntryInLine($e)
                                     			#elseif($e.type=="linkList")
                                     				#renderLinkList($e)
-                                    			#elseif($e.type=="textList")
-                                    				#renderTextList($e)
+    ##                                			#elseif($e.type=="textList")
+    ##                                				#renderTextList($e)
                                     			#elseif($e.type=="table")
                                     				#renderTable($e)
-                                    			#elseif($e.type=="udkClass")
+    ## Remove for new detail view "udkClass"
+												#elseif($e.type=="udkClass")
 													#renderUdkClass($e)
+	## Remove for new detail view "addressType"
 												#elseif($e.type=="addressType")
 													#renderAddressType($e)
 												#elseif($e.type=="textLine")
@@ -621,10 +628,10 @@
                                     				#renderLinkLine($e)
                                     			#elseif($e.type=="textLinkLine")
                                     				#renderTextLinkLine($e)
-												#elseif($e.type=="image")
-                                    				#renderImageLine($e)
-												#elseif($e.type=="tab")
-													#renderTab($e)
+	##											#elseif($e.type=="image")
+    ##                                				#renderImageLine($e)
+	##											#elseif($e.type=="tab")
+	##												#renderTab($e)
 				                    			#elseif($e.type=="line")
                                     				<div class="line"><hr /></div><br/>
                                     			#elseif($e.type=="space")
