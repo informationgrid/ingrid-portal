@@ -7,7 +7,7 @@ dojo.addOnLoad(function() {});
 /* IDs of UI Elements for checking etc. */
 var headerUiInputElements = ["objectName", "objectClass", "objectOwner"];
 var generalUiInputElements = ["generalShortDesc", "generalDesc", "generalAddress"];
-var spatialUiInputElements = ["spatialRefAdminUnit", "spatialRefLocation", "spatialRefAltMin", "spatialRefAltMax",
+var spatialUiInputElements = ["spatialRefAdminUnit", "spatialRefLocation", "ref1SpatialSystem", "spatialRefAltMin", "spatialRefAltMax",
 	"spatialRefAltMeasure", "spatialRefAltVDate", "spatialRefExplanation"];
 var timeUiInputElements = ["timeRefType", "timeRefDate1", "timeRefDate2", "timeRefStatus", "timeRefPeriodicity", "timeRefIntervalNum",
 	"timeRefIntervalUnit", "timeRefTable", "timeRefExplanation"];
@@ -18,7 +18,7 @@ var thesUiInputElements = ["thesaurusTerms", "thesaurusTopics", "thesaurusInspir
 	"thesaurusEnvTopics", "thesaurusEnvCats", "linksTo"];
 var class0UiInputElements = [];
 var class1UiInputElements = ["ref1ObjectIdentifier", "ref1DataSet", "ref1Coverage", "ref1Representation", "ref1VFormatTopology", "ref1VFormatDetails",
-	"ref1SpatialSystem", "ref1Scale", "ref1AltAccuracy", "ref1PosAccuracy", "ref1SymbolsText", "ref1SymbolsLink",
+	"ref1Scale", "ref1AltAccuracy", "ref1PosAccuracy", "ref1SymbolsText", "ref1SymbolsLink",
 	"ref1KeysText", "ref1KeysLink", "ref1BasisText", "ref1BasisLink", "ref1DataBasisText", "ref1DataBasisLink", "ref1Data",
 	"ref1ProcessText", "ref1ProcessLink", "extraInfoConformityTable"];
 var class2UiInputElements = ["ref2Author", "ref2Publisher", "ref2PublishedIn", "ref2PublishLocation", "ref2PublishedInIssue",
