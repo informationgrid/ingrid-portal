@@ -203,20 +203,34 @@ public class MdekMapper implements DataMapperInterface {
 
 		// Additional Fields
 		mdekObj.setAdditionalFields(mapToAdditionalFields((List<IngridDocument>) obj.get(MdekKeys.ADDITIONAL_FIELDS)));
+		
+		// NOTICE: some stuff was moved from class specific domain map ("Fachbezug") to general sections (in GUI).
+		// this stuff has to be processed here, before doing class specific stuff !
+
+		// former class 1, now general "Raumbezug"
+		IngridDocument td1Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
+		KeyValuePair kvp = null;
+		if (td1Map != null) {
+			kvp = mapToKeyValuePair(td1Map, MdekKeys.REFERENCESYSTEM_ID, MdekKeys.COORDINATE_SYSTEM);
+			mdekObj.setRef1SpatialSystem(kvp.getValue());			
+		}
 
 		switch(mdekObj.getObjectClass()) {
 		case 0:	// Object of type 0 doesn't have any special values
 			break;
 		case 1:
-			IngridDocument td1Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
+			td1Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
 			if (td1Map == null)
 				break;
 
 			mdekObj.setRef1ObjectIdentifier((String) td1Map.get(MdekKeys.DATASOURCE_UUID));
 			mdekObj.setRef1DataSet((Integer) td1Map.get(MdekKeys.HIERARCHY_LEVEL));
 			mdekObj.setRef1VFormatTopology((Integer) td1Map.get(MdekKeys.VECTOR_TOPOLOGY_LEVEL));
+/*
+// moved to general "Raumbezug" section, class independent, processed above !
 			KeyValuePair kvp = mapToKeyValuePair(td1Map, MdekKeys.REFERENCESYSTEM_ID, MdekKeys.COORDINATE_SYSTEM);
 			mdekObj.setRef1SpatialSystem(kvp.getValue());
+*/
 			mdekObj.setRef1Coverage((Double) td1Map.get(MdekKeys.DEGREE_OF_RECORD));
 			mdekObj.setRef1AltAccuracy((Double) td1Map.get(MdekKeys.POS_ACCURACY_VERTICAL));
 			mdekObj.setRef1PosAccuracy((Double) td1Map.get(MdekKeys.RESOLUTION));
@@ -737,20 +751,38 @@ public class MdekMapper implements DataMapperInterface {
 		// Additional Fields
 		udkObj.put(MdekKeys.ADDITIONAL_FIELDS, mapFromAdditionalFields(data.getAdditionalFields()));
 
+		// NOTICE: some stuff was moved from class specific domain map ("Fachbezug") to general sections (in GUI).
+		// this stuff has to be processed here, before doing class specific stuff !
+		
+		// former class 1, now general "Raumbezug"
+		IngridDocument td1Map = null;
+		KeyValuePair kvp = mapFromKeyValue(MdekKeys.REFERENCESYSTEM_ID, data.getRef1SpatialSystem());
+		if (kvp.getValue() != null || kvp.getKey() != -1) {
+			td1Map = new IngridDocument();
+			td1Map.put(MdekKeys.COORDINATE_SYSTEM, kvp.getValue());
+			td1Map.put(MdekKeys.REFERENCESYSTEM_ID, kvp.getKey());
+			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_MAP, td1Map);
+		}
+
 		int objClass = data.getObjectClass() != null ? data.getObjectClass() : 0; 
 		switch(objClass) {
 		case 0:	// Object of type 0 doesn't have any special values
 			break;
 		case 1:
-			IngridDocument td1Map = new IngridDocument();			
+			if (td1Map == null) {
+				td1Map = new IngridDocument();
+			}
 			td1Map.put(MdekKeys.DATASOURCE_UUID, data.getRef1ObjectIdentifier());
 			td1Map.put(MdekKeys.HIERARCHY_LEVEL, data.getRef1DataSet());
 			td1Map.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, data.getRef1VFormatTopology());
-			KeyValuePair kvp = mapFromKeyValue(MdekKeys.REFERENCESYSTEM_ID, data.getRef1SpatialSystem());
+/*
+// moved to general "Raumbezug" section, class independent, processed above !
+			kvp = mapFromKeyValue(MdekKeys.REFERENCESYSTEM_ID, data.getRef1SpatialSystem());
 			if (kvp.getValue() != null || kvp.getKey() != -1) {
 				td1Map.put(MdekKeys.COORDINATE_SYSTEM, kvp.getValue());
 				td1Map.put(MdekKeys.REFERENCESYSTEM_ID, kvp.getKey());
 			}
+*/
 			td1Map.put(MdekKeys.DEGREE_OF_RECORD, data.getRef1Coverage());
 			td1Map.put(MdekKeys.POS_ACCURACY_VERTICAL, data.getRef1AltAccuracy());
 			td1Map.put(MdekKeys.RESOLUTION, data.getRef1PosAccuracy());
@@ -763,7 +795,7 @@ public class MdekMapper implements DataMapperInterface {
 			td1Map.put(MdekKeys.KEY_CATALOG_LIST, mapFromKeyLinkDataTable(data.getRef1KeysText()));
 			td1Map.put(MdekKeys.SPATIAL_REPRESENTATION_TYPE_LIST, data.getRef1Representation());
 			td1Map.put(MdekKeys.GEO_VECTOR_LIST, mapFromVFormatDetailsTable(data.getRef1VFormatDetails()));
-			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_MAP, td1Map);			
+			udkObj.put(MdekKeys.TECHNICAL_DOMAIN_MAP, td1Map);
 			break;
 		case 2:
 			IngridDocument td2Map = new IngridDocument();			

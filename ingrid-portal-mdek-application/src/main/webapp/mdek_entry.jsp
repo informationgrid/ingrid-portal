@@ -515,13 +515,6 @@ function hideSplash(){
 					</span>
 				</div>
 
-	              <div class="inputContainer notRequired">
-                	<span id="uiElement3500" type="optional">
-		                <span class="label"><label for="ref1SpatialSystem" onclick="javascript:dialog.showContextHelp(arguments[0], 3500)"><script>document.write(message.get("ui.obj.type1.spatialSystem"))</script></label></span>
-		                <span class="input"><input dojoType="ingrid:ComboBox" maxlength="120" autoComplete="false" style="width:649px;" listId="100" id="ref1SpatialSystem" /></span>
-					</span>
-	          	  </div>
-
 	              <div class="inputContainer notRequired h130">
                 	<span id="uiElementN002" type="optional">
 		                <span class="label"><label for="ref1Scale" onclick="javascript:dialog.showContextHelp(arguments[0], 3525)"><script>document.write(message.get("ui.obj.type1.scaleTable.title"))</script></label></span>
@@ -1583,6 +1576,13 @@ function hideSplash(){
 		                </div>
 					</span>
 				</div>
+
+                  <div class="inputContainer notRequired">
+                    <span id="uiElement3500" type="optional">
+                        <span class="label"><label for="ref1SpatialSystem" onclick="javascript:dialog.showContextHelp(arguments[0], 3500)"><script>document.write(message.get("ui.obj.type1.spatialSystem"))</script></label></span>
+                        <span class="input"><input dojoType="ingrid:ComboBox" maxlength="120" autoComplete="false" style="width:649px;" listId="100" id="ref1SpatialSystem" /></span>
+                    </span>
+                  </div>
 
 				<div class="inputContainer noSpaceBelow notRequired">
 	                <div class="half left">

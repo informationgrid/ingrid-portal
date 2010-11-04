@@ -95,7 +95,8 @@ function renderNodeData(nodeData) {
 			renderTextWithTitle(nodeData.ref1Coverage, message.get("ui.obj.type1.coverage") + " [%]");
 			renderTextWithTitle(dojo.widget.byId("ref1VFormatTopology")._getDisplayValueForValue(nodeData.ref1VFormatTopology), message.get("ui.obj.type1.vectorFormat.topology"));
 			renderTable(nodeData.ref1VFormatDetails, ["geometryType", "numElements"], [message.get("ui.obj.type1.vectorFormat.detailsTable.header.geoType"), message.get("ui.obj.type1.vectorFormat.detailsTable.header.elementCount")], message.get("ui.obj.type1.vectorFormat.title"), [function(val) {return dojo.widget.byId("geometryTypeEditor")._getDisplayValueForValue(val);}, null]);
-			renderTextWithTitle(nodeData.ref1SpatialSystem, message.get("ui.obj.type1.spatialSystem"));
+			// NOTICE: moved to general section "Raumbezug"
+//			renderTextWithTitle(nodeData.ref1SpatialSystem, message.get("ui.obj.type1.spatialSystem"));
 			renderTable(nodeData.ref1Scale, ["scale", "groundResolution", "scanResolution"], [message.get("ui.obj.type1.scaleTable.header.scale"), message.get("ui.obj.type1.scaleTable.header.groundResolution"), message.get("ui.obj.type1.scaleTable.header.scanResolution")], message.get("ui.obj.type1.scaleTable.title"));
 			renderTextWithTitle(nodeData.ref1AltAccuracy, message.get("ui.obj.type1.sizeAccuracy"));
 			renderTextWithTitle(nodeData.ref1PosAccuracy, message.get("ui.obj.type1.posAccuracy"));
@@ -161,6 +162,9 @@ function renderNodeData(nodeData) {
 		UtilList.addSNSLocationLabels(nodeData.spatialRefAdminUnitTable);
 		renderTable(nodeData.spatialRefAdminUnitTable, ["label", "nativeKey", "longitude1", "latitude1", "longitude2", "latitude2"], [message.get("ui.obj.spatial.geoThesTable.header.name"), message.get("ui.obj.spatial.geoThesTable.header.nativeKey"), message.get("ui.obj.spatial.geoThesTable.header.longitude1"), message.get("ui.obj.spatial.geoThesTable.header.latitude1"), message.get("ui.obj.spatial.geoThesTable.header.longitude2"), message.get("ui.obj.spatial.geoThesTable.header.latitude2")], message.get("dialog.compare.object.spatialTable.title"));
 		renderTable(nodeData.spatialRefLocationTable, ["name", "longitude1", "latitude1", "longitude2", "latitude2"], [message.get("ui.obj.spatial.geoTable.header.name"), message.get("ui.obj.spatial.geoTable.header.longitude1"), message.get("ui.obj.spatial.geoTable.header.latitude1"), message.get("ui.obj.spatial.geoTable.header.longitude2"), message.get("ui.obj.spatial.geoTable.header.latitude2")], message.get("ui.obj.spatial.geoTable.title"));
+        // NOTICE: moved from class 1 to general "Raumbezug"
+        renderTextWithTitle(nodeData.ref1SpatialSystem, message.get("ui.obj.type1.spatialSystem"));
+
 		// create cell render functions
 		function lookupSpatialRefAltMeasure(val) {
 			return dojo.widget.byId("spatialRefAltMeasure")._getDisplayValueForValue(val);

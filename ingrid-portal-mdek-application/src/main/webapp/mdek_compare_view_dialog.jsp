@@ -52,7 +52,8 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 		renderTextWithTitle(nodeDataOld.ref1Coverage, nodeDataNew.ref1Coverage, message.get("ui.obj.type1.coverage") + " [%]");
 		renderTextWithTitle(dojo.widget.byId("ref1VFormatTopology")._getDisplayValueForValue(nodeDataOld.ref1VFormatTopology), dojo.widget.byId("ref1VFormatTopology")._getDisplayValueForValue(nodeDataNew.ref1VFormatTopology), message.get("ui.obj.type1.vectorFormat.topology"));
 		renderTable(nodeDataOld.ref1VFormatDetails, nodeDataNew.ref1VFormatDetails, ["geometryType", "numElements"], [message.get("ui.obj.type1.vectorFormat.detailsTable.header.geoType"), message.get("ui.obj.type1.vectorFormat.detailsTable.header.elementCount")], message.get("ui.obj.type1.vectorFormat.title"), [function(val) {return dojo.widget.byId("geometryTypeEditor")._getDisplayValueForValue(val);}, null]);
-		renderTextWithTitle(nodeDataOld.ref1SpatialSystem, nodeDataNew.ref1SpatialSystem, message.get("ui.obj.type1.spatialSystem"));
+// moved to general "Raumbezug" section, class independent !
+//		renderTextWithTitle(nodeDataOld.ref1SpatialSystem, nodeDataNew.ref1SpatialSystem, message.get("ui.obj.type1.spatialSystem"));
 		renderTable(nodeDataOld.ref1Scale, nodeDataNew.ref1Scale, ["scale", "groundResolution", "scanResolution"], [message.get("ui.obj.type1.scaleTable.header.scale"), message.get("ui.obj.type1.scaleTable.header.groundResolution"), message.get("ui.obj.type1.scaleTable.header.scanResolution")], message.get("ui.obj.type1.scaleTable.title"));
 		renderTextWithTitle(nodeDataOld.ref1AltAccuracy, nodeDataNew.ref1AltAccuracy, message.get("ui.obj.type1.sizeAccuracy"));
 		renderTextWithTitle(nodeDataOld.ref1PosAccuracy, nodeDataNew.ref1PosAccuracy, message.get("ui.obj.type1.posAccuracy"));
@@ -118,6 +119,9 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	UtilList.addSNSLocationLabels(nodeDataOld.spatialRefAdminUnitTable);
 	renderTable(nodeDataOld.spatialRefAdminUnitTable, nodeDataNew.spatialRefAdminUnitTable, ["label", "nativeKey", "longitude1", "latitude1", "longitude2", "latitude2"], [message.get("ui.obj.spatial.geoThesTable.header.name"), message.get("ui.obj.spatial.geoThesTable.header.nativeKey"), message.get("ui.obj.spatial.geoThesTable.header.longitude1"), message.get("ui.obj.spatial.geoThesTable.header.latitude1"), message.get("ui.obj.spatial.geoThesTable.header.longitude2"), message.get("ui.obj.spatial.geoThesTable.header.latitude2")], message.get("dialog.compare.object.spatialTable.title"));
 	renderTable(nodeDataOld.spatialRefLocationTable, nodeDataNew.spatialRefLocationTable, ["name", "longitude1", "latitude1", "longitude2", "latitude2"], [message.get("ui.obj.spatial.geoTable.header.name"), message.get("ui.obj.spatial.geoTable.header.longitude1"), message.get("ui.obj.spatial.geoTable.header.latitude1"), message.get("ui.obj.spatial.geoTable.header.longitude2"), message.get("ui.obj.spatial.geoTable.header.latitude2")], message.get("ui.obj.spatial.geoTable.title"));
+    // former class 1, now general "Raumbezug"
+    renderTextWithTitle(nodeDataOld.ref1SpatialSystem, nodeDataNew.ref1SpatialSystem, message.get("ui.obj.type1.spatialSystem"));
+
 	var altitudeDataOld = [nodeDataOld];
 	var altitudeDataNew = [nodeDataNew];
 	// create cell render functions
@@ -248,9 +252,9 @@ function renderTextWithTitle(oldVal, newVal, title) {
 	oldVal += "";
 	newVal += "";
 
-	dojo.byId("diffContent").innerHTML += "<strong>" + title + "</strong><p>" + diffString(oldVal, newVal) + "</p>";
-	dojo.byId("oldContent").innerHTML += "<strong>" + title + "</strong><p>" + oldVal.replace(/\n/g, "<br />") + "</p>";
-	dojo.byId("currentContent").innerHTML += "<strong>" + title + "</strong><p>" + newVal.replace(/\n/g, "<br />") + "</p>";
+	dojo.byId("diffContent").innerHTML += "<strong>" + title + "</strong><p>" + diffString(oldVal, newVal) + "</p><br/>";
+	dojo.byId("oldContent").innerHTML += "<strong>" + title + "</strong><p>" + oldVal.replace(/\n/g, "<br />") + "</p><br/>";
+	dojo.byId("currentContent").innerHTML += "<strong>" + title + "</strong><p>" + newVal.replace(/\n/g, "<br />") + "</p><br/>";
 }
 
 function renderLinkedObjectListWithTitle(oldList, newList, title) {

@@ -2064,6 +2064,18 @@ udkDataProxy._getObjectData = function(nodeData)
   // last modified date
   nodeData.modificationTime = dojo.byId("modificationTime").innerHTML;
 
+  // NOTICE: some stuff was moved from class specific domain map ("Fachbezug") to general sections (in GUI).
+  // this stuff has to be processed here, before doing class specific stuff !
+
+  // former class 1, now general "Raumbezug"
+    // The spatial system table is a combobox that allows free entries but also entries associated with IDs
+    // If we have a free entry the reference system ID = -1
+//  nodeData.ref1SpatialSystemId = dojo.widget.byId("ref1SpatialSystem").getIdValue();
+//  if (nodeData.ref1SpatialSystemId == -1)
+//      nodeData.ref1SpatialSystem = dojo.widget.byId("ref1SpatialSystem").getValue();
+    nodeData.ref1SpatialSystem = dojo.widget.byId("ref1SpatialSystem").getValue();
+
+
   // -- Check which object type was received and fill the appropriate fields --
   switch (nodeData.objectClass)
   {
@@ -2105,14 +2117,15 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
 	nodeData.ref1DataSet = dojo.widget.byId("ref1DataSet").getValue();
 	nodeData.ref1Coverage = dojo.widget.byId("ref1Coverage").getValue();
 	nodeData.ref1VFormatTopology = dojo.widget.byId("ref1VFormatTopology").getValue();
-
+/*
+// moved to general "Raumbezug" section, class independent, processed above ! 
 	// The spatial system table is a combobox that allows free entries but also entries associated with IDs
 	// If we have a free entry the reference system ID = -1
 //	nodeData.ref1SpatialSystemId = dojo.widget.byId("ref1SpatialSystem").getIdValue();
 //	if (nodeData.ref1SpatialSystemId == -1)
 //		nodeData.ref1SpatialSystem = dojo.widget.byId("ref1SpatialSystem").getValue();
 	nodeData.ref1SpatialSystem = dojo.widget.byId("ref1SpatialSystem").getValue();
-
+*/
 	nodeData.ref1AltAccuracy = dojo.widget.byId("ref1AltAccuracy").getValue();
 	nodeData.ref1PosAccuracy = dojo.widget.byId("ref1PosAccuracy").getValue();
 	nodeData.ref1BasisText = dojo.widget.byId("ref1BasisText").getValue();

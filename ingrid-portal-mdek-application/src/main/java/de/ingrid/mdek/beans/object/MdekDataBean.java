@@ -117,6 +117,7 @@ public class MdekDataBean {
 	private List<Integer> ref1Representation;	
 	private Integer ref1VFormatTopology;
 	private List<VectorFormatDetailsBean> ref1VFormatDetails;
+	/** NOTICE: moved to general "Raumbezug" for all objects ! */
 	private String ref1SpatialSystem;
 	private List<ScaleBean> ref1Scale;
 	private Double ref1AltAccuracy;
