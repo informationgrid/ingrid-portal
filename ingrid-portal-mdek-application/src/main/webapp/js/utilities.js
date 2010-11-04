@@ -538,6 +538,15 @@ UtilUdk.isObjectSelected = function() {
 	}
 }
 
+// check whether INSPIRE terms are in thesaurusInspireTermsList (from nodeData)  
+UtilUdk.isInspire = function(thesaurusInspireTermsList) {
+    if (dojo.lang.some(thesaurusInspireTermsList, function(iTermKey) {
+       return (dojo.string.trim(iTermKey) != "99999"); })) {
+	   return true;
+    }	
+	return false;
+}
+
 UtilUdk.getCurrentObjectClass = function() {	
 	var objectClassWidget = dojo.widget.byId("objectClass");
 	if (typeof(objectClassWidget) == "undefined") {

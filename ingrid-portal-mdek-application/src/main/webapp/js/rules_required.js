@@ -9,7 +9,7 @@
 
 dojo.addOnLoad(function() {
 	// RULE 1
-	// Applies to: erfassung object -> geoinfo/karte -> fachbezug -> digitale repräsentation Id = ref1Representation
+	// Applies to: erfassung object -> geoinfo/karte -> fachbezug -> digitale reprï¿½sentation Id = ref1Representation
 	// Rule: If value = 'Vector' then Vektorformat (below) is required
 	var representationTable = dojo.widget.byId("ref1Representation");
 	if (representationTable) {
@@ -108,6 +108,16 @@ dojo.addOnLoad(function() {
 		dojo.event.connect(spatialRefAltVDate, "onValueChanged", function(val) {applyRule6();});
 	}
 	applyRule6();
+
+
+	// RULE 7
+	// Set fields required if INSPIRE theme selected
+
+    var thesaurusInspire = dojo.widget.byId("thesaurusInspire");
+    if (thesaurusInspire) {
+        dojo.event.connect(thesaurusInspire, "onValueChanged", function(val) {applyRule7();});
+    }
+    applyRule7();
 });
 
 function applyRule1() {
@@ -223,4 +233,15 @@ function applyRule6() {
 		setRequiredState(dojo.byId("spatialRefAltMeasureLabel"), dojo.byId("uiElement5021"), false);
 		setRequiredState(dojo.byId("spatialRefAltVDateLabel"), dojo.byId("uiElement5022"), false);
 	}
+}
+
+// If INSPIRE theme make additional fields mandatory
+function applyRule7() {
+	var termsList = UtilList.tableDataToList(dojo.widget.byId("thesaurusInspire").store.getData());
+
+    if (UtilUdk.isInspire(termsList)) {
+        setRequiredState(dojo.byId("ref1SpatialSystemLabel"), dojo.byId("uiElement3500"), true);
+    } else {
+        setRequiredState(dojo.byId("ref1SpatialSystemLabel"), dojo.byId("uiElement3500"), false);
+    }
 }

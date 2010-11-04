@@ -53,7 +53,7 @@ var labels = ["objectNameLabel", "objectClassLabel", "objectOwnerLabel", "genera
 			  "addressTypeLabel", "addressOwnerLabel", "headerAddressType0UnitLabel", "headerAddressType1UnitLabel", "headerAddressType2LastnameLabel",
 			  "headerAddressType2StyleLabel", "headerAddressType3LastnameLabel", "headerAddressType3StyleLabel",
 			  "addressComLabel", "addressStreetLabel", "addressCountryLabel", "addressZipCodeLabel", "addressCityLabel", "addressPOBoxLabel",
-			  "addressZipPOBoxLabel"];
+			  "addressZipPOBoxLabel", "ref1SpatialSystemLabel"];
 
 
 var notEmptyFields = [["objectName", "objectNameLabel"],
@@ -235,6 +235,15 @@ function isObjectPublishable(idcObject) {
 		dojo.html.addClass(dojo.byId("thesaurusEnvCatsLabel"), "important");		
 		dojo.debug("If one of the 'Umweltthemen' contains an entry, both of them need to contain at least one entry.");
 		publishable = false;
+	}
+
+    // Check whether INSPIRE term set and check additional required fields !
+    if (UtilUdk.isInspire(idcObject.thesaurusInspireTermsList)) {
+	   if (!idcObject.ref1SpatialSystem || idcObject.ref1SpatialSystem == "") {
+            dojo.html.addClass(dojo.byId("ref1SpatialSystemLabel"), "important");
+            dojo.debug("Field 'ref1SpatialSystem' empty but required due to set INSPIRE theme !.");
+            publishable = false;
+        }
 	}
 
 	// Check the required fields per object class:
