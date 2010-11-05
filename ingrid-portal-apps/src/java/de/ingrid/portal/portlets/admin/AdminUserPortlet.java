@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006 wemove digital solutions. All rights reserved.
+
  */
 package de.ingrid.portal.portlets.admin;
 
@@ -9,6 +9,7 @@ import java.security.Permission;
 import java.security.Permissions;
 import java.security.Principal;
 import java.security.PrivilegedAction;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -30,7 +31,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.security.auth.Subject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -54,16 +54,17 @@ import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.User;
 import org.apache.jetspeed.security.UserManager;
 import org.apache.jetspeed.security.UserPrincipal;
-import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ActionForm;
 import de.ingrid.portal.forms.AdminUserForm;
-import de.ingrid.portal.forms.ContactForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -72,6 +73,7 @@ import de.ingrid.portal.global.UtilsSecurity;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridNewsletterData;
+import de.ingrid.portal.om.IngridSecurityCredential;
 import de.ingrid.portal.portlets.security.SecurityResources;
 import de.ingrid.portal.portlets.security.SecurityUtil;
 import de.ingrid.portal.security.permission.IngridPartnerPermission;
@@ -90,6 +92,8 @@ public class AdminUserPortlet extends ContentPortlet {
     private final static Log log = LogFactory.getLog(AdminUserPortlet.class);
 
     private static final String KEY_ENTITIES = "entities";
+    
+    private static final String GUEST = "guest";
 
     // Init Parameters
     private static final String IP_ROLES = "roles"; // comma separated
@@ -102,10 +106,6 @@ public class AdminUserPortlet extends ContentPortlet {
 
     private static final String IP_EMAIL_TEMPLATE = "emailTemplate";
 
-    /** limit upon the number of rows to be retrieved */
-    protected static int MAX_ROWS_PER_TABLE = 100;
-    
-    
     private PortalAdministration admin;
 
     private UserManager userManager;
@@ -152,7 +152,7 @@ public class AdminUserPortlet extends ContentPortlet {
                 PortletSession.APPLICATION_SCOPE);
         if (state == null) {
             state = new ContentBrowserState();
-            state.setMaxRows(MAX_ROWS_PER_TABLE);
+            state.setMaxRows(PortalConfig.getInstance().getInt(PortalConfig.USER_ADMIN_MAX_ROW));
             setBrowserState(request, state);
         }
         return state;
@@ -456,33 +456,52 @@ public class AdminUserPortlet extends ContentPortlet {
             // iterate over all users
             Iterator users = userManager.getUsers("");
             while (users.hasNext()) {
-                User user = (User) users.next();
+            	User user = (User) users.next();
                 Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
-                Permissions userPermissions = SecurityHelper.getMergedPermissions(userPrincipal, permissionManager,
-                        roleManager);
-
-                // get the user roles
-                Collection userRoles = roleManager.getRolesForUser(userPrincipal.getName());
-
-                boolean addUser = includeUserByRoleAndPermission(authUserPermissions, userRoles, userPermissions);
-
-                if (addUser) {
-                    HashMap record = new HashMap();
-                    record.put("id", userPrincipal.getName());
-                    record.put("firstName", user.getUserAttributes().get(SecurityResources.USER_NAME_GIVEN, ""));
-                    record.put("lastName", user.getUserAttributes().get(SecurityResources.USER_NAME_FAMILY, ""));
-                    record.put("email", user.getUserAttributes().get("user.business-info.online.email", ""));
-                    String roleString = "";
-                    Iterator it = userRoles.iterator();
-                    while (it.hasNext()) {
-                        Role r = (Role) it.next();
-                        roleString = roleString.concat(r.getPrincipal().getName());
-                        if (it.hasNext()) {
-                            roleString = roleString.concat(", ");
-                        }
-                    }
-                    record.put("roles", roleString);
-                    rows.add(record);
+                if(!userPrincipal.getName().equals(AdminUserPortlet.GUEST)){
+	                Permissions userPermissions = SecurityHelper.getMergedPermissions(userPrincipal, permissionManager,
+	                        roleManager);
+	
+	                // get the user roles
+	                Collection userRoles = roleManager.getRolesForUser(userPrincipal.getName());
+	
+	                boolean addUser = includeUserByRoleAndPermission(authUserPermissions, userRoles, userPermissions);
+	
+	                if (addUser) {
+	                    HashMap record = new HashMap();
+	                    record.put("id", userPrincipal.getName());
+	                    record.put("firstName", user.getUserAttributes().get(SecurityResources.USER_NAME_GIVEN, ""));
+	                    record.put("lastName", user.getUserAttributes().get(SecurityResources.USER_NAME_FAMILY, ""));
+	                    record.put("email", user.getUserAttributes().get("user.business-info.online.email", ""));
+	                    String roleString = "";
+	                    Iterator it = userRoles.iterator();
+	                    while (it.hasNext()) {
+	                        Role r = (Role) it.next();
+	                        roleString = roleString.concat(r.getPrincipal().getName());
+	                        if (it.hasNext()) {
+	                            roleString = roleString.concat(", ");
+	                        }
+	                    }
+	                    record.put("roles", roleString);
+	                    
+	                    Session session = HibernateUtil.currentSession();
+	                	ProjectionList projList = Projections.projectionList();
+	                	projList.add(Projections.groupProperty("securityLastAuthDate"));
+	                	Criteria crit = session.createCriteria(IngridSecurityCredential.class)
+	                    .setProjection(projList)
+	                    .add(Restrictions.sqlRestriction("PRINCIPAL_ID = (SELECT PRINCIPAL_ID FROM security_principal where FULL_PATH = '/user/" + userPrincipal.getName()+ "')"));
+	                   
+	            		List lastLogin = UtilsDB.getValuesFromDB(crit, session, null, true);
+	            		Object lastLoginDate;
+	            		if(lastLogin.size() > 0){
+	            			lastLoginDate = lastLogin.get(0);
+	            			record.put("lastLogin", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(lastLoginDate));
+	            		}else{
+	            			record.put("lastLogin", "");
+	            		}
+	                    
+	                    rows.add(record);
+	                }
                 }
             }
         } catch (SecurityException e) {
@@ -683,11 +702,25 @@ public class AdminUserPortlet extends ContentPortlet {
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionUpdate(javax.portlet.ActionRequest)
      */
     protected void doActionUpdate(ActionRequest request) {
-        AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
+    	Principal authUserPrincipal = request.getUserPrincipal();
+    	Permissions authUserPermissions = SecurityHelper.getMergedPermissions(authUserPrincipal, permissionManager,
+                roleManager);
+    	Permissions userPermissions = SecurityHelper.getMergedPermissions(authUserPrincipal, permissionManager,
+                roleManager);
+    	Collection userRoles;
+    	boolean isAdmin = false;
+    	
+		try {
+			userRoles = roleManager.getRolesForUser(authUserPrincipal.getName());
+			isAdmin = includeUserByRoleAndPermission(authUserPermissions, userRoles, userPermissions);
+		} catch (SecurityException e1) {
+			e1.printStackTrace();
+		}
+    	AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
         f.clearErrors();
         f.clearMessages();
         f.populate(request);
-        if (!f.validate()) {
+        if (!f.validate(isAdmin)) {
             return;
         }
 
@@ -723,11 +756,15 @@ public class AdminUserPortlet extends ContentPortlet {
                         .getInput(AdminUserForm.FIELD_SUBSCRIBE_NEWSLETTER));
                 try {
                     // update password only if a old password was provided
-                    String oldPassword = f.getInput(AdminUserForm.FIELD_PASSWORD_OLD);
-                    if (oldPassword != null && oldPassword.length() > 0) {
-                        userManager.setPassword(userName, f.getInput(AdminUserForm.FIELD_PASSWORD_OLD), f
-                                .getInput(AdminUserForm.FIELD_PASSWORD_NEW));
-                    }
+                	if(isAdmin){
+                		userManager.setPassword(userName, null, f.getInput(AdminUserForm.FIELD_PASSWORD_NEW));
+                	}else{
+                		String oldPassword = f.getInput(AdminUserForm.FIELD_PASSWORD_OLD);
+                        if (oldPassword != null && oldPassword.length() > 0) {
+                            userManager.setPassword(userName, f.getInput(AdminUserForm.FIELD_PASSWORD_OLD), 
+						                            f.getInput(AdminUserForm.FIELD_PASSWORD_NEW));
+                        }
+                	}
                 } catch (PasswordAlreadyUsedException e) {
                     f.setError(AdminUserForm.FIELD_PASSWORD_NEW, "account.edit.error.password.in.use");
                     return;

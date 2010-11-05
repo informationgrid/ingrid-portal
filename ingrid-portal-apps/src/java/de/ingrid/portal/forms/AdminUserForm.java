@@ -121,7 +121,11 @@ public class AdminUserForm extends ActionForm {
     /**
      * @see de.ingrid.portal.forms.ActionForm#validate()
      */
-    public boolean validate() {
+    public boolean validate(){
+    	return validate(false);
+    }
+    
+    public boolean validate(boolean isAdmin) {
         boolean allOk = true;
         clearErrors();
 
@@ -158,10 +162,12 @@ public class AdminUserForm extends ActionForm {
                 allOk = false;
             }
         } else {
-            if (!hasInput(FIELD_PASSWORD_OLD) && hasInput(FIELD_PASSWORD_NEW)) {
-                setError(FIELD_PASSWORD_OLD, "account.edit.error.noPasswordOld");
-                setInput(FIELD_TAB, "1");
-                allOk = false;
+            if(!isAdmin){
+	        	if (!hasInput(FIELD_PASSWORD_OLD) && hasInput(FIELD_PASSWORD_NEW)) {
+	                setError(FIELD_PASSWORD_OLD, "account.edit.error.noPasswordOld");
+	                setInput(FIELD_TAB, "1");
+	                allOk = false;
+	            }
             }
             if (hasInput(FIELD_PASSWORD_OLD) && !hasInput(FIELD_PASSWORD_NEW)) {
                 setError(FIELD_PASSWORD_NEW, "account.edit.error.noPasswordNew");

@@ -147,8 +147,10 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String ENABLE_PIWIK = "portal.enable.piwik";
     
     // Hidden iPlug ID list
-    public static final String HIDE_IPLUG_ID_LIST= "hide.in.connected.iplugs";
-        
+    public static final String HIDE_IPLUG_ID_LIST = "hide.in.connected.iplugs";
+    
+    // User admin: show max row of users in a table
+    public static final String USER_ADMIN_MAX_ROW = "admin.user.max.row";
 	// private stuff
     private static PortalConfig instance = null;
 
