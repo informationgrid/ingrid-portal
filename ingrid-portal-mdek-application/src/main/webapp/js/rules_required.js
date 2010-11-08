@@ -9,7 +9,7 @@
 
 dojo.addOnLoad(function() {
 	// RULE 1
-	// Applies to: erfassung object -> geoinfo/karte -> fachbezug -> digitale repr�sentation Id = ref1Representation
+	// Applies to: erfassung object -> geoinfo/karte -> fachbezug -> digitale repraesentation Id = ref1Representation
 	// Rule: If value = 'Vector' then Vektorformat (below) is required
 	var representationTable = dojo.widget.byId("ref1Representation");
 	if (representationTable) {
@@ -115,7 +115,11 @@ dojo.addOnLoad(function() {
 
     var thesaurusInspire = dojo.widget.byId("thesaurusInspire");
     if (thesaurusInspire) {
-        dojo.event.connect(thesaurusInspire, "onValueChanged", function(val) {applyRule7();});
+	  dojo.event.connect(thesaurusInspire, "onValueChanged", function(obj, field) {applyRule7();});
+      dojo.event.connect(thesaurusInspire, "onValueAdded", function(obj) {applyRule7();});
+      dojo.event.connect(thesaurusInspire, "onValueDeleted", function(obj) {applyRule7();});
+      dojo.event.connect(thesaurusInspire.store, "onSetData", function() {applyRule7();});
+      dojo.event.connect(thesaurusInspire.store, "onAddData", function(obj) {applyRule7();});
     }
     applyRule7();
 });
@@ -244,4 +248,10 @@ function applyRule7() {
     } else {
         setRequiredState(dojo.byId("ref1SpatialSystemLabel"), dojo.byId("uiElement3500"), false);
     }
+	
+	// update sections, so new required fields are shown !
+	// we do this manually, does not work inside of setRequiredState ???
+	var sectionName = "spatialRef";
+	var mode = UtilUI.getCurrentExpandModeOfSectionElement(dojo.byId(sectionName));
+	toggleFields(sectionName, mode);
 }

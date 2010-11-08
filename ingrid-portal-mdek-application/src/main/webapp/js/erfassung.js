@@ -104,12 +104,12 @@ function toggleFields(section, /* optional */ mode, /* optional flag */ refreshC
 //		dojo.debug("number of span elements: "+allSpanElements.length);
 
 		if (typeof(mode) == "undefined") {
-			if (typeof(sectionElement.isExpanded) == "undefined" || sectionElement.isExpanded == false) {
-				mode = "showAll";
-	
-			} else {
-				mode = "showRequired";
-			}			
+            var currentMode = UtilUI.getCurrentExpandModeOfSectionElement(sectionElement);
+			if (currentMode == "showAll") {
+                mode = "showRequired";
+            } else {
+                mode = "showAll";
+            }
 		}
 
 		if (mode == "showAll") {

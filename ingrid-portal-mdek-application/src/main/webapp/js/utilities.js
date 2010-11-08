@@ -1074,6 +1074,14 @@ UtilUI.isNewNodeId = function(nodeId) {
 	return nodeId == "newNode";
 }
 
+// get current mode of section element, to be passed to toggleFields for refresh !
+UtilUI.getCurrentExpandModeOfSectionElement = function(sectionElement) {
+    if (typeof(sectionElement.isExpanded) == "undefined" || sectionElement.isExpanded == false) {
+      return "showRequired";
+    }
+	return "showAll";
+}
+
 // General utility functions for converting strings, etc.
 var UtilGeneral = {}
 
