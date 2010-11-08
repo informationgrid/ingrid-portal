@@ -19,6 +19,8 @@
               <input class="indent1_checkbox" type="checkbox" name="meta" id="chk_meta_4" value="meta_4"#getChecked("meta" "meta_4") /><label for="chk_meta_4">$MESSAGES.getString('searchExtEnvAreaSources.meta5')</label>
     	        <br />                                                                                                                                       
               <input class="indent1_checkbox" type="checkbox" name="meta" id="chk_meta_5" value="meta_5"#getChecked("meta" "meta_5") /><label for="chk_meta_5">$MESSAGES.getString('searchExtEnvAreaSources.meta6')</label>
+                <br />                                                                                                                                       
+              <input class="indent1_checkbox" type="checkbox" name="meta" id="chk_meta_6" value="meta_6"#getChecked("meta" "meta_6") /><label for="chk_meta_6">$MESSAGES.getString('searchExtEnvAreaSources.meta7')</label>
             </p> 
 #else
 			<p>
@@ -42,6 +44,8 @@
               <input class="indent2_checkbox" type="checkbox" name="meta" id="chk_meta_4" onclick="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" onkeypress="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" value="meta_4"#getChecked("meta" "meta_4") /><label for="chk_meta_4">$MESSAGES.getString('searchExtEnvAreaSources.meta5')</label>
     	        <br />                                                                                                                                       
               <input class="indent2_checkbox" type="checkbox" name="meta" id="chk_meta_5" onclick="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" onkeypress="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" value="meta_5"#getChecked("meta" "meta_5") /><label for="chk_meta_5">$MESSAGES.getString('searchExtEnvAreaSources.meta6')</label>
+                <br />                                                                                                                                       
+              <input class="indent2_checkbox" type="checkbox" name="meta" id="chk_meta_6" onclick="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" onkeypress="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" value="meta_6"#getChecked("meta" "meta_6") /><label for="chk_meta_6">$MESSAGES.getString('searchExtEnvAreaSources.meta7')</label>
             </p> 
             <p>
               <input class="indent1_checkbox" type="checkbox" name="sources" id="chk_fis" onclick="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" onkeypress="ingrid_checkGroupAdapt(document.selection_form.meta, document.selection_form.sources)" value="fis"#getChecked("sources" "fis") /><label for="chk_fis">In <acronym title="$MESSAGES.getString('searchExtEnvAreaSources.fis.acronym')">$MESSAGES.getString('searchExtEnvAreaSources.fis')</acronym></label>

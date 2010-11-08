@@ -31,6 +31,7 @@ public class SearchExtEnvAreaSourcesForm extends ActionForm {
     public static final String VALUE_META_3 = "meta_3";
     public static final String VALUE_META_4 = "meta_4";
     public static final String VALUE_META_5 = "meta_5";
+    public static final String VALUE_META_6 = "meta_6";
     public static final String VALUE_SOURCE_FIS = "fis";
     
     /**

@@ -1283,6 +1283,8 @@ public class UtilsSearch {
         resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS + ":"
                 + Settings.QVALUE_METACLASS_SERVICE, "");
         resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS + ":"
+            + Settings.QVALUE_METACLASS_GEOSERVICE, "");
+        resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS + ":"
                 + Settings.QVALUE_METACLASS_DOCUMENT, "");
         resultingQueryStr = UtilsQueryString.replaceTerm(resultingQueryStr, Settings.QFIELD_METACLASS + ":"
                 + Settings.QVALUE_METACLASS_MAP, "");
@@ -1341,13 +1343,16 @@ public class UtilsSearch {
                 metaclasses.put(Settings.QFIELD_METACLASS + ":" + Settings.QVALUE_METACLASS_DOCUMENT, "1");
             }
             if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_3)) {
-                metaclasses.put(Settings.QFIELD_METACLASS + ":" + Settings.QVALUE_METACLASS_SERVICE, "1");
+                metaclasses.put(Settings.QFIELD_METACLASS + ":" + Settings.QVALUE_METACLASS_GEOSERVICE, "1");
             }
             if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_4)) {
                 metaclasses.put(Settings.QFIELD_METACLASS + ":" + Settings.QVALUE_METACLASS_PROJECT, "1");
             }
             if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_5)) {
                 metaclasses.put(Settings.QFIELD_METACLASS + ":" + Settings.QVALUE_METACLASS_DATABASE, "1");
+            }
+            if (meta[i].equals(SearchExtEnvAreaSourcesForm.VALUE_META_6)) {
+              metaclasses.put(Settings.QFIELD_METACLASS + ":" + Settings.QVALUE_METACLASS_SERVICE, "1");
             }
         }
         // remove meta exclusion if we have a meta data class selection

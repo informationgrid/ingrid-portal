@@ -148,6 +148,7 @@ public class Settings {
     public static final String QVALUE_METACLASS_JOB = "job";
     public static final String QVALUE_METACLASS_MAP = "map";
     public static final String QVALUE_METACLASS_DOCUMENT = "document";
+    public static final String QVALUE_METACLASS_GEOSERVICE = "geoservice";
     public static final String QVALUE_METACLASS_SERVICE = "service";
     public static final String QVALUE_METACLASS_PROJECT = "project";
     public static final String QVALUE_METACLASS_DATABASE = "database";
