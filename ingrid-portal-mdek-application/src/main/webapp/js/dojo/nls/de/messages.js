@@ -711,7 +711,7 @@
 	"ui.3400.description":"Vorhaben/Projekt/Programm - Fachbezug - Projektleiter",
 	"ui.3410.description":"Vorhaben/Projekt/Programm - Fachbezug - Beteiligte",
 	"ui.3420.description":"Vorhaben/Projekt/Programm - Fachbezug - Erl&auml;uterungen",
-	"ui.3500.description":"Geo-Information/Karte - Fachbezug - Raumbezugssystem",
+	"ui.3500.description":"Raumbezugssystem - Raumbezugssystem",
 	"ui.3515.description":"Geo-Information/Karte - Fachbezug - Herstellungsprozess",
 	"ui.3520.description":"Geo-Information/Karte - Fachbezug - Fachliche Grundlage",
 	"ui.3530.description":"Geo-Information/Karte - Fachbezug - Lagegenauigkeit (m)",
