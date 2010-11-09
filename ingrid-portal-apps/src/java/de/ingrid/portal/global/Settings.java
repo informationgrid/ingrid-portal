@@ -210,7 +210,10 @@ public class Settings {
     // ===========================================
 
     public final static String HIT_KEY_WMS_URL = "T011_obj_serv_op_connpoint.connect_point";
-
+    
+    // needed to determine the display of the "show in map" link 
+    public final static String HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT = "t011_obj_serv.has_access_constraint";
+    
     public final static String HIT_KEY_OBJ_ID = "T01_object.obj_id";
 
     // mapped ! NO, NOT MAPPED ANYMORE in Plug Description, instead in iBus when querying.

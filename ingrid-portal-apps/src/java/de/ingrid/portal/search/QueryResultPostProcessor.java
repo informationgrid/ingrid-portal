@@ -247,30 +247,35 @@ public class QueryResultPostProcessor {
             	obj = detail.get(Settings.HIT_KEY_WMS_URL.toLowerCase());
             }
             if (obj != null && WMSInterfaceImpl.getInstance().hasWMSViewer()) {
-                tmpString = "";
-                if (obj instanceof String[]) {
-                    // PATCH for wrong data in database -> service string was passed multiple times !
-                	// only show FIRST (!!!! This is an assumption that has been made to reduce the effort!!! ) WMS getCapabilities URL
-                	String[] servicesArray = (String[]) obj;
-                     for (int j = 0; j < servicesArray.length; j++) {
-                         if (servicesArray[j].toLowerCase().indexOf("service=wms") > -1 && servicesArray[j].toLowerCase().indexOf("request=getcapabilities") > -1) {
-                         	tmpString = servicesArray[j];
-                         	break;
-                         }
-                     }
-                } else {
-                    tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_WMS_URL);
-                    // only show WMS getCapabilities URL
-                    if (tmpString.toLowerCase().indexOf("service=wms") == -1 || tmpString.toLowerCase().indexOf("request=getcapabilities") == -1) {
-                    	tmpString = "";
-                    }
-                }
-                if (tmpString.length() > 0) {
-                    try {
-                        hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString.trim(), "UTF-8"));
-                    } catch (UnsupportedEncodingException e) {
-                        log.error("Error url encoding wms URL!", e);
-                    }
+                boolean objServHasAccessConstraint = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT).equals("Y") ? true : false;
+                
+                if (!objServHasAccessConstraint) {
+  
+                  tmpString = "";
+                  if (obj instanceof String[]) {
+                      // PATCH for wrong data in database -> service string was passed multiple times !
+                  	// only show FIRST (!!!! This is an assumption that has been made to reduce the effort!!! ) WMS getCapabilities URL
+                  	String[] servicesArray = (String[]) obj;
+                       for (int j = 0; j < servicesArray.length; j++) {
+                           if (servicesArray[j].toLowerCase().indexOf("service=wms") > -1 && servicesArray[j].toLowerCase().indexOf("request=getcapabilities") > -1) {
+                           	tmpString = servicesArray[j];
+                           	break;
+                           }
+                       }
+                  } else {
+                      tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_WMS_URL);
+                      // only show WMS getCapabilities URL
+                      if (tmpString.toLowerCase().indexOf("service=wms") == -1 || tmpString.toLowerCase().indexOf("request=getcapabilities") == -1) {
+                      	tmpString = "";
+                      }
+                  }
+                  if (tmpString.length() > 0) {
+                      try {
+                          hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString.trim(), "UTF-8"));
+                      } catch (UnsupportedEncodingException e) {
+                          log.error("Error url encoding wms URL!", e);
+                      }
+                  }
                 }
             }
             
