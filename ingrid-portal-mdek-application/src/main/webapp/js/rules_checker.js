@@ -53,7 +53,7 @@ var labels = ["objectNameLabel", "objectClassLabel", "objectOwnerLabel", "genera
 			  "addressTypeLabel", "addressOwnerLabel", "headerAddressType0UnitLabel", "headerAddressType1UnitLabel", "headerAddressType2LastnameLabel",
 			  "headerAddressType2StyleLabel", "headerAddressType3LastnameLabel", "headerAddressType3StyleLabel",
 			  "addressComLabel", "addressStreetLabel", "addressCountryLabel", "addressZipCodeLabel", "addressCityLabel", "addressPOBoxLabel",
-			  "addressZipPOBoxLabel", "ref1SpatialSystemLabel"];
+			  "addressZipPOBoxLabel", "ref1SpatialSystemLabel", "availabilityDataFormatLabel"];
 
 
 var notEmptyFields = [["objectName", "objectNameLabel"],
@@ -186,7 +186,6 @@ function isObjectPublishable(idcObject) {
 		publishable = false;
 	}
 
-
 	// Check if one of the 'Raumbezug' tables has an entry with a bounding box
 	var snsData = idcObject.spatialRefAdminUnitTable;
 	var freeData = idcObject.spatialRefLocationTable;
@@ -239,12 +238,32 @@ function isObjectPublishable(idcObject) {
 
     // Check whether INSPIRE term set and check additional required fields !
     if (UtilUdk.isInspire(idcObject.thesaurusInspireTermsList)) {
+
+	   // check if spatial reference is set !
 	   if (!idcObject.ref1SpatialSystem || idcObject.ref1SpatialSystem == "") {
             dojo.html.addClass(dojo.byId("ref1SpatialSystemLabel"), "important");
             dojo.debug("Field 'ref1SpatialSystem' empty but required due to set INSPIRE theme !.");
             publishable = false;
         }
-	}
+
+        // Check if the availabilityDataFormat table is not empty and contains valid input (both name and version must contain data)
+        var dataFormatData = idcObject.availabilityDataFormatTable;
+		var missingData = false; 
+        if (dataFormatData.length == 0) {
+            dojo.debug("Table 'availabilityDataFormatTable' empty but required.");
+			missingData = true;
+        } else {
+            if (dojo.lang.some(dataFormatData, function(dataFormat) {
+                return (UtilString.noContent(dataFormat.name) || UtilString.noContent(dataFormat.version)); })) {
+                dojo.debug("All entries in the 'availabilityDataFormatTable' table must have a valid name and version.");
+                missingData = true;
+            }
+		}
+		if (missingData) {
+            dojo.html.addClass(dojo.byId("availabilityDataFormatLabel"), "important");
+            publishable = false;
+		}
+    }
 
 	// Check the required fields per object class:
 	switch (""+idcObject.objectClass)

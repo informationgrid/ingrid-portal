@@ -1918,7 +1918,7 @@ function hideSplash(){
 
 	              <div class="inputContainer notRequired h130">
 					<span id="uiElement1320" type="optional">
-		                <span class="label"><label for="availabilityDataFormat" onclick="javascript:dialog.showContextHelp(arguments[0], 1320)"><script>document.write(message.get("ui.obj.availability.dataFormatTable.title"))</script></label></span>
+		                <span id="availabilityDataFormatLabel" class="label"><label for="availabilityDataFormat" onclick="javascript:dialog.showContextHelp(arguments[0], 1320)"><script>document.write(message.get("ui.obj.availability.dataFormatTable.title"))</script></label></span>
 		                <div class="tableContainer rows4 full">
 		                  <div class="cellEditors" id="availabilityDataFormatEditors">
 	                        <div dojoType="ingrid:ComboBox" maxlength="80" toggle="plain" style="width:150px;" listId="1320" widgetId="availabilityDataFormatName"></div>

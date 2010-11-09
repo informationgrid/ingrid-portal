@@ -245,13 +245,17 @@ function applyRule7() {
 
     if (UtilUdk.isInspire(termsList)) {
         setRequiredState(dojo.byId("ref1SpatialSystemLabel"), dojo.byId("uiElement3500"), true);
+        setRequiredState(dojo.byId("availabilityDataFormatLabel"), dojo.byId("uiElement1320"), true);
     } else {
         setRequiredState(dojo.byId("ref1SpatialSystemLabel"), dojo.byId("uiElement3500"), false);
+        setRequiredState(dojo.byId("availabilityDataFormatLabel"), dojo.byId("uiElement1320"), false);
     }
 	
 	// update sections, so new required fields are shown !
 	// we do this manually, does not work inside of setRequiredState ???
-	var sectionName = "spatialRef";
-	var mode = UtilUI.getCurrentExpandModeOfSectionElement(dojo.byId(sectionName));
-	toggleFields(sectionName, mode);
+	var sectionNames = new Array("spatialRef", "availability");
+	for (var i=0; i<sectionNames.length; i++) {
+        var mode = UtilUI.getCurrentExpandModeOfSectionElement(dojo.byId(sectionNames[i]));
+        toggleFields(sectionNames[i], mode);
+	}
 }

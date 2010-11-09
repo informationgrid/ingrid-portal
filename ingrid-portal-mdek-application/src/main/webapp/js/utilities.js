@@ -1041,6 +1041,10 @@ UtilString.compare = function(a, b) {
 UtilString.compareIgnoreCase = function(a, b) {
 	return UtilString.compare(a.toLowerCase(), b.toLowerCase());
 }
+// check passed string: returns true if undefined or null or length==0 
+UtilString.noContent = function(stringValue) {
+    return (typeof(stringValue) == "undefined" || stringValue == null || dojo.string.trim(stringValue).length == 0);
+}
 
 // Utility functions needed for workflow control
 var UtilQA = {}
