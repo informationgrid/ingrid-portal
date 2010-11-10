@@ -263,6 +263,22 @@ function isObjectPublishable(idcObject) {
             dojo.html.addClass(dojo.byId("availabilityDataFormatLabel"), "important");
             publishable = false;
 		}
+
+        // Check if "Datenverantwortung" address is set. "Auskunft" address already checked above, is always mandatory !
+		// Datenverantwortung = entry id 2 in syslist 505
+		// NOTICE: we check via String in dojo widget. addressData bean not updated correctly if directly published (without working save)
+
+		// Get the string (from the syslist) that is used to identify Datenverantwortung entries
+        var dvString = dojo.widget.byId("generalAddressCombobox").getDisplayValueForValue(2);
+
+	    // Check if at least one entry exists with the correct relation type
+// DOES NOT WORK IF DIRECTLY PUBLISHED AFTER ADDRESS WAS CORRECTLY SET (wrong data in address bean) !
+//        if (dojo.lang.every(addressData, function(addressRef) { return (addressRef.typeOfRelation != 2); })) {
+        if (dojo.lang.every(addressData, function(addressRef) { return ( dojo.string.trim(addressRef.nameOfRelation) != dvString); })) {
+            dojo.html.addClass(dojo.byId("generalAddressTableLabel"), "important");
+            dojo.debug("At least one address relation has to be of type 2 = 'Datenvarantwortung'.");
+            publishable = false;
+        }
     }
 
 	// Check the required fields per object class:
