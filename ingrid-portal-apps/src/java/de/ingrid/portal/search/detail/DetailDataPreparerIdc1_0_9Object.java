@@ -627,7 +627,7 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
 	
 	private void addSpatialReference(List elements, Record record) {
     	// geo thesaurus references
-		List refRecords = getSubRecordsByColumnName(record, "location");
+		List refRecords = getSubRecordsByColumnName(record, "spatial_ref_value.name_value");
     	if (refRecords.size() > 0) {
 	    	ArrayList lines = new ArrayList();
 	    	for (int i=0; i<refRecords.size(); i++) {
@@ -655,7 +655,7 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
     	}
 
     	// geo thesaurus references
-		refRecords = getSubRecordsByColumnName(record, "location");
+		refRecords = getSubRecordsByColumnName(record, "spatial_ref_value.name_value");
     	if (refRecords.size() > 0) {
 	    	ArrayList lines = new ArrayList();
 	    	for (int i=0; i<refRecords.size(); i++) {
