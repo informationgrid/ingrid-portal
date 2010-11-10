@@ -21,6 +21,7 @@ _container_.addOnLoad(function() {
     // script global variables to remember tab names where the number of read URLs will be attached
     allUrlsTitle = dojo.widget.byId("urlList1").label;
     allErrorUrlsTitle = dojo.widget.byId("urlList2").label;
+    summaryErrorUrlsTitle = dojo.widget.byId("urlList3").label;
 
 	dojo.html.hide(dojo.byId("urlsProgressBarContainer"));
 	refreshUrlProcessInfo();
@@ -30,6 +31,7 @@ _container_.addOnLoad(function() {
 scriptScope.startUrlsJob = function() {
 	dojo.widget.byId("urlListTable1").store.clearData();
 	dojo.widget.byId("urlListTable2").store.clearData();
+    dojo.widget.byId("urlListTable3").store.clearData();
 
 	CatalogManagementService.startUrlValidatorJob({
 		preHook: showLoadingZone,
@@ -56,9 +58,10 @@ scriptScope.cancelUrlsJob = function() {
 }
 
 scriptScope.replaceUrl = function() {
+	var currentTab = getCurrentTabName();
 	var urlTable = getCurrentTable();
 	var selectedData = urlTable.getSelectedData();
-	var replaceUrl = dojo.string.trim(dojo.widget.byId("urlReplace").getValue());
+	var replaceUrl = dojo.string.trim(dojo.widget.byId("urlReplace"+currentTab).getValue());
 	// TODO send data to backend
 
 	if (selectedData && selectedData.length != 0 && replaceUrl.length != 0) {
@@ -114,13 +117,20 @@ function updateDBUrlJobInfoDef(sourceUrls, targetUrl) {
 	return def;
 }
 
+function getCurrentTabName() {
+	return dojo.widget.byId("urlLists").selectedChild;
+}
+
 function getCurrentTable() {
-	var currentTab = dojo.widget.byId("urlLists").selectedChild;
+	var currentTab = getCurrentTabName();
 	if (currentTab == "urlList1") {
 		return dojo.widget.byId("urlListTable1");
 
 	} else if (currentTab == "urlList2") {
 		return dojo.widget.byId("urlListTable2");
+
+    } else if (currentTab == "urlList3") {
+        return dojo.widget.byId("urlListTable3");
 
 	} else {
 		dojo.debug("unknown tab selected: '"+currentTab+"'");
@@ -208,11 +218,14 @@ function updateUrlTables(urlObjectReferenceList) {
 		
 		var objList      = new Array();
 		var objErrorList = new Array();
+        var objErrorSummary = new Object();
+        var objErrorSummaryList = new Array();
 		
 		for (var i = 0; i < urlObjectReferenceList.length; ++i) {
+		    addUrlTableInfo(urlObjectReferenceList[i]);
 		    if (i<maxListSize) {
 			    urlObjectReferenceList[i].Id = i;
-			    addUrlTableInfo(urlObjectReferenceList[i]);
+			    urlObjectReferenceList[i].objectName = "<a href='/ingrid-portal-mdek-application/index.jsp?nodeType=O&nodeId="+urlObjectReferenceList[i].objectUuid+"' title='"+urlObjectReferenceList[i].objectName+"' target='_new'>"+urlObjectReferenceList[i].objectName+"</a>";
 			    objList.push(urlObjectReferenceList[i]);
 			    numUrls++;
 		    }
@@ -222,27 +235,42 @@ function updateUrlTables(urlObjectReferenceList) {
 		        if (errors < maxListSize) {		        
     		        if (i >= maxListSize) {
     		            urlObjectReferenceList[i].Id = i;
-                        addUrlTableInfo(urlObjectReferenceList[i]);
+    		            urlObjectReferenceList[i].objectName = "<a href='/ingrid-portal-mdek-application/index.jsp?nodeType=O&nodeId="+urlObjectReferenceList[i].objectUuid+"' title='"+urlObjectReferenceList[i].objectName+"' target='_new'>"+urlObjectReferenceList[i].objectName+"</a>";
     		        }
     		        objErrorList.push(urlObjectReferenceList[i]);
     		        errors++;
 		        }
+		        if (!objErrorSummary[urlObjectReferenceList[i].errorCode]) {
+		            objErrorSummary[urlObjectReferenceList[i].errorCode] = 0;
+		        }
+		        objErrorSummary[urlObjectReferenceList[i].errorCode]++;
 		    }
 		}
+		
+		for (errorCode in objErrorSummary) { 
+            objErrorSummaryList.push({'Id':errorCode, 'errorCode':errorCode, 'count':objErrorSummary[errorCode]}); 
+        }
+        
 		
 
         var t1 = dojo.widget.byId("urlList1");
         dojo.widget.byId("urlLists").tablist.pane2button[t1].titleNode.innerHTML = allUrlsTitle + " (" + numUrls + "/" + urlObjectReferenceList.length + ")";
         var t2 = dojo.widget.byId("urlList2");
         dojo.widget.byId("urlLists").tablist.pane2button[t2].titleNode.innerHTML = allErrorUrlsTitle + " (" + errors + "/" + allErrors + ")";
+        var t3 = dojo.widget.byId("urlList3");
+        dojo.widget.byId("urlLists").tablist.pane2button[t3].titleNode.innerHTML = summaryErrorUrlsTitle + " (" + allErrors + ")";
         
 		dojo.widget.byId("urlListTable1").store.setData(objList);//urlObjectReferenceList);
 		dojo.widget.byId("urlListTable2").store.setData(objErrorList);//urlObjectReferenceList);
 		dojo.widget.byId("urlListTable2").applyFilters();
 		dojo.widget.byId("urlListTable2").render();
+        dojo.widget.byId("urlListTable3").store.setData(objErrorSummaryList);//urlObjectReferenceList);
+        dojo.widget.byId("urlListTable3").applyFilters();
+        dojo.widget.byId("urlListTable3").render();
 	} else {
 		dojo.widget.byId("urlListTable1").store.clearData();
 		dojo.widget.byId("urlListTable2").store.clearData();
+        dojo.widget.byId("urlListTable3").store.clearData();
 	}
 }
 
@@ -256,11 +284,11 @@ function addUrlTableInfo(urlObjectReference) {
 }
 
 function showLoadingZone() {
-    dojo.html.setVisibility(dojo.byId("replaceUrlLoadingZone"), "visible");
+    dojo.html.setVisibility(dojo.byId("replaceUrlLoadingZone"+getCurrentTabName()), "visible");
 }
 
 function hideLoadingZone() {
-    dojo.html.setVisibility(dojo.byId("replaceUrlLoadingZone"), "hidden");
+    dojo.html.setVisibility(dojo.byId("replaceUrlLoadingZone"+getCurrentTabName()), "hidden");
 }
 
 </script>
@@ -310,7 +338,7 @@ function hideLoadingZone() {
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div id="urlListContainer" class="inputContainer noSpaceBelow">
 				<span class="label"><fmt:message key="dialog.admin.catalog.management.urls.result" /></span>
-				<div id="urlLists" dojoType="ingrid:TabContainer" style="height:480px; width:1200px;" selectedChild="urlList1">
+				<div id="urlLists" dojoType="ingrid:TabContainer" style="height:580px; width:1200px;" selectedChild="urlList1">
 
 					<!-- TAB 1 START -->
 					<div id="urlList1" dojoType="ContentPane" label="<fmt:message key="dialog.admin.catalog.management.urls.allUrls" />">
@@ -328,6 +356,19 @@ function hideLoadingZone() {
 								<tbody>
 								</tbody>
 							</table>
+						</div>
+						<div class="inputContainer grey field h058 noSpaceBelow" style="width:980px;">
+							<span class="label"><label for="urlReplaceurlList1" onclick="javascript:dialog.showContextHelp(arguments[0], 8034, 'Markierte URLs durch folgende URL ersetzen')"><fmt:message key="dialog.admin.catalog.management.urls.replaceUrlsWith" /></label></span>
+							<span class="input" style="position:relative;">
+								<input type="text" id="urlReplaceurlList1" maxlength="255" class="w829 nextToButton" dojoType="ingrid:ValidationTextBox" />
+							</span>
+							<span style="position:relative; top:-1px; margin-right:15px; float:right;">
+								<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.urls.replace" />" onClick="javascript:scriptScope.replaceUrl();"><fmt:message key="dialog.admin.catalog.management.urls.replace" /></button>
+							</span>
+							<span id="replaceUrlLoadingZoneurlList1" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+								<img src="img/ladekreis.gif" />
+							</span>
+							<div class="fill"></div>
 						</div>
 					</div> <!-- TAB 1 END -->
         		
@@ -348,21 +389,37 @@ function hideLoadingZone() {
 								</tbody>
 							</table>
 						</div>
+						<div class="inputContainer grey field h058 noSpaceBelow" style="width:980px;">
+							<span class="label"><label for="urlReplaceurlList2" onclick="javascript:dialog.showContextHelp(arguments[0], 8034, 'Markierte URLs durch folgende URL ersetzen')"><fmt:message key="dialog.admin.catalog.management.urls.replaceUrlsWith" /></label></span>
+							<span class="input" style="position:relative;">
+								<input type="text" id="urlReplaceurlList2" maxlength="255" class="w829 nextToButton" dojoType="ingrid:ValidationTextBox" />
+							</span>
+							<span style="position:relative; top:-1px; margin-right:15px; float:right;">
+								<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.urls.replace" />" onClick="javascript:scriptScope.replaceUrl();"><fmt:message key="dialog.admin.catalog.management.urls.replace" /></button>
+							</span>
+							<span id="replaceUrlLoadingZoneurlList2" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+								<img src="img/ladekreis.gif" />
+							</span>
+							<div class="fill"></div>
+						</div>
 					</div> <!-- TAB 2 END -->
+
+                    <!-- TAB 3 START -->
+                    <div id="urlList3" dojoType="ContentPane" label="<fmt:message key="dialog.admin.catalog.management.urls.summaryUrls" />">
+                        <div class="tableContainer rows20">
+                            <table id="urlListTable3" dojoType="ingrid:FilteringTable" minRows="20" cellspacing="0" class="filteringTable interactive" customContextMenu="true">
+                                <thead>
+                                    <tr>
+                                        <th field="errorCode" dataType="String" width="106"><fmt:message key="dialog.admin.catalog.management.urls.error" /></th>
+                                        <th field="count" dataType="String" width="867"><fmt:message key="dialog.admin.catalog.management.urls.count" /></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- TAB 3 END -->
 				</div>
-			</div>
-			<div class="inputContainer grey field h058 noSpaceBelow" style="width:980px;">
-				<span class="label"><label for="urlReplace" onclick="javascript:dialog.showContextHelp(arguments[0], 8034, 'Markierte URLs durch folgende URL ersetzen')"><fmt:message key="dialog.admin.catalog.management.urls.replaceUrlsWith" /></label></span>
-				<span class="input" style="position:relative;">
-					<input type="text" id="urlReplace" maxlength="255" class="w829 nextToButton" dojoType="ingrid:ValidationTextBox" />
-				</span>
-				<span style="position:relative; top:-1px; margin-right:15px; float:right;">
-					<button dojoType="ingrid:Button" title="<fmt:message key="dialog.admin.catalog.management.urls.replace" />" onClick="javascript:scriptScope.replaceUrl();"><fmt:message key="dialog.admin.catalog.management.urls.replace" /></button>
-				</span>
-				<span id="replaceUrlLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
-					<img src="img/ladekreis.gif" />
-				</span>
-				<div class="fill"></div>
 			</div>
 		</div>
 	</div>

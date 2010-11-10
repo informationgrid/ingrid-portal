@@ -50,7 +50,7 @@ dojo.addOnLoad(function()
   // special context menus for url tables
   var urlLists = dojo.byId('urlLists');
   if (urlLists) {
-    var tableIds = ["urlListTable1", "urlListTable2"];
+    var tableIds = ["urlListTable1", "urlListTable2", "urlListTable3"];
     for(var i=0; i<tableIds.length; i++) {
       var table = dojo.widget.byId(tableIds[i]);
       if (table) {
