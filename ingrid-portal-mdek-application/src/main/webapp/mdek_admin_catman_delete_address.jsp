@@ -140,10 +140,10 @@ function updateDeleteAddressInformation(detailedAddressInfo) {
 	dojo.widget.byId("addressDeleteDataMDQS").store.setData(detailedAddressInfo.qaUsers);
 
 	// Set List of info addresses
-	if (detailedAddressInfo.objInfoAddressList) {
-		UtilList.addIcons(detailedAddressInfo.objInfoAddressList);
+	if (detailedAddressInfo.objAddressList) {
+		UtilList.addIcons(detailedAddressInfo.objAddressList);
 		var replaceInfoStore = dojo.widget.byId("replaceInfoAddressList").store;
-		replaceInfoStore.setData(detailedAddressInfo.objInfoAddressList);
+		replaceInfoStore.setData(detailedAddressInfo.objAddressList);
 	}
 
 	// Set List of objects whose responsible user will be replaced
@@ -162,7 +162,7 @@ function updateDeleteAddressInformation(detailedAddressInfo) {
 	}
 
 	if (detailedAddressInfo.objResponsibleAddressList.length >= MAX_NUM_DATASETS
-		|| detailedAddressInfo.objInfoAddressList.length >= MAX_NUM_DATASETS
+		|| detailedAddressInfo.objAddressList.length >= MAX_NUM_DATASETS
 		|| detailedAddressInfo.addrResponsibleUserList.length >= MAX_NUM_DATASETS) {
 		dojo.html.setVisibility("maxNumDatasetsWarning", true);
 	} else {
@@ -207,7 +207,7 @@ function clearNewAddressInformation() {
 // { address: address details for the given uuid,
 //   responsibleUser: {title:address title, uuid:address uuid},
 //   qaUsers: [ {title:address title, uuid:address uuid}, {...}, ...],
-//   objInfoAddressList: [ {obj1}, {obj2}, ... ],
+//   objAddressList: [ {obj1}, {obj2}, ... ],
 //   objResponsibleAddressList: [ {obj1}, {obj2}, ... ]
 // }
 function createDetailedAddressInformationDef(addressUuid) {
@@ -215,15 +215,15 @@ function createDetailedAddressInformationDef(addressUuid) {
 	var addressDetailsDef = getAddressDetailsDef(addressUuid);
 	var responsibleUsersDef = getUsersWithWritePermissionDef(addressUuid);
 
-	var objInfoAddressDef = getObjectsWithInfoAddressDef(addressUuid);
+	var objAddressDef = getObjectsWithAddressDef(addressUuid);
 	var objResponsibleAddressDef = getObjectsWithResponsibleUserDef(addressUuid);
 	var addrResponsibleUserDef = getAddressesWithResponsibleUser(addressUuid);
 
-	var defList = new dojo.DeferredList([addressDetailsDef, responsibleUsersDef, objInfoAddressDef, objResponsibleAddressDef, addrResponsibleUserDef], false, false, true);
+	var defList = new dojo.DeferredList([addressDetailsDef, responsibleUsersDef, objAddressDef, objResponsibleAddressDef, addrResponsibleUserDef], false, false, true);
 	defList.addCallback(function (resultList) {
 		var addressDetails = resultList[0][1]; 
 		var responsibleUserList = resultList[1][1];
-		var objInfoAddressList = resultList[2][1];
+		var objAddressList = resultList[2][1];
 		var objResponsibleAddressList = resultList[3][1];
 		var addrResponsibleUserList = resultList[4][1];
 
@@ -245,7 +245,7 @@ function createDetailedAddressInformationDef(addressUuid) {
 			address:addressDetails,
 			responsibleUser:responsibleUser,
 			qaUsers:qaUsers,
-			objInfoAddressList:objInfoAddressList,
+			objAddressList:objAddressList,
 			objResponsibleAddressList:objResponsibleAddressList,
 			addrResponsibleUserList:addrResponsibleUserList
 		});
@@ -301,10 +301,10 @@ function getUsersWithWritePermissionDef(addressUuid) {
 }
 
 //Fetch objects where given adrUuid is set as the info address
-function getObjectsWithInfoAddressDef(adrUuid) {
+function getObjectsWithAddressDef(adrUuid) {
 	var def = new dojo.Deferred();
 	
-	CatalogManagementService.getObjectsOfAuskunftAddress(adrUuid, MAX_NUM_DATASETS, {
+	CatalogManagementService.getObjectsOfAddressByType(adrUuid, null, MAX_NUM_DATASETS, {
 		callback: function(objects) {
 			def.callback(objects);
 		},

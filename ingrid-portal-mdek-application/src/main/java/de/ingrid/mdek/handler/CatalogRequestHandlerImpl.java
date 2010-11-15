@@ -290,10 +290,11 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 		this.connectionFacade = connectionFacade;
 	}
 	
-	public List<MdekDataBean> getObjectsOfAuskunftAddress(String auskunftAddressUuid, int maxNumHits) {
-		IngridDocument response = mdekCallerCatalog.getObjectsOfAuskunftAddress(
+	public List<MdekDataBean> getObjectsOfAddressByType(String auskunftAddressUuid, Integer referenceTypeId, int maxNumHits) {
+		IngridDocument response = mdekCallerCatalog.getObjectsOfAddressByType(
 				connectionFacade.getCurrentPlugId(),
 				auskunftAddressUuid,
+				referenceTypeId,
 				maxNumHits,
 				MdekSecurityUtils.getCurrentUserUuid());
 		return MdekObjectUtils.extractDetailedObjectsFromResponse(response);
