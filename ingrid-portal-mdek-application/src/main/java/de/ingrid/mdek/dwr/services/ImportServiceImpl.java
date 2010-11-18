@@ -5,7 +5,6 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,7 +67,7 @@ public class ImportServiceImpl {
             
             switch (getFileType(fileTransfer.getMimeType())) {
             case GZIP:
-                File dirGZIP = createFileDirectory("gzip\\" + userId);
+                File dirGZIP = createFileDirectory("gzip/" + userId);
                 String rootDirGZIP = dirGZIP.getAbsolutePath();
                 
                 importDataStream = fileTransfer.getInputStream();
@@ -77,7 +76,7 @@ public class ImportServiceImpl {
                 //FileInputStream inXML = new FileInputStream(fileGZIP);
                 GZIPInputStream gzipInXML = new GZIPInputStream(importDataStream);//inXML);
                 
-                File outXML = createFilebyInputStream(gzipInXML, rootDirGZIP + "\\" + fileTransfer.getFilename()+".xml");
+                File outXML = createFilebyInputStream(gzipInXML, rootDirGZIP + "/" + fileTransfer.getFilename()+".xml");
                 gzipInXML.close();
                 
                 // Import file data
@@ -88,7 +87,7 @@ public class ImportServiceImpl {
 
             case ZIP:
                 importDataStream = fileTransfer.getInputStream();
-                File dirZIP = createFileDirectory("zip\\" + userId);
+                File dirZIP = createFileDirectory("zip/" + userId);
                 String rootDirZIP = dirZIP.getAbsolutePath();
 
                 ZipInputStream zipIn = new ZipInputStream(importDataStream);
@@ -101,7 +100,7 @@ public class ImportServiceImpl {
 
                 ZipEntry entry;
                 while ((entry = zipIn.getNextEntry()) != null) {
-                    File file = createFilebyInputStream(zipIn, rootDirZIP + "\\" + entry.getName());
+                    File file = createFilebyInputStream(zipIn, rootDirZIP + "/" + entry.getName());
                     zipIn.closeEntry();
                     
                    	addImportData(importData, new FileInputStream(file), file.getName(), fileType, protocolBean.getProtocolHandler());
@@ -204,6 +203,9 @@ public class ImportServiceImpl {
         } else if ("application/zip".equals(mimeType)) {
             return FileType.ZIP;
 
+        } else if ("application/x-zip-compressed".equals(mimeType)) {
+            return FileType.ZIP;
+
         } else if ("text/xml".equals(mimeType)) {
             return FileType.XML;
 
@@ -245,7 +247,7 @@ public class ImportServiceImpl {
     }
     
     private File createFileDirectory(String dirname){
-        File dirGZIP = new File(System.getProperty("java.io.tmpdir") + "\\ingrid-ige\\import\\" + dirname);
+        File dirGZIP = new File(System.getProperty("java.io.tmpdir") + "/ingrid-ige/import/" + dirname);
         dirGZIP.mkdirs();
         
         return dirGZIP;
