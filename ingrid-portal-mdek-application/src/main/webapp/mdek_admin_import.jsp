@@ -497,8 +497,8 @@ function returnToBr(string) {
 						<span class="label" style="margin-bottom:10.5px;"><label for="importFileType" style="position:absolute;" onclick="javascript:dialog.showContextHelp(arguments[0], 8074, 'Import-Datei')"><fmt:message key="dialog.admin.import.file.type" />:</label>
 							<select dojoType="ingrid:Select" id="importFileType" style="position:absolute;margin-left:90px;width:300px">
 								<option value="igc">InGrid Catalog</option>
-                                <option value="csw202">Single ISO Metadata file / ZIP Archive</option>
-								<option value="arcgis1">ArcGIS Metadata file / ZIP Archive</option>
+                                <option value="csw202">CSW 2.0.2 AP ISO 1.0 (Single Metadata file / ZIP Archive)</option>
+                                <option value="arcgis1">ArcGIS ISO-Editor (Single Metadata file / ZIP Archive)</option>
 							</select>
 						</span>
 					</div>
