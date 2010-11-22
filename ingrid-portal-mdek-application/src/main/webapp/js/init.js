@@ -1532,12 +1532,16 @@ function initSysLists() {
 		callback: function(res) {
 			dojo.lang.forEach(selectWidgetIDs, function(widgetId) {
 				var selectWidget = dojo.widget.byId(widgetId);
-				var selectWidgetData = res[selectWidget.listId];
+                var listId = selectWidget.listId;
+				var selectWidgetData = res[listId];
 				
 				// Sort list by the display values (array[0])
-				selectWidgetData.sort(function(a, b) {
-					return UtilString.compareIgnoreCase(a[0], b[0]);
-				});
+				// only if not sorted in backend, e.g. INSPIRE Themes (6100) !
+				if (listId != 6100) {
+                    selectWidgetData.sort(function(a, b) {
+                        return UtilString.compareIgnoreCase(a[0], b[0]);
+                    });
+				}
 				
 				selectWidget.dataProvider.setData(selectWidgetData);	
 			});
