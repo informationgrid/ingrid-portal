@@ -1501,8 +1501,9 @@ function initSysLists() {
 		"timeRefStatus", "ref1DataSet", "ref1RepresentationCombobox", "thesaurusTopicsCombobox", "thesaurusInspireCombobox", "ref1VFormatTopology",
 		"freeReferencesEditor", "timeRefIntervalUnit", "extraInfoLegalBasicsTableEditor", "extraInfoXMLExportTableEditor",
 		"thesaurusEnvCatsCombobox", "thesaurusEnvTopicsCombobox", "ref1SpatialSystem", "ref1SymbolsTitleCombobox", "ref1KeysTitleCombobox",
-		"ref2DocumentType", "ref3ServiceType", "ref3ServiceTypeEditor", "ref6ServiceType", "extraInfoLangData", "extraInfoLangMetaData", "extraInfoPublishArea",
-		"extraInfoConformityLevelEditor", "availabilityDataFormatName", "availabilityAccessConstraintsEditor",
+		"ref2DocumentType", "ref3ServiceType", "ref3ServiceTypeEditor", "ref6ServiceType", "extraInfoLangData", "extraInfoCharSetData",
+		"extraInfoLangMetaData", "extraInfoPublishArea", "extraInfoConformityLevelEditor",
+		"availabilityDataFormatName", "availabilityAccessConstraintsEditor",
 		// Addresses
 		"headerAddressType2Style", "headerAddressType3Style", "headerAddressType2Title", "headerAddressType3Title",
 		"addressComType","addressCountry"]; 

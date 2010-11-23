@@ -151,6 +151,7 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setExtraInfoLangDataCode((Integer)obj.get(MdekKeys.DATA_LANGUAGE_CODE));
 
 		mdekObj.setExtraInfoPublishArea((Integer) obj.get(MdekKeys.PUBLICATION_CONDITION));
+		mdekObj.setExtraInfoCharSetDataCode((Integer)obj.get(MdekKeys.DATASET_CHARACTER_SET));
 
 		// Inspire field
 		mdekObj.setExtraInfoConformityTable(mapToExtraInfoConformityTable((List<IngridDocument>) obj.get(MdekKeys.CONFORMITY_LIST)));
@@ -704,6 +705,7 @@ public class MdekMapper implements DataMapperInterface {
 		udkObj.put(MdekKeys.METADATA_LANGUAGE_CODE, data.getExtraInfoLangMetaDataCode());
 		udkObj.put(MdekKeys.DATA_LANGUAGE_CODE, data.getExtraInfoLangDataCode());
 		udkObj.put(MdekKeys.PUBLICATION_CONDITION, data.getExtraInfoPublishArea());
+		udkObj.put(MdekKeys.DATASET_CHARACTER_SET, data.getExtraInfoCharSetDataCode());
 		udkObj.put(MdekKeys.CONFORMITY_LIST, mapFromExtraInfoConformityTable(data.getExtraInfoConformityTable()));
 		udkObj.put(MdekKeys.DATASET_INTENTIONS, data.getExtraInfoPurpose());
 		udkObj.put(MdekKeys.DATASET_USAGE, data.getExtraInfoUse());
@@ -946,6 +948,10 @@ public class MdekMapper implements DataMapperInterface {
 			} else {
 				obj.setExtraInfoPublishArea(PublishType.INTERNET.getDbValue());
 			}
+		}
+
+		if (null == obj.getExtraInfoCharSetDataCode()) {
+			obj.setExtraInfoCharSetDataCode(sysListMapper.getInitialKeyFromListId(510));
 		}
 	}
 

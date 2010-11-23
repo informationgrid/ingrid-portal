@@ -11,7 +11,7 @@ var spatialUiInputElements = ["spatialRefAdminUnit", "spatialRefLocation", "ref1
 	"spatialRefAltMeasure", "spatialRefAltVDate", "spatialRefExplanation"];
 var timeUiInputElements = ["timeRefType", "timeRefDate1", "timeRefDate2", "timeRefStatus", "timeRefPeriodicity", "timeRefIntervalNum",
 	"timeRefIntervalUnit", "timeRefTable", "timeRefExplanation"];
-var extraUiInputElements = ["extraInfoLangMetaData", "extraInfoLangData", "extraInfoPublishArea",
+var extraUiInputElements = ["extraInfoLangMetaData", "extraInfoLangData", "extraInfoPublishArea", "extraInfoCharSetData",
 	"extraInfoXMLExportTable", "extraInfoLegalBasicsTable", "extraInfoPurpose", "extraInfoUse"];
 var availUiInputElements = ["availabilityAccessConstraints", "availabilityUseConstraints", "availabilityDataFormat", "availabilityMediaOptions", "availabilityOrderInfo"];
 var thesUiInputElements = ["thesaurusTerms", "thesaurusTopics", "thesaurusInspire", "thesaurusEnvExtRes",
@@ -44,7 +44,7 @@ var adrClass3UiInputElements = ["headerAddressType3Lastname", "headerAddressType
 	"headerAddressType3Title", "headerAddressType3Institution"];
 
 
-var labels = ["objectNameLabel", "objectClassLabel", "objectOwnerLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel",
+var labels = ["objectNameLabel", "objectClassLabel", "objectOwnerLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel", "extraInfoCharSetDataLabel", 
 			  "extraInfoConformityTableLabel", "availabilityAccessConstraintsLabel", "availabilityUseConstraintsLabel", "ref1BasisTabContainerLabel", "ref1ObjectIdentifierLabel",
 			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "ref3ServiceTypeTableLabel", "ref6ServiceTypeLabel", "generalAddressTableLabel", "timeRefTableLabel",
 			  "thesaurusTermsLabel", "thesaurusTopicsLabel", "thesaurusInspireLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel", "spatialRefAltHeightLabel",
@@ -62,7 +62,8 @@ var notEmptyFields = [["objectName", "objectNameLabel"],
 					  ["generalDescription", "generalDescLabel"],
 					  ["extraInfoLangDataCode", "extraInfoLangDataLabel"],
 					  ["extraInfoLangMetaDataCode", "extraInfoLangMetaDataLabel"],
-					  ["extraInfoPublishArea", "extraInfoPublishAreaLabel"]];
+					  ["extraInfoPublishArea", "extraInfoPublishAreaLabel"],
+                      ["extraInfoCharSetDataCode", "extraInfoCharSetDataLabel"]];
 
 var notEmptyFieldsClass1 = [["ref1BasisText", "ref1BasisTabContainerLabel"],
 							["ref1ObjectIdentifier", "ref1ObjectIdentifierLabel"],

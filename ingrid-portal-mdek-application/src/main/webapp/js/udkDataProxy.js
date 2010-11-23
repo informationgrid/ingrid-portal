@@ -1632,6 +1632,7 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.widget.byId("extraInfoLangMetaData").setValue(nodeData.extraInfoLangMetaDataCode);
   dojo.widget.byId("extraInfoLangData").setValue(nodeData.extraInfoLangDataCode);
   dojo.widget.byId("extraInfoPublishArea").setValue(nodeData.extraInfoPublishArea);
+  dojo.widget.byId("extraInfoCharSetData").setValue(nodeData.extraInfoCharSetDataCode);
   dojo.widget.byId("extraInfoConformityTable").store.setData(UtilList.addTableIndices(nodeData.extraInfoConformityTable));
   dojo.widget.byId("extraInfoPurpose").setValue(nodeData.extraInfoPurpose);
   dojo.widget.byId("extraInfoUse").setValue(nodeData.extraInfoUse);
@@ -2008,6 +2009,7 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.extraInfoLangMetaDataCode = dojo.widget.byId("extraInfoLangMetaData").getValue();
   nodeData.extraInfoLangDataCode = dojo.widget.byId("extraInfoLangData").getValue();
   nodeData.extraInfoPublishArea = dojo.widget.byId("extraInfoPublishArea").getValue();
+  nodeData.extraInfoCharSetDataCode = dojo.widget.byId("extraInfoCharSetData").getValue();
   nodeData.extraInfoConformityTable = udkDataProxy._getTableData("extraInfoConformityTable");
   nodeData.extraInfoPurpose = dojo.widget.byId("extraInfoPurpose").getValue();
   nodeData.extraInfoUse = dojo.widget.byId("extraInfoUse").getValue();

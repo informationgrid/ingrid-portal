@@ -485,6 +485,7 @@
 	"ui.obj.additionalInfo.title":"Additional Information",
 	"ui.obj.additionalInfo.language.metadata":"Metadata Language",
 	"ui.obj.additionalInfo.language.data":"Dataset Language",
+    "ui.obj.additionalInfo.charSet.data":"Dataset Character Set",
 	"ui.obj.additionalInfo.publicationCondition":"Publication Condition",
 	"ui.obj.additionalInfo.conformityTable.title":"Conformity",
 	"ui.obj.additionalInfo.conformityTable.header.level":"Degree of Conformity",

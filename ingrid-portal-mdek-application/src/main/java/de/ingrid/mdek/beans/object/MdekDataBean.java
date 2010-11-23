@@ -74,6 +74,7 @@ public class MdekDataBean {
 	private Integer extraInfoLangMetaDataCode;
 	private Integer extraInfoLangDataCode;
 	private Integer extraInfoPublishArea;
+	private Integer extraInfoCharSetDataCode;
 	private List<ConformityBean> extraInfoConformityTable;
 	private List<String> extraInfoXMLExportTable;
 	private List<String> extraInfoLegalBasicsTable;
@@ -896,6 +897,15 @@ public class MdekDataBean {
 		this.extraInfoPublishArea = extraInfoPublishArea;
 	}
 
+	public Integer getExtraInfoCharSetDataCode() {
+		return extraInfoCharSetDataCode;
+	}
+
+
+
+	public void setExtraInfoCharSetDataCode(Integer extraInfoCharSetData) {
+		this.extraInfoCharSetDataCode = extraInfoCharSetData;
+	}
 
 	public String getExtraInfoPurpose() {
 		return extraInfoPurpose;

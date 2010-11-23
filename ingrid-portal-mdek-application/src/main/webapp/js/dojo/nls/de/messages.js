@@ -485,6 +485,7 @@
 	"ui.obj.additionalInfo.title":"Zusatzinformation",
 	"ui.obj.additionalInfo.language.metadata":"Sprache des Metadatensatzes",
 	"ui.obj.additionalInfo.language.data":"Sprache des Datensatzes",
+    "ui.obj.additionalInfo.charSet.data":"Zeichensatz des Datensatzes",
 	"ui.obj.additionalInfo.publicationCondition":"Ver&ouml;ffentlichung",
 	"ui.obj.additionalInfo.conformityTable.title":"Konformit&auml;t",
 	"ui.obj.additionalInfo.conformityTable.header.level":"Grad der Konformit&auml;t",

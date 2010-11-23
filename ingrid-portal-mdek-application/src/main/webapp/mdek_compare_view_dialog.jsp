@@ -175,9 +175,10 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	
 	// additional information
 	renderSectionTitel(message.get("ui.obj.additionalInfo.title"));
-	renderTextWithTitle(dojo.widget.byId("extraInfoLangMetaData")._getDisplayValueForValue(nodeDataOld.extraInfoLangMetaData), dojo.widget.byId("extraInfoLangMetaData")._getDisplayValueForValue(nodeDataNew.extraInfoLangMetaData), message.get("ui.obj.additionalInfo.language.metadata"));
-	renderTextWithTitle(dojo.widget.byId("extraInfoLangData")._getDisplayValueForValue(nodeDataOld.extraInfoLangData), dojo.widget.byId("extraInfoLangData")._getDisplayValueForValue(nodeDataNew.extraInfoLangData), message.get("ui.obj.additionalInfo.language.data"));
+	renderTextWithTitle(dojo.widget.byId("extraInfoLangMetaData")._getDisplayValueForValue(nodeDataOld.extraInfoLangMetaDataCode), dojo.widget.byId("extraInfoLangMetaData")._getDisplayValueForValue(nodeDataNew.extraInfoLangMetaDataCode), message.get("ui.obj.additionalInfo.language.metadata"));
+	renderTextWithTitle(dojo.widget.byId("extraInfoLangData")._getDisplayValueForValue(nodeDataOld.extraInfoLangDataCode), dojo.widget.byId("extraInfoLangData")._getDisplayValueForValue(nodeDataNew.extraInfoLangDataCode), message.get("ui.obj.additionalInfo.language.data"));
 	renderTextWithTitle(dojo.widget.byId("extraInfoPublishArea")._getDisplayValueForValue(nodeDataOld.extraInfoPublishArea), dojo.widget.byId("extraInfoPublishArea")._getDisplayValueForValue(nodeDataNew.extraInfoPublishArea), message.get("ui.obj.additionalInfo.publicationCondition"));
+    renderTextWithTitle(dojo.widget.byId("extraInfoCharSetData")._getDisplayValueForValue(nodeDataOld.extraInfoCharSetDataCode), dojo.widget.byId("extraInfoCharSetData")._getDisplayValueForValue(nodeDataNew.extraInfoCharSetDataCode), message.get("ui.obj.additionalInfo.charSet.data"));
 	// Table is only displayed for object classes 1 and 3
 	if (nodeDataNew.objectClass == 1 || nodeDataNew.objectClass == 3) {
 		renderTable(nodeDataOld.extraInfoConformityTable, nodeDataNew.extraInfoConformityTable, ["level", "specification", "date"],
