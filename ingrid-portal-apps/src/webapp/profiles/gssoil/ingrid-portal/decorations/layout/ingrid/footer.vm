@@ -29,6 +29,7 @@
 <!--  END: layout/html/portalu/decorator.vm -->
 <!-- Piwik -->
 <script type="text/javascript">
+var domain = document.domain;
 if(domain == "gssoil-portal.eu" || domain=="www.gssoil-portal.eu"){
     var pkBaseURL = (("https:" == document.location.protocol) ? "https://gssoil-portal.eu/piwik/" : "http://gssoil-portal.eu/piwik/");
     document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
