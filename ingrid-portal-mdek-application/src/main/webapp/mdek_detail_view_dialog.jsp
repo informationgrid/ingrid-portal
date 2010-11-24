@@ -105,6 +105,11 @@ function renderNodeData(nodeData) {
 			renderTextWithTitle(nodeData.ref1DataBasisText, message.get("ui.obj.type1.dataBasisTable.title"));
 			renderList(nodeData.ref1Data, message.get("ui.obj.type1.attributes"));
 			renderTextWithTitle(nodeData.ref1ProcessText, message.get("ui.obj.type1.processTable.title"));
+
+            // DQ
+			renderSectionTitel(message.get("ui.obj.dq"));
+            renderTable(nodeData.dq109Table, ["nameOfMeasure", "resultValue", "measureDescription"], [message.get("ui.obj.dq.table.header1"), message.get("ui.obj.dq.table.header2"), message.get("ui.obj.dq.table.header3")], message.get("ui.obj.dq.table109.title"));
+
 		} else if (nodeData.objectClass == 2) {
 			renderSectionTitel(message.get("ui.obj.relevance"));
 			// Literature

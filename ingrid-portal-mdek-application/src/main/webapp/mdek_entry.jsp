@@ -759,6 +759,47 @@ function hideSplash(){
 	            </div>
 	          </div>
 
+              <!-- "FACHBEZUG DATENQUALITAET" CLASS 1 - GEO-INFORMATION/KARTE //-->
+              <div id="refClass1DQ" class="contentBlock">
+                <div class="titleBar">
+                  <div class="titleIcon"><a href="javascript:toggleFields('refClass1DQ');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a></div>
+                    <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7500)"><script>document.write(message.get("ui.obj.dq"))</script></div>
+                    <div class="titleUp"><a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a></div>
+                </div>
+                <div id="ref1ContentDQ" class="content">
+
+                  <div id="dq109TableContainer" class="inputContainer notRequired">
+                    <span id="uiElement7509" type="optional">
+                        <span id="dq109TableLabel" class="label"><label for="dq109Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7509)"><script>document.write(message.get("ui.obj.dq.table109.title"))</script></label></span>
+                        <div class="tableContainer full h088">
+                          <div class="cellEditors" id="dq109TableEditors">
+                            <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7109" id="dq109NameOfMeasureEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq109ValueEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq109DescriptionEditor"></div>
+                          </div>
+                            <table id="dq109Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
+                              <thead>
+                                  <tr>
+                                    <th nosort="true" field="nameOfMeasure" dataType="String" editor="dq109NameOfMeasureEditor"><script>document.write(message.get("ui.obj.dq.table.header1"))</script></th>
+                                    <th nosort="true" field="resultValue" dataType="String" editor="dq109ValueEditor"><script>document.write(message.get("ui.obj.dq.table.header2"))</script></th>
+                                    <th nosort="true" field="measureDescription" dataType="String" editor="dq109DescriptionEditor"><script>document.write(message.get("ui.obj.dq.table.header3"))</script></th>
+                                  </tr>
+                              </thead>
+                              <colgroup>
+                                <col width="300">
+                                <col width="105">
+                                <col width="250">
+                              </colgroup>
+                              <tbody>
+                              </tbody>
+                            </table>
+                        </div>
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+
 	          <!-- FACHBEZUG CLASS 2 - DOKUMENT/BERICHT/LITERATUR //-->
 	          <div id="refClass2" class="contentBlock">
 	          	<div class="titleBar">

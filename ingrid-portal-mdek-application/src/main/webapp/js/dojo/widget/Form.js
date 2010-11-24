@@ -45,6 +45,7 @@ dojo.widget.defineWidget(
   selectedClass: "",
   toggleContainer: [],
   toggleContainerPrefix: "",
+  toggleContainerPostfixes: [],
 
   setSelectedClass: function(/* name of the object class/address type */clazz) {
     // hide all classes first
@@ -58,6 +59,13 @@ dojo.widget.defineWidget(
     var div = dojo.byId(this.toggleContainerPrefix + clazz);
     if (div)
       div.style.display = 'block';
+
+    // show new special ones including postfixes (e.g. DQ only in class 1)
+    for(var i=0; i<this.toggleContainerPostfixes.length; i++) {
+      var div = dojo.byId(this.toggleContainerPrefix + clazz + this.toggleContainerPostfixes[i]);
+      if (div)
+        div.style.display = 'block';
+    }
 
     this.selectedClass = clazz;
   }

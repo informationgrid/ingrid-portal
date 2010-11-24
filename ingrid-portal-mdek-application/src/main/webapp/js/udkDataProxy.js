@@ -1741,6 +1741,8 @@ udkDataProxy._setObjectDataClass1 = function(nodeData) {
 	dojo.widget.byId("ref1Scale").store.setData(UtilList.addTableIndices(nodeData.ref1Scale));
 	dojo.widget.byId("ref1SymbolsText").store.setData(UtilList.addTableIndices(nodeData.ref1SymbolsText));
 	dojo.widget.byId("ref1KeysText").store.setData(UtilList.addTableIndices(nodeData.ref1KeysText));
+
+    dojo.widget.byId("dq109Table").store.setData(UtilList.addTableIndices(nodeData.dq109Table));
 }
 
 udkDataProxy._setObjectDataClass2 = function(nodeData) {
@@ -2119,15 +2121,7 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
 	nodeData.ref1DataSet = dojo.widget.byId("ref1DataSet").getValue();
 	nodeData.ref1Coverage = dojo.widget.byId("ref1Coverage").getValue();
 	nodeData.ref1VFormatTopology = dojo.widget.byId("ref1VFormatTopology").getValue();
-/*
-// moved to general "Raumbezug" section, class independent, processed above ! 
-	// The spatial system table is a combobox that allows free entries but also entries associated with IDs
-	// If we have a free entry the reference system ID = -1
-//	nodeData.ref1SpatialSystemId = dojo.widget.byId("ref1SpatialSystem").getIdValue();
-//	if (nodeData.ref1SpatialSystemId == -1)
-//		nodeData.ref1SpatialSystem = dojo.widget.byId("ref1SpatialSystem").getValue();
-	nodeData.ref1SpatialSystem = dojo.widget.byId("ref1SpatialSystem").getValue();
-*/
+
 	nodeData.ref1AltAccuracy = dojo.widget.byId("ref1AltAccuracy").getValue();
 	nodeData.ref1PosAccuracy = dojo.widget.byId("ref1PosAccuracy").getValue();
 	nodeData.ref1BasisText = dojo.widget.byId("ref1BasisText").getValue();
@@ -2142,6 +2136,8 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
 	nodeData.ref1Scale = udkDataProxy._getTableData("ref1Scale");
 	nodeData.ref1SymbolsText = udkDataProxy._getTableData("ref1SymbolsText");
 	nodeData.ref1KeysText = udkDataProxy._getTableData("ref1KeysText");
+
+    nodeData.dq109Table = udkDataProxy._getTableData("dq109Table");
 };
 
 udkDataProxy._getObjectDataClass2 = function(nodeData) {

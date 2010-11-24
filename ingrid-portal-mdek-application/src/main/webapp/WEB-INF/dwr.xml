@@ -83,6 +83,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.object.ConformityBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.object.DataFormatBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.object.DBContentBean"/>
+        <convert converter="bean" match="de.ingrid.mdek.beans.object.DQBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.object.LinkDataBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.object.LocationBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.object.MdekDataBean"/>

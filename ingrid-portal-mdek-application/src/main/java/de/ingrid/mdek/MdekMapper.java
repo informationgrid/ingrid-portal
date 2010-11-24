@@ -24,6 +24,7 @@ import de.ingrid.mdek.beans.object.AdditionalFieldBean;
 import de.ingrid.mdek.beans.object.ApplicationUrlBean;
 import de.ingrid.mdek.beans.object.ConformityBean;
 import de.ingrid.mdek.beans.object.DBContentBean;
+import de.ingrid.mdek.beans.object.DQBean;
 import de.ingrid.mdek.beans.object.DataFormatBean;
 import de.ingrid.mdek.beans.object.LinkDataBean;
 import de.ingrid.mdek.beans.object.LocationBean;
@@ -220,6 +221,9 @@ public class MdekMapper implements DataMapperInterface {
 		case 0:	// Object of type 0 doesn't have any special values
 			break;
 		case 1:
+			// DQ has different section (transferred outside of TECHNICAL_DOMAIN_MAP !)
+			mdekObj.setDq109Table(mapToDqTable(109, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
+
 			td1Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
 			if (td1Map == null)
 				break;
@@ -227,11 +231,6 @@ public class MdekMapper implements DataMapperInterface {
 			mdekObj.setRef1ObjectIdentifier((String) td1Map.get(MdekKeys.DATASOURCE_UUID));
 			mdekObj.setRef1DataSet((Integer) td1Map.get(MdekKeys.HIERARCHY_LEVEL));
 			mdekObj.setRef1VFormatTopology((Integer) td1Map.get(MdekKeys.VECTOR_TOPOLOGY_LEVEL));
-/*
-// moved to general "Raumbezug" section, class independent, processed above !
-			KeyValuePair kvp = mapToKeyValuePair(td1Map, MdekKeys.REFERENCESYSTEM_ID, MdekKeys.COORDINATE_SYSTEM);
-			mdekObj.setRef1SpatialSystem(kvp.getValue());
-*/
 			mdekObj.setRef1Coverage((Double) td1Map.get(MdekKeys.DEGREE_OF_RECORD));
 			mdekObj.setRef1AltAccuracy((Double) td1Map.get(MdekKeys.POS_ACCURACY_VERTICAL));
 			mdekObj.setRef1PosAccuracy((Double) td1Map.get(MdekKeys.RESOLUTION));
@@ -771,20 +770,15 @@ public class MdekMapper implements DataMapperInterface {
 		case 0:	// Object of type 0 doesn't have any special values
 			break;
 		case 1:
+			// DQ has different section (transferred outside of TECHNICAL_DOMAIN_MAP !)
+			udkObj.put(MdekKeys.DATA_QUALITY_LIST, mapFromDQTables(data.getDq109Table()));
+
 			if (td1Map == null) {
 				td1Map = new IngridDocument();
 			}
 			td1Map.put(MdekKeys.DATASOURCE_UUID, data.getRef1ObjectIdentifier());
 			td1Map.put(MdekKeys.HIERARCHY_LEVEL, data.getRef1DataSet());
 			td1Map.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, data.getRef1VFormatTopology());
-/*
-// moved to general "Raumbezug" section, class independent, processed above !
-			kvp = mapFromKeyValue(MdekKeys.REFERENCESYSTEM_ID, data.getRef1SpatialSystem());
-			if (kvp.getValue() != null || kvp.getKey() != -1) {
-				td1Map.put(MdekKeys.COORDINATE_SYSTEM, kvp.getValue());
-				td1Map.put(MdekKeys.REFERENCESYSTEM_ID, kvp.getKey());
-			}
-*/
 			td1Map.put(MdekKeys.DEGREE_OF_RECORD, data.getRef1Coverage());
 			td1Map.put(MdekKeys.POS_ACCURACY_VERTICAL, data.getRef1AltAccuracy());
 			td1Map.put(MdekKeys.RESOLUTION, data.getRef1PosAccuracy());
@@ -1931,7 +1925,66 @@ public class MdekMapper implements DataMapperInterface {
 		}
 		return resultList;
 	}
-	
+
+	private List<DQBean> mapToDqTable(Integer dqElementId, List<IngridDocument> dqList) {
+		List<DQBean> resultList = new ArrayList<DQBean>();
+		if (dqList == null)
+			return resultList;
+
+		// get "Name Of Measure" Syslist for dq element
+		int syslistIdNameOfMeasure = MdekUtils.MdekSysList.getSyslistIdFromDqElementId(dqElementId);
+
+		for (IngridDocument dqDoc : dqList) {
+			if (dqElementId.equals((Integer) dqDoc.get(MdekKeys.DQ_ELEMENT_ID))) {
+				DQBean dq = new DQBean();
+				dq.setDqElementId(dqElementId);
+				
+				// name of measure is free entry (key=-1) or syslist entry !
+				// first set direct value (free)
+				dq.setNameOfMeasure((String) dqDoc.get(MdekKeys.NAME_OF_MEASURE_VALUE));
+				// then overwrite with name from syslist if syslist entry
+				Integer nameOfMeasureKey = (Integer) dqDoc.get(MdekKeys.NAME_OF_MEASURE_KEY);
+				if (nameOfMeasureKey != null && nameOfMeasureKey != -1) {
+					dq.setNameOfMeasure(sysListMapper.getValueFromListId(syslistIdNameOfMeasure, nameOfMeasureKey));
+				}
+
+				dq.setResultValue((String) dqDoc.get(MdekKeys.RESULT_VALUE));
+				dq.setMeasureDescription((String) dqDoc.get(MdekKeys.MEASURE_DESCRIPTION));
+				resultList.add(dq);
+			}
+		}
+		return resultList;
+	}
+
+	private List<IngridDocument> mapFromDQTables(List<DQBean> dq109List) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+
+		if (dq109List != null) {
+			// get "Name Of Measure" Syslist for dq element
+			int syslistIdNameOfMeasure = MdekUtils.MdekSysList.getSyslistIdFromDqElementId(109);
+
+			for (DQBean dq : dq109List) {
+				IngridDocument res = new IngridDocument();
+				res.put(MdekKeys.DQ_ELEMENT_ID, 109);
+
+				// name of measure is free entry (key=-1) or syslist entry !
+				// first set as free value
+				res.put(MdekKeys.NAME_OF_MEASURE_VALUE, dq.getNameOfMeasure());
+				res.put(MdekKeys.NAME_OF_MEASURE_KEY, new Integer(-1));					
+				// then set key from syslist if syslist entry
+				Integer key = sysListMapper.getKeyFromListId(syslistIdNameOfMeasure, dq.getNameOfMeasure());
+				if (key != null) {
+					// Found special address ref
+					res.put(MdekKeys.NAME_OF_MEASURE_KEY, key);
+				}
+
+				res.put(MdekKeys.RESULT_VALUE, dq.getResultValue());
+				res.put(MdekKeys.MEASURE_DESCRIPTION, dq.getMeasureDescription());
+				resultList.add(res);
+			}
+		}
+		return resultList;
+	}
 
 
 	/********************************

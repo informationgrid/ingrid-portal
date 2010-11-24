@@ -38,12 +38,13 @@ dojo.widget.defineWidget(
   /*
    * The toggle containers contained in the page
    */
-  toggleContainer: ["refClass1", "refClass2", "refClass3", "refClass4", "refClass5", "refClass6"],
+  toggleContainer: ["refClass1", "refClass1DQ", "refClass2", "refClass3", "refClass4", "refClass5", "refClass6"],
   
   /*
    * The toggle container prefix
    */
   toggleContainerPrefix: "ref",
+  toggleContainerPostfixes: ["DQ"],
 
   setSelectedClass: function(/* name of the object class/address type */clazz) {
     ingrid.widget.Form.prototype.setSelectedClass.apply(this, arguments);

@@ -53,7 +53,8 @@ var labels = ["objectNameLabel", "objectClassLabel", "objectOwnerLabel", "genera
 			  "addressTypeLabel", "addressOwnerLabel", "headerAddressType0UnitLabel", "headerAddressType1UnitLabel", "headerAddressType2LastnameLabel",
 			  "headerAddressType2StyleLabel", "headerAddressType3LastnameLabel", "headerAddressType3StyleLabel",
 			  "addressComLabel", "addressStreetLabel", "addressCountryLabel", "addressZipCodeLabel", "addressCityLabel", "addressPOBoxLabel",
-			  "addressZipPOBoxLabel", "ref1SpatialSystemLabel", "availabilityDataFormatLabel"];
+			  "addressZipPOBoxLabel", "ref1SpatialSystemLabel", "availabilityDataFormatLabel",
+			  "dq109TableLabel"];
 
 
 var notEmptyFields = [["objectName", "objectNameLabel"],

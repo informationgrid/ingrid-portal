@@ -58,6 +58,8 @@ public class MdekDataBean {
 	private Integer spatialRefAltMeasure;
 	private Integer spatialRefAltVDate;
 	private String spatialRefExplanation;
+	/** NOTICE: moved from class 1 (Geoinformation/Karte) to spatial for all objects ! */
+	private String ref1SpatialSystem;
 
 	// Time
 	private String timeRefType;
@@ -118,8 +120,6 @@ public class MdekDataBean {
 	private List<Integer> ref1Representation;	
 	private Integer ref1VFormatTopology;
 	private List<VectorFormatDetailsBean> ref1VFormatDetails;
-	/** NOTICE: moved to general "Raumbezug" for all objects ! */
-	private String ref1SpatialSystem;
 	private List<ScaleBean> ref1Scale;
 	private Double ref1AltAccuracy;
 	private Double ref1PosAccuracy;
@@ -129,6 +129,8 @@ public class MdekDataBean {
 	private String ref1DataBasisText;
 	private String ref1ProcessText;
 	private List<String> ref1Data;
+	// Data Quality !
+	private List<DQBean> dq109Table;
 
 
 	// Object class 2 (Dokument/Bericht/Literatur)
@@ -538,6 +540,9 @@ public class MdekDataBean {
 		this.setRef1SymbolsText(new ArrayList<LinkDataBean>());
 		this.setRef1KeysText(new ArrayList<LinkDataBean>());
 		this.setRef1Data(new ArrayList<String>());
+
+		this.setDq109Table(new ArrayList<DQBean>());
+
 		this.setRef3ServiceTypeTable(new ArrayList<Integer>());
 		this.setRef3ServiceVersion(new ArrayList<String>());
 		this.setRef3Scale(new ArrayList<ScaleBean>());
@@ -1796,6 +1801,12 @@ public class MdekDataBean {
 		this.ref6UrlList = ref6UrlList;
 	}
 
-	
-	
+
+	public List<DQBean> getDq109Table() {
+		return dq109Table;
+	}
+	public void setDq109Table(List<DQBean> dq109Table) {
+		this.dq109Table = dq109Table;
+	}
+
 }

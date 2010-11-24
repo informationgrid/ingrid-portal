@@ -217,7 +217,7 @@ function initForm() {
   }
 
   // Init the contentBlocks
-  var contentBlockIds = ["generalContent", "ref1Content", "ref2Content", "ref3Content", "ref4Content", "ref5Content", "ref6Content",
+  var contentBlockIds = ["generalContent", "ref1Content", "ref1ContentDQ", "ref2Content", "ref3Content", "ref4Content", "ref5Content", "ref6Content",
   			"spatialRefContent", "timeRefContent", "extraInfoContent", "availabilityContent", "thesaurusContent", "linksContent",
   			"additionalFieldsContent",
   			"headerAddressType0Content", "headerAddressType1Content", "headerAddressType2Content", "headerAddressType3Content",
@@ -1504,6 +1504,7 @@ function initSysLists() {
 		"ref2DocumentType", "ref3ServiceType", "ref3ServiceTypeEditor", "ref6ServiceType", "extraInfoLangData", "extraInfoCharSetData",
 		"extraInfoLangMetaData", "extraInfoPublishArea", "extraInfoConformityLevelEditor",
 		"availabilityDataFormatName", "availabilityAccessConstraintsEditor",
+		"dq109NameOfMeasureEditor", 
 		// Addresses
 		"headerAddressType2Style", "headerAddressType3Style", "headerAddressType2Title", "headerAddressType3Title",
 		"addressComType","addressCountry"]; 
