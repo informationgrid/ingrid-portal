@@ -131,6 +131,7 @@ public class MdekDataBean {
 	private List<String> ref1Data;
 	// Data Quality !
 	private List<DQBean> dq109Table;
+	private List<DQBean> dq110Table;
 
 
 	// Object class 2 (Dokument/Bericht/Literatur)
@@ -542,6 +543,7 @@ public class MdekDataBean {
 		this.setRef1Data(new ArrayList<String>());
 
 		this.setDq109Table(new ArrayList<DQBean>());
+		this.setDq110Table(new ArrayList<DQBean>());
 
 		this.setRef3ServiceTypeTable(new ArrayList<Integer>());
 		this.setRef3ServiceVersion(new ArrayList<String>());
@@ -1807,6 +1809,13 @@ public class MdekDataBean {
 	}
 	public void setDq109Table(List<DQBean> dq109Table) {
 		this.dq109Table = dq109Table;
+	}
+
+	public List<DQBean> getDq110Table() {
+		return dq110Table;
+	}
+	public void setDq110Table(List<DQBean> dq110Table) {
+		this.dq110Table = dq110Table;
 	}
 
 }

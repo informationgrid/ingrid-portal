@@ -1504,7 +1504,7 @@ function initSysLists() {
 		"ref2DocumentType", "ref3ServiceType", "ref3ServiceTypeEditor", "ref6ServiceType", "extraInfoLangData", "extraInfoCharSetData",
 		"extraInfoLangMetaData", "extraInfoPublishArea", "extraInfoConformityLevelEditor",
 		"availabilityDataFormatName", "availabilityAccessConstraintsEditor",
-		"dq109NameOfMeasureEditor", 
+		"dq109NameOfMeasureEditor", "dq110NameOfMeasureEditor",
 		// Addresses
 		"headerAddressType2Style", "headerAddressType3Style", "headerAddressType2Title", "headerAddressType3Title",
 		"addressComType","addressCountry"]; 

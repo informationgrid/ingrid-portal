@@ -340,4 +340,5 @@ Vorhaben/Projekte/Programme, in denen umweltrelevante Datenbestände entstehen'#
 332#0#5043#-1#'de'#'Zeichensatz des Datensatzes'#'TODO: neues Feld ...'#
 333#0#7500#-1#'de'#'Datenqualität'#'TODO: neue Rubrik Datenqualität ...'#
 334#0#7509#-1#'de'#'Datenüberschuss'#'TODO: Tabelle 109. DQ_CompletenessComission  ...'#
+335#0#7510#-1#'de'#'Datendefizit'#'TODO: Tabelle 110. DQ_CompletenessOmission   ...'#
 999#'version'#'gui_id'#'entity_class'#'language'#'name'#'help_text'#'sample'

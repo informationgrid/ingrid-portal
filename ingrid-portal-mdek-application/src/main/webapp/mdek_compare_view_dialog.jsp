@@ -66,6 +66,7 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
         // DQ
 		renderSectionTitel(message.get("ui.obj.dq"));
         renderTable(nodeDataOld.dq109Table, nodeDataNew.dq109Table, ["nameOfMeasure", "resultValue", "measureDescription"], [message.get("ui.obj.dq.table.header1"), message.get("ui.obj.dq.table.header2"), message.get("ui.obj.dq.table.header3")], message.get("ui.obj.dq.table109.title"));
+        renderTable(nodeDataOld.dq110Table, nodeDataNew.dq110Table, ["nameOfMeasure", "resultValue", "measureDescription"], [message.get("ui.obj.dq.table.header1"), message.get("ui.obj.dq.table.header2"), message.get("ui.obj.dq.table.header3")], message.get("ui.obj.dq.table110.title"));
 
 	} else if (nodeDataNew.objectClass == 2) {
 		renderSectionTitel(message.get("ui.obj.relevance"));

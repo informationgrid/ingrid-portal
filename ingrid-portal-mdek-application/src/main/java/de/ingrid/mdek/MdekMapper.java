@@ -223,6 +223,7 @@ public class MdekMapper implements DataMapperInterface {
 		case 1:
 			// DQ has different section (transferred outside of TECHNICAL_DOMAIN_MAP !)
 			mdekObj.setDq109Table(mapToDqTable(109, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
+			mdekObj.setDq110Table(mapToDqTable(110, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
 
 			td1Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
 			if (td1Map == null)
@@ -771,7 +772,15 @@ public class MdekMapper implements DataMapperInterface {
 			break;
 		case 1:
 			// DQ has different section (transferred outside of TECHNICAL_DOMAIN_MAP !)
-			udkObj.put(MdekKeys.DATA_QUALITY_LIST, mapFromDQTables(data.getDq109Table()));
+			int[] dqIds = new int[] {
+					109,
+					110
+			};
+			List<DQBean>[] dqData = new List[] { 
+					data.getDq109Table(),
+					data.getDq110Table()					
+			};
+			udkObj.put(MdekKeys.DATA_QUALITY_LIST, mapFromDQTables(dqIds, dqData));
 
 			if (td1Map == null) {
 				td1Map = new IngridDocument();
@@ -1956,31 +1965,35 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 
-	private List<IngridDocument> mapFromDQTables(List<DQBean> dq109List) {
+	private List<IngridDocument> mapFromDQTables(int[] dqIds,
+			List<DQBean>[] dqDataList) {
 		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 
-		if (dq109List != null) {
-			// get "Name Of Measure" Syslist for dq element
-			int syslistIdNameOfMeasure = MdekUtils.MdekSysList.getSyslistIdFromDqElementId(109);
+		for (int i=0; i < dqIds.length; i++) {
+			int dqId = dqIds[i];
+			List<DQBean> dqData = dqDataList[i];
+			if (dqData != null) {
+				// get "Name Of Measure" Syslist for dq element
+				int syslistIdNameOfMeasure = MdekUtils.MdekSysList.getSyslistIdFromDqElementId(dqId);
 
-			for (DQBean dq : dq109List) {
-				IngridDocument res = new IngridDocument();
-				res.put(MdekKeys.DQ_ELEMENT_ID, 109);
+				for (DQBean dq : dqData) {
+					IngridDocument res = new IngridDocument();
+					res.put(MdekKeys.DQ_ELEMENT_ID, dqId);
 
-				// name of measure is free entry (key=-1) or syslist entry !
-				// first set as free value
-				res.put(MdekKeys.NAME_OF_MEASURE_VALUE, dq.getNameOfMeasure());
-				res.put(MdekKeys.NAME_OF_MEASURE_KEY, new Integer(-1));					
-				// then set key from syslist if syslist entry
-				Integer key = sysListMapper.getKeyFromListId(syslistIdNameOfMeasure, dq.getNameOfMeasure());
-				if (key != null) {
-					// Found special address ref
-					res.put(MdekKeys.NAME_OF_MEASURE_KEY, key);
+					// name of measure is free entry (key=-1) or syslist entry !
+					// first set as free value
+					res.put(MdekKeys.NAME_OF_MEASURE_VALUE, dq.getNameOfMeasure());
+					res.put(MdekKeys.NAME_OF_MEASURE_KEY, new Integer(-1));					
+					// then set key from syslist if syslist entry
+					Integer key = sysListMapper.getKeyFromListId(syslistIdNameOfMeasure, dq.getNameOfMeasure());
+					if (key != null) {
+						res.put(MdekKeys.NAME_OF_MEASURE_KEY, key);
+					}
+
+					res.put(MdekKeys.RESULT_VALUE, dq.getResultValue());
+					res.put(MdekKeys.MEASURE_DESCRIPTION, dq.getMeasureDescription());
+					resultList.add(res);
 				}
-
-				res.put(MdekKeys.RESULT_VALUE, dq.getResultValue());
-				res.put(MdekKeys.MEASURE_DESCRIPTION, dq.getMeasureDescription());
-				resultList.add(res);
 			}
 		}
 		return resultList;

@@ -1743,6 +1743,7 @@ udkDataProxy._setObjectDataClass1 = function(nodeData) {
 	dojo.widget.byId("ref1KeysText").store.setData(UtilList.addTableIndices(nodeData.ref1KeysText));
 
     dojo.widget.byId("dq109Table").store.setData(UtilList.addTableIndices(nodeData.dq109Table));
+    dojo.widget.byId("dq110Table").store.setData(UtilList.addTableIndices(nodeData.dq110Table));
 }
 
 udkDataProxy._setObjectDataClass2 = function(nodeData) {
@@ -2138,6 +2139,7 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
 	nodeData.ref1KeysText = udkDataProxy._getTableData("ref1KeysText");
 
     nodeData.dq109Table = udkDataProxy._getTableData("dq109Table");
+    nodeData.dq110Table = udkDataProxy._getTableData("dq110Table");
 };
 
 udkDataProxy._getObjectDataClass2 = function(nodeData) {
