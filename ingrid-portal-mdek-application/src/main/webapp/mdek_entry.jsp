@@ -774,7 +774,7 @@ function hideSplash(){
                         <div class="tableContainer full h075">
                           <div class="cellEditors" id="dq109TableEditors">
                             <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7109" id="dq109NameOfMeasureEditor"></div>
-                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq109ValueEditor"></div>
+                            <div dojoType="ingrid:RealNumberTextbox" decimal="," maxlength="255" class="w085" widgetId="dq109ValueEditor"></div>
                             <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq109DescriptionEditor"></div>
                           </div>
                             <table id="dq109Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
@@ -803,7 +803,7 @@ function hideSplash(){
                         <div class="tableContainer full h075">
                           <div class="cellEditors" id="dq110TableEditors">
                             <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7110" id="dq110NameOfMeasureEditor"></div>
-                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq110ValueEditor"></div>
+                            <div dojoType="ingrid:RealNumberTextbox" decimal="," maxlength="255" class="w085" widgetId="dq110ValueEditor"></div>
                             <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq110DescriptionEditor"></div>
                           </div>
                             <table id="dq110Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
@@ -832,7 +832,7 @@ function hideSplash(){
                         <div class="tableContainer full h075">
                           <div class="cellEditors" id="dq112TableEditors">
                             <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7112" id="dq112NameOfMeasureEditor"></div>
-                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq112ValueEditor"></div>
+                            <div dojoType="ingrid:RealNumberTextbox" decimal="," maxlength="255" class="w085" widgetId="dq112ValueEditor"></div>
                             <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq112DescriptionEditor"></div>
                           </div>
                             <table id="dq112Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
@@ -861,7 +861,7 @@ function hideSplash(){
                         <div class="tableContainer full h075">
                           <div class="cellEditors" id="dq113TableEditors">
                             <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7113" id="dq113NameOfMeasureEditor"></div>
-                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq113ValueEditor"></div>
+                            <div dojoType="ingrid:RealNumberTextbox" decimal="," maxlength="255" class="w085" widgetId="dq113ValueEditor"></div>
                             <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq113DescriptionEditor"></div>
                           </div>
                             <table id="dq113Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
@@ -890,7 +890,7 @@ function hideSplash(){
                         <div class="tableContainer full h075">
                           <div class="cellEditors" id="dq114TableEditors">
                             <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7114" id="dq114NameOfMeasureEditor"></div>
-                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq114ValueEditor"></div>
+                            <div dojoType="ingrid:RealNumberTextbox" decimal="," maxlength="255" class="w085" widgetId="dq114ValueEditor"></div>
                             <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq114DescriptionEditor"></div>
                           </div>
                             <table id="dq114Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
@@ -919,7 +919,7 @@ function hideSplash(){
                         <div class="tableContainer full h075">
                           <div class="cellEditors" id="dq115TableEditors">
                             <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7115" id="dq115NameOfMeasureEditor"></div>
-                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq115ValueEditor"></div>
+                            <div dojoType="ingrid:RealNumberTextbox" decimal="," maxlength="255" class="w085" widgetId="dq115ValueEditor"></div>
                             <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq115DescriptionEditor"></div>
                           </div>
                             <table id="dq115Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
@@ -948,7 +948,7 @@ function hideSplash(){
                         <div class="tableContainer full h075">
                           <div class="cellEditors" id="dq117TableEditors">
                             <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7117" id="dq117NameOfMeasureEditor"></div>
-                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq117ValueEditor"></div>
+                            <div dojoType="ingrid:RealNumberTextbox" decimal="," maxlength="255" class="w085" widgetId="dq117ValueEditor"></div>
                             <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq117DescriptionEditor"></div>
                           </div>
                             <table id="dq117Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
@@ -977,7 +977,7 @@ function hideSplash(){
                         <div class="tableContainer full h075">
                           <div class="cellEditors" id="dq120TableEditors">
                             <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7120" id="dq120NameOfMeasureEditor"></div>
-                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq120ValueEditor"></div>
+                            <div dojoType="ingrid:RealNumberTextbox" decimal="," maxlength="255" class="w085" widgetId="dq120ValueEditor"></div>
                             <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq120DescriptionEditor"></div>
                           </div>
                             <table id="dq120Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
@@ -1006,7 +1006,7 @@ function hideSplash(){
                         <div class="tableContainer full h075">
                           <div class="cellEditors" id="dq125TableEditors">
                             <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7125" id="dq125NameOfMeasureEditor"></div>
-                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq125ValueEditor"></div>
+                            <div dojoType="ingrid:RealNumberTextbox" decimal="," maxlength="255" class="w085" widgetId="dq125ValueEditor"></div>
                             <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq125DescriptionEditor"></div>
                           </div>
                             <table id="dq125Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
@@ -1035,7 +1035,7 @@ function hideSplash(){
                         <div class="tableContainer full h075">
                           <div class="cellEditors" id="dq126TableEditors">
                             <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7126" id="dq126NameOfMeasureEditor"></div>
-                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq126ValueEditor"></div>
+                            <div dojoType="ingrid:RealNumberTextbox" decimal="," maxlength="255" class="w085" widgetId="dq126ValueEditor"></div>
                             <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq126DescriptionEditor"></div>
                           </div>
                             <table id="dq126Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
@@ -1064,7 +1064,7 @@ function hideSplash(){
                         <div class="tableContainer full h075">
                           <div class="cellEditors" id="dq127TableEditors">
                             <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7127" id="dq127NameOfMeasureEditor"></div>
-                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq127ValueEditor"></div>
+                            <div dojoType="ingrid:RealNumberTextbox" decimal="," maxlength="255" class="w085" widgetId="dq127ValueEditor"></div>
                             <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq127DescriptionEditor"></div>
                           </div>
                             <table id="dq127Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">

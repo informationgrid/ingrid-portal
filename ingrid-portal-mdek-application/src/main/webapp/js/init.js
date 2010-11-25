@@ -1387,6 +1387,14 @@ function initTableValidators() {
 		{target: "type", validateFunction: function(item) {return (item != null && dojo.string.trim(item).length != 0);}}
 	]);
 */
+
+    // result value for DQ Elements must be empty or a number
+    dojo.lang.forEach(dqUiTableElements, function(item){
+        var table = dojo.widget.byId(item);
+        table.setValidationFunctions([
+            {target: "resultValue", validateFunction: function(item) {return (item == null || item == "" || dojo.validate.isRealNumber(item) || dojo.validate.isInteger(item));}}
+        ]);
+    });	
 }
 
 function initCatalogData() {

@@ -7,6 +7,8 @@ dojo.addOnLoad(function() {});
 /* IDs of UI Elements for checking etc. */
 var headerUiInputElements = ["objectName", "objectClass", "objectOwner"];
 var generalUiInputElements = ["generalShortDesc", "generalDesc", "generalAddress"];
+var dqUiTableElements = ["dq109Table", "dq110Table", "dq112Table", "dq113Table", "dq114Table", "dq115Table", "dq117Table",
+    "dq120Table", "dq125Table", "dq126Table", "dq127Table"]; 
 var spatialUiInputElements = ["spatialRefAdminUnit", "spatialRefLocation", "ref1SpatialSystem", "spatialRefAltMin", "spatialRefAltMax",
 	"spatialRefAltMeasure", "spatialRefAltVDate", "spatialRefExplanation"];
 var timeUiInputElements = ["timeRefType", "timeRefDate1", "timeRefDate2", "timeRefStatus", "timeRefPeriodicity", "timeRefIntervalNum",
@@ -332,6 +334,21 @@ function isObjectPublishable(idcObject) {
 				}
 			}
 */
+            // Check dq rows whether complete !
+            dojo.lang.forEach(dqUiTableElements, function(dqTableId) {
+                var dqRows = idcObject[dqTableId]
+                for (var i in dqRows) {
+				    var dqRow = dqRows[i];
+                    if (dqRow.nameOfMeasure || dqRow.resultValue || dqRow.measureDescription) {
+                        if (!dqRow.nameOfMeasure || !dqRow.resultValue) {
+                            dojo.html.addClass(dojo.byId(dqTableId + "Label"), "important");
+                            publishable = false;
+                            dojo.debug("NameOfMeasure + ResultValue needs to be filled.");
+                        }
+                    }
+                }
+            });
+
 			break;
 		case '2':
 			// No additional required fields for object class 2
@@ -644,6 +661,12 @@ function checkValidityOfInputElements() {
 		valid = checkValidityOfWidgets(availUiInputElements);
 		if (valid != "VALID") { return valid; }
 	}
+
+    // Only Object class 1 has DQ Tables.
+    if (objectClass == "1") {
+        valid = checkValidityOfWidgets(dqUiTableElements);
+        if (valid != "VALID") { return valid; }
+    }
 
 	return "VALID";
 }
