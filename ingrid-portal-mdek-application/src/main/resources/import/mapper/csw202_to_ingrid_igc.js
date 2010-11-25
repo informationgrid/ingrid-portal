@@ -960,111 +960,9 @@ var mappingDescription = {"mappings":[
   		// ****************************************************
   		
   		{	
-  			"srcXpath":"//*/gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue!='']",
-  			"targetNode":"/igc/addresses",
-  			"newNodeName":"address",
-  			"subMappings":{
-  				"mappings": [
-		     		{	
-			  			// make sure we always have a UUID 
-			  			"defaultValue":createUUIDFromAddress,
-			  			"storeValue":"uuid",
-			    		"targetNode":"address-identifier"
-		    		},
-	  				{
-			  			"defaultValue":"xxx",
-			  			"targetNode":"modificator-identifier"
-			  		},
-	  				{
-			  			"defaultValue":"xxx",
-			  			"targetNode":"responsible-identifier"
-			  		},
-	  				{
-			  			// map to address type: person getTypeOfAddress
-			  			"execute":{
-							"funct":getTypeOfAddress
-						}
-			  		},
-	  				{
-			  			"srcXpath":"gmd:organisationName/gco:CharacterString",
-			  			"targetNode":"organisation"
-			  		},
-	  				{
-			  			"srcXpath":"gmd:individualName/gco:CharacterString",
-			  			"targetNode":"name"
-			  		},
-	  				{
-			  			"srcXpath":"gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country/gco:CharacterString",
-			  			"targetNode":"country",
-			  			"targetAttribute":"id",
-			  			"defaultValue":"-1",
-			  			"transform":{
-							"funct":UtilsCountryCodelist.getCodeFromShortcut3
-						}
-			  		},
-	  				{
-			  			"srcXpath":"gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country/gco:CharacterString",
-			  			"targetNode":"country"
-			  		},
-	  				{
-			  			"srcXpath":"gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:postalCode/gco:CharacterString",
-			  			"targetNode":"postal-code"
-			  		},
-	  				{
-			  			"srcXpath":"gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint/gco:CharacterString",
-			  			"targetNode":"street"
-			  		},
-	  				{
-			  			"srcXpath":"gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city/gco:CharacterString",
-			  			"targetNode":"city"
-			  		},
-			  		{	
-			  			"execute":{
-							"funct":mapCommunicationData
-						}
-			  		},
-	  				{
-			  			"srcXpath":"gmd:positionName/gco:CharacterString",
-			  			"targetNode":"function"
-			  		},
-			  		{
-				  		"srcXpath":".",
-			  			"targetNode":"/igc/data-sources/data-source",
-			  			"newNodeName":"related-address",
-			  			"subMappings":{
-			  				"mappings": [
-				  				{
-						  			"srcXpath":"gmd:role/gmd:CI_RoleCode/@codeListValue",
-						  			"targetNode":"type-of-relation",
-						  			"targetAttribute":"entry-id",
-						  			"transform":{
-										"funct":transformISOToIgcDomainId,
-										"params":[505, "Could not transform ISO address role code to IGC id: "]
-									}
-						  		},
-				  				{
-						  			"defaultValue":"505",
-						  			"targetNode":"type-of-relation",
-						  			"targetAttribute":"list-id"
-						  		},
-				  				{
-						  			"srcXpath":"gmd:role/gmd:CI_RoleCode/@codeListValue",
-						  			"targetNode":"type-of-relation",
-							  		"transform":{
-										"funct":transformISOToIgcDomainValue,
-										"params":[505, transformISOToIGCLanguageCode('de'), "Could not transform ISO address role code to IGC codelist value: "]
-									}
-						  				
-						  		},
-				  				{
-						  			"setStoredValue":"uuid",
-						  			"targetNode":"address-identifier"
-						  		}
-						  	]
-						}
-					}
-  				]
-  			}
+  			"execute":{
+				"funct":mapAddresses
+			}
   		}
 	]};
 
@@ -1484,6 +1382,78 @@ function mapAccessConstraints(source, target) {
     }
 }
 
+
+function mapAddresses(source, target) {
+
+    var isoAddressNodes = XPathUtils.getNodeList(source, "//*/gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue!='']");
+    if (hasValue(isoAddressNodes)) {
+        var igcAdressNodes = XPathUtils.createElementFromXPath(target, "/igc/addresses");
+    	var parentAddressList = [];
+        for (i=0; i<isoAddressNodes.getLength(); i++ ) {
+        	var isoAddressNode = isoAddressNodes.item(i);
+        	var organisationName = XPathUtils.getString(isoAddressNode, "gmd:organisationName/gco:CharacterString");
+        	var individualName = XPathUtils.getString(isoAddressNode, "gmd:individualName/gco:CharacterString");
+        	var parentUuid;
+        	if (hasValue(organisationName) && hasValue(individualName)) {
+        		var parentUuid = createUUIDFromString(organisationName.toString());
+        		if (!hasValue(parentAddressList[parentUuid])) {
+	        		var igcAddressNode = XPathUtils.createElementFromXPathAsSibling(igcAdressNodes, "address");
+	                log.info("Organization in individual address detected. Create new address for organization '" + organisationName + "' with uuid=" + parentUuid + ".")
+	                XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "address-identifier"), parentUuid);
+	                XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "modificator-identifier"), "xxx");
+	                XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "responsible-identifier"), "xxx");
+	                XMLUtils.createOrReplaceAttribute(XPathUtils.createElementFromXPath(igcAddressNode, "type-of-address"), "id", "0");
+	                XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "organisation"), organisationName);
+	                parentAddressList[parentUuid] = 1;
+        		} else {
+        			log.debug("Organization in individual address detected. Use existing address for organization '" + organisationName + "' with uuid=" + parentUuid + ".")        		
+        		}
+        	}
+        	var uuid = createUUIDFromAddress(isoAddressNode);
+    		var igcAddressNode = XPathUtils.createElementFromXPathAsSibling(igcAdressNodes, "address");
+            XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "address-identifier"), uuid);
+            XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "modificator-identifier"), "xxx");
+            XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "responsible-identifier"), "xxx");
+            if (hasValue(individualName)) {
+            	XMLUtils.createOrReplaceAttribute(XPathUtils.createElementFromXPath(igcAddressNode, "type-of-address"), "id", "0");
+            } else {
+            	XMLUtils.createOrReplaceAttribute(XPathUtils.createElementFromXPath(igcAddressNode, "type-of-address"), "id", "2");
+            }
+            XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "organisation"), organisationName);
+            XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "name"), individualName);
+            XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "country"), XPathUtils.getString(isoAddressNode, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country/gco:CharacterString"));
+            var countryCode = UtilsCountryCodelist.getCodeFromShortcut3(XPathUtils.getString(isoAddressNode, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country/gco:CharacterString"));
+            if (!hasValue(countryCode)) {
+            	countryCode = "-1";
+            }
+            XMLUtils.createOrReplaceAttribute(XPathUtils.createElementFromXPath(igcAddressNode, "country"), "id", countryCode);
+            XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "postal-code"), XPathUtils.getString(isoAddressNode, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:postalCode/gco:CharacterString"));
+            XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "street"), XPathUtils.getString(isoAddressNode, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint/gco:CharacterString"));
+            XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "city"), XPathUtils.getString(isoAddressNode, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city/gco:CharacterString"));
+            mapCommunicationData(isoAddressNode, igcAddressNode);
+            XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "function"), XPathUtils.getString(isoAddressNode, "gmd:positionName/gco:CharacterString"));
+            if (hasValue(parentUuid)) {
+            	XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "parent-address"), parentUuid);
+            }
+
+            // add related addresses
+            var igcRelatedAddressNode = XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/related-address");
+            var addressRoleId = transformISOToIgcDomainId(XPathUtils.getString(isoAddressNode, "gmd:role/gmd:CI_RoleCode/@codeListValue"), 505, "Could not transform ISO address role code to IGC id: ");
+            if (!hasValue(addressRoleId)) {
+            	addressRoleId = "-1";
+            }
+            XMLUtils.createOrReplaceAttribute(XPathUtils.createElementFromXPath(igcRelatedAddressNode, "type-of-relation"), "entry-id", addressRoleId);
+            XMLUtils.createOrReplaceAttribute(XPathUtils.createElementFromXPath(igcRelatedAddressNode, "type-of-relation"), "list-id", "505");
+            var addressRoleValue = transformISOToIgcDomainValue(XPathUtils.getString(isoAddressNode, "gmd:role/gmd:CI_RoleCode/@codeListValue"), 505, transformISOToIGCLanguageCode('de'), "Could not transform ISO address role code to IGC codelist value: ");
+            XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcRelatedAddressNode, "type-of-relation"), addressRoleValue);            
+            XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcRelatedAddressNode, "address-identifier"), uuid);            
+            
+        }
+    }
+
+}
+
+
 function parseToInt(val) {
 	return java.lang.Integer.parseInt(val);
 }
@@ -1520,9 +1490,9 @@ function transformToIgcDomainId(val, codeListId, languageId, logErrorOnNotFound)
 			idcCode = UtilsUDKCodeLists.getCodeListDomainId(codeListId, val, languageId);
 		} catch (e) {
 			if (log.isWarnEnabled()) {
-				log.warn("Error tranforming code '" + val + "' with code list " + codeListId + " with language " + languageId + " to IGC id. Does the codeList exist?");
+				log.warn("Error tranforming code '" + val + "' with code list " + codeListId + " with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "' to IGC id. Does the codeList exist?");
 			}
-			protocol(WARN, "Error tranforming code '" + val + "' with code list " + codeListId + " with language " + languageId + " to IGC id. Does the codeList exist?")
+			protocol(WARN, "Error tranforming code '" + val + "' with code list " + codeListId + " with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "' to IGC id. Does the codeList exist?")
 			if (logErrorOnNotFound) {
 				log.warn(logErrorOnNotFound + val);
 				protocol(WARN, logErrorOnNotFound + val)
@@ -1532,8 +1502,8 @@ function transformToIgcDomainId(val, codeListId, languageId, logErrorOnNotFound)
 			return idcCode;
 		} else {
 			if (log.isWarnEnabled()) {
-				log.warn("Domain code '" + val + "' unknown in code list " + codeListId + " for language " + languageId + ".");
-				protocol(WARN, "Domain code '" + val + "' unknown in code list " + codeListId + " for language " + languageId + ".")
+				log.warn("Domain code '" + val + "' unknown in code list " + codeListId + " for language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'.");
+				protocol(WARN, "Domain code '" + val + "' unknown in code list " + codeListId + " for language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'.")
 			}
 			if (logErrorOnNotFound) {
 				log.warn(logErrorOnNotFound + val);
@@ -1553,9 +1523,9 @@ function transformToIgcDomainValue(val, codeListId, languageId, logErrorOnNotFou
 			idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(val), languageId);
 		} catch (e) {
 			if (log.isWarnEnabled()) {
-				log.warn("Error tranforming id '" + val + "' with code list " + codeListId + " with language " + languageId + ". Does the codeList exist?");
+				log.warn("Error tranforming id '" + val + "' with code list " + codeListId + " with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'. Does the codeList exist?");
 			}
-			protocol(WARN, "Error tranforming id '" + val + "' with code list " + codeListId + " with language " + languageId + ". Does the codeList exist?")
+			protocol(WARN, "Error tranforming id '" + val + "' with code list " + codeListId + " with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'. Does the codeList exist?")
 			if (logErrorOnNotFound) {
 				log.warn(logErrorOnNotFound + val);
 				protocol(WARN, logErrorOnNotFound + val)
@@ -1565,8 +1535,8 @@ function transformToIgcDomainValue(val, codeListId, languageId, logErrorOnNotFou
 			return idcValue;
 		} else {
 			if (log.isWarnEnabled()) {
-				log.warn("Domain id '" + val + "' unknown in code list " + codeListId + " for language " + languageId + ".");
-				protocol(WARN, "Domain id '" + val + "' unknown in code list " + codeListId + " for language " + languageId + ".")
+				log.warn("Domain id '" + val + "' unknown in code list " + codeListId + " for language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'.");
+				protocol(WARN, "Domain id '" + val + "' unknown in code list " + codeListId + " for language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'.")
 			}
 			if (logErrorOnNotFound) {
 				log.warn(logErrorOnNotFound + val);
@@ -1618,9 +1588,9 @@ function transformISOToIgcDomainValue(val, codeListId, languageId, logErrorOnNot
 			idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(idcCode), parseToInt(languageId));
 		} catch (e) {
 			if (log.isWarnEnabled()) {
-				log.warn("Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC value with language " + languageId + ". Does the codeList exist?"  + e.toString());
+				log.warn("Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC value with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'. Does the codeList exist?"  + e.toString());
 			}
-			protocol(WARN, "Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC value with language " + languageId + ". Does the codeList exist?")
+			protocol(WARN, "Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC value with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'. Does the codeList exist?")
 			if (logErrorOnNotFound) {
 				log.warn(logErrorOnNotFound + val);
 				protocol(WARN, logErrorOnNotFound + val)
@@ -1666,13 +1636,13 @@ function getTypeOfAddress(source, target) {
 	var organisationName = XPathUtils.getString(source, "gmd:organisationName/gco:CharacterString");
 	var individualName = XPathUtils.getString(source, "gmd:individualName/gco:CharacterString");
 	var node = XPathUtils.createElementFromXPath(target, "type-of-address");
-	if (hasValue(organisationName)) {
-		XMLUtils.createOrReplaceAttribute(node, "id", "0");
-	} else if (hasValue(individualName)) {
+	if (hasValue(individualName)) {
 		XMLUtils.createOrReplaceAttribute(node, "id", "2");
-	} else {
+	} else if (hasValue(organisationName)) {
 		XMLUtils.createOrReplaceAttribute(node, "id", "0");
-	}		
+	} else {
+		XMLUtils.createOrReplaceAttribute(node, "id", "2");
+	}
 }
 
 
@@ -1711,6 +1681,11 @@ function call_f(f,args)
   return f.call_self(args);
 }
 
+
+
+
+
+
 function createUUIDFromAddress(source) {
 	log.debug("create UUID from address node: " + source);
 	var isoUuid = XPathUtils.getString(source, "./@uuid");
@@ -1731,12 +1706,7 @@ function createUUIDFromAddress(source) {
 	
 	var uuid;
 	if (idString != "" && (hasValue(email) || (hasValue(organisationName) && hasValue(individualName)))) {
-		uuid = java.util.UUID.nameUUIDFromBytes((new java.lang.String(idString.toString())).getBytes());
-		var idcUuid = new java.lang.StringBuffer(uuid.toString().toUpperCase());
-		while (idcUuid.length() < 36) {
-			idcUuid.append("0");
-		}
-		uuid = idcUuid.toString();
+		uuid = createUUIDFromString(idString.toString());
 	} else if (isoUuid != "") {
 		uuid = isoUuid;
 	} else {
@@ -1751,6 +1721,15 @@ function createUUIDFromAddress(source) {
 	return uuid;
 }
 
+function createUUIDFromString(str) {
+	var uuid = java.util.UUID.nameUUIDFromBytes((new java.lang.String(str)).getBytes());
+	var idcUuid = new java.lang.StringBuffer(uuid.toString().toUpperCase());
+	while (idcUuid.length() < 36) {
+		idcUuid.append("0");
+	}
+	uuid = idcUuid.toString();
+	return uuid;
+}
 
 
 function createUUID() {
