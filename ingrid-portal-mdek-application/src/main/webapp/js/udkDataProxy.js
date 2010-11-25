@@ -1744,6 +1744,15 @@ udkDataProxy._setObjectDataClass1 = function(nodeData) {
 
     dojo.widget.byId("dq109Table").store.setData(UtilList.addTableIndices(nodeData.dq109Table));
     dojo.widget.byId("dq110Table").store.setData(UtilList.addTableIndices(nodeData.dq110Table));
+    dojo.widget.byId("dq112Table").store.setData(UtilList.addTableIndices(nodeData.dq112Table));
+    dojo.widget.byId("dq113Table").store.setData(UtilList.addTableIndices(nodeData.dq113Table));
+    dojo.widget.byId("dq114Table").store.setData(UtilList.addTableIndices(nodeData.dq114Table));
+    dojo.widget.byId("dq115Table").store.setData(UtilList.addTableIndices(nodeData.dq115Table));
+    dojo.widget.byId("dq117Table").store.setData(UtilList.addTableIndices(nodeData.dq117Table));
+    dojo.widget.byId("dq120Table").store.setData(UtilList.addTableIndices(nodeData.dq120Table));
+    dojo.widget.byId("dq125Table").store.setData(UtilList.addTableIndices(nodeData.dq125Table));
+    dojo.widget.byId("dq126Table").store.setData(UtilList.addTableIndices(nodeData.dq126Table));
+    dojo.widget.byId("dq127Table").store.setData(UtilList.addTableIndices(nodeData.dq127Table));
 }
 
 udkDataProxy._setObjectDataClass2 = function(nodeData) {
@@ -2140,6 +2149,15 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
 
     nodeData.dq109Table = udkDataProxy._getTableData("dq109Table");
     nodeData.dq110Table = udkDataProxy._getTableData("dq110Table");
+    nodeData.dq112Table = udkDataProxy._getTableData("dq112Table");
+    nodeData.dq113Table = udkDataProxy._getTableData("dq113Table");
+    nodeData.dq114Table = udkDataProxy._getTableData("dq114Table");
+    nodeData.dq115Table = udkDataProxy._getTableData("dq115Table");
+    nodeData.dq117Table = udkDataProxy._getTableData("dq117Table");
+    nodeData.dq120Table = udkDataProxy._getTableData("dq120Table");
+    nodeData.dq125Table = udkDataProxy._getTableData("dq125Table");
+    nodeData.dq126Table = udkDataProxy._getTableData("dq126Table");
+    nodeData.dq127Table = udkDataProxy._getTableData("dq127Table");
 };
 
 udkDataProxy._getObjectDataClass2 = function(nodeData) {

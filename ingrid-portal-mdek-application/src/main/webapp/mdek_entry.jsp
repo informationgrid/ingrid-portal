@@ -826,6 +826,267 @@ function hideSplash(){
                     </span>
                   </div>
 
+                  <div id="dq112TableContainer" class="inputContainer notRequired">
+                    <span id="uiElement7512" type="optional">
+                        <span id="dq112TableLabel" class="label"><label for="dq112Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7512)"><script>document.write(message.get("ui.obj.dq.table112.title"))</script></label></span>
+                        <div class="tableContainer full h075">
+                          <div class="cellEditors" id="dq112TableEditors">
+                            <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7112" id="dq112NameOfMeasureEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq112ValueEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq112DescriptionEditor"></div>
+                          </div>
+                            <table id="dq112Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
+                              <thead>
+                                  <tr>
+                                    <th nosort="true" field="nameOfMeasure" dataType="String" editor="dq112NameOfMeasureEditor"><script>document.write(message.get("ui.obj.dq.table.header1"))</script></th>
+                                    <th nosort="true" field="resultValue" dataType="String" editor="dq112ValueEditor"><script>document.write(message.get("ui.obj.dq.table.header2"))</script></th>
+                                    <th nosort="true" field="measureDescription" dataType="String" editor="dq112DescriptionEditor"><script>document.write(message.get("ui.obj.dq.table.header3"))</script></th>
+                                  </tr>
+                              </thead>
+                              <colgroup>
+                                <col width="300">
+                                <col width="105">
+                                <col width="250">
+                              </colgroup>
+                              <tbody>
+                              </tbody>
+                            </table>
+                        </div>
+                    </span>
+                  </div>
+
+                  <div id="dq113TableContainer" class="inputContainer notRequired">
+                    <span id="uiElement7513" type="optional">
+                        <span id="dq113TableLabel" class="label"><label for="dq113Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7513)"><script>document.write(message.get("ui.obj.dq.table113.title"))</script></label></span>
+                        <div class="tableContainer full h075">
+                          <div class="cellEditors" id="dq113TableEditors">
+                            <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7113" id="dq113NameOfMeasureEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq113ValueEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq113DescriptionEditor"></div>
+                          </div>
+                            <table id="dq113Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
+                              <thead>
+                                  <tr>
+                                    <th nosort="true" field="nameOfMeasure" dataType="String" editor="dq113NameOfMeasureEditor"><script>document.write(message.get("ui.obj.dq.table.header1"))</script></th>
+                                    <th nosort="true" field="resultValue" dataType="String" editor="dq113ValueEditor"><script>document.write(message.get("ui.obj.dq.table.header2"))</script></th>
+                                    <th nosort="true" field="measureDescription" dataType="String" editor="dq113DescriptionEditor"><script>document.write(message.get("ui.obj.dq.table.header3"))</script></th>
+                                  </tr>
+                              </thead>
+                              <colgroup>
+                                <col width="300">
+                                <col width="105">
+                                <col width="250">
+                              </colgroup>
+                              <tbody>
+                              </tbody>
+                            </table>
+                        </div>
+                    </span>
+                  </div>
+
+                  <div id="dq114TableContainer" class="inputContainer notRequired">
+                    <span id="uiElement7514" type="optional">
+                        <span id="dq114TableLabel" class="label"><label for="dq114Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7514)"><script>document.write(message.get("ui.obj.dq.table114.title"))</script></label></span>
+                        <div class="tableContainer full h075">
+                          <div class="cellEditors" id="dq114TableEditors">
+                            <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7114" id="dq114NameOfMeasureEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq114ValueEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq114DescriptionEditor"></div>
+                          </div>
+                            <table id="dq114Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
+                              <thead>
+                                  <tr>
+                                    <th nosort="true" field="nameOfMeasure" dataType="String" editor="dq114NameOfMeasureEditor"><script>document.write(message.get("ui.obj.dq.table.header1"))</script></th>
+                                    <th nosort="true" field="resultValue" dataType="String" editor="dq114ValueEditor"><script>document.write(message.get("ui.obj.dq.table.header2"))</script></th>
+                                    <th nosort="true" field="measureDescription" dataType="String" editor="dq114DescriptionEditor"><script>document.write(message.get("ui.obj.dq.table.header3"))</script></th>
+                                  </tr>
+                              </thead>
+                              <colgroup>
+                                <col width="300">
+                                <col width="105">
+                                <col width="250">
+                              </colgroup>
+                              <tbody>
+                              </tbody>
+                            </table>
+                        </div>
+                    </span>
+                  </div>
+
+                  <div id="dq115TableContainer" class="inputContainer notRequired">
+                    <span id="uiElement7515" type="optional">
+                        <span id="dq115TableLabel" class="label"><label for="dq115Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7515)"><script>document.write(message.get("ui.obj.dq.table115.title"))</script></label></span>
+                        <div class="tableContainer full h075">
+                          <div class="cellEditors" id="dq115TableEditors">
+                            <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7115" id="dq115NameOfMeasureEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq115ValueEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq115DescriptionEditor"></div>
+                          </div>
+                            <table id="dq115Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
+                              <thead>
+                                  <tr>
+                                    <th nosort="true" field="nameOfMeasure" dataType="String" editor="dq115NameOfMeasureEditor"><script>document.write(message.get("ui.obj.dq.table.header1"))</script></th>
+                                    <th nosort="true" field="resultValue" dataType="String" editor="dq115ValueEditor"><script>document.write(message.get("ui.obj.dq.table.header2"))</script></th>
+                                    <th nosort="true" field="measureDescription" dataType="String" editor="dq115DescriptionEditor"><script>document.write(message.get("ui.obj.dq.table.header3"))</script></th>
+                                  </tr>
+                              </thead>
+                              <colgroup>
+                                <col width="300">
+                                <col width="105">
+                                <col width="250">
+                              </colgroup>
+                              <tbody>
+                              </tbody>
+                            </table>
+                        </div>
+                    </span>
+                  </div>
+
+                  <div id="dq117TableContainer" class="inputContainer notRequired">
+                    <span id="uiElement7517" type="optional">
+                        <span id="dq117TableLabel" class="label"><label for="dq117Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7517)"><script>document.write(message.get("ui.obj.dq.table117.title"))</script></label></span>
+                        <div class="tableContainer full h075">
+                          <div class="cellEditors" id="dq117TableEditors">
+                            <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7117" id="dq117NameOfMeasureEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq117ValueEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq117DescriptionEditor"></div>
+                          </div>
+                            <table id="dq117Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
+                              <thead>
+                                  <tr>
+                                    <th nosort="true" field="nameOfMeasure" dataType="String" editor="dq117NameOfMeasureEditor"><script>document.write(message.get("ui.obj.dq.table.header1"))</script></th>
+                                    <th nosort="true" field="resultValue" dataType="String" editor="dq117ValueEditor"><script>document.write(message.get("ui.obj.dq.table.header2"))</script></th>
+                                    <th nosort="true" field="measureDescription" dataType="String" editor="dq117DescriptionEditor"><script>document.write(message.get("ui.obj.dq.table.header3"))</script></th>
+                                  </tr>
+                              </thead>
+                              <colgroup>
+                                <col width="300">
+                                <col width="105">
+                                <col width="250">
+                              </colgroup>
+                              <tbody>
+                              </tbody>
+                            </table>
+                        </div>
+                    </span>
+                  </div>
+
+                  <div id="dq120TableContainer" class="inputContainer notRequired">
+                    <span id="uiElement7520" type="optional">
+                        <span id="dq120TableLabel" class="label"><label for="dq120Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7520)"><script>document.write(message.get("ui.obj.dq.table120.title"))</script></label></span>
+                        <div class="tableContainer full h075">
+                          <div class="cellEditors" id="dq120TableEditors">
+                            <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7120" id="dq120NameOfMeasureEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq120ValueEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq120DescriptionEditor"></div>
+                          </div>
+                            <table id="dq120Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
+                              <thead>
+                                  <tr>
+                                    <th nosort="true" field="nameOfMeasure" dataType="String" editor="dq120NameOfMeasureEditor"><script>document.write(message.get("ui.obj.dq.table.header1"))</script></th>
+                                    <th nosort="true" field="resultValue" dataType="String" editor="dq120ValueEditor"><script>document.write(message.get("ui.obj.dq.table.header2"))</script></th>
+                                    <th nosort="true" field="measureDescription" dataType="String" editor="dq120DescriptionEditor"><script>document.write(message.get("ui.obj.dq.table.header3"))</script></th>
+                                  </tr>
+                              </thead>
+                              <colgroup>
+                                <col width="300">
+                                <col width="105">
+                                <col width="250">
+                              </colgroup>
+                              <tbody>
+                              </tbody>
+                            </table>
+                        </div>
+                    </span>
+                  </div>
+
+                  <div id="dq125TableContainer" class="inputContainer notRequired">
+                    <span id="uiElement7525" type="optional">
+                        <span id="dq125TableLabel" class="label"><label for="dq125Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7525)"><script>document.write(message.get("ui.obj.dq.table125.title"))</script></label></span>
+                        <div class="tableContainer full h075">
+                          <div class="cellEditors" id="dq125TableEditors">
+                            <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7125" id="dq125NameOfMeasureEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq125ValueEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq125DescriptionEditor"></div>
+                          </div>
+                            <table id="dq125Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
+                              <thead>
+                                  <tr>
+                                    <th nosort="true" field="nameOfMeasure" dataType="String" editor="dq125NameOfMeasureEditor"><script>document.write(message.get("ui.obj.dq.table.header1"))</script></th>
+                                    <th nosort="true" field="resultValue" dataType="String" editor="dq125ValueEditor"><script>document.write(message.get("ui.obj.dq.table.header2"))</script></th>
+                                    <th nosort="true" field="measureDescription" dataType="String" editor="dq125DescriptionEditor"><script>document.write(message.get("ui.obj.dq.table.header3"))</script></th>
+                                  </tr>
+                              </thead>
+                              <colgroup>
+                                <col width="300">
+                                <col width="105">
+                                <col width="250">
+                              </colgroup>
+                              <tbody>
+                              </tbody>
+                            </table>
+                        </div>
+                    </span>
+                  </div>
+
+                  <div id="dq126TableContainer" class="inputContainer notRequired">
+                    <span id="uiElement7526" type="optional">
+                        <span id="dq126TableLabel" class="label"><label for="dq126Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7526)"><script>document.write(message.get("ui.obj.dq.table126.title"))</script></label></span>
+                        <div class="tableContainer full h075">
+                          <div class="cellEditors" id="dq126TableEditors">
+                            <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7126" id="dq126NameOfMeasureEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq126ValueEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq126DescriptionEditor"></div>
+                          </div>
+                            <table id="dq126Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
+                              <thead>
+                                  <tr>
+                                    <th nosort="true" field="nameOfMeasure" dataType="String" editor="dq126NameOfMeasureEditor"><script>document.write(message.get("ui.obj.dq.table.header1"))</script></th>
+                                    <th nosort="true" field="resultValue" dataType="String" editor="dq126ValueEditor"><script>document.write(message.get("ui.obj.dq.table.header2"))</script></th>
+                                    <th nosort="true" field="measureDescription" dataType="String" editor="dq126DescriptionEditor"><script>document.write(message.get("ui.obj.dq.table.header3"))</script></th>
+                                  </tr>
+                              </thead>
+                              <colgroup>
+                                <col width="300">
+                                <col width="105">
+                                <col width="250">
+                              </colgroup>
+                              <tbody>
+                              </tbody>
+                            </table>
+                        </div>
+                    </span>
+                  </div>
+
+                  <div id="dq127TableContainer" class="inputContainer notRequired">
+                    <span id="uiElement7527" type="optional">
+                        <span id="dq127TableLabel" class="label"><label for="dq127Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7527)"><script>document.write(message.get("ui.obj.dq.table127.title"))</script></label></span>
+                        <div class="tableContainer full h075">
+                          <div class="cellEditors" id="dq127TableEditors">
+                            <div dojoType="ingrid:ComboBox" toggle="plain" class="w268" listId="7127" id="dq127NameOfMeasureEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="255" class="w085" widgetId="dq127ValueEditor"></div>
+                            <div dojoType="ingrid:ValidationTextbox" maxlength="4000" class="w238" widgetId="dq127DescriptionEditor"></div>
+                          </div>
+                            <table id="dq127Table" dojoType="ingrid:FilteringTable" minRows="2" cellspacing="0" class="filteringTable nosort interactive">
+                              <thead>
+                                  <tr>
+                                    <th nosort="true" field="nameOfMeasure" dataType="String" editor="dq127NameOfMeasureEditor"><script>document.write(message.get("ui.obj.dq.table.header1"))</script></th>
+                                    <th nosort="true" field="resultValue" dataType="String" editor="dq127ValueEditor"><script>document.write(message.get("ui.obj.dq.table.header2"))</script></th>
+                                    <th nosort="true" field="measureDescription" dataType="String" editor="dq127DescriptionEditor"><script>document.write(message.get("ui.obj.dq.table.header3"))</script></th>
+                                  </tr>
+                              </thead>
+                              <colgroup>
+                                <col width="300">
+                                <col width="105">
+                                <col width="250">
+                              </colgroup>
+                              <tbody>
+                              </tbody>
+                            </table>
+                        </div>
+                    </span>
+                  </div>
+
                 </div>
               </div>
 

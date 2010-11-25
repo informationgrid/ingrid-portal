@@ -224,6 +224,15 @@ public class MdekMapper implements DataMapperInterface {
 			// DQ has different section (transferred outside of TECHNICAL_DOMAIN_MAP !)
 			mdekObj.setDq109Table(mapToDqTable(109, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
 			mdekObj.setDq110Table(mapToDqTable(110, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
+			mdekObj.setDq112Table(mapToDqTable(112, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
+			mdekObj.setDq113Table(mapToDqTable(113, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
+			mdekObj.setDq114Table(mapToDqTable(114, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
+			mdekObj.setDq115Table(mapToDqTable(115, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
+			mdekObj.setDq117Table(mapToDqTable(117, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
+			mdekObj.setDq120Table(mapToDqTable(120, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
+			mdekObj.setDq125Table(mapToDqTable(125, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
+			mdekObj.setDq126Table(mapToDqTable(126, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
+			mdekObj.setDq127Table(mapToDqTable(127, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
 
 			td1Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
 			if (td1Map == null)
@@ -773,12 +782,12 @@ public class MdekMapper implements DataMapperInterface {
 		case 1:
 			// DQ has different section (transferred outside of TECHNICAL_DOMAIN_MAP !)
 			int[] dqIds = new int[] {
-					109,
-					110
+				109, 110, 112, 113, 114, 115, 117, 120, 125, 126, 127,
 			};
 			List<DQBean>[] dqData = new List[] { 
-					data.getDq109Table(),
-					data.getDq110Table()					
+				data.getDq109Table(), data.getDq110Table(), data.getDq112Table(), data.getDq113Table(),
+				data.getDq114Table(), data.getDq115Table(), data.getDq117Table(), data.getDq120Table(),
+				data.getDq125Table(), data.getDq126Table(), data.getDq127Table(),
 			};
 			udkObj.put(MdekKeys.DATA_QUALITY_LIST, mapFromDQTables(dqIds, dqData));
 
@@ -1998,7 +2007,6 @@ public class MdekMapper implements DataMapperInterface {
 		}
 		return resultList;
 	}
-
 
 	/********************************
 	 * Miscellaneous Helper Methods *

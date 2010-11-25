@@ -132,7 +132,15 @@ public class MdekDataBean {
 	// Data Quality !
 	private List<DQBean> dq109Table;
 	private List<DQBean> dq110Table;
-
+	private List<DQBean> dq112Table;
+	private List<DQBean> dq113Table;
+	private List<DQBean> dq114Table;
+	private List<DQBean> dq115Table;
+	private List<DQBean> dq117Table;
+	private List<DQBean> dq120Table;
+	private List<DQBean> dq125Table;
+	private List<DQBean> dq126Table;
+	private List<DQBean> dq127Table;
 
 	// Object class 2 (Dokument/Bericht/Literatur)
 	private String ref2Author;
@@ -544,6 +552,15 @@ public class MdekDataBean {
 
 		this.setDq109Table(new ArrayList<DQBean>());
 		this.setDq110Table(new ArrayList<DQBean>());
+		this.setDq112Table(new ArrayList<DQBean>());
+		this.setDq113Table(new ArrayList<DQBean>());
+		this.setDq114Table(new ArrayList<DQBean>());
+		this.setDq115Table(new ArrayList<DQBean>());
+		this.setDq117Table(new ArrayList<DQBean>());
+		this.setDq120Table(new ArrayList<DQBean>());
+		this.setDq125Table(new ArrayList<DQBean>());
+		this.setDq126Table(new ArrayList<DQBean>());
+		this.setDq127Table(new ArrayList<DQBean>());
 
 		this.setRef3ServiceTypeTable(new ArrayList<Integer>());
 		this.setRef3ServiceVersion(new ArrayList<String>());
@@ -1818,4 +1835,66 @@ public class MdekDataBean {
 		this.dq110Table = dq110Table;
 	}
 
+	public List<DQBean> getDq112Table() {
+		return dq112Table;
+	}
+	public void setDq112Table(List<DQBean> dq112Table) {
+		this.dq112Table = dq112Table;
+	}
+
+	public List<DQBean> getDq113Table() {
+		return dq113Table;
+	}
+	public void setDq113Table(List<DQBean> dq113Table) {
+		this.dq113Table = dq113Table;
+	}
+
+	public List<DQBean> getDq114Table() {
+		return dq114Table;
+	}
+	public void setDq114Table(List<DQBean> dq114Table) {
+		this.dq114Table = dq114Table;
+	}
+
+	public List<DQBean> getDq115Table() {
+		return dq115Table;
+	}
+	public void setDq115Table(List<DQBean> dq115Table) {
+		this.dq115Table = dq115Table;
+	}
+
+	public List<DQBean> getDq117Table() {
+		return dq117Table;
+	}
+	public void setDq117Table(List<DQBean> dq117Table) {
+		this.dq117Table = dq117Table;
+	}
+
+	public List<DQBean> getDq120Table() {
+		return dq120Table;
+	}
+	public void setDq120Table(List<DQBean> dq120Table) {
+		this.dq120Table = dq120Table;
+	}
+
+	public List<DQBean> getDq125Table() {
+		return dq125Table;
+	}
+	public void setDq125Table(List<DQBean> dq125Table) {
+		this.dq125Table = dq125Table;
+	}
+
+	public List<DQBean> getDq126Table() {
+		return dq126Table;
+	}
+	public void setDq126Table(List<DQBean> dq126Table) {
+		this.dq126Table = dq126Table;
+	}
+
+	public List<DQBean> getDq127Table() {
+		return dq127Table;
+	}
+	public void setDq127Table(List<DQBean> dq127Table) {
+		this.dq127Table = dq127Table;
+	}
 }

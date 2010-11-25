@@ -339,6 +339,15 @@ Vorhaben/Projekte/Programme, in denen umweltrelevante Datenbestände entstehen'#
 331#0#3670#6#'de'#'Service-Urls'#'Angaben zu der Zugriffsadresse auf das Informationssystem, den Dienst oder der Anwendung. Es soll er Name und der URL sowie eine kurzen Erläuterung zu der Adresse angegeben werden (Beispiel: Name: PortalU; URL: http://www.portalu.de; Erläuterung: Umweltportal Deutschland).'#
 332#0#5043#-1#'de'#'Zeichensatz des Datensatzes'#'TODO: neues Feld ...'#
 333#0#7500#-1#'de'#'Datenqualität'#'TODO: neue Rubrik Datenqualität ...'#
-334#0#7509#-1#'de'#'Datenüberschuss'#'TODO: Tabelle 109. DQ_CompletenessComission  ...'#
-335#0#7510#-1#'de'#'Datendefizit'#'TODO: Tabelle 110. DQ_CompletenessOmission   ...'#
+334#0#7509#-1#'de'#'Datenüberschuss'#'TODO: Tabelle 109. DQ_CompletenessComission ...'#
+335#0#7510#-1#'de'#'Datendefizit'#'TODO: Tabelle 110. DQ_CompletenessOmission ...'#
+336#0#7512#-1#'de'#'Konzeptionelle Konsistenz'#'TODO: Tabelle 112. DQ_ConceptualConsistency  ...'#
+337#0#7513#-1#'de'#'Konsistenz des Wertebereichs'#'TODO: Tabelle 113. DQ_DomainConsistency ...'#
+338#0#7514#-1#'de'#'Formatkonsistenz'#'TODO: Tabelle 114. DQ_FormatConsistency ...'#
+339#0#7515#-1#'de'#'Topologische Konsistenz'#'TODO: Tabelle 115. DQ_TopologicalConsistency ...'#
+340#0#7517#-1#'de'#'Absolute Positionsgenauigkeit'#'TODO: Tabelle 117. DQ_AbsoluteExternalPositionalAccuracy ...'#
+341#0#7520#-1#'de'#'Zeitliche Genauigkeit'#'TODO: Tabelle 120. DQ_TemporalConsistency ...'#
+342#0#7525#-1#'de'#'Korrektheit der thematischen Klassifizierung'#'TODO: Tabelle 125. DQ_ThematicClassificationCorrectness ...'#
+343#0#7526#-1#'de'#'Genauigkeit nicht-quantitativer Attribute'#'TODO: Tabelle 126. DQ_NonQuantitativeAttributeAccuracy ...'#
+344#0#7527#-1#'de'#'Genauigkeit quantitativer Attribute'#'TODO: Tabelle 127. DQ_QuantitativeAttributeAccuracy ...'#
 999#'version'#'gui_id'#'entity_class'#'language'#'name'#'help_text'#'sample'

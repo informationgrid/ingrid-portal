@@ -54,7 +54,9 @@ var labels = ["objectNameLabel", "objectClassLabel", "objectOwnerLabel", "genera
 			  "headerAddressType2StyleLabel", "headerAddressType3LastnameLabel", "headerAddressType3StyleLabel",
 			  "addressComLabel", "addressStreetLabel", "addressCountryLabel", "addressZipCodeLabel", "addressCityLabel", "addressPOBoxLabel",
 			  "addressZipPOBoxLabel", "ref1SpatialSystemLabel", "availabilityDataFormatLabel",
-			  "dq109TableLabel", "dq110TableLabel"];
+			  "dq109TableLabel", "dq110TableLabel", "dq112TableLabel", "dq113TableLabel", "dq114TableLabel",
+              "dq115TableLabel", "dq117TableLabel", "dq120TableLabel", "dq125TableLabel", "dq126TableLabel",
+              "dq127TableLabel"];
 
 
 var notEmptyFields = [["objectName", "objectNameLabel"],

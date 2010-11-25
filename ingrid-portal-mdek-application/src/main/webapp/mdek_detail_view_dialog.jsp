@@ -110,6 +110,15 @@ function renderNodeData(nodeData) {
 			renderSectionTitel(message.get("ui.obj.dq"));
             renderTable(nodeData.dq109Table, ["nameOfMeasure", "resultValue", "measureDescription"], [message.get("ui.obj.dq.table.header1"), message.get("ui.obj.dq.table.header2"), message.get("ui.obj.dq.table.header3")], message.get("ui.obj.dq.table109.title"));
             renderTable(nodeData.dq110Table, ["nameOfMeasure", "resultValue", "measureDescription"], [message.get("ui.obj.dq.table.header1"), message.get("ui.obj.dq.table.header2"), message.get("ui.obj.dq.table.header3")], message.get("ui.obj.dq.table110.title"));
+            renderTable(nodeData.dq112Table, ["nameOfMeasure", "resultValue", "measureDescription"], [message.get("ui.obj.dq.table.header1"), message.get("ui.obj.dq.table.header2"), message.get("ui.obj.dq.table.header3")], message.get("ui.obj.dq.table112.title"));
+            renderTable(nodeData.dq113Table, ["nameOfMeasure", "resultValue", "measureDescription"], [message.get("ui.obj.dq.table.header1"), message.get("ui.obj.dq.table.header2"), message.get("ui.obj.dq.table.header3")], message.get("ui.obj.dq.table113.title"));
+            renderTable(nodeData.dq114Table, ["nameOfMeasure", "resultValue", "measureDescription"], [message.get("ui.obj.dq.table.header1"), message.get("ui.obj.dq.table.header2"), message.get("ui.obj.dq.table.header3")], message.get("ui.obj.dq.table114.title"));
+            renderTable(nodeData.dq115Table, ["nameOfMeasure", "resultValue", "measureDescription"], [message.get("ui.obj.dq.table.header1"), message.get("ui.obj.dq.table.header2"), message.get("ui.obj.dq.table.header3")], message.get("ui.obj.dq.table115.title"));
+            renderTable(nodeData.dq117Table, ["nameOfMeasure", "resultValue", "measureDescription"], [message.get("ui.obj.dq.table.header1"), message.get("ui.obj.dq.table.header2"), message.get("ui.obj.dq.table.header3")], message.get("ui.obj.dq.table117.title"));
+            renderTable(nodeData.dq120Table, ["nameOfMeasure", "resultValue", "measureDescription"], [message.get("ui.obj.dq.table.header1"), message.get("ui.obj.dq.table.header2"), message.get("ui.obj.dq.table.header3")], message.get("ui.obj.dq.table120.title"));
+            renderTable(nodeData.dq125Table, ["nameOfMeasure", "resultValue", "measureDescription"], [message.get("ui.obj.dq.table.header1"), message.get("ui.obj.dq.table.header2"), message.get("ui.obj.dq.table.header3")], message.get("ui.obj.dq.table125.title"));
+            renderTable(nodeData.dq126Table, ["nameOfMeasure", "resultValue", "measureDescription"], [message.get("ui.obj.dq.table.header1"), message.get("ui.obj.dq.table.header2"), message.get("ui.obj.dq.table.header3")], message.get("ui.obj.dq.table126.title"));
+            renderTable(nodeData.dq127Table, ["nameOfMeasure", "resultValue", "measureDescription"], [message.get("ui.obj.dq.table.header1"), message.get("ui.obj.dq.table.header2"), message.get("ui.obj.dq.table.header3")], message.get("ui.obj.dq.table127.title"));
 
 		} else if (nodeData.objectClass == 2) {
 			renderSectionTitel(message.get("ui.obj.relevance"));
