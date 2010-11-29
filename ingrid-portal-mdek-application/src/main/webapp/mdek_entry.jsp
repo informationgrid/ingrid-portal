@@ -768,7 +768,8 @@ function hideSplash(){
                 </div>
                 <div id="ref1ContentDQ" class="content">
 
-                  <div id="dq109TableContainer" class="inputContainer notRequired">
+                  <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
+                  <div id="dq109TableContainer" class="inputContainer notRequired" displaytype="exclude">
                     <span id="uiElement7509" type="optional">
                         <span id="dq109TableLabel" class="label"><label for="dq109Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7509)"><script>document.write(message.get("ui.obj.dq.table109.title"))</script></label></span>
                         <div class="tableContainer full h075">
@@ -797,7 +798,8 @@ function hideSplash(){
                     </span>
                   </div>
 
-                  <div id="dq110TableContainer" class="inputContainer notRequired">
+                  <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
+                  <div id="dq110TableContainer" class="inputContainer notRequired" displaytype="exclude">
                     <span id="uiElement7510" type="optional">
                         <span id="dq110TableLabel" class="label"><label for="dq110Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7510)"><script>document.write(message.get("ui.obj.dq.table110.title"))</script></label></span>
                         <div class="tableContainer full h075">
@@ -826,7 +828,8 @@ function hideSplash(){
                     </span>
                   </div>
 
-                  <div id="dq112TableContainer" class="inputContainer notRequired">
+                  <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
+                  <div id="dq112TableContainer" class="inputContainer notRequired" displaytype="exclude">
                     <span id="uiElement7512" type="optional">
                         <span id="dq112TableLabel" class="label"><label for="dq112Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7512)"><script>document.write(message.get("ui.obj.dq.table112.title"))</script></label></span>
                         <div class="tableContainer full h075">
@@ -855,7 +858,8 @@ function hideSplash(){
                     </span>
                   </div>
 
-                  <div id="dq113TableContainer" class="inputContainer notRequired">
+                  <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
+                  <div id="dq113TableContainer" class="inputContainer notRequired" displaytype="exclude">
                     <span id="uiElement7513" type="optional">
                         <span id="dq113TableLabel" class="label"><label for="dq113Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7513)"><script>document.write(message.get("ui.obj.dq.table113.title"))</script></label></span>
                         <div class="tableContainer full h075">
@@ -884,7 +888,8 @@ function hideSplash(){
                     </span>
                   </div>
 
-                  <div id="dq114TableContainer" class="inputContainer notRequired">
+                  <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
+                  <div id="dq114TableContainer" class="inputContainer notRequired" displaytype="exclude">
                     <span id="uiElement7514" type="optional">
                         <span id="dq114TableLabel" class="label"><label for="dq114Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7514)"><script>document.write(message.get("ui.obj.dq.table114.title"))</script></label></span>
                         <div class="tableContainer full h075">
@@ -913,7 +918,8 @@ function hideSplash(){
                     </span>
                   </div>
 
-                  <div id="dq115TableContainer" class="inputContainer notRequired">
+                  <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
+                  <div id="dq115TableContainer" class="inputContainer notRequired" displaytype="exclude">
                     <span id="uiElement7515" type="optional">
                         <span id="dq115TableLabel" class="label"><label for="dq115Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7515)"><script>document.write(message.get("ui.obj.dq.table115.title"))</script></label></span>
                         <div class="tableContainer full h075">
@@ -942,7 +948,8 @@ function hideSplash(){
                     </span>
                   </div>
 
-                  <div id="dq117TableContainer" class="inputContainer notRequired">
+                  <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
+                  <div id="dq117TableContainer" class="inputContainer notRequired" displaytype="exclude">
                     <span id="uiElement7517" type="optional">
                         <span id="dq117TableLabel" class="label"><label for="dq117Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7517)"><script>document.write(message.get("ui.obj.dq.table117.title"))</script></label></span>
                         <div class="tableContainer full h075">
@@ -971,7 +978,8 @@ function hideSplash(){
                     </span>
                   </div>
 
-                  <div id="dq120TableContainer" class="inputContainer notRequired">
+                  <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
+                  <div id="dq120TableContainer" class="inputContainer notRequired" displaytype="exclude">
                     <span id="uiElement7520" type="optional">
                         <span id="dq120TableLabel" class="label"><label for="dq120Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7520)"><script>document.write(message.get("ui.obj.dq.table120.title"))</script></label></span>
                         <div class="tableContainer full h075">
@@ -1000,7 +1008,8 @@ function hideSplash(){
                     </span>
                   </div>
 
-                  <div id="dq125TableContainer" class="inputContainer notRequired">
+                  <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
+                  <div id="dq125TableContainer" class="inputContainer notRequired" displaytype="exclude">
                     <span id="uiElement7525" type="optional">
                         <span id="dq125TableLabel" class="label"><label for="dq125Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7525)"><script>document.write(message.get("ui.obj.dq.table125.title"))</script></label></span>
                         <div class="tableContainer full h075">
@@ -1029,7 +1038,8 @@ function hideSplash(){
                     </span>
                   </div>
 
-                  <div id="dq126TableContainer" class="inputContainer notRequired">
+                  <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
+                  <div id="dq126TableContainer" class="inputContainer notRequired" displaytype="exclude">
                     <span id="uiElement7526" type="optional">
                         <span id="dq126TableLabel" class="label"><label for="dq126Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7526)"><script>document.write(message.get("ui.obj.dq.table126.title"))</script></label></span>
                         <div class="tableContainer full h075">
@@ -1058,7 +1068,8 @@ function hideSplash(){
                     </span>
                   </div>
 
-                  <div id="dq127TableContainer" class="inputContainer notRequired">
+                  <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
+                  <div id="dq127TableContainer" class="inputContainer notRequired" displaytype="exclude">
                     <span id="uiElement7527" type="optional">
                         <span id="dq127TableLabel" class="label"><label for="dq127Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7527)"><script>document.write(message.get("ui.obj.dq.table127.title"))</script></label></span>
                         <div class="tableContainer full h075">
