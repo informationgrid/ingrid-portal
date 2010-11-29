@@ -63,7 +63,7 @@ var mappingDescription = {"mappings":[
 			"srcXpath":"//gmd:dateStamp/gco:DateTime | //gmd:dateStamp/gco:Date[not(../gco:DateTime)]",
 			"targetNode":"/igc/data-sources/data-source/general/date-of-creation",
 			"transform":{
-				"funct":UtilsCSWDate.mapDateFromIso8601ToIndex
+				"funct":transformDateIso8601ToIndex
 			}
 		},
   		{	
@@ -615,7 +615,7 @@ var mappingDescription = {"mappings":[
 			  			"srcXpath":"gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date",
 			  			"targetNode":"conformity-publication-date",
 			  			"transform":{
-							"funct":UtilsCSWDate.mapDateFromIso8601ToIndex
+							"funct":transformDateIso8601ToIndex
 						}
 			  		},
 	  				{
@@ -800,7 +800,7 @@ var mappingDescription = {"mappings":[
 			  			"srcXpath":"gmd:date/gco:Date",
 			  			"targetNode":"dataset-reference-date",
 			  			"transform":{
-							"funct":UtilsCSWDate.mapDateFromIso8601ToIndex
+							"funct":transformDateIso8601ToIndex
 						}
 			  		},
 	  				{
@@ -1312,27 +1312,27 @@ function mapTimeConstraints(source, target) {
 		if (hasValue(beginPosition) && hasValue(endPosition)) {
 			if (beginPosition.equals(endPosition)) {
 				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
-				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(beginPosition));
+				XMLUtils.createOrReplaceTextNode(node, transformDateIso8601ToIndex(beginPosition));
 				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/ending-date");
-				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(endPosition));
+				XMLUtils.createOrReplaceTextNode(node, transformDateIso8601ToIndex(endPosition));
 				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "am");
 			} else {
 				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
-				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(beginPosition));
+				XMLUtils.createOrReplaceTextNode(node, transformDateIso8601ToIndex(beginPosition));
 				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/ending-date");
-				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(endPosition));
+				XMLUtils.createOrReplaceTextNode(node, transformDateIso8601ToIndex(endPosition));
 				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "von");
 			}
 		} else if (hasValue(beginPosition)) {
 				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
-				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(beginPosition));
+				XMLUtils.createOrReplaceTextNode(node, transformDateIso8601ToIndex(beginPosition));
 				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "seit");
 		} else if (hasValue(endPosition)) {
 				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/ending-date");
-				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(endPosition));
+				XMLUtils.createOrReplaceTextNode(node, transformDateIso8601ToIndex(endPosition));
 				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "bis");
 		}
@@ -1631,6 +1631,17 @@ function transformISOToLanguage(val, iso639_1) {
 		return UtilsLanguageCodelist.getNameFromCode(code, iso639_1);
 	}
 }
+
+function transformDateIso8601ToIndex(isoFormat) {
+	if (!UtilsCSWDate.isCSWDate(isoFormat)) {
+		log.warn("ISO Date '" + isoFormat + "' could not be transformed. Date is not ISO 8601 conform. Leaving value unchanged.");
+		protocol(WARN, "ISO Date '" + isoFormat + "' could not be transformed. Date is not ISO 8601 conform. Leaving value unchanged.");
+		return isoFormat;
+	}
+	return UtilsCSWDate.mapDateFromIso8601ToIndex(isoFormat);
+}
+
+
 
 function getTypeOfAddress(source, target) {
 	var organisationName = XPathUtils.getString(source, "gmd:organisationName/gco:CharacterString");
