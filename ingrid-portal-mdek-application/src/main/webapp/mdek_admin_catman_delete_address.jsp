@@ -550,7 +550,7 @@ function hideLoadingZone() {
 				<div id="addressDeleteDataObjectsLists" dojoType="ingrid:TabContainer" doLayout="false" class="w684" selectedChild="replaceInfoAddress">
 
 					<!-- TAB 1 START -->
-					<div id="replaceInfoAddress" dojoType="ContentPane" label="<fmt:message key="dialog.admin.catalog.management.deleteAddress.replaceInfoAddress" />">
+					<div id="replaceInfoAddress" dojoType="ContentPane" label="<fmt:message key="dialog.admin.catalog.management.deleteAddress.replaceAddress" />">
 						<div dojoType="ContentPane">
 							<div class="tableContainer rows4 w684">
 								<table id="replaceInfoAddressList" dojoType="ingrid:FilteringTable" minRows="4" cellspacing="0" class="filteringTable nosort">
@@ -614,7 +614,7 @@ function hideLoadingZone() {
 
 			<!-- LEFT HAND SIDE CONTENT BLOCK 2 START -->
 			<div id="addressNewTree" class="inputContainer">
-				<span class="label"><fmt:message key="dialog.admin.catalog.management.deleteAddress.newInfoAddress" /></span>
+				<span class="label"><fmt:message key="dialog.admin.catalog.management.deleteAddress.newAddress" /></span>
 				<div class="inputContainer grey noSpaceBelow w264 h236 scrollable">
 					<div dojoType="ContentPane" id="treeContainerAddressNew">
 						<!-- tree components -->
