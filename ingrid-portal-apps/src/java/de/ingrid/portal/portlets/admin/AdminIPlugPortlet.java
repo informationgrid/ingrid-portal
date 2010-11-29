@@ -205,7 +205,7 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
                     for (int k = 0; k < plugs.length; k++) {
                         PlugDescription plug = plugs[k];
                         // do not include search engine iplugs
-                        if (plug.isActivate() && !plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher") && !plug.getIPlugClass().equals("de.ingrid.iplug.se.IndexIPlug") && !plug.getIPlugClass().equals("de.ingrid.admin.object.IndexSePlug")) {
+                        if (plug != null && plug.getIPlugClass() != null && plug.isActivate() && !plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher") && !plug.getIPlugClass().equals("de.ingrid.iplug.se.IndexIPlug") && !plug.getIPlugClass().equals("de.ingrid.admin.object.IndexSePlug")) {
                             String[] plugProviders = plug.getProviders();
                             DisplayTreeNode plugNode = null;
                             for (int l = 0; l < plugProviders.length; l++) {
