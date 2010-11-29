@@ -187,7 +187,7 @@ function startTreeImportProtocol() {
 	});
 	
 	//dojo.debug("check periodically status");
-	setTimeout("checkImportTransformationStatus()", 2000);
+	setTimeout("checkImportTransformationStatus()", 3000);
 }
 
 scriptScope.startImportProtocol = function() {
