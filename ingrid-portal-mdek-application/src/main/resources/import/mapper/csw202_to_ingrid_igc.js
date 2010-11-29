@@ -1415,9 +1415,9 @@ function mapAddresses(source, target) {
             XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "modificator-identifier"), "xxx");
             XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "responsible-identifier"), "xxx");
             if (hasValue(individualName)) {
-            	XMLUtils.createOrReplaceAttribute(XPathUtils.createElementFromXPath(igcAddressNode, "type-of-address"), "id", "0");
-            } else {
             	XMLUtils.createOrReplaceAttribute(XPathUtils.createElementFromXPath(igcAddressNode, "type-of-address"), "id", "2");
+            } else {
+            	XMLUtils.createOrReplaceAttribute(XPathUtils.createElementFromXPath(igcAddressNode, "type-of-address"), "id", "0");
             }
             XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "organisation"), organisationName);
             XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "name"), individualName);
@@ -1433,7 +1433,7 @@ function mapAddresses(source, target) {
             mapCommunicationData(isoAddressNode, igcAddressNode);
             XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "function"), XPathUtils.getString(isoAddressNode, "gmd:positionName/gco:CharacterString"));
             if (hasValue(parentUuid)) {
-            	XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "parent-address"), parentUuid);
+            	XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "parent-address/address-identifier"), parentUuid);
             }
 
             // add related addresses
