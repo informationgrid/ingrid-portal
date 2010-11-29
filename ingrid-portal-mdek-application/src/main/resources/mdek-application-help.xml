@@ -1921,25 +1921,22 @@
 				 einen Teilbaum zuständige ‚Müller’ zusätzlich die Aufgaben des Kollegen ‚Meier’ übernehmen 
 				 muss. In diesem Fall ist die Funktion <i>Adresse ersetzen</i> anzuwenden.</p>
 				 <p>Wählen Sie unter <i>Zulöschender Adresse</i> die Adresse aus, die endgültig gelöscht 
-				 werden soll. Alle Objekte, in denen die gewählte Adresse als Auskunftsadresse auftritt, 
+				 werden soll. Alle Objekte, in denen die gewählte Adresse auftritt, 
 				 werden angezeigt, ebenso alle Objekte und Adressen, in denen die Adresse als 
 				 Verantwortlicher auftritt.</p>
 				 <p><u>Hinweis:</u> Sie können diese Angaben (reiterweise) <i>Als CSV Datei speichern</i>.</p>
-				 <p>Wählen Sie eine <i>Neue Auskunftsadresse</i>. Es werden zur Information einige Angaben 
+				 <p>Wählen Sie eine <i>Neue Adresse</i>. Es werden zur Information einige Angaben 
 				 zu der Adresse angezeigt.</p>
 				 <p><u>Hinweis:</u> Es können ausschließlich veröffentlichte Adressen ausgewählt werden.</p>
 				 <p>Nach dem Klicken auf den Button <i>Ersetzen &amp; Löschen</i> und anschließendem 
-				 Bestätigen der Sicherheitsabfrage, werden in allen Objekten, die die Adresse als Auskunft 
-				 oder Verantwortlichen enthalten (bzw. in allen Adressen, die die Adresse als 
+				 Bestätigen der Sicherheitsabfrage, werden in allen Objekten, die die Adresse als Adressreferenz 
+				 enthalten (bzw. in allen Adressen, die die Adresse als 
 				 Verantwortlichen enthalten), mit der <i>Neuen Adresse</i> ersetzt und die <i>Zu löschende 
 				 Adresse</i> aus dem Katalog entfernt.</p>
 				 <p><u>Hinweis:</u> Wenn ein IGE-Nutzer der <i>Zulöschenden Adresse</i> zugeordnet ist, 
 				 werden Sie aufgefordert, diesem IGE-Nutzer eine andere Adresse zuzuordnen. Sie können 
 				 die Funktion <i>Ersetzen &amp; Löschen</i> erst durchführen, nachdem der Nutzer eine 
 				 andere Adresse erhalten hat.</p>
-				 <p><u>Achtung:</u> Alle Einträge der <i>Zulöschenden Adresse</i> in Objekten in dem 
-				 Feld <i>Adressen</i>, die nicht die Funktion <i>Auskunft</i> haben, werden gelöscht, 
-				 ohne durch die neue Adresse ersetzt worden zu sein.</p>
             </content>
         </section>
         <section help-key="overall-catalog-management-7">
@@ -2122,12 +2119,11 @@
 				 <p>Es gibt drei verschiedene Formate die importiert werden können:</p>
 				 <p><u>InGrid Catalog:</u> Der Import erfolgt im gleichen Format wie der 
 				 <a href="?hkey=import-export-1">Export</a>.</p> 
-				 <p><u>CSW 2.0.2 AP ISO 1.0 (Single Metadata file):</u> Die Importdatei muss aus einem gültigen 
-				 XML-Dokument im OGC-Format des Catalog Service Web (CSW) in der Version 2.0.2 und nach Definition 
-				 des Application Profile ISO 1.0 bestehen. Dabei kann nur eine Datei importiert werden, die genau 
-				 einen Metadatensatz in diesem Format enthält.</p>
-				 <p><u>ArcGIS ISO-Editor:</u> Import einer mit Hilfe von ArcGIS erzeigten XML-Datei. Das Dokument 
-				 muss aus ArcGIS heraus im ISO-Format gespeichert worden sein.</p>
+				 <p><u>CSW 2.0.2 AP ISO 1.0 (Single Metadata file / ZIP Archive):</u> Die Importdateien müssen gültige 
+				 XML-Dokumente im OGC-Format des Catalog Service Web (CSW) in der Version 2.0.2 und nach Definition 
+				 des Application Profile ISO 1.0 bestehen. Dabei kann eine XML Datei oder ein ZIP Archiv importiert werden, in dem XML Datein ohne Pfadangaben verpackt wurden.</p>
+				 <p><u>ArcGIS ISO-Editor (Single Metadata file / ZIP Archive):</u> Import von mit Hilfe von ArcGIS erzeugten XML-Dateien. Die Dokumente 
+				 müssen aus ArcGIS heraus im ISO-Format gespeichert worden sein. Es kann eine XML Datei oder ein ZIP Archiv importiert werden, in dem XML Datein ohne Pfadangaben verpackt wurden.</p>
 				 <p><b>Importierte Datensätze veröffentlichen</b></p>
 				 <p>Standardmäßig werden alle importierten Objekte und Adressen in einer Arbeitsversion 
 				 zwischengespeichert, also noch nicht veröffentlicht. Mit der Einstellung 
@@ -2143,6 +2139,9 @@
 				 (UUID). Werden Objekte aus externen Systemen in den IGC importiert, wird der von dem 
 				 externen System mitgelieferte Schlüssel als originaler Identifikationsschlüssel (OID) 
 				 zusätzlich in dem Objekt gespeichert.</p>
+				 <p>Die UUIDs der Adressen werden aus Name, Email und Organisation ermittelt. Existiert in einer Adresse 
+				 sowohl Organisation, als auch Individualname, wird die Organisation als separate Adresse importiert. Die 
+				 Individualadresse wird als Kind der Organisation importiert und für die Referenz in den Objekten verwendet.</p>
 				 <p>Standardmäßig wird ein zu importierendes Objekt (bzw. eine zu importierende Adresse) anhand 
 				 UUID und OID im Datenbestand identifiziert. Existiert es bereits, so wird es mit den zu 
 				 importierenden Angaben überschrieben. Dabei bleibt der Standort innerhalb des Strukturbaums 
