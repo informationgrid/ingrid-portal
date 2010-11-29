@@ -223,7 +223,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		InputStream result;
 		try {
 			result = mapper.convert(data, protocolHandler);
-			assertEquals(2, xpathCount(result, "//igc/addresses/address"));
+			assertEquals(3, xpathCount(result, "//igc/addresses/address"));
 			result.reset();
 			System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
 		} catch (Exception e) {

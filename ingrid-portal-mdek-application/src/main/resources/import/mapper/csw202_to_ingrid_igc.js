@@ -1722,7 +1722,8 @@ function createUUIDFromAddress(source) {
 }
 
 function createUUIDFromString(str) {
-	var uuid = java.util.UUID.nameUUIDFromBytes((new java.lang.String(str)).getBytes());
+	// replace multiple white spaces by ' '
+	var uuid = java.util.UUID.nameUUIDFromBytes((new java.lang.String(str).replaceAll("\\s+", " ")).getBytes());
 	var idcUuid = new java.lang.StringBuffer(uuid.toString().toUpperCase());
 	while (idcUuid.length() < 36) {
 		idcUuid.append("0");
