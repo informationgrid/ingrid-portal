@@ -309,8 +309,8 @@
 	"dialog.waitForJob.objCount":"Objects processed:",
 	"dialog.waitForJob.numObjects":"Total number of objects:",
 
-	"operation.error.object.parentNotPublishedError":"You have to publish the parent objects before publishing the selected object!",
-	"operation.error.address.parentNotPublishedError":"You have to publish the parent addresses before publishing the selected addresses!",
+	"operation.error.object.parentNotPublishedError":"You have to publish the parent objects before doing this operation!",
+	"operation.error.address.parentNotPublishedError":"You have to publish the parent addresses before doing this operation!",
 	"operation.error.targetIsSubnodeOfSourceError":"The target node of a move operation must not be a child of the source node.",
 	"operation.error.object.subTreeHasWorkingCopiesError":"One or more subobjects have to be saved before the operation can be carried out.",
 	"operation.error.address.subTreeHasWorkingCopiesError":"One or more subaddresses have to be saved before the operation can be carried out.",

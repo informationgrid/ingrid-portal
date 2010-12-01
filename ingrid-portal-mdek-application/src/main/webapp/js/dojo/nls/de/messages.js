@@ -309,8 +309,8 @@
 	"dialog.waitForJob.objCount":"Bearbeitete Objekte:",
 	"dialog.waitForJob.numObjects":"Anzahl der Objekte:",
 
-	"operation.error.object.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Objekte sind neu angelegt und befinden sich noch in der Bearbeitung. Bitte speichern Sie zun&auml;chst diese Objekte ab!",
-	"operation.error.address.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Adressen sind neu angelegt und befinden sich noch in der Bearbeitung. Bitte speichern Sie zun&auml;chst diese Adressen ab!",
+	"operation.error.object.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Objekte sind nicht ver&ouml;ffentlicht. Bitte ver&ouml;ffentlichen Sie zun&auml;chst diese Objekte !",
+	"operation.error.address.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Adressen sind nicht ver&ouml;ffentlicht. Bitte ver&ouml;ffentlichen Sie zun&auml;chst diese Adressen !",
 	"operation.error.targetIsSubnodeOfSourceError":"Das Ziel einer Verschiebeoperation darf nicht Kind des Ausgangsknotens sein.",
 	"operation.error.object.subTreeHasWorkingCopiesError":"Ein oder mehrere untergeordnete Objekte befinden sich noch in Bearbeitung. Bitte speichern Sie zun&auml;chst diese Objekte ab!",
 	"operation.error.address.subTreeHasWorkingCopiesError":"Ein oder mehrere untergeordnete Adressen befinden sich noch in Bearbeitung. Bitte speichern Sie zun&auml;chst diese Adressen ab!",
