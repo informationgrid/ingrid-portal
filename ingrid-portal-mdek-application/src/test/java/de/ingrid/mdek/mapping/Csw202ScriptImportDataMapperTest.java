@@ -230,6 +230,35 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 			fail("Error transforming: " + exampleXml);
 		}
 	}
+
+	public final void testConvertSTService() throws TransformerException, IOException {
+		// set variables that are needed for running correctly
+		initClassVariables(mapperScript, templateIGC);
+		
+		String exampleXml = "/de/ingrid/mdek/mapping/th_0544200808464974_iso19119.xml";
+		
+		InputStream data = null;
+		try {
+			// get example file from test resource directory
+			// spring-dependency is used to access test-resources (search from every class path!)
+			data = (new ClassPathResource(exampleXml)).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
+		HashMapProtocolHandler protocolHandler = new HashMapProtocolHandler();
+		protocolHandler.setCurrentFilename("th_0544200808464974_iso19119.xml");
+		InputStream result;
+		try {
+			result = mapper.convert(data, protocolHandler);
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/available-linkage[2]/linkage-url", "invalid link"));
+			result.reset();
+			System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
+		} catch (Exception e) {
+			fail("Error transforming: " + exampleXml);
+		}
+	}
+	
 	
 	public final void testConvertInvalidFile() {
 		// set variables that are needed for running correctly

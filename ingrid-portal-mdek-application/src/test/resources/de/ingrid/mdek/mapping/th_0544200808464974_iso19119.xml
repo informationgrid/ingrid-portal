@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:srv="http://www.isotc211.org/2005/srv"><gmd:fileIdentifier><gco:CharacterString>45649FB7-D24A-4C11-AA07-6A47B69EA685</gco:CharacterString></gmd:fileIdentifier><gmd:dateStamp><gco:Date>2009-12-31</gco:Date></gmd:dateStamp><gmd:language><gmd:LanguageCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode" codeListValue="ger">ger</gmd:LanguageCode></gmd:language><gmd:hierarchyLevel><gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="service">service</gmd:MD_ScopeCode></gmd:hierarchyLevel><gmd:hierarchyLevelName><gco:CharacterString></gco:CharacterString></gmd:hierarchyLevelName><gmd:metadataStandardName><gco:CharacterString>ISO19119</gco:CharacterString></gmd:metadataStandardName><gmd:metadataStandardVersion><gco:CharacterString>2003/Cor.1:2006</gco:CharacterString></gmd:metadataStandardVersion><gmd:referenceSystemInfo><gmd:MD_ReferenceSystem><gmd:referenceSystemIdentifier><gmd:RS_Identifier><gmd:code><gco:CharacterString>31468</gco:CharacterString></gmd:code><gmd:codeSpace><gco:CharacterString>urn:ogc:def:crs:EPSG</gco:CharacterString></gmd:codeSpace><gmd:version><gco:CharacterString>6.11.2</gco:CharacterString></gmd:version></gmd:RS_Identifier></gmd:referenceSystemIdentifier></gmd:MD_ReferenceSystem></gmd:referenceSystemInfo><gmd:characterSet><gmd:MD_CharacterSetCode codeList="http://www.isotc211.org/2005/resources/Codelist/ML_gmxCodelists.xml#MD_CharacterSetCode" codeListValue=""/></gmd:characterSet><gmd:metadataMaintenance><gmd:MD_MaintenanceInformation><gmd:maintenanceAndUpdateFrequency><gmd:MD_MaintenanceFrequencyCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_MaintenanceFrequencyCode" codeListValue="asNeeded"/></gmd:maintenanceAndUpdateFrequency></gmd:MD_MaintenanceInformation></gmd:metadataMaintenance><gmd:contact><gmd:CI_ResponsibleParty uuid="f0de8a70-9e85-4362-aa13-6c090e64035e"><gmd:individualName><gco:CharacterString>Heiner Nagel</gco:CharacterString></gmd:individualName><gmd:organisationName><gco:CharacterString>Landesamt für Umweltschutz Sachsen-Anhalt</gco:CharacterString></gmd:organisationName><gmd:contactInfo><gmd:CI_Contact><gmd:address><gmd:CI_Address><gmd:electronicMailAddress><gco:CharacterString>heiner.nagel@lau.mlu.sachsen-anhalt.de</gco:CharacterString></gmd:electronicMailAddress><gmd:deliveryPoint><gco:CharacterString>Reideburger Str. 47</gco:CharacterString></gmd:deliveryPoint><gmd:city><gco:CharacterString>Halle (Saale)</gco:CharacterString></gmd:city><gmd:administrativeArea><gco:CharacterString>Sachsen-Anhalt</gco:CharacterString></gmd:administrativeArea><gmd:postalCode><gco:CharacterString>D-06116</gco:CharacterString></gmd:postalCode><gmd:country><gco:CharacterString>DEU</gco:CharacterString></gmd:country></gmd:CI_Address></gmd:address><gmd:phone><gmd:CI_Telephone><gmd:voice><gco:CharacterString>+49-345-5704-656</gco:CharacterString></gmd:voice><gmd:facsimile><gco:CharacterString>+49-345-5704-605</gco:CharacterString></gmd:facsimile></gmd:CI_Telephone></gmd:phone></gmd:CI_Contact></gmd:contactInfo><gmd:role><gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</gmd:CI_RoleCode></gmd:role><gmd:positionName><gco:CharacterString>Dezernent</gco:CharacterString></gmd:positionName></gmd:CI_ResponsibleParty></gmd:contact><gmd:dataQualityInfo><gmd:DQ_DataQuality><gmd:scope><gmd:DQ_Scope><gmd:level><gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="service">service</gmd:MD_ScopeCode></gmd:level></gmd:DQ_Scope></gmd:scope><gmd:report><gmd:DQ_DomainConsistency><gmd:measureIdentification><gmd:RS_Identifier><gmd:code><gco:CharacterString>INSPIRE Durchführungsbestimmungen</gco:CharacterString></gmd:code><gmd:codeSpace><gco:CharacterString>INSPIRE Durchführungsbestimmungen</gco:CharacterString></gmd:codeSpace></gmd:RS_Identifier></gmd:measureIdentification><gmd:result><gmd:DQ_ConformanceResult><gmd:specification><gmd:CI_Citation><gmd:title><gco:CharacterString>INSPIRE Durchführungsbestimmungen</gco:CharacterString></gmd:title><gmd:date><gmd:CI_Date><gmd:date><gco:Date>2009-12-14</gco:Date></gmd:date><gmd:dateType><gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode></gmd:dateType></gmd:CI_Date></gmd:date></gmd:CI_Citation></gmd:specification><gmd:explanation><gco:CharacterString>nicht konform</gco:CharacterString></gmd:explanation><gmd:pass><gco:Boolean>false</gco:Boolean></gmd:pass></gmd:DQ_ConformanceResult></gmd:result></gmd:DQ_DomainConsistency></gmd:report></gmd:DQ_DataQuality></gmd:dataQualityInfo><gmd:identificationInfo><srv:SV_ServiceIdentification><srv:serviceType><gco:LocalName>view</gco:LocalName></srv:serviceType><srv:accessProperties><gmd:MD_StandardOrderProcess><gmd:fees><gco:CharacterString>none</gco:CharacterString></gmd:fees></gmd:MD_StandardOrderProcess></srv:accessProperties><srv:serviceTypeVersion><gco:CharacterString>1.1.1</gco:CharacterString></srv:serviceTypeVersion><srv:extent><gmd:EX_Extent><gmd:geographicElement><gmd:EX_GeographicBoundingBox><gmd:westBoundLongitude><gco:Decimal>10.07</gco:Decimal></gmd:westBoundLongitude><gmd:eastBoundLongitude><gco:Decimal>13.54</gco:Decimal></gmd:eastBoundLongitude><gmd:southBoundLatitude><gco:Decimal>50.59</gco:Decimal></gmd:southBoundLatitude><gmd:northBoundLatitude><gco:Decimal>53.13</gco:Decimal></gmd:northBoundLatitude></gmd:EX_GeographicBoundingBox><gmd:EX_GeographicDescription><gmd:geographicIdentifier><gmd:MD_Identifier><gmd:code><gco:CharacterString>Sachsen-Anhalt</gco:CharacterString></gmd:code></gmd:MD_Identifier></gmd:geographicIdentifier></gmd:EX_GeographicDescription></gmd:geographicElement><gmd:temporalElement><gmd:EX_TemporalExtent><gmd:extent><gml:TimePeriod><gml:beginPosition></gml:beginPosition><gml:endPosition></gml:endPosition></gml:TimePeriod></gmd:extent></gmd:EX_TemporalExtent></gmd:temporalElement></gmd:EX_Extent></srv:extent><srv:couplingType><srv:SV_CouplingType codeList="http://someurl#SV_CouplingType" codeListValue="tight"/></srv:couplingType><srv:containsOperations><srv:SV_OperationMetadata>
+					<srv:operationName>
+						<gco:CharacterString>GetCapabilities</gco:CharacterString>
+					</srv:operationName>
+					<srv:DCP>
+						<srv:DCPList codeList="http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#DCPList" codeListValue="WebServices"/>
+					</srv:DCP>
+					<srv:connectPoint>
+						<gmd:CI_OnlineResource>
+							<gmd:linkage>
+								<gmd:URL>http://laucir1.lau.mlu.lsa-net.de/UMN/php/mapserv.php?FB=Naturschutz</gmd:URL>
+							</gmd:linkage>
+						</gmd:CI_OnlineResource>
+					</srv:connectPoint></srv:SV_OperationMetadata></srv:containsOperations><srv:containsOperations><srv:SV_OperationMetadata>
+					<srv:operationName>
+						<gco:CharacterString>GetMap</gco:CharacterString>
+					</srv:operationName>
+					<srv:DCP>
+						<srv:DCPList codeList="http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#DCPList" codeListValue="WebServices"/>
+					</srv:DCP>
+					<srv:connectPoint>
+						<gmd:CI_OnlineResource>
+							<gmd:linkage>
+								<gmd:URL>http://laucir1.lau.mlu.lsa-net.de/UMN/php/mapserv.php?FB=Naturschutz</gmd:URL>
+							</gmd:linkage>
+						</gmd:CI_OnlineResource>
+					</srv:connectPoint></srv:SV_OperationMetadata></srv:containsOperations><srv:containsOperations><srv:SV_OperationMetadata>
+					<srv:operationName>
+						<gco:CharacterString>GetFeatureInfo</gco:CharacterString>
+					</srv:operationName>
+					<srv:DCP>
+						<srv:DCPList codeList="http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#DCPList" codeListValue="WebServices"/>
+					</srv:DCP>
+					<srv:connectPoint>
+						<gmd:CI_OnlineResource>
+							<gmd:linkage>
+								<gmd:URL>http://laucir1.lau.mlu.lsa-net.de/UMN/php/mapserv.php?FB=Naturschutz</gmd:URL>
+							</gmd:linkage>
+						</gmd:CI_OnlineResource>
+					</srv:connectPoint></srv:SV_OperationMetadata></srv:containsOperations><srv:coupledResource><srv:SV_CoupledResource>
+					<srv:operationName>
+						<gco:CharacterString>GetCapabilities</gco:CharacterString>
+					</srv:operationName>
+					<srv:identifier>
+						<gco:CharacterString>7BF94654-D24A-4C11-AA07-6A47B69EA685</gco:CharacterString>
+					</srv:identifier>
+					<gco:ScopedName>Layer_th_0544200808464974_0</gco:ScopedName></srv:SV_CoupledResource></srv:coupledResource><srv:coupledResource><srv:SV_CoupledResource>
+					<srv:operationName>
+						<gco:CharacterString>GetMap</gco:CharacterString>
+					</srv:operationName>
+					<srv:identifier>
+						<gco:CharacterString>7BF94654-D24A-4C11-AA07-6A47B69EA685</gco:CharacterString>
+					</srv:identifier>
+					<gco:ScopedName>Layer_th_0544200808464974_0</gco:ScopedName></srv:SV_CoupledResource></srv:coupledResource><srv:coupledResource><srv:SV_CoupledResource>
+					<srv:operationName>
+						<gco:CharacterString>GetFeatureInfo</gco:CharacterString>
+					</srv:operationName>
+					<srv:identifier>
+						<gco:CharacterString>7BF94654-D24A-4C11-AA07-6A47B69EA685</gco:CharacterString>
+					</srv:identifier>
+					<gco:ScopedName>Layer_th_0544200808464974_0</gco:ScopedName></srv:SV_CoupledResource></srv:coupledResource><srv:operatesOn uuidref="7BF94654-D24A-4C11-AA07-6A47B69EA685"/><gmd:citation><gmd:CI_Citation><gmd:date><gmd:CI_Date><gmd:date><gco:Date>2009-12-31</gco:Date></gmd:date><gmd:dateType><gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode></gmd:dateType></gmd:CI_Date></gmd:date><gmd:date><gmd:CI_Date><gmd:date><gco:Date></gco:Date></gmd:date><gmd:dateType><gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue=""></gmd:CI_DateTypeCode></gmd:dateType></gmd:CI_Date></gmd:date><gmd:date><gmd:CI_Date><gmd:date><gco:Date></gco:Date></gmd:date><gmd:dateType><gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue=""></gmd:CI_DateTypeCode></gmd:dateType></gmd:CI_Date></gmd:date><gmd:title><gco:CharacterString>Europäische Vogelschutzgebiete</gco:CharacterString></gmd:title></gmd:CI_Citation></gmd:citation><gmd:abstract><gco:CharacterString>Schutzgebiete gem. §44a NatSchG LSA</gco:CharacterString></gmd:abstract><gmd:descriptiveKeywords><gmd:MD_Keywords><gmd:keyword><gco:CharacterString>infoMapAccessService</gco:CharacterString></gmd:keyword></gmd:MD_Keywords></gmd:descriptiveKeywords><gmd:descriptiveKeywords><gmd:MD_Keywords><gmd:keyword><gco:CharacterString>Protected sites</gco:CharacterString></gmd:keyword><gmd:thesaurusName><gmd:CI_Citation><gmd:title><gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString></gmd:title><gmd:date><gmd:CI_Date><gmd:date><gco:Date>2008-06-01</gco:Date></gmd:date><gmd:dateType><gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode></gmd:dateType></gmd:CI_Date></gmd:date></gmd:CI_Citation></gmd:thesaurusName></gmd:MD_Keywords></gmd:descriptiveKeywords><gmd:purpose><gco:CharacterString></gco:CharacterString></gmd:purpose><gmd:status><gmd:MD_ProgressCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ProgressCode" codeListValue=""/></gmd:status><gmd:pointOfContact><gmd:CI_ResponsibleParty uuid="00ae8c0e-e859-4334-a8ac-26dbf81ac6ac"><gmd:individualName><gco:CharacterString>Heiner Nagel</gco:CharacterString></gmd:individualName><gmd:organisationName><gco:CharacterString>Landesamt für Umweltschutz Sachsen-Anhalt</gco:CharacterString></gmd:organisationName><gmd:contactInfo><gmd:CI_Contact><gmd:address><gmd:CI_Address><gmd:electronicMailAddress><gco:CharacterString>heiner.nagel@lau.mlu.sachsen-anhalt.de</gco:CharacterString></gmd:electronicMailAddress><gmd:deliveryPoint><gco:CharacterString>Reideburger Str. 47</gco:CharacterString></gmd:deliveryPoint><gmd:city><gco:CharacterString>Halle (Saale)</gco:CharacterString></gmd:city><gmd:administrativeArea><gco:CharacterString>Sachsen-Anhalt</gco:CharacterString></gmd:administrativeArea><gmd:postalCode><gco:CharacterString>D-06116</gco:CharacterString></gmd:postalCode><gmd:country><gco:CharacterString>DEU</gco:CharacterString></gmd:country></gmd:CI_Address></gmd:address><gmd:phone><gmd:CI_Telephone><gmd:voice><gco:CharacterString>+49-345-5704-656</gco:CharacterString></gmd:voice><gmd:facsimile><gco:CharacterString>+49-345-5704-605</gco:CharacterString></gmd:facsimile></gmd:CI_Telephone></gmd:phone></gmd:CI_Contact></gmd:contactInfo><gmd:role><gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="distributor">distributor</gmd:CI_RoleCode></gmd:role><gmd:positionName><gco:CharacterString>Dezernent</gco:CharacterString></gmd:positionName></gmd:CI_ResponsibleParty></gmd:pointOfContact><gmd:resourceConstraints><gmd:MD_Constraints><gmd:useLimitation><gco:CharacterString>no conditions apply</gco:CharacterString></gmd:useLimitation></gmd:MD_Constraints><gmd:MD_LegalConstraints><gmd:accessConstraints><gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode></gmd:accessConstraints><gmd:otherConstraints><gco:CharacterString>no limitations</gco:CharacterString></gmd:otherConstraints></gmd:MD_LegalConstraints></gmd:resourceConstraints><tbimsConstraints><gco:CharacterString></gco:CharacterString></tbimsConstraints></srv:SV_ServiceIdentification></gmd:identificationInfo><gmd:distributionInfo><gmd:MD_Distribution><gmd:transferOptions><gmd:MD_DigitalTransferOptions><gmd:onLine><gmd:CI_OnlineResource><gmd:linkage><gmd:URL>http://www.sachsen-anhalt.de/LPSA/index.php?id=36252</gmd:URL></gmd:linkage><gmd:function><gmd:CI_OnLineFunctionCode codeList="http://www.isotc211.org/2005/resources/Codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="order"/></gmd:function></gmd:CI_OnlineResource></gmd:onLine></gmd:MD_DigitalTransferOptions></gmd:transferOptions><gmd:distributionFormat><gmd:MD_Format><gmd:name><gco:CharacterString>Shapefiles</gco:CharacterString></gmd:name><gmd:version><gco:CharacterString></gco:CharacterString></gmd:version></gmd:MD_Format></gmd:distributionFormat><gmd:distributor><gmd:MD_Distributor><gmd:distributorContact><gmd:CI_ResponsibleParty uuid="f0de8a70-9e85-4362-aa13-6c090e64035e"><gmd:individualName><gco:CharacterString>Heiner Nagel</gco:CharacterString></gmd:individualName><gmd:organisationName><gco:CharacterString>Landesamt für Umweltschutz Sachsen-Anhalt</gco:CharacterString></gmd:organisationName><gmd:positionName><gco:CharacterString>Dezernent</gco:CharacterString></gmd:positionName><gmd:contactInfo><gmd:CI_Contact><gmd:phone><gmd:CI_Telephone><gmd:voice><gco:CharacterString>+48-345-5704-656</gco:CharacterString></gmd:voice><gmd:facsimile><gco:CharacterString>+48-345-5704-605</gco:CharacterString></gmd:facsimile></gmd:CI_Telephone></gmd:phone><gmd:address><gmd:CI_Address><gmd:deliveryPoint><gco:CharacterString>Reideburger Str. 47</gco:CharacterString></gmd:deliveryPoint><gmd:city><gco:CharacterString>Halle (Saale)</gco:CharacterString></gmd:city><gmd:administrativeArea><gco:CharacterString>Sachsen-Anhalt</gco:CharacterString></gmd:administrativeArea><gmd:postalCode><gco:CharacterString>D-06116</gco:CharacterString></gmd:postalCode><gmd:country><gco:CharacterString>DEU</gco:CharacterString></gmd:country><gmd:electronicMailAddress><gco:CharacterString>heiner.nagel@lau.mlu.sachsen-anhalt.de</gco:CharacterString></gmd:electronicMailAddress></gmd:CI_Address></gmd:address></gmd:CI_Contact></gmd:contactInfo><gmd:role><gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="distributor">distributor</gmd:CI_RoleCode></gmd:role></gmd:CI_ResponsibleParty></gmd:distributorContact></gmd:MD_Distributor></gmd:distributor><gmd:distributor><gmd:MD_Distributor><gmd:distributorContact><gmd:CI_ResponsibleParty><gmd:individualName>
+								<gco:CharacterString>Nagel</gco:CharacterString></gmd:individualName><gmd:organisationName>
+								<gco:CharacterString>LAU</gco:CharacterString></gmd:organisationName><gmd:positionName>
+								<gco:CharacterString>Dezernent</gco:CharacterString></gmd:positionName><gmd:contactInfo>
+								<gmd:CI_Contact>
+									<gmd:phone>
+										<gmd:CI_Telephone>
+											<gmd:voice>
+												<gco:CharacterString>0345-5704656</gco:CharacterString>
+											</gmd:voice>
+											<gmd:facsimile>
+												<gco:CharacterString>0345 5704605</gco:CharacterString>
+											</gmd:facsimile>
+										</gmd:CI_Telephone>
+									</gmd:phone>
+									<gmd:address>
+										<gmd:CI_Address>
+											<gmd:deliveryPoint>
+												<gco:CharacterString>Reideburger Straße 47</gco:CharacterString>
+											</gmd:deliveryPoint>
+											<gmd:city>
+												<gco:CharacterString>Halle (Saale)</gco:CharacterString>
+											</gmd:city>
+											<gmd:administrativeArea>
+												<gco:CharacterString>Deutschland</gco:CharacterString>
+											</gmd:administrativeArea>
+											<gmd:postalCode>
+												<gco:CharacterString>06116</gco:CharacterString>
+											</gmd:postalCode>
+											<gmd:country>
+												<gco:CharacterString>BRD</gco:CharacterString>
+											</gmd:country>
+											<gmd:electronicMailAddress>
+												<gco:CharacterString>nagel@lau.mlu.sachsen-anhalt.de</gco:CharacterString>
+											</gmd:electronicMailAddress>
+										</gmd:CI_Address>
+									</gmd:address>
+								</gmd:CI_Contact></gmd:contactInfo><gmd:role>
+								<gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</gmd:CI_RoleCode></gmd:role></gmd:CI_ResponsibleParty></gmd:distributorContact></gmd:MD_Distributor></gmd:distributor></gmd:MD_Distribution></gmd:distributionInfo></gmd:MD_Metadata>

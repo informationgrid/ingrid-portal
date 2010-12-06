@@ -938,6 +938,7 @@ var mappingDescription = {"mappings":[
 			  		},
 	  				{
 			  			"srcXpath":"./@xlink:href",
+			  			"defaultValue":"invalid link",
 			  			"targetNode":"linkage-url"
 			  		},
 	  				{
