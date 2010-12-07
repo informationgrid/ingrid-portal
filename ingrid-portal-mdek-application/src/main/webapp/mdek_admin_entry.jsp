@@ -162,10 +162,13 @@ function getCurrentGroupName() {
 
 	SecurityService.getGroups(true, {
 		callback: function(groupList) {
-			for (var i = 0; i < groupList.length; ++i) {
-				if (groupList[i].id == currentUser.groupId) {
-					def.callback(groupList[i].name);
-					break;
+            var userGroupIds = currentUser.groupIds;
+            for (var i = 0; i < groupList.length; ++i) {
+                for (var j = 0; j < userGroupIds.length; ++j) {
+                    if (groupList[i].id == userGroupIds[j]) {
+    					def.callback(groupList[i].name);
+    					break;
+    				}
 				}
 			}
 		},

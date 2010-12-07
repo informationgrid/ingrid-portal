@@ -32,7 +32,7 @@ function setTreeRoot(catAdmin) {
 	var title = UtilAddress.createAddressTitle(catAdmin.address);
 	var role = catAdmin.role;
 	var roleName = catAdmin.roleName;
-	var groupId = catAdmin.groupId;
+	var groupId = catAdmin.groupIds[0];
 	var portalLogin = catAdmin.userData.portalLogin;
 	var hasChildren = catAdmin.hasChildren;
 
@@ -238,7 +238,7 @@ scriptScope.saveUser = function() {
 	if (selectedUser.id == "newUserNode") {
 		// If the current selected node is a new node, create it in the db
 		user.addressUuid = currentSelectedAddressId;
-		user.groupId = dojo.widget.byId("userDataGroup").getValue();
+		user.groupIds = [dojo.widget.byId("userDataGroup").getValue()];
 		user.roleName = selectedUser.roleName;
 		user.role = selectedUser.role;
 		user.parentUserId = selectedUser.parentUserId;
@@ -279,7 +279,7 @@ scriptScope.saveUser = function() {
 	} else {
 		user.id = currentSelectedUser.userId;
 		user.addressUuid = currentSelectedAddressId;
-		user.groupId = dojo.widget.byId("userDataGroup").getValue();
+		user.groupIds = [dojo.widget.byId("userDataGroup").getValue()];
 		user.role = currentSelectedUser.role;
 		user.parentUserId = currentSelectedUser.parentUserId;
 
@@ -327,7 +327,7 @@ function updateTreeNode(user, newUser) {
 	} else {
 		user.setTitle(UtilAddress.createAddressTitle(newUser.address));
 		user.addressUuid = newUser.addressUuid;
-		user.groupId = newUser.groupId;
+		user.groupIds = newUser.groupIds;
 		if (newUser.userPermissions != null) {
 			dojo.lang.forEach(newUser.userPermissions, function(p) {
 				if (p == ("CREATE_ROOT")) {
@@ -586,7 +586,7 @@ function convertUserToTreeNode(user) {
 		title: UtilAddress.createAddressTitle(user.address),
 		role: user.role,
 		roleName: user.roleName,
-		groupId: user.groupId,
+		groupId: user.groupIds[0],
 		portalLogin: portalLogin,
 		nodeDocType: getDocTypeForRole(user.role),
 		isFolder: user.hasChildren,

@@ -18,7 +18,7 @@ _container_.addOnLoad(function() {
 		def.callback(null);
 
 	} else {
-		var def = getGroupDetailsById(currentUser.groupId);
+		var def = getGroupDetailsById(currentUser.groupIds);
 	}
 
 	def.addCallback(function(groupDetails) {
@@ -624,14 +624,19 @@ function getGroupDetails(groupName) {
 	return deferred;
 }
 
-function getGroupDetailsById(groupId) {
+function getGroupDetailsById(groupIds) {
 
 	var def = getAllGroups();
 
 	def.addCallback(function(groupList) {
-		for (var i = 0; i < groupList.length; ++i) {
-			if (groupList[i].id == groupId) {
-				return groupList[i].name;
+	    if (groupIds == null) {
+	       return null;
+	    }
+        for (var i = 0; i < groupList.length; ++i) {
+            for (var j = 0; j < groupIds.length; ++j) {
+                if (groupList[i].id == groupIds[j]) {
+				    return groupList[i].name;
+				}
 			}
 		}
 		return null;

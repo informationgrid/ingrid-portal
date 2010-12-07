@@ -12,7 +12,7 @@ public class User {
 	// General parameters
 	private Long id;
 	private String addressUuid;
-	private Long groupId;
+	private List<Long> groupIds;
 	private Integer role;
 	private String roleName;
 	private Long parentUserId;
@@ -60,11 +60,11 @@ public class User {
 	public void setAddressUuid(String addressUuid) {
 		this.addressUuid = addressUuid;
 	}
-	public Long getGroupId() {
-		return groupId;
+	public List<Long> getGroupIds() {
+		return groupIds;
 	}
-	public void setGroupId(Long groupId) {
-		this.groupId = groupId;
+	public void setGroupIds(List<Long> groupIds) {
+		this.groupIds = groupIds;
 	}
 	public Integer getRole() {
 		return role;

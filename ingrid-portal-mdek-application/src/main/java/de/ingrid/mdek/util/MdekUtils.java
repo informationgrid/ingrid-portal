@@ -2,6 +2,7 @@ package de.ingrid.mdek.util;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -220,7 +221,7 @@ public class MdekUtils {
 			for (IngridDocument group : groups) {
 				Group g = new Group();
 				g.setName((String) group.get(MdekKeys.NAME));
-				g.setId((Long) group.get(MdekKeysSecurity.IDC_GROUP_ID));
+				g.setId((Long) group.get(MdekKeysSecurity.ID));
 //				g.setLastEditor((String) group.get(MdekKeys.MOD_UUID));
 				IngridDocument lastEditorDoc = (IngridDocument) group.get(MdekKeys.MOD_USER);
 				if (lastEditorDoc != null)
@@ -245,7 +246,7 @@ public class MdekUtils {
 		Group group = new Group();
 		if (result != null) {
 			group.setName((String) result.get(MdekKeys.NAME));
-			group.setId((Long) result.get(MdekKeysSecurity.IDC_GROUP_ID));
+			group.setId((Long) result.get(MdekKeysSecurity.ID));
 //			group.setLastEditor((String) result.get(MdekKeys.MOD_UUID));
 			IngridDocument lastEditorDoc = (IngridDocument) result.get(MdekKeys.MOD_USER);
 			if (lastEditorDoc != null)
@@ -367,7 +368,7 @@ public class MdekUtils {
 		}
 
 		result.put(MdekKeys.NAME, group.getName());
-		result.put(MdekKeysSecurity.IDC_GROUP_ID, group.getId());
+		result.put(MdekKeysSecurity.ID, group.getId());
 
 		result.put(MdekKeysSecurity.IDC_ADDRESS_PERMISSIONS, convertPermissionsToIngridDocs(group.getAddressPermissions()));
 		result.put(MdekKeysSecurity.IDC_OBJECT_PERMISSIONS, convertPermissionsToIngridDocs(group.getObjectPermissions()));
@@ -383,7 +384,7 @@ public class MdekUtils {
 		if (result != null) {
 			user.setId((Long) result.get(MdekKeysSecurity.IDC_USER_ID));
 			user.setAddressUuid((String) result.get(MdekKeysSecurity.IDC_USER_ADDR_UUID));
-			user.setGroupId((Long) result.get(MdekKeysSecurity.IDC_GROUP_ID));
+			user.setGroupIds(Arrays.asList((Long[]) result.get(MdekKeysSecurity.IDC_GROUP_IDS)));
 			Integer role = (Integer) result.get(MdekKeysSecurity.IDC_ROLE);
 			IdcRole idcRole = EnumUtil.mapDatabaseToEnumConst(IdcRole.class, role);
 
@@ -418,7 +419,7 @@ public class MdekUtils {
 			for (IngridDocument user : users) {
 				User u = new User();
 				u.setParentUserId((Long) user.get(MdekKeysSecurity.PARENT_IDC_USER_ID));
-				u.setGroupId((Long) user.get(MdekKeysSecurity.IDC_GROUP_ID));
+				u.setGroupIds(Arrays.asList((Long[]) user.get(MdekKeysSecurity.IDC_GROUP_IDS)));
 				u.setHasChildren((Boolean) user.get(MdekKeys.HAS_CHILD));
 				u.setId((Long) user.get(MdekKeysSecurity.IDC_USER_ID));
 				u.setAddressUuid((String) user.get(MdekKeysSecurity.IDC_USER_ADDR_UUID));
@@ -461,7 +462,8 @@ public class MdekUtils {
 
 		result.put(MdekKeysSecurity.IDC_USER_ID, user.getId());
 		result.put(MdekKeysSecurity.IDC_USER_ADDR_UUID, user.getAddressUuid());
-		result.put(MdekKeysSecurity.IDC_GROUP_ID, user.getGroupId());
+		List<Long> groupIds = user.getGroupIds();
+		result.put(MdekKeysSecurity.IDC_GROUP_IDS, groupIds.toArray(new Long[groupIds.size()]));
 		result.put(MdekKeysSecurity.IDC_ROLE, user.getRole());
 		result.put(MdekKeysSecurity.PARENT_IDC_USER_ID, user.getParentUserId());
 

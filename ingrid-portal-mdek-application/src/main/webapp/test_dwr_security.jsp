@@ -117,7 +117,7 @@ storeGroup = function() {
 createCatalogAdmin = function() {
 	var catAdmin = {
 		addressUuid: "3866462F-B449-11D2-9A86-080000507261",
-		groupId: "247308",	// Administrators
+		groupIds: ["247308"],	// Administrators
 		role: "1",			// IDC_ROLE_CATALOG_ADMINISTRATOR
 		parentUserId: null
 	}

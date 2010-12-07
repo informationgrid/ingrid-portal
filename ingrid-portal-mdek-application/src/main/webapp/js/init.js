@@ -1454,12 +1454,15 @@ function getCurrentGroupName() {
 		preHook: UtilDWR.enterLoadingState,
 		postHook: UtilDWR.exitLoadingState,
 		callback: function(groupList) {
+		    var userGroupIds = currentUser.groupIds;
 			for (var i = 0; i < groupList.length; ++i) {
-				if (groupList[i].id == currentUser.groupId) {
-//					dojo.debug("Found user group:");
-//					dojo.debugShallow(groupList[i]);
-					def.callback(groupList[i].name);
-					break;
+                for (var j = 0; j < userGroupIds.length; ++j) {
+    				if (groupList[i].id == userGroupIds[j]) {
+    //					dojo.debug("Found user group:");
+    //					dojo.debugShallow(groupList[i]);
+    					def.callback(groupList[i].name);
+    					break;
+    				}
 				}
 			}
 		},
