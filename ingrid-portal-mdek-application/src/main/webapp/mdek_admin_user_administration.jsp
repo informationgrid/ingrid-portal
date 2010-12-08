@@ -10,14 +10,16 @@ var scriptScope = this;
 var currentSelectedAddressId = null;
 var currentSelectedUser = null;
 var catAdminUserData = null;
+// store cat admins adminstrators group Id for later user, see setTreeRoot() method
+var administratorGroupId = null;
+var administratorId = null;
 
-var requiredElements = [["userDataAddressLink", "userDataAddressLinkLabel"],
-					    ["userDataGroup", "userDataGroupLabel"]];
+var requiredElements = [["userDataAddressLink", "userDataAddressLinkLabel"]];
 
 
 _container_.addOnLoad(function() {
 	initializeUserTree();
-	initializeGroupList(true);
+	initializeGroupLists(true);
 
 	dojo.widget.byId("userDataAddressLink").isValid = function() { return (!this.isEmpty() && this.getValue() != "Neuer Benutzer"); };
 });
@@ -32,7 +34,13 @@ function setTreeRoot(catAdmin) {
 	var title = UtilAddress.createAddressTitle(catAdmin.address);
 	var role = catAdmin.role;
 	var roleName = catAdmin.roleName;
-	var groupId = catAdmin.groupIds[0];
+//	var groupId = catAdmin.groupIds[0];
+	var groupIds = catAdmin.groupIds;
+	// store cat admins adminstrators group Id for later user
+	administratorGroupId = groupIds[0];
+	// store cat admins Id for later user
+	administratorId = catAdmin.id;
+	dojo.debug("administrators group id: " + administratorGroupId);
 	var portalLogin = catAdmin.userData.portalLogin;
 	var hasChildren = catAdmin.hasChildren;
 
@@ -42,7 +50,8 @@ function setTreeRoot(catAdmin) {
 		title: title,
 		role: role,
 		roleName: roleName,
-		groupId: groupId,
+//		groupId: groupId,
+		groupIds: groupIds,
 		portalLogin: portalLogin,
 		nodeDocType: getDocTypeForRole(role),
 		isFolder: hasChildren
@@ -95,21 +104,108 @@ function initializeUserTree() {
 	dojo.event.topic.subscribe(treeListener.eventNames.select, function(data) { treeNodeSelected(data.node); });
 }
 
-function initializeGroupList(includeCatAdminGroup) {
+function initializeGroupLists(includeCatAdminGroup) {
 	var def = getAllGroups(includeCatAdminGroup);
 
 	def.addCallback(function(groupList) {
-		var list = [];
+		var listAvailableGroups = [];
+		var listUserGroups = [];
+		var groupIdList = currentSelectedUser.groupIds;
 		dojo.lang.forEach(groupList, function(item) {
-			list.push( [item.name, item.id] );
+			if (dojo.lang.inArray(groupIdList, item.id)) {
+				listUserGroups.push( {"name":item.name, "Id":item.id} );
+			} else if (currentSelectedUser.userId != administratorId){
+				listAvailableGroups.push( {"name":item.name, "Id":item.id} );
+			}
 		});
-		dojo.widget.byId("userDataGroup").dataProvider.setData(list);
+		dojo.widget.byId("availableGroupsList").store.setData(listAvailableGroups);
+		dojo.widget.byId("groupsList").store.setData(listUserGroups);
 	});
 
-	dojo.widget.byId("userDataGroup").isValid = function() {
-		return (this.getValue() != "");
+/*
+ * Disable forced group for users
+
+	dojo.widget.byId("groupsList").isValid = function() {
+		return (this.store.getData().length != 0);
 	}
+*/	
 	return def;
+}
+
+
+// 'Add selected groups' Button onClick function.
+//
+// This function moves the selected groups from the selection list (left) to the result list (right)
+addSelected = function() {
+    var availableGroupsTable = dojo.widget.byId("availableGroupsList"); 
+    var groupsTable = dojo.widget.byId("groupsList");
+
+    var selectedGroups = availableGroupsTable.getSelectedData();
+    if (selectedGroups) {
+        dojo.lang.forEach(selectedGroups, function(item) {
+            availableGroupsTable.store.removeData(item);
+            groupsTable.store.addData(item);
+        });
+    }
+}
+
+
+// 'Add all groups' Button onClick function.
+//
+// This function moves all groups from the selection list (left) to the result list (right)
+addAll = function() {
+    var availableGroupsTable = dojo.widget.byId("availableGroupsList"); 
+    var groupsTable = dojo.widget.byId("groupsList");
+
+    var groups = availableGroupsTable.store.getData();
+    if (groups) {
+        dojo.lang.forEach(groups, function(item) {
+            availableGroupsTable.store.removeData(item);
+            groupsTable.store.addData(item);
+        });
+    }
+}
+
+
+// 'Remove selected groups' Button onClick function.
+//
+// This function moves the selected groups from the result list (right) to the selection list (left)
+removeSelected = function() {
+    var availableGroupsTable = dojo.widget.byId("availableGroupsList"); 
+    var groupsTable = dojo.widget.byId("groupsList");
+
+    var selectedGroups = groupsTable.getSelectedData();
+    if (selectedGroups) {
+        dojo.lang.forEach(selectedGroups, function(item) {
+            if (item.name != "administrators") {
+	        	groupsTable.store.removeData(item);
+	            availableGroupsTable.store.addData(item);
+            } else {
+            	dojo.debug("Cannot remove group 'administrators' from user.")
+            }
+        });
+    }
+}
+
+
+// 'Remove all groups' Button onClick function.
+//
+// This function moves all groups from the result list (right) to the selection list (left)
+removeAll = function() {
+    var availableGroupsTable = dojo.widget.byId("availableGroupsList"); 
+    var groupsTable = dojo.widget.byId("groupsList");
+
+    var groups = groupsTable.store.getData();
+    if (groups) {
+        dojo.lang.forEach(groups, function(item) {
+            if (item.name != "administrators") {
+	            groupsTable.store.removeData(item);
+	            availableGroupsTable.store.addData(item);
+            } else {
+            	dojo.debug("Cannot remove group 'administrators' from user.")
+            }
+        });
+    }
 }
 
 // 'Delete user' button function
@@ -200,6 +296,7 @@ scriptScope.importPortalUser = function() {
 		var def = treeController.expand(selectedUser);
 
 		def.addCallback(function(deferred){
+			dojo.debug("parent group ids: " + selectedUser.groupIds);
 			treeController.createChild(selectedUser, "last", createNewUserNode(selectedUser, portalUser));
 		});
 
@@ -238,7 +335,17 @@ scriptScope.saveUser = function() {
 	if (selectedUser.id == "newUserNode") {
 		// If the current selected node is a new node, create it in the db
 		user.addressUuid = currentSelectedAddressId;
-		user.groupIds = [dojo.widget.byId("userDataGroup").getValue()];
+	    var groupsTable = dojo.widget.byId("groupsList");
+	    var groups = groupsTable.store.getData();
+		
+		var groudIds = UtilList.map(groups, function(group) {
+			return group.Id;
+			
+		});
+		dojo.debug(groudIds);
+
+
+		user.groupIds = groudIds;
 		user.roleName = selectedUser.roleName;
 		user.role = selectedUser.role;
 		user.parentUserId = selectedUser.parentUserId;
@@ -279,7 +386,17 @@ scriptScope.saveUser = function() {
 	} else {
 		user.id = currentSelectedUser.userId;
 		user.addressUuid = currentSelectedAddressId;
-		user.groupIds = [dojo.widget.byId("userDataGroup").getValue()];
+	    var groupsTable = dojo.widget.byId("groupsList");
+	    var groups = groupsTable.store.getData();
+		
+		var groudIds = UtilList.map(groups, function(group) {
+			return group.Id;
+			
+		});
+		dojo.debug(groudIds);
+
+
+		user.groupIds = groudIds;
 		user.role = currentSelectedUser.role;
 		user.parentUserId = currentSelectedUser.parentUserId;
 
@@ -416,23 +533,29 @@ function treeNodeSelected(treeNode) {
 // Updates the input elements with the data from 'treeNode'
 function updateInputElements(treeNode) {
 
+	currentSelectedUser = treeNode;
+	
 	if (treeNode.role == 1) {
 		// Standards for catAdmin
-		var def = initializeGroupList(true);
-		dojo.widget.byId("userDataGroup").disable();
+		var def = initializeGroupLists(true);
+		dojo.widget.byId("availableGroupsList").disable();
+		dojo.widget.byId("groupsList").disable();
 
 	} else {
-		var def = initializeGroupList(false);
-		dojo.widget.byId("userDataGroup").enable();	
+		var def = initializeGroupLists(false);
+		dojo.widget.byId("availableGroupsList").enable();
+		dojo.widget.byId("groupsList").enable();
 	}
+	
+	
 
 	def.addCallback(function() {
 		dojo.widget.byId("userDataLogin").setValue(treeNode.portalLogin);
 		dojo.widget.byId("userDataAddressLink").setValue(treeNode.title);
 		dojo.widget.byId("userDataRole").setValue(treeNode.roleName);
-		dojo.widget.byId("userDataGroup").setValue(treeNode.groupId);
+//		dojo.widget.byId("userDataGroup").setValue(treeNode.groupId);
 		currentSelectedAddressId = treeNode.addressUuid;
-		currentSelectedUser = treeNode;
+//		currentSelectedUser = treeNode;
 	});
 }
 
@@ -441,7 +564,8 @@ function resetInputFields() {
 	dojo.widget.byId("userDataLogin").setValue("");
 	dojo.widget.byId("userDataAddressLink").setValue("");
 	dojo.widget.byId("userDataRole").setValue("");
-	dojo.widget.byId("userDataGroup").setValue("");
+	dojo.widget.byId("groupsList").store.clearData();
+	dojo.widget.byId("availableGroupsList").store.clearData();
 	currentSelectedAddressId = null;
 	currentSelectedUser = null;
 }
@@ -586,7 +710,8 @@ function convertUserToTreeNode(user) {
 		title: UtilAddress.createAddressTitle(user.address),
 		role: user.role,
 		roleName: user.roleName,
-		groupId: user.groupIds[0],
+//		groupId: user.groupIds[0],
+		groupIds: user.groupIds,
 		portalLogin: portalLogin,
 		nodeDocType: getDocTypeForRole(user.role),
 		isFolder: user.hasChildren,
@@ -604,6 +729,7 @@ function createNewUserNode(parentNode, login) {
 		role: parentNode.role + 1,
 		roleName: getRoleName(parentNode.role + 1),
 //		groupId: parentNode.groupId,
+		groupIds: UtilList.map(parentNode.groupIds, function(groupId) {if (groupId != administratorGroupId) return groupId}),
 		createRoot: false,
 		portalLogin: login,
 		nodeDocType: getDocTypeForRole(parentNode.role + 1),
@@ -680,7 +806,7 @@ function hideLoadingZone() {
 		    <!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
 			<div id="userData" class="inputContainer" style="float:right;">
 				<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8012)"><fmt:message key="dialog.admin.users.userData" /></label></span>
-				<div class="inputContainer field grey noSpaceBelow h313">
+				<div class="inputContainer field grey noSpaceBelow">
 					<span class="label"><label for="userDataLogin" onclick="javascript:dialog.showContextHelp(arguments[0], 8013, 'Login')"><fmt:message key="dialog.admin.users.login" /></label></span>
 					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.searchForPortalUser();" title="<fmt:message key="dialog.admin.users.searchPortalUser" /> [Popup]"><fmt:message key="dialog.admin.users.searchPortalUser" /></a></span>
 					<span class="input spaceBelow"><input type="text" id="userDataLogin" name="userDataLogin" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
@@ -691,8 +817,51 @@ function hideLoadingZone() {
 					<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScope.searchForAddress();" title="<fmt:message key="dialog.admin.users.searchAddress" /> [Popup]"><fmt:message key="dialog.admin.users.searchAddress" /></a></span>
 					<span class="input spaceBelow"><input type="text" id="userDataAddressLink" name="userDataAddressLink" class="w640" disabled="true" dojoType="ingrid:ValidationTextBox" /></span>
 					
-					<span class="label required"><label id="userDataGroupLabel" for="userDataGroup" onclick="javascript:dialog.showContextHelp(arguments[0], 8016, 'Gruppe')"><fmt:message key="dialog.admin.users.group" />*</label></span>
-					<span class="input spaceBelow"><div dojoType="ingrid:Select" autoComplete="false" toggle="plain" style="width:621px;" widgetId="userDataGroup"></div></span>
+                    <span class="entry first">
+                      <span class="label"><label id="availableGroupsListLabel" for="availableGroupsList" onclick="javascript:dialog.showContextHelp(arguments[0], 8016, 'Gruppen')"><fmt:message key="dialog.admin.users.available.groups"/></label></span>
+                        <div class="tableContainer headHiddenRows10 third">
+                        <table id="availableGroupsList" dojoType="ingrid:FilteringTable" minRows="10" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
+                          <thead>
+                              <tr>
+                                <th nosort="true" field="name" dataType="String">Name</th>
+                              </tr>
+                          </thead>
+                          <colgroup>
+                            <col width="100%">
+                          </colgroup>
+                          <tbody>
+                          </tbody>
+                        </table>
+                        </div>
+                    </span>
+                
+                    <span class="entry">
+                      <span class="buttonCol" style="margin:80px -4px 0px;">
+                        <button dojoType="ingrid:Button" id="addSelectedButton" onClick="addSelected">&nbsp;>&nbsp;</button>
+                        <button dojoType="ingrid:Button" id="addAllButton" onClick="addAll">>></button>
+                        <button dojoType="ingrid:Button" id="removeAllButton" onClick="removeAll"><<</button>
+                        <button dojoType="ingrid:Button" id="removeSelectedButton" onClick="removeSelected">&nbsp;<&nbsp;</button>
+                      </span>
+                    </span>
+                
+                    <span class="entry">
+                      <span class="label"><label id="groupsListLabel" for="groupsList" onclick="javascript:dialog.showContextHelp(arguments[0], 8016, 'Gruppen')"><fmt:message key="dialog.admin.users.groups" /></label></span>
+                        <div class="tableContainer headHiddenRows10 third">
+                        <table id="groupsList" dojoType="ingrid:FilteringTable" minRows="10" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
+                          <thead>
+                              <tr>
+                                <th nosort="true" field="name" dataType="String">Name</th>
+                              </tr>
+                          </thead>
+                          <colgroup>
+                            <col width="100%">
+                          </colgroup>
+                          <tbody>
+                          </tbody>
+                        </table>
+                        </div>
+                    </span>
+
 			        <div class="fill"></div>
 				</div>
 

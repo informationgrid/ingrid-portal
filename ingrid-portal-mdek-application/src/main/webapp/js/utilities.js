@@ -786,6 +786,16 @@ UtilList.markExpiredSNSLocations = function(list) {
 	}
 }
 
+// see dojo.map in newer dojo releases
+UtilList.map = function(list, myFunction) {
+	var outArr = [];
+	for(var i=0,l=list.length; i<l; ++i){
+		outArr.push(myFunction.call(myFunction, list[i], i, list));
+	}
+	return outArr; // Array
+}
+
+
 
 // Util functions for dojo store 
 var UtilStore = {}
