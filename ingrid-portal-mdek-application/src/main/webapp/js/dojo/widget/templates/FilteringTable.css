@@ -1,4 +1,4 @@
-table.filteringTable, table.filteringTableBlue { top:0; left:0; font:normal 10px/14px Verdana, Helvetica, Arial, sans-serif; border-top:1px solid #838383; border-left:1px solid #838383; border-bottom:1px solid #add9f9; border-right:1px solid #add9f9; cursor:default; }
+table.filteringTable, table.filteringTableBlue { width: 100%; top:0; left:0; font:normal 10px/14px Verdana, Helvetica, Arial, sans-serif; border-top:1px solid #838383; border-left:1px solid #838383; border-bottom:1px solid #add9f9; border-right:1px solid #add9f9; cursor:default; }
 table.relativePos { position:relative !important; } 
 
 table.filteringTable thead th, table.filteringTableBlue thead th { padding:3px 0 3px 4px; font-weight:bold; font-size:10px; color:#fff; background:#156496; text-align:left; }
