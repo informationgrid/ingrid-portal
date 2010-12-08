@@ -301,7 +301,7 @@
 
 	"dialog.spatialAssist.title":"Add Custom Location",
 	"dialog.spatialNavigator.title":"Geothesaurus-Navigator",
-	"dialog.thesaurusAssist.title":"Thesaurus assistant",
+	"dialog.thesaurusAssist.title":"Thesaurus-Assistant",
 	"dialog.statistics.numTotal":"Total",
 	"dialog.thesaurusNavigator.title":"Thesaurus-Navigator",
 
