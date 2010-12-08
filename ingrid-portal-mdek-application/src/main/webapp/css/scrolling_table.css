@@ -101,7 +101,7 @@ div.wide table {
 }
 
 div.w364 table {
-	width: 346px;
+	width: 100%;
 }
 
 /* Modern browsers accept this (not IE) and we are targetting firefox */
