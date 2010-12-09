@@ -415,6 +415,7 @@ remove by jm because of collision with other definition change (contentSection .
 .contentBlockWhite .fullField { width:668px; }
 .contentBlockWhite .half { width:312px; }
 .contentBlockWhite .third { width:264px; }
+.contentBlockWhite .third303 { width:303px; }
 
 .contentBlockWhite span.button { display:block; margin-top:4px; padding:4px 20px 6px 20px; background:#C6C6C6; text-align:right; }
 .contentBlockWhite span.buttonLeft { display:block; margin-top:4px; padding:4px 20px 6px 0; background:#C6C6C6; text-align:left; }

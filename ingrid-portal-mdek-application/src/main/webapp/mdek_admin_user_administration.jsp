@@ -819,7 +819,7 @@ function hideLoadingZone() {
 					
                     <span class="entry first">
                       <span class="label"><label id="availableGroupsListLabel" for="availableGroupsList" onclick="javascript:dialog.showContextHelp(arguments[0], 8016, 'Gruppen')"><fmt:message key="dialog.admin.users.available.groups"/></label></span>
-                        <div class="tableContainer headHiddenRows10 third">
+                        <div class="tableContainer headHiddenRows10 third303">
                         <table id="availableGroupsList" dojoType="ingrid:FilteringTable" minRows="10" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
                           <thead>
                               <tr>
@@ -846,7 +846,7 @@ function hideLoadingZone() {
                 
                     <span class="entry">
                       <span class="label"><label id="groupsListLabel" for="groupsList" onclick="javascript:dialog.showContextHelp(arguments[0], 8016, 'Gruppen')"><fmt:message key="dialog.admin.users.groups" /></label></span>
-                        <div class="tableContainer headHiddenRows10 third">
+                        <div class="tableContainer headHiddenRows10 third303">
                         <table id="groupsList" dojoType="ingrid:FilteringTable" minRows="10" headClass="hidden" cellspacing="0" class="filteringTable nosort interactive relativePos">
                           <thead>
                               <tr>
