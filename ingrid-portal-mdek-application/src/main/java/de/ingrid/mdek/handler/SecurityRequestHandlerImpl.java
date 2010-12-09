@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.beans.security.Group;
+import de.ingrid.mdek.beans.security.Permission;
 import de.ingrid.mdek.beans.security.User;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
 import de.ingrid.mdek.util.MdekSecurityUtils;
@@ -65,6 +66,12 @@ public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 		return MdekUtils.extractSecurityUserFromResponse(response);		
 	}
 	
+    @Override
+    public List<Permission> getUserPermissions(String userId) {
+        IngridDocument response = mdekCallerSecurity.getUserPermissions(connectionFacade.getCurrentPlugId(), userId, MdekSecurityUtils.getCurrentUserUuid());
+        return MdekUtils.extractUserPermissionsFromResponse(response);     
+    }
+	
 	public User createUser(User user, boolean refetch) {
 		IngridDocument u = MdekUtils.convertSecurityUserToIngridDoc(user);
 		IngridDocument response = mdekCallerSecurity.createUser(connectionFacade.getCurrentPlugId(), u, refetch, MdekSecurityUtils.getCurrentUserUuid());
@@ -110,4 +117,5 @@ public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 	public void setConnectionFacade(ConnectionFacade connectionFacade) {
 		this.connectionFacade = connectionFacade;
 	}
+
 }

@@ -19,6 +19,7 @@ import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 
 import de.ingrid.mdek.beans.security.Group;
+import de.ingrid.mdek.beans.security.Permission;
 import de.ingrid.mdek.beans.security.User;
 import de.ingrid.mdek.handler.SecurityRequestHandler;
 import de.ingrid.mdek.job.MdekException;
@@ -26,7 +27,7 @@ import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 
-public class SecurityServiceImpl {
+public class SecurityServiceImpl implements SecurityService {
 
 	private final static Logger log = Logger.getLogger(SecurityServiceImpl.class);	
 
@@ -34,6 +35,9 @@ public class SecurityServiceImpl {
 	private SecurityRequestHandler securityRequestHandler;
 
 	
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#getGroups(boolean)
+     */
 	public List<Group> getGroups(boolean includeCatAdminGroup) {
 		try {
 			return securityRequestHandler.getGroups(includeCatAdminGroup);
@@ -44,6 +48,9 @@ public class SecurityServiceImpl {
 		}
 	}
 
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#getGroupDetails(java.lang.String)
+     */
 	public Group getGroupDetails(String name) {
 		try {
 			return securityRequestHandler.getGroupDetails(name);
@@ -54,6 +61,9 @@ public class SecurityServiceImpl {
 		}
 	}
 
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#createGroup(de.ingrid.mdek.beans.security.Group, boolean)
+     */
 	public Group createGroup(Group group, boolean refetch) {
 		try {
 			return securityRequestHandler.createGroup(group, true);
@@ -64,6 +74,9 @@ public class SecurityServiceImpl {
 		}
 	}
 
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#storeGroup(de.ingrid.mdek.beans.security.Group, boolean)
+     */
 	public Group storeGroup(Group group, boolean refetch) {
 		try {
 			return securityRequestHandler.storeGroup(group, true);
@@ -74,6 +87,9 @@ public class SecurityServiceImpl {
 		}
 	}
 
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#deleteGroup(java.lang.Long)
+     */
 	public void deleteGroup(Long groupId) {
 		try {
 			securityRequestHandler.deleteGroup(groupId);
@@ -84,10 +100,16 @@ public class SecurityServiceImpl {
 		}
 	}
 
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#getUserDataForAddress(java.lang.String)
+     */
 	public UserData getUserDataForAddress(String addressUuid) {
 		return MdekSecurityUtils.getUserDataForAddress(addressUuid);
 	} 
 
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#getSubUsers(java.lang.Long)
+     */
 	public List<User> getSubUsers(Long userId) {
 		try {
 			List<User> users = securityRequestHandler.getSubUsers(userId);		
@@ -106,6 +128,9 @@ public class SecurityServiceImpl {
 		}
 	}
 
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#getCurrentUser()
+     */
 	public User getCurrentUser() {
 		UserData curUserData = MdekSecurityUtils.getCurrentPortalUserData();
 		User curUser = getUserDetails(curUserData.getAddressUuid());
@@ -113,6 +138,9 @@ public class SecurityServiceImpl {
 		return curUser;
 	}
 
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#getUserDetails(java.lang.String)
+     */
 	public User getUserDetails(String userId) {
 		try {
 			return securityRequestHandler.getUserDetails(userId);
@@ -123,6 +151,23 @@ public class SecurityServiceImpl {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see de.ingrid.mdek.dwr.services.SecurityService#getUserPermissions(java.lang.String)
+	 */
+	@Override
+    public List<Permission> getUserPermissions(String userId) {
+        try {
+            return securityRequestHandler.getUserPermissions(userId);
+        } catch (MdekException e) {
+            // Wrap the MdekException in a RuntimeException so dwr can convert it
+            log.debug("MdekException while fetching user permissions for user '" + userId + "'.", e);
+            throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+        }
+    }
+
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#createUser(de.ingrid.mdek.beans.security.User, java.lang.String, boolean)
+     */
 	public User createUser(User user, String portalLogin, boolean refetch) {
 		try {
 			User u = securityRequestHandler.createUser(user, refetch);
@@ -149,6 +194,9 @@ public class SecurityServiceImpl {
 		}
 	}
 
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#storeUser(java.lang.String, de.ingrid.mdek.beans.security.User, java.lang.String, boolean)
+     */
 	public User storeUser(String oldUserLogin, User user, String portalLogin, boolean refetch) {
 		try {
 		    boolean loginDoesNotExist = false;
@@ -187,6 +235,9 @@ public class SecurityServiceImpl {
 		}
 	}
 
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#deleteUser(java.lang.Long, java.lang.String)
+     */
 	public void deleteUser(Long userId, String addressUuid) {
 		try {
 			securityRequestHandler.deleteUser(userId);
@@ -203,6 +254,9 @@ public class SecurityServiceImpl {
 		}
 	}
 
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#getCatalogAdmin()
+     */
 	public User getCatalogAdmin() {
 		try {
 			User u = securityRequestHandler.getCatalogAdmin();
@@ -217,6 +271,9 @@ public class SecurityServiceImpl {
 	}
 	
 	
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#getPortalUsers()
+     */
 	public List<String> getPortalUsers() {
 		List<String> userList = new ArrayList<String>();
 		
@@ -249,22 +306,37 @@ public class SecurityServiceImpl {
 		return userList;
 	}
 
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#getUsersWithWritePermissionForObject(java.lang.String, boolean, boolean)
+     */
 	public List<User> getUsersWithWritePermissionForObject(String objectUuid, boolean checkWorkflow, boolean includePermissions) {
 		return securityRequestHandler.getUsersWithWritePermissionForObject(objectUuid, checkWorkflow, includePermissions);
 	}
 	
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#getUsersWithWritePermissionForAddress(java.lang.String, boolean, boolean)
+     */
 	public List<User> getUsersWithWritePermissionForAddress(String addressUuid, boolean checkWorkflow, boolean includePermissions) {
 		return securityRequestHandler.getUsersWithWritePermissionForAddress(addressUuid, checkWorkflow, includePermissions);
 	}
 
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#getUsersOfGroup(java.lang.String)
+     */
 	public List<User> getUsersOfGroup(String groupName) {
 		return securityRequestHandler.getUsersOfGroup(groupName);
 	}
 
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#getSecurityRequestHandler()
+     */
 	public SecurityRequestHandler getSecurityRequestHandler() {
 		return securityRequestHandler;
 	}
 
+	/* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#setSecurityRequestHandler(de.ingrid.mdek.handler.SecurityRequestHandler)
+     */
 	public void setSecurityRequestHandler(
 			SecurityRequestHandler securityRequestHandler) {
 		this.securityRequestHandler = securityRequestHandler;
@@ -304,4 +376,5 @@ public class SecurityServiceImpl {
         }
         return principal;
     }
+
 }

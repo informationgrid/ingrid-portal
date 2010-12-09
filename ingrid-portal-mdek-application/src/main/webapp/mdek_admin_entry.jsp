@@ -69,7 +69,6 @@ var currentMenu = null;
 var currentSubMenu = new Array();
 
 var currentUser = null;
-var currentGroup = null;
 var catalogData = null;
 
 
@@ -91,7 +90,6 @@ dojo.addOnLoad(function() {
 
 	var def = initCatalogData();
 	def.addCallback(initCurrentUser);
-	def.addCallback(initCurrentGroup);
 	def.addCallback(initPageHeader);
 	def.addCallback(initMenu);
 	def.addCallback(initSessionKeepalive);
@@ -138,49 +136,6 @@ function initCatalogData() {
 	return deferred;
 }
 
-function initCurrentGroup() {
-	var def = getCurrentGroupName();
-
-	def.addCallback(function(groupName) {
-		SecurityService.getGroupDetails(groupName, {
-			callback: function(group) {
-				currentGroup = group;
-			},
-
-			errorHandler:function(mes){
-				dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
-				dojo.debug("Error: "+mes);
-			}
-		});
-	});
-
-	return def;
-}
-
-function getCurrentGroupName() {
-	var def = new dojo.Deferred();
-
-	SecurityService.getGroups(true, {
-		callback: function(groupList) {
-            var userGroupIds = currentUser.groupIds;
-            for (var i = 0; i < groupList.length; ++i) {
-                for (var j = 0; j < userGroupIds.length; ++j) {
-                    if (groupList[i].id == userGroupIds[j]) {
-    					def.callback(groupList[i].name);
-    					break;
-    				}
-				}
-			}
-		},
-		errorHandler:function(mes){
-			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
-			dojo.debug("Error: "+mes);
-			def.errback(mes);
-		}
-	});
-
-	return def;		
-}
 
 function initCurrentUser() {
 	var def = new dojo.Deferred();

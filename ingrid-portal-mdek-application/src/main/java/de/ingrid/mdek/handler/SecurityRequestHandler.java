@@ -3,6 +3,7 @@ package de.ingrid.mdek.handler;
 import java.util.List;
 
 import de.ingrid.mdek.beans.security.Group;
+import de.ingrid.mdek.beans.security.Permission;
 import de.ingrid.mdek.beans.security.User;
 
 public interface SecurityRequestHandler {
@@ -15,6 +16,7 @@ public interface SecurityRequestHandler {
 
 	public List<User> getSubUsers(Long userId);
 	public User getUserDetails(String userId);
+    public List<Permission> getUserPermissions(String userId);
 	public User createUser(User user, boolean refetch);
 	public User storeUser(User user, boolean refetch);
 	public void deleteUser(Long userId);

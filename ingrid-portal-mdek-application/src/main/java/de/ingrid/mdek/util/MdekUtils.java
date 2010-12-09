@@ -310,6 +310,35 @@ public class MdekUtils {
 		return resultList;
 	}
 
+    /**
+     * Extract user permissions from response document. It expects to find the permissions as list of
+     * documents under the key 'idc-permissions'. 
+     * 
+     * @param response
+     * @return A List of permissions. If no permission can be found, the list is empty.
+     */
+    public static List<Permission> extractUserPermissionsFromResponse(IngridDocument response) {
+        IngridDocument result = MdekUtils.getResultFromResponse(response);
+        
+        List<IngridDocument> permissions = (List<IngridDocument>) result.get(MdekKeysSecurity.IDC_PERMISSIONS);
+        
+        List<Permission> resultList = new ArrayList<Permission>();
+
+        if (permissions == null) {
+            return resultList;
+        }
+
+        for (IngridDocument doc : permissions) {
+            Permission p = new Permission();
+            String permissionType = (String) doc.get(MdekKeysSecurity.IDC_PERMISSION);
+            p.setPermission(EnumUtil.mapDatabaseToEnumConst(IdcPermission.class, permissionType));
+            resultList.add(p);
+        }
+
+        return resultList;
+    }
+	
+	
 	private static List<IdcPermission> getGroupPermissions(List<IngridDocument> docList) {
 		List<IdcPermission> resultList = new ArrayList<IdcPermission>();
 

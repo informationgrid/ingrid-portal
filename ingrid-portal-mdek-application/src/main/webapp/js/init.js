@@ -19,7 +19,8 @@ dojo.addOnLoad(function()
   var def = initCatalogData();
   def.addCallback(initAdditionalFields);
   def.addCallback(initCurrentUser);
-  def.addCallback(initCurrentGroup);
+  def.addCallback(initCurrentUserPermissions);
+  def.addCallback(initCurrentGroups);
   def.addCallback(initGeneralEventListener);
   def.addCallback(initToolbar);
   def.addCallback(disableInputOnWrongPermission);
@@ -1420,34 +1421,59 @@ function initCatalogData() {
 	return deferred;
 }
 
-function initCurrentGroup() {
+function initCurrentUserPermissions() {
 	var def = new dojo.Deferred();
-	var getGroupNameDef = getCurrentGroupName();
 
-	getGroupNameDef.addCallback(function(groupName) {
-		SecurityService.getGroupDetails(groupName, {
-			preHook: UtilDWR.enterLoadingState,
-			postHook: UtilDWR.exitLoadingState,
-			callback: function(group) {
-//				dojo.debug("Group Details:");
-//				dojo.debugShallow(group);
-				currentGroup = group;
-				def.callback();
-			},
+	SecurityService.getUserPermissions(currentUser.addressUuid, {
+		preHook: UtilDWR.enterLoadingState,
+		postHook: UtilDWR.exitLoadingState,
+		callback: function(permissionList) {
+			currentUserPermissions = permissionList;
+			def.callback();
+		},
+		errorHandler:function(mes){
+			UtilDWR.exitLoadingState();
+			dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+			dojo.debug("Error: "+mes);
+			def.errback(mes);
+		}
+	});
 
-			errorHandler:function(mes){
-				UtilDWR.exitLoadingState();
-				dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
-				dojo.debug("Error: "+mes);
-				def.errback(mes);
-			}
-		});
+	return def;		
+}
+
+
+function initCurrentGroups() {
+	var def = new dojo.Deferred();
+	var getGroupNameDef = getCurrentGroupNames();
+
+	getGroupNameDef.addCallback(function(groupNames) {
+		
+		for (var i=0;i<groupNames.length; i++) {
+			SecurityService.getGroupDetails(groupNames[i], {
+				preHook: UtilDWR.enterLoadingState,
+				postHook: UtilDWR.exitLoadingState,
+				callback: function(group) {
+					dojo.debug("Add group details to currentGroups.");
+					dojo.debugShallow(group);
+					currentGroups.push(group);
+				},
+
+				errorHandler:function(mes){
+					UtilDWR.exitLoadingState();
+					dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+					dojo.debug("Error: "+mes);
+					def.errback(mes);
+				}
+			});
+		}
+		def.callback();
 	});
 
 	return def;
 }
 
-function getCurrentGroupName() {
+function getCurrentGroupNames() {
 	var def = new dojo.Deferred();
 
 	SecurityService.getGroups(true, {
@@ -1455,16 +1481,17 @@ function getCurrentGroupName() {
 		postHook: UtilDWR.exitLoadingState,
 		callback: function(groupList) {
 		    var userGroupIds = currentUser.groupIds;
+		    var groupNames = [];
 			for (var i = 0; i < groupList.length; ++i) {
                 for (var j = 0; j < userGroupIds.length; ++j) {
     				if (groupList[i].id == userGroupIds[j]) {
-    //					dojo.debug("Found user group:");
-    //					dojo.debugShallow(groupList[i]);
-    					def.callback(groupList[i].name);
+    					dojo.debug("Add group name to current users group names: " + groupList[i].name);
+    					groupNames.push(groupList[i].name);
     					break;
     				}
 				}
 			}
+			def.callback(groupNames);
 		},
 		errorHandler:function(mes){
 			UtilDWR.exitLoadingState();

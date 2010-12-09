@@ -111,8 +111,11 @@ var catalogData = {};
 // This object holds the current user (See de.ingrid.mdek.beans.security.User for content)
 var currentUser = {};
 
-// This object holds the current group (See de.ingrid.mdek.beans.security.Group for content)
-var currentGroup = {};
+//This object holds the current user permissions (See de.ingrid.mdek.beans.security.Permission for content)
+var currentUserPermissions = [];
+
+// This object holds the groups of the current user (See de.ingrid.mdek.beans.security.Group for content)
+var currentGroups = [];
 
 // This list holds all additionalField widgets (if any exist) for easy access
 // The list is initialized in init.js/initAdditionalFields
@@ -2271,8 +2274,8 @@ udkDataProxy._initResponsibleUserObjectList = function(nodeData) {
 			});
 		} else {
 			// new root node
-	    	// get all users from the current group and the catalog admin
-			var getUsersDef = UtilSecurity.getUsersFromCurrentGroup();
+	    	// get all users from the current users groups that have root permission and the catalog admin
+			var getUsersDef = UtilSecurity.getUsersFromCurrentGroupsWithRootPermission();
 			var getCatAdminDef = UtilSecurity.getCatAdmin();
 
 			var defList = new dojo.DeferredList([getUsersDef, getCatAdminDef], false, false, true);
@@ -2366,8 +2369,8 @@ udkDataProxy._initResponsibleUserAddressList = function(nodeData) {
 			});
 		} else {
 			// new root node
-	    	// get all users from the current group and the catalog admin
-			var getUsersDef = UtilSecurity.getUsersFromCurrentGroup();
+	    	// get all users from the users groups that have root permission and the catalog admin
+			var getUsersDef = UtilSecurity.getUsersFromCurrentGroupsWithRootPermission();
 			var getCatAdminDef = UtilSecurity.getCatAdmin();
 
 			var defList = new dojo.DeferredList([getUsersDef, getCatAdminDef], false, false, true);

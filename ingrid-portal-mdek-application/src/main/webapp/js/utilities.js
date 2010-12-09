@@ -968,10 +968,10 @@ UtilSecurity.getRoleName = function(roleId) {
 }
 
 UtilSecurity.canCreateRootNodes = function() {
-	if (currentGroup == null || typeof(currentGroup.groupPermissions) == "undefined") { return false; }
+	if (currentUserPermissions == null || typeof(currentUserPermissions) == "undefined") { return false; }
 
-	for (var i = 0; i < currentGroup.groupPermissions.length; ++i) {
-		if (currentGroup.groupPermissions[i] == "CREATE_ROOT") {
+	for (var i = 0; i < currentUserPermissions.length; ++i) {
+		if (currentUserPermissions[i].permission == "CREATE_ROOT") {
 			return true;
 		}
 	}
@@ -979,25 +979,67 @@ UtilSecurity.canCreateRootNodes = function() {
 }
 
 UtilSecurity.isCurrentUserQA = function() {
-	if (currentGroup == null || typeof(currentGroup.groupPermissions) == "undefined") { return false; }
+	if (currentUserPermissions == null || typeof(currentUserPermissions) == "undefined") { return false; }
 
-	for (var i = 0; i < currentGroup.groupPermissions.length; ++i) {
-		if (currentGroup.groupPermissions[i] == "QUALITY_ASSURANCE") {
+	for (var i = 0; i < currentUserPermissions.length; ++i) {
+		if (currentUserPermissions[i].permission == "QUALITY_ASSURANCE") {
 			return true;
 		}
 	}
 	return false;
 }
 
-UtilSecurity.getUsersFromCurrentGroup = function() {
+UtilSecurity.getUsersFromCurrentGroupsWithRootPermission = function() {
+	var def = new dojo.Deferred();
+	var getUsersFromGroupDefList = [];
+	for (var i=0; i<currentGroups.length; i++) {
+		var hasRootPermission = false;
+		for (var j=0; j<currentGroups[i].groupPermissions.length; j++) {
+			if (currentGroups[i].groupPermissions[j] == "CREATE_ROOT") {
+				hasRootPermission = true;
+				break;
+			}
+		}
+		if (hasRootPermission) {
+			getUsersFromGroupDefList.push(UtilSecurity.getUsersFromGroup(currentGroups[i].name));
+		}
+	}
+	UtilDWR.enterLoadingState();
+	var defList = new dojo.DeferredList(getUsersFromGroupDefList, false, false, true);
+	defList.addErrback( function(errMsg, err) { 
+		UtilDWR.exitLoadingState();
+		dojo.debug("Error while calling getUserOfGroup: " + errMsg);
+		def.errback(err); 
+		} 
+	);
+	defList.addCallback(function(resultList) {
+		UtilDWR.exitLoadingState();
+		var userResultList = new Array();
+		for (var i = 0; i < resultList.length; ++i) {
+			for (var j=0; j<resultList[i][1].length; j++) {
+				userResultList.push(resultList[i][1][j]);
+			}
+		}
+		def.callback(userResultList);
+	});
+
+	return def;
+}
+
+UtilSecurity.getUsersFromGroup = function( groupName) {
 	var def = new dojo.Deferred();
 
-	SecurityService.getUsersOfGroup(currentGroup.name, {
+	SecurityService.getUsersOfGroup(groupName, {
 		callback: function(userList) { def.callback(userList); },
-		errback: function(errMsg, err) { def.errback(err); }
+		errback: function(errMsg, err) { 
+			dojo.debug("Error while calling getUserOfGroup: " + errMsg);
+			def.errback(err); 
+		}
 	});
 	return def;
 }
+
+
 
 UtilSecurity.getCatAdmin = function() {
 	var def = new dojo.Deferred();
