@@ -23,7 +23,7 @@ scriptScope.displayPermissionsForObject = function(event) {
 		return;
 	}
 
-	SecurityService.getUsersWithWritePermissionForObject(uuid, false, true, {
+	SecurityService.getUsersWithPermissionForObject(uuid, false, true, {
 		callback: function(userList) {
 			objPermissionStore.clearData();
 			for (var i in userList) {
@@ -53,7 +53,7 @@ scriptScope.displayPermissionsForAddress = function(event) {
 		return;
 	}
 
-	SecurityService.getUsersWithWritePermissionForAddress(uuid, false, true, {
+	SecurityService.getUsersWithPermissionForAddress(uuid, false, true, {
 		callback: function(userList) {
 			adrPermissionStore.clearData();
 			for (var i in userList) {

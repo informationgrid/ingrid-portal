@@ -309,17 +309,45 @@ public class SecurityServiceImpl implements SecurityService {
 	/* (non-Javadoc)
      * @see de.ingrid.mdek.dwr.services.SecurityService#getUsersWithWritePermissionForObject(java.lang.String, boolean, boolean)
      */
+    @Override
 	public List<User> getUsersWithWritePermissionForObject(String objectUuid, boolean checkWorkflow, boolean includePermissions) {
 		return securityRequestHandler.getUsersWithWritePermissionForObject(objectUuid, checkWorkflow, includePermissions);
 	}
-	
+
 	/* (non-Javadoc)
      * @see de.ingrid.mdek.dwr.services.SecurityService#getUsersWithWritePermissionForAddress(java.lang.String, boolean, boolean)
      */
+    @Override
 	public List<User> getUsersWithWritePermissionForAddress(String addressUuid, boolean checkWorkflow, boolean includePermissions) {
 		return securityRequestHandler.getUsersWithWritePermissionForAddress(addressUuid, checkWorkflow, includePermissions);
 	}
 
+    /* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#getUsersWithTreePermissionForObject(java.lang.String, boolean, boolean)
+     */
+    @Override
+    public List<User> getUsersWithTreePermissionForObject(String objectUuid, boolean checkWorkflow, boolean includePermissions) {
+        return securityRequestHandler.getUsersWithTreePermissionForObject(objectUuid, checkWorkflow, includePermissions);
+    }
+
+    /* (non-Javadoc)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#getUsersWithTreePermissionForAddress(java.lang.String, boolean, boolean)
+     */
+    @Override
+    public List<User> getUsersWithTreePermissionForAddress(String addressUuid, boolean checkWorkflow, boolean includePermissions) {
+        return securityRequestHandler.getUsersWithTreePermissionForAddress(addressUuid, checkWorkflow, includePermissions);
+    }
+
+    @Override
+    public List<User> getUsersWithPermissionForObject(String objectUuid, boolean checkWorkflow, boolean includePermissions) {
+        return securityRequestHandler.getUsersWithPermissionForObject(objectUuid, checkWorkflow, includePermissions);
+    }
+    
+    @Override
+    public List<User> getUsersWithPermissionForAddress(String addressUuid, boolean checkWorkflow, boolean includePermissions) {
+        return securityRequestHandler.getUsersWithPermissionForAddress(addressUuid, checkWorkflow, includePermissions);
+    }
+	
 	/* (non-Javadoc)
      * @see de.ingrid.mdek.dwr.services.SecurityService#getUsersOfGroup(java.lang.String)
      */

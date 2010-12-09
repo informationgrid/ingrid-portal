@@ -2025,7 +2025,7 @@ public class MdekMapper implements DataMapperInterface {
 		if (permissionList != null) {
 			for (IngridDocument permissionDoc : permissionList) {
 				IdcPermission idcPerm = EnumUtil.mapDatabaseToEnumConst(IdcPermission.class, permissionDoc.get(MdekKeysSecurity.IDC_PERMISSION));
-				if (idcPerm == IdcPermission.DUMMY_WRITE_SUBTREE) {
+				if (idcPerm == IdcPermission.WRITE_SUBTREE) {
 					return true;
 				}
 			}

@@ -2247,21 +2247,14 @@ udkDataProxy._initResponsibleUserObjectList = function(nodeData) {
 
 		if (parentUuid != null) {
 			// new node && not root
-			SecurityService.getUsersWithWritePermissionForObject(parentUuid, false, true, {
+			SecurityService.getUsersWithTreePermissionForObject(parentUuid, false, true, {
 				callback: function(userList) {
 					var list = [];
-					// Iterate over all users and include those with 'write tree' permission on the parent node
+					// Iterate over all users with 'tree' permission on the parent node
 					dojo.lang.forEach(userList, function(user){
-						// Check user permissions
-						for (var i in user.permissions) {
-							if (user.permissions[i] == "WRITE_TREE") {
-								// Only include users with write tree permission
-								var title = UtilAddress.createAddressTitle(user.address);
-								var uuid = user.address.uuid;
-								list.push([title, uuid]);
-								break;
-							}
-						}
+						var title = UtilAddress.createAddressTitle(user.address);
+						var uuid = user.address.uuid;
+						list.push([title, uuid]);
 					});
 					selectWidget.dataProvider.setData(list);	
 					def.callback(nodeData);
@@ -2342,21 +2335,14 @@ udkDataProxy._initResponsibleUserAddressList = function(nodeData) {
 
 		if (parentUuid != null) {
 			// new node && not root
-			SecurityService.getUsersWithWritePermissionForAddress(parentUuid, false, true, {
+			SecurityService.getUsersWithTreePermissionForAddress(parentUuid, false, true, {
 				callback: function(userList) {
 					var list = [];
-					// Iterate over all users and include those with 'write tree' permission on the parent node
+					// Iterate over all users with 'tree' permission on the parent node
 					dojo.lang.forEach(userList, function(user){
-						// Check user permissions
-						for (var i in user.permissions) {
-							if (user.permissions[i] == "WRITE_TREE") {
-								// Only include users with write tree permission
-								var title = UtilAddress.createAddressTitle(user.address);
-								var uuid = user.address.uuid;
-								list.push([title, uuid]);
-								break;
-							}
-						}
+						var title = UtilAddress.createAddressTitle(user.address);
+						var uuid = user.address.uuid;
+						list.push([title, uuid]);
 					});
 					selectWidget.dataProvider.setData(list);	
 					def.callback(nodeData);

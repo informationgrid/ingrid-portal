@@ -55,6 +55,7 @@ var djConfig = {locale: userLocale, isDebug: isDebug, /* use with care, may lead
 <script type="text/javascript" src="js/common.js"></script>
 
 <script type="text/javascript" src="js/utilities.js"></script>
+<script type="text/javascript" src="js/admin_groups.js"></script>
 
 
 <script type="text/javascript">

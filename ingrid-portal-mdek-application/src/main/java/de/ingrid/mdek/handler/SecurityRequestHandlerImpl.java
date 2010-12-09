@@ -105,6 +105,26 @@ public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 		return MdekUtils.extractSecurityUsersFromResponse(response);
 	}
 
+    public List<User> getUsersWithTreePermissionForObject(String objectUuid, boolean checkWorkflow, boolean detailedPermissions) {
+        IngridDocument response = mdekCallerSecurity.getUsersWithTreePermissionForObject(connectionFacade.getCurrentPlugId(), objectUuid, MdekSecurityUtils.getCurrentUserUuid(), checkWorkflow, detailedPermissions);
+        return MdekUtils.extractSecurityUsersFromResponse(response);
+    }
+    
+    public List<User> getUsersWithTreePermissionForAddress(String addressUuid, boolean checkWorkflow, boolean detailedPermissions) {
+        IngridDocument response = mdekCallerSecurity.getUsersWithTreePermissionForAddress(connectionFacade.getCurrentPlugId(), addressUuid, MdekSecurityUtils.getCurrentUserUuid(), checkWorkflow, detailedPermissions);
+        return MdekUtils.extractSecurityUsersFromResponse(response);
+    }
+
+    public List<User> getUsersWithPermissionForObject(String objectUuid, boolean checkWorkflow, boolean detailedPermissions) {
+        IngridDocument response = mdekCallerSecurity.getUsersWithPermissionForObject(connectionFacade.getCurrentPlugId(), objectUuid, MdekSecurityUtils.getCurrentUserUuid(), checkWorkflow, detailedPermissions);
+        return MdekUtils.extractSecurityUsersFromResponse(response);
+    }
+    
+    public List<User> getUsersWithPermissionForAddress(String addressUuid, boolean checkWorkflow, boolean detailedPermissions) {
+        IngridDocument response = mdekCallerSecurity.getUsersWithPermissionForAddress(connectionFacade.getCurrentPlugId(), addressUuid, MdekSecurityUtils.getCurrentUserUuid(), checkWorkflow, detailedPermissions);
+        return MdekUtils.extractSecurityUsersFromResponse(response);
+    }
+    
 	public List<User> getUsersOfGroup(String groupName) {
 		IngridDocument response = mdekCallerSecurity.getUsersOfGroup(connectionFacade.getCurrentPlugId(), groupName, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekUtils.extractSecurityUsersFromResponse(response);

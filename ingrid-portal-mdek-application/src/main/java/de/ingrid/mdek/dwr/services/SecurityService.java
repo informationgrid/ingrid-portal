@@ -44,9 +44,21 @@ public interface SecurityService {
     public List<User> getUsersWithWritePermissionForObject(String objectUuid,
             boolean checkWorkflow, boolean includePermissions);
 
-    public List<User> getUsersWithWritePermissionForAddress(String addressUuid,
+    public List<User> getUsersWithWritePermissionForAddress(String objectUuid,
+            boolean checkWorkflow, boolean includePermissions);
+    
+    public List<User> getUsersWithTreePermissionForObject(String objectUuid,
+            boolean checkWorkflow, boolean includePermissions);
+    
+    public List<User> getUsersWithTreePermissionForAddress(String addressUuid,
             boolean checkWorkflow, boolean includePermissions);
 
+    public List<User> getUsersWithPermissionForObject(String objectUuid,
+            boolean checkWorkflow, boolean includePermissions);
+    
+    public List<User> getUsersWithPermissionForAddress(String addressUuid,
+            boolean checkWorkflow, boolean includePermissions);
+    
     public List<User> getUsersOfGroup(String groupName);
 
     public SecurityRequestHandler getSecurityRequestHandler();
