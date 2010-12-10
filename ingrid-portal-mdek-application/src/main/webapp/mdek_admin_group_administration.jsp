@@ -133,10 +133,10 @@ _container_.addOnLoad(function() {
 
 						<div id="groupDataObjectsData" class="inputContainer grey field">
 							<div class="tableContainer third2 rows7">
-								<table id="groupDataRightsObjectsList" dojoType="ingrid:FilteringTable" minRows="7" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort interactive">
+								<table id="groupDataRightsObjectsList" dojoType="ingrid:FilteringTable" minRows="7" headClass="fixedHeader" cellspacing="0" class="filteringTable interactive">
 									<thead>
 										<tr>
-											<th nosort="true" field="title" dataType="String" width="358"><fmt:message key="dialog.admin.groups.objectName" /></th>
+											<th nosort="true" sort="asc" field="title" dataType="String" width="358"><fmt:message key="dialog.admin.groups.objectName" /></th>
 											<th nosort="true" field="single" dataType="String" width="85"><fmt:message key="dialog.admin.groups.objectSingle" /></th>
 											<th nosort="true" field="tree" dataType="String" width="85"><fmt:message key="dialog.admin.groups.objectTree" /></th>
                                             <th nosort="true" field="subtree" dataType="String" width="85"><fmt:message key="dialog.admin.groups.objectSubTree" /></th>
@@ -188,10 +188,10 @@ _container_.addOnLoad(function() {
 
 						<div id="groupDataAddressesData" class="inputContainer grey field">
 							<div class="tableContainer third2 rows7">
-								<table id="groupDataRightsAddressesList" dojoType="ingrid:FilteringTable" minRows="7" headClass="fixedHeader" cellspacing="0" class="filteringTable nosort interactive">
+								<table id="groupDataRightsAddressesList" dojoType="ingrid:FilteringTable" minRows="7" headClass="fixedHeader" cellspacing="0" class="filteringTable interactive">
 									<thead>
 										<tr>
-											<th nosort="true" field="title" dataType="String" width="358"><fmt:message key="dialog.admin.groups.addressName" /></th>
+											<th nosort="true" sort="asc" field="title" dataType="String" width="358"><fmt:message key="dialog.admin.groups.addressName" /></th>
 											<th nosort="true" field="single" dataType="String" width="85"><fmt:message key="dialog.admin.groups.addressSingle" /></th>
 											<th nosort="true" field="tree" dataType="String" width="85"><fmt:message key="dialog.admin.groups.addressTree" /></th>
                                             <th nosort="true" field="subtree" dataType="String" width="85"><fmt:message key="dialog.admin.groups.addressSubTree" /></th>
