@@ -87,6 +87,7 @@ public class MdekDataBean {
 	// Availability
 	private List<Integer> availabilityAccessConstraints;
 	private List<String> availabilityUseConstraints;
+	private String availabilityDataFormatInspire;
 	private List<DataFormatBean> availabilityDataFormatTable;
 	private List<MediaOptionBean> availabilityMediaOptionsTable;
 	private String availabilityOrderInfo;
@@ -1078,6 +1079,21 @@ public class MdekDataBean {
 
 	public void setTimeRefTable(List<TimeReferenceBean> timeRefTable) {
 		this.timeRefTable = timeRefTable;
+	}
+
+
+
+
+	public String getAvailabilityDataFormatInspire() {
+		return availabilityDataFormatInspire;
+	}
+
+
+
+
+	public void setAvailabilityDataFormatInspire(
+			String availabilityDataFormatInspire) {
+		this.availabilityDataFormatInspire = availabilityDataFormatInspire;
 	}
 
 

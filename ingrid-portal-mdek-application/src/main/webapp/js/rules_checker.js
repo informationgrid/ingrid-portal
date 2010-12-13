@@ -15,7 +15,7 @@ var timeUiInputElements = ["timeRefType", "timeRefDate1", "timeRefDate2", "timeR
 	"timeRefIntervalUnit", "timeRefTable", "timeRefExplanation"];
 var extraUiInputElements = ["extraInfoLangMetaData", "extraInfoLangData", "extraInfoPublishArea", "extraInfoCharSetData",
 	"extraInfoXMLExportTable", "extraInfoLegalBasicsTable", "extraInfoPurpose", "extraInfoUse"];
-var availUiInputElements = ["availabilityAccessConstraints", "availabilityUseConstraints", "availabilityDataFormat", "availabilityMediaOptions", "availabilityOrderInfo"];
+var availUiInputElements = ["availabilityAccessConstraints", "availabilityUseConstraints", "availabilityDataFormatInspire", "availabilityDataFormat", "availabilityMediaOptions", "availabilityOrderInfo"];
 var thesUiInputElements = ["thesaurusTerms", "thesaurusTopics", "thesaurusInspire", "thesaurusEnvExtRes",
 	"thesaurusEnvTopics", "thesaurusEnvCats", "linksTo"];
 var class0UiInputElements = [];
@@ -47,7 +47,8 @@ var adrClass3UiInputElements = ["headerAddressType3Lastname", "headerAddressType
 
 
 var labels = ["objectNameLabel", "objectClassLabel", "objectOwnerLabel", "generalDescLabel", "extraInfoLangDataLabel", "extraInfoLangMetaDataLabel", "extraInfoCharSetDataLabel", 
-			  "extraInfoConformityTableLabel", "availabilityAccessConstraintsLabel", "availabilityUseConstraintsLabel", "ref1BasisTabContainerLabel", "ref1ObjectIdentifierLabel",
+			  "extraInfoConformityTableLabel", "availabilityAccessConstraintsLabel", "availabilityUseConstraintsLabel", "availabilityDataFormatInspireLabel", 
+			  "ref1BasisTabContainerLabel", "ref1ObjectIdentifierLabel",
 			  "ref1DataSetLabel", "ref1VFormatLabel", "ref3ServiceTypeLabel", "ref3ServiceTypeTableLabel", "ref6ServiceTypeLabel", "generalAddressTableLabel", "timeRefTableLabel",
 			  "thesaurusTermsLabel", "thesaurusTopicsLabel", "thesaurusInspireLabel", "spatialRefAdminUnitLabel", "spatialRefLocationLabel", "spatialRefAltHeightLabel",
 			  "spatialRefAltMinLabel", "spatialRefAltMaxLabel", "spatialRefAltMeasureLabel", "spatialRefAltVDateLabel",
@@ -252,6 +253,13 @@ function isObjectPublishable(idcObject) {
             publishable = false;
         }
 
+	   // check if INSPIRE datatype is set !
+       if (!idcObject.availabilityDataFormatInspire || idcObject.availabilityDataFormatInspire == "") {
+            dojo.html.addClass(dojo.byId("availabilityDataFormatInspireLabel"), "important");
+            dojo.debug("Field 'availabilityDataFormatInspire' empty but required due to set INSPIRE theme !.");
+            publishable = false;
+        }
+/*
         // Check if the availabilityDataFormat table is not empty and contains valid input (both name and version must contain data)
         var dataFormatData = idcObject.availabilityDataFormatTable;
 		var missingData = false; 
@@ -269,7 +277,7 @@ function isObjectPublishable(idcObject) {
             dojo.html.addClass(dojo.byId("availabilityDataFormatLabel"), "important");
             publishable = false;
 		}
-
+*/
         // Check if "Datenverantwortung" address is set. "Auskunft" address already checked above, is always mandatory !
 		// Datenverantwortung = entry id 2 in syslist 505
 		// NOTICE: we check via String in dojo widget. addressData bean not updated correctly if directly published (without working save)

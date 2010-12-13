@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.MdekUtils.PublishType;
 import de.ingrid.mdek.MdekUtils.SearchtermType;
 import de.ingrid.mdek.MdekUtils.UserOperation;
@@ -168,6 +169,9 @@ public class MdekMapper implements DataMapperInterface {
 		mdekObj.setAvailabilityUseConstraints(mapToAvailUseConstraintsTable((List<IngridDocument>) obj.get(MdekKeys.USE_LIST)));
 		
 		mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
+		// NOTICE: always map this one (maps default value if not set), although only displayed in class 1
+		// Then the default value is shown if switched to class 1
+		mdekObj.setAvailabilityDataFormatInspire(mapToAvailDataFormatInspire((List<IngridDocument>) obj.get(MdekKeys.FORMAT_INSPIRE_LIST)));
 		mdekObj.setAvailabilityDataFormatTable(mapToAvailDataFormatTable((List<IngridDocument>) obj.get(MdekKeys.DATA_FORMATS)));
 		mdekObj.setAvailabilityMediaOptionsTable(mapToAvailMediaOptionsTable((List<IngridDocument>) obj.get(MdekKeys.MEDIUM_OPTIONS)));
 		
@@ -791,6 +795,8 @@ public class MdekMapper implements DataMapperInterface {
 			};
 			udkObj.put(MdekKeys.DATA_QUALITY_LIST, mapFromDQTables(dqIds, dqData));
 
+			udkObj.put(MdekKeys.FORMAT_INSPIRE_LIST, mapFromAvailDataFormatInspire(data.getAvailabilityDataFormatInspire()));
+
 			if (td1Map == null) {
 				td1Map = new IngridDocument();
 			}
@@ -964,6 +970,19 @@ public class MdekMapper implements DataMapperInterface {
 
 		if (null == obj.getExtraInfoCharSetDataCode()) {
 			obj.setExtraInfoCharSetDataCode(sysListMapper.getInitialKeyFromListId(510));
+		}
+		if (null == obj.getAvailabilityDataFormatInspire()) {
+			obj.setAvailabilityDataFormatInspire(sysListMapper.getInitialValueFromListId(MdekSysList.OBJ_FORMAT_INSPIRE.getDbValue()));
+	}
+
+		List<String> useConstrList = obj.getAvailabilityUseConstraints();
+		if (useConstrList == null)  {
+			useConstrList = new ArrayList<String>();
+		}
+		if (useConstrList.size() == 0) {
+			// TODO: Localization !
+			useConstrList.add("keine");
+			obj.setAvailabilityUseConstraints(useConstrList);
 		}
 	}
 
@@ -1214,6 +1233,23 @@ public class MdekMapper implements DataMapperInterface {
 		return resultList;
 	}
 	
+	/** NOTICE: in backend inspireDataFormat is Table/List (1:N) in frontend it's a combobox (1:1)! */
+	private List<IngridDocument> mapFromAvailDataFormatInspire(String inspireDataFormat) {
+		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+		if (inspireDataFormat == null)
+			return resultList;
+
+		KeyValuePair kvp = mapFromKeyValue(MdekKeys.FORMAT_KEY, inspireDataFormat);
+		if (kvp.getValue() != null || kvp.getKey() != -1) {
+			IngridDocument result = new IngridDocument();
+			result.put(MdekKeys.FORMAT_VALUE, kvp.getValue());
+			result.put(MdekKeys.FORMAT_KEY, kvp.getKey());
+			resultList.add(result);
+		}
+
+		return resultList;
+	}
+
 	private List<IngridDocument> mapFromAvailDataFormatTable(List<DataFormatBean> refList) {
 		List<IngridDocument> resultList = new ArrayList<IngridDocument>();
 		if (refList == null)
@@ -1713,6 +1749,21 @@ public class MdekMapper implements DataMapperInterface {
 		}
 
 		return resultList;
+	}
+
+	/** NOTICE: in backend inspireDataFormat is Table/List (1:N) in frontend it's a combobox (1:1)! */
+	private String mapToAvailDataFormatInspire(List<IngridDocument> refList) {
+		String result = null;
+		if (refList != null && refList.size() > 0) {
+			IngridDocument ref = refList.get(0);
+			KeyValuePair kvp = mapToKeyValuePair(ref, MdekKeys.FORMAT_KEY, MdekKeys.FORMAT_VALUE);
+			result = kvp.getValue();
+		} else {
+			// return default value !
+			result = sysListMapper.getInitialValueFromListId(MdekSysList.OBJ_FORMAT_INSPIRE.getDbValue());
+		}
+
+		return result;
 	}
 
 	private List<DataFormatBean> mapToAvailDataFormatTable(List<IngridDocument> refList) {

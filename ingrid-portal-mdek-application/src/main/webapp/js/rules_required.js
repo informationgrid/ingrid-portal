@@ -245,10 +245,9 @@ function applyRule7() {
 
     if (UtilUdk.isInspire(termsList)) {
         setRequiredState(dojo.byId("ref1SpatialSystemLabel"), dojo.byId("uiElement3500"), true);
-        setRequiredState(dojo.byId("availabilityDataFormatLabel"), dojo.byId("uiElement1320"), true);
+
     } else {
         setRequiredState(dojo.byId("ref1SpatialSystemLabel"), dojo.byId("uiElement3500"), false);
-        setRequiredState(dojo.byId("availabilityDataFormatLabel"), dojo.byId("uiElement1320"), false);
     }
 	
 	// update sections, so new required fields are shown !
@@ -265,6 +264,7 @@ function applyRule7() {
 
 	if (objectClass == "1") {
         // hide all DQ tables
+		var showDQSection = false;
         dojo.lang.forEach(dqUiTableElements, function(dqTableId) {
             hideDiv(dojo.byId(dqTableId + "Container"));
         });
@@ -283,6 +283,7 @@ function applyRule7() {
         if (dojo.lang.some(termsList, function(iTermKey) {return (iTermKey == 103); })) {
             displayDiv(dojo.byId("dq110TableContainer"));
             displayDiv(dojo.byId("dq117TableContainer"));
+			showDQSection = true;
         }
         // Administrative units (104)
         if (dojo.lang.some(termsList, function(iTermKey) {return (iTermKey == 104); })) {
@@ -291,6 +292,7 @@ function applyRule7() {
             displayDiv(dojo.byId("dq112TableContainer"));
             displayDiv(dojo.byId("dq115TableContainer"));
             displayDiv(dojo.byId("dq117TableContainer"));
+            showDQSection = true;
         }
         // Addresses (105)
         if (dojo.lang.some(termsList, function(iTermKey) {return (iTermKey == 105); })) {
@@ -301,11 +303,13 @@ function applyRule7() {
             displayDiv(dojo.byId("dq117TableContainer"));
             displayDiv(dojo.byId("dq120TableContainer"));
             displayDiv(dojo.byId("dq126TableContainer"));
+            showDQSection = true;
         }
         // Cadastral parcels (106)
         if (dojo.lang.some(termsList, function(iTermKey) {return (iTermKey == 106); })) {
             displayDiv(dojo.byId("dq110TableContainer"));
             displayDiv(dojo.byId("dq117TableContainer"));
+            showDQSection = true;
         }
         // Transport networks (107)
         if (dojo.lang.some(termsList, function(iTermKey) {return (iTermKey == 107); })) {
@@ -318,6 +322,7 @@ function applyRule7() {
             displayDiv(dojo.byId("dq117TableContainer"));
             displayDiv(dojo.byId("dq125TableContainer"));
             displayDiv(dojo.byId("dq126TableContainer"));
+            showDQSection = true;
         }
         // Hydrography (108)
         if (dojo.lang.some(termsList, function(iTermKey) {return (iTermKey == 108); })) {
@@ -329,18 +334,30 @@ function applyRule7() {
             displayDiv(dojo.byId("dq117TableContainer"));
             displayDiv(dojo.byId("dq126TableContainer"));
             displayDiv(dojo.byId("dq127TableContainer"));
+            showDQSection = true;
         }
         // Protected sites (109)
         if (dojo.lang.some(termsList, function(iTermKey) {return (iTermKey == 109); })) {
             displayDiv(dojo.byId("dq109TableContainer"));
             displayDiv(dojo.byId("dq110TableContainer"));
             displayDiv(dojo.byId("dq117TableContainer"));
+            showDQSection = true;
         }
+
+	    var divDQ = dojo.byId("refClass1DQ");
+		if (showDQSection) {
+            displayDiv(divDQ);
+            divDQ.setAttribute("hiddenByRules", "false");
 
         // update DQ section, so new fields are shown !
         // NECESSARY ???
-        var mode = UtilUI.getCurrentExpandModeOfSectionElement(dojo.byId("refClass1DQ"));
+            var mode = UtilUI.getCurrentExpandModeOfSectionElement(divDQ);
         toggleFields("refClass1DQ", mode);
+
+		} else {
+            hideDiv(divDQ);
+            divDQ.setAttribute("hiddenByRules", "true");
+    }
     }
 }
 

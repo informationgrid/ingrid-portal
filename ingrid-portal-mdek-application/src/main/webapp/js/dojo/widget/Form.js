@@ -63,7 +63,7 @@ dojo.widget.defineWidget(
     // show new special ones including postfixes (e.g. DQ only in class 1)
     for(var i=0; i<this.toggleContainerPostfixes.length; i++) {
       var div = dojo.byId(this.toggleContainerPrefix + clazz + this.toggleContainerPostfixes[i]);
-      if (div)
+      if (div && (div.getAttribute("hiddenByRules") != "true"))
         div.style.display = 'block';
     }
 

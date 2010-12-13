@@ -373,7 +373,7 @@ function hideSplash(){
 					</span>
 	          	  </div>
 
-                    <div class="inputContainer noSpaceBelow">
+                    <div id="thesaurusInspireContainer" class="inputContainer noSpaceBelow">
                       <span id="uiElement5064" type="required">
                           <span id="thesaurusInspireLabel" class="label required"><label for="thesaurusInspire" onclick="javascript:dialog.showContextHelp(arguments[0], 5064)"><script>document.write(message.get("ui.obj.thesaurus.terms.inspire"))</script>*</label></span>
                           <div class="tableContainer headHiddenRows4 full">
@@ -2265,6 +2265,16 @@ function hideSplash(){
                       </div>
                   </div>
 
+                  <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
+                  <div id="availabilityDataFormatInspireContainer" class="inputContainer notRequired" displaytype="exclude">
+                        <span id="uiElement1315" type="optional">
+                            <span id="availabilityDataFormatInspireLabel" class="label"><label for="availabilityDataFormatInspire" onclick="javascript:dialog.showContextHelp(arguments[0], 1315)"><script>document.write(message.get("ui.obj.availability.dataFormatInspire"))</script></label></span>
+                            <span class="input spaceBelow">
+                                <div dojoType="ingrid:ComboBox" maxlength="255" style="width:649px;" id="availabilityDataFormatInspire" listId="6300"></div>
+                            </span>
+                        </span>
+                  </div>
+
 	              <div class="inputContainer notRequired h130">
 					<span id="uiElement1320" type="optional">
 		                <span id="availabilityDataFormatLabel" class="label"><label for="availabilityDataFormat" onclick="javascript:dialog.showContextHelp(arguments[0], 1320)"><script>document.write(message.get("ui.obj.availability.dataFormatTable.title"))</script></label></span>
@@ -2337,7 +2347,7 @@ function hideSplash(){
 	          	</div>
 	        	  <div id="thesaurusContent" class="content">
 	        	  
-	              <div class="inputContainer h116">
+	              <div id="thesaurusTopicsContainer" class="inputContainer h116">
 					  <span id="uiElement5060" type="required">
 		                  <span id="thesaurusTopicsLabel" class="label required"><label for="thesaurusTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 5060)"><script>document.write(message.get("ui.obj.thesaurus.terms.category"))</script>*</label></span>
 		                  <div class="tableContainer headHiddenRows4 full">

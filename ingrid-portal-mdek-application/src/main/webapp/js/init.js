@@ -1541,7 +1541,7 @@ function initSysLists() {
 		"thesaurusEnvCatsCombobox", "thesaurusEnvTopicsCombobox", "ref1SpatialSystem", "ref1SymbolsTitleCombobox", "ref1KeysTitleCombobox",
 		"ref2DocumentType", "ref3ServiceType", "ref3ServiceTypeEditor", "ref6ServiceType", "extraInfoLangData", "extraInfoCharSetData",
 		"extraInfoLangMetaData", "extraInfoPublishArea", "extraInfoConformityLevelEditor",
-		"availabilityDataFormatName", "availabilityAccessConstraintsEditor",
+		"availabilityDataFormatInspire", "availabilityDataFormatName", "availabilityAccessConstraintsEditor",
 		"dq109NameOfMeasureEditor", "dq110NameOfMeasureEditor", "dq112NameOfMeasureEditor", "dq113NameOfMeasureEditor",
         "dq114NameOfMeasureEditor", "dq115NameOfMeasureEditor", "dq117NameOfMeasureEditor", "dq120NameOfMeasureEditor",
         "dq125NameOfMeasureEditor", "dq126NameOfMeasureEditor", "dq127NameOfMeasureEditor",

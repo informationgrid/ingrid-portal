@@ -244,6 +244,7 @@ function renderNodeData(nodeData) {
         renderList(nodeData.availabilityAccessConstraints, message.get("ui.obj.availability.accessConstraints"), null, function (val) { return dojo.widget.byId("availabilityAccessConstraintsEditor")._getDisplayValueForValue(val);});
         renderList(nodeData.availabilityUseConstraints, message.get("ui.obj.availability.useConstraints"));
 	
+        renderTextWithTitle(nodeData.availabilityDataFormatInspire, message.get("ui.obj.availability.dataFormatInspire"));
 		renderTable(nodeData.availabilityDataFormatTable, ["name", "version", "compression", "pixelDepth"], [message.get("ui.obj.availability.dataFormatTable.header.name"), message.get("ui.obj.availability.dataFormatTable.header.version"), message.get("ui.obj.availability.dataFormatTable.header.compression"), message.get("ui.obj.availability.dataFormatTable.header.depth")], message.get("ui.obj.availability.dataFormatTable.title"));
 		renderTable(nodeData.availabilityMediaOptionsTable, ["name", "transferSize", "location"], [message.get("ui.obj.availability.mediaOptionTable.header.type"), message.get("ui.obj.availability.mediaOptionTable.header.amount"), message.get("ui.obj.availability.mediaOptionTable.header.location")], message.get("ui.obj.availability.mediaOptionTable.title"), [function(val) { return dojo.widget.byId("availabilityMediaOptionsMediumCombobox")._getDisplayValueForValue(val); }, null, null]);
 		renderTextWithTitle(nodeData.availabilityOrderInfo, message.get("ui.obj.availability.orderInfo"));

@@ -67,6 +67,41 @@ dojo.widget.defineWidget(
 		}
 	}
 
+	   // class specials !
+    
+    // "Kodierungsschema der geographischen Daten" only in class 1 and then mandatory 
+    // NOTICE: div excluded from normal show/hide mechanism (displaytype="exclude")
+    div = dojo.byId("availabilityDataFormatInspireContainer");
+    if (this.selectedClass == "Class1") {
+        setRequiredState(dojo.byId("availabilityDataFormatInspireLabel"), dojo.byId("uiElement1315"), true);
+        div.style.display = 'block';
+    } else {
+        setRequiredState(dojo.byId("availabilityDataFormatInspireLabel"), dojo.byId("uiElement1315"), false);
+        div.style.display = 'none';
+    }
+
+    // "INSPIRE-Thema" only mandatory for Geoinformation/Karte(1) and Geodatendienst(3) 
+    div = dojo.byId("thesaurusInspireContainer");
+    if (this.selectedClass == "Class1" || this.selectedClass == "Class3") {
+        setRequiredState(dojo.byId("thesaurusInspireLabel"), dojo.byId("uiElement5064"), true);
+        div.style.display = 'block';
+		// show / hide DQ input dependent from INSPIRE Thema !
+		applyRule7();
+    } else {
+        setRequiredState(dojo.byId("thesaurusInspireLabel"), dojo.byId("uiElement5064"), false);
+        div.style.display = 'none';
+    }
+
+    // "ISO-Themenkategorie" only mandatory in class 1 
+    div = dojo.byId("thesaurusTopicsContainer");
+    if (this.selectedClass == "Class1") {
+        setRequiredState(dojo.byId("thesaurusTopicsLabel"), dojo.byId("uiElement5060"), true);
+        div.style.display = 'block';
+    } else {
+        setRequiredState(dojo.byId("thesaurusTopicsLabel"), dojo.byId("uiElement5060"), false);
+        div.style.display = 'none';
+    }
+
 	if (dojo.render.html.ie) {
 		setTimeout("refreshInputContainers()", 1);
 	}

@@ -1748,6 +1748,8 @@ udkDataProxy._setObjectDataClass1 = function(nodeData) {
     dojo.lang.forEach(dqUiTableElements, function(dqTableId) {
 	   dojo.widget.byId(dqTableId).store.setData(UtilList.addTableIndices(nodeData[dqTableId]));
     });
+
+    dojo.widget.byId("availabilityDataFormatInspire").setValue(nodeData.availabilityDataFormatInspire);
 }
 
 udkDataProxy._setObjectDataClass2 = function(nodeData) {
@@ -2150,6 +2152,8 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
             dojo.widget.byId(dqTableId).store.clearData();
 		}
     });
+
+    nodeData.availabilityDataFormatInspire = dojo.widget.byId("availabilityDataFormatInspire").getValue();
 };
 
 udkDataProxy._getObjectDataClass2 = function(nodeData) {
