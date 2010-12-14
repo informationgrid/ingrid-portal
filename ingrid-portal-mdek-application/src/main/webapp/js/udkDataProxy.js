@@ -2456,6 +2456,7 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 			dojoType: 'ingrid:TreeNode',
 			nodeAppType: nodeData.nodeAppType,
 			userWritePermission: nodeData.writePermission,
+			userMovePermission: nodeData.movePermission,
 			userWriteSinglePermission: nodeData.writeSinglePermission,
 			userWriteTreePermission: nodeData.writeTreePermission,
 			userWriteSubTreePermission: nodeData.writeSubTreePermission,
@@ -2482,6 +2483,7 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 			// update permissions
 			node.isPublished = nodeData.isPublished;
 			node.userWritePermission = nodeData.writePermission;
+			node.userMovePermission = nodeData.movePermission;
 			node.userWriteSinglePermission = nodeData.writeSinglePermission;
 			node.userWriteTreePermission = nodeData.writeTreePermission;
 			node.userWriteSubTreePermission = nodeData.writeSubTreePermission;

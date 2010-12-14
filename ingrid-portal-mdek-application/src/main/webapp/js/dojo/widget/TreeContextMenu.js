@@ -39,14 +39,14 @@ dojo.widget.defineWidget(
 		  node.actionsDisabled.push("PASTE");
       }
 
-	  if (!node.userWriteTreePermission && node.id != "objectRoot" && node.id != "addressRoot" && node.id != "addressFreeRoot") {
+	  if (!node.userWriteSubTreePermission && node.id != "objectRoot" && node.id != "addressRoot" && node.id != "addressFreeRoot") {
+	  	node.actionsDisabled.push("ADDCHILD");
+	  	node.actionsDisabled.push("PASTE");
+	  }
+	  if (!node.userMovePermission  && node.id != "objectRoot" && node.id != "addressRoot" && node.id != "addressFreeRoot") {
 	  	node.actionsDisabled.push("MOVE");
 	  	node.actionsDisabled.push("CUT");
 	  	node.actionsDisabled.push("DETACH");
-			if (!node.userWriteSubTreePermission) {
-			  	node.actionsDisabled.push("ADDCHILD");
-			  	node.actionsDisabled.push("PASTE");
-			}
 	  }
 
 	  if (!UtilSecurity.canCreateRootNodes() && (node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot")) {

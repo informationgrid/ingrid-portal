@@ -11,7 +11,8 @@ public class TreeNodeBean {
 	private Boolean isMarkedDeleted;
 
 	private Boolean userWritePermission;
-	private Boolean userWriteSinglePermission;
+    private Boolean userMovePermission;
+    private Boolean userWriteSinglePermission;
 	private Boolean userWriteTreePermission;
 	private Boolean userWriteSubTreePermission;
 
@@ -83,6 +84,14 @@ public class TreeNodeBean {
 		this.userWritePermission = userWritePermission;
 	}
 
+    public Boolean getUserMovePermission() {
+        return userMovePermission;
+    }
+
+    public void setUserMovePermission(Boolean userMovePermission) {
+        this.userMovePermission = userMovePermission;
+    }
+	
 	public Boolean getUserWriteSinglePermission() {
 		return userWriteSinglePermission;
 	}

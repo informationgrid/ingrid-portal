@@ -54,6 +54,9 @@ function displayErrorMessage(err) {
         } else if (err.message.indexOf("ADDRESS_IS_IDCUSER_ADDRESS") != -1) {
             dialog.show(message.get("general.error"), message.get("operation.error.deletedAddressIsIdcUser"), dialog.WARNING);
 
+        } else if (err.message.indexOf("ADDRESS_TYPE_CONFLICT") != -1) {
+            dialog.show(message.get("general.error"), message.get("operation.error.addressTypeConflict"), dialog.WARNING);
+
         } else if (err.message.indexOf("PARENT_NOT_PUBLISHED") != -1) {
             if (currentUdk.nodeAppType == "O")
                 dialog.show(message.get("general.error"), message.get("operation.error.object.parentNotPublishedError"), dialog.WARNING);

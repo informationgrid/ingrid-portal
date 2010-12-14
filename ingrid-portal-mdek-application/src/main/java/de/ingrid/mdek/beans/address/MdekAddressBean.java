@@ -18,6 +18,7 @@ public class MdekAddressBean {
 	private String nodeDocType;
 	private Boolean hasChildren;
 	private Boolean writePermission;
+    private Boolean movePermission;
 	private Boolean writeSinglePermission;
 	private Boolean writeTreePermission;
 	private Boolean writeSubTreePermission;
@@ -375,7 +376,15 @@ public class MdekAddressBean {
 		this.writePermission = writePermission;
 	}
 
-	public Boolean getWriteSinglePermission() {
+	public Boolean getMovePermission() {
+        return movePermission;
+    }
+
+    public void setMovePermission(Boolean movePermission) {
+        this.movePermission = movePermission;
+    }
+
+    public Boolean getWriteSinglePermission() {
 		return writeSinglePermission;
 	}
 

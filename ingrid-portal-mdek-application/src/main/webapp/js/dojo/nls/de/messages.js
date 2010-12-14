@@ -316,6 +316,7 @@
 	"operation.error.address.subTreeHasWorkingCopiesError":"Ein oder mehrere untergeordnete Adressen befinden sich noch in Bearbeitung. Bitte speichern Sie zun&auml;chst diese Adressen ab!",
 	"operation.error.parentHasSmallerPublicationConditionError":"Das Objekt konnte nicht ver&ouml;ffentlicht werden, da die &uuml;bergeordneten Objekte eine niedrigere Ver&ouml;ffentlichungsbreite haben.",
 	"operation.error.deletedAddressIsIdcUser":"Die Adresse kann nicht gel&ouml;scht werden, da Sie mit einem Portalbenutzer verkn&uuml;pft ist. Bitte heben Sie diese Assoziation &uuml;ber die Administrations-Oberfl&auml;che auf und versuchen Sie es erneut!",
+	"operation.error.addressTypeConflict":"Die Aktion kann nicht mit diesem Adress-Typ durchgeführt werden!",
 	"operation.error.addressHasNoEmail":"Die Adresse kann nicht gel&ouml;scht werden. Eine Adresse muss mindestens eine Emailadresse enthalten!",
 	"operation.error.userHasRunningJobs":"Bitte beenden Sie zun&auml;chst den laufenden Prozess bevor Sie einen neuen starten.",
 	"operation.hint.publicationConditionSaveHint":"Die Ver&ouml;ffentlichungsbreite der Objekte im nachgeordneten Teilbaum ist gr&ouml;&szlig;er als die, die f&uuml;r das aktuelle Objekt ausgew&auml;hlt wurde.<br>Mit dem Speichern des aktuellen Objekts werden alle nachgeordneten Objekte auf die gew&auml;hlte Ver&ouml;ffentlichungsbreite gesetzt.<br>Soll das Objekt wirklich gespeichert werden?",

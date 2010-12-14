@@ -316,6 +316,7 @@
 	"operation.error.address.subTreeHasWorkingCopiesError":"One or more subaddresses have to be saved before the operation can be carried out.",
 	"operation.error.parentHasSmallerPublicationConditionError":"It is not possible to publish this node because its parent has a lower publication condition.",
 	"operation.error.deletedAddressIsIdcUser":"Could not delete address. The address is associated with a portal user. Please remove the association via the admin UI and try again!",
+	"operation.error.addressTypeConflict":"The action could not be performed with this type of address!",
 	"operation.error.addressHasNoEmail":"Could not store address. The address must have at lease one email address!",
 	"operation.error.userHasRunningJobs":"Please cancel the current running job before starting a new one.",
 	"operation.hint.publicationConditionSaveHint":"The subtree contains objects with an incompatible publication condition. By saving this object all subobjects will be modified. Do you really want to continue?",

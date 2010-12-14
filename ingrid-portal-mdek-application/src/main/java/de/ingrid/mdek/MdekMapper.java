@@ -111,6 +111,7 @@ public class MdekMapper implements DataMapperInterface {
 
 		List<IngridDocument> idcPermissions = (List<IngridDocument>) obj.get(MdekKeysSecurity.IDC_PERMISSIONS);
 		mdekObj.setWritePermission(hasWritePermission(idcPermissions));
+        mdekObj.setMovePermission(hasMovePermission(idcPermissions));
 		mdekObj.setWriteSinglePermission(hasWriteSinglePermission(idcPermissions));
 		mdekObj.setWriteTreePermission(hasWriteTreePermission(idcPermissions));
 		mdekObj.setWriteSubTreePermission(hasWriteSubTreePermission(idcPermissions));
@@ -382,6 +383,7 @@ public class MdekMapper implements DataMapperInterface {
 
 		List<IngridDocument> idcPermissions = (List<IngridDocument>) adr.get(MdekKeysSecurity.IDC_PERMISSIONS);
 		mdekAddress.setWritePermission(hasWritePermission(idcPermissions));
+        mdekAddress.setMovePermission(hasMovePermission(idcPermissions));
 		mdekAddress.setWriteSinglePermission(hasWriteSinglePermission(idcPermissions));
 		mdekAddress.setWriteTreePermission(hasWriteTreePermission(idcPermissions));
 		mdekAddress.setWriteSubTreePermission(hasWriteSubTreePermission(idcPermissions));
@@ -566,6 +568,7 @@ public class MdekMapper implements DataMapperInterface {
 		treeNode.setUserWriteSinglePermission(hasWriteSinglePermission(idcPermissions));
 		treeNode.setUserWriteTreePermission(hasWriteTreePermission(idcPermissions));
 		treeNode.setUserWriteSubTreePermission(hasWriteSubTreePermission(idcPermissions));
+        treeNode.setUserMovePermission(hasMovePermission(idcPermissions));
 
 		return treeNode;
 	}
@@ -2066,6 +2069,10 @@ public class MdekMapper implements DataMapperInterface {
 		return MdekUtilsSecurity.hasWritePermission(permissionList);
 	}
 
+    private boolean hasMovePermission(List<IngridDocument> permissionList) {
+        return MdekUtilsSecurity.hasMovePermission(permissionList);
+    }
+	
 	private boolean hasWriteSinglePermission(List<IngridDocument> permissionList) {
 		return MdekUtilsSecurity.hasWriteSinglePermission(permissionList);
 	}

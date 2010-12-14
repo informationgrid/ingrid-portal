@@ -898,6 +898,7 @@ menuEventHandler.handleMarkDeleted = function(msg) {
 					// update permissions
 					selectedNode.userWriteSubTreePermission = selectedNode.userWriteTreePermission;
 					selectedNode.userWritePermission = false;
+					selectedNode.userMovePermission = false;
 					selectedNode.userWriteSinglePermission = false;
 					selectedNode.userWriteTreePermission = false;
 				}
@@ -1162,6 +1163,7 @@ function _createNewNode(obj, parentClass)
 			dojoType: 'ingrid:TreeNode',
 			nodeAppType: obj.nodeAppType,
 			userWritePermission: true,
+			userMovePermission: true,
 			id: obj.uuid};	// "newNode"
 }
 

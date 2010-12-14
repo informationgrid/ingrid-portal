@@ -1237,6 +1237,7 @@ var reassignToAuthorButton = null;
 	// Show/hide toolbar buttons depending on the user rights
     dojo.event.topic.subscribe(treeListener.eventNames.select, function(message) {
 		var hasWritePermission = message.node.userWritePermission;
+		var hasMovePermission = message.node.userMovePermission;
 		var hasWriteSinglePermission = message.node.userWriteSinglePermission;
 		var hasWriteTreePermission = message.node.userWriteTreePermission;
 		var hasWriteSubTreePermission = message.node.userWriteSubTreePermission;
@@ -1282,9 +1283,15 @@ var reassignToAuthorButton = null;
 					enableList.push(discardButton);
 				}
 			}
+			// If the the user has move permission, he can move the node
+			if (hasMovePermission) {
+				// add delete Button here as well, because move permission means
+				// write-tree and inherited only write subtree, which is exactly
+				// the condition for hasDeletePermission
+				enableList = enableList.concat([deleteButton, cutButton]);
+			}
 			// If the the user has write tree permission (tree), he can delete, move and create new nodes
 			if (hasWriteTreePermission) {
-				enableList = enableList.concat([deleteButton, cutButton]);
 				if (message.node.nodeAppType == "O") {
 					enableList.push(newEntityButton);
 
