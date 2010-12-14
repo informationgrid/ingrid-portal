@@ -34,7 +34,7 @@ public interface SecurityRequestHandler {
      * @param detailedPermissions If true return detailed permission on each user.
      * @return
      */
-    public List<User> getUsersWithTreePermissionForAddress(String addressUuid, boolean checkWorkflow, boolean detailedPermissions);
+    public List<User> getUsersWithTreeOrSubTreePermissionForAddress(String addressUuid, boolean checkWorkflow, boolean detailedPermissions);
 
     /**
      * Get all users with tree permission (write-tree, write-subtree) on a given address.
@@ -44,7 +44,7 @@ public interface SecurityRequestHandler {
      * @param detailedPermissions If true return detailed permission on each user.
      * @return
      */
-    public List<User> getUsersWithTreePermissionForObject(String objectUuid, boolean checkWorkflow, boolean detailedPermissions);
+    public List<User> getUsersWithTreeOrSubTreePermissionForObject(String objectUuid, boolean checkWorkflow, boolean detailedPermissions);
 
     
     /**

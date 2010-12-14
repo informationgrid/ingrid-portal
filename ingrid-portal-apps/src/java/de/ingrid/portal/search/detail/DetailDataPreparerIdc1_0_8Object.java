@@ -1047,7 +1047,7 @@ public class DetailDataPreparerIdc1_0_8Object implements DetailDataPreparer {
     	    		row.add(notNull(refRecord.getString("t011_obj_serv_operation.invocation_name")));
     	    		List serviceLinkRecords = getSubRecordsByColumnName(refRecord, "t011_obj_serv_op_connpoint.line");
     	    		// only add getCap urls of WMS services
-    	    		if (((serviceTypeKey != null && serviceTypeKey.equals("2")) || (serviceType != null && serviceType.toLowerCase().indexOf("wms") != -1)) && serviceLinkRecords.size() > 0 && refRecord.getString("t011_obj_serv_operation.name_value") != null && refRecord.getString("t011_obj_serv_operation.name_value").toLowerCase().equals("getcapabilities")) {
+    	    		if (((serviceTypeKey != null && serviceTypeKey.equals("2")) || (serviceType != null && (serviceType.toLowerCase().indexOf("wms") != -1 || serviceType.toLowerCase().indexOf("view") != -1))) && serviceLinkRecords.size() > 0 && refRecord.getString("t011_obj_serv_operation.name_value") != null && refRecord.getString("t011_obj_serv_operation.name_value").toLowerCase().equals("getcapabilities")) {
     	    	    	for (int j=0; j<serviceLinkRecords.size(); j++) {
     	    	    		// add getCap if not set
     	    	    		String serviceUrl = ((Record)serviceLinkRecords.get(i)).getString("t011_obj_serv_op_connpoint.connect_point"); 

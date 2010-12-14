@@ -214,6 +214,10 @@ public class Settings {
     // needed to determine the display of the "show in map" link 
     public final static String HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT = "t011_obj_serv.has_access_constraint";
     
+    // this key represents the index key for the service type.
+    public static final String HIT_KEY_OBJ_SERV_TYPE = "t011_obj_serv.type";
+
+    
     public final static String HIT_KEY_OBJ_ID = "T01_object.obj_id";
 
     // mapped ! NO, NOT MAPPED ANYMORE in Plug Description, instead in iBus when querying.
@@ -407,6 +411,7 @@ public class Settings {
     
     public static final String SESSION_LOGIN_STARTED = "session_started";
 
+    
 
 
 

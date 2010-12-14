@@ -47,10 +47,10 @@ public interface SecurityService {
     public List<User> getUsersWithWritePermissionForAddress(String objectUuid,
             boolean checkWorkflow, boolean includePermissions);
     
-    public List<User> getUsersWithTreePermissionForObject(String objectUuid,
+    public List<User> getUsersWithTreeOrSubTreePermissionForObject(String objectUuid,
             boolean checkWorkflow, boolean includePermissions);
     
-    public List<User> getUsersWithTreePermissionForAddress(String addressUuid,
+    public List<User> getUsersWithTreeOrSubTreePermissionForAddress(String addressUuid,
             boolean checkWorkflow, boolean includePermissions);
 
     public List<User> getUsersWithPermissionForObject(String objectUuid,

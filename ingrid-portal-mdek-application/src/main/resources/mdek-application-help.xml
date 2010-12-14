@@ -1547,14 +1547,14 @@
                  <p><b>Konzept der Nutzerverwaltung des InGridEditors</b></p>
                  <p>Das Konzept der Nutzerverwaltung des InGridEditors (IGE) beruht darauf, dass sich ein 
                  Nutzer grundsätzlich nur einmal im Portal (unter <i>Mein PortalU</i>) anmelden muss. Daher 
-                 müssen die Nutzerinformationen des Portals mit denen des Editors verknüpf sein.</p>
+                 müssen die Nutzerinformationen des Portals mit denen des Editors verknüpft sein.</p>
                  <p>Dieser Anspruch macht eine Reihe von Schritten notwendig, damit ein spezieller Nutzer 
                  die Rechte bekommt, die ihn gegenüber einem beliebigen Gast-Nutzer des Portals 
                  auszeichnen. </p>
                  <p>Die eigentlichen Rechte, die sowohl Schreibrechte als auch das Recht zur 
                  Qualitätssicherung umfassen, werden in der 
                  <a href="?hkey=hierarchy-maintenance-3">Gruppenadministration</a> festgelegt. 
-                 Jedem Nutzer wird eine Gruppe mit entsprechenden Rechten zugeordnet.</p>
+                 Jedem Nutzer werden eine oder mehrere Gruppen mit entsprechenden Rechten zugeordnet.</p>
                  <p>Die Rechte bezüglich der Nutzerverwaltung werden durch drei Hierarchieebenen festgelegt:</p>
                  <ol>
                  <li><b>Katalog-Administrator</b>: Es gibt nur einen Nutzer mit diesen Rechten. Er hat das 
@@ -1582,8 +1582,8 @@
                  <a href="?hkey=hierarchy-maintenance-1">Hierarchie &amp; Erfassung</a>
                  eine Adresse für den Benutzer eingerichtet haben.</li>
                  <li>Der Benutzer muss über den Untermenüpunkt 
-                 <a href="?hkey=user-administration-2">Gruppenadministration</a> eine Gruppe angelegt haben, 
-                 die die Rechte besitzt, die der Nutzer erhalten soll.</li>
+                 <a href="?hkey=user-administration-2">Gruppenadministration</a> eine oder mehrere Gruppen angelegt haben, 
+                 die die Rechte besitzen, die der Nutzer erhalten soll.</li>
                  </ol>
                  <p>Nachdem diese Vorarbeiten erledigt sind, gehen Sie bitte wie folgt vor:</p>
                  <ol>
@@ -1610,7 +1610,7 @@
                  <a href="?hkey=maintanance-of-objects-2">Adresse hinzufügen</a> der Objekt-Verwaltung). 
                  Wählen Sie eine Adresse aus und fügen Sie sie über <i>Übernehmen</i> den Nutzerangaben 
                  hinzu.</li>
-                 <li>Wählen Sie eine Gruppe aus der Auswahlliste aus. Es werden alle Gruppen angezeigt, 
+                 <li>Wählen Sie eine oder mehrere Gruppen aus der Auswahlliste aus. Es werden alle Gruppen angezeigt, 
                  die in der <a href="?hkey=user-administration-2">Gruppenadministration</a> angelegt wurden 
                  und für die Sie die Berechtigung zur Administration besitzen.</li>
                  <li><i>Speichern</i> Sie den neuen Nutzer. Er kann jetzt verwendet werden.</li>
@@ -1659,6 +1659,9 @@
                  <p>Sie haben zwei Einstellungsmöglichkeiten für die Berechtigung pro Objekt:</p>
                  <ul>
                  <li><u>Teilbaum:</u> Dies ist die Standardeinstellung. Sie haben für dieses und alle 
+                 nachgeordneten Objekte eine Schreibberechtigung. Sie können unterhalb dieses Objektes 
+                 und allen nachgeordneten Objekten neue Objekte anlegen.</li>
+                 <li><u>Unterbaum:</u> Sie haben für alle 
                  nachgeordneten Objekte eine Schreibberechtigung. Sie können unterhalb dieses Objektes 
                  und allen nachgeordneten Objekten neue Objekte anlegen.</li>
                  <li><u>Einzelobjekt:</u> Sie haben nur auf diesem Objekt eine Schreibberechtigung, auf 
@@ -1715,7 +1718,7 @@
             <header>Berechtigungsübersicht</header>
             <content>
                  <p>In der Berechtigungsübersicht werden alle Nutzer angezeigt, die auf ein Objekt, eine 
-                 Adresse oder einen Teilbaum Schreibrechte oder das Recht zur Qualitätssicherung haben.</p>
+                 Adresse, einen Teilbaum oder Unterbaum Schreibrechte oder das Recht zur Qualitätssicherung haben.</p>
                  <p>Klicken Sie auf ein beliebiges Objekt unter <i>Berechtigung für Objekte</i> oder auf eine 
                  beliebige Adresse unter <i>Berechtigung für Adressen</i>. Das ausgewählte Objekt bzw. die 
                  ausgewählte Adresse wird rot markiert. Es werden die <i>Nutzernamen</i> und die 
@@ -1724,6 +1727,7 @@
                  <ul>
                  <li>Schreibrecht auf  das <i>Einzelobjekt</i> bzw. die <i>Einzeladresse</i></li>
                  <li>Schreibrecht auf den <i>Teilbaum</i></li>
+                 <li>Schreibrecht auf den <i>Unterbaum</i></li>
                  <li>Recht zur Qualitätssicherung (<i>QS</i>)</li>
                  </ul>
             </content>

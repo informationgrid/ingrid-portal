@@ -2251,7 +2251,7 @@ udkDataProxy._initResponsibleUserObjectList = function(nodeData) {
 
 		if (parentUuid != null) {
 			// new node && not root
-			SecurityService.getUsersWithTreePermissionForObject(parentUuid, false, true, {
+			SecurityService.getUsersWithTreeOrSubTreePermissionForObject(parentUuid, false, true, {
 				callback: function(userList) {
 					var list = [];
 					// Iterate over all users with 'tree' permission on the parent node
@@ -2339,7 +2339,7 @@ udkDataProxy._initResponsibleUserAddressList = function(nodeData) {
 
 		if (parentUuid != null) {
 			// new node && not root
-			SecurityService.getUsersWithTreePermissionForAddress(parentUuid, false, true, {
+			SecurityService.getUsersWithTreeOrSubTreePermissionForAddress(parentUuid, false, true, {
 				callback: function(userList) {
 					var list = [];
 					// Iterate over all users with 'tree' permission on the parent node

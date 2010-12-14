@@ -323,19 +323,19 @@ public class SecurityServiceImpl implements SecurityService {
 	}
 
     /* (non-Javadoc)
-     * @see de.ingrid.mdek.dwr.services.SecurityService#getUsersWithTreePermissionForObject(java.lang.String, boolean, boolean)
+     * @see de.ingrid.mdek.dwr.services.SecurityService#getUsersWithTreeOrSubTreePermissionForObject(java.lang.String, boolean, boolean)
      */
     @Override
-    public List<User> getUsersWithTreePermissionForObject(String objectUuid, boolean checkWorkflow, boolean includePermissions) {
-        return securityRequestHandler.getUsersWithTreePermissionForObject(objectUuid, checkWorkflow, includePermissions);
+    public List<User> getUsersWithTreeOrSubTreePermissionForObject(String objectUuid, boolean checkWorkflow, boolean includePermissions) {
+        return securityRequestHandler.getUsersWithTreeOrSubTreePermissionForObject(objectUuid, checkWorkflow, includePermissions);
     }
 
     /* (non-Javadoc)
      * @see de.ingrid.mdek.dwr.services.SecurityService#getUsersWithTreePermissionForAddress(java.lang.String, boolean, boolean)
      */
     @Override
-    public List<User> getUsersWithTreePermissionForAddress(String addressUuid, boolean checkWorkflow, boolean includePermissions) {
-        return securityRequestHandler.getUsersWithTreePermissionForAddress(addressUuid, checkWorkflow, includePermissions);
+    public List<User> getUsersWithTreeOrSubTreePermissionForAddress(String addressUuid, boolean checkWorkflow, boolean includePermissions) {
+        return securityRequestHandler.getUsersWithTreeOrSubTreePermissionForAddress(addressUuid, checkWorkflow, includePermissions);
     }
 
     @Override

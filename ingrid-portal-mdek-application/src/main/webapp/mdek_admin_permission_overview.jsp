@@ -174,10 +174,10 @@ function addPermissionsToUser(user) {
 	for (var i in user.permissions) {
 		if (user.permissions[i] == "WRITE_SINGLE") {
 			user.writeSingle = "<div style='text-align: center;'><img src='img/ic_check.gif' width='16' height='16' alt='vorhanden' /></div>";
-
 		} else if (user.permissions[i] == "WRITE_TREE") {
 			user.writeTree = "<div style='text-align: center;'><img src='img/ic_check.gif' width='16' height='16' alt='vorhanden' /></div>";
-
+		} else if (user.permissions[i] == "WRITE_SUBTREE") {
+			user.writeSubTree = "<div style='text-align: center;'><img src='img/ic_check.gif' width='16' height='16' alt='vorhanden' /></div>";
 		} else if (user.permissions[i] == "QUALITY_ASSURANCE") {
 			user.qa = "<div style='text-align: center;'><img src='img/ic_check.gif' width='16' height='16' alt='vorhanden' /></div>";
 
@@ -232,10 +232,11 @@ function addPermissionsToUser(user) {
 	          	    <table id="rightsObjectsUserList" dojoType="ingrid:FilteringTable" minRows="10" cellspacing="0" class="filteringTable nosort relativePos">
 	          	      <thead>
 	          		      <tr>
-	                			<th nosort="true" field="title" dataType="String" width="359"><fmt:message key="dialog.admin.permissions.userName" /></th>
+	                			<th nosort="true" field="title" dataType="String" width="299"><fmt:message key="dialog.admin.permissions.userName" /></th>
 	                			<th nosort="true" field="roleName" dataType="String" width="145"><fmt:message key="dialog.admin.permissions.role" /></th>
 	                			<th nosort="true" field="writeSingle" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.single" /></th>
 	                			<th nosort="true" field="writeTree" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.tree" /></th>
+	                			<th nosort="true" field="writeSubTree" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.subtree" /></th>
 	                			<th nosort="true" field="qa" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.qa" /></th>
 	          		      </tr>
 	          	      </thead>
@@ -284,10 +285,11 @@ function addPermissionsToUser(user) {
 	          	    <table id="rightsAddressesUserList" dojoType="ingrid:FilteringTable" minRows="10" cellspacing="0" class="filteringTable nosort relativePos">
 	          	      <thead>
 	          		      <tr>
-	                			<th nosort="true" field="title" dataType="String" width="359"><fmt:message key="dialog.admin.permissions.userName" /></th>
+	                			<th nosort="true" field="title" dataType="String" width="299"><fmt:message key="dialog.admin.permissions.userName" /></th>
 	                			<th nosort="true" field="roleName" dataType="String" width="145"><fmt:message key="dialog.admin.permissions.role" /></th>
 	                			<th nosort="true" field="writeSingle" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.single" /></th>
 	                			<th nosort="true" field="writeTree" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.tree" /></th>
+	                			<th nosort="true" field="writeSubTree" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.subtree" /></th>
 	                			<th nosort="true" field="qa" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.qa" /></th>
 	          		      </tr>
 	          	      </thead>

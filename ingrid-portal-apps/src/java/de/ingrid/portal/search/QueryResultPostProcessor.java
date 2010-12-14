@@ -241,23 +241,30 @@ public class QueryResultPostProcessor {
             // services !
             
             // WMS, only process if Viewer is specified !
-            Object obj = detail.get(Settings.HIT_KEY_WMS_URL);
-            if (obj == null) {
+            Object connectionPoint = detail.get(Settings.HIT_KEY_WMS_URL);
+            if (connectionPoint == null) {
             	// there has been a change in the case of this key
-            	obj = detail.get(Settings.HIT_KEY_WMS_URL.toLowerCase());
+            	connectionPoint = detail.get(Settings.HIT_KEY_WMS_URL.toLowerCase());
             }
-            if (obj != null && WMSInterfaceImpl.getInstance().hasWMSViewer()) {
+            
+            if (connectionPoint != null && WMSInterfaceImpl.getInstance().hasWMSViewer()) {
                 boolean objServHasAccessConstraint = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT).equals("Y") ? true : false;
                 
                 if (!objServHasAccessConstraint) {
   
+                  Object serviceTypeArray = detail.get(Settings.HIT_KEY_OBJ_SERV_TYPE);
+                  String serviceType = "";
+                  if (serviceTypeArray instanceof String[]) {
+                      serviceType = ((String[])serviceTypeArray)[0];
+                  }
+                    
                   tmpString = "";
-                  if (obj instanceof String[]) {
+                  if (connectionPoint instanceof String[]) {
                       // PATCH for wrong data in database -> service string was passed multiple times !
                   	// only show FIRST (!!!! This is an assumption that has been made to reduce the effort!!! ) WMS getCapabilities URL
-                  	String[] servicesArray = (String[]) obj;
+                  	String[] servicesArray = (String[]) connectionPoint;
                        for (int j = 0; j < servicesArray.length; j++) {
-                           if (servicesArray[j].toLowerCase().indexOf("service=wms") > -1 && servicesArray[j].toLowerCase().indexOf("request=getcapabilities") > -1) {
+                           if (serviceType.toLowerCase().indexOf("wms") != -1 || serviceType.toLowerCase().indexOf("view") != -1 || (servicesArray[j].toLowerCase().indexOf("service=wms") > -1 && servicesArray[j].toLowerCase().indexOf("request=getcapabilities") > -1)) {
                            	tmpString = servicesArray[j];
                            	break;
                            }
@@ -265,7 +272,7 @@ public class QueryResultPostProcessor {
                   } else {
                       tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_WMS_URL);
                       // only show WMS getCapabilities URL
-                      if (tmpString.toLowerCase().indexOf("service=wms") == -1 || tmpString.toLowerCase().indexOf("request=getcapabilities") == -1) {
+                      if (serviceType.indexOf("wms") != -1 || serviceType.indexOf("view") != -1 || (tmpString.toLowerCase().indexOf("service=wms") == -1 || tmpString.toLowerCase().indexOf("request=getcapabilities") == -1)) {
                       	tmpString = "";
                       }
                   }
