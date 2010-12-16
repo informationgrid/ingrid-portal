@@ -33,7 +33,7 @@
 <!--  END: layout/html/portalu/decorator.vm -->
 <!-- Piwik -->
 <script type="text/javascript">
-	var pkBaseURL = ${piwik};
+	var pkBaseURL = '${piwik}';
 	var piwikTracker;
 	var host = location.host; 
 		

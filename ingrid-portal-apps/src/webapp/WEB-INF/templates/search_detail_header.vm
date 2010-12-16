@@ -94,7 +94,7 @@ if (!xmlhttp && window.createRequest) {
 	}
 }
 if (xmlhttp) {
-    xmlhttp.open('GET', '$jetspeed.getAbsoluteUrl('/detect-js.psml?js=1')', true);
+	xmlhttp.open('GET', '/ingrid-portal/portal/detect-js.psml?js=1', true);
     xmlhttp.onreadystatechange = function () {};
     xmlhttp.send(null);
 }	
