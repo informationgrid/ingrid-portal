@@ -82,7 +82,7 @@ public class QueryPreProcessor {
 
         int currentPage = (int) (startHit / Settings.SEARCH_RANKED_HITS_PER_PAGE) + 1;
 
-        // always request ALL DATA !!! all kind of hits can be rendered in one page when datatypes are enterd in query !
+        // always request ALL DATA !!! all kind of hits can be rendered in one page when datatypes are entered in query !
         String[] requestedMetadata = new String[] {
         		// udk object metadata
         		Settings.HIT_KEY_UDK_CLASS,

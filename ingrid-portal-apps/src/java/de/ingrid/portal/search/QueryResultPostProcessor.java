@@ -278,6 +278,15 @@ public class QueryResultPostProcessor {
                   }
                   if (tmpString.length() > 0) {
                       try {
+                          if (tmpString.toLowerCase().indexOf("request=getcapabilities") == -1) {
+                              if (tmpString.indexOf("?") == -1) {
+                                  tmpString = tmpString + "?";
+                              }
+                              if (!tmpString.endsWith("?")) {
+                                  tmpString = tmpString + "&";
+                              }
+                              tmpString = tmpString + "REQUEST=GetCapabilities&SERVICE=WMS";
+                          }
                           hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString.trim(), "UTF-8"));
                       } catch (UnsupportedEncodingException e) {
                           log.error("Error url encoding wms URL!", e);

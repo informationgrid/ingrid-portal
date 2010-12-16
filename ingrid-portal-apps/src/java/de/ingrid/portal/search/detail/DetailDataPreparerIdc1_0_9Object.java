@@ -1058,7 +1058,8 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
     	    	    		if (serviceUrl != null && serviceUrl.toLowerCase().indexOf("request=getcapabilities") == -1) {
     	    	    			if (serviceUrl.indexOf("?") == -1) {
     	    	    				serviceUrl = serviceUrl + "?";
-    	    	    			} else {
+    	    	    			}
+    	    	    			if (!serviceUrl.endsWith("?")) {
     	    	    				serviceUrl = serviceUrl + "&";
     	    	    			}
     	    	    			serviceUrl = serviceUrl + "REQUEST=GetCapabilities&SERVICE=WMS";

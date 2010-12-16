@@ -1051,15 +1051,16 @@ public class DetailDataPreparerIdc1_0_8Object implements DetailDataPreparer {
     	    	    	for (int j=0; j<serviceLinkRecords.size(); j++) {
     	    	    		// add getCap if not set
     	    	    		String serviceUrl = ((Record)serviceLinkRecords.get(i)).getString("t011_obj_serv_op_connpoint.connect_point"); 
-    	    	    		if (serviceUrl != null && serviceUrl.toLowerCase().indexOf("request=getcapabilities") == -1) {
-    	    	    			if (serviceUrl.indexOf("?") == -1) {
-    	    	    				serviceUrl = serviceUrl + "?";
-    	    	    			} else {
-    	    	    				serviceUrl = serviceUrl + "&";
-    	    	    			}
-    	    	    			serviceUrl = serviceUrl + "REQUEST=GetCapabilities&SERVICE=WMS";
-    	    	    		}
-    	    	    		wmsServiceLinks.add(serviceUrl);
+                            if (serviceUrl != null && serviceUrl.toLowerCase().indexOf("request=getcapabilities") == -1) {
+                                if (serviceUrl.indexOf("?") == -1) {
+                                    serviceUrl = serviceUrl + "?";
+                                }
+                                if (!serviceUrl.endsWith("?")) {
+                                    serviceUrl = serviceUrl + "&";
+                                }
+                                serviceUrl = serviceUrl + "REQUEST=GetCapabilities&SERVICE=WMS";
+                            }
+                            wmsServiceLinks.add(serviceUrl);
     	    	    	}
     	    		}
     	    		if (!isEmptyRow(row)) {
