@@ -80,49 +80,29 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
 		
 		String addrUuid = record.getString("t02_address.adr_uuid");
 		
-		ArrayList elements = new ArrayList();
-		int previousElementsSize = elements.size();
+		ArrayList elementsGeneral = new ArrayList();
+		ArrayList elementsReference = new ArrayList();
 
+// tab "General"
 		// address type
-		addElementAddressType(elements, record.getString("t02_address.adr_type"));
+		addElementAddressType(elementsGeneral, record.getString("t02_address.adr_type"));
 		// description
-		addElementEntry(elements, record.getString("t02_address.job"), null);
+		addElementEntry(elementsGeneral, record.getString("t02_address.job"), null);
 		
-		if (previousElementsSize < elements.size()) {
-			// add horizontal line
-			addLine(elements);
-			previousElementsSize = elements.size();
-		}
+		addAddress(elementsGeneral, record);
 		
-		addAddress(elements, record);
+		addSubordinatedAdresses(elementsGeneral, addrUuid);
 		
-		if (previousElementsSize < elements.size()) {
-			// add horizontal line
-			addLine(elements);
-			previousElementsSize = elements.size();
-		}
-		
-		addSubordinatedAdresses(elements, addrUuid);
-		
-		if (previousElementsSize < elements.size()) {
-			// add horizontal line
-			addLine(elements);
-			previousElementsSize = elements.size();
-		}
-
 		// add index information
-		addIndexInformation(elements, record);
-		if (previousElementsSize < elements.size()) {
-			// add horizontal line
-			addLine(elements);
-			previousElementsSize = elements.size();
-		}
+		addIndexInformation(elementsGeneral, record);
 		
-		addObjectReferences(elements, record);
+// tab "Reference"
+		addObjectReferences(elementsReference, record);
 		
-		addSubordiantedObjectReferences(elements, record);
+		addSubordiantedObjectReferences(elementsReference, record);
 		
-		data.put("elements", elements);
+		data.put("elementsGeneral", elementsGeneral);
+		data.put("elementsReference", elementsReference);
 		
 		context.put("data", data);
 	}
@@ -132,12 +112,13 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
         List linkList = getLinkListOfAddressesFromQuery("parent.address_node.addr_uuid:".concat(addrUuid).concat(
                 " iplugs:\"").concat(DetailDataPreparerHelper.getAddressPlugIdFromPlugId(iPlugId)).concat("\""));
         if (!linkList.isEmpty()) {
-            Collections.sort(linkList, new LinkListComparator());
+            addSectionTitle(elements, messages.getString("subordinated_addresses"));
+        	Collections.sort(linkList, new LinkListComparator());
         	HashMap element = new HashMap();
         	element.put("type", "linkList");
-        	element.put("title", messages.getString("subordinated_addresses"));
         	element.put("linkList", linkList);
         	elements.add(element);
+        	closeDiv(elements);
         }
     }
 
@@ -158,9 +139,9 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
 	        	}
 	    	}
 	    	if (textListEntries.size() > 0) {
-		    	HashMap element = new HashMap();
-		    	element.put("type", "multiLine");
-		    	element.put("title", messages.getString("search_terms"));
+	    		addSectionTitle(elements, messages.getString("search_terms"));
+	         	HashMap element = new HashMap();
+		    	element.put("type", "textList");
 		    	element.put("textList", textListEntries);
 	    	    elements.add(element);
 	    	}
@@ -193,6 +174,8 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
 	}
 	
     private void addAddress(List elements, Record record) {
+    	addSectionTitle(elements, messages.getString("addresses"));
+    	
     	HashMap element = new HashMap();
     	List innerElements = new ArrayList();
     	
@@ -218,7 +201,7 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
         	if (refRecords.size() > 0) {
         		Record refRecord = (Record)refRecords.get(0);
 		    	element = new HashMap();
-		    	element.put("type", "linkLine");
+		    	element.put("type", "linkLineAddress");
 		    	element.put("hasLinkIcon", new Boolean(false));
 		    	element.put("isExtern", new Boolean(false));
 				element.put("title", refRecord.getString("t02_address.institution"));
@@ -233,7 +216,7 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
 		        	if (refRecords.size() > 0) {
 		        		refRecord = (Record)refRecords.get(0);
 				    	element = new HashMap();
-				    	element.put("type", "linkLine");
+				    	element.put("type", "linkLineAddress");
 				    	element.put("hasLinkIcon", new Boolean(false));
 				    	element.put("isExtern", new Boolean(false));
 						element.put("title", refRecord.getString("t02_address.institution"));
@@ -251,7 +234,7 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
 			            			IngridHit hit = getAddress(refRecord.getString("address_node.fk_addr_uuid"));
 			            			while (hit != null) {
 			            		    	element = new HashMap();
-			            		    	element.put("type", "linkLine");
+			            		    	element.put("type", "linkLineAddress");
 			            		    	element.put("hasLinkIcon", new Boolean(false));
 			            		    	element.put("isExtern", new Boolean(false));
 			            				element.put("title", ((IngridHitDetail)hit.get("detail")).getString("title"));
@@ -326,11 +309,7 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
 				element.put("body", textLine);
 				innerElements.add(element);
 			}
-	    	element = new HashMap();
-	    	element.put("type", "space");
-			innerElements.add(element);
-			
-		}
+	    }
 		if (UtilsVelocity.hasContent(record.getString("t02_address.street")).booleanValue()) {
 			if (UtilsVelocity.hasContent(record.getString("t02_address.street")).booleanValue()) {
 				element = new HashMap();
@@ -351,10 +330,7 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
 				element.put("body", textLine);
 				innerElements.add(element);
 			}
-	    	element = new HashMap();
-	    	element.put("type", "space");
-			innerElements.add(element);
-		}
+	    }
     	List refRecords = getSubRecordsByColumnName(record, "t021_communication.comm_value");
 		for (int i=0; i<refRecords.size(); i++) {
     		Record refRecord = (Record)refRecords.get(i);
@@ -404,6 +380,11 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
 		elements.add(element);
     }
     
+    private void addSpace(List elements) {
+    	HashMap element = new HashMap();
+		element.put("type", "space");
+		elements.add(element);
+    }
     
     private List getLinkListOfAddressesFromQuery(String queryStr) {
         String[] requestedMetadata = new String[] {
@@ -530,7 +511,8 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
     	boolean moreHits = false;
     	List directObjReferences = getObjectsByAddress(record.getString("t02_address.adr_uuid"), maxNumObjRefs);
     	if (directObjReferences.size() > 0) {
-            if (directObjReferences.size() >= maxNumObjRefs) {
+    		addSectionTitle(elements, messages.getString("search.detail.dataRelations"));
+    		if (directObjReferences.size() >= maxNumObjRefs) {
             	moreHits = true;
             }
         	List linkList = new ArrayList();
@@ -554,7 +536,6 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
     		
     		HashMap element = new HashMap();
         	element.put("type", "linkList");
-        	element.put("title", messages.getString("search.detail.dataRelations"));
         	element.put("linkList", linkList);
         	elements.add(element);
 
@@ -590,6 +571,7 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
 		    	element.put("elements", new ArrayList(Arrays.asList(new HashMap[] { link })));
 	    	    elements.add(element);
             }
+            closeDiv(elements);
     	}
     }
     
@@ -658,12 +640,14 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
             Collections.sort(linkList, new LinkListComparator());
     		
     		HashMap element = new HashMap();
-        	element.put("type", "linkList");
-        	element.put("title", messages.getString("search.detail.dataRelations.addresses"));
-        	element.put("linkList", linkList);
-        	elements.add(element);
-
-            if (moreHits) {
+    		if(linkList.size() > 0){
+    			addSectionTitle(elements, messages.getString("search.detail.dataRelations.addresses"));
+        		element.put("type", "linkList");
+		        element.put("linkList", linkList);
+		        elements.add(element);
+		    	closeDiv(elements);
+    		}
+    		if (moreHits) {
             	HashMap link = new HashMap();
             	link.put("type", "linkLine");
             	link.put("hasLinkIcon", new Boolean(false));
@@ -720,5 +704,25 @@ public class DetailDataPreparerIdc1_0_2Address implements DetailDataPreparer {
         return result;
     }
     
+    private void openDiv(List elements) {
+		HashMap element = new HashMap();
+		element.put("type", "beginnDiv");
+		elements.add(element);
+	}
+    
+    private void closeDiv(List elements) {
+		HashMap element = new HashMap();
+		element.put("type", "endDiv");
+		elements.add(element);
+	}
+	
+	private void addSectionTitle(List elements, String title) {
+		addSpace(elements);
+		HashMap element = new HashMap();
+		element.put("type", "section");
+		element.put("title", title);
+		elements.add(element);
+		openDiv(elements);
+	}
 	
 }

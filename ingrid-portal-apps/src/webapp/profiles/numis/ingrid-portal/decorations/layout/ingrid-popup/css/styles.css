@@ -63,7 +63,10 @@ td.fontcolor {color: #e0003c;}
 .clearer { clear:both; height:1px; line-height: 0px; font-size: 1px; margin:0; padding:0; }
 .float { float:left; }
 .float_left { float:left; }
+* html .float_left { clear:right; }
 .float_right { float:right; }
+* html .float_right { clear:left; }
+.float_left_div { position: relative; float:left; }
 .bgred {background-color:#FF0000}
 .top { margin-top:0; }
 .nobottommargin { margin-bottom:0; }
@@ -587,3 +590,121 @@ a.tooltip:hover span { visibility: visible; }
     font-size:65%;
     padding-left:185px;
 }
+
+/*****************************
+*New detail view
+*******************************/
+
+span.clearer_main_color { background:none repeat scroll 0 0 #E0003C; height:2px; font-size: 1px; display:block; }
+span.clearer_sub_color{ background:none repeat scroll 0 0 #DDE9BD; height:4px; font-size: 1px; display:block; }
+span.clearer_gray { background:none repeat scroll 0 0 #DDDDDD; height:2px; font-size: 1px; display:block; }
+span.clearer_gray_small { background:none repeat scroll 0 0 #DDDDDD; height:1px; font-size: 1px; display:block; }
+span.clearer_dark_gray	{ background:none repeat scroll 0 0 #BBBBBB; height:1px; font-size: 1px; display:block; }
+
+div#detail_background span.clearer { background:none repeat scroll 0 0 #DDE9BD; clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px;}
+div#header_title { background:none repeat scroll 0 0 #F0F6FA; padding: 20px 13px 0px; }
+div#header_title span.clearer{ display:block; background:none repeat scroll 0 0 #F0F6FA; height:10px; border:0px; }
+div.header_div { margin-top:0; font-size:75%}
+div.header_div span.smaller {font-size: 83%}
+h1.detail_title_header { padding-bottom:0px; }
+div.detail_section_title { background:#EEEEEE; width:100%; height:22px; margin-bottom:20px; }
+div.detail_margin_right { margin-right:10px; padding-bottom:10px; }
+div.detail_margin_left { margin-left:10px; padding-bottom:10px; }
+
+.width_one_half { width:48%; }
+.width_one_third { width:33%; }
+.width_two_thirds { width:66%; clear:both; position: relative; }
+
+table.detail_table { width:100%; border-bottom:2px solid #DDDDDD; margin-bottom:10px; }
+table.detail_image_table { width:100%; }
+table.detail_table_text {  border-top:1px solid #DDDDDD; width:100% }
+
+div.detail_text_link_line{ border-top:1px solid #DDDDDD; width:100%; padding-bottom:12px; }
+div.detail_text_link_line_title { color:#777777; font-size:75%; font-weight:bold; padding-left:0px; padding-right:20px; } 
+div.detail_text_link_line_body { color:#000000; font-size:75%; margin-bottom:0; margin-top:0; }
+
+th.detail_table_header { background:none repeat scroll 0 0 #E0003C; color:#FFFFFF; text-align:left; font-size:75%; }
+tr.detail_image_tr { padding:2px; }
+tr.detail_table_row_1 { background:none repeat scroll 0 0 #EDEDED; color:#000000; }
+tr.detail_table_row_2 { background:none repeat scroll 0 0 #FFFFFF; color:#000000; }
+td.detail_table_cell_font { color:#000000; font-size:75%; }
+td.detail_table_cell { border-right:1px solid #DDDDDD;}
+td.detail_table_label { color:#777777; font-size:75%; font-weight:bold; width:200px; padding:0px; max-width:150px; width:150px;} 
+td.detail_table_body { color:#000000; font-size:75%; margin-bottom:0; margin-top:0; }
+td.detail_image_td	{ vertical-align:middle; text-align:center; background:none repeat scroll 0 0 #EEEEEE; height:303px; width:433px; border-top:1px solid #DDDDDD; }
+td.detail_image_descr_td { background:none repeat scroll 0 0 #EEEEEE; height:73px; width:433px; border-top:6px solid #FFFFFF; vertical-align:text-top; }
+
+H1.section_title { background:none repeat scroll 0 0 #EEEEEE; color:#777777; font-size:75%; font-weight:bold; line-height:22px; margin-top:0; padding-left:13px; }
+H2.group_title { background:none repeat scroll 0 0 #EEEEEE; color:#777777; font-size:75%; font-weight:normal; line-height:22px; margin-top:0; padding-left:13px;}
+H1.no_script_title { background:none repeat scroll 0 0 #68A5D2; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height:25px;} 
+
+p.detail_entry_title { color:#777777; font-weight:bold; font-weight:bold; padding-left:0; padding-right:20px; padding-top:3px; }
+p.detail_entry_body { color:#000000; font-size:75%; margin-bottom:0; margin-top:0; }
+p.detail_image_p { color:#777777; font-weight:bold; padding-left:14px; padding-right:14px; font-size:75%; margin:0; }
+p.detail_image_descr_p { color:#000000; padding-left:14px; padding-right:14px; }
+p.detail_list { color:#777777; font-weight:bold; padding-left:0; padding-right:20px; padding-top:3px; }
+
+a.detail_link { font-size:75%; margin-bottom:0; margin-top:0;}
+
+img.detail_image { max-height:300px; max-width:433px;}
+* html img.detail_image { max-height:300px; height: expression(this.width > 300 ? 300: true);}
+
+div.detail_block { width:100%; height:100%; }
+* html div.detail_block { width:56.125em; height:100%; }
+div.mainTabContainer { width:100%; height:100%; background:#FFFFFF; }
+div.subTabContainer { width:100%; height:100%; background:#FFFFFF; }
+div.subSubTabContainer { width:100%; height:100%; border-top: 1px solid #FFFFFF; }
+div.tabContainerContent { width:100%; height:100%; }
+
+div#detail_background { background:#FFFFFF; border-top: 1px solid #FFFFFF;}
+div.detail_content_background { background:#FFFFFF; }
+div.detail_group { width:50%; background:#FFFFFF; }
+div.detail_group_line { padding-bottom: 15px; width:100%; }
+
+
+.text_label_during { padding-top:2px; }
+div.text_label_during_title { font-size:12px; color:#777777; padding-left:1px; }
+p.text_label_during_body { font-size:75%; padding-left:1px; }
+
+.text_label_above { padding-top:2px; }
+div.text_label_above_title { font-weight:bold; font-size:12px; color:#777777; padding-left:1px; padding-bottom:19px; }
+p.text_label_above_body { font-size:75%; padding-left:1px; }
+
+.text_label_left { padding-top:2px; margin:-1px; }
+td.text_label_left_title { font-weight:bold; color:#777777; font-size:12px; padding-left:0px; }
+td.text_label_left_body { font-size:75%; }
+
+li.detail_li { color:#E0003C; }
+li.detail_li p { font-size:100%; color:#000000; }
+ 
+img.section_show_hide { padding-right:16px; padding-top:5px; }
+/******************************************
+* Dojo Tabs CSS style 
+*******************************************/
+
+div.dojoTab:hover { color:#000000; font-weight:bold; text-decoration: underline; background:none repeat scroll 0 0 #DDE9BD; }
+div.dojoTab:hover div{ color:#000000; font-weight:bold; text-decoration: underline; background:none repeat scroll 0 0 #DDE9BD; padding-bottom:4px; }
+div.dojoTab { position : relative; float : left; white-space: nowrap; z-index: 3; color:#FFFFFF; font-weight:bold;	font-size:75%; border-top: 1px solid #E0003C; border-left: 1px solid #E0003C; border-right: 1px solid #E0003C; border-bottom: 0px solid #E0003C; padding:0px;}
+div.dojoTab div { display : block;	padding : 4px 15px 4px 15px; background:#E0003C; color:#FFFFFF;}
+div.dojoTab.current { color:#000000; font-weight:bold; font-size:75%; background:none repeat scroll 0 0 #DDE9BD; padding-bottom:0px; }
+div.dojoTab.current div { color:#000000; background:none repeat scroll 0 0 #DDE9BD; border-left:2px solid #FFFFFF; border-right:2px solid #FFFFFF; border-top:2px solid #FFFFFF; margin-top:-5px; padding : 4px 15px 8px 15px; }
+div.dojoTabPaneWrapper { border : 0px solid #FFFFFF; _zoom: 1; background:#FFFFFF;}
+/* bottom tabs */
+div.dojoTabLabels-bottom { position : relative; bottom : 0px; left : 0px; overflow : visible; margin-top : -1px; width : 100%; z-index: 2; }
+div.dojoTabNoLayout.dojoTabLabels-bottom { position : relative; }
+div.dojoTabLabels-bottom .dojoTab { border-top :  0px solid #FFFFFF; border-bottom : 0px; }
+div.dojoTabLabels-bottom .dojoTab div { background:#FFFFFF; }
+div.dojoTabLabels-bottom .dojoTab.current { border-top : 0; background:#FFFFFF; }
+div.dojoTabLabels-bottom .dojoTab.current div { padding-top : 4px; background:#FFFFFF; }
+
+/* right-h tabs */
+div.dojoTabLabels-right-h .dojoTab { border-left :  0px solid #FFFFFF; background : #FFFFFF; float:none; }
+div.dojoTabLabels-right-h .dojoTab.current { border-bottom :  0px solid #FFFFFF; }
+/* left-h tabs */
+div.dojoTabLabels-left-h .dojoTab { border-right :  0px solid #FFFFFF; background: #FFFFFF; }
+div.dojoTabLabels-left-h .dojoTab.current {border-bottom :  0px solid #FFFFFF; background : #FFFFFF; }
+div.dojoTabLabels-left-h .dojoTab div { border-bottom :  0px solid #FFFFFF; }
+
+div.dojoTabContainer {background:#E0003C; }
+div.contentTab { clear:both; }
+div.dojoTabNoLayout.dojoTabLabels-top .dojoTab { margin-bottom:0; }

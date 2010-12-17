@@ -1,11 +1,11 @@
 #macro (renderTitleLine $entry)
 	#if($tool.hasContent($entry.title))
-		<strong>$entry.title</strong><br />
+		<strong>$entry.title</strong>
     #end
 #end
 
 #macro (renderLinkLine $entry)
-	<div class="size_2-3" style="padding-bottom:2px;">
+	<div>
 	#if($entry.hasLinkIcon)
 		#if($entry.iconImage)
 			<span class="icon_udk">
@@ -31,20 +31,27 @@
 		</span>
 	#end
 	#if($entry.isExtern)
-		<a class="detail_link" href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.extern')">$entry.title</a><br />
+		<a class="detail_link" href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.extern')">$entry.title</a>
 	#else
-		<a class="detail_link" href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title</a><br />
+		<a class="detail_link" href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title</a>
 	#end
 	</div>	
 #end
 
-
-
+#macro (renderLinkLineAddress $entry)
+	<div>
+	#if($entry.isExtern)
+		<a class="detail_link" href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.extern')">$entry.title</a>
+	#else
+		<a class="detail_link" href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title</a>
+	#end
+	</div>	
+#end
 
 #macro (renderUdkClass $entry)
 	#if($tool.hasContent($entry.udkClass))
-		<p class="">
-			<span class="icon_udk_detail">
+		<div class="header_div">
+        	<span class="icon_udk_detail">
 				<img src="/ingrid-portal-apps/images/icn_udk_obj_${entry.get("udkClass")}.gif" alt="${entry.get("udkClassName")}" />
 			</span>
 			&nbsp;
@@ -53,14 +60,15 @@
 			</strong>
 			&nbsp;
 			<span class="smaller">$MESSAGES.getString('search.detail.object.class')</span>
-		</p>
-		<span class="clearer"></span>
-    #end
+			<span class="clearer"></span>
+			<span class="clearer"></span>
+        </div>
+	#end
 #end
 
 #macro (renderAddressType $entry)
 	#if($tool.hasContent($entry.addressType))
-		<p class="">
+		<div class="header_div">
 			<span class="icon_udk_detail">
 				<img src="/ingrid-portal-apps/images/icn_udk_adr_${entry.get("addressType")}.gif" alt="${entry.get("addressTypeName")}" />
 			</span>
@@ -72,8 +80,9 @@
 			<span class="smaller">
 				$MESSAGES.getString('search.detail.category')
 			</span>
-		</p>
-		<span class="clearer"></span>
+			<span class="clearer"></span>
+			<span class="clearer"></span>
+		</div>
     #end
 #end
 
@@ -85,7 +94,60 @@
     #end
 #end
 
+#macro (renderLine)
+	<div class="line"><hr></div>
+#end
+
 #macro (renderMultiLine $entry)
+	#if($tool.hasContent($entry.elements))
+		#if($tool.hasContent($entry.headerTitle))
+			#renderSectionTitle($entry.headerTitle)
+		#end
+		#if($tool.hasContent($entry.title))
+			#renderGroupTitle($entry.title)
+		#end
+		#if($entry.sort=="false")
+			#set($elements = $entry.elements)
+        #else
+			#set ($hasBody = false)
+			#set ($hasBody = $sorter.sort($entry.elements,"body"))
+			#if ($hasBody)
+				#set($elements = $hasBody)
+			#else
+				#set($elements = $entry.elements)
+			#end
+		#end
+		<div class="width_two_thirds">
+		#foreach($e in $elements)
+			#if($e.type=="multiLine")
+				#renderMultiLine($e)
+			#elseif($e.type=="textLine")
+				#renderTextLine($e)
+			#elseif($e.type=="textList")
+				#renderTextList($e)
+			#elseif($e.type=="textLinkLine")
+				#renderTextLinkLine($e)
+			#elseif($e.type=="linkLine")
+				#renderLinkLine($e)
+			#elseif($e.type=="linkLineAddress")
+				#renderLinkLineAddress($e)
+			#elseif($e.type=="textLabelAbove")
+        		#renderTextLabelAbove($e)
+        	#elseif($e.type=="textLabelDuring")
+        		#renderTextLabelDuring($e)
+        	#elseif($e.type=="textLabelLeft")
+        		#renderTextLabelLeft($e)
+        	#elseif($e.type=="line")
+				<div class="line"><hr /></div><br/>
+			#elseif($e.type=="space")
+				<br />
+			#end
+		#end
+        </div>
+    #end
+#end
+
+#macro (renderMultiLineHalf $entry)
 	#if($tool.hasContent($entry.elements))
 		#renderGroupTitle($entry.title)
 		#if($entry.sort=="false")
@@ -100,21 +162,7 @@
 			#end
 		#end
 		#foreach($e in $elements)
-			#if($e.type=="multiLine")
-				#renderMultiLine($e)
-			#elseif($e.type=="textLine")
-				#renderTextLine($e)
-			#elseif($e.type=="textList")
-				#renderTextList($e)
-			#elseif($e.type=="textLinkLine")
-				#renderTextLinkLine($e)
-			#elseif($e.type=="linkLine")
-				#renderLinkLine($e)
-			#elseif($e.type=="line")
-				<div class="line"><hr /></div><br/>
-			#elseif($e.type=="space")
-				<br />
-			#end
+			#renderTypeHalf($e)
 		#end
 		</p>
     #end
@@ -124,20 +172,105 @@
 ## New Detail macros
 ## *************************
 
+#macro (renderMultiLineAddresses $entry)
+	#if($tool.hasContent($entry.elementsAddress))
+		#if($tool.hasContent($entry.title)) 
+			#renderSectionTitle ($entry.title)
+		#end
+		#set($elementsAddress = $entry.elementsAddress)
+		#set($count = 0)
+		#if($elementsAddress.size() % 2 == 0)
+			#set($rows = $elementsAddress.size()/2)
+		#else
+			#set($rows = $elementsAddress.size()/2+1)
+		#end
+		#if ($elementsAddress.size() > 0)
+				<div>
+		#end
+		#foreach($e in $sorter.sort($elementsAddress,"title"))
+			#set($count = $count + 1)
+			#if($tool.hasContent($e.elements))
+				#set($nextEntryEmpty = false)
+				#if($count != $elementsAddress.size())
+    				#if(!$tool.hasContent($elementsAddress.get($count).elements))
+						#set($nextEntryEmpty = true)
+    				#end
+				#end
+				#if(!$nextEntryEmpty)
+    				#if($count % 2 != 0)
+        				<div class="detail_group_line float_left_div">
+        				#set($openDIV = true)
+        			#end
+				#end
+				#if($count % 2 != 0)
+    				<div class="float_left width_one_half detail_margin_right">
+						#renderTypeHalf($e)
+					</div>
+					
+    			#else
+					<div class="float_right width_one_half detail_margin_left">
+						#renderTypeHalf($e)
+                    </div>
+				#end
+    			#if(($count % 2 == 0 && $openDIV) || ($count == $elementsAddress.size() && $openDIV))
+    				</div>
+					&nbsp;
+        		#end
+			#end
+		#end
+		#if ($elementsAddress.size() > 0)
+                </div>
+		#end
+    #end
+#end
+
+#macro(renderTypeHalf $e)
+	#if($e.type=="multiLine")
+		#renderMultiLineHalf($e)
+	#elseif($e.type=="textLine")
+		#renderTextLine($e)
+	#elseif($e.type=="textList")
+		#renderTextList($e)
+	#elseif($e.type=="textLinkLine")
+		#renderTextLinkLine($e)
+	#elseif($e.type=="linkLine")
+		#renderLinkLineAddress($e)
+	#elseif($e.type=="textLabelAbove")
+		#renderTextLabelAbove($e)
+	#elseif($e.type=="textLabelDuring")
+		#renderTextLabelDuring($e)
+	#elseif($e.type=="textLabelLeft")
+		#renderTextLabelLeft($e)
+	#elseif($e.type=="line")
+		<div class="line"><hr /></div><br/>
+	#elseif($e.type=="space")
+		<br />
+	#end
+#end
+
 ##Render header 
 #macro (renderDetailHeader $data)
 	<div class="detail_content_background">
-		&nbsp;
-		<span class="clearer_blue"></span>
-		<span class="clearer_dark_blue"></span>
+		<span class="clearer_main_color"></span>
+		<span class="clearer_sub_color"></span>
 		#if($data)
 			<div id="header_title">
-				#renderTitle($data.get("general").get("title"))
-				#foreach($e in $data.elements)
-					#if($e.type=="udkClass")
-						#renderUdkClass($e)
-					#elseif($e.type=="addressType")
-						#renderAddressType($e)
+				#renderTitleHeader($data.get("general").get("title"))
+				#if($tool.hasContent($data.get("elementsGeneral")))
+    				#foreach($e in $data.get("elementsGeneral"))
+    					#if($e.type=="udkClass")
+    						#renderUdkClass($e)
+    					#elseif($e.type=="addressType")
+    						#renderAddressType($e)
+    					#end
+					#end
+				#elseif($tool.hasContent($data.get("elements")))
+					#foreach($e in $data.get("elements"))
+    					#if($e.type=="udkClass")
+    						#renderUdkClass($e)
+    					#elseif($e.type=="addressType")
+    						#renderAddressType($e)
+    					#end
 					#end
 				#end
 			</div>
@@ -170,13 +303,17 @@
 #end
 
 ## Render section title
-#macro (renderSectionTitle $entry)
-	#if($tool.hasContent($entry))
+#macro (renderSectionTitle $title)
+	#if($tool.hasContent($title))
 		#renderGrayLine("2")
-		<h1 class="section_title">
-			$entry
-		</h1>
-		<br />
+		<div class="detail_section_title">
+    		<h1 class="float_left section_title" >
+    			$title
+			</h1>
+            <div class="float_right">
+				<a href="#top"><img class="section_show_hide float_left" src="/ingrid-portal-apps/images/section_to_top.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></a>
+        	</div>
+        </div>
 	#end
 #end
 
@@ -187,7 +324,6 @@
 		<h2 class="group_title">
 			$entry
 		</h2>
-		<br />
 	#end
 #end
 
@@ -234,10 +370,8 @@
 ## Render gray line(s) for section title
 #macro (renderGrayLine $count)
 	#if($count == "1")
-		&nbsp;
-		<span class="clearer_gray"></span>
+		<span class="clearer_gray_small"></span>
 	#elseif($count == "2")
-		&nbsp;
 		<span class="clearer_dark_gray"></span>
 		<span class="clearer_gray"></span>
 	#else
@@ -250,6 +384,11 @@
 #macro (renderTitle $entry)
 	<h1>$entry</h1>
 	<span class="clearer"></span>
+#end
+
+## Render title
+#macro (renderTitleHeader $entry)
+	<h1 class="detail_title_header">$entry</h1>
 #end
 
 ## Render image with description and title
@@ -277,9 +416,9 @@
 #macro (renderTable $entry)	
 	#if($tool.hasContent($entry.get("body")))
 		#if($tool.hasContent($entry.title))
-			#renderSectionTitle($entry.title)
+			#renderGroupTitle($entry.title)
 		#end
-		<table class="border" border="0" id="detail_table">
+		<table class="border detail_table" border="0">
 		#if($tool.hasContent($entry.get("head")))
 			<thead><tr>
 			#foreach($th in $entry.head)
@@ -310,7 +449,7 @@
     				#foreach($td in $tr)
     					#set ($cellCount = $cellCount + 1)
 						#if($cellCount == $tr.size())
-							<td class="detail_table_cell_font">$td $cellCount $tr.size()</td>
+							<td class="detail_table_cell_font">$td</td>
 						#else
 							<td class="detail_table_cell detail_table_cell_font">$td</td>
 						#end
@@ -322,7 +461,6 @@
 		#set ($rowCount = 0)
 		</tbody>
 		</table>
-		</p>
 	#end
 #end
 
@@ -330,47 +468,44 @@
 #macro (renderTextLine $entry)
 	#if($tool.hasContent($entry.body))
 		#if($tool.hasContent($entry.title))
-			<table class="detail_table_text size_2-3" >
-        		<tr>
-        			<td class="detail_table_label">
+			<div class="float_left_div detail_text_link_line">
+        		#if($tool.hasContent($entry.title))
+    				<div class="float_left detail_text_link_line_title">
     					$entry.title
-    				</td>
-					<td class="detail_table_body">
-						$entry.body
-					</td>
-    			</tr>
-			</table>
+    				</div>
+    			#end
+    			<div class="float_left detail_text_link_line_body">
+    				$entry.body
+        		</div>
+			</div>
 		#else
-			<p class="detail_body size_2-3">$entry.body</p>
+			<p class="detail_entry_body">$entry.body</p>
 		#end
-		
 	#end
 #end
 
 ## Render link in line
 #macro (renderTextLinkLine $entry)
 	#if($tool.hasContent($entry.body))
-		<table class="detail_table_text size_2-3">
-    		<tr>
+		<div class="float_left_div detail_text_link_line">
     		#if($tool.hasContent($entry.title))
-				<td class="detail_table_label">
+				<div class="float_left detail_text_link_line_title">
 					$entry.title
-				</td>
+				</div>
 			#end
-			<td class="detail_table_body">
+			<div class="float_left detail_text_link_line_body">
 				<a href="$entry.href" alt="$entry.altText">
 					$entry.body
 				</a>
-    		</td>
-            </tr>
-        </table>
+    		</div>
+        </div>
 	#end
 #end
 
 ## Render entry in line
 #macro (renderEntryInLine $entry)
 	#if($tool.hasContent($entry.title))
-		<table class="detail_table_text size_2-3">
+		<table class="detail_table_text">
     		<tr>
     			<td class="detail_table_label">
     				$entry.title
@@ -389,149 +524,159 @@
 		#if($tool.hasContent($entry.header))
 			#renderSectionTitle($entry.header)
 		#end
+		<div class="width_two_thirds">
 		#if($tool.hasContent($entry.title))
-			<p class="detail_label size_2-3">$entry.title</p>
+			<p class="detail_entry_title">$entry.title</p>
+			&nbsp;
 		#end
-		<p class="detail_body size_2-3">$entry.body</p>
+		<p class="detail_entry_body">$entry.body</p>
+        </div>
 	 #end
 #end
 
 ## Render link in list
 #macro (renderLinkList $entry)
 	#if($tool.hasContent($entry.get("linkList")))
-		#if($tool.hasContent($entry.title))
-			<p id="detail_label size_2-3">$entry.title</p>
-		#end
-		#foreach($link in $sorter.sort($entry.linkList,"title"))
-			#renderLinkLine($link)
-		#end
-		<br/>
+		<div class="width_two_thirds">
+			#if($tool.hasContent($entry.title))
+				#renderLine()
+    			<p class="detail_entry_title">$entry.title</p>
+    		#end
+    		#foreach($link in $sorter.sort($entry.linkList,"title"))
+    			#renderLinkLine($link)
+    		#end
+		</div>
 	#end
 #end
 
 ## Render list
 #macro (renderTextList $entry)
 	#if($tool.hasContent($entry.get("textList")))
-		#if($tool.hasContent($entry.title))
-			#renderSectionTitle($entry.title)
-		#end
-		<ul>
-		#foreach($text in $sorter.sort($entry.textList,"body"))
-			 <li class="detail_li"><p class="detail_li">$text.body</p></li>
-		#end
-		</ul>
+		<div class="width_two_thirds">
+			#renderLine()
+			#if($tool.hasContent($entry.title))
+    			<p class="width_two_thirds detail_list">$entry.title</p>
+				##renderGroupTitle($entry.title)
+    		#end
+        	<div class="width_two_thirds">
+    			<ul>
+        		#foreach($text in $sorter.sort($entry.textList,"body"))
+        			 <li class="detail_li"><p class="detail_li">$text.body</p></li>
+        		#end
+        		</ul>
+    		</div>
+		</div>
 	#end
-	<br/>
 #end
 
 
 ## Render label above text
 #macro (renderTextLabelAbove $entry)
-	<div class="size_2-3">
-	<div class="line"><hr></div>
-    <div class="text_label_above">
-	##if($tool.hasContent($entry.body))	
-     	##if($tool.hasContent($entry.title))
-        	<div class="text_label_above_title">
-				Hallo
-			##$entry.title
-			</div>
-        ##end
-		<p class="text_label_above_body">
-        ##$entry.body
-		$entry
-		</p>
-	##end
-    </div>
-	</div>
-#end
-
-## Render label above text
-#macro (renderTextLabelDuring $entry)
-	<div class="size_2-3">
-	<div class="line"><hr></div>
-		<div class="text_label_during">
-    ##if($tool.hasContent($entry.body))
-		##if($tool.hasContent($entry.title))
-        	<div class="text_label_during_title">
-				Hallo
-			##$entry.title
-			</div>
-        ##end
-		<p class="text_label_during_body">
-        ##$entry.body
-		$entry
-		</p>
-	##end
+	<div class="width_two_thirds">
+		#if($entry.line == true)
+			#renderLine()
+		#end
+        <div class="text_label_above">
+    	#if($tool.hasContent($entry.body))	
+         	#if($tool.hasContent($entry.title))
+            	<div class="text_label_above_title">
+					$entry.title
+    			</div>
+            #end
+    		<p class="text_label_above_body">$entry.body</p>
+    	#end
         </div>
 	</div>
 #end
 
 ## Render label above text
+#macro (renderTextLabelDuring $entry)
+	<div class="width_two_thirds">
+		#renderLine()
+		<div class="text_label_during">
+        #if($tool.hasContent($entry.body))
+    		#if($tool.hasContent($entry.title))
+            	<div class="text_label_during_title">
+    				$entry.title
+    			</div>
+            #end
+    		<p class="text_label_during_body">$entry.body</p>
+    	#end
+       </div>
+	</div>
+#end
+
+## Render label above text
 #macro (renderTextLabelLeft $entry)
-	<div class="size_2-3">
-	<div class="line"><hr></div>
+	<div class="width_two_thirds">
+		#renderLine()
     	<table class="text_label_left">
-			<tr>
-        	##if($tool.hasContent($entry.body))	
-                ##if($tool.hasContent($entry.title))
+    		<tr>
+        	#if($tool.hasContent($entry.body))	
+                #if($tool.hasContent($entry.title))
         		<td class="text_label_left_title">
-                Hallo
-        		##$entry.title
+    				$entry.title
                 </td>
-                ##end
-				<td class="text_label_left_body">
-        		##$entry.body
-        		$entry
-               </td>
-            ##end
-			</tr>
+                #end
+    			<td class="text_label_left_body">
+    				$entry.body
+        		</td>
+            #end
+    		</tr>
         </table>
 	</div>
 #end
 
-## Render tab construct
-#macro (renderTab $entry $addHeader)
-	<div dojoType="TabContainer" doLayout="false" class="mainTabContainer" >
-	#set($elements = $entry.tabList)
-	#foreach($e in $elements)
-		<div dojoType="ContentPane" label="$entry.title" class="subTabContainer">
-			<div id="detail_background">
-				#renderClearer()
-				#if($addHeader == true)
-					#renderDetailHeader($data)
-				#end
-				#if($e.type=="entry")
-					#renderEntry($e)
-				#elseif($e.type=="multiLine")
-					#renderMultiLine($e)
-				#elseif($e.type=="entryInline")
-					#renderEntryInLine($e)
-				#elseif($e.type=="linkList")
-					#renderLinkList($e)
-				#elseif($e.type=="table")
-					#renderTable($e)
-				#elseif($e.type=="textLine")
-					#renderTextLine($e)
-				#elseif($e.type=="linkLine")
-					#renderLinkLine($e)
-				#elseif($e.type=="textLinkLine")
-					#renderTextLinkLine($e)
-				#elseif($e.type=="textList")
-					#renderTextList($e)
-				#elseif($e.type=="tabList")
-					#renderTab($e false)
-				#elseif($e.type=="line")
-					<div class="line"><hr /></div><br/>
-				#elseif($e.type=="space")
-					<p></p>
-				#end
-			</div>
-		</div>
-	#end	
-    </div>
+## Render elements for tabs
+#macro (renderElements $elements)
+	<div class="section">
+		#foreach($e in $elements)
+			#if($e.type=="entry")
+				#renderEntry($e)
+			#elseif($e.type=="multiLine")
+				#renderMultiLine($e)
+			#elseif($e.type=="multiLineAddresses")
+				#renderMultiLineAddresses($e)
+			#elseif($e.type=="entryInline")
+				#renderEntryInLine($e)
+			#elseif($e.type=="linkList")
+				#renderLinkList($e)
+			#elseif($e.type=="textList")
+				#renderTextList($e)
+			#elseif($e.type=="table")
+				#renderTable($e)
+			#elseif($e.type=="textLine")
+				#renderTextLine($e)
+			#elseif($e.type=="linkLine")
+				#renderLinkLine($e)
+			#elseif($e.type=="textLinkLine")
+				#renderTextLinkLine($e)
+			#elseif($e.type=="linkLineAddress")
+				#renderLinkLineAddress($e)
+			#elseif($e.type=="textLabelAbove")
+				#renderTextLabelAbove($e)
+			#elseif($e.type=="textLabelDuring")
+				#renderTextLabelDuring($e)
+			#elseif($e.type=="textLabelLeft")
+				#renderTextLabelLeft($e)
+			#elseif($e.type=="image")
+				#renderImageLine($e)
+			#elseif($e.type=="section")
+				#renderSectionTitle($e.title)
+			#elseif($e.type=="group")
+				#renderGroupTitle($e.title)
+			#elseif($e.type=="beginnDiv")
+				<div>
+			#elseif($e.type=="endDiv")
+				</div>
+			#elseif($e.type=="line")
+				<div class="line"><hr /></div><br/>
+			#elseif($e.type=="space")
+				<br style="clear:both;"/>
+			#end
+		#end
+   </div>
 #end
-
 
 #macro (renderClearer)
 	<script type="text/javascript">
@@ -557,12 +702,6 @@
 
 #set ($action = $renderResponse.createActionURL())
 
-<script type="text/javascript" src="/ingrid-portal-apps/dojo/dojo.js"></script>
-<script type="text/javascript">
-	dojo.require("dojo.widget.TabContainer");
-	dojo.require("dojo.widget.ContentPane");
-</script>
-
 <div id="content_full">
 ## render "zurueck" link if no IngridSession (entry via google)
 ## Remove for new detail view
@@ -577,117 +716,86 @@
 #end
 ##
 	## Remove comment for new detail view
-	##<div class="detail_block">
-    ##	<div dojoType="TabContainer" doLayout="false" class="mainTabContainer" >
-	##		<div dojoType="ContentPane" label="Themen 1">
-				#if($data)
-	##               	<div id="detail_background" >
-    ##                	#renderNoScriptTitle("Themen 1")
-	##					#renderClearer()
-                		## Title header
-						#renderDetailHeader($data)
-    ##            			<div dojoType="TabContainer"  doLayout="false" class="subTabContainer">
-	##							<div dojoType="ContentPane" label="Allgemeines">
-	##								<div id="detail_background">
-	##								#renderNoScriptTitle("Allgemeines")
-	##								#renderClearer()
-	##								<div dojoType="TabContainer"  doLayout="false" class="subSubTabContainer" >
-	##									<div dojoType="ContentPane" label="Themen 1" class="tabContainerContent">
-	##										#renderNoScriptTitle("Themen 1")
-	##										#renderClearer()
-                                            <div class="section">
-                                    		#foreach($e in $data.elements)
-                                    			#if($e.type=="entry")
-                                    				#renderEntry($e)
-                                    			#elseif($e.type=="multiLine")
-                                    				#renderMultiLine($e)
-                                    			#elseif($e.type=="entryInline")
-                                    				#renderEntryInLine($e)
-                                    			#elseif($e.type=="linkList")
-                                    				#renderLinkList($e)
-                                    			#elseif($e.type=="textList")
-                                    				#renderTextList($e)
-                                    			#elseif($e.type=="table")
-                                    				#renderTable($e)
-    											#elseif($e.type=="textLine")
-                                    				#renderTextLine($e)
-                                    			#elseif($e.type=="linkLine")
-                                    				#renderLinkLine($e)
-                                    			#elseif($e.type=="textLinkLine")
-                                    				#renderTextLinkLine($e)
-	##											#elseif($e.type=="image")
-    ##                                				#renderImageLine($e)
-	##											#elseif($e.type=="tab")
-	##												#renderTab($e)
-				                    			#elseif($e.type=="line")
-                                    				<div class="line"><hr /></div><br/>
-                                    			#elseif($e.type=="space")
-                                    				<p></p>
-                                    			#end
-                                    		#end
-                                            </div>
-										</div>
-                                    	
-    ##                                	<div dojoType="ContentPane" label="Themen 2" class="tabContainerContent">
-	##										#renderNoScriptTitle("Themen 2")	
-	##										#renderClearer()
-	##										#set($image = ["/ingrid-portal-apps/images/screendesign_portalu_detailansichtIGC-02.png", "/ingrid-portal-apps/images/logo.gif", "/ingrid-portal-apps/images/index_themen.jpg", "/ingrid-portal-apps/images/logo.gif"])
-	##										#renderImageLine($image)
-	##									</div>
-	##									<div dojoType="ContentPane" label="Themen 3" class="tabContainerContent">
-	##										#renderNoScriptTitle("Themen 3")	
-	##										#renderClearer()
-	##										#set ($text = "Hier kommen die situationsbezogenen Textualitätskriterien ins Spiel: Texte sind auch dadurch bestimmt, dass ein Sender sie mit einer bestimmten Absicht (Intention) produziert und/oder ein Empfänger sie als solche akzeptiert. Ob ein Text für einen bestimmten Empfänger akzeptabel ist, hängt wiederum stark davon ab, ob dieser einen Zusammenhang der empfangenen Äußerung mit seiner Situation herstellen, den Text also in seine Vorstellungswelt „einbauen“ kann (Situationalität), und ob der Text für ihn informativ ist, also in einem bestimmten Verhältnis erwartete und unerwartete, bekannte und neue Elemente enthält. Um auf das Beispiel des Dada-Gedichtes zurückzukommen: Ein nicht offensichtlich kohäsiver oder kohärenter Text kann als solcher akzeptabel sein, wenn der Empfänger davon ausgeht, dass die Intention des Senders ein hohes Maß an überraschenden oder von der Norm abweichenden Elementen im Text erfordert.")
-	##										#renderTextLabelAbove($text)
-    ##                                        #renderTextLabelLeft($text)
-    ##                                        #renderTextLabelDuring($text)
-	##									</div>
-	##								</div>
-	##                              </div>
-    ##                             </div>
-	##							<div dojoType="ContentPane" label="Bez&uuml;ge">
-	##								#renderNoScriptTitle("Bez&uuml;ge")	
-	##								#renderClearer()
-	##							</div>
-	##							<div dojoType="ContentPane" label="Zusatz">
-    ##                            	#renderNoScriptTitle("Zusatz")	
-	##								#renderClearer()
-	##							</div>
-	##							<div dojoType="ContentPane" label="Verf&uuml;gbarkeit">
-    ##                            	#renderNoScriptTitle("Verf&uuml;gbarkeit")	
-	##								#renderClearer()
-	##							</div>
-	##							<div dojoType="ContentPane" label="Verschlagwortung">
-    ##                            	#renderNoScriptTitle("Verschlagwortung")	
-	##								#renderClearer()
-	##							</div>
-	##							<div dojoType="ContentPane" label="Verweise">
-    ##                            	#renderNoScriptTitle("Verweise")	
-	##								#renderClearer()
-	##							</div>
-    ##                      </div>
-	##	        	</div>
-                #else
-                	<p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>
-                	<br/>
-                	<br/>
-                	<br/>
-                	<br/>
-                	<br/>
-                	<br/>
-                	<br/>
-                	<br/>
-                	<br/>
-                	<br/>
-                	<br/>
-                	<br/>
-                	<br/>
-                	<br/>
-                	<br/>
-                	<br/>
-                #end
-			</div>
+	<div class="detail_block">
+	#if($data)
+		<div id="detail_background" >
+			## Title header
+			#renderDetailHeader($data)
+  			<div dojoType="TabContainer"  doLayout="false" class="subTabContainer">
+				#if($tool.hasContent($data.get("elementsGeneral")))
+				<div dojoType="ContentPane" label="$MESSAGES.getString('general_tab')" class="contentTab">
+					<div id="detail_background">
+						#renderNoScriptTitle($MESSAGES.getString('general_tab'))
+						#renderClearer()
+						#renderElements($data.get("elementsGeneral"))
+					</div>
+                </div>
+				#end
+				#if($tool.hasContent($data.get("elementsReference")))
+					<div dojoType="ContentPane" label="$MESSAGES.getString('references_tab')" class="contentTab">
+						#renderNoScriptTitle($MESSAGES.getString('references_tab'))	
+						#renderClearer()
+						#renderElements($data.get("elementsReference"))
+					</div>
+				#end
+				#if($tool.hasContent($data.get("elementsAreaTime")))
+    				<div dojoType="ContentPane" label="$MESSAGES.getString('spacial_reference_tab')" class="contentTab">
+                     	#renderNoScriptTitle($MESSAGES.getString('spacial_reference_tab'))	
+    					#renderClearer()
+						#renderElements($data.get("elementsAreaTime"))
+    				</div>
+				#end
+				#if($tool.hasContent($data.get("elementsSubject")))
+    				<div dojoType="ContentPane" label="$MESSAGES.getString('subject_reference_tab')" class="contentTab">
+                    	#renderNoScriptTitle($MESSAGES.getString('subject_reference_tab'))	
+    					#renderClearer()
+						#renderElements($data.get("elementsSubject"))
+    				</div>
+				#end
+				#if($tool.hasContent($data.get("elementsAvailability")))
+    				<div dojoType="ContentPane" label="$MESSAGES.getString('availability_tab')" class="contentTab">
+                    	#renderNoScriptTitle($MESSAGES.getString('availability_tab'))	
+    					#renderClearer()
+						#renderElements($data.get("elementsAvailability"))
+    				</div>
+				#end
+				#if($tool.hasContent($data.get("elementsAdditionalInfo")))
+					<div dojoType="ContentPane" label="$MESSAGES.getString('additional_information_tab')" class="contentTab">
+						#renderNoScriptTitle($MESSAGES.getString('additional_information_tab'))	
+						#renderClearer()
+						#renderElements($data.get("elementsAdditionalInfo"))
+					</div>
+				#end
+				#if($tool.hasContent($data.get("elements")))
+				<div dojoType="ContentPane" label="$MESSAGES.getString('general_tab')" class="contentTab">
+					<div id="detail_background">
+						#renderNoScriptTitle($MESSAGES.getString('general_tab'))
+						#renderClearer()
+						#renderElements($data.get("elements"))
+					</div>
+                </div>
+				#end
+           </div>
     	</div>
+    #else
+    	<p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+    	<br/>
+    #end
 	</div>
 </div>	
 

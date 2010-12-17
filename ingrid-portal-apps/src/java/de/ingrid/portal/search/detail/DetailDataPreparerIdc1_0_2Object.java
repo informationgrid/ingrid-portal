@@ -70,506 +70,513 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 
 		data.put("general", general);
 		
-		ArrayList elements = new ArrayList();
-		int previousElementsSize = elements.size();
-
+		ArrayList elementsGeneral = new ArrayList();
+		ArrayList elementsReference = new ArrayList();
+		ArrayList elementsAreaTime = new ArrayList();
+		ArrayList elementsSubject = new ArrayList();
+		ArrayList elementsAvailability = new ArrayList();
+		ArrayList elementsAdditionalInfo = new ArrayList();
+		
 		// alternate name
 		String alternateName = record.getString("t01_object.dataset_alternate_name");
 		// udk class
-		addElementUdkClass(elements, record.getString("t01_object.obj_class"));
+		addElementUdkClass(elementsGeneral, record.getString("t01_object.obj_class"));
 		// description
         String description = record.getString("t01_object.obj_descr");
 		if (description != null) {
 			description = description.replaceAll("\n", "<br/>");
 			description = description.replaceAll("<(?!b>|/b>|i>|/i>|u>|/u>|p>|/p>|br>|br/>|br />|strong>|/strong>|ul>|/ul>|ol>|/ol>|li>|/li>)[^>]*>", "");
         }
-		addElementEntry(elements, description, null, alternateName);
-		
-		if (previousElementsSize < elements.size()) {
-			// add horizontal line
-			addLine(elements);
-			previousElementsSize = elements.size();
+
+// tab "General"
+		// description
+		List listSuperiorObjects = getLinkListOfObjectsFromQuery("children.object_node.obj_uuid:".concat(record.getString("t01_object.obj_uuid")).concat(
+        	" iplugs:\"").concat(DetailDataPreparerHelper.getPlugIdFromAddressPlugId(iPlugId)).concat("\""));
+		List listSubordinatedObjects = getLinkListOfObjectsFromQuery("parent.object_node.obj_uuid:".concat(record.getString("t01_object.obj_uuid")).concat(
+        	" iplugs:\"").concat(DetailDataPreparerHelper.getPlugIdFromAddressPlugId(iPlugId)).concat("\""));
+
+		if((description != null && description.length() > 0) || alternateName != null || listSuperiorObjects.size() > 0 || listSubordinatedObjects.size() > 0){
+			addSectionTitle(elementsGeneral, messages.getString("detail_description"));
+			addElementEntryLabelAbove(elementsGeneral, description, alternateName, false);
+			// superior objects
+			addSuperiorObjects(elementsGeneral, listSuperiorObjects);
+			// subordinated objects
+			addSubordinatedObjects(elementsGeneral, listSubordinatedObjects);
+			// close description
+			closeDiv(elementsGeneral);
 		}
 		
-		// superior objects
-		addSuperiorObjects(elements, record.getString("t01_object.obj_uuid"));
+		// addresses
+		addAddresses(elementsGeneral, record);
 
-		// subordinated objects
-		addSubordinatedObjects(elements, record.getString("t01_object.obj_uuid"));
-
-		// cross referenced objects
-		addCrossReferencedObjects(elements, record.getString("t01_object.id"));
+// tab "Reference"
+		// add index information
+		addIndexInformation(elementsReference, record);
 		
-		//	URL references
-		addUrlReferences(elements, record);
-
-		if (previousElementsSize < elements.size()) {
-			// add horizontal line
-			addLine(elements);
-			previousElementsSize = elements.size();
-		}
-
-		//	addresses
-		addAddresses(elements, record);
-
-		if (previousElementsSize < elements.size()) {
-			// add horizontal line
-			addLine(elements);
-			previousElementsSize = elements.size();
-		}
-		
-		// add subject data
-		if (objClassStr.equals("5")) {
-			addReferenceObjectClass5(elements, record);
-		} else if (objClassStr.equals("3")) {
-			addReferenceObjectClass3(elements, record);
-		} else if (objClassStr.equals("2")) {
-			addReferenceObjectClass2(elements, record);
-		} else if (objClassStr.equals("4")) {
-			addReferenceObjectClass4(elements, record);
-		} else if (objClassStr.equals("1")) {
-			addReferenceObjectClass1(elements, record);
+// tab "Subject"
+		if(getSubRecordsByColumnName(record, "t011_obj_data_para.line").size() > 0 || getSubRecordsByColumnName(record, "t011_obj_serv.description").size() > 0
+				|| getSubRecordsByColumnName(record, "t011_obj_literatur.publisher").size() > 0 || getSubRecordsByColumnName(record, "t011_obj_project.leader").size() > 0 
+				|| getSubRecordsByColumnName(record, "t011_obj_geo.special_base").size() > 0){
+			
+			addSectionTitle(elementsSubject, messages.getString("subject_reference"));
+    		// add subject data
+			if (objClassStr.equals("5")) {
+				addReferenceObjectClass5(elementsSubject, record);
+			} else if (objClassStr.equals("3")) {
+				addReferenceObjectClass3(elementsSubject, record);
+			} else if (objClassStr.equals("2")) {
+				addReferenceObjectClass2(elementsSubject, record);
+			} else if (objClassStr.equals("4")) {
+				addReferenceObjectClass4(elementsSubject, record);
+			} else if (objClassStr.equals("1")) {
+				addReferenceObjectClass1(elementsSubject, record);
+			}
+			closeDiv(elementsSubject);
 		}
 		
-		if (previousElementsSize < elements.size()) {
-			// add horizontal line
-			addLine(elements);
-			previousElementsSize = elements.size();
-		}
-
+// tab "Area/Time"
 		// add spatial reference data
-		addSpatialReference(elements, record);
-
-		if (previousElementsSize < elements.size()) {
-			// add horizontal line
-			addLine(elements);
-			previousElementsSize = elements.size();
-		}
+		addSpatialReference(elementsAreaTime, record);
 		
 		// add time reference data
-		addTimeReference(elements, record);
+		addTimeReference(elementsAreaTime, record);
 
-		if (previousElementsSize < elements.size()) {
-			// add horizontal line
-			addLine(elements);
-			previousElementsSize = elements.size();
-		}
-		
+// tab "Availability"
 		// add availability information
-		addAvailabilityInformation(elements, record);
-
-		if (previousElementsSize < elements.size()) {
-			// add horizontal line
-			addLine(elements);
-			previousElementsSize = elements.size();
-		}
+		addAvailabilityInformation(elementsAvailability, record);
 		
 		// add additional information
-		addAdditionalInformation(elements, record);
-
-		if (previousElementsSize < elements.size()) {
-			// add horizontal line
-			addLine(elements);
-			previousElementsSize = elements.size();
-		}
-
-		// add index information
-		addIndexInformation(elements, record);
-		
-		data.put("elements", elements);
+		addAdditionalInformation(elementsAdditionalInfo, record);
+	
+		data.put("elementsGeneral", elementsGeneral);
+		data.put("elementsReference", elementsReference);
+		data.put("elementsAreaTime", elementsAreaTime);
+		data.put("elementsSubject", elementsSubject);
+		data.put("elementsAvailability", elementsAvailability);
+		data.put("elementsAdditionalInfo", elementsAdditionalInfo);
 		
 		context.put("data", data);
 	}
 	
-	
 	private void addIndexInformation(List elements, Record record) {
-
-    	// index references
-		List listRecords = getSubRecordsByColumnName(record, "t04_search.type");
-    	if (listRecords.size() > 0) {
-	    	ArrayList textListEntries = new ArrayList();
-	    	for (int i=0; i<listRecords.size(); i++) {
-	    		Record listRecord = (Record)listRecords.get(i);
-	    		HashMap listEntry = new HashMap();
-	    		listEntry.put("type", "textList");
-	    		listEntry.put("body", listRecord.getString("searchterm_value.term"));
-	        	if (!isEmptyList(listEntry)) {
-	        		textListEntries.add(listEntry);
-	        	}
-	    	}
-	    	if (textListEntries.size() > 0) {
-		    	HashMap element = new HashMap();
-		    	element.put("type", "textList");
-		    	element.put("title", messages.getString("search_terms"));
-		    	element.put("textList", textListEntries);
-	    	    elements.add(element);
-	    	}
-    	}
-
-    	// topic categories
-		listRecords = getSubRecordsByColumnName(record, "t011_obj_topic_cat.line");
-    	if (listRecords.size() > 0) {
-	    	ArrayList textListEntries = new ArrayList();
-	    	for (int i=0; i<listRecords.size(); i++) {
-	    		Record listRecord = (Record)listRecords.get(i);
-	    		HashMap listEntry = new HashMap();
-	    		listEntry.put("type", "textLine");
-	    		listEntry.put("body", sysCodeList.getName("527", listRecord.getString("t011_obj_topic_cat.topic_category")));
-	        	if (!isEmptyList(listEntry)) {
-	        		textListEntries.add(listEntry);
-	        	}
-	    	}
-	    	if (textListEntries.size() > 0) {
-		    	HashMap element = new HashMap();
-		    	element.put("type", "textLine");
-		    	element.put("title", messages.getString("t011_obj_geo_topic_cat.topic_category"));
-		    	element.put("textLine", textListEntries);
-	    	    elements.add(element);
-	    	}
-    	}
-
-    	// environment categories
-		listRecords = getSubRecordsByColumnName(record, "t0114_env_category.cat_value");
-    	if (listRecords.size() > 0) {
-    		ArrayList lines = new ArrayList();
-	    	for (int i=0; i<listRecords.size(); i++) {
-	    		Record listRecord = (Record)listRecords.get(i);
-	    		String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
-	            if (listRecord != null && listRecord.get("syslist.lang_id") != null && listRecord.get("syslist.lang_id").equals(lang)) {
-		    		HashMap line = new HashMap();
-		        	line.put("type", "textLine");
-		        	line.put("body", listRecord.get("syslist.name"));
-		        	if (!isEmptyLine(line)) {
-		        		lines.add(line);
+		List listType = getSubRecordsByColumnName(record, "t04_search.type");
+		List listObjTopicCat = getSubRecordsByColumnName(record, "t011_obj_topic_cat.line");
+		List listEnvCategory = getSubRecordsByColumnName(record, "t0114_env_category.cat_value");
+		List listEnvTopic = getSubRecordsByColumnName(record, "t0114_env_topic.topic_name");
+		
+		if (listType.size() > 0 || listObjTopicCat.size() > 0 || listEnvCategory.size() > 0 || listEnvTopic.size() > 0) {
+			addSectionTitle(elements, messages.getString("thesaurus"));
+		    // index references
+			if (listType.size() > 0) {
+	    		ArrayList textListEntries = new ArrayList();
+		    	for (int i=0; i<listType.size(); i++) {
+		    		Record listRecord = (Record)listType.get(i);
+		    		HashMap listEntry = new HashMap();
+		    		listEntry.put("type", "textList");
+		    		listEntry.put("body", listRecord.getString("searchterm_value.term"));
+		        	if (!isEmptyList(listEntry)) {
+		        		textListEntries.add(listEntry);
 		        	}
-	    		}
+		    	}
+		    	if (textListEntries.size() > 0) {
+			    	HashMap element = new HashMap();
+			    	element.put("type", "textList");
+			    	element.put("title", messages.getString("search_terms"));
+			    	element.put("textList", textListEntries);
+		    	    elements.add(element);
+		    	}
 	    	}
-	    	if (lines.size() > 0) {
-		    	HashMap element = new HashMap();
-		    	element.put("type", "multiLine");
-		    	element.put("title", messages.getString("t0114_env_category"));
-		    	element.put("elements", lines);
-	    	    elements.add(element);
-	    	}
-    	}
-    	
-    	// environment topics
-		listRecords = getSubRecordsByColumnName(record, "t0114_env_topic.topic_name");
-    	if (listRecords.size() > 0) {
-    		ArrayList lines = new ArrayList();
-	    	for (int i=0; i<listRecords.size(); i++) {
-	    		Record listRecord = (Record)listRecords.get(i);
-	    		String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
-	            if (listRecord != null && listRecord.get("syslist.lang_id") != null && listRecord.get("syslist.lang_id").equals(lang)) {
-		    		HashMap line = new HashMap();
-		        	line.put("type", "textLine");
-		        	line.put("body", listRecord.get("syslist.name"));
-		        	if (!isEmptyLine(line)) {
-		        		lines.add(line);
+	
+	    	// topic categories
+	    	if (listObjTopicCat.size() > 0) {
+		    	ArrayList textListEntries = new ArrayList();
+		    	for (int i=0; i<listObjTopicCat.size(); i++) {
+		    		Record listRecord = (Record)listObjTopicCat.get(i);
+		    		HashMap listEntry = new HashMap();
+		    		listEntry.put("type", "textList");
+		    		listEntry.put("body", sysCodeList.getName("527", listRecord.getString("t011_obj_topic_cat.topic_category")));
+		        	if (!isEmptyList(listEntry)) {
+		        		textListEntries.add(listEntry);
 		        	}
-	    		}
+		    	}
+		    	if (textListEntries.size() > 0) {
+			    	HashMap element = new HashMap();
+			    	element.put("type", "textList");
+			    	element.put("title", messages.getString("t011_obj_geo_topic_cat.topic_category"));
+			    	element.put("textList", textListEntries);
+		    	    elements.add(element);
+		    	}
+		 	}
+	
+	    	// environment categories
+	    	if (listEnvCategory.size() > 0) {
+	    		ArrayList textListEntries = new ArrayList();
+		    	for (int i=0; i<listEnvCategory.size(); i++) {
+		    		Record listRecord = (Record)listEnvCategory.get(i);
+		    		String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
+		            if (listRecord != null && listRecord.get("syslist.lang_id") != null && listRecord.get("syslist.lang_id").equals(lang)) {
+			    		HashMap listEntry = new HashMap();
+			        	listEntry.put("type", "textList");
+			        	listEntry.put("body", listRecord.get("syslist.name"));
+			        	if (!isEmptyList(listEntry)) {
+			        		textListEntries.add(listEntry);
+			        	}
+		    		}
+		    	}
+		    	if (textListEntries.size() > 0) {
+			    	HashMap element = new HashMap();
+			    	element.put("type", "textList");
+			    	element.put("title", messages.getString("t0114_env_category"));
+			    	element.put("textList", textListEntries);
+		    	    elements.add(element);
+		    	}
 	    	}
-	    	if (lines.size() > 0) {
-		    	HashMap element = new HashMap();
-		    	element.put("type", "multiLine");
-		    	element.put("title", messages.getString("t0114_env_topic"));
-		    	element.put("elements", lines);
-	    	    elements.add(element);
-	    	}
-    	}
-    	
+	    	
+	    	// environment topics
+	    	if (listEnvTopic.size() > 0) {
+	    		ArrayList textListEntries = new ArrayList();
+		    	for (int i=0; i<listEnvTopic.size(); i++) {
+		    		Record listRecord = (Record)listEnvTopic.get(i);
+		    		String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
+		            if (listRecord != null && listRecord.get("syslist.lang_id") != null && listRecord.get("syslist.lang_id").equals(lang)) {
+			    		HashMap listEntry = new HashMap();
+			        	listEntry.put("type", "textList");
+			        	listEntry.put("body", listRecord.get("syslist.name"));
+			        	if (!isEmptyList(listEntry)) {
+			        		textListEntries.add(listEntry);
+			        	}
+		    		}
+		    	}
+		    	if (textListEntries.size() > 0) {
+			    	HashMap element = new HashMap();
+			    	element.put("type", "textList");
+			    	element.put("title", messages.getString("t0114_env_topic"));
+			    	element.put("textList", textListEntries);
+		    	    elements.add(element);
+		    	}
+    		}
+	    	closeDiv(elements);
+		}
 	}
 
 	private void addAdditionalInformation(List elements, Record record) {
 
-   		if (UtilsVelocity.hasContent(record.getString("t01_object.metadata_language")).booleanValue()) {
-   			addElementEntryInline(elements, messages.getString("iso.language.code.".concat(record.getString("t01_object.metadata_language"))), messages.getString("t01_object.metadata_language"));
-   		}
-   		if (UtilsVelocity.hasContent(record.getString("t01_object.data_language")).booleanValue()) {
-   			addElementEntryInline(elements, messages.getString("iso.language.code.".concat(record.getString("t01_object.data_language"))), messages.getString("t01_object.data_language"));
-   		}
-		
-    	// legal references
-		List listRecords = getSubRecordsByColumnName(record, "t015_legist.name");
-    	if (listRecords.size() > 0) {
-	    	ArrayList lines = new ArrayList();
-	    	for (int i=0; i<listRecords.size(); i++) {
-	    		Record listRecord = (Record)listRecords.get(i);
-	    		HashMap line = new HashMap();
-	        	line.put("type", "textLine");
-	        	line.put("body", listRecord.getString("t015_legist.legist_value"));
-	        	if (!isEmptyLine(line)) {
-	        		lines.add(line);
-	        	}
-	    	}
-	    	if (lines.size() > 0) {
-		    	HashMap element = new HashMap();
-		    	element.put("type", "multiLine");
-		    	element.put("title", messages.getString("legal_basis"));
-		    	element.put("elements", lines);
-	    	    elements.add(element);
-	    	}
-    	}
-        
-        // XML-export-criteria
-        List listXMLRecords = getSubRecordsByColumnName(record, "t014_info_impart.impart_value");
-        if (listXMLRecords.size() > 0) {
-            ArrayList lines = new ArrayList();
-            for (int i=0; i<listXMLRecords.size(); i++) {
-                Record listRecord = (Record)listXMLRecords.get(i);
-                HashMap line = new HashMap();
-                line.put("type", "textLine");
-                line.put("body", listRecord.getString("t014_info_impart.impart_value"));
-                if (!isEmptyLine(line)) {
-                    lines.add(line);
-                }
-            }
-            if (lines.size() > 0) {
-                HashMap element = new HashMap();
-                element.put("type", "multiLine");
-                element.put("title", messages.getString("t014_info_impart.name"));
-                element.put("elements", lines);
-                elements.add(element);
-            }
-        }
+   		List listLegalReferences = getSubRecordsByColumnName(record, "t015_legist.name");
+   		List listXMLRecords = getSubRecordsByColumnName(record, "t014_info_impart.impart_value");
+   		String metadataLanguage = record.getString("t01_object.metadata_language");
+   		String dataLanguage = record.getString("t01_object.data_language");
+   		String  datasetUsage = record.getString("t01_object.dataset_usage");
+   		String  infoNote = record.getString("t01_object.info_note");
    		
-    	addElementEntry(elements, record.getString("t01_object.dataset_usage"), messages.getString("t01_object.dataset_usage"));
-   		addElementEntry(elements, record.getString("t01_object.info_note"), messages.getString("t01_object.info_note"));
-	}
+   		if(listLegalReferences.size() > 0 || listXMLRecords.size() > 0 || UtilsVelocity.hasContent(metadataLanguage).booleanValue()
+   			|| UtilsVelocity.hasContent(dataLanguage).booleanValue() || UtilsVelocity.hasContent(datasetUsage).booleanValue()
+   			|| UtilsVelocity.hasContent(infoNote).booleanValue()){
+   			
+   			addSectionTitle(elements, messages.getString("additional_information"));
+   			if (UtilsVelocity.hasContent(metadataLanguage).booleanValue()) {
+   				addElementEntryLabelLeft(elements, messages.getString("iso.language.code.".concat(metadataLanguage)), messages.getString("t01_object.metadata_language"));
+   			}
+   			if (UtilsVelocity.hasContent(dataLanguage).booleanValue()) {
+   				addElementEntryLabelLeft(elements, messages.getString("iso.language.code.".concat(dataLanguage)), messages.getString("t01_object.data_language"));
+   			}
+			// legal references
+			if (listLegalReferences.size() > 0) {
+		    	ArrayList textListEntries = new ArrayList();
+		    	for (int i=0; i<listLegalReferences.size(); i++) {
+		    		Record listRecord = (Record)listLegalReferences.get(i);
+		    		HashMap listEntry = new HashMap();
+		        	listEntry.put("type", "textList");
+		        	listEntry.put("body", listRecord.getString("t015_legist.legist_value"));
+		        	if (!isEmptyList(listEntry)) {
+		        		textListEntries.add(listEntry);
+		        	}
+		    	}
+		    	if (textListEntries.size() > 0) {
+			    	HashMap element = new HashMap();
+			    	element.put("type", "textList");
+			    	element.put("title", messages.getString("legal_basis"));
+			    	element.put("textList", textListEntries);
+		    	    elements.add(element);
+		    	}
+	    	}
+	        
+	        // XML-export-criteria
+	        if (listXMLRecords.size() > 0) {
+	            ArrayList textListEntries = new ArrayList();
+	            for (int i=0; i<listXMLRecords.size(); i++) {
+	                Record listRecord = (Record)listXMLRecords.get(i);
+	                HashMap listEntry = new HashMap();
+	                listEntry.put("type", "textList");
+	                listEntry.put("body", listRecord.getString("t014_info_impart.impart_value"));
+	                if (!isEmptyList(listEntry)) {
+	                    textListEntries.add(listEntry);
+	                }
+	            }
+	            if (textListEntries.size() > 0) {
+	                HashMap element = new HashMap();
+	                element.put("type", "textList");
+	                element.put("title", messages.getString("t014_info_impart.name"));
+	                element.put("textList", textListEntries);
+	                elements.add(element);
+	            }
+	        }
+	        if (UtilsVelocity.hasContent(datasetUsage).booleanValue()) {
+				addElementEntryLabelLeft(elements, datasetUsage, messages.getString("t01_object.dataset_usage"));
+			}
+	   		if (UtilsVelocity.hasContent(infoNote).booleanValue()) {
+				addElementEntryLabelLeft(elements, infoNote, messages.getString("t01_object.info_note"));
+			}
+	    	closeDiv(elements);
+	   	}
+   	}
 	
 	
 	private void addAvailabilityInformation(List elements, Record record) {
-		List tableRecords = getSubRecordsByColumnName(record, "t0110_avail_format.line");
-		if (tableRecords.size() > 0) {
-	    	HashMap element = new HashMap();
-	    	element.put("type", "table");
-	    	element.put("title", messages.getString("data_format"));
-			ArrayList head = new ArrayList();
-			head.add(messages.getString("t0110_avail_format.name"));
-			head.add(messages.getString("t0110_avail_format.version"));
-			head.add(messages.getString("t0110_avail_format.file_decompression_technique"));
-			head.add(messages.getString("t0110_avail_format.specification"));
-			element.put("head", head);
-			ArrayList body = new ArrayList();
-			element.put("body", body);
-	    	for (int i=0; i<tableRecords.size(); i++) {
-	    		Record tableRecord = (Record)tableRecords.get(i);
-	    		ArrayList row = new ArrayList();
-	    		row.add(notNull(tableRecord.getString("t0110_avail_format.format_value")));
-	    		row.add(notNull(tableRecord.getString("t0110_avail_format.ver")));
-	    		row.add(notNull(tableRecord.getString("t0110_avail_format.file_decompression_technique")));
-	    		row.add(notNull(tableRecord.getString("t0110_avail_format.specification")));
-	    		if (!isEmptyRow(row)) {
-	    			body.add(row);
-	    		}
-	    	}
-	    	if (body.size() > 0) {
-		    	elements.add(element);
-		    	element = new HashMap();
-		    	element.put("type", "space");
-				elements.add(element);
-	    	}
-	    	
+		List listAvailFormat = getSubRecordsByColumnName(record, "t0110_avail_format.line");
+		List listMediaOption = getSubRecordsByColumnName(record, "t0112_media_option.line");
+		String orderingInstructions = record.getString("t01_object.ordering_instructions");
+		String availAccess = record.getString("t01_object.avail_access_note");
+		String fees = record.getString("t01_object.fees");
+		
+		if(listAvailFormat.size() > 0  || listMediaOption.size() > 0 || UtilsVelocity.hasContent(orderingInstructions).booleanValue()
+				|| UtilsVelocity.hasContent(availAccess).booleanValue() || UtilsVelocity.hasContent(fees).booleanValue()){
+			
+			addSectionTitle(elements, messages.getString("availability"));
+			if (listAvailFormat.size() > 0) {
+		    	HashMap element = new HashMap();
+		    	element.put("type", "table");
+		    	element.put("title", messages.getString("data_format"));
+				ArrayList head = new ArrayList();
+				head.add(messages.getString("t0110_avail_format.name"));
+				head.add(messages.getString("t0110_avail_format.version"));
+				head.add(messages.getString("t0110_avail_format.file_decompression_technique"));
+				head.add(messages.getString("t0110_avail_format.specification"));
+				element.put("head", head);
+				ArrayList body = new ArrayList();
+				element.put("body", body);
+		    	for (int i=0; i<listAvailFormat.size(); i++) {
+		    		Record tableRecord = (Record)listAvailFormat.get(i);
+		    		ArrayList row = new ArrayList();
+		    		row.add(notNull(tableRecord.getString("t0110_avail_format.format_value")));
+		    		row.add(notNull(tableRecord.getString("t0110_avail_format.ver")));
+		    		row.add(notNull(tableRecord.getString("t0110_avail_format.file_decompression_technique")));
+		    		row.add(notNull(tableRecord.getString("t0110_avail_format.specification")));
+		    		if (!isEmptyRow(row)) {
+		    			body.add(row);
+		    		}
+		    	}
+		    	if (body.size() > 0) {
+			    	elements.add(element);
+			    	addSpace(elements);
+		    	}
+			}
+	
+			if (listMediaOption.size() > 0) {
+		    	HashMap element = new HashMap();
+		    	element.put("type", "table");
+		    	element.put("title", messages.getString("t0112_media_option.medium"));
+				ArrayList head = new ArrayList();
+				head.add(messages.getString("t0112_media_option.medium_name"));
+				head.add(messages.getString("t0112_media_option.transfer_size"));
+				head.add(messages.getString("t0112_media_option.medium_note"));
+				element.put("head", head);
+				ArrayList body = new ArrayList();
+				element.put("body", body);
+		    	for (int i=0; i<listMediaOption.size(); i++) {
+		    		Record tableRecord = (Record)listMediaOption.get(i);
+		    		ArrayList row = new ArrayList();
+		    		row.add(notNull(sysCodeList.getName("520", tableRecord.getString("t0112_media_option.medium_name"))));
+		    		row.add(notNull(tableRecord.getString("t0112_media_option.transfer_size")));
+		    		row.add(notNull(tableRecord.getString("t0112_media_option.medium_note")));
+		    		if (!isEmptyRow(row)) {
+		    			body.add(row);
+		    		}
+		    	}
+		    	if (body.size() > 0) {
+					elements.add(element);
+				}
+			}
+	   		addElementEntryLabelLeft(elements, orderingInstructions, messages.getString("t01_object.ordering_instructions"));
+	   		addElementEntryLabelLeft(elements, availAccess, messages.getString("t01_object.avail_access_note"));
+	   		addElementEntryLabelLeft(elements, fees, messages.getString("t01_object.fees"));
+	   		closeDiv(elements);
 		}
-
-		tableRecords = getSubRecordsByColumnName(record, "t0112_media_option.line");
-		if (tableRecords.size() > 0) {
-	    	HashMap element = new HashMap();
-	    	element.put("type", "table");
-	    	element.put("title", messages.getString("t0112_media_option.medium"));
-			ArrayList head = new ArrayList();
-			head.add(messages.getString("t0112_media_option.medium_name"));
-			head.add(messages.getString("t0112_media_option.transfer_size"));
-			head.add(messages.getString("t0112_media_option.medium_note"));
-			element.put("head", head);
-			ArrayList body = new ArrayList();
-			element.put("body", body);
-	    	for (int i=0; i<tableRecords.size(); i++) {
-	    		Record tableRecord = (Record)tableRecords.get(i);
-	    		ArrayList row = new ArrayList();
-	    		row.add(notNull(sysCodeList.getName("520", tableRecord.getString("t0112_media_option.medium_name"))));
-	    		row.add(notNull(tableRecord.getString("t0112_media_option.transfer_size")));
-	    		row.add(notNull(tableRecord.getString("t0112_media_option.medium_note")));
-	    		if (!isEmptyRow(row)) {
-	    			body.add(row);
-	    		}
-	    	}
-	    	elements.add(element);
-	    	element = new HashMap();
-	    	element.put("type", "space");
-			elements.add(element);
-		}
-   		addElementEntry(elements, record.getString("t01_object.ordering_instructions"), messages.getString("t01_object.ordering_instructions"));
-   		addElementEntry(elements, record.getString("t01_object.avail_access_note"), messages.getString("t01_object.avail_access_note"));
-   		addElementEntry(elements, record.getString("t01_object.fees"), messages.getString("t01_object.fees"));
-   		
 	}
 
 	
 	private void addTimeReference(List elements, Record record) {
     	// time reference
 		List refRecords = getSubRecordsByColumnName(record, "t01_object.id");
-    	if (refRecords.size() > 0) {
-	    	for (int i=0; i<refRecords.size(); i++) {
-	    		Record refRecord = (Record)refRecords.get(i);
-       	    	String timeType = refRecord.getString("t01_object.time_type");
-	    		if(UtilsVelocity.hasContent(timeType).booleanValue()) {
-	       	    	String entryLine = "";
-	       	    	if (timeType.equals("von") && refRecord.getString("t01_object.time_from") != null && refRecord.getString("t01_object.time_to") != null) {
-	       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.from")).concat(": ");
-	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_from").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
-	       	    		entryLine = entryLine.concat(" ").concat(messages.getString("search.detail.time.to")).concat(": ");
-	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_to").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
-	       	    	} else if (timeType.equals("seit") && refRecord.getString("t01_object.time_from") != null) {
-	       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.since")).concat(": ");
-	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_from").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
-	       	    	} else if (timeType.equals("am") && refRecord.getString("t01_object.time_from") != null) {
-	       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.at")).concat(": ");
-	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_from").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
-	       	    	} else if (timeType.equals("bis") && refRecord.getString("t01_object.time_to") != null) {
-	       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.until")).concat(": ");
-	       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_to").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
-	       	    	}
-	       	    	if (entryLine.length() > 0) {
-	       	    		addElementEntry(elements, entryLine, messages.getString("time_reference_content"));
-	       	    	}
-	    		}
-	    	}
-    	}
-    	
-    	addElementEntry(elements, sysCodeList.getName("523", record.getString("t01_object.time_status")), messages.getString("t01_object.time_status"));
-    	addElementEntry(elements, sysCodeList.getName("518", record.getString("t01_object.time_period")), messages.getString("t01_object.time_period"));
-    	if (UtilsVelocity.hasContent(record.getString("t01_object.time_alle")).booleanValue() 
-    			&& UtilsVelocity.hasContent(record.getString("t01_object.time_interval")).booleanValue()) {
-        	String entryLine = record.getString("t01_object.time_alle").concat(" ").concat(record.getString("t01_object.time_interval"));
-    		addElementEntry(elements, entryLine, messages.getString("t01_object.time_interval"));
-    	}
-    	
-    	// time references
 		List listRecords = getSubRecordsByColumnName(record, "t0113_dataset_reference.line");
-    	if (listRecords.size() > 0) {
-	    	ArrayList lines = new ArrayList();
-	    	for (int i=0; i<listRecords.size(); i++) {
-	    		Record listRecord = (Record)listRecords.get(i);
-	    		HashMap line = new HashMap();
-	        	line.put("type", "textLine");
-	        	line.put("title", sysCodeList.getName("502", listRecord.getString("t0113_dataset_reference.type")).concat(":"));
-	        	line.put("body", UtilsDate.convertDateString(notNull(listRecord.getString("t0113_dataset_reference.reference_date")).trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
-	        	if (!isEmptyLine(line)) {
-	        		lines.add(line);
-	        	}
+		String timeAlle = record.getString("t01_object.time_alle");
+		String timeDescr = record.getString("t01_object.time_descr");
+		String timeInterval = record.getString("t01_object.time_interval");
+		String timeStatus = record.getString("t01_object.time_status");
+		String timePeriod = record.getString("t01_object.time_period");
+		
+		if(refRecords.size() > 0 || listRecords.size() > 0 || UtilsVelocity.hasContent(timeDescr).booleanValue() 
+				|| UtilsVelocity.hasContent(timeAlle).booleanValue() || UtilsVelocity.hasContent(timeInterval).booleanValue() 
+				|| UtilsVelocity.hasContent(timeStatus).booleanValue() || UtilsVelocity.hasContent(timePeriod).booleanValue() ){
+			
+			addSectionTitle(elements, messages.getString("time_reference"));
+	    	if (refRecords.size() > 0) {
+		    	for (int i=0; i<refRecords.size(); i++) {
+		    		Record refRecord = (Record)refRecords.get(i);
+	       	    	String timeType = refRecord.getString("t01_object.time_type");
+		    		if(UtilsVelocity.hasContent(timeType).booleanValue()) {
+		       	    	String entryLine = "";
+		       	    	if (timeType.equals("von") && refRecord.getString("t01_object.time_from") != null && refRecord.getString("t01_object.time_to") != null) {
+		       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.from")).concat(": ");
+		       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_from").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+		       	    		entryLine = entryLine.concat(" ").concat(messages.getString("search.detail.time.to")).concat(": ");
+		       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_to").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+		       	    	} else if (timeType.equals("seit") && refRecord.getString("t01_object.time_from") != null) {
+		       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.since")).concat(": ");
+		       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_from").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+		       	    	} else if (timeType.equals("am") && refRecord.getString("t01_object.time_from") != null) {
+		       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.at")).concat(": ");
+		       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_from").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+		       	    	} else if (timeType.equals("bis") && refRecord.getString("t01_object.time_to") != null) {
+		       	    		entryLine = entryLine.concat(messages.getString("search.detail.time.until")).concat(": ");
+		       	    		entryLine = entryLine.concat(UtilsDate.convertDateString(refRecord.getString("t01_object.time_to").trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"));
+		       	    	}
+		       	    	if (entryLine.length() > 0) {
+		       	    		addElementEntryLabelLeft(elements, entryLine, messages.getString("time_reference_content"));
+		       	    	}
+		    		}
+		    	}
 	    	}
-	    	if (lines.size() > 0) {
-		    	HashMap element = new HashMap();
-		    	element.put("type", "multiLine");
-		    	element.put("title", messages.getString("time_reference_record"));
-		    	element.put("elements", lines);
-	    	    elements.add(element);
+	    	
+	    	addElementEntryLabelLeft(elements, sysCodeList.getName("523", timeStatus), messages.getString("t01_object.time_status"));
+	    	addElementEntryLabelLeft(elements, sysCodeList.getName("518", timePeriod), messages.getString("t01_object.time_period"));
+	    	if (UtilsVelocity.hasContent(timeAlle).booleanValue() 
+	    			&& UtilsVelocity.hasContent(timeInterval).booleanValue()) {
+	        	String entryLine = timeAlle.concat(" ").concat(timeInterval);
+	    		addElementEntryLabelLeft(elements, entryLine, messages.getString("t01_object.time_interval"));
 	    	}
+	    	
+	    	// time references
+			if (listRecords.size() > 0) {
+	    		ArrayList lines = new ArrayList();
+		    	for (int i=0; i<listRecords.size(); i++) {
+		    		Record listRecord = (Record)listRecords.get(i);
+		    		addElementEntryLabelLeft(elements, UtilsDate.convertDateString(notNull(listRecord.getString("t0113_dataset_reference.reference_date")).trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"), sysCodeList.getName("502", listRecord.getString("t0113_dataset_reference.type")));
+		    	}
+		    }
+			addElementEntryLabelLeft(elements, timeDescr, messages.getString("t01_object.time_descr"));
+			closeDiv(elements);
     	}
-    	addElementEntry(elements, record.getString("t01_object.time_descr"), messages.getString("t01_object.time_descr"));
-	}
+    }
 
 	
 	private void addSpatialReference(List elements, Record record) {
     	// geo thesaurus references
 		List refRecords = getSubRecordsByColumnName(record, "spatial_ref_value.name_value");
-    	if (refRecords.size() > 0) {
-	    	ArrayList lines = new ArrayList();
-	    	for (int i=0; i<refRecords.size(); i++) {
-	    		Record listRecord = (Record)refRecords.get(i);
-	        	if (listRecord.getString("spatial_ref_value.type") != null && listRecord.getString("spatial_ref_value.type").equals("G")) {
-		    		HashMap line = new HashMap();
-		        	line.put("type", "textLine");
-		        	String textLine = listRecord.getString("spatial_ref_value.name_value");
-		        	if (textLine != null && listRecord.getString("spatial_ref_value.nativekey") != null) {
-		        		textLine = textLine.concat(" (").concat(listRecord.getString("spatial_ref_value.nativekey")).concat(")");
-		        	}
-		        	line.put("body", textLine);
-		        	if (!isEmptyLine(line)) {
-		        		lines.add(line);
-		        	}
-	        	}
-	    	}
-	    	if (lines.size() > 0) {
-		    	HashMap element = new HashMap();
-		    	element.put("type", "multiLine");
-		    	element.put("title", messages.getString("t011_township.township_no"));
-		    	element.put("elements", lines);
-	    	    elements.add(element);
-	    	}
-    	}
+		String locDescr = record.getString("t01_object.loc_descr");
+		String extentMinimum = record.getString("t01_object.vertical_extent_minimum");
+		String extentMaximum = record.getString("t01_object.vertical_extent_maximum");
+		String extentUnit = record.getString("t01_object.vertical_extent_unit");
+		String extentVDatum = record.getString("t01_object.vertical_extent_vdatum");
+		
+		if (refRecords.size() > 0 || UtilsVelocity.hasContent(locDescr).booleanValue() || UtilsVelocity.hasContent(extentMinimum).booleanValue()
+	    		|| UtilsVelocity.hasContent(extentMaximum).booleanValue() || UtilsVelocity.hasContent(extentUnit).booleanValue()
+	    		|| UtilsVelocity.hasContent(extentVDatum).booleanValue()) {
+			
+			addSectionTitle(elements, messages.getString("t011_obj_geo.coord"));
 
-    	// geo thesaurus references
-		refRecords = getSubRecordsByColumnName(record, "spatial_ref_value.name_value");
-    	if (refRecords.size() > 0) {
-	    	ArrayList lines = new ArrayList();
-	    	for (int i=0; i<refRecords.size(); i++) {
-	    		Record listRecord = (Record)refRecords.get(i);
-	        	if (listRecord.getString("spatial_ref_value.type") != null && listRecord.getString("spatial_ref_value.type").equals("F") && listRecord.getString("spatial_ref_value.name_value") != null ) {
-		    		HashMap line = new HashMap();
-		        	line.put("type", "textLine");
-		        	line.put("body", listRecord.getString("spatial_ref_value.name_value"));
-		        	if (!isEmptyLine(line)) {
-		        		lines.add(line);
+			if (refRecords.size() > 0) {
+		    	ArrayList textListEntries = new ArrayList();
+		    	for (int i=0; i<refRecords.size(); i++) {
+		    		Record listRecord = (Record)refRecords.get(i);
+		        	if (listRecord.getString("spatial_ref_value.type") != null && listRecord.getString("spatial_ref_value.type").equals("G")) {
+			    		HashMap listEntry = new HashMap();
+			    		listEntry.put("type", "textList");
+			        	String textLine = listRecord.getString("spatial_ref_value.name_value");
+			        	if (textLine != null && listRecord.getString("spatial_ref_value.nativekey") != null) {
+			        		textLine = textLine.concat(" (").concat(listRecord.getString("spatial_ref_value.nativekey")).concat(")");
+			        	}
+			        	listEntry.put("body", textLine);
+			        	if (!isEmptyLine(listEntry)) {
+			        		textListEntries.add(listEntry);
+			        	}
 		        	}
-	        	}
+		    	}
+		    	if (textListEntries.size() > 0) {
+		    		HashMap element = new HashMap();
+			    	element.put("type", "textList");
+			    	element.put("title", messages.getString("t011_township.township_no"));
+			    	element.put("textList", textListEntries);
+		    	    elements.add(element);
+		    	}
 	    	}
-	    	if (lines.size() > 0) {
+	
+	    	// geo thesaurus references
+			if (refRecords.size() > 0) {
+		    	ArrayList textListEntries = new ArrayList();
+		    	for (int i=0; i<refRecords.size(); i++) {
+		    		Record listRecord = (Record)refRecords.get(i);
+		        	if (listRecord.getString("spatial_ref_value.type") != null && listRecord.getString("spatial_ref_value.type").equals("F") && listRecord.getString("spatial_ref_value.name_value") != null ) {
+			    		HashMap listEntry = new HashMap();
+			        	listEntry.put("type", "textList");
+			        	listEntry.put("body", listRecord.getString("spatial_ref_value.name_value"));
+			        	if (!isEmptyList(listEntry)) {
+			        		textListEntries.add(listEntry);
+			        	}
+		        	}
+		    	}
+		    	if (textListEntries.size() > 0) {
+			    	HashMap element = new HashMap();
+			    	element.put("type", "textList");
+			    	element.put("title", messages.getString("t019_coordinates.bezug"));
+			    	element.put("textList", textListEntries);
+		    	    elements.add(element);
+		    	}
+	    	}
+	    	
+	    	// vertical extend
+	    	if (UtilsVelocity.hasContent(extentMinimum).booleanValue()
+	    			|| UtilsVelocity.hasContent(extentMaximum).booleanValue()
+	    			|| UtilsVelocity.hasContent(extentUnit).booleanValue()
+	    			|| UtilsVelocity.hasContent(extentVDatum).booleanValue()
+	    		) {
 		    	HashMap element = new HashMap();
-		    	element.put("type", "multiLine");
-		    	element.put("title", messages.getString("t019_coordinates.bezug"));
-		    	element.put("elements", lines);
-	    	    elements.add(element);
+		    	element.put("type", "table");
+		    	element.put("title", messages.getString("t01_object.vertical_extent"));
+				ArrayList head = new ArrayList();
+				head.add(messages.getString("t01_object.vertical_extent_maximum"));
+				head.add(messages.getString("t01_object.vertical_extent_minimum"));
+				head.add(messages.getString("t01_object.vertical_extent_unit"));
+				head.add(messages.getString("t01_object.vertical_extent_vdatum"));
+				element.put("head", head);
+				ArrayList body = new ArrayList();
+				element.put("body", body);
+				ArrayList row = new ArrayList();
+				row.add(notNull(extentMaximum));
+				row.add(notNull(extentMinimum));
+				row.add(notNull(extentUnit));
+				row.add(notNull(extentVDatum));
+	    		if (!isEmptyRow(row)) {
+	    			body.add(row);
+	    		}
+		    	if (body.size() > 0) {
+			    	elements.add(element);
+		    	}
 	    	}
-    	}
-    	
-    	// vertical extend
-    	if (UtilsVelocity.hasContent(record.getString("t01_object.vertical_extent_minimum")).booleanValue()
-    			|| UtilsVelocity.hasContent(record.getString("t01_object.vertical_extent_maximum")).booleanValue()
-    			|| UtilsVelocity.hasContent(record.getString("t01_object.vertical_extent_unit")).booleanValue()
-    			|| UtilsVelocity.hasContent(record.getString("t01_object.vertical_extent_vdatum")).booleanValue()
-    		) {
-	    	HashMap element = new HashMap();
-	    	element.put("type", "table");
-	    	element.put("title", messages.getString("t01_object.vertical_extent"));
-			ArrayList head = new ArrayList();
-			head.add(messages.getString("t01_object.vertical_extent_maximum"));
-			head.add(messages.getString("t01_object.vertical_extent_minimum"));
-			head.add(messages.getString("t01_object.vertical_extent_unit"));
-			head.add(messages.getString("t01_object.vertical_extent_vdatum"));
-			element.put("head", head);
-			ArrayList body = new ArrayList();
-			element.put("body", body);
-			ArrayList row = new ArrayList();
-			row.add(notNull(record.getString("t01_object.vertical_extent_maximum")));
-			row.add(notNull(record.getString("t01_object.vertical_extent_minimum")));
-			row.add(notNull(record.getString("t01_object.vertical_extent_unit")));
-			row.add(notNull(record.getString("t01_object.vertical_extent_vdatum")));
-    		if (!isEmptyRow(row)) {
-    			body.add(row);
-    		}
-	    	if (body.size() > 0) {
-		    	elements.add(element);
-		    	element = new HashMap();
-		    	element.put("type", "space");
-				elements.add(element);
-	    	}
-    	}
-    	
-    	this.addElementEntry(elements, record.getString("t01_object.loc_descr"), messages.getString("t01_object.loc_descr"));
+	    	this.addElementEntryLabelLeft(elements, locDescr, messages.getString("t01_object.loc_descr"));
+	    	closeDiv(elements);
+		}
 	}
-
 	
 	private void addReferenceObjectClass1(List elements, Record record) {
     	List refRecords = getSubRecordsByColumnName(record, "t011_obj_geo.special_base");
     	if (refRecords.size() > 0) {
     		Record refRecord = (Record)refRecords.get(0);
-    		addElementEntry(elements, sysCodeList.getName("525", refRecord.getString("t011_obj_geo.hierarchy_level")), messages.getString("t011_obj_geo.hierarchy_level"));
+    		addElementEntryLabelLeft(elements, sysCodeList.getName("525", refRecord.getString("t011_obj_geo.hierarchy_level")), messages.getString("t011_obj_geo.hierarchy_level"));
     		
     		List tableRecords = getSubRecordsByColumnName(record, "t011_obj_geo_symc.line");
     		if (tableRecords.size() > 0) {
-    	    	HashMap element = new HashMap();
+    	    	addSpace(elements);
+    			HashMap element = new HashMap();
     	    	element.put("type", "table");
     	    	element.put("title", messages.getString("t011_obj_geo_symc"));
     			ArrayList head = new ArrayList();
@@ -591,14 +598,12 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	    	}
     	    	if (body.size() > 0) {
     		    	elements.add(element);
-    		    	element = new HashMap();
-    		    	element.put("type", "space");
-    				elements.add(element);
-    	    	}
+    		    }
     		}    	
 
     		tableRecords = getSubRecordsByColumnName(record, "t011_obj_geo_keyc.line");
     		if (tableRecords.size() > 0) {
+    			addSpace(elements);
     	    	HashMap element = new HashMap();
     	    	element.put("type", "table");
     	    	element.put("title", messages.getString("t011_obj_geo_keyc"));
@@ -621,9 +626,6 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	    	}
     	    	if (body.size() > 0) {
     		    	elements.add(element);
-    		    	element = new HashMap();
-    		    	element.put("type", "space");
-    				elements.add(element);
     	    	}
     		}
     		
@@ -631,18 +633,18 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     		List listRecords = getSubRecordsByColumnName(record, "t011_obj_geo_spatial_rep.line");
     		if (listRecords.size() > 0) {
     	    	HashMap element = new HashMap();
-    	    	element.put("type", "multiLine");
+    	    	element.put("type", "textList");
     	    	element.put("title", messages.getString("t011_obj_geo_spatial_rep.type"));
-    	    	ArrayList lines = new ArrayList();
-    	    	element.put("elements", lines);
+    	    	ArrayList textListEntries = new ArrayList();
+    	    	element.put("textList", textListEntries);
     	    	for (int i=0; i<listRecords.size(); i++) {
     	    		Record listRecord = (Record)listRecords.get(i);
-    	        	HashMap line = new HashMap();
-    	        	line.put("type", "textLine");
+    	        	HashMap listEntry = new HashMap();
+    	        	listEntry.put("type", "textList");
     	        	String repType = listRecord.getString("t011_obj_geo_spatial_rep.type");
-    	        	line.put("body", sysCodeList.getName("526", repType));
-    	        	if (!isEmptyLine(line)) {
-    	        		lines.add(line);
+    	        	listEntry.put("body", sysCodeList.getName("526", repType));
+    	        	if (!isEmptyList(listEntry)) {
+    	        		textListEntries.add(listEntry);
     	        	}
     	        	if (repType != null && repType.equals("1")) {
     	        		showVectorData = true;
@@ -652,11 +654,12 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     		}
     		
     		if (showVectorData) {
-        		addElementEntryInline(elements, sysCodeList.getName("528", refRecord.getString("t011_obj_geo.vector_topology_level")), messages.getString("t011_obj_geo.vector_topology_level"));
+    			addElementEntryLabelLeft(elements, sysCodeList.getName("528", refRecord.getString("t011_obj_geo.vector_topology_level")), messages.getString("t011_obj_geo.vector_topology_level"));
     			
         		tableRecords = getSubRecordsByColumnName(record, "t011_obj_geo_vector.line");
         		if (tableRecords.size() > 0) {
-        	    	HashMap element = new HashMap();
+        	    	addSpace(elements);
+        			HashMap element = new HashMap();
         	    	element.put("type", "table");
         	    	element.put("title", messages.getString("t011_obj_geo_vector"));
         			ArrayList head = new ArrayList();
@@ -676,20 +679,18 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
         	    	}
         	    	if (body.size() > 0) {
         		    	elements.add(element);
-        		    	element = new HashMap();
-        		    	element.put("type", "space");
-        				elements.add(element);
-        	    	}
+        		    }
         		}
     		}
     		if (refRecord.getString("t011_obj_geo.rec_grade") != null) {
-    			addElementEntryInline(elements, refRecord.getString("t011_obj_geo.rec_grade").concat(" %"), messages.getString("t011_obj_geo.rec_grade"));
+    			addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_geo.rec_grade").concat(" %"), messages.getString("t011_obj_geo.rec_grade"));
     		}
     		String referenceSystem = (refRecord.getString("t011_obj_geo.referencesystem_value") != null && refRecord.getString("t011_obj_geo.referencesystem_value").length() > 0) ? refRecord.getString("t011_obj_geo.referencesystem_value") : sysCodeList.getName("100", refRecord.getString("t011_obj_geo.referencesystem_key"));
-    		addElementEntryInline(elements, referenceSystem, messages.getString("t011_obj_geo.referencesystem_id"));
+    		addElementEntryLabelLeft(elements, referenceSystem, messages.getString("t011_obj_geo.referencesystem_id"));
     		
     		tableRecords = getSubRecordsByColumnName(record, "t011_obj_geo_scale.line");
     		if (tableRecords.size() > 0) {
+    			addSpace(elements);
     	    	HashMap element = new HashMap();
     	    	element.put("type", "table");
     	    	element.put("title", messages.getString("t011_obj_geo_scale"));
@@ -712,22 +713,19 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	    	}
     	    	if (body.size() > 0) {
     		    	elements.add(element);
-    		    	element = new HashMap();
-    		    	element.put("type", "space");
-    				elements.add(element);
     	    	}
     		}    		
     		if (refRecord.getString("t011_obj_geo.pos_accuracy_vertical") != null) {
-    			addElementEntry(elements, refRecord.getString("t011_obj_geo.pos_accuracy_vertical").concat(" m"), messages.getString("t011_obj_geo.pos_accuracy_vertical"));
+    			addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_geo.pos_accuracy_vertical").concat(" m"), messages.getString("t011_obj_geo.pos_accuracy_vertical"));
     		}
     		if (refRecord.getString("t011_obj_geo.rec_exact") != null) {
-    			addElementEntry(elements, refRecord.getString("t011_obj_geo.rec_exact").concat(" m"), messages.getString("t011_obj_geo.rec_exact"));
+    			addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_geo.rec_exact").concat(" m"), messages.getString("t011_obj_geo.rec_exact"));
     		}
     		if (refRecord.getString("t011_obj_geo.special_base") != null) {
-    			addElementEntry(elements, refRecord.getString("t011_obj_geo.special_base"), messages.getString("t011_obj_geo.special_base"));
+    			addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_geo.special_base"), messages.getString("t011_obj_geo.special_base"));
     		}
     		if (refRecord.getString("t011_obj_geo.data_base") != null) {
-    			addElementEntry(elements, refRecord.getString("t011_obj_geo.data_base"), messages.getString("t011_obj_geo.data_base"));
+    			addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_geo.data_base"), messages.getString("t011_obj_geo.data_base"));
     		}
     		
     		listRecords = getSubRecordsByColumnName(record, "t011_obj_geo_supplinfo.line");
@@ -740,24 +738,24 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
         		// write sorted records as a list again
         		listRecords = Arrays.asList(sortedListRecords);
         		
-        		HashMap element = new HashMap();
-    	    	element.put("type", "multiLine");
+    	    	HashMap element = new HashMap();
+    	    	element.put("type", "textList");
     	    	element.put("sort", "false");
     	    	element.put("title", messages.getString("t011_obj_geo_supplinfo.feature_type"));
-    	    	ArrayList lines = new ArrayList();
-    	    	element.put("elements", lines);
+    	    	ArrayList textListEntries = new ArrayList();
+    	    	element.put("textList", textListEntries);
     	    	for (int i=0; i<listRecords.size(); i++) {
     	    		Record listRecord = (Record)listRecords.get(i);
-    	        	HashMap line = new HashMap();
-    	        	line.put("type", "textLine");
-    	        	line.put("body", listRecord.getString("t011_obj_geo_supplinfo.feature_type"));
-    	        	if (!isEmptyLine(line)) {
-    	        		lines.add(line);
+    	        	HashMap listEntry = new HashMap();
+    	        	listEntry.put("type", "textList");
+    	        	listEntry.put("body", listRecord.getString("t011_obj_geo_supplinfo.feature_type"));
+    	        	if (!isEmptyList(listEntry)) {
+    	        		textListEntries.add(listEntry);
     	        	}
     	    	}
         	    elements.add(element);
     		}
-    		addElementEntry(elements, refRecord.getString("t011_obj_geo.method"), messages.getString("t011_obj_geo.method"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_geo.method"), messages.getString("t011_obj_geo.method"));
     	}
 	}	
 
@@ -766,9 +764,9 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	List refRecords = getSubRecordsByColumnName(record, "t011_obj_project.leader");
     	if (refRecords.size() > 0) {
     		Record refRecord = (Record)refRecords.get(0);
-    		addElementEntry(elements, refRecord.getString("t011_obj_project.leader"), messages.getString("t011_obj_project.leader"));
-    		addElementEntry(elements, refRecord.getString("t011_obj_project.member"), messages.getString("t011_obj_project.member"));
-    		addElementEntry(elements, refRecord.getString("t011_obj_project.description"), messages.getString("t011_obj_project.description"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_project.leader"), messages.getString("t011_obj_project.leader"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_project.member"), messages.getString("t011_obj_project.member"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_project.description"), messages.getString("t011_obj_project.description"));
     	}
 	}	
 	
@@ -776,46 +774,46 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	List refRecords = getSubRecordsByColumnName(record, "t011_obj_literatur.publisher");
     	if (refRecords.size() > 0) {
     		Record refRecord = (Record)refRecords.get(0);
-    		addElementEntry(elements, refRecord.getString("t011_obj_literature.author"), messages.getString("t011_obj_literatur.autor"));
-    		addElementEntryInline(elements, refRecord.getString("t011_obj_literature.publisher"), messages.getString("t011_obj_literatur.publisher"));
-    		addElementEntryInline(elements, refRecord.getString("t011_obj_literature.publish_in"), messages.getString("t011_obj_literatur.publish_in"));
-    		addElementEntryInline(elements, refRecord.getString("t011_obj_literature.volume"), messages.getString("t011_obj_literatur.volume"));
-    		addElementEntryInline(elements, refRecord.getString("t011_obj_literature.sides"), messages.getString("t011_obj_literatur.sides"));
-    		addElementEntryInline(elements, refRecord.getString("t011_obj_literature.publish_year"), messages.getString("t011_obj_literatur.publish_year"));
-    		addElementEntryInline(elements, refRecord.getString("t011_obj_literature.isbn"), messages.getString("t011_obj_literatur.isbn"));
-    		addElementEntryInline(elements, refRecord.getString("t011_obj_literature.publishing"), messages.getString("t011_obj_literatur.publishing"));
-    		addElementEntryInline(elements, refRecord.getString("t011_obj_literature.publish_loc"), messages.getString("t011_obj_literatur.publish_loc"));
-    		addElementEntryInline(elements, refRecord.getString("t011_obj_literature.type_value"), messages.getString("t011_obj_literatur.typ"));
-    		addElementEntry(elements, refRecord.getString("t011_obj_literature.doc_info"), messages.getString("t011_obj_literatur.doc_info"));
-    		addElementEntry(elements, refRecord.getString("t011_obj_literature.loc"), messages.getString("t011_obj_literatur.loc"));
-    		addElementEntry(elements, refRecord.getString("t011_obj_literature.description"), messages.getString("t011_obj_literatur.description"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_literature.author"), messages.getString("t011_obj_literatur.autor"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_literature.publisher"), messages.getString("t011_obj_literatur.publisher"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_literature.publish_in"), messages.getString("t011_obj_literatur.publish_in"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_literature.volume"), messages.getString("t011_obj_literatur.volume"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_literature.sides"), messages.getString("t011_obj_literatur.sides"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_literature.publish_year"), messages.getString("t011_obj_literatur.publish_year"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_literature.isbn"), messages.getString("t011_obj_literatur.isbn"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_literature.publishing"), messages.getString("t011_obj_literatur.publishing"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_literature.publish_loc"), messages.getString("t011_obj_literatur.publish_loc"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_literature.type_value"), messages.getString("t011_obj_literatur.typ"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_literature.doc_info"), messages.getString("t011_obj_literatur.doc_info"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_literature.loc"), messages.getString("t011_obj_literatur.loc"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_literature.description"), messages.getString("t011_obj_literatur.description"));
     	}
 	}
 	
 	
 	private void addReferenceObjectClass3(List elements, Record record) {
     	List refRecords = getSubRecordsByColumnName(record, "t011_obj_serv.description");
-    	if (refRecords.size() > 0) {
-    		Record refRecord = (Record)refRecords.get(0);
-    		addElementEntry(elements, refRecord.getString("t011_obj_serv.type_value"), messages.getString("t011_obj_serv.type"));
+	    if (refRecords.size() > 0) {
+	    	Record refRecord = (Record)refRecords.get(0);
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_serv.type_value"), messages.getString("t011_obj_serv.type"));
     		String serviceType = refRecord.getString("t011_obj_serv.type_value");
-    		addElementEntry(elements, refRecord.getString("t011_obj_serv.environment"), messages.getString("t011_obj_serv.environment"));
-    		addElementEntry(elements, refRecord.getString("t011_obj_serv.history"), messages.getString("t011_obj_serv.history"));
-    		addElementEntry(elements, refRecord.getString("t011_obj_serv.base"), messages.getString("t011_obj_serv.base"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_serv.environment"), messages.getString("t011_obj_serv.environment"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_serv.history"), messages.getString("t011_obj_serv.history"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_serv.base"), messages.getString("t011_obj_serv.base"));
     		refRecords = getSubRecordsByColumnName(record, "t011_obj_serv_version.line");
     		if (refRecords.size() > 0) {
     	    	HashMap element = new HashMap();
-    	    	element.put("type", "multiLine");
+    	    	element.put("type", "textList");
     	    	element.put("title", messages.getString("t011_obj_serv_version.version"));
-    	    	ArrayList lines = new ArrayList();
-    	    	element.put("elements", lines);
+    	    	ArrayList textListEntries = new ArrayList();
+    	    	element.put("textList", textListEntries);
     	    	for (int i=0; i<refRecords.size(); i++) {
     	    		refRecord = (Record)refRecords.get(i);
-    	        	HashMap line = new HashMap();
-    	        	line.put("type", "textLine");
-    	        	line.put("body", refRecord.getString("t011_obj_serv_version.serv_version"));
-    	        	if (!isEmptyLine(line)) {
-    	        		lines.add(line);
+    	        	HashMap listEntry = new HashMap();
+    	        	listEntry.put("type", "textList");
+    	        	listEntry.put("body", refRecord.getString("t011_obj_serv_version.serv_version"));
+    	        	if (!isEmptyList(listEntry)) {
+    	        		textListEntries.add(listEntry);
     	        	}
     	    	}
         	    elements.add(element);
@@ -852,11 +850,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     	    	}
     	    	if (body.size() > 0) {
     		    	elements.add(element);
-    		    	element = new HashMap();
-    		    	element.put("type", "space");
-    				elements.add(element);
-    	    	}
-
+    		    }
     		}
     		if (wmsServiceLinks.size() > 0) {
     	    	ArrayList linkList = new ArrayList();
@@ -903,17 +897,13 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 	    	}
 	    	if (body.size() > 0) {
 		    	elements.add(element);
-		    	element = new HashMap();
-		    	element.put("type", "space");
-				elements.add(element);
-	    	}
-	    	
+		    }
     	}
     	refRecords = getSubRecordsByColumnName(record, "t011_obj_data.base");
     	if (refRecords.size() > 0) {
     		Record refRecord = (Record)refRecords.get(0);
-    		addElementEntry(elements, refRecord.getString("t011_obj_data.base"), messages.getString("t011_obj_data.base"));
-    		addElementEntry(elements, refRecord.getString("t011_obj_data.description"), messages.getString("t011_obj_data.description"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_data.base"), messages.getString("t011_obj_data.base"));
+    		addElementEntryLabelLeft(elements, refRecord.getString("t011_obj_data.description"), messages.getString("t011_obj_data.description"));
     	}
 	}
 	
@@ -938,11 +928,32 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 			elements.add(element);
 		}
 	}
-
-	private void addElementEntryInline(List elements, String body, String title) {
+	
+	private void addElementEntryLabelLeft(List elements, String body, String title) {
 		if (UtilsVelocity.hasContent(body).booleanValue()) {
 			HashMap element = new HashMap();
-			element.put("type", "entryInline");
+			element.put("type", "textLabelLeft");
+			element.put("title", title);
+			element.put("body", body);
+			elements.add(element);
+		}
+	}
+	
+	private void addElementEntryLabelAbove(List elements, String body, String title, boolean line) {
+		if (UtilsVelocity.hasContent(body).booleanValue()) {
+			HashMap element = new HashMap();
+			element.put("type", "textLabelAbove");
+			element.put("title", title);
+			element.put("line", line);
+			element.put("body", body);
+			elements.add(element);
+		}
+	}
+	
+	private void addElementEntryLabelDuring(List elements, String body, String title) {
+		if (UtilsVelocity.hasContent(body).booleanValue()) {
+			HashMap element = new HashMap();
+			element.put("type", "textLabelDuring");
 			element.put("title", title);
 			element.put("body", body);
 			elements.add(element);
@@ -959,9 +970,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 		}
 	}
 	
-    private void addSuperiorObjects(List elements, String objUuid) {
-        List linkList = getLinkListOfObjectsFromQuery("children.object_node.obj_uuid:".concat(objUuid).concat(
-                " iplugs:\"").concat(DetailDataPreparerHelper.getPlugIdFromAddressPlugId(iPlugId)).concat("\""));
+    private void addSuperiorObjects(List elements, List linkList) {
         if (!linkList.isEmpty()) {
         	HashMap element = new HashMap();
         	element.put("type", "linkList");
@@ -971,9 +980,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
         }
     }
 
-    private void addSubordinatedObjects(List elements, String objUuid) {
-        List linkList = getLinkListOfObjectsFromQuery("parent.object_node.obj_uuid:".concat(objUuid).concat(
-                " iplugs:\"").concat(DetailDataPreparerHelper.getPlugIdFromAddressPlugId(iPlugId)).concat("\""));
+    private void addSubordinatedObjects(List elements, List linkList) {
         if (!linkList.isEmpty()) {
         	HashMap element = new HashMap();
         	element.put("type", "linkList");
@@ -983,37 +990,40 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
         }
     }
 
-    private void addCrossReferencedObjects(List elements, String objId) {
-    	ArrayList<String> referenceList = new ArrayList<String>();
-    	ArrayList<IngridHit> result = DetailDataPreparerHelper.getHits("object_reference.obj_from_id:".concat(objId).concat(
-        " iplugs:\"").concat(iPlugId).concat("\""), new String[] {Settings.HIT_KEY_OBJ_ID, "object_reference.obj_to_uuid"}, null);
-    	String query = "";
-    	boolean firstUuid = true;
-    	for (IngridHit hit : result) {
-    		String[] referenceIds = ((IngridHitDetail)hit.get("detail")).getString("object_reference.obj_to_uuid").split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
-    		for (String str : referenceIds) {
-        		if (firstUuid) {
-            		query += Settings.HIT_KEY_OBJ_ID + ":" + str;
-            		firstUuid = false;
-        		} else {
-        			query += " OR " + Settings.HIT_KEY_OBJ_ID + ":" + str;
-        		}
-    		}
-    	}
-    	if (query.length() > 0) {
-    		query = "(" + query + ")";
-	    		
-	    	List linkList = getLinkListOfObjectsFromQuery(query.concat(
-	                " iplugs:\"").concat(iPlugId).concat("\""));
-	        if (!linkList.isEmpty()) {
-	        	HashMap element = new HashMap();
-	        	element.put("type", "linkList");
-	        	element.put("title", messages.getString("cross_references"));
-	        	element.put("linkList", linkList);
-	        	elements.add(element);
-	        }
-    	}
-    }
+    private HashMap addCrossReferencedObjects(List elements, String objId) {
+		if (objId == null) {
+			return null;
+		}
+		ArrayList<String> referenceList = new ArrayList<String>();
+		ArrayList<IngridHit> result = DetailDataPreparerHelper.getHits("object_reference.obj_from_id:".concat(objId).concat(" iplugs:\"").concat(iPlugId).concat("\""), new String[] {
+				Settings.HIT_KEY_OBJ_ID, "object_reference.obj_to_uuid" }, null);
+		String query = "";
+		boolean firstUuid = true;
+		for (IngridHit hit : result) {
+			String[] referenceIds = ((IngridHitDetail) hit.get("detail")).getString("object_reference.obj_to_uuid").split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
+			for (String str : referenceIds) {
+				if (firstUuid) {
+					query += Settings.HIT_KEY_OBJ_ID + ":" + str;
+					firstUuid = false;
+				} else {
+					query += " OR " + Settings.HIT_KEY_OBJ_ID + ":" + str;
+				}
+			}
+		}
+		if (query.length() > 0) {
+			query = "(" + query + ")";
+			
+			List linkList = getLinkListOfObjectsFromQuery(query.concat(" iplugs:\"").concat(iPlugId).concat("\""));
+			if (!linkList.isEmpty()) {
+				HashMap element = new HashMap();
+				element.put("type", "linkList");
+				element.put("title", messages.getString("cross_references"));
+				element.put("linkList", linkList);
+				return element;
+			}
+		}
+		return null;
+	}
     
     private void addUrlReferences(List elements, Record record) {
         ArrayList linkList = new ArrayList();
@@ -1023,8 +1033,12 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
         	HashMap link = new HashMap();
         	link.put("hasLinkIcon", new Boolean(true));
         	link.put("isExtern", new Boolean(true));
-        	link.put("title", refRecord.getString("t017_url_ref.content"));
-        	link.put("href", refRecord.getString("t017_url_ref.url_link"));
+        	if (refRecord.getString("t017_url_ref.content") != null && refRecord.getString("t017_url_ref.content").length() > 0) {
+        		link.put("title", refRecord.getString("t017_url_ref.content"));
+        	} else {
+        		link.put("title", refRecord.getString("t017_url_ref.url_link"));
+        	}
+    		link.put("href", refRecord.getString("t017_url_ref.url_link"));
         	linkList.add(link);
     	}
         if (!linkList.isEmpty()) {
@@ -1038,10 +1052,18 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     
     private void addAddresses(List elements, Record record) {
     	List refRecords = getSubRecordsByColumnName(record, "t012_obj_adr.adr_id");
+    	ArrayList elementsAddress = new ArrayList();
     	for (int i=0; i<refRecords.size(); i++) {
     		Record refRecord = (Record)refRecords.get(i);
-    		addAddressType(elements, refRecord);
+    		addAddressType(elementsAddress, refRecord);
     	}
+    	addSpace(elements);
+		HashMap element = new HashMap();
+    	element.put("type", "multiLineAddresses");
+    	element.put("title", messages.getString("addresses"));
+    	element.put("id", "addresses_id");
+    	element.put("elementsAddress", elementsAddress);
+    	elements.add(element);
     }
     
     private void addAddressType(List elements, Record record) {
@@ -1192,10 +1214,6 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 				element.put("body", textLine);
 				elements.add(element);
 			}
-	    	element = new HashMap();
-	    	element.put("type", "space");
-			elements.add(element);
-			
 		}
 		if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.street")).booleanValue()) {
 			if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.street")).booleanValue()) {
@@ -1217,11 +1235,11 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 				element.put("body", textLine);
 				elements.add(element);
 			}
-	    	element = new HashMap();
-	    	element.put("type", "space");
-			elements.add(element);
 		}
-    	refRecords = getSubRecordsByColumnName(addrRecord, "t021_communication.comm_value");
+		refRecords = getSubRecordsByColumnName(addrRecord, "t021_communication.comm_value");
+    	if(refRecords.size() > 0){
+    		addSpace(elements);
+        }
     	for (int i=0; i<refRecords.size(); i++) {
     		Record refRecord = (Record)refRecords.get(i);
     		addCommunication(elements, refRecord);
@@ -1291,6 +1309,39 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 		elements.add(element);
     }
     
+    private void addSpace(List elements) {
+    	HashMap element = new HashMap();
+		element.put("type", "space");
+		elements.add(element);
+    }
+    
+    private void openDiv(List elements) {
+    	HashMap element = new HashMap();
+    	element.put("type", "beginnDiv");
+		elements.add(element);
+    }
+    
+    private void closeDiv(List elements) {
+    	HashMap element = new HashMap();
+		element.put("type", "endDiv");
+		elements.add(element);
+    }
+    
+    private void addSectionTitle(List elements, String title) {
+    	addSpace(elements);
+		HashMap element = new HashMap();
+		element.put("type", "section");
+		element.put("title", title);
+		elements.add(element);
+		openDiv(elements);
+    }
+    
+    private void addGroupTitle(List elements, String title) {
+    	HashMap element = new HashMap();
+		element.put("type", "group");
+		element.put("title", title);
+		elements.add(element);
+    }
     
     private List getLinkListOfObjectsFromQuery(String queryStr) {
         ArrayList result = DetailDataPreparerHelper.getHits(queryStr, new String[] {Settings.HIT_KEY_OBJ_ID}, null);
@@ -1351,7 +1402,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     }
 
     private boolean isEmptyLine(HashMap line) {
-    	if (line.get("type") != null && line.get("type").equals("textLine")) {
+    	if (line.get("type") != null && line.get("type").equals("textLine") || line.get("type").equals("textLabelLeft")) {
         	if (line.get("body") != null && line.get("body") instanceof String && ((String)line.get("body")).length() > 0) {
         		return false;
         	}
@@ -1360,7 +1411,7 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
     }
     
     private boolean isEmptyList(HashMap listEntry) {
-    	if (listEntry.get("type") != null && listEntry.get("type").equals("textList")) {
+    	if (listEntry.get("type") != null && listEntry.get("type").equals("textList") || listEntry.get("type").equals("linkList")) {
         	if (listEntry.get("body") != null && listEntry.get("body") instanceof String && ((String)listEntry.get("body")).length() > 0) {
         		return false;
         	}

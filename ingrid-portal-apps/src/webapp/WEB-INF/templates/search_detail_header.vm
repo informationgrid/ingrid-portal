@@ -3,6 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
+	<a name="top"></a>
   #if(!$pageTitle || $pageTitle == "")
 	<title>PortalU</title>
   #else
@@ -62,7 +63,7 @@
 
   #* our decorator macros, see ./decorator-macros.vm *#
   <link href="/ingrid-portal/decorations/layout/ingrid-popup/css/styles.css" media="screen, projection" type="text/css" rel="stylesheet">
-  
+  <link href="/ingrid-portal/decorations/layout/ingrid-popup/css/print.css" media="print" type="text/css" rel="stylesheet" />
 <script language="JavaScript" type="text/javascript">
 var xmlhttp=false;
 /*@cc_on @*/
@@ -102,6 +103,12 @@ if (xmlhttp) {
   #* show window in foreground *#
 self.focus();
 
+</script>
+
+<script type="text/javascript" src="/ingrid-portal-apps/dojo/dojo.js"></script>
+<script type="text/javascript">
+	dojo.require("dojo.widget.TabContainer");
+	dojo.require("dojo.widget.ContentPane");
 </script>
 
   </head>
