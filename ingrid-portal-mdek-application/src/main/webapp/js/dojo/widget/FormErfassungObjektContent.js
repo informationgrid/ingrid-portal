@@ -89,7 +89,7 @@ dojo.widget.defineWidget(
 		applyRule7();
     } else {
         setRequiredState(dojo.byId("thesaurusInspireLabel"), dojo.byId("uiElement5064"), false);
-        div.style.display = 'none';
+        // div.style.display = 'none';
     }
 
     // "ISO-Themenkategorie" only mandatory in class 1 
@@ -99,7 +99,7 @@ dojo.widget.defineWidget(
         div.style.display = 'block';
     } else {
         setRequiredState(dojo.byId("thesaurusTopicsLabel"), dojo.byId("uiElement5060"), false);
-        div.style.display = 'none';
+        // div.style.display = 'none';
     }
 
 	if (dojo.render.html.ie) {

@@ -244,7 +244,12 @@ function isObjectPublishable(idcObject) {
 	}
 
     // Check whether INSPIRE term set and check additional required fields !
-    if (UtilUdk.isInspire(idcObject.thesaurusInspireTermsList)) {
+    // ONLY IF INSPIRE TERM REQUIRED ! ("Geo-Information/Karte" class 1, "Geodatendienst" class 3)
+    var isInspireClass = false; 
+    if ((""+idcObject.objectClass == '1') || (""+idcObject.objectClass == '3')) {
+       isInspireClass = true;
+    }
+    if (isInspireClass == true && UtilUdk.isInspire(idcObject.thesaurusInspireTermsList)) {
 
 	   // check if spatial reference is set !
 	   if (!idcObject.ref1SpatialSystem || idcObject.ref1SpatialSystem == "") {
@@ -253,8 +258,8 @@ function isObjectPublishable(idcObject) {
             publishable = false;
         }
 
-	   // check if INSPIRE datatype is set !
-       if (!idcObject.availabilityDataFormatInspire || idcObject.availabilityDataFormatInspire == "") {
+       // check if INSPIRE datatype is set ! Only shown, when class 1 !
+       if (""+idcObject.objectClass == '1' && (!idcObject.availabilityDataFormatInspire || idcObject.availabilityDataFormatInspire == "")) {
             dojo.html.addClass(dojo.byId("availabilityDataFormatInspireLabel"), "important");
             dojo.debug("Field 'availabilityDataFormatInspire' empty but required due to set INSPIRE theme !.");
             publishable = false;

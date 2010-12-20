@@ -241,8 +241,16 @@ function applyRule6() {
 
 // If INSPIRE theme make additional fields mandatory
 function applyRule7() {
-	var termsList = UtilList.tableDataToList(dojo.widget.byId("thesaurusInspire").store.getData());
+    // checks dependent from object class !
+    var objectClassStr = dojo.widget.byId("objectClass").getValue().toLowerCase(); // Value is a string: "Classx" where x is the class
+    var objectClass = objectClassStr.substr(5, 1);
 
+    // INSPIRE mandatory only in classes "Geo-Information/Karte" class 1, "Geodatendienst" class 3 !
+	if (objectClass != "1" && objectClass != "3") {
+	   return;
+	}
+
+	var termsList = UtilList.tableDataToList(dojo.widget.byId("thesaurusInspire").store.getData());
     if (UtilUdk.isInspire(termsList)) {
         setRequiredState(dojo.byId("ref1SpatialSystemLabel"), dojo.byId("uiElement3500"), true);
 
@@ -259,9 +267,6 @@ function applyRule7() {
 	}
 
 	// show/remove DQ tables in class 1 dependent from themes
-    var objectClassStr = dojo.widget.byId("objectClass").getValue().toLowerCase(); // Value is a string: "Classx" where x is the class
-    var objectClass = objectClassStr.substr(5, 1);
-
 	if (objectClass == "1") {
         // hide all DQ tables
 		var showDQSection = false;
@@ -349,15 +354,15 @@ function applyRule7() {
             displayDiv(divDQ);
             divDQ.setAttribute("hiddenByRules", "false");
 
-        // update DQ section, so new fields are shown !
-        // NECESSARY ???
+            // update DQ section, so new fields are shown !
+            // NECESSARY ???
             var mode = UtilUI.getCurrentExpandModeOfSectionElement(divDQ);
-        toggleFields("refClass1DQ", mode);
+            toggleFields("refClass1DQ", mode);
 
 		} else {
             hideDiv(divDQ);
             divDQ.setAttribute("hiddenByRules", "true");
-    }
+		}
     }
 }
 
