@@ -176,8 +176,8 @@ function addPermissionsToUser(user) {
 			user.writeSingle = "<div style='text-align: center;'><img src='img/ic_check.gif' width='16' height='16' alt='vorhanden' /></div>";
 		} else if (user.permissions[i] == "WRITE_TREE") {
 			user.writeTree = "<div style='text-align: center;'><img src='img/ic_check.gif' width='16' height='16' alt='vorhanden' /></div>";
-		} else if (user.permissions[i] == "WRITE_SUBTREE") {
-			user.writeSubTree = "<div style='text-align: center;'><img src='img/ic_check.gif' width='16' height='16' alt='vorhanden' /></div>";
+        } else if (user.permissions[i] == "WRITE_SUBNODE") {
+            user.writeSubNode = "<div style='text-align: center;'><img src='img/ic_check.gif' width='16' height='16' alt='vorhanden' /></div>";
 		} else if (user.permissions[i] == "QUALITY_ASSURANCE") {
 			user.qa = "<div style='text-align: center;'><img src='img/ic_check.gif' width='16' height='16' alt='vorhanden' /></div>";
 
@@ -236,7 +236,7 @@ function addPermissionsToUser(user) {
 	                			<th nosort="true" field="roleName" dataType="String" width="145"><fmt:message key="dialog.admin.permissions.role" /></th>
 	                			<th nosort="true" field="writeSingle" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.single" /></th>
 	                			<th nosort="true" field="writeTree" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.tree" /></th>
-	                			<th nosort="true" field="writeSubTree" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.subtree" /></th>
+	                			<th nosort="true" field="writeSubNode" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.subnodes" /></th>
 	                			<th nosort="true" field="qa" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.qa" /></th>
 	          		      </tr>
 	          	      </thead>
@@ -289,7 +289,7 @@ function addPermissionsToUser(user) {
 	                			<th nosort="true" field="roleName" dataType="String" width="145"><fmt:message key="dialog.admin.permissions.role" /></th>
 	                			<th nosort="true" field="writeSingle" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.single" /></th>
 	                			<th nosort="true" field="writeTree" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.tree" /></th>
-	                			<th nosort="true" field="writeSubTree" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.subtree" /></th>
+	                			<th nosort="true" field="writeSubNode" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.subnodes" /></th>
 	                			<th nosort="true" field="qa" dataType="String" width="60" style="text-align:center;"><fmt:message key="dialog.admin.permissions.qa" /></th>
 	          		      </tr>
 	          	      </thead>

@@ -14,6 +14,7 @@ public class TreeNodeBean {
     private Boolean userMovePermission;
     private Boolean userWriteSinglePermission;
 	private Boolean userWriteTreePermission;
+	private Boolean userWriteSubNodePermission;
 	private Boolean userWriteSubTreePermission;
 
 	private String contextMenu;
@@ -106,6 +107,14 @@ public class TreeNodeBean {
 
 	public void setUserWriteTreePermission(Boolean userWriteTreePermission) {
 		this.userWriteTreePermission = userWriteTreePermission;
+	}
+
+	public Boolean getUserWriteSubNodePermission() {
+		return userWriteSubNodePermission;
+	}
+
+	public void setUserWriteSubNodePermission(Boolean userWriteSubNodePermission) {
+		this.userWriteSubNodePermission = userWriteSubNodePermission;
 	}
 
 	public Boolean getUserWriteSubTreePermission() {

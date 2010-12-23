@@ -30,6 +30,7 @@ public class MdekDataBean {
     private Boolean movePermission;
 	private Boolean writeSinglePermission;
 	private Boolean writeTreePermission;
+	private Boolean writeSubNodePermission;
 	private Boolean writeSubTreePermission;
 
 	// QA Fields
@@ -1644,6 +1645,20 @@ public class MdekDataBean {
 
 	public void setRef3ServiceType(Integer ref3ServiceType) {
 		this.ref3ServiceType = ref3ServiceType;
+	}
+
+
+
+
+	public Boolean getWriteSubNodePermission() {
+		return writeSubNodePermission;
+	}
+
+
+
+
+	public void setWriteSubNodePermission(Boolean writeSubNodePermission) {
+		this.writeSubNodePermission = writeSubNodePermission;
 	}
 
 

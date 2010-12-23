@@ -27,31 +27,31 @@ public interface SecurityRequestHandler {
 	public List<User> getUsersWithWritePermissionForObject(String objectUuid, boolean checkWorkflow, boolean detailedPermissions);
 
     /**
-     * Get all users with tree permission (write-tree, write-subtree) on a given address.
+     * Get all users who can be responsible users for given address.
      * 
      * @param addressUuid
-     * @param checkWorkflow If true take workflow conditions into account (i.e. if the the object is in QA, the user might only have write-subtree) right.
+     * @param checkWorkflow If true take workflow conditions into account
      * @param detailedPermissions If true return detailed permission on each user.
      * @return
      */
-    public List<User> getUsersWithTreeOrSubTreePermissionForAddress(String addressUuid, boolean checkWorkflow, boolean detailedPermissions);
+    public List<User> getResponsibleUsersForNewAddress(String addressUuid, boolean checkWorkflow, boolean detailedPermissions);
 
     /**
-     * Get all users with tree permission (write-tree, write-subtree) on a given address.
+     * Get all users who can be responsible users for given object.
      * 
      * @param objectUuid
-     * @param checkWorkflow If true take workflow conditions into account (i.e. if the the object is in QA, the user might only have write-subtree) right.
+     * @param checkWorkflow If true take workflow conditions into account
      * @param detailedPermissions If true return detailed permission on each user.
      * @return
      */
-    public List<User> getUsersWithTreeOrSubTreePermissionForObject(String objectUuid, boolean checkWorkflow, boolean detailedPermissions);
+    public List<User> getResponsibleUsersForNewObject(String objectUuid, boolean checkWorkflow, boolean detailedPermissions);
 
     
     /**
      * Get all users with any permission on a given address.
      * 
      * @param addressUuid
-     * @param checkWorkflow If true take workflow conditions into account (i.e. if the the object is in QA, the user might only have write-subtree) right.
+     * @param checkWorkflow If true take workflow conditions into account
      * @param detailedPermissions If true return detailed permission on each user.
      * @return
      */
@@ -61,7 +61,7 @@ public interface SecurityRequestHandler {
      * Get all users with any permission on a given address.
      * 
      * @param objectUuid
-     * @param checkWorkflow If true take workflow conditions into account (i.e. if the the object is in QA, the user might only have write-subtree) right.
+     * @param checkWorkflow If true take workflow conditions into account
      * @param detailedPermissions If true return detailed permission on each user.
      * @return
      */

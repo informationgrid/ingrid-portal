@@ -21,6 +21,7 @@ public class MdekAddressBean {
     private Boolean movePermission;
 	private Boolean writeSinglePermission;
 	private Boolean writeTreePermission;
+	private Boolean writeSubNodePermission;
 	private Boolean writeSubTreePermission;
 	private Boolean isPublished;
 	private Boolean isMarkedDeleted;
@@ -414,6 +415,14 @@ public class MdekAddressBean {
 
 	public void setTotalNumReferences(Integer totalNumReferences) {
 		this.totalNumReferences = totalNumReferences;
+	}
+
+	public Boolean getWriteSubNodePermission() {
+		return writeSubNodePermission;
+	}
+
+	public void setWriteSubNodePermission(Boolean writeSubNodePermission) {
+		this.writeSubNodePermission = writeSubNodePermission;
 	}
 
 	public Boolean getWriteSubTreePermission() {

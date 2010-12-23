@@ -113,7 +113,8 @@ dojo.widget.defineWidget(
 		var dstIsRootNode = (node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot");
 
 		if (node != null) {
-			if (node.id == "newNode" || (!dstIsRootNode && (!node.userWriteTreePermission && !node.userWriteSubTreePermission)))
+			if (node.id == "newNode" || (!dstIsRootNode && (!node.userWriteTreePermission
+			     && !node.userWriteSubTreePermission && !node.userWriteSubNodePermission)))
 				return false;
 
 			if (dstIsRootNode && !UtilSecurity.canCreateRootNodes())

@@ -139,7 +139,7 @@ _container_.addOnLoad(function() {
 											<th nosort="true" sort="asc" field="title" dataType="String" width="358"><fmt:message key="dialog.admin.groups.objectName" /></th>
 											<th nosort="true" field="single" dataType="String" width="85"><fmt:message key="dialog.admin.groups.objectSingle" /></th>
 											<th nosort="true" field="tree" dataType="String" width="85"><fmt:message key="dialog.admin.groups.objectTree" /></th>
-                                            <th nosort="true" field="subtree" dataType="String" width="85"><fmt:message key="dialog.admin.groups.objectSubTree" /></th>
+                                            <th nosort="true" field="subnode" dataType="String" width="85"><fmt:message key="dialog.admin.groups.objectSubNode" /></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -194,7 +194,7 @@ _container_.addOnLoad(function() {
 											<th nosort="true" sort="asc" field="title" dataType="String" width="358"><fmt:message key="dialog.admin.groups.addressName" /></th>
 											<th nosort="true" field="single" dataType="String" width="85"><fmt:message key="dialog.admin.groups.addressSingle" /></th>
 											<th nosort="true" field="tree" dataType="String" width="85"><fmt:message key="dialog.admin.groups.addressTree" /></th>
-                                            <th nosort="true" field="subtree" dataType="String" width="85"><fmt:message key="dialog.admin.groups.addressSubTree" /></th>
+                                            <th nosort="true" field="subnode" dataType="String" width="85"><fmt:message key="dialog.admin.groups.addressSubNode" /></th>
 										</tr>
 									</thead>
 									<tbody>

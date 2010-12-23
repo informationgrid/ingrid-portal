@@ -1656,14 +1656,15 @@
                  ab dem Sie die Schreibberechtigung vergeben wollen. Ein Klick auf das Objekt färbt es rot 
                  ein. Über die Schaltfläche <b>></b> können Sie das markierte Objekt in die Liste der 
                  Berechtigungen übernehmen.</p>
-                 <p>Sie haben zwei Einstellungsmöglichkeiten für die Berechtigung pro Objekt:</p>
+                 <p>Sie haben drei Einstellungsmöglichkeiten für die Berechtigung pro Objekt:</p>
                  <ul>
                  <li><u>Teilbaum:</u> Dies ist die Standardeinstellung. Sie haben für dieses und alle 
                  nachgeordneten Objekte eine Schreibberechtigung. Sie können unterhalb dieses Objektes 
                  und allen nachgeordneten Objekten neue Objekte anlegen.</li>
-                 <li><u>Unterbaum:</u> Sie haben für alle 
-                 nachgeordneten Objekte eine Schreibberechtigung. Sie können unterhalb dieses Objektes 
-                 und allen nachgeordneten Objekten neue Objekte anlegen.</li>
+                 <li><u>Unterobjekte:</u> Sie können direkt unterhalb dieses Objektes ein neues Objekt anlegen,
+                 für das Sie dann den vollen Zugriff bekommen (Teilbaum Recht auf neuem Unterobjekt).
+                 Alle Benutzer Ihrer Gruppe bekommen damit ebenfalls vollen Zugriff (alle Benutzer der Gruppe,
+                 die das Unterobjekterecht beinhaltet).</li>
                  <li><u>Einzelobjekt:</u> Sie haben nur auf diesem Objekt eine Schreibberechtigung, auf 
                  nachgeordnete Objekte nicht. Sie können keine neuen Objekte unterhalb dieses Objektes 
                  anlegen.</li>
@@ -1677,12 +1678,16 @@
                  ab der Sie die Schreibberechtigung vergeben wollen. Ein Klick auf die Adresse färbt sie 
                  rot ein. Über die Schaltfläche <b>></b> können Sie die markierte Adresse in die Liste der 
                  Berechtigungen übernehmen.</p>
-                 <p>Sie haben zwei Einstellungsmöglichkeiten für die Berechtigung pro Adresse:</p>
+                 <p>Sie haben drei Einstellungsmöglichkeiten für die Berechtigung pro Adresse:</p>
                  <ul>
                  <li><u>Teilbaum:</u> Dies ist die Standardeinstellung. Sie haben für diese Adresse und alle 
                  nachgeordneten Adressen eine Schreibberechtigung. Sie können unterhalb dieser und allen 
                  nachgeordneten Adressen neue Adressen anlegen.</li>
-                 <li><u>Einzelobjekt:</u> Sie haben nur auf diese Adresse eine Schreibberechtigung, auf 
+                 <li><u>Unteradressen:</u> Sie können direkt unterhalb dieser Adresse eine neue Adresse anlegen,
+                 für die Sie dann den vollen Zugriff bekommen (Teilbaum Recht auf neuer Unteradresse).
+                 Alle Benutzer Ihrer Gruppe bekommen damit ebenfalls vollen Zugriff (alle Benutzer der Gruppe,
+                 die das Unteradressenrecht beinhaltet).</li>
+                 <li><u>Einzeladresse:</u> Sie haben nur auf diese Adresse eine Schreibberechtigung, auf 
                  nachgeordnete Adressen nicht. Sie können keine neuen Adressen unterhalb dieser Adresse 
                  anlegen.</li>
                  </ul>
@@ -1718,7 +1723,8 @@
             <header>Berechtigungsübersicht</header>
             <content>
                  <p>In der Berechtigungsübersicht werden alle Nutzer angezeigt, die auf ein Objekt, eine 
-                 Adresse, einen Teilbaum oder Unterbaum Schreibrechte oder das Recht zur Qualitätssicherung haben.</p>
+                 Adresse oder einen Teilbaum Schreibrechte oder das Recht für Unterobjekte/Unteradressen oder zur
+                 Qualitätssicherung haben.</p>
                  <p>Klicken Sie auf ein beliebiges Objekt unter <i>Berechtigung für Objekte</i> oder auf eine 
                  beliebige Adresse unter <i>Berechtigung für Adressen</i>. Das ausgewählte Objekt bzw. die 
                  ausgewählte Adresse wird rot markiert. Es werden die <i>Nutzernamen</i> und die 
@@ -1727,7 +1733,7 @@
                  <ul>
                  <li>Schreibrecht auf  das <i>Einzelobjekt</i> bzw. die <i>Einzeladresse</i></li>
                  <li>Schreibrecht auf den <i>Teilbaum</i></li>
-                 <li>Schreibrecht auf den <i>Unterbaum</i></li>
+                 <li>Recht zur Erstellung direkter <i>Unterobjekte</i> bzw. <i>Unteradressen</i></li>
                  <li>Recht zur Qualitätssicherung (<i>QS</i>)</li>
                  </ul>
             </content>

@@ -49,7 +49,7 @@ function addObjectToPermissionTable(obj) {
 		permission.uuid = obj.id;
 		permission.single =  "<input type='radio' name='"+obj.id+"' id='"+obj.id+"_single' class='radio' />";
 		permission.tree = "<input type='radio' name='"+obj.id+"' id='"+obj.id+"_tree' class='radio' checked='true' />";
-        permission.subtree = "<input type='radio' name='"+obj.id+"' id='"+obj.id+"_subtree' class='radio' />";
+        permission.subnode = "<input type='radio' name='"+obj.id+"' id='"+obj.id+"_subnode' class='radio' />";
 
 		objStore.addData(permission);
 	}
@@ -66,7 +66,7 @@ function addAddressToPermissionTable(adr) {
 		permission.uuid = adr.id;
 		permission.single =  "<input type='radio' name='"+adr.id+"' id='"+adr.id+"_single' class='radio' />";
 		permission.tree = "<input type='radio' name='"+adr.id+"' id='"+adr.id+"_tree' class='radio' checked='true' />";
-        permission.subtree = "<input type='radio' name='"+adr.id+"' id='"+adr.id+"_subtree' class='radio' />";
+        permission.subnode = "<input type='radio' name='"+adr.id+"' id='"+adr.id+"_subnode' class='radio' />";
 
 		adrStore.addData(permission);
 	}
@@ -142,8 +142,8 @@ adminGroupScope.saveGroup = function() {
 			var permissionType;
 			if (dojo.byId(obj.uuid+"_tree").checked) {
 			  permissionType = "WRITE_TREE";
-			} else if (dojo.byId(obj.uuid+"_subtree").checked) {
-			  permissionType = "WRITE_SUBTREE";
+			} else if (dojo.byId(obj.uuid+"_subnode").checked) {
+			  permissionType = "WRITE_SUBNODE";
 			} else {
               permissionType = "WRITE_SINGLE";
 			} 
@@ -160,8 +160,8 @@ adminGroupScope.saveGroup = function() {
             var permissionType;
             if (dojo.byId(adr.uuid+"_tree").checked) {
               permissionType = "WRITE_TREE";
-            } else if (dojo.byId(adr.uuid+"_subtree").checked) {
-              permissionType = "WRITE_SUBTREE";
+            } else if (dojo.byId(adr.uuid+"_subnode").checked) {
+              permissionType = "WRITE_SUBNODE";
             } else {
               permissionType = "WRITE_SINGLE";
             } 
@@ -510,15 +510,15 @@ function setAddressPermissions(permissionList) {
 		if (p.permission == "WRITE_SINGLE") {
 			adr.single =  "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_single' class='radio' checked='true' />";
 			adr.tree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_tree' class='radio' />";
-            adr.subtree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subtree' class='radio' />";
+            adr.subnode = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subnode' class='radio' />";
 		} else if (p.permission == "WRITE_TREE") {
 			adr.single =  "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_single' class='radio' />";
 			adr.tree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_tree' class='radio' checked='true' />";
-            adr.subtree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subtree' class='radio' />";
+            adr.subnode = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subnode' class='radio' />";
         } else {
             adr.single =  "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_single' class='radio' />";
             adr.tree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_tree' class='radio' />";
-            adr.subtree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subtree' class='radio' checked='true' />";
+            adr.subnode = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subnode' class='radio' checked='true' />";
 		}
 
 		adrStore.addData(adr);
@@ -540,15 +540,15 @@ function setObjectPermissions(permissionList) {
 		if (p.permission == "WRITE_SINGLE") {
 			obj.single =  "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_single' class='radio' checked='true' />";
 			obj.tree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_tree' class='radio' />";
-            obj.subtree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subtree' class='radio' />";
+            obj.subnode = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subnode' class='radio' />";
 		} else if (p.permission == "WRITE_TREE") {
 			obj.single =  "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_single' class='radio' />";
 			obj.tree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_tree' class='radio' checked='true' />";
-            obj.subtree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subtree' class='radio' />";
+            obj.subnode = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subnode' class='radio' />";
         } else {
             obj.single =  "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_single' class='radio' />";
             obj.tree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_tree' class='radio' />";
-            obj.subtree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subtree' class='radio' checked='true' />";
+            obj.subnode = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subnode' class='radio' checked='true' />";
 		}
 
 		objStore.addData(obj);
@@ -644,7 +644,7 @@ function convertObjectPermissionToTreeNode(p) {
 	return {
 		id: p.object.uuid,
 		title: p.object.title,
-		isFolder: p.object.hasChildren && (p.permission == "WRITE_TREE" || p.permission == "WRITE_SUBTREE"),
+		isFolder: p.object.hasChildren && (p.permission == "WRITE_TREE" || p.permission == "WRITE_SUBNODE"),
 		nodeDocType: p.object.nodeDocType,
 		dojoType: "ingrid:TreeNode",
 		nodeAppType: "O"
@@ -655,7 +655,7 @@ function convertAddressPermissionToTreeNode(p) {
 	return {
 		id: p.address.uuid,
 		title: UtilAddress.createAddressTitle(p.address),
-		isFolder: p.address.hasChildren && (p.permission == "WRITE_TREE" || p.permission == "WRITE_SUBTREE"),
+		isFolder: p.address.hasChildren && (p.permission == "WRITE_TREE" || p.permission == "WRITE_SUBNODE"),
 		nodeDocType: p.address.nodeDocType,
 		dojoType: "ingrid:TreeNode",
 		nodeAppType: "A"

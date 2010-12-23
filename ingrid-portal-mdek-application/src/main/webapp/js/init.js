@@ -1240,6 +1240,7 @@ var reassignToAuthorButton = null;
 		var hasMovePermission = message.node.userMovePermission;
 		var hasWriteSinglePermission = message.node.userWriteSinglePermission;
 		var hasWriteTreePermission = message.node.userWriteTreePermission;
+        var hasWriteSubNodePermission = message.node.userWriteSubNodePermission;
 		var hasWriteSubTreePermission = message.node.userWriteSubTreePermission;
 		var isPublished = message.node.isPublished;
 		var canCreateRootNodes = UtilSecurity.canCreateRootNodes();
@@ -1286,8 +1287,7 @@ var reassignToAuthorButton = null;
 			// If the the user has move permission, he can move the node
 			if (hasMovePermission) {
 				// add delete Button here as well, because move permission means
-				// write-tree and inherited only write subtree, which is exactly
-				// the condition for hasDeletePermission
+				// write-tree, which is exactly the condition for hasDeletePermission
 				enableList = enableList.concat([deleteButton, cutButton]);
 			}
 			// If the the user has write tree permission (tree), he can delete, move and create new nodes
@@ -1301,8 +1301,9 @@ var reassignToAuthorButton = null;
 				}
 			}
 			// If the the user has write tree permission (tree), but a node is assigned to QA, the user
-			// is only allowed to create new subnodes.
-			if (hasWriteSubTreePermission) {
+			// is only allowed to create new subnodes -> hasWriteSubTreePermission
+			// If the user can only create direct subnodes -> hasWriteSubNodePermission
+			if (hasWriteSubTreePermission || hasWriteSubNodePermission) {
 				enableList.push(newEntityButton);
 			}
 			

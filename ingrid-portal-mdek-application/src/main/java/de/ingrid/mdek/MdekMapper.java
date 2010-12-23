@@ -15,7 +15,6 @@ import de.ingrid.mdek.MdekUtils.PublishType;
 import de.ingrid.mdek.MdekUtils.SearchtermType;
 import de.ingrid.mdek.MdekUtils.UserOperation;
 import de.ingrid.mdek.MdekUtils.WorkState;
-import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
 import de.ingrid.mdek.beans.CommentBean;
 import de.ingrid.mdek.beans.KeyValuePair;
 import de.ingrid.mdek.beans.TreeNodeBean;
@@ -114,6 +113,7 @@ public class MdekMapper implements DataMapperInterface {
         mdekObj.setMovePermission(hasMovePermission(idcPermissions));
 		mdekObj.setWriteSinglePermission(hasWriteSinglePermission(idcPermissions));
 		mdekObj.setWriteTreePermission(hasWriteTreePermission(idcPermissions));
+		mdekObj.setWriteSubNodePermission(hasWriteSubNodePermission(idcPermissions));
 		mdekObj.setWriteSubTreePermission(hasWriteSubTreePermission(idcPermissions));
 
 		mdekObj.setIsPublished((Boolean) obj.get(MdekKeys.IS_PUBLISHED));
@@ -386,6 +386,7 @@ public class MdekMapper implements DataMapperInterface {
         mdekAddress.setMovePermission(hasMovePermission(idcPermissions));
 		mdekAddress.setWriteSinglePermission(hasWriteSinglePermission(idcPermissions));
 		mdekAddress.setWriteTreePermission(hasWriteTreePermission(idcPermissions));
+		mdekAddress.setWriteSubNodePermission(hasWriteSubNodePermission(idcPermissions));
 		mdekAddress.setWriteSubTreePermission(hasWriteSubTreePermission(idcPermissions));
 
 		mdekAddress.setIsPublished((Boolean) adr.get(MdekKeys.IS_PUBLISHED));
@@ -567,6 +568,7 @@ public class MdekMapper implements DataMapperInterface {
 		treeNode.setUserWritePermission(hasWritePermission(idcPermissions));
 		treeNode.setUserWriteSinglePermission(hasWriteSinglePermission(idcPermissions));
 		treeNode.setUserWriteTreePermission(hasWriteTreePermission(idcPermissions));
+		treeNode.setUserWriteSubNodePermission(hasWriteSubNodePermission(idcPermissions));
 		treeNode.setUserWriteSubTreePermission(hasWriteSubTreePermission(idcPermissions));
         treeNode.setUserMovePermission(hasMovePermission(idcPermissions));
 
@@ -2079,17 +2081,11 @@ public class MdekMapper implements DataMapperInterface {
 	private boolean hasWriteTreePermission(List<IngridDocument> permissionList) {
 		return MdekUtilsSecurity.hasWriteTreePermission(permissionList);
 	}
+    private boolean hasWriteSubNodePermission(List<IngridDocument> permissionList) {
+        return MdekUtilsSecurity.hasWriteSubNodePermission(permissionList);
+    }	
 	private boolean hasWriteSubTreePermission(List<IngridDocument> permissionList) {
-		if (permissionList != null) {
-			for (IngridDocument permissionDoc : permissionList) {
-				IdcPermission idcPerm = EnumUtil.mapDatabaseToEnumConst(IdcPermission.class, permissionDoc.get(MdekKeysSecurity.IDC_PERMISSION));
-				if (idcPerm == IdcPermission.WRITE_SUBTREE) {
-					return true;
-				}
-			}
-		}
-
-		return false;
+        return MdekUtilsSecurity.hasWriteSubTreePermission(permissionList);
 	}
 
 

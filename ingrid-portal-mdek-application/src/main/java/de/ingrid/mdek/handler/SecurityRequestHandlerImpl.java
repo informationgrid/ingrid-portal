@@ -105,13 +105,13 @@ public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 		return MdekUtils.extractSecurityUsersFromResponse(response);
 	}
 
-    public List<User> getUsersWithTreeOrSubTreePermissionForObject(String objectUuid, boolean checkWorkflow, boolean detailedPermissions) {
-        IngridDocument response = mdekCallerSecurity.getUsersWithTreeOrSubTreePermissionForObject(connectionFacade.getCurrentPlugId(), objectUuid, MdekSecurityUtils.getCurrentUserUuid(), checkWorkflow, detailedPermissions);
+    public List<User> getResponsibleUsersForNewObject(String objectUuid, boolean checkWorkflow, boolean detailedPermissions) {
+        IngridDocument response = mdekCallerSecurity.getResponsibleUsersForNewObject(connectionFacade.getCurrentPlugId(), objectUuid, MdekSecurityUtils.getCurrentUserUuid(), checkWorkflow, detailedPermissions);
         return MdekUtils.extractSecurityUsersFromResponse(response);
     }
     
-    public List<User> getUsersWithTreeOrSubTreePermissionForAddress(String addressUuid, boolean checkWorkflow, boolean detailedPermissions) {
-        IngridDocument response = mdekCallerSecurity.getUsersWithTreeOrSubTreePermissionForAddress(connectionFacade.getCurrentPlugId(), addressUuid, MdekSecurityUtils.getCurrentUserUuid(), checkWorkflow, detailedPermissions);
+    public List<User> getResponsibleUsersForNewAddress(String addressUuid, boolean checkWorkflow, boolean detailedPermissions) {
+        IngridDocument response = mdekCallerSecurity.getResponsibleUsersForNewAddress(connectionFacade.getCurrentPlugId(), addressUuid, MdekSecurityUtils.getCurrentUserUuid(), checkWorkflow, detailedPermissions);
         return MdekUtils.extractSecurityUsersFromResponse(response);
     }
 

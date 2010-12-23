@@ -901,6 +901,7 @@ menuEventHandler.handleMarkDeleted = function(msg) {
 					selectedNode.userMovePermission = false;
 					selectedNode.userWriteSinglePermission = false;
 					selectedNode.userWriteTreePermission = false;
+                    selectedNode.userWriteSubNodePermission = false;
 				}
 	    	});
 			deleteObjDef.addErrback(displayErrorMessage);
