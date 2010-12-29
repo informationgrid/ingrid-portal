@@ -249,7 +249,7 @@ function isObjectPublishable(idcObject) {
     if ((""+idcObject.objectClass == '1') || (""+idcObject.objectClass == '3')) {
        isInspireClass = true;
     }
-    if (isInspireClass == true && UtilUdk.isInspire(idcObject.thesaurusInspireTermsList)) {
+    if (isInspireClass == true) {
 
 	   // check if spatial reference is set !
 	   if (!idcObject.ref1SpatialSystem || idcObject.ref1SpatialSystem == "") {
@@ -264,40 +264,25 @@ function isObjectPublishable(idcObject) {
             dojo.debug("Field 'availabilityDataFormatInspire' empty but required due to set INSPIRE theme !.");
             publishable = false;
         }
-/*
-        // Check if the availabilityDataFormat table is not empty and contains valid input (both name and version must contain data)
-        var dataFormatData = idcObject.availabilityDataFormatTable;
-		var missingData = false; 
-        if (dataFormatData.length == 0) {
-            dojo.debug("Table 'availabilityDataFormatTable' empty but required.");
-			missingData = true;
-        } else {
-            if (dojo.lang.some(dataFormatData, function(dataFormat) {
-                return (UtilString.noContent(dataFormat.name) || UtilString.noContent(dataFormat.version)); })) {
-                dojo.debug("All entries in the 'availabilityDataFormatTable' table must have a valid name and version.");
-                missingData = true;
+
+		// Required ONLY if INSPIRE Theme selected
+        if (UtilUdk.isInspire(idcObject.thesaurusInspireTermsList)) {
+            // Check if "Datenverantwortung" address is set. "Auskunft" address already checked above, is always mandatory !
+            // Datenverantwortung = entry id 2 in syslist 505
+            // NOTICE: we check via String in dojo widget. addressData bean not updated correctly if directly published (without working save)
+    
+            // Get the string (from the syslist) that is used to identify Datenverantwortung entries
+            var dvString = dojo.widget.byId("generalAddressCombobox").getDisplayValueForValue(2);
+    
+            // Check if at least one entry exists with the correct relation type
+    // DOES NOT WORK IF DIRECTLY PUBLISHED AFTER ADDRESS WAS CORRECTLY SET (wrong data in address bean) !
+    //        if (dojo.lang.every(addressData, function(addressRef) { return (addressRef.typeOfRelation != 2); })) {
+            if (dojo.lang.every(addressData, function(addressRef) { return ( dojo.string.trim(addressRef.nameOfRelation) != dvString); })) {
+                dojo.html.addClass(dojo.byId("generalAddressTableLabel"), "important");
+                dojo.debug("At least one address relation has to be of type 2 = 'Datenvarantwortung'.");
+                publishable = false;
             }
 		}
-		if (missingData) {
-            dojo.html.addClass(dojo.byId("availabilityDataFormatLabel"), "important");
-            publishable = false;
-		}
-*/
-        // Check if "Datenverantwortung" address is set. "Auskunft" address already checked above, is always mandatory !
-		// Datenverantwortung = entry id 2 in syslist 505
-		// NOTICE: we check via String in dojo widget. addressData bean not updated correctly if directly published (without working save)
-
-		// Get the string (from the syslist) that is used to identify Datenverantwortung entries
-        var dvString = dojo.widget.byId("generalAddressCombobox").getDisplayValueForValue(2);
-
-	    // Check if at least one entry exists with the correct relation type
-// DOES NOT WORK IF DIRECTLY PUBLISHED AFTER ADDRESS WAS CORRECTLY SET (wrong data in address bean) !
-//        if (dojo.lang.every(addressData, function(addressRef) { return (addressRef.typeOfRelation != 2); })) {
-        if (dojo.lang.every(addressData, function(addressRef) { return ( dojo.string.trim(addressRef.nameOfRelation) != dvString); })) {
-            dojo.html.addClass(dojo.byId("generalAddressTableLabel"), "important");
-            dojo.debug("At least one address relation has to be of type 2 = 'Datenvarantwortung'.");
-            publishable = false;
-        }
     }
 
 	// Check the required fields per object class:

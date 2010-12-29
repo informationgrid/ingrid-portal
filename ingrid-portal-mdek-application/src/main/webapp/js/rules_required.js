@@ -251,6 +251,9 @@ function applyRule7() {
 	}
 
 	var termsList = UtilList.tableDataToList(dojo.widget.byId("thesaurusInspire").store.getData());
+
+/*
+// NOW handled in FormErfassungObjektContent.setSelectedClass
     if (UtilUdk.isInspire(termsList)) {
         setRequiredState(dojo.byId("ref1SpatialSystemLabel"), dojo.byId("uiElement3500"), true);
 
@@ -260,11 +263,12 @@ function applyRule7() {
 	
 	// update sections, so new required fields are shown !
 	// we do this manually, does not work inside of setRequiredState ???
-	var sectionNames = new Array("spatialRef", "availability");
+	var sectionNames = new Array("spatialRef");
 	for (var i=0; i<sectionNames.length; i++) {
         var mode = UtilUI.getCurrentExpandModeOfSectionElement(dojo.byId(sectionNames[i]));
         toggleFields(sectionNames[i], mode);
 	}
+*/
 
 	// show/remove DQ tables in class 1 dependent from themes
 	if (objectClass == "1") {

@@ -49,7 +49,7 @@ dojo.widget.defineWidget(
   setSelectedClass: function(/* name of the object class/address type */clazz) {
     ingrid.widget.Form.prototype.setSelectedClass.apply(this, arguments);
     
-    // hide section 'Verf�gbarkeit' if 'Organisationseinheit/Fachaufgabe' (Class0) is selected
+    // hide section 'Verfuegbarkeit' if 'Organisationseinheit/Fachaufgabe' (Class0) is selected
     var availabilityContainer = document.getElementById('availability');
     if (availabilityContainer) {
       if(this.selectedClass == "Class0")
@@ -80,26 +80,31 @@ dojo.widget.defineWidget(
         div.style.display = 'none';
     }
 
-    // "INSPIRE-Thema" only mandatory for Geoinformation/Karte(1) and Geodatendienst(3) 
-    div = dojo.byId("thesaurusInspireContainer");
+    // Fields only mandatory for Geoinformation/Karte(1) and Geodatendienst(3)
+	// "INSPIRE-Thema", "Raumbezugssystem"
     if (this.selectedClass == "Class1" || this.selectedClass == "Class3") {
         setRequiredState(dojo.byId("thesaurusInspireLabel"), dojo.byId("uiElement5064"), true);
-        div.style.display = 'block';
+        dojo.byId("thesaurusInspireContainer").style.display = 'block';
+
+        setRequiredState(dojo.byId("ref1SpatialSystemLabel"), dojo.byId("uiElement3500"), true);
+        dojo.byId("ref1SpatialSystemContainer").style.display = 'block';
+
 		// show / hide DQ input dependent from INSPIRE Thema !
 		applyRule7();
-    } else {
+
+	} else {
         setRequiredState(dojo.byId("thesaurusInspireLabel"), dojo.byId("uiElement5064"), false);
-        // div.style.display = 'none';
+        setRequiredState(dojo.byId("ref1SpatialSystemLabel"), dojo.byId("uiElement3500"), false);
+		// DO NOT HIDE to avoid vanishing field ...
     }
 
     // "ISO-Themenkategorie" only mandatory in class 1 
-    div = dojo.byId("thesaurusTopicsContainer");
     if (this.selectedClass == "Class1") {
         setRequiredState(dojo.byId("thesaurusTopicsLabel"), dojo.byId("uiElement5060"), true);
-        div.style.display = 'block';
+        dojo.byId("thesaurusTopicsContainer").style.display = 'block';
     } else {
         setRequiredState(dojo.byId("thesaurusTopicsLabel"), dojo.byId("uiElement5060"), false);
-        // div.style.display = 'none';
+        // DO NOT HIDE to avoid vanishing field ...
     }
 
 	if (dojo.render.html.ie) {
