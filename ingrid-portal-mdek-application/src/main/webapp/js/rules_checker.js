@@ -73,20 +73,23 @@ var notEmptyFields = [["objectName", "objectNameLabel"],
 
 var notEmptyFieldsClass1 = [["ref1BasisText", "ref1BasisTabContainerLabel"],
 							["ref1ObjectIdentifier", "ref1ObjectIdentifierLabel"],
-                            ["ref1DataSet", "ref1DataSetLabel"]]; 
-var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"]];
+                            ["ref1DataSet", "ref1DataSetLabel"],
+                            ["ref1SpatialSystem", "ref1SpatialSystemLabel"],
+                            ["availabilityDataFormatInspire", "availabilityDataFormatInspireLabel"]]; 
+var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"],
+                            ["ref1SpatialSystem", "ref1SpatialSystemLabel"]];
 
 var notEmptyFieldsClass6 = [["ref6ServiceType", "ref6ServiceTypeLabel"]];
 
 var notEmptyTables = [["generalAddressTable", "generalAddressTableLabel"],
-					  ["timeRefTable", "timeRefTableLabel"],
-					  ["thesaurusTopicsList", "thesaurusTopicsLabel"],
-					  ["thesaurusInspireTermsList", "thesaurusInspireLabel"]];
+					  ["timeRefTable", "timeRefTableLabel"]];
 
 // TODO Add class 2, 4, 5 to isObjectPublishable when needed
 var notEmptyTablesClass1 = [["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
                             ["availabilityUseConstraints", "availabilityUseConstraintsLabel"],
-							["extraInfoConformityTable", "extraInfoConformityTableLabel"]];
+							["extraInfoConformityTable", "extraInfoConformityTableLabel"],
+                            ["thesaurusInspireTermsList", "thesaurusInspireLabel"],
+                            ["thesaurusTopicsList", "thesaurusTopicsLabel"]];
 var notEmptyTablesClass2 = [["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
                             ["availabilityUseConstraints", "availabilityUseConstraintsLabel"]];
 var notEmptyTablesClass3 = [["ref3ServiceTypeTable", "ref3ServiceTypeTableLabel"],
@@ -250,20 +253,6 @@ function isObjectPublishable(idcObject) {
        isInspireClass = true;
     }
     if (isInspireClass == true) {
-
-	   // check if spatial reference is set !
-	   if (!idcObject.ref1SpatialSystem || idcObject.ref1SpatialSystem == "") {
-            dojo.html.addClass(dojo.byId("ref1SpatialSystemLabel"), "important");
-            dojo.debug("Field 'ref1SpatialSystem' empty but required due to set INSPIRE theme !.");
-            publishable = false;
-        }
-
-       // check if INSPIRE datatype is set ! Only shown, when class 1 !
-       if (""+idcObject.objectClass == '1' && (!idcObject.availabilityDataFormatInspire || idcObject.availabilityDataFormatInspire == "")) {
-            dojo.html.addClass(dojo.byId("availabilityDataFormatInspireLabel"), "important");
-            dojo.debug("Field 'availabilityDataFormatInspire' empty but required due to set INSPIRE theme !.");
-            publishable = false;
-        }
 
 		// Required ONLY if INSPIRE Theme selected
         if (UtilUdk.isInspire(idcObject.thesaurusInspireTermsList)) {

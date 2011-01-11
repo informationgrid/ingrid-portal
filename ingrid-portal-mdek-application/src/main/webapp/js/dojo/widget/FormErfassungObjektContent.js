@@ -69,42 +69,45 @@ dojo.widget.defineWidget(
 
 	   // class specials !
     
-    // "Kodierungsschema der geographischen Daten" only in class 1 and then mandatory 
+    // Fields only mandatory for Geoinformation/Karte(1)
     // NOTICE: div excluded from normal show/hide mechanism (displaytype="exclude")
-    div = dojo.byId("availabilityDataFormatInspireContainer");
     if (this.selectedClass == "Class1") {
+        // "Kodierungsschema der geographischen Daten" 
         setRequiredState(dojo.byId("availabilityDataFormatInspireLabel"), dojo.byId("uiElement1315"), true);
-        div.style.display = 'block';
+        dojo.byId("availabilityDataFormatInspireContainer").style.display = 'block';
+
+        // "INSPIRE-Thema"
+        setRequiredState(dojo.byId("thesaurusInspireLabel"), dojo.byId("uiElement5064"), true);
+        dojo.byId("thesaurusInspireContainer").style.display = 'block';
+        // show / hide DQ input dependent from INSPIRE Thema !
+        applyRule7();
+
+        // "ISO-Themenkategorie" only mandatory in class 1 
+        setRequiredState(dojo.byId("thesaurusTopicsLabel"), dojo.byId("uiElement5060"), true);
+        dojo.byId("thesaurusTopicsContainer").style.display = 'block';
+
     } else {
+	   // "Kodierungsschema der geographischen Daten" only in class 1
         setRequiredState(dojo.byId("availabilityDataFormatInspireLabel"), dojo.byId("uiElement1315"), false);
-        div.style.display = 'none';
+        dojo.byId("availabilityDataFormatInspireContainer").style.display = 'none';
+
+        // "INSPIRE-Thema" also in other classes
+        setRequiredState(dojo.byId("thesaurusInspireLabel"), dojo.byId("uiElement5064"), false);
+        // DO NOT HIDE to avoid vanishing field ...
+
+        setRequiredState(dojo.byId("thesaurusTopicsLabel"), dojo.byId("uiElement5060"), false);
+        // DO NOT HIDE to avoid vanishing field ...
     }
 
     // Fields only mandatory for Geoinformation/Karte(1) and Geodatendienst(3)
-	// "INSPIRE-Thema", "Raumbezugssystem"
     if (this.selectedClass == "Class1" || this.selectedClass == "Class3") {
-        setRequiredState(dojo.byId("thesaurusInspireLabel"), dojo.byId("uiElement5064"), true);
-        dojo.byId("thesaurusInspireContainer").style.display = 'block';
-
+        // "Raumbezugssystem"
         setRequiredState(dojo.byId("ref1SpatialSystemLabel"), dojo.byId("uiElement3500"), true);
         dojo.byId("ref1SpatialSystemContainer").style.display = 'block';
 
-		// show / hide DQ input dependent from INSPIRE Thema !
-		applyRule7();
-
 	} else {
-        setRequiredState(dojo.byId("thesaurusInspireLabel"), dojo.byId("uiElement5064"), false);
         setRequiredState(dojo.byId("ref1SpatialSystemLabel"), dojo.byId("uiElement3500"), false);
 		// DO NOT HIDE to avoid vanishing field ...
-    }
-
-    // "ISO-Themenkategorie" only mandatory in class 1 
-    if (this.selectedClass == "Class1") {
-        setRequiredState(dojo.byId("thesaurusTopicsLabel"), dojo.byId("uiElement5060"), true);
-        dojo.byId("thesaurusTopicsContainer").style.display = 'block';
-    } else {
-        setRequiredState(dojo.byId("thesaurusTopicsLabel"), dojo.byId("uiElement5060"), false);
-        // DO NOT HIDE to avoid vanishing field ...
     }
 
 	if (dojo.render.html.ie) {
