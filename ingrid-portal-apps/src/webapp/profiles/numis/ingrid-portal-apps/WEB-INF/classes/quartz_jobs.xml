@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<quartz xmlns="http://www.opensymphony.com/quartz/JobSchedulingData"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.opensymphony.com/quartz/JobSchedulingData
+        webapps/ingrid-portal-apps/WEB-INF/classes/job_scheduling_data_1_5.xsd"
+        version="1.5"
+        overwrite-existing-jobs="true">
+    <job>
+        <job-detail>
+            <name>RSSFetcherJob</name>
+            <group>DEFAULT</group>
+            <description>fetching all RSS feeds in database table ingrid_rss_source. Older entries will be deleted.</description>
+            <job-class>de.ingrid.portal.scheduler.jobs.RSSFetcherJob</job-class>
+            <volatility>false</volatility>
+            <durability>false</durability>
+            <recover>false</recover>
+        </job-detail>
+        <trigger>
+            <simple>
+                <name>RSSFetcherTrigger</name>
+                <group>DEFAULT</group>
+                <job-name>RSSFetcherJob</job-name>
+                <job-group>DEFAULT</job-group>
+                <repeat-count>-1</repeat-count>
+                <repeat-interval>3600000</repeat-interval>
+            </simple>
+        </trigger>
+    </job>
+    <job>
+        <job-detail>
+            <name>AnniversaryFetcherJob</name>
+            <group>DEFAULT</group>
+            <description>job fetching all anniversaries from SNS for tomorrow and store them into DB.</description>
+            <job-class>de.ingrid.portal.scheduler.jobs.AnniversaryFetcherJob</job-class>
+            <volatility>false</volatility>
+            <durability>false</durability>
+            <recover>false</recover>
+        </job-detail>
+        <trigger>
+            <simple>
+                <name>AnniversaryTrigger</name>
+                <group>DEFAULT</group>
+                <job-name>AnniversaryFetcherJob</job-name>
+                <job-group>DEFAULT</job-group>
+                <repeat-count>-1</repeat-count>
+                <repeat-interval>3600000</repeat-interval>
+            </simple>
+        </trigger>
+    </job>
+</quartz>

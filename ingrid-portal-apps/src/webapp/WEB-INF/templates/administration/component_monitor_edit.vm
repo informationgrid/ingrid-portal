@@ -51,7 +51,7 @@
 			<p class="clearer" />
 			#renderTextField( "Service URL*" "serviceurl" )
     	#elseif ($compType == "component.monitor.general.type.provider.check")
-    		#renderTextField( "Anbieter ausschlie�en" "excl_provider" )
+    		#renderTextField( "Anbieter ausschlie&szlig;en" "excl_provider" )
     	#end
     	
     	

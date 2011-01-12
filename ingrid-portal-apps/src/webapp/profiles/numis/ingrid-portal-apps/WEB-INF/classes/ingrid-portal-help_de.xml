@@ -49,10 +49,10 @@
         <section help-key="about-1">
             <header>Konzept und Aufgabe von NUMIS</header>
             <content>
-                <p>NUMIS, das Umweltportal Deutschland, bietet einen zentralen
-                    Zugriff auf mehrere Millionen Internetseiten und
+                <p>NUMIS, das Niedersächsische Umweltportal, bietet einen zentralen
+                    Zugriff auf Internetseiten und
                     Datenbankeinträge von öffentlichen Institutionen und
-                    Organisationen in Bund und Ländern. Mit einem Mix aus
+                    Organisationen in Niedersachsen. Mit einem Mix aus
                     aktuellen Nachrichten, Umweltmesswerten (z.B. aktuelle
                     Ozonkonzentration in der Luft), Hintergrundinformationen,
                     und historischen Umweltereignissen richtet sich NUMIS
@@ -61,7 +61,7 @@
                     Ziel, langfristig möglichst alle behördlichen Anbieter von
                     Umweltinformationen zu erfassen.</p>
                 <p>Bei der Konzeption von NUMIS spielten die
-                    EU-Umweltinformationsrichtlinie von 2003 und die geplante
+                    EU-Umweltinformationsrichtlinie von 2003 und die
                     INSPIRE Richtlinie eine wichtige Rolle. Diese Richtlinien
                     setzen neue Maßstäbe für die öffentliche Verbreitung
                     behördlicher Umweltinformationen bzw. den Aufbau der dafür
@@ -70,9 +70,8 @@
                     als bisher dazu verpflichtet, umweltrelevante Daten und
                     Informationen in einer klar verständlichen und einfach
                     zugänglichen Form bereitzustellen.</p>
-                  <p> NUMIS und die eigens
-                    zum Aufbau des Portals entwickelte Software
-                    &#8222;InGrid&#8220; wurden speziell als
+                  <p>NUMIS und die zum Aufbau des Portals entwickelte Software
+                    &#8222;InGrid&#174;&#8220; wurden speziell als
                     Werkzeuge zur Unterstützung der Behörden bei der Umsetzung
                     der Richtlinien konzipiert. </p>
             </content>
@@ -80,14 +79,9 @@
         <section help-key="about-2">
             <header>Die Betreiber von NUMIS</header>
             <content>
-                <p> NUMIS wurde
-                    im Rahmen der Bund-Länder Verwaltungsvereinbarung UDK/GEIN (VwV UDK/GEIN)
-                    entwickelt. An dieser Verwaltungsvereinbarung sind
-                    u.a. das Umweltbundesministerium (BMU) und die
-                    Umweltministerien aller 16 Länder beteiligt.  NUMIS wird
-                    technisch und inhaltlich von der Koordinierungsstelle
-                    NUMIS im Niedersächsischen Ministerium für Umwelt und Klimaschutz in
-                    Hannover betreut.</p>
+                <p> NUMIS wird technisch und inhaltlich von der Fachgruppe 
+                    Umweltinformationssysteme im Niedersächsischen Ministerium 
+                    für Umwelt und Klimaschutz in Hannover betreut.</p>
             </content>
         </section>
         <section help-key="about-3">
@@ -144,18 +138,24 @@
             <content>
                 <p>Der Kreis der Informationsanbieter in NUMIS beschränkt sich
                     vorwiegend auf Behörden und behördennahen Organisationen in
-                    Deutschland, wird aber kontinuierlich erweitert. Wenn Ihre
+                    Niedersachsen, wird aber kontinuierlich erweitert. Wenn Ihre
                     Organisation ebenfalls umweltrelevante Informationen über
-                    NUMIS bereitstellen möchte wenden Sie sich bitte an die <a
-                        href="http://www.kst.NUMIS.de/"
-                        target="_new">Koordinierungsstelle NUMIS</a>.</p>
+                    NUMIS bereitstellen möchte, wenden Sie sich bitte an die <a href="mailto:&#102;&#103;&#95;&#117;&#105;&#115;&#64;&#110;&#117;&#109;&#105;&#115;&#46;&#110;&#105;&#101;&#100;&#101;&#114;&#115;&#97;&#99;&#104;&#115;&#101;&#110;&#46;&#100;&#101;">&#102;&#103;&#95;&#117;&#105;&#115;&#64;&#110;&#117;&#109;&#105;&#115;&#46;&#110;&#105;&#101;&#100;&#101;&#114;&#115;&#97;&#99;&#104;&#115;&#101;&#110;&#46;&#100;&#101;</a>
+                    im Niedersächsischen Ministerium für Umwelt und Klimaschutz.</p>
             </content>
         </section>
         <section help-key="about-6">
             <header>InGrid &#8211; Die Software hinter NUMIS</header>
             <content>
-                <p>Zur Umsetzung von NUMIS wurde das Softwarepaket InGrid
-                    entwickelt. InGrid setzt auf eine modulare und flexible
+                <p>Zur Umsetzung von NUMIS wird das Softwarepaket InGrid
+                    genutzt. InGrid wird im Rahmen der Bund-Länder 
+                    Verwaltungsvereinbarung UDK/GEIN (VwV UDK/GEIN) 
+                    entwickelt. An dieser Verwaltungsvereinbarung sind 
+                    u.a. das Umweltbundesministerium (BMU) und die 
+                    Umweltministerien aller 16 Länder beteiligt. Im Rahmen
+                    der VwV UDK/GEIN wird das Umweltportal Deutschland, PortalU, 
+                    betrieben.
+                    InGrid setzt auf eine modulare und flexible
                     Systemarchitektur auf der Basis lizenzfreier OpenSource
                     Produkte. Dadurch wird es möglich, die technische Struktur
                     des Umweltinformationsnetzes an sich wandelnde
