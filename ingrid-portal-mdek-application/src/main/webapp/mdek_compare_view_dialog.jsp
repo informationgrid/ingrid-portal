@@ -369,7 +369,7 @@ function buildListBody(list, rowProperty, renderFunction) {
 		} else {
 			val = list[i];
 		}
-		if (renderFunction) {
+		if (val && renderFunction) {
 			val = renderFunction.call(this, val);
 		}
 		if (val && val != "") {
@@ -400,7 +400,7 @@ function buildListBodyForDiff(diff, rowProperty, renderFunction) {
 		} else {
 			val = diffList[i];
 		}
-		if (renderFunction) {
+		if (val && renderFunction) {
 			val = renderFunction.call(this, val);
 		}
 		if (val && val != "") {
@@ -491,11 +491,13 @@ function buildTableBody(list, rowProperties, cellRenderFunction) {
 			t += "<tr>";
 		}
 		for (var j=0; j<rowProperties.length; j++) {
-			if (cellRenderFunction && cellRenderFunction[j]) {
-				t += "<td style=\"padding-right:4px\">"+cellRenderFunction[j].call(this, list[i][rowProperties[j]])+"</td>";
-			} else {
-				t += "<td style=\"padding-right:4px\">"+list[i][rowProperties[j]]+"</td>";
+            var rowValue = list[i][rowProperties[j]];
+            if (!rowValue) {
+                rowValue = "";
+            } else if (cellRenderFunction && cellRenderFunction[j]) {
+				rowValue = cellRenderFunction[j].call(this, rowValue);
 			}
+			t += "<td style=\"padding-right:4px\">"+rowValue+"</td>";
 		}
 		t += "</tr>";
 		
@@ -515,35 +517,25 @@ function buildTableBodyForDiff(diff, rowProperties, cellRenderFunction) {
 			t += "<tr>";
 		}
 		for (var j=0; j<rowProperties.length; j++) {
-			if (cellRenderFunction && cellRenderFunction[j]) {
-				t += "<td style=\"padding-right:4px\">";
-				if (arrayContains(diff.ins, diffList[i])) {
-					t += "<span style='font-weight: normal; text-decoration: none; color: #ffffff; background-color: #009933;'>";
-					t += cellRenderFunction[j].call(this, diffList[i][rowProperties[j]]);
-					t += "</span>";
-				} else if (arrayContains(diff.del, diffList[i])) {
-					t += "<span style='font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;'>";
-					t += cellRenderFunction[j].call(this, diffList[i][rowProperties[j]]);
-					t += "</span>";
-				} else {
-					t += cellRenderFunction[j].call(this, diffList[i][rowProperties[j]]);
-				}
-
-				t += "</td>";
-			} else {
-				t += "<td style=\"padding-right:4px\">";
-				if (arrayContains(diff.ins, diffList[i])) {
-					t += "<span style='font-weight: normal; text-decoration: none; color: #ffffff; background-color: #009933;'>";
-					t += diffList[i][rowProperties[j]]
-					t += "</span>";
-				} else if (arrayContains(diff.del, diffList[i])) {
-					t += "<span style='font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;'>";
-					t += diffList[i][rowProperties[j]]
-					t += "</span>";
-				} else {
-					t += diffList[i][rowProperties[j]]
-				}
+            var diffValue = diffList[i][rowProperties[j]];
+            t += "<td style=\"padding-right:4px\">";
+            if (!diffValue) {
+                diffValue = "";
+            } else if (cellRenderFunction && cellRenderFunction[j]) {
+            	diffValue = cellRenderFunction[j].call(this, diffValue);
 			}
+			if (arrayContains(diff.ins, diffList[i])) {
+				t += "<span style='font-weight: normal; text-decoration: none; color: #ffffff; background-color: #009933;'>";
+				t += diffValue
+				t += "</span>";
+			} else if (arrayContains(diff.del, diffList[i])) {
+				t += "<span style='font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;'>";
+				t += diffValue
+				t += "</span>";
+			} else {
+				t += diffValue
+			}
+            t += "</td>";
 		}
 		t += "</tr>";
 		

@@ -96,7 +96,7 @@ function buildListBody(list, rowProperty, renderFunction) {
 		} else {
 			val = list[i];
 		}
-		if (renderFunction) {
+		if (val && renderFunction) {
 			val = renderFunction.call(this, val);
 		}
 		if (val && val != "") {
@@ -127,7 +127,7 @@ function buildListBodyForDiff(diff, rowProperty, renderFunction) {
 		} else {
 			val = diffList[i];
 		}
-		if (renderFunction) {
+		if (val && renderFunction) {
 			val = renderFunction.call(this, val);
 		}
 		if (val && val != "") {

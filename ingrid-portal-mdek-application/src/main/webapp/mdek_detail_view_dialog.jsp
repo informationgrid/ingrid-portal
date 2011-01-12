@@ -419,7 +419,7 @@ function renderList(list, title, rowProperty, renderFunction) {
 			} else {
 				val = list[i];
 			}
-			if (renderFunction) {
+			if (val && renderFunction) {
 				val = renderFunction.call(this, val);
 			}
 			if (val && val != "") {
@@ -454,11 +454,13 @@ function renderTable(list, rowProperties, listHeader, title, cellRenderFunction)
 				t += "<tr>";
 			}
 			for (var j=0; j<rowProperties.length; j++) {
-				if (cellRenderFunction && cellRenderFunction[j]) {
-					t += "<td style=\"padding-right:4px\">"+cellRenderFunction[j].call(this, list[i][rowProperties[j]])+"</td>";
-				} else {
-					t += "<td style=\"padding-right:4px\">"+list[i][rowProperties[j]]+"</td>";
+                var rowValue = list[i][rowProperties[j]];
+                if (!rowValue) {
+                    rowValue = "";
+                } else if (cellRenderFunction && cellRenderFunction[j]) {
+					rowValue = cellRenderFunction[j].call(this, rowValue);
 				}
+                t += "<td style=\"padding-right:4px\">"+rowValue+"</td>";
 			}
 			t += "</tr>";
 			
