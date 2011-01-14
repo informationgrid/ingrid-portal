@@ -1233,7 +1233,13 @@ function validateSource(source) {
 		protocol(ERROR, "No valid ISO metadata record.\n\n");
 		throw "No valid ISO metadata record.";
 	}
-	
+	var hierarchyLevel = XPathUtils.getString(source, "//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue");
+	log.debug("Found hierarchyLevel: " + hierarchyLevel);
+	if (hierarchyLevel == "application") {
+		log.error("HierarchyLevel 'application' is not supported.");
+		protocol(ERROR, "HierarchyLevel 'application' is not supported.\n\n");
+		throw "HierarchyLevel 'application' is not supported.";
+	}
 	return true;
 }
 
@@ -1717,9 +1723,9 @@ function createUUIDFromAddress(source) {
 	}
 	
 	var uuid;
-	if (idString != "" && (hasValue(email) || (hasValue(organisationName) && hasValue(individualName)))) {
+	if (hasValue(idString) && (hasValue(email) || (hasValue(organisationName) && hasValue(individualName)))) {
 		uuid = createUUIDFromString(idString.toString());
-	} else if (isoUuid != "") {
+	} else if (hasValue(isoUuid)) {
 		uuid = isoUuid;
 	} else {
 		protocol(INFO, "Insufficient data for UUID creation (no 'email' or only one of 'individualName' or 'organisationName' has been set for this address: email='" + email + "', individualName='" + individualName + "', organisationName='" + organisationName + "'!)")

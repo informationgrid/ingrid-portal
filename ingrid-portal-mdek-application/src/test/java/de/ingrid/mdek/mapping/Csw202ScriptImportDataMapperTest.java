@@ -202,7 +202,61 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		}
 	}
 	
+	public final void testConvertCSWImport1() throws TransformerException, IOException {
+		// set variables that are needed for running correctly
+		initClassVariables(mapperScript, templateIGC);
+		
+		String exampleXml = "/de/ingrid/mdek/mapping/csw202apIso10_dataset_Ueberschwemmungsflaechen.xml";
+		
+		InputStream data = null;
+		try {
+			// get example file from test resource directory
+			// spring-dependency is used to access test-resources (search from every class path!)
+			data = (new ClassPathResource(exampleXml)).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
+		HashMapProtocolHandler protocolHandler = new HashMapProtocolHandler();
+		protocolHandler.setCurrentFilename("csw202apIso10_dataset_Ueberschwemmungsflaechen.xml");
+		InputStream result;
+		try {
+			result = mapper.convert(data, protocolHandler);
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Karte der Überschwemmungsflächen der Gewässer II. und III. Ordnung"));
+			result.reset();
+			System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
+		} catch (Exception e) {
+			fail("Error transforming: " + exampleXml);
+		}
+	}
 
+	public final void testConvertCSWImport2() throws TransformerException, IOException {
+		// set variables that are needed for running correctly
+		initClassVariables(mapperScript, templateIGC);
+		
+		String exampleXml = "/de/ingrid/mdek/mapping/csw202apIso10_application_HessenAnalyser_MultiLang.xml";
+		
+		InputStream data = null;
+		try {
+			// get example file from test resource directory
+			// spring-dependency is used to access test-resources (search from every class path!)
+			data = (new ClassPathResource(exampleXml)).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
+		HashMapProtocolHandler protocolHandler = new HashMapProtocolHandler();
+		protocolHandler.setCurrentFilename("csw202apIso10_application_HessenAnalyser_MultiLang.xml");
+		InputStream result;
+		try {
+			result = mapper.convert(data, protocolHandler);
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Hessen Wasser Analyser"));
+			result.reset();
+			System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
+			fail("HierachyLevel application should not be supported!");
+		} catch (Exception e) {}
+	}
+	
 	public final void testConvertTHObjectsComplete() throws TransformerException, IOException {
 		// set variables that are needed for running correctly
 		initClassVariables(mapperScript, templateIGC);
