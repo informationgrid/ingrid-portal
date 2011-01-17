@@ -486,7 +486,7 @@ div.formbody .snslogo_margin {margin-top: 8px; }
 div#footercontainer { margin: 0px 0 0px 28px; background: url(../images/logo_footer.gif) no-repeat; padding: 0px 0px 30px 112px; }
 #footercontent { font-size: 65%; line-height: 120% }
 
-div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF;}
+div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF; overflow:hidden; }
 div#footermarginal { background: #FFFFFF; width: 19em; padding-right: 14px; text-align:right; font-size: 65%; line-height: 100%; width:100%;}
 
 div#finalfootercontainer { float: left; width: 59.5em; }
@@ -596,34 +596,25 @@ td.text_label_left_body { font-size:75%; }
 li.detail_li { color:#68A5D2; }
 li.detail_li p { font-size:100%; color:#000000; }
  
-img.section_show_hide { padding-right:16px; padding-top:5px; }
+img.section_show_hide { padding-right:16px; padding-top:5px; display: none !important; }
+
 /******************************************
 * Dojo Tabs CSS style 
 *******************************************/
 
-div.dojoTab:hover { color:#000000; font-weight:bold; text-decoration: underline; background:none repeat scroll 0 0 #DDE9BD; }
-div.dojoTab:hover div{ color:#000000; font-weight:bold; text-decoration: underline; background:none repeat scroll 0 0 #DDE9BD; padding-bottom:4px; }
-div.dojoTab { position : relative; float : left; white-space: nowrap; z-index: 3; color:#FFFFFF; font-weight:bold;	font-size:75%; border-top: 1px solid #68A5D2; border-left: 1px solid #68A5D2; border-right: 1px solid #68A5D2; border-bottom: 0px solid #68A5D2; padding:0px;}
-div.dojoTab div { display : block;	padding : 4px 15px 4px 15px; background:#68A5D2; color:#FFFFFF;}
-div.dojoTab.current { color:#000000; font-weight:bold; font-size:75%; background:none repeat scroll 0 0 #DDE9BD; padding-bottom:0px; }
-div.dojoTab.current div { color:#000000; background:none repeat scroll 0 0 #DDE9BD; border-left:2px solid #FFFFFF; border-right:2px solid #FFFFFF; border-top:2px solid #FFFFFF; margin-top:-5px; padding : 4px 15px 8px 15px; }
-div.dojoTabPaneWrapper { border : 0px solid #FFFFFF; _zoom: 1; background:#FFFFFF;}
-/* bottom tabs */
-div.dojoTabLabels-bottom { position : relative; bottom : 0px; left : 0px; overflow : visible; margin-top : -1px; width : 100%; z-index: 2; }
-div.dojoTabNoLayout.dojoTabLabels-bottom { position : relative; }
-div.dojoTabLabels-bottom .dojoTab { border-top :  0px solid #FFFFFF; border-bottom : 0px; }
-div.dojoTabLabels-bottom .dojoTab div { background:#FFFFFF; }
-div.dojoTabLabels-bottom .dojoTab.current { border-top : 0; background:#FFFFFF; }
-div.dojoTabLabels-bottom .dojoTab.current div { padding-top : 4px; background:#FFFFFF; }
+div.dojoTab:hover { display:none; }
+div.dojoTab:hover div {display:none; }
+div.dojoTab { display:none; }
+div.dojoTab div { display:none; }
+div.dojoTab.current { display:none;}
+div.dojoTab.current div { display:none; }
+div.contentTab {display:block !important;}
+div.dojoTabPaneWrapper {border : 0px solid #6290d2; overflow: visible;}
 
-/* right-h tabs */
-div.dojoTabLabels-right-h .dojoTab { border-left :  0px solid #FFFFFF; background : #FFFFFF; float:none; }
-div.dojoTabLabels-right-h .dojoTab.current { border-bottom :  0px solid #FFFFFF; }
-/* left-h tabs */
-div.dojoTabLabels-left-h .dojoTab { border-right :  0px solid #FFFFFF; background: #FFFFFF; }
-div.dojoTabLabels-left-h .dojoTab.current {border-bottom :  0px solid #FFFFFF; background : #FFFFFF; }
-div.dojoTabLabels-left-h .dojoTab div { border-bottom :  0px solid #FFFFFF; }
+/******************************************
+Print view of detail view
+*******************************************/
 
-div.dojoTabContainer {background:#68A5D2; }
-div.contentTab { clear:both; }
-div.dojoTabNoLayout.dojoTabLabels-top .dojoTab { margin-bottom:0; }
+div#detail_background span.print_clearer { background:none repeat scroll 0 0 #DDE9BD; clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px; display:block; }
+H1.print_title { background-color:#68A5D2; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height: 25px; display:block; } 
+br.print {clear:both;}

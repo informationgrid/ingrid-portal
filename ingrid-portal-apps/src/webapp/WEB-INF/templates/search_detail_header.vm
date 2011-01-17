@@ -3,7 +3,6 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
-	<a name="top"></a>
   #if(!$pageTitle || $pageTitle == "")
 	<title>PortalU</title>
   #else
@@ -18,8 +17,8 @@
 	#set($udkObjClassName = $data.get("general").get("udkObjClassName"))
   #end
   #if($udkObjClass)
-	<meta name="igc-objektklasse" content="${udkObjClassName}">
-	<meta name="igc-icon" content="http://www.portalu.de/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif">
+	<meta name="igc-objektklasse" content="${udkObjClassName}" />
+	<meta name="igc-icon" content="http://www.portalu.de/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" />
   #end
   <meta name="author" content="wemove digital solutions" />
   <meta name="keywords" content="" />
@@ -113,7 +112,8 @@ self.focus();
 
   </head>
   <body class="layout-tigris">
-    <noscript>
+  <a name="top"></a>
+	<noscript>
 	  <iframe src="/detect-js.psml" style="display:none"></iframe>
     </noscript>
 <!--  BEGIN: layout/html/portalu/decorator.vm -->

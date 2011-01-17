@@ -95,7 +95,7 @@
 #end
 
 #macro (renderLine)
-	<div class="line"><hr></div>
+	<div class="line"><hr/></div>
 #end
 
 #macro (renderMultiLine $entry)
@@ -164,7 +164,6 @@
 		#foreach($e in $elements)
 			#renderTypeHalf($e)
 		#end
-		</p>
     #end
 #end
 
@@ -330,14 +329,20 @@
 ## Render title for non script
 #macro (renderNoScriptTitle $entry)
     <noscript>
+	#if($tool.hasContent($entry))
 	&nbsp;
-    #if($tool.hasContent($entry))
-		<h1 class="no_script_title"> 
+    	<h1 class="no_script_title"> 
 			$entry
 		</h1>
 		<span class="clearer"></span>
 	#end
 	</noscript>
+	#if($tool.hasContent($entry))
+		<br class="print" /> 
+		<h1 class="print_title"> 
+			$entry
+		</h1>
+    #end
 #end
 
 
@@ -561,7 +566,7 @@
         	<div class="width_two_thirds">
     			<ul>
         		#foreach($text in $sorter.sort($entry.textList,"body"))
-        			 <li class="detail_li"><p class="detail_li">$text.body</p></li>
+        			 <li class="detail_li"><p class="detail_li">$text.body</li>
         		#end
         		</ul>
     		</div>
@@ -672,7 +677,7 @@
 			#elseif($e.type=="line")
 				<div class="line"><hr /></div><br/>
 			#elseif($e.type=="space")
-				<br style="clear:both;"/>
+				<br style="clear:both"/>
 			#end
 		#end
    </div>
@@ -723,13 +728,11 @@
 			#renderDetailHeader($data)
   			<div dojoType="TabContainer"  doLayout="false" class="subTabContainer">
 				#if($tool.hasContent($data.get("elementsGeneral")))
-				<div dojoType="ContentPane" label="$MESSAGES.getString('general_tab')" class="contentTab">
-					<div id="detail_background">
+					<div dojoType="ContentPane" label="$MESSAGES.getString('general_tab')" class="contentTab">
 						#renderNoScriptTitle($MESSAGES.getString('general_tab'))
 						#renderClearer()
 						#renderElements($data.get("elementsGeneral"))
 					</div>
-                </div>
 				#end
 				#if($tool.hasContent($data.get("elementsReference")))
 					<div dojoType="ContentPane" label="$MESSAGES.getString('references_tab')" class="contentTab">
@@ -767,13 +770,11 @@
 					</div>
 				#end
 				#if($tool.hasContent($data.get("elements")))
-				<div dojoType="ContentPane" label="$MESSAGES.getString('general_tab')" class="contentTab">
-					<div id="detail_background">
+					<div dojoType="ContentPane" label="$MESSAGES.getString('general_tab')" class="contentTab">
 						#renderNoScriptTitle($MESSAGES.getString('general_tab'))
 						#renderClearer()
 						#renderElements($data.get("elements"))
 					</div>
-                </div>
 				#end
            </div>
     	</div>

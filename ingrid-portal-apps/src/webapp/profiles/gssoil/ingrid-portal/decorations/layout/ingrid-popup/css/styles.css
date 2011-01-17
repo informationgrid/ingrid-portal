@@ -673,3 +673,10 @@ div.dojoTabLabels-left-h .dojoTab div { border-bottom :  0px solid #FFFFFF; }
 div.dojoTabContainer {background:#99471F; }
 div.contentTab { clear:both; }
 div.dojoTabNoLayout.dojoTabLabels-top .dojoTab { margin-bottom:0; }
+
+/******************************************
+Print view of detail view
+*******************************************/
+div#detail_background span.print_clearer { background:none repeat scroll 0 0 #DDE9BD; clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px; display:none !important; }
+H1.print_title { background-color:#68A5D2; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height:25px; display:none !important; }
+div.dojoTabPaneWrapper { border : 0px solid #6290d2; _zoom: 1; /* force IE6 layout mode so top border doesnt disappear */ display: block; clear: both; overflow: hidden; }

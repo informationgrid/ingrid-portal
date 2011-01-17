@@ -64,7 +64,6 @@ td.iconwidth { width:9px; }
 .float_right { float:right; }
 * html .float_right { clear:left; }
 .float_left_div { position: relative; float:left; }
-
 .bgred {background-color:#FF0000}
 .top { margin-top:0; }
 .nobottommargin { margin-bottom:0; }
@@ -522,6 +521,7 @@ span.clearer_gray_small { background:none repeat scroll 0 0 #DDDDDD; height:1px;
 span.clearer_dark_gray	{ background:none repeat scroll 0 0 #BBBBBB; height:1px; font-size: 1px; display:block; }
 
 div#detail_background span.clearer { background:none repeat scroll 0 0 #DDE9BD; clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px;}
+div#detail_background span.print_clearer { background:none repeat scroll 0 0 #DDE9BD; clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px; display:none !important; }
 div#header_title { background:none repeat scroll 0 0 #F0F6FA; padding: 20px 13px 0px; }
 div#header_title span.clearer{ display:block; background:none repeat scroll 0 0 #F0F6FA; height:10px; border:0px; }
 div.header_div { margin-top:0; font-size:75%}
@@ -557,6 +557,7 @@ td.detail_image_descr_td { background:none repeat scroll 0 0 #EEEEEE; height:73p
 H1.section_title { background:none repeat scroll 0 0 #EEEEEE; color:#777777; font-size:75%; font-weight:bold; line-height:22px; margin-top:0; padding-left:13px; }
 H2.group_title { background:none repeat scroll 0 0 #EEEEEE; color:#777777; font-size:75%; font-weight:normal; line-height:22px; margin-top:0; padding-left:13px;}
 H1.no_script_title { background:none repeat scroll 0 0 #68A5D2; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height:25px;} 
+H1.print_title { background-color:#68A5D2; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height:25px; display:none !important; }
 
 p.detail_entry_title { color:#777777; font-weight:bold; font-weight:bold; padding-left:0; padding-right:20px; padding-top:3px; }
 p.detail_entry_body { color:#000000; font-size:75%; margin-bottom:0; margin-top:0; }
@@ -598,6 +599,7 @@ li.detail_li { color:#68A5D2; }
 li.detail_li p { font-size:100%; color:#000000; }
  
 img.section_show_hide { padding-right:16px; padding-top:5px; }
+
 /******************************************
 * Dojo Tabs CSS style 
 *******************************************/
@@ -628,3 +630,4 @@ div.dojoTabLabels-left-h .dojoTab div { border-bottom :  0px solid #FFFFFF; }
 div.dojoTabContainer {background:#68A5D2; }
 div.contentTab { clear:both; }
 div.dojoTabNoLayout.dojoTabLabels-top .dojoTab { margin-bottom:0; }
+div.dojoTabPaneWrapper { border : 0px solid #6290d2; _zoom: 1; /* force IE6 layout mode so top border doesnt disappear */ display: block; clear: both; overflow: hidden; }
