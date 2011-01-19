@@ -456,13 +456,24 @@ div.formfooter {height: auto;padding: 2px 9px 2px 9px; margin:0px 0px 20px 0px; 
 div.formfooter_border_style {border-top: 0px solid #E4E4E2;}
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 
+/*Need for IE7*/
+*+html div.formfooter {height: auto;padding: 2px 9px 10px 9px; margin:0px 0px 20px 0px; border:1px solid #E4E4E2; background-color: #f6f6f6; }
+*+html div.formfooter_border_style {border-top: 0px solid #E4E4E2;}
+*+html div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
+
 input.btn { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn.png); font-size: 11px; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 14px 5px 14px; height:24px; cursor: pointer; }
 input.btn:hover { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn_hover.png); font-size: 11px; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 14px 5px 14px; height:24px; cursor: pointer; }
 input.btn_disable { color:#FFFFFF; border: solid 1px #e0003c; font-size: 11px; line-height: 130%; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 14px 5px 14px; height:24px; }
+
+/*Need for IE7*/
+*+html input.btn { color: #FFFFFF; border: 0px solid #e0003c; background:url(../images/background_btn.png); font-size: 11px; font-weight:bold; margin:10px 0px 0px 0px; padding:2px 14px 5px 14px; height:24px; cursor: pointer; }
+*+html input.btn:hover { color: #FFFFFF; border: 0px solid #e0003c; background:url(../images/background_btn_hover.png); font-size: 11px; font-weight:bold; margin:10px 0px 0px 0px; padding:2px 14px 5px 14px; height:24px; cursor: pointer; }
+*+html input.btn_disable { color:#FFFFFF; border: solid 0px #e0003c; font-size: 11px; line-height: 130%; font-weight:bold; margin:10px 0px 0px 0px; padding:2px 14px 5px 14px; height:24px; }
+
 /*Need for IE6*/
-* html input.btn { color: #FFFFFF; border: 0px solid #FFFFFF; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 6px 5px 6px; height:24px; cursor: pointer; }
+* html input.btn { color: #FFFFFF; border: 0px solid #FFFFFF; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 6px 5px 6px; height:24px; cursor: pointer; overflow:hidden;}
 * html input.btn:hover { color: #FFFFFF; border: 0px solid #FFF; background:url(../images/background_btn_hover.png); font-size: 12px; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 6px 5px 6px; height:24px; cursor: pointer; }
-* html input.btn_disable { color:#FFFFFF; border: solid 1px #e0003c; font-size: 12px; line-height: 130%; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 6px 5px 6px; height:24px; }
+* html input.btn_disable { color:#FFFFFF; border: solid 0px #e0003c; font-size: 12px; line-height: 130%; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 6px 5px 6px; height:24px; }
 
 /*Use only at profile NUMIS*/
 input.btn_admin { margin:0px; }
@@ -471,6 +482,8 @@ input.btn_admin:hover { margin:0px; }
 label.left {width:5.5em; float:left;}
 label.login {width:8em; float:left;}
 div.optional-links { margin:0; padding:0; }
+/*Need for IE7*/
+*+html div.optional-links { margin-top:11px; padding:0; }
 div.optional-links img, ul.optional-links img { margin:0; padding:0; }
 div.optional-links a, ul.optional-links a, div.optional-links span { margin-right:1em; font-size: 11px; }
 div.optional-links span.selected { font-weight:bold; }
