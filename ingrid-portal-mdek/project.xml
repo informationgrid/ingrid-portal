@@ -23,7 +23,7 @@
   <groupId>de.ingrid.portal</groupId>
   <description>MDEK Portlets Container</description>
   <shortDescription>MDEK Portlets Container</shortDescription>
-  <currentVersion>2.3.1</currentVersion>
+  <currentVersion>3.0.0-SNAPSHOT</currentVersion>
   <dependencies>
     <dependency>
       <groupId>portlet-api</groupId>
