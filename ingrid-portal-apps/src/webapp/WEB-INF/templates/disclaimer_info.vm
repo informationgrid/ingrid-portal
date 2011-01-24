@@ -1,17 +1,27 @@
 <div class="portlet-section-body">
-	<p class="iconLink2">
+	#if($MESSAGES.getString('disclaimer.info.publisher') != "" && $MESSAGES.getString('disclaimer.info.publisher').length() > 0)
+    <p class="iconLink2">
 		<img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.down')" />&nbsp;&nbsp;&nbsp;<a href="portal/disclaimer.psml#herausgeber">$MESSAGES.getString('disclaimer.info.publisher')</a>
-	</p>       
-	<p class="iconLink2">
+	</p>
+	#end
+	#if($MESSAGES.getString('disclaimer.info.responsible') != "" && $MESSAGES.getString('disclaimer.info.responsible').length() > 0)
+    <p class="iconLink2">
 		<img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.down')" />&nbsp;&nbsp;&nbsp;<a href="portal/disclaimer.psml#verantwortlich">$MESSAGES.getString('disclaimer.info.responsible')</a>
-	</p>       
-	<p class="iconLink2">
+	</p>
+	#end
+	#if($MESSAGES.getString('disclaimer.info.realization') != "" && $MESSAGES.getString('disclaimer.info.realization').length() > 0)
+    <p class="iconLink2">
 		<img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.down')" />&nbsp;&nbsp;&nbsp;<a href="portal/disclaimer.psml#realisierung">$MESSAGES.getString('disclaimer.info.realization')</a>
-	</p>       
-	<p class="iconLink2">
+	</p>
+	#end
+	#if($MESSAGES.getString('disclaimer.info.operation') != "" && $MESSAGES.getString('disclaimer.info.operation').length() > 0)
+    <p class="iconLink2">
 		<img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.down')" />&nbsp;&nbsp;&nbsp;<a href="portal/disclaimer.psml#betrieb">$MESSAGES.getString('disclaimer.info.operation')</a>
-	</p>       
-	<p class="iconLink2">
+	</p>
+	#end
+	#if($MESSAGES.getString('disclaimer.info.liability') != "" && $MESSAGES.getString('disclaimer.info.liability').length() > 0)
+    <p class="iconLink2">
 		<img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.down')" />&nbsp;&nbsp;&nbsp;<a href="portal/disclaimer.psml#haftung">$MESSAGES.getString('disclaimer.info.liability')</a>
-	</p>       
+	</p>
+	#end
 </div>

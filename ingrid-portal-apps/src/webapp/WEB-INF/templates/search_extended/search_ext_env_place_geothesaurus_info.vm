@@ -1,7 +1,8 @@
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
       <div class="portlet-section-body">
         <p>$MESSAGES.getString('searchExtEnvPlaceGeothesaurus.info.content')</p>
-        <p class="iconLink">
+        #if($MESSAGES.getString('searchExtEnvPlaceGeothesaurus.info.link') != "" && $MESSAGES.getString('searchExtEnvPlaceGeothesaurus.info.link').length() > 0)
+		<p class="iconLink">
           <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/help.psml?hkey=ext-search-spacial-3#ext-search-spacial-3"))
 <script language="JavaScript" type="text/javascript">
@@ -12,4 +13,5 @@
 </noscript>
 		  <span class="clearer"></span>
         </p>
+		#end
       </div>

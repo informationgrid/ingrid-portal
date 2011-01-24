@@ -1,8 +1,10 @@
 <div class="portlet-section-body">
 	$MESSAGES.getString('envSearch.info.content')
-	<p class="iconLink">
+	#if($MESSAGES.getString('envSearch.info.link') != "" && $MESSAGES.getString('envSearch.info.link').length() > 0)
+    <p class="iconLink">
 		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
 		<span><a href="$infoLink">$MESSAGES.getString('envSearch.info.link')</a></span>
 		<span class="clearer"></span>
 	</p>
+	#end
 </div>

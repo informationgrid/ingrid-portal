@@ -2,7 +2,8 @@
       <div class="portlet-section-body">
         <p>$MESSAGES.getString('searchExtEnvTopicThesaurus.info.content1')</p>
         <p>$MESSAGES.getString('searchExtEnvTopicThesaurus.info.content2')</p>
-        <p class="iconLink">
+		#if($MESSAGES.getString('searchExtEnvTopicThesaurus.info.link') != "" && $MESSAGES.getString('searchExtEnvTopicThesaurus.info.link').length() > 0)
+		<p class="iconLink">
           <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/help.psml?hkey=ext-search-subject-1#ext-search-subject-3"))
 <script language="JavaScript" type="text/javascript">
@@ -13,4 +14,5 @@
 </noscript>
           <span class="clearer"></span>
         </p>
+		#end
       </div>
