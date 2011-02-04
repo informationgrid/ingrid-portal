@@ -46,7 +46,8 @@
 	var initJumpToNodeId = '<%= request.getParameter("nodeId") == null ? "" : request.getParameter("nodeId") %>';
 	var initJumpToNodeType = '<%= request.getParameter("nodeType") == null ? "" : request.getParameter("nodeType")%>';
 	var isDebug = <%= "true".equals(request.getParameter("debug")) %>;
-
+	var selenium = '<%= request.getParameter("selenium") == null ? false : true %>';
+		
 	var djConfig = {
 		locale: userLocale,
 		isDebug: isDebug, // use with care, may lead to unexpected errors!

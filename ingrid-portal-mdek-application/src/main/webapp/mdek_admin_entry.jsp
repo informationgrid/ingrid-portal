@@ -44,6 +44,7 @@
 
 <script type="text/javascript">
 var userLocale = '<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>';
+var selenium = '<%= request.getParameter("selenium") == null ? false : true %>';
 var isDebug = <%= "true".equals(request.getParameter("debug")) %>;
 var djConfig = {locale: userLocale, isDebug: isDebug, /* use with care, may lead to unexpected errors! */debugAtAllCosts: false, debugContainerId: "dojoDebugOutput"};
 </script>
@@ -199,16 +200,18 @@ function initGeneralEventListeners() {
 
 
 	// Catch the window close event
-	window.onbeforeunload = function(evt){
-		if (dojo.render.html.ie) {
-			// Catch clicks on the upper left and upper right corner. Also catch clicks on the app's 'close' button.
-			if ( (event.clientY < 0 && (event.clientX > (document.documentElement.clientWidth - 15) || event.clientX < 15))
-			   ||(event.clientY < 23 && event.clientX > document.documentElement.clientWidth - 172 && event.clientX < document.documentElement.clientWidth - 9) ) {
-		  		event.returnValue = message.get("general.closeWindow");
+	if(selenium == false || selenium == 'false'){
+		window.onbeforeunload = function(evt){
+			if (dojo.render.html.ie) {
+				// Catch clicks on the upper left and upper right corner. Also catch clicks on the app's 'close' button.
+				if ( (event.clientY < 0 && (event.clientX > (document.documentElement.clientWidth - 15) || event.clientX < 15))
+				   ||(event.clientY < 23 && event.clientX > document.documentElement.clientWidth - 172 && event.clientX < document.documentElement.clientWidth - 9) ) {
+			  		event.returnValue = message.get("general.closeWindow");
+				}
+	
+			} else {
+				return message.get("general.closeWindow");
 			}
-
-		} else {
-			return message.get("general.closeWindow");
 		}
 	}
 }
