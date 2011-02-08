@@ -193,7 +193,10 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	renderTextWithTitle(dojo.widget.byId("extraInfoLangMetaData")._getDisplayValueForValue(nodeDataOld.extraInfoLangMetaDataCode), dojo.widget.byId("extraInfoLangMetaData")._getDisplayValueForValue(nodeDataNew.extraInfoLangMetaDataCode), message.get("ui.obj.additionalInfo.language.metadata"));
 	renderTextWithTitle(dojo.widget.byId("extraInfoLangData")._getDisplayValueForValue(nodeDataOld.extraInfoLangDataCode), dojo.widget.byId("extraInfoLangData")._getDisplayValueForValue(nodeDataNew.extraInfoLangDataCode), message.get("ui.obj.additionalInfo.language.data"));
 	renderTextWithTitle(dojo.widget.byId("extraInfoPublishArea")._getDisplayValueForValue(nodeDataOld.extraInfoPublishArea), dojo.widget.byId("extraInfoPublishArea")._getDisplayValueForValue(nodeDataNew.extraInfoPublishArea), message.get("ui.obj.additionalInfo.publicationCondition"));
-    renderTextWithTitle(dojo.widget.byId("extraInfoCharSetData")._getDisplayValueForValue(nodeDataOld.extraInfoCharSetDataCode), dojo.widget.byId("extraInfoCharSetData")._getDisplayValueForValue(nodeDataNew.extraInfoCharSetDataCode), message.get("ui.obj.additionalInfo.charSet.data"));
+    // only displayed for object classes 1, 2, 5
+    if (nodeDataNew.objectClass == 1 || nodeDataNew.objectClass == 2 || nodeDataNew.objectClass == 5) {
+        renderTextWithTitle(dojo.widget.byId("extraInfoCharSetData")._getDisplayValueForValue(nodeDataOld.extraInfoCharSetDataCode), dojo.widget.byId("extraInfoCharSetData")._getDisplayValueForValue(nodeDataNew.extraInfoCharSetDataCode), message.get("ui.obj.additionalInfo.charSet.data"));
+    }
 	// Table is only displayed for object classes 1 and 3
 	if (nodeDataNew.objectClass == 1 || nodeDataNew.objectClass == 3) {
 		renderTable(nodeDataOld.extraInfoConformityTable, nodeDataNew.extraInfoConformityTable, ["level", "specification", "date"],

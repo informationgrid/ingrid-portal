@@ -110,6 +110,22 @@ dojo.widget.defineWidget(
 		// DO NOT HIDE to avoid vanishing field ...
     }
 
+    // Fields for Geo-Information/Karte(1), Dokument/Bericht/Literatur(2)and Datensammlung/Datenbank(5)
+    if (this.selectedClass == "Class1" || this.selectedClass == "Class2" || this.selectedClass == "Class5") {
+        // "Zeichensatz des Datensatzes" 
+        dojo.byId("extraInfoCharSetDataContainer").style.display = 'block';
+		var isRequired = false;
+		if (this.selectedClass == "Class1") {
+		  isRequired = true;
+		}
+		setRequiredState(dojo.byId("extraInfoCharSetDataLabel"), dojo.byId("uiElement5043"), isRequired);
+
+    } else {
+       // "Zeichensatz des Datensatzes" only in class 1,2,5
+        setRequiredState(dojo.byId("extraInfoCharSetDataLabel"), dojo.byId("uiElement5043"), false);
+        dojo.byId("extraInfoCharSetDataContainer").style.display = 'none';
+    }
+
 	if (dojo.render.html.ie) {
 		setTimeout("refreshInputContainers()", 1);
 	}

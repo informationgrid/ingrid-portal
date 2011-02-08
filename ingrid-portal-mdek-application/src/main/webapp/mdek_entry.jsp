@@ -2112,7 +2112,7 @@ function hideSplash(){
 					  </span>
  	                </div>
 
-                    <div class="half">
+                    <div id="extraInfoCharSetDataContainer" class="half">
                       <span id="uiElement5043" type="required">
                           <span id="extraInfoCharSetDataLabel" class="label required"><label for="extraInfoCharSetData" onclick="javascript:dialog.showContextHelp(arguments[0], 5043)"><script>document.write(message.get("ui.obj.additionalInfo.charSet.data"))</script>*</label></span>
                           <span class="input"><input dojoType="ingrid:Select" autoComplete="false" style="width:302px;" listId="510" id="extraInfoCharSetData" /></span>

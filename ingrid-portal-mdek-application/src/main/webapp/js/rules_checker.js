@@ -68,14 +68,14 @@ var notEmptyFields = [["objectName", "objectNameLabel"],
 					  ["generalDescription", "generalDescLabel"],
 					  ["extraInfoLangDataCode", "extraInfoLangDataLabel"],
 					  ["extraInfoLangMetaDataCode", "extraInfoLangMetaDataLabel"],
-					  ["extraInfoPublishArea", "extraInfoPublishAreaLabel"],
-                      ["extraInfoCharSetDataCode", "extraInfoCharSetDataLabel"]];
+					  ["extraInfoPublishArea", "extraInfoPublishAreaLabel"]];
 
 var notEmptyFieldsClass1 = [["ref1BasisText", "ref1BasisTabContainerLabel"],
 							["ref1ObjectIdentifier", "ref1ObjectIdentifierLabel"],
                             ["ref1DataSet", "ref1DataSetLabel"],
                             ["ref1SpatialSystem", "ref1SpatialSystemLabel"],
-                            ["availabilityDataFormatInspire", "availabilityDataFormatInspireLabel"]]; 
+                            ["availabilityDataFormatInspire", "availabilityDataFormatInspireLabel"],
+							["extraInfoCharSetDataCode", "extraInfoCharSetDataLabel"]]; 
 var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"],
                             ["ref1SpatialSystem", "ref1SpatialSystemLabel"]];
 

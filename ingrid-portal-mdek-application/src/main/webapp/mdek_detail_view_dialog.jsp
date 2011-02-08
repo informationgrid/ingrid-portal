@@ -226,7 +226,10 @@ function renderNodeData(nodeData) {
 		renderTextWithTitle(dojo.widget.byId("extraInfoLangMetaData")._getDisplayValueForValue(nodeData.extraInfoLangMetaDataCode), message.get("ui.obj.additionalInfo.language.metadata"));
 		renderTextWithTitle(dojo.widget.byId("extraInfoLangData")._getDisplayValueForValue(nodeData.extraInfoLangDataCode), message.get("ui.obj.additionalInfo.language.data"));
 		renderTextWithTitle(dojo.widget.byId("extraInfoPublishArea")._getDisplayValueForValue(nodeData.extraInfoPublishArea), message.get("ui.obj.additionalInfo.publicationCondition"));
-        renderTextWithTitle(dojo.widget.byId("extraInfoCharSetData")._getDisplayValueForValue(nodeData.extraInfoCharSetDataCode), message.get("ui.obj.additionalInfo.charSet.data"));
+        // only displayed for object classes 1, 2, 5
+        if (nodeData.objectClass == 1 || nodeData.objectClass == 2 || nodeData.objectClass == 5) {
+            renderTextWithTitle(dojo.widget.byId("extraInfoCharSetData")._getDisplayValueForValue(nodeData.extraInfoCharSetDataCode), message.get("ui.obj.additionalInfo.charSet.data"));
+        }
 		// Table is only displayed for object classes 1 and 3
 		if (nodeData.objectClass == 1 || nodeData.objectClass == 3) {
 			renderTable(nodeData.extraInfoConformityTable, ["level", "specification", "date"],
