@@ -418,7 +418,7 @@
 #end
 
 ## Render Table
-#macro (renderTable $entry)	
+#macro (renderTable $entry) 
 	#if($tool.hasContent($entry.get("body")))
 		#if($tool.hasContent($entry.title))
 			#renderGroupTitle($entry.title)
@@ -434,11 +434,11 @@
 		<tbody>
 		#set ($rowCount = 0)
 		#foreach($tr in $entry.body)
-    		#set ($rowCount = $rowCount + 1)
+			#set ($rowCount = $rowCount + 1)
 			#set ($cellCount = 0)
 			#if ($rowCount % 2 == 0)
     				<tr class="detail_table_row_1">
-    				#foreach($td in $tr)
+					#foreach($td in $tr)
 						#set ($cellCount = $cellCount + 1)
 						#if($cellCount == $tr.size())
 							<td class="detail_table_cell_font">$td</td>
@@ -632,6 +632,35 @@
 	</div>
 #end
 
+## New function for KML
+#macro (renderKML $entry)
+	#if($tool.hasContent($entry.body))	
+		<div>
+            #if($tool.hasContent($entry.title))
+        		#renderSectionTitle($entry.title)
+			#end
+			#if($tool.hasContent($entry.kmlWmsUrl))
+				#renderLinkLineKMLWMS ($entry.kmlWmsUrl)
+			#end
+			#foreach($e in $entry.body)
+				<br style="clear:both"/>
+				#renderGroupTitle($e.subtitle)
+        		#renderTable($e)
+        	#end
+    	</div>
+		
+	#end
+#end
+
+#macro (renderLinkLineKMLWMS $entry)
+	<div>
+		<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
+		</span>
+		<a class="detail_link" href="main-maps.psml?wms_url=$entry" alt="$MESSAGES.getString('common.alt.icon.intern')">$MESSAGES.getString('common.result.showCoord')</a>
+	</div>	
+#end
+
+
 ## Render elements for tabs
 #macro (renderElements $elements)
 	<div class="section">
@@ -678,6 +707,8 @@
 				<div class="line"><hr /></div><br/>
 			#elseif($e.type=="space")
 				<br style="clear:both"/>
+			#elseif($e.type=="kml")
+				#renderKML($e)
 			#end
 		#end
    </div>

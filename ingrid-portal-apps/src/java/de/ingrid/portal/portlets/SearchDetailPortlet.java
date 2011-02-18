@@ -115,6 +115,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             	noIngridSession = true;    			
     		}
             context.put("noIngridSession", new Boolean(noIngridSession));
+            	
+            // TODO: Path of testing IDF xml file 
+            String testIDF = request.getParameter("testIDF");
             
             String docUuid = request.getParameter("docuuid");
             String altDocumentId = request.getParameter("altdocid");
@@ -123,6 +126,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             PlugDescription plugDescription = null;
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             String iPlugVersion = null;
+            Record record = null;
             
             if (iplugId != null && iplugId.length() > 0) {
 
@@ -181,10 +185,14 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            }
             }
 
-            Record record = null;
             if (hit != null) {
 	            record = ibus.getRecord(hit);
-            }
+            } else if (testIDF != null) {
+            	// create IDF record, XML Daten sind in Record Eigenschaft "data" record.getString('data')
+            	record = new Record();
+            	record.put("data",testIDF);
+            	iPlugVersion = IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT;
+           	}
             
             if (record == null) {
                	log.error("No record found for document id:" + (hit != null ? hit.getDocumentId() : null) + " using iplug: " + iplugId + " for request: " + ((RequestContext) request.getAttribute(PortalReservedParameters.REQUEST_CONTEXT_ATTRIBUTE)).getRequest().getRequestURL() + "?" + ((RequestContext) request.getAttribute(PortalReservedParameters.REQUEST_CONTEXT_ATTRIBUTE)).getRequest().getQueryString());
@@ -232,11 +240,19 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
                 } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
                 	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
+                }else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT)) {
+                    	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
                 } else {
                 	setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
                 }
-                DetailDataPreparer detailPreparer = ddpf.getDetailDataPreparer(iPlugVersion);
-                detailPreparer.prepare(record);
+                // TODO: if "testIDF"-Parameter exist, use DetailDataPreparer for "IDF" version
+                if (request.getParameter("testIDF") != null) {
+                	DetailDataPreparer detailPreparer = ddpf.getDetailDataPreparer(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT);
+	                detailPreparer.prepare(record);
+                } else {
+	                DetailDataPreparer detailPreparer = ddpf.getDetailDataPreparer(iPlugVersion);
+	                detailPreparer.prepare(record);
+                }
             }
         } catch (NumberFormatException e) {
             if (log.isDebugEnabled()) {

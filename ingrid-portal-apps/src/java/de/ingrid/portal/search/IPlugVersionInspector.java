@@ -36,6 +36,9 @@ public class IPlugVersionInspector {
 	
 	public static final String VERSION_UDK_5_0_DSC_ADDRESS = "VERSION_UDK_5_0_DSC_ADDRESS";
 	
+	// TODO: Add new IDF version for object
+	public static final String	VERSION_IDF_1_0_0_OBJECT	= "VERSION_IDF_1_0_0_OBJECT";
+	
 	public static final String VERSION_UNKNOWN = "VERSION_UNKNOWN";
 	
 	public static String getIPlugVersion(PlugDescription plugDescription) {
