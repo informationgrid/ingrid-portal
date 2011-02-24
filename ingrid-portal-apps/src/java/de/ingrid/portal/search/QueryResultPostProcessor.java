@@ -96,7 +96,7 @@ public class QueryResultPostProcessor {
             }
         }
 
-        if (tmpString.equals("de.ingrid.iplug.dsc.index.DSCSearcher") || tmpString.equals("de.ingrid.iplug.csw.dsc.index.DSCSearcher")) {
+        if (tmpString.endsWith("DSCSearcher") || tmpString.endsWith("DscSearchPlug")) {
             processDSCHit(hit, detail, ds);
         } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
             hit.put(Settings.RESULT_KEY_TYPE, "www-style");

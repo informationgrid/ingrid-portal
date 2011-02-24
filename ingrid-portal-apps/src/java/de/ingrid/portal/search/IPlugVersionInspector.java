@@ -50,7 +50,9 @@ public class IPlugVersionInspector {
 		ArrayList<String> fields = (ArrayList<String>)plugDescription.get(PlugDescription.FIELDS);
 		
 		// try to get the right iPlug Type (object/adress/generic)
-		if (fields != null && fields.contains("t011_obj_serv.has_access_constraint")) {
+        if (IPlugHelper.hasDataType(plugDescription, "IDF_1.0")) {
+            return VERSION_IDF_1_0_0_OBJECT;
+        } else if (fields != null && fields.contains("t011_obj_serv.has_access_constraint")) {
 			return VERSION_IDC_1_0_9_DSC_OBJECT;
 		} else if (fields != null && fields.contains("object_use.terms_of_use")) {
 			return VERSION_IDC_1_0_8_DSC_OBJECT;

@@ -3,8 +3,12 @@
  */
 package de.ingrid.portal.search.detail;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -13,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -29,7 +35,10 @@ import org.apache.velocity.context.Context;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
@@ -44,6 +53,7 @@ import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.udk.UtilsDate;
+import de.ingrid.utils.xml.IDFNamespaceContext;
 import de.ingrid.utils.xml.XPathUtils;
 
 /**
@@ -93,7 +103,31 @@ public class DetailDataPreparerIDF1_0_0Object implements DetailDataPreparer {
 	 */
 	public void prepare(Record record) throws XPathExpressionException, SAXException, ParserConfigurationException, IOException {
 
-		String idfContent = record.getString("data");
+		String idfString = record.getString("data");
+        String compressedString = record.getString("compressed");
+        if (compressedString != null && compressedString.equals("true")) {
+            // decompress using GZIPInputStream 
+            ByteArrayOutputStream outStream = new ByteArrayOutputStream(5 * idfString.length());
+            GZIPInputStream inStream = null;
+            try {
+                inStream = new GZIPInputStream ( new ByteArrayInputStream(Base64.decode(idfString)) );
+                byte[] buf = new byte[4096];
+                while (true) {
+                  int size = inStream.read(buf);
+                  if (size <= 0) 
+                    break;
+                  outStream.write(buf, 0, size);
+                }
+                idfString = new String(outStream.toByteArray(), "UTF-8");
+            } catch (Exception e) {
+                log.error("Could not gunzip idf data. Maybe not compressed?", e);
+            } finally {
+                outStream.close();
+                if (inStream != null) {
+                    inStream.close();
+                }
+            }
+        }
 		HashMap data = new HashMap();
 		ArrayList elementsGeneral = new ArrayList();
 		ArrayList elementsReference = new ArrayList();
@@ -102,24 +136,19 @@ public class DetailDataPreparerIDF1_0_0Object implements DetailDataPreparer {
 		ArrayList elementsAvailability = new ArrayList();
 		ArrayList elementsAdditionalInfo = new ArrayList();
 		
-		if(idfContent != null){
-			File file = new File(idfContent);
-			if(file.exists()){
-				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-				DocumentBuilder db;
-				db = dbf.newDocumentBuilder();
-				Document doc = db.parse(file);
-				
-				NodeList idfNodeList= XPathUtils.getNodeList(doc, "child::node()", true);
-				HashMap<String,String> general = new HashMap<String,String>();
-				evaluateNodes(idfNodeList, data, general);
-				if(general != null){
-					data.put("general", general);
-				}
-				
-			}else{
-				log.error("File does not exist: " + idfContent);
+		if(idfString != null){
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db;
+			db = dbf.newDocumentBuilder();
+			Document idfDoc = db.parse(new InputSource(new StringReader(idfString)));
+    				
+			NodeList idfNodeList= XPathUtils.getNodeList(idfDoc, "child::node()", new IDFNamespaceContext());
+			HashMap<String,String> general = new HashMap<String,String>();
+			evaluateNodes(idfNodeList, data, general);
+			if(general != null){
+				data.put("general", general);
 			}
+    				
 		}else{
 			
 			HashMap general = new HashMap();

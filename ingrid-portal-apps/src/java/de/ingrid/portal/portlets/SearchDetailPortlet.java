@@ -1,5 +1,6 @@
 package de.ingrid.portal.portlets;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -187,10 +189,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 
             if (hit != null) {
 	            record = ibus.getRecord(hit);
+            // TODO: remove code after the iplugs deliver IDF records
             } else if (testIDF != null) {
-            	// create IDF record, XML Daten sind in Record Eigenschaft "data" record.getString('data')
+            	// create IDF record, see below how the record will be filled
             	record = new Record();
-            	record.put("data",testIDF);
             	iPlugVersion = IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT;
            	}
             
@@ -245,8 +247,23 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 } else {
                 	setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
                 }
-                // TODO: if "testIDF"-Parameter exist, use DetailDataPreparer for "IDF" version
+                // if "testIDF"-Parameter exist, use DetailDataPreparer for "IDF" version
+                // TODO: remove code after the iplugs deliver IDF records
                 if (request.getParameter("testIDF") != null) {
+                    File file = new File(request.getParameter("testIDF"));
+                    if(file.exists()){  
+                        StringBuilder stringBuilder = new StringBuilder();
+                        Scanner scanner = new Scanner(file);
+                        try {
+                            while(scanner.hasNextLine()) {        
+                                stringBuilder.append(scanner.nextLine() + "\n");
+                            }
+                        } finally {
+                            scanner.close();
+                        }
+                        record.put("data", stringBuilder.toString());
+                        record.put("compressed", "false");
+                    }
                 	DetailDataPreparer detailPreparer = ddpf.getDetailDataPreparer(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT);
 	                detailPreparer.prepare(record);
                 } else {
