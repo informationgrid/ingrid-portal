@@ -3,8 +3,6 @@
  */
 package de.ingrid.portal.search.detail;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
@@ -15,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.zip.GZIPInputStream;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -25,7 +22,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,6 +44,7 @@ import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
+import de.ingrid.utils.idf.IdfTool;
 import de.ingrid.utils.udk.UtilsDate;
 import de.ingrid.utils.xml.IDFNamespaceContext;
 import de.ingrid.utils.xml.XPathUtils;
@@ -99,31 +96,7 @@ public class DetailDataPreparerIDF1_0_0Object implements DetailDataPreparer {
 	 */
 	public void prepare(Record record) throws XPathExpressionException, SAXException, ParserConfigurationException, IOException {
 
-		String idfString = record.getString("data");
-        String compressedString = record.getString("compressed");
-        if (compressedString != null && compressedString.equals("true")) {
-            // decompress using GZIPInputStream 
-            ByteArrayOutputStream outStream = new ByteArrayOutputStream(5 * idfString.length());
-            GZIPInputStream inStream = null;
-            try {
-                inStream = new GZIPInputStream ( new ByteArrayInputStream(Base64.decodeBase64(idfString)) );
-                byte[] buf = new byte[4096];
-                while (true) {
-                  int size = inStream.read(buf);
-                  if (size <= 0) 
-                    break;
-                  outStream.write(buf, 0, size);
-                }
-                idfString = new String(outStream.toByteArray(), "UTF-8");
-            } catch (Exception e) {
-                log.error("Could not gunzip idf data. Maybe not compressed?", e);
-            } finally {
-                outStream.close();
-                if (inStream != null) {
-                    inStream.close();
-                }
-            }
-        }
+	    String idfString = IdfTool.getIdfDataFromRecord(record);
 		HashMap data = new HashMap();
 		ArrayList elementsGeneral = new ArrayList();
 		ArrayList elementsReference = new ArrayList();
