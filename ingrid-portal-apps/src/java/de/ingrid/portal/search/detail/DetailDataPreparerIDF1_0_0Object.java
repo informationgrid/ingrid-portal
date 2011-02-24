@@ -3,10 +3,8 @@
  */
 package de.ingrid.portal.search.detail;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
@@ -18,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -28,6 +25,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,8 +35,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
@@ -110,7 +106,7 @@ public class DetailDataPreparerIDF1_0_0Object implements DetailDataPreparer {
             ByteArrayOutputStream outStream = new ByteArrayOutputStream(5 * idfString.length());
             GZIPInputStream inStream = null;
             try {
-                inStream = new GZIPInputStream ( new ByteArrayInputStream(Base64.decode(idfString)) );
+                inStream = new GZIPInputStream ( new ByteArrayInputStream(Base64.decodeBase64(idfString)) );
                 byte[] buf = new byte[4096];
                 while (true) {
                   int size = inStream.read(buf);
