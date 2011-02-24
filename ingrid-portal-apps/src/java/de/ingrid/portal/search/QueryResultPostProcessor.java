@@ -191,7 +191,7 @@ public class QueryResultPostProcessor {
                         processDSCHit(hit, detail, selectedDS);
                     } else if (tmpString.equals("de.ingrid.iplug.csw.CSWPlug")) {
                         processDSCHit(hit, detail, selectedDS);
-                    } else if (tmpString.equals("de.ingrid.iplug.csw.dsc.index.DSCSearcher")) {
+                    } else if (tmpString.endsWith("DSCSearcher") || tmpString.endsWith("DscSearchPlug")) {
                         processDSCHit(hit, detail, selectedDS);
 
                     // JUST FOR TESTING, SHOULD NEVER BE UNRANKED !
@@ -254,7 +254,7 @@ public class QueryResultPostProcessor {
   
                   Object serviceTypeArray = detail.get(Settings.HIT_KEY_OBJ_SERV_TYPE);
                   String serviceType = "";
-                  if (serviceTypeArray instanceof String[]) {
+                  if (serviceTypeArray instanceof String[] && ((String[])serviceTypeArray).length > 0) {
                       serviceType = ((String[])serviceTypeArray)[0];
                   }
                     
@@ -297,7 +297,7 @@ public class QueryResultPostProcessor {
             
             PlugDescription plugDescr = (PlugDescription) hit.get(Settings.RESULT_KEY_PLUG_DESCRIPTION);
             
-            if(detail.get(Settings.RESULT_KEY_WMS_TMP_COORD_X) != null){
+            if(UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_WMS_TMP_COORD_X).length() > 0){
             	hit.put(Settings.RESULT_KEY_WMS_COORD, "action=doTmpService&" + Settings.RESULT_KEY_PLUG_ID + "=" + hit.getPlugId() + "&" + Settings.RESULT_KEY_DOC_ID + "=" + hit.getDocumentId() + "&title=" + detail.getTitle()+ "&coordType=" + plugDescr.get("coordType"));
             }
             // determine type of hit dependent from plug description !!!
@@ -316,9 +316,21 @@ public class QueryResultPostProcessor {
                 tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_UDK_CLASS);
                 if (tmpString.length() > 0) {
                     hit.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
+                } else {
+                    tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_UDK_CLASS.toLowerCase());
+                    if (tmpString.length() > 0) {
+                        hit.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
+                    }
                 }
                 tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_OBJ_ID);
-                hit.put(Settings.RESULT_KEY_DOC_UUID, tmpString);
+                if (tmpString.length() > 0) {
+                    hit.put(Settings.RESULT_KEY_DOC_UUID, tmpString);
+                } else {
+                    tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_OBJ_ID.toLowerCase());
+                    if (tmpString.length() > 0) {
+                        hit.put(Settings.RESULT_KEY_DOC_UUID, tmpString);
+                    }
+                }
             } else {
                 hit.put(Settings.RESULT_KEY_UDK_IS_ADDRESS, new Boolean(true));
                 tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRID);
