@@ -175,7 +175,6 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
 			ArrayList body = new ArrayList();
 			element.put("body", body);
 			
-			ArrayList lines = new ArrayList();
 			for (int i=0; i<tableRecords.size(); i++) {
 				Record tableRecord = (Record)tableRecords.get(i);
 				Record attrType = (Record)getSubRecordsByColumnName(tableRecord, "t08_attr_type.name").get(0);
@@ -620,7 +619,6 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
 	    	
 	    	// time references
 	    	if (listRecords.size() > 0) {
-		    	ArrayList lines = new ArrayList();
 		    	for (int i=0; i<listRecords.size(); i++) {
 		    		Record listRecord = (Record)listRecords.get(i);
 		    		addElementEntryLabelLeft(elements, UtilsDate.convertDateString(notNull(listRecord.getString("t0113_dataset_reference.reference_date")).trim(), "yyyyMMddHHmmssSSS", "dd.MM.yyyy"), sysCodeList.getName("502", listRecord.getString("t0113_dataset_reference.type")));
@@ -1345,7 +1343,6 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
 		if (objId == null) {
 			return null;
 		}
-		ArrayList<String> referenceList = new ArrayList<String>();
 		ArrayList<IngridHit> result = DetailDataPreparerHelper.getHits("object_reference.obj_from_id:".concat(objId).concat(" iplugs:\"").concat(iPlugId).concat("\""), new String[] {
 				Settings.HIT_KEY_OBJ_ID, "object_reference.obj_to_uuid" }, null);
 		String query = "";

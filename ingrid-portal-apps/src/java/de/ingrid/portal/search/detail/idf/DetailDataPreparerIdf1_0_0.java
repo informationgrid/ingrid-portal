@@ -384,14 +384,6 @@ public class DetailDataPreparerIdf1_0_0 {
 		}
 	}
 	
-	private String getValuePrevNode(Node node) {
-		if (node.getPreviousSibling().getFirstChild() != null) {
-			return getValueForNode(node.getPreviousSibling().getFirstChild());
-		} else {
-			return messages.getString("common.result.showCoord.unknown");
-		}
-	}
-	
 	public String getValueForNode(Node node) {
 		return node.getNodeValue().trim();
 	}
