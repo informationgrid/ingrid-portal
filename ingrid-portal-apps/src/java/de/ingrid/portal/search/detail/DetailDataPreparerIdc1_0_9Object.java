@@ -33,6 +33,8 @@ import de.ingrid.utils.udk.UtilsDate;
 /**
  * - split object_access and object_use (no table, instead multiple lines).
  */
+//TODO: remove annotation
+@SuppressWarnings("unchecked")
 public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
 
     private final static Log log = LogFactory.getLog(DetailDataPreparerIdc1_0_9Object.class);

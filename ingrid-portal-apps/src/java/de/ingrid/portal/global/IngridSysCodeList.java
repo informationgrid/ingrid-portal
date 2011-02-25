@@ -46,4 +46,17 @@ public class IngridSysCodeList {
         }
     }
     
+    public String getNameByCodeListValue(String codeListId, String domainValue) {
+    	
+    	String id = UtilsUDKCodeLists.getCodeListDomainId(new Long (codeListId), domainValue, new Long(UtilsLanguageCodelist.getCodeFromShortcut("de")));
+    	
+    	if(id == null){
+    		id = UtilsUDKCodeLists.getCodeListDomainId(new Long (codeListId), domainValue, new Long(UtilsLanguageCodelist.getCodeFromShortcut("en")));
+    	}
+    	
+    	if(id == null){
+    		id = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(new Long (codeListId), domainValue);
+    	}
+    	return getName(codeListId, id);
+    }
 }
