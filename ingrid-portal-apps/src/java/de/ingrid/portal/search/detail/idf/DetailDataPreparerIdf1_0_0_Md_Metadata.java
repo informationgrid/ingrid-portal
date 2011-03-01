@@ -353,7 +353,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			getNodeListValues(elementsSubject, xpathExpression, subXPathExpression, messages.getString("t011_obj_serv_op_para.repeatability"), "textList");
 			
 			if(elementsReference.size() > 0){
-				data.put(DATA_TAB_REFERENCE, addTabData(messages.getString("time_reference"), elementsReference));
+				data.put(DATA_TAB_REFERENCE, addTabData(messages.getString("references"), elementsReference));
 			}
 			if(elementsAvailability.size() > 0){
 				data.put(DATA_TAB_AVAILABILITY, addTabData(messages.getString("availability"),elementsAvailability));
