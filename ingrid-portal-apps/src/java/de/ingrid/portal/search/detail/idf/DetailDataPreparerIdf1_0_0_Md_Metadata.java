@@ -487,6 +487,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         	elements.add(element);
         	for (int i=0; i<nodeList.getLength();i++){
         		String url = "";
+        		String name = "";
         		String description = "";
         		String function = "";
         		
@@ -505,12 +506,17 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         			description = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
         		}
         		
+        		xpathExpression = "gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:name";
+        		if(XPathUtils.nodeExists(nodeList.item(i), xpathExpression)){
+        			name = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
+        		}
+        		
         		if(url.length() > 0){
         			HashMap link = new HashMap();			
     				link.put("hasLinkIcon", new Boolean(true));
       	        	link.put("isExtern", new Boolean(true));
-      	        	if(function.length() > 0){
-      	        		link.put("title", url + " (" +  function + ")");
+      	        	if(name.length() > 0){
+      	        		link.put("title", name);
       	  	        }else{
       	  	        	link.put("title", url);
       	        	}
