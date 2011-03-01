@@ -70,6 +70,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			getAddresses(elementsGeneral, xpathExpression);
 			
 	// Tab "Verweise"
+			// "Externe Webseiten"
+			xpathExpression = "gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions";
+			getExternLinks(elementsReference, xpathExpression);
+			
 			// "ISO-Themenkategorien"
 			xpathExpression = "gmd:identificationInfo/" + metadataDataNodePath + "/gmd:topicCategory";
 			subXPathExpression = "gmd:MD_TopicCategoryCode";
@@ -348,10 +352,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			subXPathExpression = "srv:SV_Parameter/srv:repeatability";
 			getNodeListValues(elementsSubject, xpathExpression, subXPathExpression, messages.getString("t011_obj_serv_op_para.repeatability"), "textList");
 			
-			xpathExpression = "gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions";
-			getExternLinks(elementsSubject, xpathExpression);
-			
-			
 			if(elementsReference.size() > 0){
 				data.put(DATA_TAB_REFERENCE, addTabData(messages.getString("time_reference"), elementsReference));
 			}
@@ -476,14 +476,13 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}
 	
-	// TODO: Edit link title
 	private void getExternLinks(ArrayList elements, String xpathExpression) {
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
 			ArrayList linkList = new ArrayList();
 	    	HashMap element = new HashMap();
         	element.put("type", "linkList");
-        	element.put("title", "Externe Webseiten");
+        	element.put("title", messages.getString("www_references"));
         	element.put("linkList", linkList);
         	elements.add(element);
         	for (int i=0; i<nodeList.getLength();i++){
