@@ -298,9 +298,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:ISBN";
 			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.isbn"));
 			
-			//TODO: CI_ResponsibleParty/role/CI_RoleCode/@codeListValue = "projectParticipant" -> individualName ...
-			// "Version"
-			
 			//TODO: CI_ResponsibleParty/role/CI_RoleCode/@codeListValue = "prjectParticipant" -> issueIdentification ...
 			// "Herausgeber"
 			xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:individualName";
@@ -383,22 +380,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}
 	
-	private void getIndividualName() {
-		String xpathExpression = "";
-		String xpathExpressionRole = "";
-		
-		xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:individualName";
-		if(XPathUtils.nodeExists(rootNode, xpathExpression)){
-			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_geo_symc.edition"));
-		}
-		
-		xpathExpressionRole = "gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue";
-		if(XPathUtils.nodeExists(rootNode, xpathExpressionRole)){
-			getNodeValue(elementsSubject, xpathExpressionRole, messages.getString("t011_obj_geo_symc.edition"), "505");	
-		}
-		
-	}
-
 	private void getNodeListValuesLanguage(ArrayList elements, String xpathExpression, String subXPathExpression, String title, String type) {
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
@@ -1141,6 +1122,15 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				ArrayList elements = (ArrayList) element.get("elements");
 				
 				xpathExpression = XPathUtils.getString(node, "gmd:individualName");
+				if(XPathUtils.nodeExists(node, xpathExpression)){
+					String value = XPathUtils.getString(node, xpathExpression).trim();
+					StringTokenizer valueTokenizer = new StringTokenizer(value, ",");
+					for(int i=0; i<valueTokenizer.countTokens();i++) {
+						elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), valueTokenizer.nextToken()));
+					}
+				}
+				
+				xpathExpression = XPathUtils.getString(node, "gmd:organisationName");
 				if(XPathUtils.nodeExists(node, xpathExpression)){
 					String value = XPathUtils.getString(node, xpathExpression).trim();
 					StringTokenizer valueTokenizer = new StringTokenizer(value, ",");
