@@ -298,16 +298,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:ISBN";
 			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.isbn"));
 			
-			//TODO: CI_ResponsibleParty/role/CI_RoleCode/@codeListValue = "prjectParticipant" -> issueIdentification ...
-			// "Herausgeber"
-			xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:individualName";
-			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.publisher"));
-			
-			//TODO: CI_ResponsibleParty/role/CI_RoleCode/@codeListValue = "projectParticipant" -> organisationName ...
-			// "Verlag"
-			xpathExpression = "gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:organisationName";
-			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.publishing"));
-			
 			// "Standort"
 			xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:contactInstructions";
 			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.loc"));
