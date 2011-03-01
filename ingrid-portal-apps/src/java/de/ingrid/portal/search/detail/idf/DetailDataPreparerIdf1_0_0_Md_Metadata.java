@@ -74,13 +74,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			xpathExpression = "gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions";
 			getExternLinks(elementsReference, xpathExpression);
 			
-			// "ISO-Themenkategorien"
-			xpathExpression = "gmd:identificationInfo/" + metadataDataNodePath + "/gmd:topicCategory";
-			subXPathExpression = "gmd:MD_TopicCategoryCode";
-			getNodeListValues(elementsReference, xpathExpression, subXPathExpression , messages.getString("t011_obj_geo_topic_cat.topic_category"), "textList", "527");
-			
 			xpathExpression = "gmd:identificationInfo/" + metadataDataNodePath + "/gmd:descriptiveKeywords";
-			getIndexInformationKeywords(elementsReference, xpathExpression);
+			getIndexInformationKeywords(elementsReference, xpathExpression, metadataDataNodePath);
 			
 	// Tab "Verfügbarkeit"
 			// "Datenformat"
@@ -953,10 +948,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}
 	
-	private void getIndexInformationKeywords(ArrayList elements, String xpathExpression) {
+	private void getIndexInformationKeywords(ArrayList elements, String xpathExpression, String metadataDataNodePath) {
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
-			
+			addSectionTitle(elements, messages.getString("thesaurus"));
 			ArrayList elementsSearch = new ArrayList();
 			ArrayList elementsInspire = new ArrayList();
 			ArrayList elementsUmthes = new ArrayList();
@@ -1063,6 +1058,11 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				elements.add(element);
 			}
 			
+			// "ISO-Themenkategorien"
+			xpathExpression = "gmd:identificationInfo/" + metadataDataNodePath + "/gmd:topicCategory";
+			String subXPathExpression = "gmd:MD_TopicCategoryCode";
+			getNodeListValues(elementsReference, xpathExpression, subXPathExpression , messages.getString("t011_obj_geo_topic_cat.topic_category"), "textList", "527");
+			closeDiv(elements);
 		}
 	}
 	
