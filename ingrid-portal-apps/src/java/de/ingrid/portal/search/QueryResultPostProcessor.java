@@ -316,9 +316,21 @@ public class QueryResultPostProcessor {
                 tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_UDK_CLASS);
                 if (tmpString.length() > 0) {
                     hit.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
+                } else {
+                    tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_UDK_CLASS.toLowerCase());
+                    if (tmpString.length() > 0) {
+                        hit.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
+                    }
                 }
                 tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_OBJ_ID);
-                hit.put(Settings.RESULT_KEY_DOC_UUID, tmpString);
+                if (tmpString.length() > 0) {
+                    hit.put(Settings.RESULT_KEY_DOC_UUID, tmpString);
+                } else {
+                    tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_OBJ_ID.toLowerCase());
+                    if (tmpString.length() > 0) {
+                        hit.put(Settings.RESULT_KEY_DOC_UUID, tmpString);
+                    }
+                }
             } else {
                 hit.put(Settings.RESULT_KEY_UDK_IS_ADDRESS, new Boolean(true));
                 tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRID);
