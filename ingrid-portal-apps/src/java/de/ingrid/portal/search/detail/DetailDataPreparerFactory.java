@@ -58,7 +58,7 @@ public class DetailDataPreparerFactory {
 			return new DetailDataPreparer_UDK_5_0_Address(context, iplugId, dateFields, request, replacementFields);
 		} else if (version.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT)) {
 			// TODO: return IDF DetailPreparer
-			return new DetailDataPreparerIDF1_0_0Object(context, iplugId, request, response);
+			return new DetailDataPreparerIDF1_0_0Generic(context, iplugId, request, response);
 		} else if (version.equals(IPlugVersionInspector.VERSION_UNKNOWN)) {
 			return new DetailDataPreparerGeneric(context, dateFields, request, replacementFields);
 		}

@@ -709,6 +709,8 @@
 				<br style="clear:both"/>
 			#elseif($e.type=="kml")
 				#renderKML($e)
+            #elseif($e.type=="html")
+                $e.body
 			#end
 		#end
    </div>

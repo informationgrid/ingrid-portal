@@ -249,8 +249,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 }
                 // if "testIDF"-Parameter exist, use DetailDataPreparer for "IDF" version
                 // TODO: remove code after the iplugs deliver IDF records
-                if (request.getParameter("testIDF") != null) {
-                    File file = new File(request.getParameter("testIDF"));
+                if (testIDF != null) {
+                    File file = new File(testIDF);
                     if(file.exists()){  
                         StringBuilder stringBuilder = new StringBuilder();
                         Scanner scanner = new Scanner(file);
