@@ -24,29 +24,6 @@
         </portlet-preferences>
     </portlet>
 
-	<portlet id="MdekQuickViewPortlet">
-        <init-param>
-            <description>Displays information about the catalog and user data</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/mdek/mdek_quick_view.vm</value>
-        </init-param>
-        <portlet-name>MdekQuickViewPortlet</portlet-name>
-        <display-name>Quick View</display-name>
-        <portlet-class>de.ingrid.portal.portlets.mdek.MdekQuickViewPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.MdekResources</resource-bundle>
-        <portlet-preferences>
-            <preference>
-                <name>titleKey</name>
-                <value>mdek.title.quickview</value>
-            </preference>
-        </portlet-preferences>
-    </portlet>
-
 	<portlet id="MdekPortalAdminPortlet">
         <init-param>
             <description>Catalog administration portlet for the portal admin</description>

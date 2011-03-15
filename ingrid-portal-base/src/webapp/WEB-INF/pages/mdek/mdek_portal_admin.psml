@@ -37,20 +37,5 @@
 	  </security-constraints>
     </fragment>
 
-    <fragment id="mdek-quick-view-0" type="portlet" decorator="clear" name="ingrid-portal-mdek::MdekQuickViewPortlet">
-      <property layout="OneColumn" name="row" value="3" />
-      <security-constraints>
-	    <security-constraint>
-	      <roles>mdek</roles>
-	      <permissions>view</permissions>
-	    </security-constraint>
-	    <!-- Explicitly exclude the portal-admin and admin -->
-	    <security-constraint>
-	      <roles>admin-portal</roles>
-	      <users>admin</users>
-	    </security-constraint>
-	  </security-constraints>
-    </fragment>
-    
   </fragment>
 </page>

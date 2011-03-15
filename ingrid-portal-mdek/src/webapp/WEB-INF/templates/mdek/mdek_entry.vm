@@ -7,19 +7,19 @@
 <p>$MESSAGES.getString('entry.error.noBackendUser')</p>
 #else
 <div class="section">    
-  <div class="formbody formbody_border_style" style="overflow: auto;">
+  <p>$MESSAGES.getString('entry.text.login')</p>
+  
 <!--
 	<a href="../ingrid-portal-mdek/dump_session.jsp">/ingrid-portal-mdek/dump_session.jsp</a> <br>
     <a href="../ingrid-portal-mdek-application/dump_session.jsp">/ingrid-portal-mdek-application/dump_session.jsp</a> <br>
     <a href="../ingrid-portal-mdek-application/test_dwr_security.jsp">/ingrid-portal-mdek-application/test_dwr_security.jsp</a><br>
     <a href="../ingrid-portal-mdek-application/mdek_admin_entry.jsp">/ingrid-portal-mdek-application/mdek_admin_entry.jsp</a>
 -->
-	<input class="btn" type="button" name="Verweis" value="$MESSAGES.getString('entry.button.ige')"
-	  onClick="javaScript:void(window.open('/ingrid-portal-mdek-application/index.jsp?lang=$language', '_erfassung'));">
-#if($showMdekAdmin)
-	<input class="btn" type="button" name="Verweis" value="$MESSAGES.getString('entry.button.administration')"
-	  onClick="javaScript:void(window.open('/ingrid-portal-mdek-application/mdek_admin_entry.jsp?lang=$language', '_verwaltung'));">
-#end
+  <div class="formfooter">
+	<input class="btn float_right" type="button" name="Verweis" value="$MESSAGES.getString('entry.button.ige')"
+	  onClick="javaScript:void(window.open('/ingrid-portal-mdek-application/start.jsp?lang=$language', '_erfassung'));">
+    </input>
+	<p class="clearer"/>
   </div>
 </div>
 #end
