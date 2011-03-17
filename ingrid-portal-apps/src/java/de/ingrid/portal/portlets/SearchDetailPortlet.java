@@ -57,6 +57,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 
     private final static String TEMPLATE_DETAIL_ECS_ADDRESS = "/WEB-INF/templates/search_detail_address.vm";
 
+    private final static String TEMPLATE_DETAIL_IDF = "/WEB-INF/templates/search_detail_idf.vm";
+
     // ecs fields that represent a date, used for date parsing and formating
     private List dateFields = null;
     
@@ -243,7 +245,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
                 	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
                 }else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT)) {
-                    	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
+                    	setDefaultViewPage(TEMPLATE_DETAIL_IDF);
                 } else {
                 	setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
                 }

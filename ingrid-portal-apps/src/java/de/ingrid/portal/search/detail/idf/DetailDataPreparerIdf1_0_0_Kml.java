@@ -28,7 +28,7 @@ public class DetailDataPreparerIdf1_0_0_Kml extends DetailDataPreparerIdf1_0_0{
 	
 	private final static Log		log	= LogFactory.getLog(DetailDataPreparerIdf1_0_0_Kml.class);
 	
-	private final static String		NODE_KML			= "//kml:Document";
+	private final static String		NODE_KML			= "kml:Document";
 	
 	public DetailDataPreparerIdf1_0_0_Kml(Node node, Context context, RenderRequest request) {
 		super(node, context, request);
@@ -38,66 +38,65 @@ public class DetailDataPreparerIdf1_0_0_Kml extends DetailDataPreparerIdf1_0_0{
 		sysCodeList = new IngridSysCodeList(request.getLocale());
 	}
 	
-	public void prepare(HashMap data) {
-		initialArrayLists(data);
+	public void prepare(ArrayList data) {
+		initialArrayLists();
 		
 		if (rootNode != null) {
 			ArrayList<Object> elementsKml = new ArrayList<Object>();
 			HashMap<String, Object> kmlDocument;
-			NodeList nodeList = XPathUtils.getNodeList(rootNode, NODE_KML);
-			for(int i=0; i<nodeList.getLength();i++){
-				Node childNode = nodeList.item(i);
-				kmlDocument = new HashMap<String, Object>();
-				List<HashMap<String, String>> kmlDocumentPlacemark = new ArrayList<HashMap<String, String>>();
-				String docName =   XPathUtils.getString(childNode,"kml:name").trim();
-				kmlDocument.put("kml_name", docName);
-				boolean nodeExistPlacemark = XPathUtils.nodeExists(childNode, "kml:Placemark");
-				if(nodeExistPlacemark){
-					NodeList nodeListPlacemark = XPathUtils.getNodeList(childNode, "kml:Placemark");
-					for(int j=0; j<nodeListPlacemark.getLength();j++){
-						Node nodePlacemark = nodeListPlacemark.item(j);
-						HashMap<String, String> placemark = new HashMap<String, String>();
-						String placemarkName = XPathUtils.getString(nodePlacemark, "kml:name").trim();
-						placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_TITLE, placemarkName);
-						String placemarkDescription = XPathUtils.getString(nodePlacemark, "kml:description").trim();
-						placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_DESCR, placemarkDescription);
-						
-						String placemarkCoordinates = XPathUtils.getString(nodePlacemark, "kml:Point/kml:coordinates").trim();
-						StringTokenizer tokenizer = new StringTokenizer(placemarkCoordinates, " ");
-						int iToken = 0;
-						while (tokenizer.hasMoreTokens()) {
-							switch (iToken) {
-								case 0:
-									placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_X, tokenizer.nextToken());
-									iToken++;
-									break;
-								case 1:
-									placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_Y, tokenizer.nextToken());
-									iToken++;
-									break;
-								default:
-									break;
-							}
+			Node childNode = XPathUtils.getNode(rootNode, NODE_KML);
+			if(log.isDebugEnabled()){
+				log.debug("Parsing of kml:kml!" + XPathUtils.getString(childNode,"kml:name"));
+			}
+			kmlDocument = new HashMap<String, Object>();
+			List<HashMap<String, String>> kmlDocumentPlacemark = new ArrayList<HashMap<String, String>>();
+			String docName =   XPathUtils.getString(childNode,"kml:name").trim();
+			kmlDocument.put("kml_name", docName);
+			boolean nodeExistPlacemark = XPathUtils.nodeExists(childNode, "kml:Placemark");
+			if(nodeExistPlacemark){
+				NodeList nodeListPlacemark = XPathUtils.getNodeList(childNode, "kml:Placemark");
+				for(int j=0; j<nodeListPlacemark.getLength();j++){
+					Node nodePlacemark = nodeListPlacemark.item(j);
+					HashMap<String, String> placemark = new HashMap<String, String>();
+					String placemarkName = XPathUtils.getString(nodePlacemark, "kml:name").trim();
+					placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_TITLE, placemarkName);
+					String placemarkDescription = XPathUtils.getString(nodePlacemark, "kml:description").trim();
+					placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_DESCR, placemarkDescription);
+					
+					String placemarkCoordinates = XPathUtils.getString(nodePlacemark, "kml:Point/kml:coordinates").trim();
+					StringTokenizer tokenizer = new StringTokenizer(placemarkCoordinates, " ");
+					int iToken = 0;
+					while (tokenizer.hasMoreTokens()) {
+						switch (iToken) {
+							case 0:
+								placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_X, tokenizer.nextToken());
+								iToken++;
+								break;
+							case 1:
+								placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_Y, tokenizer.nextToken());
+								iToken++;
+								break;
+							default:
+								break;
 						}
-						if(log.isDebugEnabled()){
-							log.debug("KML coord x: " + placemark.get(Settings.RESULT_KEY_WMS_TMP_COORD_X));
-							log.debug("KML coord y: " + placemark.get(Settings.RESULT_KEY_WMS_TMP_COORD_Y));
-							log.debug("KML coord description: " + placemark.get(Settings.RESULT_KEY_WMS_TMP_COORD_DESCR));
-							log.debug("KML coord title: " + placemark.get(Settings.RESULT_KEY_WMS_TMP_COORD_TITLE));
-						}
-						kmlDocumentPlacemark.add(placemark);
 					}
-					kmlDocument.put("kml_placemark", kmlDocumentPlacemark);
-					elementsKml.add(kmlDocument);
+					if(log.isDebugEnabled()){
+						log.debug("KML coord x: " + placemark.get(Settings.RESULT_KEY_WMS_TMP_COORD_X));
+						log.debug("KML coord y: " + placemark.get(Settings.RESULT_KEY_WMS_TMP_COORD_Y));
+						log.debug("KML coord description: " + placemark.get(Settings.RESULT_KEY_WMS_TMP_COORD_DESCR));
+						log.debug("KML coord title: " + placemark.get(Settings.RESULT_KEY_WMS_TMP_COORD_TITLE));
+					}
+					kmlDocumentPlacemark.add(placemark);
 				}
+				kmlDocument.put("kml_placemark", kmlDocumentPlacemark);
+				elementsKml.add(kmlDocument);
 			}
 			try {
-				addKML(elementsAreaTime, elementsKml, "KML");
+				addKML(data, elementsKml, docName);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 		}
-		data.put(DATA_TAB_AREA_TIME, elementsAreaTime);
 	}
 	
 	private void addKML(List elements, List kml, String title) throws UnsupportedEncodingException {
@@ -138,10 +137,10 @@ public class DetailDataPreparerIdf1_0_0_Kml extends DetailDataPreparerIdf1_0_0{
 			kmlTable.put("subtitle", table.get("kml_name"));
 			
 			ArrayList head = new ArrayList();
-			head.add("Title");
-			head.add("Description");
-			head.add("Coordinate X");
-			head.add("Coordinate Y");
+			head.add(messages.getString("kml.placemark.title"));
+			head.add(messages.getString("kml.placemark.description"));
+			head.add(messages.getString("kml.placemark.longitude"));
+			head.add(messages.getString("kml.placemark.latitude"));
 			
 			kmlTable.put("head", head);
 			

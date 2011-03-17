@@ -5,7 +5,7 @@ package de.ingrid.portal.search.detail;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -65,7 +65,7 @@ public class DetailDataPreparerIDF1_0_0Object implements DetailDataPreparer {
 	public void prepare(Record record) throws XPathExpressionException, SAXException, ParserConfigurationException, IOException {
 		
 	    String idfString = IdfTool.getIdfDataFromRecord(record);
-		HashMap data = new HashMap();
+		ArrayList data = new ArrayList();
 		
 		if(idfString != null){
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -80,7 +80,7 @@ public class DetailDataPreparerIDF1_0_0Object implements DetailDataPreparer {
 		
 	}
 	
-	private void evaluateNodes(HashMap data, Document doc) {
+	private void evaluateNodes(ArrayList data, Document doc) {
 		Node node;
 		boolean nodeExist;
 		XPathUtils.getXPathInstance(new IDFNamespaceContext());

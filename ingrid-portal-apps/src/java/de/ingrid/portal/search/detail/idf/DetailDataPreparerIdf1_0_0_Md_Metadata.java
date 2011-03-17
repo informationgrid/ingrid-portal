@@ -28,6 +28,7 @@ import de.ingrid.utils.xml.XPathUtils;
 public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerIdf1_0_0 {
 	
 	private final static Log	log	= LogFactory.getLog(DetailDataPreparerIdf1_0_0_Md_Metadata.class);
+	private final static String	UDK_OBJ_CLASS_TYPE					= "UDK_OBJ_CLASS_TYPE";
 	
 	public enum LinkType {
 		EMAIL, WWW_URL
@@ -42,11 +43,27 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		sysCodeList = new IngridSysCodeList(request.getLocale());
 	}
 	
-	public void prepare(HashMap data) {
+	public void prepare(ArrayList data) {
 		
 		if (rootNode != null) {
+			if(log.isDebugEnabled()){
+				log.debug("Parsing of gmd:MD_Metadata!");
+			}
+			initialArrayLists();
 			
-			initialArrayLists(data);
+			HashMap general = new HashMap();
+			ArrayList udkElements = new ArrayList();
+			
+			String xpathExpression;
+			String subXPathExpression;
+			
+		// Title
+			xpathExpression = "//udkObjClass";
+			getUdkObjClass(xpathExpression, general, udkElements);
+			
+			xpathExpression = "//title";
+			getTitle(xpathExpression, general);
+	
 			// check for hierachyLevelName
 			String metadataDataNodePath = "";
 			if (context.get(UDK_OBJ_CLASS_TYPE) != null) {
@@ -56,9 +73,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					metadataDataNodePath = "gmd:MD_DataIdentification";
 				}
 			}
-			
-			String xpathExpression;
-			String subXPathExpression;
 			
 	// Tab "General"
 			// Description
@@ -348,20 +362,29 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			getNodeListValues(elementsSubject, xpathExpression, subXPathExpression, messages.getString("t011_obj_serv_op_para.repeatability"), "textList");
 			
 			if(elementsReference.size() > 0){
-				data.put(DATA_TAB_REFERENCE, addTabData(messages.getString("references"), elementsReference));
+				content.put(DATA_TAB_REFERENCE, addTabData(messages.getString("references"), elementsReference));
 			}
 			if(elementsAvailability.size() > 0){
-				data.put(DATA_TAB_AVAILABILITY, addTabData(messages.getString("availability"),elementsAvailability));
+				content.put(DATA_TAB_AVAILABILITY, addTabData(messages.getString("availability"),elementsAvailability));
 			}
 			if(elementsAdditionalInfo.size() > 0){
-				data.put(DATA_TAB_ADDITIIONAL_INFO, addTabData(messages.getString("additional_information"),elementsAdditionalInfo));
+				content.put(DATA_TAB_ADDITIIONAL_INFO, addTabData(messages.getString("additional_information"),elementsAdditionalInfo));
 			}
 			if(elementsSubject.size() > 0){
-				data.put(DATA_TAB_SUBJECT, addTabData(messages.getString("subject_reference"),elementsSubject));
+				content.put(DATA_TAB_SUBJECT, addTabData(messages.getString("subject_reference"),elementsSubject));
 			}
 			
-			data.put(DATA_TAB_GENERAL, elementsGeneral);
-			data.put(DATA_TAB_AREA_TIME, elementsAreaTime);
+			content.put(DATA_TAB_GENERAL, elementsGeneral);
+			content.put(DATA_TAB_AREA_TIME, elementsAreaTime);
+			
+			if(content!=null){
+				HashMap element = new HashMap();
+				element.put("type", "gmd");
+				element.put("body", content);
+				element.put("general", general);
+				element.put("udk", udkElements);
+				data.add(element);
+			}
 		}
 	}
 	
@@ -1706,5 +1729,69 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			i++;
 		}
 		return maximum;
+	}
+	
+	private void getUdkObjClass(String xpathExpression, HashMap element, ArrayList elements) {
+		xpathExpression = "//gmd:MD_Metadata";
+		boolean	nodeExist = XPathUtils.nodeExists(rootNode, xpathExpression);
+			if (nodeExist) {
+				getUdkObjectClassType(xpathExpression);
+				element.put("udkObjClass", (String) context.get(UDK_OBJ_CLASS_TYPE));
+				addElementUdkClass(elements,(String) context.get(UDK_OBJ_CLASS_TYPE));
+			}
+	}
+
+	private void getTitle(String xpathExpression, HashMap element) {
+		boolean nodeExist = XPathUtils.nodeExists(rootNode, xpathExpression);
+		if (nodeExist) {
+			String title = XPathUtils.getString(rootNode, xpathExpression);
+			element.put("title", title);
+		}else{
+			xpathExpression = "//gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:title";
+			nodeExist = XPathUtils.nodeExists(rootNode, xpathExpression);
+			if (nodeExist) {
+				String title = XPathUtils.getString(rootNode, xpathExpression);
+				element.put("title", title);
+			}else{
+				element.put("title", "No title");
+			}
+		}	
+	}
+
+	private void getUdkObjectClassType(String xpathExpression) {
+		if(XPathUtils.nodeExists(rootNode, xpathExpression)){
+			Node node = XPathUtils.getNode(rootNode, xpathExpression);
+			if(node.hasChildNodes()){
+				String hierachyLevel = "";
+				String hierachyLevelName = "";
+				String hierachyLevelExpression ="";
+				
+				hierachyLevelExpression = "gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue";
+				if(XPathUtils.nodeExists(node, hierachyLevelExpression)){
+					hierachyLevel = XPathUtils.getString(node, hierachyLevelExpression).trim();
+				}
+				
+				hierachyLevelExpression = "gmd:hierarchyLevelName";
+				if(XPathUtils.nodeExists(node, hierachyLevelExpression)){
+					hierachyLevelName = XPathUtils.getString(node, hierachyLevelExpression).trim();
+				}
+				
+				if(hierachyLevelName.equals("service") && hierachyLevel.equals("service")){
+					context.put(UDK_OBJ_CLASS_TYPE, "6");
+				}else if(hierachyLevelName.equals("application") && hierachyLevel.equals("application")){
+					context.put(UDK_OBJ_CLASS_TYPE, "3");
+				}else if(hierachyLevelName.equals("job") && hierachyLevel.equals("nonGeographicDataset")){
+					context.put(UDK_OBJ_CLASS_TYPE, "0");
+				}else if(hierachyLevelName.equals("document") && hierachyLevel.equals("nonGeographicDataset")){
+					context.put(UDK_OBJ_CLASS_TYPE, "2");
+				}else if(hierachyLevelName.equals("project") && hierachyLevel.equals("nonGeographicDataset")){
+					context.put(UDK_OBJ_CLASS_TYPE, "4");
+				}else if(hierachyLevelName.equals("database") && hierachyLevel.equals("nonGeographicDataset")){
+					context.put(UDK_OBJ_CLASS_TYPE, "5");
+				}else if(hierachyLevel.equals("dataset") || hierachyLevel.equals("series")){
+					context.put(UDK_OBJ_CLASS_TYPE, "1");
+				}
+			}
+		}		
 	}
 }

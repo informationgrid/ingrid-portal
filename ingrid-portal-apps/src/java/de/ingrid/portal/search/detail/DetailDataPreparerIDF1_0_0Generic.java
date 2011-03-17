@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -22,12 +21,12 @@ import org.apache.velocity.context.Context;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
-import de.ingrid.portal.search.detail.idf.DetailDataPreparerIdf1_0_0;
 import de.ingrid.portal.search.detail.idf.DetailDataPreparerIdf1_0_0_Kml;
 import de.ingrid.portal.search.detail.idf.DetailDataPreparerIdf1_0_0_Md_Metadata;
 import de.ingrid.utils.dsc.Record;
@@ -68,7 +67,7 @@ public class DetailDataPreparerIDF1_0_0Generic implements DetailDataPreparer {
 	public void prepare(Record record) throws XPathExpressionException, SAXException, ParserConfigurationException, IOException {
 		
 	    String idfString = IdfTool.getIdfDataFromRecord(record);
-		HashMap data = new HashMap();
+		ArrayList data = new ArrayList();
 		
 		if(idfString != null){
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -83,74 +82,95 @@ public class DetailDataPreparerIDF1_0_0Generic implements DetailDataPreparer {
 		
 	}
 	
-	private void evaluateNodes(HashMap data, Document doc) {
+	private void evaluateNodes(ArrayList data, Document doc) {
 		Node node;
-		boolean nodeExist;
 		XPathUtils.getXPathInstance(new IDFNamespaceContext());
 		
 		Element root = doc.getDocumentElement();
-		transformNode(data, root);
-		
+		node = (Node) root;
+		NodeList nodeList = node.getChildNodes();
+		for (int i=0; i<nodeList.getLength();i++){
+			transformNode(data, nodeList.item(i));
+		}
 	}
 	
-	private void transformNode(HashMap data, Node node) {
+	private void transformNode(ArrayList data, Node node) {
         boolean isGenericIdfNode = false;
-	    if (XPathUtils.nodeExists(node, "gmd:MD_Metadata")) {
-            DetailDataPreparerIdf1_0_0_Md_Metadata gmd = new DetailDataPreparerIdf1_0_0_Md_Metadata(node, this.context, this.request);
-            gmd.prepare(data);
-            node = moveToNextNode(node);
-        } else if (XPathUtils.nodeExists(node, "kml:kml")) {
-            DetailDataPreparerIdf1_0_0_Kml kml = new DetailDataPreparerIdf1_0_0_Kml(node, this.context, this.request);
-            kml.prepare(data);
-            node = moveToNextNode(node);
+    	if(node.getNodeName().equals("head")){
+        	if(XPathUtils.nodeExists(node, "./idf:title")){
+        		Node subNode = XPathUtils.getNode(node, "./idf:title");
+        	    context.put("title", subNode.getFirstChild().getNodeValue().trim());
+        	    if(log.isDebugEnabled()){
+        	    	log.debug("Title node exist:" + subNode.getFirstChild().getNodeValue().trim());
+        	    }
+        	}else{
+        		if(log.isDebugEnabled()){
+        	    	log.debug("Title node not exist!");
+        	    }
+        	}
+        	
+        	if(XPathUtils.nodeExists(node, "./modTime")){
+            	Node subNode = XPathUtils.getNode(node, "./modTime");
+            	context.put("modTime", subNode.getFirstChild().getNodeValue().trim());
+        	}
+        }else{
+        	if (node.getNodeName().equals("gmd:MD_Metadata")) {
+    			Node subNode = XPathUtils.getNode(node, ".");
+        	    DetailDataPreparerIdf1_0_0_Md_Metadata gmd = new DetailDataPreparerIdf1_0_0_Md_Metadata(subNode, this.context, this.request);
+                gmd.prepare(data);
+            } else {
+            	if(node.getNodeName().equals("kml:kml")){
+            		Node subNode = XPathUtils.getNode(node, ".");
+             	   	DetailDataPreparerIdf1_0_0_Kml kml = new DetailDataPreparerIdf1_0_0_Kml(subNode, this.context, this.request);
+                    kml.prepare(data);
+            	}else{
+            		isGenericIdfNode = true;
+                    renderGenericTag(data, node);
+                    
+                    if(node.hasChildNodes()){
+                    	for (int i=0; i< node.getChildNodes().getLength(); i++) {
+                	        transformNode(data, node.getChildNodes().item(i));
+                	    }
+                    }
+                    
+                    if (isGenericIdfNode && node.getNodeType() != Node.TEXT_NODE) {
+                        HashMap element = new HashMap();
+                        element.put("type", "html");
+                        String body="";
+                        if (node.getNodeType() == Node.TEXT_NODE) {
+                        	body = node.getNodeValue().trim();
+                            element.put("body", body);
+                        } else {
+                        	body = node.getLocalName().trim();
+                            element.put("body", "</" + body + ">");
+                        }
+                        if(body.length() > 0){
+                        	data.add(element);
+                        }
+                    }
+            	}
+            }
+    	}	
+	}
+	
+	private void renderGenericTag(ArrayList data, Node node){
+		HashMap element = new HashMap();
+        element.put("type", "html");
+        String body="";
+        if (node.getNodeType() == Node.TEXT_NODE) {
+        	body = node.getNodeValue().trim();
+        	element.put("body", body);
         } else {
-            isGenericIdfNode = true;
-            List elements = (List)data.get("elements");
-            if (elements == null) {
-                elements = new ArrayList();
-                data.put("elements", elements);
+            body = "<" + node.getLocalName().trim();
+            for (int i=0; i<node.getAttributes().getLength(); i++) {
+                body += " " + node.getAttributes().item(i).getNodeName().trim() + "=\"" + node.getAttributes().item(i).getNodeValue().trim() + "\"";
             }
-            HashMap element = new HashMap();
-            element.put("type", "html");
-            if (node.getNodeType() == Node.TEXT_NODE) {
-                element.put("body", node.getNodeValue());
-            } else {
-                String body = "<" + node.getLocalName();
-                for (int i=0; i<node.getAttributes().getLength(); i++) {
-                    body += " " + node.getAttributes().item(i).getNodeName() + "=\"" + node.getAttributes().item(i).getNodeValue() + "\"";
-                }
-                body += ">";
-                element.put("body", body);
-            }
-            
-            elements.add(element);
-            
+            body += ">";
+            element.put("body", body);
         }
-        for (int i=0; i< node.getChildNodes().getLength(); i++) {
-	        transformNode(data, node.getChildNodes().item(i));
-	    }
-        if (isGenericIdfNode && node.getNodeType() != Node.TEXT_NODE) {
-            List elements = (List)data.get("elements");
-            HashMap element = new HashMap();
-            element.put("type", "html");
-            if (node.getNodeType() == Node.TEXT_NODE) {
-                element.put("body", node.getNodeValue());
-            } else {
-                element.put("body", "</" + node.getLocalName() + ">");
-            }
-            elements.add(element);
+        if(body.length() > 0){
+        	data.add(element);
         }
-        
-        
 	}
-	
-	private Node moveToNextNode(Node node) {
-	    Node checkNode = node;
-	    while (checkNode.getNextSibling() == null && checkNode.getParentNode() != null) {
-	        checkNode = checkNode.getParentNode();
-	    }
-	    return checkNode.getNextSibling();
-	}
-	
 	
 }
