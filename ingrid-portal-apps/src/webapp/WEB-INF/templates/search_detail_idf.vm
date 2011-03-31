@@ -758,12 +758,14 @@
     						#renderElements($e.body.get("elementsAdditionalInfo"))
     					</div>
     				#end
-    				#if($tool.hasContent($e.body.get("elements")))
-    					<div dojoType="ContentPane" label="$MESSAGES.getString('general_tab')" class="contentTab">
-    						#renderNoScriptTitle($MESSAGES.getString('general_tab'))
-    						#renderClearer()
-    						#renderElements($e.body.get("elements"))
-    					</div>
+    				#if($tool.hasContent($e.body.get("elementsAdditionalField")))
+						#foreach($additionalFieldSection in $e.body.get("elementsAdditionalField"))
+							<div dojoType="ContentPane" label="$additionalFieldSection.title" class="contentTab">
+        						#renderNoScriptTitle($additionalFieldSection.title)
+        						#renderClearer()
+        						#renderElements($additionalFieldSection.body)
+        					</div>
+						#end
     				#end
                </div>
 			#end

@@ -9,6 +9,7 @@ import java.util.StringTokenizer;
 
 import javax.naming.ConfigurationException;
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,10 +31,12 @@ public class DetailDataPreparerIdf1_0_0_Kml extends DetailDataPreparerIdf1_0_0{
 	
 	private final static String		NODE_KML			= "kml:Document";
 	
-	public DetailDataPreparerIdf1_0_0_Kml(Node node, Context context, RenderRequest request) {
-		super(node, context, request);
+	public DetailDataPreparerIdf1_0_0_Kml(Node node, Context context, RenderRequest request, String iPlugId, RenderResponse response) {
+		super(node, context, request, iPlugId, response);
 		this.rootNode = node;
 		this.context = context;
+		this.iPlugId = iPlugId;
+		this.response = response;
 		messages = (IngridResourceBundle) context.get("MESSAGES");
 		sysCodeList = new IngridSysCodeList(request.getLocale());
 	}

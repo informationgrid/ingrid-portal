@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,7 +28,8 @@ public class DetailDataPreparerIdf1_0_0 {
 	public final static String	DATA_TAB_AREA_TIME			= "elementsAreaTime";
 	public final static String	DATA_TAB_SUBJECT			= "elementsSubject";
 	public final static String	DATA_TAB_AVAILABILITY		= "elementsAvailability";
-	public final static String	DATA_TAB_ADDITIIONAL_INFO	= "elementsAdditionalInfo";
+	public final static String	DATA_TAB_ADDITIONAL_INFO	= "elementsAdditionalInfo";
+	public final static String	DATA_TAB_ADDITIONAL_FIELD	= "elementsAdditionalField";
 	
 	public Node					rootNode;
 	public NodeList				nodeList;
@@ -35,6 +37,8 @@ public class DetailDataPreparerIdf1_0_0 {
 	public IngridResourceBundle	messages;
 	public IngridSysCodeList	sysCodeList;
 	public RenderRequest		request;
+	public RenderResponse		response;
+	public String				iPlugId;
 	
 	public ArrayList			elementsGeneral;
 	public ArrayList			elementsReference;
@@ -42,13 +46,15 @@ public class DetailDataPreparerIdf1_0_0 {
 	public ArrayList			elementsSubject;
 	public ArrayList			elementsAvailability;
 	public ArrayList			elementsAdditionalInfo;
+	public ArrayList			elementsAdditionalField;
 	
 	public HashMap content;
 	
-	public DetailDataPreparerIdf1_0_0(Node node, Context context, RenderRequest request) {
+	public DetailDataPreparerIdf1_0_0(Node node, Context context, RenderRequest request, String iPlugId, RenderResponse response) {
 		this.rootNode = node;
 		this.context = context;
 		this.request = request;
+		this.response = response;
 		messages = (IngridResourceBundle) context.get("MESSAGES");
 		sysCodeList = new IngridSysCodeList(request.getLocale());
 	}
@@ -118,9 +124,13 @@ public class DetailDataPreparerIdf1_0_0 {
 		if (this.elementsAvailability == null)
 			this.elementsAvailability = new ArrayList();
 		
-		this.elementsAdditionalInfo = (ArrayList) content.get(DATA_TAB_ADDITIIONAL_INFO);
+		this.elementsAdditionalInfo = (ArrayList) content.get(DATA_TAB_ADDITIONAL_INFO);
 		if (this.elementsAdditionalInfo == null)
 			this.elementsAdditionalInfo = new ArrayList();
+		
+		this.elementsAdditionalField = (ArrayList) content.get(DATA_TAB_ADDITIONAL_FIELD);
+		if (this.elementsAdditionalField == null)
+			this.elementsAdditionalField = new ArrayList();
 	}
 	
 	public void addElementEntry(List elements, String body, String title) {
