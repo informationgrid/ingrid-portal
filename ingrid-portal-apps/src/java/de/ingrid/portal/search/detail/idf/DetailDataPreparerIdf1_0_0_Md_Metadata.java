@@ -60,7 +60,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		
 		if (rootNode != null) {
 			if(log.isDebugEnabled()){
-				log.debug("Parsing of MD Metadata Node!");
+				log.debug("Start parsing of: '"+ rootNode.getLocalName() +"'");
 			}
 			initialArrayLists();
 			
@@ -764,15 +764,23 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	private void getAdditionalFields(ArrayList elements, String xpathExpression) {
 
 		String lang = request.getLocale().toString();
+		String id = "";
+		HashMap additionalField = new HashMap();
+		ArrayList list = new ArrayList();
+		boolean newAdditionalRubric = false;
 		
 		if(XPathUtils.nodeExists(rootNode, xpathExpression)){
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
 			for (int i=0; i < nodeList.getLength(); i++){
 				Node node = nodeList.item(i);
-				HashMap additionalField = new HashMap();
-				additionalField.put("type", "additionalField");
-				ArrayList list = new ArrayList();
-				additionalField.put("body", list);
+				String tmpId = XPathUtils.getString(node, "./@id").trim();
+				if(!id.equals(tmpId)){
+					newAdditionalRubric = true;
+					additionalField = new HashMap();
+					list = new ArrayList();
+				}else{
+					newAdditionalRubric = false;
+				}
 				if(node.getLocalName()!= null){
 					if(node.hasChildNodes() && node.getLocalName().equals("additionalDataSection") && node.getNamespaceURI().equals(IDFNamespaceContext.NAMESPACE_URI_IDF)){
 						additionalField.put("title", getNodeIdfTitle(node, lang));
@@ -824,13 +832,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 											rows = rowNodeList.getLength();
 										}
 									}
-									int header=head.size();
-									log.debug("header"+ header);
-									log.debug("rows"+ rows);
-									
 									for (int iRow=1; iRow<=rows;iRow++){
 										NodeList dataList = XPathUtils.getNodeList(childNode, "./*/idf:data["+iRow+"]");
-										log.debug("dataList"+ dataList.getLength());
 										ArrayList row = new ArrayList();
 										for(int iRowCell=0; iRowCell<dataList.getLength();iRowCell++){
 											Node rowCellNode = dataList.item(iRowCell);
@@ -861,9 +864,13 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						}
 					}	
 				}
-				
-				if(additionalField.size()>0){
-					elements.add(additionalField);	
+				if(newAdditionalRubric){
+					id = tmpId;
+					additionalField.put("type", "additionalField");
+					additionalField.put("body", list);
+					if(additionalField.size()>0){
+						elements.add(additionalField);
+					}	
 				}
 			}
 		}
@@ -1528,21 +1535,25 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 							log.debug("Thesaurus name: '"+thesaurusName+"' and type: '"+type+"' for value: '"+value+"'");
 						}
 						
-						if (thesaurusName.equals("Service Classification, version 1.0")) {
+						// "Service Classification, version 1.0"
+						if (thesaurusName.indexOf("Service") > -1) {
 							if (!isEmptyList(listEntry)) {
 								elementsSearch.add(listEntry);
 							}
-						} else if (thesaurusName.equals("UMTHES Thesaurus")) {
+						// "UMTHES Thesaurus"
+						} else if (thesaurusName.indexOf("UMTHES") > -1) {
 							if (!isEmptyList(listEntry)) {
 								elementsSearch.add(listEntry);
 							}
-						} else if (thesaurusName.equals("GEMET - Concepts, version 2.1")) {
+						// "GEMET - Concepts, version 2.1"
+						} else if (thesaurusName.indexOf("Concepts") > -1) {
 							if (!isEmptyList(listEntry)) {
 								elementsGemet.add(listEntry);
 							}
-						} else if (thesaurusName.equals("GEMET - INSPIRE themes, version 1.0")) {
+						// "GEMET - INSPIRE themes, version 1.0"
+						} else if (thesaurusName.indexOf("INSPIRE") > -1) {
 							if (!isEmptyList(listEntry)) {
-								elementsSearch.add(listEntry);
+								elementsInspire.add(listEntry);
 							}
 						} else if (type.equals("theme")) {
 							if (!isEmptyList(listEntry)) {

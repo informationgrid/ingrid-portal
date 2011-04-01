@@ -45,12 +45,13 @@ public class DetailDataPreparerIdf1_0_0_Kml extends DetailDataPreparerIdf1_0_0{
 		initialArrayLists();
 		
 		if (rootNode != null) {
+			if(log.isDebugEnabled()){
+				log.debug("Start parsing of: '"+ rootNode.getLocalName() +"'");
+			}
 			ArrayList<Object> elementsKml = new ArrayList<Object>();
 			HashMap<String, Object> kmlDocument;
 			Node childNode = XPathUtils.getNode(rootNode, NODE_KML);
-			if(log.isDebugEnabled()){
-				log.debug("Parsing of kml:kml!" + XPathUtils.getString(childNode,"kml:name"));
-			}
+			
 			kmlDocument = new HashMap<String, Object>();
 			List<HashMap<String, String>> kmlDocumentPlacemark = new ArrayList<HashMap<String, String>>();
 			String docName =   XPathUtils.getString(childNode,"kml:name").trim();
