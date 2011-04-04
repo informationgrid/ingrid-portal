@@ -27,6 +27,7 @@ import org.xml.sax.SAXException;
 
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
+import de.ingrid.portal.search.detail.idf.DetailDataPreparerIdf1_0_0_Address;
 import de.ingrid.portal.search.detail.idf.DetailDataPreparerIdf1_0_0_Kml;
 import de.ingrid.portal.search.detail.idf.DetailDataPreparerIdf1_0_0_Md_Metadata;
 import de.ingrid.utils.dsc.Record;
@@ -109,8 +110,13 @@ public class DetailDataPreparerIDF1_0_0Generic implements DetailDataPreparer {
         		if ((node.getLocalName().equals("idfMdMetadata") && node.getNamespaceURI().equals(IDFNamespaceContext.NAMESPACE_URI_IDF)) 
         				|| (node.getLocalName().equals("MD_Metadata") && node.getNamespaceURI().equals(IDFNamespaceContext.NAMESPACE_URI_GMD)) ) {
 	    			Node subNode = XPathUtils.getNode(node, ".");
-	        	    DetailDataPreparerIdf1_0_0_Md_Metadata gmd = new DetailDataPreparerIdf1_0_0_Md_Metadata(subNode, this.context, this.request, this.iPlugId, this.response);
-	                gmd.prepare(data);
+	        	    DetailDataPreparerIdf1_0_0_Md_Metadata metadata = new DetailDataPreparerIdf1_0_0_Md_Metadata(subNode, this.context, this.request, this.iPlugId, this.response);
+	                metadata.prepare(data);
+	            } else if((node.getLocalName().equals("idfResponsibleParty") && node.getNamespaceURI().equals(IDFNamespaceContext.NAMESPACE_URI_IDF))
+	            		|| (node.getLocalName().equals("CI_ResponsibleParty") && node.getNamespaceURI().equals(IDFNamespaceContext.NAMESPACE_URI_GMD)) ) {
+	            	Node subNode = XPathUtils.getNode(node, ".");
+	            	DetailDataPreparerIdf1_0_0_Address address = new DetailDataPreparerIdf1_0_0_Address(subNode, this.context, this.request, this.iPlugId, this.response);
+	            	address.prepare(data);	
 	            } else {
 	            	if(node.getLocalName().equals("kml") && node.getNamespaceURI().equals(IDFNamespaceContext.NAMESPACE_URI_KML)){
 	            		Node subNode = XPathUtils.getNode(node, ".");

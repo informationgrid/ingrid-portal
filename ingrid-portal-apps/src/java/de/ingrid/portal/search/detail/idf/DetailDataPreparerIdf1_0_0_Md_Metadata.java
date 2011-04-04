@@ -33,18 +33,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	private final static Log	log	= LogFactory.getLog(DetailDataPreparerIdf1_0_0_Md_Metadata.class);
 	private final static String	UDK_OBJ_CLASS_TYPE = "UDK_OBJ_CLASS_TYPE";
 	
-	public enum LinkType {
-		EMAIL, WWW_URL
-	}
-	
-	public enum ReferenceType {
-		SUBORDINATE, SUPERIOR, CROSS
-	}
-	
-	public enum LabelType {
-		LEFT, ABOVE, DURING
-	}
-	
 	public DetailDataPreparerIdf1_0_0_Md_Metadata(Node node, Context context, RenderRequest request, String iPlugId, RenderResponse response) {
 		super(node, context, request, iPlugId, response);
 		this.rootNode = node;
@@ -90,7 +78,21 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			// Title
 			xpathExpression = "gmd:identificationInfo/"+ metadataDataNodePath +"/gmd:citation/gmd:CI_Citation/gmd:title";
 			getTitle(xpathExpression, general);
-	
+			
+			// "last modification"
+			xpathExpression = "./gmd:dateStamp";
+			if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+				Node node = XPathUtils.getNode(rootNode, xpathExpression);
+				String modTime = "";
+				if(XPathUtils.nodeExists(node, "./gco:DateTime")){
+					modTime = UtilsDate.convertDateString(XPathUtils.getString(node, "./gco:DateTime").trim().replace("T", ""), "yyyy-MM-ddHH:mm:ss", "dd.MM.yyyy HH:mm:ss");
+				}else if(XPathUtils.nodeExists(node, "./gco:Date")){
+					modTime = UtilsDate.convertDateString(XPathUtils.getString(node, "./gco:Date").trim(), "yyyy-MM-dd", "dd.MM.yyyy");
+				}
+				if(modTime.length() > 0){
+					general.put("modTime", modTime);	
+				}
+			}
 			
 	// Tab "General"
 			// Description
@@ -283,48 +285,53 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			getGeoReport(elementsSubject, xpathExpression);
 			
 			xpathExpression = "gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description";
-			if(context.get(UDK_OBJ_CLASS_TYPE).equals("1")){
-				// "Datengrundlage"			
-				getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_geo.data_base"));
-			}else if(context.get(UDK_OBJ_CLASS_TYPE).equals("5")) {
-				// "Methode/Datengrundlage"
-				getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_data.base"));
-			}else if(context.get(UDK_OBJ_CLASS_TYPE).equals("2")) {
-				// "Basisdaten"
-				getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.base"));
-			}else{
-				// "Basisdaten"
-				getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_serv.base"));
+			if (context.get(UDK_OBJ_CLASS_TYPE) != null) {
+				if(context.get(UDK_OBJ_CLASS_TYPE).equals("1")){
+					// "Datengrundlage"			
+					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_geo.data_base"));
+				}else if(context.get(UDK_OBJ_CLASS_TYPE).equals("5")) {
+					// "Methode/Datengrundlage"
+					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_data.base"));
+				}else if(context.get(UDK_OBJ_CLASS_TYPE).equals("2")) {
+					// "Basisdaten"
+					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.base"));
+				}else{
+					// "Basisdaten"
+					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_serv.base"));
+				}
 			}
 			
 			xpathExpression ="gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes";
 			subXPathExpression =".";
-			if(context.get(UDK_OBJ_CLASS_TYPE).equals("5")){
-				// "Inhalte der Datensammlung/Datenbank "
-				getParameterTable(elementsSubject, xpathExpression, subXPathExpression, messages.getString("t011_obj_data_para"));
-			}else{
-				// "Sachdaten/Attributinformation"
-				getNodeListValues(elementsSubject, xpathExpression, subXPathExpression, messages.getString("t011_obj_geo_supplinfo.feature_type"), "textList");
+			if (context.get(UDK_OBJ_CLASS_TYPE) != null) {
+				if(context.get(UDK_OBJ_CLASS_TYPE).equals("5")){
+					// "Inhalte der Datensammlung/Datenbank "
+					getParameterTable(elementsSubject, xpathExpression, subXPathExpression, messages.getString("t011_obj_data_para"));
+				}else{
+					// "Sachdaten/Attributinformation"
+					getNodeListValues(elementsSubject, xpathExpression, subXPathExpression, messages.getString("t011_obj_geo_supplinfo.feature_type"), "textList");
+				}
 			}
-			
-			// TODO: to check
+				
 			// "Erläuterung zum Fachbezug"
     		xpathExpression = "gmd:identificationInfo/gmd:MD_DataIdentification/gmd:supplementalInformation";
-			if(context.get(UDK_OBJ_CLASS_TYPE).equals("5")){
-				getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_data.description"));
-			}else if(context.get(UDK_OBJ_CLASS_TYPE).equals("4")) {
-				getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_project.description"));
-			}else if(context.get(UDK_OBJ_CLASS_TYPE).equals("3")) {
-				// "Erläuterung zum Fachbezug"
-				getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_serv.description"));
-				// "Erläuterung zum Fachbezug (srv:SV_ServiceIdentification)"
-				xpathExpression = "gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:supplementalInformation/gmd:abstract";
-				getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_serv.description"));
-			}else if(context.get(UDK_OBJ_CLASS_TYPE).equals("2")) {
-				getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literature.description"));
-			}else{
-				getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_data.description"));
-			}
+    		if (context.get(UDK_OBJ_CLASS_TYPE) != null) {
+	    		if(context.get(UDK_OBJ_CLASS_TYPE).equals("5")){
+					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_data.description"));
+				}else if(context.get(UDK_OBJ_CLASS_TYPE).equals("4")) {
+					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_project.description"));
+				}else if(context.get(UDK_OBJ_CLASS_TYPE).equals("3")) {
+					// "Erläuterung zum Fachbezug"
+					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_serv.description"));
+					// "Erläuterung zum Fachbezug (srv:SV_ServiceIdentification)"
+					xpathExpression = "gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:supplementalInformation/gmd:abstract";
+					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_serv.description"));
+				}else if(context.get(UDK_OBJ_CLASS_TYPE).equals("2")) {
+					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literature.description"));
+				}else{
+					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_data.description"));
+				}
+    		}
 			
 			// "Autor"
     		xpathExpression = "gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:individualName";
@@ -348,7 +355,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			
 			// "Erscheinungsjahr"
 			xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:editionDate";
-			getNodeValueForDate(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.publish_year"));
+			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.publish_year"));
 
 			// "ISBN-Nummer des Dokumentes"
 			xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:ISBN";
@@ -416,12 +423,14 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			getNodeListValues(elementsSubject, xpathExpression, subXPathExpression, messages.getString("t011_obj_serv_op_para.repeatability"), "textList");
 			
 			xpathExpression = "gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description";
-			if(context.get(UDK_OBJ_CLASS_TYPE).equals("1")){
-				// "Herstellungsprozess"
-				getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_geo.method"));
-			}else{
-				// "Historie"
-				getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_serv.history"));
+			if (context.get(UDK_OBJ_CLASS_TYPE) != null) {
+				if(context.get(UDK_OBJ_CLASS_TYPE).equals("1")){
+					// "Herstellungsprozess"
+					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_geo.method"));
+				}else{
+					// "Historie"
+					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_serv.history"));
+				}
 			}
 			
 			// "Identifikator der Datenquelle"
@@ -509,7 +518,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	    		}
 			}
 			if (body.size() > 0) {
-				addSpace(elements);
+				
 		    	elements.add(element);
 		    }
 		}
@@ -553,7 +562,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	    		}
 			}
 			if (body.size() > 0) {
-				addSpace(elements);
+				
 		    	elements.add(element);
 		    }
 		}
@@ -649,7 +658,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	    		}
 			}
 			if (body.size() > 0) {
-				addSpace(elements);
+				
 		    	elements.add(element);
 		    }
 		}
@@ -659,7 +668,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
 			if(nodeList.getLength() > 1){
-				ArrayList list = new ArrayList();
 				HashMap element = new HashMap();
 				element.put("type", "table");
 				element.put("title", title);
@@ -685,7 +693,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	        		}
 	        	}
 				if (body.size() > 0) {
-					addSpace(elements);
+					
 					elements.add(element);
 			    }
 			}
@@ -740,10 +748,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			if (linkList != null && linkList.size() > 0){
 				switch (referenceType) {
 					case SUPERIOR:
-						addSuperiorObjects(elements, linkList);
+						addReferenceToElement(elements, linkList, null, messages.getString("superior_references"));
 						break;
 					case SUBORDINATE:
-						addSubordinatedObjects(elements, linkList);
+						addReferenceToElement(elements, linkList, null, messages.getString("subordinated_references"));
 						break;
 					case CROSS:
 						if (!linkList.isEmpty()) {
@@ -954,16 +962,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         	}
         	elements.add(element);
 		}
-	}
-
-	private void getNodeValueForDate(ArrayList elements, String xpathExpression, String title) {
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			String body = XPathUtils.getString(rootNode, xpathExpression).trim();
-			if(body.length() > 0){
-				addElementEntryLabelLeft(elements, UtilsDate.convertDateString(body, "yyyy-MM-dd", "dd.MM.yyyy"), title);
-			}
-		}
-		
 	}
 
 	private void getNodeValue(ArrayList elements, String xpathExpression, String title) {
@@ -1178,7 +1176,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						}
 					}
 					if (body.size() > 0) {
-						addSpace(elements);
+						
 						elements.add(element);
 					}
 				}
@@ -1309,7 +1307,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						}
 					}
 					if (body.size() > 0) {
-						addSpace(elements);
+						
 						elements.add(element);
 					}
 				}
@@ -1406,7 +1404,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				}
 			}
 			if (body.size() > 0) {
-				addSpace(elements);
+				
 				elements.add(element);
 			}
 		}
@@ -1479,7 +1477,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						}
 					}
 					if (body.size() > 0) {
-						addSpace(elements);
+						
 						elements.add(element);
 					}
 				}
@@ -1614,11 +1612,27 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						Node subNode = XPathUtils.getNode(childNode, xpathExpressionContact);
 						addSingleAddress(elementsAddress, subNode);	
 					}
+					xpathExpressionContact = "gmd:CI_ResponsibleParty";
+					if(XPathUtils.nodeExists(childNode, xpathExpressionContact)){
+						Node subNode = XPathUtils.getNode(childNode, xpathExpressionContact);
+						addSingleAddress(elementsAddress, subNode);	
+					}
 				}
 			}
 		}
 		
+		// "Kontakte für idfResponsibleParty"
 		xpathExpression = "gmd:contact/idf:idfResponsibleParty";
+		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+			for (int i = 0; i < nodeList.getLength(); i++){
+				addSingleAddress(elementsAddress, nodeList.item(i));
+			}
+			
+		}
+		
+		// "Kontakte für CI_ResponsibleParty"
+		xpathExpression = "gmd:contact/gmd:CI_ResponsibleParty";
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
 			for (int i = 0; i < nodeList.getLength(); i++){
@@ -1674,7 +1688,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				xpathExpression = XPathUtils.getString(node, "gmd:organisationName");
 				if(XPathUtils.nodeExists(node, xpathExpression)){
 					String value = XPathUtils.getString(node, xpathExpression).trim();
-					StringTokenizer valueTokenizer = new StringTokenizer(value, ",");
 					String[] valueSplitter = value.split(",");
 					for(int i=0; i < valueSplitter.length;i++) {
 						if(XPathUtils.nodeExists(node, "./gmd:organisationName[@uuid]")){
@@ -1696,6 +1709,13 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		if (node != null) {
 			HashMap element;
 			String xpathExpression;
+			boolean isIdfResponsibleParty = false;
+			
+			if(node.getLocalName().trim().equals("idfResponsibleParty")){
+				isIdfResponsibleParty = true;
+			}else{
+				isIdfResponsibleParty = false;
+			}
 			
 			xpathExpression = "gmd:role/gmd:CI_RoleCode/@codeListValue";
 			if (XPathUtils.nodeExists(node, xpathExpression)) {
@@ -1707,64 +1727,61 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				
 				element = addElementAddress("multiLine", title, "", "false", new ArrayList());
 				ArrayList elements = (ArrayList) element.get("elements");
-				if(XPathUtils.nodeExists(node, "./idf:hierarchyParty")){
-					NodeList hierarchyPartyNodeList = XPathUtils.getNodeList(node, "./idf:hierarchyParty");
-					for(int i=hierarchyPartyNodeList.getLength(); 0 < i ;i--){
-						Node hierarchyPartyNode = hierarchyPartyNodeList.item(i-1);
-						String uuid = "";
-						String value = "";
-						String type = "";
-						uuid = XPathUtils.getString(hierarchyPartyNode, "./@uuid").trim();
-						
-						// "Type"
-						if(XPathUtils.nodeExists(hierarchyPartyNode, "./idf:addressIndividualName")){
-							type = XPathUtils.getString(hierarchyPartyNode, "./idf:addressType").trim();
-						}
-						
-						// "Name"
-						if(XPathUtils.nodeExists(hierarchyPartyNode, "./idf:addressIndividualName")){
-							value = XPathUtils.getString(hierarchyPartyNode, "./idf:addressIndividualName").trim();
-							String[] valueSpitter = value.split(",");
+				
+				if(isIdfResponsibleParty){
+					if(XPathUtils.nodeExists(node, "./idf:hierarchyParty")){
+						NodeList hierarchyPartyNodeList = XPathUtils.getNodeList(node, "./idf:hierarchyParty");
+						for(int i=hierarchyPartyNodeList.getLength(); 0 < i ;i--){
+							Node hierarchyPartyNode = hierarchyPartyNodeList.item(i-1);
+							String uuid = "";
+							String value = "";
+							String type = "";
+							uuid = XPathUtils.getString(hierarchyPartyNode, "./@uuid").trim();
 							
-							String firstName = "";
-							String lastName = "";
-							String nameTitle = "";
-							
-							for (int j=0;j<valueSpitter.length;j++){
-								switch (j) {
-									case 0:
-										lastName = valueSpitter[j].trim();
-										break;
-									case 1:
-										firstName = valueSpitter[j].trim();
-										break;
-									case 2:
-										for (int k=0;k<valueSpitter[j].trim().split(" ").length;k++)
-										switch (k) {
-											case 0:
-												nameTitle = valueSpitter[j].trim().split(" ")[k];
-												break;
-											case 1:
-												nameTitle = valueSpitter[j].trim().split(" ")[k] + " " + nameTitle;
-												break;
-											default:
-												break;
-										}
-										break;
-									default:
-										nameTitle = lastName + " " + valueSpitter[j].trim();
-										break;
-								}	
-									
+							// "Type"
+							if(XPathUtils.nodeExists(hierarchyPartyNode, "./idf:addressType")){
+								type = XPathUtils.getString(hierarchyPartyNode, "./idf:addressType").trim();
 							}
-							elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), nameTitle + " " + firstName + " " + lastName, uuid));
+							
+							if(type.equals("2")){
+								// "Name"
+								if(XPathUtils.nodeExists(hierarchyPartyNode, "./idf:addressIndividualName")){
+									value = XPathUtils.getString(hierarchyPartyNode, "./idf:addressIndividualName").trim();
+									elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), getIndividualName(value), uuid));
+								}
+							}else if(type.equals("3")){
+								if(XPathUtils.nodeExists(hierarchyPartyNode, "./idf:addressIndividualName")){
+									value = XPathUtils.getString(hierarchyPartyNode, "./idf:addressIndividualName").trim();
+									elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), getIndividualName(value), uuid));
+								}else if(XPathUtils.nodeExists(hierarchyPartyNode, "./idf:addressOrganisationName")){
+									value = XPathUtils.getString(hierarchyPartyNode, "./idf:addressOrganisationName").trim();
+									elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), value, uuid));
+								}
+							}else{
+								// "Organisation"
+								if(XPathUtils.nodeExists(hierarchyPartyNode, "./idf:addressOrganisationName")){
+									value = XPathUtils.getString(hierarchyPartyNode, "./idf:addressOrganisationName").trim();
+									elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), value, uuid));
+								}
+							}
 						}
-						
-						// "Organisation"
-						if(XPathUtils.nodeExists(hierarchyPartyNode, "./idf:addressOrganisationName")){
-							value = XPathUtils.getString(hierarchyPartyNode, "./idf:addressOrganisationName").trim();
-							elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), value, uuid));
+					}
+				}else{
+					// Organistation
+					xpathExpression = "gmd:organisationName";
+					if (XPathUtils.nodeExists(node, xpathExpression)) {
+						String value = XPathUtils.getString(node, xpathExpression).trim();
+						StringTokenizer valueTokenizer = new StringTokenizer(value, ",");
+						for(int i=0; i<valueTokenizer.countTokens();i++) {
+							addElement(elements, "textLine", valueTokenizer.nextToken());
 						}
+					}
+					
+					// Name
+					xpathExpression = "gmd:individualName";
+					if (XPathUtils.nodeExists(node, xpathExpression)) {
+						String value = XPathUtils.getString(node, xpathExpression).trim();
+						addElement(elements, "textLine", getIndividualName(value));
 					}
 				}
 				
@@ -1814,8 +1831,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						}
 					}
 				}
-				addSpace(elements);
 				
+				addSpace(elements);
 				// "Mail"
 				xpathExpression = "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
@@ -1960,8 +1977,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}
 	
-	// TODO: Rewrite
-	
 	private void getAreaSection(ArrayList elements, String xpathExpression) {
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			Node node = XPathUtils.getNode(rootNode, xpathExpression);
@@ -2067,7 +2082,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						}
 						
 						if (body.size() > 0) {
-							addSpace(elements);
+							
 							elements.add(element);
 						}
 					}
@@ -2118,7 +2133,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 							}
 						}
 						if (body.size() > 0) {
-							addSpace(elements);
+							
 							elements.add(element);
 						}
 						

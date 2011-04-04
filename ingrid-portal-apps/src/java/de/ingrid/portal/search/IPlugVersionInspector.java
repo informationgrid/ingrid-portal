@@ -39,6 +39,8 @@ public class IPlugVersionInspector {
 	// TODO: Add new IDF version for object
 	public static final String	VERSION_IDF_1_0_0_OBJECT	= "VERSION_IDF_1_0_0_OBJECT";
 	
+	public static final String	VERSION_IDF_1_0_0_ADDRESS	= "VERSION_IDF_1_0_0_ADDRESS";
+	
 	public static final String VERSION_UNKNOWN = "VERSION_UNKNOWN";
 	
 	public static String getIPlugVersion(PlugDescription plugDescription) {
@@ -51,7 +53,11 @@ public class IPlugVersionInspector {
 		
 		// try to get the right iPlug Type (object/adress/generic)
         if (IPlugHelper.hasDataType(plugDescription, "IDF_1.0")) {
-            return VERSION_IDF_1_0_0_OBJECT;
+        	if(IPlugHelper.hasDataType(plugDescription, "metadata")){
+        		return VERSION_IDF_1_0_0_OBJECT;
+        	}else{
+        		return VERSION_IDF_1_0_0_ADDRESS;
+        	}
         } else if (fields != null && fields.contains("t011_obj_serv.has_access_constraint")) {
 			return VERSION_IDC_1_0_9_DSC_OBJECT;
 		} else if (fields != null && fields.contains("object_use.terms_of_use")) {

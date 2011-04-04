@@ -203,12 +203,16 @@
 				#end
 				#if($count % 2 != 0)
     				<div class="float_left width_one_half detail_margin_right">
+						<div class="address_left">
 						#renderTypeHalf($e)
+						</div>
 					</div>
 					
     			#else
 					<div class="float_right width_one_half detail_margin_left">
+						<div class="address_right">
 						#renderTypeHalf($e)
+                        </div>
                     </div>
 				#end
     			#if(($count % 2 == 0 && $openDIV) || ($count == $elementsAddress.size() && $openDIV))
@@ -253,6 +257,9 @@
 		<span class="clearer_main_color"></span>
 		<span class="clearer_sub_color"></span>
 		#if($elements)
+				#if($tool.hasContent($elements.get("general").get("modTime")))
+					<p class="float_right" style="font-size: 10px;padding-right: 10px;">$elements.get("general").get("modTime")</p> 
+				#end
 			<div id="header_title">
 				#renderTitleHeader($elements.get("general").get("title"))
 				#if($tool.hasContent($elements.get("elementsGeneral")))
@@ -420,6 +427,7 @@
 ## Render Table
 #macro (renderTable $entry) 
 	#if($tool.hasContent($entry.get("body")))
+		<div style="padding: 5px 10px 10px;">
 		#if($tool.hasContent($entry.title))
 			#renderGroupTitle($entry.title)
 		#end
@@ -466,6 +474,7 @@
 		#set ($rowCount = 0)
 		</tbody>
 		</table>
+		</div>
 	#end
 #end
 

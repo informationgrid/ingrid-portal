@@ -163,6 +163,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	            	} else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
 	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT)){
+	                	qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_ADDRESS)){
+	                	qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                } else {
 	            		qStr = docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                }
@@ -244,7 +248,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
                 } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
                 	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
-                }else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT)) {
+                }else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT) || iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_ADDRESS)) {
                     	setDefaultViewPage(TEMPLATE_DETAIL_IDF);
                 } else {
                 	setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
@@ -300,10 +304,17 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         } else if (cmd.equals("doShowAddressDetail")) {
             String addrId = request.getParameter("addrId");
             String plugId = DetailDataPreparerHelper.getAddressPlugIdFromPlugId(request.getParameter("plugid"));
+            if(log.isDebugEnabled()){
+            	log.debug("doShowAddressDetail addrId: " + addrId);
+            	log.debug("doShowAddressDetail plugid: " + plugId);
+            }
             try {
                 IngridHit hit = getAddressHit(addrId, plugId);
                 response.setRenderParameter("docuuid", addrId);
                 response.setRenderParameter("plugid", hit.getPlugId());
+                if(log.isDebugEnabled()){
+                	log.debug("doShowAddressDetail hit.getPlugId(): " + hit.getPlugId());
+                }
                 if (hit.get(".alt_document_id") != null) {
                     response.setRenderParameter("altdocid", (String) hit.get("alt_document_id"));
                 }
@@ -317,10 +328,17 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         } else if (cmd.equals("doShowObjectDetail")) {
             String objId = request.getParameter("objId");
             String plugId = DetailDataPreparerHelper.getPlugIdFromAddressPlugId(request.getParameter("plugid"));
+            if(log.isDebugEnabled()){
+            	log.debug("doShowObjectDetail objId: " + objId);
+            	log.debug("doShowObjectDetail plugid: " + plugId);
+            }
             try {
                 IngridHit hit = getObjectHit(objId, plugId);
                 response.setRenderParameter("docuuid", objId);
                 response.setRenderParameter("plugid", hit.getPlugId());
+                if(log.isDebugEnabled()){
+                	log.debug("doShowObjectDetail hit.getPlugId(): " + hit.getPlugId());
+                }
                 if (hit.get(".alt_document_id") != null) {
                     response.setRenderParameter("altdocid", (String) hit.get("alt_document_id"));
                 }
@@ -332,7 +350,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 }
             }
         } else if (cmd.equals("doShowDocument")) {
-            if (request.getParameter("docid") != null) {
+        	if (request.getParameter("docid") != null) {
             	response.setRenderParameter("docid", request.getParameter("docid"));
             }
             if (request.getParameter("docuuid") != null) {

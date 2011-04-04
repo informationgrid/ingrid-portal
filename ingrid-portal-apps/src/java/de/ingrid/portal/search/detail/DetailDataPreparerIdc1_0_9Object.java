@@ -217,9 +217,9 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
 	    	}
 	    	if (lines.size() > 0) {
 		    	HashMap element = new HashMap();
-		    	element.put("type", "multiLine");
+		    	element.put("type", "textList");
 		    	element.put("title", messages.getString("object_access.restriction_value"));
-		    	element.put("elements", lines);
+		    	element.put("textList", lines);
 	    	    elements.add(element);
 	    	}
 		}
@@ -245,9 +245,9 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
 	    	}
 	    	if (lines.size() > 0) {
 		    	HashMap element = new HashMap();
-		    	element.put("type", "multiLine");
+		    	element.put("type", "textList");
 		    	element.put("title", messages.getString("object_access.terms_of_use"));
-		    	element.put("elements", lines);
+		    	element.put("textList", lines);
 	    	    elements.add(element);
 	    	}
 		}

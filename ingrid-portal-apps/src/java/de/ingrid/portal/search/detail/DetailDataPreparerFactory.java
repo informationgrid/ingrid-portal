@@ -56,7 +56,7 @@ public class DetailDataPreparerFactory {
 			return new DetailDataPreparer_UDK_5_0_Object(context, iplugId, dateFields, request, replacementFields);
 		} else if (version.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_ADDRESS)) {
 			return new DetailDataPreparer_UDK_5_0_Address(context, iplugId, dateFields, request, replacementFields);
-		} else if (version.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT)) {
+		} else if (version.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT) || version.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_ADDRESS)) {
 			return new DetailDataPreparerIDF1_0_0Generic(context, iplugId, request, response);
 		} else if (version.equals(IPlugVersionInspector.VERSION_UNKNOWN)) {
 			return new DetailDataPreparerGeneric(context, dateFields, request, replacementFields);

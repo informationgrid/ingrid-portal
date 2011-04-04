@@ -203,12 +203,16 @@
 				#end
 				#if($count % 2 != 0)
     				<div class="float_left width_one_half detail_margin_right">
+						<div class="address_left">
 						#renderTypeHalf($e)
+						</div>
 					</div>
 					
     			#else
 					<div class="float_right width_one_half detail_margin_left">
+						<div class="address_right">
 						#renderTypeHalf($e)
+						</div>
                     </div>
 				#end
     			#if(($count % 2 == 0 && $openDIV) || ($count == $elementsAddress.size() && $openDIV))
@@ -420,7 +424,8 @@
 ## Render Table
 #macro (renderTable $entry) 
 	#if($tool.hasContent($entry.get("body")))
-		#if($tool.hasContent($entry.title))
+		<div class="table_div">
+        #if($tool.hasContent($entry.title))
 			#renderGroupTitle($entry.title)
 		#end
 		<table class="border detail_table" border="0">
@@ -466,6 +471,7 @@
 		#set ($rowCount = 0)
 		</tbody>
 		</table>
+		</div>
 	#end
 #end
 

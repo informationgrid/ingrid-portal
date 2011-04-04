@@ -50,6 +50,18 @@ public class DetailDataPreparerIdf1_0_0 {
 	
 	public HashMap content;
 	
+	public enum LinkType {
+		EMAIL, WWW_URL
+	}
+	
+	public enum ReferenceType {
+		SUBORDINATE, SUPERIOR, CROSS, OBJECT
+	}
+	
+	public enum LabelType {
+		LEFT, ABOVE, DURING
+	}
+	
 	public DetailDataPreparerIdf1_0_0(Node node, Context context, RenderRequest request, String iPlugId, RenderResponse response) {
 		this.rootNode = node;
 		this.context = context;
@@ -206,13 +218,19 @@ public class DetailDataPreparerIdf1_0_0 {
 		}
 	}
 	
-	public void addSubordinatedObjects(List elements, List linkList) {
+	public void addReferenceToElement(List elements, List linkList, String sectionTitle, String title) {
 		if (!linkList.isEmpty()) {
+			if(sectionTitle != null){
+				addSectionTitle(elements, sectionTitle);	
+			}
 			HashMap element = new HashMap();
 			element.put("type", "linkList");
-			element.put("title", messages.getString("subordinated_references"));
+			element.put("title", title);
 			element.put("linkList", linkList);
 			elements.add(element);
+			if(sectionTitle != null){
+				closeDiv(elements);	
+			}
 		}
 	}
 	
@@ -298,5 +316,16 @@ public class DetailDataPreparerIdf1_0_0 {
 	public String getNameForNode(Node node) {
 		return node.getNodeName().trim();
 	}
+	
+	public String getIndividualName(String value) {
+		String[] valueSpitter = value.split(",");
+		
+		String name = "";
+		for (int j=valueSpitter.length; 0 < j ;j--){
+			name = name + " " + valueSpitter[j-1];
+		}	
+		return name;
+	}
+
 	
 }
