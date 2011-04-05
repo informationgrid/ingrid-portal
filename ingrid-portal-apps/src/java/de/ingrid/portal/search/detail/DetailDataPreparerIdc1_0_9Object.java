@@ -475,7 +475,6 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
 			    		}
 			    	}
 			    	if (body.size() > 0) {
-				    	addSpace(elements);
 				    	elements.add(element);
 			    	}
 			    	
@@ -524,7 +523,6 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
 		    	}
 		    	if (body.size() > 0) {
 			    	elements.add(element);
-			    	addSpace(elements);
 		    	}
 		    	
 			}
@@ -789,7 +787,6 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
     		
     		List tableRecords = getSubRecordsByColumnName(record, "t011_obj_geo_symc.line");
     		if (tableRecords.size() > 0) {
-    			addSpace(elements);
     	    	HashMap element = new HashMap();
     	    	element.put("type", "table");
     	    	element.put("title", messages.getString("t011_obj_geo_symc"));
@@ -817,7 +814,6 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
 
     		tableRecords = getSubRecordsByColumnName(record, "t011_obj_geo_keyc.line");
     		if (tableRecords.size() > 0) {
-    			addSpace(elements);
     	    	HashMap element = new HashMap();
     	    	element.put("type", "table");
     	    	element.put("title", messages.getString("t011_obj_geo_keyc"));
@@ -872,7 +868,6 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
     			
         		tableRecords = getSubRecordsByColumnName(record, "t011_obj_geo_vector.line");
         		if (tableRecords.size() > 0) {
-        			addSpace(elements);
         	    	HashMap element = new HashMap();
         	    	element.put("type", "table");
         	    	element.put("title", messages.getString("t011_obj_geo_vector"));
@@ -902,7 +897,6 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
     		
     		tableRecords = getSubRecordsByColumnName(record, "t011_obj_geo_scale.line");
     		if (tableRecords.size() > 0) {
-    			addSpace(elements);
     	    	HashMap element = new HashMap();
     	    	element.put("type", "table");
     	    	element.put("title", messages.getString("t011_obj_geo_scale"));
@@ -1249,7 +1243,6 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
     	    	}
     	    	if (body.size() > 0) {
     		    	elements.add(element);
-    		    	addSpace(elements);
     		    }
 
     		}
@@ -1406,7 +1399,6 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
     		Record refRecord = (Record)refRecords.get(i);
     		addAddressType(elementsAddress, refRecord);
     	}
-    	addSpace(elements);
 		HashMap element = new HashMap();
     	element.put("type", "multiLineAddresses");
     	element.put("title", messages.getString("addresses"));
@@ -1552,6 +1544,9 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
 	    	
 			elements.add(element);
 		}
+		if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.descr")).booleanValue()|| UtilsVelocity.hasContent(addrRecord.getString("t02_address.postbox")).booleanValue()) {
+		    addSpace(elements);
+		   }
 		// description
 		if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.descr")).booleanValue()) {
 	    	element = new HashMap();
@@ -1595,6 +1590,7 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
 			}
 		}
 		if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.street")).booleanValue()) {
+			addSpace(elements);
 			if (UtilsVelocity.hasContent(addrRecord.getString("t02_address.street")).booleanValue()) {
 				element = new HashMap();
 				element.put("type", "textLine");
@@ -1628,10 +1624,8 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
 				elements.add(element);
 			}
 		}
+		addSpace(elements);
 		refRecords = getSubRecordsByColumnName(addrRecord, "t021_communication.comm_value");
-		if(refRecords.size() > 0){
-    		addSpace(elements);
-        }
     	for (int i=0; i<refRecords.size(); i++) {
     		Record refRecord = (Record)refRecords.get(i);
     		addCommunication(elements, refRecord);
@@ -1720,7 +1714,6 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
     }
     
     private void addSectionTitle(List elements, String title) {
-    	addSpace(elements);
 		HashMap element = new HashMap();
 		element.put("type", "section");
 		element.put("title", title);

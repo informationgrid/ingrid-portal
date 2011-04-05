@@ -860,7 +860,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 										}
 									}
 									if (body.size() > 0) {
-										addSpace(list);
 										if(isLegacy){
 											elementsAdditionalInfo.add(element);
 										}else{
@@ -1648,13 +1647,12 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 		
 		if(elementsAddress.size() > 0){
-			addSpace(elementsGeneral);
 			HashMap elementAddress = new HashMap();
 			elementAddress.put("type", "multiLineAddresses");
 			elementAddress.put("title", messages.getString("addresses"));
 			elementAddress.put("id", "addresses_id");
 			elementAddress.put("elementsAddress", elementsAddress);
-			elementsGeneral.add(elementAddress);
+			elements.add(elementAddress);
 		}
 	}
 	
@@ -1792,6 +1790,9 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					addElement(elements, "textLine", position);
 				}
 				
+				if (XPathUtils.nodeExists(node, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address")){
+					addSpace(elements);
+				}
 				// "Delivery point"
 				xpathExpression = "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {

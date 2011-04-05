@@ -184,7 +184,7 @@
 			#set($rows = $elementsAddress.size()/2+1)
 		#end
 		#if ($elementsAddress.size() > 0)
-				<div>
+				<div class="content">
 		#end
 		#foreach($e in $sorter.sort($elementsAddress,"title"))
 			#set($count = $count + 1)
@@ -311,9 +311,9 @@
 ## Render section title
 #macro (renderSectionTitle $title)
 	#if($tool.hasContent($title))
-		#renderGrayLine("2")
 		<div class="detail_section_title">
-    		<h1 class="float_left section_title" >
+    		#renderGrayLine("2")
+			<h1 class="float_left section_title" >
     			$title
 			</h1>
             <div class="float_right">
@@ -326,10 +326,12 @@
 ## Render group title
 #macro (renderGroupTitle $entry)
 	#if($tool.hasContent($entry))
+		<div>
 		#renderGrayLine("1")
 		<h2 class="group_title">
 			$entry
 		</h2>
+		</div>
 	#end
 #end
 
@@ -427,7 +429,7 @@
 ## Render Table
 #macro (renderTable $entry) 
 	#if($tool.hasContent($entry.get("body")))
-		<div style="padding: 5px 10px 10px;">
+		<div class="table_div">
 		#if($tool.hasContent($entry.title))
 			#renderGroupTitle($entry.title)
 		#end
@@ -573,7 +575,7 @@
 				##renderGroupTitle($entry.title)
     		#end
         	<div class="width_two_thirds">
-    			<ul>
+    			<ul class="content_list">
         		#foreach($text in $sorter.sort($entry.textList,"body"))
         			 <li class="detail_li"><p class="detail_li">$text.body</li>
         		#end
@@ -710,13 +712,13 @@
 			#elseif($e.type=="group")
 				#renderGroupTitle($e.title)
 			#elseif($e.type=="beginnDiv")
-				<div>
+				<div class="content">
 			#elseif($e.type=="endDiv")
 				</div>
 			#elseif($e.type=="line")
 				<div class="line"><hr /></div><br/>
 			#elseif($e.type=="space")
-				<br style="clear:both"/>
+				<br style="clear:both;"></br>
 			#elseif($e.type=="kml")
 				#renderKML($e)
             #elseif($e.type=="html")

@@ -283,6 +283,9 @@ public class DetailDataPreparerIdc1_0_5Address implements DetailDataPreparer {
 			element.put("body", textLine);
 			innerElements.add(element);
 		}
+		if (UtilsVelocity.hasContent(record.getString("t02_address.descr")).booleanValue()|| UtilsVelocity.hasContent(record.getString("t02_address.postbox")).booleanValue()) {
+			addSpace(elements);
+		}
 		// description
 		if (UtilsVelocity.hasContent(record.getString("t02_address.descr")).booleanValue()) {
 	    	element = new HashMap();
@@ -320,6 +323,7 @@ public class DetailDataPreparerIdc1_0_5Address implements DetailDataPreparer {
 			
 		}
 		if (UtilsVelocity.hasContent(record.getString("t02_address.street")).booleanValue()) {
+			addSpace(elements);
 			if (UtilsVelocity.hasContent(record.getString("t02_address.street")).booleanValue()) {
 				element = new HashMap();
 				element.put("type", "textLine");
@@ -347,8 +351,8 @@ public class DetailDataPreparerIdc1_0_5Address implements DetailDataPreparer {
 				innerElements.add(element);
 			}
 		}
-		addSpace(innerElements);
-    	List refRecords = getSubRecordsByColumnName(record, "t021_communication.comm_value");
+		addSpace(elements);
+		List refRecords = getSubRecordsByColumnName(record, "t021_communication.comm_value");
 		for (int i=0; i<refRecords.size(); i++) {
     		Record refRecord = (Record)refRecords.get(i);
     		addCommunication(innerElements, refRecord);
@@ -742,7 +746,6 @@ public class DetailDataPreparerIdc1_0_5Address implements DetailDataPreparer {
 	}
 	
 	private void addSectionTitle(List elements, String title) {
-		addSpace(elements);
 		HashMap element = new HashMap();
 		element.put("type", "section");
 		element.put("title", title);

@@ -259,7 +259,6 @@ public class DetailDataPreparerIdf1_0_0 {
 	}
 	
 	public void addSectionTitle(List elements, String title) {
-		addSpace(elements);
 		HashMap element = new HashMap();
 		element.put("type", "section");
 		element.put("title", title);

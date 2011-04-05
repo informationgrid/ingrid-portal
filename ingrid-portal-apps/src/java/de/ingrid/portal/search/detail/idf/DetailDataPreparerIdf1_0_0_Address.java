@@ -295,7 +295,6 @@ public class DetailDataPreparerIdf1_0_0_Address extends DetailDataPreparerIdf1_0
 		}
 		
 		if(elementsAddress.size() > 0){
-			addSpace(elements);
 			HashMap elementAddress = new HashMap();
 			elementAddress.put("type", "multiLineAddresses");
 			elementAddress.put("title", messages.getString("addresses"));
@@ -380,6 +379,7 @@ public class DetailDataPreparerIdf1_0_0_Address extends DetailDataPreparerIdf1_0
 					}
 				}
 				
+				addSpace(elements);
 				// "Delivery point"
 				xpathExpression = "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
