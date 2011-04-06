@@ -25,11 +25,14 @@ import org.hibernate.criterion.Restrictions;
 
 import de.ingrid.mdek.MdekKeysSecurity;
 import de.ingrid.mdek.MdekUtilsSecurity.IdcRole;
+import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
+import de.ingrid.mdek.caller.MdekCallerCatalog;
 import de.ingrid.mdek.caller.MdekCallerSecurity;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.portal.hibernate.HibernateUtil;
+import de.ingrid.portal.portlets.mdek.utils.MdekPortletUtils;
 import de.ingrid.utils.IngridDocument;
 
 
@@ -48,12 +51,14 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
     // Parameters set on init
     private UserManager userManager;
     private RoleManager roleManager;
-	IMdekCallerSecurity mdekCallerSecurity;
+	private IMdekCallerSecurity mdekCallerSecurity;
+    private IMdekCallerCatalog mdekCallerCatalog;
 
     public void init(PortletConfig config) throws PortletException {
     	super.init(config);
 
     	mdekCallerSecurity = MdekCallerSecurity.getInstance();
+		mdekCallerCatalog = MdekCallerCatalog.getInstance();
 
         userManager = (UserManager) getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
         if (null == userManager) {
@@ -82,19 +87,33 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
     	response.setTitle(resourceBundle.getString(myTitleKey));
     	
     	String userName = request.getRemoteUser();
+    	UserData userData = null;
     	try {
+			userData = getUserData(userName);
     		if (hasUserAccessToMdekAdmin(userName)) {
     			context.put("showMdekAdmin", true);    		
     		} else {
     			context.put("showMdekAdmin", false);
-    			if (getUserData(userName) == null) {
+    			if (userData == null) {
     				context.put("noBackendUser", true);
     			}
     		}
     	} catch (SecurityException e) {
     		log.debug(e);
     	}
-    	
+		
+		// check conflicts between IGE frontend and backend !
+    	try {
+        	if (userData != null) {
+        		MdekPortletUtils.checkIGCCompatibility(userData.getPlugId(), mdekCallerCatalog);
+        	}
+		} catch (Throwable e) {
+    		String errMsg = "Error fetching values from the iPlug with id '"+userData.getPlugId() + "'. \n" + e.getMessage();
+    		PortletException exc = new PortletException (errMsg, e);
+    		log.error("Problems fetching data from catalog.", exc);
+			throw exc;
+    	}
+
     	// get auto startup parameter from request
     	String nodeType = request.getParameter("nodeType");
     	String nodeId = request.getParameter("nodeId");
