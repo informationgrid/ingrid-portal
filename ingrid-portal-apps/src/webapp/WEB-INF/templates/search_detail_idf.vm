@@ -140,7 +140,7 @@
         	#elseif($e.type=="line")
 				<div class="line"><hr /></div><br/>
 			#elseif($e.type=="space")
-				<br />
+				<div style="clear:both; padding:5px;"></div>
 			#end
 		#end
         </div>
@@ -247,7 +247,7 @@
 	#elseif($e.type=="line")
 		<div class="line"><hr /></div><br/>
 	#elseif($e.type=="space")
-		<br />
+		<div style="clear:both; padding:5px;"></div>
 	#end
 #end
 
@@ -355,32 +355,6 @@
 #end
 
 
-## Render "group"
-#macro (renderGroup $entry)
-	#renderGroupTitle ($entry.title)
-	<div class="float_left">
-		##set($elements = $entry.elements)
-		#set($elements = $entry)
-		#foreach($e in $elements)
-			#if($e.type=="image")
-				#renderImageTable($e)
-			#elseif($e.type=="textLine")
-				#renderTextLine($e)
-			#elseif($e.type=="textList")
-				#renderTextList($e)
-			#elseif($e.type=="textLinkLine")
-				#renderTextLinkLine($e)
-			#elseif($e.type=="linkLine")
-				#renderLinkLine($e)
-			#elseif($e.type=="line")
-				<div class="line"><hr /></div><br/>
-			#elseif($e.type=="space")
-				<br />
-			#end
-		#end
-    </div>
-#end
-
 ## Render gray line(s) for section title
 #macro (renderGrayLine $count)
 	#if($count == "1")
@@ -429,10 +403,11 @@
 ## Render Table
 #macro (renderTable $entry) 
 	#if($tool.hasContent($entry.get("body")))
-		<div class="table_div">
+		<div>
 		#if($tool.hasContent($entry.title))
 			#renderGroupTitle($entry.title)
 		#end
+		<div class="table_div">
 		<table class="border detail_table" border="0">
 		#if($tool.hasContent($entry.get("head")))
 			<thead><tr>
@@ -476,6 +451,7 @@
 		#set ($rowCount = 0)
 		</tbody>
 		</table>
+        </div>
 		</div>
 	#end
 #end
@@ -718,7 +694,7 @@
 			#elseif($e.type=="line")
 				<div class="line"><hr /></div><br/>
 			#elseif($e.type=="space")
-				<br style="clear:both;"></br>
+				<div style="clear:both; padding:5px;"></div>
 			#elseif($e.type=="kml")
 				#renderKML($e)
             #elseif($e.type=="html")
@@ -726,44 +702,44 @@
 			#elseif($e.type=="gmd")
 				##render title
 				#renderDetailHeader($e)
-				<div dojoType="TabContainer"  doLayout="false" class="subTabContainer">
+				<div dojoType="dijit.layout.TabContainer" doLayout="false" style="width: 100%; height: 1000px;">
     				#if($tool.hasContent($e.body.get("elementsGeneral")))
-    					<div dojoType="ContentPane" label="$MESSAGES.getString('general_tab')" class="contentTab">
+    					<div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('general_tab')" class="contentTab">
     						#renderNoScriptTitle($MESSAGES.getString('general_tab'))
     						#renderClearer()
     						#renderElements($e.body.get("elementsGeneral"))
     					</div>
     				#end
     				#if($tool.hasContent($e.body.get("elementsReference")))
-    					<div dojoType="ContentPane" label="$MESSAGES.getString('references_tab')" class="contentTab">
+    					<div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('references_tab')" class="contentTab">
     						#renderNoScriptTitle($MESSAGES.getString('references_tab'))	
     						#renderClearer()
     						#renderElements($e.body.get("elementsReference"))
     					</div>
     				#end
     				#if($tool.hasContent($e.body.get("elementsAreaTime")))
-        				<div dojoType="ContentPane" label="$MESSAGES.getString('spacial_reference_tab')" class="contentTab">
+        				<div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('spacial_reference_tab')" class="contentTab">
                          	#renderNoScriptTitle($MESSAGES.getString('spacial_reference_tab'))	
         					#renderClearer()
     						#renderElements($e.body.get("elementsAreaTime"))
         				</div>
     				#end
     				#if($tool.hasContent($e.body.get("elementsSubject")))
-        				<div dojoType="ContentPane" label="$MESSAGES.getString('subject_reference_tab')" class="contentTab">
+        				<div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('subject_reference_tab')" class="contentTab">
                         	#renderNoScriptTitle($MESSAGES.getString('subject_reference_tab'))	
         					#renderClearer()
     						#renderElements($e.body.get("elementsSubject"))
         				</div>
     				#end
     				#if($tool.hasContent($e.body.get("elementsAvailability")))
-        				<div dojoType="ContentPane" label="$MESSAGES.getString('availability_tab')" class="contentTab">
+        				<div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('availability_tab')" class="contentTab">
                         	#renderNoScriptTitle($MESSAGES.getString('availability_tab'))	
         					#renderClearer()
     						#renderElements($e.body.get("elementsAvailability"))
         				</div>
     				#end
     				#if($tool.hasContent($e.body.get("elementsAdditionalInfo")))
-    					<div dojoType="ContentPane" label="$MESSAGES.getString('additional_information_tab')" class="contentTab">
+    					<div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('additional_information_tab')" class="contentTab">
     						#renderNoScriptTitle($MESSAGES.getString('additional_information_tab'))	
     						#renderClearer()
     						#renderElements($e.body.get("elementsAdditionalInfo"))
@@ -771,7 +747,7 @@
     				#end
     				#if($tool.hasContent($e.body.get("elementsAdditionalField")))
 						#foreach($additionalFieldSection in $e.body.get("elementsAdditionalField"))
-							<div dojoType="ContentPane" label="$additionalFieldSection.title" class="contentTab">
+							<div dojoType="dijit.layout.ContentPane" title="$additionalFieldSection.title" class="contentTab">
         						#renderNoScriptTitle($additionalFieldSection.title)
         						#renderClearer()
         						#renderElements($additionalFieldSection.body)

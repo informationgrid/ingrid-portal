@@ -61,6 +61,7 @@
   </style>
 
   #* our decorator macros, see ./decorator-macros.vm *#
+  <link rel="stylesheet" type="text/css" href="/ingrid-portal-apps/dojo-release-1.6.0/dijit/themes/claro/claro.css"/>
   <link href="/ingrid-portal/decorations/layout/ingrid-popup/css/styles.css" media="screen, projection" type="text/css" rel="stylesheet">
   <link href="/ingrid-portal/decorations/layout/ingrid-popup/css/print.css" media="print" type="text/css" rel="stylesheet" />
 <script language="JavaScript" type="text/javascript">
@@ -104,14 +105,14 @@ self.focus();
 
 </script>
 
-<script type="text/javascript" src="/ingrid-portal-apps/dojo/dojo.js"></script>
+<script src="/ingrid-portal-apps/dojo-release-1.6.0/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
 <script type="text/javascript">
-	dojo.require("dojo.widget.TabContainer");
-	dojo.require("dojo.widget.ContentPane");
+    dojo.require("dijit.layout.TabContainer");
+    dojo.require("dijit.layout.ContentPane");
 </script>
 
   </head>
-  <body class="layout-tigris">
+  <body class="layout-tigris claro">
   <a name="top"></a>
 	<noscript>
 	  <iframe src="/detect-js.psml" style="display:none"></iframe>

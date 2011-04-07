@@ -384,7 +384,7 @@ public class DetailDataPreparerIdf1_0_0_Address extends DetailDataPreparerIdf1_0
 				xpathExpression = "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
 					String deliveryPoint = XPathUtils.getString(node, xpathExpression).trim();
-					addElement(elements, "textLine", deliveryPoint);
+					addElement(elements, "textLine", messages.getString("postbox_label") + " " + deliveryPoint);
 				}
 				
 				String postalCode = "";

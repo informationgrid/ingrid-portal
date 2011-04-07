@@ -167,7 +167,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			
 			// "Herstellungszweck"
 			xpathExpression = "gmd:identificationInfo/"+ metadataDataNodePath +"/gmd:purpose";
-			getNodeValue(elementsAdditionalInfo, xpathExpression, messages.getString("t01_object.info_note.t015_legist.name"), null, LabelType.ABOVE);
+			getNodeValue(elementsAdditionalInfo, xpathExpression, messages.getString("t01_object.info_note.t015_legist.name"), null, null, LabelType.ABOVE);
 			
 			// "Konformität"
 			xpathExpression = "gmd:dataQualityInfo/gmd:DQ_DataQuality";
@@ -327,60 +327,15 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					xpathExpression = "gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:supplementalInformation/gmd:abstract";
 					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_serv.description"));
 				}else if(context.get(UDK_OBJ_CLASS_TYPE).equals("2")) {
-					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literature.description"));
+					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.description"));
 				}else{
 					getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_data.description"));
 				}
     		}
 			
-			// "Autor"
-    		xpathExpression = "gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:individualName";
-			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.autor"));
-			
-			// "Herausgeber"
-			xpathExpression = "gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:individualName";
-			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.publisher"));
-			
-			// "Erschienen in"
-			xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:name";
-			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.publish_in"));
-			
-			// "Band, Heft"
-			xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:issueIdentification";
-			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.volume"));
-			
-			// "Seiten"
-			xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:page";
-			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.sides"));
-			
-			// "Erscheinungsjahr"
-			xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:editionDate";
-			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.publish_year"));
-
-			// "ISBN-Nummer des Dokumentes"
-			xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:ISBN";
-			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.isbn"));
-			
-			// "Verlag"
-    		xpathExpression = "gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/organisationName";
-			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.publishing"));
-			
-			// "Verlag Ort"
-    		xpathExpression = "gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:itedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city";
-			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.publish_loc"));
-			
-			// "Dokumenttyp"
-			xpathExpression = "gmd:identificationInfo/gmd:MD_DataIdentification/gmd:language";
-			subXPathExpression ="./gmd:LanguageCode[@codeListValue]";
-			getNodeListValues(elementsSubject, xpathExpression, subXPathExpression, messages.getString("t011_obj_literatur.typ"), "textList", "3385");
-			
-			// "Weitere bibliographische Angaben"
-			xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:otherCitationDetails";
-			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.doc_info"));
-			
-			// "Standort"
-			xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:contactInstructions";
-			getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_literatur.loc"));
+			// "Fachbezug - Dokument/Bericht/Literatur"
+    		xpathExpression = "gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty";
+			getThematicReferenceClass2(elementsSubject, xpathExpression);
 			
 			// "Digitale Repräsentation"
 			xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialRepresentationType";
@@ -472,6 +427,78 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}
 	
+	private void getThematicReferenceClass2(ArrayList elements, String xpathExpression) {
+		NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+		for (int i=0; i<nodeList.getLength(); i++){
+			Node node = nodeList.item(i);
+			
+			String type = "";
+			
+			if(XPathUtils.nodeExists(node, "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode")){
+				type = XPathUtils.getString(node, "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue").trim();
+			}
+			
+			if(type.equals("originator")){
+				// "Autor"
+				xpathExpression = "gmd:CI_ResponsibleParty/gmd:individualName";
+				getNodeValue(elements, xpathExpression, messages.getString("t011_obj_literatur.autor"), null, node);
+			}
+			
+			if(type.equals("publisher")){
+				// "Herausgeber"
+				xpathExpression = "gmd:CI_ResponsibleParty/gmd:individualName";
+				getNodeValue(elements, xpathExpression, messages.getString("t011_obj_literatur.publisher"), null, node);
+				
+				// "Erscheinungsort"
+				xpathExpression = "gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city";
+				getNodeValue(elements, xpathExpression, messages.getString("t011_obj_literatur.publish_loc"), null, node);
+			}
+			
+			if(type.equals("distribute")){
+				// "Verlag"
+				xpathExpression = "gmd:CI_ResponsibleParty/organisationName";
+				getNodeValue(elements, xpathExpression, messages.getString("t011_obj_literatur.publishing"), null, node);
+			}
+			
+			if(type.equals("resourceProvider")){
+				// "Standort"
+				xpathExpression ="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:contactInstructions";
+				getNodeValue(elements, xpathExpression, messages.getString("t011_obj_literatur.loc"), null, node);
+			}
+		}
+		
+		// "Erschienen in"
+		xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:name";
+		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_literatur.publish_in"));
+		
+		// "Erscheinungsjahr"
+		xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:editionDate";
+		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_literatur.publish_year"));
+
+		// "Band, Heft"
+		xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:issueIdentification";
+		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_literatur.volume"));
+		
+		// "Seiten"
+		xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:page";
+		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_literatur.sides"));
+		
+		// "ISBN-Nummer des Dokumentes"
+		xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:ISBN";
+		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_literatur.isbn"));
+		
+		// "Dokumententyp"
+		xpathExpression = "gmd:identificationInfo/gmd:MD_DataIdentification/gmd:language";
+		String subXPathExpression ="./gmd:LanguageCode[@codeListValue]";
+		getNodeListValues(elements, xpathExpression, subXPathExpression, messages.getString("t011_obj_literatur.typ"), "textList", "3385");
+		
+		// "Weitere bibliographische Angaben"
+		xpathExpression ="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:otherCitationDetails";
+		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_literatur.doc_info"));
+		
+		
+	}
+
 	private void getSymCatalog(ArrayList elements, String xpathExpression) {
 		if(XPathUtils.nodeExists(rootNode, xpathExpression)){
 			HashMap element = new HashMap();
@@ -968,12 +995,22 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	}
 	
 	private void getNodeValue(ArrayList elements, String xpathExpression, String title, String codeListId) {
-		getNodeValue(elements, xpathExpression, title, codeListId, LabelType.LEFT);
+		getNodeValue(elements, xpathExpression, title, codeListId, null, LabelType.LEFT);
 	}
 	
-	private void getNodeValue(ArrayList elements, String xpathExpression, String title, String codeListId, LabelType labelType) {
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			String value = XPathUtils.getString(rootNode, xpathExpression).trim();
+	private void getNodeValue(ArrayList elements, String xpathExpression, String title, String codeListId, Node node) {
+		getNodeValue(elements, xpathExpression, title, codeListId, node, LabelType.LEFT);
+	}
+	
+	private void getNodeValue(ArrayList elements, String xpathExpression, String title, String codeListId, Node node, LabelType labelType) {
+		Node tmpNode;
+		if(node != null){
+			tmpNode = node;
+		}else{
+			tmpNode = rootNode;
+		}
+		if (XPathUtils.nodeExists(tmpNode, xpathExpression)) {
+			String value = XPathUtils.getString(tmpNode, xpathExpression).trim();
 			if(value.length() > 0){
 				if(codeListId != null){
 					value = sysCodeList.getNameByCodeListValue(codeListId, value);
@@ -1797,7 +1834,12 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				xpathExpression = "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
 					String deliveryPoint = XPathUtils.getString(node, xpathExpression).trim();
-					addElement(elements, "textLine", deliveryPoint);
+					if(deliveryPoint.matches("\\d*")){
+						addElement(elements, "textLine", messages.getString("postbox_label") + " " + deliveryPoint);	
+					}else{
+						addElement(elements, "textLine", deliveryPoint);
+					}
+					
 				}
 				
 				String postalCode = "";
