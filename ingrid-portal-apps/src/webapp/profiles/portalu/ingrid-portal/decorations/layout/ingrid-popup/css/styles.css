@@ -624,9 +624,7 @@ div.dijitTabListContainer-top .tabStripButton { background-image: url("") !impor
 div.dijitTabContent .dijitTabStripIcon { background-image: url("../images/buttonArrows.png"); background-color: transparent;}
 div.dijitTabContainerTop .tabStripButton { background-color: #68A5D2; border: 1px solid transparent !important; margin-top: 4px !important; }
 div.dijitTabContainerTop .tabStripButton:hover { background-color:#DDE9BD; }
-div.dojoTabContainer {background:#68A5D2; }
-div.contentTab { clear:both; padding: 0px !important; }
-div.dojoTabNoLayout.dojoTabLabels-top .dojoTab { margin-bottom:0; }
+div.contentTab { clear:both; padding: 0px !important;}
 
 td.dijitMenuItemIconCell { min-width: 0; }
 td.dijitMenuArrowCell { min-width: 0; } 
@@ -637,5 +635,6 @@ Print view of detail view
 *******************************************/
 div#detail_background span.print_clearer { background-color:#DDE9BD; clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px; display:none !important; }
 H1.print_title { background-color:#68A5D2; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height:25px; display:none !important; }
-div.dojoTabPaneWrapper { border : 0px solid #6290d2; _zoom: 1; /* force IE6 layout mode so top border doesnt disappear */ display: block; clear: both; overflow: hidden; }
+div.dojoTabPaneWrapper { border : 0px solid #6290d2; _zoom: 1; /* force IE6 layout mode so top border doesnt disappear */ display: block; clear: both; }
 br.print {display:none;}
+.print_view_visible { visibility:hidden; }

@@ -334,21 +334,19 @@
 
 ## Render title for non script
 #macro (renderNoScriptTitle $entry)
-    <noscript>
-	#if($tool.hasContent($entry))
+    #if($tool.hasContent($entry))
+	<noscript>
 	&nbsp;
-    	<h1 class="no_script_title"> 
+    	<h1 class="no_script_title print_view_hidden"> 
 			$entry
 		</h1>
-		<span class="clearer"></span>
-	#end
+		<span class="clearer print_view_hidden"></span>
 	</noscript>
-	#if($tool.hasContent($entry))
-		<br class="print" /> 
-		<h1 class="print_title"> 
-			$entry
-		</h1>
-    #end
+	<br class="print" /> 
+	<h1 class="print_title"> 
+		$entry
+	</h1>
+	#end
 #end
 
 ## Render gray line(s) for section title
@@ -740,7 +738,7 @@
 		<div id="detail_background" >
 			## Title header
 			#renderDetailHeader($data)
-  			<div dojoType="dijit.layout.TabContainer" doLayout="false" style="width: 100%; height: 1000px;">
+  			<div dojoType="dijit.layout.TabContainer" doLayout="false" style="width: 100%; min-height: 100px;">
 				#if($tool.hasContent($data.get("elementsGeneral")))
 					<div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('general_tab')" class="contentTab">
 						#renderNoScriptTitle($MESSAGES.getString('general_tab'))

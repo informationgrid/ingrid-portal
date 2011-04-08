@@ -604,14 +604,16 @@ img.section_show_hide { padding-right:16px; padding-top:5px; display: none !impo
 * Dojo Tabs CSS style 
 *******************************************/
 
-div.dojoTab:hover { display:none; }
-div.dojoTab:hover div {display:none; }
-div.dojoTab { display:none; }
-div.dojoTab div { display:none; }
-div.dojoTab.current { display:none;}
-div.dojoTab.current div { display:none; }
-div.contentTab {display:block !important;}
-div.dojoTabPaneWrapper {border : 0px solid #6290d2; overflow: visible;}
+div.dijitTab:hover { display:none; }
+div.dijitTab:hover div {display:none; }
+div.dijitTab { display:none; }
+div.dijitTab div { display:none; }
+div.dijitTab.current { display:none;}
+div.dijitTab.current div { display:none; }
+div.dijitLayoutContainer { overflow: visible; }
+div.contentTab { display:block !important; padding: 0 !important; }
+div.dijitTabContainerBottom-container, .dijitTabContainerTop-container, .dijitTabContainerLeft-container, .dijitTabContainerRight-container { border : 0 !important; overflow: visible;}
+div.claro .dijitTabPaneWrapper, .claro .dijitTabContainerTop-tabs, .claro .dijitTabContainerBottom-tabs, .claro .dijitTabContainerLeft-tabs, .claro .dijitTabContainerRight-tabs { border: 0; }
 
 /******************************************
 Print view of detail view
@@ -619,3 +621,5 @@ Print view of detail view
 div#detail_background span.print_clearer { background-color:#DDE9BD; clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px; display:none !important; }
 H1.print_title { background-color:#68A5D2; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height: 25px; display:block; font-size:13px; } 
 br.print {clear:both;}
+.print_view_hidden { visibility:hidden; }
+.print_view_visible { visibility:visible; }
