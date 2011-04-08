@@ -41,7 +41,7 @@
         </table>
 	</div>
 	<div class="formfooter">
-		<input class="btn float_right" type="submit" name="doLoginIGE" value="Login - $MESSAGES.getString('entry.button.ige')" />
+		<input class="btn float_right" type="submit" name="doLoginIGE" value="$MESSAGES.getString('entry.button.ige')" />
 		<p class="clearer"/>
     </div>
 </form>
