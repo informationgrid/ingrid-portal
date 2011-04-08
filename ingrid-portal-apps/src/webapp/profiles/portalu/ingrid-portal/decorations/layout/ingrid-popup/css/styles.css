@@ -46,7 +46,7 @@ h3 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:80%; line-hei
 
 table.border { border-collapse:collapse;}
 table.fullwidth { width:100%; }
-th {font-size: 11px; vertical-align:top; padding-left:5px;padding-right:53px;}
+th {font-size: 11px; vertical-align:top; padding-left:5px;padding-right:5px;}
 td {font-size: 11px; vertical-align:top; padding-left:5px;padding-right:5px; min-width: 200px;}
 table.formtable td {font-size: 75%; vertical-align:middle; margin:0;}
 td.iconwidth { width:9px; }
@@ -555,8 +555,8 @@ td.detail_table_body { color:#000000; font-size:75%; margin-bottom:0; margin-top
 td.detail_image_td	{ vertical-align:middle; text-align:center; background-color:#EEEEEE; height:303px; width:433px; border-top:1px solid #DDDDDD; }
 td.detail_image_descr_td { background-color:#EEEEEE; height:73px; width:433px; border-top:6px solid #FFFFFF; vertical-align:text-top; }
 
-H1.section_title { background-color:#EEEEEE; color:#777777; font-size:11px; font-weight:bold; line-height:22px; padding:0 10px; }
-H2.group_title { background-color:#EEEEEE; color:#777777; font-size:11px; font-weight:normal; line-height:22px; padding:0 10px;}
+H1.section_title { background-color:#EEEEEE; color:#777777; font-size:12px; font-weight:bold; line-height:22px; padding:0 10px; }
+H2.group_title { background-color:#EEEEEE; color:#777777; font-size:12px; font-weight:normal; line-height:22px; padding:0 10px;}
 H1.no_script_title { background-color:#68A5D2; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:10px; line-height:25px; font-size: 12px;} 
 
 p.detail_entry_title { color:#777777; font-weight:bold; font-weight:bold; padding-left:0; padding-right:20px; padding-top:3px; }
