@@ -826,6 +826,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 								if(childNode.getLocalName().equals("additionalDataField") && childNode.getNamespaceURI().equals(IDFNamespaceContext.NAMESPACE_URI_IDF)){
 									String title = getNodeIdfTitle(childNode, lang);
 									String body = XPathUtils.getString(childNode, "./idf:data");
+									String postfix = getNodeIdfPostfix(childNode, lang);
+									
 									boolean isLegacy = false;
 									
 									if(XPathUtils.nodeExists(childNode, "./@isLegacy")){
@@ -834,9 +836,17 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 									
 									if(body.length() > 0){
 										if(isLegacy){
-											addElementEntryLabelLeft(elementsAdditionalInfo, body, title);
+											if(postfix.length() > 0){
+												addElementEntryLabelLeft(elementsAdditionalInfo, body + " " + postfix, title);	
+											}else{
+												addElementEntryLabelLeft(elementsAdditionalInfo, body, title);
+											}
 										}else{
-											addElementEntryLabelLeft(list, body, title);
+											if(postfix.length() > 0){
+												addElementEntryLabelLeft(list, body + " " + postfix, title);	
+											}else{
+												addElementEntryLabelLeft(list, body, title);
+											}
 										}
 									}
 								}else if(childNode.getLocalName().equals("additionalDataTable") && childNode.getNamespaceURI().equals(IDFNamespaceContext.NAMESPACE_URI_IDF)){
@@ -910,6 +920,20 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}	
 
+	private String getNodeIdfPostfix(Node node, String lang) {
+		String prefix; 
+		if(XPathUtils.nodeExists(node, "./idf:postfix[@lang='"+ lang +"']")){
+			prefix = XPathUtils.getString(node, "./idf:postfix[@lang='"+ lang +"']");
+		}else if(XPathUtils.nodeExists(node, "./idf:postfix[@lang]")){
+			prefix = XPathUtils.getString(node, "./idf:postfix[@lang]");
+		}else if(XPathUtils.nodeExists(node, "./idf:postfix")){
+			prefix = XPathUtils.getString(node, "./idf:postfix");
+		}else{
+			prefix = "";
+		}
+		return prefix.trim();
+	}
+
 	private String getNodeIdfTitle(Node node, String lang) {
 		String title; 
 		if(XPathUtils.nodeExists(node, "./idf:title[@lang='"+ lang +"']")){
@@ -921,7 +945,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}else{
 			title = "";
 		}
-		return title;
+		return title.trim();
 	}
 
 	private void getNodeListValuesLanguage(ArrayList elements, String xpathExpression, String subXPathExpression, String title, String type) {
