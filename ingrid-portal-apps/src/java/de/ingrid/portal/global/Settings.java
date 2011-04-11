@@ -216,6 +216,7 @@ public class Settings {
     
     // this key represents the index key for the service type.
     public static final String HIT_KEY_OBJ_SERV_TYPE = "t011_obj_serv.type";
+    public static final String HIT_KEY_OBJ_SERV_TYPE_KEY = "t011_obj_serv.type_key";
 
     
     public final static String HIT_KEY_OBJ_ID = "T01_object.obj_id";

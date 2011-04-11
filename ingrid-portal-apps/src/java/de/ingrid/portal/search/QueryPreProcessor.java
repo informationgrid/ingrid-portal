@@ -90,6 +90,7 @@ public class QueryPreProcessor {
         		Settings.HIT_KEY_OBJ_ID,
         		Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT,
         		Settings.HIT_KEY_OBJ_SERV_TYPE,        		
+        		Settings.HIT_KEY_OBJ_SERV_TYPE_KEY,        		
         		// udk address metadata
         		Settings.HIT_KEY_ADDRESS_CLASS,
         		Settings.HIT_KEY_ADDRESS_CLASS2,

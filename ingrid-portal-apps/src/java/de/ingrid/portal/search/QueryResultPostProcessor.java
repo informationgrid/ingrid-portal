@@ -253,18 +253,22 @@ public class QueryResultPostProcessor {
                 if (!objServHasAccessConstraint) {
   
                   Object serviceTypeArray = detail.get(Settings.HIT_KEY_OBJ_SERV_TYPE);
+                  Object serviceTypeKeyArray = detail.get(Settings.HIT_KEY_OBJ_SERV_TYPE_KEY);
                   String serviceType = "";
+                  String serviceTypeKey = "";
                   if (serviceTypeArray instanceof String[] && ((String[])serviceTypeArray).length > 0) {
                       serviceType = ((String[])serviceTypeArray)[0];
                   }
-                    
+                  if (serviceTypeKeyArray instanceof String[] && ((String[])serviceTypeKeyArray).length > 0) {
+                	  serviceTypeKey = ((String[])serviceTypeKeyArray)[0];
+                  }  
                   tmpString = "";
                   if (connectionPoint instanceof String[]) {
                       // PATCH for wrong data in database -> service string was passed multiple times !
                   	// only show FIRST (!!!! This is an assumption that has been made to reduce the effort!!! ) WMS getCapabilities URL
                   	String[] servicesArray = (String[]) connectionPoint;
                        for (int j = 0; j < servicesArray.length; j++) {
-                           if (serviceType.toLowerCase().indexOf("wms") != -1 || serviceType.toLowerCase().indexOf("view") != -1 || (servicesArray[j].toLowerCase().indexOf("service=wms") > -1 && servicesArray[j].toLowerCase().indexOf("request=getcapabilities") > -1)) {
+                           if (serviceTypeKey.toLowerCase().equals("2") || serviceType.toLowerCase().indexOf("wms") != -1 || serviceType.toLowerCase().indexOf("view") != -1 || (servicesArray[j].toLowerCase().indexOf("service=wms") > -1 && servicesArray[j].toLowerCase().indexOf("request=getcapabilities") > -1)) {
                            	tmpString = servicesArray[j];
                            	break;
                            }
