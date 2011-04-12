@@ -1142,7 +1142,7 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
 	    	        	if (!hasAccessConstraints) {
 	    	        	  link.put("title", messages.getString("common.result.showGetCapabilityUrl"));
 	    	        	} else {
-                    link.put("title", messages.getString("common.result.showGetCapabilityUrlRestricted"));
+	    	        		link.put("title", messages.getString("common.result.showGetCapabilityUrlRestricted"));
 	    	        	}
 	    	        	link.put("href", wmsServiceLinks.get(i).trim());
 	    	        	linkList.add(link);
