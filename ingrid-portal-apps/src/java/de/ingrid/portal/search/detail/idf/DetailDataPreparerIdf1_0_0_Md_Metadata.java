@@ -96,11 +96,11 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			
 	// Tab "General"
 			// Description
-			xpathExpression = "gmd:identificationInfo/" + metadataDataNodePath;
+			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath;
 			getGeneralTab(elementsGeneral, xpathExpression);
 			
 			// Addresses
-			xpathExpression = "gmd:identificationInfo/" + metadataDataNodePath + "/gmd:pointOfContact";
+			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/gmd:pointOfContact";
 			getAddresses(elementsGeneral, xpathExpression);
 			
 	// Tab "Verweise"
@@ -110,68 +110,70 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			getReference(referenceList, xpathExpression, ReferenceType.CROSS);
 			
 			// "Externe Webseiten"
-			xpathExpression = "gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions";
+			xpathExpression = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions";
 			getExternLinks(referenceList, xpathExpression);
 			
 			if(referenceList.size() > 0){
 				elementsReference = addTabData(messages.getString("references"), referenceList);
 			}
 			// "Verschlagwortung"
-			xpathExpression = "gmd:identificationInfo/" + metadataDataNodePath + "/gmd:descriptiveKeywords";
+			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/gmd:descriptiveKeywords";
 			getIndexInformationKeywords(elementsReference, xpathExpression, metadataDataNodePath);
 			
 	// Tab "Verfügbarkeit"
 			// "Datenformat"
-			xpathExpression = "gmd:distributionInfo/gmd:MD_Distribution";
+			xpathExpression = "./gmd:distributionInfo/gmd:MD_Distribution";
 			getAvailability(elementsAvailability, xpathExpression);
 			
-			// TODO: CodeList "Zugangsbeschränkungen"
 			// "Zugangsbeschränkungen"
-			xpathExpression = "gmd:identificationInfo/" + metadataDataNodePath + "/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints";
+			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints";
 			subXPathExpression = ".";
 			getNodeListValues(elementsAvailability, xpathExpression, subXPathExpression, messages.getString("object_access.restriction_value"), "textList", "6010");
 			
 			// "Nutzungsbedingungen"
-			xpathExpression = "gmd:identificationInfo/" + metadataDataNodePath + "/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useLimitation";
+			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useLimitation";
 			subXPathExpression = ".";
 			getNodeListValues(elementsAvailability, xpathExpression, subXPathExpression, messages.getString("object_access.terms_of_use"), "textList");
 			
-			
-			
 	// Tab "Raum/Zeit"
 			// "Raumbezugssystem"
-			xpathExpression = "gmd:identificationInfo/" + metadataDataNodePath + "/*/gmd:EX_Extent";
+			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/*/gmd:EX_Extent";
 			getAreaSection(elementsAreaTime, xpathExpression);
 			
 			// "Zeitbezug"
-			xpathExpression = "gmd:identificationInfo/" + metadataDataNodePath + "/*/gmd:EX_Extent";
+			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/*/gmd:EX_Extent";
 			getTimeSection(elementsAreaTime, xpathExpression);
 			
 	// Tab "Zusätzliche Info"
 			// "Sprache des Metadatensatzes"
-			xpathExpression = "gmd:language";
+			xpathExpression = "./gmd:language";
 			subXPathExpression = "gmd:LanguageCode/@codeListValue";
 			getNodeListValuesLanguage(elementsAdditionalInfo, xpathExpression, subXPathExpression, messages.getString("t01_object.metadata_language"), "textList");
 			
 			// "Sprache des Datensatzes"
-			xpathExpression = "gmd:identificationInfo/gmd:MD_DataIdentification/gmd:language";
+			xpathExpression = "./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:language";
 			subXPathExpression = "gmd:LanguageCode/@codeListValue";
 			getNodeListValuesLanguage(elementsAdditionalInfo, xpathExpression, subXPathExpression, messages.getString("t01_object.data_language"), "textList");
 			
 			// "Veröffentlichung"
-			xpathExpression = "gmd:identificationInfo/" + metadataDataNodePath;
+			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath;
 			getClassificationInformation(elementsAdditionalInfo, xpathExpression);
 			
 			// "Eignung/Nutzung"
-			xpathExpression = "gmd:identificationInfo/"+ metadataDataNodePath +"/gmd:resourceSpecificUsage/gmd:MD_Usage/gmd:specificUsage";
+			xpathExpression = "./gmd:identificationInfo/"+ metadataDataNodePath +"/gmd:resourceSpecificUsage/gmd:MD_Usage/gmd:specificUsage";
 			getNodeValue(elementsAdditionalInfo, xpathExpression, messages.getString("t01_object.dataset_usage"));
 			
 			// "Herstellungszweck"
-			xpathExpression = "gmd:identificationInfo/"+ metadataDataNodePath +"/gmd:purpose";
+			xpathExpression = "./gmd:identificationInfo/"+ metadataDataNodePath +"/gmd:purpose";
 			getNodeValue(elementsAdditionalInfo, xpathExpression, messages.getString("t01_object.info_note.t015_legist.name"), null, null, LabelType.ABOVE);
 			
+			// "XML-Export-Kriterium"
+			xpathExpression = "./idf:exportCriteria";
+			subXPathExpression = ".";
+			getNodeListValues(elementsAdditionalInfo, xpathExpression, subXPathExpression, messages.getString("t014_info_impart.name"), "textList");
+			
 			// "Konformität"
-			xpathExpression = "gmd:dataQualityInfo/gmd:DQ_DataQuality";
+			xpathExpression = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report";
 			getConformityData(elementsAdditionalInfo, xpathExpression);
 			
 			// "Objekt-ID"
@@ -187,11 +189,11 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			*/
 			
 			// "Zeichensatz des Metadatensatzes"
-			xpathExpression = "gmd:characterSet/gmd:MD_CharacterSetCode/@codeListValue";
+			xpathExpression = "./gmd:characterSet/gmd:MD_CharacterSetCode/@codeListValue";
 			getNodeValue(elementsAdditionalInfo, xpathExpression, messages.getString("t01_object.metadata_character_set"), "510");
 			
 			// "Zeichensatz des Datensatzes"
-			xpathExpression = "gmd:identificationInfo/gmd:MD_DataIdentification/gmd:characterSet/gmd:MD_CharacterSetCode/@codeListValue";
+			xpathExpression = "./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:characterSet/gmd:MD_CharacterSetCode/@codeListValue";
 			getNodeValue(elementsAdditionalInfo, xpathExpression, messages.getString("t01_object.dataset_character_set"), "510");
 			
 			// "ID der Objektklasse" 
@@ -427,7 +429,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	
 	private void getThematicReferenceClass3(ArrayList elements) {
 		
-		// TODO: Check value with codelist id
 		// Typ des Dienstes
 		String xpathExpression = "gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType";
 		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_serv.type"), "5100");
@@ -542,7 +543,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 
 	private void getThematicReferenceClass5(ArrayList elements) {
 		
-		// TODO: Check because Paramter and unit can not be evaluate
 		// Inhalte der Datensammlung/Datenbank
 		String xpathExpression ="gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes";
 		String subXPathExpression =".";
@@ -559,10 +559,9 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 
 	private void getThematicReferenceClass6(ArrayList elements) {
 
-		// TODO: Check value with codelist id
 		// "Art des Dienstes"
 		String xpathExpression = "gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType";
-		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_serv.type"), "5100");
+		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_serv.type"), "5300");
 
 		// "Version"
 		xpathExpression = "gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceTypeVersion";
@@ -1475,61 +1474,58 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	
 	private void getConformityData(ArrayList elements, String xpathExpression) {
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			Node node = XPathUtils.getNode(rootNode, xpathExpression);
-			if (node.hasChildNodes()) {
-				String nodeXPathExpression;
-				nodeXPathExpression = "gmd:report";
-				if (XPathUtils.nodeExists(node, nodeXPathExpression)) {
-					NodeList dataQualityNodeList = XPathUtils.getNodeList(node, nodeXPathExpression);
-					HashMap element = new HashMap();
-					element.put("type", "table");
-					element.put("title", messages.getString("object_conformity"));
-					
-					ArrayList head = new ArrayList();
-					head.add(messages.getString("object_conformity.specification"));
-					head.add(messages.getString("object_conformity.degree_value"));
-					head.add(messages.getString("object_conformity.publication_date"));
-					element.put("head", head);
-					ArrayList body = new ArrayList();
-					element.put("body", body);
-					
-					for (int i = 0; i < dataQualityNodeList.getLength(); i++) {
-						Node childNode = XPathUtils.getNode(dataQualityNodeList.item(i), "gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation");
-						ArrayList row = new ArrayList();
-						
-						String childXPathExpression = "gmd:title";
-						if (XPathUtils.nodeExists(childNode, childXPathExpression)) {
-							String value = XPathUtils.getString(childNode, childXPathExpression).trim();
-							row.add(notNull(value));
-						} else {
-							row.add("");
-						}
-						
-						childXPathExpression = "gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue";
-						if (XPathUtils.nodeExists(childNode, childXPathExpression)) {
-							String value = XPathUtils.getString(childNode, childXPathExpression).trim();
-							row.add(notNull(value));
-						} else {
-							row.add("");
-						}
-						
-						childXPathExpression = "gmd:date/gmd:CI_Date/gmd:date";
-						if (XPathUtils.nodeExists(childNode, childXPathExpression)) {
-							String value = UtilsDate.convertDateString(XPathUtils.getString(childNode, childXPathExpression).trim(), "yyyy-MM-dd", "dd.MM.yyyy");
-							row.add(notNull(value));
-						} else {
-							row.add("");
-						}
-						
-						if (!isEmptyRow(row)) {
-							body.add(row);
-						}
-					}
-					if (body.size() > 0) {
-						
-						elements.add(element);
-					}
+			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+			HashMap element = new HashMap();
+			element.put("type", "table");
+			element.put("title", messages.getString("object_conformity"));
+			
+			ArrayList head = new ArrayList();
+			head.add(messages.getString("object_conformity.specification"));
+			head.add(messages.getString("object_conformity.degree_value"));
+			head.add(messages.getString("object_conformity.publication_date"));
+			element.put("head", head);
+			ArrayList body = new ArrayList();
+			element.put("body", body);
+			
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				Node node = nodeList.item(i);
+				ArrayList row = new ArrayList();
+				
+				String childXPathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title";
+				if (XPathUtils.nodeExists(node, childXPathExpression)) {
+					String value = XPathUtils.getString(node, childXPathExpression).trim();
+					row.add(notNull(value));
+				} else {
+					row.add("");
 				}
+				
+				childXPathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:pass";
+				if (XPathUtils.nodeExists(node, childXPathExpression)) {
+					String value = XPathUtils.getString(node, childXPathExpression).trim();
+					if(value.equals("true")){
+						row.add(notNull(sysCodeList.getName("6000", "1")));	
+					}else{
+						row.add(notNull(sysCodeList.getName("6000", "2")));	
+					}
+				} else {
+					row.add(notNull(sysCodeList.getName("6000", "3")));	
+				}
+				
+				childXPathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date";
+				if (XPathUtils.nodeExists(node, childXPathExpression)) {
+					String value = UtilsDate.convertDateString(XPathUtils.getString(node, childXPathExpression).trim(), "yyyy-MM-dd", "dd.MM.yyyy");
+					row.add(notNull(value));
+				} else {
+					row.add("");
+				}
+				
+				if (!isEmptyRow(row)) {
+					body.add(row);
+				}
+			}
+			if (body.size() > 0) {
+				
+				elements.add(element);
 			}
 		}
 	}
@@ -1714,7 +1710,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Node node = nodeList.item(i);
-				ArrayList keywordList;
 				String type = "";
 				String thesaurusName = "";
 				String nodeXPathExpression;
@@ -1737,19 +1732,16 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				nodeXPathExpression = "gmd:MD_Keywords/gmd:keyword";
 				boolean existKeyword = XPathUtils.nodeExists(node, nodeXPathExpression);
 				if (existKeyword) {
-					keywordList = new ArrayList();
 					NodeList keywordNodeList = XPathUtils.getNodeList(node, nodeXPathExpression);
 					for (int j = 0; j < keywordNodeList.getLength(); j++) {
 						Node keywordNode = keywordNodeList.item(j);
-						String value = sysCodeList.getNameByCodeListValue("5200", XPathUtils.getString(keywordNode, ".").trim());
+						String value = XPathUtils.getString(keywordNode, ".").trim(); 
 						if(value.length() < 1){
 							value = XPathUtils.getString(keywordNode, ".").trim();
 						}
-						keywordList.add(value);
 						
 						HashMap listEntry = new HashMap();
 						listEntry.put("type", "textList");
-						listEntry.put("body", value);
 						
 						if(log.isDebugEnabled()){
 							log.debug("Thesaurus name: '"+thesaurusName+"' and type: '"+type+"' for value: '"+value+"'");
@@ -1757,29 +1749,57 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						
 						// "Service Classification, version 1.0"
 						if (thesaurusName.indexOf("Service") > -1) {
+							String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
+							if(tmpValue.length() < 1){
+								tmpValue = value;
+							}
+							listEntry.put("body", tmpValue);
 							if (!isEmptyList(listEntry)) {
 								elementsSearch.add(listEntry);
 							}
 						// "UMTHES Thesaurus"
 						} else if (thesaurusName.indexOf("UMTHES") > -1) {
+							listEntry.put("body", value);
 							if (!isEmptyList(listEntry)) {
 								elementsSearch.add(listEntry);
 							}
 						// "GEMET - Concepts, version 2.1"
 						} else if (thesaurusName.indexOf("Concepts") > -1) {
+							String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
+							if(tmpValue.length() < 1){
+								tmpValue = value;
+							}
+							listEntry.put("body", tmpValue);
 							if (!isEmptyList(listEntry)) {
 								elementsGemet.add(listEntry);
 							}
-						// "GEMET - INSPIRE themes, version 1.0"
+							// "GEMET - INSPIRE themes, version 1.0"
 						} else if (thesaurusName.indexOf("INSPIRE") > -1) {
+							String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
+							if(tmpValue.length() < 1){
+								tmpValue = value;
+							}
+							listEntry.put("body", tmpValue);
+							if (!isEmptyList(listEntry)) {
+								elementsInspire.add(listEntry);
+							}
+							// "German Environmental Classification - Category, version 1.0"
+						} else if (thesaurusName.indexOf("German") > -1) {
+							String tmpValue = sysCodeList.getNameByCodeListValue("1410", value);
+							if(tmpValue.length() < 1){
+								tmpValue = value;
+							}
+							listEntry.put("body", tmpValue);
 							if (!isEmptyList(listEntry)) {
 								elementsInspire.add(listEntry);
 							}
 						} else if (type.equals("theme")) {
+							listEntry.put("body", value);
 							if (!isEmptyList(listEntry)) {
 								elementsInspire.add(listEntry);
 							}
 						} else {
+							listEntry.put("body", value);
 							if (!isEmptyList(listEntry)) {
 								elementsSearch.add(listEntry);
 							}
