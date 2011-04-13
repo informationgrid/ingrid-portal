@@ -1489,38 +1489,40 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Node node = nodeList.item(i);
-				ArrayList row = new ArrayList();
-				
-				String childXPathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title";
-				if (XPathUtils.nodeExists(node, childXPathExpression)) {
-					String value = XPathUtils.getString(node, childXPathExpression).trim();
-					row.add(notNull(value));
-				} else {
-					row.add("");
-				}
-				
-				childXPathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:pass";
-				if (XPathUtils.nodeExists(node, childXPathExpression)) {
-					String value = XPathUtils.getString(node, childXPathExpression).trim();
-					if(value.equals("true")){
-						row.add(notNull(sysCodeList.getName("6000", "1")));	
-					}else{
-						row.add(notNull(sysCodeList.getName("6000", "2")));	
+				if(XPathUtils.nodeExists(node, "./gmd:DQ_DomainConsistency")){
+					ArrayList row = new ArrayList();
+					
+					String childXPathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title";
+					if (XPathUtils.nodeExists(node, childXPathExpression)) {
+						String value = XPathUtils.getString(node, childXPathExpression).trim();
+						row.add(notNull(value));
+					} else {
+						row.add("");
 					}
-				} else {
-					row.add(notNull(sysCodeList.getName("6000", "3")));	
-				}
-				
-				childXPathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date";
-				if (XPathUtils.nodeExists(node, childXPathExpression)) {
-					String value = UtilsDate.convertDateString(XPathUtils.getString(node, childXPathExpression).trim(), "yyyy-MM-dd", "dd.MM.yyyy");
-					row.add(notNull(value));
-				} else {
-					row.add("");
-				}
-				
-				if (!isEmptyRow(row)) {
-					body.add(row);
+					
+					childXPathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:pass";
+					if (XPathUtils.nodeExists(node, childXPathExpression)) {
+						String value = XPathUtils.getString(node, childXPathExpression).trim();
+						if(value.equals("true")){
+							row.add(notNull(sysCodeList.getName("6000", "1")));	
+						}else{
+							row.add(notNull(sysCodeList.getName("6000", "2")));	
+						}
+					} else {
+						row.add(notNull(sysCodeList.getName("6000", "3")));	
+					}
+					
+					childXPathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date";
+					if (XPathUtils.nodeExists(node, childXPathExpression)) {
+						String value = UtilsDate.convertDateString(XPathUtils.getString(node, childXPathExpression).trim(), "yyyy-MM-dd", "dd.MM.yyyy");
+						row.add(notNull(value));
+					} else {
+						row.add("");
+					}
+					
+					if (!isEmptyRow(row)) {
+						body.add(row);
+					}
 				}
 			}
 			if (body.size() > 0) {
