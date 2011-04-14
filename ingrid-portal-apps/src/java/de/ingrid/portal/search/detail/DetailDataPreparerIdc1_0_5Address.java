@@ -265,12 +265,7 @@ public class DetailDataPreparerIdc1_0_5Address implements DetailDataPreparer {
         	}
         }
 		
-    	element = new HashMap();
-    	element.put("type", "textLine");
-		element.put("body", record.getString("t02_address.institution"));
-		innerElements.add(element);
-		
-		// address, title, name with link
+    	// address, title, name with link
 		if (UtilsVelocity.hasContent(record.getString("t02_address.lastname")).booleanValue()) {
 	    	String textLine = null;
 	    	textLine = addStrWithSeparator(textLine, record.getString("t02_address.address_value"), " ");
@@ -282,7 +277,13 @@ public class DetailDataPreparerIdc1_0_5Address implements DetailDataPreparer {
 	    	element.put("type", "textLine");
 			element.put("body", textLine);
 			innerElements.add(element);
+		}else{
+			element = new HashMap();
+	    	element.put("type", "textLine");
+			element.put("body", record.getString("t02_address.institution"));
+			innerElements.add(element);
 		}
+		
 		if (UtilsVelocity.hasContent(record.getString("t02_address.descr")).booleanValue()|| UtilsVelocity.hasContent(record.getString("t02_address.postbox")).booleanValue()) {
 			addSpace(elements);
 		}

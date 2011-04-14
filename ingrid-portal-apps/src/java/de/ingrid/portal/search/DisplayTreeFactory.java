@@ -338,9 +338,7 @@ public class DisplayTreeFactory {
             			UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_LASTNAME)
             		};
             		String personStr =  UtilsString.concatStringsIfNotNull(titleElements, " ");
-            		if (personStr != null && personStr.length() > 0 && nodeName != null && nodeName.length() > 0) {
-            			nodeName = nodeName.concat(", ").concat(personStr);
-            		} else if (personStr != null && personStr.length() > 0) {
+            		if (personStr != null && personStr.length() > 0) {
             			nodeName = personStr;
             		}
             	}

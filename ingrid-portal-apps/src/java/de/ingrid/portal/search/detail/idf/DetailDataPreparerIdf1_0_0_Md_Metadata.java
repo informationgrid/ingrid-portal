@@ -344,7 +344,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		
 		// "Identifikator der Datenquelle"
 		xpathExpression = "gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code";
-		getNodeValue(elementsSubject, xpathExpression, messages.getString("t011_obj_geo.datasource_uuid"));	
+		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_geo.datasource_uuid"));	
 		
 	}
 
@@ -796,35 +796,42 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	private void getParameterTable(ArrayList elements, String xpathExpression, String subXPathExpression, String title) {
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
-			if(nodeList.getLength() > 0){
-				HashMap element = new HashMap();
-				element.put("type", "table");
-				element.put("title", title);
+			
+			/* 
+			 * Table for parameter and unit isn't possible because both are in the same node
+			 *  
+			HashMap element = new HashMap();
+			element.put("type", "table");
+			element.put("title", title);
+			
+			ArrayList head = new ArrayList();
+			head.add(messages.getString("t011_obj_data_para.parameter"));
+			head.add(messages.getString("t011_obj_data_para.unit"));
+			element.put("head", head);
+			
+			ArrayList body = new ArrayList();
+			element.put("body", body);
+	    	
+			for (int i=0; i<nodeList.getLength();i++){
+        		if(XPathUtils.nodeExists(nodeList.item(i), subXPathExpression)){
+        			Node node = XPathUtils.getNode(nodeList.item(i), subXPathExpression);
+	        		String value = XPathUtils.getString(node, ".").trim();
+	        		ArrayList row = new ArrayList();
+		    		row.add(value);
+		    		row.add("");
+		    		if (!isEmptyRow(row)) {
+		    			body.add(row);
+		    		}
+        		}
+        	}
+			if (body.size() > 0) {
 				
-				ArrayList head = new ArrayList();
-				head.add(messages.getString("t011_obj_data_para.parameter"));
-				head.add(messages.getString("t011_obj_data_para.unit"));
-				element.put("head", head);
-				
-				ArrayList body = new ArrayList();
-				element.put("body", body);
-		    	
-				for (int i=0; i<nodeList.getLength();i++){
-	        		if(XPathUtils.nodeExists(nodeList.item(i), subXPathExpression)){
-	        			Node node = XPathUtils.getNode(nodeList.item(i), subXPathExpression);
-		        		String value = XPathUtils.getString(node, ".").trim();
-		        		ArrayList row = new ArrayList();
-			    		row.add(value);
-			    		row.add("");
-			    		if (!isEmptyRow(row)) {
-			    			body.add(row);
-			    		}
-	        		}
-	        	}
-				if (body.size() > 0) {
-					
-					elements.add(element);
-			    }
+				elements.add(element);
+		    }
+		    */
+			
+			for (int i=0; i<nodeList.getLength();i++){
+				getNodeValue(elements, ".", messages.getString("t011_obj_data_para.parameter") +  " " + messages.getString("t011_obj_data_para.unit"), null, nodeList.item(i));
 			}
         }
 	}
@@ -1837,7 +1844,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			// "ISO-Themenkategorien"
 			xpathExpression = "gmd:identificationInfo/" + metadataDataNodePath + "/gmd:topicCategory";
 			String subXPathExpression = "gmd:MD_TopicCategoryCode";
-			getNodeListValues(elementsReference, xpathExpression, subXPathExpression , messages.getString("t011_obj_geo_topic_cat.topic_category"), "textList", "527");
+			getNodeListValues(elements, xpathExpression, subXPathExpression , messages.getString("t011_obj_geo_topic_cat.topic_category"), "textList", "527");
 			closeDiv(elements);
 		}
 	}
@@ -2388,11 +2395,11 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						
 						// "Übergeordnete Objekte"
 						xpathExpression ="./idf:superiorReference";
-						getReference(elementsGeneral, xpathExpression, ReferenceType.SUPERIOR);
+						getReference(elements, xpathExpression, ReferenceType.SUPERIOR);
 						
 						// "Untergeordnete Objekte"
 						xpathExpression ="./idf:subordinatedReference";
-						getReference(elementsGeneral, xpathExpression, ReferenceType.SUBORDINATE);
+						getReference(elements, xpathExpression, ReferenceType.SUBORDINATE);
 						
 						// close description
 						closeDiv(elements);
