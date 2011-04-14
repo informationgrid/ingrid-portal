@@ -1510,13 +1510,19 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					childXPathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:pass";
 					if (XPathUtils.nodeExists(node, childXPathExpression)) {
 						String value = XPathUtils.getString(node, childXPathExpression).trim();
-						if(value.equals("true")){
-							row.add(notNull(sysCodeList.getName("6000", "1")));	
+						if(XPathUtils.nodeExists(node, childXPathExpression + "/@gco:nilReason")){
+							row.add(notNull(sysCodeList.getName("6000", "3")));	
 						}else{
-							row.add(notNull(sysCodeList.getName("6000", "2")));	
+							if(value.equals("true")){
+								row.add(notNull(sysCodeList.getName("6000", "1")));	
+							}else if(value.equals("false")){
+								row.add(notNull(sysCodeList.getName("6000", "2")));	
+							}else{
+								row.add("");
+							}
 						}
 					} else {
-						row.add(notNull(sysCodeList.getName("6000", "3")));	
+						row.add("");	
 					}
 					
 					childXPathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date";
