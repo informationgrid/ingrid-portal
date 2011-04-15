@@ -241,13 +241,14 @@ public class QueryResultPostProcessor {
             // services !
             
             // WMS, only process if Viewer is specified !
-            Object connectionPoint = detail.get(Settings.HIT_KEY_WMS_URL);
-            if (connectionPoint == null) {
+            String[] servicesArray = (String[]) detail.get(Settings.HIT_KEY_WMS_URL);
+            
+            if (servicesArray == null || servicesArray.length < 1) {
             	// there has been a change in the case of this key
-            	connectionPoint = detail.get(Settings.HIT_KEY_WMS_URL.toLowerCase());
+            	servicesArray = (String[]) detail.get(Settings.HIT_KEY_WMS_URL.toLowerCase());
             }
             
-            if (connectionPoint != null && WMSInterfaceImpl.getInstance().hasWMSViewer()) {
+            if (servicesArray != null && WMSInterfaceImpl.getInstance().hasWMSViewer()) {
                 boolean objServHasAccessConstraint = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT).equals("Y") ? true : false;
                 
                 if (!objServHasAccessConstraint) {
@@ -263,10 +264,10 @@ public class QueryResultPostProcessor {
                 	  serviceTypeKey = ((String[])serviceTypeKeyArray)[0];
                   }  
                   tmpString = "";
-                  if (connectionPoint instanceof String[]) {
+                  if (servicesArray instanceof String[]) {
                       // PATCH for wrong data in database -> service string was passed multiple times !
                   	// only show FIRST (!!!! This is an assumption that has been made to reduce the effort!!! ) WMS getCapabilities URL
-                  	String[] servicesArray = (String[]) connectionPoint;
+                  	
                        for (int j = 0; j < servicesArray.length; j++) {
                            if (serviceTypeKey.toLowerCase().equals("2") || serviceType.toLowerCase().indexOf("wms") != -1 || serviceType.toLowerCase().indexOf("view") != -1 || (servicesArray[j].toLowerCase().indexOf("service=wms") > -1 && servicesArray[j].toLowerCase().indexOf("request=getcapabilities") > -1)) {
                            	tmpString = servicesArray[j];

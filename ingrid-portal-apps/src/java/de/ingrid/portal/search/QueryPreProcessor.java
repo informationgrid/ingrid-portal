@@ -108,6 +108,7 @@ public class QueryPreProcessor {
         		Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID3,
         		// both
         		Settings.HIT_KEY_WMS_URL,
+        		Settings.HIT_KEY_WMS_URL.toLowerCase(),
         		Settings.RESULT_KEY_PARTNER,
         		Settings.RESULT_KEY_PROVIDER,
         		Settings.RESULT_KEY_WMS_TMP_COORD_X
