@@ -1932,7 +1932,16 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			if (XPathUtils.nodeExists(node, xpathExpression)) {
 				String role = XPathUtils.getString(node, xpathExpression).trim();
 				String title = sysCodeList.getNameByCodeListValue("505", role);
-				if(title == null || title.length() < 1){
+				if(role.equals("pointOfContact")){
+					if(node.getParentNode().getNodeName().trim().equals("gmd:contact")){
+						title = title + " (" + messages.getString("pointofcontact_metadata")+ ")";
+					}else{
+						title = title + " (" + messages.getString("pointofcontact_service")+ ")";	
+					}
+					
+				}
+				
+				if (title.length() < 1){
 					title = role;
 				}
 				
