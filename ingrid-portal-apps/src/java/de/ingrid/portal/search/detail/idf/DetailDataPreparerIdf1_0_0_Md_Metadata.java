@@ -937,34 +937,15 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 									String body = XPathUtils.getString(childNode, "./idf:data");
 									String postfix = getNodeIdfPostfix(childNode, lang);
 									
-									boolean isLegacy = false;
-									
-									if(XPathUtils.nodeExists(childNode, "./@isLegacy")){
-										isLegacy = Boolean.getBoolean(XPathUtils.getString(childNode, "./@isLegacy"));
-									}
-									
 									if(body.length() > 0){
-										if(isLegacy){
-											if(postfix.length() > 0){
-												addElementEntryLabelLeft(elementsAdditionalInfo, body + " " + postfix, title);	
-											}else{
-												addElementEntryLabelLeft(elementsAdditionalInfo, body, title);
-											}
+										if(postfix.length() > 0){
+											addElementEntryLabelLeft(list, body + " " + postfix, title);	
 										}else{
-											if(postfix.length() > 0){
-												addElementEntryLabelLeft(list, body + " " + postfix, title);	
-											}else{
-												addElementEntryLabelLeft(list, body, title);
-											}
+											addElementEntryLabelLeft(list, body, title);
 										}
 									}
 								}else if(childNode.getLocalName().equals("additionalDataTable") && childNode.getNamespaceURI().equals(IDFNamespaceContext.NAMESPACE_URI_IDF)){
 									String title = getNodeIdfTitle(childNode, lang);
-									boolean isLegacy = false;
-									
-									if(XPathUtils.nodeExists(childNode, "./@isLegacy")){
-										isLegacy = Boolean.getBoolean(XPathUtils.getString(childNode, "./@isLegacy"));
-									}
 									
 									HashMap element = new HashMap();
 									element.put("type", "table");
@@ -1006,11 +987,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 										}
 									}
 									if (body.size() > 0) {
-										if(isLegacy){
-											elementsAdditionalInfo.add(element);
-										}else{
-											list.add(element);
-										}
+										list.add(element);
 									}	
 								}
 							}
