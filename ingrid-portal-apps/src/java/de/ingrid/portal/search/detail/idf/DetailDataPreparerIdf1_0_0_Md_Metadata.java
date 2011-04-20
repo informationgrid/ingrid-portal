@@ -907,7 +907,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 
 	private void getAdditionalFields(ArrayList elements, String xpathExpression) {
 
-		String lang = request.getLocale().toString();
+		String lang = request.getLocale().getLanguage().toString();
 		String id = "";
 		HashMap additionalField = new HashMap();
 		ArrayList list = new ArrayList();
@@ -1072,7 +1072,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		        		String value = XPathUtils.getString(node, ".").trim();
 						HashMap listEntry = new HashMap();
 						listEntry.put("type", type);
-						listEntry.put("body", UtilsLanguageCodelist.getNameFromIso639_2(value, this.request.getLocale().toString()));
+						listEntry.put("body", UtilsLanguageCodelist.getNameFromIso639_2(value, this.request.getLocale().getLanguage().toString()));
 						if (!isEmptyList(listEntry)) {
 							list.add(listEntry);
 						}
@@ -1084,7 +1084,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				if (XPathUtils.nodeExists(node, subXPathExpression)) {
 					String body = XPathUtils.getString(node, subXPathExpression).trim();
 					if(body.length() > 0){
-						addElementEntryLabelLeft(elements, UtilsLanguageCodelist.getNameFromIso639_2(body, this.request.getLocale().toString()), title);
+						addElementEntryLabelLeft(elements, UtilsLanguageCodelist.getNameFromIso639_2(body, this.request.getLocale().getLanguage().toString()), title);
 					}
 				}
 			}
@@ -2053,7 +2053,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
 					String country = XPathUtils.getString(node, xpathExpression).trim();
 					if(country != null){
-						String value = UtilsCountryCodelist.getNameFromCode(UtilsCountryCodelist.getCodeFromShortcut3(country), this.request.getLocale().toString());
+						String value = UtilsCountryCodelist.getNameFromCode(UtilsCountryCodelist.getCodeFromShortcut3(country), this.request.getLocale().getLanguage().toString());
 						if(value != null){
 							addElement(elements, "textLine", value);
 						}else{
@@ -2134,7 +2134,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 							entryLine = entryLine.concat(UtilsDate.convertDateString(endPosition, "yyyy-MM-dd", "dd.MM.yyyy"));
 						}
 						if (entryLine.length() > 0) {
-							// "Zeitspanne, die die Ressource abdeckt"
+							// "Durch die Ressource abgedeckte Zeitspanne"
 							addElementEntryLabelLeft(timeElements, entryLine, messages.getString("time_reference_content"));
 						}
 					}
