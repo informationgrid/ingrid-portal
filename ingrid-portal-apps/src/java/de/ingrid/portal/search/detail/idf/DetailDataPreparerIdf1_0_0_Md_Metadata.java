@@ -2134,7 +2134,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 							entryLine = entryLine.concat(UtilsDate.convertDateString(endPosition, "yyyy-MM-dd", "dd.MM.yyyy"));
 						}
 						if (entryLine.length() > 0) {
-							// "Erläuterung zum Raumbezug"
+							// "Zeitspanne, die die Ressource abdeckt"
 							addElementEntryLabelLeft(timeElements, entryLine, messages.getString("time_reference_content"));
 						}
 					}
@@ -2166,6 +2166,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					addElementEntryLabelLeft(timeElements, value.concat(" ").concat(unit), messages.getString("t01_object.time_interval"));
 				}
 				
+				// "Zeitbezug der Ressource"
 				nodeXPathExpression = "../../gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date";
 				if (XPathUtils.nodeExists(node, nodeXPathExpression)) {
 					NodeList childNodeList = XPathUtils.getNodeList(node, nodeXPathExpression);
