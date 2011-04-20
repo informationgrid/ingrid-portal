@@ -7,7 +7,7 @@
 	#end
 		  #set($title = "")
 		  #if($rs.udk_class == "2")
-		  	#if($rs.title)#set($title = "$rs.title, ")#end
+		  	#if($rs.title)#set($title = "$rs.title")#end
 			#if($rs.address_salutation)#set($title = "$title$rs.address_salutation ")#end
 			#if($rs.address_lastname)#set($title = "$title$rs.address_lastname")#end
 			#if($rs.address_firstname)#set($title = "$title, $rs.address_firstname")#end
