@@ -35,6 +35,10 @@
 	#else
 		<a class="detail_link" href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title</a>
 	#end
+	
+	#if($tool.hasContent($entry.linkInfo))
+		<span style="font-size:70%;">$entry.linkInfo</span>
+	#end
 	</div>	
 #end
 
@@ -727,6 +731,13 @@
                         	#renderNoScriptTitle($MESSAGES.getString('subject_reference_tab'))	
         					#renderClearer()
     						#renderElements($e.body.get("elementsSubject"))
+        				</div>
+    				#end
+    				#if($tool.hasContent($e.body.get("elementsDataQuality")))
+        				<div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('data_quality')" class="contentTab">
+                        	#renderNoScriptTitle($MESSAGES.getString('data_quality'))	
+        					#renderClearer()
+    						#renderElements($e.body.get("elementsDataQuality"))
         				</div>
     				#end
     				#if($tool.hasContent($e.body.get("elementsAvailability")))

@@ -30,6 +30,7 @@ public class DetailDataPreparerIdf1_0_0 {
 	public final static String	DATA_TAB_AVAILABILITY		= "elementsAvailability";
 	public final static String	DATA_TAB_ADDITIONAL_INFO	= "elementsAdditionalInfo";
 	public final static String	DATA_TAB_ADDITIONAL_FIELD	= "elementsAdditionalField";
+	public final static String	DATA_TAB_DATA_QUALITY		= "elementsDataQuality";
 	
 	public Node					rootNode;
 	public NodeList				nodeList;
@@ -47,6 +48,7 @@ public class DetailDataPreparerIdf1_0_0 {
 	public ArrayList			elementsAvailability;
 	public ArrayList			elementsAdditionalInfo;
 	public ArrayList			elementsAdditionalField;
+	public ArrayList			elementsDataQuality;
 	
 	public HashMap content;
 	
@@ -143,6 +145,10 @@ public class DetailDataPreparerIdf1_0_0 {
 		this.elementsAdditionalField = (ArrayList) content.get(DATA_TAB_ADDITIONAL_FIELD);
 		if (this.elementsAdditionalField == null)
 			this.elementsAdditionalField = new ArrayList();
+		
+		this.elementsDataQuality = (ArrayList) content.get(DATA_TAB_DATA_QUALITY);
+		if (this.elementsDataQuality == null)
+			this.elementsDataQuality = new ArrayList();
 	}
 	
 	public void addElementEntry(List elements, String body, String title) {
