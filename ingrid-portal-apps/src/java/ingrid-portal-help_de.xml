@@ -680,7 +680,7 @@
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image029.jpg"
+                            src="../decorations/layout/ingrid-help/images/image029.png"
                         alt="*"/> Über diesen Button kann ein Kartenausschnitt (Bounding-Box) selektiert werden. Nach der Aktivierung 
 						des Buttons können Sie in der Karte mit der linken Maustaste auf einen Punkt klicken und durch Festhalten der 
 						Taste ein Rechteck aufziehen. Nach dem anschließenden Loslassen der Taste werden die Koordinaten der Bounding-Box 
@@ -692,7 +692,7 @@
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image028.jpg"
+                            src="../decorations/layout/ingrid-help/images/image028.png"
                         alt="*"/> Über diesen Button kann eine Verwaltungseinheit in der Karte selektiert werden. Durch einen 
 						Klick (linke Maustaste) auf die Karte kann in einer Dialogbox die Verwaltungseinheit (Land, 
 						Regierungsbezirk, Kreis oder Gemeinde) des Standorts ausgewählt werden soll. Die Verwaltungseinheiten 
