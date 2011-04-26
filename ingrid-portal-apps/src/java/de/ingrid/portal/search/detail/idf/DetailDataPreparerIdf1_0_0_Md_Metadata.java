@@ -1364,11 +1364,11 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
           	        	}
           	        	
           	        	if(type.length() > 0 && size.length() > 0){
-          	        		link.put("linkInfo", "[" + type + "/" + size + "]");
+          	        		link.put("linkInfo", "[" + type + "/" + size + " MB]");
           	        	}else if(type.length() > 0){
           	        		link.put("linkInfo", "[" + type + "]");
           	        	}else if(size.length() > 0){
-          	        		link.put("linkInfo", "[" + size + "]");
+          	        		link.put("linkInfo", "[" + size + " MB]");
           	        	}
           	        	
           	        	link.put("href", url);
@@ -1876,6 +1876,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
 			addSectionTitle(elements, messages.getString("thesaurus"));
 			ArrayList elementsSearch = new ArrayList();
+			ArrayList elementsService = new ArrayList();
 			ArrayList elementsInspire = new ArrayList();
 			ArrayList elementsGemet = new ArrayList();
 			
@@ -1926,7 +1927,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 							}
 							listEntry.put("body", tmpValue);
 							if (!isEmptyList(listEntry)) {
-								elementsSearch.add(listEntry);
+								elementsService.add(listEntry);
 							}
 						// "UMTHES Thesaurus"
 						} else if (thesaurusName.indexOf("UMTHES") > -1) {
@@ -2001,6 +2002,14 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				element.put("title", "GEMET - Concepts");
 				element.put("textList", elementsGemet);
 				elements.add(element);
+			}
+			
+			if (elementsService.size() > 0) {
+				HashMap element = new HashMap();
+				element.put("type", "textList");
+				element.put("title", messages.getString("t011_obj_serv_type"));
+				element.put("textList", elementsService);
+				elementsSubject.add(element);
 			}
 			
 			// "ISO-Themenkategorien"
