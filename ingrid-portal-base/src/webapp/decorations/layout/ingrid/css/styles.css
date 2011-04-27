@@ -455,7 +455,7 @@ input.btn_disable { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-si
 input.btn_admin { }
 input.btn_admin:hover { }
 
-label.left {width:5.5em; float:left;}
+label.left {width:7.5em; float:left;}
 label.login {width:8em; float:left;}
 div.optional-links { margin:5px 0 0 0 ; padding:0; }
 div.optional-links img, ul.optional-links img { margin:0; padding:0; }

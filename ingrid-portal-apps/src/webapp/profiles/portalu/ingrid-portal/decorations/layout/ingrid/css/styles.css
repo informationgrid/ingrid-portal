@@ -52,7 +52,6 @@ td.iconwidth { width:9px; }
 table.layout td {font-size: 100%}
 td.fontcolor {color: #176798;}
 
-
 /********************************************************************
   helper styles 
 *********************************************************************/
@@ -84,7 +83,7 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
   identity area styles
 *********************************************************************/
 
-div#identity { padding:0; margin:0; height:5em; width:59.5em; background-color:#68A5D2; overflow:visible; }
+div#identity { padding:0; margin:0; height: 5em; width:59.5em; background-color:#68A5D2; overflow:visible; }
 div.motiv_blank { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
 div.motiv_start { background-image:url(../images/01_motiv_start.gif); background-repeat:no-repeat; }
 div.motiv_suche { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
@@ -215,6 +214,7 @@ div#content_full { float:left; width:55.5625em; }
 div#content_full .clearer { clear:both; display:block; height:1px; line-height:0px; font-size:1px; margin:0; padding:0; }
 
 div.portal-layout-OneColumn {width: 55.57em}
+
 
 /********************************************************************
   main block styles  
@@ -420,7 +420,7 @@ div.formbody div.marginleft {margin-left:4em}
 div.formbody .indent1_checkbox {margin-left:2em}
 div.formbody .indent2_checkbox {margin-left:4em}
 
-div.formbody select.env_themes { width:15em;} 
+div.formbody select.env_themes { width:15em;}
 div.formbody select.spacial_relation { width:23em;}
 div.formbody select.funct_class  { width:20em;}
 div.formbody select.info_provider  { width:22em; border: 0px inset #FFFFFF; padding:4px; }
@@ -455,7 +455,7 @@ input.btn_disable { margin:0; padding: 2px 10px 2px 10px; color:#FFFFFF; font-si
 input.btn_admin { }
 input.btn_admin:hover { }
 
-label.left {width:5.5em; float:left;}
+label.left {width:7.5em; float:left;}
 label.login {width:8em; float:left;}
 div.optional-links { margin:5px 0 0 0 ; padding:0; }
 div.optional-links img, ul.optional-links img { margin:0; padding:0; }
@@ -560,7 +560,6 @@ div.helpcontent li a { font-size:75%; }
 .contentNavigationRight { float:right; width:110px; text-align:right; }
 .contentColumnHead { text-decoration:underline; background-color:#176798; color:white; }
 .contentColumnHeadLight { text-decoration:none; background-color:#d1e4f1; color:black; }
-
 
 a.contentColumnHead, a.contentColumnHead:link, a.contentColumnHead:visited { text-decoration:underline; background-color:#176798; color: white; }
 a.contentColumnHeadLight, a.contentColumnHeadLight:link, a.contentColumnHeadLight:visited { text-decoration:none; background-color:#d1e4f1; color: black; }

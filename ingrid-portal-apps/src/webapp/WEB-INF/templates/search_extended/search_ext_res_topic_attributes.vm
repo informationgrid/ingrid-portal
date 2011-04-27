@@ -34,7 +34,7 @@
               <span class="clearer"></span>
             </p>
             <p>
-      			  <label for="db_org" class="float_left col2left">Laufzeit:</label>
+      			  <label for="db_org" class="float_left col2left">$MESSAGES.getString('searchExtResTopicAttributes.label.running.time')</label>
      		      <label for="term_from">#displayFieldLabel('term_from' $MESSAGES.getString('searchExtResTopicAttributes.label.from'))</label><input class="inputstyletext" id="term_from" size="10" maxlength="10" name="term_from" type="text" value="#getFieldValue('term_from')" />
      		      <label for="term_to">#displayFieldLabel('term_to' $MESSAGES.getString('searchExtResTopicAttributes.label.to'))</label><input class="inputstyletext" id="term_to" size="10" maxlength="10" name="term_to" type="text" value="#getFieldValue('term_to')" /> &nbsp;$MESSAGES.getString('searchExtResTopicAttributes.timeformat')<br />
    		      </p>

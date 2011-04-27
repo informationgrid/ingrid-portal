@@ -236,7 +236,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
     	    			break;
     				case 3:
     					// "Fachbezug - Geodatendienst"
-    	        		getThematicReferenceClass3(elementsSubject);
+    	        		getThematicReferenceClass3(elementsSubject, metadataDataNodePath);
     	    			break;
     				case 4:
     					// "Fachbezug - Vorhaben/Projekt/Programm"
@@ -248,7 +248,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
     	    			break;
     				case 6:
     					// "Fachbezug - Dienst/Anwendung/Informationssystem"
-    	        		getThematicReferenceClass6(elementsSubject);
+    	        		getThematicReferenceClass6(elementsSubject, metadataDataNodePath);
 						break;
 					default:
 						break;
@@ -564,10 +564,14 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_literatur.description"));
 	}
 	
-	private void getThematicReferenceClass3(ArrayList elements) {
+	private void getThematicReferenceClass3(ArrayList elements, String metadataDataNodePath) {
+		
+		// "Klassifikation des Dienstes"
+		String xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/gmd:descriptiveKeywords";
+		getServiceClassification(elements, xpathExpression);
 		
 		// Typ des Dienstes
-		String xpathExpression = "./gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType";
+		xpathExpression = "./gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType";
 		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_serv.type"), "5100");
 
 		// Version des Services
@@ -694,10 +698,14 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_data.description"));
 	}
 
-	private void getThematicReferenceClass6(ArrayList elements) {
+	private void getThematicReferenceClass6(ArrayList elements, String metadataDataNodePath) {
 
+		// "Klassifikation des Dienstes"
+		String xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/gmd:descriptiveKeywords";
+		getServiceClassification(elements, xpathExpression);
+		
 		// "Art des Dienstes"
-		String xpathExpression = "./gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType";
+		xpathExpression = "./gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType";
 		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_serv.type"), "5300");
 
 		// "Version"
@@ -1876,7 +1884,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
 			addSectionTitle(elements, messages.getString("thesaurus"));
 			ArrayList elementsSearch = new ArrayList();
-			ArrayList elementsService = new ArrayList();
 			ArrayList elementsInspire = new ArrayList();
 			ArrayList elementsGemet = new ArrayList();
 			
@@ -1915,65 +1922,54 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						HashMap listEntry = new HashMap();
 						listEntry.put("type", "textList");
 						
-						if(log.isDebugEnabled()){
-							log.debug("Thesaurus name: '"+thesaurusName+"' and type: '"+type+"' for value: '"+value+"'");
-						}
-						
 						// "Service Classification, version 1.0"
-						if (thesaurusName.indexOf("Service") > -1) {
-							String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
-							if(tmpValue.length() < 1){
-								tmpValue = value;
+						if (thesaurusName.indexOf("Service") < 0) {
+							
+							if(log.isDebugEnabled()){
+								log.debug("Thesaurus Keywords: Thesaurus name '"+thesaurusName+"' and type '"+type+"' for value '"+value+"'");
 							}
-							listEntry.put("body", tmpValue);
-							if (!isEmptyList(listEntry)) {
-								elementsService.add(listEntry);
-							}
-						// "UMTHES Thesaurus"
-						} else if (thesaurusName.indexOf("UMTHES") > -1) {
-							listEntry.put("body", value);
-							if (!isEmptyList(listEntry)) {
-								elementsSearch.add(listEntry);
-							}
-						// "GEMET - Concepts, version 2.1"
-						} else if (thesaurusName.indexOf("Concepts") > -1) {
-							String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
-							if(tmpValue.length() < 1){
-								tmpValue = value;
-							}
-							listEntry.put("body", tmpValue);
-							if (!isEmptyList(listEntry)) {
-								elementsGemet.add(listEntry);
-							}
-							// "GEMET - INSPIRE themes, version 1.0"
-						} else if (thesaurusName.indexOf("INSPIRE") > -1) {
-							String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
-							if(tmpValue.length() < 1){
-								tmpValue = value;
-							}
-							listEntry.put("body", tmpValue);
-							if (!isEmptyList(listEntry)) {
-								elementsInspire.add(listEntry);
-							}
-							// "German Environmental Classification - Category, version 1.0"
-						} else if (thesaurusName.indexOf("German") > -1) {
-							String tmpValue = sysCodeList.getNameByCodeListValue("1410", value);
-							if(tmpValue.length() < 1){
-								tmpValue = value;
-							}
-							listEntry.put("body", tmpValue);
-							if (!isEmptyList(listEntry)) {
-								elementsInspire.add(listEntry);
-							}
-						} else if (type.equals("theme")) {
-							listEntry.put("body", value);
-							if (!isEmptyList(listEntry)) {
-								elementsInspire.add(listEntry);
-							}
-						} else {
-							listEntry.put("body", value);
-							if (!isEmptyList(listEntry)) {
-								elementsSearch.add(listEntry);
+							
+							// "UMTHES Thesaurus"
+							if (thesaurusName.indexOf("UMTHES") > -1) {
+								listEntry.put("body", value);
+								if (!isEmptyList(listEntry)) {
+									elementsSearch.add(listEntry);
+								}
+							// "GEMET - Concepts, version 2.1"
+							} else if (thesaurusName.indexOf("Concepts") > -1) {
+								String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
+								if(tmpValue.length() < 1){
+									tmpValue = value;
+								}
+								listEntry.put("body", tmpValue);
+								if (!isEmptyList(listEntry)) {
+									elementsGemet.add(listEntry);
+								}
+								// "GEMET - INSPIRE themes, version 1.0"
+							} else if (thesaurusName.indexOf("INSPIRE") > -1) {
+								String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
+								if(tmpValue.length() < 1){
+									tmpValue = value;
+								}
+								listEntry.put("body", tmpValue);
+								if (!isEmptyList(listEntry)) {
+									elementsInspire.add(listEntry);
+								}
+								// "German Environmental Classification - Category, version 1.0"
+							} else if (thesaurusName.indexOf("German") > -1) {
+								String tmpValue = sysCodeList.getNameByCodeListValue("1410", value);
+								if(tmpValue.length() < 1){
+									tmpValue = value;
+								}
+								listEntry.put("body", tmpValue);
+								if (!isEmptyList(listEntry)) {
+									elementsInspire.add(listEntry);
+								}
+							} else if (thesaurusName.length() < 1 && type.length() < 1) {
+								listEntry.put("body", value);
+								if (!isEmptyList(listEntry)) {
+									elementsSearch.add(listEntry);
+								}
 							}
 						}
 					}
@@ -2004,19 +2000,82 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				elements.add(element);
 			}
 			
-			if (elementsService.size() > 0) {
-				HashMap element = new HashMap();
-				element.put("type", "textList");
-				element.put("title", messages.getString("t011_obj_serv_type"));
-				element.put("textList", elementsService);
-				elementsSubject.add(element);
-			}
-			
 			// "ISO-Themenkategorien"
 			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/gmd:topicCategory";
 			String subXPathExpression = "./gmd:MD_TopicCategoryCode";
 			getNodeListValues(elements, xpathExpression, subXPathExpression , messages.getString("t011_obj_geo_topic_cat.topic_category"), "textList", "527");
 			closeDiv(elements);
+		}
+	}
+	
+	
+	private void getServiceClassification(ArrayList elements, String xpathExpression) {
+		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+			ArrayList elementsService = new ArrayList();
+			
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				Node node = nodeList.item(i);
+				String type = "";
+				String thesaurusName = "";
+				String nodeXPathExpression;
+				
+				// type
+				nodeXPathExpression = "./gmd:MD_Keywords/gmd:type/gmd:MD_KeywordTypeCode/@codeListValue";
+				boolean existType = XPathUtils.nodeExists(node, nodeXPathExpression);
+				if (existType) {
+					type = XPathUtils.getString(node, nodeXPathExpression);
+				}
+				
+				// thesaurus
+				nodeXPathExpression = "./gmd:MD_Keywords/gmd:thesaurusName";
+				boolean existThesaurus = XPathUtils.nodeExists(node, nodeXPathExpression);
+				if (existThesaurus) {
+					thesaurusName = XPathUtils.getString(node, nodeXPathExpression + "/gmd:CI_Citation/gmd:title").trim();
+				}
+				
+				// keywords
+				nodeXPathExpression = "./gmd:MD_Keywords/gmd:keyword";
+				boolean existKeyword = XPathUtils.nodeExists(node, nodeXPathExpression);
+				if (existKeyword) {
+					NodeList keywordNodeList = XPathUtils.getNodeList(node, nodeXPathExpression);
+					for (int j = 0; j < keywordNodeList.getLength(); j++) {
+						Node keywordNode = keywordNodeList.item(j);
+						String value = XPathUtils.getString(keywordNode, ".").trim(); 
+						if(value.length() < 1){
+							value = XPathUtils.getString(keywordNode, ".").trim();
+						}
+						
+						HashMap listEntry = new HashMap();
+						listEntry.put("type", "textList");
+						
+						// "Service Classification, version 1.0"
+						if (thesaurusName.indexOf("Service") > -1) {
+							
+							if(log.isDebugEnabled()){
+								log.debug("Service Classification: Thesaurus name '"+thesaurusName+"' and type '"+type+"' for value '"+value+"'");
+							}
+							
+							String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
+							if(tmpValue.length() < 1){
+								tmpValue = value;
+							}
+							listEntry.put("body", tmpValue);
+							if (!isEmptyList(listEntry)) {
+								elementsService.add(listEntry);
+							}
+						} 
+					}
+				}
+			}
+			
+			if (elementsService.size() > 0) {
+				HashMap element = new HashMap();
+				element.put("type", "textList");
+				element.put("title", messages.getString("t011_obj_serv_type"));
+				element.put("textList", elementsService);
+				elements.add(element);
+			}
 		}
 	}
 	
