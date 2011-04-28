@@ -50,7 +50,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-jetspeed-portal</artifactId>
-      <version>1.2.1</version>
+      <version>3.0.0-SNAPSHOT</version>
       <properties>
         <war.bundle>true</war.bundle>
       </properties>
@@ -58,7 +58,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-portal-utils</artifactId>
-      <version>2.3.1</version>
+      <version>3.0.0-SNAPSHOT</version>
       <properties>
         <war.bundle>false</war.bundle>
       </properties>
