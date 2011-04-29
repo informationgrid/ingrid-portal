@@ -2667,7 +2667,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				keywords.add(listEntry);
 			}
 		}
-		String type = XPathUtils.getString(node, "//gmd:MD_KeywordTypeCode/@codeListValue").trim();
 		HashMap element = new HashMap();
 		element.put("type", "textList");
 		element.put("title", messages.getString("cross_references"));
