@@ -2816,9 +2816,9 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					log.debug("IDF hierachyLevel: '" + hierachyLevel + "' and IDF hierachyLevelName: '" + hierachyLevelName+ "'");
 				}
 				
-				if(hierachyLevelName.equals("service") && hierachyLevel.equals("service")){
+				if(hierachyLevel.equals("service")){
 					context.put(UDK_OBJ_CLASS_TYPE, "3");
-				}else if(hierachyLevelName.equals("application") && hierachyLevel.equals("application")){
+				}else if(hierachyLevel.equals("application")){
 					context.put(UDK_OBJ_CLASS_TYPE, "6");
 				}else if(hierachyLevelName.equals("job") && hierachyLevel.equals("nonGeographicDataset")){
 					context.put(UDK_OBJ_CLASS_TYPE, "0");
