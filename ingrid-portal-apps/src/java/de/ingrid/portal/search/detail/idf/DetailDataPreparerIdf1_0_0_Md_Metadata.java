@@ -854,7 +854,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					subNode = XPathUtils.getNode(node, "./gmd:DQ_CompletenessOmission");
 				}
 				if(subNode != null){
-					if(XPathUtils.nodeExists(subNode, "./gmd:measureDescription")){}{
+					if(XPathUtils.nodeExists(subNode, "./gmd:measureDescription")){
 						description = XPathUtils.getString(subNode, "./gmd:measureDescription").trim();
 					}
 					if(XPathUtils.nodeExists(subNode, "./gmd:result/gmd:DQ_QuantitativeResult/gmd:value")){
@@ -1687,8 +1687,12 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					
 					childXPathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date";
 					if (XPathUtils.nodeExists(node, childXPathExpression)) {
-						String value = UtilsDate.convertDateString(XPathUtils.getString(node, childXPathExpression).trim(), "yyyy-MM-dd", "dd.MM.yyyy");
-						row.add(notNull(value));
+						if(XPathUtils.nodeExists(node, childXPathExpression + "/@gco:nilReason")){
+							String value = XPathUtils.getString(node, childXPathExpression).trim();
+							row.add(notNull(UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy")));
+						}else {
+							row.add("");
+						}
 					} else {
 						row.add("");
 					}
