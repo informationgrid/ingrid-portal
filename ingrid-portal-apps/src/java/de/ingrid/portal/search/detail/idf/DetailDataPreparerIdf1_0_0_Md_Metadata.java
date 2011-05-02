@@ -390,7 +390,16 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			ArrayList row = new ArrayList();
 			Node node = nodeList.item(i);
 			
-			if(XPathUtils.nodeExists(node, "./gmd:result/gmd:DQ_QuantitativeResult/gmd:valueUnit[@gco:nilReason='unknown']")){
+			// Check if data quality node for omission is a subject node.
+			boolean isSubjectOmission = false;
+			if(XPathUtils.nodeExists(node, "./gmd:measureDescription")){
+				String description = XPathUtils.getString(node, "./gmd:measureDescription").trim();
+				if(description.equals("completeness omission (rec_grade)")){
+					isSubjectOmission = true;
+				}
+			}
+				
+			if(!isSubjectOmission){
 				// "Art der Messung"
 				if(XPathUtils.nodeExists(node, "./gmd:nameOfMeasure")){
 					row.add(sysCodeList.getName(codeListId, XPathUtils.getString(node, "./gmd:nameOfMeasure").trim()));
@@ -411,11 +420,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				}else{
 					row.add("");
 				}
-				
-				if (!isEmptyRow(row)) {
-	    			body.add(row);
-	    		}
 			}
+			if (!isEmptyRow(row)) {
+    			body.add(row);
+    		}
 		}
 		if (body.size() > 0) {
 			
