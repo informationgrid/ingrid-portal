@@ -883,7 +883,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 							}else if (description.equals("geographic")){
 								// "Lagegenauigkeit"
 								title = messages.getString("t011_obj_geo.rec_exact");
-							}else{
+							}else if (description.equals("completeness omission (rec_grade)")){
 								// "Datendefizit"
 								title = messages.getString("t011_obj_geo.coverage");
 							}
@@ -891,7 +891,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 								addElementEntryLabelLeft(elements, value + " " + symbol, title);	
 							}
 						}
-		
 					}
 				}
 			}
