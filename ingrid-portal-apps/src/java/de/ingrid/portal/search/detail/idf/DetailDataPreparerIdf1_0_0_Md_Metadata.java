@@ -274,7 +274,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				content.put(DATA_TAB_SUBJECT, addTabData(messages.getString("subject_reference"),elementsSubject));
 			}
 			if(elementsDataQuality.size() > 0){
-				content.put(DATA_TAB_DATA_QUALITY, elementsDataQuality);
+				content.put(DATA_TAB_DATA_QUALITY, addTabData(messages.getString("data_quality"), elementsDataQuality) );
 			}
 			
 			content.put(DATA_TAB_GENERAL, elementsGeneral);
