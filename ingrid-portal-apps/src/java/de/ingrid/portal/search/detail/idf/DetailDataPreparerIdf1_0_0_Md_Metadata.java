@@ -1695,10 +1695,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					childXPathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date";
 					if (XPathUtils.nodeExists(node, childXPathExpression)) {
 						if(XPathUtils.nodeExists(node, childXPathExpression + "/@gco:nilReason")){
+							row.add("");
+						}else {
 							String value = XPathUtils.getString(node, childXPathExpression).trim();
 							row.add(notNull(UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy")));
-						}else {
-							row.add("");
 						}
 					} else {
 						row.add("");
@@ -2584,7 +2584,12 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 								
 								if(XPathUtils.nodeExists(childNode, "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:name")){
 									rowValue = XPathUtils.getString(childNode, "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:name").trim();
-									row.add(notNull(sysCodeList.getNameByCodeListValue("101", rowValue)));
+									if(sysCodeList.getNameByCodeListValue("101", rowValue).length() > 0){
+										row.add(notNull(sysCodeList.getNameByCodeListValue("101", rowValue)));
+									}else{
+										row.add(notNull(rowValue));
+									}
+									
 								}else{
 									row.add("");
 								}
