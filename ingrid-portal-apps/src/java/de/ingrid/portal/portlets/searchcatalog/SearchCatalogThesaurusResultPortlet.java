@@ -173,20 +173,15 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
         // we extend thesaurus term with restrictions for correct query (iplug, sns keywords ...)
     	
     	if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-            fullQueryZeigeAlle = "t04_search.searchterm:\"" + UtilsString.escapeChars(queryThesaurusTerm, "\"") + "\"";
+    		fullQueryZeigeAlle = "(";
+    		fullQueryZeigeAlle += "t04_search.searchterm:\"" + UtilsString.escapeChars(queryThesaurusTerm, "\"") + "\"";
     		fullQueryZeigeAlle += " (t04_search.type:2 OR t04_search.type:T)";
-    		fullQueryZeigeAlle += " (";
-    		fullQueryZeigeAlle += Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS;
-    		fullQueryZeigeAlle += " "+Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_IPLUG_DSC_CSW;
-    		
-    		String queryTypes[] = PortalConfig.getInstance().getString(PortalConfig.THESAURUS_SEARCH_QUERY_TYPES).split(";");
-    		if(queryTypes != null){
-	    		for(int i=0; i < queryTypes.length; i++){
-	    			if(queryTypes[i].length() > 0 ){
-	    				fullQueryZeigeAlle += " "+Settings.QFIELD_DATATYPE+":"+queryTypes[i];	
-	    			}
-	        	}
-    		}
+    		fullQueryZeigeAlle += getSearchDataTypes();
+    		fullQueryZeigeAlle += ")";
+    		fullQueryZeigeAlle += " OR ";
+    		fullQueryZeigeAlle += "(";
+    		fullQueryZeigeAlle += "searchterm_value.term:\"" + UtilsString.escapeChars(queryThesaurusTerm, "\"") + "\"";
+    		fullQueryZeigeAlle += getSearchDataTypes();
     		fullQueryZeigeAlle += ")";
     	}
         else {
@@ -385,5 +380,25 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
 			datasource = Settings.PARAMV_DATASOURCE_ADDRESS;    			
 		}
     	return datasource;
+    }
+    
+    private String getSearchDataTypes(){
+    	String dataTypes = "";
+    	
+    	dataTypes += " (";
+    	dataTypes += Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS;
+    	dataTypes += " "+Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_IPLUG_DSC_CSW;
+		
+		String queryTypes[] = PortalConfig.getInstance().getString(PortalConfig.THESAURUS_SEARCH_QUERY_TYPES).split(";");
+		if(queryTypes != null){
+    		for(int i=0; i < queryTypes.length; i++){
+    			if(queryTypes[i].length() > 0 ){
+    				dataTypes += " "+Settings.QFIELD_DATATYPE+":"+queryTypes[i];	
+    			}
+        	}
+		}
+		dataTypes += ")";
+    	
+    	return dataTypes;
     }
 }
