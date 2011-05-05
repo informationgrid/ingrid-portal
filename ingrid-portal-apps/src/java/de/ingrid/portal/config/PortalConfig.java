@@ -131,6 +131,8 @@ public class PortalConfig extends PropertiesConfiguration {
 	
 	public static final String PORTAL_ENABLE_SEARCH_SEPERATOR = "portal.enable.search.seperator";
 	
+	public static final String THESAURUS_SEARCH_QUERY_TYPES = "thesaurus.search.query.types";
+	
 	// contains the short version of all supported languages
 	public static final String LANGUAGES_SHORT = "languages.short";
 	

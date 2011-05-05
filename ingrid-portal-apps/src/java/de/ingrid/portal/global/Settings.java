@@ -131,7 +131,8 @@ public class Settings {
     public static final String QVALUE_DATATYPE_IPLUG_TAMINO = "tamino";
     public final static String QVALUE_DATATYPE_IPLUG_ECS = "ecs";
     public final static String QVALUE_DATATYPE_IPLUG_CSW = "csw";
-
+    public final static String QVALUE_DATATYPE_IPLUG_DSC_CSW = "dsc_csw";
+    
     // all sub datatypes indicating address search (switch to address rendering of results) 
     public final static String[] QVALUES_DATATYPES_ADDRESS = new String[] {
     	QVALUE_DATATYPE_AREA_ADDRESS,
