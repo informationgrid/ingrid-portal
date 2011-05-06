@@ -3,17 +3,17 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-base-pom</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>3.0.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-mdek-application</artifactId>
-  <version>3.0.0-SNAPSHOT</version>
+  <version>3.0.0</version>
   <packaging>war</packaging>
   <name>Ingrid Portal MDEK Application</name>
   <scm>
-    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/branches/ingrid-portal-mdek-application_dojo-upgrade</connection>
-    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/branches/ingrid-portal-mdek-application_dojo-upgrade</developerConnection>
+    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk</developerConnection>
   </scm>
   <build>
     <finalName>ingrid-portal-mdek-application</finalName>
