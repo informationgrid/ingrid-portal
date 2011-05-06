@@ -60,7 +60,7 @@
 				The information provided is being continually added to with the aim of 
 				capturing all official providers of environment information over the long term.</p>
                 <p>The EU environment guideline of 2003 and the planned INSPIRE guideline played an important role in the conception of PortalU. These guidelines lay down new standards for the public dissemination of official environment information respectively the construction of the information technology infrastructures necessary for this. In future, signficantly more authorities and organisations than heretofore will be obliged to provide data relevant to the environment in a clear understandable and easily accessible form</p>
-                <p> PortalU and the software especially developed for the construction of the portal ”InGrid” were especially conceived as tools to support the authorities in implementing the guidelines. </p>
+                <p> PortalU and the software especially developed for the construction of the portal ”InGrid<sup>®</sup>” were especially conceived as tools to support the authorities in implementing the guidelines. </p>
             </content>
         </section>
         <section help-key="about-2">
@@ -107,7 +107,7 @@
         <section help-key="about-6">
             <header>InGrid &#8211; the software behind PortalU</header>
             <content>
-                <p>The InGrid software package was developed to realise PortalU. InGrid is positioned on modular and flexible system architecture based on licence-free open source products. This way it becomes possible to adapt the technical structure of the environment information net to changing organisational specifications. Thus, if needed, regional environment portals, e.g. for individual German Federal States or Local Authorities can be created with minimal technical expense. Thanks to Open Source the follow up use of the software is license free and free of cost for partners of the VwV UDK/GEIN.</p>
+                <p>The InGrid<sup>®</sup> software package was developed to realise PortalU. InGrid<sup>®</sup> is positioned on modular and flexible system architecture based on licence-free open source products. This way it becomes possible to adapt the technical structure of the environment information net to changing organisational specifications. Thus, if needed, regional environment portals, e.g. for individual German Federal States or Local Authorities can be created with minimal technical expense. Thanks to Open Source the follow up use of the software is license free and free of cost for partners of the VwV UDK/GEIN.</p>
             </content>
         </section>
     </chapter>
@@ -244,40 +244,40 @@
                     <p>After your search terms are analysed by the SNS, similar terms are displayed from the thesaurus. You can highlight one or more of these terms and adopt them in your search term (<i>Add to Query</i>).</p>
                     <p>However, you also have the possibility of further specifying a <i>similar term</i> by clicking on the respective term. It will then be shown as a  <a
                         href="#_Thesaurus-Schlagwort">thesaurus-keyword</a>. In addition, the associated  <a
-                            href="#_Oberbegriffe">superordinate</a>-,<a
-                        href="#_Unterbegriffe">subordinate</a>- and <a
+                            href="#_Oberbegriffe"> superordinate</a>-, <a
+                        href="#_Unterbegriffe"> subordinate</a>- and <a
                             href="#_Verwandte_Begriffe">related terms</a>
                         will be displayed as well as the  <a href="#_Synonyme">synonyms</a>.</p>
                 </content>
             </section>
-            <section help-key="ext-search-subject-6">
+            <section help-key="_Thesaurus-Schlagwort">
                 <header>Thesaurus Keyword</header>
                 <content>
                     <p>This is the thesaurus keyword currently set. You can adopt it into your search term by crossing it and clicking on the <i>Add to Query</i> button</p>
                 </content>
             </section>
-            <section help-key="ext-search-subject-7">
+            <section help-key="_Oberbegriffe">
                 <header>Superordinate Terms</header>
                 <content>
                     <p>A superordinate term is a term that generalises a thesaurus keyword. UMTHES<sup>®</sup> provides the possibility of a thesaurus term having several superordinate terms.</p>
                     <p>You can add the superordinate term(s) to your search term by crossing it and clicking on the <i>Add to Query</i> button.</p>
                 </content>
             </section>
-            <section help-key="ext-search-subject-8">
+            <section help-key="_Unterbegriffe">
                 <header>Subordinate Terms</header>
                 <content>
                     <p>A subordinate term is a term that makes a thesaurus keyword more specific. A thesaurus term can possess as many subordinate terms as desired.</p>
                     <p>You can add one or more subordinate terms to your search term by crossing them and clicking on <i>Add to Query</i> button.</p>
                 </content>
             </section>
-            <section help-key="ext-search-subject-9">
+            <section help-key="_Verwandte_Begriffe">
                 <header>Related Terms</header>
                 <content>
                     <p>EA related term is a thesaurus term that is connected with the thesaurus keyword, but is neither a super- nor a subordinate term. A thesaurus term can possess any number of related terms.</p>
                     <p>You can add one or more related terms to your search term by crossing them and clicking on the <i>Add to Query</i>.</p>
                 </content>
             </section>
-            <section help-key="ext-search-subject-10">
+            <section help-key="_Synonyme">
                 <header>Synonyms</header>
                 <content>
                     <p>A synonym is an alternative expression, but one with the same meaning for the thesaurus keyword.</p>
@@ -323,9 +323,11 @@
                 </content>
             </section>
             <section help-key="ext-search-spacial-5">
-                <header>Positional Relationships</header>
+                <header>Spatial Relations</header>
                 <content>
-                    <p>After clicking on a geographical name, the positional relationships to this name are displayed. The positional relationships are a measure for the spatial relevance between two geographical objects. By selecting (clicking on) positionally relevant geographical names you can further concretise the spatial reference desired.</p>
+                    <p>After clicking on a geographical name (e.g. Berlin, county), the positional relationships to this 
+					name are displayed. By selecting (clicking on) positionally relevant geographical names you can further 
+					concretise the spatial reference desired.</p>
                 </content>
             </section>
         </section>
@@ -341,7 +343,7 @@
                 <content>
                     <p>In the PortalU map viewer available, as well as activated map services, keys and a metadatasearch are provided in an accordion men, which is situated to the left of the map. By clicking on a menu heading the respective menu item will be opened up.</p>
 					<p><img border="0" width="130" height="111"
-                            src="../decorations/layout/ingrid-help/images/en/image201.jpg"
+                            src="../decorations/layout/ingrid-help/images/image201eng.jpg"
                         alt="*"/> </p>		
                     <p><b>Legend</b></p>
                     <p>In the menu item <i>Legend</i> all the keys available are displayed for the map layers activated under<i>Active Services</i> and which are depicted in the map viewer. The legend description provides information which symbols and/or colours are used for the different information displayed in the map.</p>
@@ -358,7 +360,7 @@
                         alt="*"/> <b>  	Moves the selection down:</b> A highlighted service or layer is displaced downwards by one level. A service or layer can be highlighted by one click with the left mouse button on the name. When a layer is overlaid by another then this can be made visible by being pushed downwards. The layer that is at the bottom of the list is always depicted as the topmost layer in the map.</p>
 
                     <p> <img border="0" width="18" height="17"
-                            src="../decorations/layout/ingrid-help/images/image114.png"
+                            src="../decorations/layout/ingrid-help/images/image114neu.png"
                         alt="*"/> <b>  	Removes the selected WMS:</b> A highlighted service or layer is deleted from the ?active services" area. A service can be highlighted by one click with the left mouse button on the name. The removal of single layers is not possible. </p>
 
                     <p> <img border="0" width="20" height="17"
@@ -425,7 +427,7 @@
                         <li>3.	The spatial footprint of the result contains the search area.</li>
                     </ul>
 					                    <p> <img border="0" width="455" height="252"
-                            src="../decorations/layout/ingrid-help/images/en/image208.jpg"
+                            src="../decorations/layout/ingrid-help/images/image208eng.jpg"
                         alt="*"/></p>
                 </content>
             </section>
@@ -437,35 +439,36 @@
                             src="../decorations/layout/ingrid-help/images/image209.jpg"
                         alt="*"/></p>
                     <p>
-                        <b>Restricting area: Select Search Area</b>
+                        <b>Area constraint: Select search area</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image029.png"
                         alt="*"/> With this button a map section (bounding box) can be selected. After activating the button you can click on a point in the map and, by holding down left mouse button draw up a rectangle. After then letting go of the button the coordinates of the bounding box are displayed underneath the map.</p>
-                    <p>By clicking on the<i>Add to Query</i> button the coordinates of the selected map section are added as an area restriction to the search term.</p>
+                    <p>By clicking on the<i> Add to Query</i> button the coordinates of the selected map section are added as an area restriction to the search term.</p>
 					<p>
-                        <b>Restricting area: Select Administrative Area</b>
+                        <b>Area constraint: Select district area</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image028.png"
-                        alt="*"/>After selection the administrative unit chosen is displayed under the map. With one click on the <i>Add to Query</i> button the unit will be added to the search term as an area restriction.</p>					
+                        alt="*"/> After selection the administrative unit chosen is displayed under the map. With one click on the <i>Add to Query</i> button the unit will be added to the search term as an area restriction.</p>					
                     <p>
                         <b>Add External Services </b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image024.jpg"
-                        alt="*"/> By means of this button you can add any GetCapabilities-URL (external service). The service is added to the active services and depicted in the map viewer with the <i>Add WMS</i> button. </p>
-					<p> Here you can select (check box) whether you want to activate the layer of the service straight away and whether you want to zoom in to the map section of the service directly. </p>
+                        alt="*"/> By means of this button you can add any GetCapabilities-URL (external service) to the active services. 
+					</p>
+					<p> The layers of the service can be activated directly. Furthermore you can zoom in the map section of the service. Therefor the adequate checks have to be placed (check box).</p>
                     <p>
                         <b>Show Data</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image026.jpg"
-                        alt="*"/> Which information is displayed depends on for which layer under <i>Active Services </i>the right check box <i>Info Query in Map</i> has been activated (see above). At present not all services support this function.</p>
+                        alt="*"/> Which information is displayed depends on for which layer under <i>Active Services </i>the check box has been activated (see above). At present not all services support this function.</p>
                     <p>
                         <b>Display Coordinates </b>
                     </p>
@@ -963,18 +966,27 @@
                             <b>Description</b>
                         </td>
 					</tr>
-                    <tr>
+                    
+					 <tr>
+					<td>www</td>  
+					<td> Web pages are being sought</td>
+					</tr>
+					
+					<tr>
 					<td>default</td>  
 					<td> Documents from the <i>environment information </i> area are searched for</td>
 					</tr>
+										
+					<tr>
+					<td>research</td>  
+					<td> Documents from the <i>research projects </i>area are searched for</td>
+					</tr>
+					
                     <tr>
 					<td>address</td>  
 					<td> Documents from the <i>addresses</i> area are searched for</td>
 					</tr>
-                    <tr>
-					<td>research</td>  
-					<td> Documents from the <i>research projects </i>area are searched for</td>
-					</tr>
+                    
                     <tr>
 					<td>topics</td>  
 					<td> Documents from the <i>environment topics</i> area are searched for</td>
@@ -1369,7 +1381,7 @@
                         alt="*"/> <b>  	Moves the selection down:</b> A highlighted service or layer is displaced downwards by one level. A service or layer can be highlighted by one click with the left mouse button on the name. When a layer is overlaid by another then this can be made visible by being pushed downwards. The layer that is at the bottom of the list is always depicted as the topmost layer in the map.</p>
 
                     <p> <img border="0" width="18" height="17"
-                            src="../decorations/layout/ingrid-help/images/image114.png"
+                            src="../decorations/layout/ingrid-help/images/image114neu.png"
                         alt="*"/> <b>  	Removes the selected WMS:</b> A highlighted service or layer is deleted from the ?active services" area. A service can be highlighted by one click with the left mouse button on the name. The removal of single layers is not possible. </p>
 
                     <p> <img border="0" width="20" height="17"
@@ -1429,8 +1441,12 @@
             <section help-key="maps-3">
                 <header>Save Map</header>
                 <content>
-                    <p>If you have registered with your account under myPortalU, you can save your settings under Active Services. For this click on the link Save Map above Legend. Below the map viewer appeares a dialogue field offering the possibility to save the actual map view under a user-defined name. </p>
-                    			
+                    <p>If you have registered with your account under myPortalU, you can 
+					save your settings under Active Services. For this click on the link Save Map above Legend. 
+					Below the map viewer appeares a dialogue field offering the possibility to save the actual 
+					map view under a user-defined name. A permanent URL ist defined, which can be used later.</p>
+               	
+      				
                 </content>
             </section>
             <section help-key="maps-4">
