@@ -1,0 +1,9 @@
+{
+	label: "label",
+	identifier: "abbreviation",
+	items:[
+		{label:"ASCII", abbreviation:"ASCII"},
+		{label:"GIF", abbreviation:"GIF"},
+		{label:"HTML", abbreviation:"HTML"}
+	]
+}

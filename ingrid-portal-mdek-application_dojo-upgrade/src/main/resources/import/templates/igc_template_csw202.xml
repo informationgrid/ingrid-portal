@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- current exchange-format will be set -->
+<igc xmlns="http://www.portalu.de/igc-import" exchange-format="x">
+	<data-sources>
+		<data-source>
+			<general>
+				<!-- a new object uuid will be generated -->
+				<object-identifier />
+				<catalogue-identifier />
+        <!-- the current user will be used here -->
+				<modificator-identifier />
+				<responsible-identifier />
+				<object-class id="0" />
+				<title>xxxTEMPLATExxx</title>
+				<abstract />
+				<!-- dates will be set automatically during the import -->
+				<date-of-last-modification />
+				<date-of-creation />
+				<original-control-identifier />
+				<general-additional-values />
+				<metadata />
+				<dataset-alternate-name />
+				<topic-categories />
+				<env-information>
+					<is-catalog>N</is-catalog>
+				</env-information>
+			</general>
+			<technical-domain>
+			</technical-domain>
+			<additional-information>
+				<!-- default language will be set -->
+				<data-language id="x" />
+				<metadata-language id="x" />
+			</additional-information>
+			<spatial-domain>
+			</spatial-domain>
+			<temporal-domain />
+			<subject-terms />
+		</data-source>
+	</data-sources>
+	<data-model-extensions>
+	</data-model-extensions>
+</igc>

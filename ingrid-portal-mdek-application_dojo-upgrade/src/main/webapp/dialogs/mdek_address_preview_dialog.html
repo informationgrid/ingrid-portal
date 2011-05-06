@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<title><fmt:message key="dialog.popup.address.preview.link" /></title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="author" content="wemove digital solutions" />
+<meta name="copyright" content="wemove digital solutions GmbH" />
+
+<script type="text/javascript" src="js/detail_helper.js"></script>
+
+<script type="text/javascript">
+
+//dojo.connect(_container_, "onLoad", function() {
+	var address = _container_.customParams.data;
+
+	var addressDiv = dojo.byId("addressPreviewContent");
+	var displayText = "";
+
+	addressDiv.innerHTML = detailHelper.renderAddressEntry(address).replace(/\n/g, '<br />');
+//});
+
+</script>
+</head>
+
+<body>
+	<div id="addressPreviewContent">
+	</div>
+</body>

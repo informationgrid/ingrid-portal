@@ -1,0 +1,10 @@
+{
+    identifier: "type",
+    items: [
+        { type: "", addressType: "dialog.statistics.numTotal", amount: "0", percentage: "0", published: "0", modified: "0", qa: "0", returned: "0"},
+        { type: "<img src='img/UDK/addr_institution.gif' width='16' height='16' />", addressType: "dialog.statistics.adrClass0", amount: "0", percentage: "0", published: "0", modified: "0", qa: "0", returned: "0"},
+        { type: "<img src='img/UDK/addr_unit.gif' width='16' height='16' />", addressType: "dialog.statistics.adrClass1", amount: "0", percentage: "0", published: "0", modified: "0", qa: "0", returned: "0"},
+        { type: "<img src='img/UDK/addr_person.gif' width='16' height='16' />", addressType: "dialog.statistics.adrClass2", amount: "0", percentage: "0", published: "0", modified: "0", qa: "0", returned: "0"},
+        { type: "<img src='img/UDK/addr_free.gif' width='16' height='16' />", addressType: "dialog.statistics.adrClass3", amount: "0", percentage: "0", published: "0", modified: "0", qa: "0", returned: "0"}
+    ]
+}
