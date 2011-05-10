@@ -37,7 +37,8 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
 	    selectedCellCssClass: "selected",
 	    multiSelect: true,
 	    visibleRowsInViewport: 4,
-	    enableMoveRows: false
+	    enableMoveRows: false,
+        forceGridHeight: true
 	},
     editorLock: new ingrid.dijit.EditorLock(),
 	
@@ -615,17 +616,16 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
      },
      
      resizeCanvas: function() {
-         //if (this.options.autoHeight) {
-        	 var showRows = undefined;
+         var showRows = this.options.visibleRowsInViewport;
+         if (!this.options.forceGridHeight) {
+        	 
         	 showRows = (this.getDataLength() + (this.options.enableAddRow ? 1 : 0) + (this.options.leaveSpaceForNewRows? this.numVisibleRows - 1 : 0));
         	 if (showRows < this.options.visibleRowsInViewport) {
         		 showRows = this.options.visibleRowsInViewport;
         	 }
-        	 this.viewportH = this.options.rowHeight;
-         //}
-         //else {
-        	 this.viewportH = this.options.rowHeight * showRows;
-         //}
+         }
+
+         this.viewportH = this.options.rowHeight * showRows;
 
          this.numVisibleRows = Math.ceil(this.viewportH / this.options.rowHeight);
          this.viewportW = parseFloat(dojo.style(this.container, "width"));

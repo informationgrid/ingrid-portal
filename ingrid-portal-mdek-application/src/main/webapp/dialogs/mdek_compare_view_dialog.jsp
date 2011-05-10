@@ -55,7 +55,7 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 		renderTextWithTitle(UtilSyslist.getSyslistEntryName(525, nodeDataOld.ref1DataSet), UtilSyslist.getSyslistEntryName(525, nodeDataNew.ref1DataSet), "<fmt:message key='ui.obj.type1.dataset' />");
 		renderList(nodeDataOld.ref1Representation, nodeDataNew.ref1Representation, "<fmt:message key='ui.obj.type1.digitalRepresentation' />", null, function(val) { return UtilSyslist.getSyslistEntryName(526, val); });
 		renderTextWithTitle(nodeDataOld.ref1Coverage, nodeDataNew.ref1Coverage, "<fmt:message key='ui.obj.type1.coverage' />" + " [%]");
-		renderTextWithTitle(UtilList.getSelectDisplayValue(dijit.byId("ref1VFormatTopology"), nodeDataOld.ref1VFormatTopology), UtilList.getSelectDisplayValue(dijit.byId("ref1VFormatTopology"), nodeDataNew.ref1VFormatTopology), "<fmt:message key='ui.obj.type1.vectorFormat.topology' />");
+		renderTextWithTitle(UtilSyslist.getSyslistEntryName(528, nodeDataOld.ref1VFormatTopology), UtilSyslist.getSyslistEntryName(528, nodeDataNew.ref1VFormatTopology), "<fmt:message key='ui.obj.type1.vectorFormat.topology' />");
 		renderTable(nodeDataOld.ref1VFormatDetails, nodeDataNew.ref1VFormatDetails, ["geometryType", "numElements"], ["<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.geoType' />", "<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.elementCount' />"], "<fmt:message key='ui.obj.type1.vectorFormat.title' />", [function(val) {return UtilSyslist.getSyslistEntryName(515, val);}, null]);
 		// moved to general "Raumbezug" section, class independent !
         //renderTextWithTitle(nodeDataOld.ref1SpatialSystem, nodeDataNew.ref1SpatialSystem, "<fmt:message key='ui.obj.type1.spatialSystem' />");
@@ -169,9 +169,15 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 
 	if (altitudeDataOld[0].spatialRefAltMin == null) { altitudeDataOld[0].spatialRefAltMin = ""; }
 	if (altitudeDataOld[0].spatialRefAltMax == null) { altitudeDataOld[0].spatialRefAltMax = ""; }
-	if (altitudeDataOld[0].spatialRefAltMeasure = null) { altitudeDataOld[0].spatialRefAltMeasure = ""; }
+	if (altitudeDataOld[0].spatialRefAltMeasure == null) { altitudeDataOld[0].spatialRefAltMeasure = ""; }
 	if (altitudeDataOld[0].spatialRefAltVDate == null) { altitudeDataOld[0].spatialRefAltVDate = ""; }
+    if (altitudeDataOld[0].spatialRefAltMin != altitudeDataNew[0].spatialRefAltMin ||
+            altitudeDataOld[0].spatialRefAltMax != altitudeDataNew[0].spatialRefAltMax ||
+            altitudeDataOld[0].spatialRefAltMeasure != altitudeDataNew[0].spatialRefAltMeasure ||
+            altitudeDataOld[0].spatialRefAltVDate != altitudeDataNew[0].spatialRefAltVDate) {
+    
 	renderTable(altitudeDataOld, altitudeDataNew, ["spatialRefAltMin", "spatialRefAltMax", "spatialRefAltMeasure", "spatialRefAltVDate"], ["<fmt:message key='ui.obj.spatial.height.min' />", "<fmt:message key='ui.obj.spatial.height.max' />", "<fmt:message key='ui.obj.spatial.height.unit' />", "<fmt:message key='ui.obj.spatial.height.geodeticSystem' />"], "<fmt:message key='ui.obj.spatial.height' />", [null, null, lookupSpatialRefAltMeasure, lookupSpatialRefAltVDate]);
+    }
 	renderTextWithTitle(nodeDataOld.spatialRefExplanation, nodeDataNew.spatialRefExplanation, "<fmt:message key='ui.obj.spatial.description' />");
     
     renderAdditionalFieldsForRubric("spatialRef", oldAdditionalFields, newAdditionalFields);

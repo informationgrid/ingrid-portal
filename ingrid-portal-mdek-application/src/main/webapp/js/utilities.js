@@ -1906,7 +1906,7 @@ UtilThesaurus.parseQueryTerm = function(queryTerm) {
 
 	// Helper function to only add valid terms (no empty strings) to the list 
 	var addTermToResultList = function(term) {
-		var trimmedTerm = dojo.trim(term);
+		var trimmedTerm = dojo.trim(dojo.regexp.escapeString(term));
 		if (trimmedTerm && trimmedTerm.length != 0) {
 			resultTerms.push(trimmedTerm);
 		}

@@ -212,7 +212,7 @@ ingridObjectLayout.createFachBezugClass1 = function(){
 	];
     createDataGrid("ref1Representation", null, ref1RepresentStructure, null);
     
-    createSelectBox("ref1VFormatTopology", null, storeProps, function(){
+    createFilteringSelect("ref1VFormatTopology", null, storeProps, function(){
         return UtilSyslist.getSyslistEntry(528);
     });
     

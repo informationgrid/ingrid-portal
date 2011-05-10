@@ -1890,37 +1890,37 @@
                  <p>Pro Katalog ist es im InGridCatalog möglich, zu den vorgegebenen Feldern <i>Zusätzliche 
 				 Felder</i> zu definieren. Diese Funktionalität ist nur für den Katalogadministrator 
 				 zugänglich.</p>
-				 <p>Als Datenarten stehen Ihnen für Zusätzliche Felder zur Verfügung:</p>
-                 <ul><li>Textfelder</li>
-                 <li>Nummernfelder</li>
-                 <li>Datumsfelder</li>
-                 <li>Auswahllisten</li>
-                 <li>Tabellen</li></ul>
-                 <p>Tabellen können wiederum Spalten 
-                 mit den folgenden Typen enthalten:</p>
-                 <ul><li>Textfelder</li>
-                 <li>Nummernfelder</li>
-                 <li>Datumsfelder</li>
-                 <li>Auswahllisten</li></ul>
-				 <p><u>Hinweis:</u> Auch bei <i>Zusätzlichen Feldern</i> mit Auswahlliste sind freie 
-				 Einträge möglich.</p>
-				 <p>Auf der Übersichtsseite werden alle Formularelemente (für Objekte), innerhalb ihrer Rubriken
-                 angezeigt. Diese sind nicht nur zusätzlich hinzugefügte Felder, sondern auch Kernfelder, die
-                 nur in geringem Maße verändert werden können. Darunter zählt die Sichtbarkeit des Feldes,
-                 ob es ein Pflichtfeld sein soll und speziellen Javascript-Code, der Einfluss auf die Funktionsweise
-                 des Feldes haben kann.</p>
-                 <br></br>
-                 <p>Kernfelder, die nur eingeschränkt bearbeitet werden können, erkennt man daran, dass sie kein
-                 Erkennungsbild besitzen und auch keinen "Löschen"-Button zugewiesen haben. Zusätzliche Felder
-                 hingegen, kann man auch wieder "Löschen" und ihre Position beeinflussen. Wird ein zusätzliches
-                 Feld in einer vorhandenen Kernrubrik angelegt, so erscheint dieses nach dem letzten Kernfeld. Die
-                 Reihenfolge von Kernfeldern ist nicht beeinflussbar!</p>
-                 <br></br>
-                 <p>Wird auf "<b>Neu laden</b>" geklickt, so werden alle Änderungen verworfen und der zuletzt gepeicherte
-                 Zustand geladen. Zwei Checkboxen sollen dazu helfen, um Übersicht über die Zusätzlichen Felder zu
-                 bekommen. So bewirkt "<b>Kernfelder verstecken</b>", dass nur zusätzliche Felder angezeigt werden und 
-                 "Leere Rubriken verstecken", zeigt nur diese Rubriken an, die mindestens ein zusätzliches Feld
-                 beinhalten.</p>
+                 <p>Diese Seite listet alle vorkommenden Felder in der Objekterfassung auf, untergliedert in der 
+                 jeweiligen Rubrik. Dabei werden die Felder in <i>Kernfelder</i> und <i>Zusätzliche Felder</i>
+                 unterschieden. Da diese Auflistung sehr groß sein kann, gibt es verschiedene Sichtbarkeitsoptionen, 
+                 die Teile der List ausblenden:</p>
+                 <p><b>"Kernfelder verstecken"</b> bewirkt, dass alle fest vorgegebenen Felder gezeigt bzw. nicht gezeigt
+                 werden. Da beim Verstecken der Kernfelder diverse Rubriken leer sein können, gibt es eine zweite Option,
+                 die auch diese versteckt <b>"Leere Rubriken verstecken"</b>. Sind diese zwei Optionen aktiviert, sieht man 
+                 nur noch die zusätlichen Felder und die dazugehörigen Rubriken.</p>
+                 <p><b>"Rubriken ausklappen"</b> lässt alle Rubriken mit all ihren Feldern angezeigt, bzw. kompakt, indem nur
+                 die Rubrik selber zu sehen ist. Anhand des linken Symbols bei einer Rubrik, lässt sich jede Rubrik
+                 individuell ein- und ausklappen.</p>
+                 <br />
+                 <p>Weiterhin gibt es Schaltflächen, die die Felder komplett noch einmal von der Datenbank laden <b>"Neu laden"</b>
+                 (dabei werden jegliche Änderungen an den Felder verworfen!) sowie vorgenommene Änderungen in die Datenbank 
+                 <b>"Speichern"</b> kann. Diese Schaltfläche färbt sich rot, sobald Änderungen vorhanden sind. Mit einem Klick 
+                 auf <b>"Neue Rubrik"</b> wird eine solche am Ende der Liste erstellt. Mehr Informationen weiter unten.</p>
+                 <br />
+                 
+                 <h4>Allgemeines</h4>
+                 <p>Auf Kernfelder bzw. Kernrubriken hat man nur beschränkten Zugriff. So lassen sich diese nicht löschen
+                 und auch nicht verschieben! Wird ein Kernfeld bearbeitet, so ist dies auch nur begrenzt. Es lässt sich die
+                 Sichtbarkeit einstellen und ob das Feld als Pflichtfeld dargestellt werden soll. Schließlich lässt sich
+                 noch eine JavaScript-Funktionalität definieren, die sich auf dieses oder ein anderes Feld sich beziehen kann.</p>
+                 <br />
+                 <p>Wie schon erwähnt, lassen sich Kernfelder bzw. -rubriken weder verschieben noch entfernen. Dies ist bei
+                 zusätzlich hinzugefügten Feldern jedoch möglich. Dabei ist zu bedenken, dass neue Felder immer ans Ende einer
+                 Rubrik erzeugt werden. Diese lassen sich <u>nicht</u> vor einem Kernfeld verschieben, sondern immer nur
+                 vor einem anderen zusätzlichen Feld! Dazu dienen die Schaltflächen mit dem <i>Pfeil hoch</i> bzw. 
+                 <i>Pfeil runter</i>. Bevor ein Feld gelöscht wird, erscheint eine Abfrage, ob dieses Element wirklich entfernt
+                 werden soll. Die Speichern-Schlatfläche sollte sich nun rot verfärben, um darauf hinzuweisen, dass die Änderung
+                 erst nach einem expliziten Speichern übernommen wird.</p>
                  
 				 <p><u>Achtung:</u> Alle Änderungen an den <i>zusätzlichen Feldern</i> werden erst nach 
 				 dem Klick auf den Button <i>Speichern</i> durchgeführt. Sie stehen vorher nicht 
@@ -1935,6 +1935,25 @@
                         Feld angelegt werden soll. Dazu befindet sich unter jeder Rubrik eine Auswahlliste, in 
                         der das zu erstellende Feld ausgewählt wird, und ein Button "Neues Formelement", der einen
                         entsprechenden Dialog für die Erstellung öffnet.</p>
+                        
+                        <p>Als Datenarten stehen Ihnen für Zusätzliche Felder zur Verfügung:</p>
+                        <ul>
+                            <li>Textfelder</li>
+                            <li>Nummernfelder</li>
+                            <li>Datumsfelder</li>
+                            <li>Auswahllisten</li>
+                            <li>Tabellen</li>
+                        </ul>
+                        <p>Tabellen können wiederum Spalten mit den folgenden Typen enthalten:</p>
+                        <ul>
+                            <li>Textfelder</li>
+                            <li>Nummernfelder</li>
+                            <li>Datumsfelder</li>
+                            <li>Auswahllisten</li>
+                        </ul>
+                        <p><u>Hinweis:</u> Auch bei <i>Zusätzlichen Feldern</i> mit Auswahlliste sind freie 
+                        Einträge möglich.</p>
+                        
                         <p>Als erstes muss eine <b>eindeutige ID</b> für das neu zu erstellende Element gewählt werden.
                         Über diese kann das Feld später auch angesprochen werden, um bspw. eine spezielle Behandlung
                         einzuführen. Als nächstes ist es möglich, das neue Feld als <b>Pflichtfeld</b> zu deklarieren.

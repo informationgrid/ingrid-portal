@@ -106,7 +106,7 @@ function renderNodeData(nodeData) {
 			renderTextWithTitle(UtilSyslist.getSyslistEntryName(525, nodeData.ref1DataSet), "<fmt:message key='ui.obj.type1.dataset' />");
 			renderList(nodeData.ref1Representation, "<fmt:message key='ui.obj.type1.digitalRepresentation' />", null, function(val) { return UtilSyslist.getSyslistEntryName(526, val); });
 			renderTextWithTitle(nodeData.ref1Coverage, "<fmt:message key='ui.obj.type1.coverage' />" + " [%]");
-			renderTextWithTitle(UtilList.getSelectDisplayValue(dijit.byId("ref1VFormatTopology"), nodeData.ref1VFormatTopology), "<fmt:message key='ui.obj.type1.vectorFormat.topology' />");
+			renderTextWithTitle(UtilSyslist.getSyslistEntryName(528, nodeData.ref1VFormatTopology), "<fmt:message key='ui.obj.type1.vectorFormat.topology' />");
 			renderTable(nodeData.ref1VFormatDetails, ["geometryType", "numElements"], ["<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.geoType' />", "<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.elementCount' />"], "<fmt:message key='ui.obj.type1.vectorFormat.title' />", [function(val) {return UtilSyslist.getSyslistEntryName(515, val);}, null]);
 			// NOTICE: moved to general section "Raumbezug"
             //renderTextWithTitle(nodeData.ref1SpatialSystem, "<fmt:message key='ui.obj.type1.spatialSystem' />");

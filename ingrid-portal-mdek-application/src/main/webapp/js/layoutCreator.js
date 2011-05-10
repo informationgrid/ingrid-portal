@@ -303,19 +303,24 @@ function getFileStoreInit(storeType, storeProps, initDataCallback, url) {
 	}
 		
 	deferred.then(function(data) {
+        // make sure not to have a reference of the properties!!!
+        // otherwise it might be overwritten
+        var newProps = dojo.clone(storeProps);
+        
+        
 		if (url) 
-			storeProps.url = url;
+			newProps.url = url;
 
 		// add the initial data to the store properties
-		if (!storeProps.data) 
-			storeProps.data = {};
-		storeProps.data.items = data;
+		if (!newProps.data) 
+			newProps.data = {};
+		newProps.data.items = data;
 
-		storeProps.clearOnClose = true;
+		newProps.clearOnClose = true;
 		var store;
     	//if (storeType == "dataGrid") {
 			//store = new ingrid.data.CustomItemFileWriteStore(storeProps);
-			store = new dojo.data.ItemFileWriteStore(storeProps);
+			store = new dojo.data.ItemFileWriteStore(newProps);
 		//}
 		//else {
 			//store = new dojo.data.ItemFileWriteStore(storeProps);

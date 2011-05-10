@@ -3027,6 +3027,9 @@ igeEvents.executeSearch = function() {
 	
 	// empty field with user added entries
 	this._inputFieldWidget.attr("value", "", true);
+    
+    // expand rubric so that new entries are visible
+    igeEvents.toggleFields('thesaurus', "showAll");
 }
 
 igeEvents.disableInputOnWrongPermission = function() {
