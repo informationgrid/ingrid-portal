@@ -29,7 +29,6 @@ import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.search.DisplayTreeNode;
 import de.ingrid.portal.search.PageState;
-import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.IngridHit;
 
 /**

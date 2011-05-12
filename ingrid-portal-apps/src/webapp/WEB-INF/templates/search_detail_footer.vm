@@ -1,8 +1,8 @@
 #* include service navigation component *#
 #macro (includeFooterNavigation)
-	<a href="/ingrid-portal/portal/disclaimer.psml" title="Impressum">Impressum</a>
-	<a href="/ingrid-portal/portal/privacy.psml" title="Datenschutzbestimmung">Datenschutzbestimmung</a>
-	<a href="mailto:webmaster@portalu.de" title="Webmaster">Webmaster</a>
+	<a href="/ingrid-portal/portal/disclaimer.psml" title="$MESSAGES.getString('footer.disclaimer')">$MESSAGES.getString('footer.disclaimer')</a>
+	<a href="/ingrid-portal/portal/privacy.psml" title="$MESSAGES.getString('footer.privacy.policy')">$MESSAGES.getString('footer.privacy.policy')</a>
+	<a href="mailto:webmaster@portalu.de" title="$MESSAGES.getString('footer.webmaster')">$MESSAGES.getString('footer.webmaster')</a>
 #end
 
 </div>
@@ -21,9 +21,9 @@
     <!-- portlets go here -->
 #includeFooterNavigation()
 <br />
-    Copyright &copy; Koordinierungsstelle PortalU im Nds. Ministerium f&uuml;r Umwelt und Klimaschutz<br />
+    $MESSAGES.getString('footer.copyright')<br />
 
-    Alle Rechte vorbehalten<br /><br />
+    $MESSAGES.getString('footer.rights')<br /><br />
   </div>
 </div>
 

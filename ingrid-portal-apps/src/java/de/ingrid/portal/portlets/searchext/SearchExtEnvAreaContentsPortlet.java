@@ -49,7 +49,8 @@ public class SearchExtEnvAreaContentsPortlet extends SearchExtEnvArea {
         context.put("enableSources", PortalConfig.getInstance().getBoolean("portal.enable.search.ext.env.area.sources", Boolean.TRUE));
         context.put("enablePartner", PortalConfig.getInstance().getBoolean("portal.enable.search.ext.env.area.partner", Boolean.TRUE));
 
-        context.put("enableService", PortalConfig.getInstance().getBoolean("portal.enable.service", Boolean.FALSE));
+        context.put("enableService", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SERVICE, Boolean.FALSE));
+        context.put("enableTopic", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_TOPIC, Boolean.FALSE));
         
         // set positions in main and sub tab
         context.put(VAR_MAIN_TAB, PARAMV_TAB_AREA);

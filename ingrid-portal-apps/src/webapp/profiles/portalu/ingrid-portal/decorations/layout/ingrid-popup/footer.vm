@@ -19,9 +19,9 @@
   #includeFooterNavigation($footerMenu)
 #end
 <br />
-    Copyright &copy; Koordinierungsstelle PortalU im Nds. Umweltministerium<br />
+    $MESSAGES.getString('ingrid.page.copyright')<br />
 
-    Alle Rechte vorbehalten<br /><br />
+    $MESSAGES.getString('ingrid.page.rights')<br /><br />
   </div>
 </div>
 

@@ -2,8 +2,9 @@
 <form action="$action" method="GET" name="service_search" id="service_search">
    	<input type="hidden" name="action" value="doSearch"/>
 	<div class="formbody formbody_border_style">
-		<h2 class="nospace">$MESSAGES.getString("common.form.criteria")</h2>
 		#displayFormErrors()
+		#if($enable_category == "0")
+		<h2 class="nospace">$MESSAGES.getString("common.form.criteria")</h2>
 		<div class="float_left">
 			<h3>#displayFieldLabel('rubric' $MESSAGES.getString("service.form.rubrics"))</h3>
 			<table cellpadding="0" cellspacing="0">
@@ -26,6 +27,7 @@
 #end
 			</table>  
 		</div>  
+		#end
 		<div class="clearer"></div>
 		<br style="line-height:10px" />
 		<div class="float_left">

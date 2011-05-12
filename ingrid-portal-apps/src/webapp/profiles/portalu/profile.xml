@@ -40,6 +40,10 @@
             <hidden>false</hidden>
         </page>
         <page>
+            <name>main-about.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>
@@ -129,6 +133,10 @@
             <hidden>false</hidden>
         </page>
         <page>
+            <name>service-contact-newsletter.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
             <name>service-contact.psml</name>
             <hidden>false</hidden>
             <portlets>
@@ -146,6 +154,24 @@
                 </portlet>
             </portlets>
         </page>
+        <page>
+            <name>_role/user/myportal-edit-account.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::MyPortalEditAccountPortlet</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::MyPortalEditAboutInfoPortlet</name>
+                </portlet>
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::MyPortalEditNewsletterInfoPortlet</name>
+                </portlet>
+                <portlet col="1" row="2">
+                    <name>ingrid-portal-apps::MyPortalEditAdvancedInfoPortlet</name>
+                </portlet>
+            </portlets>
+        </page>
       </pages>
     <files>
         <file>
@@ -155,6 +181,10 @@
         <file>
             <action>copy-dir</action>
 			<src>ingrid-portal-apps/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-mdek-application/</src>
         </file>
     </files>
     <sql>
@@ -213,6 +243,10 @@
         </execute>
 		<execute>
             <![CDATA[UPDATE ingrid_cms_item SET item_value='.</p><p>Our address:</p><p>Niedersächsisches Ministerium für Umwelt und Klimaschutz<br />Koordinierungsstelle PortalU<br />Archivstrasse 2<br />D-30169 Hannover<br /></p><p>Please contact us! We will answer your request as soon as possible. All data you entered will be saved only to process your request.</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.contact.intro.postEmail') AND item_lang='en';]]>
+        </execute>
+        <!-- Thesaurus Browser als Untermenü  -->
+        <execute>
+            <![CDATA[UPDATE folder_menu SET options='/search-catalog/search-catalog-hierarchy.psml' WHERE options='/search-catalog/search-catalog-thesaurus.psml';]]>
         </execute>
 	</sql>
 </profile>

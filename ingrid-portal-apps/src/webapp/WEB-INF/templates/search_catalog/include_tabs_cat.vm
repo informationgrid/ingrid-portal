@@ -2,13 +2,15 @@
 <ul>			
 #set ($action = $renderResponse.createActionURL())
 ##$action.setParameter('action','doChangeTab')
-#if($tab=='1')
-	<li><a class="selected">$MESSAGES.getString('searchCatHierarchy.title')</a></li>
-#else
-	$action.setParameter('tab','1')
-	<li><a href="/ingrid-portal/portal/search-catalog/search-catalog-hierarchy.psml">$MESSAGES.getString('searchCatHierarchy.title')</a></li>
+#if($enable_hierarchy_tree)
+    #if($tab=='1')
+    	<li><a class="selected">$MESSAGES.getString('searchCatHierarchy.title')</a></li>
+    #else
+    	$action.setParameter('tab','1')
+    	<li><a href="/ingrid-portal/portal/search-catalog/search-catalog-hierarchy.psml">$MESSAGES.getString('searchCatHierarchy.title')</a></li>
+    #end
 #end
-
+	
 #if($enable_thesaurus)
 	#if($tab=='2')
 		<li><a class="selected">$MESSAGES.getString('searchCatThesaurus.title')</a></li>

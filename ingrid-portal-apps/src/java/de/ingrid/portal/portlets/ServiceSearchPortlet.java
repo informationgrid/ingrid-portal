@@ -54,7 +54,8 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         // check for enabled search term field
         context.put("enable_searchterm", PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_ENABLE_SEARCH_SERVICES_SEARCHTERM, Boolean.FALSE));
-
+        context.put("enable_category", PortalConfig.getInstance().getString(PortalConfig.PORTAL_ENABLE_SEARCH_SERVICES_CATEGORY, "0"));
+        
         // ----------------------------------
         // check for passed URL PARAMETERS (for bookmarking)
         // ----------------------------------
@@ -222,7 +223,21 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
             // RUBRIC
             String queryValue = null;
             ClauseQuery cq = null;
-            String[] rubrics = af.getInputAsArray(ServiceSearchForm.FIELD_RUBRIC);
+            String[] rubrics;
+            String enableCategory = PortalConfig.getInstance().getString(PortalConfig.PORTAL_ENABLE_SEARCH_SERVICES_CATEGORY, "0");
+            if(enableCategory.equals("1")){
+            	String[] tmp = {"pub"};
+            	rubrics = tmp;
+            }else if(enableCategory.equals("2")){
+            	String[] tmp = {"ver"};
+            	rubrics = tmp;
+            }else if(enableCategory.equals("3")){
+            	String[] tmp = {"pre"};
+            	rubrics = tmp;
+            }else{
+            	String[] tmp = af.getInputAsArray(ServiceSearchForm.FIELD_RUBRIC);
+            	rubrics = tmp;
+            }
             // don't set anything if "all" is selected
             if (rubrics != null && Utils.getPosInArray(rubrics, Settings.PARAMV_ALL) == -1) {
                 cq = new ClauseQuery(true, false);

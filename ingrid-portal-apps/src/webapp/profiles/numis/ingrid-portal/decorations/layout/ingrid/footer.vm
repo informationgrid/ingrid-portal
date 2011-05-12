@@ -19,9 +19,9 @@
 #end
 <img align="right" src="#GetPageResource('images/logo-niedersachsen.png')" alt="Niedersachsen" />
 <br>
-    Copyright &copy; Niedersächsisches Ministerium für Umwelt und Klimaschutz
-<br>
-	Alle Rechte vorbehalten
+    $MESSAGES.getString('ingrid.page.copyright')<br />
+
+    $MESSAGES.getString('ingrid.page.rights')<br /><br />
 <br />
 <br />
 </div>

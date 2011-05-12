@@ -73,10 +73,16 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_ENABLE_SEARCH_SERVICES_SEARCHTERM = "portal.enable.search.services.searchterm";
     
+    public static final String PORTAL_ENABLE_SEARCH_SERVICES_CATEGORY = "service.selection.enable.category";
+   
     public static final String PORTAL_ENABLE_SEARCH_CATALOG = "portal.enable.search.catalog";
 
     public static final String PORTAL_ENABLE_SEARCH_CATALOG_THESAURUS = "portal.enable.search.catalog.thesaurus";
-
+    
+    public static final String PORTAL_ENABLE_SEARCH_CATALOG_THESAURUS_RESULT_ADDRESS = "portal.enable.search.catalog.thesaurus.result.address";
+    
+    public static final String PORTAL_ENABLE_SEARCH_CATALOG_HIERARCHY_TREE = "portal.enable.search.catalog.hierarchy.tree";
+    
     public static final String PORTAL_ENABLE_DATASOURCE_RESEARCH = "portal.enable.datasource.research";
 
     public static final String PORTAL_ENABLE_DATASOURCE_ADDRESSES = "portal.enable.datasource.addresses";
@@ -101,6 +107,12 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_ENABLE_SERVICE = "portal.enable.service";
     
+    public static final String PORTAL_ENABLE_TOPIC = "portal.enable.topic";
+    
+    public static final String PORTAL_ENABLE_ABOUT = "portal.enable.about";
+    
+    public static final String PORTAL_ENABLE_PARTNER = "portal.enable.partner";
+    
     public static final String PORTAL_ENABLE_ENVIROMENT = "portal.enable.enviroment";
 
 	public static final String PORTAL_ENABLE_CHRONICLE = "portal.enable.chronicle";
@@ -114,6 +126,8 @@ public class PortalConfig extends PropertiesConfiguration {
 	public static final String PORTAL_ENABLE_SEARCH_RESULTS_UNRANKED_ALLIPLUGS = "portal.enable.search.results.unranked.alliplugs";
 	
 	public static final String PORTAL_ENABLE_NEWSLETTER = "enable.newsletter.registration";
+	
+	public static final String THESAURUS_INFO_LINK = "thesaurus.info.use.link";
 
 	public static final String PORTAL_ENABLE_SNS_LOGO = "portal.enable.sns.logo";
 

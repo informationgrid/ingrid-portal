@@ -5,9 +5,8 @@
               <li>$MESSAGES.getString('service.result.noResult2')</li>
               <li>$MESSAGES.getString('service.result.noResult3')</li>
               <li>$MESSAGES.getString('service.result.noResult4')</li>
-			  #set($value = $MESSAGES.getString('service.result.noResult5'))
-			  #if($value !="service.result.noResult5")
-				<li>$value</li>
+			  #if($MESSAGES.getString('service.result.noResult5') != "" && $MESSAGES.getString('service.result.noResult5').length() > 0)
+				<li>$MESSAGES.getString('service.result.noResult5')</li>
 			  #end
             </ul>
         </div>

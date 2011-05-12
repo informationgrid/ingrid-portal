@@ -8,14 +8,15 @@
 			$action.setParameter('tab','1')
 			<li><a href="$action">$MESSAGES.getString('searchCatThesaurus.result.envInfos')</a></li>
 		#end
-
+#if($enable_address)
     ## --- Thesaurus Browser Tab ---
     #if($tab=='2')
 		<li><a class="selected">$MESSAGES.getString('searchCatThesaurus.result.addresses')</a></li>
     #else
 		$action.setParameter('tab','2')
         <li><a href="$action">$MESSAGES.getString('searchCatThesaurus.result.addresses')</a></li>
-    #end
+	#end
+#end
     </ul>
     <br class="clearer" />
 </div>

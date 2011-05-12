@@ -70,6 +70,8 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
         PageState ps = getPageState(request);
         context.put("ps", ps);
 
+        context.put("enable_address", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_CATALOG_THESAURUS_RESULT_ADDRESS, Boolean.TRUE));
+        
         // READ REQUEST PARAMETERS (so BOOKMARKING, BACK BUTTON etc. WORKS)
         // -----------------------------------------------------------
 

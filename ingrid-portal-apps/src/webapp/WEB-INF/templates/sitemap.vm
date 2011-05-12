@@ -85,10 +85,12 @@ $MESSAGES.setMsgParam($MESSAGES.getString('common.tooltip.link.extern'))
 					<p>$MESSAGES.getStringWithMsgParams("sitemap.area.main.chronicle.description")</p>
 				</li>
 #end
+#if($enableAbout)
 				<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-about.psml"))
 					<a href="$link">$MESSAGES.getString("sitemap.area.main.about")</a>
 					<p>$MESSAGES.getString("sitemap.area.main.about.description")</p>
+					#if($enablePartner)
 					<ul>
 						<li>
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-about-partner.psml"))
@@ -96,7 +98,16 @@ $MESSAGES.setMsgParam($MESSAGES.getString('common.tooltip.link.extern'))
 							<p>$MESSAGES.getString("sitemap.area.main.provider.description")</p>
 						</li>
 					</ul>
+					#end
 				</li>
+#end
+#if(!$enableAbout && $enablePartner)
+		        <li>
+#set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-about-partner.psml"))
+					<a href="$link">$MESSAGES.getString("sitemap.area.main.provider")</a>
+					<p>$MESSAGES.getString("sitemap.area.main.provider.description")</p>
+				</li>
+#end
 			</ul>
 			<br />
 		</div>  

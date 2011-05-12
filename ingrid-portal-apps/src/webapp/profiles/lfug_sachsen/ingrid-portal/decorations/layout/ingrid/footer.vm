@@ -19,9 +19,9 @@
   #includeFooterNavigation($footerMenu)
 #end
 <br />
-    Copyright &copy; S&auml;chsisches Landesamt f&uuml;r Umwelt, Landwirtschaft und Geologie<br />
+    $MESSAGES.getString('ingrid.page.copyright')<br />
 
-    Alle Rechte vorbehalten<br /><br />
+    $MESSAGES.getString('ingrid.page.rights')<br /><br />
   </div>
 </div>
 

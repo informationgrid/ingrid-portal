@@ -54,6 +54,8 @@ public class InfoPortlet extends GenericVelocityPortlet {
         if (myView.equalsIgnoreCase(SITEMAP_TEMPLATE)) {
             context.put("webmaster_email", PortalConfig.getInstance().getString(PortalConfig.EMAIL_WEBMASTER, "webmaster@portalu.de"));
             context.put("enableMeasure", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MEASURE, Boolean.FALSE));
+            context.put("enableAbout", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_ABOUT, Boolean.FALSE));
+            context.put("enablePartner", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_PARTNER, Boolean.FALSE));
             context.put("enableService", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SERVICE, Boolean.FALSE));
             context.put("enableEnviroment", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_ENVIROMENT, Boolean.FALSE));
             context.put("enableMaps", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, Boolean.FALSE));
@@ -62,7 +64,10 @@ public class InfoPortlet extends GenericVelocityPortlet {
             context.put("enableSearchCatalogThesaurus", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_CATALOG_THESAURUS, Boolean.FALSE));
             context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, Boolean.TRUE));
         }
-
+        if(myView.indexOf("search_cat_thesaurus_info_sns.vm") > -1 || myView.indexOf("search_settings_info.vm") > -1){
+        	context.put("thesaurusLink", PortalConfig.getInstance().getString(PortalConfig.THESAURUS_INFO_LINK, ""));
+        }
+        
         super.doView(request, response);
     }
 

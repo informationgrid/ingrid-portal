@@ -89,7 +89,7 @@ self.focus();
 #end
   <!-- LOGO -->
   <div id="logo">
-    <img src="#GetPageResource('images/logo.gif')" width="168" height="60" alt="Logo PortalU" />
+    <img src="#GetPageResource('images/logo.gif')" width="168" height="60" alt="Logo GS Soil" />
   </div>
 </div>
 
