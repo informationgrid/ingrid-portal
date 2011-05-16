@@ -380,7 +380,7 @@ function hideLoadingZone() {
 			<div id="replaceContainer" class="inputContainer grey field">
 			    <span class="outer"><div>
 				<span class="label">
-				    <label for="urlReplace" onclick="javascript:dialog.showContextHelp(arguments[0], 8034, 'Markierte URLs durch folgende URL ersetzen')"><fmt:message key="dialog.admin.catalog.management.urls.replaceUrlsWith" /></label>
+				    <label for="urlReplace" onclick="javascript:dialog.showContextHelp(arguments[0], 8034)"><fmt:message key="dialog.admin.catalog.management.urls.replaceUrlsWith" /></label>
                 </span>
 				<span class="input">
 					<input type="text" id="urlReplace" maxLength="255" dojoType="dijit.form.ValidationTextBox" style="width:100%;"/>

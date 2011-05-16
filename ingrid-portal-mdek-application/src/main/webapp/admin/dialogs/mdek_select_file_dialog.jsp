@@ -42,7 +42,7 @@ scriptScope.selectFile = function() {
 		<div class="content">
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div class="inputContainer field grey">
-				<span class="label"><label for="selectFileInputField" onclick="javascript:dialog.showContextHelp(arguments[0], 8060, '<fmt:message key='dialog.file.selectFile' />')"><fmt:message key="dialog.file.selectFile" /></label></span>
+				<span class="label"><label for="selectFileInputField" onclick="javascript:dialog.showContextHelp(arguments[0], 8060)"><fmt:message key="dialog.file.selectFile" /></label></span>
 					<span>
 						<input type="file" id="selectFileInputField" size="80" style="width:100%;" />
 					</span>

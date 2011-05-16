@@ -832,7 +832,7 @@
                                 <div class="inputContainer field grey" style="">
                                     <span class="outer"><div>
                                         <span class="label">
-                                            <label for="userDataLogin" onclick="javascript:dialog.showContextHelp(arguments[0], 8013, 'Login')">
+                                            <label for="userDataLogin" onclick="javascript:dialog.showContextHelp(arguments[0], 8013)">
                                                 <fmt:message key="dialog.admin.users.login" />
                                             </label>
                                         </span>
@@ -841,7 +841,7 @@
                                     </div></span>
                                     <span class="outer"><div>
                                         <span class="label">
-                                            <label for="userDataRole" onclick="javascript:dialog.showContextHelp(arguments[0], 8014, 'Rolle')">
+                                            <label for="userDataRole" onclick="javascript:dialog.showContextHelp(arguments[0], 8014)">
                                                 <fmt:message key="dialog.admin.users.role" />
                                             </label>
                                         </span>
@@ -850,7 +850,7 @@
                                     
                                     <span class="outer required"><div>
                                         <span class="label">
-                                            <label id="userDataAddressLinkLabel" for="userDataAddressLink" onclick="javascript:dialog.showContextHelp(arguments[0], 8015, 'Adressverweis')">
+                                            <label id="userDataAddressLinkLabel" for="userDataAddressLink" onclick="javascript:dialog.showContextHelp(arguments[0], 8015)">
                                                 <fmt:message key="dialog.admin.users.address" />*
                                             </label>
                                         </span>
@@ -859,7 +859,7 @@
                                     </div></span>
                                     
                                     <span class="outer" style="width:45%;"><div>
-                                        <span class="label"><label id="availableGroupsListLabel" for="availableGroupsList" onclick="javascript:dialog.showContextHelp(arguments[0], 8016, 'Gruppen')"><fmt:message key="dialog.admin.users.available.groups"/></label></span>
+                                        <span class="label"><label id="availableGroupsListLabel" for="availableGroupsList" onclick="javascript:dialog.showContextHelp(arguments[0], 8016)"><fmt:message key="dialog.admin.users.available.groups"/></label></span>
                                         <div class="tableContainer">
                                             <div id="availableGroupsList" autoHeight="10" contextMenu="none" ></div>
                                         </div>
@@ -877,7 +877,7 @@
                                     </div></span>
                                     
                                     <span class="outer" style="width:45%;"><div>
-                                        <span class="label"><label id="groupsListLabel" for="groupsList" onclick="javascript:dialog.showContextHelp(arguments[0], 8016, 'Gruppen')"><fmt:message key="dialog.admin.users.groups" /></label></span>
+                                        <span class="label"><label id="groupsListLabel" for="groupsList" onclick="javascript:dialog.showContextHelp(arguments[0], 8016)"><fmt:message key="dialog.admin.users.groups" /></label></span>
                                         <div class="tableContainer">
                                             <div id="groupsList" autoHeight="10" contextMenu="none" ></div>
                                         </div>

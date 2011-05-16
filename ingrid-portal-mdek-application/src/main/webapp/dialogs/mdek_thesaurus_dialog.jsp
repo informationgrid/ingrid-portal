@@ -310,7 +310,7 @@
                 <div class="inputContainer field grey">
                 	<span class="outer"><div>
                     <span class="label">
-                        <label for="thesSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 7031, 'Suche nach Deskriptoren und Ordnungsbegriffen')">
+                        <label for="thesSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 7031)">
                             <fmt:message key="dialog.thesaurusNavigator.title" />
                         </label>
                     </span><span class="input"><input type="text" id="thesSearch" name="thesSearch" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
@@ -352,7 +352,7 @@
                  <span class="outer" style="width:40%;">
                  <div id="listThesaurus" class="inputContainer">
                     <span class="label">
-                        <label for="thesaurusDescList" onclick="javascript:dialog.showContextHelp(arguments[0], 7032, 'Liste der Deskriptoren')">
+                        <label for="thesaurusDescList" onclick="javascript:dialog.showContextHelp(arguments[0], 7032)">
                             <fmt:message key="dialog.thesaurusNavigator.descriptorList" />
                         </label>
                     </span>

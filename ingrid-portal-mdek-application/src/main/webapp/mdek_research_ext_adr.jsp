@@ -198,7 +198,7 @@ function hideLoadingZone() {
 	            	<option value="1"><fmt:message key="dialog.research.ext.adr.contains.one" /></option>
 	            </select></span>
 
-	          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7054, 'Suchmodus')"><fmt:message key="dialog.research.ext.adr.mode" /></label></span>
+	          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7054)"><fmt:message key="dialog.research.ext.adr.mode" /></label></span>
 	          <div class="checkboxContainer">
 	            <input type="radio" name="addrMode" id="addrMode1" class="radio entry first" />
 	            <label class="inActive entry closer w116" for="addrMode1"><fmt:message key="dialog.research.ext.adr.full" /></label>
@@ -206,7 +206,7 @@ function hideLoadingZone() {
 	            <label class="inActive entry closer" for="addrMode2"><fmt:message key="dialog.research.ext.adr.substring" /></label>
 	          </div>
 	          <div class="fill spacer"></div>
-	          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7055, 'Suchmodus')"><fmt:message key="dialog.research.ext.adr.fields" /></label></span>
+	          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7055)"><fmt:message key="dialog.research.ext.adr.fields" /></label></span>
 	          <div class="checkboxContainer">
 	            <input type="radio" name="addrFields" id="addrFields1" class="radio entry first" checked />
 	            <label class="inActive entry closer w116" for="addrFields1"><fmt:message key="dialog.research.ext.adr.allTextFields" /></label>
@@ -232,12 +232,12 @@ function hideLoadingZone() {
 	    	  </div>
 	    	<div class="spacer"></div>
 	        <div class="inputContainer field inTabWithMenu grey noSpaceBelow">
-	          <span class="label"><label for="addrSpaceAdminUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 7056, 'Adressinformationen')"><fmt:message key="dialog.research.ext.adr.locationDescription" /></label></span>
-	          <span class="label"><label for="addrSpaceStreet" onclick="javascript:dialog.showContextHelp(arguments[0], 7057, 'Stra&szlig;e')"><fmt:message key="dialog.research.ext.adr.street" /></label></span>
+	          <span class="label"><label for="addrSpaceAdminUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 7056)"><fmt:message key="dialog.research.ext.adr.locationDescription" /></label></span>
+	          <span class="label"><label for="addrSpaceStreet" onclick="javascript:dialog.showContextHelp(arguments[0], 7057)"><fmt:message key="dialog.research.ext.adr.street" /></label></span>
 	          <span class="input spaceBelow"><input type="text" id="addrSpaceStreet" name="addrSpaceStreet" class="w800" dojoType="dijit.form.ValidationTextBox" /></span>
-	          <span class="label"><label for="addrSpaceZip" onclick="javascript:dialog.showContextHelp(arguments[0], 7058, 'PLZ')"><fmt:message key="dialog.research.ext.adr.postCode" /></label></span>
+	          <span class="label"><label for="addrSpaceZip" onclick="javascript:dialog.showContextHelp(arguments[0], 7058)"><fmt:message key="dialog.research.ext.adr.postCode" /></label></span>
 	          <span class="input spaceBelow"><input type="text" id="addrSpaceZip" name="addrSpaceZip" class="w800" dojoType="dijit.form.ValidationTextBox" /></span>
-	          <span class="label"><label for="addrSpaceCity" onclick="javascript:dialog.showContextHelp(arguments[0], 7059, 'Ort')"><fmt:message key="dialog.research.ext.adr.city" /></label></span>
+	          <span class="label"><label for="addrSpaceCity" onclick="javascript:dialog.showContextHelp(arguments[0], 7059)"><fmt:message key="dialog.research.ext.adr.city" /></label></span>
 	          <span class="input"><input type="text" id="addrSpaceCity" name="addrSpaceCity" class="w800" dojoType="dijit.form.ValidationTextBox" /></span>
 	    	  </div>
 	        <div class="spacerField"></div>

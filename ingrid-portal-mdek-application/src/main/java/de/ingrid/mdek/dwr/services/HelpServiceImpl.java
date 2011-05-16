@@ -18,12 +18,13 @@ public class HelpServiceImpl {
 	// Injected by Spring
 	private IDaoFactory daoFactory;
 
-	public HelpMessage getHelpEntry(Integer guiId, Integer entityClass) {
+	public HelpMessage getHelpEntry(Integer guiId, Integer entityClass, String language) {
 		IGenericDao<IEntity> dao = daoFactory.getDao(HelpMessage.class);
 		HelpMessage sampleMessage = new HelpMessage();
 		sampleMessage.setGuiId(guiId);
 		if (guiId != null)
 			sampleMessage.setEntityClass(entityClass);
+		sampleMessage.setLanguage(language);
 
 		dao.beginTransaction();
 		HelpMessage helpMessage = (HelpMessage) dao.findUniqueByExample(sampleMessage);

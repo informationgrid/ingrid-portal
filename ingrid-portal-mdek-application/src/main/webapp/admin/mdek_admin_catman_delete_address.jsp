@@ -520,7 +520,7 @@
                     <span class="outer">
                         <div>
                             <span class="label">
-                                <label for="addressDeleteDataTitle" onclick="javascript:dialog.showContextHelp(arguments[0], 8044, 'Titel')">
+                                <label for="addressDeleteDataTitle" onclick="javascript:dialog.showContextHelp(arguments[0], 8044)">
                                     <fmt:message key="dialog.admin.catalog.management.deleteAddress.title" />
                                 </label>
                             </span>
@@ -533,7 +533,7 @@
                         <div class="outer halfWidth">
                             <div>
                                 <span class="label">
-                                    <label for="addressDeleteDataCreationDate" onclick="javascript:dialog.showContextHelp(arguments[0], 8045, 'Erstellt am')">
+                                    <label for="addressDeleteDataCreationDate" onclick="javascript:dialog.showContextHelp(arguments[0], 8045)">
                                         <fmt:message key="dialog.admin.catalog.management.deleteAddress.creationDate" />
                                     </label>
                                 </span>
@@ -542,7 +542,7 @@
                                 </span>
                             </div><div>
                                 <span class="label">
-                                    <label for="addressDeleteDataUser" onclick="javascript:dialog.showContextHelp(arguments[0], 8046, 'Verantwortlicher')">
+                                    <label for="addressDeleteDataUser" onclick="javascript:dialog.showContextHelp(arguments[0], 8046)">
                                         <fmt:message key="dialog.admin.catalog.management.deleteAddress.responsibleUser" />
                                     </label>
                                 </span>
@@ -551,7 +551,7 @@
                                 </span>
                             </div><div>
                                 <span class="label">
-                                    <label for="addressDeleteDataID" onclick="javascript:dialog.showContextHelp(arguments[0], 8047, 'ID')">
+                                    <label for="addressDeleteDataID" onclick="javascript:dialog.showContextHelp(arguments[0], 8047)">
                                         ID 
                                     </label>
                                 </span>
@@ -562,7 +562,7 @@
                         </div>
                         <div class="outer halfWidth">
                             <span class="label">
-                                <label for="addressDeleteDataMDQS" onclick="javascript:dialog.showContextHelp(arguments[0], 8048, 'Qualit&auml;tssichernder')">
+                                <label for="addressDeleteDataMDQS" onclick="javascript:dialog.showContextHelp(arguments[0], 8048)">
                                     <fmt:message key="dialog.admin.catalog.management.deleteAddress.qa" />
                                 </label>
                             </span>
@@ -632,7 +632,7 @@
                         <span class="outer">
                             <div>
                                 <span class="label">
-                                    <label for="addressNewDataTitle" onclick="javascript:dialog.showContextHelp(arguments[0], 8049, 'Titel')">
+                                    <label for="addressNewDataTitle" onclick="javascript:dialog.showContextHelp(arguments[0], 8049)">
                                         <fmt:message key="dialog.admin.catalog.management.deleteAddress.title" />
                                     </label>
                                 </span>
@@ -648,7 +648,7 @@
                         <div class="outer halfWidth">
                             <div>
                                 <span class="label">
-                                    <label for="addressNewDataCreationDate" onclick="javascript:dialog.showContextHelp(arguments[0], 8050, 'Erstellt am')">
+                                    <label for="addressNewDataCreationDate" onclick="javascript:dialog.showContextHelp(arguments[0], 8050)">
                                         <fmt:message key="dialog.admin.catalog.management.deleteAddress.creationDate" />
                                     </label>
                                 </span>
@@ -657,7 +657,7 @@
                                 </span>
                             </div><div>
                                 <span class="label">
-                                    <label for="addressNewDataUser" onclick="javascript:dialog.showContextHelp(arguments[0], 8051, 'Verantwortlicher')">
+                                    <label for="addressNewDataUser" onclick="javascript:dialog.showContextHelp(arguments[0], 8051)">
                                         <fmt:message key="dialog.admin.catalog.management.deleteAddress.responsibleUser" />
                                     </label>
                                 </span>
@@ -666,7 +666,7 @@
                                 </span>
                             </div><div>
                                 <span class="label">
-                                    <label for="addressNewDataID" onclick="javascript:dialog.showContextHelp(arguments[0], 8052, 'ID')">
+                                    <label for="addressNewDataID" onclick="javascript:dialog.showContextHelp(arguments[0], 8052)">
                                         ID 
                                     </label>
                                 </span>
@@ -677,7 +677,7 @@
                         </div>
                         <div class="outer halfWidth">
                             <span class="label">
-                                <label for="addressNewDataMDQS" onclick="javascript:dialog.showContextHelp(arguments[0], 8053, 'Qualit&auml;tssichernder')">
+                                <label for="addressNewDataMDQS" onclick="javascript:dialog.showContextHelp(arguments[0], 8053)">
                                     <fmt:message key="dialog.admin.catalog.management.deleteAddress.qa" />
                                 </label>
                             </span>

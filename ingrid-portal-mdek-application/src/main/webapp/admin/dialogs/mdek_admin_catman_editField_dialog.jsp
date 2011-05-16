@@ -104,7 +104,8 @@
                         });
                         this.setAndShowField("span_formNumTableRows", "formNumTableRows", profileObjectToEdit.numTableRows);
                         dojo.removeClass("span_formColumns", "hide");
-                        scriptScope.updateAvailableTableWidth();
+                        dojo.connect(dijit.byId("formWidth"), "onChange", scriptScope.updateAvailableTableWidth);
+                        setTimeout(scriptScope.updateAvailableTableWidth, 1000);
                         // fall through!
                     case "selectControl":
                         if (type == "selectControl") {
@@ -370,6 +371,11 @@
                     }
                 }
                 
+                if (!dijit.byId("formWidth").validate()) {
+                    message = "<fmt:message key='dialog.admin.catalog.management.additionalFields.error.validate' />";
+                    exitDialog = false;
+                }
+                
                 if (exitDialog) {
                     dijit.byId("pageDialog").customParams.resultHandler.callback(data);
                     dijit.byId("pageDialog").hide();
@@ -462,13 +468,15 @@
             scriptScope.updateAvailableTableWidth = function() {
                 var infoMessage = '<fmt:message key="dialog.admin.additionalfields.availWidth" />';
                 var scrollWidth =  scrollbarDimensions ? scrollbarDimensions.width : 17;
+                var fieldWidth = dijit.byId("formWidth").get("value");
+                var fieldWidthFactor = fieldWidth/100;
                 
                 var allColumns = 0;
                 dojo.forEach(dijit.byId("pageDialog").customParams.item.columns, function(col) {
                     allColumns += eval(col.width);
                 });
                 
-                dojo.byId("availWidth").innerHTML = dojo.string.substitute(infoMessage, [708 - scrollWidth -allColumns]);
+                dojo.byId("availWidth").innerHTML = dojo.string.substitute(infoMessage, [dojo.number.round(708*fieldWidthFactor - scrollWidth -allColumns)]);
             }
             
             scriptScope.closeThisDialog = function(){

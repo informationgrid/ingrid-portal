@@ -282,7 +282,7 @@ function hideLoadingZone() {
             </div>
             <span class="outer"><div>
             <span class="label">
-                <label for="thesaurusSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 7062, 'Thesaurus-Hierarchie')">
+                <label for="thesaurusSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 7062)">
                     <fmt:message key="dialog.research.thes.title" />
                 </label>
             </span>

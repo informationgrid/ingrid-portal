@@ -100,7 +100,7 @@
                         <tbody>
                             <tr>
                                 <td class="label" nowrap="nowrap">
-                                    <label for="spatialAssistRef" onclick="javascript:dialog.showContextHelp(arguments[0], 7023, 'Freier Raumbezug')">
+                                    <label for="spatialAssistRef" onclick="javascript:dialog.showContextHelp(arguments[0], 7023)">
                                         <fmt:message key="dialog.spatialAssist.customLocation" />
                                     </label>
                                 </td>
@@ -110,7 +110,7 @@
                             </tr>
                             <tr>
                                 <td class="label" nowrap="nowrap">
-                                    <label for="spatialAssistLon1" onclick="javascript:dialog.showContextHelp(arguments[0], 7024, 'Unten Links: Rechtswert / L&auml;nge')">
+                                    <label for="spatialAssistLon1" onclick="javascript:dialog.showContextHelp(arguments[0], 7024)">
                                         <fmt:message key="dialog.spatialAssist.longitude1" />
                                     </label>
                                 </td>
@@ -120,7 +120,7 @@
                             </tr>
                             <tr>
                                 <td class="label" nowrap="nowrap">
-                                    <label for="spatialAssistLat1" onclick="javascript:dialog.showContextHelp(arguments[0], 7025, 'Unten Links: Hochwert / Breite')">
+                                    <label for="spatialAssistLat1" onclick="javascript:dialog.showContextHelp(arguments[0], 7025)">
                                         <fmt:message key="dialog.spatialAssist.latitude1" />
                                     </label>
                                 </td>
@@ -130,7 +130,7 @@
                             </tr>
                             <tr>
                                 <td class="label" nowrap="nowrap">
-                                    <label for="spatialAssistLon2" onclick="javascript:dialog.showContextHelp(arguments[0], 7026, 'Oben Rechts: Rechtswert / L&auml;nge')">
+                                    <label for="spatialAssistLon2" onclick="javascript:dialog.showContextHelp(arguments[0], 7026)">
                                         <fmt:message key="dialog.spatialAssist.longitude2" />
                                     </label>
                                 </td>
@@ -140,7 +140,7 @@
                             </tr>
                             <tr>
                                 <td class="label" nowrap="nowrap">
-                                    <label for="spatialAssistLat2" onclick="javascript:dialog.showContextHelp(arguments[0], 7027, 'Oben Rechts: Hochwert / Breite')">
+                                    <label for="spatialAssistLat2" onclick="javascript:dialog.showContextHelp(arguments[0], 7027)">
                                         <fmt:message key="dialog.spatialAssist.latitude2" />
                                     </label>
                                 </td>
@@ -150,7 +150,7 @@
                             </tr>
                             <tr>
                                 <td class="label" nowrap="nowrap">
-                                    <label for="spatialAssistCS" onclick="javascript:dialog.showContextHelp(arguments[0], 7028, 'Koordinatensystem')">
+                                    <label for="spatialAssistCS" onclick="javascript:dialog.showContextHelp(arguments[0], 7028)">
                                         <fmt:message key="dialog.spatialAssist.coordSys" />
                                     </label>
                                 </td>

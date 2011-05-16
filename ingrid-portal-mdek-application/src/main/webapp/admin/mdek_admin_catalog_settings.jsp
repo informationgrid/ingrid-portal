@@ -189,7 +189,7 @@
                         </div>
                         <span class="outer"><div>
                         <span class="label">
-                            <label for="adminCatalogName" onclick="javascript:dialog.showContextHelp(arguments[0], 8001, 'Name des Kataloges')">
+                            <label for="adminCatalogName" onclick="javascript:dialog.showContextHelp(arguments[0], 8001)">
                                 <fmt:message key="dialog.admin.catalog.catalogName" />
                             </label>
                         </span>
@@ -197,7 +197,7 @@
                         </div></span>
 						<span class="outer"><div>
 						    <span class="label">
-                            <label for="adminCatalogPartnerName" onclick="javascript:dialog.showContextHelp(arguments[0], 8002, 'Name des Partners')">
+                            <label for="adminCatalogPartnerName" onclick="javascript:dialog.showContextHelp(arguments[0], 8002)">
                                 <fmt:message key="dialog.admin.catalog.partnerName" />
                             </label>
                         </span>
@@ -206,7 +206,7 @@
                         </div></span>
 						<span class="outer"><div>
 						    <span class="label">
-                            <label for="adminCatalogProviderName" onclick="javascript:dialog.showContextHelp(arguments[0], 8003, 'Name des Anbieters')">
+                            <label for="adminCatalogProviderName" onclick="javascript:dialog.showContextHelp(arguments[0], 8003)">
                                 <fmt:message key="dialog.admin.catalog.providerName" />
                             </label>
                         </span>
@@ -214,7 +214,7 @@
 						</div></span>
                         <span class="outer"><div>
 						    <span class="label required">
-                            <label for="adminCatalogCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 8004, 'Staat')">
+                            <label for="adminCatalogCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 8004)">
                                 <fmt:message key="dialog.admin.catalog.state" />*
                             </label>
                         </span>
@@ -226,7 +226,7 @@
 						</div></span>
                         <span class="outer"><div>
 						    <span class="label required">
-                            <label for="adminCatalogLanguage" onclick="javascript:dialog.showContextHelp(arguments[0], 8005, 'Katalogsprache')">
+                            <label for="adminCatalogLanguage" onclick="javascript:dialog.showContextHelp(arguments[0], 8005)">
                                 <fmt:message key="dialog.admin.catalog.language" />*
                             </label>
                         </span>
@@ -238,7 +238,7 @@
                         </div></span>
 						<span class="outer"><div>
 						    <span class="label required">
-                            <label for="adminCatalogSpatialRef" onclick="javascript:dialog.showContextHelp(arguments[0], 8006, 'Raumbezug')">
+                            <label for="adminCatalogSpatialRef" onclick="javascript:dialog.showContextHelp(arguments[0], 8006)">
                                 <fmt:message key="dialog.admin.catalog.location" />*
                             </label>
                         </span>

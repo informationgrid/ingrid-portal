@@ -751,7 +751,7 @@
                    <!-- LEFT HAND SIDE CONTENT START -->
                     <div class="inputContainer grey" dojoType="dijit.layout.ContentPane" region="center" style="padding:15px;">
                         <span class="label">
-                            <label onclick="javascript:dialog.showContextHelp(arguments[0], 7034, 'Verweis von')">
+                            <label onclick="javascript:dialog.showContextHelp(arguments[0], 7034)">
                                 <fmt:message key="dialog.links.source" />
                             </label>
                         </span>
@@ -759,7 +759,7 @@
                             <span class="outer">
                                 <div>
                                     <span class="label">
-                                        <label for="linksFromObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 7035, 'Objektname')">
+                                        <label for="linksFromObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 7035)">
                                             <fmt:message key="dialog.links.objTitle" />
                                         </label>
                                     </span>
@@ -771,7 +771,7 @@
                             <span class="outer required">
                                 <div>
                                     <span id="linksFromFieldNameLabel" class="label">
-                                        <label for="linksFromFieldName" onclick="javascript:dialog.showContextHelp(arguments[0], 2000, 'Feldname/Bezeichnung der Verweisbeziehung')">
+                                        <label for="linksFromFieldName" onclick="javascript:dialog.showContextHelp(arguments[0], 2000)">
                                             <fmt:message key="dialog.links.link" />*
                                         </label>
                                     </span>
@@ -797,7 +797,7 @@
                             <span class="outer required">
                                 <div>
                                     <span class="label">
-                                        <label for="linksLinkType" onclick="javascript:dialog.showContextHelp(arguments[0], 7037, 'Verweistyp')">
+                                        <label for="linksLinkType" onclick="javascript:dialog.showContextHelp(arguments[0], 7037)">
                                             <fmt:message key="dialog.links.linkType" />*
                                         </label>
                                     </span>
@@ -819,7 +819,7 @@
                             </span>
                             <span class="outer">
                             <span class="label">
-                                <label onclick="javascript:dialog.showContextHelp(arguments[0], 7038, 'Verweis auf')">
+                                <label onclick="javascript:dialog.showContextHelp(arguments[0], 7038)">
                                     <fmt:message key="dialog.links.target" />
                                 </label>
                             </span><!-- VERWEIS AUF OBJEKT -->
@@ -827,7 +827,7 @@
                                 <span class="outer required">
                                     <div>
                                         <span class="label">
-                                            <label id="linksToObjectNameLabel" for="linksToObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 2100, 'Objektname')">
+                                            <label id="linksToObjectNameLabel" for="linksToObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 2100)">
                                                 <fmt:message key="dialog.links.objTitle" />*
                                             </label>
                                         </span>
@@ -842,7 +842,7 @@
                                 <span class="outer required">
                                     <div>
                                         <span class="label">
-                                            <label id="linksToObjectClassLabel" for="linksToObjectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 7040, 'Objektklasse')">
+                                            <label id="linksToObjectClassLabel" for="linksToObjectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 7040)">
                                                 <fmt:message key="dialog.links.objClass" />*
                                             </label>
                                         </span>
@@ -854,7 +854,7 @@
                                 <span class="outer">
                                     <div>
                                         <span class="label">
-                                            <label for="linksToDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 2110, 'Erl&auml;uterungen')">
+                                            <label for="linksToDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 2110)">
                                                 <fmt:message key="dialog.links.objDescription" />
                                             </label>
                                         </span>
@@ -870,7 +870,7 @@
                                 <span class="outer required">
                                     <div>
                                         <span class="label">
-                                            <label id="linksToNameLabel" for="linksToName" onclick="javascript:dialog.showContextHelp(arguments[0], 2210, 'Bezeichnung des Verweises')">
+                                            <label id="linksToNameLabel" for="linksToName" onclick="javascript:dialog.showContextHelp(arguments[0], 2210)">
                                                 <fmt:message key="dialog.links.urlDescription" />*
                                             </label>
                                         </span>
@@ -882,7 +882,7 @@
                                 <span class="outer required">
                                     <div>
                                         <span class="label">
-                                            <label id="linksToURLLabel" for="linksToURL" onclick="javascript:dialog.showContextHelp(arguments[0], 2200, 'Internet-Adresse (URL)')">
+                                            <label id="linksToURLLabel" for="linksToURL" onclick="javascript:dialog.showContextHelp(arguments[0], 2200)">
                                                 <fmt:message key="dialog.links.url" />*
                                             </label>
                                         </span>
@@ -894,7 +894,7 @@
                                 <span class="outer required" style="width:33%;">
                                     <div>
                                         <span class="label">
-                                            <label id="linksToDataTypeLabel" onclick="javascript:dialog.showContextHelp(arguments[0], 2240, 'Datentyp')">
+                                            <label id="linksToDataTypeLabel" onclick="javascript:dialog.showContextHelp(arguments[0], 2240)">
                                                 <fmt:message key="dialog.links.dataType" />*
                                             </label>
                                         </span>
@@ -906,7 +906,7 @@
                                 <span class="outer" style="width:33%;">
                                     <div>
                                         <span class="label">
-                                            <label for="linksToDataVolume" onclick="javascript:dialog.showContextHelp(arguments[0], 2220, 'Datenvolumen')">
+                                            <label for="linksToDataVolume" onclick="javascript:dialog.showContextHelp(arguments[0], 2220)">
                                                 <fmt:message key="dialog.links.dataSize" />
                                             </label>
                                         </span>
@@ -918,7 +918,7 @@
                                 <span class="outer" style="width:34%;">
                                     <div>
                                         <span class="label">
-                                            <label for="linksToURLType" onclick="javascript:dialog.showContextHelp(arguments[0], 2251, 'URL-Typ')">
+                                            <label for="linksToURLType" onclick="javascript:dialog.showContextHelp(arguments[0], 2251)">
                                                 <fmt:message key="dialog.links.urlType" />
                                             </label>
                                         </span>
@@ -933,7 +933,7 @@
                                 <span class="outer required halfWidth">
                                     <div>
                                         <span class="label">
-                                            <label for="linksToIconURL" onclick="javascript:dialog.showContextHelp(arguments[0], 2250, 'Icon-URL')">
+                                            <label for="linksToIconURL" onclick="javascript:dialog.showContextHelp(arguments[0], 2250)">
                                                 <fmt:message key="dialog.links.urlIcon" />
                                             </label>
                                         </span>
@@ -945,7 +945,7 @@
                                 <span class="outer required halfWidth">
                                     <div>
                                         <span class="label">
-                                            <label for="linksToIconText" onclick="javascript:dialog.showContextHelp(arguments[0], 2230, 'Icon-Text')">
+                                            <label for="linksToIconText" onclick="javascript:dialog.showContextHelp(arguments[0], 2230)">
                                                 <fmt:message key="dialog.links.urlIconText" />
                                             </label>
                                         </span>
@@ -957,7 +957,7 @@
                                 <span class="outer">
                                     <div>
                                         <span class="label">
-                                            <label for="linksToUrlDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 2260, 'Erl&auml;uterungen')">
+                                            <label for="linksToUrlDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 2260)">
                                                 <fmt:message key="dialog.links.objDescription" />
                                             </label>
                                         </span>

@@ -270,7 +270,7 @@ addLocationTopics = function() {
 			<!-- CONTENT START -->
 			<div class="inputContainer">
 			    <span class="outer halfWidth"><div>
-            		<span class="label"><label for="locationTextBox" onclick="javascript:dialog.showContextHelp(arguments[0], 7021, 'R&auml;umliche Einheit festlegen')"><fmt:message key="dialog.spatialNavigator.title" /></label></span>
+            		<span class="label"><label for="locationTextBox" onclick="javascript:dialog.showContextHelp(arguments[0], 7021)"><fmt:message key="dialog.spatialNavigator.title" /></label></span>
            			<div class="input">
            			    <input type="text" id="locationTextBox" size="20" name="locationTextBox" style="width:100%;" dojoType="dijit.form.ValidationTextBox" />
                     </div>

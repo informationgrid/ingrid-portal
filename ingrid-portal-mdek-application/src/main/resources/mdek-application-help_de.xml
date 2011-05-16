@@ -1919,7 +1919,7 @@
                  Rubrik erzeugt werden. Diese lassen sich <u>nicht</u> vor einem Kernfeld verschieben, sondern immer nur
                  vor einem anderen zusätzlichen Feld! Dazu dienen die Schaltflächen mit dem <i>Pfeil hoch</i> bzw. 
                  <i>Pfeil runter</i>. Bevor ein Feld gelöscht wird, erscheint eine Abfrage, ob dieses Element wirklich entfernt
-                 werden soll. Die Speichern-Schlatfläche sollte sich nun rot verfärben, um darauf hinzuweisen, dass die Änderung
+                 werden soll. Die Speichern-Schaltfläche sollte sich nun rot verfärben, um darauf hinzuweisen, dass die Änderung
                  erst nach einem expliziten Speichern übernommen wird.</p>
                  
 				 <p><u>Achtung:</u> Alle Änderungen an den <i>zusätzlichen Feldern</i> werden erst nach 
@@ -1936,7 +1936,7 @@
                         der das zu erstellende Feld ausgewählt wird, und ein Button "Neues Formelement", der einen
                         entsprechenden Dialog für die Erstellung öffnet.</p>
                         
-                        <p>Als Datenarten stehen Ihnen für Zusätzliche Felder zur Verfügung:</p>
+                        <p>Folgende Typen stehen zur Verfügung:</p>
                         <ul>
                             <li>Textfelder</li>
                             <li>Nummernfelder</li>
@@ -1954,7 +1954,7 @@
                         <p><u>Hinweis:</u> Auch bei <i>Zusätzlichen Feldern</i> mit Auswahlliste sind freie 
                         Einträge möglich.</p>
                         
-                        <p>Als erstes muss eine <b>eindeutige ID</b> für das neu zu erstellende Element gewählt werden.
+                        <p>Für ein neues zusätzliches Feld muss als erstes eine <b>eindeutige ID</b> gewählt werden.
                         Über diese kann das Feld später auch angesprochen werden, um bspw. eine spezielle Behandlung
                         einzuführen. Als nächstes ist es möglich, das neue Feld als <b>Pflichtfeld</b> zu deklarieren.
                         Hierdurch wird die Beschriftung des Feldes automatisch fett gedruckt und der Inhalt des Feldes
@@ -1963,48 +1963,18 @@
                         <p>Die Sichtbarkeit kann so beeinflusst werden, dass das Feld <b>optional</b> erscheint und somit nur
                         bei einem Ausklappen der Rubrik sichtbar wird, durch <b>anzeigen</b> wird es niemals ausgeblendet und
                         durch <b>verstecken</b> wird es permanent ausgeblendet und wird nie angezeigt.</p>
-                        <p>Weiterhin kann eine <b>Beschriftung</b> und ein <b>Hilfetext</b> für das Feld vergeben werden. Dies ist in
+                        <p>Weiterhin muss eine <b>Beschriftung</b> und ein <b>Hilfetext</b> für das Feld vergeben werden. Dies ist in
                         verschiedenen Sprachen möglich, wobei ein Eintrag in der ersten Sprache (Standard: Englisch) Pflicht ist.
                         Wird der InGrid-Editor in einer anderen Sprache als Englisch betrieben, so wird ein englischer Titel bzw.
                         eine englische Hilfe beim Fehlen der Lokalisierung angezeigt.</p>
                         <p>In dem Bereich Skripte unter <b>Javascript</b> kann Javascript-Funktionalität hinzugefügt werden, die
                         beim Starten des InGrid-Editors ausgeführt werden soll. Dadurch lässt sich die Funktionalität beliebig
-                        erweitern und Sonderbehandlung für Felder können ergänzt werden. Es folgen ein paar Beispiele, die dies
-                        für ein Element mit der ID "neuesElement" veranschaulichen soll. Die ersten Beispiele beziehen sich auf 
-                        die Validierung von Feldern, welche während eines normalen Speichervorganges ausgeführt werden. Bei einem 
-                        Fehler wird das Objekt dann nicht gespeichert.</p>
+                        erweitern und Sonderbehandlung für Felder können ergänzt werden. Beispiele dazu finden Sie weiter unten im
+                        Abschnitt "Beispiele: Javascript"</p>
                         
-                        <br />
-                        <i>// Textelement erlaubt nur Email-Adressen</i>
-                        dijit.byId("neuesElement").regExpGen = dojox.validate.regexp.emailAddress;
-                        <br /><br />
-                        <i>// Textelement darf nicht das Wort "NO" haben</i>
-                        dijit.byId("neuesElement").validator = function(value) {<br />
-                            if (value == "NO") return false; else return true;<br />
-                        }
-                        <br /><br />
-                        <p>Möchte man die Validierung nur durchführen, wenn ein Objekt veröffentlich werden soll, so muss ein anderer
-                        Ansatz gewählt werden! Laut des Publisher/Subscriber Prinzips, meldet man sich bei einem Ereignis an. Tritt
-                        dieses Ereignis auf, wird die eigene geschriebene Funktion ebenfalls zu diesem Zeitpunkt ausgeführt. Dafür 
-                        gibt es das spezielle Ereignis "<b>/onBeforeObjectPublish</b>" und kann wie folgt verwendet werden:</p>
-                        <br />
-                        <i>// vor dem Publizieren muss das Element mehr als 5 Zeichen haben</i>
-                        dojo.subscribe("/onBeforeObjectPublish", function(invalidIDs) {<br />
-                            if (dijit.byId("neuesElement").get("value").length &lt; 5) { <br />
-                                invalidIDs.push("neuesElement"); <br />
-                            }<br />
-                        });<br />
-                        
-                        <p>In der Variablen <i>invalidIDs</i> werden die gesamten IDs von den Elementen gesammelt, die einen 
-                        Validierungsfehler aufzeigen.</p>
-                        <p>Ein weiteres verfügbares Ereignis ist "/onObjectClassChange" welches immer auftritt, wenn die Objektklasse
-                        manuell oder automatisch (durch das Laden eines anderen Objektes) sich ändert. Hierbei wird die neue Klasse als
-                        Parameter an den Subscriber übergeben!</p>
-                        <p>Für ein besseres Verständis dieser Prinzipien empfiehlt es sich die Dokumentation des DOJO-Frameworks
-                        anzuschauen! (http://dojotoolkit.org/documentation/)</p><br></br>
-                        
-                        <p>Das <b>IDF-Mapping</b> beschreibt die Abbildung dieses Feldes in das InGrid-Data-Format. Ein Beispiel folgt:</p>
-                        
+                        <p>Das <b>IDF-Mapping</b> beschreibt die Abbildung dieses Feldes in das InGrid-Data-Format (IDF). Nur wenn das
+                        Feld ins IDF geschrieben worden ist, wird es auch in den Detaildaten bei einer Anfrage auftauchen. Beispiele dazu
+                        erfolgen weiter unten im Abschnitt "Beispiele: IDF-Mapping".</p>                        
                         <br></br>
                         
                         <p>Der <b>Indexname</b> definiert den zu verwendenden Namen während der Indexierung des Kataloges. Wird kein
@@ -2062,6 +2032,50 @@
                     </content>
                  </section>
                  
+                 <section help-key="overall-catalog-management-additionalfields-4">
+                    <h4>Beispiele: Javascript</h4>
+                    <content>
+                        Es folgen ein paar Beispiele, die dies
+                        für ein Element mit der ID "neuesElement" veranschaulichen soll. Die ersten Beispiele beziehen sich auf 
+                        die Validierung von Feldern, welche während eines normalen Speichervorganges ausgeführt werden. Bei einem 
+                        Fehler wird das Objekt dann nicht gespeichert.</p>
+                        
+                        <br />
+                        <i>// Textelement erlaubt nur Email-Adressen</i>
+                        dijit.byId("neuesElement").regExpGen = dojox.validate.regexp.emailAddress;
+                        <br /><br />
+                        <i>// Textelement darf nicht das Wort "NO" haben</i>
+                        dijit.byId("neuesElement").validator = function(value) {<br />
+                            if (value == "NO") return false; else return true;<br />
+                        }
+                        <br /><br />
+                        <p>Möchte man die Validierung nur durchführen, wenn ein Objekt veröffentlich werden soll, so muss ein anderer
+                        Ansatz gewählt werden! Laut des Publisher/Subscriber Prinzips, meldet man sich bei einem Ereignis an. Tritt
+                        dieses Ereignis auf, wird die eigene geschriebene Funktion ebenfalls zu diesem Zeitpunkt ausgeführt. Dafür 
+                        gibt es das spezielle Ereignis "<b>/onBeforeObjectPublish</b>" und kann wie folgt verwendet werden:</p>
+                        <br />
+                        <i>// vor dem Publizieren muss das Element mehr als 5 Zeichen haben</i>
+                        dojo.subscribe("/onBeforeObjectPublish", function(invalidIDs) {<br />
+                            if (dijit.byId("neuesElement").get("value").length &lt; 5) { <br />
+                                invalidIDs.push("neuesElement"); <br />
+                            }<br />
+                        });<br />
+                        
+                        <p>In der Variablen <i>invalidIDs</i> werden die gesamten IDs von den Elementen gesammelt, die einen 
+                        Validierungsfehler aufzeigen.</p>
+                        <p>Ein weiteres verfügbares Ereignis ist "/onObjectClassChange" welches immer auftritt, wenn die Objektklasse
+                        manuell oder automatisch (durch das Laden eines anderen Objektes) sich ändert. Hierbei wird die neue Klasse als
+                        Parameter an den Subscriber übergeben!</p>
+                        <p>Für ein besseres Verständis dieser Prinzipien empfiehlt es sich die Dokumentation des DOJO-Frameworks
+                        anzuschauen! (http://dojotoolkit.org/documentation/)</p><br></br>
+                    </content>
+                </section>
+                
+                <section help-key="overall-catalog-management-additionalfields-5">
+                    <h4>Beispiele: IDF-Mapping</h4>
+                    <content>
+                    </content>
+                </section>         
             </content>
         </section>
         <section help-key="overall-catalog-management-6">

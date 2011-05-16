@@ -236,7 +236,7 @@
                     <!-- CONTENT START -->
                     <div class="inputContainer">
                         <span class="label">
-                            <label for="locationTextBox" onclick="javascript:dialog.showContextHelp(arguments[0], 8008, 'R&auml;umliche Einheit festlegen')">
+                            <label for="locationTextBox" onclick="javascript:dialog.showContextHelp(arguments[0], 8008)">
                                 <fmt:message key="dialog.admin.catalog.selectLocation.setLocation" />
                             </label>
                         </span>

@@ -310,14 +310,14 @@
                             <span class="outer">
                             <div>
                                 <span class="label">
-                                    <label for="addressSearchUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 7017, 'Einheit/Institution')">
+                                    <label for="addressSearchUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 7017)">
                                         <fmt:message key="dialog.searchAddress.unitOrInstitution" />
                                     </label>
                                 </span><span class="input spaceBelow"><input id="addressSearchUnit" class="dijitInputContainer" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
                             </div></span>
                             <span class="outer halfWidth"><div>
                                 <span class="label">
-                                    <label for="addressSearchLastname" onclick="javascript:dialog.showContextHelp(arguments[0], 7018, 'Nachname')">
+                                    <label for="addressSearchLastname" onclick="javascript:dialog.showContextHelp(arguments[0], 7018)">
                                         <fmt:message key="dialog.searchAddress.surName" />
                                     </label>
                                 </span><span class="input"><input id="addressSearchLastname" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
@@ -325,7 +325,7 @@
                             </span>
                             <span class="outer halfWidth"><div>
                                 <span class="label">
-                                    <label for="addressSearchFirstname" onclick="javascript:dialog.showContextHelp(arguments[0], 7019, 'Vorname')">
+                                    <label for="addressSearchFirstname" onclick="javascript:dialog.showContextHelp(arguments[0], 7019)">
                                         <fmt:message key="dialog.searchAddress.foreName" />
                                     </label>
                                 </span><span class="input"><input id="addressSearchFirstname" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>

@@ -272,15 +272,15 @@ function hideLoadingZone() {
 	            </div>
 				<div class="inputContainer grey">
 				    <span class="outer"><div>
-				    <span class="label"><label for="duplicatesObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 8030, 'Objektname')"><fmt:message key="dialog.admin.catalog.management.duplicates.objectName" /></label></span>
+				    <span class="label"><label for="duplicatesObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 8030)"><fmt:message key="dialog.admin.catalog.management.duplicates.objectName" /></label></span>
 					<span class="input spaceBelow"><input type="text" id="duplicatesObjectName" dojoType="dijit.form.ValidationTextBox" style="width:100%;"/></span>
 					</div></span>
 					<span class="outer"><div>
-					<span class="label"><label for="duplicatesObjectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 8031, 'Klasse')"><fmt:message key="dialog.admin.catalog.management.duplicates.objectClass" /></label></span>
+					<span class="label"><label for="duplicatesObjectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 8031)"><fmt:message key="dialog.admin.catalog.management.duplicates.objectClass" /></label></span>
 					<span class="input spaceBelow"><input type="text" id="duplicatesObjectClass" disabled="true" dojoType="dijit.form.ValidationTextBox" style="width:100%;" /></span>
 					</div></span>
 					<span class="outer"><div>
-					<span class="label"><label for="duplicatesObjectDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 8032, 'Objektbeschreibung')"><fmt:message key="dialog.admin.catalog.management.duplicates.objectDescription" /></label></span>
+					<span class="label"><label for="duplicatesObjectDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 8032)"><fmt:message key="dialog.admin.catalog.management.duplicates.objectDescription" /></label></span>
    	           		<span class="input"><input type="text" mode="textarea" id="duplicatesObjectDescription" disabled="true" dojoType="dijit.form.SimpleTextarea" style="width:100%;" /></span> 
 					</div></span>
 					<div class="fill"></div>

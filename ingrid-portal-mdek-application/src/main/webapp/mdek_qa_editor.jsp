@@ -566,7 +566,7 @@ scriptScopeQaE.reloadPage = function() {
 				</div> <!-- ContentPane end -->
 			</div> <!-- TabContainer end -->
 			<div class="spacer"></div>
-			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7066)"><fmt:message key="dialog.qa.editor.spatial" /></label></span>
+			<span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7076)"><fmt:message key="dialog.qa.editor.spatial" /></label></span>
 
     		<div id="spatialObjContentPane" dojoType="dijit.layout.ContentPane" title="<fmt:message key="dialog.qa.objects" />" style="overflow:hidden;">
 

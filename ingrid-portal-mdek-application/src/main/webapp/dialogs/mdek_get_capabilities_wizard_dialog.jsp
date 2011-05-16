@@ -131,7 +131,7 @@ function hideLoadingZone() {
             </div>
 			<div class="inputContainer field grey">
 			    <span class="outer"><div style="padding:15px !important;">
-				<span class="label"><label for="assistantURL" onclick="javascript:dialog.showContextHelp(arguments[0], 8061, 'Capabilities URL')"><fmt:message key="dialog.wizard.getCap.url" /></label></span>
+				<span class="label"><label for="assistantURL" onclick="javascript:dialog.showContextHelp(arguments[0], 8061)"><fmt:message key="dialog.wizard.getCap.url" /></label></span>
 				<span class="input"><input type="text" id="assistantURL" name="assistantURL" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
                 </div></span>
                 <div class="fill"></div>

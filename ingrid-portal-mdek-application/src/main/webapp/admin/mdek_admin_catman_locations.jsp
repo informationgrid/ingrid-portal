@@ -166,7 +166,7 @@ scriptScopeLocations.downloadAsCSV = function() {
 	               <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-8#overall-catalog-management-8', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 	           </div>
 				<span class="label">
-					<label for="importFile"><!-- onclick="javascript:dialog.showContextHelp(arguments[0], 8057, '<fmt:message key='dialog.admin.catalog.management.locations.selectUpdateDataset' />')">-->
+					<label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 8057)">
 						<fmt:message key="dialog.admin.catalog.management.locations.selectUpdateDataset" />
 					</label>
 				</span>

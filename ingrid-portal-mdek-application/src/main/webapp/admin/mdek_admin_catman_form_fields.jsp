@@ -208,7 +208,7 @@ scopeAdminFormFields.writeControl = function(control, putHere, editFunction, del
         dojo.addClass(outerDiv.domNode, "legacyControl");
         innerSpanTitlePadded.innerHTML += UtilUI.getDescriptionForGuiId(control.id.substr("uiElement".length));// + ".description");
     } else 
-        innerSpanTitlePadded.innerHTML += control.label[userLocale];
+        innerSpanTitlePadded.innerHTML += control.label[userLocale] == "" ? control.label.en : control.label[userLocale];
     
     // add quick info for non legacy elements
     if (control.type != "legacyControl") {

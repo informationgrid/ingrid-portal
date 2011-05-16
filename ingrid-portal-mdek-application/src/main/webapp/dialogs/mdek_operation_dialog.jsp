@@ -420,7 +420,7 @@ closeThisDialog = function() {
       <div id="operationForm" style="visibility:hidden;">
           <div class="inputContainer field">
             <span class="outer required"><div>
-            <span class="label"><label id="operationsNameLabel" for="operationsName" onclick="javascript:dialog.showContextHelp(arguments[0], 5201, 'Name der Operation')"><fmt:message key="dialog.operation.opName" />*</label></span>
+            <span class="label"><label id="operationsNameLabel" for="operationsName" onclick="javascript:dialog.showContextHelp(arguments[0], 5201)"><fmt:message key="dialog.operation.opName" />*</label></span>
     		<span class="input">
     			<input id="operationsNameSelect" required="true" style="width:100%;"/>
     			<input type="text" maxLength="120" id="operationsName" style="width:100%;" dojoType="dijit.form.ValidationTextBox"/>
@@ -429,13 +429,13 @@ closeThisDialog = function() {
             
             <div class="inputContainer">
               <span class="outer halfWidth"><div>
-                <span class="label"><label for="operationsDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 5202, 'Beschreibung')"><fmt:message key="dialog.operation.description" /></label></span>
+                <span class="label"><label for="operationsDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 5202)"><fmt:message key="dialog.operation.description" /></label></span>
                 <span class="input">
     				<input type="text" id="operationsDescription" rows="3" style="width:100%;" dojoType="dijit.form.SimpleTextarea" />            
                 </span></div>
               </span>
               <span class="outer halfWidth required"><div>
-                <span class="label"><label id="operationsPlatformLabel" for="operationsPlatform" onclick="javascript:dialog.showContextHelp(arguments[0], 5203, 'Unterst&uuml;tzte Plattformen')"><fmt:message key="dialog.operation.platforms" />*</label></span>
+                <span class="label"><label id="operationsPlatformLabel" for="operationsPlatform" onclick="javascript:dialog.showContextHelp(arguments[0], 5203)"><fmt:message key="dialog.operation.platforms" />*</label></span>
                 <div class="tableContainer">
     			  <div id="operationsPlatform" autoHeight="2" interactive="true" class="hideTableHeader"></div>
                 </div></div>
@@ -444,12 +444,12 @@ closeThisDialog = function() {
             </div>
             
             <span class="outer"><div>
-            <span class="label"><label for="operationsCall" onclick="javascript:dialog.showContextHelp(arguments[0], 5204, 'Aufruf')"><fmt:message key="dialog.operation.call" /></label></span>
+            <span class="label"><label for="operationsCall" onclick="javascript:dialog.showContextHelp(arguments[0], 5204)"><fmt:message key="dialog.operation.call" /></label></span>
             <span class="input"><input type="text" maxLength="255" id="operationsCall" name="operationsCall" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
             </div></span>
             <div class="inputContainer">
               <span class="outer"><div>
-              <span class="label"><label id="operationsParameterLabel" for="operationsParameter" onclick="javascript:dialog.showContextHelp(arguments[0], 5205, 'Parameter')"><fmt:message key="dialog.operation.parameter" /></label></span>
+              <span class="label"><label id="operationsParameterLabel" for="operationsParameter" onclick="javascript:dialog.showContextHelp(arguments[0], 5205)"><fmt:message key="dialog.operation.parameter" /></label></span>
               <div class="tableContainer">
     			<div id="operationsParameter" interactive="true"></div>
               </div></div>
@@ -458,13 +458,13 @@ closeThisDialog = function() {
     
             <div class="inputContainer">
               <span class="outer halfWidth required"><div>
-                <span class="label"><label id="operationsAddressLabel" for="operationsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 5206, 'Zugriffsadresse')"><fmt:message key="dialog.operation.address" />*</label></span>
+                <span class="label"><label id="operationsAddressLabel" for="operationsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 5206)"><fmt:message key="dialog.operation.address" />*</label></span>
                 <div class="tableContainer">
     			  <div id="operationsAddress" autoHeight="2" interactive="true" class="hideTableHeader"></div>
                 </div></div>
               </span>
               <span class="outer halfWidth"><div>
-                <span class="label"><label for="operationsDependencies" onclick="javascript:dialog.showContextHelp(arguments[0], 5207, 'Abh&auml;ngigkeiten')"><fmt:message key="dialog.operation.dependencies" /></label></span>
+                <span class="label"><label for="operationsDependencies" onclick="javascript:dialog.showContextHelp(arguments[0], 5207)"><fmt:message key="dialog.operation.dependencies" /></label></span>
                 <div class="tableContainer">
     			  <div id="operationsDependencies" autoHeight="2" interactive="true" class="hideTableHeader"></div>
                 </div></div>

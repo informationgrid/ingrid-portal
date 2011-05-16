@@ -687,7 +687,7 @@ function hideLoadingZone() {
             	<option value="1"><fmt:message key="dialog.research.ext.obj.contains.one" /></option>
             </select></span>
 
-          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7046, 'Suchmodus')"><fmt:message key="dialog.research.ext.obj.mode" /></label></span>
+          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7046)"><fmt:message key="dialog.research.ext.obj.mode" /></label></span>
           <div class="checkboxContainer">
             <input type="radio" name="objMode" id="objMode1" class="radio entry first" />
             <label class="inActive entry closer w116" for="objMode1"><fmt:message key="dialog.research.ext.obj.full" /></label>
@@ -747,7 +747,7 @@ function hideLoadingZone() {
     	</div>
     	<div class="spacer"></div>
 	      <div class="inputContainer field inTabWithMenu grey noSpaceBelow">
-          <span class="label"><label for="objTopicThesaurus" onclick="javascript:dialog.showContextHelp(arguments[0], 7047, 'Thematischer Fachbegriff')"><fmt:message key="dialog.research.ext.obj.thesaurusText" /></label></span>
+          <span class="label"><label for="objTopicThesaurus" onclick="javascript:dialog.showContextHelp(arguments[0], 7047)"><fmt:message key="dialog.research.ext.obj.thesaurusText" /></label></span>
           <div class="input spaceBelow">
             <span class="inputButtonInLineLeft">
               <input type="text" id="objTopicThesaurus" name="objTopicThesaurus" dojoType="dijit.form.ValidationTextBox" style="width:100%;" />
@@ -770,7 +770,7 @@ function hideLoadingZone() {
 		  </span>
 
 		  <span style="float:right;">
-              <span class="label"><label for="objExtSearchThesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 7048, 'Thesaurus Suchbegriffe')"><fmt:message key="dialog.research.ext.obj.searchTerms" /></label></span>
+              <span class="label"><label for="objExtSearchThesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 7048)"><fmt:message key="dialog.research.ext.obj.searchTerms" /></label></span>
 	          <div class="tableContainer spaceBelow">
 	              <div id="objExtSearchThesaurusTerms" autoHeight="8" minRows="8" class="hideTableHeader"></div>
 	      	  </div>
@@ -810,7 +810,7 @@ function hideLoadingZone() {
 		<div class="spacer"></div>
 
         <div class="inputContainer field inTabWithMenu grey noSpaceBelow">
-          <span class="label"><label for="objLocationTopic" onclick="javascript:dialog.showContextHelp(arguments[0], 7049, 'Raumbezug')"><fmt:message key="dialog.research.ext.obj.thesaurusLocationText" /></label></span>
+          <span class="label"><label for="objLocationTopic" onclick="javascript:dialog.showContextHelp(arguments[0], 7049)"><fmt:message key="dialog.research.ext.obj.thesaurusLocationText" /></label></span>
           <div class="input spaceBelow">
             <span class="inputButtonInLineLeft">
               <input type="text" id="objLocationTopic" dojoType="dijit.form.ValidationTextBox" style="width:100%;"/>
@@ -833,7 +833,7 @@ function hideLoadingZone() {
 		  </span>
 
 		  <span style="float:right;">
-              <span class="label"><label for="objExtSearchLocationTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 7050, 'Geo-Thesaurus Suchbegriffe')"><fmt:message key="dialog.research.ext.obj.searchTerms" /></label></span>
+              <span class="label"><label for="objExtSearchLocationTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 7050)"><fmt:message key="dialog.research.ext.obj.searchTerms" /></label></span>
 	          <div class="tableContainer spaceBelow">
 	              <div id="objExtSearchLocationTerms" autoHeight="8" minRows="8" class="hideTableHeader"></div>
 	      	  </div>
@@ -868,7 +868,7 @@ function hideLoadingZone() {
     	  </div>
     	<div class="spacer"></div>
         <div class="inputContainer field inTabWithMenu">
-          <span class="label"><label for="objSpaceGeoUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 7051, 'Freier Raumbezug')"><fmt:message key="dialog.research.ext.obj.customLocation" />:</label></span>
+          <span class="label"><label for="objSpaceGeoUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 7051)"><fmt:message key="dialog.research.ext.obj.customLocation" />:</label></span>
           <span class="input"><input listId="1100" style="width:782px;" id="objSpaceGeoUnit" /></span>
     	  </div>
         <div class="spacerField"></div>
@@ -914,7 +914,7 @@ function hideLoadingZone() {
     	  </div>
     	<div class="spacer"></div>
         <div class="inputContainer field inTabWithMenu grey">
-          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7052, 'Zeitbezug')"><fmt:message key="dialog.research.ext.obj.timeRef" />:</label></span>
+          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7052)"><fmt:message key="dialog.research.ext.obj.timeRef" />:</label></span>
           <span class="note"><fmt:message key="dialog.research.ext.obj.timeIn" /></span>
           <div class="spacer"></div>
           <div class="inputContainer spaceBelow" style="width:50%;">
@@ -950,7 +950,7 @@ function hideLoadingZone() {
           </div>
 
           <div class="inputContainer noSpaceBelow">
-            <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7053, 'Erweiterung des Zeitbezuges')"><fmt:message key="dialog.research.ext.obj.timeExt" /></label></span>
+            <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7053)"><fmt:message key="dialog.research.ext.obj.timeExt" /></label></span>
             <div class="checkboxContainer">
               <span class="input"><input type="checkbox" name="objTimeRefExtend1" id="objTimeRefExtend1" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTimeRefExtend1"><fmt:message key="dialog.research.ext.obj.timeIntersect" /></label></span>
               <span class="input"><input type="checkbox" name="objTimeRefExtend2" id="objTimeRefExtend2" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTimeRefExtend2"><fmt:message key="dialog.research.ext.obj.timeContains" /></label></span>

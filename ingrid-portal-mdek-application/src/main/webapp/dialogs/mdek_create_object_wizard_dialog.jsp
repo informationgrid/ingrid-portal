@@ -568,12 +568,12 @@ closeThisDialog = function() {
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div class="inputContainer field grey" style="padding:10px !important;">
 			    <span class="outer"><div>
-				    <span class="label"><label for="assistantURL" onclick="javascript:dialog.showContextHelp(arguments[0], 8063, 'URL der Internetseite')"><fmt:message key="dialog.wizard.create.url" /></label></span>
+				    <span class="label"><label for="assistantURL" onclick="javascript:dialog.showContextHelp(arguments[0], 8063)"><fmt:message key="dialog.wizard.create.url" /></label></span>
 				    <span class="input"><input type="text" id="assistantURL" name="assistantURL" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
 				</div></span>
                 <span class="outer"><div>
                 <span>
-			     <label for="assistantNumWords" onclick="javascript:dialog.showContextHelp(arguments[0], 8064, 'Anzahl der zu analysierenden W&ouml;rter')"><fmt:message key="dialog.wizard.create.numWords" /></label></span>
+			     <label for="assistantNumWords" onclick="javascript:dialog.showContextHelp(arguments[0], 8064)"><fmt:message key="dialog.wizard.create.numWords" /></label></span>
 				<span><input dojoType="dijit.form.NumberTextBox" min="0" max="1000" maxLength="4" id="assistantNumWords" class="w038" /></span>
 				<div class="checkboxContainer">
 					<span class="input"><input type="checkbox" name="assistantIncludeMetaTagCheckbox" id="assistantIncludeMetaTagCheckbox" dojoType="dijit.form.CheckBox" checked /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8065, 'Beschreibung')"><fmt:message key="dialog.wizard.create.showDescription" /></label></span>
@@ -598,7 +598,7 @@ closeThisDialog = function() {
 			    <span class="outer"><div>
 				<span class="label"><h2><fmt:message key="dialog.wizard.create.result" /></h2></span>
 					<div class="checkboxContainer">
-						<span class="input" style="margin-bottom: 5px;"><input type="checkbox" name="assistantHtmlTitleCheckbox" id="assistantHtmlTitleCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8066, 'Titel')"><fmt:message key="dialog.wizard.create.addTitle" /></label></span>
+						<span class="input" style="margin-bottom: 5px;"><input type="checkbox" name="assistantHtmlTitleCheckbox" id="assistantHtmlTitleCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8066)"><fmt:message key="dialog.wizard.create.addTitle" /></label></span>
 					</div>
 					<div class="inputContainer">
 		           		<span class="input" style="margin-bottom: 5px;"><input type="text" id="assistantHtmlTitle" dojoType="dijit.form.ValidationTextBox" style="width:100%;" /></span> 
@@ -607,7 +607,7 @@ closeThisDialog = function() {
 
 				<span id="assistantDescriptionContainer">
 					<div class="checkboxContainer">
-						<span class="input"><input type="checkbox" name="assistantDescriptionCheckbox" id="assistantDescriptionCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8067, 'Beschreibung')"><fmt:message key="dialog.wizard.create.addDescription" /></label></span>
+						<span class="input"><input type="checkbox" name="assistantDescriptionCheckbox" id="assistantDescriptionCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8067)"><fmt:message key="dialog.wizard.create.addDescription" /></label></span>
 					</div>
 					<div class="inputContainer">
 		           		<span class="input" style="margin-bottom: 5px;"><input type="text" mode="textarea" id="assistantDescription" dojoType="dijit.form.SimpleTextarea" rows="5" style="width:100%;" /></span> 
@@ -616,7 +616,7 @@ closeThisDialog = function() {
 
 				<span id="assistantHtmlContentContainer">
 					<div class="checkboxContainer">
-						<span class="input"><input type="checkbox" name="assistantHtmlContentCheckbox" id="assistantHtmlContentCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8068, 'Inhalt')"><fmt:message key="dialog.wizard.create.addContent" /></label></span>
+						<span class="input"><input type="checkbox" name="assistantHtmlContentCheckbox" id="assistantHtmlContentCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8068)"><fmt:message key="dialog.wizard.create.addContent" /></label></span>
 					</div>
 					<div class="inputContainer">
 		           		<span class="input"><input type="text" mode="textarea" id="assistantHtmlContent" dojoType="dijit.form.SimpleTextarea" rows="5" style="width:100%;" /></span> 
@@ -625,28 +625,28 @@ closeThisDialog = function() {
                 </div></span>
                 
                 <span class="outer"><div>
-				<span class="label"><label for="assistantDescriptorTable" onclick="javascript:dialog.showContextHelp(arguments[0], 8069, 'Deskriptoren')"><fmt:message key="dialog.wizard.create.descriptors" /></label></span>
+				<span class="label"><label for="assistantDescriptorTable" onclick="javascript:dialog.showContextHelp(arguments[0], 8069)"><fmt:message key="dialog.wizard.create.descriptors" /></label></span>
 	                <div class="tableContainer" style="margin-bottom: 5px;">
 	                	<div id="assistantDescriptorTable" interactive="true" class="hideTableHeader"></div>
 	                </div>
 
     				<div class="checkboxContainer">
-    					<span class="input"><input type="checkbox" name="assistantDescriptorTableCheckbox" id="assistantDescriptorTableCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8070, 'Alle Deskriptoren ausw&auml;hlen')"><fmt:message key="dialog.wizard.create.selectAllDescriptors" /></label></span>
+    					<span class="input"><input type="checkbox" name="assistantDescriptorTableCheckbox" id="assistantDescriptorTableCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8070)"><fmt:message key="dialog.wizard.create.selectAllDescriptors" /></label></span>
     				</div>
                 </div></span>
 
                 <span class="outer"><div>
-	                <span class="label"><label for="assistantSpatialRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 8071, 'Geothesaurus-Raumbezug')"><fmt:message key="dialog.wizard.create.spatial" /></label></span>
+	                <span class="label"><label for="assistantSpatialRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 8071)"><fmt:message key="dialog.wizard.create.spatial" /></label></span>
 					<div class="tableContainer" style="margin-bottom: 5px;">
 						<div id="assistantSpatialRefTable" interactive="true" ></div>
 	                </div>
     				<div class="checkboxContainer">
-    					<span class="input"><input type="checkbox" name="assistantSpatialRefTableCheckbox" id="assistantSpatialRefTableCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8072, 'Alle Raumbez&uuml;ge ausw&auml;hlen')"><fmt:message key="dialog.wizard.create.selectAllSpatialRefs" /></label></span>
+    					<span class="input"><input type="checkbox" name="assistantSpatialRefTableCheckbox" id="assistantSpatialRefTableCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8072)"><fmt:message key="dialog.wizard.create.selectAllSpatialRefs" /></label></span>
     				</div>
                 </div></span>
                 
                 <span class="outer"><div>
-					<span class="label"><label for="assistantTimeRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 8073, 'Zeitbezug')"><fmt:message key="dialog.wizard.create.time" /></label></span>
+					<span class="label"><label for="assistantTimeRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 8073)"><fmt:message key="dialog.wizard.create.time" /></label></span>
 	                <div class="tableContainer">
 	                	<div id="assistantTimeRefTable"></div>
 					</div>

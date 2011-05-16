@@ -96,7 +96,7 @@ scriptScope.addComment = function() {
             </div>
             <div class="inputContainer">
                 <span class="label">
-                    <label for="commentNewComment" onclick="javascript:dialog.showContextHelp(arguments[0], 7043, 'Neuen Kommentar verfassen')">
+                    <label for="commentNewComment" onclick="javascript:dialog.showContextHelp(arguments[0], 7043)">
                         <fmt:message key="dialog.comments.newComment" />
                     </label>
                 </span>

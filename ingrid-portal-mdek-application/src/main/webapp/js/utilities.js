@@ -583,7 +583,7 @@ UtilUdk.loadHelpMessage = function(guiId) {
 	var cls = this.isObjectSelected() ? this.getCurrentObjectClass() : this.getCurrentAddressClass(); 
 
 	// Then load the help message via HelpService
-	HelpService.getHelpEntry(guiId, cls, {
+	HelpService.getHelpEntry(guiId, cls, userLocale, {
 		callback: function(helpEntry) {
 			if (helpEntry) {
 				deferred.callback(helpEntry);

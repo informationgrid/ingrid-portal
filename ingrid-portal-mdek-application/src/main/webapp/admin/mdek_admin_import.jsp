@@ -528,7 +528,7 @@ function returnToBr(string) {
             <table class="inputContainer field grey">
                 <tr>
                     <td nowrap>
-                        <label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 8074, 'Import-Datei')">
+                        <label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 8074)">
                             <fmt:message key="dialog.admin.import.file" />:
                         </label>
                     </td>
@@ -538,7 +538,7 @@ function returnToBr(string) {
                 </tr>
                 <tr>
                     <td>
-                        <label for="importFileType" onclick="javascript:dialog.showContextHelp(arguments[0], 8074, 'Import-Datei')">
+                        <label for="importFileType" onclick="javascript:dialog.showContextHelp(arguments[0], 8174)">
                             <fmt:message key="dialog.admin.import.file.type" />:
                         </label>
                     </td>
@@ -553,7 +553,7 @@ function returnToBr(string) {
                 <tr>
                     <td  colspan="2">
                         <input type="checkbox" id="publishImportedDatasetsCheckbox" dojoType="dijit.form.CheckBox" />
-                        <label onclick="javascript:dialog.showContextHelp(arguments[0], 8075, 'Importierte Datens&auml;tze ver&ouml;ffentlichen')">
+                        <label onclick="javascript:dialog.showContextHelp(arguments[0], 8075)">
                             <fmt:message key="dialog.admin.import.publish" />
                         </label>
                     </td>
@@ -561,7 +561,7 @@ function returnToBr(string) {
                 <tr>
                     <td  colspan="2">
                         <input type="checkbox" id="separateImportCheckbox" dojoType="dijit.form.CheckBox" />
-                        <label onclick="javascript:dialog.showContextHelp(arguments[0], 8076, 'Importierte Datens&auml;tze ausschliesslich unter dem gew&auml;hlten Importknoten anlegen')">
+                        <label onclick="javascript:dialog.showContextHelp(arguments[0], 8076)">
                             <fmt:message key="dialog.admin.import.importToSubtree" />
                         </label>
                     </td>
@@ -570,7 +570,7 @@ function returnToBr(string) {
            <div class="spacer"></div>
             <!-- SPLIT CONTAINER START -->
             <div id="importTree">
-                <span class="label">
+                <span class="label" onclick="javascript:dialog.showContextHelp(arguments[0], 8085)">
                     <label>
                         <fmt:message key="dialog.admin.import.tree" />
                     </label>
@@ -586,7 +586,7 @@ function returnToBr(string) {
                         <table style="width:100%;">
                             <tr>
                                 <td style="width:5%;"></td>
-                                <td style="width:95%;"><label for="importTreeParentObject" onclick="javascript:dialog.showContextHelp(arguments[0], 8077, 'Ausgew&auml;hltes &uuml;bergeordnetes Objekt')">
+                                <td style="width:95%;"><label for="importTreeParentObject" onclick="javascript:dialog.showContextHelp(arguments[0], 8077)">
                                     <fmt:message key="dialog.admin.import.parentObject" />
                                 </label></td>
                             </tr>
@@ -599,7 +599,7 @@ function returnToBr(string) {
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><label for="importTreeParentAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 8078, 'Ausgew&auml;hlte &uuml;bergeordnete Adresse')">
+                                <td><label for="importTreeParentAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 8078)">
                                         <fmt:message key="dialog.admin.import.parentAddress" />
                                     </label>
                                 </td>

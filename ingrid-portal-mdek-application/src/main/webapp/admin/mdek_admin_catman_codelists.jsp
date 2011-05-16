@@ -1046,8 +1046,8 @@
                                 <div dojoType="dijit.layout.ContentPane" region="top" class="grey">
                                 <span class="outer"><div>
                                     <span class="label">
-                                        <label for="selectionList">
-                                            <!-- onclick="javascript:dialog.showContextHelp(arguments[0], 8036, "<fmt:message key='dialog.admin.catalog.management.codelists.codelist' />")">--><fmt:message key="dialog.admin.catalog.management.codelists.codelist" />
+                                        <label for="selectionList" onclick="javascript:dialog.showContextHelp(arguments[0], 8036)">
+                                            <fmt:message key="dialog.admin.catalog.management.codelists.codelist" />
                                         </label>
                                     </span>
                                     <span class="input">
@@ -1069,8 +1069,7 @@
                                     <div class="checkboxContainer">
                                         <span class="input spaceBelow">
                                             <input type="checkbox" onclick="switchTableDisplay('codeListTable12', 'codeListTable11', dijit.byId('selectionListDefault').checked);" id="selectionListDefault" dojoType="dijit.form.CheckBox" />
-                                            <label>
-                                                <!-- onclick="javascript:dialog.showContextHelp(arguments[0], 8037, "<fmt:message key='dialog.admin.catalog.management.codelists.setDefault' />")">--><fmt:message key="dialog.admin.catalog.management.codelists.setDefault" />
+                                            <label onclick="javascript:dialog.showContextHelp(arguments[0], 8037)"><fmt:message key="dialog.admin.catalog.management.codelists.setDefault" />
                                             </label>
                                         </span>
                                     </div>

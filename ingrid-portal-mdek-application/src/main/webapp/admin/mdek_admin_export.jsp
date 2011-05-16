@@ -325,18 +325,18 @@ function hideLoadingZone() {
         		<!-- LEFT HAND SIDE CONTENT START -->
 				<table class="inputContainer field grey">
 					<tr>
-						<td><input type="radio" name="exportType" id="exportType1" class="radio" style="vertical-align: middle;" /><label class="noRightMargin" for="exportType1" style="padding-left: 5px;" onclick="javascript:dialog.showContextHelp(arguments[0], 8081, 'Teilexport')" ><fmt:message key="dialog.admin.export.partialExport" /></label></td>
+						<td><input type="radio" name="exportType" id="exportType1" class="radio" style="vertical-align: middle;" /><label class="noRightMargin" for="exportType1" style="padding-left: 5px;" onclick="javascript:dialog.showContextHelp(arguments[0], 8081)" ><fmt:message key="dialog.admin.export.partialExport" /></label></td>
 						<td><span class="rightAlign marginRight"><div toggle="plain" listId="1370" style="width:485px;" id="exportXMLCriteria"></div></span></td>
 					</tr>
 					<tr>
-						<td><input type="radio" name="exportType" id="exportType2" class="radio" style="vertical-align: middle;" /><label class="noRightMargin" for="exportType2" style="padding-left: 5px;" onclick="javascript:dialog.showContextHelp(arguments[0], 8082, 'Teilbaumexport')"><fmt:message key="dialog.admin.export.treeExport" /></label></td>
+						<td><input type="radio" name="exportType" id="exportType2" class="radio" style="vertical-align: middle;" /><label class="noRightMargin" for="exportType2" style="padding-left: 5px;" onclick="javascript:dialog.showContextHelp(arguments[0], 8082)"><fmt:message key="dialog.admin.export.treeExport" /></label></td>
 						<td><span class="rightAlign marginRight"><input type="text" id="exportTreeName" name="exportTreeName" style="width:100%;" disabled="true" dojoType="dijit.form.ValidationTextBox" /></span></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td>
                             <span class="functionalLink marginRight" style="position:relative;margin-top: 0px;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:scriptScopeExport.selectDataset()" title="<fmt:message key="dialog.admin.export.selectTree" /> [Popup]"><fmt:message key="dialog.admin.export.selectTree" /></a></span>
-						    <span class="rightAlign marginRight"><span class="input leftAlign"><input type="checkbox" name="exportTreeSelectionOnly" id="exportTreeSelectionOnly" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8083, 'Nur der ausgew&auml;hlte Datensatz')"><fmt:message key="dialog.admin.export.selectedNodeOnly" /></label></span></span>
+						    <span class="rightAlign marginRight"><span class="input leftAlign"><input type="checkbox" name="exportTreeSelectionOnly" id="exportTreeSelectionOnly" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8083)"><fmt:message key="dialog.admin.export.selectedNodeOnly" /></label></span></span>
                         </td>
 					</tr>
 
