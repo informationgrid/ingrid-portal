@@ -64,6 +64,11 @@ public class DetailDataPreparerIdf1_0_0 {
 		LEFT, ABOVE, DURING
 	}
 	
+	public enum TimeSpatialType {
+		TIME, SPATIAL
+	}
+	
+	
 	public DetailDataPreparerIdf1_0_0(Node node, Context context, RenderRequest request, String iPlugId, RenderResponse response) {
 		this.rootNode = node;
 		this.context = context;

@@ -261,6 +261,12 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			xpathExpression = "./gmd:dataQualityInfo/gmd:DQ_DataQuality";
     		getDataQualityClass(elementsDataQuality, xpathExpression);
     		
+   // "Tab Zusätzliche Felder"
+    		
+    		xpathExpression ="./idf:additionalDataSection";
+			getAdditionalFields(elementsAdditionalField, xpathExpression);
+			
+    		
 			if(elementsReference.size() > 0){
 				content.put(DATA_TAB_REFERENCE, elementsReference);
 			}
@@ -279,10 +285,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			
 			content.put(DATA_TAB_GENERAL, elementsGeneral);
 			content.put(DATA_TAB_AREA_TIME, elementsAreaTime);
-			
-			// "Zusätzliche Felder"
-			xpathExpression ="idf:additionalDataSection";
-			getAdditionalFields(elementsAdditionalField, xpathExpression);
 			
 			if(elementsAdditionalField.size() > 0){
 				content.put(DATA_TAB_ADDITIONAL_FIELD, elementsAdditionalField);
@@ -1063,6 +1065,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	}
 
 	private void getAdditionalFields(ArrayList elements, String xpathExpression) {
+		getAdditionalFields(elements, xpathExpression, null);
+	}
+
+	private void getAdditionalFields(ArrayList elements, String xpathExpression, TimeSpatialType timeSpatialType) {
 
 		String lang = request.getLocale().getLanguage().toString();
 		String id = "";
@@ -1075,6 +1081,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			for (int i=0; i < nodeList.getLength(); i++){
 				Node node = nodeList.item(i);
 				String tmpId = XPathUtils.getString(node, "./@id").trim();
+				
 				if(!id.equals(tmpId)){
 					newAdditionalRubric = true;
 					additionalField = new HashMap();
@@ -1084,92 +1091,151 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				}
 				if(node.getLocalName()!= null){
 					if(node.hasChildNodes() && node.getLocalName().equals("additionalDataSection") && node.getNamespaceURI().equals(IDFNamespaceContext.NAMESPACE_URI_IDF)){
-						additionalField.put("title", getNodeIdfTitle(node, lang));
-						NodeList childNodeList = node.getChildNodes();
-						for (int j=0; j < childNodeList.getLength(); j++){
-							Node childNode = childNodeList.item(j);
-							if(childNode.getLocalName()!= null){
-								if(childNode.getLocalName().equals("additionalDataField") && childNode.getNamespaceURI().equals(IDFNamespaceContext.NAMESPACE_URI_IDF)){
-									String title = getNodeIdfTitle(childNode, lang);
-									String body = XPathUtils.getString(childNode, "./idf:data");
-									String postfix = getNodeIdfPostfix(childNode, lang);
-									
-									if(body.length() > 0){
-										if(postfix.length() > 0){
-											addElementEntryLabelLeft(list, body + " " + postfix, title);	
-										}else{
-											addElementEntryLabelLeft(list, body, title);
-										}
-									}
-								}else if(childNode.getLocalName().equals("additionalDataTable") && childNode.getNamespaceURI().equals(IDFNamespaceContext.NAMESPACE_URI_IDF)){
-									String title = getNodeIdfTitle(childNode, lang);
-									
-									HashMap element = new HashMap();
-									element.put("type", "table");
-									element.put("title", title);
-									
-									ArrayList head = new ArrayList();
-									element.put("head", head);
-									ArrayList body = new ArrayList();
-									element.put("body", body);
-									
-									int countRows=0;
-									NodeList tableColumnNodeList = XPathUtils.getNodeList(childNode, "./idf:tableColumn"); 
-									// Create header
-									for (int iHead=0; iHead < tableColumnNodeList.getLength(); iHead++){
-										Node headNode = tableColumnNodeList.item(iHead);
-										head.add(getNodeIdfTitle(headNode, lang));
-										NodeList rowNodeList = XPathUtils.getNodeList(headNode, "./idf:data");
-										if(countRows < rowNodeList.getLength()){
-											countRows = rowNodeList.getLength();
-										}
-									}
-									// Create row
-									for (int iRow=1; iRow<=countRows;iRow++){
-										ArrayList row = new ArrayList();
-										for (int iCell=0; iCell < tableColumnNodeList.getLength(); iCell++){
-											Node tableColumnNode = tableColumnNodeList.item(iCell);
-											if(XPathUtils.nodeExists(tableColumnNode, "./idf:data["+iRow+"]")){
-												Node cellNode = XPathUtils.getNode(tableColumnNode, "./idf:data["+iRow+"]");
-												String value = "";
-												if(cellNode.getFirstChild() != null){
-													if(cellNode.getFirstChild().getNodeValue() != null){
-														value = cellNode.getFirstChild().getNodeValue().trim();
-													}
-													if(value!=null){
-														row.add(value);
-													}
-												}else{
-													row.add("");
-												}
-											}else{
-												row.add("");
-											}
-										}
-										if (!isEmptyRow(row)) {
-											body.add(row);
-										}
-									}
-									if (body.size() > 0) {
-										list.add(element);
+						String isLegacy = XPathUtils.getString(node, "./@isLegacy").trim();
+						if(!isLegacy.equals("true")){
+							additionalField.put("title", getNodeIdfTitle(node, lang));
+							NodeList childNodeList = node.getChildNodes();
+							getAdditionalFieldsForRubric(list, childNodeList, lang);
+							
+							if(list.size() > 0 ){
+								if(newAdditionalRubric){
+									id = tmpId;
+									additionalField.put("type", "additionalField");
+									additionalField.put("body", list);
+									if(additionalField.size()>0){
+										elements.add(additionalField);
 									}	
 								}
 							}
+						}else{
+							String legacyId = XPathUtils.getString(node, "./@id").trim();
+							NodeList childNodeList = node.getChildNodes();
+							
+							if(timeSpatialType != null){
+								switch (timeSpatialType) {
+									case TIME:
+										if(legacyId.equals("timeRef")){
+											// "Tab Raum/Zeit"
+											getAdditionalFieldsForRubric(elements, childNodeList, lang);
+										}
+										break;
+									case SPATIAL:
+										if(legacyId.equals("spatialRef")){
+											// "Tab Raum/Zeit"
+											getAdditionalFieldsForRubric(elements, childNodeList, lang);
+										}
+										break;
+									default:
+										break;
+								}
+							}else{
+								if(legacyId.equals("general")){
+									// "Tab Allgemeines"
+									getAdditionalFieldsForRubric(elementsGeneral, childNodeList, lang);
+								}else if(legacyId.equals("refClass1DQ") || legacyId.equals("refClass2DQ") || legacyId.equals("refClass1DQ")
+										|| legacyId.equals("refClass4DQ") || legacyId.equals("refClass5DQ") || legacyId.equals("refClass6DQ")){
+									// "Tab Datenqualität"
+									getAdditionalFieldsForRubric(elementsDataQuality, childNodeList, lang);
+								}else if(legacyId.equals("extraInfo")){
+									// "Tab Zusätzliche Info"
+									getAdditionalFieldsForRubric(elementsAdditionalInfo, childNodeList, lang);
+								}else if(legacyId.equals("availability")){
+									// "Tab Verfügbarkeit"
+									getAdditionalFieldsForRubric(elementsAvailability, childNodeList, lang);
+								}else if(legacyId.equals("thesaurus") || legacyId.equals("links")){
+									// "Tab Verweise"
+									getAdditionalFieldsForRubric(elementsReference, childNodeList, lang);
+								}else if(legacyId.equals("refClass1") || legacyId.equals("refClass2") || legacyId.equals("refClass3")
+										|| legacyId.equals("refClass4") || legacyId.equals("refClass5") || legacyId.equals("refClass6")){
+									// "Tab Fachbezug"
+									getAdditionalFieldsForRubric(elementsSubject, childNodeList, lang);
+								}else{
+									if(!legacyId.equals("timeRef") && !legacyId.equals("spatialRef")){
+										// "Tab Zusätzliche Info"
+										getAdditionalFieldsForRubric(elementsAdditionalInfo, childNodeList, lang);
+									}
+								}
+							}
 						}
-					}	
-				}
-				if(newAdditionalRubric){
-					id = tmpId;
-					additionalField.put("type", "additionalField");
-					additionalField.put("body", list);
-					if(additionalField.size()>0){
-						elements.add(additionalField);
 					}	
 				}
 			}
 		}
 	}	
 
+	private void getAdditionalFieldsForRubric(ArrayList list, NodeList nodeList, String lang){
+		for (int j=0; j < nodeList.getLength(); j++){
+			Node childNode = nodeList.item(j);
+			if(childNode.getLocalName()!= null){
+				if(childNode.getLocalName().equals("additionalDataField") && childNode.getNamespaceURI().equals(IDFNamespaceContext.NAMESPACE_URI_IDF)){
+					String title = getNodeIdfTitle(childNode, lang);
+					String body = XPathUtils.getString(childNode, "./idf:data");
+					String postfix = getNodeIdfPostfix(childNode, lang);
+					
+					if(body.length() > 0){
+						if(postfix.length() > 0){
+							addElementEntryLabelLeft(list, body + " " + postfix, title);	
+						}else{
+							addElementEntryLabelLeft(list, body, title);
+						}
+					}
+				}else if(childNode.getLocalName().equals("additionalDataTable") && childNode.getNamespaceURI().equals(IDFNamespaceContext.NAMESPACE_URI_IDF)){
+					String title = getNodeIdfTitle(childNode, lang);
+					
+					HashMap element = new HashMap();
+					element.put("type", "table");
+					element.put("title", title);
+					
+					ArrayList head = new ArrayList();
+					element.put("head", head);
+					ArrayList body = new ArrayList();
+					element.put("body", body);
+					
+					int countRows=0;
+					NodeList tableColumnNodeList = XPathUtils.getNodeList(childNode, "./idf:tableColumn"); 
+					// Create header
+					for (int iHead=0; iHead < tableColumnNodeList.getLength(); iHead++){
+						Node headNode = tableColumnNodeList.item(iHead);
+						head.add(getNodeIdfTitle(headNode, lang));
+						NodeList rowNodeList = XPathUtils.getNodeList(headNode, "./idf:data");
+						if(countRows < rowNodeList.getLength()){
+							countRows = rowNodeList.getLength();
+						}
+					}
+					// Create row
+					for (int iRow=1; iRow<=countRows;iRow++){
+						ArrayList row = new ArrayList();
+						for (int iCell=0; iCell < tableColumnNodeList.getLength(); iCell++){
+							Node tableColumnNode = tableColumnNodeList.item(iCell);
+							if(XPathUtils.nodeExists(tableColumnNode, "./idf:data["+iRow+"]")){
+								Node cellNode = XPathUtils.getNode(tableColumnNode, "./idf:data["+iRow+"]");
+								String value = "";
+								if(cellNode.getFirstChild() != null){
+									if(cellNode.getFirstChild().getNodeValue() != null){
+										value = cellNode.getFirstChild().getNodeValue().trim();
+									}
+									if(value!=null){
+										row.add(value);
+									}
+								}else{
+									row.add("");
+								}
+							}else{
+								row.add("");
+							}
+						}
+						if (!isEmptyRow(row)) {
+							body.add(row);
+						}
+					}
+					if (body.size() > 0) {
+						list.add(element);
+					}	
+				}
+			}
+		}
+	}
+	
 	private String getNodeIdfPostfix(Node node, String lang) {
 		String prefix; 
 		if(XPathUtils.nodeExists(node, "./idf:postfix[@lang='"+ lang +"']")){
@@ -2333,9 +2399,9 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	}
 	
 	private void getTimeSection(ArrayList elements, String xpathExpression) {
+		ArrayList timeElements = new ArrayList();
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			Node node = XPathUtils.getNode(rootNode, xpathExpression);
-			ArrayList timeElements = new ArrayList();
 			if (node.hasChildNodes()) {
 				NodeList nodeList = XPathUtils.getNodeList(node, "./gmd:temporalElement");
 				for(int i=0; i<nodeList.getLength();i++){
@@ -2425,24 +2491,27 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					Node childNode = XPathUtils.getNode(node, nodeXPathExpression);
 					addElementEntryLabelLeft(timeElements, XPathUtils.getString(childNode, ".").trim(), messages.getString("t01_object.time_descr"));
 				}
-				
-				if(timeElements.size()>0){
-					addSectionTitle(elements, messages.getString("time_reference"));
-					for(int i=0; i < timeElements.size(); i++){
-						elements.add(timeElements.get(i));
-					}
-					closeDiv(elements);	
-				}
-				
 			}
+		}
+		
+		// "Raum/Zeit - Zusätzliche Felder"
+		xpathExpression ="./idf:additionalDataSection";
+		getAdditionalFields(timeElements, xpathExpression, TimeSpatialType.TIME);
+		
+		if(timeElements.size()>0){
+			addSectionTitle(elements, messages.getString("time_reference"));
+			for(int i=0; i < timeElements.size(); i++){
+				elements.add(timeElements.get(i));
+			}
+			closeDiv(elements);	
 		}
 	}
 	
 	private void getAreaSection(ArrayList elements, String xpathExpression) {
+		ArrayList spatialElements = new ArrayList();
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			Node node = XPathUtils.getNode(rootNode, xpathExpression);
 			if (node.hasChildNodes()) {
-				addSectionTitle(elements, messages.getString("t011_obj_geo.coord"));
 				String nodeXPathExpression;
 				NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
 				ArrayList subjectEntries = new ArrayList();
@@ -2467,7 +2536,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 								textListEntries.add(listEntry);
 							}
 						}
-						elements.add(element);
+						spatialElements.add(element);
 						
 					}
 					
@@ -2544,13 +2613,13 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						
 						if (body.size() > 0) {
 							
-							elements.add(element);
+							spatialElements.add(element);
 						}
 					}
 					
 					// "Raumbezugssystem"
 					xpathExpression = "./gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code";
-					getNodeValue(elements, xpathExpression, messages.getString("t011_obj_geo.referencesystem_id"));
+					getNodeValue(spatialElements, xpathExpression, messages.getString("t011_obj_geo.referencesystem_id"));
 					
 					// "Höhe"
 					nodeXPathExpression = "./gmd:verticalElement";
@@ -2600,7 +2669,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						}
 						if (body.size() > 0) {
 							
-							elements.add(element);
+							spatialElements.add(element);
 						}
 						
 					}
@@ -2609,11 +2678,22 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					nodeXPathExpression = "./gmd:description";
 					if (XPathUtils.nodeExists(node, nodeXPathExpression)) {
 						Node childNode = XPathUtils.getNode(node, nodeXPathExpression);
-						addElementEntryLabelLeft(elements, XPathUtils.getString(childNode, ".").trim(), messages.getString("t01_object.loc_descr"));
+						addElementEntryLabelLeft(spatialElements, XPathUtils.getString(childNode, ".").trim(), messages.getString("t01_object.loc_descr"));
 					}
 				}
-				closeDiv(elements);
 			}
+		}
+		
+		// "Raum/Zeit - Zusätzliche Felder" 
+		xpathExpression ="./idf:additionalDataSection";
+		getAdditionalFields(spatialElements, xpathExpression, TimeSpatialType.SPATIAL);
+		
+		if(spatialElements.size() > 0){
+			addSectionTitle(elements, messages.getString("t011_obj_geo.coord"));
+			for(int i=0; i < spatialElements.size(); i++){
+				elements.add(spatialElements.get(i));
+			}
+			closeDiv(elements);	
 		}
 	}
 	
