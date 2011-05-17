@@ -50,6 +50,11 @@ jQuery.event.special.change.filters.focus = jQuery.event.special.change.filters.
 }*/
 
 dojo.addOnLoad(function() {
+    // show an info message for browser IE7 that it shouldn't be used
+    if (dojo.isIE == 7) {
+        dialog.show("Info", message.get("general.info.browser"), dialog.INFO);
+    }
+    
     // remember the session id for later comparison if session has expired
     initialJSessionId = dojo.cookie("JSESSIONID");
     
@@ -91,9 +96,8 @@ dojo.addOnLoad(function() {
             jumpToNodeOnInit();
         
         // create an iframe which will be used for printing    
-        dojo.create("iframe", {id: 'printFrame', name: 'printFrame', style: 'position:absolute; left:-1000px; height: 0; border:0;'}, dojo.body());
-        //setTimeout("initPrintFrame()", 5000);
-        
+        dojo.create("iframe", {id: 'printFrame', name: 'printFrame', style: {position:"absolute", left:"-1000px", height: "0", border:"0"}}, dojo.body());
+
         //console.debug("Cookie:");
         //console.debug(document.cookie);
 	});

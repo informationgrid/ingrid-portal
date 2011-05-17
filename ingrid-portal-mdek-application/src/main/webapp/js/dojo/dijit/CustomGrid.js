@@ -166,10 +166,10 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
 		
 		scrollbarDimensions = scrollbarDimensions || this.measureScrollbar(); // skip measurement if already have dimensions
 		
-        this.headerScroller = dojo.create("div", {'class': 'slick-header ui-state-default', style: 'overflow:hidden;position:relative;'}, this.container);
-        this.headers = dojo.create("div", {'class': 'slick-header-columns', style: 'width:10000px; left:-1000px;'}, this.headerScroller);
+        this.headerScroller = dojo.create("div", {'class': 'slick-header ui-state-default', style: {overflow:"hidden",position:"relative"}}, this.container);
+        this.headers = dojo.create("div", {'class': 'slick-header-columns', style: {width:"10000px", left:"-1000px"}}, this.headerScroller);
         
-        this.viewport = dojo.create("div", {'class': 'slick-viewport', tabIndex:'0', hideFocus: "", style:'width:100%;overflow-x:auto;outline:0;position:relative;overflow-y:auto;'}, this.container);
+        this.viewport = dojo.create("div", {'class': 'slick-viewport', tabIndex:'0', hideFocus: "", style:{width:"100%", overflow:"auto", outline:"0",position:"relative"}}, this.container);
         this.canvas = dojo.create("div", {'class': 'grid-canvas', tabIndex:'0', hideFocus: ""}, this.viewport);
         
         // header columns and cells may have different padding/border skewing width calculations (box-sizing, hello?)
@@ -298,7 +298,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
         var h = ["borderLeftWidth", "borderRightWidth", "paddingLeft", "paddingRight"];
         var v = ["borderTopWidth", "borderBottomWidth", "paddingTop", "paddingBottom"];
 
-        el = dojo.create("div", {'class':'ui-state-default slick-header-column', style:'visibility:hidden'}, this.headers);
+        el = dojo.create("div", {'class':'ui-state-default slick-header-column', style:{visibility:"hidden"}}, this.headers);
         this.headerColumnWidthDiff = this.headerColumnHeightDiff = 0;
         dojo.forEach(h, function(val, n) { 
         	this.headerColumnWidthDiff += parseFloat(dojo.style(el, val)) || 0; 
@@ -307,7 +307,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
         dojo.destroy(el);//.remove();
 
         var r = dojo.create("div", {'class':'slick-row'}, this.canvas);
-        el = dojo.create("div", {'class':'slick-cell', id:'', style: 'visibility:hidden'}, r);
+        el = dojo.create("div", {'class':'slick-cell', id:'', style: {visibility:"hidden"}}, r);
         this.cellWidthDiff = this.cellHeightDiff = 0;
         dojo.forEach(h, function(val, n) { this.cellWidthDiff += parseFloat(dojo.style(el, val)) || 0; }, this);
         dojo.forEach(v, function(val, n) { this.cellHeightDiff += parseFloat(dojo.style(el, val)) || 0; }, this);
@@ -346,7 +346,8 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
             	id: this.uid + m.id,
             	title: m.toolTip || m.name || "",
             	data: "fieldId="+ m.id,
-            	style: "width: "+(m.width-this.headerColumnWidthDiff+"px")}, this.headers);
+            	style: {width: (m.width-this.headerColumnWidthDiff)+"px"}}, this.headers);
+                
             dojo.create("span", {'class': 'slick-column-name', innerHTML: m.name}, header);
             
             totalColumnsWidth += m.width;
@@ -662,7 +663,8 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          /// <returns>
          /// { width: pixelWidth, height: pixelHeight }
          /// </returns>
-         var c = dojo.create("div", {style:'position:absolute; top:-10000px; left:-10000px; width:100px; height:100px; overflow:scroll;', innerHTML:"<div style='width:100%;height:100%;'></div>"}, dojo.body());
+         var c = dojo.create("div", {style:{position:"absolute", top:"-10000px", left:"-10000px", width:"100px", height:"100px", overflow:"scroll"}, innerHTML:"<div style='width:100%;height:100%;'></div>"}, dojo.body());
+        
          var cont = dojo.isFF || dojo.isIE ? c.children[0] : c;
          var dim = { width: 100 - dojo.style(cont, "width"), height: 100 - dojo.style(cont, "height") };
          dojo.destroy(c);
@@ -856,7 +858,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          var supportedHeight = 0;
          // FF reports the height back but still renders blank after ~6M px
          var testUpTo = /*(dojo.isIE) ? 5000000 : */1000000000;
-         var div = dojo.create("div", {style:'display:none'}, dojo.body());
+         var div = dojo.create("div", {style:{display:"none"}}, dojo.body());
 
          while (supportedHeight <= testUpTo) {
              dojo.style(div, "height", supportedHeight + increment + "px");

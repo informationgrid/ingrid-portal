@@ -1979,8 +1979,8 @@
                         
                         <p>Der <b>Indexname</b> definiert den zu verwendenden Namen während der Indexierung des Kataloges. Wird kein
                         Name ausgewählt, so wird dieses Feld auch nicht im Index erscheinen und ist auch nicht durchsuchbar!</p>
-                        <p>Die Breite gibt an, wieviel Platz das Element in der Zeile einnehmen soll. Die Angabe ist in Prozent, so
-                        dass "100" bedeutet, dass die gesamte Breite verwendet werden soll und "50", dass nur die Hälfte. Werden 
+                        <p>Die <b>Breite</b> gibt an, wieviel Platz das Element in der Zeile einnehmen soll. Die Angabe ist in Prozent, so
+                        dass "100" bedeutet, dass die gesamte Breite verwendet werden soll und "50", nur die Hälfte. Werden 
                         zwei Elemente mit jeweils 50% Breite angegeben, so werden diese korrekt nebeneinander positioniert. Damit
                         hat man eine flexible Möglichkeit das Layout individuell anzupassen.</p>
                         <br></br>
@@ -1990,7 +1990,7 @@
                         <p>Bei Nummernfeldern ist es möglich, eine "<b>Einheit</b>" mit anzugeben. Diese wird hinter der Eingabebox
                         und sprachabhängig angezeigt.</p>
                         <br></br>
-                        <p>Bei einer Auswahlliste lassen sich die "<b>Optionen</b>" definieren, die fest vorgeben werden sollen.
+                        <p>Bei einer Auswahlliste lassen sich die "<b>Einträge</b>" definieren, die fest vorgeben werden sollen.
                         Diese werden auch wieder mehrsprachig angegeben und sind über eine eigene automatisch generierte ID miteinander
                         synchronisiert. Die anzuzeigende Reihenfolge kann ebenfalls verändert werden, indem eine Zeile über den linken
                         "Griff" an eine beliebige Position verschoben wird. Des Weiteren ist es möglich, freie Einträge in der Auswahlliste
@@ -2000,7 +2000,7 @@
                         <p>Für Tabellen lassen sich die "<b>Anzahl der Reihen</b>" definieren, die initial (und leer) angezeigt werden
                         sollen. In der Spaltendefinition lässt sich eine "<b>Neue Spalte</b>" hinzufügen, löschen oder auch bearbeiten.
                         Eine Spalte kann vom Typ Textfeld, Nummernfeld, Datumsfeld oder Auswahlliste sein. Die Erstellung einer Spalte
-                        orientiert sich der, der anderen Elemente. Die <b>Breite</b> einer Spalte wird hier allerdings in Pixel 
+                        orientiert sich an der, der anderen Elemente. Die <b>Breite</b> einer Spalte wird hier allerdings in Pixel 
                         angegeben.</p>
                         
                         <br></br>
@@ -2014,7 +2014,7 @@
                     <content>
                         <p>Das Bearbeiten eines zusätzlichen Feldes unterscheidet sich nur insofern von einem neu angelegten Feld,
                         dass die <b>ID</b> nicht verändert werden kann. Für weitere Informationen über die verschiedenen 
-                        Einstellungen, lesen Sie bitte dazu den vorherigen Abschnitt und/oder die Kontextsensitive Hilfe zu den
+                        Einstellungen, lesen Sie bitte dazu den vorherigen Abschnitt und/oder die kontextsensitive Hilfe zu den
                         einzelnen Feldern.</p>
                         
                         <br></br>
@@ -2029,6 +2029,8 @@
                         <p>Eine <b>Neue Rubrik</b> wird erstellt, indem auf dem entsprechenden Button gedrückt wird. Jede Rubrik
                         kann verschiedene zusätzliche Felder enthalten. Wird eine zusätzliche Rubrik gelöscht, werden auch alle
                         beinhalteten zusätzliche Felder entfernt (nachdem abschließend auf "Speichern" gedrückt wurde).</p>
+                        <p>Einer neuen Rubrik weist man zuerst eine eindeutig identfizierbare ID zu. Darüber hinaus lassen sich
+                        die Beschriftung und ein Hilfetext (lokalisiert) eintragen.</p>
                     </content>
                  </section>
                  

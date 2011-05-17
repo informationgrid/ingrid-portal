@@ -398,6 +398,8 @@ function createRubricUp() {
 }
 
 function createRubric(rubric) {
+    // add a fill div before a rubric (IE7!)
+    addElementToObjectForm(dojo.create("div", {'class':"fill"}));
 	var rubricDiv = document.createElement("div");
     dojo.addClass(rubricDiv, "rubric additional content");
 	rubricDiv.setAttribute("id", rubric.id);
@@ -564,7 +566,7 @@ function addSurroundingContainer(/*DomNode*/nodeToInsert, additionalField, type)
     uiPaddingDiv.appendChild(labelSpanElement);
     if (type == "Numberbox") {
         var tableContainer = dojo.create("table", {
-            style: "width:100%;",
+            style: {width:"100%"},
             innerHTML: "<tr><td></td><td style='width:1px; padding-left:5px;'>" + additionalField.unit + "</td></tr>"
         }, inputSpanElement);
         dojo.place(nodeToInsert, dojo.query("td", tableContainer)[0]);

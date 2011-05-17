@@ -35,6 +35,7 @@
 	"general.select.remove":"Ausgewähltes Entfernen",
 	"general.deselect.all":"Alle Abwählen",
 	"general.row.remove":"Ausgewählte Zeile Entfernen",
+    "general.info.browser":"Der Internet Explorer 7 (oder Version 8 im Kompatibilitätsmodus) wird nicht unterstützt und es kann zu Layoutproblemen kommen. Es wird empfohlen, einen der unterstützten Browser zu verwenden (IE8, FF3.6, Chrome)!",
 	
 	"general.page":"Seite",
     

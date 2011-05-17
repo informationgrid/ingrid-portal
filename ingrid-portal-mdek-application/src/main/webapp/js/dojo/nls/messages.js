@@ -35,6 +35,7 @@
 	"general.select.remove":"Remove Selected",
 	"general.deselect.all":"Deselect All",
 	"general.row.remove":"Remove Clicked Row",
+    "general.info.browser":"The Internet Explorer 7 (or version 8 in compatibility mode) is not supported and layout problems can occur. It is recommended to use one of the supported browsers (IE8, FF3.6, Chrome)!",
 	
 	"general.page":"Page",
 	

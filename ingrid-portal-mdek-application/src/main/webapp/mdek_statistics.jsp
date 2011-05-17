@@ -68,10 +68,10 @@ function createDomElements() {
        {field: 'objectClass',name: "<fmt:message key='dialog.statistics.objClass' />",width: '364px', formatter:LocalizeString}, 
        {field: 'amount',name: "<fmt:message key='dialog.statistics.num' />",width: '80px'}, 
        {field: 'percentage',name: "<fmt:message key='dialog.statistics.percentage' />",width: '100px'}, 
-       {field: 'published',name: 'V',width: '50px'}, 
-       {field: 'modified',name: 'B',width: '50px'}, 
-       {field: 'qa',name: 'Q',width: '50px'},  
-       {field: 'returned',name: 'R',width: 'auto'}
+       {field: 'published',name: "<fmt:message key='dialog.statistics.header.published' />", toolTip:"<fmt:message key='dialog.statistics.tooltip.published' />", width: '50px'}, 
+       {field: 'modified',name: "<fmt:message key='dialog.statistics.header.modified' />", toolTip:"<fmt:message key='dialog.statistics.tooltip.modified' />",width: '50px'}, 
+       {field: 'qa',name: "<fmt:message key='dialog.statistics.header.qa' />", toolTip:"<fmt:message key='dialog.statistics.tooltip.qa' />",width: '50px'},  
+       {field: 'returned',name: "<fmt:message key='dialog.statistics.header.returned' />", toolTip:"<fmt:message key='dialog.statistics.tooltip.returned' />",width: 'auto'}
     ];
     var def1 = createDataGrid("statsObjectsTable", null, statsObjectsTableStructure, null, undefined, "js/data/statisticTableObject.json");
     
@@ -79,11 +79,11 @@ function createDomElements() {
        {field: 'type',name: '&nbsp;',width: '40px'},
        {field: 'addressType',name: "<fmt:message key='dialog.statistics.adrClass' />",width: '364px', formatter:LocalizeString}, 
        {field: 'amount',name: "<fmt:message key='dialog.statistics.num' />",width: '80px'}, 
-       {field: 'percentage',name: "<fmt:message key='dialog.statistics.percentage' />",width: '100px'}, 
-       {field: 'published',name: 'V',width: '50px'}, 
-       {field: 'modified',name: 'B',width: '50px'}, 
-       {field: 'qa',name: 'Q',width: '50px'},  
-       {field: 'returned',name: 'R',width: 'auto'}
+       {field: 'percentage',name: "<fmt:message key='dialog.statistics.percentage' />",width: '100px'},
+       {field: 'published',name: "<fmt:message key='dialog.statistics.header.published' />", toolTip:"<fmt:message key='dialog.statistics.tooltip.published' />", width: '50px'}, 
+       {field: 'modified',name: "<fmt:message key='dialog.statistics.header.modified' />", toolTip:"<fmt:message key='dialog.statistics.tooltip.modified' />",width: '50px'}, 
+       {field: 'qa',name: "<fmt:message key='dialog.statistics.header.qa' />", toolTip:"<fmt:message key='dialog.statistics.tooltip.qa' />",width: '50px'},  
+       {field: 'returned',name: "<fmt:message key='dialog.statistics.header.returned' />", toolTip:"<fmt:message key='dialog.statistics.tooltip.returned' />",width: 'auto'}
     ];
     var def2 = createDataGrid("statsAdrTable", null, statsAdrTableStructure, null, undefined, "js/data/statisticTableAddress.json");
     

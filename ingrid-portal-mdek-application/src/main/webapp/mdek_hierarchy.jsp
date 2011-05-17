@@ -297,6 +297,7 @@
                         </div>
                     </div>
                     <!-- FACHBEZUG CLASS 1 - GEO-INFORMATION/KARTE //-->
+                    <div class="fill"></div>
                     <div id="refClass1" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('refClass1');" title="<fmt:message key="general.open.required.field" />">
@@ -569,6 +570,7 @@
                          <div class="fill"></div>
 					</div>
                     <!-- "FACHBEZUG DATENQUALITAET" CLASS 1 - GEO-INFORMATION/KARTE //-->
+                    <div class="fill"></div>
                     <div id="refClass1DQ" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('refClass1DQ');" title="<fmt:message key="general.open.required.field" />">
@@ -729,6 +731,7 @@
                          <div class="fill"></div>
                     </div>
                     <!-- FACHBEZUG CLASS 2 - DOKUMENT/BERICHT/LITERATUR //-->
+                    <div class="fill"></div>
                     <div id="refClass2" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('refClass2');" title="<fmt:message key="general.open.required.field" />">
@@ -950,6 +953,7 @@
                         </div>
                     </div>
                     <!-- FACHBEZUG CLASS 3 - Geodatendienst //-->
+                    <div class="fill"></div>
                     <div id="refClass3" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('refClass3');" title="<fmt:message key="general.open.required.field" />">
@@ -1095,6 +1099,7 @@
                         </div>
                     </div>
                     <!-- FACHBEZUG CLASS 4 - VORHABEN/PROJEKT/PROGRAMM //-->
+                    <div class="fill"></div>
                     <div id="refClass4" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('refClass4');" title="<fmt:message key="general.open.required.field" />">
@@ -1162,6 +1167,7 @@
                         <div class="fill"></div>
                     </div><!-- FACHBEZUG CLASS 5 - DATENSAMMLUNG/DATENBANK //-->
                     <!-- FACHBEZUG CLASS 5 -  //-->
+                    <div class="fill"></div>
                     <div id="refClass5" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('refClass5');" title="<fmt:message key="general.open.required.field" />">
@@ -1222,6 +1228,7 @@
                        	<div class="fill"></div>
                     </div>
                     <!-- FACHBEZUG CLASS 6 - DIENST/ANWENDUNG/INFORMATIONSSYSTEM //-->
+                    <div class="fill"></div>
                     <div id="refClass6" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('refClass6');" title="<fmt:message key="general.open.required.field" />">
@@ -1339,6 +1346,7 @@
                         <div class="fill"></div>
                     </div>
                     <!-- RAUMBEZUG //-->
+                    <div class="fill"></div>
                     <div id="spatialRef" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('spatialRef');" title="<fmt:message key="general.open.required.field" />">
@@ -1496,6 +1504,7 @@
                         <div class="fill"></div>
                     </div>
                     <!-- ZEITBEZUG //-->
+                    <div class="fill"></div>
                     <div id="timeRef" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('timeRef');" title="<fmt:message key="general.open.required.field" />">
@@ -1631,6 +1640,7 @@
                         <div class="fill"></div>
                     </div>
                     <!-- ZUSATZINFORMATION //-->
+                    <div class="fill"></div>
                     <div id="extraInfo" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('extraInfo');" title="<fmt:message key="general.open.required.field" />">
@@ -1745,6 +1755,7 @@
                         <div class="fill"></div>
                     </div>
                     <!-- VERFÜGBARKEIT //-->
+                    <div class="fill"></div>
                     <div id="availability" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('availability');" title="<fmt:message key="general.open.required.field" />">
@@ -1842,6 +1853,7 @@
                         <div class="fill"></div>
                     </div>
                     <!-- VERSCHLAGWORTUNG //-->
+                    <div class="fill"></div>
                     <div id="thesaurus" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('thesaurus');" title="<fmt:message key="general.open.required.field" />">
@@ -1958,6 +1970,7 @@
                         <div class="fill"></div>
                     </div>
                     <!-- VERWEISE //-->
+                    <div class="fill"></div>
                     <div id="links" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('links');" title="<fmt:message key="general.open.required.field" />">
@@ -2005,24 +2018,6 @@
                         </div>
                         <div class="fill"></div>
                     </div>
-                    <!-- ZUSAETZLICHE FELDER (DEPRECATED!) //-->
-                    <!--<div id="additionalFields" class="rubric contentBlock">
-                        <div class="titleBar">
-                            <div class="titleIcon">
-                                <a href="javascript:igeEvents.toggleFields('additionalFields');" title="<fmt:message key="general.open.required.field" />"><img src="img/ic_expand_required_blue.gif" width="18" height="18" alt="Nur Pflichtfelder aufklappen" /></a>
-                            </div>
-                            <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7075)">
-                                <fmt:message key="ui.obj.additionalFields.title" />
-                            </div>
-                            <div class="titleUp">
-                                <a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a>
-                            </div>
-                        </div>
-                        <div id="additionalFieldsContent" class="content">
-                            <div id="additionalFieldsContainer" class="inputContainer">
-                            </div>
-                        </div>
-                    </div>-->
                 </div>
             </div>
             <div id="contentAddress" style="display:none; width:735px;">
@@ -2230,6 +2225,7 @@
                         <div class="fill"></div>
                     </div><!-- ADRESSE UND AUFGABEN //-->
                     <!-- ADDRESS //-->
+                    <div class="fill"></div>
                     <div id="address" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('address');" title="<fmt:message key="general.open.required.field" />">
@@ -2360,6 +2356,7 @@
                         <div class="fill"></div>
                     </div>
                     <!-- VERSCHLAGWORTUNG //-->
+                    <div class="fill"></div>
                     <div id="adrThesaurus" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('adrThesaurus');" title="<fmt:message key="general.open.required.field" />">
@@ -2409,6 +2406,7 @@
                         <div class="fill"></div>
                     </div>
                     <!-- ZUGEORDNETE OBJEKTE //-->
+                    <div class="fill"></div>
                     <div id="associatedObj" class="rubric contentBlock">
                         <div class="titleBar">
                             <a href="javascript:igeEvents.toggleFields('associatedObj');" title="<fmt:message key="general.open.required.field" />">

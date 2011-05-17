@@ -19,6 +19,11 @@ html,body {
 	margin: 0;
 }
 
+/* remove inactive vertical scrollbar in IE7 */
+html { 
+    overflow: auto; 
+} 
+
 .myGrid {
 	width: 100%;
 	height: 100px;

@@ -38,7 +38,7 @@
             
             function createGrids() {
                 var tableStructure = [
-                    {field: 'name',name: "<fmt:message key='dialog.admin.users.name' />",width: 258-scrollBarWidth+'px'}
+                    {field: 'name',name: "<fmt:message key='dialog.admin.users.name' />",width: 350-scrollBarWidth+'px'}
                 ];
                 createDataGrid("availableGroupsList", null, tableStructure, null);
                 createDataGrid("groupsList", null, tableStructure, null);
@@ -865,7 +865,7 @@
                                         </div>
                                     </div></span>
                                     
-                                    <span class="outer" style="width:10%;"><div>
+                                    <span class="outer" style="width:60px;"><div>
                                         <span class="entry">
                                             <span class="buttonCol" style="margin:80px -4px 0px;">
                                                 <button dojoType="dijit.form.Button" id="addSelectedButton" onClick="addSelected">&nbsp;>&nbsp;</button>
