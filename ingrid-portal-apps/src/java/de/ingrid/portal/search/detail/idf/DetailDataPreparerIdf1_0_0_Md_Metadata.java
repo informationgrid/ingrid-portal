@@ -61,19 +61,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			// check for hierachyLevelName
 			getUdkObjClass(general, udkElements);
 			
-			String metadataDataNodePath = "";
-			if (context.get(UDK_OBJ_CLASS_TYPE) != null) {
-				if (context.get(UDK_OBJ_CLASS_TYPE).equals("6") || context.get(UDK_OBJ_CLASS_TYPE).equals("3")) {
-					metadataDataNodePath = "srv:SV_ServiceIdentification";
-				} else {
-					metadataDataNodePath = "gmd:MD_DataIdentification";
-				}
-			}else{
-				metadataDataNodePath = "gmd:MD_DataIdentification";
-			}
-			
 			// Title
-			xpathExpression = "./gmd:identificationInfo/"+ metadataDataNodePath +"/gmd:citation/gmd:CI_Citation/gmd:title";
+			xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title";
 			getTitle(xpathExpression, general);
 			
 			// "last modification"
@@ -93,11 +82,11 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			
 	// Tab "General"
 			// Description
-			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath;
+			xpathExpression = "./gmd:identificationInfo/*";
 			getGeneralTab(elementsGeneral, xpathExpression);
 			
 			// Addresses
-			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/gmd:pointOfContact";
+			xpathExpression = "./gmd:identificationInfo/*/gmd:pointOfContact";
 			getAddresses(elementsGeneral, xpathExpression);
 			
 	// Tab "Verweise"
@@ -114,8 +103,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				elementsReference = addTabData(messages.getString("references"), referenceList);
 			}
 			// "Verschlagwortung"
-			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/gmd:descriptiveKeywords";
-			getIndexInformationKeywords(elementsReference, xpathExpression, metadataDataNodePath);
+			xpathExpression = "./gmd:identificationInfo/*/gmd:descriptiveKeywords";
+			getIndexInformationKeywords(elementsReference, xpathExpression);
 			
 	// Tab "Verfügbarkeit"
 			// "Datenformat"
@@ -123,22 +112,22 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			getAvailability(elementsAvailability, xpathExpression);
 			
 			// "Zugangsbeschränkungen"
-			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints";
+			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints";
 			subXPathExpression = ".";
 			getNodeListValues(elementsAvailability, xpathExpression, subXPathExpression, messages.getString("object_access.restriction_value"), "textList", "6010");
 			
 			// "Nutzungsbedingungen"
-			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useLimitation";
+			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useLimitation";
 			subXPathExpression = ".";
 			getNodeListValues(elementsAvailability, xpathExpression, subXPathExpression, messages.getString("object_access.terms_of_use"), "textList");
 			
 	// Tab "Raum/Zeit"
 			// "Raumbezugssystem"
-			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/*/gmd:EX_Extent";
+			xpathExpression = "./gmd:identificationInfo/*/*/gmd:EX_Extent";
 			getAreaSection(elementsAreaTime, xpathExpression);
 			
 			// "Zeitbezug"
-			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/*/gmd:EX_Extent";
+			xpathExpression = "./gmd:identificationInfo/*/*/gmd:EX_Extent";
 			getTimeSection(elementsAreaTime, xpathExpression);
 			
 	// Tab "Zusätzliche Info"
@@ -153,19 +142,19 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			getNodeListValuesLanguage(elementsAdditionalInfo, xpathExpression, subXPathExpression, messages.getString("t01_object.data_language"), "textList");
 			
 			// "Veröffentlichung"
-			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath;
+			xpathExpression = "./gmd:identificationInfo/*";
 			getClassificationInformation(elementsAdditionalInfo, xpathExpression);
 			
 			// "Eignung/Nutzung"
-			xpathExpression = "./gmd:identificationInfo/"+ metadataDataNodePath +"/gmd:resourceSpecificUsage/gmd:MD_Usage/gmd:specificUsage";
+			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceSpecificUsage/gmd:MD_Usage/gmd:specificUsage";
 			getNodeValue(elementsAdditionalInfo, xpathExpression, messages.getString("t01_object.dataset_usage"));
 			
 			// "Herstellungszweck"
-			xpathExpression = "./gmd:identificationInfo/"+ metadataDataNodePath +"/gmd:purpose";
+			xpathExpression = "./gmd:identificationInfo/*/gmd:purpose";
 			getNodeValue(elementsAdditionalInfo, xpathExpression, messages.getString("t01_object.info_note"), null, null, LabelType.ABOVE);
 			
 			// "Rechtliche Grundlagen"
-			xpathExpression = "./gmd:identificationInfo/"+ metadataDataNodePath +"/gmd:resourceConstraints/idf:idfLegalBasisConstraints/gmd:otherConstraints";
+			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/idf:idfLegalBasisConstraints/gmd:otherConstraints";
 			subXPathExpression = ".";
 			getNodeListValues(elementsAdditionalInfo, xpathExpression, subXPathExpression, messages.getString("t015_legist.name"), "textList");
 			
@@ -236,7 +225,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
     	    			break;
     				case 3:
     					// "Fachbezug - Geodatendienst"
-    	        		getThematicReferenceClass3(elementsSubject, metadataDataNodePath);
+    	        		getThematicReferenceClass3(elementsSubject);
     	    			break;
     				case 4:
     					// "Fachbezug - Vorhaben/Projekt/Programm"
@@ -248,7 +237,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
     	    			break;
     				case 6:
     					// "Fachbezug - Dienst/Anwendung/Informationssystem"
-    	        		getThematicReferenceClass6(elementsSubject, metadataDataNodePath);
+    	        		getThematicReferenceClass6(elementsSubject);
 						break;
 					default:
 						break;
@@ -574,10 +563,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_literatur.description"));
 	}
 	
-	private void getThematicReferenceClass3(ArrayList elements, String metadataDataNodePath) {
+	private void getThematicReferenceClass3(ArrayList elements) {
 		
 		// "Klassifikation des Dienstes"
-		String xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/gmd:descriptiveKeywords";
+		String xpathExpression = "./gmd:identificationInfo/*/gmd:descriptiveKeywords";
 		getServiceClassification(elements, xpathExpression);
 		
 		// Typ des Dienstes
@@ -708,10 +697,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_data.description"));
 	}
 
-	private void getThematicReferenceClass6(ArrayList elements, String metadataDataNodePath) {
+	private void getThematicReferenceClass6(ArrayList elements) {
 
 		// "Klassifikation des Dienstes"
-		String xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/gmd:descriptiveKeywords";
+		String xpathExpression = "./gmd:identificationInfo/*/gmd:descriptiveKeywords";
 		getServiceClassification(elements, xpathExpression);
 		
 		// "Art des Dienstes"
@@ -1956,7 +1945,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}
 	
-	private void getIndexInformationKeywords(ArrayList elements, String xpathExpression, String metadataDataNodePath) {
+	private void getIndexInformationKeywords(ArrayList elements, String xpathExpression) {
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
 			addSectionTitle(elements, messages.getString("thesaurus"));
@@ -2078,7 +2067,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			}
 			
 			// "ISO-Themenkategorien"
-			xpathExpression = "./gmd:identificationInfo/" + metadataDataNodePath + "/gmd:topicCategory";
+			xpathExpression = "./gmd:identificationInfo/*/gmd:topicCategory";
 			String subXPathExpression = "./gmd:MD_TopicCategoryCode";
 			getNodeListValues(elements, xpathExpression, subXPathExpression , messages.getString("t011_obj_geo_topic_cat.topic_category"), "textList", "527");
 			closeDiv(elements);
@@ -2728,6 +2717,9 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					if ((description.length() > 0) || alternateName.length() > 0) {
 						addSectionTitle(elements, messages.getString("detail_description"));
 						addElementEntryLabelAbove(elements, description, alternateName, false);
+						if(context.get("description") == null){
+							context.put("description", description);
+						}
 						
 						// "Übergeordnete Objekte"
 						xpathExpression ="./idf:superiorReference";
@@ -2876,6 +2868,12 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		if (rootNode != null) {
 			getUdkObjectClassType(".");
 			element.put("udkObjClass", (String) context.get(UDK_OBJ_CLASS_TYPE));
+			if(context.get("udkObjClass") == null){
+				context.put("udkObjClass", (String) context.get(UDK_OBJ_CLASS_TYPE));
+			}
+			if(context.get("udkObjClassName") == null){
+				context.put("udkObjClassName", messages.getString("udk_obj_class_name_".concat((String) context.get(UDK_OBJ_CLASS_TYPE))));
+			}
 			addElementUdkClass(elements,(String) context.get(UDK_OBJ_CLASS_TYPE));
 		}
 	}
@@ -2883,8 +2881,11 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	private void getTitle(String xpathExpression, HashMap element) {
 		boolean nodeExist = XPathUtils.nodeExists(rootNode, xpathExpression);
 		if (nodeExist) {
-			String title = XPathUtils.getString(rootNode, xpathExpression);
+			String title = XPathUtils.getString(rootNode, xpathExpression).trim();
 			element.put("title", title);
+			if(context.get("title") == null){
+				context.put("title", title);
+			}
 		}else{
 			element.put("title", "No title");
 		}

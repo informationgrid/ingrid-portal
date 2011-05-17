@@ -779,16 +779,13 @@
 ## include the header here
 ## ***************************
 #if($tool.hasContent($title))
-	#set($pageTitle = $title)
+	#set($pageDescription = $title)
 #end
-#set($pageDescription = $pageTitle)
-#foreach($e in $data.elements)
-	#if($e.type=="entry" && !$e.title)
-		## does not work!?
-		##set($pageDescription = $pageDescription + $e.body)
-		#set($pageDescription = $e.body)
-	#end
+
+#if($tool.hasContent($description))
+	#set($pageDescription = $description)
 #end
+
 #set($pageDescription = $pageDescription.replace('"',"'"))
 #set($pageDescription = $stringTool.cutString($pageDescription,300))
 #parse('WEB-INF/templates/search_detail_header.vm')
