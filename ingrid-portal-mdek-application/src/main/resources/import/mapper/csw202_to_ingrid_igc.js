@@ -149,11 +149,6 @@ var mappingDescription = {"mappings":[
 		      				"params":[{"dataset":"5", "series":"6"}, false, "Could not map hierarchyLevel (only 'dataset' and 'series' are supported) : "]
 		        			}
 		        	},
-		        	{
-		        		"execute":{
-		        			"funct":mapReferenceSystemInfo
-		        		}
-		      		},
 	        		{
 	        			"srcXpath":"//gmd:identificationInfo/gmd:MD_DataIdentification",
 	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
@@ -657,6 +652,11 @@ var mappingDescription = {"mappings":[
   		// /igc/data-sources/data-source/spatial-domain
   		//
   		// ****************************************************
+        {
+            "execute":{
+                "funct":mapReferenceSystemInfo
+            }
+        },
   		{	
   			"srcXpath":"//gmd:identificationInfo//gmd:EX_Extent/gmd:verticalElement/gmd:EX_VerticalExtent/gmd:minimumValue/gco:Real",
   			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-minimum",
@@ -1228,10 +1228,29 @@ function mapReferenceSystemInfo(source, target) {
 			} else if (hasValue(code)) {
 				coordinateSystem = code;
 			}
-			log.debug("adding '" + "/igc/data-sources/data-source/technical-domain/map/coordinate-system" + "' = '" + coordinateSystem + "' to target document.");
-			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/technical-domain/map/coordinate-system");
+			log.debug("adding '" + "/igc/data-sources/data-source/spatial-domain/coordinate-system" + "' = '" + coordinateSystem + "' to target document.");
+			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/spatial-domain/coordinate-system");
 			XMLUtils.createOrReplaceTextNode(node, coordinateSystem);
-			var coordinateSystemId = transformToIgcDomainId(coordinateSystem, 100, 123, "Could not map coordinate-system: ");
+            
+            // get syslist id
+			var coordinateSystemId = transformToIgcDomainId(coordinateSystem, 100, 123);
+            if (hasValue(coordinateSystemId) && coordinateSystemId == -1) {
+                // try to parse coordsystem name for correct mapping to syslist id
+                var coordinateSystemLower = coordinateSystem.toLowerCase();
+                var indx = coordinateSystemLower.indexOf("epsg:");
+                if (indx != -1) {
+                    var tmpCoordinateSystemId = coordinateSystemLower.substring(indx+5);
+                    var tmpCoordinateSystem = transformToIgcDomainValue(tmpCoordinateSystemId, 100, 123);
+                    if (hasValue(tmpCoordinateSystem)) {
+                        XMLUtils.createOrReplaceTextNode(node, tmpCoordinateSystem);
+                        coordinateSystemId = tmpCoordinateSystemId;
+                    } else {
+                        var myMsg = "Could not map coordinate-system to syslist 100, use as free entry: ";
+                        log.warn(myMsg + coordinateSystem);
+                        protocol(WARN, myMsg + coordinateSystem)
+                    }
+                }
+            }
 			if (hasValue(coordinateSystemId)) {
 				XMLUtils.createOrReplaceAttribute(node, "id", coordinateSystemId);
 			}

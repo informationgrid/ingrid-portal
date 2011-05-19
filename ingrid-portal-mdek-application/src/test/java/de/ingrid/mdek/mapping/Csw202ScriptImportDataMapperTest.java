@@ -409,7 +409,46 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
         }
     }    
     
-	
+    public final void testConvertReferenceSystem() throws TransformerException, IOException {
+        // set variables that are needed for running correctly
+        initClassVariables(mapperScript, templateIGC);
+        
+        String[] exampleXmls = new String[] {
+        		"/de/ingrid/mdek/mapping/csw202apIso10_dataset_referenceSystem.xml",
+        		"/de/ingrid/mdek/mapping/csw202apIso10_service_referenceSystem.xml"
+        		};
+        
+        for (String exampleXml : exampleXmls) {
+            InputStream data = null;
+            try {
+                // get example file from test resource directory
+                // spring-dependency is used to access test-resources (search from every class path!)
+                data = (new ClassPathResource(exampleXml)).getInputStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
+            HashMapProtocolHandler protocolHandler = new HashMapProtocolHandler();
+            protocolHandler.setCurrentFilename(exampleXml);
+            InputStream result;
+            try {
+                result = mapper.convert(data, protocolHandler);
+                String coordXPath = "//igc/data-sources/data-source/spatial-domain/coordinate-system";
+                assertEquals(1, xpathCount(result, coordXPath));
+                result.reset();
+
+                // mapped from "EPSG:25833" to correct syslist name and id !
+    			assertEquals(true, xpathExists(result, coordXPath, "EPSG 25833: ETRS89 / UTM Zone 33N"));
+    			result.reset();
+                assertEquals(1, xpathCount(result, coordXPath + "[./@id='25833']"));
+                result.reset();
+//                System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
+            } catch (Exception e) {
+                fail("Error transforming: " + exampleXml);
+            }
+        }
+    }    
+
 	private ImportDataProvider initDataProvider() {
 		MockImportDataProviderImpl dataProvider = new MockImportDataProviderImpl();
 		HashMap<Integer, Integer> mapKeys = new HashMap<Integer, Integer>();

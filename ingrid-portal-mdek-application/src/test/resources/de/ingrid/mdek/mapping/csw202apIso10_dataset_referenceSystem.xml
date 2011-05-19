@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MD_Metadata xmlns="http://www.isotc211.org/2005/gmd" xmlns:iso19119="http://www.isotc211.org/2005/srv" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gss="http://www.isotc211.org/2005/gss" xmlns:gsr="http://www.isotc211.org/2005/gsr">
+	<!-- BE/BB zusätzlich verpflichtend:   Angabe eines eindeutigen Metadatensatz-Identifikators in Form einer "UUID"  -->
+	<fileIdentifier>
+		<gco:CharacterString>a510cc5c-614f-4e31-a619-92fd28be20af</gco:CharacterString>
+	</fileIdentifier>
+	<!-- Part B 10 METADATEN ÜBER METADATEN (METADATA ON METADATA) -->
+	<!-- Part B 10.3 Metadata Language (Sprache der Metadaten) -->
+	<language>
+		<LanguageCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode" codeListValue="ger">ger</LanguageCode>
+	</language>
+	<characterSet>
+		<MD_CharacterSetCode codeList="MD_CharacterSetCode" codeListValue="utf8"/>
+	</characterSet>
+	<!-- Part B 1 IDENTIFICATION (IDENTIFIZIERUNG) -->
+	<!-- Part B 1.3 Resource type (Ressourcenart) -->
+	<hierarchyLevel>
+		<MD_ScopeCode codeList="MD_ScopeCode" codeListValue="dataset"/>
+	</hierarchyLevel>
+	<contact>
+		<CI_ResponsibleParty>
+			<!-- Part B 10 METADATEN ÜBER METADATEN (METADATA ON METADATA) -->
+			<!-- Part B 10.1 Metadata Contact (Kontakt für die Metadaten) -->
+			<organisationName>
+				<gco:CharacterString>Landesvermessung und Geobasisinformation Brandenburg (LGB)</gco:CharacterString>
+			</organisationName>
+			<contactInfo>
+				<CI_Contact>
+					<address>
+						<CI_Address>
+							<electronicMailAddress>
+								<gco:CharacterString>metadaten@geobasis-bb.de</gco:CharacterString>
+							</electronicMailAddress>
+						</CI_Address>
+					</address>
+				</CI_Contact>
+			</contactInfo>
+			<role>
+				<CI_RoleCode codeList="CI_RoleCode" codeListValue="pointOfContact"/>
+			</role>
+		</CI_ResponsibleParty>
+	</contact>
+	<!-- Part B 10 METADATEN ÜBER METADATEN (METADATA ON METADATA) -->
+	<!-- Part B 10.2 Metadata Date (Datum der Metadaten) -->
+	<dateStamp>
+		<gco:DateTime>2010-06-01T13:47:43</gco:DateTime>
+	</dateStamp>
+	<!-- BE/BB zusätzlich verpflichtend:   Angabe des verwendeten Metadatenstandards inklusive der Version  -->
+	<metadataStandardName>
+		<gco:CharacterString>ISO 19115:2003/Cor 1:2006, 19119:2005/Amd 1:2008 (BE/BB)</gco:CharacterString>
+	</metadataStandardName>
+	<metadataStandardVersion>
+		<gco:CharacterString>2.1.0</gco:CharacterString>
+	</metadataStandardVersion>
+	<referenceSystemInfo>
+		<MD_ReferenceSystem>
+			<referenceSystemIdentifier>
+				<RS_Identifier>
+					<code>
+						<gco:CharacterString>EPSG:25833</gco:CharacterString>
+					</code>
+				</RS_Identifier>
+			</referenceSystemIdentifier>
+		</MD_ReferenceSystem>
+	</referenceSystemInfo>
+	<identificationInfo>
+		<!-- Part B 1 IDENTIFICATION (IDENTIFIZIERUNG) -->
+		<!-- Part B 1.5 Unique resource identifier (Eindeutiger Ressourcenbezeichner) -->
+		<MD_DataIdentification uuid="bb1061cf-d40d-4123-8e75-4246fb717735">
+			<citation>
+				<CI_Citation>
+					<!-- Part B 1 IDENTIFICATION (IDENTIFIZIERUNG) -->
+					<!-- Part B 1.1 Resource title (Ressourcenbezeichnung) -->
+					<title>
+						<gco:CharacterString>BB-Verwaltungsgrenzen-Landkreise</gco:CharacterString>
+					</title>
+					<!-- TEMPORAL REFERENCE (ZEITBEZUG) -->
+					<!-- Part B 5.4 Date of creation (Erstellungsdatum)  alternativ:
+						Part B 5.2 Date of publication (Datum der Veröffentlichung)   oder 
+						Part B 5.3 Ddate of last revision (Datum der letzten Überarbeitung)    -->
+					<date>
+						<CI_Date>
+							<date>
+								<gco:DateTime>2002-04-04T00:00:00</gco:DateTime>
+							</date>
+							<dateType>
+								<CI_DateTypeCode codeList="CI_DateTypeCode" codeListValue="creation"/>
+							</dateType>
+						</CI_Date>
+					</date>
+					<identifier>
+						<!-- Part B 1 IDENTIFICATION (IDENTIFIZIERUNG) -->
+						<!-- Part B 1.5 Unique resource identifier (Eindeutiger Ressourcenbezeichner) -->
+						<RS_Identifier>
+							<code>
+								<gco:CharacterString>bb1061cf-d40d-4123-8e75-4246fb717735</gco:CharacterString>
+							</code>
+							<codeSpace>
+								<gco:CharacterString>http://isk.geobasis-bb.de/ows/csw.php</gco:CharacterString>
+							</codeSpace>
+						</RS_Identifier>
+					</identifier>
+				</CI_Citation>
+			</citation>
+			<!-- Part B 1 IDENTIFICATION (IDENTIFIZIERUNG) -->
+			<!-- Part B 1.2 Resource Abstract (Ressourcenüberblick) -->
+			<abstract>
+				<gco:CharacterString>Digitale Verwaltungsgrenzen der Landkreise des Landes Brandenburg.</gco:CharacterString>
+			</abstract>
+			<!-- Part B 9 ORGANISATIONS RESPONSIBLE FOR THE ESTABLISHMENT, MANAGEMENT, MAINTENANCE AND DISTRIBUTION OF SPATIAL DATA SETS AND SERVICES (FÜR DIE SCHAFFUNG, VERWALTUNG, ERHALTUNG UND VERBREITUNG VON GEODATENSÄTZEN UND -DIENSTEN ZUSTÄNDIGE STELLE)  -->
+			<pointOfContact>
+				<CI_ResponsibleParty>
+					<!-- Part B 9.1 Responsible party (Zuständige Stelle) -->
+					<organisationName>
+						<gco:CharacterString>Landesvermessung und Geobasisinformation Brandenburg (LGB)</gco:CharacterString>
+					</organisationName>
+					<contactInfo>
+						<CI_Contact>
+							<address>
+								<CI_Address>
+									<electronicMailAddress>
+										<gco:CharacterString>kundenservice@geobasis-bb.de</gco:CharacterString>
+									</electronicMailAddress>
+								</CI_Address>
+							</address>
+						</CI_Contact>
+					</contactInfo>
+					<!-- Part B 9.2 Responsible party role (Funktion der zuständigen Stelle) -->
+					<role>
+						<CI_RoleCode codeList="CI_RoleCode" codeListValue="custodian"/>
+					</role>
+				</CI_ResponsibleParty>
+			</pointOfContact>
+			<!-- optionale Angabe der Graphik -->
+			<graphicOverview>
+				<MD_BrowseGraphic>
+					<fileName>
+						<gco:CharacterString>http://geobroker.geobasis-bb.de/thumbnail/304.gif</gco:CharacterString>
+					</fileName>
+					<fileDescription>
+						<gco:CharacterString>Ausschnitt Digitale Verwaltungsgrenzen.</gco:CharacterString>
+					</fileDescription>
+					<fileType>
+						<gco:CharacterString>gif</gco:CharacterString>
+					</fileType>
+				</MD_BrowseGraphic>
+			</graphicOverview>
+			<!-- Part B 3 KEYWORD (SCHLÜSSELWORT) -->
+			<descriptiveKeywords>
+				<MD_Keywords>
+					<!-- Part B 3.1 Keyword Value (Wert des Schlüsselworts) -->
+					<keyword>
+						<gco:CharacterString>Administrative units</gco:CharacterString>
+					</keyword>
+					<type>
+						<MD_KeywordTypeCode codeList="MD_KeywordTypeCode" codeListValue="theme"/>
+					</type>
+					<!-- Part B 3.2. Originating controlled vocabulary (Herkunft des kontrollierten Vokabulars) -->
+					<thesaurusName>
+						<CI_Citation>
+							<title>
+								<gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
+							</title>
+							<date>
+								<CI_Date>
+									<date>
+										<gco:DateTime>2008-06-01T00:00:00</gco:DateTime>
+									</date>
+									<dateType>
+										<CI_DateTypeCode codeList="CI_DateTypeCode" codeListValue="publication"/>
+									</dateType>
+								</CI_Date>
+							</date>
+						</CI_Citation>
+					</thesaurusName>
+				</MD_Keywords>
+			</descriptiveKeywords>
+			<!-- BE/BB zusätzlich verpflichtend: mindestens ein Schlüsselwort aus der BE/BB Schlagwortliste  -->
+			<descriptiveKeywords>
+				<MD_Keywords>
+					<keyword>
+						<gco:CharacterString>Vermessung</gco:CharacterString>
+					</keyword>
+					<keyword>
+						<gco:CharacterString>Verwaltung</gco:CharacterString>
+					</keyword>
+					<type>
+						<MD_KeywordTypeCode codeList="MD_KeywordTypeCode" codeListValue="theme"/>
+					</type>
+					<thesaurusName>
+						<CI_Citation>
+							<title>
+								<gco:CharacterString>BE/BB Schlagwortliste, Version 1.0</gco:CharacterString>
+							</title>
+							<date>
+								<CI_Date>
+									<date>
+										<gco:DateTime>2004-06-25T00:00:00</gco:DateTime>
+									</date>
+									<dateType>
+										<CI_DateTypeCode codeList="CI_DateTypeCode" codeListValue="publication"/>
+									</dateType>
+								</CI_Date>
+							</date>
+						</CI_Citation>
+					</thesaurusName>
+				</MD_Keywords>
+			</descriptiveKeywords>
+			<!-- Part B 8 CONSTRAINT RELATED TO ACCESS AND USE (ZUGANGS- UND NUTZUNGSBESCHRÄNKUNGEN) -->
+			<resourceConstraints>
+				<MD_LegalConstraints>
+					<!-- Part B 8.1 Conditions applying to access and use (Bedingungen für den Zugang und die Nutzung) -->
+					<useLimitation>
+						<gco:CharacterString>http://www.geobasis-bb.de/GeoPortal1/pdf/AGNB.pdf</gco:CharacterString>
+					</useLimitation>
+					<!-- Part B 8.2 Limitations on public access (Beschränkungen des öffentlichen Zugangs) -->
+					<accessConstraints>
+						<MD_RestrictionCode codeList="MD_RestrictionCode" codeListValue="copyright"/>
+					</accessConstraints>
+				</MD_LegalConstraints>
+			</resourceConstraints>
+			<!-- Part B 6 QUALITY AND VALIDITY (QUALITÄT UND GÜLTIGKEIT) -->
+			<!-- Part B 6.2 Spatial resolution (Räumliche Auflösung) -->
+			<spatialResolution>
+				<MD_Resolution>
+					<equivalentScale>
+						<MD_RepresentativeFraction>
+							<denominator>
+								<gco:Integer>25000</gco:Integer>
+							</denominator>
+						</MD_RepresentativeFraction>
+					</equivalentScale>
+				</MD_Resolution>
+			</spatialResolution>
+			<!-- Part B 1 IDENTIFICATION (IDENTIFIZIERUNG) -->
+			<!-- Part B 1.7 Resource language (Ressourcensprache) -->
+			<language>
+				<LanguageCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode" codeListValue="ger">ger</LanguageCode>
+			</language>
+			<characterSet>
+				<MD_CharacterSetCode codeList="MD_CharacterSetCode" codeListValue="utf8"/>
+			</characterSet>
+			<!-- Part B 2 CLASSIFICATION OF SPATIAL DATA AND SERVICES
+                       (KLASSIFIZIERUNG VON GEODATEN UND GEODATENDIENSTEN) -->
+			<!-- Part B 2.1 Topic category (Themenkategorie) -->
+			<topicCategory>
+				<MD_TopicCategoryCode>boundaries</MD_TopicCategoryCode>
+			</topicCategory>
+			<extent>
+				<EX_Extent>
+					<geographicElement>
+						<EX_GeographicBoundingBox>
+							<!-- BE/BB zusätzlich verpflichtend: Angabe ob inner- oder außerhalb des Begrenzungsrechteckes
+			(notwendig aufgrund der Insellage Berlins innerhalb von Brandenburg für eindeutige Beschreibung)
+			   Boolean: innerhalb = true/ 1, außerhalb= false/ 0 -->
+							<extentTypeCode>
+								<gco:Boolean>1</gco:Boolean>
+							</extentTypeCode>
+							<!-- Part B 1 GEOGRAPHIC LOCATION (GEOGRAFISCHER STANDORT) -->
+							<!-- Part B 1.7 Geographic bounding box (Geografisches Begrenzungsrechteck) -->
+							<westBoundLongitude>
+								<gco:Decimal>11.28</gco:Decimal>
+							</westBoundLongitude>
+							<eastBoundLongitude>
+								<gco:Decimal>14.87</gco:Decimal>
+							</eastBoundLongitude>
+							<southBoundLatitude>
+								<gco:Decimal>51.36</gco:Decimal>
+							</southBoundLatitude>
+							<northBoundLatitude>
+								<gco:Decimal>53.56</gco:Decimal>
+							</northBoundLatitude>
+						</EX_GeographicBoundingBox>
+					</geographicElement>
+				</EX_Extent>
+			</extent>
+		</MD_DataIdentification>
+	</identificationInfo>
+	<distributionInfo>
+		<MD_Distribution>
+			<distributionFormat>
+			<MD_Format>
+				<name>
+					<gco:CharacterString>Administrative units GML application schema</gco:CharacterString>
+				</name>
+				<version>
+					<gco:CharacterString>version 3.0; GML, version 3.2.1</gco:CharacterString>
+				</version>
+				<specification>
+					<gco:CharacterString>D2.8.I.4 Data Specification on Administrative units – Draft Guidelines</gco:CharacterString>
+				</specification>
+				</MD_Format>
+			</distributionFormat>
+			<transferOptions>
+				<MD_DigitalTransferOptions>
+					<onLine>
+						<CI_OnlineResource>
+							<!-- Part B 1 IDENTIFICATION (IDENTIFIZIERUNG) -->
+							<!-- Part B 1.4 Resource locator (Ressourcenverweis) -->
+							<linkage>
+								<URL>http://isk.geobasis-bb.de</URL>
+							</linkage>
+							<function>
+								<CI_OnLineFunctionCode codeList="CI_OnLineFunctionCode" codeListValue="information"/>
+							</function>
+						</CI_OnlineResource>
+					</onLine>
+				</MD_DigitalTransferOptions>
+			</transferOptions>
+		</MD_Distribution>
+	</distributionInfo>
+	<dataQualityInfo>
+		<DQ_DataQuality>
+			<scope>
+				<DQ_Scope>
+					<level>
+						<MD_ScopeCode codeList="MD_ScopeCode" codeListValue="dataset"/>
+					</level>
+				</DQ_Scope>
+			</scope>
+			<!-- Part B 6 QUALITY AND VALIDITY (QUALITÄT UND GÜLTIGKEIT) -->
+			<!-- Part B 6.1 Lineage (Herkunft) -->
+			<lineage>
+				<LI_Lineage>
+					<statement>
+						<gco:CharacterString>Als Erfassungsgrundlage dient das Basis-DLM im Erfassungsmaßstab 1: 25.000. Die Grenzen werden vierteljährlich aktualisiert und veröffentlicht.</gco:CharacterString>
+					</statement>
+				</LI_Lineage>
+			</lineage>
+			<!-- Part B 7 CONFORMITY (ÜBEREINSTIMMUNG)  -->
+			<report>
+				<DQ_DomainConsistency>
+					<measureIdentification>
+						<MD_Identifier>
+							<code>
+								<gco:CharacterString>?????????????</gco:CharacterString>							
+							</code>
+						</MD_Identifier>					
+					</measureIdentification>
+					<result>
+						<DQ_ConformanceResult>
+			<!-- Part B 7.1 Specification (Spezifikation)  -->
+							<specification>							
+									<CI_Citation>
+										<title>
+											<gco:CharacterString>D2.8.I.4 Data Specification on Administrative units – Draft Guidelines</gco:CharacterString>
+										</title>
+										<date>
+											<CI_Date>
+												<date>
+													<gco:DateTime>2010-04-26T00:00:00</gco:DateTime>
+												</date>
+												<dateType>
+													<CI_DateTypeCode codeList="CI_DateTypeCode" codeListValue="publication"/>
+												</dateType>
+											</CI_Date>
+										</date>					
+									</CI_Citation>
+							</specification>							
+							<explanation>
+								<gco:CharacterString>See the referenced specification</gco:CharacterString>
+							</explanation>
+			<!-- Part B 7.2 Degree (Grad) -->
+							<pass>
+								<gco:Boolean>true</gco:Boolean>							
+							</pass>
+						</DQ_ConformanceResult>					
+					</result>
+				</DQ_DomainConsistency>					
+			</report>
+		</DQ_DataQuality>
+	</dataQualityInfo>
+</MD_Metadata>
