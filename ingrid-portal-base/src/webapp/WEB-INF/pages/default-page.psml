@@ -84,6 +84,16 @@
         <value>search-chronicle-1</value>
       </preference>
     </fragment>
+    <fragment id="home-8" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::WeatherTeaser">
+      <property layout="TwoColumns" name="row" value="4" />
+      <property layout="TwoColumns" name="column" value="1" />
+      <preference name="titleKey" readOnly="false">
+        <value>teaser.weather.title</value>
+      </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>teaser-weather-1</value>
+      </preference>
+    </fragment>
   </fragment>
   <security-constraints>
     <security-constraints-ref>public-view</security-constraints-ref>

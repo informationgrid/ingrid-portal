@@ -145,9 +145,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            	// remove possible invalid characters
 	            	docUuid = UtilsQueryString.normalizeUuid(docUuid);
 	                String qStr = null;
-                  if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_9_DSC_OBJECT)) {
-                  qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
-                  } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_8_DSC_OBJECT)) {
+	                if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_9_DSC_OBJECT)) {
+                	  qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
+                  	} else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_8_DSC_OBJECT)) {
 	            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT)) {
 	            		qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
@@ -173,8 +173,37 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	
 	            	IngridQuery q = QueryStringParser.parse(qStr);
 	            	IngridHits hits = ibus.search(q, 1, 1, 0, 3000);
+	            	
 	            	if (hits.length() < 1) {
-	            		log.error("No record found for document uuid:" + docUuid + " using iplug: " + iplugId);
+	            		log.error("No record found for document uuid:" + docUuid.trim() + " using iplug: " + iplugId.trim());
+	            		
+	            	    qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " ranking:score";
+	  	                q = QueryStringParser.parse(qStr);
+		            	hits = ibus.search(q, 1, 1, 0, 3000);
+		            	if(hits.length() < 1){
+		            		log.error("No object record found for document uuid:" + docUuid.trim());
+		            		
+		            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " ranking:score";
+		  	                q = QueryStringParser.parse(qStr);
+			            	hits = ibus.search(q, 1, 1, 0, 3000);
+			            	if(hits.length() < 1){
+			            		log.error("No object record found for document uuid:" + docUuid.trim());
+			            	}else{
+			            		hit = hits.getHits()[0];
+			            		if(plugDescription == null){
+			            			iplugId = hit.getPlugId();
+			            			plugDescription = ibus.getIPlug(iplugId);
+			        	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
+			            		}
+			            	}
+		            	}else{
+		            		hit = hits.getHits()[0];
+		            		if(plugDescription == null){
+		            			iplugId = hit.getPlugId();
+		            			plugDescription = ibus.getIPlug(iplugId);
+		        	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
+		            		}
+		            	}
 	            	} else {
 	            		hit = hits.getHits()[0];
 	            	}
@@ -191,6 +220,37 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	                hit.setPlugId(iplugId);
 	                context.put("docId", documentId);
 	            }
+            }else{
+            	log.error("No plugId set for detail.");
+        		if(docUuid != null && docUuid.length() > 0){
+        			String qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " ranking:score";
+        			IngridQuery q = QueryStringParser.parse(qStr);
+        			IngridHits hits = ibus.search(q, 1, 1, 0, 3000);
+	            	if(hits.length() < 1){
+	            		log.error("No object record found for document uuid:" + docUuid.trim());
+	            		
+	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " ranking:score";
+	  	                q = QueryStringParser.parse(qStr);
+		            	hits = ibus.search(q, 1, 1, 0, 3000);
+		            	if(hits.length() < 1){
+		            		log.error("No object record found for document uuid:" + docUuid.trim());
+		            	}else{
+		            		hit = hits.getHits()[0];
+		            		if(plugDescription == null){
+		            			iplugId = hit.getPlugId();
+		            			plugDescription = ibus.getIPlug(iplugId);
+		        	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
+		            		}
+		            	}
+	            	}else{
+	            		hit = hits.getHits()[0];
+	            		if(plugDescription == null){
+	            			iplugId = hit.getPlugId();
+	            			plugDescription = ibus.getIPlug(iplugId);
+	        	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
+	            		}
+	            	}
+            	}
             }
 
             if (hit != null) {

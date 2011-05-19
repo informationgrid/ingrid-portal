@@ -147,6 +147,10 @@ public class PortalConfig extends PropertiesConfiguration {
 	
 	public static final String THESAURUS_SEARCH_QUERY_TYPES = "thesaurus.search.query.types";
 	
+	public static final String TEASER_WEATHER_DWD_PATH = "teaser.weather.dwd.path";
+	
+	public static final String TEASER_WEATHER_DWD_MOVIE = "teaser.weather.dwd.movie";
+	
 	// contains the short version of all supported languages
 	public static final String LANGUAGES_SHORT = "languages.short";
 	

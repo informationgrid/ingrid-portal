@@ -1,0 +1,18 @@
+<div class="portlet-section-body">
+	#if($DWD_PATH != "" && $DWD_PATH.length() > 0)
+        <object data="$DWD_PATH" type="application/x-shockwave-flash" width="226" height="240">
+    		#if($DWD_MOVIE != "" && $DWD_MOVIE.length() > 0)
+            <param name="movie" value="$DWD_MOVIE"/>
+    		#end
+            <param name="quality" value="high"/>
+            <param name="scale" value="exactfit"/>
+            <param name="menu" value="true"/>
+                <!-- Alternate content -->
+                <p>$MESSAGES.getString("teaser.weather.adobe")</p>
+                <p><a href="http://www.adobe.com/go/getflashplayer"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Adobe Flash Player herunterladen" width="112" height="33" /></a></p>
+                <!-- End alternate content -->
+        </object>
+	#else
+		<p>$MESSAGES.getString("teaser.weather.no.data")</p>
+	#end
+</div>
