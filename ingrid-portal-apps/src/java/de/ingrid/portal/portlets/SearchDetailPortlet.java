@@ -183,7 +183,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 		            	if(hits.length() < 1){
 		            		log.error("No object record found for document uuid:" + docUuid.trim());
 		            		
-		            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " ranking:score";
+		            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " ranking:score datatype:address";
 		  	                q = QueryStringParser.parse(qStr);
 			            	hits = ibus.search(q, 1, 1, 0, 3000);
 			            	if(hits.length() < 1){
@@ -229,7 +229,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            	if(hits.length() < 1){
 	            		log.error("No object record found for document uuid:" + docUuid.trim());
 	            		
-	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " ranking:score";
+	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":" + docUuid.trim() + " ranking:score datatype:address";
 	  	                q = QueryStringParser.parse(qStr);
 		            	hits = ibus.search(q, 1, 1, 0, 3000);
 		            	if(hits.length() < 1){
