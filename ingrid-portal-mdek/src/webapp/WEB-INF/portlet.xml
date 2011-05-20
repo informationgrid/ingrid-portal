@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <portlet-app id="ingrid-portal-mdek" version="1.0">
 
-	<portlet id="MdekEntryPortlet">
+    <portlet id="MdekEntryPortlet">
         <init-param>
             <description>Entry point to the mdek application</description>
             <name>ViewPage</name>
@@ -24,7 +24,7 @@
         </portlet-preferences>
     </portlet>
 
-	<portlet id="MdekPortalAdminPortlet">
+    <portlet id="MdekPortalAdminPortlet">
         <init-param>
             <description>Catalog administration portlet for the portal admin</description>
             <name>ViewPage</name>
