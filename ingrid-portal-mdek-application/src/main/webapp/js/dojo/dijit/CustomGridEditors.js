@@ -81,6 +81,8 @@ DecimalCellEditor = function(args) {
     };
 
     this.destroy = function() {
+        // hide Tooltip if any
+        dijit.hideTooltip(this.input.domNode);
         this.input.destroy();
         dojo.destroy(this.input.domNode);
     };
@@ -163,6 +165,8 @@ SelectboxEditor = function(args) {
     /*********** REQUIRED METHODS ***********/
 
     this.destroy = function() {
+        // hide Tooltip if any
+        dijit.hideTooltip(box.domNode);
         // remove all data, events & dom elements created in the constructor
         box.destroy();
     };

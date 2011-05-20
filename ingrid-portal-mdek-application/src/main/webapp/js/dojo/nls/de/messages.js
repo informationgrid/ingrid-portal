@@ -973,6 +973,15 @@
     "dialog.statistics.adrClass0":"Institution",
     "dialog.statistics.adrClass1":"Einheit",
     "dialog.statistics.adrClass2":"Person",
-    "dialog.statistics.adrClass3":"Freie Adresse"
+    "dialog.statistics.adrClass3":"Freie Adresse",
+    
+    "validation.error.addressType":"Es muss mindestens eine Adressbeziehung '${0}' angegeben werden!",
+    "validation.error.address.references":"All entries in the address table must have valid references.",
+    "validation.error.empty.table":"All entries in the table must contain data.",
+    "validation.error.conformity.table":"All entries in the conformity table must have a valid level, specification and date.",
+    "validation.error.dq.table":"NameOfMeasure + ResultValue needs to be filled.",
+    "validation.error.spatial.table":"At least one 'spatial' table has to contain an entry with a bounding box.",
+    "validation.error.spatial.expired.table":"The spatial reference table must not contain expired entries.",
+    "validation.error.email.table":"At least one entry has to be of type '${0}'."
   }
 )

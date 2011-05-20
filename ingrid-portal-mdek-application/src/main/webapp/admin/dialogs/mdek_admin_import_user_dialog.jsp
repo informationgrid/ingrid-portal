@@ -24,6 +24,8 @@ dojo.connect(_container_, "onUnLoad", function(){
 function initUserList() {
 
 	SecurityService.getPortalUsers( {
+        preHook: scriptScope.showLoading,
+        postHook: scriptScope.endLoading,
 		callback: function(userList) {
 			var list = [];
 			for (var i in userList) {
@@ -42,6 +44,17 @@ function initUserList() {
 	});
 }
 
+scriptScope.showLoading = function() {
+    dojo.style("importUserLoadingZone", "visibility", "visible");
+    dijit.byId("userList").set("disabled", true);
+    dijit.byId("importUser").set("disabled", true);
+}
+
+scriptScope.endLoading = function() {
+    dojo.style("importUserLoadingZone", "visibility", "hidden");
+    dijit.byId("userList").set("disabled", false);
+    dijit.byId("importUser").set("disabled", false);
+}
 
 // 'Yes Button' onClick function
 scriptScope.yesButtonFunc = function() {
@@ -77,7 +90,7 @@ scriptScope.noButtonFunc = function() {
             </span>
             <div class="input">
                 <span class="input">
-                    <input dojoType="dijit.form.Select" style="width:100%; margin:0;" id="userList" />
+                    <input dojoType="dijit.form.Select" maxHeight="150" style="width:100%; margin:0;" id="userList" />
                 </span>
             </div>
         </div>
@@ -89,9 +102,12 @@ scriptScope.noButtonFunc = function() {
             </button>
         </span>
         <span style="float:right; margin-top:5px;">
-            <button dojoType="dijit.form.Button" type="button" title="<fmt:message key="general.apply" />" onClick="javascript:scriptScope.yesButtonFunc();">
+            <button dojoType="dijit.form.Button" id="importUser" type="button" title="<fmt:message key="general.apply" />" onClick="javascript:scriptScope.yesButtonFunc();">
                 <fmt:message key="general.apply" />
             </button>
+        </span>
+        <span id="importUserLoadingZone" style="float:right; margin-top:5px; z-index: 100; visibility:hidden;">
+            <img src="img/ladekreis.gif" />
         </span>
     </div>
 </div>

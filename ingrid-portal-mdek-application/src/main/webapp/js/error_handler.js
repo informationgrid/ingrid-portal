@@ -1,4 +1,7 @@
 function displayErrorMessage(err) {
+    if (!(err instanceof Object)) {
+        err = {message:err};
+    }
     // Show errors depending on outcome
     if (err && err.message) {
 		//var errorMessage = err;

@@ -372,11 +372,14 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
         }
     },
     
-    setData: function(newData,scrollToTop) {
+    setData: function(newData, scrollToTop, noRender) {
         this.invalidateAllRows();
         this.data = newData;
-        if (this.scrollToTop)
+        if (scrollToTop)
             this.scrollTo(0);
+        if (!noRender)
+            this.resizeCanvas();
+        this.onDataChanged({});
     },
     
     getData: function() {
@@ -1021,16 +1024,16 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
         }
      },
 		 
-		 clickWithinDomNode: function(evt, node) {
-		     var target = evt.target;
-         while (target != null) {
-				     if (target == node)
-						     return true;
-						 else
-						     target = target.parentNode;
-				 }
-				 return false;
-		 },
+    clickWithinDomNode: function(evt, node) {
+        var target = evt.target;
+        while (target != null) {
+            if (target == node)
+                return true;
+            else
+                target = target.parentNode;
+        }
+        return false;
+    },
      
      handleHeaderClick: function(e) {
     	 var widget = dijit.getEnclosingWidget(e.target);
@@ -1254,7 +1257,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
 
      cancelEditAndSetFocus: function() {
          if (this.getEditorLock().cancelCurrentEdit()) {
-               this.setFocus();
+             this.setFocus();
          }
      },
      

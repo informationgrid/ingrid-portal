@@ -13,7 +13,7 @@ if (!isRelease) {
 
 
 // predefined global variables for java script syntax check of additional fields
-var globalJSVariables  = {predef: ["dojo", "dijit", "UtilGrid"]};
+var globalJSVariables  = {predef: ["dojo", "dijit", "UtilGrid", "console", "Validation"]};
 var globalIDFVariables = {predef: ["importPackage", "Packages", "sourceRecord", "DatabaseSourceRecord", "IllegalArgumentException", "XPATHUtils", "igcProfileControlNode", "SQL", "XPATH", "idfDoc", "DOM", "log"]};
 
 

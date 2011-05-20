@@ -89,7 +89,7 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
 		node.state = "UNCHECKED";
 		
 		// load remote/lazy again
-		this._expandNode(node);
+		return this._expandNode(node);
 	},
 	
 	prepareCopy: function(/*TreeNodeItem*/node, /*boolean*/copySubTree) {

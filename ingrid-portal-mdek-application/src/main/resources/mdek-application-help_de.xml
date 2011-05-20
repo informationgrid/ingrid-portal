@@ -1970,12 +1970,21 @@
                         <p>In dem Bereich Skripte unter <b>Javascript</b> kann Javascript-Funktionalität hinzugefügt werden, die
                         beim Starten des InGrid-Editors ausgeführt werden soll. Dadurch lässt sich die Funktionalität beliebig
                         erweitern und Sonderbehandlung für Felder können ergänzt werden. Beispiele dazu finden Sie weiter unten im
-                        Abschnitt "Beispiele: Javascript"</p>
+                        Abschnitt "Beispiele: Javascript".</p>
                         
                         <p>Das <b>IDF-Mapping</b> beschreibt die Abbildung dieses Feldes in das InGrid-Data-Format (IDF). Nur wenn das
                         Feld ins IDF geschrieben worden ist, wird es auch in den Detaildaten bei einer Anfrage auftauchen. Beispiele dazu
-                        erfolgen weiter unten im Abschnitt "Beispiele: IDF-Mapping".</p>                        
+                        erfolgen weiter unten im Abschnitt "Beispiele: IDF-Mapping".</p>
                         <br></br>
+                        
+                        <p>Die <b>Syntaxüberprüfung</b> analysiert den eingegebenen Javascript-Code, welcher unter dem Reiter Javascript
+                        oder IDF-Mapping eingetragen wurde. Diese Überprüfung ist sehr restriktiv, so dass der Code auch trotz einer
+                        Fehlermeldung korrekt ausgeführt wird. So wird bspw. bei einem Variablenvergleich mit "==" darauf hingewiesen,
+                        dass "===" verwendet werden sollte. Im ersten Fall würde der Vergleich <i>2 == "2"</i> korrekt sein, jedoch nicht
+                        <i>2 === "2"</i>. Eine weitere oft irritierende Meldung ist <i>Implied global</i>, welches eine Auflistung an 
+                        Variablen zeigt, die nicht definiert wurden. Bei der Verwendung von globalen Variablen, können diese dann
+                        möglicherweise nicht korrekt aufgelöst werden. Ist man sich sicher, dass diese Variable wirklich im auszuführenden
+                        Kontext existiert, so kann diese Meldung vernachlässigt werden.</p>
                         
                         <p>Der <b>Indexname</b> definiert den zu verwendenden Namen während der Indexierung des Kataloges. Wird kein
                         Name ausgewählt, so wird dieses Feld auch nicht im Index erscheinen und ist auch nicht durchsuchbar!</p>
@@ -2037,35 +2046,85 @@
                  <section help-key="overall-catalog-management-additionalfields-4">
                     <h4>Beispiele: Javascript</h4>
                     <content>
-                        Es folgen ein paar Beispiele, die dies
-                        für ein Element mit der ID "neuesElement" veranschaulichen soll. Die ersten Beispiele beziehen sich auf 
+                        <p>Die folgenden Beispiele sollen die Möglichkeiten zeigen, wie man ein zusätzliches Feld mit Ereignissen 
+                        verknüpft und/oder das Verhalten beeinflusst. In diesen Beispielen wird von einem neuen Feld ausgegangen,
+                        welches mit der ID "neuesElement" angelegt wurde. Die ersten Beispiele beziehen sich auf 
                         die Validierung von Feldern, welche während eines normalen Speichervorganges ausgeführt werden. Bei einem 
                         Fehler wird das Objekt dann nicht gespeichert.</p>
                         
                         <br />
-                        <i>// Textelement erlaubt nur Email-Adressen</i>
+                        <code>
+                        <i>// Textelement erlaubt nur Email-Adressen</i><br />
                         dijit.byId("neuesElement").regExpGen = dojox.validate.regexp.emailAddress;
                         <br /><br />
-                        <i>// Textelement darf nicht das Wort "NO" haben</i>
-                        dijit.byId("neuesElement").validator = function(value) {<br />
-                            if (value == "NO") return false; else return true;<br />
-                        }
+                        <i>// Textelement darf nicht das Wort "NO" haben</i><br />
+                        dijit.byId("neuesElement").validator = function(value) {
+                            <blockquote>if (value == "NO") return false; else return true;</blockquote>
+                        }</code>
                         <br /><br />
+                        Ab Version 3.0.1 stehen auch diese Funktionen zur Verfügung:<br />
+                        <code>
+                        <i>// Textelement erlaubt nur Email-Adressen beim Speichern</i><br />
+                        Validation.addEmailCheck("neuesElement");<br />
+                        <i>// Textelement erlaubt nur Email-Adressen beim Veröffentlichen</i><br />
+                        Validation.addEmailCheck("neuesElement", true);<br />
+                        <i>// Textelement erlaubt nur URLs beim Veröffentlichen</i><br />
+                        Validation.addUrlCheck("neuesElement", true);<br />
+                        <br /><br />
+                        <i>// Textelement darf nicht das Wort "NO" haben</i><br />
+                        Validation.addValueCheck("neuesElement", "NO", true, "You must not write 'NO'!");<br />
+                        <i>// Textelement darf nur das Wort "NO" haben beim Veröffentlichen</i><br />
+                        Validation.addValueCheck("neuesElement", "NO", false, "You have to write 'NO'!", true);<br />
+                        <i>// Feld darf nur eine Zahl zwischen 1 und 10 haben</i><br />
+                        Validation.addNumberCheck("neuesElement", 1, 10, "Zahl muss zwischen 1 und 10 sein!");<br />
+                        <i>// Feld darf nur eine Zahl zwischen 1 und 10 beim Veröffentlichen haben</i><br />
+                        Validation.addNumberCheck("neuesElement", 1, 10, "Zahl muss zwischen 1 und 10 sein!", true);
+                        </code>
+                        <br /><br />
+                        
                         <p>Möchte man die Validierung nur durchführen, wenn ein Objekt veröffentlich werden soll, so muss ein anderer
                         Ansatz gewählt werden! Laut des Publisher/Subscriber Prinzips, meldet man sich bei einem Ereignis an. Tritt
                         dieses Ereignis auf, wird die eigene geschriebene Funktion ebenfalls zu diesem Zeitpunkt ausgeführt. Dafür 
                         gibt es das spezielle Ereignis "<b>/onBeforeObjectPublish</b>" und kann wie folgt verwendet werden:</p>
                         <br />
-                        <i>// vor dem Publizieren muss das Element mehr als 5 Zeichen haben</i>
-                        dojo.subscribe("/onBeforeObjectPublish", function(invalidIDs) {<br />
-                            if (dijit.byId("neuesElement").get("value").length &lt; 5) { <br />
-                                invalidIDs.push("neuesElement"); <br />
+                        <code>
+                        <i>// vor dem Publizieren muss das Element mehr als 5 Zeichen haben</i><br />
+                        dojo.subscribe("/onBeforeObjectPublish", function(invalidIDs) {
+                            <blockquote>
+                            if (dijit.byId("neuesElement").get("value").length &lt; 5) {
+                                <blockquote>invalidIDs.push("neuesElement");</blockquote>
+                            }</blockquote>
+                        });</code><br />
+                        <br />
+                        
+                        <p>Das folgende Beispiel zeigt die Validierung einer Tabelle, welches etwas komplizierter ist und durch eine
+                        abstrahierte Methode vereinfacht wurde. Dazu dient die Methode <i>Validation.addTableCellCheck</i>, welche 
+                        4 Parameter haben kann. Der erste Parameter beschreibt die ID der Tabelle, der zweite, die zu überprüfenden 
+                        Spalten mit ihren IDs, der dritte stellt die Validierungsfunktion zur Verfügung und der letzte Parameter 
+                        entscheidet, ob die Validierung während der Eingabe und des Abspeicherns erfolgt oder nur beim Veröffentlichen.
+                        Die Validierungsfunktion hat wiederum 3 Parameter. Der erste ist der Wert der zu überprüfenden Zelle, der zweite
+                        ist die ID der Spalte die gerade überprüft wird (es können nur die IDs sein, die als 2. Parameter an addTableCellCheck
+                        übergeben worden sind) und der gesamte Datensatz, welcher für Vergleiche genutzt werden kann.</p>
+                        <code>
+                        <i>// die Spalten mit den IDs 'name' und 'birth' der Tabelle 'neuesElement' dürfen<br />
+                        // nicht leer sein wenn eine dieser Spalten bereits beschrieben wurde</i><br />
+                        var f = function(value, colId, rowData) {
+                            <blockquote>
+                            <i>// get the other column for comparison</i><br />
+                            var otherCol = (colId === "name") ? "birth" : "name";<br />
+                            if ((!value || value === "") &amp;&amp; rowData[otherCol] &amp;&amp; rowData[otherCol].length &gt; 0) {<br />
+                                <blockquote>return false;</blockquote>
                             }<br />
-                        });<br />
+                            return true;<br /></blockquote>
+                        };<br /><br />
+                        <b>Validation.addTableCellCheck</b>("neuesElement", ["name","birth"], f, true);
+                        </code>
+                        <br />
+                        <br />
                         
                         <p>In der Variablen <i>invalidIDs</i> werden die gesamten IDs von den Elementen gesammelt, die einen 
                         Validierungsfehler aufzeigen.</p>
-                        <p>Ein weiteres verfügbares Ereignis ist "/onObjectClassChange" welches immer auftritt, wenn die Objektklasse
+                        <p>Ein weiteres verfügbares Ereignis ist "/onObjectClassChange", welches immer auftritt, wenn die Objektklasse
                         manuell oder automatisch (durch das Laden eines anderen Objektes) sich ändert. Hierbei wird die neue Klasse als
                         Parameter an den Subscriber übergeben!</p>
                         <p>Für ein besseres Verständis dieser Prinzipien empfiehlt es sich die Dokumentation des DOJO-Frameworks

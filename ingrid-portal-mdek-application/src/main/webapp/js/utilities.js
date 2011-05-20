@@ -1363,16 +1363,16 @@ UtilUI.setRequiredState = function(/*html node to (un-)set the notRequired class
 			dojo.addClass(containerNode, "optional");
 		}
 
-		var getSectionElement = function(node) {
-			if (dojo.hasClass(node, "rubric"))
-				return node;
-			else
-				return getSectionElement(node.parentNode);
-		}
-
-		var sectionElement = getSectionElement(containerNode);
-		var isExpanded = dojo.hasClass(sectionElement, "expanded");
+		//var sectionElement = UtilUI.getSectionElement(containerNode);
+		//var isExpanded = dojo.hasClass(sectionElement, "expanded");
 	}
+}
+
+UtilUI.getSectionElement = function(node) {
+    if (dojo.hasClass(node, "rubric"))
+        return node;
+    else
+        return UtilUI.getSectionElement(node.parentNode);
 }
 
 UtilUI.toggleFunctionalLink = function(linkTab, event) {
@@ -1445,6 +1445,24 @@ UtilUI.updateBlockerDivInfo = function(progress) {
 		dojo.byId("waitInfo").innerHTML = message.get("general.init");//progress + " / 100";
 		dojo.style("waitInfo", "display", "block");
 	}
+}
+
+UtilUI.showNextError = function(id, message) {
+    var mightBeHidden = dojo.query(".rubric:not(.expanded) #"+id);
+    if (mightBeHidden.length > 0) {
+        dojo.addClass(UtilUI.getSectionElement(mightBeHidden[0]), "expanded");
+    }
+    var pos = dojo.position(id);
+    // leave some space after the element to scroll to so that we can show tooltip
+    pos.h += 50;
+    dojo.window.scrollIntoView(id, pos);
+    if (message)
+        showToolTip(id, message);
+    else {
+        message = dijit.byId(id).invalidMessage;
+        if (message) showToolTip(id, message);
+    }
+        
 }
 
 // General utility functions for converting strings, etc.
@@ -1534,6 +1552,11 @@ UtilGeneral.askUserAndInvokeOrCancel = function(text, invocation){
             invocation.call();
         }
     }]);
+}
+
+UtilGeneral.getNumberFromDijit = function(id) {
+    var value = dijit.byId(id).get("value");
+    return isNaN(value) ? null : value;
 }
 
 var itemToJS = function(store, item) {
@@ -1747,8 +1770,8 @@ UtilGrid.setTableData = function(gridId, data) {
 		gridData.setItems(data);
 		grid.invalidate();
 	}
-	grid.render();
-	grid.notifyChangedData({});
+	//grid.render();
+	//grid.notifyChangedData({});
 }
 
 UtilGrid.addTableDataRow = function(grid, item) {

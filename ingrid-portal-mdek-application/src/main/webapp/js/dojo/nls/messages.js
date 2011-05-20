@@ -973,6 +973,14 @@
     "dialog.statistics.adrClass0":"Institution",
     "dialog.statistics.adrClass1":"Unit",
     "dialog.statistics.adrClass2":"Person",
-    "dialog.statistics.adrClass3":"Custom Address"
+    "dialog.statistics.adrClass3":"Custom Address",
+    
+    "validation.error.addressType":"At least one address relation has to be of type 2 = '${0}'.",
+    "validation.error.empty.table":"All entries in the table must contain data.",
+    "validation.error.conformity.table":"All entries in the conformity table must have a valid level, specification and date.",
+    "validation.error.dq.table":"NameOfMeasure + ResultValue needs to be filled.",
+    "validation.error.spatial.table":"At least one 'spatial' table has to contain an entry with a bounding box.",
+    "validation.error.spatial.expired.table":"The spatial reference table must not contain expired entries.",
+    "validation.error.email.table":"At least one entry has to be of type '${0}'."
   }
 )

@@ -1728,17 +1728,20 @@ udkDataProxy._setObjectData = function(nodeData)
               grid.render();
           }
           else {
-              if (currentFieldWidget.store && currentField.listId != -1) {
-            	  // distinguish between combo and select box!
-            	  // combo boxes always cope with values instead of keys
-            	  if (currentFieldWidget instanceof dijit.form.ComboBox)
-            		  currentFieldWidget.attr("value", currentField.value, true);
-            	  else
-            		  currentFieldWidget.attr("value", currentField.listId, true);
-              } else if (currentFieldWidget instanceof dijit.form.DateTextBox) {
-                  currentFieldWidget.attr("value", dojo.date.locale.parse(currentField.value, {datePattern: "dd.MM.yyyy", selector: "date"}), true);
-              } else
-                  currentFieldWidget.attr("value", currentField.value, true);
+              // if additional field has been deleted then ignore it
+              if (currentFieldWidget) {
+                  if (currentFieldWidget.store && currentField.listId != -1) {
+                	  // distinguish between combo and select box!
+                	  // combo boxes always cope with values instead of keys
+                	  if (currentFieldWidget instanceof dijit.form.ComboBox)
+                		  currentFieldWidget.attr("value", currentField.value, true);
+                	  else
+                		  currentFieldWidget.attr("value", currentField.listId, true);
+                  } else if (currentFieldWidget instanceof dijit.form.DateTextBox) {
+                      currentFieldWidget.attr("value", dojo.date.locale.parse(currentField.value, {datePattern: "dd.MM.yyyy", selector: "date"}), true);
+                  } else
+                      currentFieldWidget.attr("value", currentField.value, true);
+              }
           }
 	  }
   }
@@ -2052,8 +2055,8 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.spatialRefAdminUnitTable = udkDataProxy._getTableData("spatialRefAdminUnit");
   nodeData.spatialRefLocationTable = udkDataProxy._getTableData("spatialRefLocation");
 
-  nodeData.spatialRefAltMin = (dijit.byId("spatialRefAltMin").get('value')+"" == "NaN") ? "" : dijit.byId("spatialRefAltMin").get('value');
-  nodeData.spatialRefAltMax = (dijit.byId("spatialRefAltMax").get('value')+"" == "NaN") ? "" : dijit.byId("spatialRefAltMax").get('value');
+  nodeData.spatialRefAltMin = UtilGeneral.getNumberFromDijit("spatialRefAltMin");
+  nodeData.spatialRefAltMax = UtilGeneral.getNumberFromDijit("spatialRefAltMax");
   nodeData.spatialRefAltMeasure = dijit.byId("spatialRefAltMeasure").get('value');
   nodeData.spatialRefAltVDate = dijit.byId("spatialRefAltVDate").get('value');
   nodeData.spatialRefExplanation = dijit.byId("spatialRefExplanation").get('value');
@@ -2092,7 +2095,7 @@ udkDataProxy._getObjectData = function(nodeData)
 
   nodeData.timeRefStatus = dijit.byId("timeRefStatus").getValue();
   nodeData.timeRefPeriodicity = dijit.byId("timeRefPeriodicity").getValue();
-  nodeData.timeRefIntervalNum = dijit.byId("timeRefIntervalNum").get("displayedValue");
+  nodeData.timeRefIntervalNum = dijit.byId("timeRefIntervalNum").get("displayedValue"); // will be mapped to String
   // TODO Temporarily store the display value in the database till it is changed in the backend
   nodeData.timeRefIntervalUnit = dijit.byId("timeRefIntervalUnit").get("displayedValue");
 
@@ -2288,11 +2291,11 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
     nodeData.inspireRelevant = dijit.byId("isInspireRelevant").checked ? true : false; // in case value is NULL!
 	nodeData.ref1ObjectIdentifier = dijit.byId("ref1ObjectIdentifier").getValue();
 	nodeData.ref1DataSet = dijit.byId("ref1DataSet").getValue();
-	nodeData.ref1Coverage = dijit.byId("ref1Coverage").get("displayedValue")
+	nodeData.ref1Coverage = UtilGeneral.getNumberFromDijit("ref1Coverage");
 	nodeData.ref1VFormatTopology = dijit.byId("ref1VFormatTopology").getValue();
 
-	nodeData.ref1AltAccuracy = dijit.byId("ref1AltAccuracy").get("displayedValue");
-	nodeData.ref1PosAccuracy = dijit.byId("ref1PosAccuracy").get("displayedValue");
+	nodeData.ref1AltAccuracy = UtilGeneral.getNumberFromDijit("ref1AltAccuracy");
+	nodeData.ref1PosAccuracy = UtilGeneral.getNumberFromDijit("ref1PosAccuracy");
 	nodeData.ref1BasisText = dijit.byId("ref1BasisText").getValue();
 	nodeData.ref1DataBasisText = dijit.byId("ref1DataBasisText").getValue();
 	nodeData.ref1ProcessText = dijit.byId("ref1ProcessText").getValue();

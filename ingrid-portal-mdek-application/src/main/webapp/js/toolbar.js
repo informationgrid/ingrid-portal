@@ -45,6 +45,7 @@ ingridToolbar.createToolbar = function(pane) {
     entries.push(["ShowChanges",  menuEventHandler.handleShowChanges]);
     entries.push(["Separator",    null]);
     entries.push(["ShowComments", menuEventHandler.handleShowComment]);
+    //entries.push(["ShowNextError", menuEventHandler.handleShowComment]);
 		
 	var entriesRight = [
 		["Help", function(){
@@ -54,9 +55,22 @@ ingridToolbar.createToolbar = function(pane) {
 	];
 	
 	var buttons = this._createToolbarButtons(toolbar, entries, false);
-	this._createToolbarButtons(toolbar, entriesRight, true);
+    // add another button which is displayed when a validation error occured
+    // when trying to save or publish
+    toolbar.addChild(ingridToolbar._createErrorButton());
+    
+    this._createToolbarButtons(toolbar, entriesRight, true);
     
     this.addToolbarEvents(isQAActive, isUserQA, buttons);
+}
+
+ingridToolbar._createErrorButton = function() {
+    var errorButton = new dijit.form.Button({id:"bShowNextError", label:"Show Next Error", style:"background-color:#B00000;border: 1px solid black;display:none;"});
+    errorButton.pos = 0;
+    errorButton.onClick = function(){
+        UtilUI.showNextError(this.invalidIds[this.pos++%this.invalidIds.length]);
+    }
+    return errorButton;
 }
 
 /**

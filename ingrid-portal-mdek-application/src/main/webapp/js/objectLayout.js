@@ -1392,7 +1392,9 @@ ingridObjectLayout.applyDefaultConnections = function() {
     // on our own
     var textAreas = dojo.query(".dijitTextArea", "contentFrameBodyObject");
     dojo.forEach(textAreas, function(element) {
-        dijit.getEnclosingWidget(element).validate = function() {
+        var widget = dijit.getEnclosingWidget(element);
+        widget.validate = function(){ return this.validator(); }           
+        widget.validator = function() {
             if (this.required && this.get("value") == "") {
                 dojo.addClass(this.domNode, "importantBackground");
                 return false;
@@ -1400,7 +1402,6 @@ ingridObjectLayout.applyDefaultConnections = function() {
                 dojo.removeClass(this.domNode, "importantBackground");
                 return true;
             }
-                
         };
     });
 

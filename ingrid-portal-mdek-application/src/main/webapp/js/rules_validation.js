@@ -232,12 +232,14 @@ function addressValidation() {
         var data = this.getData();
 		dojo.forEach(data, function(item, i) {
 			if (typeof(item.uuid) == "undefined") {
+                UtilGrid.getTable(gridId).scrollRowIntoView(i);
                 var cell = dojo.query(".slick-row[row$="+i+"] .c2", "generalAddress")[0];
 				dojo.addClass(cell, "importantBackground");
 				result = false;
 			}
 			if (forPublish) {
                 if (typeof(item.nameOfRelation) == "undefined" || item.nameOfRelation == "") {
+                    UtilGrid.getTable(gridId).scrollRowIntoView(i);
                     var cell = dojo.query(".slick-row[row$=" + i + "] .c0", "generalAddress")[0];
                     dojo.addClass(cell, "importantBackground");
                     result = false;
@@ -298,6 +300,7 @@ function applyRef6UrlListValidation() {
 }
 
 function markCells(type, gridId, row, cells) {
+    UtilGrid.getTable(gridId).scrollRowIntoView(row);
     dojo.forEach(cells, function(cell) {
         var cellDom = dojo.query("#"+gridId+" .slick-row[row$="+row+"] .c"+cell)[0];
         if (type == "ERROR") 
@@ -346,6 +349,7 @@ function addServiceUrlValidation(val){
     if (((value.url == undefined || value.url == "") && (value.name == undefined || value.name == "")))
         error = false;
         
+    UtilGrid.getTable(gridId).scrollRowIntoView(row);
     var cellDom1 = dojo.query("#"+gridId+" .slick-row[row$="+row+"] .c0")[0];
     var cellDom2 = dojo.query("#"+gridId+" .slick-row[row$="+row+"] .c1")[0];
     if (error) {
@@ -448,6 +452,7 @@ function generalAddressPublishable(notPublishableIDs) {
     // Check if all entries in the address table have valid reference types
     if (dojo.some(addressData, function(addressRef) { return (typeof(addressRef.uuid) == "undefined" || addressRef.nameOfRelation == null || dojo.trim(addressRef.nameOfRelation+"").length == 0); })) {
         console.debug("All entries in the address table must have valid references.");
+        dijit.byId("generalAddress").invalidMessage = "All entries in the address table must have valid references.";
         notPublishableIDs.push("generalAddress");
     }
 
@@ -457,6 +462,7 @@ function generalAddressPublishable(notPublishableIDs) {
     // Check if at least one entry exists with the correct relation type
     if (dojo.every(addressData, function(addressRef) { return ( dojo.trim(addressRef.nameOfRelation+"") != auskunftString); })) {
         console.debug("At least one entry has to be of type '"+auskunftString+"'.");
+        dijit.byId("generalAddress").invalidMessage = dojo.string.substitute(message.get("validation.error.addressType"), [auskunftString]);
         notPublishableIDs.push("generalAddress");
     }
     
@@ -473,6 +479,7 @@ function generalAddressPublishable(notPublishableIDs) {
                 return (dojo.trim(addressRef.nameOfRelation + "") != dvString);
             })) {
                 console.debug("At least one address relation has to be of type 2 = 'Datenvarantwortung'.");
+                dijit.byId("generalAddress").invalidMessage = dojo.string.substitute(message.get("validation.error.addressType"), [dvString]);
                 notPublishableIDs.push("generalAddress");
             }
         }
@@ -581,52 +588,91 @@ function applyBeforeAddressPublishValidation() {
 var Validation = {};
 
 Validation.addEmailCheck = function(id, /*boolean*/onlyBeforePublish) {
-    dijit.byId(id).regExpGen = dojox.validate.regexp.emailAddress; 
+    //dijit.byId(id).regExpGen = dojox.validate.regexp.emailAddress;
+    Validation.addRegExCheck(id, dojox.validate.regexp.emailAddress)
 }
 
 Validation.addUrlCheck = function(id, /*boolean*/onlyBeforePublish) {
+    dijit.byId(id).regExpGen = dojox.validate.regexp.url;
+}
+
+Validation.addTableCellCheck = function(id, /*Array*/colIds, /*function*/caller, /*boolean*/onlyBeforePublish) {
+    var funcValidate = function(){
+        var isValid = true;
+        // make an array if just one value was given!
+        if (!(colIds instanceof Array)) colIds = [colIds];
+        dojo.forEach(this.getData(), function(data, row){
+            dojo.forEach(colIds, function(colId) {
+                var value = data[colId];
+                var result = caller(value, colId, data);
+                if (result === false) {
+                    markCells("ERROR", id, row, [this.columnsById[colId]]);
+                    isValid = false;
+                } else {
+                    markCells("", id, row, [this.columnsById[colId]]);
+                }
+            }, this);
+        }, this);
+        return isValid;
+    };
     
+    if (onlyBeforePublish) {
+        dojo.subscribe("/onBeforeObjectPublish", function(/*Array*/notPublishableIDs){
+            if (!dojo.hitch(dijit.byId(id), funcValidate)()) {
+                notPublishableIDs.push(id);
+            }
+        });
+    } else {
+        var widget = dijit.byId(id);
+        dojo.connect(widget, "onDataChanged", funcValidate);
+        widget.validate = funcValidate;
+    }
 }
 
-Validation.addTableCellCheck = function(id, col, /*function*/caller, /*boolean*/onlyBeforePublish) {
-    dojo.connect(dijit.byId(id), "onCellChange", function(msg) {
-        if (msg.cell == col) {
-            var value = msg.item[this.getColumns()[col].field];
-            caller(value);
-        }
-    });
-}
-
-Validation.addValueCheck = function(id, value, /*boolean*/invert, /*boolean*/onlyBeforePublish) {
+Validation.addValueCheck = function(id, value, /*boolean*/invert, message, /*boolean*/onlyBeforePublish) {
      var func = function(){
          if (invert)
              return this.get("value") != value;
          else
              return this.get("value") == value;
      }
-     this.addCheck(id, func);
+     this.addCheck(id, func, message, onlyBeforePublish);
 }
 
-Validation.addNumberCheck = function(id, min, max, /*boolean*/onlyBeforePublish) {
+Validation.addNumberCheck = function(id, min, max, /*invalidMessage*/message, /*boolean*/onlyBeforePublish) {
     // TODO: check if widget is a numberbox and use special range function
      
     var func = function(){
-        console.debug("this is:");
-        console.debug(this);
         return (min ? this.get("value") >= min : true) && (max ? this.get("value") <= max : true);
     }
     
+    this.addCheck(id, func, message, onlyBeforePublish);
+}
+
+Validation.addCheck = function(id, /*function*/caller, message, /*boolean*/onlyBeforePublish) {
     if (onlyBeforePublish) {
         dojo.subscribe("/onBeforeObjectPublish", function(/*Array*/notPublishableIDs) {
-            if (!dojo.hitch(dijit.byId(id), func)()) {
+            if (!dojo.hitch(dijit.byId(id), caller)()) {
                 notPublishableIDs.push(id);
             }
         });
     } else {
-        this.addCheck(id, func);
+        var widget = dijit.byId(id);
+        widget.validator = caller;
+        widget.invalidMessage = message;
     }
 }
 
-Validation.addCheck = function(id, /*function*/caller, /*boolean*/onlyBeforePublish) {
-    dijit.byId(id).validator = caller; 
+Validation.addRegExCheck = function(id, /*function*/caller, message, /*boolean*/onlyBeforePublish) {
+    if (onlyBeforePublish) {
+        dojo.subscribe("/onBeforeObjectPublish", function(/*Array*/notPublishableIDs) {
+            if (!dojo.hitch(dijit.byId(id), caller)()) {
+                notPublishableIDs.push(id);
+            }
+        });
+    } else {
+        var widget = dijit.byId(id);
+        widget.validator = caller;
+        widget.invalidMessage = message;
+    }
 }
