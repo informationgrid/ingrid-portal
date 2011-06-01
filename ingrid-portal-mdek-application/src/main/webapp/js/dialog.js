@@ -38,6 +38,7 @@ dialog.showPage = function(caption, url, width, height, /* boolean */modal, /* a
         id: dlgId,
         title: caption,
         showTitle: true,
+        draggable: true,
         //sizeDuration: 10, // no animation?
         style: "width: " + width + "px;",// height: " + height + "px;",
         //dimensions: [width, height],
@@ -58,6 +59,16 @@ dialog.showPage = function(caption, url, width, height, /* boolean */modal, /* a
 	dialogWnd.startup();
 	dialogWnd.show();
     dojo.style(dlgId+"_underlay", "display", "block");
+    
+    // resize dialog into viewport if it's too heigh
+    //var windowHeight = dojo.window.getBox().h;
+    //dojo.connect(dialogWnd, "onLoad", function(){
+    //    if (dojo.style(dlgId, "height") > windowHeight)
+    //        dojo.style(dlgId, "height", (windowHeight)+"px");
+    //});
+    
+    // disconnect the onScroll-event, which allows scrolling on dialogs if higher than viewport
+    dojo.disconnect(dijit.byId(dlgId)._modalconnects[0]);
 }
 
 

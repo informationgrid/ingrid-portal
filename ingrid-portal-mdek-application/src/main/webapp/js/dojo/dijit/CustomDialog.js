@@ -88,6 +88,14 @@ dojo.declare("ingrid.dijit.CustomDialog", [dojox.layout.ContentPane, dijit._Dial
             stop: function() {},
             status: function() {return null;}
         }
+    },
+    
+    _position: function(){
+        this.inherited(arguments);
+        
+        // check if top-position is not negative
+        if (dojo.style(this.domNode, 'top') < 0)
+            dojo.style(this.domNode, 'top', 0);
     }
 
 });
