@@ -2410,7 +2410,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
 					String value = XPathUtils.getString(node, xpathExpression).trim();
-					elements.add(addElementEmailWeb("URL:", value, value, value, LinkType.WWW_URL));
+					elements.add(addElementEmailWeb("URL", value, value, value, LinkType.WWW_URL));
 				}
 				
 				elementsAddress.add(element);
