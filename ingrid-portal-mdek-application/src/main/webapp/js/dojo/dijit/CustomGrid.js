@@ -169,7 +169,8 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
         this.headerScroller = dojo.create("div", {'class': 'slick-header ui-state-default', style: {overflow:"hidden",position:"relative"}}, this.container);
         this.headers = dojo.create("div", {'class': 'slick-header-columns', style: {width:"10000px", left:"-1000px"}}, this.headerScroller);
         
-        this.viewport = dojo.create("div", {'class': 'slick-viewport', tabIndex:'0', hideFocus: "", style:{width:"100%", overflow:"auto", outline:"0",position:"relative"}}, this.container);
+        //this.viewport = dojo.create("div", {'class': 'slick-viewport', tabIndex:'0', hideFocus: "", style:{width:"100%", overflow:"auto", outline:"0",position:"relative"}}, this.container);
+        this.viewport = dojo.create("div", {'class': 'slick-viewport', tabIndex:'0', hideFocus: "", style:{width:"100%", 'overflow-y':"scroll", 'overflow-x':"auto", outline:"0",position:"relative"}}, this.container);
         this.canvas = dojo.create("div", {'class': 'grid-canvas', tabIndex:'0', hideFocus: ""}, this.viewport);
         
         // header columns and cells may have different padding/border skewing width calculations (box-sizing, hello?)
@@ -991,13 +992,12 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
              });
              
              var eventWndClick = dojo.connect(dojo.isIE ? document : window, "onclick", this, function(evt){
-                 if (!this.mouse_is_inside || !this.clickWithinDomNode(evt, this.domNode)) {
+                 if (!this.mouse_is_inside) {//} || !this.clickWithinDomNode(evt, this.domNode)) {
                      var _this = this;
                      // popup inputs need to commit data first, otherwise value won't change 
                     setTimeout(function(){
                         try {
                             if (_this.getEditorLock().activeEditController && _this.getEditorLock().activeEditController.fromTable == _this.id) {
-                                _this.mouse_is_inside = false;
                                 var correct = _this.getEditorLock().commitCurrentEdit();
                                 // if input was invalid we should return from cell editor by escaping!
                                 if (correct) {
@@ -1009,6 +1009,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
                                     dojo.removeClass(_this.activeCellNode, "active");
                                 }
                             }
+                            _this.mouse_is_inside = false;
                         } 
                         catch (e) {
                             console.debug("Error");

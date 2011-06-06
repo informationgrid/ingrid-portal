@@ -14,7 +14,6 @@ import net.sf.ehcache.Element;
 
 import org.apache.log4j.Logger;
 
-import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.util.MdekCatalogUtils;

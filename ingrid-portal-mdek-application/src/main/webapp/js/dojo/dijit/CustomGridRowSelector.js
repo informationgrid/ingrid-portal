@@ -145,7 +145,7 @@ RowSelector = function(gridId) {
 
         _ranges = this.rowsToRanges(selection);
         this.setSelectedRanges(_ranges);
-        e.stopImmediatePropagation();
+        //e.stopImmediatePropagation();
 
         return true;
     }

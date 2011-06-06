@@ -1197,7 +1197,7 @@ ingridObjectLayout.createThesaurus = function() {
 	
 	
 	var thesaurusEnvTopicsStructure = [
-		{field: 'title',name: 'title',width: 348-scrollBarWidth+'px',
+		{field: 'title',name: 'title',width: 331-scrollBarWidth+'px',
 			type: SelectboxEditor,
 	        options: [], // will be filled later, when syslists are loaded
 	        values: [],
@@ -1209,7 +1209,7 @@ ingridObjectLayout.createThesaurus = function() {
     createDataGrid("thesaurusEnvTopics", null, thesaurusEnvTopicsStructure, null);
 	
 	var thesaurusEnvCatsStructure = [
-		{field: 'title',name: 'title',width: 348-scrollBarWidth+'px',
+		{field: 'title',name: 'title',width: 331-scrollBarWidth+'px',
 			type: SelectboxEditor,
 	        options: [], // will be filled later, when syslists are loaded
 	        values: [],
@@ -1404,6 +1404,9 @@ ingridObjectLayout.applyDefaultConnections = function() {
             }
         };
     });
+    
+    // add validation to thesaurus (an error should only occur from old data!)
+    UtilGrid.getTable("thesaurusTerms").validate = thesaurusValidation;
 
     // sync tables with same store (or subset of it)
     dojo.connect(UtilGrid.getTable("generalAddress"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["ref4ParticipantsLink", "ref4PMLink", "ref2LocationLink"]));

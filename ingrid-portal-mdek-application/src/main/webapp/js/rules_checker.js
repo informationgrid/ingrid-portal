@@ -111,7 +111,7 @@ var notEmptyAddressFieldsClass3 = [["name", "headerAddressType3LastnameLabel"],
 function resetRequiredFields() {
     // get all labels within object- and address form and remove class, which makes them red
     dojo.query(".important", "hierarchyContent").removeClass("important");
-    dojo.style(dijit.byId("bShowNextError").domNode, "display", "none");
+    //dojo.style(dijit.byId("bShowNextError").domNode, "display", "none");
 }
 
 function setErrorLabel(id){
@@ -137,8 +137,6 @@ function isObjectPublishable() {
     // dojo.forEach(dojo.query(".required .input .dijit"), function(e) { console.debug(e.widgetId); dijit.byId(e.getAttribute("widgetid")).set("required", false); })
     var publishable       = true;
     var notPublishableIDs = [];
-    
-    resetRequiredFields();
     
     // check first general validity
     checkValidityOfInputElements(notPublishableIDs);
@@ -213,6 +211,8 @@ function isAddressPublishable(idcAddress){
 }
 
 function checkValidityOfInputElements(/*Array*/invalidExtInputs) {
+    resetRequiredFields();
+    
     var widgets = dojo.query(".rubric:not(.hide) span:not(.hide) .dijitTextBox, .rubric:not(.hide) span:not(.hide) .dijitSelect", "contentFrameBodyObject");
     widgets = widgets.concat(dojo.query(".dijitTextBox, .dijitSelect", "sectionTopObject"));
     var grids   = dojo.query("span:not(.hide) .input .ui-widget", "contentFrameBodyObject");

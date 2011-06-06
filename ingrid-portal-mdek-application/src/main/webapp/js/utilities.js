@@ -2103,7 +2103,7 @@ UtilThesaurus.addNonDescriptorsDef = function(nonDescriptors, grid) {
 // Add a 'free' term to store if it doesn't already exist
 UtilThesaurus.addFreeTerm = function(queryTerm, grid) {
 	console.debug("add free term: " + queryTerm);
-	if (dojo.every(UtilGrid.getTableData(grid), function(item) { return item.title.toLowerCase() != queryTerm.toLowerCase(); })) {
+	if (dojo.every(UtilGrid.getTableData(grid), function(item) { if (!item.title) return true; return item.title.toLowerCase() != queryTerm.toLowerCase(); })) {
 		// If every term in store is != to the queryTerm, add it
 		UtilGrid.addTableDataRow(grid, { label: queryTerm, title: queryTerm, source: "FREE", sourceString: "FREE"} );
 	}

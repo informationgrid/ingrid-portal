@@ -298,6 +298,11 @@ input.editor-text {
     margin-bottom: 20px;
 }
 
+/* do not show inactive scrollbar for some tables */
+#spatialRefAdminUnitCoords .slick-viewport, #spatialRefLocationCoords .slick-viewport {
+	overflow: auto !important;
+}
+
 /*.slick-header-columns { background: url('../images/header-columns-bg.gif') repeat-x center bottom; border-bottom: 1px solid silver;}
 .slick-header-column {background: url('../images/header-columns-bg.gif') repeat-x center bottom;border-right: 1px solid silver;}
 .slick-header-column:hover, .slick-header-column-active {background: white url('../images/header-columns-over-bg.gif') repeat-x center bottom;}*/
@@ -455,8 +460,10 @@ iframe {
     padding-left: 5px;
 }
 
+/* IE7 fix to make rubric name visible */
 .rubricLabel {
 	font-weight: bold;
+	background-color: #156496;
 }
 
 #adminFormFields hr {

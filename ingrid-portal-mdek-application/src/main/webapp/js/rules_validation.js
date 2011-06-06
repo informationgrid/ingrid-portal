@@ -414,6 +414,18 @@ function applyTimeRefIntervalValidation() {
     });
 }
 
+function thesaurusValidation() {
+    var result = true;
+    var data = UtilGrid.getTableData("thesaurusTerms");
+    dojo.forEach(data, function(row) {
+        if (!row.title || !row.sourceString) {
+            console.debug("Thesaurus term incomplete!");
+            result = false;
+        }
+    });
+    return result;
+}
+
 function timeRefTablePublishable(notPublishableIDs) {
     if (dojo.some(UtilGrid.getTableData("timeRefTable"), function(timeRef) {
             return (typeof(timeRef.type) == "undefined" || timeRef.type == null || dojo.trim(timeRef.type+"").length == 0
