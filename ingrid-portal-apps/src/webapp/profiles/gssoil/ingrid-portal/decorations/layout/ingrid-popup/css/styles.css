@@ -10,6 +10,7 @@
 *********************************************************************/
 
 body { padding: 0; margin: 0; color: #111111; background-color: #FFFFFF; font: normal 100% Verdana, Arial, sans-serif; line-height: 120%; }
+body.claro { font-size: 16px; }
 
 img { border:0; }
 /*Need for NUMIS profile*/
@@ -542,8 +543,8 @@ table.detail_table_text {  border-top:1px solid #DDDDDD; width:100% }
 
 div.table_div { padding: 0 10px 10px; }
 div.detail_text_link_line{ border-top:1px solid #DDDDDD; width:100%; padding-bottom:5px; }
-div.detail_text_link_line_title { color:#777777; font-size: 11px; font-weight:bold; padding: 4px 1px 0 0; min-width: 160px;} 
-div.detail_text_link_line_body { color:#000000; font-size: 11px; padding: 4px 0 0; 	}
+div.detail_text_link_line_title { color:#777777; font-size: 11px; font-weight:bold; padding: 4px 0 0; width: 20%; } 
+div.detail_text_link_line_body { color:#000000; font-size: 11px; padding: 4px 0 0; width: 80%; }
 
 th.detail_table_header, body table th { background-color:#99471F; color:#FFFFFF; text-align:left; min-width:0px; }
 tr.detail_image_tr { padding:2px; }
@@ -593,8 +594,8 @@ div.text_label_above_title { font-weight:bold; font-size:70%; color:#777777; pad
 p.text_label_above_body { padding-left:1px; }
 
 .text_label_left { padding-top:4px; }
-td.text_label_left_title { font-weight:bold; color:#777777; padding-left:0px; }
-td.text_label_left_body { }
+td.text_label_left_title { font-weight:bold; color:#777777; padding-left:0px; width:50%; }
+td.text_label_left_body { width:50%; }
 
 li.detail_li, body ul li { color:#99471F; margin:-5px; }
 li.detail_li p, body ul li p { font-size:11px; color:#000000; }
