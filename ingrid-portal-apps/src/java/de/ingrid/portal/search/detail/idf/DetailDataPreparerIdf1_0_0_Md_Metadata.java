@@ -2606,7 +2606,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						String childXPathExpression = "./gmd:westBoundLongitude";
 						if (XPathUtils.nodeExists(childNode, childXPathExpression)) {
 							String value = XPathUtils.getString(childNode, childXPathExpression).trim();
-							row.add(notNull(value + "°"));
+							row.add(notNull(value + "\u00B0"));
 						} else {
 							row.add("");
 						}
@@ -2614,7 +2614,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						childXPathExpression = "./gmd:southBoundLatitude";
 						if (XPathUtils.nodeExists(childNode, childXPathExpression)) {
 							String value = XPathUtils.getString(childNode, childXPathExpression).trim();
-							row.add(notNull(value + "°"));
+							row.add(notNull(value + "\u00B0"));
 						} else {
 							row.add("");
 						}
@@ -2622,7 +2622,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						childXPathExpression = "./gmd:eastBoundLongitude";
 						if (XPathUtils.nodeExists(childNode, childXPathExpression)) {
 							String value = XPathUtils.getString(childNode, childXPathExpression).trim();
-							row.add(notNull(value + "°"));
+							row.add(notNull(value + "\u00B0"));
 						} else {
 							row.add("");
 						}
@@ -2630,7 +2630,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						childXPathExpression = "./gmd:northBoundLatitude";
 						if (XPathUtils.nodeExists(childNode, childXPathExpression)) {
 							String value = XPathUtils.getString(childNode, childXPathExpression).trim();
-							row.add(notNull(value + "°"));
+							row.add(notNull(value + "\u00B0"));
 						} else {
 							row.add("");
 						}
