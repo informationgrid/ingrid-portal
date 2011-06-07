@@ -1407,6 +1407,11 @@ ingridObjectLayout.applyDefaultConnections = function() {
     
     // add validation to thesaurus (an error should only occur from old data!)
     UtilGrid.getTable("thesaurusTerms").validate = thesaurusValidation;
+    
+    // send inspire notifications
+    dojo.connect(dijit.byId("thesaurusInspire"), "onDataChanged", function() {
+        dojo.publish("/onInspireTopicChange", [{topics: UtilList.tableDataToList(this.getData())}]);
+    });
 
     // sync tables with same store (or subset of it)
     dojo.connect(UtilGrid.getTable("generalAddress"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["ref4ParticipantsLink", "ref4PMLink", "ref2LocationLink"]));

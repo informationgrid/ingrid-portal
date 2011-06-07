@@ -2025,7 +2025,7 @@
                         dijit.byId("neuesElement").regExpGen = dojox.validate.regexp.emailAddress;
                         <br /><br />
                         <i>// Textelement darf nicht das Wort "NO" haben</i><br />
-                        dijit.byId("neuesElement").validator = function(value) {
+                        dijit.byId("neuesElement").<strong>validator</strong> = function(value) {
                             <blockquote>if (value == "NO") return false; else return true;</blockquote>
                         }</code>
                         <br /><br />
@@ -2033,14 +2033,16 @@
                         entstehen können. Deshalb wurden ab der IGE Version 3.0.1 diverse unterstützende Funktionen eingeführt, die den 
                         Umgang erleichtern sollen. Folgende Funktionen stehen zur Verfügung:<br />
                         <code>
-                            Validation.addEmailCheck(/*String*/elementId, /*boolean*/onPublish);<br/>
-                            Validation.addUrlCheck(/*String*/elementId, /*boolean*/onPublish);<br/>
-                            Validation.addValueCheck(/*String*/elementId, /*String*/value, /*boolean*/invert, /*String*/message, /*boolean*/onPublish);<br/>
-                            Validation.addNumberCheck(/*String*/elementId, /*int*/min, /*int*/max, /*String*/message, /*boolean*/onPublish);<br/>
-                            Validation.addTableCellCheck(/*String*/tableId, /*Array*/columnIds, /*function*/f, /*boolean*/onPublish);
+                            Validation.<strong>addEmailCheck</strong>(/*String*/elementId, /*boolean*/onPublish);<br/>
+                            Validation.<strong>addUrlCheck</strong>(/*String*/elementId, /*boolean*/onPublish);<br/>
+                            Validation.<strong>addValueCheck</strong>(/*String*/elementId, /*String*/value, /*boolean*/invert, /*String*/message, /*boolean*/onPublish);<br/>
+                            Validation.<strong>addNumberCheck</strong>(/*String*/elementId, /*int*/min, /*int*/max, /*String*/message, /*boolean*/onPublish);<br/>
+                            Validation.<strong>addTableCellCheck</strong>(/*String*/tableId, /*Array*/columnIds, /*function*/f, /*boolean*/onPublish);
                         </code>
                         <br />
                         <code>
+                        
+                        <br />
                         <i>// Textelement erlaubt nur Email-Adressen beim Speichern</i><br />
                         Validation.addEmailCheck("neuesElement");<br />
                         <i>// Textelement erlaubt nur Email-Adressen beim Veröffentlichen</i><br />
@@ -2104,14 +2106,25 @@
                         
                         <p>In der Variablen <i>invalidIDs</i> werden die gesamten IDs von den Elementen gesammelt, die einen 
                         Validierungsfehler aufzeigen.</p>
-                        <p>Ein weiteres verfügbares Ereignis ist "/onObjectClassChange", welches immer auftritt, wenn die Objektklasse
+                        <p>Ein weiteres verfügbares Ereignis ist <strong>"/onObjectClassChange"</strong>, welches immer auftritt, wenn die Objektklasse
                         manuell oder automatisch (durch das Laden eines anderen Objektes) sich ändert. Hierbei wird die neue Klasse als
                         Parameter an den Subscriber übergeben!</p>
                         <code>
-                        <i>// print the class that has been changed to</i><br />
-                        dojo.subscribe("/onObjectClassChange", function(c) {console.debug("class has changed to: " + c.objClass);})<br />
+                        <i>// toggle visibility of field depending on the selected class</i><br />
+                        dojo.subscribe("/onObjectClassChange", function(c) {if (c.objClass === "Class3") dojo.addClass("uiElementAddneuesElement", "hide"); else dojo.removeClass("uiElementAddneuesElement", "hide")})<br />
                         <i>// output: "class has changed to: Class3"</i>
                         </code>
+                        <p>Um nicht nur auf das zusätzliche Feld, sondern auf den gesamten Container inklusive des Labels zuzugreifen, verwendet
+                        man den Prefix 'uiElementAdd' vor der ID des Feldes. Mit <i>dojo.addClass</i> bzw. <i>dojo.removeClass</i> lässt
+                        sich die Sichtbarkeit eines Elementes steuern, wie im letzten Beispiel gezeigt.</p>
+                        <p>Weiterhin gibt es noch das Ereignis <strong>"/onInspireTopicChange"</strong>, welches bei einer Änderung an der INSPIRE-Themen
+                        Liste auftritt. Der Parameter <i>topics</i> ist ein Array mit den IDs der eingetragenen INSPIRE-Themen in 
+                        der Tabelle. Hier ein Beispiel:</p>
+                        <code>
+                        <i>// print all inspire topics when table has changed</i>
+                        dojo.subscribe("/onInspireTopicChange", function(o) {console.debug("inspire changed: " + o.topics);})
+                        </code>
+                        <br />
                         <p>Für ein besseres Verständis dieser Prinzipien empfiehlt es sich die Dokumentation des DOJO-Frameworks
                         anzuschauen! (http://dojotoolkit.org/documentation/)</p><br></br>
                     </content>
