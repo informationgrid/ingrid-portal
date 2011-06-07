@@ -62,7 +62,7 @@
   </style>
 
   #* our decorator macros, see ./decorator-macros.vm *#
-  <link rel="stylesheet" type="text/css" href="/ingrid-portal-apps/dojo/dijit/themes/claro/claro.css"/>
+  <link rel="stylesheet" type="text/css" href="/ingrid-portal-apps/css/claro.css"/>
   <link href="/ingrid-portal/decorations/layout/ingrid-popup/css/styles.css" media="screen, projection" type="text/css" rel="stylesheet">
   <link href="/ingrid-portal/decorations/layout/ingrid-popup/css/print.css" media="print" type="text/css" rel="stylesheet" />
 <script language="JavaScript" type="text/javascript">
@@ -106,11 +106,7 @@ self.focus();
 
 </script>
 
-<script src="/ingrid-portal-apps/dojo/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
-<script type="text/javascript">
-    dojo.require("dijit.layout.TabContainer");
-    dojo.require("dijit.layout.ContentPane");
-</script>
+<script src="/ingrid-portal-apps/javascript/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
 
   </head>
   <body class="layout-tigris claro">
