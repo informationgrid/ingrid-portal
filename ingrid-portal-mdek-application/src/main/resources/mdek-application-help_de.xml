@@ -188,25 +188,17 @@
         <section help-key="editor-design-1">
             <header>Metadatenerfassung und Verwaltungsfunktionen</header>
             <content>
-			<p>InGridEditor (IGE) unterteilt
-			sich in zwei Komponenten, die Metadatenerfassungskomponente und die
-			Verwaltungskomponente. Beide Anwendungen werden separat aus dem InGrid-Portal heraus 
-			über die Schaltflächen „Erfassungskomponente“
-			und „Verwaltung“ gestartet. </p>
-			<p><b>Nur</b> wenn
-			Sie <b>Administrationsrechte</b> haben,
-			sehen Sie die Schaltfläche „<b>Verwaltung</b>“.</p>
-			<p>Die Hauptmenüs für beide Komponenten unterscheiden sich
-			grundsätzlich. In der Verwaltungskomponente ist die Anzahl und Art der zur Verfügung
-			stehenden Funktionen von den Rechten des aufgeschalteten
-			Administrators abhängig.</p>
+			<p>InGridEditor (IGE) besteht aus zwei Komponenten, die Metadatenerfassungskomponente und die
+			Verwaltungskomponente. Der IGE wird aus dem InGrid-Portal heraus 
+			über die Schaltflächen "Login IGE" gestartet. </p>
+			<p>Das Hauptmenü unterscheidet sich, abhängig von der Rolle des eingeloggten Benutzers.
+            So steht einem Katalog-Administrator mehr Funktionen zur Verfügung als einem Autor.</p>
 			<p>Jedes <a href="?hkey=editor-design-2">Hauptmenü</a> kann weitere 
 			<a href="?hkey=editor-design-3">Untermenüs</a> enthalten. Bei
 			einzelnen Menüpunkten kann zudem zusätzlich eine 
 			<a href="?hkey=editor-design-4">Funktionsleiste</a> existieren.</p>
 			<p>Am rechten oberen Rand des Kopfes des IGEs befindet sich eine
-			<a href="?hkey=editor-design-1a">Navigationsleiste</a>, die für beide Komponenten 
-			identisch ist.</p>
+			<a href="?hkey=editor-design-1a">Navigationsleiste</a>.</p>
             </content>
         </section>
         <section help-key="editor-design-1a">
@@ -219,9 +211,9 @@
 				 • Rolle des Nutzers • Name des Metadaten-Katalogs</li>
 			<li> <u>Hilfe</u>: Verweis auf die Hilfetexte zum InGridEditor</li>
 			<li> <u>Impressum</u>: Verwies auf das Impressum des Portals</li>
-			<li> <u>Englisch</u>: Umschaltung auf die englischsprachige Benutzeroberfläche des Editors</li>
 			<li> <u>Info</u>: Verweis auf Informationen zum Editor (z.B. die Versionsnummer der Anwendung)</li>
 			<li> <u>Schliessen</u>: Schließt die Anwendung</li>
+            <li> <u>Sprache</u>: Umschaltung auf eine andere Sprache für die Benutzeroberfläche des Editors</li>
 			</ul>
             </content>
         </section>
@@ -265,7 +257,8 @@
                 </ul>
                 <p>Das Dashboard ist die Einstiegseite für den InGrid-Editor und zeigt eine Zusammenfassung der gerade
                 in Bearbeitung befindlichen Objekte und Adressen, abhängig vom eingeloggten Benutzer.</p>
-                <p>Die Menüpunkte Gesamtkatalogmanagement und Import/Export sind nur für den Katalog-Administrator sicht- und zugreifbar.</p>
+                <p>Die Menüpunkte Gesamtkatalogmanagement und Import/Export sind nur für den Katalog-Administrator
+                sicht- und zugreifbar.</p>
             </content>
         </section>
         <section help-key="editor-design-3">
@@ -1482,32 +1475,6 @@
 				 und sind dann sofort aktiv.</p>
 			</content>
         </section>
-        <section help-key="catalog-administration-2">
-            <header>Feldeinstellungen</header>
-            <content>
-                 <p>Im InGridEditor (IGE) sind Pflichtfelder in der Erfassungsmaske (siehe 
-				 <a href="?hkey=hierarchy-maintenance-1">Hierarchie u. Erfassung</a>) standardmäßig immer 
-				 eingeblendet. Optionale Felder sind versteckt und können über eine entsprechende Schaltfläche 
-				 eingeblendet werden.</p>
-				 <p>Unter dem Untermenüpunkt <i>Feldeinstellungen</i> ist es möglich die Standardeinstellung für 
-				 <b>optionale</b> Felder zu verändern (die Standardeinstellungen für Pflichtfelder können 
-				 <b>nicht</b> geändert werden). </p>
-				 <p>Es gibt die folgenden zwei Möglichkeiten, die Standard-Einstellung für jedes einzelne 
-				 optionale Feld zu ändern:</p>
-				 <p><b>Immer ausblenden</b></p>
-				 <p>Mit dieser Einstellung wird das optionale Feld ganz ausgeblendet. Es kann damit auch 
-				 <b>nicht befüllt</b> werden.</p>
-				 <p><u>Hinweis:</u> Diese Einstellung sollte nur dann gewählt werden, wenn die Befüllung 
-				 eines Feldes in dem betroffenen Katalog explizit nicht gewünscht ist.</p>
-				 <p><b>Immer sichtbar</b></p>
-				 <p>Mit dieser Einstellung wird das optionale Feld immer angezeigt. Es kann vom Nutzer 
-				 nicht mehr ausgeblendet werden.</p>
-				 <p><u>Hinweis:</u> Diese Einstellung sollte dann gewählt werden, wenn die Befüllung eines 
-				 optionalen Feldes in dem betroffenen Katalog als unbedingt notwendig betrachtet wird.</p>
-				 <p>Die Einstellungen müssen über die Schaltfläche <i>Speichern</i> abgeschlossen werden 
-				 und sind dann sofort aktiv.</p>
-            </content>
-        </section>
         <section help-key="catalog-administration-3">
             <header>Allgemeine Einstellungen</header>
             <content>
@@ -2062,7 +2029,17 @@
                             <blockquote>if (value == "NO") return false; else return true;</blockquote>
                         }</code>
                         <br /><br />
-                        Ab Version 3.0.1 stehen auch diese Funktionen zur Verfügung:<br />
+                        Mit Javascript und dem DOJO-Framework lässt sich jedes mögliche Verhalten nachbilden, wodurch komplexe Strukturen
+                        entstehen können. Deshalb wurden ab der IGE Version 3.0.1 diverse unterstützende Funktionen eingeführt, die den 
+                        Umgang erleichtern sollen. Folgende Funktionen stehen zur Verfügung:<br />
+                        <code>
+                            Validation.addEmailCheck(/*String*/elementId, /*boolean*/onPublish);<br/>
+                            Validation.addUrlCheck(/*String*/elementId, /*boolean*/onPublish);<br/>
+                            Validation.addValueCheck(/*String*/elementId, /*String*/value, /*boolean*/invert, /*String*/message, /*boolean*/onPublish);<br/>
+                            Validation.addNumberCheck(/*String*/elementId, /*int*/min, /*int*/max, /*String*/message, /*boolean*/onPublish);<br/>
+                            Validation.addTableCellCheck(/*String*/tableId, /*Array*/columnIds, /*function*/f, /*boolean*/onPublish);
+                        </code>
+                        <br />
                         <code>
                         <i>// Textelement erlaubt nur Email-Adressen beim Speichern</i><br />
                         Validation.addEmailCheck("neuesElement");<br />
@@ -2085,7 +2062,9 @@
                         <p>Möchte man die Validierung nur durchführen, wenn ein Objekt veröffentlich werden soll, so muss ein anderer
                         Ansatz gewählt werden! Laut des Publisher/Subscriber Prinzips, meldet man sich bei einem Ereignis an. Tritt
                         dieses Ereignis auf, wird die eigene geschriebene Funktion ebenfalls zu diesem Zeitpunkt ausgeführt. Dafür 
-                        gibt es das spezielle Ereignis "<b>/onBeforeObjectPublish</b>" und kann wie folgt verwendet werden:</p>
+                        gibt es das spezielle Ereignis "<b>/onBeforeObjectPublish</b>". Während bei einer Validierung, die vor jedem 
+                        Speichern geschieht, die Funktion 'true' oder 'false' zurückliefern muss, gilt es hier, sich die ID des Elements
+                        zu merken. Dies geschieht in dem einzigen Parameter, der der Funktion übergeben wird. Hier ein kleines Beispiel:</p>
                         <br />
                         <code>
                         <i>// vor dem Publizieren muss das Element mehr als 5 Zeichen haben</i><br />
@@ -2096,7 +2075,8 @@
                             }</blockquote>
                         });</code><br />
                         <br />
-                        
+                        <p>Sobald also mindestens ein Wert in 'invalidIDs' steht, wird auch das Veröffentlichen fehlschlagen! Das Element mit
+                        der entsprechenden ID wird dann rot gefärbt.</p>
                         <p>Das folgende Beispiel zeigt die Validierung einer Tabelle, welches etwas komplizierter ist und durch eine
                         abstrahierte Methode vereinfacht wurde. Dazu dient die Methode <i>Validation.addTableCellCheck</i>, welche 
                         4 Parameter haben kann. Der erste Parameter beschreibt die ID der Tabelle, der zweite, die zu überprüfenden 
@@ -2127,6 +2107,11 @@
                         <p>Ein weiteres verfügbares Ereignis ist "/onObjectClassChange", welches immer auftritt, wenn die Objektklasse
                         manuell oder automatisch (durch das Laden eines anderen Objektes) sich ändert. Hierbei wird die neue Klasse als
                         Parameter an den Subscriber übergeben!</p>
+                        <code>
+                        <i>// print the class that has been changed to</i><br />
+                        dojo.subscribe("/onObjectClassChange", function(c) {console.debug("class has changed to: " + c.objClass);})<br />
+                        <i>// output: "class has changed to: Class3"</i>
+                        </code>
                         <p>Für ein besseres Verständis dieser Prinzipien empfiehlt es sich die Dokumentation des DOJO-Frameworks
                         anzuschauen! (http://dojotoolkit.org/documentation/)</p><br></br>
                     </content>
@@ -2135,6 +2120,60 @@
                 <section help-key="overall-catalog-management-additionalfields-5">
                     <h4>Beispiele: IDF-Mapping</h4>
                     <content>
+                        <code>
+                        importPackage(Packages.de.ingrid.iplug.dsc.om);<br />
+                        // add Namespaces to Utility for convenient handling of NS !<br />
+                        DOM.addNS("gmd", "http://www.isotc211.org/2005/gmd");<br />
+                        DOM.addNS("gco", "http://www.isotc211.org/2005/gco");<br />
+                        <br />
+                        if (!(sourceRecord instanceof DatabaseSourceRecord)) {<br />
+                            <blockquote>
+                            throw new IllegalArgumentException("Record is no DatabaseRecord!");<br />
+                            </blockquote>
+                        }<br />
+                        <br />
+                        var id = sourceRecord.get(DatabaseSourceRecord.ID);<br />
+                        var igcProfileControlId = XPATH.getString(igcProfileControlNode, "igcp:id");<br />
+                        var content = SQL.first("SELECT list_item_id FROM additional_field_data WHERE obj_id=? AND field_key=?", [id, igcProfileControlId]);<br />
+                        <br />
+                        if (content) {<br />
+                            <blockquote>
+                            var types = ["spatialPlan.country", "spatialPlan.state", "spatialPlan.regional", "spatialPlan.subRegional", "spatialPlan.supraLocal", "spatialPlan.local", "spatialPlan.subLocal", "spatialPlan.other", "spatialPlan"];<br />
+                            var hierarchyLevelName = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:hierarchyLevelName");<br />
+                            if (hierarchyLevelName) {<br />
+                                <blockquote>
+                                hierarchyLevelName.addElementAsSibling("gmd:hierarchyLevelName/gco:CharacterString").addText(types[content.get("list_item_id")-1]);<br />
+                                </blockquote>
+                            } else {<br />
+                                <blockquote>
+                                var hierarchyLevel = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:hierarchyLevel");<br />
+                                if (hierarchyLevel) {<br />
+                                    <blockquote>
+                                    hierarchyLevel.addElementAsSibling("gmd:hierarchyLevelName/gco:CharacterString").addText(types[content.get("list_item_id")-1]);<br />
+                                    </blockquote>
+                                } else {<br />
+                                    <blockquote>
+                                    log.error("Hierarchy-Level could not be found and so HierarchyLevelName could not be added!");<br />
+                                    </blockquote>
+                                }<br />
+                                </blockquote>
+                            }<br />
+                            </blockquote>
+                        }<br />
+                        </code>
+                        <p>Der erste Teil des Beispiels gilt der Initialisierung und sollte übernommen werden. Interessant wird es ab der 
+                        Deklaration der Variablen <i>content</i>. Hier wird eine SQL-Anfrage definiert und ausgeführt, wobei die Daten
+                        als Antwort in <i>content</i> abgelegt werden. Die <i>obj_id</i> wird für die Zugehörigkeit zum Objekt benötigt
+                        und der <i>field_key</i> für die Identifikation des (zusätzlichen) Feldes mit den Daten von dem Objekt.</p>
+                        <p>Wenn das Feld Daten beinhaltet, dann müssen diese in das zu erstellende Dokument (in diesem Fall eine XML-Datei) eingeführt werden. Zuerst holt
+                        man sich daher mit einem XPath die Stelle, wo man die Daten in die Struktur <i>einhängen</i> will. Dies geschieht
+                        mit <i>DOM.getElement(...)</i>. Es ist wichtig darauf zu achten, dass man sich an die ISO korrekt hält, so dass 
+                        Anfragende Dienste das erstellte Dokument einlesen können.</p>
+                        <p>Es kann vorkommen, dass die Stelle, wo die Daten eingefügt werden sollen, nicht existiert. Dies kann man von
+                        der ISO ableiten und es müssen Überprüfungen dafür vorgesehen werden. In diesem Fall wird das laut ISO vorhergehende
+                        Element abgerufen, welches existieren muss. Sollte dieses auch nicht existieren, so wird eine Fehlermeldung geschrieben.</p>
+                        <p>Wurde die Stelle in dem Dokument gefunden, so können mit <i>domPosition.addElementAsSibling(...).addText(...)</i>
+                        die Daten hinzugefügt werden. (domPosition ist die Position im Dokument die mit DOM.getElement() abgefragt wurde)</p>
                     </content>
                 </section>         
             </content>
