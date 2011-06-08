@@ -341,10 +341,19 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             if (!currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
                 // check if query must be executed
                 if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_RANKED_QUERY)) {
-                    unrankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request,
-                            Settings.MSG_SEARCH_RESULT_UNRANKED);
-                    if (log.isDebugEnabled()) {
-                        log.debug("Read UNRANKED hits from CACHE !!!! unrankedHits=" + unrankedHits);
+                    if(!currentView.equals(TEMPLATE_RESULT_FILTERED_ONECOLUMN)){
+                    	unrankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request,
+                                Settings.MSG_SEARCH_RESULT_UNRANKED);
+                        if (log.isDebugEnabled()) {
+                            log.debug("Read UNRANKED hits from CACHE !!!! unrankedHits=" + unrankedHits);
+                        }
+                    }else{
+                    	// process query, create QueryDescriptor
+                        qd = QueryPreProcessor.createUnrankedQueryDescriptor(request);
+                        if (qd != null) {
+                            controller.addQuery("unranked", qd);
+                            SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
+                        }
                     }
                 } else {
                     // process query, create QueryDescriptor
