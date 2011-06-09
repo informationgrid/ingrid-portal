@@ -43,7 +43,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.unranked')
 #macro (renderUnrankedResultCounterGrouping $pageSelector)
 $MESSAGES.resetMsgParams()
 $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
-$MESSAGES.getStringWithMsgParams('common.result.counter.unranked.grouped')
+#if($pageSelector.numberOfHits == 1)
+	$MESSAGES.getStringWithMsgParams('common.result.counter.unranked.grouped.singular')
+#else
+	$MESSAGES.getStringWithMsgParams('common.result.counter.unranked.grouped')	
+#end
+
 #end
 
 #macro (renderRankedPageNavigation $pageSelector)
