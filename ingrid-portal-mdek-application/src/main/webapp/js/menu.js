@@ -215,10 +215,16 @@ igeMenuBar.create = function(pane) {
             popup: adminMenuCatalog
         }));
     }
-	menu.addChild(new dijit.PopupMenuBarItem({
-        label: message.get("menu.admin.main.user"),
-		popup: adminMenuUserManagement 
-    }));
+    
+    // no user management for Authors
+    if (currentUser.role != 3) {
+        menu.addChild(new dijit.PopupMenuBarItem({
+            label: message.get("menu.admin.main.user"),
+            popup: adminMenuUserManagement
+        }));
+    }
+    
+    // only all menus for cat-admin
     if (currentUser.role == 1) {
         menu.addChild(new dijit.PopupMenuBarItem({
             label: message.get("menu.admin.main.management"),

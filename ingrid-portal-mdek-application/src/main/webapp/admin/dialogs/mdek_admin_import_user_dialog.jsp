@@ -9,8 +9,9 @@ var scriptScope = this;
 dojo.connect(_container_, "onLoad", function(){
 	var msgDiv = dojo.byId("messageDiv");
 	msgDiv.innerHTML = "<fmt:message key='dialog.admin.users.selectUser' />";
-
-	initUserList();
+    var storeProps = {data: {identifier: '1',label: '0'}};
+    createFilteringSelect("userList", null, storeProps, initUserList);
+	//initUserList();
 });
 
 dojo.connect(_container_, "onUnLoad", function(){
@@ -22,6 +23,7 @@ dojo.connect(_container_, "onUnLoad", function(){
 });
 
 function initUserList() {
+    var def = new dojo.Deferred();
 
 	SecurityService.getPortalUsers( {
         preHook: scriptScope.showLoading,
@@ -32,7 +34,8 @@ function initUserList() {
 				list.push([userList[i], userList[i]]);
 			}
 
-			UtilStore.updateWriteStore("userList", list, { identifier: '1', label: '0'});
+            def.callback(list);
+			//UtilStore.updateWriteStore("userList", list, { identifier: '1', label: '0'});
 
 			// make sure that nothing is selected (or appears to be) 
 			//dijit.byId("userList").setLabel("");
@@ -42,17 +45,18 @@ function initUserList() {
 			console.debug(errMsg);
 		}
 	});
+    return def;
 }
 
 scriptScope.showLoading = function() {
     dojo.style("importUserLoadingZone", "visibility", "visible");
-    dijit.byId("userList").set("disabled", true);
+    //dijit.byId("userList").set("disabled", true);
     dijit.byId("importUser").set("disabled", true);
 }
 
 scriptScope.endLoading = function() {
     dojo.style("importUserLoadingZone", "visibility", "hidden");
-    dijit.byId("userList").set("disabled", false);
+    //dijit.byId("userList").set("disabled", false);
     dijit.byId("importUser").set("disabled", false);
 }
 
@@ -90,7 +94,7 @@ scriptScope.noButtonFunc = function() {
             </span>
             <div class="input">
                 <span class="input">
-                    <input dojoType="dijit.form.Select" maxHeight="150" style="width:100%; margin:0;" id="userList" />
+                    <input maxHeight="150" style="width:100%; margin:0;" id="userList" />
                 </span>
             </div>
         </div>
