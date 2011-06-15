@@ -398,7 +398,7 @@ function createMenuPages() {
 		title: "hierarchy",
 		layoutAlign: "client",
 		//style: "padding: 0px; width: 100%; height: 100%;",
-		href: "mdek_hierarchy.jsp",
+		href: "mdek_hierarchy.jsp?c="+userLocale,
 		//preload: "false",
 		scriptHasHooks: true,
         //doLayout: true,
@@ -409,7 +409,7 @@ function createMenuPages() {
 		id: "pageResearch",
 		title: "research",
 		layoutAlign: "client",
-		href: "mdek_research_search.jsp",
+		href: "mdek_research_search.jsp?c="+userLocale,
 		//preload: "false",
 		scriptHasHooks: true,
         executeScripts: "true"
@@ -419,7 +419,7 @@ function createMenuPages() {
         id: "pageResearchThesaurus",
         title: "researchThesaurus",
         layoutAlign: "client",
-        href: "mdek_research_thesaurus.jsp",
+        href: "mdek_research_thesaurus.jsp?c="+userLocale,
         //preload: "false",
         scriptHasHooks: true,
         style:" overflow:hidden;",
@@ -430,7 +430,7 @@ function createMenuPages() {
         id: "pageResearchDB",
         title: "researchDB",
         layoutAlign: "client",
-        href: "mdek_research_database.jsp",
+        href: "mdek_research_database.jsp?c="+userLocale,
         //preload: "false",
         scriptHasHooks: true,
         executeScripts: "true"
@@ -440,7 +440,7 @@ function createMenuPages() {
 		id: "pageStatistics",
 		title: "statistic",
 		layoutAlign: "client",
-		href: "mdek_statistics.jsp",
+		href: "mdek_statistics.jsp?c="+userLocale,
 		scriptHasHooks: true,
         executeScripts: "true"
 	});
@@ -449,7 +449,7 @@ function createMenuPages() {
 		id: "pageQualityEditor",
 		title: "quality",
 		layoutAlign: "client",
-		href: "mdek_qa_editor.jsp",
+		href: "mdek_qa_editor.jsp?c="+userLocale,
 		scriptHasHooks: true,
         executeScripts: "true"
 	});
@@ -457,7 +457,7 @@ function createMenuPages() {
         id: "pageQualityAssurance",
         title: "quality",
         layoutAlign: "client",
-        href: "mdek_qa_assurance.jsp",
+        href: "mdek_qa_assurance.jsp?c="+userLocale,
         scriptHasHooks: true,
         executeScripts: "true"
     });
@@ -468,7 +468,7 @@ function createMenuPages() {
 		title: "userManagement",
 		layoutAlign: "client",
 		style: "padding: 0px;",
-		href: "admin/mdek_admin_user_administration.jsp",
+		href: "admin/mdek_admin_user_administration.jsp?c="+userLocale,
 		scriptHasHooks: true,
         executeScripts: "true"
 	});
@@ -478,7 +478,7 @@ function createMenuPages() {
 		title: "catalogSettings",
 		layoutAlign: "client",
 		style: "padding: 0px;",
-		href: "admin/mdek_admin_catalog_settings.jsp",
+		href: "admin/mdek_admin_catalog_settings.jsp?c="+userLocale,
 		scriptHasHooks: true,
         executeScripts: "true"
 	});
@@ -497,7 +497,7 @@ function createMenuPages() {
 		title: "generalSettings",
 		layoutAlign: "client",
 		style: "padding: 0px;",
-		href: "admin/mdek_admin_general_settings.jsp",
+		href: "admin/mdek_admin_general_settings.jsp?c="+userLocale,
 		scriptHasHooks: true,
         executeScripts: "true"
 	});
@@ -507,7 +507,7 @@ function createMenuPages() {
 		title: "groupManagement",
 		layoutAlign: "client",
 		style: "padding: 0px;",
-		href: "admin/mdek_admin_group_administration.jsp",
+		href: "admin/mdek_admin_group_administration.jsp?c="+userLocale,
 		scriptHasHooks: true,
         executeScripts: "true"
 	});
@@ -517,7 +517,7 @@ function createMenuPages() {
 		title: "permissionOverview",
 		layoutAlign: "client",
 		style: "padding: 0px;",
-		href: "admin/mdek_admin_permission_overview.jsp",
+		href: "admin/mdek_admin_permission_overview.jsp?c="+userLocale,
 		scriptHasHooks: true,
         executeScripts: "true"
 	});
@@ -527,7 +527,7 @@ function createMenuPages() {
 		title: "adminImport",
 		layoutAlign: "client",
 		style: "padding: 0px;",
-		href: "admin/mdek_admin_import.jsp",
+		href: "admin/mdek_admin_import.jsp?c="+userLocale,
 		scriptHasHooks: true,
         executeScripts: "true"
 	});
@@ -537,7 +537,7 @@ function createMenuPages() {
 		title: "adminExport",
 		layoutAlign: "client",
 		style: "padding: 0px;",
-		href: "admin/mdek_admin_export.jsp",
+		href: "admin/mdek_admin_export.jsp?c="+userLocale,
 		scriptHasHooks: true,
         executeScripts: "true"
 	});
@@ -547,7 +547,7 @@ function createMenuPages() {
 		title: "adminAnalysis",
 		layoutAlign: "client",
 		style: "padding: 0px; width: 1000px;",
-		href: "admin/mdek_admin_catman_analysis.jsp",
+		href: "admin/mdek_admin_catman_analysis.jsp?c="+userLocale,
 		scriptHasHooks: true,
         executeScripts: "true"
 	});
@@ -557,7 +557,7 @@ function createMenuPages() {
 		title: "adminDublet",
 		layoutAlign: "client",
 		style: "padding: 0px;",
-		href: "admin/mdek_admin_catman_duplicates.jsp",
+		href: "admin/mdek_admin_catman_duplicates.jsp?c="+userLocale,
 		scriptHasHooks: true,
         executeScripts: "true"
 	});
@@ -567,7 +567,7 @@ function createMenuPages() {
 		title: "adminURL",
 		layoutAlign: "client",
 		style: "padding: 0px;",
-		href: "admin/mdek_admin_catman_urls.jsp",
+		href: "admin/mdek_admin_catman_urls.jsp?c="+userLocale,
 		scriptHasHooks: true,
         executeScripts: "true"
 	});
@@ -577,7 +577,7 @@ function createMenuPages() {
 		title: "adminCodeLists",
 		layoutAlign: "client",
 		style: "padding: 0px;",
-		href: "admin/mdek_admin_catman_codelists.jsp",
+		href: "admin/mdek_admin_catman_codelists.jsp?c="+userLocale,
 		scriptHasHooks: true,
         executeScripts: "true"
 	});
@@ -596,7 +596,7 @@ function createMenuPages() {
         title: "adminFormFields",
         layoutAlign: "client",
         style: "padding: 0px;",
-        href: "admin/mdek_admin_catman_form_fields.jsp",
+        href: "admin/mdek_admin_catman_form_fields.jsp?c="+userLocale,
         executeScripts: true,
 		scriptHasHooks: true
     });
@@ -606,7 +606,7 @@ function createMenuPages() {
 		title: "adminSearchTerms",
 		layoutAlign: "client",
 		style: "padding: 0px;",
-		href: "admin/mdek_admin_catman_search_terms.jsp",
+		href: "admin/mdek_admin_catman_search_terms.jsp?c="+userLocale,
 		scriptHasHooks: true,
         executeScripts: "true"
 	});
@@ -616,7 +616,7 @@ function createMenuPages() {
 		title: "adminLocations",
 		layoutAlign: "client",
 		style: "padding: 0px;",
-		href: "admin/mdek_admin_catman_locations.jsp",
+		href: "admin/mdek_admin_catman_locations.jsp?c="+userLocale,
 		scriptHasHooks: true,
         executeScripts: "true"
 	});
@@ -626,7 +626,7 @@ function createMenuPages() {
         title: "adminDeleteAddress",
         layoutAlign: "client",
         style: "padding: 0px;",
-        href: "admin/mdek_admin_catman_delete_address.jsp",
+        href: "admin/mdek_admin_catman_delete_address.jsp?c="+userLocale,
         scriptHasHooks: true,
         executeScripts: "true"
     });
@@ -635,7 +635,7 @@ function createMenuPages() {
 		id: "pageDashboard",
 		title: "dashboard1",
 		layoutAlign: "client",
-		href: "mdek_dashboard.jsp",
+		href: "mdek_dashboard.jsp?c="+userLocale,
 		//preload: "false",
 		scriptHasHooks: true,
         executeScripts: "true"

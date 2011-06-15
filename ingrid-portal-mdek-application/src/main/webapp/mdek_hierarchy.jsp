@@ -21,7 +21,7 @@
         <!--<script type="text/javascript" src="js/rules_checker.js"></script>
         <script type="text/javascript" src="js/rules_validation.js"></script>
         <script type="text/javascript" src="js/rules_required.js"></script>-->
-        <script type="text/javascript" src="generated/dynamicJS.js?lang=<%=currLang%>"></script>
+        <script type="text/javascript" src="generated/dynamicJS.js?lang=<%=currLang%>&c=<%=java.lang.Math.random()%>"></script>
         <script type="text/javascript">
             /*
              * FIXME: This javascript is not executed in CHROME when making a xhr-call!
