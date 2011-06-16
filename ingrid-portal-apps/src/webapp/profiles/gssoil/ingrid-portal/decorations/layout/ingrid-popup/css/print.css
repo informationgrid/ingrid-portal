@@ -594,8 +594,8 @@ div.text_label_above_title { font-weight:bold; font-size:70%; color:#777777; pad
 p.text_label_above_body { padding-left:1px; }
 
 .text_label_left { padding-top:4px; }
-td.text_label_left_title { font-weight:bold; color:#777777; padding-left:0px; }
-td.text_label_left_body { }
+td.text_label_left_title { font-weight:bold; color:#777777; padding-left:0px; width:40%; }
+td.text_label_left_body { width:60%; }
 
 li.detail_li, body ul li { color:#99471F; margin:-5px; }
 li.detail_li p, body ul li p { font-size:11px; color:#000000; }

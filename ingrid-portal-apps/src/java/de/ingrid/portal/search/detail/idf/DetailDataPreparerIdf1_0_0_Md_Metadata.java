@@ -131,6 +131,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			getTimeSection(elementsAreaTime, xpathExpression);
 			
 	// Tab "Zusätzliche Info"
+			// "Objekt-ID"
+			xpathExpression = "gmd:fileIdentifier";
+			getNodeValue(elementsAdditionalInfo, xpathExpression, messages.getString("t01_object.obj_id"));
+			
 			// "Sprache des Metadatensatzes"
 			xpathExpression = "./gmd:language";
 			subXPathExpression = "gmd:LanguageCode/@codeListValue";
@@ -166,10 +170,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			// "Konformität"
 			xpathExpression = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report";
 			getConformityData(elementsAdditionalInfo, xpathExpression);
-			
-			// "Objekt-ID"
-			xpathExpression = "gmd:fileIdentifier";
-			getNodeValue(elementsAdditionalInfo, xpathExpression, messages.getString("t01_object.obj_id"));
 			
 			// "Elternobjekt"
 			/* NOT IN USED
@@ -549,9 +549,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_literatur.isbn"));
 		
 		// "Dokumententyp"
-		xpathExpression = "./gmd:identificationInfo/*/gmd:language";
-		String subXPathExpression ="./gmd:LanguageCode/@codeListValue";
-		getNodeListValuesLanguage(elements, xpathExpression, subXPathExpression, messages.getString("t011_obj_literatur.typ"), "textList");
+		xpathExpression = "./gmd:identificationInfo/*/gmd:resourceFormat/gmd:MD_Format/gmd:name";
+		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_literatur.typ"));
 		
 		// "Basisdaten"
 		xpathExpression = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description";
