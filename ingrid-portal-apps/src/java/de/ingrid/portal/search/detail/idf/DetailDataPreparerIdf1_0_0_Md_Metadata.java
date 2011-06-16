@@ -168,10 +168,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			getConformityData(elementsAdditionalInfo, xpathExpression);
 			
 			// "Objekt-ID"
-			/* NOT IN USED
 			xpathExpression = "gmd:fileIdentifier";
 			getNodeValue(elementsAdditionalInfo, xpathExpression, messages.getString("t01_object.obj_id"));
-			*/
 			
 			// "Elternobjekt"
 			/* NOT IN USED
@@ -552,8 +550,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		
 		// "Dokumententyp"
 		xpathExpression = "./gmd:identificationInfo/*/gmd:language";
-		String subXPathExpression ="./gmd:LanguageCode[@codeListValue]";
-		getNodeListValues(elements, xpathExpression, subXPathExpression, messages.getString("t011_obj_literatur.typ"), "textList", "3385");
+		String subXPathExpression ="./gmd:LanguageCode/@codeListValue";
+		getNodeListValuesLanguage(elements, xpathExpression, subXPathExpression, messages.getString("t011_obj_literatur.typ"), "textList");
 		
 		// "Basisdaten"
 		xpathExpression = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description";
@@ -1276,8 +1274,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		String prefix; 
 		if(XPathUtils.nodeExists(node, "./idf:postfix[@lang='"+ lang +"']")){
 			prefix = XPathUtils.getString(node, "./idf:postfix[@lang='"+ lang +"']");
-		}else if(XPathUtils.nodeExists(node, "./idf:postfix[@lang]")){
-			prefix = XPathUtils.getString(node, "./idf:postfix[@lang]");
+		}else if(XPathUtils.nodeExists(node, "./idf:postfix/@lang")){
+			prefix = XPathUtils.getString(node, "./idf:postfix/@lang");
 		}else if(XPathUtils.nodeExists(node, "./idf:postfix")){
 			prefix = XPathUtils.getString(node, "./idf:postfix");
 		}else{
@@ -1290,8 +1288,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		String title; 
 		if(XPathUtils.nodeExists(node, "./idf:title[@lang='"+ lang +"']")){
 			title = XPathUtils.getString(node, "./idf:title[@lang='"+ lang +"']");
-		}else if(XPathUtils.nodeExists(node, "./idf:title[@lang]")){
-			title = XPathUtils.getString(node, "./idf:title[@lang]");
+		}else if(XPathUtils.nodeExists(node, "./idf:title/@lang")){
+			title = XPathUtils.getString(node, "./idf:title/@lang");
 		}else if(XPathUtils.nodeExists(node, "./idf:title")){
 			title = XPathUtils.getString(node, "./idf:title");
 		}else{
