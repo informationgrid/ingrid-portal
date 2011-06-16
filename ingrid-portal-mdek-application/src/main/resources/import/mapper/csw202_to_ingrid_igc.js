@@ -1265,11 +1265,11 @@ function mapVerticalExtentVdatum(source, target) {
     var verticalDatums = XPathUtils.getNodeList(source, "//gmd:identificationInfo//gmd:EX_Extent/gmd:verticalElement/gmd:EX_VerticalExtent/gmd:verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum");
     if (hasValue(verticalDatums)) {
         for (i=0; i<verticalDatums.getLength(); i++ ) {
-            var datumName = XPathUtils.getString(verticalDatums.item(i), "gml:name");
-            log.debug("adding '/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-vdatum' = '" + datumName + "' to target document.");
+            var datumIdentifier = XPathUtils.getString(verticalDatums.item(i), "gml:identifier");
+            log.debug("adding '/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-vdatum' = '" + datumIdentifier + "' to target document.");
             var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-vdatum");
-            XMLUtils.createOrReplaceTextNode(node, datumName);
-            var datumId = transformToIgcDomainId(datumName, 101, 123, "Could not map VerticalDatum: ");
+            XMLUtils.createOrReplaceTextNode(node, datumIdentifier);
+            var datumId = transformToIgcDomainId(datumIdentifier, 101, 123, "Could not map VerticalDatum: ");
             if (hasValue(datumId)) {
                 XMLUtils.createOrReplaceAttribute(node, "id", datumId);
             }
