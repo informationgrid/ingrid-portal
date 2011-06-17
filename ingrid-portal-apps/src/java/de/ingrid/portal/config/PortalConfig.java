@@ -172,9 +172,6 @@ public class PortalConfig extends PropertiesConfiguration {
     // User admin: show max row of users in a table
     public static final String USER_ADMIN_MAX_ROW = "admin.user.max.row";
 	
-    // Portal is developer version.
-    public static final String PORTAL_DEVELOPER_VERSION = "portal.developer.version";
-	
     // private stuff
     private static PortalConfig instance = null;
 

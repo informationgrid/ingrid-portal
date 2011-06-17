@@ -594,39 +594,26 @@ public class Utils {
 	public static ArrayList getPortalVersion(String applicationRootPath){
 		String filePath;
     	ArrayList<HashMap<String,String>> versionList = new ArrayList<HashMap<String,String>>();
-    	if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_DEVELOPER_VERSION)){
-    		// InGrid portal base data
-        	filePath = "./META-INF/MANIFEST.MF";
-        	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal Base"));
-        	
-        	// InGrid portal apps data
-        	filePath = "../../../ingrid-portal-apps/target/ingrid-portal-apps/META-INF/MANIFEST.MF";
-        	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal Apps"));
-        	
-        	// InGrid portal mdek data 
-        	filePath = "../../../ingrid-portal-mdek/target/ingrid-portal-mdek/META-INF/MANIFEST.MF";
-        	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal MDEK"));
-        	
-        	// InGrid portal mdek application data 
-        	filePath = "../../../ingrid-portal-mdek-application/target/ingrid-portal-mdek-application/META-INF/MANIFEST.MF";
-        	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal MDEK Application"));
-        }else{
-        	// InGrid portal base data
-        	filePath = "./META-INF/MANIFEST.MF";
-        	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal Base"));
-        	
-        	// InGrid portal apps data
-        	filePath = "../ingrid-portal-apps/META-INF/MANIFEST.MF";
-        	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal Apps"));
-        	
-        	// InGrid portal mdek data 
-        	filePath = "../ingrid-portal-mdek/META-INF/MANIFEST.MF";
-        	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal MDEK"));
-        	
-        	// InGrid portal mdek application data 
-        	filePath = "../ingrid-portal-mdek/META-INF/MANIFEST.MF";
-        	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal MDEK Application"));
-    	}
+    		
+		// InGrid portal base data
+    	filePath = "./META-INF/MANIFEST.MF";
+    	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal Base"));
+    	
+    	// InGrid portal apps data
+    	filePath = "../ingrid-portal-apps/META-INF/MANIFEST.MF";
+    	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal Application"));
+    	
+    	// InGrid portal apps data
+    	filePath = "../../../ingrid-portal-apps/target/ingrid-portal-apps/META-INF/MANIFEST.MF";
+    	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal Application"));
+    	
+    	// InGrid portal mdek data 
+    	filePath = "../../../ingrid-portal-mdek/target/ingrid-portal-mdek/META-INF/MANIFEST.MF";
+    	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal Application IGE"));
+    	    	
+    	// InGrid portal mdek data 
+    	filePath = "../ingrid-portal-mdek/META-INF/MANIFEST.MF";
+    	versionList.add(UtilsFileHelper.getInstallVersion(applicationRootPath + "" + filePath, "InGrid Portal Application IGE"));
     	
     	return versionList;
 	}

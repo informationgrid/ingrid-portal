@@ -116,10 +116,22 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			subXPathExpression = ".";
 			getNodeListValues(elementsAvailability, xpathExpression, subXPathExpression, messages.getString("object_access.restriction_value"), "textList", "6010");
 			
+			// "Zugangsbeschränkungen"
+			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue";
+			subXPathExpression = ".";
+			getNodeListValues(elementsAvailability, xpathExpression, subXPathExpression, messages.getString("object_access.restriction_value"), "textList", "524");
+			
+			
 			// "Nutzungsbedingungen"
 			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useLimitation";
 			subXPathExpression = ".";
 			getNodeListValues(elementsAvailability, xpathExpression, subXPathExpression, messages.getString("object_access.terms_of_use"), "textList");
+			
+			// "Nutzungsbedingungen"
+			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue";
+			subXPathExpression = ".";
+			getNodeListValues(elementsAvailability, xpathExpression, subXPathExpression, messages.getString("object_access.terms_of_use"), "textList", "524");
+			
 			
 	// Tab "Raum/Zeit"
 			// "Raumbezugssystem"
@@ -2089,6 +2101,11 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 									elementsInspire.add(listEntry);
 								}
 							} else if (thesaurusName.length() < 1 && type.length() < 1) {
+								listEntry.put("body", value);
+								if (!isEmptyList(listEntry)) {
+									elementsSearch.add(listEntry);
+								}
+							} else{
 								listEntry.put("body", value);
 								if (!isEmptyList(listEntry)) {
 									elementsSearch.add(listEntry);
