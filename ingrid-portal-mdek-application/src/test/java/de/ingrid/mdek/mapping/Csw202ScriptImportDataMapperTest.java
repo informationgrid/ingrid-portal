@@ -479,7 +479,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
                 // mapped from "EPSG:25833" to correct syslist name and id !
                 assertEquals(true, xpathExists(result, vdatumXPath, "Normaal Amsterdams Peil (NAP)"));
                 result.reset();
-                assertEquals(1, xpathCount(result, vdatumXPath + "[./@id='25833']"));
+                assertEquals(1, xpathCount(result, vdatumXPath + "[./@id='-1']"));
                 result.reset();
 //                System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
             } catch (Exception e) {
