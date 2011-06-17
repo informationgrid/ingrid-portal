@@ -1265,13 +1265,18 @@ function mapVerticalExtentVdatum(source, target) {
     var verticalDatums = XPathUtils.getNodeList(source, "//gmd:identificationInfo//gmd:EX_Extent/gmd:verticalElement/gmd:EX_VerticalExtent/gmd:verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum");
     if (hasValue(verticalDatums)) {
         for (i=0; i<verticalDatums.getLength(); i++ ) {
-            var datumIdentifier = XPathUtils.getString(verticalDatums.item(i), "gml:identifier");
-            log.debug("adding '/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-vdatum' = '" + datumIdentifier + "' to target document.");
-            var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-vdatum");
-            XMLUtils.createOrReplaceTextNode(node, datumIdentifier);
-            var datumId = transformToIgcDomainId(datumIdentifier, 101, 123, "Could not map VerticalDatum: ");
-            if (hasValue(datumId)) {
-                XMLUtils.createOrReplaceAttribute(node, "id", datumId);
+            var vDatumName = XPathUtils.getString(verticalDatums.item(i), "gml:name");
+            if (!hasValue(vDatumName)) {
+            	vDatumName = XPathUtils.getString(verticalDatums.item(i), "gml:identifier");
+            }
+            if (hasValue(vDatumName)) {
+	            log.debug("adding '/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-vdatum' = '" + vDatumName + "' to target document.");
+	            var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-vdatum");
+	            XMLUtils.createOrReplaceTextNode(node, vDatumName);
+	            var datumId = transformToIgcDomainId(vDatumName, 101, 123, "Could not map VerticalDatum: ");
+	            if (hasValue(datumId)) {
+	                XMLUtils.createOrReplaceAttribute(node, "id", datumId);
+	            }
             }
         }
     } else {
