@@ -2776,7 +2776,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		
 		// "Raumbezugssystem"
 		xpathExpression = "./gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code";
-		getNodeValue(spatialElements, xpathExpression, messages.getString("t011_obj_geo.referencesystem_id"));
+		getNodeValueReferenceSystem(spatialElements, xpathExpression, messages.getString("t011_obj_geo.referencesystem_id"));
 		
 		// "Raum/Zeit - Zusätzliche Felder" 
 		xpathExpression ="./idf:additionalDataSection";
@@ -2791,6 +2791,27 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}
 	
+	private void getNodeValueReferenceSystem(ArrayList elements, String xpathExpression, String title) {
+		String codeSpace = ""; 
+		String code = "";
+		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+			code = XPathUtils.getString(rootNode, xpathExpression).trim();
+		}
+		
+		xpathExpression = xpathExpression + "/../gmd:codeSpace";
+		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+			codeSpace = XPathUtils.getString(rootNode, xpathExpression).trim();
+		}
+		
+		if(code.length() > 0 && codeSpace.length() > 0){
+			addElementEntryLabelLeft(elements, codeSpace.concat(": " + code), title);	
+		}else if(codeSpace.length() > 0){
+			addElementEntryLabelLeft(elements, codeSpace, title);
+		}else if(code.length() > 0){
+			addElementEntryLabelLeft(elements, code, title);
+		}
+	}
+
 	private void getGeneralTab(ArrayList elements, String xpathExpression) {
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			Node node = XPathUtils.getNode(rootNode, xpathExpression);
