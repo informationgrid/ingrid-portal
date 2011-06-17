@@ -20,6 +20,7 @@ import org.hibernate.criterion.Restrictions;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridCMS;
 import de.ingrid.portal.om.IngridCMSItem;
@@ -73,6 +74,16 @@ public class CMSPortlet extends GenericVelocityPortlet {
             response.setTitle(localizedItem.getItemTitle());
             context.put("cmsItemTitle", localizedItem.getItemTitle());
             context.put("cmsItemValue", localizedItem.getItemValue());
+            
+        	if(myKey.equals("portalu.about")){
+        		String user = request.getRemoteUser();
+                if(user != null && user.equals("admin")){
+                	if(request.getPortalContext().getProperty("applicationRoot") != null){
+                		context.put("version", Utils.getPortalVersion(request.getPortalContext().getProperty("applicationRoot")));
+                    }
+                	context.put("tool", new UtilsVelocity());
+                }
+            }
         }
 
         super.doView(request, response);

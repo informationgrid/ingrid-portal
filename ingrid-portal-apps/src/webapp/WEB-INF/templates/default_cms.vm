@@ -1,3 +1,31 @@
 <div class="portlet-section-body">
 $cmsItemValue
+
 </div>
+	
+#if($version)
+<div>
+    #foreach($v in $version)
+        #if($tool.hasContent($v))
+			<p>
+				#if($tool.hasContent($v.title))
+					<b>$v.title</b>
+					<br/>
+				#end	
+				#if($tool.hasContent($v.svn_version))
+					Revision: $v.svn_version
+					<br/>
+				#end
+				#if($tool.hasContent($v.build_time))
+					Build-Time: $v.build_time
+					<br/>
+				#end
+				#if($tool.hasContent($v.project_version))
+					Project-Version: $v.project_version
+					<br/>
+				#end
+            </p>
+        #end
+    #end
+</div>
+#end

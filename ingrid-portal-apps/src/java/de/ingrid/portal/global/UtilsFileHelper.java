@@ -1,8 +1,11 @@
 package de.ingrid.portal.global;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -285,5 +288,39 @@ public class UtilsFileHelper {
 				}
 		}
 		
+	}
+	
+	public static HashMap<String, String> getInstallVersion(String path, String title){
+		HashMap<String, String> versionMap = new HashMap<String, String>();
+		BufferedReader bufferReader;
+		try {
+			bufferReader = new BufferedReader(new FileReader(path));
+			String input = "";
+			while((input = bufferReader.readLine()) != null) {
+				if(input.startsWith("SCM-Revision")){
+					String value = input.split(":")[1].trim();
+					if(value.length() > 0){
+						versionMap.put("svn_version", value);
+					}
+				}else if(input.startsWith("Implementation-Version")){
+					String value = input.split(":")[1].trim();
+					if(value.length() > 0){
+						versionMap.put("project_version", value);	
+					}
+				}else if(input.startsWith("Build-Timestamp")){
+					String value = input.split(":")[1].trim();
+					if(value.length() > 0){
+						versionMap.put("build_time", value);	
+					}
+				}
+			}
+		} catch (IOException e) {
+			log.error("File not found: " + path);
+		}
+		
+		if(versionMap.size() > 0){
+			versionMap.put("title", title);
+		}
+		return versionMap;
 	}
 }

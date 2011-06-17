@@ -3,14 +3,12 @@ package de.ingrid.portal.servlet;
 import java.io.File;
 import java.io.IOException;
 
-import javax.portlet.PortletSession;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import de.ingrid.portal.global.UtilsFileHelper;
 import de.ingrid.portal.global.UtilsMimeType;

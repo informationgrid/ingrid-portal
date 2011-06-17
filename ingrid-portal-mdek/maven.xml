@@ -53,8 +53,8 @@
 	<!-- delete file="${manifestFile}"/ -->
 	<ant:manifest file="${manifestFile}">
 		<attribute name="Build-Timestamp" value="${DSTAMP}${TSTAMP}" />
-		<attribute name="Build-SVN-Revision" value="${svn.version}" />
-		<attribute name="Build-Version" value="${pom.currentVersion}" />
+		<attribute name="SCM-Revision" value="${svn.version}" />
+		<attribute name="Implementation-Version" value="${pom.currentVersion}" />
 	</ant:manifest>
 	<maven:set plugin="maven-war-plugin" property="maven.war.manifest" value="${manifestFile}" />
   </preGoal>
