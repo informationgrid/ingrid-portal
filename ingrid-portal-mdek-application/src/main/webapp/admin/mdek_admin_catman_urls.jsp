@@ -251,7 +251,7 @@ function updateUrlTables(urlObjectReferenceList) {
 		for (var i = 0; i < urlObjectReferenceList.length; ++i) {
             addUrlTableInfo(urlObjectReferenceList[i]);
 		    if (i<maxListSize) {
-			    urlObjectReferenceList[i].objectName = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+urlObjectReferenceList[i].objectUuid+"\", \"O\")' title='"+urlObjectReferenceList[i].objectName+"' target='_new'>"+urlObjectReferenceList[i].objectName+"</a>";
+			    urlObjectReferenceList[i].objectName = "<a href='#' onclick='menuEventHandler.handleSelectNodeInTree(\""+urlObjectReferenceList[i].objectUuid+"\", \"O\"); return false;' title='"+urlObjectReferenceList[i].objectName+"' target='_new'>"+urlObjectReferenceList[i].objectName+"</a>";
 			    objList.push(urlObjectReferenceList[i]);
 			    numUrls++;
 		    }
@@ -260,7 +260,7 @@ function updateUrlTables(urlObjectReferenceList) {
 		        allErrors++;
 		        if (errors < maxListSize) {		        
     		        if (i >= maxListSize) {
-                        urlObjectReferenceList[i].objectName = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+urlObjectReferenceList[i].objectUuid+"\", \"O\")' title='"+urlObjectReferenceList[i].objectName+"' target='_new'>"+urlObjectReferenceList[i].objectName+"</a>";
+                        urlObjectReferenceList[i].objectName = "<a href='#' onclick='menuEventHandler.handleSelectNodeInTree(\""+urlObjectReferenceList[i].objectUuid+"\", \"O\"); return false;' title='"+urlObjectReferenceList[i].objectName+"' target='_new'>"+urlObjectReferenceList[i].objectName+"</a>";
     		        }
     		        objErrorList.push(urlObjectReferenceList[i]);
     		        errors++;
@@ -358,22 +358,22 @@ function hideLoadingZone() {
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div id="urlListContainer" class="inputContainer noSpaceBelow" style="padding-top:15px;">
 				<span class="label required"><fmt:message key="dialog.admin.catalog.management.urls.result" /></span>
-				<div id="urlLists" dojoType="dijit.layout.TabContainer" style="height:580px;" selectedChild="urlList1">
+				<div id="urlLists" dojoType="dijit.layout.TabContainer" style="height:500px;" selectedChild="urlList1">
 
 					<!-- TAB 1 START -->
 					<div id="urlList1" dojoType="dijit.layout.ContentPane" class="innerPadding" title="<fmt:message key="dialog.admin.catalog.management.urls.allUrls" />">
 					    <div>
-							<div id="urlListTable1" autoHeight="20" forceGridHeight="false"  contextMenu="none" query=""></div>
+							<div id="urlListTable1" autoHeight="20" forceGridHeight="true"  contextMenu="none" query=""></div>
                         </div>
 					</div> <!-- TAB 1 END -->
         		
 					<!-- TAB 2 START -->
 					<div id="urlList2" dojoType="dijit.layout.ContentPane" class="innerPadding" title="<fmt:message key="dialog.admin.catalog.management.urls.invalidUrls" />">
-							<div id="urlListTable2" autoHeight="20" forceGridHeight="false"  contextMenu="none" query=""></div>
+							<div id="urlListTable2" autoHeight="20" forceGridHeight="true"  contextMenu="none" query=""></div>
 					</div> <!-- TAB 2 END -->
                     <!-- TAB 3 START -->
                     <div id="urlList3" dojoType="dijit.layout.ContentPane" class="innerPadding" title="<fmt:message key="dialog.admin.catalog.management.urls.summaryUrls" />">
-                        <div id="urlListTable3" autoHeight="20" forceGridHeight="false" contextMenu="none"></div>
+                        <div id="urlListTable3" autoHeight="20" forceGridHeight="true" contextMenu="none"></div>
                     </div> <!-- TAB 3 END -->
 				</div>
 			</div>

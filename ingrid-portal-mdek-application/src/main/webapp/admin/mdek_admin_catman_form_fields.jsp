@@ -145,9 +145,9 @@ scopeAdminFormFields.reload = function(fromServer, /*Array*/rubrics, pos) {
             if (!rubrics) 
                 scopeAdminFormFields.writeNewControl(rubricDiv);
             else {
-                console.debug("place rubric: ");
-                console.debug(rubric);
-                console.debug(" to pos: " + pos);
+                //console.debug("place rubric: ");
+                //console.debug(rubric);
+                //console.debug(" to pos: " + pos);
                 dojo.place("admin_"+rubric.id, "catalogueFormFields", pos * 2); // times 2 because of new element row!
             }
         });
@@ -385,7 +385,7 @@ scopeAdminFormFields.writeNewControl = function(whereInDOM) {
             label: "<fmt:message key='dialog.admin.additionalfields.btnNewControl' />"//"New"
         }).placeAt(innerSpanButtons);
         
-        newButton.onClick = dojo.partial(scopeAdminFormFields.addElement, whereInDOM);
+        newButton.onClick = dojo.partial(scopeAdminFormFields.addElement, whereInDOM.id);
         
         innerSpanTitle.appendChild(innerSpanTitlePadded);
         outerDiv.appendChild(innerSpanTitle);
@@ -531,7 +531,7 @@ scopeAdminFormFields.deleteElement = function(id) {
 }
 
 scopeAdminFormFields.addElement = function(insideRubric) {
-	var type = dijit.byId(insideRubric.id+"_select").get('value');
+	var type = dijit.byId(insideRubric+"_select").get('value');
 	var item = {id:"newControl", isMandatory: false, label: {}, helpMessage: {}, indexName: "", width: "100", scriptedProperties: "", scriptedCswMapping: ""};
     
 	item.type = type;
@@ -566,14 +566,18 @@ scopeAdminFormFields.addElement = function(insideRubric) {
         var numControls = 0;
         console.debug("create new control");
 		dojo.forEach(scopeAdminFormFields.profileData.rubrics, function(rubric) {
-			if ("admin_"+rubric.id == insideRubric.id) {
+			if ("admin_"+rubric.id == insideRubric) {
                 if (rubric.controls == undefined)
                     rubric.controls = [];
 				rubric.controls.push(data);
                 numControls = rubric.controls.length;
 			}
 		});
-        scopeAdminFormFields.writeControl(data, insideRubric, null, null, numControls, null, true);
+        scopeAdminFormFields.writeControl(data, dojo.byId(insideRubric), null, null, numControls, null, data);
+        // repaint since previous last element is now second to last!
+        var pos = 0;
+        var r = dojo.filter(scopeAdminFormFields.profileData.rubrics, function(item, index) { if (item.id == "additionalFields") { pos = index; return true;} return false; })
+        scopeAdminFormFields.reload(false, r, pos);
         scopeAdminFormFields.showSaveHint();
     });
 }

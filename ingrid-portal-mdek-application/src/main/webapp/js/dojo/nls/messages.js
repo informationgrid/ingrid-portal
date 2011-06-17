@@ -186,7 +186,7 @@
 
 	"dialog.inputInvalidError":"There was an error validating input fields. Please check all entered data and try again.",
 	"dialog.inputInvalidHtmlTagError":"Error saving dataset. One of the input fields contains invalid HTML Tags. The following tags are allowed: 'b, i, u, p, br, strong, ul, ol, li'.",
-	"dialog.generalError":"An error occured: '${0}'",
+	"dialog.generalError":"An error occured:<br /><br /> '${0}'",
 	"dialog.undefinedError":"An Error occured.",
 	"dialog.sessionTimeoutError":"Your session timed out. Please close the application and log in again.",
     "dialog.sessionTimeoutErrorTitle":"Session expired",

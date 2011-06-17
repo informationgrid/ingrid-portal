@@ -592,7 +592,7 @@
                                     </label>
                                 </span>
                                 <div class="input tableContainer">
-                                    <div id="dq109Table" interactive="true" autoHeight="2">
+                                    <div id="dq109Table" interactive="true" autoHeight="3">
                                     </div>
                                 </div>
                                 </div>
@@ -605,7 +605,7 @@
                                     </label>
                                 </span>
                                 <div class="input tableContainer">
-                                    <div id="dq110Table" interactive="true" autoHeight="2">
+                                    <div id="dq110Table" interactive="true" autoHeight="3">
                                     </div>
                                 </div>
                                 </div>
@@ -618,7 +618,7 @@
                                     </label>
                                 </span>
                                 <div class="input tableContainer">
-                                    <div id="dq112Table" interactive="true" autoHeight="2">
+                                    <div id="dq112Table" interactive="true" autoHeight="3">
                                     </div>
                                 </div>
                                 </div>
@@ -631,7 +631,7 @@
                                     </label>
                                 </span>
                                 <div class="input tableContainer">
-                                    <div id="dq113Table" interactive="true" autoHeight="2">
+                                    <div id="dq113Table" interactive="true" autoHeight="3">
                                     </div>
                                 </div>
                                 </div>
@@ -644,7 +644,7 @@
                                     </label>
                                 </span>
                                 <div class="input tableContainer">
-                                    <div id="dq114Table" interactive="true" autoHeight="2">
+                                    <div id="dq114Table" interactive="true" autoHeight="3">
                                     </div>
                                 </div>
                                 </div>
@@ -657,7 +657,7 @@
                                     </label>
                                 </span>
                                 <div class="input tableContainer">
-                                    <div id="dq115Table" interactive="true" autoHeight="2">
+                                    <div id="dq115Table" interactive="true" autoHeight="3">
                                     </div>
                                 </div>
                                 </div>
@@ -670,7 +670,7 @@
                                     </label>
                                 </span>
                                 <div class="input tableContainer">
-                                    <div id="dq117Table" interactive="true" autoHeight="2">
+                                    <div id="dq117Table" interactive="true" autoHeight="3">
                                     </div>
                                 </div>
                                 </div>
@@ -683,7 +683,7 @@
                                     </label>
                                 </span>
                                 <div class="input tableContainer">
-                                    <div id="dq120Table" interactive="true" autoHeight="2">
+                                    <div id="dq120Table" interactive="true" autoHeight="3">
                                     </div>
                                 </div>
                                 </div>
@@ -696,7 +696,7 @@
                                     </label>
                                 </span>
                                 <div class="input tableContainer">
-                                    <div id="dq125Table" interactive="true" autoHeight="2">
+                                    <div id="dq125Table" interactive="true" autoHeight="3">
                                     </div>
                                 </div>
                                 </div>
@@ -709,7 +709,7 @@
                                     </label>
                                 </span>
                                 <div class="input tableContainer">
-                                    <div id="dq126Table" interactive="true" autoHeight="2">
+                                    <div id="dq126Table" interactive="true" autoHeight="3">
                                     </div>
                                 </div>
                                 </div>
@@ -722,7 +722,7 @@
                                     </label>
                                 </span>
                                 <div class="input tableContainer">
-                                    <div id="dq127Table" interactive="true" autoHeight="2">
+                                    <div id="dq127Table" interactive="true" autoHeight="3">
                                     </div>
                                 </div>
                                 </div>

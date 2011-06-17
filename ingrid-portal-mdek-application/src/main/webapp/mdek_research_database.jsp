@@ -18,11 +18,6 @@ var currentQuery = null;
 dojo.connect(_container_, "onLoad", function() {
     createDOMElements();
 	dojo.connect(pageNav, "onPageSelected", function() { startSearch(); });
-    dojo.connect(dojo.byId("databaseSearch"), "onkeypress", function(event) { 
-        if (event.keyCode == dojo.keys.ENTER) {
-            scriptScopeResearchDb.startNewSearch();
-        }
-    });
 });
 
 function createDOMElements() {
@@ -143,7 +138,7 @@ function hideLoadingZone() {
         <!-- LEFT HAND SIDE CONTENT START -->
         <span class="label"><label for="databaseSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 7064)"><fmt:message key="dialog.research.db.title" /></label></span>
         <div class="inputContainer field grey">
-          <span class="input"><input class="h062" type="text" mode="textarea" id="databaseSearch" style="width:100%;" dojoType="dijit.form.SimpleTextarea" /></span> 
+          <span class="input"><input type="text" rows="10" mode="textarea" id="databaseSearch" style="width:100%;" dojoType="dijit.form.SimpleTextarea" /></span> 
 
         <div class="inputContainer">
           <span class="button">

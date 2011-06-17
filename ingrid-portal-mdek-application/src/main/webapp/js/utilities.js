@@ -2073,24 +2073,26 @@ UtilThesaurus.addInspireSynonyms = function(curSnsTopics) {
 UtilThesaurus.addNonDescriptorsDef = function(nonDescriptors, grid) {
 	var deferred = new dojo.Deferred();
 	deferred.callback();
-	deferred.addErrback(handleFindTopicsError);
+	//deferred.addErrback(handleFindTopicsError);
 
 	dojo.forEach(nonDescriptors, function(d) {
-		console.debug("add non descriptor: " + snsTopicToString(d));
+		//console.debug("add non descriptor: " + snsTopicToString(d));
 		UtilThesaurus.addFreeTerm(d.label, grid);
 
-		deferred.addCallback(function() { return getTopicsForTopicDef(d.topicId); });
+		deferred.addCallback(function() { return UtilThesaurus.getTopicsForTopicDef(d.topicId); });
 		deferred.addCallback(function(topic) {
 			var closeDialogDef = new dojo.Deferred();
 
-			console.debug("Add descriptor for synonym '" + snsTopicToString(d) + "' ? " + snsTopicToString(topic));
+			//console.debug("Add descriptor for synonym '" + snsTopicToString(d) + "' ? " + snsTopicToString(topic));
+            //var descriptors = topic.descriptors;
+            UtilList.addSNSTopicLabels( topic.descriptors );
 
 			// Show the dialog
-			var displayText = dojo.string.substitute(message.get("dialog.addDescriptors.message"), [d.label, topic.label]);
+			var displayText = dojo.string.substitute(message.get("dialog.addDescriptors.message"), [d.label, dojo.map(topic.descriptors, function(item) {return item.title;})]);
 //			var displayText = "Synonym: " + snsTopicToString(d) + " Deskriptor: " + snsTopicToString(topic);
 			dialog.show(message.get("dialog.addDescriptor.title"), displayText, dialog.INFO, [
 	            { caption: message.get("general.no"),  action: function() { closeDialogDef.callback(); return; } },
-	        	{ caption: message.get("general.ok"), action: function() { closeDialogDef.callback(); UtilThesaurus.addDescriptors([topic], grid); } }
+	        	{ caption: message.get("general.ok"), action: function() { closeDialogDef.callback(); UtilThesaurus.addDescriptors(topic.descriptors, grid); } }
 			]);
 
 			return closeDialogDef;
