@@ -1093,7 +1093,7 @@ udkDataProxy.handleCopyObjectRequest = function(msg) {
 						}
 					});
 					onCopyOpFinishedDef.addErrback(function (err) {onCopyDef.errback(err);});
-					dialog.showPage(message.get("general.hint"), "dialogs/mdek_waitForJob_dialog.jsp", 350, 155, true, {resultHandler:onCopyOpFinishedDef});
+					dialog.showPage(message.get("general.hint"), "dialogs/mdek_waitForJob_dialog.jsp?c="+userLocale, 350, 155, true, {resultHandler:onCopyOpFinishedDef});
 				} else {
 					console.debug("Error in js/udkDataProxy.js: Error while copying nodes: " + err);
 					onCopyDef.errback(err);
@@ -1145,7 +1145,7 @@ udkDataProxy.handleCopyAddressRequest = function(msg) {
 						}
 					});
 					onCopyOpFinishedDef.addErrback(function (err) {onCopyDef.errback(err);});
-					dialog.showPage(message.get("general.hint"), "dialogs/mdek_waitForJob_dialog.jsp", 350, 155, true, {resultHandler:onCopyOpFinishedDef});
+					dialog.showPage(message.get("general.hint"), "dialogs/mdek_waitForJob_dialog.jsp?c="+userLocale, 350, 155, true, {resultHandler:onCopyOpFinishedDef});
 				} else {
 					console.debug("Error in js/udkDataProxy.js: Error while copying addresses: " + err);
 					onCopyDef.errback(err);

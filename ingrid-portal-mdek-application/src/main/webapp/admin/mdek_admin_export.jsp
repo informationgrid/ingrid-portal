@@ -135,7 +135,7 @@ scriptScopeExport.selectDataset = function() {
 		dojo.byId("exportType2").checked = true;
 	});
 
-	dialog.showPage("<fmt:message key='dialog.admin.export.selectNode' />", 'admin/dialogs/mdek_admin_export_select_dataset.jsp', 522, 525, true, {
+	dialog.showPage("<fmt:message key='dialog.admin.export.selectNode' />", 'admin/dialogs/mdek_admin_export_select_dataset.jsp?c='+userLocale, 522, 525, true, {
 		// custom parameters
 		resultHandler: deferred	
 	});
@@ -294,7 +294,7 @@ function hideLoadingZone() {
 			<div class="content">
 			    <div class="inputContainer">
 			    	<div id="winNavi" style="top:0px;">
-			        	<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=import-export-1#import-export-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+			        	<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=import-export-1#import-export-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 			        </div>
                     <div class="spacer"></div>
            			<div id="exportProcessInfo" class="infobox">

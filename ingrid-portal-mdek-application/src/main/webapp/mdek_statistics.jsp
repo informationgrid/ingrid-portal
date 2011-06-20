@@ -806,7 +806,7 @@ function hideLoadingZone() {
                 <div style="z-index: 99; height:0px;" id="winNavi">
                     <span id="statisticsLoadingZone" z-index: 100;"  style="visibility:hidden;">
                         <img src="img/ladekreis.gif" style="background-color:#EEEEEE;"/>
-                    </span><a href="javascript:scriptScopeStatistic.print()" title="<fmt:message key="dialog.statistics.print" />"><img src="img/ic_fl_print.gif" width="11" height="11" alt="drucken" /><fmt:message key="dialog.statistics.print" /></a><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=statistic-1#statistic-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+                    </span><a href="javascript:scriptScopeStatistic.print()" title="<fmt:message key="dialog.statistics.print" />"><img src="img/ic_fl_print.gif" width="11" height="11" alt="drucken" /><fmt:message key="dialog.statistics.print" /></a><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=statistic-1#statistic-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
                 </div>
                 <div id="stats" class="content">
                     <!-- MAIN TAB CONTAINER START -->

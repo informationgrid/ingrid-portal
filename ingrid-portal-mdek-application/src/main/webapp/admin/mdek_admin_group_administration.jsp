@@ -779,7 +779,7 @@ pageEncoding="UTF-8" %>
         <!-- CONTENT START -->
         <div class="contentBlockWhite top">
             <div id="winNavi" style="width: 100%; padding-bottom: 35px;">
-                <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=user-administration-2#user-administration-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+                <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=user-administration-2#user-administration-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
             </div>
             <div id="groupAdmin" class="content">
                 <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="false" style="height:250px; clear:both;" layoutAlign="client" design="headline" style="">

@@ -465,7 +465,7 @@ function returnToBr(string) {
     <div class="contentBlockWhite">
     	 <div class="inputContainer">
         	<div id="winNavi" style="top:0px;">
-					<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=import-export-2#import-export-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+					<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=import-export-2#import-export-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 			</div>
 		   <div class="spacer"></div>
            <div id="ImportProcessInfo" class="infobox">

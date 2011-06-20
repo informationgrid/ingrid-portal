@@ -801,7 +801,7 @@ function arrayContains(arr, obj) {
 <body>
     <div dojoType="dijit.layout.ContentPane" class="">
       <div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=hierarchy-maintenance-3#hierarchy-maintenance-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=hierarchy-maintenance-3#hierarchy-maintenance-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
   	  </div>
         <!-- MAIN TAB CONTAINER START -->
       	<div id="compareViews" dojoType="dijit.layout.TabContainer" selectedChild="diffView" style="height:600px; width:100%;" >

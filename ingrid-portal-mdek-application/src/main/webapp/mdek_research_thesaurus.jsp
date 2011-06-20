@@ -278,7 +278,7 @@ function hideLoadingZone() {
         <!-- LEFT HAND SIDE CONTENT START -->
         <div dojoType="dijit.layout.ContentPane" region="top">
             <div id="winNavi" style="top:0;">
-                <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=search-2#search-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+                <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=search-2#search-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
             </div>
             <span class="outer"><div>
             <span class="label">

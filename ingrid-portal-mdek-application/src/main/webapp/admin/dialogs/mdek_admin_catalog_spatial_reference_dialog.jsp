@@ -230,7 +230,7 @@
         <!--<div dojoType="dijit.layout.ContentPane">-->
             <div id="catalogueSpatialRef">
                 <div id="winNavi" style="position: absolute; right: 10px;">
-                    <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-3#maintanance-of-objects-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+                    <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=maintanance-of-objects-3#maintanance-of-objects-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
                 </div>
                 <div id="spatialRefContent" class="content">
                     <!-- CONTENT START -->

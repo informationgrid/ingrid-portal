@@ -321,7 +321,7 @@ function hideLoadingZone() {
 <!-- CONTENT START -->
 	<div id="contentSection" class="contentBlockWhite top">
 		<div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-3#overall-catalog-management-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=overall-catalog-management-3#overall-catalog-management-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 		<div id="urlsContent" class="content">
 

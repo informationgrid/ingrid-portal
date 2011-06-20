@@ -83,7 +83,7 @@ scriptScope.addComment = function() {
 
 <div id="comment" class="">
     <div id="winNavi" style="top:0px;">
-        <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-10#maintanance-of-objects-10', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+        <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=maintanance-of-objects-10#maintanance-of-objects-10', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
     </div>
     <div id="commentContent" class="content">
         <!-- CONTENT START -->

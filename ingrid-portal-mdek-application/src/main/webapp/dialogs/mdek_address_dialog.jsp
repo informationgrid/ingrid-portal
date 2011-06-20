@@ -93,7 +93,7 @@
 			function prepareDataGrid() {
                 var addressSearchResultsTableStructure = [
                     {field: 'icon',name: '&nbsp',width: '23px'},
-                    {field: 'title',name: "<fmt:message key='general.addresses' />",width: '668px'}
+                    {field: 'title',name: "<fmt:message key='general.addresses' />",width: 668-scrollBarWidth+'px'}
                 ];
                 createDataGrid("addressSearchResultsTable", null, addressSearchResultsTableStructure, null);
 			}
@@ -299,7 +299,7 @@
     <body>
         <div class="" style="width:100%;">
         	<div id="winNavi">
-                	<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-2#maintanance-of-objects-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+                	<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=maintanance-of-objects-2#maintanance-of-objects-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
             </div>
            <div id="addressContent" class="content">
                 <!-- LEFT HAND SIDE CONTENT START -->

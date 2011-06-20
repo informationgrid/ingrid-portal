@@ -268,7 +268,7 @@ function hideLoadingZone() {
 			<!-- RIGHT HAND SIDE CONTENT START -->
 			<div id="duplicatesData" dojoType="dijit.layout.ContentPane" region="center" class="inputContainer field">
 				<div id="winNavi" style="top:0;">
-	                    <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=overall-catalog-management-2#overall-catalog-management-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+	                    <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=overall-catalog-management-2#overall-catalog-management-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 	            </div>
 				<div class="inputContainer grey">
 				    <span class="outer"><div>

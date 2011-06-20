@@ -83,7 +83,7 @@
         <script type="text/javascript" src="js/rules_checker.js"></script>
         
         <!--<script type="text/javascript" src="dojo-src/dijit/Tree.js"></script>
-        <script type="text/javascript" src="js/dojo/dijit/CustomTree.js"></script>-->
+        <script type="text/javascript" src="js/dojo/dijit/CustomDialog.js"></script>-->
         <script type="text/javascript" src="js/tree.js"></script>
         
         <script type="text/javascript" src="js/dojo/dijit/CustomGridRowMover.js"></script>
@@ -107,7 +107,7 @@
                         <span style="float:right; padding:0px 5px 0px 5px;">|</span>
                         <span id="impressum" style="float:right;"><a href="javascript:void(0);" onclick="javascript:window.open('http://www.portalu.de:80/ingrid-portal/portal/disclaimer.psml', 'impressum', 'width=966,height=994,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key='general.imprint' />"><fmt:message key='general.imprint' /></a></span>
                         <span style="float:right; padding:0px 5px 0px 5px;">|</span>
-                        <span id="help" style="float:right;"><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key='general.help' />"><fmt:message key='general.help' /></a></span>
+                        <span id="help" style="float:right;"><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?c='+userLocale, 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key='general.help' />"><fmt:message key='general.help' /></a></span>
 	                	<span style="float:right; padding:0px 5px 0px 5px;">|</span>
 	                	<span id="currentCatalogName" style="float:right;"></span>
                         <span id="currentUserRole" style="float:right; padding: 0 5px;"></span>

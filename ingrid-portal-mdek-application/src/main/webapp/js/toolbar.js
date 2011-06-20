@@ -49,7 +49,7 @@ ingridToolbar.createToolbar = function(pane) {
 		
 	var entriesRight = [
 		["Help", function(){
-			window.open('mdek_help.jsp?hkey=hierarchy-maintenance-1#hierarchy-maintenance-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');
+			window.open('mdek_help.jsp?lang='+userLocale+'&hkey=hierarchy-maintenance-1#hierarchy-maintenance-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');
 		}],
 		["Expand", function(){igeEvents.toggleFields();}, "toggleFieldsBtn"]
 	];

@@ -247,7 +247,7 @@ function hideAddressLoadingZone() {
   <!-- CONTENT START -->
     <div id="researchSearchContentSection" class="contentBlockWhite top">
       <div id="winNavi">
-        <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=search-1#search-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+        <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=search-1#search-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
       </div>
       <div id="search" class="content">
 

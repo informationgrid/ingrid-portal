@@ -636,14 +636,14 @@
                 deferred.addCallback(setSelectedObject);
                 
                 if (curSelectedObject) {
-                    dialog.showPage("<fmt:message key='dialog.links.selectObject.title' />", 'dialogs/mdek_links_select_object_dialog.jsp', 522, 520, true, {
+                    dialog.showPage("<fmt:message key='dialog.links.selectObject.title' />", 'dialogs/mdek_links_select_object_dialog.jsp?c='+userLocale, 522, 520, true, {
                         // custom parameters
                         resultHandler: deferred,
                         jumpToNode: curSelectedObject.uuid
                     });
                 }
                 else {
-                    dialog.showPage("<fmt:message key='dialog.links.selectObject.title' />", 'dialogs/mdek_links_select_object_dialog.jsp', 522, 520, true, {
+                    dialog.showPage("<fmt:message key='dialog.links.selectObject.title' />", 'dialogs/mdek_links_select_object_dialog.jsp?c='+userLocale, 522, 520, true, {
                         // custom parameters
                         resultHandler: deferred
                     });
@@ -743,7 +743,7 @@
         <div id="mainContentTest" dojoType="dijit.layout.ContentPane">
             <div id="links">
              <div id="winNavi" style="right:10px;">
-                	    <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-7#maintanance-of-objects-7', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+                	    <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=maintanance-of-objects-7#maintanance-of-objects-7', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
                 	</div>
                 <br>
                 <br>   

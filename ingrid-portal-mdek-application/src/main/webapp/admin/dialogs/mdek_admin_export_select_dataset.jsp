@@ -88,7 +88,7 @@ scriptScope.selectDatasetForExport = function() {
 <body>
 
     <div id="winNavi" style="top:0px; height: 18px;">
-        <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=import-export-1#import-export-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+        <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=import-export-1#import-export-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
     </div>
         <!-- CONTENT START -->
         <div class="inputContainer grey">

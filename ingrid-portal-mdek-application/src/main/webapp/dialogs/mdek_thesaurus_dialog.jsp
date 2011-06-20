@@ -302,7 +302,7 @@
     <body>
         <div id="thesaurus" class="">
             <div id="winNavi">
-                <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=maintanance-of-objects-6#maintanance-of-objects-6', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+                <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=maintanance-of-objects-6#maintanance-of-objects-6', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
             </div>
             <div id="thesaurusContent" class="content">
                 <!-- LEFT HAND SIDE CONTENT START -->

@@ -127,7 +127,7 @@ function hideLoadingZone() {
 		<div class="content">
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div id="winNavi" style="top:0;">
-                    <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=creation-of-objects-3#creation-of-objects-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+                    <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=creation-of-objects-3#creation-of-objects-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
             </div>
 			<div class="inputContainer field grey">
 			    <span class="outer"><div style="padding:15px !important;">

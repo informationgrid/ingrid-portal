@@ -47,7 +47,7 @@ menuEventHandler.handleNewEntity = function(mes) {
 				selectClassDef.addCallback(function(addressClass){ menuEventHandler._createNewAddress(addressClass, selectedNode); });
 	
 				var params = { parentId: selectedNode.id, parentClass: selectedNode.item.objectClass, resultHandler: selectClassDef }
-				dialog.showPage(message.get("dialog.createAddressTitle"), "dialogs/mdek_address_select_class_dialog.jsp", 350, 160, false, params);
+				dialog.showPage(message.get("dialog.createAddressTitle"), "dialogs/mdek_address_select_class_dialog.jsp?c="+userLocale, 350, 160, false, params);
 			}
 		}
 	}
@@ -158,10 +158,10 @@ menuEventHandler.handlePreview = function(msg) {
 	
 	if (selectedNode.item.nodeAppType == "O") {
   	console.debug('Show object preview.');
-		dialog.showPage(message.get("dialog.object.detailView.title"), "dialogs/mdek_detail_view_dialog.jsp", 755, 600, true, params);
+		dialog.showPage(message.get("dialog.object.detailView.title"), "dialogs/mdek_detail_view_dialog.jsp?c="+userLocale, 755, 600, true, params);
 	} else if (selectedNode.item.nodeAppType == "A") {
   	console.debug('Show address preview.');
-		dialog.showPage(message.get("dialog.address.detailView.title"), "dialogs/mdek_detail_view_address_dialog.jsp", 755, 600, true, params);
+		dialog.showPage(message.get("dialog.address.detailView.title"), "dialogs/mdek_detail_view_address_dialog.jsp?c="+userLocale, 755, 600, true, params);
 	}
 }
 
@@ -968,14 +968,14 @@ menuEventHandler.handleShowChanges = function(msg) {
 	};
 
 	if (selectedNode.item.nodeAppType == "O") {
-		dialog.showPage(message.get("dialog.compareView.title"), "dialogs/mdek_compare_view_dialog.jsp", 755, 600, true, params);
+		dialog.showPage(message.get("dialog.compareView.title"), "dialogs/mdek_compare_view_dialog.jsp?c="+userLocale, 755, 600, true, params);
 	} else if (selectedNode.item.nodeAppType == "A") {
-		dialog.showPage(message.get("dialog.compareView.title"), "dialogs/mdek_compare_view_address_dialog.jsp", 755, 600, true, params);
+		dialog.showPage(message.get("dialog.compareView.title"), "dialogs/mdek_compare_view_address_dialog.jsp?c="+userLocale, 755, 600, true, params);
 	}
 }
 
 menuEventHandler.handleShowComment = function() {
-	dialog.showPage(message.get("dialog.showComments.title"), "dialogs/mdek_comments_dialog.jsp", 1010, 470, true);
+	dialog.showPage(message.get("dialog.showComments.title"), "dialogs/mdek_comments_dialog.jsp?c="+userLocale, 1010, 470, true);
 /*
 	var nodeId = prompt("Jump to node with uuid", "5CE671D3-5475-11D3-A172-08002B9A1D1D");
  	if (nodeId) {
@@ -1089,7 +1089,7 @@ menuEventHandler.switchLanguage = function() {
 }
 
 menuEventHandler.openCreateObjectWizardDialog = function() {
-	dialog.showPage(message.get("dialog.wizard.selectTitle"), "dialogs/mdek_select_wizard_dialog.jsp", 350, 170, true);
+	dialog.showPage(message.get("dialog.wizard.selectTitle"), "dialogs/mdek_select_wizard_dialog.jsp?c="+userLocale, 350, 170, true);
 }
 
 

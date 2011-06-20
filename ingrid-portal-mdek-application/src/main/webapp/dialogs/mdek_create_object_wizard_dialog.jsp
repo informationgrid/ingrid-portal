@@ -563,7 +563,7 @@ closeThisDialog = function() {
 	<div id="assistant" class="">
 		<div id="assistantContent" class="content">
 			<div id="winNavi" style="top:0px; right: 3px;">
-                    <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=creation-of-objects-2#creation-of-objects-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+                    <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=creation-of-objects-2#creation-of-objects-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
             </div>
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div class="inputContainer field grey" style="padding:10px !important;">

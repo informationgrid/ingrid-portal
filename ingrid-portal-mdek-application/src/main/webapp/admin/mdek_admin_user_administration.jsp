@@ -613,7 +613,7 @@
             scriptScopeUser.searchForAddress = function(){
 				console.debug("searchForAddress");
                 var def = new dojo.Deferred();
-                dialog.showPage("<fmt:message key='general.searchAddress' />", 'dialogs/mdek_address_dialog.jsp', 755, 580, true, {
+                dialog.showPage("<fmt:message key='general.searchAddress' />", 'dialogs/mdek_address_dialog.jsp?c='+userLocale, 755, 580, true, {
                     resultHandler: def
                 });
                 
@@ -821,7 +821,7 @@
                         <div dojoType="dijit.layout.ContentPane" splitter="false" region="center">
                             <!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
                             <div id="winNavi" style="top:0px;">
-                                <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?hkey=user-administration-1#user-administration-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+                                <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=user-administration-1#user-administration-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
                             </div>
                             <div id="userData" class="inputContainer" style="">
                                 <span class="label">
