@@ -897,10 +897,10 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
                      }
                      this.cancelEditAndSetFocus();
                  }
-                 else if (e.which == 37) {
+                 else if (e.which == 37 && !this.getEditorLock().isActive()) {
                 	 this.navigateLeft();
                  }
-                 else if (e.which == 39) {
+                 else if (e.which == 39 && !this.getEditorLock().isActive()) {
                 	 this.navigateRight();
                  }
                  else if (e.which == 38) {
@@ -918,6 +918,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
                              // adding new row
                              if (this.activeRow === this.getDataLength()) {
                             	 this.navigateRight();
+                                 this.canvas.focus();
                              }
                              else {
                             	 this.commitEditAndSetFocus();
@@ -1162,7 +1163,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
                  //}
              }
              else {
-                   this.setFocus();
+                   this.canvas.focus();
              }
          }
          else {
@@ -1248,7 +1249,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          // if the commit fails, it would do so due to a validation error
          // if so, do not steal the focus from the editor
          if (this.getEditorLock().commitCurrentEdit()) {
-               this.setFocus();
+               this.canvas.focus();
 
              if (this.options.autoEdit) {
                  this.navigateDown();
@@ -1258,7 +1259,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
 
      cancelEditAndSetFocus: function() {
          if (this.getEditorLock().cancelCurrentEdit()) {
-             this.setFocus();
+             this.canvas.focus();
          }
      },
      

@@ -89,7 +89,7 @@ scriptScopeUrls.replaceUrl = function() {
     var currentTab   = getCurrentTabName();
 	var urlTable     = getCurrentTable();
 	var selectedData = UtilGrid.getSelectedData(urlTable);
-	var replaceUrl   = dojo.trim(dijit.byId("urlReplace"+currentTab).getValue());
+	var replaceUrl   = dojo.trim(dijit.byId("urlReplace").getValue());
 	// TODO send data to backend
 
 	if (selectedData && selectedData.length != 0 && replaceUrl.length != 0) {

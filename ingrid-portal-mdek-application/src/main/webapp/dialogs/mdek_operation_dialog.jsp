@@ -45,19 +45,16 @@ function createDOMElements() {
 	
 	var operationsListStructure = [
 		{field: 'name',name: "<fmt:message key='dialog.operation.name' />",width: '155px'},
-		{field: 'description',name: "<fmt:message key='dialog.operation.description' />",width: 554-scrollBarWidth+'px'}
+		{field: 'description',name: "<fmt:message key='dialog.operation.description' />",width: 548-scrollBarWidth+'px'}
 	];
     createDataGrid("operationsList", null, operationsListStructure, null);
 	// use original store
-    console.debug("use orig store");
 	UtilGrid.setTableData("operationsList", UtilGrid.getTableData("ref3Operation"));
 	
 	var operationsPlatformStructure = [
-		{field: 'title',name: "<fmt:message key='dialog.operation.opName' />",width: 347-scrollBarWidth+'px', editable: true}
+		{field: 'title',name: "<fmt:message key='dialog.operation.opName' />",width: 340-scrollBarWidth+'px', editable: true}
 	];
-    console.debug("prepared platforms");
     createDataGrid("operationsPlatform", null, operationsPlatformStructure, null);
-    console.debug("platforms created");
 	
 	var operationsParameterStructure = [
 		{field: 'name',name: "<fmt:message key='dialog.operation.name' />",width: '105px', editable: true},
@@ -75,7 +72,7 @@ function createDOMElements() {
 	        editable: true,
 			formatter: ListCellFormatter
 		},
-		{field: 'multiple',name: "<fmt:message key='dialog.operation.multiplicity' />",width: 229-scrollBarWidth+'px',
+		{field: 'multiple',name: "<fmt:message key='dialog.operation.multiplicity' />",width: 213-scrollBarWidth+'px',
 			type: SelectboxEditor,
 	        options: ["Nein", "Ja"], // will be filled later, when syslists are loaded
 	        values: [0,1],
@@ -168,20 +165,14 @@ disableInputElements = function() {
 
 enableInputElements = function() {
 	dojo.forEach(inputElements, function(item) {
-        console.debug("item: " + item);
 		var widget = dijit.byId(item);
 		if (widget instanceof ingrid.dijit.CustomGrid) {
-            console.debug("enable: " + item);
             UtilGrid.updateOption(item, 'editable', true);
-            console.debug("enabled");
         }
         else {
-            console.debug("enable!: " + item);
             widget.setDisabled(false);
-            console.debug("enabled!");
         }
 	});
-    console.debug("item: " + operationForm);
     dojo.style("operationForm", "visibility", "visible");
 }
 
@@ -437,7 +428,7 @@ closeThisDialog = function() {
               <span class="outer halfWidth required"><div>
                 <span class="label"><label id="operationsPlatformLabel" for="operationsPlatform" onclick="javascript:dialog.showContextHelp(arguments[0], 5203)"><fmt:message key="dialog.operation.platforms" />*</label></span>
                 <div class="tableContainer">
-    			  <div id="operationsPlatform" autoHeight="2" interactive="true" class="hideTableHeader"></div>
+    			  <div id="operationsPlatform" autoHeight="3" interactive="true" class="hideTableHeader"></div>
                 </div></div>
               </span>
               <div class="fill"></div>
@@ -460,13 +451,13 @@ closeThisDialog = function() {
               <span class="outer halfWidth required"><div>
                 <span class="label"><label id="operationsAddressLabel" for="operationsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 5206)"><fmt:message key="dialog.operation.address" />*</label></span>
                 <div class="tableContainer">
-    			  <div id="operationsAddress" autoHeight="2" interactive="true" class="hideTableHeader"></div>
+    			  <div id="operationsAddress" autoHeight="3" interactive="true" class="hideTableHeader"></div>
                 </div></div>
               </span>
               <span class="outer halfWidth"><div>
                 <span class="label"><label for="operationsDependencies" onclick="javascript:dialog.showContextHelp(arguments[0], 5207)"><fmt:message key="dialog.operation.dependencies" /></label></span>
                 <div class="tableContainer">
-    			  <div id="operationsDependencies" autoHeight="2" interactive="true" class="hideTableHeader"></div>
+    			  <div id="operationsDependencies" autoHeight="3" interactive="true" class="hideTableHeader"></div>
                 </div></div>
               </span>
             </div>
