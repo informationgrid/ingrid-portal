@@ -2793,9 +2793,28 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 								}else{
 									row.add(notNull(rowValue));
 								}
-								
 							}else{
-								row.add("");
+								xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:identifier";
+								if(XPathUtils.nodeExists(childNode, xpathExpression)){
+									rowValue = XPathUtils.getString(childNode, xpathExpression).trim();
+									if(sysCodeList.getNameByCodeListValue("101", rowValue).length() > 0){
+										row.add(notNull(sysCodeList.getNameByCodeListValue("101", rowValue)));
+									}else{
+										row.add(notNull(rowValue));
+									}
+								}else{
+									xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:name";
+									if(XPathUtils.nodeExists(childNode, xpathExpression)){
+										rowValue = XPathUtils.getString(childNode, xpathExpression).trim();
+										if(sysCodeList.getNameByCodeListValue("101", rowValue).length() > 0){
+											row.add(notNull(sysCodeList.getNameByCodeListValue("101", rowValue)));
+										}else{
+											row.add(notNull(rowValue));
+										}
+									}else{
+										row.add("");
+									}
+								}
 							}
 							if (!isEmptyRow(row)) {
 								body.add(row);
