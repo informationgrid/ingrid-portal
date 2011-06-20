@@ -131,7 +131,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			
 			// "Nutzungsbedingungen"
 			ArrayList elementsUseConstraints = new ArrayList();
-			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useLimitation";
+			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation";
 			subXPathExpression = ".";
 			getNodeListValueList(elementsUseConstraints, xpathExpression, subXPathExpression, null, "textList");
 			
@@ -1893,10 +1893,21 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			Node node = XPathUtils.getNode(rootNode, xpathExpression);
 			if (node.hasChildNodes()) {
-				xpathExpression = "./gmd:resourceConstraints/gmd:MD_SecurityConstraints/gmd:classification/gmd:MD_ClassificationCode/@codeListValue";
+				String value = "";
+				xpathExpression = "./gmd:resourceConstraints/gmd:MD_SecurityConstraints/gmd:classification/gmd:MD_ClassificationCode";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
 					Node childNode = XPathUtils.getNode(node, xpathExpression);
-					String value = XPathUtils.getString(childNode, ".").trim();
+					value = XPathUtils.getString(childNode, ".").trim();
+				}
+				if(value.length() < 1){
+					xpathExpression = "./gmd:resourceConstraints/gmd:MD_SecurityConstraints/gmd:classification/gmd:MD_ClassificationCode/@codeListValue";
+					if (XPathUtils.nodeExists(node, xpathExpression)) {
+						Node childNode = XPathUtils.getNode(node, xpathExpression);
+						value = XPathUtils.getString(childNode, ".").trim();
+					}
+				}
+				
+				if (value.length() > 0) {
 					String publishId = "";
 					if (value.equals("unclassified")) {
 						publishId = "1";
