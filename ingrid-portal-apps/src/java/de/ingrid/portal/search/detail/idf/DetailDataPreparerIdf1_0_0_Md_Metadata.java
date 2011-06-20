@@ -2774,9 +2774,21 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 						for (int j = 0; j < subNodeList.getLength(); j++) {
 							Node childNode = subNodeList.item(j);
 							ArrayList row = new ArrayList();
-							row.add(notNull(XPathUtils.getString(childNode, "./gmd:maximumValue")).trim());
-							row.add(notNull(XPathUtils.getString(childNode, "./gmd:minimumValue")).trim());
+							
+							// "Maximum"
+							xpathExpression = "./gmd:maximumValue";
+							if(XPathUtils.nodeExists(childNode, xpathExpression)){
+								row.add(notNull(XPathUtils.getString(childNode, xpathExpression)).trim());
+							}
+							
+							// "Minimum"
+							xpathExpression = "./gmd:minimumValue";
+							if(XPathUtils.nodeExists(childNode, xpathExpression)){
+								row.add(notNull(XPathUtils.getString(childNode, xpathExpression)).trim());
+							}
+							
 							String rowValue;
+							// "Maßeinheit"
 							xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalCS/gml:VerticalCS/gml:axis/gml:CoordinateSystemAxis/@gml:uom";
 							if(XPathUtils.nodeExists(childNode, xpathExpression)){
 								rowValue = XPathUtils.getString(childNode, xpathExpression).trim();
@@ -2785,37 +2797,41 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 								row.add("");
 							}
 							
+							// "Vertikaldatum"
+							String verticalDatum = "" ; 
 							xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:name";
 							if(XPathUtils.nodeExists(childNode, xpathExpression)){
 								rowValue = XPathUtils.getString(childNode, xpathExpression).trim();
 								if(sysCodeList.getNameByCodeListValue("101", rowValue).length() > 0){
-									row.add(notNull(sysCodeList.getNameByCodeListValue("101", rowValue)));
+									verticalDatum = sysCodeList.getNameByCodeListValue("101", rowValue);
 								}else{
-									row.add(notNull(rowValue));
+									verticalDatum = rowValue;
 								}
-							}else{
+							}
+							
+							if(verticalDatum.length() < 1)
 								xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:identifier";
 								if(XPathUtils.nodeExists(childNode, xpathExpression)){
 									rowValue = XPathUtils.getString(childNode, xpathExpression).trim();
 									if(sysCodeList.getNameByCodeListValue("101", rowValue).length() > 0){
-										row.add(notNull(sysCodeList.getNameByCodeListValue("101", rowValue)));
+										verticalDatum = sysCodeList.getNameByCodeListValue("101", rowValue);
 									}else{
-										row.add(notNull(rowValue));
+										verticalDatum = rowValue;
 									}
-								}else{
-									xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:name";
-									if(XPathUtils.nodeExists(childNode, xpathExpression)){
-										rowValue = XPathUtils.getString(childNode, xpathExpression).trim();
-										if(sysCodeList.getNameByCodeListValue("101", rowValue).length() > 0){
-											row.add(notNull(sysCodeList.getNameByCodeListValue("101", rowValue)));
-										}else{
-											row.add(notNull(rowValue));
-										}
+								}
+							if(verticalDatum.length() < 1){
+								xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:name";
+								if(XPathUtils.nodeExists(childNode, xpathExpression)){
+									rowValue = XPathUtils.getString(childNode, xpathExpression).trim();
+									if(sysCodeList.getNameByCodeListValue("101", rowValue).length() > 0){
+										verticalDatum = sysCodeList.getNameByCodeListValue("101", rowValue);
 									}else{
-										row.add("");
+										verticalDatum = rowValue;
 									}
 								}
 							}
+							
+							row.add(verticalDatum);
 							if (!isEmptyRow(row)) {
 								body.add(row);
 							}
