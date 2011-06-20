@@ -112,26 +112,40 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			getAvailability(elementsAvailability, xpathExpression);
 			
 			// "Zugangsbeschränkungen"
+			ArrayList elementsAccessConstraints = new ArrayList();
 			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints";
 			subXPathExpression = ".";
-			getNodeListValues(elementsAvailability, xpathExpression, subXPathExpression, messages.getString("object_access.restriction_value"), "textList", "6010");
+			getNodeListValueList(elementsAccessConstraints, xpathExpression, subXPathExpression, "6010", "textList");
 			
-			// "Zugangsbeschränkungen"
 			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue";
 			subXPathExpression = ".";
-			getNodeListValues(elementsAvailability, xpathExpression, subXPathExpression, messages.getString("object_access.restriction_value"), "textList", "524");
+			getNodeListValueList(elementsAccessConstraints, xpathExpression, subXPathExpression, "524", "textList");
 			
+			if(elementsAccessConstraints.size() > 0){
+				HashMap element = new HashMap();
+	        	element.put("type", "textList");
+	        	element.put("title", messages.getString("object_access.restriction_value"));
+	        	element.put("textList", elementsAccessConstraints);
+	        	elementsAvailability.add(element);
+			}
 			
 			// "Nutzungsbedingungen"
+			ArrayList elementsUseConstraints = new ArrayList();
 			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useLimitation";
 			subXPathExpression = ".";
-			getNodeListValues(elementsAvailability, xpathExpression, subXPathExpression, messages.getString("object_access.terms_of_use"), "textList");
+			getNodeListValueList(elementsUseConstraints, xpathExpression, subXPathExpression, null, "textList");
 			
-			// "Nutzungsbedingungen"
 			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue";
 			subXPathExpression = ".";
-			getNodeListValues(elementsAvailability, xpathExpression, subXPathExpression, messages.getString("object_access.terms_of_use"), "textList", "524");
+			getNodeListValueList(elementsUseConstraints, xpathExpression, subXPathExpression, "524", "textList");
 			
+			if(elementsUseConstraints.size() > 0){
+				HashMap element = new HashMap();
+	        	element.put("type", "textList");
+	        	element.put("title", messages.getString("object_access.terms_of_use"));
+	        	element.put("textList", elementsUseConstraints);
+	        	elementsAvailability.add(element);
+			}
 			
 	// Tab "Raum/Zeit"
 			// "Raumbezugssystem"
@@ -300,6 +314,36 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}
 	
+	private void getNodeListValueList(ArrayList elements, String xpathExpression, String subXPathExpression, String codeListId, String type) {
+		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+			for (int i=0; i<nodeList.getLength();i++){
+        		if(XPathUtils.nodeExists(nodeList.item(i), subXPathExpression)){
+        			Node node = XPathUtils.getNode(nodeList.item(i), subXPathExpression);
+	        		String value = XPathUtils.getString(node, ".").trim();
+					HashMap listEntry = new HashMap();
+					listEntry.put("type", type);
+					if(codeListId != null){
+						String tmpValue = sysCodeList.getNameByCodeListValue(codeListId, value);
+						if(tmpValue.length() < 1){
+							if(log.isDebugEnabled()){
+								log.debug("Codelist ID: " + codeListId + " return no value for '" + value+"'!");
+							}
+							tmpValue = value;
+						}
+						
+						listEntry.put("body", tmpValue);
+					}else{
+						listEntry.put("body", value);
+					}
+					if (!isEmptyList(listEntry)) {
+						elements.add(listEntry);
+					}
+        		}
+        	}
+		}
+	}
+
 	private void getDataQualityClass(ArrayList elements, String xpathExpression) {
 		if(XPathUtils.nodeExists(rootNode, xpathExpression)){
 			Node node = XPathUtils.getNode(rootNode, xpathExpression);
