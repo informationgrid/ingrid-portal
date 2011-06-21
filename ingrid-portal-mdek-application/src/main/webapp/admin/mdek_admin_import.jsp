@@ -190,6 +190,9 @@ function startTreeImportProtocol() {
     console.debug("parent address uuid: "+parentAddressUuid);
 
     ImportService.importEntities(file, fileType, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, {
+        callback: function(res){
+            checkImportTransformationStatus();
+        },
         errorHandler: function(msg, err){
             hideLoadingZone();
             displayErrorMessage(err);
@@ -197,7 +200,7 @@ function startTreeImportProtocol() {
     });
     
     //console.debug("check periodically status");
-    setTimeout("checkImportTransformationStatus()", 3000);
+    //setTimeout("checkImportTransformationStatus()", 3000);
 }
 
 scriptScopeImport.startImport = function() {
