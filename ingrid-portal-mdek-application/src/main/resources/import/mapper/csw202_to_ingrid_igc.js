@@ -150,21 +150,21 @@ var mappingDescription = {"mappings":[
 		        			}
 		        	},
 	        		{
-	        			"srcXpath":"//gmd:identificationInfo/gmd:MD_DataIdentification",
+	        			"srcXpath":"//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution",
 	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
 	        			"newNodeName":"publication-scale",
 	        			"subMappings":{
 	        				"mappings": [
 		      	  				{
-		      			  			"srcXpath":"gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer",
+		      			  			"srcXpath":"gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer",
 		      			  			"targetNode":"scale"
 		      			  		},
 		      	  				{
-		      			  			"srcXpath":"gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gmd:Distance[@uom='meter']",
+		      			  			"srcXpath":"gmd:MD_Resolution/gmd:distance/gco:Distance[@uom='meter']",
 		      			  			"targetNode":"resolution-ground"
 		      			  		},
 		      	  				{
-		      			  			"srcXpath":"gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gmd:Distance[@uom='dpi']",
+		      			  			"srcXpath":"gmd:MD_Resolution/gmd:distance/gco:Distance[@uom='dpi']",
 		      			  			"targetNode":"resolution-scan"
 		      			  		}
 	      			  		]
@@ -479,7 +479,7 @@ var mappingDescription = {"mappings":[
 			}
   		},
   		{	
-  			"srcXpath":"gmd:MD_Metadata/gmd:language/gmd:LanguageCode/@codeListValue",
+  			"srcXpath":"//gmd:MD_Metadata/gmd:language/gmd:LanguageCode/@codeListValue",
   			"defaultValue":"de",
   			"targetNode":"/igc/data-sources/data-source/additional-information/metadata-language",
   			"targetAttribute":"id",
@@ -488,7 +488,7 @@ var mappingDescription = {"mappings":[
 			}
   		},
   		{	
-  			"srcXpath":"gmd:MD_Metadata/gmd:language/gmd:LanguageCode/@codeListValue",
+  			"srcXpath":"//gmd:MD_Metadata/gmd:language/gmd:LanguageCode/@codeListValue",
   			"defaultValue":"de",
   			"targetNode":"/igc/data-sources/data-source/additional-information/metadata-language",
   			"transform":{

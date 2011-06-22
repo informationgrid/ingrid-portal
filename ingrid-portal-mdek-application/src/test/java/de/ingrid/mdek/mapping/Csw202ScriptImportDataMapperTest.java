@@ -56,7 +56,39 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		mapper.setDataProvider(initDataProvider());	
 		
 	}
+	
+	
 
+    public final void testConvertgeoInformationKarteComplete() throws TransformerException, IOException {
+        // set variables that are needed for running correctly
+        initClassVariables(mapperScript, templateIGC);
+        
+        String exampleXml = "/de/ingrid/mdek/mapping/Geo_Information_Karte_vollstaendig-test2.xml";
+        
+        InputStream data = null;
+        try {
+            // get example file from test resource directory
+            // spring-dependency is used to access test-resources (search from every class path!)
+            data = (new ClassPathResource(exampleXml)).getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(data.toString());
+        // System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
+        HashMapProtocolHandler protocolHandler = new HashMapProtocolHandler();
+        protocolHandler.setCurrentFilename("Geo_Information_Karte_vollstaendig-test2.xml");
+        InputStream result;
+        try {
+            result = mapper.convert(data, protocolHandler);
+            assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/technical-domain/map/publication-scale/scale", "100000"));
+            result.reset();
+        } catch (Exception e) {
+            fail("Error transforming: " + exampleXml);
+        }
+        
+    }
+	
+	
 	public final void testConvertObjectComplete() throws TransformerException, IOException {
 		// set variables that are needed for running correctly
 		initClassVariables(mapperScript, templateIGC);
