@@ -102,4 +102,15 @@ public interface SimilarTermsInterface {
      */
     IngridHit[] getHierarchy(String topicId, String includeSiblings, String association,
     		String depth, String direction, Locale language);
+    
+    /**
+     * Get a topic name by given topic id and language.
+     * 
+     * @param topicId
+     * 			The given topic id that serves as a root topic
+     * @param language
+     * 			in which language, pass null if default language
+     * @return
+     */
+    IngridHit[] getTopicFromID(String topicId, Locale language);
 }

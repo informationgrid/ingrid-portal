@@ -24,6 +24,7 @@ import org.apache.jetspeed.request.RequestContext;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
@@ -396,6 +397,20 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
     			snsNode.setType(SNS_DESCRIPTOR_TYPE);
     		// --
 
+    		// Check for englisch topic name
+    		String topicNameEn = "";
+    		if(hit.getTopicID() != null){
+    			boolean addThesaurusSearchEnTerm = PortalConfig.getInstance().getBoolean(PortalConfig.THESAURUS_SEARCH_ADD_EN_TERM);
+                String nodeId = "";
+                if(addThesaurusSearchEnTerm && language.getLanguage() != "en"){
+                	nodeId = hit.getTopicID();
+                	topicNameEn = (SNSSimilarTermsInterfaceImpl.getInstance().getTopicFromID(nodeId, Locale.ENGLISH)[0]).toString();
+                	if(topicNameEn.length() > 0){
+                		hit.setTopicName("\'" + hit.getTopicName() + "\' OR \'" + topicNameEn + "\'");
+                	}
+                }
+     		}
+    		   		
     		// -- Set general Node Information --
     		snsNode.setParent(nodeToOpen);
     		snsNode.put("topicID", hit.getTopicID());
