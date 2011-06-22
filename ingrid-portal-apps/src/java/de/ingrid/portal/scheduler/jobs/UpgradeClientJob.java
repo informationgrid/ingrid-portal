@@ -17,11 +17,14 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpConnectionManager;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.SimpleHttpConnectionManager;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.logging.Log;
@@ -292,6 +295,8 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
 
             HttpClient client = new HttpClient(httpClientParams, httpConnectionManager);
             HttpMethod method = new GetMethod(url);
+            
+            setCredentialsIfAny(client);
         
             int status = client.executeMethod(method);
             if (status == 200) {
@@ -309,6 +314,21 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
         return null;        
     }
     
+    /**
+     * Add username and password to the connection if it was set up in 
+     * ingrid-portal-apps.properties.
+     * @param client
+     */
+    private void setCredentialsIfAny(HttpClient client) {
+        String username = PortalConfig.getInstance().getString(PortalConfig.UPGRADE_SERVER_USERNAME);
+        String password = PortalConfig.getInstance().getString(PortalConfig.UPGRADE_SERVER_PASSWORD);
+        if (username != null && !username.isEmpty() && password != null && !password.isEmpty()) {
+            Credentials defaultcreds = new UsernamePasswordCredentials(username, password);
+            //client.getState().setCredentials(new AuthScope("localhost", 80, AuthScope.ANY_REALM), defaultcreds);
+            client.getState().setCredentials(AuthScope.ANY, defaultcreds);
+        }
+    }
+
     private Document buildDocument(InputStream input) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

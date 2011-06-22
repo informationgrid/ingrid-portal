@@ -161,6 +161,10 @@ public class PortalConfig extends PropertiesConfiguration {
 	
 	// the url to the upgrade server
     public static final String UPGRADE_SERVER_URL = "upgrade.server.url";
+    
+    public static final String UPGRADE_SERVER_USERNAME = "upgrade.server.username";
+    
+    public static final String UPGRADE_SERVER_PASSWORD = "upgrade.server.password";
 	
     // disable button and textfield for edit partner/provider 
     public static final String DISABLE_PARTNER_PROVIDER_EDIT = "portal.disable.partner.provider.edit";
