@@ -2894,7 +2894,11 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 		
 		if(code.length() > 0 && codeSpace.length() > 0){
-			addElementEntryLabelLeft(elements, codeSpace.concat(": " + code), title);	
+			if(code.indexOf("EPSG") > -1){
+				addElementEntryLabelLeft(elements, code, title);
+			}else{
+				addElementEntryLabelLeft(elements, codeSpace.concat(": " + code), title);
+			}
 		}else if(codeSpace.length() > 0){
 			addElementEntryLabelLeft(elements, codeSpace, title);
 		}else if(code.length() > 0){
