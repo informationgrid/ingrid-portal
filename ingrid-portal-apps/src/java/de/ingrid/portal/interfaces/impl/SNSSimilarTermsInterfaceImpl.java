@@ -283,7 +283,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
             return hits;
 
     	} catch (Exception e) {
-            log.error("Exception while querying sns for hierarchy.", e);
+            log.error("Exception while querying sns for terms by id.", e);
             return null;
         }
     }

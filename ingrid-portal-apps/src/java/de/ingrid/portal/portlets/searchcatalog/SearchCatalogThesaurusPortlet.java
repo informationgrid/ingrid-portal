@@ -31,6 +31,7 @@ import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.search.DisplayTreeNode;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHits;
 
 /**
  * This portlet handles the fragment of the hirarchy browser in the search/catalog section.
@@ -404,10 +405,15 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
                 String nodeId = "";
                 if(addThesaurusSearchEnTerm && language.getLanguage() != "en"){
                 	nodeId = hit.getTopicID();
-                	topicNameEn = (SNSSimilarTermsInterfaceImpl.getInstance().getTopicFromID(nodeId, Locale.ENGLISH)[0]).toString();
-                	if(topicNameEn.length() > 0){
-                		hit.setTopicName("\'" + hit.getTopicName() + "\' OR \'" + topicNameEn + "\'");
-                	}
+                	IngridHit[] hitsTermsEN = SNSSimilarTermsInterfaceImpl.getInstance().getTopicFromID(nodeId, Locale.ENGLISH);
+                	if(hitsTermsEN != null && hitsTermsEN.length > 0){
+                		topicNameEn = hitsTermsEN[0].toString();
+                		if(topicNameEn.length() > 0){
+                			if(hit.getTopicName() != null){
+                				hit.setTopicName("\'" + hit.getTopicName() + "\' OR \'" + topicNameEn + "\'");
+                			}
+                    	}
+                    }
                 }
      		}
     		   		
