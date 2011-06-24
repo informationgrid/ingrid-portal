@@ -1427,7 +1427,7 @@
                                             </span>
                                             <span class="outer halfWidth"><div>
                                                 <div class="input">
-                                                    <div id="spatialRefLocationCoords"  autoHeight="1" class="hideTableHeader">
+                                                    <div id="spatialRefLocationCoords" autoHeight="1" class="hideTableHeader">
                                                     </div>
                                                 </div>
                                                 </div>
@@ -1444,7 +1444,8 @@
                                         </label>
                                     </span>
                                     <span class="input">
-                                        <input maxLength="120" autoComplete="false" style="width:100%;" maxHeight="150" listId="100" id="ref1SpatialSystem" />
+                                        <!--<input maxLength="120" autoComplete="false" style="width:100%;" maxHeight="150" listId="100" id="ref1SpatialSystem" />-->
+                                        <div id="ref1SpatialSystem" interactive="true" autoHeight="3" class="hideTableHeader"></div>
                                     </span>
                                     </div>
                                 </span>

@@ -1798,14 +1798,7 @@ udkDataProxy._setObjectDataClass1 = function(nodeData) {
 
 	// The spatial system table is a combobox that allows free entries but also entries associated with IDs
 	// If the reference system ID == -1 then we receive a free entry, otherwise we have to resolve the id
-	var value = nodeData.ref1SpatialSystem;//-1;
-	  /*dojo.some(dijit.byId("ref1SpatialSystem").getOptions(), function(entry){
-	  	if (entry.label == nodeData.ref1SpatialSystem) {
-	  		value = entry.value;
-	  		return true;
-	  	}
-	  });*/
-	dijit.byId("ref1SpatialSystem").attr("value", value, true);
+	UtilStore.updateWriteStore("ref1SpatialSystem", UtilList.listToTableData(nodeData.ref1SpatialSystemTable));
 
 	dijit.byId("ref1AltAccuracy").attr("value", nodeData.ref1AltAccuracy, true);
 	dijit.byId("ref1PosAccuracy").attr("value", nodeData.ref1PosAccuracy, true);
@@ -2246,10 +2239,7 @@ udkDataProxy._getObjectData = function(nodeData)
   // former class 1, now general "Raumbezug"
     // The spatial system table is a combobox that allows free entries but also entries associated with IDs
     // If we have a free entry the reference system ID = -1
-//  nodeData.ref1SpatialSystemId = dojo.widget.byId("ref1SpatialSystem").getIdValue();
-//  if (nodeData.ref1SpatialSystemId == -1)
-//      nodeData.ref1SpatialSystem = dojo.widget.byId("ref1SpatialSystem").getValue();
-  nodeData.ref1SpatialSystem = dijit.byId("ref1SpatialSystem").getValue();
+  nodeData.ref1SpatialSystemTable = UtilList.tableDataToList(udkDataProxy._getTableData("ref1SpatialSystem"));
 
   // -- Check which object type was received and fill the appropriate fields --
   switch (nodeData.objectClass)

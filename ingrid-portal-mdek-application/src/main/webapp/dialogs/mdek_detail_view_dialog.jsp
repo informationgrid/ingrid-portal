@@ -207,7 +207,8 @@ function renderNodeData(nodeData) {
 		renderTable(nodeData.spatialRefLocationTable, ["name", "longitude1", "latitude1", "longitude2", "latitude2"], ["<fmt:message key='ui.obj.spatial.geoTable.header.name' />", "<fmt:message key='ui.obj.spatial.geoTable.header.longitude1' />", "<fmt:message key='ui.obj.spatial.geoTable.header.latitude1' />", "<fmt:message key='ui.obj.spatial.geoTable.header.longitude2' />", "<fmt:message key='ui.obj.spatial.geoTable.header.latitude2' />"], "<fmt:message key='ui.obj.spatial.geoTable.title' />");
 		
         // NOTICE: moved from class 1 to general "Raumbezug"
-        renderTextWithTitle(nodeData.ref1SpatialSystem, "<fmt:message key='ui.obj.type1.spatialSystem' />");
+        //renderTextWithTitle(nodeData.ref1SpatialSystem, "<fmt:message key='ui.obj.type1.spatialSystem' />");
+        renderList(nodeData.ref1SpatialSystemTable, "<fmt:message key='ui.obj.type1.spatialSystem' />");
         
         // create cell render functions
 		function lookupSpatialRefAltMeasure(val) {

@@ -155,7 +155,8 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	renderTable(nodeDataOld.spatialRefLocationTable, nodeDataNew.spatialRefLocationTable, ["name", "longitude1", "latitude1", "longitude2", "latitude2"], ["<fmt:message key='ui.obj.spatial.geoTable.header.name' />", "<fmt:message key='ui.obj.spatial.geoTable.header.longitude1' />", "<fmt:message key='ui.obj.spatial.geoTable.header.latitude1' />", "<fmt:message key='ui.obj.spatial.geoTable.header.longitude2' />", "<fmt:message key='ui.obj.spatial.geoTable.header.latitude2' />"], "<fmt:message key='ui.obj.spatial.geoTable.title' />");
 	
     // former class 1, now general "Raumbezug"
-    renderTextWithTitle(nodeDataOld.ref1SpatialSystem, nodeDataNew.ref1SpatialSystem, "<fmt:message key='ui.obj.type1.spatialSystem' />");
+    //renderTextWithTitle(nodeDataOld.ref1SpatialSystem, nodeDataNew.ref1SpatialSystem, "<fmt:message key='ui.obj.type1.spatialSystem' />");
+    renderList(nodeDataOld.ref1SpatialSystemTable, nodeDataNew.ref1SpatialSystemTable, "<fmt:message key='ui.obj.type1.spatialSystem' />");
     
     var altitudeDataOld = [nodeDataOld];
 	var altitudeDataNew = [nodeDataNew];

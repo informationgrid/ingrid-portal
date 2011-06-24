@@ -214,16 +214,8 @@ public class MdekMapper implements DataMapperInterface {
         // Additional Fields
         mdekObj.setAdditionalFields(mapToAdditionalFields((List<IngridDocument>) obj.get(MdekKeys.ADDITIONAL_FIELDS)));
         
-        // NOTICE: some stuff was moved from class specific domain map ("Fachbezug") to general sections (in GUI).
-        // this stuff has to be processed here, before doing class specific stuff !
-
         // former class 1, now general "Raumbezug"
-        IngridDocument td1Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
-        kvp = null;
-        if (td1Map != null) {
-            kvp = mapToKeyValuePair(td1Map, MdekKeys.REFERENCESYSTEM_ID, MdekKeys.COORDINATE_SYSTEM);
-            mdekObj.setRef1SpatialSystem(kvp.getValue());           
-        }
+        mdekObj.setRef1SpatialSystemTable(mapToSpatialSystemsTable((List<IngridDocument>) obj.get(MdekKeys.SPATIAL_SYSTEM_LIST)));  
 
         switch(mdekObj.getObjectClass()) {
         case 0: // Object of type 0 doesn't have any special values
@@ -244,7 +236,7 @@ public class MdekMapper implements DataMapperInterface {
 
             mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
             
-            td1Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
+            IngridDocument td1Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
             if (td1Map == null)
                 break;
             
@@ -782,25 +774,15 @@ public class MdekMapper implements DataMapperInterface {
 
         // Additional Fields
         udkObj.put(MdekKeys.ADDITIONAL_FIELDS, mapFromAdditionalFields(data.getAdditionalFields()));
-
-        // NOTICE: some stuff was moved from class specific domain map ("Fachbezug") to general sections (in GUI).
-        // this stuff has to be processed here, before doing class specific stuff !
         
-        // former class 1, now general "Raumbezug"
-        IngridDocument td1Map = null;
-        kvp = mapFromKeyValue(MdekKeys.REFERENCESYSTEM_ID, data.getRef1SpatialSystem());
-        if (kvp.getValue() != null || kvp.getKey() != -1) {
-            td1Map = new IngridDocument();
-            td1Map.put(MdekKeys.COORDINATE_SYSTEM, kvp.getValue());
-            td1Map.put(MdekKeys.REFERENCESYSTEM_ID, kvp.getKey());
-            udkObj.put(MdekKeys.TECHNICAL_DOMAIN_MAP, td1Map);
-        }
+        udkObj.put(MdekKeys.SPATIAL_SYSTEM_LIST, mapFromSpatialSystemTable(data.getRef1SpatialSystemTable()));
 
         int objClass = data.getObjectClass() != null ? data.getObjectClass() : 0; 
         switch(objClass) {
         case 0: // Object of type 0 doesn't have any special values
             break;
         case 1:
+            IngridDocument td1Map = new IngridDocument();
             // DQ has different section (transferred outside of TECHNICAL_DOMAIN_MAP !)
             int[] dqIds = new int[] {
                 109, 110, 112, 113, 114, 115, 117, 120, 125, 126, 127,
@@ -820,10 +802,6 @@ public class MdekMapper implements DataMapperInterface {
 
             udkObj.put(MdekKeys.FORMAT_INSPIRE_LIST, mapFromAvailDataFormatInspire(data.getAvailabilityDataFormatInspire()));
 
-            if (td1Map == null) {
-                td1Map = new IngridDocument();
-            }
-            
             td1Map.put(MdekKeys.DATASOURCE_UUID, data.getRef1ObjectIdentifier());
             td1Map.put(MdekKeys.HIERARCHY_LEVEL, data.getRef1DataSet());
             td1Map.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, data.getRef1VFormatTopology());
@@ -939,9 +917,10 @@ public class MdekMapper implements DataMapperInterface {
         // Set default values for a new object.
         // The default in obj will be set iff the corresponding values are null or empty lists.
 
-        if (null == obj.getRef1SpatialSystem()) {
-            obj.setRef1SpatialSystem(sysListMapper.getInitialValueFromListId(100));
+        if ((null == obj.getRef1SpatialSystemTable() || obj.getRef1SpatialSystemTable().size() == 0) && null != sysListMapper.getInitialKeyFromListId(100)) {
+            obj.setRef1SpatialSystemTable(Arrays.asList(new String[] { sysListMapper.getInitialValueFromListId(100) }));
         }
+        
         if (null == obj.getTimeRefPeriodicity()) {
             obj.setTimeRefPeriodicity(sysListMapper.getInitialKeyFromListId(518));
         }
@@ -1564,7 +1543,23 @@ public class MdekMapper implements DataMapperInterface {
         }
         return resultList;
     }
+
     
+    private Object mapFromSpatialSystemTable(List<String> refList) {
+        // TODO Auto-generated method stub
+        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        if (refList == null)
+            return resultList;
+
+        for (String ref : refList) {
+            IngridDocument result = new IngridDocument();
+            KeyValuePair kvp = mapFromKeyValue(MdekKeys.REFERENCESYSTEM_ID, ref);
+            result.put(MdekKeys.REFERENCESYSTEM_ID, kvp.getKey());
+            result.put(MdekKeys.COORDINATE_SYSTEM, kvp.getValue());
+            resultList.add(result);
+        }
+        return resultList;
+    }
     
     /****************************************************************************
      * Mapping from the IngridDocument Structure to the Mdek gui representation *
@@ -1825,6 +1820,18 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
 
+    private List<String> mapToSpatialSystemsTable(List<IngridDocument> refList) {
+        List<String> resultList = new ArrayList<String>();
+        if (refList == null)
+            return resultList;
+        for (IngridDocument ref : refList) {
+            KeyValuePair kvp = mapToKeyValuePair(ref, MdekKeys.REFERENCESYSTEM_ID, MdekKeys.COORDINATE_SYSTEM);
+            resultList.add(kvp.getValue());
+        }
+        return resultList;
+    }
+    
+    
     /** NOTICE: in backend inspireDataFormat is Table/List (1:N) in frontend it's a combobox (1:1)! */
     private String mapToAvailDataFormatInspire(List<IngridDocument> refList) {
         String result = null;

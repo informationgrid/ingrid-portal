@@ -61,7 +61,7 @@ public class MdekDataBean {
 	private String spatialRefAltVDate;
 	private String spatialRefExplanation;
 	/** NOTICE: moved from class 1 (Geoinformation/Karte) to spatial for all objects ! */
-	private String ref1SpatialSystem;
+	private List<String> ref1SpatialSystemTable;
 
 	// Time
 	private String timeRefType;
@@ -553,6 +553,7 @@ public class MdekDataBean {
 		this.setRef1SymbolsText(new ArrayList<LinkDataBean>());
 		this.setRef1KeysText(new ArrayList<LinkDataBean>());
 		this.setRef1Data(new ArrayList<String>());
+		this.setRef1SpatialSystemTable(new ArrayList<String>());
 
 		this.setDq109Table(new ArrayList<DQBean>());
 		this.setDq110Table(new ArrayList<DQBean>());
@@ -1422,15 +1423,15 @@ public class MdekDataBean {
 
 
 
-	public String getRef1SpatialSystem() {
-		return ref1SpatialSystem;
+	public List<String> getRef1SpatialSystemTable() {
+		return ref1SpatialSystemTable;
 	}
 
 
 
 
-	public void setRef1SpatialSystem(String ref1SpatialSystem) {
-		this.ref1SpatialSystem = ref1SpatialSystem;
+	public void setRef1SpatialSystemTable(List<String> ref1SpatialSystem) {
+		this.ref1SpatialSystemTable = ref1SpatialSystem;
 	}
 
 

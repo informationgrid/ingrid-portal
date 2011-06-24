@@ -236,9 +236,19 @@ ingridObjectLayout.createFachBezugClass1 = function(){
     createDataGrid("ref1VFormatDetails", null, ref1VFormatDetailsStructure, null);
     
     
-    createComboBox("ref1SpatialSystem", null, storeProps, function(){
+    /*createComboBox("ref1SpatialSystem", null, storeProps, function(){
         return UtilSyslist.getSyslistEntry(100);
-    });
+    });*/
+    var ref1SpatialSystemStructure = [{
+        field: 'title',
+        name: 'System',
+        width: 708-scrollBarWidth+'px',
+        editable: true,
+        type: ComboboxEditor,
+        listId: 100,
+        formatter: dojo.partial(SyslistCellFormatter, 100)
+   }];
+   createDataGrid("ref1SpatialSystem", null, ref1SpatialSystemStructure, null);
 	
     var ref1ScaleStructure = [{
         field: 'scale',
