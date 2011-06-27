@@ -1614,14 +1614,14 @@ udkDataProxy._setObjectData = function(nodeData)
   dijit.byId("timeRefType").attr("value", nodeData.timeRefType, true);
   if (nodeData.timeRefType == "bis") {
 	if (nodeData.timeRefDate2) { dijit.byId("timeRefDate1").attr("value", nodeData.timeRefDate2, true); }
-	else { dijit.byId("timeRefDate1").attr("value", "", true);; }
-	dijit.byId("timeRefDate2").attr("value", "", true);;  		
+	else { dijit.byId("timeRefDate1").attr("value", "", true); }
+	dijit.byId("timeRefDate2").attr("value", "", true);		
 
   } else {
 	if (nodeData.timeRefDate1) { dijit.byId("timeRefDate1").attr("value", nodeData.timeRefDate1, true); }
-	else { dijit.byId("timeRefDate1").attr("value", "", true);; }
-	if (nodeData.timeRefDate2) { dijit.byId("timeRefDate2").attr("value", nodeData.timeRefDate2, true); }
-	else { dijit.byId("timeRefDate2").attr("value", "", true);; }  	
+	else { dijit.byId("timeRefDate1").attr("value", "", true); }
+	if (nodeData.timeRefType == "von" && nodeData.timeRefDate2) { dijit.byId("timeRefDate2").attr("value", nodeData.timeRefDate2, true); }
+	else { dijit.byId("timeRefDate2").attr("value", "", true); }  	
   }
 
   dijit.byId("timeRefStatus").attr("value", nodeData.timeRefStatus, true);

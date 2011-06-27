@@ -49,7 +49,6 @@ researchScriptScope.connectKeyEvents = function() {
         // Pressing 'enter' on the object input field is equal to a button click.
         dojo.connect(dojo.byId("objSearchInput"), "onkeypress",
             function(event) {
-                console.debug("key");
                 if (event.keyCode == dojo.keys.ENTER) {
                     console.debug("enter");
                     // Check if we have to do a normal or an extended search 

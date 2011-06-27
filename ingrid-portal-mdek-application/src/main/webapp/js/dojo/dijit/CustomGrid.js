@@ -1184,7 +1184,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          }
 
          // are we in the Add New row?  can we create new from this cell?
-         if (this.columns[cell].cannotTriggerInsert && row >= this.getDataLength()) {
+         if (this.columns[cell].cannotTriggerInsert/* && row >= this.getDataLength()*/) {
              return false;
          }
 
@@ -2048,7 +2048,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          if (pos) {
              var isAddNewRow = (pos.row == this.getDataLength());
              this.scrollRowIntoView(pos.row, !isAddNewRow);
-             this.setActiveCellInternal(this.getCellNode(pos.row, pos.cell), isAddNewRow || this.options.autoEdit);
+             this.setActiveCellInternal(this.getCellNode(pos.row, pos.cell), true/*isAddNewRow || this.options.autoEdit*/);
              this.activePosX = pos.posX;
          }
      },
