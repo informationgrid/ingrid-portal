@@ -2452,16 +2452,27 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				if (XPathUtils.nodeExists(node, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address")){
 					addSpace(elements);
 				}
-				// "Delivery point"
+				
+				// "Street"
 				xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
-					String deliveryPoint = XPathUtils.getString(node, xpathExpression).trim();
-					if(deliveryPoint.matches("\\d*")){
-						addElement(elements, "textLine", messages.getString("postbox_label") + " " + deliveryPoint);	
-					}else{
-						addElement(elements, "textLine", deliveryPoint);
+					NodeList nodeList = XPathUtils.getNodeList(node, xpathExpression);
+					for(int i=0; i<nodeList.getLength();i++){
+						String deliveryPoint = XPathUtils.getString(nodeList.item(i), ".").trim();
+						if(deliveryPoint.startsWith("Postbox")){
+							String[] postbox = deliveryPoint.split(",");
+							for(int j=0; j < postbox.length; j++){
+								if(postbox[j].startsWith("Postbox")){
+									addElement(elements, "textLine", messages.getString("postbox_label") + " " + postbox[j].replace("Postbox ", ""));
+								}else{
+									addElement(elements, "textLine", postbox[j]);
+								}
+							}
+							addSpace(elements);
+						}else{
+							addElement(elements, "textLine", deliveryPoint);
+						}
 					}
-					
 				}
 				
 				String postalCode = "";

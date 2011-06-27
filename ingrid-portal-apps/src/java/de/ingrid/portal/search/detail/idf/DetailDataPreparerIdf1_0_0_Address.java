@@ -316,7 +316,7 @@ public class DetailDataPreparerIdf1_0_0_Address extends DetailDataPreparerIdf1_0
 				isIdfResponsibleParty = false;
 			}
 			
-			xpathExpression = "gmd:role/@gco:nilReason";
+			xpathExpression = "./gmd:role/@gco:nilReason";
 			if (XPathUtils.nodeExists(node, xpathExpression)) {
 				
 				element = addElementAddress("multiLine", "", "", "false", new ArrayList());
@@ -362,7 +362,7 @@ public class DetailDataPreparerIdf1_0_0_Address extends DetailDataPreparerIdf1_0
 					}
 				}else{
 					// Organistation
-					xpathExpression = "gmd:organisationName";
+					xpathExpression = "./gmd:organisationName";
 					if (XPathUtils.nodeExists(node, xpathExpression)) {
 						String value = XPathUtils.getString(node, xpathExpression).trim();
 						StringTokenizer valueTokenizer = new StringTokenizer(value, ",");
@@ -372,7 +372,7 @@ public class DetailDataPreparerIdf1_0_0_Address extends DetailDataPreparerIdf1_0
 					}
 					
 					// Name
-					xpathExpression = "gmd:individualName";
+					xpathExpression = "./gmd:individualName";
 					if (XPathUtils.nodeExists(node, xpathExpression)) {
 						String value = XPathUtils.getString(node, xpathExpression).trim();
 						addElement(elements, "textLine", getIndividualName(value));
@@ -381,13 +381,24 @@ public class DetailDataPreparerIdf1_0_0_Address extends DetailDataPreparerIdf1_0
 				
 				addSpace(elements);
 				// "Delivery point"
-				xpathExpression = "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint";
+				xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
-					String deliveryPoint = XPathUtils.getString(node, xpathExpression).trim();
-					if(deliveryPoint.matches("\\d*")){
-						addElement(elements, "textLine", messages.getString("postbox_label") + " " + deliveryPoint);	
-					}else{
-						addElement(elements, "textLine", deliveryPoint);
+					NodeList nodeList = XPathUtils.getNodeList(node, xpathExpression);
+					for(int i=0; i<nodeList.getLength();i++){
+						String deliveryPoint = XPathUtils.getString(nodeList.item(i), ".").trim();
+						if(deliveryPoint.startsWith("Postbox")){
+							String[] postbox = deliveryPoint.split(",");
+							for(int j=0; j < postbox.length; j++){
+								if(postbox[j].startsWith("Postbox")){
+									addElement(elements, "textLine", messages.getString("postbox_label") + " " + postbox[j].replace("Postbox ", ""));
+								}else{
+									addElement(elements, "textLine", postbox[j]);
+								}
+							}
+							addSpace(elements);
+						}else{
+							addElement(elements, "textLine", deliveryPoint);
+						}
 					}
 				}
 				
@@ -395,13 +406,13 @@ public class DetailDataPreparerIdf1_0_0_Address extends DetailDataPreparerIdf1_0
 				String city = "";
 				
 				// "Postcode"
-				xpathExpression = "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:postalCode";
+				xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:postalCode";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
 					postalCode = XPathUtils.getString(node, xpathExpression).trim();
 				}
 				
 				// "City"
-				xpathExpression = "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city";
+				xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
 					city = XPathUtils.getString(node, xpathExpression).trim();
 				}
@@ -411,7 +422,7 @@ public class DetailDataPreparerIdf1_0_0_Address extends DetailDataPreparerIdf1_0
 				}
 				
 				// "Country"
-				xpathExpression = "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country";
+				xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
 					String country = XPathUtils.getString(node, xpathExpression).trim();
 					if(country != null){
@@ -426,7 +437,7 @@ public class DetailDataPreparerIdf1_0_0_Address extends DetailDataPreparerIdf1_0
 				addSpace(elements);
 				
 				// "Mail"
-				xpathExpression = "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress";
+				xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
 					NodeList electronicMailAddressNodeList = XPathUtils.getNodeList(node, xpathExpression);
 					for (int i = 0; i < electronicMailAddressNodeList.getLength(); i++) {
@@ -436,21 +447,21 @@ public class DetailDataPreparerIdf1_0_0_Address extends DetailDataPreparerIdf1_0
 				}
 				
 				// "Telefon"
-				xpathExpression = "gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice";
+				xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
 					String value = XPathUtils.getString(node, xpathExpression).trim();
 					addElement(elements, "textLine", value, "Telefon:");
 				}
 				
 				// "Fax"
-				xpathExpression = "gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:facsimile";
+				xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:facsimile";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
 					String value = XPathUtils.getString(node, xpathExpression).trim();
 					addElement(elements, "textLine", value, "Fax:");
 				}
 				
 				// "URL"
-				xpathExpression = "gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL";
+				xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL";
 				if (XPathUtils.nodeExists(node, xpathExpression)) {
 					String value = XPathUtils.getString(node, xpathExpression).trim();
 					elements.add(addElementEmailWeb("URL:", value, value, value, LinkType.WWW_URL));
