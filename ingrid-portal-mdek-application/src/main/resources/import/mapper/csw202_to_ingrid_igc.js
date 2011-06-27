@@ -1229,11 +1229,11 @@ function mapReferenceSystemInfo(source, target) {
 				coordinateSystem = code;
 			}
 			log.debug("adding '" + "/igc/data-sources/data-source/spatial-domain/coordinate-system" + "' = '" + coordinateSystem + "' to target document.");
-			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/spatial-domain/coordinate-system");
+			var node = XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/spatial-domain/coordinate-system");
 			XMLUtils.createOrReplaceTextNode(node, coordinateSystem);
             
             // get syslist id
-			var coordinateSystemId = transformToIgcDomainId(coordinateSystem, 100, 123);
+			var coordinateSystemId = transformToIgcDomainId(code, 100, 123);
             if (hasValue(coordinateSystemId) && coordinateSystemId == -1) {
                 // try to parse coordsystem name for correct mapping to syslist id
                 var coordinateSystemLower = coordinateSystem.toLowerCase();
@@ -1647,9 +1647,9 @@ function transformToIgcDomainValue(val, codeListId, languageId, logErrorOnNotFou
 			idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(val), languageId);
 		} catch (e) {
 			if (log.isWarnEnabled()) {
-				log.warn("Error tranforming id '" + val + "' with code list " + codeListId + " with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'. Does the codeList exist?");
+				log.warn("Error tranforming ID '" + val + "' with code list " + codeListId + " with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'. Does the codeList exist?");
 			}
-			protocol(WARN, "Error tranforming id '" + val + "' with code list " + codeListId + " with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'. Does the codeList exist?")
+			protocol(WARN, "Error tranforming ID '" + val + "' with code list " + codeListId + " with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'. Does the codeList exist?")
 			if (logErrorOnNotFound) {
 				log.warn(logErrorOnNotFound + val);
 				protocol(WARN, logErrorOnNotFound + val)
@@ -1659,8 +1659,8 @@ function transformToIgcDomainValue(val, codeListId, languageId, logErrorOnNotFou
 			return idcValue;
 		} else {
 			if (log.isWarnEnabled()) {
-				log.warn("Domain id '" + val + "' unknown in code list " + codeListId + " for language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'.");
-				protocol(WARN, "Domain id '" + val + "' unknown in code list " + codeListId + " for language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'.")
+				log.warn("Domain ID '" + val + "' unknown in code list " + codeListId + " for language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'.");
+				protocol(WARN, "Domain ID '" + val + "' unknown in code list " + codeListId + " for language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'.")
 			}
 			if (logErrorOnNotFound) {
 				log.warn(logErrorOnNotFound + val);
