@@ -2876,8 +2876,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 		
 		// "Raumbezugssystem"
-		xpathExpression = "./gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code";
-		getNodeValueReferenceSystem(spatialElements, xpathExpression, messages.getString("t011_obj_geo.referencesystem_id"));
+		xpathExpression = "./gmd:referenceSystemInfo";
+		getNodeListValueReferenceSystem(spatialElements, xpathExpression, messages.getString("t011_obj_geo.referencesystem_id"));
 		
 		// "Raum/Zeit - Zusätzliche Felder" 
 		xpathExpression ="./idf:additionalDataSection";
@@ -2892,28 +2892,53 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}
 	
-	private void getNodeValueReferenceSystem(ArrayList elements, String xpathExpression, String title) {
-		String codeSpace = ""; 
-		String code = "";
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			code = XPathUtils.getString(rootNode, xpathExpression).trim();
-		}
-		
-		xpathExpression = xpathExpression + "/../gmd:codeSpace";
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			codeSpace = XPathUtils.getString(rootNode, xpathExpression).trim();
-		}
-		
-		if(code.length() > 0 && codeSpace.length() > 0){
-			if(code.indexOf("EPSG") > -1){
-				addElementEntryLabelLeft(elements, code, title);
-			}else{
-				addElementEntryLabelLeft(elements, codeSpace.concat(": " + code), title);
+	private void getNodeListValueReferenceSystem(ArrayList elements, String xpathExpression, String title) {
+		if(XPathUtils.nodeExists(rootNode, xpathExpression)){
+			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+			ArrayList referenceSystem = new ArrayList();
+			for (int i=0; i<nodeList.getLength(); i++){
+				String codeSpace = ""; 
+				String code = "";
+				xpathExpression = "./gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code";
+				if (XPathUtils.nodeExists(nodeList.item(i), xpathExpression)) {
+					code = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
+				}
+				
+				xpathExpression = "./gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:codeSpace";
+				if (XPathUtils.nodeExists(nodeList.item(i), xpathExpression)) {
+					codeSpace = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
+				}
+				
+				String value = "";
+				if(code.length() > 0 && codeSpace.length() > 0){
+					if(code.indexOf("EPSG") > -1){
+						value = code;
+					}else{
+						value = codeSpace.concat(": " + code);
+					}
+				}else if(codeSpace.length() > 0){
+					value = codeSpace;
+				}else if(code.length() > 0){
+					value = code;
+				}
+				
+				if(value.length() > 0){
+					HashMap listEntry = new HashMap();
+					listEntry.put("type", "textList");
+					listEntry.put("body", value);
+					if (!isEmptyList(listEntry)) {
+						referenceSystem.add(listEntry);
+					}
+				}
 			}
-		}else if(codeSpace.length() > 0){
-			addElementEntryLabelLeft(elements, codeSpace, title);
-		}else if(code.length() > 0){
-			addElementEntryLabelLeft(elements, code, title);
+			if(referenceSystem.size() > 0){
+				HashMap element = new HashMap();
+				element.put("type", "textList");
+				element.put("title", title);
+				element.put("textList", referenceSystem);
+				
+				elements.add(element);
+			}
 		}
 	}
 
