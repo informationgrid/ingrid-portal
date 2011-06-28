@@ -29,7 +29,7 @@
 
 - maven jetspeed plugin (libs) holen:
   (- Neues jetspeed plugin installieren:
-	maven -DartifactId=maven-jetspeed2-plugin -DgroupId=org.apache.portals.jetspeed-2 -Dversion=2.1 plugin:download
+	maven  -Dmaven.repo.remote=http://www.bluesunrise.com/maven/ -DartifactId=maven-jetspeed2-plugin -DgroupId=org.apache.portals.jetspeed-2 -Dversion=2.1 plugin:download
     (ausgeführt im aktualisierten svn HEAD trunk mit build.properties: org.apache.jetspeed.project.home = C:/wemove/portalu/dev/jetspeed-2_svn))
   - BESSER, jetspeed von source builden, dann hat man auf alle Faelle die aktuellsten Sourcen und auch das aktuellste jetspeed maven plugin !
     Mit dem plugin aus dem repository GINGS NICHT !
