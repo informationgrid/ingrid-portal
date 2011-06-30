@@ -44,6 +44,7 @@ import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.QueryStringParser;
+import de.ingrid.utils.tool.SNSUtil;
 import de.ingrid.utils.udk.UtilsLanguageCodelist;
 
 public class SearchDetailPortlet extends GenericVelocityPortlet {
@@ -144,7 +145,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            if (docUuid != null && docUuid.length() > 0) {
 	            	// remove possible invalid characters
 	            	docUuid = UtilsQueryString.normalizeUuid(docUuid);
-	                String qStr = null;
+	            	docUuid = UtilsString.marshallId(docUuid);
+	            	String qStr = null;
 	                if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_9_DSC_OBJECT)) {
                 	  qStr = Settings.HIT_KEY_OBJ_ID + ":" + docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
                   	} else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_8_DSC_OBJECT)) {

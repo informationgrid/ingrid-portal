@@ -493,4 +493,21 @@ public class UtilsString {
         return buf.toString();
     }
     
+    
+    /** Prepare id for transport via IngridQuery.
+     *
+     * 
+     */
+    public static String marshallId(String id) {
+    	String result = id;
+    	
+    	if (id != null) {
+    		if (id.indexOf("/") != -1) {
+    			result = id.replace("/", "\\");
+    			result = "\"" + result + "\"";
+    		}
+    	}
+
+    	return result;
+    }
 }
