@@ -1569,50 +1569,60 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         	element.put("linkList", linkList);
         	elements.add(element);
 	    	for (int i=0; i<nodeList.getLength();i++){
-				Node node = XPathUtils.getNode(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL");
-				if(XPathUtils.getString(nodeList.item(i), "./../srv:operationName").trim().length() > 0){
-					String value = XPathUtils.getString(node, ".").trim();
-					if (value != null && value.toLowerCase().indexOf("request=getcapabilities") == -1) {
-		    			if (value.indexOf("?") == -1) {
-		    				value = value + "?";
-		    			}
-		    			if (!value.endsWith("?")) {
-		    				value = value + "&";
-		    			}
-		    			value = value + "REQUEST=GetCapabilities&SERVICE=WMS";
-		    		}
-		    		
-					boolean hasAccessConstraints = false;
-					xpathExpression = "./idf:hasAccessConstraint";
-					if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-						String hasAccessConstraintsValue = XPathUtils.getString(rootNode, xpathExpression).trim();
-						if(hasAccessConstraintsValue.length() > 0){
-							hasAccessConstraints = Boolean.parseBoolean(hasAccessConstraintsValue);	
+				if(XPathUtils.nodeExists(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL")){
+					Node node = XPathUtils.getNode(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL");
+					if(XPathUtils.getString(nodeList.item(i), "./../srv:operationName").trim().length() > 0){
+						String value = XPathUtils.getString(node, ".").trim();
+						if (value != null && value.toLowerCase().indexOf("request=getcapabilities") == -1) {
+			    			if (value.indexOf("?") == -1) {
+			    				value = value + "?";
+			    			}
+			    			if (!value.endsWith("?")) {
+			    				value = value + "&";
+			    			}
+			    			value = value + "REQUEST=GetCapabilities&SERVICE=WMS";
+			    		}
+			    		
+						boolean hasAccessConstraints = false;
+						xpathExpression = "./idf:hasAccessConstraint";
+						if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+							String hasAccessConstraintsValue = XPathUtils.getString(rootNode, xpathExpression).trim();
+							if(hasAccessConstraintsValue.length() > 0){
+								hasAccessConstraints = Boolean.parseBoolean(hasAccessConstraintsValue);	
+							}
 						}
+						
+						HashMap link;
+			    		
+			    		if (!hasAccessConstraints) {
+			    			if(XPathUtils.nodeExists(nodeList.item(i), "./../srv:operationName")){
+			    				String operationName = XPathUtils.getString(nodeList.item(i), "./../srv:operationName").trim();
+			    				if(operationName.equals("GetMap")){
+			    					link = new HashMap();			
+									link.put("hasLinkIcon", new Boolean(true));
+					  	        	link.put("isExtern", new Boolean(false));
+					  	        	link.put("title", messages.getString("common.result.showMap"));
+					  	        	link.put("href", "main-maps.psml?wms_url=" + UtilsVelocity.urlencode(value));
+					  	        	linkList.add(link);
+			    				}else if(operationName.equals("GetCapabilities")){
+			    					link = new HashMap();
+						        	link.put("hasLinkIcon", new Boolean(true));
+						        	link.put("isExtern", new Boolean(true));
+						        	if (!hasAccessConstraints) {
+						        	  link.put("title", messages.getString("common.result.showGetCapabilityUrl"));
+						        	} else {
+						        		link.put("title", messages.getString("common.result.showGetCapabilityUrlRestricted"));
+						        	}
+						        	link.put("href", value);
+						        	linkList.add(link);
+			    				}
+			    			}
+				    		
+			    		}
+		  	        	
 					}
-					HashMap link;
-		    		
-		    		if (!hasAccessConstraints) {
-			    		link = new HashMap();			
-						link.put("hasLinkIcon", new Boolean(true));
-		  	        	link.put("isExtern", new Boolean(false));
-		  	        	link.put("title", messages.getString("common.result.showMap"));
-		  	        	link.put("href", "main-maps.psml?wms_url=" + UtilsVelocity.urlencode(value));
-		  	        	linkList.add(link);
-		    		}
-		    		
-	  	        	link = new HashMap();
-		        	link.put("hasLinkIcon", new Boolean(true));
-		        	link.put("isExtern", new Boolean(true));
-		        	if (!hasAccessConstraints) {
-		        	  link.put("title", messages.getString("common.result.showGetCapabilityUrl"));
-		        	} else {
-		        		link.put("title", messages.getString("common.result.showGetCapabilityUrlRestricted"));
-		        	}
-		        	link.put("href", value);
-		        	linkList.add(link);
 				}
-			}
+	    	}
 		}
 	}
 
@@ -1654,6 +1664,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					}else{
 						row.add("");
 					}
+				}else{
+					row.add("");
 				}
 				
 				xpathExpression = "./srv:operationDescription";
@@ -1664,6 +1676,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					}else{
 						row.add("");
 					}
+				}else{
+					row.add("");
 				}
 				
 				xpathExpression = "./srv:invocationName";
@@ -1674,6 +1688,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					}else{
 						row.add("");
 					}
+				}else{
+					row.add("");
 				}
 				
 				if (!isEmptyRow(row)) {
