@@ -8,12 +8,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-mdek-application</artifactId>
-  <version>3.0.1</version>
+  <version>3.1.0-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Ingrid Portal MDEK Application</name>
   <scm>
-    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/tags/ingrid-portal-mdek-application-3.0.1</connection>
-    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/tags/ingrid-portal-mdek-application-3.0.1</developerConnection>
+    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek-application</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek-application</developerConnection>
   </scm>
   <build>
     <finalName>ingrid-portal-mdek-application</finalName>
