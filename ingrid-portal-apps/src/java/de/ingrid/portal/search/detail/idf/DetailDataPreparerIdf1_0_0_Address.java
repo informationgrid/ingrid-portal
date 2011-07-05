@@ -396,6 +396,8 @@ public class DetailDataPreparerIdf1_0_0_Address extends DetailDataPreparerIdf1_0
 								}
 							}
 							addSpace(elements);
+						}else if(deliveryPoint.matches("\\d*")){
+							addElement(elements, "textLine", messages.getString("postbox_label") + " " + deliveryPoint);
 						}else{
 							addElement(elements, "textLine", deliveryPoint);
 						}

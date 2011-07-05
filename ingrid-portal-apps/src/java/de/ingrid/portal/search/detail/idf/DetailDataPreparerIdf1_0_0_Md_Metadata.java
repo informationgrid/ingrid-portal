@@ -2485,6 +2485,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 								}
 							}
 							addSpace(elements);
+						}else if(deliveryPoint.matches("\\d*")){
+							addElement(elements, "textLine", messages.getString("postbox_label") + " " + deliveryPoint);
 						}else{
 							addElement(elements, "textLine", deliveryPoint);
 						}
