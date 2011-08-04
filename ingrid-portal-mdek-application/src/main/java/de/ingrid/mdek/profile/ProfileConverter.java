@@ -180,10 +180,7 @@ public class ProfileConverter {
                     + "\", createDomTextbox({"+addGeneralParameter(control)+", style:\"width:" + control.getWidth() + control.getWidthUnit() + "\"}));");
         } else {
             out.println("addToSection(\"" + rubricId
-                    + "\", createDomTextarea({id:\"" + control.getId() + "\",name:\""
-                    + control.getLabel().get(this.language) + "\", help:\""
-                    + control.getHelpMessage().get(this.language) +"\", style:\"width:" + control.getWidth()
-                    + control.getWidthUnit() + "\", rows:"+control.getNumLines()+height+"}));");
+                    + "\", createDomTextarea({"+addGeneralParameter(control)+", style:\"width:" + control.getWidth() + control.getWidthUnit() + "\", rows:"+control.getNumLines()+height+"}));");
         }
     }
     

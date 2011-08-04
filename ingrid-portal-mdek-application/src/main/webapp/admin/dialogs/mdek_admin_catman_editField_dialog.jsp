@@ -321,7 +321,7 @@
                 data.unit = {};
                 
                 //data.type = dijit.byId("formType").get('value');
-                data.id = dijit.byId("formId").get('value');
+                data.id = dojo.trim(dijit.byId("formId").get('value'));
                 data.isMandatory = dijit.byId("formMandatory").get("checked");
                 data.isVisible = dijit.byId("formVisibility").get("value").visible;
                 // get localized values

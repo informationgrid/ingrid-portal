@@ -425,7 +425,10 @@
             
                     user.groupIds = groudIds;
                     user.role = currentSelectedUser.role[0];
-                    user.parentUserId = currentSelectedUser.parentUserId+"";
+                    user.parentUserId = currentSelectedUser.parentUserId == undefined ? undefined : currentSelectedUser.parentUserId+"";
+                    
+                    console.debug("newUser:");
+                    console.debug(user);
                     
                     SecurityService.storeUser(oldUser, user, login, true, {
                         preHook: showLoadingZone,

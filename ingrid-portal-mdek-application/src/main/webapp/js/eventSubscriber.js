@@ -2817,7 +2817,10 @@ igeEvents.setSelectedClass = function(/* name of the object class/address type *
         
         // change general address label
         setGeneralAddressLabel(true);
-
+        
+        // after an object is loaded or class was changed we need to run external actions if any
+        dojo.publish("/onInspireTopicChange", [{topics: UtilList.tableDataToList(dijit.byId("thesaurusInspire").getData())}]);
+        
     } else if (isObjectClass) {
         UtilUI.setRequiredState(dojo.byId("uiElement3500"), false);
         // DO NOT HIDE to avoid vanishing field ...

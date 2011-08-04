@@ -530,7 +530,7 @@ function addSurroundingContainer(/*DomNode*/nodeToInsert, additionalField, type)
     
     // Create dom nodes
     var uiElementSpan = document.createElement("span");
-    dojo.addClass(uiElementSpan, "outer additional");
+    dojo.addClass(uiElementSpan, "outer additional content");
     uiElementSpan.id = "uiElementAdd" + additionalField.id;
    
     // mark field as additional for easier saving data

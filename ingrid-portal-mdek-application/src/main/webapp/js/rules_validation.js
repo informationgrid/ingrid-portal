@@ -259,6 +259,7 @@ function communicationValidation() {
             var anyEmail = dojo.some(UtilGrid.getTableData("addressCom"), function(item){
                 return (item.medium == email &&
                 typeof(item.value) != "undefined" &&
+                item.value != null &&
                 dojo.trim(item.value).length != 0);
             });
             
