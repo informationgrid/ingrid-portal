@@ -380,7 +380,7 @@ div.portlet div.section-header span.portlet_info { float:right; color: #000000;f
 div.portlet div.section-header a { color: #000000;}
 /* because of problems in IE rendering underline and background ! */
 div#marginal_header a:hover, div#marginal_header a:focus { text-decoration: none; }
-div#marginal_header a:hover, div#marginal_header a:focus, div#marginal_header a:active, div#marginal_header a:visited { background:#176798; }
+div#marginal_header a:hover, div#marginal_header a:focus, div#marginal_header a:active, div#marginal_header a:visited { text-decoration: underline; }
 
 div.portlet div.portlet-section-body { position:relative;padding: 0.625em 0.875em; margin:0; border-left: solid #DFC7A7 1px; border-bottom: solid #DFC7A7 1px; border-right: solid #DFC7A7 1px; border-top: solid #DFC7A7 1px; }
 
