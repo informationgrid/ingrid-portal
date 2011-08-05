@@ -1,0 +1,60 @@
+#* include service navigation component *#
+#macro (includeFooterNavigation)
+	<a href="/ingrid-portal/portal/disclaimer.psml" title="$MESSAGES.getString('footer.disclaimer')">$MESSAGES.getString('footer.disclaimer')</a>
+	|
+	<a href="/ingrid-portal/portal/privacy.psml" title="$MESSAGES.getString('footer.privacy.policy')">$MESSAGES.getString('footer.privacy.policy')</a>
+	|
+	<a href="mailto:webmaster@portalu.de" title="$MESSAGES.getString('footer.webmaster')">$MESSAGES.getString('footer.webmaster')</a>
+#end
+
+</div>
+<div class="clearer"></div>
+<div id="footermarginalcontainer">
+  <div id="footermarginal">
+    <!-- portlets go here -->
+  &nbsp;
+  </div>
+</div>
+<div class="clearer"></div>
+
+<!-- footer block -->
+<div id="footercontainer">
+  <div id="footercontent">
+    <!-- portlets go here -->
+#includeFooterNavigation()
+<br />
+    $MESSAGES.getString('footer.copyright')<br />
+
+    $MESSAGES.getString('footer.rights')<br /><br />
+  </div>
+</div>
+
+</div>
+
+#if($piwik != "")
+<!--  END: layout/html/portalu/decorator.vm -->
+<!-- Piwik -->
+<script type="text/javascript">
+	var pkBaseURL = '${piwik}';
+	var piwikTracker;
+	var host = location.host; 
+		
+	document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+	
+	try {
+		piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+		piwikTracker.trackPageView();
+		piwikTracker.enableLinkTracking();
+	} catch( err ) {
+	}
+</script>
+<noscript>
+	<p>
+		<img src="http://portalu.de/piwik/piwik.php?idsite=1" style="border:0" alt=""/>
+	</p>
+</noscript>
+<!-- End Piwik Tag -->
+#end
+
+</body>
+</html>
