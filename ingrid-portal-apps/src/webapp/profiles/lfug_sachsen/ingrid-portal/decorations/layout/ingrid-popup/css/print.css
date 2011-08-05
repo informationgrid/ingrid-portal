@@ -10,8 +10,11 @@
 *********************************************************************/
 
 body { padding: 0; margin: 0; color: #000000; background-color: #FFFFFF; font: normal 100% Verdana, Arial, sans-serif; line-height: 120%; }
+body.claro { font-size: 16px; }
 
 img { border:0; }
+/*Need for NUMIS profile*/
+img.image_alt {}
 span.icon { padding-top: 0.25em; width:12px; vertical-align:top;}
 span.icon_udk { margin-right:6px; margin-top:2px; float:left; width:21px; height:14px; }
 /* no float for detail page in OPERA */
@@ -42,7 +45,7 @@ h1 { font-family: Verdana, Arial, Helvetica, sans-serif ; font-size:105%; font-w
 h2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:90%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
 h3 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:80%; line-height:120%; font-weight:bold; margin-top:0.4em; margin-bottom:0.3em; }
 
-table.border { border-collapse:collapse;}
+table.border, body table { border-collapse:collapse;}
 table.fullwidth { width:100%; }
 th {font-size: 75%; vertical-align:top; padding-left:5px;padding-right:5px;}
 td {font-size: 75%; vertical-align:top; padding-left:5px;padding-right:5px;}
@@ -192,7 +195,7 @@ div#results_right { float:left; width:26.6458em; margin: 0px 0px 0 2.625em; }
 ***/
 
 /* full width content area styles */
-div#content_full { float:left; width:55.5625em; }
+div#content_full { float:left; width:55.5625em; padding: 0 0 20px;}
 div#content_full .clearer { clear:both; display:block; height:1px; line-height:0px; font-size:1px; margin:0; padding:0; }
 
 
@@ -603,43 +606,21 @@ img.section_show_hide { padding-right:16px; padding-top:5px; }
 * Dojo Tabs CSS style 
 *******************************************/
 
-div.dijitTabContent { }
-div.dijitLayoutContainer { border-bottom: 1px solid #FFFFFF; }
-div.dijitTabListWrapper { background-color: #E0EED9; padding: 0 5px; }
-div.dijitTabListContainer-top { background-color: #E0EED9; }
-div.dijitTabContainerTop-tabs .dijitTabContent { background-image: url("") !important; background-color: #E0EED9; border:1px none; height: 26px !important; padding: 3px 8px 3px 4px !important; font-size: 75%;}
-div.dijitTabContainerTop-tabs .dijitTabContent:hover { }
-div.dijitTabContainerTop-tabs .dijitChecked .dijitTabContent { background-color: #539755; }
-span.tabLabel { font-weight:bold;  padding: 10px 10px 0px; vertical-align: text-top; }
-div.dijitChecked .tabLabel { color: #FFFFFF; }
-div.dijitTabContent { }
-div.dijitTabContainerBottom-container, .dijitTabContainerTop-container, .dijitTabContainerLeft-container, .dijitTabContainerRight-container { border: 0px solid black; }
-div.dijitTabContainerTop-tabs .dijitTab { padding-top:0px !important;  margin:0px !important; }
-div.dijitTabContainerTop-tabs .dijitTab .dijitTabContent { height:22px; }
-div.dijitTabContainerTop-tabs .dijitTab .dijitTabContent:hover { color: #FFFFFF; border-bottom: medium solid #000000; background-color: #539755; }
-div.dijitTabContainerTop-tabs .dijitTabChecked .dijitTabContent { color: #FFFFFF; border-bottom: medium solid #FFFFFF; height:22px; }
-div.dijitTabContainerTop-tabs .dijitTabChecked .dijitTabContent:hover { color: #FFFFFF; border-bottom: medium solid #FFFFFF; }
-div.dijitTabContainerTop-tabs { border-bottom: 0; margin: 0; }
-div.dijitTabListContainer-top .tabStripButtonDisabled, .claro .dijitTabListContainer-bottom .tabStripButtonDisabled { background-color: #E0EED9 !important; }
-div.dijitTabListContainer-top .tabStripButton { background: transparent !important; border-bottom: medium solid #000000; }
-div.dijitTabListContainer-top .tabStripButton:hover { background: #539755 !important;  }
-div.dijitTabContent .dijitTabStripIcon { background-image: url("../images/buttonArrows.png"); background-color: transparent;}
-div.dijitTabContainerTop .tabStripButton { background-color: #E0EED9; border: 1px solid transparent !important; margin-top: 0px !important; }
-div.dijitTabContainerTop .tabStripButton:hover { }
-div.contentTab { clear:both; padding: 0px  0px 10px 0px !important;}
+div.dijitTab:hover { display:none; }
+div.dijitTab:hover div {display:none; }
+div.dijitTab { display:none; }
+div.dijitTab div { display:none; }
+div.dijitTab.current { display:none;}
+div.dijitTab.current div { display:none; }
+div.dijitLayoutContainer { overflow: visible; }
+div.contentTab { display:block !important; padding: 0 !important; }
+div.dijitTabContainerBottom-container, .dijitTabContainerTop-container, .dijitTabContainerLeft-container, .dijitTabContainerRight-container { border : 0 !important; overflow: visible;}
+div.claro .dijitTabPaneWrapper, .claro .dijitTabContainerTop-tabs, .claro .dijitTabContainerBottom-tabs, .claro .dijitTabContainerLeft-tabs, .claro .dijitTabContainerRight-tabs { border: 0; }
 
-td.dijitMenuItemIconCell { min-width: 0; }
-td.dijitMenuArrowCell { min-width: 0; } 
-td.dijitMenuItemLabel { font-size:70%; }
-.claro .dijitMenuActive .dijitMenuItemHover, .claro .dijitMenuActive .dijitMenuItemSelected { background-color: #E0EED9; }
-div.section .content { padding: 0px 0px 20px 0px; }
-.claro { font-size:100% !important; }
-.claro .tabStripButton .dijitTabInnerDiv { padding: 5px 0 0; }
 /******************************************
 Print view of detail view
 *******************************************/
 div#detail_background span.print_clearer { background:#E0EED9; clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px; display:none !important; }
-H1.print_title { background-color:#E0EED9; color:#000000; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height:25px; display:none !important; }
-div.dojoTabPaneWrapper { border : 0px solid #6290d2; _zoom: 1; /* force IE6 layout mode so top border doesnt disappear */ display: block; clear: both; overflow: hidden; }
-br.print {display:none;}
-.print_view_visible { visibility:hidden; }
+H1.print_title { background-color:#E0EED9; color:#000000; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height: 25px; display:block; font-size:13px; border-bottom:1px solid #FFFFFF; } 
+br.print {clear:both;}
+.print_view_hidden { visibility:hidden; }
