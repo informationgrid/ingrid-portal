@@ -604,22 +604,22 @@ img.section_show_hide { padding-right:16px; padding-top:5px; }
 * Dojo Tabs CSS style 
 *******************************************/
 
-div.dijitTabContent { }
+div.dijitTabContent { color: #000000;  height:26px; }
 div.dijitLayoutContainer { border-bottom: 1px solid #FFFFFF; }
 div.dijitTabListWrapper { background-color: #E0EED9; padding: 0 5px; }
 div.dijitTabListContainer-top { background-color: #E0EED9; }
-div.dijitTabContainerTop-tabs .dijitTabContent { background-image: url("") !important; background-color: #E0EED9; border:1px none; height: 26px !important; padding: 3px 8px 3px 4px !important; font-size: 75%;}
+div.dijitTabContainerTop-tabs { }
+div.dijitTabContainerTop-tabs .dijitTabContent { background-image: url("") !important; background-color: #E0EED9; border:1px none; padding: 3px 8px 3px 4px !important; font-size: 75%;}
 div.dijitTabContainerTop-tabs .dijitTabContent:hover { }
 div.dijitTabContainerTop-tabs .dijitChecked .dijitTabContent { background-color: #539755; }
-span.tabLabel { font-weight:bold;  padding: 10px 10px 0px; vertical-align: text-top; }
+span.tabLabel { font-weight:bold;  padding: 0 10px 0; vertical-align: middle; }
 div.dijitChecked .tabLabel { color: #FFFFFF; }
-div.dijitTabContent { }
 div.dijitTabContainerBottom-container, .dijitTabContainerTop-container, .dijitTabContainerLeft-container, .dijitTabContainerRight-container { border: 0px solid black; }
 div.dijitTabContainerTop-tabs .dijitTab { padding-top:0px !important;  margin:0px !important; }
-div.dijitTabContainerTop-tabs .dijitTab .dijitTabContent { height:22px; }
-div.dijitTabContainerTop-tabs .dijitTab .dijitTabContent:hover { color: #FFFFFF; border-bottom: medium solid #000000; background-color: #539755; }
-div.dijitTabContainerTop-tabs .dijitTabChecked .dijitTabContent { color: #FFFFFF; border-bottom: medium solid #FFFFFF; height:22px; }
-div.dijitTabContainerTop-tabs .dijitTabChecked .dijitTabContent:hover { color: #FFFFFF; border-bottom: medium solid #FFFFFF; }
+div.dijitTabContainerTop-tabs .dijitTab .dijitTabInnerDiv .dijitTabContent { color: #000000; border-bottom: medium solid transparent; }
+div.dijitTabContainerTop-tabs .dijitTab .dijitTabInnerDiv .dijitTabContent:hover { color: #FFFFFF; border-bottom: medium solid #000000; background-color: #539755; }
+div.dijitTabContainerTop-tabs .dijitTabChecked .dijitTabInnerDiv .dijitTabContent { color: #FFFFFF; border-bottom: medium solid #FFFFFF !important; }
+div.dijitTabContainerTop-tabs .dijitTabChecked .dijitTabInnerDiv .dijitTabContent:hover { color: #FFFFFF; border-bottom: medium solid #FFFFFF; }
 div.dijitTabContainerTop-tabs { border-bottom: 0; margin: 0; }
 div.dijitTabListContainer-top .tabStripButtonDisabled, .claro .dijitTabListContainer-bottom .tabStripButtonDisabled { background-color: #E0EED9 !important; }
 div.dijitTabListContainer-top .tabStripButton { background: transparent !important; border-bottom: medium solid #000000; }
@@ -636,6 +636,7 @@ td.dijitMenuItemLabel { font-size:70%; }
 div.section .content { padding: 0px 0px 20px 0px; }
 .claro { font-size:100% !important; }
 .claro .tabStripButton .dijitTabInnerDiv { padding: 5px 0 0; }
+div.dijitTabInnerDiv { background: #FFFFFF; }
 /******************************************
 Print view of detail view
 *******************************************/
