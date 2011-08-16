@@ -23,7 +23,7 @@
     <groupId>de.ingrid.portal</groupId>
     <description>PortalU Portlets Container</description>
     <shortDescription>PortalU Portlets Container</shortDescription>
-    <currentVersion>3.0.1.1</currentVersion>
+    <currentVersion>3.1.0-SNAPSHOT</currentVersion>
     <dependencies>
         <dependency>
             <groupId>portlet-api</groupId>
