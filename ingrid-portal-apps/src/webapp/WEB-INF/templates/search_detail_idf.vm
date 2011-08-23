@@ -371,10 +371,10 @@
 #end
 
 ## Render title
-#macro (renderTitle $entry)
-	<h1>$entry</h1>
-	<span class="clearer"></span>
-#end
+##macro (renderTitle $entry)
+##	<h1>$entry</h1>
+##	<span class="clearer"></span>
+##end
 
 ## Render title
 #macro (renderTitleHeader $entry)

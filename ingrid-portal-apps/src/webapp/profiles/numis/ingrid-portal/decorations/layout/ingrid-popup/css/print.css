@@ -515,10 +515,10 @@ div.formbody .snslogo_margin {margin-top: 8px; }
 div#footercontainer { background: url(../images/logo-numis_footer.png) no-repeat scroll 20px 0px transparent; }
 #footercontent { font-size: 11px; width:747px; margin-left:108px;}
 
-div#footermarginalcontainer { width: 855px; margin-top: 25px; margin-bottom: 20px; padding: 0px; background: #FFFFFF; }
-div#footermarginal { background:url("../images/footer_doppellinie.png") repeat-x scroll 0 0 transparent; height:2px; }
+div#footermarginalcontainer { width: 855px; margin-top: 25px; margin-bottom: 20px; padding: 0px; background: #FFFFFF; clear:both; }
+div#footermarginal { background:url("../images/footer_doppellinie.png"); height:2px; }
 
-div#finalfootercontainer { float: left; width: 59.5em; }
+div#finalfootercontainer { width: 59.5em; }
 div#finalfooter { padding-left:212px; padding-bottom:20px; padding-top:0px; height:11px; font-size:65%; line-height:120%; color:#000000; }
 
 /********************************************************************
@@ -549,13 +549,13 @@ span.clearer_gray { background: #DDDDDD; height:2px; font-size: 1px; display:blo
 span.clearer_gray_small { background: #DDDDDD; height:1px; font-size: 1px; display:block; }
 span.clearer_dark_gray	{ background: #BBBBBB; height:1px; font-size: 1px; display:block; }
 
-div#detail_background span.clearer { background-image:url("../images/background_subnav.png"); clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px; visibility:hidden; }
+div#detail_background span.clearer { background-image:url("../images/background_subnav.png"); clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px; }
 div#header_title { background:#F6F6F6; padding: 20px 13px 0px; }
 div#header_title span.clearer{ display:block; background:#F6F6F6; height:10px; border:0px; }
 div.header_div { margin-top:0; font-size:75%;color: #777777; }
 div.header_div span.smaller {font-size: 83%}
 h1.detail_title_header { padding-bottom:0px; }
-div.detail_section_title { background:#E0003C; width:100%; height:25px; margin-bottom:20px; }
+div.detail_section_title { background:#EEEEEE; width:100%; height:25px; margin-bottom:20px; }
 div.detail_margin_right { margin-right:10px; padding-bottom:10px; }
 div.detail_margin_left { margin-left:10px; padding-bottom:10px; }
 
@@ -583,7 +583,7 @@ td.detail_image_td	{ vertical-align:middle; text-align:center; background:#EEEEE
 td.detail_image_descr_td { background:#EEEEEE; height:73px; width:433px; border-top:6px solid #FFFFFF; vertical-align:text-top; }
 div.table_div { padding: 0 10px 10px; }
 
-H1.section_title { background:#E0003C; color:#FFFFFF; font-size:75%; font-weight:bold; line-height:22px; margin-top:0; padding-left:13px; }
+H1.section_title { background:#EEEEEE; color:#777777; font-size:75%; font-weight:bold; line-height:22px; margin-top:0; padding-left:13px; }
 H2.group_title { background:#EEEEEE; color:#777777; font-size:75%; font-weight:normal; line-height:22px; margin-top:0; padding-left:13px;}
 H1.no_script_title { background:#68A5D2; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height:25px;} 
 
@@ -646,7 +646,6 @@ div.claro .dijitTabPaneWrapper, .claro .dijitTabContainerTop-tabs, .claro .dijit
 Print view of detail view
 *******************************************/
 div#detail_background span.print_clearer { background-color:#DDE9BD; clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px; display:none !important; }
-H1.print_title { background-color:#68A5D2; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height:25px; display:none !important; }
-div.dojoTabPaneWrapper { border : 0px solid #6290d2; _zoom: 1; /* force IE6 layout mode so top border doesnt disappear */ display: block; clear: both; overflow: hidden; }
+H1.print_title { background-color:#E0003C; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height:25px; display:block; font-size:13px; border-bottom:1px solid #FFFFFF; }
 br.print {display:none;}
-.print_view_visible { visibility:hidden; }
+.print_view_visible { visibility:none; }
