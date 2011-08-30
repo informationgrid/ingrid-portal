@@ -259,7 +259,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         
         try {
             if (log.isDebugEnabled()) {
-                log.debug("iBus.getDetails: hits = " + results + ", requestedFields = " + requestedFields);
+                log.debug("iBus.getDetails: IngridQuery = '" + UtilsSearch.queryToString(query)
+                		+ "', hits = " + results + ", requestedFields = " + requestedFields);
             }
             long start = System.currentTimeMillis();
             details = bus.getDetails(results, query, requestedFields);

@@ -191,7 +191,11 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                 }
             }
             results = hits.getHits();
+
+            // for details also add filter of topic type for SNS
+            query.put("filter", "/event");
             details = ibus.getDetails(results, query, null);
+
             if (details == null) {
                 if (log.isErrorEnabled()) {
                     log.error("Problems getting details of hits ! hits = " + results + ", details = " + details);
@@ -202,13 +206,18 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                 for (int i = 0; i < results.length; i++) {
                     try {
                         topic = (Topic) results[i];
-                        detail = (DetailedTopic) details[i];
+                        boolean isDetailedTopic = false;
+                        if (details[i] != null) {
+                        	isDetailedTopic = DetailedTopic.class.isAssignableFrom(details[i].getClass());
+                        }
                         
                         // skip NULL entries
-                        if (detail == null || topic == null) {
+                        // and also plain IngridHitDetail (returned if topics details cannot be found) !
+                        if (!isDetailedTopic || topic == null) {
                         	continue;
                         }
 
+                        detail = (DetailedTopic) details[i];
                         topic.put("title", detail.getTopicName());
 
                         String searchData = (String) detail.get(DetailedTopic.ASSOCIATED_OCC);
