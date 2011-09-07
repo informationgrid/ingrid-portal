@@ -47,7 +47,7 @@ dojo.connect(_container_, "onLoad", function() {
     dojo.connect(dojo.byId("thesaurusSearch"), "onkeypress",
         function(event) {
             if (event.keyCode == dojo.keys.ENTER) {
-                findTopic();
+                scriptScopeResearchTh.findTopic();
             }
 	});
 
@@ -237,7 +237,7 @@ scriptScopeResearchTh.topicLabelClicked = function(topicId) {
 //
 // This function reads the value of the TextBox 'thesSearch' and expands the tree from the root
 // to the corresponding node
-function findTopic() {
+scriptScopeResearchTh.findTopic = function() {
 	var queryTerm = dojo.trim(dijit.byId("thesaurusSearch").getValue());
 
 	if (queryTerm.length == 0) {
