@@ -111,6 +111,14 @@
                         if (type == "selectControl") {
                             scriptScope.prepareSelectOptions(profileObjectToEdit);
                             dojo.removeClass("span_formListOptions", "hide");
+                            // remember last selected tab delayed, needed if text was entered 
+                            // without hitting enter but switching tab
+                            scriptScope.lastSelectedTab = scopeAdminFormFields.profileData.languages[0];
+                            dojo.connect(dijit.byId("formListOptions"),"selectChild", this, function(child){
+                                setTimeout(function() {
+                                    scriptScope.lastSelectedTab = dijit.byId("formListOptions").selectedChildWidget.title;
+                                }, 100);
+                            });
                         }
                         // fall through!
                     case "numberControl":
@@ -187,7 +195,7 @@
                 syncRowsInTableProgress = true;
                 //console.debug("sync rows");
                 // get active tab for language of new item
-                var activelang = dijit.byId("formListOptions").selectedChildWidget.title;
+                var activelang = scriptScope.lastSelectedTab;//dijit.byId("formListOptions").selectedChildWidget.title;
                 var newId = getNewId(UtilGrid.getTableData("formListOptions_"+activelang));
                 msg.item.id = newId;
                 msg.item.lang = activelang;
