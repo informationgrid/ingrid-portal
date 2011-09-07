@@ -444,7 +444,7 @@
 	"ui.toolbar.DiscardCaption":"Änderungen am aktuellen Objekt/Adresse verwerfen",
 	"ui.toolbar.reassignCaption":"An Bearbeiter rücküberweisen",
 	"ui.toolbar.assignToQaCaption":"An QS überweisen",
-	"ui.toolbar.FinalSaveCaption":"Abschließendes Speichern",
+	"ui.toolbar.FinalSaveCaption":"Abschließendes Speichern & Veröffentlichen",
 	"ui.toolbar.markDeletedCaption":"Als gelöscht markieren",
 	"ui.toolbar.DelSubTreeCaption":"Ausgewähltes Objekt/Teilbaum löschen",
 	"ui.toolbar.ShowChangesCaption":"Änderungen anzeigen",

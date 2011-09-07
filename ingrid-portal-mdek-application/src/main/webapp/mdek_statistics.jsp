@@ -814,12 +814,12 @@ function hideLoadingZone() {
                         <!-- MAIN TAB 1 START -->
                         <div id="statsObjectsAdr" dojoType="dijit.layout.ContentPane" title="<fmt:message key="dialog.statistics.objAdr" />" class="tab" style="overflow:hidden;">
                             <div class="tableContainer" style="padding-bottom:20px;">
-                                <div id="statsObjectsTable" autoHeight="8" contextMenu="none">
+                                <div id="statsObjectsTable" autoHeight="8" contextMenu="none" defaultHideScrollbar="true">
                                 </div>
                             </div>
                             <!-- end tableContainer -->
                             <div class="tableContainer">
-                                <div id="statsAdrTable" autoHeight="5" contextMenu="none">
+                                <div id="statsAdrTable" autoHeight="5" contextMenu="none" defaultHideScrollbar="true">
                                 </div>
                             </div>
                             <!-- end tableContainer -->
@@ -840,7 +840,7 @@ function hideLoadingZone() {
                                 </div>
                             </div>
                             <div class="tableContainer" style="padding-bottom:20px;">
-                                <div id="statsFreeTermsObjTable" autoHeight="11" contextMenu="none">
+                                <div id="statsFreeTermsObjTable" autoHeight="11" contextMenu="none" defaultHideScrollbar="true">
                                 </div>
                             </div>
                             <!-- tableContainer -->
@@ -855,7 +855,7 @@ function hideLoadingZone() {
                                 </div>
                             </div>
                             <div class="tableContainer">
-                                <div id="statsFreeTermsAdrTable" autoHeight="11" contextMenu="none">
+                                <div id="statsFreeTermsAdrTable" autoHeight="11" contextMenu="none" defaultHideScrollbar="true">
                                 </div>
                             </div>
                             <!-- tableContainer -->
@@ -874,7 +874,7 @@ function hideLoadingZone() {
                                 </div>
                             </div>
                             <div class="tableContainer" style="padding-bottom:20px;">
-                                <div id="statsThesTermsObjTable" autoHeight="11" contextMenu="none">
+                                <div id="statsThesTermsObjTable" autoHeight="11" contextMenu="none" defaultHideScrollbar="true">
                                 </div>
                             </div>
                             <div class="listInfoStatistics">
@@ -888,7 +888,7 @@ function hideLoadingZone() {
                                 </div>
                             </div>
                             <div class="tableContainer">
-                                <div id="statsThesTermsAdrTable" autoHeight="11" contextMenu="none">
+                                <div id="statsThesTermsAdrTable" autoHeight="11" contextMenu="none" defaultHideScrollbar="true">
                                 </div>
                             </div>
                             <!-- tableContainer -->

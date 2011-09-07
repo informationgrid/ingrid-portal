@@ -38,7 +38,8 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
 	    multiSelect: true,
 	    visibleRowsInViewport: 4,
 	    enableMoveRows: false,
-        forceGridHeight: true
+        forceGridHeight: true,
+        defaultHideScrollbar: false
 	},
     editorLock: new ingrid.dijit.EditorLock(),
 	
@@ -170,7 +171,11 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
         this.headers = dojo.create("div", {'class': 'slick-header-columns', style: {width:"10000px", left:"-1000px"}}, this.headerScroller);
         
         //this.viewport = dojo.create("div", {'class': 'slick-viewport', tabIndex:'0', hideFocus: "", style:{width:"100%", overflow:"auto", outline:"0",position:"relative"}}, this.container);
-        this.viewport = dojo.create("div", {'class': 'slick-viewport', tabIndex:'0', hideFocus: "", style:{width:"100%", overflowY:"scroll", overflowX:"auto", outline:"0",position:"relative"}}, this.container);
+        if (this.options.forceGridHeight && !this.options.defaultHideScrollbar) {
+            this.viewport = dojo.create("div", {'class': 'slick-viewport', tabIndex:'0', hideFocus: "", style:{width:"100%", overflowY:"scroll", overflowX:"auto", outline:"0",position:"relative"}}, this.container);
+        } else {
+            this.viewport = dojo.create("div", {'class': 'slick-viewport', tabIndex:'0', hideFocus: "", style:{width:"100%", overflowY:"auto", overflowX:"auto", outline:"0",position:"relative"}}, this.container);
+        }
         this.canvas = dojo.create("div", {'class': 'grid-canvas', tabIndex:'0', hideFocus: ""}, this.viewport);
         
         // header columns and cells may have different padding/border skewing width calculations (box-sizing, hello?)

@@ -284,7 +284,7 @@ function hideAddressLoadingZone() {
               </div>
     
               <div class="tableContainer">
-                  <div id="objectSearchResults" autoHeight="10" contextMenu="none"></div>
+                  <div id="objectSearchResults" autoHeight="10" contextMenu="none" defaultHideScrollbar="true"></div>
                </div>
               </div>
             <!-- OBJECT SEARCH RESULT LIST END -->
@@ -325,7 +325,7 @@ function hideAddressLoadingZone() {
               </div>
     
               <div class="tableContainer">
-                  <div id="addressSearchResults" autoHeight="10" contextMenu="none"></div>
+                  <div id="addressSearchResults" autoHeight="10" contextMenu="none" defaultHideScrollbar="true"></div>
                 </div>
               </div>
             <!-- ADDRESS SEARCH RESULT LIST END -->

@@ -337,7 +337,7 @@ function hideLoadingZone() {
               </div>
 
 				<div class="tableContainer">
-				    <div id="searchThesaurusNavObjectsList" autoHeight="22" contextMenu="none"></div>
+				    <div id="searchThesaurusNavObjectsList" autoHeight="22" contextMenu="none" defaultHideScrollbar="true"></div>
                 </div>
           	</div>
             <!-- TAB 1 END -->
@@ -351,7 +351,7 @@ function hideLoadingZone() {
               </div>
 
 				<div class="tableContainer">
-				    <div id="searchThesaurusNavAddressesList" autoHeight="22" contextMenu="none"></div>
+				    <div id="searchThesaurusNavAddressesList" autoHeight="22" contextMenu="none" defaultHideScrollbar="true"></div>
                 </div>
           	</div>
             <!-- TAB 2 END -->

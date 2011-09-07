@@ -182,7 +182,7 @@ ingridObjectLayout.createFachBezugClass1 = function(){
     
     var ref1Structure = [
 	   {field: 'icon',name: 'icon',width: '23px'}, 
-	   {field: 'linkLabel',name: 'linkLabel',width: 685-scrollBarWidth-12+'px'}
+	   {field: 'linkLabel',name: 'linkLabel',width: 685-scrollBarWidth-2+'px'}
 	];
     createDataGrid("ref1BasisLink", null, ref1Structure, null);
     
@@ -230,7 +230,7 @@ ingridObjectLayout.createFachBezugClass1 = function(){
     }, {
         field: 'numElements',
         name: message.get("ui.obj.type1.vectorFormat.detailsTable.header.elementCount"),
-        width: 330-scrollBarWidth+'px',
+        width: 328-scrollBarWidth+'px',
         editable: true
     }];
     createDataGrid("ref1VFormatDetails", null, ref1VFormatDetailsStructure, null);
@@ -254,17 +254,20 @@ ingridObjectLayout.createFachBezugClass1 = function(){
         field: 'scale',
         name: message.get("ui.obj.type1.scaleTable.header.scale"),
         width: '105px',
-        editable: true
+        editable: true,
+        type: DecimalCellEditor, widgetClass: dijit.form.NumberTextBox, formatter: LocalizedNumberFormatter
     }, {
         field: 'groundResolution',
         name: message.get("ui.obj.type1.scaleTable.header.groundResolution"),
         width: '285px',
-        editable: true
+        editable: true,
+        type: DecimalCellEditor, widgetClass: dijit.form.NumberTextBox, formatter: LocalizedNumberFormatter
     }, {
         field: 'scanResolution',
         name: message.get("ui.obj.type1.scaleTable.header.scanResolution"),
         width: 318-scrollBarWidth+'px',
-        editable: true
+        editable: true,
+        type: DecimalCellEditor, widgetClass: dijit.form.NumberTextBox, formatter: LocalizedNumberFormatter
     }];
     createDataGrid("ref1Scale", null, ref1ScaleStructure, null);
     
@@ -291,7 +294,7 @@ ingridObjectLayout.createFachBezugClass1 = function(){
         	editable: true,
             formatter: DateCellFormatter
     	}, 
-		{field: 'version',name: message.get("ui.obj.type1.symbolCatTable.header.version"),width: 153-scrollBarWidth-12+'px',editable: true/*!!!, formatter: emptyOrNullValidation*/}];
+		{field: 'version',name: message.get("ui.obj.type1.symbolCatTable.header.version"),width: 153-scrollBarWidth-2+'px',editable: true/*!!!, formatter: emptyOrNullValidation*/}];
     createDataGrid("ref1SymbolsText", null, ref1SymbolsTextStructure, null);
     
     var tabSymbolsTab2 = new dijit.layout.ContentPane({
@@ -300,7 +303,7 @@ ingridObjectLayout.createFachBezugClass1 = function(){
 	
 		var ref1SymbolsLinkStructure = [
 			{field: 'icon',name: 'icon',width: '23px'}, 
-			{field: 'linkLabel',name: 'linkLabel',width: 685-scrollBarWidth-12+'px'}
+			{field: 'linkLabel',name: 'linkLabel',width: 685-scrollBarWidth-2+'px'}
 		];
 	    createDataGrid("ref1SymbolsLink", null, ref1SymbolsLinkStructure, null);
     
@@ -335,7 +338,7 @@ ingridObjectLayout.createFachBezugClass1 = function(){
     }, {
         field: 'version',
         name: message.get("ui.obj.type1.keyCatTable.header.version"),
-        width: 153-scrollBarWidth-12+'px',
+        width: 153-scrollBarWidth-3+'px',
         editable: true
     }];
     createDataGrid("ref1KeysText", null, ref1KeysTextStructure, null);
@@ -351,7 +354,7 @@ ingridObjectLayout.createFachBezugClass1 = function(){
     }, {
         field: 'linkLabel',
         name: 'linkLabel',
-        width: 685-scrollBarWidth-12+'px'
+        width: 685-scrollBarWidth-2+'px'
     }];
     createDataGrid("ref1KeysLink", null, ref1KeysLinkStructure, null);
     
@@ -394,7 +397,7 @@ ingridObjectLayout.createFachBezugClass1 = function(){
     }, {
         field: 'linkLabel',
         name: 'linkLabel',
-        width: 685-scrollBarWidth-12+'px'
+        width: 685-scrollBarWidth-2+'px'
     }];
     createDataGrid("ref1DataBasisLink", null, ref1DataBasisLinkStructure, null);
     tabDataBasis.addChild(tabDataBasisTab1);
@@ -431,7 +434,7 @@ ingridObjectLayout.createFachBezugClass1 = function(){
     }, {
         field: 'linkLabel',
         name: 'linkLabel',
-        width: 685-scrollBarWidth-12+'px'
+        width: 685-scrollBarWidth-2+'px'
     }];
     createDataGrid("ref1ProcessLink", null, ref1ProcessLinkStructure, null);
     tabRef1Process.addChild(tabRef1ProcessTab1);
@@ -639,7 +642,7 @@ ingridObjectLayout.createFachBezugClass2 = function(){
     }, {
         field: 'linkLabel',
         name: 'date',
-        width: 325-scrollBarWidth-12+'px'
+        width: 325-scrollBarWidth-2+'px'
     }];
     createDataGrid("ref2LocationLink", null, ref2LocationLinkStructure, null);
     
@@ -672,7 +675,7 @@ ingridObjectLayout.createFachBezugClass2 = function(){
     }, {
         field: 'linkLabel',
         name: 'date',
-        width: 325-scrollBarWidth-12+'px'
+        width: 325-scrollBarWidth-2+'px'
     }];
     createDataGrid("ref2BaseDataLink", null, ref2BaseDataLinkStructure, null);
     
@@ -735,7 +738,7 @@ ingridObjectLayout.createFachBezugClass3 = function(){
 	
 	var ref3BaseDataLinkStructure = [
 		{field: 'icon',name: 'icon',width: '23px'},
-		{field: 'linkLabel',name: 'linkLabel',width: 325-scrollBarWidth-12+'px'}
+		{field: 'linkLabel',name: 'linkLabel',width: 325-scrollBarWidth-2+'px'}
 	];
     createDataGrid("ref3BaseDataLink", null, ref3BaseDataLinkStructure, null);
 
@@ -771,7 +774,7 @@ ingridObjectLayout.createFachBezugClass4 = function(){
 	
 		var ref4ParticipantsLinkStructure = [
 			{field: 'icon',name: 'icon',width: '23px'},
-			{field: 'linkLabel',name: 'linkLabel',width: 325-scrollBarWidth-12+'px'}
+			{field: 'linkLabel',name: 'linkLabel',width: 325-scrollBarWidth-2+'px'}
 		];
 	    createDataGrid("ref4ParticipantsLink", null, ref4ParticipantsLinkStructure, null);
 		
@@ -794,7 +797,7 @@ ingridObjectLayout.createFachBezugClass4 = function(){
 	
 		var ref4ParticipantsLinkStructure = [
 			{field: 'icon',name: 'icon',width: '23px'},
-			{field: 'linkLabel',name: 'linkLabel',width: 325-scrollBarWidth-12+'px'}
+			{field: 'linkLabel',name: 'linkLabel',width: 325-scrollBarWidth-2+'px'}
 		];
 	    createDataGrid("ref4PMLink", null, ref4ParticipantsLinkStructure, null);
 		
@@ -829,7 +832,7 @@ ingridObjectLayout.createFachBezugClass5 = function(){
 	
 		var ref5MethodLinkStructure = [
 			{field: 'icon',name: '&nbsp;',width: '23px'},
-			{field: 'linkLabel',name: 'linkLabel',width: 325-scrollBarWidth-12+'px'}
+			{field: 'linkLabel',name: 'linkLabel',width: 325-scrollBarWidth-2+'px'}
 		];
 	    createDataGrid("ref5MethodLink", null, ref5MethodLinkStructure, null);
 	
@@ -873,7 +876,7 @@ ingridObjectLayout.createFachBezugClass6 = function(){
     
     var ref6BaseDataLinkStructure = [
         {field: 'icon',name: 'icon',width: '23px'},
-        {field: 'linkLabel',name: 'Objekte',width: 325-scrollBarWidth-12+'px'}
+        {field: 'linkLabel',name: 'Objekte',width: 325-scrollBarWidth-2+'px'}
     ];
     console.debug("ref6base");
     createDataGrid("ref6BaseDataLink", null, ref6BaseDataLinkStructure, null);

@@ -26,7 +26,7 @@ dojo.addOnLoad(function() {
 
 function createDomElements(){
     var editorsOverviewTableStructure = [
-       {field: 'type',name: "<fmt:message key='dialog.qa.editor.objectState' />",width: '498px'},
+       {field: 'type',name: "<fmt:message key='dialog.qa.editor.objectState' />",width: '479px'},
        {field: 'obj',name: "<fmt:message key='dialog.qa.objects' />",width: '100px'},
        {field: 'adr',name: "<fmt:message key='dialog.qa.addresses' />",width: '100px;'}
     ];
@@ -461,7 +461,7 @@ scriptScopeQaE.reloadPage = function() {
 						<img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a></span>
 					<div class="spacer"></div>
 					<div class="input infoboxWidth" id="editorsOverviewContent">
-					    <div id="editorsOverviewTable" autoHeight="4" contextMenu="none"></div>
+					    <div id="editorsOverviewTable" autoHeight="4" contextMenu="none" defaultHideScrollbar="true"></div>
 					</div>
 				</div>
 			</div> <!-- inputContainer end -->
@@ -479,7 +479,7 @@ scriptScopeQaE.reloadPage = function() {
 						</div>
 		
 				        <div class="tableContainer">
-				            <div id="expObjTable" autoHeight="10" contextMenu="none"></div>
+				            <div id="expObjTable" autoHeight="10" contextMenu="none" defaultHideScrollbar="true"></div>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
 				</div> <!-- ContentPane end -->
@@ -494,7 +494,7 @@ scriptScopeQaE.reloadPage = function() {
 						</div>
 
 				        <div class="tableContainer">
-				            <div id="expAdrTable" autoHeight="10" contextMenu="none"></div>
+				            <div id="expAdrTable" autoHeight="10" contextMenu="none" defaultHideScrollbar="true"></div>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
 				</div> <!-- ContentPane end -->
@@ -513,7 +513,7 @@ scriptScopeQaE.reloadPage = function() {
 						</div>
 		
 				        <div class="tableContainer">
-				            <div id="modObjTable" autoHeight="10" contextMenu="none"></div>
+				            <div id="modObjTable" autoHeight="10" contextMenu="none" defaultHideScrollbar="true"></div>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
 				</div> <!-- ContentPane end -->
@@ -527,7 +527,7 @@ scriptScopeQaE.reloadPage = function() {
 						</div>
 		
 				        <div class="tableContainer">
-				            <div id="modAdrTable" autoHeight="10" contextMenu="none"></div>
+				            <div id="modAdrTable" autoHeight="10" contextMenu="none" defaultHideScrollbar="true"></div>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
 				</div> <!-- ContentPane end -->
@@ -546,7 +546,7 @@ scriptScopeQaE.reloadPage = function() {
 						</div>
 		
 				        <div class="tableContainer">
-				            <div id="qaObjTable" autoHeight="10" contextMenu="none"></div>
+				            <div id="qaObjTable" autoHeight="10" contextMenu="none" defaultHideScrollbar="true"></div>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
 				</div> <!-- ContentPane end -->
@@ -560,7 +560,7 @@ scriptScopeQaE.reloadPage = function() {
 						</div>
 		
 				        <div class="tableContainer">
-				            <div id="qaAdrTable" autoHeight="10" contextMenu="none"></div>
+				            <div id="qaAdrTable" autoHeight="10" contextMenu="none" defaultHideScrollbar="true"></div>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
 				</div> <!-- ContentPane end -->
@@ -578,7 +578,7 @@ scriptScopeQaE.reloadPage = function() {
 					</div>
 	
 			        <div class="tableContainer">
-			            <div id="spatialObjTable" autoHeight="10" contextMenu="none"></div>
+			            <div id="spatialObjTable" autoHeight="10" contextMenu="none" defaultHideScrollbar="true"></div>
 					</div> <!-- tableContainer end -->
 				</div> <!-- inputContainer end -->
 			</div> <!-- ContentPane end -->

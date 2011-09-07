@@ -254,7 +254,7 @@
                         <div class="fill">
                         </div>
                     </div>
-                    <div id="resultListThesaurusTable" autoHeight="20" contextMenu="none">
+                    <div id="resultListThesaurusTable" autoHeight="20" contextMenu="none" defaultHideScrollbar="true">
                     </div>
                 </div>
                 <!-- TABLE END -->

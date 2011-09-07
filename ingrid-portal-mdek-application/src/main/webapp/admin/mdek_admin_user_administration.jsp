@@ -5,11 +5,11 @@
     <head>
         <script type="text/javascript">
             dojo.require("dijit.form.Select");
-			dojo.require("dijit.form.ValidationTextBox");
+            dojo.require("dijit.form.ValidationTextBox");
             dojo.require("ingrid.dijit.tree.LazyTreeStoreModel");
             dojo.require("ingrid.dijit.CustomTree");
-			var userDataGroupData;
-			
+            var userDataGroupData;
+            
             var scriptScopeUser = _container_;
             
             var currentSelectedAddressId = null;
@@ -26,12 +26,12 @@
                 
                 createCustomTree("treeUser", null, "userId", "title", loadUserData);
                 
-				createGroupLists();
-				
+                createGroupLists();
+                
                 initializeUserTree();
-				
-				// select first user?
-				//tree.attr("path", [tree.rootNode.item, tree.rootNode.getChildren()[0].item]);
+                
+                // select first user?
+                //tree.attr("path", [tree.rootNode.item, tree.rootNode.getChildren()[0].item]);
                 dijit.byId("userDataAddressLink").validator = function() { return (this.getValue() != "" && this.getValue() != "Neuer Benutzer"); };
             });
             
@@ -71,7 +71,7 @@
                         callback_function();
                         //deferred.callback(res);
                     },
-                    //			timeout:10000,
+                    //          timeout:10000,
                     errorHandler: function(message){
                         hideLoadingZone();
                         dialog.show("<fmt:message key='general.error' />", "<fmt:message key='tree.loadError' />", dialog.WARNING);
@@ -124,19 +124,19 @@
                     setTreeRoot(catAdmin);
                 });
                 
-				dojo.connect(dijit.byId("treeUser"), "onClick", treeNodeSelected);
+                dojo.connect(dijit.byId("treeUser"), "onClick", treeNodeSelected);
             }
-			
-			function createGroupLists() {
-				var storeProps = { identifier: 'id', label: "<fmt:message key='dialog.admin.users.name' />" };
-				createSelectBox("userDataGroup",
-					null, 
-					storeProps,
-					null//function(){return UtilSecurity.getAllGroups(includeCatAdminGroup);}
-				);
+            
+            function createGroupLists() {
+                var storeProps = { identifier: 'id', label: "<fmt:message key='dialog.admin.users.name' />" };
+                createSelectBox("userDataGroup",
+                    null, 
+                    storeProps,
+                    null//function(){return UtilSecurity.getAllGroups(includeCatAdminGroup);}
+                );
                 initializeGroupLists(true);
-			}
-			
+            }
+            
             function initializeGroupLists(includeCatAdminGroup){
                 var def = UtilSecurity.getAllGroups(includeCatAdminGroup);
                 
@@ -145,8 +145,8 @@
                     var listUserGroups = [];
                     var groupIdList = currentSelectedUser ? currentSelectedUser.groupIds : [];
                     dojo.forEach(groupList, function(item){
-						// Due to a dojo bug, you cannot use numbers as an id
-						// it won't work when selecting an item! (06.09.2010)
+                        // Due to a dojo bug, you cannot use numbers as an id
+                        // it won't work when selecting an item! (06.09.2010)
                         //list.push({name:item.name, id:item.id+""});
                         if (dojo.indexOf(groupIdList, item.id) != -1) {
                             listUserGroups.push( {"name":item.name, "Id":item.id} );
@@ -154,16 +154,16 @@
                             listAvailableGroups.push( {"name":item.name, "Id":item.id} );
                         }
                     });
-					
+                    
                     UtilGrid.setTableData("availableGroupsList", listAvailableGroups);
                     UtilGrid.setTableData("groupsList", listUserGroups);
                 });
                 
-				console.debug("set valid function");
+                console.debug("set valid function");
                 /*dijit.byId("userDataGroup").isValid = function(){
                     return (this.getValue() != "");
                 };*/
-				console.debug("return from group set");
+                console.debug("return from group set");
                 return def;
             }
             
@@ -578,7 +578,7 @@
             function updateInputElements(treeNode){
             
                 currentSelectedUser = treeNode;
-                
+                dijit.byId("bImportUser").set("disabled", false);
                 if (treeNode.role == 1) {
                     // Standards for catAdmin
                     var def = initializeGroupLists(true);
@@ -586,16 +586,20 @@
                     UtilGrid.updateOption("groupsList", "editable", false);//).disable();
                 }
                 else {
+                    if (treeNode.role == 3) {
+                        dijit.byId("bImportUser").set("disabled", true);
+                    }
                     var def = initializeGroupLists(false);
                     UtilGrid.updateOption("availableGroupsList", "editable", true);//.disable();
                     UtilGrid.updateOption("groupsList", "editable", true);//).disable();
+                    
                 }
                 
                 def.addCallback(function(){
                     dijit.byId("userDataLogin").setValue(treeNode.portalLogin);
                     dijit.byId("userDataAddressLink").setValue(treeNode.title);
                     dijit.byId("userDataRole").setValue(treeNode.roleName);
-					console.debug("set to groupid: " + treeNode.groupId);
+                    console.debug("set to groupid: " + treeNode.groupId);
                     //dijit.byId("userDataGroup").set("value",treeNode.groupId+"");
                     currentSelectedAddressId = treeNode.addressUuid;
                     //currentSelectedUser = treeNode;
@@ -614,23 +618,23 @@
             }
             
             scriptScopeUser.searchForAddress = function(){
-				console.debug("searchForAddress");
+                console.debug("searchForAddress");
                 var def = new dojo.Deferred();
                 dialog.showPage("<fmt:message key='general.searchAddress' />", 'dialogs/mdek_address_dialog.jsp?c='+userLocale, 755, 580, true, {
                     resultHandler: def
                 });
                 
-				def.addCallback(getAddressData);
-				
+                def.addCallback(getAddressData);
+                
                 def.addCallback(function(addressData){
-					// the addressClass of an item in a tree is stored under objectClass
-					// this has to be remapped for further usage
-					/*if (addressData.addressClass == null) {
-						console.debug("modify addressClass");
-						addressData.addressClass = addressData.objectClass;
-						addressData.organisation = addressData.title;
-					}*/
-					console.debug("add address: " + addressData);
+                    // the addressClass of an item in a tree is stored under objectClass
+                    // this has to be remapped for further usage
+                    /*if (addressData.addressClass == null) {
+                        console.debug("modify addressClass");
+                        addressData.addressClass = addressData.objectClass;
+                        addressData.organisation = addressData.title;
+                    }*/
+                    console.debug("add address: " + addressData);
                     currentSelectedAddressId = [addressData.uuid];
                     var title = UtilAddress.createAddressTitle(addressData);
                     dijit.byId("userDataAddressLink").set("value", title);
@@ -684,7 +688,7 @@
                     //preHook: showLoadingZone,
                     //postHook: hideLoadingZone,
                     callback: function(adr){
-						console.debug("got addressData: " + adr);
+                        console.debug("got addressData: " + adr);
                         deferred.callback(adr);
                     },
                     errorHandler: function(errMsg, err){
@@ -760,11 +764,11 @@
                     id: "newUserNode",
                     userId: "newUserNode",
                     parentUserId: parentNode.userId[0],
-                    //		addressUuid: user.addressUuid,
+                    //      addressUuid: user.addressUuid,
                     title: "Neuer Benutzer",
                     role: parentNode.role[0] + 1,
                     roleName: getRoleName(parentNode.role[0] + 1),
-                    //		groupId: parentNode.groupId,
+                    //      groupId: parentNode.groupId,
                     groupIds: UtilList.map(parentNode.groupIds, function(groupId) {if (groupId != administratorGroupId) return groupId}),
                     createRoot: false,
                     portalLogin: login,
@@ -813,7 +817,7 @@
                                         <fmt:message key="dialog.admin.users.delete" />
                                     </button>
                                 </span><span style="float:right;">
-                                    <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.users.create" />" onClick="javascript:scriptScopeUser.importPortalUser();">
+                                    <button dojoType="dijit.form.Button" id ="bImportUser" title="<fmt:message key="dialog.admin.users.create" />" onClick="javascript:scriptScopeUser.importPortalUser();">
                                         <fmt:message key="dialog.admin.users.create" />
                                     </button>
                                 </span>
@@ -839,7 +843,7 @@
                                                 <fmt:message key="dialog.admin.users.login" />
                                             </label>
                                         </span>
-        								<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onClick="javascript:scriptScopeUser.searchForPortalUser();" title="<fmt:message key="dialog.admin.users.searchPortalUser" /> [Popup]"><fmt:message key="dialog.admin.users.searchPortalUser" /></a></span>
+                                        <span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onClick="javascript:scriptScopeUser.searchForPortalUser();" title="<fmt:message key="dialog.admin.users.searchPortalUser" /> [Popup]"><fmt:message key="dialog.admin.users.searchPortalUser" /></a></span>
                                         <span class="input"><input type="text" id="userDataLogin" name="userDataLogin" style="width:100%;" disabled="true" dojoType="dijit.form.ValidationTextBox" /></span>
                                     </div></span>
                                     <span class="outer"><div>
@@ -848,8 +852,8 @@
                                                 <fmt:message key="dialog.admin.users.role" />
                                             </label>
                                         </span>
-        								<span class="input"><input type="text" id="userDataRole" name="userDataRole" style="width:100%;" disabled="true" dojoType="dijit.form.ValidationTextBox" /></span>
-    								</div></span>
+                                        <span class="input"><input type="text" id="userDataRole" name="userDataRole" style="width:100%;" disabled="true" dojoType="dijit.form.ValidationTextBox" /></span>
+                                    </div></span>
                                     
                                     <span class="outer required"><div>
                                         <span class="label">
@@ -857,8 +861,8 @@
                                                 <fmt:message key="dialog.admin.users.address" />*
                                             </label>
                                         </span>
-        								<span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onClick="javascript:scriptScopeUser.searchForAddress();" title="<fmt:message key="dialog.admin.users.searchAddress" /> [Popup]"><fmt:message key="dialog.admin.users.searchAddress" /></a></span>
-    								    <span class="input"><input type="text" id="userDataAddressLink" name="userDataAddressLink" style="width:100%;" disabled="true" dojoType="dijit.form.ValidationTextBox" /></span>
+                                        <span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onClick="javascript:scriptScopeUser.searchForAddress();" title="<fmt:message key="dialog.admin.users.searchAddress" /> [Popup]"><fmt:message key="dialog.admin.users.searchAddress" /></a></span>
+                                        <span class="input"><input type="text" id="userDataAddressLink" name="userDataAddressLink" style="width:100%;" disabled="true" dojoType="dijit.form.ValidationTextBox" /></span>
                                     </div></span>
                                     
                                     <span class="outer" style="width:45%;"><div>

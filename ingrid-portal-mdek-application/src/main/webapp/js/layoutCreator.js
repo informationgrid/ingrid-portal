@@ -135,6 +135,9 @@ function createDataGrid(id, node, structure, initDataCallback, gridProperties, u
                 if (gridProperties.forceGridHeight) {
                 	options.forceGridHeight = gridProperties.forceGridHeight == "true";
                 }
+                if (gridProperties.defaultHideScrollbar) {
+                    options.defaultHideScrollbar = gridProperties.defaultHideScrollbar == "true";
+                }
                 if (gridProperties.moveRows) {
                     options.enableMoveRows = gridProperties.moveRows == "true";
                 }

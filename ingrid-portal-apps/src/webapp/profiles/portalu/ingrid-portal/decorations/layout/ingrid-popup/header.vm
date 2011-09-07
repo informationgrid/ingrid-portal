@@ -89,7 +89,7 @@ self.focus();
 #end
   <!-- LOGO -->
   <div id="logo">
-    <img src="#GetPageResource('images/logo.gif')" width="168" height="60" alt="Logo PortalU" />
+    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img src="#GetPageResource('images/logo.gif')" width="168" height="60" alt="Logo PortalU" /></a>
   </div>
 </div>
 

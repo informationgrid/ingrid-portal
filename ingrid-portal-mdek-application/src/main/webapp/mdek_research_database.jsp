@@ -163,7 +163,7 @@ function hideLoadingZone() {
           </div>
 
 			<div class="tableContainer">
-			    <div id="datbaseSearchResults" autoHeight="20" contextMenu="none"></div>
+			    <div id="datbaseSearchResults" autoHeight="20" contextMenu="none" defaultHideScrollbar="true"></div>
 			</div>
 	   	  </div>
         <!-- SEARCH RESULT LIST END -->

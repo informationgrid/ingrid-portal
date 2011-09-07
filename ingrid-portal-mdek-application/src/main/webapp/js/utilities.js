@@ -10,7 +10,8 @@ var attributeReplacerMap = {
 	onchange: "onChange",
 	contextmenu: "contextMenu",
 	multiselect: "multiSelect",
-	forcegridheight: "forceGridHeight"//,
+	forcegridheight: "forceGridHeight",
+    defaulthidescrollbar: "defaultHideScrollbar"//,
 	//class: "\"class\""
 };
 
@@ -1929,7 +1930,7 @@ UtilThesaurus.parseQueryTerm = function(queryTerm) {
 
 	// Helper function to only add valid terms (no empty strings) to the list 
 	var addTermToResultList = function(term) {
-		var trimmedTerm = dojo.trim(dojo.regexp.escapeString(term));
+		var trimmedTerm = dojo.trim(term);// "." are not transferred correctly when using regex! dojo.regexp.escapeString(term));
 		if (trimmedTerm && trimmedTerm.length != 0) {
 			resultTerms.push(trimmedTerm);
 		}

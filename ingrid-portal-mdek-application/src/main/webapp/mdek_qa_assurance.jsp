@@ -441,7 +441,7 @@ scriptScopeQaA.reloadPage = function() {
 						</div>
 		
 				        <div class="tableContainer">
-				            <div id="qaAssignedObjTable" minRows="10" contextMenu="none"></div>
+				            <div id="qaAssignedObjTable" minRows="10" contextMenu="none" defaultHideScrollbar="true"></div>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
 				</div> <!-- ContentPane -->
@@ -455,7 +455,7 @@ scriptScopeQaA.reloadPage = function() {
 						</div>
 		
 				        <div class="tableContainer">
-				            <div id="qaAssignedAdrTable" minRows="10" contextMenu="none"></div>
+				            <div id="qaAssignedAdrTable" minRows="10" contextMenu="none" defaultHideScrollbar="true"></div>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
 				</div> <!-- ContentPane -->
@@ -474,7 +474,7 @@ scriptScopeQaA.reloadPage = function() {
 						</div>
 		
 				        <div class="tableContainer">
-				            <div id="qaModifiedObjTable" minRows="10" contextMenu="none"></div>
+				            <div id="qaModifiedObjTable" minRows="10" contextMenu="none" defaultHideScrollbar="true"></div>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
 				</div> <!-- ContentPane -->
@@ -488,7 +488,7 @@ scriptScopeQaA.reloadPage = function() {
 						</div>
 		
 				        <div class="tableContainer">
-				            <div id="qaModifiedAdrTable" minRows="10" contextMenu="none"></div>
+				            <div id="qaModifiedAdrTable" minRows="10" contextMenu="none" defaultHideScrollbar="true"></div>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
 				</div> <!-- ContentPane -->
@@ -507,7 +507,7 @@ scriptScopeQaA.reloadPage = function() {
 						</div>
 		
 				        <div class="tableContainer">
-				            <div id="qaExpiredObjTable" minRows="10" contextMenu="none"></div>
+				            <div id="qaExpiredObjTable" minRows="10" contextMenu="none" defaultHideScrollbar="true"></div>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
 				</div> <!-- ContentPane -->
@@ -521,7 +521,7 @@ scriptScopeQaA.reloadPage = function() {
 						</div>
 		
 				        <div class="tableContainer">
-				            <div id="qaExpiredAdrTable" minRows="10" contextMenu="none"></div>
+				            <div id="qaExpiredAdrTable" minRows="10" contextMenu="none" defaultHideScrollbar="true"></div>
 						</div> <!-- tableContainer end -->
 					</div> <!-- inputContainer end -->
 				</div> <!-- ContentPane -->
@@ -539,7 +539,7 @@ scriptScopeQaA.reloadPage = function() {
 					</div>
 	
 			        <div class="tableContainer">
-			            <div id="qaSpatialObjTable" minRows="10" contextMenu="none"></div>
+			            <div id="qaSpatialObjTable" minRows="10" contextMenu="none" defaultHideScrollbar="true"></div>
 					</div> <!-- tableContainer end -->
 				</div> <!-- inputContainer end -->
 			</div> <!-- ContentPane -->

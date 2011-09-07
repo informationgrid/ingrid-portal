@@ -232,7 +232,7 @@ scriptScopeLocations.downloadAsCSV = function() {
 						<div class="fill"></div>
 					</div>
 
-					<div id="locationsResultTable" autoHeight="20" contextMenu="none">
+					<div id="locationsResultTable" autoHeight="20" contextMenu="none" defaultHideScrollbar="true">
                     </div>
 				</div>
 			</div> <!-- LEFT HAND SIDE CONTENT END -->
