@@ -998,18 +998,16 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
              });
              
              var eventWndClick = dojo.connect(dojo.isIE ? document : window, "onclick", this, function(evt){
-                 if (!this.mouse_is_inside) {//} || !this.clickWithinDomNode(evt, this.domNode)) {
+                 if (!this.mouse_is_inside) {
                      var _this = this;
-                     // popup inputs need to commit data first, otherwise value won't change 
-                    setTimeout(function(){
+                     // popup inputs need to commit data first, otherwise value won't change
+                     // -> not true anymore since event bubbling is stopped in datepicker!!!
+                     //setTimeout(function(){
                         try {
                             if (_this.getEditorLock().activeEditController && _this.getEditorLock().activeEditController.fromTable == _this.id) {
                                 var correct = _this.getEditorLock().commitCurrentEdit();
                                 // if input was invalid we should return from cell editor by escaping!
                                 if (correct) {
-                                    //_this.getEditorLock().cancelCurrentEdit();
-                                    // hide possible tooltip due to invalid entry
-                                    //dijit.hideTooltip(dojo.byId("activeCell_newControl"))
                                     if (_this.currentEditor) 
                                         _this.currentEditor.destroy();
                                     dojo.removeClass(_this.activeCellNode, "active");
@@ -1021,7 +1019,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
                             console.debug("Error");
                             console.debug(e);
                         }
-                    }, 100);
+                    //}, 100);
                     // end listener
                     dojo.disconnect(eventWndClick);
                     dojo.disconnect(mouseOver);
