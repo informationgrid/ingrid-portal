@@ -3,31 +3,22 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.StringReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
+import java.net.URL;
+import java.net.URLConnection;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.apache.axis.Message;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
-import de.ingrid.iplug.csw.CSWQueryBuilder;
-import de.ingrid.iplug.csw.tools.AxisQuerySender;
-import de.ingrid.iplug.csw.tools.AxisTools;
-import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.ParseException;
-import de.ingrid.utils.queryparser.QueryStringParser;
-
+    
+    
 /**
  * TODO Describe your created type (class, etc.) here.
  * 
@@ -56,7 +47,7 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 		boolean isActive = dataMap.getInt(PARAM_ACTIVE) == 1;
 		if (!isActive) {
 			if (log.isDebugEnabled()) {
-				log.debug("Job (" + context.getJobDetail().getName() + ") is inactive. Exiting.");
+				log.debug("Job (" + context.getJobDetail().getName() + ") is inactive. Exiting."); 
 			}
 			return;
 		} else {
@@ -84,28 +75,32 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 		String statusCode = null;
 		try {
 			startTimer();
-			IngridQuery q = QueryStringParser.parse(query);
-			CSWQueryBuilder qBuilder = new CSWQueryBuilder();
-			AxisQuerySender qSender = new AxisQuerySender(serviceUrl);
-
-			// Send and receive SOAP-Message
-			String cswQuery = qBuilder.createCSWQuery(q, 0, 1);
-			Message mRequest = AxisTools.createSOAPMessage(cswQuery, 12);
-
-			Message mResponse = qSender.sendSOAPMessage(mRequest, timeout);
-			// Analyse Result and build IngridHits
-			org.w3c.dom.Document bodyDOM = getBodyAsDOM(mResponse);
 			
-			// get number of hits matched
-			String numberOfMatchedHitsStr = null;
-			int numberOfMatchedHits = 0;
-			NodeList nl = bodyDOM.getElementsByTagNameNS("*", "SearchResults");
-			if (nl != null && nl.getLength() >= 1) {
-				Element e = (Element) nl.item(0);
-				numberOfMatchedHitsStr = e.getAttribute("numberOfRecordsMatched");
-				numberOfMatchedHits = Integer.parseInt(numberOfMatchedHitsStr);
-			}
+			URL url = new URL(serviceUrl);
+		    URLConnection conn = url.openConnection();
+		    conn.setDoOutput(true);
+		    conn.setRequestProperty("CONTENT-TYPE", "text/xml");
+		    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+		    wr.write(getCSWRequestString(query, "2.0.2"));
+		    wr.flush();
 
+		    // Get the response
+		    BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		    String line;
+		    String numberOfMatchedHitsStr = null;
+            int numberOfMatchedHits = 0;
+		    while ((line = rd.readLine()) != null) {
+		        // Process line...
+		        int start = line.indexOf("numberOfRecordsMatched");
+		        if (start != -1) {
+		            numberOfMatchedHitsStr = line.substring(start+24, line.indexOf("\"", start+24));
+		            numberOfMatchedHits = Integer.parseInt(numberOfMatchedHitsStr);
+		            break;
+		        }
+		    }
+		    wr.close();
+		    rd.close();
+			
 			if (numberOfMatchedHits == 0) {
 				status = STATUS_ERROR;
 				statusCode = STATUS_CODE_ERROR_NO_HITS;
@@ -113,29 +108,23 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 				status = STATUS_OK;
 				statusCode = STATUS_CODE_NO_ERROR;
 			}
-		} catch (ParseException e) {
-			status = STATUS_ERROR;
-			statusCode = STATUS_CODE_ERROR_QUERY_PARSE_EXCEPTION;
-			if (log.isDebugEnabled()) {
-				log.debug("Error processing SOAP call.", e);
-			}
 		} catch (MalformedURLException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_INVALID_SERVICE_URL;
 			if (log.isDebugEnabled()) {
-				log.debug("Error processing SOAP call.", e);
+				log.debug("Error processing URL Request.", e);
 			}
 		} catch (SocketTimeoutException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
 			if (log.isDebugEnabled()) {
-				log.debug("Error processing SOAP call.", e);
+				log.debug("Error processing URL Request.", e);
 			}
 		} catch (IOException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
 			if (log.isDebugEnabled()) {
-				log.debug("Error processing SOAP call.", e);
+				log.debug("Error processing URL Request.", e);
 			}
 		} catch (Throwable e) {
 			status = STATUS_ERROR;
@@ -156,51 +145,18 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 					+ (System.currentTimeMillis() - startTime) + " ms.");
 		}
 	}
-
-	/**
-	 * Extracting pure XML body out of the SOAP message. If the exracted SOAP
-	 * body is surrounded by the "<soapenv:Body ...>" tag, this tag will be
-	 * removed. In case of an parsing error an empty <code>String</code> will
-	 * be returned.
-	 * 
-	 * @param msg
-	 *            SOAP message
-	 * @return extracted XML message
-	 */
-	private String getBodyAsXMLString(final Message msg) {
-		try {
-			String xml = msg.getSOAPEnvelope().getBody().toString();
-			// remove surrounding SOAP body tag if exists:
-			if (xml.startsWith("<soapenv:Body") || xml.startsWith("<ns1:Body")) {
-				xml = xml.substring(xml.indexOf('>') + 1, xml.lastIndexOf('<'));
-			}
-			return xml;
-		} catch (Exception e) {
-			log.error("Can't extract XML message from SOAP body! Message was: " + e.getMessage());
-			return "";
-		}
+	
+	private String getCSWRequestString(String query, String version) {
+	    return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+	            "<csw:GetRecords maxRecords=\"1\" outputSchema=\"http://www.isotc211.org/2005/gmd\" " +
+	    		"resultType=\"results\" outputFormat=\"application/xml\" service=\"CSW\" startPosition=\"1\" " +
+	    		"version=\""+version+"\" xmlns:csw=\"http://www.opengis.net/cat/csw/2.0.2\">" +
+	    		"<csw:Query typeNames=\"csw:datasetcollection\">" +
+    	    	    "<csw:ElementSetName>brief</csw:ElementSetName>" +
+    	    	    "<csw:Constraint version=\"1.1.0\">" +
+    	    	      "<csw:CqlText>AnyText like '%"+query+"%'</csw:CqlText>"+
+    	    	    "</csw:Constraint>" +
+    	    	  "</csw:Query>" +
+	    		"</csw:GetRecords>";
 	}
-
-	/**
-	 * Extracting pure XML body out of the SOAP message. If the exracted SOAP
-	 * body is surrounded by the "<soapenv:Body ...>" tag, this tag will be
-	 * removed. In case of an parsing error an empty <code>Document</code>
-	 * will be returned.
-	 * 
-	 * @param msg
-	 *            SOAP message
-	 * @return extracted XML message
-	 */
-	private org.w3c.dom.Document getBodyAsDOM(final Message msg) throws Exception {
-		log.debug("Removing SOAP envelope...");
-		String xml = getBodyAsXMLString(msg);
-		// log.debug(xml);
-
-		// Create DOM document out of the AXIS message
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		factory.setNamespaceAware(true);
-		DocumentBuilder builder = factory.newDocumentBuilder();
-		return builder.parse(new InputSource(new StringReader(xml)));
-	}
-
 }
