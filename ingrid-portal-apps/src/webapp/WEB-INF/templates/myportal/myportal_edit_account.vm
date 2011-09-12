@@ -5,7 +5,7 @@
 #parse ('/WEB-INF/templates/myportal/include_account_form.vm')
 	<div class="formfooter formfooter_border_style">
 		<div align="right">
-			<input class="btn" type="submit" value="$MESSAGES.getString('account.edit.submit')" />
+			#renderInputButtonClass($MESSAGES.getString('account.edit.submit') "" "" "" "float_right")
 		</div>
 	</div>
 </form>

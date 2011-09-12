@@ -4,7 +4,11 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>ingrid.page.service</title>
+  <title>ingrid.page.service.tooltip</title>
+  <short-title>ingrid.page.service</short-title>
+  <metadata name="meta_title">ingrid.page.service.meta.title</metadata>
+  <metadata name="meta_descr">ingrid.page.service.meta.description</metadata>
+  <metadata name="meta_keywords">ingrid.page.service.meta.keywords</metadata>
 
   <fragment id="main-service" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="main-service-input" type="portlet" name="ingrid-portal-apps::ServiceSearch">

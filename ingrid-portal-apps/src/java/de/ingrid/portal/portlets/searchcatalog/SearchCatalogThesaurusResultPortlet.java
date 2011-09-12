@@ -14,8 +14,8 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.container.url.PortalURL;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
@@ -38,7 +38,7 @@ import de.ingrid.utils.IngridHits;
 
 public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet {
 
-    private final static Log log = LogFactory.getLog(SearchCatalogThesaurusResultPortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(SearchCatalogThesaurusResultPortlet.class);
 
     // Location of the custom Title (resource bundle key)
 	private final static String PORTLET_TITLE = "searchCatThesaurus.result.title";
@@ -316,7 +316,7 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
                 SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY, SEARCH_STATE_TOPIC);
                 SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, currentSelectorPage, SEARCH_STATE_TOPIC);
             }
-            actionResponse.sendRedirect(redirectPage + SearchState.getURLParamsMainSearch(request, SEARCH_STATE_TOPIC));
+            actionResponse.sendRedirect(actionResponse.encodeURL(redirectPage + SearchState.getURLParamsMainSearch(request, SEARCH_STATE_TOPIC)));
     	}
 
     	else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
@@ -329,7 +329,7 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
     		// reset result page navigation !!!
             SearchState.resetSearchStateObject(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, SEARCH_STATE_TOPIC);
     		
-            actionResponse.sendRedirect(redirectPage + SearchState.getURLParamsMainSearch(request, SEARCH_STATE_TOPIC));
+            actionResponse.sendRedirect(actionResponse.encodeURL(redirectPage + SearchState.getURLParamsMainSearch(request, SEARCH_STATE_TOPIC)));
     	}
 
     	else if (request.getParameter(Settings.PARAM_SUBJECT) != null) {
@@ -344,7 +344,7 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
             String urlParams = SearchState.getURLParamsMainSearch(request, SEARCH_STATE_TOPIC);
             SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, origQuery, SEARCH_STATE_TOPIC);
 
-    		actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + urlParams);    		
+    		actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + urlParams));    		
     	}
     }
 

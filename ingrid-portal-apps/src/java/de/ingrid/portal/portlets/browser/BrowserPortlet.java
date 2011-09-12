@@ -33,8 +33,8 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.sso.SSOProvider;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.portals.messaging.PortletMessaging;
@@ -125,7 +125,7 @@ public class BrowserPortlet extends GenericVelocityPortlet implements Browser
     /**
      * Static initialization of the logger for this class
      */
-    protected Log log = LogFactory.getLog(BrowserPortlet.class);
+    protected Logger log = LoggerFactory.getLogger(BrowserPortlet.class);
 
     public void init(PortletConfig config) throws PortletException
     {

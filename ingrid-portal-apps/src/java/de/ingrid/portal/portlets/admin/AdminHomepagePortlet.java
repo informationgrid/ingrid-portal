@@ -19,8 +19,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.components.portletregistry.PortletRegistry;
 import org.apache.jetspeed.om.common.portlet.PortletDefinitionComposite;
@@ -47,7 +47,7 @@ import de.ingrid.portal.global.UtilsPageLayout;
  */
 public class AdminHomepagePortlet extends GenericVelocityPortlet {
 
-    private final static Log log = LogFactory.getLog(AdminHomepagePortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(AdminHomepagePortlet.class);
 
     private PageManager pageManager;
 

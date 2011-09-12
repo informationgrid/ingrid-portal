@@ -3,7 +3,7 @@
 #parse ('/WEB-INF/templates/search_extended/include_env_area_tabs.vm')
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" enctype="" name="selection_form" id="extsearch">
-      <div class="formbody">
+      <div class="formbody formbody_border_style">
           <p>$MESSAGES.getString('searchExtEnvAreaSources.explanation')</p>
           <div class="innerform">
 #if($enableSourcesMetaOnly)

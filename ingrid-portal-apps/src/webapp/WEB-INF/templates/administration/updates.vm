@@ -138,8 +138,9 @@ $action.setParameter("doUpdateEdit", "updateEdit")
     </table>
 </div>
 <div class="formfooter formfooter_border_style" align="right">
-    <input class="btn float_left" type="submit" name="doUpdateRemove" value="$MESSAGES.getString('component.forms.update.component.delete')" /><span class="float_left">&nbsp;</span>
-    <input class="btn float_left" type="submit" name="doUpdateAdd"    value="$MESSAGES.getString('component.forms.update.component.add')" />
-    <input class="btn"            type="submit" name="doUpdateImport" value="$MESSAGES.getString('component.forms.update.component.import')" />
+	#renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.delete')" "" "doUpdateRemove" "" "float_left")
+	<span class="float_left">&nbsp;</span>
+	#renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.add')" "" "doUpdateAdd" "" "float_left")
+	#renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.import')" "" "doUpdateImport" "" "float_right")
 </div>
 </form>

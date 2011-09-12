@@ -133,7 +133,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
             
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
-            actionResponse.sendRedirect(PAGE_GEOTHESAURUS + urlViewParam);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_GEOTHESAURUS + urlViewParam));
 
         } else if (submittedAddToQuery != null) {
 
@@ -170,7 +170,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
             } else if (currView.equals(TEMPLATE_BROWSE)) {
                 urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_BROWSE);
             }
-            actionResponse.sendRedirect(PAGE_GEOTHESAURUS + urlViewParam);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_GEOTHESAURUS + urlViewParam));
 
         } else if (action.equalsIgnoreCase("doBrowse")) {
 
@@ -210,7 +210,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
             }
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_BROWSE);
-            actionResponse.sendRedirect(PAGE_GEOTHESAURUS + urlViewParam);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_GEOTHESAURUS + urlViewParam));
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             String newTab = request.getParameter(Settings.PARAM_TAB);

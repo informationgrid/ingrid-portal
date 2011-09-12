@@ -1,0 +1,46 @@
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action', $feature)
+<div>
+	<div>
+		<p>$MESSAGES.getString('feature.envSearch.description')</p>
+		
+		<br>
+		<div class="feature_row">
+			<H2>$MESSAGES.getString('feature.envSearch.screenshot1.title')</H2>
+			<div class="feature_row_content">
+				<div class="feature_row_cell_left">
+					<img src="/ingrid-portal-apps/images/features/ScreenshotThema01${lang}.jpg"></img>
+				</div>
+				<div class="feature_row_cell_right">
+					<p>$MESSAGES.getString('feature.envSearch.screenshot1.body')</p>
+				</div>
+			</div>
+		</div>
+		
+		<span class="clearer"></span>
+		<div class="feature_row">
+			<H2>$MESSAGES.getString('feature.envSearch.screenshot2.title')</H2>
+			<div class="feature_row_content">
+				<div class="feature_row_cell_left">
+					<img src="/ingrid-portal-apps/images/features/ScreenshotThema02${lang}.jpg"></img>
+				</div>
+				<div class="feature_row_cell_right">
+					<p>$MESSAGES.getString('feature.envSearch.screenshot2.body')</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div>
+		<p class="info_link float_left">
+			<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')"/></span>
+			<span><a href="$renderResponse.encodeURL('/portal/main-features.psml')" title="$MESSAGES.getString('feature.overview.tooltip')">$MESSAGES.getString('feature.envSearch.back')</a></span>
+			<span class="clearer"></span>
+		</p>
+		<div class="float_right">
+			<form action="$action" method="get">
+				#renderInputButtonSearch($MESSAGES.getString('feature.envSearch.button') "" "" $MESSAGES.getString('feature.envSearch.button.tooltip'))
+			</form>
+		</div>
+	</div>
+</div>

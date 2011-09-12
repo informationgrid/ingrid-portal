@@ -17,8 +17,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.container.url.PortalURL;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.velocity.context.Context;
@@ -40,7 +40,7 @@ import de.ingrid.utils.IngridHits;
  */
 public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 
-    private final static Log log = LogFactory.getLog(SearchCatalogThesaurusPortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(SearchCatalogThesaurusPortlet.class);
 
     // VIEW TEMPLATES
     private final static String TEMPLATE_START = "/WEB-INF/templates/search_catalog/search_cat_thesaurus.vm";
@@ -131,7 +131,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
                     } catch (Exception e) {
                         node.setLoading(false);
                         if (log.isWarnEnabled())
-                            log.warn(e);
+                            log.warn(e.toString());
                     }
                 } else if (action.equalsIgnoreCase("doCloseNode")) {
                     if (node != null) {
@@ -177,7 +177,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
 
         if (submittedReload != null) {
             initPageState(ps);
-        	actionResponse.sendRedirect(redirectPage + "?action=reload");
+        	actionResponse.sendRedirect(actionResponse.encodeURL(redirectPage + "?action=reload"));
         /*} else if (action.equalsIgnoreCase("doSearch")) {
         	DisplayTreeNode root = (DisplayTreeNode) ps.get("thesRoot");
             if (root != null) {

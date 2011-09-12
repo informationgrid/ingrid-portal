@@ -16,8 +16,8 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -44,7 +44,7 @@ public class IngridMonitorG2KJob extends IngridMonitorAbstractJob {
 
 	public static final String COMPONENT_TYPE = "component.monitor.general.type.g2k";
 
-	private final static Log log = LogFactory.getLog(IngridMonitorG2KJob.class);
+	private final static Logger log = LoggerFactory.getLogger(IngridMonitorG2KJob.class);
 
 	/**
 	 * Coding

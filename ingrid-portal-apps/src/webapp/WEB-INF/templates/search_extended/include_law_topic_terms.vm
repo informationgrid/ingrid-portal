@@ -1,6 +1,6 @@
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" name="xx" id="extsearch">
-      <div class="formbody">
+      <div class="formbody formbody_border_style">
           <p><label class="alignleft" for="search_term">$MESSAGES.getString('searchExtEnvTopicTerms.label.terms')</label></p>
           <div class="innerform">
             <input class="search_term inputstyletext" type="text" name="search_term" id="search_term" />

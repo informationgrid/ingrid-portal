@@ -5,7 +5,7 @@
 <h3>$MESSAGES.getString('disclaimer.publisher.address.title')</h3>
 <p>
 $MESSAGES.getString('disclaimer.publisher.address')
-#set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-contact.psml"))
+#set ($link = $renderResponse.encodeURL("/portal/service-contact.psml"))
 	<a href="$link">$MESSAGES.getString('disclaimer.publisher.contact')</a>
 </p>
 <br />
@@ -15,12 +15,6 @@ $MESSAGES.getString('disclaimer.publisher.address')
 <br />
 <a name="realisierung"></a>
 <h2>$MESSAGES.getString('disclaimer.realization.title')</h2>
-<h3>
-	<a href="http://www.gistec-online.de/" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('disclaimer.realization.company1')</a>
-</h3>
-<h3>
-	<a href="http://www.media-style.com/" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('disclaimer.realization.company2')</a>
-</h3>
 <h3>
 	<a href="http://www.wemove.com/contact.php" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('disclaimer.realization.company3')</a>
 </h3>

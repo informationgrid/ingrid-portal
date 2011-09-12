@@ -4,8 +4,8 @@
 package de.ingrid.portal.config;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provides access to the ingrid portal preferences.
@@ -113,8 +113,6 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_ENABLE_PARTNER = "portal.enable.partner";
     
-    public static final String PORTAL_ENABLE_ENVIROMENT = "portal.enable.enviroment";
-
 	public static final String PORTAL_ENABLE_CHRONICLE = "portal.enable.chronicle";
 
 	public static final String PORTAL_ENABLE_MAPS = "portal.enable.maps";
@@ -178,10 +176,14 @@ public class PortalConfig extends PropertiesConfiguration {
     // User admin: show max row of users in a table
     public static final String USER_ADMIN_MAX_ROW = "admin.user.max.row";
 	
+    public static final String PORTAL_ENABLE_FEATURE_TYPE = "portal.feature.type.enable";
+	
+    public static final String PORTAL_SEARCH_LANGUAGE_INDEPENDENT = "portal.search.language.independent";
+	
     // private stuff
     private static PortalConfig instance = null;
 
-    private final static Log log = LogFactory.getLog(PortalConfig.class);
+    private final static Logger log = LoggerFactory.getLogger(PortalConfig.class);
 
 	
     public static synchronized PortalConfig getInstance() {
@@ -189,8 +191,8 @@ public class PortalConfig extends PropertiesConfiguration {
             try {
                 instance = new PortalConfig();
             } catch (Exception e) {
-                if (log.isFatalEnabled()) {
-                    log.fatal(
+                if (log.isErrorEnabled()) {
+                    log.error(
                             "Error loading the portal config application config file. (ingrid-portal-apps.properties)",
                             e);
                 }

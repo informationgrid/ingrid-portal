@@ -5,6 +5,7 @@
     <!-- portlets go here -->
 #defineUrlParams()
 ##    <img src="#GetPageResource('images/arrow_up.gif')" alt="Pfeil nach oben" />&nbsp;<a href="${jetspeed.getAbsoluteUrl(${site.getPage().url})}${urlParams}">nach oben</a>
+      <div id="footerSeparator"></div>
   &nbsp;
   </div>
 </div>
@@ -21,7 +22,7 @@
 <br />
     $MESSAGES.getString('ingrid.page.copyright')<br />
 
-    $MESSAGES.getString('ingrid.page.rights')<br /><br />
+    <i>$MESSAGES.getString('ingrid.page.rights')</i><br /><br />
   </div>
 </div>
 
@@ -33,14 +34,16 @@ var domain = document.domain;
 if(domain == "portalu.de" || domain=="www.portalu.de"){
 	var pkBaseURL = (("https:" == document.location.protocol) ? "https://portalu.de/piwik/" : "http://portalu.de/piwik/");
 	document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+}
+</script>
+<script type="text/javascript">
 	try {
 		var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
 		piwikTracker.trackPageView();
 		piwikTracker.enableLinkTracking();
 	} catch( err ) {
 	}
-}
-</script><noscript><p><img src="http://portalu.de/piwik/piwik.php?idsite=1" style="border:0" alt=""/></p></noscript>
+</script><noscript><p><img src="http://portalu.de/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
 <!-- End Piwik Tag -->
 
 

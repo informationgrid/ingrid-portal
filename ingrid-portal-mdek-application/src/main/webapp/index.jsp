@@ -40,7 +40,7 @@ function loadit() {
 				// build the target url by replacing index.jsp with a link to the portal login page. Keep all parameters
 				var redirectUrl = document.location.href.replace(/\?/, "%3F");
 				redirectUrl = redirectUrl.replace(/&/g, "%26");
-				redirectUrl = redirectUrl.replace(/index.jsp/, "../ingrid-portal/portal/service-myportal.psml?r="+baseUrl);
+				redirectUrl = redirectUrl.replace(/index.jsp/, "../portal/service-myportal.psml?r="+baseUrl);
 	
 				// redirect
 				document.location.href = redirectUrl;

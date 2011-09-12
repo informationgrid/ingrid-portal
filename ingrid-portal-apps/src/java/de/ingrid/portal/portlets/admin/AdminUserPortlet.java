@@ -32,8 +32,8 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.administration.PortalAdministration;
 import org.apache.jetspeed.exception.JetspeedException;
@@ -89,7 +89,7 @@ import de.ingrid.portal.security.util.SecurityHelper;
  */
 public class AdminUserPortlet extends ContentPortlet {
 
-    private final static Log log = LogFactory.getLog(AdminUserPortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(AdminUserPortlet.class);
 
     private static final String KEY_ENTITIES = "entities";
     
@@ -213,7 +213,7 @@ public class AdminUserPortlet extends ContentPortlet {
         this.emailTemplate = config.getInitParameter(IP_EMAIL_TEMPLATE);
 
         // set specific stuff in mother class
-        psmlPage = "/ingrid-portal/portal/administration/admin-usermanagement.psml";
+        psmlPage = "/portal/administration/admin-usermanagement.psml";
         viewDefault = "/WEB-INF/templates/administration/admin_user_browser.vm";
         viewEdit = "/WEB-INF/templates/administration/admin_user_edit.vm";
         viewNew = "/WEB-INF/templates/administration/admin_user_new.vm";

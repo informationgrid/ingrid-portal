@@ -30,7 +30,7 @@ $MESSAGES.setMsgParam("$max_entries")
 			#end
           </ul>
           <br>
-          <input class="btn" value="$MESSAGES.getString('common.form.button.delete')" name="deleteEntries" type="submit">
+          #renderInputButton($MESSAGES.getString('common.form.button.delete') "" "deleteEntries" "")
 #end
       </div>
     </form>

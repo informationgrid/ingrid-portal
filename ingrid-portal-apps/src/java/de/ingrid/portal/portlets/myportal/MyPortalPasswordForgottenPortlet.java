@@ -19,8 +19,8 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.administration.AdministrationEmailException;
 import org.apache.jetspeed.administration.PortalAdministration;
@@ -43,7 +43,7 @@ import de.ingrid.portal.global.Utils;
  */
 public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
 
-    private final static Log log = LogFactory.getLog(MyPortalPasswordForgottenPortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(MyPortalPasswordForgottenPortlet.class);
 
     private static final String CTX_NEW_PASSWORD = "password";
 

@@ -11,8 +11,8 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
@@ -36,7 +36,7 @@ import de.ingrid.utils.query.IngridQuery;
 
 public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
 
-    private final static Log log = LogFactory.getLog(MeasuresResultPortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(MeasuresResultPortlet.class);
 
     /** view templates */
     private final static String TEMPLATE_NO_QUERY = "/WEB-INF/templates/empty.vm";
@@ -196,7 +196,7 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
                 MeasuresSearchForm.class, PortletSession.APPLICATION_SCOPE);
 
         // redirect to our page wih URL parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_MEASURES + SearchState.getURLParamsCatalogueSearch(request, af));
+        actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_MEASURES + SearchState.getURLParamsCatalogueSearch(request, af)));
     }
 
     private IngridHitsWrapper doSearch(IngridQuery query, int startHit, int groupedStartHit, int hitsPerPage,

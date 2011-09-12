@@ -12,8 +12,8 @@ import java.util.Map;
 
 import javax.portlet.RenderRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.PortalConfig;
@@ -30,7 +30,7 @@ import de.ingrid.utils.udk.UtilsDate;
  */
 public class DetailDataPreparerGeneric implements DetailDataPreparer {
 
-    private final static Log log = LogFactory.getLog(DetailDataPreparerGeneric.class);
+    private final static Logger log = LoggerFactory.getLogger(DetailDataPreparerGeneric.class);
 
 	private Context context;
 	private List dateFields;

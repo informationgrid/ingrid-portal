@@ -1,103 +1,116 @@
 ## Renders Single Hit
-	## different margins dependent from grouping
+    ## different margins dependent from grouping
     #if($topHit)
-		  <div class="resultset">
-	#else
-		#if($rs.get('moreHits') && $groupSubjectKey != "")
-			## when "more hits footer" then no bottom margin
-			<div class="resultset" style="margin-left:${subHitLeftMargin}px; margin-bottom:0px">
-		#else
-			<div class="resultset" style="margin-left:${subHitLeftMargin}px;">
-		#end
+          <div class="resultset">
+    #else
+        #if($rs.get('moreHits') && $groupSubjectKey != "")
+            ## when "more hits footer" then no bottom margin
+            <div class="resultset" style="margin-left:${subHitLeftMargin}px; margin-bottom:0px">
+        #else
+            <div class="resultset" style="margin-left:${subHitLeftMargin}px;">
+        #end
     #end
     #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
-		  #if ($rs.title)
-##		    #if ($rs.type == "www-style")
-			#if($rs.url)
-				#set($urlTitle = $MESSAGES.getString('common.tooltip.link.extern'))
-				#if ($rs.url_type && $rs.url_type == "dsc")
-					#set($iconImage = 'icn_linkextern_dsc_db1.gif')
-				#elseif ($rs.url_type && $rs.url_type == "pdf")
-					#set($iconImage = 'icn_linkextern_pdf.gif')
+          #if ($rs.title)
+##          #if ($rs.type == "www-style")
+            #if($rs.url)
+                #set($urlTitle = $MESSAGES.getString('common.tooltip.link.extern.result'))
+                #if ($rs.url_type && $rs.url_type == "dsc")
+                    #set($iconImage = 'icn_linkextern_dsc_db1.gif')
+                    #set($leftDistance = '25px')
+                #elseif ($rs.url_type && $rs.url_type == "pdf")
+                    #set($iconImage = 'icn_linkextern_pdf.gif')
 $MESSAGES.resetMsgParams()
 $MESSAGES.setMsgParam('PDF')
-					#set($urlTitle = $MESSAGES.getStringWithMsgParams('common.tooltip.link.extern.document'))
-				#elseif ($rs.url_type && $rs.url_type == "ppt")
-					#set($iconImage = 'icn_linkextern_ppt.gif')
+                    #set($urlTitle = $MESSAGES.getStringWithMsgParams('common.tooltip.link.extern.document'))
+                    #set($leftDistance = '45px')
+                #elseif ($rs.url_type && $rs.url_type == "ppt")
+                    #set($iconImage = 'icn_linkextern_ppt.gif')
 $MESSAGES.resetMsgParams()
 $MESSAGES.setMsgParam('PPT')
-					#set($urlTitle = $MESSAGES.getStringWithMsgParams('common.tooltip.link.extern.document'))
-				#elseif ($rs.url_type && $rs.url_type == "doc")
-					#set($iconImage = 'icn_linkextern_doc.gif')
+                    #set($urlTitle = $MESSAGES.getStringWithMsgParams('common.tooltip.link.extern.document'))
+                    #set($leftDistance = '45px')
+                #elseif ($rs.url_type && $rs.url_type == "doc")
+                    #set($iconImage = 'icn_linkextern_doc.gif')
 $MESSAGES.resetMsgParams()
 $MESSAGES.setMsgParam('DOC')
-					#set($urlTitle = $MESSAGES.getStringWithMsgParams('common.tooltip.link.extern.document'))
-				#else
-					#set($iconImage = 'icn_linkextern.gif')
-				#end
-			  <span class="result_title"><strong><a href="$!rs.url" target="_new" title="$urlTitle"><span class="icon"><img src="/ingrid-portal-apps/images/$iconImage" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title) </a></strong></span>
-			#elseif($rs.type == "detail-style")
-			  #if($rs.udk_class)
-				#set($udkObjClassNameKey = "udk_obj_class_name_$rs.udk_class")
-				#set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
-				#if($rs.docuuid && $rs.docuuid.length() > 0)
-				<span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><strong><a href="$contextPath/portal/search-detail.psml?docuuid=$rs.docuuid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#renderTitle($rs.title) </a></strong></span>
-				#else	
-				<span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><strong><a href="$contextPath/portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#renderTitle($rs.title) </a></strong></span>
-				#end	
-			  #else
-    			#if ($rs.url_type && $rs.url_type == "dsc")
-    				#set($iconImage = 'icn_linkextern_dsc_db1.gif')
-				#else
-					#set($iconImage = 'icn_linkextern.gif')
-				#end
-				#if($rs.docuuid && $rs.docuuid.length() > 0)
-					<span class="result_title"><strong><a href="$contextPath/portal/search-detail.psml?docid=$rs.docid&docuuid=$rs.docuuid&plugid=$rs.plugid" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/$iconImage" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title) </a></strong></span>
-				#else	
-					<span class="result_title"><strong><a href="$contextPath/portal/search-detail.psml?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/$iconImage" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#renderTitle($rs.title) </a></strong></span>
-				#end	
-			  #end
-			#else
-			  <span class="result_title"><strong>#renderTitle($rs.title) </strong></span>
-			#end		
+                    #set($urlTitle = $MESSAGES.getStringWithMsgParams('common.tooltip.link.extern.document'))
+                    #set($leftDistance = '30px')
+                #else
+                    #set($iconImage = 'icn_linkextern.gif')
+                    #set($leftDistance = '')
+                #end
+              <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/$iconImage" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span><span class="intendResult" style="left:$leftDistance;"><a href="$!rs.url" target="_new" title="$urlTitle">#renderTitle($rs.title) </a></span></span>
+            #elseif($rs.type == "detail-style")
+              #if($rs.udk_class)
+                #set($udkObjClassNameKey = "udk_obj_class_name_$rs.udk_class")
+                #set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
+                #if($rs.udk_class == "6")
+                    #set($leftDistance = '27px')
+                #else
+                    #set($leftDistance = '')
+                #end
+                
+                #if($rs.docuuid && $rs.docuuid.length() > 0)
+                <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><span class="intendResult" style="left:$leftDistance;"><a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern.result')">#renderTitle($rs.title) </a></span></span>
+                #else   
+                <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><span class="intendResult" style="left:$leftDistance;"><a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern.result')">#renderTitle($rs.title) </a></span></span>
+                #end    
+              #else
+                #if ($rs.url_type && $rs.url_type == "dsc")
+                    #set($iconImage = 'icn_linkextern_dsc_db1.gif')
+                    #set($leftDistance = '25px')
+                #else
+                    #set($iconImage = 'icn_linkextern.gif')
+                    #set($leftDistance = '')
+                #end
+                #if($rs.docuuid && $rs.docuuid.length() > 0)
+                    <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/$iconImage" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span><span class="intendResult" style="left:$leftDistance;"><a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&docuuid=$rs.docuuid&plugid=$rs.plugid" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern.result')">#renderTitle($rs.title) </a></span></span>
+                #else   
+                    <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/$iconImage" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span><span class="intendResult" style="left:$leftDistance;"><a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern.result')">#renderTitle($rs.title) </a></span></span>
+                #end    
+              #end
+            #else
+              <span class="result_title"><span class="intendResult">#renderTitle($rs.title) </span></span>
+            #end        
             <p class="result_description">
             $!rs.abstract 
             </p>
-##	        #if($topHit)
-				<p class="result_metadata">
-				#set ($showProvider = true)
-				#if($grouping && $grouping == 'provider')
-					#set ($showProvider = false)
-				#end
-				#if($showProvider)
-					##$MESSAGES.getString('common.result.provider'): $providerMap.get($!rs.provider)<br />
+##          #if($topHit)
+                <p class="result_metadata">
+                #set ($showProvider = true)
+                #if($grouping && $grouping == 'provider')
+                    #set ($showProvider = false)
+                #end
+                #if($showProvider)
+                    ##$MESSAGES.getString('common.result.provider'): $providerMap.get($!rs.provider)<br />
                     $MESSAGES.getString('common.result.provider'): $!rs.provider<br />
-				#end
-				$MESSAGES.getString('common.result.source'): $!rs.source<br />
+                #end
+                $MESSAGES.getString('common.result.source'): $!rs.source<br />
                 #if($adminContent)
                 Score: $rs.getScore()
                 #end
-				</p>
-##			#end
-			#if($rs.wms_url)
-			<p class="result_link">
-				<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$contextPath/portal/main-maps.psml?wms_url=$rs.wms_url" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('common.result.showMap')</a>
-			</p>				
-			#end
-			
-			#if($rs.wms_coord)
-			<p class="result_link">
-				<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$contextPath/portal/main-maps.psml?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('common.result.showCoord')</a>
-			</p>				
-			#end
-			
-			#if($rs.url)
-			<p class="result_link">
-              <a href="$rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rs.url_str</a>
+                </p>
+##          #end
+            #if($rs.wms_url)
+            <p class="result_link">
+                <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=$rs.wms_url" title="$MESSAGES.getString('common.result.showMap.tooltip')">$MESSAGES.getString('common.result.showMap')</a>
+            </p>                
+            #end
+            
+            #if($rs.wms_coord)
+            <p class="result_link">
+                <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
             </p>
-			#end
-		  #else
-			<span class="result_title"><strong>$MESSAGES.getString('common.result.empty')</strong></span>
-			<p class="result_link"></p>
-		  #end
+            #end
+            
+            #if($rs.url)
+            <p class="result_link">
+              <a href="$rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$!rs.url_str</a>
+            </p>
+            #end
+          #else
+            <span class="result_title"><strong>$MESSAGES.getString('common.result.empty')</strong></span>
+            <p class="result_link"></p>
+          #end
           </div>

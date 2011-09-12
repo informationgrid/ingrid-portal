@@ -57,17 +57,18 @@ public class InfoPortlet extends GenericVelocityPortlet {
             context.put("enableAbout", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_ABOUT, Boolean.FALSE));
             context.put("enablePartner", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_PARTNER, Boolean.FALSE));
             context.put("enableService", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SERVICE, Boolean.FALSE));
-            context.put("enableEnviroment", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_ENVIROMENT, Boolean.FALSE));
+            context.put("enableTopic", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_TOPIC, Boolean.FALSE));
             context.put("enableMaps", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, Boolean.FALSE));
             context.put("enableChronicle", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_CHRONICLE, Boolean.FALSE));
             context.put("enableSearchCatalog", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_CATALOG, Boolean.FALSE));
             context.put("enableSearchCatalogThesaurus", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_CATALOG_THESAURUS, Boolean.FALSE));
-            context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, Boolean.TRUE));
+            context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, Boolean.FALSE));
+            context.put("enableFeature", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_FEATURE_TYPE, Boolean.FALSE));
         }
         if(myView.indexOf("search_cat_thesaurus_info_sns.vm") > -1 || myView.indexOf("search_settings_info.vm") > -1){
         	context.put("thesaurusLink", PortalConfig.getInstance().getString(PortalConfig.THESAURUS_INFO_LINK, ""));
         }
-        
+        context.put("enableFeatureType", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_FEATURE_TYPE, false));
         super.doView(request, response);
     }
 

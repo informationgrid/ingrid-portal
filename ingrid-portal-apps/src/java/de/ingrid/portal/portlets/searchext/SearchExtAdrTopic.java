@@ -24,15 +24,15 @@ abstract class SearchExtAdrTopic extends SearchExtAdr {
 
     // PAGES FOR TABS
 
-    protected final static String PAGE_TERMS = "/ingrid-portal/portal/search-extended/search-ext-adr-topic-terms.psml";
+    protected final static String PAGE_TERMS = "/portal/search-extended/search-ext-adr-topic-terms.psml";
 
-    protected final static String PAGE_MODE = "/ingrid-portal/portal/search-extended/search-ext-adr-topic-mode.psml";
+    protected final static String PAGE_MODE = "/portal/search-extended/search-ext-adr-topic-mode.psml";
 
     protected void processTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
         if (tab.equals(PARAMV_TAB_TERMS)) {
-            actionResponse.sendRedirect(PAGE_TERMS);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_TERMS));
         } else if (tab.equals(PARAMV_TAB_MODE)) {
-            actionResponse.sendRedirect(PAGE_MODE);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_MODE));
         } else {
             super.processTab(actionResponse, tab);
         }

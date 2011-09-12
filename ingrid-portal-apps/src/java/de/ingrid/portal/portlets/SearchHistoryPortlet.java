@@ -31,8 +31,8 @@ import de.ingrid.portal.search.SavedSearchQueries;
  */
 public class SearchHistoryPortlet extends GenericVelocityPortlet {
 
-    // private final static Log log =
-    // LogFactory.getLog(SearchSettingsPortlet.class);
+    // private final static Logger log =
+    // LoggerFactory.getLogger(SearchSettingsPortlet.class);
 
     /*
      * (non-Javadoc)

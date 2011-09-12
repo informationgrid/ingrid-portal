@@ -20,8 +20,8 @@ import java.util.Set;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -60,7 +60,7 @@ public class IngridJobHandler {
 		"component.monitor.general.type.provider.check"
 	};
 	
-	private final static Log log = LogFactory.getLog(AdminComponentMonitorPortlet.class);
+	private final static Logger log = LoggerFactory.getLogger(AdminComponentMonitorPortlet.class);
 	
 	IngridMonitorFacade monitor = IngridMonitorFacade.instance();
 	
@@ -462,8 +462,16 @@ public class IngridJobHandler {
 			
 			// add specific data to the dataMap according to the iPlug
 			//if (iPlug.getIPlugClass().equals(IPlugType.IPLUG_SE)) {}
-			jobDetail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_QUERY,
+			if (iPlug.containsDataType("management")) {
+			    jobDetail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_QUERY,
+	                "datatype:management management_request_type:2 ranking:any cache:off");
+			} else if (iPlug.containsDataType("sns")) {
+			    jobDetail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_QUERY,
+			        "wasser datatype:sns iplugs:\"" + iPlug.getProxyServiceURL() + "\" sns_request_type:1 cache:off");
+			} else {
+			    jobDetail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_QUERY,
 					"wasser iplugs:\"" + iPlug.getProxyServiceURL() + "\" ranking:any cache:off");
+			}
 			jobDetail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE,
 					IngridMonitorIPlugJob.COMPONENT_TYPE);
 			

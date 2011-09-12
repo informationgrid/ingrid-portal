@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.om.IngridPartner;
 import de.ingrid.portal.om.IngridProvider;
@@ -25,7 +25,7 @@ import de.ingrid.portal.security.permission.IngridProviderPermission;
  */
 public class UtilsSecurity {
 
-    private final static Log log = LogFactory.getLog(UtilsSecurity.class);
+    private final static Logger log = LoggerFactory.getLogger(UtilsSecurity.class);
 
     public final static IngridPortalPermission ADMIN_INGRID_PORTAL_PERMISSION = new IngridPortalPermission("admin", "*");
 

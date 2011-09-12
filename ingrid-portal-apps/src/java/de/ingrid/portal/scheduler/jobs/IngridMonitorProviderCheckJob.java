@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -43,7 +43,7 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 	
 	public static final String JOB_ID 			= "ProviderCheck";
 
-	private final static Log log 				= LogFactory.getLog(IngridMonitorProviderCheckJob.class);
+	private final static Logger log 				= LoggerFactory.getLogger(IngridMonitorProviderCheckJob.class);
 	
 	private final String NEW_LINE_PLAIN			= "\r\n";
 	

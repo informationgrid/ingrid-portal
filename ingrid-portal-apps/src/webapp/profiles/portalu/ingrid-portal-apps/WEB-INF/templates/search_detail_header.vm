@@ -24,7 +24,7 @@
   <meta name="keywords" content="" />
   <meta name="copyright" content="wemove digital solutions GmbH" />
   <meta name="robots" content="index,follow" />
-  <link rel="shortcut icon" href="/ingrid-portal/decorations/layout/ingrid/images/favicon.ico" />
+  <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
 
   #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
   <style type="text/css">
@@ -62,8 +62,8 @@
 
   #* our decorator macros, see ./decorator-macros.vm *#
   <link rel="stylesheet" type="text/css" href="/ingrid-portal-apps/css/claro/claro.css"/>
-  <link href="/ingrid-portal/decorations/layout/ingrid-popup/css/styles.css" media="screen, projection" type="text/css" rel="stylesheet">
-  <link href="/ingrid-portal/decorations/layout/ingrid-popup/css/print.css" media="print" type="text/css" rel="stylesheet" />
+  <link href="/decorations/layout/ingrid-popup/css/styles.css" media="screen, projection" type="text/css" rel="stylesheet">
+  <link href="/decorations/layout/ingrid-popup/css/print.css" media="print" type="text/css" rel="stylesheet" />
 <script language="JavaScript" type="text/javascript">
 var xmlhttp=false;
 /*@cc_on @*/
@@ -95,7 +95,7 @@ if (!xmlhttp && window.createRequest) {
 	}
 }
 if (xmlhttp) {
-	xmlhttp.open('GET', '/ingrid-portal/portal/detect-js.psml?js=1', true);
+	xmlhttp.open('GET', '/portal/detect-js.psml?js=1', true);
     xmlhttp.onreadystatechange = function () {};
     xmlhttp.send(null);
 }	
@@ -118,20 +118,20 @@ self.focus();
 
 <!-- IDENTITY AREA -->
 #set($langCode = '')
-#if($preferedLocale && $preferedLocale.toString() == 'en')
+#if($lang && $lang.toString() == 'en')
 	#set($langCode = "en_")
 #end
 #set($currentPage = $site.getPage().url)
 ##if($currentPage == "/main-maps.psml")
 ##<div id="identity" class="motiv_karten">
 ###elseif($currentPage == "/search-detail.psml")
-<div id="identity" class="motiv_suche">
+<div id="identity" class="${langCode}motiv_suche_detail">
 ###else
 ##<div id="identity" class="motiv_blank">
 ###end
   <!-- LOGO -->
   <div id="logo">
-    <a href="/ingrid-portal/portal/default-page.psml"><img class="image_alt" src="/ingrid-portal/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo PortalU" /></a>
+    <a href="$renderResponse.encodeURL('/portal/default-page.psml')"><img class="image_alt" src="/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo PortalU" /></a>
   </div>
 </div>
 

@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Collections;
 import java.sql.Types;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A class for iterating over the window. The window constitutes the selection
@@ -36,7 +36,7 @@ public class DatabaseBrowserIterator implements BrowserIterator
     /**
      * Static initialization of the logger for this class
      */
-    transient protected Log log = LogFactory.getLog(DatabaseBrowserIterator.class);
+    transient protected Logger log = LoggerFactory.getLogger(DatabaseBrowserIterator.class);
 
     private static final String VELOCITY_NULL_ENTRY = "-";
 

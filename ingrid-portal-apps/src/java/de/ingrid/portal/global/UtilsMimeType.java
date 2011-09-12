@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utils class for get file extension
@@ -18,7 +18,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class UtilsMimeType {
 	
-	private static final Log			log					= LogFactory.getLog(UtilsFileHelper.class);
+	private static final Logger			log					= LoggerFactory.getLogger(UtilsFileHelper.class);
 	private static final String			MIME_TYP_BUNDLE		= "mimetype";
 	
 	private static Map<String, String>	mimeTypeToExtension	= null;

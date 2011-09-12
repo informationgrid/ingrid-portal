@@ -5,12 +5,12 @@
 	#set($partnerHash = $partners.get($key))
 	#set($partner = $partnerHash.partner)
 	#if($partnerHash.providers)
-	#set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-about-partner.psml#$partner.ident"))
+	#set ($link = $renderResponse.encodeURL("/portal/main-about-partner.psml#$partner.ident"))
 	<li><a href="$link">$partner.name</a></li>
 	#end
 #end
 	<br/>
-	#set ($link = $renderResponse.encodeURL("${contextPath}/portal/main-about-partner.psml#databases"))
+	#set ($link = $renderResponse.encodeURL("/portal/main-about-partner.psml#databases"))
     <li><a href="$link">$MESSAGES.getString("showpartner.connected.databases")</a></li>
   </ul>
 #foreach( $key in $partners.keySet() ) 

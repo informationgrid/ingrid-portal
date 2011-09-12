@@ -1,4 +1,4 @@
-#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
+#set ($MESSAGES = $jetspeed.getIngridResourceBundle($portletConfig.getResourceBundle($renderRequest.Locale)))
 
 #* defines URL parameter string *#
 #macro (defineUrlParams)

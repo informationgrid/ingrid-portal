@@ -7,8 +7,8 @@ import java.io.IOException;
 
 import net.weta.components.communication.tcp.TimeoutException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -30,7 +30,7 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 
 	public static final String COMPONENT_TYPE = "component.monitor.general.type.iplug";
 
-	private final static Log log = LogFactory.getLog(IngridMonitorIPlugJob.class);
+	private final static Logger log = LoggerFactory.getLogger(IngridMonitorIPlugJob.class);
 
 	/**
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)

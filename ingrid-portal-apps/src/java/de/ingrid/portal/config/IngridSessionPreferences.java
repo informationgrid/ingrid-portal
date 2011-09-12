@@ -7,8 +7,8 @@ import java.util.HashMap;
 
 import javax.portlet.ActionRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -23,7 +23,7 @@ public class IngridSessionPreferences extends HashMap {
 
     private static final long serialVersionUID = -9079742501129971482L;
 
-    private final static Log log = LogFactory.getLog(Utils.class);
+    private final static Logger log = LoggerFactory.getLogger(Utils.class);
 
     /** attribute name of action form in session */
     public static final String SESSION_KEY = IngridSessionPreferences.class.getName();

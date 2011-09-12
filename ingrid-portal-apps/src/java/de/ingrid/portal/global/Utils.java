@@ -34,8 +34,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.hibernate.cfg.Environment;
@@ -51,7 +51,7 @@ import de.ingrid.portal.forms.ActionForm;
  */
 public class Utils {
 
-	private final static Log log = LogFactory.getLog(Utils.class);
+	private final static Logger log = LoggerFactory.getLogger(Utils.class);
 
 	/**
 	 * Get ActionForm from Session in given scope. Add new one of given Class if

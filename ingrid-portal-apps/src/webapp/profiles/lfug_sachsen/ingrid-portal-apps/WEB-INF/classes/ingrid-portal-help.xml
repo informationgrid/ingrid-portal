@@ -13,7 +13,7 @@
                         <a href="help.psml?hkey=search-1">Suche</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-topics-1">Umweltthemen</a>
+                        <a href="help.psml?hkey=search-topics-1">Themen</a>
                     </li>
                     <li>
                         <a href="help.psml?hkey=search-service-1">Service</a>
@@ -113,9 +113,9 @@
                     <b>Messwerte</b>: SachsenPortalU informiert Sie rund um die Uhr
                     über den aktuellen Zustand Ihrer Umwelt.</p>
                 <p>
-                    <b>Umweltchronik</b>: Wann trat das Kyoto-Protokoll in
+                    <b>Chronik</b>: Wann trat das Kyoto-Protokoll in
                     Kraft? Eine Antwort auf diese und viele andere Fragen zu
-                    historischen Umweltereignissen finden Sie in der Umweltchronik.</p>
+                    historischen Umweltereignissen finden Sie in der Chronik.</p>
             </content>
         </section>
         <section help-key="about-4">
@@ -206,7 +206,7 @@
                         <a href="help.psml?hkey=search-results-1">Suchergebnisliste</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-catalog-1">Datenkataloge</a>
+                        <a href="help.psml?hkey=search-catalog-1">Kataloge</a>
                     </li>
                 </ul>
             </content>
@@ -830,21 +830,21 @@
                 <p>Wenn Sie nach einem Datum suchen, das mit einem
                     umweltrelevanten Ereignis verbunden ist (z.B. die
                     Klimaschutzkonferenz in Kyoto), können Sie über die Angabe
-                    eines Suchbegriffes nach dem Ereignis in der Umweltchronik
+                    eines Suchbegriffes nach dem Ereignis in der Chronik
                     suchen. Sie bekommen alle Ereignisse angezeigt, die über die
                     Suche gefunden wurden. Über die Kopier- und Einfüge-Funktion
                     des Browsers können Sie die angegebenen Daten direkt in das
                     von Ihnen gewünschte Feld des Zeitbezuges einfügen.</p>
             </content>
             <section help-key="ext-search-time-5">
-                <header>Was ist die Umweltchronik?</header>
+                <header>Was ist die Chronik?</header>
                 <content>
-                    <p>Die Umweltchronik ist eine Sammlung aktueller und
+                    <p>Die Chronik ist eine Sammlung aktueller und
                         historischer Ereignisse, die unsere Umweltsituation
                         wesentlich beeinflusst haben. Neben den Daten zu den
                         Ereignissen wird gegebenenfalls ein Kurzbeschreibung der
                         Ereignisse gegeben.</p>
-                    <p>Die Umweltchronik wird über den <a
+                    <p>Die Chronik wird über den <a
                             href="http://www.semantic-network.de/"
                             target="_new">Semantic Network Service (SNS)</a> des
                         Umweltbundesamtes in Dessau zur Verfügung gestellt.</p>
@@ -854,7 +854,7 @@
                 <header>Umweltereignisse</header>
                 <content>
                     <p>Es werden alle Umweltereignisse, die über die Suche in
-                        der Umweltchronik gefunden wurden, mit Titel und Datum
+                        der Chronik gefunden wurden, mit Titel und Datum
                         angezeigt. Durch einen Klick auf das Ereignis oder das
                         davor stehende Pluszeichen <img border="0" width="9"
                             height="9"
@@ -874,8 +874,8 @@
             <header>Inhalte</header>
             <content>
                 <p>An dieser Stelle können Sie festlegen, ob Sie alle
-                    Umweltinformationen (auch Umweltthemen und Service)
-                    durchsuchen wollen, oder ob Sie nur in den Umweltthemen oder
+                    Umweltinformationen (auch Themen und Service)
+                    durchsuchen wollen, oder ob Sie nur in den Themen oder
                     nur in den Service-Seiten (Pressemitteilungen, Publikationen
                     und Veranstaltungen) suchen möchten.</p>
             </content>
@@ -1290,7 +1290,7 @@
                         <td>Ein vom System unterstützter Datentyp, z.B.: dsc_ecs
                             (UDK Daten), dsc_ecs_address (UDK Adressdaten),
                             dsc_other (Andere Datenbanken), service (Service),
-                            measure (Messwerte), topics (Umweltthemen).</td>
+                            measure (Messwerte), topics (Themen).</td>
                     </tr>
                 </table>
             </content>
@@ -1417,11 +1417,11 @@
         </section>
     </chapter>
     <chapter>
-        <header>Datenkataloge</header>
+        <header>Kataloge</header>
         <section help-key="search-catalog-1">
             <header>Hierarchiebaum</header>
             <content>
-                <p>Die angeschlossenen Datenkataloge und deren Inhalte werden in 
+                <p>Die angeschlossenen Kataloge und deren Inhalte werden in 
                 	einem Hierarchie-Baum dargestellt, gegliedert nach Bund/Länder.
                 	In jedem Katalog kann nach Objekten (hier "Umweltinformationen") 
                 	oder Adressen navigiert werden. Die Detaildarstellung eines Eintrags 
@@ -1449,11 +1449,11 @@
         </section>
     </chapter>
     <chapter>
-        <header>Umweltthemen</header>
+        <header>Themen</header>
         <section help-key="search-topics-1">
-            <header>Umweltthemen</header>
+            <header>Themen</header>
             <content>
-                <p>Die Informationen, die als &#8222;Umweltthemen&#8220;
+                <p>Die Informationen, die als &#8222;Themen&#8220;
                     in SachsenPortalU bereitgestellt werden, sind Web-Seiten und
                     UDK-Metadatenobjekte die für ein bestimmtes Umweltthema
                     besonders relevant und interessant sind . Neben dem
@@ -1461,7 +1461,7 @@
                     auch den Type der gewünschten Themenseite (z.B. Daten und
                     Karten) auswählen.</p>
                 <p>Wenn Sie über den Klick auf ein Thema direkt von der
-                    Startseite zu den Umweltthemen gekommen sind, ist das
+                    Startseite zu den Themen gekommen sind, ist das
                     angewählte Thema  bereits voreingestellt und nur
                     Themenseiten zu diesem Thema werden in der Ergebnisliste angezeigt.</p>
             </content>
@@ -1532,7 +1532,7 @@
                 <p>Von diesem Menüpunkt gelangen Sie zu den entsprechenden
                     Seiten der Bundes- und Landesbehörden.</p>
                 <p>Wenn Sie über den Klick auf eine Rubrik direkt von der
-                    Startseite zu den Umweltthemen gekommen sind, ist die
+                    Startseite zu den Themen gekommen sind, ist die
                     Rubrik  bereits vorgewählt und die unter dieser Rubrik zur
                     Verfügung stehenden Seiten werden direkt angezeigt.</p>
             </content>
@@ -1581,7 +1581,7 @@
                 <p>Unter diesem Menüpunkt werden Ihnen die Web-Seiten und
                     Informationssysteme zu Messdaten von Bund- und Ländern angezeigt.</p>
                 <p>Wenn Sie über den Klick auf eine Rubrik direkt von der
-                    Startseite zu den Umweltthemen gekommen sind, ist die
+                    Startseite zu den Themen gekommen sind, ist die
                     Rubrik  bereits vorgewählt und die zur Verfügung stehenden
                     Seiten werden direkt angezeigt.</p>
             </content>

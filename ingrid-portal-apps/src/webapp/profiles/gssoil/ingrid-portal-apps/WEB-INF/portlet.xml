@@ -698,7 +698,7 @@
             <value>/WEB-INF/templates/chronicle_teaser.vm</value>
         </init-param>
         <portlet-name>ChronicleTeaser</portlet-name>
-        <display-name>Umweltchronik Teaser</display-name>
+        <display-name>Chronik Teaser</display-name>
         <description>This portlet displays an anniversary event on the home page.</description>
         <portlet-class>de.ingrid.portal.portlets.ChronicleTeaserPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
@@ -1193,7 +1193,7 @@
             <value>/WEB-INF/templates/environment_search.vm</value>
         </init-param>
         <portlet-name>EnvironmentSearch</portlet-name>
-        <display-name>Umweltthemen</display-name>
+        <display-name>Themen</display-name>
         <description>This portlet displays an environment search box.</description>
         <portlet-class>de.ingrid.portal.portlets.EnvironmentSearchPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
@@ -1210,7 +1210,7 @@
             <value>/WEB-INF/templates/empty.vm</value>
         </init-param>
         <portlet-name>EnvironmentResult</portlet-name>
-        <display-name>Umweltthemen Suchergebnis</display-name>
+        <display-name>Themen Suchergebnis</display-name>
         <description>This portlet displays the search results of the environment topics search (environment topics catalogue).</description>
         <portlet-class>de.ingrid.portal.portlets.EnvironmentResultPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
@@ -1272,7 +1272,7 @@
             <value>/WEB-INF/templates/chronicle_search.vm</value>
         </init-param>
         <portlet-name>ChronicleSearch</portlet-name>
-        <display-name>Umweltchronik</display-name>
+        <display-name>Chronik</display-name>
         <description>This portlet displayes a environment search box.</description>
         <portlet-class>de.ingrid.portal.portlets.ChronicleSearchPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
@@ -1289,7 +1289,7 @@
             <value>/WEB-INF/templates/empty.vm</value>
         </init-param>
         <portlet-name>ChronicleResult</portlet-name>
-        <display-name>Umweltchronik Suchergebnis</display-name>
+        <display-name>Chronik Suchergebnis</display-name>
         <description>This portlet displays the search results of the environment chronicle search.</description>
         <portlet-class>de.ingrid.portal.portlets.ChronicleResultPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>

@@ -3,8 +3,8 @@ package de.ingrid.portal.upgradeclient;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.quartz.JobDetail;
 import org.quartz.SchedulerException;
 
@@ -16,7 +16,7 @@ import de.ingrid.portal.scheduler.jobs.IngridJobHandler;
 import de.ingrid.utils.PlugDescription;
 
 public class UpgradeClient {
-    private final static Log log = LogFactory.getLog(UpgradeClient.class);
+    private final static Logger log = LoggerFactory.getLogger(UpgradeClient.class);
 
     private static final String UNKNOWN_COMPONENT_ID = "MANUAL_COMPONENT_ID";
     
@@ -194,8 +194,13 @@ public class UpgradeClient {
             // add a suffix for address-iPlugs (DSCs)
             if (pd.getPlugId().endsWith("_addr"))
                 component.setName(pd.getDataSourceName() + "(address)");
-            else
-                component.setName(pd.getDataSourceName());
+            else {
+                String name = pd.getDataSourceName();
+                if (name == null || name.trim().isEmpty()) {
+                    name = "(no name)";
+                }
+                component.setName(name);
+            }
             component.setVersion(version);
             component.setIPlug(true);
             //component.setStatus();

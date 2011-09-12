@@ -22,11 +22,11 @@ abstract class SearchExtAdrPlace extends SearchExtAdr {
 
     // PAGES FOR TABS
 
-    protected final static String PAGE_REFERENCE = "/ingrid-portal/portal/search-extended/search-ext-adr-place-reference.psml";
+    protected final static String PAGE_REFERENCE = "/portal/search-extended/search-ext-adr-place-reference.psml";
 
     protected void processTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
         if (tab.equals(PARAMV_TAB_REFERENCE)) {
-            actionResponse.sendRedirect(PAGE_REFERENCE);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_REFERENCE));
         } else {
             super.processTab(actionResponse, tab);
         }

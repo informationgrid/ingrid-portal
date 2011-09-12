@@ -4,7 +4,8 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>ingrid.page.search.catalog</title>
+  <title>ingrid.page.search.catalog.tooltip</title>
+  <short-title>ingrid.page.search.catalog</short-title>
 
 	<fragment id="search-catalog-thesaurus-two-columns" type="layout" name="jetspeed-layouts::IngridTwoColumns">
 	    <fragment id="search-catalog-thesaurus" type="portlet" name="ingrid-portal-apps::SearchCatalogThesaurus">

@@ -4,13 +4,13 @@
 #set ($action = $renderResponse.createActionURL())
 #if(!$ps.isSimilarOpen)
 	$action.setParameter('action','doOpenSimilar')
-        <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>&nbsp;<a href="$action">$MESSAGES.getString('searchSimilar.headline')</a></h3>
+        <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>&nbsp;<a href="$action" title="$MESSAGES.getString('searchSimilar.headline.tooltip')">$MESSAGES.getString('searchSimilar.headline')</a></h3>
 #else
 	$action.setParameter('action','doCloseSimilar')
 	#if($enableSnsLogo)
 	  <span class="float_right snslogo_margin"><a href="http://www.semantic-network.de" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><img src="/ingrid-portal-apps/images/sns_small.gif" width="30" height="23" alt="$MESSAGES.getString('common.alt.icon.sns')" title="$MESSAGES.getString('common.tooltip.link.extern.sns')" /></a></span>
 	#end
-        <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>&nbsp;<a href="$action">$MESSAGES.getString('searchSimilar.headline')</a></h3>
+        <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>&nbsp;<a href="$action" title="$MESSAGES.getString('searchSimilar.headline.tooltip')" >$MESSAGES.getString('searchSimilar.headline')</a></h3>
         <span class="clearer"></span>
         	  <div class="leftmargin">
           	  <table>
@@ -50,8 +50,8 @@
       </div>
 #if($ps.isSimilarOpen)
 	  <div class="formfooter formfooter_border_style">
-        <div align="right">
-          <input class="btn" type="submit" value="$MESSAGES.getString('searchSimilar.add.to.query')" />
+        <div align="right" style="padding-top: 8px;">
+          #renderInputButtonClass($MESSAGES.getString('searchSimilar.add.to.query') "" "" "" "float_right")
         </div>
       </div>
 #end

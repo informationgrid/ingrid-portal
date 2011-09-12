@@ -5,12 +5,12 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UtilsString {
 
-    private final static Log log = LogFactory.getLog(UtilsString.class);
+    private final static Logger log = LoggerFactory.getLogger(UtilsString.class);
 
     // see http://hotwired.lycos.com/webmonkey/reference/special_characters/
     static Object[][] entities = {
@@ -23,7 +23,7 @@ public class UtilsString {
             { "copy", new Integer(169) }, // © - copyright
             { "reg", new Integer(174) }, // ® - registered trademark
             { "Agrave", new Integer(192) }, // À - uppercase A, grave accent
-            { "Aacute", new Integer(193) }, // Á - uppercase A, acute accent
+            { "Aacute", new Integer(193) }, // �? - uppercase A, acute accent
             { "Acirc", new Integer(194) }, // Â - uppercase A, circumflex
             // accent
             { "Atilde", new Integer(195) }, // Ã - uppercase A, tilde
@@ -37,11 +37,11 @@ public class UtilsString {
             // accent
             { "Euml", new Integer(203) }, // Ë - uppercase E, umlaut
             { "Igrave", new Integer(204) }, // Ì - uppercase I, grave accent
-            { "Iacute", new Integer(205) }, // Í - uppercase I, acute accent
+            { "Iacute", new Integer(205) }, // �? - uppercase I, acute accent
             { "Icirc", new Integer(206) }, // Î - uppercase I, circumflex
             // accent
-            { "Iuml", new Integer(207) }, // Ï - uppercase I, umlaut
-            { "ETH", new Integer(208) }, // Ð - uppercase Eth, Icelandic
+            { "Iuml", new Integer(207) }, // �? - uppercase I, umlaut
+            { "ETH", new Integer(208) }, // �? - uppercase Eth, Icelandic
             { "Ntilde", new Integer(209) }, // Ñ - uppercase N, tilde
             { "Ograve", new Integer(210) }, // Ò - uppercase O, grave accent
             { "Oacute", new Integer(211) }, // Ó - uppercase O, acute accent
@@ -55,7 +55,7 @@ public class UtilsString {
             { "Ucirc", new Integer(219) }, // Û - uppercase U, circumflex
             // accent
             { "Uuml", new Integer(220) }, // Ü - uppercase U, umlaut
-            { "Yacute", new Integer(221) }, // Ý - uppercase Y, acute accent
+            { "Yacute", new Integer(221) }, // �? - uppercase Y, acute accent
             { "THORN", new Integer(222) }, // Þ - uppercase THORN, Icelandic
             { "szlig", new Integer(223) }, // ß - lowercase sharps, German
             { "agrave", new Integer(224) }, // à - lowercase a, grave accent

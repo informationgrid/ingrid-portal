@@ -40,10 +40,10 @@ abstract class SearchExtLaw extends GenericVelocityPortlet {
     // START PAGES FOR MAIN TABS
 
     /** page for main tab "topic" */
-    protected final static String PAGE_TOPIC = "/ingrid-portal/portal/search-extended/search-ext-law-topic-terms.psml";
+    protected final static String PAGE_TOPIC = "/portal/search-extended/search-ext-law-topic-terms.psml";
 
     /** page for main tab "search area" */
-    protected final static String PAGE_AREA_PARTNER = "/ingrid-portal/portal/search-extended/search-ext-law-area-partner.psml";
+    protected final static String PAGE_AREA_PARTNER = "/portal/search-extended/search-ext-law-area-partner.psml";
 
     // VARIABLE NAMES FOR VELOCITY
 
@@ -91,9 +91,9 @@ abstract class SearchExtLaw extends GenericVelocityPortlet {
 
     protected void processTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
         if (tab.equals(PARAMV_TAB_TOPIC)) {
-            actionResponse.sendRedirect(PAGE_TOPIC);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_TOPIC));
         } else if (tab.equals(PARAMV_TAB_AREA)) {
-            actionResponse.sendRedirect(PAGE_AREA_PARTNER);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_AREA_PARTNER));
         }
     }
 }

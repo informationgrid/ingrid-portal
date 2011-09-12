@@ -7,3 +7,4 @@
 	#set ($rankedSearchFinished = true)
 	#parse ('/WEB-INF/templates/search_catalog/include_thesaurus_result.vm')
 #end
+</div>

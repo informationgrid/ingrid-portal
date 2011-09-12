@@ -7,8 +7,8 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
@@ -19,7 +19,7 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
 
     private static final long serialVersionUID = 432942374839749234L;
 
-    private final static Log log = LogFactory.getLog(IngridPortalSchedulerServlet.class);
+    private final static Logger log = LoggerFactory.getLogger(IngridPortalSchedulerServlet.class);
 
     Scheduler sched = null;
 
@@ -69,7 +69,7 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
             IBUSInterfaceImpl.shutdown();
             
         } catch (SchedulerException e) {
-            log.fatal("Jetspeed: shutdown() failed: ", e);
+            log.error("Jetspeed: shutdown() failed: ", e);
         }
     }
 

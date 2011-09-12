@@ -7,8 +7,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -40,7 +40,7 @@ public class IngridPersistencePrefs {
 
     public static final String WMC_DOCUMENT = "wmcDocument";
     
-    private final static Log log = LogFactory.getLog(IngridPersistencePrefs.class);
+    private final static Logger log = LoggerFactory.getLogger(IngridPersistencePrefs.class);
 
     private static final XStream xstream;
 

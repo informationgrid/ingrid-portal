@@ -21,8 +21,8 @@ import de.ingrid.portal.om.IngridRSSSource;
  */
 public class ContentRSSPortlet extends ContentPortlet {
 
-    // private final static Log log =
-    // LogFactory.getLog(ContentRSSPortlet.class);
+    // private final static Logger log =
+    // LoggerFactory.getLogger(ContentRSSPortlet.class);
 
     /**
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
@@ -31,7 +31,7 @@ public class ContentRSSPortlet extends ContentPortlet {
         super.init(config);
 
         // set specific stuff in mother class
-        psmlPage = "/ingrid-portal/portal/administration/admin-content-rss.psml";
+        psmlPage = "/portal/administration/admin-content-rss.psml";
         viewDefault = "/WEB-INF/templates/administration/content_rss.vm";
         viewEdit = "/WEB-INF/templates/administration/edit_rss.vm";
         viewNew = "/WEB-INF/templates/administration/edit_rss.vm";

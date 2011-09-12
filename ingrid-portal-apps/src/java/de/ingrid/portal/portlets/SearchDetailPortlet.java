@@ -16,8 +16,8 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
@@ -47,7 +47,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 import de.ingrid.utils.udk.UtilsLanguageCodelist;
 
 public class SearchDetailPortlet extends GenericVelocityPortlet {
-    private final static Log log = LogFactory.getLog(SearchDetailPortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(SearchDetailPortlet.class);
 
     private final static String TEMPLATE_DETAIL_GENERIC = "/WEB-INF/templates/search_detail_generic.vm";
 
@@ -102,6 +102,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
+        context.put("lang", "de".equals(request.getLocale().getCountry().toLowerCase()) ? "" : "en");
 
         // add velocity utils class
         context.put("tool", new UtilsVelocity());

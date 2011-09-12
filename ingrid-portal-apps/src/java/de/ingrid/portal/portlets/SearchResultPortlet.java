@@ -18,8 +18,8 @@ import javax.portlet.PortletException;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
@@ -47,7 +47,7 @@ import de.ingrid.utils.query.IngridQuery;
  */
 public class SearchResultPortlet extends GenericVelocityPortlet {
 
-    private final static Log log = LogFactory.getLog(SearchResultPortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(SearchResultPortlet.class);
 
     /** view templates */
     private final static String TEMPLATE_NO_QUERY_SET = "/WEB-INF/templates/empty.vm";
@@ -651,7 +651,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         }
 
         // redirect to our page wih parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
+        actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)));
     }
 
 }

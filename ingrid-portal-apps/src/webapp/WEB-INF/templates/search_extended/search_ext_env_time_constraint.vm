@@ -9,12 +9,12 @@
           <p>$MESSAGES.getString('searchExtEnvTimeConstraint.explanation')</p>
           <br />
  		      <p>
-            <input type="radio" id="radio_from_to" name="radio_time_select" value="1"#getChecked("radio_time_select" "1") /> 		      
+            <input type="radio" class="radio_button" id="radio_from_to" name="radio_time_select" value="1"#getChecked("radio_time_select" "1") /> 		      
    		      <label for="from">#displayFieldLabel('from' $MESSAGES.getString('searchExtEnvTimeConstraint.label.from'))</label><input class="inputstyletext" id="from" size="10" maxlength="10" name="from" type="text" value="#getFieldValue('from')" />
    		      <label for="to">#displayFieldLabel('to' $MESSAGES.getString('searchExtEnvTimeConstraint.label.to'))</label><input class="inputstyletext" id="to" size="10" maxlength="10" name="to" type="text" value="#getFieldValue('to')" /> &nbsp;$MESSAGES.getString('searchExtEnvTimeConstraint.timeformat')<br />
           </p>
           <p>
-            <input type="radio" id="radio_at" name="radio_time_select" value="2"#getChecked("radio_time_select" "2") />          
+            <input type="radio" class="radio_button" id="radio_at" name="radio_time_select" value="2"#getChecked("radio_time_select" "2") />          
    		      <label for="at">#displayFieldLabel('at' $MESSAGES.getString('searchExtEnvTimeConstraint.label.at'))</label><input class="inputstyletext" id="at" size="10" maxlength="10" name="at" type="text" value="#getFieldValue('at')" /> &nbsp;$MESSAGES.getString('searchExtEnvTimeConstraint.timeformat')<br />
           </p>
  		      <span class="clearer"></span>

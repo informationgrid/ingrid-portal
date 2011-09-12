@@ -58,6 +58,10 @@ public class MyPortalPersonalizeSearchSettingsPortlet extends GenericVelocityPor
             f.clear();
             Principal principal = request.getUserPrincipal();
             HashMap searchSettings = (HashMap)IngridPersistencePrefs.getPref(principal.getName(), IngridPersistencePrefs.SEARCH_SETTINGS);
+            // get default settings if settings never have been set
+            if (searchSettings == null) {
+                searchSettings = Utils.getSessionPreferences(request, IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
+            }
             if (searchSettings != null) {
                 f.setInput(SearchSettingsForm.FIELD_RANKING, (String)searchSettings.get(IngridSessionPreferences.SEARCH_SETTING_RANKING));
                 f.setInput(SearchSettingsForm.FIELD_GROUPING, (String)searchSettings.get(IngridSessionPreferences.SEARCH_SETTING_GROUPING));

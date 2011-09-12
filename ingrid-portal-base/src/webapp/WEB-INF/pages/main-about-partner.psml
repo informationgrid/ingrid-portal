@@ -13,7 +13,7 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
      portlet-decorator="ingrid-teaser"
   />
   <title>About PortalU</title>
-  <metadata name="title" xml:lang="de">&Uuml;ber PortalU</metadata>
+  <!--<metadata name="title" xml:lang="de">&Uuml;ber PortalU</metadata>-->
 
   <fragment id="main-about-partner" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="main-about-partner-1" type="portlet" name="ingrid-portal-apps::ShowPartnerPortlet">

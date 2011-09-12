@@ -23,7 +23,7 @@
     <groupId>de.ingrid.portal</groupId>
     <description>PortalU Portlets Container</description>
     <shortDescription>PortalU Portlets Container</shortDescription>
-    <currentVersion>3.0.2-SNAPSHOT</currentVersion>
+    <currentVersion>3.1.0-SNAPSHOT</currentVersion>
     <dependencies>
         <dependency>
             <groupId>portlet-api</groupId>
@@ -165,7 +165,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-utils</artifactId>
-            <version>3.0.1</version>
+            <version>3.1.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -174,7 +174,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-portal-utils</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>false</war.bundle>
@@ -183,7 +183,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-ibus</artifactId>
-            <version>3.0.1</version>
+            <version>3.1.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -192,7 +192,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-ibus-client</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -201,7 +201,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-iplug</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -210,7 +210,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-iplug-dsc-scripted</artifactId>
-            <version>3.0.1</version>
+            <version>3.1.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -228,7 +228,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-iplug-fpn</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -237,7 +237,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-iplug-se</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -246,7 +246,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-iplug-sns</artifactId>
-            <version>3.0.1</version>
+            <version>3.1.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -264,7 +264,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-iplug-g2k</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -326,7 +326,8 @@
             <type>jar</type>
             <url>http://ibiblio.org/maven</url>
         </dependency>
-        <dependency>
+        <!-- Commons logging is replaced by SLF4J !!! -->
+        <!--<dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>${commons.logging.version}</version>
@@ -334,6 +335,30 @@
             <url>http://jakarta.apache.org/commons/logging.html</url>
             <properties>
                 <war.bundle>${commons.logging.include}</war.bundle>
+            </properties>
+        </dependency>-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.1</version>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.6.1</version>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.6.1</version>
+            <properties>
+                <war.bundle>true</war.bundle>
             </properties>
         </dependency>
         <dependency>

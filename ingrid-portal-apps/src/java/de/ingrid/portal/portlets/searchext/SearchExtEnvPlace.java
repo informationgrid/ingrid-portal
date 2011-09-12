@@ -24,15 +24,15 @@ abstract class SearchExtEnvPlace extends SearchExtEnv {
 
     // PAGES FOR TABS
 
-    protected final static String PAGE_GEOTHESAURUS = "/ingrid-portal/portal/search-extended/search-ext-env-place-geothesaurus.psml";
+    protected final static String PAGE_GEOTHESAURUS = "/portal/search-extended/search-ext-env-place-geothesaurus.psml";
 
-    protected final static String PAGE_MAP = "/ingrid-portal/portal/search-extended/search-ext-env-place-map.psml";
+    protected final static String PAGE_MAP = "/portal/search-extended/search-ext-env-place-map.psml";
 
     protected void processTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
         if (tab.equals(PARAMV_TAB_GEOTHESAURUS)) {
-            actionResponse.sendRedirect(PAGE_GEOTHESAURUS);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_GEOTHESAURUS));
         } else if (tab.equals(PARAMV_TAB_MAP)) {
-            actionResponse.sendRedirect(PAGE_MAP);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_MAP));
         } else {
             super.processTab(actionResponse, tab);
         }

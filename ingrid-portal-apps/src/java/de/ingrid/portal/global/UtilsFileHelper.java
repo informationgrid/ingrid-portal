@@ -18,8 +18,8 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
 import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
@@ -32,7 +32,7 @@ import de.ingrid.utils.dsc.Record;
  */
 public class UtilsFileHelper {
 	
-	private final static Log	log			= LogFactory.getLog(UtilsFileHelper.class);
+	private final static Logger	log			= LoggerFactory.getLogger(UtilsFileHelper.class);
 	
 	public static String		MIME		= "mime";
 	public static String		FILE_TITLE	= "file_title";

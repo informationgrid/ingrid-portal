@@ -5,8 +5,8 @@
 <input type="hidden" name="cmd" value="doLogin" />
 <div class="formbody formbody_border_style">
 		<div class="optional-links">
-			&nbsp;<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="$MESSAGES.getString('login.alt.icon.key')" /><a href="portal/myportal-create-account.psml">$MESSAGES.getString('login.form.newUser')</a>&nbsp;&nbsp;  
-			<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="$MESSAGES.getString('login.alt.icon.key')" /><a href="portal/myportal-password-forgotten.psml">$MESSAGES.getString('login.form.passwdForgotten')</a>
+			&nbsp;<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="$MESSAGES.getString('login.alt.icon.key')" /><a href="portal/myportal-create-account.psml" title="$MESSAGES.getString('login.form.newUser.tooltip')">$MESSAGES.getString('login.form.newUser')</a>&nbsp;&nbsp;  
+			<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="$MESSAGES.getString('login.alt.icon.key')" /><a href="portal/myportal-password-forgotten.psml" title="$MESSAGES.getString('login.form.passwdForgotten.tooltip')">$MESSAGES.getString('login.form.passwdForgotten')</a>
 		</div>
 		<br />
 #displayFormErrors()
@@ -32,7 +32,7 @@
 </div>
 <div class="formfooter formfooter_border_style">
 	<div align="right">
-		<input class="btn" type="submit" value="$MESSAGES.getString('login.form.button.subscribe')" />
+		#renderInputButtonClass($MESSAGES.getString('login.form.button.subscribe') "" "" "" "float_right")
     </div>
 </div>
 </form>

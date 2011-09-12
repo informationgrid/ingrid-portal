@@ -10,7 +10,7 @@ package de.ingrid.portal.portlets.admin;
  */
 public class ContentBrowserState {
 
-    //    private final static Log log = LogFactory.getLog(ContentPortlet.class);
+    //    private final static Logger log = LoggerFactory.getLogger(ContentPortlet.class);
 
     /** the first result to be retrieved, numbered from 0 */
     protected int firstRow = 0;

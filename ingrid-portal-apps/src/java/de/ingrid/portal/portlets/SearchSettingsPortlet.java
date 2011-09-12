@@ -27,7 +27,7 @@ import de.ingrid.portal.global.Utils;
  */
 public class SearchSettingsPortlet extends AbstractVelocityMessagingPortlet {
 
-    //    private final static Log log = LogFactory.getLog(SearchSettingsPortlet.class);
+    //    private final static Logger log = LoggerFactory.getLogger(SearchSettingsPortlet.class);
 
     /* (non-Javadoc)
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)

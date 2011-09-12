@@ -4,7 +4,7 @@ $MESSAGES.getString('contact.newsletter.intro')
 	<form action="$action" method="post" name="contact_newsletter" id="contact_newsletter">
 		<input type="hidden" name="cmd" value="subscribe" />
 
-            <div class="formbody">
+            <div class="formbody formbody_border_style">
 #displayFormErrorsByForm($actionForm1)
               <h2>$MESSAGES.getString('contact.newsletter.form.title')</h2>
               <h3>$MESSAGES.getString('contact.newsletter.form.required')</h3>
@@ -27,7 +27,7 @@ $MESSAGES.getString('contact.newsletter.intro')
             </div>
 	        <div class="formfooter formfooter_border_style">
               <div align="right">
-              <input class="btn" type="submit" value="$MESSAGES.getString('contact.newsletter.form.button.subscribe')" />
+              #renderInputButtonClass ($MESSAGES.getString('contact.newsletter.form.button.subscribe') "" "" $MESSAGES.getString('contact.newsletter.form.button.subscribe.tooltip') "float_right")
               </div>
             </div>
         </form>
@@ -41,7 +41,7 @@ $MESSAGES.getString('contact.newsletter.intro')
     <div class="section">
 		<form action="$action" method="post" name="contact_newsletter_unsubscribe" id="contact_newsletter_unsubscribe">
 		<input type="hidden" name="cmd" value="unsubscribe" />
-		<div class="formbody">
+		<div class="formbody formbody_border_style">
 #displayFormErrorsByForm($actionForm2)
 
             <h2>$MESSAGES.getString('contact.newsletter.form2.title')</h2>
@@ -55,7 +55,7 @@ $MESSAGES.getString('contact.newsletter.intro')
 
 	      <div class="formfooter formfooter_border_style">
             <div align="right">
-            <input class="btn" type="submit" value="$MESSAGES.getString('contact.newsletter.form2.button.unsubscribe')" />
+            	#renderInputButtonClass($MESSAGES.getString('contact.newsletter.form2.button.unsubscribe') "" "" $MESSAGES.getString('contact.newsletter.form2.button.unsubscribe.tooltip') "float_right")
             </div>
           </div>
 		</form>

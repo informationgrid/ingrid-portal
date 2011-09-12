@@ -96,7 +96,7 @@
 			#end
 			<td><a href="$action">$interval</a></td>
 		#else
-        	<td><a href="$action" title="$jobId">$jobData.getString("component.monitor.general.title")</a></td>
+        	<td><a href="$action" title="$jobId">$!jobData.getString("component.monitor.general.title")</a></td>
         	<td><a href="$action">$MESSAGES.getString($jobData.getString("component.monitor.general.type"))</a></td>
 			<td>
             #if($running)
@@ -206,8 +206,8 @@
     	<p class="clearer" />
 	</div>
     <div class="formfooter formfooter_border_style" align="right">
-    	<input class="btn" type="submit" name="doImport" value="$MESSAGES.getString('component.forms.buttons.import.jobs')" />
-		<input class="btn float_left" type="submit" name="doExport" value="$MESSAGES.getString('component.forms.buttons.export.jobs')" />
+			#renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.import.jobs')" "" "doImport" "" "float_right")
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.export.jobs')" "" "doExport" "" "float_left")
     </div>
 </form>
 

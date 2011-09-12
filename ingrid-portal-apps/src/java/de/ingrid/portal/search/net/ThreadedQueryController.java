@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.global.IngridHitsWrapper;
 
@@ -19,7 +19,7 @@ import de.ingrid.portal.global.IngridHitsWrapper;
  */
 public class ThreadedQueryController {
 
-    private final static Log log = LogFactory.getLog(ThreadedQueryController.class);
+    private final static Logger log = LoggerFactory.getLogger(ThreadedQueryController.class);
 
     private Object threadMonitor;
 

@@ -26,19 +26,19 @@ abstract class SearchExtEnvArea extends SearchExtEnv {
 
     // PAGES FOR TABS
 
-    protected final static String PAGE_CONTENTS = "/ingrid-portal/portal/search-extended/search-ext-env-area-contents.psml";
+    protected final static String PAGE_CONTENTS = "/portal/search-extended/search-ext-env-area-contents.psml";
 
-    protected final static String PAGE_SOURCES = "/ingrid-portal/portal/search-extended/search-ext-env-area-sources.psml";
+    protected final static String PAGE_SOURCES = "/portal/search-extended/search-ext-env-area-sources.psml";
 
-    protected final static String PAGE_PARTNER = "/ingrid-portal/portal/search-extended/search-ext-env-area-partner.psml";
+    protected final static String PAGE_PARTNER = "/portal/search-extended/search-ext-env-area-partner.psml";
 
     protected void processTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
         if (tab.equals(PARAMV_TAB_CONTENTS)) {
-            actionResponse.sendRedirect(PAGE_CONTENTS);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_CONTENTS));
         } else if (tab.equals(PARAMV_TAB_SOURCES)) {
-            actionResponse.sendRedirect(PAGE_SOURCES);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SOURCES));
         } else if (tab.equals(PARAMV_TAB_PARTNER)) {
-            actionResponse.sendRedirect(PAGE_PARTNER);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_PARTNER));
         } else {
             super.processTab(actionResponse, tab);
         }

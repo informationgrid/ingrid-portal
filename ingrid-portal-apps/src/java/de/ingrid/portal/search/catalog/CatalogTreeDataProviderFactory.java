@@ -3,8 +3,8 @@
  */
 package de.ingrid.portal.search.catalog;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.search.IPlugVersionInspector;
 
@@ -14,7 +14,7 @@ import de.ingrid.portal.search.IPlugVersionInspector;
  */
 public class CatalogTreeDataProviderFactory {
 
-    private final static Log log = LogFactory.getLog(CatalogTreeDataProviderFactory.class);	
+    private final static Logger log = LoggerFactory.getLogger(CatalogTreeDataProviderFactory.class);	
 	
 	public static CatalogTreeDataProvider getDetailDataPreparer(String version) {
 		

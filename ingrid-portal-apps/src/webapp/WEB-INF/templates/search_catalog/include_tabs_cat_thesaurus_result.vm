@@ -3,18 +3,18 @@
 		#set ($action = $renderResponse.createActionURL())
 		$action.setParameter('action','doChangeTab')
 		#if($tab=='1')
-			<li><a class="selected">$MESSAGES.getString('searchCatThesaurus.result.envInfos')</a></li>
+			<li><a class="selected" title="$MESSAGES.getString('searchCatThesaurus.result.envInfos.tooltip')">$MESSAGES.getString('searchCatThesaurus.result.envInfos')</a></li>
 		#else
 			$action.setParameter('tab','1')
-			<li><a href="$action">$MESSAGES.getString('searchCatThesaurus.result.envInfos')</a></li>
+			<li><a href="$action" title="$MESSAGES.getString('searchCatThesaurus.result.envInfos.tooltip')">$MESSAGES.getString('searchCatThesaurus.result.envInfos')</a></li>
 		#end
 #if($enable_address)
     ## --- Thesaurus Browser Tab ---
     #if($tab=='2')
-		<li><a class="selected">$MESSAGES.getString('searchCatThesaurus.result.addresses')</a></li>
+		<li><a class="selected" title="$MESSAGES.getString('searchCatThesaurus.result.addresses.tooltip')">$MESSAGES.getString('searchCatThesaurus.result.addresses')</a></li>
     #else
 		$action.setParameter('tab','2')
-        <li><a href="$action">$MESSAGES.getString('searchCatThesaurus.result.addresses')</a></li>
+        <li><a href="$action" title="$MESSAGES.getString('searchCatThesaurus.result.addresses.tooltip')">$MESSAGES.getString('searchCatThesaurus.result.addresses')</a></li>
 	#end
 #end
     </ul>

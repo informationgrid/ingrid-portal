@@ -27,8 +27,8 @@ import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpClientParams;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -54,7 +54,7 @@ import de.ingrid.utils.PlugDescription;
  */
 public class UpgradeClientJob extends IngridMonitorAbstractJob {
 
-    protected final static Log log = LogFactory.getLog(UpgradeClientJob.class);
+    protected final static Logger log = LoggerFactory.getLogger(UpgradeClientJob.class);
 
     /**
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -146,6 +146,18 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
                     
                     component.addExtraInfo(IngridComponent.PARTNER_INFO, getTranslatedPartner(allIngridPartnerInDB, pd.getPartners()));
                     component.addExtraInfo(IngridComponent.PROVIDER_INFO, getTranslatedProvider(allIngridProviderInDB, pd.getProviders()));
+                    component.setVersion(pd.getMetadata().getVersion());
+                    // add a suffix for address-iPlugs (DSCs)
+                    if (pd.getPlugId().endsWith("_addr"))
+                        component.setName(pd.getDataSourceName() + "(address)");
+                    else {
+                        String name = pd.getDataSourceName();
+                        if (name == null || name.trim().isEmpty()) {
+                            name = "(no name)";
+                        }
+                        component.setName(name);
+                    }
+                    // pd.getMetadata().getReleaseDate().toString()
                     
                     component.setConnected(STATUS_IS_AVAILABLE);
                 } else {

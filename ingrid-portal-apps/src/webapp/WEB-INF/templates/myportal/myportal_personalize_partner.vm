@@ -1,6 +1,6 @@
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" name="partner" id="extsearch">
-      <div class="formbody">
+      <div class="formbody formbody_border_style">
 		  <br/>
           $MESSAGES.getString('personalize.partner.explanation')
           <div class="line"><hr></div>

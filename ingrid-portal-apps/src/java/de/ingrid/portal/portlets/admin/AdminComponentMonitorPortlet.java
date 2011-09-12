@@ -18,8 +18,8 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
@@ -52,7 +52,7 @@ import de.ingrid.portal.upgradeclient.UpgradeTools;
  */
 public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 
-	private final static Log log = LogFactory.getLog(AdminComponentMonitorPortlet.class);
+	private final static Logger log = LoggerFactory.getLogger(AdminComponentMonitorPortlet.class);
 
 	private static final String VIEW_DEFAULT = "/WEB-INF/templates/administration/component_monitor.vm";
 

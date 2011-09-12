@@ -1,7 +1,7 @@
 <div class="portlet-section-body">
 	<p class="iconLink">
 		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
-		<span><a href="portal/service-contact.psml">$MESSAGES.getString('contact.back')</a></span>
+		<span><a href="$renderResponse.encodeURL('/portal/service-contact.psml')" title="$MESSAGES.getString('contact.back.tooltip')">$MESSAGES.getString('contact.back')</a></span>
 		<span class="clearer"></span>
 	</p>
 </div>

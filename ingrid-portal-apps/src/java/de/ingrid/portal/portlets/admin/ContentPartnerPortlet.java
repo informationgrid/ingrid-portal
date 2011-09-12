@@ -22,7 +22,7 @@ import de.ingrid.portal.om.IngridPartner;
  */
 public class ContentPartnerPortlet extends ContentPortlet {
 
-    //    private final static Log log = LogFactory.getLog(ContentPartnerPortlet.class);
+    //    private final static Logger log = LoggerFactory.getLogger(ContentPartnerPortlet.class);
 
     /**
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
@@ -31,7 +31,7 @@ public class ContentPartnerPortlet extends ContentPortlet {
         super.init(config);
 
         // set specific stuff in mother class
-        psmlPage = "/ingrid-portal/portal/administration/admin-content-partner.psml";
+        psmlPage = "/portal/administration/admin-content-partner.psml";
         viewDefault = "/WEB-INF/templates/administration/content_partner.vm";
         viewEdit = "/WEB-INF/templates/administration/edit_partner.vm";
         viewNew = "/WEB-INF/templates/administration/edit_partner.vm";

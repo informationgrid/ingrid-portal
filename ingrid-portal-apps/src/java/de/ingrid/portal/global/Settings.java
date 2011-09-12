@@ -42,22 +42,22 @@ public class Settings {
     // ===========================================
 
     /** main-search page -> displays and handles simple search, also with results */
-    public final static String PAGE_SEARCH_RESULT = "/ingrid-portal/portal/main-search.psml";
+    public final static String PAGE_SEARCH_RESULT = "/portal/main-search.psml";
 
     /** main-service page -> service catalogue, also displays results */
-    public final static String PAGE_SERVICE = "/ingrid-portal/portal/main-service.psml";
+    public final static String PAGE_SERVICE = "/portal/main-service.psml";
 
     /** main-measures page -> measures catalogue, also displays results */
-    public final static String PAGE_MEASURES = "/ingrid-portal/portal/main-measures.psml";
+    public final static String PAGE_MEASURES = "/portal/main-measures.psml";
 
     /** main-environment page -> environment catalogue, also displays results */
-    public final static String PAGE_ENVIRONMENT = "/ingrid-portal/portal/main-environment.psml";
+    public final static String PAGE_ENVIRONMENT = "/portal/main-environment.psml";
 
     /** main-chronicle page -> environment chronicle, also displays results */
-    public final static String PAGE_CHRONICLE = "/ingrid-portal/portal/main-chronicle.psml";
+    public final static String PAGE_CHRONICLE = "/portal/main-chronicle.psml";
 
     /** contact page */
-    public final static String PAGE_CONTACT = "/ingrid-portal/portal/service-contact.psml";
+    public final static String PAGE_CONTACT = "/portal/service-contact.psml";
 
     // ===========================================
     // IngridQuery

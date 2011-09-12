@@ -14,8 +14,8 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.hibernate.Criteria;
@@ -38,7 +38,7 @@ import de.ingrid.portal.portlets.admin.ContentBrowserState;
 
 public class SaveMapsPortlet extends GenericVelocityPortlet {
 
-	private final static Log log = LogFactory.getLog(SaveMapsPortlet.class);
+	private final static Logger log = LoggerFactory.getLogger(SaveMapsPortlet.class);
 
 	private final static String CONTEXT_UTILS_STRING = "UtilsString";
 
@@ -62,7 +62,7 @@ public class SaveMapsPortlet extends GenericVelocityPortlet {
 
 	private final static String PARAM_SORT_COLUMN = "sortColumn";
 
-	private String psmlPage = "/ingrid-portal/portal/main-maps.psml";
+	private String psmlPage = "/portal/main-maps.psml";
 
 	private Class dbEntityClass = IngridTinyUrlSource.class;
 
@@ -151,7 +151,7 @@ public class SaveMapsPortlet extends GenericVelocityPortlet {
 
 			// redirect to render method WITH URL PARAMS
 			if (psmlPage != null) {
-				actionResponse.sendRedirect(psmlPage + urlViewParams);
+				actionResponse.sendRedirect(actionResponse.encodeURL(psmlPage + urlViewParams));
 			}
 		} catch (Exception ex) {
 			if (log.isErrorEnabled()) {

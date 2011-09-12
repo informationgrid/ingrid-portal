@@ -4,8 +4,8 @@
 	## highest nodes have level 1 ! (only root has level 0)
 	## NOTICE: NO FLOATS IN VELOCITY MATHs ! Use e.g. (3/2) instead ! :-(
 	#set ($leftMargin = ($node.level - 1) * 25)
-	#set ($iconLayerWidth = 40)
-	#set ($textLayerWidth = 863 - $leftMargin - $iconLayerWidth)
+	#set ($iconLayerWidth = 35)
+	#set ($textLayerWidth = 825 - $leftMargin - $iconLayerWidth)
 	<p style="margin-left:${leftMargin}px; clear:left; overflow:hidden">	
 	## UDK Object/Address render params
 	#set($nodeTitle = $MESSAGES.getString($node.getName()))
@@ -20,9 +20,9 @@
 			#set($nodeAlt = $MESSAGES.getString("udk_adr_class_name_${node.udk_class}"))
 		#end
 		#if($node.udk_docId)
-			#set($nodeUrl = "portal/search-detail.psml?plugid=${node.plugId}#if(${node.docId})&docuuid=${node.udk_docId}#end")
+			#set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}#if(${node.docId})&docuuid=${node.udk_docId}#end")
 		#else
-			#set($nodeUrl = "portal/search-detail.psml?plugid=${node.plugId}#if(${node.docId})&docid=${node.docId}#end")
+			#set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}#if(${node.docId})&docid=${node.docId}#end")
 		#end
 	#else
 		#set($nodeIcon = "ico_tree_folder_close.gif")
@@ -76,8 +76,8 @@
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
     	<div class="formfooter formfooter_border_style">
-    		<div align="right">
-    			<input class="btn" type="submit" name="submitReload" value="$MESSAGES.getString('searchCatHierarchy.submit.reload')" />
+    		<div class="float_right">
+    			#renderInputButton($MESSAGES.getString('searchCatHierarchy.submit.reload') "" "submitReload" $MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip'))
     		</div>
     	</div>
 	</form>

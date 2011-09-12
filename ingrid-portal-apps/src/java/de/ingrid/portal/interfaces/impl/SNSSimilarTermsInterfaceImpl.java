@@ -6,8 +6,8 @@ package de.ingrid.portal.interfaces.impl;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.PortalConfig;
@@ -30,7 +30,7 @@ import de.ingrid.utils.tool.SNSUtil;
  */
 public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
-    private final static Log log = LogFactory.getLog(SNSSimilarTermsInterfaceImpl.class);
+    private final static Logger log = LoggerFactory.getLogger(SNSSimilarTermsInterfaceImpl.class);
 
     private static SimilarTermsInterface instance = null;
 
@@ -39,7 +39,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
             try {
                 instance = new SNSSimilarTermsInterfaceImpl();
             } catch (Exception e) {
-                log.fatal("Error initiating the SNSSimilarTerms interface.");
+                log.error("Error initiating the SNSSimilarTerms interface.");
                 e.printStackTrace();
             }
         }

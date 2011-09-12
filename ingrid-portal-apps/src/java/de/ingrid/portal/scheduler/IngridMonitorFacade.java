@@ -9,8 +9,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -31,7 +31,7 @@ import de.ingrid.portal.servlet.IngridComponentMonitorStartListener;
  */
 public class IngridMonitorFacade {
 
-	private final static Log log = LogFactory.getLog(IngridComponentMonitorStartListener.class);
+	private final static Logger log = LoggerFactory.getLogger(IngridComponentMonitorStartListener.class);
 
 	private static IngridMonitorFacade instance = null;
 

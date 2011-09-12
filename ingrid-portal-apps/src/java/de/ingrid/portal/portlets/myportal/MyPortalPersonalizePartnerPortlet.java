@@ -31,7 +31,7 @@ import de.ingrid.portal.search.UtilsSearch;
  */
 public class MyPortalPersonalizePartnerPortlet extends GenericVelocityPortlet {
 
-    protected final static String PAGE_PERSONALIZE_PARTNER = "/ingrid-portal/portal/search-extended/search-ext-env-area-partner.psml";
+    protected final static String PAGE_PERSONALIZE_PARTNER = "/portal/search-extended/search-ext-env-area-partner.psml";
 
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,

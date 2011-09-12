@@ -5,7 +5,11 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>ingrid.page.chronicle</title>
+  <title>ingrid.page.chronicle.tooltip</title>
+  <short-title>ingrid.page.chronicle</short-title>
+  <metadata name="meta_title">ingrid.page.chronicle.meta.title</metadata>
+  <metadata name="meta_descr">ingrid.page.chronicle.meta.description</metadata>
+  <metadata name="meta_keywords">ingrid.page.chronicle.meta.keywords</metadata>
 
   <fragment id="main-chronicle" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="main-chronicle-input" type="portlet" name="ingrid-portal-apps::ChronicleSearch">

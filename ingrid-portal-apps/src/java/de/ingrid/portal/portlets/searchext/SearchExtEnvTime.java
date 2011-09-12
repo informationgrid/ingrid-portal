@@ -22,11 +22,11 @@ abstract class SearchExtEnvTime extends SearchExtEnv {
 
     // PAGES FOR TABS
 
-    protected final static String PAGE_CONSTRAINTS = "/ingrid-portal/portal/search-extended/search-ext-env-time-constraint.psml";
+    protected final static String PAGE_CONSTRAINTS = "/portal/search-extended/search-ext-env-time-constraint.psml";
 
     protected void processTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
         if (tab.equals(PARAMV_TAB_CONSTRAINTS)) {
-            actionResponse.sendRedirect(PAGE_CONSTRAINTS);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_CONSTRAINTS));
         } else {
             super.processTab(actionResponse, tab);
         }

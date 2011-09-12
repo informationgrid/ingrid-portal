@@ -12,12 +12,12 @@
 		</filterchain>
 	</loadfile>
 	<ant:tstamp/>
-	<j:set var="manifestFile" value="${maven.build.dir}/${pom.artifactId}/META-INF/MANIFEST.MF"/>
+	<j:set var="manifestFile" value="${maven.war.build.dir}/ROOT/META-INF/MANIFEST.MF"/>
 	<!-- delete file="${manifestFile}"/ -->
 	<ant:manifest file="${manifestFile}">
 		<attribute name="Build-Timestamp" value="${DSTAMP}${TSTAMP}" />
-		<attribute name="SCM-Revision" value="${svn.version}" />
-		<attribute name="Implementation-Version" value="${pom.currentVersion}" />
+		<attribute name="Build-SVN-Revision" value="${svn.version}" />
+		<attribute name="Build-Version" value="${pom.currentVersion}" />
 	</ant:manifest>
 	<maven:set plugin="maven-war-plugin" property="maven.war.manifest" value="${manifestFile}" />
   </preGoal>
@@ -31,9 +31,9 @@
 	<postGoal name="war:war-resources">
 	    <j:if test="${webSourcesPresent == 'true'}">
 	      <echo message="-----------------------------------------------------------------------"/>
-	      <echo message="ingrid postGoal on 'war:war-resources' -> copy WITH OVERWRITE local ingrid webapp from ${maven.war.src} to ${maven.war.webapp.dir}"/>
+	      <echo message="ingrid postGoal on 'war:war-resources' -> copy WITH OVERWRITE local ingrid webapp from ${maven.war.src} to ${maven.war.build.dir}/ROOT"/>
 	      <echo message="-----------------------------------------------------------------------"/>
-	      <ant:copy todir="${maven.war.webapp.dir}" preservelastmodified="false" overwrite="true" verbose="false">
+	      <ant:copy todir="${maven.war.build.dir}/ROOT" preservelastmodified="false" overwrite="true" verbose="false">
 	        <ant:fileset dir="${maven.war.src}"
 	          includes="${maven.war.src.includes}"
 	          excludes="${maven.war.src.excludes}">
@@ -345,9 +345,9 @@
               file="./src/webapp/WEB-INF/assembly/alternate/interceptors.xml"/>        
 -->
         <copy todir="${maven.build.dir}/classes"
-              file="${maven.build.dir}/ingrid-portal/WEB-INF/assembly/transaction.xml"/>
+              file="${maven.build.dir}/ROOT/WEB-INF/assembly/transaction.xml"/>
         <copy todir="${maven.build.dir}/classes"
-              file="${maven.build.dir}/ingrid-portal/WEB-INF/assembly/alternate/interceptors.xml"/>        
+              file="${maven.build.dir}/ROOT/WEB-INF/assembly/alternate/interceptors.xml"/>        
 <!--
 	    <echo message="maven.dependency.classpath: ${maven.dependency.classpath}"/>
 	    <echo message="maven.build.dest: ${maven.build.dest}"/>
@@ -460,7 +460,7 @@
       <classpath>
         <path refid="classpath"/>
       </classpath>
-        <arg line="-I &quot;${DATAFILE}&quot; -a ./target/${org.apache.jetspeed.portal.artifactId} -b ${temp.assembly.dir}/boot/ -c ${temp.assembly.dir}/ -dc ${org.apache.jetspeed.database.driver} -ds ${org.apache.jetspeed.database.url} -du ${org.apache.jetspeed.database.user} -dp ${org.apache.jetspeed.database.password}"/>  
+        <arg line="-I &quot;${DATAFILE}&quot; -a ${portal.target.dir} -b ${temp.assembly.dir}/boot/ -c ${temp.assembly.dir}/ -dc ${org.apache.jetspeed.database.driver} -ds ${org.apache.jetspeed.database.url} -du ${org.apache.jetspeed.database.user} -dp ${org.apache.jetspeed.database.password}"/>  
     </java>
     </goal>
 

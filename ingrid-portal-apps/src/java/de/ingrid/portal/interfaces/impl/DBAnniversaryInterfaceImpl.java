@@ -7,8 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -26,7 +26,7 @@ import de.ingrid.utils.IngridHitDetail;
  */
 public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
 
-    private final static Log log = LogFactory.getLog(DBAnniversaryInterfaceImpl.class);
+    private final static Logger log = LoggerFactory.getLogger(DBAnniversaryInterfaceImpl.class);
 
     private static AnniversaryInterface instance = null;
 
@@ -35,7 +35,7 @@ public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
             try {
                 instance = new DBAnniversaryInterfaceImpl();
             } catch (Exception e) {
-                log.fatal("Error initiating the WMS interface.");
+                log.error("Error initiating the WMS interface.");
                 e.printStackTrace();
             }
         }

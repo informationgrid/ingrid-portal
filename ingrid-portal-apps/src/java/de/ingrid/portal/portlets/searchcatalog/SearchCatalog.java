@@ -33,10 +33,10 @@ abstract class SearchCatalog extends GenericVelocityPortlet {
     // START PAGES FOR TABS
 
     /** page for tab "hierarchy" */
-    protected final static String PAGE_HIERARCHY = "/ingrid-portal/portal/search-catalog/search-catalog-hierarchy.psml";
+    protected final static String PAGE_HIERARCHY = "/portal/search-catalog/search-catalog-hierarchy.psml";
 
     /** page for tab "thesaurus" */
-    protected final static String PAGE_THESAURUS = "/ingrid-portal/portal/search-catalog/search-catalog-thesaurus.psml";
+    protected final static String PAGE_THESAURUS = "/portal/search-catalog/search-catalog-thesaurus.psml";
 
     // VARIABLE NAMES FOR VELOCITY
 
@@ -61,9 +61,9 @@ abstract class SearchCatalog extends GenericVelocityPortlet {
 
     protected void processTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
         if (tab.equals(PARAMV_TAB_HIERARCHY)) {
-            actionResponse.sendRedirect(PAGE_HIERARCHY);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_HIERARCHY));
         } else if (tab.equals(PARAMV_TAB_THESAURUS)) {
-            actionResponse.sendRedirect(PAGE_THESAURUS);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_THESAURUS));
         }
     }
 }

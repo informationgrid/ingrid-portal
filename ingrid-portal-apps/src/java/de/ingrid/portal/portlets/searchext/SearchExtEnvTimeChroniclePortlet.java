@@ -11,8 +11,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
@@ -46,11 +46,11 @@ import de.ingrid.utils.udk.UtilsDate;
  */
 public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingPortlet {
 
-    private final static Log log = LogFactory.getLog(SearchExtEnvTimeChroniclePortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(SearchExtEnvTimeChroniclePortlet.class);
 
     // PAGES
     /** our current page, for redirecting with URL params */
-    private final static String PAGE_CURRENT = "/ingrid-portal/portal/search-extended/search-ext-env-time-constraint.psml";
+    private final static String PAGE_CURRENT = "/portal/search-extended/search-ext-env-time-constraint.psml";
 
     // URL PARAMETER VALUES
     private final static String PARAMV_VIEW_RESULTS = "results";
@@ -189,7 +189,7 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
 
             // redirect to same page with URL parameter indicating that action was called !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
-            actionResponse.sendRedirect(PAGE_CURRENT + urlViewParam);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_CURRENT + urlViewParam));
 
         } else if (action.equalsIgnoreCase("doOpenEvent")) {
 
@@ -203,7 +203,7 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
 
             // redirect to same page with URL parameter indicating that action was called !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
-            actionResponse.sendRedirect(PAGE_CURRENT + urlViewParam);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_CURRENT + urlViewParam));
 
         } else if (action.equalsIgnoreCase("doCloseEvent")) {
 
@@ -217,7 +217,7 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
 
             // redirect to same page with URL parameter indicating that action was called !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
-            actionResponse.sendRedirect(PAGE_CURRENT + urlViewParam);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_CURRENT + urlViewParam));
         }
 
     }

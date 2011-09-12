@@ -5,8 +5,8 @@ package de.ingrid.portal.forms;
 
 import javax.portlet.PortletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorCSWJob;
@@ -22,7 +22,7 @@ import de.ingrid.portal.scheduler.jobs.IngridMonitorSNSJob;
  */
 public class AdminComponentMonitorForm extends ActionForm {
 
-	private final static Log log = LogFactory.getLog(AdminComponentMonitorForm.class);
+	private final static Logger log = LoggerFactory.getLogger(AdminComponentMonitorForm.class);
 
 	private static final long serialVersionUID = 8335389649101265303L;
 

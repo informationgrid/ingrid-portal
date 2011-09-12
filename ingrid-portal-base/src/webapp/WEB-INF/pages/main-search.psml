@@ -4,7 +4,11 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>ingrid.page.search.free</title>
+  <title>ingrid.page.search.tooltip</title>
+  <short-title>ingrid.page.search</short-title>
+  <metadata name="meta_title">ingrid.page.search.meta.title</metadata>
+  <metadata name="meta_descr">ingrid.page.search.meta.description</metadata>
+  <metadata name="meta_keywords">ingrid.page.search.meta.keywords</metadata>
 
     <fragment id="main-search" type="layout" name="jetspeed-layouts::IngridOneColumn">
         <fragment id="main-search-two-columns" type="layout" name="jetspeed-layouts::IngridTwoColumns">

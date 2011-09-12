@@ -1,29 +1,33 @@
 <div class="portlet-section-body">
 $cmsItemValue
-
 </div>
-	
+#if($showNewsletter && $enableNewsletter)
+<div class="portlet-section-body">
+    <p id="getNewsletter"><strong>$MESSAGES.getString('teaser.newsletter.visit.text.part1') <a href="$renderResponse.encodeURL('http://www.kst.portalu.de/newsletter/PortalU-Newsletter_2010_dez.html')" target="_new" title="$MESSAGES.getString('teaser.newsletter.visit.text.part2.tooltip')">$MESSAGES.getString('teaser.newsletter.visit.text.part2')</a>!</strong></p>
+</div>
+#end
+    
 #if($version)
 <div>
     #foreach($v in $version)
         #if($tool.hasContent($v))
-			<p>
-				#if($tool.hasContent($v.title))
-					<b>$v.title</b>
-					<br/>
-				#end	
-				#if($tool.hasContent($v.svn_version))
-					Revision: $v.svn_version
-					<br/>
-				#end
-				#if($tool.hasContent($v.build_time))
-					Build-Time: $v.build_time
-					<br/>
-				#end
-				#if($tool.hasContent($v.project_version))
-					Project-Version: $v.project_version
-					<br/>
-				#end
+            <p>
+                #if($tool.hasContent($v.title))
+                    <b>$v.title</b>
+                    <br/>
+                #end    
+                #if($tool.hasContent($v.svn_version))
+                    Revision: $v.svn_version
+                    <br/>
+                #end
+                #if($tool.hasContent($v.build_time))
+                    Build-Time: $v.build_time
+                    <br/>
+                #end
+                #if($tool.hasContent($v.project_version))
+                    Project-Version: $v.project_version
+                    <br/>
+                #end
             </p>
         #end
     #end

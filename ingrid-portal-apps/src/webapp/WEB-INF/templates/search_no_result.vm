@@ -10,7 +10,7 @@
                 	document.write("<a href=\"javascript:ingrid_openWindow('portal/help.psml?hkey=search-tipps-1',750,550);\">$MESSAGES.getString('searchSimple.search.tips')</a>");
                 </script>
                 <noscript>
-                	<a href="portal/help.psml?hkey=search-tipps-1" target="_new">$MESSAGES.getString('searchSimple.search.tips')</a>
+                	<a href="$renderResponse.encodeURL('/portal/help.psml?hkey=search-tipps-1')" target="_new">$MESSAGES.getString('searchSimple.search.tips')</a>
                 </noscript>
 			  </li>
               <li>$MESSAGES.getString('searchResult.results.noResult4')</li>

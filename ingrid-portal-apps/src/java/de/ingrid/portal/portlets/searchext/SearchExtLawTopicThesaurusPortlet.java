@@ -204,7 +204,7 @@ public class SearchExtLawTopicThesaurusPortlet extends SearchExtLawTopic {
             
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_THESAURUS + urlViewParam));
 
         } else if (action.equalsIgnoreCase("doOpenNode")) {
             similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
@@ -214,7 +214,7 @@ public class SearchExtLawTopicThesaurusPortlet extends SearchExtLawTopic {
             }
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_THESAURUS + urlViewParam));
         } else if (action.equalsIgnoreCase("doCloseNode")) {
             similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
             if (similarRoot != null) {
@@ -225,7 +225,7 @@ public class SearchExtLawTopicThesaurusPortlet extends SearchExtLawTopic {
             }
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_RESULTS);
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_THESAURUS + urlViewParam));
         } else if (submittedAddToQuery != null) {
 
             // Zur Suchanfrage hinzufuegen
@@ -290,7 +290,7 @@ public class SearchExtLawTopicThesaurusPortlet extends SearchExtLawTopic {
             } else if (currView.equals(TEMPLATE_SYNONYM)) {
                 urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_SYNONYM);
             }
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_THESAURUS + urlViewParam));
 
         } else if (action.equalsIgnoreCase("doBrowseFromTree")) {
 
@@ -304,7 +304,7 @@ public class SearchExtLawTopicThesaurusPortlet extends SearchExtLawTopic {
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_BROWSE);
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_THESAURUS + urlViewParam));
 
         } else if (action.equalsIgnoreCase("doBrowse")) {
 
@@ -325,7 +325,7 @@ public class SearchExtLawTopicThesaurusPortlet extends SearchExtLawTopic {
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_BROWSE);
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_THESAURUS + urlViewParam));
             
         } else if (action.equalsIgnoreCase("doSynonym")) {
 
@@ -354,7 +354,7 @@ public class SearchExtLawTopicThesaurusPortlet extends SearchExtLawTopic {
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_SYNONYM);
-            actionResponse.sendRedirect(PAGE_THESAURUS + urlViewParam);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_THESAURUS + urlViewParam));
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
             // changed main or sub tab

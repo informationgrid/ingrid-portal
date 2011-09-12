@@ -12,7 +12,11 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>ingrid.page.about</title>
+  <title>ingrid.page.about.tooltip</title>
+  <short-title>ingrid.page.about</short-title>
+  <metadata name="meta_title">ingrid.page.about.meta.title</metadata>
+  <metadata name="meta_descr">ingrid.page.about.meta.description</metadata>
+  <metadata name="meta_keywords">ingrid.page.about.meta.keywords</metadata>
 
   <fragment id="main-about" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="main-about-1" type="portlet" name="ingrid-portal-apps::CMSPortlet">

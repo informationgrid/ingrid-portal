@@ -12,6 +12,6 @@
         #end
     </select>
     <noscript>
-        <input class="btn" type="submit" style="padding:0;vertical-align:top;margin-top:1px;font-size:80%;" value=">" />
+        <input class="btn" type="submit" style="padding:0;vertical-align:top;margin-top:1px;font-size:80%; color: #000000; height: 20px;" value=">" />
     </noscript>
 </form>

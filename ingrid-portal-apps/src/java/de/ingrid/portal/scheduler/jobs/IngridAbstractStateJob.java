@@ -3,8 +3,8 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.SchedulerException;
@@ -17,7 +17,7 @@ import org.quartz.StatefulJob;
  */
 public abstract class IngridAbstractStateJob implements StatefulJob {
 
-	private final static Log log = LogFactory.getLog(IngridAbstractStateJob.class);
+	private final static Logger log = LoggerFactory.getLogger(IngridAbstractStateJob.class);
 
 	public static final int STATUS_OK = 0;
 

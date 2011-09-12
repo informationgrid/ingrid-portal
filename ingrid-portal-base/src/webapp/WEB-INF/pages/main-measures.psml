@@ -4,7 +4,11 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>ingrid.page.measures</title>
+  <title>ingrid.page.measures.tooltip</title>
+  <short-title>ingrid.page.measures</short-title>
+  <metadata name="meta_title">ingrid.page.measures.meta.title</metadata>
+  <metadata name="meta_descr">ingrid.page.measures.meta.description</metadata>
+  <metadata name="meta_keywords">ingrid.page.measures.meta.keywords</metadata>
 
   <fragment id="main-measures" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="main-measures-input" type="portlet" name="ingrid-portal-apps::MeasuresSearch">

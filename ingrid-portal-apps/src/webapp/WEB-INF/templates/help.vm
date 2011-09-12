@@ -1,7 +1,7 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="popupContent">
   <p class="optional-links">
-    <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="help.psml?hkey=index">$MESSAGES.getString('help.startpage')</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$renderResponse.encodeURL('/portal/help.psml?hkey=index')">$MESSAGES.getString('help.startpage')</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="javascript:window.close()">$MESSAGES.getString('help.close')</a>
   </p>
   <p class="clearer"></p> 

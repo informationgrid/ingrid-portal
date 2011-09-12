@@ -13,8 +13,8 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.IngridResourceBundle;
@@ -34,7 +34,7 @@ import de.ingrid.utils.udk.UtilsDate;
  */
 public class DetailDataPreparerIdc1_0_5Address implements DetailDataPreparer {
 
-    private final static Log log = LogFactory.getLog(DetailDataPreparerIdc1_0_5Address.class);
+    private final static Logger log = LoggerFactory.getLogger(DetailDataPreparerIdc1_0_5Address.class);
 
 	private Context context;
 	private String iPlugId;

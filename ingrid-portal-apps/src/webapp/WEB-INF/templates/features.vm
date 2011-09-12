@@ -1,0 +1,177 @@
+#set ($action = $renderResponse.createActionURL())
+
+<p style="width:72em;">$MESSAGES.getString('feature.intro.text')</p>
+<div class="portlet_feature_info_boxes">
+<div class="portlet_feature_info_big portlet_feature_info_padding">
+    <div class="portlet_feature_info_top_big"></div>
+    <div class="portlet_feature">
+        <div class="portlet_feature_info_body">
+            <h1 class="info_title"><a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doSearch" title="$MESSAGES.getString('feature.show.examples.tooltip')">$MESSAGES.getString('feature.searchSimple.info.title')</a></h1>
+            <span class="clearer"><img class="info_img_line" src="/ingrid-portal-apps/images/portlet_feature_info_line_big.png"/></span>
+            <img class="info_img" src="/ingrid-portal-apps/images/search_info.png"/>
+            #if($MESSAGES.getString('feature.searchSimple.info.subtitle') != "" && $MESSAGES.getString('feature.searchSimple.info.subtitle').length() > 0)
+                <p class="info_subtitle">$MESSAGES.getString('feature.searchSimple.info.subtitle')</p>
+            #end
+            #if($MESSAGES.getString('feature.searchSimple.info.body') != "" && $MESSAGES.getString('feature.searchSimple.info.body').length() > 0)
+                <p class="info_body float_left">$MESSAGES.getString('feature.searchSimple.info.body')</p>
+            #end
+            <p class="info_link bottom_align">
+                <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>
+                <span><a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doSearch" title="$MESSAGES.getString('feature.show.examples.tooltip')">$MESSAGES.getString('feature.searchSimple.info.link')</a></span>
+                <span class="clearer"></span>
+            </p>
+        </div>
+    </div>
+    <div class="portlet_feature_info_bottom_big"></div>
+</div>
+
+#if($enableTopic)
+<div class="portlet_feature_info portlet_feature_info_padding">
+    <div class="portlet_feature_info_top"></div>
+    <div class="portlet_feature">
+        <div class="portlet_feature_info_body">
+            <h1 class="info_title"><a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doEnvironment" title="$MESSAGES.getString('feature.show.examples.tooltip')">$MESSAGES.getString('feature.envSearch.info.title')</a></h1>
+            <span class="clearer"><img class="info_img_line" src="/ingrid-portal-apps/images/portlet_feature_info_line.png"/></span>
+            <img class="info_img" src="/ingrid-portal-apps/images/topic_info.png"/>
+            #if($MESSAGES.getString('feature.envSearch.info.subtitle') != "" && $MESSAGES.getString('feature.envSearch.info.subtitle').length() > 0)
+                <p class="info_subtitle">$MESSAGES.getString('feature.envSearch.info.subtitle')</p>
+            #end
+            #if($MESSAGES.getString('feature.envSearch.info.body') != "" && $MESSAGES.getString('feature.envSearch.info.body').length() > 0)
+                <p class="info_body float_left">$MESSAGES.getString('feature.envSearch.info.body')</p>
+            #end
+            <p class="info_link bottom_align">
+                <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>
+                <span><a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doEnvironment" title="$MESSAGES.getString('feature.show.examples.tooltip')">$MESSAGES.getString('feature.envSearch.info.link')</a></span>
+                <span class="clearer"></span>
+            </p>
+        </div>
+    </div>
+    <div class="portlet_feature_info_bottom"></div>
+</div>
+#end
+
+#if($enableMeasure)
+<div class="portlet_feature_info portlet_feature_info_padding">
+    <div class="portlet_feature_info_top"></div>
+    <div class="portlet_feature ">
+        <div class="portlet_feature_info_body">
+            <h1 class="info_title"><a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doMeasures" title="$MESSAGES.getString('feature.show.examples.tooltip')">$MESSAGES.getString('feature.measuresSearch.info.title')</a></h1>
+            <span class="clearer"><img class="info_img_line" src="/ingrid-portal-apps/images/portlet_feature_info_line.png"/></span>
+            <img class="info_img" src="/ingrid-portal-apps/images/measure_info.png"/>
+            #if($MESSAGES.getString('feature.measuresSearch.info.subtitle') != "" && $MESSAGES.getString('feature.measuresSearch.info.subtitle').length() > 0)
+                <p class="info_subtitle">$MESSAGES.getString('feature.measuresSearch.info.subtitle')</p>
+            #end
+            #if($MESSAGES.getString('feature.measuresSearch.info.body') != "" && $MESSAGES.getString('feature.measuresSearch.info.body').length() > 0)
+                <p class="info_body float_left">$MESSAGES.getString('feature.measuresSearch.info.body')</p>
+            #end
+            <p class="info_link bottom_align">
+                <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>
+                <span><a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doMeasures" title="$MESSAGES.getString('feature.show.examples.tooltip')">$MESSAGES.getString('feature.measuresSearch.info.link')</a></span>
+                <span class="clearer"></span>
+            </p>
+        </div>
+    </div>
+    <div class="portlet_feature_info_bottom"></div>
+</div>
+#end
+
+#if($enableService)
+<div class="portlet_feature_info portlet_feature_info_padding">
+    <div class="portlet_feature_info_top"></div>
+    <div class="portlet_feature">
+        <div class="portlet_feature_info_body">
+            <h1 class="info_title"><a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doService" title="$MESSAGES.getString('feature.show.examples.tooltip')">$MESSAGES.getString('feature.serviceSearch.info.title')</a></h1>
+            <span class="clearer"><img class="info_img_line" src="/ingrid-portal-apps/images/portlet_feature_info_line.png"/></span>
+            <img class="info_img" src="/ingrid-portal-apps/images/service_info.png"/>
+            #if($MESSAGES.getString('feature.serviceSearch.info.subtitle') != "" && $MESSAGES.getString('feature.serviceSearch.info.subtitle').length() > 0)
+                <p class="info_subtitle">$MESSAGES.getString('feature.serviceSearch.info.subtitle')</p>
+            #end
+            #if($MESSAGES.getString('feature.serviceSearch.info.body') != "" && $MESSAGES.getString('feature.serviceSearch.info.body').length() > 0)
+                <p class="info_body float_left">$MESSAGES.getString('feature.serviceSearch.info.body')</p>
+            #end
+            <p class="info_link bottom_align">
+                <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>
+                <span><a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doService" title="$MESSAGES.getString('feature.show.examples.tooltip')">$MESSAGES.getString('feature.serviceSearch.info.link')</a></span>
+                <span class="clearer"></span>
+            </p>
+        </div>
+    </div>
+    <div class="portlet_feature_info_bottom"></div>
+</div>
+#end
+
+#if($enableSearchCatalog || $enableSearchCatalogThesaurus)
+<div class="portlet_feature_info portlet_feature_info_padding">
+    <div class="portlet_feature_info_top"></div>
+    <div class="portlet_feature">
+        <div class="portlet_feature_info_body">
+            <h1 class="info_title"><a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doCatalog" title="$MESSAGES.getString('feature.show.examples.tooltip')">$MESSAGES.getString('feature.catalogSearch.info.title')</a></h1>
+            <span class="clearer"><img class="info_img_line" src="/ingrid-portal-apps/images/portlet_feature_info_line.png"/></span>
+            <img class="info_img" src="/ingrid-portal-apps/images/catalog_info.png"/>
+            #if($MESSAGES.getString('feature.catalogSearch.info.subtitle') != "" && $MESSAGES.getString('feature.catalogSearch.info.subtitle').length() > 0)
+                <p class="info_subtitle">$MESSAGES.getString('feature.catalogSearch.info.subtitle')</p>
+            #end
+            #if($MESSAGES.getString('feature.catalogSearch.info.body') != "" && $MESSAGES.getString('feature.catalogSearch.info.body').length() > 0)
+                <p class="info_body float_left">$MESSAGES.getString('feature.catalogSearch.info.body')</p>
+            #end
+            <p class="info_link bottom_align">
+                <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>
+                <span><a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doCatalog" title="$MESSAGES.getString('feature.show.examples.tooltip')">$MESSAGES.getString('feature.catalogSearch.info.link')</a></span>
+                <span class="clearer"></span>
+            </p>
+         </div>
+    </div>
+    <div class="portlet_feature_info_bottom"></div>
+</div>
+#end
+
+#if($enableMaps)
+<div class="portlet_feature_info portlet_feature_info_padding">
+    <div class="portlet_feature_info_top"></div>
+    <div class="portlet_feature">
+        <div class="portlet_feature_info_body">
+            <h1 class="info_title"><a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doMap" title="$MESSAGES.getString('feature.show.examples.tooltip')">$MESSAGES.getString('feature.mapSearch.info.title')</a></h1>
+            <span class="clearer"><img class="info_img_line" src="/ingrid-portal-apps/images/portlet_feature_info_line.png"/></span>
+            <img class="info_img" src="/ingrid-portal-apps/images/map_info.png"/>
+            #if($MESSAGES.getString('feature.mapSearch.info.subtitle') != "" && $MESSAGES.getString('feature.mapSearch.info.subtitle').length() > 0)
+                <p class="info_subtitle">$MESSAGES.getString('feature.mapSearch.info.subtitle')</p>
+            #end
+            #if($MESSAGES.getString('feature.mapSearch.info.body') != "" && $MESSAGES.getString('feature.mapSearch.info.body').length() > 0)
+                <p class="info_body float_left">$MESSAGES.getString('feature.mapSearch.info.body')</p>
+            #end
+            <p class="info_link bottom_align">
+                <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>
+                <span><a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doMap" title="$MESSAGES.getString('feature.show.examples.tooltip')">$MESSAGES.getString('feature.mapSearch.info.link')</a></span>
+                <span class="clearer"></span>
+            </p>
+        </div>
+    </div>
+    <div class="portlet_feature_info_bottom"></div>
+</div>
+#end
+
+#if($enableChronicle)
+<div class="portlet_feature_info portlet_feature_info_padding">
+    <div class="portlet_feature_info_top"></div>
+    <div class="portlet_feature">
+        <div class="portlet_feature_info_body">
+            <h1 class="info_title"><a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doChronicle" title="$MESSAGES.getString('feature.show.examples.tooltip')">$MESSAGES.getString('feature.chronicleSearch.info.title')</a></h1>
+            <span class="clearer"><img class="info_img_line" src="/ingrid-portal-apps/images/portlet_feature_info_line.png"/></span>
+            <img class="info_img" src="/ingrid-portal-apps/images/chronicle_info.png"/>
+            #if($MESSAGES.getString('feature.chronicleSearch.info.subtitle') != "" && $MESSAGES.getString('feature.chronicleSearch.info.subtitle').length() > 0)
+                <p class="info_subtitle">$MESSAGES.getString('feature.chronicleSearch.info.subtitle')</p>
+            #end
+            #if($MESSAGES.getString('feature.chronicleSearch.info.body') != "" && $MESSAGES.getString('feature.chronicleSearch.info.body').length() > 0)
+                <p class="info_body float_left">$MESSAGES.getString('feature.chronicleSearch.info.body')</p>
+            #end
+            <p class="info_link bottom_align">
+                <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>
+                <span><a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doChronicle" title="$MESSAGES.getString('feature.show.examples.tooltip')">$MESSAGES.getString('feature.chronicleSearch.info.link')</a></span>
+                <span class="clearer"></span>
+            </p>
+        </div>
+    </div>
+    <div class="portlet_feature_info_bottom"></div>
+</div>
+#end
+</div>

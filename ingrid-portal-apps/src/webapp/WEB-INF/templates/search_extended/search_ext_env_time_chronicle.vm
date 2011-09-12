@@ -8,7 +8,7 @@
           <p><label class="alignleft" for="search_term">$MESSAGES.getString('searchExtEnvTimeChronicle.label.terms')</label></p>
           <div class="innerform">
             <input class="thesaurus_term float_left inputstyletext" type="text" name="search_term" id="search_term" value="#getFieldValue('search_term')" />
-            <input class="btn float_right" type="submit" value="$MESSAGES.getString('searchExtEnvTimeChronicle.submit')" />
+            #renderInputButton($MESSAGES.getString('searchExtEnvTimeChronicle.submit') "float:right" "" "")
             <span class="clearer"></span>
 #if($ps && $ps.similarRoot.getChildren().size() > 0)
             <br />

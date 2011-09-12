@@ -10,8 +10,8 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
 
@@ -33,7 +33,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
 
-    private final static Log log = LogFactory.getLog(ServiceSearchPortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(ServiceSearchPortlet.class);
 
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
@@ -194,7 +194,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         af.populate(request);
 
         // redirect to our page with URL parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_SERVICE + SearchState.getURLParamsCatalogueSearch(request, null));
+        actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SERVICE + SearchState.getURLParamsCatalogueSearch(request, null)));
     }
 
     public void setupQuery(PortletRequest request) {
@@ -218,7 +218,9 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
                             Settings.QVALUE_DATATYPE_AREA_SERVICE));
 
             // Language
-            UtilsSearch.processLanguage(query, request.getLocale());
+            if(!PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_LANGUAGE_INDEPENDENT, false)){
+               UtilsSearch.processLanguage(query, request.getLocale());
+            }
 
             // RUBRIC
             String queryValue = null;

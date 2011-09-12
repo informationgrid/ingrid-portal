@@ -3,13 +3,13 @@
     #if($MESSAGES.getString('chronicleSearch.info.link') != "" && $MESSAGES.getString('chronicleSearch.info.link').length() > 0)
     <p class="iconLink">
     	<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>
-    	<span><a href="http://www.semantic-network.de" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$MESSAGES.getString('chronicleSearch.info.link')</a></span>
+    	<span><a href="http://www.semantic-network.de" target="_new" title="$MESSAGES.getString('common.chronicle.info.tooltip')">$MESSAGES.getString('chronicleSearch.info.link')</a></span>
     	<span class="clearer"></span>
     </p>
 	#end
 	<p>
     	<span class="icon"></span>
-    	<span><a href="http://www.semantic-network.de" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><img src="/ingrid-portal-apps/images/sns_big.gif" width="84" height="31" alt="$MESSAGES.getString('chronicleSearch.info.sns.alt')" title="$MESSAGES.getString('chronicleSearch.info.sns.tooltip')" /></a></span>
+    	<span><a href="http://www.semantic-network.de" target="_new" title="$MESSAGES.getString('common.chronicle.info.tooltip')"><img src="/ingrid-portal-apps/images/sns_big.gif" width="84" height="31" alt="$MESSAGES.getString('chronicleSearch.info.sns.alt')" title="$MESSAGES.getString('chronicleSearch.info.sns.tooltip')" /></a></span>
     	<span class="clearer"></span>
 	</p>
 </div>

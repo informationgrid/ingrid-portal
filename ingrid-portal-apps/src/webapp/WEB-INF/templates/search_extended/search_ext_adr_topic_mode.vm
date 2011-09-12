@@ -3,21 +3,21 @@
 #parse ('/WEB-INF/templates/search_extended/include_adr_topic_tabs.vm')
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" enctype="" name="xx" id="extsearch">
-      <div class="formbody">
+      <div class="formbody formbody_border_style">
           <p>$MESSAGES.getString('searchExtAdrTopicMode.explanation')</p>
           <div class="innerform">
             <h3>$MESSAGES.getString('searchExtAdrTopicMode.title.mode')</h3>
             <div class="intend">
               <p>
-                <input type="radio" value="2" checked="checked" name="search_mode" id="search_word" /><label for="search_word">$MESSAGES.getString('searchExtAdrTopicMode.label.mode2')</label>
-                <input type="radio" value="1" name="search_mode" id="search_like" /><label for="search_like">$MESSAGES.getString('searchExtAdrTopicMode.label.mode1')</label>
+                <input type="radio" class="radio_button" value="2" checked="checked" name="search_mode" id="search_word" title="$MESSAGES.getString('searchExtAdrTopicMode.label.mode2.tooltip')" /><label for="search_word" title="$MESSAGES.getString('searchExtAdrTopicMode.label.mode2.tooltip')" >$MESSAGES.getString('searchExtAdrTopicMode.label.mode2')</label>
+                <input type="radio" class="radio_button" value="1" name="search_mode" id="search_like" title="$MESSAGES.getString('searchExtAdrTopicMode.label.mode1.tooltip')" /><label for="search_like" title="$MESSAGES.getString('searchExtAdrTopicMode.label.mode1.tooltip')" >$MESSAGES.getString('searchExtAdrTopicMode.label.mode1')</label>
               </p>
             </div>
             <p></p>
             <h3>$MESSAGES.getString('searchExtAdrTopicMode.title.fields')</h3>
             <div class="intend">
-                <p><input type="radio" value="1" checked="checked" name="search_scope" id="search_all_fields" /><label for="search_all_fields">$MESSAGES.getString('searchExtAdrTopicMode.label.fields1')</label></p>
-                <p><input type="radio" value="2" name="search_scope" id="search_some_fields" /><label for="search_some_fields">$MESSAGES.getString('searchExtAdrTopicMode.label.fields2')</label></p>
+                <p><input type="radio" class="radio_button" value="1" checked="checked" name="search_scope" id="search_all_fields" /><label for="search_all_fields">$MESSAGES.getString('searchExtAdrTopicMode.label.fields1')</label></p>
+                <p><input type="radio" class="radio_button" value="2" name="search_scope" id="search_some_fields" /><label for="search_some_fields">$MESSAGES.getString('searchExtAdrTopicMode.label.fields2')</label></p>
             </div>  
           </div>  
       </div>      

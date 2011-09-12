@@ -7,8 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
@@ -37,7 +37,7 @@ public class IngridMonitorRSSFetcherJob extends IngridMonitorAbstractJob {
 	
 	public static final String JOB_ID = "RSS-Fetcher-Monitor";
 
-	private final static Log log = LogFactory.getLog(IngridMonitorRSSFetcherJob.class);
+	private final static Logger log = LoggerFactory.getLogger(IngridMonitorRSSFetcherJob.class);
 
 	/**
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)

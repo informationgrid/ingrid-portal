@@ -3,13 +3,12 @@
 #parse ('/WEB-INF/templates/search_extended/include_env_place_tabs.vm')
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" name="env_place_map" id="env_place_map">
-      <div class="formbody" style="background-color:white">
+      <div class="formbody formbody_map formbody_border_style" style="background-color:white">
         <iframe src="$wmsURL" style="width:100%;height:676px;border:0;" name="wms_viewer" marginheight="0" marginwidth="0" frameborder="0">
 			$MESSAGES.getString('searchExtEnvPlaceMap.noIFrames')
         </iframe>
         <div class="line" style="width:33em"><hr /></div>
-        <div class="float_right rightmargin">
-      </div>
+        <div class="float_right rightmargin"></div>
 		  #displayFormErrors()
           <h3>$MESSAGES.getString('searchExtEnvPlaceMap.title.constraint')</h3>
           <p>
@@ -18,6 +17,10 @@
           <input id="chk_3" name="chk_3" type="checkbox"#getChecked("chk_3" "on") /><label for="chk_3">$MESSAGES.getString('searchExtEnvPlaceMap.label.constraint3')</label><br />
           </p>
       </div>      
-#parse ('/WEB-INF/templates/search_extended/include_addToQuery.vm')
+	  <div class="formfooter formfooter_border_style formfooter_border_style_top">
+	      <div align="right">
+	        #renderInputButtonClass($MESSAGES.getString('searchExt.submit.addToQuery') "" "submitAddToQuery" $MESSAGES.getString('searchExt.submit.addToQuery.tooltip') "float_right")
+	      </div>
+      </div>
     </form>
   </div>    

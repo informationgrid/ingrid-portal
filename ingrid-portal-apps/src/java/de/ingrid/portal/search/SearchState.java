@@ -5,8 +5,8 @@ package de.ingrid.portal.search;
 
 import javax.portlet.PortletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.portals.messaging.PortletMessaging;
 
 import de.ingrid.portal.forms.ActionForm;
@@ -20,7 +20,7 @@ import de.ingrid.portal.global.Utils;
  */
 public class SearchState {
 
-    private final static Log log = LogFactory.getLog(SearchState.class);
+    private final static Logger log = LoggerFactory.getLogger(SearchState.class);
 
     /**
      * Returns the current state of a Catalogue page as URL Parameters, which can be concatenated

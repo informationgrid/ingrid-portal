@@ -24,15 +24,15 @@ abstract class SearchExtLawTopic extends SearchExtLaw {
 
     // PAGES FOR TABS
 
-    protected final static String PAGE_TERMS = "/ingrid-portal/portal/search-extended/search-ext-law-topic-terms.psml";
+    protected final static String PAGE_TERMS = "/portal/search-extended/search-ext-law-topic-terms.psml";
 
-    protected final static String PAGE_THESAURUS = "/ingrid-portal/portal/search-extended/search-ext-law-topic-thesaurus.psml";
+    protected final static String PAGE_THESAURUS = "/portal/search-extended/search-ext-law-topic-thesaurus.psml";
 
     protected void processTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
         if (tab.equals(PARAMV_TAB_TERMS)) {
-            actionResponse.sendRedirect(PAGE_TERMS);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_TERMS));
         } else if (tab.equals(PARAMV_TAB_THESAURUS)) {
-            actionResponse.sendRedirect(PAGE_THESAURUS);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_THESAURUS));
         } else {
             super.processTab(actionResponse, tab);
         }

@@ -12,8 +12,8 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 
 import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.hibernate.Criteria;
@@ -34,7 +34,7 @@ import de.ingrid.portal.search.UtilsSearch;
 
 public class ShowMapsPortlet extends GenericVelocityPortlet {
 
-	private final static Log log = LogFactory.getLog(ShowMapsPortlet.class);
+	private final static Logger log = LoggerFactory.getLogger(ShowMapsPortlet.class);
 
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);

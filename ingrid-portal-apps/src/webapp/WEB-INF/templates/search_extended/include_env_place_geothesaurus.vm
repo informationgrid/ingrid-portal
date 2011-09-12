@@ -4,7 +4,7 @@
           <p><label class="alignleft" for="search_term">$MESSAGES.getString('searchExtEnvPlaceGeothesaurus.label.terms')</label></p>
           <div class="innerform">
 			  <input class="thesaurus_term float_left inputstyletext" type="text" name="search_term" id="search_term" value="#getFieldValue('search_term')" />
-              <input class="btn float_right" type="submit" name="submitSearch" value="$MESSAGES.getString('searchExtEnvPlaceGeothesaurus.submit')" />
+              #renderInputButton($MESSAGES.getString('searchExtEnvPlaceGeothesaurus.submit') "float:right" "submitSearch" "")
               <span class="clearer"></span>
 #displayFormErrors()
 <!-- DON'T FORGET TO CLOSE THE FORM AND THE TWO OPEN DIVs OUTSIDE OF THE INCLUDE ! -->

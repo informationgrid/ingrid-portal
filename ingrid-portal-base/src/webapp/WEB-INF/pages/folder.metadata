@@ -38,17 +38,22 @@
       <text>separator1</text>
     </separator>
     <options>/webmaster.link</options>
+    <separator>
+      <text>separator1</text>
+    </separator>
+    <options>/service-contact-newsletter.psml</options>
   </menu>
 
 
   <menu name="main-menu">
     <options>/main-search.psml</options>
-    <options>/main-service.psml</options>
-    <options>/main-measures.psml</options>
     <options>/main-environment.psml</options>
+    <options>/main-measures.psml</options>
+    <options>/main-service.psml</options>
+    <options>/search-catalog/search-catalog-hierarchy.psml</options>
     <options>/main-maps.psml</options>
     <options>/main-chronicle.psml</options>
-    <options>/main-about.psml</options>
+    <options>/main-features.psml</options>
     <options>/administration</options>
     <options>/mdek</options>
 <!--
@@ -57,8 +62,14 @@
   </menu>
 
   <menu name="sub-menu-search">
-    <options>/main-search.psml</options>
-    <options>/search-catalog/search-catalog-hierarchy.psml</options>
+	<!--<options>/main-search.psml</options>-->
+    <!-- "Datenkataloge" moved to main menu "Kataloge" --> 
+    <!--<options>/search-catalog/search-catalog-hierarchy.psml</options>-->
+  </menu>
+  
+  <menu name="sub-menu-about">
+    <options>/main-features.psml</options>
+    <options>/main-about.psml</options>
   </menu>
   
   <security-constraints>

@@ -3,10 +3,10 @@
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doChangeTab')
 #if($tab=='1')
-          <li><a class="selected">$MESSAGES.getString('searchExtEnvTopic.title')</a></li>
+          <li><a class="selected" title="$MESSAGES.getString('searchExtEnvTopic.title.tooltip')">$MESSAGES.getString('searchExtEnvTopic.title')</a></li>
 #else
 $action.setParameter('tab','1')
-          <li><a href="$action">$MESSAGES.getString('searchExtEnvTopic.title')</a></li>
+          <li><a href="$action" title="$MESSAGES.getString('searchExtEnvTopic.title.tooltip')">$MESSAGES.getString('searchExtEnvTopic.title')</a></li>
 #end
         </ul>
         <br class="clearer" />

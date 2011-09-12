@@ -46,18 +46,18 @@ abstract class SearchExtEnv extends GenericVelocityPortlet {
     // START PAGES FOR MAIN TABS
 
     /** page for main tab "topic" */
-    protected final static String PAGE_TOPIC = "/ingrid-portal/portal/search-extended/search-ext-env-topic-terms.psml";
+    protected final static String PAGE_TOPIC = "/portal/search-extended/search-ext-env-topic-terms.psml";
 
     /** page for main tab "place" */
-    protected final static String PAGE_PLACE = "/ingrid-portal/portal/search-extended/search-ext-env-place-geothesaurus.psml";
+    protected final static String PAGE_PLACE = "/portal/search-extended/search-ext-env-place-geothesaurus.psml";
 
     /** page for main tab "time" */
-    protected final static String PAGE_TIME = "/ingrid-portal/portal/search-extended/search-ext-env-time-constraint.psml";
+    protected final static String PAGE_TIME = "/portal/search-extended/search-ext-env-time-constraint.psml";
 
     /** page for main tab "search area" */
-    protected final static String PAGE_AREA_CONTENTS = "/ingrid-portal/portal/search-extended/search-ext-env-area-contents.psml";
-    protected final static String PAGE_AREA_SOURCES = "/ingrid-portal/portal/search-extended/search-ext-env-area-sources.psml";
-    protected final static String PAGE_AREA_PARTNER = "/ingrid-portal/portal/search-extended/search-ext-env-area-partner.psml";
+    protected final static String PAGE_AREA_CONTENTS = "/portal/search-extended/search-ext-env-area-contents.psml";
+    protected final static String PAGE_AREA_SOURCES = "/portal/search-extended/search-ext-env-area-sources.psml";
+    protected final static String PAGE_AREA_PARTNER = "/portal/search-extended/search-ext-env-area-partner.psml";
 
     // VARIABLE NAMES FOR VELOCITY
 
@@ -105,18 +105,18 @@ abstract class SearchExtEnv extends GenericVelocityPortlet {
 
     protected void processTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
         if (tab.equals(PARAMV_TAB_TOPIC)) {
-            actionResponse.sendRedirect(PAGE_TOPIC);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_TOPIC));
         } else if (tab.equals(PARAMV_TAB_PLACE)) {
-            actionResponse.sendRedirect(PAGE_PLACE);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_PLACE));
         } else if (tab.equals(PARAMV_TAB_TIME)) {
-            actionResponse.sendRedirect(PAGE_TIME);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_TIME));
         } else if (tab.equals(PARAMV_TAB_AREA)) {
             if (PortalConfig.getInstance().getBoolean("portal.enable.search.ext.env.area.contents", true)) {
-                actionResponse.sendRedirect(PAGE_AREA_CONTENTS);
+                actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_AREA_CONTENTS));
             } else if (PortalConfig.getInstance().getBoolean("portal.enable.search.ext.env.area.sources", true)) {
-                actionResponse.sendRedirect(PAGE_AREA_SOURCES);
+                actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_AREA_SOURCES));
             } else if (PortalConfig.getInstance().getBoolean("portal.enable.search.ext.env.area.partner", true)) {
-                actionResponse.sendRedirect(PAGE_AREA_PARTNER);
+                actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_AREA_PARTNER));
             }
         }
     }

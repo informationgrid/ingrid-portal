@@ -1,8 +1,8 @@
 #macro (renderNode $node)
 	## NOTICE: NO FLOATS IN VELOCITY MATHs ! Use e.g. (3/2) instead ! :-(
 	#set ($leftMargin = ($node.level - 1) * 25)
-	#set ($iconLayerWidth = 30)
-	#set ($textLayerWidth = 568 - $leftMargin - $iconLayerWidth)
+	#set ($iconLayerWidth = 35)
+	#set ($textLayerWidth = 530 - $leftMargin - $iconLayerWidth)
     
 	#set ($action = $renderResponse.createActionURL())
 	$action.setParameter('topicID',$node.get("topicID"))
@@ -11,7 +11,7 @@
 	## render +/- and icon
 	#set($nodeIcon = "ico_tree_folder_close.gif")
 	#set($nodeAlt = "$MESSAGES.getString('common.alt.icon.folder')")
-    #set ($url = "/ingrid-portal/portal/search-catalog/search-catalog-thesaurus.psml")
+    #set ($url = "$renderResponse.encodeURL('/portal/search-catalog/search-catalog-thesaurus.psml')")
 
 	## render +/- and icon
 	<span style="float:left; width:${iconLayerWidth}px;">
@@ -70,15 +70,19 @@
   #parse ('/WEB-INF/templates/search_catalog/include_tabs_cat.vm')
   #parse ('/WEB-INF/templates/search_catalog/include_tabs_cat_thesaurus.vm')
   <div class="formbody formbody_border_style">
-	#foreach($termNode in $ps.thesRoot.getChildren())
-	  #renderNode($termNode)
+	#if ($ps.thesRoot.getChildren().size() == 0 )
+        $MESSAGES.getString('')There were no results in this language!
+    #else
+        #foreach($termNode in $ps.thesRoot.getChildren())
+          #renderNode($termNode)
+        #end
     #end
   </div>
   #set ($action = $renderResponse.createActionURL())
   <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
     <div class="formfooter formfooter_border_style">
-      <div align="right">
-        <input class="btn" type="submit" name="submitReload" value="$MESSAGES.getString('searchCatHierarchy.submit.reload')" />
+      <div class="float_right">
+      	#renderInputButton($MESSAGES.getString('searchCatHierarchy.submit.reload') "" "submitReload" $MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip'))
       </div>
     </div>
   </form>

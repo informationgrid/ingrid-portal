@@ -1,3 +1,5 @@
+#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
+
 #set($decoration = $f.decoration)
 #set($actions = $decoration.actions)
 #set($_actions = $layoutDecoration.actions)

@@ -9,9 +9,9 @@
 		<input size="80" maxlength="250" type="text" name="mapurl" value=""/>
 	</p>
 	</div>
-	<div class="formfooter formfooter_border_style" style="width:65%;">
+	<div class="formfooter formfooter_border_style" style="width:65%;padding:0 30px 10px;">
 		<div align="right">
-			<input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.save')" name="doSave" />
+			#renderInputButtonClass($MESSAGES.getString('common.form.button.save') "" "doSave" "" "float_right")
 		</div>
 	</div>
 	<br></br>
@@ -38,7 +38,7 @@
             $action.setParameter("doUpdate",  $dbEntity.tinyKey)
             #foreach ($rowValue in $rowValues)
         		#if ($velocityCount == 3)
-        			<td class="contentRowLine" style="vertical-align:middle;" width=55%><a href="${request.scheme}://${request.serverName}:${request.serverPort}/ingrid-portal/portal/main-maps.psml?t=$dbEntity.tinyKey" name="doUpdate">$UtilsString.getShortURLStr("${request.scheme}://${request.serverName}:${request.serverPort}/ingrid-portal/portal/main-maps.psml?t=$dbEntity.tinyKey", 50)</a></td>
+        			<td class="contentRowLine" style="vertical-align:middle;" width=55%><a href="${request.scheme}://${request.serverName}:${request.serverPort}/portal/main-maps.psml?t=$dbEntity.tinyKey" name="doUpdate">$UtilsString.getShortURLStr("${request.scheme}://${request.serverName}:${request.serverPort}/portal/main-maps.psml?t=$dbEntity.tinyKey", 50)</a></td>
         		#elseif ($velocityCount == 2)
         			<td class="contentRowLine" style="vertical-align:middle;" width=10%>$rowValue</td>
         		#elseif ($velocityCount == 1)
@@ -65,9 +65,9 @@
         </tr>
 		
 	</table>
-	<div class="formfooter formfooter_border_style">
+	<div class="formfooter formfooter_border_style formfooter_border_style_top" style="padding-top: 15px;">
 		<div align="left">
-			<input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.delete')" name="doDelete" />
+			#renderInputButton($MESSAGES.getString('common.form.button.delete') "font-size:90%;" "doDelete" "")
 		</div>
 	</div>
 		

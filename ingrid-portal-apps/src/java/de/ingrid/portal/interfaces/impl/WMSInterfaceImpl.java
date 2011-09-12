@@ -24,8 +24,8 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Node;
@@ -48,7 +48,7 @@ import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
  */
 public class WMSInterfaceImpl implements WMSInterface {
 
-    private final static Log log = LogFactory.getLog(WMSInterfaceImpl.class);
+    private final static Logger log = LoggerFactory.getLogger(WMSInterfaceImpl.class);
 
     private final static String LANGUAGE_PARAM = "lang";
 
@@ -63,7 +63,7 @@ public class WMSInterfaceImpl implements WMSInterface {
             try {
                 instance = new WMSInterfaceImpl();
             } catch (Exception e) {
-                log.fatal("Error initiating the WMS interface.");
+                log.error("Error initiating the WMS interface.");
                 e.printStackTrace();
             }
         }
@@ -141,7 +141,7 @@ public class WMSInterfaceImpl implements WMSInterface {
             return result;
 
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.toString());
         }
 
         return null;
@@ -223,7 +223,7 @@ public class WMSInterfaceImpl implements WMSInterface {
             return wmsSearchDescriptor;
 
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.toString());
         }
 
         return null;
@@ -351,7 +351,7 @@ public class WMSInterfaceImpl implements WMSInterface {
                 }
             }
         } catch (UnsupportedEncodingException e) {
-            log.error(e);
+            log.error(e.toString());
         }
 
         return resultB.toString();
@@ -454,7 +454,7 @@ public class WMSInterfaceImpl implements WMSInterface {
         	return urlEncodedWmc;
 
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.toString());
         }
         return null;
     }

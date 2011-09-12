@@ -45,7 +45,7 @@
       <div class="formbody">
           <p>$MESSAGES.getString('searchExtResTopicAttributes.explanation2')</p>
           <div class="innerform">
-            <input class="btn float_right" type="submit" name="submitUnfilter" value="$MESSAGES.getString('searchExtResTopicAttributes.submit2')" />
+            #renderInputButton($MESSAGES.getString('searchExtResTopicAttributes.submit2') "float:right" "submitUnfilter" "" )
             <span class="clearer"></span>
           </div>
       </div>      

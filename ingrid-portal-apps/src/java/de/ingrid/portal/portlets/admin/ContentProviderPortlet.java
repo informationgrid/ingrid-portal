@@ -15,8 +15,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.velocity.context.Context;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -36,7 +36,7 @@ import de.ingrid.portal.om.IngridProvider;
  */
 public class ContentProviderPortlet extends ContentPortlet {
 
-    private final static Log log = LogFactory.getLog(ContentProviderPortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(ContentProviderPortlet.class);
 
     private static final String PARAMV_ACTION_DO_IMPORT = "doImport";
 
@@ -47,7 +47,7 @@ public class ContentProviderPortlet extends ContentPortlet {
         super.init(config);
 
         // set specific stuff in mother class
-        psmlPage = "/ingrid-portal/portal/administration/admin-content-provider.psml";
+        psmlPage = "/portal/administration/admin-content-provider.psml";
         viewDefault = "/WEB-INF/templates/administration/content_provider.vm";
         viewEdit = "/WEB-INF/templates/administration/edit_provider.vm";
         viewNew = "/WEB-INF/templates/administration/edit_provider.vm";

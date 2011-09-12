@@ -4,7 +4,11 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>ingrid.page.disclaimer</title>
+  <title>ingrid.page.disclaimer.tooltip</title>
+  <short-title>ingrid.page.disclaimer</short-title>
+  <metadata name="meta_title">ingrid.page.disclaimer.meta.title</metadata>
+  <metadata name="meta_descr">ingrid.page.disclaimer.meta.description</metadata>
+  <metadata name="meta_keywords">ingrid.page.disclaimer.meta.keywords</metadata>
 
   <fragment id="disclaimer" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="disclaimer-1" type="portlet" name="ingrid-portal-apps::CMSPortlet">

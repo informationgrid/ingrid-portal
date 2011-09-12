@@ -8,8 +8,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.generic.ListTool;
@@ -27,7 +27,7 @@ import de.ingrid.portal.global.Utils;
  */
 public class LanguageSwitchPortlet extends GenericVelocityPortlet {
 
-    private final static Log log = LogFactory.getLog(LanguageSwitchPortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(LanguageSwitchPortlet.class);
 
     // VIEW TEMPLATES
     private final static String TEMPLATE_LANGUAGE_SWITCH = "/WEB-INF/templates/language.vm";

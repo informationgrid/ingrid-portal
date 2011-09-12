@@ -14,8 +14,8 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
@@ -27,7 +27,7 @@ import de.ingrid.utils.dsc.Column;
 import de.ingrid.utils.dsc.Record;
 
 public class UtilsMapServiceManager {
-	private static final Log		log	= LogFactory.getLog(UtilsMapServiceManager.class);
+	private static final Logger		log	= LoggerFactory.getLogger(UtilsMapServiceManager.class);
 	
 	private static final String EPSG_WGS84 = "4326";
 	private static final String EPSG_GK2 = "31466";

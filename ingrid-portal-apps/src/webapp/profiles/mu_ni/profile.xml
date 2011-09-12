@@ -12,6 +12,10 @@
             <hidden>true</hidden>
         </page>
         <page>
+            <name>main-features.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>
@@ -97,5 +101,86 @@
             <action>copy-dir</action>
             <src>ingrid-portal-apps/</src>
         </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-mdek/</src>
+        </file>
     </files>
+    <sql>
+    	<!-- Use old templates for info portlet -->
+       	<execute>
+            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/chronicle_info.vm' WHERE value='/WEB-INF/templates/chronicle_info_new.vm';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/environment_info.vm' WHERE value='/WEB-INF/templates/environment_info_new.vm';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/measures_info.vm' WHERE value='/WEB-INF/templates/measures_info_new.vm';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/service_info.vm' WHERE value='/WEB-INF/templates/service_info_new.vm';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/search_simple_info.vm' WHERE value='/WEB-INF/templates/search_simple_info_new.vm';]]>
+        </execute>
+        <!-- Set decorator to ingrid-marginal-teaser -->
+        <execute>
+            <![CDATA[CREATE TABLE IF NOT EXISTS `tmp_table` (`id` bigint(20) NOT NULL AUTO_INCREMENT\, `item_key` varchar(255) COLLATE latin1_general_ci DEFAULT NULL\, `item_value` varchar(255) COLLATE latin1_general_ci DEFAULT NULL\, `item_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP\, PRIMARY KEY (`id`));]]>
+        </execute>
+        <execute>
+            <![CDATA[INSERT INTO tmp_table (`item_key`\, `item_value`) values ('tmp_id'\, '0');]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-chronicle.psml')) WHERE `item_key`='tmp_id';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-measures.psml')) WHERE `item_key`='tmp_id';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-environment.psml')) WHERE `item_key`='tmp_id';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-service.psml')) WHERE `item_key`='tmp_id';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-search.psml')) WHERE `item_key`='tmp_id';]]>
+        </execute>
+        <execute>
+            <![CDATA[INSERT INTO ingrid_lookup (`item_key`\, `item_value`) values ('tmp_id'\, '0');]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE ingrid_lookup SET `item_value` = (SELECT fragment_id FROM fragment WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'jetspeed-layouts::IngridTwoColumns') WHERE `item_key`='tmp_id';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+        </execute>
+        <execute>
+            <![CDATA[DELETE FROM ingrid_lookup WHERE item_key = 'tmp_id';]]>
+        </execute>
+        <!-- Revert feature page as default for about page -->
+        <execute>
+            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT menu_id FROM folder_menu WHERE name = 'main-menu') WHERE `item_key`='tmp_id';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE folder_menu SET OPTIONS = '/main-about.psml' WHERE OPTIONS = '/main-features.psml' AND parent_id  = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') ;]]>
+        </execute>
+        <execute>
+            <![CDATA[DROP TABLE tmp_table;]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE page SET title = 'ingrid.page.features.tooltip'\, short_title = 'ingrid.page.features' WHERE path = '/main-features.psml';]]>
+        </execute>
+    </sql>
 </profile>

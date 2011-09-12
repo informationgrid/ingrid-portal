@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -33,7 +33,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  */
 public class IPlugHelperDscEcs extends IPlugHelper {
 
-    static private final Log log = LogFactory.getLog(IPlugHelperDscEcs.class);
+    static private final Logger log = LoggerFactory.getLogger(IPlugHelperDscEcs.class);
 
     static private final String KEY_RELATION_FILTER = "RELATION_FILTER";
     static private final String KEY_RELATION_FILTER_FROM_OBJ_ID = "RELATION_FILTER_FROM_OBJ_ID";

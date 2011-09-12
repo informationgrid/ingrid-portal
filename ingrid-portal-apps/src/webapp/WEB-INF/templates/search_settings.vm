@@ -35,7 +35,7 @@
         <div align="right">
 $action.setParameter('action','doOriginalSettings')
           <span class="iconLink"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('searchSettings.action.reset')</a></span>
-          <input class="btn" type="submit" value="$MESSAGES.getString('common.form.button.save')" />
+          #renderInputButtonClass($MESSAGES.getString('common.form.button.save') "" "" $MESSAGES.getString('common.form.button.save.tooltip') "float_right")
         </div>
       </div>
     </form>

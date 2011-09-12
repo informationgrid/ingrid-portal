@@ -1,10 +1,12 @@
 #* include service navigation component *#
 #macro (includeFooterNavigation)
-	<a href="/ingrid-portal/portal/disclaimer.psml" title="Impressum">Impressum</a>
+	<a href="$renderResponse.encodeURL('/portal/disclaimer.psml')" title="$MESSAGES.getString('footer.disclaimer.tooltip')">$MESSAGES.getString('footer.disclaimer')</a>
 	|
-	<a href="/ingrid-portal/portal/privacy.psml" title="Datenschutzbestimmung">Datenschutzbestimmung</a>
+	<a href="$renderResponse.encodeURL('/portal/privacy.psml')" title="$MESSAGES.getString('footer.privacy.policy.tooltip')">$MESSAGES.getString('footer.privacy.policy')</a>
 	|
-	<a href="mailto:webmaster@portalu.de" title="Webmaster">Webmaster</a>
+	<a href="mailto:webmaster@portalu.de" title="$MESSAGES.getString('footer.webmaster.tooltip')">$MESSAGES.getString('footer.webmaster')</a>
+	|
+	<a href="$renderResponse.encodeURL('/portal/service-contact-newsletter.psml')" title="$MESSAGES.getString('footer.newsletter.tooltip')">$MESSAGES.getString('footer.newsletter')</a>
 #end
 
 </div>
@@ -22,7 +24,7 @@
   <div id="footercontent">
     <!-- portlets go here -->
 #includeFooterNavigation()
-	<img align="right" src="/ingrid-portal/decorations/layout/ingrid-popup/images/logo-niedersachsen.png" alt="Niedersachsen" />
+	<img align="right" src="/decorations/layout/ingrid-popup/images/logo-niedersachsen.png" alt="Niedersachsen" />
 	<br>
 		Copyright &copy; Nieders&auml;chsisches Ministerium f&uuml;r Umwelt und Klimaschutz
 	<br>
@@ -32,31 +34,26 @@
 </div>
 
 </div>
-
-#if($piwik != "")
 <!--  END: layout/html/portalu/decorator.vm -->
+
 <!-- Piwik -->
+#if($piwik != "")
 <script type="text/javascript">
-	var pkBaseURL = ${piwik};
-	var piwikTracker;
+	var pkBaseURL = '${piwik}';
 	var host = location.host; 
-		
 	document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-	
+	</script>
+	<script type="text/javascript">
 	try {
-		piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+			var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
 		piwikTracker.trackPageView();
 		piwikTracker.enableLinkTracking();
 	} catch( err ) {
 	}
 </script>
-<noscript>
-	<p>
-		<img src="http://213.144.28.243/piwik/piwik.php?idsite=1" style="border:0" alt=""/>
-	</p>
-</noscript>
-<!-- End Piwik Tag -->
+	<noscript><p><img src="$piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
 #end
+<!-- End Piwik Tag -->
 
 </body>
 </html>

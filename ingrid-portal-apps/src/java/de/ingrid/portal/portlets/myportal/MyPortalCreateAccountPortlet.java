@@ -23,8 +23,6 @@ import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.administration.PortalAdministration;
 import org.apache.jetspeed.exception.JetspeedException;
@@ -37,9 +35,10 @@ import org.apache.velocity.context.Context;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.forms.ContactNewsletterSubscribeForm;
 import de.ingrid.portal.forms.CreateAccountForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
@@ -53,7 +52,7 @@ import de.ingrid.portal.om.IngridNewsletterData;
  */
 public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
-    private final static Log log = LogFactory.getLog(MyPortalCreateAccountPortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(MyPortalCreateAccountPortlet.class);
 
     private static final String STATE_ACCOUNT_CREATED = "account_created";
 

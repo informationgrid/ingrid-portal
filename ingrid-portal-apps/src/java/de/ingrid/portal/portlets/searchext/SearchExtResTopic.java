@@ -24,15 +24,15 @@ abstract class SearchExtResTopic extends SearchExtRes {
 
     // PAGES FOR TABS
 
-    protected final static String PAGE_TERMS = "/ingrid-portal/portal/search-extended/search-ext-res-topic-terms.psml";
+    protected final static String PAGE_TERMS = "/portal/search-extended/search-ext-res-topic-terms.psml";
 
-    protected final static String PAGE_ATTRIBUTES = "/ingrid-portal/portal/search-extended/search-ext-res-topic-attributes.psml";
+    protected final static String PAGE_ATTRIBUTES = "/portal/search-extended/search-ext-res-topic-attributes.psml";
 
     protected void processTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
         if (tab.equals(PARAMV_TAB_TERMS)) {
-            actionResponse.sendRedirect(PAGE_TERMS);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_TERMS));
         } else if (tab.equals(PARAMV_TAB_ATTRIBUTES)) {
-            actionResponse.sendRedirect(PAGE_ATTRIBUTES);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_ATTRIBUTES));
         } else {
             super.processTab(actionResponse, tab);
         }

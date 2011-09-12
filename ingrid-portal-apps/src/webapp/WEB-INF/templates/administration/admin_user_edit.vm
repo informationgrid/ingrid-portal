@@ -7,16 +7,16 @@ $action.setParameter('action','doChangeTab')
 $action.setParameter('id',$actionForm.getInput("id"))
 $action.setParameter('layoutPermission',$actionForm.getInput("layoutPermission"))
 #if($tab=='1')
-		<li><a class="selected">Allgemeine Daten</a></li>
+		<li><a class="selected">$MESSAGES.getString('account.edit.tab1')</a></li>
 #else
 $action.setParameter('tab','1')
-        <li><a href="$action">Allgemeine Daten</a></li>
+        <li><a href="$action">$MESSAGES.getString('account.edit.tab1')</a></li>
 #end
 #if($tab=='2')
-		<li><a class="selected">Rechte</a></li>
+		<li><a class="selected">$MESSAGES.getString('account.edit.tab2')</a></li>
 #else
 $action.setParameter('tab','2')
-        <li><a href="$action">Rechte</a></li>
+        <li><a href="$action">$MESSAGES.getString('account.edit.tab2')</a></li>
 #end
      </ul>
 	 <br class="clearer" />
@@ -31,9 +31,9 @@ $action.setParameter('tab','2')
 #displayFormErrors()
 #displayFormMessages()
 	#if ($mode == 'edit')
-		<h2 class="nospace">Benutzer aktualisieren</h2>
+		<h2 class="nospace">$MESSAGES.getString('account.edit.update.user')</h2>
 	#elseif ($mode == 'new')
-		<h2 class="nospace">Neuen Benutzer anlegen</h2>
+		<h2 class="nospace">$MESSAGES.getString('account.edit.add.user')</h2>
 	#end
 #if($tab=='1')
 	<h3>* Pflichtfelder</h3>
@@ -159,17 +159,17 @@ $action.setParameter('tab','2')
 	
 #if($actionForm.getInput('layoutPermission') == "admin.portal" || $actionForm.getInput('layoutPermission') == "admin")
 	<p>
-		<label class="float_left col2left alignleft">Admin Portal</label>
+		<label class="float_left col2left alignleft">$MESSAGES.getString('account.edit.admin.portal')</label>
 		<input type="checkbox" id="admin_portal" name="admin_portal" value="1" #getChecked('admin_portal' '1') onchange="adapt()"/>
 		<p class="clearer"></p>
 	</p>
 	<p>
-		<label class="float_left col2left alignleft">Admin Partner</label>
+		<label class="float_left col2left alignleft">$MESSAGES.getString('account.edit.admin.partner')</label>
 		<input type="checkbox" id="admin_partner" name="admin_partner" value="1" #getChecked('admin_partner' '1')  onchange="adapt()"/>
 		<p class="clearer"></p>
 	</p>
 	<p>
-		<label class="float_left col2left alignleft" for="partner">#displayFieldLabel('partner' 'zugeordneter Partner')</label>
+		<label class="float_left col2left alignleft" for="partner">#displayFieldLabel('partner' "$MESSAGES.getString('account.edit.assigned.partner')")</label>
 		<select class="float_left inputstyle" size="1" id="partner" name="partner">
 		<option value="" #getSelectedFlag('partner' '')>---</option>
 		#foreach ($partner in $partnerlist)
@@ -178,24 +178,25 @@ $action.setParameter('tab','2')
 		#end	
 		</select>
 	</p>
-	&nbsp;&nbsp;<input class="btn left" type="submit" name="doRefresh" value="Anbieter aktualisieren" />
+	&nbsp;&nbsp;
+	#renderInputButtonClass("$MESSAGES.getString('account.edit.update.provider')" "" "doRefresh" "" "float_left")
 	<p class="clearer"></p>
 #elseif($actionForm.getInput('layoutPermission') == "admin.portal.partner")
 	<input type="hidden" name="admin_portal" value="#if($actionForm.isCurrentInput('admin_portal','1'))1#end"/>
 	<input type="hidden" name="admin_partner" value="#if($actionForm.isCurrentInput('admin_partner','1'))1#end"/>
 	<input type="hidden" name="partner" value="$actionForm.getInput('partner')"/>
 	<p>
-		<label class="float_left col2left alignleft" for="partner">zugeordneter Partner:</label>$actionForm.getInput('partner_name')
+		<label class="float_left col2left alignleft" for="partner">$MESSAGES.getString('account.edit.assigned.partner'):</label>$actionForm.getInput('partner_name')
 		<p class="clearer"></p>
 	</p>
 #end
 	<p>
-		<label class="float_left col2left alignleft">Admin Index</label>
+		<label class="float_left col2left alignleft">$MESSAGES.getString('account.edit.admin.index')</label>
 		<input type="checkbox" id="admin_index" name="admin_index" value="1" #getChecked('admin_index' '1') />
 		<p class="clearer"></p>
 	</p>
 	<p>
-		<label class="float_left col2left alignleft">Admin Katalog</label>
+		<label class="float_left col2left alignleft">$MESSAGES.getString('account.edit.admin.catalog')</label>
 		<input type="checkbox" id="admin_catalog" name="admin_catalog" value="1" #getChecked('admin_catalog' '1') />
 		<p class="clearer"></p>
 	</p>
@@ -203,13 +204,15 @@ $action.setParameter('tab','2')
 		<label class="float_left col2left alignleft" for="provider">#displayFieldLabel('provider' 'zugeordnete Anbieter')</label>
 #if($actionForm.hasInput('partner'))
 		<select class="float_left inputstyle" size="10" id="provider" name="provider" multiple="multiple">
-		<option value="*" #getSelectedFlag('provider' '*')>Alle</option>
+		<option value="*" #getSelectedFlag('provider' '*')>$MESSAGES.getString('account.edit.select.all')</option>
 		#foreach ($provider in $providerlist)
 			<option value="$provider.ident" #getSelectedFlag('provider' $provider.ident) title="$provider.name">$UtilsString.cutString($provider.name, 50, 50)</option>
 		#end	
 		</select>
+		
+		
 #else
-	Bitte geben Sie zun�chst einen Partner an und speichern Sie den Datensatz.
+	$MESSAGES.getString('account.edit.select.partner')
 #end		
 
 	<script type="text/javascript">
@@ -241,6 +244,8 @@ $action.setParameter('tab','2')
 					document.frmEditUser.provider.disabled = true;
 				}
 				document.frmEditUser.doRefresh.style.display = "none";
+				document.getElementById('doRefresh left').style.display = "none";
+				document.getElementById('doRefresh right').style.display = "none";
 			} else {
 				document.frmEditUser.admin_index.disabled = false;
 				document.frmEditUser.admin_catalog.disabled = false;
@@ -248,6 +253,8 @@ $action.setParameter('tab','2')
 					document.frmEditUser.provider.disabled = false;
 				}
 				document.frmEditUser.doRefresh.style.display = "inline";
+				document.getElementById('doRefresh left').style.display = "inline";
+				document.getElementById('doRefresh right').style.display = "inline";
 			}
 		}
 

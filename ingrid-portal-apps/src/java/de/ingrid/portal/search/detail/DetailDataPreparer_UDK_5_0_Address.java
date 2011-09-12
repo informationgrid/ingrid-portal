@@ -12,8 +12,8 @@ import java.util.Map;
 
 import javax.portlet.RenderRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.IngridResourceBundle;
@@ -30,7 +30,7 @@ import de.ingrid.utils.udk.UtilsDate;
  */
 public class DetailDataPreparer_UDK_5_0_Address implements DetailDataPreparer {
 
-    private final static Log log = LogFactory.getLog(DetailDataPreparer_UDK_5_0_Address.class);
+    private final static Logger log = LoggerFactory.getLogger(DetailDataPreparer_UDK_5_0_Address.class);
 
 	private Context context;
 	private String iplugId;

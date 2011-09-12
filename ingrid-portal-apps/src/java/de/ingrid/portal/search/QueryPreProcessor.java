@@ -9,8 +9,8 @@ import java.util.HashMap;
 
 import javax.portlet.PortletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
@@ -32,7 +32,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  */
 public class QueryPreProcessor {
 
-    private final static Log log = LogFactory.getLog(QueryPreProcessor.class);
+    private final static Logger log = LoggerFactory.getLogger(QueryPreProcessor.class);
 
     /**
      * Prepares an ranked query for submitting to the ibus. If no query should be submitted,

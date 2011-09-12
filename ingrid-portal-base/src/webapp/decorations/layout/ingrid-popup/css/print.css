@@ -12,6 +12,7 @@
 body { padding: 0; margin: 0; color: #111111; background-color: #FFFFFF; font: normal 100% Verdana, Arial, sans-serif; line-height: 120%; }
 body.claro { font-size: 16px; }
 
+sup { line-height: 0; }
 img { border:0; }
 /*Need for NUMIS profile*/
 img.image_alt {}
@@ -87,7 +88,7 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
   identity area styles
 *********************************************************************/
 
-div#identity { padding:0; margin:0; height: 80px; width:59.5em; background-color:#68A5D2; overflow:visible; }
+div#identity { padding:0; margin:0; height: 97px; width:59.5em; background-color:#68A5D2; overflow:visible; }
 div.motiv_blank { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
 div.motiv_suche { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
 div.motiv_karten { background-image:url(../images/01_motiv_karten.gif); background-repeat:no-repeat; }
@@ -145,7 +146,7 @@ div#mainnav ul li a:visited
 div#mainnav ul li a.selected,
 div#mainnav ul li a.selected:link, 
 div#mainnav ul li a.selected:visited 
- { text-decoration:none; color:#111; background-color:#DDE9BD; margin:0; padding:3px 6px 5px 6px; border-bottom: solid #FFFFFF 10px; font-size: 95%; }  
+ { text-decoration:none; color:#111; background-color:#AFD93F; margin:0; padding:3px 6px 5px 6px; border-bottom: solid #FFFFFF 10px; font-size: 95%; }  
 
 div#mainnav ul li a:hover,
 div#mainnav ul li a:active
@@ -155,7 +156,7 @@ div#mainnav ul li a:active
   sub navigation styles
 *********************************************************************/
 
-div#subnav { position:relative; border-top: solid #FFFFFF 1px; background-color:#DDE9BD; width:59.5em; height:1.375em; z-index:12;}
+div#subnav { position:relative; border-top: solid #FFFFFF 1px; background-color:#AFD93F; width:59.5em; height:1.375em; z-index:12;}
 div#subnav ul { list-style:none; padding: 0px 7px 1px 63px; margin:0; line-height:120%; color:#111111; }
 div#subnav ul li { display:inline; font-size: 65%; }
 
@@ -166,8 +167,8 @@ div#subnav ul li a:visited,
 div#subnav ul li a:active {text-decoration:none; color:#111111;}  
 div#subnav ul li a:hover, div#subnav ul li a:focus {color:#111111;text-decoration:underline;}
 
-div.subnav_corner {vertical-align:bottom;float:right; width:21px; height: 100%;background-color:#DDE9BD}
-div.subnav_corner_img {vertical-align:bottom;width: 21px; height:100%;background:url(../images/corner_sub_nav.gif) no-repeat;background-position:bottom; background-color:#DDE9BD}
+div.subnav_corner {vertical-align:bottom;float:right; width:21px; height: 100%;background-color:#AFD93F}
+div.subnav_corner_img {vertical-align:bottom;width: 21px; height:100%;background:url(../images/corner_sub_nav.gif) no-repeat;background-position:bottom; background-color:#AFD93F}
 
 /********************************************************************
   content block styles
@@ -298,7 +299,7 @@ div.tabs ul li { padding: 2px 0px 2px 0; margin: 0px 2px 0px 0px; border: 0; flo
 div.tabs ul li a.selected,
 div.tabs ul li a.selected:link, 
 div.tabs ul li a.selected:visited 
-  { position:relative; top: -2px; text-decoration:none; color:#111111; background-color:#DDE9BD; margin:0; padding:3px 7px 5px 7px; border-bottom: solid #FFFFFF 0px; }  
+  { position:relative; top: -2px; text-decoration:none; color:#111111; background-color:#AFD93F; margin:0; padding:3px 7px 5px 7px; border-bottom: solid #FFFFFF 0px; }  
 
 /* Commented Backslash Hack hides rule from IE5-Mac \*/
 div.tabs ul li a {float:none;}
@@ -315,7 +316,7 @@ div.tabs ul li a:focus { color:#111111; text-decoration:none; background-color:#
 
 /* TAB MENU, EXTENDED SEARCH */
 
-div.tabmenu {position:relative; background-color:#DDE9BD; padding: 6px 0px 6px 0px; width:100%; margin:1px 0px 1px 0px;font-size:100%;z-index:12;}
+div.tabmenu {position:relative; background-color:#AFD93F; padding: 6px 0px 6px 0px; width:100%; margin:1px 0px 1px 0px;font-size:100%;z-index:12;}
 div.tabmenu ul { list-style:none; padding: 0px 7px 0px 6px; margin:0; font-size:75%; line-height:130%; color:#111111; }
 div.tabmenu ul li { display:inline; }
 
@@ -483,14 +484,18 @@ div.formbody .snslogo_margin {margin-top: 8px; }
   footer block styles  
 *********************************************************************/
 
-div#footercontainer { margin: 0px 0 0px 28px; background: url(../images/logo_footer.gif) no-repeat; padding: 0px 0px 30px 112px; }
-#footercontent { font-size: 65%; line-height: 120% }
+div#footercontainer { margin: 0px 0 0px 55px; background: url(../images/logo_footer.gif) no-repeat; padding: 0 0 70px 115px; }
+#footercontent { font-size: 65%; line-height: 120%; color: #B0B2B4; padding-top: 10px; }
 
-div#footermarginalcontainer { margin-top: 25px; margin-bottom: 20px; padding: 0; background-color: #FFFFFF;}
-div#footermarginal { background-color: #FFFFFF; width: 19em; text-align:right; font-size: 65%; line-height: 100%; }
+div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF;}
+div#footermarginal { background: #FFFFFF; width: 19em; padding-right: 14px; text-align:right; font-size: 65%; line-height: 100%; width:100%;}
 
 div#finalfootercontainer { float: left; width: 59.5em; }
 div#finalfooter { padding-left:112px; padding-bottom:20px; padding-top:0px; height:11px; font-size:65%; line-height:120%; color:#000000; }
+
+#footerSeparator { background-image: url("../images/footer_separator.gif"); background-repeat: repeat-x; height: 3px; margin-left: 25px;}
+#footercontent a { color: #B0B2B4; }
+#getNewsletter { font-size:10px !important; margin-top: 5px;}
 
 /********************************************************************
   popup + overview styles  
@@ -520,7 +525,7 @@ span.clearer_gray { background-color:#DDDDDD; height:2px; font-size: 1px; displa
 span.clearer_gray_small { background-color:#DDDDDD; height:1px; font-size: 1px; display:block; }
 span.clearer_dark_gray	{ background-color:#BBBBBB; height:1px; font-size: 1px; display:block; }
 
-div#detail_background span.clearer { background-color:#DDE9BD;height:10px; }
+div#detail_background span.clearer { background-color:#AFD93F;height:10px; }
 div#header_title { background-color:#F0F6FA; padding: 20px 13px 0px; }
 div#header_title span.clearer{ display:block; background-color:#F0F6FA; height:10px; border:0px; }
 div.header_div { margin-top:0; font-size:75%}
@@ -559,7 +564,7 @@ td.detail_image_descr_td { background-color:#EEEEEE; height:73px; width:433px; b
 
 H1.section_title { background-color:#EEEEEE; color:#777777; font-size:11px; font-weight:bold; line-height:22px; padding:0 10px; }
 H2.group_title { background-color:#EEEEEE; color:#777777; font-size:11px; font-weight:normal; line-height:22px; padding:0 10px;}
-H1.no_script_title { background-color:#68A5D2; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:10px; line-height:25px; font-size: 12px; } 
+H1.no_script_title { background-image: url(../images/background-mainmenu.png); color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:10px; line-height:25px; font-size: 12px; } 
 
 p.detail_entry_title { color:#777777; font-weight:bold; font-weight:bold; padding-left:0; padding-right:20px; padding-top:3px; }
 p.detail_entry_body { color:#000000; margin-bottom:0; }
@@ -608,7 +613,6 @@ img.section_show_hide { padding-right:16px; padding-top:5px; display: none !impo
 
 div.dijitTab:hover { display:none; }
 div.dijitTab:hover div {display:none; }
-div.dijitTab { display:none; }
 div.dijitTab div { display:none; }
 div.dijitTab.current { display:none;}
 div.dijitTab.current div { display:none; }
@@ -620,8 +624,8 @@ div.claro .dijitTabPaneWrapper, .claro .dijitTabContainerTop-tabs, .claro .dijit
 /******************************************
 Print view of detail view
 *******************************************/
-div#detail_background span.print_clearer { background-color:#DDE9BD; clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px; display:none !important; }
-H1.print_title { background-color:#68A5D2; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height: 25px; display:block; font-size:13px; } 
+div#detail_background span.print_clearer { background-image:url(../images/background-mainmenu.png); clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px; display:none !important; }
+H1.print_title { background-image:url(../images/background-mainmenu.png); color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height: 25px; display:block; font-size:13px; } 
 br.print {clear:both;}
 .print_view_hidden { visibility:hidden; }
 .print_view_visible { visibility:visible; }

@@ -15,8 +15,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.velocity.context.Context;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -40,7 +40,7 @@ import de.ingrid.utils.xml.XPathUtils;
  */
 public class DetailDataPreparerIDF1_0_0Generic implements DetailDataPreparer {
 	
-	private final static Log		log							= LogFactory.getLog(DetailDataPreparerIDF1_0_0Generic.class);
+	private final static Logger		log							= LoggerFactory.getLogger(DetailDataPreparerIDF1_0_0Generic.class);
 	
 	private Context					context;
 	private String					iPlugId;

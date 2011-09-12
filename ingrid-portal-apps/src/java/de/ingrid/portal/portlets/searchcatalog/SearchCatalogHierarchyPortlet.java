@@ -138,6 +138,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             }
 
         } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
+            // TODO: comment this block???
             // changed main or sub tab
             String newTab = request.getParameter(Settings.PARAM_TAB);
             processTab(actionResponse, newTab);

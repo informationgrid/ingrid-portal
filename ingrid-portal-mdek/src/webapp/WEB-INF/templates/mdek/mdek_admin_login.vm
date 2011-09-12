@@ -40,8 +40,8 @@
         </td></tr>
         </table>
 	</div>
-	<div class="formfooter">
-		<input class="btn float_right" type="submit" name="doLoginIGE" value="$MESSAGES.getString('entry.button.ige')" />
+	<div class="formfooter formfooter_border_style">
+		#renderInputButtonClass("$MESSAGES.getString('entry.button.ige')" "" "doLoginIGE" "" "float_right")
 		<p class="clearer"/>
     </div>
 </form>

@@ -7,15 +7,14 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
-  <title>HMDK</title>
+  <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "HMDK")</title>
   <meta http-equiv="Content-type" content="#ContentType()" />
   <meta http-equiv="Content-style-type" content="text/css" />   
-  <meta http-equiv="content-language" content="DE" />
-  <!--<meta name="description" content="" />-->
-  <meta name="description" content="#PageDescription()" />
+  <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
+  <meta name="description" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_descr"), "")" />
   <meta name="version" content="#SiteVersionTag()" />
   <meta name="author" content="wemove digital solutions" />
-  <meta name="keywords" content="HMDK" />
+  <meta name="keywords" lang="$renderRequest.Locale.getLanguage()" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_keywords"), "")" />
   <meta name="copyright" content="wemove digital solutions GmbH" />
   <meta name="robots" content="index,follow" />
   <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />

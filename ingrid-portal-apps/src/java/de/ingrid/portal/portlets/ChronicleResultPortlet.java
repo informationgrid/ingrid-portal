@@ -13,8 +13,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
@@ -39,7 +39,7 @@ import de.ingrid.utils.udk.UtilsDate;
 
 public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
 
-    private final static Log log = LogFactory.getLog(ChronicleResultPortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(ChronicleResultPortlet.class);
 
     /** view templates */
     private final static String TEMPLATE_NO_QUERY = "/WEB-INF/templates/empty.vm";
@@ -142,7 +142,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                 ChronicleSearchForm.class, PortletSession.APPLICATION_SCOPE);
 
         // redirect to our page wih URL parameters for bookmarking
-        actionResponse.sendRedirect(Settings.PAGE_CHRONICLE + SearchState.getURLParamsCatalogueSearch(request, af));
+        actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_CHRONICLE + SearchState.getURLParamsCatalogueSearch(request, af)));
     }
 
     private IngridHits doSearch(IngridQuery query, int startHit, int hitsPerPage, PortletRequest request,

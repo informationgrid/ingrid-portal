@@ -9,7 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title><fmt:message key="ui.entry.session.expired" /></title>
-<link rel="shortcut icon" href="/ingrid-portal/decorations/layout/ingrid-popup/images/favicon.ico" />
+<link rel="shortcut icon" href="/decorations/layout/ingrid-popup/images/favicon.ico" />
   <style type="text/css">
 	
 	body {
@@ -42,14 +42,14 @@
     }
 
   </style>
-  <link href="/ingrid-portal/decorations/layout/ingrid-popup/css/styles.css" media="screen, projection" type="text/css" rel="stylesheet">
+  <link href="/decorations/layout/ingrid-popup/css/styles.css" media="screen, projection" type="text/css" rel="stylesheet">
 </head>
 <body>
 <div class="layout-tigris">
 <div id="identity" class="motiv_suche">
   <!-- LOGO -->
   <div id="logo">
-    <a href="/ingrid-portal/portal/default-page.psml"><img src="/ingrid-portal/decorations/layout/ingrid/images/logo.gif" width="168" height="60" alt="Logo PortalU" /></a>
+    <a href="/portal/default-page.psml"><img src="/decorations/layout/ingrid/images/logo.gif" width="168" height="60" alt="Logo PortalU" /></a>
   </div>
 </div>
 
@@ -71,8 +71,8 @@
 <div id="footercontainer">
   <div id="footercontent">
     <!-- portlets go here -->
-	<a href="/ingrid-portal/portal/disclaimer.psml" title="<fmt:message key="general.imprint" />"><fmt:message key="general.imprint" /></a>
-	<a href="/ingrid-portal/portal/privacy.psml" title="<fmt:message key="general.privacy.policy" />"><fmt:message key="general.privacy.policy" /></a>
+	<a href="/portal/disclaimer.psml" title="<fmt:message key="general.imprint" />"><fmt:message key="general.imprint" /></a>
+	<a href="/portal/privacy.psml" title="<fmt:message key="general.privacy.policy" />"><fmt:message key="general.privacy.policy" /></a>
 	<a href="mailto:webmaster@portalu.de" title="<fmt:message key="general.webmaster" />"><fmt:message key="general.webmaster" /></a>
 	<br />
     Copyright &copy; Koordinierungsstelle PortalU im Nds. Ministerium f&uuml;r Umwelt und Klimaschutz<br />

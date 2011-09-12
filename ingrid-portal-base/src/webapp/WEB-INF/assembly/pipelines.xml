@@ -96,7 +96,7 @@ limitations under the License.
        if set to false, requests generate HTTP 403/404 errors
        for access errors or missing pages
    -->
-   <constructor-arg index="3"><value>true</value></constructor-arg>    
+   <constructor-arg index="3"><value>false</value></constructor-arg>    
    <!--
        use last visited page histories to select default page
        for folder navigational urls; if set to false, the

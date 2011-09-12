@@ -6,8 +6,8 @@ package de.ingrid.portal.interfaces.impl;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
@@ -29,7 +29,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  */
 public class SNSAnniversaryInterfaceImpl implements AnniversaryInterface {
 
-    private final static Log log = LogFactory.getLog(SNSAnniversaryInterfaceImpl.class);
+    private final static Logger log = LoggerFactory.getLogger(SNSAnniversaryInterfaceImpl.class);
 
     private static AnniversaryInterface instance = null;
 
@@ -38,7 +38,7 @@ public class SNSAnniversaryInterfaceImpl implements AnniversaryInterface {
             try {
                 instance = new SNSAnniversaryInterfaceImpl();
             } catch (Exception e) {
-                log.fatal("Error initiating the WMS interface.");
+                log.error("Error initiating the WMS interface.");
                 e.printStackTrace();
             }
         }

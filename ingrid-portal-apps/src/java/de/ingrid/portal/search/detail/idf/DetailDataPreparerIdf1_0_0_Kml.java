@@ -11,8 +11,8 @@ import javax.naming.ConfigurationException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.velocity.context.Context;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -27,7 +27,7 @@ import de.ingrid.utils.xml.XPathUtils;
 @SuppressWarnings("unchecked")
 public class DetailDataPreparerIdf1_0_0_Kml extends DetailDataPreparerIdf1_0_0{
 	
-	private final static Log		log	= LogFactory.getLog(DetailDataPreparerIdf1_0_0_Kml.class);
+	private final static Logger		log	= LoggerFactory.getLogger(DetailDataPreparerIdf1_0_0_Kml.class);
 	
 	private final static String		NODE_KML			= "kml:Document";
 	

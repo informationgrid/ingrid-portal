@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.om.page.Fragment;
 import org.apache.jetspeed.om.page.Page;
 import org.apache.jetspeed.om.preference.FragmentPreference;
@@ -22,7 +22,7 @@ import org.apache.jetspeed.page.PageManager;
  */
 public class UtilsPageLayout {
 
-    private final static Log log = LogFactory.getLog(UtilsPageLayout.class);
+    private final static Logger log = LoggerFactory.getLogger(UtilsPageLayout.class);
 
     /**
      * Remove a fragment defined by position inside a parent fragment from a

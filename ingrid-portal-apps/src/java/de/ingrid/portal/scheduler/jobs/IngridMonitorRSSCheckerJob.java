@@ -7,8 +7,8 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -39,7 +39,7 @@ public class IngridMonitorRSSCheckerJob extends IngridMonitorAbstractJob {
 	
 	public static final String JOB_ID = "RSS-Checker";
 
-	private final static Log log = LogFactory.getLog(IngridMonitorRSSCheckerJob.class);
+	private final static Logger log = LoggerFactory.getLogger(IngridMonitorRSSCheckerJob.class);
 
 	/**
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)

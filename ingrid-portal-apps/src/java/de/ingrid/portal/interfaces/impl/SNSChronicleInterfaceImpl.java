@@ -3,8 +3,8 @@
  */
 package de.ingrid.portal.interfaces.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.interfaces.ChronicleInterface;
 
@@ -15,7 +15,7 @@ import de.ingrid.portal.interfaces.ChronicleInterface;
  */
 public class SNSChronicleInterfaceImpl implements ChronicleInterface {
 
-    private final static Log log = LogFactory.getLog(SNSChronicleInterfaceImpl.class);
+    private final static Logger log = LoggerFactory.getLogger(SNSChronicleInterfaceImpl.class);
 
     private static ChronicleInterface instance = null;
 
@@ -24,7 +24,7 @@ public class SNSChronicleInterfaceImpl implements ChronicleInterface {
             try {
                 instance = new SNSChronicleInterfaceImpl();
             } catch (Exception e) {
-                log.fatal("Error initiating the SNSChronicle Interface");
+                log.error("Error initiating the SNSChronicle Interface");
                 e.printStackTrace();
             }
         }

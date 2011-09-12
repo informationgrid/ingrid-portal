@@ -4,7 +4,7 @@
         #if($MESSAGES.getString('searchExtEnvPlaceGeothesaurus.info.link') != "" && $MESSAGES.getString('searchExtEnvPlaceGeothesaurus.info.link').length() > 0)
 		<p class="iconLink">
           <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
-#set ($link = $renderResponse.encodeURL("${contextPath}/portal/help.psml?hkey=ext-search-spacial-3#ext-search-spacial-3"))
+#set ($link = $renderResponse.encodeURL("/portal/help.psml?hkey=ext-search-spacial-3#ext-search-spacial-3"))
 <script language="JavaScript" type="text/javascript">
 	document.write("<span><a href=\"javascript:ingrid_openWindow('$link',750,550);\">$MESSAGES.getString('searchExtEnvPlaceGeothesaurus.info.link')</a></span>");
 </script>

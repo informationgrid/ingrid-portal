@@ -8,7 +8,7 @@
 		  <p>$MESSAGES.getString('searchExtEnvAreaContents.explanation')</p>
           <div class="innerform">
             <p>
-              <input type="radio" name="content_type" id="all" value="1"#getChecked("content_type" "1") /><label for="all">$MESSAGES.getString('searchExtEnvAreaContents.label.all')</label>
+              <input type="radio" class="radio_button" name="content_type" id="all" value="1"#getChecked("content_type" "1") /><label for="all">$MESSAGES.getString('searchExtEnvAreaContents.label.all')</label>
             </p> 
             <p>
 #if($enableTopic)

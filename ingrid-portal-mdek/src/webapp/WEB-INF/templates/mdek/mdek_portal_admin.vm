@@ -36,21 +36,21 @@
 </tr>
 #end
 #macro (renderDBBrowserFooterButtons $buttons)
-<div class="formfooter">
+<div class="formfooter formfooter_border_style">
 #foreach ($button in $buttons)
 	#if($button == "doEdit")
-    	<input class="btn float_left" type="submit" name="doEdit" value="$MESSAGES.getString('mdek.portal.admin.edit')"/>
-    	<span class="float_left">&nbsp;</span>
+    	#renderInputButtonClass("$MESSAGES.getString('mdek.portal.admin.edit')" "" "doEdit" "" "float_left")
+		<span class="float_left">&nbsp;</span>
 	#end
 	#if($button == "doDelete")
-		<input class="btn float_left" type="submit" name="doDelete" onClick="return confirm('$MESSAGES.getString('mdek.portal.admin.delete.message')')" value=$MESSAGES.getString('mdek.portal.admin.delete') />
+		#renderInputButtonOnClick("$MESSAGES.getString('mdek.portal.admin.delete')" "" "doDelete" "" "float_left" "return confirm('$MESSAGES.getString('mdek.portal.admin.delete.message')')")
 	#end
 	#if($button == "doRefresh")
-    	<input class="btn float_right" type="submit" name="doRefresh" value="$MESSAGES.getString('mdek.portal.admin.reload')" />
-    	<span class="float_right">&nbsp;</span>
+    	#renderInputButtonClass("$MESSAGES.getString('mdek.portal.admin.reload')" "" "doRefresh" "" "float_right")
+		<span class="float_right">&nbsp;</span>
 	#end
 	#if($button == "doNew")
-		<input class="btn float_right" type="submit" name="doNew" value="$MESSAGES.getString('mdek.portal.admin.add')" />
+		#renderInputButtonClass("$MESSAGES.getString('mdek.portal.admin.add')" "" "doNew" "" "float_right")
 	#end
 #end
 	<p class="clearer"></p>

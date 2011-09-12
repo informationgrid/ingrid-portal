@@ -1,4 +1,4 @@
-#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
+#set ($MESSAGES = $jetspeed.getIngridResourceBundle($portletConfig.getResourceBundle($renderRequest.Locale)))
 
 #* defines URL parameter string *#
 #macro (defineUrlParams)
@@ -69,7 +69,7 @@
 
   <!-- LOGO -->
   <div id="logo">
-    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img style="padding:26px 16px 0px;" src="#GetPageResource('images/logo.gif')" alt="Logo NUMIS" /></a>
+    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')"><img style="padding:26px 16px 0px;" src="#GetPageResource('images/logo.gif')" alt="Logo NUMIS" /></a>
   </div>
   
   <!-- SERVICE-NAVIGATION -->
@@ -104,7 +104,7 @@
 #* include main navigation component *#
 #macro (includeMainNavigation $_menu)
     #set($currentPage = $site.getPage().url)
-	#foreach($element in $_menu.elements.iterator())
+   #foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
         #set($tabTitle = $element.getTitle($preferedLocale))
         #set($tabName = $element.getShortTitle($preferedLocale))
@@ -119,7 +119,7 @@
         #set($elemRender = true)
 		## different menu item name than title in psml !
 		#if($element.url=="/main-search.psml")
-            #set($tabTitle = $MESSAGES.getString('ingrid.page.search'))
+            ##set($tabTitle = $MESSAGES.getString('ingrid.page.search'))
             #set($tabName = $MESSAGES.getString('ingrid.page.search'))
 		#end
 		## process and set flags accordingly
@@ -129,33 +129,30 @@
 			##<li><a href="$tabUrl" title="$MESSAGES.getString('ingrid.page.maps.link.title')" target="ingrid_wms">$tabName</a></li>
 			###set($elemRender = false)
 		#elseif($element.url=="/main-search.psml")
-			#if($currentPage.startsWith('/search-'))
+			#if($currentPage.startsWith('/search-ext'))
 				#set($elemSelected = true)
 			#end
-		#elseif($element.url=="/main-about.psml")
-			#if($currentPage.startsWith('/main-about'))
-				#set($elemSelected = true)
-			#end
-		#end
+		#elseif($element.url.startsWith("/search-catalog"))
+        	#if($currentPage.startsWith('/search-catalog'))
+                #set($elemSelected = true)
+            #end
+        #elseif($element.url=="/main-about.psml" || $element.url=="/main-features.psml")
+            #if($currentPage.startsWith('/main-about') || $currentPage.startsWith('/main-feature') )
+                #set($elemSelected = true)
+            #end
+        #end
 		## render menue item dependent from flags
 		#if ($elemRender)
     		#if ($elemSelected)
               <li>
-				<a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a>
-				#if($velocityCount != $_menu.elements.size())
-					<img style="padding:2px 0px 0px 0px" src="#GetPageResource('images/mainnav_seperator.png')">
-				#else
-					<img style="padding:2px 0px 0px 0px; height:25px" src="#GetPageResource('images/background_mainnav.png')">
+              	<a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a>
+				#if ($currentPage.startsWith('/main-about') || $currentPage.startsWith('/main-features'))
+					#set($subMenu = $site.getMenu("sub-menu-about"))
 				#end
 			  </li>
             #else
               <li>
 				<a href="$tabUrl" title="$tabTitle">$tabName</a>
-				#if($velocityCount != $_menu.elements.size())
-					<img style="padding:2px 0px 0px 0px" src="#GetPageResource('images/mainnav_seperator.png')">
-				#else
-					<img style="padding:2px 0px 0px 0px; height:25px" src="#GetPageResource('images/background_mainnav.png')">
-				#end
 			  </li>
 			#end
 		#end
@@ -178,23 +175,21 @@
 		#end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
         #if($velocityCount > 1)
-           | 
+           	|
 		#end
 		## flags indicating how to render menu item
         #set($elemSelected = false)
 		## process and set flags accordingly
+		#if ($element.url.startsWith('/main-about.psml'))
+            #set($linkTitle = $MESSAGES.getString('ingrid.page.portrait.tooltip'))
+            #set($linkName = $MESSAGES.getString('ingrid.page.portrait')) 
+        #end
+        #if ($element.url.startsWith('/main-features.psml'))
+            #set($linkTitle = $MESSAGES.getString('ingrid.page.features.tooltip'))
+            #set($linkName = $MESSAGES.getString('ingrid.page.features')) 
+        #end
         #if($element.isSelected($site))
 			#set($elemSelected = true)
-		#elseif($_menu.Name=='sub-menu-search')
-			#if($element.url.startsWith('/main-search'))
-				#if (!$currentPage.startsWith('/search-catalog'))
-					#set($elemSelected = true)
-				#end
-			#elseif($element.url.startsWith('/search-catalog'))
-				#if ($currentPage.startsWith('/search-catalog'))
-					#set($elemSelected = true)
-				#end
-			#end
 		#end
 		#if ($elemSelected)
           <li><a href="$linkUrl" title="$linkTitle" class="selected">$linkName</a></li>
@@ -252,10 +247,10 @@
 	#end
   #elseif($el=="/help.psml")
 	<script language="JavaScript" type="text/javascript">
-		document.write("<li><a href=\"javascript:ingrid_openWindow('$linkUrl',750,550);\" title=\"$MESSAGES.getString('ingrid.page.help.link.title')\">${linkName}</a>$postfix</li>");
+		document.write("<li><a href=\"javascript:ingrid_openWindow('$linkUrl',750,550);\" title=\"$MESSAGES.getString('ingrid.page.help.link.tooltip')\">${linkName}</a>$postfix</li>");
 	</script>
 	<noscript>
-		<li><a href="$linkUrl" target="_new" title="$MESSAGES.getString('ingrid.page.help.link.title')">${linkName}</a>$postfix</li>
+		<li><a href="$linkUrl" target="_new" title="$linkTitle">${linkName}</a>$postfix</li>
 	</noscript>
   #elseif($linkTitle == "ingrid.page.language")
     $jetspeed.renderPortletEntity("LanguageSwitch", "ingrid-portal-apps::LanguageSwitch")

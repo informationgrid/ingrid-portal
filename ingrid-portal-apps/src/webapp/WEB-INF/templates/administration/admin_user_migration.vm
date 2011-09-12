@@ -6,7 +6,7 @@
 		</p>
 	</div>
 <div class="formfooter formfooter_border_style" align="right">
-	<input class="btn" type="submit" name="doExport" value="Export" />
+   	#renderInputButtonClass("Export" "" "doExport" "" "float_right")
 </div>
 </form>
 <form action="$action" method="post" name="frmAdminUserMigrationImport" id="frmAdminUserMigrationImport">
@@ -26,6 +26,6 @@
 			
 	</div>
 <div class="formfooter formfooter_border_style" align="right">
-	<input class="btn" type="submit" name="doImport" value="Import" />
+   	#renderInputButtonClass("Import" "" "doImport" "" "float_right")
 </div>
 </form>

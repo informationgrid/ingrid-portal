@@ -17,6 +17,7 @@ import org.apache.velocity.context.Context;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
@@ -83,6 +84,9 @@ public class CMSPortlet extends GenericVelocityPortlet {
                     }
                 	context.put("tool", new UtilsVelocity());
                 }
+            } else if (myKey.equals("portalu.teaser.inform")) {
+                context.put("showNewsletter", true);
+                context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, true));
             }
         }
 

@@ -4,8 +4,13 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>ingrid.page.home</title>
-
+  <title>ingrid.page.home.tooltip</title>
+  <short-title>ingrid.page.home</short-title>
+  <metadata name="meta_title">ingrid.page.home.meta.title</metadata>
+  <metadata name="meta_descr">ingrid.page.home.meta.description</metadata>
+  <metadata name="meta_keywords">ingrid.page.home.meta.keywords</metadata>
+  <!--<metadata name="title">ingrid.page.home.meta.title</metadata>-->
+  
   <fragment id="home" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <!-- USE id="search-simple-portlet", this one will be shared across pages ! -->
     <fragment id="search-simple-portlet" type="portlet" name="ingrid-portal-apps::SearchSimple">

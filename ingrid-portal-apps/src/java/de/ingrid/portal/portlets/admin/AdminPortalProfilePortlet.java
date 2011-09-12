@@ -22,8 +22,8 @@ import javax.portlet.RenderResponse;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.ConversionException;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.components.portletregistry.PortletRegistry;
 import org.apache.jetspeed.om.folder.Folder;
@@ -48,7 +48,7 @@ import de.ingrid.portal.global.UtilsPageLayout;
  */
 public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
 
-    private final static Log log = LogFactory.getLog(AdminPortalProfilePortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(AdminPortalProfilePortlet.class);
 
     private PageManager pageManager;
 
@@ -163,7 +163,7 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                                 		prefs.add(f);
                                 	}
                                 } catch (Exception e) {
-                                	log.error(e);
+                                	log.error(e.toString());
                                 }
                                 UtilsPageLayout.positionPortletOnPage(pageManager, p, p.getRootFragment(), portletName,
                                         row, col, prefs);

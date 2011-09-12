@@ -12,8 +12,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -46,7 +46,7 @@ import de.ingrid.portal.om.IngridRSSStore;
  */
 public class RSSFetcherJob extends IngridMonitorAbstractJob {
 
-    protected final static Log log = LogFactory.getLog(RSSFetcherJob.class);
+    protected final static Logger log = LoggerFactory.getLogger(RSSFetcherJob.class);
 
     /**
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)

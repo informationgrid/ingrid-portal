@@ -22,11 +22,11 @@ abstract class SearchExtLawArea extends SearchExtLaw {
 
     // PAGES FOR TABS
 
-    protected final static String PAGE_PARTNER = "/ingrid-portal/portal/search-extended/search-ext-law-area-partner.psml";
+    protected final static String PAGE_PARTNER = "/portal/search-extended/search-ext-law-area-partner.psml";
 
     protected void processTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
         if (tab.equals(PARAMV_TAB_PARTNER)) {
-            actionResponse.sendRedirect(PAGE_PARTNER);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_PARTNER));
         } else {
             super.processTab(actionResponse, tab);
         }

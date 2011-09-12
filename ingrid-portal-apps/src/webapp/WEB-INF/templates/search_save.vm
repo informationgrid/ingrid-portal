@@ -9,7 +9,7 @@ $MESSAGES.setMsgParam("$max_entries")
         <p>$MESSAGES.getStringWithMsgParams('searchSave.label.explanation')</p>
         <label class="lbl_qrystr" for="save_entry_name">$MESSAGES.getString('searchSave.label.save_entry_name')</label><br>
         <input class="qrystr inputstyletext" name="save_entry_name" id="save_entry_name" type="text">
-        <input class="btn" value="$MESSAGES.getString('searchSave.btn.save')" type="submit">
+        #renderInputButton($MESSAGES.getString('searchSave.btn.save') "" "" "")
         <br><br>
         <hr>
 
@@ -24,7 +24,7 @@ $MESSAGES.setMsgParam("$max_entries")
 			#end
           </ul>
           <br>
-          <input class="btn" value="$MESSAGES.getString('common.form.button.delete')" name="deleteEntries" type="submit">
+         #renderInputButton($MESSAGES.getString('common.form.button.delete') "" "deleteEntries" "")
       </div>
     </form>
   </div>

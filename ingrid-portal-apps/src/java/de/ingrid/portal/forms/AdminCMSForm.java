@@ -7,8 +7,8 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -23,7 +23,7 @@ import de.ingrid.portal.om.IngridCMS;
  */
 public class AdminCMSForm extends ActionForm {
 
-    private final static Log log = LogFactory.getLog(AdminCMSForm.class);
+    private final static Logger log = LoggerFactory.getLogger(AdminCMSForm.class);
 
     public static final String SESSION_KEY = AdminCMSForm.class.getName();
 

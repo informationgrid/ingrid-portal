@@ -1,0 +1,129 @@
+<div>
+ 	### MENU ###
+	<div class="float_left feature_menu">
+		<ul>
+			<li>
+				#if ($feature == "doSearch")
+					<div title="$MESSAGES.getString('feature.menu.tab0.tooltip')" class="selected">
+						<img src="/ingrid-portal-apps/images/features/tab_search.png"></img><p>$MESSAGES.getString('feature.menu.tab0')</p>
+					</div>
+				#else
+					<a title="$MESSAGES.getString('feature.menu.tab0.tooltip')" href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doSearch">
+						<div>
+							<img src="/ingrid-portal-apps/images/features/tab_search.png"></img><p>$MESSAGES.getString('feature.menu.tab0')</p>
+						</div>
+					</a>
+				#end
+			</li>
+			#if($enableTopic)
+			<li>
+				#if ($feature == "doEnvironment")
+					<div title="$MESSAGES.getString('feature.menu.tab1.tooltip')" class="selected">
+						<img src="/ingrid-portal-apps/images/features/tab_topic.png"></img><p>$MESSAGES.getString('feature.menu.tab1')</p>
+					</div>
+				#else
+					<a title="$MESSAGES.getString('feature.menu.tab1.tooltip')" href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doEnvironment">
+						<div>
+							<img src="/ingrid-portal-apps/images/features/tab_topic.png"></img><p>$MESSAGES.getString('feature.menu.tab1')</p>
+						</div>
+					</a>
+				#end
+			</li>
+			#end
+			#if($enableMeasure)
+			<li>
+				#if ($feature == "doMeasures")
+					<div title="$MESSAGES.getString('feature.menu.tab2.tooltip')" class="selected">
+						<img src="/ingrid-portal-apps/images/features/tab_measures.png"></img><p>$MESSAGES.getString('feature.menu.tab2')</p>
+					</div>
+				#else
+					<a title="$MESSAGES.getString('feature.menu.tab2.tooltip')" href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doMeasures">
+						<div>
+							<img src="/ingrid-portal-apps/images/features/tab_measures.png"></img><p>$MESSAGES.getString('feature.menu.tab2')</p>
+						</div>
+					</a>
+				#end
+			</li>
+			#end
+			#if($enableService)
+			<li>
+				#if ($feature == "doService")
+					<div title="$MESSAGES.getString('feature.menu.tab3.tooltip')" class="selected">
+						<img src="/ingrid-portal-apps/images/features/tab_service.png"></img><p>$MESSAGES.getString('feature.menu.tab3')</p>
+					</div>
+				#else
+					<a title="$MESSAGES.getString('feature.menu.tab3.tooltip')" href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doService">
+						<div>
+							<img src="/ingrid-portal-apps/images/features/tab_service.png"></img><p>$MESSAGES.getString('feature.menu.tab3')</p>
+						</div>
+					</a>
+				#end
+			</li>
+			#end
+			#if($enableSearchCatalog || $enableSearchCatalogThesaurus)
+			<li>
+				#if ($feature == "doCatalog")
+					<div title="$MESSAGES.getString('feature.menu.tab4.tooltip')" class="selected">
+						<img src="/ingrid-portal-apps/images/features/tab_catalog.png"></img><p>$MESSAGES.getString('feature.menu.tab4')</p>
+					</div>
+				#else
+					<a title="$MESSAGES.getString('feature.menu.tab4.tooltip')" href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doCatalog">
+						<div>
+							<img src="/ingrid-portal-apps/images/features/tab_catalog.png"></img><p>$MESSAGES.getString('feature.menu.tab4')</p>
+						</div>
+					</a>
+				#end
+			</li>
+			#end
+			#if($enableMaps)
+			<li>
+				#if ($feature == "doMap")
+					<div title="$MESSAGES.getString('feature.menu.tab5.tooltip')" class="selected">
+						<img src="/ingrid-portal-apps/images/features/tab_map.png"></img><p>$MESSAGES.getString('feature.menu.tab5')</p>
+					</div>
+				#else
+					<a title="$MESSAGES.getString('feature.menu.tab5.tooltip')" href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doMap">
+						<div>
+							<img src="/ingrid-portal-apps/images/features/tab_map.png"></img><p>$MESSAGES.getString('feature.menu.tab5')</p>
+						</div>
+					</a>
+				#end
+			</li>
+			#end
+			#if($enableChronicle)
+			<li>
+				#if ($feature == "doChronicle")
+					<div title="$MESSAGES.getString('feature.menu.tab6.tooltip')" class="selected">
+						<img src="/ingrid-portal-apps/images/features/tab_chronicle.png"></img><p>$MESSAGES.getString('feature.menu.tab6')</p>
+					</div>
+				#else
+					<a title="$MESSAGES.getString('feature.menu.tab6.tooltip')" href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doChronicle">
+						<div>
+							<img src="/ingrid-portal-apps/images/features/tab_chronicle.png"></img><p>$MESSAGES.getString('feature.menu.tab6')</p>
+						</div>
+					</a>
+				#end
+			</li>
+			#end
+		</ul>
+	</div>
+	
+	### CONTENT ###
+	<div class="float_left feature_content">
+	#if ($feature == "doSearch")
+		#parse ('/WEB-INF/templates/features_search.vm')
+	#elseif ($feature == "doEnvironment")
+		#parse ('/WEB-INF/templates/features_environment.vm')
+	#elseif ($feature == "doMeasures")
+		#parse ('/WEB-INF/templates/features_measures.vm')
+	#elseif ($feature == "doService")
+		#parse ('/WEB-INF/templates/features_service.vm')
+	#elseif ($feature == "doCatalog")
+		#parse ('/WEB-INF/templates/features_catalog.vm')
+	#elseif ($feature == "doMap")
+		#parse ('/WEB-INF/templates/features_map.vm')
+	#elseif ($feature == "doChronicle")
+		#parse ('/WEB-INF/templates/features_chronicle.vm')
+	#end
+	</div>
+</div>

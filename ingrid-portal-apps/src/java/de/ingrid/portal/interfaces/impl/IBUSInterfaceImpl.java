@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.commons.configuration.Configuration;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.cfg.Environment;
 
 import de.ingrid.ibus.client.BusClient;
@@ -33,7 +33,7 @@ import de.ingrid.utils.query.IngridQuery;
  */
 public class IBUSInterfaceImpl implements IBUSInterface {
 
-    private final static Log log = LogFactory.getLog(IBUSInterfaceImpl.class);
+    private final static Logger log = LoggerFactory.getLogger(IBUSInterfaceImpl.class);
 
     private static IBUSInterfaceImpl instance = null;
 
@@ -48,7 +48,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             try {
                 instance = new IBUSInterfaceImpl();
             } catch (Exception e) {
-                log.fatal("Error initiating the iBus interface.", e);
+                log.error("Error initiating the iBus interface.", e);
             }
         }
         
@@ -92,8 +92,8 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
 
         } catch (Throwable t) {
-            if (log.isFatalEnabled()) {
-                log.fatal("Problems Constructor IBUSInterfaceImpl Singleton", t);
+            if (log.isErrorEnabled()) {
+                log.error("Problems Constructor IBUSInterfaceImpl Singleton", t);
             }
             shutdown();
             throw new Exception("Error Constructor IBUSInterfaceImpl", t);

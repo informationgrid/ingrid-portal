@@ -14,8 +14,8 @@ import java.util.Set;
 
 import javax.portlet.RenderRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.IPlugHelperDscEcs;
@@ -31,7 +31,7 @@ import de.ingrid.utils.udk.UtilsDate;
  */
 public class DetailDataPreparer_UDK_5_0_Object implements DetailDataPreparer {
 
-    private final static Log log = LogFactory.getLog(DetailDataPreparer_UDK_5_0_Object.class);
+    private final static Logger log = LoggerFactory.getLogger(DetailDataPreparer_UDK_5_0_Object.class);
 	
 	private Context context;
 	private String iplugId;

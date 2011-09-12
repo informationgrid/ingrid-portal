@@ -14,8 +14,8 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.hibernate.Session;
@@ -39,7 +39,7 @@ import de.ingrid.portal.om.IngridNewsletterData;
 
 public class ContactPortlet extends GenericVelocityPortlet {
 
-    private final static Log log = LogFactory.getLog(ContactPortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(ContactPortlet.class);
     
     private final static String TEMPLATE_FORM_INPUT = "/WEB-INF/templates/contact.vm";
 
@@ -117,7 +117,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
             cf.populate(request);
             
     		String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
-             actionResponse.sendRedirect(Settings.PAGE_CONTACT + urlViewParam);
+             actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_CONTACT + urlViewParam));
              return;
     	}else{
     		Boolean isResponseCorrect = false;
@@ -129,7 +129,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
                 // before render request
             	 	
                 String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
-                actionResponse.sendRedirect(Settings.PAGE_CONTACT + urlViewParam);
+                actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_CONTACT + urlViewParam));
                 
                 return;
             }
@@ -227,11 +227,11 @@ public class ContactPortlet extends GenericVelocityPortlet {
 
                  // temporarily show same page with content
                  String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_SUCCESS);
-                 actionResponse.sendRedirect(Settings.PAGE_CONTACT + urlViewParam);
+                 actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_CONTACT + urlViewParam));
             }else{
            		cf.setErrorCaptcha();
            		String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
-                actionResponse.sendRedirect(Settings.PAGE_CONTACT + urlViewParam);
+                actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_CONTACT + urlViewParam));
                 return;
             }
     	}    

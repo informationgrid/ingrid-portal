@@ -6,8 +6,8 @@
 
 #macro (renderFooter)
 <div class="formfooter" align="right">
-	<input class="btn" type="submit" name="doCreateCatalog" value="$MESSAGES.getString('mdek.portaladmin.catalog.create')" />
-	<input class="btn" type="submit" name="doCancel" value="$MESSAGES.getString('mdek.portaladmin.catalog.back')" />
+	#renderInputButtonClass("$MESSAGES.getString('mdek.portaladmin.catalog.back')" "" "doCancel" "" "float_right")
+	#renderInputButtonClass("$MESSAGES.getString('mdek.portaladmin.catalog.create')" "" "doCreateCatalog" "" "float_right")
 </div>
 #end
 
@@ -40,7 +40,7 @@
 
 #renderFooter()
 <!--
-	<div class="formfooter">
+	<div class="formfooter formfooter_border_style">
 		<div align="right">
 			<input class="btn" type="submit" value="Speichern" />
 		</div>

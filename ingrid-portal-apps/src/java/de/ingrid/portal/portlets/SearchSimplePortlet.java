@@ -11,8 +11,8 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
@@ -41,7 +41,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  */
 public class SearchSimplePortlet extends GenericVelocityPortlet {
 
-    private final static Log log = LogFactory.getLog(SearchSimplePortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(SearchSimplePortlet.class);
 
     // VIEW TEMPLATES
 
@@ -89,37 +89,37 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
     // PAGES
 
     /** search-history page -> displays and handles search settings */
-    private final static String PAGE_SEARCH_HISTORY = "/ingrid-portal/portal/search-history.psml";
+    private final static String PAGE_SEARCH_HISTORY = "/portal/search-history.psml";
 
     /** search-settings page -> displays and handles search settings */
-    private final static String PAGE_SEARCH_SETTINGS = "/ingrid-portal/portal/search-settings.psml";
+    private final static String PAGE_SEARCH_SETTINGS = "/portal/search-settings.psml";
 
     /** save query page -> displays and handles save query functionality */
-    private final static String PAGE_SAVE_QUERY = "/ingrid-portal/portal/search-save.psml";
+    private final static String PAGE_SAVE_QUERY = "/portal/search-save.psml";
 
     /**
      * main extended search page for datasource "environmentinfos" -> envinfo:
      * topic/terms
      */
-    private final static String PAGE_SEARCH_EXT_ENV = "/ingrid-portal/portal/search-extended/search-ext-env-topic-terms.psml";
+    private final static String PAGE_SEARCH_EXT_ENV = "/portal/search-extended/search-ext-env-topic-terms.psml";
 
     /**
      * main extended search page for datasource "address" -> address:
      * topic/terms
      */
-    private final static String PAGE_SEARCH_EXT_ADR = "/ingrid-portal/portal/search-extended/search-ext-adr-topic-terms.psml";
+    private final static String PAGE_SEARCH_EXT_ADR = "/portal/search-extended/search-ext-adr-topic-terms.psml";
 
     /**
      * main extended search page for datasource "research" -> research:
      * topic/attributes
      */
-    private final static String PAGE_SEARCH_EXT_RES = "/ingrid-portal/portal/search-extended/search-ext-res-topic-attributes.psml";
+    private final static String PAGE_SEARCH_EXT_RES = "/portal/search-extended/search-ext-res-topic-attributes.psml";
 
     /**
      * main extended search page for datasource "law" -> law:
      * topic/attributes
      */
-    private final static String PAGE_SEARCH_EXT_LAW = "/ingrid-portal/portal/search-extended/search-ext-law-topic-terms.psml";
+    private final static String PAGE_SEARCH_EXT_LAW = "/portal/search-extended/search-ext-law-topic-terms.psml";
     
     /*
      * (non-Javadoc)
@@ -378,7 +378,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             // check if submit or requery or delete query
             if (request.getParameter("doSetQuery") == null && request.getParameter("doDeleteQuery") == null) {
                 // redirect to our page wih parameters for bookmarking
-                actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
+                actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)));
             }
 
         } else if (action.equalsIgnoreCase(PARAMV_ACTION_NEW_DATASOURCE)) {
@@ -402,39 +402,39 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             // datasource without support for bookmarking !
             if (getDefaultViewPage().equals(TEMPLATE_SEARCH_SIMPLE)) {
                 // we're in main search
-                actionResponse.sendRedirect(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
+                actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)));
             } else {
                 // we're in extended search
                 if (newDatasource.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-                    actionResponse.sendRedirect(PAGE_SEARCH_EXT_ENV);
+                    actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_ENV));
                 } else if (newDatasource.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-                    actionResponse.sendRedirect(PAGE_SEARCH_EXT_ADR);
+                    actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_ADR));
                 } else if (newDatasource.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
-                    actionResponse.sendRedirect(PAGE_SEARCH_EXT_RES);
+                    actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_RES));
                 } else if (newDatasource.equals(Settings.PARAMV_DATASOURCE_LAW)) {
-                    actionResponse.sendRedirect(PAGE_SEARCH_EXT_LAW);
+                    actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_LAW));
                 }
             }
 
         } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_SETTINGS)) {
-            actionResponse.sendRedirect(PAGE_SEARCH_SETTINGS + SearchState.getURLParamsMainSearch(request));
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_SETTINGS + SearchState.getURLParamsMainSearch(request)));
 
         } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_HISTORY)) {
-            actionResponse.sendRedirect(PAGE_SEARCH_HISTORY + SearchState.getURLParamsMainSearch(request));
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_HISTORY + SearchState.getURLParamsMainSearch(request)));
 
         } else if (action.equalsIgnoreCase(PARAMV_ACTION_SAVE_QUERY)) {
-            actionResponse.sendRedirect(PAGE_SAVE_QUERY + SearchState.getURLParamsMainSearch(request));
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SAVE_QUERY + SearchState.getURLParamsMainSearch(request)));
 
         } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_EXTENDED)) {
             String currentDatasource = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
             if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-                actionResponse.sendRedirect(PAGE_SEARCH_EXT_ENV);
+                actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_ENV));
             } else if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-                actionResponse.sendRedirect(PAGE_SEARCH_EXT_ADR);
+                actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_ADR));
             } else if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
-                actionResponse.sendRedirect(PAGE_SEARCH_EXT_RES);
+                actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_RES));
             } else if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_LAW)) {
-                actionResponse.sendRedirect(PAGE_SEARCH_EXT_LAW);
+                actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_LAW));
             }
         }
     }

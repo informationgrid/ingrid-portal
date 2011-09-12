@@ -35,13 +35,13 @@ abstract class SearchExtAdr extends GenericVelocityPortlet {
     // START PAGES FOR MAIN TABS
 
     /** page for main tab "topic" */
-    protected final static String PAGE_TOPIC = "/ingrid-portal/portal/search-extended/search-ext-adr-topic-terms.psml";
+    protected final static String PAGE_TOPIC = "/portal/search-extended/search-ext-adr-topic-terms.psml";
 
     /** page for main tab "place" */
-    protected final static String PAGE_PLACE = "/ingrid-portal/portal/search-extended/search-ext-adr-place-reference.psml";
+    protected final static String PAGE_PLACE = "/portal/search-extended/search-ext-adr-place-reference.psml";
 
     /** page for main tab "search area" */
-    protected final static String PAGE_AREA = "/ingrid-portal/portal/search-extended/search-ext-adr-area-partner.psml";
+    protected final static String PAGE_AREA = "/portal/search-extended/search-ext-adr-area-partner.psml";
 
     // VARIABLE NAMES FOR VELOCITY
 
@@ -63,11 +63,11 @@ abstract class SearchExtAdr extends GenericVelocityPortlet {
 
     protected void processTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
         if (tab.equals(PARAMV_TAB_TOPIC)) {
-            actionResponse.sendRedirect(PAGE_TOPIC);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_TOPIC));
         } else if (tab.equals(PARAMV_TAB_PLACE)) {
-            actionResponse.sendRedirect(PAGE_PLACE);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_PLACE));
         } else if (tab.equals(PARAMV_TAB_AREA)) {
-            actionResponse.sendRedirect(PAGE_AREA);
+            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_AREA));
         }
     }
 }

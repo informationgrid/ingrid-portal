@@ -106,7 +106,7 @@ COMPONENT_AVAILABLE
 COMPONENT_INFO
 -->
     <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.update.component.info')</label>
-    <textarea cols="125" rows="3" id="componentInfo" name="componentInfo">#getFieldValue('componentInfo')</textarea>
+    <textarea cols="119" rows="3" id="componentInfo" name="componentInfo">#getFieldValue('componentInfo')</textarea>
     <div class="comment">$MESSAGES.getString('component.forms.update.component.help.info')</div>
     <p class="clearer" />
     <p>
@@ -116,7 +116,7 @@ COMPONENT_EMAILS
     <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.update.component.emails')</label>
 #set ($emails = $actionForm.getInputAsArray('contact_email'))
 #if ($component.emails.size() > 0)    
-    <table class="border" style="width:663px;">
+    <table class="border" style="width:640px;">
         <tr>
             <td class="contentColumnHead" style="text-decoration:none; width: 10px;"></td>
             <td class="contentColumnHead" style="text-decoration:none">Email</td>
@@ -134,26 +134,30 @@ COMPONENT_EMAILS
     #end
         <tr>
             <td></td>
-            <td><input class="btn" type="submit" name="doUpdateDeleteEmail" value="$MESSAGES.getString('component.forms.update.component.remove.email')" style="font-size:100%; float: right;" /></td>
+            <td>
+                #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.remove.email')" "font-size:100%;" "doUpdateAddEmail" "" "float_right")
+            </td>
         </tr>
     </table>
     <p>
     <label class="float_left col2left_incr">&nbsp;</label>
 #end
-    <table class="border" style="width:663px;">
+    <table class="border" style="width:640px;">
     <tr>
 <!--
 COMPONENT_EMAIL_NEW
 -->
-    <td><input class="#getInputStyleText('contact_email_new')" id="newEmail" name="contact_email_new" value="#getFieldValue('contact_email_new')" type="text" style="width:95%;"></td>
-    <td style="width:10px;"><input class="btn" type="submit" name="doUpdateAddEmail" value="$MESSAGES.getString('component.forms.update.component.add.new.email')" style="font-size:100%;" /></td>
+    <td><input class="#getInputStyleText('contact_email_new')" id="newEmail" name="contact_email_new" value="#getFieldValue('contact_email_new')" type="text" style="width:425px;"></td>
+    <td>
+        #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.add.new.email')" "font-size:100%;" "doUpdateAddEmail" "" "float_right")
+    </td>
     </tr>
     </table>
     <p><div class="comment">$MESSAGES.getString('component.forms.update.component.help.add.new.email')</div></p>
     
 </div>
 <div class="formfooter formfooter_border_style" align="right">
-    <input class="btn" type="submit" name="doShowUpdates" value="$MESSAGES.getString('component.forms.update.component.edit.back')" />
-    <input class="btn" type="submit" name="doSaveUpdates" value="$MESSAGES.getString('component.forms.update.component.edit.save')" />
+    #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.edit.back')" "" "doShowUpdates" "" "float_right")
+    #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.edit.save')" "" "doSaveUpdates" "" "float_right")
 </div>
 </form>

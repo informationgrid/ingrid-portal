@@ -4,7 +4,11 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>ingrid.page.envtopics</title>
+  <title>ingrid.page.envtopics.tooltip</title>
+  <short-title>ingrid.page.envtopics</short-title>
+  <metadata name="meta_title">ingrid.page.environment.meta.title</metadata>
+  <metadata name="meta_descr">ingrid.page.environment.meta.description</metadata>
+  <metadata name="meta_keywords">ingrid.page.environment.meta.keywords</metadata>
 
   <fragment id="main-environment" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="main-environment-input" type="portlet" name="ingrid-portal-apps::EnvironmentSearch">

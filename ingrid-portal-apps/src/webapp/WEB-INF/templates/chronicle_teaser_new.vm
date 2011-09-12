@@ -1,0 +1,31 @@
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doTeaser')
+<div class="portlet-section-body">
+    <div>
+        <img class="teaser_image" src="/ingrid-portal-apps/images/features/marginal_chronicle.png" alt="$MESSAGES.getString('chronicle.teaser.new.image.info')" />
+            #if($snsAnniversary.years && $snsAnniversary.title)
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter('action','doTeaser')
+                $action.setParameter('topId',"$!snsAnniversary.topicId")
+                $action.setParameter('topType',"$!snsAnniversary.type")
+                ##$action.setParameter('topFrom',"$!snsAnniversary.from")
+                ##$action.setParameter('topTo',"$!snsAnniversary.to")
+                $action.setParameter('topTerm',"$!snsAnniversary.term")
+                <p style="padding: 5px 0 3px; margin: 0;"><strong><i>$MESSAGES.getString('chronicle.teaser.event.prae') $snsAnniversary.years#if($snsAnniversary.years > 1) $MESSAGES.getString('chronicle.teaser.event.years')#else $MESSAGES.getString('chronicle.teaser.event.year')#end: </i></strong></p>
+                <p class="teaser_title">
+                    <a href="$action" title="$MESSAGES.getString('chronicle.teaser.event.tooltip')">$snsAnniversary.title</a>
+                    <!--<span style="font-weight:normal;"> ($snsAnniversary.from#if($snsAnniversary.until) - $snsAnniversary.until#end)</span>-->
+                </p>
+            #else
+                
+            #end
+    </div>
+    <p class="teaser_body">
+        $MESSAGES.getString('chronicle.teaser.new.body')
+    </p>
+    <p class="iconLink">
+      <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
+      <span><a href="$action" title="$MESSAGES.getString('chronicle.teaser.new.link.tooltip')">$MESSAGES.getString('chronicle.teaser.new.link')</a></span>
+      <span class="clearer"></span>
+    </p>
+</div>

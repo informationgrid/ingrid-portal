@@ -1,0 +1,20 @@
+<div class="portlet_info_top"></div>
+<div class="portlet-section-body portlet_info">
+	<h1 class="info_title">$MESSAGES.getString('searchSimple.info.title')</h1>
+	<span class="clearer"><img class="info_img_line" src="/ingrid-portal-apps/images/portlet_info_line.png"/></span>
+	<img class="info_img" src="/ingrid-portal-apps/images/search_info.png"/>
+	#if($MESSAGES.getString('searchSimple.info.subtitle') != "" && $MESSAGES.getString('searchSimple.info.subtitle').length() > 0)
+    	<p class="info_subtitle">$MESSAGES.getString('searchSimple.info.subtitle')</p>
+    #end
+    #if($MESSAGES.getString('searchSimple.info.body') != "" && $MESSAGES.getString('searchSimple.info.body').length() > 0)
+   		<p class="info_body">$MESSAGES.getString('searchSimple.info.body')</p>
+    #end
+	#if($enableFeatureType)    
+    <p class="iconLink">
+    	<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')"/></span>
+    	<span><a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doSearch" title="$MESSAGES.getString('feature.read.more.tooltip')">$MESSAGES.getString('searchSimple.info.link')</a></span>
+    	<span class="clearer"></span>
+    </p>
+    #end
+</div>
+<div class="portlet_info_bottom"></div>	

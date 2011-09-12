@@ -4,7 +4,8 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>ingrid.page.search.catalog</title>
+  <title>ingrid.page.search.catalog.tooltip</title>
+  <short-title>ingrid.page.search.catalog</short-title>
 
     <fragment id="search-catalog-hierarchy-page" type="layout" name="jetspeed-layouts::IngridOneColumn">
 	    <fragment id="search-catalog-hierarchy" type="portlet" name="ingrid-portal-apps::SearchCatalogHierarchy">

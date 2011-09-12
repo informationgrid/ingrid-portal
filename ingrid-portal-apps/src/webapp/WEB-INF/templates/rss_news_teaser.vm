@@ -1,7 +1,7 @@
 #foreach($rssEntry in $rssEntries)
   <div class="resultset">
-    <span class="result_title"><strong><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" /></span><a href="$!rssEntry.link" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rssEntry.title</a></strong><em class="date"> <nobr>$date.format('d.M.yyyy H:mm',$rssEntry.publishedDate)</nobr></em></span>
-    <p class="result_description">
+    <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" /></span><span class="intendResult"><a href="$!rssEntry.link" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rssEntry.title</a></span><em class="date"> <nobr>$date.format('d.M.yyyy H:mm',$rssEntry.publishedDate)</nobr></em></span>
+    <p class="result_description"> 
       $strutils.cutString($rssEntry.description, 350)
     </p>
     <p class="result_metadata">
@@ -15,5 +15,4 @@
   <div class="line"><hr /></div>
 #end	
   <br />
-
-  <div class="ico_linkintern"><span style="font-size:75%"><a href="portal/rss-news.psml">$MESSAGES.getString('news.teaser.more')</a></span></div>
+  <div class="ico_linkintern"><span style="font-size:75%"><a href="$renderResponse.encodeURL('/portal/rss-news.psml')" title="$MESSAGES.getString('news.teaser.more.tooltip')">$MESSAGES.getString('news.teaser.more')</a></span></div>

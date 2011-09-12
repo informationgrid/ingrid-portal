@@ -81,9 +81,9 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
 *********************************************************************/
 
 div#identity { padding:0; margin:0; height: 80px; width:59.5em; background-color:#68A5D2; overflow:visible; }
-div.motiv_hilfe { background-image:url(../images/01_motiv_hilfe.gif); background-repeat:no-repeat; }
+div.motiv_hilfe { background-image:url(../images/01_motiv_hilfe.png); background-repeat:no-repeat; }
 
-div.en_motiv_hilfe { background-image:url(../images/en/en_01_motiv_hilfe.gif); background-repeat:no-repeat; }
+div.en_motiv_hilfe { background-image:url(../images/en/01_motiv_hilfe.png); background-repeat:no-repeat; }
 
 /********************************************************************
   logo styles 
@@ -486,7 +486,7 @@ div#finalfooter { padding-left:112px; padding-bottom:20px; padding-top:0px; heig
   popup + overview styles  
 *********************************************************************/
 
-div#popupheader { padding:0; margin:0; height: 80px; width:100%; background-color:#68A5D2; overflow: visible; }  
+div#popupheader { padding:0; margin:0; height: 97px; width:100%; background-color:#68A5D2; overflow: visible; }  
 div#popupContent, div#popupOverview { margin:27px 0 27px 56px; }
 div#popupContent div.left { float:left;  width:196px; margin: 0 28px 0 0; background-color:#EFEFEF; }
 div#popupContent div.right { float:left; width:25em; margin:0 0 42px; padding:0; }
@@ -500,3 +500,5 @@ div.helpcontent ul {list-style: none; margin: 0.0em 0 0 0.5em; padding:0;}
 div.helpcontent li { margin: 0 0 0.3em 0;padding: 0 0 0 15px;background-image:url("../images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .45em; }
 
 div#popupContent li { font-size:75%; }
+
+.greenSeparator { background-color: #AFD93F; height: 14px; }

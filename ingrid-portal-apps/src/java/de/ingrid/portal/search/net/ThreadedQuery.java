@@ -3,8 +3,8 @@
  */
 package de.ingrid.portal.search.net;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.global.IngridHitWrapper;
 import de.ingrid.portal.global.IngridHitsWrapper;
@@ -24,7 +24,7 @@ import de.ingrid.utils.query.IngridQuery;
  */
 public class ThreadedQuery extends Thread {
 
-    private final static Log log = LogFactory.getLog(ThreadedQuery.class);
+    private final static Logger log = LoggerFactory.getLogger(ThreadedQuery.class);
 
     private String key;
 

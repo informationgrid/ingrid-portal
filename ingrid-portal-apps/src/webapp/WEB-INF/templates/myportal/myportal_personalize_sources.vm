@@ -1,7 +1,7 @@
   <div class="section">    
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" enctype="" name="selection_form" id="extsearch">
-      <div class="formbody">
+      <div class="formbody formbody_border_style">
           <p>$MESSAGES.getString('personalize.sources.explanation')</p>
           <div class="innerform">
             <p>

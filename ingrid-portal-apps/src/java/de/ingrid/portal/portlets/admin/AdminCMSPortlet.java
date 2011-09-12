@@ -15,8 +15,8 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.generic.ListTool;
 import org.hibernate.Session;
@@ -38,7 +38,7 @@ import de.ingrid.portal.om.IngridCMSItem;
  */
 public class AdminCMSPortlet extends ContentPortlet {
 
-    private final static Log log = LogFactory.getLog(ContentPortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(ContentPortlet.class);
 
     /**
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
@@ -47,7 +47,7 @@ public class AdminCMSPortlet extends ContentPortlet {
         super.init(config);
 
         // set specific stuff in mother class
-        psmlPage = "/ingrid-portal/portal/administration/admin-cms.psml";
+        psmlPage = "/portal/administration/admin-cms.psml";
         viewDefault = "/WEB-INF/templates/administration/admin_cms_browser.vm";
         viewEdit = "/WEB-INF/templates/administration/admin_cms_edit.vm";
         viewNew = "/WEB-INF/templates/administration/admin_cms_edit.vm";

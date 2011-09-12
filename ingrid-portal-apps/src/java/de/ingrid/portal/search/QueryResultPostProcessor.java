@@ -8,8 +8,8 @@ import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridHitWrapper;
@@ -31,7 +31,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  */
 public class QueryResultPostProcessor {
 
-    private final static Log log = LogFactory.getLog(QueryResultPostProcessor.class);
+    private final static Logger log = LoggerFactory.getLogger(QueryResultPostProcessor.class);
 
     public static IngridHitsWrapper processRankedHits(IngridHitsWrapper hits, String ds) {
         try {

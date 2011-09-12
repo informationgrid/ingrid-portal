@@ -6,8 +6,8 @@ package de.ingrid.portal.servlet;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.quartz.SchedulerException;
 
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -20,7 +20,7 @@ import de.ingrid.portal.scheduler.IngridMonitorFacade;
  */
 public class IngridComponentMonitorStartListener implements ServletContextListener {
 
-    private final static Log log = LogFactory.getLog(IngridComponentMonitorStartListener.class);
+    private final static Logger log = LoggerFactory.getLogger(IngridComponentMonitorStartListener.class);
 
     /**
      * @see javax.servlet.ServletContextListener#contextInitialized(javax.servlet.ServletContextEvent)

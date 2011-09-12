@@ -56,7 +56,7 @@
 		</p>
 	</div>
 <div class="formfooter formfooter_border_style" align="right">
-	<input class="btn" type="submit" name="doImport" value="$MESSAGES.getString('component.forms.provider.button.import')" />
+	#renderInputButtonClass("$MESSAGES.getString('component.forms.provider.button.import')" "" "doImport" "" "float_right")
 </div>
 </form>
 

@@ -12,8 +12,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -30,7 +30,7 @@ import de.ingrid.portal.upgradeclient.IngridComponent;
  */
 public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
 
-	private final static Log log = LogFactory.getLog(IngridMonitorAbstractJob.class);
+	private final static Logger log = LoggerFactory.getLogger(IngridMonitorAbstractJob.class);
 
 	protected void updateJobData(JobExecutionContext context, int status, String statusCode) {
 		JobDataMap dataMap = context.getJobDetail().getJobDataMap();

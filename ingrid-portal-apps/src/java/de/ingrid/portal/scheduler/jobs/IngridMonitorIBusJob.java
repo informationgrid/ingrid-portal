@@ -3,8 +3,8 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -26,7 +26,7 @@ public class IngridMonitorIBusJob extends IngridMonitorAbstractJob {
 	
 	public static final String JOB_ID = "iBus";
 
-	private final static Log log = LogFactory.getLog(IngridMonitorIBusJob.class);
+	private final static Logger log = LoggerFactory.getLogger(IngridMonitorIBusJob.class);
 
 	/**
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)

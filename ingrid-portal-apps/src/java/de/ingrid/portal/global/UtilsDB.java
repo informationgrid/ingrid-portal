@@ -13,8 +13,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -38,7 +38,7 @@ import de.ingrid.portal.om.IngridServiceRubric;
  */
 public class UtilsDB {
 
-    private final static Log log = LogFactory.getLog(UtilsDB.class);
+    private final static Logger log = LoggerFactory.getLogger(UtilsDB.class);
 
     /**
      * this flag controls whether Data is always fetched from Database or from

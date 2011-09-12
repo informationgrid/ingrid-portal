@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.global.IPlugHelper;
 import de.ingrid.portal.global.IPlugHelperDscEcs;
@@ -21,7 +21,7 @@ import de.ingrid.utils.PlugDescription;
  */
 public class CatalogTreeDataProvider_IDC_1_0_2 implements CatalogTreeDataProvider {
 
-    private final static Log log = LogFactory.getLog(CatalogTreeDataProviderFactory.class);	
+    private final static Logger log = LoggerFactory.getLogger(CatalogTreeDataProviderFactory.class);	
 
 	static final String FIELD_OBJECT_ID = "t01_object.id";
 	static final String FIELD_PARENT_OBJ_UUID = "parent.object_node.obj_uuid";

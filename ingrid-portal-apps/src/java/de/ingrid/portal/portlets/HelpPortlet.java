@@ -13,8 +13,8 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.dom4j.Document;
@@ -34,7 +34,7 @@ import de.ingrid.portal.global.Utils;
  */
 public class HelpPortlet extends GenericVelocityPortlet {
 
-    private final static Log log = LogFactory.getLog(HelpPortlet.class);
+    private final static Logger log = LoggerFactory.getLogger(HelpPortlet.class);
 
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest, javax.portlet.RenderResponse)

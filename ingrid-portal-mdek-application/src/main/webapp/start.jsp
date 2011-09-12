@@ -105,7 +105,7 @@
                         <span style="float:right; padding:0px 5px 0px 5px;">|</span>
                         <span id="info" style="float:right;"><a href="javascript:void(0);" onclick="javascript:dialog.showPage('Info', 'dialogs/mdek_info_dialog.html', 365, 210, false); return false;" title="Info"><fmt:message key='general.info' /></a></span>
                         <span style="float:right; padding:0px 5px 0px 5px;">|</span>
-                        <span id="impressum" style="float:right;"><a href="javascript:void(0);" onclick="javascript:window.open('http://www.portalu.de:80/ingrid-portal/portal/disclaimer.psml', 'impressum', 'width=966,height=994,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key='general.imprint' />"><fmt:message key='general.imprint' /></a></span>
+                        <span id="impressum" style="float:right;"><a href="javascript:void(0);" onclick="javascript:window.open('http://www.portalu.de:80/portal/disclaimer.psml', 'impressum', 'width=966,height=994,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key='general.imprint' />"><fmt:message key='general.imprint' /></a></span>
                         <span style="float:right; padding:0px 5px 0px 5px;">|</span>
                         <span id="help" style="float:right;"><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?c='+userLocale, 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key='general.help' />"><fmt:message key='general.help' /></a></span>
 	                	<span style="float:right; padding:0px 5px 0px 5px;">|</span>

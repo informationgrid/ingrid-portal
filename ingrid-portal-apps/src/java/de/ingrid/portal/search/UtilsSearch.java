@@ -20,8 +20,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
@@ -57,7 +57,7 @@ import de.ingrid.utils.queryparser.IDataTypes;
  */
 public class UtilsSearch {
 
-    private final static Log log = LogFactory.getLog(UtilsSearch.class);
+    private final static Logger log = LoggerFactory.getLogger(UtilsSearch.class);
 
     public final static String DETAIL_VALUES_SEPARATOR = ", ";
 

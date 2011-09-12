@@ -8,8 +8,8 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -25,7 +25,7 @@ import de.ingrid.portal.om.IngridPartner;
  */
 public class AdminContentPartnerForm extends ActionForm {
 
-    private final static Log log = LogFactory.getLog(AdminContentPartnerForm.class);
+    private final static Logger log = LoggerFactory.getLogger(AdminContentPartnerForm.class);
 
     private static final long serialVersionUID = 8335389649101260309L;
 

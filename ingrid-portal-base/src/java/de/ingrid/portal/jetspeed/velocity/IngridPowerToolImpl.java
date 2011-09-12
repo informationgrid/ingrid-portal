@@ -1,8 +1,10 @@
 package de.ingrid.portal.jetspeed.velocity;
 
 import java.security.Principal;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
 import javax.portlet.PortletException;
@@ -10,7 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.jetspeed.Jetspeed;
 import org.apache.jetspeed.aggregator.PortletRenderer;
+import org.apache.jetspeed.om.common.GenericMetadata;
 import org.apache.jetspeed.om.page.ContentFragment;
+import org.apache.jetspeed.om.page.PageLocalizedFieldImpl;
+import org.apache.jetspeed.om.page.impl.PageMetadataLocalizedFieldImpl;
 import org.apache.jetspeed.om.preference.FragmentPreference;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.jetspeed.security.SecurityException;
@@ -20,6 +25,8 @@ import org.apache.jetspeed.services.title.DynamicTitleService;
 import org.apache.jetspeed.velocity.JetspeedPowerToolImpl;
 import org.apache.pluto.om.common.Preference;
 import org.apache.pluto.om.common.PreferenceSet;
+
+import de.ingrid.portal.global.IngridResourceBundle;
 
 public class IngridPowerToolImpl extends JetspeedPowerToolImpl {
     private static UserManager userManager = null;
@@ -106,5 +113,24 @@ public class IngridPowerToolImpl extends JetspeedPowerToolImpl {
         return buf.toString();
     }
     
+    public String getPageMetadata(String field) {
+        String value = "";
+        GenericMetadata metadata = getPage().getMetadata();
+        if (metadata == null)
+            return "";
+        
+        Collection<PageMetadataLocalizedFieldImpl> c = metadata.getFields(field);
+        
+        if (c != null) {
+            for (PageLocalizedFieldImpl entry : c) {
+                value = entry.getValue();
+                break;
+            }
+        }
+        return value;
+    }
     
+    public IngridResourceBundle getIngridResourceBundle(ResourceBundle r) {
+        return new IngridResourceBundle(r);
+    }
 }

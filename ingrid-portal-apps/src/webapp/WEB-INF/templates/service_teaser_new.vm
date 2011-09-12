@@ -1,0 +1,18 @@
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doTeaser')
+<div class="portlet-section-body">
+	<div>
+		<img class="teaser_image" src="/ingrid-portal-apps/images/features/marginal_service.png" alt="$MESSAGES.getString('service.teaser.new.image.info')" />
+		<p class="teaser_title">
+			<a href="$action" title="$MESSAGES.getString('service.teaser.new.link.tooltip')">$MESSAGES.getString('service.teaser.new.title')</a>
+		</p>
+	</div>
+	<p class="teaser_body">
+		$MESSAGES.getString('service.teaser.new.body')
+	</p>
+    <p class="iconLink">
+      <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
+      <span><a href="$action" title="$MESSAGES.getString('service.teaser.new.link.tooltip')">$MESSAGES.getString('service.teaser.new.link')</a></span>
+      <span class="clearer"></span>
+    </p>
+</div>
