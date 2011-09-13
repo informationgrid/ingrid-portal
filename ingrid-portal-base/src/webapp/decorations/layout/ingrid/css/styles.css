@@ -485,11 +485,11 @@ div.formheader {height: 1em; padding: 4px 14px 2px 8px; color: #FFFFFF; font-siz
 div.formheader span.portlet_info { float:right; color: #FFFFFF; line-height:100%; margin: 0 0 0 0;}
 div.formheader span.portlet_info a { color: #FFFFFF; }
 
-div.formbody { padding:10px 30px 0; background: #EFEFEF; border: 1px solid #CECECE; }
-div.formbody_search { background-image: url(../images/bg_search.png); height:117px; padding: 0px; }
+div.formbody { padding:10px 30px; background: #EFEFEF; border: 1px solid #CECECE; }
+div.formbody_search { background-image: url(../images/bg_search.png); padding: 0px; }
 div.formbody_search div.search_line { background-image: url(../images/bg_search_line.png); width:100%; height:1px;  }
 div.formbody_search form { padding:5px 15px 10px 25px; }
-div.formbody_search div.optional-links { padding:0px 15px 0px 25px; margin:0; font-size:12px; }
+div.formbody_search div.optional-links { padding:0px 15px 12px 25px; margin:0; font-size:12px; }
 /* use formbody_border_style if need to change border style in profile (e.g. NUMIS)*/
 div.formbody_border_style { border-left: 1px solid #CECECE; border-right: 1px solid #CECECE; border-top: 1px solid #CECECE; border-bottom: 
 
