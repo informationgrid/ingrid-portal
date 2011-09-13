@@ -154,7 +154,6 @@ dojo.declare("ingrid.dijit.ThesaurusTree", null, {
         return def;
     },
     
-    
     // Expands the tree
     // This is an internal function and should not be called. Call expandToTopicWithId(topicID) instead
     // @param tree - Tree/TreeNode. Current position in the tree   
@@ -164,15 +163,19 @@ dojo.declare("ingrid.dijit.ThesaurusTree", null, {
     // The function iterates over tree.children and locates a TreeNode with topicID == currentNode.topicID
     // This node is then expanded and passed to expandPath recursively in a callback function.
     _expandPath: function(tree, currentNode, targetNode, def) {
-    
+        
         // Break Condition
         if (currentNode.topicId == targetNode.topicId) {
             // Mark the target node as selected
             dojo.some(tree.getChildren(), function(child) {
                 if (child.item.topicId == currentNode.topicId) {
-                    child.setSelected(true);
-                    this.treeWidget.selectedNode = child;
-                    setTimeout(dojo.partial(dojo.window.scrollIntoView,child.domNode), 500);
+                    this.treeWidget._selectNode(child);
+                    if (tree._expandDeferred) {
+                        tree._expandDeferred.addCallback(function() {
+                            //console.debug("jump to node 500ms delayed, since animation might not be done yet");
+                            setTimeout(function() {dojo.window.scrollIntoView(child.domNode)}, 500);
+                        });
+                    }
                     def.callback();
                     return true;
                 }
