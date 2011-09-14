@@ -46,6 +46,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
 	options: null,
     
     //uid: "slickgrid_" + Math.round(1000000 * Math.random()),
+    headers: null,
     headerColumnWidthDiff: null, headerColumnHeightDiff: null, cellWidthDiff: null, cellHeightDiff : null,
     viewport: null,
     canvas: null,
@@ -143,8 +144,9 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
 		this.postProcessedRows = [];
 		this.selectedRows = [];
 		this.cellCssClasses = {};
-		this.uid = "slickgrid_" + Math.round(1000000 * Math.random()),
+		this.uid = "slickgrid_" + Math.round(1000000 * Math.random());
 		this.activeRow = this.activeCell = this.activeCellNode = null;
+        this.headers = new Object();
     },
     
     postCreate: function() {
@@ -200,6 +202,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
         }
         
 		this.createColumnHeaders();
+        this.setupColumnSort();
 		this.createCssRules();
 		this.resizeAndRender();
 		
@@ -351,8 +354,9 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
             	'class': (m.headerCssClass ? m.headerCssClass : "") + ' ui-state-default slick-header-column',
             	id: this.uid + m.id,
             	title: m.toolTip || m.name || "",
-            	data: "fieldId="+ m.id,
+            	//data: "fieldId="+ m.id,
             	style: {width: (m.width-this.headerColumnWidthDiff)+"px"}}, this.headers);
+            header.data = {fieldId: m.id};
                 
             dojo.create("span", {'class': 'slick-column-name', innerHTML: m.name}, header);
             
@@ -371,7 +375,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
             //}
         }
 
-        //setSortColumn(sortColumnId,sortAsc);
+        this.setSortColumn(this.sortColumnId,this.sortAsc);
         this.setupColumnResize();
         if (this.options.enableColumnReorder) {
             //this.setupColumnReorder();
@@ -2174,6 +2178,67 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          this.render();
      },
      
+     // sort functionality
+     setSortColumn: function(columnId, ascending) {
+         this.sortColumnId = columnId;
+         this.sortAsc = ascending;
+         /*var columnIndex = getColumnIndex(this.sortColumnId);
+         
+         $headers.children().removeClass("slick-header-column-sorted");
+         $headers.find(".slick-sort-indicator").removeClass("slick-sort-indicator-asc slick-sort-indicator-desc");
+        
+         if (columnIndex != null) {
+             $headers.children().eq(columnIndex)
+                .addClass("slick-header-column-sorted")
+                .find(".slick-sort-indicator")
+                    .addClass(sortAsc ? "slick-sort-indicator-asc" : "slick-sort-indicator-desc");
+         }*/
+     },
+     
+     setupColumnSort: function() {
+            dojo.connect(this.headers, "onclick", this, function(e) {
+                if (dojo.hasClass(e.target, "slick-resizable-handle")) {
+                    return;
+                }
+
+                /*var $col = $(e.target).closest(".slick-header-column");
+                if (!$col.length)
+                    return;
+*/
+                var col = this._findParentElementByClass(e.target, "slick-header-column");
+                if (!col)
+                    return;
+                var column = this.columns[this.getColumnIndex(col.data["fieldId"])];
+                if (column.sortable) {
+                    if (!this.getEditorLock().commitCurrentEdit())
+                        return;
+
+                    if (column.id === this.sortColumnId) {
+                        this.sortAsc = !this.sortAsc;
+                    }
+                    else {
+                        this.sortColumnId = column.id;
+                        this.sortAsc = true;
+                    }
+
+                    this.setSortColumn(this.sortColumnId,this.sortAsc);
+                    this.onSort(column.sortColField ? column.sortColField : column.field,this.sortAsc);
+                }
+            });
+        },
+        
+        onSort: function(col, asc) {
+            console.debug("sorting now!");
+            var comp = function(a,b) {
+                var x = a[col], y = b[col];
+                return (x == y ? 0 : (x > y ? 1 : -1));
+            };
+            //this.setData(
+            this.data.sort(comp);
+            if (asc === false) this.data.reverse();
+            this.invalidate();
+        },
+     
      // EVENTS
      notifyChangedData: function(msg) {
     	 this.onDataChanged(msg);
@@ -2193,6 +2258,6 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
      onCellChange: function() {},
      onColumnsResized: function() {},
      onValidationError: function() {},
-     onViewportChanged: function() {}
+     onViewportChanged: function() {}     
      
 });

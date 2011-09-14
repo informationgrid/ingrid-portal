@@ -50,9 +50,9 @@ function createDomElements(){
     
     var modObjTableStructure = [
        {field: 'icon',name: '&nbsp;',width: '32px'},
-       {field: 'linkLabel',name: "<fmt:message key='dialog.qa.name' />",width: '550px'},
-       {field: 'modUserTitle',name: "<fmt:message key='dialog.qa.modUser' />",width: '130px'},
-       {field: 'expiryDate',name: "<fmt:message key='dialog.qa.expiredAt' />",width: 'auto', formatter: DateCellFormatter}
+       {field: 'linkLabel',name: "<fmt:message key='dialog.qa.name' />",width: '550px'/*, sortable: true, sortColField: "objectName"*/},
+       {field: 'modUserTitle',name: "<fmt:message key='dialog.qa.modUser' />",width: '130px'/*, sortable: true*/},
+       {field: 'expiryDate',name: "<fmt:message key='dialog.qa.expiredAt' />",width: 'auto', formatter: DateCellFormatter/*, sortable: true*/}
     ];
     createDataGrid("modObjTable", null, modObjTableStructure, null);
     
