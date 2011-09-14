@@ -102,7 +102,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
-        context.put("lang", "de".equals(request.getLocale().getCountry().toLowerCase()) ? "" : "en");
+        context.put("lang", "de".equals(request.getLocale().getLanguage().toLowerCase()) ? "" : "en");
 
         // add velocity utils class
         context.put("tool", new UtilsVelocity());

@@ -37,7 +37,7 @@ public class ShowFeaturesPortlet extends GenericVelocityPortlet {
         context.put("MESSAGES", messages);
         
         // show different snapshots in English and German!
-        context.put("lang", "de".equals(request.getLocale().getCountry().toLowerCase()) ? "" : "_en");
+        context.put("lang", "de".equals(request.getLocale().getLanguage().toLowerCase()) ? "" : "_en");
 
         // read preferences
         PortletPreferences prefs = request.getPreferences();
