@@ -114,6 +114,9 @@
                             // remember last selected tab delayed, needed if text was entered 
                             // without hitting enter but switching tab
                             scriptScope.lastSelectedTab = scopeAdminFormFields.profileData.languages[0];
+                            dojo.connect(dijit.byId("formListOptions"),"onMouseDown", this, function(child){
+                                dijit.byId("formListOptions_"+scriptScope.lastSelectedTab).editorLock.commitCurrentEdit(); }
+                            );
                             dojo.connect(dijit.byId("formListOptions"),"selectChild", this, function(child){
                                 setTimeout(function() {
                                     scriptScope.lastSelectedTab = dijit.byId("formListOptions").selectedChildWidget.title;

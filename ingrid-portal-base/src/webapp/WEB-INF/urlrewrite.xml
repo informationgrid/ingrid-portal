@@ -96,7 +96,7 @@
     <!-- Startseite  -->
     <rule>
         <from>/startseite</from>
-        <to type="forward">portal/default-page.psml</to>
+        <to type="forward">/portal/default-page.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/default-page.psml</from>
@@ -106,7 +106,7 @@
     <!-- Hauptsuche   -->
     <rule>
         <from>/freitextsuche</from>
-        <to type="forward">portal/main-search.psml</to>
+        <to type="forward">/portal/main-search.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-search.psml</from>
@@ -130,7 +130,7 @@
     <!-- Suchhistorie   -->
     <rule>
         <from>/suchhistorie</from>
-        <to type="forward">portal/search-history.psml</to>
+        <to type="forward">/portal/search-history.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/search-history.psml</from>
@@ -140,7 +140,7 @@
     <!-- Einstellungen   -->
     <rule>
         <from>/darstellungsoptionen</from>
-        <to type="forward">portal/search-settings.psml</to>
+        <to type="forward">/portal/search-settings.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/search-settings.psml</from>
@@ -150,7 +150,7 @@
     <!--  Suche - Datenkataloge - Hierarchiebaum -->
     <rule>
         <from>/datenkataloge</from>
-        <to type="forward">portal/search-catalog/search-catalog-hierarchy.psml</to>
+        <to type="forward">/portal/search-catalog/search-catalog-hierarchy.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/search-catalog/search-catalog-hierarchy.psml</from>
@@ -160,7 +160,7 @@
     <!-- Suche - Datenkataloge -Thesaurus-Navigator  -->
     <rule>
         <from>/umweltthesaurus</from>
-        <to type="forward">portal/search-catalog/search-catalog-thesaurus.psml</to>
+        <to type="forward">/portal/search-catalog/search-catalog-thesaurus.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/search-catalog/search-catalog-thesaurus.psml</from>
@@ -170,7 +170,7 @@
     <!--  Service  -->
     <rule>
         <from>/servicesuche</from>
-        <to type="forward">portal/main-service.psml</to>
+        <to type="forward">/portal/main-service.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-service.psml</from>
@@ -180,7 +180,7 @@
     <!--  Messwerte  -->
     <rule>
         <from>/messwertsuche</from>
-        <to type="forward">portal/main-measures.psml</to>
+        <to type="passthrough">/portal/main-measures.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-measures.psml</from>
@@ -190,7 +190,7 @@
     <!--  Umweltthemen  -->
     <rule>
         <from>/themensuche</from>
-        <to type="forward">portal/main-environment.psml</to>
+        <to type="forward">/portal/main-environment.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-environment.psml</from>
@@ -200,7 +200,7 @@
     <!--  Karten   -->
     <rule>
         <from>/kartendienste</from>
-        <to type="forward">portal/main-maps.psml</to>
+        <to type="forward">/portal/main-maps.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-maps.psml</from>
@@ -210,7 +210,7 @@
     <!--  Umweltchronik  -->
     <rule>
         <from>/umweltchronik</from>
-        <to type="forward">portal/main-chronicle.psml</to>
+        <to type="forward">/portal/main-chronicle.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-chronicle.psml</from>
@@ -220,7 +220,7 @@
     <!-- Über PortalU  -->
     <rule>
         <from>/hintergrundinformationen</from>
-        <to type="forward">portal/main-about.psml</to>
+        <to type="forward">/portal/main-about.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-about.psml</from>
@@ -230,7 +230,7 @@
     <!-- Informationsanbieter   -->
     <rule>
         <from>/informationsanbieter</from>
-        <to type="forward">portal/main-about-partner.psml</to>
+        <to type="forward">/portal/main-about-partner.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-about-partner.psml</from>
@@ -240,7 +240,7 @@
     <!-- Mein PortalU  -->
     <rule>
         <from>/personalisierungsoptionen</from>
-        <to type="forward">portal/service-myportal.psml</to>
+        <to type="forward">/portal/service-myportal.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/service-myportal.psml</from>
@@ -250,7 +250,7 @@
     <!-- Datenschutzbestimmung   -->
     <rule>
         <from>/datenschutzbestimmung</from>
-        <to type="forward">portal/privacy.psml</to>
+        <to type="forward">/portal/privacy.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/privacy.psml</from>
@@ -260,7 +260,7 @@
     <!-- Weitere Meldungen  -->
     <rule>
         <from>/neuigkeiten</from>
-        <to type="forward">portal/rss-news.psml</to>
+        <to type="forward">/portal/rss-news.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/rss-news.psml</from>
@@ -270,7 +270,7 @@
     <!--  Inhaltsübersicht  -->
     <rule>
         <from>/inhaltsverzeichnis</from>
-        <to type="forward">portal/service-sitemap.psml</to>
+        <to type="forward">/portal/service-sitemap.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/service-sitemap.psml</from>
@@ -280,7 +280,7 @@
     <!-- Kontakt   -->
     <rule>
         <from>/kontakt</from>
-        <to type="forward">portal/service-contact.psml</to>
+        <to type="forward">/portal/service-contact.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/service-contact.psml</from>
@@ -290,7 +290,7 @@
     <!--  Newsletter  -->
     <rule>
         <from>/newsletter</from>
-        <to type="forward">portal/service-contact-newsletter.psml</to>
+        <to type="forward">/portal/service-contact-newsletter.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/service-contact-newsletter.psml</from>
@@ -300,7 +300,7 @@
     <!-- Impressum   -->
     <rule>
         <from>/impressum</from>
-        <to type="forward">portal/disclaimer.psml</to>
+        <to type="forward">/portal/disclaimer.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/disclaimer.psml</from>
@@ -310,7 +310,7 @@
     <!-- SearchDetail -->
     <rule>
         <from>/trefferanzeige</from>
-        <to type="forward">portal/search-detail.psml</to>
+        <to type="forward">/portal/search-detail.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/search-detail.psml</from>
@@ -320,7 +320,7 @@
     <!-- Help -->
     <rule>
         <from>/hilfe</from>
-        <to type="forward">portal/help.psml</to>
+        <to type="forward">/portal/help.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/help.psml</from>
@@ -330,7 +330,7 @@
     <!-- Features -->
     <rule>
         <from>/funktionen</from>
-        <to type="forward">portal/main-features.psml</to>
+        <to type="forward">/portal/main-features.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-features.psml</from>

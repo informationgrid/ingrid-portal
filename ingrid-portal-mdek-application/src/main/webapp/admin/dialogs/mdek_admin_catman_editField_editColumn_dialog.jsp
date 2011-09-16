@@ -15,13 +15,16 @@
 			
 			function init() {
                 columnTypeStore.url = userLocale == "de" ? "js/data/additionalFormTypes_de.json" : "js/data/additionalFormTypes.json";
-                columnTypeStore.close();
-                dijit.byId("formColumnType").setStore(columnTypeStore)
+                dijit.byId("formColumnType").setStore(columnTypeStore, '', {query: {asColumn: "true"}});
+                columnTypeStore.fetch();
 				scriptScopeEditColumn.fillFields(scriptScopeEditColumn.customParams.column);
 				dojo.connect(dijit.byId("formColumnType"), "onChange", scriptScopeEditColumn.layoutForms);
 			}
 			
 			scriptScopeEditColumn.fillFields = function(column) {
+                dojo.connect(dijit.byId("formColumnOptions"),"onMouseDown", function(child){
+                    dijit.byId("formColumnOptions_"+this.selectedChildWidget.title).editorLock.commitCurrentEdit(); }
+                );
                 // create table with data
                 var formColumnOptionsStructure = [
                     {field: 'id',name: 'id',width: '30px',editable: false},
