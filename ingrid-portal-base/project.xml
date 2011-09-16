@@ -22,7 +22,7 @@
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal</artifactId>
   <name>Ingrid Portal</name>
-  <currentVersion>3.2.0-SNAPSHOT</currentVersion> 
+  <currentVersion>3.1.0</currentVersion> 
   <dependencies>
     <dependency>
       <id>commons-logging</id>
