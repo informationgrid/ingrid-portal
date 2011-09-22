@@ -111,7 +111,9 @@ public class QueryPreProcessor {
         		Settings.HIT_KEY_WMS_URL.toLowerCase(),
         		Settings.RESULT_KEY_PARTNER,
         		Settings.RESULT_KEY_PROVIDER,
-        		Settings.RESULT_KEY_WMS_TMP_COORD_X
+        		Settings.RESULT_KEY_WMS_TMP_COORD_X,
+        		// other dsc scripted iPlugs might deliver an URL !!!
+        		Settings.RESULT_KEY_URL
         };
         
         // set properties according to the session preferences
