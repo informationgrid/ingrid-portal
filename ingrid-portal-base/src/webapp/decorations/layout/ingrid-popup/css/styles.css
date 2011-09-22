@@ -604,10 +604,12 @@ p.text_label_above_body { padding-left:1px; }
 td.text_label_left_title { font-weight:bold; color:#777777; padding-left:0px; width:40%; }
 td.text_label_left_body { width:60%; }
 
-li.detail_li, body ul li { color:#68A5D2; margin:-5px; }
-li.detail_li p, body ul li p { font-size:11px; color:#000000; }
- 
+li.detail_li, body ul li { margin:-5px; font-size: 11px; }
+li.detail_li p, body ul li p { font-size:11px; }
+
 img.section_show_hide { padding-right:16px; padding-top:5px; }
+
+span.linkinfo { color:#000000; font-size: 60%; }
 
 /******************************************
 * Dojo Tabs CSS style 

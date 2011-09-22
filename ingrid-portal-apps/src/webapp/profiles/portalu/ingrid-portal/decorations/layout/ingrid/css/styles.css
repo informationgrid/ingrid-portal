@@ -670,7 +670,7 @@ div.helpcontent li a { font-size:75%; }
 
 .contentNavigation { padding:2px 170px 2px 170px; margin:0px 0px 10px 0px; border:1px solid #176798; }
 .contentNavigationLeft { float:left;  width:110px; }
-.contentNavigationMiddle { float:left; font-size:75%; width:300px; text-align:center; }
+.contentNavigationMiddle { float:left; font-size:75%; width:250px; text-align:center; }
 .contentNavigationRight { float:right; width:110px; text-align:right; }
 .contentColumnHead { text-decoration:underline; background-color:#176798; color:white; }
 .contentColumnHeadLight { text-decoration:none; background-color:#d1e4f1; color:black; }

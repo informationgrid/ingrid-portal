@@ -14,9 +14,9 @@
 		#else
 			<span class="icon">
 			#if($entry.isExtern)
-				<img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
+				<img src="/decorations/layout/ingrid-popup/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
 			#else
-				<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
+				<img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
 			#end
 			</span>
 		#end
@@ -24,9 +24,9 @@
 	#if(!$entry.hasLinkIcon)
 		<span class="icon">
 			#if($entry.isExtern)
-				<img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
+				<img src="/decorations/layout/ingrid-popup/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
 			#else
-				<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
+				<img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
 			#end
 		</span>
 	#end
@@ -37,7 +37,7 @@
 	#end
 	
 	#if($tool.hasContent($entry.linkInfo))
-		<span style="font-size:70%;">$entry.linkInfo</span>
+		<span class="linkinfo">$entry.linkInfo</span>
 	#end
 	</div>	
 #end
@@ -640,7 +640,7 @@
 
 #macro (renderLinkLineKMLWMS $entry)
 	<div>
-		<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
+		<img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
 		</span>
 		#if($tool.hasContent($entry.title))
 			<a class="detail_link" href="main-maps.psml?wms_url=$entry.kmlWmsUrl" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
@@ -798,7 +798,7 @@
 #if($noIngridSession)
 	<div class="section-header">
 		<p class="iconLink">
-    		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
+    		<span class="icon"><img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
     		<span><a href="$renderResponse.encodeURL('/portal/default-page.psml')">$MESSAGES.getString('search.detail.back')</a></span>
     		<span class="clearer"></span>
 		</p>

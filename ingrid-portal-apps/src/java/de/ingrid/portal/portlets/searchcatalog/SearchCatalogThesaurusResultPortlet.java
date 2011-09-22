@@ -176,18 +176,18 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
     	
        if (selectedDS.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
      		fullQueryZeigeAlle = "(";
-     		fullQueryZeigeAlle += "t04_search.searchterm:" + UtilsString.escapeChars(queryThesaurusTerm, "\"").replace("'", "\"");
+     		fullQueryZeigeAlle += "t04_search.searchterm:" + UtilsString.escapeChars(queryThesaurusTerm.replace(" OR ", " OR t04_search.searchterm:"), "\"").replace("'", "\"");
      		fullQueryZeigeAlle += " (t04_search.type:2 OR t04_search.type:T OR t04_search.type:G)";
      		fullQueryZeigeAlle += getSearchDataTypes();
      		fullQueryZeigeAlle += ")";
      		fullQueryZeigeAlle += " OR ";
      		fullQueryZeigeAlle += "(";
-     		fullQueryZeigeAlle += "searchterm_value.term:" + UtilsString.escapeChars(queryThesaurusTerm, "\"").replace("'", "\"");
+     		fullQueryZeigeAlle += "searchterm_value.term:" + UtilsString.escapeChars(queryThesaurusTerm.replace(" OR ", " OR searchterm_value.term:"), "\"").replace("'", "\"");
      		fullQueryZeigeAlle += getSearchDataTypes();
      		fullQueryZeigeAlle += ")";
      	}
          else {
-            fullQueryZeigeAlle = "t04_search.searchterm:" + UtilsString.escapeChars(queryThesaurusTerm, "\"").replace("'", "\"");
+            fullQueryZeigeAlle = "t04_search.searchterm:" + UtilsString.escapeChars(queryThesaurusTerm.replace(" OR ", " OR t04_search.searchterm:"), "\"").replace("'", "\"");
          	fullQueryZeigeAlle += " (t04_search.type:4 OR t04_search.type:T OR t04_search.type:G)";
          	fullQueryZeigeAlle += " "+Settings.QFIELD_DATATYPE+":"+Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS;
         }

@@ -1,0 +1,143 @@
+
+#* Add the current layouts configuration values to the context *#
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+  <head>
+  #if(!$pageTitle || $pageTitle == "")
+	<title>NUMIS - Das nieders&auml;chsische Umweltportal</title>
+  #else
+	<title>$pageTitle - NUMIS</title>
+  #end
+  <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-style-type" content="text/css" />   
+  <meta http-equiv="content-language" content="DE" />
+  <meta name="description" content="$pageDescription" />
+  #if($data.get("general").get("udkObjClass"))
+	#set($udkObjClass = $data.get("general").get("udkObjClass"))
+	#set($udkObjClassName = $data.get("general").get("udkObjClassName"))
+  #end
+  #if($udkObjClass)
+	<meta name="igc-objektklasse" content="${udkObjClassName}" />
+	<meta name="igc-icon" content="http://www.portalu.de/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" />
+  #end
+  <meta name="author" content="wemove digital solutions" />
+  <meta name="keywords" content="" />
+  <meta name="copyright" content="wemove digital solutions GmbH" />
+  <meta name="robots" content="index,follow" />
+  <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
+
+  #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
+  <style type="text/css">
+	
+	body {
+        font-family: Verdana, Helvetica, Arial, sans-serif;
+        voice-family: "\"}\"";
+        voice-family: inherit;
+        padding: 1em;
+        background: #fff;
+        color: #000;
+        white-space: normal;
+    	margin: 0;
+    	padding: 0;
+	}
+	
+	td,
+    th {
+		white-space: normal;
+    }
+    
+    th {
+		font-size: 12pt;
+    }
+    
+    a:link, a:visited {
+        color: blue;
+    }
+    
+    a:hover {
+        color: #f30 !important;
+    }
+
+  </style>
+
+  #* our decorator macros, see ./decorator-macros.vm *#
+  <link rel="stylesheet" type="text/css" href="/ingrid-portal-apps/css/claro/claro.css"/>
+  <link href="/decorations/layout/ingrid-popup/css/styles.css" media="screen, projection" type="text/css" rel="stylesheet">
+  <link href="/decorations/layout/ingrid-popup/css/print.css" media="print" type="text/css" rel="stylesheet" />
+<script language="JavaScript" type="text/javascript">
+var xmlhttp=false;
+/*@cc_on @*/
+/*@if (@_jscript_version >= 5)
+// JScript gives us Conditional compilation, we can cope with old IE versions.
+// and security blocked creation of the objects.
+try {
+	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+} catch (e) {
+	try {
+   		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  	} catch (E) {
+   		xmlhttp = false;
+  	}
+}
+@end @*/
+if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
+	try {
+		xmlhttp = new XMLHttpRequest();
+	} catch (e) {
+		xmlhttp=false;
+	}
+}
+if (!xmlhttp && window.createRequest) {
+	try {
+		xmlhttp = window.createRequest();
+	} catch (e) {
+		xmlhttp=false;
+	}
+}
+if (xmlhttp) {
+	xmlhttp.open('GET', '/portal/detect-js.psml?js=1', true);
+    xmlhttp.onreadystatechange = function () {};
+    xmlhttp.send(null);
+}	
+
+  #* show window in foreground *#
+self.focus();
+
+</script>
+
+<script src="/ingrid-portal-apps/javascript/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
+
+  </head>
+  <body class="layout-tigris claro">
+  <a name="top"></a>
+	<noscript>
+	  <iframe src="/detect-js.psml" style="display:none"></iframe>
+    </noscript>
+<!--  BEGIN: layout/html/portalu/decorator.vm -->
+    <div class="layout-tigris">
+
+<!-- IDENTITY AREA -->
+#set($langCode = '')
+#if($lang && $lang.toString() == 'en')
+	#set($langCode = "en_")
+#end
+#set($currentPage = $site.getPage().url)
+##if($currentPage == "/main-maps.psml")
+##<div id="identity" class="motiv_karten">
+###elseif($currentPage == "/search-detail.psml")
+<div id="identity" class="${langCode}motiv_suche_detail">
+###else
+##<div id="identity" class="motiv_blank">
+###end
+  <!-- LOGO -->
+  <div id="logo">
+    <a href="$renderResponse.encodeURL('/portal/default-page.psml')"><img class="image_alt" src="/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo NUMIS" /></a>
+  </div>
+</div>
+
+<!-- CONTENT BLOCK -->
+<div id="container">
+  
+## $jetspeed.include($jetspeed.currentFragment)
+
+<!--  END: layout/html/portalu/decorator.vm -->
