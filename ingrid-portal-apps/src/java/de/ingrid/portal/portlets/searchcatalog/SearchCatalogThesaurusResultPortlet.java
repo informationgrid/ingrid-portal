@@ -6,6 +6,7 @@ package de.ingrid.portal.portlets.searchcatalog;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -26,6 +27,7 @@ import de.ingrid.portal.global.IngridHitsWrapper;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsString;
+import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.QueryResultPostProcessor;
@@ -33,6 +35,7 @@ import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.portal.search.net.QueryDescriptor;
 import de.ingrid.portal.search.net.ThreadedQueryController;
+import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
 
 
@@ -85,6 +88,26 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
 
         // pure thesaurus query
     	String queryThesaurusTerm = request.getParameter(Settings.PARAM_QUERY_STRING);
+    	
+    	// Check for englisch topic name
+		String topicNameEn = "";
+		String nodeId = request.getParameter("nodeId");
+		if( nodeId != null){
+			boolean addThesaurusSearchEnTerm = PortalConfig.getInstance().getBoolean(PortalConfig.THESAURUS_SEARCH_ADD_EN_TERM);
+            if(addThesaurusSearchEnTerm && request.getLocale().getLanguage() != "en"){
+            	nodeId = request.getParameter("nodeId");
+            	IngridHit[] hitsTermsEN = SNSSimilarTermsInterfaceImpl.getInstance().getTopicFromID(nodeId, Locale.ENGLISH);
+            	if(hitsTermsEN != null && hitsTermsEN.length > 0){
+            		topicNameEn = hitsTermsEN[0].toString();
+            		if(topicNameEn.length() > 0){
+            			if(queryThesaurusTerm != null){
+            				queryThesaurusTerm = "\'" + queryThesaurusTerm + "\' OR \'" + topicNameEn + "\'";
+            			}
+                	}
+                }
+            }
+ 		}
+		
     	ps.put("queryTerm", queryThesaurusTerm);
 
         // Page Navigation, only set if really navigated results before !

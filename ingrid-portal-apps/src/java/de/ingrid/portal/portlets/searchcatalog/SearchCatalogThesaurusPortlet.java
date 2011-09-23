@@ -398,25 +398,6 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
     			snsNode.setType(SNS_DESCRIPTOR_TYPE);
     		// --
 
-    		// Check for englisch topic name
-    		String topicNameEn = "";
-    		if(hit.getTopicID() != null){
-    			boolean addThesaurusSearchEnTerm = PortalConfig.getInstance().getBoolean(PortalConfig.THESAURUS_SEARCH_ADD_EN_TERM);
-                String nodeId = "";
-                if(addThesaurusSearchEnTerm && language.getLanguage() != "en"){
-                	nodeId = hit.getTopicID();
-                	IngridHit[] hitsTermsEN = SNSSimilarTermsInterfaceImpl.getInstance().getTopicFromID(nodeId, Locale.ENGLISH);
-                	if(hitsTermsEN != null && hitsTermsEN.length > 0){
-                		topicNameEn = hitsTermsEN[0].toString();
-                		if(topicNameEn.length() > 0){
-                			if(hit.getTopicName() != null){
-                				hit.setTopicName("\'" + hit.getTopicName() + "\' OR \'" + topicNameEn + "\'");
-                			}
-                    	}
-                    }
-                }
-     		}
-    		   		
     		// -- Set general Node Information --
     		snsNode.setParent(nodeToOpen);
     		snsNode.put("topicID", hit.getTopicID());
