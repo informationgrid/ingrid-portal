@@ -4,10 +4,10 @@
   <preGoal name="war:war">
   	<loadfile property="svn.version" srcFile=".svn/entries" failonerror="true">
 		<filterchain>
-			<headfilter lines="6"/>
+			<headfilter lines="12"/>
 				<tokenfilter>
 					<filetokenizer/>
-					<replaceregex pattern=".*[\r\n]+dir[\r\n]+([0-9]+)[\r\n]+https://.*" flags="s" replace="\1"/>
+					<replaceregex pattern=".*[0-9]Z[\r\n]+([0-9]+).*" flags="s" replace="\1"/>
 				</tokenfilter>
 		</filterchain>
 	</loadfile>

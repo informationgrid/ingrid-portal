@@ -41,10 +41,10 @@
   <preGoal name="war:war">
   	<loadfile property="svn.version" srcFile=".svn/entries" failonerror="true">
 		<filterchain>
-			<headfilter lines="6"/>
+			<headfilter lines="12"/>
 				<tokenfilter>
 					<filetokenizer/>
-					<replaceregex pattern=".*[\r\n]+dir[\r\n]+([0-9]+)[\r\n]+https://.*" flags="s" replace="\1"/>
+					<replaceregex pattern=".*[0-9]Z[\r\n]+([0-9]+).*" flags="s" replace="\1"/>
 				</tokenfilter>
 		</filterchain>
 	</loadfile>
@@ -53,8 +53,8 @@
 	<!-- delete file="${manifestFile}"/ -->
 	<ant:manifest file="${manifestFile}">
 		<attribute name="Build-Timestamp" value="${DSTAMP}${TSTAMP}" />
-		<attribute name="SCM-Revision" value="${svn.version}" />
-		<attribute name="Implementation-Version" value="${pom.currentVersion}" />
+		<attribute name="Build-SVN-Revision" value="${svn.version}" />
+		<attribute name="Build-Version" value="${pom.currentVersion}" />
 	</ant:manifest>
 	<maven:set plugin="maven-war-plugin" property="maven.war.manifest" value="${manifestFile}" />
   </preGoal>

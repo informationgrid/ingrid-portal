@@ -297,12 +297,12 @@ public class UtilsFileHelper {
 			bufferReader = new BufferedReader(new FileReader(path));
 			String input = "";
 			while((input = bufferReader.readLine()) != null) {
-				if(input.startsWith("SCM-Revision")){
+				if(input.startsWith("Build-SVN-Revision")){
 					String value = input.split(":")[1].trim();
 					if(value.length() > 0){
 						versionMap.put("svn_version", value);
 					}
-				}else if(input.startsWith("Implementation-Version")){
+				}else if(input.startsWith("Build-Version")){
 					String value = input.split(":")[1].trim();
 					if(value.length() > 0){
 						versionMap.put("project_version", value);	
