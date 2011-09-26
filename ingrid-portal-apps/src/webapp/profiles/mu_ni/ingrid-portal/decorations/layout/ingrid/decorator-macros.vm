@@ -289,25 +289,25 @@
         #set($separatorText = $element.getText($preferedLocale))
         #if ($separatorText == "separator1")
 		  #if($lastType != "separator")
-            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "|")
+            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "&nbsp;|&nbsp;")
           #else
-           |
+           &nbsp;|&nbsp;
           #end
         #elseif($separatorText == "separator2")
           #if($lastType != "separator")
-            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "|")
+            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "&nbsp;-")
           #else
-             - 
+             &nbsp;- 
           #end
         #else
           #if($lastType != "separator")
-            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "|")
+            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "")
           #end 
         #end
         #set($lastType = "separator")
       #end
 	#end
     #if($lastType != "separator")
-	  #renderServiceLink($element.url $currentPage $linkUrl $linkTitle $linkName "|")
+	  #renderServiceLink($element.url $currentPage $linkUrl $linkTitle $linkName "")
     #end 
 #end

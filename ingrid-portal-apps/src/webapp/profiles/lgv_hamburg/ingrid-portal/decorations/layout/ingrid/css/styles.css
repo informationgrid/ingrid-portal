@@ -564,13 +564,18 @@ ul.optional-links { list-style:none; margin: 0 0 1.2em 0; }
 
 /*** sitemap ***/
 
-div.sitemap ul {list-style: none; margin: 0.5em 0 0 0.5em;}
-div.sitemap li { margin: 0 0 0.3em 0;padding-left: 15px;background-image:url("../images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .45em; }
-div.sitemap li a { font-size:75%; }
-div.sitemap li p { margin: 0 0 0 0; font-size:75%; line-height:110%; color:#111111}
+div.sitemap ul { list-style: none; margin: 0.5em 0 0 0.5em;}
+div.sitemap li { margin: 0 0 0.2em; padding: 10px 0 0 15px; }
+div.sitemap li a { font-size:80%; }
+div.sitemap li p { margin: 0 0 0 0; font-size:80%; line-height:110%; color:#111111}
 div.sitemap li p a { font-size:100%;}
-div.sitemap li li a { font-size:75%;}
-div.sitemap li li p { margin: 0 0 0 0; font-size:70%; line-height:110%; color:#111111}
+div.sitemap li li a { font-size:80%;}
+div.sitemap li li p { margin: 0 0 0 0; font-size:80%; line-height:110%; color:#111111}
+
+div#overview .whole { padding-top: 25px; width: 49em; }
+
+.dottedTop {  border-top: 1px dotted #B4B4B4; margin-top: 20px !important; }
+.middle { float: left; margin-left: 2.625em; width: 10.75em; }
 
 /*** Formular Anmeldung ***/
 
