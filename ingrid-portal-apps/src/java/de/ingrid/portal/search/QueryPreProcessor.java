@@ -112,8 +112,10 @@ public class QueryPreProcessor {
         		Settings.RESULT_KEY_PARTNER,
         		Settings.RESULT_KEY_PROVIDER,
         		Settings.RESULT_KEY_WMS_TMP_COORD_X,
-        		// other dsc scripted iPlugs might deliver an URL !!!
-        		Settings.RESULT_KEY_URL
+        		// other dsc scripted iPlugs might deliver a direct URL, so always request URL !
+        		// NO, older SE iPlugs have a bug: extracted SE url is set empty when URL is requested :(
+        		// so let's skip URL for now ... (26. Sep. 2011)
+//        		Settings.RESULT_KEY_URL
         };
         
         // set properties according to the session preferences
