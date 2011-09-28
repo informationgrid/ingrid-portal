@@ -187,6 +187,8 @@ public class TreeServiceImpl {
 	}
 	
 	
+	/** Fetches locale NOT from catalog, instead from default language in language syslist !
+	 * If NO default language set, set "en" ! */
 	private Locale getCatalogLocale(){
 		MdekDataBean data = null; 		
 		try {
@@ -197,13 +199,15 @@ public class TreeServiceImpl {
 		}
 		MdekObjectUtils.setInitialValues(data);
 		Integer languageCode = data.getExtraInfoLangDataCode();
-		if (languageCode.compareTo(UtilsLanguageCodelist.getCodeFromShortcut("en")) == 0)
-			return new Locale("en");
-		else if (languageCode.compareTo(UtilsLanguageCodelist.getCodeFromShortcut("de")) == 0)
-			return new Locale("de");
-		else {
-			log.debug("Language ("+languageCode+") not supported! Using 'de' as default!");
-			return new Locale("de");
-		} 
+		
+		if (languageCode != null) {
+			if (languageCode.compareTo(UtilsLanguageCodelist.getCodeFromShortcut("en")) == 0)
+				return new Locale("en");
+			else if (languageCode.compareTo(UtilsLanguageCodelist.getCodeFromShortcut("de")) == 0)
+				return new Locale("de");
+		}
+		
+		log.warn("Language ("+languageCode+") not supported! Using 'en' as default!");
+		return new Locale("en");
 	}
 }
