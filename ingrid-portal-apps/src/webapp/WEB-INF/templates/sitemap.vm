@@ -35,6 +35,7 @@
                     </li>
                 </ul>
             </div>
+            #if ($enableSearchCatalog || $enableSearchCatalogThesaurus)
             <div class="middle">
                 <ul>
                     <li>
@@ -73,6 +74,7 @@
                     </li>
                 </ul>
             </div>
+            #end
             <div class="clearer"></div>
             <div class="left">
                 <ul>
