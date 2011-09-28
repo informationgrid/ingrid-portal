@@ -32,7 +32,7 @@
                 return true;
             }
             
-            this.addLocation = function(){
+            scriptScope.addLocation = function(){
                 if (!validateInput()) {
                     dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.fillAllFieldsHint' />", dialog.WARNING);
                     return;
