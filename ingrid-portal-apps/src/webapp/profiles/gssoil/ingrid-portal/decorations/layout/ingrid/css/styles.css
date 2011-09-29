@@ -766,7 +766,7 @@ span.feature_title { padding:0px 0px 0px 180px; }
 
 div.subnav_img { float:left; background: #AFD93F; }
 li.mainnav_img:first-child{ background-image: url(); }
-li.mainnav_img { float:left; padding: 2px 0px; background-image: url(../images/mainnav_seperator.png); background-position: left center; background-repeat: no-repeat;}
+li.mainnav_img { float:left; padding: 2px 0px; background-position: left center; background-repeat: no-repeat;}
 div.btn_search_left { float:left; background-image: url(../images/button_search_left.png); height: 33px; width: 2px; }
 div.btn_search_right { float:left; background-image: url(../images/button_search_right.png); height: 33px; width: 2px; }
 div.btn_search_center { float:left; background-image: url("../images/button_search.png"); background-position: right center; }
