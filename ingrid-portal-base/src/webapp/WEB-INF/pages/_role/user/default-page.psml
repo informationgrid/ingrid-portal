@@ -4,8 +4,13 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>ingrid.page.home</title>
-
+  <title>ingrid.page.home.tooltip</title>
+  <short-title>ingrid.page.home</short-title>
+  <metadata name="meta_title">ingrid.page.home.meta.title</metadata>
+  <metadata name="meta_descr">ingrid.page.home.meta.description</metadata>
+  <metadata name="meta_keywords">ingrid.page.home.meta.keywords</metadata>
+  <!--<metadata name="title">ingrid.page.home.meta.title</metadata>-->
+  
   <fragment id="home" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <!-- USE id="search-simple-portlet", this one will be shared across pages ! -->
     <fragment id="search-simple-portlet" type="portlet" name="ingrid-portal-apps::SearchSimple">
@@ -47,8 +52,8 @@
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/ingrid_inform_teaser.vm</value>
       </preference>
-      <preference name="titleKey" readOnly="false">
-        <value>teaser.ingridInform.title</value>
+      <preference name="cmsKey" readOnly="false">
+        <value>portalu.teaser.inform</value>
       </preference>
       <preference name="helpKey" readOnly="false">
         <value>ingrid-inform-1</value>
@@ -60,12 +65,18 @@
       <preference name="titleKey" readOnly="false">
         <value>teaser.service.title</value>
       </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>search-service-1</value>
+      </preference>
     </fragment>
     <fragment id="home-6" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::MeasuresTeaser">
       <property layout="TwoColumns" name="row" value="2" />
       <property layout="TwoColumns" name="column" value="1" />
       <preference name="titleKey" readOnly="false">
         <value>teaser.measures.title</value>
+      </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>search-measure-1</value>
       </preference>
     </fragment>
     <fragment id="home-7" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::ChronicleTeaser">
@@ -74,8 +85,20 @@
       <preference name="titleKey" readOnly="false">
         <value>chronicle.teaser.title</value>
       </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>search-chronicle-1</value>
+      </preference>
     </fragment>
-
+    <fragment id="home-8" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::WeatherTeaser">
+      <property layout="TwoColumns" name="row" value="4" />
+      <property layout="TwoColumns" name="column" value="1" />
+      <preference name="titleKey" readOnly="false">
+        <value>teaser.weather.title</value>
+      </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>teaser-weather-1</value>
+      </preference>
+    </fragment>
   </fragment>
   <security-constraints>
     <security-constraints-ref>public-view</security-constraints-ref>
