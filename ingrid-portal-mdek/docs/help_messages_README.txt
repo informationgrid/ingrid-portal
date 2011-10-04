@@ -11,3 +11,8 @@ Import in MySQL/ Create SQL:
 	- enclosed with: '
 - export table "help_messages"
 	- add 'drop table'
+
+Export from MySQL to CSV:
+- select CSV
+	- separator: #
+	- enclosed with: '
