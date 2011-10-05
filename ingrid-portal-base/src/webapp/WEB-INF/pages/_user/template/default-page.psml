@@ -59,6 +59,7 @@
         <value>ingrid-inform-1</value>
       </preference>
     </fragment>
+<!-- REMOVED FROM START PAGE InGrid 3.1.0, also reorder following portlets -> ChronicleTeaser, WeatherTeaser, MeasuresTeaser
     <fragment id="home-5" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::ServiceTeaser">
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="1" />
@@ -69,18 +70,9 @@
         <value>search-service-1</value>
       </preference>
     </fragment>
-    <fragment id="home-6" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::MeasuresTeaser">
-      <property layout="TwoColumns" name="row" value="2" />
-      <property layout="TwoColumns" name="column" value="1" />
-      <preference name="titleKey" readOnly="false">
-        <value>teaser.measures.title</value>
-      </preference>
-      <preference name="helpKey" readOnly="false">
-        <value>search-measure-1</value>
-      </preference>
-    </fragment>
+-->
     <fragment id="home-7" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::ChronicleTeaser">
-      <property layout="TwoColumns" name="row" value="3" />
+      <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="1" />
       <preference name="titleKey" readOnly="false">
         <value>chronicle.teaser.title</value>
@@ -90,13 +82,20 @@
       </preference>
     </fragment>
     <fragment id="home-8" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::WeatherTeaser">
-      <property layout="TwoColumns" name="row" value="4" />
+      <property layout="TwoColumns" name="row" value="2" />
       <property layout="TwoColumns" name="column" value="1" />
       <preference name="titleKey" readOnly="false">
         <value>teaser.weather.title</value>
       </preference>
+    </fragment>
+    <fragment id="home-6" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::MeasuresTeaser">
+      <property layout="TwoColumns" name="row" value="3" />
+      <property layout="TwoColumns" name="column" value="1" />
+      <preference name="titleKey" readOnly="false">
+        <value>teaser.measures.title</value>
+      </preference>
       <preference name="helpKey" readOnly="false">
-        <value>teaser-weather-1</value>
+        <value>search-measure-1</value>
       </preference>
     </fragment>
   </fragment>
