@@ -5,6 +5,9 @@ package de.ingrid.portal.global;
 
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.ingrid.utils.udk.UtilsLanguageCodelist;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
@@ -14,6 +17,8 @@ import de.ingrid.utils.udk.UtilsUDKCodeLists;
  * @author joachim@wemove.com
  */
 public class IngridSysCodeList {
+
+	private final Logger log = LoggerFactory.getLogger(IngridSysCodeList.class);
 
     Locale locale;
 
@@ -27,8 +32,16 @@ public class IngridSysCodeList {
     
     public String getName(long codeListId, long domainId) {
     	
-        long langId = UtilsLanguageCodelist.getCodeFromShortcut("de");
-        if (locale.getLanguage().equals(new Locale("en", "", "").getLanguage())) {
+        long langId;
+        if (locale.getLanguage().equals(new Locale("de", "", "").getLanguage())) {
+            langId = UtilsLanguageCodelist.getCodeFromShortcut("de");
+        } else if (locale.getLanguage().equals(new Locale("en", "", "").getLanguage())) {
+            langId = UtilsLanguageCodelist.getCodeFromShortcut("en");
+        } else {
+        	// different language, we use english !
+        	if (log.isDebugEnabled()) {
+        		log.debug("Unknown language for syslists ('" + locale.getLanguage() + "'), we use english syslist");
+        	}
             langId = UtilsLanguageCodelist.getCodeFromShortcut("en");
         }
         return UtilsUDKCodeLists.getCodeListEntryName(new Long(codeListId), new Long(domainId), new Long(langId));
