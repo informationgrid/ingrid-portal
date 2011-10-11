@@ -18,6 +18,8 @@ public class IngridHitsWrapper extends IngridHits {
     private static final String GROUPED_HITS_LENGTH = "groupedHitsLength";
 
     private static final String INVOLVED_PLUGS = "involvedPlugs";
+    
+    private static final String FACETS = "FACETS";
 	
 	public IngridHitsWrapper() {
 		
@@ -30,6 +32,7 @@ public class IngridHitsWrapper extends IngridHits {
 		putInt(GROUPED_HITS_LENGTH, ingridHits.getGoupedHitsLength());
 		setInVolvedPlugs(ingridHits.getInVolvedPlugs());
 		setPlugId(ingridHits.getPlugId());
+		put(FACETS, ingridHits.get(FACETS));
 	}
 	
 	
