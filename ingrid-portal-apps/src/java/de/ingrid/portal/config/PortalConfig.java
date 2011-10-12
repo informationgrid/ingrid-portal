@@ -125,6 +125,8 @@ public class PortalConfig extends PropertiesConfiguration {
 	
 	public static final String PORTAL_ENABLE_NEWSLETTER = "enable.newsletter.registration";
 	
+	public static final String PORTAL_ENABLE_NEWSLETTER_CMS_INFO = "enable.newsletter.cms.info";
+	
 	public static final String THESAURUS_INFO_LINK = "thesaurus.info.use.link";
 
 	public static final String PORTAL_ENABLE_SNS_LOGO = "portal.enable.sns.logo";
@@ -180,6 +182,14 @@ public class PortalConfig extends PropertiesConfiguration {
 	
     public static final String PORTAL_SEARCH_LANGUAGE_INDEPENDENT = "portal.search.language.independent";
 	
+    public static final String PORTAL_ENABLE_SEARCH_SIMPLE_DATASOURCE_SELECTION = "portal.enable.search.simple.datasource.selection";
+	
+    public static final String PORTAL_ENABLE_SEARCH_SIMPLE_OPTIONAL_LINKS= "portal.enable.search.simple.optional.links";
+	
+    // Hide CMS items for changing on admin page
+    public static final String PORTAL_ADMIN_HIDE_CMS_ITEMS = "portal.admin.hide.cms.items";
+    
+    
     // private stuff
     private static PortalConfig instance = null;
 

@@ -8,9 +8,17 @@
 #set ($colTitles = [$MESSAGES.getString('admin.cms.overview.id'), $MESSAGES.getString('admin.cms.overview.short'), $MESSAGES.getString('admin.cms.overview.description')])
 #renderDBBrowserHeader($colNames $colTitles)
 #foreach ($dbEntity in $dbEntities)
-	#set ($rowId = $dbEntity.id)
-	#set ($rowValues = [$UtilsString.cutString($dbEntity.itemKey, 40, 40), $dbEntity.itemDescription])
-	#renderDBBrowserRowWithEditLinkNoSelection($rowId $rowValues)
+	#set ($hideCms = "false")
+	#foreach ($cmsItem in $hideCmsItem)
+		#if($cmsItem == "$dbEntity.itemKey")
+			#set ($hideCms = "true")
+		#end
+	#end
+	#if($hideCms == "false")
+		#set ($rowId = $dbEntity.id)
+		#set ($rowValues = [$UtilsString.cutString($dbEntity.itemKey, 40, 40), $dbEntity.itemDescription])
+		#renderDBBrowserRowWithEditLinkNoSelection($rowId $rowValues)
+	#end
 #end
 		</table>
 		</p>

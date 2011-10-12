@@ -1,0 +1,30 @@
+<!DOCTYPE doc [
+<!-- 
+for more entities look at
+http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
+-->
+<!ENTITY Uuml	"&#x00DC;">
+]>
+
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>ingrid.page.application.tooltip</title>
+  <short-title>ingrid.page.application</short-title>
+  <metadata name="meta_title">ingrid.page.application.meta.title</metadata>
+  <metadata name="meta_descr">ingrid.page.application.meta.description</metadata>
+  <metadata name="meta_keywords">ingrid.page.application.meta.keywords</metadata>
+
+  <fragment id="main-application-page" type="layout" name="jetspeed-layouts::IngridOneColumn">
+    <fragment id="main-application" type="portlet" decorator="ingrid-teaser" name="ingrid-portal-apps::ApplicationOverviewPortlet">
+      <property layout="OneColumn" name="row" value="0" />
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>

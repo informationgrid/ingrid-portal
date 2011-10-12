@@ -1,0 +1,3 @@
+#set ($action = $renderResponse.createActionURL())
+
+&Uuml;bersicht der Anwendungen

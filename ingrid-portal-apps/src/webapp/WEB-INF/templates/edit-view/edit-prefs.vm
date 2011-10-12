@@ -1,0 +1,34 @@
+
+<h2 class="portlet-section-header">Edit Preferences</h2>
+<form action="$renderResponse.createActionURL()" method="post">
+
+<div class="formbody formbody_border_style">
+	<p></p>
+	<table class="border fullwidth">
+	<tbody>
+		<tr>
+			<td class="contentColumnHead">Key</td>
+			<td class="contentColumnHead">Value</td>
+		</tr>
+		#foreach ($pref in $prefs)
+		<tr>
+			<td class="contentRowOdd">$pref.Key</td>
+			<td class="contentRowOdd">
+			#foreach ($value in $pref.Value)
+			
+				<input class="float_left col2right inputstyletext" type="text" value="$value" name="$pref.Key">
+			#end
+			</td>
+		</tr>
+		#end
+	</tbody>
+	</table>
+</div>
+
+
+<div class="formfooter formfooter_border_style">
+	<input type="submit" value="Save" name="Save" class="btn float_right">
+	<span class="float_right">&nbsp;</span>
+	<p class="clearer"></p>
+</div>
+</form>

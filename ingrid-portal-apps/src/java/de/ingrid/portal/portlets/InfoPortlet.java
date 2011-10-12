@@ -64,6 +64,8 @@ public class InfoPortlet extends GenericVelocityPortlet {
             context.put("enableSearchCatalogThesaurus", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_CATALOG_THESAURUS, Boolean.FALSE));
             context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, Boolean.FALSE));
             context.put("enableFeature", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_FEATURE_TYPE, Boolean.FALSE));
+            context.put("enableSearchSimpleOptionalLinks", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_SIMPLE_OPTIONAL_LINKS, Boolean.TRUE));
+            
         }
         if(myView.indexOf("search_cat_thesaurus_info_sns.vm") > -1 || myView.indexOf("search_settings_info.vm") > -1){
         	context.put("thesaurusLink", PortalConfig.getInstance().getString(PortalConfig.THESAURUS_INFO_LINK, ""));

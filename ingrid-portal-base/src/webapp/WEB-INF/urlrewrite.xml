@@ -337,5 +337,38 @@
         <to>/funktionen</to>
     </outbound-rule>
 
+	<!-- Applications -->
+    <rule>
+        <from>/anwendungen</from>
+        <to type="forward">/portal/application/main-application.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/application/main-application.psml</from>
+        <to>/anwendungen</to>
+    </outbound-rule>
+    <rule>
+        <from>/bwastr</from>
+        <to type="forward">/portal/application/main-application-bwastr-locator.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/application/main-application-bwastr-locator.psml</from>
+        <to>/bwastr</to>
+    </outbound-rule>
+    <rule>
+        <from>/visualist</from>
+        <to type="forward">/portal/application/main-application-visualist.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/application/main-application-visualist.psml</from>
+        <to>/visualist</to>
+    </outbound-rule>
+    <rule>
+        <from>/wms2go</from>
+        <to type="forward">/portal/application/main-application-wms2go.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/application/main-application-wms2go.psml</from>
+        <to>/wms2go</to>
+    </outbound-rule>
 </urlrewrite>
 

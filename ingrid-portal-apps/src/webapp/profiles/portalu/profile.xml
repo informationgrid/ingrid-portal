@@ -48,6 +48,10 @@
             <hidden>false</hidden>
         </page>
         <page>
+            <name>application/main-application.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>
@@ -64,16 +68,13 @@
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
                 <portlet col="1" row="1">
-                    <name>ingrid-portal-apps::ServiceTeaser</name>
-                </portlet>
-                <portlet col="1" row="2">
-                    <name>ingrid-portal-apps::MeasuresTeaser</name>
-                </portlet>
-                <portlet col="1" row="3">
                     <name>ingrid-portal-apps::ChronicleTeaser</name>
                 </portlet>
-                <portlet col="1" row="4">
+                <portlet col="1" row="2">
                     <name>ingrid-portal-apps::WeatherTeaser</name>
+                </portlet>
+                <portlet col="1" row="3">
+                    <name>ingrid-portal-apps::MeasuresTeaser</name>
                 </portlet>
             </portlets>
         </page>
@@ -94,13 +95,13 @@
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
                 <portlet col="1" row="1">
-                    <name>ingrid-portal-apps::ServiceTeaser</name>
+                    <name>ingrid-portal-apps::ChronicleTeaser</name>
                 </portlet>
                 <portlet col="1" row="2">
-                    <name>ingrid-portal-apps::MeasuresTeaser</name>
+                    <name>ingrid-portal-apps::WeatherTeaser</name>
                 </portlet>
                 <portlet col="1" row="3">
-                    <name>ingrid-portal-apps::ChronicleTeaser</name>
+                    <name>ingrid-portal-apps::MeasuresTeaser</name>
                 </portlet>
             </portlets>
         </page>
@@ -121,13 +122,13 @@
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
                 <portlet col="1" row="1">
-                    <name>ingrid-portal-apps::ServiceTeaser</name>
+                    <name>ingrid-portal-apps::ChronicleTeaser</name>
                 </portlet>
                 <portlet col="1" row="2">
-                    <name>ingrid-portal-apps::MeasuresTeaser</name>
+                    <name>ingrid-portal-apps::WeatherTeaser</name>
                 </portlet>
                 <portlet col="1" row="3">
-                    <name>ingrid-portal-apps::ChronicleTeaser</name>
+                    <name>ingrid-portal-apps::MeasuresTeaser</name>
                 </portlet>
             </portlets>
         </page>
@@ -213,7 +214,7 @@
         <execute>
             <![CDATA[UPDATE ingrid_cms_item SET item_title='About PortalU'\, item_value='<p>PortalU is the Environmental Information Web Portal of the environmental administration on federal and state (Laender) level in Germany. The portal offers central access to over 2\,500\,000 web pages and about 500\,000 database entries from over 340 public organisations in Germany. The portal aims at establishing a fast and reliable survey of all relevant public environmental information. The main focus is set on the evidence of environmental information according to the EU Directive on public access to environmental information 2003/4/EC. At this the active dissemination of environmental information as well as the evidence of existing environmental data through metadata plays an important role. Above that\, all environmental metadata from the environmental data catalogues (UDKs) on federal and state are bundled in PortalU and transferred to the central German INSPIRE organisation GDI-DE to contribute to the aim of the EU INSPIRE Directive 2007/2/EC to establish a spatial data infrastructure for Europe.</p><p>Altogether 28 data bases from public administrations are available. 17 of them are UDKs\, which contain about 5\,000 INSPIRE relevant metadata entries. The UDKs are updated by the employees of the particular public institute with a web application. This application\, the InGridEditor\, is an integral part of PortalU.</p><p>In PortalU all environmental information\, web pages\, databases as well as data catalogues can be searched by simple or advanced search queries according to the requirements of the user. The results are displayed in a ranked result list independent from the data source. Besides this\, PortalU offers a separate access to service pages (SERVICE)\, environmental measurement pages (DATA)\, selected web pages\, which serve as easy access point to diverse environmental topics (TOPICS)\, selected Web Mapping Services (MAPS) and an environmental chronicle (ALMANAC).</p><p>The technology of PortalU has a modular structure and is thereby easily extendible. It is based on open source components and internal developments. Therefore it can be used without external licence costs within the public administration.</p><p>PortalU is a federal-state-cooperation between the German "Laender" and the German Federal Government. The project is managed by the <a href="http://www.kst.portalu.de/" target="_new" title="Link opens new window">Coordination Center PortalU</a> at the Ministry of Environment and Climate Protection of Lower Saxony in Hanover\, Germany. The German Environmental Information Portal PortalU is continuously improved and extended. For questions and suggestions please contact the <a href="mailto:kst@portalu.de">Coordination Center PortalU</a>.</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.about') AND item_lang='en';]]>
         </execute>    
-        <!-- Webmastter -->
+        <!-- Webmaster -->
 		<execute>
             <![CDATA[UPDATE LINK SET URL='mailto:webmaster@portalu.de' WHERE NAME='webmaster.link';]]>
         </execute>

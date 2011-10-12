@@ -94,6 +94,15 @@
                 <war.bundle>true</war.bundle>
             </properties>
         </dependency>
+        <dependency>
+            <groupId>org.apache.portals.jetspeed-2</groupId>
+            <artifactId>jetspeed-web-content</artifactId>
+            <version>${jetspeed.version}</version>
+            <type>jar</type>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
         <!-- ================================================== -->
         <!-- NEEDED FOR TESTCASES -->
         <dependency>

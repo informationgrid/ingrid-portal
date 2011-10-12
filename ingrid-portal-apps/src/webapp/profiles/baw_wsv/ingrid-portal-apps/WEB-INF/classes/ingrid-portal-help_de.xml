@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ingrid-portal-help.xsl" ?>
+<help>
+    <chapter>
+        <header>Hilfe zu PortalU</header>
+        <section help-key="index">
+            <header>Hilfethemen</header>
+            <content>
+                <ul>
+                    <li>
+                        <a href="?hkey=search-1">Suche</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=maps-1">Karten</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=rss-news-1">Aktuelles</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=ingrid-inform-1">PortalU informiert</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=myingrid-1">Mein PortalU</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=ingrid-newsletter-1">Newsletter</a>
+                    </li>
+                </ul>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Suche</header>
+        <section help-key="search-1">
+            <header>Einfache Suche</header>
+            <content>
+                <p>Über die Suche können Sie einen oder mehrere Suchbegriffe
+                    eingeben. Gefunden werden diejenigen Seiten, die alle
+                    Suchbegriffe enthalten.</p>
+            </content>
+        </section>
+        
+    </chapter>
+    <chapter>
+        <header>Suchergebnisliste</header>
+        <section help-key="search-results-1">
+            <header>Suchergebnisliste</header>
+            <content>
+                <p>Nach dem Absenden einer Suchanfrage erhalten Sie die
+                    Ergebnisliste. Sie gliedert sich in die Hauptergebnisliste
+                    (linke Spalte) und die Liste mit Ergebnissen aus weiteren
+                    Datenquellen (rechte Spalte). Weiterhin wird Ihnen die
+                    Möglichkeit gegeben, über das <a href="?hkey=search-1">Suchformular</a> ihre
+                    Suchanfrage zu verfeinern und erneut zu suchen. Hierzu
+                    können Sie auch die Ihnen angebotenen ähnlichen Begriffe nutzen.</p>
+            </content>
+        </section>
+        <section help-key="search-results-2">
+            <header>Hauptergebnisliste</header>
+            <content>
+                <p>In der Hauptergebnisliste werden Ihnen die Ergebnisse aus der
+                    Suche in den Webseiten der angeschlossenen Server sowie in
+                    den Meta- und Fachinformationssystemen in einer nach
+                    Relevanz gewichteten Liste angezeigt.</p>
+                <p>Anstatt der einfachen gewichteten Liste können Sie sich die
+                    Ergebnisse auch nach Bund und Ländern oder nach Anbietern <a href="?hkey=search-settings-2">gruppiert</a>
+                    anzeigen lassen oder sie nach Aktualität <a href="?hkey=search-settings-2">sortieren</a>.</p>
+                <p>Ist die Fundstelle eine Webseite, erhalten Sie neben einer
+                    Reihe von Informationen (z.B. Titel, Beschreibung und
+                    Anbieter) einen Link, über den Sie direkt auf die
+                    Originalseite geführt werden.</p>
+                <p>Ist die Fundstelle eine Meta- oder Fachinformation, werden Sie
+                    über den Link auf die Detaildarstellung der Fachinformation
+                    geführt. In den Fällen, in denen ein direkter Link zu einer
+                    Webseite in den Meta- oder Fachinformationen vorhanden ist,
+                    bekommen Sie diesen angeboten und werden über ihn auf die
+                    Originalseite geführt. In den Fällen, in denen eine Karte
+                    hinterlegt ist, bekommen Sie einen Link „Zeige
+                    Karte“ angeboten, über den Sie die Karte in der
+                    Kartenansicht von PortalU öffnen können.</p>
+            </content>
+        </section>
+        <section help-key="search-results-3">
+            <header>Weitere Datenquellen</header>
+            <content>
+                <p>Neben den in der Hauptergebnisliste eingebunden Meta- und
+                    Fachinformationssystemen werden auch weitere
+                    Umweltinformationssysteme über PortalU abgefragt. Die
+                    Schnittstellen dieser Systeme erlauben keine Einbindung der
+                    Suchergebnisse in die gewichtete Hauptergebnisliste. Die
+                    Suchergebnisse werden daher in einer getrennten Liste nach
+                    Datenquellen geordnet angezeigt. Die Datenquellen werden
+                    dabei in der Reihenfolge der erfolgten Rückmeldungen aufgeführt.</p>
+                <p>Über die angebotenen Links werden Sie je nach Datenquelle
+                    entweder direkt zu den einzelnen Suchergebnissen oder zu
+                    einer Suchergebnisliste im Quellsystem weitergeleitet.</p>
+            </content>
+        </section>
+        <section help-key="search-results-4">
+            <header>Ähnliche Begriffe</header>
+            <content>
+                <p>PortalU bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
+                    ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen
+                    eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
+                    Umweltbundesamtes in Dessau analysiert und ihnen zur
+                    Verfügung gestellt.</p>
+                <p>Wenn Sie auf das Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg"></img> klicken,
+                    erhalten Sie zu jedem eingegebenen Suchbegriff die ähnlichen
+                    Begriffe angeboten. Diese können Sie sich wiederum über das
+                        <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg"></img> Symbol
+                    anzeigen lassen. Durch das Ankreuzen der einzelnen Begriffe
+                    und Klick auf den Button „Zur Suche
+                    hinzufügen“ werden die ähnlichen Begriffe jeweils
+                    dem zugeordneten Suchbegriff hinzugefügt und zwar so, dass
+                    ein Dokument gefunden wird, wenn entweder der Suchbegriff
+                    oder der ähnliche Begriff enthalten ist (ODER-Verknüpfung).</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Karten</header>
+        <section help-key="maps-1">
+            <header>Karten</header>
+            <content>
+                <p>Im Kartenviewer können Sie sich umweltrelevante Karten ansehen. Wählen Sie 
+                   einen Kartendienst aus der Rubrik „Themen“ oder der Rubrik „Bund/Länder“ aus 
+                   oder fügen Sie einen externen Dienst hinzu. Wenn Sie über ein PortalU-Suchergebnis 
+                   („Zeige Karte“) auf den Kartenviewer gelangt sind, wird Ihnen die entsprechende 
+                   Karte direkt angezeigt.
+                   </p>
+            </content>
+        </section>
+            <section help-key="maps-2">
+                <header>Akkordeon-Menü</header>
+                <content>
+                    <p>Im PortalU-Kartenviewer werden verfügbare sowie aktivierte Kartendienste, Legenden und 
+                    eine Metadatensuche in einem Akkordeon-Menü angeboten, das sich links neben der Karte befindet. 
+                    Durch einen Klick auf eine Menüüberschrift wird der jeweilige Menüpunkt aufgeklappt.</p>
+                    <p><img border="0" width="130" height="111" src="../decorations/layout/ingrid-help/images/image201.jpg" alt="*"></img> </p>
+                    <p><b>Legende</b></p>
+                    <p>Im Menüpunkt „Legende“ werden alle verfügbaren Legenden der Kartenebenen (Layer) 
+                       dargestellt, die unter „Aktive Dienste“ aktiviert sind und im Viewer dargestellt 
+                       werden. Die Legendenbeschreibung gibt darüber Aufschluss, mit welchen Symbolen und/oder 
+                       Farben die unterschiedlichen Informationen in der Karte dargestellt werden.</p>
+                   <p><b>Aktive Kartendienste</b></p>
+                    <p>Alle Kartendienste, die sich unter „Aktive Dienste“ befinden, können durch einen Klick 
+                       im Kartenviewer aktiviert bzw. deaktiviert werden. Die Kartendienste mit ihren Layern 
+                       werden in einer Baumstruktur wiedergegeben.</p>
+                    <p><img border="0" width="159" height="95" src="../decorations/layout/ingrid-help/images/image202neu.jpg" alt="*"></img> </p>                      
+                    <p>Die einzelnen Symbole haben die folgende Bedeutung:</p>
+
+                    <p> <img border="0" width="16" height="16" src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"></img> Rauf: Ein markierter Dienst bzw. ein markierter Layer wird um eine Ebene nach 
+                        oben verschoben. Ein Dienst bzw. ein Layer kann durch einen Klick mit der linken Maustaste 
+                        auf den Namen markiert werden. Für die Darstellung in der Karte gilt: Layer, die in der 
+                        Baumstruktur weiter unten gelistet sind, überlagern Layer, die weiter oben gelistet sind.</p>                               
+                    <p> <img border="0" width="16" height="16" src="../decorations/layout/ingrid-help/images/image102.jpg" alt="*"></img> Runter: Ein markierter Dienst bzw. ein markierter Layer wird um eine Ebene nach unten 
+                        verschoben. Ein Dienst bzw. ein Layer kann durch einen Klick mit der linken Maustaste auf den 
+                        Namen markiert werden. Wenn ein Layer durch einen anderen überlagert wird, kann dieser durch ein 
+                        Verschieben nach unten sichtbar gemacht werden. Die Layer, die sich am unteren Ende der Liste 
+                        befinden, werden immer als oberste Ebene in der Karte dargestellt.</p>
+
+                    <p> <img border="0" width="18" height="17" src="../decorations/layout/ingrid-help/images/image114neu.png" alt="*"></img> Entfernen: Ein markierter Dienst wird aus dem Bereich „Aktive Dienste“ gelöscht. 
+                        Ein Dienst kann durch einen Klick mit der linken Maustaste auf den Namen markiert werden. Das 
+                        Entfernen von einzelnen Layer ist nicht möglich.</p>
+
+                    <p> <img border="0" width="20" height="17" src="../decorations/layout/ingrid-help/images/image106.jpg" alt="*"></img> Das Ordnersymbol wird zur Anzeige der Kartendienste verwendet. In den einzelnen Ordnern 
+                        sind die entsprechenden Layer eines Dienstes zu finden. Mit einem Klick (linke Maustaste) auf das 
+                        Ordnersymbol können Sie den Dienst verschieben, entfernen oder dessen Transparenz ändern.</p>
+
+                    <p> <img border="0" width="16" height="16" src="../decorations/layout/ingrid-help/images/image107.jpg" alt="*"></img> Dieses Symbol wird zur Anzeige eines Layers verwendet. Mit einem Klick (linke Maustaste) 
+                        auf das Symbol können Sie den Dienst verschieben oder auf die Ebene des Dienstes zoomen.</p>
+
+                    <p> <img border="0" width="17" height="17" src="../decorations/layout/ingrid-help/images/image108.jpg" alt="*"></img> Dienst / Layer in Karte aktivieren: Wenn die Checkbox für einen Dienst oder 
+                        einen Layer angehakt ist, wird der Dienst bzw. der Layer in der Karte aktiviert und in der Karte dargestellt,
+                        wenn die entsprechende Zoomstufe (vordefinierter Maßstab der Layer) eingestellt ist. Zudem können für die 
+                        aktivierten Dienste bzw. Layer entsprechende Layer-Informationen über den Button „Infoabfrage“ (Werkzeugleiste) 
+                        aufgerufen werden. Befindet sich der dargestellte Kartenausschnitt außerhalb der Zoomstufe der Layer, wird die 
+                        Layer in der Karte nicht angezeigt und der Layertitel grau dargestellt. Wird ein Dienst angehakt, so werden 
+                        alle Layer des Dienstes aktiviert. Wird das Häkchen eines Dienstes entfernt, so werden alle Layer des Dienstes 
+                        deaktiviert. </p>
+          
+                    <p> <img border="0" width="18" height="16" src="../decorations/layout/ingrid-help/images/image104.jpg" alt="*"></img> Informationen: Weiterführende Informationen (Metadaten) über einen Dienst bzw. einen Layer können für 
+                         Kartendienste angezeigt werden die unter Themen bzw. Bund/Länder eingebunden sind. Die Informationen, die aus der 
+                         jeweiligen GetCapabilities-URL stammen, werden aus einer Datenbank des PortalU-Kartenviewers ausgelesen. Wenn in der 
+                         GetCapabilities-URL bestimmte Angaben wie z.B. zur Organisation oder Anschrift fehlen, können einige Felder nicht 
+                         befüllt werden.</p>
+
+                    <p><b>Themen</b></p>
+                    <p>Unter Themen finden Sie verschiedene nach Themen sortierte Kartendienste von Bund und Ländern, die in 
+                       den PortalU-Kartenviewer reingeladen werden können.</p>
+                    <p> <img border="0" width="319" height="144" src="../decorations/layout/ingrid-help/images/image203.jpg" alt="*"></img> </p> 
+                       
+                    <p>Die einzelnen Symbole haben die folgende Bedeutung:</p>
+
+                    <p> <img border="0" width="17" height="17" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> Das Ordnersymbol wird für die Anzeige der einzelnen Themen verwendet. 
+                        In den Ordnern finden Sie die entsprechenden Kartendienste.</p>
+ 
+                    <p> <img border="0" width="18" height="22" src="../decorations/layout/ingrid-help/images/image111.jpg" alt="*"></img> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende Dienst 
+                        zu den aktiven Diensten hinzugefügt und in der Karte auf den vom Dienst beschriebenen Kartenausschnitt 
+                        gezoomt. Wenn der Dienst weniger als 11 Layer enthält, werden alle Layer direkt 
+                        in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, werden die Layer nicht automatisch aktiviert, 
+                        um die Ladezeit gering zu halten.</p>
+
+                    <p> <img border="0" width="18" height="16" src="../decorations/layout/ingrid-help/images/image104.jpg" alt="*"></img> Informationen: Weiterführende Informationen (Metadaten) über einen Dienst können für Kartendienste angezeigt 
+                         werden, die unter Themen bzw. Bund/Länder eingebunden sind. Die Informationen, die aus der jeweiligen GetCapabilities-URL 
+                         stammen, werden aus einer Datenbank des PortalU-Kartenviewers ausgelesen. Wenn in der 
+                         GetCapabilities-URL bestimmte Angaben wie z.B. zur Organisation oder Anschrift fehlen, können einige Felder nicht 
+                         befüllt werden.</p>
+
+                    <p><b>Bund/Länder</b></p>
+                    <p>Unter Bund/Länder finden Sie umweltrelevante Kartendienste verschiedener Institutionen und Organisationen 
+                    von Bund und Ländern, die regional (nach Bund und Ländern) sortiert sind.</p>
+                    <p> <img border="0" width="321" height="132" src="../decorations/layout/ingrid-help/images/image204.jpg" alt="*"></img> </p> 
+                    <p>Die Bedeutung der einzelnen Symbole wird unter dem Menüpunkt „Themen“ beschrieben (siehe oben).</p>
+                        
+                    <p><b>Metadatensuche</b></p>
+                    <p>In der Metadatensuche können Sie nach Kartendiensten von Bund und Ländern suchen, die im PortalU-Kartenviewer 
+                    eingebunden sind. Geben Sie hierfür einen Suchbegriff ein und klicken Sie auf „ok“. </p>
+                    <p> <img border="0" width="353" height="191" src="../decorations/layout/ingrid-help/images/image205.jpg" alt="*"></img> </p>                    
+                    
+                    <p>In der Suchergebnisliste werden die folgenden Symbole verwendet:</p>
+
+                    <p> <img border="0" width="20" height="18" src="../decorations/layout/ingrid-help/images/image112.jpg" alt="*"></img> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende Dienst 
+                        zu den aktiven Diensten hinzugefügt. Wenn der Dienst weniger als 11 Layer enthält, werden zudem alle Layer 
+                        direkt in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, werden die Layer nicht automatisch 
+                        aktiviert, um die Ladezeit gering zu halten.</p>
+
+                    <p> <img border="0" width="19" height="19" src="../decorations/layout/ingrid-help/images/image113.jpg" alt="*"></img> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende Dienst zu 
+                        den aktiven Diensten hinzugefügt und in der Karte auf den vom Dienst beschriebenen Kartenausschnitt 
+                        gezoomt. Auch hier gilt: Wenn der Dienst weniger als 11 Layer enthält, werden zudem alle Layer direkt 
+                        in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, werden die Layer nicht automatisch 
+                        aktiviert, um die Ladezeit gering zu halten.</p>
+
+                    <p> <img border="0" width="15" height="16" src="../decorations/layout/ingrid-help/images/image110.jpg" alt="*"></img> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende Layer zu den aktiven 
+                        Diensten hinzugefügt.</p>
+
+                    <p> <img border="0" width="18" height="22" src="../decorations/layout/ingrid-help/images/image111.jpg" alt="*"></img> Mit einem Klick (linke Maustaste) auf dieses Symbol wird die entsprechende Layer zu den aktiven 
+                        Diensten hinzugefügt und in der Karte auf den vom Dienst beschriebenen Kartenausschnitt gezoomt.</p>
+                        
+                 </content>
+            </section>
+            <section help-key="maps-3">
+                <header>Karte speichern</header>
+                <content>
+                    <p>Wenn Sie sich mit ihrem PortalU-Account unter „Mein PortalU“ angemeldet haben, können Sie ihre Einstellungen unter 
+                    „Aktive Dienste“ speichern. Klicken Sie dazu auf den Link „Karte speichern" oberhalb der Legende. Unterhalb des 
+                    Kartenviewers erscheint nun ein Dialogfenster, das die Möglichkeit bietet, die Darstellung unter einem beliebigen 
+                    Namen zu speichern. Mit dem Speichern wird eine <b>feste URL </b> vergeben, die weiter verwendet werden kann.</p>
+                    <p> <img border="0" width="363" height="67" src="../decorations/layout/ingrid-help/images/image206.jpg" alt="*"></img></p>                  
+                </content>
+            </section>
+            <section help-key="maps-4">
+                <header>Werkzeugleiste</header>
+                <content>
+                    <p>Über die Werkzeugleiste können Sie verschiedene Aktionen
+                        direkt oder durch einen Klick in die Karte ausführen.</p>
+                   <p> <img border="0" width="294" height="46" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img></p>           
+                    <p>
+                        <b>Kartendienst hinzufügen</b>
+                    </p>
+                    <p>
+                        <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image024.jpg" alt="*"></img> Über diesen Button können Sie eine beliebige GetCapabilities-URL (externer Dienst) 
+                        hinzufügen. Mit dem Button „WMS hinzufügen“ wird der Dienst zu den aktiven Diensten hinzufügen 
+                        und im Kartenviewer dargestellt. </p>
+                    <p> Sie können hierbei wählen (Checkbox), ob die Layer des Dienstes direkt aktiviert und ob auf den 
+                    Kartenausschnitt des Dienstes direkt gezoomt werden soll.</p>
+                    <p>
+                        <b>Datenabfrage</b>
+                    </p>
+                    <p>
+                        <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image026.jpg" alt="*"></img> Über diesen Button können Sachdaten in der Karte abgefragt werden. Die Informationen 
+                        werden über einen Web Feature Service (WFS) bereitgestellt. Über einen Klick 
+                        in die Karte erhalten Sie standortspezifische Informationen der dargestellten Layer. </p>
+                    <p> Derzeit unterstützen nicht 
+                    alle Dienste diese Funktion.</p>
+                    <p>
+                        <b>Koordinaten anzeigen</b>
+                    </p>
+                    <p>
+                        <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image027.jpg" alt="*"></img> Über diesen Button können Punktkoordinaten in der Karte aufgerufen werden. Die Position der 
+                        Maus wird in geografischen Koordinaten unterhalb der Karte angezeigt. Zudem werden die Koordinaten des 
+                        letzten Klicks in der Karte angezeigt.</p>
+                    <p>
+                        <b>Ausschnitt wählen</b>
+                    </p>
+                    <p>
+                        <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image031.jpg" alt="*"></img> Mit diesem Button kann in die Karte hineingezoomt werden. Sie können einen beliebigen 
+                        Kartenausschnitt aufziehen, indem Sie mit gedrückter linker Maustaste ein Quadrat aufziehen. Die Karte 
+                        wird auf diesen Ausschnitt zentriert und entsprechend vergrößert.</p>
+                    <p>
+                        <b>Aus der Karte herauszoomen</b>
+                    </p>
+                    <p>
+                        <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image032.jpg" alt="*"></img> Durch einen Klick auf diesen Button wird die
+                        Karte um die Hälfte verkleinert.</p>
+                    <p>
+                        <b>Karte verschieben</b>
+                    </p>
+                    <p>
+                        <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image033.jpg" alt="*"></img> Mit diesem Button kann die Karte verschoben werden. Zum Verschieben: 
+                        Klicken Sie mit der linken Maustaste auf einen Punkt in der Karte, halten Sie 
+                        die Taste und ziehen Sie die Maus über die Karte. Der Punkt der Karte, auf den 
+                        geklickt wurde, befindet sich nach dem Vorgang dort, wo Sie die Taste loslassen.</p>
+                    <p>
+                        <b>Zurück</b>
+                    </p>
+                    <p>
+                        <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image034.jpg" alt="*"></img> Durch Klick auf diesen Button wird der
+                        Kartenausschnitt, der vor der letzten Aktion angezeigt
+                        wurde, wieder hergestellt.</p>
+                    <p>Die Aktion kann mehrfach hintereinander ausgeführt werden.</p>
+                    <p>
+                        <b>Vor</b>
+                    </p>
+                    <p>
+                        <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image035.jpg" alt="*"></img> Wurde über den Button „Zurück“ zu einem Kartenausschnitt zurück gesprungen, der 
+                        eine oder mehrere Aktionen zurückliegt, kann über den Button „Vor“ wieder zu den danach 
+                        ausgeführten Aktionen „vorgeblättert“ werden</p>
+                    <p>Die Aktion kann so häufig ausgeführt werden wie vorher
+                        die Aktion „Zurück“ ausgeführt wurde.</p>
+                    <p>
+                        <b>Zoom auf Ausgangskarte</b>
+                    </p>
+                    <p>
+                        <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image037.jpg" alt="*"></img> Bei dem Klick auf diesen Button wird der Zoombereich der 
+                        Ausgangskarte wieder hergestellt.</p>
+                    <p>
+                        <b>Druck</b>
+                    </p>
+                    <p>
+                        <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image039.jpg" alt="*"></img> Über diesen Button wird ein PDF-Dokument der Karte mit oder ohne Legende erzeugt. 
+                        Sie können die Ausrichtung der Karte wählen und zudem einen Titel und Kommentare zur Karte 
+                        einfügen. Das Dokument können Sie über die übliche PDF-Funktionalität drucken oder speichern.</p>
+                        
+                </content>
+            </section>
+    </chapter>
+    <chapter>
+        <header>Aktuelles</header>
+        <section help-key="rss-news-1">
+            <header>Aktuelles</header>
+            <content>
+                <p>Unter „Aktuelles“ werden aktuelle
+                    Meldungen zum Thema „Umwelt“ aus Bundes-
+                     und Landesbehörden gelistet. Die aktuellste Meldung steht
+                    dabei immer oben. Es wird jeweils nur der Titel und eine
+                    Kurzbeschreibung der Meldung angezeigt. Durch einen Klick
+                    auf die Meldung werden Sie zu der Originalmeldung weitergeleitet.</p>
+                <p>Ältere Meldungen, die nicht mehr auf der Startseite angezeigt
+                    werden, werden in dem Meldungsarchiv abgelegt. Sie können
+                    diese Meldungen einsehen, indem Sie auf den Link
+                    „Weitere Meldungen“ klicken.</p>
+                <p>(Hinweis: Ggf. können Sie Meldungen, die so alt sind, dass
+                    sie auch im Meldungsarchiv nicht mehr auffindbar sind, noch
+                    auf den Original-Servern der jeweiligen Bundes- oder
+                    Landesbehörde finden. Klicken Sie hierzu auf <a href="?hkey=search-service-1">Service / Pressemitteilungen</a>.)</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>PortalU informiert</header>
+        <section help-key="ingrid-inform-1">
+            <header>PortalU informiert</header>
+            <content>
+                <p>In diesem Bereich finden Sie Meldungen, die durch den
+                    Betreiber von PortalU, die <a href="http://www.kst.portalu.de/" target="_new">Koordinierungsstelle PortalU</a>,
+                    bereitgestellt werden.</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Mein PortalU</header>
+        <section help-key="myingrid-1">
+            <header>Mein PortalU</header>
+            <content>
+                <p>PortalU bietet Ihnen die Möglichkeit, eigene Einstellungen
+                    dauerhaft vorzunehmen. Sie können darüber:</p>
+                <ul>
+                    <li>die Startseite an Ihre Bedürfnisse anpassen</li>
+                    <li>die Suche personalisieren</li>
+                </ul>
+                <p>Sie müssen sich hierzu registrieren und erhalten einen
+                    Benutzernamen und ein Passwort. Die Registrierung ist
+                    kostenlos. Ihre Angaben werden nicht weitergegeben und nur
+                    anonymisiert für statistische Zwecke genutzt.</p>
+            </content>
+        </section>
+        <section help-key="myingrid-2">
+            <header>Anmeldung</header>
+            <content>
+                <p>Haben Sie bereits einen Benutzernamen und ein Kennwort, so
+                    geben Sie beides hier ein und klicken auf „Anmelden“.</p>
+            </content>
+            <section help-key="myingrid-3">
+                <header>Neuer Benutzer</header>
+                <content>
+                    <p>Haben Sie noch keinen Benutzernamen und Kennwort, so
+                        klicken Sie auf den Link „Neuer
+                        Benutzer“. Damit werden Sie zu dem Formular
+                        „Anmeldung“ durchgeschaltet.</p>
+                    <p>Bitte füllen Sie das Formular aus. Die Angaben mit
+                        Sternchen * sind Pflichtangaben, die ausgefüllt werden
+                        müssen. Alle anderen Angaben sind freiwillig.</p>
+                    <p>Alle Angaben werden strikt vertraulich behandelt und
+                        dienen nur der anonymisierten statistischen Auswertung.</p>
+                    <p>Wenn Sie immer die neusten Nachrichten aus dem Umfeld von
+                        PortalU erhalten möchten, so bestellen Sie den <a href="?hkey=ingrid-newsletter-1">PortalU-Newsletter</a>, indem Sie am
+                        Ende des Formulars „Ich möchte den Newsletter
+                        abonnieren.“ ankreuzen (Hinweis: Sie können ihn
+                        jederzeit wieder abbestellen).</p>
+                </content>
+            </section>
+            <section help-key="myingrid-4">
+                <header>Kennwort vergessen?</header>
+                <content>
+                    <p>Wenn Sie Ihr Kennwort vergessen haben, klicken Sie auf
+                        den Link „Kennwort vergessen“. Sie
+                        werden dann zu dem entsprechenden Formular geführt, in
+                        dem Sie Ihre E-Mail-Adresse eingeben können. Nach dem
+                        Absenden bekommen Sie umgehend Ihren Benutzernamen und
+                        Ihr Kennwort zugesandt.</p>
+                </content>
+            </section>
+            <section help-key="myingrid-5">
+                <header>Automatisches Login</header>
+                <content>
+                    <p>Wenn Sie Ihre persönlichen Einstellungen immer nutzen
+                        möchten, können Sie die Option „Automatisches
+                        Login“ wählen. Sie müssen in diesem Fall sich
+                        nicht jedes Mal über Benutzernamen und Kennwort
+                        aufschalten. (Hinweis: Diese Funktion funktioniert nur,
+                        wenn Sie Ihrem Internet-Browser die Erlaubnis zur
+                        Nutzung von Cookies gegeben haben.)</p>
+                </content>
+            </section>
+        </section>
+        <section help-key="myingrid-6">
+            <header>Ihre persönliche Startseite</header>
+            <content>
+                <p>Dieser Link führt Sie zu Ihrer persönlichen Startseite, so
+                    wie Sie sie in der Personalisierung eingestellt haben.</p>
+            </content>
+        </section>
+        <section help-key="myingrid-7">
+            <header>Nutzerprofil bearbeiten</header>
+            <content>
+                <p>Dieser Link führt Sie zu dem Formular mit Ihren bisherigen
+                    Angaben. Haben sich Ihre Daten geändert, so können Sie diese
+                    Änderungen jetzt nachtragen.</p>
+                <p>Die Angaben mit Sternchen * sind Pflichtangaben, die
+                    ausgefüllt werden müssen. Alle anderen Angaben sind freiwillig.</p>
+                <p>Alle Angaben werden strikt vertraulich behandelt und dienen
+                    nur der anonymisierten statistischen Auswertung.</p>
+                <p>Wenn Sie immer die neuesten Nachrichten aus dem Umfeld von
+                    PortalU erhalten möchten, können Sie den <a href="?hkey=ingrid-newsletter-1">PortalU-Newsletter</a>
+                    abbonieren. Kreuzen Sie einfach am Ende des Formulars
+                    „Ich möchte den Newsletter abonnieren“
+                    an (Hinweis: Sie können ihn jederzeit wieder abbestellen).</p>
+            </content>
+        </section>
+        <section help-key="myingrid-8">
+            <header>Personalisierung</header>
+            <content>
+                <p>Die folgenden Einstellungen können Sie Ihren eigenen
+                    Vorstellungen entsprechend einstellen.</p>
+            </content>
+            <section help-key="myingrid-9">
+                <header>Inhalt der Startseite ändern</header>
+                <content>
+                    <p>In diesem Bereich können Sie einstellen, welche Inhalte
+                        in welcher Reihenfolge auf Ihrer persönlichen Startseite
+                        angezeigt werden sollen. Legen Sie dazu die Inhalte der
+                        Zeilen 1 bis 3 in der Hauptspalte (links) der Startseite
+                        über die Auswahlliste fest. Wenn Sie einen Inhalt gar
+                        nicht einstellen (leerer Eintrag in der Auswahlliste),
+                        wird dieser auch nicht angezeigt.</p>
+                    <p>In gleicher Weise können sie für die Marginal-Spalte
+                        (schmalere Spalte auf der rechten Seite) der Startseite vorgehen.</p>
+                        
+                 <p>Die Einstellungen werden nicht permanent als Voreinstellung gespeichert. 
+                 Nach dem Klick auf LOGOUT kommen Sie zurück auf die Startseite von PortalU 
+                 mit seinen Standard-Voreinstellungen. </p>
+                        
+                </content>
+            </section>
+            <section help-key="myingrid-10">
+                <header>Filterung nach Bund/Länder oder Informationsanbieter</header>
+                <content>
+                    <p>In diesem Bereich können Sie einstellen, ob sich die für
+                        Sie angezeigten Informationen nur auf den Bund und/oder
+                        einzelne Länder (z.B. Bund und Hessen) oder auf einzelne
+                        Informationsanbieter (z.B. Umweltbundesamt) einschränken sollen.</p>
+                    <p>Die Einstellungen beziehen sich auf die Suche, sowie auf
+                        die Bereiche Themenseiten, Messwerte und Service.</p>
+                    <p>Die Einstellungen werden permanent als Voreinstellungen
+                        gespeichert. Sie können sie aber über die
+                        Einstellungsmöglichkeiten in den oben genannten
+                        Bereichen temporär (also z.B. für einzelne Suchen)
+                        wieder überschreiben</p>
+                </content>
+            </section>
+            <section help-key="myingrid-11">
+                <header>Filterung nach Typen und Datenquellen</header>
+                <content>
+                    <p>An PortalU sind neben den üblichen Web-Servern auch
+                        Metadaten- und Fachdatensysteme angeschlossen. Sie
+                        können nun wählen, ob Sie in allen Datenquellen suchen
+                        wollen (Standard) oder ob Sie ihre Suche gezielt auf
+                        eine oder mehrere Arten von Datenquellen einschränken möchten.</p>
+                    <p>Wenn Sie sich auf Metadaten beschränken, haben Sie
+                        weiterhin die Möglichkeit, die Klassen der Metadaten
+                        auszuwählen, die Sie durchsuchen möchten. Es stehen
+                        Ihnen folgende Klassen zur Verfügung:</p>
+                    <ul>
+
+                        <li>Organisationseinheit / Fachaufgabe</li>
+                        <li>Geo-Information / Karte</li>
+                        <li>Dokument / Bericht / Literatur</li>
+                        <li>Geodatendienst</li>
+                        <li>Vorhaben / Projekt / Programm</li>
+                        <li>Datensammlung / Datenbank</li>
+                        <li>Dienst / Anwendung / Informationssystem</li>
+                        
+                        
+                    </ul>
+                    <p>Die gemachten Einstellungen wirken sich dauerhaft als
+                        Voreinstellung aus. Sie können Sie aber über temporäre
+                        Einstellungen für einzelne Suchen überschreiben.</p>
+                </content>
+            </section>
+            <section help-key="myingrid-12">
+                <header>Sortierung und Gruppierung der Suchergebnisse</header>
+                <content>
+                    <p>Sie können sich Ihr Suchergebnisse entweder nach Ranking
+                        (Relevanz der gefundenen Seite in Bezug auf Ihren
+                        Suchausdruck) oder nach Aktualität (die neusten Seiten
+                        stehen vorne) sortiert anzeigen lassen.</p>
+                    <p>Gruppierung bedeutet, dass alle Suchergebnisse einer
+                        Seite zu Gruppen zusammengefasst werden. Je nach
+                        Einstellung werden alle Suchergebnisse des Bundes oder
+                        eines Landes zusammengefasst oder die aller Anbieter
+                        oder Domänen.</p>
+                    <p>
+                        <b>Ähnliche Begriffe in die Suche einbeziehen</b>
+                    </p>
+                    <p>PortalU führt nicht nur die bei Suchmaschinen übliche
+                        Indizierung  der Seiten durch, sondern lässt den
+                        Seiteninhalt auch über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
+                        Umweltbundesamtes analysieren. Als Ergebnis dieser
+                        Analyse werden geeignete Fachbegriffe aus dem <a href="?hkey=ext-search-subject-4">Umwelt-Thesaurus</a>
+                        den Webseiten zugeordnet.</p>
+                    <p>Wenn Sie durch Ankreuzen die Einstellung
+                        „Ähnliche Begriffe in die Suche
+                        einbeziehen“ auswählen, werden diese
+                        Schlagworte in der Suche mitberücksichtigt. (Hinweis: Es
+                        ist davon auszugehen, dass die Wahl dieser Einstellung
+                        die Treffermenge erhöht.)</p>
+                    <p>Die Einstellungen wirken sich dauerhaft als
+                        Voreinstellung auf die Darstellung der Suchergebnisliste
+                        aus, können aber für einzelne Suchen wieder über die
+                        Einstellungen in der Suche überschrieben werden.</p>
+                </content>
+            </section>
+        </section>
+        <section help-key="myingrid-13">
+            <header>Logout</header>
+            <content>
+                <p>Über das Logout verlassen Sie den personalisierten Bereich
+                    und kommen zurück auf die Startseite von PortalU mit seinen Standard-Voreinstellungen.</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Newsletter</header>
+        <section help-key="ingrid-newsletter-1">
+            <header>Newsletter</header>
+            <content>
+                <p>Sie können sich über Neuigkeiten und aktuelle Entwicklungen
+                    im Umfeld von PortalU über unseren Newsletter per e-mail
+                    informieren lassen. Der Bezug des Newsletters ist kostenlos.
+                    Ihre E-Mail Adresse wird nicht weitergegeben oder zu anderen
+                    Zwecken als zur Zustellung des Newsletters genutzt.</p>
+            </content>
+        </section>
+        <section help-key="ingrid-newsletter-2">
+            <header>Anmeldung für neue Leser</header>
+            <content>
+                <p>Füllen Sie bitte die Felder des Anmeldeformulars aus und
+                    senden sie die Angaben ab. Alle mit Sternchen *
+                    gekennzeichneten Felder sind Pflichtfelder.</p>
+                <p>Ab der nächsten Ausgabe erhalten Sie dann den PortalU-Newsletter.</p>
+            </content>
+        </section>
+        <section help-key="ingrid-newsletter-3">
+            <header>Newsletter abbestellen</header>
+            <content>
+                <p>Wenn Sie kein Interesse mehr an dem PortalU-Newsletter haben,
+                    tragen Sie bitte Ihre Email-Adresse in das Formular ein und
+                    senden es ab. Sie werden dann keine weiteren
+                    PortalU-Newsletter mehr erhalten.</p>
+            </content>
+        </section>
+    </chapter>
+</help>

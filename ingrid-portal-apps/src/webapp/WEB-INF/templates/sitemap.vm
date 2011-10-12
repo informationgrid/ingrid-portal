@@ -10,6 +10,7 @@
                         #set ($link = $renderResponse.encodeURL("/portal/main-search.psml"))
                         <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.tooltip")">$MESSAGES.getString("sitemap.area.main.search")</a>
                         <p>$MESSAGES.getString("sitemap.area.main.search.description")</p>
+                        #if($enableSearchSimpleOptionalLinks)
                         <ul>
                             <li>
                                 #set ($link = $renderResponse.encodeURL("/portal/search-extended/search-ext-env-topic-terms.psml?ds=1"))
@@ -32,6 +33,7 @@
                                 <p>$MESSAGES.getString("sitemap.area.main.tips.description")</p>
                             </li> 
                         </ul>
+                        #end
                     </li>
                 </ul>
             </div>

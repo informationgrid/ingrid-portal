@@ -15,8 +15,6 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.generic.ListTool;
@@ -25,6 +23,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ActionForm;
@@ -142,6 +142,10 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             	context.put("disablePartnerProviderEdit", PortalConfig.getInstance().getString(disablePartnerProviderEdit));
             }
             
+            String[] hideCmsItem = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_ADMIN_HIDE_CMS_ITEMS);
+            if(hideCmsItem != null){
+            	context.put("hideCmsItem", hideCmsItem);
+            }
             
             // set localized title for this page
             if(viewTitleKey == null){

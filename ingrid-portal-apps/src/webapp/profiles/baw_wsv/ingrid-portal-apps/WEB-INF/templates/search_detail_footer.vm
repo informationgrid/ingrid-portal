@@ -1,0 +1,64 @@
+#* include service navigation component *#
+#macro (includeFooterNavigation)
+	<a href="$renderResponse.encodeURL('/portal/disclaimer.psml')" title="$MESSAGES.getString('footer.disclaimer.tooltip')">$MESSAGES.getString('footer.disclaimer')</a>
+	|
+	<a href="$renderResponse.encodeURL('/portal/privacy.psml')" title="$MESSAGES.getString('footer.privacy.policy.tooltip')">$MESSAGES.getString('footer.privacy.policy')</a>
+	|
+	<a href="mailto:webmaster@portalu.de" title="$MESSAGES.getString('footer.webmaster.tooltip')">$MESSAGES.getString('footer.webmaster')</a>
+	|
+	<a href="$renderResponse.encodeURL('/portal/service-contact-newsletter.psml')" title="$MESSAGES.getString('footer.newsletter.tooltip')">$MESSAGES.getString('footer.newsletter')</a>
+#end
+
+</div>
+<div class="clearer"></div>
+<div id="footermarginalcontainer">
+  <div id="footermarginal">
+    <!-- portlets go here -->
+      <div id="footerSeparator"></div>
+  &nbsp;
+  </div>
+</div>
+<div class="clearer"></div>
+
+<!-- footer block -->
+<div id="footercontainer">
+  <div id="footercontent">
+  <div id="footerimage"></div>
+    <!-- portlets go here -->
+    <div id=footertext>
+#set($footerMenu = $site.getMenu("footer-menu"))
+#if(!$footerMenu.empty)
+  #includeFooterNavigation($footerMenu)
+#end
+<br />
+    $MESSAGES.getString('ingrid.page.copyright')<br />
+
+    <i>$MESSAGES.getString('ingrid.page.rights')</i><br /><br />
+    </div>
+  <div id="footerimage2"></div>
+</div>
+
+</div>
+<!--  END: layout/html/portalu/decorator.vm -->
+
+<!-- Piwik -->
+#if($piwik != "")
+	<script type="text/javascript">
+	var pkBaseURL = '${piwik}';
+	var host = location.host;
+	document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+		try {
+			var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+			piwikTracker.trackPageView();
+			piwikTracker.enableLinkTracking();
+		} catch( err ) {
+		}
+	</script>
+	<noscript><p><img src="$piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
+#end
+<!-- End Piwik Tag -->
+
+</body>
+</html>

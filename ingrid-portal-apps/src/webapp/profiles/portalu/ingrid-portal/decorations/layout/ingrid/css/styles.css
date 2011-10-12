@@ -311,6 +311,8 @@ div.section div p a:hover { text-decoration:underline; }
 div.section-header { margin-top:0; padding:0; }
 div.section-header h1 { display:inline; float:left; padding-top:0em; padding-bottom:0em; color: #5E5E5F; text-transform: uppercase; }
 div.section-header span.portlet_info { float:right; font-size:80%; }
+div.section-header span.edit_info { float:right; font-size:80%; }
+
 /* n�tig f�r Firefox, sonst zerreissts �berschrift ! */
 div.section-header span.clearer { display:block; }
 
@@ -797,3 +799,13 @@ div#logo img { height: 81px; width: 188px; }
 *+html input {overflow: visible;}   /* IE7 - remove button extra padding */
 *+html h1 {height:1%;}             /* IE7 - remove header extra padding */
 *+html a div {cursor: pointer;}     /* IE7 - remove header extra padding */
+
+div.shortcut_teaser_border { border:0; }
+ul.shortcut { margin:0 !important; list-style-type: none; }
+ul.shortcut li { border-bottom:1px solid #CCCCCC; }
+ul.shortcut li img { position: absolute; }
+ul.shortcut li p { color: #1B78B1; font-size: 12px; font-weight: bold; line-height: 19px; margin-bottom: 0; padding: 10px 50px; }
+ul.shortcut li p:hover { text-decoration:underline; }
+
+/* IFrame Portlet */
+.contentWrapper { border: 0px solid #CCD5DE; padding: 0px; }

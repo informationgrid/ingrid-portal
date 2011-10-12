@@ -35,6 +35,7 @@ public class CMSPortlet extends GenericVelocityPortlet {
 
     /** InfoPortlet default template if not set via PSML */
     public final static String DEFAULT_TEMPLATE = "/WEB-INF/templates/default_cms.vm";
+    public final static String SHORTCUT_TEMPLATE = "/WEB-INF/templates/shortcut_teaser_cms.vm";
 
     public final static String CMS_DEFAULT_KEY = "default.key";
 
@@ -54,8 +55,14 @@ public class CMSPortlet extends GenericVelocityPortlet {
         PortletPreferences prefs = request.getPreferences();
 
         String myKey = prefs.getValue("cmsKey", CMS_DEFAULT_KEY);
-        String myView = prefs.getValue("infoTemplate", DEFAULT_TEMPLATE);
-
+        String myView;
+        
+        if(myKey.equals("portal.teaser.shortcut")){
+        	myView= prefs.getValue("infoTemplate", SHORTCUT_TEMPLATE);
+        }else{
+        	myView= prefs.getValue("infoTemplate", DEFAULT_TEMPLATE);	
+        }
+        
         setDefaultViewPage(myView);
 
         Session session = HibernateUtil.currentSession();
@@ -85,8 +92,7 @@ public class CMSPortlet extends GenericVelocityPortlet {
                 	context.put("tool", new UtilsVelocity());
                 }
             } else if (myKey.equals("portalu.teaser.inform")) {
-                context.put("showNewsletter", true);
-                context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, true));
+                context.put("showNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER_CMS_INFO, false));
             }
         }
 

@@ -328,6 +328,10 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                 PortalConfig.PORTAL_ENABLE_DATASOURCE_CATALOG, Boolean.FALSE));
         context.put("enableSearchSeperator", PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_ENABLE_SEARCH_SEPERATOR, Boolean.FALSE));
+        context.put("enableDatasourceSelection", PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_SEARCH_SIMPLE_DATASOURCE_SELECTION, Boolean.TRUE));
+        context.put("enableOptionalLinks", PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_SEARCH_SIMPLE_OPTIONAL_LINKS, Boolean.TRUE));
                 
         super.doView(request, response);
     }
