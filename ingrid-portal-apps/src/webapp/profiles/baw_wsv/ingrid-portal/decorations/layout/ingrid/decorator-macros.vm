@@ -39,33 +39,7 @@
   #if($preferedLocale.toString().startsWith('en'))
 	#set($langCode = "en_")
   #end
-  #if($currentPage == "/default-page.psml")
 <div id="identity" class="${langCode}motiv_start"/>
-  #elseif($currentPage == "/main-about.psml")
-<div id="identity" class="${langCode}motiv_start"/>
-  #elseif($currentPage == "/main-chronicle.psml")
-<div id="identity" class="${langCode}motiv_umweltchronik"/>
-  #elseif($currentPage == "/main-environment.psml")
-<div id="identity" class="${langCode}motiv_umweltthemen"/>
-  #elseif($currentPage == "/main-maps.psml")
-<div id="identity" class="${langCode}motiv_karten"/>
-  #elseif($currentPage == "/main-measures.psml")
-<div id="identity" class="${langCode}motiv_messwerte"/>
-  #elseif($currentPage == "/main-search.psml" || $currentPage.startsWith('/search-catalog'))
-<div id="identity" class="${langCode}motiv_suche"/>
-  #elseif($currentPage == "/main-service.psml")
-<div id="identity" class="${langCode}motiv_service"/>
-  #elseif($currentPage == "/service-contact.psml")
-<div id="identity" class="${langCode}motiv_topnavi"/>
-  #elseif($currentPage == "/help.psml")
-<div id="identity" class="${langCode}motiv_hilfe"/>
-  #elseif($currentPage == "/service-myportal.psml")
-<div id="identity" class="${langCode}motiv_topnavi"/>
-  #elseif($currentPage.startsWith('/administration/'))
-<div id="identity" class="${langCode}motiv_admin"/>
-  #else
-<div id="identity" class="${langCode}motiv_blank"/>
-  #end
 
   <!-- LOGO -->
   <div id="logo">
@@ -189,10 +163,12 @@
 		#if ($element.url.startsWith('/main-about.psml'))
             #set($linkTitle = $MESSAGES.getString('ingrid.page.portrait.tooltip'))
             #set($linkName = $MESSAGES.getString('ingrid.page.portrait')) 
-        #end
-        #if ($element.url.startsWith('/main-features.psml'))
+        #elseif ($element.url.startsWith('/main-features.psml'))
             #set($linkTitle = $MESSAGES.getString('ingrid.page.features.tooltip'))
             #set($linkName = $MESSAGES.getString('ingrid.page.features')) 
+        #elseif ($element.url.startsWith('/application/main-application.psml'))
+            #set($linkTitle = $MESSAGES.getString('ingrid.page.application.overview.tooltip'))
+            #set($linkName = $MESSAGES.getString('ingrid.page.application.overview')) 
         #end
         #if($element.isSelected($site))
 			#set($elemSelected = true)

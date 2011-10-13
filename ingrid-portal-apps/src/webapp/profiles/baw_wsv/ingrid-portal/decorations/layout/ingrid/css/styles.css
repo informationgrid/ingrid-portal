@@ -85,66 +85,9 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
 *********************************************************************/
 
 div#identity { padding:0; margin:0; height: 124px; width:59.5em; background-color:#3E3E3E; overflow:visible; }
-div.motiv_blank { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
 div.motiv_start { background-image:url(../images/01_motiv_start.png); background-repeat:no-repeat; }
-div.motiv_suche { background-image:url(../images/01_motiv_suche.png); background-repeat:no-repeat; }
-div.motiv_service { background-image:url(../images/01_motiv_service.png); background-repeat:no-repeat; }
-div.motiv_messwerte { background-image:url(../images/01_motiv_messwerte.png); background-repeat:no-repeat; }
-div.motiv_umweltthemen { background-image:url(../images/01_motiv_umweltthemen.png); background-repeat:no-repeat; }
-div.motiv_karten { background-image:url(../images/01_motiv_karten.png); background-repeat:no-repeat; }
-div.motiv_umweltchronik { background-image:url(../images/01_motiv_umweltchronik.png); background-repeat:no-repeat; }
-div.motiv_topnavi { background-image:url(../images/01_motiv_topnavi.gif); background-repeat:no-repeat; }
-div.motiv_hilfe { background-image:url(../images/01_motiv_hilfe.png); background-repeat:no-repeat; }
-div.motiv_admin { background-image:url(../images/01_motiv_admin.gif); background-repeat:no-repeat; }
 
-/*** new for ingrid 3.1.0 ****/
-div.motiv_datenschutz { background-image:url(../images/01_motiv_datenschutz.png); background-repeat:no-repeat; }
-div.motiv_funktionen { background-image:url(../images/01_motiv_funktionen.png); background-repeat:no-repeat; }
-div.motiv_impressum { background-image:url(../images/01_motiv_impressum.png); background-repeat:no-repeat; }
-div.motiv_informationsanbieter { background-image:url(../images/01_motiv_informationsanbieter.png); background-repeat:no-repeat; }
-div.motiv_inhalte { background-image:url(../images/01_motiv_inhalte.png); background-repeat:no-repeat; }
-div.motiv_katalog_hierarchie { background-image:url(../images/01_motiv_katalog_hierarchie.png); background-repeat:no-repeat; }
-div.motiv_katalog_thesaurus { background-image:url(../images/01_motiv_katalog_thesaurus.png); background-repeat:no-repeat; }
-div.motiv_kontakt { background-image:url(../images/01_motiv_kontakt.png); background-repeat:no-repeat; }
-div.motiv_mein_portal { background-image:url(../images/01_motiv_mein_portal.png); background-repeat:no-repeat; }
-div.motiv_newsletter { background-image:url(../images/01_motiv_newsletter.png); background-repeat:no-repeat; }
-div.motiv_suche_einstellungen { background-image:url(../images/01_motiv_suche_einstellungen.png); background-repeat:no-repeat; }
-div.motiv_suche_erweiterte { background-image:url(../images/01_motiv_suche_erweiterte.png); background-repeat:no-repeat; }
-div.motiv_suche_historie { background-image:url(../images/01_motiv_suche_historie.png); background-repeat:no-repeat; }
-div.motiv_treffer { background-image:url(../images/01_motiv_treffer.png); background-repeat:no-repeat; }
-div.motiv_ueber_portal { background-image:url(../images/01_motiv_ueber_portal.png); background-repeat:no-repeat; }
-div.motiv_weitere_meldungen { background-image:url(../images/01_motiv_weitere_meldungen.png); background-repeat:no-repeat; }
-
-
-div.en_motiv_blank { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
 div.en_motiv_start { background-image:url(../images/en/01_motiv_start.png); background-repeat:no-repeat; }
-div.en_motiv_suche { background-image:url(../images/en/01_motiv_suche.png); background-repeat:no-repeat; }
-div.en_motiv_service { background-image:url(../images/en/01_motiv_service.png); background-repeat:no-repeat; }
-div.en_motiv_messwerte { background-image:url(../images/en/01_motiv_messwerte.png); background-repeat:no-repeat; }
-div.en_motiv_umweltthemen { background-image:url(../images/en/01_motiv_umweltthemen.png); background-repeat:no-repeat; }
-div.en_motiv_karten { background-image:url(../images/en/01_motiv_karten.png); background-repeat:no-repeat; }
-div.en_motiv_umweltchronik { background-image:url(../images/en/01_motiv_umweltchronik.png); background-repeat:no-repeat; }
-div.en_motiv_topnavi { background-image:url(../images/en/en_01_motiv_topnavi.gif); background-repeat:no-repeat; }
-div.en_motiv_hilfe { background-image:url(../images/en/01_motiv_hilfe.png); background-repeat:no-repeat; }
-div.en_motiv_admin { background-image:url(../images/en/en_01_motiv_admin.gif); background-repeat:no-repeat; }
-
-/*** new for ingrid 3.1.0 ****/
-div.en_motiv_datenschutz { background-image:url(../images/en/01_motiv_datenschutz.png); background-repeat:no-repeat; }
-div.en_motiv_funktionen { background-image:url(../images/en/01_motiv_funktionen.png); background-repeat:no-repeat; }
-div.en_motiv_impressum { background-image:url(../images/en/01_motiv_impressum.png); background-repeat:no-repeat; }
-div.en_motiv_informationsanbieter { background-image:url(../images/en/01_motiv_informationsanbieter.png); background-repeat:no-repeat; }
-div.en_motiv_inhalte { background-image:url(../images/en/01_motiv_inhalte.png); background-repeat:no-repeat; }
-div.en_motiv_katalog_hierarchie { background-image:url(../images/en/01_motiv_katalog_hierarchie.png); background-repeat:no-repeat; }
-div.en_motiv_katalog_thesaurus { background-image:url(../images/en/01_motiv_katalog_thesaurus.png); background-repeat:no-repeat; }
-div.en_motiv_kontakt { background-image:url(../images/en/01_motiv_kontakt.png); background-repeat:no-repeat; }
-div.en_motiv_mein_portal { background-image:url(../images/en/01_motiv_mein_portal.png); background-repeat:no-repeat; }
-div.en_motiv_newsletter { background-image:url(../images/en/01_motiv_newsletter.png); background-repeat:no-repeat; }
-div.en_motiv_suche_einstellungen { background-image:url(../images/en/01_motiv_suche_einstellungen.png); background-repeat:no-repeat; }
-div.en_motiv_suche_erweiterte { background-image:url(../images/en/01_motiv_suche_erweiterte.png); background-repeat:no-repeat; }
-div.en_motiv_suche_historie { background-image:url(../images/en/01_motiv_suche_historie.png); background-repeat:no-repeat; }
-div.en_motiv_treffer { background-image:url(../images/en/01_motiv_treffer.png); background-repeat:no-repeat; }
-div.en_motiv_ueber_portal { background-image:url(../images/en/01_motiv_ueber_portal.png); background-repeat:no-repeat; }
-div.en_motiv_weitere_meldungen { background-image:url(../images/en/01_motiv_weitere_meldungen.png); background-repeat:no-repeat; }
 
 
 /********************************************************************
@@ -548,8 +491,8 @@ div.formfooter_border_style { border-bottom: 1px solid #CECECE; border-left: 1px
 div.formfooter_border_style_top { border-top: 1px solid #CECECE; }
 
 input.btn { color: #FFFFFF; background:url(../images/background_btn.png); font-size: 11px; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 14px 5px 14px; height:24px; cursor: pointer; }
-input.btn:hover { background:url(../images/background_btn_hover.png); }
-input.btn_disable { background: none; height: 33px; color: #CECECE; font-weight: bold; text-align: left; padding-left: 10px; padding-right: 10px; border: 0 none !important; background-image: url(../images/background-mainmenu-hover.png);}
+input.btn:hover { }
+input.btn_disable { color: #FFFFFF; background:#CECECE; font-size: 11px; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 14px 5px 14px; height:24px; }
 input.btn_search { color: #FFFFFF; background:url(../images/background_btn.png); font-weight:bold; height:32px; width:95px; }
 input.btn_search:hover { }
 input.btn_search_disable { background: none; height: 33px; color: #CECECE; font-weight: bold; text-align: left; padding-left: 10px; padding-right: 35px; border: 0 none !important; background-image: url(../images/background-mainmenu-hover.png); }
@@ -813,3 +756,30 @@ ul.shortcut li a div { padding: 5px 10px; }
 ul.shortcut li a div img { position: absolute; }
 ul.shortcut li p { color: #14606D; font-size: 12px; font-weight: bold; line-height: 19px; margin-bottom: 0; padding: 10px 50px; }
 ul.shortcut li p:hover { text-decoration:underline; }
+
+div.application_menu { width:25%; height:100%; }
+div.application_menu ul { list-style: none outside none; margin: 0 0px; }
+div.application_menu ul li { width:80%; }
+div.application_menu ul li img { width:35px; height:35px; padding: 5px 5px 0px; float:left; }
+div.application_menu ul li a { font-weight:bold; }
+div.application_menu ul li p { font-weight:bold; font-size: 12px; margin-bottom: 0px; float:left; padding:10px 0px; line-height:19px; }
+div.application_menu ul li p:hover { }
+div.application_menu ul li div { float:left; width: 100%; border-bottom: 1px dotted #B4B4B4; border-top: 1px dotted #FFFFFF;  }
+div.application_menu ul li div.selected { border-bottom-color: #fff; position: relative; top: -1px;  padding-top:1px; border-top: 1px dotted #FFFFFF;}
+div.application_menu ul li div.selected p:hover  { text-decoration: none; }
+div.application_menu ul li:first-child div { border-top: 1px dotted #B4B4B4; }
+div.application_menu ul li:first-child div.selected { border-top: 1px dotted #FFFFFF;}
+
+div.application_content { width:75%; height:100%; padding: 20px 0 0; }
+div.application_content p { color:#646464; font: normal 16px Verdana, Arial, sans-serif; line-height: 25px; }
+div.application_content p span.icon { padding:0px; margin:7px 0px 0px 0px; }
+div.application_content H2 { color:#1B78B1; font-size:18px; font-weight:normal; }
+div.application_content form { padding: 0px 25px 0px 0px; }
+div.application_row { padding:0 25px 0 0; }
+div.application_content div.application_row img { border: 1px solid #CDCDCE; }
+div.application_content div.application_row p { color:#646464; font: normal 14px Verdana, Arial, sans-serif; line-height: 21px;  }
+div.application_content div.application_row_content { background:#D9EAFA; padding:20px; float:left; margin-bottom: 25px; }
+div.application_content div.application_row div.application_row_cell_left { width:45%; height:100%; float:left; }
+div.application_content div.application_row div.application_row_cell_right { width:45%; height:100%; float:right; padding-left:10px; }
+span.application_title { padding:0px 0px 20px 220px; }
+

@@ -1,0 +1,43 @@
+<!DOCTYPE doc [
+<!-- 
+for more entities look at
+http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
+-->
+<!ENTITY Uuml	"&#x00DC;">
+]>
+
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>ingrid.page.application.2.tooltip</title>
+  <short-title>ingrid.page.application.2</short-title>
+  <metadata name="meta_title">ingrid.page.application.2.meta.title</metadata>
+  <metadata name="meta_descr">ingrid.page.application.2.meta.description</metadata>
+  <metadata name="meta_keywords">ingrid.page.application.2.meta.keywords</metadata>
+
+  <fragment id="main-application-2-page" type="layout" name="jetspeed-layouts::IngridOneColumn">
+    <fragment id="main-application-2" type="portlet" decorator="ingrid-teaser" name="ingrid-portal-apps::IFramePortalPortlet">
+      <property layout="OneColumn" name="row" value="0" />
+      <preference name="WIDTH">
+        <value>883</value>
+      </preference>
+      <preference name="HEIGHT">
+        <value>450</value>
+      </preference>
+      <preference name="SRC">
+        <value></value>
+      </preference>
+      <preference name="titleKey">
+        <value>ingrid.application.2.title</value>
+      </preference>
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+    <security-constraints-ref>admin</security-constraints-ref>
+  </security-constraints>
+</page>

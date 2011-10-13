@@ -1,3 +1,102 @@
 #set ($action = $renderResponse.createActionURL())
-
-&Uuml;bersicht der Anwendungen
+$action.setParameter('action', $app_menu)
+<div>
+ 	### MENU ###
+	<div class="float_left application_menu">
+		<ul>
+			<li>
+				#if ($app_menu == "0")
+					<div>
+						<img src="/ingrid-portal-apps/images/application/app-visualist.png"></img><p>$MESSAGES.getString('application.menu.tab.0')</p>
+					</div>
+				#else
+				<a title="$MESSAGES.getString('application.menu.tab.0.tooltip')" href="$renderResponse.encodeURL('/portal/application/main-application.psml')?action=0">
+					<div>
+						<img src="/ingrid-portal-apps/images/application/app-visualist.png"></img><p>$MESSAGES.getString('application.menu.tab.0')</p>
+					</div>
+				</a>
+				#end
+			</li>
+			<li>
+				#if ($app_menu == "1")
+					<div>
+						<img src="/ingrid-portal-apps/images/application/app-geoviewer.png"></img><p>$MESSAGES.getString('application.menu.tab.1')</p>
+					</div>
+				#else
+				<a title="$MESSAGES.getString('application.menu.tab.1.tooltip')" href="$renderResponse.encodeURL('/portal/application/main-application.psml')?action=1">
+					<div>
+						<img src="/ingrid-portal-apps/images/application/app-geoviewer.png"></img><p>$MESSAGES.getString('application.menu.tab.1')</p>
+					</div>
+				</a>
+				#end
+			</li>
+			<li>
+				#if ($app_menu == "2")
+					<div>
+						<img src="/ingrid-portal-apps/images/application/app-catalog-wsv.png"></img><p>$MESSAGES.getString('application.menu.tab.2')</p>
+					</div>
+				#else
+				<a title="$MESSAGES.getString('application.menu.tab.2.tooltip')" href="$renderResponse.encodeURL('/portal/application/main-application.psml')?action=2">
+					<div>
+						<img src="/ingrid-portal-apps/images/application/app-catalog-wsv.png"></img><p>$MESSAGES.getString('application.menu.tab.2')</p>
+					</div>
+				</a>
+				#end
+			</li>
+			<li>
+				#if ($app_menu == "extern1")
+					<div>
+						<img src="/ingrid-portal-apps/images/application/app-arcgis.png"></img><p>$MESSAGES.getString('application.menu.tab.extern1')</p>
+					</div>
+				#else
+				<a title="$MESSAGES.getString('application.menu.tab.extern1.tooltip')" href="$renderResponse.encodeURL('/portal/application/main-application.psml')?action=extern1">
+					<div>
+						<img src="/ingrid-portal-apps/images/application/app-arcgis.png"></img><p>$MESSAGES.getString('application.menu.tab.extern1')</p>
+					</div>
+				</a>
+				#end
+			</li>
+			<li>
+				#if ($app_menu == "extern2")
+					<div>
+						<img src="/ingrid-portal-apps/images/application/app-gis-tools.png"></img><p>$MESSAGES.getString('application.menu.tab.extern2')</p>
+					</div>
+				#else
+				<a title="$MESSAGES.getString('application.menu.tab.extern2.tooltip')" href="$renderResponse.encodeURL('/portal/application/main-application.psml')?action=extern2">
+					<div>
+						<img src="/ingrid-portal-apps/images/application/app-gis-tools.png"></img><p>$MESSAGES.getString('application.menu.tab.extern2')</p>
+					</div>
+				</a>
+				#end
+			</li>
+		</ul>
+	</div>
+	
+	### CONTENT ###
+	<div class="float_left application_content">
+		<div>
+		#set($description = "application.description.tab.$app_menu")
+		#set($button = "application.button.tab.$app_menu")
+		#set($button_tooltip = "application.button.tooltip.tab.$app_menu")
+			<div>
+				<p>$MESSAGES.getString($description)</p>
+				<br>
+				<span class="clearer"></span>
+				<br>
+				<div class="float_right">
+					#if($app_menu.startsWith("extern"))
+						#if($app_menu == "extern1")
+							<form action="http://google.de" method="get" target="_blank">
+						#else
+							<form action="https://bscw.ilmenau.baw.de/bscw/bscw.cgi/13594949" method="get" target="_blank">
+						#end
+					#else
+						<form action="$action" method="get">
+					#end
+						#renderInputButton($MESSAGES.getString($button) "" "" $MESSAGES.getString($button_tooltip))
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

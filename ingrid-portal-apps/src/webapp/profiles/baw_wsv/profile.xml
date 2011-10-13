@@ -44,6 +44,69 @@
             <hidden>false</hidden>
         </page>
         <page>
+            <name>application/main-application-0.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::IFramePortalPortlet</name>
+                    <preference name="SRC">
+                    	<value>http://wsvmapserv.wsv.bvbs.bund.de/xml2wms/upload.php</value>
+                    </preference>
+                    <preference name="HEIGHT">
+                    	<value>450</value>
+                    </preference>
+                    <preference name="WIDTH">
+                    	<value>883</value>
+                    </preference>
+                    <preference name="titleKey">
+				        <value>ingrid.application.0.title</value>
+			       	</preference>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>application/main-application-1.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::IFramePortalPortlet</name>
+                    <preference name="SRC">
+                    	<value>http://bwastr-locator.wsv.bund.de/wfsgui/</value>
+                    </preference>
+                    <preference name="HEIGHT">
+                    	<value>450</value>
+                    </preference>
+                    <preference name="WIDTH">
+                    	<value>883</value>
+                    </preference>
+                    <preference name="titleKey">
+				        <value>ingrid.application.1.title</value>
+			       	</preference>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>application/main-application-2.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::IFramePortalPortlet</name>
+                    <preference name="SRC">
+                    	<value>http://bwastr-locator.wsv.bund.de/wfsgui/</value>
+                    </preference>
+                    <preference name="HEIGHT">
+                    	<value>450</value>
+                    </preference>
+                    <preference name="WIDTH">
+                    	<value>883</value>
+                    </preference>
+                    <preference name="titleKey">
+				        <value>ingrid.application.2.title</value>
+			       	</preference>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>
@@ -136,10 +199,10 @@
         </execute>    
         <!-- Shortcut -->
         <execute>
-            <![CDATA[UPDATE ingrid_cms_item SET item_title='Anwendung'\, item_value='<div><ul class=\"shortcut\"><li><a href=\"/visualist\" title=\"VisuaList\"><div><img src=\"/ingrid-portal-apps/images/features/tab_topic.png\"><p>VisuaList</p></div></a></li><li><a href=\"/wms2go\" title=\"GeoViewer\"><div><img src=\"/ingrid-portal-apps/images/features/tab_topic.png\"><p>GeoViewer</p></div></a></li><li><a href=\"/bwastr\" title=\"GeoKatalog.WSV\"><div><img src=\"/ingrid-portal-apps/images/features/tab_measures.png\"><p>GeoKatalog.WSV</p></div></a></li><li><a href=\"/bwastr\" title=\"ArcGIS\"><div><img src=\"/ingrid-portal-apps/images/features/tab_service.png\"><p>ArcGIS</p></div></a></li><li><a href=\"/bwastr\" title=\"Weiter GIS-Tools\"><div><img src=\"/ingrid-portal-apps/images/features/tab_catalog.png\"><p>Weitere GIS-Tools</p></div></a></li></ul></div>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portal.teaser.shortcut') AND item_lang='de';]]>
+            <![CDATA[UPDATE ingrid_cms_item SET item_title='Anwendung'\, item_value='<div><ul class=\"shortcut\"><li><a href=\"/visualist\" title=\"VisuaList\"><div><img src=\"/ingrid-portal-apps/images/application/app-visualist.png\"><p>VisuaList</p></div></a></li><li><a href=\"/wms2go\" title=\"GeoViewer\"><div><img src=\"/ingrid-portal-apps/images/application/app-geoviewer.png\"><p>GeoViewer</p></div></a></li><li><a href=\"/bwastr\" title=\"GeoKatalog.WSV\"><div><img src=\"/ingrid-portal-apps/images/application/app-catalog-wsv.png\"><p>GeoKatalog.WSV</p></div></a></li><li><a href=\"/bwastr\" title=\"ArcGIS\"><div><img src=\"/ingrid-portal-apps/images/application/app-arcgis.png\"><p>ArcGIS</p></div></a></li><li><a href=\"/bwastr\" title=\"Weiter GIS-Tools\"><div><img src=\"/ingrid-portal-apps/images/application/app-gis-tools.png\"><p>Weitere GIS-Tools</p></div></a></li></ul></div>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portal.teaser.shortcut') AND item_lang='de';]]>
         </execute>    
         <execute>
-            <![CDATA[UPDATE ingrid_cms_item SET item_title='Application'\, item_value='<div><ul class=\"shortcut\"><li><a href=\"/visualist\" title=\"VisuaList\"><div><img src=\"/ingrid-portal-apps/images/features/tab_topic.png\"><p>VisuaList</p></div></a></li><li><a href=\"/wms2go\" title=\"GeoViewer\"><div><img src=\"/ingrid-portal-apps/images/features/tab_topic.png\"><p>GeoViewer</p></div></a></li><li><a href=\"/bwastr\" title=\"GeoKatalog.WSV\"><div><img src=\"/ingrid-portal-apps/images/features/tab_measures.png\"><p>GeoKatalog.WSV</p></div></a></li><li><a href=\"/bwastr\" title=\"ArcGIS\"><div><img src=\"/ingrid-portal-apps/images/features/tab_service.png\"><p>ArcGIS</p></div></a></li><li><a href=\"bwastr\" title=\"Weiter GIS-Tools\"><div><img src=\"/ingrid-portal-apps/images/features/tab_catalog.png\"><p>Weitere GIS-Tools</p></div></a></li></ul></div>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portal.teaser.shortcut') AND item_lang='en';]]>
+            <![CDATA[UPDATE ingrid_cms_item SET item_title='Application'\, item_value='<div><ul class=\"shortcut\"><li><a href=\"/visualist\" title=\"VisuaList\"><div><img src=\"/ingrid-portal-apps/images/application/app-visualist.png\"><p>VisuaList</p></div></a></li><li><a href=\"/wms2go\" title=\"GeoViewer\"><div><img src=\"/ingrid-portal-apps/images/application/app-geoviewer.png\"><p>GeoViewer</p></div></a></li><li><a href=\"/bwastr\" title=\"GeoKatalog.WSV\"><div><img src=\"/ingrid-portal-apps/images/application/app-catalog-wsv.png\"><p>GeoKatalog.WSV</p></div></a></li><li><a href=\"/bwastr\" title=\"ArcGIS\"><div><img src=\"/ingrid-portal-apps/images/application/app-arcgis.png\"><p>ArcGIS</p></div></a></li><li><a href=\"bwastr\" title=\"Weiter GIS-Tools\"><div><img src=\"/ingrid-portal-apps/images/application/app-gis-tools.png\"><p>Weitere GIS-Tools</p></div></a></li></ul></div>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portal.teaser.shortcut') AND item_lang='en';]]>
         </execute>    
         <!-- Shortcut Query -->
         <execute>
