@@ -145,7 +145,7 @@ div#mainnav ul li a {float:none;}
 div#mainnav ul li a,  
 div#mainnav ul li a:link, 
 div#mainnav ul li a:visited 
- { text-decoration:none; color:#FFFFFF; padding:5px 20px 10px; margin:0; font-size: 13px; font-weight: normal; margin: 6px; }  
+ { text-decoration:none; color:#FFFFFF; padding:5px 12px 10px; margin:0; font-size: 13px; font-weight: normal; margin: 6px; }  
 
 div#mainnav ul li a.selected,
 div#mainnav ul li a.selected:link, 
@@ -782,4 +782,3 @@ div.application_content div.application_row_content { background:#D9EAFA; paddin
 div.application_content div.application_row div.application_row_cell_left { width:45%; height:100%; float:left; }
 div.application_content div.application_row div.application_row_cell_right { width:45%; height:100%; float:right; padding-left:10px; }
 span.application_title { padding:0px 0px 20px 220px; }
-
