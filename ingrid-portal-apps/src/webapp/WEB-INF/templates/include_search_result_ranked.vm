@@ -31,15 +31,15 @@
 			#renderHit($rs)
 		#end
 		#parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
-        #if($adminContent)
-           Facets: $rankedResultList.get("FACETS")
-        #end
 	#end
 #elseif($rankedSearchFinished)
 		<p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
 #else
 		<p><strong>$MESSAGES.getString('common.result.interrupted')</strong><br /><br /></p>
 #end
+        #if($adminContent)
+           Facets: $rankedResultList.get("FACETS")
+        #end
 		#parse ('/WEB-INF/templates/include_search_result_counter.vm')
       <div class="resultset_nav">
         &nbsp;
