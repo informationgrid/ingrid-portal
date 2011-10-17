@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="ingrid-portal-help.xsl" ?>
 <help>
     <chapter>
-        <header>Hilfe zu PortalU</header>
+        <header>Hilfe zu GeoPortal.WSV</header>
         <section help-key="index">
             <header>Hilfethemen</header>
             <content>
@@ -17,10 +17,10 @@
                         <a href="?hkey=rss-news-1">Aktuelles</a>
                     </li>
                     <li>
-                        <a href="?hkey=ingrid-inform-1">PortalU informiert</a>
+                        <a href="?hkey=ingrid-inform-1">GeoPortal.WSV informiert</a>
                     </li>
                     <li>
-                        <a href="?hkey=myingrid-1">Mein PortalU</a>
+                        <a href="?hkey=myingrid-1">Mein GeoPortal.WSV</a>
                     </li>
                     <li>
                         <a href="?hkey=ingrid-newsletter-1">Newsletter</a>
@@ -77,7 +77,7 @@
                     Originalseite geführt. In den Fällen, in denen eine Karte
                     hinterlegt ist, bekommen Sie einen Link „Zeige
                     Karte“ angeboten, über den Sie die Karte in der
-                    Kartenansicht von PortalU öffnen können.</p>
+                    Kartenansicht von GeoPortal.WSV öffnen können.</p>
             </content>
         </section>
         <section help-key="search-results-3">
@@ -85,7 +85,7 @@
             <content>
                 <p>Neben den in der Hauptergebnisliste eingebunden Meta- und
                     Fachinformationssystemen werden auch weitere
-                    Umweltinformationssysteme über PortalU abgefragt. Die
+                    Umweltinformationssysteme über GeoPortal.WSV abgefragt. Die
                     Schnittstellen dieser Systeme erlauben keine Einbindung der
                     Suchergebnisse in die gewichtete Hauptergebnisliste. Die
                     Suchergebnisse werden daher in einer getrennten Liste nach
@@ -99,7 +99,7 @@
         <section help-key="search-results-4">
             <header>Ähnliche Begriffe</header>
             <content>
-                <p>PortalU bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
+                <p>GeoPortal.WSV bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
                     ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen
                     eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
                     Umweltbundesamtes in Dessau analysiert und ihnen zur
@@ -124,7 +124,7 @@
             <content>
                 <p>Im Kartenviewer können Sie sich umweltrelevante Karten ansehen. Wählen Sie 
                    einen Kartendienst aus der Rubrik „Themen“ oder der Rubrik „Bund/Länder“ aus 
-                   oder fügen Sie einen externen Dienst hinzu. Wenn Sie über ein PortalU-Suchergebnis 
+                   oder fügen Sie einen externen Dienst hinzu. Wenn Sie über ein GeoPortal.WSV-Suchergebnis 
                    („Zeige Karte“) auf den Kartenviewer gelangt sind, wird Ihnen die entsprechende 
                    Karte direkt angezeigt.
                    </p>
@@ -133,7 +133,7 @@
             <section help-key="maps-2">
                 <header>Akkordeon-Menü</header>
                 <content>
-                    <p>Im PortalU-Kartenviewer werden verfügbare sowie aktivierte Kartendienste, Legenden und 
+                    <p>Im GeoPortal.WSV-Kartenviewer werden verfügbare sowie aktivierte Kartendienste, Legenden und 
                     eine Metadatensuche in einem Akkordeon-Menü angeboten, das sich links neben der Karte befindet. 
                     Durch einen Klick auf eine Menüüberschrift wird der jeweilige Menüpunkt aufgeklappt.</p>
                     <p><img border="0" width="130" height="111" src="../decorations/layout/ingrid-help/images/image201.jpg" alt="*"></img> </p>
@@ -181,13 +181,13 @@
           
                     <p> <img border="0" width="18" height="16" src="../decorations/layout/ingrid-help/images/image104.jpg" alt="*"></img> Informationen: Weiterführende Informationen (Metadaten) über einen Dienst bzw. einen Layer können für 
                          Kartendienste angezeigt werden die unter Themen bzw. Bund/Länder eingebunden sind. Die Informationen, die aus der 
-                         jeweiligen GetCapabilities-URL stammen, werden aus einer Datenbank des PortalU-Kartenviewers ausgelesen. Wenn in der 
+                         jeweiligen GetCapabilities-URL stammen, werden aus einer Datenbank des GeoPortal.WSV-Kartenviewers ausgelesen. Wenn in der 
                          GetCapabilities-URL bestimmte Angaben wie z.B. zur Organisation oder Anschrift fehlen, können einige Felder nicht 
                          befüllt werden.</p>
 
                     <p><b>Themen</b></p>
                     <p>Unter Themen finden Sie verschiedene nach Themen sortierte Kartendienste von Bund und Ländern, die in 
-                       den PortalU-Kartenviewer reingeladen werden können.</p>
+                       den GeoPortal.WSV-Kartenviewer reingeladen werden können.</p>
                     <p> <img border="0" width="319" height="144" src="../decorations/layout/ingrid-help/images/image203.jpg" alt="*"></img> </p> 
                        
                     <p>Die einzelnen Symbole haben die folgende Bedeutung:</p>
@@ -203,7 +203,7 @@
 
                     <p> <img border="0" width="18" height="16" src="../decorations/layout/ingrid-help/images/image104.jpg" alt="*"></img> Informationen: Weiterführende Informationen (Metadaten) über einen Dienst können für Kartendienste angezeigt 
                          werden, die unter Themen bzw. Bund/Länder eingebunden sind. Die Informationen, die aus der jeweiligen GetCapabilities-URL 
-                         stammen, werden aus einer Datenbank des PortalU-Kartenviewers ausgelesen. Wenn in der 
+                         stammen, werden aus einer Datenbank des GeoPortal.WSV-Kartenviewers ausgelesen. Wenn in der 
                          GetCapabilities-URL bestimmte Angaben wie z.B. zur Organisation oder Anschrift fehlen, können einige Felder nicht 
                          befüllt werden.</p>
 
@@ -214,7 +214,7 @@
                     <p>Die Bedeutung der einzelnen Symbole wird unter dem Menüpunkt „Themen“ beschrieben (siehe oben).</p>
                         
                     <p><b>Metadatensuche</b></p>
-                    <p>In der Metadatensuche können Sie nach Kartendiensten von Bund und Ländern suchen, die im PortalU-Kartenviewer 
+                    <p>In der Metadatensuche können Sie nach Kartendiensten von Bund und Ländern suchen, die im GeoPortal.WSV-Kartenviewer 
                     eingebunden sind. Geben Sie hierfür einen Suchbegriff ein und klicken Sie auf „ok“. </p>
                     <p> <img border="0" width="353" height="191" src="../decorations/layout/ingrid-help/images/image205.jpg" alt="*"></img> </p>                    
                     
@@ -242,7 +242,7 @@
             <section help-key="maps-3">
                 <header>Karte speichern</header>
                 <content>
-                    <p>Wenn Sie sich mit ihrem PortalU-Account unter „Mein PortalU“ angemeldet haben, können Sie ihre Einstellungen unter 
+                    <p>Wenn Sie sich mit ihrem GeoPortal.WSV-Account unter „Mein GeoPortal.WSV“ angemeldet haben, können Sie ihre Einstellungen unter 
                     „Aktive Dienste“ speichern. Klicken Sie dazu auf den Link „Karte speichern" oberhalb der Legende. Unterhalb des 
                     Kartenviewers erscheint nun ein Dialogfenster, das die Möglichkeit bietet, die Darstellung unter einem beliebigen 
                     Namen zu speichern. Mit dem Speichern wird eine <b>feste URL </b> vergeben, die weiter verwendet werden kann.</p>
@@ -358,22 +358,22 @@
         </section>
     </chapter>
     <chapter>
-        <header>PortalU informiert</header>
+        <header>GeoPortal.WSV informiert</header>
         <section help-key="ingrid-inform-1">
-            <header>PortalU informiert</header>
+            <header>GeoPortal.WSV informiert</header>
             <content>
                 <p>In diesem Bereich finden Sie Meldungen, die durch den
-                    Betreiber von PortalU, die <a href="http://www.kst.portalu.de/" target="_new">Koordinierungsstelle PortalU</a>,
+                    Betreiber von GeoPortal.WSV, die <a href="http://www.kst.portalu.de/" target="_new">Koordinierungsstelle GeoPortal.WSV</a>,
                     bereitgestellt werden.</p>
             </content>
         </section>
     </chapter>
     <chapter>
-        <header>Mein PortalU</header>
+        <header>Mein GeoPortal.WSV</header>
         <section help-key="myingrid-1">
-            <header>Mein PortalU</header>
+            <header>Mein GeoPortal.WSV</header>
             <content>
-                <p>PortalU bietet Ihnen die Möglichkeit, eigene Einstellungen
+                <p>GeoPortal.WSV bietet Ihnen die Möglichkeit, eigene Einstellungen
                     dauerhaft vorzunehmen. Sie können darüber:</p>
                 <ul>
                     <li>die Startseite an Ihre Bedürfnisse anpassen</li>
@@ -404,7 +404,7 @@
                     <p>Alle Angaben werden strikt vertraulich behandelt und
                         dienen nur der anonymisierten statistischen Auswertung.</p>
                     <p>Wenn Sie immer die neusten Nachrichten aus dem Umfeld von
-                        PortalU erhalten möchten, so bestellen Sie den <a href="?hkey=ingrid-newsletter-1">PortalU-Newsletter</a>, indem Sie am
+                        GeoPortal.WSV erhalten möchten, so bestellen Sie den <a href="?hkey=ingrid-newsletter-1">GeoPortal.WSV-Newsletter</a>, indem Sie am
                         Ende des Formulars „Ich möchte den Newsletter
                         abonnieren.“ ankreuzen (Hinweis: Sie können ihn
                         jederzeit wieder abbestellen).</p>
@@ -452,7 +452,7 @@
                 <p>Alle Angaben werden strikt vertraulich behandelt und dienen
                     nur der anonymisierten statistischen Auswertung.</p>
                 <p>Wenn Sie immer die neuesten Nachrichten aus dem Umfeld von
-                    PortalU erhalten möchten, können Sie den <a href="?hkey=ingrid-newsletter-1">PortalU-Newsletter</a>
+                    GeoPortal.WSV erhalten möchten, können Sie den <a href="?hkey=ingrid-newsletter-1">GeoPortal.WSV-Newsletter</a>
                     abbonieren. Kreuzen Sie einfach am Ende des Formulars
                     „Ich möchte den Newsletter abonnieren“
                     an (Hinweis: Sie können ihn jederzeit wieder abbestellen).</p>
@@ -478,7 +478,7 @@
                         (schmalere Spalte auf der rechten Seite) der Startseite vorgehen.</p>
                         
                  <p>Die Einstellungen werden nicht permanent als Voreinstellung gespeichert. 
-                 Nach dem Klick auf LOGOUT kommen Sie zurück auf die Startseite von PortalU 
+                 Nach dem Klick auf LOGOUT kommen Sie zurück auf die Startseite von GeoPortal.WSV 
                  mit seinen Standard-Voreinstellungen. </p>
                         
                 </content>
@@ -502,7 +502,7 @@
             <section help-key="myingrid-11">
                 <header>Filterung nach Typen und Datenquellen</header>
                 <content>
-                    <p>An PortalU sind neben den üblichen Web-Servern auch
+                    <p>An GeoPortal.WSV sind neben den üblichen Web-Servern auch
                         Metadaten- und Fachdatensysteme angeschlossen. Sie
                         können nun wählen, ob Sie in allen Datenquellen suchen
                         wollen (Standard) oder ob Sie ihre Suche gezielt auf
@@ -543,7 +543,7 @@
                     <p>
                         <b>Ähnliche Begriffe in die Suche einbeziehen</b>
                     </p>
-                    <p>PortalU führt nicht nur die bei Suchmaschinen übliche
+                    <p>GeoPortal.WSV führt nicht nur die bei Suchmaschinen übliche
                         Indizierung  der Seiten durch, sondern lässt den
                         Seiteninhalt auch über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
                         Umweltbundesamtes analysieren. Als Ergebnis dieser
@@ -566,7 +566,7 @@
             <header>Logout</header>
             <content>
                 <p>Über das Logout verlassen Sie den personalisierten Bereich
-                    und kommen zurück auf die Startseite von PortalU mit seinen Standard-Voreinstellungen.</p>
+                    und kommen zurück auf die Startseite von GeoPortal.WSV mit seinen Standard-Voreinstellungen.</p>
             </content>
         </section>
     </chapter>
@@ -576,7 +576,7 @@
             <header>Newsletter</header>
             <content>
                 <p>Sie können sich über Neuigkeiten und aktuelle Entwicklungen
-                    im Umfeld von PortalU über unseren Newsletter per e-mail
+                    im Umfeld von GeoPortal.WSV über unseren Newsletter per e-mail
                     informieren lassen. Der Bezug des Newsletters ist kostenlos.
                     Ihre E-Mail Adresse wird nicht weitergegeben oder zu anderen
                     Zwecken als zur Zustellung des Newsletters genutzt.</p>
@@ -588,16 +588,16 @@
                 <p>Füllen Sie bitte die Felder des Anmeldeformulars aus und
                     senden sie die Angaben ab. Alle mit Sternchen *
                     gekennzeichneten Felder sind Pflichtfelder.</p>
-                <p>Ab der nächsten Ausgabe erhalten Sie dann den PortalU-Newsletter.</p>
+                <p>Ab der nächsten Ausgabe erhalten Sie dann den GeoPortal.WSV-Newsletter.</p>
             </content>
         </section>
         <section help-key="ingrid-newsletter-3">
             <header>Newsletter abbestellen</header>
             <content>
-                <p>Wenn Sie kein Interesse mehr an dem PortalU-Newsletter haben,
+                <p>Wenn Sie kein Interesse mehr an dem GeoPortal.WSV-Newsletter haben,
                     tragen Sie bitte Ihre Email-Adresse in das Formular ein und
                     senden es ab. Sie werden dann keine weiteren
-                    PortalU-Newsletter mehr erhalten.</p>
+                    GeoPortal.WSV-Newsletter mehr erhalten.</p>
             </content>
         </section>
     </chapter>
