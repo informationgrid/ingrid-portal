@@ -268,12 +268,17 @@ scriptScope.addValuesToObject = function() {
 		if (thesaList[i].selection == 1) {//dojo.byId("objectWiz_"+getThesaurusId(thesaList[i])).checked) {
 			if (thesaList[i].source == "INSPIRE") {
 				// if it's an Inspire topic that's not already in the list
-				addInspireTopics([thesaList[i].title]);
+				UtilThesaurus.addInspireTopics([thesaList[i].title]);
 			} else {
 				// and if the descriptor isn't already in the target list
 				if (dojo.every(UtilGrid.getTableData("thesaurusTerms"), function(item){ return (thesaList[i].topicId != item.topicId); })) {
 					// add descriptor to store
-					UtilGrid.addTableDataRow("thesaurusTerms", {topicId: thesaList[i].topicId, title: thesaList[i].title, source: thesaList[i].source} );
+                    UtilGrid.addTableDataRow("thesaurusTerms", {
+                        topicId: thesaList[i].topicId, 
+                        label:thesaList[i].title, 
+                        title: thesaList[i].title, 
+                        source: thesaList[i].source,
+                        sourceString: thesaList[i].source} );
 				}
 			}
 		}

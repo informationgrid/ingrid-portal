@@ -397,6 +397,9 @@ public class SNSService {
     	if (classifyResult.getTerms() != null) {
         	int num = 0;
         	for (Term term : classifyResult.getTerms()) {
+                if (term == null || term.getName() == null || term.getName().trim().isEmpty()) {
+                	continue;
+                }
         		thesaTopics.add(convertTermToSNSTopic(term));
         		num++;
         		if (num == maxNum) {
@@ -411,6 +414,9 @@ public class SNSService {
     	if (classifyResult.getLocations() != null) {
         	int num = 0;
         	for (Location location : classifyResult.getLocations()) {
+                if (location == null || location.getName() == null || location.getName().trim().isEmpty()) {
+                	continue;
+                }
             	SNSLocationTopic t = convertLocationToSNSLocationTopic(location);
         		// returns null for expired locations
             	if (t != null) {

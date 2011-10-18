@@ -784,6 +784,7 @@ function getInspireTopics(topics) {
 				if (!inspireArrayContains(inspireArray,inspireTopic)) {			
 					var obj = new Object();
 					obj.title = inspireTopic;
+					obj.label = inspireTopic;
 					obj.source = "INSPIRE";
 					inspireArray.push(obj);
 				}
