@@ -558,7 +558,6 @@
 	"ui.obj.thesaurus.terms.enviromental.title":"Umweltthemen",
 	"ui.obj.thesaurus.terms.enviromental.displayCatalogPage":"Als Katalogseite anzeigen",
 	"ui.obj.thesaurus.terms.enviromental.topics":"Themen",
-	"ui.obj.thesaurus.terms.enviromental.categories":"Kategorien",
 	"ui.obj.links.title":"Verweise",
 	"ui.obj.links.linksTo.title":"Verweise zu",
 	"ui.obj.links.linksTo.link":"Verweis anlegen/bearbeiten",

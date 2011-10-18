@@ -17,16 +17,12 @@
 	}
 
 	// RULE 2
-	// Applies to: erfassung object -> verschlagwortung -> umweltthemen Ids = thesaurusEnvTopics, thesaurusEnvCats
-	// Rule: If value != leer then Umweltthemen, Umweltkategorien is required
+	// Applies to: erfassung object -> verschlagwortung -> umweltthemen Ids = thesaurusEnvTopics
+	// Rule: If value != leer then Umweltthemen is required
 	var thesaurusEnvTopicsTable = UtilGrid.getTable("thesaurusEnvTopics");
-	var thesaurusEnvCatsTable = UtilGrid.getTable("thesaurusEnvCats");
 	var thesaurusEnvExtResCheckBox = dijit.byId("thesaurusEnvExtRes");
 	if (thesaurusEnvTopicsTable) {
 		dojo.connect(thesaurusEnvTopicsTable, "onDataChanged", applyRule2);
-	}
-	if (thesaurusEnvCatsTable) {
-		dojo.connect(thesaurusEnvCatsTable, "onDataChanged", applyRule2);
 	}
 	if (thesaurusEnvExtResCheckBox) {
 	  dojo.connect(thesaurusEnvExtResCheckBox, "onChange", function(val) {applyRule2();});
@@ -129,19 +125,16 @@ function applyRule1() {
 function applyRule2() {
 	console.debug("apply rule 2");
 	var required = false;
-	if (dijit.byId("thesaurusEnvExtRes").checked || UtilGrid.getTableData("thesaurusEnvTopics").length != 0 || UtilGrid.getTableData("thesaurusEnvCats").length != 0)
+	if (dijit.byId("thesaurusEnvExtRes").checked || UtilGrid.getTableData("thesaurusEnvTopics").length != 0)
 	  required = true;
 
-	var labelNode1 = dojo.byId("thesaurusEnvironmentLabel");
-	var labelNode2 = dojo.byId("thesaurusEnvTopicsLabel");
-	var labelNode3 = dojo.byId("thesaurusEnvCatsLabel");
+//	var labelNode1 = dojo.byId("thesaurusEnvironmentLabel");
+//	var labelNode2 = dojo.byId("thesaurusEnvTopicsLabel");
 	var containerNode1 = dojo.byId("uiElementN014");
 	var containerNode2 = dojo.byId("uiElementN015");
-	var containerNode3 = dojo.byId("uiElementN016");
 
 	UtilUI.setRequiredState(containerNode1, required);
 	UtilUI.setRequiredState(containerNode2, required);
-	UtilUI.setRequiredState(containerNode3, required);
 }
 	
 function applyRule3(value) {
@@ -204,8 +197,8 @@ function applyRule5() {
 			freeHasBB = true;
 	}
 
-	var labelNode1 = dojo.byId("spatialRefAdminUnitLabel");
-	var labelNode2 = dojo.byId("spatialRefLocationLabel");
+//	var labelNode1 = dojo.byId("spatialRefAdminUnitLabel");
+//	var labelNode2 = dojo.byId("spatialRefLocationLabel");
 	var container1 = dojo.byId("uiElementN006");
 	var container2 = dojo.byId("uiElementN008");
 

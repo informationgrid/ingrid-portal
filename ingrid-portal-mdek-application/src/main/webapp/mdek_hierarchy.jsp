@@ -1937,7 +1937,7 @@
                                                 </label>
                                             </span>
                                         </div>
-                                            <span id="uiElementN015" class="outer headHiddenRows4" style="width:50%;">
+                                            <span id="uiElementN015" class="outer headHiddenRows4">
                                             	<span id="thesaurusEnvTopicsLabel" class="label">
                                                     <label for="thesaurusEnvTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 10015)">
                                                         <fmt:message key="ui.obj.thesaurus.terms.enviromental.topics" />
@@ -1945,17 +1945,6 @@
                                                 </span>
                                                 <div class="input tableContainer">
                                                     <div id="thesaurusEnvTopics" autoHeight="4" interactive="true" class="hideTableHeader">
-                                                    </div>
-                                                </div>
-                                            </span>
-                                            <span id="uiElementN016" class="outer" style="width:50%;">
-                                            	<span id="thesaurusEnvCatsLabel" class="label">
-                                                    <label for="thesaurusEnvCats" onclick="javascript:dialog.showContextHelp(arguments[0], 10016)">
-                                                        <fmt:message key="ui.obj.thesaurus.terms.enviromental.categories" />
-                                                    </label>
-                                                </span>
-                                                <div class="input tableContainer">
-                                                    <div id="thesaurusEnvCats" autoHeight="4" interactive="true" class="hideTableHeader">
                                                     </div>
                                                 </div>
                                             </span>
@@ -2004,7 +1993,7 @@
                             <span id="uiElementN018" class="outer" style="width:50%;">
                                 <div>
                                     <span class="label">
-                                        <label for="thesaurusEnvCats" onclick="javascript:dialog.showContextHelp(arguments[0], 1510)">
+                                        <label for="linksFrom" onclick="javascript:dialog.showContextHelp(arguments[0], 1510)">
                                             <fmt:message key="ui.obj.links.linksFrom.title" />
                                         </label>
                                     </span>

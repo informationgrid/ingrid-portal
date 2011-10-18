@@ -101,7 +101,6 @@ public class MdekDataBean {
 	private List<Integer> thesaurusTopicsList;
 	private Boolean thesaurusEnvExtRes;
 	private List<Integer> thesaurusEnvTopicsList;
-	private List<Integer> thesaurusEnvCatsList;
 
 
 	// Links
@@ -542,7 +541,6 @@ public class MdekDataBean {
 		this.setThesaurusTermsTable(new ArrayList<SNSTopic>());
 		this.setThesaurusTopicsList(new ArrayList<Integer>());
 		this.setThesaurusEnvTopicsList(new ArrayList<Integer>());
-		this.setThesaurusEnvCatsList(new ArrayList<Integer>());
 		this.setLinksToObjectTable(new ArrayList<MdekDataBean>());
 		this.setLinksFromObjectTable(new ArrayList<MdekDataBean>());
 		this.setLinksFromPublishedObjectTable(new ArrayList<MdekDataBean>());
@@ -612,16 +610,6 @@ public class MdekDataBean {
 	}
 
 
-
-	public List<Integer> getThesaurusEnvCatsList() {
-		return thesaurusEnvCatsList;
-	}
-
-
-
-	public void setThesaurusEnvCatsList(List<Integer> thesaurusEnvCatsList) {
-		this.thesaurusEnvCatsList = thesaurusEnvCatsList;
-	}
 
 	public List<MdekAddressBean> getGeneralAddressTable() {
 		return generalAddressTable;

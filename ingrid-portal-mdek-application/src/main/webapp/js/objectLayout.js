@@ -1210,7 +1210,7 @@ ingridObjectLayout.createThesaurus = function() {
 	
 	
 	var thesaurusEnvTopicsStructure = [
-		{field: 'title',name: 'title',width: 331-scrollBarWidth+'px',
+		{field: 'title',name: 'title',width: 677-scrollBarWidth+'px',
 			type: SelectboxEditor,
 	        options: [], // will be filled later, when syslists are loaded
 	        values: [],
@@ -1220,18 +1220,6 @@ ingridObjectLayout.createThesaurus = function() {
 		}
 	];
     createDataGrid("thesaurusEnvTopics", null, thesaurusEnvTopicsStructure, null);
-	
-	var thesaurusEnvCatsStructure = [
-		{field: 'title',name: 'title',width: 331-scrollBarWidth+'px',
-			type: SelectboxEditor,
-	        options: [], // will be filled later, when syslists are loaded
-	        values: [],
-	        editable: true,
-            listId: 1400,
-            formatter: dojo.partial(SyslistCellFormatter, 1400)
-		}
-	];
-    createDataGrid("thesaurusEnvCats", null, thesaurusEnvCatsStructure, null);
 	
 }
 

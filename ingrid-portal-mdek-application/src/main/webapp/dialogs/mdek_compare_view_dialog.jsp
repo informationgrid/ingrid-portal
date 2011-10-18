@@ -262,7 +262,6 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	renderList(nodeDataOld.thesaurusTopicsList, nodeDataNew.thesaurusTopicsList, "<fmt:message key='ui.obj.thesaurus.terms.category' />", null, function (val) { return UtilSyslist.getSyslistEntryName(527, val);});
 	renderTextWithTitle(nodeDataOld.thesaurusEnvExtRes ? "<fmt:message key='general.yes' />": "<fmt:message key='general.no' />", nodeDataNew.thesaurusEnvExtRes ? "<fmt:message key='general.yes' />": "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.thesaurus.terms.enviromental.displayCatalogPage' />");
 	renderList(nodeDataOld.thesaurusEnvTopicsList, nodeDataNew.thesaurusEnvTopicsList, "<fmt:message key='ui.obj.thesaurus.terms.enviromental.title' />"+ " - " + "<fmt:message key='ui.obj.thesaurus.terms.enviromental.topics' />", null, function (val) { return UtilSyslist.getSyslistEntryName(1410, val);});
-	renderList(nodeDataOld.thesaurusEnvCatsList, nodeDataNew.thesaurusEnvCatsList, "<fmt:message key='ui.obj.thesaurus.terms.enviromental.title' />"+ " - " + "<fmt:message key='ui.obj.thesaurus.terms.enviromental.categories' />", null, function (val) { return UtilSyslist.getSyslistEntryName(1400, val);});
     
     renderAdditionalFieldsForRubric("thesaurus", oldAdditionalFields, newAdditionalFields);
 

@@ -198,10 +198,6 @@ public class MdekMapper implements DataMapperInterface {
         if (intList != null)
             mdekObj.setThesaurusEnvTopicsList(intList);
         
-        intList = (List<Integer>) obj.get(MdekKeys.ENV_CATEGORIES);
-        if (intList != null)
-            mdekObj.setThesaurusEnvCatsList(intList);
-        
         // Links
         mdekObj.setLinksToObjectTable(mapToObjectLinksTable((List<IngridDocument>) obj.get(MdekKeys.OBJ_REFERENCES_TO)));
         mdekObj.setLinksFromObjectTable(mapToObjectLinksTable((List<IngridDocument>) obj.get(MdekKeys.OBJ_REFERENCES_FROM)));
@@ -749,7 +745,6 @@ public class MdekMapper implements DataMapperInterface {
         udkObj.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTable(data.getThesaurusTermsTable()));
         udkObj.put(MdekKeys.TOPIC_CATEGORIES, data.getThesaurusTopicsList());
         udkObj.put(MdekKeys.ENV_TOPICS, data.getThesaurusEnvTopicsList());
-        udkObj.put(MdekKeys.ENV_CATEGORIES, data.getThesaurusEnvCatsList());
         if (data.getThesaurusEnvExtRes() != null) {
             if (data.getThesaurusEnvExtRes().booleanValue()) {
                 udkObj.put(MdekKeys.IS_CATALOG_DATA, "Y");

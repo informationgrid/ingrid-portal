@@ -1660,7 +1660,6 @@ udkDataProxy._setObjectData = function(nodeData)
   UtilStore.updateWriteStore("thesaurusTopics", UtilList.listToTableData(nodeData.thesaurusTopicsList));
   UtilStore.updateWriteStore("thesaurusInspire", UtilList.listToTableData(nodeData.thesaurusInspireTermsList));
   UtilStore.updateWriteStore("thesaurusEnvTopics", UtilList.listToTableData(nodeData.thesaurusEnvTopicsList));
-  UtilStore.updateWriteStore("thesaurusEnvCats", UtilList.listToTableData(nodeData.thesaurusEnvCatsList));
   dijit.byId("thesaurusEnvExtRes").attr("value", nodeData.thesaurusEnvExtRes, true);
 
 
@@ -2122,7 +2121,6 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.thesaurusTopicsList = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusTopics"));
   nodeData.thesaurusInspireTermsList = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusInspire"));
   nodeData.thesaurusEnvTopicsList = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusEnvTopics"));
-  nodeData.thesaurusEnvCatsList = UtilList.tableDataToList(udkDataProxy._getTableData("thesaurusEnvCats"));
   nodeData.thesaurusEnvExtRes = dijit.byId("thesaurusEnvExtRes").checked;
 
 

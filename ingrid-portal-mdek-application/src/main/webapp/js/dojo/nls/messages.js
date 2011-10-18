@@ -558,7 +558,6 @@
 	"ui.obj.thesaurus.terms.enviromental.title":"Environmental",
 	"ui.obj.thesaurus.terms.enviromental.displayCatalogPage":"Display as Catalogue Page",
 	"ui.obj.thesaurus.terms.enviromental.topics":"Topics",
-	"ui.obj.thesaurus.terms.enviromental.categories":"Categories",
 	"ui.obj.links.title":"Links",
 	"ui.obj.links.linksTo.title":"Links to",
 	"ui.obj.links.linksTo.link":"Add/Edit Links",
