@@ -98,7 +98,7 @@ public class ProfileConverter {
                 for (Controls control : rubric.getControls()) {
                   processToJS(control, rubric.getId());
                   
-                  if (control.getType() != Controls.LEGACY_CONTROL) {
+                  if (!control.getType().equals(Controls.LEGACY_CONTROL)) {
                       additionalFieldPresent = true;
                       // remember all table controls for adding context menus later
                       //if (control.getType().equals(Controls.GRID_CONTROL))
