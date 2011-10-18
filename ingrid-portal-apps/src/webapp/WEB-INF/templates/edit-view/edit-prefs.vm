@@ -1,19 +1,42 @@
-
-<h2 class="portlet-section-header">Edit Preferences</h2>
 <form action="$renderResponse.createActionURL()" method="post">
-
+#set($count = 0)
+#set ($rowstyle = "contentRowOdd")
 <div class="formbody formbody_border_style">
-	<p></p>
+	<h2 class="portlet-section-header">$MESSAGES.getString('ingrid.application.iframe.edit'):</h2>
 	<table class="border fullwidth">
 	<tbody>
 		<tr>
-			<td class="contentColumnHead">Key</td>
-			<td class="contentColumnHead">Value</td>
+			<td class="contentColumnHead"></td>
+			<td class="contentColumnHead">$MESSAGES.getString('ingrid.application.iframe.edit.key')</td>
+			<td class="contentColumnHead">$MESSAGES.getString('ingrid.application.iframe.edit.value')</td>
 		</tr>
 		#foreach ($pref in $prefs)
+		#set($count = $count + 1)
 		<tr>
-			<td class="contentRowOdd">$pref.Key</td>
-			<td class="contentRowOdd">
+			#if ($velocityCount % 2 == 0)
+            	#set ($rowstyle = "contentRowEven")
+            #else
+            	#set ($rowstyle = "contentRowOdd")
+            #end
+            <td class="$rowstyle">
+            </td>
+            <td class="$rowstyle">
+				#if($pref.Key == "titleKey")
+					$MESSAGES.getString('ingrid.application.iframe.edit.titlekey'):
+				#elseif($pref.Key == "SRC")
+					$MESSAGES.getString('ingrid.application.iframe.edit.src'):
+				#elseif($pref.Key == "HEIGHT")
+					$MESSAGES.getString('ingrid.application.iframe.edit.height'):
+				#elseif($pref.Key == "WIDTH")
+					$MESSAGES.getString('ingrid.application.iframe.edit.width'):
+				#elseif($pref.Key == "SCROLLING")
+					$MESSAGES.getString('ingrid.application.iframe.edit.scrolling'):
+				#else
+					$pref.Key:
+				#end
+				
+			</td>
+			<td class="$rowstyle">
 			#foreach ($value in $pref.Value)
 			
 				<input class="float_left col2right inputstyletext" type="text" value="$value" name="$pref.Key">

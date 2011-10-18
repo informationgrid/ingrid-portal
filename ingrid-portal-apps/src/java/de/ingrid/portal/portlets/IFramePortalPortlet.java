@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
@@ -36,6 +38,24 @@ public class IFramePortalPortlet extends org.apache.jetspeed.portlet.IFrameGener
         response.setTitle(messages.getString(myTitleKey));
         
          super.doView(request, response);
+    }
+
+	public void doEdit(RenderRequest request, RenderResponse response) throws PortletException, IOException
+    {
+		Context context = getContext(request);
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
+        context.put("MESSAGES", messages);
+        
+        // read preferences
+        PortletPreferences prefs = request.getPreferences();
+        
+        String myTitleKey = prefs.getValue("titleKey", "");
+        response.setTitle(messages.getString(myTitleKey));
+        
+		response.setContentType("text/html");
+        doPreferencesEdit(request, response);
+        
     }
 
 }
