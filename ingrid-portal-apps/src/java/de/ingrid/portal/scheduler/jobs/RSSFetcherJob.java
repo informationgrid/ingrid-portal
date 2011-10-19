@@ -54,7 +54,7 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
     public void execute(JobExecutionContext context) throws JobExecutionException {
     	
     	if (log.isDebugEnabled()) {
-    		log.info("RSSFetcherJob is started ...");
+    		log.debug("RSSFetcherJob is started ...");
     	}
 
         Session session 	= HibernateUtil.currentSession();
@@ -86,6 +86,9 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
         	startTimer();
             while (it.hasNext()) {
                 IngridRSSSource rssSource = (IngridRSSSource) it.next();
+                if (log.isDebugEnabled()) {
+                    log.debug("Working on: " + rssSource.getUrl());
+                }
                 try {
                     feedUrl = new URL(rssSource.getUrl());
                     URLConnection urlCon = feedUrl.openConnection();
@@ -94,7 +97,9 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                     input 	= new SyndFeedInput();
                     feed 	= input.build(new XmlReader(urlCon));
                     
-                    log.debug("fetched " + rssSource.getUrl());
+                    if (log.isDebugEnabled()) {
+                        log.debug("Resource fetched.");
+                    }
                     
                     if (feed.getLanguage() == null) {
                         feed.setLanguage(rssSource.getLanguage());
@@ -107,6 +112,9 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                     // work on all rss items of the feed
                     while (it2.hasNext()) {
                         entry = (SyndEntry) it2.next();
+                        if (log.isDebugEnabled()) {
+                            log.debug("Working on item: " + entry.getTitle());
+                        }
                         boolean includeEntry = true;
                         String categoryFilter = rssSource.getCategories();
                         if (categoryFilter != null && !categoryFilter.equalsIgnoreCase("all")) {
@@ -131,6 +139,9 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                         // filter entries with no title
                         if (includeEntry && (entry.getTitle() == null || entry.getTitle().trim().length() == 0)) {
                             includeEntry = false;
+                            if (log.isDebugEnabled()) {
+                                log.debug("Ignore item, because item has no title: " + entry);
+                            }
                         }
 
                         publishedDate = entry.getPublishedDate();
@@ -143,6 +154,9 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                             publishedDate = feed.getPublishedDate();
                             if (publishedDate == null) {
                                 includeEntry = false;
+                                if (log.isDebugEnabled()) {
+                                    log.debug("Ignore item, because a publishing date could not be retrieved: " + entry);
+                                }
                             }
                         }
 
@@ -151,11 +165,17 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                         // filter entries with dates in future
                         if (includeEntry && publishedDate != null && publishedDate.after(cal.getTime())) {
                             includeEntry = false;
+                            if (log.isDebugEnabled()) {
+                                log.debug("Ignore item, because the publishing date is in the future: " + publishedDate);
+                            }
                         }
                         // filter dates before RSS entry window
                         cal.add(Calendar.DATE, -1 * PortalConfig.getInstance().getInt(PortalConfig.RSS_HISTORY_DAYS));
                         if (includeEntry && publishedDate != null && publishedDate.before(cal.getTime())) {
                             includeEntry = false;
+                            if (log.isDebugEnabled()) {
+                                log.debug("Ignore item, because the publishing date is too far in the past: " + publishedDate);
+                            }
                         }
 
                         if (includeEntry) {
@@ -199,6 +219,9 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                                 tx = session.beginTransaction();
                                 session.save(rssEntry);
                                 tx.commit();
+                                if (log.isDebugEnabled()) {
+                                    log.debug("Item saved to database.");
+                                }
 
                                 cnt++;
                                 feedEntriesCount++;
@@ -286,11 +309,19 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
             throw new JobExecutionException("Error executing quartz job RSSFetcherJob.", t, false);
         } finally {
         	computeTime(dataMap, stopTimer());
+            if (log.isDebugEnabled()) {
+                log.debug("Update quartz job data.");
+            }
         	updateJobData(context, status, statusCode);
         	updateJob(context);
             HibernateUtil.closeSession();
+            if (log.isDebugEnabled()) {
+                log.debug("Hibernate session is closed.");
+            }
         }
-
+        if (log.isDebugEnabled()) {
+            log.debug("RSSFetcherJob finished.");
+        }
     }
 
 }
