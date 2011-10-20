@@ -78,10 +78,12 @@
  
 <!--
    Used only for profile baw_wsv
-   <options>/application/main-application</options>
-   <options>/application/main-application-0.psml</options>
-   <options>/application/main-application-1.psml</options>
-   <options>/application/main-application-2.psml</options>
+  <menu name="sub-menu-application">
+    <options>/application/main-application</options>
+    <options>/application/main-application-0.psml</options>
+    <options>/application/main-application-1.psml</options>
+    <options>/application/main-application-2.psml</options>
+  </menu>
 -->
 
   <security-constraints>
