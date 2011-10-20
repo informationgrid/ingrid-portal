@@ -16,6 +16,9 @@ public class PortalConfig extends PropertiesConfiguration {
 
     /** how old can rss news be, before the are deleted from news history in days */
     public final static String RSS_HISTORY_DAYS = "rss.history.days";
+    
+    /** define number of rss feeds for RSSNewsTeaserPortlet */
+    public final static String PORTAL_RSS_NEWS_NUMBER = "portal.rss.news.number";
 
     /**
      * timout for queries in ms should be larger than query.timout.ranked and
