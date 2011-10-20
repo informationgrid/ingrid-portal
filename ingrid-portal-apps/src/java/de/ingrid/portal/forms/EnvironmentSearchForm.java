@@ -23,8 +23,6 @@ public class EnvironmentSearchForm extends ActionForm {
     /** field names (name of request parameter) */
     public static final String FIELD_TOPIC = Settings.PARAM_RUBRIC;
 
-    public static final String FIELD_FUNCT_CATEGORY = "category";
-
     public static final String FIELD_PARTNER = Settings.PARAM_PARTNER;
 
     public static final String FIELD_GROUPING = Settings.PARAM_GROUPING;
@@ -40,8 +38,6 @@ public class EnvironmentSearchForm extends ActionForm {
     /** initial values */
     public static final String INITIAL_THEMES = Settings.PARAMV_ALL;
 
-    public static final String INITIAL_CATEGORY = Settings.PARAMV_ALL;
-
     public static final String INITIAL_PARTNER = Settings.PARAMV_ALL;
 
     public static final String INITIAL_GROUPING = "none";
@@ -52,7 +48,6 @@ public class EnvironmentSearchForm extends ActionForm {
     public void init() {
         clear();
         setInput(FIELD_TOPIC, INITIAL_THEMES);
-        setInput(FIELD_FUNCT_CATEGORY, INITIAL_CATEGORY);
         setInput(FIELD_PARTNER, INITIAL_PARTNER);
         setInput(FIELD_GROUPING, INITIAL_GROUPING);
         setInput(FIELD_QUERY_STRING, "");
@@ -70,9 +65,6 @@ public class EnvironmentSearchForm extends ActionForm {
     public void populate(PortletRequest request) {
         if (request.getParameterValues(FIELD_TOPIC) != null) {
             setInput(FIELD_TOPIC, request.getParameterValues(FIELD_TOPIC));
-        }
-        if (request.getParameterValues(FIELD_FUNCT_CATEGORY) != null) {
-            setInput(FIELD_FUNCT_CATEGORY, request.getParameterValues(FIELD_FUNCT_CATEGORY));
         }
         if (request.getParameterValues(FIELD_PARTNER) != null) {
             setInput(FIELD_PARTNER, request.getParameterValues(FIELD_PARTNER));
@@ -95,10 +87,6 @@ public class EnvironmentSearchForm extends ActionForm {
         // check rubric
         if (!hasInput(FIELD_TOPIC)) {
             setError(FIELD_TOPIC, "envSearch.error.noTheme");
-            allOk = false;
-        }
-        if (!hasInput(FIELD_FUNCT_CATEGORY)) {
-            setError(FIELD_FUNCT_CATEGORY, "envSearch.error.noCategory");
             allOk = false;
         }
         if (!hasInput(FIELD_PARTNER)) {

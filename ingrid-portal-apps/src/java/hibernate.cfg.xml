@@ -25,7 +25,6 @@
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridPartner.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridProvider.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridEnvTopic.hbm.xml"/>
-        <mapping resource="de/ingrid/portal/hibernate/resources/IngridEnvFunctCategory.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridServiceRubric.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridMeasuresRubric.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridChronicleEventType.hbm.xml"/>

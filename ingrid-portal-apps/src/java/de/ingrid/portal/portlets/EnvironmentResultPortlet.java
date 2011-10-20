@@ -11,10 +11,10 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.EnvironmentSearchForm;
@@ -219,10 +219,10 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHitsWrapper hitsWrapper = null;
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            String[] requestedFields = { Settings.RESULT_KEY_TOPIC, Settings.RESULT_KEY_FUNCT_CATEGORY,
+            String[] requestedFields = { Settings.RESULT_KEY_TOPIC,
                     Settings.RESULT_KEY_PARTNER, Settings.RESULT_KEY_PROVIDER,
             		Settings.HIT_KEY_UDK_CLASS, Settings.HIT_KEY_OBJ_ID,
-            		Settings.HIT_KEY_OBJ_ENV_TOPIC_KEY, Settings.HIT_KEY_OBJ_ENV_CATEGORY_KEY };
+            		Settings.HIT_KEY_OBJ_ENV_TOPIC_KEY };
             hits = ibus.searchAndDetail(query, hitsPerPage, currentPage, startHit, PortalConfig.getInstance().getInt(
                     PortalConfig.QUERY_TIMEOUT_RANKED, 5000), requestedFields);
             
@@ -257,35 +257,6 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                         		", detail = " + hitArray[i].getHitDetail(), t);
                     }
                 }
-
-                /*            
-                 IngridHit result = null;
-                 IngridHitDetail detail = null;
-                 for (int i = 0; i < results.length; i++) {
-                 try {
-                 result = results[i];
-                 detail = null;
-                 if (details != null) {
-                 detail = details[i];
-                 }
-                 //detail = ibus.getDetail(result, query, requestedFields);
-
-                 if (result == null) {
-                 continue;
-                 }
-                 if (detail != null) {
-                 UtilsSearch.transferHitDetails(result, detail);
-                 result.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailValue(detail,
-                 Settings.RESULT_KEY_TOPIC, resources));
-                 result.put(Settings.RESULT_KEY_FUNCT_CATEGORY, UtilsSearch.getDetailValue(detail,
-                 Settings.RESULT_KEY_FUNCT_CATEGORY, resources));
-                 }
-                 } catch (Throwable t) {
-                 if (log.isErrorEnabled()) {
-                 log.error("Problems processing Hit, hit = " + result + ", detail = " + detail, t);
-                 }
-                 }
-                 */
             }
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
@@ -299,8 +270,6 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
     private void transferDetailData(IngridHitWrapper hit, IngridHitDetail detail, IngridResourceBundle resources) {
         UtilsSearch.transferHitDetails(hit, detail);
         hit.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_TOPIC, resources));
-        hit.put(Settings.RESULT_KEY_FUNCT_CATEGORY, UtilsSearch.getDetailValue(detail,
-                Settings.RESULT_KEY_FUNCT_CATEGORY, resources));
 
         // process IGC Object (no url) !
         if (hit.get("url") == null) {
@@ -321,22 +290,6 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                     displayValues.append(resources.getString(resourceKey.toLowerCase()));
             	}
                 hit.put(Settings.RESULT_KEY_TOPIC, displayValues.toString());
-            }
-
-            // process topics: map ids from index to query values to resource names !
-            ids = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_OBJ_ENV_CATEGORY_KEY);
-            if (ids != null && ids.trim().length() > 0) {
-                StringBuffer displayValues = new StringBuffer();
-            	String[] idList = ids.split(",");
-            	for (int i=0; i < idList.length; i++) {
-                    if (i != 0) {
-                    	displayValues.append(UtilsSearch.DETAIL_VALUES_SEPARATOR);
-                    }
-                    String resourceKey = UtilsUDKCodeLists.getCodeListEntryName(UtilsUDKCodeLists.SYSLIST_ID_ENV_FUNCT_CATEGORY,
-            			new Long(idList[i].trim()), UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE);
-                    displayValues.append(resources.getString(resourceKey.toLowerCase()));
-            	}
-                hit.put(Settings.RESULT_KEY_FUNCT_CATEGORY, displayValues.toString());
             }
         }
     }

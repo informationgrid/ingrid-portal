@@ -13,15 +13,6 @@
 #end
 			</select>
 		</div>
-		<div class="float_left marginleft" style="display:none;">
-			<h3><label for="xx3">#displayFieldLabel('category' $MESSAGES.getString('envSearch.form.category'))</label></h3>
-			<select class="funct_class inputstyle" name="category" id="xx3" size="5" multiple="multiple">
-				<option value="all" #getSelectedFlag('category' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
-#foreach ($category in $categoryList)
-<option value="$category.FormValue" #getSelectedFlag('category' "$category.FormValue")>$category.QueryValue</option>
-#end
-			</select>
-		</div>  
 		<span class="clearer"></span>
 		<br style="line-height:10px" />
 		<div class="float_left">

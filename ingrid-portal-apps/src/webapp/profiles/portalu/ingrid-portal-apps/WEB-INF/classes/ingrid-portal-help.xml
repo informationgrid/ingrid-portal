@@ -1222,7 +1222,7 @@
         <section help-key="search-topics-1">
             <header>Environmental Topics</header>
             <content>
-                <p>The information that is provided as <i>Environmental Topics</i> in PortalU are web pages and EDC-metadata objects (Environmental Data Catalogues) which are particularly relevant for a certain topic. As well as the actual topic (such as, for example, water or refuse), you can also select the functional categories of the topic page wished (e.g. data and maps).</p>
+                <p>The information that is provided as <i>Environmental Topics</i> in PortalU are web pages and EDC-metadata objects (Environmental Data Catalogues) which are particularly relevant for a certain topic. You can select the actual topic (such as, for example, water or refuse) of the topic page wished.</p>
                 <p>If you have arrived at a topic directly from the start page on the environmental topics, the topic chosen is already pre-loaded and only the topic pages on this topic will be shown in the results list. </p>
             </content>
         </section>
@@ -1232,14 +1232,6 @@
                 <p>In this area you can select the topic you wish to find information about.</p>
                 <p>You can carry out multiple selections by holding down the ctrl-key and then clicking on the topics desired. </p>
                 <p>If <i>Select All </i>is selected all the topics available will be displayed.</p>
-            </content>
-        </section>
-        <section help-key="search-topics-3">
-            <header>Categories</header>
-            <content>
-                <p>In this area you can select the functional category respectively the type of the topic page desired.</p>
-                <p>You can carry out multiple selections by holding down the ctrl-key and then clicking on the categories desired.</p>
-                <p>If <i>Select All</i> is selected then all the categories available will be displayed.</p>
             </content>
         </section>
         <section help-key="search-topics-4">

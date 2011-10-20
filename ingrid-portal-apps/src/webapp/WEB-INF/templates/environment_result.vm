@@ -24,7 +24,6 @@
               $MESSAGES.getString('common.result.provider'): $!rs.provider<br />
 				#end
               $MESSAGES.getString('envSearch.result.topic'): $!rs.topic<br />
-              $MESSAGES.getString('envSearch.result.rubric'): $!rs.funct_category<br />
             </p>
 			#if($rs.url)
 			<p class="result_link">

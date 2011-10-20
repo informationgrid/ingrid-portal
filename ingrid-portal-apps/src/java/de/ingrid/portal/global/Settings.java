@@ -81,8 +81,6 @@ public class Settings {
 
     // "environment topics": first category
     public final static String QFIELD_TOPIC = "topic";
-    // "environment topics": second category
-    public final static String QFIELD_FUNCT_CATEGORY = "funct_category";
 
     // "environment chronicle": event type
     public final static String QFIELD_EVENT_TYPE = "eventtype";
@@ -164,7 +162,6 @@ public class Settings {
 
     public final static String RESULT_KEY_RUBRIC = "topic";
     public final static String RESULT_KEY_TOPIC = "topic";
-    public final static String RESULT_KEY_FUNCT_CATEGORY = "funct_category";
 
     public final static String RESULT_KEY_URL = "url";
     public final static String RESULT_KEY_URL_STR = "url_str";
@@ -254,8 +251,7 @@ public class Settings {
     // Address address relations
     public static final String HIT_KEY_ADDR_ADDR_RELATION = "T022_adr_adr";
 
-    // UDK Objects category and topic in environment catalog (Umweltthemen = datatype:topics)
-    public static final String HIT_KEY_OBJ_ENV_CATEGORY_KEY = "t0114_env_category.cat_key";
+    // UDK Objects topic in environment catalog (Umweltthemen = datatype:topics)
     public static final String HIT_KEY_OBJ_ENV_TOPIC_KEY = "t0114_env_topic.topic_key";
 
     // ===========================================

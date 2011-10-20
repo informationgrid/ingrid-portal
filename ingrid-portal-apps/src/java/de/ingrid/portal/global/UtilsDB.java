@@ -11,19 +11,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.ResourceBundle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridChronicleEventType;
-import de.ingrid.portal.om.IngridEnvFunctCategory;
 import de.ingrid.portal.om.IngridEnvTopic;
 import de.ingrid.portal.om.IngridFormToQuery;
 import de.ingrid.portal.om.IngridMeasuresRubric;
@@ -334,55 +332,6 @@ public class UtilsDB {
     public static String getTopicFromKey(String key) {
         List envTopics = getEnvTopics(null);
         return getQueryValueFromFormValue(envTopics, key);
-    }
-
-    /**
-     * Get all the environment functional categories sorted alphabetically by the localized query value.
-     * The query value of the IngridEnvFunctCategory instances are overwritten with the localized values.
-     * If resources is NULL, nor localization/sorting will occur.
-     * 
-     * @param resources
-     * 
-     * @return
-     */
-    public static List getEnvFunctCategories(IngridResourceBundle resources) {
-        // NOTICE: assign list to our static variable, passed static variable
-        // may be null,
-        // so there's no call by reference !
-        envFunctCategories = getValuesFromDB(IngridEnvFunctCategory.class, envFunctCategories);
-        if (resources == null) {
-        	return envFunctCategories;
-        }
-        for (int i=0; i<envFunctCategories.size(); i++) {
-        	IngridEnvFunctCategory category = (IngridEnvFunctCategory)envFunctCategories.get(i);
-        	category.setQueryValue(resources.getString(category.getQueryValue()));
-        }
-        Collections.sort(envFunctCategories, new IngridEnvFunctCategoryComparator());
-        return envFunctCategories;
-    }
-
-    private static class IngridEnvFunctCategoryComparator implements Comparator {
-        /**
-         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-         */
-        public final int compare(Object a, Object b) {
-            String sa = ((IngridEnvFunctCategory)a).getQueryValue();
-            String sb = ((IngridEnvFunctCategory)b).getQueryValue();
- 
-            return sa.compareTo(sb);
-        }
-    }
-    
-    
-    /**
-     * Get the query value of a functional category from the form value (key).
-     * 
-     * @param key
-     * @return
-     */
-    public static String getFunctCategoryFromKey(String key) {
-        List envCategories = getEnvFunctCategories(null);
-        return getQueryValueFromFormValue(envCategories, key);
     }
 
     /**

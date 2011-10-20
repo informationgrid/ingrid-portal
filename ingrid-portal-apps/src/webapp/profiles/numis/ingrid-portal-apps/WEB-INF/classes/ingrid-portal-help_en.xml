@@ -1715,10 +1715,9 @@
                 <p>Die Informationen, die als &#8222;Themen&#8220;
                     in NUMIS bereitgestellt werden, sind Web-Seiten und
                     UDK-Metadatenobjekte die für ein bestimmtes Umweltthema
-                    besonders relevant und interessant sind . Neben dem
-                    eigentlichen Thema (wie z.B. Wasser oder Abfall) können Sie
-                    auch den Type der gewünschten Themenseite (z.B. Daten und
-                    Karten) auswählen.</p>
+                    besonders relevant und interessant sind. Über das eigentliche
+                    Thema (wie z.B. Wasser oder Abfall) können Sie
+                    die gewünschten Themenseite auswählen.</p>
                 <p>Wenn Sie über den Klick auf ein Thema direkt von der
                     Startseite zu den Themen gekommen sind, ist das
                     angewählte Thema  bereits voreingestellt und nur
@@ -1735,18 +1734,6 @@
                     gewünschten Themen klicken.</p>
                 <p>Wird &#8222;Alles auswählen&#8220; selektiert werden
                     alle zur Verfügung stehenden Themen angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-topics-3">
-            <header>Kategorien</header>
-            <content>
-                <p>In diesem Bereich können Sie die Kategorie bzw. den Typ der
-                    gewünschten Themenseite auswählen.</p>
-                <p>Sie können Mehrfachselektionen durchführen, indem Sie die
-                    Strg- bzw. Ctrl-Taste gedrückt halten und dann auf die
-                    gewünschten Kategorien klicken.</p>
-                <p>Wird &#8222;Alles auswählen&#8220; selektiert, werden
-                    alle zur Verfügung stehenden Kategorien angezeigt.</p>
             </content>
         </section>
         <section help-key="search-topics-4">

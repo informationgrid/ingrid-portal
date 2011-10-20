@@ -104,10 +104,6 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         List topics = UtilsDB.getEnvTopics(messages);
         context.put("topicList", topics);
 
-        // get functional categories
-        List categories = UtilsDB.getEnvFunctCategories(messages);
-        context.put("categoryList", categories);
-
         // update ActionForm !
         EnvironmentSearchForm af = (EnvironmentSearchForm) Utils.getActionForm(request,
                 EnvironmentSearchForm.SESSION_KEY, EnvironmentSearchForm.class, PortletSession.APPLICATION_SCOPE);
@@ -234,20 +230,6 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
                     if (topics[i] != null) {
                         queryValue = UtilsDB.getTopicFromKey(topics[i]);
                         cq.addField(new FieldQuery(false, false, Settings.QFIELD_TOPIC, queryValue));
-                    }
-                }
-                query.addClause(cq);
-            }
-
-            // FUNCT_CATEGORY
-            String[] functCategories = request.getParameterValues(EnvironmentSearchForm.FIELD_FUNCT_CATEGORY);
-            // don't set anything if "all" is selected
-            if (functCategories != null && Utils.getPosInArray(functCategories, Settings.PARAMV_ALL) == -1) {
-                cq = new ClauseQuery(true, false);
-                for (int i = 0; i < functCategories.length; i++) {
-                    if (functCategories[i] != null) {
-                        queryValue = UtilsDB.getFunctCategoryFromKey(functCategories[i]);
-                        cq.addField(new FieldQuery(false, false, Settings.QFIELD_FUNCT_CATEGORY, queryValue));
                     }
                 }
                 query.addClause(cq);
