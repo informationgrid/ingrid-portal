@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateUtil;
@@ -44,6 +45,11 @@ public class RssNewsPortlet extends GenericVelocityPortlet
         PortletPreferences prefs = request.getPreferences();
 
         int noOfEntriesDisplayed = Integer.parseInt(prefs.getValue("startWithEntry", "3"));
+        
+        /* used number of entries from ingrid-portal-apps.properties if property portal.rss.news.number is define */
+        if(PortalConfig.getInstance().getString(PortalConfig.PORTAL_RSS_NEWS_NUMBER) != null){
+        	noOfEntriesDisplayed = Integer.parseInt((PortalConfig.getInstance().getString(PortalConfig.PORTAL_RSS_NEWS_NUMBER)));
+        }
         
         List rssEntries = null;
         
