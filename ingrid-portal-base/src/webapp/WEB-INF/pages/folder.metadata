@@ -54,6 +54,10 @@
     <options>/main-maps.psml</options>
     <options>/main-chronicle.psml</options>
     <options>/main-features.psml</options>
+<!--
+	Used only for profile baw_wsv
+    <options>/application/main-application</options>
+-->
     <options>/administration</options>
     <options>/mdek</options>
 <!--
@@ -71,7 +75,15 @@
     <options>/main-features.psml</options>
     <options>/main-about.psml</options>
   </menu>
-  
+ 
+<!--
+   Used only for profile baw_wsv
+   <options>/application/main-application</options>
+   <options>/application/main-application-0.psml</options>
+   <options>/application/main-application-1.psml</options>
+   <options>/application/main-application-2.psml</options>
+-->
+
   <security-constraints>
     <security-constraints-ref>public-view</security-constraints-ref>
   </security-constraints>

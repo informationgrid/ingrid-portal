@@ -50,18 +50,4 @@ public class ApplicationPortlet extends GenericVelocityPortlet {
 		
        super.doView(request, response);
     }
-	
-	public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException {
-		IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
-        
-		String action = request.getParameter(Settings.PARAM_ACTION);
-		if(action != null && action.length() > 0){
-			if(!action.startsWith("extern")){
-				actionResponse.sendRedirect(actionResponse.encodeURL("/portal/application/main-application-"+action+".psml"));
-			}else{
-				actionResponse.sendRedirect(actionResponse.encodeURL(messages.getString("application.link."+action)));
-			}
-		}
-	}
 }

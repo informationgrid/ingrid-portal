@@ -408,7 +408,7 @@ div.portlet div.section-header { padding: 5px 0px; background:#666666; }
 /* IE6, 5 bugfix. sets hasLayout property and fixes http://jira.media-style.com/browse/INGRID-1468 */
 * html div.portlet div.section-header {height:1%;}
 
-div.portlet div.section-header h1 { display:inline; color:#FFFFFF; font-size:14px; font-weight:bold; line-height:19px; margin:0; text-transform:uppercase; padding:0px  5px 0px 10px; }
+div.portlet div.section-header h1 { display:inline; color:#FFFFFF; font-size:12px; font-weight:bold; line-height:19px; margin:0; text-transform:uppercase; padding:0px  5px 0px 10px; }
 div.portlet div.section-header span.portlet_info { float:right; color: #FFFFFF; }
 div.portlet div.section-header a { color: #FFFFFF; background-image:url("../images/help.png") no-repeat; }
 /* because of problems in IE rendering underline and background ! */
@@ -753,10 +753,11 @@ div#logo img { height: 124px; width: 195px; }
 div.shortcut_teaser_border { border:0; }
 ul.shortcut { margin:0 !important; list-style-type: none; }
 ul.shortcut li { border-bottom:1px solid #CCCCCC; }
-ul.shortcut li a div { padding: 5px 10px; }
+ul.shortcut li a div { padding: 10px; }
+ul.shortcut li a div:hover { background-image: url(../images/background-mainmenu-hover.png); color:#FFFFFF; }
 ul.shortcut li a div img { position: absolute; }
 ul.shortcut li p { color: #14606D; font-size: 12px; font-weight: bold; line-height: 19px; margin-bottom: 0; padding: 10px 50px; }
-ul.shortcut li p:hover { text-decoration:underline; }
+ul.shortcut li p:hover { }
 
 div.application_menu { width:25%; height:100%; }
 div.application_menu ul { list-style: none outside none; margin: 0 0px; }
@@ -765,11 +766,12 @@ div.application_menu ul li img { width:35px; height:35px; padding: 5px 5px 0px; 
 div.application_menu ul li a { font-weight:bold; }
 div.application_menu ul li p { font-weight:bold; font-size: 12px; margin-bottom: 0px; float:left; padding:10px 0px; line-height:19px; }
 div.application_menu ul li p:hover { }
-div.application_menu ul li div { float:left; width: 100%; border-bottom: 1px dotted #B4B4B4; border-top: 1px dotted #FFFFFF;  }
-div.application_menu ul li div.selected { border-bottom-color: #fff; position: relative; top: -1px;  padding-top:1px; border-top: 1px dotted #FFFFFF;}
+div.application_menu ul li div { float:left; width: 100%; border-bottom: 1px solid #CCCCCC; padding: 5px 0;}
+div.application_menu ul li div:hover { background-image: url(../images/background-mainmenu-hover.png); color:#FFFFFF; }
+div.application_menu ul li div.selected { border-bottom-color: #fff; position: relative; top: -1px;  padding-top:1px; }
 div.application_menu ul li div.selected p:hover  { text-decoration: none; }
-div.application_menu ul li:first-child div { border-top: 1px dotted #B4B4B4; }
-div.application_menu ul li:first-child div.selected { border-top: 1px dotted #FFFFFF;}
+div.application_menu ul li:first-child div { }
+div.application_menu ul li:first-child div.selected { }
 
 div.application_content { width:75%; height:100%; padding: 20px 0 0; }
 div.application_content p { color:#646464; font: normal 16px Verdana, Arial, sans-serif; line-height: 25px; }
@@ -782,4 +784,6 @@ div.application_content div.application_row p { color:#646464; font: normal 14px
 div.application_content div.application_row_content { background:#D9EAFA; padding:20px; float:left; margin-bottom: 25px; }
 div.application_content div.application_row div.application_row_cell_left { width:45%; height:100%; float:left; }
 div.application_content div.application_row div.application_row_cell_right { width:45%; height:100%; float:right; padding-left:10px; }
+div.application_content p.iconLink { font-size: 12px; padding:0px 10px; }
+
 span.application_title { padding:0px 0px 20px 220px; }
