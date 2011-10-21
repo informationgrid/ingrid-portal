@@ -84,7 +84,7 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
   identity area styles
 *********************************************************************/
 
-div#identity { padding:0; margin:0; height: 124px; width:59.5em; background-color:#3E3E3E; overflow:visible; }
+div#identity { padding:0; margin:0; height: 123px; width:59.5em; background-color:#3E3E3E; overflow:visible; }
 div.motiv_start { background-image:url(../images/01_motiv_start.png); background-repeat:no-repeat; }
 
 div.en_motiv_start { background-image:url(../images/en/01_motiv_start.png); background-repeat:no-repeat; }
@@ -741,7 +741,7 @@ div.btn_center { float:left; background-image: url("../images/button.png"); back
 
 .search_query_button { }
 .search_query_textarea { }
-div#logo img { height: 124px; width: 195px; }
+div#logo img { height: 123px; width: 195px; }
 
 
 /* IE HACKS */
@@ -767,16 +767,16 @@ div.application_menu ul li a { font-weight:bold; }
 div.application_menu ul li p { font-weight:bold; font-size: 12px; margin-bottom: 0px; float:left; padding:10px 0px; line-height:19px; }
 div.application_menu ul li p:hover { }
 div.application_menu ul li div { float:left; width: 100%; border-bottom: 1px solid #CCCCCC; padding: 5px 0;}
-div.application_menu ul li div:hover { background-image: url(../images/background-mainmenu-hover.png); color:#FFFFFF; }
+div.application_menu ul li div:hover { background-image: url(../images/background-mainmenu-hover.png); }
 div.application_menu ul li div.selected { border-bottom-color: #fff; position: relative; top: -1px;  padding-top:1px; }
 div.application_menu ul li div.selected p:hover  { text-decoration: none; }
 div.application_menu ul li:first-child div { }
 div.application_menu ul li:first-child div.selected { }
 
-div.application_content { width:75%; height:100%; padding: 20px 0 0; }
-div.application_content p { color:#646464; font: normal 16px Verdana, Arial, sans-serif; line-height: 25px; }
+div.application_content { width:75%; height:100%; }
+div.application_content p { color:#646464; font: normal 12px Verdana, Arial, sans-serif; line-height: 25px; }
 div.application_content p span.icon { padding:0px; margin:7px 0px 0px 0px; }
-div.application_content H2 { color:#1B78B1; font-size:18px; font-weight:normal; }
+div.application_content H2 { color:#14606D; font-size:18px; font-weight:normal; }
 div.application_content form { padding: 0px 25px 0px 0px; }
 div.application_row { padding:0 25px 0 0; }
 div.application_content div.application_row img { border: 1px solid #CDCDCE; }
@@ -785,5 +785,5 @@ div.application_content div.application_row_content { background:#D9EAFA; paddin
 div.application_content div.application_row div.application_row_cell_left { width:45%; height:100%; float:left; }
 div.application_content div.application_row div.application_row_cell_right { width:45%; height:100%; float:right; padding-left:10px; }
 div.application_content p.iconLink { font-size: 12px; padding:0px 10px; }
-
+div.application_content ul { list-style-type: none; }
 span.application_title { padding:0px 0px 20px 220px; }

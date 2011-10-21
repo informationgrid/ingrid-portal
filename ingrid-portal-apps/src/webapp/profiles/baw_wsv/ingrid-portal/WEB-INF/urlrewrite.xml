@@ -336,6 +336,39 @@
         <from>/portal/main-features.psml</from>
         <to>/funktionen</to>
     </outbound-rule>
-    
+
+	<!-- Applications -->
+    <rule>
+        <from>/anwendungen</from>
+        <to type="forward">/portal/application/main-application.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/application/main-application.psml</from>
+        <to>/anwendungen</to>
+    </outbound-rule>
+    <rule>
+        <from>/bwastr</from>
+        <to type="forward">/portal/application/main-application-1.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/application/main-application-1.psml</from>
+        <to>/bwastr</to>
+    </outbound-rule>
+    <rule>
+        <from>/visualist</from>
+        <to type="forward">/portal/application/main-application-0.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/application/main-application-0.psml</from>
+        <to>/visualist</to>
+    </outbound-rule>
+    <rule>
+        <from>/wms2go</from>
+        <to type="forward">/portal/application/main-application-2.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/application/main-application-2.psml</from>
+        <to>/wms2go</to>
+    </outbound-rule>
 </urlrewrite>
 

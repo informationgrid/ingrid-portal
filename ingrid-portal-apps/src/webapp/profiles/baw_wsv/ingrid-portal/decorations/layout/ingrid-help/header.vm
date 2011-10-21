@@ -1,0 +1,73 @@
+
+#* Add the current layouts configuration values to the context *#
+#defineLayoutObjects()
+
+#* Loads our custom macros *#
+#parse($layoutDecoration.getResource("decorator-macros.vm"))
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+  <head>
+  <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "PortalU")</title>
+  <meta http-equiv="Content-type" content="#ContentType()" />
+  <meta http-equiv="Content-style-type" content="text/css" />   
+  <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
+  <meta name="description" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_descr"), "")" />
+  <meta name="version" content="#SiteVersionTag()" />
+  <meta name="author" content="wemove digital solutions" />
+  <meta name="keywords" lang="$renderRequest.Locale.getLanguage()" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_keywords"), "")" />
+  <meta name="copyright" content="wemove digital solutions GmbH" />
+  <meta name="robots" content="index,follow" />
+  <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
+
+  #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
+  #foreach($style in $theme.styleSheets)        
+  	<link rel="stylesheet" type="text/css" media="screen, projection" href="#BaseHref()$style"  />
+  #end
+  
+<script language="JavaScript" type="text/javascript">
+	/*@cc_on @if (@_win32 && @_jscript_version >= 5) if (!window.XMLHttpRequest)
+    function XMLHttpRequest() { return new ActiveXObject('Microsoft.XMLHTTP') }
+    @end @*/
+	
+	var xmlHttp = new XMLHttpRequest;
+
+	if (xmlHttp) {
+        xmlHttp.open('GET', '$jetspeed.getAbsoluteUrl('/detect-js.psml?js=1')', true);
+        xmlHttp.onreadystatechange = function () {
+        };
+        xmlHttp.send(null);
+    }	
+</script>
+
+  </head>
+  <body class="#PageBaseCSSClass()">
+    <noscript>
+	  <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
+    </noscript>
+<!--  BEGIN: layout/html/portalu/decorator.vm -->
+    <div class="#PageBaseCSSClass()">
+
+<!-- IDENTITY AREA -->
+#set($langCode = '')
+#if($preferedLocale.toString() == 'en')
+	#set($langCode = "en_")
+#end
+<div id="popupheader" class="${langCode}motiv_hilfe">
+	<!-- LOGO -->
+  <div id="logo">
+    <img src="#GetPageResource('images/logo.gif')" alt="Logo PortalU" />
+  </div>
+</div>
+<div id="mainnav">
+<h2 class="hide">Hauptmenu</h2>
+<ul>
+</ul>
+<br class="clearer">
+</div>
+<div class="greenSeparator"></div>
+
+<!-- CONTENT BLOCK -->
+  
+## $jetspeed.include($jetspeed.currentFragment)
+
+<!--  END: layout/html/portalu/decorator.vm -->

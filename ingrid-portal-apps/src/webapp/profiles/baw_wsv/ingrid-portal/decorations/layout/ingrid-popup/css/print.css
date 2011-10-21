@@ -88,10 +88,10 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
   identity area styles
 *********************************************************************/
 
-div#identity { padding:0; margin:0; height: 124px; width:59.5em; background-color:#3E3E3E; overflow:visible; }
-div.motiv_suche_detail { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div#identity { padding:0; margin:0; height: 123px; width:59.5em; background-color:#3E3E3E; overflow:visible; }
+div.motiv_suche_detail { background-image:url(../images/01_motiv_start.png); background-repeat:no-repeat; }
 
-div.en_motiv_suche_detail { background-image:url(../images/en/en_01_motiv_suche.gif); background-repeat:no-repeat; }
+div.en_motiv_suche_detail { background-image:url(../images/01_motiv_start.png); background-repeat:no-repeat; }
 
 /********************************************************************
   logo styles 
@@ -123,7 +123,7 @@ div#servicenav ul li a.selected:hover { text-decoration:underline; color:#111111
 *********************************************************************/
 
 /* IE Win needs this to show background-color \*/
-html body div#mainnav { height: 1%; }
+html body div#mainnav { }
 /* End Hack */
 
 div#mainnav { background-color:#3E3E3E; margin:0; padding:0; width:59.5em; height:2.0625em; }  
@@ -482,9 +482,10 @@ div.formbody .snslogo_margin {margin-top: 8px; }
 
 div#footercontainer { margin: 0; background: #cccccc; padding: 0; width:59.5em; padding:65px 0px 100px 0px; }
 #footercontent { font-size: 65%; line-height: 120%; color: #666666; padding:0px 35px 0px 35px; }
-#footerimage { background: url(../images/logo_footer.gif) no-repeat; width:100px; height:40px; float:left; }
-#footerimage2 { background: url(../images/logo_footer.gif) no-repeat; width:100px; height:40px; float:right; }
-#footertext { float:left; margin:0px 0px 0px 90px;}
+#footerimage { background: url(../images/logo_footer_1.png) no-repeat; width:160px; height:50px; float:left; margin: -35px 0 0; }
+#footerimage2 { background: url(../images/logo_footer_2.png) no-repeat; width:71px; height:52px; float:right; }
+#footertext { float:left; margin:0 0 0 35px;}
+#footertext2 { text-transform: uppercase; float:right; }
 
 div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 0px; padding: 0; background: #FFFFFF;}
 div#footermarginal { background: #FFFFFF; width: 19em; padding-right: 14px; text-align:right; font-size: 65%; width:100%;}
@@ -630,3 +631,5 @@ H1.print_title { background-color:#3E3E3E; color:#FFFFFF; font-weight:bold; marg
 br.print {clear:both;}
 .print_view_hidden { visibility:hidden; }
 .print_view_visible { visibility:visible; }
+
+.greenSeparator { background:#BAD405; border-top: 0 none; height: 1.375em; margin-top: 1px; padding: 5px 0 0; position: relative; width: 59.5em; }

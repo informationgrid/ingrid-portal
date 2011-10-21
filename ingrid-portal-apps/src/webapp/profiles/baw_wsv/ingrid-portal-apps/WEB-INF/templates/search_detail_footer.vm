@@ -4,7 +4,7 @@
 	|
 	<a href="$renderResponse.encodeURL('/portal/privacy.psml')" title="$MESSAGES.getString('footer.privacy.policy.tooltip')">$MESSAGES.getString('footer.privacy.policy')</a>
 	|
-	<a href="mailto:webmaster@portalu.de" title="$MESSAGES.getString('footer.webmaster.tooltip')">$MESSAGES.getString('footer.webmaster')</a>
+	<a href="mailto:gdi-wsv.support@dlz-it-bvbs.bund.de" title="$MESSAGES.getString('footer.webmaster.tooltip')">$MESSAGES.getString('footer.webmaster')</a>
 	|
 	<a href="$renderResponse.encodeURL('/portal/service-contact-newsletter.psml')" title="$MESSAGES.getString('footer.newsletter.tooltip')">$MESSAGES.getString('footer.newsletter')</a>
 #end
@@ -28,12 +28,12 @@
     <div id=footertext>
 #set($footerMenu = $site.getMenu("footer-menu"))
 #if(!$footerMenu.empty)
-  #includeFooterNavigation($footerMenu)
+  #includeFooterNavigation()
 #end
 <br />
-    $MESSAGES.getString('ingrid.page.copyright')<br />
+    $MESSAGES.getString('footer.copyright')<br />
 
-    <i>$MESSAGES.getString('ingrid.page.rights')</i><br /><br />
+    <i>$MESSAGES.getString('footer.rights')</i><br /><br />
     </div>
   <div id="footerimage2"></div>
 </div>

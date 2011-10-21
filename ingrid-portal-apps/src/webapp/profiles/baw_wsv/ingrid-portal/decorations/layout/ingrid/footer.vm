@@ -26,9 +26,6 @@
 
     <i>$MESSAGES.getString('ingrid.page.rights')</i><br /><br />
     </div>
-  <div id="footertext2"><p>Mitglied im</p></div>
-  <br/>
-  <br/>
   <div id="footerimage2"></div>
 </div>
   

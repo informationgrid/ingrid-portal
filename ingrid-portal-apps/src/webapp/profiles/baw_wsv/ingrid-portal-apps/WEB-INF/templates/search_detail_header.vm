@@ -134,6 +134,10 @@ self.focus();
     <a href="$renderResponse.encodeURL('/portal/default-page.psml')"><img class="image_alt" src="/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo Geoportal.WSV" /></a>
   </div>
 </div>
+<div id="mainnav">
+<br class="clearer">
+</div>
+<div class="greenSeparator"></div>
 
 <!-- CONTENT BLOCK -->
 <div id="container">
