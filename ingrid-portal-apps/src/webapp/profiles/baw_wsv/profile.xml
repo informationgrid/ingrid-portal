@@ -188,6 +188,10 @@
             <action>copy-dir</action>
             <src>ingrid-portal-apps/</src>
         </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-mdek/</src>
+        </file>
     </files>
     <sql>
     	<!-- PortalU informiert -->
