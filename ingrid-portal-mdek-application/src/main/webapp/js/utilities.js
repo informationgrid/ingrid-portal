@@ -1814,6 +1814,8 @@ UtilGrid.updateTableDataRowAttr = function(grid, row, attr, value) {
 	else 
 		data.getItem(row)[attr] = value;
 	gridManager[grid].updateRow(row);
+	// we need invalidate so table renders new !!!
+	gridManager[grid].invalidate();
 	gridManager[grid].notifyChangedData({});
 }
 

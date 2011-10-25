@@ -6,7 +6,7 @@ public interface CoordinateTransformationService {
 	
 	public enum SpatialReferenceSystem {
 		// All uppercase since the CTService seems to return arbitrary values
-		GEO84, GEO_BESSEL_POTSDAM, GK2, GK3, GK4, GK5, UTM32W, UTM33W, UTM32S, UTM33S, LAMGW;
+		GEO_WGS84, GEO_DHDN, GK2, GK3, GK4, GK5, UTM32e, UTM33e, UTM32s, UTM33s, LAMGe;
 	}
 
 	public CTSResponse getCoordinates (

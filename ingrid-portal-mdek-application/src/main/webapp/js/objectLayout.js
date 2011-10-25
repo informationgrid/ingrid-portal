@@ -914,17 +914,17 @@ ingridObjectLayout.createRaumbezug = function() {
 	var spatialData = function() {
 		var def = new dojo.Deferred();
 		var data = [
-			{value: "GEO84", label: message.get("dialog.research.ext.obj.coordinates.wgs84")},
-			{value: "GEO_BESSEL_POTSDAM", label: message.get("dialog.research.ext.obj.coordinates.geobp")},
+			{value: "GEO_WGS84", label: message.get("dialog.research.ext.obj.coordinates.wgs84")},
+			{value: "GEO_DHDN", label: message.get("dialog.research.ext.obj.coordinates.geobp")},
 			{value: "GK2", label: message.get("dialog.research.ext.obj.coordinates.gk2")},
 			{value: "GK3", label: message.get("dialog.research.ext.obj.coordinates.gk3")},
 			{value: "GK4", label: message.get("dialog.research.ext.obj.coordinates.gk4")},
 			{value: "GK5", label: message.get("dialog.research.ext.obj.coordinates.gk5")},
-			{value: "UTM32W", label: message.get("dialog.research.ext.obj.coordinates.utm32w")},
-			{value: "UTM33W", label: message.get("dialog.research.ext.obj.coordinates.utm33w")},
-			{value: "UTM32S", label: message.get("dialog.research.ext.obj.coordinates.utm32s")},
-			{value: "UTM33S", label: message.get("dialog.research.ext.obj.coordinates.utm33s")},
-			{value: "LAMGW", label: message.get("dialog.research.ext.obj.coordinates.lamgw")}
+			{value: "UTM32e", label: message.get("dialog.research.ext.obj.coordinates.utm32w")},
+			{value: "UTM33e", label: message.get("dialog.research.ext.obj.coordinates.utm33w")},
+			{value: "UTM32s", label: message.get("dialog.research.ext.obj.coordinates.utm32s")},
+			{value: "UTM33s", label: message.get("dialog.research.ext.obj.coordinates.utm33s")},
+			{value: "LAMGe", label: message.get("dialog.research.ext.obj.coordinates.lamgw")}
 		];
 		
 		def.callback(data);
@@ -932,7 +932,7 @@ ingridObjectLayout.createRaumbezug = function() {
 	}
 	var storeProps = {data: {identifier: 'value',label: 'label'}};
 	createSelectBox("spatialRefAdminUnitSelect", null, storeProps, spatialData);
-    dijit.byId("spatialRefAdminUnitSelect").set("value", "GEO84");
+    dijit.byId("spatialRefAdminUnitSelect").set("value", "GEO_WGS84");
     
 	
 	var emptyData = function() {
@@ -973,7 +973,7 @@ ingridObjectLayout.createRaumbezug = function() {
     
 	//new dijit.form.Select({},"spatialRefLocationSelect");
 	createSelectBox("spatialRefLocationSelect", null, storeProps, spatialData);
-    dijit.byId("spatialRefLocationSelect").set("value", "GEO84");
+    dijit.byId("spatialRefLocationSelect").set("value", "GEO_WGS84");
 	
 	createDataGrid("spatialRefLocationCoords", null, spatialRefAdminUnitCoordsStructure, emptyData);
 	
@@ -1301,7 +1301,7 @@ function initCTS() {
 
 		this.updateCoordinates = function() {
 			console.debug("update coordinates: " + this.srcTable);
-			var fromSRS = "GEO84";
+			var fromSRS = "GEO_WGS84";
 			var selectedData = UtilGrid.getSelectedData(this.srcTable);//.selection.getSelected();//this.srcTable.getSelectedData();
 			if (!selectedData[0] || selectedData[0] == null)
 				return;

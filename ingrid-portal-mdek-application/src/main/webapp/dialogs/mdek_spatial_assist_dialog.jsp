@@ -40,7 +40,7 @@
                 
                 var location = dijit.byId("spatialAssistRef").getValue();
                 var fromSRS = dijit.byId("spatialAssistCS").getValue();
-                var toSRS = "GEO84";
+                var toSRS = "GEO_WGS84";
                 var coords = {
                     longitude1: dijit.byId("spatialAssistLon1").getValue(),
                     latitude1: dijit.byId("spatialAssistLat1").getValue(),

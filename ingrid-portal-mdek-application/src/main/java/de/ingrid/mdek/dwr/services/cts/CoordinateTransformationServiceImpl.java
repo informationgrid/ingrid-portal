@@ -84,13 +84,20 @@ public class CoordinateTransformationServiceImpl implements CoordinateTransforma
 			ctsConnection.setReadTimeout(REQUEST_TIMEOUT);
 			ctsConnection.setDoInput(true);
 			ctsConnection.setDoOutput(false);
-	
-			log.debug("CTS Request URL: "+ctsConnection.getURL());
+
+			if (log.isDebugEnabled()) {
+				log.debug("CTS Request URL: " + ctsConnection.getURL());				
+			}
 	
 			// Start the request
 			ctsConnection.connect();
+			CTSResponse ctsResp = (CTSResponse) xstream.fromXML(ctsConnection.getInputStream());
 
-			return (CTSResponse) xstream.fromXML(ctsConnection.getInputStream());
+			if (log.isDebugEnabled()) {
+				log.debug("CTS Response: " + ctsResp);				
+			}
+	
+			return ctsResp;
 
 		} catch (IOException e) {
 			log.error("Error while communicating with the transformation service", e);
