@@ -102,10 +102,8 @@ var notEmptyAddressTables = [["communication", "addressComLabel"]];
 var notEmptyAddressFieldsClass0 = [["organisation", "headerAddressType0UnitLabel"]];
 var notEmptyAddressFieldsClass1 = [["organisation", "headerAddressType1UnitLabel"]];
 
-var notEmptyAddressFieldsClass2 = [["name", "headerAddressType2LastnameLabel"],
-								   ["nameForm", "headerAddressType2StyleLabel"]];
-var notEmptyAddressFieldsClass3 = [["name", "headerAddressType3LastnameLabel"],
-								   ["nameForm", "headerAddressType3StyleLabel"]];
+var notEmptyAddressFieldsClass2 = [["name", "headerAddressType2LastnameLabel"]];
+var notEmptyAddressFieldsClass3 = [["name", "headerAddressType3LastnameLabel"]];
 
 
 function resetRequiredFields() {

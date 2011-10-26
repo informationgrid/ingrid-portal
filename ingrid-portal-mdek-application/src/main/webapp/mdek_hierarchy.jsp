@@ -2142,7 +2142,7 @@
                                     </span>
                             </div>
                             <div class="inputContainer">
-                                    <span id="uiElement4300" class="outer halfWidth required">
+                                    <span id="uiElement4300" class="outer halfWidth optional show">
                                         <div><span id="headerAddressType2StyleLabel" class="label">
                                             <label for="headerAddressType2Style" onclick="javascript:dialog.showContextHelp(arguments[0], 4300)">
                                                 <fmt:message key="ui.adr.general.form" />
@@ -2184,7 +2184,7 @@
                                     </span>
                             </div>
                             <div class="inputContainer">
-                                    <span id="uiElement4015" class="outer halfWidth required">
+                                    <span id="uiElement4015" class="outer halfWidth optional show">
                                         <div><span id="headerAddressType3StyleLabel" class="label">
                                             <label for="headerAddressType3Style" onclick="javascript:dialog.showContextHelp(arguments[0], 4015)">
                                                 <fmt:message key="ui.adr.general.form" />

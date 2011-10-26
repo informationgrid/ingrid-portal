@@ -546,7 +546,7 @@
                 <scriptedProperties><![CDATA[]]></scriptedProperties>
             </legacyControl>
             <legacyControl>
-                <id>uiElement5042</id><!-- Sprache des Datensatzes* -->
+                <id>uiElement5042</id><!-- Sprache der Ressource* -->
                 <isMandatory>true</isMandatory>
                 <isVisible>optional</isVisible>
                 <scriptedProperties><![CDATA[]]></scriptedProperties>
