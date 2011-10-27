@@ -204,7 +204,7 @@ div#subnavBack div.subnav_center { background-image: url(../images/subnav.png); 
   base layout for content area and marginal column  
 *********************************************************************/
 
-div#container { width:56em; margin:28px 0 0 63px; }
+div#container { width:56em; margin:28px 0 0 63px; min-height:500px; }
 
 /*** alt ***/
 div#content { float:left; width:37.1875em; }
@@ -276,8 +276,8 @@ div.section ul.catalog li { border:1px solid red; background: url(../images/list
 
 padding-left:1em; padding-right:0.5em}
 */
-div.section ul li { font-size:14px; }
-div.section ol li { font-size:14px; }
+div.section ul li { font-size:12px; }
+div.section ol li { font-size:12px; }
 
 div.section ul.innermenu {list-style: none; margin: 0 0 0 0.0em;}
 div.section ul.innermenu li { margin: 0 0 0.3em 0;padding-left: 20px;background-image:url("../images/icn_down.gif");background-repeat: no-repeat;background-position: 0 .15em; }
@@ -494,7 +494,7 @@ div.formfooter_border_style_top { border-top: 1px solid #CECECE; }
 input.btn { color: #FFFFFF; background:url(../images/background_btn.png); font-size: 11px; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 14px 5px 14px; height:24px; cursor: pointer; }
 input.btn:hover { }
 input.btn_disable { color: #FFFFFF; background:#CECECE; font-size: 11px; font-weight:bold; margin:10px 0px 11px 0px; padding:2px 14px 5px 14px; height:24px; }
-input.btn_search { color: #FFFFFF; background:url(../images/background_btn.png); font-weight:bold; height:32px; width:95px; }
+input.btn_search { color: #FFFFFF; background:url(../images/background_btn.png); font-weight:bold; height:32px; width:95px; padding:0px 0px 0px 0px; }
 input.btn_search:hover { }
 input.btn_search_disable { background: none; height: 33px; color: #CECECE; font-weight: bold; text-align: left; padding-left: 10px; padding-right: 35px; border: 0 none !important; background-image: url(../images/background-mainmenu-hover.png); }
 
@@ -740,7 +740,7 @@ div.btn_right { float:left; background-image: url(../images/button_right.png); h
 div.btn_center { float:left; background-image: url("../images/button.png"); background-position: right center; }
 
 .search_query_button { }
-.search_query_textarea { }
+.search_query_textarea { margin: 0; }
 div#logo img { height: 123px; width: 195px; }
 
 
