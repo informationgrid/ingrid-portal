@@ -1,11 +1,6 @@
 <div class="portlet-section-body">
 $cmsItemValue
 </div>
-#if($showNewsletter)
-<div class="portlet-section-body">
-    <p id="getNewsletter"><strong>$MESSAGES.getString('teaser.newsletter.visit.text.part1') <a href="$renderResponse.encodeURL('http://www.kst.portalu.de/newsletter/PortalU-Newsletter_2010_dez.html')" target="_new" title="$MESSAGES.getString('teaser.newsletter.visit.text.part2.tooltip')">$MESSAGES.getString('teaser.newsletter.visit.text.part2')</a>!</strong></p>
-</div>
-#end
     
 #if($version)
 <div>

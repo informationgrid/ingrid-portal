@@ -48,6 +48,10 @@
             <hidden>false</hidden>
         </page>
         <page>
+            <name>administration/admin-wms.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
             <name>application/main-application.psml</name>
             <hidden>true</hidden>
         </page>
