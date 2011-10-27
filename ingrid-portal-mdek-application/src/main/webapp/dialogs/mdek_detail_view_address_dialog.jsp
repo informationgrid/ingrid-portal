@@ -7,7 +7,8 @@
 <script type="text/javascript">
 
 dojo.addOnLoad(function() {
-	dojo.connect(dijit.byId("pageDialog"), "onLoad", function(){
+// NOTICE: connect again onLoad does NOT work in IE7 ! Why again ?
+//	dojo.connect(dijit.byId("pageDialog"), "onLoad", function(){
 		if (dijit.byId("pageDialog").customParams.useDirtyData == true) {
 			// get dirty data from proxy
 			renderNodeData(udkDataProxy._getData());
@@ -30,7 +31,7 @@ dojo.addOnLoad(function() {
 				}
 			);
 		}
-	});
+//	});
 });
 
 function renderNodeData(nodeData) {
