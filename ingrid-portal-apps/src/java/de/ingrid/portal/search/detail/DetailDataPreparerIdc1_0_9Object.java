@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
@@ -1137,7 +1138,9 @@ public class DetailDataPreparerIdc1_0_9Object implements DetailDataPreparer {
 							// do not display "show in map" link if the map has access constraints
 		    	        	if (!hasAccessConstraints) {
 	  							element.put("title", messages.getString("common.result.showGetCapabilityUrl"));
-	  							element.put("link", elementLink);
+	  							if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)){
+	  								element.put("link", elementLink);
+	  							}
 	  						}else{
 	  							element.put("title", messages.getString("common.result.showGetCapabilityUrlRestricted"));
 	  						}

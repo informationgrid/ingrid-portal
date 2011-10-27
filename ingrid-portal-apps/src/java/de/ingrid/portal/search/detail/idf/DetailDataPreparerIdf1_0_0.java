@@ -88,36 +88,6 @@ public class DetailDataPreparerIdf1_0_0 {
 		}
 	}
 	
-	public void generateWmsLinks(ArrayList data, Node node){
-		HashMap element = new HashMap();
-		String title = getValueForNode(node.getFirstChild());
-		if (title == null || title.length() < 1) {
-			title = messages.getString("common.result.showCoord.unknown");
-		}
-		element.put("title", title.concat(" (" + messages.getString("common.result.showMap") + ")"));
-		element.put("type", "linkLine");
-		element.put("hasLinkIcon", new Boolean(false));
-		element.put("isExtern", new Boolean(false));
-		element.put("href", "main-maps.psml?wms_url=" + UtilsVelocity.urlencode(getValueForNode(node.getAttributes().getNamedItem("href"))));
-		
-		data.add(element);
-	}	
-	
-	public void generateExternLinks(ArrayList data, Node node) {
-		HashMap element = new HashMap();
-		String title = getValueForNode(node.getFirstChild());
-		if (title == null || title.length() < 1) {
-			title = messages.getString("common.result.showCoord.unknown");
-		}
-		element.put("title", title);
-		element.put("type", "linkLine");
-		element.put("hasLinkIcon", new Boolean(false));
-		element.put("isExtern", new Boolean(false));
-		element.put("href", UtilsVelocity.urlencode(getValueForNode(node.getAttributes().getNamedItem("href"))));
-		
-		data.add(element);
-	}
-	
 	public void initialArrayLists() {
 		if(content==null){
 			content = new HashMap();

@@ -12,10 +12,11 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
@@ -855,12 +856,14 @@ public class DetailDataPreparerIdc1_0_2Object implements DetailDataPreparer {
 	        	elements.add(element);
     	    	for (int i=0; i<wmsServiceLinks.size(); i++) {
     	        	if (UtilsVelocity.hasContent(wmsServiceLinks.get(i)).booleanValue()) {
-	    	    		HashMap link = new HashMap();
-	    	        	link.put("hasLinkIcon", new Boolean(true));
-	    	        	link.put("isExtern", new Boolean(false));
-	    	        	link.put("title", messages.getString("common.result.showMap"));
-	    	        	link.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(wmsServiceLinks.get(i).trim()));
-	    	        	linkList.add(link);
+    	        		if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)){
+      						HashMap link = new HashMap();
+		    	        	link.put("hasLinkIcon", new Boolean(true));
+		    	        	link.put("isExtern", new Boolean(false));
+		    	        	link.put("title", messages.getString("common.result.showMap"));
+		    	        	link.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(wmsServiceLinks.get(i).trim()));
+		    	        	linkList.add(link);
+    	        		}
     	        	}
     	    	}
     		}

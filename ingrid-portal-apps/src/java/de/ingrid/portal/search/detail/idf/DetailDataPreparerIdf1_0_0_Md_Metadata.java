@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.UtilsString;
@@ -1621,7 +1622,9 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 
 		    					if (!hasAccessConstraints) {
 		    						elementCapabilities.put("title", messages.getString("common.result.showGetCapabilityUrl"));
-			    					elementCapabilities.put("link", elementMap);
+		    						if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)){
+		    	  						elementCapabilities.put("link", elementMap);
+		    						}
 					        	} else {
 					        		elementCapabilities.put("title", messages.getString("common.result.showGetCapabilityUrlRestricted"));
 					        	}

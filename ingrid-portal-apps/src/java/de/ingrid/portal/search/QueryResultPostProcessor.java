@@ -281,29 +281,34 @@ public class QueryResultPostProcessor {
                       	tmpString = "";
                       }
                   }
-                  if (tmpString.length() > 0) {
-                      try {
-                          if (tmpString.toLowerCase().indexOf("request=getcapabilities") == -1) {
-                              if (tmpString.indexOf("?") == -1) {
-                                  tmpString = tmpString + "?";
-                              }
-                              if (!tmpString.endsWith("?")) {
-                                  tmpString = tmpString + "&";
-                              }
-                              tmpString = tmpString + "REQUEST=GetCapabilities&SERVICE=WMS";
-                          }
-                          hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString.trim(), "UTF-8"));
-                      } catch (UnsupportedEncodingException e) {
-                          log.error("Error url encoding wms URL!", e);
-                      }
+                  
+                  if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)){
+	                  if (tmpString.length() > 0) {
+	                      try {
+	                          if (tmpString.toLowerCase().indexOf("request=getcapabilities") == -1) {
+	                              if (tmpString.indexOf("?") == -1) {
+	                                  tmpString = tmpString + "?";
+	                              }
+	                              if (!tmpString.endsWith("?")) {
+	                                  tmpString = tmpString + "&";
+	                              }
+	                              tmpString = tmpString + "REQUEST=GetCapabilities&SERVICE=WMS";
+	                          }
+	                          hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString.trim(), "UTF-8"));
+	                      } catch (UnsupportedEncodingException e) {
+	                          log.error("Error url encoding wms URL!", e);
+	                      }
+	                  }
                   }
                 }
             }
             
             PlugDescription plugDescr = (PlugDescription) hit.get(Settings.RESULT_KEY_PLUG_DESCRIPTION);
             
-            if(UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_WMS_TMP_COORD_X).length() > 0){
-            	hit.put(Settings.RESULT_KEY_WMS_COORD, "action=doTmpService&" + Settings.RESULT_KEY_PLUG_ID + "=" + hit.getPlugId() + "&" + Settings.RESULT_KEY_DOC_ID + "=" + hit.getDocumentId() + "&title=" + detail.getTitle()+ "&coordType=" + plugDescr.get("coordType"));
+            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)){
+	              if(UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_WMS_TMP_COORD_X).length() > 0){
+	            	  hit.put(Settings.RESULT_KEY_WMS_COORD, "action=doTmpService&" + Settings.RESULT_KEY_PLUG_ID + "=" + hit.getPlugId() + "&" + Settings.RESULT_KEY_DOC_ID + "=" + hit.getDocumentId() + "&title=" + detail.getTitle()+ "&coordType=" + plugDescr.get("coordType"));
+	              }
             }
             // determine type of hit dependent from plug description !!!
             boolean isObject = true;

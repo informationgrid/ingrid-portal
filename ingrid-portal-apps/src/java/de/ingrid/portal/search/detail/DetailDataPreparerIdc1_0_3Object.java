@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
@@ -1064,25 +1065,23 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     	    	}
     		}
     		if (wmsServiceLinks.size() > 0) {
-    	    	ArrayList linkList = new ArrayList();
-    			HashMap element = new HashMap();
-	        	element.put("type", "linkList");
-	        	element.put("linkList", linkList);
-	        	elements.add(element);
     	    	for (int i=0; i<wmsServiceLinks.size(); i++) {
     	        	if (UtilsVelocity.hasContent(wmsServiceLinks.get(i)).booleanValue()) {
-	    	    		HashMap link = new HashMap();
-	    	        	link.put("hasLinkIcon", new Boolean(true));
-	    	        	link.put("isExtern", new Boolean(false));
-	    	        	link.put("title", messages.getString("common.result.showMap"));
-	    	        	link.put("href", "main-maps.psml?wms_url=" + UtilsVelocity.urlencode(wmsServiceLinks.get(i).trim()));
-	    	        	linkList.add(link);
-	    	    		link = new HashMap();
-	    	        	link.put("hasLinkIcon", new Boolean(true));
-	    	        	link.put("isExtern", new Boolean(true));
-	    	        	link.put("title", messages.getString("common.result.showGetCapabilityUrl"));
-	    	        	link.put("href", wmsServiceLinks.get(i).trim());
-	    	        	linkList.add(link);
+    	        		HashMap elementLink = new HashMap();
+						elementLink.put("type", "linkLine");
+						elementLink.put("hasLinkIcon", new Boolean(true));
+						elementLink.put("isExtern", new Boolean(false));
+						elementLink.put("title", messages.getString("common.result.showMap"));
+						elementLink.put("href", "main-maps.psml?wms_url=" + UtilsVelocity.urlencode(wmsServiceLinks.get(i).trim()));
+						
+						HashMap element = new HashMap();
+						element.put("type", "textLabelLeft");
+						element.put("title", messages.getString("common.result.showGetCapabilityUrl"));
+						element.put("body", wmsServiceLinks.get(i).trim().split("\\?")[0].toString());
+						if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)){
+  							element.put("link", elementLink);
+						}
+						elements.add(element);
     	        	}
     	    	}
     		}
