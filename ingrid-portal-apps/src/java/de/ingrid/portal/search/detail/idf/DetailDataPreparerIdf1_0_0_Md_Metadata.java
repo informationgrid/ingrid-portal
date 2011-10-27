@@ -8,9 +8,9 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.velocity.context.Context;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -1568,8 +1568,11 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			ArrayList linkList = new ArrayList();
 	    	HashMap element = new HashMap();
         	element.put("type", "linkList");
-        	element.put("linkList", linkList);
         	elements.add(element);
+        	
+        	HashMap elementMap = new HashMap();
+			HashMap elementCapabilities = new HashMap();
+			
 	    	for (int i=0; i<nodeList.getLength();i++){
 				if(XPathUtils.nodeExists(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL")){
 					Node node = XPathUtils.getNode(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL");
@@ -1594,34 +1597,39 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 							}
 						}
 						
-						HashMap link;
-			    		
-			    		if (!hasAccessConstraints) {
-			    			if(XPathUtils.nodeExists(nodeList.item(i), "./../srv:operationName")){
-			    				String operationName = XPathUtils.getString(nodeList.item(i), "./../srv:operationName").trim();
-			    				if(operationName.equals("GetMap")){
-			    					link = new HashMap();			
-									link.put("hasLinkIcon", new Boolean(true));
-					  	        	link.put("isExtern", new Boolean(false));
-					  	        	link.put("title", messages.getString("common.result.showMap"));
-					  	        	link.put("href", "main-maps.psml?wms_url=" + UtilsVelocity.urlencode(value));
-					  	        	linkList.add(link);
-			    				}else if(operationName.equals("GetCapabilities")){
-			    					link = new HashMap();
-						        	link.put("hasLinkIcon", new Boolean(true));
-						        	link.put("isExtern", new Boolean(true));
-						        	if (!hasAccessConstraints) {
-						        	  link.put("title", messages.getString("common.result.showGetCapabilityUrl"));
-						        	} else {
-						        		link.put("title", messages.getString("common.result.showGetCapabilityUrlRestricted"));
-						        	}
-						        	link.put("href", value);
-						        	linkList.add(link);
-			    				}
-			    			}
-				    		
+						if(XPathUtils.nodeExists(nodeList.item(i), "./../srv:operationName")){
+		    				String operationName = XPathUtils.getString(nodeList.item(i), "./../srv:operationName").trim();
+		    				
+		    				if(elementCapabilities.size() > 0 && elementMap.size() > 0 ){
+		    					elementMap = new HashMap();
+		    					elementCapabilities = new HashMap();
+		    				}
+		    				
+		    				if(operationName.equals("GetMap")){
+		    					// do not display "show in map" link if the map has access constraints
+		    					if (!hasAccessConstraints) {
+		    						elementMap.put("type", "linkLine");
+		    						elementMap.put("hasLinkIcon", new Boolean(true));
+		    						elementMap.put("isExtern", new Boolean(false));
+		    						elementMap.put("title", messages.getString("common.result.showMap"));
+		    						elementMap.put("href", "main-maps.psml?wms_url=" + UtilsVelocity.urlencode(value));
+		    						
+		    					}
+		    				}else if(operationName.equals("GetCapabilities")){
+		    					elementCapabilities.put("type", "textLabelLeft");
+		    					elementCapabilities.put("body", value.split("\\?")[0].toString());
+
+		    					if (!hasAccessConstraints) {
+		    						elementCapabilities.put("title", messages.getString("common.result.showGetCapabilityUrl"));
+			    					elementCapabilities.put("link", elementMap);
+					        	} else {
+					        		elementCapabilities.put("title", messages.getString("common.result.showGetCapabilityUrlRestricted"));
+					        	}
+		    				}
+		    				if(elementCapabilities.size() > 0 && elementMap.size() > 0 ){
+		    					elements.add(elementCapabilities);
+		    				}
 			    		}
-		  	        	
 					}
 				}
 	    	}

@@ -607,6 +607,15 @@
         		</td>
             #end
     		</tr>
+    		#if($tool.hasContent($entry.link))
+    		<tr>
+        		<td class="text_label_left_title">
+    			</td>
+            	<td class="text_label_left_body">
+    				#renderLinkLine($entry.link)
+        		</td>
+            </tr>
+    		#end
         </table>
 	</div>
 #end
