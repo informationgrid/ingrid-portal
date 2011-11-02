@@ -179,7 +179,6 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 		List<NodeList> datesNodesList = new ArrayList<NodeList>();
 		datesNodesList.add(docTarget.getElementsByTagName(XMLKeys.DATE_OF_LAST_MODIFICATION));
 		datesNodesList.add(docTarget.getElementsByTagName(XMLKeys.DATE_OF_CREATION));
-		datesNodesList.add(docTarget.getElementsByTagName(XMLKeys.CONFORMITY_PUBLICATION_DATE));
 		datesNodesList.add(docTarget.getElementsByTagName(XMLKeys.DATASET_REFERENCE_DATE));
 		
 		for (NodeList nodeList : datesNodesList) {

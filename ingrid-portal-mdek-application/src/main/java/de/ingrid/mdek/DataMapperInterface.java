@@ -33,9 +33,9 @@ public interface DataMapperInterface {
 
 	// Language codes
 	//   Codes are stored in the database
-	public final static String LANGUAGE_CODE_GERMAN = "de";
-	public final static String LANGUAGE_CODE_ENGLISH = "en";
+//	public final static String LANGUAGE_CODE_GERMAN = "de";
+//	public final static String LANGUAGE_CODE_ENGLISH = "en";
 	//   Identifiers are used by the frontend (sysList lookup, etc.)
-	public final static String LANGUAGE_ID_GERMAN = "121";
-	public final static String LANGUAGE_ID_ENGLISH = "94";
+//	public final static String LANGUAGE_ID_GERMAN = "121";
+//	public final static String LANGUAGE_ID_ENGLISH = "94";
 }

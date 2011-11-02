@@ -982,8 +982,7 @@ public class MdekMapper implements DataMapperInterface {
             useConstrList = new ArrayList<String>();
         }
         if (useConstrList.size() == 0) {
-            // TODO: Localization !
-            useConstrList.add("keine");
+            useConstrList.add(sysListMapper.getInitialValueFromListId(MdekSysList.OBJ_USE.getDbValue()));
             obj.setAvailabilityUseConstraints(useConstrList);
         }
     }
@@ -1049,14 +1048,20 @@ public class MdekMapper implements DataMapperInterface {
 
         for (CommunicationBean comm : commMap) {
             IngridDocument mappedEntry = new IngridDocument();
-            mappedEntry.put(MdekKeys.COMMUNICATION_DESCRIPTION, comm.getDescription());
+            if (comm.getDescription() != null && !comm.getDescription().isEmpty()) {
+                mappedEntry.put(MdekKeys.COMMUNICATION_DESCRIPTION, comm.getDescription());
+            }
             KeyValuePair kvp = mapFromKeyValue(MdekKeys.COMMUNICATION_MEDIUM_KEY, comm.getMedium());
             if (kvp.getValue() != null || kvp.getKey() != -1) {
                 mappedEntry.put(MdekKeys.COMMUNICATION_MEDIUM, kvp.getValue());
                 mappedEntry.put(MdekKeys.COMMUNICATION_MEDIUM_KEY, kvp.getKey());
             }
-            mappedEntry.put(MdekKeys.COMMUNICATION_VALUE, comm.getValue());
-            resultList.add(mappedEntry);
+            if (comm.getValue() != null && !comm.getValue().isEmpty()) {
+                mappedEntry.put(MdekKeys.COMMUNICATION_VALUE, comm.getValue());
+            }
+            if (!mappedEntry.isEmpty()) {
+                resultList.add(mappedEntry);
+            }
         }
 
         return resultList;  
@@ -1194,10 +1199,17 @@ public class MdekMapper implements DataMapperInterface {
 
         for (ConformityBean con : conList) {
             IngridDocument result = new IngridDocument();
-            result.put(MdekKeys.CONFORMITY_DEGREE_KEY, con.getLevel());
-            result.put(MdekKeys.CONFORMITY_SPECIFICATION, con.getSpecification());
-            result.put(MdekKeys.CONFORMITY_PUBLICATION_DATE, convertDateToTimestamp(con.getDate()));
-            resultList.add(result);
+            if (con.getLevel() != null) {
+                result.put(MdekKeys.CONFORMITY_DEGREE_KEY, con.getLevel());
+            }
+            KeyValuePair kvp = mapFromKeyValue(MdekKeys.CONFORMITY_SPECIFICATION_KEY, con.getSpecification());
+            if (kvp.getValue() != null || kvp.getKey() != -1) {
+            	result.put(MdekKeys.CONFORMITY_SPECIFICATION_KEY, kvp.getKey());
+            	result.put(MdekKeys.CONFORMITY_SPECIFICATION_VALUE, kvp.getValue());
+            }
+            if (!result.isEmpty()) {
+                resultList.add(result);
+            }
         }
         return resultList;
     }
@@ -1208,11 +1220,13 @@ public class MdekMapper implements DataMapperInterface {
             return resultList;
 
         for (String ref : refList) {
-            IngridDocument result = new IngridDocument();
             KeyValuePair kvp = mapFromKeyValue(MdekKeys.EXPORT_CRITERION_KEY, ref);
-            result.put(MdekKeys.EXPORT_CRITERION_KEY, kvp.getKey());
-            result.put(MdekKeys.EXPORT_CRITERION_VALUE, kvp.getValue());
-            resultList.add(result);
+            if (kvp.getValue() != null || kvp.getKey() != -1) {
+                IngridDocument result = new IngridDocument();
+                result.put(MdekKeys.EXPORT_CRITERION_KEY, kvp.getKey());
+                result.put(MdekKeys.EXPORT_CRITERION_VALUE, kvp.getValue());
+                resultList.add(result);
+            }
         }
         return resultList;
     }
@@ -1223,11 +1237,13 @@ public class MdekMapper implements DataMapperInterface {
             return resultList;
 
         for (String ref : refList) {
-            IngridDocument result = new IngridDocument();
             KeyValuePair kvp = mapFromKeyValue(MdekKeys.LEGISLATION_KEY, ref);
-            result.put(MdekKeys.LEGISLATION_KEY, kvp.getKey());
-            result.put(MdekKeys.LEGISLATION_VALUE, kvp.getValue());
-            resultList.add(result);
+            if (kvp.getValue() != null || kvp.getKey() != -1) {
+                IngridDocument result = new IngridDocument();
+                result.put(MdekKeys.LEGISLATION_KEY, kvp.getKey());
+                result.put(MdekKeys.LEGISLATION_VALUE, kvp.getValue());
+                resultList.add(result);
+            }
         }
         return resultList;
     }
@@ -1237,11 +1253,13 @@ public class MdekMapper implements DataMapperInterface {
         
         if (acList != null) {
             for (String ac : acList) {
-                IngridDocument result = new IngridDocument();
                 KeyValuePair kvp = mapFromKeyValue(MdekKeys.ACCESS_RESTRICTION_KEY, ac);
-                result.put(MdekKeys.ACCESS_RESTRICTION_KEY, kvp.getKey());
-                result.put(MdekKeys.ACCESS_RESTRICTION_VALUE, kvp.getValue());
-                resultList.add(result);
+                if (kvp.getValue() != null || kvp.getKey() != -1) {
+                    IngridDocument result = new IngridDocument();
+                    result.put(MdekKeys.ACCESS_RESTRICTION_KEY, kvp.getKey());
+                    result.put(MdekKeys.ACCESS_RESTRICTION_VALUE, kvp.getValue());
+                    resultList.add(result);
+                }
             }           
         }
 
@@ -1252,9 +1270,13 @@ public class MdekMapper implements DataMapperInterface {
         List<IngridDocument> resultList = new ArrayList<IngridDocument>();
         if (ucList != null) {
             for (String uc : ucList) {
-                IngridDocument result = new IngridDocument();
-                result.put(MdekKeys.USE_TERMS_OF_USE, uc);
-                resultList.add(result);
+                KeyValuePair kvp = mapFromKeyValue(MdekKeys.USE_TERMS_OF_USE_KEY, uc);
+                if (kvp.getValue() != null || kvp.getKey() != -1) {
+                    IngridDocument result = new IngridDocument();
+                    result.put(MdekKeys.USE_TERMS_OF_USE_KEY, kvp.getKey());
+                    result.put(MdekKeys.USE_TERMS_OF_USE_VALUE, kvp.getValue());
+                    resultList.add(result);
+                }
             }           
         }
 
@@ -1474,8 +1496,10 @@ public class MdekMapper implements DataMapperInterface {
                 result.put(MdekKeys.SERVICE_OPERATION_NAME_KEY, new Integer(-1));
             } else {
                 KeyValuePair kvp = mapFromKeyValue(MdekKeys.SERVICE_OPERATION_NAME_KEY+"."+serviceType, op.getName());
-//              result.put(MdekKeys.SERVICE_OPERATION_NAME, kvp.getValue());
-                result.put(MdekKeys.SERVICE_OPERATION_NAME_KEY, kvp.getKey());
+                if (kvp.getValue() != null || kvp.getKey() != -1) {
+//                  result.put(MdekKeys.SERVICE_OPERATION_NAME, kvp.getValue());
+                    result.put(MdekKeys.SERVICE_OPERATION_NAME_KEY, kvp.getKey());
+                }
             }
             result.put(MdekKeys.SERVICE_OPERATION_DESCRIPTION, op.getDescription());
             result.put(MdekKeys.PLATFORM_LIST, op.getPlatform());
@@ -1541,17 +1565,18 @@ public class MdekMapper implements DataMapperInterface {
 
     
     private Object mapFromSpatialSystemTable(List<String> refList) {
-        // TODO Auto-generated method stub
         List<IngridDocument> resultList = new ArrayList<IngridDocument>();
         if (refList == null)
             return resultList;
 
         for (String ref : refList) {
-            IngridDocument result = new IngridDocument();
             KeyValuePair kvp = mapFromKeyValue(MdekKeys.REFERENCESYSTEM_ID, ref);
-            result.put(MdekKeys.REFERENCESYSTEM_ID, kvp.getKey());
-            result.put(MdekKeys.COORDINATE_SYSTEM, kvp.getValue());
-            resultList.add(result);
+            if (kvp.getValue() != null || kvp.getKey() != -1) {
+                IngridDocument result = new IngridDocument();
+                result.put(MdekKeys.REFERENCESYSTEM_ID, kvp.getKey());
+                result.put(MdekKeys.COORDINATE_SYSTEM, kvp.getValue());
+                resultList.add(result);
+            }
         }
         return resultList;
     }
@@ -1760,8 +1785,8 @@ public class MdekMapper implements DataMapperInterface {
         for (IngridDocument con : conList) {
             ConformityBean c = new ConformityBean();
             c.setLevel((Integer) con.get(MdekKeys.CONFORMITY_DEGREE_KEY));
-            c.setSpecification((String) con.get(MdekKeys.CONFORMITY_SPECIFICATION));
-            c.setDate(convertTimestampToDate((String) con.get(MdekKeys.CONFORMITY_PUBLICATION_DATE)));
+            KeyValuePair kvp = mapToKeyValuePair(con, MdekKeys.CONFORMITY_SPECIFICATION_KEY, MdekKeys.CONFORMITY_SPECIFICATION_VALUE);
+            c.setSpecification(kvp.getValue());
             resultList.add(c);
         }
         return resultList;
@@ -1808,7 +1833,8 @@ public class MdekMapper implements DataMapperInterface {
 
         if (docList != null) {
             for (IngridDocument doc : docList) {
-                resultList.add((String) doc.get(MdekKeys.USE_TERMS_OF_USE));
+                KeyValuePair kvp = mapToKeyValuePair(doc, MdekKeys.USE_TERMS_OF_USE_KEY, MdekKeys.USE_TERMS_OF_USE_VALUE);
+                resultList.add(kvp.getValue());
             }           
         }
 

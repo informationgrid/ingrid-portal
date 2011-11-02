@@ -265,8 +265,7 @@ Geod&amp;#228;tische Basisdaten</gco:CharacterString>
           <gmd:resourceConstraints>
             <gmd:MD_LegalConstraints>
               <gmd:useLimitation>
-                <gco:CharacterString>Bestellinformation:
-Punktkennzeichen</gco:CharacterString>
+                <gco:CharacterString>No conditions apply</gco:CharacterString>
               </gmd:useLimitation>
               <gmd:accessConstraints>
                 <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="intellectualPropertyRights">intellectualPropertyRights</gmd:MD_RestrictionCode>
@@ -494,7 +493,7 @@ Vierte Zeile</gco:CharacterString>
                   <gmd:specification>
                     <gmd:CI_Citation>
                       <gmd:title>
-                        <gco:CharacterString>INSPIRE-Richtlinie</gco:CharacterString>
+                        <gco:CharacterString>INSPIRE Richtlinie</gco:CharacterString>
                       </gmd:title>
                       <gmd:date>
                         <gmd:CI_Date>

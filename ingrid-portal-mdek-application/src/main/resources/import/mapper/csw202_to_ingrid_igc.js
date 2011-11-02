@@ -513,9 +513,19 @@ var mappingDescription = {"mappings":[
                 "mappings": [
                     {
                         "srcXpath":".",
-                        "defaultValue":"no conditions apply",
+                        "defaultValue":"No conditions apply",
                         "targetNode":"terms-of-use"
-                    }
+                    },
+	  				{
+			  			"srcXpath":".",
+			  			"targetNode":"terms-of-use",
+			  			"targetAttribute":"id",
+			  			"defaultValue":"-1",
+			  			"transform":{
+							"funct":transformToIgcDomainId,
+							"params":[6020, 123]
+						}
+			  		}
                 ]
             }
   		},
@@ -602,10 +612,13 @@ var mappingDescription = {"mappings":[
 			  			"targetNode":"conformity-specification"
 			  		},
 	  				{
-			  			"srcXpath":"gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date[not(../gco:DateTime)] | gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:DateTime",
-			  			"targetNode":"conformity-publication-date",
+			  			"srcXpath":"gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString",
+			  			"targetNode":"conformity-specification",
+			  			"targetAttribute":"id",
+			  			"defaultValue":"-1",
 			  			"transform":{
-							"funct":transformDateIso8601ToIndex
+							"funct":transformToIgcDomainId,
+							"params":[6005, 123]
 						}
 			  		},
 	  				{

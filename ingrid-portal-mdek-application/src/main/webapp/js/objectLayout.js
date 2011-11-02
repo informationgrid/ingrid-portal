@@ -1091,11 +1091,13 @@ ingridObjectLayout.createExtraInfo = function() {
             listId: 6000,
 	        formatter: dojo.partial(SyslistCellFormatter, 6000)
 		},
-		{field: 'specification',name: message.get("ui.obj.additionalInfo.conformityTable.header.specification"),width: '414px', editable: true},
-		{field: 'date',name: message.get("ui.obj.additionalInfo.conformityTable.header.date"),width: 144-scrollBarWidth+'px',
-			type: DateCellEditor,
+		{field: 'specification',name: message.get("ui.obj.additionalInfo.conformityTable.header.specification"),width: 558-scrollBarWidth+'px',
+			type: ComboboxEditor,
+	        options: [], // will be filled later, when syslists are loaded
+	        values: [],
 	        editable: true,
-            formatter: DateCellFormatter
+            listId: 6005,
+	        formatter: dojo.partial(SyslistCellFormatter, 6005)
 		}
 	];
     createDataGrid("extraInfoConformityTable", null, extraInfoConformityTableStructure, null);
@@ -1139,7 +1141,14 @@ ingridObjectLayout.createAvailability = function() {
     createDataGrid("availabilityAccessConstraints", null, availabilityAccessConstraintsStructure, null);
     
     var availabilityUseConstraintsStructure = [
-        {field: 'title',name: 'title',width: 348-scrollBarWidth+'px',editable: true}
+		{field: 'title',name: 'title',width: 348-scrollBarWidth+'px',
+			type: ComboboxEditor,
+	        options: [], // will be filled later, when syslists are loaded
+	        values: [],
+	        editable: true,
+            listId: 6020,
+            formatter: dojo.partial(SyslistCellFormatter, 6020)
+		}
     ];
     createDataGrid("availabilityUseConstraints", null, availabilityUseConstraintsStructure, null);
 	

@@ -505,9 +505,8 @@ function extraInfoConformityPublishable(notPublishableIDs) {
         // Check if the conformity table contains valid input (both level and specification must contain data)
         if (dojo.some(UtilGrid.getTableData("extraInfoConformityTable"), function(conf) {
                 return (typeof(conf.level) == "undefined" || conf.level == null || dojo.trim(conf.level+"").length == 0
-                     || typeof(conf.specification) == "undefined" || conf.specification == null || dojo.trim(conf.specification+"").length == 0
-                     || typeof(conf.date) == "undefined" || conf.date == null || dojo.trim(conf.date+"").length == 0); })) {
-            console.debug("All entries in the conformity table must have a valid level, specification and date.");
+                     || typeof(conf.specification) == "undefined" || conf.specification == null || dojo.trim(conf.specification+"").length == 0); })) {
+            console.debug("All entries in the conformity table must have a valid level and specification.");
             notPublishableIDs.push("extraInfoConformityTable");
         }
     }

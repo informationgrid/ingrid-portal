@@ -335,8 +335,13 @@ var mappingDescription = {"mappings":[
   			"prefix":"Dauer des Bestellvorganges: "
   		},
   		{	
-  			"defaultValue":"INSPIRE-Richtlinie",
+  			"defaultValue":"INSPIRE Richtline",
   			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-specification"
+  		},
+  		{	
+  			"defaultValue":"13",
+  			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-specification",
+  			"targetAttribute":"id"
   		},
   		{	
   			"defaultValue":"nicht evaluiert",
@@ -346,10 +351,6 @@ var mappingDescription = {"mappings":[
   			"defaultValue":"3",
   			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-degree",
   			"targetAttribute":"id"
-  		},
-  		{	
-  			"defaultValue":"20081001000000000",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-publication-date"
   		},
 
 

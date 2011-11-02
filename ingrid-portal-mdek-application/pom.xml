@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-base-pom</artifactId>
-    <version>3.1.0</version>
+    <version>3.2.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -113,46 +113,12 @@
   </build>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
+<!--
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>de.ingrid.mdek</groupId>
-        <artifactId>ingrid-mdek-services</artifactId>
-        <version>3.2.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-        <groupId>de.ingrid.mdek</groupId>
-        <artifactId>ingrid-import-export</artifactId>
-        <version>3.2.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-        <groupId>net.sf.ehcache</groupId>
-        <artifactId>ehcache</artifactId>
-        <version>1.4.1</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.hibernate</groupId>
-        <artifactId>hibernate-annotations</artifactId>
-        <version>3.2.1.ga</version>
-        <exclusions>
-          <exclusion>
-            <groupId>asm</groupId>
-            <artifactId>asm-attrs</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>asm</groupId>
-            <artifactId>asm</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
     </dependencies>
   </dependencyManagement>
-
+-->
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
     <dependency>
@@ -162,6 +128,11 @@
       <!-- NO !!! LOG4J has to be in webapp, otherwise log4j.properties is read from tomcat/common/classes !!! no classloader conflicts ! -->
       <!-- scope>provided</scope-->
     </dependency>
+      <dependency>
+        <groupId>net.sf.ehcache</groupId>
+        <artifactId>ehcache</artifactId>
+        <scope>provided</scope>
+      </dependency>
     <dependency>
       <groupId>de.ingrid.mdek</groupId>
       <artifactId>ingrid-mdek-api</artifactId>
@@ -232,6 +203,24 @@
           </exclusion>
         </exclusions>
       </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-annotations</artifactId>
+        <exclusions>
+          <exclusion>
+            <groupId>asm</groupId>
+            <artifactId>asm-attrs</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>asm</groupId>
+            <artifactId>asm</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
 
 <!-- ======================================================= -->
 
@@ -258,7 +247,6 @@
     <dependency>
       <groupId>opensymphony</groupId>
       <artifactId>quartz</artifactId>
-      <version>1.6.0</version>
     </dependency>
     <dependency>
       <groupId>javax.mail</groupId>
@@ -284,7 +272,6 @@
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
-      <version>2.2</version>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>

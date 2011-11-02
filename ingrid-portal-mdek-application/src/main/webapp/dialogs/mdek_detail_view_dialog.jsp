@@ -263,10 +263,10 @@ function renderNodeData(nodeData) {
 		renderTextWithTitle(dijit.byId("extraInfoCharSetData").get("displayedValue"), "<fmt:message key='ui.obj.additionalInfo.charSet.data' />");
         // Table is only displayed for object classes 1 and 3
 		if (nodeData.objectClass == 1 || nodeData.objectClass == 3) {
-			renderTable(nodeData.extraInfoConformityTable, ["level", "specification", "date"],
-						["<fmt:message key='ui.obj.additionalInfo.conformityTable.header.level' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.specification' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.date' />"],
+			renderTable(nodeData.extraInfoConformityTable, ["level", "specification"],
+						["<fmt:message key='ui.obj.additionalInfo.conformityTable.header.level' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.specification' />"],
 						"<fmt:message key='ui.obj.additionalInfo.conformityTable.title' />",
-						[function(val) { return UtilSyslist.getSyslistEntryName(6000, val); }, null, formatDate]);
+						[function(val) { return UtilSyslist.getSyslistEntryName(6000, val); }, function(val) { return UtilSyslist.getSyslistEntryName(6005, val); }]);
 		}
 		renderList(nodeData.extraInfoXMLExportTable, "<fmt:message key='ui.obj.additionalInfo.xmlExportCriteria' />");
 		renderList(nodeData.extraInfoLegalBasicsTable, "<fmt:message key='ui.obj.additionalInfo.legalBasis' />");
