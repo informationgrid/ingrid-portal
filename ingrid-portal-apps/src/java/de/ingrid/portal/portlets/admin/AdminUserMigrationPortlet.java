@@ -39,7 +39,6 @@ import org.apache.jetspeed.security.PermissionManager;
 import org.apache.jetspeed.security.Role;
 import org.apache.jetspeed.security.RoleManager;
 import org.apache.jetspeed.security.User;
-import org.apache.jetspeed.security.UserManager;
 import org.apache.jetspeed.security.UserPrincipal;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
@@ -50,6 +49,7 @@ import de.ingrid.portal.global.IngridPersistencePrefs;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.portlets.security.SecurityUtil;
+import de.ingrid.portal.security.UserManager;
 
 /**
  * TODO Describe your created type (class, etc.) here.
