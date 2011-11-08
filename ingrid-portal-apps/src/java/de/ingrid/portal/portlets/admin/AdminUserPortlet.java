@@ -9,6 +9,7 @@ import java.security.Permission;
 import java.security.Permissions;
 import java.security.Principal;
 import java.security.PrivilegedAction;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,16 +44,19 @@ import org.apache.jetspeed.om.folder.InvalidFolderException;
 import org.apache.jetspeed.page.PageManager;
 import org.apache.jetspeed.page.document.NodeException;
 import org.apache.jetspeed.profiler.Profiler;
+import org.apache.jetspeed.security.BasePrincipal;
 import org.apache.jetspeed.security.GroupManager;
 import org.apache.jetspeed.security.InvalidPasswordException;
 import org.apache.jetspeed.security.JSSubject;
 import org.apache.jetspeed.security.PasswordAlreadyUsedException;
+import org.apache.jetspeed.security.PasswordCredential;
 import org.apache.jetspeed.security.PermissionManager;
 import org.apache.jetspeed.security.Role;
 import org.apache.jetspeed.security.RoleManager;
 import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.User;
 import org.apache.jetspeed.security.UserPrincipal;
+import org.apache.jetspeed.security.om.InternalUserPrincipal;
 import org.apache.velocity.context.Context;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -75,7 +79,9 @@ import de.ingrid.portal.om.IngridNewsletterData;
 import de.ingrid.portal.om.IngridSecurityCredential;
 import de.ingrid.portal.portlets.security.SecurityResources;
 import de.ingrid.portal.portlets.security.SecurityUtil;
+import de.ingrid.portal.security.JetspeedPrincipalQueryContext;
 import de.ingrid.portal.security.UserManager;
+import de.ingrid.portal.security.UserResultList;
 import de.ingrid.portal.security.permission.IngridPartnerPermission;
 import de.ingrid.portal.security.permission.IngridPortalPermission;
 import de.ingrid.portal.security.permission.IngridProviderPermission;
@@ -454,9 +460,13 @@ public class AdminUserPortlet extends ContentPortlet {
                     roleManager);
 
             // iterate over all users
-            Iterator users = userManager.getUsers("");
+            JetspeedPrincipalQueryContext qc = new JetspeedPrincipalQueryContext("", 0, Integer.MAX_VALUE);
+            UserResultList ul = userManager.getUsersExtended(qc);
+            Iterator<InternalUserPrincipal> users = ul.getResults().iterator();
             while (users.hasNext()) {
-            	User user = (User) users.next();
+                InternalUserPrincipal internalUserPrincipal = users.next();
+                User user = userManager.getUser(internalUserPrincipal.getFullPath().substring(BasePrincipal.PREFS_USER_ROOT.length()));
+                
                 Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
                 if(!userPrincipal.getName().equals(AdminUserPortlet.GUEST)){
 	                Permissions userPermissions = SecurityHelper.getMergedPermissions(userPrincipal, permissionManager,
@@ -484,21 +494,13 @@ public class AdminUserPortlet extends ContentPortlet {
 	                    }
 	                    record.put("roles", roleString);
 	                    
-	                    Session session = HibernateUtil.currentSession();
-	                	ProjectionList projList = Projections.projectionList();
-	                	projList.add(Projections.groupProperty("securityLastAuthDate"));
-	                	Criteria crit = session.createCriteria(IngridSecurityCredential.class)
-	                    .setProjection(projList)
-	                    .add(Restrictions.sqlRestriction("PRINCIPAL_ID = (SELECT PRINCIPAL_ID FROM security_principal where FULL_PATH = '/user/" + userPrincipal.getName()+ "')"));
-	                   
-	            		List lastLogin = UtilsDB.getValuesFromDB(crit, session, null, true);
-	            		Object lastLoginDate;
-	            		if(lastLogin.size() > 0){
-	            			lastLoginDate = lastLogin.get(0);
-	            			record.put("lastLogin", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(lastLoginDate));
-	            		}else{
-	            			record.put("lastLogin", "");
-	            		}
+	                    PasswordCredential pc = SecurityUtil.getPasswordCredential(user.getSubject());
+	                    Timestamp t = pc.getLastAuthenticationDate();
+                        if(t != null){
+                            record.put("lastLogin", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(t));
+                        }else{
+                            record.put("lastLogin", "");
+                        }
 	                    
 	                    rows.add(record);
 	                }

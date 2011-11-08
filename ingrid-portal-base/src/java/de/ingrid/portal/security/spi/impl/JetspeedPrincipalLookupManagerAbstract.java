@@ -87,9 +87,10 @@ public abstract class JetspeedPrincipalLookupManagerAbstract implements Jetspeed
 					// TODO: optimize, just retrieve the id from the DB and setup
 					// a JetspeedPrincipal template on that.
 					rr.readObjectArrayFrom(rs, row);
-					InternalUserPrincipalImpl p = (InternalUserPrincipalImpl) rr.readObjectFrom(row);
+					InternalUserPrincipal p = (InternalUserPrincipalImpl) rr.readObjectFrom(row);
+					
 					QueryByCriteria query = new QueryByCriteria(p);
-					p = (InternalUserPrincipalImpl) PersistenceBrokerFactory.defaultPersistenceBroker()
+					p = (InternalUserPrincipal) PersistenceBrokerFactory.defaultPersistenceBroker()
 							.getObjectByQuery(query);
 					results.add(p);
 					if (!rs.next()) {
@@ -147,11 +148,11 @@ public abstract class JetspeedPrincipalLookupManagerAbstract implements Jetspeed
 			int cnt = 1;
 			for (Map.Entry<String, String> attribute : queryContext.getSecurityAttributes().entrySet()) {
 				if (attributeConstraint == null) {
-					attributeConstraint = "pnb" + cnt + ".FULL_PATH=security_principal.FULLPATH AND pnb" + cnt + ".NODE_ID=pn" + cnt 
-					+ ".PARENT_NODE_ID AND pn" + cnt + ".NODEID=pv" + cnt + ".NODE_ID AND pv" + cnt + ".PROPERTY_NAME='" + attribute.getKey() + "' AND pv" + cnt + ".PROPERTY_VALUE LIKE '" + attribute.getValue() + "'"; 
+					attributeConstraint = "pnb" + cnt + ".FULL_PATH=security_principal.FULL_PATH AND pnb" + cnt + ".NODE_ID=pn" + cnt 
+					+ ".PARENT_NODE_ID AND pn" + cnt + ".NODE_ID=pv" + cnt + ".NODE_ID AND pv" + cnt + ".PROPERTY_NAME='" + attribute.getKey() + "' AND pv" + cnt + ".PROPERTY_VALUE LIKE '" + attribute.getValue() + "'"; 
 				} else {
-                    attributeConstraint = " AND pnb" + cnt + ".FULL_PATH=security_principal.FULLPATH AND pnb" + cnt + ".NODE_ID=pn" + cnt 
-                    + ".PARENT_NODE_ID AND pn" + cnt + ".NODEID=pv" + cnt + ".NODE_ID AND pv" + cnt + ".PROPERTY_NAME='" + attribute.getKey() + "' AND pv" + cnt + ".PROPERTY_VALUE LIKE '" + attribute.getValue() + "'"; 
+                    attributeConstraint = " AND pnb" + cnt + ".FULL_PATH=security_principal.FULL_PATH AND pnb" + cnt + ".NODE_ID=pn" + cnt 
+                    + ".PARENT_NODE_ID AND pn" + cnt + ".NODE_ID=pv" + cnt + ".NODE_ID AND pv" + cnt + ".PROPERTY_NAME='" + attribute.getKey() + "' AND pv" + cnt + ".PROPERTY_VALUE LIKE '" + attribute.getValue() + "'"; 
 				}
 				fromPart += ", prefs_node pnb" + cnt + ", prefs_node pn" + cnt + ", prefs_property_value pv" + cnt;
 				cnt++;
@@ -160,7 +161,7 @@ public abstract class JetspeedPrincipalLookupManagerAbstract implements Jetspeed
 
 		String constraint = null;
 		if (queryContext.getNameFilter() != null && queryContext.getNameFilter().length() > 0) {
-			constraint = "pnb.FULL_PATH=security_principal.FULLPATH AND pnb.NODE_NAME LIKE '"+queryContext.getNameFilter().replace('*', '%')+"'";
+			constraint = "pnb.FULL_PATH=security_principal.FULL_PATH AND pnb.NODE_NAME LIKE '"+queryContext.getNameFilter().replace('*', '%')+"'";
 			fromPart += ", prefs_node pnb";
 		}
 
@@ -173,12 +174,12 @@ public abstract class JetspeedPrincipalLookupManagerAbstract implements Jetspeed
 			for (String roleName : queryContext.getAssociatedRoles()) {
 				if (roleConstraints == null) {
 				    roleConstraints = "sur" + cnt + ".USER_ID=security_principal.PRINCIPAL_ID AND sur" + cnt 
-				        + ".ROLE_ID=spr.PRINCIPAL_ID AND pnr" + cnt + ".FULL_PATH=sur" + cnt 
-				        + ".FULLPATH AND pnr" + cnt + ".NODE_NAME LIKE '" + roleName + "'";
+				        + ".ROLE_ID=spr" + cnt + ".PRINCIPAL_ID AND pnr" + cnt + ".FULL_PATH=spr" + cnt 
+				        + ".FULL_PATH AND pnr" + cnt + ".NODE_NAME LIKE '" + roleName + "'";
 				} else {
                     roleConstraints = " AND sur" + cnt + ".USER_ID=security_principal.PRINCIPAL_ID AND sur" + cnt 
-                    + ".ROLE_ID=spr.PRINCIPAL_ID AND pnr" + cnt + ".FULL_PATH=sur" + cnt 
-                    + ".FULLPATH AND pnr" + cnt + ".NODE_NAME LIKE '" + roleName + "'";
+                    + ".ROLE_ID=spr" + cnt + ".PRINCIPAL_ID AND pnr" + cnt + ".FULL_PATH=spr" + cnt 
+                    + ".FULL_PATH AND pnr" + cnt + ".NODE_NAME LIKE '" + roleName + "'";
 				}
 			}
 			fromPart += ", security_user_role sur" + cnt + ", security_principal spr" + cnt + ", prefs_node pnr" + cnt;
@@ -194,12 +195,12 @@ public abstract class JetspeedPrincipalLookupManagerAbstract implements Jetspeed
 			for (String groupName : queryContext.getAssociatedGroups()) {
 				if (groupConstraints == null) {
                     groupConstraints = "sug" + cnt + ".USER_ID=security_principal.PRINCIPAL_ID AND sug" + cnt 
-                    + ".GROUP_ID=spg" + cnt + ".PRINCIPAL_ID AND png" + cnt + ".FULL_PATH=sug" + cnt 
-                    + ".FULLPATH AND png" + cnt + ".NODE_NAME LIKE '" + groupName + "'";
+                    + ".GROUP_ID=spg" + cnt + ".PRINCIPAL_ID AND png" + cnt + ".FULL_PATH=spg" + cnt 
+                    + ".FULL_PATH AND png" + cnt + ".NODE_NAME LIKE '" + groupName + "'";
 				} else {
                     groupConstraints = " AND sug" + cnt + ".USER_ID=security_principal.PRINCIPAL_ID AND sug" + cnt 
-                    + ".GROUP_ID=spg" + cnt + ".PRINCIPAL_ID AND png" + cnt + ".FULL_PATH=sug" + cnt 
-                    + ".FULLPATH AND png" + cnt + ".NODE_NAME LIKE '" + groupName + "'";
+                    + ".GROUP_ID=spg" + cnt + ".PRINCIPAL_ID AND png" + cnt + ".FULL_PATH=spg" + cnt 
+                    + ".FULL_PATH AND png" + cnt + ".NODE_NAME LIKE '" + groupName + "'";
 				}
 			}
             fromPart += ", security_user_group sug" + cnt + ", security_principal spg" + cnt + ", prefs_node png" + cnt;
@@ -230,7 +231,7 @@ public abstract class JetspeedPrincipalLookupManagerAbstract implements Jetspeed
 			}
 		}
 
-		String baseSqlStr = "SELECT security_principal.* from " + fromPart + " WHERE IS_ENABLED=1";
+		String baseSqlStr = "SELECT security_principal.* from " + fromPart + " WHERE security_principal.CLASSNAME='org.apache.jetspeed.security.InternalUserPrincipalImpl' AND security_principal.IS_ENABLED=1";
 		
 		if (constraint != null) {
 			baseSqlStr += " AND " + constraint;

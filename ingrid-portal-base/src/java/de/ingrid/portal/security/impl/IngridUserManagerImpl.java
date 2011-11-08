@@ -444,8 +444,7 @@ public class IngridUserManagerImpl implements UserManager
      */
     @Override
     public UserResultList getUsersExtended(JetspeedPrincipalQueryContext queryContext) throws SecurityException {
-        JetspeedPrincipalLookupManagerFactory jplmf = new JetspeedPrincipalLookupManagerFactory();
-        return new UserResultList(jplmf.getJetspeedPrincipalLookupManager().getPrincipals(queryContext));        
+        return new UserResultList(jetspeedPrincipalLookupManagerFactory.getJetspeedPrincipalLookupManager().getPrincipals(queryContext));        
     }
 
     /**

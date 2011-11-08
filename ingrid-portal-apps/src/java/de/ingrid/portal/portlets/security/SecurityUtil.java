@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
+import org.apache.jetspeed.security.PasswordCredential;
 import org.apache.portals.messaging.PortletMessaging;
 
 import de.ingrid.portal.portlets.browser.BrowserPortlet;
@@ -54,6 +55,19 @@ public abstract class SecurityUtil extends BrowserPortlet
             }
         }
         return principal;
+    }
+    
+    public static PasswordCredential getPasswordCredential(Subject subject) {
+        PasswordCredential credential = null;
+        Iterator credentials = subject.getPrivateCredentials().iterator();
+        while (credentials.hasNext())
+        {
+            PasswordCredential p = (PasswordCredential) credentials.next();
+            credential = p;
+            break;
+        }
+        return credential;
+        
     }
 
     public static boolean isEmpty(String s)
