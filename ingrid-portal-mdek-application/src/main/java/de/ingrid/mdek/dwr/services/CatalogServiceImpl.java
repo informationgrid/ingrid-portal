@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
 
+import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.GenericValueBean;
@@ -35,8 +36,9 @@ public class CatalogServiceImpl implements CatalogService {
 		return catalogRequestHandler.getSysLists(listIds, language);
 	}
 
-	public String[] getFreeListEntries(MdekSysList sysList) {
-		return catalogRequestHandler.getFreeListEntries(sysList);
+	public String[] getFreeListEntries(Integer sysListId) {
+		MdekSysList mySyslist = EnumUtil.mapDatabaseToEnumConst(MdekSysList.class, sysListId);
+		return catalogRequestHandler.getFreeListEntries(mySyslist);
 	}
 
 	public void storeSysList(Integer listId, boolean maintainable, Integer defaultEntryIndex, Integer[] entryIds,
@@ -44,8 +46,9 @@ public class CatalogServiceImpl implements CatalogService {
 		catalogRequestHandler.storeSysList(listId, maintainable, defaultEntryIndex, entryIds, entriesGerman, entriesEnglish);
 	}
 
-	public void replaceFreeEntryWithSysListEntry(String freeEntry, MdekSysList sysList, Integer sysListEntryId, String sysListEntryName) {
-		catalogRequestHandler.replaceFreeEntryWithSysListEntry(freeEntry, sysList, sysListEntryId, sysListEntryName);
+	public void replaceFreeEntryWithSysListEntry(String freeEntry, Integer sysListId, Integer sysListEntryId, String sysListEntryName) {
+		MdekSysList mySyslist = EnumUtil.mapDatabaseToEnumConst(MdekSysList.class, sysListId);
+		catalogRequestHandler.replaceFreeEntryWithSysListEntry(freeEntry, mySyslist, sysListEntryId, sysListEntryName);
 	}
 
 	public FileTransfer exportSysLists(Integer[] listIds) throws UnsupportedEncodingException {

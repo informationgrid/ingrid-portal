@@ -1827,19 +1827,19 @@
 				 klicken Sie auf <i>Exportieren</i> und wählen den Ort, an dem Sie die XML-Datei speichern 
 				 möchten. Zum Importieren klicken Sie auf <i>Importieren</i> und wählen die XML-Datei, die 
 				 Sie importieren möchten. Sie muss das gleiche Format wie die Exportdatei haben.</p>
-				 <p><b>Liste: Rechtliche Grundlagen</b></p>
-				 <p>Unter dem Karteireiter <i>Liste: Rechtliche Grundlagen</i> können freie Einträge in dem 
-				 Feld <i>Rechtliche Grundlagen</i> in die Auswahlliste übertragen werden.</p>
-				 <p>Wählen Sie hierzu in der Liste <i>Einträge die nicht in der Schlüsseltabelle vorhanden 
-				 sind</i> den Eintrag aus, den Sie in die Auswahlliste aufnehmen möchten. Über einen Klick 
-				 auf den Button <i>&gt;Übertragen</i> wird er in die Auswahlliste übernommen.</p>
+				 <p><b>Übernahme Freie Einträge</b></p>
+				 <p>Unter dem Karteireiter <i>Übernahme Freie Einträge</i> können freie Einträge vorgegebener 
+				 Felder in die entsprechende Auswahlliste des Feldes übertragen werden.</p>
+				 <p>Wählen Sie hierzu die gewünschte <i>Auswahlliste</i> und in der Liste <i>Einträge die nicht 
+                 in der Schlüsseltabelle vorhanden sind</i> den Eintrag aus, den Sie in die Auswahlliste 
+                 aufnehmen möchten. Über einen Klick auf den Button <i>&gt;Übertragen</i> wird er in die 
+                 Auswahlliste übernommen.</p>
 				 <p>Ein Klick auf den Button <i>&gt;&gt;Alle</i> übernimmt alle freien Einträge in die Auswahlliste.</p>
-				 <p>Sie können auch einzelne freie Einträge im Feld <i>Rechtliche Grundlagen</i> durch 
-				 Auswahllisteneinträge ersetzen, indem Sie den Eintrag, den Sie ersetzen wollen, in der 
-				 Liste <i>Einträge die nicht in der Schlüsseltabelle vorhanden sind</i> auswählen und den 
-				 Eintrag, durch den er ersetzt werden soll, in der Liste <i>Inhalte der Schlüsseltabelle</i> 
-				 auswählen. Ein Klick auf <i>&lt;Ersetzen</i> ersetzt den ausgewählten Eintrag des Feldes 
-				 durch den Auswahllisteneintrag.</p>
+				 <p>Sie können auch einzelne freie Einträge durch Auswahllisteneinträge ersetzen, indem 
+                 Sie den Eintrag, den Sie ersetzen wollen, in der Liste <i>Einträge die nicht in der 
+                 Schlüsseltabelle vorhanden sind</i> auswählen und den Eintrag, durch den er ersetzt werden 
+                 soll, in der Liste <i>Inhalte der Schlüsseltabelle</i> auswählen. Ein Klick auf <i>&lt;Ersetzen</i> 
+                 ersetzt den ausgewählten Eintrag des Feldes durch den Auswahllisteneintrag.</p>
 				 <p><b>Reindexierung</b></p>
 				 <p>Im Index sind die Einträge der Felder, die über Codelisten gepflegt werden, natürlich 
 				 nicht als IDs sondern als Text gespeichert. Wurde der Text für einzelne IDs geändert, ist 

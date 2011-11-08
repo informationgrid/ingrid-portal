@@ -1319,11 +1319,11 @@
 				 <p><u><i>Import and Export</i></u></p>
 				 <p>The list of the code lists can be exported and imported. To export, click on <i>Export</i> and select the place where you would like to save the XML file. To import, click on <i>Import</i> and select the XML file you wish to import. It must have the same format as the export file. </p>
 				 
-				 <p><b>List: Legal Basis</b></p>
-				 <p>Under the tag <i>List</i>: <i>Legal Basis</i> free entries in the <i>Legal Basis</i> field can be adopted into the code list. </p>
-				 <p>For this, select the entry in the <i>Entries found in the catalogue that are not in the internal code list</i> that you would like to transfer to the code list. By clicking once on the > <i>Add</i> button it is adopted in the code list. </p>
+				 <p><b>Mapping of free entries</b></p>
+				 <p>Under the tag <i>Mapping of free entries</i> free entries of given fields can be adopted into their code lists. </p>
+				 <p>For this, select the code list and the entry in the <i>Entries found in the catalogue that are not in the internal code list</i> that you would like to transfer to the code list. By clicking once on the > <i>Add</i> button it is adopted in the code list. </p>
 				 <p>One click on the >> <i>All</i> button adopts all free entries in the code list.</p>
-				 <p>You can also replace individual free entries in the <i>Legal Basis</i> field by code list entries through selecting the entry you want to replace it in the <i>Entries found in the catalogue that are not in the internal code list</i> and selecting the entry to replace it in the Code List entries. One click on  <i>Replace</i> replaces the entry selected in the field by the code list entry. </p>
+				 <p>You can also replace individual free entries by code list entries through selecting the entry you want to replace it in the <i>Entries found in the catalogue that are not in the internal code list</i> and selecting the entry to replace it in the Code List entries. One click on <i>Replace</i> replaces the entry selected in the field by the code list entry. </p>
 				 
 				 <p><b>Re-index</b></p>
 				 <p>In the index the entries of the fields that are maintained via code lists are saved as text of course and not as IDs. If the text was changed for individual IDs then the index is no longer consistent (in a search the old text would be found and not the new text). For this reason, a re-indexing must be triggered for the IGE’s index after an amendment has been made to the code list. </p>

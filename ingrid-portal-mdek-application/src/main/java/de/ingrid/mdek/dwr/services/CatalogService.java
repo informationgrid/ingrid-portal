@@ -17,8 +17,8 @@ public interface CatalogService {
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode);
 	public void storeSysList(Integer listId, boolean maintainable, Integer defaultEntryIndex, Integer[] entryIds,
 			String[] entriesGerman, String[] entriesEnglish);
-	public String[] getFreeListEntries(MdekSysList sysList);
-	public void replaceFreeEntryWithSysListEntry(String freeEntry, MdekSysList sysList, Integer sysListEntryId, String sysListEntryName);
+	public String[] getFreeListEntries(Integer listId);
+	public void replaceFreeEntryWithSysListEntry(String freeEntry, Integer listId, Integer sysListEntryId, String sysListEntryName);
 	public FileTransfer exportSysLists(Integer[] listIds) throws UnsupportedEncodingException;
 	public void importSysLists(byte[] data) throws UnsupportedEncodingException;
 

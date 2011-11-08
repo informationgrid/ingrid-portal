@@ -506,7 +506,9 @@
                 var selectWidget = dijit.byId("freeEntrySelectionList");
                 
                 // Currently the form is restricted to the list with id 1350 - 'rechtliche Grundlagen'
-                var listIds = [1350];
+                // 6005 - Zusatzinfo -> Spezifikation der Konformität
+                // 6020 - Verfügbarkeit -> Nutzungsbedingungen
+                var listIds = [1350, 6005, 6020];
                 var selectWidgetData = [];
                 for (var index = 0; index < listIds.length; ++index) {
                     var name = UtilCatalog.getNameForSysList(listIds[index]);
@@ -528,7 +530,7 @@
                 if (listId) {
                     var germanListDef = getSysListDef(listId, "de");
                     var englishListDef = getSysListDef(listId, "en");
-                    var freeEntryDef = getFreeEntriesDef("LEGIST");
+                    var freeEntryDef = getFreeEntriesDef(listId);
                     
                     var defList = new dojo.DeferredList([germanListDef, englishListDef, freeEntryDef], false, false, true);
                     defList.addCallback(function(resultList){
@@ -568,9 +570,9 @@
                 UtilGrid.getTable("freeEntryTable").resizeCanvas();
             }
             
-            function getFreeEntriesDef(mdekListName){
+            function getFreeEntriesDef(mdekListId){
                 var def = new dojo.Deferred();
-                CatalogService.getFreeListEntries(mdekListName, {
+                CatalogService.getFreeListEntries(mdekListId, {
                     preHook: showLoadingZone,
                     postHook: hideLoadingZone,
                     callback: function(entries){
@@ -706,7 +708,7 @@
                     if (sysListEntry != null) {
                         // If the entry was already found, just replace the free entry with the sysList entry
                         console.debug("Entry already exists. Replacing free entry with sysList entry.");
-                        def = replaceFreeEntryWithSysListEntryDef(freeEntry.title, sysListEntry.entryId, sysListEntry.deName, "LEGIST");
+                        def = replaceFreeEntryWithSysListEntryDef(freeEntry.title, sysListEntry.entryId, sysListEntry.deName, sysListId);
                         
                     }
                     else {
@@ -730,7 +732,7 @@
                                 return;
                             }
                             newEntry.entryId = newSysListEntry[1];
-                            return replaceFreeEntryWithSysListEntryDef(freeEntry.title, newSysListEntry[1], newSysListEntry[0], "LEGIST");
+                            return replaceFreeEntryWithSysListEntryDef(freeEntry.title, newSysListEntry[1], newSysListEntry[0], sysListId);
                         });
                     }
                     
@@ -765,10 +767,10 @@
             }
             
             
-            function replaceFreeEntryWithSysListEntryDef(freeEntry, sysListEntryId, sysListEntryName, mdekListName){
+            function replaceFreeEntryWithSysListEntryDef(freeEntry, sysListEntryId, sysListEntryName, sysListId){
                 var def = new dojo.Deferred();
                 
-                CatalogService.replaceFreeEntryWithSysListEntry(freeEntry, mdekListName, sysListEntryId, sysListEntryName, {
+                CatalogService.replaceFreeEntryWithSysListEntry(freeEntry, sysListId, sysListEntryId, sysListEntryName, {
                     preHook: showLoadingZone,
                     postHook: hideLoadingZone,
                     callback: function(){
@@ -807,7 +809,7 @@
                     }]);
                     
                     def.addCallback(function(){
-                        return replaceFreeEntryWithSysListEntryDef(freeEntry.title, codelistEntry.entryId, codelistEntry.deName, "LEGIST");
+                        return replaceFreeEntryWithSysListEntryDef(freeEntry.title, codelistEntry.entryId, codelistEntry.deName, sysListId);
                     });
                     
                     def.addCallback(function(){
@@ -1098,7 +1100,7 @@
                             </div>
                         </div><!-- TAB 1 END -->
                         <!-- TAB 2 START -->
-                        <div id="freeEntryTab" dojoType="dijit.layout.BorderContainer" class="grey" title="<fmt:message key="dialog.admin.catalog.management.codelists.legalBaseTitle" />">
+                        <div id="freeEntryTab" dojoType="dijit.layout.BorderContainer" class="grey" title="<fmt:message key="dialog.admin.catalog.management.codelists.freeEntriesTitle" />">
                                     <div dojoType="dijit.layout.ContentPane" region="top">
                                         <span class="outer grey"><div>
                                             <span class="label">
@@ -1129,7 +1131,7 @@
                                                     &gt; <fmt:message key="dialog.admin.catalog.management.codelists.move" />
                                                 </button>
                                                 <button dojoType="dijit.form.Button" onClick="javascript:scriptScopeCodeLists.addAllFreeEntriesToSysList();">
-                                                    <fmt:message key="dialog.admin.catalog.management.codelists.moveAll" />
+                                                    &gt;&gt; <fmt:message key="dialog.admin.catalog.management.codelists.moveAll" />
                                                 </button>
                                                 <button dojoType="dijit.form.Button" onClick="javascript:scriptScopeCodeLists.replaceFreeEntryWithSysListEntry();">
                                                     &nbsp;&lt; <fmt:message key="dialog.admin.catalog.management.codelists.replace" />&nbsp;
