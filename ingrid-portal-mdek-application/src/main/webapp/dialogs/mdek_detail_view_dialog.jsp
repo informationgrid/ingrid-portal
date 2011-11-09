@@ -94,7 +94,10 @@ function renderNodeData(nodeData) {
 		
 		// define date conversion renderer function
 		function formatDate(val) {
-			return dojo.date.locale.format(val, {selector:'dateOnly', datePattern:'dd.MM.yyyy'});
+            if (typeof val == "undefined" || val == null || val == "") {
+                return "";
+            }
+			return dojo.date.locale.format(val, {selector:'date', datePattern:'dd.MM.yyyy'});
 		}
 	
 		// technical domains
@@ -232,9 +235,9 @@ function renderNodeData(nodeData) {
 		var timeRefTxt;
 		if (nodeData.timeRefDate1) {
 			if (nodeData.timeRefType && nodeData.timeRefType == "von") {
-				timeRefTxt = "von "+dojo.date.locale.format(nodeData.timeRefDate1, {selector:'dateOnly', datePattern:'dd.MM.yyyy'})+" bis "+dojo.date.locale.format(nodeData.timeRefDate2, {selector:'dateOnly', datePattern:'dd.MM.yyyy'});
+				timeRefTxt = "von "+formatDate(nodeData.timeRefDate1)+" bis "+formatDate(nodeData.timeRefDate2);
 			} else if (nodeData.timeRefType) {
-				timeRefTxt = nodeData.timeRefType+" "+dojo.date.locale.format(nodeData.timeRefDate1, {selector:'dateOnly', datePattern:'dd.MM.yyyy'});
+				timeRefTxt = nodeData.timeRefType+" "+formatDate(nodeData.timeRefDate1);
 			}
 		}
 		

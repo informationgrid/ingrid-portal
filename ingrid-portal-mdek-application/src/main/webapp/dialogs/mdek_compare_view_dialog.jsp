@@ -25,7 +25,10 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
     
 	// define date conversion renderer function
 	function formatDate(val) {
-		return dojo.date.locale.format(val, {selector: "dateOnly", datePattern: "dd.MM.yyyy"});
+        if (typeof val == "undefined" || val == null || val == "") {
+            return "";
+        }
+		return dojo.date.locale.format(val, {selector: "date", datePattern: "dd.MM.yyyy"});
 	}
 
 	renderTitel(nodeDataOld.objectName, nodeDataNew.objectName);
@@ -189,16 +192,16 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	var timeRefTxtNew;
 	if (nodeDataOld.timeRefDate1) {
 		if (nodeDataOld.timeRefType && nodeDataOld.timeRefType == "von") {
-			timeRefTxtOld = "von "+dojo.date.locale.format(nodeDataOld.timeRefDate1, {selector:'dateOnly', datePattern:'dd.MM.yyyy'})+" bis "+dojo.date.locale.format(nodeDataOld.timeRefDate2, {selector:'dateOnly', datePattern:'dd.MM.yyyy'});
+			timeRefTxtOld = "von "+formatDate(nodeDataOld.timeRefDate1)+" bis "+formatDate(nodeDataOld.timeRefDate2);
 		} else if (nodeDataOld.timeRefType) {
-			timeRefTxtOld = nodeDataOld.timeRefType+" "+dojo.date.locale.format(nodeDataOld.timeRefDate1, {selector:'dateOnly', datePattern:'dd.MM.yyyy'});
+			timeRefTxtOld = nodeDataOld.timeRefType+" "+formatDate(nodeDataOld.timeRefDate1);
 		}
 	}
 	if (nodeDataNew.timeRefDate1) {
 		if (nodeDataNew.timeRefType && nodeDataNew.timeRefType == "von") {
-			timeRefTxtNew = "von "+dojo.date.locale.format(nodeDataNew.timeRefDate1, {selector:'dateOnly', datePattern:'dd.MM.yyyy'})+" bis "+dojo.date.locale.format(nodeDataNew.timeRefDate2, {selector:'dateOnly', datePattern:'dd.MM.yyyy'});
+			timeRefTxtNew = "von "+formatDate(nodeDataNew.timeRefDate1)+" bis "+formatDate(nodeDataNew.timeRefDate2);
 		} else if (nodeDataNew.timeRefType) {
-			timeRefTxtNew = nodeDataNew.timeRefType+" "+dojo.date.locale.format(nodeDataNew.timeRefDate1, {selector:'dateOnly', datePattern:'dd.MM.yyyy'});
+			timeRefTxtNew = nodeDataNew.timeRefType+" "+formatDate(nodeDataNew.timeRefDate1);
 		}
 	}
 
