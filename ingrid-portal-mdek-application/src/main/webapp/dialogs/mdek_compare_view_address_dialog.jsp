@@ -3,18 +3,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
-<script type="text/javascript" src="js/detail_helper.js"></script>
 <script type="text/javascript">
-_container_.addOnLoad(function() {
-	var tree = dojo.widget.byId("tree");
-	var nodeDataNew = udkDataProxy._getData();
-	var nodeOld = dojo.widget.byId(_container_.customParams.selectedNodeId);
 
-	AddressService.getPublishedAddressData(nodeOld.id,
+dojo.connect(_container_, "onLoad", function() {
+	var nodeDataNew = udkDataProxy._getData();
+	var nodeOld = dijit.byId(dijit.byId("pageDialog").customParams.selectedNodeId);
+
+	AddressService.getPublishedAddressData(nodeOld.id[0],
 		{
 			callback:function(res) { renderNodeData(res, nodeDataNew); },
-//			timeout:5000,
-			errorHandler:function(message) {dojo.debug("Error in mdek_compare_view_address_dialog.jsp: Error while waiting for published nodeData: " + message); }
+			errorHandler:function(message) {console.debug("Error in mdek_compare_view_address_dialog.jsp: Error while waiting for published nodeData: " + message); displayErrorMessage(message); }
 		}
 	);
 });
@@ -52,9 +50,9 @@ function renderTextWithTitle(oldVal, newVal, title) {
 
 	oldVal += "";
 	newVal += "";
-	dojo.byId("diffContent").innerHTML += "<strong>" + title + "</strong><p>" + diffString(oldVal, newVal) + "</p>";
-	dojo.byId("oldContent").innerHTML += "<strong>" + title + "</strong><p>" + oldVal.replace(/\n/g, "<br />") + "</p>";
-	dojo.byId("currentContent").innerHTML += "<strong>" + title + "</strong><p>" + newVal.replace(/\n/g, "<br />") + "</p>";
+	dojo.byId("diffContent").innerHTML += "<strong>" + title + "</strong><p>" + diffString(oldVal, newVal) + "</p><br/>";
+	dojo.byId("oldContent").innerHTML += "<strong>" + title + "</strong><p>" + oldVal.replace(/\n/g, "<br />") + "</p><br/>";
+	dojo.byId("currentContent").innerHTML += "<strong>" + title + "</strong><p>" + newVal.replace(/\n/g, "<br />") + "</p><br/>";
 }
 
 function renderText(oldVal, newVal) {
@@ -68,8 +66,15 @@ function renderText(oldVal, newVal) {
 	oldVal += "";
 	newVal += "";
 	var str = diffString(oldVal, newVal);
+    
+//    console.debug(oldVal);
+//    console.debug(newVal);
+//    console.debug(str);
+
 	// Replace newlines with <br /> and remove EOL chars
-	str = str.replace(/\n/g, '<br />').replace(/&para;/g, '');
+    // and fix html tags for rendering (e.g. "&lt;strong&gt;" -> "<strong>")
+	str = str.replace(/\n/g, '<br />').replace(/&para;/g, '').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+//    console.debug(str);
 	dojo.byId("diffContent").innerHTML += "<p>" + str + "</p><br/>";
 	dojo.byId("oldContent").innerHTML += "<p>" + oldVal.replace(/\n/g, '<br />') + "</p><br/>";
 	dojo.byId("currentContent").innerHTML += "<p>" + newVal.replace(/\n/g, '<br />') + "</p><br/>";
@@ -241,17 +246,14 @@ function arrayContains(arr, obj) {
 </head>
 
 <body>
-  <div dojoType="ContentPane">
-    <div id="contentPane" layoutAlign="client" class="contentBlockWhite top">
+  <div dojoType="dijit.layout.ContentPane" class="">
       <div id="winNavi">
 			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=hierarchy-maintenance-3#hierarchy-maintenance-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
   	  </div>
-  	  <div id="dialogContent" class="content">
         <!-- MAIN TAB CONTAINER START -->
-        <div class="spacer"></div>
-      	<div id="compareViews" dojoType="ingrid:TabContainer" doLayout="false" class="full" selectedChild="diffView">
+      	<div id="compareViews" dojoType="dijit.layout.TabContainer" selectedChild="diffView" style="height:600px; width:100%;" >
           <!-- MAIN TAB 1 START -->
-      		<div id="diffView" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.compare.compare" />">
+      		<div id="diffView" dojoType="dijit.layout.ContentPane" class="blueTopBorder" title="<fmt:message key="dialog.compare.compare" />">
               <div id="diffContent" class="inputContainer field grey"></div>
               <div id="diffContentLegend" class="inputContainer field grey"><span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #009933;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - <fmt:message key="dialog.compare.insertedText" /><br/>
 			  			<span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - <fmt:message key="dialog.compare.deletedText" /></div>
@@ -259,22 +261,19 @@ function arrayContains(arr, obj) {
           <!-- MAIN TAB 1 END -->
       		
           <!-- MAIN TAB 2 START -->
-      		<div id="oldView" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.compare.original" />">
+      		<div id="oldView" dojoType="dijit.layout.ContentPane" class="blueTopBorder" title="<fmt:message key="dialog.compare.original" />">
               <div id="oldContent" class="inputContainer field grey"></div>
       		</div>
           <!-- MAIN TAB 2 END -->
 
           <!-- MAIN TAB 3 START -->
-      		<div id="currentView" dojoType="ContentPane" class="blueTopBorder" label="<fmt:message key="dialog.compare.modified" />">
+      		<div id="currentView" dojoType="dijit.layout.ContentPane" class="blueTopBorder" title="<fmt:message key="dialog.compare.modified" />">
               <div id="currentContent" class="inputContainer field grey"></div>
       		</div>
           <!-- MAIN TAB 3 END -->
 
       	</div>
         <!-- MAIN TAB CONTAINER END -->
-  
-      </div>
-    </div>
   </div>
   <!-- CONTENT END -->
 </body>
