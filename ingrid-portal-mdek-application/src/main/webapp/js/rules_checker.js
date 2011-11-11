@@ -5,10 +5,11 @@
 dojo.addOnLoad(function() {});
 
 /* IDs of UI Elements for checking etc. */
-var headerUiInputElements = ["objectName", "objectClass"/*, "objectOwner"*/]; // setStore of object owner is delayed! 
+//var headerUiInputElements = ["objectName", "objectClass"/*, "objectOwner"*/]; // setStore of object owner is delayed! 
 var generalUiInputElements = ["generalShortDesc", "generalDesc", "generalAddress"];
 var dqUiTableElements = ["dq109Table", "dq110Table", "dq112Table", "dq113Table", "dq114Table", "dq115Table", "dq117Table",
-    "dq120Table", "dq125Table", "dq126Table", "dq127Table"]; 
+    "dq120Table", "dq125Table", "dq126Table", "dq127Table"];
+/*
 var spatialUiInputElements = ["spatialRefAdminUnit", "spatialRefLocation", "ref1SpatialSystem", "spatialRefAltMin", "spatialRefAltMax",
 	"spatialRefAltMeasure", "spatialRefAltVDate", "spatialRefExplanation"];
 var timeUiInputElements = ["timeRefType", "timeRefDate1", "timeRefDate2", "timeRefStatus", "timeRefPeriodicity", "timeRefIntervalNum",
@@ -34,6 +35,7 @@ var class5UiInputElements = ["ref5dbContent", "ref5MethodText", "ref5MethodLink"
 //                            "ref3BaseDataLink", "ref3Explanation", "ref3Scale", "ref3Operation", "extraInfoConformityTable"];
 var class6UiInputElements = ["ref6ServiceType", "ref6ServiceVersion", "ref6SystemEnv", "ref6History", "ref6BaseDataText",
                             "ref6BaseDataLink", "ref6Explanation", "ref6UrlList" ];
+*/
 
 
 // Address Type is not included since the field is filled automatically
@@ -45,7 +47,7 @@ var adrClass2UiInputElements = ["headerAddressType2Lastname", "headerAddressType
 	"headerAddressType2Title"];
 var adrClass3UiInputElements = ["headerAddressType3Lastname", "headerAddressType3Firstname", "headerAddressType3Style",
 	"headerAddressType3Title", "headerAddressType3Institution"];
-
+/*
 var notEmptyFields = [["objectName", "objectNameLabel"],
 					  ["objectClass", "objectClassLabel"],
 					  ["objectOwner", "objectOwnerLabel"],
@@ -104,6 +106,7 @@ var notEmptyAddressFieldsClass1 = [["organisation", "headerAddressType1UnitLabel
 
 var notEmptyAddressFieldsClass2 = [["name", "headerAddressType2LastnameLabel"]];
 var notEmptyAddressFieldsClass3 = [["name", "headerAddressType3LastnameLabel"]];
+*/
 
 
 function resetRequiredFields() {
