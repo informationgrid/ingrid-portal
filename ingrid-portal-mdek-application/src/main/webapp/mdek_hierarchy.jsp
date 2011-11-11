@@ -584,7 +584,6 @@
                             </div>
                         </div>
                         <div id="ref1ContentDQ" class="content">
-                            <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
                             <span id="uiElement7509" class="outer">
                                 <div><span class="label">
                                     <label for="dq109Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7509)">
@@ -597,7 +596,6 @@
                                 </div>
                                 </div>
                             </span>
-                        <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
                             <span id="uiElement7510" class="outer">
                                 <div><span class="label">
                                     <label for="dq110Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7510)">
@@ -610,7 +608,6 @@
                                 </div>
                                 </div>
                             </span>
-                        <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
                             <span id="uiElement7512" class="outer">
                                 <div><span class="label">
                                     <label for="dq112Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7512)">
@@ -623,7 +620,6 @@
                                 </div>
                                 </div>
                             </span>
-                        <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
                             <span id="uiElement7513" class="outer">
                                 <div><span class="label">
                                     <label for="dq113Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7513)">
@@ -636,7 +632,6 @@
                                 </div>
                                 </div>
                             </span>
-                        <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
                             <span id="uiElement7514" class="outer">
                                 <div><span class="label">
                                     <label for="dq114Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7514)">
@@ -649,7 +644,6 @@
                                 </div>
                                 </div>
                             </span>
-                        <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
                             <span id="uiElement7515" class="outer">
                                 <div><span class="label">
                                     <label for="dq115Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7515)">
@@ -662,7 +656,6 @@
                                 </div>
                                 </div>
                             </span>
-                        <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
                             <span id="uiElement7517" class="outer">
                                 <div><span class="label">
                                     <label for="dq117Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7517)">
@@ -675,7 +668,6 @@
                                 </div>
                                 </div>
                             </span>
-                        <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
                             <span id="uiElement7520" class="outer">
                                 <div><span class="label">
                                     <label for="dq120Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7520)">
@@ -688,7 +680,6 @@
                                 </div>
                                 </div>
                             </span>
-                        <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
                             <span id="uiElement7525" class="outer">
                                 <div><span class="label">
                                     <label for="dq125Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7525)">
@@ -701,7 +692,6 @@
                                 </div>
                                 </div>
                             </span>
-                        <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
                             <span id="uiElement7526" class="outer">
                                 <div><span class="label">
                                     <label for="dq126Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7526)">
@@ -714,7 +704,6 @@
                                 </div>
                                 </div>
                             </span>
-                        <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
                             <span id="uiElement7527" class="outer">
                                 <div><span class="label">
                                     <label for="dq127Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7527)">
@@ -1795,7 +1784,6 @@
                                     </div>
                                     </div>
                                 </span>
-                                <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected INSPIRE theme -->
                             </div>
                             <span id="uiElement1315" class="outer">
                                 <div>
