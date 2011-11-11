@@ -2832,29 +2832,11 @@ igeEvents.setSelectedClass = function(/* name of the object class/address type *
         setGeneralAddressLabel(false);
     }
     
-    // Fields for Geo-Information/Karte(1), Dokument/Bericht/Literatur(2)and Datensammlung/Datenbank(5)
-    if (clazz == "Class1" || clazz == "Class2" || clazz == "Class5") {
-        // "Zeichensatz des Datensatzes" 
-        var isRequired = false;
-        if (this.selectedClass == "Class1") {
-          isRequired = true;
-        }
-        UtilUI.setRequiredState(dojo.byId("uiElement5043"), isRequired);
-
-    } else if (isObjectClass) {
-       // "Zeichensatz des Datensatzes" only in class 1,2,5
-        UtilUI.setRequiredState(dojo.byId("uiElement5043"), false);
-    }
-    
     // fields that are not stored in class 3 and 6
     if (clazz == "Class3" || clazz == "Class6") {
         dojo.addClass("uiElement5060", "hide");
-        dojo.addClass("uiElement5043", "hide");
-        dojo.addClass("uiElement5042", "hide");
     } else if (isObjectClass) {
         dojo.removeClass("uiElement5060", "hide");
-        dojo.removeClass("uiElement5043", "hide");
-        dojo.removeClass("uiElement5042", "hide");
     }
 
 }
