@@ -2771,6 +2771,7 @@ igeEvents.setSelectedClass = function(/* name of the object class/address type *
     } else if (isObjectClass) {
         dojo.removeClass("uiElementN024", "required");
         dojo.addClass("uiElementN024", "hide");
+        // Here we also delete DATA !!!! Necessary ???
         UtilGrid.setTableData("extraInfoConformityTable", []);
     }
 
@@ -2786,21 +2787,11 @@ igeEvents.setSelectedClass = function(/* name of the object class/address type *
         // show / hide DQ input dependent from INSPIRE Thema !
         applyRule7();
 
-        // "ISO-Themenkategorie" only mandatory in class 1 
-        UtilUI.setRequiredState(dojo.byId("uiElement5060"), true);
-
     } else if (isObjectClass) {
        // "Kodierungsschema der geographischen Daten" only in class 1
         UtilUI.setRequiredState(dojo.byId("uiElement1315"), false);
         dojo.addClass("uiElement1315", "hide");
         dijit.byId("availabilityDataFormatInspire").set("value", "");
-
-        // "INSPIRE-Thema" also in other classes
-        //UtilUI.setRequiredState(dojo.byId("uiElement5064"), false);
-        // DO NOT HIDE to avoid vanishing field ...
-
-        UtilUI.setRequiredState(dojo.byId("uiElement5060"), false);
-        // DO NOT HIDE to avoid vanishing field ...
     }
 
     // Fields only mandatory for Geoinformation/Karte(1) and Geodatendienst(3)
@@ -2808,10 +2799,6 @@ igeEvents.setSelectedClass = function(/* name of the object class/address type *
         // "Raumbezugssystem"
         UtilUI.setRequiredState(dojo.byId("uiElement3500"), true);
         //dojo.style("uiElement3500", "display", "block");
-        
-        // "INSPIRE-Thema"
-        UtilUI.setRequiredState(dojo.byId("uiElement5064"), true);
-        dojo.removeClass("uiElement6000", "hide");
         
         // change general address label
         setGeneralAddressLabel(true);
@@ -2823,22 +2810,9 @@ igeEvents.setSelectedClass = function(/* name of the object class/address type *
         UtilUI.setRequiredState(dojo.byId("uiElement3500"), false);
         // DO NOT HIDE to avoid vanishing field ...
         
-        // "INSPIRE-Thema"
-        UtilUI.setRequiredState(dojo.byId("uiElement5064"), false);
-        // no reset needed -> handled in MDEK-Mapper
-        dojo.addClass("uiElement6000", "hide");
-        
         // change general address label
         setGeneralAddressLabel(false);
     }
-    
-    // fields that are not stored in class 3 and 6
-    if (clazz == "Class3" || clazz == "Class6") {
-        dojo.addClass("uiElement5060", "hide");
-    } else if (isObjectClass) {
-        dojo.removeClass("uiElement5060", "hide");
-    }
-
 }
 
 igeEvents.refreshTabContainers = function(section) {

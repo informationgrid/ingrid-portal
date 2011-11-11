@@ -270,19 +270,6 @@
                                     </div>
                                 </div></div>
                             </span>
-                            <span id="uiElement5064" class="outer">
-                                <div>
-                                    <span id="ref1ThesaurusInspireLabel" class="label">
-                                        <label for="ref1ThesaurusInspire" onclick="javascript:dialog.showContextHelp(arguments[0], 5064);" >
-                                            <fmt:message key="ui.obj.thesaurus.terms.inspire" />
-                                        </label>
-                                    </span>
-                                    <div class="input tableContainer">
-                                        <div id="thesaurusInspire" autoHeight="4" interactive="true" class="hideTableHeader">
-                                        </div>
-                                    </div>
-                                </div>
-                            </span>
                             <span id="uiElement6000" class="outer">
                                 <div>
                                 <div class="input">
@@ -295,6 +282,127 @@
                             </span>
                             <div class="fill"></div>
                         </div>
+                    </div>
+                    <!-- VERSCHLAGWORTUNG //-->
+                    <div class="fill"></div>
+                    <div id="thesaurus" class="rubric contentBlock">
+                        <div class="titleBar">
+                            <a href="javascript:igeEvents.toggleFields('thesaurus');" title="<fmt:message key="general.open.required.field" />">
+                                <div class="image18px titleIcon"></div>
+                            </a>
+                            <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7005)">
+                                <fmt:message key="ui.obj.thesaurus.title" />
+                            </div>
+                            <div class="titleUp">
+                                <a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a>
+                            </div>
+                        </div>
+                        <div id="thesaurusContent" class="content">
+                            <div class="inputContainer">
+                                <span id="uiElement5064" class="outer">
+                                    <div>
+                                        <span id="ref1ThesaurusInspireLabel" class="label">
+                                            <label for="thesaurusInspire" onclick="javascript:dialog.showContextHelp(arguments[0], 5064);" >
+                                                <fmt:message key="ui.obj.thesaurus.terms.inspire" />
+                                            </label>
+                                        </span>
+                                        <div class="input tableContainer">
+                                            <div id="thesaurusInspire" autoHeight="4" interactive="true" class="hideTableHeader">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="inputContainer">
+                                <span id="uiElement5060" class="outer">
+                                    <div>
+                                        <span id="thesaurusTopicsLabel" class="label">
+                                            <label for="thesaurusTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 5060)">
+                                                <fmt:message key="ui.obj.thesaurus.terms.category" />
+                                            </label>
+                                        </span>
+                                        <div class="input tableContainer">
+                                            <div id="thesaurusTopics" autoHeight="4" interactive="true" class="hideTableHeader">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="inputContainer">
+                                <span id="uiElement1409" class="outer">
+                                    <div>
+                                        <span id="thesaurusTermsLabel" class="label">
+                                        <label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 1420)">
+                                            <fmt:message key="ui.obj.thesaurus.terms" />
+                                        </label>
+                                        </span>
+                                    <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('thesaurusTerms'), 'dialogs/mdek_thesaurus_assist_dialog.jsp?c='+userLocale, 735, 430, true);" title="<fmt:message key='dialog.popup.thesaurus.terms.link.assistant' /> [Popup]"><fmt:message key="ui.obj.thesaurus.terms.link.assistant" /></a>
+                                        <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsNavigatorLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('thesaurusNavigator'), 'dialogs/mdek_thesaurus_dialog.jsp?c='+userLocale, 1010, 430, true, {dstTable: 'thesaurusTerms'});" title="<fmt:message key="dialog.popup.thesaurus.terms.link.navigator" /> [Popup]"><fmt:message key="ui.obj.thesaurus.terms.link.navigator" /></a></span>
+                                    <div class="input tableContainer">
+                                        <div id="thesaurusTerms" autoHeight="4" class="hideTableHeader">
+                                        </div>
+                                    </div>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="inputContainer">
+                                <span id="uiElement1410" class="outer">
+                                    <div>
+                                        <span id="thesaurusTermsAddLabel" class="label">
+                                            <label for="thesaurusFreeTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 1410)">
+                                                <fmt:message key="ui.obj.thesaurus.terms.add.label" />
+                                            </label>
+                                        </span>
+                                        <div class="input">
+                                            <input type="text" maxLength="255" id="thesaurusFreeTerms" />
+                                            <div style="position:relative; top: 2px; float:right;">
+                                                <button id="thesaurusFreeTermsAddButton">
+                                                    <fmt:message key="ui.obj.thesaurus.terms.custom.buttonAdd" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="fill">
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="inputContainer">
+                                <span id="uiElementN014" class="outer">
+                                    <div>
+                                    <span id="thesaurusEnvironmentLabel" class="label">
+                                        <label for="thesaurusEnvironment" onclick="javascript:dialog.showContextHelp(arguments[0], 10014)">
+                                            <fmt:message key="ui.obj.thesaurus.terms.enviromental.title" />
+                                        </label>
+                                    </span>
+                                    <div id="thesaurusEnvironment" class="outlined">
+                                        <div class="checkboxContainer">
+                                            <span class="input"><input type="checkbox" name="thesaurusEnvExtRes" id="thesaurusEnvExtRes" />
+                                                <label onclick="javascript:dialog.showContextHelp(arguments[0], 7006)">
+                                                    <fmt:message key="ui.obj.thesaurus.terms.enviromental.displayCatalogPage" />
+                                                </label>
+                                            </span>
+                                        </div>
+                                            <span id="uiElementN015" class="outer headHiddenRows4">
+                                                <span id="thesaurusEnvTopicsLabel" class="label">
+                                                    <label for="thesaurusEnvTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 10015)">
+                                                        <fmt:message key="ui.obj.thesaurus.terms.enviromental.topics" />
+                                                    </label>
+                                                </span>
+                                                <div class="input tableContainer">
+                                                    <div id="thesaurusEnvTopics" autoHeight="4" interactive="true" class="hideTableHeader">
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        <div class="fill">
+                                        </div>
+                                    </div>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="fill">
+                            </div>
+                        </div>
+                        <div class="fill"></div>
                     </div>
                     <!-- FACHBEZUG CLASS 1 - GEO-INFORMATION/KARTE //-->
                     <div class="fill"></div>
@@ -1837,112 +1945,6 @@
 									</div></span>
                                 <div class="fill">
                                 </div>
-                            </div>
-                        </div>
-                        <div class="fill"></div>
-                    </div>
-                    <!-- VERSCHLAGWORTUNG //-->
-                    <div class="fill"></div>
-                    <div id="thesaurus" class="rubric contentBlock">
-                        <div class="titleBar">
-                            <a href="javascript:igeEvents.toggleFields('thesaurus');" title="<fmt:message key="general.open.required.field" />">
-                                <div class="image18px titleIcon"></div>
-                            </a>
-                            <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7005)">
-                                <fmt:message key="ui.obj.thesaurus.title" />
-                            </div>
-                            <div class="titleUp">
-                                <a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a>
-                            </div>
-                        </div>
-                        <div id="thesaurusContent" class="content">
-                        <div class="inputContainer">
-                            <span id="uiElement5060" class="outer">
-                                <div>
-                                    <span id="thesaurusTopicsLabel" class="label">
-                                        <label for="thesaurusTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 5060)">
-                                            <fmt:message key="ui.obj.thesaurus.terms.category" />
-                                        </label>
-                                    </span>
-                                    <div class="input tableContainer">
-                                        <div id="thesaurusTopics" autoHeight="4" interactive="true" class="hideTableHeader">
-                                        </div>
-                                    </div>
-                                </div>
-                            </span>
-                        </div>
-                            <div class="inputContainer">
-                                <span id="uiElement1409" class="outer">
-                                	<div>
-                                		<span id="thesaurusTermsLabel" class="label">
-                                        <label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 1420)">
-                                            <fmt:message key="ui.obj.thesaurus.terms" />
-                                        </label>
-										</span>
-                                    <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('thesaurusTerms'), 'dialogs/mdek_thesaurus_assist_dialog.jsp?c='+userLocale, 735, 430, true);" title="<fmt:message key='dialog.popup.thesaurus.terms.link.assistant' /> [Popup]"><fmt:message key="ui.obj.thesaurus.terms.link.assistant" /></a>
-                                        <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsNavigatorLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('thesaurusNavigator'), 'dialogs/mdek_thesaurus_dialog.jsp?c='+userLocale, 1010, 430, true, {dstTable: 'thesaurusTerms'});" title="<fmt:message key="dialog.popup.thesaurus.terms.link.navigator" /> [Popup]"><fmt:message key="ui.obj.thesaurus.terms.link.navigator" /></a></span>
-                                    <div class="input tableContainer">
-                                        <div id="thesaurusTerms" autoHeight="4" class="hideTableHeader">
-                                        </div>
-                                    </div>
-									</div>
-                                </span>
-                            </div>
-                            <div class="inputContainer">
-                                <span id="uiElement1410" class="outer">
-                                    <div>
-                                        <span id="thesaurusTermsAddLabel" class="label">
-                                            <label for="thesaurusFreeTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 1410)">
-                                                <fmt:message key="ui.obj.thesaurus.terms.add.label" />
-                                            </label>
-                                        </span>
-                                        <div class="input">
-                                            <input type="text" maxLength="255" id="thesaurusFreeTerms" />
-                                            <div style="position:relative; top: 2px; float:right;">
-                                                <button id="thesaurusFreeTermsAddButton">
-                                                    <fmt:message key="ui.obj.thesaurus.terms.custom.buttonAdd" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="fill">
-                                        </div>
-                                    </div>
-                                </span>
-                            </div>
-                            <div class="inputContainer">
-                                <span id="uiElementN014" class="outer">
-                                	<div>
-                                	<span id="thesaurusEnvironmentLabel" class="label">
-                                        <label for="thesaurusEnvironment" onclick="javascript:dialog.showContextHelp(arguments[0], 10014)">
-                                            <fmt:message key="ui.obj.thesaurus.terms.enviromental.title" />
-                                        </label>
-                                    </span>
-                                    <div id="thesaurusEnvironment" class="outlined">
-                                        <div class="checkboxContainer">
-                                            <span class="input"><input type="checkbox" name="thesaurusEnvExtRes" id="thesaurusEnvExtRes" />
-                                                <label onclick="javascript:dialog.showContextHelp(arguments[0], 7006)">
-                                                    <fmt:message key="ui.obj.thesaurus.terms.enviromental.displayCatalogPage" />
-                                                </label>
-                                            </span>
-                                        </div>
-                                            <span id="uiElementN015" class="outer headHiddenRows4">
-                                            	<span id="thesaurusEnvTopicsLabel" class="label">
-                                                    <label for="thesaurusEnvTopics" onclick="javascript:dialog.showContextHelp(arguments[0], 10015)">
-                                                        <fmt:message key="ui.obj.thesaurus.terms.enviromental.topics" />
-                                                    </label>
-                                                </span>
-                                                <div class="input tableContainer">
-                                                    <div id="thesaurusEnvTopics" autoHeight="4" interactive="true" class="hideTableHeader">
-                                                    </div>
-                                                </div>
-                                            </span>
-                                        <div class="fill">
-                                        </div>
-                                    </div>
-									</div>
-                                </span>
-                            </div>
-                            <div class="fill">
                             </div>
                         </div>
                         <div class="fill"></div>
