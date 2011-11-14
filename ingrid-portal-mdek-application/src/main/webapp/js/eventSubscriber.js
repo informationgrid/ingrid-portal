@@ -2781,23 +2781,21 @@ igeEvents.setSelectedClass = function(/* name of the object class/address type *
     // NOTICE: div excluded from normal show/hide mechanism (displaytype="exclude")
     if (clazz == "Class1") {
         // "Kodierungsschema der geographischen Daten" 
-        UtilUI.setRequiredState(dojo.byId("uiElement1315"), true);
-        dojo.removeClass("uiElement1315", "hide");
+        UtilUI.setMandatory(dojo.byId("uiElement1315"));
 
         // show / hide DQ input dependent from INSPIRE Thema !
         applyRule7();
 
     } else if (isObjectClass) {
        // "Kodierungsschema der geographischen Daten" only in class 1
-        UtilUI.setRequiredState(dojo.byId("uiElement1315"), false);
-        dojo.addClass("uiElement1315", "hide");
+        UtilUI.setHide(dojo.byId("uiElement1315"));
         dijit.byId("availabilityDataFormatInspire").set("value", "");
     }
 
     // Fields only mandatory for Geoinformation/Karte(1) and Geodatendienst(3)
     if (clazz == "Class1" || clazz == "Class3") {
         // "Raumbezugssystem"
-        UtilUI.setRequiredState(dojo.byId("uiElement3500"), true);
+        UtilUI.setMandatory(dojo.byId("uiElement3500"));
         //dojo.style("uiElement3500", "display", "block");
         
         // change general address label
@@ -2807,8 +2805,8 @@ igeEvents.setSelectedClass = function(/* name of the object class/address type *
         dojo.publish("/onInspireTopicChange", [{topics: UtilList.tableDataToList(dijit.byId("thesaurusInspire").getData())}]);
         
     } else if (isObjectClass) {
-        UtilUI.setRequiredState(dojo.byId("uiElement3500"), false);
         // DO NOT HIDE to avoid vanishing field ...
+        UtilUI.setOptional(dojo.byId("uiElement3500"));
         
         // change general address label
         setGeneralAddressLabel(false);

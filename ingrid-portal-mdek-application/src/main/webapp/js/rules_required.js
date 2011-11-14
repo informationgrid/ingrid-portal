@@ -124,17 +124,13 @@ function applyRule1() {
 
 function applyRule2() {
 	console.debug("apply rule 2");
-	var required = false;
-	if (dijit.byId("thesaurusEnvExtRes").checked || UtilGrid.getTableData("thesaurusEnvTopics").length != 0)
-	  required = true;
-
-//	var labelNode1 = dojo.byId("thesaurusEnvironmentLabel");
-//	var labelNode2 = dojo.byId("thesaurusEnvTopicsLabel");
-	var containerNode1 = dojo.byId("uiElementN014");
-	var containerNode2 = dojo.byId("uiElementN015");
-
-	UtilUI.setRequiredState(containerNode1, required);
-	UtilUI.setRequiredState(containerNode2, required);
+	if (dijit.byId("thesaurusEnvExtRes").checked || UtilGrid.getTableData("thesaurusEnvTopics").length != 0) {
+		UtilUI.setMandatory(dojo.byId("uiElementN014"));
+		UtilUI.setMandatory(dojo.byId("uiElementN015"));
+	} else {
+		UtilUI.setOptional(dojo.byId("uiElementN014"));
+		UtilUI.setOptional(dojo.byId("uiElementN015"));		
+	}
 }
 	
 function applyRule3(value) {
@@ -197,13 +193,16 @@ function applyRule5() {
 			freeHasBB = true;
 	}
 
-//	var labelNode1 = dojo.byId("spatialRefAdminUnitLabel");
-//	var labelNode2 = dojo.byId("spatialRefLocationLabel");
-	var container1 = dojo.byId("uiElementN006");
-	var container2 = dojo.byId("uiElementN008");
-
-	UtilUI.setRequiredState(container1, snsHasBB || !freeHasBB);
-	UtilUI.setRequiredState(container2, !snsHasBB);
+	if (snsHasBB || !freeHasBB) {
+		UtilUI.setMandatory(dojo.byId("uiElementN006"));
+	} else {
+		UtilUI.setOptional(dojo.byId("uiElementN006"));		
+	}
+	if (!snsHasBB) {
+		UtilUI.setMandatory(dojo.byId("uiElementN008");		
+	} else {
+		UtilUI.setOptional(dojo.byId("uiElementN008");		
+	}
 }
 
 // If one of the fields contains data, all fields are mandatory
@@ -217,18 +216,18 @@ function applyRule6() {
 
 	if (spatialRefAltMin.getValue() || spatialRefAltMax.getValue() ||
 			spatialRefAltMeasure.getValue() || spatialRefAltVDate.getValue()) {
-		UtilUI.setRequiredState(dojo.byId("uiElementN010"), true);
-		UtilUI.setRequiredState(dojo.byId("uiElement1130"), true);
-		UtilUI.setRequiredState(dojo.byId("uiElement5020"), true);
-		UtilUI.setRequiredState(dojo.byId("uiElement5021"), true);
-		UtilUI.setRequiredState(dojo.byId("uiElement5022"), true);
+		UtilUI.setMandatory(dojo.byId("uiElementN010"));
+		UtilUI.setMandatory(dojo.byId("uiElement1130"));
+		UtilUI.setMandatory(dojo.byId("uiElement5020"));
+		UtilUI.setMandatory(dojo.byId("uiElement5021"));
+		UtilUI.setMandatory(dojo.byId("uiElement5022"));
 
 	} else {
-		UtilUI.setRequiredState(dojo.byId("uiElementN010"), false);
-		UtilUI.setRequiredState(dojo.byId("uiElement1130"), false);
-		UtilUI.setRequiredState(dojo.byId("uiElement5020"), false);
-		UtilUI.setRequiredState(dojo.byId("uiElement5021"), false);
-		UtilUI.setRequiredState(dojo.byId("uiElement5022"), false);
+		UtilUI.setOptional(dojo.byId("uiElementN010"));
+		UtilUI.setOptional(dojo.byId("uiElement1130"));
+		UtilUI.setOptional(dojo.byId("uiElement5020"));
+		UtilUI.setOptional(dojo.byId("uiElement5021"));
+		UtilUI.setOptional(dojo.byId("uiElement5022"));
 	}
 }
 

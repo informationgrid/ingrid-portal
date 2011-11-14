@@ -1351,21 +1351,37 @@ UtilUI.resetSelectedData = function() {
 	selRowNode = null;
 }
 
-UtilUI.setRequiredState = function(/*html node to (un-)set the notRequired class*/containerNode, isRequired) {
-  // dojo.debug("-> setRequiredState("+labelNode.id+", "+containerNode.id+", "+isRequired+")");
-	// set the container to required
+UtilUI.setMandatory = function(/*html node to process*/containerNode) {
 	if (containerNode) {
-//		dojo.debug("containerNode.type before change: "+containerNode.getAttribute("type"));
-		if (isRequired) {
-			dojo.removeClass(containerNode, "optional");
-			dojo.addClass(containerNode, "required");
-		} else {
-			dojo.removeClass(containerNode, "required");
-			dojo.addClass(containerNode, "optional");
-		}
-
-		//var sectionElement = UtilUI.getSectionElement(containerNode);
-		//var isExpanded = dojo.hasClass(sectionElement, "expanded");
+		UtilUI.removeVisibilityClasses(containerNode);
+		dojo.addClass(containerNode, "required");
+		dojo.addClass(containerNode, "show");
+	}
+}
+UtilUI.setOptional = function(/*html node to process*/containerNode) {
+	if (containerNode) {
+		UtilUI.removeVisibilityClasses(containerNode);
+		dojo.addClass(containerNode, "optional");
+	}
+}
+UtilUI.setShow = function(/*html node to process*/containerNode) {
+	if (containerNode) {
+		UtilUI.removeVisibilityClasses(containerNode);
+		dojo.addClass(containerNode, "show");
+	}
+}
+UtilUI.setHide = function(/*html node to process*/containerNode) {
+	if (containerNode) {
+		UtilUI.removeVisibilityClasses(containerNode);
+		dojo.addClass(containerNode, "hide");
+	}
+}
+UtilUI.removeVisibilityClasses = function(/*html node to process*/containerNode) {
+	if (containerNode) {
+		dojo.removeClass(containerNode, "required");
+		dojo.removeClass(containerNode, "optional");
+		dojo.removeClass(containerNode, "show");
+		dojo.removeClass(containerNode, "hide");
 	}
 }
 
