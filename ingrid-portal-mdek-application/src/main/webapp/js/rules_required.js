@@ -199,9 +199,9 @@ function applyRule5() {
 		UtilUI.setOptional(dojo.byId("uiElementN006"));		
 	}
 	if (!snsHasBB) {
-		UtilUI.setMandatory(dojo.byId("uiElementN008");		
+		UtilUI.setMandatory(dojo.byId("uiElementN008"));
 	} else {
-		UtilUI.setOptional(dojo.byId("uiElementN008");		
+		UtilUI.setOptional(dojo.byId("uiElementN008"));
 	}
 }
 
