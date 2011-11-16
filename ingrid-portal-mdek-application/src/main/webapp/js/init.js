@@ -151,7 +151,7 @@ function fetchSysLists() {
         3535, 3555, 3385, 3571, 4300, 4305, 4430, 5100, 5105, 5110, 5120, 5130, 5200, 5300, 6000, 6005, 6010, 6020, 6100, 6200, 6300,
         7109, 7110, 7112, 7113, 7114, 7115, 7117, 7120, 7125, 7126, 7127, 99999999];
 
-	CatalogService.getSysLists(lstIds, languageCode, {
+	CatalogService.getSysListsRemoveMetadata(lstIds, languageCode, {
 		//preHook: UtilDWR.enterLoadingState,
 		//postHook: UtilDWR.exitLoadingState,
 		callback: function(res){

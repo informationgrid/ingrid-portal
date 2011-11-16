@@ -455,7 +455,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekAddress.setRefOfRelation(-1);           
         } else {
             // Lookup the value from relationRef
-            mdekAddress.setNameOfRelation(sysListMapper.getValueFromListId(relationRef, relationId));
+            mdekAddress.setNameOfRelation(sysListMapper.getValueFromListId(relationRef, relationId, false));
             mdekAddress.setRefOfRelation(relationRef);
             mdekAddress.setTypeOfRelation(relationId);
         }
@@ -1585,11 +1585,28 @@ public class MdekMapper implements DataMapperInterface {
      * Mapping from the IngridDocument Structure to the Mdek gui representation *
      ****************************************************************************/
 
-    private KeyValuePair mapToKeyValuePair(IngridDocument obj, String key, String value) {
-        Integer k = (Integer) obj.get(key);
-        String val = (String) obj.get(value);
+    /** Map from IngridDocument to ige. NOTICE: Mapped values will contain metadata !!!
+     * @param obj document passed from backend
+     * @param keyForEntryKey key for accessing syslist entry key in document
+     * @param keyForEntryValue key for accessing syslist value in document
+     * @return key value pair for ige
+     */
+    private KeyValuePair mapToKeyValuePair(IngridDocument obj, String keyForEntryKey, String keyForEntryValue) {
+    	return mapToKeyValuePair(obj, keyForEntryKey, keyForEntryValue, false);
+    }
+
+    /** Map from IngridDocument to ige. Metadata is removed dependent from passed flag !!!
+     * @param obj document passed from backend
+     * @param keyForEntryKey key for accessing syslist entry key in document
+     * @param keyForEntryValue key for accessing syslist value in document
+	 * @param removeMetadata true=remove additional metadata from entry value
+     * @return key value pair for ige
+     */
+    private KeyValuePair mapToKeyValuePair(IngridDocument obj, String keyForEntryKey, String keyForEntryValue, boolean removeMetadata) {
+        Integer k = (Integer) obj.get(keyForEntryKey);
+        String val = (String) obj.get(keyForEntryValue);
         if (k != null && k != -1) {
-            val = sysListMapper.getValue(key, k);
+            val = sysListMapper.getValue(keyForEntryKey, k, removeMetadata);
         }
 
         if (val != null && val.trim().length() == 0) {
@@ -1785,7 +1802,7 @@ public class MdekMapper implements DataMapperInterface {
         for (IngridDocument con : conList) {
             ConformityBean c = new ConformityBean();
             c.setLevel((Integer) con.get(MdekKeys.CONFORMITY_DEGREE_KEY));
-            KeyValuePair kvp = mapToKeyValuePair(con, MdekKeys.CONFORMITY_SPECIFICATION_KEY, MdekKeys.CONFORMITY_SPECIFICATION_VALUE);
+            KeyValuePair kvp = mapToKeyValuePair(con, MdekKeys.CONFORMITY_SPECIFICATION_KEY, MdekKeys.CONFORMITY_SPECIFICATION_VALUE, true);
             c.setSpecification(kvp.getValue());
             resultList.add(c);
         }
@@ -2035,7 +2052,7 @@ public class MdekMapper implements DataMapperInterface {
             if (serviceType == null || serviceType == 5 || serviceType == 6) {
                 op.setName((String) operation.get(MdekKeys.SERVICE_OPERATION_NAME));
             } else {
-                String val = sysListMapper.getValue(MdekKeys.SERVICE_OPERATION_NAME_KEY+"."+serviceType, (Integer) operation.get(MdekKeys.SERVICE_OPERATION_NAME_KEY));
+                String val = sysListMapper.getValue(MdekKeys.SERVICE_OPERATION_NAME_KEY+"."+serviceType, (Integer) operation.get(MdekKeys.SERVICE_OPERATION_NAME_KEY), false);
                 op.setName(val);                
             }
             op.setDescription((String) operation.get(MdekKeys.SERVICE_OPERATION_DESCRIPTION));
@@ -2116,7 +2133,7 @@ public class MdekMapper implements DataMapperInterface {
                 // then overwrite with name from syslist if syslist entry
                 Integer nameOfMeasureKey = (Integer) dqDoc.get(MdekKeys.NAME_OF_MEASURE_KEY);
                 if (nameOfMeasureKey != null && nameOfMeasureKey != -1) {
-                    dq.setNameOfMeasure(sysListMapper.getValueFromListId(syslistIdNameOfMeasure, nameOfMeasureKey));
+                    dq.setNameOfMeasure(sysListMapper.getValueFromListId(syslistIdNameOfMeasure, nameOfMeasureKey, false));
                 }
 
                 dq.setResultValue((String) dqDoc.get(MdekKeys.RESULT_VALUE));

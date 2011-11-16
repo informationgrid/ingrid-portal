@@ -130,27 +130,37 @@ public class SysListCache {
     }
 
 
-	public String getValue(String key, Integer entryId) {
+	/** Determine list id from key from IngridDocument and fetch entry value from given entryId.
+	 * Also remove metadata from entry value if requested (e.g. conformity spec contains date
+	 * at end, NOT displayed in IGE input !
+	 * @param key key from IngridDocument determining syslist id
+	 * @param entryId entry id in syslist
+	 * @param removeMetadata true=remove additional metadata from entry value
+	 * @return entry value
+	 */
+	public String getValue(String key, Integer entryId, boolean removeMetadata) {
 		if (sysListCache == null) {
 			this.loadInitialLists();
 		}
 
-		List<String[]> sysList = getSysListForListId(keyCache.get(key));
-		if (sysList == null) {
-			sysList = addSysListToCache(keyCache.get(key));
+		Integer listId = keyCache.get(key);
+		if (listId == null) {
+			log.debug("Could not find sysList ID for key '"+key+"', entryId is '"+entryId+"'");
+			return null;
 		}
 
-		for (String[] entry : sysList) {
-			if (entry[1].equals(entryId.toString())) {
-				return entry[0];
-			}
-		}
-		
-		log.debug("Could not find sysList value for: ["+key+", "+entryId+"]");
-		return "";
+		return getValueFromListId(listId, entryId, removeMetadata);
 	}
 
-	public String getValueFromListId(Integer listId, Integer entryId) {
+	/** Fetch entry value from given syslistId and entryId.
+	 * Also remove metadata from entry value if requested (e.g. conformity spec contains date
+	 * at end, NOT displayed in IGE input !
+	 * @param listId id of syslist
+	 * @param entryId entry id in syslist
+	 * @param removeMetadata true=remove additional metadata from entry value 
+	 * @return entry value
+	 */
+	public String getValueFromListId(Integer listId, Integer entryId, boolean removeMetadata) {
 		if (sysListCache == null) {
 			this.loadInitialLists();
 		}
@@ -162,7 +172,11 @@ public class SysListCache {
 
 		for (String[] entry : sysList) {
 			if (entry[1].equals(entryId.toString())) {
-				return entry[0];
+				if (removeMetadata) {
+					return MdekCatalogUtils.removeMetadataFromSysListEntry(listId, entry[0]);
+				} else {
+					return entry[0];
+				}
 			}
 		}
 		
@@ -200,39 +214,47 @@ public class SysListCache {
 			return null;
 		}
 
-		List<String[]> sysList = getSysListForListId(keyCache.get(key));
-		if (sysList == null) {
-			log.debug("Could not find sysList: ["+key+", "+entryVal+"]");
+		Integer listId = keyCache.get(key);
+		if (listId == null) {
+			log.debug("Could not find sysList ID for key '"+key+"', entryVal is '"+entryVal+"'");
 			return null;
 		}
-		
-		for (String[] entry : sysList) {
-			if (entry[0].trim().equalsIgnoreCase(entryVal.trim())) {
-				return Integer.valueOf(entry[1]);
-			}
-		}
 
-		log.debug("Could not find sysList key for: ["+key+", "+entryVal+"]");
-		return null;
+		return getKeyFromListId(listId, entryVal);
 	}
 
 	
+	/** Checks also syslist entries without metadata !
+	 * E.g. MdekSysList.OBJ_CONFORMITY_SPECIFICATION contains date at end NOT displayed in IGE selection lists */
 	public Integer getKeyFromListId(Integer listId, String entryVal) {
 		if (sysListCache == null) {
 			this.loadInitialLists();
 		}
 
-		List<String[]> sysList = getSysListForListId(listId);
-		if (sysList == null) {
-			sysList = addSysListToCache(listId);
+		List<String[]> sysListFromDB = getSysListForListId(listId);
+		if (sysListFromDB == null) {
+			sysListFromDB = addSysListToCache(listId);
 		}
-		
+
+		// syslist may exist in "different" versions: one with metadata from datatbase (used in syslist maintenance)
+		// and one for the selection list in IGE without metadata. We check entryValue against both version !  
+		List<List<String[]>> allSysLists = new ArrayList<List<String[]>>();
+		// add the one from database (with metadata)
+		allSysLists.add(sysListFromDB);
+		// and the one without metadata if there is one !
+		List<String[]> sysListNoMetadata = MdekCatalogUtils.cloneSysListRemoveMetadata(listId, sysListFromDB);
+		if (sysListNoMetadata != null) {
+			allSysLists.add(sysListNoMetadata);
+		}
+
 		if (entryVal != null) {
-    		for (String[] entry : sysList) {
-    			if (entry[0].trim().equalsIgnoreCase(entryVal.trim())) {
-    				return Integer.valueOf(entry[1]);
-    			}
-    		}
+			for (List<String[]> sysList : allSysLists) {
+	    		for (String[] entry : sysList) {
+	    			if (entry[0].trim().equalsIgnoreCase(entryVal.trim())) {
+	    				return Integer.valueOf(entry[1]);
+	    			}
+	    		}
+			}
 		}
 		
 		log.debug("Could not find sysList/entryId for: ["+listId+", "+entryVal+"]");

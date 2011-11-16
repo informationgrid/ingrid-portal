@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.directwebremoting.io.FileTransfer;
 
-import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.ProfileBean;
@@ -15,6 +14,8 @@ public interface CatalogService {
 
 	public Integer[] getAllSysListIds();
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode);
+	/** Removes metadata encoded in syslist values, e.g. ", yyyy-MM-dd" at end */
+	public Map<Integer, List<String[]>> getSysListsRemoveMetadata(Integer[] listIds, String languageCode);
 	public void storeSysList(Integer listId, boolean maintainable, Integer defaultEntryIndex, Integer[] entryIds,
 			String[] entriesGerman, String[] entriesEnglish);
 	public String[] getFreeListEntries(Integer listId);

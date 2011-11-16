@@ -32,6 +32,8 @@ import de.ingrid.mdek.quartz.jobs.util.URLState.State;
 import de.ingrid.mdek.services.catalog.dbconsistency.ErrorReport;
 import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.udk.UtilsLanguageCodelist;
+import de.ingrid.utils.udk.UtilsUDKCodeLists;
+import de.ingrid.utils.udk.UtilsUDKCodeLists.ParseType;
 
 public class MdekCatalogUtils {
 
@@ -54,12 +56,14 @@ public class MdekCatalogUtils {
 		}
 	}
 
-	// Returns a map containing the mapped sysLists from response:
-	// { listId1 : [ [ entry1Name, entry1Id, entry1Default ],
-	//               [ entry2Name, entry2Id, entry2Default ]
-	//             ],
-	//   listId2 : ...
-	// }
+	/**
+	 * Returns a map containing the mapped sysLists from response:<p>
+	 * { listId1 : [ [ entry1Name, entry1Id, entry1Default ],<br>
+	 *               [ entry2Name, entry2Id, entry2Default ]<br>
+	 *             ],<br>
+	 *   listId2 : ...<br>
+	 * } 
+	 */
 	public static Map<Integer, List<String[]>> extractSysListFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		if (result != null) {
@@ -106,6 +110,57 @@ public class MdekCatalogUtils {
 			MdekErrorUtils.handleError(response);
 			return null;
 		}
+	}
+
+	/** Remove metadata from syslist value if there is metadata. Returns cleared or unchanged value !*/
+	public static String removeMetadataFromSysListEntry(Integer listId, String entryValue) {
+		String retValue = entryValue;
+		
+		if (de.ingrid.mdek.MdekUtils.MdekSysList.OBJ_CONFORMITY_SPECIFICATION.getDbValue().equals(listId)) {
+			retValue = UtilsUDKCodeLists.parseCodeListEntryName(entryValue, ParseType.DATE_AT_END)[0];
+		}
+
+		return retValue;
+	}
+
+	/** Prepare all syslists read from backend for displaying in syslist. All metadata in syslist values is removed ! */
+	public static  Map<Integer, List<String[]>> removeMetadataFromSysLists(Map<Integer, List<String[]>> sysListsFromDB) {
+		for (Integer listId : sysListsFromDB.keySet()) {
+			List<String[]> clearedList = cloneSysListRemoveMetadata(listId, sysListsFromDB.get(listId));
+			if (clearedList != null) {
+				sysListsFromDB.put(listId, clearedList);
+			}
+		}
+		
+		return sysListsFromDB;
+	}
+
+	/** Removes metadata from syslist and returns "cleared" syslist to be used in selection lists.
+	 * NOTICE: if the list has no metadata null is returned otherwise the list without metadata.
+	 * @param listId list id determining whether list has metadata
+	 * @param inList list from database maybe containing metadata
+	 * @return null if no metadata in list, if syslist has metadata then cleared syslist is returned
+	 */
+	public static List<String[]> cloneSysListRemoveMetadata(Integer listId, List<String[]> inList) {
+		List<String[]> returnList = null;
+
+		ParseType parseType = null;
+		if (de.ingrid.mdek.MdekUtils.MdekSysList.OBJ_CONFORMITY_SPECIFICATION.getDbValue().equals(listId)) {
+			parseType = ParseType.DATE_AT_END;
+		}
+		
+		if (parseType != null) {
+			returnList = new ArrayList<String[]>();
+			for (String[] entry : inList) {
+				returnList.add(new String[] {
+						UtilsUDKCodeLists.parseCodeListEntryName(entry[0], parseType)[0],
+						entry[1],
+						entry[2]
+					});
+			}			
+		}
+
+		return returnList;
 	}
 
 	public static String convertSysListsToXML(IngridDocument result) {

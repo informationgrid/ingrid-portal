@@ -18,6 +18,7 @@ import de.ingrid.mdek.beans.ProfileBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.profile.ProfileMapper;
+import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekErrorUtils;
 
 public class CatalogServiceImpl implements CatalogService {
@@ -34,6 +35,12 @@ public class CatalogServiceImpl implements CatalogService {
 
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String language) {
 		return catalogRequestHandler.getSysLists(listIds, language);
+	}
+
+	public Map<Integer, List<String[]>> getSysListsRemoveMetadata(Integer[] listIds, String language) {
+		Map<Integer, List<String[]>> listMap = catalogRequestHandler.getSysLists(listIds, language);
+		
+		return MdekCatalogUtils.removeMetadataFromSysLists(listMap);
 	}
 
 	public String[] getFreeListEntries(Integer sysListId) {
