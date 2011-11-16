@@ -5,7 +5,9 @@ package de.ingrid.portal.portlets.admin;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -88,6 +90,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
     protected static String PARAMV_ACTION_DO_LAST_PAGE = "doLast";
 
     protected static String PARAMV_ACTION_DO_EDIT = "doEdit";
+
+    protected static String PARAMV_ACTION_DO_FILTER = "doFilter";
 
     protected static String PARAMV_ACTION_DO_NEW = "doNew";
 
@@ -394,6 +398,16 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
                 Utils.appendURLParameter(urlViewParams, urlParam);
 
                 // handled in render method
+            } else if (request.getParameter(PARAMV_ACTION_DO_FILTER) != null) {
+                
+                ContentBrowserState state = getBrowserState(request);
+                Map<String, String> filterCriteria = state.getFilterCriteria();
+                for (Enumeration<String> e = request.getParameterNames() ; e.hasMoreElements() ;) {
+                    String pName = e.nextElement();
+                    if (pName.startsWith("filterCriteria")) {
+                        filterCriteria.put(pName, request.getParameter(pName));
+                    }
+                }
 
             } else if (request.getParameter(PARAMV_ACTION_DO_FIRST_PAGE) != null) {
                 urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_FIRST_PAGE);

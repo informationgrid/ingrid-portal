@@ -2,7 +2,7 @@ package de.ingrid.portal.om;
 
 import java.util.Date;
 
-public class IngridSecurityCredential {
+public class IngridJetspeedCredential {
 
 	private Long securityCredentialId;
 	private Long securityPrincipalId;

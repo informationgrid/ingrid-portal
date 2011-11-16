@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="de.ingrid.portal.om.IngridJetspeedPrincipal" table="security_principal">
+		<id name="principalId" column="PRINCIPAL_ID">
+			<generator class="native" />
+		</id>
+		
+		<property name="className"	column="CLASSNAME"		type="java.lang.String" />
+		<property name="isEnabled" 	 	column="IS_ENABLED"			type="java.lang.Boolean" />
+		<property name="fullPath"	column="FULL_PATH"		type="java.lang.String" />
+
+	</class>
+</hibernate-mapping>

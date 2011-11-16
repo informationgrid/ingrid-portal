@@ -13,7 +13,7 @@
         <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 -->        
         <property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
-        <property name="cache.use_query_cache">true</property>
+        <property name="cache.use_query_cache">false</property>
 
         <!-- SQL dialect -->
 <!--    <property name="dialect">org.hibernate.dialect.OracleDialect</property> -->
@@ -37,6 +37,12 @@
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridCMSItem.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridCMS.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridTinyUrlSource.hbm.xml"/>
-		<mapping resource="de/ingrid/portal/hibernate/resources/IngridSecurityCredential.hbm.xml"/>
+		<mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedCredential.hbm.xml"/>
+        <mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedPermission.hbm.xml"/>
+        <mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedPrefsNode.hbm.xml"/>
+        <mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedPrefsPropertyValue.hbm.xml"/>
+        <mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedPrincipal.hbm.xml"/>
+        <mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedPrincipalPermission.hbm.xml"/>
+        <mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedUserRole.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

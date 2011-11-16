@@ -5,6 +5,7 @@ package de.ingrid.portal.portlets.admin;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.security.Permission;
 import java.security.Permissions;
 import java.security.Principal;
@@ -20,6 +21,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.prefs.Preferences;
@@ -33,8 +35,6 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.administration.PortalAdministration;
 import org.apache.jetspeed.exception.JetspeedException;
@@ -49,21 +49,20 @@ import org.apache.jetspeed.security.GroupManager;
 import org.apache.jetspeed.security.InvalidPasswordException;
 import org.apache.jetspeed.security.JSSubject;
 import org.apache.jetspeed.security.PasswordAlreadyUsedException;
-import org.apache.jetspeed.security.PasswordCredential;
 import org.apache.jetspeed.security.PermissionManager;
 import org.apache.jetspeed.security.Role;
 import org.apache.jetspeed.security.RoleManager;
 import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.User;
 import org.apache.jetspeed.security.UserPrincipal;
-import org.apache.jetspeed.security.om.InternalUserPrincipal;
 import org.apache.velocity.context.Context;
-import org.hibernate.Criteria;
+import org.hibernate.CacheMode;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ActionForm;
@@ -75,13 +74,12 @@ import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsSecurity;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateUtil;
+import de.ingrid.portal.om.IngridJetspeedPermission;
 import de.ingrid.portal.om.IngridNewsletterData;
-import de.ingrid.portal.om.IngridSecurityCredential;
 import de.ingrid.portal.portlets.security.SecurityResources;
 import de.ingrid.portal.portlets.security.SecurityUtil;
 import de.ingrid.portal.security.JetspeedPrincipalQueryContext;
 import de.ingrid.portal.security.UserManager;
-import de.ingrid.portal.security.UserResultList;
 import de.ingrid.portal.security.permission.IngridPartnerPermission;
 import de.ingrid.portal.security.permission.IngridPortalPermission;
 import de.ingrid.portal.security.permission.IngridProviderPermission;
@@ -266,6 +264,11 @@ public class AdminUserPortlet extends ContentPortlet {
             context.put(CONTEXT_ENTITIES, rows.subList(firstRow, lastRow));
             context.put(CONTEXT_UTILS_STRING, new UtilsString());
             context.put(CONTEXT_BROWSER_STATE, state);
+            
+            for (Map.Entry<String, String> filter : state.getFilterCriteria().entrySet()) {
+                context.put(filter.getKey(), filter.getValue());
+            }
+            
             setDefaultViewPage(viewDefault);
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
@@ -362,7 +365,7 @@ public class AdminUserPortlet extends ContentPortlet {
      * @return true if the auth user has permission to edit the user with
      *         userPermissions, false if not.
      */
-    public static boolean includeUserByRoleAndPermission(Permissions authUserPermissions, Collection userRoles,
+    public static boolean includeUserByRoleAndPermission(Permissions authUserPermissions, List<String> userRoles,
             Permissions userPermissions) {
         Enumeration en;
 
@@ -379,15 +382,15 @@ public class AdminUserPortlet extends ContentPortlet {
                     return true;
                 }
             }
-            Iterator it = userRoles.iterator();
+            Iterator<String> it = userRoles.iterator();
             // check for user with no roles, exit
             if (!it.hasNext()) {
                 return false;
             }
             // check for users with roles others than 'user' or 'mdek' -> exit if found
             while (it.hasNext()) {
-                Role r = (Role) it.next();
-                if (!r.getPrincipal().getName().equals("user") && !r.getPrincipal().getName().equals("mdek")) {
+                String r = it.next();
+                if (!r.equals("user") && !r.equals("mdek")) {
                     return false;
                 }
             }
@@ -424,10 +427,10 @@ public class AdminUserPortlet extends ContentPortlet {
                     implyPermission = true;
                 } else {
                     // check for users with roles admin-provider
-                    Iterator it = userRoles.iterator();
+                    Iterator<String> it = userRoles.iterator();
                     while (it.hasNext()) {
-                        Role r = (Role) it.next();
-                        if (r.getPrincipal().getName().equals(IngridRole.ROLE_ADMIN_PROVIDER)) {
+                        String r = it.next();
+                        if (r.equals(IngridRole.ROLE_ADMIN_PROVIDER)) {
                             implyRole = true;
                         }
                     }
@@ -461,58 +464,356 @@ public class AdminUserPortlet extends ContentPortlet {
 
             // iterate over all users
             JetspeedPrincipalQueryContext qc = new JetspeedPrincipalQueryContext("", 0, Integer.MAX_VALUE);
+            long start = 0;
+            long fetchUsers = 0;
+            long fetchRoles = 0;
+            long fetchPermission = 0;
+            long fetchUserDetails = 0;
+
+            if (log.isDebugEnabled()) {
+                start = System.currentTimeMillis();
+            }
+            ContentBrowserState state = getBrowserState(request);
+            Session session = HibernateUtil.currentSession();
+            Map<String, String> filterCriteria = state.getFilterCriteria();
+            StringBuilder selectString = new StringBuilder("SELECT DISTINCT usr.fullPath, prefName.propertyValue, prefLastName.propertyValue, cred.securityLastAuthDate");
+            StringBuilder fromString = new StringBuilder("FROM IngridJetspeedPrincipal usr, IngridJetspeedCredential cred, IngridJetspeedPrefsNode prefs, IngridJetspeedPrefsNode prefsUserInfo, IngridJetspeedPrefsPropertyValue prefName, IngridJetspeedPrefsPropertyValue prefLastName");
+            StringBuilder whereString = new StringBuilder("WHERE usr.isEnabled=true AND usr.principalId=cred.securityPrincipalId AND prefs.fullPath=usr.fullPath AND prefsUserInfo.parentNodeId=prefs.nodeId AND prefsUserInfo.nodeName='userInfo' AND prefName.nodeId=prefsUserInfo.nodeId AND prefName.propertyName='"+SecurityResources.USER_NAME_GIVEN+"' AND prefLastName.nodeId=prefsUserInfo.nodeId AND prefLastName.propertyName='"+SecurityResources.USER_NAME_FAMILY+"'");
+            StringBuilder orderString = new StringBuilder("order by usr.fullPath");
+            if (filterCriteria.get("filterCriteriaId") != null && filterCriteria.get("filterCriteriaId").length() > 0) {
+                whereString.append(" AND usr.fullPath like '"+BasePrincipal.PREFS_USER_ROOT+filterCriteria.get("filterCriteriaId") +"%'");
+            }
+            if (filterCriteria.get("filterCriteriaFirstName") != null && filterCriteria.get("filterCriteriaFirstName").length() > 0) {
+                whereString.append(" AND prefName.propertyValue like '"+filterCriteria.get("filterCriteriaFirstName") +"%'");
+            }
+            if (filterCriteria.get("filterCriteriaLastName") != null && filterCriteria.get("filterCriteriaLastName").length() > 0) {
+                whereString.append(" AND prefLastName.propertyValue like '"+filterCriteria.get("filterCriteriaLastName") +"%'");
+            }
+            if (filterCriteria.get("filterCriteriaRole") != null && filterCriteria.get("filterCriteriaRole").length() > 0) {
+                fromString.append(", IngridJetspeedUserRole usrRole, IngridJetspeedPrincipal role");
+                whereString.append(" AND usr.principalId=usrRole.userId AND role.principalId=usrRole.roleId AND role.fullPath like '"+BasePrincipal.PREFS_ROLE_ROOT+filterCriteria.get("filterCriteriaRole") +"%'");
+            }
+            if (filterCriteria.get("filterCriteriaEmail") != null && filterCriteria.get("filterCriteriaEmail").length() > 0) {
+                fromString.append(", IngridJetspeedPrefsPropertyValue prefEmail");
+                whereString.append(" AND prefEmail.nodeId=prefsUserInfo.nodeId AND prefEmail.propertyName='user.business-info.online.email' AND prefEmail.propertyValue like '"+filterCriteria.get("filterCriteriaEmail") +"%'");
+            }
+            String hqlString = selectString + " " + fromString + " " + whereString + " " + orderString;
+            
+            Query q = session.createQuery(hqlString);
+            q.setCacheMode(CacheMode.REFRESH);
+            List<Object[]> principalInfoList = q.list();
+            if (log.isDebugEnabled()) {
+                log.debug("Hibernate query took: " + (System.currentTimeMillis() - start));
+            }
+            
+            Map<String, UserInfo> userInfos = new LinkedHashMap<String, UserInfo>(); 
+            for (Object[] prinipalInfo : principalInfoList) {
+                UserInfo userInfo = null;
+                if (userInfos.containsKey(prinipalInfo[0] )) {
+                    userInfo = userInfos.get(prinipalInfo[0]);
+                } else {
+                    userInfo = new UserInfo();
+                    userInfo.setFullPath((String)prinipalInfo[0]);
+                    userInfos.put((String)prinipalInfo[0], userInfo);
+                }
+                q = session.createQuery("SELECT DISTINCT role.fullPath FROM IngridJetspeedPrincipal usr, IngridJetspeedUserRole usrRole, IngridJetspeedPrincipal role WHERE usr.fullPath='"+prinipalInfo[0]+"' AND usr.principalId=usrRole.userId AND role.principalId=usrRole.roleId");
+                List<String> roleList = q.list();
+                for (String roleStr : roleList) {
+                    userInfo.addRole(roleStr.substring(BasePrincipal.PREFS_ROLE_ROOT.length()));
+                }
+                userInfo.setFirstName((String)prinipalInfo[1]);
+                userInfo.setLastName((String)prinipalInfo[2]);
+                Timestamp t = (Timestamp)prinipalInfo[3];
+                if(t != null){
+                    userInfo.setLastLogin(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(t));
+                } else {
+                    userInfo.setLastLogin("");
+                }
+                q = session.createQuery("SELECT DISTINCT perm FROM IngridJetspeedPrincipal usr, IngridJetspeedUserRole usrRole, IngridJetspeedPrincipal role, IngridJetspeedPrincipalPermission usrPerms, IngridJetspeedPrincipalPermission rolePerms, IngridJetspeedPermission perm WHERE usr.fullPath='"+prinipalInfo[0]+"' AND usr.principalId=usrRole.userId AND role.principalId=usrRole.roleId AND role.principalId=rolePerms.principalId AND usr.principalId=usrPerms.principalId AND perm.className like 'de.ingrid.portal.security.permission.%' AND (usrPerms.permissionId=perm.permissionId OR rolePerms.permissionId=perm.permissionId)");
+                List<IngridJetspeedPermission> permList = q.list();
+                for (IngridJetspeedPermission perm : permList) {
+                    userInfo.addPermission(perm);
+                }
+                q = session.createQuery("SELECT DISTINCT prefEmail.propertyValue FROM IngridJetspeedPrincipal usr, IngridJetspeedPrefsNode prefs, IngridJetspeedPrefsNode prefsUserInfo, IngridJetspeedPrefsPropertyValue prefEmail WHERE usr.fullPath='"+prinipalInfo[0]+"' AND prefs.fullPath=usr.fullPath AND prefsUserInfo.parentNodeId=prefs.nodeId AND prefsUserInfo.nodeName='userInfo' AND prefEmail.nodeId=prefsUserInfo.nodeId AND prefEmail.propertyName='user.business-info.online.email'");
+                List<String> emails = q.list();
+                userInfo.setEmail(emails.size() > 0 ? emails.get(0):"");
+                
+            }
+            
+            if (log.isDebugEnabled()) {
+                start = System.currentTimeMillis();
+            }
+            
+            
+            
+            for (Map.Entry<String, UserInfo> userInfo : userInfos.entrySet()) {
+                    boolean addUser = includeUserByRoleAndPermission(authUserPermissions, userInfo.getValue().rolesList, userInfo.getValue().permissions);
+                    if (addUser) {
+                        rows.add(userInfo.getValue());                    
+                    }
+            }
+            if (log.isDebugEnabled()) {
+                log.debug("Matching principals: " + (System.currentTimeMillis() - start));
+            }
+            
+/*            
+            
+            
+            
+            
+            
+            if (log.isDebugEnabled()) {
+                start = System.currentTimeMillis();
+            }
             UserResultList ul = userManager.getUsersExtended(qc);
+            
+            
+            
+            if (log.isDebugEnabled()) {
+                fetchUsers = (System.currentTimeMillis() - start);
+            }
             Iterator<InternalUserPrincipal> users = ul.getResults().iterator();
+            ContentBrowserState state = getBrowserState(request);
             while (users.hasNext()) {
                 InternalUserPrincipal internalUserPrincipal = users.next();
-                User user = userManager.getUser(internalUserPrincipal.getFullPath().substring(BasePrincipal.PREFS_USER_ROOT.length()));
+                String userPrincipalName = internalUserPrincipal.getFullPath().substring(BasePrincipal.PREFS_USER_ROOT.length());
                 
-                Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
+                Principal userPrincipal = new DummyUserPrincipal(userPrincipalName);
+                
                 if(!userPrincipal.getName().equals(AdminUserPortlet.GUEST)){
-	                Permissions userPermissions = SecurityHelper.getMergedPermissions(userPrincipal, permissionManager,
-	                        roleManager);
 	
 	                // get the user roles
-	                Collection userRoles = roleManager.getRolesForUser(userPrincipal.getName());
+                    if (log.isDebugEnabled()) {
+                        start = System.currentTimeMillis();
+                    }
+	                Collection<Role> userRoles = roleManager.getRolesForUser(userPrincipal.getName());
+	                List<String> userRoleNames = new ArrayList<String>();
+	                for (Role r : userRoles) {
+	                    userRoleNames.add(r.getPrincipal().getName());
+	                }
+	                if (log.isDebugEnabled()) {
+	                    fetchRoles += (System.currentTimeMillis() - start);
+	                }
+                    if (log.isDebugEnabled()) {
+                        start = System.currentTimeMillis();
+                    }
+                    Permissions userPermissions = SecurityHelper.getMergedPermissions(userPrincipal, userRoles, permissionManager);
+                    if (log.isDebugEnabled()) {
+                        fetchPermission += (System.currentTimeMillis() - start);
+                    }
 	
-	                boolean addUser = includeUserByRoleAndPermission(authUserPermissions, userRoles, userPermissions);
+	                boolean addUser = includeUserByRoleAndPermission(authUserPermissions, userRoleNames, userPermissions);
 	
 	                if (addUser) {
 	                    HashMap record = new HashMap();
-	                    record.put("id", userPrincipal.getName());
-	                    record.put("firstName", user.getUserAttributes().get(SecurityResources.USER_NAME_GIVEN, ""));
-	                    record.put("lastName", user.getUserAttributes().get(SecurityResources.USER_NAME_FAMILY, ""));
-	                    record.put("email", user.getUserAttributes().get("user.business-info.online.email", ""));
-	                    String roleString = "";
-	                    Iterator it = userRoles.iterator();
-	                    while (it.hasNext()) {
-	                        Role r = (Role) it.next();
-	                        roleString = roleString.concat(r.getPrincipal().getName());
-	                        if (it.hasNext()) {
-	                            roleString = roleString.concat(", ");
-	                        }
-	                    }
-	                    record.put("roles", roleString);
-	                    
-	                    PasswordCredential pc = SecurityUtil.getPasswordCredential(user.getSubject());
-	                    Timestamp t = pc.getLastAuthenticationDate();
-                        if(t != null){
-                            record.put("lastLogin", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(t));
-                        }else{
-                            record.put("lastLogin", "");
+                        if (rows.size() >= state.firstRow && rows.size() < state.firstRow + state.maxRows) {
+                            if (log.isDebugEnabled()) {
+                                start = System.currentTimeMillis();
+                            }
+                            User user = userManager.getUser(internalUserPrincipal.getFullPath().substring(BasePrincipal.PREFS_USER_ROOT.length()));
+                            if (log.isDebugEnabled()) {
+                                fetchUserDetails += (System.currentTimeMillis() - start);
+                            }
+                            record.put("id", userPrincipal.getName());
+                            record.put("firstName", user.getUserAttributes().get(SecurityResources.USER_NAME_GIVEN, ""));
+                            record.put("lastName", user.getUserAttributes().get(SecurityResources.USER_NAME_FAMILY, ""));
+                            record.put("email", user.getUserAttributes().get("user.business-info.online.email", ""));
+                            String roleString = "";
+                            Iterator it = userRoles.iterator();
+                            while (it.hasNext()) {
+                                Role r = (Role) it.next();
+                                roleString = roleString.concat(r.getPrincipal().getName());
+                                if (it.hasNext()) {
+                                    roleString = roleString.concat(", ");
+                                }
+                            }
+                            record.put("roles", roleString);
+                            
+                            PasswordCredential pc = SecurityUtil.getPasswordCredential(user.getSubject());
+                            Timestamp t = pc.getLastAuthenticationDate();
+                            if(t != null){
+                                record.put("lastLogin", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(t));
+                            }else{
+                                record.put("lastLogin", "");
+                            }
                         }
-	                    
 	                    rows.add(record);
 	                }
                 }
             }
-        } catch (SecurityException e) {
+            */
+            if (log.isDebugEnabled()) {
+                log.debug("fetchUsers: " + fetchUsers);
+                log.debug("fetchRoles: " + fetchRoles);
+                log.debug("fetchPermission: " + fetchPermission);
+                log.debug("fetchUserDetails: " + fetchUserDetails);
+            }
+            
+        } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.error("Error getting entities!", e);
             }
         }
         refreshBrowserState(request);
+        
         return rows;
+    }
+    
+    public class UserInfo extends HashMap<String, String> {
+        
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -7920936432515328718L;
+
+        List<String> rolesList = new ArrayList<String>();
+        
+        Permissions permissions = new Permissions();
+        
+        public UserInfo() {
+            super();
+        }
+       
+        
+        public String getFullPath() {
+            return (String) this.get("fullPath");
+        }
+
+        public void setFullPath(String fullPath) {
+            this.put("fullPath", fullPath);
+            this.put("id", fullPath.substring(BasePrincipal.PREFS_USER_ROOT.length()));
+        }
+        
+        public String getFirstName() {
+            return (String) this.get("firstName");
+        }
+        
+        public void setFirstName(String firstName) {
+            this.put("firstName", firstName);
+        }
+        
+        public String getLastName() {
+            return (String) this.get("lastName");
+        }
+        
+        public void setLastName(String lastName) {
+            this.put("lastName", lastName);
+        }
+
+        public String getEmail() {
+            return (String) this.get("email");
+        }
+        
+        public void setEmail(String email) {
+            this.put("email", email);
+        }
+        
+        public String getLastLogin() {
+            return (String) this.get("lastLogin");
+        }
+        
+        public void setLastLogin(String lastLogin) {
+            this.put("lastLogin", lastLogin);
+        }
+
+        
+        public String getRoles() {
+            return (String) this.get("roles");
+        }
+
+        public void setRoles(String roles) {
+            this.put("roles", roles);
+        }
+
+        public boolean hasRole(String role) {
+            return rolesList.contains(role);
+        }
+        
+        public void addRole(String role) {
+            if (!hasRole(role)) {
+                rolesList.add(role);
+                this.put("roles", join(rolesList, ", "));
+            }
+        }
+
+        public Permissions getPermissions() {
+            return permissions;
+        }
+
+        public void setPermissions(Permissions permissions) {
+            this.permissions = permissions;
+        }
+        
+        public boolean hasPermission(IngridJetspeedPermission permission) {
+            
+            Enumeration<Permission> permissionEnum = this.permissions.elements();
+            while (permissionEnum.hasMoreElements()) {
+                Permission p = permissionEnum.nextElement();
+                if (p.getActions().equals(permission.getActions()) && p.getName().equals(permission.getName()) && p.getClass().getName().equals(permission.getClassName())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        @SuppressWarnings("unchecked")
+        public void addPermission(IngridJetspeedPermission permission) {
+            if (!hasPermission(permission)) {
+                Class permissionClass;
+                try {
+                    permissionClass = Class.forName(permission.getClassName());
+                    Class[] parameterTypes = { String.class, String.class };
+                    Constructor permissionConstructor = permissionClass.getConstructor(parameterTypes);
+                    Object[] initArgs = { permission.getName(), permission.getActions() };
+                    Permission p = (Permission) permissionConstructor.newInstance(initArgs);
+                    this.permissions.add(p);
+                } catch (Exception e) {
+                    log.error("Error creating ingrid permission from db.", e);                }
+            }
+        }
+        
+        
+    }
+    
+    private static String join(Collection s, String delimiter) {
+        StringBuilder buffer = new StringBuilder();
+        Iterator iter = s.iterator();
+        while (iter.hasNext()) {
+            buffer.append(iter.next());
+            if (iter.hasNext()) {
+                buffer.append(delimiter);
+            }
+        }
+        return buffer.toString();
+    }
+
+    
+    private class DummyUserPrincipal implements UserPrincipal {
+
+        String name = null;
+        
+        public DummyUserPrincipal(String name) {
+            this.name = name;
+        }
+        
+        public String getName() {
+            return name;
+        }
+
+        public String getFullPath() {
+            return BasePrincipal.PREFS_USER_ROOT.concat(name);
+        }
+
+        public boolean isEnabled() {
+            // not to be used
+            throw new RuntimeException("Method not to be used in DummyUserPrincipal");
+        }
+
+        public void setEnabled(boolean enabled) {
+            // not to be used
+            throw new RuntimeException("Method not to be used in DummyUserPrincipal");
+        }
+        
     }
 
     /**
@@ -709,12 +1010,16 @@ public class AdminUserPortlet extends ContentPortlet {
                 roleManager);
     	Permissions userPermissions = SecurityHelper.getMergedPermissions(authUserPrincipal, permissionManager,
                 roleManager);
-    	Collection userRoles;
+    	Collection<Role> userRoles;
     	boolean isAdmin = false;
     	
 		try {
 			userRoles = roleManager.getRolesForUser(authUserPrincipal.getName());
-			isAdmin = includeUserByRoleAndPermission(authUserPermissions, userRoles, userPermissions);
+            List<String> userRoleNames = new ArrayList<String>();
+            for (Role r : userRoles) {
+                userRoleNames.add(r.getPrincipal().getName());
+            }
+			isAdmin = includeUserByRoleAndPermission(authUserPermissions, userRoleNames, userPermissions);
 		} catch (SecurityException e1) {
 			e1.printStackTrace();
 		}

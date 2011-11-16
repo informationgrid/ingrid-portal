@@ -3,6 +3,9 @@
  */
 package de.ingrid.portal.portlets.admin;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A class for encapsulating the current state of a DB Browser.
  *
@@ -26,6 +29,9 @@ public class ContentBrowserState {
 
     /** current sort order */
     protected boolean ascendingOrder = true;
+    
+    /** filter criteria to filter the results */
+    Map<String, String> filterCriteria = new HashMap<String, String>();
 
     // PAGING STUFF
     // ------------
@@ -140,4 +146,13 @@ public class ContentBrowserState {
     public void setMaxRows(int maxRows) {
         this.maxRows = maxRows;
     }
+
+    public Map<String, String> getFilterCriteria() {
+        return filterCriteria;
+    }
+
+    public void setFilterCriteria(Map<String, String> filterCriteria) {
+        this.filterCriteria = filterCriteria;
+    }
+
 }

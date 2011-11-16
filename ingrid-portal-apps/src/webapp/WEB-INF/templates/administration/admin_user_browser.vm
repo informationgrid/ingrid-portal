@@ -1,6 +1,17 @@
 #set ($action = $renderResponse.createActionURL())
-<form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
+<form action="$action" method="post" name="frmUserBrowser" id="frmUserBrowser">
 	<div class="formbody formbody_border_style">
+	<label for="filterCriteriaId">Login-Id</label>
+	<input type="text" name="filterCriteriaId" id="filterCriteriaId" value="$!browser.filterCriteria.filterCriteriaId" />
+    <label for="filterCriteriaFirstName">First Name</label>
+    <input type="text" name="filterCriteriaFirstName" id="filterCriteriaFirstName" value="$!browser.filterCriteria.filterCriteriaFirstName" />
+    <label for="filterCriteriaLastName">Last Name</label>
+    <input type="text" name="filterCriteriaLastName" id="filterCriteriaLastName" value="$!browser.filterCriteria.filterCriteriaLastName" />
+    <label for="filterCriteriaEmail">Email</label>
+    <input type="text" name="filterCriteriaEmail" id="filterCriteriaEmail" value="$!browser.filterCriteria.filterCriteriaEmail" />
+    <label for="filterCriteriaRole">Rolle</label>
+    <input type="text" name="filterCriteriaRole" id="filterCriteriaRole" value="$!browser.filterCriteria.filterCriteriaRole" />
+    #renderInputButton("doFilter" "" "doFilter" "Filter")
 	<p>$MESSAGES.getString('account.view.tip')</p>
 #renderDBBrowserNavigation($browser)
 	<p>
