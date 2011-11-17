@@ -1680,7 +1680,7 @@ udkDataProxy._setObjectData = function(nodeData)
   var unpubLinkTable = nodeData.linksFromObjectTable;
   var pubLinkTable = nodeData.linksFromPublishedObjectTable;
   dojo.forEach(pubLinkTable, function(link) { link.pubOnly = true; } );
-  linkTable = unpubLinkTable.concat(pubLinkTable);
+  linkTable = pubLinkTable.concat(unpubLinkTable);
 
   UtilList.addObjectLinkLabels(linkTable);
   UtilList.addIcons(linkTable);
