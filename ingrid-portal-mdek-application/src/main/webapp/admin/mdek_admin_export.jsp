@@ -37,7 +37,7 @@ var exportServiceCallback = {
 
 
 var storeProps = {data: {identifier: '1',label: '0'}};
-createSelectBox("exportXMLCriteria", null, storeProps, function(){
+createComboBox("exportXMLCriteria", null, dojo.clone(storeProps), function(){
     return UtilSyslist.getSyslistEntry(1370);
 });
 
@@ -46,7 +46,7 @@ dojo.connect(_container_, "onLoad", function(){
 });
 
 function startExportCriteria() {
-	var exportCriteria = dijit.byId("exportXMLCriteria").getValue();
+	var exportCriteria = dijit.byId("exportXMLCriteria").get("value");
 	console.debug("exportCriteria: "+ exportCriteria);
 	if (exportCriteria) {
 		exportObjectsWithCriteria(exportCriteria);
@@ -213,8 +213,10 @@ function updateExportInfo(exportInfo) {
 		dojo.byId("exportInfoNumExportedEntities").innerHTML = exportInfo.numProcessedEntities + " / " + exportInfo.numEntities;
 
 		var progressBar = dijit.byId("exportProgressBar");
-		progressBar.setMaxProgressValue(exportInfo.numEntities);
-		progressBar.setProgressValue(exportInfo.numProcessedEntities);
+        progressBar.update({
+            maximum: exportInfo.numEntities,
+            progress: exportInfo.numProcessedEntities
+        });
 	}
     
     //console.debug(exportInfo);
