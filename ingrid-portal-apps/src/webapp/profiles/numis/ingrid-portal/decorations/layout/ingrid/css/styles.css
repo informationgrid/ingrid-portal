@@ -818,3 +818,6 @@ div.btn_center { float:left; background-image: url("../images/button.png"); back
 #footerSeparator { }
 #footercontent a { }
 #getNewsletter { }
+
+div.weather { padding:0px !important; }
+object.weatherObject { width:250px; height:310px; margin: -7px 0 0; }

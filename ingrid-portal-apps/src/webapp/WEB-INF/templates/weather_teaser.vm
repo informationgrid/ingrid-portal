@@ -1,6 +1,6 @@
-<div class="portlet-section-body">
+<div class="portlet-section-body weather">
 	#if($DWD_PATH != "" && $DWD_PATH.length() > 0)
-        <object data="$DWD_PATH" type="application/x-shockwave-flash" width="226" height="240">
+        <object class="weatherObject" data="$DWD_PATH" type="application/x-shockwave-flash" width="226" height="240">
     		#if($DWD_MOVIE != "" && $DWD_MOVIE.length() > 0)
             <param name="movie" value="$DWD_MOVIE"/>
     		#end
