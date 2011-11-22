@@ -135,10 +135,10 @@ $action.setParameter('action', $app_menu)
 							#set ($link = "http://geokat.wsv.bvbs.bund.de/terraCatalog.Start.do")
 							#renderLinkToUrlExtern ($link)
 						#elseif($app_menu == "extern3")
-							#set ($link = "http://geoviewer.ilmenau.baw.de/mapclient/initParams.do")
+							#set ($link = "http://geopartal.wsv.bvbs.bund.de/geoportal/cms/Content/Anwendungen/ArcGIS.html")
 							#renderLinkToUrlExtern ($link)
 						#else
-							#set ($link = "http://geokat.wsv.bvbs.bund.de/terraCatalog/Start.do")
+							#set ($link = "http://geopartal.wsv.bvbs.bund.de/geoportal/cms/Content/Anwendungen/Tools.html")
 							#renderLinkToUrlExtern ($link)
 						#end
 					#else
