@@ -1083,14 +1083,6 @@ ingridObjectLayout.createExtraInfo = function() {
 	//new dijit.form.DateTextBox({}, "extraInfoConformityDatePicker");
 	
 	var extraInfoConformityTableStructure = [
-		{field: 'level',name: message.get("ui.obj.additionalInfo.conformityTable.header.level"),width: '150px',
-			type: SelectboxEditor,
-	        options: [], // will be filled later, when syslists are loaded
-	        values: [],
-	        editable: true,
-            listId: 6000,
-	        formatter: dojo.partial(SyslistCellFormatter, 6000)
-		},
 		{field: 'specification',name: message.get("ui.obj.additionalInfo.conformityTable.header.specification"),width: 558-scrollBarWidth+'px',
 			type: ComboboxEditor,
 	        options: [], // will be filled later, when syslists are loaded
@@ -1098,6 +1090,14 @@ ingridObjectLayout.createExtraInfo = function() {
 	        editable: true,
             listId: 6005,
 	        formatter: dojo.partial(SyslistCellFormatter, 6005)
+		},
+		{field: 'level',name: message.get("ui.obj.additionalInfo.conformityTable.header.level"),width: '150px',
+			type: SelectboxEditor,
+	        options: [], // will be filled later, when syslists are loaded
+	        values: [],
+	        editable: true,
+            listId: 6000,
+	        formatter: dojo.partial(SyslistCellFormatter, 6000)
 		}
 	];
     createDataGrid("extraInfoConformityTable", null, extraInfoConformityTableStructure, null);
