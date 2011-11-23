@@ -37,7 +37,7 @@
                     </li>
                 </ul>
             </div>
-            #if ($enableSearchCatalog || $enableSearchCatalogThesaurus)
+			#if ($enableSearchCatalog || $enableSearchCatalogThesaurus)
             <div class="middle">
                 <ul>
                     <li>
@@ -76,7 +76,36 @@
                     </li>
                 </ul>
             </div>
-            #end
+			#end
+			#if ($enableApplication)
+			<div class="right">
+                <ul>
+                    <li>
+                        #set ($link = $renderResponse.encodeURL("/portal/application/main-application.psml"))
+                        <a href="$link" title="$MESSAGES.getString("sitemap.application.main.tooltip")">$MESSAGES.getString("sitemap.application.main")</a>
+                        <p>$MESSAGES.getString("sitemap.application.main.description")</p>
+                        <ul>
+                            <li>
+                                #set ($link = $renderResponse.encodeURL("/portal/application/main-application-0.psml"))
+                                <a href="$link" title="$MESSAGES.getString("sitemap.application.0.tooltip")">$MESSAGES.getString("sitemap.application.0")</a>
+                                <p>$MESSAGES.getString("sitemap.application.0.description")</p>
+                            </li>
+                            <li>
+                                #set ($link = $renderResponse.encodeURL("/portal/application/main-application-1.psml"))
+                                <a href="$link" title="$MESSAGES.getString("sitemap.application.1.tooltip")">$MESSAGES.getString("sitemap.application.1")</a>
+                                <p>$MESSAGES.getString("sitemap.application.1.description")</p>
+                            </li>
+                            <li>
+                                #set ($link = $renderResponse.encodeURL("/portal/application/main-application-2.psml"))
+                                <a href="$link" title="$MESSAGES.getString("sitemap.application.2.tooltip")">$MESSAGES.getString("sitemap.application.2")</a>
+                                <p>$MESSAGES.getString("sitemap.application.2.description")</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <br />
+            </div>
+			#end
             <div class="clearer"></div>
             <div class="left">
                 <ul>

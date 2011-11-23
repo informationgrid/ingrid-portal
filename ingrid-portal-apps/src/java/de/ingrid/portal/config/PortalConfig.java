@@ -188,7 +188,9 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_ENABLE_SEARCH_SIMPLE_DATASOURCE_SELECTION = "portal.enable.search.simple.datasource.selection";
 	
     public static final String PORTAL_ENABLE_SEARCH_SIMPLE_OPTIONAL_LINKS= "portal.enable.search.simple.optional.links";
-	
+    
+    public static final String PORTAL_ENABLE_APPLICATION= "portal.enable.application";
+    
     // Hide CMS items for changing on admin page
     public static final String PORTAL_ADMIN_HIDE_CMS_ITEMS = "portal.admin.hide.cms.items";
     
