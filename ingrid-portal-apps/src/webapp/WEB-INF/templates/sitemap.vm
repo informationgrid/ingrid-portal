@@ -100,6 +100,26 @@
                                 <a href="$link" title="$MESSAGES.getString("sitemap.application.2.tooltip")">$MESSAGES.getString("sitemap.application.2")</a>
                                 <p>$MESSAGES.getString("sitemap.application.2.description")</p>
                             </li>
+							<li>
+                                #set ($link = "http://geoviewer.ilmenau.baw.de/mapclient/initParams.do")
+                                <a target="_blank" href="$link" title="$MESSAGES.getString("sitemap.application.extern1.tooltip")">$MESSAGES.getString("sitemap.application.extern1")</a>
+                                <p>$MESSAGES.getString("sitemap.application.extern1.description")</p>
+                            </li>
+							<li>
+                                #set ($link = "http://geokat.wsv.bvbs.bund.de/terraCatalog/Start.do")
+                                <a target="_blank" href="$link" title="$MESSAGES.getString("sitemap.application.extern2.tooltip")">$MESSAGES.getString("sitemap.application.extern2")</a>
+                                <p>$MESSAGES.getString("sitemap.application.extern2.description")</p>
+                            </li>
+							<li>
+                                #set ($link = "http://geoportal.wsv.bvbs.bund.de/geoportal/cms/Content/Anwendungen/ArcGIS.html")
+                                <a target="_blank" href="$link" title="$MESSAGES.getString("sitemap.application.extern3.tooltip")">$MESSAGES.getString("sitemap.application.extern3")</a>
+                                <p>$MESSAGES.getString("sitemap.application.extern3.description")</p>
+                            </li>
+							<li>
+                                #set ($link = "http://geoportal.wsv.bvbs.bund.de/geoportal/cms/Content/Anwendungen/Tools.html")
+                                <a target="_blank" href="$link" title="$MESSAGES.getString("sitemap.application.extern4.tooltip")">$MESSAGES.getString("sitemap.application.extern4")</a>
+                                <p>$MESSAGES.getString("sitemap.application.extern4.description")</p>
+                            </li>
                         </ul>
                     </li>
                 </ul>
