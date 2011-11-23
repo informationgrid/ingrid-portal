@@ -542,14 +542,14 @@ div.formbody .spacer_search_form {margin-top: 15px}
 .col2left_incr { width:14em; }
 .col2right { width:15em; }
 
-div.formfooter {height: auto;padding: 10px 20px 20px; margin:0px 0px 20px 0px; background-color: #EFEFEF; height: 30px; }
+div.formfooter {height: auto;padding: 10px 30px 20px; margin:0px 0px 20px 0px; background-color: #EFEFEF; height: 30px; }
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 div.formfooter_border_style { border-bottom: 1px solid #CECECE; border-left: 1px solid #CECECE; border-right: 1px solid #CECECE; }
 div.formfooter_border_style_top { border-top: 1px solid #CECECE; }
 
 input.btn { background: none; height: 33px; color: #FFFFFF; font-weight: bold; text-align: left; padding-left: 10px; padding-right: 10px; padding-bottom: 2px; border: 0 none !important; font-size: 12px; font-family: Verdana, Arial, sans-serif; text-shadow: 1px -1px 0 #1C5269; }
 input.btn:hover { color: #FFFFFF; cursor: pointer;  background-image: url(../images/background-mainmenu-hover.png); }
-input.btn_disable { background: none; height: 33px; color: #CECECE; font-weight: bold; text-align: left; padding-left: 10px; padding-right: 10px; border: 0 none !important; background-image: url(../images/background-mainmenu-hover.png);}
+input.btn_disable { background: none; height: 33px; color: #CECECE; font-weight: bold; text-align: left; padding-left: 10px; padding-right: 10px; border: 0 none !important;}
 input.btn_search { background: none; height: 33px; color: #486606; font-weight: bold; text-align: left; padding: 2px 38px 2px 9px; border: 0 none !important; font-size: 12px; font-family: Verdana, Arial, sans-serif; text-shadow: 1px -1px 0px #BCE465; }
 input.btn_search:hover { color: #486606; cursor: pointer; background-image: url(../images/button_hover.png); text-shadow: 1px -1px 0px #BCE465; background-position: right center; }
 input.btn_search_disable { background: none; height: 33px; color: #CECECE; font-weight: bold; text-align: left; padding-left: 9px; padding-right: 38px;  padding-bottom: 2px; border: 0 none !important; background-image: url(../images/background-mainmenu-hover.png); font-family: Verdana, Arial, sans-serif; text-shadow: 1px -1px 0px #BCE465; }
@@ -795,6 +795,8 @@ div.btn_center { float:left; background-image: url("../images/button.png"); back
 div#logo img { height: 81px; width: 188px; }
 
 
+
+
 /* IE HACKS */
 *+html input {overflow: visible;}   /* IE7 - remove button extra padding */
 *+html h1 {height:1%;}             /* IE7 - remove header extra padding */
@@ -809,3 +811,24 @@ ul.shortcut li p:hover { text-decoration:underline; }
 
 /* IFrame Portlet */
 .contentWrapper { border: 0px solid #CCD5DE; padding: 0px; }
+
+
+/** new for InGrid 3.2.0 **/
+
+/* pagination styles */
+#paginationAndHint {margin-top:8px;padding-top:8px;border-top-width:1px;border-top-style:solid;border-top-color:#cecece}
+#dbBrowserHint {float:left}
+#pagination {float:right}
+#btnPageFirst {float:left;margin-top:4px;margin-right:4px}
+#btnPagePrev {float:left;margin-top:4px;margin-right:8px}
+#btnPageNext {float:left;margin-top:4px;margin-right:4px;margin-left:8px}
+#btnPageLast {float:left;margin-top:4px}
+.btn_pg_left {float:left;height:19px;width: 2px;background-image:url(../images/button_small_left.png)}
+.btn_pg_left_disabled {float:left;height:19px;width: 2px;background:#cecece}
+.btn_pg_right {float:left;height:19px;width: 2px;background-image:url(../images/button_small_right.png)}
+.btn_pg_right_disabled {float:left;height:19px;width: 2px;background:#cecece}
+.btn_pg_center {float:left;height:19px;background-image:url(../images/button_small.png); background-position: right center; }
+.btn_pg_center_disabled {float:left;height:19px;background:#cecece}
+
+
+

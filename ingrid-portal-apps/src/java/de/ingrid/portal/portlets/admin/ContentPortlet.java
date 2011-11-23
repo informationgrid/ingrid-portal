@@ -409,28 +409,28 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
                     }
                 }
 
-            } else if (request.getParameter(PARAMV_ACTION_DO_FIRST_PAGE) != null) {
+            } else if (request.getParameter(PARAMV_ACTION_DO_FIRST_PAGE) != null || request.getParameter(PARAMV_ACTION_DO_FIRST_PAGE+".x") != null) {
                 urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_FIRST_PAGE);
                 Utils.appendURLParameter(urlViewParams, urlParam);
 
                 ContentBrowserState state = getBrowserState(request);
                 state.doFirstPage();
 
-            } else if (request.getParameter(PARAMV_ACTION_DO_PREV_PAGE) != null) {
+            } else if (request.getParameter(PARAMV_ACTION_DO_PREV_PAGE) != null || request.getParameter(PARAMV_ACTION_DO_PREV_PAGE+".x") != null) {
                 urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_PREV_PAGE);
                 Utils.appendURLParameter(urlViewParams, urlParam);
 
                 ContentBrowserState state = getBrowserState(request);
                 state.doPreviousPage();
 
-            } else if (request.getParameter(PARAMV_ACTION_DO_NEXT_PAGE) != null) {
+            } else if (request.getParameter(PARAMV_ACTION_DO_NEXT_PAGE) != null || request.getParameter(PARAMV_ACTION_DO_NEXT_PAGE+".x") != null) {
                 urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_NEXT_PAGE);
                 Utils.appendURLParameter(urlViewParams, urlParam);
 
                 ContentBrowserState state = getBrowserState(request);
                 state.doNextPage();
 
-            } else if (request.getParameter(PARAMV_ACTION_DO_LAST_PAGE) != null) {
+            } else if (request.getParameter(PARAMV_ACTION_DO_LAST_PAGE) != null || request.getParameter(PARAMV_ACTION_DO_LAST_PAGE+".x") != null) {
                 urlParam = Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_DO_LAST_PAGE);
                 Utils.appendURLParameter(urlViewParams, urlParam);
 

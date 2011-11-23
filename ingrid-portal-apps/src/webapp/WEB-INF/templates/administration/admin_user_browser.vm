@@ -1,32 +1,43 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmUserBrowser" id="frmUserBrowser">
-	<div class="formbody formbody_border_style">
-	<label for="filterCriteriaId">Login-Id</label>
-	<input type="text" name="filterCriteriaId" id="filterCriteriaId" value="$!browser.filterCriteria.filterCriteriaId" />
-    <label for="filterCriteriaFirstName">First Name</label>
-    <input type="text" name="filterCriteriaFirstName" id="filterCriteriaFirstName" value="$!browser.filterCriteria.filterCriteriaFirstName" />
-    <label for="filterCriteriaLastName">Last Name</label>
-    <input type="text" name="filterCriteriaLastName" id="filterCriteriaLastName" value="$!browser.filterCriteria.filterCriteriaLastName" />
-    <label for="filterCriteriaEmail">Email</label>
-    <input type="text" name="filterCriteriaEmail" id="filterCriteriaEmail" value="$!browser.filterCriteria.filterCriteriaEmail" />
-    <label for="filterCriteriaRole">Rolle</label>
-    <input type="text" name="filterCriteriaRole" id="filterCriteriaRole" value="$!browser.filterCriteria.filterCriteriaRole" />
-    #renderInputButton("doFilter" "" "doFilter" "Filter")
-	<p>$MESSAGES.getString('account.view.tip')</p>
-#renderDBBrowserNavigation($browser)
-	<p>
-		<table class="border fullwidth">
+    <div class="formbody formbody_border_style">
+    <div style="float:left">
+    <p style="float:left;margin-right:10px"><label for="filterCriteriaId">Login-Id</label><br/>
+    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaId" id="filterCriteriaId" value="$!browser.filterCriteria.filterCriteriaId" />
+    </p>
+    <p style="float:left;margin-right:10px"><label for="filterCriteriaFirstName">First Name</label><br/>
+    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaFirstName" id="filterCriteriaFirstName" value="$!browser.filterCriteria.filterCriteriaFirstName" />
+    </p>
+    <p style="float:left;margin-right:10px"><label for="filterCriteriaLastName">Last Name</label><br/>
+    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaLastName" id="filterCriteriaLastName" value="$!browser.filterCriteria.filterCriteriaLastName" />
+    </p>
+    <br style="clear:both" />
+    <p style="float:left;margin-right:10px"><label for="filterCriteriaEmail">Email</label><br/>
+    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaEmail" id="filterCriteriaEmail" value="$!browser.filterCriteria.filterCriteriaEmail" />
+    </p>
+    <p style="float:left;margin-right:10px"><label for="filterCriteriaRole">Rolle</label><br/>
+    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaRole" id="filterCriteriaRole" value="$!browser.filterCriteria.filterCriteriaRole" />
+    </p>
+    </div>
+    <div style="float:right;margin-top:20px">
+    #renderInputButton("Suchen" "" "doFilter" "Suchen")
+    </div>
+    <br style="clear:both" />
+    
+    #renderPaginationAndHint($browser "$MESSAGES.getString('account.view.tip')")
+
+    <br style="clear:both" />
+    <table class="border fullwidth">
 #set ($colNames = ["id", "firstName", "lastName", "email", "roles", "lastLogin"])
 #set ($colTitles = [$MESSAGES.getString('account.view.id'), $MESSAGES.getString('account.view.first.name'), $MESSAGES.getString('account.view.last.name'), $MESSAGES.getString('account.view.email'), $MESSAGES.getString('account.view.roles'), $MESSAGES.getString('account.view.last.login')])
 #renderDBBrowserHeader($colNames $colTitles)
 #foreach ($dbEntity in $dbEntities)
-	#set ($rowId = $dbEntity.id)
-	#set ($rowValues = [$UtilsString.cutString($dbEntity.firstName, 20, 20), $UtilsString.cutString($dbEntity.lastName, 20, 20), $UtilsString.cutString($dbEntity.email, 40, 40), $dbEntity.roles, $dbEntity.lastLogin])
-	#renderDBBrowserRowWithEditLink($rowId $rowValues)
+    #set ($rowId = $dbEntity.id)
+    #set ($rowValues = [$UtilsString.cutString($dbEntity.firstName, 20, 20), $UtilsString.cutString($dbEntity.lastName, 20, 20), $UtilsString.cutString($dbEntity.email, 40, 40), $dbEntity.roles, $dbEntity.lastLogin])
+    #renderDBBrowserRowWithEditLink($rowId $rowValues)
 #end
-		</table>
-		</p>
-	</div>
+        </table>
+    </div>
 #set ($buttons = ["doDelete", "doRefresh", "doNew"])
 #renderDBBrowserFooterButtons($buttons)
 </form>
