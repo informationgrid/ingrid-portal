@@ -44,5 +44,7 @@
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedPrincipal.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedPrincipalPermission.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedUserRole.hbm.xml"/>
+		<mapping resource="de/ingrid/portal/hibernate/resources/IngridFragmentPref.hbm.xml"/>
+		<mapping resource="de/ingrid/portal/hibernate/resources/IngridFragmentPrefValue.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

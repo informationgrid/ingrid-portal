@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="de.ingrid.portal.om.IngridFragmentPref" table="fragment_pref">
+		<id name="id" column="PREF_ID">
+			<generator class="native" />
+		</id>
+		<property name="fragmentId" 		column="FRAGMENT_ID"		type="java.lang.Long" />
+		<property name="fragmentName" 		column="NAME"				type="java.lang.String" />
+		<property name="fragmentReadOnly" 	column="IS_READ_ONLY"		type="java.lang.Long" />
+	</class>
+</hibernate-mapping>

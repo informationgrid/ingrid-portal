@@ -1895,7 +1895,7 @@
             <name>EditPage</name>
             <value>/WEB-INF/templates/edit-view/edit-prefs.vm</value>
         </init-param>
-        <expiration-cache>300</expiration-cache>
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>EDIT</portlet-mode>
