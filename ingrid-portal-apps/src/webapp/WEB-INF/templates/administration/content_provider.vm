@@ -1,62 +1,77 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
-	<div class="formbody formbody_border_style">
-#renderDBBrowserNavigation($browser)
-		<p>
-		<table class="border fullwidth">
+    <div class="formbody formbody_border_style">
+
+    <div id="filterArea">
+    <div style="float:left">
+    <p style="float:left;margin-right:10px"><label for="filterCriteriaProviderIdent">$MESSAGES.getString('component.forms.provider.text.short')</label><br/>
+    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaProviderIdent" id="filterCriteriaProviderIdent" value="$!browser.filterCriteria.filterCriteriaProviderIdent" />
+    </p>
+    <p style="float:left;margin-right:10px"><label for="filterCriteriaProviderName">$MESSAGES.getString('component.forms.provider.text.name')</label><br/>
+    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaProviderName" id="filterCriteriaProviderName" value="$!browser.filterCriteria.filterCriteriaProviderName" />
+    </p>
+    </div>
+    <div style="float:right;margin-top:20px">
+    #renderInputButton("$MESSAGES.getString('component.forms.buttons.search')" "" "doFilter" "$MESSAGES.getString('component.forms.buttons.search')")
+    </div>
+    <br style="clear:both" />
+    </div>
+
+    #renderPaginationAndHint($browser "")
+    <br style="clear:both" />
+        <table class="border fullwidth">
 #set ($colNames = ["id", "ident", "name", "url", "sortkey", "sortkeyPartner"])
 #set ($colTitles = [$MESSAGES.getString('component.forms.provider.text.id'), $MESSAGES.getString('component.forms.provider.text.short'), $MESSAGES.getString('component.forms.provider.text.name'), $MESSAGES.getString('component.forms.provider.text.link'), $MESSAGES.getString('component.forms.provider.text.sort'), $MESSAGES.getString('component.forms.provider.text.partner')])
 #renderDBBrowserHeader($colNames $colTitles)
 #foreach ($dbEntity in $dbEntities)
-	#set ($rowId = $dbEntity.Id)
-	#set ($rowValues = [$dbEntity.Ident, $dbEntity.Name, $UtilsString.cutString($dbEntity.Url, 20, 20), $dbEntity.Sortkey, $dbEntity.SortkeyPartner])
+    #set ($rowId = $dbEntity.Id)
+    #set ($rowValues = [$dbEntity.Ident, $dbEntity.Name, $UtilsString.cutString($dbEntity.Url, 20, 20), $dbEntity.Sortkey, $dbEntity.SortkeyPartner])
     <tr>
     #if ($velocityCount % 2 == 0)
-    	#set ($rowstyle = "contentRowEven")
+        #set ($rowstyle = "contentRowEven")
     #else
-    	#set ($rowstyle = "contentRowOdd")
+        #set ($rowstyle = "contentRowOdd")
     #end   
-    	<td class="$rowstyle">
-    		<input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+        <td class="$rowstyle">
+            <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
         </td>
     #set ($action = $renderResponse.createActionURL())
     $action.setParameter('doEdit','Edit')
     $action.setParameter("id", "$rowId")
-    	<td class="$rowstyle"><a href="$action">$rowId</a></td>
-    	<td class="$rowstyle"><a href="$action">$dbEntity.Ident</a></td>
-    	<td class="$rowstyle"><a href="$action">$dbEntity.Name</a></td>
-    	<td class="$rowstyle"><a href="$action">$UtilsString.cutString($dbEntity.Url, 20, 20)</a></td>
-    	<td class="$rowstyle"><a href="$action">$dbEntity.Sortkey</a></td>
-    	<td class="$rowstyle"><a href="$action">
-		#foreach ($partner in $partners)
-			#if($partner.sortkey == $dbEntity.SortkeyPartner)
-				$partner.name
-			#end
-		#end</a></td>
+        <td class="$rowstyle"><a href="$action">$rowId</a></td>
+        <td class="$rowstyle"><a href="$action">$dbEntity.Ident</a></td>
+        <td class="$rowstyle"><a href="$action">$dbEntity.Name</a></td>
+        <td class="$rowstyle"><a href="$action">$UtilsString.cutString($dbEntity.Url, 20, 20)</a></td>
+        <td class="$rowstyle"><a href="$action">$dbEntity.Sortkey</a></td>
+        <td class="$rowstyle"><a href="$action">
+        #foreach ($partner in $partners)
+            #if($partner.sortkey == $dbEntity.SortkeyPartner)
+                $partner.name
+            #end
+        #end</a></td>
     </tr>
 #end
-		</table>
-		</p>
-	</div>
+        </table>
+    </div>
 #set ($buttons = ["doDelete", "doRefresh", "doNew"])
 #renderDBBrowserFooterButtonsDisable($buttons $disablePartnerProviderEdit)
 </form>
 <p/>
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
-	<input type="hidden" name="action" value="doImport">
-	<div class="formbody formbody_border_style">
-		<p>
+    <input type="hidden" name="action" value="doImport">
+    <div class="formbody formbody_border_style">
+        <p>
 <label for="csvData">$MESSAGES.getString('component.forms.provider.text.tip')
 </label><br/>
 #if($import_message)
 <br/><span class="portlet-msg-error">$import_message</span><br/>
 #end
-	<textarea rows="30" cols="125" id="csvData" name="csvData"></textarea>
-		</p>
-	</div>
+    <textarea rows="30" cols="125" id="csvData" name="csvData"></textarea>
+        </p>
+    </div>
 <div class="formfooter formfooter_border_style" align="right">
-	#renderInputButtonClass("$MESSAGES.getString('component.forms.provider.button.import')" "" "doImport" "" "float_right")
+    #renderInputButtonClass("$MESSAGES.getString('component.forms.provider.button.import')" "" "doImport" "" "float_right")
 </div>
 </form>
 

@@ -6,6 +6,7 @@ package de.ingrid.portal.portlets.admin;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -15,12 +16,14 @@ import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.velocity.context.Context;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.AdminContentPartnerForm;
@@ -127,6 +130,51 @@ public class ContentProviderPortlet extends ContentPortlet {
         }
         super.doView(request, response);
     }
+    
+    protected boolean doViewDefault(RenderRequest request) {
+        try {
+            // always refresh !
+//            refreshBrowserState(request);
+            ContentBrowserState state = getBrowserState(request);
+
+            // get data from database
+            String sortColumn = getSortColumn(request, "id");
+            boolean ascendingOrder = isAscendingOrder(request);
+            Session session = HibernateUtil.currentSession();
+            Criteria crit = session.createCriteria(dbEntityClass);
+            Map<String, String> filterCriteria = state.getFilterCriteria();
+            if (filterCriteria.get("filterCriteriaProviderIdent") != null && filterCriteria.get("filterCriteriaProviderIdent").length() > 0) {
+                crit.add((Restrictions.like("ident", filterCriteria.get("filterCriteriaProviderIdent")+"%")));
+            }
+            if (filterCriteria.get("filterCriteriaProviderName") != null && filterCriteria.get("filterCriteriaProviderName").length() > 0) {
+                crit.add((Restrictions.like("name", filterCriteria.get("filterCriteriaProviderName")+"%")));
+            }
+            if (ascendingOrder) {
+                crit.addOrder(Order.asc(sortColumn));
+            } else {
+                crit.addOrder(Order.desc(sortColumn));
+            }
+            List totalResults = UtilsDB.getValuesFromDB(crit, session, null, false);
+            state.setTotalNumRows(totalResults.size());
+            
+            crit.setFirstResult(state.getFirstRow());
+            crit.setMaxResults(state.getMaxRows());
+            List displayResults = UtilsDB.getValuesFromDB(crit, session, null, true);
+
+            // put to render context
+            Context context = getContext(request);
+            context.put(CONTEXT_ENTITIES, displayResults);
+            context.put(CONTEXT_BROWSER_STATE, state);
+            setDefaultViewPage(viewDefault);
+            return true;
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems processing default view:", ex);
+            }
+        }
+
+        return false;
+    }    
 
     /**
      * Redefine method, we have to check stuff.

@@ -1,8 +1,8 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
 	<div class="formbody formbody_border_style">
-#renderDBBrowserNavigation($browser)
-	<p>
+    #renderPaginationAndHint($browser "")
+    <br style="clear:both" />
 		<table class="border fullwidth">
 #set ($colNames = ["id", "itemKey", "itemDescription"])
 #set ($colTitles = [$MESSAGES.getString('admin.cms.overview.id'), $MESSAGES.getString('admin.cms.overview.short'), $MESSAGES.getString('admin.cms.overview.description')])
@@ -21,7 +21,6 @@
 	#end
 #end
 		</table>
-		</p>
 	</div>
 #set ($buttons = ["doRefresh"])
 #renderDBBrowserFooterButtons($buttons)

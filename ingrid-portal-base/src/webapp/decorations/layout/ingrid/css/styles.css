@@ -816,7 +816,8 @@ ul.shortcut li p:hover { text-decoration:underline; }
 /** new for InGrid 3.2.0 **/
 
 /* pagination styles */
-#paginationAndHint {margin-top:8px;padding-top:8px;border-top-width:1px;border-top-style:solid;border-top-color:#cecece}
+#filterArea {padding-bottom:8px;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#cecece}
+#paginationAndHint {margin-top:8px;}
 #dbBrowserHint {float:left}
 #pagination {float:right}
 #btnPageFirst {float:left;margin-top:4px;margin-right:4px}

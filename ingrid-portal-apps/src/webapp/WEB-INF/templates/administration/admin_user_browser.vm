@@ -1,28 +1,31 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmUserBrowser" id="frmUserBrowser">
     <div class="formbody formbody_border_style">
+
+    <div id="filterArea">
     <div style="float:left">
-    <p style="float:left;margin-right:10px"><label for="filterCriteriaId">Login-Id</label><br/>
+    <p style="float:left;margin-right:10px"><label for="filterCriteriaId">$MESSAGES.getString('account.view.id')</label><br/>
     <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaId" id="filterCriteriaId" value="$!browser.filterCriteria.filterCriteriaId" />
     </p>
-    <p style="float:left;margin-right:10px"><label for="filterCriteriaFirstName">First Name</label><br/>
+    <p style="float:left;margin-right:10px"><label for="filterCriteriaFirstName">$MESSAGES.getString('account.view.first.name')</label><br/>
     <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaFirstName" id="filterCriteriaFirstName" value="$!browser.filterCriteria.filterCriteriaFirstName" />
     </p>
-    <p style="float:left;margin-right:10px"><label for="filterCriteriaLastName">Last Name</label><br/>
+    <p style="float:left;margin-right:10px"><label for="filterCriteriaLastName">$MESSAGES.getString('account.view.last.name')</label><br/>
     <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaLastName" id="filterCriteriaLastName" value="$!browser.filterCriteria.filterCriteriaLastName" />
     </p>
     <br style="clear:both" />
-    <p style="float:left;margin-right:10px"><label for="filterCriteriaEmail">Email</label><br/>
+    <p style="float:left;margin-right:10px"><label for="filterCriteriaEmail">$MESSAGES.getString('account.view.email')</label><br/>
     <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaEmail" id="filterCriteriaEmail" value="$!browser.filterCriteria.filterCriteriaEmail" />
     </p>
-    <p style="float:left;margin-right:10px"><label for="filterCriteriaRole">Rolle</label><br/>
+    <p style="float:left;margin-right:10px"><label for="filterCriteriaRole">$MESSAGES.getString('account.view.roles')</label><br/>
     <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaRole" id="filterCriteriaRole" value="$!browser.filterCriteria.filterCriteriaRole" />
     </p>
     </div>
     <div style="float:right;margin-top:20px">
-    #renderInputButton("Suchen" "" "doFilter" "Suchen")
+    #renderInputButton("$MESSAGES.getString('component.forms.buttons.search')" "" "doFilter" "$MESSAGES.getString('component.forms.buttons.search')")
     </div>
     <br style="clear:both" />
+    </div>
     
     #renderPaginationAndHint($browser "$MESSAGES.getString('account.view.tip')")
 
