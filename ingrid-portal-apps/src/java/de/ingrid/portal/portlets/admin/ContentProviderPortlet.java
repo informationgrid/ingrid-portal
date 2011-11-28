@@ -144,10 +144,10 @@ public class ContentProviderPortlet extends ContentPortlet {
             Criteria crit = session.createCriteria(dbEntityClass);
             Map<String, String> filterCriteria = state.getFilterCriteria();
             if (filterCriteria.get("filterCriteriaProviderIdent") != null && filterCriteria.get("filterCriteriaProviderIdent").length() > 0) {
-                crit.add((Restrictions.like("ident", filterCriteria.get("filterCriteriaProviderIdent")+"%")));
+                crit.add((Restrictions.like("ident", filterCriteria.get("filterCriteriaProviderIdent").replaceAll("\\*", "\\%"))));
             }
             if (filterCriteria.get("filterCriteriaProviderName") != null && filterCriteria.get("filterCriteriaProviderName").length() > 0) {
-                crit.add((Restrictions.like("name", filterCriteria.get("filterCriteriaProviderName")+"%")));
+                crit.add((Restrictions.like("name", filterCriteria.get("filterCriteriaProviderName").replaceAll("\\*", "\\%"))));
             }
             if (ascendingOrder) {
                 crit.addOrder(Order.asc(sortColumn));

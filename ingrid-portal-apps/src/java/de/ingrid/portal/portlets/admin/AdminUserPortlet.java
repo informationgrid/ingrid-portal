@@ -481,21 +481,21 @@ public class AdminUserPortlet extends ContentPortlet {
             StringBuilder whereString = new StringBuilder("WHERE usr.isEnabled=true AND usr.principalId=cred.securityPrincipalId AND prefs.fullPath=usr.fullPath AND prefsUserInfo.parentNodeId=prefs.nodeId AND prefsUserInfo.nodeName='userInfo' AND prefName.nodeId=prefsUserInfo.nodeId AND prefName.propertyName='"+SecurityResources.USER_NAME_GIVEN+"' AND prefLastName.nodeId=prefsUserInfo.nodeId AND prefLastName.propertyName='"+SecurityResources.USER_NAME_FAMILY+"'");
             StringBuilder orderString = new StringBuilder("order by usr.fullPath");
             if (filterCriteria.get("filterCriteriaId") != null && filterCriteria.get("filterCriteriaId").length() > 0) {
-                whereString.append(" AND usr.fullPath like '"+BasePrincipal.PREFS_USER_ROOT+filterCriteria.get("filterCriteriaId") +"%'");
+                whereString.append(" AND usr.fullPath like '"+BasePrincipal.PREFS_USER_ROOT+filterCriteria.get("filterCriteriaId").replaceAll("\\*", "\\%")+"'");
             }
             if (filterCriteria.get("filterCriteriaFirstName") != null && filterCriteria.get("filterCriteriaFirstName").length() > 0) {
-                whereString.append(" AND prefName.propertyValue like '"+filterCriteria.get("filterCriteriaFirstName") +"%'");
+                whereString.append(" AND prefName.propertyValue like '"+filterCriteria.get("filterCriteriaFirstName").replaceAll("\\*", "\\%")+"'");
             }
             if (filterCriteria.get("filterCriteriaLastName") != null && filterCriteria.get("filterCriteriaLastName").length() > 0) {
-                whereString.append(" AND prefLastName.propertyValue like '"+filterCriteria.get("filterCriteriaLastName") +"%'");
+                whereString.append(" AND prefLastName.propertyValue like '"+filterCriteria.get("filterCriteriaLastName").replaceAll("\\*", "\\%")+"'");
             }
             if (filterCriteria.get("filterCriteriaRole") != null && filterCriteria.get("filterCriteriaRole").length() > 0) {
                 fromString.append(", IngridJetspeedUserRole usrRole, IngridJetspeedPrincipal role");
-                whereString.append(" AND usr.principalId=usrRole.userId AND role.principalId=usrRole.roleId AND role.fullPath like '"+BasePrincipal.PREFS_ROLE_ROOT+filterCriteria.get("filterCriteriaRole") +"%'");
+                whereString.append(" AND usr.principalId=usrRole.userId AND role.principalId=usrRole.roleId AND role.fullPath like '"+BasePrincipal.PREFS_ROLE_ROOT+filterCriteria.get("filterCriteriaRole").replaceAll("\\*", "\\%")+"'");
             }
             if (filterCriteria.get("filterCriteriaEmail") != null && filterCriteria.get("filterCriteriaEmail").length() > 0) {
                 fromString.append(", IngridJetspeedPrefsPropertyValue prefEmail");
-                whereString.append(" AND prefEmail.nodeId=prefsUserInfo.nodeId AND prefEmail.propertyName='user.business-info.online.email' AND prefEmail.propertyValue like '"+filterCriteria.get("filterCriteriaEmail") +"%'");
+                whereString.append(" AND prefEmail.nodeId=prefsUserInfo.nodeId AND prefEmail.propertyName='user.business-info.online.email' AND prefEmail.propertyValue like '"+filterCriteria.get("filterCriteriaEmail").replaceAll("\\*", "\\%")+"'");
             }
             String hqlString = selectString + " " + fromString + " " + whereString + " " + orderString;
             
