@@ -10,6 +10,8 @@
     <p style="float:left;margin-right:10px"><label for="filterCriteriaProviderName">$MESSAGES.getString('component.forms.provider.text.name')</label><br/>
     <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaProviderName" id="filterCriteriaProviderName" value="$!browser.filterCriteria.filterCriteriaProviderName" />
     </p>
+    <br style="clear:both" />
+    <p>$MESSAGES.getString('component.forms.text.search.wildcard')</p>
     </div>
     <div style="float:right;margin-top:20px">
     #renderInputButton("$MESSAGES.getString('component.forms.buttons.search')" "" "doFilter" "$MESSAGES.getString('component.forms.buttons.search')")
