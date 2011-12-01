@@ -148,12 +148,25 @@ public class UtilsFacete {
 	/***************************** THEMEN **********************************************/
 	
 	private static void setFaceteQueryParamsTopic(ArrayList list) {
-		IngridDocument faceteEntry = new IngridDocument();
-		faceteEntry.put("id", "topic");
-		faceteEntry.put("field", "topic");
-        
-        list.add(faceteEntry);
+		IngridDocument facete = new IngridDocument();
+        ArrayList faceteList = new ArrayList ();
+	    
+        String[] enableFaceteTopic = PortalConfig.getInstance().getStringArray("portal.search.facete.topics");
+    	
+        for(int i=0; i < enableFaceteTopic.length; i++){
+    		String id = UtilsDB.getTopicFromKey(enableFaceteTopic[i]);
+    		if(id != null){
+    			HashMap faceteEntry = new HashMap();
+                faceteEntry.put("id", enableFaceteTopic[i]);
+                faceteEntry.put("query", "topic:"+ id);
+                faceteList.add(faceteEntry);
+    		}
+    	}
 		
+        facete.put("id", "topic");
+        facete.put("classes", faceteList);
+        
+        list.add(facete);
 	}
 
 	private static void setFaceteTopicParamsToSession(ActionRequest request) {
@@ -228,7 +241,7 @@ public class UtilsFacete {
             String queryValue = null;
             ClauseQuery cq  = new ClauseQuery(true, false);
             for (int i = 0; i < selectedTopics.size(); i++) {
-                queryValue = UtilsDB.getTopicFromKey(selectedTopics.get(i).toString());
+                queryValue = UtilsDB.getTopicFromKey((String) selectedTopics.get(i));
                 cq.addField(new FieldQuery(false, false, Settings.QFIELD_TOPIC, queryValue));
             }
             query.addClause(cq);
