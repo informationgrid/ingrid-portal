@@ -1,0 +1,118 @@
+#set ($action = $renderResponse.createActionURL())
+#macro (renderInputButtonDialog $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick)
+	<div class="$buttonclass" style="$buttonstyle">
+		<div class="btn_left" id="$buttonname left"></div>
+		<div class="btn_center">
+			#if($buttondisable == "true")
+				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_disable" onclick="$buttononclick" disabled />
+			#else
+				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn" onclick="$buttononclick" />
+			#end
+		</div>
+		<div class="btn_right" id="$buttonname right"></div>
+	</div>
+#end
+
+#macro (renderFaceteMoreLinkLineDialog $label $style $id $button)
+	<div style="$style">
+		<button id="$button" dojoType="dijit.form.Button" type="button" onClick="prepareDialog('$id','$button')">
+	        $label
+	    </button>
+	   <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" >
+   </div>
+   <br>
+#end
+
+#macro (renderFaceteSelectedAttribute $doAction $title)
+	<div class="facete_delete">
+		<span class="facete_delete_span_img">
+			<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png"></img>
+		</span>
+		<span class="facete_delete_span_a">
+        	<a href="$doAction" class="facete_link_line">
+    			$title
+        	</a>
+		</span>
+	</div>
+#end
+
+#macro(renderLinkEntryNumber $type $id)
+	#set($checkExist = false)
+	#foreach ($facet in $rankedResultList.get("FACETS").keySet())
+		#set($check = "${type}:${id}")
+		#if($facet == $check)
+			($rankedResultList.get("FACETS").get($facet))
+			#set($checkExist = true)
+		#end
+	#end
+	#if(!$checkExist)
+		(!)
+	#end
+#end
+
+<div>
+	#if($ds == "2")
+		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete_address', 'search_hits_address', '58.9em', '71.9em')">
+	#else
+		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete', 'search_hits', '37em', '50.0em')">
+	#end
+		<img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_open.png" >
+	</a>
+	<div id="facete">
+		<h2>$MESSAGES.getString("searchResult.facete.title")</h2>
+		
+		
+## ERGEBNISTYPEN ##
+	#if(!$ds || $ds == "1")
+		<div class="cat_label">
+			<img id="hit_types_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('hit_types')">
+			<a onclick="openNode('hit_types')" >$MESSAGES.getString("searchResult.facete.title.types")</a>
+			<br>
+		</div>
+		
+		<div id="hit_types" class="cat_content">
+## DATENTYPEN ##
+			#parse ('/WEB-INF/templates/facete/facete_datatype.vm')
+## METADATEN ##
+			#parse ('/WEB-INF/templates/facete/facete_metaclass.vm')
+## THEMEN ##
+			#parse ('/WEB-INF/templates/facete/facete_topic.vm')
+## SERVICE ##
+			#parse ('/WEB-INF/templates/facete/facete_service.vm')
+## MEASURES ##
+			#parse ('/WEB-INF/templates/facete/facete_measures.vm')
+		</div>
+	#end
+	
+## PARTNER ##
+	#if(!$ds || $ds == "1" || $ds == "2" || $ds == "4")
+		#parse ('/WEB-INF/templates/facete/facete_partner.vm')
+	#end
+		
+## ZEITBEZUG ##
+	#if(!$ds || $ds == "1")
+		#parse ('/WEB-INF/templates/facete/facete_time.vm')
+	#end
+	
+## RAUMBEZUG ##
+	#if(!$ds || $ds == "1")
+		#parse ('/WEB-INF/templates/facete/facete_area.vm')
+	#end
+	
+## SCHLAGWORTE ##
+	#if(!$ds || $ds == "1" || $ds == "2" || $ds == "3" || $ds == "4")
+		#parse ('/WEB-INF/templates/facete/facete_thesaurus.vm')
+	#end
+	
+## ATTRIBUTE ##
+	#if($ds == "3")
+		#parse ('/WEB-INF/templates/facete/facete_attribute.vm')
+	#end
+	
+## RAUMBEZUG - ADDRESSEN ##
+	#if($ds == "2")
+		#parse ('/WEB-INF/templates/facete/facete_area_address.vm')
+	#end
+	</div>
+</div>
+

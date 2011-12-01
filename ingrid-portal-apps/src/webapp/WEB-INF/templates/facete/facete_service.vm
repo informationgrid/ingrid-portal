@@ -1,0 +1,43 @@
+#set ($action = $renderResponse.createActionURL())
+<div class="cat_label">
+	<img id="service_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('service')">
+	<a onclick="openNode('service')" >
+		$MESSAGES.getString("searchResult.facete.title.service")
+		#renderLinkEntryNumber("type" "service")
+	</a>
+	<br>
+</div>
+
+<div id="service" class="cat_content">
+	#foreach ($service in $enableFaceteService)
+		#set($serviceTitle = "searchResult.facete.service.$service")
+		#set($isSelectedChbService = false)
+		#foreach ($selectChb in $selectedService)
+			#if($isSelectedChbService != true)
+				#if($service == $selectChb)
+					#set($isSelectedChbService = true)
+				#end
+			#end
+		#end
+		<div class="facete_chb">
+    		<span>
+				#set ($action = $renderResponse.createActionURL())
+				#if($isSelectedChbService)
+					$action.setParameter("doRemoveService", "$service")
+					<a href="$action" class="facete_label_chb">
+					<input id="$service" class="facete_input_chb" type=checkbox checked>
+					$MESSAGES.getString("$serviceTitle")
+					#renderLinkEntryNumber("service" $service)
+					</a>
+				#else
+					$action.setParameter("doAddService", "$service")
+					<a href="$action" class="facete_label_chb">
+					<input id="$service" class="facete_input_chb" type=checkbox>
+					$MESSAGES.getString("$serviceTitle")
+					#renderLinkEntryNumber("service" $service)
+					</a>
+				#end
+			</span>
+		</div>
+	#end
+</div>

@@ -38,9 +38,16 @@
   #* our decorator macros, see ./decorator-macros.vm *#
   #decoratorIncludeJavaScriptForHead()
   
-
-
-
+#set($currentPage = $site.getPage().url)
+#if ($currentPage.startsWith('/main-search'))
+    <script src="/ingrid-portal-apps/javascript/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
+    <script type="text/javascript">
+        dojo.require("dijit.layout.ContentPane");
+        dojo.require("dijit.form.Button");
+    	dojo.require("dijit.Dialog");
+    </script>
+    <link rel="stylesheet" type="text/css" href="/ingrid-portal-apps/css/claro/claro.css"/>
+#end
 <script language="JavaScript" type="text/javascript">
 var xmlhttp=false;
 /*@cc_on @*/
@@ -77,9 +84,8 @@ if (xmlhttp) {
     xmlhttp.send(null);
 }   
 </script>
-
   </head>
-  <body class="#PageBaseCSSClass()">
+  <body class="#PageBaseCSSClass() claro">
     <noscript>
       <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
     </noscript>

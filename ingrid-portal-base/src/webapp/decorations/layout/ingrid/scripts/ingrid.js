@@ -115,3 +115,97 @@ function adaptPartnerNode(providerElementName, formName) {
   document.forms[formName].elements["chk_"+partnerIdent].checked = checkPartner;
 }
 
+/* Open and close categories */
+function openNode(element){
+	var status = document.getElementById(element).style.display;
+	var status_img = document.getElementById(element + "_img").src;
+	
+	document.getElementById(element).style.display = 'none';
+	if(status == "none"){
+		document.getElementById(element).style.display = "block";
+	}
+	
+	document.getElementById(element + "_img").src = '/ingrid-portal-apps/images/facete/facete_cat_close.png';
+	if(status_img.indexOf('/ingrid-portal-apps/images/facete/facete_cat_close.png') != -1){
+		document.getElementById(element + "_img").src = '/ingrid-portal-apps/images/facete/facete_cat_open.png';
+	}	
+	
+}
+
+/* Open and close facete */
+function openFaceteNode(element, id_facete, id_hits, width_min, width_max){
+	var status = document.getElementById(element).style.display;
+	var status_img = document.getElementById(element + "_img").src;
+	document.getElementById(element).style.display = 'none';
+	document.getElementById(id_facete).style.width = '3%';
+	document.getElementById(id_facete).style.margin = '0 0 0 -35px';
+	document.getElementById(id_hits).style.width = width_max;
+	document.getElementById(element + "_img").src = '/ingrid-portal-apps/images/facete/facete_close.png'
+	if(status == "none"){
+		document.getElementById(element).style.display = "block";
+		document.getElementById(id_facete).style.width = '208px';
+		document.getElementById(id_facete).style.margin = '0';
+		document.getElementById(id_hits).style.width = width_min;
+		}
+	if(status_img.indexOf('/ingrid-portal-apps/images/facete_close.png') != -1){
+		document.getElementById(element + "_img").src = '/ingrid-portal-apps/images/facete/facete_open.png';
+		}
+}
+
+/* select all checkboxes in form */
+function faceteDialogSelectAll(field){
+	for (i = 0; i < field.length; i++)
+		field[i].checked = true ;
+}
+
+/* deselect all checkboxes in form */
+function faceteDialogDeselectAll(field){
+	for (i = 0; i < field.length; i++)
+		field[i].checked = false ;
+}
+
+/* cancel dialog */
+function faceteDialogCancel(id){
+	var dialog = dijit.byId(id);
+	dialog.hide();
+}
+
+/* open dialog by onclick-event */
+function prepareDialog (id, button) {
+   var dialog = dijit.byId(id);
+   dojo.connect(dijit.byId(button), "onClick", dialog, "show");
+}
+
+/* open dialog for map */
+function prepareDialogMap (id, wms, divId, iframeId) {
+		var dialog = dijit.byId(id);
+		var map = document.getElementById(divId);
+		if (map.childNodes.length <= 1) {
+			var iframe = document.createElement('iframe');
+			iframe.setAttribute('id', iframeId);
+			iframe.setAttribute('class', 'facete_map');
+			iframe.setAttribute('name', 'wms_viewer');
+			iframe.setAttribute('marginheight', '0');
+			iframe.setAttribute('marginwidth', '0');
+			iframe.setAttribute('frameborder', '0');
+			iframe.setAttribute('src', wms);
+			map.appendChild(iframe);
+		}
+		dialog.show();
+}
+
+/* open dialog */
+function loadDialog(id){
+	var dialog = dijit.byId(id);
+	dialog.show();
+}
+
+function loadingProgressDialog(element){
+	var status = document.getElementById(element).style.display;
+	console.debug(status);
+	if(status == "inline"){
+		document.getElementById(element).style.display = "none";
+	}
+	if(status == "none"){
+		document.getElementById(element).style.display = "inline";}
+	}

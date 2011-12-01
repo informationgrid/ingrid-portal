@@ -1,0 +1,93 @@
+#set ($action = $renderResponse.createActionURL())
+#macro(renderProviderListTree $provider $selectedProviders)
+	<div id="${provider.ident}">
+		<div style="padding: 0 0 0 20px;">
+			#set($isSelectedChbProvider = false)
+			#foreach ($selectChb in $selectedProviders)
+				#if($isSelectedChbProvider != true)
+					#if("${provider.ident}" == "${selectChb.ident}")
+						#set($isSelectedChbProvider = true)
+					#end
+				#end
+			#end
+			<div class="facete_chb">
+        		<span>
+					#set ($action = $renderResponse.createActionURL())
+					#if($isSelectedChbProvider)
+    					$action.setParameter("doRemoveProvider", "${provider.ident}")
+    					<a href="$action" class="facete_label_chb" style="$style_label">
+							<input id="${provider.ident}" class="facete_input_chb" type=checkbox checked>
+						$provider.name
+						#renderLinkEntryNumber("provider" "${provider.ident}")
+						</a>
+					#else
+						$action.setParameter("doAddProviderChb", "${provider.ident}")
+    					<a href="$action" class="facete_label_chb" style="$style_label">
+							<input id="${provider.ident}" class="facete_input_chb" type=checkbox>
+						$provider.name
+						#renderLinkEntryNumber("provider" "${provider.ident}")
+						</a>
+					#end
+				</span>
+    		</div>
+		</div>
+	</div>
+#end
+
+
+
+
+<div class="cat_label">
+	<img id="partner_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('partner')">
+	<a onclick="openNode('partner')" >$MESSAGES.getString("searchResult.facete.title.provider")</a>
+	<br>
+</div>
+<div id="partner" class="cat_content">
+	<div>
+		#foreach ($partner in $enableFacetePartnerList)
+			<div class="cat_entry_label">
+				#if($enableFacetePartnerList.size() == 1)
+					<img id="${partner.ident}_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('${partner.ident}')">
+						$action.setParameter("doRemovePartner",  "${partner.ident}")
+                        <span>
+							$partner.name
+							#renderLinkEntryNumber("partner" "${partner.ident}")
+						</span>
+        				<a href="$action" class="facete_link_line">
+							<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png">
+							</img>
+        				</a>
+				#else
+					$action.setParameter("doPartner", ${partner.ident})
+					<a href="$action">
+						$partner.name 
+						#renderLinkEntryNumber("partner" "${partner.ident}")
+					</a>
+				#end
+				<br>
+			</div>
+			#if($enableFacetePartnerList.size() == 1)
+    			<div id="${partner.ident}">
+    			#set($j = 0)
+				#if($isProviderSelect == true)
+    				#foreach ($provider in $selectedProvider)
+    						#renderProviderListTree ($provider $selectedProvider)
+					#end
+    			#else
+        			#foreach ($provider in $enableFaceteProviderList)
+        				#if(${provider.sortkeyPartner} == ${partner.sortkey})
+        					#if($j < $enableFacetePartnerListCount)
+    							#renderProviderListTree ($provider $selectedProvider)
+        					#end
+        					#set($j = $j + 1)
+        				#end
+    				#end
+    			#end
+    			#renderFaceteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.category.plus") "padding:0px 0px 0px 20px" "dialog_${partner.ident}" "button_${partner.ident}")
+    			</div>
+			#parse ('/WEB-INF/templates/facete/facete_dialog_provider.vm')
+			#end
+		#end
+		</div>
+	<br>
+</div>

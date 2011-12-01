@@ -1,0 +1,37 @@
+#set ($action = $renderResponse.createActionURL())
+<div class="cat_label">
+	<img id="area_address_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('area_address')">
+	<a onclick="openNode('area_address')" >$MESSAGES.getString("searchResult.facete.title.area.address")</a>
+	<br>
+</div>
+<div id="area_address" class="cat_content">
+	<div class="cat_entry_label">
+		<a onclick="loadDialog('dialog_area_address')" class="facete_link_line">
+			$MESSAGES.getString("searchResult.facete.area.address.add")
+		</a>
+        <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" ></img>
+	</div>
+	#parse ('/WEB-INF/templates/facete/facete_dialog_area_address.vm')
+	#if($doAddAreaAddress)
+		 ## Strasse
+		#if($doAddAreaAddress.street)
+    			$action.setParameter("doRemoveAreaAddress",  "street")
+            	#renderFaceteSelectedAttribute($action $doAddAreaAddress.street)
+		#end
+		## PLZ
+		#if($doAddAreaAddress.zip)
+    			$action.setParameter("doRemoveAreaAddress",  "zip")
+    			#renderFaceteSelectedAttribute($action $doAddAreaAddress.zip)
+		#end
+		## Ort
+		#if($doAddAreaAddress.city)
+    			$action.setParameter("doRemoveAreaAddress",  "city")
+    			#renderFaceteSelectedAttribute($action $doAddAreaAddress.city)
+		#end
+		#if($doAddAreaAddress.size() > 1)
+       			$action.setParameter("doRemoveAreaAddress",  "all")
+           		#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.attribute.delete.all"))
+		#end
+	#end
+	<br>
+</div>

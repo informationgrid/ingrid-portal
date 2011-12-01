@@ -1,0 +1,52 @@
+#set ($action = $renderResponse.createActionURL())
+<div id="dialog_topic" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.title.topic")" dojoType="dijit.Dialog">
+   	<form name="topic_form" action="$action" method="post">
+		<div class="dialog_content">
+	   	   	<table>
+			#set($i = 0)
+			#set($newColumn = "true")
+			#foreach ($topic in $enableFaceteTopic)
+				#set($topicTitle = "searchResult.facete.topic.$topic")
+				#set($isSelectedChbTopic = false)
+				#foreach ($selectChb in $selectedTopics)
+					#if($isSelectedChbTopic != true)
+						#if($topic == $selectChb)
+							#set($isSelectedChbTopic = true)
+						#end
+					#end
+				#end
+				#if($newColumn == "true")
+					<tr>
+					#set($newColumn = "false")
+				#end
+				#set($i = $i + 1)
+				<td>
+					<div class="facete_chb">
+                    		<p>
+                    		<label class="facete_label_chb">
+								<input id="$topic" class="facete_input_chb" type=checkbox name="chk$i" value="$topic"
+									#if($isSelectedChbTopic)
+										checked
+									#end
+								>
+                    		$MESSAGES.getString($topicTitle)
+							#renderLinkEntryNumber("topic" $topic)
+							</label></p>
+                    	</div>
+				</td>
+				#if($i % 3 == 0)
+					</tr>
+					#set($newColumn = "true")
+				#end
+			#end
+			</table>
+		
+		</div>
+		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddTopic" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right btn_submit_dialog" "")
+	</form>
+	<div class="dialog_bottom">
+		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.cancel') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.cancel') "float_right" "faceteDialogCancel('dialog_topic')")
+		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.all.select') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.all.select') "float_left" "faceteDialogSelectAll(document.topic_form)")
+		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.all.delete') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.all.delete') "float_left" "faceteDialogDeselectAll(document.topic_form)")
+	</div>
+</div>

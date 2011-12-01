@@ -1,0 +1,25 @@
+#set ($action = $renderResponse.createActionURL())
+<div class="cat_label">
+	<img id="area_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('thesaurus')">
+	<a onclick="openNode('area')" >$MESSAGES.getString("searchResult.facete.title.thesaurus")</a>
+	<br>
+</div>
+<div id="thesaurus" class="cat_content">
+	<div>
+		$action.setParameter("doThesaurus",  "true")
+		<a href="$action" class="facete_link_line">
+			$MESSAGES.getString("searchResult.facete.thesaurus.search")
+		</a>
+        <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" ></img>
+	</div>
+	#foreach ($thesaurus in $thesaurusSelectTopics)
+		$action.setParameter("doRemoveThesaurus",  $thesaurus.topicId)
+        #renderFaceteSelectedAttribute ($action  $thesaurus.topicTitle)
+	#end
+	#if($thesaurusSelectTopics.size() > 1)
+		$action.setParameter("doRemoveThesaurus",  "all")
+        	#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.attribute.delete.all"))
+	#end
+	#parse ('/WEB-INF/templates/facete/facete_dialog_thesaurus.vm')
+	<br>
+</div>

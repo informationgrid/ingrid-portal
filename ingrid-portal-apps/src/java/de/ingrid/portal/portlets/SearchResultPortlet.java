@@ -18,12 +18,12 @@ import javax.portlet.PortletException;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridHitsWrapper;
@@ -31,6 +31,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsFacete;
 import de.ingrid.portal.om.IngridProvider;
 import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.QueryResultPostProcessor;
@@ -94,6 +95,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         // WHEN NO GROUPING !!!
         String reqParam = null;
+        
         int rankedStartHit = 0;
         try {
             reqParam = request.getParameter(Settings.PARAM_STARTHIT_RANKED);
@@ -201,6 +203,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         // IngridQuery from state  (set in SimpleSearch Portlet)
         IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
+        UtilsFacete.setParamsToContext(request, context);
         
         // change datasource dependent from query input
         selectedDS = UtilsSearch.determineFinalPortalDatasource(selectedDS, query);
@@ -258,50 +261,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         boolean renderResultColumnRanked = true;
         boolean renderResultColumnUnranked = true;
         reqParam = request.getParameter("js_ranked");
-        // check for one column rendering
-        if (reqParam != null) {
-            // check if we have to render only the ranked column
-            if (reqParam.equals("true")) {
-                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS_RANKED);
-                renderResultColumnUnranked = false;
-            } else {
-                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS_UNRANKED);
-                renderResultColumnRanked = false;
-            }
-            // check for js enabled iframe rendering
-
-        } else if (currentView.equals(TEMPLATE_RESULT_FILTERED_ONECOLUMN)) {
-        	if (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID)) {
-                renderResultColumnRanked = false;
-                context.put("IS_RANKED", new Boolean(false));
-        	} else {
-        		// grouping by domain
-                renderResultColumnUnranked = false;
-                context.put("IS_RANKED", new Boolean(true));
-        	}
-
-        } else if (currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
-            renderResultColumnUnranked = false;
-
-            // check for js enabled iframe rendering
-        } else if (hasJavaScript && queryType.equals(Settings.MSGV_NEW_QUERY)) {
-            // if javascript and new query, set template to javascript enabled iframe template
-            // exit method!!
-            request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS);
-            context.put("rankedResultUrl", response
-                    .encodeURL(((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest()
-                            .getContextPath()
-                            + "/portal/search-result-js.psml"
-                            + SearchState.getURLParamsMainSearch(request)
-                            + "&js_ranked=true"));
-            context.put("unrankedResultUrl", response.encodeURL(((RequestContext) request
-                    .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()
-                    + "/portal/search-result-js.psml"
-                    + SearchState.getURLParamsMainSearch(request)
-                    + "&js_ranked=false"));
-            super.doView(request, response);
-            return;
-        }
         // finally disable query for right column if switched OFF !
         if (rightColumnDisabled) {
         	renderResultColumnUnranked = false;
@@ -586,6 +545,57 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         	showAdminContent = request.getUserPrincipal().getName().equals("admin");
         }
         
+     // check for one column rendering
+        if (reqParam != null) {
+            // check if we have to render only the ranked column
+            if (reqParam.equals("true")) {
+                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS_RANKED);
+                renderResultColumnUnranked = false;
+            } else {
+                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS_UNRANKED);
+                renderResultColumnRanked = false;
+            }
+            // check for js enabled iframe rendering
+
+        } else if (currentView.equals(TEMPLATE_RESULT_FILTERED_ONECOLUMN)) {
+        	if (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID)) {
+                renderResultColumnRanked = false;
+                context.put("IS_RANKED", new Boolean(false));
+        	} else {
+        		// grouping by domain
+                renderResultColumnUnranked = false;
+                context.put("IS_RANKED", new Boolean(true));
+        	}
+
+        } else if (currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
+            renderResultColumnUnranked = false;
+            context.put("ds", request.getParameter("ds"));
+            
+            // check for js enabled iframe rendering
+        } else if (hasJavaScript && queryType.equals(Settings.MSGV_NEW_QUERY)) {
+            // if javascript and new query, set template to javascript enabled iframe template
+            // exit method!!
+            request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS);
+            
+            context.put("ds", request.getParameter("ds"));
+            
+        	context.put("rankedResultList", rankedHits);
+            
+        	context.put("rankedResultUrl", response
+                    .encodeURL(((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest()
+                            .getContextPath()
+                            + "/portal/search-result-js.psml"
+                            + SearchState.getURLParamsMainSearch(request)
+                            + "&js_ranked=true"));
+            context.put("unrankedResultUrl", response.encodeURL(((RequestContext) request
+                    .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()
+                    + "/portal/search-result-js.psml"
+                    + SearchState.getURLParamsMainSearch(request)
+                    + "&js_ranked=false"));
+            super.doView(request, response);
+            return;
+        }
+        
         context.put("adminContent", showAdminContent);
         context.put("rankedPageSelector", rankedPageNavigation);
         context.put("unrankedPageSelector", unrankedPageNavigation);
@@ -649,7 +659,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, request.getParameter(Settings.PARAM_SUBJECT));
             SearchState.adaptSearchState(request, Settings.PARAM_FILTER, request.getParameter(Settings.PARAM_GROUPING));
         }
-
+        
+        UtilsFacete.setFaceteParamsToSessionByAction(request);
+        
         // redirect to our page wih parameters for bookmarking
         actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)));
     }

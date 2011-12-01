@@ -1,0 +1,34 @@
+#set ($action = $renderResponse.createActionURL())
+<div>
+	#foreach ($datatype in $enableFaceteDatatype)
+		#set($datatypeTitle = "searchResult.facete.datatype.$datatype")
+		#set($isSelectedChbDatatype = false)
+		#foreach ($selectChb in $selectedDatatype)
+			#if($isSelectedChbDatatype != true)
+				#if($datatype == $selectChb)
+					#set($isSelectedChbDatatype = true)
+				#end
+			#end
+		#end
+		<div class="facete_chb">
+    		<span>
+				#set ($action = $renderResponse.createActionURL())
+				#if($isSelectedChbDatatype)
+					$action.setParameter("doRemoveDatatype", "$datatype")
+					<a href="$action" class="facete_label_chb">
+					<input id="$datatype" class="facete_input_chb" type=checkbox checked>
+					$MESSAGES.getString("$datatypeTitle")
+					#renderLinkEntryNumber("type" $datatype)
+					</a>
+				#else
+					$action.setParameter("doAddDatatype", "$datatype")
+					<a href="$action" class="facete_label_chb">
+						<input id="$datatype" class="facete_input_chb" type=checkbox>
+					$MESSAGES.getString("$datatypeTitle")
+					#renderLinkEntryNumber("type" $datatype)
+					</a>
+				#end
+			</span>
+		</div>
+	#end
+</div>	

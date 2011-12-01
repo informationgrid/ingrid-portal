@@ -1,0 +1,55 @@
+#set ($action = $renderResponse.createActionURL())
+<div class="cat_label">
+	<img id="area_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('area')">
+	<a onclick="openNode('area')" >$MESSAGES.getString("searchResult.facete.title.area")</a>
+	<br>
+</div>
+<div id="area" class="cat_content">
+	<div>
+    #if(!$geothesaurusSelectTopics || $geothesaurusSelectTopics.size() == 0)
+		<div>
+    		<a onclick="prepareDialogMap('dialog_area_map', '$wmsURL', 'dialog_area_map_content', 'dialog_map_searcher')" class="facete_link_line">
+    			$MESSAGES.getString("searchResult.facete.area.map.search")
+    		</a>
+            <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" ></img>
+    	</div>
+    	## SELECTED PARAMS
+		#if($doMapCoords.size() > 0)
+			#if($doMapCoords.inside)
+    			$action.setParameter("doRemoveMap",  "inside")
+    			#renderFaceteSelectedAttribute ($action  $doMapCoords.inside)
+    		#end
+    		#if($doMapCoords.intersect)
+    			$action.setParameter("doRemoveMap",  "intersect")
+                #renderFaceteSelectedAttribute ($action  $doMapCoords.intersect)
+    		#end
+    		#if($doMapCoords.include)
+        		$action.setParameter("doRemoveMap",  "include")
+                #renderFaceteSelectedAttribute ($action  $doMapCoords.include)
+    		#end
+    	#end
+    	#parse ('/WEB-INF/templates/facete/facete_dialog_area_map.vm')
+	#end
+	#if(!$doMapCoords || $doMapCoords.size() == 0)
+    	<div>
+    		$action.setParameter("doGeothesaurus",  "true")
+    		<a href="$action" class="facete_link_line">
+    			$MESSAGES.getString("searchResult.facete.area.name.search")
+    		</a>
+            <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" ></img>
+    	</div>
+    	## SELECTED PARAMS
+		#foreach ($geothesaurus in $geothesaurusSelectTopics)
+    		$action.setParameter("doRemoveGeothesaurus",  $geothesaurus.topicId)
+			#set($title = "$geothesaurus.topicTitle ($geothesaurus.topicId)") 
+        	#renderFaceteSelectedAttribute ($action  $title)
+		#end
+		#if($geothesaurusSelectTopics.size() > 1)
+       		$action.setParameter("doRemoveGeothesaurus",  "all")
+        	#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.attribute.delete.all"))
+		#end
+		#parse ('/WEB-INF/templates/facete/facete_dialog_area_geothesaurus.vm')
+	#end
+	</div>
+	<br>
+</div>

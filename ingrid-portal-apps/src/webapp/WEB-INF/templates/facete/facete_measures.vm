@@ -1,0 +1,44 @@
+#set ($action = $renderResponse.createActionURL())
+<div class="cat_label">
+	<img id="measures_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('measures')">
+	<a onclick="openNode('measures')" >
+		$MESSAGES.getString("searchResult.facete.title.measures")
+		#renderLinkEntryNumber("type" "measure")
+	</a>
+	<br>
+</div>
+
+<div id="measures" class="cat_content">
+	#foreach ($measures in $enableFaceteMeasures)
+		#set($measuresTitle = "searchResult.facete.measures.$measures")
+		#set($isSelectedChbMeasures = false)
+		#foreach ($selectChb in $selectedMeasures)
+			#if($isSelectedChbMeasures != true)
+				#if($measures == $selectChb)
+					#set($isSelectedChbMeasures = true)
+				#end
+			#end
+		#end
+		<div class="facete_chb">
+    		<span>
+				#set ($action = $renderResponse.createActionURL())
+				#if($isSelectedChbMeasures)
+					$action.setParameter("doRemoveMeasures", "$measures")
+					<a href="$action" class="facete_label_chb">
+					<input id="$measures" class="facete_input_chb" type=checkbox checked>
+					$MESSAGES.getString("$measuresTitle")
+					#renderLinkEntryNumber("measure" $measures)
+					</a>
+				#else
+					$action.setParameter("doAddMeasures", "$measures")
+					<a href="$action" class="facete_label_chb">
+						<input id="$measures" class="facete_input_chb" type=checkbox>
+					$MESSAGES.getString("$measuresTitle")
+					#renderLinkEntryNumber("measure" $measures)
+					</a>
+				#end
+			</span>
+		</div>
+	#end
+	<br>
+</div>

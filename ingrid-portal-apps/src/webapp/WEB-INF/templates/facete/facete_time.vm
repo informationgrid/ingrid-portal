@@ -1,0 +1,50 @@
+#set ($action = $renderResponse.createActionURL())
+<div class="cat_label">
+	<img id="time_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('time')">
+	<a onclick="openNode('time')" >$MESSAGES.getString("searchResult.facete.title.time")</a>
+	<br>
+</div>
+<div id="time" class="cat_content">
+	#if($doTime == "1")
+		$action.setParameter("doTime",  "0")
+		#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.time.1"))
+	#elseif($doTime == "2")
+		$action.setParameter("doTime",  "0")
+		#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.time.2"))	
+	#elseif($doTime == "3")
+		$action.setParameter("doTime",  "0")
+		#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.time.3"))
+	#elseif($doTime == "4")
+		$action.setParameter("doTime",  "0")
+		#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.time.4"))
+	#else
+		$action.setParameter("doTime",  "1")
+    	<div class="cat_entry_label">
+    		<a href="$action" class="facete_link_line">
+    			$MESSAGES.getString("searchResult.facete.time.1")
+    		</a>
+    	</div>
+    	
+    	$action.setParameter("doTime",  "2")
+    	<div class="cat_entry_label">
+    		<a href="$action" class="facete_link_line">
+    			$MESSAGES.getString("searchResult.facete.time.2")
+    		</a>
+    	</div>
+        
+    	$action.setParameter("doTime",  "3")
+        <div class="cat_entry_label">
+    		<a href="$action" class="facete_link_line">
+    			$MESSAGES.getString("searchResult.facete.time.3")
+    		</a>
+    	</div>
+    	
+    	$action.setParameter("doTime",  "4")
+    	<div class="cat_entry_label">
+    		<a href="$action" class="facete_link_line">
+    			$MESSAGES.getString("searchResult.facete.time.4")
+    		</a>
+    	</div>
+    #end
+    <br>
+</div>

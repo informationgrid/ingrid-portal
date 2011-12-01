@@ -1,5 +1,9 @@
 #parse ('/WEB-INF/templates/include_search_result_filter.vm')
 
+<div dojoType="dijit.layout.ContentPane" id="search_facete">
+   	#parse ('/WEB-INF/templates/facete/facete.vm')
+</div>
+<div dojoType="dijit.layout.ContentPane" id="search_hits">
 <!-- RESULTS LEFT -->
 #if ($RIGHT_COLUMN_DISABLED)
   <div id="section">
@@ -8,10 +12,10 @@
 #end
 	<p><img style="position: relative; margin-right:18px; float: left;;" src="/ingrid-portal-apps/images/sanduhr.gif" alt="$MESSAGES.getString('common.alt.icon.clock')" width="10" height="17" /><strong>$MESSAGES.getString('searchResult.results.requested')</strong></p>
   </div>
-
+</div>
 <!-- in this iframe LEFT search is executed ! -->
 <iframe id="frm_ranked" src="$rankedResultUrl" style="display:none"></iframe>
-
+</div>
 <!-- RESULTS RIGHT -->
 #if (!$RIGHT_COLUMN_DISABLED)
   <div id="results_right">

@@ -17,6 +17,7 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridPersistencePrefs;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsFacete;
 import de.ingrid.portal.search.net.QueryDescriptor;
 import de.ingrid.utils.IngridQueryTools;
 import de.ingrid.utils.query.ClauseQuery;
@@ -52,6 +53,8 @@ public class QueryPreProcessor {
         try {
         	log.debug("The QueryString: " + queryString);
             query = QueryStringParser.parse(queryString);
+            UtilsFacete.facetePrepareInGridQuery(request, query);
+            
         } catch (ParseException ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems creating separate IngridQuery for ranked search, parsed query string: "
@@ -247,6 +250,8 @@ public class QueryPreProcessor {
         IngridQuery query = null;
         try {
             query = QueryStringParser.parse(queryString);
+            UtilsFacete.facetePrepareInGridQuery(request, query);
+            
         } catch (ParseException ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems creating separate IngridQuery for ranked search, parsed query string: "

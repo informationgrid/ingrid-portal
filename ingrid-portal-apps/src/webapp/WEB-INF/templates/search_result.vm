@@ -1,5 +1,10 @@
 #parse ('/WEB-INF/templates/include_search_result_filter.vm')
 
+<div dojoType="dijit.layout.ContentPane" id="search_facete">
+   	#parse ('/WEB-INF/templates/facete/facete.vm')
+</div>
+
+<div dojoType="dijit.layout.ContentPane" id="search_hits">
 <!-- RESULTS LEFT -->
 #if ($RIGHT_COLUMN_DISABLED)
   <div id="section">
@@ -8,6 +13,7 @@
 #end
 #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
   </div>
+</div>
   
 <!-- RESULTS RIGHT -->
 #if (!$RIGHT_COLUMN_DISABLED)

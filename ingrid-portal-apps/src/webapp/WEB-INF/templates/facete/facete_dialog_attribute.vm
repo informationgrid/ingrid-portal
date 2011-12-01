@@ -1,0 +1,87 @@
+#set ($action = $renderResponse.createActionURL())
+<div id="dialog_attribute" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.attribute")" dojoType="dijit.Dialog">
+	<form action="$action" method="post">
+	<div class="dialog_content" style="overflow: auto;">
+		<div style="width:400px;">
+        <p>
+            <label class="float_left col2left" for="db_title">$MESSAGES.getString("searchResult.facete.attribute.project")</label>
+            <input type="text" name="db_title" id="db_title" size="35" class="float_left inputstyletext"
+			#if($doAddAttribute.db_title)
+				value="$doAddAttribute.db_title"
+			#end
+			>
+            <span class="clearer"></span>
+        </p>
+		</div>
+		<div style="width:400px;">
+        <p>
+            <label class="float_left col2left" for="db_institute">$MESSAGES.getString("searchResult.facete.attribute.institution")</label>
+            <input type="text" name="db_institute" id="db_institute" size="35" class="float_left inputstyletext"
+				#if($doAddAttribute.db_institute)
+					value="$doAddAttribute.db_institute"
+				#end
+			>
+            <span class="clearer"></span>
+        </p>
+		</div>
+		<div style="width:400px;">
+        <p>
+            <label class="float_left col2left" for="db_pm">$MESSAGES.getString("searchResult.facete.attribute.leader")</label>
+            <input type="text" name="db_pm" id="db_pm" size="35" class="float_left inputstyletext"
+				#if($doAddAttribute.db_pm)
+					value="$doAddAttribute.db_pm"
+				#end
+			>
+            <span class="clearer"></span>
+        </p>
+        </div>
+		<div style="width:400px;">
+        <p>
+            <label class="float_left col2left" for="db_staff">$MESSAGES.getString("searchResult.facete.attribute.involved")</label>
+            <input type="text" name="db_staff" id="db_staff" size="35" class="float_left inputstyletext"
+				#if($doAddAttribute.db_staff)
+					value="$doAddAttribute.db_staff"
+				#end
+			>
+            <span class="clearer"></span>
+        </p>
+        </div>
+		<div style="width:400px;">
+        <p>
+            <label class="float_left col2left" for="db_org">$MESSAGES.getString("searchResult.facete.attribute.org")</label>
+            <input type="text" name="db_org" id="db_org" size="35" class="float_left inputstyletext"
+				#if($doAddAttribute.db_org)
+					value="$doAddAttribute.db_org"
+				#end
+			>
+            <span class="clearer"></span>
+        </p>
+        </div>
+		<div style="width:400px;">
+        <p>
+            <label class="float_left col2left" for="db_org">$MESSAGES.getString("searchResult.facete.attribute.time")</label>
+            <label for="term_from">$MESSAGES.getString("searchResult.facete.attribute.from")</label>
+			<input type="text" name="term_from" maxlength="10" size="10" id="term_from" class="inputstyletext"
+				#if($doAddAttribute.term_from)
+					value="$doAddAttribute.term_from"
+				#end
+			>
+			<br>
+			<label class="float_left col2left" for="db_org">$MESSAGES.getString("searchResult.facete.attribute.timeformat")</label>
+            <label for="term_to">$MESSAGES.getString("searchResult.facete.attribute.to")</label>
+			<input type="text" name="term_to" maxlength="10" size="10" id="term_to" class="inputstyletext"
+				#if($doAddAttribute.term_to)
+					value="$doAddAttribute.term_to"
+				#end
+			>
+			<br>
+        </p>
+		</div>
+		<span class="clearer"></span>
+	</div>
+	<div class="dialog_bottom">
+		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddAttribute" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right" "")
+		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.cancel') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.cancel') "float_right" "faceteDialogCancel('dialog_attribute')")
+	</div>
+	</form>
+</div>

@@ -1,0 +1,63 @@
+#set ($action = $renderResponse.createActionURL())
+<div class="cat_label">
+	<img id="attribute_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('attribute')">
+	<a onclick="openNode('attribute')" >$MESSAGES.getString("searchResult.facete.title.attribute")</a>
+	<br>
+</div>
+<div id="attribute" class="cat_content">
+	<div class="cat_entry_label">
+    	<a onclick="loadDialog('dialog_attribute')" class="facete_link_line">
+			$MESSAGES.getString("searchResult.facete.attribute.add")
+		</a>
+        <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" ></img>
+    </div>
+	#parse ('/WEB-INF/templates/facete/facete_dialog_attribute.vm')
+	#if($doAddAttribute)
+		 ##Projektname
+		#if($doAddAttribute.db_title)
+			$action.setParameter("doRemoveAttribute",  "db_title")
+        	#renderFaceteSelectedAttribute ($action  $doAddAttribute.db_title)
+			<div>
+				<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png">
+    				<a href="$action" class="facete_link_line">
+    				$doAddAttribute.db_title
+    				</a>
+    			</img>
+       		</div>
+		#end
+		##Institution
+		#if($doAddAttribute.db_institute)
+			$action.setParameter("doRemoveAttribute",  "db_institute")
+        	#renderFaceteSelectedAttribute ($action  $doAddAttribute.db_institute)
+		#end
+		##Projektleiter
+		#if($doAddAttribute.db_pm)
+			$action.setParameter("doRemoveAttribute",  "db_pm")
+        	#renderFaceteSelectedAttribute ($action  $doAddAttribute.db_pm)
+		#end
+		##Beteiligte
+		#if($doAddAttribute.db_staff)
+			$action.setParameter("doRemoveAttribute",  "db_staff")
+        	#renderFaceteSelectedAttribute ($action  $doAddAttribute.db_staff)
+		#end
+		##Projektträger
+		#if($doAddAttribute.db_org)
+			$action.setParameter("doRemoveAttribute",  "db_org")
+        	#renderFaceteSelectedAttribute ($action  $doAddAttribute.db_org)
+		#end
+		##Laufzeit
+		#if($doAddAttribute.term_from)
+			$action.setParameter("doRemoveAttribute",  "term_from")
+        	#renderFaceteSelectedAttribute ($action  $doAddAttribute.term_from)
+		#end
+		#if($doAddAttribute.term_to)
+			$action.setParameter("doRemoveAttribute",  "term_to")
+        	#renderFaceteSelectedAttribute ($action  $doAddAttribute.term_to)
+		#end
+		#if($doAddAttribute.size() > 1)
+			$action.setParameter("doRemoveAttribute",  "all")
+        	#renderFaceteSelectedAttribute ($action  $MESSAGES.getString("searchResult.facete.attribute.delete.all"))
+		#end
+	#end
+	<br>
+</div>

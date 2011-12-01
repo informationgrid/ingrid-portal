@@ -1,0 +1,34 @@
+<div id="dialog_area_address" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.area.address")" dojoType="dijit.Dialog">
+	<form action="$action" method="post">
+	<div class="dialog_content" style="overflow: auto;">
+        <p>
+          <label for="street" class="left">$MESSAGES.getString("searchResult.facete.area.address.street")</label>
+          <input type="text" id="street" name="street" class="address_space inputstyletext"
+			#if($doAddAreaAddress.street)
+				value="$doAddAreaAddress.street"
+			#end
+			>
+        </p>
+        <p>
+          <label for="zip" class="left">$MESSAGES.getString("searchResult.facete.area.address.zip")</label>
+          <input type="text" id="zip" name="zip" class="address_space inputstyletext"
+			#if($doAddAreaAddress.zip)
+				value="$doAddAreaAddress.zip"
+			#end
+			>
+        </p>
+        <p>
+          <label for="city" class="left">$MESSAGES.getString("searchResult.facete.area.address.city")</label>
+          <input type="text" id="city" name="city" class="address_space inputstyletext"
+			#if($doAddAreaAddress.city)
+				value="$doAddAreaAddress.city"
+			#end
+			>
+        </p>
+	</div>
+	<div class="dialog_bottom">
+		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddAreaAddress" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right" "")
+		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.cancel') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.cancel') "float_right" "faceteDialogCancel('dialog_area_address')")
+	</div>
+	</form>
+</div>

@@ -1,0 +1,133 @@
+## check topic ref and set msg to render accordingly (location type)
+#macro (setMsgTopicType $topicRef)
+	  #if ($topicRef)
+        #set($msgTopicRef = $MESSAGES.getString("sns.topic.ref.${topicRef}"))
+		#if ($msgTopicRef.startsWith("sns.topic"))
+            #set($msgTopicRef = ${topicRef})
+        #end
+    #end
+#end
+
+## render location type if set
+#macro (renderMsgTopicType)
+#if($msgTopicRef), <span class="smaller">$msgTopicRef</span>#end
+#end
+
+
+#if($doGeothesaurus)
+	<script type="text/javascript">
+    	window.onload = function() {
+			loadDialog('dialog_geothesaurus');
+			loadingProgressDialog('dialog_geothesaurus_loading');
+		}
+		
+		window.onsubmit = function() {
+			loadingProgressDialog('dialog_geothesaurus_loading');
+		}
+    </script>
+#end
+
+<div id="dialog_geothesaurus" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.area.name.search")" dojoType="dijit.Dialog" disableCloseButton="true">
+	<span id="dialog_geothesaurus_loading" class="dijitContentPaneLoading" style="display:inline;"></span>
+	<form action="$action" method="post" name="geothesaurus_form">
+		<div class="dialog_content">
+			<div style="height:50px;">
+			#if($geothesaurusTerm)
+				<input class="thesaurus_term float_left inputstyletext" type="text" name="search_term" id="search_term" value="$geothesaurusTerm" />
+			#else
+				<input class="thesaurus_term float_left inputstyletext" type="text" name="search_term" id="search_term"/>
+			#end
+			#renderInputButton($MESSAGES.getString("searchResult.facete.area.name.search.button") "float:right" "doSearchGeothesaurus" "")
+			<span class="clearer"></span>
+			</div>
+            
+		#if($geothesaurusCurrentTopic)
+		<div class="facete_dialog_sns_content">
+            <p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.area.name.keyword")</p>
+			#setMsgTopicType($geothesaurusCurrentTopic.topic_ref)
+			<div class="facete_line">
+				<div class="facete_chb">
+               		<p>
+                		#set($topicId = $geothesaurusCurrentTopic.topicID)
+						#if($geothesaurusCurrentTopic.topicNativeKey && $geothesaurusCurrentTopic.topicNativeKey != "")
+							#set($topicId = $geothesaurusCurrentTopic.topicNativeKey)
+						#end
+						<span>$geothesaurusCurrentTopic.title #renderMsgTopicType()</span>
+					</p>
+                </div>
+			</div>
+        </div>
+		#end
+		#if($geothesaurusTopicsBrowse)
+			<div class="facete_dialog_sns_content">
+            <p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.area.name.relations")</p>
+			#set($count = 0)
+			#foreach($topic in $geothesaurusTopicsBrowse)
+				#set($count = $count + 1)
+				#setMsgTopicType($topic.topic_ref)
+				<div class="facete_line">
+						<div class="facete_chb">
+                    		<p>
+                    			#set($topicId = $topic.topicID)
+								#if($topic.topicNativeKey && $topic.topicNativeKey != "")
+									#set($topicId = $topic.topicNativeKey)
+								#end
+								<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
+								#foreach($selectTopic in $geothesaurusSelectTopics)
+									#if($selectTopic.topicId == $topicId)
+										checked
+									#end
+								#end
+								>
+								$action.setParameter("doBrowseSimilarGeothesaurus",  "$topic.topicID")
+    							<a class="facete_label_chb_dialog" href="$action">$topic.title</a>#renderMsgTopicType()
+							</p>
+                    	</div>
+				</div>
+			#end
+        </div>
+		#elseif($geothesaurusTopics)
+		<div class="facete_dialog_sns_content">
+            <p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.area.name.keyword")</p>
+			#set($count = 0)
+			#foreach($topic in $geothesaurusTopics)
+				#set($count = $count + 1)
+				#setMsgTopicType($topic.topic_ref)
+				<div class="facete_line">
+						<div class="facete_chb">
+                    		<p>
+								#set($topicId = $topic.topicID)
+								#if($topic.topicNativeKey && $topic.topicNativeKey != "")
+									#set($topicId = $topic.topicNativeKey)
+								#end
+								<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
+								#foreach($selectTopic in $geothesaurusSelectTopics)
+									#if($selectTopic.topicId == $topicId)
+										checked
+									#end
+								#end
+								>
+								$action.setParameter("doBrowseGeothesaurus",  "$topic.topicID")
+    							<a class="facete_label_chb_dialog" href="$action">$topic.title</a>#renderMsgTopicType()
+							</p>
+                    	</div>
+				</div>
+			#end
+        </div>
+		#end
+		#if($geothesaurusError)
+		<div class="dialog_error_message">
+			<span>
+				$MESSAGES.getString('searchResult.facete.area.name.search.error')
+            </span>
+		</div>
+		#end
+    </div>
+		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddGeothesaurus" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right btn_submit_dialog" "")
+		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.cancel') "" "doCancelGeothesaurus" $MESSAGES.getString('searchResult.facete.dialog.tooltip.cancel') "float_right btn_submit_dialog" "")
+	</form>
+	<div class="dialog_bottom">
+		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.all.select') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.all.select') "float_left" "faceteDialogSelectAll(document.geothesaurus_form)")
+		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.all.delete') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.all.delete') "float_left" "faceteDialogDeselectAll(document.geothesaurus_form)")
+	</div>
+</div>

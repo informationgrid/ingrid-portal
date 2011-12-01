@@ -10,7 +10,10 @@
 #set ($IS_RANKED = true)
 
 #parse ('/WEB-INF/templates/include_search_result_filter.vm')
-
+<div dojoType="dijit.layout.ContentPane" id="search_facete_address">
+   	#parse ('/WEB-INF/templates/facete/facete.vm')
+</div>
+<div dojoType="dijit.layout.ContentPane" id="search_hits_address">
 <!-- RESULTS LEFT -->
     <div class="section">  
 #parse ('/WEB-INF/templates/include_search_result_counter.vm')
@@ -39,3 +42,4 @@
 #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
     </div>
   <div class="clearer"></div>
+</div>

@@ -1,0 +1,72 @@
+#set ($action = $renderResponse.createActionURL())
+<div class="cat_label">
+	<img id="class_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('class')">
+	<a onclick="openNode('class')">
+		$MESSAGES.getString("searchResult.facete.title.metaclass")
+		#renderLinkEntryNumber("type" "metadata")
+		</a>
+	<br>
+</div>
+
+<div id="class" class="cat_content">
+	#foreach ($metaclass in $enableFaceteMetaClass)
+		#set($title = "searchResult.facete.metaclass.${metaclass}")
+		#set($metaclassTitle = "$MESSAGES.getString($title)")
+		#set($isSelectedChbMetaClass = false)
+		#foreach ($selectChb in $selectedMetaclass)
+			#if($isSelectedChbMetaClass != true)
+				#if($metaclass == $selectChb)
+					#set($isSelectedChbMetaClass = true)
+				#end
+			#end
+		#end
+		<div class="facete_chb">
+    		<span>
+				#set ($action = $renderResponse.createActionURL())
+				#if($isSelectedChbMetaClass)
+					$action.setParameter("doRemoveMetaclass", "$metaclass")
+					<a href="$action" class="facete_label_chb">
+					<input id="$metaclass" class="facete_input_chb" type=checkbox checked>
+					$MESSAGES.getString("$metaclassTitle")
+					#if($metaclass == "job")
+						#renderLinkEntryNumber("t01_object.obj_class" "0")
+        			#elseif($metaclass == "map")
+        				#renderLinkEntryNumber("t01_object.obj_class" "1")
+        			#elseif($metaclass == "document")
+        				#renderLinkEntryNumber("t01_object.obj_class" "2")
+        			#elseif($metaclass == "geoservice")
+        				#renderLinkEntryNumber("t01_object.obj_class" "3")
+        			#elseif($metaclass == "project")
+        				#renderLinkEntryNumber("t01_object.obj_class" "4")
+        			#elseif($metaclass == "database")
+        				#renderLinkEntryNumber("t01_object.obj_class" "5")
+        			#elseif($metaclass == "service")
+        				#renderLinkEntryNumber("t01_object.obj_class" "6")
+        			#end
+					</a>
+				#else
+					$action.setParameter("doAddMetaclass", "$metaclass")
+					<a href="$action" class="facete_label_chb">
+						<input id="$metaclass" class="facete_input_chb" type=checkbox>
+					$MESSAGES.getString("$metaclassTitle")
+					#if($metaclass == "job")
+						#renderLinkEntryNumber("t01_object.obj_class" "0")
+        			#elseif($metaclass == "map")
+        				#renderLinkEntryNumber("t01_object.obj_class" "1")
+        			#elseif($metaclass == "document")
+        				#renderLinkEntryNumber("t01_object.obj_class" "2")
+        			#elseif($metaclass == "geoservice")
+        				#renderLinkEntryNumber("t01_object.obj_class" "3")
+        			#elseif($metaclass == "project")
+        				#renderLinkEntryNumber("t01_object.obj_class" "4")
+        			#elseif($metaclass == "database")
+        				#renderLinkEntryNumber("t01_object.obj_class" "5")
+        			#elseif($metaclass == "service")
+        				#renderLinkEntryNumber("t01_object.obj_class" "6")
+        			#end
+					</a>
+				#end
+			</span>
+		</div>
+	#end
+</div>
