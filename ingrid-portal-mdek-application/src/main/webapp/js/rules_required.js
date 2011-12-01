@@ -239,8 +239,8 @@ function applyRule7() {
     var objectClassStr = dijit.byId("objectClass").getValue().toLowerCase(); // Value is a string: "Classx" where x is the class
     var objectClass = objectClassStr.substr(5, 1);
 
-    // INSPIRE mandatory only in classes "Geo-Information/Karte" class 1, "Geodatendienst" class 3 !
-    if (objectClass != "1" && objectClass != "3") {
+    // INSPIRE mandatory only in classes "Geo-Information/Karte" class 1
+    if (objectClass != "1") {
        return;
     }
 
@@ -266,9 +266,8 @@ function applyRule7() {
 
     // show/remove DQ tables in class 1 dependent from themes
     if (objectClass == "1") {
-        // hide all DQ tables
-        var showDQSection = false;
-        dojo.query("#ref1ContentDQ > span").forEach(hideDiv);
+        // hide all spans underneath ref1ContentDQTables div -> DQ tables
+        dojo.query("#ref1ContentDQTables > span").forEach(hideDiv);
 
         // then show table dependent from theme
 
@@ -282,40 +281,31 @@ function applyRule7() {
         }
         // Geographical names (103)
         if (dojo.some(termsList, function(iTermKey) {return (iTermKey == 103); })) {
-            displayDiv(dojo.byId("uiElement7510"));
             displayDiv(dojo.byId("uiElement7517"));
-            showDQSection = true;
         }
         // Administrative units (104)
         if (dojo.some(termsList, function(iTermKey) {return (iTermKey == 104); })) {
             displayDiv(dojo.byId("uiElement7509"));
-            displayDiv(dojo.byId("uiElement7510"));
             displayDiv(dojo.byId("uiElement7512"));
             displayDiv(dojo.byId("uiElement7515"));
             displayDiv(dojo.byId("uiElement7517"));
-            showDQSection = true;
         }
         // Addresses (105)
         if (dojo.some(termsList, function(iTermKey) {return (iTermKey == 105); })) {
             displayDiv(dojo.byId("uiElement7509"));
-            displayDiv(dojo.byId("uiElement7510"));
             displayDiv(dojo.byId("uiElement7512"));
             displayDiv(dojo.byId("uiElement7513"));
             displayDiv(dojo.byId("uiElement7517"));
             displayDiv(dojo.byId("uiElement7520"));
             displayDiv(dojo.byId("uiElement7526"));
-            showDQSection = true;
         }
         // Cadastral parcels (106)
         if (dojo.some(termsList, function(iTermKey) {return (iTermKey == 106); })) {
-            displayDiv(dojo.byId("uiElement7510"));
             displayDiv(dojo.byId("uiElement7517"));
-            showDQSection = true;
         }
         // Transport networks (107)
         if (dojo.some(termsList, function(iTermKey) {return (iTermKey == 107); })) {
             displayDiv(dojo.byId("uiElement7509"));
-            displayDiv(dojo.byId("uiElement7510"));
             displayDiv(dojo.byId("uiElement7512"));
             displayDiv(dojo.byId("uiElement7513"));
             displayDiv(dojo.byId("uiElement7514"));
@@ -323,45 +313,21 @@ function applyRule7() {
             displayDiv(dojo.byId("uiElement7517"));
             displayDiv(dojo.byId("uiElement7525"));
             displayDiv(dojo.byId("uiElement7526"));
-            
-            showDQSection = true;
         }
         // Hydrography (108)
         if (dojo.some(termsList, function(iTermKey) {return (iTermKey == 108); })) {
             displayDiv(dojo.byId("uiElement7509"));
-            displayDiv(dojo.byId("uiElement7510"));
             displayDiv(dojo.byId("uiElement7512"));
             displayDiv(dojo.byId("uiElement7513"));
             displayDiv(dojo.byId("uiElement7515"));
             displayDiv(dojo.byId("uiElement7517"));
             displayDiv(dojo.byId("uiElement7526"));
             displayDiv(dojo.byId("uiElement7527"));
-            
-            showDQSection = true;
         }
         // Protected sites (109)
         if (dojo.some(termsList, function(iTermKey) {return (iTermKey == 109); })) {
             displayDiv(dojo.byId("uiElement7509"));
-            displayDiv(dojo.byId("uiElement7510"));
             displayDiv(dojo.byId("uiElement7517"));
-            showDQSection = true;
-        }
-
-        var divDQ = dojo.byId("refClass1DQ");
-        if (showDQSection) {
-            //displayDiv(divDQ);
-            dojo.removeClass(divDQ, "hide");
-            divDQ.setAttribute("hiddenByRules", "false");
-
-            // update DQ section, so new fields are shown !
-            // NECESSARY ???
-            //var mode = UtilUI.getCurrentExpandModeOfSectionElement(divDQ);
-            //igeEvents.toggleFields("refClass1DQ", mode);
-
-        } else {
-            //hideDiv(divDQ);
-            dojo.addClass(divDQ, "hide");
-            divDQ.setAttribute("hiddenByRules", "true");
         }
     }
 }

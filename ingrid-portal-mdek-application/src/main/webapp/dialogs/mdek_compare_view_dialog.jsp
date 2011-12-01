@@ -57,14 +57,11 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 		renderTextWithTitle(nodeDataOld.ref1ObjectIdentifier, nodeDataNew.ref1ObjectIdentifier, "<fmt:message key='ui.obj.type1.identifier' />");
 		renderTextWithTitle(UtilSyslist.getSyslistEntryName(525, nodeDataOld.ref1DataSet), UtilSyslist.getSyslistEntryName(525, nodeDataNew.ref1DataSet), "<fmt:message key='ui.obj.type1.dataset' />");
 		renderList(nodeDataOld.ref1Representation, nodeDataNew.ref1Representation, "<fmt:message key='ui.obj.type1.digitalRepresentation' />", null, function(val) { return UtilSyslist.getSyslistEntryName(526, val); });
-		renderTextWithTitle(nodeDataOld.ref1Coverage, nodeDataNew.ref1Coverage, "<fmt:message key='ui.obj.type1.coverage' />" + " [%]");
 		renderTextWithTitle(UtilSyslist.getSyslistEntryName(528, nodeDataOld.ref1VFormatTopology), UtilSyslist.getSyslistEntryName(528, nodeDataNew.ref1VFormatTopology), "<fmt:message key='ui.obj.type1.vectorFormat.topology' />");
 		renderTable(nodeDataOld.ref1VFormatDetails, nodeDataNew.ref1VFormatDetails, ["geometryType", "numElements"], ["<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.geoType' />", "<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.elementCount' />"], "<fmt:message key='ui.obj.type1.vectorFormat.title' />", [function(val) {return UtilSyslist.getSyslistEntryName(515, val);}, null]);
 		// moved to general "Raumbezug" section, class independent !
         //renderTextWithTitle(nodeDataOld.ref1SpatialSystem, nodeDataNew.ref1SpatialSystem, "<fmt:message key='ui.obj.type1.spatialSystem' />");
         renderTable(nodeDataOld.ref1Scale, nodeDataNew.ref1Scale, ["scale", "groundResolution", "scanResolution"], ["<fmt:message key='ui.obj.type1.scaleTable.header.scale' />", "<fmt:message key='ui.obj.type1.scaleTable.header.groundResolution' />", "<fmt:message key='ui.obj.type1.scaleTable.header.scanResolution' />"], "<fmt:message key='ui.obj.type1.scaleTable.title' />");
-		renderTextWithTitle(nodeDataOld.ref1AltAccuracy, nodeDataNew.ref1AltAccuracy, "<fmt:message key='ui.obj.type1.sizeAccuracy' />");
-		renderTextWithTitle(nodeDataOld.ref1PosAccuracy, nodeDataNew.ref1PosAccuracy, "<fmt:message key='ui.obj.type1.posAccuracy' />");
 		renderTable(nodeDataOld.ref1SymbolsText, nodeDataNew.ref1SymbolsText, ["title", "date", "version"], ["<fmt:message key='ui.obj.type1.symbolCatTable.header.title' />", "<fmt:message key='ui.obj.type1.symbolCatTable.header.date' />", "<fmt:message key='ui.obj.type1.symbolCatTable.header.version' />"], "<fmt:message key='ui.obj.type1.symbolCatTable.title' />", [null, formatDate, null]);
 		renderTable(nodeDataOld.ref1KeysText, nodeDataNew.ref1KeysText, ["title", "date", "version"], ["<fmt:message key='ui.obj.type1.keyCatTable.header.title' />", "<fmt:message key='ui.obj.type1.keyCatTable.header.date' />", "<fmt:message key='ui.obj.type1.keyCatTable.header.version' />"], "<fmt:message key='ui.obj.type1.keyCatTable.title' />", [null, formatDate, null]);
 		renderTextWithTitle(nodeDataOld.ref1DataBasisText, nodeDataNew.ref1DataBasisText, "<fmt:message key='ui.obj.type1.dataBasisTable.title' />");
@@ -75,8 +72,10 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
         
         // DQ
         renderSectionTitel("<fmt:message key='ui.obj.dq' />");
+        renderTextWithTitle(nodeDataOld.ref1Coverage, nodeDataNew.ref1Coverage, "<fmt:message key='ui.obj.type1.coverage' />" + " [%]");
+        renderTextWithTitle(nodeDataOld.ref1AltAccuracy, nodeDataNew.ref1AltAccuracy, "<fmt:message key='ui.obj.type1.sizeAccuracy' />");
+        renderTextWithTitle(nodeDataOld.ref1PosAccuracy, nodeDataNew.ref1PosAccuracy, "<fmt:message key='ui.obj.type1.posAccuracy' />");
         renderTable(nodeDataOld.dq109Table, nodeDataNew.dq109Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table109.title' />");
-        renderTable(nodeDataOld.dq110Table, nodeDataNew.dq110Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table110.title' />");
         renderTable(nodeDataOld.dq112Table, nodeDataNew.dq112Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table112.title' />");
         renderTable(nodeDataOld.dq113Table, nodeDataNew.dq113Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table113.title' />");
         renderTable(nodeDataOld.dq114Table, nodeDataNew.dq114Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table114.title' />");
@@ -396,31 +395,27 @@ function renderSectionTitel(val) {
 }
 
 function renderTitel(oldVal, newVal) {
-	if (!oldVal) {
-		oldVal = "";
-	}
-	if (!newVal) {ffffff
-		newVal = "";
-	}
+	// compare with null so 0 will be different ! !oldVal handles 0 the same as null so replaces it with "" !
+	if (oldVal == null) oldVal = "";
+	if (newVal == null) newVal = "";
+    oldVal += "";
+    newVal += "";
+
 	dojo.byId("diffContent").innerHTML += "<strong>" + diffString(oldVal, newVal)+"</strong><br/><br/>";
 	dojo.byId("oldContent").innerHTML += "<strong>" + oldVal + "</strong><br/><br/>";
 	dojo.byId("currentContent").innerHTML += "<strong>" + newVal + "</strong><br/><br/>";
 }
 
 function renderTextWithTitle(oldVal, newVal, title) {
+	// compare with null so 0 will be different ! !oldVal handles 0 the same as null so replaces it with "" !
+    if (oldVal == null) oldVal = "";
+    if (newVal == null) newVal = "";
+    oldVal += "";
+    newVal += "";
+
 	if (!detailHelper.isValid(oldVal) && !detailHelper.isValid(newVal)) {
 		return;
 	}
-
-	if (oldVal == null) {
-		oldVal = "";
-	}
-	if (newVal == null) {
-		newVal = "";
-	}
-
-	oldVal += "";
-	newVal += "";
 
 	dojo.byId("diffContent").innerHTML += "<strong>" + title + "</strong><p>" + diffString(oldVal, newVal) + "</p><br/>";
     dojo.byId("oldContent").innerHTML += "<strong>" + title + "</strong><p>" + oldVal.replace(/\n/g, "<br />") + "</p><br/>";

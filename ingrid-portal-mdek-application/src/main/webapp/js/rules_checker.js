@@ -7,7 +7,7 @@ dojo.addOnLoad(function() {});
 /* IDs of UI Elements for checking etc. */
 //var headerUiInputElements = ["objectName", "objectClass"/*, "objectOwner"*/]; // setStore of object owner is delayed! 
 var generalUiInputElements = ["generalShortDesc", "generalDesc", "generalAddress"];
-var dqUiTableElements = ["dq109Table", "dq110Table", "dq112Table", "dq113Table", "dq114Table", "dq115Table", "dq117Table",
+var dqUiTableElements = ["dq109Table", "dq112Table", "dq113Table", "dq114Table", "dq115Table", "dq117Table",
     "dq120Table", "dq125Table", "dq126Table", "dq127Table"];
 /*
 var spatialUiInputElements = ["spatialRefAdminUnit", "spatialRefLocation", "ref1SpatialSystem", "spatialRefAltMin", "spatialRefAltMax",

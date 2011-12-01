@@ -108,14 +108,11 @@ function renderNodeData(nodeData) {
 			renderTextWithTitle(nodeData.ref1ObjectIdentifier, "<fmt:message key='ui.obj.type1.identifier' />");
 			renderTextWithTitle(UtilSyslist.getSyslistEntryName(525, nodeData.ref1DataSet), "<fmt:message key='ui.obj.type1.dataset' />");
 			renderList(nodeData.ref1Representation, "<fmt:message key='ui.obj.type1.digitalRepresentation' />", null, function(val) { return UtilSyslist.getSyslistEntryName(526, val); });
-			renderTextWithTitle(nodeData.ref1Coverage, "<fmt:message key='ui.obj.type1.coverage' />" + " [%]");
 			renderTextWithTitle(UtilSyslist.getSyslistEntryName(528, nodeData.ref1VFormatTopology), "<fmt:message key='ui.obj.type1.vectorFormat.topology' />");
 			renderTable(nodeData.ref1VFormatDetails, ["geometryType", "numElements"], ["<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.geoType' />", "<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.elementCount' />"], "<fmt:message key='ui.obj.type1.vectorFormat.title' />", [function(val) {return UtilSyslist.getSyslistEntryName(515, val);}, null]);
 			// NOTICE: moved to general section "Raumbezug"
             //renderTextWithTitle(nodeData.ref1SpatialSystem, "<fmt:message key='ui.obj.type1.spatialSystem' />");
 			renderTable(nodeData.ref1Scale, ["scale", "groundResolution", "scanResolution"], ["<fmt:message key='ui.obj.type1.scaleTable.header.scale' />", "<fmt:message key='ui.obj.type1.scaleTable.header.groundResolution' />", "<fmt:message key='ui.obj.type1.scaleTable.header.scanResolution' />"], "<fmt:message key='ui.obj.type1.scaleTable.title' />");
-			renderTextWithTitle(nodeData.ref1AltAccuracy, "<fmt:message key='ui.obj.type1.sizeAccuracy' />");
-			renderTextWithTitle(nodeData.ref1PosAccuracy, "<fmt:message key='ui.obj.type1.posAccuracy' />");
 			renderTable(nodeData.ref1SymbolsText, ["title", "date", "version"], ["<fmt:message key='ui.obj.type1.symbolCatTable.header.title' />", "<fmt:message key='ui.obj.type1.symbolCatTable.header.date' />", "<fmt:message key='ui.obj.type1.symbolCatTable.header.version' />"], "<fmt:message key='ui.obj.type1.symbolCatTable.title' />", [null, formatDate, null]);
 			renderTable(nodeData.ref1KeysText, ["title", "date", "version"], ["<fmt:message key='ui.obj.type1.keyCatTable.header.title' />", "<fmt:message key='ui.obj.type1.keyCatTable.header.date' />", "<fmt:message key='ui.obj.type1.keyCatTable.header.version' />"], "<fmt:message key='ui.obj.type1.keyCatTable.title' />", [null, formatDate, null]);
 			renderTextWithTitle(nodeData.ref1DataBasisText, "<fmt:message key='ui.obj.type1.dataBasisTable.title' />");
@@ -126,8 +123,10 @@ function renderNodeData(nodeData) {
             
             // DQ
             renderSectionTitel("<fmt:message key='ui.obj.dq' />");
+            renderTextWithTitle(nodeData.ref1Coverage, "<fmt:message key='ui.obj.type1.coverage' />" + " [%]");
+            renderTextWithTitle(nodeData.ref1AltAccuracy, "<fmt:message key='ui.obj.type1.sizeAccuracy' />");
+            renderTextWithTitle(nodeData.ref1PosAccuracy, "<fmt:message key='ui.obj.type1.posAccuracy' />");
             renderTable(nodeData.dq109Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table109.title' />");
-            renderTable(nodeData.dq110Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table110.title' />");
             renderTable(nodeData.dq112Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table112.title' />");
             renderTable(nodeData.dq113Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table113.title' />");
             renderTable(nodeData.dq114Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table114.title' />");
@@ -513,6 +512,9 @@ function renderSectionTitel(val) {
 }
 
 function renderTextWithTitle(val, title) {
+	// compare with null so 0 will be different ! !oldVal handles 0 the same as null so replaces it with "" !
+    if (val == null) val = "";
+    val += "";
 	if (detailHelper.isValid(val)) {
 		// Replace newlines with <br/>
 		val = val.replace(/\n/g, "<br/>");
@@ -546,6 +548,9 @@ function renderAddressList(list) {
 }
 
 function renderText(val) {
+	// compare with null so 0 will be different ! !oldVal handles 0 the same as null so replaces it with "" !
+    if (val == null) val = "";
+    val += "";
 	if (val && val.length>0) {
 		// Replace newlines with <br/>
 		val = val.replace(/\n/g, "<br/>");

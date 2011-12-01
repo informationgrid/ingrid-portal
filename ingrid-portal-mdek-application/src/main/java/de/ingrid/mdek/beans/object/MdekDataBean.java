@@ -134,7 +134,6 @@ public class MdekDataBean {
 	private List<String> ref1Data;
 	// Data Quality !
 	private List<DQBean> dq109Table;
-	private List<DQBean> dq110Table;
 	private List<DQBean> dq112Table;
 	private List<DQBean> dq113Table;
 	private List<DQBean> dq114Table;
@@ -554,7 +553,6 @@ public class MdekDataBean {
 		this.setRef1SpatialSystemTable(new ArrayList<String>());
 
 		this.setDq109Table(new ArrayList<DQBean>());
-		this.setDq110Table(new ArrayList<DQBean>());
 		this.setDq112Table(new ArrayList<DQBean>());
 		this.setDq113Table(new ArrayList<DQBean>());
 		this.setDq114Table(new ArrayList<DQBean>());
@@ -1864,13 +1862,6 @@ public class MdekDataBean {
 	}
 	public void setDq109Table(List<DQBean> dq109Table) {
 		this.dq109Table = dq109Table;
-	}
-
-	public List<DQBean> getDq110Table() {
-		return dq110Table;
-	}
-	public void setDq110Table(List<DQBean> dq110Table) {
-		this.dq110Table = dq110Table;
 	}
 
 	public List<DQBean> getDq112Table() {

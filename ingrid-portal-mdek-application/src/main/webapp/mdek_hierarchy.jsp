@@ -463,15 +463,6 @@
 										    <span class="input spaceBelow"><input listId="525" id="ref1DataSet" style="width:100%;" /></span>
                                             </div>
                                         </span>
-										<span id="uiElement3565">
-											<div><span class="label">
-		                                        <label for="ref1Coverage" onclick="javascript:dialog.showContextHelp(arguments[0], 3565)">
-		                                            <fmt:message key="ui.obj.type1.coverage" />
-		                                        </label>
-		                                    </span>
-									        <span class="input"><input type="text" id="ref1Coverage" min="0" max="100" name="ref1Coverage" class="" decimal="," /> %</span>
-									       </div>
-								        </span>
                                     </div>
 								</span>
                             <span id="uiElement5062" class="outer halfWidth">
@@ -535,24 +526,6 @@
                                     </div>
 									</div>
                                 </span>
-                            </div>
-                            <div class="inputContainer">
-                                    <span id="uiElement5069" class="outer halfWidth">
-                                    	<div><span class="label">
-                                            <label for="ref1AltAccuracy" onclick="javascript:dialog.showContextHelp(arguments[0], 5069)">
-                                                <fmt:message key="ui.obj.type1.sizeAccuracy" />
-                                            </label>
-                                        </span><span class="input"><input type="text" id="ref1AltAccuracy" name="ref1AltAccuracy" class="" decimal="," /></span>
-										</div>
-									</span>
-                                    <span id="uiElement3530" class="outer halfWidth">
-                                    	<div><span class="label">
-                                            <label for="ref1PosAccuracy" onclick="javascript:dialog.showContextHelp(arguments[0], 3530)">
-                                                <fmt:message key="ui.obj.type1.posAccuracy" />
-                                            </label>
-                                        </span><span class="input"><input type="text" id="ref1PosAccuracy" name="ref1PosAccuracy" class="" decimal="," /></span>
-										</div>
-									</span>
                             </div>
                             <div class="inputContainer">
                                 <span id="uiElement3555" class="outer">
@@ -691,7 +664,37 @@
                                 <a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a>
                             </div>
                         </div>
-                        <div id="ref1ContentDQ" class="content">
+                            <span id="uiElement3565" class="outer">
+                                <div><span class="label">
+                                    <label for="ref1Coverage" onclick="javascript:dialog.showContextHelp(arguments[0], 3565)">
+                                        <fmt:message key="ui.obj.type1.coverage" />
+                                    </label>
+                                </span>
+                                <span class="input">
+                                    <input type="text" id="ref1Coverage" min="0" max="100" name="ref1Coverage" class="" decimal="," /> %</span>
+                                </div>
+                            </span>
+                            <div class="inputContainer">
+                                    <span id="uiElement5069" class="outer halfWidth">
+                                        <div><span class="label">
+                                            <label for="ref1AltAccuracy" onclick="javascript:dialog.showContextHelp(arguments[0], 5069)">
+                                                <fmt:message key="ui.obj.type1.sizeAccuracy" />
+                                            </label>
+                                        </span><span class="input"><input type="text" id="ref1AltAccuracy" name="ref1AltAccuracy" class="" decimal="," /></span>
+                                        </div>
+                                    </span>
+                                    <span id="uiElement3530" class="outer halfWidth">
+                                        <div><span class="label">
+                                            <label for="ref1PosAccuracy" onclick="javascript:dialog.showContextHelp(arguments[0], 3530)">
+                                                <fmt:message key="ui.obj.type1.posAccuracy" />
+                                            </label>
+                                        </span><span class="input"><input type="text" id="ref1PosAccuracy" name="ref1PosAccuracy" class="" decimal="," /></span>
+                                        </div>
+                                    </span>
+                            </div>
+                        <!-- BELOW HERE ARE THE DQ TABELS with special IDs so validation, content read etc. works automatically (see eventSubscriber.js, rules_validation.js) ! -->
+                        <!-- Further the tables are shown DEPENDENT FROM CHOSEN INSPIRE THEME, see rules_requires.js applyRule7() -->
+                        <div id="ref1ContentDQTables" class="content">
                             <span id="uiElement7509" class="outer">
                                 <div><span class="label">
                                     <label for="dq109Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7509)">
@@ -700,18 +703,6 @@
                                 </span>
                                 <div class="input tableContainer">
                                     <div id="dq109Table" interactive="true" autoHeight="3">
-                                    </div>
-                                </div>
-                                </div>
-                            </span>
-                            <span id="uiElement7510" class="outer">
-                                <div><span class="label">
-                                    <label for="dq110Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7510)">
-                                        <fmt:message key="ui.obj.dq.table110.title" />
-                                    </label>
-                                </span>
-                                <div class="input tableContainer">
-                                    <div id="dq110Table" interactive="true" autoHeight="3">
                                     </div>
                                 </div>
                                 </div>

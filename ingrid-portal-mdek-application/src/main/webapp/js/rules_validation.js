@@ -515,7 +515,7 @@ function extraInfoConformityPublishable(notPublishableIDs) {
 function dqTablesPublishable(notPublishableIDs) {
     var objClass = dijit.byId("objectClass").getValue().substr(5, 1);
     if (objClass == '1') {
-        var dqUiTableElements = dojo.query("#refClass1DQ span:not(.hide) .ui-widget", "contentFrameBodyObject").map(function(item) {return item.id;});
+        var dqUiTableElements = dojo.query("#ref1ContentDQTables span:not(.hide) .ui-widget", "contentFrameBodyObject").map(function(item) {return item.id;});
         // Check dq rows whether complete !
         dojo.forEach(dqUiTableElements, function(dqTableId){
             var dqRows = UtilGrid.getTableData(dqTableId);

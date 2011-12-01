@@ -562,13 +562,24 @@ UtilUdk.isInspire = function(thesaurusInspireTermsList) {
 	return false;
 }
 
-UtilUdk.getCurrentObjectClass = function() {	
+//returns "1", "2" ...
+UtilUdk.getCurrentObjectClass = function() {
 	var objectClassWidget = dijit.byId("objectClass");
 	if (typeof(objectClassWidget) == "undefined") {
 		return 0;
 	}
 
 	return objectClassWidget.getValue()[5];
+}
+
+// returns "Class1", "Class2" ...
+UtilUdk.getObjectClass = function() {	
+	var objectClassWidget = dijit.byId("objectClass");
+	if (typeof(objectClassWidget) == "undefined") {
+		return 0;
+	}
+
+	return objectClassWidget.getValue();
 }
 
 UtilUdk.getCurrentAddressClass = function() {	

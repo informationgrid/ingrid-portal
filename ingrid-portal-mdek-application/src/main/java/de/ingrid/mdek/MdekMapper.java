@@ -219,7 +219,6 @@ public class MdekMapper implements DataMapperInterface {
         case 1:
             // DQ has different section (transferred outside of TECHNICAL_DOMAIN_MAP !)
             mdekObj.setDq109Table(mapToDqTable(109, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
-            mdekObj.setDq110Table(mapToDqTable(110, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
             mdekObj.setDq112Table(mapToDqTable(112, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
             mdekObj.setDq113Table(mapToDqTable(113, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
             mdekObj.setDq114Table(mapToDqTable(114, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
@@ -777,17 +776,18 @@ public class MdekMapper implements DataMapperInterface {
         case 0: // Object of type 0 doesn't have any special values
             break;
         case 1:
-            IngridDocument td1Map = new IngridDocument();
-            // DQ has different section (transferred outside of TECHNICAL_DOMAIN_MAP !)
-            int[] dqIds = new int[] {
-                109, 110, 112, 113, 114, 115, 117, 120, 125, 126, 127,
-            };
-            List<DQBean>[] dqData = new List[] { 
-                data.getDq109Table(), data.getDq110Table(), data.getDq112Table(), data.getDq113Table(),
-                data.getDq114Table(), data.getDq115Table(), data.getDq117Table(), data.getDq120Table(),
-                data.getDq125Table(), data.getDq126Table(), data.getDq127Table()
-            };
-            udkObj.put(MdekKeys.DATA_QUALITY_LIST, mapFromDQTables(dqIds, dqData));
+            List<IngridDocument> dqList = new ArrayList<IngridDocument>();
+            mapFromDQTable(109, data.getDq109Table(), dqList);
+            mapFromDQTable(112, data.getDq112Table(), dqList);
+            mapFromDQTable(113, data.getDq113Table(), dqList);
+            mapFromDQTable(114, data.getDq114Table(), dqList);
+            mapFromDQTable(115, data.getDq115Table(), dqList);
+            mapFromDQTable(117, data.getDq117Table(), dqList);
+            mapFromDQTable(120, data.getDq120Table(), dqList);
+            mapFromDQTable(125, data.getDq125Table(), dqList);
+            mapFromDQTable(126, data.getDq126Table(), dqList);
+            mapFromDQTable(127, data.getDq127Table(), dqList);
+            udkObj.put(MdekKeys.DATA_QUALITY_LIST, dqList);
             
             Boolean inspireRelevantC1 = data.getInspireRelevant();
             if (inspireRelevantC1 != null && inspireRelevantC1 == true)
@@ -797,6 +797,7 @@ public class MdekMapper implements DataMapperInterface {
 
             udkObj.put(MdekKeys.FORMAT_INSPIRE_LIST, mapFromAvailDataFormatInspire(data.getAvailabilityDataFormatInspire()));
 
+            IngridDocument td1Map = new IngridDocument();
             td1Map.put(MdekKeys.DATASOURCE_UUID, data.getRef1ObjectIdentifier());
             td1Map.put(MdekKeys.HIERARCHY_LEVEL, data.getRef1DataSet());
             td1Map.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, data.getRef1VFormatTopology());
@@ -2144,38 +2145,31 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
 
-    private List<IngridDocument> mapFromDQTables(int[] dqIds,
-            List<DQBean>[] dqDataList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+    /** Map given DQ data from given table (dqId) to IngridDocument and add it to result list. */
+    private void mapFromDQTable(int dqId, List<DQBean> dqData, List<IngridDocument> dqList) {
+        if (dqData != null) {
+            // get "Name Of Measure" Syslist for dq element
+            int syslistIdNameOfMeasure = MdekUtils.MdekSysList.getSyslistIdFromDqElementId(dqId);
 
-        for (int i=0; i < dqIds.length; i++) {
-            int dqId = dqIds[i];
-            List<DQBean> dqData = dqDataList[i];
-            if (dqData != null) {
-                // get "Name Of Measure" Syslist for dq element
-                int syslistIdNameOfMeasure = MdekUtils.MdekSysList.getSyslistIdFromDqElementId(dqId);
+            for (DQBean dq : dqData) {
+            	IngridDocument resultDoc = new IngridDocument();
+                resultDoc.put(MdekKeys.DQ_ELEMENT_ID, dqId);
 
-                for (DQBean dq : dqData) {
-                    IngridDocument res = new IngridDocument();
-                    res.put(MdekKeys.DQ_ELEMENT_ID, dqId);
-
-                    // name of measure is free entry (key=-1) or syslist entry !
-                    // first set as free value
-                    res.put(MdekKeys.NAME_OF_MEASURE_VALUE, dq.getNameOfMeasure());
-                    res.put(MdekKeys.NAME_OF_MEASURE_KEY, new Integer(-1));                 
-                    // then set key from syslist if syslist entry
-                    Integer key = sysListMapper.getKeyFromListId(syslistIdNameOfMeasure, dq.getNameOfMeasure());
-                    if (key != null) {
-                        res.put(MdekKeys.NAME_OF_MEASURE_KEY, key);
-                    }
-
-                    res.put(MdekKeys.RESULT_VALUE, dq.getResultValue());
-                    res.put(MdekKeys.MEASURE_DESCRIPTION, dq.getMeasureDescription());
-                    resultList.add(res);
+                // name of measure is free entry (key=-1) or syslist entry !
+                // first set as free value
+                resultDoc.put(MdekKeys.NAME_OF_MEASURE_VALUE, dq.getNameOfMeasure());
+                resultDoc.put(MdekKeys.NAME_OF_MEASURE_KEY, new Integer(-1));                 
+                // then set key from syslist if syslist entry
+                Integer key = sysListMapper.getKeyFromListId(syslistIdNameOfMeasure, dq.getNameOfMeasure());
+                if (key != null) {
+                    resultDoc.put(MdekKeys.NAME_OF_MEASURE_KEY, key);
                 }
+
+                resultDoc.put(MdekKeys.RESULT_VALUE, dq.getResultValue());
+                resultDoc.put(MdekKeys.MEASURE_DESCRIPTION, dq.getMeasureDescription());
+                dqList.add(resultDoc);
             }
         }
-        return resultList;
     }
 
     /********************************

@@ -2297,7 +2297,7 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
 	nodeData.ref1SymbolsText = udkDataProxy._getTableData("ref1SymbolsText");
 	nodeData.ref1KeysText = udkDataProxy._getTableData("ref1KeysText");
     
-    var dqUiTableElements = dojo.query("#refClass1DQ span:not(.hide) .ui-widget", "contentFrameBodyObject").map(function(item) {return item.id;});
+    var dqUiTableElements = dojo.query("#ref1ContentDQTables span:not(.hide) .ui-widget", "contentFrameBodyObject").map(function(item) {return item.id;});
     dojo.forEach(dqUiTableElements, function(dqTableId) {
         // only map data of DQ tables shown ! remove other data !
         // -> only visible dqTables are selected!!! 
