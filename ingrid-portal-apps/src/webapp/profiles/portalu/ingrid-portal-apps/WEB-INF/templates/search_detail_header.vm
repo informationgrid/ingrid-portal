@@ -20,9 +20,9 @@
 	<meta name="igc-objektklasse" content="${udkObjClassName}" />
 	<meta name="igc-icon" content="http://www.portalu.de/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" />
   #end
-  <meta name="author" content="wemove digital solutions" />
+  <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
   <meta name="keywords" content="" />
-  <meta name="copyright" content="wemove digital solutions GmbH" />
+  <meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
   <meta name="robots" content="index,follow" />
   <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
 
