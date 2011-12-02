@@ -840,10 +840,12 @@ div#facete h2 { color:#5E5E5F; }
 div.facete_open { width:13px; height:13px; background-image: url(../images/facete_cat_open.png); }
 div.facete_close { width:13px; height:13px; background-image: url(../images/facete_cat_close.png); }
 div#search_facete { width: 208px; float: left; padding: 0; border-right: 1px dotted #CCCCCC;}
-div#search_hits { float: left; padding: 0 0 0 25px; width:37em; }
+div#search_hits.nonjavascript { float: left; padding: 0 0 0 0; width:826px; }
+div#search_hits.javascript { float: left; padding: 0 0 0 25px; width:37em; }
 div#search_hits div#results_lefts div.section { width:37em; }
 div#search_facete_address { width: 208px; float: left; padding: 0; border-right: 1px dotted #CCCCCC;}
-div#search_hits_address { float: left; padding: 0 0 0 25px; width:58.9em; }
+div#search_hits_address.nonjavascript { float: left; padding: 0 0 0 0; width:100%; }
+div#search_hits_address.javascript { float: left; padding: 0 0 0 25px; width:58.9em; }
 div.cat_label { }
 div.cat_label a { font-size: 12px; font-weight:bold; }
 div.cat_content { padding:5px 0 0 30px; display: block; }

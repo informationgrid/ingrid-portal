@@ -1,10 +1,10 @@
 #parse ('/WEB-INF/templates/include_search_result_filter.vm')
 
-<div dojoType="dijit.layout.ContentPane" id="search_facete">
+<div dojoType="dijit.layout.ContentPane" id="search_facete" style="display:none">
    	#parse ('/WEB-INF/templates/facete/facete.vm')
 </div>
 
-<div dojoType="dijit.layout.ContentPane" id="search_hits">
+<div dojoType="dijit.layout.ContentPane" id="search_hits" class="nonjavascript">
 <!-- RESULTS LEFT -->
 #if ($RIGHT_COLUMN_DISABLED)
   <div id="section">
@@ -23,3 +23,8 @@
 #end
 
   <div class="clearer"></div>
+
+ <script type="text/javascript">
+ 	document.getElementById('search_facete').style.display = "block";
+	document.getElementById('search_hits').setAttribute('class', "javascript");
+ </script>

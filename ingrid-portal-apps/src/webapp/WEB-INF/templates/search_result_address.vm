@@ -10,10 +10,10 @@
 #set ($IS_RANKED = true)
 
 #parse ('/WEB-INF/templates/include_search_result_filter.vm')
-<div dojoType="dijit.layout.ContentPane" id="search_facete_address">
+<div dojoType="dijit.layout.ContentPane" id="search_facete_address" style="display:none">
    	#parse ('/WEB-INF/templates/facete/facete.vm')
 </div>
-<div dojoType="dijit.layout.ContentPane" id="search_hits_address">
+<div dojoType="dijit.layout.ContentPane" id="search_hits_address" class="nonjavascript">
 <!-- RESULTS LEFT -->
     <div class="section">  
 #parse ('/WEB-INF/templates/include_search_result_counter.vm')
@@ -43,3 +43,8 @@
     </div>
   <div class="clearer"></div>
 </div>
+
+<script type="text/javascript">
+ 	document.getElementById('search_facete_address').style.display = "block";
+	document.getElementById('search_hits_address').setAttribute('class', "javascript");
+ </script>
