@@ -52,9 +52,9 @@
 
 <div>
 	#if($ds == "2")
-		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete_address', 'search_hits_address', '58.9em', '71.9em')">
+		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete_address', 'search_hits_address')">
 	#else
-		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete', 'search_hits', '37em', '50.0em')">
+		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete', 'search_hits')">
 	#end
 		<img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_open.png" >
 	</a>

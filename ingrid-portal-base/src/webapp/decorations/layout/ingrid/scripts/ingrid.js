@@ -133,23 +133,21 @@ function openNode(element){
 }
 
 /* Open and close facete */
-function openFaceteNode(element, id_facete, id_hits, width_min, width_max){
-	var status = document.getElementById(element).style.display;
+function openFaceteNode(element, id_facete, id_hits){
 	var status_img = document.getElementById(element + "_img").src;
-	document.getElementById(element).style.display = 'none';
-	document.getElementById(id_facete).style.width = '3%';
-	document.getElementById(id_facete).style.margin = '0 0 0 -35px';
-	document.getElementById(id_hits).style.width = width_max;
-	document.getElementById(element + "_img").src = '/ingrid-portal-apps/images/facete/facete_close.png'
-	if(status == "none"){
+	
+	if(status_img.indexOf('/ingrid-portal-apps/images/facete/facete_close.png') > -1){
 		document.getElementById(element).style.display = "block";
-		document.getElementById(id_facete).style.width = '208px';
-		document.getElementById(id_facete).style.margin = '0';
-		document.getElementById(id_hits).style.width = width_min;
-		}
-	if(status_img.indexOf('/ingrid-portal-apps/images/facete_close.png') != -1){
 		document.getElementById(element + "_img").src = '/ingrid-portal-apps/images/facete/facete_open.png';
-		}
+		document.getElementById(id_hits).setAttribute('class', "closeNode");
+		document.getElementById(id_facete).setAttribute('class', "openNode");
+	}else{
+		document.getElementById(element).style.display = 'none';
+		document.getElementById(element + "_img").src = '/ingrid-portal-apps/images/facete/facete_close.png';
+		document.getElementById(id_hits).setAttribute('class', "openNode");
+		document.getElementById(id_facete).setAttribute('class', "closeNode");
+	}
+	
 }
 
 /* select all checkboxes in form */
