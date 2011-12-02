@@ -271,6 +271,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		
 	// Tab "Datenqualität"
 			
+			// "Erfassungsgrad (neu = Datendefizit) / Lagegenauigkeit / Höhengenauigkeit"
+			xpathExpression = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report";	
+			getGeoReport(elementsDataQuality, xpathExpression);
+			
 			xpathExpression = "./gmd:dataQualityInfo/gmd:DQ_DataQuality";
     		getDataQualityClass(elementsDataQuality, xpathExpression);
     		
@@ -506,10 +510,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		// "Erstellungsmaßstab"
 		xpathExpression = "./gmd:identificationInfo/*";
 		getReferenceObject(elements, xpathExpression);
-		
-		// "Erfassungsgrad / Lagegenauigkeit / Höhengenauigkeit / Datendefizit"
-		xpathExpression = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report";	
-		getGeoReport(elements, xpathExpression);
 		
 		// "Symbolkatalog"
 		xpathExpression = "./gmd:portrayalCatalogueInfo";
