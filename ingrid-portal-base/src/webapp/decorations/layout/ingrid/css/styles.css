@@ -911,3 +911,6 @@ div.dialog_content .inputstyletext { border: 1px inset #FFFFFF; padding: 2px 4px
 
 div.btn_submit_dialog { padding: 11px 0 0; }
 div.btn_submit_dialog div.btn_center input { font-size: 10px; }
+
+.tundra .dijitBorderContainer { background-color: transparent !important; }
+.tundra .dijitSplitContainer-child, .tundra .dijitBorderContainer-child { border: 0px solid #CCCCCC !important; }

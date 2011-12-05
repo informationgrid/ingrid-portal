@@ -15,19 +15,16 @@
 					#set ($action = $renderResponse.createActionURL())
 					#if($isSelectedChbProvider)
     					$action.setParameter("doRemoveProvider", "${provider.ident}")
-    					<a href="$action" class="facete_label_chb" style="$style_label">
+    					<a href="$action" class="facete_label_chb">
 							<input id="${provider.ident}" class="facete_input_chb" type=checkbox checked>
-						$provider.name
-						#renderLinkEntryNumber("provider" "${provider.ident}")
-						</a>
 					#else
 						$action.setParameter("doAddProviderChb", "${provider.ident}")
-    					<a href="$action" class="facete_label_chb" style="$style_label">
+    					<a href="$action" class="facete_label_chb">
 							<input id="${provider.ident}" class="facete_input_chb" type=checkbox>
+					#end
 						$provider.name
 						#renderLinkEntryNumber("provider" "${provider.ident}")
 						</a>
-					#end
 				</span>
     		</div>
 		</div>
