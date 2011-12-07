@@ -123,7 +123,8 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
             for (int i = 0; i < plugs.length; i++) {
                 PlugDescription plug = plugs[i];
                 // only include activated index engine iplugs
-                if (plug.isActivate() && (plug.getIPlugClass().equals("de.ingrid.iplug.se.IndexIPlug") || plug.getIPlugClass().equals("de.ingrid.admin.object.IndexSePlug"))) {
+                if (plug.isActivate() && plug.getIPlugClass() != null &&
+                		(plug.getIPlugClass().equals("de.ingrid.iplug.se.IndexIPlug") || plug.getIPlugClass().equals("de.ingrid.admin.object.IndexSePlug"))) {
                     result.add(plug);
                 }
             }
@@ -139,7 +140,8 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
 	        for (int i = 0; i < plugs.length; i++) {
 	            PlugDescription plug = plugs[i];
 	            // do not include search engine iplugs
-	            if (plug.isActivate() && plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
+	            if (plug.isActivate() && plug.getIPlugClass() != null &&
+	            		plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
 	                result.add(plug);
 	            }
 	        }
