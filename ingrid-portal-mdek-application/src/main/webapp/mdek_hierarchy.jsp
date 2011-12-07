@@ -575,6 +575,20 @@
                                 </span>
                             </div>
                             <div class="inputContainer">
+                                <span id="uiElement5070" class="outer">
+                                    <div><span class="label">
+                                        <label for="ref1Data" onclick="javascript:dialog.showContextHelp(arguments[0], 5070)">
+                                            <fmt:message key="ui.obj.type1.attributes" />
+                                        </label>
+                                    </span>
+                                    <div class="input tableContainer">
+                                        <div id="ref1Data" interactive="true" autoHeight="3" minRows="3" class="hideTableHeader">
+                                        </div>
+                                    </div>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="inputContainer">
                                 <span id="uiElementN003" class="outer">
                                 	<div><span class="label">
                                         <label for="ref1ServiceLink" onclick="javascript:dialog.showContextHelp(arguments[0], 5066)">
@@ -604,20 +618,6 @@
                                                 <div id="ref1DataBasisLink" autoHeight="4" class="hideTableHeader noValidate" contextMenu="none" query="{relationType:'3570'}">
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-									</div>
-                                </span>
-                            </div>
-                            <div class="inputContainer">
-                                <span id="uiElement5070" class="outer">
-                                	<div><span class="label">
-                                        <label for="ref1Data" onclick="javascript:dialog.showContextHelp(arguments[0], 5070)">
-                                            <fmt:message key="ui.obj.type1.attributes" />
-                                        </label>
-                                    </span>
-                                    <div class="input tableContainer">
-                                        <div id="ref1Data" interactive="true" autoHeight="3" minRows="3" class="hideTableHeader">
                                         </div>
                                     </div>
 									</div>

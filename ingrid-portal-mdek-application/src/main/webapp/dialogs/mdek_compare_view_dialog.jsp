@@ -64,8 +64,8 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
         renderTable(nodeDataOld.ref1Scale, nodeDataNew.ref1Scale, ["scale", "groundResolution", "scanResolution"], ["<fmt:message key='ui.obj.type1.scaleTable.header.scale' />", "<fmt:message key='ui.obj.type1.scaleTable.header.groundResolution' />", "<fmt:message key='ui.obj.type1.scaleTable.header.scanResolution' />"], "<fmt:message key='ui.obj.type1.scaleTable.title' />");
 		renderTable(nodeDataOld.ref1SymbolsText, nodeDataNew.ref1SymbolsText, ["title", "date", "version"], ["<fmt:message key='ui.obj.type1.symbolCatTable.header.title' />", "<fmt:message key='ui.obj.type1.symbolCatTable.header.date' />", "<fmt:message key='ui.obj.type1.symbolCatTable.header.version' />"], "<fmt:message key='ui.obj.type1.symbolCatTable.title' />", [null, formatDate, null]);
 		renderTable(nodeDataOld.ref1KeysText, nodeDataNew.ref1KeysText, ["title", "date", "version"], ["<fmt:message key='ui.obj.type1.keyCatTable.header.title' />", "<fmt:message key='ui.obj.type1.keyCatTable.header.date' />", "<fmt:message key='ui.obj.type1.keyCatTable.header.version' />"], "<fmt:message key='ui.obj.type1.keyCatTable.title' />", [null, formatDate, null]);
+        renderList(nodeDataOld.ref1Data, nodeDataNew.ref1Data, "<fmt:message key='ui.obj.type1.attributes' />");
 		renderTextWithTitle(nodeDataOld.ref1DataBasisText, nodeDataNew.ref1DataBasisText, "<fmt:message key='ui.obj.type1.dataBasisTable.title' />");
-		renderList(nodeDataOld.ref1Data, nodeDataNew.ref1Data, "<fmt:message key='ui.obj.type1.attributes' />");
 		renderTextWithTitle(nodeDataOld.ref1ProcessText, nodeDataNew.ref1ProcessText, "<fmt:message key='ui.obj.type1.processTable.title' />");
         
         renderAdditionalFieldsForRubric("refClass1", oldAdditionalFields, newAdditionalFields);
