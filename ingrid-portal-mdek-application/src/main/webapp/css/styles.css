@@ -38,9 +38,9 @@ html {
 .claro { font: 11px/16px Verdana,Helvetica,Arial,sans-serif; }
 .claro #logo { float:left; padding-right:10px; }
 .claro #title { float:left; }
-.claro #languageBox { float: right; margin: 5px !important; font-size: 9px; }
+.claro #languageBox { float: right; margin: 5px !important; margin-left: 10px; font-size: 9px; }
 .claro #logoPane { padding: 0; background:#5d9ccd; }
-.claro #headMenu { color:#C2E3FC; float:right; padding-right:10px;padding-top:8px; font-size: 90%; font-weight: normal; }
+.claro #headMenu { color:#C2E3FC; padding-right:20px;padding-top:8px; font-size: 90%; font-weight: normal; }
 .claro #logoContainer { background-color: #146da9; background-image: url(""); border: 1px solid #B5BCC7; margin: 0; padding: 0; }
 .iconDashboard { margin: -2px 0 0;}
 
