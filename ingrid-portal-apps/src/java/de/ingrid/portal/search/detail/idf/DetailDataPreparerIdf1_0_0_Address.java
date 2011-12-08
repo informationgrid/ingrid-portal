@@ -167,7 +167,8 @@ public class DetailDataPreparerIdf1_0_0_Address extends DetailDataPreparerIdf1_0
 					
 					if (description != null) {
 						description = description.replaceAll("\n", "<br/>");
-						description = description.replaceAll("<(?!b>|/b>|i>|/i>|u>|/u>|p>|/p>|br>|br/>|br />|strong>|/strong>|ul>|/ul>|ol>|/ol>|li>|/li>)[^>]*>", "");
+						description = description.replaceAll("&lt;", "<");
+						description = description.replaceAll("&gt;", ">");
 					}
 				}
 				if ((description.length() > 0) || alternateName.length() > 0) {
