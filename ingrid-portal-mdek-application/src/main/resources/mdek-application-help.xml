@@ -87,7 +87,7 @@
 			</ul>
 			<p> Metadata objects contain details on the subject reference as well as spatial and temporal reference of a data object. The subject reference makes statements about the type and manner of data collection and its accuracy; spatial and temporal reference state where and when the data object was obtained.</p>
 
-			<p>Each object is assigned at least one address (e.g. address of the place providing the information or of the data holder). Through these assignment possiblities (references) the addresses must only be entered or maintained once in the IGC address management.</p>
+			<p>Each object is assigned at least one address (e.g. address of the custodian or of the point of contact). Through these assignment possiblities (references) the addresses must only be entered or maintained once in the IGC address management.</p>
 			<p>The addresses are divided into four categories:</p>
 			<ul>
 			<li> Institutions</li>
@@ -406,7 +406,7 @@
 				 or the <a href="?hkey=creation-of-objects-3">getCapabilities wizard</a> 
 				 for support in filling out the new object. You operate the wizard selected by means of 
 				 <i><b>Start Wizard</b></i>.</p>
-                 <p>Select <i><b>Continue without a Wizard</b></i> in order to open an empty new object. As a standard, not only the information 
+                 <p>Select <i><b>Continue without a Wizard</b></i> in order to open an empty new object. As a standard, not only the custodian 
 				 address and the spatial reference but also the thesaurus terms are borrowed from the superordinate object in the hierarchy.</p>
             </content>
         </section>
@@ -1267,7 +1267,7 @@
 				 <p>The <i>Analysis</i> submenu item provides a series of checks on the catalogue for internal consistency.</p>
 				 <p>Checks are made for the following defects:</p>
 				 <ul>
-				 <li>Objects that do not have a data information address</li>
+				 <li>Objects that do not have a custodian address</li>
 				 <li>Objects that have no parent-objects</li>
 				 <li>Objects that have invalid address references</li>
 				 <li>Addresses that have no parent-address</li>

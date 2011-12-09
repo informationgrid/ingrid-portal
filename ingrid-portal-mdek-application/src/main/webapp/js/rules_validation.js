@@ -206,20 +206,20 @@ function addressValidation() {
         if (msg.type != "deleted")
             return;
             
-        // special behaviour only if "Auskunft" is going to be deleted
-        var auskunftString = UtilSyslist.getSyslistEntryName(505, 7);
-        // if it's the last Auskunft then revert store state since
+        // special behaviour only if "Verwalter" is going to be deleted
+        var verwalterString = UtilSyslist.getSyslistEntryName(505, 2);
+        // if it's the last Verwalter then revert store state since
         // at least one address of this kind must exist
-        var anyAuskunft = dojo.some(UtilGrid.getTableData("generalAddress"), function(item){
-            return item.nameOfRelation == auskunftString;
+        var anyVerwalter = dojo.some(UtilGrid.getTableData("generalAddress"), function(item){
+            return item.nameOfRelation == verwalterString;
         });
-        if (!anyAuskunft) {
+        if (!anyVerwalter) {
             dojo.forEach(msg.items, function(itemRow){
-                if (itemRow.nameOfRelation == auskunftString) {
+                if (itemRow.nameOfRelation == verwalterString) {
                     UtilGrid.addTableDataRow("generalAddress", itemRow);
                     
                     // show tooltip
-                    var toolTip = dojo.string.substitute(message.get("validation.addressInfoRequired"), [auskunftString]);
+                    var toolTip = dojo.string.substitute(message.get("validation.addressInfoRequired"), [verwalterString]);
                     showToolTip("generalAddress", toolTip);
                 }
             });
@@ -469,16 +469,18 @@ function generalAddressPublishable(notPublishableIDs) {
         notPublishableIDs.push("generalAddress");
     }
 
-    // Get the string (from the syslist) that is used to identify auskunft entries
-    var auskunftString = UtilSyslist.getSyslistEntryName(505, 7);
+    // Get the string (from the syslist) that is used to identify verwalter entries
+    var verwalterString = UtilSyslist.getSyslistEntryName(505, 2);
 
     // Check if at least one entry exists with the correct relation type
-    if (dojo.every(addressData, function(addressRef) { return ( dojo.trim(addressRef.nameOfRelation+"") != auskunftString); })) {
-        console.debug("At least one entry has to be of type '"+auskunftString+"'.");
-        dijit.byId("generalAddress").invalidMessage = dojo.string.substitute(message.get("validation.error.addressType"), [auskunftString]);
+    if (dojo.every(addressData, function(addressRef) { return ( dojo.trim(addressRef.nameOfRelation+"") != verwalterString); })) {
+        console.debug("At least one entry has to be of type '"+verwalterString+"'.");
+        dijit.byId("generalAddress").invalidMessage = dojo.string.substitute(message.get("validation.error.addressType"), [verwalterString]);
         notPublishableIDs.push("generalAddress");
     }
-    
+
+// NOT NEEDED ANYMORE, only "Verwalter" address mandatory for all classes, see https://dev.wemove.com/jira/browse/INGRID32-46
+/*
     if ((objClass == '1') || (objClass == '3')) {
         // Required ONLY if INSPIRE Theme selected
         if (UtilUdk.isInspire(UtilList.tableDataToList("thesaurusInspire"))) {
@@ -497,6 +499,7 @@ function generalAddressPublishable(notPublishableIDs) {
             }
         }
     }
+*/
 }
 
 function extraInfoConformityPublishable(notPublishableIDs) {

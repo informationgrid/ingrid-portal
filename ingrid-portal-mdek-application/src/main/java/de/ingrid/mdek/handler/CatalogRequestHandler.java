@@ -50,7 +50,7 @@ public interface CatalogRequestHandler {
 	
 	// from CatalogManagementService
 	public AnalyzeJobInfoBean analyze();
-	public List<MdekDataBean> getObjectsOfAddressByType(String auskunftAddressUuid, Integer referenceTypeId, int maxNumHits);
+	public List<MdekDataBean> getObjectsOfAddressByType(String addressUuid, Integer referenceTypeId, int maxNumHits);
 	public List<MdekDataBean> getObjectsOfResponsibleUser(String responsibleUserUuid, int maxNumHits);
 	public List<MdekAddressBean> getAddressesOfResponsibleUser(String responsibleUserUuid, int maxNumHits);
 	public byte[] getCsvData(String uuid, CsvRequestType type);

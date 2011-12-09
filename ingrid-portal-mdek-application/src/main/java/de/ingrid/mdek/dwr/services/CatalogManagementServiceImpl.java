@@ -276,8 +276,8 @@ public class CatalogManagementServiceImpl {
 		this.catalogRequestHandler = catalogRequestHandler;
 	}
 	
-	public List<MdekDataBean> getObjectsOfAddressByType(String auskunftAddressUuid, Integer referenceTypeId, int maxNumHits) {
-		return catalogRequestHandler.getObjectsOfAddressByType(auskunftAddressUuid, referenceTypeId, maxNumHits);
+	public List<MdekDataBean> getObjectsOfAddressByType(String addressUuid, Integer referenceTypeId, int maxNumHits) {
+		return catalogRequestHandler.getObjectsOfAddressByType(addressUuid, referenceTypeId, maxNumHits);
 	}
 	
 	public List<MdekDataBean> getObjectsOfResponsibleUser(String responsibleUserUuid, int maxNumHits) {

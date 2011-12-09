@@ -141,7 +141,7 @@
 			das Datenobjekt gewonnen wurde.</p>
 
 			<p>Jedem Objekt wird mindestens eine Adresse zugeordnet (z.B.
-			Adresse der Auskunft gebenden Stelle oder des Datenhalters). Durch diese
+			Adresse des Verwalters oder des Ansprechpartners). Durch diese
 			Zuordnungsmöglichkeiten (Verweise) müssen die Adressen jeweils nur einmal in
 			die Adressverwaltung des IGC eingegeben bzw. gepflegt werden.</p>
 			<p>Die Adressen lassen sich in vier Kategorien unterscheiden:</p>
@@ -598,7 +598,7 @@
 				 zur Unterstützung der Befüllung des neuen Objektes auswählen können. Über 
 				 <i><b>Assistent starten</b></i> führen Sie den ausgewählten Assistenten aus.</p>
                  <p>Wählen Sie <i><b>Ohne Assistent weiter</b></i>, um ein leeres neues Objekt zu öffnen. 
-				 Standardmäßig werden für ein leeres Objekt sowohl die Auskunftsadresse und der Raumbezug 
+				 Standardmäßig werden für ein leeres Objekt sowohl die Verwalteradresse und der Raumbezug 
 				 als auch die Thesaurusbegriffe des in der Hierarchie übergeordneten Objektes übernommen.</p>
             </content>
         </section>
@@ -1722,7 +1722,7 @@
 				 auf interne Konsistenz an.</p>
 				 <p>Die Überprüfung erfolgt auf folgende Mängel:</p>
 				 <ul>
-				 <li>Objekte, die keine Datenauskunftsadresse haben</li>
+				 <li>Objekte, die keine Verwalteradresse haben</li>
 				 <li>Objekte, die keine Eltern-Objekte haben</li>
 				 <li>Objekte, die ungültige Adressverweise haben</li>
 				 <li>Adressen, die keine Eltern-Adresse haben</li>

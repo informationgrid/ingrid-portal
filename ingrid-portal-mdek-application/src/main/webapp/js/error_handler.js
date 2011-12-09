@@ -37,7 +37,7 @@ function displayErrorMessage(err) {
         } else if (err.message.indexOf("ENTITY_REFERENCED_BY_OBJ") != -1) {
             handleEntityReferencedException(err);
 
-        } else if (err.message.indexOf("ADDRESS_IS_AUSKUNFT") != -1) {
+        } else if (err.message.indexOf("ADDRESS_IS_VERWALTER") != -1) {
             handleEntityReferencedException(err);
 
         } else if (err.message.indexOf("ADDRESS_HAS_NO_EMAIL") != -1) {

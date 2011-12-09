@@ -36,8 +36,8 @@ public class MdekErrorUtils {
 			if (containsErrorType(err, MdekErrorType.ENTITY_REFERENCED_BY_OBJ)) {
 				handleEntityReferencedByObjectError(err, MdekErrorType.ENTITY_REFERENCED_BY_OBJ);
 			
-			} else if (containsErrorType(err, MdekErrorType.ADDRESS_IS_AUSKUNFT)) {
-				handleEntityReferencedByObjectError(err, MdekErrorType.ADDRESS_IS_AUSKUNFT);
+			} else if (containsErrorType(err, MdekErrorType.ADDRESS_IS_VERWALTER)) {
+				handleEntityReferencedByObjectError(err, MdekErrorType.ADDRESS_IS_VERWALTER);
 
 			} else if (containsErrorType(err, MdekErrorType.SINGLE_BELOW_TREE_OBJECT_PERMISSION)
 					|| containsErrorType(err, MdekErrorType.TREE_BELOW_TREE_OBJECT_PERMISSION)
