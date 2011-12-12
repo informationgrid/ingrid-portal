@@ -138,7 +138,6 @@ public class MdekDataBean {
 	private List<DQBean> dq113Table;
 	private List<DQBean> dq114Table;
 	private List<DQBean> dq115Table;
-	private List<DQBean> dq117Table;
 	private List<DQBean> dq120Table;
 	private List<DQBean> dq125Table;
 	private List<DQBean> dq126Table;
@@ -557,7 +556,6 @@ public class MdekDataBean {
 		this.setDq113Table(new ArrayList<DQBean>());
 		this.setDq114Table(new ArrayList<DQBean>());
 		this.setDq115Table(new ArrayList<DQBean>());
-		this.setDq117Table(new ArrayList<DQBean>());
 		this.setDq120Table(new ArrayList<DQBean>());
 		this.setDq125Table(new ArrayList<DQBean>());
 		this.setDq126Table(new ArrayList<DQBean>());
@@ -1890,13 +1888,6 @@ public class MdekDataBean {
 	}
 	public void setDq115Table(List<DQBean> dq115Table) {
 		this.dq115Table = dq115Table;
-	}
-
-	public List<DQBean> getDq117Table() {
-		return dq117Table;
-	}
-	public void setDq117Table(List<DQBean> dq117Table) {
-		this.dq117Table = dq117Table;
 	}
 
 	public List<DQBean> getDq120Table() {

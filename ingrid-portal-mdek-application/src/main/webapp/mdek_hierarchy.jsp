@@ -755,18 +755,6 @@
                                 </div>
                                 </div>
                             </span>
-                            <span id="uiElement7517" class="outer">
-                                <div><span class="label">
-                                    <label for="dq117Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7517)">
-                                        <fmt:message key="ui.obj.dq.table117.title" />
-                                    </label>
-                                </span>
-                                <div class="input tableContainer">
-                                    <div id="dq117Table" interactive="true" autoHeight="3">
-                                    </div>
-                                </div>
-                                </div>
-                            </span>
                             <span id="uiElement7520" class="outer">
                                 <div><span class="label">
                                     <label for="dq120Table" onclick="javascript:dialog.showContextHelp(arguments[0], 7520)">

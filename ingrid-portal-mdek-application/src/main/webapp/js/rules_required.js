@@ -281,27 +281,25 @@ function applyRule7() {
         }
         // Geographical names (103)
         if (dojo.some(termsList, function(iTermKey) {return (iTermKey == 103); })) {
-            displayDiv(dojo.byId("uiElement7517"));
+            // ???
         }
         // Administrative units (104)
         if (dojo.some(termsList, function(iTermKey) {return (iTermKey == 104); })) {
             displayDiv(dojo.byId("uiElement7509"));
             displayDiv(dojo.byId("uiElement7512"));
             displayDiv(dojo.byId("uiElement7515"));
-            displayDiv(dojo.byId("uiElement7517"));
         }
         // Addresses (105)
         if (dojo.some(termsList, function(iTermKey) {return (iTermKey == 105); })) {
             displayDiv(dojo.byId("uiElement7509"));
             displayDiv(dojo.byId("uiElement7512"));
             displayDiv(dojo.byId("uiElement7513"));
-            displayDiv(dojo.byId("uiElement7517"));
             displayDiv(dojo.byId("uiElement7520"));
             displayDiv(dojo.byId("uiElement7526"));
         }
         // Cadastral parcels (106)
         if (dojo.some(termsList, function(iTermKey) {return (iTermKey == 106); })) {
-            displayDiv(dojo.byId("uiElement7517"));
+            // ???
         }
         // Transport networks (107)
         if (dojo.some(termsList, function(iTermKey) {return (iTermKey == 107); })) {
@@ -310,7 +308,6 @@ function applyRule7() {
             displayDiv(dojo.byId("uiElement7513"));
             displayDiv(dojo.byId("uiElement7514"));
             displayDiv(dojo.byId("uiElement7515"));
-            displayDiv(dojo.byId("uiElement7517"));
             displayDiv(dojo.byId("uiElement7525"));
             displayDiv(dojo.byId("uiElement7526"));
         }
@@ -320,14 +317,12 @@ function applyRule7() {
             displayDiv(dojo.byId("uiElement7512"));
             displayDiv(dojo.byId("uiElement7513"));
             displayDiv(dojo.byId("uiElement7515"));
-            displayDiv(dojo.byId("uiElement7517"));
             displayDiv(dojo.byId("uiElement7526"));
             displayDiv(dojo.byId("uiElement7527"));
         }
         // Protected sites (109)
         if (dojo.some(termsList, function(iTermKey) {return (iTermKey == 109); })) {
             displayDiv(dojo.byId("uiElement7509"));
-            displayDiv(dojo.byId("uiElement7517"));
         }
     }
 }

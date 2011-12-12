@@ -520,21 +520,6 @@ ingridObjectLayout.createRefClass1DQ = function() {
     ];
     createDataGrid("dq115Table", null, dq115TableStructure, null);
     
-    var dq117TableStructure = [
-        {field: 'nameOfMeasure',name: message.get("ui.obj.dq.table.header1"),width: '300px',
-            type: ComboboxEditor,
-            options: [], // will be filled later, when syslists are loaded listId=7117
-            values: [],
-            editable: true,
-            listId: 7117,
-            formatter: dojo.partial(SyslistCellFormatter, 7117)
-        }, 
-        {field: 'resultValue',name: message.get("ui.obj.dq.table.header2"),width: '105px', editable: true,
-            type: DecimalCellEditor, widgetClass: dijit.form.NumberTextBox, formatter: LocalizedNumberFormatter},
-        {field: 'measureDescription',name: message.get("ui.obj.dq.table.header3"),width: 303-scrollBarWidth+'px', editable: true}
-    ];
-    createDataGrid("dq117Table", null, dq117TableStructure, null);
-    
     var dq120TableStructure = [
         {field: 'nameOfMeasure',name: message.get("ui.obj.dq.table.header1"),width: '300px',
             type: ComboboxEditor,

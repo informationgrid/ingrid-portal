@@ -223,7 +223,6 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setDq113Table(mapToDqTable(113, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
             mdekObj.setDq114Table(mapToDqTable(114, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
             mdekObj.setDq115Table(mapToDqTable(115, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
-            mdekObj.setDq117Table(mapToDqTable(117, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
             mdekObj.setDq120Table(mapToDqTable(120, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
             mdekObj.setDq125Table(mapToDqTable(125, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
             mdekObj.setDq126Table(mapToDqTable(126, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
@@ -782,7 +781,6 @@ public class MdekMapper implements DataMapperInterface {
             mapFromDQTable(113, data.getDq113Table(), dqList);
             mapFromDQTable(114, data.getDq114Table(), dqList);
             mapFromDQTable(115, data.getDq115Table(), dqList);
-            mapFromDQTable(117, data.getDq117Table(), dqList);
             mapFromDQTable(120, data.getDq120Table(), dqList);
             mapFromDQTable(125, data.getDq125Table(), dqList);
             mapFromDQTable(126, data.getDq126Table(), dqList);
