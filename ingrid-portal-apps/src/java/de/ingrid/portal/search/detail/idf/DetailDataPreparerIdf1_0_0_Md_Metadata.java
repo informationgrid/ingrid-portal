@@ -359,12 +359,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				createDataQualityTable(elements, XPathUtils.getNodeList(node, dataQualityXPath), messages.getString("data_quality.table109.title"), "7109");
 			}
 			
-			// "Datendefizit"
-			dataQualityXPath = "./gmd:report/gmd:DQ_CompletenessOmission";
-			if(XPathUtils.nodeExists(node, dataQualityXPath)){
-				createDataQualityTable(elements, XPathUtils.getNodeList(node, dataQualityXPath), messages.getString("data_quality.table110.title"), "7110");
-			}
-
 			// "Konzeptionelle Konsistenz"
 			dataQualityXPath = "./gmd:report/gmd:DQ_ConceptualConsistency";
 			if(XPathUtils.nodeExists(node, dataQualityXPath)){
@@ -389,12 +383,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				createDataQualityTable(elements, XPathUtils.getNodeList(node, dataQualityXPath), messages.getString("data_quality.table115.title"), "7115");
 			}
 
-			// "Absolute Positionsgenauigkeit"
-			dataQualityXPath = "./gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy";
-			if(XPathUtils.nodeExists(node, dataQualityXPath)){
-				createDataQualityTable(elements, XPathUtils.getNodeList(node, dataQualityXPath), messages.getString("data_quality.table117.title"), "7117");
-			}
-			
 			// "Zeitliche Genauigkeit"
 			dataQualityXPath = "./gmd:report/gmd:DQ_TemporalConsistency";
 			if(XPathUtils.nodeExists(node, dataQualityXPath)){
@@ -917,18 +905,21 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				Node node = nodeList.item(i);
 				Node subNode = null;
 				String symbol = null;
+				String nameOfMeasure = null;
 				String description = null;
 				String value = "";
 				String title = "";
 				
-				if(XPathUtils.nodeExists(node, "./gmd:DQ_CompletenessCommission")){
-					subNode = XPathUtils.getNode(node, "./gmd:DQ_CompletenessCommission");
-				}else if(XPathUtils.nodeExists(node, "./gmd:DQ_RelativeInternalPositionalAccuracy")){
-					subNode = XPathUtils.getNode(node, "./gmd:DQ_RelativeInternalPositionalAccuracy");
+				if(XPathUtils.nodeExists(node, "./gmd:DQ_AbsoluteExternalPositionalAccuracy")){
+					subNode = XPathUtils.getNode(node, "./gmd:DQ_AbsoluteExternalPositionalAccuracy");
 				}else if(XPathUtils.nodeExists(node, "./gmd:DQ_CompletenessOmission")){
 					subNode = XPathUtils.getNode(node, "./gmd:DQ_CompletenessOmission");
 				}
 				if(subNode != null){
+					xpathExpression = "./gmd:nameOfMeasure";
+					if(XPathUtils.nodeExists(subNode, xpathExpression)){
+						nameOfMeasure = XPathUtils.getString(subNode, xpathExpression).trim();
+					}
 					xpathExpression = "./gmd:measureDescription";
 					if(XPathUtils.nodeExists(subNode, xpathExpression)){
 						description = XPathUtils.getString(subNode, xpathExpression).trim();
@@ -943,17 +934,14 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					}
 					
 					if(symbol != null){
-						if(description != null){
-							if (description.equals("completeness")){
-								// "Erfassungsgrad"
-								title = messages.getString("t011_obj_geo.rec_grade");
-							}else if (description.equals("vertical")){
+						if(description != null || nameOfMeasure != null){
+							if ("vertical".equals(description) || "Mean value of positional uncertainties (1D)".equalsIgnoreCase(nameOfMeasure)){
 								// "Höhengenauigkeit"
 								title = messages.getString("t011_obj_geo.pos_accuracy_vertical");
-							}else if (description.equals("geographic")){
+							}else if ("geographic".equals(description) || "Mean value of positional uncertainties (2D)".equalsIgnoreCase(nameOfMeasure)){
 								// "Lagegenauigkeit"
 								title = messages.getString("t011_obj_geo.rec_exact");
-							}else if (description.equals("completeness omission (rec_grade)")){
+							}else if ("completeness omission (rec_grade)".equals(description) || "Rate of missing items".equalsIgnoreCase(nameOfMeasure)){
 								// "Datendefizit"
 								title = messages.getString("t011_obj_geo.coverage");
 							}
