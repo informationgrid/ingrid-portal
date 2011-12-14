@@ -11,6 +11,9 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
+import org.apache.jetspeed.portlet.PortletHeaderRequest;
+import org.apache.jetspeed.portlet.PortletHeaderResponse;
+import org.apache.jetspeed.portlet.SupportsHeaderPhase;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.PortalConfig;
@@ -25,11 +28,12 @@ import de.ingrid.portal.search.PageState;
 import de.ingrid.utils.PlugDescription;
 
 /**
- * This portlet handles the fragment of the hierarchy browser in the search/catalog section.
- *
+ * This portlet handles the fragment of the hierarchy browser in the
+ * search/catalog section.
+ * 
  * @author martin@wemove.com
  */
-public class SearchCatalogHierarchyPortlet extends SearchCatalog {
+public class SearchCatalogHierarchyPortlet extends SearchCatalog implements SupportsHeaderPhase {
 
     // VIEW TEMPLATES
     private final static String TEMPLATE_START = "/WEB-INF/templates/search_catalog/search_cat_hierarchy.vm";
@@ -67,19 +71,20 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
 
         if (ps.get("plugsRoot") == null) {
 
-        	// set up ECS plug list for view
-        	
-        	// all iplugs
+            // set up ECS plug list for view
+
+            // all iplugs
             PlugDescription[] allPlugs = IBUSInterfaceImpl.getInstance().getAllActiveIPlugs();
-            
+
             // filter types
-            String[] plugTypes = new String[]{Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS};
+            String[] plugTypes = new String[] { Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS,
+                    Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS };
             PlugDescription[] plugs = IPlugHelper.filterIPlugsByType(allPlugs, plugTypes);
 
             // filter corrupt ones
             plugs = IPlugHelper.filterCorruptECSIPlugs(plugs);
 
-        	// filter partners
+            // filter partners
             String partnerRestriction = PortalConfig.getInstance().getString(
                     PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
             if (partnerRestriction != null && partnerRestriction.length() > 0) {
@@ -93,12 +98,12 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
 
             DisplayTreeNode plugsRoot = DisplayTreeFactory.getTreeFromECSIPlugs(plugs);
             String restrictPartner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
-            if(restrictPartner!= null && restrictPartner.length() > 0){
-            	openNodesUntilHierarchyLevel(plugsRoot, plugsRoot);
+            if (restrictPartner != null && restrictPartner.length() > 0) {
+                openNodesUntilHierarchyLevel(plugsRoot, plugsRoot);
             }
             ps.put("plugsRoot", plugsRoot);
         }
-        
+
         super.doView(request, response);
     }
 
@@ -123,13 +128,13 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             initPageState(ps);
 
         } else if (action.equalsIgnoreCase("doOpenNode")) {
-        	DisplayTreeNode root = (DisplayTreeNode) ps.get("plugsRoot");
+            DisplayTreeNode root = (DisplayTreeNode) ps.get("plugsRoot");
             if (root != null) {
                 openNode(root, request.getParameter("nodeId"));
             }
 
         } else if (action.equalsIgnoreCase("doCloseNode")) {
-        	DisplayTreeNode root = (DisplayTreeNode) ps.get("plugsRoot");
+            DisplayTreeNode root = (DisplayTreeNode) ps.get("plugsRoot");
             if (root != null) {
                 DisplayTreeNode node = root.getChild(request.getParameter("nodeId"));
                 if (node != null) {
@@ -149,48 +154,51 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         ps.put("plugsRoot", null);
         return ps;
     }
-    
+
     private void openNode(DisplayTreeNode rootNode, String nodeId) {
         DisplayTreeNode node = rootNode.getChild(nodeId);
         if (node != null) {
             node.setOpen(true);
-            
+
             // only load if not loaded yet !
             if (!node.isLoading() && node.getChildren().size() == 0) {
-            	node.setLoading(true);
-            	
-            	// handles all stuff
-            	DisplayTreeFactory.openECSNode(rootNode, node);
+                node.setLoading(true);
+
+                // handles all stuff
+                DisplayTreeFactory.openECSNode(rootNode, node);
 
                 node.setLoading(false);
             }
         }
     }
-    
+
     /**
-     * Open nodes if restrict partner and restrict partner level
-     * is set.
+     * Open nodes if restrict partner and restrict partner level is set.
      * 
      * @param node
-     * 			to check for sub nodes 
+     *            to check for sub nodes
      * @param rootNode
-     * 			need for open sub nodes by node ID (must always be root node)
+     *            need for open sub nodes by node ID (must always be root node)
      */
-    private void openNodesUntilHierarchyLevel(DisplayTreeNode node, DisplayTreeNode rootNode){
-    	ArrayList list = new ArrayList();
+    private void openNodesUntilHierarchyLevel(DisplayTreeNode node, DisplayTreeNode rootNode) {
+        ArrayList list = new ArrayList();
         list = node.getChildren();
         String rootNodeLevel = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER_LEVEL);
-        	
-        if(rootNodeLevel != null)
-	        for(int i=0; i < list.size();i++){
-	        	if(node.get("level").toString().equals(rootNodeLevel)){
-	           	   break;
-	           	}
-	        	DisplayTreeNode subNode = (DisplayTreeNode)list.get(i);
-        		if((Boolean) subNode.get("expandable")){
-        			openNode(rootNode, subNode.getId());
-	        		openNodesUntilHierarchyLevel(subNode, rootNode);
-        		}
-	        }
-    	}
-	}
+
+        if (rootNodeLevel != null)
+            for (int i = 0; i < list.size(); i++) {
+                if (node.get("level").toString().equals(rootNodeLevel)) {
+                    break;
+                }
+                DisplayTreeNode subNode = (DisplayTreeNode) list.get(i);
+                if ((Boolean) subNode.get("expandable")) {
+                    openNode(rootNode, subNode.getId());
+                    openNodesUntilHierarchyLevel(subNode, rootNode);
+                }
+            }
+    }
+
+    public void doHeader(PortletHeaderRequest request, PortletHeaderResponse response) throws PortletException {
+        response.getHeaderResource().addHeaderSectionFragment("robots", "noindex,follow");
+    }
+}
