@@ -5,6 +5,7 @@ package de.ingrid.portal.portlets.searchcatalog;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -13,7 +14,6 @@ import javax.portlet.PortletSession;
 
 import org.apache.jetspeed.portlet.PortletHeaderRequest;
 import org.apache.jetspeed.portlet.PortletHeaderResponse;
-import org.apache.jetspeed.portlet.SupportsHeaderPhase;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.PortalConfig;
@@ -33,7 +33,7 @@ import de.ingrid.utils.PlugDescription;
  * 
  * @author martin@wemove.com
  */
-public class SearchCatalogHierarchyPortlet extends SearchCatalog implements SupportsHeaderPhase {
+public class SearchCatalogHierarchyPortlet extends SearchCatalog {
 
     // VIEW TEMPLATES
     private final static String TEMPLATE_START = "/WEB-INF/templates/search_catalog/search_cat_hierarchy.vm";
@@ -197,8 +197,5 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog implements Supp
                 }
             }
     }
-
-    public void doHeader(PortletHeaderRequest request, PortletHeaderResponse response) throws PortletException {
-        response.getHeaderResource().addHeaderSectionFragment("robots", "noindex,follow");
-    }
+    
 }
