@@ -19,7 +19,12 @@
   <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
   <meta name="keywords" lang="$renderRequest.Locale.getLanguage()" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_keywords"), "")" />
   <meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
+#set($currentPage = $site.getPage().url)
+#if ($currentPage.startsWith('/search-catalog/search-catalog-hierarchy'))
+  <meta name="robots" content="no-index,follow" />
+#else
   <meta name="robots" content="index,follow" />
+#end
   <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
   #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
     <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
@@ -38,7 +43,6 @@
   #* our decorator macros, see ./decorator-macros.vm *#
   #decoratorIncludeJavaScriptForHead()
   
-#set($currentPage = $site.getPage().url)
 #if ($currentPage.startsWith('/main-search'))
     <script src="/ingrid-portal-apps/javascript/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
     <script type="text/javascript">
