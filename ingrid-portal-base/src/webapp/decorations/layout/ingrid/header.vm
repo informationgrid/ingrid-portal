@@ -21,7 +21,7 @@
   <meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
 #set($currentPage = $site.getPage().url)
 #if ($currentPage.startsWith('/search-catalog/search-catalog-hierarchy'))
-  <meta name="robots" content="no-index,follow" />
+  <meta name="robots" content="noindex,follow" />
 #else
   <meta name="robots" content="index,follow" />
 #end
