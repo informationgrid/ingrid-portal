@@ -101,7 +101,7 @@ function displayErrorMessage(err) {
         } else if (err.message.indexOf("REFERENCED_ADDRESSES_NOT_PUBLISHED") != -1) {
             handleAddressNeverPublishedException(err);
         } else {
-            dialog.show(message.get("general.error"), dojo.string.substitute(message.get("dialog.generalError"), [err.message]), dialog.WARNING, null, 350, 350);               
+            dialog.show(message.get("general.error"), dojo.string.substitute(message.get("dialog.generalError"), [err.message]), dialog.WARNING, null, 800, 350);               
         }
     } else {
         // Show error message if we can't determine what went wrong
