@@ -782,6 +782,59 @@ ingridObjectLayout.createFachBezugClass4 = function(){
 }
 
 ingridObjectLayout.createFachBezugClass5 = function(){
+    var tabKeys = new dijit.layout.TabContainer({
+        style: "width: 100%;",
+        doLayout: false
+    }, "ref5KeysTabContainer");
+    
+    var tabKeysTab1 = new dijit.layout.ContentPane({
+        title: message.get("ui.obj.type5.keyCatTable.tab.text")
+    }, "ref5KeysTab1");
+    
+    var ref5KeysTextStructure = [{
+        field: 'title',
+        name: message.get("ui.obj.type5.keyCatTable.header.title"),
+        width: '435px',
+        editable: true,
+        type: ComboboxEditor,
+        listId: 3535,
+        formatter: dojo.partial(SyslistCellFormatter, 3535)
+    }, {
+        field: 'date',
+        name: message.get("ui.obj.type5.keyCatTable.header.date"),
+        width: '120px',
+		type: DateCellEditor,
+        editable: true,
+        formatter: DateCellFormatter
+    }, {
+        field: 'version',
+        name: message.get("ui.obj.type5.keyCatTable.header.version"),
+        width: 153-scrollBarWidth-3+'px',
+        editable: true
+    }];
+    createDataGrid("ref5KeysText", null, ref5KeysTextStructure, null);
+    
+    var tabKeysTab2 = new dijit.layout.ContentPane({
+        title: message.get("ui.obj.type5.keyCatTable.tab.links")
+    }, "ref5KeysTab2");
+    
+    var ref5KeysLinkStructure = [{
+        field: 'icon',
+        name: 'icon',
+        width: '23px'
+    }, {
+        field: 'linkLabel',
+        name: 'linkLabel',
+        width: 685-scrollBarWidth-2+'px'
+    }];
+    createDataGrid("ref5KeysLink", null, ref5KeysLinkStructure, null);
+    
+    tabKeys.addChild(tabKeysTab1);
+    tabKeys.addChild(tabKeysTab2);
+    tabKeys.startup();
+	
+	dojo.connect(tabKeys, "selectChild", dojo.partial(UtilUI.toggleFunctionalLink, "ref5KeysTab2"));
+    
 	var ref5dbContentStructure = [
 		{field: 'parameter',name: message.get("ui.obj.type5.contentTable.header.parameter"),width: '335px', editable: true},
 		{field: 'additionalData',name: message.get("ui.obj.type5.contentTable.header.additionalData"),width: 373-scrollBarWidth+'px', editable: true}

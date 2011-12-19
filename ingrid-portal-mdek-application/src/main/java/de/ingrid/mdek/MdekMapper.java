@@ -316,6 +316,7 @@ public class MdekMapper implements DataMapperInterface {
                 break;
             mdekObj.setRef5Explanation((String) td5Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
             mdekObj.setRef5MethodText((String) td5Map.get(MdekKeys.METHOD));
+            mdekObj.setRef5KeysText(mapToKeyLinkDataTable((List<IngridDocument>) td5Map.get(MdekKeys.KEY_CATALOG_LIST)));
             mdekObj.setRef5dbContent(mapToDbContentTable((List<IngridDocument>) td5Map.get(MdekKeys.PARAMETERS)));
             break;
         case 6:
@@ -871,6 +872,7 @@ public class MdekMapper implements DataMapperInterface {
             IngridDocument td5Map = new IngridDocument();           
             td5Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef5Explanation());
             td5Map.put(MdekKeys.METHOD, data.getRef5MethodText());
+            td5Map.put(MdekKeys.KEY_CATALOG_LIST, mapFromKeyLinkDataTable(data.getRef5KeysText()));
             td5Map.put(MdekKeys.PARAMETERS, mapFromDbContentTable(data.getRef5dbContent()));
             udkObj.put(MdekKeys.TECHNICAL_DOMAIN_DATASET, td5Map);
             break;

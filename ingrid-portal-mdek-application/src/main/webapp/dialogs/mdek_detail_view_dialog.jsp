@@ -182,6 +182,7 @@ function renderNodeData(nodeData) {
 		} else if (nodeData.objectClass == 5) {
 			renderSectionTitel("<fmt:message key='ui.obj.relevance' />");
 			// Datensammlung/Datenbank
+            renderTable(nodeData.ref5KeysText, ["title", "date", "version"], ["<fmt:message key='ui.obj.type5.keyCatTable.header.title' />", "<fmt:message key='ui.obj.type5.keyCatTable.header.date' />", "<fmt:message key='ui.obj.type5.keyCatTable.header.version' />"], "<fmt:message key='ui.obj.type5.keyCatTable.title' />", [null, formatDate, null]);
 			renderTable(nodeData.ref5dbContent, ["parameter", "additionalData"], ["<fmt:message key='ui.obj.type5.contentTable.header.parameter' />", "<fmt:message key='ui.obj.type5.contentTable.header.additionalData' />"], "<fmt:message key='ui.obj.type5.contentTable.header.additionalData' />");
 			renderTextWithTitle(nodeData.ref5MethodText, "<fmt:message key='ui.obj.type5.methodTable.title' />");
 			renderTextWithTitle(nodeData.ref5Explanation, "<fmt:message key='ui.obj.type5.description' />");

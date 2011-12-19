@@ -1767,7 +1767,9 @@ udkDataProxy._setObjectData = function(nodeData)
 udkDataProxy._connectSharedStore = function() {
 	var ids = [["ref1KeysLink", "3535"], ["ref1ServiceLink", "5066"], ["ref1DataBasisLink", "3570"], ["ref1BasisLink", "3520"],
 		["ref1SymbolsLink", "3555"], ["ref1ProcessLink", "3515"], ["ref2BaseDataLink", "3345"], ["ref3BaseDataLink", "3210"],
-		["ref5MethodLink", "3100"], ["ref6BaseDataLink", "3210"]];
+		["ref5MethodLink", "3100"],
+		["ref5KeysLink", "3109"], 
+		["ref6BaseDataLink", "3210"]];
 	var idsLinkAddresses = [["ref2LocationLink", "3360"], ["ref4ParticipantsLink","3410"], ["ref4PMLink","3400"]];
 	
 	var linksToTableData = UtilGrid.getTableData("linksTo");
@@ -1881,6 +1883,7 @@ udkDataProxy._setObjectDataClass5 = function(nodeData) {
 	dijit.byId("ref5MethodText").attr("value", nodeData.ref5MethodText, true);
 	dijit.byId("ref5Explanation").attr("value", nodeData.ref5Explanation, true);
 
+	UtilStore.updateWriteStore("ref5KeysText", nodeData.ref5KeysText);
 	UtilStore.updateWriteStore("ref5dbContent", nodeData.ref5dbContent);
 }
 
@@ -2375,6 +2378,7 @@ udkDataProxy._getObjectDataClass5 = function(nodeData) {
 	nodeData.ref5MethodText = dijit.byId("ref5MethodText").getValue();
 	nodeData.ref5Explanation = dijit.byId("ref5Explanation").getValue();
 
+	nodeData.ref5KeysText = udkDataProxy._getTableData("ref5KeysText");
 	nodeData.ref5dbContent = udkDataProxy._getTableData("ref5dbContent");
 };
 

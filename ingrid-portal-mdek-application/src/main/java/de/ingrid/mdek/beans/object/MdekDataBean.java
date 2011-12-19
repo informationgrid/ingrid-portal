@@ -177,6 +177,7 @@ public class MdekDataBean {
 	private String ref4Explanation;
 
 	// Object class 5 (Vorhaben/Projekt/Programm)
+	private List<LinkDataBean> ref5KeysText;
 	private List<DBContentBean> ref5dbContent;
 	private String ref5MethodText;
 	private String ref5Explanation;
@@ -189,7 +190,65 @@ public class MdekDataBean {
 	private String ref6BaseDataText;
 	private String ref6Explanation;
 	private List<ApplicationUrlBean> ref6UrlList;
+
+	public MdekDataBean(){
+		this.setGeneralAddressTable(new ArrayList<MdekAddressBean>());
+		this.setCommentTable(new ArrayList<CommentBean>());
+		this.setSpatialRefAdminUnitTable(new ArrayList<LocationBean>());
+		this.setSpatialRefLocationTable(new ArrayList<LocationBean>());
+		this.setTimeRefTable(new ArrayList<TimeReferenceBean>());
+		this.setExtraInfoConformityTable(new ArrayList<ConformityBean>());
+		this.setExtraInfoXMLExportTable(new ArrayList<String>());
+		this.setExtraInfoLegalBasicsTable(new ArrayList<String>());
+		this.setAvailabilityDataFormatTable(new ArrayList<DataFormatBean>());
+		this.setAvailabilityMediaOptionsTable(new ArrayList<MediaOptionBean>());
+		this.setThesaurusInspireTermsList(new ArrayList<Integer>());
+		this.setThesaurusTermsTable(new ArrayList<SNSTopic>());
+		this.setThesaurusTopicsList(new ArrayList<Integer>());
+		this.setThesaurusEnvTopicsList(new ArrayList<Integer>());
+		this.setLinksToObjectTable(new ArrayList<MdekDataBean>());
+		this.setLinksFromObjectTable(new ArrayList<MdekDataBean>());
+		this.setLinksFromPublishedObjectTable(new ArrayList<MdekDataBean>());
+		this.setLinksToUrlTable(new ArrayList<UrlBean>());
+		this.setRef1Representation(new ArrayList<Integer>());
+		this.setRef1VFormatDetails(new ArrayList<VectorFormatDetailsBean>());
+		this.setRef1Scale(new ArrayList<ScaleBean>());
+		this.setRef1SymbolsText(new ArrayList<LinkDataBean>());
+		this.setRef1KeysText(new ArrayList<LinkDataBean>());
+		this.setRef1Data(new ArrayList<String>());
+		this.setRef1SpatialSystemTable(new ArrayList<String>());
+
+		this.setDq109Table(new ArrayList<DQBean>());
+		this.setDq112Table(new ArrayList<DQBean>());
+		this.setDq113Table(new ArrayList<DQBean>());
+		this.setDq114Table(new ArrayList<DQBean>());
+		this.setDq115Table(new ArrayList<DQBean>());
+		this.setDq120Table(new ArrayList<DQBean>());
+		this.setDq125Table(new ArrayList<DQBean>());
+		this.setDq126Table(new ArrayList<DQBean>());
+		this.setDq127Table(new ArrayList<DQBean>());
+
+		this.setRef3ServiceTypeTable(new ArrayList<Integer>());
+		this.setRef3ServiceVersion(new ArrayList<String>());
+		this.setRef3Scale(new ArrayList<ScaleBean>());
+		this.setRef3Operation(new ArrayList<OperationBean>());
+		this.setRef5KeysText(new ArrayList<LinkDataBean>());
+		this.setRef5dbContent(new ArrayList<DBContentBean>());
+		this.setRef6ServiceVersion(new ArrayList<String>());
+		this.setRef6UrlList(new ArrayList<ApplicationUrlBean>());
+	}
 	
+	
+	public List<LinkDataBean> getRef5KeysText() {
+		return ref5KeysText;
+	}
+
+
+
+
+	public void setRef5KeysText(List<LinkDataBean> ref5KeysText) {
+		this.ref5KeysText = ref5KeysText;
+	}
 
 	public List<DBContentBean> getRef5dbContent() {
 		return ref5dbContent;
@@ -524,55 +583,6 @@ public class MdekDataBean {
 
 
 
-	public MdekDataBean(){
-		this.setGeneralAddressTable(new ArrayList<MdekAddressBean>());
-		this.setCommentTable(new ArrayList<CommentBean>());
-		this.setSpatialRefAdminUnitTable(new ArrayList<LocationBean>());
-		this.setSpatialRefLocationTable(new ArrayList<LocationBean>());
-		this.setTimeRefTable(new ArrayList<TimeReferenceBean>());
-		this.setExtraInfoConformityTable(new ArrayList<ConformityBean>());
-		this.setExtraInfoXMLExportTable(new ArrayList<String>());
-		this.setExtraInfoLegalBasicsTable(new ArrayList<String>());
-		this.setAvailabilityDataFormatTable(new ArrayList<DataFormatBean>());
-		this.setAvailabilityMediaOptionsTable(new ArrayList<MediaOptionBean>());
-		this.setThesaurusInspireTermsList(new ArrayList<Integer>());
-		this.setThesaurusTermsTable(new ArrayList<SNSTopic>());
-		this.setThesaurusTopicsList(new ArrayList<Integer>());
-		this.setThesaurusEnvTopicsList(new ArrayList<Integer>());
-		this.setLinksToObjectTable(new ArrayList<MdekDataBean>());
-		this.setLinksFromObjectTable(new ArrayList<MdekDataBean>());
-		this.setLinksFromPublishedObjectTable(new ArrayList<MdekDataBean>());
-		this.setLinksToUrlTable(new ArrayList<UrlBean>());
-		this.setRef1Representation(new ArrayList<Integer>());
-		this.setRef1VFormatDetails(new ArrayList<VectorFormatDetailsBean>());
-		this.setRef1Scale(new ArrayList<ScaleBean>());
-		this.setRef1SymbolsText(new ArrayList<LinkDataBean>());
-		this.setRef1KeysText(new ArrayList<LinkDataBean>());
-		this.setRef1Data(new ArrayList<String>());
-		this.setRef1SpatialSystemTable(new ArrayList<String>());
-
-		this.setDq109Table(new ArrayList<DQBean>());
-		this.setDq112Table(new ArrayList<DQBean>());
-		this.setDq113Table(new ArrayList<DQBean>());
-		this.setDq114Table(new ArrayList<DQBean>());
-		this.setDq115Table(new ArrayList<DQBean>());
-		this.setDq120Table(new ArrayList<DQBean>());
-		this.setDq125Table(new ArrayList<DQBean>());
-		this.setDq126Table(new ArrayList<DQBean>());
-		this.setDq127Table(new ArrayList<DQBean>());
-
-		this.setRef3ServiceTypeTable(new ArrayList<Integer>());
-		this.setRef3ServiceVersion(new ArrayList<String>());
-		this.setRef3Scale(new ArrayList<ScaleBean>());
-		this.setRef3Operation(new ArrayList<OperationBean>());
-		this.setRef5dbContent(new ArrayList<DBContentBean>());
-		this.setRef6ServiceVersion(new ArrayList<String>());
-		this.setRef6UrlList(new ArrayList<ApplicationUrlBean>());
-	}
-	
-	
-
-	
 	public String getRelationTypeName() {
 		return relationTypeName;
 	}

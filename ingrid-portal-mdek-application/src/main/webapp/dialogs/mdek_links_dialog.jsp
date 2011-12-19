@@ -24,7 +24,6 @@
             var urlUiInputElements = [["linksToName", "linksToNameLabel"], ["linksToURL", "linksToURLLabel"], ["linksToDataType", "linksToDataTypeLabel"]];
             
             // All the possible values for the select box
-            //var referenceMap = [["Basisdaten", "3210"], ["Basisdaten", "3345"], ["Datengrundlage", "3570"], ["Fachliche Grundlage", "3520"], ["Herstellungsprozess", "3515"], ["Methode / Datengrundlage", "3100"], ["Schl\u00fcsselkatalog", "3535"], ["Symbolkatalog", "3555"], ["Verweis zu Dienst", "5066"]];
             var referenceMap = [{
                 label: "Basisdaten",
                 id: "3210"
@@ -43,6 +42,9 @@
             }, {
                 label: "Methode / Datengrundlage",
                 id: "3100"
+            }, {
+                label: "Objektartenkatalog",
+                id: "3109"
             }, {
                 label: "Schl\u00fcsselkatalog",
                 id: "3535"
@@ -435,7 +437,7 @@
                         case "4":
                             break; // Empty select box
                         case "5":
-                            idList = ["3100"];
+                            idList = ["3100", "3109"];
                             break;
                         default:
                             console.debug("Error: could not determine object class.");

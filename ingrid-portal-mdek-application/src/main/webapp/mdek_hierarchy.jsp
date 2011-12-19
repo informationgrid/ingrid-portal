@@ -127,6 +127,7 @@
                     case "ref1Process":
                     case "ref2BaseData":
                     case "ref3BaseData":
+                    case "ref5Keys":
                     case "ref5Method":
                     case "ref6BaseData":
                     case "linksTo":
@@ -1257,6 +1258,28 @@
                             </div>
                         </div>
                         <div id="ref5Content" class="content">
+                            <div class="inputContainer">
+                                <span id="uiElement3109" class="outer">
+                                    <div><span class="label">
+                                        <label for="ref5KeysTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3109)">
+                                            <fmt:message key="ui.obj.type5.keyCatTable.title" />
+                                        </label>
+                                    </span><span id="ref5KeysTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref5AddKeysLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref5Keys'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3109, grid: 'ref5KeysLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type5.keyCatTable.link" /></a></span>
+                                    <div id="ref5KeysTabContainer" selectedChild="ref5KeysTab1">
+                                        <div id='ref5KeysTab1' label="<fmt:message key="ui.obj.type5.keyCatTable.tab.text" />">
+                                            <div class="input tableContainer">
+                                                <div id="ref5KeysText" autoHeight="3" minRows="3" interactive="true" class="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id='ref5KeysTab2' label="<fmt:message key="ui.obj.type5.keyCatTable.tab.links" />">
+                                            <div id="ref5KeysLink" class="hideTableHeader noValidate" contextMenu="none" query="{relationType:'3109'}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </span>
+                            </div>
                             <div class="inputContainer">
                                 <span id="uiElement3110" class="outer">
                                 	<div><span class="label">
