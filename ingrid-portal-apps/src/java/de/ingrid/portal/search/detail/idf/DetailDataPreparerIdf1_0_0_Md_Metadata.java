@@ -746,8 +746,16 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 
 	private void getThematicReferenceClass5(ArrayList elements) {
 		
+		// "Schlüsselkatalog: im Datensatz vorhanden"
+		String xpathExpression = "./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:includedWithDataset";
+		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_geo.keyc_incl_w_dataset"));
+		
+		// "Schlüsselkatalog"
+		xpathExpression = "./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation";
+		getKeyCatalogTable(elements, xpathExpression);
+		
 		// Inhalte der Datensammlung/Datenbank
-		String xpathExpression ="./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes";
+		xpathExpression ="./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes";
 		String subXPathExpression =".";
 		getParameterTable(elements, xpathExpression, subXPathExpression, messages.getString("t011_obj_data_para"));
 		
