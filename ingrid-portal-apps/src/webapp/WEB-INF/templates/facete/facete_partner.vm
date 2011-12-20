@@ -50,10 +50,12 @@
 							$partner.name
 							#renderLinkEntryNumber("partner" "${partner.ident}")
 						</span>
-        				<a href="$action" class="facete_link_line">
-							<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png">
-							</img>
-        				</a>
+						#if($isPartnerSelect)
+            				<a href="$action" class="facete_link_line">
+        						<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png">
+        						</img>
+            				</a>
+						#end
 				#else
 					$action.setParameter("doPartner", ${partner.ident})
 					<a href="$action">

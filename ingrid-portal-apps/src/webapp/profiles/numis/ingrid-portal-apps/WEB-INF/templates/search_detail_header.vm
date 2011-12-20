@@ -18,7 +18,7 @@
   #end
   #if($udkObjClass)
 	<meta name="igc-objektklasse" content="${udkObjClassName}" />
-	<meta name="igc-icon" content="http://www.portalu.de/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" />
+	<meta name="igc-icon" content="http://213.144.28.243/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" />
   #end
   <meta name="author" content="wemove digital solutions" />
   <meta name="keywords" content="" />

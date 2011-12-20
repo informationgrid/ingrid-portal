@@ -39,6 +39,7 @@ import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.portal.search.net.QueryDescriptor;
 import de.ingrid.portal.search.net.ThreadedQueryController;
+import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.query.IngridQuery;
 
 /**
@@ -203,7 +204,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         // IngridQuery from state  (set in SimpleSearch Portlet)
         IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
-        UtilsFacete.setParamsToContext(request, context);
         
         // change datasource dependent from query input
         selectedDS = UtilsSearch.determineFinalPortalDatasource(selectedDS, query);
@@ -579,6 +579,13 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             
             context.put("ds", request.getParameter("ds"));
             
+            if(rankedHits != null){
+            	if(rankedHits.get("FACETS") != null){
+                   	UtilsFacete.checkForExistingFacettes((IngridDocument) rankedHits.get("FACETS"), request);
+               	}
+               	UtilsFacete.setParamsToContext(request, context);
+            }
+            
         	context.put("rankedResultList", rankedHits);
             
         	context.put("rankedResultUrl", response
@@ -599,6 +606,12 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("adminContent", showAdminContent);
         context.put("rankedPageSelector", rankedPageNavigation);
         context.put("unrankedPageSelector", unrankedPageNavigation);
+        if(rankedHits != null){
+        	if(rankedHits.get("FACETS") != null){
+               	UtilsFacete.checkForExistingFacettes((IngridDocument) rankedHits.get("FACETS"), request);
+           	}
+           	UtilsFacete.setParamsToContext(request, context);
+        }
         context.put("rankedResultList", rankedHits);
         context.put("unrankedResultList", unrankedHits);
         context.put("rankedSearchFinished", rankedSearchFinished);

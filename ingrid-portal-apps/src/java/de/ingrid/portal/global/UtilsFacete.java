@@ -7,8 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -51,12 +54,6 @@ public class UtilsFacete {
 
 	private final static Logger log = LoggerFactory.getLogger(UtilsFacete.class);
 
-    public static String PARTNER = "partner";
-    public static String PROVIDER = "provider";
-    public static String TOPIC = "topic";
-    public static String DATATYPE = "datatype";
-    public static String METACLASS = "metaclass";
-
     private static final String CURRENT_TOPIC_GEOTHESAURUS = "facete_current_topic_geothesaurus";
     private static final String TOPICS_GEOTHESAURUS = "facete_topics_geothesaurus";
     private static final String SIMILAR_TOPICS_GEOTHESAURUS = "facete_similar_topics_geothesaurus";
@@ -69,8 +66,24 @@ public class UtilsFacete {
     private static final String ERROR_THESAURUS = "facete_error_thesaurus";
     private static final String LIST_SIZE_THESAURUS = "facete_list_size_thesaurus";
     
+    private static final String ELEMENTS_PROVIDER = "elementsProvider";
+    private static final String ELEMENTS_PARTNER = "elementsPartner";
+    private static final String ELEMENTS_TOPIC = "elementsTopic";
+    private static final String ELEMENTS_DATATYPE = "elementsDatatype";
+    private static final String ELEMENTS_METACLASS = "elementsMetaclass";
+    private static final String ELEMENTS_SERVICE = "elementsService";
+    private static final String ELEMENTS_MEASURE = "elementsMeasure";
+	
+    private static final String ENABLE_FACETE_PARTNER_LIST = "enableFacetePartnerList";
     
-   	/**
+    private static final String SELECTED_PROVIDER = "selectedProvider";
+    private static final String SELECTED_TOPIC = "selectedTopics";
+    private static final String SELECTED_METACLASS = "selectedMetaclass";
+    private static final String SELECTED_DATATYPE = "selectedDatatype";
+    private static final String SELECTED_MEASURES = "selectedMeasures";
+    private static final String SELECTED_SERVICE = "selectedService";
+    
+    /**
      * Prepare query by facete activity
      * 
      * @param ps
@@ -93,13 +106,13 @@ public class UtilsFacete {
         addAreaAddressToQuery(request, query);
         
         if(query.get("FACETS") == null){
-            ArrayList list = new ArrayList();
+            ArrayList<IngridDocument> list = new ArrayList<IngridDocument>();
 	        setFaceteQueryParamsService(list);
 	        setFaceteQueryParamsMeasure(list);
 	        setFaceteQueryParamsMetaclass(list);
 	        setFaceteQueryParamsPartner(list);
 	        setFaceteQueryParamsProvider(list);
-	        setFaceteQueryParamsDatatype(list);
+			setFaceteQueryParamsDatatype(list);
 	        setFaceteQueryParamsTopic(list);
 	        query.put("FACETS", list);
         }
@@ -128,13 +141,15 @@ public class UtilsFacete {
 
 	public static void setFaceteParamsToSessionByAction(ActionRequest request) {
 		
+		removeElementsSession(request);
+				
 		setFaceteTopicParamsToSession(request);
 		setFaceteMetaclassParamsToSession(request);
 		setFaceteDatatypeParamsToSession(request);
 		setFaceteServiceParamsToSession(request);
 		setFaceteMeasuresParamsToSession(request);
-		setFaceteProviderParamsToSession(request);
 		setFacetePartnerParamsToSession(request);
+		setFaceteProviderParamsToSession(request);
 		setFaceteTimeParamsToSession(request);
         setFaceteMapParamsToSession(request);
         setFaceteGeothesaurusParamsToSession(request);
@@ -144,27 +159,124 @@ public class UtilsFacete {
         
 	}
 
+	public static void checkForExistingFacettes(IngridDocument doc, PortletRequest request) {
+		
+		ArrayList<String> elementsProvider = null;
+		ArrayList<String> elementsPartner = null;
+		ArrayList<String> elementsTopic = null;
+		ArrayList<String> elementsDatatype = null;
+		ArrayList<String> elementsMetaclass = null;
+		ArrayList<String> elementsService = null;
+		ArrayList<String> elementsMeasure = null;
+		
+		removeElementsSession(request);
+		
+		for (Iterator iterator = doc.keySet().iterator(); iterator.hasNext();) {
+			String type = (String) iterator.next();
+			Long value = (Long) doc.get(type); 
+			if(value > 0){
+				if (type.startsWith("provider")){
+					if(elementsProvider == null){
+						elementsProvider = new ArrayList<String>();
+					}
+					elementsProvider.add(type.replace("provider:", ""));
+					
+				}else if(type.startsWith("partner")){
+					if(elementsPartner == null){
+						elementsPartner = new ArrayList<String>();
+					}
+					elementsPartner.add(type.replace("partner:", ""));
+					
+				}else if(type.startsWith("measure")){
+					if(elementsMeasure == null){
+						elementsMeasure = new ArrayList<String>();
+					}
+					elementsMeasure.add(type.replace("measure:", ""));
+					
+				}else if(type.startsWith("topic")){
+					if(elementsTopic == null){
+						elementsTopic = new ArrayList<String>();
+					}
+					elementsTopic.add(type.replace("topic:", ""));
+					
+				}else if(type.startsWith("service")){
+					if(elementsService == null){
+						elementsService = new ArrayList<String>();
+					}
+					elementsService.add(type.replace("service:", ""));
+
+				}else if(type.startsWith("t01_object.obj_class:")){
+					if(elementsMetaclass == null){
+						elementsMetaclass = new ArrayList<String>();
+					}
+					if(type.endsWith(":0")){
+						elementsMetaclass.add("job");
+					} else if(type.endsWith(":1")){
+						elementsMetaclass.add("map");
+					} else if(type.endsWith(":2")){
+						elementsMetaclass.add("document");
+					} else if(type.endsWith(":3")){
+						elementsMetaclass.add("geoservice");
+					} else if(type.endsWith(":4")){
+						elementsMetaclass.add("project");
+					} else if(type.endsWith(":5")){
+						elementsMetaclass.add("database");
+					} else if(type.endsWith(":6")){
+						elementsMetaclass.add("service");
+					}
+				}else if(type.startsWith("type:")){
+					if(elementsDatatype == null){
+						elementsDatatype = new ArrayList<String>();
+					}
+					elementsDatatype.add(type.replace("type:", ""));
+
+				}
+			}
+		}		
+		
+		if (elementsDatatype != null){
+			Collections.sort(elementsDatatype);
+			setAttributeToSession(request, ELEMENTS_DATATYPE, elementsDatatype);
+		}
+		
+		if (elementsProvider != null){
+			Collections.sort(elementsProvider);
+			setAttributeToSession(request, ELEMENTS_PROVIDER, elementsProvider);
+		}
+		
+		if (elementsTopic != null){
+			Collections.sort(elementsTopic);
+			setAttributeToSession(request, ELEMENTS_TOPIC, elementsTopic);
+		}
+		
+		if (elementsPartner != null){
+			Collections.sort(elementsPartner);
+			setAttributeToSession(request, ELEMENTS_PARTNER, elementsPartner);
+		}
+		
+		if (elementsMetaclass != null){
+			Collections.sort(elementsMetaclass);
+			setAttributeToSession(request, ELEMENTS_METACLASS, elementsMetaclass);
+		}
+		
+		if (elementsService != null){
+			Collections.sort(elementsService);
+			setAttributeToSession(request, ELEMENTS_SERVICE, elementsService);
+		}
+		
+		if (elementsMeasure != null){
+			Collections.sort(elementsMeasure);
+			setAttributeToSession(request, ELEMENTS_MEASURE, elementsMeasure);
+		}
+	}
 
 	/***************************** THEMEN **********************************************/
 	
-	private static void setFaceteQueryParamsTopic(ArrayList list) {
+	private static void setFaceteQueryParamsTopic(ArrayList<IngridDocument> list) {
 		IngridDocument facete = new IngridDocument();
-        ArrayList faceteList = new ArrayList ();
-	    
-        String[] enableFaceteTopic = PortalConfig.getInstance().getStringArray("portal.search.facete.topics");
-    	
-        for(int i=0; i < enableFaceteTopic.length; i++){
-    		String id = UtilsDB.getTopicFromKey(enableFaceteTopic[i]);
-    		if(id != null){
-    			HashMap faceteEntry = new HashMap();
-                faceteEntry.put("id", enableFaceteTopic[i]);
-                faceteEntry.put("query", "topic:"+ id);
-                faceteList.add(faceteEntry);
-    		}
-    	}
-		
+        
         facete.put("id", "topic");
-        facete.put("classes", faceteList);
+        facete.put("field", "topic");
         
         list.add(facete);
 	}
@@ -174,27 +286,30 @@ public class UtilsFacete {
 		String doAddTopic = request.getParameter("doAddTopic");
 		String doAddTopicChb = request.getParameter("doAddTopicChb");
 		String doRemoveTopic = request.getParameter("doRemoveTopic");
-		ArrayList selectedTopics = null;
+		ArrayList<String> selectedTopics = null;
 		
 		if(doAddTopic != null){
-			String[] enableFaceteTopic = PortalConfig.getInstance().getStringArray("portal.search.facete.topics");
-	    	int listSize = enableFaceteTopic.length;
-			selectedTopics = new ArrayList ();
-            for (int i=0; i< listSize; i++) {
-                String chkVal = request.getParameter("chk"+(i+1));
-                if (chkVal != null) {
-                	selectedTopics.add(chkVal);
-                }
-            }
+			ArrayList<String> elementsTopic = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_TOPIC); 
+			if(elementsTopic != null){
+				String[] enableFaceteTopic = (String []) elementsTopic.toArray();
+		    	int listSize = enableFaceteTopic.length;
+				selectedTopics = new ArrayList<String> ();
+	            for (int i=0; i< listSize; i++) {
+	                String chkVal = request.getParameter("chk"+(i+1));
+	                if (chkVal != null) {
+	                	selectedTopics.add(chkVal);
+	                }
+	            }
+			}
 		}
 		
 		if(doAddTopicChb != null){
-			selectedTopics = new ArrayList ();
+			selectedTopics = new ArrayList<String> ();
 			selectedTopics.add(doAddTopicChb);
 		}
 		
 		if(doRemoveTopic != null){
-			selectedTopics = (ArrayList) getAttributeFromSession(request, "selectedTopics");
+			selectedTopics = (ArrayList<String>) getAttributeFromSession(request, SELECTED_TOPIC);
 			if (selectedTopics != null){
 				for(int i = 0; i < selectedTopics.size(); i++){
 					if(selectedTopics.get(i).equals(doRemoveTopic)){
@@ -204,17 +319,17 @@ public class UtilsFacete {
 			}
 		}
 		
-		 if(selectedTopics != null){
-         	setAttributeToSession(request, "selectedTopics", selectedTopics);
-         }
+		if(selectedTopics != null){
+        	setAttributeToSession(request, SELECTED_TOPIC, selectedTopics);
+        }
 	}
 	
 	private static void setTopicParamsToContext (RenderRequest request, Context context){
 		
-		ArrayList selectedTopics = (ArrayList) getAttributeFromSession(request, "selectedTopics");
+		ArrayList<String> enableFaceteTopic = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_TOPIC);
+		ArrayList<String> selectedTopics = (ArrayList<String>) getAttributeFromSession(request, SELECTED_TOPIC);
 		
-		String[] enableFaceteTopic = PortalConfig.getInstance().getStringArray("portal.search.facete.topics");
-    	if(enableFaceteTopic != null){
+		if(enableFaceteTopic != null){
     		context.put("enableFaceteTopic", enableFaceteTopic);
     		context.put("enableFaceteTopicCount", PortalConfig.getInstance().getInt("portal.search.facete.topics.count", 3));
         }
@@ -226,12 +341,11 @@ public class UtilsFacete {
     		context.put("isTopicSelect", false);
     		context.remove("selectedTopics");
     	}
-	    	
 	}
 	
 	private static void addTopicToQuery(PortletRequest request, IngridQuery query) {
 		
-		ArrayList selectedTopics = (ArrayList) getAttributeFromSession(request, "selectedTopics");
+		ArrayList<String> selectedTopics = (ArrayList<String>) getAttributeFromSession(request, SELECTED_TOPIC);
     	
 		if(selectedTopics != null && selectedTopics.size() > 0){
         	query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
@@ -250,7 +364,7 @@ public class UtilsFacete {
 	
 	/***************************** METACLASS *******************************************/
 
-	private static void setFaceteQueryParamsMetaclass(ArrayList list) {
+	private static void setFaceteQueryParamsMetaclass(ArrayList<IngridDocument> list) {
 		IngridDocument faceteEntry = new IngridDocument();
         faceteEntry.put("id", "metaclass");
         faceteEntry.put("field", "t01_object.obj_class");
@@ -266,18 +380,18 @@ public class UtilsFacete {
 		
 		String doAddMetaclass = request.getParameter("doAddMetaclass");
 		String doRemoveMetaclass = request.getParameter("doRemoveMetaclass");
-		ArrayList selectedMetaclass = null;
+		ArrayList<String> selectedMetaclass = null;
 		
 		if(doAddMetaclass != null){
-			selectedMetaclass = (ArrayList) getAttributeFromSession(request, "selectedMetaclass");;
+			selectedMetaclass = (ArrayList<String>) getAttributeFromSession(request, SELECTED_METACLASS);;
 			if(selectedMetaclass == null){
-				selectedMetaclass = new ArrayList();
+				selectedMetaclass = new ArrayList<String>();
 			}
 			selectedMetaclass.add(doAddMetaclass);
 		}
 		
 		if(doRemoveMetaclass != null){
-			selectedMetaclass = (ArrayList) getAttributeFromSession(request, "selectedMetaclass");
+			selectedMetaclass = (ArrayList<String>) getAttributeFromSession(request, SELECTED_METACLASS);
 			if (selectedMetaclass != null){
 				for(int i = 0; i < selectedMetaclass.size(); i++){
 					if(selectedMetaclass.get(i).equals(doRemoveMetaclass)){
@@ -288,14 +402,14 @@ public class UtilsFacete {
 		}
 		
 		if(selectedMetaclass != null){
-			setAttributeToSession(request, "selectedMetaclass", selectedMetaclass);
+			setAttributeToSession(request, SELECTED_METACLASS, selectedMetaclass);
 		}
 	}
 	private static void setMetaclassParamsToContext (RenderRequest request, Context context){
 		
-		ArrayList selectedMetaclass = (ArrayList) getAttributeFromSession(request, "selectedMetaclass");
+		ArrayList<String> selectedMetaclass = (ArrayList<String>) getAttributeFromSession(request, SELECTED_METACLASS);
+		ArrayList<String> enableFaceteMetaClass = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_METACLASS);
 		
-		String[] enableFaceteMetaClass = PortalConfig.getInstance().getStringArray("portal.search.facete.metaclass");
     	if(enableFaceteMetaClass != null){
     		context.put("isMetaclassSelect", true);
     		context.put("enableFaceteMetaClass", enableFaceteMetaClass);
@@ -314,7 +428,7 @@ public class UtilsFacete {
 	
 	private static void addMetaclassToQuery(PortletRequest request, IngridQuery query) {
 		
-		ArrayList selectedMetaclass = (ArrayList) getAttributeFromSession(request, "selectedMetaclass");
+		ArrayList<String> selectedMetaclass = (ArrayList<String>) getAttributeFromSession(request, SELECTED_METACLASS);
     	
 		if(selectedMetaclass != null && selectedMetaclass.size() > 0){
     	   for (int i = 0; i < selectedMetaclass.size(); i++) {
@@ -325,51 +439,51 @@ public class UtilsFacete {
 	
 	/***************************** DATENTYPEN *********************************************/
 	
-	private static void setFaceteQueryParamsDatatype(ArrayList list) {
+	private static void setFaceteQueryParamsDatatype(ArrayList<IngridDocument> list) {
 		IngridDocument facete = new IngridDocument();
-        ArrayList faceteList = new ArrayList ();
+        ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
 	        
-        HashMap faceteEntry = new HashMap();
+        HashMap<String, String> faceteEntry = new HashMap<String, String>();
         faceteEntry.put("id", "www");
         faceteEntry.put("query", "datatype:www");
         faceteList.add(faceteEntry);
         
-        faceteEntry = new HashMap();
+        faceteEntry = new HashMap<String, String>();
         faceteEntry.put("id", "map");
         faceteEntry.put("query", "t011_obj_serv_op_connpoint.connect_point:http*");
         faceteList.add(faceteEntry);
         
-        faceteEntry = new HashMap();
+        faceteEntry = new HashMap<String, String>();
         faceteEntry.put("id", "metadata");
         faceteEntry.put("query", "datatype:metadata");
         faceteList.add(faceteEntry);
         
-        faceteEntry = new HashMap();
+        faceteEntry = new HashMap<String, String>();
         faceteEntry.put("id", "address");
         faceteEntry.put("query", "datatype:address");
         faceteList.add(faceteEntry);
         
-        faceteEntry = new HashMap();
+        faceteEntry = new HashMap<String, String>();
         faceteEntry.put("id", "law");
         faceteEntry.put("query", "datatype:law");
         faceteList.add(faceteEntry);
         
-        faceteEntry = new HashMap();
+        faceteEntry = new HashMap<String, String>();
         faceteEntry.put("id", "research");
         faceteEntry.put("query", "datatype:research");
         faceteList.add(faceteEntry);
         
-        faceteEntry = new HashMap();
+        faceteEntry = new HashMap<String, String>();
         faceteEntry.put("id", "fis");
         faceteEntry.put("query", "datatype:fis");
         faceteList.add(faceteEntry);
         
-        faceteEntry = new HashMap();
+        faceteEntry = new HashMap<String, String>();
         faceteEntry.put("id", "service");
         faceteEntry.put("query", "datatype:service");
         faceteList.add(faceteEntry);
         
-        faceteEntry = new HashMap();
+        faceteEntry = new HashMap<String, String>();
         faceteEntry.put("id", "measure");
         faceteEntry.put("query", "datatype:measure");
         faceteList.add(faceteEntry);
@@ -385,18 +499,18 @@ public class UtilsFacete {
 		
 		String doAddDatatype = request.getParameter("doAddDatatype");
 		String doRemoveDatatype = request.getParameter("doRemoveDatatype");
-		ArrayList selectedDatatype = null;
+		ArrayList<String> selectedDatatype = null;
 		
 		if(doAddDatatype != null){
-			selectedDatatype = (ArrayList) getAttributeFromSession(request, "selectedDatatype");
+			selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE);
 			if(selectedDatatype == null){
-				selectedDatatype = new ArrayList();
+				selectedDatatype = new ArrayList<String>();
 			}
 			selectedDatatype.add(doAddDatatype);
 		}
 		
 		if(doRemoveDatatype != null){
-			selectedDatatype = (ArrayList) getAttributeFromSession(request, "selectedDatatype");
+			selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE);
 			if (selectedDatatype != null){
 				for(int i = 0; i < selectedDatatype.size(); i++){
 					if(selectedDatatype.get(i).equals(doRemoveDatatype)){
@@ -407,18 +521,18 @@ public class UtilsFacete {
 		}
 		
 		if(selectedDatatype != null){
-			setAttributeToSession(request, "selectedDatatype", selectedDatatype);
+			setAttributeToSession(request, SELECTED_DATATYPE, selectedDatatype);
 		}
 	}
 	
 	private static void setDatatypeParamsToContext (RenderRequest request, Context context){
 		
-		ArrayList selectedDatatype = (ArrayList) getAttributeFromSession(request, "selectedDatatype");
+		ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE);
+		ArrayList<String> elementsDatatype = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_DATATYPE);
     	
-		String[] enableFaceteDatatype = PortalConfig.getInstance().getStringArray("portal.search.facete.datatype");
-    	if(enableFaceteDatatype != null){
+		if(elementsDatatype != null){
     		context.put("isDatatypeSelect", true);
-    		context.put("enableFaceteDatatype", enableFaceteDatatype);
+    		context.put("enableFaceteDatatype", elementsDatatype);
         }else{
         	context.put("isDatatypeSelect", false);
         }
@@ -435,7 +549,7 @@ public class UtilsFacete {
 	
 	private static void addDatatypeToQuery(PortletRequest request, IngridQuery query) {
 		
-		ArrayList selectedDatatype = (ArrayList) getAttributeFromSession(request, "selectedDatatype");
+		ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE);
     	
 		if(selectedDatatype != null && selectedDatatype.size() > 0){
         	for(int i = 0; i < selectedDatatype.size(); i++){
@@ -450,22 +564,26 @@ public class UtilsFacete {
 	
 	/***************************** SERVICE *********************************************/
 
-	private static void setFaceteQueryParamsService(ArrayList list) {
+	private static void setFaceteQueryParamsService(ArrayList<IngridDocument> list) {
 		
 		IngridDocument facete = new IngridDocument();
-        ArrayList faceteList = new ArrayList ();
+        ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
 	    
-        String[] enableFaceteService = PortalConfig.getInstance().getStringArray("portal.search.facete.service");
-    	
-        for(int i=0; i < enableFaceteService.length; i++){
-    		String id = UtilsDB.getServiceRubricFromKey(enableFaceteService[i]);
-    		if(id != null){
-    			HashMap faceteEntry = new HashMap();
-                faceteEntry.put("id", enableFaceteService[i]);
-                faceteEntry.put("query", "topic:"+ id);
-                faceteList.add(faceteEntry);
-    		}
-    	}
+        HashMap<String, String> faceteEntry = new HashMap<String, String>();
+        faceteEntry.put("id", "pre");
+        faceteEntry.put("query", "topic:" + UtilsDB.getServiceRubricFromKey("pre"));
+        faceteList.add(faceteEntry);
+        
+        faceteEntry = new HashMap<String, String>();
+        faceteEntry.put("id", "pub");
+        faceteEntry.put("query", "topic:" + UtilsDB.getServiceRubricFromKey("pub"));
+        faceteList.add(faceteEntry);
+        
+        faceteEntry = new HashMap<String, String>();
+        faceteEntry.put("id", "ver");
+        faceteEntry.put("query", "topic:" + UtilsDB.getServiceRubricFromKey("ver"));
+        faceteList.add(faceteEntry);
+        
         
         facete.put("id", "service");
         facete.put("classes", faceteList);
@@ -477,18 +595,18 @@ public class UtilsFacete {
 		
 		String doAddService = request.getParameter("doAddService");
 		String doRemoveService = request.getParameter("doRemoveService");
-		ArrayList selectedService = null;
+		ArrayList<String> selectedService = null;
 		
 		if(doAddService != null){
-			selectedService = (ArrayList) getAttributeFromSession(request, "selectedService");
+			selectedService = (ArrayList<String>) getAttributeFromSession(request, SELECTED_SERVICE);
 			if(selectedService == null){
-				selectedService = new ArrayList();
+				selectedService = new ArrayList<String>();
 			}
 			selectedService.add(doAddService);
 		}
 		
 		if(doRemoveService != null){
-			selectedService = (ArrayList) getAttributeFromSession(request, "selectedService");
+			selectedService = (ArrayList<String>) getAttributeFromSession(request, SELECTED_SERVICE);
 			if (selectedService != null){
 				for(int i = 0; i < selectedService.size(); i++){
 					if(selectedService.get(i).equals(doRemoveService)){
@@ -499,18 +617,18 @@ public class UtilsFacete {
 		}
 		
 		if(selectedService != null){
-			setAttributeToSession(request, "selectedService", selectedService);
+			setAttributeToSession(request, SELECTED_SERVICE, selectedService);
 		}
 	}
 	
 	private static void setServiceParamsToContext (RenderRequest request, Context context){
 		
-		ArrayList selectedService = (ArrayList) getAttributeFromSession(request, "selectedService");
-    	
-		String[] enableFaceteService = PortalConfig.getInstance().getStringArray("portal.search.facete.service");
-    	if(enableFaceteService != null){
-    		context.put("enableFaceteService", enableFaceteService);
-        }
+		ArrayList<String> selectedService = (ArrayList<String>) getAttributeFromSession(request, SELECTED_SERVICE);
+		ArrayList<String> elementsService = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_SERVICE);
+	    
+		if(elementsService != null){
+    		context.put("enableFaceteService", elementsService);
+		}
 		
 		if(selectedService != null){
     		context.put("isServiceSelect", true);
@@ -525,7 +643,7 @@ public class UtilsFacete {
 	
 	private static void addServiceToQuery(PortletRequest request, IngridQuery query) {
 		
-		ArrayList selectedService = (ArrayList) getAttributeFromSession(request, "selectedService");
+		ArrayList<String> selectedService = (ArrayList<String>) getAttributeFromSession(request, SELECTED_SERVICE);
     	
 		if(selectedService != null && selectedService.size() > 0){
 	    	query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
@@ -544,22 +662,30 @@ public class UtilsFacete {
 	
 	/***************************** MESSWERTE *******************************************/
 
-	private static void setFaceteQueryParamsMeasure(ArrayList list) {
+	private static void setFaceteQueryParamsMeasure(ArrayList<IngridDocument> list) {
 		
 		IngridDocument facete = new IngridDocument();
-        ArrayList faceteList = new ArrayList ();
+        ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
 	    
-        String[] enableFaceteMeasures = PortalConfig.getInstance().getStringArray("portal.search.facete.measures");
-    	
-        for(int i=0; i < enableFaceteMeasures.length; i++){
-    		String id = UtilsDB.getMeasuresRubricFromKey(enableFaceteMeasures[i]);
-    		if(id != null){
-    			HashMap faceteEntry = new HashMap();
-                faceteEntry.put("id", enableFaceteMeasures[i]);
-                faceteEntry.put("query", "topic:"+ id);
-                faceteList.add(faceteEntry);
-    		}
-    	}
+        HashMap<String, String> faceteEntry = new HashMap<String, String>();
+        faceteEntry.put("id", "str");
+        faceteEntry.put("query", "topic:" + UtilsDB.getMeasuresRubricFromKey("str"));
+        faceteList.add(faceteEntry);
+        
+        faceteEntry = new HashMap<String, String>();
+        faceteEntry.put("id", "luf");
+        faceteEntry.put("query", "topic:" + UtilsDB.getMeasuresRubricFromKey("luf"));
+        faceteList.add(faceteEntry);
+        
+        faceteEntry = new HashMap<String, String>();
+        faceteEntry.put("id", "was");
+        faceteEntry.put("query", "topic:" + UtilsDB.getMeasuresRubricFromKey("was"));
+        faceteList.add(faceteEntry);
+        
+        faceteEntry = new HashMap<String, String>();
+        faceteEntry.put("id", "wei");
+        faceteEntry.put("query", "topic:" + UtilsDB.getMeasuresRubricFromKey("wei"));
+        faceteList.add(faceteEntry);
         
         facete.put("id", "measure");
         facete.put("classes", faceteList);
@@ -571,18 +697,18 @@ public class UtilsFacete {
 		
 		String doAddMeasures = request.getParameter("doAddMeasures");
 		String doRemoveMeasures = request.getParameter("doRemoveMeasures");
-		ArrayList selectedMeasures = null;
+		ArrayList<String> selectedMeasures = null;
 		
 		if(doAddMeasures != null){
-			selectedMeasures = (ArrayList) getAttributeFromSession(request, "selectedMeasures");
+			selectedMeasures = (ArrayList<String>) getAttributeFromSession(request, SELECTED_MEASURES);
 			if(selectedMeasures == null){
-				selectedMeasures = new ArrayList();
+				selectedMeasures = new ArrayList<String>();
 			}
 			selectedMeasures.add(doAddMeasures);
 		}
 		
 		if(doRemoveMeasures != null){
-			selectedMeasures = (ArrayList) getAttributeFromSession(request, "selectedMeasures");
+			selectedMeasures = (ArrayList<String>) getAttributeFromSession(request, SELECTED_MEASURES);
 			if (selectedMeasures != null){
 				for(int i = 0; i < selectedMeasures.size(); i++){
 					if(selectedMeasures.get(i).equals(doRemoveMeasures)){
@@ -593,20 +719,20 @@ public class UtilsFacete {
 		}
 
 		if(selectedMeasures != null){
-			setAttributeToSession(request, "selectedMeasures", selectedMeasures);
+			setAttributeToSession(request, SELECTED_MEASURES, selectedMeasures);
 		}
 	}
 		
 	
 	private static void setMeasuresParamsToContext (RenderRequest request, Context context){
 		
-		ArrayList selectedMeasures = (ArrayList) getAttributeFromSession(request, "selectedMeasures");
-    	
-		String[] enableFaceteMeasures = PortalConfig.getInstance().getStringArray("portal.search.facete.measures");
-    	if(enableFaceteMeasures != null){
-    		context.put("enableFaceteMeasures", enableFaceteMeasures);
-        }
-    	
+		ArrayList<String> selectedMeasures = (ArrayList<String>) getAttributeFromSession(request, SELECTED_MEASURES);
+		ArrayList<String> elementsMeasure = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_MEASURE);
+	    
+		if(elementsMeasure != null){
+    		context.put("enableFaceteMeasures", elementsMeasure);
+		}
+		
     	if(selectedMeasures != null){
     		context.put("isMeasuresSelect", true);
     		context.put("selectedMeasures", selectedMeasures);
@@ -619,7 +745,7 @@ public class UtilsFacete {
 	
 	private static void addMeasuresToQuery(PortletRequest request, IngridQuery query) {
 		
-		ArrayList selectedMeasures = (ArrayList) getAttributeFromSession(request, "selectedMeasures");
+		ArrayList<String> selectedMeasures = (ArrayList<String>) getAttributeFromSession(request, SELECTED_MEASURES);
     	
 		if(selectedMeasures != null && selectedMeasures.size() > 0){
 	    	query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
@@ -638,7 +764,7 @@ public class UtilsFacete {
 		
 	/***************************** PARTNER *********************************************/
 
-	private static void setFaceteQueryParamsPartner(ArrayList list) {
+	private static void setFaceteQueryParamsPartner(ArrayList<IngridDocument> list) {
 		IngridDocument faceteEntry = new IngridDocument();
         faceteEntry.put("id", "partner");
         
@@ -651,8 +777,8 @@ public class UtilsFacete {
 		String doRemovePartner = request.getParameter("doRemovePartner");
 		
 		if(doPartner != null){
-			List partners = UtilsDB.getPartners();
-			List selectedPartner = new ArrayList();
+			List<IngridPartner> partners = UtilsDB.getPartners();
+			ArrayList<IngridPartner> selectedPartner = new ArrayList<IngridPartner>();
 			for(int j=0; j < partners.size(); j++){
 				IngridPartner partner = (IngridPartner) partners.get(j);
 				if(partner.getIdent().equals(doPartner)){
@@ -660,22 +786,34 @@ public class UtilsFacete {
 				}
 			}
 			if(selectedPartner != null){
-				setAttributeToSession(request, "enableFacetePartnerList", selectedPartner);
+				setAttributeToSession(request, ENABLE_FACETE_PARTNER_LIST, selectedPartner);
 			}
         }
 		
 		if(doRemovePartner != null){
-			removeAttributeFromSession(request, "enableFacetePartnerList");
-			removeAttributeFromSession(request, "selectedProvider");
+			removeAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);
+			removeAttributeFromSession(request, SELECTED_PROVIDER);
 		}
 	}
 		
 	private static void setPartnerParamsToContext (RenderRequest request, Context context){
 		
-		if(getAttributeFromSession(request, "enableFacetePartnerList") != null){
-    		context.put("enableFacetePartnerList", getAttributeFromSession(request, "enableFacetePartnerList"));
+		ArrayList<IngridPartner> enableFacetePartnerList = (ArrayList<IngridPartner>) getAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);
+		
+		if(enableFacetePartnerList != null){
+    		context.put("enableFacetePartnerList", enableFacetePartnerList);
+    		context.put("isPartnerSelect", true);
 		}else{
-			context.put("enableFacetePartnerList",  UtilsDB.getPartners());
+			ArrayList<String> elementsPartner = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_PARTNER);
+			LinkedHashMap partnerProvider = UtilsDB.getPartnerProviderMap(elementsPartner); 
+			enableFacetePartnerList = new ArrayList<IngridPartner>();
+			if(elementsPartner != null && partnerProvider != null){
+				for (int i=0; i < partnerProvider.size(); i++){
+					HashMap partner = (HashMap) partnerProvider.get(elementsPartner.get(i));
+					enableFacetePartnerList.add((IngridPartner)partner.get("partner"));
+				}
+			}
+			context.put("enableFacetePartnerList",  enableFacetePartnerList);
 		}
 		context.put("enableFacetePartnerListCount", PortalConfig.getInstance().getInt("portal.search.facete.partner.count", 3));
 	}
@@ -683,7 +821,7 @@ public class UtilsFacete {
 	
 	private static void addPartnerToQuery(PortletRequest request, IngridQuery query) {
 		
-		ArrayList selectedPartner = (ArrayList) getAttributeFromSession(request, "enableFacetePartnerList");
+		ArrayList<IngridPartner> selectedPartner = (ArrayList<IngridPartner>) getAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);
     	
 		if(selectedPartner != null && selectedPartner.size() > 0){
 			for(int i=0; i<selectedPartner.size();i++){
@@ -695,7 +833,7 @@ public class UtilsFacete {
    
 	/***************************** ANBIETER ********************************************/
 
-	private static void setFaceteQueryParamsProvider(ArrayList list) {
+	private static void setFaceteQueryParamsProvider(ArrayList<IngridDocument> list) {
 		IngridDocument faceteEntry = new IngridDocument();
         faceteEntry.put("id", "provider");
         
@@ -707,16 +845,17 @@ public class UtilsFacete {
 		String doAddProvider = request.getParameter("doAddProvider");
 		String doAddProviderChb = request.getParameter("doAddProviderChb");
 		String doRemoveProvider = request.getParameter("doRemoveProvider");
-		ArrayList selectedIds  = null;
 		
-		ArrayList selectedPartnerProviders = new ArrayList();
-		ArrayList selectedPartner = (ArrayList) getAttributeFromSession(request, "enableFacetePartnerList");
+		ArrayList<String> selectedIds  = null;
+		
+		ArrayList<IngridProvider> selectedPartnerProviders = new ArrayList<IngridProvider>();
+		ArrayList<IngridPartner> selectedPartner = (ArrayList<IngridPartner>) getAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);
 		if(selectedPartner != null){
 			for(int i=0; i < selectedPartner.size(); i++){
-				IngridPartner partner = (IngridPartner) selectedPartner.get(i);
-				List providers = UtilsDB.getProviders();
+				IngridPartner partner = selectedPartner.get(i);
+				List<IngridProvider> providers = UtilsDB.getProviders();
 				for(int j=0; j<providers.size(); j++){
-					IngridProvider provider = (IngridProvider) providers.get(j);
+					IngridProvider provider = providers.get(j);
 					if(provider != null){
 						if (partner.getSortkey() == provider.getSortkeyPartner()){
 							selectedPartnerProviders.add(provider);
@@ -729,7 +868,7 @@ public class UtilsFacete {
 		if(doAddProvider != null){
 			
 			int listSize = selectedPartnerProviders.size();
-			selectedIds = new ArrayList ();
+			selectedIds = new ArrayList<String>();
             for (int i=0; i< listSize; i++) {
                 String chkVal = request.getParameter("chk"+(i+1));
                 if (chkVal != null) {
@@ -739,12 +878,12 @@ public class UtilsFacete {
 		}
 		
 		if(doAddProviderChb != null){
-			selectedIds = new ArrayList ();
+			selectedIds = new ArrayList<String>();
             selectedIds.add(doAddProviderChb);
 		}
 		
 		if(doRemoveProvider != null){
-			selectedIds = (ArrayList) getAttributeFromSession(request, "selectedProvider");
+			selectedIds = (ArrayList<String>) getAttributeFromSession(request, SELECTED_PROVIDER);
 			if (selectedIds != null){
 				for(int i = 0; i < selectedIds.size(); i++){
 					if(selectedIds.get(i).equals(doRemoveProvider)){
@@ -755,57 +894,62 @@ public class UtilsFacete {
 		}
 		
 		if(selectedIds != null){
-        	setAttributeToSession(request, "selectedProvider", selectedIds);
+        	setAttributeToSession(request, SELECTED_PROVIDER, selectedIds);
         }
 	}
 
 	private static void setProviderParamsToContext (RenderRequest request, Context context){
 		
-		ArrayList selectedProvider = (ArrayList) getAttributeFromSession(request, "selectedProvider");
-		List partners = UtilsDB.getPartners();
+		ArrayList<String> selectedProvider = (ArrayList<String>) getAttributeFromSession(request, SELECTED_PROVIDER);
+		List<IngridPartner> partners = (ArrayList<IngridPartner>) getAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);
+		List<IngridProvider> providers = null;
 		
 		// TODO: (Facete) Add providers to facete
-    	List providers = UtilsDB.getProviders();
+		if(partners != null && partners.size() == 1) {
+	    	providers = UtilsDB.getProvidersFromPartnerKey(partners.get(0).getIdent());
+		}
+		
+		if(providers == null){
+			ArrayList<String> elementsPartner = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_PARTNER);
+			if(elementsPartner != null && elementsPartner.size() > 0){
+				providers = UtilsDB.getProvidersFromPartnerKey(elementsPartner.get(0));	
+			}
+		}
+			
+    	ArrayList<String> elementsProvider = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_PROVIDER);
+
+    	if(providers != null && elementsProvider != null){
+    		for(int i=0; i < providers.size(); i++){
+	    		String ident = providers.get(i).getIdent();
+	    		boolean foundProvider = false;
+	    		for(int j=0; j < elementsProvider.size(); j++){
+	    			if(ident != null){
+	    				if(ident.equals(elementsProvider.get(j))){
+	    					foundProvider = true;
+	    					break;
+	    				}
+	    			}
+	    		}
+	    		if(!foundProvider){
+	    			providers.remove(i);
+	    			i = i-1;
+	    		}
+
+	    	}
+	    }
+				    	
     	context.put("enableFaceteProviderList", providers);
     	if(selectedProvider != null && selectedProvider.size() > 0){
-    		List selectedPartnerByProvider = new ArrayList();
-    		int sortkeyPartner = 0;
-    		// Set partner by selected provider
-    		for(int i=0; i < selectedProvider.size(); i++){
-    			for(int j=0; j < providers.size(); j++){
-        			IngridProvider provider = (IngridProvider) providers.get(j);
-        			if(provider.getIdent().equals(selectedProvider.get(i))){
-        				sortkeyPartner = provider.getSortkeyPartner();
-        			}
-        			if(sortkeyPartner != 0){
-        				break;
-        			}
-    			}
-    			for(int j=0; j < partners.size(); j++){
-    				IngridPartner partner = (IngridPartner) partners.get(j);
-    				if(partner.getSortkey() == sortkeyPartner){
-    					selectedPartnerByProvider.add(partner);
-    					break;
-    				}
-    			}
-    			
-    			if(selectedPartnerByProvider.size() > 0){
-    				break;
-    			}
-    		}
-    		
     		// Set selected providers
-    		ArrayList provider = new ArrayList(); 
+    		ArrayList<HashMap<String, String>> provider = new ArrayList<HashMap<String, String>>(); 
         	for(int i=0; i < selectedProvider.size();i++){
-        		HashMap map = new HashMap ();
+        		HashMap<String, String> map = new HashMap<String, String>();
         		map.put("name", UtilsDB.getProviderFromKey(selectedProvider.get(i).toString()));
         		map.put("ident", selectedProvider.get(i).toString());
         		provider.add(map);
         	}
         	
         	context.put("isProviderSelect", true);
-    		context.put("isPartnerSelect", true);
-    		context.put("enableFacetePartnerList", selectedPartnerByProvider);
     		context.put("selectedProvider", provider);
     	} else{
     		context.put("isProviderSelect", false);
@@ -815,11 +959,11 @@ public class UtilsFacete {
 	
 	private static void addProviderToQuery(PortletRequest request, IngridQuery query) {
 		
-		ArrayList selectedProvider = (ArrayList) getAttributeFromSession(request, "selectedProvider");
+		ArrayList<String> selectedProvider = (ArrayList<String>) getAttributeFromSession(request, SELECTED_PROVIDER);
 		
 		if(selectedProvider != null && selectedProvider.size() > 0){
 			for(int i=0; i<selectedProvider.size();i++){
-				query.addField(new FieldQuery(false, false, Settings.QFIELD_PROVIDER, selectedProvider.get(i).toString()));
+				query.addField(new FieldQuery(true, false, Settings.QFIELD_PROVIDER, selectedProvider.get(i)));
 			}
 		}
 	}
@@ -924,7 +1068,7 @@ public class UtilsFacete {
 		}
 		
 		if(doRemoveMap != null){
-			doMapCoords = (HashMap) getAttributeFromSession(request, "doMapCoords");
+			doMapCoords = (HashMap<String, String>) getAttributeFromSession(request, "doMapCoords");
 			doMapCoords.remove(doRemoveMap);
 			
 			coordOptions = (ArrayList<String>) getAttributeFromSession(request, "coordOptions");
@@ -954,7 +1098,7 @@ public class UtilsFacete {
 
 		String wmsURL = UtilsSearch.getWMSURL(request, request.getParameter("wms_url"), false);
         context.put("wmsURL", wmsURL);
-        HashMap doMapCoords = (HashMap) getAttributeFromSession(request, "doMapCoords");
+        HashMap<String, String> doMapCoords = (HashMap<String, String>) getAttributeFromSession(request, "doMapCoords");
         
         if(doMapCoords != null && doMapCoords.size() > 0){
         	context.put("doMapCoords", getAttributeFromSession(request, "doMapCoords"));
@@ -963,7 +1107,7 @@ public class UtilsFacete {
 	
 	private static void addMapToQuery(PortletRequest request, IngridQuery query) {
 		
-		HashMap doMapCoords = (HashMap) getAttributeFromSession(request, "doMapCoords");
+		HashMap<String, String> doMapCoords = (HashMap<String, String>) getAttributeFromSession(request, "doMapCoords");
     	
 		if (doMapCoords != null && doMapCoords.size() > 0){
 	    	WMSSearchDescriptor wmsDescriptor = WMSInterfaceImpl.getInstance().getWMSSearchParameter(
@@ -1046,7 +1190,7 @@ public class UtilsFacete {
 				if(doRemoveGeothesaurus.equals("all")){
 					removeAttributeFromSession(request, "geothesaurusSelectTopicsId");
 				}else{
-					ArrayList selectedIds = (ArrayList) getAttributeFromSession(request, "geothesaurusSelectTopicsId");
+					ArrayList<String> selectedIds = (ArrayList<String>) getAttributeFromSession(request, "geothesaurusSelectTopicsId");
 					if (selectedIds != null){
 						for(int i = 0; i < selectedIds.size(); i++){
 							if(selectedIds.get(i).equals(doRemoveGeothesaurus)){
@@ -1134,7 +1278,7 @@ public class UtilsFacete {
 	                setAttributeToSession(request, LIST_SIZE_GEOTHESAURUS, list_size);
 	            }
 	        }
-	        ArrayList geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
+	        ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
 	        setAttributeToSession(request, "geothesaurusSelectTopics", geothesaurusSelectTopics);
         }
 	}
@@ -1148,7 +1292,7 @@ public class UtilsFacete {
         context.put("geothesaurusCurrentTopic", getAttributeFromSession(request, CURRENT_TOPIC_GEOTHESAURUS));
         context.put("list_size", getAttributeFromSession(request, LIST_SIZE_GEOTHESAURUS));
         
-        ArrayList geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
+        ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
         context.put("geothesaurusSelectTopics", geothesaurusSelectTopics);
         if(getAttributeFromSession(request, "doGeothesaurus") != null){
         	context.put("doGeothesaurus", getAttributeFromSession(request, "doGeothesaurus"));
@@ -1160,12 +1304,12 @@ public class UtilsFacete {
 	
 	private static void addGeothesaurusToQuery(PortletRequest request, IngridQuery query) {
 
-		ArrayList geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
+		ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
         
 		if(geothesaurusSelectTopics != null && geothesaurusSelectTopics.size() > 0){
 	    	if(query != null){
 	    	   for (int i = 0; i < geothesaurusSelectTopics.size(); i++) {
-	    		   HashMap map = (HashMap) geothesaurusSelectTopics.get(i);
+	    		   HashMap<String, String> map = (HashMap<String, String>) geothesaurusSelectTopics.get(i);
 	    		   String topicId = (String) map.get("topicId");
 	               if (topicId != null && topicId.length() > 0) {
 	            	   query.addField(new FieldQuery(true, false, "areaid", topicId));
@@ -1175,13 +1319,13 @@ public class UtilsFacete {
 	    }
 	}
 	
-	private static ArrayList getSelectedGeothesaurusTopics(PortletRequest request){
+	private static ArrayList<HashMap<String, String>> getSelectedGeothesaurusTopics(PortletRequest request){
 		IngridHit[] geothesaurusTopics = (IngridHit []) getAttributeFromSession(request, TOPICS_GEOTHESAURUS);
         Topic currentTopic = (Topic) getAttributeFromSession(request, CURRENT_TOPIC_GEOTHESAURUS);
 		IngridHit[] assocTopics = (IngridHit []) getAttributeFromSession(request, SIMILAR_TOPICS_GEOTHESAURUS);
         
-		ArrayList selectedIds = (ArrayList) getAttributeFromSession(request, "geothesaurusSelectTopicsId");
-        ArrayList geothesaurusSelectTopics = new ArrayList ();
+		ArrayList<String> selectedIds = (ArrayList<String>) getAttributeFromSession(request, "geothesaurusSelectTopicsId");
+        ArrayList<HashMap<String, String>> geothesaurusSelectTopics = new ArrayList<HashMap<String, String>> ();
         if(selectedIds != null){
         	boolean foundTopicId = false;
         	for(int i = 0; i < selectedIds.size(); i++){
@@ -1194,8 +1338,8 @@ public class UtilsFacete {
             			}
 	        			if(topicId != null){
 	        				if(topicId.indexOf((String)selectedIds.get(i)) > -1){
-	                        	HashMap map = new HashMap();
-	                			map.put("topicTitle", topic.get("topicName"));
+	                        	HashMap<String, String> map = new HashMap<String, String>();
+	                			map.put("topicTitle", topic.get("topicName").toString());
 	                			map.put("topicId", (String)selectedIds.get(i));
 	                			geothesaurusSelectTopics.add(map);
 	                			foundTopicId = true;
@@ -1214,8 +1358,8 @@ public class UtilsFacete {
                 			}
     	        			if(topicId != null){
                 				if(topicId.indexOf((String)selectedIds.get(i)) > -1){
-                                	HashMap map = new HashMap();
-                        			map.put("topicTitle", topic.get("topicName"));
+                                	HashMap<String, String> map = new HashMap<String, String>();
+                        			map.put("topicTitle", topic.get("topicName").toString());
                         			map.put("topicId", (String)selectedIds.get(i));
                         			geothesaurusSelectTopics.add(map);
                         			foundTopicId = true;
@@ -1229,8 +1373,8 @@ public class UtilsFacete {
         		if(currentTopic != null){
         			if(!foundTopicId){
         				if(currentTopic.getTopicID().indexOf((String)selectedIds.get(i)) > -1){
-        					HashMap map = new HashMap();
-                			map.put("topicTitle", currentTopic.getTopicName());
+        					HashMap<String, String> map = new HashMap<String, String>();
+                			map.put("topicTitle", currentTopic.getTopicName().toString());
                 			map.put("topicId", (String)selectedIds.get(i));
                 			geothesaurusSelectTopics.add(map);
                 			foundTopicId = true;
@@ -1273,7 +1417,7 @@ public class UtilsFacete {
 				setAttributeToSession(request, "doThesaurus", false);
 				if(getAttributeFromSession(request, LIST_SIZE_THESAURUS) != null){
 		        	String listSize = getAttributeFromSession(request, LIST_SIZE_THESAURUS).toString();
-	        		ArrayList selectedIds = new ArrayList ();
+	        		ArrayList<String> selectedIds = new ArrayList<String> ();
 	                for (int i=0; i< Integer.parseInt(listSize); i++) {
 	                    String chkVal = request.getParameter("chk"+(i+1));
 	                    if (chkVal != null) {
@@ -1285,7 +1429,7 @@ public class UtilsFacete {
 	                }
 	        	}
 				
-				ArrayList thesaurusSelectTopics = getSelectedThesaurusTopics(request);
+				ArrayList<HashMap<String, String>> thesaurusSelectTopics = getSelectedThesaurusTopics(request);
 		        setAttributeToSession(request, "thesaurusSelectTopics", thesaurusSelectTopics);
 			}
 			
@@ -1293,7 +1437,7 @@ public class UtilsFacete {
 				if(doRemoveThesaurus.equals("all")){
 					removeAttributeFromSession(request, "thesaurusSelectTopicsId");
 				}else{
-					ArrayList selectedIds = (ArrayList) getAttributeFromSession(request, "thesaurusSelectTopicsId");
+					ArrayList<String> selectedIds = (ArrayList<String>) getAttributeFromSession(request, "thesaurusSelectTopicsId");
 					if (selectedIds != null){
 						for(int i = 0; i < selectedIds.size(); i++){
 							if(selectedIds.get(i).equals(doRemoveThesaurus)){
@@ -1359,7 +1503,7 @@ public class UtilsFacete {
 	        	setAttributeToSession(request, LIST_SIZE_THESAURUS, assocTopics.length + 1);
 	        }
 	        
-	    	ArrayList thesaurusSelectTopics = getSelectedThesaurusTopics(request);
+	    	ArrayList<HashMap<String, String>> thesaurusSelectTopics = getSelectedThesaurusTopics(request);
 	        setAttributeToSession(request, "thesaurusSelectTopics", thesaurusSelectTopics);
 		}
 	}
@@ -1376,10 +1520,10 @@ public class UtilsFacete {
         context.put("doThesaurus", getAttributeFromSession(request, "doThesaurus"));
         context.put("thesaurusTerm", getAttributeFromSession(request, "thesaurusTerm"));
         
-        ArrayList narrowerTermAssoc = new ArrayList();
-        ArrayList widerTermAssoc = new ArrayList();
-        ArrayList synonymAssoc = new ArrayList();
-        ArrayList relatedTermsAssoc = new ArrayList();
+        ArrayList<Topic> narrowerTermAssoc = new ArrayList<Topic>();
+        ArrayList<Topic> widerTermAssoc = new ArrayList<Topic>();
+        ArrayList<Topic> synonymAssoc = new ArrayList<Topic>();
+        ArrayList<Topic> relatedTermsAssoc = new ArrayList<Topic>();
         
         Object obj = getAttributeFromSession(request, SIMILAR_TOPICS_THESAURUS);
         if (obj != null) {
@@ -1409,12 +1553,12 @@ public class UtilsFacete {
 	
 	private static void addThesaurusToQuery(PortletRequest request, IngridQuery query) {
 
-		ArrayList thesaurusSelectTopics = getSelectedThesaurusTopics(request);
+		ArrayList<HashMap<String, String>> thesaurusSelectTopics = getSelectedThesaurusTopics(request);
         
 		if(thesaurusSelectTopics != null && thesaurusSelectTopics.size() > 0){
     		ClauseQuery cq = null;
     		for (int i = 0; i < thesaurusSelectTopics.size(); i++) {
-    		  HashMap map = (HashMap) thesaurusSelectTopics.get(i);
+    		  HashMap<String, String> map = (HashMap<String, String>) thesaurusSelectTopics.get(i);
     		  cq = new ClauseQuery(true, false);
    	            
    	    	   if (map != null) {
@@ -1430,13 +1574,13 @@ public class UtilsFacete {
 	    }
 	}
 	
-	private static ArrayList getSelectedThesaurusTopics(PortletRequest request){
+	private static ArrayList<HashMap<String, String>> getSelectedThesaurusTopics(PortletRequest request){
 		IngridHit[] thesaurusTopics = (IngridHit []) getAttributeFromSession(request, TOPICS_THESAURUS);
         Topic currentTopic = (Topic) getAttributeFromSession(request, CURRENT_TOPIC_THESAURUS);
 		Object assocTopics = getAttributeFromSession(request, SIMILAR_TOPICS_THESAURUS);
         
-		ArrayList selectedIds = (ArrayList) getAttributeFromSession(request, "thesaurusSelectTopicsId");
-        ArrayList thesaurusSelectTopics = new ArrayList();
+		ArrayList<String> selectedIds = (ArrayList<String>) getAttributeFromSession(request, "thesaurusSelectTopicsId");
+        ArrayList<HashMap<String, String>> thesaurusSelectTopics = new ArrayList<HashMap<String, String>>();
         if(selectedIds != null){
         	boolean foundTopicId = false;
         	for(int i = 0; i < selectedIds.size(); i++){
@@ -1446,8 +1590,8 @@ public class UtilsFacete {
 	        			String topicId = (String) topic.get("topicID");
 	        			if(topicId != null){
 	        				if(topicId.indexOf((String)selectedIds.get(i)) > -1){
-	                        	HashMap map = new HashMap();
-	                			map.put("topicTitle", topic.get("topicName"));
+	                        	HashMap<String, String> map = new HashMap<String, String>();
+	                			map.put("topicTitle", topic.get("topicName").toString());
 	                			map.put("topicId", (String)selectedIds.get(i));
 	                			thesaurusSelectTopics.add(map);
 	                			foundTopicId = true;
@@ -1464,8 +1608,8 @@ public class UtilsFacete {
                 			String topicId = (String) topic.get("topicID");
                 			if(topicId != null){
                 				if(topicId.indexOf((String)selectedIds.get(i)) > -1){
-                                	HashMap map = new HashMap();
-                        			map.put("topicTitle", topic.get("topicName"));
+                                	HashMap<String, String> map = new HashMap<String, String>();
+                        			map.put("topicTitle", topic.get("topicName").toString());
                         			map.put("topicId", (String)selectedIds.get(i));
                         			thesaurusSelectTopics.add(map);
                         			foundTopicId = true;
@@ -1479,8 +1623,8 @@ public class UtilsFacete {
         		if(currentTopic != null){
         			if(!foundTopicId){
         				if(currentTopic.getTopicID().indexOf((String)selectedIds.get(i)) > -1){
-        					HashMap map = new HashMap();
-                			map.put("topicTitle", currentTopic.getTopicName());
+        					HashMap<String, String> map = new HashMap<String, String>();
+                			map.put("topicTitle", currentTopic.getTopicName().toString());
                 			map.put("topicId", (String)selectedIds.get(i));
                 			thesaurusSelectTopics.add(map);
                 			foundTopicId = true;
@@ -1542,7 +1686,7 @@ public class UtilsFacete {
 				removeAttributeFromSession(request, "doAddAttribute");
 			}else {
 				attribute = new HashMap<String, String> ();
-				attribute = (HashMap) getAttributeFromSession(request, "doAddAttribute");
+				attribute = (HashMap<String, String>) getAttributeFromSession(request, "doAddAttribute");
 				
 				if (doRemoveAttribute.equals(SearchExtResTopicAttributesForm.FIELD_DB_INSTITUTE)) {
 	            	attribute.remove(SearchExtResTopicAttributesForm.FIELD_DB_INSTITUTE);
@@ -1580,7 +1724,7 @@ public class UtilsFacete {
 	
 	private static void addAttributeToQuery(PortletRequest request, IngridQuery query) {
 		
-		HashMap<String, String>  doAddAttribute = (HashMap) getAttributeFromSession(request, "doAddAttribute");
+		HashMap<String, String>  doAddAttribute = (HashMap<String, String>) getAttributeFromSession(request, "doAddAttribute");
     	
 		if (doAddAttribute != null && doAddAttribute.size() > 0){
     		if(doAddAttribute.get(SearchExtResTopicAttributesForm.FIELD_DB_TITLE) != null)
@@ -1636,7 +1780,7 @@ public class UtilsFacete {
 				removeAttributeFromSession(request, "doAddAreaAddress");
 			}else {
 				areaAddress = new HashMap<String, String> ();
-				areaAddress = (HashMap) getAttributeFromSession(request, "doAddAreaAddress");
+				areaAddress = (HashMap<String, String>) getAttributeFromSession(request, "doAddAreaAddress");
 				
 				if (doRemoveAreaAddress.equals(SearchExtAdrPlaceReferenceForm.FIELD_STREET)) {
 	            	areaAddress.remove(SearchExtAdrPlaceReferenceForm.FIELD_STREET);
@@ -1662,7 +1806,7 @@ public class UtilsFacete {
 	
 	private static void addAreaAddressToQuery(PortletRequest request, IngridQuery query) {
 		
-		HashMap doAddAreaAddress = (HashMap) getAttributeFromSession(request, "doAddAreaAddress");
+		HashMap<String, String> doAddAreaAddress = (HashMap<String, String>) getAttributeFromSession(request, "doAddAreaAddress");
     	
 		if (doAddAreaAddress != null && doAddAreaAddress.size() > 0){
 	    	if(query != null){
@@ -1693,6 +1837,18 @@ public class UtilsFacete {
 		
 		return request.getPortletSession().getAttribute(key, PortletSessionImpl.APPLICATION_SCOPE);
 	}
+	
+	private static void removeElementsSession(PortletRequest request){
+		
+		removeAttributeFromSession(request, ELEMENTS_DATATYPE);
+		removeAttributeFromSession(request, ELEMENTS_PROVIDER);
+		removeAttributeFromSession(request, ELEMENTS_TOPIC);
+		removeAttributeFromSession(request, ELEMENTS_PARTNER);
+		removeAttributeFromSession(request, ELEMENTS_METACLASS);
+		removeAttributeFromSession(request, ELEMENTS_SERVICE);
+		removeAttributeFromSession(request, ELEMENTS_MEASURE);
+	}
+		
 }
 
 

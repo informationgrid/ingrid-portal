@@ -46,7 +46,7 @@
 		#end
 	#end
 	#if(!$checkExist)
-		(!)
+		(0)
 	#end
 #end
 
@@ -74,19 +74,29 @@
 ## DATENTYPEN ##
 			#parse ('/WEB-INF/templates/facete/facete_datatype.vm')
 ## METADATEN ##
+	    #if($enableFaceteMetaClass || ($selectedMetaclass && $selectedMetaclass.size() > 0))
 			#parse ('/WEB-INF/templates/facete/facete_metaclass.vm')
+		#end
 ## THEMEN ##
+	    #if($enableFaceteTopic || ($selectedTopics && $selectedTopics.size() > 0))
 			#parse ('/WEB-INF/templates/facete/facete_topic.vm')
+		#end
 ## SERVICE ##
+	    #if($enableFaceteService || ($selectedService && $selectedService.size() > 0))
 			#parse ('/WEB-INF/templates/facete/facete_service.vm')
+		#end
 ## MEASURES ##
+	    #if($enableFaceteMeasures || ($selectedMeasures && $selectedMeasures.size() > 0))
 			#parse ('/WEB-INF/templates/facete/facete_measures.vm')
+		#end
 		</div>
 	#end
 	
 ## PARTNER ##
 	#if(!$ds || $ds == "1" || $ds == "2" || $ds == "4")
-		#parse ('/WEB-INF/templates/facete/facete_partner.vm')
+		#if($enableFacetePartnerList && $enableFacetePartnerList.size() > 0)
+			#parse ('/WEB-INF/templates/facete/facete_partner.vm')
+		#end
 	#end
 		
 ## ZEITBEZUG ##

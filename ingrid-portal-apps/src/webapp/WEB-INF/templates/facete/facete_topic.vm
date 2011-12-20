@@ -36,7 +36,6 @@
 	<img id="topic_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('topic')">
 	<a onclick="openNode('topic')" >
 		$MESSAGES.getString("searchResult.facete.title.topic")
-		#renderLinkEntryNumber("type" "topic")
 	</a>
 	<br>
 </div>
