@@ -11,6 +11,7 @@
     </script>
 #end
 
+#set ($action = $renderResponse.createActionURL())
 <div id="dialog_thesaurus" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.thesaurus.search")" dojoType="dijit.Dialog">
 	<span id="dialog_thesaurus_loading" class="dijitContentPaneLoading" style="display:inline;"></span>
 	<form action="$action" method="post" name="thesaurus_form">

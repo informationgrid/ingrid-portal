@@ -27,6 +27,7 @@
     </script>
 #end
 
+#set ($action = $renderResponse.createActionURL())
 <div id="dialog_geothesaurus" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.area.name.search")" dojoType="dijit.Dialog" disableCloseButton="true">
 	<span id="dialog_geothesaurus_loading" class="dijitContentPaneLoading" style="display:inline;"></span>
 	<form action="$action" method="post" name="geothesaurus_form">
