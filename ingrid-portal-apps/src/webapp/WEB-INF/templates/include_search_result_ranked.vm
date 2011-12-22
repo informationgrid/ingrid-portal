@@ -37,10 +37,7 @@
 #else
 		<p><strong>$MESSAGES.getString('common.result.interrupted')</strong><br /><br /></p>
 #end
-        #if($adminContent)
-           Facets: $rankedResultList.get("FACETS")
-        #end
-		#parse ('/WEB-INF/templates/include_search_result_counter.vm')
+        #parse ('/WEB-INF/templates/include_search_result_counter.vm')
       <div class="resultset_nav">
         &nbsp;
       </div>

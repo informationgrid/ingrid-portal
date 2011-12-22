@@ -1,10 +1,13 @@
 #set ($action = $renderResponse.createActionURL())
 #macro(renderTopicListTree $topic $selectedTopics)
-	#set($topicTitle = "searchResult.facete.topic.$topic")
+	#foreach ($key in $topic.keySet())
+		#set($topicKey = $key)
+	#end
+	#set($topicTitle = "searchResult.facete.topic.$topicKey")
 	#set($isSelectedChbTopic = false)
 	#foreach ($selectChb in $selectedTopics)
 		#if($isSelectedChbTopic != true)
-			#if($topic == $selectChb)
+			#if($topicKey == $selectChb)
 				#set($isSelectedChbTopic = true)
 			#end
 		#end
@@ -13,18 +16,18 @@
 		<span>
 			#set ($action = $renderResponse.createActionURL())
 			#if($isSelectedChbTopic)
-				$action.setParameter("doRemoveTopic", "$topic")
+				$action.setParameter("doRemoveTopic", "$topicKey")
 				<a href="$action" class="facete_label_chb">
-				<input id="$topic" class="facete_input_chb" type=checkbox checked>
+				<input id="$topicKey" class="facete_input_chb" type=checkbox checked>
 				$MESSAGES.getString("$topicTitle")
-				#renderLinkEntryNumber("topic" $topic)
+				#renderLinkEntryNumber("$topic.get($topicKey)")
 				</a>
 			#else
-				$action.setParameter("doAddTopicChb", "$topic")
+				$action.setParameter("doAddTopicChb", "$topicKey")
 				<a href="$action" class="facete_label_chb">
-					<input id="$topic" class="facete_input_chb" type=checkbox>
+					<input id="$topicKey" class="facete_input_chb" type=checkbox>
 				$MESSAGES.getString("$topicTitle")
-				#renderLinkEntryNumber("topic" $topic)
+				#renderLinkEntryNumber("$topic.get($topicKey)")
 				</a>
 			#end
 		</span>
@@ -37,6 +40,10 @@
 	<a onclick="openNode('topic')" >
 		$MESSAGES.getString("searchResult.facete.title.topic")
 	</a>
+	$action.setParameter("doRemoveDatatype", "$datatypeKey")
+    <a href="$action" class="facete_link_line">
+		<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png"></img>
+	</a>
 	<br>
 </div>
 <div id="topic" class="cat_content">
@@ -48,7 +55,7 @@
 			#end
 		#else
 			#foreach ($topic in $enableFaceteTopic)
-    			#if($i < $enableFaceteTopicCount)
+				#if($i < $enableFaceteTopicCount)
     				#renderTopicListTree ($topic $selectedTopics)
     			#end
     			#set($i = $i + 1)

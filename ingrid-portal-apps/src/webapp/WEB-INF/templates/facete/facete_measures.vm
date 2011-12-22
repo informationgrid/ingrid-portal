@@ -3,7 +3,7 @@
 	<img id="measures_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('measures')">
 	<a onclick="openNode('measures')" >
 		$MESSAGES.getString("searchResult.facete.title.measures")
-		#renderLinkEntryNumber("type" "measure")
+		#renderLinkEntryNumber("$datatype.get($datatypeKey)")
 	</a>
 	<br>
 </div>

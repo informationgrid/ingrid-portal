@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -32,8 +34,10 @@ import de.ingrid.portal.forms.SearchExtResTopicAttributesForm;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
 import de.ingrid.portal.interfaces.om.WMSSearchDescriptor;
+import de.ingrid.portal.om.IngridMeasuresRubric;
 import de.ingrid.portal.om.IngridPartner;
 import de.ingrid.portal.om.IngridProvider;
+import de.ingrid.portal.om.IngridServiceRubric;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHit;
@@ -41,6 +45,7 @@ import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.query.TermQuery;
+import de.ingrid.utils.query.WildCardFieldQuery;
 import de.ingrid.utils.udk.UtilsDate;
 
 /**
@@ -159,116 +164,137 @@ public class UtilsFacete {
         
 	}
 
-	public static void checkForExistingFacettes(IngridDocument doc, PortletRequest request) {
+	public static void checkForExistingFacettes(IngridDocument facetes, PortletRequest request) {
 		
-		ArrayList<String> elementsProvider = null;
-		ArrayList<String> elementsPartner = null;
-		ArrayList<String> elementsTopic = null;
-		ArrayList<String> elementsDatatype = null;
-		ArrayList<String> elementsMetaclass = null;
-		ArrayList<String> elementsService = null;
-		ArrayList<String> elementsMeasure = null;
+		HashMap<String, Long> elementsProvider = null;
+		HashMap<String, Long> elementsPartner = null;
+		HashMap<String, Long> elementsTopic = null;
+		HashMap<String, Long> elementsDatatype = null;
+		HashMap<String, Long> elementsMetaclass = null;
+		HashMap<String, Long> elementsService = null;
+		HashMap<String, Long> elementsMeasure = null;
 		
 		removeElementsSession(request);
-		
-		for (Iterator iterator = doc.keySet().iterator(); iterator.hasNext();) {
-			String type = (String) iterator.next();
-			Long value = (Long) doc.get(type); 
-			if(value > 0){
-				if (type.startsWith("provider")){
-					if(elementsProvider == null){
-						elementsProvider = new ArrayList<String>();
-					}
-					elementsProvider.add(type.replace("provider:", ""));
-					
-				}else if(type.startsWith("partner")){
-					if(elementsPartner == null){
-						elementsPartner = new ArrayList<String>();
-					}
-					elementsPartner.add(type.replace("partner:", ""));
-					
-				}else if(type.startsWith("measure")){
-					if(elementsMeasure == null){
-						elementsMeasure = new ArrayList<String>();
-					}
-					elementsMeasure.add(type.replace("measure:", ""));
-					
-				}else if(type.startsWith("topic")){
-					if(elementsTopic == null){
-						elementsTopic = new ArrayList<String>();
-					}
-					elementsTopic.add(type.replace("topic:", ""));
-					
-				}else if(type.startsWith("service")){
-					if(elementsService == null){
-						elementsService = new ArrayList<String>();
-					}
-					elementsService.add(type.replace("service:", ""));
 
-				}else if(type.startsWith("t01_object.obj_class:")){
+		for (Iterator<String> iterator = facetes.keySet().iterator(); iterator.hasNext();) {
+			String key = iterator.next();
+			Long value = (Long) facetes.get(key);
+			
+			if(value > 0){
+				if (key.startsWith("provider")){
+					if(elementsProvider == null){
+						elementsProvider = new HashMap<String, Long>();
+					}
+					elementsProvider.put(key.replace("provider:", ""), value);
+					
+				}else if(key.startsWith("partner")){
+					if(elementsPartner == null){
+						elementsPartner = new HashMap<String, Long>();
+					}
+					elementsPartner.put(key.replace("partner:", ""), value);
+					
+				}else if(key.startsWith("measure")){
+					if(elementsMeasure == null){
+						elementsMeasure = new HashMap<String, Long>();
+					}
+					elementsMeasure.put(key.replace("measure:", ""), value);
+					
+				}else if(key.startsWith("topic")){
+					if(elementsTopic == null){
+						elementsTopic = new HashMap<String, Long>();
+					}
+					elementsTopic.put(key.replace("topic:", ""), value);
+					
+				}else if(key.startsWith("service")){
+					if(elementsService == null){
+						elementsService = new HashMap<String, Long>();
+					}
+					elementsService.put(key.replace("service:", ""), value);
+
+				}else if(key.startsWith("t01_object.obj_class:")){
 					if(elementsMetaclass == null){
-						elementsMetaclass = new ArrayList<String>();
+						elementsMetaclass = new HashMap<String, Long>();
 					}
-					if(type.endsWith(":0")){
-						elementsMetaclass.add("job");
-					} else if(type.endsWith(":1")){
-						elementsMetaclass.add("map");
-					} else if(type.endsWith(":2")){
-						elementsMetaclass.add("document");
-					} else if(type.endsWith(":3")){
-						elementsMetaclass.add("geoservice");
-					} else if(type.endsWith(":4")){
-						elementsMetaclass.add("project");
-					} else if(type.endsWith(":5")){
-						elementsMetaclass.add("database");
-					} else if(type.endsWith(":6")){
-						elementsMetaclass.add("service");
+					if(key.endsWith(":0")){
+						elementsMetaclass.put("job", value);
+					} else if(key.endsWith(":1")){
+						elementsMetaclass.put("map", value);
+					} else if(key.endsWith(":2")){
+						elementsMetaclass.put("document", value);
+					} else if(key.endsWith(":3")){
+						elementsMetaclass.put("geoservice", value);
+					} else if(key.endsWith(":4")){
+						elementsMetaclass.put("project", value);
+					} else if(key.endsWith(":5")){
+						elementsMetaclass.put("database", value);
+					} else if(key.endsWith(":6")){
+						elementsMetaclass.put("service", value);
 					}
-				}else if(type.startsWith("type:")){
+				}else if(key.startsWith("type:")){
 					if(elementsDatatype == null){
-						elementsDatatype = new ArrayList<String>();
+						elementsDatatype = new HashMap<String, Long>();
 					}
-					elementsDatatype.add(type.replace("type:", ""));
+					elementsDatatype.put(key.replace("type:", ""), value);
 
 				}
 			}
 		}		
 		
 		if (elementsDatatype != null){
-			Collections.sort(elementsDatatype);
-			setAttributeToSession(request, ELEMENTS_DATATYPE, elementsDatatype);
+			setAttributeToSession(request, ELEMENTS_DATATYPE, sortHashMap(elementsDatatype));
 		}
 		
 		if (elementsProvider != null){
-			Collections.sort(elementsProvider);
-			setAttributeToSession(request, ELEMENTS_PROVIDER, elementsProvider);
+			setAttributeToSession(request, ELEMENTS_PROVIDER, sortHashMap(elementsProvider));
 		}
 		
 		if (elementsTopic != null){
-			Collections.sort(elementsTopic);
-			setAttributeToSession(request, ELEMENTS_TOPIC, elementsTopic);
+			setAttributeToSession(request, ELEMENTS_TOPIC, sortHashMap(elementsTopic));
 		}
 		
 		if (elementsPartner != null){
-			Collections.sort(elementsPartner);
-			setAttributeToSession(request, ELEMENTS_PARTNER, elementsPartner);
+			setAttributeToSession(request, ELEMENTS_PARTNER, sortHashMap(elementsPartner));
 		}
 		
 		if (elementsMetaclass != null){
-			Collections.sort(elementsMetaclass);
-			setAttributeToSession(request, ELEMENTS_METACLASS, elementsMetaclass);
+			setAttributeToSession(request, ELEMENTS_METACLASS, sortHashMap(elementsMetaclass));
 		}
 		
 		if (elementsService != null){
-			Collections.sort(elementsService);
-			setAttributeToSession(request, ELEMENTS_SERVICE, elementsService);
+			setAttributeToSession(request, ELEMENTS_SERVICE, sortHashMap(elementsService));
 		}
 		
 		if (elementsMeasure != null){
-			Collections.sort(elementsMeasure);
-			setAttributeToSession(request, ELEMENTS_MEASURE, elementsMeasure);
+			setAttributeToSession(request, ELEMENTS_MEASURE, sortHashMap(elementsMeasure));
 		}
 	}
+
+	private static ArrayList<HashMap<String, Long>> sortHashMap(HashMap<String, Long> input){
+		List<String> keys = new ArrayList<String>(input.keySet());
+		final Map<String, Long> tmpInput = input;
+        
+		Collections.sort(keys,new Comparator(){
+            public int compare(Object left, Object right){
+                String leftKey = (String)left;
+                String rightKey = (String)right;
+  
+                Long leftValue = (Long)tmpInput.get(leftKey);
+                Long rightValue = (Long)tmpInput.get(rightKey);
+                return leftValue.compareTo(rightValue) * -1;
+            }
+        });
+		ArrayList<HashMap<String, Long>> sortedInput = new ArrayList<HashMap<String, Long>>();
+        
+		for(Iterator<String> i=keys.iterator(); i.hasNext();){
+            String k = i.next();
+            HashMap<String, Long> map = new HashMap<String, Long>();
+            map.put(k, tmpInput.get(k));
+            sortedInput.add(map); 
+        }
+		
+		return sortedInput;
+	}
+
 
 	/***************************** THEMEN **********************************************/
 	
@@ -353,7 +379,7 @@ public class UtilsFacete {
 
         	// TOPIC
             String queryValue = null;
-            ClauseQuery cq  = new ClauseQuery(true, false);
+            ClauseQuery cq  = new ClauseQuery(false, false);
             for (int i = 0; i < selectedTopics.size(); i++) {
                 queryValue = UtilsDB.getTopicFromKey((String) selectedTopics.get(i));
                 cq.addField(new FieldQuery(false, false, Settings.QFIELD_TOPIC, queryValue));
@@ -459,21 +485,6 @@ public class UtilsFacete {
         faceteList.add(faceteEntry);
         
         faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "address");
-        faceteEntry.put("query", "datatype:address");
-        faceteList.add(faceteEntry);
-        
-        faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "law");
-        faceteEntry.put("query", "datatype:law");
-        faceteList.add(faceteEntry);
-        
-        faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "research");
-        faceteEntry.put("query", "datatype:research");
-        faceteList.add(faceteEntry);
-        
-        faceteEntry = new HashMap<String, String>();
         faceteEntry.put("id", "fis");
         faceteEntry.put("query", "datatype:fis");
         faceteList.add(faceteEntry);
@@ -486,6 +497,11 @@ public class UtilsFacete {
         faceteEntry = new HashMap<String, String>();
         faceteEntry.put("id", "measure");
         faceteEntry.put("query", "datatype:measure");
+        faceteList.add(faceteEntry);
+        
+        faceteEntry = new HashMap<String, String>();
+        faceteEntry.put("id", "topics");
+        faceteEntry.put("query", "datatype:topics");
         faceteList.add(faceteEntry);
         
         facete.put("id", "type");
@@ -554,7 +570,7 @@ public class UtilsFacete {
 		if(selectedDatatype != null && selectedDatatype.size() > 0){
         	for(int i = 0; i < selectedDatatype.size(); i++){
         		if(selectedDatatype.get(i).equals("map")){
-        			query.addField(new FieldQuery(true, false, "t011_obj_serv_op_connpoint.connect_point", "http*"));
+        			query.addWildCardFieldQuery(new WildCardFieldQuery(true, false, "t011_obj_serv_op_connpoint.connect_point", "http*"));
         		}else{
         			query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, selectedDatatype.get(i).toString()));
         		}
@@ -568,22 +584,17 @@ public class UtilsFacete {
 		
 		IngridDocument facete = new IngridDocument();
         ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
-	    
-        HashMap<String, String> faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "pre");
-        faceteEntry.put("query", "topic:" + UtilsDB.getServiceRubricFromKey("pre"));
-        faceteList.add(faceteEntry);
         
-        faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "pub");
-        faceteEntry.put("query", "topic:" + UtilsDB.getServiceRubricFromKey("pub"));
-        faceteList.add(faceteEntry);
+        List<IngridServiceRubric> services = UtilsDB.getServiceRubrics();
+        HashMap<String, String> faceteEntry = null;
         
-        faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "ver");
-        faceteEntry.put("query", "topic:" + UtilsDB.getServiceRubricFromKey("ver"));
-        faceteList.add(faceteEntry);
-        
+        for(int i=0; i < services.size(); i++){
+        	IngridServiceRubric service = services.get(i);
+        	faceteEntry = new HashMap<String, String>();
+        	faceteEntry.put("id", service.getFormValue());
+            faceteEntry.put("query", "topic:" + service.getFormValue());
+            faceteList.add(faceteEntry);
+        }
         
         facete.put("id", "service");
         facete.put("classes", faceteList);
@@ -654,7 +665,7 @@ public class UtilsFacete {
 	        
            	for (int i = 0; i < selectedService.size(); i++) {
            		queryValue = UtilsDB.getServiceRubricFromKey((String) selectedService.get(i));
-           		cq.addField(new FieldQuery(false, false, Settings.QFIELD_RUBRIC, queryValue));
+           		cq.addField(new FieldQuery(true, false, Settings.QFIELD_RUBRIC, queryValue));
             }
             query.addClause(cq);
 	    }
@@ -666,27 +677,17 @@ public class UtilsFacete {
 		
 		IngridDocument facete = new IngridDocument();
         ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
-	    
-        HashMap<String, String> faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "str");
-        faceteEntry.put("query", "topic:" + UtilsDB.getMeasuresRubricFromKey("str"));
-        faceteList.add(faceteEntry);
+        List<IngridMeasuresRubric> measures = UtilsDB.getMeasuresRubrics();
+        HashMap<String, String> faceteEntry = null;
         
-        faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "luf");
-        faceteEntry.put("query", "topic:" + UtilsDB.getMeasuresRubricFromKey("luf"));
-        faceteList.add(faceteEntry);
-        
-        faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "was");
-        faceteEntry.put("query", "topic:" + UtilsDB.getMeasuresRubricFromKey("was"));
-        faceteList.add(faceteEntry);
-        
-        faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "wei");
-        faceteEntry.put("query", "topic:" + UtilsDB.getMeasuresRubricFromKey("wei"));
-        faceteList.add(faceteEntry);
-        
+        for(int i=0; i < measures.size(); i++){
+        	IngridMeasuresRubric measure = measures.get(i);
+        	faceteEntry = new HashMap<String, String>();
+        	faceteEntry.put("id", measure.getFormValue());
+            faceteEntry.put("query", "topic:" + measure.getFormValue());
+            faceteList.add(faceteEntry);
+        }
+         
         facete.put("id", "measure");
         facete.put("classes", faceteList);
         
@@ -804,16 +805,32 @@ public class UtilsFacete {
     		context.put("enableFacetePartnerList", enableFacetePartnerList);
     		context.put("isPartnerSelect", true);
 		}else{
-			ArrayList<String> elementsPartner = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_PARTNER);
-			LinkedHashMap partnerProvider = UtilsDB.getPartnerProviderMap(elementsPartner); 
-			enableFacetePartnerList = new ArrayList<IngridPartner>();
-			if(elementsPartner != null && partnerProvider != null){
-				for (int i=0; i < partnerProvider.size(); i++){
-					HashMap partner = (HashMap) partnerProvider.get(elementsPartner.get(i));
-					enableFacetePartnerList.add((IngridPartner)partner.get("partner"));
+			ArrayList<HashMap<String, Long>> elementsPartner = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_PARTNER);
+			if(elementsPartner != null){
+				ArrayList<String> keys = new ArrayList<String>();
+				for(int i=0; i < elementsPartner.size(); i++){
+					List<String> mapKeys = new ArrayList<String>(elementsPartner.get(i).keySet());
+					for(int j=0; j < mapKeys.size(); j++){
+						keys.add(mapKeys.get(j));
+					}
 				}
+
+				if(keys != null){
+					LinkedHashMap partnerProvider = UtilsDB.getPartnerProviderMap(keys); 
+					enableFacetePartnerList = new ArrayList<IngridPartner>();
+					if(partnerProvider != null){
+						for (int i=0; i < keys.size(); i++){
+							HashMap partner = (HashMap) partnerProvider.get(keys.get(i));
+							if(partner != null){
+								enableFacetePartnerList.add((IngridPartner)partner.get("partner"));
+							}
+						}
+					}
+					context.put("enableFacetePartnerList",  enableFacetePartnerList);
+					context.put("elementsPartner",  elementsPartner);
+				}
+				
 			}
-			context.put("enableFacetePartnerList",  enableFacetePartnerList);
 		}
 		context.put("enableFacetePartnerListCount", PortalConfig.getInstance().getInt("portal.search.facete.partner.count", 3));
 	}
@@ -866,7 +883,6 @@ public class UtilsFacete {
 		}
 		
 		if(doAddProvider != null){
-			
 			int listSize = selectedPartnerProviders.size();
 			selectedIds = new ArrayList<String>();
             for (int i=0; i< listSize; i++) {
@@ -900,57 +916,94 @@ public class UtilsFacete {
 
 	private static void setProviderParamsToContext (RenderRequest request, Context context){
 		
-		ArrayList<String> selectedProvider = (ArrayList<String>) getAttributeFromSession(request, SELECTED_PROVIDER);
+		ArrayList<String> selectedProviders = (ArrayList<String>) getAttributeFromSession(request, SELECTED_PROVIDER);
 		List<IngridPartner> partners = (ArrayList<IngridPartner>) getAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);
 		List<IngridProvider> providers = null;
+		ArrayList<IngridProvider> enableFaceteProviderList = null;
 		
 		// TODO: (Facete) Add providers to facete
 		if(partners != null && partners.size() == 1) {
 	    	providers = UtilsDB.getProvidersFromPartnerKey(partners.get(0).getIdent());
 		}
 		
-		if(providers == null){
-			ArrayList<String> elementsPartner = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_PARTNER);
-			if(elementsPartner != null && elementsPartner.size() > 0){
-				providers = UtilsDB.getProvidersFromPartnerKey(elementsPartner.get(0));	
+		ArrayList<HashMap<String, Long>> elementsProvider = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_PROVIDER);
+		
+		if(selectedProviders != null){
+			for(int i=0; i< selectedProviders.size(); i++){
+				String selectedKey = selectedProviders.get(i);
+				boolean foundKey = false;
+				if(elementsProvider != null){
+					for(int j=0; j< elementsProvider.size(); j++){
+						HashMap<String, Long> provider = elementsProvider.get(j);
+						for (Iterator<String> iterator = provider.keySet().iterator(); iterator.hasNext();) {
+							String key = iterator.next();
+							if(key.equals(selectedKey)){
+								foundKey = true;
+								break;
+							}
+						}
+						if(foundKey){
+							break;
+						}
+					}
+					if(!foundKey){
+						HashMap<String, Long> addingProvider = new HashMap<String, Long>();
+						addingProvider.put(selectedKey, (long) 0);
+						elementsProvider.add(addingProvider);
+					}
+				}else{
+					elementsProvider = new ArrayList<HashMap<String,Long>>();
+					HashMap<String, Long> addingProvider = new HashMap<String, Long>();
+					addingProvider.put(selectedKey, (long) 0);
+					elementsProvider.add(addingProvider);
+				}
 			}
 		}
-			
-    	ArrayList<String> elementsProvider = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_PROVIDER);
-
+		
     	if(providers != null && elementsProvider != null){
-    		for(int i=0; i < providers.size(); i++){
-	    		String ident = providers.get(i).getIdent();
-	    		boolean foundProvider = false;
-	    		for(int j=0; j < elementsProvider.size(); j++){
-	    			if(ident != null){
-	    				if(ident.equals(elementsProvider.get(j))){
-	    					foundProvider = true;
-	    					break;
-	    				}
-	    			}
-	    		}
-	    		if(!foundProvider){
-	    			providers.remove(i);
-	    			i = i-1;
-	    		}
-
-	    	}
+    		for(int i=0; i < elementsProvider.size(); i++){
+    			HashMap<String, Long> map = elementsProvider.get(i);
+    			List<String> keys = new ArrayList<String>(map.keySet());
+    			String ident = keys.get(0);
+    			for(int j=0; j < providers.size(); j++){
+    				if(ident != null){
+    					IngridProvider prov = providers.get(j);
+    					String provIdent = prov.getIdent(); 
+    					
+        				if(ident.equals(provIdent)){
+        					if(enableFaceteProviderList == null){
+        						enableFaceteProviderList = new ArrayList<IngridProvider>();
+            				}
+        					enableFaceteProviderList.add(prov);
+        					providers.remove(j);
+        					j = j-1;
+        					break;
+        				}
+        			}
+    			}
+    		}
 	    }
-				    	
-    	context.put("enableFaceteProviderList", providers);
-    	if(selectedProvider != null && selectedProvider.size() > 0){
-    		// Set selected providers
-    		ArrayList<HashMap<String, String>> provider = new ArrayList<HashMap<String, String>>(); 
-        	for(int i=0; i < selectedProvider.size();i++){
-        		HashMap<String, String> map = new HashMap<String, String>();
-        		map.put("name", UtilsDB.getProviderFromKey(selectedProvider.get(i).toString()));
-        		map.put("ident", selectedProvider.get(i).toString());
-        		provider.add(map);
-        	}
-        	
-        	context.put("isProviderSelect", true);
-    		context.put("selectedProvider", provider);
+		
+    	if(enableFaceteProviderList == null){
+    		ArrayList<HashMap<String, Long>> elementsPartner = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_PARTNER);
+    		if(elementsPartner != null && elementsPartner.size() > 0){
+				for(int i=0; i < elementsPartner.size(); i++){
+					HashMap<String, Long> map = elementsPartner.get(i);
+	    			List<String> keys = new ArrayList<String>(map.keySet());
+		    		enableFaceteProviderList = (ArrayList<IngridProvider>) UtilsDB.getProvidersFromPartnerKey(keys.get(0));
+				}
+			}
+			
+		}
+		
+    	
+    	context.put("enableFaceteProviderList", enableFaceteProviderList);
+    	context.put("elementsProvider", elementsProvider);
+    	
+    	if(selectedProviders != null && selectedProviders.size() > 0){
+    		context.put("isProviderSelect", true);
+    		context.put("selectedProvider", selectedProviders);
+    		context.put("unselectedProvider", providers);
     	} else{
     		context.put("isProviderSelect", false);
     		context.remove("selectedProvider");

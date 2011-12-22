@@ -3,19 +3,26 @@
 	<img id="class_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('class')">
 	<a onclick="openNode('class')">
 		$MESSAGES.getString("searchResult.facete.title.metaclass")
-		#renderLinkEntryNumber("type" "metadata")
-		</a>
-	<br>
+		#renderLinkEntryNumber("$datatype.get($datatypeKey)")
+	</a>
+	$action.setParameter("doRemoveDatatype", "$datatypeKey")
+    <a href="$action" class="facete_link_line">
+		<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png"></img>
+	</a>
+    <br>
 </div>
 
 <div id="class" class="cat_content">
 	#foreach ($metaclass in $enableFaceteMetaClass)
-		#set($title = "searchResult.facete.metaclass.${metaclass}")
+		#foreach ($key in $metaclass.keySet())
+			#set($metaclassKey = $key)
+			#set($title = "searchResult.facete.metaclass.$metaclassKey")
+		#end
 		#set($metaclassTitle = "$MESSAGES.getString($title)")
 		#set($isSelectedChbMetaClass = false)
 		#foreach ($selectChb in $selectedMetaclass)
 			#if($isSelectedChbMetaClass != true)
-				#if($metaclass == $selectChb)
+				#if($metaclassKey == $selectChb)
 					#set($isSelectedChbMetaClass = true)
 				#end
 			#end
@@ -24,46 +31,18 @@
     		<span>
 				#set ($action = $renderResponse.createActionURL())
 				#if($isSelectedChbMetaClass)
-					$action.setParameter("doRemoveMetaclass", "$metaclass")
+					$action.setParameter("doRemoveMetaclass", "$metaclassKey")
 					<a href="$action" class="facete_label_chb">
-					<input id="$metaclass" class="facete_input_chb" type=checkbox checked>
+					<input id="$metaclassKey" class="facete_input_chb" type=checkbox checked>
 					$MESSAGES.getString("$metaclassTitle")
-					#if($metaclass == "job")
-						#renderLinkEntryNumber("t01_object.obj_class" "0")
-        			#elseif($metaclass == "map")
-        				#renderLinkEntryNumber("t01_object.obj_class" "1")
-        			#elseif($metaclass == "document")
-        				#renderLinkEntryNumber("t01_object.obj_class" "2")
-        			#elseif($metaclass == "geoservice")
-        				#renderLinkEntryNumber("t01_object.obj_class" "3")
-        			#elseif($metaclass == "project")
-        				#renderLinkEntryNumber("t01_object.obj_class" "4")
-        			#elseif($metaclass == "database")
-        				#renderLinkEntryNumber("t01_object.obj_class" "5")
-        			#elseif($metaclass == "service")
-        				#renderLinkEntryNumber("t01_object.obj_class" "6")
-        			#end
+					#renderLinkEntryNumber("$metaclass.get($metaclassKey)")
 					</a>
 				#else
-					$action.setParameter("doAddMetaclass", "$metaclass")
+					$action.setParameter("doAddMetaclass", "$metaclassKey")
 					<a href="$action" class="facete_label_chb">
-						<input id="$metaclass" class="facete_input_chb" type=checkbox>
+						<input id="$metaclassKey" class="facete_input_chb" type=checkbox>
 					$MESSAGES.getString("$metaclassTitle")
-					#if($metaclass == "job")
-						#renderLinkEntryNumber("t01_object.obj_class" "0")
-        			#elseif($metaclass == "map")
-        				#renderLinkEntryNumber("t01_object.obj_class" "1")
-        			#elseif($metaclass == "document")
-        				#renderLinkEntryNumber("t01_object.obj_class" "2")
-        			#elseif($metaclass == "geoservice")
-        				#renderLinkEntryNumber("t01_object.obj_class" "3")
-        			#elseif($metaclass == "project")
-        				#renderLinkEntryNumber("t01_object.obj_class" "4")
-        			#elseif($metaclass == "database")
-        				#renderLinkEntryNumber("t01_object.obj_class" "5")
-        			#elseif($metaclass == "service")
-        				#renderLinkEntryNumber("t01_object.obj_class" "6")
-        			#end
+					#renderLinkEntryNumber("$metaclass.get($metaclassKey)")
 					</a>
 				#end
 			</span>

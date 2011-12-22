@@ -1,11 +1,15 @@
 #set ($action = $renderResponse.createActionURL())
 <div>
 	#foreach ($datatype in $enableFaceteDatatype)
-		#set($datatypeTitle = "searchResult.facete.datatype.$datatype")
+		
+		#foreach ($key in $datatype.keySet())
+			#set($datatypeKey = $key)
+			#set($datatypeTitle = "searchResult.facete.datatype.$datatypeKey")
+		#end
 		#set($isSelectedChbDatatype = false)
 		#foreach ($selectChb in $selectedDatatype)
 			#if($isSelectedChbDatatype != true)
-				#if($datatype == $selectChb)
+				#if($datatypeKey == $selectChb)
 					#set($isSelectedChbDatatype = true)
 				#end
 			#end
@@ -14,18 +18,41 @@
     		<span>
 				#set ($action = $renderResponse.createActionURL())
 				#if($isSelectedChbDatatype)
-					$action.setParameter("doRemoveDatatype", "$datatype")
-					<a href="$action" class="facete_label_chb">
-					<input id="$datatype" class="facete_input_chb" type=checkbox checked>
-					$MESSAGES.getString("$datatypeTitle")
-					#renderLinkEntryNumber("type" $datatype)
-					</a>
+					#if($datatypeKey == "metadata")
+                        ## METADATEN ##
+                		#if($enableFaceteMetaClass || ($selectedMetaclass && $selectedMetaclass.size() > 0))
+                    		#parse ('/WEB-INF/templates/facete/facete_metaclass.vm')
+        				#end
+        			#elseif($datatypeKey == "topics")
+                        ## THEMEN ##
+                	    #if($enableFaceteTopic || ($selectedTopics && $selectedTopics.size() > 0))
+							#parse ('/WEB-INF/templates/facete/facete_topic.vm')
+                		#end
+        			#elseif($datatypeKey == "service")
+                        ## SERVICE ##
+                	    #if($enableFaceteService || ($selectedService && $selectedService.size() > 0))
+                			#parse ('/WEB-INF/templates/facete/facete_service.vm')
+                		#end
+        			#elseif($datatypeKey == "measure")
+						## MEASURES ##
+                	    #if($enableFaceteMeasures || ($selectedMeasures && $selectedMeasures.size() > 0))
+                			#parse ('/WEB-INF/templates/facete/facete_measures.vm')
+                		#end
+        			#else
+						$action.setParameter("doRemoveDatatype", "$datatypeKey")
+        				<p href="$action" class="facete_label_chb">
+        					<a href="$action" class="facete_link_line">
+        						<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png"></img>
+        					</a>
+        					$MESSAGES.getString("$datatypeTitle")
+        					#renderLinkEntryNumber("$datatype.get($datatypeKey)")
+        				</p>
+        			#end
 				#else
-					$action.setParameter("doAddDatatype", "$datatype")
-					<a href="$action" class="facete_label_chb">
-						<input id="$datatype" class="facete_input_chb" type=checkbox>
-					$MESSAGES.getString("$datatypeTitle")
-					#renderLinkEntryNumber("type" $datatype)
+					$action.setParameter("doAddDatatype", "$datatypeKey")
+    				<a href="$action" class="facete_label_chb">
+    					$MESSAGES.getString("$datatypeTitle")
+						#renderLinkEntryNumber("$datatype.get($datatypeKey)")
 					</a>
 				#end
 			</span>

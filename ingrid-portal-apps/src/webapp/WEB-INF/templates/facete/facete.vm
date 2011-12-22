@@ -36,16 +36,20 @@
 	</div>
 #end
 
-#macro(renderLinkEntryNumber $type $id)
-	#set($checkExist = false)
-	#foreach ($facet in $rankedResultList.get("FACETS").keySet())
-		#set($check = "${type}:${id}")
-		#if($facet == $check)
-			($rankedResultList.get("FACETS").get($facet))
-			#set($checkExist = true)
+#macro(renderLinkEntryNumberInArrayHashMap $numbers $id)
+	#foreach($number in $numbers)
+		#foreach($key in $number.keySet())
+			#if($key == "$id")
+				($number.get($key))
+			#end
 		#end
 	#end
-	#if(!$checkExist)
+#end
+
+#macro(renderLinkEntryNumber $number)
+	#if($number != "")
+			($number)
+	#else
 		(0)
 	#end
 #end
@@ -73,22 +77,6 @@
 		<div id="hit_types" class="cat_content">
 ## DATENTYPEN ##
 			#parse ('/WEB-INF/templates/facete/facete_datatype.vm')
-## METADATEN ##
-	    #if($enableFaceteMetaClass || ($selectedMetaclass && $selectedMetaclass.size() > 0))
-			#parse ('/WEB-INF/templates/facete/facete_metaclass.vm')
-		#end
-## THEMEN ##
-	    #if($enableFaceteTopic || ($selectedTopics && $selectedTopics.size() > 0))
-			#parse ('/WEB-INF/templates/facete/facete_topic.vm')
-		#end
-## SERVICE ##
-	    #if($enableFaceteService || ($selectedService && $selectedService.size() > 0))
-			#parse ('/WEB-INF/templates/facete/facete_service.vm')
-		#end
-## MEASURES ##
-	    #if($enableFaceteMeasures || ($selectedMeasures && $selectedMeasures.size() > 0))
-			#parse ('/WEB-INF/templates/facete/facete_measures.vm')
-		#end
 		</div>
 	#end
 	

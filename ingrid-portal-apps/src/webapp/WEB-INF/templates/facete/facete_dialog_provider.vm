@@ -1,50 +1,62 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="dialog_${partner.ident}" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.title.provider")" dojoType="dijit.Dialog">
 	<form name="providers_${partner.ident}_form" action="$action" method="post">
-    	<div class="dialog_content">
-	   	   	<table>
+    	<div class="dialog_content" style="padding:10px 5px;">
 			#set($k = 0)
-			#set($newColumn = "true")
+			<div style="padding:0 0 10px 0;">
+			#if($unselectedProvider)
+				<p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.selected.entries")</p>
+			#else
+				<p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.result.entries")</p>
+			#end
 			#foreach ($provider in $enableFaceteProviderList)
 				#if(${provider.sortkeyPartner} == ${partner.sortkey})
 					#set($isSelectedChbProvider = false)
 					#foreach ($selectChb in $selectedProvider)
 						#if($isSelectedChbProvider != true)
-							#if("${provider.ident}" == "${selectChb.ident}")
+							#if("${provider.ident}" == $selectChb)
 								#set($isSelectedChbProvider = true)
 							#end
 						#end
 					#end
-					#if($newColumn == "true")
-						<tr>
-						#set($newColumn = "false")
-					#end
 					#set($k = $k + 1)
-					<td>
-						<div class="facete_chb">
-                    		<p>
-                    		<label class="facete_label_chb">
-								<input id="${provider.ident}" class="facete_input_chb" type=checkbox name="chk$k" value="${provider.ident}"
-									#if($isSelectedChbProvider)
-										checked
-									#end
-									>
-                    		$provider.name
-							#renderLinkEntryNumber("provider" "$provider.ident")
-							</label>
-							</p>
-                    	</div>
-					</td>
-					#if($k % 3 == 0)
-						</tr>
-						#set($newColumn = "true")
-					#end
+					<div class="facete_chb">
+                		<p>
+                		<label class="facete_label_chb">
+							<input id="${provider.ident}" style="margin:4px 0 0 0;" class="facete_input_chb" type=checkbox name="chk$k" value="${provider.ident}"
+								#if($isSelectedChbProvider)
+									checked
+								#end
+								>
+                		$provider.name
+						#renderLinkEntryNumberInArrayHashMap($elementsProvider "$provider.ident")
+						</label>
+						</p>
+                   	</div>
 				#end
 			#end
-			</table>
+			</div>
+			#if($unselectedProvider)
+				<div>
+				<p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.unselected.entries")</p>
+                #foreach ($provider in $unselectedProvider)
+    				#if(${provider.sortkeyPartner} == ${partner.sortkey})
+    					#set($k = $k + 1)
+    					<div class="facete_chb">
+                    		<p>
+                    		<label class="facete_label_chb">
+    							<input id="${provider.ident}" style="margin:4px 0 0 0;" class="facete_input_chb" type=checkbox name="chk$k" value="${provider.ident}">
+                    		$provider.name
+							</label>
+    						</p>
+                       	</div>
+    				#end
+				#end
+				</div>
+			#end
 		</div>
 		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddProvider" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right btn_submit_dialog" "")
-	</form>			
+	</form>
 	<div class="dialog_bottom">
 		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.cancel') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.cancel') "float_right" "faceteDialogCancel('dialog_${partner.ident}')")
 		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.all.select') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.all.select') "float_left" "faceteDialogSelectAll(document.providers_${partner.ident}_form)")
