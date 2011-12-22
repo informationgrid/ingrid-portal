@@ -389,7 +389,7 @@ div.resultset_partner_only {background-color:#D1E4F1; margin: 0 0 20px 0;padding
 
 div.resultset_show_partner {text-decoration:none;font-size:12px; margin: 10px 0px 10px 0px;}
 
-.intendResult { font-weight: bold; left: 20px; position: relative; }
+.intendResult { font-weight: bold; left: 20px; position: relative; padding: 0 10px 0 0; }
 
 /* TAB, EXTENDED SEARCH */
 div.tabs ul { list-style: none; padding: 7px 0 0px 0px; margin: 0;}
