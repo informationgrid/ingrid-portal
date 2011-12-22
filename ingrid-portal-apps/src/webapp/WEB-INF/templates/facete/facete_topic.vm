@@ -41,9 +41,7 @@
 		$MESSAGES.getString("searchResult.facete.title.topic")
 	</a>
 	$action.setParameter("doRemoveDatatype", "$datatypeKey")
-    <a href="$action" class="facete_link_line">
-		<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png"></img>
-	</a>
+    #renderDeleteIcon ($action)
 	<br>
 </div>
 <div id="topic" class="cat_content">

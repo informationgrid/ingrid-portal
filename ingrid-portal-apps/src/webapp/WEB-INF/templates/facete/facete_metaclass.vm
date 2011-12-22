@@ -6,13 +6,11 @@
 		#renderLinkEntryNumber("$datatype.get($datatypeKey)")
 	</a>
 	$action.setParameter("doRemoveDatatype", "$datatypeKey")
-    <a href="$action" class="facete_link_line">
-		<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png"></img>
-	</a>
-    <br>
+    #renderDeleteIcon ($action)
+	<br>
 </div>
 
-<div id="class" class="cat_content">
+<div id="class" class="cat_content" style="padding: 5px 0 0 20px;">
 	#foreach ($metaclass in $enableFaceteMetaClass)
 		#foreach ($key in $metaclass.keySet())
 			#set($metaclassKey = $key)
@@ -30,20 +28,13 @@
 		<div class="facete_chb">
     		<span>
 				#set ($action = $renderResponse.createActionURL())
-				#if($isSelectedChbMetaClass)
+				#set ($title = $MESSAGES.getString("$metaclassTitle"))
+        		#if($isSelectedChbMetaClass)
 					$action.setParameter("doRemoveMetaclass", "$metaclassKey")
-					<a href="$action" class="facete_label_chb">
-					<input id="$metaclassKey" class="facete_input_chb" type=checkbox checked>
-					$MESSAGES.getString("$metaclassTitle")
-					#renderLinkEntryNumber("$metaclass.get($metaclassKey)")
-					</a>
+					#renderFaceteSelectedAttributeNumber ($action $title $metaclass.get($metaclassKey) true)
 				#else
 					$action.setParameter("doAddMetaclass", "$metaclassKey")
-					<a href="$action" class="facete_label_chb">
-						<input id="$metaclassKey" class="facete_input_chb" type=checkbox>
-					$MESSAGES.getString("$metaclassTitle")
-					#renderLinkEntryNumber("$metaclass.get($metaclassKey)")
-					</a>
+					#renderFaceteSelectedAttributeNumber ($action $title $metaclass.get($metaclassKey) false)
 				#end
 			</span>
 		</div>

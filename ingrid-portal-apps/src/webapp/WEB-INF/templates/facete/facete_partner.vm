@@ -50,10 +50,7 @@
 						$partner.name
 						#renderLinkEntryNumberInArrayHashMap($elementsPartner "${partner.ident}")
 					</a>
-					<a href="$action" class="facete_link_line">
-    					<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png">
-    					</img>
-        			</a>
+					#renderDeleteIcon ($action)
     			</div>
     			<div id="class" class="cat_content">
         			<div id="${partner.ident}">

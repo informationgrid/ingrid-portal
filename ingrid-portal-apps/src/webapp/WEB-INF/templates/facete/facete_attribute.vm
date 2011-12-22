@@ -17,13 +17,6 @@
 		#if($doAddAttribute.db_title)
 			$action.setParameter("doRemoveAttribute",  "db_title")
         	#renderFaceteSelectedAttribute ($action  $doAddAttribute.db_title)
-			<div>
-				<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png">
-    				<a href="$action" class="facete_link_line">
-    				$doAddAttribute.db_title
-    				</a>
-    			</img>
-       		</div>
 		#end
 		##Institution
 		#if($doAddAttribute.db_institute)

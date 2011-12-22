@@ -40,20 +40,13 @@
                 		#end
         			#else
 						$action.setParameter("doRemoveDatatype", "$datatypeKey")
-        				<p href="$action" class="facete_label_chb">
-        					<a href="$action" class="facete_link_line">
-        						<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png"></img>
-        					</a>
-        					$MESSAGES.getString("$datatypeTitle")
-        					#renderLinkEntryNumber("$datatype.get($datatypeKey)")
-        				</p>
+        				#set ($title = $MESSAGES.getString("$datatypeTitle"))
+        				#renderFaceteSelectedAttributeNumber ($action $title $datatype.get($datatypeKey) true)
         			#end
 				#else
 					$action.setParameter("doAddDatatype", "$datatypeKey")
-    				<a href="$action" class="facete_label_chb">
-    					$MESSAGES.getString("$datatypeTitle")
-						#renderLinkEntryNumber("$datatype.get($datatypeKey)")
-					</a>
+    				#set ($title = $MESSAGES.getString("$datatypeTitle"))
+        			#renderFaceteSelectedAttributeNumber ($action $title $datatype.get($datatypeKey) false)
 				#end
 			</span>
 		</div>

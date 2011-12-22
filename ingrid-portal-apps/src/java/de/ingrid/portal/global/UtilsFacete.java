@@ -534,6 +534,15 @@ public class UtilsFacete {
 					}
 				}
 			}
+			if(doRemoveDatatype.equals("metadata")){
+				removeAttributeFromSession(request, SELECTED_METACLASS);
+			}else if(doRemoveDatatype.equals("topics")){
+				removeAttributeFromSession(request, SELECTED_TOPIC);
+			}else if(doRemoveDatatype.equals("measure")){
+				removeAttributeFromSession(request, SELECTED_MEASURES);
+			}else if(doRemoveDatatype.equals("service")){
+				removeAttributeFromSession(request, SELECTED_SERVICE);
+			}
 		}
 		
 		if(selectedDatatype != null){

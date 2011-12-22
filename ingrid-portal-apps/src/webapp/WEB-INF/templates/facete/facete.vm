@@ -24,16 +24,28 @@
 #end
 
 #macro (renderFaceteSelectedAttribute $doAction $title)
-	<div class="facete_delete">
-		<span class="facete_delete_span_img">
-			<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png"></img>
-		</span>
-		<span class="facete_delete_span_a">
-        	<a href="$doAction" class="facete_link_line">
-    			$title
-        	</a>
-		</span>
-	</div>
+	<div>
+		<a href="$doAction" class="facete_link_line" style="font-weight:bold;">
+    		$title
+        </a>
+		#renderDeleteIcon ($doAction)
+    </div>
+#end
+
+#macro (renderFaceteSelectedAttributeNumber $doAction $title $number $isDelete)
+	<div>
+		<a href="$doAction" class="facete_link_line" 
+			#if($isDelete)
+				style="font-weight:bold;"
+			#end
+			>
+    		$title 
+			#renderLinkEntryNumber("$number")
+        </a>
+		#if($isDelete)
+			#renderDeleteIcon ($doAction)
+		#end
+    </div>
 #end
 
 #macro(renderLinkEntryNumberInArrayHashMap $numbers $id)
@@ -53,6 +65,14 @@
 		(0)
 	#end
 #end
+
+#macro(renderDeleteIcon $doAction)
+	<a href="$doAction" class="facete_link_line">
+		<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png"></img>
+	</a>
+#end
+
+
 
 <div>
 	#if($ds == "2")
