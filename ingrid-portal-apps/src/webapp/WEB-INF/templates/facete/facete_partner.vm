@@ -11,7 +11,7 @@
 				#end
 			#end
 			<div class="facete_chb">
-        		<span>
+        		<span class="facete_label">
 					#set ($action = $renderResponse.createActionURL())
 					#if($isSelectedChbProvider)
     					$action.setParameter("doRemoveProvider", "${provider.ident}")
@@ -22,9 +22,8 @@
     					<a href="$action" class="facete_label_chb">
 							<input id="${provider.ident}" class="facete_input_chb" type=checkbox>
 					#end
-						$provider.name
+						$provider.name</a>
 						#renderLinkEntryNumberInArrayHashMap($elementsProvider "${provider.ident}")
-						</a>
 				</span>
     		</div>
 		</div>
@@ -44,13 +43,13 @@
 		#foreach ($partner in $enableFacetePartnerList)
 			#if($isPartnerSelect)
 				<div class="cat_label">
-					<img id="${partner.ident}_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('${partner.ident}')">
-					$action.setParameter("doRemovePartner",  "${partner.ident}")
-                    <a onclick="openNode('${partner.ident}')">
-						$partner.name
-						#renderLinkEntryNumberInArrayHashMap($elementsPartner "${partner.ident}")
-					</a>
-					#renderDeleteIcon ($action)
+					<span class="facete_label">
+    					<img id="${partner.ident}_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('${partner.ident}')">
+    					$action.setParameter("doRemovePartner",  "${partner.ident}")
+                        <a onclick="openNode('${partner.ident}')">$partner.name</a>
+    					#renderLinkEntryNumberInArrayHashMap($elementsPartner "${partner.ident}")
+    					#renderDeleteIcon ($action)
+					</span>
     			</div>
     			<div id="class" class="cat_content">
         			<div id="${partner.ident}">
@@ -75,12 +74,10 @@
                </div>
 			#else
 				<div class="facete_chb">
-					<span>
+					<span class="facete_label">
     					$action.setParameter("doPartner", ${partner.ident})
-    					<a href="$action">
-    						$partner.name 
-    						#renderLinkEntryNumberInArrayHashMap($elementsPartner "${partner.ident}")
-    					</a>
+    					<a href="$action">$partner.name</a>
+						#renderLinkEntryNumberInArrayHashMap($elementsPartner "${partner.ident}")
 					</span>
 				</div>
 			#end

@@ -96,6 +96,8 @@ public class UtilsFacete {
      */
     public static void facetePrepareInGridQuery (PortletRequest request, IngridQuery query){
     	
+    	checkSessionForNewSearchTerm(request);
+    	
     	addTopicToQuery(request, query);
 	    addMeasuresToQuery(request, query);
         addDatatypeToQuery(request, query);
@@ -146,8 +148,8 @@ public class UtilsFacete {
 
 	public static void setFaceteParamsToSessionByAction(ActionRequest request) {
 		
-		removeElementsSession(request);
-				
+		removeFaceteElementsFromSession(request);
+		
 		setFaceteTopicParamsToSession(request);
 		setFaceteMetaclassParamsToSession(request);
 		setFaceteDatatypeParamsToSession(request);
@@ -174,8 +176,8 @@ public class UtilsFacete {
 		HashMap<String, Long> elementsService = null;
 		HashMap<String, Long> elementsMeasure = null;
 		
-		removeElementsSession(request);
-
+		removeFaceteElementsFromSession(request);
+		
 		for (Iterator<String> iterator = facetes.keySet().iterator(); iterator.hasNext();) {
 			String key = iterator.next();
 			Long value = (Long) facetes.get(key);
@@ -268,33 +270,6 @@ public class UtilsFacete {
 			setAttributeToSession(request, ELEMENTS_MEASURE, sortHashMap(elementsMeasure));
 		}
 	}
-
-	private static ArrayList<HashMap<String, Long>> sortHashMap(HashMap<String, Long> input){
-		List<String> keys = new ArrayList<String>(input.keySet());
-		final Map<String, Long> tmpInput = input;
-        
-		Collections.sort(keys,new Comparator(){
-            public int compare(Object left, Object right){
-                String leftKey = (String)left;
-                String rightKey = (String)right;
-  
-                Long leftValue = (Long)tmpInput.get(leftKey);
-                Long rightValue = (Long)tmpInput.get(rightKey);
-                return leftValue.compareTo(rightValue) * -1;
-            }
-        });
-		ArrayList<HashMap<String, Long>> sortedInput = new ArrayList<HashMap<String, Long>>();
-        
-		for(Iterator<String> i=keys.iterator(); i.hasNext();){
-            String k = i.next();
-            HashMap<String, Long> map = new HashMap<String, Long>();
-            map.put(k, tmpInput.get(k));
-            sortedInput.add(map); 
-        }
-		
-		return sortedInput;
-	}
-
 
 	/***************************** THEMEN **********************************************/
 	
@@ -584,6 +559,8 @@ public class UtilsFacete {
         			query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, selectedDatatype.get(i).toString()));
         		}
             }
+        }else{
+        	query.removeField(Settings.QFIELD_DATATYPE);
         }
 	}
 	
@@ -1900,7 +1877,7 @@ public class UtilsFacete {
 		return request.getPortletSession().getAttribute(key, PortletSessionImpl.APPLICATION_SCOPE);
 	}
 	
-	private static void removeElementsSession(PortletRequest request){
+	private static void removeFaceteElementsFromSession(PortletRequest request){
 		
 		removeAttributeFromSession(request, ELEMENTS_DATATYPE);
 		removeAttributeFromSession(request, ELEMENTS_PROVIDER);
@@ -1910,7 +1887,88 @@ public class UtilsFacete {
 		removeAttributeFromSession(request, ELEMENTS_SERVICE);
 		removeAttributeFromSession(request, ELEMENTS_MEASURE);
 	}
+	
+	private static ArrayList<HashMap<String, Long>> sortHashMap(HashMap<String, Long> input){
+		List<String> keys = new ArrayList<String>(input.keySet());
+		final Map<String, Long> tmpInput = input;
+        
+		Collections.sort(keys,new Comparator(){
+            public int compare(Object left, Object right){
+                String leftKey = (String)left;
+                String rightKey = (String)right;
+  
+                Long leftValue = (Long)tmpInput.get(leftKey);
+                Long rightValue = (Long)tmpInput.get(rightKey);
+                return leftValue.compareTo(rightValue) * -1;
+            }
+        });
+		ArrayList<HashMap<String, Long>> sortedInput = new ArrayList<HashMap<String, Long>>();
+        
+		for(Iterator<String> i=keys.iterator(); i.hasNext();){
+            String k = i.next();
+            HashMap<String, Long> map = new HashMap<String, Long>();
+            map.put(k, tmpInput.get(k));
+            sortedInput.add(map); 
+        }
 		
+		return sortedInput;
+	}
+
+	private static void checkSessionForNewSearchTerm(PortletRequest request){
+		String portalTerm = request.getParameter("q");
+		String portalDS = request.getParameter("ds");
+
+		if(portalTerm != null && portalDS != null){
+			String faceteTerm  = (String) getAttributeFromSession(request, "faceteTerm");
+			String faceteDS  = (String) getAttributeFromSession(request, "faceteDS");
+			
+			if(faceteTerm == null){
+				faceteTerm = portalTerm;
+				setAttributeToSession(request, "faceteTerm", faceteTerm);
+			}
+			
+			if(faceteDS == null){
+				faceteDS = portalDS;
+				setAttributeToSession(request, "faceteDS", faceteDS);
+			}
+			
+			if(!portalTerm.equals(faceteTerm) || !portalDS.equals(faceteDS)){
+				removeAttributeFromSession(request, SELECTED_PROVIDER);
+				removeAttributeFromSession(request, SELECTED_TOPIC);
+				removeAttributeFromSession(request, SELECTED_METACLASS);
+				removeAttributeFromSession(request, SELECTED_DATATYPE);
+				removeAttributeFromSession(request, SELECTED_MEASURES);
+				removeAttributeFromSession(request, SELECTED_SERVICE);
+				removeAttributeFromSession(request, "doGeothesaurus");  
+				removeAttributeFromSession(request, "geothesaurusSelectTopicsId");  
+				removeAttributeFromSession(request, "geothesaurusTerm");  
+				removeAttributeFromSession(request, "geothesaurusSelectTopics");  
+				removeAttributeFromSession(request, TOPICS_GEOTHESAURUS);  
+				removeAttributeFromSession(request, ERROR_GEOTHESAURUS);  
+				removeAttributeFromSession(request, CURRENT_TOPIC_GEOTHESAURUS);  
+				removeAttributeFromSession(request, SIMILAR_TOPICS_GEOTHESAURUS);  
+				removeAttributeFromSession(request, LIST_SIZE_GEOTHESAURUS);  
+				removeAttributeFromSession(request, "doThesaurus");  
+				removeAttributeFromSession(request, "thesaurusSelectTopicsId");  
+				removeAttributeFromSession(request, "thesaurusSelectTopics");  
+				removeAttributeFromSession(request, "thesaurusTerm");  
+				removeAttributeFromSession(request, TOPICS_THESAURUS);  
+				removeAttributeFromSession(request, LIST_SIZE_THESAURUS);  
+				removeAttributeFromSession(request, ERROR_THESAURUS);  
+				removeAttributeFromSession(request, CURRENT_TOPIC_THESAURUS);  
+				removeAttributeFromSession(request, SIMILAR_TOPICS_THESAURUS);  
+				removeAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);  
+				removeAttributeFromSession(request, "doTime");  
+				removeAttributeFromSession(request, "doMapCoords");  
+				removeAttributeFromSession(request, "coordOptions");  
+				removeAttributeFromSession(request, "doAddAttribute");  
+				removeAttributeFromSession(request, "doAddAreaAddress");
+			}
+			setAttributeToSession(request, "faceteTerm", portalTerm);
+			setAttributeToSession(request, "faceteDS", portalDS);
+		}
+	}
+	
 }
 
 

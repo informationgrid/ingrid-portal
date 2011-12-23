@@ -869,7 +869,7 @@ div.cat_entry_delete { padding: 0 0 0 30px; }
 div.cat_entry_delete div a { font-size:10px; }
 div.cat_entry_label span { font-size: 12px; font-weight: bold; color: #1B78B1; }
 div.facete_line { }
-div.facete_chb { padding: 0 0 5px; }
+div.facete_chb { padding: 0 0 5px; font-size:12px; }
 div.facete_chb span a { font-size:12px; position: relative; }
 div.facete_chb span a input { position: absolute; }
 div.facete_chb p { padding: 0px; margin: 0px; }
@@ -911,6 +911,9 @@ div.dialog_content .inputstyletext { border: 1px inset #FFFFFF; padding: 2px 4px
 
 div.btn_submit_dialog { padding: 11px 0 0; }
 div.btn_submit_dialog div.btn_center input { font-size: 10px; }
+
+span.facete_label { font-size:11px; color: #5E5E5F; }
+span.facete_label_dialog { padding: 0 0 0 7px; font-size:12px; color: #176798; }
 
 .tundra .dijitBorderContainer { background-color: transparent !important; }
 .tundra .dijitSplitContainer-child, .tundra .dijitBorderContainer-child { border: 0px solid #CCCCCC !important; }

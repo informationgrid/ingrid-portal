@@ -15,9 +15,7 @@
 
 #macro (renderFaceteMoreLinkLineDialog $label $style $id $button)
 	<div style="$style">
-		<button id="$button" dojoType="dijit.form.Button" type="button" onClick="prepareDialog('$id','$button')">
-	        $label
-	    </button>
+		<button id="$button" dojoType="dijit.form.Button" type="button" onClick="prepareDialog('$id','$button')">$label</button>
 	   <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" >
    </div>
    <br>
@@ -25,23 +23,21 @@
 
 #macro (renderFaceteSelectedAttribute $doAction $title)
 	<div>
-		<a href="$doAction" class="facete_link_line" style="font-weight:bold;">
-    		$title
-        </a>
+		<a href="$doAction" class="facete_link_line" style="font-weight:bold;">$title</a>
 		#renderDeleteIcon ($doAction)
     </div>
 #end
 
 #macro (renderFaceteSelectedAttributeNumber $doAction $title $number $isDelete)
 	<div>
-		<a href="$doAction" class="facete_link_line" 
-			#if($isDelete)
-				style="font-weight:bold;"
-			#end
-			>
-    		$title 
+		<span class="facete_label">
+			<a href="$doAction" class="facete_link_line" 
+        		#if($isDelete)
+        			style="font-weight:bold;"
+        		#end
+        		>$title</a>
 			#renderLinkEntryNumber("$number")
-        </a>
+        </span>
 		#if($isDelete)
 			#renderDeleteIcon ($doAction)
 		#end
@@ -49,13 +45,15 @@
 #end
 
 #macro(renderLinkEntryNumberInArrayHashMap $numbers $id)
-	#foreach($number in $numbers)
+	<span class="facete_label">
+    #foreach($number in $numbers)
 		#foreach($key in $number.keySet())
 			#if($key == "$id")
 				($number.get($key))
 			#end
 		#end
 	#end
+	</span>
 #end
 
 #macro(renderLinkEntryNumber $number)

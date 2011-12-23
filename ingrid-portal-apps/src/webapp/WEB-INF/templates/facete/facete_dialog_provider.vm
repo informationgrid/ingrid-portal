@@ -21,17 +21,14 @@
 					#end
 					#set($k = $k + 1)
 					<div class="facete_chb">
-                		<p>
-                		<label class="facete_label_chb">
-							<input id="${provider.ident}" style="margin:4px 0 0 0;" class="facete_input_chb" type=checkbox name="chk$k" value="${provider.ident}"
+						<span class="facete_label_dialog">
+                			<input id="${provider.ident}" style="margin:4px 0 0 0;" class="facete_input_chb" type=checkbox name="chk$k" value="${provider.ident}"
 								#if($isSelectedChbProvider)
 									checked
 								#end
-								>
-                		$provider.name
+                            >$provider.name</input>
+						</span>
 						#renderLinkEntryNumberInArrayHashMap($elementsProvider "$provider.ident")
-						</label>
-						</p>
                    	</div>
 				#end
 			#end
@@ -43,12 +40,10 @@
     				#if(${provider.sortkeyPartner} == ${partner.sortkey})
     					#set($k = $k + 1)
     					<div class="facete_chb">
-                    		<p>
-                    		<label class="facete_label_chb">
-    							<input id="${provider.ident}" style="margin:4px 0 0 0;" class="facete_input_chb" type=checkbox name="chk$k" value="${provider.ident}">
-                    		$provider.name
-							</label>
-    						</p>
+                    		<span class="facete_label_dialog">
+								<input id="${provider.ident}" style="margin:4px 0 0 0;" class="facete_input_chb" type=checkbox name="chk$k" value="${provider.ident}">
+                        		$provider.name
+    						</span>
                        	</div>
     				#end
 				#end
