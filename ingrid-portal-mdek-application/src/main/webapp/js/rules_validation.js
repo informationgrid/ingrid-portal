@@ -447,18 +447,6 @@ function availabilityAccessPublishable(notPublishableIDs) {
     }
 }
 
-function availabilityUsePublishable(notPublishableIDs) {
-    var objClass = dijit.byId("objectClass").getValue().substr(5, 1);
-    if (objClass != '0') {
-        if (dojo.some(UtilGrid.getTableData("availabilityUseConstraints"), function(ud){
-            return (typeof(ud.title) == "undefined" || ud.title == null || dojo.trim(ud.title + "").length == 0);
-        })) {
-            notPublishableIDs.push("availabilityUseConstraints");
-            console.debug("All entries in the availabilityUseConstraints table must contain data.");
-        }
-    }
-}
-
 function generalAddressPublishable(notPublishableIDs) {
     var objClass = dijit.byId("objectClass").getValue().substr(5, 1);
     var addressData = UtilGrid.getTableData("generalAddress");

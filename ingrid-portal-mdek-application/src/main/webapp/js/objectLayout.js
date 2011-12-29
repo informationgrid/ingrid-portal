@@ -1163,17 +1163,7 @@ ingridObjectLayout.createAvailability = function() {
 	];
     createDataGrid("availabilityAccessConstraints", null, availabilityAccessConstraintsStructure, null);
     
-    var availabilityUseConstraintsStructure = [
-		{field: 'title',name: 'title',width: 348-scrollBarWidth+'px',
-			type: ComboboxEditor,
-	        options: [], // will be filled later, when syslists are loaded
-	        values: [],
-	        editable: true,
-            listId: 6020,
-            formatter: dojo.partial(SyslistCellFormatter, 6020)
-		}
-    ];
-    createDataGrid("availabilityUseConstraints", null, availabilityUseConstraintsStructure, null);
+	new dijit.form.SimpleTextarea({"class": "textAreaFull", rows:4}, "availabilityUseConstraints");
 	
 	var availabilityDataFormatStructure = [
 		{field: 'name',name: message.get("ui.obj.availability.dataFormatTable.header.name"),width: '100px',

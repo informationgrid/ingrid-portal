@@ -127,8 +127,11 @@ public class MdekProfileUtils {
 		rubric.getControls().add(index, control);
 	}
 
-	public static void updateScriptedProperties(Controls control, String jsToAdd) {
+	public static void addToScriptedProperties(Controls control, String jsToAdd) {
 		String js = control.getScriptedProperties();
 		control.setScriptedProperties(js + jsToAdd);
+	}
+	public static void removeAllScriptedProperties(Controls control) {
+		control.setScriptedProperties("");
 	}
 }

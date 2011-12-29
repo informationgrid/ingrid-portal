@@ -170,7 +170,7 @@ public class MdekMapper implements DataMapperInterface {
         // Availability
         // Inspire field
         mdekObj.setAvailabilityAccessConstraints(mapToAvailAccessConstraintsTable((List<IngridDocument>) obj.get(MdekKeys.ACCESS_LIST)));
-        mdekObj.setAvailabilityUseConstraints(mapToAvailUseConstraintsTable((List<IngridDocument>) obj.get(MdekKeys.USE_LIST)));
+        mdekObj.setAvailabilityUseConstraints(mapToAvailUseConstraints((List<IngridDocument>) obj.get(MdekKeys.USE_LIST)));
         
         mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
         // NOTICE: always map this one (maps default value if not set), although only displayed in class 1
@@ -733,7 +733,7 @@ public class MdekMapper implements DataMapperInterface {
         // Availability
         if (data.getObjectClass() != null && data.getObjectClass() != 0) {
             udkObj.put(MdekKeys.ACCESS_LIST, mapFromAvailAccessConstraintsTable(data.getAvailabilityAccessConstraints()));          
-            udkObj.put(MdekKeys.USE_LIST, mapFromAvailUseConstraintsTable(data.getAvailabilityUseConstraints()));           
+            udkObj.put(MdekKeys.USE_LIST, mapFromAvailUseConstraints(data.getAvailabilityUseConstraints()));           
             udkObj.put(MdekKeys.DATA_FORMATS, mapFromAvailDataFormatTable(data.getAvailabilityDataFormatTable()));
             udkObj.put(MdekKeys.MEDIUM_OPTIONS, mapFromAvailMediaOptionsTable(data.getAvailabilityMediaOptionsTable()));
             udkObj.put(MdekKeys.ORDERING_INSTRUCTIONS, data.getAvailabilityOrderInfo());
@@ -978,13 +978,10 @@ public class MdekMapper implements DataMapperInterface {
             obj.setAvailabilityDataFormatInspire(sysListMapper.getInitialValueFromListId(MdekSysList.OBJ_FORMAT_INSPIRE.getDbValue()));
     }
 
-        List<String> useConstrList = obj.getAvailabilityUseConstraints();
-        if (useConstrList == null)  {
-            useConstrList = new ArrayList<String>();
-        }
-        if (useConstrList.size() == 0) {
-            useConstrList.add(sysListMapper.getInitialValueFromListId(MdekSysList.OBJ_USE.getDbValue()));
-            obj.setAvailabilityUseConstraints(useConstrList);
+        String useConstr = obj.getAvailabilityUseConstraints();
+        if (useConstr == null)  {
+        	useConstr = sysListMapper.getInitialValueFromListId(MdekSysList.OBJ_USE.getDbValue());
+            obj.setAvailabilityUseConstraints(useConstr);
         }
     }
 
@@ -1267,18 +1264,17 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
     
-    private List<IngridDocument> mapFromAvailUseConstraintsTable(List<String> ucList) {
+    /** Map single value to list ! UseConstraints was a table, now a text field, see INGRID32-45 */
+    private List<IngridDocument> mapFromAvailUseConstraints(String uc) {
         List<IngridDocument> resultList = new ArrayList<IngridDocument>();
-        if (ucList != null) {
-            for (String uc : ucList) {
-                KeyValuePair kvp = mapFromKeyValue(MdekKeys.USE_TERMS_OF_USE_KEY, uc);
-                if (kvp.getValue() != null || kvp.getKey() != -1) {
-                    IngridDocument result = new IngridDocument();
-                    result.put(MdekKeys.USE_TERMS_OF_USE_KEY, kvp.getKey());
-                    result.put(MdekKeys.USE_TERMS_OF_USE_VALUE, kvp.getValue());
-                    resultList.add(result);
-                }
-            }           
+        if (uc != null) {
+            KeyValuePair kvp = mapFromKeyValue(MdekKeys.USE_TERMS_OF_USE_KEY, uc);
+            if (kvp.getValue() != null || kvp.getKey() != -1) {
+                IngridDocument result = new IngridDocument();
+                result.put(MdekKeys.USE_TERMS_OF_USE_KEY, kvp.getKey());
+                result.put(MdekKeys.USE_TERMS_OF_USE_VALUE, kvp.getValue());
+                resultList.add(result);
+            }
         }
 
         return resultList;
@@ -1846,17 +1842,20 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
 
-    private List<String> mapToAvailUseConstraintsTable(List<IngridDocument> docList) {
-        List<String> resultList = new ArrayList<String>();
+    /** Map only first element ! UseConstraints was a table, now a text field, see INGRID32-45 */
+    private String mapToAvailUseConstraints(List<IngridDocument> docList) {
+        String result = null;
 
         if (docList != null) {
             for (IngridDocument doc : docList) {
                 KeyValuePair kvp = mapToKeyValuePair(doc, MdekKeys.USE_TERMS_OF_USE_KEY, MdekKeys.USE_TERMS_OF_USE_VALUE);
-                resultList.add(kvp.getValue());
+                result = kvp.getValue();
+                // use only FIRST element, ignore rest (will be deleted on save !). was a table, now a text field, see INGRID32-45
+                break;
             }           
         }
 
-        return resultList;
+        return result;
     }
 
     private List<String> mapToSpatialSystemsTable(List<IngridDocument> refList) {

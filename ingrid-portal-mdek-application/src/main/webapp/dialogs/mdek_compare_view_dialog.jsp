@@ -245,7 +245,7 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	// availability
 	renderSectionTitel("<fmt:message key='ui.obj.availability.title' />");
     renderList(nodeDataOld.availabilityAccessConstraints, nodeDataNew.availabilityAccessConstraints, "<fmt:message key='ui.obj.availability.accessConstraints' />", null, function (val) { return UtilSyslist.getSyslistEntryName(6010, val);});
-    renderList(nodeDataOld.availabilityUseConstraints, nodeDataNew.availabilityUseConstraints, "<fmt:message key='ui.obj.availability.useConstraints' />");
+    renderTextWithTitle(nodeDataOld.availabilityUseConstraints, nodeDataNew.availabilityUseConstraints, "<fmt:message key='ui.obj.availability.useConstraints' />");
     
     // only show "availabilityDataFormatInspire" in class 1 ... by default a default value is mapped to 
     // this field which shall not be shown here

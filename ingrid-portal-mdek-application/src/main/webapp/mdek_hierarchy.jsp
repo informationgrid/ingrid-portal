@@ -1889,9 +1889,7 @@
                                             <fmt:message key="ui.obj.availability.useConstraints" />
                                         </label>
                                     </span>
-                                    <div class="input tableContainer">
-                                        <div id="availabilityUseConstraints" autoHeight="4" interactive="true" class="hideTableHeader"></div>
-                                    </div>
+                                    <span class="input"><input type="text" id="availabilityUseConstraints" name="availabilityUseConstraints" /></span>
                                     </div>
                                 </span>
                             </div>

@@ -1647,7 +1647,7 @@ udkDataProxy._setObjectData = function(nodeData)
 
   // -- Availability --
   UtilStore.updateWriteStore("availabilityAccessConstraints", UtilList.listToTableData(nodeData.availabilityAccessConstraints));
-  UtilStore.updateWriteStore("availabilityUseConstraints", UtilList.listToTableData(nodeData.availabilityUseConstraints));
+  dijit.byId("availabilityUseConstraints").attr("value", nodeData.availabilityUseConstraints, true);
   dijit.byId("availabilityOrderInfo").attr("value", nodeData.availabilityOrderInfo, true);
   UtilStore.updateWriteStore("availabilityDataFormat", nodeData.availabilityDataFormatTable);
   UtilStore.updateWriteStore("availabilityMediaOptions", nodeData.availabilityMediaOptionsTable);
@@ -2113,7 +2113,7 @@ udkDataProxy._getObjectData = function(nodeData)
   // -- Availability --
 //  nodeData.availabilityUsageLimitationTable = udkDataProxy._getTableData("availabilityUsageLimitationTable");
   nodeData.availabilityAccessConstraints = UtilList.tableDataToList(udkDataProxy._getTableData("availabilityAccessConstraints"));
-  nodeData.availabilityUseConstraints = UtilList.tableDataToList(udkDataProxy._getTableData("availabilityUseConstraints"));
+  nodeData.availabilityUseConstraints = dijit.byId("availabilityUseConstraints").getValue();
 
   nodeData.availabilityOrderInfo = dijit.byId("availabilityOrderInfo").getValue();
   nodeData.availabilityDataFormatTable = udkDataProxy._getTableData("availabilityDataFormat");
