@@ -147,6 +147,9 @@
                         break;
                     case "ref3Operation":
                         localizedTitle = "<fmt:message key='dialog.operations.title' />";
+                        break;
+                    case "availabilityUseConstraints":
+                        localizedTitle = "<fmt:message key='dialog.useConstraints.title' />";
                 }
                 return localizedTitle;
             }
@@ -1888,6 +1891,10 @@
                                         <label for="availabilityUseConstraints" onclick="javascript:dialog.showContextHelp(arguments[0], 10026)">
                                             <fmt:message key="ui.obj.availability.useConstraints" />
                                         </label>
+                                    </span>
+                                    <span class="functionalLink">
+                                        <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" />
+                                        <a id="availabilityUseConstraintsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('availabilityUseConstraints'), 'dialogs/mdek_use_constraints_dialog.jsp?c='+userLocale, 735, 300, true);" title="<fmt:message key="dialog.popup.useConstraints.link" /> [Popup]"><fmt:message key="ui.obj.availability.useConstraints.link" /></a>
                                     </span>
                                     <span class="input"><input type="text" id="availabilityUseConstraints" name="availabilityUseConstraints" /></span>
                                     </div>

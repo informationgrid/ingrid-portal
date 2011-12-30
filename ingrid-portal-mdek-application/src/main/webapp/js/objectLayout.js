@@ -1163,7 +1163,7 @@ ingridObjectLayout.createAvailability = function() {
 	];
     createDataGrid("availabilityAccessConstraints", null, availabilityAccessConstraintsStructure, null);
     
-	new dijit.form.SimpleTextarea({"class": "textAreaFull", rows:4}, "availabilityUseConstraints");
+	new dijit.form.SimpleTextarea({"class": "textAreaFull", rows:5}, "availabilityUseConstraints");
 	
 	var availabilityDataFormatStructure = [
 		{field: 'name',name: message.get("ui.obj.availability.dataFormatTable.header.name"),width: '100px',

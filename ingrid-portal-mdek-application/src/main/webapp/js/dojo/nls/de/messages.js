@@ -534,6 +534,7 @@
 	"ui.obj.availability.title":"Verf&uuml;gbarkeit",
 	"ui.obj.availability.accessConstraints":"Zugangsbeschr&auml;nkungen",
     "ui.obj.availability.useConstraints":"Nutzungsbedingungen",
+	"ui.obj.availability.useConstraints.link":"Text aus Liste w&auml;hlen",
     "ui.obj.availability.dataFormatInspire":"Kodierungsschema der geographischen Daten",
 	"ui.obj.availability.dataFormatTable.title":"Datenformat",
 	"ui.obj.availability.dataFormatTable.header.name":"Name",

@@ -1773,6 +1773,24 @@ UtilSyslist.getSyslistEntryKey = function(syslist, value) {
 	return result;
 }
 
+// Input is a list of string arrays of the following form:
+// [ [listEntry, entryId, isDefault], [...] ]
+// e.g [ ["Inch", "4", "N"], ["Meter", "9001", "N"], ["Fuss", "9002", "N"], ["Kilometer", "9036", "N"] ]
+// Output is [ {name:listItems[0][0], entryId: listItems[0][1], isDefault: listItems[0][2] == "Y"}, ...
+UtilSyslist.convertSysListToTableData = function(listItems) {
+    // Prepare the list items for display
+    var listData = [];
+    for (var index = 0; index < listItems.length; ++index) {
+        listData.push({
+            name: listItems[index][0],
+            entryId: listItems[index][1],
+            isDefault: listItems[index][2] == "Y"
+        });
+    }
+    
+    return listData;
+}
+
 // Utility functions for DataGrids
 var UtilGrid = {}
 

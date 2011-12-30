@@ -147,8 +147,8 @@
                         defList.addCallback(function(resultList){
                             var germanList = resultList[0][1];
                             var englishList = resultList[1][1];
-                            var germanData = convertSysListToTableData(germanList);
-                            var englishData = convertSysListToTableData(englishList);
+                            var germanData = UtilSyslist.convertSysListToTableData(germanList);
+                            var englishData = UtilSyslist.convertSysListToTableData(englishList);
                             var mergedData = mergeTableData(germanData, englishData);
                             updateCodelistTable(mergedData);
                         });
@@ -246,24 +246,6 @@
                     }
                 });
                 return def;
-            }
-            
-            // Input is a list of string arrays of the following form:
-            // [ [listEntry, entryId, isDefault], [...] ]
-            // e.g [ ["Inch", "4", "N"], ["Meter", "9001", "N"], ["Fuss", "9002", "N"], ["Kilometer", "9036", "N"] ]
-            // The codelist table is being overwritten
-            function convertSysListToTableData(listItems){
-                // Prepare the list items for display
-                var listData = [];
-                for (var index = 0; index < listItems.length; ++index) {
-                    listData.push({
-                        name: listItems[index][0],
-                        entryId: listItems[index][1],
-                        isDefault: listItems[index][2] == "Y"
-                    });
-                }
-                
-                return listData;
             }
             
             // Merge two lists into one. The lists must have the following format:
@@ -538,8 +520,8 @@
                         var englishList = resultList[1][1];
                         var freeList = resultList[2][1];
                         
-                        var germanData = convertSysListToTableData(germanList);
-                        var englishData = convertSysListToTableData(englishList);
+                        var germanData = UtilSyslist.convertSysListToTableData(germanList);
+                        var englishData = UtilSyslist.convertSysListToTableData(englishList);
                         
                         var mergedData = mergeTableData(germanData, englishData);
                         updateFreeEntryCodelistTable(mergedData);
