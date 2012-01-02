@@ -2,41 +2,17 @@
  * Functions for checking the validity of entered values.
  */
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// removed stuff not needed anymore
+// see svn log, "CLEAN UP: REMOVED NOT NEEDED JAVASCRIPT FROM rules_*.js"
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 dojo.addOnLoad(function() {});
 
 /* IDs of UI Elements for checking etc. */
-//var headerUiInputElements = ["objectName", "objectClass"/*, "objectOwner"*/]; // setStore of object owner is delayed! 
-var generalUiInputElements = ["generalShortDesc", "generalDesc", "generalAddress"];
+
 var dqUiTableElements = ["dq109Table", "dq112Table", "dq113Table", "dq114Table", "dq115Table",
     "dq120Table", "dq125Table", "dq126Table", "dq127Table"];
-/*
-var spatialUiInputElements = ["spatialRefAdminUnit", "spatialRefLocation", "ref1SpatialSystem", "spatialRefAltMin", "spatialRefAltMax",
-	"spatialRefAltMeasure", "spatialRefAltVDate", "spatialRefExplanation"];
-var timeUiInputElements = ["timeRefType", "timeRefDate1", "timeRefDate2", "timeRefStatus", "timeRefPeriodicity", "timeRefIntervalNum",
-	"timeRefIntervalUnit", "timeRefTable", "timeRefExplanation"];
-var extraUiInputElements = ["extraInfoLangMetaData", "extraInfoLangData", "extraInfoPublishArea", "extraInfoCharSetData",
-	"extraInfoXMLExportTable", "extraInfoLegalBasicsTable", "extraInfoPurpose", "extraInfoUse"];
-var availUiInputElements = ["availabilityAccessConstraints", "availabilityUseConstraints", "availabilityDataFormat", "availabilityMediaOptions", "availabilityOrderInfo"];
-var thesUiInputElements = ["thesaurusTerms", "thesaurusTopics", "thesaurusInspire", "thesaurusEnvExtRes",
-	"thesaurusEnvTopics", "linksTo"];
-var class0UiInputElements = [];
-var class1UiInputElements = ["ref1ObjectIdentifier", "ref1DataSet", "ref1Coverage", "ref1Representation", "ref1VFormatTopology", "ref1VFormatDetails",
-	"ref1Scale", "ref1AltAccuracy", "ref1PosAccuracy", "ref1SymbolsText", "ref1SymbolsLink",
-	"ref1KeysText", "ref1KeysLink", "ref1BasisText", "ref1BasisLink", "ref1DataBasisText", "ref1DataBasisLink", "ref1Data",
-	"ref1ProcessText", "ref1ProcessLink", "extraInfoConformityTable"];
-var class2UiInputElements = ["ref2Author", "ref2Publisher", "ref2PublishedIn", "ref2PublishLocation", "ref2PublishedInIssue",
-	"ref2PublishedInPages", "ref2PublishedInYear", "ref2PublishedISBN", "ref2PublishedPublisher", "ref2LocationText", 
-	"ref2LocationLink", "ref2DocumentType", "ref2BaseDataText", "ref2BaseDataLink", "ref2BibData", "ref2Explanation"];
-var class3UiInputElements = ["ref3ServiceType", "ref3ServiceTypeTable", "ref3ServiceVersion", "ref3SystemEnv", "ref3History", "ref3BaseDataText",
-	"ref3BaseDataLink", "ref3Explanation", "ref3Scale", "ref3Operation", "extraInfoConformityTable", "ref3HasAccessConstraint"];
-var class4UiInputElements = ["ref4ParticipantsText", "ref4ParticipantsLink", "ref4PMText", "ref4PMLink", "ref4Explanation"];
-var class5UiInputElements = ["ref5dbContent", "ref5MethodText", "ref5MethodLink", "ref5Explanation"];
-//var class3UiInputElements = ["ref3ServiceType", "ref3ServiceTypeTable", "ref3ServiceVersion", "ref3SystemEnv", "ref3History", "ref3BaseDataText",
-//                            "ref3BaseDataLink", "ref3Explanation", "ref3Scale", "ref3Operation", "extraInfoConformityTable"];
-var class6UiInputElements = ["ref6ServiceType", "ref6ServiceVersion", "ref6SystemEnv", "ref6History", "ref6BaseDataText",
-                            "ref6BaseDataLink", "ref6Explanation", "ref6UrlList" ];
-*/
-
 
 // Address Type is not included since the field is filled automatically
 var adrUiInputElements = [/*"addressType",*/ "addressOwner", "addressStreet", "addressCountry", "addressZipCode", "addressCity", "addressPOBox",
@@ -47,66 +23,6 @@ var adrClass2UiInputElements = ["headerAddressType2Lastname", "headerAddressType
 	"headerAddressType2Title"];
 var adrClass3UiInputElements = ["headerAddressType3Lastname", "headerAddressType3Firstname", "headerAddressType3Style",
 	"headerAddressType3Title", "headerAddressType3Institution"];
-/*
-var notEmptyFields = [["objectName", "objectNameLabel"],
-					  ["objectClass", "objectClassLabel"],
-					  ["objectOwner", "objectOwnerLabel"],
-					  ["generalDescription", "generalDescLabel"],
-					  ["extraInfoLangDataCode", "extraInfoLangDataLabel"],
-					  ["extraInfoLangMetaDataCode", "extraInfoLangMetaDataLabel"],
-					  ["extraInfoPublishArea", "extraInfoPublishAreaLabel"],
-                      ["extraInfoCharSetDataCode", "extraInfoCharSetDataLabel"]];
-
-var notEmptyFieldsClass1 = [["ref1BasisText", "ref1BasisTabContainerLabel"],
-							["ref1ObjectIdentifier", "ref1ObjectIdentifierLabel"],
-                            ["ref1DataSet", "ref1DataSetLabel"],
-                            ["ref1SpatialSystem", "ref1SpatialSystemLabel"],
-                            ["availabilityDataFormatInspire", "availabilityDataFormatInspireLabel"],
-                            ["extraInfoCharSetDataCode", "extraInfoCharSetDataLabel"]]; 
-var notEmptyFieldsClass3 = [["ref3ServiceType", "ref3ServiceTypeLabel"],
-                            ["ref1SpatialSystem", "ref1SpatialSystemLabel"]];
-
-var notEmptyFieldsClass6 = [["ref6ServiceType", "ref6ServiceTypeLabel"]];
-
-var notEmptyTables = [["generalAddressTable", "generalAddressTableLabel"],
-					  ["timeRefTable", "timeRefTableLabel"]];
-
-// TODO Add class 2, 4, 5 to isObjectPublishable when needed
-var notEmptyTablesClass1 = [["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
-                            ["availabilityUseConstraints", "availabilityUseConstraintsLabel"],
-                            ["extraInfoConformityTable", "extraInfoConformityTableLabel"],
-                            ["thesaurusInspireTermsList", "thesaurusInspireLabel"],
-                            ["thesaurusTopicsList", "thesaurusTopicsLabel"]];
-var notEmptyTablesClass2 = [["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
-                            ["availabilityUseConstraints", "availabilityUseConstraintsLabel"]];
-var notEmptyTablesClass3 = [["ref3ServiceTypeTable", "ref3ServiceTypeTableLabel"],
-                            ["extraInfoConformityTable", "extraInfoConformityTableLabel"],
-                            ["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
-                            ["availabilityUseConstraints", "availabilityUseConstraintsLabel"]];
-var notEmptyTablesClass4 = [["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
-                            ["availabilityUseConstraints", "availabilityUseConstraintsLabel"]];
-var notEmptyTablesClass5 = [["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
-                            ["availabilityUseConstraints", "availabilityUseConstraintsLabel"]];
-var notEmptyTablesClass6 = [["availabilityAccessConstraints", "availabilityAccessConstraintsLabel"],
-                            ["availabilityUseConstraints", "availabilityUseConstraintsLabel"]];
-
-
-
-// INSPIRE changes. Only one email address is required 
-var notEmptyAddressFields = [// ["addressClass", "addressTypeLabel"],
-							 // ["addressOwner", "addressOwnerLabel"],
-						     // ["countryCode", "addressCountryLabel"],
-						     // ["city", "addressCityLabel"]
-							 ];
-
-var notEmptyAddressTables = [["communication", "addressComLabel"]];
-
-var notEmptyAddressFieldsClass0 = [["organisation", "headerAddressType0UnitLabel"]];
-var notEmptyAddressFieldsClass1 = [["organisation", "headerAddressType1UnitLabel"]];
-
-var notEmptyAddressFieldsClass2 = [["name", "headerAddressType2LastnameLabel"]];
-var notEmptyAddressFieldsClass3 = [["name", "headerAddressType3LastnameLabel"]];
-*/
 
 
 function resetRequiredFields() {

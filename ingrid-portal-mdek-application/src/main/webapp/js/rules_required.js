@@ -2,103 +2,12 @@
  * Special rules for form items
  */
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// removed stuff not needed anymore
+// see svn log, "CLEAN UP: REMOVED NOT NEEDED JAVASCRIPT FROM rules_*.js"
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-/*
- * Rules that change the required state of a field depending on another field's value
- */
-
-/*function applyRules() {
-	// RULE 1
-	// Applies to: erfassung object -> geoinfo/karte -> fachbezug -> digitale repr�sentation Id = ref1Representation
-	// Rule: If value = 'Vector' then Vektorformat (below) is required
-	var representationTable = UtilGrid.getTable("ref1Representation");
-	if (representationTable) {
-      dojo.connect(representationTable, "onDataChanged", applyRule1);
-	}
-
-	// RULE 2
-	// Applies to: erfassung object -> verschlagwortung -> umweltthemen Ids = thesaurusEnvTopics
-	// Rule: If value != leer then Umweltthemen is required
-	var thesaurusEnvTopicsTable = UtilGrid.getTable("thesaurusEnvTopics");
-	var thesaurusEnvExtResCheckBox = dijit.byId("thesaurusEnvExtRes");
-	if (thesaurusEnvTopicsTable) {
-		dojo.connect(thesaurusEnvTopicsTable, "onDataChanged", applyRule2);
-	}
-	if (thesaurusEnvExtResCheckBox) {
-	  dojo.connect(thesaurusEnvExtResCheckBox, "onChange", function(val) {applyRule2();});
-	  dojo.connect(thesaurusEnvExtResCheckBox, "onClick", function(obj, field) {applyRule2();});
-	}
-	
-	// RULE 3
-	// Applies to: erfassung object -> zeitbezug -> Zeitbezug des Dateninhaltes Id = timeRefType
-	// Rule: If value == 'von' then timeRefDate2 is visible
-	var refTypeList = dijit.byId("timeRefType");
-	if (refTypeList) {
-	  dojo.connect(refTypeList, "onChange", function(value) {applyRule3(value);});
-	}
-	// initialize
-	applyRule3("");
-*/	
-	
-	// RULE 4
-	
-	// Applies to: erfassung adresse -> adresse und aufgaben -> postfach/plz (postfach) Ids = addressPOBox, addressZipPOBox
-	// Rule: If value != leer then other fields is required, strasse, plz are not required
-	// INSPIRE CHANGE - Remove required state.
-/*
-	var addressPOBoxField = dijit.byId("addressPOBox");
-	var addressZipPOBoxField = dijit.byId("addressZipPOBox");
-	if (addressPOBoxField) {
-	  dojo.connect(addressPOBoxField, "update", function() {applyRule4();});
-	}
-	if (addressZipPOBoxField) {
-	  dojo.connect(addressZipPOBoxField, "update", function() {applyRule4();});
-	}
-	applyRule4();
-*/
-
-	// Applies to: erfassung object -> Raumbezug -> Geothesaurus-Raumbezug & freier Raumbezug Ids = spatialRefAdminUnit, spatialRefLocation
-	// Rule: At least one entry with a bounding box is required
-/*    var spatialRefAdminUnit = UtilGrid.getTable("spatialRefAdminUnit");
-    var spatialRefLocation = UtilGrid.getTable("spatialRefLocation");
-	if (spatialRefAdminUnit) {
-		dojo.connect(spatialRefAdminUnit, "onDataChanged", applyRule5);
-	}
-	if (spatialRefLocation) {
-		dojo.connect(spatialRefLocation, "onDataChanged", applyRule5);
-	}
-
-	// initialize
-	applyRule5();
-
-	var spatialRefAltMin = dijit.byId("spatialRefAltMin");
-	var spatialRefAltMax = dijit.byId("spatialRefAltMax");
-	var spatialRefAltMeasure = dijit.byId("spatialRefAltMeasure");
-	var spatialRefAltVDate = dijit.byId("spatialRefAltVDate");
-	if (spatialRefAltMin) {
-		dojo.connect(spatialRefAltMin, "onChange", function(val) {applyRule6();});
-	}
-	if (spatialRefAltMax) {
-		dojo.connect(spatialRefAltMax, "onChange", function(val) {applyRule6();});
-	}
-	if (spatialRefAltMeasure) {
-		dojo.connect(spatialRefAltMeasure, "onChange", function(val) {applyRule6();});
-	}
-	if (spatialRefAltVDate) {
-		dojo.connect(spatialRefAltVDate, "onChange", function(val) {applyRule6();});
-	}
-	applyRule6();
-    
-    // RULE 7
-    // Set fields required if INSPIRE theme selected
-
-    var thesaurusInspire = UtilGrid.getTable("thesaurusInspire");
-    //if (thesaurusInspire) {
-      // handles new and changed values on table
-    dojo.connect(thesaurusInspire, "onDataChanged", applyRule7);
-    //}
-    applyRule7();
-}*/
+// NOTICE: Most of these functions are "called from" Profile XML !
 
 function applyRule1() {
 	console.debug("apply rule 1");
@@ -155,21 +64,6 @@ function applyRule3(value) {
 	}
   // date must not be null when value != ""
 }
-
-/*
-function applyRule4() {
-	var poBoxRequired = false;
-	if (dojo.byId("addressPOBox").value.length > 0 || dojo.byId("addressZipPOBox").value.length > 0)
-		poBoxRequired = true;
-	
-	// set strasse, plz required state
-	UtilUI.setRequiredState(dojo.byId("addressStreetLabel"), dojo.byId("uiElement4400"), !poBoxRequired);
-	UtilUI.setRequiredState(dojo.byId("addressZipCodeLabel"), dojo.byId("uiElement4410"), !poBoxRequired);
-	// set postfach, plz (postfach) required state
-	UtilUI.setRequiredState(dojo.byId("addressPOBoxLabel"), dojo.byId("uiElement4420"), poBoxRequired);
-	UtilUI.setRequiredState(dojo.byId("addressZipPOBoxLabel"), dojo.byId("uiElement4425"), poBoxRequired);
-}
-*/
 
 function applyRule5() {
 	console.debug("apply rule 5");
@@ -245,24 +139,6 @@ function applyRule7() {
     }
 
     var termsList = UtilList.tableDataToList(UtilGrid.getTableData("thesaurusInspire"));
-
-/*
-// NOW handled in FormErfassungObjektContent.setSelectedClass
-    if (UtilUdk.isInspire(termsList)) {
-        setRequiredState(dojo.byId("ref1SpatialSystemLabel"), dojo.byId("uiElement3500"), true);
-
-    } else {
-        setRequiredState(dojo.byId("ref1SpatialSystemLabel"), dojo.byId("uiElement3500"), false);
-    }
-    
-    // update sections, so new required fields are shown !
-    // we do this manually, does not work inside of setRequiredState ???
-    var sectionNames = new Array("spatialRef");
-    for (var i=0; i<sectionNames.length; i++) {
-        var mode = UtilUI.getCurrentExpandModeOfSectionElement(dojo.byId(sectionNames[i]));
-        toggleFields(sectionNames[i], mode);
-    }
-*/
 
     // show/remove DQ tables in class 1 dependent from themes
     if (objectClass == "1") {

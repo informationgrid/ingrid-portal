@@ -2,6 +2,12 @@
  * Special validation rules for form items
  */
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// removed stuff not needed anymore
+// see svn log, "CLEAN UP: REMOVED NOT NEEDED JAVASCRIPT FROM rules_*.js"
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 /*
  * Rules that validate a field's value depending on another field's value
  */
@@ -13,7 +19,6 @@ function addMinMaxValidation(minWidgetId, maxWidgetId, minCaption, maxCaption) {
 	var minMaxError = dojo.string.substitute(message.get("validation.minmax"), [maxCaption, minCaption]);
 	var defaultError = maxWidget.invalidMessage;
 
-    //var realNumberFormat = { format: ["#???????????.#?????????????????????", "#?????????????????????", "-#???????????.#?????????????????????", "-#?????????????????????", "#???????????,#?????????????????????", "-#???????????,#?????????????????????"]};
 	var defValidator = minWidget.validator;
     minWidget.validator = function(value, constraints) {
         var ret = dojo.hitch(this, defValidator)(value, constraints);
@@ -50,28 +55,6 @@ function addMinMaxValidation(minWidgetId, maxWidgetId, minCaption, maxCaption) {
 	dojo.connect(maxWidget, "onChange", minWidget, function(){this.validate();});
 }
 
-/* solved within the widget
-function addMinMaxDateValidation(typeWidgetId, minWidgetId, maxWidgetId) {
-	var minWidget = dijit.byId(minWidgetId);
-	var maxWidget = dijit.byId(maxWidgetId);
-	
-	minWidget.invalidMessage = dojo.string.substitute(message.get("validation.minmax"), [message.get("validation.to"), message.get("validation.from")]);
-	maxWidget.invalidMessage = maxWidget.invalidMessage;
-
-	var validate = function() {
-		var minVal = minWidget.valueNode.value;
-		var maxVal = maxWidget.valueNode.value;
-		if (minVal >= maxVal) return false;
-		return true;
-	}
-	
-	minWidget.validator = validate;
-	maxWidget.validator = validate;
-
-	dojo.connect(minWidget, "onChange", maxWidget, function() {this.validate();});
-	dojo.connect(maxWidget, "onChange", minWidget, function() {this.validate();});
-}
-*/
 function spatialRefLocationValidation(){
     var error = false;
     var data = UtilGrid.getTableData("spatialRefLocation");
@@ -466,28 +449,6 @@ function generalAddressPublishable(notPublishableIDs) {
         dijit.byId("generalAddress").invalidMessage = dojo.string.substitute(message.get("validation.error.addressType"), [verwalterString]);
         notPublishableIDs.push("generalAddress");
     }
-
-// NOT NEEDED ANYMORE, only "Verwalter" address mandatory for all classes, see https://dev.wemove.com/jira/browse/INGRID32-46
-/*
-    if ((objClass == '1') || (objClass == '3')) {
-        // Required ONLY if INSPIRE Theme selected
-        if (UtilUdk.isInspire(UtilList.tableDataToList("thesaurusInspire"))) {
-            // Get the string (from the syslist) that is used to identify Datenverantwortung entries
-            var dvString = UtilSyslist.getSyslistEntryName(505, 2);
-            
-            // Check if at least one entry exists with the correct relation type
-            // DOES NOT WORK IF DIRECTLY PUBLISHED AFTER ADDRESS WAS CORRECTLY SET (wrong data in address bean) !
-            // if (dojo.lang.every(addressData, function(addressRef) { return (addressRef.typeOfRelation != 2); })) {
-            if (dojo.every(addressData, function(addressRef){
-                return (dojo.trim(addressRef.nameOfRelation + "") != dvString);
-            })) {
-                console.debug("At least one address relation has to be of type 2 = 'Datenvarantwortung'.");
-                dijit.byId("generalAddress").invalidMessage = dojo.string.substitute(message.get("validation.error.addressType"), [dvString]);
-                notPublishableIDs.push("generalAddress");
-            }
-        }
-    }
-*/
 }
 
 function extraInfoConformityPublishable(notPublishableIDs) {
@@ -541,13 +502,6 @@ function applyBeforeObjectPublishValidation() {
     dojo.subscribe("/onBeforeObjectPublish", function(/*Array*/notPublishableIDs) {
         var objClass = dijit.byId("objectClass").getValue().substr(5, 1);
         var addressData = UtilGrid.getTableData("generalAddress");
-        
-        // check if general address table has all valid entries
-        // already checked!!!
-        /*if (!UtilGrid.getTable("generalAddress").validate(true)) {
-            console.debug("general address has not valid entries!");
-            notPublishableIDs.push("generalAddress");
-        }*/
         
         // Check if the timeRef table contains valid input (both date and type must contain data)
         timeRefTablePublishable(notPublishableIDs);
