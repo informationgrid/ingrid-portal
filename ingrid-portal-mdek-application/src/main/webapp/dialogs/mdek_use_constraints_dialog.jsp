@@ -8,23 +8,17 @@
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
-
 <script type="text/javascript">
 var constraintsScriptScope = _container_;
 
 dojo.connect(constraintsScriptScope, "onLoad", function(){
     var def = createDOMElements();
+    def.then(init);
 });
-
-/*
-dojo.connect(constraintsScriptScope, "onUnload", function(){
-    dijit.byId("availabilityUseConstraints").invalidate();
-});
-*/
 
 function createDOMElements() {
     var Structure = [
-        {field: 'name', name: "<fmt:message key='dialog.useConstraints.valueColumn' />",width: 703-scrollBarWidth+'px'}
+        {field: 'name', name: "<fmt:message key='dialog.useConstraints.valueColumn' />", editable: false, width: 703-scrollBarWidth+'px'}
     ];
     createDataGrid("constraintsList", null, Structure, null);
 
@@ -49,6 +43,30 @@ function readSysListData(listId) {
     return def;
 }
 
+function init() {
+    dojo.connect(UtilGrid.getTable("constraintsList"), "onSelectedRowsChanged", function(row) {
+        var selRowsData = UtilGrid.getSelectedData("constraintsList");
+        if (selRowsData.length == 1) {
+            // react only if not an empty row was selected
+            if (selRowsData[0] != null) {
+                if (currentUdk.writePermission) {
+                    updateUseConstraints(selRowsData[0]);
+                }
+            }
+        }
+    });
+}
+
+function updateUseConstraints(constraint) {
+    console.debug(constraint);
+    dijit.byId("availabilityUseConstraints").attr("value", constraint.name, true);
+    closeThisDialog();
+}
+
+function closeThisDialog() {
+    UtilGrid.clearSelection("constraintsList");
+    dijit.byId("pageDialog").hide();
+}
 </script> 
 </head>
 
@@ -63,7 +81,7 @@ function readSysListData(listId) {
         <!-- CONTENT START -->
         <div class="inputContainer field grey">
             <div class="tableContainer">
-                <div id="constraintsList"></div>
+                <div id="constraintsList" autoHeight="10" contextMenu="none" class="hideTableHeader"></div>
             </div>
         </div>
         <!-- CONTENT END -->
