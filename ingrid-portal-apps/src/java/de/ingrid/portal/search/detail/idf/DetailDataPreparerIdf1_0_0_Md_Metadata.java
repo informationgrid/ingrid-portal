@@ -318,6 +318,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}
 	
+	/** NOTICE: replaces all "\n" with "<br/>" because can have multiple lines (text areas, e.g. gmd:useLimitation). */
 	private void getNodeListValueList(ArrayList elements, String xpathExpression, String subXPathExpression, String codeListId, String type) {
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
@@ -329,17 +330,16 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					listEntry.put("type", type);
 					if(codeListId != null){
 						String tmpValue = sysCodeList.getNameByCodeListValue(codeListId, value);
-						if(tmpValue.length() < 1){
+						if(tmpValue != null && tmpValue.length() > 0){
+							value = tmpValue;
+						} else {
 							if(log.isDebugEnabled()){
 								log.debug("Codelist ID: " + codeListId + " return no value for '" + value+"'!");
 							}
-							tmpValue = value;
 						}
-						
-						listEntry.put("body", tmpValue);
-					}else{
-						listEntry.put("body", value);
 					}
+					value = value.replaceAll("\n", "<br/>");
+					listEntry.put("body", value);
 					if (!isEmptyList(listEntry)) {
 						elements.add(listEntry);
 					}
