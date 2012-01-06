@@ -263,6 +263,7 @@ public class MdekCatalogUtils {
 			
 			resultCat.setUuid(result.getString(MdekKeys.UUID));
 			resultCat.setCatalogName(result.getString(MdekKeys.CATALOG_NAME));
+			resultCat.setCatalogNamespace(result.getString(MdekKeys.CATALOG_NAMESPACE));
 			resultCat.setPartnerName(result.getString(MdekKeys.PARTNER_NAME));
 			resultCat.setProviderName(result.getString(MdekKeys.PROVIDER_NAME));
 			resultCat.setCountryCode(result.getInt(MdekKeys.COUNTRY_CODE));
@@ -402,6 +403,7 @@ public class MdekCatalogUtils {
 
 		catDoc.put(MdekKeys.UUID, cat.getUuid());
 		catDoc.put(MdekKeys.CATALOG_NAME, cat.getCatalogName());
+		catDoc.put(MdekKeys.CATALOG_NAMESPACE, cat.getCatalogNamespace());
 		catDoc.put(MdekKeys.PARTNER_NAME, cat.getPartnerName());
 		catDoc.put(MdekKeys.PROVIDER_NAME, cat.getProviderName());
 		catDoc.put(MdekKeys.COUNTRY_CODE, cat.getCountryCode());

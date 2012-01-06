@@ -71,6 +71,7 @@
             
             function updateInputFields(catalogData){
                 dijit.byId("adminCatalogName").setValue(catalogData.catalogName);
+                dijit.byId("adminCatalogNamespace").setValue(catalogData.catalogNamespace);
                 dijit.byId("adminCatalogPartnerName").setValue(catalogData.partnerName);
                 dijit.byId("adminCatalogProviderName").setValue(catalogData.providerName);
                 dijit.byId("adminCatalogCountry").setValue(catalogData.countryCode);
@@ -114,6 +115,7 @@
                 var newCatalogData = {};
                 newCatalogData.uuid = currentCatalogData.uuid;
                 newCatalogData.catalogName = dijit.byId("adminCatalogName").getValue();
+                newCatalogData.catalogNamespace = dijit.byId("adminCatalogNamespace").getValue();
                 newCatalogData.partnerName = dijit.byId("adminCatalogPartnerName").getValue();
                 newCatalogData.providerName = dijit.byId("adminCatalogProviderName").getValue();
                 newCatalogData.countryCode = dijit.byId("adminCatalogCountry").getValue();
@@ -194,6 +196,14 @@
                             </label>
                         </span>
 						<span class="input"><input type="text" id="adminCatalogName" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                        </div></span>
+                        <span class="outer"><div>
+                        <span class="label">
+                            <label for="adminCatalogNamespace" onclick="javascript:dialog.showContextHelp(arguments[0], 8100)">
+                                <fmt:message key="dialog.admin.catalog.catalogNamespace" />
+                            </label>
+                        </span>
+                        <span class="input"><input type="text" id="adminCatalogNamespace" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
                         </div></span>
 						<span class="outer"><div>
 						    <span class="label">

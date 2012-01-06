@@ -7,6 +7,7 @@ import de.ingrid.mdek.beans.object.LocationBean;
 public class CatalogBean {
 	private String uuid;
 	private String catalogName;
+	private String catalogNamespace;
 	private String partnerName;
 	private String providerName;
 	private Integer countryCode;
@@ -34,6 +35,14 @@ public class CatalogBean {
 
 	public void setCatalogName(String catalogName) {
 		this.catalogName = catalogName;
+	}
+
+	public String getCatalogNamespace() {
+		return catalogNamespace;
+	}
+
+	public void setCatalogNamespace(String catalogNamespace) {
+		this.catalogNamespace = catalogNamespace;
 	}
 
 	public Integer getCountryCode() {
