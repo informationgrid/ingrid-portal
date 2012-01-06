@@ -193,7 +193,11 @@ ingridObjectLayout.createFachBezugClass1 = function(){
 	dojo.connect(tabRef1, "selectChild", dojo.partial(UtilUI.toggleFunctionalLink, "ref1BasisTab2"));
 	
     new dijit.form.ValidationTextBox({style:"width:100%;"}, "ref1ObjectIdentifier");
-    
+
+    var button = new dijit.form.Button({style:"margin-right: 0px;"}, "ref1ObjectIdentifierAddButton");
+    button._inputFieldWidget = dijit.byId("ref1ObjectIdentifier");
+    button.onClick = igeEvents.setObjectUuid;
+
     var storeProps = {data: {identifier: '1',label: '0'}};
     createSelectBox("ref1DataSet", null, storeProps, function(){
         return UtilSyslist.getSyslistEntry(525);

@@ -1,6 +1,7 @@
 package de.ingrid.mdek.dwr.services;
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -32,4 +33,9 @@ public class UtilityServiceImpl {
         HttpSession ses = wctx.getSession(false);
         return ses.getMaxInactiveInterval();
 	}
+
+	/** returns java generated UUID via UUID.randomUUID() */
+	public String getRandomUUID() {
+		return UUID.randomUUID().toString();
+    }
 }

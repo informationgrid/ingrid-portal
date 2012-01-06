@@ -2984,6 +2984,26 @@ igeEvents.executeSearch = function() {
     igeEvents.toggleFields('thesaurus', "showAll");
 }
 
+igeEvents.setObjectUuid = function() {
+	var fieldWidget = this._inputFieldWidget;
+    var fieldValue = fieldWidget.getValue();
+    
+    // extract namespace from field content (Namespace#ID)
+    var myNamespace = "";
+    var fieldValues = fieldValue.split("#");
+    if (fieldValues.length > 1) {
+    	myNamespace = fieldValues[0] + "#";
+    }
+
+    // generate UUID
+    var def = UtilGeneral.generateUUID();
+    def.then(function(uuid) {
+        var newValue = myNamespace + uuid;
+        // and set in field
+        fieldWidget.attr("value", newValue, true);
+    });
+}
+
 igeEvents.disableInputOnWrongPermission = function() {
     UtilUI._uiElementsActiveA = true;
     UtilUI._uiElementsActiveO = true;
@@ -3068,7 +3088,7 @@ igeEvents.disableInputOnWrongPermission = function() {
 }
 
 igeEvents._toggleButtonsAccessibility = function(/*boolean*/disable) {
-    var widgets = ["thesaurusFreeTermsAddButton","thesaurusFreeTermsAddressAddButton"]
+    var widgets = ["thesaurusFreeTermsAddButton", "thesaurusFreeTermsAddressAddButton", "ref1ObjectIdentifierAddButton"]
     dojo.forEach(widgets, function(w) {
         var wid = dijit.byId(w);
         if (wid)

@@ -453,6 +453,11 @@
                                 </span>
 								<span class="input">
 									<input type="text" maxLength="255" id="ref1ObjectIdentifier" style="width:100%;" />
+                                    <div style="position:relative; top: 2px; float:right;">
+                                        <button id="ref1ObjectIdentifierAddButton">
+                                            <fmt:message key="ui.obj.type1.identifier.buttonAdd" />
+                                        </button>
+                                    </div>
 								</span></div>
 							</span>
                             <div>

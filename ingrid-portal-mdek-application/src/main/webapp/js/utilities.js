@@ -1570,6 +1570,17 @@ UtilGeneral.generateRandomString = function(strLength) {
 	return str;
 }
 
+UtilGeneral.generateUUID = function() {
+    var def = new dojo.Deferred();
+
+    UtilityService.getRandomUUID( {
+        callback: function(res) {
+        	def.callback(res);
+    }});
+
+    return def;
+}
+
 UtilGeneral.askUserAndInvokeOrCancel = function(text, invocation){
     dialog.show(message.get('general.hint'), text, dialog.INFO, [{
         caption: message.get('general.no'),
