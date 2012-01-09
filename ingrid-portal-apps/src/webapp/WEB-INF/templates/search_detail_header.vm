@@ -121,6 +121,7 @@ self.focus();
 #if($lang && $lang.toString() == 'en')
 	#set($langCode = "en_")
 #end
+<div id="identity" class="${langCode}motiv_suche_detail">
   <!-- LOGO -->
   <div id="logo">
     <a href="$renderResponse.encodeURL('/portal/default-page.psml')"><img class="image_alt" src="/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo PortalU" /></a>
