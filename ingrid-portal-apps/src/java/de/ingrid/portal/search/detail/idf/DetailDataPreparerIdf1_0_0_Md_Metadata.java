@@ -525,6 +525,11 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_geo.method"));
 		
 		// "Identifikator der Datenquelle"
+		// mapped differently in IDF 3.2.0 (gmd:MD_Identifier) than before (gmd:RS_Identifier). We map both !
+		// IDF 3.2.0
+		xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code";
+		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_geo.datasource_uuid"));
+		// IDF older
 		xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code";
 		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_geo.datasource_uuid"));	
 		
