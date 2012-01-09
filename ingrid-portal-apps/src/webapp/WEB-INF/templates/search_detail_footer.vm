@@ -24,8 +24,7 @@
 <div id="footercontainer">
   <div id="footercontent">
     <!-- portlets go here -->
-#set($footerMenu = $site.getMenu("footer-menu"))
-#if(!$footerMenu.empty)
+#if($site && $site.getMenu("footer-menu") && !$site.getMenu("footer-menu").empty)
   #includeFooterNavigation()
 #end
 <br /> 

@@ -121,14 +121,6 @@ self.focus();
 #if($lang && $lang.toString() == 'en')
 	#set($langCode = "en_")
 #end
-#set($currentPage = $site.getPage().url)
-##if($currentPage == "/main-maps.psml")
-##<div id="identity" class="motiv_karten">
-###elseif($currentPage == "/search-detail.psml")
-<div id="identity" class="${langCode}motiv_suche_detail">
-###else
-##<div id="identity" class="motiv_blank">
-###end
   <!-- LOGO -->
   <div id="logo">
     <a href="$renderResponse.encodeURL('/portal/default-page.psml')"><img class="image_alt" src="/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo PortalU" /></a>

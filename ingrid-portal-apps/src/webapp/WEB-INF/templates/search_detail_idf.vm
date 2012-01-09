@@ -796,8 +796,10 @@
 	#set($pageDescription = $description)
 #end
 
-#set($pageDescription = $pageDescription.replace('"',"'"))
-#set($pageDescription = $stringTool.cutString($pageDescription,300))
+#if($pageDescription)
+    #set($pageDescription = $pageDescription.replace('"',"'"))
+    #set($pageDescription = $stringTool.cutString($pageDescription,300))
+#end    
 #parse('WEB-INF/templates/search_detail_header.vm')
 
 #set ($action = $renderResponse.createActionURL())

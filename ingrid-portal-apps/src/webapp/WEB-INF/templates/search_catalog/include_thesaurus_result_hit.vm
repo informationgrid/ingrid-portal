@@ -3,7 +3,7 @@
 #if($topHit)
 	<div class="resultset">
 #else
-	#if($rs.get('moreHits') && $groupSubjectKey != "")
+	#if($rs.get('moreHits') && $groupSubjectKey && $groupSubjectKey != "")
 		## when "more hits footer" then no bottom margin
 		<div class="resultset" style="margin-left:${subHitLeftMargin}px; margin-bottom:0px">
 	#else
