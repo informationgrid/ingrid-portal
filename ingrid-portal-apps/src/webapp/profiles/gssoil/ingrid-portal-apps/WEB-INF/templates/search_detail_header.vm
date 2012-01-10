@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
   #if(!$pageTitle || $pageTitle == "")
-	<title>GS Soil</title>
+	<title>GS Soil - Search results</title>
   #else
 	<title>$pageTitle - GS Soil</title>
   #end
@@ -20,9 +20,9 @@
 	<meta name="igc-objektklasse" content="${udkObjClassName}" />
 	<meta name="igc-icon" content="http://www.portalu.de/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" />
   #end
-  <meta name="author" content="wemove digital solutions" />
-  <meta name="keywords" content="" />
-  <meta name="copyright" content="wemove digital solutions GmbH" />
+  <meta name="author" content="Coordination Center PortalU at the Lower Saxony Ministry of Environment and Climate Protection" />
+  <meta name="keywords" content="GS Soil Portal, hit list, result, search results, results, websites, monitoring data, maps, metadata " />
+  <meta name="copyright" content="Coordination Center PortalU at the Lower Saxony Ministry of Environment and Climate Protection" />
   <meta name="robots" content="index,follow" />
   <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
 

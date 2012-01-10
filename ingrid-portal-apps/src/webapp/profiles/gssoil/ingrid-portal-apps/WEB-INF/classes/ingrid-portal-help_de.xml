@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <help>
     <chapter>
-        <header>Hilfe zu GS Soil</header>
+        <header>Allgemeinehilfe zu dem GS Soil Portal</header>
         <section help-key="index">
             <header>Hilfethemen</header>
             <content>
@@ -13,16 +13,7 @@
                         <a href="help.psml?hkey=search-1">Suche</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-topics-1">Themen</a>
-                    </li>
-                    <li>
-                        <a href="help.psml?hkey=search-service-1">Service</a>
-                    </li>
-                    <li>
-                        <a href="help.psml?hkey=search-measure-1">Messwerte</a>
-                    </li>
-                    <li>
-                        <a href="help.psml?hkey=search-chronicle-1">Chronik</a>
+                        <a href="help.psml?hkey=search-service-1">Publikationen</a>
                     </li>
                     <li>
                         <a href="help.psml?hkey=maps-1">Karten</a>
@@ -31,13 +22,7 @@
                         <a href="help.psml?hkey=rss-news-1">Aktuelles</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=ingrid-inform-1">GS Soil informiert</a>
-                    </li>
-                    <li>
                         <a href="help.psml?hkey=myingrid-1">Mein GS Soil</a>
-                    </li>
-                    <li>
-                        <a href="help.psml?hkey=ingrid-newsletter-1">Newsletter</a>
                     </li>
                 </ul>
             </content>
@@ -48,45 +33,46 @@
         <section help-key="about-1">
             <header>Konzept und Aufgabe von GS Soil</header>
             <content>
-                <p>GS Soil, das Umweltportal Deutschland, bietet einen zentralen
-                    Zugriff auf mehrere hunderttausend Internetseiten und
-                    Datenbankeinträge von öffentlichen Institutionen und
-                    Organisationen in Bund und Ländern. Mit einem Mix aus
-                    aktuellen Nachrichten, Umweltmesswerten (z.B. aktuelle
-                    Ozonkonzentration in der Luft), Hintergrundinformationen,
-                    und historischen Umweltereignissen richtet sich GS Soil
-                    sowohl an interessierte Laien als auch an Fachpublikum. Das
-                    Informationsangebot wird kontinuierlich ausgebaut mit dem
-                    Ziel, langfristig möglichst alle behördlichen Anbieter von
-                    Umweltinformationen zu erfassen.</p>
-                <p>Bei der Konzeption von GS Soil spielten die
-                    EU-Umweltinformationsrichtlinie von 2003 und die geplante
-                    INSPIRE Richtlinie eine wichtige Rolle. Diese Richtlinien
-                    setzen neue Maßstäbe für die öffentliche Verbreitung
-                    behördlicher Umweltinformationen bzw. den Aufbau der dafür
-                    notwendigen informationstechnischen Infrastrukturen.
-                    Zukünftig sind wesentlich mehr Behörden und Organisationen
-                    als bisher dazu verpflichtet, umweltrelevante Daten und
-                    Informationen in einer klar verständlichen und einfach
-                    zugänglichen Form bereitzustellen. GS Soil und die eigens
-                    zum Aufbau des Portals entwickelte Software
-                    &#8222;InGrid&#8220; wurden speziell als
-                    Werkzeuge zur Unterstützung der Behörden bei der Umsetzung
-                    der Richtlinien konzipiert. </p>
+                <p>Co-funded by the community programme eContentplus GS Soil aims at establishing 
+				a Best Practice Network dealing with a cluster of the data themes listed in the Annexes I to III of the 
+				<a target="_blank" href="http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2007:108:0001:0014:EN:PDF">INSPIRE Directive (2007/2/EC)</a> 
+				and focused on soil related issues.</p> 
+				<p>The establishment of the soil thematic strategy and the new transboundary EU approach for protected sites management has 
+				enforced the link between soil conservation and best practice use and geo-information. This has generated the need for 
+				interoperable, accessible and harmonised datasets for the EU. The link is also addressed by the INSPIRE Directive which 
+				pursues an EU Spatial Data Infrastructure to support environmental policies.</p>
+				<p>The GS Soil Network aims, through 
+				state-of-the-art methodologies and best practice examples, to improve harmonisation of national datasets and make them more 
+				accessible and exploitable within Europe. Therefore, the consortium contributes to the INSPIRE implementation with specific 
+				reference to a cluster of data themes on nature conservation (as per the INSPIRE Annexes). Within the INSPIRE directive the 
+				theme soil is explicitly addressed as an individual theme (Annex III) and besides that soil related environmental, agricultural 
+				and forestry aspects are also addressed in Annex II and III. According to this, the thematic focus of GS Soil is set on soil as 
+				an important parameter according to climate, land use, geology and geomorphology. At the same time soils are the basis for food 
+				production and consumer health, for the ecological and economical balance and for many other important bases of life.</p>
+				<p>Considering the INSPIRE Annexes, the following soil and soil related themes will be considered:</p> 
+				<ul>
+					<li>Basic soil describing information including depth, texture, structure and organic material as described in Annex III theme "Soil",</li>
+					<li>Information about soil monitoring facilities and long term observations as part of the Annex III theme "Environmental Monitoring Facilities",</li>
+					<li>Information about the soil related aspects of Annex III theme "Natural Risk Zones" as e.g. landslides, soil erosion, soil compaction, soil organic carbon decline, salinization, acidification and soil biodiversity loss, </li>
+					<li>Soil related information of the INSPIRE Annex III theme "Human Health and Safety" and </li>
+					<li>Soils as primary site factor to identify protected land as part of the INSPIRE Annex I theme "Protected Sites" (e.g. peat land, extrazonal sites)</li>
+				</ul>
+				<p>The main objective of the GS Soil Network is to: <br /> 
+				<ul>
+					<li>involve new stakeholders; </li>
+					<li>share data and best practices; </li>
+					<li>Improve and stimulate exploitation and </li>
+					<li>the re-use of information on nature conservation.</li>
+				</ul>
+				</p>
             </content>
         </section>
         <section help-key="about-2">
             <header>Die Betreiber von GS Soil</header>
             <content>
-                <p>Als Nachfolgeprojekt des Umweltdatenkatalogs (UDK) und des
-                    German Environmental Information Network (gein) wurde
-                    GS Soil im Rahmen der Bund-Länder Verwaltungsvereinbarung
-                    UDK/GEIN entwickelt. An der Verwaltungsvereinbarung sind
-                    u.a. das Umweltbundesministerium (BMU) und die
-                    Umweltministerien von 15 Ländern beteiligt.  GS Soil wird
-                    technisch und inhaltlich von der Koordinierungsstelle
-                    GS Soil im Niedersächsischen Umweltministerium in
-                    Hannover betreut.</p>
+                <p>As expected result from the project GS Soil the GS Soil Portal was set up. The GS Soil Portal provides access to all project
+				soil data. GS Soil Portal is maintained from technical and contents point of view by Coordination Center PortalU in the 
+				Lower Saxony ministry for environment and climate protection in Hanover.</p>
             </content>
         </section>
         <section help-key="about-3">
@@ -94,44 +80,30 @@
             <content>
                 <p>
                     <b>Suche:</b> Zentrale Funktion des Portals ist die
-                    GS Soil-Suche (<a href="help.psml?hkey=search-1">Suche</a>)
+                    <a href="help.psml?hkey=search-1">Suche</a>
                     mit deren Hilfe Webseiten und Datenbankeinträge über eine
                     herkömmliche Volltextsuche (<a
                         href="help.psml?hkey=search-1">Einfache Suche</a>), aber
                     auch über ein differenziertes Fachvokabular (<a
                         href="help.psml?hkey=ext-search-1">Erweiterte Suche</a>)
                     durchsucht werden können. </p>
+				<p>
+                    <b>Publikationen</b>: Hier finden Sie aktuelle
+                    Publikationen aus dem Bodenbereich.</p>
                 <p>
                     <b>Karten:</b> Ein Kartenviewer bietet die Möglichkeit,
                     Raumbezüge für die Suche über interaktive Karten einzugeben
                     oder aber digitale Karten aus der Such-Ergebnisliste direkt
                     in GS Soil anzuzeigen.</p>
                 <p>
-                    <b>Themenseiten:</b> Die GS Soil Themenseiten  bieten einen
-                    themenbezogenen Zugang zu ausgewählten, besonders
-                    interessanten Informationen und Daten.</p>
-                <p>
-                    <b>Aktuelles</b>: Tagesaktuelle Meldungen werden direkt aus
-                    den Pressestellen der beteiligten Behörden und
-                    Organisationen eingeblendet.</p>
-                <p>
-                    <b>Service</b>: Hier finden Sie Nachrichten und
-                    Informationen über Veranstaltungen und aktuelle
-                    Publikationen im Umweltbereich.</p>
-                <p>
-                    <b>Messwerte</b>: GS Soil informiert Sie rund um die Uhr
-                    über den aktuellen Zustand Ihrer Umwelt.</p>
-                <p>
-                    <b>Chronik</b>: Wann trat das Kyoto-Protokoll in
-                    Kraft? Eine Antwort auf diese und viele andere Fragen zu
-                    historischen Umweltereignissen finden Sie in der Chronik.</p>
+                    <b>Aktuelles</b>: Aktuelle Meldungen des GS Soil Newsticker werden angezeigt.</p>
             </content>
         </section>
         <section help-key="about-4">
             <header>Informationsquellen in GS Soil</header>
             <content>
-                <p>GS Soil ist ein komfortables und benutzerfreudliches Tor zu
-                    Umweltinformationen im Internet. Im Gegensatz zu den meisten
+                <p>GS Soil ist ein komfortables und benutzerfreudliches Portal zu
+                    Boden- und bodenrelevanten Informationen im Internet. Im Gegensatz zu den meisten
                     Portalen und Suchmaschinen erfasst GS Soil nicht nur
                     Webseiten, Textdokumente und andere Internetformate, sondern
                     kann auch auf Datenbanken und Fachinformationssysteme
@@ -142,18 +114,18 @@
             <header>Bedingungen für Nutzung und Beteiligung an GS Soil</header>
             <content>
                 <p>Der Kreis der Informationsanbieter in GS Soil beschränkt sich
-                    vorwiegend auf Behörden und behördennahen Organisationen in
-                    Deutschland, wird aber kontinuierlich erweitert. Wenn Ihre
-                    Organisation ebenfalls umweltrelevante Informationen über
+                    vorwiegend auf das GS Soil Netzwerk in
+                    Europa, wird aber kontinuierlich erweitert. Wenn Ihre
+                    Organisation ebenfalls bodenrelevante Informationen über
                     GS Soil bereitstellen möchte wenden Sie sich bitte an die <a
                         href="http://www.kst.portalu.de/"
-                        target="_new">Koordinierungsstelle GS Soil</a>.</p>
+                        target="_new">Koordinierungsstelle PortalU</a>.</p>
             </content>
         </section>
         <section help-key="about-6">
-            <header>InGrid &#8211; Die Software hinter GS Soil</header>
+            <header>InGrid &#8211; Die Software hinter dem GS Soil Portal</header>
             <content>
-                <p>Zur Umsetzung von GS Soil wurde das Softwarepaket InGrid
+                <p>Das Softwarepaket InGrid wurde für die Umsetzung des Umweltportal Deutschland (PortalU)
                     entwickelt. InGrid setzt auf eine modulare und flexible
                     Systemarchitektur auf der Basis lizenzfreier OpenSource
                     Produkte. Dadurch wird es möglich, die technische Struktur
@@ -168,18 +140,31 @@
     </chapter>
     <chapter>
         <header>Suche</header>
+		<section help-key="search-3">
+			<header>Schnelleinstieg in die Suche</header>
+			<content>
+				<p>Über das GS Soil Portal können Sie nach unterschiedlichen Typen von Datenquellen suchen:</p>
+				<ul>
+						<li>Metadaten</li>
+						<li>Webseiten</li>
+						<li>Publikationen</li>
+				</ul>
+				<p>Für einen schnellen Überblick über die unterschiedlichen Daten, geben Sie bitte für</p>
+				<ul>
+				<p>Metadaten: <b>datatype:metadata</b>,</p>
+				<p>Webseiten: <b>datatype:www</b> und </p>
+				<p>Publikationen: <b>datatype:service</b></p>
+				</ul>
+				<p>als Suchanfrage ein. Mit diesen Anfragen erhalten Sie alle Einträge für diese 3 Datentypen.</p>
+				<p>Wenn Sie ihre Suchanfrage detaillierter gestalten wollen benutzen Sie bitte die unterschiedlichen Möglichkeiten der <a href="?hkey=ext-search-1">Erweiterten Suche</a>.</p>
+			</content>
+		</section>
         <section help-key="search-1">
             <header>Einfache Suche</header>
             <content>
                 <p>Über die Suche können Sie einen oder mehrere Suchbegriffe
                     eingeben. Gefunden werden diejenigen Seiten die alle
                     Suchbegriffe enthalten.</p>
-                <p>Es wird je nach Einstellung in einem der folgenden Suchräume gesucht:</p>
-                <ul>
-                    <li>Umweltinformationen: behördliche Informationen zur Umwelt</li>
-                    <li>Adressen: Zuständigkeiten</li>
-                    <li>Forschungsprojekte: Projekte zur Umweltforschung</li>
-                </ul>
             </content>
         </section>
         <section help-key="search-2">
@@ -189,17 +174,7 @@
                     verfeinern. Lesen Sie hierzu folgende Themen:</p>
                 <ul>
                     <li>
-                        <a href="help.psml?hkey=ext-search-1">Erweiterte Suche
-                            nach Umweltinformationen</a>
-                    </li>
-                    <li>
-                        <a href="help.psml?hkey=ext-search-address-1">Erweiterte
-                            Suche nach Adressen</a>
-                    </li>
-                    <li>
-                        <a
-                            href="help.psml?hkey=ext-search-research-1">Erweiterte
-                            Suche nach Forschungsprojekten</a>
+                        <a href="help.psml?hkey=ext-search-1">Erweiterte Suche</a>
                     </li>
                     <li>
                         <a href="help.psml?hkey=search-history-1">Suchhistorie</a>
@@ -220,31 +195,31 @@
                         <a href="help.psml?hkey=search-results-1">Suchergebnisliste</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-catalog-1">Kataloge</a>
+                        <a href="help.psml?hkey=search-catalog-2">Thesaurus Navigator</a>
                     </li>
                 </ul>
             </content>
         </section>
     </chapter>
     <chapter>
-        <header>Erweiterte Suche nach Umweltinformationen</header>
+        <header>Erweiterte Suche</header>
         <section help-key="ext-search-1">
-            <header>Erweiterte Suche nach Umweltinformationen</header>
+            <header>Erweiterte Suche</header>
             <content>
-                <p>Sie können Ihre Suche nach Umweltinformationen über die
-                    &#8222;Erweiterte Suche&#8220; verfeinern.</p>
+                <p>Sie können Ihre Suche nach Bodeninformationen über die
+                    <i>Erweiterte Suche</i> verfeinern.</p>
                 <p>Prinzipiell setzt sich ein Suchausdruck aus einzelnen
                     Suchbegriffen zusammen, die  mit Operatoren (UND, ODER,
                     NICHT) verbunden werden. Wie Sie diese Operatoren von Hand
-                    eingeben können lesen Sie in dem Kapitel &#8222;<a href="help.psml?hkey=search-expert-1">Experteneingabe</a>&#8220;.</p>
-                <p>Die &#8222;Erweiterte Suche&#8220; bietet Ihnen die
+                    eingeben können lesen Sie in dem Kapitel <a href="help.psml?hkey=search-expert-1">Experteneingabe</a>.</p>
+                <p>Die <i>Erweiterte Suche</i> bietet Ihnen die
                     Möglichkeit Ihren Suchausdruck per Assistenten aufzubauen.</p>
             </content>
         </section>
         <section help-key="ext-search-2">
-            <header>Bereiche zur Spezifizierung der Suche</header>
+            <header>Eingrenzung des Suchraums</header>
             <content>
-                <p>Der sog. &#8222;Suchraum&#8220; umfasst alle
+                <p>Der sog. Suchraum umfasst alle
                     Webseiten, Dokumente, etc. die von einer Suchanfrage erfasst
                     werden. Folgende Bereiche zur Erweiterung oder Einschränkung
                     des Suchraumes stehen Ihnen zur Verfügung:</p>
@@ -285,7 +260,7 @@
                     gefunden, wenn sie <b>genau</b> die eingegebene Wortgruppe
                     enthält (in der gleichen Reihenfolge, mit Leerzeichen etc.).</p>
                 <p>
-                    <b>keinen dieser Begriffe:</b> eine Information wird nur
+                    <b>keinen dieser Begriffe (NOT):</b> eine Information wird nur
                     dann gefunden, wenn sie <b>keinen</b> der eingegebenen
                     Begriffe enthält.</p>
             </content>
@@ -297,8 +272,7 @@
                     Fachbegriffe hinzufügen. Dazu geben Sie einen beliebigen
                     Begriff in das Eingabefeld ein und senden eine Anfrage an
                     den <a href="#ext-search-subject-3">Thesaurus</a> ab.</p>
-                <p>Sie erhalten dann eine Reihe <a
-                        href="#ext-search-subject-5">ähnlicher Begriffe</a>, die
+                <p>Sie erhalten dann eine Reihe <a href="#ext-search-subject-5">ähnlicher Begriffe</a>, die
                     Sie dem Suchausdruck hinzufügen können oder über deren
                     Verlinkungen Sie ihren Suchbegriff weiter spezifizieren können.</p>
             </content>
@@ -316,97 +290,71 @@
                         (Unterbegriffe) oder anders ausdrücken (Synonyme) lässt.
                         Thesauri werden z.B. zum Verschlagworten und Auffinden
                         von Dokumenten genutzt.</p>
-                    <p>GS Soil verwendet den Umweltthesaurus
-                        (UMTHES<sup>®</sup>) des Umweltbundesamtes in Dessau. Er
-                        enthält mehr als 30.000 Fachbegriffe aus dem
-                        Themengebiet &quot;Umwelt&quot;.</p>
-                    <p>Der UMTHES<sup>® </sup>wird über den <a
-                            href="http://www.semantic-network.de/"
-                            target="_new">Semantic Network Service (SNS)</a> vom
-                        Umweltbundesamt zur Verfügung gestellt.</p>
+                    <p>GS Soil verwendet den GEneral Multilingual Environmental Thesaurus 
+						(<a href="http://www.eionet.europa.eu/gemet" target="SNS">GEMET</a>). 
+						GEMET ist ein Thesaurus für die Klassifizierung von Umweltresourcen welcher von der Europäischen Umweltbehörde (EEA) und dem Europäische Ansprechstelle für Katalogen aus Datenquellen (ETCCDS)
+						zusammen mit internationalen Experten entwickelt wurde.
+						Er enthält mehr als 6.562 Fachbegriffe welche in einem Klassifikationsschema angeordnet sind und die Begriffe wurden in 31 Sprachen übersetzt.</p>
                 </content>
             </section>
             <section help-key="ext-search-subject-5">
                 <header>Ähnliche Begriffe</header>
                 <content>
-                    <p>Nach der Analyse Ihres Suchbegriffs durch den SNS werden
-                        &#8222;ähnliche&#8220; Begriffe aus dem
-                        Thesaurus angezeigt . Sie haben die Möglichkeit, einen
+                    <p>Nach der Analyse Ihres Suchbegriffs durch den semantischen Dienst werden
+                        ähnliche Begriffe aus dem
+                        Thesaurus angezeigt. Sie haben die Möglichkeit, einen
                         oder mehrere dieser Begriffe zu markieren und in Ihren
-                        Suchausdruck zu übernehmen (&#8222;Zur Suchanfrage hinzufügen&#8220;).</p>
-                    <p>Sie haben aber auch die Möglichkeit einen
-                        &#8222;ähnlichen&#8220; Begriff weiter zu
-                        spezifizieren, in dem Sie auf den jeweiligen Begriff
-                        klicken. Er wird dann als <a
-                        href="#_Thesaurus-Schlagwort">Thesaurus-Schlagwort</a>
-                        angezeigt. Zusätzlich werden die zughörigen <a
-                            href="#_Oberbegriffe">Ober</a>-,<a
-                        href="#_Unterbegriffe">Unter</a>- und <a
-                            href="#_Verwandte_Begriffe">verwandten Begriffe</a>,
+                        Suchausdruck zu übernehmen (<i>Zur Suchanfrage hinzufügen</i>).</p>
+                    <p>Sie haben aber auch die Möglichkeit einen ähnlichen Begriff weiter zu spezifizieren, in dem Sie auf den jeweiligen Begriff
+                        klicken. Er wird dann als <a href="#_Thesaurus-Schlagwort">Thesaurus-Schlagwort</a> angezeigt. Zusätzlich werden die zughörigen 
+							<a href="#_Oberbegriffe">Ober</a>-,
+							<a href="#_Unterbegriffe">Unter</a>- und 
+							<a href="#_Verwandte_Begriffe">verwandten Begriffe</a>,
                         sowie die <a href="#_Synonyme">Synonyme</a> angezeigt.</p>
                 </content>
             </section>
             <section help-key="ext-search-subject-6">
                 <header>Thesaurus-Schlagwort</header>
                 <content>
-                    <p>Dies ist das aktuell eingestellt Thesaurus-Schlagwort.
-                        Sie können es in ihren Suchausdruck übernehmen, indem
-                        Sie es ankreuzen und den Button &#8222;Zur
-                        Suchanfrage hinzufügen&#8220; anklicken.</p>
+                    <p>Dies ist das aktuell eingestellt Thesaurus-Schlagwort. Sie können es in ihren Suchausdruck übernehmen, indem
+                        Sie es ankreuzen und den Button <i>Zur Suchanfrage hinzufügen</i> anklicken.</p>
                 </content>
             </section>
             <section help-key="ext-search-subject-7">
                 <header>Oberbegriffe</header>
                 <content>
-                    <p>Ein Oberbegriff ist ein Begriff, der ein
-                        Thesaurus-Schlagwort verallgemeinert. Der
-                        UMTHES<sup>®</sup> bietet die Möglichkeit, dass ein
+                    <p>Ein Oberbegriff ist ein Begriff, der ein Thesaurus-Schlagwort verallgemeinert. GEMET bietet die Möglichkeit, dass ein
                         Thesaurus-Begriff mehrere Oberbegriffe besitzt.</p>
-                    <p>Sie können den oder die Oberbegriffe ihrem Suchausdruck
-                        hinzufügen, in dem Sie sie ankreuzen und auf den Button
-                        &#8222;Zur Suchanfrage hinzufügen&#8220; klicken.</p>
+                    <p>Sie können den oder die Oberbegriffe ihrem Suchausdruck hinzufügen, in dem Sie sie ankreuzen und auf den Button
+                        <i>Zur Suchanfrage hinzufügen</i> klicken.</p>
                 </content>
             </section>
             <section help-key="ext-search-subject-8">
                 <header>Unterbegriffe</header>
                 <content>
-                    <p>Ein Unterbegriff ist eine Spezialisierung eines
-                        Thesaurus-Schlagworts. Ein Thesaurus-Begriff kann
-                        beliebig viele Unterbegriffe besitzen.</p>
-                    <p>Sie können einen oder mehrere Unterbegriffe ihrem
-                        Suchausdruck hinzufügen, in dem Sie sie ankreuzen und
-                        auf den Button &#8222;Zur Suchanfrage
-                        hinzufügen&#8220; klicken.</p>
+                    <p>Ein Unterbegriff ist eine Spezialisierung eines Thesaurus-Schlagworts. Ein Thesaurus-Begriff kann beliebig viele Unterbegriffe besitzen.</p>
+                    <p>Sie können einen oder mehrere Unterbegriffe ihrem Suchausdruck hinzufügen, in dem Sie sie ankreuzen und
+                        auf den Button <i>Zur Suchanfrage hinzufügen</i> klicken.</p>
                 </content>
             </section>
             <section help-key="ext-search-subject-9">
                 <header>Verwandte Begriffe</header>
                 <content>
-                    <p>Ein verwandter Begriff ist ein Thesaurus-Begriff der in
-                        einer Beziehung zu dem Thesaurus-Schlagwort steht, aber
-                        weder eine Ober- noch eine Unterbegriff ist. Ein
-                        Thesaurus-Begriff kann beliebig viele verwandte Begriffe besitzen.</p>
-                    <p>Sie können einen oder mehrere verwandte Begriffe ihrem
-                        Suchausdruck hinzufügen, in dem Sie sie ankreuzen und
-                        auf den Button &#8222;Zur Suchanfrage
-                        hinzufügen&#8220; klicken.</p>
+                    <p>Ein verwandter Begriff ist ein Thesaurusbegriff der in einer Beziehung zu dem Thesaurus-Schlagwort steht, aber
+                        weder eine Ober- noch eine Unterbegriff ist. Ein Thesaurusbegriff kann beliebig viele verwandte Begriffe besitzen.</p>
+                    <p>Sie können einen oder mehrere verwandte Begriffe ihrem Suchausdruck hinzufügen, in dem Sie sie ankreuzen und
+                        auf den Button <i>Zur Suchanfrage hinzufügen</i> klicken.</p>
                 </content>
             </section>
             <section help-key="ext-search-subject-10">
                 <header>Synonyme</header>
                 <content>
-                    <p>Ein Synonym ist ein alternativer , aber sinngleicher
-                        Ausdruck für das Thesaurus-Schlagwort.</p>
-                    <p>Manchmal setzt sich ein Synonym aus zwei oder mehreren
-                        Thesaurus-Begriffen zusammen. In diesem Fall ist das
-                        Synonym nicht als alternativer Ausdruck für einen
-                        einzelnen Thesaurus-Begriff, sondern als Synonym für den
-                        zusammengesetzten Begriff zu verstehen.</p>
-                    <p>Sie können ein oder mehrere Synonyme ihrem Suchausdruck
-                        hinzufügen, in dem Sie sie ankreuzen und auf den Button
-                        &#8222;Zur Suchanfrage hinzufügen&#8220; klicken.</p>
-                    <p>Wenn Sie auf den Synonym-Begriff klicken, gelangen Sie zu
-                        den dahinter liegenden Thesaurus-Begriffen. Sie können
+                    <p>Ein Synonym ist ein alternativer, aber sinngleicher Ausdruck für das Thesaurus-Schlagwort.</p>
+                    <p>Manchmal setzt sich ein Synonym aus zwei oder mehreren Thesaurus-Begriffen zusammen. In diesem Fall ist das Synonym nicht als alternativer Ausdruck für einen
+                        einzelnen Thesaurus-Begriff, sondern als Synonym für den zusammengesetzten Begriff zu verstehen.</p>
+                    <p>Sie können ein oder mehrere Synonyme ihrem Suchausdruck hinzufügen, in dem Sie sie ankreuzen und auf den Button
+                        <i>Zur Suchanfrage hinzufügen</i> klicken.</p>
+                    <p>Wenn Sie auf den Synonym-Begriff klicken, gelangen Sie zu den dahinter liegenden Thesaurusbegriffen. Sie können
                         auch diese in Ihren Suchausdruck übernehmen.</p>
                 </content>
             </section>
@@ -417,11 +365,8 @@
         <section help-key="ext-search-spacial-1">
             <header>Raum</header>
             <content>
-                <p>GS Soil analysiert über den <a
-                        href="http://www.semantic-network.de/"
-                        target="_new">Semantic Network Service (SNS)</a> des
-                    Umweltbundesamtes in Dessau die Web-Seiten der
-                    angeschlossenen Server und ermittelt einen Raumbezug für
+                <p>Das GS Soil Portal analysiert über den <a href="#ext-search-spacial-3">Gazetteer</a> für jede Webseite, 
+				welche über das GS Soil Portal verfügbar gemacht wurde, den entsprechenden Raumbezug für
                     jede Seite. Bei der räumlichen Suche nach Webseiten wird in
                     GS Soil dieser Raumbezug genutzt. Die räumliche Suche ist
                     also nicht, wie in den meisten anderen Suchmaschinen, eine
@@ -437,44 +382,35 @@
                 <p>Über die begriffliche Raumeinschränkung können Sie gezielt
                     geografische Begriffe Ihrem Suchausdruck hinzufügen. Dazu
                     geben Sie einen beliebigen Begriff in das Eingabefeld ein
-                    und senden eine Anfrage an den <a
-                    href="#ext-search-spacial-3">Geo-Thesaurus</a> (Button:
-                    &#8222;Geografische Namen suchen&#8220;).</p>
-                <p>Sie erhalten dann eine Reihe <a
-                        href="#ext-search-spacial-4">geografischer Namen</a>,
+                    und senden eine Anfrage an den <a href="#ext-search-spacial-3">Gazetteer</a> (Button:
+                    <i>Geografische Namen suchen</i>).</p>
+                <p>Sie erhalten dann eine Reihe geografischer Namen,
                     die Sie dem Suchausdruck hinzufügen können oder über deren
-                    Verlinkung Sie ihren Suchbegriff weiter spezifizieren können.</p>
+                    Verlinkung Sie ihren <i>Suchbegriff</i> weiter spezifizieren können.</p>
             </content>
             <section help-key="ext-search-spacial-3">
-                <header>Was ist ein Geo-Thesaurus?</header>
+                <header>Was ist ein Gazetteer?</header>
                 <content>
                     <p>Ähnlich wie das Ortsverzeichnis eines Atlanten beschreibt
-                        der Geo-Thesaurus Umwelt (GTU) die Namen von Gemeinden,
+                        ein Gazetteer die Namen von Gemeinden,
                         Flüssen, Bergen, Landschaften und anderen geografischen
-                        Objekten in Deutschland. Dabei gibt der GTU die genaue
+                        Objekten in Deutschland. Dabei liefert der Gazetteer die genaue
                         Schreibweise ebenso wie die geografische Position
-                        (Koordinaten) eines Orts an.</p>
-                    <p>Der GTU beschränkt sich aus praktischen Gründen auf Orte,
-                        die üblicherweise auf Karten ab dem Maßstab 1:250.000
-                        verzeichnet sind. Derzeit sind ca. 50.000 geografische
-                        Objekte in ihm verzeichnet.</p>
-                    <p>Der Geo-Thesaurus Umwelt wird über den <a
-                            href="http://www.semantic-network.de/"
-                            target="_new">Semantic Network Service (SNS)</a> des
-                        Umweltbundesamtes zur Verfügung gestellt.</p>
+                        (Koordinaten) eines Orts.</p>
+                    <p>Der Gazetteer ist verfügbar über den semantischen Dienst welcher im GS Soil Portal eingebunden ist.</p>
                 </content>
             </section>
             <section help-key="ext-search-spacial-4">
-                <header>Was ist ein Geo-Thesaurus?</header>
+                <header>Der Ablauf im GS Soil Portal</header>
                 <content>
                     <p>Der Suchausdruck, den Sie über den Button
-                        &#8222;Geografische Namen suchen&#8220;
-                        abgeschickt haben, wird durch den SNS analysiert und Sie
+                        <i>Geografische Namen suchen</i>
+                        abgeschickt haben, wird durch den semantischen dienst analysiert und Sie
                         erhalten eine Reihe geografischer Namen zurück. Sie
                         können diese jetzt ankreuzen und Ihrem Suchausdruck
                         hinzufügen. Die geografischen Namen werden zur
                         räumlichen Suche in den räumlichen Informationen der
-                        Web-Seiten und der Datenbanken genutzt.</p>
+                        Webseiten und der Datenbanken genutzt.</p>
                     <p>Wollen Sie Ihre räumlichen Suchbegriffe weiter
                         verfeinern, können Sie sich die Lagebeziehungen durch
                         einen Klick auf den jeweiligen Begriff ansehen.</p>
@@ -494,81 +430,205 @@
                         gewünschten Raumbezug weiter konkretisieren.</p>
                 </content>
             </section>
+			<section help-key="ext-search-spacial-11">
+                <header>Beschreibung der Gazetteer Featureklassen</header>
+                <content>
+					<p>Der GS Soil Gazetteer basiert auf <a href="http://www.geonames.org/">GeoNames</a>. Im folgenden werden die wesentlichen Featureklassen von GeoNames beschrieben.
+					Wenn Sie interesse an der vollständigen Liste der Featureklassen habe, besuchen Sie bitte die <a href="http://www.geonames.org/statistics/germany.html">Featurestatistik</a> von GeoNames.</p>
+                    <p><b>Administrative Boundary Features (country, state, region,...)</b></p>
+					<p>A.ADM4: fourth-order administrative division </p>	
+					<ul><p>A subdivision of a fourth-order administrative division.</p></ul>
+					<p>A.ADMD: administrative division</p>	
+					<ul><p>An administrative division of a country, undifferentiated as to administrative level.</p></ul>
+					<p>A.ADM3: third-order administrative division</p>
+					<ul><p>A subdivision of a third-order administrative division.</p></ul>
+					<p>A.ADM2: second-order administrative division</p>	
+					<ul><p>A subdivision of a second-order administrative division.</p></ul>
+					<p>A.ADM1: first-order administrative division</p>	
+					<ul><p>A primary administrative division of a country, such as a state in Germany.</p></ul>
+					<p>A.PCLI: independent political entity</p>
+					
+					<p><b>Populated Place Features (city, village,...)</b></p>
+					<p>P.PPL: populated place</p>	
+					<ul><p>A city, town, village, or other agglomeration of buildings where people live and work.</p></ul>
+					<p>P.PPLA4: seat of a fourth-order administrative division</p>	
+					<p>P.PPLX: section of populated place</p>
+					<p>P.PPLL: populated locality</p>
+					<ul><p>An area similar to a locality but with a small group of dwellings or other buildings.</p></ul>
+					<p>P.PPLA2: seat of a second-order administrative division</p>
+					<p>P.PPLQ: abandoned populated place</p>	
+					<p>P.PPLA: seat of a first-order administrative division</p>
+					<ul><p>Seat of a first-order administrative division (PPLC takes precedence over PPLA).</p></ul>
+					<p>P.PPLF: farm village</p>
+					<ul><p>A populated place where the population is largely engaged in agricultural activities.</p></ul>
+					<p>P.PPLA3: seat of a third-order administrative division</p>	
+					<p>P.PPLS: populated places</p>
+					<ul><p>Cities, towns, villages, or other agglomerations of buildings where people live and work.</p></ul>
+					<p>P.PPLC: capital of a political entity</p>
+					<p>P.PPLG: seat of government of a political entity</p>
+					
+					<p><b>Area Features (parks,area, ...)</b></p>
+					<p>L.AREA: area</p>	
+					<ul><p>A tract of land without homogeneous character or boundaries.</p></ul>
+					<p>L.RGN: region</p>	
+					<ul><p>An area distinguished by one or more observable physical or cultural characteristics.</p></ul>
+					
+					<p><b>Road / Railroad Features (road, railroad )</b></p>
+					<p>R.RD: road</p>	
+					<p>R.ST: street</p>
+					<p>R.RR: railroad</p>
+					
+					<p><b>Spot Features (spot, building, farm)</b></p>
+					<p>H.STM: stream </p>	
+					<p>H.LK: lake</p>
+					<p>H.PND: pond</p>	
+					<p>H.HBR: harbor(s)</p>
+					
+					<p><b>Road / Railroad Features (road, railroad )</b></p>
+					<p>S.HTL: hotel</p>	
+					<p>S.BLDG: building(s)</p>
+					<p>S.RSTN: railroad station</p>
+                </content>
+            </section>			
         </section>
         <section help-key="ext-search-spacial-6">
             <header>Raumeinschränkung Karte</header>
             <content>
-                <p>Neben der begrifflichen räumlichen Suche ist auch eine Suche
-                    über eine Karte möglich. Hierbei wird ein Suchrechteck
-                    (Bounding-Box) an die Suche übergeben.</p>
-                <p>Bei Web-Seiten wird die Bounding-Box mit den umschließenden
-                    Rechtecken der geografischen Begriffe, die der Web-Seite
-                    zugeordnet sind, verglichen. Innerhalb der Datenbanken wird
-                    direkt nach dem Suchrechteck gesucht.</p>
-                <p>Zur Orientierung und Spezifikation eines Suchrechtecks können
-                    Sie die Standard-Hintergrundkarten in GS Soil nutzen oder
-                    aber eigene Hintergrundkarten über den Web-Mapping-Service
-                    (WMS) des GS Soil hinzu laden.</p>
+                <p>Die GS Soil Suche kann nicht nur über Begriffe eingeschränkt werden, sondern auch über die Auswahl eines Kartenausschnitts (Bounding-Box). 
+					Wenn Sie eine entsprechende Ausschnitt definiert haben, wird in dem über GS Soil verfügbaren Webangebot gezielt nach räumlichen Begriffen 
+					(wie z.B. Städten, Gebirgen usw.) gesucht, die sich im Kartenausschnitt befinden. In den über GS Soil verfügbaren Datenbanken wird hingegen 
+					direkt nach dem Kartenausschnitt (Suchrechteck) gesucht.</p>
+                <p>Zur Orientierung und Spezifikation eines Kartenausschnitts können Sie die Hintergrundkarten des Kartenviewers, 
+				die im GS Soil Portal verfügbaren Kartendienste oder externe Kartendienste nutzen.</p>
             </content>
             <section help-key="ext-search-spacial-7">
-                <header>Aktive Kartendienste</header>
+				<header>Reiter</header>
                 <content>
-                    <p>In der rechten Spalte werden alle geladenen Services
-                        gelistet. Für jeden Service werden alle vorhandenen
-                        Layer angegeben. Sie können über das Pluszeichen <img
-                            border="0" width="9" height="9"
-                        src="../decorations/layout/ingrid-help/images/image018.jpg"/> angezeigt
-                        bzw. durch das Minuszeichen <img border="0" width="9"
-                            height="9" src="image019.jpg"/> wieder ausgeblendet werden.</p>
-                    <p>Die verwendeten Symbole haben die folgende Bedeutung:</p>
-                    <p>
-                        <img border="0" width="14" height="14"
-                            src="../decorations/layout/ingrid-help/images/image020.jpg"
-                        alt="*"/> Ein Layer, der unterhalb dieses Symbols
-                        angekreuzt ist, wird angezeigt.</p>
-                    <p>
-                        <img border="0" width="14" height="14"
-                            src="../decorations/layout/ingrid-help/images/image021.jpg"
-                        alt="*"/> Die Informationen für einen Layer, der
-                        unterhalb diesem Symbol angekreuzt ist, werden angezeigt
-                        wenn die &#8222;Layerbasierte
-                        Informationsabfrage&#8220; aktiviert wurde.</p>
-                    <p>
-                        <img border="0" width="14" height="14"
-                            src="../decorations/layout/ingrid-help/images/image022.jpg"
-                        alt="*"/> Beim Klick auf dieses Symbol wird der
-                        zugehörige Layer um eine Position nach oben verschoben.
-                        (Hinweis: Die oben stehenden Layer werden zuerst
-                        angezeigt und können dadurch ggf. von folgenden Layern
-                        verdeckt werden.)</p>
-                    <p>
-                        <img border="0" width="14" height="14"
-                            src="../decorations/layout/ingrid-help/images/image023.jpg"
-                        alt="*"/> Beim Klick auf dieses Symbol wird der
-                        zugehörige Service mit all seinen Layern um eine
-                        Position nach oben, vor den davor stehenden Service
-                        verschoben. (Hinweis: Die oben stehenden Layer werden
-                        zuerst angezeigt und können dadurch ggf. von folgenden
-                        Layern verdeckt werden. Das kann eventuell für alle
-                        Layer eines Service gelten.)</p>
-                </content>
-            </section>
-            <section help-key="ext-search-spacial-8">
-                <header>Kartendienste speichern</header>
-                <content>
-                    <p>Wenn Sie eine Nutzerin oder ein eingeloggter Nutzer sind,
-                        können Sie die Einstellungen unter &#8222;aktive
-                        Kartendienste&#8220; in die Personalisierung
-                        übernehmen, in dem Sie auf den Button
-                        &#8222;Kartendienste speichern&#8220; klicken.</p>
-                </content>
+                    <p>Im GS Soil Kartenviewer werden verfügbare sowie aktivierte Kartendienste, Legenden und eine Metadatensuche in unterschiedlichen Reitern angeboten, 
+				die sich links neben der Karte befindet. Durch einen Klick auf eine Überschrift wird der jeweilige Menüpunkt aufgeklappt.</p>
+					<p><img border="0" width="191" height="145" src="../decorations/layout/ingrid-help/images/image201.jpg" alt="*"/> </p>
+                    <p><b>Legende</b></p>
+                    <p>Im Reiter <i>Legende</i> werden alle verfügbaren Legenden der Kartenebenen (Layer) dargestellt, die unter <i>Aktive Dienste</i> aktiviert sind und 
+					im Viewer dargestellt werden. Die Legendenbeschreibung gibt darüber Aufschluss, mit welchen Symbolen und/oder Farben die unterschiedlichen Informationen 
+					in der Karte dargestellt werden.</p>
+                   <p><b>Aktive Dienste</b></p>
+                    <p>Alle Kartendienste, die sich unter <i>Aktive Dienste</i> befinden, können durch einen Klick im Kartenviewer aktiviert bzw. deaktiviert werden. 
+					Die Kartendienste mit ihren Layern werden in einer Baumstruktur wiedergegeben.</p>
+					<p><img border="0" width="306" height="94"
+                            src="../decorations/layout/ingrid-help/images/image202.jpg"
+                        alt="*"/> </p>					   
+					<p>Die einzelnen Symbole haben die folgende Bedeutung:</p>
+
+                    <p> <img border="0" width="16" height="16"
+                            src="../decorations/layout/ingrid-help/images/image101.jpg"
+                        alt="*"/><b>Rauf:</b> Ein markierter Dienst bzw. ein markierter Layer wird um eine Ebene nach oben verschoben. 
+						Ein Dienst bzw. ein Layer kann durch einen Klick mit der linken Maustaste auf den Namen markiert werden. Für die 
+						Darstellung in der Karte gilt: Layer, die in der Baumstruktur weiter unten gelistet sind, überlagern Layer, die weiter oben gelistet sind.</p>								
+                    <p> <img border="0" width="16" height="16" src="../decorations/layout/ingrid-help/images/image102.jpg" alt="*"/>
+						<b>Runter:</b> Ein markierter Dienst bzw. ein markierter Layer wird um eine Ebene nach unten verschoben. 
+						Ein Dienst bzw. ein Layer kann durch einen Klick mit der linken Maustaste auf den Namen markiert werden. 
+						Wenn ein Layer durch einen anderen überlagert wird, kann dieser durch ein Verschieben nach unten sichtbar gemacht 
+						werden. Die Layer, die sich am unteren Ende der Liste befinden, werden immer als oberste Ebene in der Karte dargestellt.</p>
+
+                    <p> <img border="0" width="18" height="17" src="../decorations/layout/ingrid-help/images/image114.jpg" alt="*"/>
+						<b>Entfernen:</b> Ein markierter Dienst wird aus dem Bereich <i>Aktive Dienste</i> gelöscht. Ein Dienst kann durch 
+						einen Klick mit der linken Maustaste auf den Namen markiert werden. Das Entfernen von einzelnen Layer ist nicht möglich.</p>
+
+                    <p> <img border="0" width="20" height="17"
+                            src="../decorations/layout/ingrid-help/images/image106.jpg"
+                        alt="*"/><b>Aktive Dienste:</b> Das Ordnersymbol wird zur Anzeige der Kartendienste verwendet. In den einzelnen Ordnern sind die 
+						entsprechenden Layer eines Dienstes zu finden. Mit einem Klick (linke Maustaste) auf das Ordnersymbol können Sie den Dienst verschieben, 
+						entfernen oder dessen Transparenz ändern.</p>
+
+                    <p> <img border="0" width="16" height="16"
+                            src="../decorations/layout/ingrid-help/images/image107.jpg"
+                        alt="*"/> Dieses Symbol wird zur Anzeige eines <b>Layers</b> verwendet. Mit einem Klick (linke Maustaste) auf das Symbol können 
+						Sie den Dienst verschieben oder auf die Ebene des Dienstes zoomen.</p>
+
+                    <p> <img border="0" width="17" height="17"
+                            src="../decorations/layout/ingrid-help/images/image108.jpg"
+                        alt="*"/><b>Dienst / Layer in Karte aktivieren:</b> Wenn die Checkbox für einen Dienst oder einen Layer angehakt ist, wird der Dienst 
+						bzw. die Layer in der Karte aktiviert und in der Karte dargestellt, wenn die entsprechende Zoomstufe (vordefinierter Maßstab der Layer) 
+						eingestellt ist. Zudem können für die aktivierten Dienste bzw. Layer entsprechende Layer-Informationen über den Button <i>Infoabfrage</i> 
+						(Werkzeugleiste) aufgerufen werden. Befindet sich der dargestellte Kartenausschnitt außerhalb der Zoomstufe der Layer, wird der Layer 
+						in der Karte nicht angezeigt und der Layertitel grau dargestellt. Wird ein Dienst angehakt, so werden alle Layer des Dienstes aktiviert. 
+						Wird das Häkchen eines Dienstes entfernt, so werden alle Layer des Dienstes deaktiviert. </p>
+          
+					<p> <img border="0" width="18" height="16"
+                            src="../decorations/layout/ingrid-help/images/image104.jpg"
+                        alt="*"/><b>Anzeige der Metadaten:</b> Weiterführende Informationen (Metadaten) über einen Dienst bzw. eine Layer können für Kartendienste 
+						angezeigt werden. Die Informationen, die aus der jeweiligen GetCapabilities-URL stammen, werden aus einer Datenbank des Kartenviewers ausgelesen. 
+						Wenn in der GetCapabilities-URL bestimmte Angaben wie z.B. zur Organisation oder Anschrift fehlen, können einige Felder nicht befüllt werden.</p>
+
+					<p><b>Themen</b></p>
+                    <p>Unter Themen finden Sie verschiedene nach Bodenthemen sortierte Kartendienste von den Datenanbietern, die in den Kartenviewer geladen werden können.</p>
+                    <p> <img border="0" width="304" height="203"
+                            src="../decorations/layout/ingrid-help/images/image203.jpg"				   
+					     alt="*"/> </p> 
+					   
+					<p>Die einzelnen Symbole haben die folgende Bedeutung:</p>
+
+                    <p> <img border="0" width="17" height="17"
+                            src="../decorations/layout/ingrid-help/images/image109.jpg"
+                        alt="*"/> Das Ordnersymbol wird für die Anzeige der einzelnen Themen verwendet. In den Ordnern finden Sie die entsprechenden Kartendienste.</p>
+ 
+                    <p> <img border="0" width="18" height="22"
+                            src="../decorations/layout/ingrid-help/images/image111.jpg"
+                        alt="*"/><b>WMS zu aktiven Diensten hinzufügen und auf Ausschnitt zoomen:</b> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende 
+						Dienst zu den aktiven Diensten hinzugefügt und in der Karte auf den vom Dienst beschriebenen Kartenausschnitt gezoomt. Wenn der Dienst weniger als 11 Layer 
+						enthält, werden alle Layer direkt in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, werden die Layer nicht automatisch aktiviert, um die 
+						Ladezeit gering zu halten.</p>
+
+                    <p> <img border="0" width="18" height="16"
+                            src="../decorations/layout/ingrid-help/images/image104.jpg"
+                        alt="*"/><b>Anzeige der Metadaten:</b> Weiterführende Informationen (Metadaten) über einen Dienst bzw. eine Layer können für Kartendienste 
+						angezeigt werden. Die Informationen, die aus der jeweiligen GetCapabilities-URL stammen, werden aus einer Datenbank des Kartenviewers ausgelesen. 
+						Wenn in der GetCapabilities-URL bestimmte Angaben wie z.B. zur Organisation oder Anschrift fehlen, können einige Felder nicht befüllt werden.</p>
+
+                    <p><b>Partner</b></p>
+                    <p>Unter Partner finden Sie bodenrelevante Kartendienste verschiedener Datenanbieter aus dem GS Soil Netzwerk, die nach den Ländern sortiert sind</p>
+                    <p> <img border="0" width="305" height="157"
+                            src="../decorations/layout/ingrid-help/images/image204.jpg"
+                        alt="*"/> </p> 
+					<p>Die Bedeutung der einzelnen Symbole wird unter dem Menüpunkt <i>Themen</i> beschrieben (siehe oben).</p>
+						
+                    <p><b>Metadatensuche</b></p>
+                    <p>In der Metadatensuche können Sie nach Kartendiensten von den Partnern suchen, die im Kartenviewer eingebunden sind. Geben Sie hierfür einen Suchbegriff ein und klicken Sie auf <i>Ok</i>.</p>
+                    <p> <img border="0" width="308" height="148"
+                            src="../decorations/layout/ingrid-help/images/image205.jpg"
+                        alt="*"/> </p> 					
+					
+					<p>In der Suchergebnisliste werden die folgenden Symbole verwendet:</p>
+
+                    <p> <img border="0" width="20" height="18"
+                            src="../decorations/layout/ingrid-help/images/image112.jpg"
+                        alt="*"/><b>WMS zu aktiven Diensten hinzufügen:</b> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende Dienst zu den aktiven Diensten hinzugefügt. 
+						Wenn der Dienst weniger als 11 Layer enthält, werden zudem alle Layer direkt in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, werden die Layer nicht 
+						automatisch aktiviert, um die Ladezeit gering zu halten.</p>
+
+                    <p> <img border="0" width="19" height="19"
+                            src="../decorations/layout/ingrid-help/images/image113.jpg"
+                        alt="*"/><b>WMS zu aktiven Diensten hinzufügen und auf Ausschnitt zoomen:</b> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende Dienst zu den 
+						aktiven Diensten hinzugefügt und in der Karte auf den vom Dienst beschriebenen Kartenausschnitt gezoomt. Auch hier gilt: Wenn der Dienst weniger als 11 Layer enthält, 
+						werden zudem alle Layer direkt in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, werden die Layer nicht automatisch aktiviert, um die Ladezeit gering zu halten.</p>
+
+                    <p> <img border="0" width="15" height="16"
+                            src="../decorations/layout/ingrid-help/images/image110.jpg"
+                        alt="*"/><b>Layer zu aktiven Diensten hinzufügen:</b> Mit einem Klick (linke Maustaste) auf dieses Symbol wird die entsprechende Layer zu den aktiven Diensten hinzugefügt.</p>
+
+                    <p> <img border="0" width="18" height="22"
+                            src="../decorations/layout/ingrid-help/images/image111.jpg"
+                        alt="*"/><b>Layer zu aktiven Diensten hinzufügen und auf Ausschnitt zoomen:</b> Mit einem Klick (linke Maustaste) auf dieses Symbol wird die entsprechende Layer zu den 
+						aktiven Diensten hinzugefügt und in der Karte auf den vom Dienst beschriebenen Kartenausschnitt gezoomt.</p>
+						
+					<p>Über einen Klick auf den Namen des Dienstes bzw. der Layer werden nähere Informationen über den Dienst bzw. die Layer angezeigt.</p>
+                 </content>
             </section>
             <section help-key="ext-search-spacial-9">
                 <header>Art der Einschränkung</header>
                 <content>
-                    <p>Hier können Sie wählen, wie das ausgewählte Suchrechteck
-                        auf Ihre Suche wirken soll. Es werden je nach Auswahl
-                        nur Ergebnisse gefunden für die folgendes gilt:</p>
+                    <p>Wenn Sie einen Kartenausschnitt gewählt haben, können Sie wählen, in welcher Form die räumliche Einschränkung für die Suche verwendet werden soll. 
+					Folgende Optionen sind hierbei möglich:</p>
                     <ul>
                         <li>Der Raumbezug der Ergebnisse liegt innerhalb des
                             gewählten Kartenausschnittes</li>
@@ -576,65 +636,34 @@
                         <li>Der Raumbezug der Ergebnisse umschließt den
                             gewählten Kartenausschnitt</li>
                     </ul>
+					<p><img border="0" width="455" height="252" src="../decorations/layout/ingrid-help/images/image208.jpg" alt="*"/></p>
                 </content>
             </section>
             <section help-key="ext-search-spacial-10">
-                <header>Kartendienste Werkzeugleiste</header>
+                <header>Werkzeugleiste</header>
                 <content>
-                    <p>Über die Werkzeugleiste können entweder direkt Aktionen
-                        ausgelöst werden, oder die Funktion der Maus wird so
-                        geschaltet, dass die Funktionalität beim nächsten Klick
-                        in die Karte ausgelöst wird.</p>
+                    <p>Über die Werkzeugleiste können Sie verschiedene Aktionen direkt oder durch einen Klick in die Karte ausführen.</p>
                     <p>
-                        <b>Button &#8222;Dienst hinzufügen&#8220;</b>
+                        <b>Kartendienst hinzufügen</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image024.jpg"
-                        alt="*"/> Nach dem Klick auf diesen Button wird ein
-                        Fenster geöffnet. Sie können nun über Ankreuzen einen
-                        der bereits vorkonfigurierten Dienste dem Karten-Viewer hinzugefügen.</p>
-                    <p>Wenn Sie die URL eines nicht in der Liste vorhandenen
-                        Dienstes kennen, können Sie diese in der Eingabe einfügen.</p>
-                    <p>In beiden Fällen wird der jeweilige Dienst zu den
-                        &#8222;Aktiven Kartendiensten&#8220;
-                        hinzugefügt. (Hinweis: Die zugefügten Dienste bleiben
-                        über die Sitzung erhalten. Wenn sie ein eingeloggter
-                        Nutzer sind, können Sie diese Einstellung auch permanent speichern.)</p>
+                        alt="*"/> Über diesen Button können Sie eine beliebige GetCapabilities-URL (externer Dienst) hinzufügen. Mit dem Button <i>WMS hinzufügen</i> 
+						wird der Dienst zu den aktiven Diensten hinzufügen und im Kartenviewer dargestellt.</p> 
+					<p>	Sie können hierbei wählen (Checkbox), ob die Layer des Dienstes direkt aktiviert und ob auf den Kartenausschnitt des Dienstes direkt gezoomt werden soll.</p>
                     <p>
-                        <b>Button &#8222;Dienst entfernen&#8220;</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image025.jpg"
-                        alt="*"/> Nach dem Klick auf diesen Button werden alle
-                        bereits eingefügten Dienste angezeigt. Sie können sie
-                        wieder aus der Auswahl (Aktive Kartendienste) entfernen.
-                        (Hinweis: Der WMS-Service von GS Soil ist der
-                        voreingestellte Standard-Service. Er kann nicht entfernt
-                        werden und wird daher auch nicht angezeigt.)</p>
-                    <p>
-                        <b>Button &#8222;Layerbasierte Informationsabfrage&#8220;</b>
+                        <b>Datenabfrage</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image026.jpg"
-                        alt="*"/> Dieser Button schaltet die Funktion der Maus
-                        auf die Informationsabfrage um. Über einen Klick in die
-                        Karte erhalten Sie Informationen zu dem Punkt der Karte,
-                        auf den Sie geklickt haben.</p>
-                    <p>Nach dem Klick öffnet sich Informationsabfrage ein neues
-                        Fenster, in dem Sie auswählen können, zu welchem Layer
-                        die Informationen angezeigt werden sollen. (Hinweis: Es
-                        werden nur diejenigen Layer angezeigt, für die unter
-                        &#8222;Aktive Kartendienste&#8220; die
-                        Informationsabfrage <img border="0" width="14"
-                            height="14"
-                            src="../decorations/layout/ingrid-help/images/image021.jpg"
-                        alt="*"/> angekreuzt wurde.) Nach der Auswahl des Layers
-                        werden die Informationen in einem getrennten Fenster angezeigt.</p>
+                        alt="*"/> Über diesen Button können Sachdaten in der Karte abgefragt werden. Die Informationen werden über eine OGC WMS getFeatureInfo-Abfrage an den eingebunden WMS Dienst abgefragt. 
+						Über einen Klick in die Karte erhalten Sie standortspezifische Informationen der dargestellten Layer. </p>
+                    <p>Welche Sachdaten angezeigt werden, hängt davon ab, bei welchem Layer unter <i>Aktive Dienste</i> die Check-Box (Infoabfrage in Karte) aktiviert ist (siehe oben). 
+					Derzeit unterstützen nicht alle Dienste diese Funktion.</p>
                     <p>
-                        <b>Button &#8222;Punktkoordinate definieren&#8220;</b>
+                        <b>Koordinaten anzeigen</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
@@ -645,25 +674,7 @@
                         Koordinaten unterhalb der Karte angezeigt. Ebenso wird
                         die Position der Maus beim letzten Klick in die Karte angezeigt.</p>
                     <p>
-                        <b>Button &#8222;Verwaltungsgebiet selektieren&#8220;</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image028.jpg"
-                        alt="*"/> Über diesen Button wird die Funktion der Maus
-                        auf das Selektieren einer Verwaltungseinheit
-                        umgeschaltet. Nach dem Klick auf einen Punkt in der
-                        Karte öffnet sich ein neues Fenster, über das Sie
-                        auswählen können, welche Ebene der Verwaltungseinheit
-                        (Land, Regierungsbezirk, Kreis oder Gemeinde) ausgewählt
-                        werden soll. Die auswählbaren Verwaltungseinheiten
-                        beziehen sich immer auf die Standard-Layer von GS Soil (Verwaltungsgrenzen).</p>
-                    <p>Nach der Auswahl wird die selektierte Verwaltungseinheit
-                        unterhalb der Karte angezeigt. Durch einen Klick auf den
-                        Button &#8222;Zur Suche hinzufügen&#8220; wird
-                        sie als Raumeinschränkung zum Suchausdruck hinzugefügt.</p>
-                    <p>
-                        <b>Button &#8222;Suchgebiet selektieren (Rahmen aufziehen)&#8220;</b>
+                        <b>Raumeinschränkung: Suchgebiet selektieren</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
@@ -677,36 +688,20 @@
                     <p>Die Koordinaten des ausgewählten Gebietes werden
                         unterhalb der Karte angezeigt und die Kartenansicht
                         darauf gezoomt.</p>
-                    <p>Durch einen Klick auf den Button &#8222;Zur Suche
-                        hinzufügen&#8220; werden die Koordinaten des
+                    <p>Durch einen Klick auf den Button <i>Zur Suche
+                        hinzufügen</i> werden die Koordinaten des
                         selektierten Gebietes als Raumeinschränkung zum
                         Suchausdruck hinzugefügt.</p>
                     <p>
-                        <b>Button &#8222;Karte aktualisieren&#8220;</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image030.jpg"
-                        alt="*"/> Durch einen Klick auf diesen Button wird die
-                        Karte aktualisiert. Alle Layer-Informationen werden
-                        erneut von den Karten-Servern abgerufen.</p>
-                    <p>
-                        <b>Button &#8222;Zoom&#8220;</b>
+                        <b>Ansicht vergrößern</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image031.jpg"
-                        alt="*"/> Über diesen Button wird die Funktion der Maus
-                        auf das Hineinzoomen in die Karte umgeschaltet. Über das
-                        Klicken auf einen Punkt in der Karte, festhalten der
-                        linken Maustaste, ziehen der Maus über die Karte und
-                        anschließendes Loslassen der linken Maustaste können Sie
-                        das Zoom Gebiet definieren.</p>
-                    <p>Die Karte wird auf dieses Gebiet zentriert und soweit
-                        vergrößert, dass Sie gerade noch in den dargestellten
-                        Bereich hinein passt.</p>
+                        alt="*"/> Mit diesem Button kann in die Karte hineingezoomt werden. Sie können einen beliebigen Kartenausschnitt aufziehen, 
+						indem Sie mit gedrückter linker Maustaste ein Quadrat aufziehen. Die Karte wird auf diesen Ausschnitt zentriert und entsprechend vergrößert.</p>
                     <p>
-                        <b>Button &#8222;Zoom Out&#8220;</b>
+                        <b>Aus der Karte herauszoomen</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
@@ -714,23 +709,15 @@
                         alt="*"/> Durch einen Klick auf diesen Button wird die
                         Karten um die Hälfte verkleinert.</p>
                     <p>
-                        <b>Button &#8222;Kartenausschnitt verschieben&#8220;</b>
+                        <b>Karte verschieben</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image033.jpg"
-                        alt="*"/> Über diesen Button wird die Funktion der Maus
-                        auf das Verschieben des Kartenausschnittes umgeschaltet.
-                        Nach dem Klick auf einen Punkt in der Karte, Festhalten
-                        der linken Maustaste und Ziehen der Maus über die Karte,
-                        können Sie den Kartenausschnitt verschieben. Der Punkt
-                        der Karte auf den geklickt wurde befindet sich nach dem
-                        Vorgang dort, wo Sie die linke Maustaste wieder
-                        losgelassen haben.</p>
-                    <p>Die Karte wird so nachgeladen, dass Sie den dargestellten
-                        Bereich wieder ausfüllt.</p>
+                        alt="*"/> Mit diesem Button kann die Karte verschoben werden. Zum Verschieben: Klicken Sie mit der linken Maustaste auf einen Punkt in der Karte, 
+						halten Sie die Taste und ziehen Sie die Maus über die Karte. Der Punkt der Karte, auf den geklickt wurde, befindet sich nach dem Vorgang dort, wo Sie die Taste loslassen.</p>
                     <p>
-                        <b>Button &#8222;Vorheriger Kartenausschnitt&#8220;</b>
+                        <b>Zurück</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
@@ -740,62 +727,34 @@
                         wurde, wieder hergestellt.</p>
                     <p>Die Aktion kann mehrfach hintereinander ausgeführt werden.</p>
                     <p>
-                        <b>Button &#8222;Nachfolgender Kartenausschnitt&#8220;</b>
+                        <b>Vor</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image035.jpg"
-                        alt="*"/> Wurde über den Button &#8222;Vorheriger
-                        Kartenausschnitt&#8220; zu einem Kartenausschnitt
+                        alt="*"/> Wurde über den Button <i>Zurück</i> zu einem Kartenausschnitt
                         zurück gesprungen, der eine oder mehrere Aktionen
-                        zurückliegt, kann über den Button
-                        &#8222;Nachfolgender Kartenausschnitt&#8220;
+                        zurückliegt, kann über den Button <i>Vor</i>
                         wieder zu den danach ausgeführten Aktionen
-                        &#8222;vorgeblättert&#8220; werden.</p>
+                        &#8218;vorgeblättert#8217; werden.</p>
                     <p>Die Aktion kann so häufig ausgeführt werden wie vorher
-                        die Aktion &#8222;Vorheriger
-                        Kartenausschnitt&#8220; ausgeführt wurde.</p>
+                        die Aktion <i>Zurück</i> ausgeführt wurde.</p>
                     <p>
-                        <b>Button &#8222;Kartenausschnitt zentrieren&#8220;</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image036.jpg"
-                        alt="*"/> Über diesen Button wird die Funktion der Maus
-                        auf das Zentrieren des Kartenausschnittes umgeschaltet.
-                        Nach dem Klick auf einen Punkt in der Karte wird der
-                        angeklickte Punkt in die Mitte des dargestellten
-                        Bereichs gerückt.</p>
-                    <p>Die Karte wird so nachgeladen, dass Sie den dargestellten
-                        Bereich wieder ausfüllt.</p>
-                    <p>
-                        <b>Button &#8222;Zoom auf Ausgangskarte&#8220;</b>
+                        <b>Zoom auf Ausgangskarte</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image037.jpg"
-                        alt="*"/> Bei dem Klick auf diesen Button wird die
-                        Ausgangskarte wieder hergestellt.</p>
+                        alt="*"/> Bei dem Klick auf diesen Button wird der Zoombereich der Ausgangskarte wieder hergestellt.</p>
                     <p>
-                        <b>Button &#8222;Legende darstellen&#8220;</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image038.jpg"
-                        alt="*"/> Bei einem Klick auf diesen Button wird ein
-                        neues Fenster geöffnet in dem die Legende für alle
-                        sichtbaren Layer angezeigt wird.</p>
-                    <p>
-                        <b>Button &#8222;Kartenausschnitt als PDF drucken&#8220;</b>
+                        <b>Druck</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image039.jpg"
-                        alt="*"/> Bei einem Klick auf diesen Button wird sowohl
-                        der dargestellte Kartenausschnitt als auch die Legende
-                        in eine PDF Datei geschrieben und in einem neuen Fenster geöffnet.</p>
-                    <p>Sie können das Dokument über die übliche Funktionalität
-                        drucken oder als Datei auf Ihrem Rechner speichern.</p>
+                        alt="*"/> Über diesen Button wird ein PDF-Dokument der Karte mit oder ohne Legende erzeugt. Sie können die Ausrichtung 
+						der Karte wählen und zudem einen Titel und Kommentare zur Karte einfügen. Das Dokument können Sie über die übliche 
+						PDF-Funktionalität drucken oder speichern.</p>
                 </content>
             </section>
         </section>
@@ -805,12 +764,9 @@
         <section help-key="ext-search-time-1">
             <header>Zeit</header>
             <content>
-                <p>GS Soil ist in der Lage nach den Zeitbezügen der
+                <p>Das GS Soil Portal ist in der Lage nach den Zeitbezügen der
                     angeschlossenen Systeme zu suchen. Hierzu werden einerseits
-                    die Daten genutzt, die der <a
-                        href="http://www.semantic-network.de/"
-                        target="_new">Semantic Network Service (SNS)</a> des
-                    Umweltbundesamtes aus den Web-Seiten als Zeitbezüge
+                    die Daten genutzt, die der semantische Dienst aus den Webseiten als Zeitbezüge
                     analysiert hat. Andererseits wird auf die Zeitbezüge in den
                     Datenbanken zugegriffen.</p>
             </content>
@@ -838,49 +794,6 @@
                 </ul>
             </content>
         </section>
-        <section help-key="ext-search-time-4">
-            <header>Suche nach Zeitbezügen</header>
-            <content>
-                <p>Wenn Sie nach einem Datum suchen, das mit einem
-                    umweltrelevanten Ereignis verbunden ist (z.B. die
-                    Klimaschutzkonferenz in Kyoto), können Sie über die Angabe
-                    eines Suchbegriffes nach dem Ereignis in der Chronik
-                    suchen. Sie bekommen alle Ereignisse angezeigt, die über die
-                    Suche gefunden wurden. Über die Kopier- und Einfüge-Funktion
-                    des Browsers können Sie die angegebenen Daten direkt in das
-                    von Ihnen gewünschte Feld des Zeitbezuges einfügen.</p>
-            </content>
-            <section help-key="ext-search-time-5">
-                <header>Was ist die Chronik?</header>
-                <content>
-                    <p>Die Chronik ist eine Sammlung aktueller und
-                        historischer Ereignisse, die unsere Umweltsituation
-                        wesentlich beeinflusst haben. Neben den Daten zu den
-                        Ereignissen wird gegebenenfalls ein Kurzbeschreibung der
-                        Ereignisse gegeben.</p>
-                    <p>Die Chronik wird über den <a
-                            href="http://www.semantic-network.de/"
-                            target="_new">Semantic Network Service (SNS)</a> des
-                        Umweltbundesamtes in Dessau zur Verfügung gestellt.</p>
-                </content>
-            </section>
-            <section help-key="ext-search-time-6">
-                <header>Umweltereignisse</header>
-                <content>
-                    <p>Es werden alle Umweltereignisse, die über die Suche in
-                        der Chronik gefunden wurden, mit Titel und Datum
-                        angezeigt. Durch einen Klick auf das Ereignis oder das
-                        davor stehende Pluszeichen <img border="0" width="9"
-                            height="9"
-                            src="../decorations/layout/ingrid-help/images/image018.jpg"
-                        alt="*"/> wird die Beschreibung des Ereignisses
-                        eingeblendet, durch einen Klick auf das Minuszeichen
-                            <img border="0" width="9" height="9"
-                            src="../decorations/layout/ingrid-help/images/image019.jpg"
-                        alt="*"/> wieder ausgeblendet.</p>
-                </content>
-            </section>
-        </section>
     </chapter>
     <chapter>
         <header>Erweiterte Suche: Suchbereich</header>
@@ -888,16 +801,13 @@
             <header>Inhalte</header>
             <content>
                 <p>An dieser Stelle können Sie festlegen, ob Sie alle
-                    Umweltinformationen (auch Themen und Service)
-                    durchsuchen wollen, oder ob Sie nur in den Themen oder
-                    nur in den Service-Seiten (Pressemitteilungen, Publikationen
-                    und Veranstaltungen) suchen möchten.</p>
+                    Bodeninformationen durchsuchen wollen, oder ob Sie nur in den Publikationen suchen möchten.</p>
             </content>
         </section>
         <section help-key="ext-search-area-2">
             <header>Datenquellen</header>
             <content>
-                <p>An GS Soil sind neben Web-Servern auch Metadaten- und
+                <p>An das GS Soil Portal sind neben Webservern auch Metadaten- und
                     Fachdatensysteme angeschlossen. Sie können wählen, ob Sie in
                     all diesen Systemen suchen wollen (Standard), oder ob Sie
                     ihre Suche gezielt auf eine oder mehrere Arten von
@@ -907,30 +817,27 @@
                     auszuwählen, die Sie durchsuchen möchten. Es stehen Ihnen
                     folgende Klassen zur Verfügung:</p>
                 <ul>
-                    <li>Datensammlung/Datenbank</li>
-                    <li>Dienst/Anwendung/Informationssystem</li>
-                    <li>Dokument/Bericht/Literatur</li>
-                    <li>Geo-Information/Karte</li>
-                    <li>Organisationseinheit/Fachaufgabe</li>
-                    <li>Vorhaben/Projekt/Programm</li>
+                    <li>Organisationseinheit / Fachaufgabe</li>
+                    <li>Geo-Information / Karte</li>
+                    <li>Dokument / Bericht / Literatur</li>
+                    <li>Geodatendienst</li>
+                    <li>Vorhaben / Projekt / Programm</li>
+                    <li>Datensammlung / Datenbank</li>
+					<li>Dienst /Anwendung / Informationssystem</li>
                 </ul>
             </content>
         </section>
         <section help-key="ext-search-area-3">
-            <header>Bund/Länder</header>
+            <header>Land/Anbieter</header>
             <content>
-                <p>Die Datenangebote in GS Soil stammen von Behörden und
-                    behördennahen Organisationen aus Bund und Ländern der
-                    Bundesrepublik Deutschland. Sie können für Ihre Suche das
-                    Angebot auf den Bund oder einzelne Länder einschränken. Eine
+                <p>Die Datenangebote im GS Soil Portal stammen von den Datenanbietern aus des GS Soil Netzwerk. Sie können für Ihre Suche das
+                    Angebot auf einzelne Länder oder Datenanbieter einschränken. Eine
                     Mehrfachauswahl ist dabei möglich.</p>
-                <p>Der Bund und auch die meisten Länder haben mehrere
+                <p>Der meisten Länder haben mehrere
                     Datenanbieter. Diese werden angezeigt wenn Sie auf das
                     Pluszeichen <img border="0" width="9" height="9"
                         src="../decorations/layout/ingrid-help/images/image018.jpg"
-                    alt="*"/> klicken. Anstatt des Bundes oder eines Landes
-                    können auch einzelne Anbieter ausgewählt werden. Auch in
-                    diesem Fall ist eine Mehrfachauswahl möglich.</p>
+                    alt="*"/> klicken. Eine Mehrfachauswahl ist möglich.</p>
             </content>
         </section>
     </chapter>
@@ -939,13 +846,13 @@
         <section help-key="search-history-1">
             <header>Suchhistorie</header>
             <content>
-                <p>GS Soil speichert eine Historie Ihrer Suchanfragen. Neben
+                <p>Das GS Soil Portal speichert eine Historie Ihrer Suchanfragen. Neben
                     dieser Historie, die automatisch für eine Sitzung mitgeführt
                     wird, können Sie als eingeloggter Nutzer (siehe <a
                         href="help.psml?hkey=myingrid-1">Mein GS Soil</a>) auch
                     Suchanfragen permanent speichern.</p>
                 <p>Beide Formen gespeicherter Suchanfragen können Sie über die
-                    Funktion &#8222;Suchhistorie&#8220; erneut aufrufen.</p>
+                    Funktion <i>Suchhistorie</i> erneut aufrufen.</p>
             </content>
         </section>
         <section help-key="search-history-2">
@@ -964,7 +871,7 @@
                     Suchanfragen aufgelistet. Durch das Anklicken einer
                     Suchanfrage wird diese in das Suchfenster geladen und die
                     Suche ausgeführt. Gespeicherte Suchanfragen können durch
-                    Ankreuzen und den &#8222;Löschen&#8220; Button
+                    Ankreuzen und den <i>Löschen</i> Button
                     entfernt werden.</p>
             </content>
         </section>
@@ -974,7 +881,7 @@
         <section help-key="search-settings-1">
             <header>Einstellungen</header>
             <content>
-                <p>Unter der Rubrik &#8222;Einstellungen&#8220; können
+                <p>Unter der Rubrik <i>Einstellungen</i> können
                     Sie die Darstellung der Suchergebnisse steuern.</p>
             </content>
         </section>
@@ -985,23 +892,20 @@
                     (Relevanz der gefundenen Seite in Bezug auf Ihren
                     Suchausdruck) oder nach Aktualität (die neusten Seiten
                     stehen vorne) sortiert anzeigen lassen.</p>
-                <p>&#8222;Gruppierung&#8220; bedeutet, dass die
-                    Suchergebnisse nach Bund/Ländern, Informationsanbietern
+                <p><i>Gruppierung</i> bedeutet, dass die
+                    Suchergebnisse nach Ländern, Informationsanbietern
                     oder Domänen zusammengefasst angezeigt werden.</p>
             </content>
         </section>
         <section help-key="search-settings-3">
             <header>Ähnliche Begriffe in die Suche einbeziehen</header>
             <content>
-                <p>GS Soil führt nicht nur die bei Suchmaschinen übliche
+                <p>Das GS Soil Portal führt nicht nur die bei Suchmaschinen übliche
                     Indexierung der Seiten durch, sondern lässt den Seiteninhalt
-                    auch über den <a href="http://www.semantic-network.de/"
-                        target="_new">Semantic Network Service (SNS)</a> des
-                    Umweltbundesamtes analysieren. Als Ergebnis dieser Analyse
-                    werden den Web-Seiten Fachbegriffe aus dem  <a
-                    href="help.psml?hkey=ext-search-subject-4#ext-search-subject-4">Umwelt-Thesaurus</a> zugeordnet.</p>
-                <p>Wenn Sie durch Ankreuzen die Einstellung &#8222;Ähnliche
-                    Begriffe in die Suche einbeziehen&#8220; wählen werden
+                    auch über den semantischen Dienst analysieren. Als Ergebnis dieser Analyse
+                    werden den Webseiten Fachbegriffe aus dem  Thesaurus zugeordnet.</p>
+                <p>Wenn Sie durch Ankreuzen die Einstellung <i>Ähnliche
+                    Begriffe in die Suche einbeziehen</i> wählen werden
                     die zugeordneten ähnlichen Begriffe in der Suche
                     mitberücksichtigt. (Hinweis: In den meisten Fällen wird
                     durch die Wahl dieser Einstellung die Treffermenge erhöht.)</p>
@@ -1016,23 +920,22 @@
                 <p>Sie haben drei Möglichkeiten ähnliche Begriffe in die Suche einzubeziehen:</p>
                 <ul>
                     <li>Automatisiert: Kreuzen Sie hierzu im Formular
-                        &#8222;Einstellungen für die Suche&#8220; (<a
-                        href="help.psml?hkey=search-settings-1">Suche/Einstellungen</a>)
-                        die Option &#8222;Ähnliche Begriffe in die Suche
-                        einbeziehen&#8220; an. Sie können diese
+                        <a href="help.psml?hkey=search-settings-1">Einstellungen für die Suche</a>
+                        die Option <i>Ähnliche Begriffe in die Suche
+                        einbeziehen</i> an. Sie können diese
                         Einstellungen auch dauerhaft vornehmen (siehe <a
                             href="help.psml?hkey=myingrid-1">Mein GS Soil</a>).</li>
                     <li>Vor einer Suche erweitern Sie Ihren Suchausdruck um
                         ähnliche Begriffe, indem Sie die die Funktionalität
-                            &#8222;<a
-                        href="help.psml?hkey=ext-search-subject-2">Thema/Fachwörterbuch</a>&#8220;
-                        der &#8222;<a
+                            <a
+                        href="help.psml?hkey=ext-search-subject-2">Thema/Fachwörterbuch</a>
+                        der <a
                             href="help.psml?hkey=ext-search-1">Erweiterten
-                        Suche</a>&#8220; nutzen.</li>
+                        Suche</a> nutzen.</li>
                     <li>Nach einer Suche werden Ihnen neben der
-                        Suchergebnisliste &#8222;<a
+                        Suchergebnisliste <a
                             href="help.psml?hkey=ext-search-subject-5">ähnliche
-                        Begriffe</a>&#8220; angeboten, über die Sie ihren
+                        Begriffe</a> angeboten, über die Sie ihren
                         Suchausdruck erweitern können.</li>
                 </ul>
             </content>
@@ -1054,10 +957,7 @@
             <content>
                 <p>Über den <a
                     href="help.psml?hkey=ext-search-area-1">Suchbereich</a> der
-                    Suche können Sie ihr Land auswählen. Bedenken Sie das auch
-                    Informationen auf Bundesebene für Sie interessant sein
-                    können. Sie können im Suchbereich neben einem Land auch die
-                    Bundesinformationen einstellen.</p>
+                    Suche können Sie ihr Land auswählen.</p>
                 <p>Sie können diese Einstellungen auch dauerhaft vornehmen
                     (siehe <a href="help.psml?hkey=myingrid-1">Mein GS Soil</a>).</p>
             </content>
@@ -1070,108 +970,13 @@
                     über die Möglichkeiten der erweiterten Suche hinausgehen
                     (z.B. Gruppierung über Klammerung oder Ähnlichkeitssuchen
                     usw.). Lesen Sie hierzu in der Hilfe zu GS Soil den
-                    Abschnitt &#8222;<a
-                    href="help.psml?hkey=search-expert-1">Expertensuche</a>&#8220;
+                    Abschnitt <a
+                    href="help.psml?hkey=search-expert-1">Expertensuche</a>
                     und geben Sie Ihren Suchausdruck in das Suchfeld ein.</p>
             </content>
         </section>
     </chapter>
     <chapter>
-        <header>Erweiterte Suche nach Adressen</header>
-        <section help-key="ext-search-address-1">
-            <header>Thema</header>
-            <section help-key="ext-search-address-2">
-                <header>Suchbegriffe</header>
-                <content>
-                    <p>In diesem Bereich können Sie gezielt einen oder mehrere
-                        Suchbegriffe zu Ihrem Suchausdruck hinzufügen, in dem
-                        Sie sie mit einer der folgenden Optionen verknüpfen:</p>
-                    <p>
-                        <b>all diese Begriffe (UND)</b> eine Information wird
-                        gefunden, wenn sie <b>alle</b> eingegebenen Begriffe
-                        enthält (Standard).</p>
-                    <p>
-                        <b>einen dieser Begriffe (ODER)</b> eine Information
-                        wird gefunden, wenn sie <b>mindestens einen</b> der
-                        eingegebenen Begriffe enthält.</p>
-                    <p>
-                        <b>genau diese Wortgruppe:</b> eine Information wird
-                        gefunden, wenn sie <b>genau</b> die eingegebene
-                        Wortgruppe enthält (in der gleichen Reihenfolge, mit
-                        Leerzeichen etc.).</p>
-                    <p>
-                        <b>keinen dieser Begriffe:</b> eine Information wird nur
-                        dann gefunden, wenn sie <b>keinen</b> der eingegebenen
-                        Begriffe enthält.</p>
-                </content>
-            </section>
-            <section help-key="ext-search-address-3">
-                <header>Suchmodus</header>
-                <content>
-                    <p>In diesem Bereich können Sie bestimmen, ob Ihre
-                        Suchbegriffe nur dann gefunden werden, wenn Sie mit
-                        einem ganzen Wort in der durchsuchten Adresse
-                        übereinstimmen, oder ob es reicht wenn nur ein Teil
-                        eines ganzen Wortes (Teilzeichenkette) in der Adresse
-                        mit dem jeweiligen Suchbegriff übereinstimmt.</p>
-                    <p>Weiterhin können Sie bestimmen, ob die Suche in allen
-                        Feldern der Adresse durchgeführt werden soll (z.B. also
-                        auch in dem Feld &#8222;Strasse&#8220;) oder
-                        aber nur in den vorgegebenen Feldern
-                        &#8222;Institution&#8220;,
-                        &#8222;Person&#8220;,
-                        &#8222;Beschreibung&#8220; und &#8222;Schlagworte&#8220;.</p>
-                </content>
-            </section>
-        </section>
-        <section help-key="ext-search-address-4">
-            <header>Raum</header>
-            <content>
-                <p>In diesem Bereich können Sie die Suche nach einer Adresse auf
-                    eine Strasse, eine Postleitzahl oder einen Ort einschränken</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche nach Forschungsprojekten</header>
-        <section help-key="ext-search-research-1">
-            <header>Suchbegriffe</header>
-            <content>
-                <p>In diesem Bereich können Sie gezielt einen oder mehrere
-                    Suchbegriffe zu Ihrem Suchausdruck hinzufügen, in dem Sie
-                    sie mit einer der folgenden Optionen verknüpfen:</p>
-                <p>
-                    <b>all diese Begriffe (UND)</b> eine Information wird
-                    gefunden, wenn sie <b>alle</b> eingegebenen Begriffe enthält (Standard).</p>
-                <p>
-                    <b>einen dieser Begriffe (ODER)</b> eine Information wird
-                    gefunden, wenn sie <b>mindestens einen</b> der eingegebenen
-                    Begriffe enthält.</p>
-                <p>
-                    <b>genau diese Wortgruppe:</b> eine Information wird
-                    gefunden, wenn sie <b>genau</b> die eingegebene Wortgruppe
-                    enthält (in der gleichen Reihenfolge, mit Leerzeichen etc.).</p>
-                <p>
-                    <b>keinen dieser Begriffe:</b> eine Information wird nur
-                    dann gefunden, wenn sie <b>keinen</b> der eingegebenen
-                    Begriffe enthält.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-research-2">
-            <header>Attribute</header>
-            <content>
-                <p>In diesem Bereich können Sie die Suche nach
-                    Forschungsprojekten den Projektnamen, die beteiligten
-                    Institutionen, den Projektleiter, weitere Beteiligte, den
-                    Projektträger und die Laufzeit einschränken.</p>
-                <p>Bitte beachten Sie, dass sich die Suche bei der Nutzung
-                    dieser Filtermöglichkeiten ausschließlich auf Datenbanken
-                    beschränkt, die eine Suche in dem jeweiligen Attribut
-                    unterstützen. Sie schränken den Suchraum dadurch ggf.
-                    erheblich ein.</p>
-            </content>
-        </section>
-    </chapter>
     <chapter>
         <header>Suche Speichern</header>
         <section help-key="search-save-1">
@@ -1181,10 +986,10 @@
                     Nutzer (siehe <a href="help.psml?hkey=myingrid-1">Mein
                     GS Soil</a>) die Möglichkeit den verwendeten Suchausdruck
                     dauerhaft zu speichern. Dies geschieht über die Funktion
-                    &#8222;Suche speichern&#8220;.</p>
+                    <i>Suche speichern</i>.</p>
                 <p>Hinweis: Die zuletzt verwendeten Suchanfragen sind auch ohne
-                    Speicherung für die laufende Sitzung über die &#8222;<a
-                    href="help.psml?hkey=search-history-1">Suchhistorie</a>&#8220; zugänglich.</p>
+                    Speicherung für die laufende Sitzung über die <a
+                    href="help.psml?hkey=search-history-1">Suchhistorie</a> zugänglich.</p>
             </content>
         </section>
     </chapter>
@@ -1226,13 +1031,6 @@
                     kann auch das Symbol ! oder das Symbol - verwendet
                     werden)<br/> Beispiel: &#8218;Wasser NOT
                     Fisch&#8217; (gesucht wird nach Wasser aber nicht nach Fisch)</p>
-                <p>
-                    <b>+ (Erforderlicher Term)</b>: Wird das Pluszeichen einem
-                    Term vorangestellt muss er vorhanden sein. Weitere Terme
-                    können vorhanden sein, müssen aber nicht.<br/> Beispiel:
-                    &#8217;+Wasser Fisch&#8217; (
-                    &#8218;Wasser&#8217; muss im Dokument vorhanden
-                    sein, &#8218;Fisch&#8217; darf im Dokument vorhanden sein)</p>
             </content>
         </section>
         <section help-key="search-expert-3">
@@ -1250,10 +1048,10 @@
         <section help-key="search-expert-4">
             <header>Suche nach Wortgruppen</header>
             <content>
-                <p>Wird eine Zeichenkette in Anführungszeichen (&#8222;)
+                <p>Wird eine Zeichenkette in Anführungszeichen (&#8218;)
                     gesetzt, wird nach dem Vorkommen der gesamten Zeichenkette
                     und nicht nach dem Vorkommen der einzelnen Begriffe gesucht.</p>
-                <p>Beispiel: &#8222;der Fisch schwimmt im Wasser&#8220;
+                <p>Beispiel: &#8218;der Fisch schwimmt im Wasser&#8217;
                     (Es werden nur Texte gefunden, die exakt diese Zeichenfolge enthalten.)</p>
             </content>
         </section>
@@ -1268,88 +1066,9 @@
                 <p>Beispiel: &#8218;Te?t&#8217; (Es werden sowohl
                     Dokumente mit dem Begriff &#8218;Text&#8217; als
                     auch Dokumente mit dem Begriff  &#8218;Test&#8217; gefunden)</p>
-                <p>Beispiel: &#8218;umwelt*katalog&#8217; (Es werden
-                    sowohl Dokumente mit dem Begriff
-                    &#8218;Umweltdatenkatalog&#8217; als auch Dokumente
-                    mit dem Begriff  &#8218;Umweltobjektkatalog&#8217; gefunden)</p>
             </content>
         </section>
         <section help-key="search-expert-6">
-            <header>Ähnlichkeitssuche</header>
-            <content>
-                <p>Über die Ähnlichkeitssuche (Fuzzy-Search) werden auch
-                    Dokumente gefunden in denen Begriffe mit ähnlicher
-                    Schreibweise gefunden werden. Die Ähnlichkeitssuche wird
-                    über das Anhängen einer Tilde (~) an den Suchbegriff ausgelöst.</p>
-                <p>Beispiel: &#8218;Korn~&#8217; (Es werden z.B. auch
-                    Dokumente mit dem Begriff &#8218;Horn&#8217; gefunden)</p>
-            </content>
-        </section>
-        <section help-key="search-expert-7">
-            <header>Nachbarschaftssuche</header>
-            <content>
-                <p>Es ist möglich nach Begriffen zu suchen, die sich im Text in
-                    einer festgelegten maximalen Distanz zueinander befinden.
-                    Hierzu werden die Begriffe in Anführungszeichen
-                    (&#8222;) gesetzt und eine Tilde (~) an den Ausdruck
-                    angehängt gefolgt von einer ganzen Zahl, die den maximalen
-                    Abstand der Begriffe (in Anzahl von Worten) angibt.</p>
-                <p>Beispiel: &#8218;&#8220;Wasser
-                    Fisch&#8220;~10&#8217; (Es werden nur Dokumente
-                    gefunden die sowohl den Begriff &#8218;Wasser&#8217;
-                    als auch den Begriff &#8218;Fisch&#8217; enthalten,
-                    wobei der Abstand zwischen den beiden Begriffen maximal 10
-                    Worte betragen darf.)</p>
-            </content>
-        </section>
-        <section help-key="search-expert-8">
-            <header>Suchbegriff-Gewichtung</header>
-            <content>
-                <p>Bei der Suche nach mehreren Begriffen kann die Gewichtung der
-                    einzelnen Suchbegriffe vom Nutzer beeinflusst werden. Wird
-                    einem Suchbegriff das Symbol ^ gefolgt von einer ganzen Zahl
-                    n angehängt, wird dieser Suchbegriff n-mal so hoch gewichtet
-                    wie die anderen Suchbegriffe (Hinweis: Dies gilt auch für Wortgruppen).</p>
-                <p>Beispiel: &#8218;Wasser^4 Fisch&#8217; (Der
-                    Suchbegriff &#8218;Wasser&#8217; wird viermal so
-                    hoch gewichtet wie der Suchbegriff &#8218;Fisch&#8217;.)</p>
-                <p>Beispiel: &#8218;Wasser &#8222;Forelle im
-                    Bach&#8220;^3&#8217; (Die Wortgruppe
-                    &#8222;Forelle im Bach&#8220; wird dreimal so hoch
-                    gewichtet wie der Suchbegriff &#8218;Wasser&#8217;)</p>
-            </content>
-        </section>
-        <section help-key="search-expert-9">
-            <header>Suche in speziellen Feldern</header>
-            <content>
-                <p>Der GS Soil Volltextindex gliedert sich in verschiedene
-                    Felder. Alle in GS Soil verwendeten Felder lassen sich
-                    gezielt einzeln durchsuchen. Dazu wird die Syntax
-                    &#8218;Feldname:Wert&#8217; verwandt.</p>
-                <p>Beispiel: &#8218;location:Berlin&#8217; (Es wird nach
-                    Dokumenten gesucht, die den Raumbezug
-                    &#8218;Berlin&#8217; haben.)</p>
-                <p>Folgende Felder sind in GS Soil durchsuchbar:</p>
-                <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
-                    <tr>
-                        <td>
-                            <b>Feldname</b>
-                        </td>
-                        <td>
-                            <b>Wertebereich</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>datatype</td>
-                        <td>Ein vom System unterstützter Datentyp, z.B.: dsc_ecs
-                            (UDK Daten), dsc_ecs_address (UDK Adressdaten),
-                            dsc_other (Andere Datenbanken), service (Service),
-                            measure (Messwerte), topics (Themen).</td>
-                    </tr>
-                </table>
-            </content>
-        </section>
-        <section help-key="search-expert-10">
             <header>Suche nach Bereichen in Feldern</header>
             <content>
                 <p>Innerhalb der speziellen Felder kann nach einem Suchbereich
@@ -1371,9 +1090,20 @@
                     Hannover]&#8217; (Es wird nach Dokumenten gesucht, die
                     sich auf einen Ort alphabetisch zwischen einschließlich
                     Braunschweig und Hannover befinden.)</p>
+            </content>	
+        </section>
+        <section help-key="search-expert-7">			
+            <header>Ähnlichkeitssuche</header>
+            <content>
+                <p>Über die Ähnlichkeitssuche (Fuzzy-Search) werden auch
+                    Dokumente gefunden in denen Begriffe mit ähnlicher
+                    Schreibweise gefunden werden. Die Ähnlichkeitssuche wird
+                    über das Anhängen einer Tilde (~) an den Suchbegriff ausgelöst.</p>
+                <p>Beispiel: &#8218;Korn~&#8217; (Es werden z.B. auch
+                    Dokumente mit dem Begriff &#8218;Horn&#8217; gefunden)</p>
             </content>
         </section>
-        <section help-key="search-expert-11">
+        <section help-key="search-expert-8">
             <header>Sonderzeichen</header>
             <content>
                 <p>Die folgenden Zeichen haben im Suchausdruck von GS Soil eine
@@ -1386,6 +1116,205 @@
                     Ausdruck &#8218;(1+1):2&#8217; gesucht)</p>
             </content>
         </section>
+        <section help-key="search-expert-9a">
+            <header>Suche nach speziellen Dokumenttypen</header>
+            <content>
+                <p>Im GS Soil Portal kann nach verschiedenen Dokumenttypen gesucht werden. 
+                    Dazu wird die Syntax &#8218;fileformat:Wert&#8217; verwandt.</p>
+                <p>Beispiel: &#8218;fileformat:pdf&#8217; (Es wird nur nach
+                    PDF-Dokumenten gesucht.)</p>
+                <p>Folgende Werte stehen für das Feld &#8218;fileformat&#8217; in GS Soil durchsuchbar:</p>
+                <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
+                    <tr>
+                        <td>
+                            <b>Wert</b>
+                        </td>
+                        <td>
+                            <b>Beschreibung</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>pdf </td>
+                        <td> Es wird nur nach PDF - Dokumenten gesucht</td>
+                    </tr>
+					<tr>
+                        <td>rtf </td>
+                        <td> Es wird nur nach RTF - Dokumenten gesucht</td>
+                    </tr>
+					<tr>
+                        <td>msword </td>
+                        <td> Es wird nur nach MS Word - Dokumenten gesucht</td>
+                    </tr>
+					<tr>
+                        <td>msexcel </td>
+                        <td> Es wird nur nach MS Excel - Dokumenten gesucht</td>
+                    </tr>
+					<tr>
+                        <td>mspowerpoint </td>
+                        <td> Es wird nur nach MS PowerPoint - Dokumenten gesucht</td>
+                    </tr>
+                </table>
+            </content>
+        </section>
+        <section help-key="search-expert-9">
+            <header>Suche nach speziellen Datentypen</header>
+            <content>
+                <p>Der GS Soil Volltextindex gliedert sich in verschiedene
+                    Felder. Alle in GS Soil verwendeten Felder lassen sich
+                    gezielt einzeln durchsuchen. Dazu wird die Syntax
+                    &#8218;Feldname:Wert&#8217; verwandt.</p>
+                <p>Bei der Suche nach einem Datentyp ist der Feldname &#8218;Datatype&#8217;.</p>
+				<p>Beispiel: ‚datatype:metadata’ (Es wird nach
+                    Dokumenten gesucht, die unter Rechtsvorschriften eingeordnet sind.)</p>
+                <p>Folgende Werte stehen für das Feld &#8218;datatype&#8217; in GS Soil Portal zur Verfügung:</p>
+                <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
+                    <tr>
+                        <td>
+                            <b>Wert</b>
+                        </td>
+                        <td>
+                            <b>Beschreibung</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>www</td>
+                        <td> Es wird nur nach Webseiten gesucht</td>
+                    </tr>
+                    <tr>
+                        <td>service</td>
+                        <td> Es wird nur nach Publikationen gesucht</td>
+                    </tr>
+                    <tr>
+                        <td>metadata</td>
+                        <td> Es wird nur nach Metadaten gesucht</td>
+                    </tr>
+                </table>
+            </content>
+        </section>
+        <section help-key="search-expert-13">
+            <header>Suche nach einer speziellen Metadatenklasse</header>
+            <content>
+				<p>Bei der Suche nach einer spezielen Metadatenklasse wird die 
+                Syntax &#8218;topic:Wert&#8217; verwandt.</p>
+                <p>Beispiel: &#8218;datatype:metadata metaclass:map&#8217; (Es wird nach
+                    Metadaten der Klasse Geo-Information/Karte gesucht.)</p>
+                <p>Folgende Werte stehen für das Feld &#8218;metaclass&#8217; in GS Soil Portal zur Verfügung:</p>
+                <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
+                    <tr>
+                        <td>
+                            <b>Wert</b>
+                        </td>
+                        <td>
+                            <b>Beschreibung</b>
+                        </td>
+					</tr>
+                    <tr>
+					<td>job </td>  
+					<td> Es wird nach Metadaten der Klasse &#8218;Organisationseinheit/Fachaufgabe&#8217; gesucht</td>
+					</tr>
+                    <tr>
+					<td>map  </td>  
+					<td> Es wird nach Metadaten der Klasse &#8218;Geo-Information/Karte&#8217; gesucht</td>
+					</tr>
+                    <tr>
+					<td>document </td>  
+					<td> Es wird nach Metadaten der Klasse &#8218;Dokument/Bericht/Literatur&#8217; gesucht</td>
+					</tr>
+                    <tr>
+					<td>geoservice </td>  
+					<td> Es wird nach Metadaten der Klasse &#8218;Geodatendienst&#8217; gesucht</td>
+					</tr>
+                    <tr>
+					<td>project </td>  
+					<td> Es wird nach Metadaten der Klasse &#8218;Vorhaben/Projekt/Programm&#8217; gesucht</td>
+					</tr>
+                    <tr>
+					<td>database  </td>  
+					<td> Es wird nach Metadaten der Klasse &#8218;Datensammlung/Datenbank&#8217; gesucht</td>
+					</tr>
+					<tr>
+					<td>service  </td>  
+					<td> Es wird nach Metadaten der Klasse &#8218;Dienst/Anwendung/Informationssystem&#8217; gesucht</td>
+					</tr>
+                </table>
+            </content>
+        </section>
+        <section help-key="search-expert-14">
+            <header>Angabe des Raumbezugs</header>
+            <content>
+				<p> Die Suche kann auf Dokumente, die einem bestimmten Raumbezug zugeordnet sind, eingeschränkt werden. 
+				Der Raumbezug kann über Koordinaten oder über den räumlichen Schlüssel der Verwaltungseinheit angegeben werden.</p>
+                <p>Beispiel: &#8218;areaid:2800866&#8217; (Die Suche wird auf Brüssel als Verwaltungseinheit eingeschränkt.)</p>
+                <p>Beispiel: &#8218;x1:3.44 y1:50.27 x2:5.25 y2:51.42&#8217; (Die Suche wird auf ein ausgewähltes Rechteck eingeschränkt.)</p>
+                <p>Folgende Felder stehen für die Einschränkung des Raumbezugs in GS Soil Portal zur Verfügung:</p>
+                <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
+                    <tr>
+                        <td>
+                            <b>Feld</b>
+                        </td>
+                        <td>
+                            <b>Beschreibung des Werts </b>
+                        </td>
+					</tr>
+                    <tr>
+					<td>areaid </td>  
+					<td> Schlüssel der Verwaltungseinheit</td>
+					</tr>
+                    <tr>
+					<td>x1  </td>  
+					<td> links</td>
+					</tr>
+                    <tr>
+					<td>x2 </td>  
+					<td> rechts</td>
+					</tr>
+                    <tr>
+					<td>y1 </td>  
+					<td> oben</td>
+					</tr>
+                    <tr>
+					<td>y2 </td>  
+					<td> unten</td>
+					</tr>
+               </table>
+			   <p> Die Koordinaten müssen als Gradzahlen (WGS 84) eingegeben werden. </p>
+            </content>
+        </section>
+        <section help-key="search-expert-15">
+            <header>Angabe des Zeitbezugs</header>
+            <content>
+				<p> Die Suche kann auf Dokumente, die einem bestimmten Zeitbezug zugeordnet sind, eingeschränkt werden. </p>
+                <p>Beispiel: &#8218;t1:2009-06-01 t2:2010-12-31&#8217; (Die Suche wird auf ein ausgewähltes Zeitintervall eingeschränkt.)</p>
+                <p>Folgende Felder stehen für die Einschränkung des Zeitbezugs in GS Soil Portal zur Verfügung:</p>
+                <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
+                    <tr>
+                        <td>
+                            <b>Feld</b>
+                        </td>
+                        <td>
+                            <b>Beschreibung des Werts</b>
+                        </td>
+					</tr>
+                    <tr>
+					                    <td>t0 </td>  
+                    <td> Das Dokument wurde dem angegebenen Zeitpunkt zugeordnet</td>
+                    </tr>
+                    <tr>
+                    <td>t1  </td>  
+                    <td> Das Dokument wurde einer Zeitspanne zugeordnet, die mit dem 
+                    angegebenen Wert beginnt</td>
+                    </tr>
+
+                    <tr>
+                    <td>t2 </td>  
+                    <td> Das Dokument wurde einer Zeitspanne zugeordnet, die mit dem 
+                    angegebenen Wert endet</td>
+                    </tr>
+               </table>
+               <p> Die Zeitangaben müssen immer in der Form YYYY-MM-DD (Y=Jahr, M=Monat, D=Tag) eingegeben werden. </p>
+            </content>
+        </section>
+    </chapter>
     </chapter>
     <chapter>
         <header>Suchergebnisliste</header>
@@ -1406,26 +1335,26 @@
             <header>Hauptergebnisliste</header>
             <content>
                 <p>In der Hauptergebnisliste werden Ihnen die Ergebnisse aus der
-                    Suche in den Web-Seiten der angeschlossenen Server, sowie in
+                    Suche in den Webseiten der angeschlossenen Server, sowie in
                     den Meta- und Fachinformationssystemen in einer nach
                     Relevanz gewichteten Liste angezeigt.</p>
                 <p>Anstatt der einfachen gewichteten Liste können Sie sich die
-                    Ergebnisse auch nach Bund und Ländern oder nach Anbietern <a
+                    Ergebnisse auch nach Ländern oder nach Anbietern <a
                     href="help.psml?hkey=search-settings-2#search-settings-2">gruppiert</a>
                     anzeigen lassen oder sie nach Aktualität <a href="help.psml?hkey=search-settings-2#search-settings-2">sortieren</a>.</p>
-                <p>Ist die Fundstelle eine Web-Seite, erhalten Sie neben einer
+                <p>Ist die Fundstelle eine Webseite, erhalten Sie neben einer
                     Reihe von Informationen (z.B. Titel, Beschreibung und
                     Anbieter) einen Link über den Sie direkt auf die
                     Originalseite geführt werden.</p>
                 <p>Ist die Fundstelle eine Meta- oder Fachinformation werden Sie
                     über den Link auf die Detaildarstellung der Fachinformation
                     geführt. In den Fällen, in denen ein direkter Link zu einer
-                    Web-Seite in den Meta- oder Fachinformationen vorhanden ist,
+                    Webseite in den Meta- oder Fachinformationen vorhanden ist,
                     bekommen sie diesen angeboten und werden über ihn auf die
                     Originalseite geführt. In den Fällen, in denen eine Karte
-                    hinterlegt ist, bekommen sie einen Link &#8222;Zeige
-                    Karte&#8220; angeboten, über den Sie die Karte in der
-                    Kartenansicht von GS Soil öffnen können.</p>
+                    hinterlegt ist, bekommen sie einen Link <i>Zeige
+                    Karte</i> angeboten, über den Sie die Karte in der
+                    Kartenansicht des GS Soil Portals öffnen können.</p>
             </content>
         </section>
         <section help-key="search-results-3">
@@ -1433,7 +1362,7 @@
             <content>
                 <p>Neben den in der Hauptergebnisliste eingebunden Meta- und
                     Fachinformationssystemen werden auch weitere
-                    Umweltinformationssysteme über GS Soil abgefragt. Die
+                    Informationssysteme über das GS Soil Portal abgefragt. Die
                     Schnittstellen dieser Systeme erlauben keine Einbindung der
                     Suchergebnisse in die gewichtete Hauptergebnisliste. Die
                     Suchergebnisse werden daher in einer getrennten Liste nach
@@ -1447,12 +1376,9 @@
         <section help-key="search-results-4">
             <header>Ähnliche Begriffe</header>
             <content>
-                <p>GS Soil bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
+                <p>Das GS Soil Portal bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
                     ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen
-                    eingegebene Suchausdruck durch den <a
-                        href="http://www.semantic-network.de/"
-                        target="_new">Semantic Network Service (SNS)</a> des
-                    Umweltbundesamtes in Dessau analysiert und ihnen zur
+                    eingegebene Suchausdruck durch einen semantischen Dienst analysiert und ihnen zur
                     Verfügung gestellt.</p>
                 <p>Wenn Sie auf das Pluszeichen <img border="0" width="9"
                         height="9"
@@ -1462,8 +1388,8 @@
                         <img border="0" width="9" height="9"
                     src="../decorations/layout/ingrid-help/images/image018.jpg"/> Symbol
                     anzeigen lassen. Durch das Ankreuzen der einzelnen Begriffe
-                    und Klick auf den Button &#8222;Zur Suche
-                    hinzufügen&#8220; werden die ähnlichen Begriffe jeweils
+                    und Klick auf den Button <i>Zur Suche
+                    hinzufügen</i> werden die ähnlichen Begriffe jeweils
                     dem zugeordneten Suchbegriff hinzugefügt und zwar so, dass
                     ein Dokument gefunden wird, wenn entweder der Suchbegriff
                     oder der ähnliche Begriff enthalten ist (ODER-Verknüpfung).</p>
@@ -1471,241 +1397,56 @@
         </section>
     </chapter>
     <chapter>
-        <header>Kataloge</header>
-        <section help-key="search-catalog-1">
-            <header>Hierarchiebaum</header>
-            <content>
-                <p>Die angeschlossenen Kataloge und deren Inhalte werden in 
-                	einem Hierarchie-Baum dargestellt, gegliedert nach Bund/Länder.
-                	In jedem Katalog kann nach Objekten (hier "Umweltinformationen") 
-                	oder Adressen navigiert werden. Die Detaildarstellung eines Eintrags 
-                	erfolgt erst auf Anfrage, d.h. bei Klick auf dessen Titel, gleich 
-                	wie in der <a
-                    href="help.psml?hkey=search-results-2">Hauptergebnisliste</a> bei 
-                    der freien Suche.</p>
-            </content>
-        </section>
+        <header>Thesaurus-Navigator</header>
         <section help-key="search-catalog-2">
             <header>Thesaurus-Navigator</header>
             <content>
                 <p>Die Darstellung des Thesaurus-Wortgutes erfolgt in einer Baumstruktur, 
-                ausgehend von den Topterms des SNS. Bei Auswahl eines Thesaurus-Begriffs 
+                ausgehend von den Oberbegriffen von <a href="#ext-search-subject-3">GEMET</a>. Bei Auswahl eines Thesaurus-Begriffs 
                 (Deskriptor) erfolgt die Darstellung der Metadatensätze der zur Verfügung 
-                stehenden Kataloge (Objekt- bzw. Adress-iPlugs), die mit dem ausgewählten 
+                stehenden Metadatenkataloge, die mit dem ausgewählten 
                 Deskriptor verschlagwortet sind, in einer neben dem Hierarchiebaum stehenden 
-                "Trefferliste". Die Auflistung der Metadatensätze ist in dieser Liste nach 
+                <i>Trefferliste</i>. Die Auflistung der Metadatensätze ist in dieser Liste nach 
                 den Katalogen gruppiert. Die Detaildarstellung eines Metadatensatzes erfolgt 
                 erst auf Anfrage, d.h. bei Klick auf dessen Titel, gleich wie in der Liste 
                 der Suchergebnisse bei der freien Suche. Das Umschalten zwischen 
-                "Umweltinformationen" (Objekten) und "Adressen" erfolgt direkt im Bereich 
+                <i>Bodeninformationen</i> und <i>Adressen</i> erfolgt direkt im Bereich 
                 der Trefferliste.</p>
             </content>
         </section>
     </chapter>
     <chapter>
-        <header>Themen</header>
-        <section help-key="search-topics-1">
-            <header>Themen</header>
-            <content>
-                <p>Die Informationen, die als &#8222;Themen&#8220;
-                    in GS Soil bereitgestellt werden, sind Web-Seiten und
-                    UDK-Metadatenobjekte die für ein bestimmtes Umweltthema
-                    besonders relevant und interessant sind . Über das eigentliche
-                    Thema (wie z.B. Wasser oder Abfall) können Sie
-                    die gewünschten Themenseite auswählen.</p>
-                <p>Wenn Sie über den Klick auf ein Thema direkt von der
-                    Startseite zu den Themen gekommen sind, ist das
-                    angewählte Thema  bereits voreingestellt und nur
-                    Themenseiten zu diesem Thema werden in der Ergebnisliste angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-topics-2">
-            <header>Themen</header>
-            <content>
-                <p>In diesem Bereich können Sie das Thema auswählen, über das
-                    Sie sich informieren wollen.</p>
-                <p>Sie können Mehrfachselektionen durchführen, indem Sie die
-                    Strg- bzw. Ctrl-Taste gedrückt halten und dann auf die
-                    gewünschten Themen klicken.</p>
-                <p>Wird &#8222;Alles auswählen&#8220; selektiert werden
-                    alle zur Verfügung stehenden Themen angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-topics-4">
-            <header>Bund/Länder</header>
-            <content>
-                <p>In diesem Bereich können Sie auswählen, von welchen
-                    Informationsanbietern (des Bundes oder einzelner Länder) Sie
-                    die Informationen wünschen.</p>
-                <p>Sie können Mehrfachselektionen durchführen, indem Sie die
-                    Strg- bzw. Ctrl-Taste gedrückt halten und dann auf den Bund
-                    oder die gewünschten Länder klicken.</p>
-                <p>Wird &#8222;Alles auswählen&#8220; selektiert, werden
-                    die Informationen aller Informationsanbieter angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-topics-5">
-            <header>Gruppierung</header>
-            <content>
-                <p>Sie können sich die Ergebnisse entweder nach Bund und Ländern
-                    oder aber nach den einzelnen Informationsanbietern (z.B.
-                    Umweltbundesamt) gruppiert anzeigen lassen. Das heißt, alle
-                    Informationen des Bundes oder eines Landes bzw. eines
-                    Anbieters werden zu einer Gruppe zusammengefasst und
-                    zusammen angezeigt.</p>
-                <p>Wünschen Sie eine solche Gruppierung nicht, können Sie die
-                    Einstellung &#8222;keine&#8220; wählen.</p>
-                <p>Wird &#8222;Alles auswählen&#8220; selektiert, werden
-                    die Informationen aller Informationsanbieter angezeigt.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Service</header>
+        <header>Publikationen</header>
         <section help-key="search-service-1">
-            <header>Service</header>
+            <header>Publikationen</header>
             <content>
-                <p>Unter &#8222;Service&#8220; werden die Rubriken
-                    &#8222;Pressemitteilungen&#8220;,
-                    &#8222;Publikationen&#8220; und
-                    &#8222;Veranstaltungen&#8220; des Bundes und der
-                    Länder zusammengefasst.</p>
+                <p>Unter <i>Publikationen</i> werden alles Veröffentlichungen aus dem GS Soil Netzwerk zusammengefasst.</p>
                 <p>Von diesem Menüpunkt gelangen Sie zu den entsprechenden
-                    Seiten der Bundes- und Landesbehörden.</p>
-                <p>Wenn Sie über den Klick auf eine Rubrik direkt von der
-                    Startseite zu den Themen gekommen sind, ist die
-                    Rubrik  bereits vorgewählt und die unter dieser Rubrik zur
-                    Verfügung stehenden Seiten werden direkt angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-service-2">
-            <header>Rubriken</header>
-            <content>
-                <p>In diesem Bereich können Sie bestimmte Rubriken auswählen.
-                    Nach dem Klick auf den Button &#8222;Anzeigen&#8220;
-                    werden Ihnen die zu den angekreuzten Rubriken zur Verfügung
-                    stehenden Seiten angezeigt.</p>
+                    Seiten der Datenanbieter.</p>
             </content>
         </section>
         <section help-key="search-service-3">
-            <header>Bund/Länder</header>
+            <header>Land</header>
             <content>
                 <p>In diesem Bereich können Sie auswählen, von welchen
-                    Informationsanbietern (des Bundes oder aus einzelner Länder)
+                    Land
                     Sie die Informationen wünschen.</p>
                 <p>Sie können Mehrfachselektionen durchführen, indem Sie die
-                    Strg- bzw. Ctrl-Taste gedrückt halten und dann auf den Bund
-                    oder die gewünschten Länder klicken.</p>
-                <p>Wird &#8222;Alles auswählen&#8220; selektiert, werden
+                    Strg- bzw. Ctrl-Taste gedrückt halten und dann auf die gewünschten Länder klicken.</p>
+                <p>Wird <i>Alles auswählen</i> selektiert, werden
                     die Informationen aller Informationsanbieter angezeigt.</p>
             </content>
         </section>
         <section help-key="search-service-4">
             <header>Gruppierung</header>
             <content>
-                <p>Sie können sich die Ergebnisse entweder nach Bund und Ländern
-                    oder aber nach den einzelnen Informationsanbietern (z.B.
-                    Umweltbundesamt) gruppiert anzeigen lassen. Das heißt, alle
-                    Informationen des Bundes oder eines Landes bzw. eines
+                <p>Sie können sich die Ergebnisse entweder nach Ländern
+                    oder aber nach den einzelnen Informationsanbietern gruppiert anzeigen lassen. Das heißt, alle
+                    Informationen eines Landes bzw. eines
                     Anbieters werden zu einer Gruppe zusammengefasst und
                     zusammen angezeigt.</p>
                 <p>Wünschen Sie eine solche Gruppierung nicht, können Sie die
-                    Einstellung &#8222;keine&#8220; wählen.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Messwerte</header>
-        <section help-key="search-measure-1">
-            <header>Messwerte</header>
-            <content>
-                <p>Unter diesem Menüpunkt werden Ihnen die Web-Seiten und
-                    Informationssysteme zu Messdaten von Bund- und Ländern angezeigt.</p>
-                <p>Wenn Sie über den Klick auf eine Rubrik direkt von der
-                    Startseite zu den Themen gekommen sind, ist die
-                    Rubrik  bereits vorgewählt und die zur Verfügung stehenden
-                    Seiten werden direkt angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-measure-2">
-            <header>Rubriken</header>
-            <content>
-                <p>In diesem Bereich können Sie auswählen, zu welchem
-                    Umweltmedium Sie sich aktuelle  Messwerte anzeigen lassen
-                    wollen. Nach dem Klick auf den Button
-                    &#8222;Anzeigen&#8220; werden Ihnen die zu den
-                    angekreuzten Rubriken zur Verfügung stehenden
-                    Messwert-Seiten angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-measure-3">
-            <header>Bund/Länder</header>
-            <content>
-                <p>In diesem Bereich können Sie auswählen, von welchen
-                    Informationsanbietern (des Bundes oder einzelner Länder) Sie
-                    die Informationen wünschen.</p>
-                <p>Sie können Mehrfachselektionen durchführen, indem Sie die
-                    Strg- bzw. Ctrl-Taste gedrückt halten und dann auf den Bund
-                    oder die gewünschten Länder klicken.</p>
-                <p>Wird &#8222;Alles auswählen&#8220; selektiert, werden
-                    die Informationen aller Informationsanbieter angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-measure-4">
-            <header>Gruppierung</header>
-            <content>
-                <p>Sie können sich die Ergebnisse entweder nach Bund und Ländern
-                    oder aber nach den einzelnen Informationsanbietern (z.B.
-                    Umweltbundesamt) gruppiert anzeigen lassen. Das heißt, alle
-                    Informationen des Bundes oder eines Landes bzw. eines
-                    Anbieters werden zu einer Gruppe zusammengefasst und
-                    zusammen angezeigt.</p>
-                <p>Wünschen Sie eine solche Gruppierung nicht, können Sie die
-                    Einstellung &#8222;keine&#8220; wählen.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Chronik</header>
-        <section help-key="search-chronicle-1">
-            <header>Chronik</header>
-            <content>
-                <p>Die Chronik ist eine Sammlung aktueller und
-                    historischer Ereignisse, die unsere Umweltsituation
-                    wesentlich beeinflusst haben. Neben den Eckdaten liefert die
-                    Chronik eine  kurze Beschreibung der Ereignisse.</p>
-                <p>Die Chronik wird über den <a
-                        href="http://www.semantic-network.de/"
-                        target="_new">Semantic Network Service (SNS)</a> des
-                    Umweltbundesamtes zur Verfügung gestellt.</p>
-                <p>Sie können gezielt nach Ereignissen suchen, in dem Sie eine
-                    Suche in der Chronik über Suchbegriff, Zeitbezug und
-                    Ereignistyp über den Button &#8222;Anzeigen&#8220; absenden.</p>
-            </content>
-        </section>
-        <section help-key="search-chronicle-2">
-            <header>Ereignistypen</header>
-            <content>
-                <p>Die Chronik verzeichnet verschiedene Ereignistypen. Sie
-                    können in diesem Bereich wählen, nach welchen Ereignistypen
-                    Sie suchen.</p>
-            </content>
-        </section>
-        <section help-key="search-chronicle-3">
-            <header>Zeitbezug</header>
-            <content>
-                <p>Die Chronik verzeichnet zu jedem Ereignis das Datum, an
-                    dem es sich ereignet hat. In diesem Bereich Sie können den
-                    Zeitpunkt oder den Zeitraum angeben, in dem Sie nach
-                    umweltrelevanten Ereignissen suchen.</p>
-            </content>
-        </section>
-        <section help-key="search-chronicle-4">
-            <header>Suchbegriff</header>
-            <content>
-                <p>In diesem Bereich können Sie einen Suchbegriff eingeben. Es
-                    wird nach Ereignissen gesucht, die den Suchbegriff im Titel
-                    oder in der Beschreibung enthalten.</p>
+                    Einstellung <i>keine</i> wählen.</p>
             </content>
         </section>
     </chapter>
@@ -1714,172 +1455,262 @@
         <section help-key="maps-1">
             <header>Karten</header>
             <content>
-                <p>Über diese Funktion können Karten interner und externer
-                    Dienste visualisiert werden.</p>
-                <p>Wenn Sie zu dieser Funktion über die Ergebnisliste
-                    (&#8222;Zeige Karte&#8220;) gelangt sind, wird Ihnen
-                    die ausgewählte Karte angezeigt. Ansonsten wird Ihnen Ihre
-                    letzte Einstellung im Menü &#8222;Karten&#8220; präsentiert.</p>
+                <p>Mit dem GS Soil Kartenviewer können Sie unterschiedliche Karten mit Boden- und bodenrelevanten Informationen betrachten. 
+					Wählen Sie einen Kartendienst aus der Rubrik <i>Themen</i> oder der Rubrik <i>Partner</i> aus oder fügen Sie einen externen Dienst hinzu. 
+					Wenn Sie über ein Suchergebnis (<i>Zeige Karte</i>) auf den Kartenviewer gelangt sind, wird Ihnen die entsprechende Karte direkt angezeigt.</p>
             </content>
         </section>
             <section help-key="maps-2">
-                <header>Aktive Kartendienste</header>
+				<header>Reiter</header>
                 <content>
-                    <p>In der rechten Spalte werden alle geladenen Services
-                        gelistet. Für jeden Service werden alle vorhandenen
-                        Layer angegeben. Sie können über das Pluszeichen <img
-                            border="0" width="9" height="9"
-                        src="../decorations/layout/ingrid-help/images/image018.jpg"/> angezeigt
-                        bzw. durch das Minuszeichen <img border="0" width="9"
-                            height="9" src="image019.jpg"/> wieder ausgeblendet werden.</p>
-                    <p>Die verwendeten Symbole haben die folgende Bedeutung:</p>
-                    <p>
-                        <img border="0" width="14" height="14"
-                            src="../decorations/layout/ingrid-help/images/image020.jpg"
-                        alt="*"/> Ein Layer, der unterhalb dieses Symbols
-                        angekreuzt ist, wird angezeigt.</p>
-                    <p>
-                        <img border="0" width="14" height="14"
-                            src="../decorations/layout/ingrid-help/images/image021.jpg"
-                        alt="*"/> Die Informationen für einen Layer, der
-                        unterhalb diesem Symbol angekreuzt ist, werden angezeigt
-                        wenn die &#8222;Layerbasierte
-                        Informationsabfrage&#8220; aktiviert wurde.</p>
-                    <p>
-                        <img border="0" width="14" height="14"
-                            src="../decorations/layout/ingrid-help/images/image022.jpg"
-                        alt="*"/> Beim Klick auf dieses Symbol wird der
-                        zugehörige Layer um eine Position nach oben verschoben.
-                        (Hinweis: Die oben stehenden Layer werden zuerst
-                        angezeigt und können dadurch ggf. von folgenden Layern
-                        verdeckt werden.)</p>
-                    <p>
-                        <img border="0" width="14" height="14"
-                            src="../decorations/layout/ingrid-help/images/image023.jpg"
-                        alt="*"/> Beim Klick auf dieses Symbol wird der
-                        zugehörige Service mit all seinen Layern um eine
-                        Position nach oben, vor den davor stehenden Service
-                        verschoben. (Hinweis: Die oben stehenden Layer werden
-                        zuerst angezeigt und können dadurch ggf. von folgenden
-                        Layern verdeckt werden. Das kann eventuell für alle
-                        Layer eines Service gelten.)</p>
-                </content>
+                    <p>Im GS Soil Kartenviewer werden verfügbare sowie aktivierte Kartendienste, Legenden und eine Metadatensuche in unterschiedlichen Reitern angeboten, 
+				die sich links neben der Karte befindet. Durch einen Klick auf eine Überschrift wird der jeweilige Menüpunkt aufgeklappt.</p>
+					<p><img border="0" width="191" height="145"
+                            src="../decorations/layout/ingrid-help/images/image201.jpg"
+                        alt="*"/> </p>
+                    <p><b>Legende</b></p>
+                    <p>m Menüpunkt <i>Legende</i> werden alle verfügbaren Legenden der Kartenebenen (Layer) dargestellt, die unter <i>Aktive Dienste</i> aktiviert sind und 
+					im Viewer dargestellt werden. Die Legendenbeschreibung gibt darüber Aufschluss, mit welchen Symbolen und/oder Farben die unterschiedlichen Informationen 
+					in der Karte dargestellt werden.</p>
+                   <p><b>Aktive Dienste</b></p>
+                    <p>Alle Kartendienste, die sich unter <i>Aktive Dienste</i> befinden, können durch einen Klick im Kartenviewer aktiviert bzw. deaktiviert werden. 
+					Die Kartendienste mit ihren Layern werden in einer Baumstruktur wiedergegeben.</p>
+					<p><img border="0" width="306" height="94"
+                            src="../decorations/layout/ingrid-help/images/image202.jpg"
+                        alt="*"/> </p>					   
+					<p>Die einzelnen Symbole haben die folgende Bedeutung:</p>
+
+                    <p> <img border="0" width="16" height="16"
+                            src="../decorations/layout/ingrid-help/images/image101.jpg"
+                        alt="*"/><b>Rauf:</b> Ein markierter Dienst bzw. ein markierter Layer wird um eine Ebene nach oben verschoben. 
+						Ein Dienst bzw. ein Layer kann durch einen Klick mit der linken Maustaste auf den Namen markiert werden. Für die 
+						Darstellung in der Karte gilt: Layer, die in der Baumstruktur weiter unten gelistet sind, überlagern Layer, die weiter oben gelistet sind.</p>								
+                    <p> <img border="0" width="16" height="16" src="../decorations/layout/ingrid-help/images/image102.jpg" alt="*"/>
+						<b>Runter:</b> Ein markierter Dienst bzw. ein markierter Layer wird um eine Ebene nach unten verschoben. 
+						Ein Dienst bzw. ein Layer kann durch einen Klick mit der linken Maustaste auf den Namen markiert werden. 
+						Wenn ein Layer durch einen anderen überlagert wird, kann dieser durch ein Verschieben nach unten sichtbar gemacht 
+						werden. Die Layer, die sich am unteren Ende der Liste befinden, werden immer als oberste Ebene in der Karte dargestellt.</p>
+
+                    <p> <img border="0" width="18" height="17" src="../decorations/layout/ingrid-help/images/image114.jpg" alt="*"/>
+						<b>Entfernen:</b> Ein markierter Dienst wird aus dem Bereich <i>Aktive Dienste</i> gelöscht. Ein Dienst kann durch 
+						einen Klick mit der linken Maustaste auf den Namen markiert werden. Das Entfernen von einzelnen Layer ist nicht möglich.</p>
+
+                    <p> <img border="0" width="20" height="17"
+                            src="../decorations/layout/ingrid-help/images/image106.jpg"
+                        alt="*"/><b>Aktive Dienste:</b> Das Ordnersymbol wird zur Anzeige der Kartendienste verwendet. In den einzelnen Ordnern sind die 
+						entsprechenden Layer eines Dienstes zu finden. Mit einem Klick (linke Maustaste) auf das Ordnersymbol können Sie den Dienst verschieben, 
+						entfernen oder dessen Transparenz ändern.</p>
+
+                    <p> <img border="0" width="16" height="16"
+                            src="../decorations/layout/ingrid-help/images/image107.jpg"
+                        alt="*"/> Dieses Symbol wird zur Anzeige eines <b>Layers</b> verwendet. Mit einem Klick (linke Maustaste) auf das Symbol können 
+						Sie den Dienst verschieben oder auf die Ebene des Dienstes zoomen.</p>
+
+                    <p> <img border="0" width="17" height="17"
+                            src="../decorations/layout/ingrid-help/images/image108.jpg"
+                        alt="*"/><b>Dienst / Layer in Karte aktivieren:</b> Wenn die Checkbox für einen Dienst oder einen Layer angehakt ist, wird der Dienst 
+						bzw. die Layer in der Karte aktiviert und in der Karte dargestellt, wenn die entsprechende Zoomstufe (vordefinierter Maßstab der Layer) 
+						eingestellt ist. Zudem können für die aktivierten Dienste bzw. Layer entsprechende Layer-Informationen über den Button <i>Infoabfrage</i> 
+						(Werkzeugleiste) aufgerufen werden. Befindet sich der dargestellte Kartenausschnitt außerhalb der Zoomstufe der Layer, wird der Layer 
+						in der Karte nicht angezeigt und der Layertitel grau dargestellt. Wird ein Dienst angehakt, so werden alle Layer des Dienstes aktiviert. 
+						Wird das Häkchen eines Dienstes entfernt, so werden alle Layer des Dienstes deaktiviert. </p>
+          
+					<p> <img border="0" width="18" height="16"
+                            src="../decorations/layout/ingrid-help/images/image104.jpg"
+                        alt="*"/><b>Anzeige der Metadaten:</b> Weiterführende Informationen (Metadaten) über einen Dienst bzw. eine Layer können für Kartendienste 
+						angezeigt werden. Die Informationen, die aus der jeweiligen GetCapabilities-URL stammen, werden aus einer Datenbank des Kartenviewers ausgelesen. 
+						Wenn in der GetCapabilities-URL bestimmte Angaben wie z.B. zur Organisation oder Anschrift fehlen, können einige Felder nicht befüllt werden.</p>
+
+					<p><b>Themen</b></p>
+                    <p>Unter Themen finden Sie verschiedene nach Bodenthemen sortierte Kartendienste von den Datenanbietern, die in den Kartenviewer geladen werden können.</p>
+                    <p> <img border="0" width="304" height="203"
+                            src="../decorations/layout/ingrid-help/images/image203.jpg"				   
+					     alt="*"/> </p> 
+					   
+					<p>Die einzelnen Symbole haben die folgende Bedeutung:</p>
+
+                    <p> <img border="0" width="17" height="17"
+                            src="../decorations/layout/ingrid-help/images/image109.jpg"
+                        alt="*"/> Das Ordnersymbol wird für die Anzeige der einzelnen Themen verwendet. In den Ordnern finden Sie die entsprechenden Kartendienste.</p>
+ 
+                    <p> <img border="0" width="18" height="22"
+                            src="../decorations/layout/ingrid-help/images/image111.jpg"
+                        alt="*"/><b>WMS zu aktiven Diensten hinzufügen und auf Ausschnitt zoomen:</b> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende 
+						Dienst zu den aktiven Diensten hinzugefügt und in der Karte auf den vom Dienst beschriebenen Kartenausschnitt gezoomt. Wenn der Dienst weniger als 11 Layer 
+						enthält, werden alle Layer direkt in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, werden die Layer nicht automatisch aktiviert, um die 
+						Ladezeit gering zu halten.</p>
+
+                    <p> <img border="0" width="18" height="16"
+                            src="../decorations/layout/ingrid-help/images/image104.jpg"
+                        alt="*"/><b>Anzeige der Metadaten:</b> Weiterführende Informationen (Metadaten) über einen Dienst bzw. eine Layer können für Kartendienste 
+						angezeigt werden. Die Informationen, die aus der jeweiligen GetCapabilities-URL stammen, werden aus einer Datenbank des Kartenviewers ausgelesen. 
+						Wenn in der GetCapabilities-URL bestimmte Angaben wie z.B. zur Organisation oder Anschrift fehlen, können einige Felder nicht befüllt werden.</p>
+
+                    <p><b>Partner</b></p>
+                    <p>Unter Partner finden Sie bodenrelevante Kartendienste verschiedener Datenanbieter aus dem GS Soil Netzwerk, die nach den Ländern sortiert sind</p>
+                    <p> <img border="0" width="305" height="157"
+                            src="../decorations/layout/ingrid-help/images/image204.jpg"
+                        alt="*"/> </p> 
+					<p>Die Bedeutung der einzelnen Symbole wird unter dem Menüpunkt <i>Themen</i> beschrieben (siehe oben).</p>
+						
+                    <p><b>Metadatensuche</b></p>
+                    <p>In der Metadatensuche können Sie nach Kartendiensten von den Partnern suchen, die im Kartenviewer eingebunden sind. Geben Sie hierfür einen Suchbegriff ein und klicken Sie auf <i>Ok</i>.</p>
+                    <p> <img border="0" width="308" height="148"
+                            src="../decorations/layout/ingrid-help/images/image205.jpg"
+                        alt="*"/> </p> 					
+					
+					<p>In der Suchergebnisliste werden die folgenden Symbole verwendet:</p>
+
+                    <p> <img border="0" width="20" height="18"
+                            src="../decorations/layout/ingrid-help/images/image112.jpg"
+                        alt="*"/><b>WMS zu aktiven Diensten hinzufügen:</b> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende Dienst zu den aktiven Diensten hinzugefügt. 
+						Wenn der Dienst weniger als 11 Layer enthält, werden zudem alle Layer direkt in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, werden die Layer nicht 
+						automatisch aktiviert, um die Ladezeit gering zu halten.</p>
+
+                    <p> <img border="0" width="19" height="19"
+                            src="../decorations/layout/ingrid-help/images/image113.jpg"
+                        alt="*"/><b>WMS zu aktiven Diensten hinzufügen und auf Ausschnitt zoomen:</b> Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende Dienst zu den 
+						aktiven Diensten hinzugefügt und in der Karte auf den vom Dienst beschriebenen Kartenausschnitt gezoomt. Auch hier gilt: Wenn der Dienst weniger als 11 Layer enthält, 
+						werden zudem alle Layer direkt in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, werden die Layer nicht automatisch aktiviert, um die Ladezeit gering zu halten.</p>
+
+                    <p> <img border="0" width="15" height="16"
+                            src="../decorations/layout/ingrid-help/images/image110.jpg"
+                        alt="*"/><b>Layer zu aktiven Diensten hinzufügen:</b> Mit einem Klick (linke Maustaste) auf dieses Symbol wird die entsprechende Layer zu den aktiven Diensten hinzugefügt.</p>
+
+                    <p> <img border="0" width="18" height="22"
+                            src="../decorations/layout/ingrid-help/images/image111.jpg"
+                        alt="*"/><b>Layer zu aktiven Diensten hinzufügen und auf Ausschnitt zoomen:</b> Mit einem Klick (linke Maustaste) auf dieses Symbol wird die entsprechende Layer zu den 
+						aktiven Diensten hinzugefügt und in der Karte auf den vom Dienst beschriebenen Kartenausschnitt gezoomt.</p>
+						
+					<p>Über einen Klick auf den Namen des Dienstes bzw. der Layer werden nähere Informationen über den Dienst bzw. die Layer angezeigt.</p>
+					
+					<p><b>Neuen WMS-Dienst hinzufügen</b></p>
+					<p>Mit Hilfe diesen Reiters können Datennbieter aus dem GS Soil Netzwerk einfach neue Kartendienste über diese graphische Benutzeroberfläche eingeben. 
+					Diese werden direkt in der Datenbank gespeichert. Nach der Freigabe durch dem Administrator sind diese Dienste im Kartenviewer verfügbar.</p>
+                 </content>
             </section>
             <section help-key="maps-3">
-                <header>Kartendienste speichern</header>
+				<header>WFS-Suche</header>
+					<content>
+                    <p>Der Downloaddienst ermöglich es dem Nutzer Bodendatensätze über die Kartenkomponente des GS Soil Portal abzufragen und herunterzuladen. 
+					Diese Datensätze werden von den GS Soil Datenanbieternetzwerk, dass mit dem Portal verbunden ist, verfügbar gemacht.</p>
+					<p><b>Hinweis</b>: In der aktuellen Version ist keine Komponente für das Rechtemanagement vorhanden.</p>
+					<p>Der nachstehende Abschnitt zielt darauf ab dem Nutzer bei der korrekten und effizienten Nutzung des Downloadienstes zu helfen. </p>
+                    <p> <img border="0" width="305" height="123"
+                            src="../decorations/layout/ingrid-help/images/Search_WFS.jpg"
+                        alt="*"/> </p> 					
+					<p><u>Schritt 1 : Auswahl des WFS-Dienstes</u></p>
+					<p> <img border="0" width="304" height="238"
+                            src="../decorations/layout/ingrid-help/images/Search_WFS_box.jpg"
+                        alt="*"/> </p>
+					<p>In der <i>WFS-Suche</i> wird das Ordnersymbol zur Anzeige der einzelnen Ländern, von denen WFS Dienste verfügbar sind, verwendet. Mit einen Klickt auf das 
+					<img border="0" width="13" height="13" src="../decorations/layout/ingrid-help/images/WFS_node.jpg" alt="WFS node"/> Symbol vor dem Ordner werden die verfügbaren 
+					Ordner (Land bzw. WFS-Dienst) und Daten (Ebenen des Dienstes) des gewählten Landes dargestellt.</p>
+					<p> <img border="0" width="307" height="238"
+                            src="../decorations/layout/ingrid-help/images/Search_WFS_box2.jpg"
+                        alt="*"/> </p>
+					<p>Wiederum durch einen Klickt auf das  
+					<img border="0" width="15" height="16" src="../decorations/layout/ingrid-help/images/WFS_node2.jpg" alt="WFS node"/> Symbol werden die einzelnen Ordner auf 
+					Länder- und Serviceebene geschlossen.</p>
+					<p><u>Schritt 2 : Ebenenauswahl</u></p>
+					<p><img border="0" width="17" height="17" src="../decorations/layout/ingrid-help/images/image108.jpg" alt="*"/> Die Auswahl der einzelnen Ebenen erfolgt über das 
+					Anhaken der Checkbox vor dem Ebenentitel. Desweiteren können für den Download mehrer Ebenen eines Dienst bzw. von unterschiedlichen Diensten ausgewählt werden. </p>
+					<p> <img border="0" width="380" height="216"
+                            src="../decorations/layout/ingrid-help/images/WFS_layer_sel.jpg"
+                        alt="*"/> </p>
+					<p><u>Schritt 3 : Auf das Layer zoomen </u></p>
+					<p>Mit einen Klick auf das  
+					<img border="0" width="16" height="16" src="../decorations/layout/ingrid-help/images/Zoom_layer_i.jpg" alt="Zoom to layer"/> Symbol links von Ebenennamen wird in der Karte auf den vom Dienst 
+					beschriebenen Kartenausschnitt gezoomt.</p>
+					<p><b>Hinweis</b>: Da über einen WFS nur die Daten ausgeliefert werden, wird nur die Hintergrundkarte dargestellt sofern nicht der zugehörige WMS in die <i>Aktiven Dienste</i> geladen wurde.</p>
+					<p> <img border="0" width="450" height="297"
+                            src="../decorations/layout/ingrid-help/images/Zoom_layer.jpg"
+                        alt="*"/> </p>
+					<p><u>Schritt 4 : Anzeige der Metadaten</u></p>
+					<p><img border="0" width="16" height="15" src="../decorations/layout/ingrid-help/images/Meta_button_i.jpg" alt="Layer metadata"/> 
+					Weiterführende Informationen (Metadaten) über einen Dienst bzw. eine Layer können für Datendienste angezeigt werden. Die Informationen, die aus der jeweiligen GetCapabilities-URL stammen, 
+					werden aus einer Datenbank des Kartenviewers ausgelesen. Wenn in der GetCapabilities-URL bestimmte Angaben wie z.B. zur Organisation oder Anschrift fehlen, können einige Felder nicht befüllt werden.</p>
+					<p> <img border="0" width="450" height="254"
+                            src="../decorations/layout/ingrid-help/images/Meta_button.jpg"
+                        alt="*"/> </p>
+					<p><u>Schritt 5 : Datenauswahl</u></p>
+					<p><img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image029.png" alt="*"/> Über diesen Button kann ein Kartenausschnitt (Bounding-Box) selektiert werden. 
+					Nach der Aktivierung des Buttons können Sie in der Karte mit der linken Maustaste auf einen Punkt klicken und durch Festhalten der Taste ein Rechteck aufziehen. Nach dem anschließenden 
+					Loslassen der Taste werden die Koordinaten der Bounding-Box unterhalb der Karte angezeigt.</p>
+					<p> <img border="0" width="550" height="318"
+                            src="../decorations/layout/ingrid-help/images/Spatial_filter.jpg"
+                        alt="*"/> </p>
+					<p><u>Schritt 6 : Ausführen der Abfrage</u></p>
+					<p>Nach der Auswahl der Bounding-Box wird das Herunterladen der Daten über den <i>Download</i> Button gestartet. Mit einen Klick auf den <i>Download</i> Button werden die Koordinaten 
+					der Bounding-Box an das Portal zu Datenabfrage übermittelt. </p>
+					<p>Anhand des <i>New</i> Buttons wird die aktuelle Bouding-Box für die Datenauswahl gelöscht und eine neue Bounding-Box kann erstellt werden.</p>
+					<p><u>Schritt 7 : Darstellung und Download der Daten(sätze)</u></p>
+					<p>Das Ergebnis der Datenabfrage wird in einem Popup dargstellt. Dazu wird für jede Ebene bzw. Abfrage ein Popup-Fenster geöffnet. Folgende Möglichkeiten der Ergebnisdarstellung gibt es: 
+					<ul>
+						<p>1.	Es wurden keine Daten gefunden.</p>
+						<p>2.	Die Menge der gefundenen Daten ist zu groß zum Herunterladen.</p>
+						<p>3.	Ein Link zum Herunterladen der Daten.</p>
+						<p>4.	Ein Link zum Herunterladen der Daten und anzeige der Daten in einer Tabelle.</p>
+					</ul>
+					</p>
+					<p> <img border="0" width="532" height="400"
+                            src="../decorations/layout/ingrid-help/images/WFS_result.jpg"
+                        alt="*"/> </p>
+					<p>Gründe für die Antworten sind wie folgt:
+					<ul>
+						<p>1.	Die Bounding-Box führte zu keiner Verschneidung mit den Daten der ausgewählten Ebenen, d.h. es konnten keine Daten zurück geliefert werden.</p>
+						<p>2.	Die Datenmenge zum Herunterladen wurde auf 16MB begrenzt. Wird diese Obergrenze erreicht werden keine Daten geliefert und der Nutzer muss eine 
+						neue, kleinere Bounding-Box auswählen.</p>
+						<p>3.	Weiterhin ist die Ergebnisdarstellung in der Tabelle auf 8 MB begrenz. Liegt die Datenmenge der herunterzuladenden ziwschen 8 und 16 ML, erhält 
+						der Nutzer nur den Link zum Herunterladen den Daten im Popup.</p>
+						<p>4.	Wenn die zurück gelieferte Datenmenge kleiner als 8 MB ist erfolgt die Darstellung der Daten in einer Tabelle und der Link zum Herunterladen der Daten wird angezeigt.</p>
+					</ul>
+					</p>
+				</content>
+			</section>
+			<section help-key="maps-5">
+                <header>Karte speichern</header>
                 <content>
                      <p>
-                     Wenn Sie eine eingeloggte Nutzerin oder Nutzer sind, 
-                     können Sie diverse Kartenansichten mit Ihren 
-                     eingestellten Karten-Konfigurationen unter einem beliebigen 
-                     Namen abspeichern. Der Dienst zur Kartenspeicherung 
-                     steht unterhalb der Karte nur für eingeloggte Benutzer 
-                     zur Verfügung. Konfigurieren Sie die 
-                     Karte nach Ihren Wünschen, tragen Sie in das untere 
-                     Textfeld den zugehörigen Namen für die Kartenansicht ein und 
-                     verwenden Sie zur Speicherung den Button &#8222;
-                     Speichern&#8220;. Die Verwaltung der gespeicherten Kartenansichten 
-                     werden tabellarisch dargestellt. Hierbei ist zu beachten, 
-					 dass die Karten-Webadressen verkürzt abgespeichert werden, 
-                     aber trotzdem zum Weiterversenden geeignet sind. Zum Löschen 
-                     von gespeicherten Kartenansichten selektieren Sie die 
-                     jeweiligen Kartenansichten in der unteren Tabelle 
-                     und bestätigen das Löschen mit dem Button &#8222;Löschen&#8220;.
+                     Wenn Sie sich mit ihrem Account unter &#8218;Mein GS Soil&#8217; angemeldet haben, können Sie ihre Einstellungen unter <i>Aktive Dienste</i> speichern. 
+					 Klicken Sie dazu auf den Link <i>Karte speichern</i> oberhalb der Legende. Unterhalb des Kartenviewers erscheint nun ein Dialogfenster, das die Möglichkeit 
+					 bietet, die Darstellung unter einem beliebigen Namen zu speichern. Mit dem Speichern wird eine feste URL vergeben, die weiter verwendet werden kann.
                      </p>
                 </content>
             </section>
-            <section help-key="maps-4">
-                <header>Kartendienste Werkzeugleiste</header>
+            <section help-key="maps-5">
+                <header>Werkzeugleiste</header>
                 <content>
-                    <p>Über die Werkzeugleiste können entweder direkt Aktionen
-                        ausgelöst werden, oder die Funktion der Maus wird so
-                        geschaltet, dass die Funktionalität beim nächsten Klick
-                        in die Karte ausgelöst wird.</p>
+                    <p>Über die Werkzeugleiste können Sie verschiedene Aktionen direkt oder durch einen Klick in die Karte ausführen.</p>
                     <p>
-                        <b>Button &#8222;Dienst hinzufügen&#8220;</b>
+                        <b>Kartendienst hinzufügen</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image024.jpg"
-                        alt="*"/> Nach dem Klick auf diesen Button wird ein
-                        Fenster geöffnet. Sie können nun über Ankreuzen einen
-                        der bereits vorkonfigurierten Dienste dem Karten-Viewer hinzugefügen.</p>
-                    <p>Wenn Sie die URL eines nicht in der Liste vorhandenen
-                        Dienstes kennen, können Sie diese in der Eingabe einfügen.</p>
-                    <p>In beiden Fällen wird der jeweilige Dienst zu den
-                        &#8222;Aktiven Kartendiensten&#8220;
-                        hinzugefügt. (Hinweis: Die zugefügten Dienste bleiben
-                        über die Sitzung erhalten. Wenn sie ein eingeloggter
-                        Nutzer sind, können Sie diese Einstellung auch permanent speichern.)</p>
+                        alt="*"/> Über diesen Button können Sie eine beliebige GetCapabilities-URL (externer Dienst) hinzufügen. Mit dem Button <i>WMS hinzufügen</i> 
+						wird der Dienst zu den aktiven Diensten hinzufügen und im Kartenviewer dargestellt.</p> 
+					<p>	Sie können hierbei wählen (Checkbox), ob die Layer des Dienstes direkt aktiviert und ob auf den Kartenausschnitt des Dienstes direkt gezoomt werden soll.</p>
                     <p>
-                        <b>Button &#8222;Dienst entfernen&#8220;</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image025.jpg"
-                        alt="*"/> Nach dem Klick auf diesen Button werden alle
-                        bereits eingefügten Dienste angezeigt. Sie können sie
-                        wieder aus der Auswahl (Aktive Kartendienste) entfernen.
-                        (Hinweis: Der WMS-Service von GS Soil ist der
-                        voreingestellte Standard-Service. Er kann nicht entfernt
-                        werden und wird daher auch nicht angezeigt.)</p>
-                    <p>
-                        <b>Button &#8222;Layerbasierte Informationsabfrage&#8220;</b>
+                        <b>Datenabfrage</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image026.jpg"
-                        alt="*"/> Dieser Button schaltet die Funktion der Maus
-                        auf die Informationsabfrage um. Über einen Klick in die
-                        Karte erhalten Sie Informationen zu dem Punkt der Karte,
-                        auf den Sie geklickt haben.</p>
-                    <p>Nach dem Klick öffnet sich Informationsabfrage ein neues
-                        Fenster, in dem Sie auswählen können, zu welchem Layer
-                        die Informationen angezeigt werden sollen. (Hinweis: Es
-                        werden nur diejenigen Layer angezeigt, für die unter
-                        &#8222;Aktive Kartendienste&#8220; die
-                        Informationsabfrage <img border="0" width="14"
-                            height="14"
-                            src="../decorations/layout/ingrid-help/images/image021.jpg"
-                        alt="*"/> angekreuzt wurde.) Nach der Auswahl des Layers
-                        werden die Informationen in einem getrennten Fenster angezeigt.</p>
+                        alt="*"/> Über diesen Button können Sachdaten in der Karte abgefragt werden. Die Informationen werden über eine OGC WMS getFeatureInfo-Abfrage an den eingebunden WMS Dienst abgefragt. 
+						Über einen Klick in die Karte erhalten Sie standortspezifische Informationen der dargestellten Layer. </p>
+                    <p>Welche Sachdaten angezeigt werden, hängt davon ab, bei welchem Layer unter <i>Aktive Dienste</i> die Check-Box (Infoabfrage in Karte) aktiviert ist (siehe oben). 
+					Derzeit unterstützen nicht alle Dienste diese Funktion.</p>
                     <p>
-                        <b>Button &#8222;Punktkoordinate definieren&#8220;</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image027.jpg"
-                        alt="*"/> Über diesen Button wird die Funktion der Maus
-                        auf das Definieren eine Punktkoordinate umgeschaltet. Es
-                        wird jeweils die Position der Maus in geografischen
-                        Koordinaten unterhalb der Karte angezeigt. Ebenso wird
-                        die Position der Maus beim letzten Klick in die Karte angezeigt.</p>
-                    <p>
-                        <b>Button &#8222;Karte aktualisieren&#8220;</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image030.jpg"
-                        alt="*"/> Durch einen Klick auf diesen Button wird die
-                        Karte aktualisiert. Alle Layer-Informationen werden
-                        erneut von den Karten-Servern abgerufen.</p>
-                    <p>
-                        <b>Button &#8222;Zoom&#8220;</b>
+                        <b>Ansicht vergrößern</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image031.jpg"
-                        alt="*"/> Über diesen Button wird die Funktion der Maus
-                        auf das Hineinzoomen in die Karte umgeschaltet. Über das
-                        Klicken auf einen Punkt in der Karte, festhalten der
-                        linken Maustaste, ziehen der Maus über die Karte und
-                        anschließendes Loslassen der linken Maustaste können Sie
-                        das Zoom Gebiet definieren.</p>
-                    <p>Die Karte wird auf dieses Gebiet zentriert und soweit
-                        vergrößert, dass Sie gerade noch in den dargestellten
-                        Bereich hinein passt.</p>
+                        alt="*"/> Mit diesem Button kann in die Karte hineingezoomt werden. Sie können einen beliebigen Kartenausschnitt aufziehen, 
+						indem Sie mit gedrückter linker Maustaste ein Quadrat aufziehen. Die Karte wird auf diesen Ausschnitt zentriert und entsprechend vergrößert.</p>
                     <p>
-                        <b>Button &#8222;Zoom Out&#8220;</b>
+                        <b>Aus der Karte herauszoomen</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
@@ -1887,23 +1718,15 @@
                         alt="*"/> Durch einen Klick auf diesen Button wird die
                         Karten um die Hälfte verkleinert.</p>
                     <p>
-                        <b>Button &#8222;Kartenausschnitt verschieben&#8220;</b>
+                        <b>Karte verschieben</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image033.jpg"
-                        alt="*"/> Über diesen Button wird die Funktion der Maus
-                        auf das Verschieben des Kartenausschnittes umgeschaltet.
-                        Nach dem Klick auf einen Punkt in der Karte, Festhalten
-                        der linken Maustaste und Ziehen der Maus über die Karte,
-                        können Sie den Kartenausschnitt verschieben. Der Punkt
-                        der Karte auf den geklickt wurde befindet sich nach dem
-                        Vorgang dort, wo Sie die linke Maustaste wieder
-                        losgelassen haben.</p>
-                    <p>Die Karte wird so nachgeladen, dass Sie den dargestellten
-                        Bereich wieder ausfüllt.</p>
+                        alt="*"/> Mit diesem Button kann die Karte verschoben werden. Zum Verschieben: Klicken Sie mit der linken Maustaste auf einen Punkt in der Karte, 
+						halten Sie die Taste und ziehen Sie die Maus über die Karte. Der Punkt der Karte, auf den geklickt wurde, befindet sich nach dem Vorgang dort, wo Sie die Taste loslassen.</p>
                     <p>
-                        <b>Button &#8222;Vorheriger Kartenausschnitt&#8220;</b>
+                        <b>Zurück</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
@@ -1913,62 +1736,34 @@
                         wurde, wieder hergestellt.</p>
                     <p>Die Aktion kann mehrfach hintereinander ausgeführt werden.</p>
                     <p>
-                        <b>Button &#8222;Nachfolgender Kartenausschnitt&#8220;</b>
+                        <b>Vor</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image035.jpg"
-                        alt="*"/> Wurde über den Button &#8222;Vorheriger
-                        Kartenausschnitt&#8220; zu einem Kartenausschnitt
+                        alt="*"/> Wurde über den Button <i>Zurück</i> zu einem Kartenausschnitt
                         zurück gesprungen, der eine oder mehrere Aktionen
-                        zurückliegt, kann über den Button
-                        &#8222;Nachfolgender Kartenausschnitt&#8220;
+                        zurückliegt, kann über den Button <i>Vor</i>
                         wieder zu den danach ausgeführten Aktionen
-                        &#8222;vorgeblättert&#8220; werden.</p>
+                        &#8218;vorgeblättert#8217; werden.</p>
                     <p>Die Aktion kann so häufig ausgeführt werden wie vorher
-                        die Aktion &#8222;Vorheriger
-                        Kartenausschnitt&#8220; ausgeführt wurde.</p>
+                        die Aktion <i>Zurück</i> ausgeführt wurde.</p>
                     <p>
-                        <b>Button &#8222;Kartenausschnitt zentrieren&#8220;</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image036.jpg"
-                        alt="*"/> Über diesen Button wird die Funktion der Maus
-                        auf das Zentrieren des Kartenausschnittes umgeschaltet.
-                        Nach dem Klick auf einen Punkt in der Karte wird der
-                        angeklickte Punkt in die Mitte des dargestellten
-                        Bereichs gerückt.</p>
-                    <p>Die Karte wird so nachgeladen, dass Sie den dargestellten
-                        Bereich wieder ausfüllt.</p>
-                    <p>
-                        <b>Button &#8222;Zoom auf Ausgangskarte&#8220;</b>
+                        <b>Zoom auf Ausgangskarte</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image037.jpg"
-                        alt="*"/> Bei dem Klick auf diesen Button wird die
-                        Ausgangskarte wieder hergestellt.</p>
+                        alt="*"/> Bei dem Klick auf diesen Button wird der Zoombereich der Ausgangskarte wieder hergestellt.</p>
                     <p>
-                        <b>Button &#8222;Legende darstellen&#8220;</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image038.jpg"
-                        alt="*"/> Bei einem Klick auf diesen Button wird ein
-                        neues Fenster geöffnet in dem die Legende für alle
-                        sichtbaren Layer angezeigt wird.</p>
-                    <p>
-                        <b>Button &#8222;Kartenausschnitt als PDF drucken&#8220;</b>
+                        <b>Druck</b>
                     </p>
                     <p>
                         <img border="0" width="24" height="23"
                             src="../decorations/layout/ingrid-help/images/image039.jpg"
-                        alt="*"/> Bei einem Klick auf diesen Button wird sowohl
-                        der dargestellte Kartenausschnitt als auch die Legende
-                        in eine PDF Datei geschrieben und in einem neuen Fenster geöffnet.</p>
-                    <p>Sie können das Dokument über die übliche Funktionalität
-                        drucken oder als Datei auf Ihrem Rechner speichern.</p>
+                        alt="*"/> Über diesen Button wird ein PDF-Dokument der Karte mit oder ohne Legende erzeugt. Sie können die Ausrichtung 
+						der Karte wählen und zudem einen Titel und Kommentare zur Karte einfügen. Das Dokument können Sie über die übliche 
+						PDF-Funktionalität drucken oder speichern.</p>
                 </content>
             </section>
     </chapter>
@@ -1977,33 +1772,14 @@
         <section help-key="rss-news-1">
             <header>Aktuelles</header>
             <content>
-                <p>Unter &#8222;Aktuelles&#8220; werden aktuelle
-                    Meldungen zum Thema &#8222;Umwelt&#8220; aus Bundes-
-                     und Landesbehörden gelistet. Die aktuellste Meldung steht
+                <p>Unter <i>Aktuelles</i> werden die Meldungen GS Soil Newsticker angezeigt. Die aktuellste Meldung steht
                     dabei immer oben. Es wird jeweils nur der Titel und eine
                     Kurzbeschreibung der Meldung angezeigt. Durch einen Klick
                     auf die Meldung werden Sie zu der Originalmeldung weitergeleitet.</p>
                 <p>Ältere Meldungen, die nicht mehr auf der Startseite angezeigt
                     werden, werden in dem Meldungsarchiv abgelegt. Sie können
                     diese Meldungen einsehen, indem Sie auf den Link
-                    &#8222;Weitere Meldungen&#8220; klicken.</p>
-                <p>(Hinweis: Ggf. können Sie Meldungen, die so alt sind, dass
-                    sie auch im Meldungsarchiv nicht mehr auffindbar sind, noch
-                    auf den Orginal-Servern der jeweiligen Bundes- oder
-                    Landesbehörde finden. Klicken Sie hierzu auf <a
-                        href="help.psml?hkey=search-service-1">Service / Pressemitteilungen</a>.)</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>GS Soil informiert</header>
-        <section help-key="ingrid-inform-1">
-            <header>GS Soil informiert</header>
-            <content>
-                <p>In diesem Bereich finden Sie Meldungen, die durch den
-                    Betreiber von GS Soil, die <a href="http://www.kst.portalu.de/"
-                        target="_new">Koordinierungsstelle GS Soil</a>,
-                    bereitgestellt werden.</p>
+                    <i>Weitere Meldungen</i> klicken.</p>
             </content>
         </section>
     </chapter>
@@ -2028,33 +1804,27 @@
             <header>Anmeldung</header>
             <content>
                 <p>Haben Sie bereits einen Benutzernamen und ein Kennwort, so
-                    geben Sie beides hier ein und klicken auf &#8222;Anmeldung&#8220;.</p>
+                    geben Sie beides hier ein und klicken auf <i>Anmeldung</i>.</p>
             </content>
             <section help-key="myingrid-3">
                 <header>Neuer Benutzer</header>
                 <content>
                     <p>Haben Sie noch keinen Benutzernamen und Kennwort, so
-                        klicken Sie auf den Link &#8222;Neuer
-                        Benutzer&#8220;. Damit werden Sie zu dem Formular
-                        &#8222;Neues Konto erstellen&#8220; durchgeschaltet.</p>
+                        klicken Sie auf den Link <i>Neuer
+                        Benutzer</i>. Damit werden Sie zu dem Formular
+                        <i>Neues Konto erstellen</i> durchgeschaltet.</p>
                     <p>Bitte füllen Sie das Formular aus. Die Angaben mit
                         Sternchen * sind Pflichtangaben, die ausgefüllt werden
                         müssen. Alle anderen Angaben sind freiwillig.</p>
                     <p>Alle Angaben werden strikt vertraulich behandelt und
                         dienen nur der anonymisierten statistischen Auswertung.</p>
-                    <p>Wenn Sie immer die neusten Nachrichten aus dem Umfeld von
-                        GS Soil erhalten möchten, so bestellen Sie den <a
-                        href="#_Newsletter">GS Soil-Newsletter</a>, indem Sie am
-                        Ende des Formulars &#8222;ich möchte den Newsletter
-                        abonnieren&#8220; ankreuzen (Hinweis: Sie können ihn
-                        jederzeit wieder abbestellen).</p>
                 </content>
             </section>
             <section help-key="myingrid-4">
                 <header>Kennwort vergessen?</header>
                 <content>
                     <p>Wenn Sie Ihr Kennwort vergessen haben, klicken Sie auf
-                        den Link &#8222;Kennwort vergessen&#8220;. Sie
+                        den Link <i>Kennwort vergessen</i>. Sie
                         werden dann zu dem entsprechenden Formular geführt, in
                         dem Sie Ihre E-Mail-Adresse eingeben können. Nach dem
                         Absenden bekommen Sie umgehend Ihren Benutzernamen und
@@ -2065,8 +1835,8 @@
                 <header>Automatisches Login</header>
                 <content>
                     <p>Wenn Sie Ihre persönlichen Einstellungen immer nutzen
-                        möchten, können Sie die Option &#8222;Automatisches
-                        Login&#8220; wählen. Sie müssen in diesem Fall sich
+                        möchten, können Sie die Option <i>Automatisches
+                        Login</i> wählen. Sie müssen in diesem Fall sich
                         nicht jedes Mal über Benutzernamen und Kennwort
                         aufschalten. (Hinweis: Diese Funktion funktioniert nur
                         wenn Sie Ihrem Internet-Browser die Erlaubnis zur
@@ -2091,12 +1861,6 @@
                     ausgefüllt werden müssen. Alle anderen Angaben sind freiwillig.</p>
                 <p>Alle Angaben werden strikt vertraulich behandelt und dienen
                     nur der anonymisierten statistischen Auswertung.</p>
-                <p>Wenn Sie immer die neuesten Nachrichten aus dem Umfeld von
-                    GS Soil erhalten möchten, können Sie den <a
-                    href="help.psml?hkey=ingrid-newsletter-1">GS Soil-Newsletter</a>
-                    abbonieren. Kreuzen Sie einfach am Ende des Formulars
-                    &#8222;Ich möchte den Newsletter abonnieren&#8220;
-                    an (Hinweis: Sie können ihn jederzeit wieder abbestellen).</p>
             </content>
         </section>
         <section help-key="myingrid-8">
@@ -2120,14 +1884,12 @@
                 </content>
             </section>
             <section help-key="myingrid-10">
-                <header>Filterung nach Bund/Länder oder Informationsanbieter</header>
+                <header>Filterung nach Ländern oder Informationsanbieter</header>
                 <content>
                     <p>In diesem Bereich können Sie einstellen, ob sich die für
-                        Sie angezeigten Informationen nur auf den Bund und/oder
-                        einzelne Länder (z.B. Bund und Hessen) oder auf einzelne
-                        Informationsanbieter (z.B. Umweltbundesamt) einschränken sollen.</p>
-                    <p>Die Einstellungen beziehen sich auf die Suche, sowie auf
-                        die Bereiche Themenseiten, Messwerte und Service.</p>
+                        Sie angezeigten Informationen nur auf einzelne Länder (oder auf einzelne
+                        Informationsanbieter einschränken sollen.</p>
+                    <p>Die Einstellungen beziehen sich auf die Suche, sowie auf Publikationen.</p>
                     <p>Die Einstellungen werden permanent als Voreinstellungen
                         gespeichert. Sie können sie aber über die
                         Einstellungsmöglichkeiten in den oben genannten
@@ -2138,7 +1900,7 @@
             <section help-key="myingrid-11">
                 <header>Filterung nach Typen und Datenquellen</header>
                 <content>
-                    <p>An GS Soil sind neben den üblichen Web-Servern auch
+                    <p>An GS Soil sind neben den üblichen Webservern auch
                         Metadaten- und Fachdatensysteme angeschlossen. Sie
                         können nun wählen, ob Sie in allen Datenquellen suchen
                         wollen (Standard) oder ob Sie ihre Suche gezielt auf
@@ -2148,12 +1910,13 @@
                         auszuwählen, die Sie durchsuchen möchten. Es stehen
                         Ihnen folgende Klassen zur Verfügung:</p>
                     <ul>
-                        <li>Datensammlung/Datenbank</li>
-                        <li>Dienst/Anwendung/Informationssystem</li>
-                        <li>Dokument/Bericht/Literatur</li>
-                        <li>Geo-Information/Karte</li>
-                        <li>Organisationseinheit/Fachaufgabe</li>
-                        <li>Vorhaben/Projekt/Programm</li>
+                    <li>Organisationseinheit / Fachaufgabe</li>
+                    <li>Geo-Information / Karte</li>
+                    <li>Dokument / Bericht / Literatur</li>
+                    <li>Geodatendienst</li>
+                    <li>Vorhaben / Projekt / Programm</li>
+                    <li>Datensammlung / Datenbank</li>
+					<li>Dienst /Anwendung / Informationssystem</li>
                     </ul>
                     <p>Die gemachten Einstellungen wirken sich dauerhaft als
                         Voreinstellung aus. Sie können Sie aber über temporäre
@@ -2175,18 +1938,15 @@
                     <p>
                         <b>Ähnliche Begriffe in die Suche einbeziehen</b>
                     </p>
-                    <p>GS Soil führt nicht nur die bei Suchmaschinen übliche
+                    <p>Das GS Soil Portal führt nicht nur die bei Suchmaschinen übliche
                         Indizierung  der Seiten durch, sondern lässt den
-                        Seiteninhalt auch über den <a
-                            href="http://www.semantic-network.de/"
-                            target="_new">Semantic Network Service (SNS)</a> des
-                        Umweltbundesamtes analysieren. Als Ergebnis dieser
+                        Seiteninhalt auch über den semantischen Dienst analysieren. Als Ergebnis dieser
                         Analyse werden geeignete Fachbegriffe aus dem <a
-                        href="help.psml?hkey=ext-search-subject-4#ext-search-subject-4">Umwelt-Thesaurus</a>
-                        den Web-Seiten zugeordnet.</p>
+                        href="help.psml?hkey=ext-search-subject-4#ext-search-subject-4">Thesaurus</a>
+                        den Webseiten zugeordnet.</p>
                     <p>Wenn Sie durch Ankreuzen die Einstellung
-                        &#8222;Ähnliche Begriffe in die Suche
-                        einbeziehen&#8220; auswählen, werden diese
+                        <i>Ähnliche Begriffe in die Suche
+                        einbeziehen</i> auswählen, werden diese
                         Schlagworte in der Suche mitberücksichtigt. (Hinweis: Es
                         ist davon auszugehen, dass die Wahl dieser Einstellung
                         die Treffermenge erhöht.)</p>
@@ -2201,38 +1961,7 @@
             <header>Logout</header>
             <content>
                 <p>Über das Logout verlassen Sie den personalisierten Bereich
-                    und kommen zurück auf die Startseite von GS Soil mit seinen Standard-Voreinstellungen.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Newsletter</header>
-        <section help-key="ingrid-newsletter-1">
-            <header>Newsletter</header>
-            <content>
-                <p>Sie können sich über Neuigkeiten und aktuelle Entwicklungen
-                    im Umfeld von GS Soil über unseren Newsletter per e-mail
-                    informieren lassen. Der Bezug des Newsletters ist kostenlos.
-                    Ihre e-mail Adresse wird nicht weitergegeben oder zu anderen
-                    Zwecken als zur Zustellung des Newsletters genutzt.</p>
-            </content>
-        </section>
-        <section help-key="ingrid-newsletter-2">
-            <header>Anmeldung für neue Leser</header>
-            <content>
-                <p>Füllen Sie bitte die Felder des Anmeldeformulars aus und
-                    senden sie die Angaben ab. Alle mit Sternchen *
-                    gekennzeichneten Felder sind Pflichtfelder.</p>
-                <p>Ab der nächsten Ausgabe erhalten Sie dann den GS Soil-Newsletter.</p>
-            </content>
-        </section>
-        <section help-key="ingrid-newsletter-3">
-            <header>Newsletter abbestellen</header>
-            <content>
-                <p>Wenn Sie kein Interesse mehr an dem GS Soil-Newsletter haben,
-                    tragen Sie bitte Ihre Email-Adresse in das Formular ein und
-                    senden es ab. Sie werden dann keine weiteren
-                    GS Soil-Newsletter mehr erhalten.</p>
+                    und kommen zurück auf die Startseite des GS Soil Portals mit seinen Standard-Voreinstellungen.</p>
             </content>
         </section>
     </chapter>

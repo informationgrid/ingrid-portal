@@ -42,7 +42,7 @@ if(domain == "gssoil-portal.eu" || domain=="www.gssoil-portal.eu"){
 		piwikTracker.enableLinkTracking();
 	} catch( err ) {
 	}
-</script><noscript><p><img src="http://gssoil-portal.de/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
+</script><noscript><p><img src="http://gssoil-portal.eu/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
 <!-- End Piwik Tag -->
 
 </body>

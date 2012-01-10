@@ -197,7 +197,7 @@
                         <a href="help.psml?hkey=search-results-1">Suchergebnisliste</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-catalog-1">Kataloge</a>
+                        <a href="help.psml?hkey=search-catalog-1">Datenkataloge</a>
                     </li>
                 </ul>
             </content>
@@ -821,21 +821,21 @@
                 <p>Wenn Sie nach einem Datum suchen, das mit einem
                     umweltrelevanten Ereignis verbunden ist (z.B. die
                     Klimaschutzkonferenz in Kyoto), können Sie über die Angabe
-                    eines Suchbegriffes nach dem Ereignis in der Chronik
+                    eines Suchbegriffes nach dem Ereignis in der Umweltchronik
                     suchen. Sie bekommen alle Ereignisse angezeigt, die über die
                     Suche gefunden wurden. Über die Kopier- und Einfüge-Funktion
                     des Browsers können Sie die angegebenen Daten direkt in das
                     von Ihnen gewünschte Feld des Zeitbezuges einfügen.</p>
             </content>
             <section help-key="ext-search-time-5">
-                <header>Was ist die Chronik?</header>
+                <header>Was ist die Umweltchronik?</header>
                 <content>
-                    <p>Die Chronik ist eine Sammlung aktueller und
+                    <p>Die Umweltchronik ist eine Sammlung aktueller und
                         historischer Ereignisse, die unsere Umweltsituation
                         wesentlich beeinflusst haben. Neben den Daten zu den
                         Ereignissen wird gegebenenfalls ein Kurzbeschreibung der
                         Ereignisse gegeben.</p>
-                    <p>Die Chronik wird über den <a
+                    <p>Die Umweltchronik wird über den <a
                             href="http://www.semantic-network.de/"
                             target="_new">Semantic Network Service (SNS)</a> des
                         Umweltbundesamtes in Dessau zur Verfügung gestellt.</p>
@@ -845,7 +845,7 @@
                 <header>Umweltereignisse</header>
                 <content>
                     <p>Es werden alle Umweltereignisse, die über die Suche in
-                        der Chronik gefunden wurden, mit Titel und Datum
+                        der Umweltchronik gefunden wurden, mit Titel und Datum
                         angezeigt. Durch einen Klick auf das Ereignis oder das
                         davor stehende Pluszeichen <img border="0" width="9"
                             height="9"
@@ -865,8 +865,8 @@
             <header>Inhalte</header>
             <content>
                 <p>An dieser Stelle können Sie festlegen, ob Sie alle
-                    Umweltinformationen (auch Themen und Service)
-                    durchsuchen wollen, oder ob Sie nur in den Themen oder
+                    Umweltinformationen (auch Umweltthemen und Service)
+                    durchsuchen wollen, oder ob Sie nur in den Umweltthemen oder
                     nur in den Service-Seiten (Pressemitteilungen, Publikationen
                     und Veranstaltungen) suchen möchten.</p>
             </content>
@@ -1321,7 +1321,7 @@
                         <td>Ein vom System unterstützter Datentyp, z.B.: dsc_ecs
                             (UDK Daten), dsc_ecs_address (UDK Adressdaten),
                             dsc_other (Andere Datenbanken), service (Service),
-                            measure (Messwerte), topics (Themen).</td>
+                            measure (Messwerte), topics (Umweltthemen).</td>
                     </tr>
                 </table>
             </content>
@@ -1448,11 +1448,11 @@
         </section>
     </chapter>
     <chapter>
-        <header>Kataloge</header>
+        <header>Datenkataloge</header>
         <section help-key="search-catalog-1">
             <header>Hierarchiebaum</header>
             <content>
-                <p>Die angeschlossenen Kataloge und deren Inhalte werden in 
+                <p>Die angeschlossenen Datenkataloge und deren Inhalte werden in 
                 	einem Hierarchie-Baum dargestellt, gegliedert nach Bund/Länder.
                 	In jedem Katalog kann nach Objekten (hier "Umweltinformationen") 
                 	oder Adressen navigiert werden. Die Detaildarstellung eines Eintrags 
@@ -1480,18 +1480,19 @@
         </section>
     </chapter>
     <chapter>
-        <header>Themen</header>
+        <header>Umweltthemen</header>
         <section help-key="search-topics-1">
-            <header>Themen</header>
+            <header>Umweltthemen</header>
             <content>
-                <p>Die Informationen, die als &#8222;Themen&#8220;
+                <p>Die Informationen, die als &#8222;Umweltthemen&#8220;
                     in GS Soil bereitgestellt werden, sind Web-Seiten und
                     UDK-Metadatenobjekte die für ein bestimmtes Umweltthema
-                    besonders relevant und interessant sind. Über das eigentliche
-                    Thema (wie z.B. Wasser oder Abfall) können Sie
-                    die gewünschten Themenseite auswählen.</p>
+                    besonders relevant und interessant sind . Neben dem
+                    eigentlichen Thema (wie z.B. Wasser oder Abfall) können Sie
+                    auch den Type der gewünschten Themenseite (z.B. Daten und
+                    Karten) auswählen.</p>
                 <p>Wenn Sie über den Klick auf ein Thema direkt von der
-                    Startseite zu den Themen gekommen sind, ist das
+                    Startseite zu den Umweltthemen gekommen sind, ist das
                     angewählte Thema  bereits voreingestellt und nur
                     Themenseiten zu diesem Thema werden in der Ergebnisliste angezeigt.</p>
             </content>
@@ -1506,6 +1507,18 @@
                     gewünschten Themen klicken.</p>
                 <p>Wird &#8222;Alles auswählen&#8220; selektiert werden
                     alle zur Verfügung stehenden Themen angezeigt.</p>
+            </content>
+        </section>
+        <section help-key="search-topics-3">
+            <header>Kategorien</header>
+            <content>
+                <p>In diesem Bereich können Sie die Kategorie bzw. den Typ der
+                    gewünschten Themenseite auswählen.</p>
+                <p>Sie können Mehrfachselektionen durchführen, indem Sie die
+                    Strg- bzw. Ctrl-Taste gedrückt halten und dann auf die
+                    gewünschten Kategorien klicken.</p>
+                <p>Wird &#8222;Alles auswählen&#8220; selektiert, werden
+                    alle zur Verfügung stehenden Kategorien angezeigt.</p>
             </content>
         </section>
         <section help-key="search-topics-4">
@@ -1550,7 +1563,7 @@
                 <p>Von diesem Menüpunkt gelangen Sie zu den entsprechenden
                     Seiten der Bundes- und Landesbehörden.</p>
                 <p>Wenn Sie über den Klick auf eine Rubrik direkt von der
-                    Startseite zu den Themen gekommen sind, ist die
+                    Startseite zu den Umweltthemen gekommen sind, ist die
                     Rubrik  bereits vorgewählt und die unter dieser Rubrik zur
                     Verfügung stehenden Seiten werden direkt angezeigt.</p>
             </content>
@@ -1599,7 +1612,7 @@
                 <p>Unter diesem Menüpunkt werden Ihnen die Web-Seiten und
                     Informationssysteme zu Messdaten von Bund- und Ländern angezeigt.</p>
                 <p>Wenn Sie über den Klick auf eine Rubrik direkt von der
-                    Startseite zu den Themen gekommen sind, ist die
+                    Startseite zu den Umweltthemen gekommen sind, ist die
                     Rubrik  bereits vorgewählt und die zur Verfügung stehenden
                     Seiten werden direkt angezeigt.</p>
             </content>
@@ -1643,27 +1656,27 @@
         </section>
     </chapter>
     <chapter>
-        <header>Chronik</header>
+        <header>Umweltchronik</header>
         <section help-key="search-chronicle-1">
-            <header>Chronik</header>
+            <header>Umweltchronik</header>
             <content>
-                <p>Die Chronik ist eine Sammlung aktueller und
+                <p>Die Umweltchronik ist eine Sammlung aktueller und
                     historischer Ereignisse, die unsere Umweltsituation
                     wesentlich beeinflusst haben. Neben den Eckdaten liefert die
-                    Chronik eine  kurze Beschreibung der Ereignisse.</p>
-                <p>Die Chronik wird über den <a
+                    Umweltchronik eine  kurze Beschreibung der Ereignisse.</p>
+                <p>Die Umweltchronik wird über den <a
                         href="http://www.semantic-network.de/"
                         target="_new">Semantic Network Service (SNS)</a> des
                     Umweltbundesamtes zur Verfügung gestellt.</p>
                 <p>Sie können gezielt nach Ereignissen suchen, in dem Sie eine
-                    Suche in der Chronik über Suchbegriff, Zeitbezug und
+                    Suche in der Umweltchronik über Suchbegriff, Zeitbezug und
                     Ereignistyp über den Button &#8222;Anzeigen&#8220; absenden.</p>
             </content>
         </section>
         <section help-key="search-chronicle-2">
             <header>Ereignistypen</header>
             <content>
-                <p>Die Chronik verzeichnet verschiedene Ereignistypen. Sie
+                <p>Die Umweltchronik verzeichnet verschiedene Ereignistypen. Sie
                     können in diesem Bereich wählen, nach welchen Ereignistypen
                     Sie suchen.</p>
             </content>
@@ -1671,7 +1684,7 @@
         <section help-key="search-chronicle-3">
             <header>Zeitbezug</header>
             <content>
-                <p>Die Chronik verzeichnet zu jedem Ereignis das Datum, an
+                <p>Die Umweltchronik verzeichnet zu jedem Ereignis das Datum, an
                     dem es sich ereignet hat. In diesem Bereich Sie können den
                     Zeitpunkt oder den Zeitraum angeben, in dem Sie nach
                     umweltrelevanten Ereignissen suchen.</p>

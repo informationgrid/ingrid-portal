@@ -42,6 +42,38 @@
         <page>
             <name>main-about.psml</name>
             <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::CMSPortlet</name>
+                    <preference name="infoTemplate" readOnly="false">
+        				<value>/WEB-INF/templates/default_cms.vm</value>
+      				</preference>
+      				<preference name="cmsKey" readOnly="false">
+        				<value>portalu.about</value>
+      				</preference>
+      				<preference name="helpKey" readOnly="false">
+        				<value>about-1</value>
+      				</preference>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::InfoPortlet</name>
+                    <preference name="infoTemplate" readOnly="false">
+        				<value>/WEB-INF/templates/about_portalu_links.vm</value>
+      				</preference>
+      				<preference name="titleKey" readOnly="false">
+        				<value>about.links.title</value>
+      				</preference>
+                </portlet>
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::InfoPortlet</name>
+                    <preference name="infoTemplate" readOnly="false">
+        				<value>/WEB-INF/templates/about_portalu_partner.vm</value>
+      				</preference>
+      				<preference name="titleKey" readOnly="false">
+        				<value>about.partner.title</value>
+      				</preference>
+      	         </portlet>
+            </portlets>
         </page>
         <page>
             <name>main-features.psml</name>
