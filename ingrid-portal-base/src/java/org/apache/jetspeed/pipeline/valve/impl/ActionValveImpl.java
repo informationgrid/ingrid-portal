@@ -98,7 +98,6 @@ public class ActionValveImpl extends AbstractValve implements ActionValve
             {
                 // If portlet entity is null, try to refresh the actionWindow.
                 // Under some clustered environments, a cached portlet window could have null entity.
-            	// wemove: DO THIS ONLY IF FRAGMENT PRESENT to avoid exception ! 
                 if (null == actionWindow.getPortletEntity())
                 {
                     try 
