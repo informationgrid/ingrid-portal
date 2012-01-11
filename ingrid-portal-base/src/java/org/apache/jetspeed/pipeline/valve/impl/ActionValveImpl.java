@@ -96,21 +96,21 @@ public class ActionValveImpl extends AbstractValve implements ActionValve
             PortletWindow actionWindow = request.getActionWindow();
             if (actionWindow != null)
             {
-            	// wemove: Immediately check whether fragment present ! Often not the case, e.g. when search engines verify old requests !
-                Fragment fragment = request.getPage().getFragmentById(actionWindow.getId().toString());
-                if (fragment == null) {
-                	log.error("Unable to get fragment for action window id='" + actionWindow.getId().toString() + "' while making the following request: " + request.getRequest().getRequestURL() + "?" + request.getRequest().getQueryString());
-                }
-
                 // If portlet entity is null, try to refresh the actionWindow.
                 // Under some clustered environments, a cached portlet window could have null entity.
             	// wemove: DO THIS ONLY IF FRAGMENT PRESENT to avoid exception ! 
-                if (null == actionWindow.getPortletEntity() && fragment != null)
+                if (null == actionWindow.getPortletEntity())
                 {
                     try 
                     {
-                        ContentFragment contentFragment = new ContentFragmentImpl(fragment, new HashMap());
-                        actionWindow = this.windowAccessor.getPortletWindow(contentFragment);
+                        Fragment fragment = request.getPage().getFragmentById(actionWindow.getId().toString());
+                        if (fragment == null) {
+                        	log.error("Unable to get fragment for action windew id='" + actionWindow.getId().toString() + "' while making the following request: " + request.getRequest().getRequestURL() + "?" + request.getRequest().getQueryString());
+                        } else {
+                        	// wemove: Only if we have fragment to avoid Exception
+                        	ContentFragment contentFragment = new ContentFragmentImpl(fragment, new HashMap());
+                            actionWindow = this.windowAccessor.getPortletWindow(contentFragment);                        	
+                        }
                     } 
                     catch (Exception e)
                     {
@@ -120,8 +120,8 @@ public class ActionValveImpl extends AbstractValve implements ActionValve
 
                 HttpServletResponse response = request.getResponseForWindow(actionWindow);
 
-            	// wemove: DO THIS ONLY IF FRAGMENT PRESENT to avoid exception ! 
-                if (fragment != null) {
+            	// wemove: DO THIS ONLY IF PORTLET PRESENT to avoid exception ! 
+                if (actionWindow.getPortletEntity() != null) {
                     initWindow(actionWindow, request);
 
                     HttpServletRequest requestForWindow = request.getRequestForWindow(actionWindow);
