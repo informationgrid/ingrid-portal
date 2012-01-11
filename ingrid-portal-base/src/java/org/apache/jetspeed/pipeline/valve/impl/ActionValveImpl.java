@@ -96,16 +96,19 @@ public class ActionValveImpl extends AbstractValve implements ActionValve
             PortletWindow actionWindow = request.getActionWindow();
             if (actionWindow != null)
             {
+            	// wemove: Immediately check whether fragment present ! Often not the case, e.g. when search engines verify old requests !
+                Fragment fragment = request.getPage().getFragmentById(actionWindow.getId().toString());
+                if (fragment == null) {
+                	log.error("Unable to get fragment for action window id='" + actionWindow.getId().toString() + "' while making the following request: " + request.getRequest().getRequestURL() + "?" + request.getRequest().getQueryString());
+                }
+
                 // If portlet entity is null, try to refresh the actionWindow.
                 // Under some clustered environments, a cached portlet window could have null entity.
-                if (null == actionWindow.getPortletEntity())
+            	// wemove: DO THIS ONLY IF FRAGMENT PRESENT to avoid exception ! 
+                if (null == actionWindow.getPortletEntity() && fragment != null)
                 {
                     try 
                     {
-                        Fragment fragment = request.getPage().getFragmentById(actionWindow.getId().toString());
-                        if (fragment == null) {
-                        	log.error("Unable to get fragment for action windew id='" + actionWindow.getId().toString() + "' while making the following request: " + request.getRequest().getRequestURL() + "?" + request.getRequest().getQueryString());
-                        }
                         ContentFragment contentFragment = new ContentFragmentImpl(fragment, new HashMap());
                         actionWindow = this.windowAccessor.getPortletWindow(contentFragment);
                     } 
@@ -115,22 +118,30 @@ public class ActionValveImpl extends AbstractValve implements ActionValve
                     }
                 }
 
-                initWindow(actionWindow, request);
                 HttpServletResponse response = request.getResponseForWindow(actionWindow);
-                HttpServletRequest requestForWindow = request.getRequestForWindow(actionWindow);
-                requestForWindow.setAttribute(PortalReservedParameters.REQUEST_CONTEXT_ATTRIBUTE, request);
-                
-                //PortletMessagingImpl msg = new PortletMessagingImpl(windowAccessor);
-                
-                requestForWindow.setAttribute("JETSPEED_ACTION", request);
-                container.processPortletAction(
-                    actionWindow,
-                    requestForWindow,
-                    response);
-                // The container redirects the client after PortletAction processing
-                // so there is no need to continue the pipeline
-                
-                //msg.processActionMessage("todo", request);
+
+            	// wemove: DO THIS ONLY IF FRAGMENT PRESENT to avoid exception ! 
+                if (fragment != null) {
+                    initWindow(actionWindow, request);
+
+                    HttpServletRequest requestForWindow = request.getRequestForWindow(actionWindow);
+                    requestForWindow.setAttribute(PortalReservedParameters.REQUEST_CONTEXT_ATTRIBUTE, request);
+                    
+                    //PortletMessagingImpl msg = new PortletMessagingImpl(windowAccessor);
+                    
+                    requestForWindow.setAttribute("JETSPEED_ACTION", request);
+                    container.processPortletAction(
+                        actionWindow,
+                        requestForWindow,
+                        response);
+                    // The container redirects the client after PortletAction processing
+                    // so there is no need to continue the pipeline
+                    
+                    //msg.processActionMessage("todo", request);
+                } else {
+                	// wemove: send Error, so request not executed anymore, e.g. by search engines !
+                	response.sendError(response.SC_NOT_FOUND, "Unable to get fragment for action window");
+                }
                 
                 // clear the cache for all portlets on the current page
                 clearPortletCacheForPage(request, actionWindow);
