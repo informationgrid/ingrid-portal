@@ -77,17 +77,16 @@ $fieldLabel#end
 <div class="contentNavigation">
    	<div class="contentNavigationLeft">
 	#if ($browser.hasPreviousPage())
-       	<input class="btn btn_admin" type="submit" name="doFirst" value="<<" />
-       	<input class="btn btn_admin" type="submit" name="doPrev" value="<" />
+       	#renderInputButtonClass("<<" "" "doFirst" "" "btn_admin")
+		#renderInputButtonClass("<" "" "doPrev" "" "btn_admin")
 	#end
 		&nbsp;
 	</div>
    	<div class="contentNavigationMiddle">$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() $MESSAGES.getString('component.forms.text.of') $browser.getTotalNumRows() $MESSAGES.getString('component.forms.text.entries')</div>
    	<div class="contentNavigationRight">
-		&nbsp;
 	#if ($browser.hasNextPage())
-			<input class="btn btn_admin" type="submit" name="doNext" value=">" />
-			<input class="btn btn_admin" type="submit" name="doLast" value=">>" />
+		#renderInputButtonClass(">" "" "doNext" "" "btn_admin")
+		#renderInputButtonClass(">>" "" "doLast" "" "btn_admin")
 	#end
 	</div>
 	<p class="clearer"></p>
@@ -181,7 +180,7 @@ $action.setParameter("id", "$rowId")
 
 #macro (renderDBBrowserFooterButtonDisable $button)
 	#if($button == "doDelete")
-		<input class="btn_disable float_left" type="submit" name="doDelete" onClick="return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')" value="$MESSAGES.getString('component.forms.buttons.delete')" disabled/>
+		#renderInputButtonDisable("$MESSAGES.getString('component.forms.buttons.delete')" "" "doDelete" "" "float_left" "return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')" "true")
 	#end
 #end
 
@@ -189,26 +188,26 @@ $action.setParameter("id", "$rowId")
 <div class="formfooter formfooter_border_style">
 #foreach ($button in $buttons)
 	#if($button == "doEdit")
-		<input class="btn float_left" type="submit" name="doEdit" value="Edit"/>
+			#renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.edit')" "" "doEdit" "" "float_left")
 		<span class="float_left">&nbsp;</span>
 	#end
 	#if($button == "doDelete")
 		#if($disableDeleteButton == "true")
 			#renderDBBrowserFooterButtonDisable ($button)
 		#else
-			<input class="btn float_left" type="submit" name="doDelete" onClick="return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')" value="$MESSAGES.getString('component.forms.buttons.delete')" />
+			#renderInputButtonOnClick("$MESSAGES.getString('component.forms.buttons.delete')" "float:left" "doDelete" "" "float_left" "return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')")
 		#end
 	#end
 	#if($button == "doRefresh")
-    	<input class="btn float_right" type="submit" name="doRefresh" value="$MESSAGES.getString('component.forms.buttons.refresh')" />
+		#renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.refresh')" "" "doRefresh" "" "float_right")
 		<span class="float_right">&nbsp;</span>
 	#end
 	#if($button == "doNew")
-		<input class="btn float_right" type="submit" name="doNew" value="$MESSAGES.getString('component.forms.buttons.add')" />
+		#renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.add')" "" "doNew" "" "float_right")
 	#end
 	#if($button == "doClear")
 		<span class="float_left">&nbsp;</span>
-		<input class="btn float_left" type="submit" name="doClear" value="$MESSAGES.getString('component.forms.buttons.reset')" title="$MESSAGES.getString('component.forms.info.reset')" />
+		#renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.reset')" "" "doClear" "" "float_left")
 	#end
 #end
 	<p class="clearer"></p>
@@ -266,12 +265,12 @@ $action.setParameter("id", "$rowId")
 	#elseif ($mode == 'new')
 		#set ($butAction = 'doSave')
 	#end
+	#renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.back')" "" "doCancel" "" "float_right")
 	#if ($disableSaving && $disableSaving == 'true')
 		## do nothing
 	#else
-		<input class="btn" type="submit" name="$butAction" value="$MESSAGES.getString('component.forms.buttons.save')" />
+		#renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.save')" "" $butAction "" "float_right")
 	#end
-	<input class="btn" type="submit" name="doCancel" value="$MESSAGES.getString('component.forms.buttons.back')" />
 </div>
 #end
 
@@ -311,14 +310,19 @@ $action.setParameter("id", "$rowId")
 #end
 
 #macro (renderInputButtonDisable $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick $buttondisable)
-	<span>
-		#if($buttondisable == "true")
-			<input type="submit" value="$buttonvalue" style="$buttonstyle" name="$buttonname" title="$buttontitle" class="btn_disable $buttonclass" onclick="$buttononclick" disabled />
-		#else
-			<input type="submit" value="$buttonvalue" style="$buttonstyle" name="$buttonname" title="$buttontitle" class="btn $buttonclass" onclick="$buttononclick" />
-		#end
-	</span>
+	<div class="$buttonclass" style="$buttonstyle">
+		<div class="btn_left" id="$buttonname left"></div>
+		<div class="btn_center">
+			#if($buttondisable == "true")
+				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_disable" onclick="$buttononclick" disabled />
+			#else
+				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn" onclick="$buttononclick" />
+			#end
+		</div>
+		<div class="btn_right" id="$buttonname right"></div>
+	</div>
 #end
+
 
 #macro (renderInputButtonSearch $buttonvalue $buttonstyle $buttonname $buttontitle)
 	#renderInputButtonSearchClass ("$buttonvalue" $buttonstyle $buttonname $buttontitle "")
@@ -329,15 +333,20 @@ $action.setParameter("id", "$rowId")
 #end
 
 #macro (renderInputButtonSearchOnClick $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick)
-	#renderInputButtonSearchDisable ($buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick "false")
+	#renderInputButtonSearchDisable ("$buttonvalue" $buttonstyle $buttonname $buttontitle $buttonclass  $buttononclick "false")
 #end
 
 #macro (renderInputButtonSearchDisable $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick $buttondisable)
-	<span>
-		#if($buttondisable == "true")
-			<input type="submit" value="$buttonvalue" style="$buttonstyle" name="$buttonname" title="$buttontitle" class="btn_search_disable $buttonclass" onclick="$buttononclick" disabled />
-		#else
-			<input type="submit" value="$buttonvalue" style="$buttonstyle" name="$buttonname" title="$buttontitle" class="btn_search $buttonclass" onclick="$buttononclick" />
-		#end
-	</span>
+	<div class="$buttonclass" style="$buttonstyle">
+		<div class="btn_search_left" id="$buttonname left"></div>
+		<div class="btn_search_center">
+			#if($buttondisable == "true")
+				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_search_disable" onclick="$buttononclick" disabled/>
+			#else
+				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_search" onclick="$buttononclick"/>
+			#end
+			
+		</div>
+		<div class="btn_search_right" id="$buttonname right"></div>
+	</div>
 #end

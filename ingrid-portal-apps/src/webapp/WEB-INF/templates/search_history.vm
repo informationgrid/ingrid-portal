@@ -30,8 +30,13 @@ $MESSAGES.setMsgParam("$max_entries")
 			#end
           </ul>
           <br>
-          #renderInputButton($MESSAGES.getString('common.form.button.delete') "" "deleteEntries" "")
+		
 #end
-      </div>
+	</div>
+#if($searchSaveEntries)
+	<div class="formfooter formfooter_border_style">
+		#renderInputButton($MESSAGES.getString('common.form.button.delete') "" "deleteEntries" "")
+    </div>
+#end
     </form>
   </div>

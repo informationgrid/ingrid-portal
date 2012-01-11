@@ -12,7 +12,7 @@ $action.setParameter('action','doTeaser')
                 ##$action.setParameter('topTo',"$!snsAnniversary.to")
                 $action.setParameter('topTerm',"$!snsAnniversary.term")
                 <p style="padding: 5px 0 3px; margin: 0;"><strong><i>$MESSAGES.getString('chronicle.teaser.event.prae') $snsAnniversary.years#if($snsAnniversary.years > 1) $MESSAGES.getString('chronicle.teaser.event.years')#else $MESSAGES.getString('chronicle.teaser.event.year')#end: </i></strong></p>
-                <p class="teaser_title">
+                <p class="teaser_title chronicle_teaser_title">
                     <a href="$action" title="$MESSAGES.getString('chronicle.teaser.event.tooltip')">$snsAnniversary.title</a>
                     <!--<span style="font-weight:normal;"> ($snsAnniversary.from#if($snsAnniversary.until) - $snsAnniversary.until#end)</span>-->
                 </p>

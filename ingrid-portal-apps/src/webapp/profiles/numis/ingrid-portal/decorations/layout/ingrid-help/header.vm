@@ -40,7 +40,7 @@
 </script>
 
   </head>
-  <body class="#PageBaseCSSClass()">
+  <body class="body-background">
     <noscript>
 	  <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
     </noscript>
@@ -49,15 +49,26 @@
 
 <!-- IDENTITY AREA -->
 #set($langCode = '')
-#if($preferedLocale.toString() == 'en')
+#if($lang && $lang.toString() == 'en')
 	#set($langCode = "en_")
 #end
-<div id="popupheader" class="${langCode}motiv_hilfe">
-	<!-- LOGO -->
+#set($currentPage = $site.getPage().url)
+##if($currentPage == "/main-maps.psml")
+##<div id="identity" class="motiv_karten">
+###elseif($currentPage == "/search-detail.psml")
+<div id="identity" class="${langCode}motiv_hilfe">
+###else
+##<div id="identity" class="motiv_blank">
+###end
+  <!-- LOGO -->
   <div id="logo">
-    <img style="padding:26px 16px 0px" src="#GetPageResource('images/logo.gif')" alt="Logo NUMIS" />
+    <a href="$renderResponse.encodeURL('/portal/default-page.psml')"><img class="image_alt" src="/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo Geoportal.WSV" style="padding: 31px 27px 0;"/></a>
   </div>
 </div>
+<div id="mainnav">
+<br class="clearer">
+</div>
+<div class="greenSeparator"></div>
 
 <!-- CONTENT BLOCK -->
   

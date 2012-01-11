@@ -22,26 +22,13 @@
 				## try to get it form the preferences as it was done with the titleKey and helpKey
 				#set($hTitle = $jetspeed.getPreferenceFirstValue($f, "helpToolTip"))
 			#end
-		<script language="JavaScript" type="text/javascript" >
-			imageDefaultTeaser = new Image(); 
-			imageDefaultTeaser.src = "$request.contextPath$decoration.getBasePath("images")/icon-help.png";
-			imageHoverTeaser = new Image();
-			imageHoverTeaser.src = "$request.contextPath$decoration.getBasePath("images")/icon-help-hover.png";
-			
-			function imageOnTeaser(image) {
-				image.src=imageHoverTeaser.src;
-			}
-			
-			function imageOutTeaser(image) {
-				image.src=imageDefaultTeaser.src;
-			}
-			
-			document.write("<a class=\"help\" href=\"javascript:ingrid_openWindow('$hpath',750,550);\" title=\"$hTitle\"><image src=\"$request.contextPath$decoration.getBasePath("images")/icon-help.png\" onMouseover=\"imageOnTeaser(this)\" onMouseout=\"imageOutTeaser(this)\"/></a>");
-    	</script>
-    	<noscript>
-    		<a href="$hpath" target="_new" title="$hTitle"><img src="$request.contextPath$decoration.getBasePath("images")/icon-help.png" alt="$hTitle" /></a>
-    	</noscript>
-		#end
+		<script language="JavaScript" type="text/javascript">
+            document.write("<a href=\"javascript:ingrid_openWindow('$hpath',790,550);\" title=\"$hTitle\">&nbsp;</a>");
+        </script>
+        <noscript>
+            <a href="$hpath" target="_new" title="$hTitle">&nbsp;</a>
+        </noscript>
+        #end
 		</span>
 		<span class="clearer"></span>
   	</div>

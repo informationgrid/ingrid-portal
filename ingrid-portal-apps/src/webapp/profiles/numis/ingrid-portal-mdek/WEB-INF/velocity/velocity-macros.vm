@@ -15,9 +15,15 @@
 #end
 
 #macro (renderInputButtonDisable $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick $buttondisable)
-	#if($buttondisable == "true")
-		<input type="submit" value="$buttonvalue" style="$buttonstyle" name="$buttonname" title="$buttontitle" class="btn_disable $buttonclass" onclick="$buttononclick" disabled />
-	#else
-		<input type="submit" value="$buttonvalue" style="$buttonstyle" name="$buttonname" title="$buttontitle" class="btn $buttonclass" onclick="$buttononclick" />
-	#end
+	<div class="$buttonclass" style="$buttonstyle">
+		<div class="btn_left" id="$buttonname left"></div>
+		<div class="btn_center">
+			#if($buttondisable == "true")
+				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_disable" onclick="$buttononclick" disabled />
+			#else
+				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn" onclick="$buttononclick" />
+			#end
+		</div>
+		<div class="btn_right" id="$buttonname right"></div>
+	</div>
 #end

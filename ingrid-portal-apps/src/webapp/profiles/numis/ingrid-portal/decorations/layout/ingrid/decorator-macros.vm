@@ -37,54 +37,86 @@
   #set($currentPage = $site.getPage().url)
   #set($langCode = '')
   #if($preferedLocale.toString().startsWith('en'))
-	#set($langCode = "en_")
+    #set($langCode = "en_")
   #end
-  #if($currentPage == "/default-page.psml")
-<div id="identity" class="${langCode}motiv_start"/>
-  #elseif($currentPage == "/main-about.psml")
-<div id="identity" class="${langCode}motiv_start"/>
+  #if($currentPage == "/default-page.psml" && !$jetspeed.getLoggedOn())
+<div id="identity" class="${langCode}motiv_start">
   #elseif($currentPage == "/main-chronicle.psml")
-<div id="identity" class="${langCode}motiv_umweltchronik"/>
+<div id="identity" class="${langCode}motiv_umweltchronik">
   #elseif($currentPage == "/main-environment.psml")
-<div id="identity" class="${langCode}motiv_umweltthemen"/>
+<div id="identity" class="${langCode}motiv_umweltthemen">
   #elseif($currentPage == "/main-maps.psml")
-<div id="identity" class="${langCode}motiv_karten"/>
+<div id="identity" class="${langCode}motiv_karten">
   #elseif($currentPage == "/main-measures.psml")
-<div id="identity" class="${langCode}motiv_messwerte"/>
-  #elseif($currentPage == "/main-search.psml" || $currentPage.startsWith('/search-catalog'))
-<div id="identity" class="${langCode}motiv_suche"/>
+<div id="identity" class="${langCode}motiv_messwerte">
   #elseif($currentPage == "/main-service.psml")
-<div id="identity" class="${langCode}motiv_service"/>
-  #elseif($currentPage == "/service-contact.psml")
-<div id="identity" class="${langCode}motiv_topnavi"/>
+<div id="identity" class="${langCode}motiv_service">
   #elseif($currentPage == "/help.psml")
-<div id="identity" class="${langCode}motiv_hilfe"/>
-  #elseif($currentPage == "/service-myportal.psml")
-<div id="identity" class="${langCode}motiv_topnavi"/>
+<div id="identity" class="${langCode}motiv_hilfe">
+  #elseif($currentPage.startsWith('/search-extended/'))
+<div id="identity" class="${langCode}motiv_suche_erweiterte">
+  #elseif($currentPage == "/search-history.psml")
+<div id="identity" class="${langCode}motiv_suche_historie">
+  #elseif($currentPage == "/search-settings.psml")
+<div id="identity" class="${langCode}motiv_suche_einstellungen">
+  #elseif($currentPage == "/search-catalog/search-catalog-hierarchy.psml")
+<div id="identity" class="${langCode}motiv_katalog_hierarchie">
+  #elseif($currentPage == "/search-catalog/search-catalog-thesaurus.psml")
+<div id="identity" class="${langCode}motiv_katalog_thesaurus">
+  #elseif($currentPage == "/service-contact.psml")
+<div id="identity" class="${langCode}motiv_kontakt">
+  #elseif($currentPage == "/service-myportal.psml" || $currentPage == "/myportal-edit-account.psml" || $currentPage =="/myportal-personalize.psml" || ($currentPage == "/default-page.psml" && $jetspeed.getLoggedOn()))
+<div id="identity" class="${langCode}motiv_mein_portal">
+  #elseif($currentPage == "/service-contact-newsletter.psml")
+<div id="identity" class="${langCode}motiv_newsletter">
+  #elseif($currentPage == "/main-search.psml" && ($request.getParameter("action") == "doSearch"))
+<div id="identity" class="${langCode}motiv_treffer">
+  #elseif($currentPage == "/main-search.psml")
+<div id="identity" class="${langCode}motiv_suche">
+  #elseif($currentPage == "/main-about.psml")
+<div id="identity" class="${langCode}motiv_ueber_portal">
+  #elseif($currentPage == "/rss-news.psml")
+<div id="identity" class="${langCode}motiv_weitere_meldungen">
+  #elseif($currentPage == "/privacy.psml")
+<div id="identity" class="${langCode}motiv_datenschutz">
+  #elseif($currentPage == "/main-features.psml")
+<div id="identity" class="${langCode}motiv_funktionen">
+  #elseif($currentPage == "/disclaimer.psml")
+<div id="identity" class="${langCode}motiv_impressum">
+  #elseif($currentPage == "/main-about-partner.psml")
+<div id="identity" class="${langCode}motiv_informationsanbieter">
+  #elseif($currentPage == "/service-sitemap.psml")
+<div id="identity" class="${langCode}motiv_inhalte">
   #elseif($currentPage.startsWith('/administration/'))
-<div id="identity" class="${langCode}motiv_admin"/>
+<div id="identity" class="${langCode}motiv_admin">
+  #elseif($currentPage.startsWith('/mdek/'))
+<div id="identity" class="${langCode}motiv_mdek">
   #else
-<div id="identity" class="${langCode}motiv_blank"/>
+<div id="identity" class="${langCode}motiv_blank">
   #end
-
   <!-- LOGO -->
   <div id="logo">
-    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')"><img style="padding:26px 16px 0px;" src="#GetPageResource('images/logo.gif')" alt="Logo NUMIS" /></a>
+    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')"><img src="#GetPageResource('images/logo.gif')" alt="Logo NUMIS" /></a>
   </div>
   
   <!-- SERVICE-NAVIGATION -->
   <div id="servicenav"><a name="servicenav"></a>
       <h2 class="hide">Servicemenu</h2>
+      <div class="service_nav_left"></div>
+      <div class="service_nav_center" style="float:left;">
+        <div style="padding:6px 0 0;"></div>
       <ul>
 #set($serviceMenu = $site.getMenu("service-menu"))
 #if($serviceMenu && !$serviceMenu.empty)
   #includeServiceNavigation($serviceMenu)
 #end
       </ul>
+      </div>
+      <div class="service_nav_right"></div>
   </div>
 <!-- logged on message -->
 #if($jetspeed.getLoggedOn())
-	#set($userAttributes = $jetspeed.getUserProperties())
+    #set($userAttributes = $jetspeed.getUserProperties())
     #set($userNameGiven = $userAttributes.get("user.name.given", null))
     #set($userNameFamily = $userAttributes.get("user.name.family", null))
     
@@ -93,7 +125,7 @@
     #end
     #if($userNameFamily)
     #set ($salutation = "$!{salutation} $userNameFamily")
-    #end		
+    #end        
 <div id="logged_on">
   <a href="portal/myportal-edit-account.psml">$salutation</a> | <a href="login/logout">LOGOUT</a>
 </div>
@@ -104,36 +136,36 @@
 #* include main navigation component *#
 #macro (includeMainNavigation $_menu)
     #set($currentPage = $site.getPage().url)
-   #foreach($element in $_menu.elements.iterator())
+    #foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
         #set($tabTitle = $element.getTitle($preferedLocale))
         #set($tabName = $element.getShortTitle($preferedLocale))
-		## read localized title from resource with title from psml as key !
-		#if($tabTitle.startsWith('ingrid'))
+        ## read localized title from resource with title from psml as key !
+        #if($tabTitle.startsWith('ingrid'))
             #set($tabTitle = $MESSAGES.getString($tabTitle))
-            #set($tabName = $MESSAGES.getString($tabName))			
-		#end
+            #set($tabName = $MESSAGES.getString($tabName))          
+        #end
         #set($tabUrl = $jetspeed.getAbsoluteUrl($element.url))
-		## flags indicating how to render menu item
+        ## flags indicating how to render menu item
         #set($elemSelected = false)
         #set($elemRender = true)
-		## different menu item name than title in psml !
-		#if($element.url=="/main-search.psml")
+        ## different menu item name than title in psml !
+        #if($element.url=="/main-search.psml")
             ##set($tabTitle = $MESSAGES.getString('ingrid.page.search'))
             #set($tabName = $MESSAGES.getString('ingrid.page.search'))
-		#end
-		## process and set flags accordingly
+        #end
+        ## process and set flags accordingly
         #if($element.isSelected($site))
-			#set($elemSelected = true)
-		#elseif($element.url=="/main-maps.psml")
-			##<li><a href="$tabUrl" title="$MESSAGES.getString('ingrid.page.maps.link.title')" target="ingrid_wms">$tabName</a></li>
-			###set($elemRender = false)
-		#elseif($element.url=="/main-search.psml")
-			#if($currentPage.startsWith('/search-ext'))
-				#set($elemSelected = true)
-			#end
-		#elseif($element.url.startsWith("/search-catalog"))
-        	#if($currentPage.startsWith('/search-catalog'))
+            #set($elemSelected = true)
+        #elseif($element.url=="/main-maps.psml")
+            ##<li><a href="$tabUrl" title="$MESSAGES.getString('ingrid.page.maps.link.title')" target="ingrid_wms">$tabName</a></li>
+            ###set($elemRender = false)
+        #elseif($element.url=="/main-search.psml")
+            #if($currentPage.startsWith('/search-ext'))
+                #set($elemSelected = true)
+            #end
+        #elseif($element.url.startsWith("/search-catalog"))
+            #if($currentPage.startsWith('/search-catalog'))
                 #set($elemSelected = true)
             #end
         #elseif($element.url=="/main-about.psml" || $element.url=="/main-features.psml")
@@ -141,64 +173,89 @@
                 #set($elemSelected = true)
             #end
         #end
-		## render menue item dependent from flags
-		#if ($elemRender)
-    		#if ($elemSelected)
+        ## render menue item dependent from flags
+        #if ($elemRender)
+       	   #if ($elemSelected)
               <li>
-              	<a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a>
-				#if ($currentPage.startsWith('/main-about') || $currentPage.startsWith('/main-features'))
-					#set($subMenu = $site.getMenu("sub-menu-about"))
-				#end
-			  </li>
+              <div class="tabs">
+	              <div class="tabs_left"></div>
+	              <div class="tabs_center">
+	              	<a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a>
+	              </div>
+	              <div class="tabs_right"></div>
+	           </div>
+            	#if ($currentPage.startsWith('/main-about') || $currentPage.startsWith('/main-feature'))
+                #set($subMenu = $site.getMenu("sub-menu-about"))
+	                #if($subMenu && !$subMenu.empty)
+	                    <div id="subnav">
+	                    	#includeSubNavigation($subMenu true)
+	                    </div>
+	                #end
+            	#end
+          		</li>
             #else
-              <li>
-				<a href="$tabUrl" title="$tabTitle">$tabName</a>
-			  </li>
-			#end
-		#end
+              <li class="mainnav_img"><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
+            #end
+        #end
       #end
     #end
 #end
 
 #* include sub navigation component *#
-#macro (includeSubNavigation $_menu)
+#macro (includeSubNavigation $_menu $_attached)
     #set($currentPage = $site.getPage().url)
+    #if ($_attached)
+        <div class="float_left">
+    #else
+        <div class="float_left" style="position:absolute">
+    #end
+    <div class="subnav_left"></div>
+    <div class="subnav_center">
     <ul>
-	#foreach($element in $_menu.elements.iterator())
+    #foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
         #set($linkTitle = $element.getTitle($preferedLocale))
         #set($linkName = $element.getShortTitle($preferedLocale))
-		## read localized title from resource with title from psml as key !
-		#if($linkTitle.startsWith('ingrid'))
+        ## read localized title from resource with title from psml as key !
+        #if($linkTitle.startsWith('ingrid'))
             #set($linkTitle = $MESSAGES.getString($linkTitle))
-            #set($linkName = $MESSAGES.getString($linkName))			
-		#end
+            #set($linkName = $MESSAGES.getString($linkName))            
+        #end
+         #if($velocityCount > 1)
+            <li>
+         	<div class="subnav_img">
+           	<img src="#GetPageResource('images/subnav_seperator.png')"/>
+           	</div>
+            </li>
+           #end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
-        #if($velocityCount > 1)
-           	|
-		#end
-		## flags indicating how to render menu item
+        ## flags indicating how to render menu item
         #set($elemSelected = false)
-		## process and set flags accordingly
-		#if ($element.url.startsWith('/main-about.psml'))
+        ## process and set flags accordingly
+        #if ($element.url.startsWith('/main-about.psml'))
             #set($linkTitle = $MESSAGES.getString('ingrid.page.portrait.tooltip'))
             #set($linkName = $MESSAGES.getString('ingrid.page.portrait')) 
-        #end
-        #if ($element.url.startsWith('/main-features.psml'))
+        #elseif($element.url.startsWith('/main-features.psml'))
             #set($linkTitle = $MESSAGES.getString('ingrid.page.features.tooltip'))
-            #set($linkName = $MESSAGES.getString('ingrid.page.features')) 
+            #set($linkName = $MESSAGES.getString('ingrid.page.features'))
         #end
         #if($element.isSelected($site))
-			#set($elemSelected = true)
-		#end
-		#if ($elemSelected)
-          <li><a href="$linkUrl" title="$linkTitle" class="selected">$linkName</a></li>
+            #set($elemSelected = true)
+        #end
+        #if ($elemSelected)
+          <li>
+          <a href="$linkUrl" title="$linkTitle" class="selected">$linkName</a></li>
         #else
-          <li><a href="$linkUrl" title="$linkTitle">$linkName</a></li>
-		#end
+          <li>
+          <a href="$linkUrl" title="$linkTitle">$linkName</a>
+          </li>
+        #end
       #end
-	#end
-	</ul>
+    #end
+    </ul>
+    </div>
+    <div class="subnav_right"></div>
+    </div>
 #end
 
 #* include service navigation component *#
@@ -207,15 +264,15 @@
       #if($element.elementType == "option")
         #set($linkTitle = $element.getTitle($preferedLocale))
         #set($linkName = $element.getShortTitle($preferedLocale))
-		## read localized title from resource with title from psml as key !
-		#if($linkTitle.startsWith('ingrid'))
+        ## read localized title from resource with title from psml as key !
+        #if($linkTitle.startsWith('ingrid'))
             #set($linkTitle = $MESSAGES.getString($linkTitle))
-            #set($linkName = $MESSAGES.getString($linkName))			
-		#end
+            #set($linkName = $MESSAGES.getString($linkName))            
+        #end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
         ## obfuscate email addresse (webmaster)
         #if($linkUrl && $linkUrl.contains("@"))
-        	#set($linkUrl = $jetspeed.htmlescapeAll($linkUrl))
+            #set($linkUrl = $jetspeed.htmlescapeAll($linkUrl))
         #end
         #if($velocityCount > 1)
            | 
@@ -232,28 +289,38 @@
 
 #macro (renderServiceLink $el $currentPage $linkUrl $linkTitle $linkName $postfix)
   #if($isSelected)
-    <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a>$postfix</li>
+	#if($el=="/service-contact.psml")
+		<li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a></li>
+	#else
+		<li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a>$postfix</li>
+	#end
   #elseif($el=="/service-contact.psml")
-	#if($currentPage.indexOf('service-contact') != -1)
-	<li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a>$postfix</li>
-	#else
-	<li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
-	#end
+    #if($currentPage.indexOf('service-contact') != -1)
+    <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a></li>
+    #else
+    <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a></li>
+    #end
   #elseif($el=="/service-myportal.psml")
-	#if($currentPage.indexOf('myportal') != -1)
-	<li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a>$postfix</li>
-	#else
-	<li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
-	#end
+    #if($currentPage.indexOf('myportal') != -1)
+    <li><a href="$linkUrl" class="selected" title="$!linkTitle">${linkName}</a>$postfix</li>
+    #else
+    <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
+    #end
   #elseif($el=="/help.psml")
-	<script language="JavaScript" type="text/javascript">
-		document.write("<li><a href=\"javascript:ingrid_openWindow('$linkUrl',750,550);\" title=\"$MESSAGES.getString('ingrid.page.help.link.tooltip')\">${linkName}</a>$postfix</li>");
-	</script>
-	<noscript>
-		<li><a href="$linkUrl" target="_new" title="$linkTitle">${linkName}</a>$postfix</li>
-	</noscript>
+    <script language="JavaScript" type="text/javascript">
+        document.write("<li><a href=\"javascript:ingrid_openWindow('$linkUrl',790,550);\" title=\"$MESSAGES.getString('ingrid.page.help.link.tooltip')\">${linkName}</a>$postfix</li>");
+    </script>
+    <noscript>
+        <li><a href="$linkUrl" target="_new" title="$linkTitle">${linkName}</a>$postfix</li>
+    </noscript>
   #elseif($linkTitle == "ingrid.page.language")
-    $jetspeed.renderPortletEntity("LanguageSwitch", "ingrid-portal-apps::LanguageSwitch")
+    ## do not render language switch
+	#if($preferedLocale.toString().startsWith('de'))
+		#set($langCode = "de")
+	#end
+	#if($langCode != "de")
+		$jetspeed.renderPortletEntity("LanguageSwitch", "ingrid-portal-apps::LanguageSwitch")
+	#end
   #else
     <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
   #end  
@@ -261,20 +328,20 @@
 
 ## include service navigation component
 #macro (includeServiceNavigation $_menu)
-	#set($currentPage = $site.getPage().url)
-	#foreach($element in $_menu.elements.iterator())
+    #set($currentPage = $site.getPage().url)
+    #foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
         #if($lastType && $lastType != "separator")
-		  #renderServiceLink($element.url $currentPage $linkUrl $linkTitle $linkName "")
+          #renderServiceLink($element.url $currentPage $linkUrl $linkTitle $linkName "")
         #end 
         #set($lastType = $element.type)
         #set($linkTitle = $element.getTitle($preferedLocale))
         #set($linkName = $element.getShortTitle($preferedLocale))
-		## read localized title from resource with title from psml as key !
-		#if($linkTitle.startsWith('ingrid'))
+        ## read localized title from resource with title from psml as key !
+        #if($linkTitle.startsWith('ingrid'))
             #set($linkTitle = $MESSAGES.getString($linkTitle))
-            #set($linkName = $MESSAGES.getString($linkName))			
-		#end
+            #set($linkName = $MESSAGES.getString($linkName))            
+        #end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
         #set($linkPage = $element.url)
         #set($isSelected = $element.isSelected($site))
@@ -282,32 +349,32 @@
 ## NOTICE: defaultTitle is from "psml" or "link" file !
         #set($defaultTitle = $element.getTitle())
         #if($defaultTitle == "ingrid.page.language")
-			#set($linkTitle = $defaultTitle)
+            #set($linkTitle = $defaultTitle)
         #end
       #elseif($element.elementType == "separator")
         #set($separatorTitle = $element.getTitle($preferedLocale))
         #set($separatorText = $element.getText($preferedLocale))
         #if ($separatorText == "separator1")
-		  #if($lastType != "separator")
-            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "|")
+          #if($lastType != "separator")
+            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "&nbsp;|&nbsp;")
           #else
-           |
+            &nbsp;|&nbsp;
           #end
         #elseif($separatorText == "separator2")
           #if($lastType != "separator")
-            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "|")
+            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName " - ")
           #else
              - 
           #end
         #else
           #if($lastType != "separator")
-            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "|")
+            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "")
           #end 
         #end
         #set($lastType = "separator")
       #end
-	#end
+    #end
     #if($lastType != "separator")
-	  #renderServiceLink($element.url $currentPage $linkUrl $linkTitle $linkName "|")
+      #renderServiceLink($element.url $currentPage $linkUrl $linkTitle $linkName "")
     #end 
 #end

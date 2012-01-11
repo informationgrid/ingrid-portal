@@ -793,6 +793,7 @@ div.btn_center { float:left; background-image: url("../images/button.png"); back
 .search_query_button { padding: 0px 0px 0px 625px; }
 .search_query_textarea { position: absolute;  margin: 1px 0 0; }
 div#logo img { height: 81px; width: 188px; }
+p.chronicle_teaser_title { float: none; width: 100%; }
 
 
 

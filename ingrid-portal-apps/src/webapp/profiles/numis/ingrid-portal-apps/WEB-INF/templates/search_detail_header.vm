@@ -108,7 +108,7 @@ self.focus();
 <script src="/ingrid-portal-apps/javascript/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
 
   </head>
-  <body class="layout-tigris claro">
+  <body class="body-background claro">
   <a name="top"></a>
 	<noscript>
 	  <iframe src="/detect-js.psml" style="display:none"></iframe>
@@ -134,6 +134,11 @@ self.focus();
     <a href="$renderResponse.encodeURL('/portal/default-page.psml')"><img class="image_alt" src="/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo NUMIS" /></a>
   </div>
 </div>
+<div id="mainnav">
+<br class="clearer">
+</div>
+<div class="greenSeparator"></div>
+
 
 <!-- CONTENT BLOCK -->
 <div id="container">

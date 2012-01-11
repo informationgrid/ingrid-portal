@@ -9,21 +9,21 @@
   standard styles 
 *********************************************************************/
 
-body { padding: 0; margin: 0; color: #333333; background-color: #FFFFFF; font-family: Arial, Verdana, Helvetica, sans-serif; }
+body { padding: 0; margin: 0; color: #505050; background-color: #FFFFFF; font-family: Arial,sans-serif !important; }
 body.claro { font-size: 16px; }
 
 sup { line-height: 0; }
 img { border:0; }
 /*Need for NUMIS profile*/
-img.image_alt {padding:26px 0px 0px 16px; }
+img.image_alt { padding:31px 27px 0; }
 span.icon { margin-right:4px; margin-top:2px; float:left; position: absolute; }
 span.icon_udk { margin-right:6px; margin-top:0px; float:left; width:21px; height:14px; }
 /* no float for detail page in OPERA */
 span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px; }
 span.normaltext { font-weight:normal; text-transform:none; }
 span.smaller {font-size: 83%}
-ul { list-style-type:square; padding-left:0; margin: 0 0 1em 30px; width: 100%; }
-p { margin-top:0; margin-bottom:1em; font-size:75%;}
+ul { list-style-type:square; padding-left:0; margin: 0 0 1em 30px; }
+p { margin-top:0; margin-bottom:1em; font-size:75%; color: #505050; }
 strong {font-weight:bold}
 
 div.line { border: 0; background-color: #CCCCCC; height: 1px; margin:10px 0 0 0; padding:0 }
@@ -35,16 +35,16 @@ div.line_form hr { display: none;}
 div.line * { display: none;}
 div.line_form * { display: none;}
 
-a,a:link { color: #e0003c; text-decoration: none; }
-a:visited { color: #e0003c; }
-a:hover { color: #333333; text-decoration: none; }
-a:focus { color: #333333; text-decoration: none; }
-a:active { color: #333333; text-decoration: none; }
+a,a:link { color: #2C5C91; text-decoration: none; }
+a:visited { color: #2C5C91; }
+a:hover { text-decoration: underline; }
+a:focus { text-decoration: none; }
+a:active { text-decoration: none; }
 a.selected { font-weight:bold; }
 /*search_seperator style used at profile NUMIS*/
 span.search_seperator{ color:#999999; }
 
-h1 { color: #999; font-size: 16px; font-weight: normal; line-height: 27px; margin: 0.7em 0em 0.7em 0em; text-transform:uppercase; }
+h1 { color: #2C5C91; font-size: 18px; font-weight: normal; line-height: 24px; margin: 0.7em 0em 0.7em 0em; }
 h2 { font-family: Arial, Verdana, Helvetica, sans-serif; font-size:90%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
 h3 { font-family: Arial, Verdana, Helvetica, sans-serif; font-size:80%; line-height:120%; font-weight:bold; margin-top:0.4em; margin-bottom:0.3em; }
 
@@ -55,7 +55,7 @@ td {font-size: 75%; vertical-align:top; padding-left:5px;padding-right:5px;}
 table.formtable td {font-size: 75%; vertical-align:middle; margin:0;}
 td.iconwidth { width:9px; }
 table.layout td {font-size: 100%}
-td.fontcolor {color: #e0003c;}
+td.fontcolor {color: #2C5C91;}
 
 /********************************************************************
   helper styles 
@@ -91,15 +91,10 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
   identity area styles
 *********************************************************************/
 
-div#identity { padding:0; margin:0; height: 80px; width:auto; background-color:#FFFFFF; overflow:visible; }
-div.motiv_blank { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
-div.motiv_suche { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
-div.motiv_suche_detail { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
-div.motiv_karten { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
+div#identity { padding:0; margin:0; height: 90px; width:auto; background-color:#FFFFFF; overflow:visible; }
+div.motiv_suche_detail { background-image:url(../images/01_motiv_suche_detail.png); background-repeat:no-repeat; }
 
-div.en_motiv_blank { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
-div.en_motiv_suche { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
-div.en_motiv_karten { background-image:url(../images/header_suche.png); background-repeat:no-repeat; }
+div.en_motiv_suche_detail { background-image:url(../images/01_motiv_suche_detail.png); background-repeat:no-repeat; }
 
 /********************************************************************
   logo styles 
@@ -111,37 +106,32 @@ div#logo { float: left; }
   logged on styles 
 *********************************************************************/
 
-div#logged_on {float: right; clear:right; font-size: 65%; padding:3.5em 1.2em 0 0; color:#e0003c;}
-div#logged_on a, div#logged_on a:link, div#logged_on a:visited {color:#e0003c; text-decoration: none}
-div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { color: #111111; text-decoration: none; }
+div#logged_on {float: right; clear:right; font-size: 65%; padding:3.5em 1.2em 0 0; color:#C7E7FF;}
+div#logged_on a, div#logged_on a:link, div#logged_on a:visited {color:#C7E7FF; text-decoration: none}
+div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { color: #111111; text-decoration: underline; }
 
 /********************************************************************
   service navigation styles
 *********************************************************************/
 
-div#servicenav { padding:0em 0em 0em 1em; background:url(../images/background_servicenav.png) repeat-x; float: right; height:24px; color:#6798da; font-size:12px; }
-#servicenav { font-size: 70%; }
-div#servicenav ul { list-style: none; padding:0; margin:0; }
+div#servicenav { padding:0.1em 0em 0.1em 1.5em; background-color:#FFFFFF; float: right; }
+#servicenav { font-size:70%; }
+div#servicenav ul { list-style: none; padding: 0; margin: 0; }
 div#servicenav ul li { display:inline; }
-div#servicenav ul li a { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
-div#servicenav ul li a:link { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
-div#servicenav ul li a:visited { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
-div#servicenav ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:normal; padding:1px 5px 6px 5px; }
-div#servicenav ul li a:hover { text-decoration:none; color:#FFFFFF; background:url(../images/background_servicenav_hover.png) repeat-x; font-weight:normal; padding:3px 5px 4px 5px; }
-
-select.language_switch_style {font-size:100%; background-color:#0066cc; color:#FFFFFF; }
+div#servicenav ul li a.selected { text-decoration:none; color:#111111; font-weight:normal;}
+div#servicenav ul li a.selected:hover { text-decoration:underline; color:#111111; font-weight:normal; }
 
 /********************************************************************
   main navigation styles
 *********************************************************************/
 
 /* IE Win needs this to show background-color \*/
-html body div#mainnav { height: 1%; }
+html body div#mainnav { }
 /* End Hack */
 
-div#mainnav { background:url(../images/background_mainnav.png); margin:0; padding:0; width:59.5em;}  
-div#mainnav ul { list-style: none; padding: 0px 0px 0px 56px; margin: 0; }
-div#mainnav ul li { margin: 0px 2px 0px 0px; float: left;font-size: 13px; font-weight:bold;}
+div#mainnav { background-image: url("../images/background_mainnav.png"); margin:0; padding:0; width:966px; height:31px; }  
+div#mainnav ul { list-style: none; padding: 7px 0 4px 56px; margin: 0;}
+div#mainnav ul li { padding: 2px 0px 6px 0; margin: 0px 2px 0px 0px; border: 0; float: left;font-size: 11px; font-weight:bold;}
 
 /* Commented Backslash Hack hides rule from IE5-Mac \*/
 div#mainnav ul li a {float:none;}
@@ -227,7 +217,7 @@ div.whole { width:34.125em; padding:0; }
 div.themen_image { margin:0; padding:4px 14px 0 0; float:left; }
 div img.themen_image_style{width:140px; height:90px;}
 
-div.section { margin: 0 0 0px 0; padding:0; }
+div.section { margin: 10px 0 0; padding:0; }
 div.section p a { text-decoration:none; }
 div.section div p a { font-size: 12px; }
 div.section-header { margin-top:0; padding:0; }
@@ -250,8 +240,8 @@ div.section ul.catalog span.separator { background: url(../images/list_dot.gif) 
 div.section ul.catalog li a { white-space:nowrap; padding-left:1em; padding-right:0.5em; background: url(../images/list_dot.gif) no-repeat top left; }
 div.section ul.catalog li { border:1px solid red; background: url(../images/list_dot.gif) no-repeat bottom left; display: inline; padding-left:1em; padding-right:0.5em}
 */
-div.section ul li { font-size:75%; line-height:100%; }
-div.section ol li { font-size:100%; line-height:100%; }
+div.section ul li { font-size:80%}
+div.section ol li { font-size:100%}
 
 div.section ul.innermenu {list-style: none; margin: 0 0 0 0.0em;}
 div.section ul.innermenu li { margin: 0 0 0.3em 0;padding-left: 20px;background-image:url("../images/icn_down.gif");background-repeat: no-repeat;background-position: 0 .15em; }
@@ -282,7 +272,7 @@ div.resultset_nav { text-align:right; background-color:#F4F4F4; padding:0px 4px 
 div.resultset_nav a { text-decoration:underline; font-weight: bold;}
 
 div.resultset { padding:4px 4px 4px 0px; font-size:100%; margin: 5px 0px 5px 0px; }
-div.resultset a { text-decoration:none; font-size:100%;color: #e0003c;line-height:140%}
+div.resultset a { text-decoration:none; font-size:100%;color: #2C5C91;line-height:140%}
 div.resultset a:hover { text-decoration:underline;color: #111111;}
 div.resultset p.result_title { font-size:90%; margin: 10px 0px 10px 0px; }
 div.resultset p.result_description { font-size:65%;margin: 5px 0px 0px 0px; line-height:120%}
@@ -297,7 +287,7 @@ div.resultset span.result_title { font-size:75%;}
 div.resultset span.inquiry { margin-left:20px; font-size:83%}
 div.resultset em.date { font-style:normal; font-size: 83%; color:#111111; }
 
-div.resultset_partner_group {background: #EAEAEA url(../images/bg_resultset_partner_group.png) left top repeat-x; margin: 0 0 10px 0;padding: 0.25em 0.875em 0.05em 0.7em;}
+div.resultset_partner_group {background:#EAEAEA url(../images/bg_resultset_partner_group.png) left top repeat-x; margin: 0 0 10px 0;padding: 0.25em 0.875em 0.05em 0.7em;}
 div.resultset_partner_group span.title {font-size:67.5%; font-weight:bold; line-height:100%; text-transform:uppercase;}
 div.resultset_partner_group p.result_description { font-size:65%;margin: 5px 0px 0px 0px; line-height:120%}
 div.resultset_partner_group p.result_metadata { font-size:65%; color:#999999; margin:0; line-height:120%; margin-bottom:2px;}
@@ -444,12 +434,9 @@ div.formfooter {height: auto;padding: 2px 12px 2px 12px; margin:0px 0px 20px 0px
 div.formfooter_border_style {border-top: 0px solid #E4E4E2;}
 div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 
-input.btn { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 15px 0px 15px; }
-input.btn:hover { color: #FFFFFF; border: 1px solid #e0003c; background:url(../images/background_btn_hover.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 15px 0px 15px; }
-input.btn_disable { color:#FFFFFF; border: solid 1px #e0003c; font-size: 11px; line-height: 130%; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px; }
-/*Use only at profile NUMIS*/
-input.btn_admin { margin:0px; }
-input.btn_admin:hover { margin:0px; }
+input.btn { color: #FFFFFF; border: 1px solid #2C5C91; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 15px 0px 15px; }
+input.btn:hover { color: #FFFFFF; border: 1px solid #2C5C91; background:url(../images/background_btn_hover.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 15px 0px 15px; }
+input.btn_disable { color:#FFFFFF; border: solid 1px #2C5C91; font-size: 11px; line-height: 130%; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px; }
 
 label.left {width:5.5em; float:left;}
 label.login {width:8em; float:left;}
@@ -516,14 +503,17 @@ div.formbody .snslogo_margin {margin-top: 8px; }
   footer block styles  
 *********************************************************************/
 
-div#footercontainer { background: url(../images/logo-numis_footer.png) no-repeat scroll 20px 0px transparent; }
-#footercontent { font-size: 11px; width:747px; margin-left:108px;}
+div#footercontainer { width:966px; background: url(../images/logo-numis_footer.png) no-repeat scroll 53px 30px #F8F8F8; border: 1px solid #F8F8F8; height:137px; }
+#footercontent { font-size: 11px; width:60.5em; margin-left:197px; color:#909090; padding: 45px 0 0; line-height: 140%; }
 
-div#footermarginalcontainer { width: 855px; margin-top: 25px; margin-bottom: 20px; padding: 0px; background: #FFFFFF; clear:both; }
-div#footermarginal { background:url("../images/footer_doppellinie.png"); height:2px; }
+#footercontent a { color:#909090; }
+#footercontent a:hover { color:#111111; text-decoration: underline; }
+
+div#footermarginalcontainer { height: 20px; }
+div#footermarginal { }
 
 div#finalfootercontainer { float: left; width: 59.5em; }
-div#finalfooter { padding-left:212px; padding-bottom:20px; padding-top:0px; height:11px; font-size:65%; line-height:120%; color:#000000; }
+div#finalfooter { padding-left:112px; padding-bottom:20px; padding-top:0px; height:11px; font-size:65%; line-height:120%; color:#000000; }
 
 /********************************************************************
   popup + overview styles  
@@ -547,35 +537,35 @@ div.helpcontent li a { font-size:75%; }
 *New detail view
 *******************************/
 
-span.clearer_main_color { background: #E0003C; height:2px; font-size: 1px; display:block; }
-span.clearer_sub_color{ background: #999999; height:4px; font-size: 1px; display:block; }
+span.clearer_main_color { background: #2C5C91; height:2px; font-size: 1px; display:block; }
+span.clearer_sub_color{ background: #E2E2E2; height:4px; font-size: 1px; display:block; }
 span.clearer_gray { background: #DDDDDD; height:2px; font-size: 1px; display:block; }
-span.clearer_gray_small { background: #DDDDDD; height:1px; font-size: 1px; display:block; margin-top: 10px;}
+span.clearer_gray_small { background: #DDDDDD; height:1px; font-size: 1px; display:block; }
 span.clearer_dark_gray	{ background: #BBBBBB; height:1px; font-size: 1px; display:block; }
 
-div#detail_background span.clearer { background:url("../images/background_subnav.png"); clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px; }
+div#detail_background span.clearer { background:#E2E2E2; clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px; }
 div#header_title { background:#F6F6F6; padding: 20px 13px 0px; }
 div#header_title span.clearer{ display:block; background:#F6F6F6; height:10px; border:0px; }
-div.header_div { margin-top:0; font-size:75%; color: #777777; }
+div.header_div { margin-top:0; font-size:75%;color: #777777; }
 div.header_div span.smaller {font-size: 83%}
-h1.detail_title_header { padding-bottom:0px; font-weight:bold; color: #000000; }
+h1.detail_title_header { padding-bottom:0px; }
 div.detail_section_title { background:#EEEEEE; width:100%; height:25px; margin-bottom:20px; }
 div.detail_margin_right { margin-right:10px; padding-bottom:10px; }
 div.detail_margin_left { margin-left:10px; padding-bottom:10px; }
 
 .width_one_half { width:48%; }
 .width_one_third { width:33%; }
-.width_two_thirds { width:66%; padding: 0 10px 5px; clear:both; position: relative; }
+.width_two_thirds { width:66%; clear:both; position: relative; }
 
-table.detail_table { width:100%; border-bottom:2px solid #DDDDDD; border-left:1px solid #DDDDDD; border-right:1px solid #DDDDDD; margin-bottom:10px; }
+table.detail_table { width:100%; border-bottom:2px solid #DDDDDD; border-left:1px solid #2C5C91; border-right:1px solid #2C5C91; margin-bottom:10px; }
 table.detail_image_table { width:100%; }
 table.detail_table_text {  border-top:1px solid #DDDDDD; width:100% }
 
-div.detail_text_link_line{ border-top:1px solid #DDDDDD; width:100%; padding:8px 0; width:100%; }
-div.detail_text_link_line_title { color:#777777; font-size:75%; font-weight:bold; padding-left:0px; width:20%; }
-div.detail_text_link_line_body { color:#000000; font-size:75%; margin-bottom:0; margin-top:0; width:80%; }
+div.detail_text_link_line{ border-top:1px solid #DDDDDD; width:100%; padding-bottom:12px; }
+div.detail_text_link_line_title { color:#777777; font-size:75%; font-weight:bold; padding-left:0px; padding-right:20px; } 
+div.detail_text_link_line_body { color:#000000; font-size:75%; margin-bottom:0; margin-top:0; }
 
-th.detail_table_header { background:#EEE; color:#000; text-align:left; font-size:75%; }
+th.detail_table_header { background:#2C5C91; color:#FFFFFF; text-align:left; font-size:75%; }
 tr.detail_image_tr { padding:2px; }
 tr.detail_table_row_1 { background:#EDEDED; color:#000000; }
 tr.detail_table_row_2 { background:#FFFFFF; color:#000000; }
@@ -588,7 +578,7 @@ td.detail_image_descr_td { background:#EEEEEE; height:73px; width:433px; border-
 
 H1.section_title { background:#EEEEEE; color:#777777; font-size:75%; font-weight:bold; line-height:22px; margin-top:0; padding-left:13px; }
 H2.group_title { background:#EEEEEE; color:#777777; font-size:75%; font-weight:bold; line-height:22px; margin-top:0; padding-left:13px;}
-H1.no_script_title { background:#68A5D2; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height:25px; font-size: 13px; }
+H1.no_script_title { background:#68A5D2; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height:25px;} 
 
 p.detail_entry_title { color:#777777; font-weight:bold; font-weight:bold; padding-left:0; padding-right:20px; padding-top:3px; }
 p.detail_entry_body { color:#000000; font-size:75%; margin-bottom:0; margin-top:0; }
@@ -596,7 +586,7 @@ p.detail_image_p { color:#777777; font-weight:bold; padding-left:14px; padding-r
 p.detail_image_descr_p { color:#000000; padding-left:14px; padding-right:14px; }
 p.detail_list { color:#777777; font-weight:bold; padding-left:0; padding-right:20px; padding-top:3px; }
 
-a.detail_link { font-size:75%; margin-bottom:0; margin-top:0; left: 20px; position: relative; }
+a.detail_link { font-size:12px; margin-bottom:0; margin-top:0; left: 15px; position: relative; }
 
 img.detail_image { max-height:300px; max-width:433px;}
 * html img.detail_image { max-height:300px; height: expression(this.width > 300 ? 300: true);}
@@ -625,17 +615,11 @@ p.text_label_above_body { font-size:75%; padding-left:1px; }
 .text_label_left { padding-top:2px; margin:-1px; }
 td.text_label_left_title { font-weight:bold; color:#777777; font-size:12px; padding-left:0px; }
 td.text_label_left_body { font-size:75%; }
-div.table_div { padding: 0 10px 10px; }
 
-li.detail_li { color:#E0003C; }
+li.detail_li { color:#2C5C91; }
 li.detail_li p { font-size:100%; color:#000000; }
  
 img.section_show_hide { padding-right:16px; padding-top:5px; }
-
-div.address_left div a.detail_link { left:0; }
-div.address_right div a.detail_link { left:0; }
-span.linkinfo { color:#000000; font-size: 60%; padding-left:20px; }
-p.iconLink span a { left:10px; position: relative; }
 
 /******************************************
 * Dojo Tabs CSS style 
@@ -656,6 +640,8 @@ div.claro .dijitTabPaneWrapper, .claro .dijitTabContainerTop-tabs, .claro .dijit
 Print view of detail view
 *******************************************/
 div#detail_background span.print_clearer { background-color:#DDE9BD; clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px; display:none !important; }
-H1.print_title { background-color:#E0003C; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height:25px; display:block; font-size:13px; border-bottom:1px solid #FFFFFF; }
+H1.print_title { background-color:#2C5C91; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height:25px; display:block; font-size:13px; border-bottom:1px solid #FFFFFF; }
 br.print {display:none;}
 .print_view_visible { visibility:none; }
+
+.greenSeparator { background:#E2E2E2; border-top: 0 none; height: 14px; position: relative; width: 966px; }

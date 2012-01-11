@@ -87,7 +87,7 @@
             }
         </script>
     </head>
-    <body class="layout-tigris">
+    <body class="body-background">
         <noscript>
             <iframe src="/portal/detect-js.psml" style="display:none">
             </iframe>
@@ -105,40 +105,32 @@
                 <h2 class="hide">Servicemenu</h2>
                 <div class="service_nav_left">
                 </div>
-                <div style="float:left;">
+                <div class="service_nav_center" style="float:left;">
+                	<div style="padding: 6px 0pt 0pt;"></div>
                     <ul>
                         <li>
-                            <a href="/startseite" class="selected" title="Startseite von NUMIS aufrufen ">Startseite</a>|
+                            <a href="/startseite" class="selected" title="Startseite von NUMIS aufrufen ">Startseite</a>&nbsp;|&nbsp;
                         </li>
                         <li>
                             <a href="/personalisierungsoptionen" title="Registrierung und Login f&uuml;r Ihren pers&ouml;nlichen NUMIS Bereich">Mein NUMIS</a>
-                            | 
+                            - 
                         </li>
                         <li>
                             <a href="/inhaltsverzeichnis" title="Alle Inhalte von NUMIS auf einen Blick">Inhalt</a>
-                            | 
+                            -
                         </li>
                         <script language="JavaScript" type="text/javascript">
-                            document.write("<li><a href=\"javascript:ingrid_openWindow('/hilfe',750,550);\" title=\"Erl&auml;uterungen zur Nutzung von NUMIS - Neues Fenster &ouml;ffnet sich\">Hilfe</a> | </li>");
+                            document.write("<li><a href=\"javascript:ingrid_openWindow('/hilfe',790,550);\" title=\"Erl&auml;uterungen zur Nutzung von NUMIS - Neues Fenster &ouml;ffnet sich\">Hilfe</a> - </li>");
                         </script>
                         <noscript>
                             <li>
                                 <a href="/hilfe" target="_new" title="Erl&auml;uterungen zur Nutzung von NUMIS - Neues Fenster &ouml;ffnet sich">Hilfe</a>
-                                | 
+                                - 
                             </li>
                         </noscript>
                         <li>
-                            <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an NUMIS">Kontakt</a>|
+                            <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an NUMIS">Kontakt</a>
                         </li>
-                        <form action="/portal/_ns:Ykxhbmd1YWdlU3dpdGNo/default-page.psml" method="get" name="LanguageForm" id="LanguageForm" style="display:inline; ">
-                            <select name="lang" onchange="this.form.submit();" class="language_switch_style">
-                                <option value="de" selected="selected">Deutsch</option>
-                                <option value="en">Englisch</option>
-                            </select>
-                            <noscript>
-                                <input class="btn" type="submit" style="padding:0;vertical-align:top;margin-top:1px;font-size:80%; color: #000000; height: 20px;" value=">" />
-                            </noscript>
-                        </form>
                     </ul>
                 </div>
                 <div class="service_nav_right">
@@ -147,7 +139,7 @@
             <!-- logged on message -->
         </div>
         <!-- MAIN-NAVIGATION -->
-        <div id="mainnav" style="height: 29px;">
+        <div id="mainnav" style="height:31px;">
             <h2 class="hide">Hauptmenu</h2>
             <ul>
                 <li class="mainnav_img">
@@ -283,7 +275,8 @@
                     <!-- portlets go here --><a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss">Impressum</a>
                     | <a href="/datenschutzbestimmung" title="Welche Daten werden gespeichert?">Datenschutzbestimmung</a>
                     | <a href="mailto:fg_uis@numis.niedersachsen.de" title="Ansprechpartner bei fehlerhafter Darstellung der Webseite - E-Mail Programm startet automatisch">Webmaster</a>
-                    | <a href="/newsletter" title="Newsletter">Newsletter</a>
+                    | <a href="/newsletter" title="Newsletter">Newsletter abonnieren</a>
+                    <img align="right" alt="Niedersachsen" src="/decorations/layout/ingrid/images/logo-niedersachsen.png">
                     <br/>
                     Copyright &copy; Nieders&auml;chsisches Ministerium f&uuml;r Umwelt und Klimaschutz 
                     <br/>

@@ -1,6 +1,6 @@
 #set ($action = $renderResponse.createActionURL())
 
-<p style="width:72em;">$MESSAGES.getString('feature.intro.text')</p>
+<p class="feature_descr" style="width:72em;">$MESSAGES.getString('feature.intro.text')</p>
 <div class="portlet_feature_info_boxes">
 <div class="portlet_feature_info_big portlet_feature_info_padding">
     <div class="portlet_feature_info_top_big"></div>
