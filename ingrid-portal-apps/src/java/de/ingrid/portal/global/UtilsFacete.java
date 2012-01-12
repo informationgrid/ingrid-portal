@@ -92,7 +92,6 @@ public class UtilsFacete {
     private static final String SELECTED_SERVICE = "selectedService";
     
     
-    private static List<IngridEnvTopic> dbTopics = null; 
     private static List<IngridServiceRubric> dbServices = null; 
     private static List<IngridMeasuresRubric> dbMeasures = null;
     
@@ -343,11 +342,9 @@ public class UtilsFacete {
 		ArrayList<IngridEnvTopic> enableFaceteTopicsList = null;
 		List<IngridEnvTopic> unselectedTopics = null;
 		
-		if(unselectedTopics == null){
-			ResourceBundle bundle = ResourceBundle.getBundle("de.ingrid.portal.resources.EnvironmentSearchResources", Locale.GERMAN);
-			IngridResourceBundle resources = new IngridResourceBundle(bundle);
-			unselectedTopics = UtilsDB.getEnvTopics(resources);
-		}
+		ResourceBundle bundle = ResourceBundle.getBundle("de.ingrid.portal.resources.EnvironmentSearchResources", Locale.GERMAN);
+		IngridResourceBundle resources = new IngridResourceBundle(bundle);
+		unselectedTopics = UtilsDB.getEnvTopics(resources);
 		
 		if(unselectedTopics != null && elementsTopic != null){
 			for(int i=0; i < elementsTopic.size(); i++){
@@ -1464,7 +1461,7 @@ public class UtilsFacete {
         	context.put("doGeothesaurus", getAttributeFromSession(request, "doGeothesaurus"));
         }
         context.put("geothesaurusTerm", getAttributeFromSession(request, "geothesaurusTerm"));
-        context.put("geothesaurusError", getAttributeFromSession(request, "ERROR_GEOTHESAURUS"));
+        context.put("geothesaurusError", getAttributeFromSession(request, ERROR_GEOTHESAURUS));
 	}
 
 	
