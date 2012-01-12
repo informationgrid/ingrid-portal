@@ -3,32 +3,79 @@
    	<form name="topic_form" action="$action" method="post">
 		<div class="dialog_content" style="padding:10px 5px;">
 			#set($i = 0)
-			#foreach ($topic in $enableFaceteTopic)
-				#set($topicTitle = "searchResult.facete.topic.$topic")
-				#set($isSelectedChbTopic = false)
-				#foreach ($selectChb in $selectedTopics)
-					#if($isSelectedChbTopic != true)
-						#if($topic == $selectChb)
-							#set($isSelectedChbTopic = true)
-						#end
-					#end
-				#end
-				#set($i = $i + 1)
-				<div class="facete_chb">
-            		<p>
-            		<label class="facete_label_chb">
-						<input id="$topic" style="margin:4px 0 0 0;" class="facete_input_chb" type=checkbox name="chk$i" value="$topic"
-							#if($isSelectedChbTopic)
-								checked
-							#end
-						>
-            		$MESSAGES.getString($topicTitle)
-					#renderLinkEntryNumber("topic" $topic)
-					</label>
-					</p>
-               	</div>
+			#if($elementsTopicSelect)
+    			<div style="padding:0 0 10px 0;">
+        			<p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.selected.entries")</p>
+        			#foreach ($topicKey in $elementsTopicSelect.keySet())
+        					#set($topicTitle = "searchResult.facete.topic.$topicKey")
+            				#set($isSelectedChbTopic = false)
+            				#foreach ($selectChb in $selectedTopics)
+            					#if($isSelectedChbTopic != true)
+            						#if($topicKey == $selectChb)
+            							#set($isSelectedChbTopic = true)
+            						#end
+            					#end
+            				#end
+            				#set($i = $i + 1)
+            				<div class="facete_chb">
+            					<span class="facete_label_dialog">
+                        			<input id="$topicKey" style="margin:4px 0 0 0;" class="facete_input_chb" type=checkbox name="chk$i" value="$topicKey"
+            							#if($isSelectedChbTopic)
+            								checked
+            							#end
+                                    >$MESSAGES.getString($topicTitle)</input>
+            					</span>
+								#renderLinkEntryNumberInHashMap($elementsTopicSelect "$topicKey")
+                           	</div>
+        			#end
+    			</div>
 			#end
+			#if($elementsTopic)
+    			<div style="padding:0 0 10px 0;">
+        			<p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.result.entries")</p>
+        			#foreach ($topicKey in $elementsTopic.keySet())
+    					#set($topicTitle = "searchResult.facete.topic.$topicKey")
+        				#set($isSelectedChbTopic = false)
+        				#foreach ($selectChb in $selectedTopics)
+        					#if($isSelectedChbTopic != true)
+        						#if($topicKey == $selectChb)
+        							#set($isSelectedChbTopic = true)
+        						#end
+        					#end
+        				#end
+        				#set($i = $i + 1)
+        				<div class="facete_chb">
+        					<span class="facete_label_dialog">
+                    			<input id="$topicKey" style="margin:4px 0 0 0;" class="facete_input_chb" type=checkbox name="chk$i" value="$topicKey"
+        							#if($isSelectedChbTopic)
+        								checked
+        							#end
+                                >$MESSAGES.getString($topicTitle)</input>
+        					</span>
+        					#renderLinkEntryNumberInHashMap($elementsTopic "$topicKey")
+                       	</div>
+    				#end
+    			</div>
+			#end
+        	#if($unselectedTopics)
+        		<div>
+        		<p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.unselected.entries")</p>
+                #foreach ($topic in $unselectedTopics)
+        			#set($value = $topic.getFormValue())
+        			#set($key = $value.toLowerCase())
+        			#set($i = $i + 1)
+        			<div class="facete_chb">
+                		<span class="facete_label_dialog">
+        					<input id="$key" style="margin:4px 0 0 0;" class="facete_input_chb" type=checkbox name="chk$i" value="$key">
+                    		#set($topicTitle = "searchResult.facete.topic.$key")
+        					$MESSAGES.getString($topicTitle)
+        				</span>
+                   	</div>
+        		#end
+    		</div>
+        	#end
 		</div>
+		
 		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddTopic" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right btn_submit_dialog" "")
 	</form>
 	<div class="dialog_bottom">

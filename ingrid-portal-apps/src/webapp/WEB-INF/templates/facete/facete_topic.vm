@@ -1,8 +1,6 @@
 #set ($action = $renderResponse.createActionURL())
-#macro(renderTopicListTree $topic $selectedTopics)
-	#foreach ($key in $topic.keySet())
-		#set($topicKey = $key)
-	#end
+#macro(renderTopicListTree $key $topic)
+	#set($topicKey = $key)
 	#set($topicTitle = "searchResult.facete.topic.$topicKey")
 	#set($isSelectedChbTopic = false)
 	#foreach ($selectChb in $selectedTopics)
@@ -13,27 +11,22 @@
 		#end
 	#end
 	<div class="facete_chb">
-		<span>
+		<span class="facete_label">
 			#set ($action = $renderResponse.createActionURL())
 			#if($isSelectedChbTopic)
 				$action.setParameter("doRemoveTopic", "$topicKey")
-				<span class="facete_label">
-					<a href="$action" class="facete_label_chb">
-						<input id="$topicKey" class="facete_input_chb" type=checkbox checked>$MESSAGES.getString("$topicTitle")</a>
-					#renderLinkEntryNumber("$topic.get($topicKey)")
-				</span>
+				<a href="$action" class="facete_label_chb">
+					<input id="$topicKey" class="facete_input_chb" type=checkbox checked>
 			#else
 				$action.setParameter("doAddTopicChb", "$topicKey")
-				<span class="facete_label">
-					<a href="$action" class="facete_label_chb">
-						<input id="$topicKey" class="facete_input_chb" type=checkbox>$MESSAGES.getString("$topicTitle")</a>
-					#renderLinkEntryNumber("$topic.get($topicKey)")
-				</span>
+				<a href="$action" class="facete_label_chb">
+					<input id="$topicKey" class="facete_input_chb" type=checkbox>
 			#end
+				$MESSAGES.getString("$topicTitle")</a>
+				#renderLinkEntryNumber("$topic.get($topicKey)")
 		</span>
 	</div>
 #end
-
 
 <div class="cat_label">
 	<img id="topic_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('topic')">
@@ -47,19 +40,19 @@
 <div id="topic" class="cat_content">
 	<div>
 		#set($i = 0)
-		#if($isTopicSelect == true)
-        	#foreach ($topic in $selectedTopics)
-    			#renderTopicListTree ($topic $selectedTopics)
+		#if($isTopicSelect)
+			#foreach ($key in $elementsTopicSelect.keySet())
+				#renderTopicListTree ($key $elementsTopicSelect)
 			#end
 		#else
-			#foreach ($topic in $enableFaceteTopic)
+			#foreach ($key in $elementsTopic.keySet())
 				#if($i < $enableFaceteTopicCount)
-    				#renderTopicListTree ($topic $selectedTopics)
-    			#end
-    			#set($i = $i + 1)
-			#end
+					#renderTopicListTree ($key $elementsTopic)
+					#set($i = $i + 1)
+				#end
+    		#end	
 		#end
-	#renderFaceteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.category.plus") "" "dialog_topic" "button_topic")
+		#renderFaceteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.category.plus") "" "dialog_topic" "button_topic")
 	</div>
 	#parse ('/WEB-INF/templates/facete/facete_dialog_topic.vm')		        
 </div>

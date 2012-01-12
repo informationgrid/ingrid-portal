@@ -16,9 +16,13 @@
 		$action.setParameter("doRemoveThesaurus",  $thesaurus.topicId)
         #renderFaceteSelectedAttribute ($action  $thesaurus.topicTitle)
 	#end
-	#if($thesaurusSelectTopics.size() > 1)
-		$action.setParameter("doRemoveThesaurus",  "all")
-        	#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.attribute.delete.all"))
+	#if($thesaurusSelectTopics)
+    	#if($thesaurusSelectTopics.size())
+        	#if($thesaurusSelectTopics.size() > 1)
+        		$action.setParameter("doRemoveThesaurus",  "all")
+                	#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.attribute.delete.all"))
+    		#end
+		#end
 	#end
 	#parse ('/WEB-INF/templates/facete/facete_dialog_thesaurus.vm')
 	<br>

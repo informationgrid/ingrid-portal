@@ -5,16 +5,16 @@
 	<br>
 </div>
 <div id="time" class="cat_content">
-	#if($doTime == "1")
+	#if($doTime && $doTime == "1")
 		$action.setParameter("doTime",  "0")
 		#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.time.1"))
-	#elseif($doTime == "2")
+	#elseif($doTime && $doTime == "2")
 		$action.setParameter("doTime",  "0")
 		#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.time.2"))	
-	#elseif($doTime == "3")
+	#elseif($doTime && $doTime == "3")
 		$action.setParameter("doTime",  "0")
 		#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.time.3"))
-	#elseif($doTime == "4")
+	#elseif($doTime && $doTime == "4")
 		$action.setParameter("doTime",  "0")
 		#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.time.4"))
 	#else

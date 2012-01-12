@@ -3,7 +3,7 @@
 	<div class="$buttonclass" style="$buttonstyle">
 		<div class="btn_left" id="$buttonname left"></div>
 		<div class="btn_center">
-			#if($buttondisable == "true")
+			#if($buttondisable && $buttondisable == "true")
 				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_disable" onclick="$buttononclick" disabled />
 			#else
 				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn" onclick="$buttononclick" />
@@ -56,6 +56,16 @@
 	</span>
 #end
 
+#macro(renderLinkEntryNumberInHashMap $numbers $id)
+	<span class="facete_label">
+   	#foreach($key in $numbers.keySet())
+		#if($key == "$id")
+			($numbers.get($key))
+		#end
+	#end
+	</span>
+#end
+
 #macro(renderLinkEntryNumber $number)
 	#if($number != "")
 			($number)
@@ -73,7 +83,7 @@
 
 
 <div>
-	#if($ds == "2")
+	#if($ds && $ds == "2")
 		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete_address', 'search_hits_address')">
 	#else
 		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete', 'search_hits')">
@@ -121,12 +131,12 @@
 	#end
 	
 ## ATTRIBUTE ##
-	#if($ds == "3")
+	#if($ds && $ds == "3")
 		#parse ('/WEB-INF/templates/facete/facete_attribute.vm')
 	#end
 	
 ## RAUMBEZUG - ADDRESSEN ##
-	#if($ds == "2")
+	#if($ds &&  $ds == "2")
 		#parse ('/WEB-INF/templates/facete/facete_area_address.vm')
 	#end
 	</div>

@@ -25,7 +25,7 @@
         				#end
         			#elseif($datatypeKey == "topics")
                         ## THEMEN ##
-                	    #if($enableFaceteTopic || ($selectedTopics && $selectedTopics.size() > 0))
+						#if($enableFaceteTopicsList || ($selectedTopics && $selectedTopics.size() > 0))
 							#parse ('/WEB-INF/templates/facete/facete_topic.vm')
                 		#end
         			#elseif($datatypeKey == "service")

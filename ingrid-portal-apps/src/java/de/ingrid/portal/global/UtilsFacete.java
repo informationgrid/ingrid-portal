@@ -14,7 +14,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -34,6 +36,7 @@ import de.ingrid.portal.forms.SearchExtResTopicAttributesForm;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
 import de.ingrid.portal.interfaces.om.WMSSearchDescriptor;
+import de.ingrid.portal.om.IngridEnvTopic;
 import de.ingrid.portal.om.IngridMeasuresRubric;
 import de.ingrid.portal.om.IngridPartner;
 import de.ingrid.portal.om.IngridProvider;
@@ -88,6 +91,11 @@ public class UtilsFacete {
     private static final String SELECTED_MEASURES = "selectedMeasures";
     private static final String SELECTED_SERVICE = "selectedService";
     
+    
+    private static List<IngridEnvTopic> dbTopics = null; 
+    private static List<IngridServiceRubric> dbServices = null; 
+    private static List<IngridMeasuresRubric> dbMeasures = null;
+    
     /**
      * Prepare query by facete activity
      * 
@@ -96,6 +104,7 @@ public class UtilsFacete {
      */
     public static void facetePrepareInGridQuery (PortletRequest request, IngridQuery query){
     	
+    	//removeFaceteElementsFromSession(request);
     	checkSessionForNewSearchTerm(request);
     	
     	addTopicToQuery(request, query);
@@ -120,7 +129,7 @@ public class UtilsFacete {
 	        setFaceteQueryParamsPartner(list);
 	        setFaceteQueryParamsProvider(list);
 			setFaceteQueryParamsDatatype(list);
-	        setFaceteQueryParamsTopic(list);
+	        setFaceteQueryParamsTopic(list, request);
 	        query.put("FACETS", list);
         }
         
@@ -148,8 +157,6 @@ public class UtilsFacete {
 
 	public static void setFaceteParamsToSessionByAction(ActionRequest request) {
 		
-		removeFaceteElementsFromSession(request);
-		
 		setFaceteTopicParamsToSession(request);
 		setFaceteMetaclassParamsToSession(request);
 		setFaceteDatatypeParamsToSession(request);
@@ -166,7 +173,7 @@ public class UtilsFacete {
         
 	}
 
-	public static void checkForExistingFacettes(IngridDocument facetes, PortletRequest request) {
+	public static void checkForExistingFacete(IngridDocument facetes, PortletRequest request) {
 		
 		HashMap<String, Long> elementsProvider = null;
 		HashMap<String, Long> elementsPartner = null;
@@ -273,7 +280,8 @@ public class UtilsFacete {
 
 	/***************************** THEMEN **********************************************/
 	
-	private static void setFaceteQueryParamsTopic(ArrayList<IngridDocument> list) {
+	private static void setFaceteQueryParamsTopic(ArrayList<IngridDocument> list, PortletRequest request) {
+		
 		IngridDocument facete = new IngridDocument();
         
         facete.put("id", "topic");
@@ -290,17 +298,17 @@ public class UtilsFacete {
 		ArrayList<String> selectedTopics = null;
 		
 		if(doAddTopic != null){
-			ArrayList<String> elementsTopic = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_TOPIC); 
-			if(elementsTopic != null){
-				String[] enableFaceteTopic = (String []) elementsTopic.toArray();
-		    	int listSize = enableFaceteTopic.length;
-				selectedTopics = new ArrayList<String> ();
-	            for (int i=0; i< listSize; i++) {
-	                String chkVal = request.getParameter("chk"+(i+1));
-	                if (chkVal != null) {
-	                	selectedTopics.add(chkVal);
-	                }
-	            }
+			Map map = request.getParameterMap();
+			List<String> mapKeys = new ArrayList<String>(map.keySet());
+			for (int i=0; i< mapKeys.size(); i++) {
+				String key = mapKeys.get(i);
+				if(selectedTopics == null){
+					selectedTopics = new ArrayList<String>();
+				}
+				if(key.startsWith("chk")){
+					String [] topicsId = (String[]) map.get(key);
+					selectedTopics.add(topicsId[0]);
+				}
 			}
 		}
 		
@@ -327,15 +335,127 @@ public class UtilsFacete {
 	
 	private static void setTopicParamsToContext (RenderRequest request, Context context){
 		
-		ArrayList<String> enableFaceteTopic = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_TOPIC);
-		ArrayList<String> selectedTopics = (ArrayList<String>) getAttributeFromSession(request, SELECTED_TOPIC);
+		ArrayList<HashMap<String, Long>> elementsTopic = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_TOPIC);
+		HashMap<String, Long> elementsTopicWithFacete = null;
+		HashMap<String, Long> elementsTopicSelect = null;
 		
-		if(enableFaceteTopic != null){
-    		context.put("enableFaceteTopic", enableFaceteTopic);
-    		context.put("enableFaceteTopicCount", PortalConfig.getInstance().getInt("portal.search.facete.topics.count", 3));
-        }
+		ArrayList<String> selectedTopics = (ArrayList<String>) getAttributeFromSession(request, SELECTED_TOPIC);
+		ArrayList<IngridEnvTopic> enableFaceteTopicsList = null;
+		List<IngridEnvTopic> unselectedTopics = null;
+		
+		if(unselectedTopics == null){
+			ResourceBundle bundle = ResourceBundle.getBundle("de.ingrid.portal.resources.EnvironmentSearchResources", Locale.GERMAN);
+			IngridResourceBundle resources = new IngridResourceBundle(bundle);
+			unselectedTopics = UtilsDB.getEnvTopics(resources);
+		}
+		
+		if(unselectedTopics != null && elementsTopic != null){
+			for(int i=0; i < elementsTopic.size(); i++){
+    			HashMap<String, Long> map = elementsTopic.get(i);
+    			List<String> keys = new ArrayList<String>(map.keySet());
+    			String ident = keys.get(0);
     			
-		if(selectedTopics != null && selectedTopics.size() > 0){
+    			for(int j=0; j < unselectedTopics.size(); j++){
+    				if(ident != null){
+    					IngridEnvTopic top = unselectedTopics.get(j);
+    					String topIdent = top.getQueryValue(); 
+    					
+        				if(ident.equals(topIdent.toLowerCase())){
+        					
+        					if(elementsTopicWithFacete == null){
+        						elementsTopicWithFacete = new HashMap<String,Long>();
+        					}
+        						
+        					elementsTopicWithFacete.put(top.getFormValue(), map.get(ident));
+        					
+        					if(enableFaceteTopicsList == null){
+        						enableFaceteTopicsList = new ArrayList<IngridEnvTopic>();
+            				}
+        					enableFaceteTopicsList.add(top);
+        					unselectedTopics.remove(j);
+        					j = j-1;
+        					break;
+        				}
+        			}
+    			}
+    		}
+	    }
+		
+		if(selectedTopics != null){
+			for(int i=0; i< selectedTopics.size(); i++){
+				String selectedKey = selectedTopics.get(i);
+				boolean foundKey = false;
+				if(elementsTopicWithFacete != null){
+					for(int j=0; j< elementsTopicWithFacete.size(); j++){
+						for (Iterator<String> iterator = elementsTopicWithFacete.keySet().iterator(); iterator.hasNext();) {
+							String key = iterator.next();
+							if(key.equals(selectedKey)){
+								foundKey = true;
+								break;
+							}
+						}
+						if(foundKey){
+							break;
+						}
+					}
+					if(!foundKey){
+						elementsTopicWithFacete.put(selectedKey, (long) 0);
+					}
+				}else{
+					elementsTopicWithFacete = new HashMap<String,Long>();
+					elementsTopicWithFacete.put(selectedKey, (long) 0);
+				}
+			}
+		}
+		
+		if(elementsTopicWithFacete != null && elementsTopicWithFacete.size() > 0){
+			for(int i=0; i < elementsTopicWithFacete.size(); i++){
+    			List<String> keys = new ArrayList<String>(elementsTopicWithFacete.keySet());
+    			String ident = keys.get(i);
+    			
+    			for(int j=0; j < unselectedTopics.size(); j++){
+    				if(ident != null){
+    					IngridEnvTopic top = unselectedTopics.get(j);
+    					String topIdent = top.getFormValue(); 
+    					
+        				if(ident.equals(topIdent.toLowerCase())){
+        					unselectedTopics.remove(j);
+        					j = j-1;
+        					break;
+        				}
+        			}
+    			}
+    		}
+			
+			if(selectedTopics != null){
+				for(int i=0; i < selectedTopics.size(); i++){
+					String selectedKey = selectedTopics.get(i);
+					if(selectedKey != null){
+						for(int j=0; j < elementsTopicWithFacete.size(); j++){
+							List<String> mapKeys = new ArrayList<String>(elementsTopicWithFacete.keySet());
+							String mapKey = mapKeys.get(i);
+							if(mapKey.equals(selectedKey)){
+								if(elementsTopicSelect == null){
+									elementsTopicSelect = new HashMap<String,Long>();
+								}
+								elementsTopicSelect.put(mapKey, elementsTopicWithFacete.get(mapKey));
+								elementsTopicWithFacete.remove(mapKey);
+								break;
+							}
+						}
+					}
+				}
+			}
+			
+		}
+		
+    	context.put("enableFaceteTopicsList", enableFaceteTopicsList);
+    	context.put("elementsTopic", elementsTopicWithFacete);
+    	context.put("elementsTopicSelect", elementsTopicSelect);
+    	context.put("enableFaceteTopicCount", PortalConfig.getInstance().getInt("portal.search.facete.topics.count", 3));
+    	context.put("unselectedTopics", unselectedTopics);
+    	
+    	if(selectedTopics != null && selectedTopics.size() > 0){
         	context.put("isTopicSelect", true);
     		context.put("selectedTopics", selectedTopics);
     	} else{
@@ -354,9 +474,9 @@ public class UtilsFacete {
 
         	// TOPIC
             String queryValue = null;
-            ClauseQuery cq  = new ClauseQuery(false, false);
+            ClauseQuery cq  = new ClauseQuery(true, false);
             for (int i = 0; i < selectedTopics.size(); i++) {
-                queryValue = UtilsDB.getTopicFromKey((String) selectedTopics.get(i));
+                queryValue = UtilsDB.getTopicFromKey(selectedTopics.get(i));
                 cq.addField(new FieldQuery(false, false, Settings.QFIELD_TOPIC, queryValue));
             }
             query.addClause(cq);
@@ -571,11 +691,13 @@ public class UtilsFacete {
 		IngridDocument facete = new IngridDocument();
         ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
         
-        List<IngridServiceRubric> services = UtilsDB.getServiceRubrics();
+        if(dbServices == null){
+        	dbServices = UtilsDB.getServiceRubrics();
+        }
         HashMap<String, String> faceteEntry = null;
         
-        for(int i=0; i < services.size(); i++){
-        	IngridServiceRubric service = services.get(i);
+        for(int i=0; i < dbServices.size(); i++){
+        	IngridServiceRubric service = dbServices.get(i);
         	faceteEntry = new HashMap<String, String>();
         	faceteEntry.put("id", service.getFormValue());
             faceteEntry.put("query", "topic:" + service.getFormValue());
@@ -663,11 +785,13 @@ public class UtilsFacete {
 		
 		IngridDocument facete = new IngridDocument();
         ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
-        List<IngridMeasuresRubric> measures = UtilsDB.getMeasuresRubrics();
+        if(dbMeasures == null){
+        	dbMeasures = UtilsDB.getMeasuresRubrics();
+        }
         HashMap<String, String> faceteEntry = null;
         
-        for(int i=0; i < measures.size(); i++){
-        	IngridMeasuresRubric measure = measures.get(i);
+        for(int i=0; i < dbMeasures.size(); i++){
+        	IngridMeasuresRubric measure = dbMeasures.get(i);
         	faceteEntry = new HashMap<String, String>();
         	faceteEntry.put("id", measure.getFormValue());
             faceteEntry.put("query", "topic:" + measure.getFormValue());

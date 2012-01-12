@@ -14,7 +14,7 @@
             <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" ></img>
     	</div>
     	## SELECTED PARAMS
-		#if($doMapCoords.size() > 0)
+		#if($doMapCoords && $doMapCoords.size() > 0)
 			#if($doMapCoords.inside)
     			$action.setParameter("doRemoveMap",  "inside")
     			#renderFaceteSelectedAttribute ($action  $doMapCoords.inside)
@@ -44,9 +44,13 @@
 			#set($title = "$geothesaurus.topicTitle ($geothesaurus.topicId)") 
         	#renderFaceteSelectedAttribute ($action  $title)
 		#end
-		#if($geothesaurusSelectTopics.size() > 1)
-       		$action.setParameter("doRemoveGeothesaurus",  "all")
-        	#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.attribute.delete.all"))
+		#if($geothesaurusSelectTopics)
+			#if($geothesaurusSelectTopics.size())
+        		#if($geothesaurusSelectTopics.size() > 1)
+               		$action.setParameter("doRemoveGeothesaurus",  "all")
+                	#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.attribute.delete.all"))
+				#end
+			#end
 		#end
 		#parse ('/WEB-INF/templates/facete/facete_dialog_area_geothesaurus.vm')
 	#end
