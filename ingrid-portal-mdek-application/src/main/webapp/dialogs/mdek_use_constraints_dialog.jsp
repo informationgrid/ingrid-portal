@@ -22,23 +22,11 @@ function createDOMElements() {
     ];
     createDataGrid("constraintsList", null, Structure, null);
 
-    var def = readSysListData(6020);
+    var def = UtilSyslist.readSysListData(6020);
     def.then(function(syslistData) {
         var tableData = UtilSyslist.convertSysListToTableData(syslistData);
         UtilGrid.setTableData("constraintsList", tableData);
     });
-
-    return def;
-}
-
-function readSysListData(listId) {
-    var def = new dojo.Deferred();
-
-    var languageCode = UtilCatalog.getCatalogLanguage();
-    CatalogService.getSysLists([listId], languageCode, {
-        callback: function(res) {
-            def.callback(res[listId]);
-    }});
 
     return def;
 }

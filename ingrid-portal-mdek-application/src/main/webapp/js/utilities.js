@@ -1784,6 +1784,18 @@ UtilSyslist.getSyslistEntryKey = function(syslist, value) {
 	return result;
 }
 
+UtilSyslist.readSysListData = function(listId) {
+    var def = new dojo.Deferred();
+
+    var languageCode = UtilCatalog.getCatalogLanguage();
+    CatalogService.getSysLists([listId], languageCode, {
+        callback: function(res) {
+            def.callback(res[listId]);
+    }});
+
+    return def;
+}
+
 // Input is a list of string arrays of the following form:
 // [ [listEntry, entryId, isDefault], [...] ]
 // e.g [ ["Inch", "4", "N"], ["Meter", "9001", "N"], ["Fuss", "9002", "N"], ["Kilometer", "9036", "N"] ]
