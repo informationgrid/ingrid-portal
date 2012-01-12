@@ -67,11 +67,13 @@
 #end
 
 #macro(renderLinkEntryNumber $number)
-	#if($number != "")
-			($number)
-	#else
-		(0)
-	#end
+	<span class="facete_label">
+       	#if($number != "")
+    			($number)
+    	#else
+    		(0)
+		#end
+	<end>
 #end
 
 #macro(renderDeleteIcon $doAction)

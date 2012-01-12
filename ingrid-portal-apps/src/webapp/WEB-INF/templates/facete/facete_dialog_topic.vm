@@ -6,27 +6,31 @@
 			#if($elementsTopicSelect)
     			<div style="padding:0 0 10px 0;">
         			<p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.selected.entries")</p>
-        			#foreach ($topicKey in $elementsTopicSelect.keySet())
-        					#set($topicTitle = "searchResult.facete.topic.$topicKey")
-            				#set($isSelectedChbTopic = false)
-            				#foreach ($selectChb in $selectedTopics)
-            					#if($isSelectedChbTopic != true)
-            						#if($topicKey == $selectChb)
-            							#set($isSelectedChbTopic = true)
-            						#end
-            					#end
-            				#end
-            				#set($i = $i + 1)
-            				<div class="facete_chb">
-            					<span class="facete_label_dialog">
-                        			<input id="$topicKey" style="margin:4px 0 0 0;" class="facete_input_chb" type=checkbox name="chk$i" value="$topicKey"
-            							#if($isSelectedChbTopic)
-            								checked
-            							#end
-                                    >$MESSAGES.getString($topicTitle)</input>
-            					</span>
-								#renderLinkEntryNumberInHashMap($elementsTopicSelect "$topicKey")
-                           	</div>
+        			#foreach ($topic in $elementsTopicSelect)
+						#set($topicKey = "")
+                		#foreach ($key in $topic.keySet())
+                			#set($topicKey = $key)
+                		#end
+    					#set($topicTitle = "searchResult.facete.topic.$topicKey")
+        				#set($isSelectedChbTopic = false)
+        				#foreach ($selectChb in $selectedTopics)
+        					#if($isSelectedChbTopic != true)
+        						#if($topicKey == $selectChb)
+        							#set($isSelectedChbTopic = true)
+        						#end
+        					#end
+        				#end
+        				#set($i = $i + 1)
+        				<div class="facete_chb">
+        					<span class="facete_label_dialog">
+                    			<input id="$topicKey" style="margin:4px 0 0 0;" class="facete_input_chb" type=checkbox name="chk$i" value="$topicKey"
+        							#if($isSelectedChbTopic)
+        								checked
+        							#end
+                                >$MESSAGES.getString($topicTitle)</input>
+        					</span>
+							#renderLinkEntryNumber("$topic.get($topicKey)")
+                       	</div>
         			#end
     			</div>
 			#end

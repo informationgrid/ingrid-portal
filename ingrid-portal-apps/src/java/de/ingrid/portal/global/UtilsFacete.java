@@ -250,31 +250,31 @@ public class UtilsFacete {
 		}		
 		
 		if (elementsDatatype != null){
-			setAttributeToSession(request, ELEMENTS_DATATYPE, sortHashMap(elementsDatatype));
+			setAttributeToSession(request, ELEMENTS_DATATYPE, sortHashMapAsArrayList(elementsDatatype));
 		}
 		
 		if (elementsProvider != null){
-			setAttributeToSession(request, ELEMENTS_PROVIDER, sortHashMap(elementsProvider));
+			setAttributeToSession(request, ELEMENTS_PROVIDER, sortHashMapAsArrayList(elementsProvider));
 		}
 		
 		if (elementsTopic != null){
-			setAttributeToSession(request, ELEMENTS_TOPIC, sortHashMap(elementsTopic));
+			setAttributeToSession(request, ELEMENTS_TOPIC, sortHashMapAsArrayList(elementsTopic));
 		}
 		
 		if (elementsPartner != null){
-			setAttributeToSession(request, ELEMENTS_PARTNER, sortHashMap(elementsPartner));
+			setAttributeToSession(request, ELEMENTS_PARTNER, sortHashMapAsArrayList(elementsPartner));
 		}
 		
 		if (elementsMetaclass != null){
-			setAttributeToSession(request, ELEMENTS_METACLASS, sortHashMap(elementsMetaclass));
+			setAttributeToSession(request, ELEMENTS_METACLASS, sortHashMapAsArrayList(elementsMetaclass));
 		}
 		
 		if (elementsService != null){
-			setAttributeToSession(request, ELEMENTS_SERVICE, sortHashMap(elementsService));
+			setAttributeToSession(request, ELEMENTS_SERVICE, sortHashMapAsArrayList(elementsService));
 		}
 		
 		if (elementsMeasure != null){
-			setAttributeToSession(request, ELEMENTS_MEASURE, sortHashMap(elementsMeasure));
+			setAttributeToSession(request, ELEMENTS_MEASURE, sortHashMapAsArrayList(elementsMeasure));
 		}
 	}
 
@@ -433,13 +433,14 @@ public class UtilsFacete {
 					if(selectedKey != null){
 						for(int j=0; j < elementsTopicWithFacete.size(); j++){
 							List<String> mapKeys = new ArrayList<String>(elementsTopicWithFacete.keySet());
-							String mapKey = mapKeys.get(i);
+							String mapKey = mapKeys.get(j);
 							if(mapKey.equals(selectedKey)){
 								if(elementsTopicSelect == null){
 									elementsTopicSelect = new HashMap<String,Long>();
 								}
 								elementsTopicSelect.put(mapKey, elementsTopicWithFacete.get(mapKey));
 								elementsTopicWithFacete.remove(mapKey);
+								j = j-1;
 								break;
 							}
 						}
@@ -451,7 +452,9 @@ public class UtilsFacete {
 		
     	context.put("enableFaceteTopicsList", enableFaceteTopicsList);
     	context.put("elementsTopic", elementsTopicWithFacete);
-    	context.put("elementsTopicSelect", elementsTopicSelect);
+    	if(elementsTopicSelect != null){
+    		context.put("elementsTopicSelect", sortHashMapAsArrayList(elementsTopicSelect));
+    	}
     	context.put("enableFaceteTopicCount", PortalConfig.getInstance().getInt("portal.search.facete.topics.count", 3));
     	context.put("unselectedTopics", unselectedTopics);
     	
@@ -2012,7 +2015,7 @@ public class UtilsFacete {
 		removeAttributeFromSession(request, ELEMENTS_MEASURE);
 	}
 	
-	private static ArrayList<HashMap<String, Long>> sortHashMap(HashMap<String, Long> input){
+	private static ArrayList<HashMap<String, Long>> sortHashMapAsArrayList(HashMap<String, Long> input){
 		List<String> keys = new ArrayList<String>(input.keySet());
 		final Map<String, Long> tmpInput = input;
         
@@ -2037,7 +2040,7 @@ public class UtilsFacete {
 		
 		return sortedInput;
 	}
-
+	
 	private static void checkSessionForNewSearchTerm(PortletRequest request){
 		String portalTerm = request.getParameter("q");
 		String portalDS = request.getParameter("ds");
