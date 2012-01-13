@@ -727,25 +727,27 @@ public class UtilsFacete {
         	dbServices = UtilsDB.getServiceRubrics();
         }
 		
-		for(int i=0; i < elementsService.size();i++){
-			HashMap<String, Long> topic = elementsService.get(i);
-			boolean found = false;
-			for (Iterator<String> iterator = topic.keySet().iterator(); iterator.hasNext();) {
-				String key = iterator.next();
-				for(int j=0; j < dbServices.size(); j++){
-					IngridServiceRubric service = dbServices.get(j);
-					String ident = service.getQueryValue();
-					if(key.equals(ident)){
-						found = true;
-						break;
+		if(elementsService != null){
+			for(int i=0; i < elementsService.size();i++){
+				HashMap<String, Long> topic = elementsService.get(i);
+				boolean found = false;
+				for (Iterator<String> iterator = topic.keySet().iterator(); iterator.hasNext();) {
+					String key = iterator.next();
+					for(int j=0; j < dbServices.size(); j++){
+						IngridServiceRubric service = dbServices.get(j);
+						String ident = service.getQueryValue();
+						if(key.equals(ident)){
+							found = true;
+							break;
+						}
 					}
 				}
-			}
-			if(found){
-				if(enableFaceteService == null){
-					enableFaceteService = new ArrayList<HashMap<String,Long>>();
+				if(found){
+					if(enableFaceteService == null){
+						enableFaceteService = new ArrayList<HashMap<String,Long>>();
+					}
+					enableFaceteService.add(topic);
 				}
-				enableFaceteService.add(topic);
 			}
 		}
 		
@@ -849,29 +851,30 @@ public class UtilsFacete {
 		if(dbMeasures == null){
         	dbMeasures = UtilsDB.getMeasuresRubrics();
         }
-        		
-		for(int i=0; i < elementsMeasure.size();i++){
-			HashMap<String, Long> topic = elementsMeasure.get(i);
-			boolean found = false;
-			for (Iterator<String> iterator = topic.keySet().iterator(); iterator.hasNext();) {
-				String key = iterator.next();
-				for(int j=0; j < dbMeasures.size(); j++){
-					IngridMeasuresRubric measure = dbMeasures.get(j);
-					String ident = measure.getQueryValue();
-					if(key.equals(ident)){
-						found = true;
-						break;
+        
+		if(elementsMeasure != null){
+			for(int i=0; i < elementsMeasure.size();i++){
+				HashMap<String, Long> topic = elementsMeasure.get(i);
+				boolean found = false;
+				for (Iterator<String> iterator = topic.keySet().iterator(); iterator.hasNext();) {
+					String key = iterator.next();
+					for(int j=0; j < dbMeasures.size(); j++){
+						IngridMeasuresRubric measure = dbMeasures.get(j);
+						String ident = measure.getQueryValue();
+						if(key.equals(ident)){
+							found = true;
+							break;
+						}
 					}
 				}
-			}
-			if(found){
-				if(enableFaceteMeasures == null){
-					enableFaceteMeasures = new ArrayList<HashMap<String,Long>>();
+				if(found){
+					if(enableFaceteMeasures == null){
+						enableFaceteMeasures = new ArrayList<HashMap<String,Long>>();
+					}
+					enableFaceteMeasures.add(topic);
 				}
-				enableFaceteMeasures.add(topic);
 			}
 		}
-		
 		
 		if(enableFaceteMeasures != null){
     		context.put("enableFaceteMeasures", enableFaceteMeasures);
