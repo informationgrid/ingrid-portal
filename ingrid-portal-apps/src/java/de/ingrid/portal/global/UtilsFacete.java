@@ -79,9 +79,7 @@ public class UtilsFacete {
     private static final String ELEMENTS_TOPIC = "elementsTopic";
     private static final String ELEMENTS_DATATYPE = "elementsDatatype";
     private static final String ELEMENTS_METACLASS = "elementsMetaclass";
-    private static final String ELEMENTS_SERVICE = "elementsService";
-    private static final String ELEMENTS_MEASURE = "elementsMeasure";
-	
+    
     private static final String ENABLE_FACETE_PARTNER_LIST = "enableFacetePartnerList";
     
     private static final String SELECTED_PROVIDER = "selectedProvider";
@@ -179,8 +177,6 @@ public class UtilsFacete {
 		HashMap<String, Long> elementsTopic = null;
 		HashMap<String, Long> elementsDatatype = null;
 		HashMap<String, Long> elementsMetaclass = null;
-		HashMap<String, Long> elementsService = null;
-		HashMap<String, Long> elementsMeasure = null;
 		
 		removeFaceteElementsFromSession(request);
 		
@@ -201,24 +197,12 @@ public class UtilsFacete {
 					}
 					elementsPartner.put(key.replace("partner:", ""), value);
 					
-				}else if(key.startsWith("measure")){
-					if(elementsMeasure == null){
-						elementsMeasure = new HashMap<String, Long>();
-					}
-					elementsMeasure.put(key.replace("measure:", ""), value);
-					
 				}else if(key.startsWith("topic")){
 					if(elementsTopic == null){
 						elementsTopic = new HashMap<String, Long>();
 					}
 					elementsTopic.put(key.replace("topic:", ""), value);
 					
-				}else if(key.startsWith("service")){
-					if(elementsService == null){
-						elementsService = new HashMap<String, Long>();
-					}
-					elementsService.put(key.replace("service:", ""), value);
-
 				}else if(key.startsWith("t01_object.obj_class:")){
 					if(elementsMetaclass == null){
 						elementsMetaclass = new HashMap<String, Long>();
@@ -268,13 +252,6 @@ public class UtilsFacete {
 			setAttributeToSession(request, ELEMENTS_METACLASS, sortHashMapAsArrayList(elementsMetaclass));
 		}
 		
-		if (elementsService != null){
-			setAttributeToSession(request, ELEMENTS_SERVICE, sortHashMapAsArrayList(elementsService));
-		}
-		
-		if (elementsMeasure != null){
-			setAttributeToSession(request, ELEMENTS_MEASURE, sortHashMapAsArrayList(elementsMeasure));
-		}
 	}
 
 	/***************************** THEMEN **********************************************/
@@ -743,10 +720,37 @@ public class UtilsFacete {
 	private static void setServiceParamsToContext (RenderRequest request, Context context){
 		
 		ArrayList<String> selectedService = (ArrayList<String>) getAttributeFromSession(request, SELECTED_SERVICE);
-		ArrayList<String> elementsService = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_SERVICE);
-	    
-		if(elementsService != null){
-    		context.put("enableFaceteService", elementsService);
+		ArrayList<HashMap<String, Long>> elementsService = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_TOPIC);
+		ArrayList<HashMap<String, Long>> enableFaceteService = null;
+		
+		if(dbServices == null){
+        	dbServices = UtilsDB.getServiceRubrics();
+        }
+		
+		for(int i=0; i < elementsService.size();i++){
+			HashMap<String, Long> topic = elementsService.get(i);
+			boolean found = false;
+			for (Iterator<String> iterator = topic.keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				for(int j=0; j < dbServices.size(); j++){
+					IngridServiceRubric service = dbServices.get(j);
+					String ident = service.getQueryValue();
+					if(key.equals(ident)){
+						found = true;
+						break;
+					}
+				}
+			}
+			if(found){
+				if(enableFaceteService == null){
+					enableFaceteService = new ArrayList<HashMap<String,Long>>();
+				}
+				enableFaceteService.add(topic);
+			}
+		}
+		
+		if(enableFaceteService != null){
+    		context.put("enableFaceteService", enableFaceteService);
 		}
 		
 		if(selectedService != null){
@@ -785,10 +789,11 @@ public class UtilsFacete {
 		
 		IngridDocument facete = new IngridDocument();
         ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
+        HashMap<String, String> faceteEntry = null;
+        
         if(dbMeasures == null){
         	dbMeasures = UtilsDB.getMeasuresRubrics();
         }
-        HashMap<String, String> faceteEntry = null;
         
         for(int i=0; i < dbMeasures.size(); i++){
         	IngridMeasuresRubric measure = dbMeasures.get(i);
@@ -838,10 +843,38 @@ public class UtilsFacete {
 	private static void setMeasuresParamsToContext (RenderRequest request, Context context){
 		
 		ArrayList<String> selectedMeasures = (ArrayList<String>) getAttributeFromSession(request, SELECTED_MEASURES);
-		ArrayList<String> elementsMeasure = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_MEASURE);
-	    
-		if(elementsMeasure != null){
-    		context.put("enableFaceteMeasures", elementsMeasure);
+		ArrayList<HashMap<String, Long>> elementsMeasure = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_TOPIC);
+		ArrayList<HashMap<String, Long>> enableFaceteMeasures = null;
+				
+		if(dbMeasures == null){
+        	dbMeasures = UtilsDB.getMeasuresRubrics();
+        }
+        		
+		for(int i=0; i < elementsMeasure.size();i++){
+			HashMap<String, Long> topic = elementsMeasure.get(i);
+			boolean found = false;
+			for (Iterator<String> iterator = topic.keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				for(int j=0; j < dbMeasures.size(); j++){
+					IngridMeasuresRubric measure = dbMeasures.get(j);
+					String ident = measure.getQueryValue();
+					if(key.equals(ident)){
+						found = true;
+						break;
+					}
+				}
+			}
+			if(found){
+				if(enableFaceteMeasures == null){
+					enableFaceteMeasures = new ArrayList<HashMap<String,Long>>();
+				}
+				enableFaceteMeasures.add(topic);
+			}
+		}
+		
+		
+		if(enableFaceteMeasures != null){
+    		context.put("enableFaceteMeasures", enableFaceteMeasures);
 		}
 		
     	if(selectedMeasures != null){
@@ -2008,8 +2041,6 @@ public class UtilsFacete {
 		removeAttributeFromSession(request, ELEMENTS_TOPIC);
 		removeAttributeFromSession(request, ELEMENTS_PARTNER);
 		removeAttributeFromSession(request, ELEMENTS_METACLASS);
-		removeAttributeFromSession(request, ELEMENTS_SERVICE);
-		removeAttributeFromSession(request, ELEMENTS_MEASURE);
 	}
 	
 	private static ArrayList<HashMap<String, Long>> sortHashMapAsArrayList(HashMap<String, Long> input){

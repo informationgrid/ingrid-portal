@@ -5,6 +5,8 @@
 		$MESSAGES.getString("searchResult.facete.title.service")
 		#renderLinkEntryNumber("$datatype.get($datatypeKey)")
 	</a>
+	$action.setParameter("doRemoveDatatype", "$datatypeKey")
+    #renderDeleteIcon ($action)
 	<br>
 </div>
 

@@ -5,16 +5,21 @@
 		$MESSAGES.getString("searchResult.facete.title.measures")
 		#renderLinkEntryNumber("$datatype.get($datatypeKey)")
 	</a>
+	$action.setParameter("doRemoveDatatype", "$datatypeKey")
+    #renderDeleteIcon ($action)
 	<br>
 </div>
 
 <div id="measures" class="cat_content">
 	#foreach ($measures in $enableFaceteMeasures)
-		#set($measuresTitle = "searchResult.facete.measures.$measures")
+		#foreach ($key in $measures.keySet())
+			#set($measuresKey = $key)
+			#set($measuresTitle = "searchResult.facete.measures.$measuresKey")
+		#end
 		#set($isSelectedChbMeasures = false)
 		#foreach ($selectChb in $selectedMeasures)
 			#if($isSelectedChbMeasures != true)
-				#if($measures == $selectChb)
+				#if($measuresKey == $selectChb)
 					#set($isSelectedChbMeasures = true)
 				#end
 			#end
