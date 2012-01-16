@@ -934,7 +934,7 @@ UtilStore.updateWriteStore = function(/*(name of) element that has store*/id, /*
 		widget.setStore(updatedStore, widget.query);
 	}
 	return id;
-	
+/*
 	if (!storeProps)
 		var storeProps = {label:"label"};
 	
@@ -952,7 +952,7 @@ UtilStore.updateWriteStore = function(/*(name of) element that has store*/id, /*
 		if (canEdit != undefined)
 			widget.set("_canEdit", canEdit);
 	}
-	
+*/
 	/*
 		
 	if (updatedStore == null) {
@@ -975,7 +975,7 @@ UtilStore.updateWriteStore = function(/*(name of) element that has store*/id, /*
 	// resize grid to make use of autoHeight!
 	//dijit.byId(id).resize();
 	
-	return updatedStore;
+//	return updatedStore;
 }
 
 UtilStore.convertItemsToJS = function(store, /*Array*/items) {
@@ -1315,14 +1315,10 @@ UtilString.emptyIfNull = function(value){
 		return value;
 }
 
-//check passed string: returns true if undefined or null or length==0 
-UtilString.noContent = function(stringValue) {
-    return (typeof(stringValue) == "undefined" || stringValue == null || dojo.trim(stringValue).length == 0);
+//check passed string: returns false if undefined or null or length==0 
+UtilString.hasValue = function(stringValue) {
+	return UtilGeneral.hasValue(stringValue);
 }
-
-/*UtilString.addPrefix = function(prefix, b) {
-	return UtilString.compare(a.toLowerCase(), b.toLowerCase());
-}*/
 
 // Utility functions needed for workflow control
 var UtilQA = {}
@@ -1596,6 +1592,22 @@ UtilGeneral.askUserAndInvokeOrCancel = function(text, invocation){
 UtilGeneral.getNumberFromDijit = function(id) {
     var value = dijit.byId(id).get("value");
     return isNaN(value) ? null : value;
+}
+
+//check passed value: returns true if it has a value, returns false if undefined or null or length==0;
+// checks objects and strings and ... 
+UtilGeneral.hasValue = function(val) {
+    if (typeof val == "undefined") {
+        return false; 
+    } else if (val == null) {
+        return false; 
+    } else if (typeof val == "string" && val == "") {
+        return false;
+    } else if (typeof val == "object" && val.toString().equals("")) {
+        return false;
+    }
+
+    return true;
 }
 
 var itemToJS = function(store, item) {

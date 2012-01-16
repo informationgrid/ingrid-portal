@@ -10,348 +10,189 @@
         <script type="text/javascript">
             var curSelectedObject = {};
             var curSelectedUrl = {};
-            var dirtyFlag = null;
             
             var scriptScope = _container_;
             
-            var fieldData = {
-                items: []
-            };
-            
             var generalUiInputElements = [["linksFromFieldName", "linksFromFieldNameLabel"]];
             var objUiInputElements = [["linksToObjectName", "linksToObjectNameLabel"], ["linksToObjectClass", "linksToObjectClassLabel"]];
+            var urlUiInputElements = [["linksToURLName", "linksToURLNameLabel"], ["linksToURL", "linksToURLLabel"]];
             
-            var urlUiInputElements = [["linksToName", "linksToNameLabel"], ["linksToURL", "linksToURLLabel"], ["linksToDataType", "linksToDataTypeLabel"]];
-            
-            // All the possible values for the select box
-            var referenceMap = [{
-                label: "Basisdaten",
-                id: "3210"
-            }, {
-                label: "Basisdaten",
-                id: "3345"
-            }, {
-                label: "Datengrundlage",
-                id: "3570"
-            }, {
-                label: "Fachliche Grundlage",
-                id: "3520"
-            }, {
-                label: "Herstellungsprozess",
-                id: "3515"
-            }, {
-                label: "Methode / Datengrundlage",
-                id: "3100"
-            }, {
-                label: "Objektartenkatalog",
-                id: "3109"
-            }, {
-                label: "Schl\u00fcsselkatalog",
-                id: "3535"
-            }, {
-                label: "Symbolkatalog",
-                id: "3555"
-            }, {
-                label: "Verweis zu Dienst",
-                id: "5066"
-            }];
-            
-            //dijit.byId('pageDialog').onLoadDeferred.addCallback(init);
-            dojo.connect(_container_, "onLoad", init);
-            
-            dojo.connect(_container_, "onUnload", acceptLinkList);
-            
+            // All the possible values for the select box "Verweisbeziehungen"
+            var syslist2000Map = [];
+
+            // data passed by caller of this dialog
+            var caller = {};
+
+            dojo.connect(_container_, "onLoad", doDeferredThenInit);
+//            dojo.connect(_container_, "onUnload", closeThisDialog);
+
+            function doDeferredThenInit() {
+                // first do deferred stuff, takes some time, when finished, call init() !
+
+                // read our "Verweisbeziehungen" from syslist
+                var def = UtilSyslist.readSysListData(2000);
+                def.then(function(syslistData) {
+                    syslist2000Map = UtilSyslist.convertSysListToTableData(syslistData);
+                    init();
+                });
+            }
+
             function init(){
-                dirtyFlag = udkDataProxy.dirtyFlag;
-                
-                disableInputElementsOnWrongPermission();
-                
+                // take over passed data
+                if (_container_.customParams) {
+                    caller.grid = _container_.customParams.grid;
+                    caller.selectedRow = _container_.customParams.selectedRow;
+                    caller.filter = _container_.customParams.filter;
+                }
+
+                console.debug("mdek_links_dialog -> data from caller (grid, selectedRow, filter)");
+                console.debug(caller.grid);
+                console.debug(caller.selectedRow);
+                console.debug(caller.filter);
+
                 createDOMElements();
-                
-                // reset the dialog
-                hideInputElements();
-                console.debug("a2");
                 resetRequiredInputElements();
-                console.debug("b");
+
                 // Init static data
                 var objectName = dijit.byId("objectName").getValue();
                 dijit.byId("linksFromObjectName").setValue(objectName);
-                
-                // Connect both tables so only one value is selected at once. If the user selects an object the
-                // current url is deselected, if an url is selected the object is deselected 
-                var objectList = UtilGrid.getTable("linkListObject");
-                var urlList = UtilGrid.getTable("linkListURL");
-                
-                // If a selected object was removed from the lists, reset the input fields
-                //dojo.connect(objectList.store, "onRemoveData", function(obj){
-                dojo.connect(objectList, "onDataChanged", function(msg) {
-                    //if (dojo.some(objectList.selection.getSelected(), function(item){
-                    //    return (item == obj.src);
-                    //})) 
-                    if (msg.type == "deleted")
-                        resetInput();
-                });
-                dojo.connect(urlList, "onDataChanged", function(msg) {
-                    //if (dojo.some(urlList.selection.getSelected(), function(item){
-                    //    return (item == url.src);
-                    //}))
-                    if (msg.type == "deleted") 
-                        resetInput();
-                });
-                
-                // Init the radio buttons onclick functions
-                dojo.byId("linksLinkType1").onclick = function(){
-                    selectLinkType("obj");
-                    newLink();
-                }
-                dojo.byId("linksLinkType2").onclick = function(){
-                    selectLinkType("url");
-                    newLink();
-                }
-                // Init the form
-                dojo.byId("linkToObject").style.display = "block";
-                dojo.byId("linkToURL").style.display = "none";
-                
-                
-                // The selected value has to be displayed on select
-                //dojo.connect(objectList, "onSelected", function(){
-                dojo.connect(objectList, "onSelectedRowsChanged", function(row) {
-                    // Update the displayed data
-                    var selectedObjects = UtilGrid.getSelectedRowIndexes("linkListObject");//objectList.selection.getSelected();
-                    if (selectedObjects.length == 0) {
-                        curSelectedObject = {};
-                        return;
-                    }
-                    else {
-                        if (selectedObjects[0] == null) 
-                            return;
-                        if (selectedObjects.length == 1 && selectedObjects[0] != undefined && selectedObjects[0] < UtilGrid.getTableData("linkListObject").length) {
-                            selectLinkType("obj");
-                            curSelectedUrl = {};
-                            curSelectedObject = UtilGrid.getSelectedData("linkListObject")[0];
-                            
-                            if (curSelectedObject.relationType == -1) {
-                                dijit.byId("linksFromFieldName").setValue(curSelectedObject.relationTypeName);
-                                //				console.debug("setting value to "+curSelectedObject.relationTypeName);
-                            }
-                            else {
-                                //dijit.byId("linksFromFieldName").setValue(getDisplayValueForRelationType(curSelectedObject.relationType));
-                                var typeWidget = dijit.byId("linksFromFieldName");
-                                var def = UtilStore.getItemByAttribute(typeWidget.store, "id", curSelectedObject.relationType);
-                                def.addCallback(function(item) {typeWidget.set("item", item);});
-                                //dijit.byId("linksFromFieldName").set("item", dijit.byId("linksFromFieldName").store._arrayOfTopLevelItems[0]) // set the first item from store here!
-                            }
-                            
-                            dijit.byId("linksToObjectName").setValue(curSelectedObject.title);
-                            dijit.byId("linksToObjectClass").setValue("Class" + curSelectedObject.objectClass);
-                            dijit.byId("linksToDescription").setValue(curSelectedObject.relationDescription);
-                            
-                            // Update the 'save' button text
-                            dijit.byId("saveButton").setLabel("<fmt:message key='general.save' />");
-                            showInputElements();
-                        }
-                        else {
-                            curSelectedObject = {};
-                            curSelectedUrl = {};
-                            hideInputElements();
-                            resetInputFields();
-                        }
-                        UtilGrid.clearSelection("linkListURL");
-                    }
-                });
-                
-                // The selected value has to be displayed on select
-                //dojo.connect(urlList, "onSelected", function(){
-                dojo.connect(urlList, "onSelectedRowsChanged", function(row) {
-                    // Update the displayed data
-                    var selectedUrls = UtilGrid.getSelectedRowIndexes("linkListURL");//urlList.selection.getSelected();
-                    if (selectedUrls.length == 0) {
-                        curSelectedUrl = {};
-                        return;
-                    }
-                    else 
-                        if (selectedUrls.length == 1 && selectedUrls[0] != undefined && selectedUrls[0] < UtilGrid.getTableData("linkListURL").length) {
-                            selectLinkType("url");
-                            curSelectedObject = {};
-                            curSelectedUrl = UtilGrid.getSelectedData("linkListURL")[0];
-                            // Reset the obj List
-                            //objectList.selection.deselectAll();
-                            
-                            //objectList.renderSelections();
-                            var typeWidget = dijit.byId("linksFromFieldName");
-                            typeWidget.setValue(curSelectedUrl.relationTypeName);
-                            if (curSelectedUrl.relationType == -1) {
-                                typeWidget.setValue(curSelectedUrl.relationTypeName);
-                            } else {
-                                var def = UtilStore.getItemByAttribute(typeWidget.store, "id", curSelectedUrl.relationType);
-                                def.addCallback(function(item) {typeWidget.set("item", item);});
-                            }
-                            
-                            dijit.byId("linksToURL").setValue(curSelectedUrl.url);
-                            dijit.byId("linksToName").setValue(curSelectedUrl.name);
-                            dijit.byId("linksToDataType").setValue(curSelectedUrl.datatype);
-                            dijit.byId("linksToDataVolume").setValue(curSelectedUrl.volume);
-                            dijit.byId("linksToURLType").setValue(curSelectedUrl.urlType);
-                            dijit.byId("linksToIconURL").setValue(curSelectedUrl.iconUrl);
-                            dijit.byId("linksToIconText").setValue(curSelectedUrl.iconText);
-                            dijit.byId("linksToUrlDescription").setValue(curSelectedUrl.description);
-                            
-                            // Update the 'save' button text
-                            dijit.byId("saveButton").setLabel("<fmt:message key='general.save' />");
-                            showInputElements();
-                        }
-                        else {
-                            curSelectedObject = {};
-                            curSelectedUrl = {};
-                            hideInputElements();
-                            resetInputFields();
-                        }
-                        UtilGrid.clearSelection("linkListObject");
-                });
-                
-                // Populate the object and url links list
-                var srcStore = UtilGrid.getTableData("linksTo");
-                
-                var container = dijit.byId("pageDialog");
-                // Check if a filter was passes as an argument
-                if (container.customParams && container.customParams.filter) {
-                    // Filter the list according to the filter arg
-                    
-                    var filter = container.customParams.filter;
-                    var grid = container.customParams.grid;
-                    /*var filterFuncObject = function(item){
-                        return item.relationType == filter && item.objectClass != undefined;
-                    };
-                    var filterFuncUrl = function(item){
-                        return item.relationType == filter && item.url != undefined;
-                    };
 
-                    objectList.getData().setFilter(filterFuncObject);
-                    urlList.getData().setFilter(filterFuncUrl);*/
-                    UtilGrid.setTableData("linkListObject", dojo.filter(UtilGrid.getTableData(grid), function(item) {return item.objectClass != undefined;}));
-                    UtilGrid.setTableData("linkListURL", dojo.filter(UtilGrid.getTableData(grid), function(item) {return item.url != undefined;}));
-                    
+                // initialize type widget dependent from passed filter 
+                var referenceWidget = dijit.byId("linksFromFieldName");
+                if (caller.filter) {
                     // Disable the type input and set it to the filter
-                    var referenceWidget = dijit.byId("linksFromFieldName");
                     referenceWidget.setDisabled(true);
-                    
-                    var filterStr = container.customParams.filter + '';
+                    var filterStr = caller.filter + '';
                     initReferenceWidget(filterStr);
-                    var def = UtilStore.getItemByAttribute(referenceWidget.store, "id", filterStr)
-                    def.addCallback(function(item) {referenceWidget.set("item", item);});
-                }
-                else {
-                    // Load the initial values from the backend
+                    var def = UtilStore.getItemByAttribute(referenceWidget.store, "entryId", filterStr)
+                    def.then(function(item) {
+                        referenceWidget.setValue(item.entryId[0]);
+                    });
+                } else {
+                    // set values from syslist dependent from object class
                     initReferenceWidget();
-                    dijit.byId("linksFromFieldName").setValue("");
-                    /*var showAllObj = function(item) { return item.objectClass != undefined; };
-                    var showAllURL = function(item) { return item.url != undefined; };
-                    objectList.getData().setFilter(showAllObj);
-                    urlList.getData().setFilter(showAllURL);*/
-                    //objectList.setData(srcStore);
-                    //urlList.setData(srcStore);
-                    UtilGrid.setTableData("linkListObject", dojo.filter(srcStore, function(item) {return item.objectClass != undefined;}));
-                    UtilGrid.setTableData("linkListURL", dojo.filter(srcStore, function(item) {return item.url != undefined;}));
-                    
+                    referenceWidget.setValue("");
                 }
 
-                objectList.invalidate();
-                urlList.invalidate();
+                // adapt UI and data dependent from passed data (create new link or edit link ?)
+                if (caller.selectedRow) {
+
+                    // EDIT ROW ! Link type canNOT be changed !
+                    dojo.byId("inputLinkTypeRadioButtons").style.display = "none";
+                    
+                    console.debug("UtilString.hasValue(caller.selectedRow.objectClass)");
+                    console.debug(UtilString.hasValue(caller.selectedRow.objectClass));
+                    
+                    if (UtilString.hasValue(caller.selectedRow.objectClass)) {
+                        curSelectedObject = dojo.clone(caller.selectedRow);
+                        selectLinkType("obj");
+                        setObjectData(curSelectedObject);
+                    } else {
+                        curSelectedUrl = dojo.clone(caller.selectedRow);
+                        selectLinkType("url");
+                        setUrlData(curSelectedUrl);
+                    }
+
+                    // Update the 'save' button text
+                    dijit.byId("saveButton").setLabel("<fmt:message key='dialog.links.apply' />");
+
+                } else {
+
+                    // NEW ROW ! Link type can be chosen !
+                    dojo.byId("inputLinkTypeRadioButtons").style.display = "";
+
+                    // initial display is object stuff
+                    selectLinkType("obj");
+
+                    // Init the radio buttons onclick functions
+                    dojo.byId("linksLinkType1").onclick = function(){
+                        selectLinkType("obj");
+                    }
+                    dojo.byId("linksLinkType2").onclick = function(){
+                        selectLinkType("url");
+                    }
+                    resetInputFields();
+                }
                 
-                // Connect the object and url store with the internal dirty flag
-                //connectStoreWithDirtyFlag(objStore);
-                //connectStoreWithDirtyFlag(urlStore);
+                disableInputElementsOnWrongPermission();
             };
             
-            
-            createDOMElements = function(){
-            
-                var storeProps = {data: {identifier: 'id',label: 'id'}};
-                //var storeProps2 = {searchAttr:"label", data: {identifier: 'abbreviation',label: 'label'}};
-                
-                createComboBox("linksFromFieldName", null, storeProps, null);
-                dijit.byId("linksFromFieldName").searchAttr = "label";
-                
-                createComboBox("linksToDataType", null, storeProps, null, "js/data/datatypes.json");
-                dijit.byId("linksToDataType").searchAttr = "label";
+            createDOMElements = function() {
+                var storeProps = {data: {identifier: 'entryId', label: 'name'}};
+                // initialize with empty store !
+                createSelectBox("linksFromFieldName", null, storeProps, null);
+
+                // storeProps data attributes overwritten by json data
                 createSelectBox("linksToURLType", null, storeProps, null, "js/data/urlReferenceTypes.json");
-                
-                var linkListObjectStructure = [
-                    {field: 'icon', name: 'icon', width: '23px'}, 
-                    {field: 'title', name: 'title', width: 175-scrollBarWidth+'px'}
-                ];
-                createDataGrid("linkListObject", null, linkListObjectStructure, null);
-                
-                var linkListObjectStructure = [{
-                    field: 'icon',
-                    name: 'icon',
-                    width: '23px'
-                }, {
-                    field: 'name',
-                    name: 'name',
-                    width: 175-scrollBarWidth+'px'
-                }];
-                createDataGrid("linkListURL", null, linkListObjectStructure, null);
-                
-                //var storeProps2 = {data: {identifier: 'id',label: 'label'}};
                 createSelectBox("linksToObjectClass", null, storeProps, null, "js/data/objectclasses.json");
             }
             
-            setDirtyFlag = function(){
-                dirtyFlag = true;
+            setObjectData = function(objectData) {
+                var typeWidget = dijit.byId("linksFromFieldName");
+                if (objectData.relationType == -1) {
+                    typeWidget.setValue(objectData.relationTypeName);
+                }
+                else {
+                    var def = UtilStore.getItemByAttribute(typeWidget.store, "entryId", objectData.relationType);
+                    def.then(function(item) {
+                        typeWidget.setValue(item.entryId[0]);
+                    });
+                }
+                dijit.byId("linksToObjectName").setValue(objectData.title);
+                dijit.byId("linksToObjectClass").setValue("Class" + objectData.objectClass);
+                dijit.byId("linksToObjectDescription").setValue(objectData.relationDescription);
             }
             
-            connectStoreWithDirtyFlag = function(store){
-                dojo.connect(store, "onAddData", this, "setDirtyFlag");
-                dojo.connect(store, "onRemoveData", this, "setDirtyFlag");
-                dojo.connect(store, "onUpdateField", this, "setDirtyFlag");
+            setUrlData = function(urlData) {
+                var typeWidget = dijit.byId("linksFromFieldName");
+                if (urlData.relationType == -1) {
+                    typeWidget.setValue(urlData.relationTypeName);
+                } else {
+                    var def = UtilStore.getItemByAttribute(typeWidget.store, "entryId", urlData.relationType);
+                    def.then(function(item) {
+                        typeWidget.setValue(item.entryId[0]);
+                    });
+                }
+                dijit.byId("linksToURL").setValue(urlData.url);
+                dijit.byId("linksToURLName").setValue(urlData.name);
+                dijit.byId("linksToURLType").setValue(urlData.urlType);
+                dijit.byId("linksToUrlDescription").setValue(urlData.description);
             }
             
             disableInputElementsOnWrongPermission = function(){
                 if (currentUdk.writePermission == false) {
-                    dijit.byId("newLinkButton").setDisabled(true);
                     dijit.byId("saveButton").setDisabled(true);
                     dijit.byId("resetButton").setDisabled(true);
+
+                    dijit.byId("linksFromFieldName").setDisabled(true);
                     dojo.byId("linksLinkType1").setDisabled(true);
                     dojo.byId("linksLinkType2").setDisabled(true);
-                    dijit.byId("linksFromFieldName").setDisabled(true);
-                    dijit.byId("linksToDescription").setDisabled(true);
+
+                    // object input fields
+                    dijit.byId("linksToObjectName").setDisabled(true);
+                    dijit.byId("linksToObjectClass").setDisabled(true);
+                    dijit.byId("linksToObjectDescription").setDisabled(true);
                     
                     // URL Input Fields
+                    dijit.byId("linksToURLName").setDisabled(true);
                     dijit.byId("linksToURL").setDisabled(true);
-                    dijit.byId("linksToDataType").setDisabled(true);
-                    dijit.byId("linksToDataVolume").setDisabled(true);
                     dijit.byId("linksToURLType").setDisabled(true);
-                    dijit.byId("linksToIconURL").setDisabled(true);
-                    dijit.byId("linksToIconText").setDisabled(true);
                     dijit.byId("linksToUrlDescription").setDisabled(true);
-                    dijit.byId("linksToName").setDisabled(true);
                 }
             }
-            
-            resetRequiredInputElements = function(){
+
+            // resets marked fields with wrong input
+            resetRequiredInputElements = function() {
                 dojo.query(".important").forEach(function(item) {dojo.removeClass(item, "important");});
-                /*var resetRequiredState = function(widgetLabelList){
-                    for (var i in widgetLabelList) {
-                        console.debug("remove class from: " + widgetLabelList[i][1]);
-                        dojo.removeClass(dojo.byId(widgetLabelList[i][1]), "important");
-                    }
-                }
-                
-                resetRequiredState(generalUiInputElements);
-                console.debug("1");
-                resetRequiredState(objUiInputElements);
-                console.debug(dijit.byId("linksToDataType"));
-                resetRequiredState(urlUiInputElements);*/
             }
-            
-            validateInputElements = function(){
+
+            // marks fields if wrong input
+            validateInputElements = function() {
                 var valid = true;
                 var objSelected = dojo.byId("linksLinkType1").checked;
-                var validate = function(widgetLabelList){
+                var validate = function(widgetLabelList) {
                     for (var i in widgetLabelList) {
                         var val = dijit.byId(widgetLabelList[i][0]).getValue();
-                        
                         if (!val || val == "") {
                             dojo.addClass(dojo.byId(widgetLabelList[i][1]), "important");
                             valid = false;
@@ -369,52 +210,13 @@
                 }
                 return valid;
             }
-            
-            
-            hideInputElements = function(){
-                dojo.byId("inputFields").style.display = "none";
-                dojo.byId("inputButtons").style.display = "none";
-                dijit.byId("linksFromFieldName").setDisabled(true);
-            }
-            
-            showInputElements = function(){
-                dojo.byId("inputFields").style.display = "";
-                dojo.byId("inputButtons").style.display = "";
-                
-                if (!dijit.byId("pageDialog").customParams || !dijit.byId("pageDialog").customParams.filter) {
-                    if (currentUdk.writePermission) 
-                        dijit.byId("linksFromFieldName").setDisabled(false);
-                }
-            }
-            
-            /*
-             function getRelationTypeForDisplayValue(dispVal){
-             var relationType = dijit.byId("linksFromFieldName").getValueForDisplayValue(dispVal);
-             if (relationType != null) {
-             return relationType;
-             }
-             else {
-             return -1;
-             }
-             }*/
-            
-            function getDisplayValueForRelationType(relType){
-                var result = -1;
-                dojo.some(referenceMap, function(ref){
-                    //console.debug("check: " + typeof(relType) + "-" + typeof(ref.id));
-                    if (ref.id == relType) {
-                        result = ref.label;
-                        return true;
-                    }
-                });
-                return result;
-            }
+
             // Initialises the 'linksFromFieldName' select box depending on the current obj class and the filter id
             function initReferenceWidget(filter){
                 var initialValues = [];
                 if (filter) {
-                    dojo.forEach(referenceMap, function(item){
-                        if (item.id == filter) 
+                    dojo.forEach(syslist2000Map, function(item){
+                        if (item.entryId == filter) 
                             initialValues.push(item);
                     });
                 }
@@ -443,36 +245,33 @@
                             console.debug("Error: could not determine object class.");
                             break;
                     }
-                    initialValues = dojo.filter(referenceMap, function(item){
+                    initialValues = dojo.filter(syslist2000Map, function(item) {
                         return dojo.some(idList, function(id){
-                            return id == item.id;
+                            return id == item.entryId;
                         });
                     });
-                }
-                // add empty item at the beginning
-                //console.debug("initialValues: " + initialValues);
-                var storeProps = {
-                    searchAttr: "label",
-                    data: {
-                        label: "id",
-                        identifier: "id",
-                        items: initialValues
+                    // add empty item at the beginning
+                    if (initialValues.length > 1) {
+                        var emptyData = [{entryId:-1, name:""}];
+                        initialValues = emptyData.concat(initialValues);
                     }
+                }
+//                console.debug("initialValues: " + initialValues);
+//                console.debug(initialValues);
+
+                // which data attributes for id and label (to show)
+                var storeProps = {
+                    label: "name",
+                    identifier: "entryId"
                 };
-                //UtilStore.updateWriteStore("linksFromFieldName", initialValues, storeProps);
-                dijit.byId("linksFromFieldName").store = new dojo.data.ItemFileWriteStore(storeProps);
-                
+                UtilStore.updateWriteStore("linksFromFieldName", initialValues, storeProps);
             }
             
-            
-            
             saveLink = function(){
-                var objData = UtilGrid.getSelectedData("linkListObject")[0];
-                var urlData = UtilGrid.getSelectedData("linkListURL")[0];
                 var objSelected = dojo.byId("linksLinkType1").checked;
-                
+
+                // validate input !
                 resetRequiredInputElements();
-                
                 if (!validateInputElements()) {
                     dialog.show("<fmt:message key='general.error' />", "<fmt:message key='links.fillRequiredFieldsHint' />", dialog.WARNING);
                     return;
@@ -483,142 +282,72 @@
                     dialog.show("<fmt:message key='general.error' />", "<fmt:message key='links.noLinkToSelfHint' />", dialog.WARNING);
                     return;
                 }
-                
-                if (objData) {
-                    // If a node was selected we have to update the information
-                    // The dojo FilteringTable does not like updates on values that are not displayed
-                    // It simply throws a cryptic error on update. The connected 'onUpdateField' function in
-                    // FilteringTable.init tries to get a row idx which is 'undefined'
-                    //		store.update(data, "uuid", curSelectedObject.uuid);
-                    //		store.update(data, "relationDescription", dijit.byId("linksToDescription").getValue());
-                    //		store.update(data, "objectClass", curSelectedObject.objectClass);
-                    objData.uuid = curSelectedObject.uuid;
-                    objData.relationDescription = dijit.byId("linksToDescription").getValue();
-                    objData.objectClass = curSelectedObject.objectClass;
-                    //var typeName = dijit.byId("linksFromFieldName").getValue();
-                    var selectedLinksFrom = dijit.byId("linksFromFieldName");
-                    objData.relationType = selectedLinksFrom.item == null ? -1 : selectedLinksFrom.item.id[0];
-                    if (objData.relationType == -1) {
-                        objData.relationTypeName = selectedLinksFrom.get("value");
-                    }
-                    UtilList.addIcons([objData]);
-                    UtilList.addObjectLinkLabels([objData]);
-                    UtilGrid.updateTableDataRowAttr("linkListObject", UtilGrid.getSelectedRowIndexes("linkListObject")[0], "icon", objData.icon);
-                    UtilGrid.updateTableDataRowAttr("linkListObject", UtilGrid.getSelectedRowIndexes("linkListObject")[0], "title", curSelectedObject.title);
+
+                // take over data ! NOTICE: this is a copy of the selected row of calling grid !
+                // first special stuff for OBJECT / URL !
+                var currentLink;
+                if (objSelected) {
+                    // Take the current selected object and add the values that were entered in the ui fields
+                    // NOTICE: The curSelectedObject was selected by object tree dialog and already has all object data !
+                    currentLink = curSelectedObject;
+                    // this is the only field that can be changed after selection !
+                    currentLink.relationDescription = dijit.byId("linksToObjectDescription").getValue();
+                    UtilList.addObjectLinkLabels([currentLink]);
+                } else {
+                    // Take the current selected url and add the values that were entered in the ui fields
+                    currentLink = curSelectedUrl;
+                    currentLink.url = dijit.byId("linksToURL").getValue();
+                    currentLink.name = dijit.byId("linksToURLName").getValue();
+                    currentLink.urlType = dijit.byId("linksToURLType").getValue();
+                    currentLink.description = dijit.byId("linksToUrlDescription").getValue();
+                    UtilList.addUrlLinkLabels([currentLink]);
                 }
-                else 
-                    if (urlData) {
-                        var newUrl = _getUrl();
-                        urlData.url = newUrl.url;
-                        urlData.datatype = newUrl.datatype;
-                        urlData.volume = newUrl.volume;
-                        urlData.urlType = newUrl.urlType;
-                        urlData.iconUrl = newUrl.iconUrl;
-                        urlData.iconText = newUrl.iconText;
-                        urlData.description = newUrl.description;
-                        urlData.relationType = newUrl.relationType;
-                        if (newUrl.relationType == -1) {
-                            urlData.relationTypeName = newUrl.relationTypeName;
-                        }
-                        UtilList.addIcons([urlData]);
-                        UtilList.addUrlLinkLabels([urlData]);
-                        //urlStore.setValue(urlData, "name", newUrl.name);
-                        UtilGrid.updateTableDataRowAttr("linkListURL", UtilGrid.getSelectedRowIndexes("linkListURL")[0], "name", newUrl.name);
+                // then take over stuff for both OBJECT and URL !
+                currentLink.relationType = dijit.byId("linksFromFieldName").getValue();
+                UtilList.addIcons([currentLink]);
+
+
+                // update calling grid ! Here we use the selected row in calling grid !
+                if (caller.selectedRow) {
+                    // EDIT existing link
+                    // we only change the stuff which is stored or is visible
+
+                    if (objSelected) {
+                        caller.selectedRow.uuid = currentLink.uuid;
+                        caller.selectedRow.relationDescription = currentLink.relationDescription;
+                        caller.selectedRow.objectClass = currentLink.objectClass;
+                        caller.selectedRow.title = currentLink.title;
+                    } else {
+                        caller.selectedRow.url = currentLink.url;
+                        caller.selectedRow.name = currentLink.name;
+                        caller.selectedRow.urlType = currentLink.urlType;
+                        caller.selectedRow.description = currentLink.description;
                     }
-                    else 
-                        if (objSelected && curSelectedObject) {
-                            // Otherwise a new link has to be created
-                            // Take the current selected object and add the values that were entered in the ui fields
-                            curSelectedObject.relationDescription = dijit.byId("linksToDescription").getValue();
-                            
-                            //var typeName = dijit.byId("linksFromFieldName").getValue();
-                            var selectedLinksFrom = dijit.byId("linksFromFieldName");//._getSelectedOptionsAttr();
-                            curSelectedObject.relationType = selectedLinksFrom.item == null ? -1 : selectedLinksFrom.item.id[0];
-                            if (curSelectedObject.relationType == -1) {
-                                curSelectedObject.relationTypeName = selectedLinksFrom.get("value");
-                            }
-                            
-                            // No checks if the store already contains the current element.
-                            //curSelectedObject.Id = _getNewKey();
-                            UtilList.addIcons([curSelectedObject]);
-                            UtilList.addObjectLinkLabels([curSelectedObject]);
-                            UtilGrid.addTableDataRow("linkListObject", curSelectedObject);
-                            // Select the object in the list
-                            //console.debug("data.length: " + UtilGrid.getTableData("linkListObject").getLength());
-                            // row seems to be added to store a bit later!?
-                            UtilGrid.setSelection("linkListObject", [UtilGrid.getTableData("linkListObject").length-1]);
-                            
-                            dijit.byId("saveButton").setLabel("<fmt:message key='general.save' />");
-                        }
-                        else 
-                            if (!objSelected) {
-                                var newUrl = _getUrl();
-                                //newUrl.Id = _getNewKey();
-                                UtilList.addIcons([newUrl]);
-                                UtilList.addUrlLinkLabels([newUrl]);
-                                //urlStore.newItem(newUrl);
-                                UtilGrid.addTableDataRow("linkListURL", newUrl);
-                                //dijit.byId("linkListURL").selection.deselectAll();
-                                //dijit.byId("linkListURL").selection.select(newUrl);
-                                UtilGrid.setSelection("linkListURL", [UtilGrid.getTableData("linkListURL").length-1]);
-                                
-                                dijit.byId("saveButton").setLabel("<fmt:message key='general.save' />");
-                            }
-                            else {
-                                dialog.show("<fmt:message key='general.error' />", "<fmt:message key='links.fillRequiredFieldsHint' />", dialog.WARNING);
-                                return;
-                            }
-                UtilGrid.getTable("linkListObject").invalidate();
-                UtilGrid.getTable("linkListURL").invalidate();
-            }
-            
-            _getUrl = function(){
-                var newUrl = {};
-                newUrl.url = dijit.byId("linksToURL").getValue();
-                newUrl.datatype = dijit.byId("linksToDataType").getValue();
-                newUrl.volume = dijit.byId("linksToDataVolume").getValue();
-                newUrl.urlType = dijit.byId("linksToURLType").getValue();
-                newUrl.iconUrl = dijit.byId("linksToIconURL").getValue();
-                newUrl.iconText = dijit.byId("linksToIconText").getValue();
-                newUrl.description = dijit.byId("linksToUrlDescription").getValue();
-                
-                //var typeName = dijit.byId("linksFromFieldName").getValue();
-                var selectedLinksFrom = dijit.byId("linksFromFieldName");//._getSelectedOptionsAttr();
-                newUrl.relationType = selectedLinksFrom.item == null ? -1 : selectedLinksFrom.item.id[0];
-                if (newUrl.relationType == -1) {
-                    newUrl.relationTypeName = selectedLinksFrom.get("value");
+
+                    caller.selectedRow.relationType = currentLink.relationType;
+                    caller.selectedRow.icon = currentLink.icon;
+                    caller.selectedRow.linkLabel = currentLink.linkLabel;
+
+                } else {
+                    // add NEW link
+                    // No checks if the store already contains the current element.
+                    UtilGrid.addTableDataRow(caller.grid, currentLink);
+ 
+                    // also add to "global" link table in "Verweise"
+                    if (caller.grid != "linksTo") {
+                        UtilGrid.addTableDataRow("linksTo", currentLink);
+                    }
                 }
-                
-                newUrl.name = dijit.byId("linksToName").getValue();
-                return newUrl;
-            }
-            
-            // iterates over all entries in the stores and returns a key that is not in use yet
-            /*_getNewKey = function(){
-             var objStore = dijit.byId("linkListObject").store;
-             var urlStore = dijit.byId("linkListURL").store;
-             
-             var objKey = UtilStore.getNewKey(objStore);
-             var urlKey = UtilStore.getNewKey(urlStore);
-             
-             return (objKey > urlKey ? objKey : urlKey);
-             }*/
-            // 'New Link' Button onClick function.
-            //
-            // Resets the list selection and currently selected objects/urls
-            newLink = function(){
-                showInputElements();
-                // Reset object and url selections
-                //var objectList = dijit.byId("linkListObject");
-                //var urlList = dijit.byId("linkListURL");
-                //objectList.selection.deselectAll();
-                //objectList.renderSelections();
-                //urlList.selection.deselectAll();
-                //urlList.renderSelections();
-                UtilGrid.clearSelection("linkListObject");
-                UtilGrid.clearSelection("linkListURL");
-                
-                resetInputFields();
+
+                var callerGrid = UtilGrid.getTable(caller.grid);
+                callerGrid.invalidate();
+                callerGrid.notifyChangedData({});
+
+                // "global" link table in "Verweise"
+//                UtilGrid.getTable("linksTo").invalidate();
+
+                // save also closes dialog !
+                closeThisDialog();
             }
             
             showAssignObjectDialog = function(){
@@ -652,7 +381,7 @@
                 }
             }
             
-            function selectLinkType(e){
+            function selectLinkType(e) {
                 if (this.id == "linksLinkType2" || e == "url") {
                     document.getElementById("linkToObject").style.display = "none";
                     document.getElementById("linkToURL").style.display = "block";
@@ -667,76 +396,35 @@
                 }
             }
             
-            
             resetInputFields = function(){
                 // Reset field values
                 curSelectedObject = {};
                 curSelectedUrl = {};
                 
-                var thisDialog = dijit.byId("pageDialog");
-                if (!thisDialog.customParams || !thisDialog.customParams.filter) {
-                    //if (currentUdk.writePermission) {
+                if (!caller.filter) {
                     dijit.byId("linksFromFieldName").setDisabled(false);
-                    //}
                     dijit.byId("linksFromFieldName").setValue("");
                 }
                 
                 dijit.byId("linksToObjectName").setValue("");
                 dijit.byId("linksToObjectClass").setValue("");
-                dijit.byId("linksToDescription").setValue("");
+                dijit.byId("linksToObjectDescription").setValue("");
                 dijit.byId("linksToURL").setValue("http://");
-                dijit.byId("linksToName").setValue("");
-                dijit.byId("linksToDataType").setValue("");
-                dijit.byId("linksToDataVolume").setValue("");
+                dijit.byId("linksToURLName").setValue("");
                 dijit.byId("linksToURLType").setValue("");
-                dijit.byId("linksToIconURL").setValue("");
-                dijit.byId("linksToIconText").setValue("");
                 dijit.byId("linksToUrlDescription").setValue("");
-                
-                // Change 'save' Button text
-                dijit.byId("saveButton").setLabel("<fmt:message key='general.add' />");
             }
             
             // Cancel Button onClick function
-            //
-            resetInput = function(){
-                newLink();
-                hideInputElements();
-                resetRequiredInputElements();
-                
-                var thisDialog = dijit.byId("pageDialog");
-                if (!thisDialog.customParams || !thisDialog.customParams.filter) {
-                    dijit.byId("linksFromFieldName").setValue("");
-                }
+            resetInput = function() {
+                closeThisDialog();
             }
             
-            // Accept Button onClick function.
-            //
-            // This function copies the object links list to the main mdek linksTo list
-            function acceptLinkList(){
-            	//delete gridManager.linkListObject;
-                //delete gridManager.linkListURL;
-                var dlg = dijit.byId("pageDialog");
-             
-                var relationType = dlg.customParams ? dlg.customParams.filter : -2;
-                var objectData = UtilGrid.getTableData("linkListObject");
-                var relTypeData = objectData.concat(UtilGrid.getTableData("linkListURL"));
-
-                console.debug("relTypeData: " + relationType);
-                console.debug(relTypeData);
-                var allDataWithoutThisRelationType = [];
-                if (dlg.customParams && dlg.customParams.grid) {
-                	UtilGrid.setTableData(dlg.customParams.grid, relTypeData);
-                	// remove all entires with certain relationtype and insert all from here
-                	allDataWithoutThisRelationType = dojo.filter(UtilGrid.getTableData("linksTo"), function(item) { return item.relationType != relationType});
-                    console.debug("allDataWithoutThisRelationType:");
-                    console.debug(allDataWithoutThisRelationType);
-                }
-                
-                UtilGrid.setTableData("linksTo", allDataWithoutThisRelationType.concat(relTypeData));
-            }
-            
-            closeThisDialog = function(){
+            closeThisDialog = function() {
+                // we can't clear in a way, that we can immediately reselect the row !? :(
+                // so we keep selection, user has to click to other row, before reselecting !
+//                UtilGrid.clearSelection(caller.grid);
+//                UtilGrid.getTable(caller.grid).invalidate();
                 dijit.byId("pageDialog").hide();
             }
         </script>
@@ -749,8 +437,8 @@
                 	</div>
                 <br>
                 <br>   
-                <div id="linksContent" class="content" dojoType="dijit.layout.BorderContainer" design="sidebar" style="height:600px;">
-                   <!-- LEFT HAND SIDE CONTENT START -->
+                <div id="linksContent" class="content">
+                   <!-- CONTENT START -->
                     <div class="inputContainer grey" dojoType="dijit.layout.ContentPane" region="center" style="padding:15px;">
                         <span class="label">
                             <label onclick="javascript:dialog.showContextHelp(arguments[0], 7034)">
@@ -778,24 +466,17 @@
                                         </label>
                                     </span>
                                     <span class="input">
-                                        <input id="linksFromFieldName" style="width: 100%;"><!--<span dojoType="dojo.data.ItemFileWriteStore" id="linksFromStore" jsId="linksFromStore" data="fieldData"></span>
-                                        <div dojoType="dijit.form.ComboBox" store="linksFromStore" maxlength="80" autoComplete="false" toggle="plain" style="width: 590px;" id="linksFromFieldName">
-                                        </div>-->
+                                        <input id="linksFromFieldName" style="width: 100%;">
                                     </span>
                                 </div>
                             </span>
                             <div class="fill">
                             </div>
                         </div>
-                        <span class="button transparent">
-                            <span style="float: right;">
-                                <button dojoType="dijit.form.Button" id="newLinkButton" onClick="newLink" type="button">
-                                    <fmt:message key="dialog.links.new" />
-                                </button>
-                            </span>
-                        </span>
                         <div class="fill"></div>
-                        <span id="inputFields" style="display: none;">
+                        <span id="inputFields">
+                          <!-- RADIO BUTTONS-->
+                          <span id="inputLinkTypeRadioButtons" style="display: none;">
                             <span class="outer required">
                                 <div>
                                     <span class="label">
@@ -819,7 +500,8 @@
                                     </div>
                                 </div>
                             </span>
-                            <span class="outer">
+                          </span><!-- RADIO BUTTONS-->
+                            <span class="outer" style="padding-top:5px;">
                             <span class="label">
                                 <label onclick="javascript:dialog.showContextHelp(arguments[0], 7038)">
                                     <fmt:message key="dialog.links.target" />
@@ -856,12 +538,12 @@
                                 <span class="outer">
                                     <div>
                                         <span class="label">
-                                            <label for="linksToDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 2110)">
+                                            <label for="linksToObjectDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 2110)">
                                                 <fmt:message key="dialog.links.objDescription" />
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" mode="textarea" id="linksToDescription" name="linksToDescription" class="textAreaFull" dojoType="dijit.form.SimpleTextarea" />
+                                            <input type="text" mode="textarea" id="linksToObjectDescription" name="linksToObjectDescription" class="textAreaFull" dojoType="dijit.form.SimpleTextarea" />
                                         </span>
                                     </div>
                                 </span>
@@ -869,19 +551,19 @@
                             </div>
                             <!-- VERWEIS AUF URL -->
                             <div id="linkToURL" class="outlined">
-                                <span class="outer required">
+                                <span class="outer required" style="width:100%;">
                                     <div>
                                         <span class="label">
-                                            <label id="linksToNameLabel" for="linksToName" onclick="javascript:dialog.showContextHelp(arguments[0], 2210)">
+                                            <label id="linksToURLNameLabel" for="linksToURLName" onclick="javascript:dialog.showContextHelp(arguments[0], 2210)">
                                                 <fmt:message key="dialog.links.urlDescription" />*
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" maxlength="255" id="linksToName" name="linksToName" dojoType="dijit.form.ValidationTextBox" />
+                                            <input type="text" maxlength="255" id="linksToURLName" name="linksToURLName" dojoType="dijit.form.ValidationTextBox" style="width:100%;" />
                                         </span>
                                     </div>
                                 </span>
-                                <span class="outer required">
+                                <span class="outer required" style="width:66%;">
                                     <div>
                                         <span class="label">
                                             <label id="linksToURLLabel" for="linksToURL" onclick="javascript:dialog.showContextHelp(arguments[0], 2200)">
@@ -889,31 +571,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" maxLength="255" id="linksToURL" name="linksToURL" dojoType="dijit.form.ValidationTextBox" />
-                                        </span>
-                                    </div>
-                                </span>
-                                <span class="outer required" style="width:33%;">
-                                    <div>
-                                        <span class="label">
-                                            <label id="linksToDataTypeLabel" onclick="javascript:dialog.showContextHelp(arguments[0], 2240)">
-                                                <fmt:message key="dialog.links.dataType" />*
-                                            </label>
-                                        </span>
-                                        <span class="input">
-                                            <input id="linksToDataType" searchAttr="label" style="width: 100%;">
-                                        </span>
-                                    </div>
-                                </span>
-                                <span class="outer" style="width:33%;">
-                                    <div>
-                                        <span class="label">
-                                            <label for="linksToDataVolume" onclick="javascript:dialog.showContextHelp(arguments[0], 2220)">
-                                                <fmt:message key="dialog.links.dataSize" />
-                                            </label>
-                                        </span>
-                                        <span class="input">
-                                            <input type="text" id="linksToDataVolume" maxlength="20" name="linksToDataVolume" dojoType="dijit.form.ValidationTextBox" style="width:100%;"/>
+                                            <input type="text" maxLength="255" id="linksToURL" name="linksToURL" dojoType="dijit.form.ValidationTextBox" style="width:100%;" />
                                         </span>
                                     </div>
                                 </span>
@@ -925,37 +583,12 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input id="linksToURLType" style="width: 100%;"><!--<div dojoType="dijit.form.Select" autoComplete="false" toggle="plain" dataUrl="js/data/urlReferenceTypes.js" style="width: 116px;" widgetId="linksToURLType">
-                                            </div>-->
+                                            <input id="linksToURLType" style="width: 100%;">
                                         </span>
                                     </div>
                                 </span>
                                 <div class="fill">
                                 </div>
-                                <span class="outer required halfWidth">
-                                    <div>
-                                        <span class="label">
-                                            <label for="linksToIconURL" onclick="javascript:dialog.showContextHelp(arguments[0], 2250)">
-                                                <fmt:message key="dialog.links.urlIcon" />
-                                            </label>
-                                        </span>
-                                        <span class="input">
-                                            <input type="text" id="linksToIconURL" maxlength="255" name="linksToIconURL" dojoType="dijit.form.ValidationTextBox" style="width:100%;"/>
-                                        </span>
-                                    </div>
-                                </span>
-                                <span class="outer required halfWidth">
-                                    <div>
-                                        <span class="label">
-                                            <label for="linksToIconText" onclick="javascript:dialog.showContextHelp(arguments[0], 2230)">
-                                                <fmt:message key="dialog.links.urlIconText" />
-                                            </label>
-                                        </span>
-                                        <span class="input">
-                                            <input type="text" id="linksToIconText" maxlength="80" name="linksToIconText" dojoType="dijit.form.ValidationTextBox" style="width:100%;"/>
-                                        </span>
-                                    </div>
-                                </span>
                                 <span class="outer">
                                     <div>
                                         <span class="label">
@@ -972,16 +605,14 @@
                                 </div>
                             </div>
                             </span>
-                            <span id="inputButtons" style="display: none;">
+                            <span id="inputButtons">
                                 <div class="inputContainer">
                                     <span class="button">
                                         <span style="float: right;">
                                             <button dojoType="dijit.form.Button" id="resetButton" onClick="resetInput">
                                                 <fmt:message key="dialog.links.cancel" />
                                             </button>
-                                        </span><!--
-                                        <span style="float:right; padding-right:5px;"><button dojoType="ingrid:Button" onClick="acceptLinkList">&Auml;nderungen &uuml;bernehmen</button></span>
-                                        -->
+                                        </span>
                                         <span style="float: right; padding-right: 5px;">
                                             <button id="saveButton" dojoType="dijit.form.Button" onClick="saveLink" type="button">
                                                 <fmt:message key="dialog.links.add" />
@@ -991,40 +622,7 @@
                                 </div>
                             </span>
                         </span>
-                    </div><!-- LEFT HAND SIDE CONTENT END -->
-                    <!-- RIGHT HAND SIDE CONTENT START -->
-                    <div id="listLinks" class="inputContainer" dojoType="dijit.layout.ContentPane" region="right" style="width: 200px; padding:5px;">
-                        <span class="label">
-                            <label class="inActive" for="linkList">
-                                <fmt:message key="dialog.links.list" />
-                            </label>
-                        </span>
-                        <div dojoType="dijit.layout.ContentPane">
-                            <span class="label">
-                                <label class="inActive" for="linkListObject">
-                                    <fmt:message key="dialog.links.objects" />
-                                </label>
-                            </span>
-                            <div class="tableContainer">
-                                <div id="linkListObject" autoHeight="9" class="hideTableHeader" query="{relationType:'-9'}">
-                                </div>
-                            </div>
-                            <div class="spacer">
-                            </div>
-                            <div dojoType="dijit.layout.ContentPane">
-                                <span class="label">
-                                    <label for="linkListURL" class="inActive">
-                                        URL
-                                    </label>
-                                </span>
-                                <div class="tableContainer">
-                                    <div id="linkListURL" autoHeight="9" class="hideTableHeader" query="{relationType:'-9'}">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- RIGHT HAND SIDE CONTENT END -->
-                    </div>
+                    </div><!-- CONTENT END -->
                 </div>
             </div>
         </div>
