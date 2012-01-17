@@ -63,7 +63,11 @@
                             });
                         }
                         else {
-                            dialog.show("<fmt:message key='general.error' />", "<fmt:message key='cts.transformError' />", dialog.WARNING);
+                            if (res.errorMsg) {
+                                dialog.show("<fmt:message key='general.error' />", res.errorMsg, dialog.WARNING);
+                            } else {
+                                dialog.show("<fmt:message key='general.error' />", "<fmt:message key='cts.transformError' />", dialog.WARNING);
+                            }
                         }
 						dijit.byId("pageDialog").hide();
                         

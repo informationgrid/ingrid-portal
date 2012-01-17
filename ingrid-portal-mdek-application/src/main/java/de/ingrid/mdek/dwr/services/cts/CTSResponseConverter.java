@@ -25,9 +25,16 @@ public class CTSResponseConverter implements Converter {
 		while (reader.hasMoreChildren()) {
 			reader.moveDown();
 			if ("SRS".equals(reader.getNodeName())) {
-				response.setSpatialReferenceSystem(SpatialReferenceSystem.valueOf(reader.getAttribute("name")));
+				String srsName = reader.getAttribute("name");
+				try {
+					response.setSpatialReferenceSystem(SpatialReferenceSystem.valueOf(srsName));
+				} catch (Exception ex) {
+					response.setErrorMsg(ex.getMessage());
+				}
 			} else if ("Coords".equals(reader.getNodeName())) {
 				response.setCoordinate(new Coordinate(reader.getAttribute("values").split(" ")));				
+			} else if ("ERROR".equals(reader.getNodeName())) {
+				response.setErrorMsg(reader.getAttribute("message"));				
 			}
 			reader.moveUp();
 		}

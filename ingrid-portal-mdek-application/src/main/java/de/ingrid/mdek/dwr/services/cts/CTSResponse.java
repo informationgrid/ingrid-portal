@@ -5,9 +5,10 @@ import de.ingrid.mdek.dwr.services.cts.CoordinateTransformationService.SpatialRe
 public class CTSResponse {
 	private SpatialReferenceSystem spatialReferenceSystem;
 	private Coordinate coordinate;
+	private String errorMsg = null;
 
 	public String toString() {
-		return "[" + spatialReferenceSystem + ", " + coordinate + "]";
+		return "[" + spatialReferenceSystem + ", " + coordinate + ", " + errorMsg + "]";
 	}
 
 	public SpatialReferenceSystem getSpatialReferenceSystem() {
@@ -25,5 +26,13 @@ public class CTSResponse {
 
 	public void setCoordinate(Coordinate coordinate) {
 		this.coordinate = coordinate;
+	}
+
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
 	}
 }
