@@ -596,15 +596,14 @@
             </content>
         </section>
         <section help-key="maintanance-of-objects-7">
-            <header>Add/Edit Links</header>
+            <header>Add/Edit Link</header>
             <content>
                  <p>This dialogue box can either be called up via the <i>Links</i> field group or from one of the specific fields that support 
 				 references (such as, for example, the baseline data field of the object class <i>Geoinformation/ Map</i>).</p>
-				 <p>WIf the dialogue is summoned from a particular field, the detail 
-				 <i>Link Name</i> is already filled in with the field names. In this case you cannot carry out any changes to the details.</p>
+				 <p>If the dialogue is summoned from a particular field, the detail 
+				 <i>Attached to field</i> is already filled in with the field name. In this case you cannot carry out any changes to the details.</p>
 				 <p>If you have called up the dialogue box from the general 
-				 <i>Links</i> field group, then you can either select a field name from the dropdown list of the field <i>Link Name</i> 
-				 or give the reference relationship any free designation.</p>
+				 <i>Links</i> field group, then you can select a field name from the dropdown list of the field <i>Attached to field</i>.</p>
 				 <p>There are two types of links:</p>
 				 <ul>
 				 <li>Cross-references between objects (link type: object)</li>
@@ -617,27 +616,16 @@
 				 <p>Optionally you can make a <i>Description</i> on the reference.</p>
 				 <p><b>Link type: URL</b></p>
 				 <p>By means of this reference type a reference is defined to an external data source in the internet. It is obligatory for 
-				 you to give a <i>Link Description</i>, <i>Internet address (URL)</i> and the <i>Data Type</i> of the data source.</p>
+				 you to give a <i>Link Description</i> and the <i>Internet address (URL)</i>.</p>
 				 <p>Optionally you can make a <i>Description</i> on the reference.</p>
-				 <p><u>Take care</u>: All further statements are likewise optional. In the representation of the metadata object via the portal 
-				 they will not be displayed and it is anticipated that in future they will no longer be supported.</p>
-				 <p><b>Link List</b></p>
-				 <p>On the right side of the dialogue box the <i>Link</i> list is displayed. It is broken down according to the two reference 
-				 types into <i>Objects</i> and <i>URL</i>.</p>
-				 <p>You can add further links to the list by clicking on the 
-				 <i>New</i> button in the left window so that a new reference to the link type desired is created and then add it to the list via the 
-				 <i>Add</i> button.</p>
-				 <p>You can edit a reference already in place by selecting it in the 
-				 <i>Link List</i>. It is then displayed on the left side of the window and can be edited. Afterwards, you can adopt the changes into the 
-				 <i>Link List</i> via the <i>Save</i> button.</p>
-				 <p>You can delete an existing reference by clicking with the right mouse button on the corresponding entry in the 
-				 <i>Link List</i> and selecting the <i>Delete Row</i> function from the context menu.</p>
+				 <p><u>Take care</u>: <i>URL-Type</i> is also optional but will not be displayed in the representation of the metadata object 
+				 via the portal.</p>
             </content>
         </section>
         <section help-key="maintanance-of-objects-8">
             <header>Select Object</header>
             <content>
-                 <p>This dialogue box is called up from the <i>Add/EditLinks</i> dialogue box to create a reference to an object. 
+                 <p>This dialogue box is called up from the <i>Add/Edit Link</i> dialogue box to create a reference to an object. 
 				 Through this one can select the object to which the link is to be made.</p>
 				 <p>Click through the structure of the objects and select the desired object with one click on the name of the 
 				 object. The object selected is displayed in <b>red</b>.</p>

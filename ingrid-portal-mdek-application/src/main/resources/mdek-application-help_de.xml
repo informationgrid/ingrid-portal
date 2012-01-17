@@ -849,12 +849,11 @@
 				 speziellen Felder heraus aufgerufen werden, die Verweise unterstützen (wie z.B. das Feld 
 				 <i>Datengrundlage</i> der Objektklasse <i>Geoinformation/Karte</i>).</p>
 				 <p>Wird der Dialog aus einem speziellen Feld heraus aufgerufen, ist die Angabe 
-				 <i>Feldname/Bezeichnung der Verweisbeziehung</i> bereits mit dem Feldnamen gefüllt. 
+				 <i>Kopplung an Feld</i> bereits mit dem Feldnamen gefüllt. 
 				 Sie können in diesem Fall keine Änderung an der Angabe vornehmen.</p>
 				 <p>Haben Sie den Dialog aus der allgemeinen Feldgruppe Verweise heraus aufgerufen, dann 
-				 können Sie entweder einen Feldnamen aus der Auswahlliste des Feldes 
-				 <i>Feldname/Bezeichnung der Verweisbeziehung</i> wählen oder der Verweisbeziehung eine 
-				 beliebige freie Bezeichnung geben. </p>
+				 können Sie einen Feldnamen aus der Auswahlliste des Feldes 
+				 <i>Kopplung an Feld</i> wählen. </p>
 				 <p>Es gibt zwei Typen von Verweisen:</p>
 				 <ul>
 				 <li>Querverweise zwischen Objekten (Verweistyp: Objekt)</li>
@@ -868,26 +867,11 @@
 				 <p>Optional können Sie eine <i>Erläuterung</i> zu dem Verweis angeben.</p>
 				 <p><b>Verweistyp: URL</b></p>
 				 <p>Über diesen Verweistyp wird ein Verweis zu einer externen Datenquelle im Internet 
-				 definiert. Verpflichtend müssen Sie eine <i>Bezeichnung des Verweises</i>, 
-				 die <i>Internet-Adresse (URL)</i> und den <i>Datentyp</i> der Datenquelle angeben.</p>
+				 definiert. Verpflichtend müssen Sie eine <i>Bezeichnung des Verweises</i> und 
+				 die <i>Internet-Adresse (URL)</i> angeben.</p>
 				 <p>Optional können Sie eine <i>Erläuterung</i> zu dem Verweis angeben.</p>
-				 <p><u>Achtung:</u> Alle weiteren Angaben sind ebenfalls optional. Sie werden bei 
-				 der Darstellung des Metadatenobjektes über das Portal nicht angezeigt und 
-				 voraussichtlich zukünftig nicht weiter unterstützt.</p>
-				 <p><b>Verweisliste</b></p>
-				 <p>Auf der rechten Seite des Dialoges wird die Verweisliste angezeigt. Sie ist nach den 
-				 beiden Verweistypen in <i>Objekte</i> und <i>URL</i> getrennt.</p>
-				 <p>Weitere Verweise können Sie zu der Liste hinzufügen, indem Sie auf die Schaltfläche 
-				 <i>Neu</i> im linken Fenster klicken, damit einen neuen Verweis des gewünschten 
-				 Verweistyps erstellen und ihn abschließend über die Schaltfläche <i>Hinzufügen</i> der 
-				 Liste hinzufügen.</p>
-				 <p>Einen bereits vorhandenen Verweis können Sie bearbeiten, indem Sie ihn in der 
-				 <i>Verweisliste</i> anwählen. Er wird dann im Fenster auf der linken Seite dargestellt 
-				 und kann bearbeitet werden. Anschließend können Sie über die Schaltfläche <i>Speichern</i> 
-				 die Änderungen in die <i>Verweisliste</i> übernehmen.</p>
-				 <p>Einen vorhandenen Verweis können Sie löschen, indem Sie mit der rechten Maustaste 
-				 auf den entsprechenden Eintrag in der <i>Verweisliste</i> klicken und die Funktion 
-				 <i>Löschen</i> aus dem Kontextmenü auswählen.</p>
+				 <p><u>Achtung:</u> Die Angabe <i>URL-Typ</i> ist ebenfalls optional, wird bei 
+				 der Darstellung des Metadatenobjektes über das Portal jedoch nicht angezeigt.</p>
             </content>
         </section>
         <section help-key="maintanance-of-objects-8">
