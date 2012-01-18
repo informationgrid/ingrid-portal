@@ -9,7 +9,7 @@
             dojo.require("dojo.date.locale");
             var scriptScopeCodeLists = _container_;
             
-            var MAINTAINABLE_LIST_IDS = [100, 101, 102, 515, 518, 520, 523, 526, 528, 1100, 1320, 1350, 1370, 2240, 3385, 3535, 3555, 6005];
+            var MAINTAINABLE_LIST_IDS = [100, 101, 102, 515, 518, 520, 523, 526, 528, 1100, 1320, 1350, 1370, 3385, 3535, 3555, 6005];
             var CAN_SET_DEFAULT_LIST_IDS = [100, 518, 523, 525, 526, 527, 1350, 1370, 3385, 3571, 4300, 4305, 5100, 5200, 99999999];
 
 			createDOMElements();

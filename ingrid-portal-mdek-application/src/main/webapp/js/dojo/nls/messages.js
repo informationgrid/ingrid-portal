@@ -891,7 +891,6 @@
 	"ui.sysList.1410":"Thesaurus - Enviromental topics - Topics",
 	"ui.sysList.2000":"Object / Url-Link - Type",
 	"ui.sysList.2010":"Addresstype for special object classes",
-	"ui.sysList.2240":"Url-Link - Type",
 	"ui.sysList.2251":"Url-Link - Intranet/Internet",
 	"ui.sysList.3385":"Object class 2 - Document type",
 	"ui.sysList.3535":"Object class 1 / 5 - Key catalogue - Title",

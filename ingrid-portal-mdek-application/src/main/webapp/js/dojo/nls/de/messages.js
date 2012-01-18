@@ -891,7 +891,6 @@
 	"ui.sysList.1410":"Verschlagwortung - Umweltthemen - Themen",
 	"ui.sysList.2000":"Objekt / Url-Verweis - Typ",
 	"ui.sysList.2010":"Adresstyp für spezielle Objektklassen",
-	"ui.sysList.2240":"Url-Verweis - Typ",
 	"ui.sysList.2251":"Url-Verweis - Intranet/Internet",
 	"ui.sysList.3385":"Objektklasse 2 - Dokumenttyp",
 	"ui.sysList.3535":"Objektklasse 1 / 5 - Schlüssel-/Objektartenkatalog - Titel",

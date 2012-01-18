@@ -221,25 +221,32 @@
                     });
                 }
                 else {
-                    var objectClass = dijit.byId("objectClass").getValue().substr(5, 1);
+                    var objectClass = UtilUdk.getCurrentObjectClass();
+                    console.debug("objectClass field value: '" + dijit.byId("objectClass").getValue() + "'");
+                    console.debug("extracted objectClass: '" + objectClass + "'");
                     
                     var idList = [];
                     switch (objectClass) {
                         case "0":
-                            break; // Empty select box
+                            idList = ["9999"];
+                            break;
                         case "1":
-                            idList = ["3570", "3520", "3515", "3535", "3555", "5066"];
+                            idList = ["3570", "3520", "3515", "3535", "3555", "5066", "9999"];
                             break;
                         case "2":
-                            idList = ["3345"];
+                            idList = ["3345", "9999"];
                             break;
                         case "3":
-                            idList = ["3210"];
+                            idList = ["3210", "9999"];
                             break;
                         case "4":
-                            break; // Empty select box
+                            idList = ["9999"];
+                            break;
                         case "5":
-                            idList = ["3100", "3109"];
+                            idList = ["3100", "3109", "9999"];
+                            break;
+                        case "6":
+                            idList = ["3210", "9999"];
                             break;
                         default:
                             console.debug("Error: could not determine object class.");

@@ -1120,20 +1120,12 @@ public class MdekMapper implements DataMapperInterface {
 
         for (UrlBean url : urlList) {
             IngridDocument mappedUrl = new IngridDocument();
-            KeyValuePair kvp = mapFromKeyValue(MdekKeys.LINKAGE_DATATYPE_KEY, url.getDatatype());
-            if (kvp.getValue() != null || kvp.getKey() != -1) {
-                mappedUrl.put(MdekKeys.LINKAGE_DATATYPE, kvp.getValue());
-                mappedUrl.put(MdekKeys.LINKAGE_DATATYPE_KEY, kvp.getKey());
-            }
             mappedUrl.put(MdekKeys.LINKAGE_DESCRIPTION, url.getDescription());
-            mappedUrl.put(MdekKeys.LINKAGE_ICON_TEXT, url.getIconText());
-            mappedUrl.put(MdekKeys.LINKAGE_ICON_URL, url.getIconUrl());
             mappedUrl.put(MdekKeys.LINKAGE_NAME, url.getName());
             mappedUrl.put(MdekKeys.LINKAGE_REFERENCE, url.getRelationTypeName());
             mappedUrl.put(MdekKeys.LINKAGE_REFERENCE_ID, url.getRelationType());
             mappedUrl.put(MdekKeys.LINKAGE_URL, url.getUrl());
             mappedUrl.put(MdekKeys.LINKAGE_URL_TYPE, url.getUrlType());
-            mappedUrl.put(MdekKeys.LINKAGE_VOLUME, url.getVolume());
             resultList.add(mappedUrl);
         }
         return resultList;
@@ -1660,17 +1652,12 @@ public class MdekMapper implements DataMapperInterface {
         
         for (IngridDocument obj : objList) {
             UrlBean url = new UrlBean();
-            KeyValuePair kvp = mapToKeyValuePair(obj, MdekKeys.LINKAGE_DATATYPE_KEY, MdekKeys.LINKAGE_DATATYPE);
-            url.setDatatype(kvp.getValue());
             url.setDescription((String) obj.get(MdekKeys.LINKAGE_DESCRIPTION));
-            url.setIconText((String) obj.get(MdekKeys.LINKAGE_ICON_TEXT));
-            url.setIconUrl((String) obj.get(MdekKeys.LINKAGE_ICON_URL));
             url.setName((String) obj.get(MdekKeys.LINKAGE_NAME));
             url.setRelationTypeName((String) obj.get(MdekKeys.LINKAGE_REFERENCE));
             url.setRelationType((Integer) obj.get(MdekKeys.LINKAGE_REFERENCE_ID));
             url.setUrl((String) obj.get(MdekKeys.LINKAGE_URL));
             url.setUrlType((Integer) obj.get(MdekKeys.LINKAGE_URL_TYPE));
-            url.setVolume((String) obj.get(MdekKeys.LINKAGE_VOLUME));
             resultList.add(url);
         }
         return resultList;

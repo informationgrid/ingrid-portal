@@ -5,10 +5,6 @@ public class UrlBean {
 	private String url;
 	private Integer relationType;
 	private String relationTypeName;
-	private String datatype;
-	private String volume;
-	private String iconUrl;
-	private String iconText;
 	private String description;
 	private Integer urlType;
 
@@ -34,38 +30,6 @@ public class UrlBean {
 
 	public void setRelationTypeName(String relationTypeName) {
 		this.relationTypeName = relationTypeName;
-	}
-
-	public String getDatatype() {
-		return datatype;
-	}
-
-	public void setDatatype(String datatype) {
-		this.datatype = datatype;
-	}
-
-	public String getVolume() {
-		return volume;
-	}
-
-	public void setVolume(String volume) {
-		this.volume = volume;
-	}
-
-	public String getIconUrl() {
-		return iconUrl;
-	}
-
-	public void setIconUrl(String iconUrl) {
-		this.iconUrl = iconUrl;
-	}
-
-	public String getIconText() {
-		return iconText;
-	}
-
-	public void setIconText(String iconText) {
-		this.iconText = iconText;
 	}
 
 	public String getDescription() {

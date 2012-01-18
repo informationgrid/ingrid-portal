@@ -403,16 +403,12 @@ function createNewUrl() {
 	var newUrl = {};
 
 	//newUrl.Id = 0;
-	newUrl.relationType = -1;
-	newUrl.relationTypeName = "Internet-Verweis";
+	newUrl.relationType = 9999;
+	newUrl.relationTypeName = "Keine Kopplung";
 	var urlName = dojo.trim(dijit.byId("assistantHtmlTitle").getValue());
 	newUrl.name = urlName.length != 0 ? urlName : "Internet-Verweis";
 	newUrl.url = dojo.trim(dijit.byId("assistantURL").getValue());
-	newUrl.datatype = "HTML";
-	newUrl.volume = "";
 	newUrl.urlType = "";
-	newUrl.iconUrl = "";
-	newUrl.iconText = "";
 	newUrl.description = "";
 
 	return newUrl;
