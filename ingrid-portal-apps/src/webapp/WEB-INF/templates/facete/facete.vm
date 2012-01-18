@@ -15,7 +15,7 @@
 
 #macro (renderFaceteMoreLinkLineDialog $label $style $id $button)
 	<div style="$style">
-		<button id="$button" dojoType="dijit.form.Button" type="button" onClick="prepareDialog('$id','$button')">$label</button>
+		<button id="$button" dojoType="dijit.form.Button" type="button" onClick="prepareDialog('$id')">$label</button>
 	   <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" >
    </div>
    <br>

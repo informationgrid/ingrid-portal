@@ -169,9 +169,9 @@ function faceteDialogCancel(id){
 }
 
 /* open dialog by onclick-event */
-function prepareDialog (id, button) {
+function prepareDialog (id) {
    var dialog = dijit.byId(id);
-   dojo.connect(dijit.byId(button), "onClick", dialog, "show");
+   dialog.show();
 }
 
 /* open dialog for map */
