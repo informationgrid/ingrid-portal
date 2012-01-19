@@ -16,14 +16,16 @@
 			#if($isSelectedChbTopic)
 				$action.setParameter("doRemoveTopic", "$topicKey")
 				<a href="$action" class="facete_label_chb">
-					<input id="$topicKey" class="facete_input_chb" type=checkbox checked>
+					<input id="$topicKey" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
 			#else
 				$action.setParameter("doAddTopicChb", "$topicKey")
 				<a href="$action" class="facete_label_chb">
-					<input id="$topicKey" class="facete_input_chb" type=checkbox>
+					<input id="$topicKey" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
 			#end
 				$MESSAGES.getString("$topicTitle")</a>
 				#renderLinkEntryNumber("$topic.get($topicKey)")
+					</input>
+				</a>
 		</span>
 	</div>
 #end
@@ -48,15 +50,17 @@
     			#set ($action = $renderResponse.createActionURL())
     			#if($isSelectedChbTopic)
     				$action.setParameter("doRemoveTopic", "$topicKey")
-    				<a href="$action" class="facete_label_chb">
-    					<input id="$topicKey" class="facete_input_chb" type=checkbox checked>
+					<a href="$action" class="facete_label_chb">
+    					<input id="$topicKey" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
     			#else
     				$action.setParameter("doAddTopicChb", "$topicKey")
     				<a href="$action" class="facete_label_chb">
-    					<input id="$topicKey" class="facete_input_chb" type=checkbox>
+    					<input id="$topicKey" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
     			#end
     				$MESSAGES.getString("$topicTitle")</a>
     				#renderLinkEntryNumber("$topic.get($topicKey)")
+					    </input>
+					</a>
     		</span>
     	</div>
     #end

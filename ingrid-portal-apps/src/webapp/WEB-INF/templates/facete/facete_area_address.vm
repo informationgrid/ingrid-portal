@@ -6,7 +6,7 @@
 </div>
 <div id="area_address" class="cat_content">
 	<div class="cat_entry_label">
-		<a onclick="loadDialog('dialog_area_address')" class="facete_link_line">
+		<a onclick="loadDialog(dijit.byId('dialog_area_address'))" class="facete_link_line">
 			$MESSAGES.getString("searchResult.facete.area.address.add")
 		</a>
         <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" ></img>

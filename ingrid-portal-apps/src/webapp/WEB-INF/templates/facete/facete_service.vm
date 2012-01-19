@@ -30,18 +30,16 @@
 				#if($isSelectedChbService)
 					$action.setParameter("doRemoveService", "$serviceKey")
 					<a href="$action" class="facete_label_chb">
-					<input id="$serviceKey" class="facete_input_chb" type=checkbox checked>
-					$MESSAGES.getString("$serviceTitle")
-					#renderLinkEntryNumber("$service.get($serviceKey)")
-					</a>
+						<input id="$serviceKey" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
 				#else
 					$action.setParameter("doAddService", "$serviceKey")
 					<a href="$action" class="facete_label_chb">
-					<input id="$serviceKey" class="facete_input_chb" type=checkbox>
-					$MESSAGES.getString("$serviceTitle")
-					#renderLinkEntryNumber("$service.get($serviceKey)")
-					</a>
+						<input id="$serviceKey" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
 				#end
+    					$MESSAGES.getString("$serviceTitle")
+    					#renderLinkEntryNumber("$service.get($serviceKey)")
+                        </input>
+					</a>
 			</span>
 		</div>
 	#end

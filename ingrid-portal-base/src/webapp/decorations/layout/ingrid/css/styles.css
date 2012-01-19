@@ -365,7 +365,7 @@ div.resultset_nav { text-align:right; background-color:#F4F4F4; padding:0px 4px 
 div.resultset_nav a { text-decoration:underline; font-weight: bold;}
 
 div.resultset { padding:4px 4px 4px 0px; font-size:100%; margin: 5px 0px 5px 0px; }
-div.resultset a { text-decoration:none; font-size:14px; color: #1B78B1; line-height:120%; padding: 0 10px 0 0; }
+div.resultset a { text-decoration:none; font-size:14px; color: #1B78B1; line-height:120%; padding: 0 15px 0 0; }
 div.resultset a:hover { text-decoration:underline;color: #111111;}
 div.resultset p.result_title { font-size:10px; margin: 10px 0px 10px 0px; }
 div.resultset p.result_description { font-size:11px; margin: 10px 0px 0px 0px; line-height:120%; color:#646464; }
@@ -843,7 +843,7 @@ div.facete_close { width:13px; height:13px; background-image: url(../images/face
 div#search_facete { width: 208px; float: left; padding: 0; border-right: 1px dotted #CCCCCC;}
 div#search_facete.openNode { width:208px ; margin:0 0 0 0px; }
 div#search_facete.closeNode { width:0; margin:0; }
-div#search_hits { float: left; padding: 0 0 0 25px; width:37em; }
+div#search_hits { float: left; padding: 0 0 0 25px; width:37em; font-size:100% !important; }
 div#search_hits.openNode { width:50.0em; }
 div#search_hits.closeNode { }
 div#search_hits.nonjavascript { padding: 0 0 0 0; width:826px; }

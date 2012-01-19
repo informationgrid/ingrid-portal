@@ -6,7 +6,7 @@
 </div>
 <div id="attribute" class="cat_content">
 	<div class="cat_entry_label">
-    	<a onclick="loadDialog('dialog_attribute')" class="facete_link_line">
+    	<a onclick="loadDialog(dijit.byId('dialog_attribute'))" class="facete_link_line">
 			$MESSAGES.getString("searchResult.facete.attribute.add")
 		</a>
         <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" ></img>

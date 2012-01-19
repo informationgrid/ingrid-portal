@@ -16,10 +16,11 @@
 
 #if($doGeothesaurus)
 	<script type="text/javascript">
-    	window.onload = function() {
-			loadDialog('dialog_geothesaurus');
+		
+		dojo.addOnLoad(function() {
+        	loadDialog(dijit.byId('dialog_geothesaurus'));
 			loadingProgressDialog('dialog_geothesaurus_loading');
-		}
+		});
 		
 		window.onsubmit = function() {
 			loadingProgressDialog('dialog_geothesaurus_loading');

@@ -1,10 +1,11 @@
 #if($doThesaurus)
 	<script type="text/javascript">
-    	window.onload = function() {
-			loadDialog('dialog_thesaurus');
+    	
+		dojo.addOnLoad(function() {
+        	loadDialog(dijit.byId('dialog_thesaurus'));
 			loadingProgressDialog('dialog_thesaurus_loading');
-		}
-		
+		});
+
 		window.onsubmit = function() {
 			loadingProgressDialog('dialog_thesaurus_loading');
 		}

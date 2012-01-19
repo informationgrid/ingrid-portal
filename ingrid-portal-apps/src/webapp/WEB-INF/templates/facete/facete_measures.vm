@@ -30,18 +30,16 @@
 				#if($isSelectedChbMeasures)
 					$action.setParameter("doRemoveMeasures", "$measuresKey")
 					<a href="$action" class="facete_label_chb">
-					<input id="$measuresKey" class="facete_input_chb" type=checkbox checked>
-					$MESSAGES.getString("$measuresTitle")
-					#renderLinkEntryNumber("$measures.get($measuresKey)")
-					</a>
+						<input id="$measuresKey" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
 				#else
 					$action.setParameter("doAddMeasures", "$measuresKey")
 					<a href="$action" class="facete_label_chb">
-						<input id="$measuresKey" class="facete_input_chb" type=checkbox>
+						<input id="$measuresKey" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
+				#end
 					$MESSAGES.getString("$measuresTitle")
 					#renderLinkEntryNumber("$measures.get($measuresKey)")
+						</input>
 					</a>
-				#end
 			</span>
 		</div>
 	#end

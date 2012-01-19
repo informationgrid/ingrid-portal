@@ -16,14 +16,16 @@
 					#if($isSelectedChbProvider)
     					$action.setParameter("doRemoveProvider", "${provider.ident}")
     					<a href="$action" class="facete_label_chb">
-							<input id="${provider.ident}" class="facete_input_chb" type=checkbox checked>
+							<input id="${provider.ident}" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
 					#else
 						$action.setParameter("doAddProviderChb", "${provider.ident}")
     					<a href="$action" class="facete_label_chb">
-							<input id="${provider.ident}" class="facete_input_chb" type=checkbox>
+							<input id="${provider.ident}" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
 					#end
-						$provider.name</a>
-						#renderLinkEntryNumberInArrayHashMap($elementsProvider "${provider.ident}")
+    						$provider.name
+    						#renderLinkEntryNumberInArrayHashMap($elementsProvider "${provider.ident}")
+                            </input>
+						</a>
 				</span>
     		</div>
 		</div>

@@ -194,13 +194,12 @@ function prepareDialogMap (id, wms, divId, iframeId) {
 
 /* open dialog */
 function loadDialog(id){
-	var dialog = dijit.byId(id);
+	var dialog = id;
 	dialog.show();
 }
 
 function loadingProgressDialog(element){
 	var status = document.getElementById(element).style.display;
-	console.debug(status);
 	if(status == "inline"){
 		document.getElementById(element).style.display = "none";
 	}

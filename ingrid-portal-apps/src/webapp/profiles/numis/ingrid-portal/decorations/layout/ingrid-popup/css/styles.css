@@ -678,3 +678,6 @@ br.print {display:none;}
 .print_view_visible { visibility:hidden; }
 
 .greenSeparator { background:#E2E2E2; border-top: 0 none; height: 14px; position: relative; width: 966px; }
+
+div.address_left div a { left:0px; }
+div.address_right div a { left:0px; }
