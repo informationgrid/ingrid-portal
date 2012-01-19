@@ -88,7 +88,20 @@
 				#end
     		#end	
 		#end
-		#renderFaceteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.category.plus") "" "dialog_topic" "button_topic")
+		<ul class="facete_ul_more">
+			<li>
+				#renderFaceteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.category.plus") "" "dialog_topic" "button_topic")
+            </li>
+			#if($isTopicSelect)
+			<li>
+				<img class="more_seperator" src="/ingrid-portal-apps/images/facete/facete_delete_seperator.png">
+            </li>
+			<li>
+				$action.setParameter("doRemoveAllTopics",  "true")
+            	#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete") $action)
+            </li>
+			#end
+		</ul>	
 	</div>
 	#parse ('/WEB-INF/templates/facete/facete_dialog_topic.vm')		        
 </div>

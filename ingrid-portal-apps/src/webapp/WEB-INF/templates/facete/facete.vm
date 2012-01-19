@@ -14,16 +14,17 @@
 #end
 
 #macro (renderFaceteMoreLinkLineDialog $label $style $id $button)
-	<div style="$style">
-		<button id="$button" dojoType="dijit.form.Button" type="button" onClick="prepareDialog('$id')">$label</button>
-	   <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" >
-   </div>
-   <br>
+	<a id="$button" class="facete_more" style="$style" onClick="prepareDialog('$id')">$label</a>
+	<img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" >
+#end
+
+#macro (renderFaceteDeleteLinkLineDialog $label $doAction)
+	<a href="$doAction" class="facete_link_line" style="font-weight: bold">$label</a>
 #end
 
 #macro (renderFaceteSelectedAttribute $doAction $title)
 	<div>
-		<a href="$doAction" class="facete_link_line" style="font-weight:bold;">$title</a>
+		<a href="$doAction" class="facete_link_line" style="color: #5E5E5F;">$title</a>
 		#renderDeleteIcon ($doAction)
     </div>
 #end
@@ -33,7 +34,7 @@
 		<span>
 			<a href="$doAction" class="facete_link_line" 
         		#if($isDelete)
-        			style="font-weight:bold;"
+        			style="color: #5E5E5F;"
         		#end
         		>$title</a>
 			#renderLinkEntryNumber("$number")

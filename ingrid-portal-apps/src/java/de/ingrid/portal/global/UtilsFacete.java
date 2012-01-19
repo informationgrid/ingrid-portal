@@ -271,6 +271,7 @@ public class UtilsFacete {
 		String doAddTopic = request.getParameter("doAddTopic");
 		String doAddTopicChb = request.getParameter("doAddTopicChb");
 		String doRemoveTopic = request.getParameter("doRemoveTopic");
+		String doRemoveAllTopics = request.getParameter("doRemoveAllTopics");
 		ArrayList<String> selectedTopics = null;
 		
 		if(doAddTopic != null){
@@ -307,6 +308,10 @@ public class UtilsFacete {
 		if(selectedTopics != null){
         	setAttributeToSession(request, SELECTED_TOPIC, selectedTopics);
         }
+		
+		if(doRemoveAllTopics != null){
+			removeAttributeFromSession(request, SELECTED_TOPIC);
+		}
 	}
 	
 	private static void setTopicParamsToContext (RenderRequest request, Context context){
@@ -1008,6 +1013,7 @@ public class UtilsFacete {
 		String doAddProvider = request.getParameter("doAddProvider");
 		String doAddProviderChb = request.getParameter("doAddProviderChb");
 		String doRemoveProvider = request.getParameter("doRemoveProvider");
+		String doRemoveAllProvider = request.getParameter("doRemoveAllProvider");
 		
 		ArrayList<String> selectedIds  = null;
 		
@@ -1058,6 +1064,10 @@ public class UtilsFacete {
 		if(selectedIds != null){
         	setAttributeToSession(request, SELECTED_PROVIDER, selectedIds);
         }
+		
+		if(doRemoveAllProvider != null){
+			removeAttributeFromSession(request, SELECTED_PROVIDER);
+		}
 	}
 
 	private static void setProviderParamsToContext (RenderRequest request, Context context){
