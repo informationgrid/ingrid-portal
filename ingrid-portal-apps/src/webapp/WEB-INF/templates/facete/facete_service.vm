@@ -10,7 +10,7 @@
 	<br>
 </div>
 
-<div id="service" class="cat_content">
+<div id="service" class="cat_content_entry">
 	#foreach ($service in $enableFaceteService)
 		#foreach ($key in $service.keySet())
 			#set($serviceKey = $key)
@@ -33,7 +33,7 @@
 						<input id="$serviceKey" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
 				#else
 					$action.setParameter("doAddService", "$serviceKey")
-					<a href="$action" class="facete_label_chb">
+					<a href="$action">
 						<input id="$serviceKey" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
 				#end
     					$MESSAGES.getString("$serviceTitle")

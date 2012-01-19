@@ -19,7 +19,7 @@
 					<input id="$topicKey" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
 			#else
 				$action.setParameter("doAddTopicChb", "$topicKey")
-				<a href="$action" class="facete_label_chb">
+				<a href="$action">
 					<input id="$topicKey" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
 			#end
 				$MESSAGES.getString("$topicTitle")</a>
@@ -54,7 +54,7 @@
     					<input id="$topicKey" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
     			#else
     				$action.setParameter("doAddTopicChb", "$topicKey")
-    				<a href="$action" class="facete_label_chb">
+    				<a href="$action">
     					<input id="$topicKey" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
     			#end
     				$MESSAGES.getString("$topicTitle")</a>
@@ -75,7 +75,7 @@
     #renderDeleteIcon ($action)
 	<br>
 </div>
-<div id="topic" class="cat_content">
+<div id="topic" class="cat_content_entry">
 	<div>
 		#set($i = 0)
 		#if($isTopicSelect)

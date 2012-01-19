@@ -19,7 +19,7 @@
 							<input id="${provider.ident}" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
 					#else
 						$action.setParameter("doAddProviderChb", "${provider.ident}")
-    					<a href="$action" class="facete_label_chb">
+    					<a href="$action">
 							<input id="${provider.ident}" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
 					#end
     						$provider.name
@@ -53,7 +53,7 @@
     					#renderDeleteIcon ($action)
 					</span>
     			</div>
-    			<div id="class" class="cat_content">
+    			<div id="class" class="cat_content_entry">
         			<div id="${partner.ident}">
         			#set($j = 0)
     				#if($isProviderSelect)

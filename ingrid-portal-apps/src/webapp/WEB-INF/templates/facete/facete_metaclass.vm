@@ -10,7 +10,7 @@
 	<br>
 </div>
 
-<div id="class" class="cat_content" style="padding: 5px 0 0 20px;">
+<div id="class" class="cat_content_entry" style="padding: 5px 0 0 20px;">
 	#foreach ($metaclass in $enableFaceteMetaClass)
 		#foreach ($key in $metaclass.keySet())
 			#set($metaclassKey = $key)

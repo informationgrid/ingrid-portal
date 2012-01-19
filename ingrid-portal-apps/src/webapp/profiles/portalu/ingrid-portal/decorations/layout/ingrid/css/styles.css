@@ -1,4 +1,4 @@
-/**
+	/**
  * Inlcude CSS styles for portlets (standardized classes)
  * See: Section PLT.C of the Portlet Specfication 1.0
  */
@@ -273,7 +273,7 @@ div.portal-layout-column-2 { float:left; width:15.75em; margin: 0px 0px 0 2.625e
 
 
 /*** Ergebnis-Spalten: 2/3 zu 1/3 ***/
-div#results_left { float:left; width:100%; }
+div#results_left { float:left; width:100%; font-size:100%; }
 div#results_right { float:right; width:17.6458em; padding: 0 30px 0 0; }
 
 /*** Ergebnis-Spalten: 1/2 zu 1/2 
@@ -365,6 +365,7 @@ div.resultset_nav { text-align:right; background-color:#F4F4F4; padding:0px 4px 
 div.resultset_nav a { text-decoration:underline; font-weight: bold;}
 
 div.resultset { padding:4px 4px 4px 0px; font-size:100%; margin: 5px 0px 5px 0px; }
+* div.resultset { padding:4px 4px 4px 0px; font-size:100%; margin: 5px 0px 5px 0px; }
 div.resultset a { text-decoration:none; font-size:14px; color: #1B78B1; line-height:120%; padding: 0 15px 0 0; }
 div.resultset a:hover { text-decoration:underline;color: #111111;}
 div.resultset p.result_title { font-size:10px; margin: 10px 0px 10px 0px; }
@@ -843,7 +844,7 @@ div.facete_close { width:13px; height:13px; background-image: url(../images/face
 div#search_facete { width: 208px; float: left; padding: 0; border-right: 1px dotted #CCCCCC;}
 div#search_facete.openNode { width:208px ; margin:0 0 0 0px; }
 div#search_facete.closeNode { width:0; margin:0; }
-div#search_hits { float: left; padding: 0 0 0 25px; width:37em; font-size:100% !important; }
+div#search_hits { float: left; padding: 0 0 0 25px; width:37em; }
 div#search_hits.openNode { width:50.0em; }
 div#search_hits.closeNode { }
 div#search_hits.nonjavascript { padding: 0 0 0 0; width:826px; }
@@ -861,9 +862,10 @@ div#search_hits_address.javascript {width:58.9em; }
 
 div.cat_label { }
 div.cat_label a { font-size: 12px; font-weight:bold; }
-div.cat_content { padding:5px 0 0 30px; display: block; }
+div.cat_content { padding:5px 0 0 20px; display: block; }
 div.cat_content div span.dijitButton { font-size:12px; padding: 0px; font-weight: bold; color: #1B78B1; margin: 0 0 0 -5px; }
 div.cat_content div span.dijitButton span.dijitButtonNode { background-color: transparent; background-image: none; border:0; padding:0; -moz-box-shadow:none; -moz-border-radius:0; }
+div.cat_content_entry { display:block; padding:5px 0 0 25px; }
 div.cat_entry_label { padding: 2px 0px; }
 div.cat_entry_label a { font-weight:normal; font-size:12px; }
 div.cat_entry_delete { padding: 0 0 0 30px; }
@@ -880,7 +882,7 @@ a.facete_link_line { font-size:12px; }
 a.facete_more_link_line { font-size:12px; padding: 0px 0px 0px 20px; font-weight: bold;  }
 
 input.facete_input_chb { float:left; margin: 4px 0 0 -20px; top: -2px; }
-label.facete_label_chb { padding: 0 0 0 7px; font-size:12px; color:#1B78B1; }
+a.facete_label_chb { color:#5e5e5f; }
 
 div.dijitDialog { background: none repeat scroll 0 0 #FFFFFF; padding: 10px; min-width: 400px; }
 div.facete_dialog div.dijitDialogTitleBar { border-bottom: 1px dotted #CECECE !important; background-color: #FFFFFF !important; background-image: none !important; height: 30px; }
@@ -913,7 +915,8 @@ div.dialog_content .inputstyletext { border: 1px inset #FFFFFF; padding: 2px 4px
 div.btn_submit_dialog { padding: 11px 0 0; }
 div.btn_submit_dialog div.btn_center input { font-size: 10px; }
 
-span.facete_label { font-size:11px; color: #5E5E5F; }
+span.facete_label { color: #5E5E5F; }
+span.facete_label_number { font-size:11px; color:#5e5e5f; }
 span.facete_label_dialog { padding: 0 0 0 7px; font-size:12px; color: #176798; }
 
 .tundra .dijitBorderContainer { background-color: transparent !important; }
