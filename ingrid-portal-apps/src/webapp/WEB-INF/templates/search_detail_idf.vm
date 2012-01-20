@@ -47,7 +47,9 @@
         <span class="linkinfo">(${entry.get("attachedToField")})</span>
     #end
     #if($tool.hasContent($entry.description))
-        <span class="linkinfo"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$entry.description</span>
+        #set($myIndent = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
+        #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>${myIndent}"))
+        <span class="linkinfo"><br/>${myIndent}${myDescription}</span>
     #end
 	</div>	
 #end

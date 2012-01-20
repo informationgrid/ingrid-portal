@@ -492,4 +492,9 @@ public class UtilsString {
         }
         return buf.toString();
     }
+
+    /** replaceAll String method (Java) for velocity :) */
+    public static String replaceAll(String stringToProcess, String stringToReplace, String stringToReplaceWith) {
+    	return stringToProcess.replaceAll(stringToReplace, stringToReplaceWith);
+    }
 }
