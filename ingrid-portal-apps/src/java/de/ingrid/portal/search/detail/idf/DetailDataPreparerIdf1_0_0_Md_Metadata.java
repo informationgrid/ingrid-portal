@@ -1076,6 +1076,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				String uuid = "";
 				String title = "";
 				String type = "";
+				String attachedToField = "";
+				String description = "";
 				
 				xpathExpression = "./@uuid";
 				if(XPathUtils.nodeExists(node, xpathExpression)){
@@ -1092,10 +1094,27 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					type = XPathUtils.getString(node, xpathExpression).trim();
 				}
 				
+				xpathExpression = "./idf:attachedToField";
+				if(XPathUtils.nodeExists(node, xpathExpression)){
+					attachedToField = XPathUtils.getString(node, xpathExpression).trim();
+				}
+				
+				xpathExpression = "./idf:description";
+				if(XPathUtils.nodeExists(node, xpathExpression)){
+					description = XPathUtils.getString(node, xpathExpression).trim();
+				}
+				
 				HashMap link = new HashMap();
 	        	link.put("hasLinkIcon", new Boolean(true));
 	        	link.put("isExtern", new Boolean(false));
 	        	link.put("title", title);
+	        	link.put("objectClass", type);
+  	        	if (description.length() > 0) {
+  	        		link.put("description", description);
+  	        	}
+  	        	if (attachedToField.length() > 0) {
+  	        		link.put("attachedToField", attachedToField);
+  	        	}          	        	
 	        	if(this.iPlugId != null){
 	        		if(uuid != null){
 	        			if(log.isDebugEnabled()){
@@ -1496,7 +1515,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         		String name = "";
         		String description = "";
         		String function = "";
-        		String type = "";
+        		String attachedToField = "";
         		String size = "";
         		float roundSize = 0;
         		
@@ -1521,11 +1540,12 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
             			name = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
             		}
             		
-            		xpathExpression = "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:datatype";
+            		xpathExpression = "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField";
             		if(XPathUtils.nodeExists(nodeList.item(i), xpathExpression)){
-            			type = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
+            			attachedToField = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
             		}
-            		
+
+            		// also mapped by T0112_media_option !!!
             		xpathExpression = "./gmd:MD_DigitalTransferOptions/gmd:transferSize";
             		if(XPathUtils.nodeExists(nodeList.item(i), xpathExpression)){
             			size = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
@@ -1538,21 +1558,23 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
             			HashMap link = new HashMap();			
         				link.put("hasLinkIcon", new Boolean(true));
           	        	link.put("isExtern", new Boolean(true));
+          	        	link.put("href", url);
+
           	        	if(name.length() > 0){
           	        		link.put("title", name);
           	  	        }else{
           	  	        	link.put("title", url);
           	        	}
-          	        	
-          	        	if(type.length() > 0 && size.length() > 0){
-          	        		link.put("linkInfo", "[" + type + "/" + roundSize + " MB]");
-          	        	}else if(type.length() > 0){
-          	        		link.put("linkInfo", "[" + type + "]");
-          	        	}else if(size.length() > 0){
+          	        	if (description.length() > 0) {
+          	        		link.put("description", description);
+          	        	}
+          	        	if (attachedToField.length() > 0) {
+          	        		link.put("attachedToField", attachedToField);
+          	        	}          	        	
+          	        	if (size.length() > 0) {
           	        		link.put("linkInfo", "[" + roundSize + " MB]");
           	        	}
           	        	
-          	        	link.put("href", url);
           	        	linkList.add(link);
             		}
         		}

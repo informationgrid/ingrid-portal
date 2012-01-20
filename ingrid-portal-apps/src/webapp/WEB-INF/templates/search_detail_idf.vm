@@ -11,6 +11,10 @@
 			<span class="icon_udk">
 				<img src="/ingrid-portal-apps/images/$entry.iconImage" alt="$entry.iconImageAltText" />
 			</span>
+        #elseif($entry.objectClass)
+            <span class="icon_udk">
+                <img src="/ingrid-portal-apps/images/icn_udk_obj_${entry.get("objectClass")}.gif" alt="Class${entry.get("objectClass")}" />
+            </span>
 		#else
 			<span class="icon">
 			#if($entry.isExtern)
@@ -39,6 +43,12 @@
 	#if($tool.hasContent($entry.linkInfo))
 		<span class="linkinfo">$entry.linkInfo</span>
 	#end
+    #if($tool.hasContent($entry.attachedToField))
+        <span class="linkinfo">(${entry.get("attachedToField")})</span>
+    #end
+    #if($tool.hasContent($entry.description))
+        <span class="linkinfo"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$entry.description</span>
+    #end
 	</div>	
 #end
 
