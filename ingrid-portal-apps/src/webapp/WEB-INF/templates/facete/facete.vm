@@ -113,7 +113,6 @@
 		
 ## ERGEBNISTYPEN ##
 	#if($enableFaceteDatatype)
-			
         #if(!$ds || $ds == "1")
         	<div class="cat_label">
         		<img id="hit_types_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('hit_types')">
@@ -125,40 +124,52 @@
         ## DATENTYPEN ##
         		#parse ('/WEB-INF/templates/facete/facete_datatype.vm')
         	</div>
+    	#end
+        ## PARTNER ##
+        #if(!$ds || $ds == "1" || $ds == "2" || $ds == "4")
+        	#if($enableFacetePartnerList && $enableFacetePartnerList.size() > 0)
+        		#parse ('/WEB-INF/templates/facete/facete_partner.vm')
+        	#end
+        #end
+        	
+        ## ZEITBEZUG ##
+        #if(!$ds || $ds == "1")
+        	#parse ('/WEB-INF/templates/facete/facete_time.vm')
+        #end
+        
+        ## RAUMBEZUG ##
+        #if(!$ds || $ds == "1")
+        	#parse ('/WEB-INF/templates/facete/facete_area.vm')
+        #end
+        
+        ## SCHLAGWORTE ##
+        #if(!$ds || $ds == "1" || $ds == "2" || $ds == "3" || $ds == "4")
+        	#parse ('/WEB-INF/templates/facete/facete_thesaurus.vm')
+        #end
+        
+        ## ATTRIBUTE ##
+        #if($ds && $ds == "3")
+        	#parse ('/WEB-INF/templates/facete/facete_attribute.vm')
+        #end
+        
+        ## RAUMBEZUG - ADDRESSEN ##
+        #if($ds &&  $ds == "2")
+        	#parse ('/WEB-INF/templates/facete/facete_area_address.vm')
 		#end
-	#end
-	
-## PARTNER ##
-	#if(!$ds || $ds == "1" || $ds == "2" || $ds == "4")
-		#if($enableFacetePartnerList && $enableFacetePartnerList.size() > 0)
-			#parse ('/WEB-INF/templates/facete/facete_partner.vm')
+	#else
+		#if($isTopicSelect || $doTime || ($thesaurusSelectTopics && $thesaurusSelectTopics.size() > 0 ) || $selectedService || $isPartnerSelect || $selectedMetaclass || $selectedMeasures || $selectedDatatype || $doAddAttribute || ($geothesaurusSelectTopics && $thesaurusSelectTopics.size() > 0) || $doMapCoords || $doAddAreaAddress)
+    		<p>
+    			$MESSAGES.getString("searchResult.facete.category.error")
+            </p>
+    		$action.setParameter("doRemoveAll", "true")
+            #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.all") $action)
+    	#else
+    		<p>
+        		$MESSAGES.getString("searchResult.facete.category.no.hits")
+            </p>
 		#end
-	#end
-		
-## ZEITBEZUG ##
-	#if(!$ds || $ds == "1")
-		#parse ('/WEB-INF/templates/facete/facete_time.vm')
-	#end
-	
-## RAUMBEZUG ##
-	#if(!$ds || $ds == "1")
-		#parse ('/WEB-INF/templates/facete/facete_area.vm')
-	#end
-	
-## SCHLAGWORTE ##
-	#if(!$ds || $ds == "1" || $ds == "2" || $ds == "3" || $ds == "4")
-		#parse ('/WEB-INF/templates/facete/facete_thesaurus.vm')
-	#end
-	
-## ATTRIBUTE ##
-	#if($ds && $ds == "3")
-		#parse ('/WEB-INF/templates/facete/facete_attribute.vm')
-	#end
-	
-## RAUMBEZUG - ADDRESSEN ##
-	#if($ds &&  $ds == "2")
-		#parse ('/WEB-INF/templates/facete/facete_area_address.vm')
 	#end
 	</div>
+	
 </div>
 

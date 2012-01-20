@@ -156,6 +156,8 @@ public class UtilsFacete {
 
 	public static void setFaceteParamsToSessionByAction(ActionRequest request) {
 		
+		general(request);
+		
 		setFaceteTopicParamsToSession(request);
 		setFaceteMetaclassParamsToSession(request);
 		setFaceteDatatypeParamsToSession(request);
@@ -685,8 +687,15 @@ public class UtilsFacete {
         	for(int i = 0; i < selectedDatatype.size(); i++){
         		if(selectedDatatype.get(i).equals("map")){
         			query.addWildCardFieldQuery(new WildCardFieldQuery(true, false, "t011_obj_serv_op_connpoint.connect_point", "http*"));
+        			query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, "metadata"));
+        			query.addField(new FieldQuery(true, true, Settings.QFIELD_DATATYPE, "www"));
         		}else{
-        			query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, selectedDatatype.get(i).toString()));
+        			query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, selectedDatatype.get(i)));
+        			if(selectedDatatype.get(i).equals("metadata")){
+        				query.addField(new FieldQuery(true, true, Settings.QFIELD_DATATYPE, "www"));
+        			}else if(selectedDatatype.get(i).equals("www")){
+        				query.addField(new FieldQuery(true, true, Settings.QFIELD_DATATYPE, "metadata"));
+        			}
         		}
             }
         }else{
@@ -2105,42 +2114,54 @@ public class UtilsFacete {
 			}
 			
 			if(!portalTerm.equals(faceteTerm) || !portalDS.equals(faceteDS)){
-				removeAttributeFromSession(request, SELECTED_PROVIDER);
-				removeAttributeFromSession(request, SELECTED_TOPIC);
-				removeAttributeFromSession(request, SELECTED_METACLASS);
-				removeAttributeFromSession(request, SELECTED_DATATYPE);
-				removeAttributeFromSession(request, SELECTED_MEASURES);
-				removeAttributeFromSession(request, SELECTED_SERVICE);
-				removeAttributeFromSession(request, "doGeothesaurus");  
-				removeAttributeFromSession(request, "geothesaurusSelectTopicsId");  
-				removeAttributeFromSession(request, "geothesaurusTerm");  
-				removeAttributeFromSession(request, "geothesaurusSelectTopics");  
-				removeAttributeFromSession(request, TOPICS_GEOTHESAURUS);  
-				removeAttributeFromSession(request, ERROR_GEOTHESAURUS);  
-				removeAttributeFromSession(request, CURRENT_TOPIC_GEOTHESAURUS);  
-				removeAttributeFromSession(request, SIMILAR_TOPICS_GEOTHESAURUS);  
-				removeAttributeFromSession(request, LIST_SIZE_GEOTHESAURUS);  
-				removeAttributeFromSession(request, "doThesaurus");  
-				removeAttributeFromSession(request, "thesaurusSelectTopicsId");  
-				removeAttributeFromSession(request, "thesaurusSelectTopics");  
-				removeAttributeFromSession(request, "thesaurusTerm");  
-				removeAttributeFromSession(request, TOPICS_THESAURUS);  
-				removeAttributeFromSession(request, LIST_SIZE_THESAURUS);  
-				removeAttributeFromSession(request, ERROR_THESAURUS);  
-				removeAttributeFromSession(request, CURRENT_TOPIC_THESAURUS);  
-				removeAttributeFromSession(request, SIMILAR_TOPICS_THESAURUS);  
-				removeAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);  
-				removeAttributeFromSession(request, "doTime");  
-				removeAttributeFromSession(request, "doMapCoords");  
-				removeAttributeFromSession(request, "coordOptions");  
-				removeAttributeFromSession(request, "doAddAttribute");  
-				removeAttributeFromSession(request, "doAddAreaAddress");
+				removeAllFaceteSelections(request);
 			}
 			setAttributeToSession(request, "faceteTerm", portalTerm);
 			setAttributeToSession(request, "faceteDS", portalDS);
 		}
 	}
 	
+	private static void removeAllFaceteSelections(PortletRequest request){
+		
+		removeAttributeFromSession(request, SELECTED_PROVIDER);
+		removeAttributeFromSession(request, SELECTED_TOPIC);
+		removeAttributeFromSession(request, SELECTED_METACLASS);
+		removeAttributeFromSession(request, SELECTED_DATATYPE);
+		removeAttributeFromSession(request, SELECTED_MEASURES);
+		removeAttributeFromSession(request, SELECTED_SERVICE);
+		removeAttributeFromSession(request, "doGeothesaurus");  
+		removeAttributeFromSession(request, "geothesaurusSelectTopicsId");  
+		removeAttributeFromSession(request, "geothesaurusTerm");  
+		removeAttributeFromSession(request, "geothesaurusSelectTopics");  
+		removeAttributeFromSession(request, TOPICS_GEOTHESAURUS);  
+		removeAttributeFromSession(request, ERROR_GEOTHESAURUS);  
+		removeAttributeFromSession(request, CURRENT_TOPIC_GEOTHESAURUS);  
+		removeAttributeFromSession(request, SIMILAR_TOPICS_GEOTHESAURUS);  
+		removeAttributeFromSession(request, LIST_SIZE_GEOTHESAURUS);  
+		removeAttributeFromSession(request, "doThesaurus");  
+		removeAttributeFromSession(request, "thesaurusSelectTopicsId");  
+		removeAttributeFromSession(request, "thesaurusSelectTopics");  
+		removeAttributeFromSession(request, "thesaurusTerm");  
+		removeAttributeFromSession(request, TOPICS_THESAURUS);  
+		removeAttributeFromSession(request, LIST_SIZE_THESAURUS);  
+		removeAttributeFromSession(request, ERROR_THESAURUS);  
+		removeAttributeFromSession(request, CURRENT_TOPIC_THESAURUS);  
+		removeAttributeFromSession(request, SIMILAR_TOPICS_THESAURUS);  
+		removeAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);  
+		removeAttributeFromSession(request, "doTime");  
+		removeAttributeFromSession(request, "doMapCoords");  
+		removeAttributeFromSession(request, "coordOptions");  
+		removeAttributeFromSession(request, "doAddAttribute");  
+		removeAttributeFromSession(request, "doAddAreaAddress");
+	}
+	
+	private static void general(ActionRequest request) {
+		String doRemoveAll = request.getParameter("doRemoveAll");
+		if(doRemoveAll != null){
+			removeAllFaceteSelections(request);
+			removeFaceteElementsFromSession(request);
+		}
+	}
 }
 
 
