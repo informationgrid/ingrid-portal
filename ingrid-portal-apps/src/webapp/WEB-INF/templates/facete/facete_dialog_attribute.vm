@@ -1,9 +1,8 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="dialog_attribute" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.attribute")" dojoType="dijit.Dialog">
 	<form action="$action" method="post">
-	<div class="dialog_content" style="overflow: auto;">
-		<div style="width:400px;">
-        <p>
+	<div class="dialog_content" style="width:400px;">
+		<p>
             <label class="float_left col2left" for="db_title">$MESSAGES.getString("searchResult.facete.attribute.project")</label>
             <input type="text" name="db_title" id="db_title" size="35" class="float_left inputstyletext"
 			#if($doAddAttribute.db_title)
@@ -12,9 +11,7 @@
 			>
             <span class="clearer"></span>
         </p>
-		</div>
-		<div style="width:400px;">
-        <p>
+		<p>
             <label class="float_left col2left" for="db_institute">$MESSAGES.getString("searchResult.facete.attribute.institution")</label>
             <input type="text" name="db_institute" id="db_institute" size="35" class="float_left inputstyletext"
 				#if($doAddAttribute.db_institute)
@@ -23,9 +20,7 @@
 			>
             <span class="clearer"></span>
         </p>
-		</div>
-		<div style="width:400px;">
-        <p>
+		<p>
             <label class="float_left col2left" for="db_pm">$MESSAGES.getString("searchResult.facete.attribute.leader")</label>
             <input type="text" name="db_pm" id="db_pm" size="35" class="float_left inputstyletext"
 				#if($doAddAttribute.db_pm)
@@ -34,8 +29,6 @@
 			>
             <span class="clearer"></span>
         </p>
-        </div>
-		<div style="width:400px;">
         <p>
             <label class="float_left col2left" for="db_staff">$MESSAGES.getString("searchResult.facete.attribute.involved")</label>
             <input type="text" name="db_staff" id="db_staff" size="35" class="float_left inputstyletext"
@@ -45,8 +38,6 @@
 			>
             <span class="clearer"></span>
         </p>
-        </div>
-		<div style="width:400px;">
         <p>
             <label class="float_left col2left" for="db_org">$MESSAGES.getString("searchResult.facete.attribute.org")</label>
             <input type="text" name="db_org" id="db_org" size="35" class="float_left inputstyletext"
@@ -56,8 +47,6 @@
 			>
             <span class="clearer"></span>
         </p>
-        </div>
-		<div style="width:400px;">
         <p>
             <label class="float_left col2left" for="db_org">$MESSAGES.getString("searchResult.facete.attribute.time")</label>
             <label for="term_from">$MESSAGES.getString("searchResult.facete.attribute.from")</label>
@@ -76,7 +65,6 @@
 			>
 			<br>
         </p>
-		</div>
 		<span class="clearer"></span>
 	</div>
 	<div class="dialog_bottom">

@@ -106,7 +106,7 @@
 		#if($tool.hasContent($entry.title))
 			#renderGroupTitle($entry.title)
 		#end
-		#if($entry.sort=="false")
+		#if($entry.sort && $entry.sort == "false")
 			#set($elements = $entry.elements)
         #else
 			#set ($hasBody = false)
@@ -150,7 +150,7 @@
 #macro (renderMultiLineHalf $entry)
 	#if($tool.hasContent($entry.elements))
 		#renderGroupTitle($entry.title)
-		#if($entry.sort=="false")
+		#if($entry.sort && $entry.sort == "false")
 			#set($elements = $entry.elements)
         #else
 			#set ($hasBody = false)

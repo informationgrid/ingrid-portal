@@ -23,7 +23,9 @@
 							<input id="${provider.ident}" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
 					#end
     						$provider.name
-    						#renderLinkEntryNumberInArrayHashMap($elementsProvider "${provider.ident}")
+							#if($elementsProvider && ${provider.ident})
+								#renderLinkEntryNumberInArrayHashMap($elementsProvider "${provider.ident}")
+							#end
                             </input>
 						</a>
 				</span>
@@ -49,8 +51,12 @@
     					<img id="${partner.ident}_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('${partner.ident}')">
     					$action.setParameter("doRemovePartner",  "${partner.ident}")
                         <a onclick="openNode('${partner.ident}')">$partner.name</a>
-    					#renderLinkEntryNumberInArrayHashMap($elementsPartner "${partner.ident}")
-    					#renderDeleteIcon ($action)
+    					#if($elementsPartner && ${partner.ident})
+							#renderLinkEntryNumberInArrayHashMap($elementsPartner "${partner.ident}")
+						#end
+						#if($action)
+		    					#renderDeleteIcon ($action)
+						#end
 					</span>
     			</div>
     			<div id="class" class="cat_content_entry">
@@ -80,7 +86,7 @@
                             </li>
     						<li>
     							$action.setParameter("doRemoveAllProvider",  "true")
-                            	#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete") $action)
+                            	#renderFaceteDeleteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete") $action)
                             </li>
     						#end
                         </ul>
@@ -92,7 +98,9 @@
 					<span class="facete_label">
     					$action.setParameter("doPartner", ${partner.ident})
     					<a href="$action">$partner.name</a>
-						#renderLinkEntryNumberInArrayHashMap($elementsPartner "${partner.ident}")
+						#if($elementsPartner && ${partner.ident})
+							#renderLinkEntryNumberInArrayHashMap($elementsPartner "${partner.ident}")
+						#end
 					</span>
 				</div>
 			#end

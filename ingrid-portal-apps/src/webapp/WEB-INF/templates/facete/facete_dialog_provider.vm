@@ -1,13 +1,13 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="dialog_${partner.ident}" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.title.provider")" dojoType="dijit.Dialog">
 	<form name="providers_${partner.ident}_form" action="$action" method="post">
-    	<div class="dialog_content" style="padding:10px 5px;">
+    	<div class="dialog_content">
 			#set($k = 0)
-			<div style="padding:0 0 10px 0;">
+			<div class="dialog_sub_content">
 			#if($unselectedProvider)
-				<p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.selected.entries")</p>
+				<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.selected.entries")</p>
 			#else
-				<p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.result.entries")</p>
+				<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.result.entries")</p>
 			#end
 			#foreach ($provider in $enableFaceteProviderList)
 				#if(${provider.sortkeyPartner} == ${partner.sortkey})
@@ -22,26 +22,28 @@
 					#set($k = $k + 1)
 					<div class="facete_chb">
 						<span class="facete_label_dialog">
-                			<input id="${provider.ident}" style="margin:4px 0 0 0;" class="facete_input_chb" type=checkbox name="chk$k" value="${provider.ident}"
+                			<input id="${provider.ident}" class="facete_dialog_chb facete_input_chb" type=checkbox name="chk$k" value="${provider.ident}"
 								#if($isSelectedChbProvider)
 									checked
 								#end
                             >$provider.name</input>
 						</span>
-						#renderLinkEntryNumberInArrayHashMap($elementsProvider "$provider.ident")
+						#if($elementsProvider && $provider.ident)
+							#renderLinkEntryNumberInArrayHashMap($elementsProvider "$provider.ident")
+						#end
                    	</div>
 				#end
 			#end
 			</div>
 			#if($unselectedProvider)
 				<div>
-				<p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.unselected.entries")</p>
+				<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.unselected.entries")</p>
                 #foreach ($provider in $unselectedProvider)
     				#if(${provider.sortkeyPartner} == ${partner.sortkey})
     					#set($k = $k + 1)
     					<div class="facete_chb">
                     		<span class="facete_label_dialog">
-								<input id="${provider.ident}" style="margin:4px 0 0 0;" class="facete_input_chb" type=checkbox name="chk$k" value="${provider.ident}">
+								<input id="${provider.ident}" class="facete_dialog_chb facete_input_chb" type=checkbox name="chk$k" value="${provider.ident}">
                         		$provider.name
     						</span>
                        	</div>

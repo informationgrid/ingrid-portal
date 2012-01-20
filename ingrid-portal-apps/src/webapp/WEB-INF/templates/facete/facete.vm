@@ -18,29 +18,43 @@
 	<img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" >
 #end
 
+#macro (renderFaceteDeleteMoreLinkLineDialog $label $doAction)
+	<a href="$doAction" class="facete_link_line facete_delete_link">$label</a>
+#end
+
 #macro (renderFaceteDeleteLinkLineDialog $label $doAction)
-	<a href="$doAction" class="facete_link_line" style="font-weight: bold">$label</a>
+	<div>
+		#renderFaceteDeleteMoreLinkLineDialog ($label $doAction)
+	</div>
 #end
 
 #macro (renderFaceteSelectedAttribute $doAction $title)
 	<div>
-		<a href="$doAction" class="facete_link_line" style="color: #5E5E5F;">$title</a>
-		#renderDeleteIcon ($doAction)
+		<a href="$doAction" class="facete_link_line facete_select_link">$title</a>
+		#if($doAction)
+			#renderDeleteIcon ($doAction)
+		#end
     </div>
 #end
 
 #macro (renderFaceteSelectedAttributeNumber $doAction $title $number $isDelete)
 	<div>
 		<span>
-			<a href="$doAction" class="facete_link_line" 
+			<a href="$doAction"  
         		#if($isDelete)
-        			style="color: #5E5E5F;"
+        			class="facete_link_line facete_select_link"
+				#else
+					class="facete_link_line"
         		#end
         		>$title</a>
-			#renderLinkEntryNumber("$number")
+			#if($number)
+				#renderLinkEntryNumber("$number")
+			#end
         </span>
 		#if($isDelete)
-			#renderDeleteIcon ($doAction)
+			#if($doAction)
+				#renderDeleteIcon ($doAction)
+			#end
 		#end
     </div>
 #end
@@ -98,17 +112,20 @@
 		
 		
 ## ERGEBNISTYPEN ##
-	#if(!$ds || $ds == "1")
-		<div class="cat_label">
-			<img id="hit_types_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('hit_types')">
-			<a onclick="openNode('hit_types')" >$MESSAGES.getString("searchResult.facete.title.types")</a>
-			<br>
-		</div>
-		
-		<div id="hit_types" class="cat_content">
-## DATENTYPEN ##
-			#parse ('/WEB-INF/templates/facete/facete_datatype.vm')
-		</div>
+	#if($enableFaceteDatatype)
+			
+        #if(!$ds || $ds == "1")
+        	<div class="cat_label">
+        		<img id="hit_types_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('hit_types')">
+        		<a onclick="openNode('hit_types')" >$MESSAGES.getString("searchResult.facete.title.types")</a>
+        		<br>
+        	</div>
+        	
+        	<div id="hit_types" class="cat_content">
+        ## DATENTYPEN ##
+        		#parse ('/WEB-INF/templates/facete/facete_datatype.vm')
+        	</div>
+		#end
 	#end
 	
 ## PARTNER ##

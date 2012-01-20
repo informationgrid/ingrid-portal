@@ -7,7 +7,13 @@
 <div id="thesaurus" class="cat_content">
 	<div>
 		$action.setParameter("doThesaurus",  "true")
-		<a href="$action" class="facete_link_line">
+		<a href="$action" 
+			#if($thesaurusSelectTopics && $thesaurusSelectTopics.size() > 0)
+				class="facete_link_line facete_select_link_topic"
+			#else
+				class="facete_link_line"
+			#end
+			>
 			$MESSAGES.getString("searchResult.facete.thesaurus.search")
 		</a>
         <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" ></img>
@@ -20,7 +26,7 @@
     	#if($thesaurusSelectTopics.size())
         	#if($thesaurusSelectTopics.size() > 1)
         		$action.setParameter("doRemoveThesaurus",  "all")
-                	#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.attribute.delete.all"))
+                #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete") $action)
     		#end
 		#end
 	#end

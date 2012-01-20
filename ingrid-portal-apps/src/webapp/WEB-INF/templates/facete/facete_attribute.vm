@@ -49,7 +49,7 @@
 		#end
 		#if($doAddAttribute.size() > 1)
 			$action.setParameter("doRemoveAttribute",  "all")
-        	#renderFaceteSelectedAttribute ($action  $MESSAGES.getString("searchResult.facete.attribute.delete.all"))
+        	#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete") $action)
 		#end
 	#end
 	<br>

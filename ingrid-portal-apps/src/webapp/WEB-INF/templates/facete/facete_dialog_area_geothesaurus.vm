@@ -30,7 +30,7 @@
 
 #set ($action = $renderResponse.createActionURL())
 <div id="dialog_geothesaurus" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.area.name.search")" dojoType="dijit.Dialog" disableCloseButton="true">
-	<span id="dialog_geothesaurus_loading" class="dijitContentPaneLoading" style="display:inline;"></span>
+	<span id="dialog_geothesaurus_loading" class="dijitContentPaneLoading dialog_loading_panel" style="display:inline;"></span>
 	<form action="$action" method="post" name="geothesaurus_form">
 		<div class="dialog_content">
 			<div style="height:50px;">
@@ -45,7 +45,7 @@
             
 		#if($geothesaurusCurrentTopic)
 		<div class="facete_dialog_sns_content">
-            <p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.area.name.keyword")</p>
+            <p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.area.name.keyword")</p>
 			#setMsgTopicType($geothesaurusCurrentTopic.topic_ref)
 			<div class="facete_line">
 				<div class="facete_chb">
@@ -62,7 +62,7 @@
 		#end
 		#if($geothesaurusTopicsBrowse)
 			<div class="facete_dialog_sns_content">
-            <p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.area.name.relations")</p>
+            <p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.area.name.relations")</p>
 			#set($count = 0)
 			#foreach($topic in $geothesaurusTopicsBrowse)
 				#set($count = $count + 1)
@@ -90,7 +90,7 @@
         </div>
 		#elseif($geothesaurusTopics)
 		<div class="facete_dialog_sns_content">
-            <p style="font-weight:bold">$MESSAGES.getString("searchResult.facete.area.name.keyword")</p>
+            <p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.area.name.keyword")</p>
 			#set($count = 0)
 			#foreach($topic in $geothesaurusTopics)
 				#set($count = $count + 1)

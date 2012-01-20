@@ -204,5 +204,29 @@ function loadingProgressDialog(element){
 		document.getElementById(element).style.display = "none";
 	}
 	if(status == "none"){
-		document.getElementById(element).style.display = "inline";}
+		document.getElementById(element).style.display = "inline";
 	}
+}
+
+function showButtonSelectCheckboxForm (form, button){
+	var status = document.getElementById(button).style.display;
+	var isSelect = false
+	
+	for (i = 0; i < form.length; i++){
+		if(form[i].checked){
+			isSelect = true;
+			break;
+		}		
+	}
+	
+	if(isSelect){
+		if(status == "none"){
+			document.getElementById(button).style.display = "inline";
+		}
+	}else{
+		if(status == "inline"){
+			document.getElementById(button).style.display = "none";
+		}
+	}
+	
+}

@@ -583,7 +583,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             	if(rankedHits.get("FACETS") != null){
                    	UtilsFacete.checkForExistingFacete((IngridDocument) rankedHits.get("FACETS"), request);
                	}
-               	UtilsFacete.setParamsToContext(request, context);
+               	UtilsFacete.setParamsToContext(request, context, (IngridDocument) rankedHits.get("FACETS") );
             }
             
         	context.put("rankedResultList", rankedHits);
@@ -610,7 +610,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         	if(rankedHits.get("FACETS") != null){
                	UtilsFacete.checkForExistingFacete((IngridDocument) rankedHits.get("FACETS"), request);
            	}
-           	UtilsFacete.setParamsToContext(request, context);
+           	UtilsFacete.setParamsToContext(request, context, (IngridDocument) rankedHits.get("FACETS"));
         }
         context.put("rankedResultList", rankedHits);
         context.put("unrankedResultList", unrankedHits);

@@ -58,10 +58,15 @@
             #set ($groupSubjectKey = $rs.plugId)
             #set ($detailAction = "showAllFromIPlug")
             ## save grouping and reset after calling group footer (for subnavigation !)
-            #set ($saveGrouping = $grouping)        
+			
+			#if($grouping)
+				#set ($saveGrouping = $grouping)
+			#end
             #set ($grouping = 'plugid')
             #parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
-            #set ($grouping = $saveGrouping)
+            #if($saveGrouping)
+				#set ($grouping = $saveGrouping)
+			#end
       #end
 #elseif($unrankedSearchFinished)
         <p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>

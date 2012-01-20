@@ -2,24 +2,24 @@
 <div id="dialog_area_map" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.area.map.search")" dojoType="dijit.Dialog">
    	<div class="dialog_content" id="dialog_area_map_content" style="max-height: none;">
 	</div>
-	<form action="$action" method="post">
+	<form action="$action" method="post" name="facete_map_form">
 		<h3>$MESSAGES.getString("searchResult.facete.area.map.options")</h3>
         <p>
-        <input id="chk_1" type="checkbox" value="inside" name="chk_1"
+        <input id="chk_1" type="checkbox" value="inside" name="chk_1" onclick="showButtonSelectCheckboxForm(document.facete_map_form, 'facete_map_submit_btn')"
 			#if($doMapCoords.inside)
 				checked
 			#end
 			>
         <label for="chk_1">$MESSAGES.getString("searchResult.facete.area.map.options.inside")</label>
         <br>
-        <input id="chk_2" type="checkbox" value="intersect" name="chk_2"
+        <input id="chk_2" type="checkbox" value="intersect" name="chk_2" onclick="showButtonSelectCheckboxForm(document.facete_map_form, 'facete_map_submit_btn')"
 			#if($doMapCoords.intersect)
 				checked
 			#end
 			>
         <label for="chk_2">$MESSAGES.getString("searchResult.facete.area.map.options.intersect")</label>
         <br>
-        <input id="chk_3" type="checkbox" value="include" name="chk_3"
+        <input id="chk_3" type="checkbox" value="include" name="chk_3" onclick="showButtonSelectCheckboxForm(document.facete_map_form, 'facete_map_submit_btn')"
 			#if($doMapCoords.include)
 				checked
 			#end
@@ -28,7 +28,9 @@
         <br>
         </p>    
         <div class="dialog_bottom">
+			<div id="facete_map_submit_btn" style="display:none">
         	#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddMap" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right" "")
+			</div>
         	#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.cancel') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.cancel') "float_right" "faceteDialogCancel('dialog_area_map')")
 		</div>
 	</form>

@@ -46,7 +46,7 @@
 				#else
 					$action.setParameter("doAddDatatype", "$datatypeKey")
     				#set ($title = $MESSAGES.getString("$datatypeTitle"))
-        			#renderFaceteSelectedAttributeNumber ($action $title $datatype.get($datatypeKey) false)
+					#renderFaceteSelectedAttributeNumber ($action $title $datatype.get($datatypeKey) false)
 				#end
 			</span>
 		</div>
