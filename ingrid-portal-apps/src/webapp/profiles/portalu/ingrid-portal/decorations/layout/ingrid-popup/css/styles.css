@@ -89,8 +89,14 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
 *********************************************************************/
 
 div#identity { padding:0; margin:0; height: 97px; width:59.5em; background-color:#68A5D2; overflow:visible; }
+div.motiv_blank { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_suche { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.motiv_karten { background-image:url(../images/01_motiv_karten.gif); background-repeat:no-repeat; }
 div.motiv_suche_detail { background-image:url(../images/01_motiv_suche_detail.png); background-repeat:no-repeat; }
 
+div.en_motiv_blank { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_suche { background-image:url(../images/en/en_01_motiv_suche.gif); background-repeat:no-repeat; }
+div.en_motiv_karten { background-image:url(../images/en/en_01_motiv_karten.gif); background-repeat:no-repeat; }
 div.en_motiv_suche_detail { background-image:url(../images/en/01_motiv_suche_detail.png); background-repeat:no-repeat; }
 
 /********************************************************************
@@ -621,7 +627,7 @@ div.dijitTab .tabLabel:hover { text-decoration: none; }
 div.dijitChecked .tabLabel { color: #1C5679; font-weight:bold; padding: 0 11px 0px; }
 div.dijitTabContent { border: 2px solid #FFFFFF; }
 div.dijitTabContainerBottom-container, .dijitTabContainerTop-container, .dijitTabContainerLeft-container, .dijitTabContainerRight-container { border: 0px solid black; }
-div.dijitTabContainerTop-tabs .dijitTab { padding-top:0px; }
+div.dijitTabContainerTop-tabs .dijitTab { margin-right: 1px; padding-top: 3px; top: 1px; }
 div.dijitTabContainerTop-tabs .dijitTabChecked .dijitTabContent { color: #AFD93F; }
 div.dijitTabContainerTop-tabs { border-bottom: 0; margin: -5px 0 0; }
 div.dijitTabListContainer-top .tabStripButtonDisabled, .claro .dijitTabListContainer-bottom .tabStripButtonDisabled { background-color: transparent !important; }

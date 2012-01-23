@@ -1636,7 +1636,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		    						elementMap.put("hasLinkIcon", new Boolean(true));
 		    						elementMap.put("isExtern", new Boolean(false));
 		    						elementMap.put("title", messages.getString("common.result.showMap"));
-		    						elementMap.put("href", "main-maps.psml?wms_url=" + UtilsVelocity.urlencode(value));
+		    						elementMap.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(value));
 		    						
 		    					}
 		    				}else if(operationName.equals("GetCapabilities")){
