@@ -1986,6 +1986,20 @@ UtilGrid.synchedDelete = function(checkGrids, msg){
     });
 }
 
+UtilGrid.connectRowSelectionToFunction = function(onSelectCallback, gridId, filterEntryId){
+    dojo.connect(UtilGrid.getTable(gridId), "onSelectedRowsChanged", function(row) {
+        var selRowsData = UtilGrid.getSelectedData(gridId);
+        if (selRowsData.length == 1) {
+            // react only if not an empty row was selected
+            if (selRowsData[0] != null) {
+                if (currentUdk.writePermission) {
+                    onSelectCallback(gridId, selRowsData[0], filterEntryId);
+                }
+            }
+        }
+    });
+}
+
 
 var UtilThesaurus = {}
 
