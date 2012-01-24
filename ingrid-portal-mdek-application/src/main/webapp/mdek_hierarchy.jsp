@@ -1093,6 +1093,20 @@
                                     </span>
                             </div>
                             <div class="inputContainer">
+                                <span id="uiElementN004" class="outer">
+                                    <div><span class="label">
+                                        <label for="ref3Operation" onclick="javascript:dialog.showContextHelp(arguments[0], 7015)">
+                                            <fmt:message key="ui.obj.type3.operationTable.title" />
+                                        </label>
+                                    </span><span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(getLocalizedTitle('ref3Operation'), 'dialogs/mdek_operation_dialog.jsp?c='+userLocale, 735, 745, true);" title="<fmt:message key="dialog.popup.operationTable.link" /> [Popup]"><fmt:message key="ui.obj.type3.operationTable.link" /></a></span>
+                                    <div class="input tableContainer">
+                                        <div id="ref3Operation" autoHeight="4" contextMenu="none">
+                                        </div>
+                                    </div>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="inputContainer">
                                 <span id="uiElementN023" class="outer">
                                 	<div><span class="label">
                                         <label for="ref3Scale" onclick="javascript:dialog.showContextHelp(arguments[0], 3525)">
@@ -1152,20 +1166,6 @@
                                         </span><span class="input"><input type="text" id="ref3Explanation" name="ref3Explanation" class="w320 h055" /></span>
 										</div>
 									</span>
-                            </div>
-                            <div class="inputContainer">
-                                <span id="uiElementN004" class="outer">
-                                	<div><span class="label">
-                                        <label for="ref3Operation" onclick="javascript:dialog.showContextHelp(arguments[0], 7015)">
-                                            <fmt:message key="ui.obj.type3.operationTable.title" />
-                                        </label>
-                                    </span><span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(getLocalizedTitle('ref3Operation'), 'dialogs/mdek_operation_dialog.jsp?c='+userLocale, 735, 745, true);" title="<fmt:message key="dialog.popup.operationTable.link" /> [Popup]"><fmt:message key="ui.obj.type3.operationTable.link" /></a></span>
-                                    <div class="input tableContainer">
-                                        <div id="ref3Operation" autoHeight="4" contextMenu="none">
-                                        </div>
-                                    </div>
-									</div>
-                                </span>
                             </div>
                             <div class="inputContainer">
                             <span id="uiElement3260">

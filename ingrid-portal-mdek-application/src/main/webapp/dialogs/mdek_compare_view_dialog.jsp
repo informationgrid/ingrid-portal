@@ -114,9 +114,9 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 		renderTextWithTitle(nodeDataOld.ref3SystemEnv, nodeDataNew.ref3SystemEnv, "<fmt:message key='ui.obj.type3.environment' />");
 		renderTextWithTitle(nodeDataOld.ref3History, nodeDataNew.ref3History, "<fmt:message key='ui.obj.type3.history' />");
 		renderTextWithTitle(nodeDataOld.ref3BaseDataText, nodeDataNew.ref3BaseDataText, "<fmt:message key='ui.obj.type3.generalDataTable.title' />" + " (" + "<fmt:message key='ui.obj.type3.generalDataTable.tab.text' />" + ")");
+        renderOperations(nodeDataOld.ref3Operation, nodeDataNew.ref3Operation);
 		renderTable(nodeDataOld.ref3Scale, nodeDataNew.ref3Scale, ["scale", "groundResolution", "scanResolution"], ["<fmt:message key='ui.obj.type1.scaleTable.header.scale' />", "<fmt:message key='ui.obj.type1.scaleTable.header.groundResolution' />", "<fmt:message key='ui.obj.type1.scaleTable.header.scanResolution' />"], "<fmt:message key='ui.obj.type3.scaleTable.title' />");
         renderTextWithTitle(nodeDataOld.ref3HasAccessConstraint ? "<fmt:message key='general.yes' />": "<fmt:message key='general.no' />", nodeDataNew.ref3HasAccessConstraint ? "<fmt:message key='general.yes' />": "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.type3.ref3HasAccessConstraint' />");
-//		renderOperations(nodeData.ref3Operation);
 
         renderAdditionalFieldsForRubric("refClass3", oldAdditionalFields, newAdditionalFields);
 	} else if (nodeDataNew.objectClass == 4) {
@@ -612,6 +612,33 @@ function renderTable(oldList, newList, rowProperties, listHeader, title, cellRen
 
 		dojo.byId("diffContent").innerHTML += t + "<br/><br/>";
 	}
+}
+
+function renderOperations(oldList, newList) {
+    if (!oldList) { oldList = []; }
+    if (!newList) { newList = []; }
+    if (oldList.length == 0 && newList.length == 0) {
+        return;
+    }
+    renderTable(oldList, newList, ["name", "description"], ["<fmt:message key='ui.obj.type3.operationTable.header.name' />", "<fmt:message key='ui.obj.type3.operationTable.header.name' />"], "<fmt:message key='ui.obj.type3.operationTable.title' />");
+    
+    // render Operation details
+    var emptyOp = { platform:"", methodCall:"", paramList:[], addressList:[], dependencies:[]};
+    var maxLength = (oldList.length > newList.length) ? oldList.length : newList.length;
+    for(var i=0; i<maxLength; i++) {
+        var opOld = oldList[i];
+        if (!opOld) { opOld = emptyOp; }
+        var opNew = newList[i];
+        if (!opNew) { opNew = emptyOp; }
+
+        renderTextWithTitle(opOld.name, opNew.name, "Operation");
+        renderTextWithTitle(opOld.description, opNew.description, "Beschreibung");
+        renderList(opOld.platform, opNew.platform, "unterst&uuml;tzte Plattformen");
+        renderTextWithTitle(opOld.methodCall, opNew.methodCall, "Aufruf");
+        renderTable(opOld.paramList, opNew.paramList, ["name", "direction", "description", "optional", "multiple"], ["Name", "Richtung", "Beschreibung", "Optional", "Mehrfacheingabe"], "Parameter", [null, null, null, renderYesNo, renderYesNo]);
+        renderList(opOld.addressList, opNew.addressList, "Zugriffsadressen");
+        renderList(opOld.dependencies, opNew.dependencies, "Abh&auml;ngigkeiten");
+    }
 }
 
 function buildTableHead(listHeader, title) {

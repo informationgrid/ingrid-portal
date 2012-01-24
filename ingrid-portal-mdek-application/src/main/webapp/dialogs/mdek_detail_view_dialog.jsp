@@ -166,8 +166,8 @@ function renderNodeData(nodeData) {
 			renderTextWithTitle(nodeData.ref3History, "<fmt:message key='ui.obj.type3.history' />");
 			renderTextWithTitle(nodeData.ref3BaseDataText, "<fmt:message key='ui.obj.type3.generalDataTable.title' />" + " (" + "<fmt:message key='ui.obj.type3.generalDataTable.tab.text' />" + ")");
 			renderTextWithTitle(nodeData.ref3Explanation, "<fmt:message key='ui.obj.type3.description' />");
+            renderOperations(nodeData.ref3Operation);
 			renderTable(nodeData.ref3Scale, ["scale", "groundResolution", "scanResolution"], ["<fmt:message key='ui.obj.type1.scaleTable.header.scale' />", "<fmt:message key='ui.obj.type1.scaleTable.header.groundResolution' />", "<fmt:message key='ui.obj.type1.scaleTable.header.scanResolution' />"], "<fmt:message key='ui.obj.type3.scaleTable.title' />");
-			renderOperations(nodeData.ref3Operation);
             renderTextWithTitle(nodeData.ref3HasAccessConstraint ? "<fmt:message key='general.yes' />": "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.type3.ref3HasAccessConstraint' />");
             
             renderAdditionalFieldsForRubric("refClass3", additionalFields);
