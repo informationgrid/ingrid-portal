@@ -194,6 +194,8 @@ public class PortalConfig extends PropertiesConfiguration {
     // Hide CMS items for changing on admin page
     public static final String PORTAL_ADMIN_HIDE_CMS_ITEMS = "portal.admin.hide.cms.items";
     
+    // Enable facete on search hits
+    public static final String PORTAL_ENABLE_SEARCH_FACETE = "portal.search.facete.enable";
     
     // private stuff
     private static PortalConfig instance = null;

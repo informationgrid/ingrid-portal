@@ -268,7 +268,16 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
      */
     private static void copyDir(String source, String dest) throws IOException {
         File sourceDir = new File(source);
-        File[] sourceFiles = sourceDir.listFiles();
+        File destDir = new File(dest);
+		File[] sourceFiles = sourceDir.listFiles();
+        
+        if(!destDir.exists()){
+        	if(sourceDir != null){
+        		if(sourceDir.isDirectory()){
+            		destDir.mkdir();
+            	}
+        	}
+        }
         
     	for (int i = 0; i < sourceFiles.length; i++) {
     		File sourceFile = sourceFiles[i];

@@ -80,6 +80,18 @@
             <hidden>false</hidden>
         </page>
         <page>
+        	<name>cms/cms-0.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>cms/cms-1.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>cms/cms-2.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>administration/admin-wms.psml</name>
             <hidden>false</hidden>
         </page>
@@ -370,6 +382,20 @@
         </execute>
         <execute>
             <![CDATA[UPDATE page SET title = 'ingrid.page.about.tooltip'\, short_title = 'ingrid.page.about' WHERE path = '/main-features.psml';]]>
+        </execute>
+        <!-- Revert of replacing main-menu option "main-search" with "default-page" (BAW)-->
+        <execute>
+        	<![CDATA[INSERT INTO ingrid_lookup (`item_key`\, `item_value`) values ('tmp_id'\,  (SELECT menu_id FROM folder_menu WHERE name = 'main-menu')); ]]>
+        </execute>
+        <execute>
+        	<![CDATA[UPDATE folder_menu SET options = '/main-search.psml' WHERE options = '/default-page.psml' AND parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_id');]]>
+        </execute>
+        <execute>
+        	<![CDATA[DELETE FROM ingrid_lookup WHERE item_key = 'tmp_id';]]>
+        </execute>
+        <!-- Set folder "/cms" from display to hidden (only use on profile baw_wsv) -->
+        <execute>
+        	<![CDATA[UPDATE folder SET is_hidden = "1" WHERE path = '/cms';]]>
         </execute>
 	</sql>
 </profile>

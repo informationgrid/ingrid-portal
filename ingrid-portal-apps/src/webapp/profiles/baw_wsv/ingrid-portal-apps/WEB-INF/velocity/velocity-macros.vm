@@ -94,6 +94,47 @@ $fieldLabel#end
 </div>
 #end
 
+#macro (renderPaginationAndHint $browser $hint)
+    <div id="paginationAndHint">
+      <div id="dbBrowserHint">
+        <p>$hint</p>
+      </div>
+      <div id="pagination" style="float:right">    
+      <div id="btnPageFirst" class="btn_admin">
+        <div id="doFirst"#if($browser.hasPreviousPage()) class="btn_pg_left"#else class="btn_pg_left_disabled"#end></div>
+        <div#if($browser.hasPreviousPage()) class="btn_pg_center"#else class="btn_pg_center_disabled"#end>
+          <input#if($browser.hasPreviousPage()) class="btn"#else class="btn_disable" disabled="true"#end style="height:19px;padding:0;margin:0;" type="image" src="../../decorations/layout/ingrid/images/button_page_first.png" onclick="" title="" name="doFirst" value="first">
+        </div>
+        <div id="doFirst right"#if($browser.hasPreviousPage()) class="btn_pg_right"#else class="btn_pg_right_disabled"#end></div>
+      </div>
+      <div id="btnPagePrev" class="btn_admin">
+        <div id="doPrev"#if($browser.hasPreviousPage()) class="btn_pg_left"#else class="btn_pg_left_disabled"#end></div>
+        <div#if($browser.hasPreviousPage()) class="btn_pg_center"#else class="btn_pg_center_disabled"#end>
+          <input#if($browser.hasPreviousPage()) class="btn"#else class="btn_disable" disabled="true"#end style="height:19px;padding:0;margin:0;" type="image" src="../../decorations/layout/ingrid/images/button_page_prev.png" onclick="" title="" name="doPrev" value="prev">
+        </div>
+        <div id="doPrev right"#if($browser.hasPreviousPage()) class="btn_pg_right"#else class="btn_pg_right_disabled"#end></div>
+      </div>
+      <div id="paginationText" style="float:left">
+        <p>$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() $MESSAGES.getString('component.forms.text.of') $browser.getTotalNumRows() $MESSAGES.getString('component.forms.text.entries')</p>
+      </div>
+      <div id="btnPageNext" class="btn_admin">
+        <div id="doNext"#if($browser.hasNextPage()) class="btn_pg_left"#else class="btn_pg_left_disabled"#end></div>
+        <div#if($browser.hasNextPage()) class="btn_pg_center"#else class="btn_pg_center_disabled"#end>
+          <input#if($browser.hasNextPage()) class="btn"#else class="btn_disable" disabled="true"#end style="height:19px;padding:0;margin:0;" type="image" src="../../decorations/layout/ingrid/images/button_page_next.png" onclick="" title="" name="doNext" value="next">
+        </div>
+        <div id="doNext right"#if($browser.hasNextPage()) class="btn_pg_right"#else class="btn_pg_right_disabled"#end></div>
+      </div>
+      <div id="btnPageLast" class="btn_admin">
+        <div id="doLast"#if($browser.hasNextPage()) class="btn_pg_left"#else class="btn_pg_left_disabled"#end></div>
+        <div#if($browser.hasNextPage()) class="btn_pg_center"#else class="btn_pg_center_disabled"#end>
+          <input#if($browser.hasNextPage()) class="btn"#else class="btn_disable" disabled="true"#end style="height:19px;padding:0;margin:0;" type="image" src="../../decorations/layout/ingrid/images/button_page_last.png" onclick="" title="" name="doLast" value="last">
+        </div>
+        <div id="doLast right"#if($browser.hasNextPage()) class="btn_pg_right"#else class="btn_pg_right_disabled"#end></div>
+      </div>
+      </div>
+    </div>
+#end
+
 #macro (renderDBBrowserHeader $colNames $colTitles)
 <tr>
 	<td class="contentColumnHead"></td>

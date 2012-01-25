@@ -1864,29 +1864,7 @@
         <resource-bundle>de.ingrid.portal.resources.FeaturesResources</resource-bundle> 
     </portlet>
 
-	<portlet id="ApplicationOverviewPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/application.vm</value>
-        </init-param>
-        <portlet-name>ApplicationOverviewPortlet</portlet-name>
-        <display-name>ApplicationOverviewPortlet Information</display-name>
-        <description>This portlet explains all the application.</description>
-        <portlet-class>de.ingrid.portal.portlets.ApplicationPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Anwendungen</title>
-            <short-title>Anwendungen</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.ApplicationResources</resource-bundle>
-    </portlet>
-    
-    <portlet id="IFramePortalPortlet">
+	<portlet id="IFramePortalPortlet">
         <description>Places an HTML IFrame inside a portlet for easily hosting other web application within a portlet. Sizes of both normal and maximized modes are configurable in edit mode.</description>
         <portlet-name>IFramePortalPortlet</portlet-name>
         <display-name>IFrame Portlet</display-name>
@@ -1913,6 +1891,83 @@
                 <value>AUTO</value>
             </preference>
        </portlet-preferences>
+    </portlet>
+
+	<!-- *********************** -->
+    <!-- CMS Portlets            -->
+    <!-- *********************** -->
+	
+	
+	<portlet id="CMSPortlet0">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_cms.vm</value>
+        </init-param>
+        <portlet-name>CMSPortlet0</portlet-name>
+        <display-name>CMSPortlet0</display-name>
+        <description>This portlet displays the CMSPortlet0.</description>
+        <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.CMSPortletResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>cmsKey</name>
+                <value>portal.cms.portlet.0</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+	
+	<portlet id="CMSPortlet1">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_cms.vm</value>
+        </init-param>
+        <portlet-name>CMSPortlet1</portlet-name>
+        <display-name>CMSPortlet1</display-name>
+        <description>This portlet displays the CMSPortlet1.</description>
+        <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.CMSPortletResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>cmsKey</name>
+                <value>portal.cms.portlet.1</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>  
+    
+    <portlet id="CMSPortlet2">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_cms.vm</value>
+        </init-param>
+        <portlet-name>CMSPortlet2</portlet-name>
+        <display-name>CMSPortlet2</display-name>
+        <description>This portlet displays the CMSPortlet2.</description>
+        <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.CMSPortletResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>cmsKey</name>
+                <value>portal.cms.portlet.2</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
     
 </portlet-app>

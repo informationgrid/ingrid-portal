@@ -36,6 +36,7 @@ import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateUtil;
+import de.ingrid.portal.om.IngridCMS;
 import de.ingrid.portal.om.IngridRSSStore;
 import de.ingrid.portal.scheduler.IngridMonitorFacade;
 
@@ -144,11 +145,6 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             context.put(CONTEXT_UTILS_STRING, new UtilsString());
             if(disablePartnerProviderEdit != null){
             	context.put("disablePartnerProviderEdit", PortalConfig.getInstance().getString(disablePartnerProviderEdit));
-            }
-            
-            String[] hideCmsItem = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_ADMIN_HIDE_CMS_ITEMS);
-            if(hideCmsItem != null){
-            	context.put("hideCmsItem", hideCmsItem);
             }
             
             // set localized title for this page
@@ -347,7 +343,24 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             crit.setMaxResults(state.getMaxRows());
 
             List rssSources = UtilsDB.getValuesFromDB(crit, session, null, true);
-
+            
+            String[] hideCmsItem = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_ADMIN_HIDE_CMS_ITEMS);
+            if(hideCmsItem != null){
+            	for(int i=0; i < hideCmsItem.length; i++){
+            		String hideKey = hideCmsItem[i]; 
+            		for(int j=0; j < rssSources.size(); j++){
+            			if(rssSources.get(j).getClass() == IngridCMS.class){
+                			IngridCMS cms = (IngridCMS) rssSources.get(j);
+                			if(hideKey.equals(cms.getItemKey())){
+                				rssSources.remove(j);
+                				j = j - 1;
+                				break;
+                			}
+                		}
+            		}
+            	}
+            }
+            
             // put to render context
             Context context = getContext(request);
             context.put(CONTEXT_ENTITIES, rssSources);
@@ -730,7 +743,25 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
             Session session = HibernateUtil.currentSession();
             crit = session.createCriteria(dbEntityClass);
             List entities = UtilsDB.getValuesFromDB(crit, session, null, true);
-
+            
+            String[] hideCmsItem = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_ADMIN_HIDE_CMS_ITEMS);
+            
+            if(hideCmsItem != null){
+            	for(int i=0; i < hideCmsItem.length; i++){
+            		String hideKey = hideCmsItem[i]; 
+            		for(int j=0; j < entities.size(); j++){
+            			if(entities.get(j).getClass() == IngridCMS.class){
+                			IngridCMS cms = (IngridCMS) entities.get(j);
+                			if(hideKey.equals(cms.getItemKey())){
+                				entities.remove(j);
+                				j = j - 1;
+                				break;
+                			}
+                		}
+            		}
+            	}
+            }
+           
             state.setTotalNumRows(entities.size());
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {

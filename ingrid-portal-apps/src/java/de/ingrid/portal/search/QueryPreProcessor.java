@@ -53,7 +53,10 @@ public class QueryPreProcessor {
         try {
         	log.debug("The QueryString: " + queryString);
             query = QueryStringParser.parse(queryString);
-            UtilsFacete.facetePrepareInGridQuery(request, query);
+            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
+            	UtilsFacete.facetePrepareInGridQuery(request, query);
+            }
+            
             
         } catch (ParseException ex) {
             if (log.isErrorEnabled()) {
@@ -250,7 +253,9 @@ public class QueryPreProcessor {
         IngridQuery query = null;
         try {
             query = QueryStringParser.parse(queryString);
-            UtilsFacete.facetePrepareInGridQuery(request, query);
+            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
+            	UtilsFacete.facetePrepareInGridQuery(request, query);
+            }
             
         } catch (ParseException ex) {
             if (log.isErrorEnabled()) {

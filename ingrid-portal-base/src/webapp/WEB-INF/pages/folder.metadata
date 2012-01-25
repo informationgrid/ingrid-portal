@@ -86,6 +86,16 @@
   </menu>
 -->
 
+<!--
+   Used only for profile baw_wsv
+  <menu name="sub-menu-start">
+    <options>/default-page.psml</options>
+    <options>/cms/cms-0.psml</options>
+    <options>/cms/cms-1.psml</options>
+    <options>/cms/cms-2.psml</options>
+  </menu>
+-->
+
   <security-constraints>
     <security-constraints-ref>public-view</security-constraints-ref>
   </security-constraints>

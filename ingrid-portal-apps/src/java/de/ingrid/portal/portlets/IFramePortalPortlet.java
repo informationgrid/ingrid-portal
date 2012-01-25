@@ -32,8 +32,6 @@ public class IFramePortalPortlet extends org.apache.jetspeed.portlet.IFrameGener
 
 	private final static Logger log = LoggerFactory.getLogger(IFramePortalPortlet.class);
 	
-	public final static String DEFAULT_TEMPLATE = "/WEB-INF/templates/application.vm";
-
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);
 	}

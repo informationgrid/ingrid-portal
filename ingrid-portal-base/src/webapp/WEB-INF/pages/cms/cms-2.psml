@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page id="/cms/cms-2.psml" hidden="false">
+    <security-constraints>
+        <security-constraints-ref>public-view</security-constraints-ref>
+    </security-constraints>
+    <title>ingrid.page.cms.2.tooltip</title>
+    <short-title>ingrid.page.cms.2</short-title>
+    <defaults skin="orange" layout-decorator="ingrid" portlet-decorator="ingrid-teaser"/>
+    <fragment id="cms-2" type="layout" name="jetspeed-layouts::IngridOneColumn">
+        <fragment id="cms-2-1" type="portlet" name="ingrid-portal-apps::CMSPortlet">
+            <property name="row" value="0"/>
+            <preference name="infoTemplate" readOnly="false">
+                <value>/WEB-INF/templates/default_cms.vm</value>
+            </preference>
+            <preference name="cmsKey" readOnly="false">
+                <value>portal.cms.portlet.2</value>
+            </preference>
+        </fragment>
+    </fragment>
+    <metadata name="meta_title">ingrid.page.cms.2.meta.title</metadata>
+    <metadata name="meta_descr">ingrid.page.cms.2.meta.description</metadata>
+    <metadata name="meta_keywords">ingrid.page.cms.2.meta.keywords</metadata>
+</page>

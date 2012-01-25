@@ -988,7 +988,6 @@ public class UtilsFacete {
 				
 			}
 		}
-		context.put("enableFacetePartnerListCount", PortalConfig.getInstance().getInt("portal.search.facete.partner.count", 3));
 	}
 	
 	

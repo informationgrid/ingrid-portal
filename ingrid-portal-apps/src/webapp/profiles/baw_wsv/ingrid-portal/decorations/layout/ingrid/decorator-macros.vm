@@ -118,6 +118,10 @@
             #if($currentPage.startsWith('/application/'))
                 #set($elemSelected = true)
             #end
+         #elseif($element.url.startsWith('/default-page'))
+            #if($currentPage.startsWith('/cms/'))
+                #set($elemSelected = true)
+            #end
         #end
 		## render menue item dependent from flags
 		#if ($elemRender)
@@ -128,6 +132,8 @@
 					#set($subMenu = $site.getMenu("sub-menu-about"))
 				#elseif($currentPage.startsWith('/application/'))
 		            #set($subMenu = $site.getMenu("sub-menu-application"))
+		        #elseif($currentPage.startsWith('/default-page') || $currentPage.startsWith('/cms/'))
+		            #set($subMenu = $site.getMenu("sub-menu-start"))
 		        #end
 			  </li>
 			#else
@@ -169,6 +175,9 @@
         #elseif ($element.url.startsWith('/application/main-application.psml'))
             #set($linkTitle = $MESSAGES.getString('ingrid.page.application.overview.tooltip'))
             #set($linkName = $MESSAGES.getString('ingrid.page.application.overview')) 
+        #elseif ($element.url.startsWith('/default-page.psml'))
+            #set($linkTitle = $MESSAGES.getString('ingrid.page.cms.default.tooltip'))
+            #set($linkName = $MESSAGES.getString('ingrid.page.cms.default')) 
         #end
         #if($element.isSelected($site))
 			#set($elemSelected = true)
@@ -272,7 +281,9 @@
         #set($separatorText = $element.getText($preferedLocale))
         #if ($separatorText == "separator1")
 		  #if($lastType != "separator")
-            #renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "|")
+			#if($linkPage != '/default-page.psml')
+				#renderServiceLink($linkPage $currentPage $linkUrl $linkTitle $linkName "|")
+			#end
           #else
            |
           #end

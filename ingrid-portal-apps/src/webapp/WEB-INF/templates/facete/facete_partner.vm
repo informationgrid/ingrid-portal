@@ -61,18 +61,14 @@
     			</div>
     			<div id="class" class="cat_content_entry">
         			<div id="${partner.ident}">
-        			#set($j = 0)
-    				#if($isProviderSelect)
+        			#if($isProviderSelect)
     					#foreach ($provider in $enableFaceteProviderList)
     							#renderProviderListTree ($provider)
     					#end
         			#else
     					#foreach ($provider in $enableFaceteProviderList)
             				#if(${provider.sortkeyPartner} == ${partner.sortkey})
-    							#if($j < $enableFacetePartnerListCount)
-    								#renderProviderListTree ($provider)
-            					#end
-            					#set($j = $j + 1)
+    							#renderProviderListTree ($provider)
             				#end
         				#end
 					#end

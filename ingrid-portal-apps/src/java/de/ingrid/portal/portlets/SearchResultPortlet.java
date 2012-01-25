@@ -87,7 +87,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
-
+        context.put("enableFacete", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false));
+        
         // ----------------------------------
         // check for passed RENDER PARAMETERS (for bookmarking) and
         // ADAPT OUR PERMANENT STATE VIA MESSAGES
@@ -580,10 +581,12 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             context.put("ds", request.getParameter("ds"));
             
             if(rankedHits != null){
-            	if(rankedHits.get("FACETS") != null){
-                   	UtilsFacete.checkForExistingFacete((IngridDocument) rankedHits.get("FACETS"), request);
-               	}
-               	UtilsFacete.setParamsToContext(request, context, (IngridDocument) rankedHits.get("FACETS") );
+            	if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
+            		if(rankedHits.get("FACETS") != null){
+	                   	UtilsFacete.checkForExistingFacete((IngridDocument) rankedHits.get("FACETS"), request);
+	               	}
+	               	UtilsFacete.setParamsToContext(request, context, (IngridDocument) rankedHits.get("FACETS") );
+            	}
             }
             
         	context.put("rankedResultList", rankedHits);
@@ -607,10 +610,12 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("rankedPageSelector", rankedPageNavigation);
         context.put("unrankedPageSelector", unrankedPageNavigation);
         if(rankedHits != null){
-        	if(rankedHits.get("FACETS") != null){
-               	UtilsFacete.checkForExistingFacete((IngridDocument) rankedHits.get("FACETS"), request);
-           	}
-           	UtilsFacete.setParamsToContext(request, context, (IngridDocument) rankedHits.get("FACETS"));
+        	if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
+                if(rankedHits.get("FACETS") != null){
+	               	UtilsFacete.checkForExistingFacete((IngridDocument) rankedHits.get("FACETS"), request);
+	           	}
+	           	UtilsFacete.setParamsToContext(request, context, (IngridDocument) rankedHits.get("FACETS"));
+        	}
         }
         context.put("rankedResultList", rankedHits);
         context.put("unrankedResultList", unrankedHits);
@@ -673,7 +678,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             SearchState.adaptSearchState(request, Settings.PARAM_FILTER, request.getParameter(Settings.PARAM_GROUPING));
         }
         
-        UtilsFacete.setFaceteParamsToSessionByAction(request);
+        if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
+            UtilsFacete.setFaceteParamsToSessionByAction(request);
+        }
         
         // redirect to our page wih parameters for bookmarking
         actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)));

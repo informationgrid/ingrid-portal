@@ -1,30 +1,41 @@
 #parse ('/WEB-INF/templates/include_search_result_filter.vm')
 
-<div dojoType="dijit.layout.ContentPane" id="search_facete" style="display:none">
-   	#parse ('/WEB-INF/templates/facete/facete.vm')
-</div>
-
-<div dojoType="dijit.layout.ContentPane" id="search_hits" class="nonjavascript">
-<!-- RESULTS LEFT -->
-#if ($RIGHT_COLUMN_DISABLED)
-  <div id="section">
+#if($enableFacete)
+    <div dojoType="dijit.layout.ContentPane" id="search_facete" style="display:none">
+       	#parse ('/WEB-INF/templates/facete/facete.vm')
+    </div>
+    
+    <div dojoType="dijit.layout.ContentPane" id="search_hits" class="nonjavascript">
+    <!-- RESULTS LEFT -->
+    #if ($RIGHT_COLUMN_DISABLED)
+      <div id="section">
+    #else
+      <div id="results_left">
+    #end
+    #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
+      </div>
+    </div>
 #else
-  <div id="results_left">
-#end
-#parse ('/WEB-INF/templates/include_search_result_ranked.vm')
-  </div>
-</div>
-  
-<!-- RESULTS RIGHT -->
-#if (!$RIGHT_COLUMN_DISABLED)
-  <div id="results_right">
-#parse ('/WEB-INF/templates/include_search_result_unranked.vm')
-  </div>
+	<!-- RESULTS LEFT -->
+    #if ($RIGHT_COLUMN_DISABLED)
+      <div id="section">
+    #else
+      <div id="results_left">
+    #end
+    #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
+      </div>
 #end
 
-  <div class="clearer"></div>
-
- <script type="text/javascript">
- 	document.getElementById('search_facete').style.display = "block";
-	document.getElementById('search_hits').setAttribute('class', "javascript");
- </script>
+	<!-- RESULTS RIGHT -->
+    #if (!$RIGHT_COLUMN_DISABLED)
+      <div id="results_right">
+    #parse ('/WEB-INF/templates/include_search_result_unranked.vm')
+      </div>
+    #end
+    
+      <div class="clearer"></div>
+    
+     <script type="text/javascript">
+     	document.getElementById('search_facete').style.display = "block";
+    	document.getElementById('search_hits').setAttribute('class', "javascript");
+     </script>
