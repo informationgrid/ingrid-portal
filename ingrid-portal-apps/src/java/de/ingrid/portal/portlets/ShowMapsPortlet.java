@@ -12,8 +12,10 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 
 import org.apache.commons.configuration.ConfigurationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.jetspeed.headerresource.HeaderResource;
+import org.apache.jetspeed.portlet.PortletHeaderRequest;
+import org.apache.jetspeed.portlet.PortletHeaderResponse;
+import org.apache.jetspeed.portlet.SupportsHeaderPhase;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.hibernate.Criteria;
@@ -21,6 +23,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
@@ -32,7 +36,7 @@ import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
 import de.ingrid.portal.om.IngridTinyUrlSource;
 import de.ingrid.portal.search.UtilsSearch;
 
-public class ShowMapsPortlet extends GenericVelocityPortlet {
+public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsHeaderPhase {
 
 	private final static Logger log = LoggerFactory.getLogger(ShowMapsPortlet.class);
 
@@ -46,8 +50,6 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()));
         context.put("MESSAGES", messages);
-
-        response.setTitle(messages.getString("maps.page.title"));
 
         String wmsURL = UtilsSearch.getWMSURL(request, request.getParameter("wms_url"), true);
         
@@ -128,5 +130,55 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
 	public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException {
 		
 	}
+
+	public void doHeader(PortletHeaderRequest request, PortletHeaderResponse response)
+			throws PortletException {
+		
+
+        HeaderResource headerResource = response.getHeaderResource();
+        
+        
+        headerResource.addHeaderInfo("<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/adapter/ext/ext-base-debug.js\"></script>" +
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/ext-all-debug.js\"></script>" +
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/lib/OpenLayers.js\"></script>" +
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext/lib/GeoExt.js\"></script>"+
+        							 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all.css\" />"+
+        							 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/frontend/css/style.css\" />"+
+        							 "<script type=\"text/javascript\" src=\"http://proj4js.org/lib/proj4js-compressed.js\"></script>"+
+        							 "<!-- openlayers extensions -->"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers.addins/LoadingPanel.js\"></script>"+
+        							 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/openlayers.addins/loadingpanel.css\" />"+
+        							 "<!-- geoext extensions -->"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/SimplePrint.js\"></script>"+
+        							 "<!-- custom code -->"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/config.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/Message.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/Configuration.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/data/StoreHelper.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/model/WmsProxy.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/Session.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/SessionState.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/Service.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/ActiveServicesPanel.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/ServiceCategoryPanel.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/SettingsDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/OpacityDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/NewServiceDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/MetaDataDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/FeatureInfoControl.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/FeatureInfoDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/LoadDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/SaveDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/PrintDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/Workspace.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/main.js\"></script>");
+		
+	
+    
+	//path: /ingrid-webmap-client/frontend/
+
+    
+	}
+	
 
 }

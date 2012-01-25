@@ -4,9 +4,7 @@
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" name="env_place_map" id="env_place_map">
       <div class="formbody formbody_map formbody_border_style" style="background-color:white">
-        <iframe src="$wmsURL" style="width:100%;height:676px;border:0;" name="wms_viewer" marginheight="0" marginwidth="0" frameborder="0">
-			$MESSAGES.getString('searchExtEnvPlaceMap.noIFrames')
-        </iframe>
+		<div id="openlayersDiv" style="width:100%;"></div>
         <div class="line" style="width:33em"><hr /></div>
         <div class="float_right rightmargin"></div>
 		  #displayFormErrors()
