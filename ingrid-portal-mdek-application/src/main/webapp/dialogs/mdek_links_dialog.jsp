@@ -40,15 +40,11 @@
             function init(){
                 // take over passed data
                 if (_container_.customParams) {
-                    caller.grid = _container_.customParams.grid;
-                    caller.selectedRow = _container_.customParams.selectedRow;
-                    caller.filter = _container_.customParams.filter;
+                    caller = _container_.customParams;
                 }
 
-                console.debug("mdek_links_dialog -> data from caller (grid, selectedRow, filter)");
-                console.debug(caller.grid);
-                console.debug(caller.selectedRow);
-                console.debug(caller.filter);
+                console.debug("mdek_links_dialog -> data from caller");
+                console.debug(caller);
 
                 createDOMElements();
                 resetRequiredInputElements();
@@ -338,15 +334,15 @@
                 } else {
                     // add NEW link
                     // No checks if the store already contains the current element.
-                    UtilGrid.addTableDataRow(caller.grid, currentLink);
+                    UtilGrid.addTableDataRow(caller.gridId, currentLink);
  
                     // also add to "global" link table in "Verweise"
-                    if (caller.grid != "linksTo") {
+                    if (caller.gridId != "linksTo") {
                         UtilGrid.addTableDataRow("linksTo", currentLink);
                     }
                 }
 
-                var callerGrid = UtilGrid.getTable(caller.grid);
+                var callerGrid = UtilGrid.getTable(caller.gridId);
                 callerGrid.invalidate();
                 callerGrid.notifyChangedData({});
 
@@ -430,8 +426,8 @@
             closeThisDialog = function() {
                 // we can't clear in a way, that we can immediately reselect the row !? :(
                 // so we keep selection, user has to click to other row, before reselecting !
-//                UtilGrid.clearSelection(caller.grid);
-//                UtilGrid.getTable(caller.grid).invalidate();
+//                UtilGrid.clearSelection(caller.gridId);
+//                UtilGrid.getTable(caller.gridId).invalidate();
                 dijit.byId("pageDialog").hide();
             }
         </script>
@@ -446,7 +442,7 @@
                 <br>   
                 <div id="linksContent" class="content">
                    <!-- CONTENT START -->
-                    <div class="inputContainer grey" dojoType="dijit.layout.ContentPane" region="center" style="padding:15px;">
+                    <div class="inputContainer" dojoType="dijit.layout.ContentPane" region="center" style="padding:15px;">
                         <span class="label">
                             <label onclick="javascript:dialog.showContextHelp(arguments[0], 7034)">
                                 <fmt:message key="dialog.links.source" />

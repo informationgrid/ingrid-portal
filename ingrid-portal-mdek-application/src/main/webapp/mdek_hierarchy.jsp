@@ -430,7 +430,7 @@
                                         </label>
                                     </span>
                                     <span id="ref1BasisTab2Header" class="functionalLink onTab marginRight" style="display: none;">
-                                        <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddBasisLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Basis'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3520, grid: 'ref1BasisLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.technicalBasisTable.link" /></a>
+                                        <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddBasisLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Basis'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3520, gridId: 'ref1BasisLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.technicalBasisTable.link" /></a>
                                     </span>
                                     <div id="ref1BasisTabContainer" selectedChild="ref1BasisTab1">
                                         <div id='ref1BasisTab1' label="<fmt:message key="ui.obj.type1.technicalBasisTable.tab.text" />">
@@ -541,7 +541,7 @@
                                         <label for="ref1SymbolsTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3555)">
                                             <fmt:message key="ui.obj.type1.symbolCatTable.title" />
                                         </label>
-                                    </span><span id="ref1SymbolsTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddSymbolsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Symbols'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3555, grid: 'ref1SymbolsLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.symbolCatTable.link" /></a></span>
+                                    </span><span id="ref1SymbolsTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddSymbolsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Symbols'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3555, gridId: 'ref1SymbolsLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.symbolCatTable.link" /></a></span>
                                     <div id="ref1SymbolsTabContainer" selectedChild="ref1SymbolsTab1">
                                         <div id='ref1SymbolsTab1' label="<fmt:message key="ui.obj.type1.symbolCatTable.tab.text" />">
                                             <!-- Need to use document.write here since the titel 'label' is set directly in the div
@@ -566,7 +566,7 @@
                                         <label for="ref1KeysTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3535)">
                                             <fmt:message key="ui.obj.type1.keyCatTable.title" />
                                         </label>
-                                    </span><span id="ref1KeysTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddKeysLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Keys'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3535, grid: 'ref1KeysLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.keyCatTable.link" /></a></span>
+                                    </span><span id="ref1KeysTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddKeysLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Keys'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3535, gridId: 'ref1KeysLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.keyCatTable.link" /></a></span>
                                     <div id="ref1KeysTabContainer" selectedChild="ref1KeysTab1">
                                         <div id='ref1KeysTab1' label="<fmt:message key="ui.obj.type1.keyCatTable.tab.text" />">
                                             <div class="input tableContainer">
@@ -602,7 +602,7 @@
                                         <label for="ref1ServiceLink" onclick="javascript:dialog.showContextHelp(arguments[0], 5066)">
                                             <fmt:message key="ui.obj.type1.serviceLink.title" />
                                         </label>
-                                    </span><span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddServiceLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Service'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 5066, grid: 'ref1ServiceLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.serviceLink.link" /></a></span>
+                                    </span><span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddServiceLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Service'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 5066, gridId: 'ref1ServiceLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.serviceLink.link" /></a></span>
                                     <div class="input tableContainer">
                                         <div id="ref1ServiceLink" autoHeight="4" class="hideTableHeader" query="{relationType:'5066'}">
                                         </div>
@@ -616,7 +616,7 @@
                                         <label for="ref1DataBasisTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3570)">
                                             <fmt:message key="ui.obj.type1.dataBasisTable.title" />
                                         </label>
-                                    </span><span id="ref1DataBasisTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddDataBasisLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1DataBasis'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3570, grid: 'ref1DataBasisLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.dataBasisTable.link" /></a></span>
+                                    </span><span id="ref1DataBasisTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddDataBasisLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1DataBasis'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3570, gridId: 'ref1DataBasisLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.dataBasisTable.link" /></a></span>
                                     <div id="ref1DataBasisTabContainer" selectedChild="ref1DataBasisTab1">
                                         <div id='ref1DataBasisTab1' label="<fmt:message key="ui.obj.type1.dataBasisTable.tab.text" />">
                                             <input type="text" id="ref1DataBasisText" name="ref1DataBasisText" />
@@ -638,7 +638,7 @@
                                             <fmt:message key="ui.obj.type1.processTable.title" />
                                         </label>
                                     </span><span id="ref1ProcessTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" />
-    									<a id="ref1AddProcessLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Process'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3515, grid: 'ref1ProcessLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.processTable.link" /></a>
+    									<a id="ref1AddProcessLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Process'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3515, gridId: 'ref1ProcessLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.processTable.link" /></a>
 									</span>
                                     <div id="ref1ProcessTabContainerSpace" selectedChild="ref1ProcessTab1">
                                         <!--<div id='ref1ProcessTab1' label="<fmt:message key="ui.obj.type1.processTable.tab.text" />";-->
@@ -991,7 +991,7 @@
 		                                    </label>
 		                                </span>
 		                                <span id="ref2BaseDataTab2Header" class="functionalLink onTab marginRight" style="display: none;">
-		                                    <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref2AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref2BaseData'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3345, grid: 'ref2BaseDataLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type2.generalDataTable.link" /></a>
+		                                    <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref2AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref2BaseData'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3345, gridId: 'ref2BaseDataLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type2.generalDataTable.link" /></a>
 		                                </span>
 		                                <div id="ref2BaseDataTabContainer" selectedChild="ref2BaseDataTab1">
 		                                    <div id='ref2BaseDataTab1' label="<fmt:message key="ui.obj.type2.generalDataTable.tab.text" />">
@@ -1098,9 +1098,9 @@
                                         <label for="ref3Operation" onclick="javascript:dialog.showContextHelp(arguments[0], 7015)">
                                             <fmt:message key="ui.obj.type3.operationTable.title" />
                                         </label>
-                                    </span><span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(getLocalizedTitle('ref3Operation'), 'dialogs/mdek_operation_dialog.jsp?c='+userLocale, 735, 745, true);" title="<fmt:message key="dialog.popup.operationTable.link" /> [Popup]"><fmt:message key="ui.obj.type3.operationTable.link" /></a></span>
+                                    </span><span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(getLocalizedTitle('ref3Operation'), 'dialogs/mdek_operation_dialog.jsp?c='+userLocale, 735, 745, true, {serviceTypeWidgetId:'ref3ServiceType', gridId:'ref3Operation'});" title="<fmt:message key="dialog.popup.operationTable.link" /> [Popup]"><fmt:message key="ui.obj.type3.operationTable.link" /></a></span>
                                     <div class="input tableContainer">
-                                        <div id="ref3Operation" autoHeight="4" contextMenu="none">
+                                        <div id="ref3Operation" autoHeight="4">
                                         </div>
                                     </div>
                                     </div>
@@ -1144,7 +1144,7 @@
                                             <label for="ref3BaseDataTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3345)">
                                                 <fmt:message key="ui.obj.type3.generalDataTable.title" />
                                             </label>
-                                        </span><span id="ref3MethodTab2Header" class="functionalLink onTab" style="display: none;"><!--marginRightColumn--><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref3AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref3BaseData'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3210, grid: 'ref3BaseDataLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type3.generalDataTable.link" /></a></span>
+                                        </span><span id="ref3MethodTab2Header" class="functionalLink onTab" style="display: none;"><!--marginRightColumn--><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref3AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref3BaseData'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3210, gridId: 'ref3BaseDataLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type3.generalDataTable.link" /></a></span>
                                         <div id="ref3BaseDataTabContainer" class="h088" selectedChild="ref3BaseDataTab1">
                                             <div id='ref3BaseDataTab1' label="<fmt:message key="ui.obj.type3.generalDataTable.tab.text" />">
                                             <input type="text" id="ref3BaseDataText" name="ref3BaseDataText" class="textAreaFull" />
@@ -1271,7 +1271,7 @@
                                         <label for="ref5KeysTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3109)">
                                             <fmt:message key="ui.obj.type5.keyCatTable.title" />
                                         </label>
-                                    </span><span id="ref5KeysTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref5AddKeysLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref5Keys'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3109, grid: 'ref5KeysLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type5.keyCatTable.link" /></a></span>
+                                    </span><span id="ref5KeysTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref5AddKeysLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref5Keys'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3109, gridId: 'ref5KeysLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type5.keyCatTable.link" /></a></span>
                                     <div id="ref5KeysTabContainer" selectedChild="ref5KeysTab1">
                                         <div id='ref5KeysTab1' label="<fmt:message key="ui.obj.type5.keyCatTable.tab.text" />">
                                             <div class="input tableContainer">
@@ -1307,7 +1307,7 @@
                                             <label for="ref5MethodTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3100)">
                                                 <fmt:message key="ui.obj.type5.methodTable.title" />
                                             </label>
-                                       </span><span id="ref5MethodTab2Header" class="functionalLink onTab marginRightColumn" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref5AddMethodLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref5Method'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3100, grid: 'ref5MethodLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type5.methodTable.link" /></a></span>
+                                       </span><span id="ref5MethodTab2Header" class="functionalLink onTab marginRightColumn" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref5AddMethodLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref5Method'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3100, gridId: 'ref5MethodLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type5.methodTable.link" /></a></span>
                                         <div id="ref5MethodTabContainer" selectedChild="ref5MethodTab1">
                                             <div id='ref5MethodTab1' label="<fmt:message key="ui.obj.type5.methodTable.tab.text" />">
                                                 <span class="input"><input type="text" maxLength="255" id="ref5MethodText" name="ref5MethodText" /></span>
@@ -1410,7 +1410,7 @@
                                             </label>
                                         </span>
                                         <span id="ref6MethodTab2Header" class="functionalLink onTab marginRightColumn" style="display: none;">
-                                            <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref6AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref6BaseData'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3210, grid: 'ref6BaseDataLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.links.linksTo.link" /></a>
+                                            <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref6AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref6BaseData'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3210, gridId: 'ref6BaseDataLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.links.linksTo.link" /></a>
                                         </span>
                                         <div id="ref6BaseDataTabContainer" selectedChild="ref6BaseDataTab1">
                                                 <input type="text" id="ref6BaseDataText" />
@@ -1983,7 +1983,7 @@
                                         </label>
                                     </span>
                                     <span class="functionalLink">
-                                        <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(getLocalizedTitle('linksTo'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {grid: 'linksTo'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.links.linksTo.link" /></a>
+                                        <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(getLocalizedTitle('linksTo'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {gridId: 'linksTo'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.links.linksTo.link" /></a>
                                     </span>
                                     <div class="input tableContainer">
                                         <div id="linksTo" autoHeight="4" class="hideTableHeader">

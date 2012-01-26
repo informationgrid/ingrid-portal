@@ -185,7 +185,7 @@ ingridObjectLayout.createFachBezugClass1 = function(){
 	   {field: 'linkLabel',name: 'linkLabel',width: 685-scrollBarWidth-2+'px'}
 	];
     createDataGrid("ref1BasisLink", null, ref1Structure, null);
-    UtilGrid.connectRowSelectionToFunction(ingridObjectLayout.openLinkDialog, "ref1BasisLink", 3520);
+    UtilGrid.addRowSelectionCallback("ref1BasisLink", ingridObjectLayout.openLinkDialog, { filter:3520 });
     
     tabRef1.addChild(tabRef1Tab1);
     tabRef1.addChild(tabRef1Tab2);
@@ -311,7 +311,7 @@ ingridObjectLayout.createFachBezugClass1 = function(){
 		{field: 'linkLabel',name: 'linkLabel',width: 685-scrollBarWidth-2+'px'}
 	];
 	createDataGrid("ref1SymbolsLink", null, ref1SymbolsLinkStructure, null);
-	UtilGrid.connectRowSelectionToFunction(ingridObjectLayout.openLinkDialog, "ref1SymbolsLink", 3555);
+	UtilGrid.addRowSelectionCallback("ref1SymbolsLink", ingridObjectLayout.openLinkDialog, { filter:3555 });
     
     tabSymbols.addChild(tabSymbolsTab1);
     tabSymbols.addChild(tabSymbolsTab2);
@@ -363,7 +363,7 @@ ingridObjectLayout.createFachBezugClass1 = function(){
         width: 685-scrollBarWidth-2+'px'
     }];
     createDataGrid("ref1KeysLink", null, ref1KeysLinkStructure, null);
-    UtilGrid.connectRowSelectionToFunction(ingridObjectLayout.openLinkDialog, "ref1KeysLink", 3535);
+    UtilGrid.addRowSelectionCallback("ref1KeysLink", ingridObjectLayout.openLinkDialog, { filter:3535 });
     
     tabKeys.addChild(tabKeysTab1);
     tabKeys.addChild(tabKeysTab2);
@@ -381,7 +381,7 @@ ingridObjectLayout.createFachBezugClass1 = function(){
         width: 685-scrollBarWidth+'px'
     }];
     createDataGrid("ref1ServiceLink", null, ref1ServiceLinkStructure, null);
-    UtilGrid.connectRowSelectionToFunction(ingridObjectLayout.openLinkDialog, "ref1ServiceLink", 5066);
+    UtilGrid.addRowSelectionCallback("ref1ServiceLink", ingridObjectLayout.openLinkDialog, { filter:5066 });
     
     var tabDataBasis = new dijit.layout.TabContainer({
         style: "width: 100%;",
@@ -408,7 +408,7 @@ ingridObjectLayout.createFachBezugClass1 = function(){
         width: 685-scrollBarWidth-2+'px'
     }];
     createDataGrid("ref1DataBasisLink", null, ref1DataBasisLinkStructure, null);
-    UtilGrid.connectRowSelectionToFunction(ingridObjectLayout.openLinkDialog, "ref1DataBasisLink", 3570);
+    UtilGrid.addRowSelectionCallback("ref1DataBasisLink", ingridObjectLayout.openLinkDialog, { filter:3570 });
     tabDataBasis.addChild(tabDataBasisTab1);
     tabDataBasis.addChild(tabDataBasisTab2);
     tabDataBasis.startup();
@@ -446,7 +446,7 @@ ingridObjectLayout.createFachBezugClass1 = function(){
         width: 685-scrollBarWidth-2+'px'
     }];
     createDataGrid("ref1ProcessLink", null, ref1ProcessLinkStructure, null);
-    UtilGrid.connectRowSelectionToFunction(ingridObjectLayout.openLinkDialog, "ref1ProcessLink", 3515);
+    UtilGrid.addRowSelectionCallback("ref1ProcessLink", ingridObjectLayout.openLinkDialog, { filter:3515 });
     tabRef1Process.addChild(tabRef1ProcessTab1);
     tabRef1Process.addChild(tabRef1ProcessTab2);
     tabRef1Process.startup();
@@ -658,7 +658,7 @@ ingridObjectLayout.createFachBezugClass2 = function(){
         width: 325-scrollBarWidth-2+'px'
     }];
     createDataGrid("ref2BaseDataLink", null, ref2BaseDataLinkStructure, null);
-    UtilGrid.connectRowSelectionToFunction(ingridObjectLayout.openLinkDialog, "ref2BaseDataLink", 3345);
+    UtilGrid.addRowSelectionCallback("ref2BaseDataLink", ingridObjectLayout.openLinkDialog, { filter:3345 });
     
     ref2BaseDataTabContainer.addChild(ref2BaseDataTab1);
     ref2BaseDataTabContainer.addChild(ref2BaseDataTab2);
@@ -722,7 +722,7 @@ ingridObjectLayout.createFachBezugClass3 = function(){
 		{field: 'linkLabel',name: 'linkLabel',width: 325-scrollBarWidth-2+'px'}
 	];
     createDataGrid("ref3BaseDataLink", null, ref3BaseDataLinkStructure, null);
-    UtilGrid.connectRowSelectionToFunction(ingridObjectLayout.openLinkDialog, "ref3BaseDataLink", 3210);
+    UtilGrid.addRowSelectionCallback("ref3BaseDataLink", ingridObjectLayout.openLinkDialog, { filter:3210 });
 
 	ref3BaseDataTabContainer.addChild(ref3BaseDataTab1);
     ref3BaseDataTabContainer.addChild(ref3MethodTab2);
@@ -737,7 +737,7 @@ ingridObjectLayout.createFachBezugClass3 = function(){
 		{field: 'description',name: message.get("ui.obj.type3.operationTable.header.description"),width: 543-scrollBarWidth+'px'}
 	];
     createDataGrid("ref3Operation", null, ref3OperationStructure, null);
-    UtilGrid.connectRowSelectionToFunction(ingridObjectLayout.openOperationDialog, "ref3Operation");
+    UtilGrid.addRowSelectionCallback("ref3Operation", ingridObjectLayout.openOperationDialog, { serviceTypeWidgetId:"ref3ServiceType" });
 
     new dijit.form.CheckBox({}, "ref3HasAccessConstraint");
 }
@@ -840,7 +840,7 @@ ingridObjectLayout.createFachBezugClass5 = function(){
         width: 685-scrollBarWidth-2+'px'
     }];
     createDataGrid("ref5KeysLink", null, ref5KeysLinkStructure, null);
-    UtilGrid.connectRowSelectionToFunction(ingridObjectLayout.openLinkDialog, "ref5KeysLink", 3109);
+    UtilGrid.addRowSelectionCallback("ref5KeysLink", ingridObjectLayout.openLinkDialog, { filter:3109 });
     
     tabKeys.addChild(tabKeysTab1);
     tabKeys.addChild(tabKeysTab2);
@@ -871,7 +871,7 @@ ingridObjectLayout.createFachBezugClass5 = function(){
 		{field: 'linkLabel',name: 'linkLabel',width: 325-scrollBarWidth-2+'px'}
 	];
     createDataGrid("ref5MethodLink", null, ref5MethodLinkStructure, null);
-    UtilGrid.connectRowSelectionToFunction(ingridObjectLayout.openLinkDialog, "ref5MethodLink", 3100);
+    UtilGrid.addRowSelectionCallback("ref5MethodLink", ingridObjectLayout.openLinkDialog, { filter:3100 });
 	
 	ref5MethodTabContainer.addChild(ref5MethodTab1);
     ref5MethodTabContainer.addChild(ref5MethodTab2);
@@ -917,7 +917,7 @@ ingridObjectLayout.createFachBezugClass6 = function(){
     ];
     console.debug("ref6base");
     createDataGrid("ref6BaseDataLink", null, ref6BaseDataLinkStructure, null);
-    UtilGrid.connectRowSelectionToFunction(ingridObjectLayout.openLinkDialog, "ref6BaseDataLink", 3210);
+    UtilGrid.addRowSelectionCallback("ref6BaseDataLink", ingridObjectLayout.openLinkDialog, { filter:3210 });
     console.debug("ref6baseE");
     ref6BaseDataTabContainer.addChild(ref6BaseDataTab1);
     ref6BaseDataTabContainer.addChild(ref6BaseDataTab2);
@@ -1267,7 +1267,7 @@ ingridObjectLayout.createReferences = function(){
 		{field: 'linkLabel',name: 'linkLabel',width: 325-scrollBarWidth+'px'}
 	];
     createDataGrid("linksTo", null, linksToStructure, null);
-    UtilGrid.connectRowSelectionToFunction(ingridObjectLayout.openLinkDialog, "linksTo");
+    UtilGrid.addRowSelectionCallback("linksTo", ingridObjectLayout.openLinkDialog);
     
     var linksFromStructure = [
 		{field: 'icon',name: 'icon',width: '23px'}, 
@@ -1276,12 +1276,12 @@ ingridObjectLayout.createReferences = function(){
     createDataGrid("linksFrom", null, linksFromStructure, null);
 }
 
-ingridObjectLayout.openLinkDialog = function(gridId, selectedRowData, filterEntryId){
-    dialog.showPage(message.get("dialog.links.title.edit"), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {grid:gridId, selectedRow:selectedRowData, filter:filterEntryId});
+ingridObjectLayout.openLinkDialog = function(dialogData){
+    dialog.showPage(message.get("dialog.links.title.edit"), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, dialogData);
 }
 
-ingridObjectLayout.openOperationDialog = function(gridId, selectedRowData){
-    dialog.showPage(message.get("dialog.operations.title"), 'dialogs/mdek_operation_dialog.jsp?c='+userLocale, 735, 745, true, {grid:gridId, selectedRow:selectedRowData});
+ingridObjectLayout.openOperationDialog = function(dialogData){
+    dialog.showPage(message.get("dialog.operations.title"), 'dialogs/mdek_operation_dialog.jsp?c='+userLocale, 735, 745, true, dialogData);
 }
 
 // Initialize the Coordinate Transformation Service

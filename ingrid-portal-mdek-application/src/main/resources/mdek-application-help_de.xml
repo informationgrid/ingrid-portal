@@ -890,32 +890,26 @@
             <header>Operation hinzufügen/bearbeiten</header>
             <content>
                  <p>Dieser Dialog tritt nur im Fachbezug der Objektklasse 
-				 <i>Dienst/Anwendung/Informationssystem</i> auf. Über ihn können Sie die Operationen angeben, 
-				 über die Ihr Dienst verfügt. </p>
+				 <i>Geodatendienst</i> auf. Über ihn können Sie die Operationen angeben, 
+				 über die Ihr Dienst verfügt.</p>
 				 <p>Besonders wichtig ist die Angabe der unterstützten Operationen bei OGC-konformen 
 				 Web-Diensten, da insbesondere die getCapabilities-Operation (z.B. bei WMS oder WFS) zur 
 				 Darstellung des Dienstes im Karten-Viewer genutzt wird.</p>
-				 <p>Die <i>Namen</i> und zugehörigen <i>Beschreibungen</i> der bereits erfassten 
-				 Operationen werden im Dialog ganz oben aufgelistet.</p>
-				 <p>Über die Schaltfläche <i>Neu</i> können weitere Operationen hinzugefügt werden. 
-				 Über die Schaltfläche <i>Hinzufügen</i> wird die neuerfasste Operation der Liste 
-				 hinzugefügt.</p>
-				 <p>Durch Anwählen einer Operation in der Liste wird diese in die Felder unterhalb der 
-				 Liste geladen und kann bearbeitet werden. Durch das Anklicken der Schaltfläche 
-				 <i>Speichern</i> übernehmen Sie die geänderten Daten in die Liste.</p>
+				 <p>Über den Link <i>Operation hinzufügen</i> können neue Operationen hinzugefügt werden.</p>
+				 <p>Eine bestehende Operation kann durch Anwählen in der Liste in einem eigenen Dialog 
+				 bearbeitet werden. Durch das Anklicken der Schaltfläche 
+				 <i>Übernehmen</i> übernehmen Sie die geänderten Daten in die Liste.</p>
 				 <p>Sie können eine Operation löschen, indem Sie auf den entsprechenden Eintrag in der 
 				 Liste mit der rechten Maustaste klicken und die Funktion <i>Löschen</i> aus dem 
 				 Kontextmenü auswählen.</p>
 				 <p><u>Achtung:</u> Der Name der Operation ist abhängig von der im Fachbezug des Objekts 
-				 ausgewählten <i>Service-Klassifikation</i>. Nur wenn als Service-Klassifikation 
-				 <i>Andere Dienste</i> oder <i>Verkettete Geodatendienste</i> ausgewählt wurde, 
+				 ausgewählten <i>Art des Dienstes</i>. Nur wenn als Art des Dienstes 
+				 <i>Sonstige Dienste</i> oder <i>Dienste zum Abrufen von Geodatendiensten</i> ausgewählt wurde, 
 				 kann der Name der Operation frei gewählt werden. 
 				 In allen anderen Fällen stehen die über das OGC für den jeweils gewählten Dienst 
 				 definierten Operationen zur Auswahl.</p>
 				 <p><u>Um die volle Funktionalität des InGridCatalogs auszunutzen, sollte für jeden 
 				 OGC-Dienst mindestens die getCapabilities-Operation eingetragen werden.</u></p>
-				 <p>Sie schließen das Dialog-Fenster über die Schaltfläche <i>Schließen</i> 
-				 rechts oben im Dialog.</p> 
             </content>
         </section>
         <section help-key="maintanance-of-objects-10">

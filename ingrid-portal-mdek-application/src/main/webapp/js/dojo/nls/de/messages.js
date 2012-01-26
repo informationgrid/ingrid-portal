@@ -182,7 +182,7 @@
 	"dialog.object.detailView.title":"Detailansicht",
 	"dialog.address.detailView.title":"Adress-Detailansicht",
 	"dialog.showComments.title":"Kommentar ansehen/hinzufügen",
-	"dialog.operations.title":"Operation hinzuf&uuml;gen/bearbeiten",
+	"dialog.operations.title":"Operation bearbeiten",
 
 	"dialog.inputInvalidError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Bitte &uuml;berpr&uuml;fen sie die Rot unterlegten Felder auf ihre Eingabe.",
 	"dialog.inputInvalidHtmlTagError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Eines der Eingabefelder enth&auml;lt ung&uuml;ltige HTML Tags. Es sind ausschlie&szlig;lich folgende Tags erlaubt: 'b, i, u, p, br, strong, ul, ol, li'.",
