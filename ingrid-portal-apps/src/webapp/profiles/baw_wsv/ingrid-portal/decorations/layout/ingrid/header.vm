@@ -79,11 +79,7 @@ if (xmlhttp) {
 
 </script>
   </head>
-  #if($site.getPage().url == "/application/main-application.psml")
-	<body class="#PageBaseCSSClass()" onload="resizeIFrame('ifrm')">
-  #else
-	<body class="#PageBaseCSSClass()">
-  #end
+  <body class="#PageBaseCSSClass()">
     <noscript>
 	  <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
     </noscript>

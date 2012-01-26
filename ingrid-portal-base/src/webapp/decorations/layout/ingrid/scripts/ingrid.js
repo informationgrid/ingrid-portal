@@ -230,20 +230,3 @@ function showButtonSelectCheckboxForm (form, button){
 	}
 	
 }
-
-function resizeIFrame(frameId)
-{
-	try {
-		frame = document.getElementById(frameId);
-		if(frame != null){
-			innerDoc = (frame.contentDocument) ? frame.contentDocument : frame.contentWindow.document;
-			objToResize = (frame.style) ? frame.style : frame;
-			objToResize.height = (innerDoc.body.scrollHeight + 10) + "px";
-			frame.setAttribute('onload', 'window.location.reload()');
-		}
-     }
-     catch(err) {
-        window.status = err.message;
-     }
-}
-

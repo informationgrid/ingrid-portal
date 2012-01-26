@@ -1,88 +1,112 @@
-<link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/styles.css" />
-
-<style>
-	div ul li { font-size:12px; }
-</style>
-
-<div class="float_left application_menu">
-	<ul>
-		<li>
-			<div>
-				<img src="/ingrid-portal-apps/images/application/app-visualist.png"><p>VisuaList.WSV</p>
-			</div>
-		</li>
-		<li>
-			<a href="./app-1.html" title="BWaStr Locator">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-locator.png"><p>BWaStr Locator</p>
-				</div>
-			</a>
-		</li>
-		<li>
-			<a href="./app-2.html" title="Wadaba WMS">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-wadaba.png"><p>Wadaba WMS</p>
-				</div>
-			</a>
-		</li>
-		<li>
-			<a href="./app-3.html" title="GeoViewer.WSV">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-geoviewer.png"><p>GeoViewer.WSV</p>
-				</div>
-			</a>
-		</li>
-		<li>
-			<a href="./app-4.html" title="GeoKatalog.WSV">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-catalog-wsv.png"><p>GeoKatalog.WSV</p>
-				</div>
-			</a>
-		</li>
-		<li>
-			<a href="./app-5.html" title="Desktop GIS">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-desktopgis.png"><p>Desktop GIS</p>
-				</div>
-			</a>
-		</li>
-		<li>
-			<a href="./app-6.html" title="Weitere GIS-Tools">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-gis-tools.png"><p>Weitere GIS-Tools</p>
-				</div>
-			</a>
-		</li>
-	</ul>
-</div>
-<div class="float_left application_content">
-	<div>
-		<div>
-			<p></p>
-			<h2>Bwastr-Kilometer-Listen einfach als WMS darstellen!</h2>
-			<p>Excel-Listen mit BWaStr-Ident-Nr. und BWaStr-KM oder Koordinatenpaaren können mit der WebApplikation VisuaList.WSV von jedermann mit wenigen Mausklicks in einer dynamischen Karte dargestellt werden. Dabei wird Ihre Excel-Liste hochgeladen und in einen WMS konvertiert. VisuaList.WSV bietet drei unterschiedliche Ausgabeformen an: </p>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/styles.css" />
+		
+		<style>
+			div ul li { font-size:12px; }
+		</style>
+		<script type="text/javascript">
+			function isLoad(frameId){
+				if (parent == window){
+					return;
+				} else {
+					var frame = parent.document.getElementById ? parent.document.getElementById(frameId): parent.document.all ? parent.document.all[frameId]: null;
+					try {
+						if(frame != null){
+							objToResize = (frame.style) ? frame.style : frame;
+							objToResize.height = "0px";
+							objToResize.height = (document.body.scrollHeight + 10) + "px";
+						}
+				     }
+				     catch(err) {
+				        window.status = err.message;
+				     }
+				} 
+			}
+		</script>
+	</head>
+	<body onload="isLoad('ifrm')">	
+		<div class="float_left application_menu">
 			<ul>
-				<li><p>1. in einer einfachen dynamische Karte (OpenLayersClient),</p></li>
-				<li><p>2. die Darstellung im GeoViewer.WSV und</p></li>
-				<li><p>3. die kopierbare WMS-URL, zur Darstellung in GI-Systemen wie ArcGIS.</p></li>
+				<li>
+					<div>
+						<img src="/ingrid-portal-apps/images/application/app-visualist.png"><p>VisuaList.WSV</p>
+					</div>
+				</li>
+				<li>
+					<a href="./app-1.html" title="BWaStr Locator">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-locator.png"><p>BWaStr Locator</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="./app-2.html" title="Wadaba WMS">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-wadaba.png"><p>Wadaba WMS</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="./app-3.html" title="GeoViewer.WSV">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-geoviewer.png"><p>GeoViewer.WSV</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="./app-4.html" title="GeoKatalog.WSV">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-catalog-wsv.png"><p>GeoKatalog.WSV</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="./app-5.html" title="Desktop GIS">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-desktopgis.png"><p>Desktop GIS</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="./app-6.html" title="Weitere GIS-Tools">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-gis-tools.png"><p>Weitere GIS-Tools</p>
+						</div>
+					</a>
+				</li>
 			</ul>
-			<p class="iconLink">
-				<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="extern Link"></span>
-				<span>
-					<a title="Link zu Testdaten" href="http://geoportal.wsv.bvbs.bund.de/geoportal/cms/common/pdf/Testdaten_VisuaList.WSV.xls">Link zu Testdaten</a>
-				</span>
-				<span class="clearer"></span>
-			</p>
-			<br>
-			<span class="clearer"></span>
-			<br>
-			<div class="float_right">
-				<p class="iconLink">
-					<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link"></span>
-					<span><a title="Zu VisuaList.WSV" href="/portal/application/main-application-0.psml">Zu VisuaList.WSV</a></span>
+		</div>
+		<div class="float_left application_content">
+			<div>
+				<div>
+					<p></p>
+					<h2>Bwastr-Kilometer-Listen einfach als WMS darstellen!</h2>
+					<p>Excel-Listen mit BWaStr-Ident-Nr. und BWaStr-KM oder Koordinatenpaaren können mit der WebApplikation VisuaList.WSV von jedermann mit wenigen Mausklicks in einer dynamischen Karte dargestellt werden. Dabei wird Ihre Excel-Liste hochgeladen und in einen WMS konvertiert. VisuaList.WSV bietet drei unterschiedliche Ausgabeformen an: </p>
+					<ul>
+						<li><p>1. in einer einfachen dynamische Karte (OpenLayersClient),</p></li>
+						<li><p>2. die Darstellung im GeoViewer.WSV und</p></li>
+						<li><p>3. die kopierbare WMS-URL, zur Darstellung in GI-Systemen wie ArcGIS.</p></li>
+					</ul>
+					<p class="iconLink">
+						<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="extern Link"></span>
+						<span>
+							<a title="Link zu Testdaten" href="http://geoportal.wsv.bvbs.bund.de/geoportal/cms/common/pdf/Testdaten_VisuaList.WSV.xls">Link zu Testdaten</a>
+						</span>
+						<span class="clearer"></span>
+					</p>
+					<br>
 					<span class="clearer"></span>
-				</p>
+					<br>
+					<div class="float_right">
+						<p class="iconLink">
+							<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link"></span>
+							<span><a target="_parent" title="Zu VisuaList.WSV" href="/app1">Zu VisuaList.WSV</a></span>
+							<span class="clearer"></span>
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
+	</body>
+</html>

@@ -1,125 +1,149 @@
-<link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/styles.css" />
-
-<style>
-	div ul li { font-size:12px; }
-</style>
-
-<div class="float_left application_menu">
-	<ul>
-		<li>
-			<a href="./app-0.html" title="VisuaList.WSV">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-visualist.png"><p>VisuaList.WSV</p>
-				</div>
-			</a>
-		</li>
-		<li>
-			<a href="./app-1.html" title="BWaStr Locator">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-locator.png"><p>BWaStr Locator</p>
-				</div>
-			</a>
-		</li>
-		<li>
-			<a href="./app-2.html" title="Wadaba WMS">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-wadaba.png"><p>Wadaba WMS</p>
-				</div>
-			</a>
-		</li>
-		<li>
-			<a href="./app-3.html" title="GeoViewer.WSV">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-geoviewer.png"><p>GeoViewer.WSV</p>
-				</div>
-			</a>
-		</li>
-		<li>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/styles.css" />
+		
+		<style>
+			div ul li { font-size:12px; }
+		</style>
+		<script type="text/javascript">
+			function isLoad(frameId){
+				if (parent == window){
+					return;
+				} else {
+					var frame = parent.document.getElementById ? parent.document.getElementById(frameId): parent.document.all ? parent.document.all[frameId]: null;
+					try {
+						if(frame != null){
+							objToResize = (frame.style) ? frame.style : frame;
+							objToResize.height = "0px";
+							objToResize.height = (document.body.scrollHeight + 10) + "px";
+						}
+				     }
+				     catch(err) {
+				        window.status = err.message;
+				     }
+				} 
+			}
+		</script>
+	</head>
+	<body onload="isLoad('ifrm')">
+		<div class="float_left application_menu">
+			<ul>
+				<li>
+					<a href="./app-0.html" title="VisuaList.WSV">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-visualist.png"><p>VisuaList.WSV</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="./app-1.html" title="BWaStr Locator">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-locator.png"><p>BWaStr Locator</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="./app-2.html" title="Wadaba WMS">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-wadaba.png"><p>Wadaba WMS</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="./app-3.html" title="GeoViewer.WSV">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-geoviewer.png"><p>GeoViewer.WSV</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<div>
+						<img src="/ingrid-portal-apps/images/application/app-catalog-wsv.png"><p>GeoKatalog.WSV</p>
+					</div>
+				</li>
+				<li>
+					<a href="./app-5.html" title="Desktop GIS">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-desktopgis.png"><p>Desktop GIS</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="./app-6.html" title="Weitere GIS-Tools">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-gis-tools.png"><p>Weitere GIS-Tools</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="float_left application_content">
 			<div>
-				<img src="/ingrid-portal-apps/images/application/app-catalog-wsv.png"><p>GeoKatalog.WSV</p>
-			</div>
-		</li>
-		<li>
-			<a href="./app-5.html" title="Desktop GIS">
 				<div>
-					<img src="/ingrid-portal-apps/images/application/app-desktopgis.png"><p>Desktop GIS</p>
-				</div>
-			</a>
-		</li>
-		<li>
-			<a href="./app-6.html" title="Weitere GIS-Tools">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-gis-tools.png"><p>Weitere GIS-Tools</p>
-				</div>
-			</a>
-		</li>
-	</ul>
-</div>
-<div class="float_left application_content">
-	<div>
-		<div>
-			<p></p>
-			<h2>Kurzinformation:</h2>
-			<p>- Anwenderhandbuch <a class="apdf" href="http://geokat.wsv.bvbs.bund.de/terraCatalog/data/docs/Anwenderhandbuch_Geokatalog-WSV.pdf" target="_blank" title="zum Anwenderhandbuch des GeoKatalog.WSV">anzeigen</a></p> 
-			<p> - Umstiegshilfe von WSV Datenkatalog nach GeoKatalog.WSV <a class="aintern" href="Umstiegshilfen.html" target="_blank">anzeigen</a></p> 
-			<p>- <strong>Registrierung neuer Nutzer (Downloadberechtigung beantragen)</strong>&nbsp;&nbsp;&nbsp;[ <a class="aintern" title="mehr Informationen ein-/ausblenden" onclick="return toggleMe('para1')" href="Hilfen.html">Beitrag ein-/ausblenden</a> ]</p> 
-			<div style="display: none; margin: 10px; border: 0.063em dashed rgb(180, 180, 180); padding: 5px;" id="para1"> 
-				<p><strong>Registrierung neuer Nutzer (Downloadberechtigung beantragen)</strong></p> 
-				<p> Der neue Nutzer sendet die <a target="_blank" href="http://geokat.wsv.bvbs.bund.de/terraCatalog/data/docs/Verpflichtung_Nutzer.pdf">Verpflichtungserklärung</a> zur Einhaltung der Nutzungsbedingungen ausgefüllt und <strong>unterschrieben </strong>zusammen mit seinen entsprechenden Nutzerdaten wie</p>
-				<ul> 
-					<li><strong>Name</strong></li> 
-					<li><strong>Vorname</strong></li> 
-					<li><strong>E-Mail-Adresse</strong> (= Nutzername)</li> 
-					<li><strong>Telefon-Nr.</strong> per z.B. Scan (PDF, TIF,...), Fax, Brief </li> 
-				</ul> 
-				<p>an:</p> 
-				<p><strong>DLZ-IT BVBS bei der Bundesanstalt für Wasserbau </strong><br> Thomas Schubert <br> Am Ehrenberg 8 <br> 98693 Ilmenau <br> Fax: +49 3677 669-3333 <br> E-Mail: <a href="mailto:geokat.wsv@ilmenau.baw.de">geokat.wsv@ilmenau.baw.de</a> </p>
-				<p>Er wird per E-Mail über seine Freischaltung zum Geokatalog.WSV informiert und kann sich, falls bei ihm Windows- und Verzeichnisdienst-Anmeldung noch nicht synchronisiert sind, über folgende WSV-Intranet-Seite: <a title="Passwort neu setzen" target="_blank" href="http://intranet.wsv.bvbs.bund.de/login/wsv-dir_new_pw.php">http://intranet.wsv.bvbs.bund.de/login/wsv-dir_new_pw.php</a> ein initiales Passwort zusenden lassen. </p>
-			</div> 
-			<!-- End div para1 --> <!-- ----------------------------------------- --> 
-			
-			<p>- Wie lautet mein Nutzername?&nbsp;&nbsp;&nbsp;[ <a class="aintern" title="mehr Informationen ein-/ausblenden" onclick="return toggleMe('para2')" href="Hilfen.html">Beitrag ein-/ausblenden</a> ]</p> 
-			<div style="display: none; margin: 10px; border: 0.063em dashed rgb(180, 180, 180); padding: 5px;" id="para2"> 
-				<p><strong>Wie lautet mein Nutzername?</strong></p> 
-				<p>Nutzername ist die <strong>vollständige dienstliche Emailadresse</strong> des Nutzers.</p> 
-			</div> 
-			<!-- End div para2 --> <!-- ----------------------------------------- --> 
-			
-			<p>- Passwort: vergessen / initialisieren / zurücksetzen&nbsp;&nbsp;&nbsp;[ <a class="aintern" title="mehr Informationen ein-/ausblenden" onclick="return toggleMe('para3')" href="Hilfen.html">Beitrag ein-/ausblenden</a> ]</p> 
-			<div style="display: none; margin: 10px; border: 0.063em dashed rgb(180, 180, 180); padding: 5px;" id="para3"> 
-				<p><strong>Passwort: vergessen / initialisieren / zurücksetzen</strong></p> <p><strong>Info:</strong></p> 
-				<p>Das hier eingestellte Passwort gilt für alle am WSV-Verzeichnisdienst angeschlossenen WSV-Verfahren. Neben dem GeoKatalog.WSV sind dies z.B. WADABA, GeoBas u.v.a.</p> 
-				<p> <strong>Windows-Passwort?</strong></p> 
-				<p> Wird das Passwort, das Sie zum Login an Ihrem Windows-PC benutzen bereits mit dem WSV-Verzeichnisdienst synchronisiert (ggf. beim lokalen Systemadministrator erfragen), dann verwenden Sie zu Login am GeoKatalog.WSV bitte dieses Passwort. <strong>Wenn nicht</strong>, dann gehen Sie bitte gemäß der folgenden Schritte vor. </p>
-				<p>1. Schritt: Lassen Sie sich ein neues <strong>Passwort</strong> für den WSV-Verzeichnisdienst <strong>generieren</strong>: </p> 
-				<ul> 
-					<li> Aufruf folgender WSV-Intranet-Seite: <a target="_blank" href="https://intranet.wsv.bvbs.bund.de/login/wsv-dir_new_pw.php">https://intranet.wsv.bvbs.bund.de/login/wsv-dir_new_pw.php</a></li> 
-					<li>Dort tragen Sie bitte Ihre vollständige, dienstliche E-Mail-Adresse ein und klicken auf den Button "<strong>Passwort zurück </strong>..." </li> 
-					<li> Es wird jetzt ein neues, automatisch generiertes Passwort für Sie gesetzt und an Ihre dienstliche E-Mail-Adresse gesandt. (Für Ihren Zugang zum WSV-Verzeichnisdienst wird damit ein initiales Passwort eingerichtet.) </li> 
-				</ul> 
-				<p>2. Schritt: <strong>Ändern</strong> Sie Ihr <strong>Passwort</strong> für den WSV-Verzeichnisdienst nach Ihren Bedürfnissen <a target="_blank" title="Zur Passwort-Ändern-Seite im WSV-Intranet" class="aextern" href="https://intranet.wsv.bvbs.bund.de/login/wsv-dir_change_pw.php.html">hier</a>.</p> 
-			</div> 
-			<!-- End div para3 --> <!-- ----------------------------------------- --> 
-			
-			<p>- Weitergabe von Geodaten an externe Auftragnehmer&nbsp;&nbsp;&nbsp;[ <a class="aintern" title="mehr Informationen ein-/ausblenden" onclick="return toggleMe('para4')" href="Hilfen.html">Beitrag ein-/ausblenden</a> ]</p> 
-			<div style="display: none; margin: 10px; border: 0.063em dashed rgb(180, 180, 180); padding: 5px;" id="para4"> 
-				<p><strong>Weitergabe von Geodaten an externe Auftragnehmer</strong></p> 
-				<p>Bei dienstlich erforderlicher Weitergabe von geotopografischen Basisdaten (z.B. vom GeoKatalog.WSV heruntergeladene Daten, für die das <a target="_blank" href="http://www.ifag.de">BKG</a> oder das <acronym title="Bundesamt für Seeschifffahrt und Hydrographie">BSH</acronym> das Copyright besitzen) an externe Auftragnehmer, muss der Weitergebende den Auftragnehmer zur Einhaltung der Nutzungsbedingungen verpflichten und das <a target="_blank" href="http://www.dlz-it.de">DLZ-IT BMVBS</a><a target="_blank" href="http://www.dlz-it.de"></a> als Datendistributor über Umfang und Zweck der Daten-Weitergabe in Kenntnis setzen.</p>
-				<p>Hierfür lässt die WSV-Dienststelle das von ihr entsprechend ausgefüllte <a target="_blank" href="http://geokat.wsv.bvbs.bund.de/terraCatalog/data/docs/VerpflErkl_AN.zip">Formular Verpflichtungserklärung Auftragnehmer</a> den Auftragnehmer gegenzeichnen. Eine Kopie des gegengezeichneten Formulars ist an das <a target="_blank" href="http://www.dlz-it.de">DLZ-IT BMVBS</a> in Ilmenau zu senden.</p>
-			 </div> 
-			 <!-- End div para4 --> <!-- ----------------------------------------- --> 
-			 
-			<p>- Sonstiges&nbsp;&nbsp;&nbsp;[ <a class="aintern" title="mehr Informationen ein-/ausblenden" onclick="return toggleMe('para6')" href="Hilfen.html">Beitrag ein-/ausblenden</a> ]</p> 
-			<br>
-			<span class="clearer"></span>
-			<br>
-			<div class="float_right">
-				<p class="iconLink">
-					<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link"></span>
-					<span><a title="Zu GeoKatalog.WSV" target="_blank" href="http://geokat.wsv.bvbs.bund.de/terraCatalog/Start.do">Zu GeoKatalog.WSV</a></span>
+					<p></p>
+					<h2>Kurzinformation:</h2>
+					<p>- Anwenderhandbuch <a class="apdf" href="http://geokat.wsv.bvbs.bund.de/terraCatalog/data/docs/Anwenderhandbuch_Geokatalog-WSV.pdf" target="_blank" title="zum Anwenderhandbuch des GeoKatalog.WSV">anzeigen</a></p> 
+					<p> - Umstiegshilfe von WSV Datenkatalog nach GeoKatalog.WSV <a class="aintern" href="Umstiegshilfen.html" target="_blank">anzeigen</a></p> 
+					<p>- <strong>Registrierung neuer Nutzer (Downloadberechtigung beantragen)</strong>&nbsp;&nbsp;&nbsp;[ <a class="aintern" title="mehr Informationen ein-/ausblenden" onclick="return toggleMe('para1')" href="Hilfen.html">Beitrag ein-/ausblenden</a> ]</p> 
+					<div style="display: none; margin: 10px; border: 0.063em dashed rgb(180, 180, 180); padding: 5px;" id="para1"> 
+						<p><strong>Registrierung neuer Nutzer (Downloadberechtigung beantragen)</strong></p> 
+						<p> Der neue Nutzer sendet die <a target="_blank" href="http://geokat.wsv.bvbs.bund.de/terraCatalog/data/docs/Verpflichtung_Nutzer.pdf">Verpflichtungserklärung</a> zur Einhaltung der Nutzungsbedingungen ausgefüllt und <strong>unterschrieben </strong>zusammen mit seinen entsprechenden Nutzerdaten wie</p>
+						<ul> 
+							<li><strong>Name</strong></li> 
+							<li><strong>Vorname</strong></li> 
+							<li><strong>E-Mail-Adresse</strong> (= Nutzername)</li> 
+							<li><strong>Telefon-Nr.</strong> per z.B. Scan (PDF, TIF,...), Fax, Brief </li> 
+						</ul> 
+						<p>an:</p> 
+						<p><strong>DLZ-IT BVBS bei der Bundesanstalt für Wasserbau </strong><br> Thomas Schubert <br> Am Ehrenberg 8 <br> 98693 Ilmenau <br> Fax: +49 3677 669-3333 <br> E-Mail: <a href="mailto:geokat.wsv@ilmenau.baw.de">geokat.wsv@ilmenau.baw.de</a> </p>
+						<p>Er wird per E-Mail über seine Freischaltung zum Geokatalog.WSV informiert und kann sich, falls bei ihm Windows- und Verzeichnisdienst-Anmeldung noch nicht synchronisiert sind, über folgende WSV-Intranet-Seite: <a title="Passwort neu setzen" target="_blank" href="http://intranet.wsv.bvbs.bund.de/login/wsv-dir_new_pw.php">http://intranet.wsv.bvbs.bund.de/login/wsv-dir_new_pw.php</a> ein initiales Passwort zusenden lassen. </p>
+					</div> 
+					<!-- End div para1 --> <!-- ----------------------------------------- --> 
+					
+					<p>- Wie lautet mein Nutzername?&nbsp;&nbsp;&nbsp;[ <a class="aintern" title="mehr Informationen ein-/ausblenden" onclick="return toggleMe('para2')" href="Hilfen.html">Beitrag ein-/ausblenden</a> ]</p> 
+					<div style="display: none; margin: 10px; border: 0.063em dashed rgb(180, 180, 180); padding: 5px;" id="para2"> 
+						<p><strong>Wie lautet mein Nutzername?</strong></p> 
+						<p>Nutzername ist die <strong>vollständige dienstliche Emailadresse</strong> des Nutzers.</p> 
+					</div> 
+					<!-- End div para2 --> <!-- ----------------------------------------- --> 
+					
+					<p>- Passwort: vergessen / initialisieren / zurücksetzen&nbsp;&nbsp;&nbsp;[ <a class="aintern" title="mehr Informationen ein-/ausblenden" onclick="return toggleMe('para3')" href="Hilfen.html">Beitrag ein-/ausblenden</a> ]</p> 
+					<div style="display: none; margin: 10px; border: 0.063em dashed rgb(180, 180, 180); padding: 5px;" id="para3"> 
+						<p><strong>Passwort: vergessen / initialisieren / zurücksetzen</strong></p> <p><strong>Info:</strong></p> 
+						<p>Das hier eingestellte Passwort gilt für alle am WSV-Verzeichnisdienst angeschlossenen WSV-Verfahren. Neben dem GeoKatalog.WSV sind dies z.B. WADABA, GeoBas u.v.a.</p> 
+						<p> <strong>Windows-Passwort?</strong></p> 
+						<p> Wird das Passwort, das Sie zum Login an Ihrem Windows-PC benutzen bereits mit dem WSV-Verzeichnisdienst synchronisiert (ggf. beim lokalen Systemadministrator erfragen), dann verwenden Sie zu Login am GeoKatalog.WSV bitte dieses Passwort. <strong>Wenn nicht</strong>, dann gehen Sie bitte gemäß der folgenden Schritte vor. </p>
+						<p>1. Schritt: Lassen Sie sich ein neues <strong>Passwort</strong> für den WSV-Verzeichnisdienst <strong>generieren</strong>: </p> 
+						<ul> 
+							<li> Aufruf folgender WSV-Intranet-Seite: <a target="_blank" href="https://intranet.wsv.bvbs.bund.de/login/wsv-dir_new_pw.php">https://intranet.wsv.bvbs.bund.de/login/wsv-dir_new_pw.php</a></li> 
+							<li>Dort tragen Sie bitte Ihre vollständige, dienstliche E-Mail-Adresse ein und klicken auf den Button "<strong>Passwort zurück </strong>..." </li> 
+							<li> Es wird jetzt ein neues, automatisch generiertes Passwort für Sie gesetzt und an Ihre dienstliche E-Mail-Adresse gesandt. (Für Ihren Zugang zum WSV-Verzeichnisdienst wird damit ein initiales Passwort eingerichtet.) </li> 
+						</ul> 
+						<p>2. Schritt: <strong>Ändern</strong> Sie Ihr <strong>Passwort</strong> für den WSV-Verzeichnisdienst nach Ihren Bedürfnissen <a target="_blank" title="Zur Passwort-Ändern-Seite im WSV-Intranet" class="aextern" href="https://intranet.wsv.bvbs.bund.de/login/wsv-dir_change_pw.php.html">hier</a>.</p> 
+					</div> 
+					<!-- End div para3 --> <!-- ----------------------------------------- --> 
+					
+					<p>- Weitergabe von Geodaten an externe Auftragnehmer&nbsp;&nbsp;&nbsp;[ <a class="aintern" title="mehr Informationen ein-/ausblenden" onclick="return toggleMe('para4')" href="Hilfen.html">Beitrag ein-/ausblenden</a> ]</p> 
+					<div style="display: none; margin: 10px; border: 0.063em dashed rgb(180, 180, 180); padding: 5px;" id="para4"> 
+						<p><strong>Weitergabe von Geodaten an externe Auftragnehmer</strong></p> 
+						<p>Bei dienstlich erforderlicher Weitergabe von geotopografischen Basisdaten (z.B. vom GeoKatalog.WSV heruntergeladene Daten, für die das <a target="_blank" href="http://www.ifag.de">BKG</a> oder das <acronym title="Bundesamt für Seeschifffahrt und Hydrographie">BSH</acronym> das Copyright besitzen) an externe Auftragnehmer, muss der Weitergebende den Auftragnehmer zur Einhaltung der Nutzungsbedingungen verpflichten und das <a target="_blank" href="http://www.dlz-it.de">DLZ-IT BMVBS</a><a target="_blank" href="http://www.dlz-it.de"></a> als Datendistributor über Umfang und Zweck der Daten-Weitergabe in Kenntnis setzen.</p>
+						<p>Hierfür lässt die WSV-Dienststelle das von ihr entsprechend ausgefüllte <a target="_blank" href="http://geokat.wsv.bvbs.bund.de/terraCatalog/data/docs/VerpflErkl_AN.zip">Formular Verpflichtungserklärung Auftragnehmer</a> den Auftragnehmer gegenzeichnen. Eine Kopie des gegengezeichneten Formulars ist an das <a target="_blank" href="http://www.dlz-it.de">DLZ-IT BMVBS</a> in Ilmenau zu senden.</p>
+					 </div> 
+					 <!-- End div para4 --> <!-- ----------------------------------------- --> 
+					 
+					<p>- Sonstiges&nbsp;&nbsp;&nbsp;[ <a class="aintern" title="mehr Informationen ein-/ausblenden" onclick="return toggleMe('para6')" href="Hilfen.html">Beitrag ein-/ausblenden</a> ]</p> 
+					<br>
 					<span class="clearer"></span>
-				</p>
+					<br>
+					<div class="float_right">
+						<p class="iconLink">
+							<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link"></span>
+							<span><a target="_blank" title="Zu GeoKatalog.WSV" href="http://geokat.wsv.bvbs.bund.de/terraCatalog/Start.do">Zu GeoKatalog.WSV</a></span>
+							<span class="clearer"></span>
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
+	</body>
+</html>

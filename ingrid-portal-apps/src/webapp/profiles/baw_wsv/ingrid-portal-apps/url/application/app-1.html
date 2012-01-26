@@ -1,79 +1,104 @@
-<link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/styles.css" />
-      
-<style>
-	div ul li { font-size:12px; }
-</style>
- 
-<div class="float_left application_menu">
-	<ul>
-		<li>
-			<a href="./app-0.html" title="VisuaList.WSV">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-visualist.png"><p>VisuaList.WSV</p>
-				</div>
-			</a>
-		</li>
-		<li>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/styles.css" />
+		
+		<style>
+			div ul li { font-size:12px; }
+		</style>
+		<script type="text/javascript">
+			function isLoad(frameId){
+				if (parent == window){
+					return;
+				} else {
+					var frame = parent.document.getElementById ? parent.document.getElementById(frameId): parent.document.all ? parent.document.all[frameId]: null;
+					try {
+						if(frame != null){
+							objToResize = (frame.style) ? frame.style : frame;
+							objToResize.height = "0px";
+							objToResize.height = (document.body.scrollHeight + 10) + "px";
+						}
+				     }
+				     catch(err) {
+				        window.status = err.message;
+				     }
+				} 
+			}
+		</script>
+	</head>
+	<body onload="isLoad('ifrm')">	
+		<div class="float_left application_menu">
+			<ul>
+				<li>
+					<a href="./app-0.html" title="VisuaList.WSV">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-visualist.png"><p>VisuaList.WSV</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<div>
+						<img src="/ingrid-portal-apps/images/application/app-locator.png"><p>BWaStr Locator</p>
+					</div>
+				</li>
+				<li>
+					<a href="./app-2.html" title="Wadaba WMS">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-wadaba.png"><p>Wadaba WMS</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="./app-3.html" title="GeoViewer.WSV">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-geoviewer.png"><p>GeoViewer.WSV</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="./app-4.html" title="GeoKatalog.WSV">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-catalog-wsv.png"><p>GeoKatalog.WSV</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="./app-5.html" title="Desktop GIS">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-desktopgis.png"><p>Desktop GIS</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="./app-6.html" title="Weitere GIS-Tools">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-gis-tools.png"><p>Weitere GIS-Tools</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="float_left application_content">
 			<div>
-				<img src="/ingrid-portal-apps/images/application/app-locator.png"><p>BWaStr Locator</p>
-			</div>
-		</li>
-		<li>
-			<a href="./app-2.html" title="Wadaba WMS">
 				<div>
-					<img src="/ingrid-portal-apps/images/application/app-wadaba.png"><p>Wadaba WMS</p>
-				</div>
-			</a>
-		</li>
-		<li>
-			<a href="./app-3.html" title="GeoViewer.WSV">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-geoviewer.png"><p>GeoViewer.WSV</p>
-				</div>
-			</a>
-		</li>
-		<li>
-			<a href="./app-4.html" title="GeoKatalog.WSV">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-catalog-wsv.png"><p>GeoKatalog.WSV</p>
-				</div>
-			</a>
-		</li>
-		<li>
-			<a href="./app-5.html" title="Desktop GIS">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-desktopgis.png"><p>Desktop GIS</p>
-				</div>
-			</a>
-		</li>
-		<li>
-			<a href="./app-6.html" title="Weitere GIS-Tools">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-gis-tools.png"><p>Weitere GIS-Tools</p>
-				</div>
-			</a>
-		</li>
-	</ul>
-</div>
-<div class="float_left application_content">
-	<div>
-		<div>
-			<p></p>
-			<h2>Umrechnung zwischen Bundeswassertstraßen-km und Koordinaten</h2>
-			<p>Der BWaStr-Locator ermöglicht die Berechnung von Koordinaten auf Grundlage bekannter Bundeswasserstraßenidentnummern und Bundeswasserstraßenkilometer. Die Berechnung von Stationen aus bekannten Koordinaten und Bundeswasserstraßenidentnummern ist ebenfalls möglich.</p>
-			<p>Hilfe zur Benutzung steht <a title="hier im GeoPortal" href="http://geoportal.wsv.bvbs.bund.de/geoportal/cms/Content/Hilfen-Menue/Hilfen.html#weitere">hier im GeoPortal</a> zur Verfügung.</p>
-			<p>Für die massenhafte Berechnungen von Einzelpunkten steht eine <b>Excelliste mit Makros</b> zur Verfügung. <a title="Download Excel-Liste" href="http://geoportal.wsv.bvbs.bund.de/geoportal/cms/common/pdf/Online-Excel-BWaStr-Locator.xls">Download Excel-Liste</a></p>
-			<p>Hinweise zum <b>zweckmäßigen Einsatz des BWaStr-Locator</b> und des BWaStr-WFS sind in einem Dokument beschrieben. <a title="zum Dokument" href="http://geoportal.wsv.bvbs.bund.de/geoportal/cms/common/pdf/BWaStrLocator_Doku_Einsatz.pdf">zum Dokument</a></p>
-			<br>
-			<span class="clearer"></span>
-			<br>
-			<div class="float_right">
-				<p class="iconLink">
-					<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link"></span>
-					<span><a title="Zu BWaStr Locator" href="/portal/application/main-application-1.psml">Zu BWaStr Locator</a></span>
+					<p></p>
+					<h2>Umrechnung zwischen Bundeswassertstraßen-km und Koordinaten</h2>
+					<p>Der BWaStr-Locator ermöglicht die Berechnung von Koordinaten auf Grundlage bekannter Bundeswasserstraßenidentnummern und Bundeswasserstraßenkilometer. Die Berechnung von Stationen aus bekannten Koordinaten und Bundeswasserstraßenidentnummern ist ebenfalls möglich.</p>
+					<p>Hilfe zur Benutzung steht <a title="hier im GeoPortal" href="http://geoportal.wsv.bvbs.bund.de/geoportal/cms/Content/Hilfen-Menue/Hilfen.html#weitere">hier im GeoPortal</a> zur Verfügung.</p>
+					<p>Für die massenhafte Berechnungen von Einzelpunkten steht eine <b>Excelliste mit Makros</b> zur Verfügung. <a title="Download Excel-Liste" href="http://geoportal.wsv.bvbs.bund.de/geoportal/cms/common/pdf/Online-Excel-BWaStr-Locator.xls">Download Excel-Liste</a></p>
+					<p>Hinweise zum <b>zweckmäßigen Einsatz des BWaStr-Locator</b> und des BWaStr-WFS sind in einem Dokument beschrieben. <a title="zum Dokument" href="http://geoportal.wsv.bvbs.bund.de/geoportal/cms/common/pdf/BWaStrLocator_Doku_Einsatz.pdf">zum Dokument</a></p>
+					<br>
 					<span class="clearer"></span>
-				</p>
+					<br>
+					<div class="float_right">
+						<p class="iconLink">
+							<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="interner Link"></span>
+							<span><a target="_parent" title="Zu BWaStr Locator" href="/app2">Zu BWaStr Locator</a></span>
+							<span class="clearer"></span>
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
+	</body>
+</html>
+			

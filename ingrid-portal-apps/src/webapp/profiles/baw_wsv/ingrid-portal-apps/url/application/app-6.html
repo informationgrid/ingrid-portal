@@ -1,336 +1,359 @@
-<link rel="stylesheet" type="text/css" media="screen, projection"
-	href="/decorations/layout/ingrid/css/styles.css" />
-
-<style>
-	div ul li { font-size:12px; }
-</style>
-
-<div class="float_left application_menu">
-	<ul>
-		<li><a href="./app-0.html" title="VisuaList.WSV">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-visualist.png"
-						alt="">
-					<p>VisuaList.WSV</p>
-				</div> </a>
-		</li>
-		<li><a href="./app-1.html" title="BWaStr Locator">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-locator.png"
-						alt="">
-					<p>BWaStr Locator</p>
-				</div> </a>
-		</li>
-		<li><a href="./app-2.html" title="Wadaba WMS">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-wadaba.png"
-						alt="">
-					<p>Wadaba WMS</p>
-				</div> </a>
-		</li>
-		<li><a href="./app-3.html" title="GeoViewer.WSV">
-				<div>
-					<img src="/ingrid-portal-apps/images/application/app-geoviewer.png"
-						alt="">
-					<p>GeoViewer.WSV</p>
-				</div> </a>
-		</li>
-		<li><a href="./app-4.html" title="GeoKatalog.WSV">
-				<div>
-					<img
-						src="/ingrid-portal-apps/images/application/app-catalog-wsv.png"
-						alt="">
-					<p>GeoKatalog.WSV</p>
-				</div> </a>
-		</li>
-		<li><a href="./app-5.html" title="Desktop GIS">
-				<div>
-					<img
-						src="/ingrid-portal-apps/images/application/app-desktopgis.png"
-						alt="">
-					<p>Desktop GIS</p>
-				</div> </a>
-		</li>
-		<li>
-			<div>
-				<img src="/ingrid-portal-apps/images/application/app-gis-tools.png"
-					alt="">
-				<p>Weitere GIS-Tools</p>
-			</div>
-		</li>
-	</ul>
-</div>
-<div class="float_left application_content">
-	<div>
-		<div>
-			<p></p>
-			<h2>Kurzinformation:</h2>
-			<p></p>
-			<ul class="cms-navi-accordion">
-				<a id="positionfinder" name="positionfinder"></a>
-				<li>
-					<h3 class="active">
-						<span>PositionFinder (DLZ-IT BMVBS)</span>
-					</h3>
-					<div class="cms-content-prolog">
-						<div
-							style='width: 616px; height: 176px; margin-left: 10px; margin-right: 5px; border: 0pt none; background-image: url(&amp;quot;../../common/img/clt-shdw-bgrnd.png&amp;quot;);'>
-							<iframe scrolling="no" frameborder="0"
-								src="http://wsvmapserv.wsv.bvbs.bund.de/ol_bwastr/index.html?bwastr=0401&amp;kmwert=2331.0&amp;abstand=0&amp;zoom=9"
-								style="width: 600px; height: 160px; float: left; margin-right: 0px; margin-left: 0px; border: 0pt none;"
-								marginwidth="0" marginheight="0"> </iframe>
-						</div>
-						Eine dynamische Karte, die anhand eines
-						Bundeswassertstraßenkilometers oder eines Koordinatenpaares auf
-						eine Position zentriert werden kann. Die Parameter werden über die
-						Adresszeile (URL) übergeben.
-						<br clear="all">
-					</div>
-					<div class="cms_contentblock" style="display: block;">
-						<strong>- Aufruf mit Bundeswasserstraßenkilometer</strong>
-						<p>Bei Angabe folgender BWaStr-bezogener Parameter wird an die
-							betreffende Stelle gezoomt und diese mit einem Symbol markiert:</p>
-						<div style="margin-left: 20px;">
-							<ul>
-								<li><em>bwastr=0401</em> ... BWaStr-Id (z.B. 0401),</li>
-								<li><em>kmwert=2331.25</em> ...
-									Bundeswasserstraßenkilometerwert,</li>
-								<li><em>abstand=0</em> ... Abstand in Metern</li>
-								<li><em>zoom=10</em> ... Zoomstufe vom 0-20, 0=kleinster
-									und 20=größter Maßstab</li>
-							</ul>
-							Beispielaufruf: <a target="_blank"
-								href="http://wsvmapserv.wsv.bvbs.bund.de/ol_bwastr/index.html?bwastr=0401&amp;kmwert=2331.25&amp;abstand=0&amp;zoom=15">http://wsvmapserv.wsv.bvbs.bund.de/ol_bwastr/index.html?bwastr=0401&amp;kmwert=2331.25&amp;abstand=0&amp;zoom=15</a>
-							<!--<br clear="all">-->
-						</div>
-						<!-- End div para2 -->
-						<p>
-							<strong>- Aufruf mit Koordinatenpaar</strong>
-						</p>
-						<p>Bei Angabe folgender koordinatenbezogener Parameter wird an
-							die betreffende Stelle gezoomt und diese mit einem Symbol
-							markiert:</p>
-						<div style="margin-left: 20px;">
-							<ul>
-								<li><em>x </em>... Rechtswert / Easting / Longitude /
-									Länge, (Bsp.: <em>x=3387773,73</em>)</li>
-								<li><em>y</em>... Hochwert / Northing / Latitude / Breite,
-									(Bsp.: <em>x=5728371,06</em>)</li>
-								<li>epsg ... EPSG-Code )*, (Bsp.: epsg=31467)</li>
-								<li><em>zoom=15</em> ... Zoomstufe vom 0-20, 0=kleinster
-									und 20=größter Maßstab</li>
-							</ul>
-						</div>
-						* Gültige <em>EPSG</em>-Codes sind : <strong>31466,
-							31467, 31468, 31469, 2397, 2398, 2399, 25832, 25833, 4326</strong> mit
-						<div style="margin-left: 20px;">
-							<ul>
-								<li>31466 = DE_DHDN_3GK2, 31467 = DE_DHDN_3GK3, 31468 =
-									DE_DHDN_3GK4, 31469 = DE_DHDN_3GK5</li>
-								<li>2397 = DE_42-83_3GK3, 2398 = DE_42-83_3GK4, 2399 =
-									DE_42-83_3GK5</li>
-								<li>25832 = ETRS89_UTM32 (6-stellig), 25833 = ETRS89_UTM33
-									(6-stellig)</li>
-								<li>4326 = WGS84_Lat-Lon</li>
-							</ul>
-						</div>
-						Beispielaufruf: <a target="_blank"
-							href="http://wsvmapserv.wsv.bvbs.bund.de/ol_bwastr/index.html?x=3832460,12&amp;y=5668140,45&amp;epsg=31467&amp;zoom=16">http://wsvmapserv.wsv.bvbs.bund.de/ol_bwastr/index.html?x=3832460,12&amp;y=5668140,45&amp;epsg=31467&amp;zoom=16</a><br>
-					</div></li>
-				<a id="kartenlinkgenerator" name="kartenlinkgenerator"></a>
-				<li><h3 class="active">
-						<span><span>Excel zu Karte "<em>KartenLinkGenerator</em>"</span>
-						</span>
-					</h3>
-					<div class="cms-content-prolog">
-						<a title="Link zur Exceltabelle KartenLinkGenerator"
-							target="_blank"
-							href="../../common/pdf/KartenLinkGenerator1.0.xls"><img
-							style="float: left; margin-right: 10px; margin-left: 10px; border: 0pt none;"
-							alt="KartenLinkGenerator" src="../../common/img/klg.png">
-						</a>
-					</div>
-					<div class="cms_contentblock" style="display: block;">
-						Es steht eine Exceltabelle zur Verfügung, die den Link zur Karte
-						über eine Formel generieren kann.<br> Dieser Link kann aus
-						den Parametern <em>BWaStr-ID</em>, <em>BWaStr-KM, </em><em>seitlicher
-							Abstand </em>und <em>Zoomstufe </em>zusammengesetzt werden und
-						ermöglicht den Absprung aus Excel direkt zur Position auf der
-						Karte.<br> Die Excel-Liste enthält neben der vorgenannten
-						schlanken "Zeige-in-Karte"-Lösung für BWaStr-km-Listen auch
-						Beispiele für Koordinaten-Listen. <a
-							href="../../common/pdf/KartenLinkGenerator2.0.xls"
-							target="_blank" class="aexel">Link zur Excel-Tabelle</a>
-					</div></li>
-				<!-- <li><a href="http://wsvmapserv.ilmenau.baw.de/ol_ienc/ol_ienc_objrep.html" target="_blank" class="aintern">IENC-WMS in einem KartenClient mit Objektreport</a> (DLZ-IT BMVBS)</li> -->
-				<a id="excelmakros" name="excelmakros"></a>
-				<li><h3 class="active">
-						<span><span>Excel Makros für die Umrechnung von
-								Bundeswasserstraßenkilometern in Koordinaten</span>
-						</span>
-					</h3>
-					<div class="cms-content-prolog">
-						<p>
-							<a
-								href="http://geoportal.wsv.bvbs.bund.de/geoportal/cms/common/pdf/Online-Excel-BWaStr-Locator.xls"><img
-								style="float: left; margin-right: 10px; margin-left: 10px; border: 0pt none;"
-								title="Excel-Locator-Symbolleiste"
-								alt="Excel-Locator-Symbolleiste"
-								src="../../common/img/excel-locator.png">
-							</a>
-						</p>
-					</div>
-					<div class="cms_contentblock" style="display: block;">
-						<p>
-							Für die <strong>Berechnung von Massendaten</strong>
-							(BWaStr-Kilometer -&gt; Koordinaten /<br> Koordinaten -&gt;
-							BWaStr-Kilometer) wurden Excel-Makros entwickelt, die die
-							Berechnung <strong>kompletter Excel-Listen</strong> erlauben. Die
-							Makros wurden in einer Excel-Datei implementiert - <a
-								class="aexel"
-								href="http://geoportal.wsv.bvbs.bund.de/geoportal/cms/common/pdf/Online-Excel-BWaStr-Locator.xls">Link
-								zur Excel-Tabelle</a>.
-						</p>
-						<p>
-							Für die Zeitdauer, in der diese Excelliste geöffnet ist, stehen
-							folgende zwei Schaltflächen: BWaStr-Kilometer -&gt; Koordinaten
-							und<br> Koordinaten -&gt; BWaStr-Kilometer<br>
-							unterhalb der Symbolleiste, in allen gleichzeitig geöffneten
-							Excel-Anwendungen, zur Verfügung.
-						</p>
-						<p>Für die Berechnung wird eine Verbindung zum BVBS-WAN
-							(WSV-Intranet) benötigt, da die Berechnung durch den BWaStr-WFS
-							erfolgt.</p>
-						<p>Bitte beachten Sie Hinweise zu der erreichbaren
-							Genauigkeit. Mit den Makros ist keine strenge Stationierung von
-							Punkten gemäß VV-WSV 2601 möglich.</p>
-						<p>Um die Makros auszuführen, darf die Sicherheitsstufe in
-							Excel nicht auf "sehr hoch" gesetzt sein. Die Änderung erfolgt in
-							Excel über &gt;Extras&gt;Makro&gt;Sicherheit. Anschließend muss
-							die Tabelle erneut geladen werden.</p>
-						<p>Bei Verwendung der Sicherheitsstufen "hoch" und "mittel"
-							muss dem beigefügten Zertifikat vertraut werden, um die Makros
-							auszuführen.</p>
-					</div></li>
-				<a id="visualist" name="visualist"></a>
-				<li><h3 class="active">
-						<span><span>VisuaList, Bwastr-Kilometer-Listen
-								einfach als WMS darstellen (DLZ-IT BMVBS)</span>
-						</span>
-					</h3>
-					<div class="cms-content-prolog">
-						<p>
-							<a title="VisuaList starten" href="VisuaList.html"><img
-								style="float: left; margin-right: 10px; margin-left: 10px; border: 0pt none;"
-								alt="VisuaList" src="../../common/img/visualist.png">
-							</a>
-						</p>
-					</div>
-					<div class="cms_contentblock" style="display: block;">
-						Excel-Listen mit <em>BWaStr-Ident-Nr. </em>und <em>BWaStr-KM</em>
-						können mit der WebApplikation <strong><a
-							title="VisuaList starten" href="VisuaList.html">VisuaList</a>
-						</strong> von jedermann mit wenigen Mausklicks in einer dynamischen Karte
-						dargestellt werden.<br> Dabei wird Ihre Excel-Liste
-						hochgeladen und in einen WMS konvertiert. (<a class="aexel"
-							title="Download Excel-Liste m. Testdaten" target="_blank"
-							href="../../common/pdf/eislagen.xls">Testdaten</a>)<br>
-						VisuaList bietet drei unterschiedliche Ausgabeformen an: ? eine
-						einfache dynamische Karte (OpenLayersClient),<br> ? im
-						GeoViewer (Link zum direkten Übernehmen) und<br> ? WMS-URL,
-						zur Darstellung in GI-Systemen wie ArcGIS einfach heraus kopieren.
-					</div></li>
-				<!-- <li><a class="aintern" target="_blank" href="http://wsvmapserv.wsv.bvbs.bund.de/ol_ienc/ol_ienc_objrep.html">IENC-WMS in einem KartenClient mit Objektreport</a> (DLZ-IT BMVBS)<br /> <br /> </li> -->
-				<a id="ienc" name="ienc"></a>
-				<li><h3 class="active">
-						<span><span><a
-								href="http://wsvmapserv.wsv.bund.de/ol_ienc" target="_blank"
-								class="aintern">IENC-WMS in einem KartenClient mit
-									Objektreport - WWW</a> (DLZ-IT BMVBS)</span>
-						</span>
-					</h3>
-					<div class="cms_contentblock" style="display: block;">
-						Diese WebAplikation zeigt den IENC-WMS und ermöglicht bei Klick in
-						die Karte eine Sachdatenabfrage ("Objektreport")<br> <br>
-					</div></li>
-				<li>
-					<h3 class="active">
-						<span><span><a
-								href="http://wsvmapserv.wsv.bund.de/ol_ienc/intranet.html"
-								target="_blank" class="aintern">IENC-WMS in einem
-									KartenClient mit Objektreport und Luftbildern - Intranet</a>
-								(DLZ-IT BMVBS)</span>
-						</span>
-					</h3>
-					<div class="cms_contentblock" style="display: block;">Diese
-						WebAplikation zeigt den IENC-WMS vor dem Hintergrund von
-						Luftbildern, Topografischen Karten. etc. und ermöglicht bei Klick
-						in die Karte eine Sachdatenabfrage ("Objektreport")</div>
-				</li>
-			</ul>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/styles.css" />
+		
+		<style>
+			div ul li { font-size:12px; }
+		</style>
+		<script type="text/javascript">
+			function isLoad(frameId){
+				if (parent == window){
+					return;
+				} else {
+					var frame = parent.document.getElementById ? parent.document.getElementById(frameId): parent.document.all ? parent.document.all[frameId]: null;
+					try {
+						if(frame != null){
+							objToResize = (frame.style) ? frame.style : frame;
+							objToResize.height = "0px";
+							objToResize.height = (document.body.scrollHeight + 10) + "px";
+						}
+				     }
+				     catch(err) {
+				        window.status = err.message;
+				     }
+				} 
+			}
+		</script>
+	</head>
+	<body onload="isLoad('ifrm')">	
+		<div class="float_left application_menu">
 			<ul>
-				<a id="beta" name="beta"></a>
-				<h1>Beta / Tests / QS:</h1>
-				<!-- <li><a class="aextern" target="_blank" href="http://wsvmapserv.wsv.bvbs.bund.de/awstats/awstats.pl?config=elara.ilmenau.baw.de">Statistik wsvmapserv</a> (DLZ-IT BMVBS, zugangsgesch&uuml;tzt)</li> <li><a class="aextern" target="_blank" href="http://gdz.bkg.bund.de/web_adressen/start.html">Addresssuche-Applet</a> (Geodatenzentrum.de)<br> Für eine zeichenseparierte Adressliste des Nutzers (Str. HausNr., Ort, PLZ) werden Koordinaten gefunden.</li> <li><a class="aextern" target="_blank" href="http://gdz.bkg.bund.de/web_wmsbenchmark/start.html">WMS-Benchmark-Applet</a> (Geodatenzentrum.de)<br /></li> <li>DBWK2-WMS via Bentley sisIMS, Alpha-Version auf VorTestSystem: <ul> <li><a href="http://atlas.ik.ilmenau.baw.de/sisimsxm/wms/request.aspx?" title="URL kopieren" target="_blank" class="aextern">Direkt-URL</a> (nur ein CRS: DHDN_GK4), <a href="http://atlas.ik.ilmenau.baw.de/sisimsxm/wms/request.aspx?REQUEST=GetCapabilities&amp;SERVICE=WMS&amp;VERSION=1.1.1" target="_blank" class="aextern">GetCapabilities</a>, <a href="http://atlas.ik.ilmenau.baw.de/sisimsxm/wms/request.aspx?VERSION=1.1.1&amp;REQUEST=GetMap&amp;SRS=EPSG:31468&amp;BBOX=4450500,5889986,4450653,5890119&amp;LAYERS=101,103,110,111,112,113,114,115,116,117,118,119&amp;STYLES=&amp;WIDTH=850&amp;HEIGHT=730&amp;BGCOLOR=0xffffff&amp;TRANSPARENT=FALSE&amp;EXCEPTIONS=application/vnd.ogc.se_inimage&amp;FORMAT=image/png" target="_blank" class="aextern">GetMap-Bsp.</a></li> <li><a href="http://wsvmapserv.ilmenau.baw.de/cgi-bin/wms_cc_dbwk2?" title="URL-Kopieren" target="_blank" class="aextern">URL-mit-Kaskade-via-UMN</a> (mehrere CRS), <a href="http://wsvmapserv.ilmenau.baw.de/cgi-bin/wms_cc_dbwk2?REQUEST=GetCapabilities&amp;SERVICE=WMS&amp;VERSION=1.1.1" target="_blank" class="aextern">GetCapabilities</a>, <a href="http://wsvmapserv.ilmenau.baw.de/cgi-bin/wms_cc_dbwk2?VERSION=1.1.1&amp;REQUEST=GetMap&amp;SRS=EPSG:31468&amp;BBOX=4450500,5889986,4450653,5890119&amp;LAYERS=All,Kommune Netz,Uebersicht,Bwp,Anl,Top,Lik,Mor,Umw,Ago,Ins,Alk,Vicinity&amp;STYLES=&amp;WIDTH=850&amp;HEIGHT=730&amp;BGCOLOR=0xffffff&amp;TRANSPARENT=FALSE&amp;EXCEPTIONS=application/vnd.ogc.se_inimage&amp;FORMAT=image/png" target="_blank" class="aextern">GetMap-Bsp.</a></li> </ul> </li> -->
-				<li><strong>Routing auf Bundeswasserstraßen
-						(Beta-Version, DLZ-IT BMVBS)</strong>
-					<p>
-						<a title="Routing-Client starten" target="_blank"
-							href="http://routing.wsv.bund.de"><img
-							style="float: left; margin-right: 10px; margin-left: 10px; border: 0pt none;"
-							title="Routing-Client starten" alt="Screenshot Routing-Client"
-							src="../../common/img/routing.png">
-						</a>1. <a href="http://routing.wsv.bund.de" target="_blank">BWaStr-Routenplaner
-							(Beta) im Internet</a><a href="#" target="_blank"></a><a
-							href="http://routing.wsv.bund.de"></a>
-					</p>
-					<p>2. Routingdienst (SOAP) auf BWaStr:
-						http://routing.wsv.bund.de/routing.cgi</p>
-					<p>
-						3. zugehörige WSDL-Datei: <a target="_blank" class="aextern"
-							href="http://routing.wsv.bund.de/RoutingService.wsdl">
-							http://routing.wsv.bund.de/RoutingService.wsdl</a>
-					</p>
-					<p>
-						4. Routing-WFS: http://routing.wsv.bund.de/wfs_routing (<a
-							target="_blank"
-							href="http://routing.wsv.bund.de/wfs_routing?Service=WFS&amp;Version=1.0.0&amp;Request=GetCapabilities">GetCapabilities</a>)<br>
-						<br clear="all">
-					</p>
+				<li><a href="./app-0.html" title="VisuaList.WSV">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-visualist.png"
+								alt="">
+							<p>VisuaList.WSV</p>
+						</div> </a>
+				</li>
+				<li><a href="./app-1.html" title="BWaStr Locator">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-locator.png"
+								alt="">
+							<p>BWaStr Locator</p>
+						</div> </a>
+				</li>
+				<li><a href="./app-2.html" title="Wadaba WMS">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-wadaba.png"
+								alt="">
+							<p>Wadaba WMS</p>
+						</div> </a>
+				</li>
+				<li><a href="./app-3.html" title="GeoViewer.WSV">
+						<div>
+							<img src="/ingrid-portal-apps/images/application/app-geoviewer.png"
+								alt="">
+							<p>GeoViewer.WSV</p>
+						</div> </a>
+				</li>
+				<li><a href="./app-4.html" title="GeoKatalog.WSV">
+						<div>
+							<img
+								src="/ingrid-portal-apps/images/application/app-catalog-wsv.png"
+								alt="">
+							<p>GeoKatalog.WSV</p>
+						</div> </a>
+				</li>
+				<li><a href="./app-5.html" title="Desktop GIS">
+						<div>
+							<img
+								src="/ingrid-portal-apps/images/application/app-desktopgis.png"
+								alt="">
+							<p>Desktop GIS</p>
+						</div> </a>
+				</li>
+				<li>
+					<div>
+						<img src="/ingrid-portal-apps/images/application/app-gis-tools.png"
+							alt="">
+						<p>Weitere GIS-Tools</p>
+					</div>
 				</li>
 			</ul>
-			<a id="admin" name="admin"></a>
-			<p>
-				[ <a onclick="return toggleMe('para1')" href="../../index.html">+</a>
-				] <span class="b">geschützter Bereich</span>
-			</p>
-			<div style="display: none;" id="para1">
-				<ul class="uldrei">
-					<li><a target="_blank" class="aintern"
-						title="ServieMonitor starten"
-						href="http://geospace.ilmenau.baw.de:8080/servicemonitor">ServiceMonitor</a>
-					</li>
-					<li><a target="_blank" class="aextern"
-						href="http://wsvmapserv.wsv.bvbs.bund.de/awstats/awstats.pl?config=elara.ilmenau.baw.de">Statistik
-							wsvmapserv</a>
-					</li>
-					<li><a target="_blank" class="aextern"
-						href="http://rt.ilmenau.baw.de">RT</a>
-					</li>
-				</ul>
-				<br> <span class="clearer"></span> <br>
-				<div class="float_right">
-					<p class="iconLink">
-						<span class="icon"><img
-							src="/ingrid-portal-apps/images/icn_linkintern.gif"
-							alt="interner Link">
-						</span> <span><a title="Zu Weitere GIS-Tools" target="_blank"
-							href="http://geoportal.wsv.bvbs.bund.de/geoportal/cms/Content/Anwendungen/Tools.html">Zu
-								Weitere GIS-Tools</a>
-						</span> <span class="clearer"></span>
+		</div>
+		<div class="float_left application_content">
+			<div>
+				<div>
+					<p></p>
+					<h2>Kurzinformation:</h2>
+					<p></p>
+					<ul class="cms-navi-accordion">
+						<a id="positionfinder" name="positionfinder"></a>
+						<li>
+							<h3 class="active">
+								<span>PositionFinder (DLZ-IT BMVBS)</span>
+							</h3>
+							<div class="cms-content-prolog">
+								<div
+									style='width: 616px; height: 176px; margin-left: 10px; margin-right: 5px; border: 0pt none; background-image: url(&amp;quot;../../common/img/clt-shdw-bgrnd.png&amp;quot;);'>
+									<iframe scrolling="no" frameborder="0"
+										src="http://wsvmapserv.wsv.bvbs.bund.de/ol_bwastr/index.html?bwastr=0401&amp;kmwert=2331.0&amp;abstand=0&amp;zoom=9"
+										style="width: 600px; height: 160px; float: left; margin-right: 0px; margin-left: 0px; border: 0pt none;"
+										marginwidth="0" marginheight="0"> </iframe>
+								</div>
+								Eine dynamische Karte, die anhand eines
+								Bundeswassertstraßenkilometers oder eines Koordinatenpaares auf
+								eine Position zentriert werden kann. Die Parameter werden über die
+								Adresszeile (URL) übergeben.
+								<br clear="all">
+							</div>
+							<div class="cms_contentblock" style="display: block;">
+								<strong>- Aufruf mit Bundeswasserstraßenkilometer</strong>
+								<p>Bei Angabe folgender BWaStr-bezogener Parameter wird an die
+									betreffende Stelle gezoomt und diese mit einem Symbol markiert:</p>
+								<div style="margin-left: 20px;">
+									<ul>
+										<li><em>bwastr=0401</em> ... BWaStr-Id (z.B. 0401),</li>
+										<li><em>kmwert=2331.25</em> ...
+											Bundeswasserstraßenkilometerwert,</li>
+										<li><em>abstand=0</em> ... Abstand in Metern</li>
+										<li><em>zoom=10</em> ... Zoomstufe vom 0-20, 0=kleinster
+											und 20=größter Maßstab</li>
+									</ul>
+									Beispielaufruf: <a target="_blank"
+										href="http://wsvmapserv.wsv.bvbs.bund.de/ol_bwastr/index.html?bwastr=0401&amp;kmwert=2331.25&amp;abstand=0&amp;zoom=15">http://wsvmapserv.wsv.bvbs.bund.de/ol_bwastr/index.html?bwastr=0401&amp;kmwert=2331.25&amp;abstand=0&amp;zoom=15</a>
+									<!--<br clear="all">-->
+								</div>
+								<!-- End div para2 -->
+								<p>
+									<strong>- Aufruf mit Koordinatenpaar</strong>
+								</p>
+								<p>Bei Angabe folgender koordinatenbezogener Parameter wird an
+									die betreffende Stelle gezoomt und diese mit einem Symbol
+									markiert:</p>
+								<div style="margin-left: 20px;">
+									<ul>
+										<li><em>x </em>... Rechtswert / Easting / Longitude /
+											Länge, (Bsp.: <em>x=3387773,73</em>)</li>
+										<li><em>y</em>... Hochwert / Northing / Latitude / Breite,
+											(Bsp.: <em>x=5728371,06</em>)</li>
+										<li>epsg ... EPSG-Code )*, (Bsp.: epsg=31467)</li>
+										<li><em>zoom=15</em> ... Zoomstufe vom 0-20, 0=kleinster
+											und 20=größter Maßstab</li>
+									</ul>
+								</div>
+								* Gültige <em>EPSG</em>-Codes sind : <strong>31466,
+									31467, 31468, 31469, 2397, 2398, 2399, 25832, 25833, 4326</strong> mit
+								<div style="margin-left: 20px;">
+									<ul>
+										<li>31466 = DE_DHDN_3GK2, 31467 = DE_DHDN_3GK3, 31468 =
+											DE_DHDN_3GK4, 31469 = DE_DHDN_3GK5</li>
+										<li>2397 = DE_42-83_3GK3, 2398 = DE_42-83_3GK4, 2399 =
+											DE_42-83_3GK5</li>
+										<li>25832 = ETRS89_UTM32 (6-stellig), 25833 = ETRS89_UTM33
+											(6-stellig)</li>
+										<li>4326 = WGS84_Lat-Lon</li>
+									</ul>
+								</div>
+								Beispielaufruf: <a target="_blank"
+									href="http://wsvmapserv.wsv.bvbs.bund.de/ol_bwastr/index.html?x=3832460,12&amp;y=5668140,45&amp;epsg=31467&amp;zoom=16">http://wsvmapserv.wsv.bvbs.bund.de/ol_bwastr/index.html?x=3832460,12&amp;y=5668140,45&amp;epsg=31467&amp;zoom=16</a><br>
+							</div></li>
+						<a id="kartenlinkgenerator" name="kartenlinkgenerator"></a>
+						<li><h3 class="active">
+								<span><span>Excel zu Karte "<em>KartenLinkGenerator</em>"</span>
+								</span>
+							</h3>
+							<div class="cms-content-prolog">
+								<a title="Link zur Exceltabelle KartenLinkGenerator"
+									target="_blank"
+									href="../../common/pdf/KartenLinkGenerator1.0.xls"><img
+									style="float: left; margin-right: 10px; margin-left: 10px; border: 0pt none;"
+									alt="KartenLinkGenerator" src="../../common/img/klg.png">
+								</a>
+							</div>
+							<div class="cms_contentblock" style="display: block;">
+								Es steht eine Exceltabelle zur Verfügung, die den Link zur Karte
+								über eine Formel generieren kann.<br> Dieser Link kann aus
+								den Parametern <em>BWaStr-ID</em>, <em>BWaStr-KM, </em><em>seitlicher
+									Abstand </em>und <em>Zoomstufe </em>zusammengesetzt werden und
+								ermöglicht den Absprung aus Excel direkt zur Position auf der
+								Karte.<br> Die Excel-Liste enthält neben der vorgenannten
+								schlanken "Zeige-in-Karte"-Lösung für BWaStr-km-Listen auch
+								Beispiele für Koordinaten-Listen. <a
+									href="../../common/pdf/KartenLinkGenerator2.0.xls"
+									target="_blank" class="aexel">Link zur Excel-Tabelle</a>
+							</div></li>
+						<!-- <li><a href="http://wsvmapserv.ilmenau.baw.de/ol_ienc/ol_ienc_objrep.html" target="_blank" class="aintern">IENC-WMS in einem KartenClient mit Objektreport</a> (DLZ-IT BMVBS)</li> -->
+						<a id="excelmakros" name="excelmakros"></a>
+						<li><h3 class="active">
+								<span><span>Excel Makros für die Umrechnung von
+										Bundeswasserstraßenkilometern in Koordinaten</span>
+								</span>
+							</h3>
+							<div class="cms-content-prolog">
+								<p>
+									<a
+										href="http://geoportal.wsv.bvbs.bund.de/geoportal/cms/common/pdf/Online-Excel-BWaStr-Locator.xls"><img
+										style="float: left; margin-right: 10px; margin-left: 10px; border: 0pt none;"
+										title="Excel-Locator-Symbolleiste"
+										alt="Excel-Locator-Symbolleiste"
+										src="../../common/img/excel-locator.png">
+									</a>
+								</p>
+							</div>
+							<div class="cms_contentblock" style="display: block;">
+								<p>
+									Für die <strong>Berechnung von Massendaten</strong>
+									(BWaStr-Kilometer -&gt; Koordinaten /<br> Koordinaten -&gt;
+									BWaStr-Kilometer) wurden Excel-Makros entwickelt, die die
+									Berechnung <strong>kompletter Excel-Listen</strong> erlauben. Die
+									Makros wurden in einer Excel-Datei implementiert - <a
+										class="aexel"
+										href="http://geoportal.wsv.bvbs.bund.de/geoportal/cms/common/pdf/Online-Excel-BWaStr-Locator.xls">Link
+										zur Excel-Tabelle</a>.
+								</p>
+								<p>
+									Für die Zeitdauer, in der diese Excelliste geöffnet ist, stehen
+									folgende zwei Schaltflächen: BWaStr-Kilometer -&gt; Koordinaten
+									und<br> Koordinaten -&gt; BWaStr-Kilometer<br>
+									unterhalb der Symbolleiste, in allen gleichzeitig geöffneten
+									Excel-Anwendungen, zur Verfügung.
+								</p>
+								<p>Für die Berechnung wird eine Verbindung zum BVBS-WAN
+									(WSV-Intranet) benötigt, da die Berechnung durch den BWaStr-WFS
+									erfolgt.</p>
+								<p>Bitte beachten Sie Hinweise zu der erreichbaren
+									Genauigkeit. Mit den Makros ist keine strenge Stationierung von
+									Punkten gemäß VV-WSV 2601 möglich.</p>
+								<p>Um die Makros auszuführen, darf die Sicherheitsstufe in
+									Excel nicht auf "sehr hoch" gesetzt sein. Die Änderung erfolgt in
+									Excel über &gt;Extras&gt;Makro&gt;Sicherheit. Anschließend muss
+									die Tabelle erneut geladen werden.</p>
+								<p>Bei Verwendung der Sicherheitsstufen "hoch" und "mittel"
+									muss dem beigefügten Zertifikat vertraut werden, um die Makros
+									auszuführen.</p>
+							</div></li>
+						<a id="visualist" name="visualist"></a>
+						<li><h3 class="active">
+								<span><span>VisuaList, Bwastr-Kilometer-Listen
+										einfach als WMS darstellen (DLZ-IT BMVBS)</span>
+								</span>
+							</h3>
+							<div class="cms-content-prolog">
+								<p>
+									<a title="VisuaList starten" href="VisuaList.html"><img
+										style="float: left; margin-right: 10px; margin-left: 10px; border: 0pt none;"
+										alt="VisuaList" src="../../common/img/visualist.png">
+									</a>
+								</p>
+							</div>
+							<div class="cms_contentblock" style="display: block;">
+								Excel-Listen mit <em>BWaStr-Ident-Nr. </em>und <em>BWaStr-KM</em>
+								können mit der WebApplikation <strong><a
+									title="VisuaList starten" href="VisuaList.html">VisuaList</a>
+								</strong> von jedermann mit wenigen Mausklicks in einer dynamischen Karte
+								dargestellt werden.<br> Dabei wird Ihre Excel-Liste
+								hochgeladen und in einen WMS konvertiert. (<a class="aexel"
+									title="Download Excel-Liste m. Testdaten" target="_blank"
+									href="../../common/pdf/eislagen.xls">Testdaten</a>)<br>
+								VisuaList bietet drei unterschiedliche Ausgabeformen an: ? eine
+								einfache dynamische Karte (OpenLayersClient),<br> ? im
+								GeoViewer (Link zum direkten Übernehmen) und<br> ? WMS-URL,
+								zur Darstellung in GI-Systemen wie ArcGIS einfach heraus kopieren.
+							</div></li>
+						<!-- <li><a class="aintern" target="_blank" href="http://wsvmapserv.wsv.bvbs.bund.de/ol_ienc/ol_ienc_objrep.html">IENC-WMS in einem KartenClient mit Objektreport</a> (DLZ-IT BMVBS)<br /> <br /> </li> -->
+						<a id="ienc" name="ienc"></a>
+						<li><h3 class="active">
+								<span><span><a
+										href="http://wsvmapserv.wsv.bund.de/ol_ienc" target="_blank"
+										class="aintern">IENC-WMS in einem KartenClient mit
+											Objektreport - WWW</a> (DLZ-IT BMVBS)</span>
+								</span>
+							</h3>
+							<div class="cms_contentblock" style="display: block;">
+								Diese WebAplikation zeigt den IENC-WMS und ermöglicht bei Klick in
+								die Karte eine Sachdatenabfrage ("Objektreport")<br> <br>
+							</div></li>
+						<li>
+							<h3 class="active">
+								<span><span><a
+										href="http://wsvmapserv.wsv.bund.de/ol_ienc/intranet.html"
+										target="_blank" class="aintern">IENC-WMS in einem
+											KartenClient mit Objektreport und Luftbildern - Intranet</a>
+										(DLZ-IT BMVBS)</span>
+								</span>
+							</h3>
+							<div class="cms_contentblock" style="display: block;">Diese
+								WebAplikation zeigt den IENC-WMS vor dem Hintergrund von
+								Luftbildern, Topografischen Karten. etc. und ermöglicht bei Klick
+								in die Karte eine Sachdatenabfrage ("Objektreport")</div>
+						</li>
+					</ul>
+					<ul>
+						<a id="beta" name="beta"></a>
+						<h1>Beta / Tests / QS:</h1>
+						<!-- <li><a class="aextern" target="_blank" href="http://wsvmapserv.wsv.bvbs.bund.de/awstats/awstats.pl?config=elara.ilmenau.baw.de">Statistik wsvmapserv</a> (DLZ-IT BMVBS, zugangsgesch&uuml;tzt)</li> <li><a class="aextern" target="_blank" href="http://gdz.bkg.bund.de/web_adressen/start.html">Addresssuche-Applet</a> (Geodatenzentrum.de)<br> Für eine zeichenseparierte Adressliste des Nutzers (Str. HausNr., Ort, PLZ) werden Koordinaten gefunden.</li> <li><a class="aextern" target="_blank" href="http://gdz.bkg.bund.de/web_wmsbenchmark/start.html">WMS-Benchmark-Applet</a> (Geodatenzentrum.de)<br /></li> <li>DBWK2-WMS via Bentley sisIMS, Alpha-Version auf VorTestSystem: <ul> <li><a href="http://atlas.ik.ilmenau.baw.de/sisimsxm/wms/request.aspx?" title="URL kopieren" target="_blank" class="aextern">Direkt-URL</a> (nur ein CRS: DHDN_GK4), <a href="http://atlas.ik.ilmenau.baw.de/sisimsxm/wms/request.aspx?REQUEST=GetCapabilities&amp;SERVICE=WMS&amp;VERSION=1.1.1" target="_blank" class="aextern">GetCapabilities</a>, <a href="http://atlas.ik.ilmenau.baw.de/sisimsxm/wms/request.aspx?VERSION=1.1.1&amp;REQUEST=GetMap&amp;SRS=EPSG:31468&amp;BBOX=4450500,5889986,4450653,5890119&amp;LAYERS=101,103,110,111,112,113,114,115,116,117,118,119&amp;STYLES=&amp;WIDTH=850&amp;HEIGHT=730&amp;BGCOLOR=0xffffff&amp;TRANSPARENT=FALSE&amp;EXCEPTIONS=application/vnd.ogc.se_inimage&amp;FORMAT=image/png" target="_blank" class="aextern">GetMap-Bsp.</a></li> <li><a href="http://wsvmapserv.ilmenau.baw.de/cgi-bin/wms_cc_dbwk2?" title="URL-Kopieren" target="_blank" class="aextern">URL-mit-Kaskade-via-UMN</a> (mehrere CRS), <a href="http://wsvmapserv.ilmenau.baw.de/cgi-bin/wms_cc_dbwk2?REQUEST=GetCapabilities&amp;SERVICE=WMS&amp;VERSION=1.1.1" target="_blank" class="aextern">GetCapabilities</a>, <a href="http://wsvmapserv.ilmenau.baw.de/cgi-bin/wms_cc_dbwk2?VERSION=1.1.1&amp;REQUEST=GetMap&amp;SRS=EPSG:31468&amp;BBOX=4450500,5889986,4450653,5890119&amp;LAYERS=All,Kommune Netz,Uebersicht,Bwp,Anl,Top,Lik,Mor,Umw,Ago,Ins,Alk,Vicinity&amp;STYLES=&amp;WIDTH=850&amp;HEIGHT=730&amp;BGCOLOR=0xffffff&amp;TRANSPARENT=FALSE&amp;EXCEPTIONS=application/vnd.ogc.se_inimage&amp;FORMAT=image/png" target="_blank" class="aextern">GetMap-Bsp.</a></li> </ul> </li> -->
+						<li><strong>Routing auf Bundeswasserstraßen
+								(Beta-Version, DLZ-IT BMVBS)</strong>
+							<p>
+								<a title="Routing-Client starten" target="_blank"
+									href="http://routing.wsv.bund.de"><img
+									style="float: left; margin-right: 10px; margin-left: 10px; border: 0pt none;"
+									title="Routing-Client starten" alt="Screenshot Routing-Client"
+									src="../../common/img/routing.png">
+								</a>1. <a href="http://routing.wsv.bund.de" target="_blank">BWaStr-Routenplaner
+									(Beta) im Internet</a><a href="#" target="_blank"></a><a
+									href="http://routing.wsv.bund.de"></a>
+							</p>
+							<p>2. Routingdienst (SOAP) auf BWaStr:
+								http://routing.wsv.bund.de/routing.cgi</p>
+							<p>
+								3. zugehörige WSDL-Datei: <a target="_blank" class="aextern"
+									href="http://routing.wsv.bund.de/RoutingService.wsdl">
+									http://routing.wsv.bund.de/RoutingService.wsdl</a>
+							</p>
+							<p>
+								4. Routing-WFS: http://routing.wsv.bund.de/wfs_routing (<a
+									target="_blank"
+									href="http://routing.wsv.bund.de/wfs_routing?Service=WFS&amp;Version=1.0.0&amp;Request=GetCapabilities">GetCapabilities</a>)<br>
+								<br clear="all">
+							</p>
+						</li>
+					</ul>
+					<a id="admin" name="admin"></a>
+					<p>
+						[ <a onclick="return toggleMe('para1')" href="../../index.html">+</a>
+						] <span class="b">geschützter Bereich</span>
 					</p>
+					<div style="display: none;" id="para1">
+						<ul class="uldrei">
+							<li><a target="_blank" class="aintern"
+								title="ServieMonitor starten"
+								href="http://geospace.ilmenau.baw.de:8080/servicemonitor">ServiceMonitor</a>
+							</li>
+							<li><a target="_blank" class="aextern"
+								href="http://wsvmapserv.wsv.bvbs.bund.de/awstats/awstats.pl?config=elara.ilmenau.baw.de">Statistik
+									wsvmapserv</a>
+							</li>
+							<li><a target="_blank" class="aextern"
+								href="http://rt.ilmenau.baw.de">RT</a>
+							</li>
+						</ul>
+						<br> <span class="clearer"></span> <br>
+						<div class="float_right">
+							<p class="iconLink">
+								<span class="icon"><img
+									src="/ingrid-portal-apps/images/icn_linkintern.gif"
+									alt="interner Link">
+								</span> 
+								<span>
+									<a target="_blank" title="Zu Weitere GIS-Tools" href="http://geoportal.wsv.bvbs.bund.de/geoportal/cms/Content/Anwendungen/Tools.html">Zu Weitere GIS-Tools</a>
+									</span> <span class="clearer"></span>
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
+	</body>
+</html>
