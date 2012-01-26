@@ -374,7 +374,7 @@ div.section div.indent {margin-left: 1em}
 div.noresult { margin-top:20px; }
 div.noresult ul { line-height:2em; }
 
-div.resultset_nav { text-align:right; background:#E2E2E2; padding:3px 10px; font-size:75%; color:#000000; }
+div.resultset_nav { text-align:right; background:#E2E2E2; padding:0px 10px; font-size:75%; color:#000000; }
 div.resultset_nav a { text-decoration:underline; font-weight: bold;}
 
 div.resultset { padding:4px 4px 4px 0px; font-size:14px; }
