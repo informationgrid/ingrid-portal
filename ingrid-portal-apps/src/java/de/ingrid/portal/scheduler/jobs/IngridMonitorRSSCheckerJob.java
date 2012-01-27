@@ -88,7 +88,7 @@ public class IngridMonitorRSSCheckerJob extends IngridMonitorAbstractJob {
             // work on all rss items of the feed and check the title length
             while (it.hasNext()) {
                 entry = it.next();
-                if (UtilsString.stripHTMLTagsAndHTMLEncode(entry.getTitle()).length()>256) {
+                if (UtilsString.stripHTMLTagsAndHTMLEncode(entry.getTitle()).length() > 1024) {
                 	status = STATUS_ERROR;
                 	statusCode = ERROR_CODE;
                 	break;

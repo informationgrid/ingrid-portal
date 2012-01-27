@@ -85,7 +85,15 @@ public class AdminRSSForm extends ActionForm {
                 int intNumEntities = new Integer(numEntities).intValue();
                 String fieldName = "";
                 for (int i = 0; i < intNumEntities; i++) {
-
+                	
+                	fieldName = FIELD_DESCRIPTION + i;
+                	if (hasInput(fieldName)) {
+                        if(getInput(fieldName).length() > 1024)
+                		setError(fieldName, "admin.rss.error.description.too.long");
+                        allOk = false;
+                    }
+                    
+                	
                     fieldName = FIELD_PROVIDER + i;
                     if (!hasInput(fieldName)) {
                         setError(fieldName, "admin.rss.error.missing.provider");
