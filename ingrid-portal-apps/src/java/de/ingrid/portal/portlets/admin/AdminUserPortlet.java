@@ -481,7 +481,7 @@ public class AdminUserPortlet extends ContentPortlet {
             StringBuilder whereString = new StringBuilder("WHERE usr.isEnabled=true AND usr.principalId=cred.securityPrincipalId AND prefs.fullPath=usr.fullPath AND prefsUserInfo.parentNodeId=prefs.nodeId AND prefsUserInfo.nodeName='userInfo' AND prefName.nodeId=prefsUserInfo.nodeId AND prefName.propertyName='"+SecurityResources.USER_NAME_GIVEN+"' AND prefLastName.nodeId=prefsUserInfo.nodeId AND prefLastName.propertyName='"+SecurityResources.USER_NAME_FAMILY+"'");
             StringBuilder orderString = new StringBuilder("order by usr.fullPath");
             if (filterCriteria.get("filterCriteriaId") != null && filterCriteria.get("filterCriteriaId").length() > 0) {
-                whereString.append(" AND usr.fullPath like '"+BasePrincipal.PREFS_USER_ROOT+filterCriteria.get("filterCriteriaId").replaceAll("\\*", "\\%")+"'");
+                whereString.append(" AND usr.fullPath like '"+BasePrincipal.PREFS_USER_ROOT+filterCriteria.get("filterCriteriaId").replaceAll("\\*", "\\%").replaceAll("\\.", "/")+"'");
             }
             if (filterCriteria.get("filterCriteriaFirstName") != null && filterCriteria.get("filterCriteriaFirstName").length() > 0) {
                 whereString.append(" AND prefName.propertyValue like '"+filterCriteria.get("filterCriteriaFirstName").replaceAll("\\*", "\\%")+"'");
@@ -681,7 +681,8 @@ public class AdminUserPortlet extends ContentPortlet {
 
         public void setFullPath(String fullPath) {
             this.put("fullPath", fullPath);
-            this.put("id", fullPath.substring(BasePrincipal.PREFS_USER_ROOT.length()));
+            // replace '/' by '.' since Jetspeed replaces '.' in login names with '/'. The character '/' is not allowed in log in ids. 
+            this.put("id", fullPath.substring(BasePrincipal.PREFS_USER_ROOT.length()).replaceAll("/", "."));
         }
         
         public String getFirstName() {
@@ -988,6 +989,7 @@ public class AdminUserPortlet extends ContentPortlet {
             if (log.isErrorEnabled()) {
                 log.error("Problems creating new user.", e);
             }
+            f.setError("", "account.created.problems.general");
         }
 
     }

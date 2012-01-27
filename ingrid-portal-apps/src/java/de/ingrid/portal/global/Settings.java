@@ -409,7 +409,9 @@ public class Settings {
     
     public static final String SESSION_LOGIN_STARTED = "session_started";
 
-    
+    // reg exp to check for forbidden login patterns
+    public static final String FORBIDDEN_LOGINS_REGEXP_STR = ".*/.*";
+
 
 
 

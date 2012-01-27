@@ -5,6 +5,7 @@ package de.ingrid.portal.forms;
 
 import javax.portlet.PortletRequest;
 
+import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 
 /**
@@ -70,7 +71,7 @@ public class AdminUserForm extends ActionForm {
     public static final String FIELD_PROVIDER = "provider";
 
     public static final String FIELD_LAYOUT_PERMISSION = "layoutPermission";
-
+    
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
@@ -146,7 +147,12 @@ public class AdminUserForm extends ActionForm {
             allOk = false;
         }
         if (!hasInput(FIELD_ID)) {
-            setError(FIELD_PASSWORD_OLD, "account.create.error.noLogin");
+            setError(FIELD_ID, "account.create.error.noLogin");
+            setInput(FIELD_TAB, "1");
+            allOk = false;
+        }
+        if (hasInput(FIELD_ID) && getInput(FIELD_ID).matches(Settings.FORBIDDEN_LOGINS_REGEXP_STR)) {
+            setError(FIELD_ID, "account.create.error.invalidLogin");
             setInput(FIELD_TAB, "1");
             allOk = false;
         }

@@ -5,6 +5,7 @@ package de.ingrid.portal.forms;
 
 import javax.portlet.PortletRequest;
 
+import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 
 /**
@@ -49,7 +50,6 @@ public class CreateAccountForm extends ActionForm {
 
     public static final String FIELD_SUBSCRIBE_NEWSLETTER = "subscribe_newsletter";
 
-    
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
@@ -103,6 +103,10 @@ public class CreateAccountForm extends ActionForm {
             setError(FIELD_LOGIN, "account.create.error.noLogin");
             allOk = false;
         } 
+        if (hasInput(FIELD_LOGIN) && getInput(FIELD_LOGIN).matches(Settings.FORBIDDEN_LOGINS_REGEXP_STR)) {
+            setError(FIELD_LOGIN, "account.create.error.invalidLogin");
+            allOk = false;
+        }
         if (!hasInput(FIELD_PASSWORD)) {
             setError(FIELD_PASSWORD, "account.create.error.noPassword");
             allOk = false;
