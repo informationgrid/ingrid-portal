@@ -1029,7 +1029,7 @@
         <portlet-preferences>
             <preference>
                 <name>infoTemplate</name>
-                <value>/WEB-INF/templates/about_portalu_partner.vm</value>
+                <value>/WEB-INF/templates/myportal/myportal_navigation.vm</value>
             </preference>
             <preference>
                 <name>titleKey</name>
