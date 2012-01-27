@@ -204,7 +204,8 @@ init = function() {
     if (caller.selectedRow) {
         // EDIT ROW !
 
-        displayOperation(caller.selectedRow);
+        // we clone row, so edit process does not affect original row (cancel may be clicked)
+        displayOperation(dojo.clone(caller.selectedRow));
         isNewOperation = false;
         dijit.byId("saveButton").setLabel("<fmt:message key='dialog.links.apply' />");
 
