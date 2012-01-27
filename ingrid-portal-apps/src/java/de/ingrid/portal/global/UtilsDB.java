@@ -3,6 +3,7 @@
  */
 package de.ingrid.portal.global;
 
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
@@ -130,7 +132,20 @@ public class UtilsDB {
             return null;
         } finally {
             if (closeSession) {
-                HibernateUtil.closeSession();
+            	try {
+            		if(session != null){
+            			if(session.connection() != null){
+            				if(!session.connection().isClosed()){
+        						HibernateUtil.closeSession();	
+        					}
+            			}
+            		}
+				} catch (HibernateException e) {
+					log.error("HibernateException: "+ e);
+				} catch (SQLException e) {
+					log.error("SQLException: While trying to close hibernate session.");
+				}
+            	
             }
         }
     }
