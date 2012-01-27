@@ -498,6 +498,19 @@ function spatialRefAdminUnitPublishable(notPublishableIDs) {
     }
 }
 
+function ref3OperationPublishable(notPublishableIDs) {
+    var objClass = dijit.byId("objectClass").getValue().substr(5, 1);
+    if (objClass == '3') {
+        // Check if the operation table contains valid input (name has to be set)
+    	// NOTICE: Name may be reset to "" if serviceType is changed !!!
+        if (dojo.some(UtilGrid.getTableData("ref3Operation"), function(op) {
+                return (typeof(op.name) == "undefined" || op.name == null || dojo.trim(op.name+"").length == 0); })) {
+            console.debug("All entries in the operation table must have a valid name.");
+            notPublishableIDs.push("ref3Operation");
+        }
+    }
+}
+
 function applyBeforeObjectPublishValidation() {
     dojo.subscribe("/onBeforeObjectPublish", function(/*Array*/notPublishableIDs) {
         var objClass = dijit.byId("objectClass").getValue().substr(5, 1);

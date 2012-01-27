@@ -49,7 +49,7 @@ dojo.connect(operationsScriptScope, "onUnload", function(){
 
 function createDOMElements() {
 	var storeProps = {data: {identifier: '1',label: '0'}};
-	var def = createFilteringSelect("operationsNameSelect", null, storeProps, initOperationNameInput);
+	var def = createSelectBox("operationsNameSelect", null, storeProps, initOperationNameInput);
 	
 	var operationsPlatformStructure = [
 		{field: 'title',name: "<fmt:message key='dialog.operation.opName' />",width: 340-scrollBarWidth+'px', editable: true}
@@ -100,12 +100,12 @@ initOperationNameInput = function() {
 		var selectWidget = dijit.byId("operationsNameSelect");
 
 		var listId = getSysListIdForServiceType(serviceType);
-
-		var languageCode = UtilCatalog.getCatalogLanguage();
-		CatalogService.getSysLists([listId], languageCode, {
-			callback: function(res) {
-				def.callback(res[listId]);
-		}});
+        var def2 = UtilSyslist.readSysListData(listId);
+        def2.then(function(syslistData) {
+            // add empty item at the beginning
+            var emptyData = [["",-1]];
+            def.callback(emptyData.concat(syslistData));
+        });
 		_opNameIsTextInput = false;
 	} else {
 		dojo.style("operationsNameSelect", "display", "none");
@@ -241,7 +241,14 @@ getOperation = function() {
 	if (_opNameIsTextInput)
 		operation.name = dijit.byId("operationsName").getValue();
 	else {
-		operation.name = dijit.byId("operationsNameSelect").get("displayedValue");
+        var selectWidget = dijit.byId("operationsNameSelect");
+        // NOTICE: getValue() delivers id and is null if nothing selected
+		operation.nameId = selectWidget.getValue();
+        if (operation.nameId) {
+            // and this one is the label displayed and is set as name in op.
+            // NOTICE: causes NPE if nothing selected !!!!!
+            operation.name = selectWidget.get("displayedValue");
+        }
 	}
 	operation.description = dijit.byId("operationsDescription").getValue();
 	operation.platform = UtilGrid.getTableData("operationsPlatform");
@@ -305,7 +312,6 @@ saveOperation = function() {
         } else {
             // EDIT existing operation
             var oldOp = caller.selectedRow;
-            oldOp.name = operation.name;
             for (i in operation) {
                 oldOp[i] = operation[i];
             }

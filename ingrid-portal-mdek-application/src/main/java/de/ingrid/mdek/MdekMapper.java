@@ -1486,7 +1486,7 @@ public class MdekMapper implements DataMapperInterface {
             } else {
                 KeyValuePair kvp = mapFromKeyValue(MdekKeys.SERVICE_OPERATION_NAME_KEY+"."+serviceType, op.getName());
                 if (kvp.getValue() != null || kvp.getKey() != -1) {
-//                  result.put(MdekKeys.SERVICE_OPERATION_NAME, kvp.getValue());
+                    result.put(MdekKeys.SERVICE_OPERATION_NAME, kvp.getValue());
                     result.put(MdekKeys.SERVICE_OPERATION_NAME_KEY, kvp.getKey());
                 }
             }
