@@ -161,6 +161,11 @@ public class SysListCache {
 	 * @return entry value
 	 */
 	public String getValueFromListId(Integer listId, Integer entryId, boolean removeMetadata) {
+		if (entryId == null) {
+			log.warn("entryId is NULL !!! Could not find sysList/entryId for: ["+listId+", "+entryId+"]");
+			return "";
+		}
+
 		if (sysListCache == null) {
 			this.loadInitialLists();
 		}
