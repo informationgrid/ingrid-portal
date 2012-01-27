@@ -237,7 +237,8 @@ public class UtilsFacete {
 		}		
 		
 		if (elementsDatatype != null){
-			setAttributeToSession(request, ELEMENTS_DATATYPE, sortHashMapAsArrayList(elementsDatatype));
+			String[] sortedRanking = PortalConfig.getInstance().getStringArray("portal.search.facete.sort.ranking.datatype");
+			setAttributeToSession(request, ELEMENTS_DATATYPE, sortHashMapAsArrayList(elementsDatatype, sortedRanking));
 		}
 		
 		if (elementsProvider != null){
@@ -575,41 +576,24 @@ public class UtilsFacete {
 	private static void setFaceteQueryParamsDatatype(ArrayList<IngridDocument> list) {
 		IngridDocument facete = new IngridDocument();
         ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
-	        
-        HashMap<String, String> faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "www");
-        faceteEntry.put("query", "datatype:www");
-        faceteList.add(faceteEntry);
-        
-        faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "map");
-        faceteEntry.put("query", "t011_obj_serv_op_connpoint.connect_point:http*");
-        faceteList.add(faceteEntry);
-        
-        faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "metadata");
-        faceteEntry.put("query", "datatype:metadata");
-        faceteList.add(faceteEntry);
-        
-        faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "fis");
-        faceteEntry.put("query", "datatype:fis");
-        faceteList.add(faceteEntry);
-        
-        faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "service");
-        faceteEntry.put("query", "datatype:service");
-        faceteList.add(faceteEntry);
-        
-        faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "measure");
-        faceteEntry.put("query", "datatype:measure");
-        faceteList.add(faceteEntry);
-        
-        faceteEntry = new HashMap<String, String>();
-        faceteEntry.put("id", "topics");
-        faceteEntry.put("query", "datatype:topics");
-        faceteList.add(faceteEntry);
+	    
+        String[] sortedRanking = PortalConfig.getInstance().getStringArray("portal.search.facete.sort.ranking.datatype");
+		for(int i=0; i < sortedRanking.length; i++){
+			String key = sortedRanking[i];
+			if(key.equals("map")){
+				HashMap<String, String> faceteEntry = new HashMap<String, String>();
+		        faceteEntry.put("id", "map");
+		        faceteEntry.put("query", "t011_obj_serv_op_connpoint.connect_point:http*");
+		        faceteList.add(faceteEntry);
+		       
+			}else{
+				HashMap<String, String> faceteEntry = new HashMap<String, String>();
+		        faceteEntry.put("id", key);
+		        faceteEntry.put("query", "datatype:"+ key);
+		        faceteList.add(faceteEntry);	
+			}
+			
+	   }
         
         facete.put("id", "type");
         facete.put("classes", faceteList);
@@ -2069,27 +2053,64 @@ public class UtilsFacete {
 	}
 	
 	private static ArrayList<HashMap<String, Long>> sortHashMapAsArrayList(HashMap<String, Long> input){
+		return sortHashMapAsArrayList(input, null);
+	}
+	
+	private static ArrayList<HashMap<String, Long>> sortHashMapAsArrayList(HashMap<String, Long> input, String[] sortedRanking){
 		List<String> keys = new ArrayList<String>(input.keySet());
 		final Map<String, Long> tmpInput = input;
-        
-		Collections.sort(keys,new Comparator(){
-            public int compare(Object left, Object right){
-                String leftKey = (String)left;
-                String rightKey = (String)right;
-  
-                Long leftValue = (Long)tmpInput.get(leftKey);
-                Long rightValue = (Long)tmpInput.get(rightKey);
-                return leftValue.compareTo(rightValue) * -1;
-            }
-        });
 		ArrayList<HashMap<String, Long>> sortedInput = new ArrayList<HashMap<String, Long>>();
         
-		for(Iterator<String> i=keys.iterator(); i.hasNext();){
-            String k = i.next();
-            HashMap<String, Long> map = new HashMap<String, Long>();
-            map.put(k, tmpInput.get(k));
-            sortedInput.add(map); 
-        }
+		if(sortedRanking != null && sortedRanking.length > 0){
+			if(sortedRanking[0].length() > 0){
+				for(int i=0; i < sortedRanking.length; i++){
+					String key = sortedRanking[i];
+					Long value = input.get(key);
+					if(key != null && value != null){
+						HashMap<String, Long> map = new HashMap<String, Long>();
+						map.put(key, input.get(key));
+			            sortedInput.add(map);	
+					}
+		           	
+				}
+			}else{
+				Collections.sort(keys,new Comparator(){
+		            public int compare(Object left, Object right){
+		                String leftKey = (String)left;
+		                String rightKey = (String)right;
+		  
+		                Long leftValue = (Long)tmpInput.get(leftKey);
+		                Long rightValue = (Long)tmpInput.get(rightKey);
+		                return leftValue.compareTo(rightValue) * -1;
+		            }
+		        });
+			
+				for(Iterator<String> i=keys.iterator(); i.hasNext();){
+		            String k = i.next();
+		            HashMap<String, Long> map = new HashMap<String, Long>();
+		           	map.put(k, tmpInput.get(k));
+		            sortedInput.add(map); 
+		        }
+			}
+		}else{
+			Collections.sort(keys,new Comparator(){
+	            public int compare(Object left, Object right){
+	                String leftKey = (String)left;
+	                String rightKey = (String)right;
+	  
+	                Long leftValue = (Long)tmpInput.get(leftKey);
+	                Long rightValue = (Long)tmpInput.get(rightKey);
+	                return leftValue.compareTo(rightValue) * -1;
+	            }
+	        });
+		
+			for(Iterator<String> i=keys.iterator(); i.hasNext();){
+	            String k = i.next();
+	            HashMap<String, Long> map = new HashMap<String, Long>();
+	           	map.put(k, tmpInput.get(k));
+	            sortedInput.add(map); 
+	        }
+		}
 		
 		return sortedInput;
 	}
