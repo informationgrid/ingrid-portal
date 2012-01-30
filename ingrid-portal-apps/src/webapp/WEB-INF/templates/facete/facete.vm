@@ -138,7 +138,7 @@
 		
 		
 ## ERGEBNISTYPEN ##
-	#if($enableFaceteDatatype)
+	#if($enableFaceteDatatype || ($enableFacetePartnerList && $enableFacetePartnerList.size() > 0))
 		#set ($hasRankedHits = false)
 		#foreach($e in $rankedResultList.getHits())
 			#set ($hasRankedHits = true)
