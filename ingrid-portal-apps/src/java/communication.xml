@@ -2,19 +2,19 @@
 
 <!-- Harrison - extern -->
 <!--
+-->
 <communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="communication.xsd">
-        <client name="/torwald-group:USERNAME-ibus-client">
+        <client name="/torwald-group:ma-ibus-client">
                 <connections>
                         <server name="/torwald-group:torwald-ibus">
-                                <socket port="9900" timeout="10" ip="213.144.28.245" />
+                                <socket port="9900" timeout="10" ip="213.144.28.209" />
                                 <messages maximumSize="3145728" threadCount="100" />
                         </server>
                 </connections>
         </client>
         <messages queueSize="2000" handleTimeout="120"/>
 </communication>
--->
 <!-- Harrison - intern -->
 <!--
 <communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -49,7 +49,6 @@
 
 <!-- LIVE - intern -->
 <!-- 
--->
 <communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="communication.xsd">
         <client name="/torwald-group:live-kug-ibus">
@@ -62,5 +61,6 @@
         </client>
         <messages queueSize="2000" handleTimeout="120"/>
 </communication>
+-->
 
 

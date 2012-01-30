@@ -11,6 +11,10 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
+import org.apache.jetspeed.headerresource.HeaderResource;
+import org.apache.jetspeed.portlet.PortletHeaderRequest;
+import org.apache.jetspeed.portlet.PortletHeaderResponse;
+import org.apache.jetspeed.portlet.SupportsHeaderPhase;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
@@ -29,7 +33,7 @@ import de.ingrid.portal.search.UtilsSearch;
  * 
  * @author martin@wemove.com
  */
-public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
+public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements SupportsHeaderPhase{
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
@@ -93,49 +97,86 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
             if (!f.validate()) {
                 return;
             }
-            // Zur Suchanfrage hinzufuegen
-            WMSSearchDescriptor wmsDescriptor = WMSInterfaceImpl.getInstance().getWMSSearchParameter(
-                    request.getPortletSession().getId());
-            if (wmsDescriptor == null) {
-                f.setError("", "searchExtEnvPlaceMap.error.no_spacial_constraint");
-                return;
-            } else {
-                String searchTerm = "";
-                if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_BBOX) {
-                    String coordinates = "x1:".concat(Double.toString(wmsDescriptor.getMinX()));
-                    coordinates = coordinates.concat(" y1:").concat(Double.toString(wmsDescriptor.getMinY()));
-                    coordinates = coordinates.concat(" x2:").concat(Double.toString(wmsDescriptor.getMaxX()));
-                    coordinates = coordinates.concat(" y2:").concat(Double.toString(wmsDescriptor.getMaxY()));
-                    if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK1)) {
-                        searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:inside)");
-                    }
-                    if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK2)) {
-                        if (searchTerm.length() > 0) {
-                            searchTerm = searchTerm.concat(" OR ");
-                        }
-                        searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:intersect)");
-                    }
-                    if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK3)) {
-                        if (searchTerm.length() > 0) {
-                            searchTerm = searchTerm.concat(" OR ");
-                        }
-                        searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:include)");
-                    }
-                    if (searchTerm.length() == 0) {
-                        searchTerm = searchTerm.concat(coordinates);
-                    }
-                    searchTerm = "(".concat(searchTerm).concat(")");
-                    
-                } else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
-                    searchTerm = searchTerm.concat("areaid:").concat(wmsDescriptor.getCommunityCode());
-                }
-                searchTerm = UtilsQueryString.stripQueryWhitespace(searchTerm);
+            String searchTerm = "";
 
-                String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
-                        Settings.PARAM_QUERY_STRING);
-                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING,
-                        UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_AND));
-            }
+          String coordinates = "x1:".concat(f.getInput(SearchExtEnvPlaceMapForm.FIELD_X1));
+          coordinates = coordinates.concat(" y1:").concat(f.getInput(SearchExtEnvPlaceMapForm.FIELD_Y1));
+          coordinates = coordinates.concat(" x2:").concat(f.getInput(SearchExtEnvPlaceMapForm.FIELD_X2));
+          coordinates = coordinates.concat(" y2:").concat(f.getInput(SearchExtEnvPlaceMapForm.FIELD_Y2));            
+          if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK1)) {
+          searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:inside)");
+      }
+      if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK2)) {
+          if (searchTerm.length() > 0) {
+              searchTerm = searchTerm.concat(" OR ");
+          }
+          searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:intersect)");
+      }
+      if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK3)) {
+          if (searchTerm.length() > 0) {
+              searchTerm = searchTerm.concat(" OR ");
+          }
+          searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:include)");
+      }
+      if (searchTerm.length() == 0) {
+          searchTerm = searchTerm.concat(coordinates);
+      }
+      searchTerm = "(".concat(searchTerm).concat(")");
+      
+    String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
+    		Settings.PARAM_QUERY_STRING);
+    PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING,
+    		UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_AND));
+      
+      
+            // Zur Suchanfrage hinzufuegen
+//            WMSSearchDescriptor wmsDescriptor = WMSInterfaceImpl.getInstance().getWMSSearchParameter(
+//                    request.getPortletSession().getId());
+//            
+//            
+            
+            
+            
+//            if (wmsDescriptor == null) {
+//                f.setError("", "searchExtEnvPlaceMap.error.no_spacial_constraint");
+//                return;
+//            } else {
+//                String searchTerm = "";
+//                if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_BBOX) {
+//                    String coordinates = "x1:".concat(Double.toString(wmsDescriptor.getMinX()));
+//                    coordinates = coordinates.concat(" y1:").concat(Double.toString(wmsDescriptor.getMinY()));
+//                    coordinates = coordinates.concat(" x2:").concat(Double.toString(wmsDescriptor.getMaxX()));
+//                    coordinates = coordinates.concat(" y2:").concat(Double.toString(wmsDescriptor.getMaxY()));
+//                    if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK1)) {
+//                        searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:inside)");
+//                    }
+//                    if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK2)) {
+//                        if (searchTerm.length() > 0) {
+//                            searchTerm = searchTerm.concat(" OR ");
+//                        }
+//                        searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:intersect)");
+//                    }
+//                    if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK3)) {
+//                        if (searchTerm.length() > 0) {
+//                            searchTerm = searchTerm.concat(" OR ");
+//                        }
+//                        searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:include)");
+//                    }
+//                    if (searchTerm.length() == 0) {
+//                        searchTerm = searchTerm.concat(coordinates);
+//                    }
+//                    searchTerm = "(".concat(searchTerm).concat(")");
+//                    
+//                } else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
+//                    searchTerm = searchTerm.concat("areaid:").concat(wmsDescriptor.getCommunityCode());
+//                }
+//                searchTerm = UtilsQueryString.stripQueryWhitespace(searchTerm);
+//
+//                String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
+//                        Settings.PARAM_QUERY_STRING);
+//                PortletMessaging.publish(request, Settings.MSG_TOPIC_SEARCH, Settings.PARAM_QUERY_STRING,
+//                        UtilsQueryString.addTerm(queryStr, searchTerm, UtilsQueryString.OP_AND));
+//            }
         } else if (action.equalsIgnoreCase("doSaveWMSServices") && Utils.getLoggedOn(request)) {
             // get the WMS Services
             Collection c = WMSInterfaceImpl.getInstance().getWMSServices(request.getPortletSession().getId());
@@ -147,4 +188,52 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
             processTab(actionResponse, newTab);
         }
     }
+    public void doHeader(PortletHeaderRequest request, PortletHeaderResponse response)
+			throws PortletException {
+		
+
+        HeaderResource headerResource = response.getHeaderResource();
+        
+        
+        headerResource.addHeaderInfo("<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/adapter/ext/ext-base-debug.js\"></script>" +
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/ext-all-debug.js\"></script>" +
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/lib/OpenLayers.js\"></script>" +
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext/lib/GeoExt.js\"></script>"+
+        							 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all.css\" />"+
+        							 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/frontend/css/style.css\" />"+
+        							 "<script type=\"text/javascript\" src=\"http://proj4js.org/lib/proj4js-compressed.js\"></script>"+
+        							 "<!-- openlayers extensions -->"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers.addins/LoadingPanel.js\"></script>"+
+        							 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/openlayers.addins/loadingpanel.css\" />"+
+        							 "<!-- geoext extensions -->"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/SimplePrint.js\"></script>"+
+        							 "<!-- custom code -->"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/config.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/Message.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/Configuration.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/data/StoreHelper.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/model/WmsProxy.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/Session.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/SessionState.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/Service.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/ActiveServicesPanel.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/ServiceCategoryPanel.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/SettingsDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/OpacityDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/NewServiceDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/MetaDataDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/FeatureInfoControl.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/FeatureInfoDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/LoadDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/SaveDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/PrintDialog.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/PanelWorkspace.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/main.js\"></script>");
+		
+	
+    
+	//path: /ingrid-webmap-client/frontend/
+
+    
+	}
 }

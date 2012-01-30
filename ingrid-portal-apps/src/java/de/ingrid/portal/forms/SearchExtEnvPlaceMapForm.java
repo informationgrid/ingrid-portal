@@ -21,6 +21,10 @@ public class SearchExtEnvPlaceMapForm extends ActionForm {
     public static final String FIELD_CHK1 = "chk_1";
     public static final String FIELD_CHK2 = "chk_2";
     public static final String FIELD_CHK3 = "chk_3";
+    public static final String FIELD_X1 = "x1";
+    public static final String FIELD_X2 = "x2";
+    public static final String FIELD_Y1 = "y1";
+    public static final String FIELD_Y2 = "y2";
     
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
@@ -38,6 +42,10 @@ public class SearchExtEnvPlaceMapForm extends ActionForm {
         setInput(FIELD_CHK1, request.getParameter(FIELD_CHK1));
         setInput(FIELD_CHK2, request.getParameter(FIELD_CHK2));
         setInput(FIELD_CHK3, request.getParameter(FIELD_CHK3));
+        setInput(FIELD_X1, request.getParameter(FIELD_X1));
+        setInput(FIELD_X2, request.getParameter(FIELD_X2));
+        setInput(FIELD_Y1, request.getParameter(FIELD_Y1));
+        setInput(FIELD_Y2, request.getParameter(FIELD_Y2));
     }
 
     /**
@@ -49,6 +57,11 @@ public class SearchExtEnvPlaceMapForm extends ActionForm {
         if (!hasInput(FIELD_CHK1) && !hasInput(FIELD_CHK2) && !hasInput(FIELD_CHK3)) {
             setError("constraint", "searchExtEnvPlaceMap.error.no_constraint");
             valid = false;
+            
+        }
+        else if(!hasInput(FIELD_X1) && !hasInput(FIELD_X2) && !hasInput(FIELD_Y1) && !hasInput(FIELD_Y2)){
+        	setError("", "searchExtEnvPlaceMap.error.no_spacial_constraint");
+        	valid = false;
         }
         return valid;
     }

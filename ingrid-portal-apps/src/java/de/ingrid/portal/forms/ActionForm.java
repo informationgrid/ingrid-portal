@@ -113,6 +113,7 @@ public abstract class ActionForm implements Serializable {
      * string has length > 0
      */
     public boolean hasInput(String field) {
+    	int len = getInput(field).trim().length();
         if (getInput(field).trim().length() > 0) {
             return true;
         }
