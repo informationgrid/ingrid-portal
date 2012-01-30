@@ -80,7 +80,7 @@
 	</a>
 	$action.setParameter("doRemoveDatatype", "$datatypeKey")
     #if($action)
-		#renderDeleteIcon ($action)
+		#renderDeleteIcon ($action $MESSAGES.getString("searchResult.facete.category.delete.btn"))
 	#end
 	<br>
 </div>
@@ -107,7 +107,7 @@
             </li>
 			<li>
 				$action.setParameter("doRemoveAllTopics",  "true")
-            	#renderFaceteDeleteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete") $action)
+            	#renderFaceteDeleteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.topic.delete") $action)
             </li>
 			#end
 		</ul>	

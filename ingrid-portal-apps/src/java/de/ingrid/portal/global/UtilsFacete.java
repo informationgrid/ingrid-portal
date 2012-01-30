@@ -136,7 +136,7 @@ public class UtilsFacete {
 	public static void setParamsToContext(RenderRequest request, Context context, IngridDocument facete) {
 		
 		if(facete == null){
-			removeFaceteElementsFromSession(request);
+			//removeFaceteElementsFromSession(request);
 		}
 		
 		setTopicParamsToContext(request, context);
@@ -1146,6 +1146,7 @@ public class UtilsFacete {
     	
     	context.put("enableFaceteProviderList", enableFaceteProviderList);
     	context.put("elementsProvider", elementsProvider);
+    	context.put("enableFaceteProviderCount", PortalConfig.getInstance().getInt("portal.search.facete.provider.count", 3));
     	
     	if(selectedProviders != null && selectedProviders.size() > 0){
     		context.put("isProviderSelect", true);
@@ -1362,6 +1363,7 @@ public class UtilsFacete {
 		
 		if(doCancelGeothesaurus != null){
 			setAttributeToSession(request, "doGeothesaurus", false);
+			request.removeAttribute("doCancelGeothesaurus");
         }else{
 			if(doGeothesaurus != null){
 				if(doGeothesaurus.equals("true")){
@@ -1607,7 +1609,7 @@ public class UtilsFacete {
 		
 		if(doCancelThesaurus != null){
 			setAttributeToSession(request, "doThesaurus", false);
-        
+			request.removeAttribute("doCancelThesaurus");
 		}else{
         	
         	if(doThesaurus != null){

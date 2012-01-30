@@ -1,7 +1,8 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="dialog_topic" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.title.topic")" dojoType="dijit.Dialog">
-   	<form name="topic_form" action="$action" method="post">
-		<div class="dialog_content">
+	<form name="topic_form" action="$action" method="post">
+		#renderCloseDialogJS ("faceteDialogCancel('dialog_topic');" $MESSAGES.getString("searchResult.facete.dialog.tooltip.close"))
+   		<div class="dialog_content">
 			#set($i = 0)
 			#if($elementsTopicSelect)
     			<div class="dialog_sub_content">
@@ -89,7 +90,7 @@
 		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddTopic" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right btn_submit_dialog" "")
 	</form>
 	<div class="dialog_bottom">
-		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.cancel') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.cancel') "float_right" "faceteDialogCancel('dialog_topic')")
+		#renderInputButtonDialogCancel($MESSAGES.getString('searchResult.facete.dialog.cancel') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.cancel') "float_right" "faceteDialogCancel('dialog_topic')")
 		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.all.select') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.all.select') "float_left" "faceteDialogSelectAll(document.topic_form)")
 		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.all.delete') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.all.delete') "float_left" "faceteDialogDeselectAll(document.topic_form)")
 	</div>

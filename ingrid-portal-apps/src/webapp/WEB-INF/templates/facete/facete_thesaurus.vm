@@ -26,7 +26,7 @@
     	#if($thesaurusSelectTopics.size())
         	#if($thesaurusSelectTopics.size() > 1)
         		$action.setParameter("doRemoveThesaurus",  "all")
-                #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete") $action)
+                #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.thesaurus.delete") $action)
     		#end
 		#end
 	#end

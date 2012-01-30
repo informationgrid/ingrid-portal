@@ -15,188 +15,192 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="dialog_thesaurus" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.thesaurus.search")" dojoType="dijit.Dialog">
 	<span id="dialog_thesaurus_loading" class="dijitContentPaneLoading dialog_loading_panel" style="display:inline;"></span>
+	$action.setParameter("doCancelThesaurus",  "true")
+	#renderCloseDialog ($action $MESSAGES.getString("searchResult.facete.dialog.tooltip.close"))
+	
+	#set ($action = $renderResponse.createActionURL())
 	<form action="$action" method="post" name="thesaurus_form">
-	<div class="dialog_content">
-		<div style="height:50px;">
-		#if($thesaurusTerm)
-			<input class="thesaurus_term float_left inputstyletext" type="text" name="search_term" id="search_term" value="$thesaurusTerm" />
-		#else
-			<input class="thesaurus_term float_left inputstyletext" type="text" name="search_term" id="search_term"/>
-		#end
-		#renderInputButton($MESSAGES.getString("searchResult.facete.thesaurus.search.button") "float:right" "doSearchThesaurus" "")
-		<span class="clearer"></span>
-		</div>
-        #set($count = 0)
-		#if($thesaurusTopics && !$thesaurusCurrentTopic)
-			<div class="facete_dialog_sns_content">
-                <p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.thesaurus.title")</p>
-				#foreach($topic in $thesaurusTopics)
-    				#set($count = $count + 1)
-    				<div class="facete_line">
-						<div class="facete_chb">
-                    		<p>
-								#set($topicId = $topic.topicID)
-								<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
-								#foreach($selectTopic in $thesaurusSelectTopics)
-										#if($selectTopic.topicId == $topicId)
-											checked
-										#end
-								#end
-								>
-								$action.setParameter("doBrowseThesaurus",  "$topic.topicID")
-    							$action.setParameter("topicID",  "$topic.topicID")
-    							$action.setParameter("plugID",  "$topic.iPlugId")
-    							$action.setParameter("docID",  "$topic.getDocumentId()")
-    							<a class="facete_label_chb_dialog" href="$action">$topic.title</a>
-							</p>
-                    	</div>
-    				</div>
-				#end
-			</div>
-		#elseif($thesaurusCurrentTopic)
-			#set($count = $count + 1)
+    	<div class="dialog_content">
+    		<div style="height:50px;">
+    		#if($thesaurusTerm)
+    			<input class="thesaurus_term float_left inputstyletext" type="text" name="search_term" id="search_term" value="$thesaurusTerm" />
+    		#else
+    			<input class="thesaurus_term float_left inputstyletext" type="text" name="search_term" id="search_term"/>
+    		#end
+    		#renderInputButton($MESSAGES.getString("searchResult.facete.thesaurus.search.button") "float:right" "doSearchThesaurus" "")
+    		<span class="clearer"></span>
+    		</div>
+            #set($count = 0)
+    		#if($thesaurusTopics && !$thesaurusCurrentTopic)
     			<div class="facete_dialog_sns_content">
-				<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.thesaurus.keyword")</p>
-				<div class="facete_line">
-    				<div class="facete_chb">
-                   		<p>
-                    		#set($topicId = $thesaurusCurrentTopic.topicID)
-    						#if($thesaurusCurrentTopic.topicNativeKey && $thesaurusCurrentTopic.topicNativeKey != "")
-    							#set($topicId = $thesaurusCurrentTopic.topicNativeKey)
-							#end
-							<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
-							#foreach($selectTopic in $thesaurusSelectTopics)
-									#if($selectTopic.topicId == $topicId)
-										checked
-									#end
-							#end
-							>
-    						<span>$thesaurusCurrentTopic.title</span>
-    					</p>
-                    </div>
+                    <p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.thesaurus.title")</p>
+    				#foreach($topic in $thesaurusTopics)
+        				#set($count = $count + 1)
+        				<div class="facete_line">
+    						<div class="facete_chb">
+                        		<p>
+    								#set($topicId = $topic.topicID)
+    								<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
+    								#foreach($selectTopic in $thesaurusSelectTopics)
+    										#if($selectTopic.topicId == $topicId)
+    											checked
+    										#end
+    								#end
+    								>
+    								$action.setParameter("doBrowseThesaurus",  "$topic.topicID")
+        							$action.setParameter("topicID",  "$topic.topicID")
+        							$action.setParameter("plugID",  "$topic.iPlugId")
+        							$action.setParameter("docID",  "$topic.getDocumentId()")
+        							<a class="facete_label_chb_dialog" href="$action">$topic.title</a>
+    							</p>
+                        	</div>
+        				</div>
+    				#end
     			</div>
-			</div>
-		#else
-		#end
-		
-		#if($thesaurusSynonym.size() > 0)
-			<div class="facete_dialog_sns_content">
-				<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.thesaurus.synonyms")</p>
-				#foreach($topic in $thesaurusSynonym)
+    		#elseif($thesaurusCurrentTopic)
+    			#set($count = $count + 1)
+        			<div class="facete_dialog_sns_content">
+    				<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.thesaurus.keyword")</p>
+    				<div class="facete_line">
+        				<div class="facete_chb">
+                       		<p>
+                        		#set($topicId = $thesaurusCurrentTopic.topicID)
+        						#if($thesaurusCurrentTopic.topicNativeKey && $thesaurusCurrentTopic.topicNativeKey != "")
+        							#set($topicId = $thesaurusCurrentTopic.topicNativeKey)
+    							#end
+    							<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
+    							#foreach($selectTopic in $thesaurusSelectTopics)
+    									#if($selectTopic.topicId == $topicId)
+    										checked
+    									#end
+    							#end
+    							>
+        						<span>$thesaurusCurrentTopic.title</span>
+        					</p>
+                        </div>
+        			</div>
+    			</div>
+    		#else
+    		#end
+    		
+    		#if($thesaurusSynonym.size() > 0)
+    			<div class="facete_dialog_sns_content">
+    				<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.thesaurus.synonyms")</p>
+    				#foreach($topic in $thesaurusSynonym)
+        				#set($count = $count + 1)
+        				<div class="facete_line">
+    						<div class="facete_chb">
+                        		<p>
+    								#set($topicId = $topic.topicID)
+    								<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
+    								#foreach($selectTopic in $thesaurusSelectTopics)
+    									#if($selectTopic.topicId == $topicId)
+    										checked
+    									#end
+    								#end
+    								>
+    								$action.setParameter("doBrowseThesaurus",  "$topic.topicID")
+        							$action.setParameter("topicID",  "$topic.topicID")
+        							$action.setParameter("plugID",  "$topic.iPlugId")
+        							$action.setParameter("docID",  "$topic.getDocumentId()")
+        							<a class="facete_label_chb_dialog" href="$action">$topic.title</a>
+    							</p>
+                        	</div>
+        				</div>
+    				#end
+    			</div>
+    		#end
+    		#if($thesaurusWiderTerm.size() > 0)
+    			<div class="facete_dialog_sns_content">
+    				<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.thesaurus.super")</p>
+    			#foreach($topic in $thesaurusWiderTerm)
     				#set($count = $count + 1)
     				<div class="facete_line">
-						<div class="facete_chb">
+    					<div class="facete_chb">
                     		<p>
-								#set($topicId = $topic.topicID)
-								<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
-								#foreach($selectTopic in $thesaurusSelectTopics)
-									#if($selectTopic.topicId == $topicId)
-										checked
-									#end
-								#end
-								>
-								$action.setParameter("doBrowseThesaurus",  "$topic.topicID")
+    							#set($topicId = $topic.topicID)
+    							<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
+    							#foreach($selectTopic in $thesaurusSelectTopics)
+    									#if($selectTopic.topicId == $topicId)
+    										checked
+    									#end
+    							#end
+    							>
+    							$action.setParameter("doBrowseThesaurus",  "$topic.topicID")
     							$action.setParameter("topicID",  "$topic.topicID")
     							$action.setParameter("plugID",  "$topic.iPlugId")
     							$action.setParameter("docID",  "$topic.getDocumentId()")
     							<a class="facete_label_chb_dialog" href="$action">$topic.title</a>
-							</p>
+    						</p>
                     	</div>
     				</div>
-				#end
-			</div>
-		#end
-		#if($thesaurusWiderTerm.size() > 0)
-			<div class="facete_dialog_sns_content">
-				<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.thesaurus.super")</p>
-			#foreach($topic in $thesaurusWiderTerm)
-				#set($count = $count + 1)
-				<div class="facete_line">
-					<div class="facete_chb">
-                		<p>
-							#set($topicId = $topic.topicID)
-							<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
-							#foreach($selectTopic in $thesaurusSelectTopics)
-									#if($selectTopic.topicId == $topicId)
-										checked
-									#end
-							#end
-							>
-							$action.setParameter("doBrowseThesaurus",  "$topic.topicID")
-							$action.setParameter("topicID",  "$topic.topicID")
-							$action.setParameter("plugID",  "$topic.iPlugId")
-							$action.setParameter("docID",  "$topic.getDocumentId()")
-							<a class="facete_label_chb_dialog" href="$action">$topic.title</a>
-						</p>
-                	</div>
-				</div>
-			#end
-			</div>
-		#end
-		#if($thesaurusNarrowerTerm.size() > 0)
-			<div class="facete_dialog_sns_content">
-                <p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.thesaurus.sub")</p>
-                #foreach($topic in $thesaurusNarrowerTerm)
-    				#set($count = $count + 1)
-    				<div class="facete_line">
-						<div class="facete_chb">
-                    		<p>
-								#set($topicId = $topic.topicID)
-								<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
-								#foreach($selectTopic in $thesaurusSelectTopics)
-									#if($selectTopic.topicId == $topicId)
-										checked
-									#end
-								#end
-								>
-								$action.setParameter("doBrowseThesaurus",  "$topic.topicID")
-    							$action.setParameter("topicID",  "$topic.topicID")
-    							$action.setParameter("plugID",  "$topic.iPlugId")
-    							$action.setParameter("docID",  "$topic.getDocumentId()")
-    							<a class="facete_label_chb_dialog" href="$action">$topic.title</a>
-							</p>
-                    	</div>
-    				</div>
-				#end
-			</div>
-		#end
-		#if($thesaurusRelatedTerms.size() > 0)
-			<div class="facete_dialog_sns_content">
-                <p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.thesaurus.alternative")</p>
-                #foreach($topic in $thesaurusRelatedTerms)
-    				#set($count = $count + 1)
-    				<div class="facete_line">
-						<div class="facete_chb">
-                    		<p>
-								#set($topicId = $topic.topicID)
-								<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
-								#foreach($selectTopic in $thesaurusSelectTopics)
-									#if($selectTopic.topicId == $topicId)
-										checked
-									#end
-								#end
-								>
-								$action.setParameter("doBrowseThesaurus",  "$topic.topicID")
-    							$action.setParameter("topicID",  "$topic.topicID")
-    							$action.setParameter("plugID",  "$topic.iPlugId")
-    							$action.setParameter("docID",  "$topic.getDocumentId()")
-    							<a class="facete_label_chb_dialog" href="$action">$topic.title</a>
-							</p>
-                    	</div>
-    				</div>
-				#end
-			</div>
-		#end
-		#if($thesaurusError)
-		<div class="dialog_error_message">
-			<span>
-				$MESSAGES.getString('searchResult.facete.thesaurus.search.error')
-            </span>
-		</div>
-		#end
-	</div>
-	#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddThesaurus" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right btn_submit_dialog" "")
-	#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.cancel') "" "doCancelThesaurus" $MESSAGES.getString('searchResult.facete.dialog.tooltip.cancel') "float_right btn_submit_dialog" "")
+    			#end
+    			</div>
+    		#end
+    		#if($thesaurusNarrowerTerm.size() > 0)
+    			<div class="facete_dialog_sns_content">
+                    <p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.thesaurus.sub")</p>
+                    #foreach($topic in $thesaurusNarrowerTerm)
+        				#set($count = $count + 1)
+        				<div class="facete_line">
+    						<div class="facete_chb">
+                        		<p>
+    								#set($topicId = $topic.topicID)
+    								<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
+    								#foreach($selectTopic in $thesaurusSelectTopics)
+    									#if($selectTopic.topicId == $topicId)
+    										checked
+    									#end
+    								#end
+    								>
+    								$action.setParameter("doBrowseThesaurus",  "$topic.topicID")
+        							$action.setParameter("topicID",  "$topic.topicID")
+        							$action.setParameter("plugID",  "$topic.iPlugId")
+        							$action.setParameter("docID",  "$topic.getDocumentId()")
+        							<a class="facete_label_chb_dialog" href="$action">$topic.title</a>
+    							</p>
+                        	</div>
+        				</div>
+    				#end
+    			</div>
+    		#end
+    		#if($thesaurusRelatedTerms.size() > 0)
+    			<div class="facete_dialog_sns_content">
+                    <p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.thesaurus.alternative")</p>
+                    #foreach($topic in $thesaurusRelatedTerms)
+        				#set($count = $count + 1)
+        				<div class="facete_line">
+    						<div class="facete_chb">
+                        		<p>
+    								#set($topicId = $topic.topicID)
+    								<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
+    								#foreach($selectTopic in $thesaurusSelectTopics)
+    									#if($selectTopic.topicId == $topicId)
+    										checked
+    									#end
+    								#end
+    								>
+    								$action.setParameter("doBrowseThesaurus",  "$topic.topicID")
+        							$action.setParameter("topicID",  "$topic.topicID")
+        							$action.setParameter("plugID",  "$topic.iPlugId")
+        							$action.setParameter("docID",  "$topic.getDocumentId()")
+        							<a class="facete_label_chb_dialog" href="$action">$topic.title</a>
+    							</p>
+                        	</div>
+        				</div>
+    				#end
+    			</div>
+    		#end
+    		#if($thesaurusError)
+    		<div class="dialog_error_message">
+    			<span>
+    				$MESSAGES.getString('searchResult.facete.thesaurus.search.error')
+                </span>
+    		</div>
+    		#end
+    	</div>
+    	#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddThesaurus" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right btn_submit_dialog" "")
+    	#renderInputButtonDialogCancel($MESSAGES.getString('searchResult.facete.dialog.cancel') "" "doCancelThesaurus" $MESSAGES.getString('searchResult.facete.dialog.tooltip.cancel') "float_right btn_submit_dialog" "")
 	</form>
 	<div class="dialog_bottom">
 		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.all.select') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.all.select') "float_left" "faceteDialogSelectAll(document.thesaurus_form)")

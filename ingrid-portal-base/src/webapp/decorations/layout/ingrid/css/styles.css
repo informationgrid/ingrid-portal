@@ -556,6 +556,9 @@ input.btn_disable { background: none; height: 33px; color: #CECECE; font-weight:
 input.btn_search { background: none; height: 33px; color: #486606; font-weight: bold; text-align: left; padding: 2px 38px 2px 9px; border: 0 none !important; font-size: 12px; font-family: Verdana, Arial, sans-serif; text-shadow: 1px -1px 0px #BCE465; }
 input.btn_search:hover { color: #486606; cursor: pointer; background-image: url(../images/button_hover.png); text-shadow: 1px -1px 0px #BCE465; background-position: right center; }
 input.btn_search_disable { background: none; height: 33px; color: #CECECE; font-weight: bold; text-align: left; padding-left: 9px; padding-right: 38px;  padding-bottom: 2px; border: 0 none !important; background-image: url(../images/background-mainmenu-hover.png); font-family: Verdana, Arial, sans-serif; text-shadow: 1px -1px 0px #BCE465; }
+input.btn_gray { background: none; height: 33px; color: #1b78b1; font-weight: bold; text-align: left; padding-left: 10px; padding-right: 10px; padding-bottom: 2px; border: 0 none !important; font-size: 12px; font-family: Verdana, Arial, sans-serif; /* text-shadow: 1px -1px 0 #1C5269; */ }
+input.btn_gray:hover { color: #FFFFFF; cursor: pointer; background-image: url(../images/background-mainmenu-hover.png); }
+input.btn_gray_disable { background: none; height: 33px; font-weight: bold; color: #111111; text-align: left; padding-left: 10px; padding-right: 10px; border: 0 none !important;}
 
 /*Use only at profile NUMIS*/
 input.btn_admin { }
@@ -789,9 +792,12 @@ li.mainnav_img { float:left; padding: 2px 0px; background-image: url(../images/m
 div.btn_search_left { float:left; background-image: url(../images/button_search_left.png); height: 33px; width: 2px; }
 div.btn_search_right { float:left; background-image: url(../images/button_search_right.png); height: 33px; width: 2px; }
 div.btn_search_center { float:left; background-image: url("../images/button_search.png"); background-position: right center; }
-div.btn_left { float:left; background-image: url(../images/button_left.png); height: 33px; width: 2px; }
-div.btn_right { float:left; background-image: url(../images/button_right.png); height: 33px; width: 2px; }
+div.btn_left { float:left; background-image: url(../images/button_left.png); height: 33px; width: 3px; }
+div.btn_right { float:left; background-image: url(../images/button_right.png); height: 33px; width: 3px; }
 div.btn_center { float:left; background-image: url("../images/button.png"); background-position: right center; }
+div.btn_gray_left { float:left; background-image: url(../images/button_gray_left.png); height: 33px; width: 3px; }
+div.btn_gray_right { float:left; background-image: url(../images/button_gray_right.png); height: 33px; width: 3px; }
+div.btn_gray_center { float:left; background-image: url("../images/button_gray.png"); background-position: right center; }
 
 .search_query_button { padding: 0px 0px 0px 625px; }
 .search_query_textarea { position: absolute;  margin: 1px 0 0; }
@@ -884,7 +890,7 @@ a.facete_link_line { font-size:12px; }
 a.facete_more_link_line { font-size:12px; padding: 0px 0px 0px 20px; font-weight: bold;  }
 
 input.facete_input_chb { float:left; margin: 4px 0 0 -20px; top: -2px; }
-a.facete_label_chb { color:#5e5e5f; }
+a.facete_label_chb { color:#111111; }
 
 div.dijitDialog { background: none repeat scroll 0 0 #FFFFFF; padding: 10px; min-width: 400px; }
 div.facete_dialog {min-width: 610px; }
@@ -907,12 +913,14 @@ p.dialog_sub_title { font-weight:bold; }
 div.dialog_sub_content { padding:0 0 10px 0; }
 span.dialog_loading_panel { }
 
+div.closeDialog { float: right; margin: -30px 0 0; }
+
 img.facete_open { cursor: pointer; padding: 2px 0px 0 0; }
-div.facete_delete img.facete_delete_img { margin: 0px 0px -1px 0px; }
+img.facete_delete_img { margin: 0px 0px -1px 0px; }
 div.facete_delete span.facete_delete_span_img { position:absolute; padding: 5px 0 0; }
 div.facete_delete span.facete_delete_span_a { position:relative; left:15px; }
 
-div.dialog_bottom div.btn_center input.btn { font-size:10px; color:#FFFFFF; }
+div.dialog_bottom div.btn_center input.btn { font-size:11px; color:#FFFFFF; }
 
 iframe.facete_map { height: 680px; width: 880px; }
 
@@ -920,20 +928,24 @@ div.dialog_content input.thesaurus_term { font-size: 83%; line-height: 120%; wid
 div.dialog_content .inputstyletext { border: 1px inset #FFFFFF; padding: 2px 4px 2px 4px; margin-right:6px;margin-bottom: 5px; }
 
 div.btn_submit_dialog { padding: 11px 0 0; }
-div.btn_submit_dialog div.btn_center input { font-size: 10px; }
+div.btn_submit_dialog div.btn_center input { font-size: 11px; }
 
 span.facete_label { color: #5E5E5F; }
 span.facete_label_number { font-size:11px; color:#5e5e5f; }
 span.facete_label_dialog { padding: 0 0 0 7px; font-size:11px; color: #176798; }
 
-ul.facete_ul_more { margin: 0; list-style: none outside none; list-style-type: none; }
+ul.facete_ul_more { margin: 0 0 0 -5px; list-style: none outside none; list-style-type: none; }
 ul.facete_ul_more li { display: inline; }
 ul.facete_ul_more li a { font-size:11px !important; }
 a.facete_more { font-weight:bold; }
 img.more_seperator { widht:2px; height:11px; padding:0px 2px; }
 a.facete_delete_link { font-weight: bold; font-size:11px; }
-a.facete_select_link { color: #5E5E5F; }
+a.facete_select_link { color: #111111; font-weight:normal !important; }
 a.facete_select_link_topic { font-weight:bold; }
+
+div#area a.facete_link_line { font-size:11px;font-weight: bold; }
+div#thesaurus a.facete_link_line { font-size:11px;font-weight: bold; }
+div.dialog_content input.btn { text-align: center; min-width: 100px; }
 
 .tundra .dijitBorderContainer { background-color: transparent !important; }
 .tundra .dijitSplitContainer-child, .tundra .dijitBorderContainer-child { border: 0px solid #CCCCCC !important; }

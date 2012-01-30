@@ -30,7 +30,7 @@
 		#end
 		#if($doAddAreaAddress.size() > 1)
        			$action.setParameter("doRemoveAreaAddress",  "all")
-           		#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete") $action)
+           		#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.area.address.delete") $action)
 		#end
 	#end
 	<br>

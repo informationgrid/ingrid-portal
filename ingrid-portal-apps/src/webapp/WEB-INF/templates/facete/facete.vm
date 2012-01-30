@@ -13,9 +13,23 @@
 	</div>
 #end
 
+#macro (renderInputButtonDialogCancel $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick)
+	<div class="$buttonclass" style="$buttonstyle">
+		<div class="btn_gray_left" id="$buttonname left"></div>
+		<div class="btn_gray_center">
+			#if($buttondisable && $buttondisable == "true")
+				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_gray_disable" onclick="$buttononclick" disabled />
+			#else
+				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_gray" onclick="$buttononclick" />
+			#end
+		</div>
+		<div class="btn_gray_right" id="$buttonname right"></div>
+	</div>
+#end
+
 #macro (renderFaceteMoreLinkLineDialog $label $style $id $button)
 	<a id="$button" class="facete_more" style="$style" onClick="prepareDialog('$id')">$label</a>
-	<img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" >
+	<img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png">
 #end
 
 #macro (renderFaceteDeleteMoreLinkLineDialog $label $doAction)
@@ -32,7 +46,7 @@
 	<div>
 		<a href="$doAction" class="facete_link_line facete_select_link">$title</a>
 		#if($doAction)
-			#renderDeleteIcon ($doAction)
+			#renderDeleteIcon ($doAction $MESSAGES.getString("searchResult.facete.category.delete.btn"))
 		#end
     </div>
 #end
@@ -53,7 +67,7 @@
         </span>
 		#if($isDelete)
 			#if($doAction)
-				#renderDeleteIcon ($doAction)
+				#renderDeleteIcon ($doAction $MESSAGES.getString("searchResult.facete.category.delete.btn"))
 			#end
 		#end
     </div>
@@ -91,13 +105,25 @@
 	</span>
 #end
 
-#macro(renderDeleteIcon $doAction)
+#macro(renderDeleteIcon $doAction $title)
 	<a href="$doAction" class="facete_link_line">
-		<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png"></img>
+		<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png" title="$title"></img>
 	</a>
 #end
 
+#macro(renderCloseDialog $doAction $title)
+	<div class="closeDialog">
+		<a href="$doAction" class="facete_link_line">
+			<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_close_dialog.png" title="$title"></img>
+        </a>
+	</div>
+#end
 
+#macro(renderCloseDialogJS $onClick $title)
+	<div class="closeDialog">
+		<img class="facete_delete_img" onclick="$onClick" src="/ingrid-portal-apps/images/facete/facete_close_dialog.png" title="$title"></img>
+	</div>
+#end
 
 <div>
 	#if($ds && $ds == "2")
@@ -113,7 +139,19 @@
 		
 ## ERGEBNISTYPEN ##
 	#if($enableFaceteDatatype)
-        #if(!$ds || $ds == "1")
+		#set ($hasRankedHits = false)
+		#foreach($e in $rankedResultList.getHits())
+			#set ($hasRankedHits = true)
+		#end
+		#if(!$hasRankedHits)
+			<p>
+    			$MESSAGES.getString("searchResult.facete.category.error")
+            </p>
+    		$action.setParameter("doRemoveAll", "true")
+            #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.all") $action)
+			<br>
+		#end
+		#if(!$ds || $ds == "1")
         	<div class="cat_label">
         		<img id="hit_types_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('hit_types')">
         		<a onclick="openNode('hit_types')" >$MESSAGES.getString("searchResult.facete.title.types")</a>
@@ -156,18 +194,11 @@
         #if($ds &&  $ds == "2")
         	#parse ('/WEB-INF/templates/facete/facete_area_address.vm')
 		#end
+	
 	#else
-		#if($isTopicSelect || $doTime || ($thesaurusSelectTopics && $thesaurusSelectTopics.size() > 0 ) || $selectedService || $isPartnerSelect || $selectedMetaclass || $selectedMeasures || $selectedDatatype || $doAddAttribute || ($geothesaurusSelectTopics && $thesaurusSelectTopics.size() > 0) || $doMapCoords || $doAddAreaAddress)
-    		<p>
-    			$MESSAGES.getString("searchResult.facete.category.error")
-            </p>
-    		$action.setParameter("doRemoveAll", "true")
-            #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.all") $action)
-    	#else
-    		<p>
-        		$MESSAGES.getString("searchResult.facete.category.no.hits")
-            </p>
-		#end
+		<p>
+    		$MESSAGES.getString("searchResult.facete.category.no.hits")
+        </p>
 	#end
 	</div>
 	

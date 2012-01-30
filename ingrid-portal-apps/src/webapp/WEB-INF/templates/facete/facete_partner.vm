@@ -55,20 +55,24 @@
 							#renderLinkEntryNumberInArrayHashMap($elementsPartner "${partner.ident}")
 						#end
 						#if($action)
-		    					#renderDeleteIcon ($action)
+		    					#renderDeleteIcon ($action $MESSAGES.getString("searchResult.facete.category.delete.btn"))
 						#end
 					</span>
     			</div>
     			<div id="class" class="cat_content_entry">
         			<div id="${partner.ident}">
-        			#if($isProviderSelect)
+        			#set($j = 0)
+    				#if($isProviderSelect)
     					#foreach ($provider in $enableFaceteProviderList)
     							#renderProviderListTree ($provider)
     					#end
         			#else
     					#foreach ($provider in $enableFaceteProviderList)
             				#if(${provider.sortkeyPartner} == ${partner.sortkey})
-    							#renderProviderListTree ($provider)
+								#if($j < $enableFaceteProviderCount)
+    								#renderProviderListTree ($provider)
+            					#end
+            					#set($j = $j + 1)
             				#end
         				#end
 					#end

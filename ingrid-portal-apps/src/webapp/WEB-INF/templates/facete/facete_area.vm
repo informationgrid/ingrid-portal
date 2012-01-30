@@ -36,7 +36,7 @@
 		#end
 		#if($doMapCoords && $doMapCoords.size() > 1)
 			$action.setParameter("doRemoveMap",  "all")
-            #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete") $action)
+            #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.area.map.delete") $action)
 		#end
     	#parse ('/WEB-INF/templates/facete/facete_dialog_area_map.vm')
 	#end
@@ -62,7 +62,7 @@
 		#end
 		#if($geothesaurusSelectTopics && $geothesaurusSelectTopics.size() > 1)
 			$action.setParameter("doRemoveGeothesaurus",  "all")
-            #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete") $action)
+            #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.area.name.delete") $action)
 		#end
 		#parse ('/WEB-INF/templates/facete/facete_dialog_area_geothesaurus.vm')
 	#end
