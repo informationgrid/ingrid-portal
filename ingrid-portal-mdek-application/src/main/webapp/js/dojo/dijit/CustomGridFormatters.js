@@ -63,3 +63,18 @@ function LocalizedNumberFormatter(row, cell, value, columnDef, dataContext){
 function BoolCellFormatter(row, cell, value, columnDef, dataContext) {
     return value ? "<img src='img/tick.png'>" : "";
 }
+
+function FirstEntryFormatter(identifier, row, cell, value, columnDef, dataContext){
+	var retValue = "";
+    if (value && dojo.isArray(value) && value.length > 0) {
+    	retValue = value[0];
+    	if (dojo.isObject(retValue)) {
+    	   if (identifier) {
+    	       retValue = retValue[identifier];
+    	   } else {
+               retValue = retValue["title"];    	   	
+    	   }
+    	}
+    }
+    return retValue;
+}

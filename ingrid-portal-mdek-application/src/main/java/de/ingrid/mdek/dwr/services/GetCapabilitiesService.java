@@ -205,10 +205,10 @@ public class GetCapabilitiesService {
     	// Operation - GetCapabilities
     	OperationBean getCapabilitiesOp = new OperationBean();
     	getCapabilitiesOp.setName("GetCapabilities");
+    	getCapabilitiesOp.setMethodCall("GetCapabilities");
     	List<String> getCapabilitiesOpPlatform = new ArrayList<String>();
     	getCapabilitiesOpPlatform.add("HTTP GET");
     	getCapabilitiesOp.setPlatform(getCapabilitiesOpPlatform);
-    	getCapabilitiesOp.setMethodCall("GetCapabilities");
     	List<String> getCapabilitiesOpAddressList = new ArrayList<String>();
     	String address = xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_CAPABILITIES_HREF"), doc);
     	getCapabilitiesOpAddressList.add(appendGetCapabilitiesParameterToWmsServiceUrl(address,version));
@@ -225,10 +225,10 @@ public class GetCapabilitiesService {
     	// Operation - GetMap
     	OperationBean getMapOp = new OperationBean();
     	getMapOp.setName("GetMap");
+    	getMapOp.setMethodCall("GetMap");
     	List<String> getMapOpPlatform = new ArrayList<String>();
     	getMapOpPlatform.add("HTTP GET");
     	getMapOp.setPlatform(getMapOpPlatform);
-    	getMapOp.setMethodCall("GetMap");
     	List<String> getMapOpAddressList = new ArrayList<String>();
     	getMapOpAddressList.add(appendVersionParameterToWmsServiceUrl(xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_MAP_HREF"), doc),version));
     	getMapOp.setAddressList(getMapOpAddressList);
@@ -261,10 +261,10 @@ public class GetCapabilitiesService {
     	if (getFeatureInfoAddress != null && getFeatureInfoAddress.length() != 0) {
 	    	OperationBean getFeatureInfoOp = new OperationBean();
 	    	getFeatureInfoOp.setName("GetFeatureInfo");
+	    	getFeatureInfoOp.setMethodCall("GetFeatureInfo");
 	    	List<String> getFeatureInfoOpPlatform = new ArrayList<String>();
 	    	getFeatureInfoOpPlatform.add("HTTP GET");
 	    	getFeatureInfoOp.setPlatform(getFeatureInfoOpPlatform);
-	    	getFeatureInfoOp.setMethodCall("GetFeatureInfo");
 	    	List<String> getFeatureInfoOpAddressList = new ArrayList<String>();
 	    	getFeatureInfoOpAddressList.add(getFeatureInfoAddress);
 	    	getFeatureInfoOp.setAddressList(getFeatureInfoOpAddressList);
@@ -326,15 +326,11 @@ public class GetCapabilitiesService {
     	List<OperationBean> operations = new ArrayList<OperationBean>();
 
     	// Operation - GetCapabilities
-    	OperationBean getCapabilitiesOp = new OperationBean();
+    	OperationBean getCapabilitiesOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_WFS_OP_GET_CAPABILITIES_HREF },
+        		new String[]{ "HTTP GET" });
     	getCapabilitiesOp.setName("GetCapabilities");
-    	List<String> getCapabilitiesOpPlatform = new ArrayList<String>();
-    	getCapabilitiesOpPlatform.add("HTTP GET");
-    	getCapabilitiesOp.setPlatform(getCapabilitiesOpPlatform);
     	getCapabilitiesOp.setMethodCall("GetCapabilities");
-    	List<String> getCapabilitiesOpAddressList = new ArrayList<String>();
-    	getCapabilitiesOpAddressList.add(xPath.evaluate(XPATH_EXP_WFS_OP_GET_CAPABILITIES_HREF, doc));
-    	getCapabilitiesOp.setAddressList(getCapabilitiesOpAddressList);
 
     	List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("VERSION=version", "Request version", "", true, false));
@@ -345,21 +341,11 @@ public class GetCapabilitiesService {
     	operations.add(getCapabilitiesOp);
 
     	// Operation - DescribeFeatureType
-    	OperationBean describeFeatureTypeOp = new OperationBean();
-    	String describeFeatureTypeGet = xPath.evaluate(XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_GET_HREF, doc);
-    	String describeFeatureTypePost = xPath.evaluate(XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_POST_HREF, doc);
+    	OperationBean describeFeatureTypeOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_GET_HREF, XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	describeFeatureTypeOp.setName("DescribeFeatureType");
     	describeFeatureTypeOp.setMethodCall("DescribeFeatureType");
-    	List<String> describeFeatureTypeOpAddressList = new ArrayList<String>();
-    	describeFeatureTypeOpAddressList.add(describeFeatureTypeGet);
-    	List<String> describeFeatureTypeOpPlatform = new ArrayList<String>();
-    	describeFeatureTypeOpPlatform.add("HTTP GET");
-    	if (describeFeatureTypePost != null && describeFeatureTypePost.length() != 0) {
-        	describeFeatureTypeOpAddressList.add(describeFeatureTypePost);
-    		describeFeatureTypeOpPlatform.add("HTTP POST");
-    	}
-    	describeFeatureTypeOp.setPlatform(describeFeatureTypeOpPlatform);
-    	describeFeatureTypeOp.setAddressList(describeFeatureTypeOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("REQUEST=DescribeFeatureType", "Name of request", "", false, false));
@@ -369,21 +355,11 @@ public class GetCapabilitiesService {
     	operations.add(describeFeatureTypeOp);
 
     	// Operation - GetFeature
-    	OperationBean getFeatureOp = new OperationBean();
-    	String getFeatureGet = xPath.evaluate(XPATH_EXP_WFS_OP_GET_FEATURE_GET_HREF, doc);
-    	String getFeaturePost = xPath.evaluate(XPATH_EXP_WFS_OP_GET_FEATURE_POST_HREF, doc);
+    	OperationBean getFeatureOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_WFS_OP_GET_FEATURE_GET_HREF, XPATH_EXP_WFS_OP_GET_FEATURE_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	getFeatureOp.setName("GetFeature");
     	getFeatureOp.setMethodCall("GetFeature");
-    	List<String> getFeatureOpAddressList = new ArrayList<String>();
-    	getFeatureOpAddressList.add(getFeatureGet);
-    	List<String> getFeatureOpPlatform = new ArrayList<String>();
-    	getFeatureOpPlatform.add("HTTP GET");
-    	if (getFeaturePost != null && getFeaturePost.length() != 0) {
-        	getFeatureOpAddressList.add(getFeaturePost);
-    		getFeatureOpPlatform.add("HTTP POST");
-    	}
-    	getFeatureOp.setPlatform(getFeatureOpPlatform);
-    	getFeatureOp.setAddressList(getFeatureOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("outputFormat=GML2", "This value is kept for backward compatability and indicates that an XML instance document must be generated that validates against a GML2 application schema", "", true, false));
@@ -396,23 +372,13 @@ public class GetCapabilitiesService {
     	operations.add(getFeatureOp);
 
     	// Operation - GetGmlObject - optional
-    	String getGmlObjectGet = xPath.evaluate(XPATH_EXP_WFS_OP_GET_GML_OBJECT_GET_HREF, doc);
-    	String getGmlObjectPost = xPath.evaluate(XPATH_EXP_WFS_OP_GET_GML_OBJECT_POST_HREF, doc);
-    	if (getGmlObjectGet != null && getGmlObjectGet.length() != 0) {
-	    	OperationBean getGmlObjectOp = new OperationBean();
+    	OperationBean getGmlObjectOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_WFS_OP_GET_GML_OBJECT_GET_HREF, XPATH_EXP_WFS_OP_GET_GML_OBJECT_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
+    	if (getGmlObjectOp.getAddressList().size() > 0) {
 	    	getGmlObjectOp.setName("GetGmlObject");
 	    	getGmlObjectOp.setMethodCall("GetGmlObject");
-	    	List<String> getGmlObjectAddressList = new ArrayList<String>();
-	    	getGmlObjectAddressList.add(getGmlObjectGet);
-	    	List<String> getGmlObjectOpPlatform = new ArrayList<String>();
-	    	getGmlObjectOpPlatform.add("HTTP GET");
-	    	if (getGmlObjectPost != null && getGmlObjectPost.length() != 0) {
-	        	getGmlObjectAddressList.add(getGmlObjectPost);
-	    		getGmlObjectOpPlatform.add("HTTP POST");
-	    	}
-	    	getGmlObjectOp.setPlatform(getGmlObjectOpPlatform);
-	    	getGmlObjectOp.setAddressList(getGmlObjectAddressList);
-	
+
 	    	paramList = new ArrayList<OperationParameterBean>();
 	    	paramList.add(new OperationParameterBean("REQUEST=[GetGmlObject]", "The name of the WFS request", "", false, false));
 	    	paramList.add(new OperationParameterBean("TRAVERSEXLINKDEPTH", "The depth to which nested property XLink linking element locator attribute (href) XLinks are traversed and resolved if possible. The range of valid values consists of positive integers plus \"*\" for unlimited", "", false, false));
@@ -424,22 +390,12 @@ public class GetCapabilitiesService {
     	}
 
     	// Operation - LockFeature - optional
-    	String lockFeatureGet = xPath.evaluate(XPATH_EXP_WFS_OP_LOCK_FEATURE_GET_HREF, doc);
-    	String lockFeaturePost = xPath.evaluate(XPATH_EXP_WFS_OP_LOCK_FEATURE_POST_HREF, doc);
-    	if (lockFeatureGet != null && lockFeatureGet.length() != 0) {
-	    	OperationBean lockFeatureOp = new OperationBean();
+    	OperationBean lockFeatureOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_WFS_OP_LOCK_FEATURE_GET_HREF, XPATH_EXP_WFS_OP_LOCK_FEATURE_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
+    	if (lockFeatureOp.getAddressList().size() > 0) {
 	    	lockFeatureOp.setName("LockFeature");
 	    	lockFeatureOp.setMethodCall("LockFeature");
-	    	List<String> lockFeatureAddressList = new ArrayList<String>();
-	    	lockFeatureAddressList.add(lockFeatureGet);
-	    	List<String> lockFeatureOpPlatform = new ArrayList<String>();
-	    	lockFeatureOpPlatform.add("HTTP GET");
-	    	if (lockFeaturePost != null && lockFeaturePost.length() != 0) {
-	        	lockFeatureAddressList.add(lockFeaturePost);
-	    		lockFeatureOpPlatform.add("HTTP POST");
-	    	}
-	    	lockFeatureOp.setPlatform(lockFeatureOpPlatform);
-	    	lockFeatureOp.setAddressList(lockFeatureAddressList);
 
 	    	paramList = new ArrayList<OperationParameterBean>();
 	    	paramList.add(new OperationParameterBean("REQUEST=[LockFeature]", "The name of the WFS request", "", false, false));
@@ -452,22 +408,12 @@ public class GetCapabilitiesService {
     	}
 
     	// Operation - Transaction - optional
-    	String transactionGet = xPath.evaluate(XPATH_EXP_WFS_OP_TRANSACTION_GET_HREF, doc);
-    	String transactionPost = xPath.evaluate(XPATH_EXP_WFS_OP_TRANSACTION_POST_HREF, doc);
-    	if (transactionGet != null && transactionGet.length() != 0) {
-	    	OperationBean transactionOp = new OperationBean();
+    	OperationBean transactionOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_WFS_OP_TRANSACTION_GET_HREF, XPATH_EXP_WFS_OP_TRANSACTION_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
+    	if (transactionOp.getAddressList().size() > 0) {
 	    	transactionOp.setName("Transaction");
 	    	transactionOp.setMethodCall("Transaction");
-	    	List<String> transactionAddressList = new ArrayList<String>();
-	    	transactionAddressList.add(transactionGet);
-	    	List<String> transactionOpPlatform = new ArrayList<String>();
-	    	transactionOpPlatform.add("HTTP GET");
-	    	if (transactionPost != null && transactionPost.length() != 0) {
-	        	transactionAddressList.add(transactionPost);
-	    		transactionOpPlatform.add("HTTP POST");
-	    	}
-	    	transactionOp.setPlatform(transactionOpPlatform);
-	    	transactionOp.setAddressList(transactionAddressList);
 
 	    	paramList = new ArrayList<OperationParameterBean>();
 	    	paramList.add(new OperationParameterBean("REQUEST=Transaction", "The name of the WFS request", "", false, false));
@@ -504,21 +450,13 @@ public class GetCapabilitiesService {
 
 
     	// Operation - GetCapabilities
-    	OperationBean getCapabilitiesOp = new OperationBean();
-    	String getCapabilitiesGet = xPath.evaluate(getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_GET_CAPABILITIES_GET_HREF"), doc);
-    	String getCapabilitiesPost = xPath.evaluate(getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_GET_CAPABILITIES_POST_HREF"), doc);
+    	OperationBean getCapabilitiesOp = mapToOperationBean(doc,
+        		new String[]{
+    				getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_GET_CAPABILITIES_GET_HREF"),
+    				getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_GET_CAPABILITIES_POST_HREF") },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	getCapabilitiesOp.setName("GetCapabilities");
     	getCapabilitiesOp.setMethodCall("GetCapabilities");
-    	List<String> getCapabilitiesOpAddressList = new ArrayList<String>();
-    	getCapabilitiesOpAddressList.add(getCapabilitiesGet);
-    	List<String> getCapabilitiesOpPlatform = new ArrayList<String>();
-    	getCapabilitiesOpPlatform.add("HTTP GET");
-    	if (getCapabilitiesPost != null && getCapabilitiesPost.length() != 0) {
-    		getCapabilitiesOpAddressList.add(getCapabilitiesPost);
-    		getCapabilitiesOpPlatform.add("HTTP POST");
-    	}
-		getCapabilitiesOp.setPlatform(getCapabilitiesOpPlatform);
-		getCapabilitiesOp.setAddressList(getCapabilitiesOpAddressList);
 
     	List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("SERVICE=WCS", "Service type", "", false, false));
@@ -532,21 +470,13 @@ public class GetCapabilitiesService {
 
 
     	// Operation - DescribeCoverage
-    	OperationBean describeCoverageOp = new OperationBean();
-    	String describeCoverageGet = xPath.evaluate(getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_DESCRIBE_COVERAGE_GET_HREF"), doc);
-    	String describeCoveragePost = xPath.evaluate(getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_DESCRIBE_COVERAGE_POST_HREF"), doc);
+    	OperationBean describeCoverageOp = mapToOperationBean(doc,
+        		new String[]{
+    				getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_DESCRIBE_COVERAGE_GET_HREF"),
+    				getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_DESCRIBE_COVERAGE_POST_HREF") },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	describeCoverageOp.setName("DescribeCoverage");
     	describeCoverageOp.setMethodCall("DescribeCoverage");
-    	List<String> describeCoverageOpAddressList = new ArrayList<String>();
-    	describeCoverageOpAddressList.add(describeCoverageGet);
-    	List<String> describeCoverageOpPlatform = new ArrayList<String>();
-    	describeCoverageOpPlatform.add("HTTP GET");
-    	if (describeCoveragePost != null && describeCoveragePost.length() != 0) {
-        	describeCoverageOpAddressList.add(describeCoveragePost);
-    		describeCoverageOpPlatform.add("HTTP POST");
-    	}
-    	describeCoverageOp.setPlatform(describeCoverageOpPlatform);
-    	describeCoverageOp.setAddressList(describeCoverageOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("service=WCS", "Service name. Shall be WCS", "", false, false));
@@ -558,21 +488,13 @@ public class GetCapabilitiesService {
 
     	
     	// Operation - GetCoverage
-    	OperationBean getCoverageOp = new OperationBean();
-    	String getCoverageGet = xPath.evaluate(getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_GET_COVERAGE_GET_HREF"), doc);
-    	String getCoveragePost = xPath.evaluate(getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_GET_COVERAGE_POST_HREF"), doc);
+    	OperationBean getCoverageOp = mapToOperationBean(doc,
+        		new String[]{
+    				getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_GET_COVERAGE_GET_HREF"),
+    				getXPathExpressionFor(ServiceType.WCS, serviceVersion, "OP_GET_COVERAGE_POST_HREF") },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	getCoverageOp.setName("GetCoverage");
     	getCoverageOp.setMethodCall("GetCoverage");
-    	List<String> getCoverageOpAddressList = new ArrayList<String>();
-    	getCoverageOpAddressList.add(getCoverageGet);
-    	List<String> getCoverageOpPlatform = new ArrayList<String>();
-    	getCoverageOpPlatform.add("HTTP GET");
-    	if (getCoveragePost != null && getCoveragePost.length() != 0) {
-        	getCoverageOpAddressList.add(getCoveragePost);
-    		getCoverageOpPlatform.add("HTTP POST");
-    	}
-    	getCoverageOp.setPlatform(getCoverageOpPlatform);
-    	getCoverageOp.setAddressList(getCoverageOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("service=WCS", "Service name. Shall be WCS", "", false, false));
@@ -612,21 +534,11 @@ public class GetCapabilitiesService {
     	List<OperationBean> operations = new ArrayList<OperationBean>();
 
     	// Operation - GetCapabilities
-    	OperationBean getCapabilitiesOp = new OperationBean();
-    	String getCapabilitiesGet = xPath.evaluate(XPATH_EXP_CSW_OP_GET_CAPABILITIES_GET_HREF, doc);
-    	String getCapabilitiesPost = xPath.evaluate(XPATH_EXP_CSW_OP_GET_CAPABILITIES_POST_HREF, doc);
+    	OperationBean getCapabilitiesOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_CSW_OP_GET_CAPABILITIES_GET_HREF, XPATH_EXP_CSW_OP_GET_CAPABILITIES_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	getCapabilitiesOp.setName("GetCapabilities");
     	getCapabilitiesOp.setMethodCall("GetCapabilities");
-    	List<String> getCapabilitiesOpAddressList = new ArrayList<String>();
-    	getCapabilitiesOpAddressList.add(getCapabilitiesGet);
-    	List<String> getCapabilitiesOpPlatform = new ArrayList<String>();
-    	getCapabilitiesOpPlatform.add("HTTP GET");
-    	if (getCapabilitiesPost != null && getCapabilitiesPost.length() != 0) {
-    		getCapabilitiesOpAddressList.add(getCapabilitiesPost);
-    		getCapabilitiesOpPlatform.add("HTTP POST");
-    	}
-		getCapabilitiesOp.setPlatform(getCapabilitiesOpPlatform);
-		getCapabilitiesOp.setAddressList(getCapabilitiesOpAddressList);
 
     	List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("SERVICE=CSW", "Service type", "", false, false));
@@ -640,21 +552,11 @@ public class GetCapabilitiesService {
 
 
     	// Operation - DescribeRecord
-    	OperationBean describeRecordOp = new OperationBean();
-    	String describeRecordGet = xPath.evaluate(XPATH_EXP_CSW_OP_DESCRIBE_RECORD_GET_HREF, doc);
-    	String describeRecordPost = xPath.evaluate(XPATH_EXP_CSW_OP_DESCRIBE_RECORD_POST_HREF, doc);
+    	OperationBean describeRecordOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_CSW_OP_DESCRIBE_RECORD_GET_HREF, XPATH_EXP_CSW_OP_DESCRIBE_RECORD_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	describeRecordOp.setName("DescribeRecord");
     	describeRecordOp.setMethodCall("DescribeRecord");
-    	List<String> describeRecordOpAddressList = new ArrayList<String>();
-    	describeRecordOpAddressList.add(describeRecordGet);
-    	List<String> describeRecordOpPlatform = new ArrayList<String>();
-    	describeRecordOpPlatform.add("HTTP GET");
-    	if (describeRecordPost != null && describeRecordPost.length() != 0) {
-        	describeRecordOpAddressList.add(describeRecordPost);
-    		describeRecordOpPlatform.add("HTTP POST");
-    	}
-    	describeRecordOp.setPlatform(describeRecordOpPlatform);
-    	describeRecordOp.setAddressList(describeRecordOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
@@ -669,21 +571,11 @@ public class GetCapabilitiesService {
 
 
     	// Operation - GetDomain
-    	OperationBean getDomainOp = new OperationBean();
-    	String getDomainGet = xPath.evaluate(XPATH_EXP_CSW_OP_GET_DOMAIN_GET_HREF, doc);
-    	String getDomainPost = xPath.evaluate(XPATH_EXP_CSW_OP_GET_DOMAIN_POST_HREF, doc);
+    	OperationBean getDomainOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_CSW_OP_GET_DOMAIN_GET_HREF, XPATH_EXP_CSW_OP_GET_DOMAIN_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	getDomainOp.setName("GetDomain");
     	getDomainOp.setMethodCall("GetDomain");
-    	List<String> getDomainOpAddressList = new ArrayList<String>();
-    	getDomainOpAddressList.add(getDomainGet);
-    	List<String> getDomainOpPlatform = new ArrayList<String>();
-    	getDomainOpPlatform.add("HTTP GET");
-    	if (getDomainPost != null && getDomainPost.length() != 0) {
-        	getDomainOpAddressList.add(getDomainPost);
-    		getDomainOpPlatform.add("HTTP POST");
-    	}
-    	getDomainOp.setPlatform(getDomainOpPlatform);
-    	getDomainOp.setAddressList(getDomainOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
@@ -695,21 +587,11 @@ public class GetCapabilitiesService {
     	operations.add(getDomainOp);
 
     	// Operation - GetRecords
-    	OperationBean getRecordsOp = new OperationBean();
-    	String getRecordsGet = xPath.evaluate(XPATH_EXP_CSW_OP_GET_RECORDS_GET_HREF, doc);
-    	String getRecordsPost = xPath.evaluate(XPATH_EXP_CSW_OP_GET_RECORDS_POST_HREF, doc);
+    	OperationBean getRecordsOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_CSW_OP_GET_RECORDS_GET_HREF, XPATH_EXP_CSW_OP_GET_RECORDS_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	getRecordsOp.setName("GetRecords");
     	getRecordsOp.setMethodCall("GetRecords");
-    	List<String> getRecordsOpAddressList = new ArrayList<String>();
-    	getRecordsOpAddressList.add(getRecordsGet);
-    	List<String> getRecordsOpPlatform = new ArrayList<String>();
-    	getRecordsOpPlatform.add("HTTP GET");
-    	if (getRecordsPost != null && getRecordsPost.length() != 0) {
-        	getRecordsOpAddressList.add(getRecordsPost);
-    		getRecordsOpPlatform.add("HTTP POST");
-    	}
-    	getRecordsOp.setPlatform(getRecordsOpPlatform);
-    	getRecordsOp.setAddressList(getRecordsOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
@@ -735,21 +617,11 @@ public class GetCapabilitiesService {
     	operations.add(getRecordsOp);
     	
     	// Operation - GetRecordById
-    	OperationBean getRecordByIdOp = new OperationBean();
-    	String getRecordByIdGet = xPath.evaluate(XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_GET_HREF, doc);
-    	String getRecordByIdPost = xPath.evaluate(XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_POST_HREF, doc);
+    	OperationBean getRecordByIdOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_GET_HREF, XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	getRecordByIdOp.setName("GetRecordById");
     	getRecordByIdOp.setMethodCall("GetRecordById");
-    	List<String> getRecordByIdOpAddressList = new ArrayList<String>();
-    	getRecordByIdOpAddressList.add(getRecordByIdGet);
-    	List<String> getRecordByIdOpPlatform = new ArrayList<String>();
-    	getRecordByIdOpPlatform.add("HTTP GET");
-    	if (getRecordByIdPost != null && getRecordByIdPost.length() != 0) {
-        	getRecordByIdOpAddressList.add(getRecordByIdPost);
-    		getRecordByIdOpPlatform.add("HTTP POST");
-    	}
-    	getRecordByIdOp.setPlatform(getRecordByIdOpPlatform);
-    	getRecordByIdOp.setAddressList(getRecordByIdOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("request=GetRecordById", "Fixed value of GetRecordById, case insensitive", "", false, false));
@@ -761,21 +633,11 @@ public class GetCapabilitiesService {
     	operations.add(getRecordByIdOp);
 
     	// Operation - Harvest
-    	OperationBean harvestOp = new OperationBean();
-    	String harvestGet = xPath.evaluate(XPATH_EXP_CSW_OP_HARVEST_GET_HREF, doc);
-    	String harvestPost = xPath.evaluate(XPATH_EXP_CSW_OP_HARVEST_POST_HREF, doc);
+    	OperationBean harvestOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_CSW_OP_HARVEST_GET_HREF, XPATH_EXP_CSW_OP_HARVEST_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	harvestOp.setName("Harvest");
     	harvestOp.setMethodCall("Harvest");
-    	List<String> harvestOpAddressList = new ArrayList<String>();
-    	harvestOpAddressList.add(harvestGet);
-    	List<String> harvestOpPlatform = new ArrayList<String>();
-    	harvestOpPlatform.add("HTTP GET");
-    	if (harvestPost != null && harvestPost.length() != 0) {
-        	harvestOpAddressList.add(harvestPost);
-    		harvestOpPlatform.add("HTTP POST");
-    	}
-    	harvestOp.setPlatform(harvestOpPlatform);
-    	harvestOp.setAddressList(harvestOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("request=Harvest", "Fixed value of Harvest, case insensitive", "", false, false));
@@ -811,21 +673,11 @@ public class GetCapabilitiesService {
     	List<OperationBean> operations = new ArrayList<OperationBean>();
 
     	// Operation - GetCapabilities
-    	OperationBean getCapabilitiesOp = new OperationBean();
-    	String getCapabilitiesGet = xPath.evaluate(XPATH_EXP_WCTS_OP_GET_CAPABILITIES_GET_HREF, doc);
-    	String getCapabilitiesPost = xPath.evaluate(XPATH_EXP_WCTS_OP_GET_CAPABILITIES_POST_HREF, doc);
+    	OperationBean getCapabilitiesOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_WCTS_OP_GET_CAPABILITIES_GET_HREF, XPATH_EXP_WCTS_OP_GET_CAPABILITIES_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	getCapabilitiesOp.setName("GetCapabilities");
     	getCapabilitiesOp.setMethodCall("GetCapabilities");
-    	List<String> getCapabilitiesOpAddressList = new ArrayList<String>();
-    	getCapabilitiesOpAddressList.add(getCapabilitiesGet);
-    	List<String> getCapabilitiesOpPlatform = new ArrayList<String>();
-    	getCapabilitiesOpPlatform.add("HTTP GET");
-    	if (getCapabilitiesPost != null && getCapabilitiesPost.length() != 0) {
-    		getCapabilitiesOpAddressList.add(getCapabilitiesPost);
-    		getCapabilitiesOpPlatform.add("HTTP POST");
-    	}
-		getCapabilitiesOp.setPlatform(getCapabilitiesOpPlatform);
-		getCapabilitiesOp.setAddressList(getCapabilitiesOpAddressList);
 
     	List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("SERVICE=WCTS", "Service type", "", false, false));
@@ -839,21 +691,11 @@ public class GetCapabilitiesService {
 
 
     	// Operation - Transform
-    	OperationBean transformOp = new OperationBean();
-    	String transformGet = xPath.evaluate(XPATH_EXP_WCTS_OP_TRANSFORM_GET_HREF, doc);
-    	String transformPost = xPath.evaluate(XPATH_EXP_WCTS_OP_TRANSFORM_POST_HREF, doc);
+    	OperationBean transformOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_WCTS_OP_TRANSFORM_GET_HREF, XPATH_EXP_WCTS_OP_TRANSFORM_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	transformOp.setName("Transform");
     	transformOp.setMethodCall("Transform");
-    	List<String> transformOpAddressList = new ArrayList<String>();
-    	transformOpAddressList.add(transformGet);
-    	List<String> transformOpPlatform = new ArrayList<String>();
-    	transformOpPlatform.add("HTTP GET");
-    	if (transformPost != null && transformPost.length() != 0) {
-        	transformOpAddressList.add(transformPost);
-    		transformOpPlatform.add("HTTP POST");
-    	}
-    	transformOp.setPlatform(transformOpPlatform);
-    	transformOp.setAddressList(transformOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
@@ -871,21 +713,11 @@ public class GetCapabilitiesService {
 
 
     	// Operation - IsTransformable
-    	OperationBean isTransformableOp = new OperationBean();
-    	String isTransformableGet = xPath.evaluate(XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_GET_HREF, doc);
-    	String isTransformablePost = xPath.evaluate(XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_POST_HREF, doc);
+    	OperationBean isTransformableOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_GET_HREF, XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	isTransformableOp.setName("IsTransformable");
     	isTransformableOp.setMethodCall("IsTransformable");
-    	List<String> isTransformableOpAddressList = new ArrayList<String>();
-    	isTransformableOpAddressList.add(isTransformableGet);
-    	List<String> isTransformableOpPlatform = new ArrayList<String>();
-    	isTransformableOpPlatform.add("HTTP GET");
-    	if (isTransformablePost != null && isTransformablePost.length() != 0) {
-        	isTransformableOpAddressList.add(isTransformablePost);
-    		isTransformableOpPlatform.add("HTTP POST");
-    	}
-    	isTransformableOp.setPlatform(isTransformableOpPlatform);
-    	isTransformableOp.setAddressList(isTransformableOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
@@ -903,21 +735,11 @@ public class GetCapabilitiesService {
 
 
     	// Operation - GetTransformation
-    	OperationBean getTransformationOp = new OperationBean();
-    	String getTransformationGet = xPath.evaluate(XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_GET_HREF, doc);
-    	String getTransformationPost = xPath.evaluate(XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_POST_HREF, doc);
+    	OperationBean getTransformationOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_GET_HREF, XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	getTransformationOp.setName("GetTransformation");
     	getTransformationOp.setMethodCall("GetTransformation");
-    	List<String> getTransformationOpAddressList = new ArrayList<String>();
-    	getTransformationOpAddressList.add(getTransformationGet);
-    	List<String> getTransformationOpPlatform = new ArrayList<String>();
-    	getTransformationOpPlatform.add("HTTP GET");
-    	if (getTransformationPost != null && getTransformationPost.length() != 0) {
-        	getTransformationOpAddressList.add(getTransformationPost);
-    		getTransformationOpPlatform.add("HTTP POST");
-    	}
-    	getTransformationOp.setPlatform(getTransformationOpPlatform);
-    	getTransformationOp.setAddressList(getTransformationOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
@@ -929,21 +751,11 @@ public class GetCapabilitiesService {
     	operations.add(getTransformationOp);
 
     	// Operation - DescribeTransformation
-    	OperationBean describeTransformationOp = new OperationBean();
-    	String describeTransformationGet = xPath.evaluate(XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_GET_HREF, doc);
-    	String describeTransformationPost = xPath.evaluate(XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_POST_HREF, doc);
+    	OperationBean describeTransformationOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_GET_HREF, XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
     	describeTransformationOp.setName("DescribeTransformation");
     	describeTransformationOp.setMethodCall("DescribeTransformation");
-    	List<String> describeTransformationOpAddressList = new ArrayList<String>();
-    	describeTransformationOpAddressList.add(describeTransformationGet);
-    	List<String> describeTransformationOpPlatform = new ArrayList<String>();
-    	describeTransformationOpPlatform.add("HTTP GET");
-    	if (describeTransformationPost != null && describeTransformationPost.length() != 0) {
-        	describeTransformationOpAddressList.add(describeTransformationPost);
-    		describeTransformationOpPlatform.add("HTTP POST");
-    	}
-    	describeTransformationOp.setPlatform(describeTransformationOpPlatform);
-    	describeTransformationOp.setAddressList(describeTransformationOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
@@ -954,21 +766,12 @@ public class GetCapabilitiesService {
     	operations.add(describeTransformationOp);
 
     	// Operation - DescribeCRS
-    	OperationBean describeCRSOp = new OperationBean();
-    	String describeCRSGet = xPath.evaluate(XPATH_EXP_WCTS_OP_DESCRIBE_CRS_GET_HREF, doc);
-    	String describeCRSPost = xPath.evaluate(XPATH_EXP_WCTS_OP_DESCRIBE_CRS_POST_HREF, doc);
+    	OperationBean describeCRSOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_WCTS_OP_DESCRIBE_CRS_GET_HREF, XPATH_EXP_WCTS_OP_DESCRIBE_CRS_POST_HREF },
+        		new String[]{ "HTTP GET", "HTTP POST" });
+
     	describeCRSOp.setName("DescribeCRS");
     	describeCRSOp.setMethodCall("DescribeCRS");
-    	List<String> describeCRSOpAddressList = new ArrayList<String>();
-    	describeCRSOpAddressList.add(describeCRSGet);
-    	List<String> describeCRSOpPlatform = new ArrayList<String>();
-    	describeCRSOpPlatform.add("HTTP GET");
-    	if (describeCRSPost != null && describeCRSPost.length() != 0) {
-        	describeCRSOpAddressList.add(describeCRSPost);
-    		describeCRSOpPlatform.add("HTTP POST");
-    	}
-    	describeCRSOp.setPlatform(describeCRSOpPlatform);
-    	describeCRSOp.setAddressList(describeCRSOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
@@ -979,21 +782,11 @@ public class GetCapabilitiesService {
     	operations.add(describeCRSOp);
     	
     	// Operation - DescribeMethod
-    	OperationBean describeMethodOp = new OperationBean();
-    	String describeMethodGet = xPath.evaluate(XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_GET_HREF, doc);
-    	String describeMethodPost = xPath.evaluate(XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_POST_HREF, doc);
+    	OperationBean describeMethodOp = mapToOperationBean(doc,
+    		new String[]{ XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_GET_HREF, XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_POST_HREF },
+    		new String[]{ "HTTP GET", "HTTP POST" });
     	describeMethodOp.setName("DescribeMethod");
     	describeMethodOp.setMethodCall("DescribeMethod");
-    	List<String> describeMethodOpAddressList = new ArrayList<String>();
-    	describeMethodOpAddressList.add(describeMethodGet);
-    	List<String> describeMethodOpPlatform = new ArrayList<String>();
-    	describeMethodOpPlatform.add("HTTP GET");
-    	if (describeMethodPost != null && describeMethodPost.length() != 0) {
-        	describeMethodOpAddressList.add(describeMethodPost);
-    		describeMethodOpPlatform.add("HTTP POST");
-    	}
-    	describeMethodOp.setPlatform(describeMethodOpPlatform);
-    	describeMethodOp.setAddressList(describeMethodOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
     	paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
@@ -1005,6 +798,24 @@ public class GetCapabilitiesService {
     	
     	result.setOperations(operations);
     	return result;
+    }
+
+    /** Length of passed xPathsOfMethods and platformsOfMethods has to be the same !!! */
+    private OperationBean mapToOperationBean(Document doc, String[] xPathsOfMethods, String[] platformsOfMethods) throws XPathExpressionException {
+    	OperationBean opBean = new OperationBean();
+    	List<String> methodAddresses = new ArrayList<String>();
+    	List<String> methodPlatforms = new ArrayList<String>();
+    	for (int i=0; i < xPathsOfMethods.length; i++) {
+        	String methodAddress = xPath.evaluate(xPathsOfMethods[i], doc);
+        	if (methodAddress != null && methodAddress.length() != 0) {
+            	methodAddresses.add(methodAddress);
+        		methodPlatforms.add(platformsOfMethods[i]);
+        	}
+    	}
+    	opBean.setPlatform(methodPlatforms);
+    	opBean.setAddressList(methodAddresses);
+    	
+    	return opBean;
     }
 
     private String getServiceVersionWMS(Document doc) throws XPathExpressionException {

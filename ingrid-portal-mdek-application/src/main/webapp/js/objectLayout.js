@@ -734,7 +734,8 @@ ingridObjectLayout.createFachBezugClass3 = function(){
 	
 	var ref3OperationStructure = [
 		{field: 'name',name: message.get("ui.obj.type3.operationTable.header.name") ,width: '165px'},
-		{field: 'description',name: message.get("ui.obj.type3.operationTable.header.description"),width: 543-scrollBarWidth+'px'}
+		{field: 'addressList',name: message.get("ui.obj.type3.operationTable.header.address"),
+		  formatter: dojo.partial(FirstEntryFormatter, "title"), width: 543-scrollBarWidth+'px'}
 	];
     createDataGrid("ref3Operation", null, ref3OperationStructure, null);
     UtilGrid.addRowSelectionCallback("ref3Operation", ingridObjectLayout.openOperationDialog, { serviceTypeWidgetId:"ref3ServiceType" });

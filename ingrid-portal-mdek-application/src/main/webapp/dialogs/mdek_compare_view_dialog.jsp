@@ -620,7 +620,7 @@ function renderOperations(oldList, newList) {
     if (oldList.length == 0 && newList.length == 0) {
         return;
     }
-    renderTable(oldList, newList, ["name", "description"], ["<fmt:message key='ui.obj.type3.operationTable.header.name' />", "<fmt:message key='ui.obj.type3.operationTable.header.name' />"], "<fmt:message key='ui.obj.type3.operationTable.title' />");
+    renderTable(oldList, newList, ["name", "addressList"], ["<fmt:message key='ui.obj.type3.operationTable.header.name' />", "<fmt:message key='ui.obj.type3.operationTable.header.address' />"], "<fmt:message key='ui.obj.type3.operationTable.title' />", [null, renderFirstElement]);
     
     // render Operation details
     var emptyOp = { platform:"", methodCall:"", paramList:[], addressList:[], dependencies:[]};
@@ -633,10 +633,10 @@ function renderOperations(oldList, newList) {
 
         renderTextWithTitle(opOld.name, opNew.name, "Operation");
         renderTextWithTitle(opOld.description, opNew.description, "Beschreibung");
+        renderList(opOld.addressList, opNew.addressList, "Zugriffsadressen");
         renderList(opOld.platform, opNew.platform, "unterst&uuml;tzte Plattformen");
         renderTextWithTitle(opOld.methodCall, opNew.methodCall, "Aufruf");
         renderTable(opOld.paramList, opNew.paramList, ["name", "direction", "description", "optional", "multiple"], ["Name", "Richtung", "Beschreibung", "Optional", "Mehrfacheingabe"], "Parameter", [null, null, null, renderYesNo, renderYesNo]);
-        renderList(opOld.addressList, opNew.addressList, "Zugriffsadressen");
         renderList(opOld.dependencies, opNew.dependencies, "Abh&auml;ngigkeiten");
     }
 }
@@ -818,6 +818,14 @@ function arrayContains(arr, obj) {
 		if(arr[i]===obj){return true;}
 	}
 	return false;
+}
+
+function renderFirstElement(val) {
+    var retVal = "";
+    if (val && dojo.isArray(val) && val.length > 0) {
+        retVal = val[0];
+    }
+    return retVal;
 }
 
 </script>

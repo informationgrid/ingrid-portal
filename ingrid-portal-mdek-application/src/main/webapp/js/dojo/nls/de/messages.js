@@ -662,7 +662,7 @@
 	"ui.obj.type3.operationTable.title":"Operationen",
 	"ui.obj.type3.operationTable.link":"Operation hinzuf&uuml;gen/bearbeiten",
 	"ui.obj.type3.operationTable.header.name":"Name",
-	"ui.obj.type3.operationTable.header.description":"Beschreibung",
+	"ui.obj.type3.operationTable.header.address":"Zugriffsadresse",
     "ui.obj.type3.ref3HasAccessConstraint":"Zugang gesch&uuml;tzt",
     "ui.obj.refClass4.title":"Fachbezug - Klasse 4",
 	"ui.obj.type4.participantsTable.title":"Beteiligte",

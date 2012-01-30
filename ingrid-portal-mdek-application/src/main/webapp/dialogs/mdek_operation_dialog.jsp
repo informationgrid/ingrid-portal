@@ -354,16 +354,16 @@ closeThisDialog = function() {
             <span class="label"><label id="operationsNameLabel" for="operationsName" onclick="javascript:dialog.showContextHelp(arguments[0], 5201)"><fmt:message key="dialog.operation.opName" />*</label></span>
     		<span class="input">
     			<input id="operationsNameSelect" required="true" style="width:100%;"/>
-    			<input type="text" maxLength="120" id="operationsName" style="width:100%;" dojoType="dijit.form.ValidationTextBox"/>
+    			<input type="text" maxLength="255" id="operationsName" style="width:100%;" dojoType="dijit.form.ValidationTextBox"/>
     		</span>
             </div></span>
             
             <div class="inputContainer">
-              <span class="outer halfWidth"><div>
-                <span class="label"><label for="operationsDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 5202)"><fmt:message key="dialog.operation.description" /></label></span>
-                <span class="input">
-    				<input type="text" id="operationsDescription" rows="3" style="width:100%;" dojoType="dijit.form.SimpleTextarea" />            
-                </span></div>
+              <span class="outer halfWidth required"><div>
+                <span class="label"><label id="operationsAddressLabel" for="operationsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 5206)"><fmt:message key="dialog.operation.address" />*</label></span>
+                <div class="tableContainer">
+    			  <div id="operationsAddress" autoHeight="3" interactive="true" class="hideTableHeader"></div>
+                </div></div>
               </span>
               <span class="outer halfWidth required"><div>
                 <span class="label"><label id="operationsPlatformLabel" for="operationsPlatform" onclick="javascript:dialog.showContextHelp(arguments[0], 5203)"><fmt:message key="dialog.operation.platforms" />*</label></span>
@@ -388,11 +388,11 @@ closeThisDialog = function() {
             </div>
     
             <div class="inputContainer">
-              <span class="outer halfWidth required"><div>
-                <span class="label"><label id="operationsAddressLabel" for="operationsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 5206)"><fmt:message key="dialog.operation.address" />*</label></span>
-                <div class="tableContainer">
-    			  <div id="operationsAddress" autoHeight="3" interactive="true" class="hideTableHeader"></div>
-                </div></div>
+              <span class="outer halfWidth"><div>
+                <span class="label"><label for="operationsDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 5202)"><fmt:message key="dialog.operation.description" /></label></span>
+                <span class="input">
+                    <input type="text" id="operationsDescription" rows="3" style="width:100%;" dojoType="dijit.form.SimpleTextarea" />            
+                </span></div>
               </span>
               <span class="outer halfWidth"><div>
                 <span class="label"><label for="operationsDependencies" onclick="javascript:dialog.showContextHelp(arguments[0], 5207)"><fmt:message key="dialog.operation.dependencies" /></label></span>

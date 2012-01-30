@@ -480,14 +480,15 @@ function renderSubordinatedElements(node) {
 }
 
 function renderOperations(list) {
-	renderTable(list, ["name", "description"], ["<fmt:message key='ui.obj.type3.operationTable.header.name' />", "<fmt:message key='ui.obj.type3.operationTable.header.name' />"], "<fmt:message key='ui.obj.type3.operationTable.title' />");
+	renderTable(list, ["name", "addressList"], ["<fmt:message key='ui.obj.type3.operationTable.header.name' />", "<fmt:message key='ui.obj.type3.operationTable.header.address' />"], "<fmt:message key='ui.obj.type3.operationTable.title' />", [null, renderFirstElement]);
 	for(var i=0; i<list.length; i++) {
 		var op = list[i];
-		renderTextWithTitle(op.description, "Operation " + op.name);
+        renderTitle("Operation " + op.name);
+		renderText(op.description);
+        renderList(op.addressList, "Zugriffsadressen");
 		renderList(op.platform, "unterst&uuml;tzte Plattformen");
 		renderTextWithTitle(op.methodCall, "Aufruf");
 		renderTable(op.paramList, ["name", "direction", "description", "optional", "multiple"], ["Name", "Richtung", "Beschreibung", "Optional", "Mehrfacheingabe"], "Parameter", [null, null, null, renderYesNo, renderYesNo]);
-		renderList(op.addressList, "Zugriffsadressen");
 		renderList(op.dependencies, "Abh&auml;ngigkeiten");
 	}
 }
@@ -524,6 +525,12 @@ function renderTextWithTitle(val, title) {
 			dojo.byId("detailViewContent").innerHTML += "<p>" + val + "</p><br/>";
 		}
 	}
+}
+
+function renderTitle(title) {
+    if (detailHelper.isValid(title)) {
+        dojo.byId("detailViewContent").innerHTML += "<p><strong>" + title + "</strong><br/></p><br/>";
+    }
 }
 
 function removeEvilTags(val) {
@@ -623,6 +630,14 @@ function renderTable(list, rowProperties, listHeader, title, cellRenderFunction,
 		t += "</tbody></table></p>";
 		dojo.byId("detailViewContent").innerHTML += t + "<br/><br/>";
 	}
+}
+
+function renderFirstElement(val) {
+    var retVal = "";
+    if (val && dojo.isArray(val) && val.length > 0) {
+        retVal = val[0];
+    }
+    return retVal;
 }
 
 </script>
