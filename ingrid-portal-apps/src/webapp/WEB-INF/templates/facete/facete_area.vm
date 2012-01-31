@@ -7,7 +7,7 @@
 <div id="area" class="cat_content">
 	<div>
     #if(!$geothesaurusSelectTopics || $geothesaurusSelectTopics.size() == 0)
-		<div>
+		<div style="padding:0px 0px 5px 0px;">
     		<a onclick="prepareDialogMap('dialog_area_map', '$wmsURL', 'dialog_area_map_content', 'dialog_map_searcher')" 
 				#if($doMapCoords && $doMapCoords.size() > 0)
 					class="facete_link_line facete_select_link_topic"

@@ -32,7 +32,7 @@
 			<div id="facete_map_submit_btn" style="display:none">
         	#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddMap" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right" "")
 			</div>
-        	#renderInputButtonDialogCancel($MESSAGES.getString('searchResult.facete.dialog.cancel') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.cancel') "float_right" "faceteDialogCancel('dialog_area_map')")
+        	#renderInputButtonDialogCancel($MESSAGES.getString('searchResult.facete.dialog.cancel') "padding:0px 5px 0px 0px" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.cancel') "float_right" "faceteDialogCancel('dialog_area_map')")
 		</div>
 	</form>
 </div>

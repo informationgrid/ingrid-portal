@@ -129,11 +129,11 @@
     		</div>
     		#end
         </div>
-		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddGeothesaurus" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right btn_submit_dialog" "")
+		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "padding:10px 0px 0px 5px" "doAddGeothesaurus" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right btn_submit_dialog" "")
 		#renderInputButtonDialogCancel($MESSAGES.getString('searchResult.facete.dialog.cancel') "" "doCancelGeothesaurus" $MESSAGES.getString('searchResult.facete.dialog.tooltip.cancel') "float_right btn_submit_dialog" "")
 	</form>
 	<div class="dialog_bottom">
-		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.all.select') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.all.select') "float_left" "faceteDialogSelectAll(document.geothesaurus_form)")
+		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.all.select') "padding:0px 5px 0px 0px" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.all.select') "float_left" "faceteDialogSelectAll(document.geothesaurus_form)")
 		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.all.delete') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.all.delete') "float_left" "faceteDialogDeselectAll(document.geothesaurus_form)")
 	</div>
 </div>
