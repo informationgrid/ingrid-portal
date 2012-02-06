@@ -8,7 +8,7 @@ public class OperationBean {
 
 	private String name;
 	private String description;
-	private List<String> platform = new ArrayList<String>();
+	private List<Integer> platform = new ArrayList<Integer>();
 	private String methodCall;
 	private List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
 	private List<String> addressList = new ArrayList<String>();
@@ -16,10 +16,10 @@ public class OperationBean {
 	
 	
 	
-	public List<String> getPlatform() {
+	public List<Integer> getPlatform() {
 		return platform;
 	}
-	public void setPlatform(List<String> platform) {
+	public void setPlatform(List<Integer> platform) {
 		this.platform = platform;
 	}
 	public String getMethodCall() {

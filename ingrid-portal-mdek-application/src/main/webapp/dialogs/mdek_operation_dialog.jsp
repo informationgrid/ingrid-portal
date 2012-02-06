@@ -52,7 +52,14 @@ function createDOMElements() {
 	var def = createSelectBox("operationsNameSelect", null, storeProps, initOperationNameInput);
 	
 	var operationsPlatformStructure = [
-		{field: 'title',name: "<fmt:message key='dialog.operation.opName' />",width: 340-scrollBarWidth+'px', editable: true}
+		{field: 'title',name: "<fmt:message key='dialog.operation.opName' />",width: 340-scrollBarWidth+'px',
+            type: SelectboxEditor,
+            options: [],
+            values: [],
+            editable: true,
+            listId: 5180,
+            formatter: dojo.partial(SyslistCellFormatter, 5180)
+        }
 	];
     createDataGrid("operationsPlatform", null, operationsPlatformStructure, null);
 	
@@ -81,8 +88,12 @@ function createDOMElements() {
 		}
 	];
     createDataGrid("operationsParameter", null, operationsParameterStructure, null);
-    createDataGrid("operationsAddress", null, operationsPlatformStructure, null);
-    createDataGrid("operationsDependencies", null, operationsPlatformStructure, null);
+
+	var operationsAddressStructure = [
+		{field: 'title',name: "<fmt:message key='dialog.operation.opName' />",width: 340-scrollBarWidth+'px', editable: true}
+	];
+    createDataGrid("operationsAddress", null, operationsAddressStructure, null);
+    createDataGrid("operationsDependencies", null, operationsAddressStructure, null);
 	
 	return def;
 }
@@ -97,7 +108,6 @@ initOperationNameInput = function() {
 	if (serviceType != "5" && serviceType != "6") {
 		dijit.byId("operationsName").domNode.style.display = "none";
 		requiredElements.push(["operationsNameSelect", "operationsNameLabel"]);
-		var selectWidget = dijit.byId("operationsNameSelect");
 
 		var listId = getSysListIdForServiceType(serviceType);
         var def2 = UtilSyslist.readSysListData(listId);

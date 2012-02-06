@@ -1491,12 +1491,24 @@ public class MdekMapper implements DataMapperInterface {
                 }
             }
             result.put(MdekKeys.SERVICE_OPERATION_DESCRIPTION, op.getDescription());
-            result.put(MdekKeys.PLATFORM_LIST, op.getPlatform());
+            result.put(MdekKeys.PLATFORM_LIST, mapFromOperationPlatformTable(op.getPlatform()));
             result.put(MdekKeys.INVOCATION_NAME, op.getMethodCall());
             result.put(MdekKeys.PARAMETER_LIST, mapFromOperationParamTable(op.getParamList()));
             result.put(MdekKeys.CONNECT_POINT_LIST, op.getAddressList());
             result.put(MdekKeys.DEPENDS_ON_LIST, op.getDependencies());
             resultList.add(result);
+        }
+        return resultList;
+    }
+
+    private List<IngridDocument> mapFromOperationPlatformTable(List<Integer> platformList) {
+        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        if (platformList != null) {
+            for (Integer identifier : platformList) {
+                IngridDocument res = new IngridDocument();
+                res.put(MdekKeys.PLATFORM_KEY, identifier);
+                resultList.add(res);
+            }
         }
         return resultList;
     }
@@ -2043,7 +2055,7 @@ public class MdekMapper implements DataMapperInterface {
                 op.setName(val);                
             }
             op.setDescription((String) operation.get(MdekKeys.SERVICE_OPERATION_DESCRIPTION));
-            op.setPlatform((List<String>) operation.get(MdekKeys.PLATFORM_LIST));
+            op.setPlatform(mapToOperationPlatformTable((List<IngridDocument>) operation.get(MdekKeys.PLATFORM_LIST)));
             op.setMethodCall((String) operation.get(MdekKeys.INVOCATION_NAME));
             op.setParamList(mapToOperationParamTable((List<IngridDocument>) operation.get(MdekKeys.PARAMETER_LIST)));
             op.setAddressList((List<String>) operation.get(MdekKeys.CONNECT_POINT_LIST));
@@ -2053,6 +2065,17 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
 
+    private List<Integer> mapToOperationPlatformTable(List<IngridDocument> platformList) {
+        List<Integer> resultList = new ArrayList<Integer>();
+
+        if (platformList != null) {
+            for (IngridDocument platform : platformList) {
+                resultList.add((Integer) platform.get(MdekKeys.PLATFORM_KEY));
+            }
+        }
+
+        return resultList;
+    }
 
     private List<OperationParameterBean> mapToOperationParamTable(List<IngridDocument> opList) {
         List<OperationParameterBean> resultList = new ArrayList<OperationParameterBean>();

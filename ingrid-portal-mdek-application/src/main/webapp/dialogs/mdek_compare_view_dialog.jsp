@@ -631,13 +631,13 @@ function renderOperations(oldList, newList) {
         var opNew = newList[i];
         if (!opNew) { opNew = emptyOp; }
 
-        renderTextWithTitle(opOld.name, opNew.name, "Operation");
-        renderTextWithTitle(opOld.description, opNew.description, "Beschreibung");
-        renderList(opOld.addressList, opNew.addressList, "Zugriffsadressen");
-        renderList(opOld.platform, opNew.platform, "unterst&uuml;tzte Plattformen");
-        renderTextWithTitle(opOld.methodCall, opNew.methodCall, "Aufruf");
-        renderTable(opOld.paramList, opNew.paramList, ["name", "direction", "description", "optional", "multiple"], ["Name", "Richtung", "Beschreibung", "Optional", "Mehrfacheingabe"], "Parameter", [null, null, null, renderYesNo, renderYesNo]);
-        renderList(opOld.dependencies, opNew.dependencies, "Abh&auml;ngigkeiten");
+        renderTextWithTitle(opOld.name, opNew.name, "<fmt:message key='dialog.operation.opName' />");
+        renderTextWithTitle(opOld.description, opNew.description, "<fmt:message key='dialog.operation.description' />");
+        renderList(opOld.addressList, opNew.addressList, "<fmt:message key='dialog.operation.address' />");
+        renderList(opOld.platform, opNew.platform, "<fmt:message key='dialog.operation.platforms' />", null, function (val) { return UtilSyslist.getSyslistEntryName(5180, val);});
+        renderTextWithTitle(opOld.methodCall, opNew.methodCall, "<fmt:message key='dialog.operation.call' />");
+        renderTable(opOld.paramList, opNew.paramList, ["name", "direction", "description", "optional", "multiple"], ["<fmt:message key='dialog.operation.name' />", "<fmt:message key='dialog.operation.direction' />", "<fmt:message key='dialog.operation.description' />", "<fmt:message key='dialog.operation.optional' />", "<fmt:message key='dialog.operation.multiplicity' />"], "<fmt:message key='dialog.operation.parameter' />", [null, null, null, renderYesNo, renderYesNo]);
+        renderList(opOld.dependencies, opNew.dependencies, "<fmt:message key='dialog.operation.dependencies' />");
     }
 }
 

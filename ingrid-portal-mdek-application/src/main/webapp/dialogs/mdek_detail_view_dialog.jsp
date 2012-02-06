@@ -483,13 +483,14 @@ function renderOperations(list) {
 	renderTable(list, ["name", "addressList"], ["<fmt:message key='ui.obj.type3.operationTable.header.name' />", "<fmt:message key='ui.obj.type3.operationTable.header.address' />"], "<fmt:message key='ui.obj.type3.operationTable.title' />", [null, renderFirstElement]);
 	for(var i=0; i<list.length; i++) {
 		var op = list[i];
-        renderTitle("Operation " + op.name);
-		renderText(op.description);
-        renderList(op.addressList, "Zugriffsadressen");
-		renderList(op.platform, "unterst&uuml;tzte Plattformen");
-		renderTextWithTitle(op.methodCall, "Aufruf");
-		renderTable(op.paramList, ["name", "direction", "description", "optional", "multiple"], ["Name", "Richtung", "Beschreibung", "Optional", "Mehrfacheingabe"], "Parameter", [null, null, null, renderYesNo, renderYesNo]);
-		renderList(op.dependencies, "Abh&auml;ngigkeiten");
+        renderTextWithTitle(op.name, "<fmt:message key='dialog.operation.opName' />");
+        renderTextWithTitle(op.description, "<fmt:message key='dialog.operation.description' />");
+        renderList(op.addressList, "<fmt:message key='dialog.operation.address' />");
+        sortedList = op.platform.sort(function(a,b) {return UtilString.compareIgnoreCase(UtilSyslist.getSyslistEntryName(5180, a),UtilSyslist.getSyslistEntryName(5180, b));}); 
+        renderList(sortedList, "<fmt:message key='dialog.operation.platforms' />", null, function (val) { return UtilSyslist.getSyslistEntryName(5180, val);});
+		renderTextWithTitle(op.methodCall, "<fmt:message key='dialog.operation.call' />");
+		renderTable(op.paramList, ["name", "direction", "description", "optional", "multiple"], ["<fmt:message key='dialog.operation.name' />", "<fmt:message key='dialog.operation.direction' />", "<fmt:message key='dialog.operation.description' />", "<fmt:message key='dialog.operation.optional' />", "<fmt:message key='dialog.operation.multiplicity' />"], "<fmt:message key='dialog.operation.parameter' />", [null, null, null, renderYesNo, renderYesNo]);
+		renderList(op.dependencies, "<fmt:message key='dialog.operation.dependencies' />");
 	}
 }
 
