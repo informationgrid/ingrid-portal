@@ -904,6 +904,7 @@
     "ui.sysList.5110":"Objektklasse 3 - Name der Operation - WMS",
     "ui.sysList.5120":"Objektklasse 3 - Name der Operation - WFS",
     "ui.sysList.5130":"Objektklasse 3 - Name der Operation - WCTS",
+    "ui.sysList.5180":"Objektklasse 3 - Operation - Unterstützte Platformen",
     "ui.sysList.5200":"Objektklasse 3 - Klassifikation des Dienstes",
     "ui.sysList.5300":"Objektklasse 6 - Art des Dienstes",
 	"ui.sysList.6000":"Konformität - Grad der Konformität",
