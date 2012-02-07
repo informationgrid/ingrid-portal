@@ -3,7 +3,7 @@
 <div id="dialog_area_map" class="facete_dialog" style="min-width:800px;" title="$MESSAGES.getString("searchResult.facete.area.map.search")" dojoType="dijit.Dialog">
 #renderCloseDialogJS ("faceteDialogCancel('dialog_area_map');" $MESSAGES.getString("searchResult.facete.dialog.tooltip.close"))
   <div class="dialog_content" id="dialog_area_map_content" style="max-height: none;">
-  	<div id="openlayersDiv" style="width:100%;"></div>
+  	<div id="openlayersDiv" style="width:100%;"></div></div>
 	<form action="$action" method="post" name="facete_map_form">
 		<h3>$MESSAGES.getString("searchResult.facete.area.map.options")</h3>
         <p>
