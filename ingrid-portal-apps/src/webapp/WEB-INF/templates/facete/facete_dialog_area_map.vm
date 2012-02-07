@@ -1,8 +1,9 @@
+
 #set ($action = $renderResponse.createActionURL())
-<div id="dialog_area_map" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.area.map.search")" dojoType="dijit.Dialog">
-	#renderCloseDialogJS ("faceteDialogCancel('dialog_area_map');" $MESSAGES.getString("searchResult.facete.dialog.tooltip.close"))
-	<div class="dialog_content" id="dialog_area_map_content" style="max-height: none;">
-   	</div>
+<div id="dialog_area_map" class="facete_dialog" style="min-width:800px;" title="$MESSAGES.getString("searchResult.facete.area.map.search")" dojoType="dijit.Dialog">
+#renderCloseDialogJS ("faceteDialogCancel('dialog_area_map');" $MESSAGES.getString("searchResult.facete.dialog.tooltip.close"))
+  <div class="dialog_content" id="dialog_area_map_content" style="max-height: none;">
+  	<div id="openlayersDiv" style="width:100%;"></div>
 	<form action="$action" method="post" name="facete_map_form">
 		<h3>$MESSAGES.getString("searchResult.facete.area.map.options")</h3>
         <p>
@@ -27,7 +28,15 @@
 			>
         <label for="chk_3">$MESSAGES.getString("searchResult.facete.area.map.options.include")</label>
         <br>
-        </p>    
+        <div class="formbody_webmapclient_coordinates_title">$MESSAGES.getString('searchExtEnvPlaceMap.label.selected_coordinates')</div>
+ 	    <div id="coordinatesOutput" class="formbody_webmapclient_coordinates" ></div>        
+        <input id="x1" name="x1" type="hidden" />
+        <input id="x2" name="x2" type="hidden" />
+        <input id="y1" name="y1" type="hidden" />
+        <input id="y2" name="y2" type="hidden" />
+
+        </p>
+                
         <div class="dialog_bottom">
 			<div id="facete_map_submit_btn" style="display:none">
         	#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddMap" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right" "")

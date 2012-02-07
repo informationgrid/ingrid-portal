@@ -1,3 +1,19 @@
+<script type="text/javascript">
+
+mapClientCallbackHooks = {bboxSelected: function(x1, x2, y1, y2) {
+
+	document.facete_map_form.x1.value = x1;
+	document.facete_map_form.x2.value = x2;
+	document.facete_map_form.y1.value = y1;
+	document.facete_map_form.y2.value = y2;
+	
+	document.getElementById("coordinatesOutput").innerHTML=x1+" / "+y1+""+" | "+x2+" "+" / "+""+y2 ;
+	showButtonSelectCheckboxForm(document.facete_map_form, 'facete_map_submit_btn','coordinatesOutput');
+
+}};
+
+
+</script>
 #set ($action = $renderResponse.createActionURL())
 <div class="cat_label">
 	<img id="area_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('area')">
@@ -8,7 +24,7 @@
 	<div>
     #if(!$geothesaurusSelectTopics || $geothesaurusSelectTopics.size() == 0)
 		<div style="padding:0px 0px 5px 0px;">
-    		<a onclick="prepareDialogMap('dialog_area_map', '$wmsURL', 'dialog_area_map_content', 'dialog_map_searcher')" 
+    		<a onclick="prepareDialogWebMapClient('dialog_area_map')" 
 				#if($doMapCoords && $doMapCoords.size() > 0)
 					class="facete_link_line facete_select_link_topic"
 				#else
