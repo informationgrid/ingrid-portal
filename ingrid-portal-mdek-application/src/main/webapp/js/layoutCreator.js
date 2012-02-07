@@ -147,10 +147,7 @@ function createDataGrid(id, node, structure, initDataCallback, gridProperties, u
      
                 var myDataGrid = new ingrid.dijit.CustomGrid({id: id, data: data, columns: struct, customOptions: options}, id);
                 
-                if (gridProperties.contextMenu == undefined)
-                	createContextMenu(myDataGrid, id);
-                else if (gridProperties.contextMenu != "none")
-                	createContextMenu(myDataGrid, id, gridProperties.contextMenu);
+               	createContextMenu(myDataGrid, id, gridProperties);
                 
                 gridManager[id] = myDataGrid;
             });

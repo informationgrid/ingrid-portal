@@ -245,7 +245,8 @@ igeMenuBar.create = function(pane) {
 // holds all different context menus
 var contextMenu = {};
 
-function initContextMenu(type) {
+function initContextMenu(gridProperties) {
+	var type = gridProperties.contextMenu;
     var menu = new dijit.Menu({id:"contextMenu_"+type});
     
     if (type == "DUPLICATE_GRID") {
@@ -286,6 +287,7 @@ function initContextMenu(type) {
         }));
         
         menu.addChild(new dijit.MenuItem({
+            id: "menuRemoveClicked_"+type,
             label: message.get('contextmenu.table.removeClicked'),
             onClick: function() {
                         UtilGrid.removeTableDataRow(clickedSlickGrid.id, [clickedRow]);
@@ -312,6 +314,15 @@ function initContextMenu(type) {
                     if (i.id.indexOf("menuDeselectAll") != -1) i.setDisabled(true);
                     if (i.id.indexOf("menuRemoveSelected") != -1) i.setDisabled(true);
                 }
+                if (clickedSlickGrid.getData()[clickedRow]) {
+                    if (i.id.indexOf("menuRemoveClicked") != -1) i.setDisabled(false);
+                    if (i.id.indexOf("menuEditClicked") != -1) i.setDisabled(false);
+                    if (i.id.indexOf("menuShowAddress") != -1) i.setDisabled(false);
+                } else {
+                    if (i.id.indexOf("menuRemoveClicked") != -1) i.setDisabled(true);
+                    if (i.id.indexOf("menuEditClicked") != -1) i.setDisabled(true);
+                    if (i.id.indexOf("menuShowAddress") != -1) i.setDisabled(true);
+                }
             });
         });
     }
@@ -319,6 +330,7 @@ function initContextMenu(type) {
     if (type == "GENERAL_ADDRESS") {
         menu.addChild(new dijit.MenuSeparator());
         menu.addChild(new dijit.MenuItem({
+            id: "menuShowAddress_"+type,
             label: message.get('contextmenu.table.showAddress'),
             onClick: function() {
                 var rowData = clickedSlickGrid.getData()[clickedRow];
@@ -326,7 +338,31 @@ function initContextMenu(type) {
                 dialog.showPage('Adresse', 'dialogs/mdek_address_preview_dialog.html', 500, 240, false, { data:rowData });
             }
         }));
-        
+    }
+    
+    if (type == "EDIT_OPERATION") {
+        menu.addChild(new dijit.MenuSeparator());
+        menu.addChild(new dijit.MenuItem({
+            id: "menuEditClicked_"+type,
+            label: message.get('contextmenu.table.editClicked'),
+            onClick: function() {
+                var rowData = clickedSlickGrid.getData()[clickedRow];
+                ingridObjectLayout.openOperationDialog({ gridId:clickedSlickGridProperties.id, selectedRow:rowData });
+            }
+        }));
+    }
+    
+    if (type == "EDIT_LINK") {
+        menu.addChild(new dijit.MenuSeparator());
+        menu.addChild(new dijit.MenuItem({
+            id: "menuEditClicked_"+type,
+            label: message.get('contextmenu.table.editClicked'),
+            onClick: function() {
+            	console.debug(clickedSlickGridProperties);
+                var rowData = clickedSlickGrid.getData()[clickedRow];
+                ingridObjectLayout.openLinkDialog({ gridId:clickedSlickGridProperties.id, filter:clickedSlickGridProperties.relation_filter, selectedRow:rowData });
+            }
+        }));
     }
     
     contextMenu[type] = menu;
@@ -340,23 +376,27 @@ function _getClickedRowFromTarget(target, iteration) {
     return attr;
 }
 
-function createContextMenu(grid, gridId, type) {
+function createContextMenu(grid, gridId, gridProperties) {
+    var type = gridProperties.contextMenu;
+    if (type == undefined)
+        type = gridProperties.contextMenu = "DEFAULT";
+    else if (type == "none") {
+    	return;
+    }
+
 	dojo.connect(grid.domNode, "oncontextmenu", grid, function (e) {
         e.preventDefault();
         var cell = this.getCellFromEvent(e);
         clickedRow = _getClickedRowFromTarget(e.target, 5); // look for row property within next 5 parents of target
         console.debug("clicked row is: " + clickedRow);
         clickedSlickGrid = this; // needed for event when menuitem was clicked
+        clickedSlickGridProperties = gridProperties;
     });
-    
-	//var menu = new dijit.Menu({targetNodeIds: [gridId]});
-    if (type == undefined)
-        type = "DEFAULT";
     
     var m = contextMenu[type];
     if (m == undefined) {
         console.debug("create new context menu");
-        m = initContextMenu(type);
+        m = initContextMenu(gridProperties);
     }
     m.bindDomNode(dojo.byId(gridId));
 }

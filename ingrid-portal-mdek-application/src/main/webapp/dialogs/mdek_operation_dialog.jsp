@@ -100,7 +100,7 @@ function createDOMElements() {
 
 initOperationNameInput = function() {
 	var def = new dojo.Deferred();
-	var serviceTypeWidget = dijit.byId(caller.serviceTypeWidgetId);
+	var serviceTypeWidget = dijit.byId("ref3ServiceType");
 	var serviceType = ""+serviceTypeWidget.getValue();
 
     console.debug("serviceType = " + serviceType);
@@ -198,7 +198,7 @@ displayOperation = function(op) {
 		dijit.byId("operationsName").setValue(op.name);
 	else {
 		var selectWidget = dijit.byId("operationsNameSelect");
-		selectWidget.set('value', UtilSyslist.getSyslistEntryKey(getSysListIdForServiceType(dijit.byId(caller.serviceTypeWidgetId).get("value")), op.name));
+		selectWidget.set('value', UtilSyslist.getSyslistEntryKey(getSysListIdForServiceType(dijit.byId("ref3ServiceType").get("value")), op.name));
 	}
 	
 	dijit.byId("operationsDescription").setValue(op.description);

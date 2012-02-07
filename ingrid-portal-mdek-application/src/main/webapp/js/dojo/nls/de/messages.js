@@ -103,6 +103,7 @@
     "contextmenu.table.removeClicked":"Zeile löschen",
     "contextmenu.table.showInTree":"Im Hierarchiebaum anzeigen",
     "contextmenu.table.showAddress":"Zeige Adresse",
+    "contextmenu.table.editClicked":"Zeile bearbeiten",
 
 	"init.loadError":"Fehler in der Initialisierungsphase. Bitte versuchen Sie es erneut oder kontaktieren Sie den zust&auml;ndigen Systemadministrator.",
     "init.userError":"Fehler in der Initialisierungsphase. Der aktuelle Benutzer konnte nicht ermittelt werden. Bitte melden Sie sich zuerst am Portal an bevor Sie auf die Mdek Applikation zugreifen!",

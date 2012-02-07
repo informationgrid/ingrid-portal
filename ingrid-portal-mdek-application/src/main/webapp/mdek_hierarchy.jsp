@@ -438,7 +438,7 @@
                                             </textarea>
                                         </div>
                                         <div id='ref1BasisTab2' label="<fmt:message key="ui.obj.type1.technicalBasisTable.tab.links" />">
-                                            <div id="ref1BasisLink" autoHeight="4" class="hideTableHeader noValidate" query="{relationType:'3520'}">
+                                            <div id="ref1BasisLink" autoHeight="4" class="hideTableHeader noValidate" contextMenu="EDIT_LINK" relation_filter="3520" query="{relationType:'3520'}">
                                             </div>
                                         </div>
                                     </div>
@@ -553,7 +553,7 @@
                                             </div>
                                         </div>
                                         <div id='ref1SymbolsTab2' label="<fmt:message key="ui.obj.type1.symbolCatTable.tab.links" />">
-                                            <div id="ref1SymbolsLink" class="hideTableHeader noValidate" query="{relationType:'3555'}">
+                                            <div id="ref1SymbolsLink" class="hideTableHeader noValidate" contextMenu="EDIT_LINK" relation_filter="3555" query="{relationType:'3555'}">
                                             </div>
                                         </div>
                                     </div>
@@ -575,7 +575,7 @@
                                             </div>
                                         </div>
                                         <div id='ref1KeysTab2' label="<fmt:message key="ui.obj.type1.keyCatTable.tab.links" />">
-                                            <div id="ref1KeysLink" class="hideTableHeader noValidate" query="{relationType:'3535'}">
+                                            <div id="ref1KeysLink" class="hideTableHeader noValidate" contextMenu="EDIT_LINK" relation_filter="3535" query="{relationType:'3535'}">
                                             </div>
                                         </div>
                                     </div>
@@ -604,7 +604,7 @@
                                         </label>
                                     </span><span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddServiceLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Service'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 5066, gridId: 'ref1ServiceLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.serviceLink.link" /></a></span>
                                     <div class="input tableContainer">
-                                        <div id="ref1ServiceLink" autoHeight="4" class="hideTableHeader" query="{relationType:'5066'}">
+                                        <div id="ref1ServiceLink" autoHeight="4" class="hideTableHeader" contextMenu="EDIT_LINK" relation_filter="5066" query="{relationType:'5066'}">
                                         </div>
                                     </div>
 									</div>
@@ -623,7 +623,7 @@
                                         </div>
                                         <div id='ref1DataBasisTab2' label="<fmt:message key="ui.obj.type1.dataBasisTable.tab.links" />">
                                             <div class="input tableContainer">
-                                                <div id="ref1DataBasisLink" autoHeight="4" class="hideTableHeader noValidate" query="{relationType:'3570'}">
+                                                <div id="ref1DataBasisLink" autoHeight="4" class="hideTableHeader noValidate" contextMenu="EDIT_LINK" relation_filter="3570" query="{relationType:'3570'}">
                                                 </div>
                                             </div>
                                         </div>
@@ -646,7 +646,7 @@
                                         <!--</div>-->
                                         <div id='ref1ProcessTab2' label="<fmt:message key="ui.obj.type1.processTable.tab.links" />">
                                             <div class="input tableContainer">
-                                                <div id="ref1ProcessLink" autoHeight="4" class="hideTableHeader noValidate" query="{relationType:'3515'}">
+                                                <div id="ref1ProcessLink" autoHeight="4" class="hideTableHeader noValidate" contextMenu="EDIT_LINK" relation_filter="3515" query="{relationType:'3515'}">
                                                 </div>
                                             </div>
                                         </div>
@@ -999,7 +999,7 @@
 		                                    </div>
 		                                    <div id='ref2BaseDataTab2' label="<fmt:message key="ui.obj.type2.generalDataTable.tab.links" />">
 		                                        <div class="input tableContainer">
-		                                            <div id="ref2BaseDataLink" autoHeight="2" class="hideTableHeader noValidate" query="{relationType:'3345'}">
+		                                            <div id="ref2BaseDataLink" autoHeight="2" class="hideTableHeader noValidate" contextMenu="EDIT_LINK" relation_filter="3345" query="{relationType:'3345'}">
 		                                            </div>
 		                                        </div>
 		                                    </div>
@@ -1098,9 +1098,9 @@
                                         <label for="ref3Operation" onclick="javascript:dialog.showContextHelp(arguments[0], 7015)">
                                             <fmt:message key="ui.obj.type3.operationTable.title" />
                                         </label>
-                                    </span><span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(getLocalizedTitle('ref3Operation'), 'dialogs/mdek_operation_dialog.jsp?c='+userLocale, 735, 745, true, {serviceTypeWidgetId:'ref3ServiceType', gridId:'ref3Operation'});" title="<fmt:message key="dialog.popup.operationTable.link" /> [Popup]"><fmt:message key="ui.obj.type3.operationTable.link" /></a></span>
+                                    </span><span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(getLocalizedTitle('ref3Operation'), 'dialogs/mdek_operation_dialog.jsp?c='+userLocale, 735, 745, true, {gridId:'ref3Operation'});" title="<fmt:message key="dialog.popup.operationTable.link" /> [Popup]"><fmt:message key="ui.obj.type3.operationTable.link" /></a></span>
                                     <div class="input tableContainer">
-                                        <div id="ref3Operation" autoHeight="4">
+                                        <div id="ref3Operation" autoHeight="4" contextMenu="EDIT_OPERATION">
                                         </div>
                                     </div>
                                     </div>
@@ -1151,7 +1151,7 @@
                                         </div>
                                         <div id='ref3MethodTab2' label="<fmt:message key="ui.obj.type3.generalDataTable.tab.links" />">
                                             <div class="input tableContainer">
-                                                <div id="ref3BaseDataLink" autoHeight="2" query="{relationType:'3210'}" class="hideTableHeader noValidate">
+                                                <div id="ref3BaseDataLink" autoHeight="2" query="{relationType:'3210'}" class="hideTableHeader noValidate" contextMenu="EDIT_LINK" relation_filter="3210">
                                                 </div>
                                             </div>
                                         </div>
@@ -1280,7 +1280,7 @@
                                             </div>
                                         </div>
                                         <div id='ref5KeysTab2' label="<fmt:message key="ui.obj.type5.keyCatTable.tab.links" />">
-                                            <div id="ref5KeysLink" class="hideTableHeader noValidate" query="{relationType:'3109'}">
+                                            <div id="ref5KeysLink" class="hideTableHeader noValidate" contextMenu="EDIT_LINK" relation_filter="3109" query="{relationType:'3109'}">
                                             </div>
                                         </div>
                                     </div>
@@ -1314,7 +1314,7 @@
                                             </div>
                                             <div id='ref5MethodTab2' label="<fmt:message key="ui.obj.type5.methodTable.tab.links" />">
                                                 <div class="input tableContainer">
-                                                    <div id="ref5MethodLink" autoHeight="2" query="{relationType:'3100'}" class="hideTableHeader noValidate">
+                                                    <div id="ref5MethodLink" autoHeight="2" query="{relationType:'3100'}" class="hideTableHeader noValidate" contextMenu="EDIT_LINK" relation_filter="3100">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1417,7 +1417,7 @@
                                         </div>
                                         <div class="input tableContainer">
                                             <div id="ref6MethodTab2">
-                                                <div id="ref6BaseDataLink" autoHeight="2" class="hideTableHeader noValidate" query="{relationType:'3210'}"></div>
+                                                <div id="ref6BaseDataLink" autoHeight="2" class="hideTableHeader noValidate" contextMenu="EDIT_LINK" relation_filter="3210" query="{relationType:'3210'}"></div>
                                             </div>
                                         </div>
                                         </div>
@@ -1986,7 +1986,7 @@
                                         <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(getLocalizedTitle('linksTo'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {gridId: 'linksTo'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.links.linksTo.link" /></a>
                                     </span>
                                     <div class="input tableContainer">
-                                        <div id="linksTo" autoHeight="4" class="hideTableHeader">
+                                        <div id="linksTo" autoHeight="4" class="hideTableHeader" contextMenu="EDIT_LINK">
                                         </div>
                                     </div>
                                 </div>

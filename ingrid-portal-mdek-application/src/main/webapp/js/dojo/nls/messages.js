@@ -103,6 +103,7 @@
     "contextmenu.table.removeClicked":"Delete row",
     "contextmenu.table.showInTree":"Show in Hierarchy-Tree",
     "contextmenu.table.showAddress":"Show Address",
+    "contextmenu.table.editClicked":"Edit row",
 
 	"init.loadError":"Error while loading initial values from the server. Please check your connection and try again.",
     "init.userError":"Error while loading initial values from the server. The current user could not be found. Please log in to the portal before accessing the mdek application.",

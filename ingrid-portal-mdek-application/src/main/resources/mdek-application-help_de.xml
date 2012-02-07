@@ -896,11 +896,12 @@
 				 Web-Diensten, da insbesondere die getCapabilities-Operation (z.B. bei WMS oder WFS) zur 
 				 Darstellung des Dienstes im Karten-Viewer genutzt wird.</p>
 				 <p>Über den Link <i>Operation hinzufügen</i> können neue Operationen hinzugefügt werden.</p>
-				 <p>Eine bestehende Operation kann durch Anwählen in der Liste in einem eigenen Dialog 
-				 bearbeitet werden. Durch das Anklicken der Schaltfläche 
-				 <i>Übernehmen</i> übernehmen Sie die geänderten Daten in die Liste.</p>
-				 <p>Sie können eine Operation löschen, indem Sie auf den entsprechenden Eintrag in der 
-				 Liste mit der rechten Maustaste klicken und die Funktion <i>Löschen</i> aus dem 
+                 <p>Sie können eine bestehende Operation bearbeiten, indem Sie auf den entsprechenden 
+                 Eintrag in der Liste mit der rechten Maustaste klicken und die Funktion <i>Zeile 
+                 bearbeiten</i> aus dem Kontextmenü auswählen. Es öffnet sich ein separater Dialog.
+                 Durch das Anklicken der Schaltfläche <i>Übernehmen</i> übernehmen Sie die geänderten 
+                 Daten in die Liste.</p>
+				 <p>Sie können eine Operation löschen, indem Sie die Funktion <i>Löschen</i> aus dem 
 				 Kontextmenü auswählen.</p>
 				 <p><u>Achtung:</u> Der Name der Operation ist abhängig von der im Fachbezug des Objekts 
 				 ausgewählten <i>Art des Dienstes</i>. Nur wenn als Art des Dienstes 
