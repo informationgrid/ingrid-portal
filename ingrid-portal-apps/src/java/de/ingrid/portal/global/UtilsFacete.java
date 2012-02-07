@@ -1246,25 +1246,36 @@ public class UtilsFacete {
         		coordOptions.add(request.getParameter("chk_3"));
         		
         	}
+
+
+
+
 			if(coordOptions != null && coordOptions.size() > 0){
-				WMSSearchDescriptor wmsDescriptor = WMSInterfaceImpl.getInstance().getWMSSearchParameter(request.getPortletSession().getId());
+
 				doMapCoords = new HashMap<String, String>();
-	            if(wmsDescriptor != null){
 	        		for(int i=0; i < coordOptions.size(); i++){
 	        			String searchTerm = "";
-	                    if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_BBOX) {
-	                        searchTerm = Double.toString(wmsDescriptor.getMinX()).concat("' O / ");
-	                        searchTerm = searchTerm.concat(Double.toString(wmsDescriptor.getMinY())).concat("' N");
+//	                    if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_BBOX) {
+	                    	if(request.getParameter("x1") != null){
+	                    		searchTerm = request.getParameter("x1").concat("' O / ");
+	                    	}
+	                    	if(request.getParameter("x2") != null){
+	                    		searchTerm = searchTerm.concat(request.getParameter("x2")).concat("' N");	
+	                    	}                
 	                        searchTerm = searchTerm.concat("<br>");
-	                        searchTerm = searchTerm.concat(Double.toString(wmsDescriptor.getMaxX())).concat("' O / ");
-	                        searchTerm = searchTerm.concat(Double.toString(wmsDescriptor.getMaxY())).concat("' N");
+	                    	if(request.getParameter("y1") != null){
+	                    		searchTerm = searchTerm.concat(request.getParameter("y1")).concat("' O / ");                    		
+	                    	}
+	                    	if(request.getParameter("y2") != null){
+	                    		searchTerm = searchTerm.concat(request.getParameter("y2")).concat("' N");
+	                    	} 
+	                        
 	                        searchTerm = searchTerm.concat("<br>" +  coordOptions.get(i));
-	                    } else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
-	                        searchTerm = searchTerm.concat("areaid:").concat(wmsDescriptor.getCommunityCode());
-	                    }
+//	                    } else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
+//	                        searchTerm = searchTerm.concat("areaid:").concat(wmsDescriptor.getCommunityCode());
+//	                    }
 	                    doMapCoords.put(coordOptions.get(i), searchTerm);
 	        		}
-	        	}
 			}
 		}
 
