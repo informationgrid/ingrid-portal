@@ -384,10 +384,6 @@ closeThisDialog = function() {
               <div class="fill"></div>
             </div>
             
-            <span class="outer"><div>
-            <span class="label"><label for="operationsCall" onclick="javascript:dialog.showContextHelp(arguments[0], 5204)"><fmt:message key="dialog.operation.call" /></label></span>
-            <span class="input"><input type="text" maxLength="255" id="operationsCall" name="operationsCall" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
-            </div></span>
             <div class="inputContainer">
               <span class="outer"><div>
               <span class="label"><label id="operationsParameterLabel" for="operationsParameter" onclick="javascript:dialog.showContextHelp(arguments[0], 5205)"><fmt:message key="dialog.operation.parameter" /></label></span>
@@ -397,6 +393,11 @@ closeThisDialog = function() {
               </span>
             </div>
     
+            <span class="outer"><div>
+            <span class="label"><label for="operationsCall" onclick="javascript:dialog.showContextHelp(arguments[0], 5204)"><fmt:message key="dialog.operation.call" /></label></span>
+            <span class="input"><input type="text" maxLength="255" id="operationsCall" name="operationsCall" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+            </div></span>
+
             <div class="inputContainer">
               <span class="outer halfWidth"><div>
                 <span class="label"><label for="operationsDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 5202)"><fmt:message key="dialog.operation.description" /></label></span>
