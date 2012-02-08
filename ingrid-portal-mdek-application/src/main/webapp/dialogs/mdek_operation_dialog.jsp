@@ -293,15 +293,33 @@ isValidOperation = function(op) {
         }
 	});
 
+    var tmpValid = true;
 	if (op.platform.length == 0) {
-		dojo.addClass(dojo.byId("operationsPlatformLabel"), "important");		
-		valid = false;
-	}
+		tmpValid = false;
+	} else {
+        if (dojo.some(op.platform, function(platf) {
+                return (typeof(platf.title) == "undefined" || platf.title == null || dojo.trim(platf.title+"").length == 0); })) {
+            tmpValid = false;
+        }
+    }
+    if (!tmpValid) {
+        dojo.addClass(dojo.byId("operationsPlatformLabel"), "important");
+        valid = false;
+    }
 	
+    tmpValid = true;
 	if (op.addressList.length == 0) {
-		dojo.addClass(dojo.byId("operationsAddressLabel"), "important");		
-		valid = false;
-	}
+		tmpValid = false;
+	} else {
+        if (dojo.some(op.addressList, function(addr) {
+                return (typeof(addr.title) == "undefined" || addr.title == null || dojo.trim(addr.title+"").length == 0); })) {
+            tmpValid = false;
+        }
+    }
+    if (!tmpValid) {
+        dojo.addClass(dojo.byId("operationsAddressLabel"), "important");
+        valid = false;
+    }
 
 	return valid;
 }

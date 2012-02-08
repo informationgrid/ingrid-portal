@@ -505,7 +505,8 @@ function ref3OperationPublishable(notPublishableIDs) {
     	// NOTICE: Name may be reset to "" if serviceType is changed !!!
         if (dojo.some(UtilGrid.getTableData("ref3Operation"), function(op) {
                 return (typeof(op.name) == "undefined" || op.name == null || dojo.trim(op.name+"").length == 0
-                    || typeof(op.addressList) == "undefined" || op.addressList == null || op.addressList.length == 0); })) {
+                    || typeof(op.addressList) == "undefined" || op.addressList == null || op.addressList.length == 0
+                    || typeof(op.platform) == "undefined" || op.platform == null || op.platform.length == 0); })) {
             console.debug("All entries in the operation table must have a valid name.");
             notPublishableIDs.push("ref3Operation");
         }
