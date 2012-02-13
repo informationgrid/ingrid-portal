@@ -24,7 +24,7 @@ mapClientCallbackHooks = {bboxSelected: function(x1, x2, y1, y2) {
 	<div>
     #if(!$geothesaurusSelectTopics || $geothesaurusSelectTopics.size() == 0)
 		<div style="padding:0px 0px 5px 0px;">
-    		<a onclick="prepareDialogWebMapClient('dialog_area_map')" 
+    		<a onclick="prepareDialogMap('dialog_area_map','/ingrid-webmap-client/frontend/index-dev.html','openlayersDivInParent','webmapIframe')"
 				#if($doMapCoords && $doMapCoords.size() > 0)
 					class="facete_link_line facete_select_link_topic"
 				#else

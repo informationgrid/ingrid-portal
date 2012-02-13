@@ -1230,6 +1230,7 @@ public class UtilsFacete {
 		String doAddMap = request.getParameter("doAddMap");
 		String doRemoveMap = request.getParameter("doRemoveMap");
 		HashMap<String, String> doMapCoords = null;
+		HashMap<String, String> webmapclientCoords = new HashMap<String, String>();
 		ArrayList<String> coordOptions = null;
 		
 		if(doAddMap != null){
@@ -1246,7 +1247,19 @@ public class UtilsFacete {
         		coordOptions.add(request.getParameter("chk_3"));
         		
         	}
-
+        	if(request.getParameter("x1") != null){
+        		webmapclientCoords.put("x1", request.getParameter("x1"));
+        	}
+        	if(request.getParameter("x2") != null){
+        		webmapclientCoords.put("x2", request.getParameter("x2"));	
+        	}                
+           
+        	if(request.getParameter("y1") != null){
+        		webmapclientCoords.put("y1", request.getParameter("y1"));                    		
+        	}
+        	if(request.getParameter("y2") != null){
+        		webmapclientCoords.put("y2", request.getParameter("y2"));
+        	} 
 
 
 
@@ -1255,19 +1268,20 @@ public class UtilsFacete {
 				doMapCoords = new HashMap<String, String>();
 	        		for(int i=0; i < coordOptions.size(); i++){
 	        			String searchTerm = "";
+	        			//TODO implement areaid search
 //	                    if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_BBOX) {
 	                    	if(request.getParameter("x1") != null){
-	                    		searchTerm = request.getParameter("x1").concat("' O / ");
+	                    		searchTerm = webmapclientCoords.get("x1").concat("' O / ");
 	                    	}
 	                    	if(request.getParameter("x2") != null){
-	                    		searchTerm = searchTerm.concat(request.getParameter("x2")).concat("' N");	
+	                    		searchTerm = searchTerm.concat(webmapclientCoords.get("x2")).concat("' N");	
 	                    	}                
 	                        searchTerm = searchTerm.concat("<br>");
 	                    	if(request.getParameter("y1") != null){
-	                    		searchTerm = searchTerm.concat(request.getParameter("y1")).concat("' O / ");                    		
+	                    		searchTerm = searchTerm.concat(webmapclientCoords.get("y1")).concat("' O / ");                    		
 	                    	}
 	                    	if(request.getParameter("y2") != null){
-	                    		searchTerm = searchTerm.concat(request.getParameter("y2")).concat("' N");
+	                    		searchTerm = searchTerm.concat(webmapclientCoords.get("y2")).concat("' N");
 	                    	} 
 	                        
 	                        searchTerm = searchTerm.concat("<br>" +  coordOptions.get(i));
@@ -1286,13 +1300,19 @@ public class UtilsFacete {
 		if(coordOptions != null){
 			setAttributeToSession(request, "coordOptions", coordOptions);
 		}
+		if(webmapclientCoords != null){
+			setAttributeToSession(request, "webmapclientCoords", webmapclientCoords);
+		}
 		
 		if(doRemoveMap != null){
 			if(doRemoveMap.equals("all")){
 				removeAttributeFromSession(request, "doMapCoords");
+				removeAttributeFromSession(request, "webmapclientCoords");
 			}else{
 				doMapCoords = (HashMap<String, String>) getAttributeFromSession(request, "doMapCoords");
 				doMapCoords.remove(doRemoveMap);
+				
+				webmapclientCoords = (HashMap<String, String>) getAttributeFromSession(request, "webmapclientCoords");
 				
 				coordOptions = (ArrayList<String>) getAttributeFromSession(request, "coordOptions");
 				
@@ -1307,6 +1327,7 @@ public class UtilsFacete {
 	        	}
 	        	setAttributeToSession(request, "doMapCoords", doMapCoords);
 	        	setAttributeToSession(request, "coordOptions", coordOptions);
+	        	setAttributeToSession(request, "webmapclientCoords", webmapclientCoords);
 			}
 		}
 	}
@@ -1325,30 +1346,33 @@ public class UtilsFacete {
 	private static void addMapToQuery(PortletRequest request, IngridQuery query) {
 		
 		HashMap<String, String> doMapCoords = (HashMap<String, String>) getAttributeFromSession(request, "doMapCoords");
-    	
+		HashMap<String, String> webmapclientCoords = (HashMap<String, String>) getAttributeFromSession(request, "webmapclientCoords");
 		if (doMapCoords != null && doMapCoords.size() > 0){
-	    	WMSSearchDescriptor wmsDescriptor = WMSInterfaceImpl.getInstance().getWMSSearchParameter(
-	                request.getPortletSession().getId());
+
 	    	
 	    	ArrayList<String> coordOptions = (ArrayList<String>) getAttributeFromSession(request, "coordOptions");
-	    	if(coordOptions != null){
+	    	if(coordOptions != null && webmapclientCoords != null){
 	    		for(int i=0; i < coordOptions.size(); i++){
 			    	ClauseQuery cq = null;
-			        
-			    	if(wmsDescriptor != null){
+
 			    		cq = new ClauseQuery(true, false);
-			            
-			    		if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_BBOX) {
-			                cq.addField(new FieldQuery(true, false, "x1", Double.toString(wmsDescriptor.getMinX())));
-			                cq.addField(new FieldQuery(true, false, "y1", Double.toString(wmsDescriptor.getMinY())));
-			                cq.addField(new FieldQuery(true, false, "x2", Double.toString(wmsDescriptor.getMaxX())));
-			                cq.addField(new FieldQuery(true, false, "y2", Double.toString(wmsDescriptor.getMaxY())));
+//TODO implement areaid in map			            
+//			    		if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_BBOX) {
+
+                    		cq.addField(new FieldQuery(true, false, "x1", webmapclientCoords.get("x1")));
+			    		
+                    		cq.addField(new FieldQuery(true, false, "y1", webmapclientCoords.get("y1")));
+
+                    		cq.addField(new FieldQuery(true, false, "x2", webmapclientCoords.get("x2")));
+
+                    		cq.addField(new FieldQuery(true, false, "y2", webmapclientCoords.get("y2")));
+
 			                cq.addField(new FieldQuery(true, false, "coord", coordOptions.get(i)));
-			            } else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
-			            	cq.addField(new FieldQuery(true, false, "areaid", wmsDescriptor.getCommunityCode()));
-			            }
+//			            } else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
+//			            	cq.addField(new FieldQuery(true, false, "areaid", wmsDescriptor.getCommunityCode()));
+//			            }
 			            query.addClause(cq);
-			    	}
+
 		    	}
 	    	}
 	    }

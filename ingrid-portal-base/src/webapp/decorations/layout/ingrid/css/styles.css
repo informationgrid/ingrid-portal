@@ -924,7 +924,7 @@ div.facete_delete span.facete_delete_span_a { position:relative; left:15px; }
 
 div.dialog_bottom div.btn_center input.btn { font-size:11px; color:#FFFFFF; }
 
-iframe.facete_map { height: 680px; width: 880px; }
+iframe.facete_map { height: 500px; width: 810px; }
 
 div.dialog_content input.thesaurus_term { font-size: 83%; line-height: 120%; width: 70%; height: 50%; }
 div.dialog_content .inputstyletext { border: 1px inset #FFFFFF; padding: 2px 4px 2px 4px; margin-right:6px;margin-bottom: 5px; }
