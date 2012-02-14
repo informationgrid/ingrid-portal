@@ -186,6 +186,8 @@ function prepareDialogMap (id, wms, divId, iframeId) {
 			iframe.setAttribute('marginheight', '0');
 			iframe.setAttribute('marginwidth', '0');
 			iframe.setAttribute('frameborder', '0');
+			iframe.setAttribute('height', '500');
+			iframe.setAttribute('width', '820');
 			iframe.setAttribute('src', wms);
 			map.appendChild(iframe);
 		}
@@ -230,4 +232,3 @@ function showButtonSelectCheckboxForm (form, button, coordDiv){
 	}
 	
 }
-

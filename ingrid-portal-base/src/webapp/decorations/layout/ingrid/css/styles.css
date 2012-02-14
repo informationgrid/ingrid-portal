@@ -901,8 +901,8 @@ div.facete_dialog div.dijitDialogTitleBar span.dijitDialogCloseIcon { display:no
 div.facete_dialog span.dijitDialogTitle { font-size:14px; font-weight: bold; padding: 0 15px; }
 div.facete_dialog div.dijitDialogCloseIcon { }
 div.facete_dialog_underlay { background: #1B78B1 !important; }
-div.facete_dialog div.dijitDialogPaneContent { border-top: 0 !important; }
-div.facete_dialog div.dijitDialogPaneContent div.dialog_content { padding:25px 5px; max-height: 500px; overflow: auto; }
+div.facete_dialog div.dijitDialogPaneContent { border-top: 0 !important; max-width:850px;}
+div.facete_dialog div.dijitDialogPaneContent div.dialog_content { padding:25px 5px; height: 520px; max-width:820px;}
 div.facete_dialog div.dijitDialogPaneContent div.dialog_content table tr td { padding:0px 20px; }
 div.facete_dialog div.dijitDialogPaneContent div.dialog_bottom { border-top: 1px dotted #CECECE; padding:10px 0 0;  }
 div.facete_dialog_sns_content { border-top:1px dotted #CCCCCC; padding:10px 0px; }
@@ -925,8 +925,10 @@ div.facete_delete span.facete_delete_span_a { position:relative; left:15px; }
 div.dialog_bottom div.btn_center input.btn { font-size:11px; color:#FFFFFF; }
 
 iframe.facete_map { height: 500px; width: 810px; }
+div.facete_map { height: 500px; width: 820px; }
 
-div.dialog_content input.thesaurus_term { font-size: 83%; line-height: 120%; width: 70%; height: 50%; }
+input.thesaurus_term { font-size: 83%; line-height: 120%; width: 70%; height: 50%; }
+div.dialog_content { font-size: 83%; line-height: 120%; width: 70%; height: 50%; }
 div.dialog_content .inputstyletext { border: 1px inset #FFFFFF; padding: 2px 4px 2px 4px; margin-right:6px;margin-bottom: 5px; }
 
 div.btn_submit_dialog { padding: 11px 0 0; }
