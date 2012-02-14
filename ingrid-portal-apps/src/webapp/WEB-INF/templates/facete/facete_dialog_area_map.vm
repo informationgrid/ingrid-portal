@@ -1,6 +1,6 @@
 
 #set ($action = $renderResponse.createActionURL())
-<div id="dialog_area_map" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.area.map.search")" dojoType="dojox.widget.DialogSimple">
+<div id="dialog_area_map" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.area.map.search")" dojoType="dijit.Dialog">
 #renderCloseDialogJS ("faceteDialogCancel('dialog_area_map');" $MESSAGES.getString("searchResult.facete.dialog.tooltip.close"))
   <div class="dialog_content" id="dialog_area_map_content" style="max-height: none;">
 	<div id="openlayersDivInParent" class="facete_map"></div>
