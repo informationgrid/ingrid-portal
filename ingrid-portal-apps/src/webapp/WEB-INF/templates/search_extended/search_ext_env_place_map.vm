@@ -21,19 +21,19 @@ mapClientCallbackHooks = {bboxSelected: function(x1, x2, y1, y2) {
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" name="env_place_map" id="env_place_map">
       <div class="formbody_webmapclient formbody_map formbody_border_style" style="background-color:white">
-		<div id="openlayersDiv" style="width:100%;"></div>
+		<div id="openlayersDiv" class="openlayersDiv" style="width:100%;"></div>
         <div class="line" style="width:33em"><hr /></div>
         <div class="float_right rightmargin"></div>
 		  #displayFormErrors()
-          <h3>$MESSAGES.getString('searchExtEnvPlaceMap.title.constraint')</h3>
-          <p>
+          <h3 class="search-ext-env">$MESSAGES.getString('searchExtEnvPlaceMap.title.constraint')</h3>
+          <p class="search-ext-env">
           <input id="x1" name="x1" type="hidden" />
           <input id="x2" name="x2" type="hidden" />
           <input id="y1" name="y1" type="hidden" />
           <input id="y2" name="y2" type="hidden" />
-          <input id="chk_1" name="chk_1" type="checkbox"#getChecked("chk_1" "on") /><label for="chk_1">$MESSAGES.getString('searchExtEnvPlaceMap.label.constraint1')</label><br />
-          <input id="chk_2" name="chk_2" type="checkbox"#getChecked("chk_2" "on") /><label for="chk_2">$MESSAGES.getString('searchExtEnvPlaceMap.label.constraint2')</label><br />
-          <input id="chk_3" name="chk_3" type="checkbox"#getChecked("chk_3" "on") /><label for="chk_3">$MESSAGES.getString('searchExtEnvPlaceMap.label.constraint3')</label><br />
+          <input id="chk_1" name="chk_1" type="checkbox"#getChecked("chk_1" "on") /><label class="search-ext-env" for="chk_1">$MESSAGES.getString('searchExtEnvPlaceMap.label.constraint1')</label><br />
+          <input id="chk_2" name="chk_2" type="checkbox"#getChecked("chk_2" "on") /><label class="search-ext-env" for="chk_2">$MESSAGES.getString('searchExtEnvPlaceMap.label.constraint2')</label><br />
+          <input id="chk_3" name="chk_3" type="checkbox"#getChecked("chk_3" "on") /><label class="search-ext-env" for="chk_3">$MESSAGES.getString('searchExtEnvPlaceMap.label.constraint3')</label><br />
           </p>
 			<div class="formbody_webmapclient_coordinates_title">$MESSAGES.getString('searchExtEnvPlaceMap.label.selected_coordinates') </div>
      	     <div id="coordinatesOutput" class="formbody_webmapclient_coordinates" ></div>

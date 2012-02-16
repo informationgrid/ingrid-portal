@@ -8,7 +8,7 @@
 	<form action="$action" method="post" name="facete_map_form">
 		<h3>$MESSAGES.getString("searchResult.facete.area.map.options")</h3>
         <p>
-        <input id="chk_1" type="checkbox" value="inside" name="chk_1" onclick="showButtonSelectCheckboxForm(document.facete_map_form, 'facete_map_submit_btn','coordinatesOutput')"
+        <input id="chk_1" type="checkbox" value="inside" checked="true" name="chk_1" onclick="showButtonSelectCheckboxForm(document.facete_map_form, 'facete_map_submit_btn','coordinatesOutput')"
 			#if($doMapCoords.inside)
 				checked
 			#end
