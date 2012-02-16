@@ -1606,10 +1606,15 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			    			if (value.indexOf("?") == -1) {
 			    				value = value + "?";
 			    			}
-			    			if (!value.endsWith("?")) {
+			    			if (!value.endsWith("?") && !value.endsWith("&")) {
 			    				value = value + "&";
 			    			}
-			    			value = value + "REQUEST=GetCapabilities&SERVICE=WMS";
+			    			value = value + "REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1";
+			    		} else if (value.toLowerCase().indexOf("version=") == -1){
+                            if (!value.endsWith("&")) {
+                                value = value + "&";
+                            }
+                            value = value + "VERSION=1.1.1";
 			    		}
 			    		
 						boolean hasAccessConstraints = false;

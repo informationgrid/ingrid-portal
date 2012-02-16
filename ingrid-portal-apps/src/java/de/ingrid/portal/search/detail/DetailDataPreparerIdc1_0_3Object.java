@@ -1051,7 +1051,12 @@ public class DetailDataPreparerIdc1_0_3Object implements DetailDataPreparer {
     	    	    			} else {
     	    	    				serviceUrl = serviceUrl + "&";
     	    	    			}
-    	    	    			serviceUrl = serviceUrl + "REQUEST=GetCapabilities&SERVICE=WMS";
+                                serviceUrl = serviceUrl + "REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1";
+                            } else if (serviceUrl.toLowerCase().indexOf("version=") == -1){
+                                if (!serviceUrl.endsWith("&")) {
+                                    serviceUrl = serviceUrl + "&";
+                                }
+                                serviceUrl = serviceUrl + "VERSION=1.1.1";
     	    	    		}
     	    	    		wmsServiceLinks.add(serviceUrl);
     	    	    	}

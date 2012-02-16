@@ -292,7 +292,12 @@ public class QueryResultPostProcessor {
 	                              if (!tmpString.endsWith("?")) {
 	                                  tmpString = tmpString + "&";
 	                              }
-	                              tmpString = tmpString + "REQUEST=GetCapabilities&SERVICE=WMS";
+	                              tmpString = tmpString + "REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1";
+	                          } else if (tmpString.toLowerCase().indexOf("version=") == -1){
+	                              if (!tmpString.endsWith("&")) {
+	                                  tmpString = tmpString + "&";
+	                              }
+	                              tmpString = tmpString + "VERSION=1.1.1";
 	                          }
 	                          hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString.trim(), "UTF-8"));
 	                      } catch (UnsupportedEncodingException e) {
