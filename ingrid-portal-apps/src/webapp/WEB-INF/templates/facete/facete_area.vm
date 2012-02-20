@@ -12,7 +12,7 @@ mapClientCallbackHooks = {bboxSelected: function(x1, x2, y1, y2) {
 
 }};
 
-var viewConfiguration = "portalu-fullmap";
+var viewConfiguration = "portalu-facete-search";
 
 </script>
 #set ($action = $renderResponse.createActionURL())
