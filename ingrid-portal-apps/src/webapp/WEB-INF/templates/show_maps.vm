@@ -1,6 +1,12 @@
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 #set ($action = $renderResponse.createActionURL())
+<script type="text/javascript">
 
+mapClientCallbackHooks = null;
+
+var viewConfiguration = "portalu-fullmap";
+
+</script>
 <div class="section">
 </div>	
 </div>

@@ -12,6 +12,7 @@ mapClientCallbackHooks = {bboxSelected: function(x1, x2, y1, y2) {
 
 }};
 
+var viewConfiguration = "portalu-extended-search";
 
 </script>
 
