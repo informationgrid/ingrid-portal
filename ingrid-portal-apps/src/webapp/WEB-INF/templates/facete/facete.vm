@@ -26,7 +26,19 @@
 		<div class="btn_gray_right" id="$buttonname right"></div>
 	</div>
 #end
-
+#macro (renderButtonDialogCancelNotInput $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick)
+	<div class="$buttonclass" style="$buttonstyle">
+		<div class="btn_gray_left" id="$buttonname left"></div>
+		<div class="btn_gray_center">
+			#if($buttondisable && $buttondisable == "true")
+			<input type="button" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_gray_disable" onclick="$buttononclick" disabled />	
+			#else
+			<input type="button" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_gray" onclick="$buttononclick" />
+			#end
+		</div>
+		<div class="btn_gray_right" id="$buttonname right"></div>
+	</div>
+#end
 #macro (renderFaceteMoreLinkLineDialog $label $style $id $button)
 	<a id="$button" class="facete_more" style="$style" onClick="prepareDialog('$id')">$label</a>
 	<img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png">
@@ -84,6 +96,13 @@
 	#end
 	</span>
 #end
+#macro(renderCloseDialog $doAction $title)
+	<div class="closeDialog">
+		<a href="$doAction" class="facete_link_line">
+			<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_close_dialog.png" title="$title"></img>
+        </a>
+	</div>
+#end
 
 #macro(renderLinkEntryNumberInHashMap $numbers $id)
 	<span class="facete_label_number">
@@ -111,13 +130,6 @@
 	</a>
 #end
 
-#macro(renderCloseDialog $doAction $title)
-	<div class="closeDialog">
-		<a href="$doAction" class="facete_link_line">
-			<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_close_dialog.png" title="$title"></img>
-        </a>
-	</div>
-#end
 
 #macro(renderCloseDialogJS $onClick $title)
 	<div class="closeDialog">
