@@ -471,7 +471,7 @@ ingridObjectLayout.createRefClass1DQ = function() {
             formatter: dojo.partial(SyslistCellFormatter, 7109)
         }, 
         {field: 'resultValue',name: message.get("ui.obj.dq.table.header2"),width: '105px', editable: true,
-            type: DecimalCellEditor, widgetClass: dijit.form.NumberTextBox, formatter: LocalizedNumberFormatter},
+            type: DecimalCellEditor, constraints:{min:0}, formatter: LocalizedNumberFormatter},
         {field: 'measureDescription',name: message.get("ui.obj.dq.table.header3"),width: 303-scrollBarWidth+'px', editable: true}
     ];
     createDataGrid("dq109Table", null, dq109TableStructure, null);

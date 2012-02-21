@@ -28,7 +28,7 @@ function DateCellFormatter(row, cell, value, columnDef, dataContext){
     if (typeof value == "string")
         return value;
     var result = "";
-    if (value != null && value != "")
+    if (UtilGeneral.hasValue(value))
         result = UtilString.getDateString(value, "dd.MM.yyyy");
     return result;
 }
@@ -38,7 +38,7 @@ function LocalizeString(row, cell, value, columnDef, dataContext) {
 }
 
 function emptyOrNullValidation(gridId, row, cell, value, columnDef, dataContext){
-    if (!value || value == "") {
+    if (!UtilGeneral.hasValue(value)) {
         value = "";
         setTimeout(function() {
             var cellDom = dojo.query("#"+gridId+" .slick-row[row$="+row+"] .c"+cell)[0];
@@ -54,10 +54,11 @@ function emptyOrNullValidation(gridId, row, cell, value, columnDef, dataContext)
 }
 
 function LocalizedNumberFormatter(row, cell, value, columnDef, dataContext){
-    if (!value)
-        return "";
-    else
+    var retValue = "";
+    if (UtilGeneral.hasValue(value)) {
         return dojo.number.format(value);
+    }
+    return retValue;
 }
 
 function BoolCellFormatter(row, cell, value, columnDef, dataContext) {
@@ -66,7 +67,7 @@ function BoolCellFormatter(row, cell, value, columnDef, dataContext) {
 
 function FirstEntryFormatter(identifier, row, cell, value, columnDef, dataContext){
 	var retValue = "";
-    if (value && dojo.isArray(value) && value.length > 0) {
+    if (UtilGeneral.hasValue(value) && dojo.isArray(value) && value.length > 0) {
     	retValue = value[0];
     	if (dojo.isObject(retValue)) {
     	   if (identifier) {

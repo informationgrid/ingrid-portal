@@ -73,9 +73,9 @@ DecimalCellEditor = function(args) {
         this.input.constraints.places = '0,10';
         var constraints = args.column.constraints; 
         if (constraints) {
-            if (constraints.min) this.input.constraints.min = constraints.min;
-            if (constraints.max) this.input.constraints.max = constraints.max;
-            if (constraints.places) this.input.constraints.places = constraints.places;
+            if (UtilGeneral.hasValue(constraints.min)) this.input.constraints.min = constraints.min;
+            if (UtilGeneral.hasValue(constraints.max)) this.input.constraints.max = constraints.max;
+            if (UtilGeneral.hasValue(constraints.places)) this.input.constraints.places = constraints.places;
         }
         this.input.focus();
     };

@@ -1594,16 +1594,13 @@ UtilGeneral.getNumberFromDijit = function(id) {
     return isNaN(value) ? null : value;
 }
 
-//check passed value: returns true if it has a value, returns false if undefined or null or length==0;
-// checks objects and strings and ... 
+//check passed value: returns false if undefined or null or "" or "    ";
 UtilGeneral.hasValue = function(val) {
     if (typeof val == "undefined") {
         return false; 
     } else if (val == null) {
         return false; 
-    } else if (typeof val == "string" && val == "") {
-        return false;
-    } else if (typeof val == "object" && val.toString().equals("")) {
+    } else if (dojo.trim(val + "") == "") {
         return false;
     }
 

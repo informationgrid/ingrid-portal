@@ -472,11 +472,9 @@ function dqTablesPublishable(notPublishableIDs) {
         dojo.forEach(dqUiTableElements, function(dqTableId){
             var dqRows = UtilGrid.getTableData(dqTableId);
             dojo.forEach(dqRows, function(dqRow) {
-                if (dqRow.nameOfMeasure || dqRow.resultValue || dqRow.measureDescription) {
-                    if (!dqRow.nameOfMeasure || !dqRow.resultValue) {
-                        console.debug("NameOfMeasure + ResultValue needs to be filled.");
-                        notPublishableIDs.push(dqTableId);
-                    }
+                if (!UtilGeneral.hasValue(dqRow.nameOfMeasure) || !UtilGeneral.hasValue(dqRow.resultValue)) {
+                    console.debug("NameOfMeasure + ResultValue needs to be filled.");
+                    notPublishableIDs.push(dqTableId);
                 }
             });
         });
@@ -504,9 +502,7 @@ function ref3OperationPublishable(notPublishableIDs) {
         // Check if the operation table contains valid input (name has to be set)
     	// NOTICE: Name may be reset to "" if serviceType is changed !!!
         if (dojo.some(UtilGrid.getTableData("ref3Operation"), function(op) {
-                return (typeof(op.name) == "undefined" || op.name == null || dojo.trim(op.name+"").length == 0
-                    || typeof(op.addressList) == "undefined" || op.addressList == null || op.addressList.length == 0
-                    || typeof(op.platform) == "undefined" || op.platform == null || op.platform.length == 0); })) {
+                return (!UtilGeneral.hasValue(op.name) || !UtilGeneral.hasValue(op.addressList) || !UtilGeneral.hasValue(op.platform)); })) {
             console.debug("All entries in the operation table must have a valid name.");
             notPublishableIDs.push("ref3Operation");
         }
