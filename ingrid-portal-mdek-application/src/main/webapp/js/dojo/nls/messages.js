@@ -192,7 +192,7 @@
 	"dialog.sessionTimeoutError":"Your session timed out. Please close the application and log in again.",
     "dialog.sessionTimeoutErrorTitle":"Session expired",
 	"dialog.commentTitle":"Comments for '${0}'",
-	"dialog.fillAllFieldsHint":"Please fill all fields!",
+	"dialog.fillAllFieldsHint":"Please fill all mandatory fields!",
 	"dialog.hqlQueryInvalidError":"The entered HQL query is invalid. Please check your input.",
 	"dialog.noPermissionError":"You don't have permission to execute this operation.",
 	"dialog.createAddressTitle":"Create address",

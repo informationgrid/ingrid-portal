@@ -11,16 +11,42 @@
         	dojo.require("dijit.form.ValidationTextBox");
 			
             var scriptScope = _container_;
-            
+
+            // coordinates not mandatory, see INGRID-2089 
+            var requiredElements = [["spatialAssistRef", "spatialAssistRefLabel"]];
+
             dojo.connect(_container_, "onLoad", function(){
                 dijit.byId("spatialAssistCS").setStore(dijit.byId("spatialRefLocationSelect").store);// spatialReferenceStore
+                resetRequiredElements();
             });
             dojo.addOnUnload(function(){
             
             });
             
             
+resetRequiredElements = function() {
+    dojo.forEach(requiredElements, function(element) {
+        dojo.removeClass(dojo.byId(element[1]), "important");       
+    });
+}
+
             function validateInput(){
+                resetRequiredElements();
+
+                var valid = true;
+                dojo.forEach(requiredElements, function(element) {
+                    var widget = dijit.byId(element[0]);
+                    if (!(widget instanceof ingrid.dijit.CustomGrid)) {
+                        var val = widget.getValue();
+                        if (!UtilGeneral.hasValue(val)) {
+                            dojo.addClass(dojo.byId(element[1]), "important");
+                            valid = false;
+                        }
+                    }
+                });
+
+                return valid;
+/*                
                 if (dijit.byId("spatialAssistCS").getValue() == "" ||
                 dijit.byId("spatialAssistRef").getValue() == "" ||
                 !dijit.byId("spatialAssistLon1").isValid() ||
@@ -30,6 +56,7 @@
                     return false;
                 
                 return true;
+*/
             }
             
             scriptScope.addLocation = function(){
@@ -47,38 +74,54 @@
                     longitude2: dijit.byId("spatialAssistLon2").getValue(),
                     latitude2: dijit.byId("spatialAssistLat2").getValue()
                 };
-                
-                CTService.getCoordinates(fromSRS, toSRS, coords, {
-                    preHook: showLoadingZone,
-                    postHook: hideLoadingZone,
-                    
-                    callback: function(res){
-                        if (res.coordinate) {
-                            UtilGrid.addTableDataRow("spatialRefLocation", {
-                                name: location,
-                                longitude1: res.coordinate.longitude1,
-                                latitude1: res.coordinate.latitude1,
-                                longitude2: res.coordinate.longitude2,
-                                latitude2: res.coordinate.latitude2
-                            });
-                        }
-                        else {
-                            if (res.errorMsg) {
-                                dialog.show("<fmt:message key='general.error' />", res.errorMsg, dialog.WARNING);
-                            } else {
-                                dialog.show("<fmt:message key='general.error' />", "<fmt:message key='cts.transformError' />", dialog.WARNING);
-                            }
-                        }
-						dijit.byId("pageDialog").hide();
+
+                if (UtilGeneral.hasValue(fromSRS) &&
+                    (UtilGeneral.hasValue(coords.longitude1) ||
+                     UtilGeneral.hasValue(coords.latitude1) ||
+                     UtilGeneral.hasValue(coords.longitude2) ||
+                     UtilGeneral.hasValue(coords.latitude2)))
+                {
+                    CTService.getCoordinates(fromSRS, toSRS, coords, {
+                        preHook: showLoadingZone,
+                        postHook: hideLoadingZone,
                         
-                    },
-                    timeout: 8000,
-                    errorHandler: function(err){
-                        console.debug("Error: " + err);
-                        dialog.show("<fmt:message key='general.error' />", "<fmt:message key='cts.serviceError' />", dialog.WARNING, null, 300, 170);
-                        dijit.byId("pageDialog").hide();
-                    }
-                });
+                        callback: function(res){
+                            if (res.coordinate) {
+                                UtilGrid.addTableDataRow("spatialRefLocation", {
+                                    name: location,
+                                    longitude1: res.coordinate.longitude1,
+                                    latitude1: res.coordinate.latitude1,
+                                    longitude2: res.coordinate.longitude2,
+                                    latitude2: res.coordinate.latitude2
+                                });
+                            }
+                            else {
+                                if (res.errorMsg) {
+                                    dialog.show("<fmt:message key='general.error' />", res.errorMsg, dialog.WARNING);
+                                } else {
+                                    dialog.show("<fmt:message key='general.error' />", "<fmt:message key='cts.transformError' />", dialog.WARNING);
+                                }
+                            }
+                            dijit.byId("pageDialog").hide();
+                            
+                        },
+                        timeout: 8000,
+                        errorHandler: function(err){
+                            console.debug("Error: " + err);
+                            dialog.show("<fmt:message key='general.error' />", "<fmt:message key='cts.serviceError' />", dialog.WARNING, null, 300, 170);
+                            dijit.byId("pageDialog").hide();
+                        }
+                    });
+                } else {
+                    UtilGrid.addTableDataRow("spatialRefLocation", {
+                        name: location,
+                        longitude1: "",
+                        latitude1: "",
+                        longitude2: "",
+                        latitude2: ""
+                    });
+                    dijit.byId("pageDialog").hide();
+                }
             }
             
             function showLoadingZone(){
@@ -104,7 +147,7 @@
                         <tbody>
                             <tr>
                                 <td class="label" nowrap="nowrap">
-                                    <label for="spatialAssistRef" onclick="javascript:dialog.showContextHelp(arguments[0], 7023)">
+                                    <label id="spatialAssistRefLabel" for="spatialAssistRef" onclick="javascript:dialog.showContextHelp(arguments[0], 7023)">
                                         <fmt:message key="dialog.spatialAssist.customLocation" />
                                     </label>
                                 </td>

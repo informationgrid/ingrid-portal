@@ -1594,7 +1594,7 @@ UtilGeneral.getNumberFromDijit = function(id) {
     return isNaN(value) ? null : value;
 }
 
-//check passed value: returns false if undefined or null or "" or "    ";
+//check passed value: returns false if undefined or null or "" or "    " or NaN;
 UtilGeneral.hasValue = function(val) {
     if (typeof val == "undefined") {
         return false; 
@@ -1602,6 +1602,8 @@ UtilGeneral.hasValue = function(val) {
         return false; 
     } else if (dojo.trim(val + "") == "") {
         return false;
+    } else if ((val + "") == (Number.NaN + "")) {
+        return false; 
     }
 
     return true;

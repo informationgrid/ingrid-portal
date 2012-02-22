@@ -192,7 +192,7 @@
 	"dialog.sessionTimeoutError":"Ihre Session ist abgelaufen. Bitte schliessen Sie die Anwendung und melden Sie sich erneut an.",
     "dialog.sessionTimeoutErrorTitle":"Session abgelaufen",
 	"dialog.commentTitle":"Kommentare zu '${0}'",
-	"dialog.fillAllFieldsHint":"Vor dem Hinzuf&uuml;gen m&uuml;ssen alle Felder gef&uuml;llt sein!",
+	"dialog.fillAllFieldsHint":"Vor dem Hinzuf&uuml;gen m&uuml;ssen alle Pflicht-Felder gef&uuml;llt sein!",
 	"dialog.hqlQueryInvalidError":"Der eingegebene HQL Suchstring ist ung&uuml;ltig. Bitte &uuml;berpr&uuml;fen sie die Eingabe.",
 	"dialog.noPermissionError":"Sie verf&uuml;gen nicht &uuml;ber die n&ouml;tige Berechtigung um diese Aktion auszuf&uuml;hren.",
 	"dialog.createAddressTitle":"Adresse anlegen",

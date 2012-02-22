@@ -106,7 +106,12 @@ DecimalCellEditor = function(args) {
     };
 
     this.serializeValue = function() {
-        return this.input.get("value");
+    	var val = this.input.get("value");
+    	// e.g. return null if NaN to avoid exceptions when saved to Double !
+    	if (!UtilGeneral.hasValue(val)) {
+    		val = null;
+    	}
+        return val;
     };
 
     this.applyValue = function(item, state) {

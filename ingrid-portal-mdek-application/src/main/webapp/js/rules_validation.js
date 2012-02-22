@@ -56,32 +56,47 @@ function addMinMaxValidation(minWidgetId, maxWidgetId, minCaption, maxCaption) {
 }
 
 function spatialRefLocationValidation(){
-    var error = false;
+    var isOk = true;
     var data = UtilGrid.getTableData("spatialRefLocation");
+
     dojo.forEach(data, function(item, row){
-        if (   item.longitude1 == undefined || item.longitude1 == ""
-            || item.longitude2 == undefined || item.longitude2 == ""
-            || item.latitude1 == undefined || item.latitude1 == ""
-            || item.latitude2 == undefined || item.latitude2 == "" 
-            || item.longitude1 > item.longitude2
-            || item.latitude1 > item.latitude2
-            || item.name == undefined || item.name == "") {
-            error = true;
+    	var error = false;
+        // coordinates not mandatory, see INGRID-2089 
+        if (UtilGeneral.hasValue(item.name)
+            && !UtilGeneral.hasValue(item.longitude1)
+            && !UtilGeneral.hasValue(item.longitude2)
+            && !UtilGeneral.hasValue(item.latitude1)
+            && !UtilGeneral.hasValue(item.latitude2)) {
+            error = false;
+        } else {
+            if (!UtilGeneral.hasValue(item.longitude1)
+                || !UtilGeneral.hasValue(item.longitude2)
+                || !UtilGeneral.hasValue(item.latitude1)
+                || !UtilGeneral.hasValue(item.latitude2) 
+                || item.longitude1 > item.longitude2
+                || item.latitude1 > item.latitude2
+                || !UtilGeneral.hasValue(item.name)) {
+                error = true;
+            }        	
         }
         
         if (error) {
-            if (item.longitude1 > item.longitude2) markCells("ERROR", "spatialRefLocation", row, [1, 3]);
-            if (item.latitude1 > item.latitude2) markCells("ERROR", "spatialRefLocation", row, [2, 4]);
-            if (item.name == "") markCells("ERROR", "spatialRefLocation", row, [0]);
-            if (item.longitude1 == undefined || item.longitude1 == "") markCells("ERROR", "spatialRefLocation", row, [1]);
-            if (item.longitude2 == undefined || item.longitude2 == "") markCells("ERROR", "spatialRefLocation", row, [3]);
-            if (item.latitude1 == undefined || item.latitude1 == "") markCells("ERROR", "spatialRefLocation", row, [2]);
-            if (item.latitude2 == undefined || item.latitude2 == "") markCells("ERROR", "spatialRefLocation", row, [4]);
+        	isOk = false;
+            if (!UtilGeneral.hasValue(item.name)) {
+                markCells("ERROR", "spatialRefLocation", row, [0]);
+            } else {
+                if (item.longitude1 > item.longitude2) markCells("ERROR", "spatialRefLocation", row, [1, 3]);
+                if (item.latitude1 > item.latitude2) markCells("ERROR", "spatialRefLocation", row, [2, 4]);
+                if (!UtilGeneral.hasValue(item.longitude1)) markCells("ERROR", "spatialRefLocation", row, [1]);
+                if (!UtilGeneral.hasValue(item.longitude2)) markCells("ERROR", "spatialRefLocation", row, [3]);
+                if (!UtilGeneral.hasValue(item.latitude1)) markCells("ERROR", "spatialRefLocation", row, [2]);
+                if (!UtilGeneral.hasValue(item.latitude2)) markCells("ERROR", "spatialRefLocation", row, [4]);            	
+            }
         } else {
             markCells("VALID", "spatialRefLocation", row, [0, 1, 2, 3, 4]);
         }
     });
-    return !error;
+    return isOk;
 }
 
 function minMaxBoundingBoxValidation(val) {
