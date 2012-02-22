@@ -1121,7 +1121,7 @@ ingridObjectLayout.createExtraInfo = function() {
         return UtilSyslist.getSyslistEntry(3571);
     });
     
-    createSelectBox("extraInfoCharSetData", null, storeProps, function(){
+    createFilteringSelect("extraInfoCharSetData", null, storeProps, function(){
         return UtilSyslist.getSyslistEntry(510);
     });
 	
