@@ -15,9 +15,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
+import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.velocity.context.Context;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

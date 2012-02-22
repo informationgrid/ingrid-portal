@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+	<Document>
+		#foreach($placemark in $placemarks)
+        	<Placemark>
+        		<name>$placemark.get("coord_title")</name>
+        		<description>$placemark.get("coord_descr")</description>
+				<labelAlign>center</labelAlign>
+                <labelX>0</labelX>
+                <labelY>10</labelY>
+                <fontColor>#000000</fontColor>
+				<fillColor>$fillColor</fillColor>
+        		<strokeColor>$strokeColor</strokeColor>
+        		<Point>
+        			<coordinates>$placemark.get("coord_x"),$placemark.get("coord_y")</coordinates>
+        		</Point>
+        	</Placemark>
+		#end
+	</Document>
+</kml>
+	

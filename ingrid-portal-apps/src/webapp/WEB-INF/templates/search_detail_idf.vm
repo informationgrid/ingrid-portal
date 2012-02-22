@@ -646,31 +646,22 @@
 #macro (renderKML $entry)
 	#if($tool.hasContent($entry.body))	
 		<div>
-           #if($tool.hasContent($entry.kmlWmsUrl))
-				#renderLinkLineKMLWMS ($entry)
-			#end
-			#foreach($e in $entry.body)
-				<br style="clear:both"/>
-				#renderGroupTitle($e.subtitle)
+           #foreach($e in $entry.body)
+    			<br style="clear:both"/>
+    			#renderGroupTitle($e.subtitle)
         		#renderTable($e)
-        	#end
+		   #end
+		   #if($tool.hasContent($entry.title) && $tool.hasContent($entry.plugId) && $tool.hasContent($entry.docId))
+				<div>
+            		<img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
+            		</span>
+            		<a class="detail_link" href="portal/main-maps.psml?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
+            	</div>	
+		   #end
     	</div>
 		
 	#end
 #end
-
-#macro (renderLinkLineKMLWMS $entry)
-	<div>
-		<img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
-		</span>
-		#if($tool.hasContent($entry.title))
-			<a class="detail_link" href="main-maps.psml?wms_url=$entry.kmlWmsUrl" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
-		#else
-			<a class="detail_link" href="main-maps.psml?wms_url=$entry.kmlWmsUrl" alt="$MESSAGES.getString('common.alt.icon.intern')">$MESSAGES.getString('common.result.showCoord')</a>
-		#end
-	</div>	
-#end
-
 
 ## Render elements for tabs
 #macro (renderElements $elements)

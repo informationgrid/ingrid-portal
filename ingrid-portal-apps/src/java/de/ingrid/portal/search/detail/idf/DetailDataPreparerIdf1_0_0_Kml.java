@@ -1,26 +1,22 @@
 package de.ingrid.portal.search.detail.idf;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.StringTokenizer;
 
-import javax.naming.ConfigurationException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.velocity.context.Context;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.global.UtilsMapServiceManager;
 import de.ingrid.utils.xml.XPathUtils;
 
 //TODO: remove annotation
@@ -36,6 +32,7 @@ public class DetailDataPreparerIdf1_0_0_Kml extends DetailDataPreparerIdf1_0_0{
 		this.rootNode = node;
 		this.context = context;
 		this.iPlugId = iPlugId;
+		this.request = request;
 		this.response = response;
 		messages = (IngridResourceBundle) context.get("MESSAGES");
 		sysCodeList = new IngridSysCodeList(request.getLocale());
@@ -68,22 +65,10 @@ public class DetailDataPreparerIdf1_0_0_Kml extends DetailDataPreparerIdf1_0_0{
 					placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_DESCR, placemarkDescription);
 					
 					String placemarkCoordinates = XPathUtils.getString(nodePlacemark, "kml:Point/kml:coordinates").trim();
-					StringTokenizer tokenizer = new StringTokenizer(placemarkCoordinates, " ");
-					int iToken = 0;
-					while (tokenizer.hasMoreTokens()) {
-						switch (iToken) {
-							case 0:
-								placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_X, tokenizer.nextToken());
-								iToken++;
-								break;
-							case 1:
-								placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_Y, tokenizer.nextToken());
-								iToken++;
-								break;
-							default:
-								break;
-						}
-					}
+					String [] coordinates = placemarkCoordinates.split(",");
+					placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_X, coordinates[0]);
+					placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_Y, coordinates[1]);
+					
 					if(log.isDebugEnabled()){
 						log.debug("KML coord x: " + placemark.get(Settings.RESULT_KEY_WMS_TMP_COORD_X));
 						log.debug("KML coord y: " + placemark.get(Settings.RESULT_KEY_WMS_TMP_COORD_Y));
@@ -95,44 +80,29 @@ public class DetailDataPreparerIdf1_0_0_Kml extends DetailDataPreparerIdf1_0_0{
 				kmlDocument.put("kml_placemark", kmlDocumentPlacemark);
 				elementsKml.add(kmlDocument);
 			}
-			try {
-				addKML(data, elementsKml, docName);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
+			addKmlToContext(data, elementsKml, docName);
 		}
 	}
 	
-	private void addKML(List elements, List kml, String title) throws UnsupportedEncodingException {
-		List<HashMap<String, String>> coords = mergeCoordsByKML(kml);
-		String kmlWmsUrl = "";
-		
-		try {
-			
-			String mapFilePath = UtilsMapServiceManager.getTmpDirectory().concat(UtilsMapServiceManager.createTemporaryMapService(title, title, coords, "4326"));
-			kmlWmsUrl = UtilsMapServiceManager.getConfig().getString("temp_service_server").concat(mapFilePath).concat("&REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1");
-		} catch (ConfigurationException e) {
-			if (log.isErrorEnabled()) {
-				log.error("ConfigurationException by create temporary service: " + e);
-			}
-		} catch (Exception e) {
-			if (log.isErrorEnabled()) {
-				log.error("Exception by create temporary service: " + e);
-			}
-		}
+	private void addKmlToContext(List elements, List kml, String title) {
+		List<HashMap<String, String>> coords = mergeCoordsByKML(kml, title);
 		
 		addSpace(elements);
 		HashMap element = new HashMap();
 		element.put("type", "kml");
 		element.put("title", title);
-		if (kmlWmsUrl.length() > 0) {
-			element.put("kmlWmsUrl", URLEncoder.encode(kmlWmsUrl, "UTF-8"));
+		String plugId = this.request.getParameter("plugid");
+		String docId = this.request.getParameter("docid");
+		if (plugId != null && docId != null) {
+			element.put("docId", docId);
+			element.put("plugId", plugId);
 		}
 		element.put("body", createTableOfPlacemark(kml));
 		elements.add(element);
 	}
 	
 	private ArrayList createTableOfPlacemark(List list) {
+		
 		ArrayList kmlTables = new ArrayList();
 		for (int i = 0; i < list.size(); i++) {
 			HashMap kmlTable = new HashMap();
@@ -169,7 +139,7 @@ public class DetailDataPreparerIdf1_0_0_Kml extends DetailDataPreparerIdf1_0_0{
 		return kmlTables;
 	}
 	
-	private List mergeCoordsByKML(List kml) {
+	private List mergeCoordsByKML(List kml, String title) {
 		List<HashMap<String, String>> pointCoords = new ArrayList<HashMap<String, String>>();
 		
 		for (int i = 0; i < kml.size(); i++) {
@@ -182,7 +152,7 @@ public class DetailDataPreparerIdf1_0_0_Kml extends DetailDataPreparerIdf1_0_0{
 				pointCoords.add(placemark);
 			}
 		}
-		
+	
 		return pointCoords;
 	}
 	

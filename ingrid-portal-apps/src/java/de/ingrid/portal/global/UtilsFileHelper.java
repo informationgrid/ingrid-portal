@@ -38,6 +38,7 @@ public class UtilsFileHelper {
 	public static String		FILE_TITLE	= "file_title";
 	public static String		MAP			= "map";
 	public static String		GML			= "gml";
+	public static String		KML			= "kml";
 	
 	/**
 	 * Convert a byte array to file
@@ -98,11 +99,11 @@ public class UtilsFileHelper {
 	 * @throws Exception
 	 * @throws ConfigurationException
 	 */
-	public static String createNewMapService(String fileTitle, String typ) throws ConfigurationException, Exception {
+	public static String createNewService(String fileTitle, String typ, String path) throws ConfigurationException, Exception {
 		File directory;
 		File file;
 		
-		directory = new File(UtilsMapServiceManager.getTmpDirectory());
+		directory = new File(path);
 		directory.mkdirs();
 		
 		file = new File(directory.getAbsolutePath() + "/" + generateFilename(Integer.toString(fileTitle.hashCode()), typ));
