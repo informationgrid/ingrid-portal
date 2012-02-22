@@ -201,7 +201,7 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements S
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext/lib/GeoExt.js\"></script>"+
         							 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all.css\" />"+
         							 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/frontend/css/style.css\" />"+
-        							 "<script type=\"text/javascript\" src=\"http://proj4js.org/lib/proj4js-compressed.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/proj4.js\"></script>"+
         							 "<!-- openlayers extensions -->"+
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers.addins/LoadingPanel.js\"></script>"+
         							 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/openlayers.addins/loadingpanel.css\" />"+
