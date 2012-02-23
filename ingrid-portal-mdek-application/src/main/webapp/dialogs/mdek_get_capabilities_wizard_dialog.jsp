@@ -89,8 +89,8 @@ scriptScope.startRequest = function() {
 		callback: function(res) {
 		    if (res.versions == "1.3.0") {
 		        dialog.show("<fmt:message key='general.warning' />", dojo.string.substitute("<fmt:message key='dialog.wizard.getCap.version.warning' />",[res.versions]), dialog.WARNING, [
-		            { caption: "<fmt:message key='general.no' />",  action: function() { def.errback("CANCEL"); } },
-                    { caption: "<fmt:message key='general.ok' />", action: function() { setOperationValues(res); } }
+		            { caption: "<fmt:message key='general.no' />",  action: function() { dijit.byId("InfoDialog").hide(); scriptScope.closeThisDialog(); } },
+                    { caption: "<fmt:message key='general.ok' />", action: function() { dijit.byId("InfoDialog").hide(); setOperationValues(res); } }
 		        ]);
 		    } else {
 		    	setOperationValues(res);
