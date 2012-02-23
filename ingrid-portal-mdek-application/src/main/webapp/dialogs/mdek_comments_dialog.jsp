@@ -11,23 +11,28 @@
 <script type="text/javascript">
 var dirtyFlag = null;
 
-var scriptScope = this;
+var scriptScope = _container_;
+
+dojo.connect(scriptScope, "onLoad", function(){
+    var def = scriptScope.createDOMElements();
+    def.then(scriptScope.init);
+});
+
+dojo.connect(scriptScope, "onUnload", function(){
+    dirtyFlag ? udkDataProxy.setDirtyFlag() : udkDataProxy.resetDirtyFlag();
+});
 
 scriptScope.createDOMElements = function() {
-	var commentCommentsTableStructure = [
-		{field: 'date',name: "<fmt:message key='dialog.comments.date'/>",width: '120px', formatter: DateCellFormatter},
-		{field: 'title',name: "<fmt:message key='dialog.comments.user'/>",width: '185px'},
-		{field: 'comment',name: "<fmt:message key='dialog.comments.comment'/>",width: '500px'}
+    var commentCommentsTableStructure = [
+        {field: 'date',name: "<fmt:message key='dialog.comments.date'/>",width: '120px', formatter: DateCellFormatter},
+        {field: 'title',name: "<fmt:message key='dialog.comments.user'/>",width: '185px'},
+        {field: 'comment',name: "<fmt:message key='dialog.comments.comment'/>",width: '500px'}
     ];
-    createDataGrid("commentCommentsTable", null, commentCommentsTableStructure, null);
+    var def = createDataGrid("commentCommentsTable", null, commentCommentsTableStructure, null);
+    return def;
 }
 
-dojo.addOnLoad(function() {
-	
-	scriptScope.createDOMElements();
-	
-	scriptScope.container = dijit.byId("pageDialog");
-	dojo.connect(scriptScope.container, "onLoad", function(){
+scriptScope.init = function() {
 		dirtyFlag = udkDataProxy.dirtyFlag;
 	
 		var srcStore = commentStore;
@@ -53,19 +58,13 @@ dojo.addOnLoad(function() {
 	
 		var setDirtyFlag = function(){ dirtyFlag = true; }
 		dojo.connect(UtilGrid.getTable("commentCommentsTable"), "onDataChanged", setDirtyFlag);
-        
-	});
-	
-	dojo.connect(scriptScope.container, "onUnload", function(){
-		dirtyFlag ? udkDataProxy.setDirtyFlag() : udkDataProxy.resetDirtyFlag();
-	});
-});
+};
 
 scriptScope.addComment = function() {
 	var newComment = dijit.byId("commentNewComment").getValue();
 	newComment = dojo.trim(newComment);
 
-	if (newComment != "") {
+	if (UtilGeneral.hasValue(newComment)) {
 		var userName = UtilAddress.createAddressTitle(currentUser.address);
 		var newCommentBean = {comment: newComment, date: new Date(), user: {uuid: currentUser.addressUuid}, title: userName};
 
@@ -105,7 +104,7 @@ scriptScope.addComment = function() {
                 </span>
                 <span class="button">
                     <span style="float:right;">
-                        <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.comments.addComment" />" id="addCommentButton" onClick="scriptScope.addComment">
+                        <button type="button" dojoType="dijit.form.Button" title="<fmt:message key="dialog.comments.addComment" />" id="addCommentButton" onClick="scriptScope.addComment">
                             <fmt:message key="dialog.comments.addComment" />
                         </button>
                     </span>
