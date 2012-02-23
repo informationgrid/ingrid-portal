@@ -193,7 +193,23 @@ function prepareDialogMap (id, wms, divId, iframeId) {
 			iframe.setAttribute('src', wms);
 			map.appendChild(iframe);
 		}
+
 		dialog.show();
+		//append a div with js, since the normal button disappears on small browsers
+		//the dijit title bar doesnt leave any space, therefore we append it to her 
+		var divs = document.getElementById(id);
+		var theDivInQuestion = divs.firstChild.nextSibling;
+		if(!document.getElementById('closeWebmapDialogX')){
+		dv = document.createElement('div');
+		im = document.createElement('img');
+		dv.setAttribute('class','closeDialogWebmapClient');
+		dv.setAttribute('id','closeWebmapDialogX');
+		im.setAttribute('src','/ingrid-portal-apps/images/facete/facete_close_dialog.png');
+		im.setAttribute('class','facete_delete_img');
+		im.setAttribute('onclick','faceteDialogCancel(\''+id+'\')');
+		dv.appendChild(im);
+		theDivInQuestion.appendChild(dv);
+		}
 
 }
 
@@ -235,4 +251,3 @@ function showButtonSelectCheckboxForm (form, button, coordDiv){
 	}
 	
 }
-
