@@ -150,19 +150,9 @@
 		
 		
 ## ERGEBNISTYPEN ##
-	#if($enableFaceteDatatype || ($enableFacetePartnerList && $enableFacetePartnerList.size() > 0))
-		#set ($hasRankedHits = false)
-		#foreach($e in $rankedResultList.getHits())
-			#set ($hasRankedHits = true)
-		#end
-		#if(!$hasRankedHits)
-			<p>
-    			$MESSAGES.getString("searchResult.facete.category.error")
-            </p>
-    		$action.setParameter("doRemoveAll", "true")
-            #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.all") $action)
-			<br>
-		#end
+	#set ($rankedHitslenght = $rankedResultList.get("length").toString())
+	
+	#if($rankedHitslenght != "0")
 		#if(!$ds || $ds == "1")
         	<div class="cat_label">
         		<img id="hit_types_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('hit_types')">
@@ -174,7 +164,21 @@
         ## DATENTYPEN ##
         		#parse ('/WEB-INF/templates/facete/facete_datatype.vm')
         	</div>
-    	#end
+		#end
+		
+		#set($isMetadata = false)
+		#foreach($datatype in $selectedDatatype)
+			#if($datatype == "metadata")
+				#set($isMetadata = true)
+			#end
+		#end
+		#if($isMetadata)
+    		## ZEITBEZUG ##
+            #if(!$ds || $ds == "1")
+            	#parse ('/WEB-INF/templates/facete/facete_time.vm')
+			#end
+		#end
+		
         ## PARTNER ##
         #if(!$ds || $ds == "1" || $ds == "2" || $ds == "4")
         	#if($enableFacetePartnerList && $enableFacetePartnerList.size() > 0)
@@ -182,11 +186,6 @@
         	#end
         #end
         	
-        ## ZEITBEZUG ##
-        #if(!$ds || $ds == "1")
-        	#parse ('/WEB-INF/templates/facete/facete_time.vm')
-        #end
-        
         ## RAUMBEZUG ##
         #if(!$ds || $ds == "1")
         	#parse ('/WEB-INF/templates/facete/facete_area.vm')
@@ -206,13 +205,20 @@
         #if($ds &&  $ds == "2")
         	#parse ('/WEB-INF/templates/facete/facete_area_address.vm')
 		#end
-	
 	#else
 		<p>
-    		$MESSAGES.getString("searchResult.facete.category.no.hits")
+			#if($isMetaclassSelect || $isMeasuresSelect || $isTopicSelect  || $isDatatypeSelect  || $isAreaAddressSelect || $isAttributeSelect || $isGeothesaurusSelect || $isServiceSelect || $isProviderSelect || $isMapSelect || $isThesaurusSelect || $isTimeSelect)
+				$MESSAGES.getString("searchResult.facete.category.error")
+			#else
+				$MESSAGES.getString("searchResult.facete.category.no.hits")	
+			#end
+			
         </p>
+			#if($isMetaclassSelect || $isMeasuresSelect || $isTopicSelect  || $isDatatypeSelect  || $isAreaAddressSelect || $isAttributeSelect || $isGeothesaurusSelect || $isServiceSelect || $isProviderSelect || $isMapSelect || $isThesaurusSelect || $isTimeSelect)
+        		$action.setParameter("doRemoveAll", "true")
+        		#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.all") $action)
+			#end
+		<br>
 	#end
 	</div>
-	
 </div>
-

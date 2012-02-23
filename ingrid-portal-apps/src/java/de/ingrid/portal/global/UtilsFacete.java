@@ -34,8 +34,6 @@ import de.ingrid.portal.forms.SearchExtEnvPlaceGeothesaurusForm;
 import de.ingrid.portal.forms.SearchExtEnvTopicThesaurusForm;
 import de.ingrid.portal.forms.SearchExtResTopicAttributesForm;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
-import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
-import de.ingrid.portal.interfaces.om.WMSSearchDescriptor;
 import de.ingrid.portal.om.IngridEnvTopic;
 import de.ingrid.portal.om.IngridMeasuresRubric;
 import de.ingrid.portal.om.IngridPartner;
@@ -79,6 +77,7 @@ public class UtilsFacete {
     private static final String ELEMENTS_TOPIC = "elementsTopic";
     private static final String ELEMENTS_DATATYPE = "elementsDatatype";
     private static final String ELEMENTS_METACLASS = "elementsMetaclass";
+    private static final String ELEMENTS_TIME = "elementsTime";
     
     private static final String ENABLE_FACETE_PARTNER_LIST = "enableFacetePartnerList";
     
@@ -88,7 +87,6 @@ public class UtilsFacete {
     private static final String SELECTED_DATATYPE = "selectedDatatype";
     private static final String SELECTED_MEASURES = "selectedMeasures";
     private static final String SELECTED_SERVICE = "selectedService";
-    
     
     private static List<IngridServiceRubric> dbServices = null; 
     private static List<IngridMeasuresRubric> dbMeasures = null;
@@ -104,19 +102,19 @@ public class UtilsFacete {
     	//removeFaceteElementsFromSession(request);
     	checkSessionForNewSearchTerm(request);
     	
-    	addTopicToQuery(request, query);
-	    addMeasuresToQuery(request, query);
-        addDatatypeToQuery(request, query);
-        addServiceToQuery(request, query);
-        addMetaclassToQuery(request, query);
-        addPartnerToQuery(request, query);
-        addProviderToQuery(request, query);
-        addTimeToQuery(request, query);
-        addMapToQuery(request, query);
-        addGeothesaurusToQuery(request, query);
-        addThesaurusToQuery(request, query);
-        addAttributeToQuery(request, query);
-        addAreaAddressToQuery(request, query);
+    	addToQueryTopic(request, query);
+	    addToQueryMeasures(request, query);
+        addToQueryDatatype(request, query);
+        addToQueryService(request, query);
+        addToQueryMetaclass(request, query);
+        addToQueryPartner(request, query);
+        addToQueryProvider(request, query);
+        addToQueryTime(request, query);
+        addToQueryMap(request, query);
+        addToQueryGeothesaurus(request, query);
+        addToQueryThesaurus(request, query);
+        addToQueryAttribute(request, query);
+        addToQueryAreaAddress(request, query);
         
         if(query.get("FACETS") == null){
             ArrayList<IngridDocument> list = new ArrayList<IngridDocument>();
@@ -125,6 +123,7 @@ public class UtilsFacete {
 	        setFaceteQueryParamsProvider(list, request);
 			setFaceteQueryParamsDatatype(list);
 	        setFaceteQueryParamsTopic(list, request);
+	        setFaceteQueryParamsTime(list, request);
 	        query.put("FACETS", list);
         }
         
@@ -139,38 +138,38 @@ public class UtilsFacete {
 			//removeFaceteElementsFromSession(request);
 		}
 		
-		setTopicParamsToContext(request, context);
-		setMetaclassParamsToContext(request, context);
-		setDatatypeParamsToContext(request, context);
-		setServiceParamsToContext(request, context);
-		setMeasuresParamsToContext(request, context);
-		setPartnerParamsToContext(request, context);
-		setProviderParamsToContext(request, context);
-		setMapParamsToContext(request, context);
-        setGeothesaurusParamsToContext(request, context);
-        setThesaurusParamsToContext(request, context);
-        setTimeParamsToContext(request, context);
-        setAttributeParamsToContext(request, context);
-        setAreaAddressParamsToContext(request, context);
+		setParamsToContextTopic(request, context);
+		setParamsToContextMetaclass(request, context);
+		setParamsToContextDatatype(request, context);
+		setParamsToContextService(request, context);
+		setParamsToContextMeasures(request, context);
+		setParamsToContextPartner(request, context);
+		setParamsToContextProvider(request, context);
+		setParamsToContextMap(request, context);
+        setParamsToContextGeothesaurus(request, context);
+        setParamsToContextThesaurus(request, context);
+        setParamsToContextTime(request, context);
+        setParamsToContextAttribute(request, context);
+        setParamsToContextAreaAddress(request, context);
 	}
 
 	public static void setFaceteParamsToSessionByAction(ActionRequest request) {
 		
 		general(request);
 		
-		setFaceteTopicParamsToSession(request);
-		setFaceteMetaclassParamsToSession(request);
-		setFaceteDatatypeParamsToSession(request);
-		setFaceteServiceParamsToSession(request);
-		setFaceteMeasuresParamsToSession(request);
-		setFacetePartnerParamsToSession(request);
-		setFaceteProviderParamsToSession(request);
-		setFaceteTimeParamsToSession(request);
-        setFaceteMapParamsToSession(request);
-        setFaceteGeothesaurusParamsToSession(request);
-        setFaceteThesaurusParamsToSession(request);
-        setFaceteAttributeParamsToSession(request);
-        setFaceteAreaAddressParamsToSession(request);
+		setFaceteParamsToSessionTopic(request);
+		setFaceteParamsToSessionMetaclass(request);
+		setFaceteParamsToSessionDatatype(request);
+		setFaceteParamsToSessionService(request);
+		setFaceteParamsToSessionMeasures(request);
+		setFaceteParamsToSessionPartner(request);
+		setFaceteParamsToSessionProvider(request);
+		setFaceteParamsToSessionTime(request);
+        setFaceteParamsToSessionMap(request);
+        setFaceteParamsToSessionGeothesaurus(request);
+        setFaceteParamsToSessionThesaurus(request);
+        setFaceteParamsToSessionAttribute(request);
+        setFaceteParamsToSessionAreaAddress(request);
         
 	}
 
@@ -181,6 +180,7 @@ public class UtilsFacete {
 		HashMap<String, Long> elementsTopic = null;
 		HashMap<String, Long> elementsDatatype = null;
 		HashMap<String, Long> elementsMetaclass = null;
+		HashMap<String, Long> elementsTime = null;
 		
 		removeFaceteElementsFromSession(request);
 		
@@ -232,6 +232,12 @@ public class UtilsFacete {
 					}
 					elementsDatatype.put(key.replace("type:", ""), value);
 
+				}else if(key.startsWith("modtime:")){
+					if(elementsTime == null){
+						elementsTime = new HashMap<String, Long>();
+					}
+					elementsTime.put(key.replace("modtime:", ""), value);
+
 				}
 			}
 		}		
@@ -257,6 +263,10 @@ public class UtilsFacete {
 			setAttributeToSession(request, ELEMENTS_METACLASS, sortHashMapAsArrayList(elementsMetaclass));
 		}
 		
+		if (elementsTime != null){
+			setAttributeToSession(request, ELEMENTS_TIME, sortHashMapAsArrayList(elementsTime));
+		}
+		
 	}
 
 	/***************************** THEMEN **********************************************/
@@ -280,7 +290,7 @@ public class UtilsFacete {
 		}
 	}
 
-	private static void setFaceteTopicParamsToSession(ActionRequest request) {
+	private static void setFaceteParamsToSessionTopic(ActionRequest request) {
 		
 		String doAddTopic = request.getParameter("doAddTopic");
 		String doAddTopicChb = request.getParameter("doAddTopicChb");
@@ -328,7 +338,7 @@ public class UtilsFacete {
 		}
 	}
 	
-	private static void setTopicParamsToContext (RenderRequest request, Context context){
+	private static void setParamsToContextTopic (RenderRequest request, Context context){
 		
 		ArrayList<HashMap<String, Long>> elementsTopic = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_TOPIC);
 		ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE); 
@@ -468,7 +478,7 @@ public class UtilsFacete {
     	}
 	}
 	
-	private static void addTopicToQuery(PortletRequest request, IngridQuery query) {
+	private static void addToQueryTopic(PortletRequest request, IngridQuery query) {
 		
 		ArrayList<String> selectedTopics = (ArrayList<String>) getAttributeFromSession(request, SELECTED_TOPIC);
     	
@@ -510,7 +520,7 @@ public class UtilsFacete {
 		}
 	}
 
-	private static void setFaceteMetaclassParamsToSession(ActionRequest request) {
+	private static void setFaceteParamsToSessionMetaclass(ActionRequest request) {
 		
 		String doAddMetaclass = request.getParameter("doAddMetaclass");
 		String doRemoveMetaclass = request.getParameter("doRemoveMetaclass");
@@ -539,19 +549,16 @@ public class UtilsFacete {
 			setAttributeToSession(request, SELECTED_METACLASS, selectedMetaclass);
 		}
 	}
-	private static void setMetaclassParamsToContext (RenderRequest request, Context context){
+	private static void setParamsToContextMetaclass (RenderRequest request, Context context){
 		
 		ArrayList<String> selectedMetaclass = (ArrayList<String>) getAttributeFromSession(request, SELECTED_METACLASS);
 		ArrayList<String> enableFaceteMetaClass = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_METACLASS);
 		
     	if(enableFaceteMetaClass != null){
-    		context.put("isMetaclassSelect", true);
     		context.put("enableFaceteMetaClass", enableFaceteMetaClass);
-        }else{
-        	context.put("isMetaclassSelect", false);
         }
-		
-		if(selectedMetaclass != null){
+    	
+		if(selectedMetaclass != null && selectedMetaclass.size() > 0){
     		context.put("isMetaclassSelect", true);
     		context.put("selectedMetaclass", selectedMetaclass);
     	} else{
@@ -560,7 +567,7 @@ public class UtilsFacete {
     	}
 	}
 	
-	private static void addMetaclassToQuery(PortletRequest request, IngridQuery query) {
+	private static void addToQueryMetaclass(PortletRequest request, IngridQuery query) {
 		
 		ArrayList<String> selectedMetaclass = (ArrayList<String>) getAttributeFromSession(request, SELECTED_METACLASS);
     	
@@ -602,7 +609,7 @@ public class UtilsFacete {
 		
 	}
 	
-	private static void setFaceteDatatypeParamsToSession(ActionRequest request) {
+	private static void setFaceteParamsToSessionDatatype(ActionRequest request) {
 		
 		String doAddDatatype = request.getParameter("doAddDatatype");
 		String doRemoveDatatype = request.getParameter("doRemoveDatatype");
@@ -641,19 +648,16 @@ public class UtilsFacete {
 		}
 	}
 	
-	private static void setDatatypeParamsToContext (RenderRequest request, Context context){
+	private static void setParamsToContextDatatype (RenderRequest request, Context context){
 		
 		ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE);
 		ArrayList<String> elementsDatatype = (ArrayList<String>) getAttributeFromSession(request, ELEMENTS_DATATYPE);
     	
 		if(elementsDatatype != null){
-    		context.put("isDatatypeSelect", true);
     		context.put("enableFaceteDatatype", elementsDatatype);
-        }else{
-        	context.put("isDatatypeSelect", false);
         }
 		
-		if(selectedDatatype != null){
+		if(selectedDatatype != null && selectedDatatype.size() > 0){
     		context.put("isDatatypeSelect", true);
     		context.put("selectedDatatype", selectedDatatype);
     	} else{
@@ -663,7 +667,7 @@ public class UtilsFacete {
     	
 	}
 	
-	private static void addDatatypeToQuery(PortletRequest request, IngridQuery query) {
+	private static void addToQueryDatatype(PortletRequest request, IngridQuery query) {
 		
 		ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE);
     	
@@ -689,7 +693,7 @@ public class UtilsFacete {
 	
 	/***************************** SERVICE *********************************************/
 
-	private static void setFaceteServiceParamsToSession(ActionRequest request) {
+	private static void setFaceteParamsToSessionService(ActionRequest request) {
 		
 		String doAddService = request.getParameter("doAddService");
 		String doRemoveService = request.getParameter("doRemoveService");
@@ -719,7 +723,7 @@ public class UtilsFacete {
 		}
 	}
 	
-	private static void setServiceParamsToContext (RenderRequest request, Context context){
+	private static void setParamsToContextService (RenderRequest request, Context context){
 		
 		ArrayList<String> selectedService = (ArrayList<String>) getAttributeFromSession(request, SELECTED_SERVICE);
 		ArrayList<HashMap<String, Long>> elementsService = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_TOPIC);
@@ -765,7 +769,7 @@ public class UtilsFacete {
     		context.put("enableFaceteService", enableFaceteService);
 		}
 		
-		if(selectedService != null){
+		if(selectedService != null && selectedService.size() > 0){
     		context.put("isServiceSelect", true);
     		context.put("selectedService", selectedService);
     	} else{
@@ -776,7 +780,7 @@ public class UtilsFacete {
     	
 	}
 	
-	private static void addServiceToQuery(PortletRequest request, IngridQuery query) {
+	private static void addToQueryService(PortletRequest request, IngridQuery query) {
 		
 		ArrayList<String> selectedService = (ArrayList<String>) getAttributeFromSession(request, SELECTED_SERVICE);
     	
@@ -797,7 +801,7 @@ public class UtilsFacete {
 	
 	/***************************** MESSWERTE *******************************************/
 
-	private static void setFaceteMeasuresParamsToSession(ActionRequest request) {
+	private static void setFaceteParamsToSessionMeasures(ActionRequest request) {
 		
 		String doAddMeasures = request.getParameter("doAddMeasures");
 		String doRemoveMeasures = request.getParameter("doRemoveMeasures");
@@ -828,7 +832,7 @@ public class UtilsFacete {
 	}
 		
 	
-	private static void setMeasuresParamsToContext (RenderRequest request, Context context){
+	private static void setParamsToContextMeasures (RenderRequest request, Context context){
 		
 		ArrayList<String> selectedMeasures = (ArrayList<String>) getAttributeFromSession(request, SELECTED_MEASURES);
 		ArrayList<HashMap<String, Long>> elementsMeasure = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_TOPIC);
@@ -874,7 +878,7 @@ public class UtilsFacete {
     		context.put("enableFaceteMeasures", enableFaceteMeasures);
 		}
 		
-    	if(selectedMeasures != null){
+    	if(selectedMeasures != null && selectedMeasures.size() > 0){
     		context.put("isMeasuresSelect", true);
     		context.put("selectedMeasures", selectedMeasures);
     	} else{
@@ -884,7 +888,7 @@ public class UtilsFacete {
     	
 	}
 	
-	private static void addMeasuresToQuery(PortletRequest request, IngridQuery query) {
+	private static void addToQueryMeasures(PortletRequest request, IngridQuery query) {
 		
 		ArrayList<String> selectedMeasures = (ArrayList<String>) getAttributeFromSession(request, SELECTED_MEASURES);
     	
@@ -912,7 +916,7 @@ public class UtilsFacete {
         list.add(faceteEntry);
 	}
 	
-	private static void setFacetePartnerParamsToSession(ActionRequest request) {
+	private static void setFaceteParamsToSessionPartner(ActionRequest request) {
 		
 		String doPartner = request.getParameter("doPartner");
 		String doRemovePartner = request.getParameter("doRemovePartner");
@@ -937,7 +941,7 @@ public class UtilsFacete {
 		}
 	}
 		
-	private static void setPartnerParamsToContext (RenderRequest request, Context context){
+	private static void setParamsToContextPartner (RenderRequest request, Context context){
 		
 		ArrayList<IngridPartner> enableFacetePartnerList = (ArrayList<IngridPartner>) getAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);
 		
@@ -975,7 +979,7 @@ public class UtilsFacete {
 	}
 	
 	
-	private static void addPartnerToQuery(PortletRequest request, IngridQuery query) {
+	private static void addToQueryPartner(PortletRequest request, IngridQuery query) {
 		
 		ArrayList<IngridPartner> selectedPartner = (ArrayList<IngridPartner>) getAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);
     	
@@ -999,7 +1003,7 @@ public class UtilsFacete {
 		}
 	}
 
-	private static void setFaceteProviderParamsToSession(ActionRequest request) {
+	private static void setFaceteParamsToSessionProvider(ActionRequest request) {
 		
 		String doAddProvider = request.getParameter("doAddProvider");
 		String doAddProviderChb = request.getParameter("doAddProviderChb");
@@ -1061,7 +1065,7 @@ public class UtilsFacete {
 		}
 	}
 
-	private static void setProviderParamsToContext (RenderRequest request, Context context){
+	private static void setParamsToContextProvider (RenderRequest request, Context context){
 		
 		ArrayList<String> selectedProviders = (ArrayList<String>) getAttributeFromSession(request, SELECTED_PROVIDER);
 		List<IngridPartner> partners = (ArrayList<IngridPartner>) getAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);
@@ -1158,7 +1162,7 @@ public class UtilsFacete {
     	}
 	}
 	
-	private static void addProviderToQuery(PortletRequest request, IngridQuery query) {
+	private static void addToQueryProvider(PortletRequest request, IngridQuery query) {
 		
 		ArrayList<String> selectedProvider = (ArrayList<String>) getAttributeFromSession(request, SELECTED_PROVIDER);
 		
@@ -1172,7 +1176,52 @@ public class UtilsFacete {
 	
 	/***************************** ZEITBEZUG *******************************************/
 
-	private static void setFaceteTimeParamsToSession(ActionRequest request) {
+	private static void setFaceteQueryParamsTime(ArrayList<IngridDocument> list, PortletRequest request) {
+		IngridDocument facete = new IngridDocument();
+        ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
+	    
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+		Calendar cal;
+		
+        
+        String timeNow = df.format(new GregorianCalendar().getTime()) + "*";
+        
+       	HashMap<String, String> faceteEntry = new HashMap<String, String>();
+   		faceteEntry.put("id", "modtime1");
+   		cal = new GregorianCalendar();
+   		cal.add(Calendar.MONTH, -1);
+	    faceteEntry.put("query", "t01_object.mod_time:[" +  df.format(cal.getTime()) +  "* TO " + timeNow +  "]");
+	    faceteList.add(faceteEntry);
+	    
+	    faceteEntry = new HashMap<String, String>();
+	    faceteEntry.put("id", "modtime2");
+	    cal = new GregorianCalendar();
+	    cal.add(Calendar.MONTH, -3);
+	    faceteEntry.put("query", "t01_object.mod_time:[" + df.format(cal.getTime()) +  " TO " + timeNow +  "]");
+	    faceteList.add(faceteEntry);	
+	
+	    faceteEntry = new HashMap<String, String>();
+	    faceteEntry.put("id", "modtime3");
+	    cal = new GregorianCalendar();
+	    cal.add(Calendar.YEAR, -1);
+	    faceteEntry.put("query", "t01_object.mod_time:[" + df.format(cal.getTime()) +  " TO " + timeNow +  "]");
+	    faceteList.add(faceteEntry);	
+	
+	    faceteEntry = new HashMap<String, String>();
+	    faceteEntry.put("id", "modtime4");
+	    cal = new GregorianCalendar();
+	    cal.add(Calendar.YEAR, -5);
+	    faceteEntry.put("query", "t01_object.mod_time:[" + df.format(cal.getTime()) +  " TO " + timeNow +  "]");
+	    faceteList.add(faceteEntry);	
+		
+        facete.put("id", "modtime");
+        facete.put("classes", faceteList);
+        
+        list.add(facete);
+		
+	}
+	
+	private static void setFaceteParamsToSessionTime(ActionRequest request) {
 		
 		String doTime = request.getParameter("doTime");
 		
@@ -1187,14 +1236,18 @@ public class UtilsFacete {
 		}
 	}
 	
-	private static void setTimeParamsToContext (RenderRequest request, Context context){
+	private static void setParamsToContextTime (RenderRequest request, Context context){
 		String doTime = (String) getAttributeFromSession(request, "doTime");
 		
-		if(doTime != null)
+		if(doTime != null && doTime.length() > 0){
+			context.put("isTimeSelect", true);
 			context.put("doTime", doTime);
+		}else{
+			context.put("isTimeSelect", false);
+		}
 	}
 	
-	private static void addTimeToQuery(PortletRequest request, IngridQuery query) {
+	private static void addToQueryTime(PortletRequest request, IngridQuery query) {
 		String doTime = (String) getAttributeFromSession(request, "doTime");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar cal = new GregorianCalendar();
@@ -1225,7 +1278,7 @@ public class UtilsFacete {
 	
 	/***************************** KARTE ***********************************************/
 	
-	private static void setFaceteMapParamsToSession(ActionRequest request) {
+	private static void setFaceteParamsToSessionMap(ActionRequest request) {
 		
 		String doAddMap = request.getParameter("doAddMap");
 		String doRemoveMap = request.getParameter("doRemoveMap");
@@ -1332,18 +1385,21 @@ public class UtilsFacete {
 		}
 	}
 	
-	private static void setMapParamsToContext (RenderRequest request, Context context){
+	private static void setParamsToContextMap (RenderRequest request, Context context){
 
 		String wmsURL = UtilsSearch.getWMSURL(request, request.getParameter("wms_url"), false);
         context.put("wmsURL", wmsURL);
         HashMap<String, String> doMapCoords = (HashMap<String, String>) getAttributeFromSession(request, "doMapCoords");
         
         if(doMapCoords != null && doMapCoords.size() > 0){
+        	context.put("isMapSelect", true);
         	context.put("doMapCoords", doMapCoords);
+        }else{
+        	context.put("isMapSelect", false);
         }
 	}
 	
-	private static void addMapToQuery(PortletRequest request, IngridQuery query) {
+	private static void addToQueryMap(PortletRequest request, IngridQuery query) {
 		
 		HashMap<String, String> doMapCoords = (HashMap<String, String>) getAttributeFromSession(request, "doMapCoords");
 		HashMap<String, String> webmapclientCoords = (HashMap<String, String>) getAttributeFromSession(request, "webmapclientCoords");
@@ -1386,7 +1442,7 @@ public class UtilsFacete {
 	 * @param request
 	 */
 	
-	private static void setFaceteGeothesaurusParamsToSession(ActionRequest request) {
+	private static void setFaceteParamsToSessionGeothesaurus(ActionRequest request) {
 		
 		String doGeothesaurus = request.getParameter("doGeothesaurus");
 		String doCancelGeothesaurus = request.getParameter("doCancelGeothesaurus");
@@ -1525,7 +1581,7 @@ public class UtilsFacete {
         }
 	}
 	
-	private static void setGeothesaurusParamsToContext (RenderRequest request, Context context){
+	private static void setParamsToContextGeothesaurus (RenderRequest request, Context context){
 
 		// Nach Raumbezug suchen
         IngridHit[] geothesaurusTopics = (IngridHit []) getAttributeFromSession(request, TOPICS_GEOTHESAURUS);
@@ -1535,7 +1591,12 @@ public class UtilsFacete {
         context.put("list_size", getAttributeFromSession(request, LIST_SIZE_GEOTHESAURUS));
         
         ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
-        context.put("geothesaurusSelectTopics", geothesaurusSelectTopics);
+        if(geothesaurusSelectTopics != null && geothesaurusSelectTopics.size() > 0){
+        	context.put("geothesaurusSelectTopics", geothesaurusSelectTopics);
+            context.put("isGeothesaurusSelect", true);
+        }else{
+        	context.put("isGeothesaurusSelect", false);
+        }
         if(getAttributeFromSession(request, "doGeothesaurus") != null){
         	context.put("doGeothesaurus", getAttributeFromSession(request, "doGeothesaurus"));
         }
@@ -1544,7 +1605,7 @@ public class UtilsFacete {
 	}
 
 	
-	private static void addGeothesaurusToQuery(PortletRequest request, IngridQuery query) {
+	private static void addToQueryGeothesaurus(PortletRequest request, IngridQuery query) {
 
 		ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
         
@@ -1632,7 +1693,7 @@ public class UtilsFacete {
 	
 	/***************************** Thesaurus *****************************************/
 	
-	private static void setFaceteThesaurusParamsToSession(ActionRequest request) {
+	private static void setFaceteParamsToSessionThesaurus(ActionRequest request) {
 		
 		String doThesaurus = request.getParameter("doThesaurus");
 		String doCancelThesaurus = request.getParameter("doCancelThesaurus");
@@ -1750,7 +1811,7 @@ public class UtilsFacete {
 		}
 	}
 	
-	private static void setThesaurusParamsToContext (RenderRequest request, Context context){
+	private static void setParamsToContextThesaurus (RenderRequest request, Context context){
 
 		// Nach Raumbezug suchen
         IngridHit[] thesaurusTopics = (IngridHit []) getAttributeFromSession(request, TOPICS_THESAURUS);
@@ -1758,7 +1819,13 @@ public class UtilsFacete {
         context.put("thesaurusTopicsBrowse", getAttributeFromSession(request, SIMILAR_TOPICS_THESAURUS));
         context.put("thesaurusCurrentTopic", getAttributeFromSession(request, CURRENT_TOPIC_THESAURUS));
         context.put("list_size", getAttributeFromSession(request, LIST_SIZE_THESAURUS));
-        context.put("thesaurusSelectTopics", getAttributeFromSession(request, "thesaurusSelectTopics"));
+        ArrayList<HashMap<String, String>> thesaurusSelectTopics = (ArrayList<HashMap<String, String>>) getAttributeFromSession(request, "thesaurusSelectTopics");
+        if(thesaurusSelectTopics != null && thesaurusSelectTopics.size() > 0){
+        	context.put("isThesaurusSelect", true);
+        	context.put("thesaurusSelectTopics", getAttributeFromSession(request, "thesaurusSelectTopics"));
+        }else{
+        	context.put("isThesaurusSelect", false);
+        }
         context.put("doThesaurus", getAttributeFromSession(request, "doThesaurus"));
         context.put("thesaurusTerm", getAttributeFromSession(request, "thesaurusTerm"));
         
@@ -1793,7 +1860,7 @@ public class UtilsFacete {
 	}
 
 	
-	private static void addThesaurusToQuery(PortletRequest request, IngridQuery query) {
+	private static void addToQueryThesaurus(PortletRequest request, IngridQuery query) {
 
 		ArrayList<HashMap<String, String>> thesaurusSelectTopics = getSelectedThesaurusTopics(request);
         
@@ -1882,7 +1949,7 @@ public class UtilsFacete {
 	
 	/***************************** Attribute ****************************************/
 	
-	private static void setFaceteAttributeParamsToSession(ActionRequest request) {
+	private static void setFaceteParamsToSessionAttribute(ActionRequest request) {
 		
 		String doAddAttribute = request.getParameter("doAddAttribute");
 		String doRemoveAttribute = request.getParameter("doRemoveAttribute");
@@ -1959,12 +2026,17 @@ public class UtilsFacete {
 		}
 	}
 	
-	private static void setAttributeParamsToContext (RenderRequest request, Context context){
-
-		context.put("doAddAttribute", getAttributeFromSession(request, "doAddAttribute"));
+	private static void setParamsToContextAttribute (RenderRequest request, Context context){
+		HashMap<String, String>  attribute = (HashMap<String, String>) getAttributeFromSession(request, "doAddAttribute");
+		if(attribute != null && attribute.size() > 0 ){
+			context.put("isAttributeSelect", true);
+			context.put("doAddAttribute", getAttributeFromSession(request, "doAddAttribute"));	
+		}else{
+			context.put("isAttributeSelect", false);
+		}
 	}
 	
-	private static void addAttributeToQuery(PortletRequest request, IngridQuery query) {
+	private static void addToQueryAttribute(PortletRequest request, IngridQuery query) {
 		
 		HashMap<String, String>  doAddAttribute = (HashMap<String, String>) getAttributeFromSession(request, "doAddAttribute");
     	
@@ -1989,7 +2061,7 @@ public class UtilsFacete {
 	
 	/***************************** Raumbezug - Addressen ****************************************/
 	
-	private static void setFaceteAreaAddressParamsToSession(ActionRequest request) {
+	private static void setFaceteParamsToSessionAreaAddress(ActionRequest request) {
 		
 		String doAddAreaAddress = request.getParameter("doAddAreaAddress");
 		String doRemoveAreaAddress = request.getParameter("doRemoveAreaAddress");
@@ -2041,12 +2113,18 @@ public class UtilsFacete {
 		}
 	}
 	
-	private static void setAreaAddressParamsToContext (RenderRequest request, Context context){
-
-		context.put("doAddAreaAddress", getAttributeFromSession(request, "doAddAreaAddress")); 
+	private static void setParamsToContextAreaAddress (RenderRequest request, Context context){
+		HashMap<String, String> areaAddress = (HashMap<String, String>) getAttributeFromSession(request, "doAddAreaAddress");
+		if(areaAddress != null && areaAddress.size() > 0 ){
+			context.put("isAreaAddressSelect", true);
+			context.put("doAddAreaAddress", getAttributeFromSession(request, "doAddAreaAddress"));	
+		}else{
+			context.put("isAreaAddressSelect", false);
+		}
+		 
 	}
 	
-	private static void addAreaAddressToQuery(PortletRequest request, IngridQuery query) {
+	private static void addToQueryAreaAddress(PortletRequest request, IngridQuery query) {
 		
 		HashMap<String, String> doAddAreaAddress = (HashMap<String, String>) getAttributeFromSession(request, "doAddAreaAddress");
     	

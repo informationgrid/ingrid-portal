@@ -19,32 +19,33 @@
 		#renderFaceteSelectedAttribute($action $MESSAGES.getString("searchResult.facete.time.4"))
 	#else
 		$action.setParameter("doTime",  "1")
-    	<div class="cat_entry_label">
-    		<a href="$action" class="facete_link_line">
-    			$MESSAGES.getString("searchResult.facete.time.1")
-    		</a>
+		<div>
+        	<span class="facete_label">
+        		<a href="$action" class="facete_link_line">$MESSAGES.getString("searchResult.facete.time.1")</a>
+    			#renderLinkEntryNumberInArrayHashMap($elementsTime "modtime1")
+        	</span>
     	</div>
-    	
     	$action.setParameter("doTime",  "2")
-    	<div class="cat_entry_label">
-    		<a href="$action" class="facete_link_line">
-    			$MESSAGES.getString("searchResult.facete.time.2")
-    		</a>
-    	</div>
-        
+    	<div>
+            <span class="facete_label">
+        		<a href="$action" class="facete_link_line">$MESSAGES.getString("searchResult.facete.time.2")</a>
+    			#renderLinkEntryNumberInArrayHashMap($elementsTime "modtime2")
+        	</span>
+        </div>
     	$action.setParameter("doTime",  "3")
-        <div class="cat_entry_label">
-    		<a href="$action" class="facete_link_line">
-    			$MESSAGES.getString("searchResult.facete.time.3")
-    		</a>
+        <div>
+            <span class="facete_label">
+        		<a href="$action" class="facete_link_line">$MESSAGES.getString("searchResult.facete.time.3")</a>
+    			#renderLinkEntryNumberInArrayHashMap($elementsTime "modtime3")
+        	</span>
     	</div>
-    	
     	$action.setParameter("doTime",  "4")
-    	<div class="cat_entry_label">
-    		<a href="$action" class="facete_link_line">
-    			$MESSAGES.getString("searchResult.facete.time.4")
-    		</a>
-    	</div>
+    	<div>
+            <span class="facete_label">
+        		<a href="$action" class="facete_link_line">$MESSAGES.getString("searchResult.facete.time.4")</a>
+    			#renderLinkEntryNumberInArrayHashMap($elementsTime "modtime4")
+        	</span>
+		</div>
     #end
     <br>
 </div>

@@ -74,7 +74,7 @@ var viewConfiguration = "portalu-facete-search";
     	## SELECTED PARAMS
 		#foreach ($geothesaurus in $geothesaurusSelectTopics)
     		$action.setParameter("doRemoveGeothesaurus",  $geothesaurus.topicId)
-			#set($title = "$geothesaurus.topicTitle ($geothesaurus.topicId)") 
+			#set($title = "$geothesaurus.topicTitle") 
         	#renderFaceteSelectedAttribute ($action  $title)
 		#end
 		#if($geothesaurusSelectTopics && $geothesaurusSelectTopics.size() > 1)

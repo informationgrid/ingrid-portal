@@ -75,7 +75,7 @@
                 <p>
                     <b>Search:</b> Central function of the Portal is the PortalU-Search (<a href="?hkey=search-1">Search</a>),
                     with the help of which web pages and data base entries can be searched via a customary full text search (<a
-                        href="?hkey=search-1">Simple search</a>), but can also be searched using a differentiated specialist vocabulary  (<a href="?hkey=ext-search-1">Advanced Search</a>). </p>
+                        href="?hkey=search-1">Basic search</a>), but can also be searched using a differentiated specialist vocabulary  (<a href="?hkey=ext-search-1">Advanced Search</a>). </p>
                 <p>
                     <b>Service:</b> Here you can find news and information about events and current publications in the environment field.</p>
                 <p>
@@ -114,7 +114,7 @@
     <chapter>
         <header>Search</header>
         <section help-key="search-1">
-            <header>Simple search</header>
+            <header>Basic search</header>
             <content>
                 <p>When you use the search function you can enter one or more search terms. Those pages that contain all search terms will be found.</p>
                 <p>Depending on the setting, one of the following search areas will be searched:</p>
@@ -129,7 +129,7 @@
         <section help-key="search-2">
             <header>Further topics for the search</header>
             <content>
-                <p>In addition to the simple search you can further refine your search. Read the following topics on this::</p>
+                <p>In addition to the basic search you can further refine your search. Read the following topics on this::</p>
                 <ul>
                     <li>
                         <a href="?hkey=ext-search-1">Advanced search for environment information </a>
