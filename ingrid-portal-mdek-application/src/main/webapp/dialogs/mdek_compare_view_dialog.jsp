@@ -828,6 +828,14 @@ function renderFirstElement(val) {
     return retVal;
 }
 
+function renderYesNo(val) {
+    if (val == 1) {
+        return "<fmt:message key='general.yes' />";
+    } else {
+        return "<fmt:message key='general.no' />";
+    }
+}
+
 </script>
 </head>
 
