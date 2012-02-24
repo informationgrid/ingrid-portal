@@ -205,8 +205,6 @@ public class UtilsMapServiceManager {
 		VelocityContext context = new VelocityContext();
 		context.put("name", title);
 		context.put("placemarks", coords);
-		context.put("strokeColor", getRandomHexColor());
-		context.put("fillColor", getRandomHexColor());
 		
 		sw = new StringWriter();
 		templatePath = path;
@@ -394,15 +392,4 @@ public class UtilsMapServiceManager {
 			}
 		}
 	}
-	
-	public static String getRandomHexColor(){
-		String color = "000000";
-		String code = ""+(int)(Math.random()*256);
-		
-		code = code+code+code;
-		int  i = Integer.parseInt(code);
-	    color = "#" + Integer.toHexString( 0x1000000 | i).substring(1).toUpperCase();
-	    
-	    return color;
-	 }
 }

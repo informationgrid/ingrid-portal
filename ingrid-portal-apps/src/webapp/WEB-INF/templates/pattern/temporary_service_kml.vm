@@ -5,13 +5,7 @@
         	<Placemark>
         		<name>$placemark.get("coord_title")</name>
         		<description>$placemark.get("coord_descr")</description>
-				<labelAlign>center</labelAlign>
-                <labelX>0</labelX>
-                <labelY>10</labelY>
-                <fontColor>#000000</fontColor>
-				<fillColor>$fillColor</fillColor>
-        		<strokeColor>$strokeColor</strokeColor>
-        		<Point>
+				<Point>
         			<coordinates>$placemark.get("coord_x"),$placemark.get("coord_y")</coordinates>
         		</Point>
         	</Placemark>
