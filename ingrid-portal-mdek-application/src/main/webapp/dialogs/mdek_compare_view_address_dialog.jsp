@@ -20,6 +20,8 @@ dojo.connect(_container_, "onLoad", function() {
 function renderNodeData(nodeDataOld, nodeDataNew) {
 	renderSectionTitel("<fmt:message key='dialog.compare.address.address' />");
 	renderText(detailHelper.renderAddressEntry(nodeDataOld), detailHelper.renderAddressEntry(nodeDataNew));
+    // also compare checkbox in compare view !
+    renderTextWithTitle(nodeDataOld.hideAddress ? "<fmt:message key='general.yes' />": "<fmt:message key='general.no' />", nodeDataNew.hideAddress ? "<fmt:message key='general.yes' />": "<fmt:message key='general.no' />", "<fmt:message key='ui.adr.general.hideAddress' />");
 
 	renderSectionTitel("<fmt:message key='ui.adr.thesaurus.title' />");
 	renderList(nodeDataOld.thesaurusTermsTable, nodeDataNew.thesaurusTermsTable, "<fmt:message key='ui.adr.thesaurus.terms' />", "title");
