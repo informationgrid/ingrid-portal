@@ -36,6 +36,7 @@ public class MdekAddressBean {
 	private String modificationTime;
 	private MdekAddressBean lastEditor;
 	private String workState;
+	private Boolean hideAddress;
 
 	private Integer addressClass;
 	private String organisation;
@@ -463,5 +464,13 @@ public class MdekAddressBean {
 
 	public void setIsMarkedDeleted(Boolean isMarkedDeleted) {
 		this.isMarkedDeleted = isMarkedDeleted;
+	}
+
+	public Boolean getHideAddress() {
+		return hideAddress;
+	}
+
+	public void setHideAddress(Boolean hideAddress) {
+		this.hideAddress = hideAddress;
 	}
 }

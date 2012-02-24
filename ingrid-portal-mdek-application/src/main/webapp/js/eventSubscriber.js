@@ -1516,6 +1516,7 @@ udkDataProxy._setAddressData = function(nodeData)
 			dijit.byId("headerAddressType2Firstname").attr("value", nodeData.givenName, true);
 			dijit.byId("headerAddressType2Style").attr("value", nodeData.nameForm, true);
 			dijit.byId("headerAddressType2Title").attr("value", nodeData.titleOrFunction, true);
+            dijit.byId("headerAddressType2HideAddress").attr("value", nodeData.hideAddress, true);
 			break;
 		case 3:
 			//dijit.byId("headerAddressType3Lastname").attr("value", nodeData.name, true);
@@ -1984,12 +1985,11 @@ udkDataProxy._getAddressData = function(nodeData) {
 			nodeData.organisation = dijit.byId("headerAddressType1Unit").getValue();
 			break;
 		case 2:
-//			dijit.byId("headerAddressType2Institution").attr("value", nodeData.organisation);
 			nodeData.name = dijit.byId("headerAddressType2Lastname").getValue();
 			nodeData.givenName = dijit.byId("headerAddressType2Firstname").getValue();
 			nodeData.nameForm = dijit.byId("headerAddressType2Style").getValue();
 			nodeData.titleOrFunction = dijit.byId("headerAddressType2Title").getValue();
-			//nodeData.organisation = dijit.byId("headerAddressType2Institution").getValue();
+            nodeData.hideAddress = dijit.byId("headerAddressType2HideAddress").checked ? true : false; // in case value is NULL!
 			break;
 		case 3:
 			nodeData.name = dijit.byId("headerAddressType3Lastname").getValue();

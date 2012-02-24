@@ -2160,6 +2160,18 @@
                                         </div>
                                     </span>
                             </div>
+                            <div class="inputContainer">
+                                <span id="uiElement4320" class="outer optional show">
+                                    <div>
+                                    <div class="input">
+                                        <input type="checkbox" id="headerAddressType2HideAddress" />
+                                        <label onclick="javascript:dialog.showContextHelp(arguments[0], 4320)">
+                                            <fmt:message key="ui.adr.general.hideAddress" />
+                                        </label>
+                                    </div>
+                                    </div>
+                                </span>
+                            </div>
                         </div>
                         <div class="fill"></div>
                     </div>

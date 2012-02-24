@@ -423,6 +423,7 @@ public class MdekMapper implements DataMapperInterface {
         mdekAddress.setNameForm(mapToKeyValuePair(adr, MdekKeys.NAME_FORM_KEY, MdekKeys.NAME_FORM).getValue());
         mdekAddress.setTitleOrFunction(mapToKeyValuePair(adr, MdekKeys.TITLE_OR_FUNCTION_KEY, MdekKeys.TITLE_OR_FUNCTION).getValue());
         mdekAddress.setCountryName(mapToKeyValuePair(adr, MdekKeys.COUNTRY_CODE, MdekKeys.COUNTRY_NAME).getValue());
+        mdekAddress.setHideAddress("Y".equals(adr.get(MdekKeys.HIDE_ADDRESS)) ? true : false);
 
         // Common information
         mdekAddress.setStreet((String) adr.get(MdekKeys.STREET));
@@ -650,7 +651,12 @@ public class MdekMapper implements DataMapperInterface {
             udkAdr.put(MdekKeys.COUNTRY_NAME, kvp.getValue());
             udkAdr.put(MdekKeys.COUNTRY_CODE, kvp.getKey());
         }
-        
+        Boolean hideAddress = data.getHideAddress();
+        if (hideAddress != null && hideAddress == true)
+        	udkAdr.put(MdekKeys.HIDE_ADDRESS, "Y");
+        else
+        	udkAdr.put(MdekKeys.HIDE_ADDRESS, "N");
+
 
         // Common information
         udkAdr.put(MdekKeys.STREET, data.getStreet());

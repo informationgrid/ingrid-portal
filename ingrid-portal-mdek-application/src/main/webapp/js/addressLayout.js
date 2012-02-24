@@ -91,6 +91,7 @@ ingridAddressLayout.createType2 = function(){
     createComboBox("headerAddressType2Title", null, dojo.clone(storeProps), function(){
         return UtilSyslist.getSyslistEntry(4305);
     });
+    new dijit.form.CheckBox({}, "headerAddressType2HideAddress");
 }
 
 ingridAddressLayout.createType3 = function(){

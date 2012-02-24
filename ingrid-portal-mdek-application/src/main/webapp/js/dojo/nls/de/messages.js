@@ -720,6 +720,7 @@
 	"ui.adr.general.foreName":"Vorname",
 	"ui.adr.general.form":"Anrede",
 	"ui.adr.general.title":"Titel",
+    "ui.adr.general.hideAddress":"Daten nicht anzeigen",
 	"ui.adr.details.title":"Adresse und Aufgaben",
 	"ui.adr.details.communicationTable.title":"Kommunikation",
 	"ui.adr.details.communicationTable.header.medium":"Art",
