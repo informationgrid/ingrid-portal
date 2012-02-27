@@ -308,9 +308,10 @@ div.section { margin: 0 0 0px 0; padding:0; }
 div.section p a { text-decoration:underline; }
 div.section div p a { text-decoration:none; }
 div.section div p a:hover { text-decoration:underline; }
-div.section-header { margin-top:0; padding:0; }
+div.section-header { margin-top:0; padding:0;}
+div.section-header-webmap { margin-top:0; padding:0; margin-bottom:13px;}
 div.section-header h1 { display:inline; float:left; padding-top:0em; padding-bottom:0em; color: #5E5E5F; text-transform: uppercase; }
-div.section-header span.portlet_info { float:right; font-size:80%; }
+div.section-header span.portlet_info { float:right; font-size:80%; margin-bottom:15px;}
 div.section-header span.edit_info { float:right; font-size:80%; }
 
 /* n�tig f�r Firefox, sonst zerreissts �berschrift ! */
@@ -895,9 +896,10 @@ a.facete_label_chb { color:#111111; }
 div.dijitDialog { background: none repeat scroll 0 0 #FFFFFF; padding: 10px; min-width: 400px; }
 div.facete_dialog {min-width: 610px; }
 div.facete_dialog div.dijitDialogTitleBar { border-bottom: 1px dotted #CECECE !important; background-color: #FFFFFF !important; background-image: none !important; height: 30px; }
-div.facete_dialog div.dijitDialogTitleBar span.dijitDialogCloseIcon { display:none; } 
+div.facete_dialog div.dijitDialogTitleBar span.dijitDialogCloseIcon { }
 div.facete_dialog span.dijitDialogTitle { font-size:14px; font-weight: bold; padding: 0 15px; }
-div.facete_dialog div.dijitDialogCloseIcon { }
+div.facete_dialog span.dijitDialogCloseIcon { float:right; background-image: url("/ingrid-portal-apps/images/facete/facete_close_dialog.png"); width:22px; height:22px; }
+div.facete_dialog span.closeText {}
 div.facete_dialog_underlay { background: #1B78B1 !important; }
 div.facete_dialog div.dijitDialogPaneContent { border-top: 0 !important; }
 div.facete_dialog div.dijitDialogPaneContent div.dialog_content { padding:25px 5px; max-height: 500px; overflow: auto; }

@@ -1,4 +1,3 @@
-
 #set ($action = $renderResponse.createActionURL())
 <div id="dialog_area_map" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.area.map.search")" dojoType="dijit.Dialog">
   <div class="dialog_content_webmapclient" id="dialog_area_map_content" style="max-height: none;">

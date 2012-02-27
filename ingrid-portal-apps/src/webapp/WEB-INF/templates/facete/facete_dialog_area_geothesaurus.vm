@@ -29,11 +29,9 @@
 #end
 
 #set ($action = $renderResponse.createActionURL())
-<div id="dialog_geothesaurus" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.area.name.search")" dojoType="dijit.Dialog" disableCloseButton="true">
+$action.setParameter("doCancelGeothesaurus",  "true")
+<div id="dialog_geothesaurus" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.area.name.search")" dojoType="dijit.Dialog" onCancel="window.location='$action';">
 	<span id="dialog_geothesaurus_loading" class="dijitContentPaneLoading dialog_loading_panel" style="display:inline;"></span>
-	$action.setParameter("doCancelGeothesaurus",  "true")
-	#renderCloseDialog ($action $MESSAGES.getString("searchResult.facete.dialog.tooltip.close"))
-	
 	#set ($action = $renderResponse.createActionURL())
 	<form action="$action" method="post" name="geothesaurus_form">
 		<div class="dialog_content">
