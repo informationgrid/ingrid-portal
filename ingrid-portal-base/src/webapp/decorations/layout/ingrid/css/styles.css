@@ -293,8 +293,8 @@ div.portal-layout-OneColumn { }
 *********************************************************************/
 
 .iconLink { margin:0px 0px 5px 0px; font-size:70%;}
-/* ich will all die beknackten Abh�ngigkeiten unterhalb der Klasse .iconLink nicht (a styles etc. s.u.)
-deshalb definier ich mir jetzt das Gleiche unter anderem Namen,da hab ich keine Abh�ngigkeiten, mm */
+/* ich will all die beknackten Abh?ngigkeiten unterhalb der Klasse .iconLink nicht (a styles etc. s.u.)
+deshalb definier ich mir jetzt das Gleiche unter anderem Namen,da hab ich keine Abhängigkeiten, mm */
 .iconLink2 { margin:0px 0px 5px 0px; font-size:70%;}
 
 div.left { float:left; width:15.75em; padding:0; }
@@ -308,16 +308,15 @@ div.section { margin: 0 0 0px 0; padding:0; }
 div.section p a { text-decoration:underline; }
 div.section div p a { text-decoration:none; }
 div.section div p a:hover { text-decoration:underline; }
-div.section-header { margin-top:0; padding:0;}
-div.section-header-webmap { margin-top:0; padding:0; margin-bottom:13px;}
+div.section-header { margin-top:0; padding:0; margin-bottom:8px;}
 div.section-header h1 { display:inline; float:left; padding-top:0em; padding-bottom:0em; color: #5E5E5F; text-transform: uppercase; }
-div.section-header span.portlet_info { float:right; font-size:80%; margin-bottom:15px;}
+div.section-header span.portlet_info { float:right; font-size:80%; margin-bottom:8px;}
 div.section-header span.edit_info { float:right; font-size:80%; }
 
-/* n�tig f�r Firefox, sonst zerreissts �berschrift ! */
+/* n?tig f?r Firefox, sonst zerreissts ?berschrift ! */
 div.section-header span.clearer { display:block; }
 
-/* n�tig fuer IE: sonst springt in Erweiterter Suche "Suche" Button */
+/* n?tig fuer IE: sonst springt in Erweiterter Suche "Suche" Button */
 div.portal-layout-column-1 .clearer { clear:both; display:block; height:1px; line-height:0px; font-size:1px; margin:0; padding:0; }
 
 div.section p.iconLink span.icon { margin: 7px 0 0 0; }
@@ -448,7 +447,7 @@ div.portlet p { font-size:11px; line-height:15px; color:#646464; }
 div.portlet p.hitrow { font-size:83%; line-height:140%;}
 div.portlet ul { margin: 0 0 -5px 14px;}
 
-/* n�tig fuer Firefox: sonst f�llt Link aus Portlet, vgl. Einstellungen */
+/* nötig fuer Firefox: sonst fällt Link aus Portlet, vgl. Einstellungen */
 div.portlet .clearer { clear:both; display:block; height:1px; line-height: 0px; font-size: 1px; margin:0; padding:0; }
 
 div.portlet .iconLink a { float:left; line-height:140%; font-size:12px; color: #1B78B1 }
@@ -503,7 +502,7 @@ div.formbody_border_style { border-left: 1px solid #CECECE; border-right: 1px so
 
 div.formbody_map { paddingpadding:10px 12px; }
 
-/* Sonderbehandlung f�r IE: dieser �bernimmt die Farbe des �bergeordneten divs nicht f�r rollover Link Auszeichnungen 
+/* Sonderbehandlung für IE: dieser übernimmt die Farbe des ?bergeordneten divs nicht für rollover Link Auszeichnungen 
    siehe auch http://jira.media-style.com/browse/INGRID-192
 */
 div.formbody div { }
@@ -894,7 +893,7 @@ input.facete_input_chb { float:left; margin: 4px 0 0 -20px; top: -2px; }
 a.facete_label_chb { color:#111111; }
 
 div.dijitDialog { background: none repeat scroll 0 0 #FFFFFF; padding: 10px; min-width: 400px; }
-div.facete_dialog {min-width: 610px; }
+div.facete_dialog {min-width: 610px; max-width:810px; max-width:850px;}
 div.facete_dialog div.dijitDialogTitleBar { border-bottom: 1px dotted #CECECE !important; background-color: #FFFFFF !important; background-image: none !important; height: 30px; }
 div.facete_dialog div.dijitDialogTitleBar span.dijitDialogCloseIcon { }
 div.facete_dialog span.dijitDialogTitle { font-size:14px; font-weight: bold; padding: 0 15px; }
@@ -916,7 +915,7 @@ div.dialog_sub_content { padding:0 0 10px 0; }
 span.dialog_loading_panel { }
 
 div.closeDialog { float: right; margin: -30px 0 0; }
-
+div.closeDialogWebmapClient { right:5px; position:absolute;display:inline;margin:  0 0; top:10px; }
 img.facete_open { cursor: pointer; padding: 2px 0px 0 0; }
 img.facete_delete_img { margin: 0px 0px -1px 0px; }
 div.facete_delete span.facete_delete_span_img { position:absolute; padding: 5px 0 0; }
@@ -924,11 +923,13 @@ div.facete_delete span.facete_delete_span_a { position:relative; left:15px; }
 
 div.dialog_bottom div.btn_center input.btn { font-size:11px; color:#FFFFFF; }
 
-iframe.facete_map { height: 680px; width: 880px; }
+iframe.facete_map { height: 505px; width: 880px; }
 
 div.dialog_content input.thesaurus_term { font-size: 83%; line-height: 120%; width: 70%; height: 50%; }
+div.dialog_content_webmapclient { font-size: 83%; line-height: 120%; width: 70%; height: 50%; max-width:820px;height:500px; padding:2px}
 div.dialog_content .inputstyletext { border: 1px inset #FFFFFF; padding: 2px 4px 2px 4px; margin-right:6px;margin-bottom: 5px; }
-
+div.formbody_webmapclient_coordinates_title_facete{font-size:13px;display:inline;}
+div.formbody_webmapclient_coordinates_facete{font-size:13px;display:inline;}
 div.btn_submit_dialog { padding: 11px 0 0; }
 div.btn_submit_dialog div.btn_center input { font-size: 11px; }
 

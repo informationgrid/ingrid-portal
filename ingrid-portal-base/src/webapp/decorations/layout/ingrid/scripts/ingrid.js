@@ -193,7 +193,9 @@ function prepareDialogMap (id, wms, divId, iframeId) {
 			iframe.setAttribute('src', wms);
 			map.appendChild(iframe);
 		}
+
 		dialog.show();
+
 }
 
 /* open dialog */

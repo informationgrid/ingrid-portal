@@ -84,7 +84,7 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
   identity area styles
 *********************************************************************/
 
-div#identity { padding:0; margin:0; height: 97px; width:100%; min-width:1240px; background-color:#68A5D2; overflow:visible; }
+div#identity { padding:0; margin:0; height: 97px; width:100%; min-width:1240px; background-color:#68A5D2; overflow:visible;position:relative; z-index:5; }
 div.motiv_blank { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
 div.motiv_start { background-image:url(../images/01_motiv_start.png); background-repeat:no-repeat; }
 div.motiv_suche { background-image:url(../images/01_motiv_suche.png); background-repeat:no-repeat; }
