@@ -376,7 +376,7 @@ div.resultset p.result_link { font-size:65%; color:#999999; margin:3px 0 8px 0; 
 div.resultset p.result_link img { position:relative; top:1px; }
 div.resultset p.result_link a { text-decoration:none; font-size: 11px; }
 div.resultset p.result_link a:hover { text-decoration:underline; }
-div.resultset span.result_title { font-size:75%; white-space: pre-wrap;}
+div.resultset span.result_title { font-size:75%; }
 div.resultset span.inquiry { margin-left:20px; font-size:83%}
 div.resultset em.date { font-style:normal; font-size: 83%; color:#111111; padding-left:20px;}
 
