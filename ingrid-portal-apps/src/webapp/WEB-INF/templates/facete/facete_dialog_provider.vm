@@ -1,8 +1,7 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="dialog_${partner.ident}" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.title.provider")" dojoType="dijit.Dialog">
 	<form name="providers_${partner.ident}_form" action="$action" method="post">
-    	#renderCloseDialogJS ("faceteDialogCancel('dialog_${partner.ident}');" $MESSAGES.getString("searchResult.facete.dialog.tooltip.close"))
-   		<div class="dialog_content">
+    	<div class="dialog_content">
 			#set($k = 0)
 			<div class="dialog_sub_content">
 			#if($unselectedProvider)

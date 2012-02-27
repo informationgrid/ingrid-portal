@@ -1,8 +1,7 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="dialog_attribute" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.attribute")" dojoType="dijit.Dialog">
 	<form action="$action" method="post">
-    	#renderCloseDialogJS ("faceteDialogCancel('dialog_attribute');" $MESSAGES.getString("searchResult.facete.dialog.tooltip.close"))
-   		<div class="dialog_content" style="width:400px;">
+    	<div class="dialog_content" style="width:400px;">
     		<p>
                 <label class="float_left col2left" for="db_title">$MESSAGES.getString("searchResult.facete.attribute.project")</label>
                 <input type="text" name="db_title" id="db_title" size="35" class="float_left inputstyletext"

@@ -130,12 +130,6 @@
 	</a>
 #end
 
-
-#macro(renderCloseDialogJS $onClick $title)
-	<div class="closeDialog">
-		<img class="facete_delete_img" onclick="$onClick" src="/ingrid-portal-apps/images/facete/facete_close_dialog.png" title="$title"></img>
-	</div>
-#end
 <div>
 	#if($ds && $ds == "2")
 		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete_address', 'search_hits_address')">

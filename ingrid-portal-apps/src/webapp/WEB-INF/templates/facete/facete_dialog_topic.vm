@@ -1,8 +1,7 @@
 #set ($action = $renderResponse.createActionURL())
 <div id="dialog_topic" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.title.topic")" dojoType="dijit.Dialog">
 	<form name="topic_form" action="$action" method="post">
-		#renderCloseDialogJS ("faceteDialogCancel('dialog_topic');" $MESSAGES.getString("searchResult.facete.dialog.tooltip.close"))
-   		<div class="dialog_content">
+		<div class="dialog_content">
 			#set($i = 0)
 			#if($elementsTopicSelect)
     			<div class="dialog_sub_content">
