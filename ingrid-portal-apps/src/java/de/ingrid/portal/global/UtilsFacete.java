@@ -342,10 +342,11 @@ public class UtilsFacete {
 		
 		ArrayList<HashMap<String, Long>> elementsTopic = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_TOPIC);
 		ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE); 
+		ArrayList<String> selectedTopics = (ArrayList<String>) getAttributeFromSession(request, SELECTED_TOPIC);
+		
 		HashMap<String, Long> elementsTopicWithFacete = null;
 		HashMap<String, Long> elementsTopicSelect = null;
 		
-		ArrayList<String> selectedTopics = (ArrayList<String>) getAttributeFromSession(request, SELECTED_TOPIC);
 		ArrayList<IngridEnvTopic> enableFaceteTopicsList = null;
 		List<IngridEnvTopic> unselectedTopics = null;
 		
@@ -369,9 +370,9 @@ public class UtilsFacete {
     			for(int j=0; j < unselectedTopics.size(); j++){
     				if(ident != null){
     					IngridEnvTopic top = unselectedTopics.get(j);
-    					String topIdent = top.getQueryValue(); 
+    					String topIdent = UtilsDB.getTopicFromKey(top.getFormValue()); 
     					
-        				if(ident.equals(topIdent.toLowerCase())){
+        				if(ident.equals(topIdent)){
         					
         					if(elementsTopicWithFacete == null){
         						elementsTopicWithFacete = new HashMap<String,Long>();
@@ -461,13 +462,19 @@ public class UtilsFacete {
 			
 		}
 		
-    	context.put("enableFaceteTopicsList", enableFaceteTopicsList);
-    	context.put("elementsTopic", elementsTopicWithFacete);
-    	if(elementsTopicSelect != null){
+		if(enableFaceteTopicsList != null && enableFaceteTopicsList.size() > 0){
+	    	context.put("enableFaceteTopicsList", enableFaceteTopicsList);
+		}
+    	if(elementsTopicWithFacete != null && elementsTopicWithFacete.size() > 0){
+    		context.put("elementsTopicUnused", sortHashMapAsArrayList(elementsTopicWithFacete));
+    	}
+    	
+    	if(elementsTopicSelect != null && elementsTopicSelect.size() > 0){
     		context.put("elementsTopicSelect", sortHashMapAsArrayList(elementsTopicSelect));
     	}
-    	context.put("enableFaceteTopicCount", PortalConfig.getInstance().getInt("portal.search.facete.topics.count", 3));
-    	context.put("unselectedTopics", unselectedTopics);
+    	if(unselectedTopics != null && unselectedTopics.size() > 0){
+    	    context.put("unselectedTopics", unselectedTopics);
+    	}
     	
     	if(selectedTopics != null && selectedTopics.size() > 0){
         	context.put("isTopicSelect", true);
@@ -476,6 +483,8 @@ public class UtilsFacete {
     		context.put("isTopicSelect", false);
     		context.remove("selectedTopics");
     	}
+    	
+    	context.put("enableFaceteTopicCount", PortalConfig.getInstance().getInt("portal.search.facete.topics.count", 3));
 	}
 	
 	private static void addToQueryTopic(PortletRequest request, IngridQuery query) {
@@ -634,6 +643,7 @@ public class UtilsFacete {
 			}
 			if(doRemoveDatatype.equals("metadata")){
 				removeAttributeFromSession(request, SELECTED_METACLASS);
+				removeAttributeFromSession(request, "doTime");
 			}else if(doRemoveDatatype.equals("topics")){
 				removeAttributeFromSession(request, SELECTED_TOPIC);
 			}else if(doRemoveDatatype.equals("measure")){
@@ -1180,38 +1190,38 @@ public class UtilsFacete {
 		IngridDocument facete = new IngridDocument();
         ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
 	    
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar cal;
 		
         
-        String timeNow = df.format(new GregorianCalendar().getTime()) + "*";
+        String timeNow = df.format(new GregorianCalendar().getTime());
         
        	HashMap<String, String> faceteEntry = new HashMap<String, String>();
    		faceteEntry.put("id", "modtime1");
    		cal = new GregorianCalendar();
    		cal.add(Calendar.MONTH, -1);
-	    faceteEntry.put("query", "t01_object.mod_time:[" +  df.format(cal.getTime()) +  "* TO " + timeNow +  "]");
+	    faceteEntry.put("query", "t1:" + df.format(cal.getTime()) +  " t2:" + timeNow + " time:include");
 	    faceteList.add(faceteEntry);
 	    
 	    faceteEntry = new HashMap<String, String>();
 	    faceteEntry.put("id", "modtime2");
 	    cal = new GregorianCalendar();
 	    cal.add(Calendar.MONTH, -3);
-	    faceteEntry.put("query", "t01_object.mod_time:[" + df.format(cal.getTime()) +  " TO " + timeNow +  "]");
+	    faceteEntry.put("query", "t1:" + df.format(cal.getTime()) +  " t2:" + timeNow + " time:include");
 	    faceteList.add(faceteEntry);	
 	
 	    faceteEntry = new HashMap<String, String>();
 	    faceteEntry.put("id", "modtime3");
 	    cal = new GregorianCalendar();
 	    cal.add(Calendar.YEAR, -1);
-	    faceteEntry.put("query", "t01_object.mod_time:[" + df.format(cal.getTime()) +  " TO " + timeNow +  "]");
+	    faceteEntry.put("query", "t1:" + df.format(cal.getTime()) +  " t2:" + timeNow + " time:include");
 	    faceteList.add(faceteEntry);	
 	
 	    faceteEntry = new HashMap<String, String>();
 	    faceteEntry.put("id", "modtime4");
 	    cal = new GregorianCalendar();
 	    cal.add(Calendar.YEAR, -5);
-	    faceteEntry.put("query", "t01_object.mod_time:[" + df.format(cal.getTime()) +  " TO " + timeNow +  "]");
+	    faceteEntry.put("query", "t1:" +  df.format(cal.getTime()) +  " t2:" + timeNow + " time:include");
 	    faceteList.add(faceteEntry);	
 		
         facete.put("id", "modtime");
@@ -1852,10 +1862,16 @@ public class UtilsFacete {
             }
             context.put("list_size", new Integer(topics.size() + 1));
         }
-        context.put("thesaurusNarrowerTerm", narrowerTermAssoc);
-        context.put("thesaurusWiderTerm", widerTermAssoc);
-        context.put("thesaurusSynonym", synonymAssoc);
-        context.put("thesaurusRelatedTerms", relatedTermsAssoc);
+        
+        if(narrowerTermAssoc != null && narrowerTermAssoc.size() > 0)
+        	context.put("thesaurusNarrowerTerm", narrowerTermAssoc);
+        if(widerTermAssoc != null && widerTermAssoc.size() > 0)
+        	context.put("thesaurusWiderTerm", widerTermAssoc);
+        if(synonymAssoc != null && synonymAssoc.size() > 0)
+        	context.put("thesaurusSynonym", synonymAssoc);
+        if(relatedTermsAssoc != null && relatedTermsAssoc.size() > 0)
+            context.put("thesaurusRelatedTerms", relatedTermsAssoc);
+        
         context.put("thesaurusError", getAttributeFromSession(request, ERROR_THESAURUS));
 	}
 

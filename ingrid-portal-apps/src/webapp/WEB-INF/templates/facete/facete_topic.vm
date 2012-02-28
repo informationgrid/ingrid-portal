@@ -1,72 +1,43 @@
 #set ($action = $renderResponse.createActionURL())
-#macro(renderTopicListTree $key $topic)
-	#set($topicKey = $key)
-	#set($topicTitle = "searchResult.facete.topic.$topicKey")
-	#set($isSelectedChbTopic = false)
-	#foreach ($selectChb in $selectedTopics)
-		#if($isSelectedChbTopic != true)
-			#if($topicKey == $selectChb)
-				#set($isSelectedChbTopic = true)
-			#end
-		#end
-	#end
-	<div class="facete_chb">
-		<span class="facete_label">
-			#set ($action = $renderResponse.createActionURL())
-			#if($isSelectedChbTopic)
-				$action.setParameter("doRemoveTopic", "$topicKey")
-				<a href="$action" class="facete_label_chb">
-					<input id="$topicKey" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
-			#else
-				$action.setParameter("doAddTopicChb", "$topicKey")
-				<a href="$action">
-					<input id="$topicKey" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
-			#end
-				$MESSAGES.getString("$topicTitle")</a>
-				#if($topic.get($topicKey))
-					#renderLinkEntryNumber("$topic.get($topicKey)")
-				#end
-					</input>
-				</a>
-		</span>
-	</div>
-#end
-
-#macro(renderTopicListTreeList $topics)
+#macro(renderTopicListTreeList $topics $counter)
+	#set($count = 0)
 	#foreach ($topic in $topics)
-		#set($topicKey = "")
-		#foreach ($key in $topic.keySet())
-			#set($topicKey = $key)
-		#end
-		#set($topicTitle = "searchResult.facete.topic.$topicKey")
-    	#set($isSelectedChbTopic = false)
-    	#foreach ($selectChb in $selectedTopics)
-    		#if($isSelectedChbTopic != true)
-    			#if($topicKey == $selectChb)
-    				#set($isSelectedChbTopic = true)
-    			#end
+		#set($count = $count + 1)
+		#if($count <= $counter)
+    		#set($topicKey = "")
+    		#foreach ($key in $topic.keySet())
+    			#set($topicKey = $key)
     		#end
-    	#end
-    	<div class="facete_chb">
-    		<span class="facete_label">
-    			#set ($action = $renderResponse.createActionURL())
-    			#if($isSelectedChbTopic)
-    				$action.setParameter("doRemoveTopic", "$topicKey")
-					<a href="$action" class="facete_label_chb">
-    					<input id="$topicKey" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
-    			#else
-    				$action.setParameter("doAddTopicChb", "$topicKey")
-    				<a href="$action">
-    					<input id="$topicKey" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
-    			#end
-    				$MESSAGES.getString("$topicTitle")</a>
-    				#if($topic.get($topicKey))
-						#renderLinkEntryNumber("$topic.get($topicKey)")
-					#end
-					    </input>
-					</a>
-    		</span>
-    	</div>
+    		#set($topicTitle = "searchResult.facete.topic.$topicKey")
+        	#set($isSelectedChbTopic = false)
+        	#foreach ($selectChb in $selectedTopics)
+        		#if($isSelectedChbTopic != true)
+        			#if($topicKey == $selectChb)
+        				#set($isSelectedChbTopic = true)
+        			#end
+        		#end
+        	#end
+        	<div class="facete_chb">
+        		<span class="facete_label">
+        			#set ($action = $renderResponse.createActionURL())
+        			#if($isSelectedChbTopic)
+        				$action.setParameter("doRemoveTopic", "$topicKey")
+    					<a href="$action" class="facete_label_chb">
+        					<input id="$topicKey" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
+        			#else
+        				$action.setParameter("doAddTopicChb", "$topicKey")
+        				<a href="$action">
+        					<input id="$topicKey" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
+        			#end
+        				$MESSAGES.getString("$topicTitle")</a>
+        				#if($topic.get($topicKey))
+    						#renderLinkEntryNumber("$topic.get($topicKey)")
+    					#end
+    					    </input>
+    					</a>
+        		</span>
+        	</div>
+		#end
     #end
 #end
 
@@ -88,14 +59,9 @@
 	<div>
 		#set($i = 0)
 		#if($isTopicSelect)
-			#renderTopicListTreeList ($elementsTopicSelect)
+			#renderTopicListTreeList ($elementsTopicSelect $elementsTopicSelect.size())
 		#else
-			#foreach ($key in $elementsTopic.keySet())
-				#if($i < $enableFaceteTopicCount)
-					#renderTopicListTree ($key $elementsTopic)
-					#set($i = $i + 1)
-				#end
-    		#end	
+			#renderTopicListTreeList ($elementsTopicUnused $enableFaceteTopicCount)
 		#end
 		<ul class="facete_ul_more">
 			<li>

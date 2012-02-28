@@ -36,10 +36,14 @@
         			#end
     			</div>
 			#end
-			#if($elementsTopic)
-    			<div class="dialog_sub_content">
+			#if($elementsTopicUnused)
+				<div class="dialog_sub_content">
         			<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.result.entries")</p>
-        			#foreach ($topicKey in $elementsTopic.keySet())
+					#foreach ($topic in $elementsTopicUnused)
+						#set($topicKey = "")
+                		#foreach ($key in $topic.keySet())
+                			#set($topicKey = $key)
+                		#end
     					#set($topicTitle = "searchResult.facete.topic.$topicKey")
         				#set($isSelectedChbTopic = false)
         				#foreach ($selectChb in $selectedTopics)
@@ -58,11 +62,11 @@
         							#end
                                 >$MESSAGES.getString($topicTitle)</input>
         					</span>
-							#if($elementsTopic && $topicKey)
-								#renderLinkEntryNumberInHashMap($elementsTopic "$topicKey")
+							#if($topic.get($topicKey))
+								#renderLinkEntryNumber("$topic.get($topicKey)")
 							#end
                        	</div>
-    				#end
+        			#end
     			</div>
 			#end
         	#if($elementsTopicSelect)
