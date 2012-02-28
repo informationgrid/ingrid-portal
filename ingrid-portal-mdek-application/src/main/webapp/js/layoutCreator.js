@@ -19,31 +19,23 @@ function createCustomTree(id, node, identifier, label, expandLoadFunction){
         childrenAttrs: ["children"]
     });
     
-	var myTree;
+	var myTreeStructure = {
+            id: id,
+            model: treeModel,
+            persist: false,
+            showRoot: false,
+            openOnClick: false,
+            onLoad: function() {this.finishedCreate = true; },
+            lazyLoadItems: expandLoadFunction
+        };
+    var myTree;
 	if (node == null) {
-		myTree = new ingrid.dijit.CustomTree({
-			id: id,
-			model: treeModel,
-			persist: false,
-			showRoot: false,
-			openOnClick: false,
-            onLoad: function() {this.finishedCreate = true; },
-			lazyLoadItems: expandLoadFunction
-		}, id);
+		myTree = new ingrid.dijit.CustomTree(myTreeStructure, id);
 	} else {
-		myTree = new ingrid.dijit.CustomTree({
-			id: id,
-			model: treeModel,
-			persist: false,
-			showRoot: false,
-			openOnClick: false,
-            onLoad: function() {this.finishedCreate = true; },
-			lazyLoadItems: expandLoadFunction
-		}).placeAt(node);
+		myTree = new ingrid.dijit.CustomTree(myTreeStructure).placeAt(node);
 	}
 	
 	myTree.startup();
-    
 }
 
 /*

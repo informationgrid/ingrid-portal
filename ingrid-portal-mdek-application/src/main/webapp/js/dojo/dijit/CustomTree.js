@@ -54,13 +54,21 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
     },
 	
 	getIconClass: function(/*dojo.data.Item*/ item, /*Boolean*/ opened) {
-		return "TreeIcon " + "TreeIcon" + item.nodeDocType;
+        var myIconClass = "TreeIcon " + "TreeIcon" + item.nodeDocType;
+        // check explicitly if set to false ! (can also be null in top nodes ...)
+        if (item.userWritePermission && item.userWritePermission[0] == false)
+            myIconClass = myIconClass + " IconDisabled";
+		return myIconClass;
 	},
 	
 	getLabelClass: function(/*dojo.data.Item*/ item, /*Boolean*/ opened) {
-		if (item.labelClass)
-			return item.labelClass;
-		return "";
+		var myLabelClass = "";
+        if (item.labelClass)
+            myLabelClass = item.labelClass;
+        // check explicitly if set to false ! (can also be null in top nodes ...)
+        if (item.userWritePermission && item.userWritePermission[0] == false)
+            myLabelClass = myLabelClass + " TreeNodeNotSelectable";
+		return myLabelClass;
 	},
 	
 	mayHaveChildren: function(/*dojo.data.Item*/item){

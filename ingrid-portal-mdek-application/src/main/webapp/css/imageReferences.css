@@ -25,7 +25,7 @@
 .tabIconHelp         {background-position: -270px;}
 
 /* disabled icons */
-.dijitDisabled .dijitIcon { opacity: 0.3; filter: alpha(opacity=30);}
+.dijitDisabled .dijitIcon, .IconDisabled { opacity: 0.3; filter: alpha(opacity=30);}
 
 .titleIcon           {background-position: -198px; position:relative; top:2px; left:4px; float:left; }
 .expanded .titleIcon {background-position: -234px;}
