@@ -2622,6 +2622,7 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 				isFolder: false,
 				isPublished: nodeData.isPublished,
 				nodeDocType: nodeData.nodeDocType,
+                publicationCondition: nodeData.extraInfoPublishArea,
 				title: title,
 				objectClass: objClass,
 				dojoType: 'ingrid:TreeNode',
@@ -2649,8 +2650,10 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 		var node = dijit.byId(oldUuid).item;
 		if (node) {
 			node.nodeDocType = [nodeData.nodeDocType];
+            node.publicationCondition = [nodeData.extraInfoPublishArea];
 			//dijit.byId("treeDocIcons").setnodeDocTypeClass(node);
 			//node.setTitle(title);
+			// this call updates the tree, so provide newest data in node before !
 			dijit.byId("dataTree").model.store.setValue(node, "title", title);
 			node.objectClass = [objClass],
 			node.id = [nodeData.uuid];	
