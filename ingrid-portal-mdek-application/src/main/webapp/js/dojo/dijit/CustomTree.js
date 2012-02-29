@@ -2,6 +2,28 @@ dojo.provide("ingrid.dijit.CustomTree");
 
 dojo.require("dijit.Tree");
 
+dojo.declare("ingrid.dijit._CustomTreeNode", dijit._TreeNode, {
+	
+    templateString: dojo.cache("ingrid.dijit", "templates/CustomTreeNode.html"),
+
+    _updateItemClasses: function(item){
+        // summary:
+        //      Set appropriate CSS classes for icon and label dom node
+        //      (used to allow for item updates to change respective CSS)
+        // tags:
+        //      private
+        var tree = this.tree, model = tree.model;
+        if(tree._v10Compat && item === model.root){
+            // For back-compat with 1.0, need to use null to specify root item (TODO: remove in 2.0)
+            item = null;
+        }
+        this._applyClassAndStyle(item, "preIcon", "PreIcon");
+        this._applyClassAndStyle(item, "icon", "Icon");
+        this._applyClassAndStyle(item, "label", "Label");
+        this._applyClassAndStyle(item, "row", "Row");
+    }
+});
+
 dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
 	// remember the node we want to copy/cut
 	nodeToCopy: null,
@@ -53,22 +75,41 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
         }
     },
 	
+    getPreIconClass: function(/*dojo.data.Item*/ item, /*Boolean*/ opened) {
+        var myClass = "TreePreIcon";
+        if (item.publicationCondition && item.publicationCondition[0] != null) {
+            myClass = myClass + " TreePreIcon" + item.publicationCondition[0];
+            if (item.userWritePermission && item.userWritePermission[0] == false)
+                myClass = myClass + " IconDisabled";
+        }
+        return myClass;
+    },
+    
+    getPreIconStyle: function(/*dojo.data.Item*/ item, /*Boolean*/ opened){
+        // summary:
+        //      Overridable function to return CSS styles to display preIcon
+        // returns:
+        //      Object suitable for input to dojo.style() like {color: "red", background: "green"}
+        // tags:
+        //      extension
+    },
+
 	getIconClass: function(/*dojo.data.Item*/ item, /*Boolean*/ opened) {
-        var myIconClass = "TreeIcon " + "TreeIcon" + item.nodeDocType;
+        var myClass = "TreeIcon " + "TreeIcon" + item.nodeDocType;
         // check explicitly if set to false ! (can also be null in top nodes ...)
         if (item.userWritePermission && item.userWritePermission[0] == false)
-            myIconClass = myIconClass + " IconDisabled";
-		return myIconClass;
+            myClass = myClass + " IconDisabled";
+		return myClass;
 	},
 	
 	getLabelClass: function(/*dojo.data.Item*/ item, /*Boolean*/ opened) {
-		var myLabelClass = "";
+		var myClass = "";
         if (item.labelClass)
-            myLabelClass = item.labelClass;
+            myClass = item.labelClass;
         // check explicitly if set to false ! (can also be null in top nodes ...)
         if (item.userWritePermission && item.userWritePermission[0] == false)
-            myLabelClass = myLabelClass + " TreeNodeNotSelectable";
-		return myLabelClass;
+            myClass = myClass + " TreeNodeNotSelectable";
+		return myClass;
 	},
 	
 	mayHaveChildren: function(/*dojo.data.Item*/item){
@@ -250,7 +291,16 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
                 return false;
             }
         }
+    },
+	
+    _createTreeNode: function(/*Object*/ args){
+        // summary:
+        //      creates a TreeNode
+        // description:
+        //      Developers can override this method to define their own TreeNode class;
+        //      However it will probably be removed in a future release in favor of a way
+        //      of just specifying a widget for the label, rather than one that contains
+        //      the children too.
+        return new ingrid.dijit._CustomTreeNode(args);
     }
-	
-	
 });

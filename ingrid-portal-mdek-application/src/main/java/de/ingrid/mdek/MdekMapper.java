@@ -533,6 +533,7 @@ public class MdekMapper implements DataMapperInterface {
         TreeNodeBean treeNode = getTreeNodeWithCommonParameters(doc);
 
         treeNode.setTitle((String) doc.get(MdekKeys.TITLE));
+        treeNode.setPublicationCondition((Integer) doc.get(MdekKeys.PUBLICATION_CONDITION));
         String nodeDocType = getObjectDocType(doc);
         treeNode.setNodeDocType(nodeDocType);
 

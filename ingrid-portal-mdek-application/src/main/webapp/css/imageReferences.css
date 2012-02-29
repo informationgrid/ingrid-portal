@@ -237,6 +237,19 @@
     border: none !important;
 }
 
+/* generic class for preIcon */
+.TreePreIcon {
+    width: 3px;
+    height: 3px;
+    float: left;
+    margin-top: 13px;
+    border: none !important;
+}
+/* specials for preIcon, 1=internet, 2=intranet, 3=internal */
+.TreePreIcon1 {}
+.TreePreIcon2 {background-color: #176798;}
+.TreePreIcon3 {background-color: #C31200;}
+
 /* overwrite/add treeNode display of theme CLARO to show connecting lines */
 
 .claro .dijitTreeNode {

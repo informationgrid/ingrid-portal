@@ -5,6 +5,7 @@ public class TreeNodeBean {
 	private String title;
 	private String nodeDocType;
 	private Integer objectClass;
+	private Integer publicationCondition;
 
 	private Boolean isFolder;
 	private Boolean isPublished;
@@ -147,6 +148,14 @@ public class TreeNodeBean {
 
 	public void setNodeAppType(String nodeAppType) {
 		this.nodeAppType = nodeAppType;
+	}
+
+	public Integer getPublicationCondition() {
+		return publicationCondition;
+	}
+
+	public void setPublicationCondition(Integer publicationCondition) {
+		this.publicationCondition = publicationCondition;
 	}
 
 }
