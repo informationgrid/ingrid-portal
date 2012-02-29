@@ -69,9 +69,8 @@
         			#end
     			</div>
 			#end
-        	#if($elementsTopicSelect)
-        		#if($unselectedTopics)
-            		<div>
+        	#if($unselectedTopics)
+            	<div>
             		<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.unselected.entries")</p>
                     #foreach ($topic in $unselectedTopics)
             			#set($value = $topic.getFormValue())
@@ -86,7 +85,6 @@
                        	</div>
             		#end
         		</div>
-				#end
 			#end
 		</div>
 		
