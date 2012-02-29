@@ -394,7 +394,10 @@
 	"extraInfo.publicationCondition.internet":"Internet",
 	"extraInfo.publicationCondition.intranet":"Intranet",
 	"extraInfo.publicationCondition.internal":"amtsintern",
-	"extraInfo.publicationCondition.notShared":"nicht freigegeben",
+
+    "tooltip.publicationCondition.1":"Internet",
+    "tooltip.publicationCondition.2":"Intranet",
+    "tooltip.publicationCondition.3":"Amtsintern",
 
     "table.selectAll":"Alle Zeilen auswählen",
     "table.deselectAll":"Auswahl aufheben",

@@ -394,7 +394,10 @@
 	"extraInfo.publicationCondition.internet":"Internet",
 	"extraInfo.publicationCondition.intranet":"Intranet",
 	"extraInfo.publicationCondition.internal":"Internal",
-	"extraInfo.publicationCondition.notShared":"Not Shared",
+
+    "tooltip.publicationCondition.1":"Internet",
+    "tooltip.publicationCondition.2":"Intranet",
+    "tooltip.publicationCondition.3":"Internal",
 
     "table.selectAll":"Select all rows",
     "table.deselectAll":"Clear selection",

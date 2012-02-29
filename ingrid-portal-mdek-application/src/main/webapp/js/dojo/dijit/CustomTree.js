@@ -123,6 +123,12 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
             myMsgKey += item.objectClass[0];
             myTooltip = message.get(myMsgKey);
         }
+        if (item.publicationCondition && item.publicationCondition[0] != null) {
+            myMsgKey = "tooltip.publicationCondition." + item.publicationCondition[0];
+            if (myTooltip.length > 0)
+                myTooltip += ", ";
+            myTooltip += message.get(myMsgKey);
+        }
         return myTooltip;
     },
 
