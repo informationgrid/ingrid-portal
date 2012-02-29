@@ -1850,21 +1850,64 @@ public class UtilsFacete {
 		ArrayList<HashMap<String, String>> thesaurusSelectTopics = getSelectedThesaurusTopics(request);
         
 		if(thesaurusSelectTopics != null && thesaurusSelectTopics.size() > 0){
-    		ClauseQuery cq = null;
+			ClauseQuery cq = null;
     		for (int i = 0; i < thesaurusSelectTopics.size(); i++) {
-    		  HashMap<String, String> map = (HashMap<String, String>) thesaurusSelectTopics.get(i);
-    		  cq = new ClauseQuery(true, false);
-   	            
-   	    	   if (map != null) {
-            	   String term = (String) map.get("topicTitle");
-            	   if(term != null){
-            		   cq.addTerm(new TermQuery(false, false, term));
-            	   }
-               }
-           }
-    	   if(cq != null){
-    		   query.addClause(cq);   
-    	   }
+    			HashMap<String, String> map = (HashMap<String, String>) thesaurusSelectTopics.get(i);
+    			if (map != null) {
+    				String term = (String) map.get("topicTitle");
+    				switch (i) {
+					case 0:
+						if(thesaurusSelectTopics.size() == 1){
+		    				if(term != null){
+			            		query.addTerm(new TermQuery(true, false, term));
+			            	}
+	    				}else{
+	    					if(term != null){
+	    						if(cq == null){
+	        						cq = new ClauseQuery(true, false);
+	        					}
+	        		   	       	cq.addTerm(new TermQuery(true, false, term));
+	    					}
+	    				}
+						break;
+					case 1:
+						cq.addTerm(new TermQuery(false, false, term));
+						break;
+					default:
+						cq.addTerm(new TermQuery(false, false, term));
+						break;
+					}
+	            	
+	    		}
+    		}
+    		if(cq != null){
+    			query.addClause(cq);
+    		}
+    		
+    		String ds = request.getParameter("ds");
+    		switch (new Integer(ds)) {
+			case 1:
+				// Umweltinformtionen
+				query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
+	                    Settings.QVALUE_DATATYPE_AREA_ENVINFO));
+				break;
+			case 2:
+				break;
+			case 3:
+				// Forschungsprojekte
+				query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
+	                    Settings.QVALUE_DATATYPE_AREA_RESEARCH));
+				break;
+			case 4:
+				// Rechtsvorschriften
+				query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
+	                    Settings.QVALUE_DATATYPE_AREA_LAW));
+				break;
+
+			default:
+				break;
+			}
+    		
 	    }
 	}
 	
