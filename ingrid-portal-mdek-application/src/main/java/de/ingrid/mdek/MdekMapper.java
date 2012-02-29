@@ -544,8 +544,6 @@ public class MdekMapper implements DataMapperInterface {
         TreeNodeBean treeNode = getTreeNodeWithCommonParameters(doc);
 
         treeNode.setTitle(buildAddressTitle(doc));
-        Integer adrClass = (Integer) doc.get(MdekKeys.CLASS);
-        treeNode.setObjectClass(adrClass);
         String adrDocType = getAddressDocType(doc);
         treeNode.setNodeDocType(adrDocType);
 
@@ -556,6 +554,7 @@ public class MdekMapper implements DataMapperInterface {
     private TreeNodeBean getTreeNodeWithCommonParameters(IngridDocument doc) {
         TreeNodeBean treeNode = new TreeNodeBean();
         treeNode.setId((String) doc.get(MdekKeys.UUID));
+        treeNode.setObjectClass((Integer) doc.get(MdekKeys.CLASS));
         treeNode.setIsFolder((Boolean) doc.get(MdekKeys.HAS_CHILD));
         treeNode.setIsPublished((Boolean) doc.get(MdekKeys.IS_PUBLISHED));
         boolean markedDeleted = doc.get(MdekKeys.MARK_DELETED) == null ? false : ((String) doc.get(MdekKeys.MARK_DELETED)).equalsIgnoreCase("Y");

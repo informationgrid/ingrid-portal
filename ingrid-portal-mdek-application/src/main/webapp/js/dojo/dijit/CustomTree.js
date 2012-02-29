@@ -78,9 +78,9 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
     getPreIconClass: function(/*dojo.data.Item*/ item, /*Boolean*/ opened) {
         var myClass = "TreePreIcon";
         if (item.publicationCondition && item.publicationCondition[0] != null) {
-            myClass = myClass + " TreePreIcon" + item.publicationCondition[0];
+            myClass += " TreePreIcon" + item.publicationCondition[0];
             if (item.userWritePermission && item.userWritePermission[0] == false)
-                myClass = myClass + " IconDisabled";
+                myClass += " IconDisabled";
         }
         return myClass;
     },
@@ -98,7 +98,7 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
         var myClass = "TreeIcon " + "TreeIcon" + item.nodeDocType;
         // check explicitly if set to false ! (can also be null in top nodes ...)
         if (item.userWritePermission && item.userWritePermission[0] == false)
-            myClass = myClass + " IconDisabled";
+            myClass += " IconDisabled";
 		return myClass;
 	},
 	
@@ -108,10 +108,24 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
             myClass = item.labelClass;
         // check explicitly if set to false ! (can also be null in top nodes ...)
         if (item.userWritePermission && item.userWritePermission[0] == false)
-            myClass = myClass + " TreeNodeNotSelectable";
+            myClass += " TreeNodeNotSelectable";
 		return myClass;
 	},
 	
+    getTooltip: function(/*dojo.data.Item*/ item){
+    	var myTooltip = "";
+        if (item.objectClass && item.objectClass[0] != null) {
+        	var myMsgKey = "dialog.statistics.";
+        	if (item.nodeAppType[0] == "O")
+        	   myMsgKey += "objClass";
+        	else
+               myMsgKey += "adrClass";
+            myMsgKey += item.objectClass[0];
+            myTooltip = message.get(myMsgKey);
+        }
+        return myTooltip;
+    },
+
 	mayHaveChildren: function(/*dojo.data.Item*/item){
 		if (item.isFolder == "true") {
 			return true;
