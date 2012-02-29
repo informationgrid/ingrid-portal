@@ -63,10 +63,7 @@ $action.setParameter("doCancelThesaurus",  "true")
         				<div class="facete_chb">
                        		<p>
                         		#set($topicId = $thesaurusCurrentTopic.topicID)
-        						#if($thesaurusCurrentTopic.topicNativeKey && $thesaurusCurrentTopic.topicNativeKey != "")
-        							#set($topicId = $thesaurusCurrentTopic.topicNativeKey)
-    							#end
-    							<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
+								<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
     							#foreach($selectTopic in $thesaurusSelectTopics)
     									#if($selectTopic.topicId == $topicId)
     										checked

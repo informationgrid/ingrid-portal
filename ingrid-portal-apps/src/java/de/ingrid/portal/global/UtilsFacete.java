@@ -1478,12 +1478,25 @@ public class UtilsFacete {
 				setAttributeToSession(request, "doGeothesaurus", false);
 				if(getAttributeFromSession(request, LIST_SIZE_GEOTHESAURUS) != null){
 			    	String listSize = getAttributeFromSession(request, LIST_SIZE_GEOTHESAURUS).toString();
-			        ArrayList<String> selectedIds = new ArrayList<String>();
+			        ArrayList<String> selectedIds = (ArrayList<String>) getAttributeFromSession(request, "geothesaurusSelectTopicsId");
+			        if(selectedIds == null){
+			        	selectedIds = new ArrayList<String>();
+			        }
 			        if(listSize != null){
 			        	for (int i=0; i< Integer.parseInt(listSize); i++) {
 			        		String chkVal = request.getParameter("chk"+(i+1));
+			        		boolean isFound = false;
 			                if (chkVal != null) {
-			                	selectedIds.add(chkVal);
+			                	for(int j = 0; j < selectedIds.size(); j++){
+			                		String selectedId = selectedIds.get(j);
+			                		if(selectedId.equals(chkVal)){
+			                			isFound = true;
+			                			break;
+			                		}
+			                	}
+			                	if(!isFound){
+				                	selectedIds.add(chkVal);
+				                }
 			                }
 			            }
 			        }
@@ -1633,69 +1646,22 @@ public class UtilsFacete {
 	}
 	
 	private static ArrayList<HashMap<String, String>> getSelectedGeothesaurusTopics(PortletRequest request){
-		IngridHit[] geothesaurusTopics = (IngridHit []) getAttributeFromSession(request, TOPICS_GEOTHESAURUS);
-        Topic currentTopic = (Topic) getAttributeFromSession(request, CURRENT_TOPIC_GEOTHESAURUS);
-		IngridHit[] assocTopics = (IngridHit []) getAttributeFromSession(request, SIMILAR_TOPICS_GEOTHESAURUS);
-        
 		ArrayList<String> selectedIds = (ArrayList<String>) getAttributeFromSession(request, "geothesaurusSelectTopicsId");
         ArrayList<HashMap<String, String>> geothesaurusSelectTopics = new ArrayList<HashMap<String, String>> ();
         if(selectedIds != null){
-        	boolean foundTopicId = false;
         	for(int i = 0; i < selectedIds.size(); i++){
-        		if(geothesaurusTopics != null){
-                	for(int j = 0; j < geothesaurusTopics.length; j++){
-	            		Topic topic = (Topic) geothesaurusTopics[j];
-	        			String topicId = (String) topic.get("topicID");
-	        			if(topic.getTopicNativeKey() != null){
-            				topicId = topic.getTopicNativeKey();
-            			}
-	        			if(topicId != null){
-	        				if(topicId.indexOf((String)selectedIds.get(i)) > -1){
-	                        	HashMap<String, String> map = new HashMap<String, String>();
-	                			map.put("topicTitle", topic.get("topicName").toString());
-	                			map.put("topicId", (String)selectedIds.get(i));
-	                			geothesaurusSelectTopics.add(map);
-	                			foundTopicId = true;
-	                			break;
-	                		}
-	        			}
-                	}
-            	}
-            	if(assocTopics != null){
-        			if(!foundTopicId){
-        				for(int j = 0; j < assocTopics.length; j++){
-                    		Topic topic = (Topic) assocTopics[j];
-                			String topicId = (String) topic.get("topicID");
-                			if(topic.getTopicNativeKey() != null){
-                				topicId = topic.getTopicNativeKey();
-                			}
-    	        			if(topicId != null){
-                				if(topicId.indexOf((String)selectedIds.get(i)) > -1){
-                                	HashMap<String, String> map = new HashMap<String, String>();
-                        			map.put("topicTitle", topic.get("topicName").toString());
-                        			map.put("topicId", (String)selectedIds.get(i));
-                        			geothesaurusSelectTopics.add(map);
-                        			foundTopicId = true;
-    	                			break;
-                        		}
-                			}
-                    	}
-                	}
-        		}
-            	
-        		if(currentTopic != null){
-        			if(!foundTopicId){
-        				if(currentTopic.getTopicID().indexOf((String)selectedIds.get(i)) > -1){
-        					HashMap<String, String> map = new HashMap<String, String>();
-                			map.put("topicTitle", currentTopic.getTopicName().toString());
-                			map.put("topicId", (String)selectedIds.get(i));
-                			geothesaurusSelectTopics.add(map);
-                			foundTopicId = true;
-        				}
-                	}
-        		}
-        		foundTopicId = false;
-            }
+        		String geothesaurusId = selectedIds.get(i);
+                IngridHit[] geothesaurusTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicFromID(geothesaurusId, request.getLocale());;
+                if(geothesaurusTopics != null && geothesaurusTopics.length > 0){
+                    IngridHit geothesaurusTopic = geothesaurusTopics[0];
+                    if(geothesaurusTopic != null){
+                    	HashMap<String, String> topic = new HashMap<String, String>();
+                        topic.put("topicId", geothesaurusTopic.get("topicID").toString());
+                        topic.put("topicTitle", geothesaurusTopic.get("title").toString());
+                        geothesaurusSelectTopics.add(topic);
+                    }
+                }
+        	}
         }
        
         return geothesaurusSelectTopics;
@@ -1730,7 +1696,10 @@ public class UtilsFacete {
 				setAttributeToSession(request, "doThesaurus", false);
 				if(getAttributeFromSession(request, LIST_SIZE_THESAURUS) != null){
 		        	String listSize = getAttributeFromSession(request, LIST_SIZE_THESAURUS).toString();
-	        		ArrayList<String> selectedIds = new ArrayList<String> ();
+	        		ArrayList<String> selectedIds = (ArrayList<String>) getAttributeFromSession(request, "thesaurusSelectTopicsId");
+	        			if(selectedIds == null){
+	        				selectedIds = new ArrayList<String> ();
+	        			}
 	                for (int i=0; i< Integer.parseInt(listSize); i++) {
 	                    String chkVal = request.getParameter("chk"+(i+1));
 	                    if (chkVal != null) {
@@ -1900,64 +1869,22 @@ public class UtilsFacete {
 	}
 	
 	private static ArrayList<HashMap<String, String>> getSelectedThesaurusTopics(PortletRequest request){
-		IngridHit[] thesaurusTopics = (IngridHit []) getAttributeFromSession(request, TOPICS_THESAURUS);
-        Topic currentTopic = (Topic) getAttributeFromSession(request, CURRENT_TOPIC_THESAURUS);
-		Object assocTopics = getAttributeFromSession(request, SIMILAR_TOPICS_THESAURUS);
-        
 		ArrayList<String> selectedIds = (ArrayList<String>) getAttributeFromSession(request, "thesaurusSelectTopicsId");
         ArrayList<HashMap<String, String>> thesaurusSelectTopics = new ArrayList<HashMap<String, String>>();
         if(selectedIds != null){
-        	boolean foundTopicId = false;
-        	for(int i = 0; i < selectedIds.size(); i++){
-        		if(thesaurusTopics != null){
-                	for(int j = 0; j < thesaurusTopics.length; j++){
-	            		Topic topic = (Topic) thesaurusTopics[j];
-	        			String topicId = (String) topic.get("topicID");
-	        			if(topicId != null){
-	        				if(topicId.indexOf((String)selectedIds.get(i)) > -1){
-	                        	HashMap<String, String> map = new HashMap<String, String>();
-	                			map.put("topicTitle", topic.get("topicName").toString());
-	                			map.put("topicId", (String)selectedIds.get(i));
-	                			thesaurusSelectTopics.add(map);
-	                			foundTopicId = true;
-	                			break;
-	                		}
-	        			}
-                	}
-            	}
-            	if(assocTopics != null){
-        			if(!foundTopicId){
-        				List topics = (List)assocTopics;
-                		for(int j = 0; j < topics.size(); j++){
-                    		Topic topic = (Topic) topics.get(j);
-                			String topicId = (String) topic.get("topicID");
-                			if(topicId != null){
-                				if(topicId.indexOf((String)selectedIds.get(i)) > -1){
-                                	HashMap<String, String> map = new HashMap<String, String>();
-                        			map.put("topicTitle", topic.get("topicName").toString());
-                        			map.put("topicId", (String)selectedIds.get(i));
-                        			thesaurusSelectTopics.add(map);
-                        			foundTopicId = true;
-    	                			break;
-                        		}
-                			}
-                    	}
-                	}
+        	for(int i=0; i<selectedIds.size(); i++){
+        		String thesaurusId = selectedIds.get(i);
+        		IngridHit[] thesaurusTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicFromID(thesaurusId, request.getLocale());
+        		if(thesaurusTopics != null && thesaurusTopics.length > 0){
+        			IngridHit thesaurusTopic = thesaurusTopics[0];
+        			if(thesaurusTopic != null){
+        				HashMap<String, String> topic = new HashMap<String, String>();
+                		topic.put("topicId", thesaurusTopic.get("topicID").toString());
+                		topic.put("topicTitle", thesaurusTopic.get("title").toString());
+                		thesaurusSelectTopics.add(topic);
+        			}
         		}
-            	
-        		if(currentTopic != null){
-        			if(!foundTopicId){
-        				if(currentTopic.getTopicID().indexOf((String)selectedIds.get(i)) > -1){
-        					HashMap<String, String> map = new HashMap<String, String>();
-                			map.put("topicTitle", currentTopic.getTopicName().toString());
-                			map.put("topicId", (String)selectedIds.get(i));
-                			thesaurusSelectTopics.add(map);
-                			foundTopicId = true;
-        				}
-                	}
-        		}
-        		foundTopicId = false;
-            }
+        	}
         }
        
         return thesaurusSelectTopics;
