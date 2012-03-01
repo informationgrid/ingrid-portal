@@ -1542,7 +1542,6 @@ public class UtilsFacete {
 	            }
 	            
 	            if(geothesaurusTerm != null){
-	            	
 	            	IngridHit[] topics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromText(geothesaurusTerm, "/location", request.getLocale());
 	                if (topics != null && topics.length > 0) {
 	                	for (int i=0; i<topics.length; i++) {
@@ -1550,6 +1549,7 @@ public class UtilsFacete {
 	                		if (href != null && href.lastIndexOf("#") != -1) {
 	                			topics[i].put("topic_ref", href.substring(href.lastIndexOf("#")+1));
 	                		}
+	                		addToListOfTopicsGeoThesaurus(topics[i], request);
 	                    }
 	                	setAttributeToSession(request, TOPICS_GEOTHESAURUS, topics);
 	                	setAttributeToSession(request, LIST_SIZE_GEOTHESAURUS, topics.length);
@@ -1591,6 +1591,7 @@ public class UtilsFacete {
 	                            if (href != null && href.lastIndexOf("#") != -1) {
 	                                similarTopics[j].put("topic_ref", href.substring(href.lastIndexOf("#")+1));
 	                            }
+	                            addToListOfTopicsGeoThesaurus(similarTopics[j], request);
 	                        }
 	                        setAttributeToSession(request, SIMILAR_TOPICS_GEOTHESAURUS, similarTopics);
 	                        break;
@@ -1605,7 +1606,7 @@ public class UtilsFacete {
 	}
 	
 	private static void setParamsToContextGeothesaurus (RenderRequest request, Context context){
-
+		
 		// Nach Raumbezug suchen
         IngridHit[] geothesaurusTopics = (IngridHit []) getAttributeFromSession(request, TOPICS_GEOTHESAURUS);
         context.put("geothesaurusTopics", geothesaurusTopics);
@@ -1629,44 +1630,83 @@ public class UtilsFacete {
 
 	
 	private static void addToQueryGeothesaurus(PortletRequest request, IngridQuery query) {
-
+		
 		ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
         
 		if(geothesaurusSelectTopics != null && geothesaurusSelectTopics.size() > 0){
-	    	if(query != null){
-	    	   for (int i = 0; i < geothesaurusSelectTopics.size(); i++) {
-	    		   HashMap<String, String> map = (HashMap<String, String>) geothesaurusSelectTopics.get(i);
-	    		   String topicId = (String) map.get("topicId");
-	               if (topicId != null && topicId.length() > 0) {
-	            	   query.addField(new FieldQuery(true, false, "areaid", topicId));
-	               }
-	           }
-	    	}
+			ClauseQuery cq = null;
+			String ds = request.getParameter("ds");
+    		
+    		for (int i = 0; i < geothesaurusSelectTopics.size(); i++) {
+    			HashMap<String, String> map = (HashMap<String, String>) geothesaurusSelectTopics.get(i);
+    			if (map != null) {
+    				String topicId = (String) map.get("topicId");
+    				switch (i) {
+					case 0:
+						if(geothesaurusSelectTopics.size() == 1){
+		    				if(topicId != null){
+		    					query.addField(new FieldQuery(true, false, "areaid", topicId));
+			            	}
+	    				}else{
+	    					if(topicId != null){
+	    						if(cq == null){
+	        						cq = new ClauseQuery(true, false);
+	        					}
+	        		   	       	cq.addField(new FieldQuery(true, false, "areaid", topicId));
+	    					}
+	    				}
+						break;
+					default:
+						cq.setLastQueryUnrequired();
+						cq.addField(new FieldQuery(false, false, "areaid", topicId));
+						break;
+					}
+	            	
+	    		}
+    		}
+    		if(cq != null){
+    			query.addClause(cq);
+    		}
 	    }
 	}
 	
 	private static ArrayList<HashMap<String, String>> getSelectedGeothesaurusTopics(PortletRequest request){
 		ArrayList<String> selectedIds = (ArrayList<String>) getAttributeFromSession(request, "geothesaurusSelectTopicsId");
+        ArrayList allGeoThesaurusTopics = (ArrayList) getAttributeFromSession(request, "allGeoThesaurusTopics");
         ArrayList<HashMap<String, String>> geothesaurusSelectTopics = new ArrayList<HashMap<String, String>> ();
-        if(selectedIds != null){
-        	for(int i = 0; i < selectedIds.size(); i++){
-        		String geothesaurusId = selectedIds.get(i);
-                IngridHit[] geothesaurusTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicFromID(geothesaurusId, request.getLocale());;
-                if(geothesaurusTopics != null && geothesaurusTopics.length > 0){
-                    IngridHit geothesaurusTopic = geothesaurusTopics[0];
-                    if(geothesaurusTopic != null){
-                    	HashMap<String, String> topic = new HashMap<String, String>();
-                        topic.put("topicId", geothesaurusTopic.get("topicID").toString());
-                        topic.put("topicTitle", geothesaurusTopic.get("title").toString());
-                        geothesaurusSelectTopics.add(topic);
-                    }
-                }
-        	}
-        }
-       
+        
+        if(allGeoThesaurusTopics != null &&  selectedIds != null){
+			for(int i = 0; i < selectedIds.size(); i++){
+				for(int j = 0; j < allGeoThesaurusTopics.size(); j++){
+					Topic topic = (Topic) allGeoThesaurusTopics.get(j);
+					String topicId = (String) topic.get("topicID");
+        			if(topic.getTopicNativeKey() != null){
+        				topicId = topic.getTopicNativeKey();
+        			}
+        			if(topicId != null){
+        				if(topicId.indexOf((String)selectedIds.get(i)) > -1){
+                        	HashMap<String, String> map = new HashMap<String, String>();
+                			map.put("topicTitle", topic.get("topicName").toString());
+                			map.put("topicId", (String)selectedIds.get(i));
+                			geothesaurusSelectTopics.add(map);
+                			break;
+                		}
+        			}
+				}
+			}
+		}
         return geothesaurusSelectTopics;
 	}
 	
+	private static void addToListOfTopicsGeoThesaurus(IngridHit ingridHit, ActionRequest request) {
+		ArrayList allGeoThesaurusTopics = (ArrayList) getAttributeFromSession(request, "allGeoThesaurusTopics"); 
+		if(allGeoThesaurusTopics == null){
+			allGeoThesaurusTopics = new ArrayList();
+		}
+		allGeoThesaurusTopics.add(ingridHit);
+		setAttributeToSession(request, "allGeoThesaurusTopics", allGeoThesaurusTopics);
+	}
+
 	/***************************** Thesaurus *****************************************/
 	
 	private static void setFaceteParamsToSessionThesaurus(ActionRequest request) {
@@ -1757,6 +1797,7 @@ public class UtilsFacete {
 	                		if (href != null && href.lastIndexOf("#") != -1) {
 	                			topics[i].put("topic_ref", href.substring(href.lastIndexOf("#")+1));
 	                		}
+	                		addToListOfTopicsThesaurus(topics[i], request);
 	                    }
 	                	setAttributeToSession(request, TOPICS_THESAURUS, topics);
 	                	setAttributeToSession(request, LIST_SIZE_THESAURUS, topics.length);
@@ -1781,6 +1822,9 @@ public class UtilsFacete {
 	            Topic currentTopic = (Topic)SNSSimilarTermsInterfaceImpl.getInstance().getDetailsTopic(topic, "/thesa", request.getLocale());
 	            setAttributeToSession(request, CURRENT_TOPIC_THESAURUS, currentTopic);
 	        	IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID, request.getLocale());
+	        	for (int j=0; j<assocTopics.length; j++) {
+	        		addToListOfTopicsThesaurus(assocTopics[j], request);
+                }
 	        	setAttributeToSession(request, SIMILAR_TOPICS_THESAURUS, Arrays.asList(assocTopics));
 	        	setAttributeToSession(request, LIST_SIZE_THESAURUS, assocTopics.length + 1);
 	        }
@@ -1870,68 +1914,55 @@ public class UtilsFacete {
 	    					}
 	    				}
 						break;
-					case 1:
-						cq.addTerm(new TermQuery(false, false, term));
-						break;
 					default:
+						cq.setLastQueryUnrequired(); 
+						cq.setLastWasAnd(false);
 						cq.addTerm(new TermQuery(false, false, term));
 						break;
 					}
-	            	
 	    		}
     		}
     		if(cq != null){
     			query.addClause(cq);
     		}
-    		
-    		String ds = request.getParameter("ds");
-    		switch (new Integer(ds)) {
-			case 1:
-				// Umweltinformtionen
-				query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
-	                    Settings.QVALUE_DATATYPE_AREA_ENVINFO));
-				break;
-			case 2:
-				break;
-			case 3:
-				// Forschungsprojekte
-				query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
-	                    Settings.QVALUE_DATATYPE_AREA_RESEARCH));
-				break;
-			case 4:
-				// Rechtsvorschriften
-				query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
-	                    Settings.QVALUE_DATATYPE_AREA_LAW));
-				break;
-
-			default:
-				break;
-			}
-    		
 	    }
 	}
 	
 	private static ArrayList<HashMap<String, String>> getSelectedThesaurusTopics(PortletRequest request){
+		ArrayList allThesaurusTopics = (ArrayList) getAttributeFromSession(request, "allThesaurusTopics");
 		ArrayList<String> selectedIds = (ArrayList<String>) getAttributeFromSession(request, "thesaurusSelectTopicsId");
-        ArrayList<HashMap<String, String>> thesaurusSelectTopics = new ArrayList<HashMap<String, String>>();
-        if(selectedIds != null){
-        	for(int i=0; i<selectedIds.size(); i++){
-        		String thesaurusId = selectedIds.get(i);
-        		IngridHit[] thesaurusTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicFromID(thesaurusId, request.getLocale());
-        		if(thesaurusTopics != null && thesaurusTopics.length > 0){
-        			IngridHit thesaurusTopic = thesaurusTopics[0];
-        			if(thesaurusTopic != null){
-        				HashMap<String, String> topic = new HashMap<String, String>();
-                		topic.put("topicId", thesaurusTopic.get("topicID").toString());
-                		topic.put("topicTitle", thesaurusTopic.get("title").toString());
-                		thesaurusSelectTopics.add(topic);
+		ArrayList<HashMap<String, String>> thesaurusSelectTopics = new ArrayList<HashMap<String, String>>();
+		
+		if(allThesaurusTopics != null && selectedIds != null){
+			for(int i=0; i<selectedIds.size(); i++){
+				for(int j = 0; j < allThesaurusTopics.size(); j++){
+					Topic topic = (Topic) allThesaurusTopics.get(j);
+					String topicId = (String) topic.get("topicID");
+        			if(topicId != null){
+        				if(topicId.indexOf((String)selectedIds.get(i)) > -1){
+                        	HashMap<String, String> map = new HashMap<String, String>();
+                			map.put("topicTitle", topic.get("topicName").toString());
+                			map.put("topicId", topicId);
+                			thesaurusSelectTopics.add(map);
+                			break;
+                		}
         			}
-        		}
+				}
         	}
-        }
-       
+		}
         return thesaurusSelectTopics;
 	}
+	
+	private static void addToListOfTopicsThesaurus(IngridHit ingridHit, ActionRequest request) {
+		ArrayList allThesaurusTopics = (ArrayList) getAttributeFromSession(request, "allThesaurusTopics"); 
+		if(allThesaurusTopics == null){
+			allThesaurusTopics = new ArrayList();
+		}
+		allThesaurusTopics.add(ingridHit);
+		setAttributeToSession(request, "allThesaurusTopics", allThesaurusTopics);
+	}
+
+	
 	
 	/***************************** Attribute ****************************************/
 	
@@ -2259,6 +2290,7 @@ public class UtilsFacete {
 		removeAttributeFromSession(request, CURRENT_TOPIC_GEOTHESAURUS);  
 		removeAttributeFromSession(request, SIMILAR_TOPICS_GEOTHESAURUS);  
 		removeAttributeFromSession(request, LIST_SIZE_GEOTHESAURUS);  
+		removeAttributeFromSession(request, "allGeoThesaurusTopics");
 		removeAttributeFromSession(request, "doThesaurus");  
 		removeAttributeFromSession(request, "thesaurusSelectTopicsId");  
 		removeAttributeFromSession(request, "thesaurusSelectTopics");  
@@ -2267,7 +2299,8 @@ public class UtilsFacete {
 		removeAttributeFromSession(request, LIST_SIZE_THESAURUS);  
 		removeAttributeFromSession(request, ERROR_THESAURUS);  
 		removeAttributeFromSession(request, CURRENT_TOPIC_THESAURUS);  
-		removeAttributeFromSession(request, SIMILAR_TOPICS_THESAURUS);  
+		removeAttributeFromSession(request, SIMILAR_TOPICS_THESAURUS);
+		removeAttributeFromSession(request, "allThesaurusTopics");
 		removeAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);  
 		removeAttributeFromSession(request, "doTime");  
 		removeAttributeFromSession(request, "doMapCoords");  

@@ -53,6 +53,9 @@ $action.setParameter("doCancelGeothesaurus",  "true")
     				<div class="facete_chb">
                    		<p>
                     		#set($topicId = $geothesaurusCurrentTopic.topicID)
+							#if($geothesaurusCurrentTopic.topicNativeKey && $geothesaurusCurrentTopic.topicNativeKey != "")
+    							#set($topicId = $geothesaurusCurrentTopic.topicNativeKey)
+    						#end
 							<span>$geothesaurusCurrentTopic.title #renderMsgTopicType()</span>
     					</p>
                     </div>
@@ -70,6 +73,9 @@ $action.setParameter("doCancelGeothesaurus",  "true")
     						<div class="facete_chb">
                         		<p>
                         			#set($topicId = $topic.topicID)
+									#if($topic.topicNativeKey && $topic.topicNativeKey != "")
+    									#set($topicId = $topic.topicNativeKey)
+    								#end
 									<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
     								#foreach($selectTopic in $geothesaurusSelectTopics)
     									#if($selectTopic.topicId == $topicId)
@@ -95,9 +101,12 @@ $action.setParameter("doCancelGeothesaurus",  "true")
     						<div class="facete_chb">
                         		<p>
     								#set($topicId = $topic.topicID)
+									#if($topic.topicNativeKey && $topic.topicNativeKey != "")
+    									#set($topicId = $topic.topicNativeKey)
+									#end
 									<input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
     								#foreach($selectTopic in $geothesaurusSelectTopics)
-    									#if($selectTopic.topicId == $topicId)
+										#if($selectTopic.topicId == $topicId)
     										checked
     									#end
     								#end
