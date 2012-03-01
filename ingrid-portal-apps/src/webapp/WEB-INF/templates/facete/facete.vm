@@ -144,19 +144,20 @@
 		
 ## ERGEBNISTYPEN ##
 	#set ($rankedHitslenght = $rankedResultList.get("length").toString())
-	
 	#if($rankedHitslenght != "0")
-		#if(!$ds || $ds == "1")
-        	<div class="cat_label">
-        		<img id="hit_types_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('hit_types')">
-        		<a onclick="openNode('hit_types')" >$MESSAGES.getString("searchResult.facete.title.types")</a>
-        		<br>
-        	</div>
-        	
-        	<div id="hit_types" class="cat_content">
-        ## DATENTYPEN ##
-        		#parse ('/WEB-INF/templates/facete/facete_datatype.vm')
-        	</div>
+		#if($enableFaceteDatatype)
+    		#if(!$ds || $ds == "1")
+            	<div class="cat_label">
+            		<img id="hit_types_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('hit_types')">
+            		<a onclick="openNode('hit_types')" >$MESSAGES.getString("searchResult.facete.title.types")</a>
+            		<br>
+            	</div>
+            	
+            	<div id="hit_types" class="cat_content">
+            ## DATENTYPEN ##
+            		#parse ('/WEB-INF/templates/facete/facete_datatype.vm')
+            	</div>
+			#end
 		#end
 		
 		#set($isMetadata = false)

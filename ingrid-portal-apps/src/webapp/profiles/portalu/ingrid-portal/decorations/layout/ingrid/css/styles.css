@@ -282,7 +282,7 @@ div#results_right { float:left; width:26.6458em; margin: 0px 0px 0 2.625em; }
 ***/
 
 /* full width content area styles */
-div#content_full { float:left; width:55.5625em; }
+div#content_full { float:left; width: 100%; }
 div#content_full .clearer { clear:both; display:block; height:1px; line-height:0px; font-size:1px; margin:0; padding:0; }
 
 div.portal-layout-OneColumn { }
