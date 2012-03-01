@@ -88,7 +88,13 @@ dialog.showContextHelp = function(e, guiId, caption /* optional */) {
 	if (typeof guiId == "string") {
         var def = new dojo.Deferred();
         var manualMessage      = {};
-        manualMessage.name     = e.currentTarget[dojo.isFF ? "textContent" : "innerText"];
+
+        // IE work around
+        // If "e" is undefined use the global "event" variable
+        e = e || event;
+        var target = e.currentTarget || e.srcElement;
+    
+        manualMessage.name     = target[dojo.isFF ? "textContent" : "innerText"];
         manualMessage.helpText = guiId;
         guiId                  = "-1";
         def.callback(manualMessage);
