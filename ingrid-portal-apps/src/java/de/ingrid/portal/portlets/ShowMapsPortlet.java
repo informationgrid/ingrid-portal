@@ -48,7 +48,10 @@ public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsH
         }
         
         if(Utils.getLoggedOn(request)){
-        	context.put("logged", "true");        	
+        	context.put("logged", "true");
+        	context.put("mapUserId", request.getUserPrincipal().getName());
+        }else{
+        	context.put("mapUserId","NoId");
         }
         
         if(request.getParameter("action") != null){

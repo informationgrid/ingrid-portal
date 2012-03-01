@@ -23,6 +23,10 @@ mapClientCallbackHooks = null;
 
 var viewConfiguration = "portalu-fullmap";
 
+
+var mapUserId = '$mapUserId';
+
+
 </script>
 <div class="section">
 </div>	
