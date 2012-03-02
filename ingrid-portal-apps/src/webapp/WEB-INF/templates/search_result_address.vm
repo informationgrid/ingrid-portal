@@ -43,12 +43,18 @@
     </div>
   <div class="clearer"></div>
   #if($adminContent)
-  	#if($rankedResultList.get("FACETS"))
-		<p>Facets: $rankedResultList.get("FACETS")</p>
-	#end
-	#if($facetsQuery)
-		<p>Facets Query: $facetsQuery</p>
-	#end
+	#if($rankedResultList.get("FACETS"))
+        <p>Facets:</p>
+        <p>$rankedResultList.get("FACETS")</p>
+    #end
+    #if($facetsQuery)
+        <p>Facets Query:</p>
+        <p>
+        #foreach($facete in $facetsQuery)
+        	<span>$facete</span><br>
+        #end
+        </p>
+    #end
   #end
 </div>
 
