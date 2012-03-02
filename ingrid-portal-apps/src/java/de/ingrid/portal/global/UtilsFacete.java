@@ -600,7 +600,7 @@ public class UtilsFacete {
 			}else if(key.equals("topic")){
 				HashMap<String, String> faceteEntry = new HashMap<String, String>();
 		        faceteEntry.put("id", "topic");
-		        faceteEntry.put("field", "topic");
+		        faceteEntry.put("datatype", "topics");
 		        faceteList.add(faceteEntry);
 			}else{
 				HashMap<String, String> faceteEntry = new HashMap<String, String>();
