@@ -377,7 +377,6 @@ public class UtilsFacete {
         					if(elementsTopicWithFacete == null){
         						elementsTopicWithFacete = new HashMap<String,Long>();
         					}
-        						
         					elementsTopicWithFacete.put(top.getFormValue(), map.get(ident));
         					
         					if(enableFaceteTopicsList == null){
@@ -385,7 +384,6 @@ public class UtilsFacete {
             				}
         					enableFaceteTopicsList.add(top);
         					unselectedTopics.remove(j);
-        					j = j-1;
         					break;
         				}
         			}
@@ -432,7 +430,6 @@ public class UtilsFacete {
     					
         				if(ident.equals(topIdent.toLowerCase())){
         					unselectedTopics.remove(j);
-        					j = j-1;
         					break;
         				}
         			}
@@ -452,7 +449,6 @@ public class UtilsFacete {
 								}
 								elementsTopicSelect.put(mapKey, elementsTopicWithFacete.get(mapKey));
 								elementsTopicWithFacete.remove(mapKey);
-								j = j-1;
 								break;
 							}
 						}
@@ -1140,7 +1136,6 @@ public class UtilsFacete {
             				}
         					enableFaceteProviderList.add(prov);
         					providers.remove(j);
-        					j = j-1;
         					break;
         				}
         			}

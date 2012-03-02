@@ -852,7 +852,7 @@ div.facete_close { width:13px; height:13px; background-image: url(../images/face
 div#search_facete { width: 227px; float: left; padding: 0; }
 div#search_facete.openNode { width:227px ; margin:0 0 0 0px; }
 div#search_facete.closeNode { width:0; margin:0; }
-div#search_hits { float: left; padding: 0 0 0 25px; width:576px; border-left: 1px dotted #CCCCCC; }
+div#search_hits { float: left; padding: 0 0 0 25px; width:585px; border-left: 1px dotted #CCCCCC; }
 div#search_hits.openNode { width:50.0em; }
 div#search_hits.closeNode { }
 div#search_hits.nonjavascript { padding: 0 0 0 0; width:826px; }
