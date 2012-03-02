@@ -40,7 +40,14 @@
     <!-- in this iframe RIGHT search is executed ! -->
     <iframe id="frm_unranked" src="$unrankedResultUrl" style="display:none"></iframe>
     #end
-    
+  #if($adminContent)
+  	#if($rankedResultList.get("FACETS"))
+		<p>Facets: $rankedResultList.get("FACETS")</p>
+	#end
+	#if($facetsQuery)
+		<p>Facets Query: $facetsQuery</p>
+	#end
+  #end
     <script type="text/javascript">
      	document.getElementById('search_facete').style.display = "block";
     	document.getElementById('search_hits').setAttribute('class', "javascript");

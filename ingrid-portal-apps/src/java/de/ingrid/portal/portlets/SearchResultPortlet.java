@@ -593,8 +593,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             	}
             }
             
-        	context.put("rankedResultList", rankedHits);
-            
+            context.put("adminContent", showAdminContent);
+            context.put("rankedResultList", rankedHits);
         	context.put("rankedResultUrl", response
                     .encodeURL(((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest()
                             .getContextPath()

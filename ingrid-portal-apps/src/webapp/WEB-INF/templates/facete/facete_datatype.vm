@@ -23,7 +23,7 @@
                 		#if($enableFaceteMetaClass || ($selectedMetaclass && $selectedMetaclass.size() > 0))
                     		#parse ('/WEB-INF/templates/facete/facete_metaclass.vm')
         				#end
-        			#elseif($datatypeKey == "topics")
+        			#elseif($datatypeKey == "topic")
                         ## THEMEN ##
 						#if($enableFaceteTopicsList || ($selectedTopics && $selectedTopics.size() > 0))
 							#parse ('/WEB-INF/templates/facete/facete_topic.vm')
