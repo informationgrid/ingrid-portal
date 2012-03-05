@@ -60,7 +60,7 @@
                     callback: function(res){
                         var userNodes = convertUserListToTreeNodes(res);
                         dojo.forEach(userNodes, function(userNode){
-                            if (parentItem.root && parentItem.root) 
+                            if (parentItem.root) 
                                 store.newItem(userNode);
                             else 
                                 store.newItem(userNode, {
@@ -287,8 +287,12 @@
             // 'Import portal user' button function
             scriptScopeUser.importPortalUser = function(){
                 var selectedUser = dijit.byId("treeUser").selectedNode;
+                console.debug("selectedUser");
+                console.debug(selectedUser);
+                console.debug("currentUser");
+                console.debug(currentUser);
                 
-                if (currentUser.role == 1 && selectedUser == null) {
+                if (selectedUser == null) {
                     dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.users.noParentSelectedError' />", dialog.WARNING);
                     console.debug("No node selected.");
                     return;
@@ -296,7 +300,7 @@
                 
                 // In case a mdAdmin wants to create a new user, we have to check if the mdAdmin is selected in the tree
                 if (currentUser.role == 2) {
-                    if (selectedUser == null || (selectedUser.userId != currentUser.id)) {
+                    if (selectedUser.item.userId[0] != currentUser.id) {
                         dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.users.adminSelectedInvalidUserError' />", dialog.WARNING);
                         console.debug("Can't create users here. Select the correct mdAdmin.");
                         return;
@@ -304,7 +308,7 @@
                 }
                 
                 // In case a user with role mdAutor is selected, do nothing and return
-                if (selectedUser.role < 1 || selectedUser.role > 2) {
+                if (selectedUser.item.role[0] < 1 || selectedUser.item.role[0] > 2) {
                     dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.users.authorSelectedAsParentError' />", dialog.WARNING);
                     console.debug("Select a user with role catAdmin or mdAdmin.");
                     return;
