@@ -595,12 +595,14 @@ UtilUdk.loadHelpMessage = function(guiId) {
 	var cls = this.isObjectSelected() ? this.getCurrentObjectClass() : this.getCurrentAddressClass(); 
 
 	// Then load the help message via HelpService
+	// Use current locale as target language (e.g. maybe switched to english)
+	// Use catalog language as default language (e.g. current locale is not de/en, maybe different one from browser)
 	var helpLanguage = userLocale;
-	// do NOT use userLocale (= browser language), instead use catalog language !
-	if (catalogData && catalogData.languageShort) {
-        helpLanguage = catalogData.languageShort;		
-	}
-	HelpService.getHelpEntry(guiId, cls, helpLanguage, {
+	var defaultLanguage = "en";
+    if (catalogData && catalogData.languageShort) {
+        defaultLanguage = catalogData.languageShort;
+    }
+	HelpService.getHelpEntry(guiId, cls, helpLanguage, defaultLanguage, {
 		callback: function(helpEntry) {
 			if (helpEntry) {
 				deferred.callback(helpEntry);

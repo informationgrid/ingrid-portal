@@ -18,7 +18,7 @@ public class HelpServiceImpl {
 	// Injected by Spring
 	private IDaoFactory daoFactory;
 
-	public HelpMessage getHelpEntry(Integer guiId, Integer entityClass, String language) {
+	public HelpMessage getHelpEntry(Integer guiId, Integer entityClass, String language, String defaultLanguage) {
 		IGenericDao<IEntity> dao = daoFactory.getDao(HelpMessage.class);
 		HelpMessage sampleMessage = new HelpMessage();
 		sampleMessage.setGuiId(guiId);
@@ -30,6 +30,18 @@ public class HelpServiceImpl {
 		HelpMessage helpMessage = (HelpMessage) dao.findUniqueByExample(sampleMessage);
 		if (helpMessage == null) {
 			// Try to load any helpMessage for the specified guiId
+			sampleMessage.setEntityClass(null);
+			helpMessage = (HelpMessage) dao.findUniqueByExample(sampleMessage);
+		}
+		if (helpMessage == null) {
+			// Use default language instead of passed locale, also set class again
+			sampleMessage.setLanguage(defaultLanguage);
+			if (guiId != null)
+				sampleMessage.setEntityClass(entityClass);
+			helpMessage = (HelpMessage) dao.findUniqueByExample(sampleMessage);
+		}
+		if (helpMessage == null) {
+			// Try to load any helpMessage for the specified guiId (in default language)
 			sampleMessage.setEntityClass(null);
 			helpMessage = (HelpMessage) dao.findUniqueByExample(sampleMessage);
 		}
