@@ -35,7 +35,7 @@ $MESSAGES.setMsgParam('PPT')
 $MESSAGES.resetMsgParams()
 $MESSAGES.setMsgParam('DOC')
                     #set($urlTitle = $MESSAGES.getStringWithMsgParams('common.tooltip.link.extern.document'))
-                    #set($leftDistance = '30px')
+                    #set($leftDistance = '47px')
                 #else
                     #set($iconImage = 'icn_linkextern.gif')
                     #set($leftDistance = '')
@@ -72,7 +72,9 @@ $MESSAGES.setMsgParam('DOC')
               #end
             #else
               <span class="result_title"><span class="intendResult">#renderTitle($rs.title) </span></span>
-            #end        
+            #end
+            ## render additional html if passed !
+            $!rs.additional_html_1
             <p class="result_description">
             $!rs.abstract 
             </p>

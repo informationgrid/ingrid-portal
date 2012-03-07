@@ -238,6 +238,9 @@ public class QueryResultPostProcessor {
 
             // read for all dsc iplugs
 
+            Object additionalHtml = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_ADDITIONAL_HTML_1);
+            hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, additionalHtml);
+
             // services !
             
             // WMS, only process if Viewer is specified !
