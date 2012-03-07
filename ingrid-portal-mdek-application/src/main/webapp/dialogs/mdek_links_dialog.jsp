@@ -224,25 +224,25 @@
                     var idList = [];
                     switch (objectClass) {
                         case "0":
-                            idList = ["9999"];
+                            idList = ["9990", "9999"];
                             break;
                         case "1":
-                            idList = ["3570", "3520", "3515", "3535", "3555", "5066", "9999"];
+                            idList = ["3570", "3520", "3515", "3535", "3555", "5066", "9990", "9999"];
                             break;
                         case "2":
-                            idList = ["3345", "9999"];
+                            idList = ["3345", "9990", "9999"];
                             break;
                         case "3":
-                            idList = ["3210", "9999"];
+                            idList = ["3210", "9990", "9999"];
                             break;
                         case "4":
-                            idList = ["9999"];
+                            idList = ["9990", "9999"];
                             break;
                         case "5":
-                            idList = ["3100", "3109", "9999"];
+                            idList = ["3100", "3109", "9990", "9999"];
                             break;
                         case "6":
-                            idList = ["3210", "9999"];
+                            idList = ["3210", "9990", "9999"];
                             break;
                         default:
                             console.debug("Error: could not determine object class.");

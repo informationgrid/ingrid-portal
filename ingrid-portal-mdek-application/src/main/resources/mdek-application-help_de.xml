@@ -848,25 +848,25 @@
                  <p>Dieser Dialog kann entweder aus der Feldgruppe <i>Verweise</i> oder aus einem der 
 				 speziellen Felder heraus aufgerufen werden, die Verweise unterstützen (wie z.B. das Feld 
 				 <i>Datengrundlage</i> der Objektklasse <i>Geoinformation/Karte</i>).</p>
-				 <p>Wird der Dialog aus einem speziellen Feld heraus aufgerufen, ist die Angabe 
-				 <i>Kopplung an Feld</i> bereits mit dem Feldnamen gefüllt. 
-				 Sie können in diesem Fall keine Änderung an der Angabe vornehmen.</p>
-				 <p>Haben Sie den Dialog aus der allgemeinen Feldgruppe Verweise heraus aufgerufen, dann 
-				 können Sie einen Feldnamen aus der Auswahlliste des Feldes 
-				 <i>Kopplung an Feld</i> wählen. </p>
-				 <p>Es gibt zwei Typen von Verweisen:</p>
+				 <p>Wird der Verweis-Dialog in der Rubrik <i>Verweise</i> geöffnet, so kann über das Dropdown-Menu 
+				 (ausklappbar über den Pfeil an der rechten Seite des Feldes) aus einer Auswahlliste ein Eintrag 
+				 gewählt werden. Wurde der 
+				 Dialog von einem Feld in einer anderen Rubrik (z.B. das Feld <i>Basisdaten/Verweise</i> in der 
+				 Rubrik <i>Fachbezug</i>) geöffnet, so wird automatisch der betreffende Feldname eingetragen und 
+				 angezeigt (z.B. <i>Basisdaten</i>).</p>
+				 <p>Es gibt zwei mögliche Verweisziele:</p>
 				 <ul>
-				 <li>Querverweise zwischen Objekten (Verweistyp: Objekt)</li>
-				 <li>Verweis auf Informationen im Internet (Verweistyp: URL)</li>
+				 <li>Querverweise zwischen Objekten (Verweisziel: Objekt)</li>
+				 <li>Verweis auf Informationen im Internet (Verweisziel: URL)</li>
 				 </ul>
-				 <p><b>Verweistyp: Objekt</b></p>
-				 <p>Über diesen Verweistypen werden Querverweise zwischen Objekten definiert. Über 
+				 <p><b>Verweisziel: Objekt</b></p>
+				 <p>Über dieses Verweisziel werden Querverweise zwischen Objekten definiert. Über 
 				 <a href="?hkey=maintanance-of-objects-8">Objekt auswählen</a> wird das Zielobjekt gewählt. 
 				 Die Pflichtangaben <i>Objektname</i> und <i>Objektklasse</i> werden automatisch mit den 
 				 entsprechenden Daten des ausgewählten Objekts gefüllt.</p>
 				 <p>Optional können Sie eine <i>Erläuterung</i> zu dem Verweis angeben.</p>
-				 <p><b>Verweistyp: URL</b></p>
-				 <p>Über diesen Verweistyp wird ein Verweis zu einer externen Datenquelle im Internet 
+				 <p><b>Verweisziel: URL</b></p>
+				 <p>Über dieses Verweisziel wird ein Verweis zu einer externen Datenquelle im Internet 
 				 definiert. Verpflichtend müssen Sie eine <i>Bezeichnung des Verweises</i> und 
 				 die <i>Internet-Adresse (URL)</i> angeben.</p>
 				 <p>Optional können Sie eine <i>Erläuterung</i> zu dem Verweis angeben.</p>

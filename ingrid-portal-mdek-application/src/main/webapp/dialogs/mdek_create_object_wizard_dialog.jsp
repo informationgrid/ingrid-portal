@@ -404,7 +404,7 @@ function createNewUrl() {
 
 	//newUrl.Id = 0;
 	newUrl.relationType = 9999;
-	newUrl.relationTypeName = "Keine Kopplung";
+	newUrl.relationTypeName = "unspezifischer Verweis";
 	var urlName = dojo.trim(dijit.byId("assistantHtmlTitle").getValue());
 	newUrl.name = urlName.length != 0 ? urlName : "Internet-Verweis";
 	newUrl.url = dojo.trim(dijit.byId("assistantURL").getValue());
