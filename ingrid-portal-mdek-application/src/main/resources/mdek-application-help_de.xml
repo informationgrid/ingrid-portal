@@ -850,7 +850,7 @@
 				 <i>Datengrundlage</i> der Objektklasse <i>Geoinformation/Karte</i>).</p>
 				 <p>Wird der Verweis-Dialog in der Rubrik <i>Verweise</i> geöffnet, so kann über das Dropdown-Menu 
 				 (ausklappbar über den Pfeil an der rechten Seite des Feldes) aus einer Auswahlliste ein Eintrag 
-				 gewählt werden. Wurde der 
+				 gewählt werden, es sind dann auch freie Einträge für den Verweistyp möglich. Wurde der 
 				 Dialog von einem Feld in einer anderen Rubrik (z.B. das Feld <i>Basisdaten/Verweise</i> in der 
 				 Rubrik <i>Fachbezug</i>) geöffnet, so wird automatisch der betreffende Feldname eingetragen und 
 				 angezeigt (z.B. <i>Basisdaten</i>).</p>

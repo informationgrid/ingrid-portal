@@ -603,7 +603,8 @@
 				 <p>If the dialogue is summoned from a particular field, the detail 
 				 <i>Link type</i> is already filled in with the field name. In this case you cannot carry out any changes to the details.</p>
 				 <p>If you have called up the dialogue box from the general 
-				 <i>Links</i> field group, then you can select a link type from the dropdown list of the field <i>Link type</i>.</p>
+				 <i>Links</i> field group, then you can select a link type from the dropdown list of the field <i>Link type</i> or enter a 
+				 free value.</p>
 				 <p>There are two targets of links:</p>
 				 <ul>
 				 <li>Cross-references between objects (link target: object)</li>

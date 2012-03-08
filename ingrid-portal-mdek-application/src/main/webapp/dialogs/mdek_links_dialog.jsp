@@ -62,7 +62,7 @@
                     initReferenceWidget(filterStr);
                     var def = UtilStore.getItemByAttribute(referenceWidget.store, "entryId", filterStr)
                     def.then(function(item) {
-                        referenceWidget.setValue(item.entryId[0]);
+                        referenceWidget.set("item", item);
                     });
                 } else {
                     // set values from syslist dependent from object class
@@ -116,7 +116,8 @@
             createDOMElements = function() {
                 var storeProps = {data: {identifier: 'entryId', label: 'name'}};
                 // initialize with empty store !
-                createSelectBox("linksFromFieldName", null, storeProps, null);
+                createComboBox("linksFromFieldName", null, storeProps, null);
+                dijit.byId("linksFromFieldName").searchAttr = "name";
 
                 // storeProps data attributes overwritten by json data
                 createSelectBox("linksToURLType", null, storeProps, null, "js/data/urlReferenceTypes.json");
@@ -131,7 +132,7 @@
                 else {
                     var def = UtilStore.getItemByAttribute(typeWidget.store, "entryId", objectData.relationType);
                     def.then(function(item) {
-                        typeWidget.setValue(item.entryId[0]);
+                        typeWidget.set("item", item);
                     });
                 }
                 dijit.byId("linksToObjectName").setValue(objectData.title);
@@ -146,7 +147,7 @@
                 } else {
                     var def = UtilStore.getItemByAttribute(typeWidget.store, "entryId", urlData.relationType);
                     def.then(function(item) {
-                        typeWidget.setValue(item.entryId[0]);
+                        typeWidget.set("item", item);
                     });
                 }
                 dijit.byId("linksToURL").setValue(urlData.url);
@@ -253,21 +254,27 @@
                             return id == item.entryId;
                         });
                     });
-                    // add empty item at the beginning
+/*
+                    // add empty item at the beginning. ONLY IF SELECT BOX !
                     if (initialValues.length > 1) {
                         var emptyData = [{entryId:-1, name:""}];
                         initialValues = emptyData.concat(initialValues);
                     }
+*/
                 }
 //                console.debug("initialValues: " + initialValues);
 //                console.debug(initialValues);
 
                 // which data attributes for id and label (to show)
                 var storeProps = {
-                    label: "name",
-                    identifier: "entryId"
+                    searchAttr: "name",
+                    data: {
+                        label: "name",
+                        identifier: "entryId",
+                        items: initialValues
+                    }
                 };
-                UtilStore.updateWriteStore("linksFromFieldName", initialValues, storeProps);
+                dijit.byId("linksFromFieldName").store = new dojo.data.ItemFileWriteStore(storeProps);
             }
             
             saveLink = function(){
@@ -306,7 +313,11 @@
                     UtilList.addUrlLinkLabels([currentLink]);
                 }
                 // then take over stuff for both OBJECT and URL !
-                currentLink.relationType = dijit.byId("linksFromFieldName").getValue();
+                var linkTypeWidget = dijit.byId("linksFromFieldName");
+                currentLink.relationType = linkTypeWidget.item == null ? -1 : linkTypeWidget.item.entryId[0];
+                currentLink.relationTypeName = linkTypeWidget.get("value");
+//                console.debug("currentLink to save !");
+//                console.debug(currentLink);
                 UtilList.addIcons([currentLink]);
 
 
@@ -328,6 +339,7 @@
                     }
 
                     caller.selectedRow.relationType = currentLink.relationType;
+                    caller.selectedRow.relationTypeName = currentLink.relationTypeName;
                     caller.selectedRow.icon = currentLink.icon;
                     caller.selectedRow.linkLabel = currentLink.linkLabel;
 
