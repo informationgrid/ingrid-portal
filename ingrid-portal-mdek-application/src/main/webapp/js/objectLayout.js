@@ -879,7 +879,7 @@ ingridObjectLayout.createFachBezugClass5 = function(){
 	
 	var ref5MethodLinkStructure = [
 		{field: 'icon',name: '&nbsp;',width: '23px'},
-		{field: 'linkLabel',name: 'linkLabel',width: 325-scrollBarWidth-2+'px'}
+		{field: 'linkLabel',name: 'linkLabel',width: 324-scrollBarWidth-2+'px'}
 	];
     createDataGrid("ref5MethodLink", null, ref5MethodLinkStructure, null);
     // no immediate dialog on row click !
