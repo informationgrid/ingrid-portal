@@ -16,6 +16,7 @@ import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.ingrid.codelists.CodeListService;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.EnvironmentSearchForm;
 import de.ingrid.portal.global.IngridHitWrapper;
@@ -33,6 +34,7 @@ import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.tool.SpringUtil;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
 public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
@@ -45,12 +47,17 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
     private final static String TEMPLATE_RESULT = "/WEB-INF/templates/environment_result.vm";
 
     private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/environment_no_result.vm";
-
+    
+    private static SpringUtil springUtil = null;
+    
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
         setTopic(Settings.MSG_TOPIC_ENVIRONMENT);
 
         super.init(config);
+        
+        if (springUtil == null)
+            springUtil = new SpringUtil("../spring.xml");
     }
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
@@ -285,8 +292,9 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                     if (i != 0) {
                     	displayValues.append(UtilsSearch.DETAIL_VALUES_SEPARATOR);
                     }
-                    String resourceKey = UtilsUDKCodeLists.getCodeListEntryName(UtilsUDKCodeLists.SYSLIST_ID_ENV_TOPICS,
-            			new Long(idList[i].trim()), UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE);
+                    CodeListService clService = springUtil.getBean("codeListService", CodeListService.class);
+                    String resourceKey = clService.getCodeListValue(UtilsUDKCodeLists.SYSLIST_ID_ENV_TOPICS.toString(),
+                            idList[i].trim(), UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE);
                     displayValues.append(resources.getString(resourceKey.toLowerCase()));
             	}
                 hit.put(Settings.RESULT_KEY_TOPIC, displayValues.toString());
