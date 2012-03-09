@@ -4,12 +4,15 @@
 package de.ingrid.portal.global;
 
 import java.util.Locale;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.ingrid.utils.udk.UtilsLanguageCodelist;
-import de.ingrid.utils.udk.UtilsUDKCodeLists;
+import de.ingrid.codelists.CodeListService;
+import de.ingrid.codelists.model.CodeList;
+import de.ingrid.codelists.model.CodeListEntry;
+import de.ingrid.utils.tool.SpringUtil;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -21,6 +24,8 @@ public class IngridSysCodeList {
 	private final Logger log = LoggerFactory.getLogger(IngridSysCodeList.class);
 
     Locale locale;
+    
+    private static SpringUtil springUtil;
 
     /**
      * @param locale
@@ -28,23 +33,24 @@ public class IngridSysCodeList {
     public IngridSysCodeList(Locale locale) {
         super();
         this.locale = locale;
+        if (springUtil == null)
+            springUtil = new SpringUtil("../spring.xml");
     }
     
     public String getName(long codeListId, long domainId) {
     	
-        long langId;
+        String langId = "en";
         if (locale.getLanguage().equals(new Locale("de", "", "").getLanguage())) {
-            langId = UtilsLanguageCodelist.getCodeFromShortcut("de");
-        } else if (locale.getLanguage().equals(new Locale("en", "", "").getLanguage())) {
-            langId = UtilsLanguageCodelist.getCodeFromShortcut("en");
-        } else {
+            langId = "de";
+        } else if (!locale.getLanguage().equals(new Locale("en", "", "").getLanguage())) {
         	// different language, we use english !
         	if (log.isDebugEnabled()) {
         		log.debug("Unknown language for syslists ('" + locale.getLanguage() + "'), we use english syslist");
         	}
-            langId = UtilsLanguageCodelist.getCodeFromShortcut("en");
         }
-        return UtilsUDKCodeLists.getCodeListEntryName(new Long(codeListId), new Long(domainId), new Long(langId));
+        
+        CodeListService clService = springUtil.getBean("codeListService", CodeListService.class);
+        return clService.getCodeListValue(String.valueOf(codeListId), String.valueOf(domainId), langId);
     }
     
     public String getName(String codeListId, String domainId) {
@@ -60,16 +66,18 @@ public class IngridSysCodeList {
     }
     
     public String getNameByCodeListValue(String codeListId, String domainValue) {
+        CodeListService clService = springUtil.getBean("codeListService", CodeListService.class);
+        
+        CodeList cl = clService.getCodeList(codeListId);
+        for (CodeListEntry entry : cl.getEntries()) {
+            Map<String, String> locals = entry.getLocalisations();
+            for (String key : locals.keySet()) {
+                if (locals.get(key).equalsIgnoreCase(domainValue)) {
+                    return getName(codeListId, entry.getId()); 
+                }
+            }
+        }
     	
-    	String id = UtilsUDKCodeLists.getCodeListDomainId(new Long (codeListId), domainValue, new Long(UtilsLanguageCodelist.getCodeFromShortcut("de")));
-    	
-    	if(id == null){
-    		id = UtilsUDKCodeLists.getCodeListDomainId(new Long (codeListId), domainValue, new Long(UtilsLanguageCodelist.getCodeFromShortcut("en")));
-    	}
-    	
-    	if(id == null){
-    		id = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(new Long (codeListId), domainValue);
-    	}
-    	return getName(codeListId, id);
+    	return "";
     }
 }
