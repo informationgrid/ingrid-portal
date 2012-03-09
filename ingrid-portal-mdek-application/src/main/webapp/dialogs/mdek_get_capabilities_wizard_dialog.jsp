@@ -74,6 +74,9 @@ function setOperationValues(capBean) {
 		}
 	}	
 	UtilStore.updateWriteStore("ref3Operation", capBean.operations);
+    
+    // keywords !
+    igeEvents.addKeywords(capBean.keywords, { id:"getCapabilitiesWizard", _termListWidget:"thesaurusTerms" });
 
 	scriptScope.closeThisDialog();
 }

@@ -10,11 +10,14 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import de.ingrid.mdek.beans.CapabilitiesBean;
@@ -204,6 +207,10 @@ public class GetCapabilitiesService {
     	versions.add(version);
     	result.setVersions(versions);
 
+    	// Keywords
+    	List<String> keywords = getKeywords(doc);
+    	result.setKeywords(keywords);
+
     	// Operation List
     	List<OperationBean> operations = new ArrayList<OperationBean>();
 
@@ -326,6 +333,10 @@ public class GetCapabilitiesService {
     	List<String> versions = new ArrayList<String>();
     	versions.add(version);
     	result.setVersions(versions);
+
+    	// Keywords
+    	List<String> keywords = getKeywords(doc);
+    	result.setKeywords(keywords);
 
     	// Operation List
     	List<OperationBean> operations = new ArrayList<OperationBean>();
@@ -450,6 +461,10 @@ public class GetCapabilitiesService {
     	versions.add(version);
     	result.setVersions(versions);
 
+    	// Keywords
+    	List<String> keywords = getKeywords(doc);
+    	result.setKeywords(keywords);
+
     	// Operation List
     	List<OperationBean> operations = new ArrayList<OperationBean>();
 
@@ -534,6 +549,10 @@ public class GetCapabilitiesService {
     	List<String> versions = new ArrayList<String>();
     	versions.add(version);
     	result.setVersions(versions);
+
+    	// Keywords
+    	List<String> keywords = getKeywords(doc);
+    	result.setKeywords(keywords);
 
     	// Operation List
     	List<OperationBean> operations = new ArrayList<OperationBean>();
@@ -673,6 +692,10 @@ public class GetCapabilitiesService {
     	List<String> versions = new ArrayList<String>();
     	versions.add(version);
     	result.setVersions(versions);
+
+    	// Keywords
+    	List<String> keywords = getKeywords(doc);
+    	result.setKeywords(keywords);
 
     	// Operation List
     	List<OperationBean> operations = new ArrayList<OperationBean>();
@@ -905,6 +928,20 @@ public class GetCapabilitiesService {
     	}
     }
 
+    private List<String> getKeywords(Document doc) throws XPathExpressionException {
+    	List<String> keywords = new ArrayList<String>();
+
+    	NodeList nodeList = (NodeList) xPath.evaluate("//KeywordList/Keyword/text()", doc, XPathConstants.NODESET);
+		for (int index = 0; index < nodeList.getLength(); ++index) {
+			Node node = nodeList.item(index);
+			String content = node.getTextContent();
+			if (content != null && content.trim().length() > 0 && !keywords.contains(content)) {
+				keywords.add(content);
+			}
+		}
+
+    	return keywords;
+    }
 
     private static String getXPathExpressionFor(ServiceType serviceType, String ver, String postfix) {
     	String fieldId = "XPATH_EXP_"+serviceType+"_"+ver+"_"+postfix;

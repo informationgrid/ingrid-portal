@@ -12,6 +12,7 @@ public class CapabilitiesBean {
 	private List<String> versions;
 
 	private List<OperationBean> operations;
+	private List<String> keywords;
 
 	public String getTitle() {
 		return title;
@@ -51,6 +52,14 @@ public class CapabilitiesBean {
 
 	public void setVersions(List<String> versions) {
 		this.versions = versions;
+	}
+
+	public List<String> getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(List<String> keywords) {
+		this.keywords = keywords;
 	}
 
 }

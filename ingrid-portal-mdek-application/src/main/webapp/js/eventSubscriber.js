@@ -2922,66 +2922,74 @@ igeEvents.toggleButton = function(section, mode, labelElement) {
 }
 
 igeEvents.executeSearch = function() {
-	var _this = this;
 	var termList = UtilThesaurus.parseQueryTerm(this._inputFieldWidget.getValue());
-	var inspireTopics = [];
 
-	// For object search terms...
-	if (_this.id == "thesaurusFreeTermsAddButton" && termList && termList.length > 0) {
-		// Check if the termList contains inspire topics
-		// If so, tell the user and wait for confirmation. Then proceed with the normal search
-		termList = dojo.filter(termList, function(t) {
-			if (UtilThesaurus.isInspireTopic(t)) {
-				inspireTopics.push(t);
-				return false;
-			} else {
-				return true;
-			}
-		});
-	}
-	console.debug("term list: "+termList);
-	console.debug("inspire topics: "+inspireTopics);
+    igeEvents.addKeywords(termList, this);
 
-	var def = new dojo.Deferred();
-	// add inspire topics to the list
-	if (inspireTopics.length > 0) {
-		UtilThesaurus.addInspireTopics(inspireTopics);
-		var displayText = dojo.string.substitute(message.get("dialog.addInspireTopics.message"), [inspireTopics.join(", ")]);
-		dialog.show(message.get("dialog.addInspireTopics.title"), displayText, dialog.INFO, [
-		    { caption: message.get("general.ok"), action: function() { return def.callback(); } }
-		]);
-	} else {
-		// Otherwise just execute the callback to continue
-		def.callback();
-	}
-
-	if (termList && termList.length > 0) {
-		def.addCallback(function() {
-			// search for topics in SNS and put results into findTopicDefList
-			var findTopicDefList = [];
-			for (var i = 0; i < termList.length; ++i) {
-				findTopicDefList.push(UtilThesaurus.findTopicsDef(termList[i]));
-			}
-
-			UtilDWR.enterLoadingState();
-			var defList = new dojo.DeferredList(findTopicDefList, false, false, true);
-			defList.addErrback( function(err) { UtilDWR.exitLoadingState(); handleFindTopicsError(err); } );
-			defList.addCallback(function(resultList) {
-				UtilDWR.exitLoadingState();
-				var snsTopicList = [];
-				//for (var i = 0; i < resultList[0][1].length; ++i) {
-                dojo.forEach(resultList, function(item) {
-					// TODO handle sns timeout errors?
-					snsTopicList.push(item[1]);
-				});
-
-				UtilThesaurus.handleFindTopicsResult(termList, snsTopicList, _this._termListWidget);
-			});
-		});
-	}
-	
 	// empty field with user added entries
 	this._inputFieldWidget.attr("value", "", true);
+}
+
+// pass termList: list of strings or [] in JS
+// pass caller: e.g. { id:"getCapabilitiesWizard", _termListWidget:"thesaurusTerms" }
+igeEvents.addKeywords = function(termList, caller) {
+    var inspireTopics = [];
+
+    // For object search terms...
+    if ((caller.id == "thesaurusFreeTermsAddButton" || caller.id == "getCapabilitiesWizard") && termList && termList.length > 0) {
+        // Check if the termList contains inspire topics
+        // If so, tell the user and wait for confirmation. Then proceed with the normal search
+        termList = dojo.filter(termList, function(t) {
+            if (UtilThesaurus.isInspireTopic(t)) {
+                inspireTopics.push(t);
+                return false;
+            } else {
+                return true;
+            }
+        });
+    }
+    console.debug("term list: "+termList);
+    console.debug("inspire topics: "+inspireTopics);
+
+    var def = new dojo.Deferred();
+    // add inspire topics to the list
+    if (inspireTopics.length > 0) {
+        UtilThesaurus.addInspireTopics(inspireTopics);
+//        if (caller.id != "getCapabilitiesWizard") {
+            var displayText = dojo.string.substitute(message.get("dialog.addInspireTopics.message"), [inspireTopics.join(", ")]);
+            dialog.show(message.get("dialog.addInspireTopics.title"), displayText, dialog.INFO, [
+                { caption: message.get("general.ok"), action: function() { return def.callback(); } }
+            ]);
+//        }
+    } else {
+        // Otherwise just execute the callback to continue
+        def.callback();
+    }
+
+    if (termList && termList.length > 0) {
+        def.addCallback(function() {
+            // search for topics in SNS and put results into findTopicDefList
+            var findTopicDefList = [];
+            for (var i = 0; i < termList.length; ++i) {
+                findTopicDefList.push(UtilThesaurus.findTopicsDef(termList[i]));
+            }
+
+            UtilDWR.enterLoadingState();
+            var defList = new dojo.DeferredList(findTopicDefList, false, false, true);
+            defList.addErrback( function(err) { UtilDWR.exitLoadingState(); handleFindTopicsError(err); } );
+            defList.addCallback(function(resultList) {
+                UtilDWR.exitLoadingState();
+                var snsTopicList = [];
+                //for (var i = 0; i < resultList[0][1].length; ++i) {
+                dojo.forEach(resultList, function(item) {
+                    // TODO handle sns timeout errors?
+                    snsTopicList.push(item[1]);
+                });
+
+                UtilThesaurus.handleFindTopicsResult(termList, snsTopicList, caller._termListWidget);
+            });
+        });
+    }
     
     // expand rubric so that new entries are visible
     igeEvents.toggleFields('thesaurus', "showAll");
