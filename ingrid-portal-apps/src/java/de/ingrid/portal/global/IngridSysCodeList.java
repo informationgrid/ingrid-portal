@@ -72,6 +72,8 @@ public class IngridSysCodeList {
                     }
                 }
             }
+        }else{
+        	log.error("Codelist does not exit for codeListId: " + codeListId);
         }
     	return "";
     }

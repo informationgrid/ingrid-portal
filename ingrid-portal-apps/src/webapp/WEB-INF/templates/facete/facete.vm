@@ -85,6 +85,28 @@
     </div>
 #end
 
+#macro (renderFaceteSelectedAttributeHashMapNumber $doAction $title $numbers $key $isDelete)
+	<div>
+		<span>
+			<a href="$doAction"  
+        		#if($isDelete)
+        			class="facete_link_line facete_select_link"
+				#else
+					class="facete_link_line"
+        		#end
+        		>$title</a>
+			#if($numbers && $key)
+				#renderLinkEntryNumberInArrayHashMap($numbers $key)
+			#end
+        </span>
+		#if($isDelete)
+			#if($doAction)
+				#renderDeleteIcon ($doAction $MESSAGES.getString("searchResult.facete.category.delete.btn"))
+			#end
+		#end
+    </div>
+#end
+
 #macro(renderLinkEntryNumberInArrayHashMap $numbers $id)
 	<span class="facete_label_number">
     #foreach($number in $numbers)

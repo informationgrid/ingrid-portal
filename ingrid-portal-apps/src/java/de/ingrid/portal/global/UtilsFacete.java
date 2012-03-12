@@ -45,6 +45,7 @@ import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.query.RangeQuery;
 import de.ingrid.utils.query.TermQuery;
 import de.ingrid.utils.query.WildCardFieldQuery;
 import de.ingrid.utils.udk.UtilsDate;
@@ -1189,39 +1190,86 @@ public class UtilsFacete {
 					IngridDocument facete = new IngridDocument();
 			        ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
 				    
-			        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
 					Calendar cal;
 					
-					String timeNow = df.format(new GregorianCalendar().getTime());
+					cal = new GregorianCalendar();
+			   		String timeNow = df.format(cal.getTime());
 			        
 			       	HashMap<String, String> faceteEntry = new HashMap<String, String>();
-			   		faceteEntry.put("id", "modtime1");
-			   		cal = new GregorianCalendar();
-			   		cal.add(Calendar.MONTH, -1);
-				    faceteEntry.put("query", "t1:" + df.format(cal.getTime()) +  " t2:" + timeNow + " time:include");
-				    faceteList.add(faceteEntry);
-				    
-				    faceteEntry = new HashMap<String, String>();
-				    faceteEntry.put("id", "modtime2");
-				    cal = new GregorianCalendar();
-				    cal.add(Calendar.MONTH, -3);
-				    faceteEntry.put("query", "t1:" + df.format(cal.getTime()) +  " t2:" + timeNow + " time:include");
-				    faceteList.add(faceteEntry);	
-				
-				    faceteEntry = new HashMap<String, String>();
-				    faceteEntry.put("id", "modtime3");
-				    cal = new GregorianCalendar();
-				    cal.add(Calendar.YEAR, -1);
-				    faceteEntry.put("query", "t1:" + df.format(cal.getTime()) +  " t2:" + timeNow + " time:include");
-				    faceteList.add(faceteEntry);	
-				
-				    faceteEntry = new HashMap<String, String>();
-				    faceteEntry.put("id", "modtime4");
-				    cal = new GregorianCalendar();
-				    cal.add(Calendar.YEAR, -5);
-				    faceteEntry.put("query", "t1:" +  df.format(cal.getTime()) +  " t2:" + timeNow + " time:include");
-				    faceteList.add(faceteEntry);	
+			       	
+			       	if((String) getAttributeFromSession(request, "doTime") != null){
+			       		int doTime = Integer.valueOf((String) getAttributeFromSession(request, "doTime"));
+				       	switch (doTime) {
+				       		case 1:
+				       			faceteEntry.put("id", "modtime1");
+						   		cal = new GregorianCalendar();
+						   		cal.add(Calendar.MONTH, -1);
+							    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+							    faceteList.add(faceteEntry);
+
+								break;
+				       		case 2:
+				       			faceteEntry = new HashMap<String, String>();
+							    faceteEntry.put("id", "modtime2");
+							    cal = new GregorianCalendar();
+							    cal.add(Calendar.MONTH, -3);
+							    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+							    faceteList.add(faceteEntry);	
+
+								break;
+				       		case 3:
+				       			faceteEntry = new HashMap<String, String>();
+							    faceteEntry.put("id", "modtime3");
+							    cal = new GregorianCalendar();
+							    cal.add(Calendar.YEAR, -1);
+							    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+							    faceteList.add(faceteEntry);	
+
+								break;
+				       		case 4:
+				       			faceteEntry = new HashMap<String, String>();
+							    faceteEntry.put("id", "modtime4");
+							    cal = new GregorianCalendar();
+							    cal.add(Calendar.YEAR, -5);
+							    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+							    faceteList.add(faceteEntry);
+							    
+								break;
+			
+							default:
+							    
+							    break;
+						}
+			       	}else{
+			       		faceteEntry.put("id", "modtime1");
+				   		cal = new GregorianCalendar();
+				   		cal.add(Calendar.MONTH, -1);
+					    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+					    faceteList.add(faceteEntry);
+					    
+					    faceteEntry = new HashMap<String, String>();
+					    faceteEntry.put("id", "modtime2");
+					    cal = new GregorianCalendar();
+					    cal.add(Calendar.MONTH, -3);
+					    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+					    faceteList.add(faceteEntry);	
 					
+					    faceteEntry = new HashMap<String, String>();
+					    faceteEntry.put("id", "modtime3");
+					    cal = new GregorianCalendar();
+					    cal.add(Calendar.YEAR, -1);
+					    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+					    faceteList.add(faceteEntry);	
+					
+					    faceteEntry = new HashMap<String, String>();
+					    faceteEntry.put("id", "modtime4");
+					    cal = new GregorianCalendar();
+					    cal.add(Calendar.YEAR, -5);
+					    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+					    faceteList.add(faceteEntry);
+			       	}
+			       	
 			        facete.put("id", "modtime");
 			        facete.put("classes", faceteList);
 			        
@@ -1259,30 +1307,32 @@ public class UtilsFacete {
 	
 	private static void addToQueryTime(PortletRequest request, IngridQuery query) {
 		String doTime = (String) getAttributeFromSession(request, "doTime");
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Calendar cal = new GregorianCalendar();
-		ClauseQuery cq = null;
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+		Calendar cal;
+		
+		cal = new GregorianCalendar();
+   		String timeNow = df.format(cal.getTime());
         
+		
 		if(doTime != null){
-            cq = new ClauseQuery(true, false);
-            
             if (doTime.equals("1")) {
             	// letzten Monat
+            	cal = new GregorianCalendar();
             	cal.add(Calendar.MONTH, -1);
             }else if(doTime.equals("2")){
             	// letzten 3 Monate
+            	cal = new GregorianCalendar();
             	cal.add(Calendar.MONTH, -3);
             }else if(doTime.equals("3")){
             	// letztes Jahr
+            	cal = new GregorianCalendar();
             	cal.add(Calendar.YEAR, -1);
             }else if(doTime.equals("4")){
             	// letzte 5 Jahre
+            	cal = new GregorianCalendar();
             	cal.add(Calendar.YEAR, -5);
             }
-            cq.addField(new FieldQuery(false, false, Settings.QFIELD_DATE_FROM, df.format(cal.getTime())));
-            cq.addField(new FieldQuery(false, false, Settings.QFIELD_DATE_TO, df.format(new GregorianCalendar().getTime())));
-            cq.addField(new FieldQuery(false, false, "time", "include"));
-            query.addClause(cq);
+            query.addRangeQuery(new RangeQuery(true, false, "t0113_dataset_reference.reference_date", df.format(cal.getTime()) + "0*", timeNow + "9*", true));
         }	
 	}
 	
