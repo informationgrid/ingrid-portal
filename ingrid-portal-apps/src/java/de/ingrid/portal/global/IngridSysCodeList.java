@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import de.ingrid.codelists.CodeListService;
 import de.ingrid.codelists.model.CodeList;
 import de.ingrid.codelists.model.CodeListEntry;
-import de.ingrid.utils.tool.SpringUtil;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -25,16 +24,12 @@ public class IngridSysCodeList {
 
     Locale locale;
     
-    private static SpringUtil springUtil;
-
     /**
      * @param locale
      */
     public IngridSysCodeList(Locale locale) {
         super();
         this.locale = locale;
-        if (springUtil == null)
-            springUtil = new SpringUtil("../spring.xml");
     }
     
     public String getName(long codeListId, long domainId) {
@@ -49,8 +44,7 @@ public class IngridSysCodeList {
         	}
         }
         
-        CodeListService clService = springUtil.getBean("codeListService", CodeListService.class);
-        return clService.getCodeListValue(String.valueOf(codeListId), String.valueOf(domainId), langId);
+        return CodeListServiceFactory.instance().getCodeListValue(String.valueOf(codeListId), String.valueOf(domainId), langId);
     }
     
     public String getName(String codeListId, String domainId) {
@@ -66,18 +60,19 @@ public class IngridSysCodeList {
     }
     
     public String getNameByCodeListValue(String codeListId, String domainValue) {
-        CodeListService clService = springUtil.getBean("codeListService", CodeListService.class);
+        CodeListService clService = CodeListServiceFactory.instance();
         
         CodeList cl = clService.getCodeList(codeListId);
-        for (CodeListEntry entry : cl.getEntries()) {
-            Map<String, String> locals = entry.getLocalisations();
-            for (String key : locals.keySet()) {
-                if (locals.get(key).equalsIgnoreCase(domainValue)) {
-                    return getName(codeListId, entry.getId()); 
+        if (cl != null) {
+            for (CodeListEntry entry : cl.getEntries()) {
+                Map<String, String> locals = entry.getLocalisations();
+                for (String key : locals.keySet()) {
+                    if (locals.get(key).equalsIgnoreCase(domainValue)) {
+                        return getName(codeListId, entry.getId()); 
+                    }
                 }
             }
         }
-    	
     	return "";
     }
 }

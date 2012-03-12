@@ -42,4 +42,25 @@
             </simple>
         </trigger>
     </job>
+    <job>
+        <job-detail>
+            <name>UpdateCodelistsJob</name>
+            <group>DEFAULT</group>
+            <description>A job for updating the codelists from a repository via the management iPlug.</description>
+            <job-class>de.ingrid.portal.scheduler.jobs.UpdateCodelistsFromPortalJob</job-class>
+            <volatility>false</volatility>
+            <durability>false</durability>
+            <recover>false</recover>
+        </job-detail>
+        <trigger>
+            <simple>
+                <name>UpdateCodelistsTrigger</name>
+                <group>DEFAULT</group>
+                <job-name>UpdateCodelistsJob</job-name>
+                <job-group>DEFAULT</job-group>
+                <repeat-count>-1</repeat-count>
+                <repeat-interval>86400000</repeat-interval>
+            </simple>
+        </trigger>
+    </job>
 </quartz>
