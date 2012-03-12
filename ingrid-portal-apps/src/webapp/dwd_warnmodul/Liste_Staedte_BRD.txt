@@ -369,7 +369,7 @@ Eutin	54.133	10.617
 Heide	54.2	9.1
 Husum	54.483	9.05
 Itzehoe	53.933	9.517
-Pinneberg	53.633	9.8
+Pinneberg	53.667	9.8
 Plön	54.167	10.417
 Ratzeburg	53.7	10.75
 Rendsburg	54.3	9.667
