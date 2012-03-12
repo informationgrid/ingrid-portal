@@ -1396,7 +1396,8 @@ public class UtilsFacete {
 	}
 	
 	private static void setParamsToContextMap (RenderRequest request, Context context){
-
+		
+		
 		String wmsURL = UtilsSearch.getWMSURL(request, request.getParameter("wms_url"), false);
         context.put("wmsURL", wmsURL);
         HashMap<String, String> doMapCoords = (HashMap<String, String>) getAttributeFromSession(request, "doMapCoords");
@@ -1407,6 +1408,8 @@ public class UtilsFacete {
         }else{
         	context.put("isMapSelect", false);
         }
+        
+        context.put("webmapDebugMode", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_WEBMAPCLIENT_DEBUG, false));
 	}
 	
 	private static void addToQueryMap(PortletRequest request, IngridQuery query) {

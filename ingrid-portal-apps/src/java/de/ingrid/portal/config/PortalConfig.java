@@ -197,8 +197,13 @@ public class PortalConfig extends PropertiesConfiguration {
     // Enable facete on search hits
     public static final String PORTAL_ENABLE_SEARCH_FACETE = "portal.search.facete.enable";
     
+    // Enable debug mode of webmap-client
+    public static final String PORTAL_WEBMAPCLIENT_DEBUG = "portal.webmapclient.debug";
+    
     // private stuff
     private static PortalConfig instance = null;
+    
+    
 
     private final static Logger log = LoggerFactory.getLogger(PortalConfig.class);
 

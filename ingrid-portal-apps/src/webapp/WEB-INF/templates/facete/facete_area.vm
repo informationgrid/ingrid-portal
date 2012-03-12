@@ -25,6 +25,7 @@ var viewConfiguration = "portalu-facete-search";
 	<div>
     #if(!$geothesaurusSelectTopics || $geothesaurusSelectTopics.size() == 0)
 		<div style="padding:0px 0px 5px 0px;">
+			#if($webmapDebugMode)
     		<a onclick="prepareDialogMap('dialog_area_map','/ingrid-webmap-client/frontend/index-dev.html','openlayersDivInParent','webmapIframe')"
 				#if($doMapCoords && $doMapCoords.size() > 0)
 					class="facete_link_line facete_select_link_topic"
@@ -34,6 +35,17 @@ var viewConfiguration = "portalu-facete-search";
 				>
     			$MESSAGES.getString("searchResult.facete.area.map.search")
     		</a>
+			#else
+		    <a onclick="prepareDialogMap('dialog_area_map','/ingrid-webmap-client/frontend/index.html','openlayersDivInParent','webmapIframe')"
+				#if($doMapCoords && $doMapCoords.size() > 0)
+					class="facete_link_line facete_select_link_topic"
+				#else
+					class="facete_link_line"
+				#end
+				>
+    			$MESSAGES.getString("searchResult.facete.area.map.search")
+    		</a>			
+			#end
             <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" ></img>
     	</div>
     	## SELECTED PARAMS

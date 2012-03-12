@@ -18,6 +18,7 @@ import org.apache.jetspeed.portlet.SupportsHeaderPhase;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchExtEnvPlaceMapForm;
 import de.ingrid.portal.global.IngridPersistencePrefs;
 import de.ingrid.portal.global.IngridResourceBundle;
@@ -190,11 +191,10 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements S
     }
     public void doHeader(PortletHeaderRequest request, PortletHeaderResponse response)
 			throws PortletException {
-		
-
-        HeaderResource headerResource = response.getHeaderResource();
-        
-        
+    	HeaderResource headerResource = response.getHeaderResource();
+		if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_WEBMAPCLIENT_DEBUG, false)){
+        //debug mode
+		      
         headerResource.addHeaderInfo("<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/adapter/ext/ext-base-debug.js\"></script>" +
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/ext-all-debug.js\"></script>" +
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/lib/OpenLayers.js\"></script>" +
@@ -234,7 +234,25 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements S
 	
     
 	//path: /ingrid-webmap-client/frontend/
+		}else{
+			//productive mode
 
+			
+	        headerResource.addHeaderInfo("<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/adapter/ext/ext-base.js\"></script>" +
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/ext-all.js\"></script>" +
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/OpenLayers.js\"></script>" +
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext/script/GeoExt.js\"></script>"+
+					 
+					 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all.css\" />"+
+					 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/openlayers.addins/loadingpanel-min.css\" />"+
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/proj4js/lib/proj4js-compressed.js\"></script>"+
+
+					 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/frontend/css/style-min.css\" />"+
+
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/frontend-all-min.js\"></script>");		
+			
+
+		}
     
 	}
 }
