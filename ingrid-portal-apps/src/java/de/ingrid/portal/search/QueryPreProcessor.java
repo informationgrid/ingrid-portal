@@ -94,6 +94,7 @@ public class QueryPreProcessor {
         		Settings.HIT_KEY_UDK_CLASS,
         		Settings.HIT_KEY_UDK_CLASS.toLowerCase(),
         		Settings.HIT_KEY_OBJ_ID,
+        		Settings.HIT_KEY_ORG_OBJ_ID,
         		Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT,
         		Settings.HIT_KEY_OBJ_SERV_TYPE,        		
         		Settings.HIT_KEY_OBJ_SERV_TYPE_KEY,        		
@@ -386,6 +387,7 @@ public class QueryPreProcessor {
         String[] requestedMetadata = new String[] {
                 // udk object metadata
                 Settings.HIT_KEY_OBJ_ID,
+                Settings.HIT_KEY_ORG_OBJ_ID,
                 Settings.HIT_KEY_UDK_CLASS,
                 Settings.HIT_KEY_UDK_CLASS.toLowerCase(),
         };

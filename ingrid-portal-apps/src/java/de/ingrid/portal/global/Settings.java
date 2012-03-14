@@ -220,6 +220,7 @@ public class Settings {
 
     
     public final static String HIT_KEY_OBJ_ID = "T01_object.obj_id";
+    public final static String HIT_KEY_ORG_OBJ_ID = "T01_object.org_obj_id";
 
     // mapped ! NO, NOT MAPPED ANYMORE in Plug Description, instead in iBus when querying.
     // ECS iPlug has to be adapted (maybe !)
