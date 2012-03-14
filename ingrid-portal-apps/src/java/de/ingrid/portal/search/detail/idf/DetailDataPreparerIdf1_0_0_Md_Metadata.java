@@ -240,7 +240,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			// Addresse (Metadatum)
 			xpathExpression = "./gmd:identificationInfo/*/gmd:pointOfContact";
 			getAddresses(elementsAdditionalInfo, xpathExpression, true);
-			
+
 			
 	// Tab "Fachbezug"
 			
@@ -1609,7 +1609,11 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					Node node = XPathUtils.getNode(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL");
 					if(XPathUtils.getString(nodeList.item(i), "./../srv:operationName").trim().length() > 0){
 						String value = XPathUtils.getString(node, ".").trim();
-						if (value != null && value.toLowerCase().indexOf("request=getcapabilities") == -1) {
+						// do not display empty URLs
+						if (value == null || value.length() == 0) {
+						    continue;
+						}
+						if (value.toLowerCase().indexOf("request=getcapabilities") == -1) {
 			    			if (value.indexOf("?") == -1) {
 			    				value = value + "?";
 			    			}
@@ -2344,966 +2348,966 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}
 	
-	// "Addressen"
-	private void getAddresses(ArrayList elements, String xpathExpression, boolean isForAdditionalInfo) {
-		ArrayList elementsAddress = new ArrayList();
-		
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				Node childNode = nodeList.item(i);
-				if (childNode.hasChildNodes()) {
-					xpathExpression = "./idf:idfResponsibleParty";
-					if(XPathUtils.nodeExists(childNode, xpathExpression)){
-						Node subNode = XPathUtils.getNode(childNode, xpathExpression);
-						addSingleAddress(elementsAddress, subNode, isForAdditionalInfo);	
-					}
-					xpathExpression = "./gmd:CI_ResponsibleParty";
-					if(XPathUtils.nodeExists(childNode, xpathExpression)){
-						Node subNode = XPathUtils.getNode(childNode, xpathExpression);
-						addSingleAddress(elementsAddress, subNode, isForAdditionalInfo);	
-					}
-				}
-			}
-		}
-		
-		// "Kontakte für idfResponsibleParty"
-		xpathExpression = "./gmd:contact/idf:idfResponsibleParty";
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
-			for (int i = 0; i < nodeList.getLength(); i++){
-				addSingleAddress(elementsAddress, nodeList.item(i), isForAdditionalInfo);
-			}
-			
-		}
-		
-		// "Kontakte für CI_ResponsibleParty"
-		xpathExpression = "./gmd:contact/gmd:CI_ResponsibleParty";
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
-			for (int i = 0; i < nodeList.getLength(); i++){
-				addSingleAddress(elementsAddress, nodeList.item(i), isForAdditionalInfo);
-			}
-			
-		}
-		
-		xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/idf:idfResponsibleParty";
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
-			for (int i = 0; i < nodeList.getLength(); i++){
-				addSingleAddress(elementsAddress, nodeList.item(i), isForAdditionalInfo);
-			}
-		}
-		
-		if(isForAdditionalInfo){
-			if(elementsAddress != null && elementsAddress.size() > 0){
-				elements.add(elementsAddress.get(0));
-			}
-		}else{
-			if(elementsAddress.size() > 0){
-				HashMap elementAddress = new HashMap();
-				elementAddress.put("type", "multiLineAddresses");
-				elementAddress.put("title", messages.getString("addresses"));
-				elementAddress.put("id", "addresses_id");
-				elementAddress.put("elementsAddress", elementsAddress);
-				elements.add(elementAddress);
-			}
-		}
-	}
-	
-	private void addSingleAddress(ArrayList elementsAddress, Node node, boolean isForAdditionalInfo) {
-		if (node != null) {
-			HashMap element;
-			String xpathExpression;
-			boolean isIdfResponsibleParty = false;
-			
-			if(node.getLocalName().trim().equals("idfResponsibleParty")){
-				isIdfResponsibleParty = true;
-			}else{
-				isIdfResponsibleParty = false;
-			}
-			
-			xpathExpression = "./gmd:role/gmd:CI_RoleCode/@codeListValue";
-			if (XPathUtils.nodeExists(node, xpathExpression)) {
-				String role = XPathUtils.getString(node, xpathExpression).trim();
-				String title = sysCodeList.getNameByCodeListValue("505", role);
-				boolean isMetadatumContact = false;
-				if(role.equals("pointOfContact")){
-					if(node.getParentNode().getNodeName().trim().equals("gmd:contact")){
-						isMetadatumContact = true;
-						title = title + " (" + messages.getString("pointofcontact_metadata")+ ")";
-					}
-				}
-				
-				if (title.length() < 1){
-					title = role;
-				}
-				
-				
-				if((isForAdditionalInfo && isMetadatumContact)){
-					addSingleMetaAddress(elementsAddress, node, title, isIdfResponsibleParty);
-				}else if (!isForAdditionalInfo && !isMetadatumContact){
-					element = addElementAddress("multiLine", title, "", "false", new ArrayList());
-					ArrayList elements = (ArrayList) element.get("elements");
-					
-					addressEvaluateNode(elements, node, isIdfResponsibleParty);
-					
-					elementsAddress.add(element);
-				}
-			}
-		}
-	}
-	
-	private void addSingleMetaAddress(ArrayList elementsAddress, Node node, String title, Boolean isIdfResponsibleParty) {
-		
-		ArrayList elementsMetaAddress = new ArrayList();
-		String xpathExpression = "";
-		HashMap element = addElementAddress("multiLine", null, "", "false", new ArrayList());
-		ArrayList elements = (ArrayList) element.get("elements");
-		
-		addressEvaluateNode(elements,node, isIdfResponsibleParty);
-		
-		elementsMetaAddress.add(element);
-		
-		HashMap elementAddress = new HashMap();
-		elementAddress.put("type", "multiLineAddresses");
-		elementAddress.put("title", title);
-		elementAddress.put("id", "addresses_id");
-		elementAddress.put("elementsAddress", elementsMetaAddress);
-		elementsAddress.add(elementAddress);
-		
-	}
+    // "Addressen"
+    private void getAddresses(ArrayList elements, String xpathExpression, boolean isForAdditionalInfo) {
+        ArrayList elementsAddress = new ArrayList();
+        
+        if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node childNode = nodeList.item(i);
+                if (childNode.hasChildNodes()) {
+                    xpathExpression = "./idf:idfResponsibleParty";
+                    if(XPathUtils.nodeExists(childNode, xpathExpression)){
+                        Node subNode = XPathUtils.getNode(childNode, xpathExpression);
+                        addSingleAddress(elementsAddress, subNode, isForAdditionalInfo);    
+                    }
+                    xpathExpression = "./gmd:CI_ResponsibleParty";
+                    if(XPathUtils.nodeExists(childNode, xpathExpression)){
+                        Node subNode = XPathUtils.getNode(childNode, xpathExpression);
+                        addSingleAddress(elementsAddress, subNode, isForAdditionalInfo);    
+                    }
+                }
+            }
+        }
+        
+        // "Kontakte für idfResponsibleParty"
+        xpathExpression = "./gmd:contact/idf:idfResponsibleParty";
+        if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+            for (int i = 0; i < nodeList.getLength(); i++){
+                addSingleAddress(elementsAddress, nodeList.item(i), isForAdditionalInfo);
+            }
+            
+        }
+        
+        // "Kontakte für CI_ResponsibleParty"
+        xpathExpression = "./gmd:contact/gmd:CI_ResponsibleParty";
+        if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+            for (int i = 0; i < nodeList.getLength(); i++){
+                addSingleAddress(elementsAddress, nodeList.item(i), isForAdditionalInfo);
+            }
+            
+        }
+        
+        xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/idf:idfResponsibleParty";
+        if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+            for (int i = 0; i < nodeList.getLength(); i++){
+                addSingleAddress(elementsAddress, nodeList.item(i), isForAdditionalInfo);
+            }
+        }
+        
+        if(isForAdditionalInfo){
+            if(elementsAddress != null && elementsAddress.size() > 0){
+                elements.add(elementsAddress.get(0));
+            }
+        }else{
+            if(elementsAddress.size() > 0){
+                HashMap elementAddress = new HashMap();
+                elementAddress.put("type", "multiLineAddresses");
+                elementAddress.put("title", messages.getString("addresses"));
+                elementAddress.put("id", "addresses_id");
+                elementAddress.put("elementsAddress", elementsAddress);
+                elements.add(elementAddress);
+            }
+        }
+    }
+    
+    private void addSingleAddress(ArrayList elementsAddress, Node node, boolean isForAdditionalInfo) {
+        if (node != null) {
+            HashMap element;
+            String xpathExpression;
+            boolean isIdfResponsibleParty = false;
+            
+            if(node.getLocalName().trim().equals("idfResponsibleParty")){
+                isIdfResponsibleParty = true;
+            }else{
+                isIdfResponsibleParty = false;
+            }
+            
+            xpathExpression = "./gmd:role/gmd:CI_RoleCode/@codeListValue";
+            if (XPathUtils.nodeExists(node, xpathExpression)) {
+                String role = XPathUtils.getString(node, xpathExpression).trim();
+                String title = sysCodeList.getNameByCodeListValue("505", role);
+                boolean isMetadatumContact = false;
+                if(role.equals("pointOfContact")){
+                    if(node.getParentNode().getNodeName().trim().equals("gmd:contact")){
+                        isMetadatumContact = true;
+                        title = title + " (" + messages.getString("pointofcontact_metadata")+ ")";
+                    }
+                }
+                
+                if (title.length() < 1){
+                    title = role;
+                }
+                
+                
+                if((isForAdditionalInfo && isMetadatumContact)){
+                    addSingleMetaAddress(elementsAddress, node, title, isIdfResponsibleParty);
+                }else if (!isForAdditionalInfo && !isMetadatumContact){
+                    element = addElementAddress("multiLine", title, "", "false", new ArrayList());
+                    ArrayList elements = (ArrayList) element.get("elements");
+                    
+                    addressEvaluateNode(elements, node, isIdfResponsibleParty);
+                    
+                    elementsAddress.add(element);
+                }
+            }
+        }
+    }
+    
+    private void addSingleMetaAddress(ArrayList elementsAddress, Node node, String title, Boolean isIdfResponsibleParty) {
+        
+        ArrayList elementsMetaAddress = new ArrayList();
+        String xpathExpression = "";
+        HashMap element = addElementAddress("multiLine", null, "", "false", new ArrayList());
+        ArrayList elements = (ArrayList) element.get("elements");
+        
+        addressEvaluateNode(elements,node, isIdfResponsibleParty);
+        
+        elementsMetaAddress.add(element);
+        
+        HashMap elementAddress = new HashMap();
+        elementAddress.put("type", "multiLineAddresses");
+        elementAddress.put("title", title);
+        elementAddress.put("id", "addresses_id");
+        elementAddress.put("elementsAddress", elementsMetaAddress);
+        elementsAddress.add(elementAddress);
+        
+    }
 
-	private void addressEvaluateNode(ArrayList elements, Node node, boolean isIdfResponsibleParty) {
+    private void addressEvaluateNode(ArrayList elements, Node node, boolean isIdfResponsibleParty) {
 
-		String xpathExpression = "";
-		
-		if(isIdfResponsibleParty){
-			if(XPathUtils.nodeExists(node, "./idf:hierarchyParty")){
-				NodeList hierarchyPartyNodeList = XPathUtils.getNodeList(node, "./idf:hierarchyParty");
-				for(int i=hierarchyPartyNodeList.getLength(); 0 < i ;i--){
-					Node hierarchyPartyNode = hierarchyPartyNodeList.item(i-1);
-					String uuid = "";
-					String value = "";
-					String type = "";
-					xpathExpression = "./@uuid";
-					if (XPathUtils.nodeExists(node, xpathExpression)) {
-						uuid = XPathUtils.getString(hierarchyPartyNode, xpathExpression).trim();
-					}
-					// "Type"
-					xpathExpression = "./idf:addressType";
-					if(XPathUtils.nodeExists(hierarchyPartyNode, xpathExpression)){
-						type = XPathUtils.getString(hierarchyPartyNode, xpathExpression).trim();
-					}
-					
-					if(type.equals("2")){
-						// "Name"
-						xpathExpression = "./idf:addressIndividualName";
-						if(XPathUtils.nodeExists(hierarchyPartyNode, xpathExpression)){
-							value = XPathUtils.getString(hierarchyPartyNode, xpathExpression).trim();
-							elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), getIndividualName(value), uuid));
-						}
-					}else if(type.equals("3")){
-						if(XPathUtils.nodeExists(hierarchyPartyNode, "./idf:addressIndividualName")){
-							value = XPathUtils.getString(hierarchyPartyNode, "./idf:addressIndividualName").trim();
-							elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), getIndividualName(value), uuid));
-						}else if(XPathUtils.nodeExists(hierarchyPartyNode, "./idf:addressOrganisationName")){
-							value = XPathUtils.getString(hierarchyPartyNode, "./idf:addressOrganisationName").trim();
-							elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), value, uuid));
-						}
-					}else{
-						// "Organisation"
-						xpathExpression = "./idf:addressOrganisationName";
-						if(XPathUtils.nodeExists(hierarchyPartyNode, xpathExpression)){
-							value = XPathUtils.getString(hierarchyPartyNode, xpathExpression).trim();
-							elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), value, uuid));
-						}
-					}
-				}
-			}else{
-				// Organistation
-				xpathExpression = "./gmd:organisationName";
-				if (XPathUtils.nodeExists(node, xpathExpression)) {
-					String value = XPathUtils.getString(node, xpathExpression).trim();
-					StringTokenizer valueTokenizer = new StringTokenizer(value, ",");
-					for(int i=0; i<valueTokenizer.countTokens();i++) {
-						addElement(elements, "textLine", valueTokenizer.nextToken());
-					}
-				}
-				
-				// Name
-				xpathExpression = "./gmd:individualName";
-				if (XPathUtils.nodeExists(node, xpathExpression)) {
-					String value = XPathUtils.getString(node, xpathExpression).trim();
-					addElement(elements, "textLine", getIndividualName(value));
-				}
-			}
-		}else{
-			// Organistation
-			xpathExpression = "./gmd:organisationName";
-			if (XPathUtils.nodeExists(node, xpathExpression)) {
-				String value = XPathUtils.getString(node, xpathExpression).trim();
-				StringTokenizer valueTokenizer = new StringTokenizer(value, ",");
-				for(int i=0; i<valueTokenizer.countTokens();i++) {
-					addElement(elements, "textLine", valueTokenizer.nextToken());
-				}
-			}
-			
-			// Name
-			xpathExpression = "./gmd:individualName";
-			if (XPathUtils.nodeExists(node, xpathExpression)) {
-				String value = XPathUtils.getString(node, xpathExpression).trim();
-				addElement(elements, "textLine", getIndividualName(value));
-			}
-		}
-		
-		// "Position"
-		/* NOT IN USED
-		xpathExpression = "./gmd:positionName";
-		if (XPathUtils.nodeExists(node, xpathExpression)) {
-			String position = XPathUtils.getString(node, xpathExpression).trim();
-			if (position != null) {
-				position = position.replaceAll("\n", "<br/>");
-				position = position.replaceAll("&lt;", "<");
-				position = position.replaceAll("&gt;", ">");
-			}
-			addElement(elements, "textLine", position);
-		}
-		*/
-		if (XPathUtils.nodeExists(node, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address")){
-			addSpace(elements);
-		}
-		
-		// "Street"
-		xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint";
-		if (XPathUtils.nodeExists(node, xpathExpression)) {
-			NodeList nodeList = XPathUtils.getNodeList(node, xpathExpression);
-			for(int i=0; i<nodeList.getLength();i++){
-				String deliveryPoint = XPathUtils.getString(nodeList.item(i), ".").trim();
-				if(deliveryPoint.startsWith("Postbox")){
-					String[] postbox = deliveryPoint.split(",");
-					for(int j=0; j < postbox.length; j++){
-						if(postbox[j].startsWith("Postbox")){
-							addElement(elements, "textLine", messages.getString("postbox_label") + " " + postbox[j].replace("Postbox ", ""));
-						}else{
-							addElement(elements, "textLine", postbox[j]);
-						}
-					}
-					addSpace(elements);
-				}else if(deliveryPoint.matches("\\d*")){
-					addElement(elements, "textLine", messages.getString("postbox_label") + " " + deliveryPoint);
-				}else{
-					addElement(elements, "textLine", deliveryPoint);
-				}
-			}
-		}
-		
-		String postalCode = "";
-		String city = "";
-		
-		// "Postcode"
-		xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:postalCode";
-		if (XPathUtils.nodeExists(node, xpathExpression)) {
-			postalCode = XPathUtils.getString(node, xpathExpression).trim();
-		}
-		
-		// "City"
-		xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city";
-		if (XPathUtils.nodeExists(node, xpathExpression)) {
-			city = XPathUtils.getString(node, xpathExpression).trim();
-		}
-		
-		if (postalCode.length() > 0 || city.length() > 0) {
-			addElement(elements, "textLine", postalCode.concat(" ").concat(city));
-		}
-		
-		// "Country"
-		xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country";
-		if (XPathUtils.nodeExists(node, xpathExpression)) {
-			String country = XPathUtils.getString(node, xpathExpression).trim();
-			if(country != null){
-				String value = UtilsCountryCodelist.getNameFromCode(UtilsCountryCodelist.getCodeFromShortcut3(country), this.request.getLocale().getLanguage().toString());
-				if(value != null){
-					addElement(elements, "textLine", value);
-				}else{
-					addElement(elements, "textLine", country);
-				}
-			}
-		}
-		
-		addSpace(elements);
-		// "Mail"
-		xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress";
-		if (XPathUtils.nodeExists(node, xpathExpression)) {
-			NodeList electronicMailAddressNodeList = XPathUtils.getNodeList(node, xpathExpression);
-			for (int i = 0; i < electronicMailAddressNodeList.getLength(); i++) {
-				String value = XPathUtils.getString(electronicMailAddressNodeList.item(i), ".").trim();
-				elements.add(addElementEmailWeb(messages.getString("t021_communication.comm_type_email"), value, value, value, LinkType.EMAIL));
-			}
-		}
-		
-		// "Telefon"
-		xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice";
-		if (XPathUtils.nodeExists(node, xpathExpression)) {
-			String value = XPathUtils.getString(node, xpathExpression).trim();
-			addElement(elements, "textLine", value, messages.getString("t021_communication.comm_type_phone"));
-		}
-		
-		// "Fax"
-		xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:facsimile";
-		if (XPathUtils.nodeExists(node, xpathExpression)) {
-			String value = XPathUtils.getString(node, xpathExpression).trim();
-			addElement(elements, "textLine", value, messages.getString("t021_communication.comm_type_fax"));
-		}
-		
-		// "URL"
-		xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL";
-		if (XPathUtils.nodeExists(node, xpathExpression)) {
-			String value = XPathUtils.getString(node, xpathExpression).trim();
-			elements.add(addElementEmailWeb("URL", value, value, value, LinkType.WWW_URL));
-		}
-		
-	}
+        String xpathExpression = "";
+        
+        if(isIdfResponsibleParty){
+            if(XPathUtils.nodeExists(node, "./idf:hierarchyParty")){
+                NodeList hierarchyPartyNodeList = XPathUtils.getNodeList(node, "./idf:hierarchyParty");
+                for(int i=hierarchyPartyNodeList.getLength(); 0 < i ;i--){
+                    Node hierarchyPartyNode = hierarchyPartyNodeList.item(i-1);
+                    String uuid = "";
+                    String value = "";
+                    String type = "";
+                    xpathExpression = "./@uuid";
+                    if (XPathUtils.nodeExists(node, xpathExpression)) {
+                        uuid = XPathUtils.getString(hierarchyPartyNode, xpathExpression).trim();
+                    }
+                    // "Type"
+                    xpathExpression = "./idf:addressType";
+                    if(XPathUtils.nodeExists(hierarchyPartyNode, xpathExpression)){
+                        type = XPathUtils.getString(hierarchyPartyNode, xpathExpression).trim();
+                    }
+                    
+                    if(type.equals("2")){
+                        // "Name"
+                        xpathExpression = "./idf:addressIndividualName";
+                        if(XPathUtils.nodeExists(hierarchyPartyNode, xpathExpression)){
+                            value = XPathUtils.getString(hierarchyPartyNode, xpathExpression).trim();
+                            elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), getIndividualName(value), uuid));
+                        }
+                    }else if(type.equals("3")){
+                        if(XPathUtils.nodeExists(hierarchyPartyNode, "./idf:addressIndividualName")){
+                            value = XPathUtils.getString(hierarchyPartyNode, "./idf:addressIndividualName").trim();
+                            elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), getIndividualName(value), uuid));
+                        }else if(XPathUtils.nodeExists(hierarchyPartyNode, "./idf:addressOrganisationName")){
+                            value = XPathUtils.getString(hierarchyPartyNode, "./idf:addressOrganisationName").trim();
+                            elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), value, uuid));
+                        }
+                    }else{
+                        // "Organisation"
+                        xpathExpression = "./idf:addressOrganisationName";
+                        if(XPathUtils.nodeExists(hierarchyPartyNode, xpathExpression)){
+                            value = XPathUtils.getString(hierarchyPartyNode, xpathExpression).trim();
+                            elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), value, uuid));
+                        }
+                    }
+                }
+            }else{
+                // Organistation
+                xpathExpression = "./gmd:organisationName";
+                if (XPathUtils.nodeExists(node, xpathExpression)) {
+                    String value = XPathUtils.getString(node, xpathExpression).trim();
+                    StringTokenizer valueTokenizer = new StringTokenizer(value, ",");
+                    for(int i=0; i<valueTokenizer.countTokens();i++) {
+                        addElement(elements, "textLine", valueTokenizer.nextToken());
+                    }
+                }
+                
+                // Name
+                xpathExpression = "./gmd:individualName";
+                if (XPathUtils.nodeExists(node, xpathExpression)) {
+                    String value = XPathUtils.getString(node, xpathExpression).trim();
+                    addElement(elements, "textLine", getIndividualName(value));
+                }
+            }
+        }else{
+            // Organistation
+            xpathExpression = "./gmd:organisationName";
+            if (XPathUtils.nodeExists(node, xpathExpression)) {
+                String value = XPathUtils.getString(node, xpathExpression).trim();
+                StringTokenizer valueTokenizer = new StringTokenizer(value, ",");
+                for(int i=0; i<valueTokenizer.countTokens();i++) {
+                    addElement(elements, "textLine", valueTokenizer.nextToken());
+                }
+            }
+            
+            // Name
+            xpathExpression = "./gmd:individualName";
+            if (XPathUtils.nodeExists(node, xpathExpression)) {
+                String value = XPathUtils.getString(node, xpathExpression).trim();
+                addElement(elements, "textLine", getIndividualName(value));
+            }
+        }
+        
+        // "Position"
+        /* NOT IN USED
+        xpathExpression = "./gmd:positionName";
+        if (XPathUtils.nodeExists(node, xpathExpression)) {
+            String position = XPathUtils.getString(node, xpathExpression).trim();
+            if (position != null) {
+                position = position.replaceAll("\n", "<br/>");
+                position = position.replaceAll("&lt;", "<");
+                position = position.replaceAll("&gt;", ">");
+            }
+            addElement(elements, "textLine", position);
+        }
+        */
+        if (XPathUtils.nodeExists(node, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address")){
+            addSpace(elements);
+        }
+        
+        // "Street"
+        xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint";
+        if (XPathUtils.nodeExists(node, xpathExpression)) {
+            NodeList nodeList = XPathUtils.getNodeList(node, xpathExpression);
+            for(int i=0; i<nodeList.getLength();i++){
+                String deliveryPoint = XPathUtils.getString(nodeList.item(i), ".").trim();
+                if(deliveryPoint.startsWith("Postbox")){
+                    String[] postbox = deliveryPoint.split(",");
+                    for(int j=0; j < postbox.length; j++){
+                        if(postbox[j].startsWith("Postbox")){
+                            addElement(elements, "textLine", messages.getString("postbox_label") + " " + postbox[j].replace("Postbox ", ""));
+                        }else{
+                            addElement(elements, "textLine", postbox[j]);
+                        }
+                    }
+                    addSpace(elements);
+                }else if(deliveryPoint.matches("\\d*")){
+                    addElement(elements, "textLine", messages.getString("postbox_label") + " " + deliveryPoint);
+                }else{
+                    addElement(elements, "textLine", deliveryPoint);
+                }
+            }
+        }
+        
+        String postalCode = "";
+        String city = "";
+        
+        // "Postcode"
+        xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:postalCode";
+        if (XPathUtils.nodeExists(node, xpathExpression)) {
+            postalCode = XPathUtils.getString(node, xpathExpression).trim();
+        }
+        
+        // "City"
+        xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city";
+        if (XPathUtils.nodeExists(node, xpathExpression)) {
+            city = XPathUtils.getString(node, xpathExpression).trim();
+        }
+        
+        if (postalCode.length() > 0 || city.length() > 0) {
+            addElement(elements, "textLine", postalCode.concat(" ").concat(city));
+        }
+        
+        // "Country"
+        xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country";
+        if (XPathUtils.nodeExists(node, xpathExpression)) {
+            String country = XPathUtils.getString(node, xpathExpression).trim();
+            if(country != null){
+                String value = UtilsCountryCodelist.getNameFromCode(UtilsCountryCodelist.getCodeFromShortcut3(country), this.request.getLocale().getLanguage().toString());
+                if(value != null){
+                    addElement(elements, "textLine", value);
+                }else{
+                    addElement(elements, "textLine", country);
+                }
+            }
+        }
+        
+        addSpace(elements);
+        // "Mail"
+        xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress";
+        if (XPathUtils.nodeExists(node, xpathExpression)) {
+            NodeList electronicMailAddressNodeList = XPathUtils.getNodeList(node, xpathExpression);
+            for (int i = 0; i < electronicMailAddressNodeList.getLength(); i++) {
+                String value = XPathUtils.getString(electronicMailAddressNodeList.item(i), ".").trim();
+                elements.add(addElementEmailWeb(messages.getString("t021_communication.comm_type_email"), value, value, value, LinkType.EMAIL));
+            }
+        }
+        
+        // "Telefon"
+        xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice";
+        if (XPathUtils.nodeExists(node, xpathExpression)) {
+            String value = XPathUtils.getString(node, xpathExpression).trim();
+            addElement(elements, "textLine", value, messages.getString("t021_communication.comm_type_phone"));
+        }
+        
+        // "Fax"
+        xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:facsimile";
+        if (XPathUtils.nodeExists(node, xpathExpression)) {
+            String value = XPathUtils.getString(node, xpathExpression).trim();
+            addElement(elements, "textLine", value, messages.getString("t021_communication.comm_type_fax"));
+        }
+        
+        // "URL"
+        xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL";
+        if (XPathUtils.nodeExists(node, xpathExpression)) {
+            String value = XPathUtils.getString(node, xpathExpression).trim();
+            elements.add(addElementEmailWeb("URL", value, value, value, LinkType.WWW_URL));
+        }
+        
+    }
 
-	private void getTimeSection(ArrayList elements, String xpathExpression) {
-		ArrayList timeElements = new ArrayList();
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
-			for(int j=0; j<nodeList.getLength();j++){
-				Node node = nodeList.item(j);
-				NodeList nodeListTemporalElement = XPathUtils.getNodeList(node, "./gmd:temporalElement");
-				for(int i=0; i<nodeListTemporalElement.getLength();i++){
-					Node childNode = nodeListTemporalElement.item(i);
-					String beginPosition = "";
-					String endPosition = "";
-					xpathExpression = "./gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition";
-					if(XPathUtils.nodeExists(childNode, xpathExpression)){
-						beginPosition = XPathUtils.getString(childNode, xpathExpression).trim();
-					}
-					xpathExpression = "./gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition";
-					if(XPathUtils.nodeExists(childNode, xpathExpression)){
-						endPosition = XPathUtils.getString(childNode, xpathExpression).trim();
-					}
-					String entryLine = "";
-					if (beginPosition.length() > 0 || endPosition.length() > 0) {
-						if (beginPosition.equals(endPosition)) {
-							entryLine = entryLine.concat(messages.getString("search.detail.time.at")).concat(": ");
-							entryLine = entryLine.concat(UtilsDate.convertDateString(beginPosition, "yyyy-MM-dd", "dd.MM.yyyy"));
-						} else if (beginPosition.length() > 0 && endPosition.length() < 1) {
-							entryLine = entryLine.concat(messages.getString("search.detail.time.since")).concat(": ");
-							entryLine = entryLine.concat(UtilsDate.convertDateString(beginPosition, "yyyy-MM-dd", "dd.MM.yyyy"));
-						} else if (beginPosition.length() < 1 && endPosition.length() > 0) {
-							entryLine = entryLine.concat(messages.getString("search.detail.time.to")).concat(": ");
-							entryLine = entryLine.concat(UtilsDate.convertDateString(endPosition, "yyyy-MM-dd", "dd.MM.yyyy"));
-						} else if (!beginPosition.equals(endPosition)) {
-							entryLine = entryLine.concat(messages.getString("search.detail.time.from")).concat(": ");
-							entryLine = entryLine.concat(UtilsDate.convertDateString(beginPosition, "yyyy-MM-dd", "dd.MM.yyyy"));
-							entryLine = entryLine.concat(" ");
-							entryLine = entryLine.concat(messages.getString("search.detail.time.to")).concat(": ");
-							entryLine = entryLine.concat(UtilsDate.convertDateString(endPosition, "yyyy-MM-dd", "dd.MM.yyyy"));
-						}
-						if (entryLine.length() > 0) {
-							// "Durch die Ressource abgedeckte Zeitspanne"
-							addElementEntryLabelLeft(timeElements, entryLine, messages.getString("time_reference_content"));
-						}
-					}
-				}
-			}
-		}
-				
-		// "Status"
-		xpathExpression = "./*/*/gmd:status/gmd:MD_ProgressCode";
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			Node childNode = XPathUtils.getNode(rootNode, xpathExpression);
-			String domainValue = XPathUtils.getString(childNode, "./@codeListValue").trim();
-			addElementEntryLabelLeft(timeElements, sysCodeList.getNameByCodeListValue("523", domainValue), messages.getString("t01_object.time_status"));
-		}
-		
-		// "Periodizität"
-		xpathExpression = "./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode";
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			Node childNode = XPathUtils.getNode(rootNode, xpathExpression);
-			String domainValue = XPathUtils.getString(childNode, "./@codeListValue").trim();
-			addElementEntryLabelLeft(timeElements, sysCodeList.getNameByCodeListValue("518", domainValue), messages.getString("t01_object.time_period"));
-		}
-		
-		// "Intervall der Erhebung"
-		xpathExpression = "./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency";
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			Node childNode = XPathUtils.getNode(rootNode, xpathExpression);
-			String content = XPathUtils.getString(childNode, ".").trim();
-			String value = new TM_PeriodDurationToTimeAlle().parse(content);
-			String unit = new TM_PeriodDurationToTimeInterval().parse(content);
-			addElementEntryLabelLeft(timeElements, value.concat(" ").concat(unit), messages.getString("t01_object.time_interval"));
-		}
-		
-		// "Zeitbezug der Ressource"
-		xpathExpression = "./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date";
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			NodeList childNodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
-			for (int i = 0; i < childNodeList.getLength(); i++) {
-				String time = "";
-				xpathExpression = "./gmd:date";
-				if (XPathUtils.nodeExists(childNodeList.item(i), xpathExpression)) {
-					time = XPathUtils.getString(childNodeList.item(i), xpathExpression).trim();
-				}
-				String type = "";
-				xpathExpression = "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue";
-				if (XPathUtils.nodeExists(childNodeList.item(i), xpathExpression)) {
-					type = XPathUtils.getString(childNodeList.item(i), xpathExpression).trim();
-				}
-				
-				String typeId = "";
-				if (type.equals("creation")) {
-					typeId = "1";
-				}else if (type.equals("publication")) {
-					typeId = "2";
-				}else if (type.equals("revision")) {
-					typeId = "3";
-				}
-				addElementEntryLabelLeft(timeElements, UtilsDate.convertDateString(time, "yyyy-MM-dd", "dd.MM.yyyy"), sysCodeList.getName("502", typeId));
-			}
-		}
-		
-		// "Erläuterung zum Zeitbezug"
-		xpathExpression = "./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceNote";
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			Node childNode = XPathUtils.getNode(rootNode, xpathExpression);
-			addElementEntryLabelLeft(timeElements, XPathUtils.getString(childNode, ".").trim(), messages.getString("t01_object.time_descr"));
-		}
-		
-		// "Raum/Zeit - Zusätzliche Felder"
-		xpathExpression ="./idf:additionalDataSection";
-		getAdditionalFields(timeElements, xpathExpression, TimeSpatialType.TIME);
-		
-		if(timeElements.size()>0){
-			addSectionTitle(elements, messages.getString("time_reference"));
-			for(int i=0; i < timeElements.size(); i++){
-				elements.add(timeElements.get(i));
-			}
-			closeDiv(elements);	
-		}
-	}
-	
-	private void getAreaSection(ArrayList elements, String xpathExpression) {
-		ArrayList spatialElements = new ArrayList();
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
-			ArrayList subjectEntries = new ArrayList();
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				// "Administrative Einheit (Gemeindenummer)"
-				xpathExpression = "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code";
-				Node node = nodeList.item(i);
-				if (XPathUtils.nodeExists(node, xpathExpression)) {
-					NodeList childNodeList = XPathUtils.getNodeList(node, xpathExpression);
-					HashMap element = new HashMap();
-					element.put("type", "textList");
-					element.put("title", messages.getString("t011_township.township_no"));
-					ArrayList textListEntries = new ArrayList();
-					element.put("textList", textListEntries);
-					for (int j = 0; j < childNodeList.getLength(); j++) {
-						String domainValue = XPathUtils.getString(childNodeList.item(j), ".").trim();
-						HashMap listEntry = new HashMap();
-						listEntry.put("type", "textList");
-						listEntry.put("body", domainValue);
-						subjectEntries.add(domainValue);
-						if (!isEmptyList(listEntry)) {
-							textListEntries.add(listEntry);
-						}
-					}
-					spatialElements.add(element);
-					
-				}
-				
-				// "Geothesaurus-Raumbezug"
-				xpathExpression = "./gmd:geographicElement/gmd:EX_GeographicBoundingBox";
-				if (XPathUtils.nodeExists(node, xpathExpression)) {
-					NodeList subNodeList = XPathUtils.getNodeList(node, xpathExpression);
-					HashMap element = new HashMap();
-					element.put("type", "table");
-					element.put("title", messages.getString("geothesaurus_spacial_reference"));
-					
-					ArrayList head = new ArrayList();
-					head.add(messages.getString("geothesaurus_spacial_reference"));
-					head.add(messages.getString("spatial_ref_value_x1"));
-					head.add(messages.getString("spatial_ref_value_y1"));
-					head.add(messages.getString("spatial_ref_value_x2"));
-					head.add(messages.getString("spatial_ref_value_y2"));
-					element.put("head", head);
-					ArrayList body = new ArrayList();
-					element.put("body", body);
-					
-					ArrayList numbers = new ArrayList();
-					numbers.add(subjectEntries.size());
-					numbers.add(subNodeList.getLength());
-					int maxRows = getGreatestInt(numbers); 
-					
-					
-					for (int j = 0; j < maxRows; j++) {
-						Node childNode = subNodeList.item(j);
-						ArrayList row = new ArrayList();
-						
-						if(subjectEntries.size() > 0){
-							if (subjectEntries.get(j)!= null) {
-								row.add(subjectEntries.get(j));
-							}else {
-								row.add("");
-							}
-						} else {
-							row.add("");
-						}
-						
-						xpathExpression = "./gmd:westBoundLongitude";
-						if (XPathUtils.nodeExists(childNode, xpathExpression)) {
-							String value = XPathUtils.getString(childNode, xpathExpression).trim();
-							row.add(notNull(value + "\u00B0"));
-						} else {
-							row.add("");
-						}
-						
-						xpathExpression = "./gmd:southBoundLatitude";
-						if (XPathUtils.nodeExists(childNode, xpathExpression)) {
-							String value = XPathUtils.getString(childNode, xpathExpression).trim();
-							row.add(notNull(value + "\u00B0"));
-						} else {
-							row.add("");
-						}
-						
-						xpathExpression = "./gmd:eastBoundLongitude";
-						if (XPathUtils.nodeExists(childNode, xpathExpression)) {
-							String value = XPathUtils.getString(childNode, xpathExpression).trim();
-							row.add(notNull(value + "\u00B0"));
-						} else {
-							row.add("");
-						}
-						
-						xpathExpression = "./gmd:northBoundLatitude";
-						if (XPathUtils.nodeExists(childNode, xpathExpression)) {
-							String value = XPathUtils.getString(childNode, xpathExpression).trim();
-							row.add(notNull(value + "\u00B0"));
-						} else {
-							row.add("");
-						}
-						
-						if (!isEmptyRow(row)) {
-							body.add(row);
-						}
-					}
-					
-					if (body.size() > 0) {
-						
-						spatialElements.add(element);
-					}
-				}
-				
-				// "Höhe"
-				xpathExpression = "./gmd:verticalElement";
-				if (XPathUtils.nodeExists(node, xpathExpression)) {
-					HashMap element = new HashMap();
-					element.put("type", "table");
-					element.put("title", messages.getString("t01_object.vertical_extent"));
-					
-					ArrayList head = new ArrayList();
-					head.add(messages.getString("t01_object.vertical_extent_maximum"));
-					head.add(messages.getString("t01_object.vertical_extent_minimum"));
-					head.add(messages.getString("t01_object.vertical_extent_unit"));
-					head.add(messages.getString("t01_object.vertical_extent_vdatum"));
-					element.put("head", head);
-					ArrayList body = new ArrayList();
-					element.put("body", body);
-					if (XPathUtils.nodeExists(node, "./gmd:verticalElement/gmd:EX_VerticalExtent")) {
-						NodeList subNodeList = XPathUtils.getNodeList(node, "./gmd:verticalElement/gmd:EX_VerticalExtent");
-						for (int j = 0; j < subNodeList.getLength(); j++) {
-							Node childNode = subNodeList.item(j);
-							ArrayList row = new ArrayList();
-							
-							// "Maximum"
-							xpathExpression = "./gmd:maximumValue";
-							if(XPathUtils.nodeExists(childNode, xpathExpression)){
-								row.add(notNull(XPathUtils.getString(childNode, xpathExpression)).trim());
-							}
-							
-							// "Minimum"
-							xpathExpression = "./gmd:minimumValue";
-							if(XPathUtils.nodeExists(childNode, xpathExpression)){
-								row.add(notNull(XPathUtils.getString(childNode, xpathExpression)).trim());
-							}
-							
-							String rowValue;
-							// "Maßeinheit"
-							xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalCS/gml:VerticalCS/gml:axis/gml:CoordinateSystemAxis/@gml:uom";
-							if(XPathUtils.nodeExists(childNode, xpathExpression)){
-								rowValue = XPathUtils.getString(childNode, xpathExpression).trim();
-								row.add(notNull(sysCodeList.getNameByCodeListValue("102", rowValue)));
-							}else{
-								row.add("");
-							}
-							
-							// "Vertikaldatum"
-							String verticalDatum = "" ; 
-							xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:name";
-							if(XPathUtils.nodeExists(childNode, xpathExpression)){
-								rowValue = XPathUtils.getString(childNode, xpathExpression).trim();
-								if(sysCodeList.getNameByCodeListValue("101", rowValue).length() > 0){
-									verticalDatum = sysCodeList.getNameByCodeListValue("101", rowValue);
-								}else{
-									verticalDatum = rowValue;
-								}
-							}
-							
-							if(verticalDatum.length() < 1)
-								xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:identifier";
-								if(XPathUtils.nodeExists(childNode, xpathExpression)){
-									rowValue = XPathUtils.getString(childNode, xpathExpression).trim();
-									if(sysCodeList.getNameByCodeListValue("101", rowValue).length() > 0){
-										verticalDatum = sysCodeList.getNameByCodeListValue("101", rowValue);
-									}else{
-										verticalDatum = rowValue;
-									}
-								}
-							if(verticalDatum.length() < 1){
-								xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:name";
-								if(XPathUtils.nodeExists(childNode, xpathExpression)){
-									rowValue = XPathUtils.getString(childNode, xpathExpression).trim();
-									if(sysCodeList.getNameByCodeListValue("101", rowValue).length() > 0){
-										verticalDatum = sysCodeList.getNameByCodeListValue("101", rowValue);
-									}else{
-										verticalDatum = rowValue;
-									}
-								}
-							}
-							
-							row.add(verticalDatum);
-							if (!isEmptyRow(row)) {
-								body.add(row);
-							}
-						}
-					}
-					if (body.size() > 0) {
-						
-						spatialElements.add(element);
-					}
-					
-				}
-				
-				// "Erläuterung zum Raumbezug"
-				xpathExpression = "./gmd:description";
-				if (XPathUtils.nodeExists(node, xpathExpression)) {
-					Node childNode = XPathUtils.getNode(node, xpathExpression);
-					addElementEntryLabelLeft(spatialElements, XPathUtils.getString(childNode, ".").trim(), messages.getString("t01_object.loc_descr"));
-				}
-			}
-		}
-		
-		// "Raumbezugssystem"
-		xpathExpression = "./gmd:referenceSystemInfo";
-		getNodeListValueReferenceSystem(spatialElements, xpathExpression, messages.getString("t011_obj_geo.referencesystem_id"));
-		
-		// "Raum/Zeit - Zusätzliche Felder" 
-		xpathExpression ="./idf:additionalDataSection";
-		getAdditionalFields(spatialElements, xpathExpression, TimeSpatialType.SPATIAL);
-		
-		if(spatialElements.size() > 0){
-			addSectionTitle(elements, messages.getString("t011_obj_geo.coord"));
-			for(int i=0; i < spatialElements.size(); i++){
-				elements.add(spatialElements.get(i));
-			}
-			closeDiv(elements);	
-		}
-	}
-	
-	private void getNodeListValueReferenceSystem(ArrayList elements, String xpathExpression, String title) {
-		if(XPathUtils.nodeExists(rootNode, xpathExpression)){
-			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
-			ArrayList referenceSystem = new ArrayList();
-			for (int i=0; i<nodeList.getLength(); i++){
-				String codeSpace = ""; 
-				String code = "";
-				xpathExpression = "./gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code";
-				if (XPathUtils.nodeExists(nodeList.item(i), xpathExpression)) {
-					code = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
-				}
-				
-				xpathExpression = "./gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:codeSpace";
-				if (XPathUtils.nodeExists(nodeList.item(i), xpathExpression)) {
-					codeSpace = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
-				}
-				
-				String value = "";
-				if(code.length() > 0 && codeSpace.length() > 0){
-					if(code.indexOf("EPSG") > -1){
-						value = code;
-					}else{
-						value = codeSpace.concat(": " + code);
-					}
-				}else if(codeSpace.length() > 0){
-					value = codeSpace;
-				}else if(code.length() > 0){
-					value = code;
-				}
-				
-				if(value.length() > 0){
-					HashMap listEntry = new HashMap();
-					listEntry.put("type", "textList");
-					listEntry.put("body", value);
-					if (!isEmptyList(listEntry)) {
-						referenceSystem.add(listEntry);
-					}
-				}
-			}
-			if(referenceSystem.size() > 0){
-				HashMap element = new HashMap();
-				element.put("type", "textList");
-				element.put("title", title);
-				element.put("textList", referenceSystem);
-				
-				elements.add(element);
-			}
-		}
-	}
+    private void getTimeSection(ArrayList elements, String xpathExpression) {
+        ArrayList timeElements = new ArrayList();
+        if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+            for(int j=0; j<nodeList.getLength();j++){
+                Node node = nodeList.item(j);
+                NodeList nodeListTemporalElement = XPathUtils.getNodeList(node, "./gmd:temporalElement");
+                for(int i=0; i<nodeListTemporalElement.getLength();i++){
+                    Node childNode = nodeListTemporalElement.item(i);
+                    String beginPosition = "";
+                    String endPosition = "";
+                    xpathExpression = "./gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition";
+                    if(XPathUtils.nodeExists(childNode, xpathExpression)){
+                        beginPosition = XPathUtils.getString(childNode, xpathExpression).trim();
+                    }
+                    xpathExpression = "./gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition";
+                    if(XPathUtils.nodeExists(childNode, xpathExpression)){
+                        endPosition = XPathUtils.getString(childNode, xpathExpression).trim();
+                    }
+                    String entryLine = "";
+                    if (beginPosition.length() > 0 || endPosition.length() > 0) {
+                        if (beginPosition.equals(endPosition)) {
+                            entryLine = entryLine.concat(messages.getString("search.detail.time.at")).concat(": ");
+                            entryLine = entryLine.concat(UtilsDate.convertDateString(beginPosition, "yyyy-MM-dd", "dd.MM.yyyy"));
+                        } else if (beginPosition.length() > 0 && endPosition.length() < 1) {
+                            entryLine = entryLine.concat(messages.getString("search.detail.time.since")).concat(": ");
+                            entryLine = entryLine.concat(UtilsDate.convertDateString(beginPosition, "yyyy-MM-dd", "dd.MM.yyyy"));
+                        } else if (beginPosition.length() < 1 && endPosition.length() > 0) {
+                            entryLine = entryLine.concat(messages.getString("search.detail.time.to")).concat(": ");
+                            entryLine = entryLine.concat(UtilsDate.convertDateString(endPosition, "yyyy-MM-dd", "dd.MM.yyyy"));
+                        } else if (!beginPosition.equals(endPosition)) {
+                            entryLine = entryLine.concat(messages.getString("search.detail.time.from")).concat(": ");
+                            entryLine = entryLine.concat(UtilsDate.convertDateString(beginPosition, "yyyy-MM-dd", "dd.MM.yyyy"));
+                            entryLine = entryLine.concat(" ");
+                            entryLine = entryLine.concat(messages.getString("search.detail.time.to")).concat(": ");
+                            entryLine = entryLine.concat(UtilsDate.convertDateString(endPosition, "yyyy-MM-dd", "dd.MM.yyyy"));
+                        }
+                        if (entryLine.length() > 0) {
+                            // "Durch die Ressource abgedeckte Zeitspanne"
+                            addElementEntryLabelLeft(timeElements, entryLine, messages.getString("time_reference_content"));
+                        }
+                    }
+                }
+            }
+        }
+                
+        // "Status"
+        xpathExpression = "./*/*/gmd:status/gmd:MD_ProgressCode";
+        if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            Node childNode = XPathUtils.getNode(rootNode, xpathExpression);
+            String domainValue = XPathUtils.getString(childNode, "./@codeListValue").trim();
+            addElementEntryLabelLeft(timeElements, sysCodeList.getNameByCodeListValue("523", domainValue), messages.getString("t01_object.time_status"));
+        }
+        
+        // "Periodizität"
+        xpathExpression = "./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode";
+        if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            Node childNode = XPathUtils.getNode(rootNode, xpathExpression);
+            String domainValue = XPathUtils.getString(childNode, "./@codeListValue").trim();
+            addElementEntryLabelLeft(timeElements, sysCodeList.getNameByCodeListValue("518", domainValue), messages.getString("t01_object.time_period"));
+        }
+        
+        // "Intervall der Erhebung"
+        xpathExpression = "./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency";
+        if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            Node childNode = XPathUtils.getNode(rootNode, xpathExpression);
+            String content = XPathUtils.getString(childNode, ".").trim();
+            String value = new TM_PeriodDurationToTimeAlle().parse(content);
+            String unit = new TM_PeriodDurationToTimeInterval().parse(content);
+            addElementEntryLabelLeft(timeElements, value.concat(" ").concat(unit), messages.getString("t01_object.time_interval"));
+        }
+        
+        // "Zeitbezug der Ressource"
+        xpathExpression = "./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date";
+        if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            NodeList childNodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+            for (int i = 0; i < childNodeList.getLength(); i++) {
+                String time = "";
+                xpathExpression = "./gmd:date";
+                if (XPathUtils.nodeExists(childNodeList.item(i), xpathExpression)) {
+                    time = XPathUtils.getString(childNodeList.item(i), xpathExpression).trim();
+                }
+                String type = "";
+                xpathExpression = "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue";
+                if (XPathUtils.nodeExists(childNodeList.item(i), xpathExpression)) {
+                    type = XPathUtils.getString(childNodeList.item(i), xpathExpression).trim();
+                }
+                
+                String typeId = "";
+                if (type.equals("creation")) {
+                    typeId = "1";
+                }else if (type.equals("publication")) {
+                    typeId = "2";
+                }else if (type.equals("revision")) {
+                    typeId = "3";
+                }
+                addElementEntryLabelLeft(timeElements, UtilsDate.convertDateString(time, "yyyy-MM-dd", "dd.MM.yyyy"), sysCodeList.getName("502", typeId));
+            }
+        }
+        
+        // "Erläuterung zum Zeitbezug"
+        xpathExpression = "./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceNote";
+        if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            Node childNode = XPathUtils.getNode(rootNode, xpathExpression);
+            addElementEntryLabelLeft(timeElements, XPathUtils.getString(childNode, ".").trim(), messages.getString("t01_object.time_descr"));
+        }
+        
+        // "Raum/Zeit - Zusätzliche Felder"
+        xpathExpression ="./idf:additionalDataSection";
+        getAdditionalFields(timeElements, xpathExpression, TimeSpatialType.TIME);
+        
+        if(timeElements.size()>0){
+            addSectionTitle(elements, messages.getString("time_reference"));
+            for(int i=0; i < timeElements.size(); i++){
+                elements.add(timeElements.get(i));
+            }
+            closeDiv(elements); 
+        }
+    }
+    
+    private void getAreaSection(ArrayList elements, String xpathExpression) {
+        ArrayList spatialElements = new ArrayList();
+        if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+            ArrayList subjectEntries = new ArrayList();
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                // "Administrative Einheit (Gemeindenummer)"
+                xpathExpression = "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code";
+                Node node = nodeList.item(i);
+                if (XPathUtils.nodeExists(node, xpathExpression)) {
+                    NodeList childNodeList = XPathUtils.getNodeList(node, xpathExpression);
+                    HashMap element = new HashMap();
+                    element.put("type", "textList");
+                    element.put("title", messages.getString("t011_township.township_no"));
+                    ArrayList textListEntries = new ArrayList();
+                    element.put("textList", textListEntries);
+                    for (int j = 0; j < childNodeList.getLength(); j++) {
+                        String domainValue = XPathUtils.getString(childNodeList.item(j), ".").trim();
+                        HashMap listEntry = new HashMap();
+                        listEntry.put("type", "textList");
+                        listEntry.put("body", domainValue);
+                        subjectEntries.add(domainValue);
+                        if (!isEmptyList(listEntry)) {
+                            textListEntries.add(listEntry);
+                        }
+                    }
+                    spatialElements.add(element);
+                    
+                }
+                
+                // "Geothesaurus-Raumbezug"
+                xpathExpression = "./gmd:geographicElement/gmd:EX_GeographicBoundingBox";
+                if (XPathUtils.nodeExists(node, xpathExpression)) {
+                    NodeList subNodeList = XPathUtils.getNodeList(node, xpathExpression);
+                    HashMap element = new HashMap();
+                    element.put("type", "table");
+                    element.put("title", messages.getString("geothesaurus_spacial_reference"));
+                    
+                    ArrayList head = new ArrayList();
+                    head.add(messages.getString("geothesaurus_spacial_reference"));
+                    head.add(messages.getString("spatial_ref_value_x1"));
+                    head.add(messages.getString("spatial_ref_value_y1"));
+                    head.add(messages.getString("spatial_ref_value_x2"));
+                    head.add(messages.getString("spatial_ref_value_y2"));
+                    element.put("head", head);
+                    ArrayList body = new ArrayList();
+                    element.put("body", body);
+                    
+                    ArrayList numbers = new ArrayList();
+                    numbers.add(subjectEntries.size());
+                    numbers.add(subNodeList.getLength());
+                    int maxRows = getGreatestInt(numbers); 
+                    
+                    
+                    for (int j = 0; j < maxRows; j++) {
+                        Node childNode = subNodeList.item(j);
+                        ArrayList row = new ArrayList();
+                        
+                        if(subjectEntries.size() > 0){
+                            if (subjectEntries.get(j)!= null) {
+                                row.add(subjectEntries.get(j));
+                            }else {
+                                row.add("");
+                            }
+                        } else {
+                            row.add("");
+                        }
+                        
+                        xpathExpression = "./gmd:westBoundLongitude";
+                        if (XPathUtils.nodeExists(childNode, xpathExpression)) {
+                            String value = XPathUtils.getString(childNode, xpathExpression).trim();
+                            row.add(notNull(value + "\u00B0"));
+                        } else {
+                            row.add("");
+                        }
+                        
+                        xpathExpression = "./gmd:southBoundLatitude";
+                        if (XPathUtils.nodeExists(childNode, xpathExpression)) {
+                            String value = XPathUtils.getString(childNode, xpathExpression).trim();
+                            row.add(notNull(value + "\u00B0"));
+                        } else {
+                            row.add("");
+                        }
+                        
+                        xpathExpression = "./gmd:eastBoundLongitude";
+                        if (XPathUtils.nodeExists(childNode, xpathExpression)) {
+                            String value = XPathUtils.getString(childNode, xpathExpression).trim();
+                            row.add(notNull(value + "\u00B0"));
+                        } else {
+                            row.add("");
+                        }
+                        
+                        xpathExpression = "./gmd:northBoundLatitude";
+                        if (XPathUtils.nodeExists(childNode, xpathExpression)) {
+                            String value = XPathUtils.getString(childNode, xpathExpression).trim();
+                            row.add(notNull(value + "\u00B0"));
+                        } else {
+                            row.add("");
+                        }
+                        
+                        if (!isEmptyRow(row)) {
+                            body.add(row);
+                        }
+                    }
+                    
+                    if (body.size() > 0) {
+                        
+                        spatialElements.add(element);
+                    }
+                }
+                
+                // "Höhe"
+                xpathExpression = "./gmd:verticalElement";
+                if (XPathUtils.nodeExists(node, xpathExpression)) {
+                    HashMap element = new HashMap();
+                    element.put("type", "table");
+                    element.put("title", messages.getString("t01_object.vertical_extent"));
+                    
+                    ArrayList head = new ArrayList();
+                    head.add(messages.getString("t01_object.vertical_extent_maximum"));
+                    head.add(messages.getString("t01_object.vertical_extent_minimum"));
+                    head.add(messages.getString("t01_object.vertical_extent_unit"));
+                    head.add(messages.getString("t01_object.vertical_extent_vdatum"));
+                    element.put("head", head);
+                    ArrayList body = new ArrayList();
+                    element.put("body", body);
+                    if (XPathUtils.nodeExists(node, "./gmd:verticalElement/gmd:EX_VerticalExtent")) {
+                        NodeList subNodeList = XPathUtils.getNodeList(node, "./gmd:verticalElement/gmd:EX_VerticalExtent");
+                        for (int j = 0; j < subNodeList.getLength(); j++) {
+                            Node childNode = subNodeList.item(j);
+                            ArrayList row = new ArrayList();
+                            
+                            // "Maximum"
+                            xpathExpression = "./gmd:maximumValue";
+                            if(XPathUtils.nodeExists(childNode, xpathExpression)){
+                                row.add(notNull(XPathUtils.getString(childNode, xpathExpression)).trim());
+                            }
+                            
+                            // "Minimum"
+                            xpathExpression = "./gmd:minimumValue";
+                            if(XPathUtils.nodeExists(childNode, xpathExpression)){
+                                row.add(notNull(XPathUtils.getString(childNode, xpathExpression)).trim());
+                            }
+                            
+                            String rowValue;
+                            // "Maßeinheit"
+                            xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalCS/gml:VerticalCS/gml:axis/gml:CoordinateSystemAxis/@gml:uom";
+                            if(XPathUtils.nodeExists(childNode, xpathExpression)){
+                                rowValue = XPathUtils.getString(childNode, xpathExpression).trim();
+                                row.add(notNull(sysCodeList.getNameByCodeListValue("102", rowValue)));
+                            }else{
+                                row.add("");
+                            }
+                            
+                            // "Vertikaldatum"
+                            String verticalDatum = "" ; 
+                            xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:name";
+                            if(XPathUtils.nodeExists(childNode, xpathExpression)){
+                                rowValue = XPathUtils.getString(childNode, xpathExpression).trim();
+                                if(sysCodeList.getNameByCodeListValue("101", rowValue).length() > 0){
+                                    verticalDatum = sysCodeList.getNameByCodeListValue("101", rowValue);
+                                }else{
+                                    verticalDatum = rowValue;
+                                }
+                            }
+                            
+                            if(verticalDatum.length() < 1)
+                                xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:identifier";
+                                if(XPathUtils.nodeExists(childNode, xpathExpression)){
+                                    rowValue = XPathUtils.getString(childNode, xpathExpression).trim();
+                                    if(sysCodeList.getNameByCodeListValue("101", rowValue).length() > 0){
+                                        verticalDatum = sysCodeList.getNameByCodeListValue("101", rowValue);
+                                    }else{
+                                        verticalDatum = rowValue;
+                                    }
+                                }
+                            if(verticalDatum.length() < 1){
+                                xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:name";
+                                if(XPathUtils.nodeExists(childNode, xpathExpression)){
+                                    rowValue = XPathUtils.getString(childNode, xpathExpression).trim();
+                                    if(sysCodeList.getNameByCodeListValue("101", rowValue).length() > 0){
+                                        verticalDatum = sysCodeList.getNameByCodeListValue("101", rowValue);
+                                    }else{
+                                        verticalDatum = rowValue;
+                                    }
+                                }
+                            }
+                            
+                            row.add(verticalDatum);
+                            if (!isEmptyRow(row)) {
+                                body.add(row);
+                            }
+                        }
+                    }
+                    if (body.size() > 0) {
+                        
+                        spatialElements.add(element);
+                    }
+                    
+                }
+                
+                // "Erläuterung zum Raumbezug"
+                xpathExpression = "./gmd:description";
+                if (XPathUtils.nodeExists(node, xpathExpression)) {
+                    Node childNode = XPathUtils.getNode(node, xpathExpression);
+                    addElementEntryLabelLeft(spatialElements, XPathUtils.getString(childNode, ".").trim(), messages.getString("t01_object.loc_descr"));
+                }
+            }
+        }
+        
+        // "Raumbezugssystem"
+        xpathExpression = "./gmd:referenceSystemInfo";
+        getNodeListValueReferenceSystem(spatialElements, xpathExpression, messages.getString("t011_obj_geo.referencesystem_id"));
+        
+        // "Raum/Zeit - Zusätzliche Felder" 
+        xpathExpression ="./idf:additionalDataSection";
+        getAdditionalFields(spatialElements, xpathExpression, TimeSpatialType.SPATIAL);
+        
+        if(spatialElements.size() > 0){
+            addSectionTitle(elements, messages.getString("t011_obj_geo.coord"));
+            for(int i=0; i < spatialElements.size(); i++){
+                elements.add(spatialElements.get(i));
+            }
+            closeDiv(elements); 
+        }
+    }
+    
+    private void getNodeListValueReferenceSystem(ArrayList elements, String xpathExpression, String title) {
+        if(XPathUtils.nodeExists(rootNode, xpathExpression)){
+            NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+            ArrayList referenceSystem = new ArrayList();
+            for (int i=0; i<nodeList.getLength(); i++){
+                String codeSpace = ""; 
+                String code = "";
+                xpathExpression = "./gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code";
+                if (XPathUtils.nodeExists(nodeList.item(i), xpathExpression)) {
+                    code = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
+                }
+                
+                xpathExpression = "./gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:codeSpace";
+                if (XPathUtils.nodeExists(nodeList.item(i), xpathExpression)) {
+                    codeSpace = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
+                }
+                
+                String value = "";
+                if(code.length() > 0 && codeSpace.length() > 0){
+                    if(code.indexOf("EPSG") > -1){
+                        value = code;
+                    }else{
+                        value = codeSpace.concat(": " + code);
+                    }
+                }else if(codeSpace.length() > 0){
+                    value = codeSpace;
+                }else if(code.length() > 0){
+                    value = code;
+                }
+                
+                if(value.length() > 0){
+                    HashMap listEntry = new HashMap();
+                    listEntry.put("type", "textList");
+                    listEntry.put("body", value);
+                    if (!isEmptyList(listEntry)) {
+                        referenceSystem.add(listEntry);
+                    }
+                }
+            }
+            if(referenceSystem.size() > 0){
+                HashMap element = new HashMap();
+                element.put("type", "textList");
+                element.put("title", title);
+                element.put("textList", referenceSystem);
+                
+                elements.add(element);
+            }
+        }
+    }
 
-	private void getGeneralTab(ArrayList elements, String xpathExpression) {
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			Node node = XPathUtils.getNode(rootNode, xpathExpression);
-			if (node.hasChildNodes()) {
-				xpathExpression = "./gmd:abstract";
-				
-				// Beschreibung
-				if (XPathUtils.nodeExists(node, xpathExpression)) {
-					String alternateName = "";
-					String description = "";
-					
-					// alternate name
-					xpathExpression = "./gmd:citation/gmd:CI_Citation/gmd:alternateTitle";
-					if (XPathUtils.nodeExists(node, xpathExpression)) {
-						alternateName = XPathUtils.getString(node, xpathExpression).trim();
-					}
-					
-					// description
-					xpathExpression = "./gmd:abstract";
-					if (XPathUtils.nodeExists(node, xpathExpression)) {
-						description = XPathUtils.getString(node, xpathExpression).trim();
-						
-						if (description != null) {
-							description = description.replaceAll("\n", "<br/>");
-							description = description.replaceAll("&lt;", "<");
-							description = description.replaceAll("&gt;", ">");
-						}
-					}
-					if ((description.length() > 0) || alternateName.length() > 0) {
-						addSectionTitle(elements, messages.getString("detail_description"));
-						addElementEntryLabelAbove(elements, description, alternateName, false);
-						if(context.get("description") == null){
-							context.put("description", description);
-						}
-						
-						// "Übergeordnete Objekte"
-						xpathExpression ="./idf:superiorReference";
-						getReference(elements, xpathExpression, ReferenceType.SUPERIOR);
-						
-						// "Untergeordnete Objekte"
-						xpathExpression ="./idf:subordinatedReference";
-						getReference(elements, xpathExpression, ReferenceType.SUBORDINATE);
-						
-						// close description
-						closeDiv(elements);
-					}
-				}
-				
-				xpathExpression = "./gmd:descriptiveKeywords";
-				if (XPathUtils.nodeExists(node, xpathExpression)) {
-					addReference(node);
-				}
-			}
-		}
-	}
-	
-	// "Querverweise"
-	private HashMap addReference(Node node) {
-		ArrayList keywords = new ArrayList();
-		String xpathExpression = "//gmd:keyword";
-		if (XPathUtils.nodeExists(node, xpathExpression)) {
-			NodeList nodeListKeywords = XPathUtils.getNodeList(node, xpathExpression);
-			for (int i = 0; i < nodeListKeywords.getLength(); i++) {
-				Node keywordNode = nodeListKeywords.item(i);
-				HashMap listEntry = new HashMap();
-				listEntry.put("type", "textList");
-				listEntry.put("body", XPathUtils.getString(keywordNode, ".").trim());
-				keywords.add(listEntry);
-			}
-		}
-		HashMap element = new HashMap();
-		element.put("type", "textList");
-		element.put("title", messages.getString("cross_references"));
-		element.put("textList", keywords);
-		
-		return element;
-	}
-	
-	private HashMap addElementEmailWeb(String title, String href, String body, String altText, LinkType linkType) {
-		HashMap element = new HashMap();
-		element.put("type", "textLinkLine");
-		element.put("title", title);
-		element.put("href", "mailto:".concat(UtilsString.htmlescapeAll(href)));
-		element.put("body", UtilsString.htmlescapeAll(body));
-		element.put("altText", UtilsString.htmlescapeAll(altText));
-		switch (linkType) {
-			case EMAIL:
-				element.put("href", "mailto:".concat(UtilsString.htmlescapeAll(href)));
-				break;
-			case WWW_URL:
-				if (href.startsWith("http")) {
-					element.put("href", href);
-				} else {
-					element.put("href", "http://".concat(href));
-				}
-				break;
-			default:
-				break;
-		}
-		
-		return element;
-	}
-	
-	private void addElement(ArrayList elements, String type, String body) {
-		addElement(elements, type, body, null);
-	}
-	
-	private void addElement(ArrayList elements, String type, String body, String title) {
-		HashMap element = new HashMap();
-		if (type != null)
-			element.put("type", type);
-		if (body != null)
-			element.put("body", body);
-		if (title != null)
-			element.put("title", title);
-		
-		elements.add(element);
-	}
-	
-	
-	private HashMap addElementLink(String type, Boolean hasLinkIcon, Boolean isExtern, String title, String uuid) {
-		HashMap element = new HashMap();
-		if (type != null)
-			element.put("type", type);
-		if (title != null)
-			element.put("title", title);
-		if (hasLinkIcon)
-			element.put("sort", hasLinkIcon);
-		if (isExtern != null)
-			element.put("isExtern", isExtern);
-		
-		if (this.iPlugId != null){
-			if(uuid != null){
-				if(log.isDebugEnabled()){
-    				log.debug("Create URL with iPlug: '" + this.iPlugId + "' and UUID: '" + uuid +"'");
-    			}
-				PortletURL actionUrl = response.createActionURL();
-		    	actionUrl.setParameter("cmd", "doShowAddressDetail");
-				actionUrl.setParameter("addrId", uuid);
-				actionUrl.setParameter("plugid", this.iPlugId);
-				element.put("href", actionUrl.toString());
-			}else{
-				element.put("href", "");
-			}
-		}else{
-			element.put("href", "");
-		}
-			
-		return element;
-	}
-	
-	private HashMap addElementAddress(String type, String title, String body, String sort, ArrayList elements) {
-		HashMap element = new HashMap();
-		if (type != null)
-			element.put("type", type);
-		if (title != null)
-			element.put("title", title);
-		if (sort != null)
-			element.put("sort", sort);
-		if (body != null)
-			element.put("body", body);
-		if (elements != null)
-			element.put("elements", elements);
-		
-		return element;
-	}
-	
-	public int getGreatestInt(ArrayList numbers) {
-		int i = 0;
-		int maximum = Integer.parseInt(numbers.get(i).toString());
-		while (i < numbers.size()) {
-			if (Integer.parseInt(numbers.get(i).toString()) > maximum) {
-				maximum =  Integer.parseInt(numbers.get(i).toString());
-			}
-			i++;
-		}
-		return maximum;
-	}
-	
-	private void getUdkObjClass(HashMap element, ArrayList elements) {
-		if (rootNode != null) {
-			getUdkObjectClassType(".");
-			element.put("udkObjClass", (String) context.get(UDK_OBJ_CLASS_TYPE));
-			if(context.get("udkObjClass") == null){
-				context.put("udkObjClass", (String) context.get(UDK_OBJ_CLASS_TYPE));
-			}
-			if(context.get("udkObjClassName") == null){
-				context.put("udkObjClassName", messages.getString("udk_obj_class_name_".concat((String) context.get(UDK_OBJ_CLASS_TYPE))));
-			}
-			addElementUdkClass(elements,(String) context.get(UDK_OBJ_CLASS_TYPE));
-		}
-	}
+    private void getGeneralTab(ArrayList elements, String xpathExpression) {
+        if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            Node node = XPathUtils.getNode(rootNode, xpathExpression);
+            if (node.hasChildNodes()) {
+                xpathExpression = "./gmd:abstract";
+                
+                // Beschreibung
+                if (XPathUtils.nodeExists(node, xpathExpression)) {
+                    String alternateName = "";
+                    String description = "";
+                    
+                    // alternate name
+                    xpathExpression = "./gmd:citation/gmd:CI_Citation/gmd:alternateTitle";
+                    if (XPathUtils.nodeExists(node, xpathExpression)) {
+                        alternateName = XPathUtils.getString(node, xpathExpression).trim();
+                    }
+                    
+                    // description
+                    xpathExpression = "./gmd:abstract";
+                    if (XPathUtils.nodeExists(node, xpathExpression)) {
+                        description = XPathUtils.getString(node, xpathExpression).trim();
+                        
+                        if (description != null) {
+                            description = description.replaceAll("\n", "<br/>");
+                            description = description.replaceAll("&lt;", "<");
+                            description = description.replaceAll("&gt;", ">");
+                        }
+                    }
+                    if ((description.length() > 0) || alternateName.length() > 0) {
+                        addSectionTitle(elements, messages.getString("detail_description"));
+                        addElementEntryLabelAbove(elements, description, alternateName, false);
+                        if(context.get("description") == null){
+                            context.put("description", description);
+                        }
+                        
+                        // "Übergeordnete Objekte"
+                        xpathExpression ="./idf:superiorReference";
+                        getReference(elements, xpathExpression, ReferenceType.SUPERIOR);
+                        
+                        // "Untergeordnete Objekte"
+                        xpathExpression ="./idf:subordinatedReference";
+                        getReference(elements, xpathExpression, ReferenceType.SUBORDINATE);
+                        
+                        // close description
+                        closeDiv(elements);
+                    }
+                }
+                
+                xpathExpression = "./gmd:descriptiveKeywords";
+                if (XPathUtils.nodeExists(node, xpathExpression)) {
+                    addReference(node);
+                }
+            }
+        }
+    }
+    
+    // "Querverweise"
+    private HashMap addReference(Node node) {
+        ArrayList keywords = new ArrayList();
+        String xpathExpression = "//gmd:keyword";
+        if (XPathUtils.nodeExists(node, xpathExpression)) {
+            NodeList nodeListKeywords = XPathUtils.getNodeList(node, xpathExpression);
+            for (int i = 0; i < nodeListKeywords.getLength(); i++) {
+                Node keywordNode = nodeListKeywords.item(i);
+                HashMap listEntry = new HashMap();
+                listEntry.put("type", "textList");
+                listEntry.put("body", XPathUtils.getString(keywordNode, ".").trim());
+                keywords.add(listEntry);
+            }
+        }
+        HashMap element = new HashMap();
+        element.put("type", "textList");
+        element.put("title", messages.getString("cross_references"));
+        element.put("textList", keywords);
+        
+        return element;
+    }
+    
+    private HashMap addElementEmailWeb(String title, String href, String body, String altText, LinkType linkType) {
+        HashMap element = new HashMap();
+        element.put("type", "textLinkLine");
+        element.put("title", title);
+        element.put("href", "mailto:".concat(UtilsString.htmlescapeAll(href)));
+        element.put("body", UtilsString.htmlescapeAll(body));
+        element.put("altText", UtilsString.htmlescapeAll(altText));
+        switch (linkType) {
+            case EMAIL:
+                element.put("href", "mailto:".concat(UtilsString.htmlescapeAll(href)));
+                break;
+            case WWW_URL:
+                if (href.startsWith("http")) {
+                    element.put("href", href);
+                } else {
+                    element.put("href", "http://".concat(href));
+                }
+                break;
+            default:
+                break;
+        }
+        
+        return element;
+    }
+    
+    private void addElement(ArrayList elements, String type, String body) {
+        addElement(elements, type, body, null);
+    }
+    
+    private void addElement(ArrayList elements, String type, String body, String title) {
+        HashMap element = new HashMap();
+        if (type != null)
+            element.put("type", type);
+        if (body != null)
+            element.put("body", body);
+        if (title != null)
+            element.put("title", title);
+        
+        elements.add(element);
+    }
+    
+    
+    private HashMap addElementLink(String type, Boolean hasLinkIcon, Boolean isExtern, String title, String uuid) {
+        HashMap element = new HashMap();
+        if (type != null)
+            element.put("type", type);
+        if (title != null)
+            element.put("title", title);
+        if (hasLinkIcon)
+            element.put("sort", hasLinkIcon);
+        if (isExtern != null)
+            element.put("isExtern", isExtern);
+        
+        if (this.iPlugId != null){
+            if(uuid != null){
+                if(log.isDebugEnabled()){
+                    log.debug("Create URL with iPlug: '" + this.iPlugId + "' and UUID: '" + uuid +"'");
+                }
+                PortletURL actionUrl = response.createActionURL();
+                actionUrl.setParameter("cmd", "doShowAddressDetail");
+                actionUrl.setParameter("addrId", uuid);
+                actionUrl.setParameter("plugid", this.iPlugId);
+                element.put("href", actionUrl.toString());
+            }else{
+                element.put("href", "");
+            }
+        }else{
+            element.put("href", "");
+        }
+            
+        return element;
+    }
+    
+    private HashMap addElementAddress(String type, String title, String body, String sort, ArrayList elements) {
+        HashMap element = new HashMap();
+        if (type != null)
+            element.put("type", type);
+        if (title != null)
+            element.put("title", title);
+        if (sort != null)
+            element.put("sort", sort);
+        if (body != null)
+            element.put("body", body);
+        if (elements != null)
+            element.put("elements", elements);
+        
+        return element;
+    }
+    
+    public int getGreatestInt(ArrayList numbers) {
+        int i = 0;
+        int maximum = Integer.parseInt(numbers.get(i).toString());
+        while (i < numbers.size()) {
+            if (Integer.parseInt(numbers.get(i).toString()) > maximum) {
+                maximum =  Integer.parseInt(numbers.get(i).toString());
+            }
+            i++;
+        }
+        return maximum;
+    }
+    
+    private void getUdkObjClass(HashMap element, ArrayList elements) {
+        if (rootNode != null) {
+            getUdkObjectClassType(".");
+            element.put("udkObjClass", (String) context.get(UDK_OBJ_CLASS_TYPE));
+            if(context.get("udkObjClass") == null){
+                context.put("udkObjClass", (String) context.get(UDK_OBJ_CLASS_TYPE));
+            }
+            if(context.get("udkObjClassName") == null){
+                context.put("udkObjClassName", messages.getString("udk_obj_class_name_".concat((String) context.get(UDK_OBJ_CLASS_TYPE))));
+            }
+            addElementUdkClass(elements,(String) context.get(UDK_OBJ_CLASS_TYPE));
+        }
+    }
 
-	private void getTitle(String xpathExpression, HashMap element) {
-		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-			String title = XPathUtils.getString(rootNode, xpathExpression).trim();
-			element.put("title", title);
-			if(context.get("title") == null){
-				context.put("title", title);
-			}
-		}else{
-			element.put("title", "No title");
-		}
-	}
+    private void getTitle(String xpathExpression, HashMap element) {
+        if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            String title = XPathUtils.getString(rootNode, xpathExpression).trim();
+            element.put("title", title);
+            if(context.get("title") == null){
+                context.put("title", title);
+            }
+        }else{
+            element.put("title", "No title");
+        }
+    }
 
-	private void getUdkObjectClassType(String xpathExpression) {
-		if(XPathUtils.nodeExists(rootNode, xpathExpression)){
-			Node node = XPathUtils.getNode(rootNode, xpathExpression);
-			if(node.hasChildNodes()){
-				String hierachyLevel = "";
-				String hierachyLevelName = "";
-				
-				xpathExpression = "./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue";
-				if(XPathUtils.nodeExists(node, xpathExpression)){
-					hierachyLevel = XPathUtils.getString(node, xpathExpression).trim();
-				}
-				
-				xpathExpression = "./gmd:hierarchyLevelName";
-				if(XPathUtils.nodeExists(node, xpathExpression)){
-					hierachyLevelName = XPathUtils.getString(node, xpathExpression).trim();
-				}
-				
-				if(log.isDebugEnabled()){
-					log.debug("IDF hierachyLevel: '" + hierachyLevel + "' and IDF hierachyLevelName: '" + hierachyLevelName+ "'");
-				}
-				
-				if(hierachyLevel.equals("service")){
-					context.put(UDK_OBJ_CLASS_TYPE, "3");
-				}else if(hierachyLevel.equals("application")){
-					context.put(UDK_OBJ_CLASS_TYPE, "6");
-				}else if(hierachyLevelName.equals("job") && hierachyLevel.equals("nonGeographicDataset")){
-					context.put(UDK_OBJ_CLASS_TYPE, "0");
-				}else if(hierachyLevelName.equals("document") && hierachyLevel.equals("nonGeographicDataset")){
-					context.put(UDK_OBJ_CLASS_TYPE, "2");
-				}else if(hierachyLevelName.equals("project") && hierachyLevel.equals("nonGeographicDataset")){
-					context.put(UDK_OBJ_CLASS_TYPE, "4");
-				}else if(hierachyLevelName.equals("database") && hierachyLevel.equals("nonGeographicDataset")){
-					context.put(UDK_OBJ_CLASS_TYPE, "5");
-				}else if(hierachyLevel.equals("dataset") || hierachyLevel.equals("series")){
-					context.put(UDK_OBJ_CLASS_TYPE, "1");
-				}
-			}
-		}		
-	}
+    private void getUdkObjectClassType(String xpathExpression) {
+        if(XPathUtils.nodeExists(rootNode, xpathExpression)){
+            Node node = XPathUtils.getNode(rootNode, xpathExpression);
+            if(node.hasChildNodes()){
+                String hierachyLevel = "";
+                String hierachyLevelName = "";
+                
+                xpathExpression = "./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue";
+                if(XPathUtils.nodeExists(node, xpathExpression)){
+                    hierachyLevel = XPathUtils.getString(node, xpathExpression).trim();
+                }
+                
+                xpathExpression = "./gmd:hierarchyLevelName";
+                if(XPathUtils.nodeExists(node, xpathExpression)){
+                    hierachyLevelName = XPathUtils.getString(node, xpathExpression).trim();
+                }
+                
+                if(log.isDebugEnabled()){
+                    log.debug("IDF hierachyLevel: '" + hierachyLevel + "' and IDF hierachyLevelName: '" + hierachyLevelName+ "'");
+                }
+                
+                if(hierachyLevel.equals("service")){
+                    context.put(UDK_OBJ_CLASS_TYPE, "3");
+                }else if(hierachyLevel.equals("application")){
+                    context.put(UDK_OBJ_CLASS_TYPE, "6");
+                }else if(hierachyLevelName.equals("job") && hierachyLevel.equals("nonGeographicDataset")){
+                    context.put(UDK_OBJ_CLASS_TYPE, "0");
+                }else if(hierachyLevelName.equals("document") && hierachyLevel.equals("nonGeographicDataset")){
+                    context.put(UDK_OBJ_CLASS_TYPE, "2");
+                }else if(hierachyLevelName.equals("project") && hierachyLevel.equals("nonGeographicDataset")){
+                    context.put(UDK_OBJ_CLASS_TYPE, "4");
+                }else if(hierachyLevelName.equals("database") && hierachyLevel.equals("nonGeographicDataset")){
+                    context.put(UDK_OBJ_CLASS_TYPE, "5");
+                }else if(hierachyLevel.equals("dataset") || hierachyLevel.equals("series")){
+                    context.put(UDK_OBJ_CLASS_TYPE, "1");
+                }
+            }
+        }       
+    }
 }
