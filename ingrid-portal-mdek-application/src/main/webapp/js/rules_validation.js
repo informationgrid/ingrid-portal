@@ -203,23 +203,17 @@ function addressValidation() {
     dojo.connect(UtilGrid.getTable("generalAddress"), "onDataChanged", function(msg) {
         if (msg.type != "deleted")
             return;
-            
-        // special behaviour only if "Verwalter" is going to be deleted
-        var verwalterString = UtilSyslist.getSyslistEntryName(505, 2);
-        // if it's the last Verwalter then revert store state since
-        // at least one address of this kind must exist
-        var anyVerwalter = dojo.some(UtilGrid.getTableData("generalAddress"), function(item){
-            return item.nameOfRelation == verwalterString;
-        });
-        if (!anyVerwalter) {
+
+        // just any address needed (not "Verwalter" anymore), see INGRID32-46
+        // if it's the last address then revert store state since
+        // at least one address must exist
+        var anyAddress = UtilGrid.getTableData("generalAddress").length > 0;
+        if (!anyAddress) {
             dojo.forEach(msg.items, function(itemRow){
-                if (itemRow.nameOfRelation == verwalterString) {
-                    UtilGrid.addTableDataRow("generalAddress", itemRow);
-                    
-                    // show tooltip
-                    var toolTip = dojo.string.substitute(message.get("validation.addressInfoRequired"), [verwalterString]);
-                    showToolTip("generalAddress", toolTip);
-                }
+                UtilGrid.addTableDataRow("generalAddress", itemRow);
+                // show tooltip
+                var toolTip = message.get("validation.addressInfoRequired");
+                showToolTip("generalAddress", toolTip);
             });
         }
 	});
@@ -455,13 +449,12 @@ function generalAddressPublishable(notPublishableIDs) {
         notPublishableIDs.push("generalAddress");
     }
 
-    // Get the string (from the syslist) that is used to identify verwalter entries
-    var verwalterString = UtilSyslist.getSyslistEntryName(505, 2);
-
-    // Check if at least one entry exists with the correct relation type
-    if (dojo.every(addressData, function(addressRef) { return ( dojo.trim(addressRef.nameOfRelation+"") != verwalterString); })) {
-        console.debug("At least one entry has to be of type '"+verwalterString+"'.");
-        dijit.byId("generalAddress").invalidMessage = dojo.string.substitute(message.get("validation.error.addressType"), [verwalterString]);
+    // Check if at least one entry exists
+    // just any address needed (not "Verwalter" anymore), see INGRID32-46
+    var anyAddress = addressData.length > 0;
+    if (!anyAddress) {
+        console.debug("At least one referenced address has to be set");
+        dijit.byId("generalAddress").invalidMessage = message.get("validation.error.addressType");
         notPublishableIDs.push("generalAddress");
     }
 }

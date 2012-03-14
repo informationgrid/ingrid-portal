@@ -406,7 +406,7 @@
 				 or the <a href="?hkey=creation-of-objects-3">getCapabilities wizard</a> 
 				 for support in filling out the new object. You operate the wizard selected by means of 
 				 <i><b>Start Wizard</b></i>.</p>
-                 <p>Select <i><b>Continue without a Wizard</b></i> in order to open an empty new object. As a standard, not only the custodian 
+                 <p>Select <i><b>Continue without a Wizard</b></i> in order to open an empty new object. As a standard, not only the point of contact 
 				 address and the spatial reference but also the thesaurus terms are borrowed from the superordinate object in the hierarchy.</p>
             </content>
         </section>
@@ -1253,7 +1253,7 @@
 				 <p>The <i>Analysis</i> submenu item provides a series of checks on the catalogue for internal consistency.</p>
 				 <p>Checks are made for the following defects:</p>
 				 <ul>
-				 <li>Objects that do not have a custodian address</li>
+				 <li>Objects that do not have address references</li>
 				 <li>Objects that have no parent-objects</li>
 				 <li>Objects that have invalid address references</li>
 				 <li>Addresses that have no parent-address</li>
@@ -1484,9 +1484,9 @@
 				 <p><u>Note:</u>You can save these details tab for tab with <i>Save as CSV File</i>. </p>
 				 <p>Select a <i>New Address</i>. Some details are given on the address for information purposes. </p>
 				 <p><u>Note:</u>Only published addresses can be chosen. </p>
-				 <p>After clicking on the <i>Replace and Delete</i> button and then confirming the security prompt, the address in all objects containing the address as information or as the person responsible (or in all addresses that contain the address as the person responsible) will be replaced with the <i>New Address</i> and the <i>Address to Delete</i> is removed from the catalogue. </p>
+				 <p>After clicking on the <i>Replace and Delete</i> button and then confirming the security prompt, the address in all objects containing the address as information will be replaced with the <i>New Address</i>.
+				 If the address is a responsible user for an object or address (IGE user) you first have to assign a new address to the IGE user (see below). Then the <i>Address to Delete</i> is removed from the catalogue. </p>
 				 <p><u>Note:</u>If an IGE user is assigned to the <i>Address to Delete</i>, you will be requested to assign another address to this IGE user. You can only carry out the <i>Replace and Delete</i> function after the user is assigned to another address. </p>
-				 <p><u>Take care:</u> In all objects where the <i>Address to Delete</i> is entered in the <i>Addresses</i> field and where this address does not have the <i>Information</i> function, the <i>Address to Delete</i> is deleted without having been replaced by the new address. </p>
             </content>
         </section>
         <section help-key="overall-catalog-management-7">

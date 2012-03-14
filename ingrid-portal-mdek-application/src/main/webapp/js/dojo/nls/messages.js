@@ -423,7 +423,7 @@
     "table.rowDeleteReference":"Delete references in object/address",
 
     "validation.minmax":"The Value of field '${0}' must be larger than the value of field '${1}'.",
-    "validation.addressInfoRequired":"The address table must contain at least one entry of type '${0}'!",
+    "validation.addressInfoRequired":"The address table must contain at least one entry!",
     "validation.communicationEmailRequired":"The communication table must contain at least one entry of type '${0}'!",
 	"validation.titleDate":"Please enter the value for '${0}' and '${1}'.",
 	"validation.latLon1":"Longitude/Latitude 1",
@@ -984,7 +984,7 @@
     "dialog.statistics.adrClass2":"Person",
     "dialog.statistics.adrClass3":"Custom Address",
     
-    "validation.error.addressType":"At least one address relation has to be of type 2 = '${0}'.",
+    "validation.error.addressType":"At least one address relation has to be set.",
     "validation.error.empty.table":"All entries in the table must contain data.",
     "validation.error.conformity.table":"All entries in the conformity table must have a valid level and specification.",
     "validation.error.dq.table":"NameOfMeasure + ResultValue needs to be filled.",

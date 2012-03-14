@@ -370,7 +370,7 @@
                     var addressUuid = selectedNode.item.uuid[0];
                     
                     if ("replaceInfoAddress" == selectedChild) {
-                        var tableToExport = "OBJECTS_OF_VERWALTER_ADDRESS";
+                        var tableToExport = "OBJECTS_OF_ADDRESS";
                     }
                     else 
                         if ("replaceUser" == selectedChild) {

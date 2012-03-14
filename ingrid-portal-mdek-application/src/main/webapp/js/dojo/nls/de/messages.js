@@ -423,7 +423,7 @@
     "table.rowDeleteReference":"Ungültige Verweise in Objekt/Adresse löschen",
 
     "validation.minmax":"Der Wert des Feldes '${0}' muß größer sein als der Wert des Feldes '${1}'.",
-    "validation.addressInfoRequired":"Die Adressverweistabelle muss mindestens eine Adresse vom Typ '${0}' beinhalten!",
+    "validation.addressInfoRequired":"Die Adressverweistabelle muss mindestens eine Adresse beinhalten!",
     "validation.communicationEmailRequired":"Die Kommunikationstabelle muss mindestens einen Eintrag vom Typ '${0}' beinhalten!",
 	"validation.titleDate":"Der '${0}' sowie das '${1}' muss angegeben werden.",
 	"validation.latLon1":"L&auml;nge/Breite 1",
@@ -984,7 +984,7 @@
     "dialog.statistics.adrClass2":"Person",
     "dialog.statistics.adrClass3":"Freie Adresse",
     
-    "validation.error.addressType":"Es muss mindestens eine Adressbeziehung '${0}' angegeben werden!",
+    "validation.error.addressType":"Es muss mindestens eine Adressbeziehung angegeben werden!",
     "validation.error.address.references":"All entries in the address table must have valid references.",
     "validation.error.empty.table":"All entries in the table must contain data.",
     "validation.error.conformity.table":"All entries in the conformity table must have a valid level and specification.",
