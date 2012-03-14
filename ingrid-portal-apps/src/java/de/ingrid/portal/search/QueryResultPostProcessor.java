@@ -341,10 +341,9 @@ public class QueryResultPostProcessor {
                     }
                 }
                 
-                tmpString = null;
                 tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ORG_OBJ_ID);
                 
-                if(tmpString == null){
+                if(tmpString.length() == 0){
                 	tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_OBJ_ID);
                 }
                 
