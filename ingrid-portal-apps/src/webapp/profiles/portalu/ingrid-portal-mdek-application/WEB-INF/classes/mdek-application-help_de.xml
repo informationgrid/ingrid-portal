@@ -141,7 +141,7 @@
 			das Datenobjekt gewonnen wurde.</p>
 
 			<p>Jedem Objekt wird mindestens eine Adresse zugeordnet (z.B.
-			Adresse der Auskunft gebenden Stelle oder des Datenhalters). Durch diese
+			Adresse des Verwalters oder des Ansprechpartners). Durch diese
 			Zuordnungsmöglichkeiten (Verweise) müssen die Adressen jeweils nur einmal in
 			die Adressverwaltung des IGC eingegeben bzw. gepflegt werden.</p>
 			<p>Die Adressen lassen sich in vier Kategorien unterscheiden:</p>
@@ -598,7 +598,7 @@
 				 zur Unterstützung der Befüllung des neuen Objektes auswählen können. Über 
 				 <i><b>Assistent starten</b></i> führen Sie den ausgewählten Assistenten aus.</p>
                  <p>Wählen Sie <i><b>Ohne Assistent weiter</b></i>, um ein leeres neues Objekt zu öffnen. 
-				 Standardmäßig werden für ein leeres Objekt sowohl die Auskunftsadresse und der Raumbezug 
+				 Standardmäßig werden für ein leeres Objekt sowohl die Ansprechpartneradresse und der Raumbezug 
 				 als auch die Thesaurusbegriffe des in der Hierarchie übergeordneten Objektes übernommen.</p>
             </content>
         </section>
@@ -848,46 +848,30 @@
                  <p>Dieser Dialog kann entweder aus der Feldgruppe <i>Verweise</i> oder aus einem der 
 				 speziellen Felder heraus aufgerufen werden, die Verweise unterstützen (wie z.B. das Feld 
 				 <i>Datengrundlage</i> der Objektklasse <i>Geoinformation/Karte</i>).</p>
-				 <p>Wird der Dialog aus einem speziellen Feld heraus aufgerufen, ist die Angabe 
-				 <i>Feldname/Bezeichnung der Verweisbeziehung</i> bereits mit dem Feldnamen gefüllt. 
-				 Sie können in diesem Fall keine Änderung an der Angabe vornehmen.</p>
-				 <p>Haben Sie den Dialog aus der allgemeinen Feldgruppe Verweise heraus aufgerufen, dann 
-				 können Sie entweder einen Feldnamen aus der Auswahlliste des Feldes 
-				 <i>Feldname/Bezeichnung der Verweisbeziehung</i> wählen oder der Verweisbeziehung eine 
-				 beliebige freie Bezeichnung geben. </p>
-				 <p>Es gibt zwei Typen von Verweisen:</p>
+				 <p>Wird der Verweis-Dialog in der Rubrik <i>Verweise</i> geöffnet, so kann über das Dropdown-Menu 
+				 (ausklappbar über den Pfeil an der rechten Seite des Feldes) aus einer Auswahlliste ein Eintrag 
+				 gewählt werden, es sind dann auch freie Einträge für den Verweistyp möglich. Wurde der 
+				 Dialog von einem Feld in einer anderen Rubrik (z.B. das Feld <i>Basisdaten/Verweise</i> in der 
+				 Rubrik <i>Fachbezug</i>) geöffnet, so wird automatisch der betreffende Feldname eingetragen und 
+				 angezeigt (z.B. <i>Basisdaten</i>).</p>
+				 <p>Es gibt zwei mögliche Verweisziele:</p>
 				 <ul>
-				 <li>Querverweise zwischen Objekten (Verweistyp: Objekt)</li>
-				 <li>Verweis auf Informationen im Internet (Verweistyp: URL)</li>
+				 <li>Querverweise zwischen Objekten (Verweisziel: Objekt)</li>
+				 <li>Verweis auf Informationen im Internet (Verweisziel: URL)</li>
 				 </ul>
-				 <p><b>Verweistyp: Objekt</b></p>
-				 <p>Über diesen Verweistypen werden Querverweise zwischen Objekten definiert. Über 
+				 <p><b>Verweisziel: Objekt</b></p>
+				 <p>Über dieses Verweisziel werden Querverweise zwischen Objekten definiert. Über 
 				 <a href="?hkey=maintanance-of-objects-8">Objekt auswählen</a> wird das Zielobjekt gewählt. 
 				 Die Pflichtangaben <i>Objektname</i> und <i>Objektklasse</i> werden automatisch mit den 
 				 entsprechenden Daten des ausgewählten Objekts gefüllt.</p>
 				 <p>Optional können Sie eine <i>Erläuterung</i> zu dem Verweis angeben.</p>
-				 <p><b>Verweistyp: URL</b></p>
-				 <p>Über diesen Verweistyp wird ein Verweis zu einer externen Datenquelle im Internet 
-				 definiert. Verpflichtend müssen Sie eine <i>Bezeichnung des Verweises</i>, 
-				 die <i>Internet-Adresse (URL)</i> und den <i>Datentyp</i> der Datenquelle angeben.</p>
+				 <p><b>Verweisziel: URL</b></p>
+				 <p>Über dieses Verweisziel wird ein Verweis zu einer externen Datenquelle im Internet 
+				 definiert. Verpflichtend müssen Sie eine <i>Bezeichnung des Verweises</i> und 
+				 die <i>Internet-Adresse (URL)</i> angeben.</p>
 				 <p>Optional können Sie eine <i>Erläuterung</i> zu dem Verweis angeben.</p>
-				 <p><u>Achtung:</u> Alle weiteren Angaben sind ebenfalls optional. Sie werden bei 
-				 der Darstellung des Metadatenobjektes über das Portal nicht angezeigt und 
-				 voraussichtlich zukünftig nicht weiter unterstützt.</p>
-				 <p><b>Verweisliste</b></p>
-				 <p>Auf der rechten Seite des Dialoges wird die Verweisliste angezeigt. Sie ist nach den 
-				 beiden Verweistypen in <i>Objekte</i> und <i>URL</i> getrennt.</p>
-				 <p>Weitere Verweise können Sie zu der Liste hinzufügen, indem Sie auf die Schaltfläche 
-				 <i>Neu</i> im linken Fenster klicken, damit einen neuen Verweis des gewünschten 
-				 Verweistyps erstellen und ihn abschließend über die Schaltfläche <i>Hinzufügen</i> der 
-				 Liste hinzufügen.</p>
-				 <p>Einen bereits vorhandenen Verweis können Sie bearbeiten, indem Sie ihn in der 
-				 <i>Verweisliste</i> anwählen. Er wird dann im Fenster auf der linken Seite dargestellt 
-				 und kann bearbeitet werden. Anschließend können Sie über die Schaltfläche <i>Speichern</i> 
-				 die Änderungen in die <i>Verweisliste</i> übernehmen.</p>
-				 <p>Einen vorhandenen Verweis können Sie löschen, indem Sie mit der rechten Maustaste 
-				 auf den entsprechenden Eintrag in der <i>Verweisliste</i> klicken und die Funktion 
-				 <i>Löschen</i> aus dem Kontextmenü auswählen.</p>
+				 <p><u>Achtung:</u> Die Angabe <i>URL-Typ</i> ist ebenfalls optional, wird bei 
+				 der Darstellung des Metadatenobjektes über das Portal jedoch nicht angezeigt.</p>
             </content>
         </section>
         <section help-key="maintanance-of-objects-8">
@@ -906,32 +890,27 @@
             <header>Operation hinzufügen/bearbeiten</header>
             <content>
                  <p>Dieser Dialog tritt nur im Fachbezug der Objektklasse 
-				 <i>Dienst/Anwendung/Informationssystem</i> auf. Über ihn können Sie die Operationen angeben, 
-				 über die Ihr Dienst verfügt. </p>
+				 <i>Geodatendienst</i> auf. Über ihn können Sie die Operationen angeben, 
+				 über die Ihr Dienst verfügt.</p>
 				 <p>Besonders wichtig ist die Angabe der unterstützten Operationen bei OGC-konformen 
 				 Web-Diensten, da insbesondere die getCapabilities-Operation (z.B. bei WMS oder WFS) zur 
 				 Darstellung des Dienstes im Karten-Viewer genutzt wird.</p>
-				 <p>Die <i>Namen</i> und zugehörigen <i>Beschreibungen</i> der bereits erfassten 
-				 Operationen werden im Dialog ganz oben aufgelistet.</p>
-				 <p>Über die Schaltfläche <i>Neu</i> können weitere Operationen hinzugefügt werden. 
-				 Über die Schaltfläche <i>Hinzufügen</i> wird die neuerfasste Operation der Liste 
-				 hinzugefügt.</p>
-				 <p>Durch Anwählen einer Operation in der Liste wird diese in die Felder unterhalb der 
-				 Liste geladen und kann bearbeitet werden. Durch das Anklicken der Schaltfläche 
-				 <i>Speichern</i> übernehmen Sie die geänderten Daten in die Liste.</p>
-				 <p>Sie können eine Operation löschen, indem Sie auf den entsprechenden Eintrag in der 
-				 Liste mit der rechten Maustaste klicken und die Funktion <i>Löschen</i> aus dem 
+				 <p>Über den Link <i>Operation hinzufügen</i> können neue Operationen hinzugefügt werden.</p>
+                 <p>Sie können eine bestehende Operation bearbeiten, indem Sie auf den entsprechenden 
+                 Eintrag in der Liste mit der rechten Maustaste klicken und die Funktion <i>Zeile 
+                 bearbeiten</i> aus dem Kontextmenü auswählen. Es öffnet sich ein separater Dialog.
+                 Durch das Anklicken der Schaltfläche <i>Übernehmen</i> übernehmen Sie die geänderten 
+                 Daten in die Liste.</p>
+				 <p>Sie können eine Operation löschen, indem Sie die Funktion <i>Löschen</i> aus dem 
 				 Kontextmenü auswählen.</p>
 				 <p><u>Achtung:</u> Der Name der Operation ist abhängig von der im Fachbezug des Objekts 
-				 ausgewählten <i>Service-Klassifikation</i>. Nur wenn als Service-Klassifikation 
-				 <i>Andere Dienste</i> oder <i>Verkettete Geodatendienste</i> ausgewählt wurde, 
+				 ausgewählten <i>Art des Dienstes</i>. Nur wenn als Art des Dienstes 
+				 <i>Sonstige Dienste</i> oder <i>Dienste zum Abrufen von Geodatendiensten</i> ausgewählt wurde, 
 				 kann der Name der Operation frei gewählt werden. 
 				 In allen anderen Fällen stehen die über das OGC für den jeweils gewählten Dienst 
 				 definierten Operationen zur Auswahl.</p>
 				 <p><u>Um die volle Funktionalität des InGridCatalogs auszunutzen, sollte für jeden 
 				 OGC-Dienst mindestens die getCapabilities-Operation eingetragen werden.</u></p>
-				 <p>Sie schließen das Dialog-Fenster über die Schaltfläche <i>Schließen</i> 
-				 rechts oben im Dialog.</p> 
             </content>
         </section>
         <section help-key="maintanance-of-objects-10">
@@ -1722,7 +1701,7 @@
 				 auf interne Konsistenz an.</p>
 				 <p>Die Überprüfung erfolgt auf folgende Mängel:</p>
 				 <ul>
-				 <li>Objekte, die keine Datenauskunftsadresse haben</li>
+				 <li>Objekte, die keinen Adressverweis haben</li>
 				 <li>Objekte, die keine Eltern-Objekte haben</li>
 				 <li>Objekte, die ungültige Adressverweise haben</li>
 				 <li>Adressen, die keine Eltern-Adresse haben</li>
@@ -1827,19 +1806,19 @@
 				 klicken Sie auf <i>Exportieren</i> und wählen den Ort, an dem Sie die XML-Datei speichern 
 				 möchten. Zum Importieren klicken Sie auf <i>Importieren</i> und wählen die XML-Datei, die 
 				 Sie importieren möchten. Sie muss das gleiche Format wie die Exportdatei haben.</p>
-				 <p><b>Liste: Rechtliche Grundlagen</b></p>
-				 <p>Unter dem Karteireiter <i>Liste: Rechtliche Grundlagen</i> können freie Einträge in dem 
-				 Feld <i>Rechtliche Grundlagen</i> in die Auswahlliste übertragen werden.</p>
-				 <p>Wählen Sie hierzu in der Liste <i>Einträge die nicht in der Schlüsseltabelle vorhanden 
-				 sind</i> den Eintrag aus, den Sie in die Auswahlliste aufnehmen möchten. Über einen Klick 
-				 auf den Button <i>&gt;Übertragen</i> wird er in die Auswahlliste übernommen.</p>
+				 <p><b>Übernahme Freie Einträge</b></p>
+				 <p>Unter dem Karteireiter <i>Übernahme Freie Einträge</i> können freie Einträge vorgegebener 
+				 Felder in die entsprechende Auswahlliste des Feldes übertragen werden.</p>
+				 <p>Wählen Sie hierzu die gewünschte <i>Auswahlliste</i> und in der Liste <i>Einträge die nicht 
+                 in der Schlüsseltabelle vorhanden sind</i> den Eintrag aus, den Sie in die Auswahlliste 
+                 aufnehmen möchten. Über einen Klick auf den Button <i>&gt;Übertragen</i> wird er in die 
+                 Auswahlliste übernommen.</p>
 				 <p>Ein Klick auf den Button <i>&gt;&gt;Alle</i> übernimmt alle freien Einträge in die Auswahlliste.</p>
-				 <p>Sie können auch einzelne freie Einträge im Feld <i>Rechtliche Grundlagen</i> durch 
-				 Auswahllisteneinträge ersetzen, indem Sie den Eintrag, den Sie ersetzen wollen, in der 
-				 Liste <i>Einträge die nicht in der Schlüsseltabelle vorhanden sind</i> auswählen und den 
-				 Eintrag, durch den er ersetzt werden soll, in der Liste <i>Inhalte der Schlüsseltabelle</i> 
-				 auswählen. Ein Klick auf <i>&lt;Ersetzen</i> ersetzt den ausgewählten Eintrag des Feldes 
-				 durch den Auswahllisteneintrag.</p>
+				 <p>Sie können auch einzelne freie Einträge durch Auswahllisteneinträge ersetzen, indem 
+                 Sie den Eintrag, den Sie ersetzen wollen, in der Liste <i>Einträge die nicht in der 
+                 Schlüsseltabelle vorhanden sind</i> auswählen und den Eintrag, durch den er ersetzt werden 
+                 soll, in der Liste <i>Inhalte der Schlüsseltabelle</i> auswählen. Ein Klick auf <i>&lt;Ersetzen</i> 
+                 ersetzt den ausgewählten Eintrag des Feldes durch den Auswahllisteneintrag.</p>
 				 <p><b>Reindexierung</b></p>
 				 <p>Im Index sind die Einträge der Felder, die über Codelisten gepflegt werden, natürlich 
 				 nicht als IDs sondern als Text gespeichert. Wurde der Text für einzelne IDs geändert, ist 
@@ -2215,10 +2194,11 @@
 				 zu der Adresse angezeigt.</p>
 				 <p><u>Hinweis:</u> Es können ausschließlich veröffentlichte Adressen ausgewählt werden.</p>
 				 <p>Nach dem Klicken auf den Button <i>Ersetzen &amp; Löschen</i> und anschließendem 
-                 Bestätigen der Sicherheitsabfrage, werden in allen Objekten, die die Adresse als Adressreferenz 
-                 enthalten (bzw. in allen Adressen, die die Adresse als 
-				 Verantwortlichen enthalten), mit der <i>Neuen Adresse</i> ersetzt und die <i>Zu löschende 
-				 Adresse</i> aus dem Katalog entfernt.</p>
+                 Bestätigen der Sicherheitsabfrage, wird in allen Objekten, die die Adresse als Adressreferenz 
+                 unter "Adressen" enthalten, diese mit der <i>Neuen Adresse</i> ersetzt. Taucht die Adresse
+                 als Verantwortlicher (IGE Nutzer) in einem Objekt auf, so muss zuerst dem Benutzer eine neue
+                 Adresse zugewiesen werden (s.u.). Anschließend wird die <i>Zu löschende Adresse</i> aus dem 
+                 Katalog entfernt.</p>
 				 <p><u>Hinweis:</u> Wenn ein IGE-Nutzer der <i>Zulöschenden Adresse</i> zugeordnet ist, 
 				 werden Sie aufgefordert, diesem IGE-Nutzer eine andere Adresse zuzuordnen. Sie können 
 				 die Funktion <i>Ersetzen &amp; Löschen</i> erst durchführen, nachdem der Nutzer eine 

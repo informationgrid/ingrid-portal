@@ -87,7 +87,7 @@
 			</ul>
 			<p> Metadata objects contain details on the subject reference as well as spatial and temporal reference of a data object. The subject reference makes statements about the type and manner of data collection and its accuracy; spatial and temporal reference state where and when the data object was obtained.</p>
 
-			<p>Each object is assigned at least one address (e.g. address of the place providing the information or of the data holder). Through these assignment possiblities (references) the addresses must only be entered or maintained once in the IGC address management.</p>
+			<p>Each object is assigned at least one address (e.g. address of the custodian or of the point of contact). Through these assignment possiblities (references) the addresses must only be entered or maintained once in the IGC address management.</p>
 			<p>The addresses are divided into four categories:</p>
 			<ul>
 			<li> Institutions</li>
@@ -406,7 +406,7 @@
 				 or the <a href="?hkey=creation-of-objects-3">getCapabilities wizard</a> 
 				 for support in filling out the new object. You operate the wizard selected by means of 
 				 <i><b>Start Wizard</b></i>.</p>
-                 <p>Select <i><b>Continue without a Wizard</b></i> in order to open an empty new object. As a standard, not only the information 
+                 <p>Select <i><b>Continue without a Wizard</b></i> in order to open an empty new object. As a standard, not only the point of contact 
 				 address and the spatial reference but also the thesaurus terms are borrowed from the superordinate object in the hierarchy.</p>
             </content>
         </section>
@@ -596,48 +596,37 @@
             </content>
         </section>
         <section help-key="maintanance-of-objects-7">
-            <header>Add/Edit Links</header>
+            <header>Add/Edit Link</header>
             <content>
                  <p>This dialogue box can either be called up via the <i>Links</i> field group or from one of the specific fields that support 
 				 references (such as, for example, the baseline data field of the object class <i>Geoinformation/ Map</i>).</p>
-				 <p>WIf the dialogue is summoned from a particular field, the detail 
-				 <i>Link Name</i> is already filled in with the field names. In this case you cannot carry out any changes to the details.</p>
+				 <p>If the dialogue is summoned from a particular field, the detail 
+				 <i>Link type</i> is already filled in with the field name. In this case you cannot carry out any changes to the details.</p>
 				 <p>If you have called up the dialogue box from the general 
-				 <i>Links</i> field group, then you can either select a field name from the dropdown list of the field <i>Link Name</i> 
-				 or give the reference relationship any free designation.</p>
-				 <p>There are two types of links:</p>
+				 <i>Links</i> field group, then you can select a link type from the dropdown list of the field <i>Link type</i> or enter a 
+				 free value.</p>
+				 <p>There are two targets of links:</p>
 				 <ul>
-				 <li>Cross-references between objects (link type: object)</li>
-				 <li>Reference to information in the internet (link type: URL)</li>
+				 <li>Cross-references between objects (link target: object)</li>
+				 <li>Reference to information in the internet (link target: URL)</li>
 				 </ul>
-				 <p><b>Link type: Object</b></p>
-				 <p>Cross-references between objects are defined via these link types. The target object is selected via 
+				 <p><b>Link target: Object</b></p>
+				 <p>Cross-references between objects are defined via these link targets. The target object is selected via 
 				 <a href="?hkey=maintanance-of-objects-8">Select Object</a>. The obligatory details <i>Object Name</i> and <i>Object Class</i> 
 				 are automatically filled in with the corresponding data of the object selected.</p>
 				 <p>Optionally you can make a <i>Description</i> on the reference.</p>
-				 <p><b>Link type: URL</b></p>
-				 <p>By means of this reference type a reference is defined to an external data source in the internet. It is obligatory for 
-				 you to give a <i>Link Description</i>, <i>Internet address (URL)</i> and the <i>Data Type</i> of the data source.</p>
+				 <p><b>Link target: URL</b></p>
+				 <p>By means of this reference target a reference is defined to an external data source in the internet. It is obligatory for 
+				 you to give a <i>Link Description</i> and the <i>Internet address (URL)</i>.</p>
 				 <p>Optionally you can make a <i>Description</i> on the reference.</p>
-				 <p><u>Take care</u>: All further statements are likewise optional. In the representation of the metadata object via the portal 
-				 they will not be displayed and it is anticipated that in future they will no longer be supported.</p>
-				 <p><b>Link List</b></p>
-				 <p>On the right side of the dialogue box the <i>Link</i> list is displayed. It is broken down according to the two reference 
-				 types into <i>Objects</i> and <i>URL</i>.</p>
-				 <p>You can add further links to the list by clicking on the 
-				 <i>New</i> button in the left window so that a new reference to the link type desired is created and then add it to the list via the 
-				 <i>Add</i> button.</p>
-				 <p>You can edit a reference already in place by selecting it in the 
-				 <i>Link List</i>. It is then displayed on the left side of the window and can be edited. Afterwards, you can adopt the changes into the 
-				 <i>Link List</i> via the <i>Save</i> button.</p>
-				 <p>You can delete an existing reference by clicking with the right mouse button on the corresponding entry in the 
-				 <i>Link List</i> and selecting the <i>Delete Row</i> function from the context menu.</p>
+				 <p><u>Take care</u>: <i>URL-Type</i> is also optional but will not be displayed in the representation of the metadata object 
+				 via the portal.</p>
             </content>
         </section>
         <section help-key="maintanance-of-objects-8">
             <header>Select Object</header>
             <content>
-                 <p>This dialogue box is called up from the <i>Add/EditLinks</i> dialogue box to create a reference to an object. 
+                 <p>This dialogue box is called up from the <i>Add/Edit Link</i> dialogue box to create a reference to an object. 
 				 Through this one can select the object to which the link is to be made.</p>
 				 <p>Click through the structure of the objects and select the desired object with one click on the name of the 
 				 object. The object selected is displayed in <b>red</b>.</p>
@@ -647,27 +636,24 @@
         <section help-key="maintanance-of-objects-9">
             <header>Add/edit Operations</header>
             <content>
-                 <p>This dialogue box only appears in the field group <i>Relevanc</i> of the object class <i>Geo-Service</i>. 
+                 <p>This dialogue box only appears in the field group <i>Relevance</i> of the object class <i>Geo-Service</i>. 
 				 Using this you can state the operations your service has available.</p>
 				 <p>Particularly important is the statement of the operations supported in OGC-compliant web services, 
 				 as the getCapabilities operation (e.g. for WMS or WFA) in particular is used to represent the service in map viewer.</p>
-				 <p>The <i>Names</i> and associated <i>Descriptions</i> dof the operations already recorded are listed in the dialogue 
-				 box right at the top.</p>
-				 <p>Further operations can be added via the <i>New</i> button. You can choose an <i>Operation Name</i> from the code 
+				 <p>Further operations can be added via the <i>Add operation</i> link. You can choose an <i>Operation Name</i> from the code 
 				 list via a click on the arrow at the right side of the field. To fill in the fields of 
 				 <i>Supported Platforms</i>, <i>Parameter</i> and <i>Address</i> make a double click at first to activate the table. 
 				 The newly described operation is added to the list via the <i>Add</i> button.</p>
-				 <p>By selecting an operation in the list this is loaded into the fields under the list and can be edited. By clicking on the 
-				 <i>Save</i> button you adopt the amended data into the list.</p>
-				 <p>You can delete an operation by clicking on the relevant entry in the list with the right mouse button and selecting the 
-				 <i>Delete Row/ Delete Selected Row</i> function from the context menu.</p>
-				 <p><u>Take care</u>: The name of the operation is dependent on the <i>Classification of Service</i>selected with relevance to the object. 
-				 Only if <i>Other Services</i> or <i>Invoke Spatial Data Service</i> are selected as service classification, the name of the 
+                 <p>You can edit an operation by clicking on the relevant entry in the list with the right mouse button and selecting the 
+                 <i>Edit row</i> function from the context menu. A separate dialog will be opened. By clicking on the 
+				 <i>Apply</i> button you adopt the amended data back into the list.</p>
+				 <p>You can delete an operation by selecting the <i>Delete Row / Delete Selected Row</i> function from the context menu.</p>
+				 <p><u>Take care</u>: The name of the operation is dependent on the <i>Type of Service</i> selected with relevance to the object. 
+				 Only if <i>Other Service</i> or <i>Invoke Spatial Data Service</i> are selected as service classification, the name of the 
 				 operation can be freely selected. In all other cases the operations defined via the OGC for the respective service selected 
 				 are available for selecting.</p>
 				 <p><u>In order to get the best out of the full functionality of InGridCatalog, the getCapabilities operation at least 
 				 should be entered for each OGC-service.</u></p>
-				 <p>You close the dialogue window with one click on the <i>cross</i> top right in the dialogue box.</p> 
             </content>
         </section>
         <section help-key="maintanance-of-objects-10">
@@ -1267,7 +1253,7 @@
 				 <p>The <i>Analysis</i> submenu item provides a series of checks on the catalogue for internal consistency.</p>
 				 <p>Checks are made for the following defects:</p>
 				 <ul>
-				 <li>Objects that do not have a data information address</li>
+				 <li>Objects that do not have address references</li>
 				 <li>Objects that have no parent-objects</li>
 				 <li>Objects that have invalid address references</li>
 				 <li>Addresses that have no parent-address</li>
@@ -1319,11 +1305,11 @@
 				 <p><u><i>Import and Export</i></u></p>
 				 <p>The list of the code lists can be exported and imported. To export, click on <i>Export</i> and select the place where you would like to save the XML file. To import, click on <i>Import</i> and select the XML file you wish to import. It must have the same format as the export file. </p>
 				 
-				 <p><b>List: Legal Basis</b></p>
-				 <p>Under the tag <i>List</i>: <i>Legal Basis</i> free entries in the <i>Legal Basis</i> field can be adopted into the code list. </p>
-				 <p>For this, select the entry in the <i>Entries found in the catalogue that are not in the internal code list</i> that you would like to transfer to the code list. By clicking once on the > <i>Add</i> button it is adopted in the code list. </p>
+				 <p><b>Mapping of free entries</b></p>
+				 <p>Under the tag <i>Mapping of free entries</i> free entries of given fields can be adopted into their code lists. </p>
+				 <p>For this, select the code list and the entry in the <i>Entries found in the catalogue that are not in the internal code list</i> that you would like to transfer to the code list. By clicking once on the > <i>Add</i> button it is adopted in the code list. </p>
 				 <p>One click on the >> <i>All</i> button adopts all free entries in the code list.</p>
-				 <p>You can also replace individual free entries in the <i>Legal Basis</i> field by code list entries through selecting the entry you want to replace it in the <i>Entries found in the catalogue that are not in the internal code list</i> and selecting the entry to replace it in the Code List entries. One click on  <i>Replace</i> replaces the entry selected in the field by the code list entry. </p>
+				 <p>You can also replace individual free entries by code list entries through selecting the entry you want to replace it in the <i>Entries found in the catalogue that are not in the internal code list</i> and selecting the entry to replace it in the Code List entries. One click on <i>Replace</i> replaces the entry selected in the field by the code list entry. </p>
 				 
 				 <p><b>Re-index</b></p>
 				 <p>In the index the entries of the fields that are maintained via code lists are saved as text of course and not as IDs. If the text was changed for individual IDs then the index is no longer consistent (in a search the old text would be found and not the new text). For this reason, a re-indexing must be triggered for the IGE’s index after an amendment has been made to the code list. </p>
@@ -1498,9 +1484,9 @@
 				 <p><u>Note:</u>You can save these details tab for tab with <i>Save as CSV File</i>. </p>
 				 <p>Select a <i>New Address</i>. Some details are given on the address for information purposes. </p>
 				 <p><u>Note:</u>Only published addresses can be chosen. </p>
-				 <p>After clicking on the <i>Replace and Delete</i> button and then confirming the security prompt, the address in all objects containing the address as information or as the person responsible (or in all addresses that contain the address as the person responsible) will be replaced with the <i>New Address</i> and the <i>Address to Delete</i> is removed from the catalogue. </p>
+				 <p>After clicking on the <i>Replace and Delete</i> button and then confirming the security prompt, the address in all objects containing the address as information will be replaced with the <i>New Address</i>.
+				 If the address is a responsible user for an object or address (IGE user) you first have to assign a new address to the IGE user (see below). Then the <i>Address to Delete</i> is removed from the catalogue. </p>
 				 <p><u>Note:</u>If an IGE user is assigned to the <i>Address to Delete</i>, you will be requested to assign another address to this IGE user. You can only carry out the <i>Replace and Delete</i> function after the user is assigned to another address. </p>
-				 <p><u>Take care:</u> In all objects where the <i>Address to Delete</i> is entered in the <i>Addresses</i> field and where this address does not have the <i>Information</i> function, the <i>Address to Delete</i> is deleted without having been replaced by the new address. </p>
             </content>
         </section>
         <section help-key="overall-catalog-management-7">
