@@ -22,6 +22,7 @@ import org.springframework.core.io.Resource;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import de.ingrid.codelists.CodeListService;
 import de.ingrid.mdek.MdekError;
 import de.ingrid.mdek.MdekError.MdekErrorType;
 import de.ingrid.mdek.MdekUtils;
@@ -46,6 +47,8 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 	// Injected by Spring
 	private ImportDataProvider dataProvider;
 
+	// Injected by Spring
+	private CodeListService codeListService;
 
 	public ScriptImportDataMapper() {
 		
@@ -74,6 +77,7 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 		    parameters.put("source", doc);
 		    parameters.put("target", docTarget);
 		    parameters.put("protocolHandler", protocolHandler);
+		    parameters.put("codeListService", codeListService);
 		    // the template represents only one object!
 		    // Better if docTarget is only header and footer where
 		    // new objects made from template will be put into?
@@ -275,4 +279,7 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 		this.dataProvider = dataProvider;
 	}
 
+	public void setCodeListService(CodeListService cls) {
+	    this.codeListService = cls;
+	}
 }

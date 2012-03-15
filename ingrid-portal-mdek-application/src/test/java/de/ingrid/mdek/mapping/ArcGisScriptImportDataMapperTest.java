@@ -2,7 +2,9 @@ package de.ingrid.mdek.mapping;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -25,6 +27,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import de.ingrid.codelists.CodeListService;
+import de.ingrid.codelists.persistency.ICodeListPersistency;
+import de.ingrid.codelists.persistency.IgeCodeListPersistency;
 import de.ingrid.mdek.handler.HashMapProtocolHandler;
 import de.ingrid.utils.xml.XPathUtils;
 
@@ -38,6 +43,14 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 	
 	public void setUp() {
 		mapper = new ScriptImportDataMapper();
+		
+		CodeListService cls = new CodeListService();
+        ICodeListPersistency persistency = new IgeCodeListPersistency();
+        List<ICodeListPersistency> persistencies = new ArrayList<ICodeListPersistency>();
+        persistencies.add(persistency);
+        cls.setPersistencies(persistencies);
+        cls.setDefaultPersistency(0);
+        mapper.setCodeListService(cls);
 	}
 	
 	private void initClassVariables(String mapperScript, String template) {

@@ -75,7 +75,7 @@ public class MdekCatalogUtils {
 				Integer listId = (Integer) listDocument.get(MdekKeys.LST_ID);
 
 				Integer[] entryIds = (Integer[]) listDocument.get(MdekKeys.LST_ENTRY_IDS);
-				String[] entryNames = (String[]) (listDocument.get(MdekKeys.LST_ENTRY_NAMES_DE) != null ? listDocument.get(MdekKeys.LST_ENTRY_NAMES_DE) : listDocument.get(MdekKeys.LST_ENTRY_NAMES_EN));
+				String[] entryNames = (String[]) listDocument.get(MdekKeys.LST_ENTRY_NAMES);
 				Integer defaultIndex = (Integer) listDocument.get(MdekKeys.LST_DEFAULT_ENTRY_INDEX);
 
 				if (entryIds != null && entryNames != null) {
@@ -575,4 +575,5 @@ public class MdekCatalogUtils {
 			MdekErrorUtils.handleError(response);
 		}
 	}
+
 }

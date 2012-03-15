@@ -323,7 +323,7 @@ var mappingDescription = {"mappings":[
 		    			  			"targetAttribute":"id",
 		    			  			"transform":{
 		        						"funct":transformToIgcDomainId,
-		        						"params":[5105, 123]
+		        						"params":[5105, "en"]
 		        					}
 		    			  		},
 		    	  				{
@@ -338,7 +338,7 @@ var mappingDescription = {"mappings":[
 		    			  			"targetAttribute":"id",
 		    			  			"transform":{
 		        						"funct":transformToIgcDomainId,
-		        						"params":[5110, 123]
+		        						"params":[5110, "en"]
 		        					}
 		    			  		},
 		    	  				{
@@ -353,7 +353,7 @@ var mappingDescription = {"mappings":[
 		    			  			"targetAttribute":"id",
 		    			  			"transform":{
 		        						"funct":transformToIgcDomainId,
-		        						"params":[5120, 123]
+		        						"params":[5120, "en"]
 		        					}
 		    			  		},
 		    	  				{
@@ -368,7 +368,7 @@ var mappingDescription = {"mappings":[
 		    			  			"targetAttribute":"id",
 		    			  			"transform":{
 		        						"funct":transformToIgcDomainId,
-		        						"params":[5130, 123]
+		        						"params":[5130, "en"]
 		        					}
 		    			  		},
 		    	  				{
@@ -523,7 +523,7 @@ var mappingDescription = {"mappings":[
 			  			"defaultValue":"-1",
 			  			"transform":{
 							"funct":transformToIgcDomainId,
-							"params":[6020, 123]
+							"params":[6020, "en"]
 						}
 			  		}
                 ]
@@ -575,7 +575,7 @@ var mappingDescription = {"mappings":[
 			  			"defaultValue":"-1",
 			  			"transform":{
 							"funct":transformToIgcDomainId,
-							"params":[1320, 123]
+							"params":[1320, "en"]
 						}
 			  		},
 	  				{
@@ -618,7 +618,7 @@ var mappingDescription = {"mappings":[
 			  			"defaultValue":"-1",
 			  			"transform":{
 							"funct":transformToIgcDomainId,
-							"params":[6005, 123]
+							"params":[6005, "en"]
 						}
 			  		},
 	  				{
@@ -690,7 +690,7 @@ var mappingDescription = {"mappings":[
   			"targetAttribute":"id",
   			"transform":{
 				"funct":transformToIgcDomainId,
-				"params":[102, 123, "Could not map vertical-extent unit:"]
+				"params":[102, "en", "Could not map vertical-extent unit:"]
 			}						    					
   		},
         {
@@ -857,7 +857,7 @@ var mappingDescription = {"mappings":[
 			  			"targetAttribute":"id",
 			  			"transform":{
 							"funct":transformToIgcDomainId,
-							"params":[6100, 123, "Could not map INSPIRE theme:"]
+							"params":[6100, "en", "Could not map INSPIRE theme:"]
 						}
 			  		},
 	  				{
@@ -1246,14 +1246,14 @@ function mapReferenceSystemInfo(source, target) {
 			XMLUtils.createOrReplaceTextNode(node, coordinateSystem);
             
             // get syslist id
-			var coordinateSystemId = transformToIgcDomainId(code, 100, 123);
+			var coordinateSystemId = transformToIgcDomainId(code, 100, "en");
             if (hasValue(coordinateSystemId) && coordinateSystemId == -1) {
                 // try to parse coordsystem name for correct mapping to syslist id
                 var coordinateSystemLower = coordinateSystem.toLowerCase();
                 var indx = coordinateSystemLower.indexOf("epsg:");
                 if (indx != -1) {
                     var tmpCoordinateSystemId = coordinateSystemLower.substring(indx+5);
-                    var tmpCoordinateSystem = transformToIgcDomainValue(tmpCoordinateSystemId, 100, 123);
+                    var tmpCoordinateSystem = transformToIgcDomainValue(tmpCoordinateSystemId, 100, "en");
                     if (hasValue(tmpCoordinateSystem)) {
                         XMLUtils.createOrReplaceTextNode(node, tmpCoordinateSystem);
                         coordinateSystemId = tmpCoordinateSystemId;
@@ -1286,7 +1286,7 @@ function mapVerticalExtentVdatum(source, target) {
 	            log.debug("adding '/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-vdatum' = '" + vDatumName + "' to target document.");
 	            var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-vdatum");
 	            XMLUtils.createOrReplaceTextNode(node, vDatumName);
-	            var datumId = transformToIgcDomainId(vDatumName, 101, 123, "Could not map VerticalDatum: ");
+	            var datumId = transformToIgcDomainId(vDatumName, 101, "en", "Could not map VerticalDatum: ");
 	            if (hasValue(datumId)) {
 	                XMLUtils.createOrReplaceAttribute(node, "id", datumId);
 	            }
@@ -1422,7 +1422,7 @@ function addAccessConstraint(accConstraint, target) {
         var node = XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/additional-information/access-constraint");
         node = XPathUtils.createElementFromXPath(node, "restriction");
         XMLUtils.createOrReplaceTextNode(node, accConstraint);
-        var accConstraintId = transformToIgcDomainId(accConstraint, 6010, 123, "Could not map access-constraint, use as free entry: ");
+        var accConstraintId = transformToIgcDomainId(accConstraint, 6010, "en", "Could not map access-constraint, use as free entry: ");
         if (hasValue(accConstraintId)) {
             XMLUtils.createOrReplaceAttribute(node, "id", accConstraintId);                 
         }
@@ -1508,7 +1508,8 @@ function mapUncontrolledTerms(source, target) {
             	// transform to IGC domain id
         		var igcCode = null;
         		try {
-        			igcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(5200, term);
+        			//igcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(5200, term);
+        			igcCode = codeListService.getCodeListEntryId(5200, term, "iso");
         		} catch (e) { /* can be ignored */}
                 if (!hasValue(igcCode)) {
 	        		// check "inspireidentifiziert" and add flag !
@@ -1571,7 +1572,8 @@ function mapServiceClassifications(source, target) {
         		// transform to IGC domain id
         		var igcCode = null;
         		try {
-        			igcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(5200, term);
+        			//igcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(5200, term);
+        			igcCode = codeListService.getCodeListEntryId(5200, term, "iso");
         		} catch (e) {
         			if (log.isWarnEnabled()) {
         				log.warn("Error tranforming INSPIRE Service Classification code '" + term + "' with code list 5200 to IGC id. Does the codeList exist?");
@@ -1624,12 +1626,13 @@ function transformToIgcDomainId(val, codeListId, languageId, logErrorOnNotFound)
 		// transform to IGC domain id
 		var idcCode = null;
 		try {
-			idcCode = UtilsUDKCodeLists.getCodeListDomainId(codeListId, val, languageId);
+			//idcCode = UtilsUDKCodeLists.getCodeListDomainId(codeListId, val, languageId);
+		    idcCode = codeListService.getCodeListEntryId(codeListId, val, languageId);
 		} catch (e) {
 			if (log.isWarnEnabled()) {
-				log.warn("Error tranforming code '" + val + "' with code list " + codeListId + " with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "' to IGC id. Does the codeList exist?");
+				log.warn("Error tranforming code '" + val + "' with code list " + codeListId + " with language '" + languageId + "' to IGC id. Does the codeList exist?");
 			}
-			protocol(WARN, "Error tranforming code '" + val + "' with code list " + codeListId + " with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "' to IGC id. Does the codeList exist?")
+			protocol(WARN, "Error tranforming code '" + val + "' with code list " + codeListId + " with language '" + languageId + "' to IGC id. Does the codeList exist?")
 			if (logErrorOnNotFound) {
 				log.warn(logErrorOnNotFound + val);
 				protocol(WARN, logErrorOnNotFound + val)
@@ -1639,8 +1642,8 @@ function transformToIgcDomainId(val, codeListId, languageId, logErrorOnNotFound)
 			return idcCode;
 		} else {
 			if (log.isWarnEnabled()) {
-				log.warn("Domain code '" + val + "' unknown in code list " + codeListId + " for language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'.");
-				protocol(WARN, "Domain code '" + val + "' unknown in code list " + codeListId + " for language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'.")
+				log.warn("Domain code '" + val + "' unknown in code list " + codeListId + " for language '" + languageId + "'.");
+				protocol(WARN, "Domain code '" + val + "' unknown in code list " + codeListId + " for language '" + languageId + "'.")
 			}
 			if (logErrorOnNotFound) {
 				log.warn(logErrorOnNotFound + val);
@@ -1657,12 +1660,13 @@ function transformToIgcDomainValue(val, codeListId, languageId, logErrorOnNotFou
 		// transform to IGC domain id
 		var idcValue = null;
 		try {
-			idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(val), languageId);
+			//idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(val), languageId);
+			idcValue = codeListService.getCodeListValue(codeListId, val, languageId);
 		} catch (e) {
 			if (log.isWarnEnabled()) {
-				log.warn("Error tranforming ID '" + val + "' with code list " + codeListId + " with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'. Does the codeList exist?");
+				log.warn("Error tranforming ID '" + val + "' with code list " + codeListId + " with language '" + languageId + "'. Does the codeList exist?");
 			}
-			protocol(WARN, "Error tranforming ID '" + val + "' with code list " + codeListId + " with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'. Does the codeList exist?")
+			protocol(WARN, "Error tranforming ID '" + val + "' with code list " + codeListId + " with language '" + languageId + "'. Does the codeList exist?")
 			if (logErrorOnNotFound) {
 				log.warn(logErrorOnNotFound + val);
 				protocol(WARN, logErrorOnNotFound + val)
@@ -1672,8 +1676,8 @@ function transformToIgcDomainValue(val, codeListId, languageId, logErrorOnNotFou
 			return idcValue;
 		} else {
 			if (log.isWarnEnabled()) {
-				log.warn("Domain ID '" + val + "' unknown in code list " + codeListId + " for language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'.");
-				protocol(WARN, "Domain ID '" + val + "' unknown in code list " + codeListId + " for language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'.")
+				log.warn("Domain ID '" + val + "' unknown in code list " + codeListId + " for language '" + languageId + "'.");
+				protocol(WARN, "Domain ID '" + val + "' unknown in code list " + codeListId + " for language '" + languageId + "'.")
 			}
 			if (logErrorOnNotFound) {
 				log.warn(logErrorOnNotFound + val);
@@ -1689,7 +1693,8 @@ function transformISOToIgcDomainId(val, codeListId, logErrorOnNotFound) {
 		// transform to IGC domain id
 		var idcCode = null;
 		try {
-			idcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(codeListId, val);
+			//idcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(codeListId, val);
+			idcCode = codeListService.getCodeListEntryId(codeListId, val, "iso");
 		} catch (e) {
 			if (log.isWarnEnabled()) {
 				log.warn("Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC id. Does the codeList exist?");
@@ -1721,8 +1726,10 @@ function transformISOToIgcDomainValue(val, codeListId, languageId, logErrorOnNot
 		// transform ISO code to IGC domain value
 		var idcValue = null;
 		try {
-			var idcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(codeListId, val);
-			idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(idcCode), parseToInt(languageId));
+			//var idcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(codeListId, val);
+			var idcCode = codeListService.getCodeListEntryId(codeListId, val, "iso");
+			//idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(idcCode), parseToInt(languageId));
+			idcValue = codeListService.getCodeListValue(codeListId, idcCode, languageId);
 		} catch (e) {
 			if (log.isWarnEnabled()) {
 				log.warn("Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC value with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'. Does the codeList exist?"  + e.toString());

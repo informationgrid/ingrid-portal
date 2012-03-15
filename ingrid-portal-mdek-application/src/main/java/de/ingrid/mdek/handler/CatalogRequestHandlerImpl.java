@@ -39,7 +39,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 
     // Initialized by spring through the init method
     private IMdekCallerCatalog mdekCallerCatalog;
-
+    
     public void init() {
         mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
     }
@@ -47,11 +47,15 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 
     public Integer[] getAllSysListIds() {
         IngridDocument response = mdekCallerCatalog.getSysLists(connectionFacade.getCurrentPlugId(), null, null, MdekSecurityUtils.getCurrentUserUuid());
+        // used for migration of syslists from database initiated by testcase
+        //IngridDocument response = mdekCallerCatalog.getSysLists("ige-iplug-test", null, null, "");
         return MdekCatalogUtils.extractSysListIdsFromResponse(response);
     }
 
     public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode) {
         IngridDocument response = mdekCallerCatalog.getSysLists(connectionFacade.getCurrentPlugId(), listIds, languageCode, MdekSecurityUtils.getCurrentUserUuid());
+        // used for migration of syslists from database initiated by testcase
+        //IngridDocument response = mdekCallerCatalog.getSysLists("ige-iplug-test", listIds, languageCode, "");
         return MdekCatalogUtils.extractSysListFromResponse(response);
     }
 

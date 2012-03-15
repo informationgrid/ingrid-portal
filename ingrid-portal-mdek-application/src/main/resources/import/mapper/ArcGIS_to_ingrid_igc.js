@@ -1168,7 +1168,8 @@ function transformToIgcDomainId(val, codeListId, languageId, logErrorOnNotFound)
 		// transform to IGC domain id
 		var idcCode = null;
 		try {
-			idcCode = UtilsUDKCodeLists.getCodeListDomainId(codeListId, val, languageId);
+			//idcCode = UtilsUDKCodeLists.getCodeListDomainId(codeListId, val, languageId);
+			idcCode = codeListService.getCodeListEntryId(codeListId, val, languageId);
 		} catch (e) {
 			if (log.isWarnEnabled()) {
 				log.warn("Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
@@ -1202,7 +1203,8 @@ function transformToIgcDomainValue(val, codeListId, languageId, logErrorOnNotFou
 		// transform to IGC domain id
 		var idcValue = null;
 		try {
-			idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(val), languageId);
+			//idcValue = UtilsUDKCodeLists.getCodeListEntryName(codeListId, parseToInt(val), languageId);
+            idcValue = codeListService.getCodeListValue(codeListId, val, languageId);
 		} catch (e) {
 			if (log.isWarnEnabled()) {
 				log.warn("Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");
@@ -1234,7 +1236,8 @@ function transformISOToIgcDomainId(val, codeListId, logErrorOnNotFound) {
 		// transform to IGC domain id
 		var idcCode = null;
 		try {
-			idcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(codeListId, val);
+			//idcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(codeListId, val);
+			idcCode = codeListService.getCodeListEntryId(codeListId, val, "iso");
 		} catch (e) {
 			if (log.isWarnEnabled()) {
 				log.warn("Error tranforming value '" + val + "' with code list " + codeListId + ". Does the codeList exist?");

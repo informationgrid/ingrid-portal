@@ -1067,12 +1067,6 @@ ingridObjectLayout.createZeitbezug = function() {
 	
 	var timeTypeData = function() {
 		var def = new dojo.Deferred();
-		/*var data = [
-			{value: "am", label: message.get("dialog.research.ext.obj.content.time.at")},
-			{value: "seit", label: message.get("dialog.research.ext.obj.content.time.since")},
-			{value: "bis", label: message.get("dialog.research.ext.obj.content.time.until")},
-			{value: "von", label: message.get("dialog.research.ext.obj.content.time.fromto")}
-		];*/
 		var data = [
 			[[message.get("dialog.research.ext.obj.content.time.at")], ["am"]],
 			[[message.get("dialog.research.ext.obj.content.time.since")], ["seit"]],
