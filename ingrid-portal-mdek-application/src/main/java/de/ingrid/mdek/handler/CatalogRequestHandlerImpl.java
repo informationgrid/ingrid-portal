@@ -141,24 +141,10 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
         }
     }
 
-/*
-    public List<Map<String, String>> getSysGuis(String[] guiIds) {
-        IngridDocument response = mdekCallerCatalog.getSysGuis(connectionFacade.getCurrentPlugId(), guiIds, MdekSecurityUtils.getCurrentUserUuid());
-        return MdekCatalogUtils.extractSysGuisFromResponse(response);
-    }
-
-    public List<Map<String, String>> storeSysGuis(List<Map<String, String>> sysGuis, boolean refetchAfterStore) {
-        List<IngridDocument> sysGuiDoc = MdekCatalogUtils.convertFromSysGuiRepresentation(sysGuis);
-
-        IngridDocument response = mdekCallerCatalog.storeSysGuis(connectionFacade.getCurrentPlugId(), sysGuiDoc, refetchAfterStore, MdekSecurityUtils.getCurrentUserUuid());
-        return MdekCatalogUtils.extractSysGuisFromResponse(response);
-    }*/
-
     public List<GenericValueBean> getSysGenericValues(String[] keyNames) {
         IngridDocument response = mdekCallerCatalog.getSysGenericKeys(connectionFacade.getCurrentPlugId(), keyNames, MdekSecurityUtils.getCurrentUserUuid());
         return MdekCatalogUtils.extractSysGenericKeysFromResponse(response);
     }
-    
     
     public List<GenericValueBean> getSysGenericValues(String[] keyNames, HttpServletRequest request) {
         IngridDocument response = mdekCallerCatalog.getSysGenericKeys(connectionFacade.getCurrentPlugId(request), keyNames, MdekSecurityUtils.getCurrentUserUuid(request));

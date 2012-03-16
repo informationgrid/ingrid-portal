@@ -9,6 +9,7 @@
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
 }
+.dj_webkit .dijitTextBoxDisabled INPUT { color: #818181; }
 
 div { margin:0; padding:0; }
 img { border:0; }

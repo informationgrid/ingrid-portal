@@ -1496,6 +1496,15 @@ UtilUI.showNextError = function(id, message) {
         
 }
 
+UtilUI.changeLabel = function(uiElementId, text) {
+    var label = dojo.query("#"+uiElementId+" label")[0];
+    if (label) {
+        label.innerHTML = text + '<span class="requiredSign">*</span>';
+    } else {
+        console.debug("ERROR: Label in container '" + uiElementId + "' could not be found!");
+    }
+}
+
 // General utility functions for converting strings, etc.
 var UtilGeneral = {}
 
