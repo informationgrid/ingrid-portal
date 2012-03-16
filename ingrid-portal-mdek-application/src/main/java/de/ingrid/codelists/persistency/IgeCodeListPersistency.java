@@ -171,7 +171,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                     for (String langKey : entry.getLocalisations().keySet()) {
                         locals.put(langKey, entry.getLocalisedEntry(langKey));
                     }
-                    docEntry.put(MdekKeys.LST_LOCALISED_ENTRY_MAP, locals);
+                    docEntry.put(MdekKeys.LST_LOCALISED_ENTRY_NAME_MAP, locals);
                     entriesDoc[i++] = docEntry;
                 }
                 doc.setArray(MdekKeys.LST_ENTRIES, entriesDoc);
