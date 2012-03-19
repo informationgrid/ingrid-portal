@@ -54,6 +54,11 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         // check for enabled search term field
         context.put("enable_searchterm", PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_ENABLE_SEARCH_SERVICES_SEARCHTERM, Boolean.FALSE));
+        
+        // check for enabled grouping field
+        context.put("enable_grouping", PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_SEARCH_SERVICES_GROUPING, Boolean.FALSE));
+
         context.put("enable_category", PortalConfig.getInstance().getString(PortalConfig.PORTAL_ENABLE_SEARCH_SERVICES_CATEGORY, "0"));
         
         // ----------------------------------
@@ -173,7 +178,7 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         // ----------------------------------
         // prepare Search, Search will be performed in Result portlet 
         // ----------------------------------
-        if (doSearch) {
+        if (doSearch || PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_SERVICES_DOSEARCH, Boolean.FALSE)) {
             setupQuery(request);
         } else {
             // remove query message for result portlet -> no results

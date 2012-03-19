@@ -76,6 +76,18 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_ENABLE_SEARCH_SERVICES_SEARCHTERM = "portal.enable.search.services.searchterm";
     
+    public static final String PORTAL_ENABLE_SEARCH_TOPICS_GROUPING = "portal.enable.search.topics.grouping";
+    
+    public static final String PORTAL_ENABLE_SEARCH_MEASURES_GROUPING = "portal.enable.search.measures.grouping";
+    
+    public static final String PORTAL_ENABLE_SEARCH_SERVICES_GROUPING = "portal.enable.search.services.grouping";
+    
+    public static final String PORTAL_ENABLE_SEARCH_TOPICS_DOSEARCH = "portal.enable.search.topics.dosearch";
+    
+    public static final String PORTAL_ENABLE_SEARCH_MEASURES_DOSEARCH = "portal.enable.search.measures.dosearch";
+    
+    public static final String PORTAL_ENABLE_SEARCH_SERVICES_DOSEARCH = "portal.enable.search.services.dosearch";
+    
     public static final String PORTAL_ENABLE_SEARCH_SERVICES_CATEGORY = "service.selection.enable.category";
    
     public static final String PORTAL_ENABLE_SEARCH_CATALOG = "portal.enable.search.catalog";

@@ -30,6 +30,7 @@
 				#displayPartner()
 			</select>
 		</div>
+#if($enable_grouping)
 		<div class="float_left marginleft">
 			<h3><label>#displayFieldLabel('grouping' $MESSAGES.getString('common.form.grouping'))</label></h3>
 			<input type="radio" class="radio_button" id="grouping_no" name="grouping" value="none" #getChecked('grouping' 'none')/>
@@ -44,6 +45,7 @@
 			<label class="radiogroup" for="grouping_info">$MESSAGES.getString('common.form.grouping.provider')</label>
 			<br />
 		</div>
+#end
 #if($enable_searchterm)
 		<br style="line-height:10px" />
 		<span class="clearer"></span>
