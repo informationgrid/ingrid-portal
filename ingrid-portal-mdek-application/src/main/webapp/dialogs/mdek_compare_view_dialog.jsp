@@ -279,7 +279,9 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
     	
 	// administrative data
 	renderSectionTitel("<fmt:message key='dialog.compare.object.administrative' />");
-	renderTextWithTitle(nodeDataOld.uuid, nodeDataNew.uuid, "<fmt:message key='dialog.compare.object.id' />");
+    var oldObjId = nodeDataOld.orgObjId ? nodeDataOld.orgObjId : nodeDataOld.uuid;
+    var newObjId = nodeDataNew.orgObjId ? nodeDataNew.orgObjId : nodeDataNew.uuid;
+	renderTextWithTitle(oldObjId, newObjId, "<fmt:message key='dialog.compare.object.id' />");
 	renderTextWithTitle(catalogData.catalogName, catalogData.catalogName, "<fmt:message key='dialog.compare.object.catalog' />");
 }
 

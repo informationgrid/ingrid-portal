@@ -2012,7 +2012,7 @@ udkDataProxy._getObjectData = function(nodeData)
 {
   /* 
    * 1. Get the static data that is not displayed in the gui which is:
-   *    nodeUuid, id, hasChildren
+   *    nodeUuid, orgObjId, id, hasChildren
    * 
    * 2. Get the data common to all objects which is:
    *    Header, General, Spatial, Time, Extra Info,
@@ -2024,6 +2024,7 @@ udkDataProxy._getObjectData = function(nodeData)
 
   // ------------- General Static Data -------------
   nodeData.uuid = currentUdk.uuid;
+  nodeData.orgObjId = currentUdk.orgObjId;
   nodeData.hasChildren = currentUdk.hasChildren; // Do we need to store this?
   nodeData.workState = currentUdk.workState;
   var parentUuid = dijit.byId(currentUdk.uuid).getParent().id[0];

@@ -320,7 +320,8 @@ function renderNodeData(nodeData) {
 		
 		// administrative data
 		renderSectionTitel("<fmt:message key='dialog.compare.object.administrative' />");
-		renderTextWithTitle(nodeData.uuid, "<fmt:message key='dialog.compare.object.id' />");
+        var objId = nodeData.orgObjId ? nodeData.orgObjId : nodeData.uuid;
+		renderTextWithTitle(objId, "<fmt:message key='dialog.compare.object.id' />");
 		renderTextWithTitle(catalogData.catalogName, "<fmt:message key='dialog.compare.object.catalog' />");
 	
 		// additional fields

@@ -39,6 +39,7 @@ public class MdekDataBean {
 	private String userOperation;
 
 	// Identification 
+	private String orgObjId;
 	private String objectName;
 	private Integer objectClass;
 	private String objectOwner;
@@ -1941,4 +1942,14 @@ public class MdekDataBean {
     public Boolean getInspireRelevant() {
         return inspireRelevant;
     }
+
+
+	public String getOrgObjId() {
+		return orgObjId;
+	}
+
+
+	public void setOrgObjId(String orgObjId) {
+		this.orgObjId = orgObjId;
+	}
 }
