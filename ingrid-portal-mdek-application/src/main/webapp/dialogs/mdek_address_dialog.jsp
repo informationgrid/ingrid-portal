@@ -177,10 +177,6 @@
 										res.nameOfRelation = data[i].nameOfRelation;
                                         res.refOfRelation = 2010;
 										// delete first empty available item and replace it with new address
-										/*store.newItem(res);
-										store.save();
-										store.deleteItem(data[i]);										
-										store.save();*/
                                         UtilGrid.updateTableDataRow("generalAddress", i, res);
                                         return;
                                     }
@@ -193,9 +189,6 @@
                             // Remove the object references since we don't need them in the address table
                             // This information is removed because it can be quite large if the address is referenced by many objects 
                             res.linksFromObjectTable = [];
-							//store.newItem(res);
-							//store.save();
-                            UtilGrid.addTableDataRow("generalAddress", res);
                             UtilGrid.addTableDataRow(dijit.byId("pageDialog").customParams.grid, res);
                         }
                     },

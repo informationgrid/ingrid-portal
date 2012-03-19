@@ -266,7 +266,7 @@
                                     </label>
                                 </span>
                                     <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" />
-                                        <a id="generalAddressTableLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('generalAddress'), 'dialogs/mdek_address_dialog.jsp?c='+userLocale, 755, 585, true);" title="<fmt:message key="dialog.popup.addressTable.link" /> [Popup]"><fmt:message key="ui.obj.general.addressTable.link" /></a>
+                                        <a id="generalAddressTableLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('generalAddress'), 'dialogs/mdek_address_dialog.jsp?c='+userLocale, 755, 585, true, {grid: 'generalAddress'});" title="<fmt:message key="dialog.popup.addressTable.link" /> [Popup]"><fmt:message key="ui.obj.general.addressTable.link" /></a>
                                     </span>
                                 <div id="generalAddressTable" class="input tableContainer">
                                     <div id="generalAddress" autoHeight="4" contextMenu="GENERAL_ADDRESS" class="hideTableHeader" interactive="true">
