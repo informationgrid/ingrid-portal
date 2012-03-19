@@ -333,7 +333,10 @@
     <!-- Beans for codelist access and synchronisation -->
     
     <bean id="httpCommunication" class="de.ingrid.codelists.comm.HttpCLCommunication">
-        <property name="requestUrl" value="http://localhost:8082/rest/getCodelists" />
+<!--    <property name="requestUrl" value="http://localhost:8082/rest/getCodelists" /> -->
+        <property name="requestUrl" value="@URL@" />
+        <property name="username" value="@USERNAME@" />
+        <property name="password" value="@PASSWORD@" />
     </bean>
 <!--
     <bean id="xmlPersistency" class="de.ingrid.codelists.persistency.XmlCodeListPersistency">
