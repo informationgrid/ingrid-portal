@@ -59,6 +59,14 @@ public class EnvironmentSearchPortlet extends AbstractVelocityMessagingPortlet {
         context.put("enable_grouping", PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_ENABLE_SEARCH_TOPICS_GROUPING, Boolean.FALSE));
 
+        // check for enabled provider field
+        context.put("enable_provider", PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_SEARCH_TOPICS_PROVIDER, Boolean.FALSE));
+
+     // check for enabled provider field
+        context.put("list_number", PortalConfig.getInstance().getInt(
+                PortalConfig.PORTAL_TOPIC_SELECTION_LIST_NUMBER, 5));
+        
         // ----------------------------------
         // check for passed URL PARAMETERS (for bookmarking)
         // ----------------------------------

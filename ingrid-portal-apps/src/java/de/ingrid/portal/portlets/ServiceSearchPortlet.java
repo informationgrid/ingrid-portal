@@ -59,6 +59,10 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
         context.put("enable_grouping", PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_ENABLE_SEARCH_SERVICES_GROUPING, Boolean.FALSE));
 
+        // check for enabled provider field
+        context.put("enable_provider", PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_SEARCH_SERVICES_PROVIDER, Boolean.FALSE));
+
         context.put("enable_category", PortalConfig.getInstance().getString(PortalConfig.PORTAL_ENABLE_SEARCH_SERVICES_CATEGORY, "0"));
         
         // ----------------------------------

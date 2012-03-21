@@ -1,12 +1,12 @@
 #set ($action = $renderResponse.createActionURL())
 <div class="cat_label">
 	<img id="area_address_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('area_address')">
-	<a onclick="openNode('area_address')" >$MESSAGES.getString("searchResult.facete.title.area.address")</a>
+	<a onclick="openNode('area_address')" title="$MESSAGES.getString("searchResult.facete.title.area.address.tooltip")">$MESSAGES.getString("searchResult.facete.title.area.address")</a>
 	<br>
 </div>
 <div id="area_address" class="cat_content">
 	<div class="cat_entry_label">
-		<a onclick="loadDialog(dijit.byId('dialog_area_address'))" class="facete_link_line">
+		<a onclick="loadDialog(dijit.byId('dialog_area_address'))" class="facete_link_line" title="$MESSAGES.getString("searchResult.facete.area.address.tooltip")">
 			$MESSAGES.getString("searchResult.facete.area.address.add")
 		</a>
         <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" ></img>

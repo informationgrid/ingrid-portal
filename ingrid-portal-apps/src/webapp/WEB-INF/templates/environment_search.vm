@@ -1,12 +1,12 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="get" name="environment_search" id="environment_search">
    	<input type="hidden" name="action" value="doSearch"/>
-	<div class="formbody formbody_border_style">
+	<div class="formbody formbody_border_style formbody_padding">
 		<h2 class="nospace">$MESSAGES.getString('common.form.criteria')</h2>
 		#displayFormErrors()
 		<div class="float_left">
 			<h3><label for="xx2">#displayFieldLabel('rubric' $MESSAGES.getString('envSearch.form.themes'))</label></h3>
-			<select class="env_themes inputstyle" name="rubric" id="xx2" size="5" multiple="multiple">
+			<select class="env_themes inputstyle" name="rubric" id="xx2" size="$list_number" multiple="multiple">
 				<option value="all" #getSelectedFlag('rubric' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
 #foreach ($topic in $topicList)
 <option value="$topic.FormValue" #getSelectedFlag('rubric' "$topic.FormValue")>$MESSAGES.getString("$topic.QueryValue")</option>
@@ -21,7 +21,8 @@
 <option value="$category.FormValue" #getSelectedFlag('category' "$category.FormValue")>$category.QueryValue</option>
 #end
 			</select>
-		</div>  
+		</div> 
+#if($enable_provider)
 		<span class="clearer"></span>
 		<br style="line-height:10px" />
 		<div class="float_left">
@@ -30,6 +31,7 @@
 				#displayPartner()
 			</select>
 		</div>
+#end
 #if($enable_grouping)
 		<div class="float_left marginleft">
 			<h3><label>#displayFieldLabel('grouping' $MESSAGES.getString('common.form.grouping'))</label></h3>
@@ -57,7 +59,7 @@
 		<span class="clearer"></span>
 		<br />
 	</div>
-	<div class="formfooter formfooter_border_style">
+	<div class="formfooter formfooter_border_style formfooter_padding">
 		<div align="right">
 			#renderInputButtonSearchClass($MESSAGES.getString('common.form.button.show') "" "" $MESSAGES.getString('common.form.button.show.tooltip') "float_right")
 		</div>

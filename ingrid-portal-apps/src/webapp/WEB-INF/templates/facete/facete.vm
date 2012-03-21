@@ -63,10 +63,10 @@
     </div>
 #end
 
-#macro (renderFaceteSelectedAttributeNumber $doAction $title $number $isDelete)
+#macro (renderFaceteSelectedAttributeNumber $doAction $title $tooltip $number $isDelete)
 	<div>
 		<span>
-			<a href="$doAction"  
+			<a title="$tooltip" href="$doAction"  
         		#if($isDelete)
         			class="facete_link_line facete_select_link"
 				#else
@@ -155,6 +155,8 @@
 <div>
 	#if($ds && $ds == "2")
 		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete_address', 'search_hits_address')">
+	#elseif($showAllForDomain )
+		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete_address', 'search_hits_address')">
 	#else
 		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete', 'search_hits')">
 	#end
@@ -171,7 +173,7 @@
     		#if(!$ds || $ds == "1")
             	<div class="cat_label">
             		<img id="hit_types_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('hit_types')">
-            		<a onclick="openNode('hit_types')" >$MESSAGES.getString("searchResult.facete.title.types")</a>
+            		<a onclick="openNode('hit_types')" title="$MESSAGES.getString("searchResult.facete.title.types.tooltip")">$MESSAGES.getString("searchResult.facete.title.types")</a>
             		<br>
             	</div>
             	
@@ -209,7 +211,7 @@
         
         ## SCHLAGWORTE ##
         #if(!$ds || $ds == "1" || $ds == "2" || $ds == "3" || $ds == "4")
-        	#parse ('/WEB-INF/templates/facete/facete_thesaurus.vm')
+        	##parse ('/WEB-INF/templates/facete/facete_thesaurus.vm')
         #end
         
         ## ATTRIBUTE ##

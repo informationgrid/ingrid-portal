@@ -4,7 +4,8 @@
 		
 		#foreach ($key in $datatype.keySet())
 			#set($datatypeKey = $key)
-			#set($datatypeTitle = "searchResult.facete.datatype.$datatypeKey")
+			#set($datatypeTitle = "searchResult.facete.datatype.${datatypeKey}")
+			#set($datatypeTooltip = "searchResult.facete.datatype.${datatypeKey}.tooltip")
 		#end
 		#set($isSelectedChbDatatype = false)
 		#foreach ($selectChb in $selectedDatatype)
@@ -41,12 +42,14 @@
         			#else
 						$action.setParameter("doRemoveDatatype", "$datatypeKey")
         				#set ($title = $MESSAGES.getString("$datatypeTitle"))
-        				#renderFaceteSelectedAttributeNumber ($action $title $datatype.get($datatypeKey) true)
+						#set ($tooltip = $MESSAGES.getString("$datatypeTooltip"))
+        				#renderFaceteSelectedAttributeNumber ($action $title $tooltip $datatype.get($datatypeKey) true)
         			#end
 				#else
 					$action.setParameter("doAddDatatype", "$datatypeKey")
     				#set ($title = $MESSAGES.getString("$datatypeTitle"))
-					#renderFaceteSelectedAttributeNumber ($action $title $datatype.get($datatypeKey) false)
+					#set ($tooltip = $MESSAGES.getString("$datatypeTooltip"))
+					#renderFaceteSelectedAttributeNumber ($action $title $tooltip $datatype.get($datatypeKey) false)
 				#end
 			</span>
 		</div>

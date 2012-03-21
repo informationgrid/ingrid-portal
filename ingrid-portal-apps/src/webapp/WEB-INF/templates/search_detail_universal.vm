@@ -644,7 +644,7 @@
 	<div>
 		<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
 		</span>
-		<a class="detail_link" href="portal/main-maps.psml?wms_url=$entry" alt="$MESSAGES.getString('common.alt.icon.intern')">$MESSAGES.getString('common.result.showCoord')</a>
+		<a target="_new" class="detail_link" href="portal/main-maps.psml?wms_url=$entry" alt="$MESSAGES.getString('common.alt.icon.intern')">$MESSAGES.getString('common.result.showCoord')</a>
 	</div>	
 #end
 

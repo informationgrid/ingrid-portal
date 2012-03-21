@@ -1,3 +1,10 @@
+#if($enableFacete)
+    <div dojoType="dijit.layout.ContentPane" id="search_facete_address" style="display:none">
+    #parse ('/WEB-INF/templates/facete/facete.vm')
+    </div>
+	<div dojoType="dijit.layout.ContentPane" id="search_hits_address" class="nonjavascript">
+#end
+
 #if ($IS_RANKED)
 	## RANKED -> CALLED FROM LEFT COLUMN (where grouped by domain)
 	#parse ('/WEB-INF/templates/include_search_result_filter.vm')
@@ -7,7 +14,6 @@
 	  #parse ('/WEB-INF/templates/include_search_result_counter.vm')
 	  #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
       <br />
-
 #if ($IS_RANKED)
 	## RANKED -> CALLED FROM LEFT COLUMN (where grouped by domain)
     #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
@@ -67,7 +73,16 @@
     		<p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
     #end
 #end
+#if($enableFacete)
+				</div>
+				<div class="clearer"></div>
+#end
 	  #parse ('/WEB-INF/templates/include_search_result_counter.vm')
 	  #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
     </div>
   <div class="clearer"></div>
+
+  <script type="text/javascript">
+     	document.getElementById('search_facete_address').style.display = "block";
+		document.getElementById('search_hits_address').setAttribute('class', "javascript");
+     </script>

@@ -59,6 +59,10 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
         context.put("enable_grouping", PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_ENABLE_SEARCH_MEASURES_GROUPING, Boolean.FALSE));
 
+        // check for enabled provider field
+        context.put("enable_provider", PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_SEARCH_MEASURES_PROVIDER, Boolean.FALSE));
+
         // ----------------------------------
         // check for passed URL PARAMETERS (for bookmarking)
         // ----------------------------------

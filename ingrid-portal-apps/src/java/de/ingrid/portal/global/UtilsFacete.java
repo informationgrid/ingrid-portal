@@ -1644,7 +1644,10 @@ public class UtilsFacete {
 	            }
 	        }
 	        ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
-	        setAttributeToSession(request, GEOTHESAURUS_SELECTED_TOPICS, geothesaurusSelectTopics);
+	        if(geothesaurusSelectTopics != null && geothesaurusSelectTopics.size() > 0){
+	        	setAttributeToSession(request, GEOTHESAURUS_SELECTED_TOPICS, geothesaurusSelectTopics);	
+	        }
+	        
         }
 	}
 	
@@ -1806,7 +1809,9 @@ public class UtilsFacete {
 	        	}
 				
 				ArrayList<HashMap<String, String>> thesaurusSelectTopics = getSelectedThesaurusTopics(request);
-		        setAttributeToSession(request, THESAURUS_SELECTED_TOPICS, thesaurusSelectTopics);
+				if(thesaurusSelectTopics != null && thesaurusSelectTopics.size() > 0){
+					setAttributeToSession(request, THESAURUS_SELECTED_TOPICS, thesaurusSelectTopics);
+				}
 			}
 			
 			if(doRemoveThesaurus != null && doAddThesaurus == null){

@@ -18,10 +18,6 @@ import javax.portlet.PortletException;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.jetspeed.headerresource.HeaderResource;
-import org.apache.jetspeed.portlet.PortletHeaderRequest;
-import org.apache.jetspeed.portlet.PortletHeaderResponse;
-import org.apache.jetspeed.portlet.SupportsHeaderPhase;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
@@ -92,7 +88,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 request.getLocale()));
         context.put("MESSAGES", messages);
         context.put("enableFacete", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false));
-        
+        if(request.getParameter("action").equals("showAllForDomain")){
+        	context.put("showAllForDomain", true);
+        }
         // ----------------------------------
         // check for passed RENDER PARAMETERS (for bookmarking) and
         // ADAPT OUR PERMANENT STATE VIA MESSAGES

@@ -39,7 +39,7 @@
 
 <div class="cat_label">
 	<img id="partner_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('partner')">
-	<a onclick="openNode('partner')" >$MESSAGES.getString("searchResult.facete.title.provider")</a>
+	<a onclick="openNode('partner')" title="$MESSAGES.getString("searchResult.facete.title.provider.tooltip")">$MESSAGES.getString("searchResult.facete.title.provider")</a>
 	<br>
 </div>
 <div id="partner" class="cat_content">

@@ -88,6 +88,14 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_ENABLE_SEARCH_SERVICES_DOSEARCH = "portal.enable.search.services.dosearch";
     
+    public static final String PORTAL_ENABLE_SEARCH_TOPICS_PROVIDER = "portal.enable.search.topics.provider";
+    
+    public static final String PORTAL_ENABLE_SEARCH_MEASURES_PROVIDER = "portal.enable.search.measures.provider";
+    
+    public static final String PORTAL_ENABLE_SEARCH_SERVICES_PROVIDER = "portal.enable.search.services.provider";
+    
+    public static final String PORTAL_TOPIC_SELECTION_LIST_NUMBER = "portal.topic.selection.list.number";
+    
     public static final String PORTAL_ENABLE_SEARCH_SERVICES_CATEGORY = "service.selection.enable.category";
    
     public static final String PORTAL_ENABLE_SEARCH_CATALOG = "portal.enable.search.catalog";

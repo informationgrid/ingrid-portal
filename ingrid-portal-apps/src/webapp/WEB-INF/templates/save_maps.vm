@@ -38,7 +38,7 @@
             $action.setParameter("doUpdate",  $dbEntity.tinyKey)
             #foreach ($rowValue in $rowValues)
         		#if ($velocityCount == 3)
-        			<td class="contentRowLine" style="vertical-align:middle;" width=55%><a href="${request.scheme}://${request.serverName}:${request.serverPort}/portal/main-maps.psml?t=$dbEntity.tinyKey" name="doUpdate">$UtilsString.getShortURLStr("${request.scheme}://${request.serverName}:${request.serverPort}/portal/main-maps.psml?t=$dbEntity.tinyKey", 50)</a></td>
+        			<td class="contentRowLine" style="vertical-align:middle;" width=55%><a target="_new" href="${request.scheme}://${request.serverName}:${request.serverPort}/portal/main-maps.psml?t=$dbEntity.tinyKey" name="doUpdate">$UtilsString.getShortURLStr("${request.scheme}://${request.serverName}:${request.serverPort}/portal/main-maps.psml?t=$dbEntity.tinyKey", 50)</a></td>
         		#elseif ($velocityCount == 2)
         			<td class="contentRowLine" style="vertical-align:middle;" width=10%>$rowValue</td>
         		#elseif ($velocityCount == 1)

@@ -1,7 +1,7 @@
 #set ($action = $renderResponse.createActionURL())
 <div class="cat_label">
 	<img id="thesaurus_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('thesaurus')">
-	<a onclick="openNode('thesaurus')" >$MESSAGES.getString("searchResult.facete.title.thesaurus")</a>
+	<a onclick="openNode('thesaurus')" title="$MESSAGES.getString("searchResult.facete.title.thesaurus.tooltip")">$MESSAGES.getString("searchResult.facete.title.thesaurus")</a>
 	<br>
 </div>
 <div id="thesaurus" class="cat_content">

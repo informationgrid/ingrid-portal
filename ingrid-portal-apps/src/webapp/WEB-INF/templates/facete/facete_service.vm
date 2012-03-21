@@ -1,7 +1,7 @@
 #set ($action = $renderResponse.createActionURL())
 <div class="cat_label">
 	<img id="service_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('service')">
-	<a onclick="openNode('service')" >
+	<a onclick="openNode('service')" title="$MESSAGES.getString("searchResult.facete.title.service.tooltip")">
 		$MESSAGES.getString("searchResult.facete.title.service")
 		#if($datatype.get($datatypeKey))
 			#renderLinkEntryNumber("$datatype.get($datatypeKey)")

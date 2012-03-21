@@ -1,33 +1,65 @@
+#macro (renderServiceTableHorizontal $list)
+	<table cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<input id="chk_all" name="rubric" type="checkbox" onclick="ingrid_checkAll(document.measures_search.rubric)" onkeypress="ingrid_checkAll(document.measures_search.rubric)" value="all" #getChecked('rubric' 'all')/> 
+				<label for="chk_all">$MESSAGES.getString('measuresSearch.form.rubric.all')</label>
+			</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+#set ($numRubrics = $list.size())
+#foreach ($rubric in $list)
+#if($velocityCount==1 || $velocityCount==5 || $velocityCount==9)<tr>#end
+		<td>
+			<input id="chk_$velocityCount" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="$rubric.FormValue" #getChecked('rubric' "$rubric.FormValue")/> 
+			<label for="chk_$velocityCount">$MESSAGES.getString("$rubric.QueryValue")</label>
+		</td>
+#if($velocityCount==$numRubrics || $velocityCount==4 || $velocityCount==8)</tr>#end
+#end
+			</table>  
+#end
+
+#macro (renderServiceTableVertical $list)
+	<table cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<input id="chk_all" name="rubric" type="checkbox" onclick="ingrid_checkAll(document.measures_search.rubric)" onkeypress="ingrid_checkAll(document.measures_search.rubric)" value="all" #getChecked('rubric' 'all')/> 
+				<label for="chk_all">$MESSAGES.getString('measuresSearch.form.rubric.all')</label>
+			</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+#set ($numRubrics = $rubricList.size())
+#foreach ($rubric in $rubricList)
+    	<tr>
+			<td>
+    			<input id="chk_$velocityCount" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="$rubric.FormValue" #getChecked('rubric' "$rubric.FormValue")/> 
+    			<label for="chk_$velocityCount">$MESSAGES.getString("$rubric.QueryValue")</label>
+    		</td>
+		</tr>
+#end
+	</table>     
+#end
+
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="get" name="measures_search" id="measures_search">
    	<input type="hidden" name="action" value="doSearch"/>
-	<div class="formbody formbody_border_style">
+	<div class="formbody formbody_border_style formbody_padding">
 		<h2 class="nospace">$MESSAGES.getString('common.form.criteria')</h2>
 		#displayFormErrors()    
 		<div class="float_left">  
 			<h3>#displayFieldLabel('rubric' $MESSAGES.getString('measuresSearch.form.rubric'))</h3>
-			<table cellpadding="0" cellspacing="0">
-				<tr>
-					<td>
-						<input id="chk_all" name="rubric" type="checkbox" onclick="ingrid_checkAll(document.measures_search.rubric)" onkeypress="ingrid_checkAll(document.measures_search.rubric)" value="all" #getChecked('rubric' 'all')/> 
-						<label for="chk_all">$MESSAGES.getString('measuresSearch.form.rubric.all')</label>
-					</td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-#set ($numRubrics = $rubricList.size())
-#foreach ($rubric in $rubricList)
-#if($velocityCount==1 || $velocityCount==5 || $velocityCount==9)<tr>#end
-					<td>
-						<input id="chk_$velocityCount" name="rubric" type="checkbox" onclick="ingrid_checkGroup(document.measures_search.rubric)" onkeypress="ingrid_checkGroup(document.measures_search.rubric)" value="$rubric.FormValue" #getChecked('rubric' "$rubric.FormValue")/> 
-						<label for="chk_$velocityCount">$MESSAGES.getString("$rubric.QueryValue")</label>
-					</td>
-#if($velocityCount==$numRubrics || $velocityCount==4 || $velocityCount==8)</tr>#end
-#end
-			</table>  
-		</div>  
-		<div class="clearer"></div>
+			#if($enable_provider)
+				#renderServiceTableHorizontal($rubricList)
+			#else
+				#renderServiceTableVertical($rubricList)
+			#end
+		</div> 
+#if($enable_provider)
+		<span class="clearer"></span>
 		<br style="line-height:10px" />
 		<div class="float_left">
 			<h3>#displayFieldLabel('partner' $MESSAGES.getString('common.form.partner'))</h3>
@@ -35,6 +67,7 @@
 				#displayPartner()
 			</select>
 		</div>
+#end
 #if($enable_grouping)
 		<div class="float_left marginleft">
 			<h3>#displayFieldLabel('grouping' $MESSAGES.getString('common.form.grouping'))</h3>
@@ -62,7 +95,7 @@
 		<span class="clearer"></span>
 		<br/>
 	</div>
-	<div class="formfooter formfooter_border_style">
+	<div class="formfooter formfooter_border_style formfooter_padding">
 		<div align="right">
 			#renderInputButtonSearchClass($MESSAGES.getString('common.form.button.show') "" "" $MESSAGES.getString('common.form.button.show.tooltip') "float_right")
 		</div>

@@ -18,7 +18,7 @@ var viewConfiguration = "portalu-facete-search";
 #set ($action = $renderResponse.createActionURL())
 <div class="cat_label">
 	<img id="area_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('area')">
-	<a onclick="openNode('area')" >$MESSAGES.getString("searchResult.facete.title.area")</a>
+	<a onclick="openNode('area')" title="$MESSAGES.getString("searchResult.facete.title.area.tooltip")">$MESSAGES.getString("searchResult.facete.title.area")</a>
 	<br>
 </div>
 <div id="area" class="cat_content">
@@ -32,7 +32,7 @@ var viewConfiguration = "portalu-facete-search";
 				#else
 					class="facete_link_line"
 				#end
-				>
+				title="$MESSAGES.getString("searchResult.facete.area.map.search.tooltip")">
     			$MESSAGES.getString("searchResult.facete.area.map.search")
     		</a>
 			#else
@@ -42,7 +42,7 @@ var viewConfiguration = "portalu-facete-search";
 				#else
 					class="facete_link_line"
 				#end
-				>
+				title="$MESSAGES.getString("searchResult.facete.area.map.search.tooltip")">
     			$MESSAGES.getString("searchResult.facete.area.map.search")
     		</a>			
 			#end
@@ -78,7 +78,7 @@ var viewConfiguration = "portalu-facete-search";
 				#else
 					class="facete_link_line"
 				#end
-				>
+				title="$MESSAGES.getString("searchResult.facete.area.name.search.tooltip")">
     			$MESSAGES.getString("searchResult.facete.area.name.search")
     		</a>
             <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" ></img>
