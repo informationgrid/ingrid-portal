@@ -89,9 +89,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("MESSAGES", messages);
         context.put("enableFacete", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false));
         
-        if(request.getParameter("action") != null){
-        	if(request.getParameter("action").equals("showAllForDomain")){
-        		context.put("showAllForDomain", true);
+        if(request.getParameter("filter") != null){
+        	if(request.getParameter("filter").equals("domain")){
+        		context.put("domain", true);
         	}
         }
         // ----------------------------------
