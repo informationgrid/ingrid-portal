@@ -88,8 +88,11 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 request.getLocale()));
         context.put("MESSAGES", messages);
         context.put("enableFacete", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false));
-        if(request.getParameter("action").equals("showAllForDomain")){
-        	context.put("showAllForDomain", true);
+        
+        if(request.getParameter("action") != null){
+        	if(request.getParameter("action").equals("showAllForDomain")){
+        		context.put("showAllForDomain", true);
+        	}
         }
         // ----------------------------------
         // check for passed RENDER PARAMETERS (for bookmarking) and
