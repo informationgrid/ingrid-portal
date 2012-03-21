@@ -155,7 +155,7 @@
 <div>
 	#if($ds && $ds == "2")
 		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete_address', 'search_hits_address')">
-	#elseif($domain)
+	#elseif($isFilterDomain)
 		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete_address', 'search_hits_address')">
 	#else
 		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete', 'search_hits')">

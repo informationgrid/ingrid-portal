@@ -91,7 +91,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         
         if(request.getParameter("filter") != null){
         	if(request.getParameter("filter").equals("domain")){
-        		context.put("domain", true);
+        		context.put("isFilterDomain", true);
         	}
         }
         // ----------------------------------
