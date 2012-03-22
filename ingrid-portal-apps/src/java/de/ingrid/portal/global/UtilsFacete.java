@@ -27,6 +27,7 @@ import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.ingrid.codelists.CodeListService;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchExtAdrPlaceReferenceForm;
@@ -49,6 +50,7 @@ import de.ingrid.utils.query.RangeQuery;
 import de.ingrid.utils.query.TermQuery;
 import de.ingrid.utils.query.WildCardFieldQuery;
 import de.ingrid.utils.udk.UtilsDate;
+import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -357,6 +359,7 @@ public class UtilsFacete {
 		
 		HashMap<String, Long> elementsTopicWithFacete = null;
 		HashMap<String, Long> elementsTopicSelect = null;
+		HashMap<String, String> elementsTopicLocalisation = new HashMap<String, String>();
 		
 		ArrayList<IngridEnvTopic> enableFaceteTopicsList = null;
 		List<IngridEnvTopic> unselectedTopics = null;
@@ -378,6 +381,7 @@ public class UtilsFacete {
     			List<String> keys = new ArrayList<String>(map.keySet());
     			String ident = keys.get(0);
     			
+    			CodeListService codelistService = CodeListServiceFactory.instance();
     			for(int j=0; j < unselectedTopics.size(); j++){
     				if(ident != null){
     					IngridEnvTopic top = unselectedTopics.get(j);
@@ -389,6 +393,10 @@ public class UtilsFacete {
         						elementsTopicWithFacete = new HashMap<String,Long>();
         					}
         					elementsTopicWithFacete.put(top.getFormValue(), map.get(ident));
+
+        					String entryId = codelistService.getCodeListEntryId("1410", ident, UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE);
+        					String localizedValue = codelistService.getCodeListValue("1410", entryId, request.getLocale().getLanguage());
+        					elementsTopicLocalisation.put(top.getFormValue(), localizedValue);
         					
         					if(enableFaceteTopicsList == null){
         						enableFaceteTopicsList = new ArrayList<IngridEnvTopic>();
@@ -482,6 +490,9 @@ public class UtilsFacete {
     	if(unselectedTopics != null && unselectedTopics.size() > 0){
     	    context.put("unselectedTopics", unselectedTopics);
     	}
+    	if(elementsTopicLocalisation != null && elementsTopicLocalisation.size() > 0){
+            context.put("localizedTopics", elementsTopicLocalisation);
+        }
     	
     	if(selectedTopics != null && selectedTopics.size() > 0){
         	context.put("isTopicSelect", true);
@@ -1644,10 +1655,7 @@ public class UtilsFacete {
 	            }
 	        }
 	        ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
-	        if(geothesaurusSelectTopics != null && geothesaurusSelectTopics.size() > 0){
-	        	setAttributeToSession(request, GEOTHESAURUS_SELECTED_TOPICS, geothesaurusSelectTopics);	
-	        }
-	        
+	        setAttributeToSession(request, GEOTHESAURUS_SELECTED_TOPICS, geothesaurusSelectTopics);
         }
 	}
 	

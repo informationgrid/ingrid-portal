@@ -8,7 +8,7 @@
     		#foreach ($key in $topic.keySet())
     			#set($topicKey = $key)
     		#end
-    		#set($topicTitle = "searchResult.facete.topic.$topicKey")
+    		#set($topicTitle = $localizedTopics.get($topicKey))
         	#set($isSelectedChbTopic = false)
         	#foreach ($selectChb in $selectedTopics)
         		#if($isSelectedChbTopic != true)
@@ -29,7 +29,7 @@
         				<a href="$action">
         					<input id="$topicKey" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
         			#end
-        				$MESSAGES.getString("$topicTitle")</a>
+        				$topicTitle</a>
         				#if($topic.get($topicKey))
     						#renderLinkEntryNumber("$topic.get($topicKey)")
     					#end

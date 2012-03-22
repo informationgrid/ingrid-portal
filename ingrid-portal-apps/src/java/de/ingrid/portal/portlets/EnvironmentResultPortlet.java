@@ -245,7 +245,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                         continue;
                     }
                     if (hitArray[i].getHitDetail() != null) {
-                        transferDetailData(hitArray[i], hitArray[i].getHitDetail(), resources);
+                        transferDetailData(hitArray[i], hitArray[i].getHitDetail(), resources, locale);
                     }
                     // check for grouping and get details of "sub hits"
                     // NO, WE ONLY SHOW ONE HIT !
@@ -269,7 +269,7 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         return hitsWrapper;
     }
 
-    private void transferDetailData(IngridHitWrapper hit, IngridHitDetail detail, IngridResourceBundle resources) {
+    private void transferDetailData(IngridHitWrapper hit, IngridHitDetail detail, IngridResourceBundle resources, Locale locale) {
         UtilsSearch.transferHitDetails(hit, detail);
         hit.put(Settings.RESULT_KEY_TOPIC, UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_TOPIC, resources));
 
@@ -287,9 +287,9 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
                     if (i != 0) {
                     	displayValues.append(UtilsSearch.DETAIL_VALUES_SEPARATOR);
                     }
-                    String resourceKey = CodeListServiceFactory.instance().getCodeListValue(UtilsUDKCodeLists.SYSLIST_ID_ENV_TOPICS.toString(),
-                            idList[i].trim(), UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE);
-                    displayValues.append(resources.getString(resourceKey.toLowerCase()));
+                    String localizedValue = CodeListServiceFactory.instance().getCodeListValue(UtilsUDKCodeLists.SYSLIST_ID_ENV_TOPICS.toString(),
+                            idList[i].trim(), locale.getLanguage());
+                    displayValues.append(resources.getString(localizedValue));
             	}
                 hit.put(Settings.RESULT_KEY_TOPIC, displayValues.toString());
             }

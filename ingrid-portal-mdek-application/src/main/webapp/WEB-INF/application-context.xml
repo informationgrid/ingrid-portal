@@ -364,6 +364,6 @@
     <bean id="simpleTriggerCodeLists" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
         <property name="jobDetail" ref="updateCodeListsJobDetail" />
         <property name="startDelay" value="15000" />
-        <property name="repeatInterval" value="86400000" />
+        <property name="repeatInterval" value="300000" />
     </bean>
  </beans>

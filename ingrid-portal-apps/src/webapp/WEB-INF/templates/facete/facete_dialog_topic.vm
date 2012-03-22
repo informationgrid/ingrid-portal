@@ -11,7 +11,7 @@
                 		#foreach ($key in $topic.keySet())
                 			#set($topicKey = $key)
                 		#end
-    					#set($topicTitle = "searchResult.facete.topic.$topicKey")
+    					#set($topicTitle = $localizedTopics.get($topicKey))
         				#set($isSelectedChbTopic = false)
         				#foreach ($selectChb in $selectedTopics)
         					#if($isSelectedChbTopic != true)
@@ -27,7 +27,7 @@
         							#if($isSelectedChbTopic)
         								checked
         							#end
-                                >$MESSAGES.getString($topicTitle)</input>
+                                >$topicTitle</input>
         					</span>
 							#if($topic.get($topicKey))
 								#renderLinkEntryNumber("$topic.get($topicKey)")
@@ -44,7 +44,7 @@
                 		#foreach ($key in $topic.keySet())
                 			#set($topicKey = $key)
                 		#end
-    					#set($topicTitle = "searchResult.facete.topic.$topicKey")
+    					#set($topicTitle = $localizedTopics.get($topicKey))
         				#set($isSelectedChbTopic = false)
         				#foreach ($selectChb in $selectedTopics)
         					#if($isSelectedChbTopic != true)
@@ -60,7 +60,7 @@
         							#if($isSelectedChbTopic)
         								checked
         							#end
-                                >$MESSAGES.getString($topicTitle)</input>
+                                >$topicTitle</input>
         					</span>
 							#if($topic.get($topicKey))
 								#renderLinkEntryNumber("$topic.get($topicKey)")

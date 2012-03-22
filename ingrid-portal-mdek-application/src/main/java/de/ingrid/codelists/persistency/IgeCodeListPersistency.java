@@ -17,6 +17,7 @@ import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.job.repository.IJobRepository;
+import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.utils.IngridDocument;
 
 public class IgeCodeListPersistency implements ICodeListPersistency {
@@ -74,13 +75,20 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
             }};
         
 
-        Integer[] listIds = catalogReqHandler.getAllSysListIds();
-        Map<Integer, List<String[]>> listDe = catalogReqHandler.getSysLists(listIds, "de");
-        Map<Integer, List<String[]>> listEn = catalogReqHandler.getSysLists(listIds, "en");
+            
+        IMdekClientCaller caller = connectionFacade.getMdekClientCaller();
+        List<String> iplugList = caller.getRegisteredIPlugs();
+        if (iplugList.isEmpty()) {
+            throw new RuntimeException("Codelist-Update aborted! No IGE-IPlugs connected!");
+        }
+        
+        Integer[] codelistsIds = getSyslistIDs(iplugList.get(0));
+        
+        Map<Integer, List<String[]>> listDe = getSyslists(iplugList.get(0), codelistsIds, "de");
+        Map<Integer, List<String[]>> listEn = getSyslists(iplugList.get(0), codelistsIds, "en");
         
         List<CodeList> codelists = new ArrayList<CodeList>();
-        String extraLangValue = "";
-        for (Integer id : listIds) {
+        for (Integer id : codelistsIds) {
             
             System.out.print(id+",");
             CodeList cl = new CodeList();
@@ -95,9 +103,9 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
             for (int i=0; i<entriesDe.size(); i++) {
                 CodeListEntry cle = new CodeListEntry();
                 cle.setId(entriesDe.get(i)[1]);
-                if (entriesDe.size() > 0)
+                if (entriesDe.size() > i)
                     cle.setLocalisedEntry("de", entriesDe.get(i)[0]);
-                if (entriesEn.size() > 0)
+                if (entriesEn.size() > i)
                     cle.setLocalisedEntry("en", entriesEn.get(i)[0]);
                 
                 if (MdekUtils.YES.equals(entriesDe.get(i)[2]))
@@ -110,8 +118,38 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
             codelists.add(cl);
         }
         
+        // find lowest timestamp to get all necessary codelists for an eventual update
+        // add this timestamp to one codelist at least to be identified and used for the
+        // update procedure
+        codelists.get(0).setLastModified(getLowestTimestamp(iplugList));
+        
         return codelists;
     }
+
+
+    private long getLowestTimestamp(List<String> iplugList) {
+        Long lowestTimestamp = null;
+        for (String iplug : iplugList) {
+            IngridDocument response = connectionFacade.getMdekCallerCatalog().getLastModifiedTimestampOfSyslists(iplug, getCatAdminUuid(iplug));
+            Long timestamp = MdekCatalogUtils.extractLastModifiedTimestampFromResponse(response);
+            if (lowestTimestamp == null || lowestTimestamp > timestamp) {
+                lowestTimestamp = timestamp;
+            }
+        }
+        return lowestTimestamp;
+    }
+
+
+    private Integer[] getSyslistIDs(String iplug) {
+        IngridDocument response = connectionFacade.getMdekCallerCatalog().getSysLists(iplug, null, null, getCatAdminUuid(iplug));
+        return MdekCatalogUtils.extractSysListIdsFromResponse(response);
+    }
+    
+    private Map<Integer, List<String[]>> getSyslists(String iplug, Integer[] listIds, String languageCode) {
+        IngridDocument response = connectionFacade.getMdekCallerCatalog().getSysLists(iplug, listIds, languageCode, getCatAdminUuid(iplug));
+        return MdekCatalogUtils.extractSysListFromResponse(response);
+    }
+    
 
 
     @Override
@@ -121,11 +159,21 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 log.debug("Write updated codelists to database ...");
             }
             List<IngridDocument> doc = mapToIngridDocument(codelists);
+            
+            // find highest timestamp which will be used for future requests to
+            // the codelist repository
+            Long highestTimestamp = 0L;
+            for (CodeList codelist : codelists) {
+                if (highestTimestamp < codelist.getLastModified()) {
+                    highestTimestamp = codelist.getLastModified();
+                }                
+            }
+            
             IMdekClientCaller caller = connectionFacade.getMdekClientCaller();
             List<String> iplugList = caller.getRegisteredIPlugs();
             log.debug("Number of iplugs found: "+iplugList.size());
             for (String plugId : iplugList) {
-                boolean success = updateConnectedIgePlugs(plugId, doc, getCatAdminUuid(plugId)); ;
+                boolean success = updateConnectedIgePlugs(plugId, doc, highestTimestamp, getCatAdminUuid(plugId)); ;
                 if (!success) {
                     log.error("Could not update codelists in iPlug: " + plugId);
                 }
@@ -141,9 +189,9 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
         return true;
     }
 
-    private boolean updateConnectedIgePlugs(String plugId, List<IngridDocument> doc, String catAdminUuid) {
+    private boolean updateConnectedIgePlugs(String plugId, List<IngridDocument> doc, Long timestamp, String catAdminUuid) {
         
-        IngridDocument response = connectionFacade.getMdekCallerCatalog().storeSysLists(plugId, doc, catAdminUuid);
+        IngridDocument response = connectionFacade.getMdekCallerCatalog().storeSysLists(plugId, doc, timestamp, catAdminUuid);
         
         return (Boolean) response.get(IJobRepository.JOB_INVOKE_SUCCESS);
         
@@ -158,6 +206,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 doc.putInt(MdekKeys.LST_ID, Integer.valueOf(codelist.getId()));
                 doc.put(MdekKeys.LST_NAME, codelist.getName());
                 doc.put(MdekKeys.LST_DESCRIPTION, codelist.getDescription());
+//                doc.put(MdekKeys.LST_LAST_MODIFIED, String.valueOf(codelist.getLastModified()));
                 doc.putBoolean(MdekKeys.LST_MAINTAINABLE, false);
                 if (!codelist.getDefaultEntry().isEmpty())
                     doc.putInt(MdekKeys.LST_DEFAULT_ENTRY_ID, Integer.valueOf(codelist.getDefaultEntry()));
@@ -202,5 +251,15 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
     
     public void setConnectionFacade(ConnectionFacade cf) {
         this.connectionFacade = cf;
+    }
+    
+    @Override
+    public boolean writePartial(List<CodeList> codelists) {
+        return write(codelists);
+    }
+    
+    @Override
+    public boolean canDoPartialUpdates() {
+        return true;
     }
 }

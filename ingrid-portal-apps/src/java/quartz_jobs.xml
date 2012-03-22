@@ -59,7 +59,7 @@
                 <job-name>UpdateCodelistsJob</job-name>
                 <job-group>DEFAULT</job-group>
                 <repeat-count>-1</repeat-count>
-                <repeat-interval>86400000</repeat-interval>
+                <repeat-interval>300000</repeat-interval>
             </simple>
         </trigger>
     </job>

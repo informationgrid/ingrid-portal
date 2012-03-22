@@ -576,4 +576,8 @@ public class MdekCatalogUtils {
 		}
 	}
 
+	public static Long extractLastModifiedTimestampFromResponse(IngridDocument response) {
+	    IngridDocument result = MdekUtils.getResultFromResponse(response);
+	    return (Long) result.get(MdekKeys.LST_LAST_MODIFIED);
+	}
 }

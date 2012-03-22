@@ -5,6 +5,7 @@ import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import de.ingrid.codelists.CodeListService;
 import de.ingrid.portal.global.CodeListServiceFactory;
 
 public class UpdateCodelistsFromPortalJob extends IngridMonitorAbstractJob {
@@ -21,8 +22,8 @@ public class UpdateCodelistsFromPortalJob extends IngridMonitorAbstractJob {
         if (log.isDebugEnabled()) {
             log.debug("Executing UpdateCodeListsJob...");
         }
-        
-        boolean success = CodeListServiceFactory.instance().updateFromServer();
+        CodeListService codelistService = CodeListServiceFactory.instance();
+        boolean success = codelistService.updateFromServer(codelistService.getLastModifiedTimestamp());
         if (success) {
             status = STATUS_OK;
             statusCode = STATUS_CODE_NO_ERROR;
