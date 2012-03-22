@@ -1489,7 +1489,7 @@ function mapAddresses(source, target) {
             }
             XMLUtils.createOrReplaceAttribute(XPathUtils.createElementFromXPath(igcRelatedAddressNode, "type-of-relation"), "entry-id", addressRoleId);
             XMLUtils.createOrReplaceAttribute(XPathUtils.createElementFromXPath(igcRelatedAddressNode, "type-of-relation"), "list-id", "505");
-            var addressRoleValue = transformISOToIgcDomainValue(XPathUtils.getString(isoAddressNode, "gmd:role/gmd:CI_RoleCode/@codeListValue"), 505, transformISOToIGCLanguageCode('de'), "Could not transform ISO address role code to IGC codelist value: ");
+            var addressRoleValue = transformISOToIgcDomainValue(XPathUtils.getString(isoAddressNode, "gmd:role/gmd:CI_RoleCode/@codeListValue"), 505, "de", "Could not transform ISO address role code to IGC codelist value: ");
             XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcRelatedAddressNode, "type-of-relation"), addressRoleValue);            
             XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcRelatedAddressNode, "address-identifier"), uuid);            
             

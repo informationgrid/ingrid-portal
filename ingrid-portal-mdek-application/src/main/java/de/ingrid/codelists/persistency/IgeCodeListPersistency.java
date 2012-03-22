@@ -19,6 +19,7 @@ import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
 public class IgeCodeListPersistency implements ICodeListPersistency {
     
@@ -86,6 +87,8 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
         
         Map<Integer, List<String[]>> listDe = getSyslists(iplugList.get(0), codelistsIds, "de");
         Map<Integer, List<String[]>> listEn = getSyslists(iplugList.get(0), codelistsIds, "en");
+        Map<Integer, List<String[]>> listIso = getSyslists(iplugList.get(0), codelistsIds, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
+        Map<Integer, List<String[]>> listReq = getSyslists(iplugList.get(0), codelistsIds, UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE);
         
         List<CodeList> codelists = new ArrayList<CodeList>();
         for (Integer id : codelistsIds) {
@@ -98,6 +101,8 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
             
             List<String[]> entriesDe = listDe.get(id);
             List<String[]> entriesEn = listEn.get(id);
+            List<String[]> entriesIso = listIso.get(id);
+            List<String[]> entriesReq = listReq.get(id);
             List<CodeListEntry> entries = new ArrayList<CodeListEntry>();
             String defaultEntry = "";
             for (int i=0; i<entriesDe.size(); i++) {
@@ -107,6 +112,10 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                     cle.setLocalisedEntry("de", entriesDe.get(i)[0]);
                 if (entriesEn.size() > i)
                     cle.setLocalisedEntry("en", entriesEn.get(i)[0]);
+                if (entriesIso.size() > i)
+                    cle.setLocalisedEntry(UtilsUDKCodeLists.LANG_ID_ISO_ENTRY, entriesIso.get(i)[0]);
+                if (entriesReq.size() > i)
+                    cle.setLocalisedEntry(UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE, entriesReq.get(i)[0]);
                 
                 if (MdekUtils.YES.equals(entriesDe.get(i)[2]))
                     defaultEntry = cle.getId();
