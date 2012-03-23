@@ -62,6 +62,7 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.CapabilitiesBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CatalogBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CommentBean"/>
+        <convert converter="bean" match="de.ingrid.mdek.beans.SysList"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.ExportJobInfoBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.GenericValueBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.ProtocolInfoBean"/>

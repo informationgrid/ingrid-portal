@@ -9,10 +9,11 @@ import org.directwebremoting.io.FileTransfer;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.ProfileBean;
+import de.ingrid.mdek.beans.SysList;
 
 public interface CatalogService {
 
-	public Integer[] getAllSysListIds();
+	public List<SysList> getAllSysListInfos();
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode);
 	/** Removes metadata encoded in syslist values, e.g. ", yyyy-MM-dd" at end */
 	public Map<Integer, List<String[]>> getSysListsRemoveMetadata(Integer[] listIds, String languageCode);

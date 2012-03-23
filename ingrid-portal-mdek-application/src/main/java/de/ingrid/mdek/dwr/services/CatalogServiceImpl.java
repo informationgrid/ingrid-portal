@@ -15,6 +15,7 @@ import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.ProfileBean;
+import de.ingrid.mdek.beans.SysList;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.profile.ProfileMapper;
@@ -29,8 +30,8 @@ public class CatalogServiceImpl implements CatalogService {
 	private CatalogRequestHandler catalogRequestHandler;
 
 	
-	public Integer[] getAllSysListIds() {
-		return catalogRequestHandler.getAllSysListIds();
+	public List<SysList> getAllSysListInfos() {
+		return catalogRequestHandler.getAllSysListInfos();
 	}
 
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String language) {

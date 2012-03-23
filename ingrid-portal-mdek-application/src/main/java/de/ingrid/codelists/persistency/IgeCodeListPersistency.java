@@ -219,6 +219,8 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 doc.putBoolean(MdekKeys.LST_MAINTAINABLE, false);
                 if (!codelist.getDefaultEntry().isEmpty())
                     doc.putInt(MdekKeys.LST_DEFAULT_ENTRY_ID, Integer.valueOf(codelist.getDefaultEntry()));
+                // language specific default entry
+                //docEntry.put(MdekKeys.LST_DEFAULT_ENTRY, codelist.getDefaultEntries());
                 IngridDocument[] entriesDoc = new IngridDocument[codelist.getEntries().size()];
                 int i=0;
                 for (CodeListEntry entry : codelist.getEntries()) {

@@ -45,17 +45,13 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
     }
     
 
-    public Integer[] getAllSysListIds() {
+    public List<SysList> getAllSysListInfos() {
         IngridDocument response = mdekCallerCatalog.getSysLists(connectionFacade.getCurrentPlugId(), null, null, MdekSecurityUtils.getCurrentUserUuid());
-        // used for migration of syslists from database initiated by testcase
-        //IngridDocument response = mdekCallerCatalog.getSysLists("ige-iplug-test", null, null, "");
-        return MdekCatalogUtils.extractSysListIdsFromResponse(response);
+        return MdekCatalogUtils.extractSysListInfosFromResponse(response);
     }
 
     public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode) {
         IngridDocument response = mdekCallerCatalog.getSysLists(connectionFacade.getCurrentPlugId(), listIds, languageCode, MdekSecurityUtils.getCurrentUserUuid());
-        // used for migration of syslists from database initiated by testcase
-        //IngridDocument response = mdekCallerCatalog.getSysLists("ige-iplug-test", listIds, languageCode, "");
         return MdekCatalogUtils.extractSysListFromResponse(response);
     }
 
@@ -103,7 +99,12 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
     // If listIds is null, all existing sysLists will be exported
     public String exportSysLists(Integer[] listIds) {
         if (listIds == null) {
-            listIds = getAllSysListIds();
+            List<SysList> codelists = getAllSysListInfos();
+            List<Integer> listIdsTemp = new ArrayList<Integer>();
+            for (SysList codelist : codelists) {
+                listIdsTemp.add(codelist.getId());
+            }
+            listIds = (Integer[]) listIdsTemp.toArray();
         }
 
         IngridDocument response = mdekCallerCatalog.getSysLists(

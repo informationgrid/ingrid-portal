@@ -9,8 +9,8 @@
             dojo.require("dojo.date.locale");
             var scriptScopeCodeLists = _container_;
             
-            var MAINTAINABLE_LIST_IDS = [100, 101, 102, 515, 518, 520, 523, 526, 528, 1100, 1320, 1350, 1370, 3385, 3535, 3555, 6005];
-            var CAN_SET_DEFAULT_LIST_IDS = [100, 518, 523, 525, 526, 527, 1350, 1370, 3385, 3571, 4300, 4305, 5100, 5200, 99999999];
+            var MAINTAINABLE_LIST_IDS = [];//100, 101, 102, 515, 518, 520, 523, 526, 528, 1100, 1320, 1350, 1370, 3385, 3535, 3555, 6005];
+            var CAN_SET_DEFAULT_LIST_IDS = [1350, 1370];
 
 			createDOMElements();
 			            
@@ -83,19 +83,19 @@
             function initCodelistSelect(){
                 var selectWidget = dijit.byId("selectionList");
                 
-                var def = getAllSysListIdsDef();
-                def.addCallback(function(listIds){
+                var def = getAllSysListInfosDef();
+                def.addCallback(function(listInfos){
                     var selectWidgetData = [];
-                    for (var index = 0; index < listIds.length; ++index) {
-                        var name = UtilCatalog.getNameForSysList(listIds[index]);
-                        var editable = dojo.some(MAINTAINABLE_LIST_IDS, function(id){
-                            return id == listIds[index];
-                        });
-                        var displayedText = name + " (" + listIds[index] + ")";
+                    for (var index = 0; index < listInfos.length; ++index) {
+                        var name = UtilCatalog.getNameForSysList(listInfos[index].id);
+                        var editable = listInfos[index].maintainable;
+                        var displayedText = name + " (" + listInfos[index].id + ")";
                         if (!editable) {
                             displayedText += " [" + "<fmt:message key='dialog.admin.catalog.management.codelist.notMaintainable' />" + "]";
+                        } else {
+                            MAINTAINABLE_LIST_IDS.push(listInfos[index].id);
                         }
-                        selectWidgetData.push([displayedText, listIds[index] + ""]);
+                        selectWidgetData.push([displayedText, listInfos[index].id + ""]);
                     }
                     
                     // Sort list by the display values
@@ -209,13 +209,13 @@
             // Retrieve all sysList ids stored in the backend
             // A list of the following form is returned:
             // [ listId1, listId2, ... ]
-            function getAllSysListIdsDef(){
+            function getAllSysListInfosDef(){
                 var def = new dojo.Deferred();
-                CatalogService.getAllSysListIds({
+                CatalogService.getAllSysListInfos({
                     preHook: showLoadingZone,
                     postHook: hideLoadingZone,
-                    callback: function(listIds){
-                        def.callback(listIds);
+                    callback: function(listInfos){
+                        def.callback(listInfos);
                     },
                     errorHandler: function(msg, err){
                         hideLoadingZone();
@@ -1035,7 +1035,7 @@
                                         </label>
                                     </span>
                                     <span class="input">
-                                        <input dojoType="dijit.form.Select" autocomplete="false" style="width:100%; margin:0.01px;" maxHeight="150" id="selectionList" />
+                                        <input dojoType="dijit.form.Select" autocomplete="false" style="width:100%; margin:0.01px;" maxHeight="350" id="selectionList" />
                                     </span>
                                     </div>
                                 </span>

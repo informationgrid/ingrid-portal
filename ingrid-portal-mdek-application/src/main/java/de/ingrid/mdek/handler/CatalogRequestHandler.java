@@ -12,6 +12,7 @@ import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
 import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.JobInfoBean;
+import de.ingrid.mdek.beans.SysList;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.persistence.db.model.UserData;
@@ -19,7 +20,7 @@ import de.ingrid.utils.IngridDocument;
 
 public interface CatalogRequestHandler {
 
-	public Integer[] getAllSysListIds();
+	public List<SysList> getAllSysListInfos();
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode);
 	public void storeSysList(Integer listId, boolean maintainable, Integer defaultEntryIndex, Integer[] entryIds,
 			String[] entriesGerman, String[] entriesEnglish);

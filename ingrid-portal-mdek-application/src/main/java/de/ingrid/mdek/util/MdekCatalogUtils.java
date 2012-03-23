@@ -39,22 +39,31 @@ public class MdekCatalogUtils {
 
 	private final static Logger log = Logger.getLogger(MdekCatalogUtils.class);	
 
-	//private static final String SYS_GUI_ID = "id";
-	//private static final String SYS_GUI_MODE = "mode";
-	
 	private static XStream xstream = new XStream();
 
 
 	public static Integer[] extractSysListIdsFromResponse(IngridDocument response) {
-		IngridDocument result = MdekUtils.getResultFromResponse(response);
-		if (result != null) {
-			return (Integer[]) result.get(MdekKeys.SYS_LIST_IDS);
-
-		} else {
-			MdekErrorUtils.handleError(response);
-			return null;
-		}
+		List<SysList> result = extractSysListInfosFromResponse(response);
+		List<Integer> listIdsTemp = new ArrayList<Integer>();
+        for (SysList codelist : result) {
+            listIdsTemp.add(codelist.getId());
+        }
+        return (Integer[]) listIdsTemp.toArray(new Integer[0]);
 	}
+	
+	public static List<SysList> extractSysListInfosFromResponse(IngridDocument response) {
+        IngridDocument result = MdekUtils.getResultFromResponse(response);
+        List<SysList> codelists = new ArrayList<SysList>();
+        
+        List<IngridDocument> docs = result.getArrayList(MdekKeys.LST_SYSLISTS);
+        for (IngridDocument doc : docs) {
+            SysList codelist = new SysList();
+            codelist.setId(doc.getInt(MdekKeys.LST_ID));
+            codelist.setMaintainable(doc.getInt(MdekKeys.LST_MAINTAINABLE) == 1);
+            codelists.add(codelist);
+        }
+        return codelists;
+    }
 
 	/**
 	 * Returns a map containing the mapped sysLists from response:<p>
