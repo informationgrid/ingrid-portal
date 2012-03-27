@@ -126,31 +126,33 @@ $action.setParameter('action','doSaveQuery')
 </div>
 
 <script type="text/javascript">
-	if(document.getElementById('envInfos') != null){
-		document.getElementById('envInfos').style.display = "none";
-	}
-	if(document.getElementById('laws') != null){
-		document.getElementById('laws').style.display = "none";
-	}
-	if(document.getElementById('catalog') != null){
-		document.getElementById('catalog').style.display = "none";
-	}
-	if(document.getElementById('addresses') != null){
-		document.getElementById('addresses').style.display = "none";
-	}
-	if(document.getElementById('research') != null){
-		document.getElementById('research').style.display = "none";
-	}
-	if(document.getElementById('lawsSep') != null){
-		document.getElementById('lawsSep').style.display = "none";
-	}
-	if(document.getElementById('catalogSep') != null){
-		document.getElementById('catalogSep').style.display = "none";
-	}
-	if(document.getElementById('addressesSep') != null){
-		document.getElementById('addressesSep').style.display = "none";
-	}
-	if(document.getElementById('researchSep') != null){
-		document.getElementById('researchSep').style.display = "none";
+	if(!${enableFacets}){
+    	if(document.getElementById('envInfos') != null){
+    		document.getElementById('envInfos').style.display = "none";
+    	}
+    	if(document.getElementById('laws') != null){
+    		document.getElementById('laws').style.display = "none";
+    	}
+    	if(document.getElementById('catalog') != null){
+    		document.getElementById('catalog').style.display = "none";
+    	}
+    	if(document.getElementById('addresses') != null){
+    		document.getElementById('addresses').style.display = "none";
+    	}
+    	if(document.getElementById('research') != null){
+    		document.getElementById('research').style.display = "none";
+    	}
+    	if(document.getElementById('lawsSep') != null){
+    		document.getElementById('lawsSep').style.display = "none";
+    	}
+    	if(document.getElementById('catalogSep') != null){
+    		document.getElementById('catalogSep').style.display = "none";
+    	}
+    	if(document.getElementById('addressesSep') != null){
+    		document.getElementById('addressesSep').style.display = "none";
+    	}
+    	if(document.getElementById('researchSep') != null){
+    		document.getElementById('researchSep').style.display = "none";
+		}
 	}
 </script>
