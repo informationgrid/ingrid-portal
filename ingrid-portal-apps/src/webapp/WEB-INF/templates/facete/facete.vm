@@ -185,42 +185,53 @@
 		#end
 		
 		#set($isMetadata = false)
+		#set($isWebsite = false)
+		#set($isLaw = false)
+		#set($isResearch = false)
+		#set($isAddress = false)
+		#set($isMap = false)
+		
 		#foreach($datatype in $selectedDatatype)
 			#if($datatype == "metadata")
 				#set($isMetadata = true)
-			#end
-		#end
-		#if($isMetadata)
-    		## ZEITBEZUG ##
-            #if(!$ds || $ds == "1")
-            	#parse ('/WEB-INF/templates/facete/facete_time.vm')
+			#elseif($datatype == "www")
+				#set($isWebsite = true)
+			#elseif($datatype == "law")
+				#set($isLaw = true)
+			#elseif($datatype == "research")
+				#set($isResearch = true)
+			#elseif($datatype == "address")
+				#set($isAddress = true)
+			#elseif($datatype == "map")
+				#set($isMap = true)
 			#end
 		#end
 		
+		#if($isMetadata)
+    		## ZEITBEZUG ##
+            #parse ('/WEB-INF/templates/facete/facete_time.vm')
+		#end
+		
         ## PARTNER ##
-        #if(!$ds || $ds == "1" || $ds == "2" || $ds == "4")
-        	#if($enableFacetePartnerList && $enableFacetePartnerList.size() > 0)
-        		#parse ('/WEB-INF/templates/facete/facete_partner.vm')
-        	#end
+        #if($enableFacetePartnerList && $enableFacetePartnerList.size() > 0)
+        	#parse ('/WEB-INF/templates/facete/facete_partner.vm')
         #end
         	
         ## RAUMBEZUG ##
-        #if(!$ds || $ds == "1")
+        #if(!$isAddress)
         	#parse ('/WEB-INF/templates/facete/facete_area.vm')
         #end
         
         ## SCHLAGWORTE ##
-        #if(!$ds || $ds == "1" || $ds == "2" || $ds == "3" || $ds == "4")
-        	##parse ('/WEB-INF/templates/facete/facete_thesaurus.vm')
-        #end
+        ##parse ('/WEB-INF/templates/facete/facete_thesaurus.vm')
         
         ## ATTRIBUTE ##
-        #if($ds && $ds == "3")
+        #if($isResearch)
         	#parse ('/WEB-INF/templates/facete/facete_attribute.vm')
         #end
         
         ## RAUMBEZUG - ADDRESSEN ##
-        #if($ds &&  $ds == "2")
+        #if($isAddress)
         	#parse ('/WEB-INF/templates/facete/facete_area_address.vm')
 		#end
 	#else
@@ -233,7 +244,10 @@
 			
         </p>
 			#if($isMetaclassSelect || $isMeasuresSelect || $isTopicSelect  || $isDatatypeSelect  || $isAreaAddressSelect || $isAttributeSelect || $isGeothesaurusSelect || $isServiceSelect || $isProviderSelect || $isMapSelect || $isThesaurusSelect || $isTimeSelect)
-        		$action.setParameter("doRemoveAll", "true")
+        		$action.setParameter("doRemoveLast", "true")
+        		#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.last") $action)
+				#set ($action = $renderResponse.createActionURL())
+				$action.setParameter("doRemoveAll", "true")
         		#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.all") $action)
 			#end
 		<br>

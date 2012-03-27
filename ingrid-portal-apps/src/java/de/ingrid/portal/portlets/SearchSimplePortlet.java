@@ -307,7 +307,6 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             context.put("displayProviders", Boolean.TRUE);
             context.put("providers", providers);
             context.put("UtilsString", new UtilsString());
-            
             // get selected provider
             IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
                     IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);

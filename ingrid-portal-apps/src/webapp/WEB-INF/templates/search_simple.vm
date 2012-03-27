@@ -6,66 +6,66 @@ $action.setParameter('action','doSearch')
     <form action="$action" method="get" name="SearchForm" id="SearchForm" onSubmit='if (this.q.value == "$MESSAGES.getString('searchSimple.query.initial')") this.q.value=""'>
     	<input type="hidden" name="ds" value="$ds"/>
     	<input type="hidden" name="action" value="doSearch"/>
-#if($enableDatasourceSelection)    	
+#if($enableDatasourceSelection && !$hasJavaScript)    	
 		<p class="datasource_selection">
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doChangeDS')
 #if($ds=="1")
-	<span class="selected" title="$MESSAGES.getString('searchSimple.area.envInfos.tooltip')">$MESSAGES.getString('searchSimple.area.envInfos')</span>
+	<span id="envInfos" class="selected" title="$MESSAGES.getString('searchSimple.area.envInfos.tooltip')">$MESSAGES.getString('searchSimple.area.envInfos')</span>
 #else
     $action.setParameter('ds','1')
-	<a href="$action" title="$MESSAGES.getString('searchSimple.area.envInfos.tooltip')">$MESSAGES.getString('searchSimple.area.envInfos')</a>	
+	<a id="envInfos" href="$action" title="$MESSAGES.getString('searchSimple.area.envInfos.tooltip')">$MESSAGES.getString('searchSimple.area.envInfos')</a>	
 #end
 #if($enableDatasourceCatalog)
 	#if($enableSearchSeperator)
-		<span class="search_seperator">&nbsp;|&nbsp</span>
+		<span id="catalogSep" class="search_seperator">&nbsp;|&nbsp</span>
 	#else
 		&nbsp;	
 	#end
     #if($ds=="5")
-    	<span class="selected" title="$MESSAGES.getString('searchSimple.area.catalog.tooltip')">$MESSAGES.getString('searchSimple.area.catalog')</span>
+    	<span id="catalog" class="selected" title="$MESSAGES.getString('searchSimple.area.catalog.tooltip')">$MESSAGES.getString('searchSimple.area.catalog')</span>
     #else
         $action.setParameter('ds','5')
-    	<a href="$action" title="$MESSAGES.getString('searchSimple.area.catalog.tooltip')">$MESSAGES.getString('searchSimple.area.catalog')</a>	
+    	<a id="catalog" href="$action" title="$MESSAGES.getString('searchSimple.area.catalog.tooltip')">$MESSAGES.getString('searchSimple.area.catalog')</a>	
     #end
 #end
 #if($enableDatasourceLaws)
 	#if($enableSearchSeperator)
-		<span class="search_seperator">&nbsp;|&nbsp</span>
+		<span id="lawsSep" class="search_seperator">&nbsp;|&nbsp</span>
 	#else
 		&nbsp;
 	#end
     #if($ds=="4")
-    	<span class="selected" title="$MESSAGES.getString('searchSimple.area.laws.tooltip')">$MESSAGES.getString('searchSimple.area.laws')</span>
+    	<span id="laws" class="selected" title="$MESSAGES.getString('searchSimple.area.laws.tooltip')">$MESSAGES.getString('searchSimple.area.laws')</span>
     #else
         $action.setParameter('ds','4')
-    	<a href="$action" title="$MESSAGES.getString('searchSimple.area.laws.tooltip')">$MESSAGES.getString('searchSimple.area.laws')</a>	
+    	<a id="laws" href="$action" title="$MESSAGES.getString('searchSimple.area.laws.tooltip')">$MESSAGES.getString('searchSimple.area.laws')</a>	
     #end
 #end
 #if($enableDatasourceResearch)
 	#if($enableSearchSeperator)
-		<span class="search_seperator">&nbsp;|&nbsp</span>
+		<span id="researchSep" class="search_seperator">&nbsp;|&nbsp</span>
 	#else
 		&nbsp;
 	#end
     #if($ds=="3")
-    	<span class="selected" title="$MESSAGES.getString('searchSimple.area.research.tooltip')">$MESSAGES.getString('searchSimple.area.research')</span>
+    	<span id="research" class="selected" title="$MESSAGES.getString('searchSimple.area.research.tooltip')">$MESSAGES.getString('searchSimple.area.research')</span>
     #else
         $action.setParameter('ds','3')
-    	<a href="$action" title="$MESSAGES.getString('searchSimple.area.research.tooltip')">$MESSAGES.getString('searchSimple.area.research')</a>	
+    	<a id="research" href="$action" title="$MESSAGES.getString('searchSimple.area.research.tooltip')">$MESSAGES.getString('searchSimple.area.research')</a>	
     #end
 #end
 #if($enableDatasourceAddresses)
 	#if($enableSearchSeperator)
-		<span class="search_seperator">&nbsp;|&nbsp</span>
+		<span id="addressesSep" class="search_seperator">&nbsp;|&nbsp</span>
 	#else
 		&nbsp;
 	#end
     #if($ds=="2")
-    	<span class="selected" title="$MESSAGES.getString('searchSimple.area.addresses.tooltip')">$MESSAGES.getString('searchSimple.area.addresses')</span>
+    	<span id="addresses" class="selected" title="$MESSAGES.getString('searchSimple.area.addresses.tooltip')">$MESSAGES.getString('searchSimple.area.addresses')</span>
     #else
         $action.setParameter('ds','2')
-    	<a href="$action" title="$MESSAGES.getString('searchSimple.area.addresses.tooltip')">$MESSAGES.getString('searchSimple.area.addresses')</a>	
+    	<a id="addresses" href="$action" title="$MESSAGES.getString('searchSimple.area.addresses.tooltip')">$MESSAGES.getString('searchSimple.area.addresses')</a>	
     #end
 #end
     	</p>
@@ -124,3 +124,33 @@ $action.setParameter('action','doSaveQuery')
     </div>
 #end
 </div>
+
+<script type="text/javascript">
+	if(document.getElementById('envInfos') != null){
+		document.getElementById('envInfos').style.display = "none";
+	}
+	if(document.getElementById('laws') != null){
+		document.getElementById('laws').style.display = "none";
+	}
+	if(document.getElementById('catalog') != null){
+		document.getElementById('catalog').style.display = "none";
+	}
+	if(document.getElementById('addresses') != null){
+		document.getElementById('addresses').style.display = "none";
+	}
+	if(document.getElementById('research') != null){
+		document.getElementById('research').style.display = "none";
+	}
+	if(document.getElementById('lawsSep') != null){
+		document.getElementById('lawsSep').style.display = "none";
+	}
+	if(document.getElementById('catalogSep') != null){
+		document.getElementById('catalogSep').style.display = "none";
+	}
+	if(document.getElementById('addressesSep') != null){
+		document.getElementById('addressesSep').style.display = "none";
+	}
+	if(document.getElementById('researchSep') != null){
+		document.getElementById('researchSep').style.display = "none";
+	}
+</script>

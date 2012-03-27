@@ -262,7 +262,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         // check for Javascript
         boolean hasJavaScript = Utils.isJavaScriptEnabled(request);
-
+        
         // determine whether we have to render only one result column
         boolean renderResultColumnRanked = true;
         boolean renderResultColumnUnranked = true;

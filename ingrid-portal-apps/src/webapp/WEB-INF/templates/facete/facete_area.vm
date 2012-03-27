@@ -27,7 +27,7 @@ var viewConfiguration = "portalu-facete-search";
 		<div style="padding:0px 0px 5px 0px;">
 			#if($webmapDebugMode)
     		<a onclick="prepareDialogMap('dialog_area_map','/ingrid-webmap-client/frontend/index-dev.html','openlayersDivInParent','webmapIframe')"
-				#if($doMapCoords && $doMapCoords.size() > 0)
+				#if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)
 					class="facete_link_line facete_select_link_topic"
 				#else
 					class="facete_link_line"
@@ -37,7 +37,7 @@ var viewConfiguration = "portalu-facete-search";
     		</a>
 			#else
 		    <a onclick="prepareDialogMap('dialog_area_map','/ingrid-webmap-client/frontend/index.html','openlayersDivInParent','webmapIframe')"
-				#if($doMapCoords && $doMapCoords.size() > 0)
+				#if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)
 					class="facete_link_line facete_select_link_topic"
 				#else
 					class="facete_link_line"
@@ -49,27 +49,29 @@ var viewConfiguration = "portalu-facete-search";
             <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" ></img>
     	</div>
     	## SELECTED PARAMS
-		#if($doMapCoords && $doMapCoords.size() > 0)
-			#if($doMapCoords.inside)
-    			$action.setParameter("doRemoveMap",  "inside")
-    			#renderFaceteSelectedAttribute ($action  $doMapCoords.inside)
+		#if($selectedMap)
+    		#if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)
+    			#if($selectedMap.doMapCoords.inside)
+        			$action.setParameter("doRemoveMap",  "inside")
+        			#renderFaceteSelectedAttribute ($action  $selectedMap.doMapCoords.inside)
+        		#end
+        		#if($selectedMap.doMapCoords.intersect)
+        			$action.setParameter("doRemoveMap",  "intersect")
+                    #renderFaceteSelectedAttribute ($action  $selectedMap.doMapCoords.intersect)
+        		#end
+        		#if($selectedMap.doMapCoords.include)
+            		$action.setParameter("doRemoveMap",  "include")
+                    #renderFaceteSelectedAttribute ($action  $selectedMap.doMapCoords.include)
+        		#end
     		#end
-    		#if($doMapCoords.intersect)
-    			$action.setParameter("doRemoveMap",  "intersect")
-                #renderFaceteSelectedAttribute ($action  $doMapCoords.intersect)
-    		#end
-    		#if($doMapCoords.include)
-        		$action.setParameter("doRemoveMap",  "include")
-                #renderFaceteSelectedAttribute ($action  $doMapCoords.include)
-    		#end
-		#end
-		#if($doMapCoords && $doMapCoords.size() > 1)
-			$action.setParameter("doRemoveMap",  "all")
-            #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.area.map.delete") $action)
+    		#if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 1)
+    			$action.setParameter("doRemoveMap",  "all")
+                #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.area.map.delete") $action)
+			#end
 		#end
     	#parse ('/WEB-INF/templates/facete/facete_dialog_area_map.vm')
 	#end
-	#if(!$doMapCoords || $doMapCoords.size() == 0)
+	#if(!$selectedMap.doMapCoords || $selectedMap.doMapCoords.size() == 0)
     	<div>
     		$action.setParameter("doGeothesaurus",  "true")
 			<a href="$action" 

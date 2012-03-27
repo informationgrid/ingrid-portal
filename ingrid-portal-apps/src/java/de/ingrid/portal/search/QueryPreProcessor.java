@@ -77,7 +77,7 @@ public class QueryPreProcessor {
         UtilsSearch.processBasicDataType(query, ds);
 
         // change datasource dependent from query input
-        ds = UtilsSearch.determineFinalPortalDatasource(ds, query);
+        //ds = UtilsSearch.determineFinalPortalDatasource(ds, query);
 
         // start hit
         int startHit = 0;
