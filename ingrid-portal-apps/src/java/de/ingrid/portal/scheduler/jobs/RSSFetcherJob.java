@@ -147,16 +147,9 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                         publishedDate = entry.getPublishedDate();
                         // check for published date in the entry
                         if (publishedDate == null) {
-                            // for rss feeds prior rss 1.0 or feeds with pubDate
-                            // in
-                            // item tag
-                            // use the publish Date of the feed itself
-                            publishedDate = feed.getPublishedDate();
-                            if (publishedDate == null) {
-                                includeEntry = false;
-                                if (log.isDebugEnabled()) {
-                                    log.debug("Ignore item, because a publishing date could not be retrieved: " + entry);
-                                }
+                            includeEntry = false;
+                            if (log.isDebugEnabled()) {
+                                log.debug("Ignore item, because a publishing date could not be retrieved: " + entry);
                             }
                         }
 
