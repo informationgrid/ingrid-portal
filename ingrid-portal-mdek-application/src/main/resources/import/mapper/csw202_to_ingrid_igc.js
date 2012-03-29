@@ -1732,9 +1732,9 @@ function transformISOToIgcDomainValue(val, codeListId, languageId, logErrorOnNot
 			idcValue = codeListService.getCodeListValue(codeListId, idcCode, languageId);
 		} catch (e) {
 			if (log.isWarnEnabled()) {
-				log.warn("Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC value with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'. Does the codeList exist?"  + e.toString());
+				log.warn("Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC value with language '" + languageId + "'. Does the codeList exist?"  + e.toString());
 			}
-			protocol(WARN, "Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC value with language '" + UtilsLanguageCodelist.getShortcutFromCode(languageId) + "'. Does the codeList exist?")
+			protocol(WARN, "Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC value with language '" + languageId + "'. Does the codeList exist?")
 			if (logErrorOnNotFound) {
 				log.warn(logErrorOnNotFound + val);
 				protocol(WARN, logErrorOnNotFound + val)

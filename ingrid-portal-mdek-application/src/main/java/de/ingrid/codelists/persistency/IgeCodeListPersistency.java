@@ -1,5 +1,6 @@
 package de.ingrid.codelists.persistency;
 
+import java.lang.reflect.UndeclaredThrowableException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -182,9 +183,17 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
             List<String> iplugList = caller.getRegisteredIPlugs();
             log.debug("Number of iplugs found: "+iplugList.size());
             for (String plugId : iplugList) {
-                boolean success = updateConnectedIgePlugs(plugId, doc, highestTimestamp, getCatAdminUuid(plugId)); ;
+                String user = getCatAdminUuid(plugId);
+                boolean success = updateConnectedIgePlugs(plugId, doc, highestTimestamp, user); ;
                 if (!success) {
                     log.error("Could not update codelists in iPlug: " + plugId);
+                }
+                // rebuild syslist so that all documents have updated syslist values
+                // for those who allow free entries!
+                try {
+                    rebuildSyslists(plugId, user);
+                } catch (UndeclaredThrowableException e) {
+                    // a timeout exception is normal for a longer running process
                 }
             }
             if (log.isDebugEnabled()) {
@@ -199,11 +208,16 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
     }
 
     private boolean updateConnectedIgePlugs(String plugId, List<IngridDocument> doc, Long timestamp, String catAdminUuid) {
-        
         IngridDocument response = connectionFacade.getMdekCallerCatalog().storeSysLists(plugId, doc, timestamp, catAdminUuid);
-        
         return (Boolean) response.get(IJobRepository.JOB_INVOKE_SUCCESS);
-        
+    }
+    
+    private boolean rebuildSyslists(String plugId, String catAdminUuid) {
+        IngridDocument response = connectionFacade.getMdekCallerCatalog().rebuildSyslistData(plugId, catAdminUuid);
+        if (null == de.ingrid.mdek.util.MdekUtils.getResultFromResponse(response)) {
+            return false;
+        }
+        return true;
     }
 
     private List<IngridDocument> mapToIngridDocument(List<CodeList> codelists) throws Exception {
