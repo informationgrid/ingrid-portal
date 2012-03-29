@@ -481,7 +481,7 @@
                                         </label>
                                     </span>
                                     <span class="input">
-                                        <input id="linksFromFieldName" style="width: 100%;">
+                                        <input id="linksFromFieldName" style="width: 100%;" maxLength="255">
                                     </span>
                                 </div>
                             </span>

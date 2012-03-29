@@ -3,6 +3,7 @@ dojo.require("dojo.date.locale"); // used for date conversions
 var attributeReplacerMap = {
 	listid: "listId",
 	maxheight: "maxHeight",
+    maxlength: "maxLength",
 	onrowcontextmenu: "onRowContextMenu",
 	minrows: "minRows",
 	autoheight: "autoHeight",
