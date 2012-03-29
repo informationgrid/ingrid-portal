@@ -192,7 +192,7 @@ div#mainnav ul li { padding: 5px 0px; margin:0; border: 0; float: left;font-size
 div#mainnav ul li:hover { }
 
 div#mainnav ul li ul {}
-div#mainnav ul li ul li { padding:3px 0px; }
+div#mainnav ul li ul li { }
 div#mainnav ul li ul li:hover { background: url(); }
 
 /* Commented Backslash Hack hides rule from IE5-Mac \*/
@@ -238,12 +238,12 @@ div#subnav ul li a.selected { text-decoration:none; color:#111111; font-weight:b
 div.subnav_corner {}
 div.subnav_corner_img {}
 
-div#subnav div.subnav_left { background-image: url(../images/subnav_left.png); width: 5px; height: 28px; float:left; }
-div#subnav div.subnav_right { background-image: url(../images/subnav_right.png); width: 5px; height: 28px; float:left; }
-div#subnav div.subnav_center { background-image: url(../images/subnav.png); height: 28px; float:left; }
+div#subnav div.subnav_left { background-image: url(../images/subnav_left.png); width: 5px; height: 28px; float:left; margin: 10px 0 0; }
+div#subnav div.subnav_right { background-image: url(../images/subnav_right.png); width: 5px; height: 28px; float:left; margin: 10px 0 0; }
+div#subnav div.subnav_center { background-image: url(../images/subnav.png); height: 28px; float:left; margin: 10px 0 0; }
 
 div#subnavBack ul { list-style:none; padding: 0px; margin:0; line-height:120%; color:#111111; }
-div#subnavBack ul li { display:inline; padding: 5px 10px 2px 0; float:left; font-size: 11px; }
+div#subnavBack ul li { display:inline; padding: 0 10px 0 0; float:left; font-size: 11px; }
 
 div#subnavBack ul li a.selected { text-decoration:none; color:#215A7E; font-weight:bold; }
 div#subnavBack ul li a,
@@ -252,16 +252,16 @@ div#subnavBack ul li a:visited,
 div#subnavBack ul li a:active {text-decoration:none; color:#215A7E;}  
 div#subnavBack ul li a:hover, div#subnav ul li a:focus {color:#215A7E;text-decoration:underline;}
 
-div#subnavBack div.subnav_left { background-image: url(../images/subnav_left.png); width: 5px; height: 28px; float:left; margin: 0px 0px 0px 63px }
-div#subnavBack div.subnav_right { background-image: url(../images/subnav_right.png); width: 5px; height: 28px; float:left; }
-div#subnavBack div.subnav_center { background-image: url(../images/subnav.png); height: 28px; float:left; padding-left:10px;}
+div#subnavBack div.subnav_left { background-image: url(../images/subnav_left.png); width: 5px; height: 28px; float:left; margin: 10px 0px 0px 63px; }
+div#subnavBack div.subnav_right { background-image: url(../images/subnav_right.png); width: 5px; height: 28px; float:left; margin: 10px 0 0; }
+div#subnavBack div.subnav_center { background-image: url(../images/subnav.png); height: 28px; float:left; padding-left:10px; margin: 10px 0 0; }
 
 /********************************************************************
   content block styles
   base layout for content area and marginal column  
 *********************************************************************/
 
-div#container { width:1177px; margin:28px 0 0 63px; }
+div#container { width:1177px; margin:40px 0 0 63px; }
 
 /*** alt ***/
 div#content { float:left; width:37.1875em; }
