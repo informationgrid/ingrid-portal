@@ -74,6 +74,13 @@
   <menu name="sub-menu-about">
     <options>/main-features.psml</options>
     <options>/main-about.psml</options>
+    <options>/main-about-partner.psml</options>
+    <options>/main-about-data-source.psml</options>
+  </menu>
+
+  <menu name="sub-menu-catalog">
+    <options>/search-catalog/search-catalog-hierarchy.psml</options>
+    <options>/search-catalog/search-catalog-thesaurus.psml</options>
   </menu>
  
 <!--

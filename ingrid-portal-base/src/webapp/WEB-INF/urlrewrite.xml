@@ -237,6 +237,16 @@
         <to>/informationsanbieter</to>
     </outbound-rule>
     
+    <!-- Datenquellen  -->
+    <rule>
+        <from>/datenquellen</from>
+        <to type="forward">/portal/main-about-data-source.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/main-about-data-source.psml</from>
+        <to>/datenquellen</to>
+    </outbound-rule>
+    
     <!-- Mein PortalU  -->
     <rule>
         <from>/personalisierungsoptionen</from>

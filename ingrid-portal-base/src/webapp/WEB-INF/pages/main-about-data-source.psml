@@ -1,0 +1,28 @@
+<!DOCTYPE doc [
+<!-- 
+for more entities look at
+http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
+-->
+<!ENTITY Uuml	"&#x00DC;">
+]>
+
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>About PortalU</title>
+  <!--<metadata name="title" xml:lang="de">&Uuml;ber PortalU</metadata>-->
+
+  <fragment id="main-about-data-source" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+    <fragment id="main-about-data-source-1" type="portlet" name="ingrid-portal-apps::ShowDataSourcePortlet">
+      <property layout="TwoColumns" name="row" value="0" />
+      <property layout="TwoColumns" name="column" value="0" />
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>

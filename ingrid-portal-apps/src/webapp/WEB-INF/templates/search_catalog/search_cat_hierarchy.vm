@@ -65,9 +65,6 @@
 #end
 
 <div class="section">
-#parse ('/WEB-INF/templates/search_catalog/include_tabs_cat.vm')
-#parse ('/WEB-INF/templates/search_catalog/include_tabs_cat_hierarchy.vm')
-
 	<div class="formbody formbody_border_style">
 #foreach($plugNode in $ps.plugsRoot.getChildren())
 	#renderNode($plugNode)

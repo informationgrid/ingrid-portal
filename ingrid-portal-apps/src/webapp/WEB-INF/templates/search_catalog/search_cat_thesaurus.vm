@@ -67,8 +67,6 @@
 #end
 
 <div class="section">    
-  #parse ('/WEB-INF/templates/search_catalog/include_tabs_cat.vm')
-  #parse ('/WEB-INF/templates/search_catalog/include_tabs_cat_thesaurus.vm')
   <div class="formbody formbody_border_style">
 	#if ($ps.thesRoot.getChildren().size() == 0 )
         $MESSAGES.getString('')There were no results in this language!

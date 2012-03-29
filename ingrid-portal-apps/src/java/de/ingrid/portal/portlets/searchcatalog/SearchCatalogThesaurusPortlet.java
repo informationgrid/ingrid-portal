@@ -17,21 +17,20 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.container.url.PortalURL;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.iplug.sns.utils.Topic;
-import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.impl.SNSSimilarTermsInterfaceImpl;
 import de.ingrid.portal.search.DisplayTreeNode;
 import de.ingrid.portal.search.PageState;
 import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.IngridHits;
 
 /**
  * This portlet handles the fragment of the hirarchy browser in the search/catalog section.
@@ -63,6 +62,9 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
 
+    	IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                 request.getLocale()));
+         
 		Context context = getContext(request);
 
         // add velocity utils class
@@ -144,7 +146,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
         // Put the current query term in the search state so we can highlight it in the tree
         String queryThesaurusTerm = request.getParameter(Settings.PARAM_QUERY_STRING);
         ps.put("currentQueryTerm", queryThesaurusTerm);
-        	
+        response.setTitle(messages.getString("searchCatThesaurus.portlet.title"));
         super.doView(request, response);
     }
 

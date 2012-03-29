@@ -5,20 +5,18 @@ package de.ingrid.portal.portlets.searchcatalog;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
-import org.apache.jetspeed.portlet.PortletHeaderRequest;
-import org.apache.jetspeed.portlet.PortletHeaderResponse;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IPlugHelper;
 import de.ingrid.portal.global.IPlugHelperDscEcs;
+import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
@@ -40,7 +38,11 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
-        Context context = getContext(request);
+        
+    	IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()));
+       
+    	Context context = getContext(request);
 
         // add velocity utils class
         context.put("tool", new UtilsVelocity());
@@ -103,7 +105,8 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             }
             ps.put("plugsRoot", plugsRoot);
         }
-
+        response.setTitle(messages.getString("searchCatHierarchy.portlet.title"));
+        
         super.doView(request, response);
     }
 
