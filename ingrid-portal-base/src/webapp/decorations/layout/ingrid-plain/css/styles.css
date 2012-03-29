@@ -635,7 +635,7 @@ div.formbody .snslogo_margin {margin-top: 8px; }
 div#footercontainer { margin: 0 0 0 55px; background: url(../images/logo_footer.gif) no-repeat; padding: 0 0 70px 115px; display:none;}
 #footercontent { font-size: 65%; line-height: 120%; color: #B0B2B4; padding-top: 10px; display:none;}
 
-div#footermarginalcontainer { width:100%; min-width: 1240px; margin-top: 25px; margin-bottom: 0px; padding: 0; background: #FFFFFF; display:none;}
+div#footermarginalcontainer { width:100%; min-width: 1240px; margin-top: 25px; margin-bottom: 0px; padding: 0; background: #FFFFFF; display:none; height: 10px;}
 div#footermarginal { background: #FFFFFF; width: 19em; padding-right: 14px; text-align:right; font-size: 65%; width:100%; display:none;}
 
 div#finalfootercontainer { float: left; width: 1240px; display:none;}

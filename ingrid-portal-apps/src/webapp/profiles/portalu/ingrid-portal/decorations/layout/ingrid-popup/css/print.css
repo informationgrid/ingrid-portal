@@ -89,9 +89,13 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
 *********************************************************************/
 
 div#identity { padding:0; margin:0; height: 97px; width:59.5em; background-color:#68A5D2; overflow:visible; }
-div.motiv_suche_detail { background-image:url(../images/01_motiv_suche_detail.png); background-repeat:no-repeat; }
+div.motiv_blank { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_suche { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
+div.motiv_karten { background-image:url(../images/01_motiv_karten.gif); background-repeat:no-repeat; }
 
-div.en_motiv_suche_detail { background-image:url(../images/en/01_motiv_suche_detail.png); background-repeat:no-repeat; }
+div.en_motiv_blank { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_suche { background-image:url(../images/en/en_01_motiv_suche.gif); background-repeat:no-repeat; }
+div.en_motiv_karten { background-image:url(../images/en/en_01_motiv_karten.gif); background-repeat:no-repeat; }
 
 /********************************************************************
   logo styles 
@@ -483,7 +487,7 @@ div.formbody .snslogo_margin {margin-top: 8px; }
 div#footercontainer { margin: 0px 0 0px 55px; background: url(../images/logo_footer.gif) no-repeat; padding: 0 0 70px 115px; }
 #footercontent { font-size: 65%; line-height: 120%; color: #B0B2B4; padding-top: 10px; }
 
-div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF;}
+div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF; height: 10px; }
 div#footermarginal { background: #FFFFFF; width: 19em; padding-right: 14px; text-align:right; font-size: 65%; line-height: 100%; width:100%;}
 
 div#finalfootercontainer { float: left; width: 59.5em; }
