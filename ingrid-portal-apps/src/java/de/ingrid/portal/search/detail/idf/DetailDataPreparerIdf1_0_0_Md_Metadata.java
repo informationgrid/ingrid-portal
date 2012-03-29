@@ -2642,7 +2642,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
             NodeList electronicMailAddressNodeList = XPathUtils.getNodeList(node, xpathExpression);
             for (int i = 0; i < electronicMailAddressNodeList.getLength(); i++) {
                 String value = XPathUtils.getString(electronicMailAddressNodeList.item(i), ".").trim();
-                elements.add(addElementEmailWeb(messages.getString("t021_communication.comm_type_email"), value, value, value, LinkType.EMAIL));
+                elements.add(addElementEmailWeb(sysCodeList.getName("4430", "3"), value, value, value, LinkType.EMAIL));
             }
         }
         
@@ -2650,21 +2650,21 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice";
         if (XPathUtils.nodeExists(node, xpathExpression)) {
             String value = XPathUtils.getString(node, xpathExpression).trim();
-            addElement(elements, "textLine", value, messages.getString("t021_communication.comm_type_phone"));
+            addElement(elements, "textLine", value, sysCodeList.getName("4430", "1"));
         }
         
         // "Fax"
         xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:facsimile";
         if (XPathUtils.nodeExists(node, xpathExpression)) {
             String value = XPathUtils.getString(node, xpathExpression).trim();
-            addElement(elements, "textLine", value, messages.getString("t021_communication.comm_type_fax"));
+            addElement(elements, "textLine", value, sysCodeList.getName("4430", "2"));
         }
         
         // "URL"
         xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL";
         if (XPathUtils.nodeExists(node, xpathExpression)) {
             String value = XPathUtils.getString(node, xpathExpression).trim();
-            elements.add(addElementEmailWeb("URL", value, value, value, LinkType.WWW_URL));
+            elements.add(addElementEmailWeb(sysCodeList.getName("4430", "4"), value, value, value, LinkType.WWW_URL));
         }
         
     }
