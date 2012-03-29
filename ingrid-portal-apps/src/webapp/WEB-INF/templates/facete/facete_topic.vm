@@ -8,7 +8,7 @@
     		#foreach ($key in $topic.keySet())
     			#set($topicKey = $key)
     		#end
-    		#set($topicTitle = $localizedTopics.get($topicKey))
+    		#set($topicTitle = $topicsLocalisation.get($topicKey))
         	#set($isSelectedChbTopic = false)
         	#foreach ($selectChb in $selectedTopics)
         		#if($isSelectedChbTopic != true)

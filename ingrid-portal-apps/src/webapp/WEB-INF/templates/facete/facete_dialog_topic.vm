@@ -11,7 +11,7 @@
                 		#foreach ($key in $topic.keySet())
                 			#set($topicKey = $key)
                 		#end
-    					#set($topicTitle = $localizedTopics.get($topicKey))
+    					#set($topicTitle = $topicsLocalisation.get($topicKey))
         				#set($isSelectedChbTopic = false)
         				#foreach ($selectChb in $selectedTopics)
         					#if($isSelectedChbTopic != true)
@@ -44,7 +44,7 @@
                 		#foreach ($key in $topic.keySet())
                 			#set($topicKey = $key)
                 		#end
-    					#set($topicTitle = $localizedTopics.get($topicKey))
+    					#set($topicTitle = $topicsLocalisation.get($topicKey))
         				#set($isSelectedChbTopic = false)
         				#foreach ($selectChb in $selectedTopics)
         					#if($isSelectedChbTopic != true)
@@ -69,8 +69,9 @@
         			#end
     			</div>
 			#end
-        	#if($unselectedTopics)
-            	<div>
+        	#if($elementsTopicSelect)
+        		#if($unselectedTopics)
+            		<div>
             		<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.unselected.entries")</p>
                     #foreach ($topic in $unselectedTopics)
             			#set($value = $topic.getFormValue())
@@ -79,12 +80,13 @@
             			<div class="facete_chb">
                     		<span class="facete_label_dialog">
             					<input id="$key" class="facete_dialog_chb facete_input_chb" type=checkbox name="chk$i" value="$key">
-                        		#set($topicTitle = "searchResult.facete.topic.$key")
-            					$MESSAGES.getString($topicTitle)
+                        		#set($topicTitle = $topicsLocalisation.get($key))
+								$topicTitle
             				</span>
                        	</div>
             		#end
         		</div>
+				#end
 			#end
 		</div>
 		

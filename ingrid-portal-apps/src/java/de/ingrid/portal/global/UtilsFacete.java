@@ -102,9 +102,6 @@ public class UtilsFacete {
     private static final String SELECTED_GEOTHESAURUS = "selectedGeothesaurus";
     private static final String SELECTED_MAP = "selectedMap";
     
-    private static List<IngridServiceRubric> dbServices = null; 
-    private static List<IngridMeasuresRubric> dbMeasures = null;
-    
     /**
      * Prepare query by facete activity
      * 
@@ -360,10 +357,11 @@ public class UtilsFacete {
 		
 		HashMap<String, Long> elementsTopicWithFacete = null;
 		HashMap<String, Long> elementsTopicSelect = null;
-		HashMap<String, String> elementsTopicLocalisation = new HashMap<String, String>();
+		HashMap<String, String> topicsLocalisation = null;
 		
 		ArrayList<IngridEnvTopic> enableFaceteTopicsList = null;
 		List<IngridEnvTopic> unselectedTopics = null;
+		CodeListService codelistService = CodeListServiceFactory.instance();
 		
 		ResourceBundle bundle = ResourceBundle.getBundle("de.ingrid.portal.resources.EnvironmentSearchResources", Locale.GERMAN);
 		IngridResourceBundle resources = new IngridResourceBundle(bundle);
@@ -371,6 +369,18 @@ public class UtilsFacete {
 			for(int i=0; i < selectedDatatype.size(); i++){
 				if(selectedDatatype.get(i).equals("topic")){
 					unselectedTopics = UtilsDB.getEnvTopics(resources);	
+					
+					for(int j=0; j < unselectedTopics.size(); j++){
+		    			if(topicsLocalisation == null){
+		    				topicsLocalisation  = new HashMap<String, String>();
+		    			}
+		    			IngridEnvTopic topic = unselectedTopics.get(j);
+						
+		    			String entryId = codelistService.getCodeListEntryId("1410", UtilsDB.getTopicFromKey(topic.getFormValue()), UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE);
+						String localizedValue = codelistService.getCodeListValue("1410", entryId, request.getLocale().getLanguage());
+						topicsLocalisation.put(topic.getFormValue(), localizedValue);
+						
+		    		}
 					break;
 				}
 			}
@@ -382,7 +392,6 @@ public class UtilsFacete {
     			List<String> keys = new ArrayList<String>(map.keySet());
     			String ident = keys.get(0);
     			
-    			CodeListService codelistService = CodeListServiceFactory.instance();
     			for(int j=0; j < unselectedTopics.size(); j++){
     				if(ident != null){
     					IngridEnvTopic top = unselectedTopics.get(j);
@@ -395,10 +404,6 @@ public class UtilsFacete {
         					}
         					elementsTopicWithFacete.put(top.getFormValue(), map.get(ident));
 
-        					String entryId = codelistService.getCodeListEntryId("1410", ident, UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE);
-        					String localizedValue = codelistService.getCodeListValue("1410", entryId, request.getLocale().getLanguage());
-        					elementsTopicLocalisation.put(top.getFormValue(), localizedValue);
-        					
         					if(enableFaceteTopicsList == null){
         						enableFaceteTopicsList = new ArrayList<IngridEnvTopic>();
             				}
@@ -489,10 +494,11 @@ public class UtilsFacete {
     		context.put("elementsTopicSelect", sortHashMapAsArrayList(elementsTopicSelect));
     	}
     	if(unselectedTopics != null && unselectedTopics.size() > 0){
-    	    context.put("unselectedTopics", unselectedTopics);
+    		context.put("unselectedTopics", unselectedTopics);
     	}
-    	if(elementsTopicLocalisation != null && elementsTopicLocalisation.size() > 0){
-            context.put("localizedTopics", elementsTopicLocalisation);
+    	
+    	if(topicsLocalisation != null && topicsLocalisation.size() > 0){
+            context.put("topicsLocalisation", topicsLocalisation);
         }
     	
     	if(selectedTopics != null && selectedTopics.size() > 0){
@@ -789,7 +795,8 @@ public class UtilsFacete {
 		ArrayList<HashMap<String, Long>> elementsService = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_TOPIC);
 		ArrayList<HashMap<String, Long>> enableFaceteService = null;
 		ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE); 
-			
+		List<IngridServiceRubric> dbServices = null;
+				 
         if(selectedDatatype != null){
 			for(int i=0; i < selectedDatatype.size(); i++){
 				if(selectedDatatype.get(i).equals("service")){
@@ -898,6 +905,7 @@ public class UtilsFacete {
 		ArrayList<HashMap<String, Long>> elementsMeasure = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_TOPIC);
 		ArrayList<HashMap<String, Long>> enableFaceteMeasures = null;
 		ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE); 
+		List<IngridMeasuresRubric> dbMeasures = null;
 		
         if(selectedDatatype != null){
 			for(int i=0; i < selectedDatatype.size(); i++){
