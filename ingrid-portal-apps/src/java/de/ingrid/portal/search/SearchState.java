@@ -86,12 +86,10 @@ public class SearchState {
             Utils.appendURLParameter(result, urlParam);
 
             // datasource (read from state)
-            if(Utils.isJavaScriptEnabled(request) == false){
-            	paramValue = getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE, msgTopic);
-                urlParam = Utils.toURLParam(Settings.PARAM_DATASOURCE, paramValue);
-                Utils.appendURLParameter(result, urlParam);
-            }
-            
+            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE, msgTopic);
+            urlParam = Utils.toURLParam(Settings.PARAM_DATASOURCE, paramValue);
+            Utils.appendURLParameter(result, urlParam);
+
             // ranking (read from state)
             paramValue = getSearchStateObjectAsString(request, Settings.PARAM_RANKING, msgTopic);
             urlParam = Utils.toURLParam(Settings.PARAM_RANKING, paramValue);

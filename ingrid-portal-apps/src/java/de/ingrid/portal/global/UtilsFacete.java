@@ -751,14 +751,12 @@ public class UtilsFacete {
         }else{
         	String searchQuery = request.getParameter("q");
         	if(searchQuery != null){
-        		if(Utils.isJavaScriptEnabled(request)){
-        			if(searchQuery.indexOf("datatype") < 0){
-            			String[] availableDatatypes = PortalConfig.getInstance().getStringArray("portal.search.facete.sort.ranking.datatype");
-                    	for(int i=0; i < availableDatatypes.length; i++){
-                    		query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, availableDatatypes[i]));
-                    	}
-            		}
-        		}
+        		if(searchQuery.indexOf("datatype") < 0){
+        			String[] availableDatatypes = PortalConfig.getInstance().getStringArray("portal.search.facete.sort.ranking.datatype");
+                	for(int i=0; i < availableDatatypes.length; i++){
+                		query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, availableDatatypes[i]));
+                   	}
+           		}
         	}
         }
 	}
