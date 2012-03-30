@@ -750,8 +750,9 @@ public class UtilsFacete {
             }
         }else{
         	String searchQuery = request.getParameter("q");
+        	String searchDs = request.getParameter("ds");
         	if(searchQuery != null){
-        		if(searchQuery.indexOf("datatype") < 0){
+        		if(searchQuery.indexOf("datatype") < 0 && searchDs == null){
         			String[] availableDatatypes = PortalConfig.getInstance().getStringArray("portal.search.facete.sort.ranking.datatype");
                 	for(int i=0; i < availableDatatypes.length; i++){
                 		query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, availableDatatypes[i]));
