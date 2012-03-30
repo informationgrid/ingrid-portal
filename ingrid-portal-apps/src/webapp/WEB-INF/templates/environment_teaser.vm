@@ -1,6 +1,5 @@
 <div class="themen_image">
-    <img class="themen_image_style" src="/ingrid-portal-apps/images/index_themen.jpg" width="140" height="65" alt="$MESSAGES.getString('teaser.environment.img.alt')" />
-    
+	<img class="themen_image_style" src="/ingrid-portal-apps/images/topics/index_themen_${randomTopicImage}.png" alt="$MESSAGES.getString('teaser.environment.img.alt')" />
 </div>
 <ul class="catalog">
 #set ($numTopics = $topicList.size())
@@ -11,3 +10,4 @@ $action.setParameter('rubric',"$topic.FormValue")
     <li><a href="$action">$topic.QueryValue</a>#if($velocityCount != $numTopics)<span class="separator">&nbsp;</span>#end</li>
 #end
 </ul>
+<span class="clearer"></span>

@@ -341,3 +341,9 @@ $action.setParameter("id", "$rowId")
 		#end
 	</span>
 #end
+
+#macro(renderTopicImageRandom $index)
+	<div class="themen_image">
+		<img class="themen_image_style" height="65" width="140" src="/ingrid-portal-apps/images/index_themen.jpg" alt="$MESSAGES.getString('teaser.environment.img.alt')" />
+	</div>
+#end
