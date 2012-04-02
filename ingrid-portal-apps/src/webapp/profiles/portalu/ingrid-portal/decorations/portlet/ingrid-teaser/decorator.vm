@@ -23,7 +23,7 @@
                 #set($hTitle = $jetspeed.getPreferenceFirstValue($f, "helpToolTip"))
             #end
         <script language="JavaScript" type="text/javascript">
-            document.write("<a href=\"javascript:ingrid_openWindow('$hpath',750,550);\" title=\"$hTitle\">&nbsp;</a>");
+            document.write("<a href=\"javascript:ingrid_openWindow('$hpath',950,550);\" title=\"$hTitle\">&nbsp;</a>");
         </script>
         <noscript>
             <a href="$hpath" target="_new" title="$hTitle">&nbsp;</a>

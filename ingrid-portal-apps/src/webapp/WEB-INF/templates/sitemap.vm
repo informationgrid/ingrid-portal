@@ -264,7 +264,7 @@
                     <li class="dottedTop">
                         #set ($link = $renderResponse.encodeURL("/portal/help.psml"))
                         <script language="JavaScript" type="text/javascript">
-                            document.write("<a href=\"javascript:ingrid_openWindow('$link',750,550);\" title=\"$MESSAGES.getString('sitemap.area.service.help.tooltip')\">$MESSAGES.getString("sitemap.area.service.help")</a>");
+                            document.write("<a href=\"javascript:ingrid_openWindow('$link',950,550);\" title=\"$MESSAGES.getString('sitemap.area.service.help.tooltip')\">$MESSAGES.getString("sitemap.area.service.help")</a>");
                         </script>
                         <noscript>
                             <a href="$link" title="$MESSAGES.getString("sitemap.area.service.help.tooltip")" target="_new">$MESSAGES.getString("sitemap.area.service.help")</a>
