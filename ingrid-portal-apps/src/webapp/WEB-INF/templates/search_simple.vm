@@ -126,7 +126,7 @@ $action.setParameter('action','doSaveQuery')
 </div>
 
 <script type="text/javascript">
-	if(!${enableFacets}){
+	if(${enableFacets}){
     	if(document.getElementById('envInfos') != null){
     		document.getElementById('envInfos').style.display = "none";
     	}

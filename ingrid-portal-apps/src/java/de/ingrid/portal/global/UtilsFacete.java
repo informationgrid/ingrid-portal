@@ -140,6 +140,7 @@ public class UtilsFacete {
 	        setAttributeToSession(request, "FACETS_QUERY", list);
         }
         
+        setAttributeToSession(request, "SEARCH_QUERY", query);
         if(log.isDebugEnabled()){
         	log.debug("Query Facete: " + query);
         }
@@ -166,6 +167,7 @@ public class UtilsFacete {
         setParamsToContextAreaAddress(request, context);
         
         context.put("facetsQuery", getAttributeFromSession(request, "FACETS_QUERY"));
+        context.put("searchQuery", getAttributeFromSession(request, "SEARCH_QUERY"));
 	}
 
 	public static void setFaceteParamsToSessionByAction(ActionRequest request) {
@@ -517,14 +519,11 @@ public class UtilsFacete {
 		ArrayList<String> selectedTopics = (ArrayList<String>) getAttributeFromSession(request, SELECTED_TOPIC);
     	
 		if(selectedTopics != null && selectedTopics.size() > 0){
-        	query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
-                    Settings.QVALUE_DATATYPE_AREA_ENVTOPICS));
-
+			
         	// TOPIC
-            String queryValue = null;
             ClauseQuery cq  = new ClauseQuery(true, false);
             for (int i = 0; i < selectedTopics.size(); i++) {
-                queryValue = UtilsDB.getTopicFromKey(selectedTopics.get(i));
+            	String queryValue = UtilsDB.getTopicFromKey(selectedTopics.get(i));
                 cq.addField(new FieldQuery(false, false, Settings.QFIELD_TOPIC, queryValue));
             }
             query.addClause(cq);
@@ -775,7 +774,19 @@ public class UtilsFacete {
 			if(selectedService == null){
 				selectedService = new ArrayList<String>();
 			}
-			selectedService.add(doAddService);
+			
+			boolean isFound = false;
+			for(int i=0; i < selectedService.size(); i++){
+				String topic = selectedService.get(i);
+				if(doAddService.equals(topic)){
+					isFound = true; 
+					break;
+				}
+			}
+			
+			if(!isFound){
+				selectedService.add(doAddService);
+			}
 		}
 		
 		if(doRemoveService != null){
@@ -857,14 +868,11 @@ public class UtilsFacete {
 		ArrayList<String> selectedService = (ArrayList<String>) getAttributeFromSession(request, SELECTED_SERVICE);
     	
 		if(selectedService != null && selectedService.size() > 0){
-	    	query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
-	                Settings.QVALUE_DATATYPE_AREA_SERVICE));
 	    	
-	    	String queryValue = null;
-	        ClauseQuery cq  = new ClauseQuery(true, false);
+	    	ClauseQuery cq  = new ClauseQuery(true, false);
 	        
            	for (int i = 0; i < selectedService.size(); i++) {
-           		queryValue = UtilsDB.getServiceRubricFromKey((String) selectedService.get(i));
+           		String queryValue = UtilsDB.getServiceRubricFromKey((String) selectedService.get(i));
            		cq.addField(new FieldQuery(false, false, Settings.QFIELD_RUBRIC, queryValue));
             }
             query.addClause(cq);
@@ -884,7 +892,19 @@ public class UtilsFacete {
 			if(selectedMeasures == null){
 				selectedMeasures = new ArrayList<String>();
 			}
-			selectedMeasures.add(doAddMeasures);
+			
+			boolean isFound = false;
+			for(int i=0; i < selectedMeasures.size(); i++){
+				String topic = selectedMeasures.get(i);
+				if(doAddMeasures.equals(topic)){
+					isFound = true; 
+					break;
+				}
+			}
+			
+			if(!isFound){
+				selectedMeasures.add(doAddMeasures);
+			}
 		}
 		
 		if(doRemoveMeasures != null){
@@ -966,14 +986,11 @@ public class UtilsFacete {
 		ArrayList<String> selectedMeasures = (ArrayList<String>) getAttributeFromSession(request, SELECTED_MEASURES);
     	
 		if(selectedMeasures != null && selectedMeasures.size() > 0){
-	    	query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE,
-	                Settings.QVALUE_DATATYPE_AREA_MEASURES));
-	
-	    	// RUBRIC
-	        String queryValue = null;
+	    	
+			// RUBRIC
 	        ClauseQuery cq = new ClauseQuery(true, false);
             for (int i = 0; i < selectedMeasures.size(); i++) {
-                queryValue = UtilsDB.getMeasuresRubricFromKey((String) selectedMeasures.get(i));
+            	String queryValue = UtilsDB.getMeasuresRubricFromKey((String) selectedMeasures.get(i));
                 cq.addField(new FieldQuery(false, false, Settings.QFIELD_RUBRIC, queryValue));
             }
             query.addClause(cq);

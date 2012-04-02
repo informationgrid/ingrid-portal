@@ -54,6 +54,12 @@
         	<span>$facete</span><br>
         #end
         </p>
+	#end
+	#if($searchQuery)
+        <p>Search Query:</p>
+        <p>
+        <span>$searchQuery</span><br>
+        </p>
     #end
   #end
 </div>
