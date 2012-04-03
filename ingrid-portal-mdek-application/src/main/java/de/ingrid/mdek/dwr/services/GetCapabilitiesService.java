@@ -1,6 +1,8 @@
 package de.ingrid.mdek.dwr.services;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -157,7 +159,9 @@ public class GetCapabilitiesService {
     public CapabilitiesBean getCapabilities(String urlStr) {
     	try {
     		URL url = new URL(urlStr);
-        	InputSource inputSource = new InputSource(url.openStream());
+    		// get the content in UTF-8 format, to avoid "MalformedByteSequenceException: Invalid byte 1 of 1-byte UTF-8 sequence"
+    		Reader reader = new InputStreamReader(url.openStream(), "UTF-8");
+    		InputSource inputSource = new InputSource(reader);
 
         	// Build a document from the xml response
         	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
