@@ -1635,7 +1635,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			    		}
 
 						HashMap elementCapabilities = new HashMap();
-    					elementCapabilities.put("type", "textLabelLeft");
+    					elementCapabilities.put("type", "textLabelAboveWithLink");
+    					elementCapabilities.put("line", true);
 //    					elementCapabilities.put("body", value.split("\\?")[0].toString());
 
     					HashMap elementCapabilitiesLink = new HashMap();
