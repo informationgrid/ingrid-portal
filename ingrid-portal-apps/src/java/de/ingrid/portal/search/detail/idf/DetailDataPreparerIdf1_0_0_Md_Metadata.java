@@ -633,7 +633,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		
 		// Typ des Dienstes
 		xpathExpression = "./gmd:identificationInfo/*/srv:serviceType";
-		getNodeValue(elements, xpathExpression, messages.getString("t011_obj_serv.type"), "5100");
+		String serviceType = getNodeValue(elements, xpathExpression, messages.getString("t011_obj_serv.type"), "5100");
 
 		// Version des Services
 		xpathExpression = "./gmd:identificationInfo/*/srv:serviceTypeVersion";
@@ -670,7 +670,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		
 		// "Operation -> Zugriffsadresse"
 		xpathExpression = "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint";
-		getConnectionPoints(elements, xpathExpression);
+		getConnectionPoints(serviceType, elements, xpathExpression);
 		
 		// "Abhängigkeit"
 		/* NOT IN USED*/
@@ -1458,15 +1458,17 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		getNodeValue(elements, xpathExpression, title, null);
 	}
 	
-	private void getNodeValue(ArrayList elements, String xpathExpression, String title, String codeListId) {
-		getNodeValue(elements, xpathExpression, title, codeListId, null, LabelType.LEFT);
+	private String getNodeValue(ArrayList elements, String xpathExpression, String title, String codeListId) {
+		return getNodeValue(elements, xpathExpression, title, codeListId, null, LabelType.LEFT);
 	}
 	
-	private void getNodeValue(ArrayList elements, String xpathExpression, String title, String codeListId, Node node) {
-		getNodeValue(elements, xpathExpression, title, codeListId, node, LabelType.LEFT);
+	private String getNodeValue(ArrayList elements, String xpathExpression, String title, String codeListId, Node node) {
+		return getNodeValue(elements, xpathExpression, title, codeListId, node, LabelType.LEFT);
 	}
 	
-	private void getNodeValue(ArrayList elements, String xpathExpression, String title, String codeListId, Node node, LabelType labelType) {
+	private String getNodeValue(ArrayList elements, String xpathExpression, String title, String codeListId, Node node, LabelType labelType) {
+		String retValue = null;
+
 		Node tmpNode;
 		if(node != null){
 			tmpNode = node;
@@ -1475,6 +1477,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 		if (XPathUtils.nodeExists(tmpNode, xpathExpression)) {
 			String value = XPathUtils.getString(tmpNode, xpathExpression).trim();
+			retValue = value;
 			String tmpValue = "";
 			if(value.length() > 0){
 				if(codeListId != null){
@@ -1507,6 +1510,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				}
 			}
 		}
+		
+		return retValue;
 	}
 
 	private void getExternLinks(ArrayList elements, String xpathExpression) {
@@ -1593,85 +1598,84 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}
 
-	private void getConnectionPoints(ArrayList elements, String xpathExpression) {
+	/** ONLY CALLED FOR CLASS 3 GEODATENDIENST !!! */
+	private void getConnectionPoints(String serviceType, ArrayList elements, String xpathExpression) {
+		// only render operations for Karte !?
+		if (!"view".equals(serviceType)) {
+			return;
+		}
+
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
-			ArrayList linkList = new ArrayList();
-	    	HashMap element = new HashMap();
-        	element.put("type", "linkList");
-        	elements.add(element);
-        	
-        	HashMap elementMap = new HashMap();
-			HashMap elementCapabilities = new HashMap();
 			
 	    	for (int i=0; i<nodeList.getLength();i++){
 				if(XPathUtils.nodeExists(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL")){
-					Node node = XPathUtils.getNode(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL");
-					if(XPathUtils.getString(nodeList.item(i), "./../srv:operationName").trim().length() > 0){
-						String value = XPathUtils.getString(node, ".").trim();
-						// do not display empty URLs
-						if (value == null || value.length() == 0) {
-						    continue;
-						}
-						if (value.toLowerCase().indexOf("request=getcapabilities") == -1) {
-			    			if (value.indexOf("?") == -1) {
-			    				value = value + "?";
-			    			}
-			    			if (!value.endsWith("?") && !value.endsWith("&")) {
-			    				value = value + "&";
-			    			}
-			    			value = value + "REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1";
-			    		} else if (value.toLowerCase().indexOf("version=") == -1){
-                            if (!value.endsWith("&")) {
-                                value = value + "&";
-                            }
-                            value = value + "VERSION=1.1.1";
-			    		}
-			    		
-						boolean hasAccessConstraints = false;
-						xpathExpression = "./idf:hasAccessConstraint";
-						if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-							String hasAccessConstraintsValue = XPathUtils.getString(rootNode, xpathExpression).trim();
-							if(hasAccessConstraintsValue.length() > 0){
-								hasAccessConstraints = Boolean.parseBoolean(hasAccessConstraintsValue);	
-							}
-						}
-						
-						if(XPathUtils.nodeExists(nodeList.item(i), "./../srv:operationName")){
-		    				String operationName = XPathUtils.getString(nodeList.item(i), "./../srv:operationName").trim();
-		    				
-		    				if(elementCapabilities.size() > 0 && elementMap.size() > 0 ){
-		    					elementMap = new HashMap();
-		    					elementCapabilities = new HashMap();
-		    				}
-		    				
-		    				if(operationName.equals("GetMap")){
-		    					// do not display "show in map" link if the map has access constraints
-		    					if (!hasAccessConstraints) {
-		    						elementMap.put("type", "linkLine");
-		    						elementMap.put("hasLinkIcon", new Boolean(true));
-		    						elementMap.put("isExtern", new Boolean(false));
-		    						elementMap.put("title", messages.getString("common.result.showMap"));
-		    						elementMap.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(value));
-		    						
-		    					}
-		    				}else if(operationName.equals("GetCapabilities")){
-		    					elementCapabilities.put("type", "textLabelLeft");
-		    					elementCapabilities.put("body", value.split("\\?")[0].toString());
+					Node node = XPathUtils.getNode(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL");				
+					String urlValue = XPathUtils.getString(node, ".").trim();
+					// do not display empty URLs
+					if (urlValue == null || urlValue.length() == 0) {
+					    continue;
+					}
 
-		    					if (!hasAccessConstraints) {
-		    						elementCapabilities.put("title", messages.getString("common.result.showGetCapabilityUrl"));
-		    						if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)){
-		    	  						elementCapabilities.put("link", elementMap);
-		    						}
-					        	} else {
-					        		elementCapabilities.put("title", messages.getString("common.result.showGetCapabilityUrlRestricted"));
-					        	}
-		    				}
-		    				if(elementCapabilities.size() > 0 && elementMap.size() > 0 ){
-		    					elements.add(elementCapabilities);
-		    				}
+					// do not display empty operations
+					String operationName = XPathUtils.getString(nodeList.item(i), "./../srv:operationName").trim();
+					if (operationName == null || operationName.length() == 0) {
+					    continue;
+					}
+
+					if (operationName.equals("GetCapabilities")) {
+						if (urlValue.toLowerCase().indexOf("request=getcapabilities") == -1) {
+			    			if (urlValue.indexOf("?") == -1) {
+			    				urlValue = urlValue + "?";
+			    			}
+			    			if (!urlValue.endsWith("?") && !urlValue.endsWith("&")) {
+			    				urlValue = urlValue + "&";
+			    			}
+			    			urlValue = urlValue + "REQUEST=GetCapabilities&SERVICE=WMS";
 			    		}
+
+						HashMap elementCapabilities = new HashMap();
+    					elementCapabilities.put("type", "textLabelLeft");
+//    					elementCapabilities.put("body", value.split("\\?")[0].toString());
+
+    					HashMap elementCapabilitiesLink = new HashMap();
+    					elementCapabilitiesLink.put("type", "linkLine");
+    					elementCapabilitiesLink.put("hasLinkIcon", new Boolean(true));
+    					elementCapabilitiesLink.put("isExtern", new Boolean(true));
+    					elementCapabilitiesLink.put("title", urlValue);
+    					elementCapabilitiesLink.put("href", urlValue);
+//    					elementCapabilitiesLink.put("href", UtilsVelocity.urlencode(urlValue));
+  						elementCapabilities.put("body", elementCapabilitiesLink);
+
+
+  						boolean hasAccessConstraints = false;
+  						xpathExpression = "./idf:hasAccessConstraint";
+  						if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+  							String hasAccessConstraintsValue = XPathUtils.getString(rootNode, xpathExpression).trim();
+  							if(hasAccessConstraintsValue.length() > 0){
+  								hasAccessConstraints = Boolean.parseBoolean(hasAccessConstraintsValue);	
+  							}
+  						}
+
+    					if (!hasAccessConstraints) {
+    						elementCapabilities.put("title", messages.getString("common.result.showGetCapabilityUrl"));
+    						if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)){
+    	  			        	HashMap elementMapLink = new HashMap();
+	    						elementMapLink.put("type", "linkLine");
+	    						elementMapLink.put("hasLinkIcon", new Boolean(true));
+	    						elementMapLink.put("isExtern", new Boolean(false));
+	    						elementMapLink.put("title", messages.getString("common.result.showMap"));
+	    						elementMapLink.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(urlValue));
+    	  						elementCapabilities.put("link", elementMapLink);
+    						}
+			        	} else {
+	    					// do not display "show in map" link if the map has access constraints
+			        		elementCapabilities.put("title", messages.getString("common.result.showGetCapabilityUrlRestricted"));
+			        	}
+
+    					elements.add(elementCapabilities);
+    					// ADD FIRST ONE FOUND !!!
+    					break;
 					}
 				}
 	    	}

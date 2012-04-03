@@ -625,7 +625,11 @@
                 </td>
                 #end
     			<td class="text_label_left_body">
-    				$entry.body
+                    #if($entry.body.type=="linkLine")
+                        #renderLinkLine($entry.body)
+                    #else
+                        $entry.body
+                    #end
         		</td>
             #end
     		</tr>
