@@ -1294,6 +1294,10 @@ public class UtilsFacete {
 				       			faceteEntry = new HashMap<String, String>();
 							    faceteEntry.put("id", "modtime2");
 							    cal = new GregorianCalendar();
+						   		cal.add(Calendar.MONTH, -1);
+						   		cal.add(Calendar.DAY_OF_MONTH, -1);
+						   		timeNow = df.format(cal.getTime());
+							    cal = new GregorianCalendar();
 							    cal.add(Calendar.MONTH, -3);
 							    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
 							    faceteList.add(faceteEntry);	
@@ -1303,6 +1307,10 @@ public class UtilsFacete {
 				       			faceteEntry = new HashMap<String, String>();
 							    faceteEntry.put("id", "modtime3");
 							    cal = new GregorianCalendar();
+						   		cal.add(Calendar.MONTH, -3);
+						   		cal.add(Calendar.DAY_OF_MONTH, -1);
+						   		timeNow = df.format(cal.getTime());
+							    cal = new GregorianCalendar();
 							    cal.add(Calendar.YEAR, -1);
 							    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
 							    faceteList.add(faceteEntry);	
@@ -1311,6 +1319,10 @@ public class UtilsFacete {
 				       		case 4:
 				       			faceteEntry = new HashMap<String, String>();
 							    faceteEntry.put("id", "modtime4");
+							    cal = new GregorianCalendar();
+							    cal.add(Calendar.YEAR, -1);
+							    cal.add(Calendar.DAY_OF_MONTH, -1);
+						   		timeNow = df.format(cal.getTime());
 							    cal = new GregorianCalendar();
 							    cal.add(Calendar.YEAR, -5);
 							    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
@@ -1332,12 +1344,20 @@ public class UtilsFacete {
 					    faceteEntry = new HashMap<String, String>();
 					    faceteEntry.put("id", "modtime2");
 					    cal = new GregorianCalendar();
+				   		cal.add(Calendar.MONTH, -1);
+				   		cal.add(Calendar.DAY_OF_MONTH, -1);
+				   		timeNow = df.format(cal.getTime());
+					    cal = new GregorianCalendar();
 					    cal.add(Calendar.MONTH, -3);
 					    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
 					    faceteList.add(faceteEntry);	
 					
 					    faceteEntry = new HashMap<String, String>();
 					    faceteEntry.put("id", "modtime3");
+					    cal = new GregorianCalendar();
+				   		cal.add(Calendar.MONTH, -3);
+				   		cal.add(Calendar.DAY_OF_MONTH, -1);
+				   		timeNow = df.format(cal.getTime());
 					    cal = new GregorianCalendar();
 					    cal.add(Calendar.YEAR, -1);
 					    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
@@ -1346,6 +1366,10 @@ public class UtilsFacete {
 					    faceteEntry = new HashMap<String, String>();
 					    faceteEntry.put("id", "modtime4");
 					    cal = new GregorianCalendar();
+					    cal.add(Calendar.YEAR, -1);
+					    cal.add(Calendar.DAY_OF_MONTH, -1);
+				   		timeNow = df.format(cal.getTime());
+				   		cal = new GregorianCalendar();
 					    cal.add(Calendar.YEAR, -5);
 					    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
 					    faceteList.add(faceteEntry);
@@ -1401,15 +1425,24 @@ public class UtilsFacete {
             	cal = new GregorianCalendar();
             	cal.add(Calendar.MONTH, -1);
             }else if(doTime.equals("2")){
-            	// letzten 3 Monate
+            	cal.add(Calendar.MONTH, -1);
+		   		cal.add(Calendar.DAY_OF_MONTH, -1);
+		   		timeNow = df.format(cal.getTime());
+			    // letzten 3 Monate
             	cal = new GregorianCalendar();
             	cal.add(Calendar.MONTH, -3);
             }else if(doTime.equals("3")){
-            	// letztes Jahr
+            	cal.add(Calendar.MONTH, -3);
+		   		cal.add(Calendar.DAY_OF_MONTH, -1);
+		   		timeNow = df.format(cal.getTime());
+			    // letztes Jahr
             	cal = new GregorianCalendar();
             	cal.add(Calendar.YEAR, -1);
             }else if(doTime.equals("4")){
-            	// letzte 5 Jahre
+            	cal.add(Calendar.YEAR, -1);
+		   		cal.add(Calendar.DAY_OF_MONTH, -1);
+		   		timeNow = df.format(cal.getTime());
+			    // letzte 5 Jahre
             	cal = new GregorianCalendar();
             	cal.add(Calendar.YEAR, -5);
             }
@@ -2484,9 +2517,10 @@ public class UtilsFacete {
 		String portalTerm = request.getParameter("q");
 		String portalDS = request.getParameter("ds");
 
+		String faceteTerm  = (String) getAttributeFromSession(request, "faceteTerm");
+		String faceteDS  = (String) getAttributeFromSession(request, "faceteDS");
+		
 		if(portalTerm != null && portalDS != null){
-			String faceteTerm  = (String) getAttributeFromSession(request, "faceteTerm");
-			String faceteDS  = (String) getAttributeFromSession(request, "faceteDS");
 			
 			if(faceteTerm == null){
 				faceteTerm = portalTerm;
@@ -2503,6 +2537,15 @@ public class UtilsFacete {
 			}
 			setAttributeToSession(request, "faceteTerm", portalTerm);
 			setAttributeToSession(request, "faceteDS", portalDS);
+		}else if (portalTerm != null){ 
+			if(faceteTerm == null){
+				faceteTerm = portalTerm;
+				setAttributeToSession(request, "faceteTerm", faceteTerm);
+			}
+			
+			if(!portalTerm.equals(faceteTerm)){
+				removeAllFaceteSelections(request);
+			}
 		}
 	}
 	
