@@ -90,6 +90,8 @@ public class UtilsFacete {
     private static final String ELEMENTS_DATATYPE = "elementsDatatype";
     private static final String ELEMENTS_METACLASS = "elementsMetaclass";
     private static final String ELEMENTS_TIME = "elementsTime";
+    private static final String ELEMENTS_GEOTHESAURUS = "elementsGeothesaurus";
+    private static final String ELEMENTS_MAP = "elementsMap";
     
     private static final String ENABLE_FACETE_PARTNER_LIST = "enableFacetePartnerList";
     
@@ -135,6 +137,8 @@ public class UtilsFacete {
 			setFaceteQueryParamsDatatype(list);
 	        setFaceteQueryParamsTopic(list, request);
 	        setFaceteQueryParamsTime(list, request);
+	        setFaceteQueryParamsMap(list, request);
+	        setFaceteQueryParamsGeothesaurus(list, request);
 	        query.put("FACETS", list);
 	        
 	        setAttributeToSession(request, "FACETS_QUERY", list);
@@ -198,6 +202,8 @@ public class UtilsFacete {
 		HashMap<String, Long> elementsDatatype = null;
 		HashMap<String, Long> elementsMetaclass = null;
 		HashMap<String, Long> elementsTime = null;
+		HashMap<String, Long> elementsGeothesaurus = null;
+		HashMap<String, Long> elementsMap = null;
 		
 		removeFaceteElementsFromSession(request);
 		
@@ -255,6 +261,18 @@ public class UtilsFacete {
 					}
 					elementsTime.put(key.replace("modtime:", ""), value);
 
+				}else if(key.startsWith("geothesaurus:")){
+					if(elementsGeothesaurus == null){
+						elementsGeothesaurus = new HashMap<String, Long>();
+					}
+					elementsGeothesaurus.put(key.replace("geothesaurus:", ""), value);
+
+				}else if(key.startsWith("map:")){
+					if(elementsMap == null){
+						elementsMap = new HashMap<String, Long>();
+					}
+					elementsMap.put(key.replace("map:", ""), value);
+
 				}
 			}
 		}		
@@ -283,6 +301,15 @@ public class UtilsFacete {
 		if (elementsTime != null){
 			setAttributeToSession(request, ELEMENTS_TIME, sortHashMapAsArrayList(elementsTime));
 		}
+		
+		if (elementsGeothesaurus != null){
+			setAttributeToSession(request, ELEMENTS_GEOTHESAURUS, sortHashMapAsArrayList(elementsGeothesaurus));
+		}
+	
+		if (elementsMap != null){
+			setAttributeToSession(request, ELEMENTS_MAP, sortHashMapAsArrayList(elementsMap));
+		}
+	
 	}
 
 	/***************************** THEMEN **********************************************/
@@ -1452,6 +1479,32 @@ public class UtilsFacete {
 	
 	/***************************** KARTE ***********************************************/
 	
+	private static void setFaceteQueryParamsMap(ArrayList<IngridDocument> list, PortletRequest request) {
+		IngridDocument facete = new IngridDocument();
+        ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
+	    
+        HashMap selectedMap = (HashMap) getAttributeFromSession(request, SELECTED_MAP);
+		if(selectedMap != null){
+			ArrayList<String> coordOptions = (ArrayList<String>) selectedMap.get("coordOptions");
+			HashMap<String, String> webmapclientCoords = (HashMap<String, String>) selectedMap.get("webmapclientCoords");
+			if(coordOptions != null && webmapclientCoords != null){
+				for(int i=0; i<coordOptions.size(); i++){
+					String coordOption = coordOptions.get(i);
+					
+					HashMap<String, String> faceteEntry = new HashMap<String, String>();
+				    faceteEntry.put("id", coordOption);
+				    faceteEntry.put("query", "x1:" + webmapclientCoords.get("x1") + " y1:" + webmapclientCoords.get("y1") + " x2:" + webmapclientCoords.get("x2") + " y2:" + webmapclientCoords.get("y2") + " coord:" + coordOption);
+				    faceteList.add(faceteEntry);
+				}
+				facete.put("id", "map");
+				facete.put("classes", faceteList);
+		        
+				list.add(facete);
+
+			}
+		}
+	}
+	
 	private static void setFaceteParamsToSessionMap(ActionRequest request) {
 		
 		String doAddMap = request.getParameter("doAddMap");
@@ -1601,6 +1654,7 @@ public class UtilsFacete {
 		if(selectedMap != null && selectedMap.size() > 0){
         	context.put("isMapSelect", true);
         	context.put("selectedMap", selectedMap);
+        	context.put("elementsMap", getAttributeFromSession(request, ELEMENTS_MAP));
         }else{
         	context.put("isMapSelect", false);
         }
@@ -1617,13 +1671,22 @@ public class UtilsFacete {
 		    	if(coordOptions != null && coordOptions.size() > 0){
 		    		ClauseQuery cq = new ClauseQuery(true, false);
 		    		for(int i=0; i < coordOptions.size(); i++){
-				    		ClauseQuery cqCoord = new ClauseQuery(false, false);
-							cqCoord.addField(new FieldQuery(true, false, "x1", webmapclientCoords.get("x1")));
-				    		cqCoord.addField(new FieldQuery(true, false, "y1", webmapclientCoords.get("y1")));
-				    		cqCoord.addField(new FieldQuery(true, false, "x2", webmapclientCoords.get("x2")));
-				    		cqCoord.addField(new FieldQuery(true, false, "y2", webmapclientCoords.get("y2")));
-				    		cqCoord.addField(new FieldQuery(true, false, "coord", coordOptions.get(i)));
-				            cq.addClause(cqCoord);
+			    		ClauseQuery cqCoord = null;
+			    		switch (coordOptions.size()) {
+						case 1:
+							cqCoord = new ClauseQuery(true, false);
+							break;
+
+						default:
+							cqCoord = new ClauseQuery(false, false);
+							break;
+						}
+						cqCoord.addField(new FieldQuery(true, false, "x1", webmapclientCoords.get("x1")));
+			    		cqCoord.addField(new FieldQuery(true, false, "y1", webmapclientCoords.get("y1")));
+			    		cqCoord.addField(new FieldQuery(true, false, "x2", webmapclientCoords.get("x2")));
+			    		cqCoord.addField(new FieldQuery(true, false, "y2", webmapclientCoords.get("y2")));
+			    		cqCoord.addField(new FieldQuery(true, false, "coord", coordOptions.get(i)));
+			            cq.addClause(cqCoord);
 			    	}
 		    		query.addClause(cq);
 		    	}
@@ -1632,6 +1695,31 @@ public class UtilsFacete {
 	}
 	
 	/***************************** GEOTHESAURUS ****************************************/
+	
+	private static void setFaceteQueryParamsGeothesaurus(ArrayList<IngridDocument> list, PortletRequest request) {
+		IngridDocument facete = new IngridDocument();
+        ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
+	    
+        HashMap selectedGeothesaurus = (HashMap) getAttributeFromSession(request, SELECTED_GEOTHESAURUS);
+		if(selectedGeothesaurus != null){
+			ArrayList<String> selectedIds = (ArrayList<String>) selectedGeothesaurus.get("geothesaurusSelectTopicsId");
+			if(selectedIds != null){
+				for(int i=0; i < selectedIds.size(); i++){
+					String id = selectedIds.get(i);
+					HashMap<String, String> faceteEntry = new HashMap<String, String>();
+				    faceteEntry.put("id", id);
+				    faceteEntry.put("query", "areaid:" + id);
+				    faceteList.add(faceteEntry);
+				}
+			}
+			
+			facete.put("id", "geothesaurus");
+			facete.put("classes", faceteList);
+	        
+			list.add(facete);
+		}
+	}
+
 	
 	/**
 	 * Action Params for "Search Geothesaurus
@@ -1815,8 +1903,37 @@ public class UtilsFacete {
         context.put("list_size", getAttributeFromSession(request, GEOTHESAURUS_LIST_SIZE));
         
         ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
-        if(geothesaurusSelectTopics != null && geothesaurusSelectTopics.size() > 0){
-        	context.put("geothesaurusSelectTopics", geothesaurusSelectTopics);
+        ArrayList<HashMap<String, String>> geothesaurusSelectTopicsSorted = new ArrayList<HashMap<String,String>>();
+        ArrayList<HashMap<String, Long>> elementsGeothesaurus = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_GEOTHESAURUS);
+        
+        if(elementsGeothesaurus != null){
+    		for(int i=0; i<elementsGeothesaurus.size(); i++){
+    			HashMap<String, Long> geothesaurus = elementsGeothesaurus.get(i);
+    			String geothesaurusFacetId = null;
+    			for (Iterator<String> iterator = geothesaurus.keySet().iterator(); iterator.hasNext();) {
+    				geothesaurusFacetId = iterator.next();
+    			}
+    			if(geothesaurusFacetId != null){
+    				for(int j=0; j<geothesaurusSelectTopics.size();j++){
+    					HashMap <String, String> geothesaurusSelectTopic = geothesaurusSelectTopics.get(j);
+    					String geothesaurusSelectId = geothesaurusSelectTopic.get("topicId");
+    					if(geothesaurusFacetId != null && geothesaurusSelectId != null){
+    						if(geothesaurusFacetId.equals(geothesaurusSelectId)){
+    							geothesaurusSelectTopicsSorted.add(geothesaurusSelectTopic);
+    							geothesaurusSelectTopics.remove(j);
+        						break;
+        					}	
+    					}
+    				}
+    			}
+    		}
+    		geothesaurusSelectTopicsSorted.addAll(geothesaurusSelectTopics);
+    	}else{
+    		geothesaurusSelectTopicsSorted.addAll(geothesaurusSelectTopics);
+    	}
+        if(geothesaurusSelectTopicsSorted != null && geothesaurusSelectTopicsSorted.size() > 0){
+        	
+        	context.put("geothesaurusSelectTopics", geothesaurusSelectTopicsSorted);
             context.put("isGeothesaurusSelect", true);
         }else{
         	context.put("isGeothesaurusSelect", false);
@@ -1826,6 +1943,7 @@ public class UtilsFacete {
         }
         context.put("geothesaurusTerm", getAttributeFromSession(request, GEOTHESAURUS_TERM));
         context.put("geothesaurusError", getAttributeFromSession(request, GEOTHESAURUS_ERROR));
+        context.put("elementsGeothesaurus", elementsGeothesaurus);
 	}
 
 	
@@ -2444,6 +2562,8 @@ public class UtilsFacete {
 		removeAttributeFromSession(request, ELEMENTS_PARTNER);
 		removeAttributeFromSession(request, ELEMENTS_METACLASS);
 		removeAttributeFromSession(request, ELEMENTS_TIME);
+		removeAttributeFromSession(request, ELEMENTS_GEOTHESAURUS);
+		removeAttributeFromSession(request, ELEMENTS_MAP);
 	}
 	
 	private static ArrayList<HashMap<String, Long>> sortHashMapAsArrayList(HashMap<String, Long> input){

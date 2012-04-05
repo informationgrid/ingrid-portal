@@ -109,12 +109,17 @@
 
 #macro(renderLinkEntryNumberInArrayHashMap $numbers $id)
 	<span class="facete_label_number">
+	#set($isFound = false)
     #foreach($number in $numbers)
 		#foreach($key in $number.keySet())
 			#if($key == "$id")
+				#set($isFound = true)
 				($number.get($key))
 			#end
 		#end
+	#end
+	#if(!$isFound)
+		(0)
 	#end
 	</span>
 #end
@@ -128,10 +133,15 @@
 
 #macro(renderLinkEntryNumberInHashMap $numbers $id)
 	<span class="facete_label_number">
+	#set($isFound = false)
    	#foreach($key in $numbers.keySet())
 		#if($key == "$id")
+			#set($isFound = true)
 			($numbers.get($key))
 		#end
+	#end
+	#if(!$isFound)
+		(0)
 	#end
 	</span>
 #end

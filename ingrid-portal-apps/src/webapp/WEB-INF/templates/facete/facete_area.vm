@@ -50,18 +50,18 @@ var viewConfiguration = "portalu-facete-search";
     	</div>
     	## SELECTED PARAMS
 		#if($selectedMap)
-    		#if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)
-    			#if($selectedMap.doMapCoords.inside)
+			#if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)
+				#if($selectedMap.doMapCoords.inside)
         			$action.setParameter("doRemoveMap",  "inside")
-        			#renderFaceteSelectedAttribute ($action  $selectedMap.doMapCoords.inside)
+        			#renderFaceteSelectedAttributeHashMapNumber ($action $selectedMap.doMapCoords.inside $elementsMap "inside" true)
         		#end
         		#if($selectedMap.doMapCoords.intersect)
         			$action.setParameter("doRemoveMap",  "intersect")
-                    #renderFaceteSelectedAttribute ($action  $selectedMap.doMapCoords.intersect)
+                    #renderFaceteSelectedAttributeHashMapNumber ($action $selectedMap.doMapCoords.intersect $elementsMap "intersect" true)
         		#end
         		#if($selectedMap.doMapCoords.include)
             		$action.setParameter("doRemoveMap",  "include")
-                    #renderFaceteSelectedAttribute ($action  $selectedMap.doMapCoords.include)
+                    #renderFaceteSelectedAttributeHashMapNumber ($action $selectedMap.doMapCoords.include $elementsMap "include" true)
         		#end
     		#end
     		#if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 1)
@@ -89,7 +89,7 @@ var viewConfiguration = "portalu-facete-search";
 		#foreach ($geothesaurus in $geothesaurusSelectTopics)
     		$action.setParameter("doRemoveGeothesaurus",  $geothesaurus.topicId)
 			#set($title = "$geothesaurus.topicTitle") 
-        	#renderFaceteSelectedAttribute ($action  $title)
+			#renderFaceteSelectedAttributeHashMapNumber ($action $title $elementsGeothesaurus $geothesaurus.topicId true)
 		#end
 		#if($geothesaurusSelectTopics && $geothesaurusSelectTopics.size() > 1)
 			$action.setParameter("doRemoveGeothesaurus",  "all")
