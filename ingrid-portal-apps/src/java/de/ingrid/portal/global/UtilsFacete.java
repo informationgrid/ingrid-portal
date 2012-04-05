@@ -1496,12 +1496,12 @@ public class UtilsFacete {
                     	if(request.getParameter("x1") != null){
                     		searchTerm = webmapclientCoords.get("x1").concat("' O / ");
                     	}
-                    	if(request.getParameter("x2") != null){
-                    		searchTerm = searchTerm.concat(webmapclientCoords.get("x2")).concat("' N");	
+                    	if(request.getParameter("y1") != null){
+                    		searchTerm = searchTerm.concat(webmapclientCoords.get("y1")).concat("' N");	
                     	}                
                         searchTerm = searchTerm.concat("<br>");
-                    	if(request.getParameter("y1") != null){
-                    		searchTerm = searchTerm.concat(webmapclientCoords.get("y1")).concat("' O / ");                    		
+                    	if(request.getParameter("x2") != null){
+                    		searchTerm = searchTerm.concat(webmapclientCoords.get("x2")).concat("' O / ");                    		
                     	}
                     	if(request.getParameter("y2") != null){
                     		searchTerm = searchTerm.concat(webmapclientCoords.get("y2")).concat("' N");
@@ -1615,21 +1615,17 @@ public class UtilsFacete {
 			if (webmapclientCoords != null && webmapclientCoords.size() > 0){
 				ArrayList<String> coordOptions = (ArrayList<String>) selectedMap.get("coordOptions");
 		    	if(coordOptions != null && coordOptions.size() > 0){
+		    		ClauseQuery cq = new ClauseQuery(true, false);
 		    		for(int i=0; i < coordOptions.size(); i++){
-				    	ClauseQuery cq = new ClauseQuery(true, false);
-//TODO implement areaid in map			            
-//				    		if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_BBOX) {
-
-	                    		cq.addField(new FieldQuery(true, false, "x1", webmapclientCoords.get("x1")));
-	                    		cq.addField(new FieldQuery(true, false, "y1", webmapclientCoords.get("y1")));
-	                    		cq.addField(new FieldQuery(true, false, "x2", webmapclientCoords.get("x2")));
-	                    		cq.addField(new FieldQuery(true, false, "y2", webmapclientCoords.get("y2")));
-				                cq.addField(new FieldQuery(true, false, "coord", coordOptions.get(i)));
-//				            } else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
-//				            	cq.addField(new FieldQuery(true, false, "areaid", wmsDescriptor.getCommunityCode()));
-//				            }
-				            query.addClause(cq);
+				    		ClauseQuery cqCoord = new ClauseQuery(false, false);
+							cqCoord.addField(new FieldQuery(true, false, "x1", webmapclientCoords.get("x1")));
+				    		cqCoord.addField(new FieldQuery(true, false, "y1", webmapclientCoords.get("y1")));
+				    		cqCoord.addField(new FieldQuery(true, false, "x2", webmapclientCoords.get("x2")));
+				    		cqCoord.addField(new FieldQuery(true, false, "y2", webmapclientCoords.get("y2")));
+				    		cqCoord.addField(new FieldQuery(true, false, "coord", coordOptions.get(i)));
+				            cq.addClause(cqCoord);
 			    	}
+		    		query.addClause(cq);
 		    	}
 		    }
 		}
