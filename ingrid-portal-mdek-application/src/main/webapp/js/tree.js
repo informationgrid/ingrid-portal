@@ -71,6 +71,22 @@ ingridDataTree.createTree = function(){
             onClick: menuEventHandler.handleDelete
         }));
 	}
+    menuDataTree.addChild(new dijit.MenuSeparator({id: "menuItemSeparatorPublicationCondition"}));
+    menuDataTree.addChild(new dijit.MenuItem({
+        id: "menuItemPublicationCondition1",
+        label: message.get('tree.publicationInternet'),
+        onClick: dojo.partial(menuEventHandler.changePublicationCondition, 1)
+    }));
+    menuDataTree.addChild(new dijit.MenuItem({
+        id: "menuItemPublicationCondition2",
+        label: message.get('tree.publicationIntranet'),
+        onClick: dojo.partial(menuEventHandler.changePublicationCondition, 2)
+    }));
+    menuDataTree.addChild(new dijit.MenuItem({
+        id: "menuItemPublicationCondition3",
+        label: message.get('tree.publicationInternal'),
+        onClick: dojo.partial(menuEventHandler.changePublicationCondition, 3)
+    }));
 
 	// connect the special menu for the root node
     dojo.connect(menuDataTree, "_openMyself", this, function(e) {
@@ -135,7 +151,20 @@ ingridDataTree.createTree = function(){
                 if (!tn.item.userMovePermission[0] && (i.id == "menuItemMove" || i.id == "menuItemCut" || i.id == "menuItemDetach")) {
                     i.setDisabled(true);
                   }
-				
+
+                if (tn.item.publicationCondition && tn.item.publicationCondition[0]) {
+                    if (i.id.indexOf("PublicationCondition") != -1) {
+                        i.attr('class', "");
+                        i.setDisabled(false);
+                    }
+                    if (i.id == "menuItemPublicationCondition" + tn.item.publicationCondition[0]) {
+                        i.setDisabled(true);
+                    }
+                } else {
+                    if (i.id.indexOf("PublicationCondition") != -1) {
+                        i.attr('class', "hidden");
+                    }
+                }
             });
 		}
         /*

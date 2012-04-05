@@ -615,6 +615,48 @@ menuEventHandler.handleDelete = function(msg) {
 	}
 }
 
+menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
+    // Get the selected node from the message
+    var selectedNode = getSelectedNode(msg);
+    var tree = dijit.byId("dataTree");
+
+    console.debug("changePublicationCondition to " + newPubCondition);
+    console.debug(selectedNode);
+
+    if (!selectedNode || selectedNode.id == "objectRoot" || selectedNode == "addressRoot" || selectedNode == "addressFreeRoot") {
+        dialog.show(message.get("general.hint"), message.get("tree.selectNodePubConditionHint"), dialog.WARNING);
+    } else {
+        // If a selected node was found do the following:
+        // 1. Publish a change request which is picked up by the
+        //    udkDataProxy and sent to the backend. We need a deferred obj 'changeObjDef' for this
+        //    so we can see if the change operation was successful.
+
+        var changeObjDef = new dojo.Deferred();
+        changeObjDef.addCallback(function() {
+            // This function is called when the user has selected yes and the node was successfully changed
+/*
+            var def = new dojo.Deferred();
+            def.addErrback(function(msg){
+                dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
+                console.debug(msg);
+            });
+*/
+            // DO NOT reset dirty flag, selected node may have changes !
+//            udkDataProxy.resetDirtyFlag();
+
+//            console.debug("Publishing event: /loadRequest("+selectedNode.id+", "+selectedNode.item.nodeAppType+")");
+//            dojo.publish("/loadRequest", [{id: selectedNode.id[0], appType: selectedNode.item.nodeAppType[0], resultHandler:def}]);
+            
+            tree.refreshChildren(selectedNode);
+        });
+        changeObjDef.addErrback(displayErrorMessage);
+
+        // Tell the backend to change the selected node.
+        console.debug("Publishing event: /changePublicationCondition("+selectedNode.id+", "+newPubCondition+")");
+        dojo.publish("/changePublicationCondition", [{id: selectedNode.id[0], publicationCondition: newPubCondition, resultHandler: changeObjDef}]);
+    }
+}
+
 // Reloads the tree structure for the selected root node
 // TODO: adapt to reload only the selected root node
 //       at the moment the whole tree is reloaded

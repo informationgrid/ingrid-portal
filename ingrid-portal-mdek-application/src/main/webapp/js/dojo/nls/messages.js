@@ -129,6 +129,9 @@
     "tree.newAddressName":"New Address",
     "tree.reload":"Reload",
     "tree.subReload":"Reload subtree",
+    "tree.publicationInternet":"Change to Internet",
+    "tree.publicationIntranet":"Change to Intranet",
+    "tree.publicationInternal":"Change to Internal",
 
 	"dialog.object.deleteChildrenMessage":"Do you really want to delete the object '${0}' and all subobjects?",
 	"dialog.address.deleteChildrenMessage":"Do you really want to delete the address '${0}' and all subaddresses?",
