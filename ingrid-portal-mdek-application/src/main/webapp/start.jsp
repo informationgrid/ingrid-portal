@@ -52,6 +52,7 @@
 		<script src='/ingrid-portal-mdek-application/dwr/interface/ExportService.js'></script>
 		<script src='/ingrid-portal-mdek-application/dwr/interface/CatalogManagementService.js'></script>
         <script src='/ingrid-portal-mdek-application/dwr/interface/UtilityService.js'></script>
+        <script src='/ingrid-portal-mdek-application/dwr/interface/UserRepoManager.js'></script>
 	
 		<script type="text/javascript" src="js/config.js"></script>
 		<script type="text/javascript" src="js/message.js"></script>

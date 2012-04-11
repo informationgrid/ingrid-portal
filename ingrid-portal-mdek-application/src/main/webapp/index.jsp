@@ -10,6 +10,7 @@
 <script src='/ingrid-portal-mdek-application/dwr/engine.js'></script>
 
 <script>
+// Example: http://localhost:8080/ingrid-portal-mdek-application/index.jsp?nodeType=O&nodeId=7937CA1A-3F3A-4D36-9EBA-E2F55190811A
 
 function localizeLoadingMessage() {
 	var userLocale = '<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>';
@@ -40,10 +41,16 @@ function loadit() {
 				// build the target url by replacing index.jsp with a link to the portal login page. Keep all parameters
 				var redirectUrl = document.location.href.replace(/\?/, "%3F");
 				redirectUrl = redirectUrl.replace(/&/g, "%26");
-				redirectUrl = redirectUrl.replace(/index.jsp/, "../portal/service-myportal.psml?r="+baseUrl);
-	
-				// redirect
-				document.location.href = redirectUrl;
+
+				SecurityService.isPortalConnected(function(response) {
+					if (response == true)
+					    redirectUrl = redirectUrl.replace(/index.jsp/, "../portal/service-myportal.psml?r="+baseUrl);
+					else
+					    redirectUrl = redirectUrl.replace(/index.jsp/, "/login.jsp?r="+baseUrl);
+				    
+	                // redirect
+	                document.location.href = redirectUrl;
+				});
 
 			} else {
 				alert("Die Applikation kann nicht geöffnet werden. Bei der Anmeldung ist folgender Fehler aufgetreten: "+errMsg);

@@ -1,8 +1,10 @@
 package de.ingrid.mdek.util;
 
+import java.security.MessageDigest;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +13,7 @@ import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 
 import de.ingrid.mdek.persistence.db.model.UserData;
+import de.ingrid.mdek.security.AuthenticationProvider;
 import de.ingrid.mdek.services.persistence.db.IDaoFactory;
 import de.ingrid.mdek.services.persistence.db.IEntity;
 import de.ingrid.mdek.services.persistence.db.IGenericDao;
@@ -22,6 +25,8 @@ public class MdekSecurityUtils {
 	// Injected by Spring
 	private static IDaoFactory daoFactory;
 
+	// Injected by Spring
+	private static AuthenticationProvider authProvider;
 
 	public static UserData getCurrentPortalUserData() {
 	    return getCurrentPortalUserData(null);
@@ -38,15 +43,7 @@ public class MdekSecurityUtils {
 		    ses = req.getSession();
 		}
 		
-		
-		ServletContext ctx = ses.getServletContext().getContext("/ingrid-portal-mdek");
-//		log.debug("last accessed time: "+new Date(ses.getLastAccessedTime()));
-//		log.debug("max inactive interval: "+ses.getMaxInactiveInterval());
-
-		String forcedIgeUser = null;
-		if (ctx != null) {
-			forcedIgeUser = (String) ctx.getAttribute("ige.force.userName");
-		}
+		String forcedIgeUser = authProvider.getForcedUser(req);
 		
 		// Principal is null after the JetSpeed session times out
 		// The session will not be refreshed if the user only operates in the mdek app!
@@ -226,4 +223,69 @@ public class MdekSecurityUtils {
         return getCurrentPortalUserData(req).getAddressUuid();
     }
 
+	public static String getHash(String password) {
+        byte[] input = null;
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-1");
+            digest.reset();
+            input = digest.digest(password.getBytes("UTF-8"));
+        } catch (Exception e) {
+            log.error("Could not create hash from password!");
+            e.printStackTrace();
+        }
+        return String.valueOf(new String(input).hashCode());
+	}
+	
+    public void setAuthProvider(AuthenticationProvider authProvider) {
+        MdekSecurityUtils.authProvider = authProvider;
+    }
+
+    public AuthenticationProvider getAuthProvider() {
+        return authProvider;
+    }
+
+    public static String getLoginFromUuidAndIPlug(String uuid, String plugid) {
+        // Load user data directly from the db via hibernate
+        IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
+        UserData sampleUser = new UserData();
+        sampleUser.setAddressUuid(uuid);
+        sampleUser.setPlugId(plugid);
+        
+        dao.beginTransaction();
+        UserData userData = (UserData) dao.findUniqueByExample(sampleUser);
+        dao.commitTransaction();
+
+        if (userData != null)
+            return userData.getPortalLogin();
+        
+        return null;
+    }
+    
+    public static UserData getUserDataFromLogin(String login) {
+        // Load user data directly from the db via hibernate
+        IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
+        UserData sampleUser = new UserData();
+        sampleUser.setPortalLogin(login);
+        
+        dao.beginTransaction();
+        UserData userData = (UserData) dao.findUniqueByExample(sampleUser);
+        dao.commitTransaction();
+
+        return userData;
+    }
+    
+    public static List<String> getAllIgeUserLogins() {
+        IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
+
+        dao.beginTransaction();
+        List<UserData> userList = (List) dao.findAll();  // Can't cast to List<RepoUser>
+        dao.commitTransaction();
+        
+        List<String> users = new ArrayList<String>();
+        for (UserData user : userList) {
+            users.add(user.getPortalLogin());
+        }
+
+        return users;
+    }
 }

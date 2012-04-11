@@ -8,6 +8,10 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 </head>
 
+<%
+    request.getSession(true).setAttribute("userName", null);
+%>
+
 <script>
     //window.close();
     window.open('', '_self', '');

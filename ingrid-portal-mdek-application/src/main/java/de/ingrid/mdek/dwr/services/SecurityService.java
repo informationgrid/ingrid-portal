@@ -39,7 +39,7 @@ public interface SecurityService {
 
     public User getCatalogAdmin();
 
-    public List<String> getPortalUsers();
+    public List<String> getAvailableUsers();
 
     public List<User> getUsersWithWritePermissionForObject(String objectUuid,
             boolean checkWorkflow, boolean includePermissions);
@@ -67,4 +67,6 @@ public interface SecurityService {
             SecurityRequestHandler securityRequestHandler);
 
     public int getUserNumForPlugId(String plugId);
+    
+    public boolean authenticate(String username, String password);
 }

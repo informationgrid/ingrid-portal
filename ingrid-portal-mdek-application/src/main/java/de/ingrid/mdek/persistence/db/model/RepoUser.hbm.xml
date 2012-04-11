@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE hibernate-mapping
+  PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="de.ingrid.mdek.persistence.db.model">
+   <class name="RepoUser" table="repo_user">
+      <id name="username" type="string" column="username">
+      </id>
+      <version name="version" type="integer" column="version"/>
+<!--       <property name="username" type="string" column="username"/> -->
+      <property name="password" type="string" column="password"/>
+   </class>
+
+</hibernate-mapping>

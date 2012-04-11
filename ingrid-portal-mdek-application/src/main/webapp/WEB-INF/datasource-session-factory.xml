@@ -18,6 +18,7 @@
          <list>
             <value>de/ingrid/mdek/persistence/db/model/HelpMessage.hbm.xml</value>
             <value>de/ingrid/mdek/persistence/db/model/UserData.hbm.xml</value>
+            <value>de/ingrid/mdek/persistence/db/model/RepoUser.hbm.xml</value>
          </list>
       </property>
       <property name="entityCacheStrategies">

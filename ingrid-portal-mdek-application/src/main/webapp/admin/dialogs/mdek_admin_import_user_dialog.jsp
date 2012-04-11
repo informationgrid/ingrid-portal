@@ -25,7 +25,7 @@ dojo.connect(_container_, "onUnLoad", function(){
 function initUserList() {
     var def = new dojo.Deferred();
 
-	SecurityService.getPortalUsers( {
+    SecurityService.getAvailableUsers( {
         preHook: scriptScope.showLoading,
         postHook: scriptScope.endLoading,
 		callback: function(userList) {

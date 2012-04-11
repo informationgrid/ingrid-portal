@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ import org.xml.sax.SAXException;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekKeysSecurity;
 import de.ingrid.mdek.MdekUtils.CsvRequestType;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean;
@@ -33,6 +35,7 @@ import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
+import de.ingrid.mdek.caller.IMdekCallerSecurity;
 import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.handler.ConnectionFacade;
@@ -329,4 +332,37 @@ public class CatalogManagementServiceImpl {
 			throw MdekErrorUtils.convertToRuntimeException(e);
 		}
 	}
+
+	public List<String> getConnectedIPlugs() {
+	    return connectionFacade.getMdekClientCaller().getRegisteredIPlugs();
+	}
+	
+    public List<Map<String, String>> getConnectedCataloguesInfo() {
+        List<Map<String, String>> result = new ArrayList<Map<String,String>>();
+        List<String> iplugs = getConnectedIPlugs();
+        for (String iplug : iplugs) {
+            Map<String, String> m = new HashMap<String, String>();
+            m.put("iplug", iplug);
+            // check if iplug is in mdek db
+            String catAdminUuid = getCatAdminUuid(iplug);
+            if (catAdminUuid != null) {
+                String login = MdekSecurityUtils.getLoginFromUuidAndIPlug(catAdminUuid, iplug);
+                if (login != null)
+                    m.put("admin", login);
+            }
+            result.add(m);
+        }
+        return result;
+    }
+    
+    private String getCatAdminUuid(String plugId) {
+        try {
+            IMdekCallerSecurity mdekCallerSecurity = connectionFacade.getMdekCallerSecurity();
+            IngridDocument response = mdekCallerSecurity.getCatalogAdmin(plugId, "");
+            IngridDocument result = de.ingrid.mdek.util.MdekUtils.getResultFromResponse(response);
+            return (String) result.get(MdekKeysSecurity.IDC_USER_ADDR_UUID);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

@@ -2,30 +2,31 @@ package de.ingrid.mdek.dwr.services;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.security.auth.Subject;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
-import org.apache.jetspeed.CommonPortletServices;
-import org.apache.jetspeed.security.RoleManager;
-import org.apache.jetspeed.security.SecurityException;
-import org.apache.jetspeed.security.UserManager;
 import org.apache.log4j.Logger;
-import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 
+import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.security.Group;
 import de.ingrid.mdek.beans.security.Permission;
 import de.ingrid.mdek.beans.security.User;
+import de.ingrid.mdek.caller.IMdekCallerSecurity;
+import de.ingrid.mdek.caller.MdekCallerSecurity;
 import de.ingrid.mdek.handler.SecurityRequestHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.persistence.db.model.UserData;
+import de.ingrid.mdek.security.AuthenticationProvider;
+import de.ingrid.mdek.security.PortalAuthenticationProvider;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
+import de.ingrid.mdek.util.MdekUtils;
+import de.ingrid.utils.IngridDocument;
 
 public class SecurityServiceImpl implements SecurityService {
 
@@ -33,6 +34,9 @@ public class SecurityServiceImpl implements SecurityService {
 
 	// Injected by Spring
 	private SecurityRequestHandler securityRequestHandler;
+	
+	// Injected by Spring
+	private AuthenticationProvider authProvider;
 
 	
 	/* (non-Javadoc)
@@ -187,7 +191,7 @@ public class SecurityServiceImpl implements SecurityService {
 			u.setUserData(userData);
 
 			// Add the proper role to the user
-			addRoleToUser(portalLogin, "mdek");
+			authProvider.setIgeUser(portalLogin);
 
 			return u;
 
@@ -195,9 +199,6 @@ public class SecurityServiceImpl implements SecurityService {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while creating user.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
-		} catch (SecurityException e) {
-			log.debug("SecurityException while creating user.", e);
-			throw new RuntimeException(e);
 		}
 	}
 
@@ -220,15 +221,15 @@ public class SecurityServiceImpl implements SecurityService {
 			// create user-portal-connection if user only exists in IGC
 			if (loginDoesNotExist) {
 			    MdekSecurityUtils.createUserData(userData);
-                addRoleToUser(portalLogin, "mdek");
+                authProvider.setIgeUser(portalLogin);
 			} else if (userData.getPortalLogin().equals(oldUserLogin)) {
 			    // store the user if the portal-login association did not change
 				MdekSecurityUtils.storeUserData(oldUserLogin, userData);
 			} else {
 				// store the user and set and cancel mdek-roles
-				removeRoleFromUser(oldUserLogin, "mdek");
+			    authProvider.removeIgeUser(oldUserLogin);
 				MdekSecurityUtils.storeUserData(oldUserLogin, userData);
-				addRoleToUser(portalLogin, "mdek");
+				authProvider.setIgeUser(portalLogin);
 			}
 			return u;
 
@@ -236,9 +237,6 @@ public class SecurityServiceImpl implements SecurityService {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while storing user.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
-		} catch (SecurityException e) {
-			log.debug("SecurityException while creating user.", e);
-			throw new RuntimeException(e);
 		}
 	}
 
@@ -249,15 +247,12 @@ public class SecurityServiceImpl implements SecurityService {
 		try {
 			securityRequestHandler.deleteUser(userId);
 			UserData user = MdekSecurityUtils.deleteUserDataForAddress(addressUuid);
-			removeRoleFromUser(user.getPortalLogin(), "mdek");
+			authProvider.removeIgeUser(user.getPortalLogin());
 			
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while deleting user.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
-		} catch (SecurityException e) {
-			log.debug("SecurityException while deleting user.", e);
-			throw new RuntimeException(e);
 		}
 	}
 
@@ -278,41 +273,6 @@ public class SecurityServiceImpl implements SecurityService {
 	}
 	
 	
-	/* (non-Javadoc)
-     * @see de.ingrid.mdek.dwr.services.SecurityService#getPortalUsers()
-     */
-	public List<String> getPortalUsers() {
-		List<String> userList = new ArrayList<String>();
-		
-		WebContext wctx = WebContextFactory.get();
-		HttpSession session = wctx.getSession();
-
-		ServletContext ctx = session.getServletContext().getContext("/ingrid-portal-mdek");
-
-		try {
-			UserManager userManager = (UserManager) ctx.getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
-			RoleManager roleManager = (RoleManager) ctx.getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
-			Iterator<String> users = userManager.getUserNames("");
-
-			while (users.hasNext()) {
-				String user = users.next();
-		    	if (!user.equals("admin") && !user.equals("guest") && !user.equals("devmgr")
-		          	 && !roleManager.isUserInRole(user, "admin")
-		       	     && !roleManager.isUserInRole(user, "admin-portal")
-		       		 && !roleManager.isUserInRole(user, "mdek")) {
-					userList.add(user);
-				}
-			}
-
-		} catch (Exception err) {
-			log.error("Exception: ", err);
-			throw new RuntimeException("Error while fetching users from the portal context.", err);
-		}
-
-		Collections.sort(userList);
-		return userList;
-	}
-
 	/* (non-Javadoc)
      * @see de.ingrid.mdek.dwr.services.SecurityService#getUsersWithWritePermissionForObject(java.lang.String, boolean, boolean)
      */
@@ -371,25 +331,6 @@ public class SecurityServiceImpl implements SecurityService {
 		this.securityRequestHandler = securityRequestHandler;
 	}
 
-	private void addRoleToUser(String userName, String role) throws SecurityException {
-		WebContext wctx = WebContextFactory.get();
-		HttpSession session = wctx.getSession();
-		ServletContext ctx = session.getServletContext().getContext("/ingrid-portal-mdek");
-		RoleManager roleManager = (RoleManager) ctx.getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
-		roleManager.addRoleToUser(userName, role);
-	}
-
-	private void removeRoleFromUser(String userName, String role) throws SecurityException {
-		WebContext wctx = WebContextFactory.get();
-		HttpSession session = wctx.getSession();
-		ServletContext ctx = session.getServletContext().getContext("/ingrid-portal-mdek");
-		UserManager userManager = (UserManager) ctx.getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
-		if (userManager.userExists(userName)) {
-			RoleManager roleManager = (RoleManager) ctx.getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
-			roleManager.removeRoleFromUser(userName, role);
-		}
-	}
-
     private static Principal getPrincipal(Subject subject, Class classe)
     {
         Principal principal = null;
@@ -406,4 +347,95 @@ public class SecurityServiceImpl implements SecurityService {
         return principal;
     }
 
+    public void setAuthProvider(AuthenticationProvider authProvider) {
+        this.authProvider = authProvider;
+    }
+
+    public AuthenticationProvider getAuthProvider() {
+        return authProvider;
+    }
+
+    public boolean authenticate(String username, String password) {
+        boolean isValid = false; 
+        if ("admin".equals(username)) {
+            ResourceBundle resourceBundle = ResourceBundle.getBundle("igeAdminUser");
+            String pw = resourceBundle.getString("admin.password");
+            if (password.equals(pw)) {
+                isValid = true;
+            }
+        } else {
+            isValid = authProvider.authenticate(username, password);
+            if (isValid) {
+                // next check if user also is known in mdek database and therefore an IGE user
+                // admin user does not have to be in mdek db
+                if (MdekSecurityUtils.portalLoginExists(username)) {
+                    isValid = true;
+                }
+            }
+        }
+        if (isValid) {
+            setSessionAttribute("userName", username);
+        }
+        return isValid;
+    }
+
+    private void setSessionAttribute(String key, String value) {
+        HttpSession session = WebContextFactory.get().getHttpServletRequest().getSession();
+        session.setAttribute(key, value);
+    }
+
+    public boolean createCatAdmin(String plugId, String login) {
+        IMdekCallerSecurity mdekCallerSecurity = MdekCallerSecurity.getInstance();
+        IngridDocument catAdminDoc = mdekCallerSecurity.getCatalogAdmin(plugId, "");
+        IngridDocument catAdmin = MdekUtils.getResultFromResponse(catAdminDoc);
+        
+        try {
+            UserData userData = new UserData();
+            userData.setPortalLogin(login);
+            userData.setAddressUuid((String)catAdmin.get(MdekKeys.UUID));
+            userData.setPlugId(plugId);
+
+            MdekSecurityUtils.createUserData(userData);
+
+            // Add the proper role to the user
+            authProvider.setIgeUser(login);
+
+            return true;
+
+        } catch (MdekException e) {
+            // Wrap the MdekException in a RuntimeException so dwr can convert it
+            log.debug("MdekException while creating user.", e);
+            throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+        }
+    }
+    
+    public boolean removeCatAdmin(String plugId, String login) {
+        UserData user = MdekSecurityUtils.getUserDataFromLogin(login);
+        if (user != null)
+            MdekSecurityUtils.deleteUserDataForAddress(user.getAddressUuid());
+        authProvider.removeIgeUser(login);
+        
+        return true;
+    }
+
+    @Override
+    public List<String> getAvailableUsers() {
+        List<String> allUsers = authProvider.getAllUserIds();
+        List<String> existingUsers = MdekSecurityUtils.getAllIgeUserLogins();
+        List<String> availableUsers = new ArrayList<String>();
+        
+        for (String user : allUsers) {
+            if (!existingUsers.contains(user)) {
+                availableUsers.add(user);
+            }
+        }
+        return availableUsers;
+    }
+    
+    public boolean isPortalConnected() {
+        if (authProvider instanceof PortalAuthenticationProvider) {
+            return true;
+        }
+        return false;
+    }
 }

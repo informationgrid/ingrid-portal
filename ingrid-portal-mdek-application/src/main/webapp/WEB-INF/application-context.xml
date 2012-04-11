@@ -26,6 +26,7 @@
     <!-- Import hibernate bean definitions -->
 	<import resource="core-services.xml"/>
     <import resource="external-services.xml"/>
+    <import resource="portal-user-services.xml"/>
     
     
 
@@ -98,9 +99,8 @@
  	</bean>
 	<bean id="mdekSecurityUtils"
 		class="de.ingrid.mdek.util.MdekSecurityUtils">
-		<property name="daoFactory">
-			<ref bean="daoFactory" />
-		</property>
+		<property name="daoFactory"><ref bean="daoFactory" /></property>
+        <property name="authProvider"><ref bean="authenticationProvider" /></property>
  	</bean>
 
 <!-- Services -->
@@ -170,6 +170,9 @@
 		<property name="securityRequestHandler">
 			<ref local="securityRequestHandler" />
 		</property>
+        <property name="authProvider">
+            <ref bean="authenticationProvider" />
+        </property>
 	</bean>
 	<bean id="treeService"
 		class="de.ingrid.mdek.dwr.services.TreeServiceImpl">
@@ -328,7 +331,6 @@
 			<ref local="sysListMapper" />
 		</property>
 	</bean>
-    
     
     <!-- Beans for codelist access and synchronisation -->
     

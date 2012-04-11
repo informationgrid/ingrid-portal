@@ -104,7 +104,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
             for (SysList codelist : codelists) {
                 listIdsTemp.add(codelist.getId());
             }
-            listIds = (Integer[]) listIdsTemp.toArray();
+            listIds = listIdsTemp.toArray(new Integer[0]);
         }
 
         IngridDocument response = mdekCallerCatalog.getSysLists(
