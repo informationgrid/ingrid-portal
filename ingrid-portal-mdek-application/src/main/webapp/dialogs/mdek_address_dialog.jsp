@@ -189,6 +189,8 @@
                             // Remove the object references since we don't need them in the address table
                             // This information is removed because it can be quite large if the address is referenced by many objects 
                             res.linksFromObjectTable = [];
+                            // if an address is added from another location, also add it to generalAddress!
+                            UtilGrid.addTableDataRow("generalAddress", res);
                             UtilGrid.addTableDataRow(dijit.byId("pageDialog").customParams.grid, res);
                         }
                     },

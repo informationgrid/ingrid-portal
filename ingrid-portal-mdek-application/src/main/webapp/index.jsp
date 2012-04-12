@@ -42,6 +42,10 @@ function loadit() {
 				var redirectUrl = document.location.href.replace(/\?/, "%3F");
 				redirectUrl = redirectUrl.replace(/&/g, "%26");
 
+				// in case we access the page from "/" and redirected to the welcome file automatically
+			    if (redirectUrl.indexOf("index.jsp") == -1)
+			        redirectUrl += "/index.jsp";
+				
 				SecurityService.isPortalConnected(function(response) {
 					if (response == true)
 					    redirectUrl = redirectUrl.replace(/index.jsp/, "../portal/service-myportal.psml?r="+baseUrl);
