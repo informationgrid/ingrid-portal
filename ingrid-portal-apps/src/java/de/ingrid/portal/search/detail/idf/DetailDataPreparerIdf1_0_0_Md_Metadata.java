@@ -737,7 +737,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				Node node = nodeList.item(i);
 				String role = "";
 				xpathExpression = "./gmd:role/gmd:CI_RoleCode/@codeListValue";
-				if(XPathUtils.nodeExists(rootNode, xpathExpression)){
+				if(XPathUtils.nodeExists(node, xpathExpression)){
 					role = XPathUtils.getString(node, xpathExpression).trim();
 				}
 				xpathExpression = "./gmd:individualName";
@@ -2445,8 +2445,15 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                     }
                 }
                 
-                if (title.length() < 1){
-                    title = role;
+                if (title.length() < 1) {
+                    String newTitle = role;
+
+                    if(role.equals("projectManager")){
+                        newTitle = messages.getString("t011_obj_project.leader");
+                    } else if (role.equals("projectParticipant")) {
+                        newTitle = messages.getString("t011_obj_project.member");
+                    }
+                    title = newTitle;
                 }
                 
                 
