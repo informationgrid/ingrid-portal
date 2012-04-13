@@ -5,24 +5,24 @@
             <p>
               <label for="street" class="left">$MESSAGES.getString("searchResult.facete.area.address.street")</label>
               <input type="text" id="street" name="street" class="address_space inputstyletext"
-    			#if($doAddAreaAddress.street)
-    				value="$doAddAreaAddress.street"
+    			#if($doAddAreaAddressInput.street)
+    				value="$doAddAreaAddressInput.street"
     			#end
     			>
             </p>
             <p>
               <label for="zip" class="left">$MESSAGES.getString("searchResult.facete.area.address.zip")</label>
               <input type="text" id="zip" name="zip" class="address_space inputstyletext"
-    			#if($doAddAreaAddress.zip)
-    				value="$doAddAreaAddress.zip"
+    			#if($doAddAreaAddressInput.zip)
+    				value="$doAddAreaAddressInput.zip"
     			#end
     			>
             </p>
             <p>
               <label for="city" class="left">$MESSAGES.getString("searchResult.facete.area.address.city")</label>
               <input type="text" id="city" name="city" class="address_space inputstyletext"
-    			#if($doAddAreaAddress.city)
-    				value="$doAddAreaAddress.city"
+    			#if($doAddAreaAddressInput.city)
+    				value="$doAddAreaAddressInput.city"
     			#end
     			>
             </p>

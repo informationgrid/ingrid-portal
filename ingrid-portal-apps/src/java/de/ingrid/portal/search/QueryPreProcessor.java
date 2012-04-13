@@ -74,7 +74,7 @@ public class QueryPreProcessor {
 
         // add basic data type dependent from query and GUI ! may manipulate the query.
         // NOTICE: see http://jira.media-style.com/browse/INGRID-1076
-        UtilsSearch.processBasicDataType(query, ds);
+        UtilsSearch.processBasicDataType(request, query, ds);
 
         // change datasource dependent from query input
         //ds = UtilsSearch.determineFinalPortalDatasource(ds, query);
@@ -275,7 +275,7 @@ public class QueryPreProcessor {
 
         // add basic data type dependent from query and GUI ! may manipulate the query.
         // NOTICE: see http://jira.media-style.com/browse/INGRID-1076
-        UtilsSearch.processBasicDataType(query, ds);
+        UtilsSearch.processBasicDataType(request, query, ds);
 
         // change datasource dependent from query input
         ds = UtilsSearch.determineFinalPortalDatasource(ds, query);

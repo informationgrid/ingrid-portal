@@ -732,7 +732,7 @@ public class UtilsSearch {
      * @param query
      * @param selectedDS
      */
-    public static void processBasicDataType(IngridQuery query, String selectedDS) {
+    public static void processBasicDataType(PortletRequest request, IngridQuery query, String selectedDS) {
         // !!! NOTICE: see http://jira.media-style.com/browse/INGRID-1076
 
     	String basicDatatypeForQuery = null;
@@ -758,8 +758,10 @@ public class UtilsSearch {
         }
 
         if (basicDatatypeForQuery != null) {
-            query.addField(new FieldQuery(true, false,
-                	Settings.QFIELD_DATATYPE, basicDatatypeForQuery));        	
+        	if(request.getParameter(Settings.PARAM_DATASOURCE) != null){
+	            query.addField(new FieldQuery(true, false,
+	            		Settings.QFIELD_DATATYPE, basicDatatypeForQuery));
+        	}
         }
     }
 
@@ -892,14 +894,18 @@ public class UtilsSearch {
 
         // don't set anything if "all" is selected
         if (partners != null && Utils.getPosInArray(partners, Settings.PARAMV_ALL) == -1) {
-            cq = new ClauseQuery(true, false);
             for (int i = 0; i < partners.length; i++) {
-                if (partners[i] != null && partners[i].length() > 0) {
+            	if (partners[i] != null && partners[i].length() > 0) {
+            		if(cq == null){
+            			cq = new ClauseQuery(true, false);
+            		}
                     cq.addField(new FieldQuery(false, false, Settings.QFIELD_PARTNER, partners[i]));
                     added = true;
                 }
             }
-            query.addClause(cq);
+            if(cq != null){
+            	query.addClause(cq);
+            }
         }
         
         // remove grouped-field

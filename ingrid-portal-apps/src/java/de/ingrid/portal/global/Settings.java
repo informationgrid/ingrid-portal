@@ -130,6 +130,7 @@ public class Settings {
     public final static String QVALUE_DATATYPE_IPLUG_ECS = "ecs";
     public final static String QVALUE_DATATYPE_IPLUG_CSW = "csw";
     public final static String QVALUE_DATATYPE_IPLUG_DSC_CSW = "dsc_csw";
+    public final static String QVALUE_DATATYPE_IPLUG_DSC_OTHER = "dsc_other";
     
     // all sub datatypes indicating address search (switch to address rendering of results) 
     public final static String[] QVALUES_DATATYPES_ADDRESS = new String[] {

@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
 import org.apache.pluto.core.impl.PortletSessionImpl;
@@ -54,6 +55,7 @@ import de.ingrid.utils.udk.UtilsUDKCodeLists;
  *
  * @author ktt@wemove.com
  */
+
 
 @SuppressWarnings("unchecked")
 public class UtilsFacete {
@@ -113,7 +115,7 @@ public class UtilsFacete {
     public static void facetePrepareInGridQuery (PortletRequest request, IngridQuery query){
     	
     	//removeFaceteElementsFromSession(request);
-    	checkSessionForNewSearchTerm(request);
+    	//checkSessionForNewSearchTerm(request);
     	
     	addToQueryTopic(request, query);
 	    addToQueryMeasures(request, query);
@@ -137,14 +139,14 @@ public class UtilsFacete {
 			setFaceteQueryParamsDatatype(list);
 	        setFaceteQueryParamsTopic(list, request);
 	        setFaceteQueryParamsTime(list, request);
-	        setFaceteQueryParamsMap(list, request);
+	        //setFaceteQueryParamsMap(list, request);
 	        setFaceteQueryParamsGeothesaurus(list, request);
 	        query.put("FACETS", list);
 	        
-	        setAttributeToSession(request, "FACETS_QUERY", list);
+	        setAttributeToSession(request, "FACETS_QUERY", list, false);
         }
         
-        setAttributeToSession(request, "SEARCH_QUERY", query);
+        setAttributeToSession(request, "SEARCH_QUERY", query, false);
         if(log.isDebugEnabled()){
         	log.debug("Query Facete: " + query);
         }
@@ -172,6 +174,10 @@ public class UtilsFacete {
         
         context.put("facetsQuery", getAttributeFromSession(request, "FACETS_QUERY"));
         context.put("searchQuery", getAttributeFromSession(request, "SEARCH_QUERY"));
+        
+        if(isFacetSelection(request)){
+        	context.put("enableFacetSelection", true);
+        }
 	}
 
 	public static void setFaceteParamsToSessionByAction(ActionRequest request) {
@@ -330,6 +336,7 @@ public class UtilsFacete {
 		}
 	}
 
+	
 	private static void setFaceteParamsToSessionTopic(ActionRequest request) {
 		
 		String doAddTopic = request.getParameter("doAddTopic");
@@ -427,7 +434,9 @@ public class UtilsFacete {
     					String topIdent = UtilsDB.getTopicFromKey(top.getFormValue()); 
     					
         				if(ident.equals(topIdent)){
-        					
+        					if(j >= unselectedTopics.size()){
+        						break;
+        					}
         					if(elementsTopicWithFacete == null){
         						elementsTopicWithFacete = new HashMap<String,Long>();
         					}
@@ -531,10 +540,10 @@ public class UtilsFacete {
         }
     	
     	if(selectedTopics != null && selectedTopics.size() > 0){
-        	context.put("isTopicSelect", true);
+        	setFacetSelectionState(context, request, "isTopicSelect", true);
     		context.put("selectedTopics", selectedTopics);
     	} else{
-    		context.put("isTopicSelect", false);
+    		setFacetSelectionState(context, request, "isTopicSelect", false);
     		context.remove("selectedTopics");
     	}
     	
@@ -619,10 +628,10 @@ public class UtilsFacete {
         }
     	
 		if(selectedMetaclass != null && selectedMetaclass.size() > 0){
-    		context.put("isMetaclassSelect", true);
+			setFacetSelectionState(context, request, "isMetaclassSelect", true);
     		context.put("selectedMetaclass", selectedMetaclass);
     	} else{
-    		context.put("isMetaclassSelect", false);
+    		setFacetSelectionState(context, request, "isMetaclassSelect", false);
     		context.remove("selectedMetaclass");
     	}
 	}
@@ -656,6 +665,11 @@ public class UtilsFacete {
 				HashMap<String, String> faceteEntry = new HashMap<String, String>();
 		        faceteEntry.put("id", "topic");
 		        faceteEntry.put("query", "datatype:topics");
+		        faceteList.add(faceteEntry);
+			}else if(key.equals("other")){
+				HashMap<String, String> faceteEntry = new HashMap<String, String>();
+		        faceteEntry.put("id", "other");
+		        faceteEntry.put("query", "datatype:dsc_other");
 		        faceteList.add(faceteEntry);
 			}else{
 				HashMap<String, String> faceteEntry = new HashMap<String, String>();
@@ -736,14 +750,19 @@ public class UtilsFacete {
 								elementsDatatypes.remove(j);
 								j--;
 							}
+						}else if(selectedDatatype.equals("topic")){
+							if(elementsDatatype.containsKey("research") || elementsDatatype.containsKey("law")){
+								elementsDatatypes.remove(j);
+								j--;
+							}
 						}
 					}
 				}
 			}
-			context.put("isDatatypeSelect", true);
+			setFacetSelectionState(context, request, "isDatatypeSelect", true);
     		context.put("selectedDatatype", selectedDatatypes);
     	} else{
-    		context.put("isDatatypeSelect", false);
+    		setFacetSelectionState(context, request, "isDatatypeSelect", false);
     		context.remove("selectedDatatype");
     	}
 		
@@ -756,32 +775,120 @@ public class UtilsFacete {
 	private static void addToQueryDatatype(PortletRequest request, IngridQuery query) {
 		
 		ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE);
-    	
+		String searchQuery = request.getParameter("q");
+    	String searchDs = request.getParameter("ds");
+    	boolean isWww=false;
+		boolean isMetadata=false;
+		boolean isAddress=false;
+		boolean isLaw=false;
+		boolean isResearch=false;
+		boolean isFis=false;
+		boolean isTopic=false;
+		boolean isMeasure=false;
+		boolean isService=false;
+		boolean isMap=false;
+		
 		if(selectedDatatype != null && selectedDatatype.size() > 0){
-        	for(int i = 0; i < selectedDatatype.size(); i++){
+
+			for(int i = 0; i < selectedDatatype.size(); i++){
         		if(selectedDatatype.get(i).equals("map")){
         			query.addWildCardFieldQuery(new WildCardFieldQuery(true, false, "t011_obj_serv_op_connpoint.connect_point", "http*"));
-        			query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_SOURCE_METADATA));
-        			query.addField(new FieldQuery(true, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_SOURCE_WWW));
         		}else if(selectedDatatype.get(i).equals("topic")){
         			query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_AREA_ENVTOPICS));
+        		}else if(selectedDatatype.get(i).equals("other")){
+        			query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_IPLUG_DSC_OTHER));
                 }else{
         			query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, selectedDatatype.get(i)));
-        			if(selectedDatatype.get(i).equals("metadata")){
-        				query.addField(new FieldQuery(true, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_SOURCE_WWW));
-        			}else if(selectedDatatype.get(i).equals("www")){
-        				query.addField(new FieldQuery(true, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_SOURCE_METADATA));
-        			}
         		}
             }
+			
+			if(query.getDataTypes() != null){
+	        	FieldQuery[] fieldQueries = query.getDataTypes();
+				for(int i=0; i < fieldQueries.length; i++){
+					FieldQuery fieldQuery = fieldQueries[i];
+					String value = fieldQuery.getFieldValue();
+					if(value.equals(Settings.QVALUE_DATATYPE_SOURCE_METADATA)){
+						isMetadata=true;
+	    			}else if(value.equals(Settings.QVALUE_DATATYPE_SOURCE_WWW)){
+	    				isWww=true;
+	    			}else if(value.equals(Settings.QVALUE_DATATYPE_AREA_ENVTOPICS)){
+	    				isTopic=true;
+	    			}else if(value.equals(Settings.QVALUE_DATATYPE_AREA_ADDRESS)){
+	    				isAddress=true;
+	    			}else if(value.equals(Settings.QVALUE_DATATYPE_AREA_RESEARCH)){
+	    				isResearch=true;
+	    			}else if(value.equals(Settings.QVALUE_DATATYPE_AREA_LAW)){
+	    				isLaw=true;
+	    			}else if(value.equals(Settings.QVALUE_DATATYPE_SOURCE_FIS)){
+	    				isFis=true;
+	    			}else if(value.equals(Settings.QVALUE_DATATYPE_AREA_SERVICE)){
+	    				isService=true;
+	    			}else if(value.equals(Settings.QVALUE_DATATYPE_AREA_MEASURES)){
+	    				isMeasure=true;
+	    			}
+				}
+				
+				
+			}
+			
+			if(query.getWildCardFieldQueries() !=null){
+				WildCardFieldQuery[] wildCardFieldQueries = query.getWildCardFieldQueries();
+				for(int i=0; i < wildCardFieldQueries.length; i++){
+					WildCardFieldQuery wildCardFieldQuery = wildCardFieldQueries[i];
+					String value = wildCardFieldQuery.getFieldName();
+					if(value.startsWith("t011_obj_serv_op_connpoint.connect_point")){
+						isMap=true;
+					}
+				}
+			}
+			
+			/* Add or Remove "datatypes" from query after selection*/
+			if(isMetadata){
+				query.addField(new FieldQuery(true, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_SOURCE_WWW));
+			}
+			
+			if(isWww){
+				query.addField(new FieldQuery(true, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_SOURCE_METADATA));
+			}
+			
+			if(isAddress){
+			}
+			
+			if(isResearch){
+				// Grouping off
+				//query.addField(new FieldQuery(true, false, Settings.QFIELD_GROUPED, "grouped_off"));
+			}
+			
+			if(isLaw){
+				// Grouping off
+				//query.addField(new FieldQuery(true, false, Settings.QFIELD_GROUPED, "grouped_off"));
+			}
+			
+			if(isFis){
+			}
+
+			if(isService){
+			}
+
+			if(isMeasure){
+			}
+			
+			if(isMap){
+				//query.addField(new FieldQuery(true, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_SOURCE_METADATA));
+				//query.addField(new FieldQuery(true, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_SOURCE_WWW));
+			}
+			
+			if(isTopic){
+				
+			}
         }else{
-        	String searchQuery = request.getParameter("q");
-        	String searchDs = request.getParameter("ds");
         	if(searchQuery != null){
         		if(searchQuery.indexOf("datatype") < 0 && searchDs == null){
         			String[] availableDatatypes = PortalConfig.getInstance().getStringArray("portal.search.facete.sort.ranking.datatype");
                 	for(int i=0; i < availableDatatypes.length; i++){
-                		query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, availableDatatypes[i]));
+                		if(!availableDatatypes[i].equals("map") && !availableDatatypes[i].equals("topics")){
+                			//query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, availableDatatypes[i]));
+                		}
                    	}
            		}
         	}
@@ -880,10 +987,10 @@ public class UtilsFacete {
 		}
 		
 		if(selectedService != null && selectedService.size() > 0){
-    		context.put("isServiceSelect", true);
+			setFacetSelectionState(context, request, "isServiceSelect", true);
     		context.put("selectedService", selectedService);
     	} else{
-    		context.put("isServiceSelect", false);
+    		setFacetSelectionState(context, request, "isServiceSelect", false);
     		context.remove("selectedService");
     	}
     	
@@ -999,10 +1106,10 @@ public class UtilsFacete {
 		}
 		
     	if(selectedMeasures != null && selectedMeasures.size() > 0){
-    		context.put("isMeasuresSelect", true);
+    		setFacetSelectionState(context, request, "isMeasuresSelect", true);
     		context.put("selectedMeasures", selectedMeasures);
     	} else{
-    		context.put("isMeasuresSelect", false);
+    		setFacetSelectionState(context, request, "isMeasuresSelect", false);
     		context.remove("selectedMeasures");
     	}
     	
@@ -1064,7 +1171,7 @@ public class UtilsFacete {
 		
 		if(enableFacetePartnerList != null){
     		context.put("enableFacetePartnerList", enableFacetePartnerList);
-    		context.put("isPartnerSelect", true);
+    		setFacetSelectionState(context, request, "isPartnerSelect", true);
 		}else{
 			ArrayList<HashMap<String, Long>> elementsPartner = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_PARTNER);
 			if(elementsPartner != null){
@@ -1267,11 +1374,11 @@ public class UtilsFacete {
     	context.put("enableFaceteProviderCount", PortalConfig.getInstance().getInt("portal.search.facete.provider.count", 3));
     	
     	if(selectedProviders != null && selectedProviders.size() > 0){
-    		context.put("isProviderSelect", true);
+    		setFacetSelectionState(context, request, "isProviderSelect", true);
     		context.put("selectedProvider", selectedProviders);
     		context.put("unselectedProvider", providers);
     	} else{
-    		context.put("isProviderSelect", false);
+    		setFacetSelectionState(context, request, "isProviderSelect", false);
     		context.remove("selectedProvider");
     	}
 	}
@@ -1430,10 +1537,10 @@ public class UtilsFacete {
 		String doTime = (String) getAttributeFromSession(request, "doTime");
 		
 		if(doTime != null && doTime.length() > 0){
-			context.put("isTimeSelect", true);
+			setFacetSelectionState(context, request, "isTimeSelect", true);
 			context.put("doTime", doTime);
 		}else{
-			context.put("isTimeSelect", false);
+			setFacetSelectionState(context, request, "isTimeSelect", false);
 		}
 	}
 	
@@ -1478,7 +1585,6 @@ public class UtilsFacete {
 	}
 	
 	/***************************** KARTE ***********************************************/
-	
 	private static void setFaceteQueryParamsMap(ArrayList<IngridDocument> list, PortletRequest request) {
 		IngridDocument facete = new IngridDocument();
         ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
@@ -1487,7 +1593,8 @@ public class UtilsFacete {
 		if(selectedMap != null){
 			ArrayList<String> coordOptions = (ArrayList<String>) selectedMap.get("coordOptions");
 			HashMap<String, String> webmapclientCoords = (HashMap<String, String>) selectedMap.get("webmapclientCoords");
-			if(coordOptions != null && webmapclientCoords != null){
+			if(coordOptions != null && coordOptions.size() > 0 
+					&& webmapclientCoords != null && webmapclientCoords.size() > 0){
 				for(int i=0; i<coordOptions.size(); i++){
 					String coordOption = coordOptions.get(i);
 					
@@ -1652,11 +1759,11 @@ public class UtilsFacete {
 		HashMap selectedMap = (HashMap) getAttributeFromSession(request, SELECTED_MAP);
 
 		if(selectedMap != null && selectedMap.size() > 0){
-        	context.put("isMapSelect", true);
+			setFacetSelectionState(context, request, "isMapSelect", true);
         	context.put("selectedMap", selectedMap);
         	context.put("elementsMap", getAttributeFromSession(request, ELEMENTS_MAP));
         }else{
-        	context.put("isMapSelect", false);
+        	setFacetSelectionState(context, request, "isMapSelect", false);
         }
         context.put("webmapDebugMode", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_WEBMAPCLIENT_DEBUG, false));
 	}
@@ -1934,9 +2041,9 @@ public class UtilsFacete {
         if(geothesaurusSelectTopicsSorted != null && geothesaurusSelectTopicsSorted.size() > 0){
         	
         	context.put("geothesaurusSelectTopics", geothesaurusSelectTopicsSorted);
-            context.put("isGeothesaurusSelect", true);
+        	setFacetSelectionState(context, request, "isGeothesaurusSelect", true);
         }else{
-        	context.put("isGeothesaurusSelect", false);
+        	setFacetSelectionState(context, request, "isGeothesaurusSelect", false);
         }
         if(getAttributeFromSession(request, GEOTHESAURUS_DO) != null){
         	context.put("doGeothesaurus", getAttributeFromSession(request, GEOTHESAURUS_DO));
@@ -2181,10 +2288,10 @@ public class UtilsFacete {
         context.put("list_size", getAttributeFromSession(request, THESAURUS_LIST_SIZE));
         ArrayList<HashMap<String, String>> thesaurusSelectTopics = (ArrayList<HashMap<String, String>>) getAttributeFromSession(request, THESAURUS_SELECTED_TOPICS);
         if(thesaurusSelectTopics != null && thesaurusSelectTopics.size() > 0){
-        	context.put("isThesaurusSelect", true);
+        	setFacetSelectionState(context, request, "isThesaurusSelect", true);
         	context.put("thesaurusSelectTopics", getAttributeFromSession(request, THESAURUS_SELECTED_TOPICS));
         }else{
-        	context.put("isThesaurusSelect", false);
+        	setFacetSelectionState(context, request, "isThesaurusSelect", false);
         }
         context.put("doThesaurus", getAttributeFromSession(request, THESAURUS_DO));
         context.put("thesaurusTerm", getAttributeFromSession(request, THESAURUS_TERM));
@@ -2387,6 +2494,7 @@ public class UtilsFacete {
 		}
 		
 		if(attribute != null){
+			setAttributeToSession(request, "doAddAttributeInput", attribute, true);
 			setAttributeToSession(request, "doAddAttribute", attribute, true);
 		}
 	}
@@ -2394,11 +2502,12 @@ public class UtilsFacete {
 	private static void setParamsToContextAttribute (RenderRequest request, Context context){
 		HashMap<String, String>  attribute = (HashMap<String, String>) getAttributeFromSession(request, "doAddAttribute");
 		if(attribute != null && attribute.size() > 0 ){
-			context.put("isAttributeSelect", true);
+			setFacetSelectionState(context, request, "isAttributeSelect", true);
 			context.put("doAddAttribute", getAttributeFromSession(request, "doAddAttribute"));	
 		}else{
-			context.put("isAttributeSelect", false);
+			setFacetSelectionState(context, request, "isAttributeSelect", false);
 		}
+		context.put("doAddAttributeInput", getAttributeFromSession(request, "doAddAttributeInput"));
 	}
 	
 	private static void addToQueryAttribute(PortletRequest request, IngridQuery query) {
@@ -2475,18 +2584,19 @@ public class UtilsFacete {
 		
 		if(areaAddress != null){
 			setAttributeToSession(request, "doAddAreaAddress", areaAddress, true);
+			setAttributeToSession(request, "doAddAreaAddressInput", areaAddress, true);
 		}
 	}
 	
 	private static void setParamsToContextAreaAddress (RenderRequest request, Context context){
 		HashMap<String, String> areaAddress = (HashMap<String, String>) getAttributeFromSession(request, "doAddAreaAddress");
 		if(areaAddress != null && areaAddress.size() > 0 ){
-			context.put("isAreaAddressSelect", true);
+			setFacetSelectionState(context, request, "isAreaAddressSelect", true);
 			context.put("doAddAreaAddress", getAttributeFromSession(request, "doAddAreaAddress"));	
 		}else{
-			context.put("isAreaAddressSelect", false);
+			setFacetSelectionState(context, request, "isAreaAddressSelect", false);
 		}
-		 
+		context.put("doAddAreaAddressInput", getAttributeFromSession(request, "doAddAreaAddressInput"));
 	}
 	
 	private static void addToQueryAreaAddress(PortletRequest request, IngridQuery query) {
@@ -2509,7 +2619,6 @@ public class UtilsFacete {
 	/***************************** Funktionen ****************************************/
 	
 	private static void removeAttributeFromSession(PortletRequest request, String key){
-		
 		request.getPortletSession().removeAttribute(key, PortletSessionImpl.APPLICATION_SCOPE);
 	}
 	
@@ -2518,7 +2627,6 @@ public class UtilsFacete {
 	}
 	
 	private static void setAttributeToSession(PortletRequest request, String key, Object value, boolean isSelection){
-
 		ArrayList<String> faceteSessionKeys = (ArrayList<String>) request.getPortletSession().getAttribute("faceteSessionKeys");
 		
 		if(faceteSessionKeys == null){
@@ -2552,6 +2660,45 @@ public class UtilsFacete {
 	private static Object getAttributeFromSession(PortletRequest request, String key){
 		
 		return request.getPortletSession().getAttribute(key, PortletSessionImpl.APPLICATION_SCOPE);
+	}
+	
+private static void general(ActionRequest request) {
+		
+		String doRemoveAll = request.getParameter("doRemoveAll");
+		String doRemoveLast = request.getParameter("doRemoveLast");
+		
+		if(doRemoveAll != null){
+			removeAllFaceteSelections(request);
+			removeFaceteElementsFromSession(request);
+		}
+		
+		if(doRemoveLast != null){
+			removeLastFaceteSelection(request);
+		}
+	}
+	
+	public static void removeAllFaceteSelections(PortletRequest request){
+		ArrayList<String> faceteSessionKeys = (ArrayList<String>) request.getPortletSession().getAttribute("faceteSessionKeys");
+		if(faceteSessionKeys != null){
+			for(int i=0; i < faceteSessionKeys.size(); i++){
+				removeAttributeFromSession(request, faceteSessionKeys.get(i));
+			}
+		}
+		removeAttributeFromSession(request, "faceteSessionKeys");
+		removeAttributeFromSession(request, "faceteLastSelection");
+		removeAttributeFromSession(request, "facetSelectionState");
+		removeFaceteElementsFromSession(request);
+	}
+	
+	public static void removeLastFaceteSelection(ActionRequest request) {
+
+		HashMap faceteLastSelection = (HashMap) request.getPortletSession().getAttribute("faceteLastSelection");
+		if(faceteLastSelection != null){
+			for (Iterator<String> iterator = faceteLastSelection.keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				removeAttributeFromSession(request, key);
+			}
+		}
 	}
 	
 	private static void removeFaceteElementsFromSession(PortletRequest request){
@@ -2665,40 +2812,34 @@ public class UtilsFacete {
 		}
 	}
 	
-	private static void removeAllFaceteSelections(PortletRequest request){
-		ArrayList<String> faceteSessionKeys = (ArrayList<String>) request.getPortletSession().getAttribute("faceteSessionKeys");
-		if(faceteSessionKeys != null){
-			for(int i=0; i < faceteSessionKeys.size(); i++){
-				removeAttributeFromSession(request, faceteSessionKeys.get(i));
-			}
+	private static void setFacetSelectionState(Context context, PortletRequest request, String key, boolean value) {
+		context.put(key, value);
+		PortletSession ps = request.getPortletSession();
+		HashMap<String, Boolean> facetSelectionState = (HashMap<String, Boolean>) ps.getAttribute("facetSelectionState");
+		if(facetSelectionState == null){
+			facetSelectionState = new HashMap<String, Boolean>();
 		}
-		removeAttributeFromSession(request, "faceteSessionKeys");
+		facetSelectionState.put(key, value);
+		ps.setAttribute("facetSelectionState", facetSelectionState, PortletSessionImpl.APPLICATION_SCOPE);
 	}
 	
-	private static void general(ActionRequest request) {
-		
-		String doRemoveAll = request.getParameter("doRemoveAll");
-		String doRemoveLast = request.getParameter("doRemoveLast");
-		
-		if(doRemoveAll != null){
-			removeAllFaceteSelections(request);
-			removeFaceteElementsFromSession(request);
-		}
-		
-		if(doRemoveLast != null){
-			removeLastFaceteSelection(request);
-		}
+	private static HashMap<String, Boolean> getFacetSelectionState(PortletRequest request){
+		PortletSession ps = request.getPortletSession();
+		HashMap<String, Boolean> facetSelectionState = (HashMap<String, Boolean>) ps.getAttribute("facetSelectionState", PortletSessionImpl.APPLICATION_SCOPE);
+		return facetSelectionState;
 	}
-
-	private static void removeLastFaceteSelection(ActionRequest request) {
-
-		HashMap faceteLastSelection = (HashMap) request.getPortletSession().getAttribute("faceteLastSelection");
-		if(faceteLastSelection != null){
-			for (Iterator<String> iterator = faceteLastSelection.keySet().iterator(); iterator.hasNext();) {
-				String key = iterator.next();
-				removeAttributeFromSession(request, key);
-			}
-		}
+	
+	private static boolean isFacetSelection(PortletRequest request){
+		HashMap<String, Boolean> facetSelectionState = getFacetSelectionState(request);
+    	boolean isFacetSelect = false;
+    	for (Iterator<String> iterator = facetSelectionState.keySet().iterator(); iterator.hasNext();) {
+    		String key = iterator.next();
+    		if(facetSelectionState.get(key)){
+    			isFacetSelect = true;
+    			break;
+    		}
+    	}
+		return isFacetSelect;
 	}
 }
 
