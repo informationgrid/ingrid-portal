@@ -38,22 +38,22 @@
             }
         </script>
         
-		<script src='/ingrid-portal-mdek-application/dwr/interface/CatalogService.js'></script>
-		<script src='/ingrid-portal-mdek-application/dwr/interface/TreeService.js'></script>
-		<script src='/ingrid-portal-mdek-application/dwr/interface/ObjectService.js'></script>
-		<script src='/ingrid-portal-mdek-application/dwr/interface/AddressService.js'></script>
-		<script src='/ingrid-portal-mdek-application/dwr/interface/SecurityService.js'></script>
-		<script src='/ingrid-portal-mdek-application/dwr/interface/SNSService.js'></script>
-		<script src='/ingrid-portal-mdek-application/dwr/interface/QueryService.js'></script>
-		<script src='/ingrid-portal-mdek-application/dwr/interface/HelpService.js'></script>
-		<script src='/ingrid-portal-mdek-application/dwr/interface/CTService.js'></script>
-		<script src='/ingrid-portal-mdek-application/dwr/interface/HttpService.js'></script>
-		<script src='/ingrid-portal-mdek-application/dwr/interface/GetCapabilitiesService.js'></script>
-		<script src='/ingrid-portal-mdek-application/dwr/interface/ImportService.js'></script>
-		<script src='/ingrid-portal-mdek-application/dwr/interface/ExportService.js'></script>
-		<script src='/ingrid-portal-mdek-application/dwr/interface/CatalogManagementService.js'></script>
-        <script src='/ingrid-portal-mdek-application/dwr/interface/UtilityService.js'></script>
-<!--         <script src='/ingrid-portal-mdek-application/dwr/interface/UserRepoManager.js'></script> -->
+		<script src='dwr/interface/CatalogService.js'></script>
+		<script src='dwr/interface/TreeService.js'></script>
+		<script src='dwr/interface/ObjectService.js'></script>
+		<script src='dwr/interface/AddressService.js'></script>
+		<script src='dwr/interface/SecurityService.js'></script>
+		<script src='dwr/interface/SNSService.js'></script>
+		<script src='dwr/interface/QueryService.js'></script>
+		<script src='dwr/interface/HelpService.js'></script>
+		<script src='dwr/interface/CTService.js'></script>
+		<script src='dwr/interface/HttpService.js'></script>
+		<script src='dwr/interface/GetCapabilitiesService.js'></script>
+		<script src='dwr/interface/ImportService.js'></script>
+		<script src='dwr/interface/ExportService.js'></script>
+		<script src='dwr/interface/CatalogManagementService.js'></script>
+        <script src='dwr/interface/UtilityService.js'></script>
+<!--         <script src='dwr/interface/UserRepoManager.js'></script> -->
 	
 		<script type="text/javascript" src="js/config.js"></script>
 		<script type="text/javascript" src="js/message.js"></script>

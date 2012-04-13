@@ -8,7 +8,7 @@
     <meta name="author" content="wemove digital solutions" />
     <meta name="copyright" content="wemove digital solutions GmbH" />
     
-    <script src="/ingrid-portal-mdek-application/js/jsLint/fullwebjslint.js"></script>
+    <script src="js/jsLint/fullwebjslint.js"></script>
     
 <script type="text/javascript">
 	dojo.require("dijit.form.Select");

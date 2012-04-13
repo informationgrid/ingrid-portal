@@ -3,7 +3,7 @@
 <html>
 <head>
 
-<script src='/ingrid-portal-mdek-application/dwr/interface/BackendService.js'></script>
+<script src='dwr/interface/BackendService.js'></script>
 
 <script type="text/javascript">
 dojo.require("dijit.ProgressBar");

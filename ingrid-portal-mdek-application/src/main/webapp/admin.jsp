@@ -50,9 +50,9 @@
         
         <script type='text/javascript' src='dwr/engine.js'></script>
         <script type='text/javascript' src='dwr/util.js'></script>
-        <script src='/ingrid-portal-mdek-application/dwr/interface/SecurityService.js'></script>
-        <script src='/ingrid-portal-mdek-application/dwr/interface/UserRepoManager.js'></script>
-        <script src='/ingrid-portal-mdek-application/dwr/interface/CatalogManagementService.js'></script>
+        <script src='dwr/interface/SecurityService.js'></script>
+        <script src='dwr/interface/UserRepoManager.js'></script>
+        <script src='dwr/interface/CatalogManagementService.js'></script>
         
         <script type="text/javascript">
             var previousContent = "welcomeDiv";

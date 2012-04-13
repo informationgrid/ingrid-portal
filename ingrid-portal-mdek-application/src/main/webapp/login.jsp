@@ -25,7 +25,7 @@
     <head>
         <script type='text/javascript' src='dwr/engine.js'></script>
         <script type='text/javascript' src='dwr/util.js'></script>
-        <script src='/ingrid-portal-mdek-application/dwr/interface/SecurityService.js'></script>
+        <script src='dwr/interface/SecurityService.js'></script>
         
         <script type="text/javascript">
             // only allow to login if portal is not connected

@@ -3,8 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
-        <script src='/ingrid-portal-mdek-application/dwr/interface/CatalogService.js'>
-        </script>
         <script type="text/javascript">
             dojo.require("dijit.form.Select");
 			dojo.require("dijit.form.CheckBox");
