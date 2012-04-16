@@ -1777,25 +1777,25 @@ public class UtilsFacete {
 				ArrayList<String> coordOptions = (ArrayList<String>) selectedMap.get("coordOptions");
 		    	if(coordOptions != null && coordOptions.size() > 0){
 		    		ClauseQuery cq = new ClauseQuery(true, false);
-		    		for(int i=0; i < coordOptions.size(); i++){
-			    		ClauseQuery cqCoord = null;
-			    		switch (coordOptions.size()) {
-						case 1:
-							cqCoord = new ClauseQuery(true, false);
-							break;
-
-						default:
-							cqCoord = new ClauseQuery(false, false);
-							break;
-						}
-						cqCoord.addField(new FieldQuery(true, false, "x1", webmapclientCoords.get("x1")));
-			    		cqCoord.addField(new FieldQuery(true, false, "y1", webmapclientCoords.get("y1")));
-			    		cqCoord.addField(new FieldQuery(true, false, "x2", webmapclientCoords.get("x2")));
-			    		cqCoord.addField(new FieldQuery(true, false, "y2", webmapclientCoords.get("y2")));
-			    		cqCoord.addField(new FieldQuery(true, false, "coord", coordOptions.get(i)));
-			            cq.addClause(cqCoord);
-			    	}
-		    		query.addClause(cq);
+		    		if(coordOptions.size() == 1) {
+						cq.addField(new FieldQuery(true, false, "x1", webmapclientCoords.get("x1")));
+			    		cq.addField(new FieldQuery(true, false, "y1", webmapclientCoords.get("y1")));
+			    		cq.addField(new FieldQuery(true, false, "x2", webmapclientCoords.get("x2")));
+			    		cq.addField(new FieldQuery(true, false, "y2", webmapclientCoords.get("y2")));
+			    		cq.addField(new FieldQuery(true, false, "coord", coordOptions.get(0)));
+			    		query.addClause(cq);
+		    		}else{
+		    			for(int i=0; i<coordOptions.size();i++){
+		    				ClauseQuery coordQuery = new ClauseQuery(false, false);
+		    				coordQuery.addField(new FieldQuery(true, false, "x1", webmapclientCoords.get("x1")));
+		    				coordQuery.addField(new FieldQuery(true, false, "y1", webmapclientCoords.get("y1")));
+		    				coordQuery.addField(new FieldQuery(true, false, "x2", webmapclientCoords.get("x2")));
+		    				coordQuery.addField(new FieldQuery(true, false, "y2", webmapclientCoords.get("y2")));
+		    				coordQuery.addField(new FieldQuery(true, false, "coord", coordOptions.get(i)));
+				    		cq.addClause(coordQuery);
+		    			}
+		    			query.addClause(cq);
+					}
 		    	}
 		    }
 		}
