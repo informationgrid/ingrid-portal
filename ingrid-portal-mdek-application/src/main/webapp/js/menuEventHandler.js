@@ -632,7 +632,7 @@ menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
         //    so we can see if the change operation was successful.
 
         var changeObjDef = new dojo.Deferred();
-        changeObjDef.addCallback(function() {
+        changeObjDef.addCallback(function(res) {
             // This function is called when the node was successfully changed
 
             if (tree.selectedNode == selectedNode) {
@@ -654,7 +654,12 @@ menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
                 dojo.publish("/loadRequest", [{id: selectedNode.id[0], appType: selectedNode.item.nodeAppType[0], resultHandler:d}]);
             }
 
-            tree.refreshChildren(selectedNode);
+            // update tree data but do NOT select node, to avoid display of right content if not initialized yet ! 
+            udkDataProxy._updateTree(res, null, true);
+
+            if (selectedNode.isExpanded) {
+                tree.refreshChildren(selectedNode);
+            }
         });
         changeObjDef.addErrback(displayErrorMessage);
 

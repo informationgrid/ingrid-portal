@@ -2639,10 +2639,14 @@ udkDataProxy._initResponsibleUserAddressList = function(nodeData) {
 
 // Looks for the node widget with uuid = nodeData.uuid and updates the
 // tree data (label, type, etc.) according to the given nodeData
-udkDataProxy._updateTree = function(nodeData, oldUuid) {
+udkDataProxy._updateTree = function(nodeData, oldUuid, doNotSelectNode) {
 	console.debug("_updateTree("+nodeData.uuid+", "+oldUuid+")");
-	if (typeof(oldUuid) == "undefined") {
+	if (typeof(oldUuid) == "undefined" || oldUuid == null) {
 		oldUuid = nodeData.uuid;
+	}
+	var doSelectNode = true;
+	if (doNotSelectNode) {
+		doSelectNode = false;
 	}
 
 	var title = "";
@@ -2660,6 +2664,7 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 	// If we change the uuid (= widgetId) of a node the treeNode has to be created again
 	// because otherwise dojo doesn't 'register' the changed widgetId 
 	// Currently a changed uuid is only possible if a new Node is updated.
+	var node;
 	if (nodeData.uuid != oldUuid && oldUuid == "newNode") {
 		var oldWidget = dijit.byId(oldUuid);
 		var parent = oldWidget.getParent();
@@ -2693,15 +2698,15 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 		tree.model.store.save();
 		
 		var newNode = dijit.byId(nodeData.uuid);
+		node = newNode.item;
 		UtilTree.selectNode("dataTree", nodeData.uuid);
 		//if (!dojo.isIE)				
 		//	dojo.window.scrollIntoView(newNode.domNode);
-		dojo.publish("/selectNode", [{node: newNode.item}]);
 
 	} else {
 		//alert("Get widget: " + oldUuid);
 		// find the node ... check all children of tree for item.id == oldUuid!
-		var node = dijit.byId(oldUuid).item;
+		node = dijit.byId(oldUuid).item;
 		if (node) {
 			node.nodeDocType = [nodeData.nodeDocType];
             node.publicationCondition = [nodeData.extraInfoPublishArea];
@@ -2719,10 +2724,13 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 			node.userWriteTreePermission = [nodeData.writeTreePermission];
             node.userWriteSubNodePermission = [nodeData.writeSubNodePermission];
 			node.userWriteSubTreePermission = [nodeData.writeSubTreePermission];
-			dojo.publish("/selectNode", [{node: node}]);
 		} else {
 			console.debug("Error in _updateTree: TreeNode widget not found. ID: "+nodeData.uuid);
 		}
+	}
+	
+	if (doSelectNode && node) {
+	    dojo.publish("/selectNode", [{node: node}]);
 	}
 }
 
