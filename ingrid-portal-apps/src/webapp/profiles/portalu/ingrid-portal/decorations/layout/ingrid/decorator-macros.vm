@@ -69,7 +69,7 @@
 <div id="identity" class="${langCode}motiv_mein_portal">
   #elseif($currentPage == "/service-contact-newsletter.psml")
 <div id="identity" class="${langCode}motiv_newsletter">
-  #elseif($currentPage == "/main-search.psml" && ($request.getParameter("action") == "doSearch"))
+  #elseif($currentPage == "/main-search.psml" && ($request.getParameter("q")))
 <div id="identity" class="${langCode}motiv_treffer">
   #elseif($currentPage == "/main-search.psml")
 <div id="identity" class="${langCode}motiv_suche">
