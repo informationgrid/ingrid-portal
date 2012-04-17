@@ -618,7 +618,6 @@ menuEventHandler.handleDelete = function(msg) {
 menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
     // Get the selected node from the message
     var selectedNode = getSelectedNode(msg);
-    var tree = dijit.byId("dataTree");
 
     console.debug("changePublicationCondition to " + newPubCondition);
     console.debug(selectedNode);
@@ -634,7 +633,7 @@ menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
         var changeObjDef = new dojo.Deferred();
         changeObjDef.addCallback(function(res) {
             // This function is called when the node was successfully changed
-
+            var tree = dijit.byId("dataTree");
             if (tree.selectedNode == selectedNode || (tree.selectedNode && _isChildOf(tree.selectedNode, selectedNode))) {
                 // reload the current displayed node (tree.selectedNode) if it is the one changed or it is a subnode of the one changed (maybe also applied to subnodes !)
                 var d = new dojo.Deferred();
