@@ -635,23 +635,24 @@ menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
         changeObjDef.addCallback(function(res) {
             // This function is called when the node was successfully changed
 
-            if (tree.selectedNode == selectedNode) {
-                // reload node if currently displayed
+            if (tree.selectedNode == selectedNode || (tree.selectedNode && _isChildOf(tree.selectedNode, selectedNode))) {
+                // reload the current displayed node (tree.selectedNode) if it is the one changed or it is a subnode of the one changed (maybe also applied to subnodes !)
                 var d = new dojo.Deferred();
                 d.addCallback(function(){               
-                    UtilTree.selectNode("dataTree", selectedNode.id[0], true);
-                    dojo.publish("/selectNode", [{node: selectedNode.item}]);
-                    dojo.window.scrollIntoView(selectedNode.domNode);
+                    UtilTree.selectNode("dataTree", tree.selectedNode.id[0], true);
+                    dojo.publish("/selectNode", [{node: tree.selectedNode.item}]);
+                    dojo.window.scrollIntoView(tree.selectedNode.domNode);
                 });
                 d.addErrback(function(msg){
                     dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
                     console.debug(msg);
                 });
 
-                udkDataProxy.resetDirtyFlag();
+                // do NOT reset dirty flag, if the node was edited, ask user to save before reload !
+//                udkDataProxy.resetDirtyFlag();
 
-                console.debug("Publishing event: /loadRequest("+selectedNode.id+", "+selectedNode.item.nodeAppType+")");
-                dojo.publish("/loadRequest", [{id: selectedNode.id[0], appType: selectedNode.item.nodeAppType[0], resultHandler:d}]);
+                console.debug("Publishing event: /loadRequest("+tree.selectedNode.id+", "+tree.selectedNode.item.nodeAppType+")");
+                dojo.publish("/loadRequest", [{id: tree.selectedNode.id[0], appType: tree.selectedNode.item.nodeAppType[0], resultHandler:d}]);
             }
 
             // update tree data but do NOT select node, to avoid display of right content if not initialized yet ! 
