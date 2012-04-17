@@ -633,27 +633,40 @@ menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
 
         var changeObjDef = new dojo.Deferred();
         changeObjDef.addCallback(function() {
-            // This function is called when the user has selected yes and the node was successfully changed
-/*
-            var def = new dojo.Deferred();
-            def.addErrback(function(msg){
-                dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
-                console.debug(msg);
-            });
-*/
-            // DO NOT reset dirty flag, selected node may have changes !
-//            udkDataProxy.resetDirtyFlag();
+            // This function is called when the node was successfully changed
 
-//            console.debug("Publishing event: /loadRequest("+selectedNode.id+", "+selectedNode.item.nodeAppType+")");
-//            dojo.publish("/loadRequest", [{id: selectedNode.id[0], appType: selectedNode.item.nodeAppType[0], resultHandler:def}]);
-            
+            if (tree.selectedNode == selectedNode) {
+                // reload node if currently displayed
+                var d = new dojo.Deferred();
+                d.addCallback(function(){               
+                    UtilTree.selectNode("dataTree", selectedNode.id[0], true);
+                    dojo.publish("/selectNode", [{node: selectedNode.item}]);
+                    dojo.window.scrollIntoView(selectedNode.domNode);
+                });
+                d.addErrback(function(msg){
+                    dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
+                    console.debug(msg);
+                });
+
+                udkDataProxy.resetDirtyFlag();
+
+                console.debug("Publishing event: /loadRequest("+selectedNode.id+", "+selectedNode.item.nodeAppType+")");
+                dojo.publish("/loadRequest", [{id: selectedNode.id[0], appType: selectedNode.item.nodeAppType[0], resultHandler:d}]);
+            }
+
             tree.refreshChildren(selectedNode);
         });
         changeObjDef.addErrback(displayErrorMessage);
 
         // Tell the backend to change the selected node.
-        console.debug("Publishing event: /changePublicationCondition("+selectedNode.id+", "+newPubCondition+")");
-        dojo.publish("/changePublicationCondition", [{id: selectedNode.id[0], publicationCondition: newPubCondition, resultHandler: changeObjDef}]);
+        var forcePubCondition = false;
+        var useWorkingCopy = !("V" == selectedNode.item.workState[0]);
+        console.debug("Publishing event: /changePublicationCondition("+selectedNode.id+", useWorkingCopy="+useWorkingCopy+", newPubCondition="+newPubCondition+", forcePubCondition="+forcePubCondition+")");
+        dojo.publish("/changePublicationCondition", [{id: selectedNode.id[0],
+            useWorkingCopy: useWorkingCopy,
+            publicationCondition: newPubCondition,
+            forcePublicationCondition: forcePubCondition,
+            resultHandler: changeObjDef}]);
     }
 }
 

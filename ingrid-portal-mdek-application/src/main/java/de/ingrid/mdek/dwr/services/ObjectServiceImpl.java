@@ -223,6 +223,19 @@ public class ObjectServiceImpl implements ObjectService {
 		}
 	}
 
+	public MdekDataBean saveObjectPublicationCondition(String uuid, Boolean useWorkingCopy, Integer newPublicationCondition, boolean forcePublicationCondition) {
+		log.debug("saveObjectPublicationCondition()");
+
+		// first load object
+		MdekDataBean data = getNodeData(uuid, "O", useWorkingCopy);
+		
+		// then change publication condition
+		data.setExtraInfoPublishArea(newPublicationCondition);
+
+		// then save
+		return saveNodeData(data, useWorkingCopy, forcePublicationCondition);
+	}
+
 	public void updateObjectTitle(String uuid, String newTitle) {
 		try {
 			objectRequestHandler.updateObjectTitle(uuid, newTitle);

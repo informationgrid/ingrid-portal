@@ -9,6 +9,7 @@ public class TreeNodeBean {
 
 	private Boolean isFolder;
 	private Boolean isPublished;
+	private String workState;
 	private Boolean isMarkedDeleted;
 
 	private Boolean userWritePermission;
@@ -68,6 +69,14 @@ public class TreeNodeBean {
 
 	public void setIsPublished(Boolean isPublished) {
 		this.isPublished = isPublished;
+	}
+
+	public String getWorkState() {
+		return workState;
+	}
+
+	public void setWorkState(String workState) {
+		this.workState = workState;
 	}
 
 	public Boolean getIsMarkedDeleted() {

@@ -363,7 +363,7 @@
 	"operation.error.addressTypeConflict":"This action can not be carried out with this address type!",
     "operation.error.addressHasNoEmail":"Could not store address. The address must have at lease one email address!",
 	"operation.error.userHasRunningJobs":"Please cancel the current running job before starting a new one.",
-	"operation.hint.publicationConditionSaveHint":"The subtree contains objects with an incompatible publication condition. By saving this object all subobjects will be modified. Do you really want to continue?",
+	"operation.hint.publicationConditionSaveHint":"The subtree contains objects with an incompatible publication condition (in the published versions). By saving this object all published versions of subobjects will be modified. Do you really want to continue?",
 	"operation.hint.publicationConditionMoveHint":"The subtree contains objects with an incompatible publication condition. By moving this object all subobjects will be modified. Do you really want to continue?",
 	"operation.hint.forceDeleteObjectHint":"The object '${0}' is referenced by other MD-S. Do you really want to delete this object?",
 	"operation.hint.forceDeleteAddressHint":"The address '${0}' is referenced by other MD-S. Do you really want to delete this address?",

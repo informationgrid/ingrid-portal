@@ -88,6 +88,13 @@
  *     nodeUuid - The Uuid of the target Address
  *     resultHandler - A dojo.Deferred which is called when the request has been processed
  *     ignoreDirtyFlag - boolean value indicating if the dirty flag should be ignored
+ *     
+ *   topic = '/changePublicationCondition' - argument: {id: nodeUuid, useWorkingCopy: bool, publicationCondition: integer, forcePublicationCondition: bool, resultHandler: deferred}
+ *     nodeUuid - The Uuid of the object which should be changed
+ *     useWorkingCopy - save (true) or publish (false) the object
+ *     publicationCondition - new PublicationCondition (1-3)
+ *     forcePublicationCondition - Tell the backend to adjust the publication condition of published(!) subnodes
+ *     resultHandler - A dojo.Deferred which is called when the request has been processed
  */
 
 
@@ -129,6 +136,7 @@ dojo.addOnLoad(function()
     dojo.subscribe("/saveRequest", udkDataProxy, "handleSaveRequest");
     dojo.subscribe("/deleteRequest", udkDataProxy, "handleDeleteRequest");
     dojo.subscribe("/deleteWorkingCopyRequest", udkDataProxy, "handleDeleteWorkingCopyRequest");
+    dojo.subscribe("/changePublicationCondition", udkDataProxy, "handleChangePublicationCondition");
 	
 	dojo.subscribe("/selectNode", igeEvents, "handleSelectNode");
     
@@ -614,7 +622,7 @@ udkDataProxy._handleSaveObjectRequest = function(msg) {
 //					dialog.showPage(message.get("general.warning"), "mdek_pubCond_dialog.html", 382, 220, true, {operation:"SAVE", resultHandler:onForceSaveDef});
 					var displayText = message.get("operation.hint.publicationConditionSaveHint");
 					dialog.show(message.get("general.warning"), displayText, dialog.WARNING, [
-                    	{ caption: message.get("general.cancel"),  action: function() { onForceSaveDef.errback(); } },
+                    	{ caption: message.get("general.cancel"),  action: function() { /**onForceSaveDef.errback();*/ } },
                     	{ caption: message.get("general.save"), action: function() { onForceSaveDef.callback(); } }
 					]);
 
@@ -679,7 +687,7 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 //					dialog.showPage(message.get("general.warning"), "mdek_pubCond_dialog.html", 382, 220, true, {operation:"SAVE", resultHandler:onForcePublishDef});
 					var displayText = message.get("operation.hint.publicationConditionSaveHint");
 					dialog.show(message.get("general.warning"), displayText, dialog.WARNING, [
-                    	{ caption: message.get("general.cancel"),  action: function() { onForcePublishDef.errback(); } },
+                    	{ caption: message.get("general.cancel"),  action: function() { /**onForcePublishDef.errback();*/ } },
                     	{ caption: message.get("general.save"), action: function() { onForcePublishDef.callback(); } }
 					], 382, 220);
 
@@ -902,6 +910,51 @@ udkDataProxy.handleDeleteRequest = function(msg) {
 			}
 		);
 	}
+}
+
+udkDataProxy.handleChangePublicationCondition = function(msg) {
+    var forcePubCondition = false;
+    if (msg && typeof(msg.forcePublicationCondition) != "undefined") {
+        forcePubCondition = msg.forcePublicationCondition;
+    }
+
+    var useWorkingCopy = true;
+    if (msg && typeof(msg.useWorkingCopy) != "undefined") {
+        useWorkingCopy = msg.useWorkingCopy;
+    }
+
+    console.debug("udkDataProxy calling ObjectService.saveObjectPublicationCondition("+msg.id+", useWorkingCopy="+useWorkingCopy+", forcePubCondition="+forcePubCondition+")");
+    ObjectService.saveObjectPublicationCondition(msg.id, useWorkingCopy, msg.publicationCondition, forcePubCondition, {
+        preHook: UtilDWR.enterLoadingState,
+        postHook: UtilDWR.exitLoadingState,
+        callback: function(res){msg.resultHandler.callback(res);},
+        errorHandler:function(err) {
+            UtilDWR.exitLoadingState();
+            // Check for the publication condition error
+            if (err.indexOf("SUBTREE_HAS_LARGER_PUBLICATION_CONDITION") != -1) {
+                var onForceSaveDef = new dojo.Deferred();                        
+                // If the user wants to save the object anyway, set force save and start another request
+                onForceSaveDef.addCallback(function() {
+                    msg.forcePublicationCondition = true;
+                    udkDataProxy.handleChangePublicationCondition(msg);
+                });
+                onForceSaveDef.addErrback(function(err) {
+                    msg.resultHandler.errback(err);
+                });
+
+                // Display the 'publication condition' dialog with the attached resultHandler
+                var displayText = message.get("operation.hint.publicationConditionSaveHint");
+                dialog.show(message.get("general.warning"), displayText, dialog.WARNING, [
+                    { caption: message.get("general.cancel"),  action: function() { /**onForceSaveDef.errback();*/ } },
+                    { caption: message.get("general.save"), action: function() { onForceSaveDef.callback(); } }
+                ]);
+
+            } else {
+                console.debug("Error in js/eventSubscriber.js: udkDataProxy.handleChangePublicationCondition:");
+                msg.resultHandler.errback(err);
+            }
+        }
+    });
 }
 
 udkDataProxy.handleCanCutObjectRequest = function(msg) {

@@ -558,6 +558,7 @@ public class MdekMapper implements DataMapperInterface {
         treeNode.setObjectClass((Integer) doc.get(MdekKeys.CLASS));
         treeNode.setIsFolder((Boolean) doc.get(MdekKeys.HAS_CHILD));
         treeNode.setIsPublished((Boolean) doc.get(MdekKeys.IS_PUBLISHED));
+        treeNode.setWorkState((String) doc.get(MdekKeys.WORK_STATE)); 
         boolean markedDeleted = doc.get(MdekKeys.MARK_DELETED) == null ? false : ((String) doc.get(MdekKeys.MARK_DELETED)).equalsIgnoreCase("Y");
         treeNode.setIsMarkedDeleted(markedDeleted);
         List<IngridDocument> idcPermissions = (List<IngridDocument>) doc.get(MdekKeysSecurity.IDC_PERMISSIONS);
