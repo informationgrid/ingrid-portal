@@ -5,6 +5,7 @@ package de.ingrid.portal.forms;
 
 import javax.portlet.PortletRequest;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Utils;
 
 /**
@@ -95,9 +96,11 @@ public class ContactForm extends ActionForm {
             }
         }
 
-        if (!hasInput(FIELD_JCAPTCHA)) {
-            setError(FIELD_JCAPTCHA, "contact.error.noJCapture");
-            allOk = false;
+        if(PortalConfig.getInstance().getBoolean("portal.contact.enable.captcha", Boolean.TRUE)){
+        	if (!hasInput(FIELD_JCAPTCHA)) {
+                setError(FIELD_JCAPTCHA, "contact.error.noJCapture");
+                allOk = false;
+            }
         }
         
         return allOk;

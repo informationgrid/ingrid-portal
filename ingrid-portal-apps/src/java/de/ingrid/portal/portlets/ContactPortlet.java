@@ -73,6 +73,9 @@ public class ContactPortlet extends GenericVelocityPortlet {
         context.put("portalEmail", UtilsString.htmlescapeAll(PortalConfig.getInstance().getString(PortalConfig.EMAIL_CONTACT_FORM_RECEIVER,
                 "portalu@portalu.de")));
 
+        // enable captcha 
+        context.put("enableCaptcha", PortalConfig.getInstance().getBoolean("portal.contact.enable.captcha", Boolean.TRUE));
+
         // address after email
         Session session = HibernateUtil.currentSession();
         List entities = UtilsDB.getValuesFromDB(session.createCriteria(IngridCMS.class).add(
@@ -137,17 +140,21 @@ public class ContactPortlet extends GenericVelocityPortlet {
             //remenber that we need an id to validate!
             String sessionId = request.getPortletSession().getId();
             //retrieve the response
-            String response = request.getParameter("jcaptcha");
+            boolean enableCaptcha = PortalConfig.getInstance().getBoolean("portal.contact.enable.captcha", Boolean.TRUE);
+            
+            if(enableCaptcha){
+            	String response = request.getParameter("jcaptcha");
+            
             // Call the Service method
-             try {
-                 isResponseCorrect = CaptchaServiceSingleton.getInstance().validateResponseForID(sessionId,
-                         response);
-             } catch (CaptchaServiceException e) {
-                  //should not happen, may be thrown if the id is not valid
-             }
+				try {
+				    isResponseCorrect = CaptchaServiceSingleton.getInstance().validateResponseForID(sessionId,
+				            response);
+				} catch (CaptchaServiceException e) {
+				     //should not happen, may be thrown if the id is not valid
+				}
+            }
              
-             
-            if (isResponseCorrect){
+            if (isResponseCorrect || !enableCaptcha){
             	 try {
                      IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                              request.getLocale()));

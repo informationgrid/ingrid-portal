@@ -58,6 +58,7 @@ $contactIntroPostEmail
 		</p>
 #end
 
+#if($enableCaptcha)
 		<p>
             <label class="float_left col2left_incr"><br></label>
 #if ($actionForm.hasErrors() && !$actionForm.hasErrorInField("jcaptcha"))
@@ -80,6 +81,7 @@ $contactIntroPostEmail
 			
 			<span class="clearer"></span>
 		</p>
+#end
 		<span class="clearer"></span>
 	</div>
 	
