@@ -153,8 +153,6 @@
         		#renderTextLabelDuring($e)
         	#elseif($e.type=="textLabelLeft")
         		#renderTextLabelLeft($e)
-            #elseif($e.type=="textLabelAboveWithLink")
-                #renderTextLabelAboveWithLink($e)
         	#elseif($e.type=="line")
 				<div class="line"><hr /></div><br/>
 			#elseif($e.type=="space")
@@ -262,8 +260,6 @@
 		#renderTextLabelDuring($e)
 	#elseif($e.type=="textLabelLeft")
 		#renderTextLabelLeft($e)
-    #elseif($e.type=="textLabelAboveWithLink")
-        #renderTextLabelAboveWithLink($e)
 	#elseif($e.type=="line")
 		<div class="line"><hr /></div><br/>
 	#elseif($e.type=="space")
@@ -638,42 +634,23 @@
             #end
     		</tr>
     		#if($tool.hasContent($entry.link))
-    		<tr>
-        		<td class="text_label_left_title">
-    			</td>
-            	<td class="text_label_left_body">
-    				#renderLinkLine($entry.link)
-        		</td>
-            </tr>
-    		#end
+                #if($entry.linkLeft == true)
         </table>
-	</div>
-#end
-
-## Render label ABOVE text with additional link
-#macro (renderTextLabelAboveWithLink $entry)
-    <div class="width_two_thirds">
-        #if($entry.line == true)
-            #renderLine()
-        #end
-        #if($tool.hasContent($entry.title))
-            <p class="detail_entry_title">$entry.title</p>
-        #end
-        #if($tool.hasContent($entry.body))  
-            <p class="text_label_above_body">
-                #if($entry.body.type=="linkLine")
-                    #renderLinkLine($entry.body)
+                    #renderLinkLine($entry.link)
                 #else
-                    $entry.body
+            <tr>
+                <td class="text_label_left_title">
+                </td>
+                <td class="text_label_left_body">
+                    #renderLinkLine($entry.link)
+                </td>
+            </tr>
+        </table>
                 #end
-            </p>
-        #end
-        #if($tool.hasContent($entry.link))
-            <p class="text_label_above_body">
-                #renderLinkLine($entry.link)
-            </p>
-        #end
-    </div>
+            #else
+        </table>
+    		#end
+	</div>
 #end
 
 ## New function for KML
@@ -729,8 +706,6 @@
 				#renderTextLabelDuring($e)
 			#elseif($e.type=="textLabelLeft")
 				#renderTextLabelLeft($e)
-            #elseif($e.type=="textLabelAboveWithLink")
-                #renderTextLabelAboveWithLink($e)
 			#elseif($e.type=="image")
 				#renderImageLine($e)
 			#elseif($e.type=="section")

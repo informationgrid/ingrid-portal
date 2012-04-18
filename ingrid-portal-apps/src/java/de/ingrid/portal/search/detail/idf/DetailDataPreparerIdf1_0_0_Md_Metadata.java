@@ -1636,7 +1636,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 
 						HashMap elementCapabilities = new HashMap();
     					elementCapabilities.put("type", "textLabelLeft");
-//    					elementCapabilities.put("type", "textLabelAboveWithLink");
     					elementCapabilities.put("line", true);
 //    					elementCapabilities.put("body", value.split("\\?")[0].toString());
 
@@ -1669,6 +1668,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	    						elementMapLink.put("title", messages.getString("common.result.showMap"));
 	    						elementMapLink.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(urlValue));
     	  						elementCapabilities.put("link", elementMapLink);
+    	    					elementCapabilities.put("linkLeft", true);
     						}
 			        	} else {
 	    					// do not display "show in map" link if the map has access constraints
