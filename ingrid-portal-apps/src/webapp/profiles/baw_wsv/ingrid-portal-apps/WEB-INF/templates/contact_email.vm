@@ -1,0 +1,16 @@
+
+
+Thema: $!{map.get("user.area.of.profession")}
+
+Vorname: $!{map.get("user.name.given")}
+Name: $!{map.get("user.name.family")}
+Email: $!{map.get("user.business-info.online.email")}
+Dienststelle / Organisation: $!{map.get("user.employer")}
+Telefon: $!{map.get("user.business-info.telecom.telephone")}
+Email: $!{map.get("user.business-info.online.email")}
+
+
+Die folgende Nachricht wurde über das Kontaktformular versendet:
+
+$!{map.get("message.body")}
+

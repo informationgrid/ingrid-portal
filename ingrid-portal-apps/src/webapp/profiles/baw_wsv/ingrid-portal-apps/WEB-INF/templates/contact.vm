@@ -1,0 +1,91 @@
+$contactIntroPostEmail
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="contact" id="contact">
+	<div class="formbody formbody_border_style">
+#displayFormErrors()
+		<h3>
+			<label for="bemerkungen">#displayFieldLabel('message' "$MESSAGES.getString('contact.form.message')")</label>
+		</h3>
+		<textarea cols="60" rows="10" name="message" id="bemerkungen">#getFieldValue('message')</textarea>
+		<h3>$MESSAGES.getString('contact.form.required')</h3>
+				<p>
+			<label class="float_left col2left_incr" for="activity">$MESSAGES.getString('contact.form.activity')</label>
+			<select class="float_left inputstyle" size="1" id="activity" name="activity">
+				<option value="none" #getSelectedFlag('activity' 'none')>---</option>
+				<option value="schul" #getSelectedFlag('activity' 'schul')>$MESSAGES.getString('contact.report.email.area.of.profession.schul')</option>
+				<option value="hand" #getSelectedFlag('activity' 'hand')>$MESSAGES.getString('contact.report.email.area.of.profession.hand')</option>
+				<option value="umwe" #getSelectedFlag('activity' 'umwe')>$MESSAGES.getString('contact.report.email.area.of.profession.umwe')</option>
+				<option value="beho" #getSelectedFlag('activity' 'beho')>$MESSAGES.getString('contact.report.email.area.of.profession.beho')</option>
+				<option value="lehre" #getSelectedFlag('activity' 'lehre')>$MESSAGES.getString('contact.report.email.area.of.profession.lehre')</option>
+				<option value="univ" #getSelectedFlag('activity' 'univ')>$MESSAGES.getString('contact.report.email.area.of.profession.univ')</option>
+				<option value="medi" #getSelectedFlag('activity' 'medi')>$MESSAGES.getString('contact.report.email.area.of.profession.medi')</option>
+				<option value="ande" #getSelectedFlag('activity' 'ande')>$MESSAGES.getString('contact.report.email.area.of.profession.ande')</option>
+			</select>  
+			<span class="clearer"></span>
+		</p>
+		<p>
+			<label class="float_left col2left_incr" for="xx2">#displayFieldLabel('firstname' "$MESSAGES.getString('contact.form.firstname')")</label>
+			<input class="float_left col2right inputstyletext" type="text" id="xx2" name="firstname" value="#getFieldValue('firstname')"/>
+			<span class="clearer"></span>    			  
+		</p>
+		<p>
+			<label class="float_left col2left_incr" for="xx3">#displayFieldLabel('lastname' "$MESSAGES.getString('contact.form.lastname')")</label>
+			<input class="float_left col2right inputstyletext" type="text" id="xx3" name="lastname" value="#getFieldValue('lastname')"/>
+			<span class="clearer"></span>
+		</p>
+		<p>
+			<label class="float_left col2left_incr" for="xx6">#displayFieldLabel('email' "$MESSAGES.getString('contact.form.email')")</label>
+			<input class="float_left col2right inputstyletext" type="text" id="xx6" name="email" value="#getFieldValue('email')"/>
+			<span class="clearer"></span>
+		</p>
+		<p>
+			<label class="float_left col2left_incr" for="xx4">$MESSAGES.getString('contact.form.company')</label>
+			<input class="float_left col2right inputstyletext" type="text" id="xx4" name="company" value="#getFieldValue('company')"/>
+			<span class="clearer"></span>
+		</p>
+		<p>
+			<label class="float_left col2left_incr" for="xx5">$MESSAGES.getString('contact.form.phone')</label>
+			<input class="float_left col2right inputstyletext" type="text" id="xx5" name="phone" value="#getFieldValue('phone')"/>
+			<span class="clearer"></span>    			  
+		</p>
+
+#if ($enableNewsletter)		
+		<p>
+			<label class="float_left col2left_incr">$MESSAGES.getString('contact.form.newsletter')</label>
+			<input type="checkbox" id="chk1" name="newsletter" value="1" #getChecked('newsletter' '1')/>&nbsp;
+			<label for="chk1">$MESSAGES.getString('contact.form.newsletter.label')</label>
+			<span class="clearer"></span>
+		</p>
+#end
+
+		<p>
+            <label class="float_left col2left_incr"><br></label>
+#if ($actionForm.hasErrors() && !$actionForm.hasErrorInField("jcaptcha"))
+    		<image width=210px height=70px class="float_left" src="/ingrid-portal-apps/jcaptcha?keep">
+#else
+    		<image width=210px height=70px class="float_left" src="/ingrid-portal-apps/jcaptcha">
+#end    			
+	        <span class="clearer"></span>
+        </p>
+			
+		<p>
+            <label class="float_left col2left_incr"><br></label>
+            #renderInputButtonClass($MESSAGES.getString('common.form.button.reload') "font-size:90%;" "doRefresh" $MESSAGES.getString('common.form.button.reload.tooltip') "float_left")
+            <span class="clearer"></span>	
+		</p>
+		$action.setParameter("doRefresh",  "Refresh")
+    	<p>
+			<label class="float_left col2left_incr" for="xx7">#displayFieldLabel('jcaptcha' "$MESSAGES.getString('contact.jcaptcha.title')")</label>
+			<input class="float_left col2right inputstyletext" type="text" id="xx7" name="jcaptcha" value="#getFieldValue('jcaptcha')"/>
+			
+			<span class="clearer"></span>
+		</p>
+		<span class="clearer"></span>
+	</div>
+	
+	<div class="formfooter formfooter_border_style">
+		<div align="right">
+			#renderInputButtonClass($MESSAGES.getString('common.form.button.submit') "" "" $MESSAGES.getString('common.form.button.submit.tooltip') "float_right")
+		</div>
+	</div>
+</form>

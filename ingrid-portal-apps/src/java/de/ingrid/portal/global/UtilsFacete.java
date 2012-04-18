@@ -732,6 +732,7 @@ public class UtilsFacete {
 		if(selectedDatatypes != null && selectedDatatypes.size() > 0){
 			for(int i=0; i<selectedDatatypes.size(); i++){
 				String selectedDatatype = selectedDatatypes.get(i);
+				// Remove special data types depend of selected data type.  
 				if(elementsDatatypes != null && elementsDatatypes.size() > 0){
 					for (int j=0; j<elementsDatatypes.size(); j++) {
 						HashMap<String, String> elementsDatatype = elementsDatatypes.get(j);
@@ -855,13 +856,9 @@ public class UtilsFacete {
 			}
 			
 			if(isResearch){
-				// Grouping off
-				//query.addField(new FieldQuery(true, false, Settings.QFIELD_GROUPED, "grouped_off"));
 			}
 			
 			if(isLaw){
-				// Grouping off
-				//query.addField(new FieldQuery(true, false, Settings.QFIELD_GROUPED, "grouped_off"));
 			}
 			
 			if(isFis){
@@ -874,12 +871,11 @@ public class UtilsFacete {
 			}
 			
 			if(isMap){
-				//query.addField(new FieldQuery(true, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_SOURCE_METADATA));
-				//query.addField(new FieldQuery(true, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_SOURCE_WWW));
+				query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_SOURCE_METADATA));
+				query.addField(new FieldQuery(true, true, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_SOURCE_WWW));
 			}
 			
 			if(isTopic){
-				
 			}
         }else{
         	if(searchQuery != null){

@@ -215,6 +215,12 @@ public class ContactPortlet extends GenericVelocityPortlet {
 
                      String emailSubject = messages.getString("contact.report.email.subject");
 
+                     if(PortalConfig.getInstance().getBoolean("email.subject.add.topic", Boolean.FALSE)){
+                    	 if(cf.getInput(ContactForm.FIELD_ACTIVITY) != null && !cf.getInput(ContactForm.FIELD_ACTIVITY).equals("none")){
+                    		 emailSubject = emailSubject + " - " + messages.getString("contact.report.email.area.of.profession." + cf.getInput(ContactForm.FIELD_ACTIVITY));
+                    	 }
+                     }
+                     
                      String from = cf.getInput(ContactForm.FIELD_EMAIL);
                      String to = PortalConfig.getInstance().getString(PortalConfig.EMAIL_CONTACT_FORM_RECEIVER, "foo@bar.com");
 
