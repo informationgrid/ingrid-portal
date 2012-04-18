@@ -2640,7 +2640,7 @@ udkDataProxy._initResponsibleUserAddressList = function(nodeData) {
 // Looks for the node widget with uuid = nodeData.uuid and updates the
 // tree data (label, type, etc.) according to the given nodeData
 udkDataProxy._updateTree = function(nodeData, oldUuid, doNotSelectNode) {
-	console.debug("_updateTree("+nodeData.uuid+", "+oldUuid+")");
+	console.debug("_updateTree("+nodeData.uuid+", "+oldUuid+", "+doNotSelectNode+")");
 	if (typeof(oldUuid) == "undefined" || oldUuid == null) {
 		oldUuid = nodeData.uuid;
 	}
@@ -2698,7 +2698,9 @@ udkDataProxy._updateTree = function(nodeData, oldUuid, doNotSelectNode) {
 		tree.model.store.save();
 		
 		var newNode = dijit.byId(nodeData.uuid);
-		node = newNode.item;
+		if (newNode) {
+            node = newNode.item;
+		}
 		UtilTree.selectNode("dataTree", nodeData.uuid);
 		//if (!dojo.isIE)				
 		//	dojo.window.scrollIntoView(newNode.domNode);
@@ -2706,7 +2708,11 @@ udkDataProxy._updateTree = function(nodeData, oldUuid, doNotSelectNode) {
 	} else {
 		//alert("Get widget: " + oldUuid);
 		// find the node ... check all children of tree for item.id == oldUuid!
-		node = dijit.byId(oldUuid).item;
+        console.debug("oldUuid: "+oldUuid);
+        console.debug(dijit.byId(oldUuid));
+        if (dijit.byId(oldUuid)) {
+            node = dijit.byId(oldUuid).item;
+        }
 		if (node) {
 			node.nodeDocType = [nodeData.nodeDocType];
             node.publicationCondition = [nodeData.extraInfoPublishArea];

@@ -632,34 +632,44 @@ menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
 
         var changeObjDef = new dojo.Deferred();
         changeObjDef.addCallback(function(res) {
+            console.debug("callback after /changePublicationCondition");
             // This function is called when the node was successfully changed
             var tree = dijit.byId("dataTree");
-            if (tree.selectedNode == selectedNode || (tree.selectedNode && _isChildOf(tree.selectedNode, selectedNode))) {
-                // reload the current displayed node (tree.selectedNode) if it is the one changed or it is a subnode of the one changed (maybe also applied to subnodes !)
-                var d = new dojo.Deferred();
-                d.addCallback(function(){               
-                    UtilTree.selectNode("dataTree", tree.selectedNode.id[0], true);
-                    dojo.publish("/selectNode", [{node: tree.selectedNode.item}]);
-                    dojo.window.scrollIntoView(tree.selectedNode.domNode);
-                });
-                d.addErrback(function(msg){
-                    dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
-                    console.debug(msg);
-                });
+            var treeSelectedNode;
+            if (tree.selectedNode) {
+            	// fetch again to avoid null domNode !
+            	treeSelectedNode = dijit.byId(tree.selectedNode.id[0]);
+            }
+            console.debug("fetched treeSelectedNode");
+            console.debug(treeSelectedNode);
 
+            // we update the tree after all functionality is done via triggering this deferred !
+            var defUpdateTree = new dojo.Deferred();
+            defUpdateTree.addCallback(function() {               
+                // update tree data but do NOT select node, to avoid display of right content if not initialized yet ! 
+                console.debug("_updateTree on right clicked tree node, NO \"/selectNode\" event !");
+                udkDataProxy._updateTree(res, null, true);
+    
+                if (selectedNode.isExpanded) {
+                    console.debug("refreshChildren");
+                    tree.refreshChildren(selectedNode);
+                }
+            });
+            defUpdateTree.addErrback(displayErrorMessage);
+
+            // reload the current displayed node (treeSelectedNode) if it is the one changed or it is a subnode of the one
+            // changed (maybe also applied to subnodes !)
+            if (treeSelectedNode == selectedNode || (treeSelectedNode && _isChildOf(treeSelectedNode, selectedNode))) {
                 // do NOT reset dirty flag, if the node was edited, ask user to save before reload !
 //                udkDataProxy.resetDirtyFlag();
 
-                console.debug("Publishing event: /loadRequest("+tree.selectedNode.id+", "+tree.selectedNode.item.nodeAppType+")");
-                dojo.publish("/loadRequest", [{id: tree.selectedNode.id[0], appType: tree.selectedNode.item.nodeAppType[0], resultHandler:d}]);
+                console.debug("Publishing event: /loadRequest("+treeSelectedNode.id+", "+treeSelectedNode.item.nodeAppType+")");
+                dojo.publish("/loadRequest", [{id: treeSelectedNode.id[0], appType: treeSelectedNode.item.nodeAppType[0], resultHandler:defUpdateTree}]);
+            } else {
+                // if no reload of displayed node necessary, just update the according node in tree and its children !
+            	defUpdateTree.callback();
             }
 
-            // update tree data but do NOT select node, to avoid display of right content if not initialized yet ! 
-            udkDataProxy._updateTree(res, null, true);
-
-            if (selectedNode.isExpanded) {
-                tree.refreshChildren(selectedNode);
-            }
         });
         changeObjDef.addErrback(displayErrorMessage);
 
