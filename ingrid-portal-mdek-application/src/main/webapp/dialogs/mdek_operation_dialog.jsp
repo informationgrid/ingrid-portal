@@ -239,10 +239,12 @@ init = function() {
             }
         };
         dojo.forEach(this.getData(), function(item, i) {
+            // make sure the row is not in the buffer but visible!
+            this.scrollRowIntoView(i);
             checkIfEmpty(item.name, i, 0);
             checkIfEmpty(item.optional, i, 3);
             checkIfEmpty(item.multiple, i, 4);
-        });
+        }, this);
     });
 }
 

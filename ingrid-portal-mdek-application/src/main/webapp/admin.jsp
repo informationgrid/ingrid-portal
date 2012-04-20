@@ -96,10 +96,11 @@
 
             function createCatalogueTable() {
                 // get all connected catalogues
-                CatalogManagementService.getConnectedCataloguesInfo(function(iplugs) {
+                CatalogManagementService.getConnectedCataloguesInfo({
+                    callback: function(iplugs) {
                     var atLeastOneNotConnectedIPlug = false;
                     var atLeastOneConnectedIPlug = false;
-                    if (iplugs) {
+                    if (iplugs && iplugs.length > 0) {
                         var element = dojo.create("select", {id:"catalogueSelectAdd"});
                         var elementDisconnect = dojo.create("select", {id:"catalogueSelectDisconnect"});
                         dojo.forEach(iplugs, function(iplug) {
@@ -131,7 +132,10 @@
                             dojo.style("containerDisconnectCatalogue", "display", "");
                         }
                     }
-                });
+                },
+                errback: function(error) {
+                    console.debug("There's no connected iplug!");
+                }});
                 
                 
             }
