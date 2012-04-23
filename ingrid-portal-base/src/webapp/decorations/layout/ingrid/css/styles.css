@@ -114,6 +114,7 @@ div.motiv_suche_historie { background-image:url(../images/01_motiv_suche_histori
 div.motiv_treffer { background-image:url(../images/01_motiv_treffer.png); background-repeat:no-repeat; }
 div.motiv_ueber_portal { background-image:url(../images/01_motiv_ueber_portal.png); background-repeat:no-repeat; }
 div.motiv_weitere_meldungen { background-image:url(../images/01_motiv_weitere_meldungen.png); background-repeat:no-repeat; }
+div.motiv_datenquellen { background-image:url(../images/01_motiv_datenquellen.png); background-repeat:no-repeat; }
 
 
 div.en_motiv_blank { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
@@ -145,6 +146,7 @@ div.en_motiv_suche_historie { background-image:url(../images/en/01_motiv_suche_h
 div.en_motiv_treffer { background-image:url(../images/en/01_motiv_treffer.png); background-repeat:no-repeat; }
 div.en_motiv_ueber_portal { background-image:url(../images/en/01_motiv_ueber_portal.png); background-repeat:no-repeat; }
 div.en_motiv_weitere_meldungen { background-image:url(../images/en/01_motiv_weitere_meldungen.png); background-repeat:no-repeat; }
+div.en_motiv_datenquellen { background-image:url(../images/en/01_motiv_datenquellen.png); background-repeat:no-repeat; }
 
 
 /********************************************************************

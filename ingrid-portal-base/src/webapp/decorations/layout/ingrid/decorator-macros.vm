@@ -83,8 +83,10 @@
 <div id="identity" class="${langCode}motiv_funktionen">
   #elseif($currentPage == "/disclaimer.psml")
 <div id="identity" class="${langCode}motiv_impressum">
-  #elseif($currentPage == "/main-about-partner.psml" || $currentPage == "/main-about-data-source.psml")
+  #elseif($currentPage == "/main-about-partner.psml")
 <div id="identity" class="${langCode}motiv_informationsanbieter">
+  #elseif($currentPage == "/main-about-data-source.psml")
+<div id="identity" class="${langCode}motiv_datenquellen">
   #elseif($currentPage == "/service-sitemap.psml")
 <div id="identity" class="${langCode}motiv_inhalte">
   #elseif($currentPage.startsWith('/administration/'))
