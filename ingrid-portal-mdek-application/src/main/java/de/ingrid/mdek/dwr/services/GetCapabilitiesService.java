@@ -288,7 +288,7 @@ public class GetCapabilitiesService {
 	    	paramList = new ArrayList<OperationParameterBean>();
 	    	paramList.add(new OperationParameterBean("VERSION="+version, "Request version", "", false, false));
 	    	paramList.add(new OperationParameterBean("REQUEST=GetFeatureInfo", "Request name", "", false, false));
-	    	paramList.add(new OperationParameterBean("<map_request_copy>", "Partial copy of the Map request parameters that generated the map for which information is desired", "", false, false));
+	    	paramList.add(new OperationParameterBean("(map_request_copy)", "Partial copy of the Map request parameters that generated the map for which information is desired", "", false, false));
 	    	paramList.add(new OperationParameterBean("QUERY_LAYERS=layer_list", "Comma-separated list of one or more layers to be queried", "", false, false));
 	    	paramList.add(new OperationParameterBean("INFO_FORMAT=output_format", "Return format of feature information (MIME type)", "", true, false));
 	    	paramList.add(new OperationParameterBean("FEATURE_COUNT=number", "Number of features about which to return information (default=1)", "", true, false));
