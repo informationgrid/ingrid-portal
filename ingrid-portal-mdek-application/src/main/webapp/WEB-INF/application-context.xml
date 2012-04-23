@@ -360,12 +360,17 @@
     </bean>
     
     <bean name="updateCodeListsJobDetail" class="org.springframework.scheduling.quartz.JobDetailBean">
-        <property name="jobClass" value="de.ingrid.codelists.quartz.jobs.UpdateCodeListsJob" />
+        <property name="jobClass" value="de.ingrid.mdek.quartz.jobs.UpdateCodeListsFromIGEJob" />
     </bean>
     
     <bean id="simpleTriggerCodeLists" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
         <property name="jobDetail" ref="updateCodeListsJobDetail" />
         <property name="startDelay" value="15000" />
         <property name="repeatInterval" value="300000" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="connectionFacade"><ref local="connectionFacade"/></entry>
+            </map>
+      </property>
     </bean>
  </beans>
