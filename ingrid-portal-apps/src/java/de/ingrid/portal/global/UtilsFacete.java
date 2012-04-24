@@ -174,10 +174,7 @@ public class UtilsFacete {
         
         context.put("facetsQuery", getAttributeFromSession(request, "FACETS_QUERY"));
         context.put("searchQuery", getAttributeFromSession(request, "SEARCH_QUERY"));
-        
-        if(isFacetSelection(request)){
-        	context.put("enableFacetSelection", true);
-        }
+        context.put("enableFacetSelection", isFacetSelection(request));
 	}
 
 	public static void setFaceteParamsToSessionByAction(ActionRequest request) {
@@ -2826,17 +2823,19 @@ private static void general(ActionRequest request) {
 		return facetSelectionState;
 	}
 	
-	private static boolean isFacetSelection(PortletRequest request){
+	private static int isFacetSelection(PortletRequest request){
 		HashMap<String, Boolean> facetSelectionState = getFacetSelectionState(request);
-    	boolean isFacetSelect = false;
+		int i=0; 
     	for (Iterator<String> iterator = facetSelectionState.keySet().iterator(); iterator.hasNext();) {
     		String key = iterator.next();
     		if(facetSelectionState.get(key)){
-    			isFacetSelect = true;
-    			break;
+    			i=i+1;
+    			if(i>1){
+    				break;	
+    			}
     		}
     	}
-		return isFacetSelect;
+		return i;
 	}
 }
 

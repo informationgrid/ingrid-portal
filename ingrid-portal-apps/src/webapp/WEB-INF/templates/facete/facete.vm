@@ -177,7 +177,7 @@
 ## ERGEBNISTYPEN ##
 	#set ($rankedHitslenght = $rankedResultList.get("length").toString())
 	#if($rankedHitslenght != "0")
-		#if($enableFacetSelection)
+		#if($enableFacetSelection > 0)
 			#set ($action = $renderResponse.createActionURL())
 			$action.setParameter("doRemoveAll", "true")
 			<p>
@@ -251,17 +251,19 @@
 		#end
 	#else
 		<p>
-			#if($enableFacetSelection)
+			#if($enableFacetSelection > 0)
 				$MESSAGES.getString("searchResult.facete.category.error")
 			#else
 				$MESSAGES.getString("searchResult.facete.category.no.hits")	
 			#end
 			
         </p>
-			#if($enableFacetSelection)
+			#if($enableFacetSelection > 0)
         		#set ($action = $renderResponse.createActionURL())
 				$action.setParameter("doRemoveLast", "true")
         		#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.last") $action)
+			#end
+			#if($enableFacetSelection > 1)
 				#set ($action = $renderResponse.createActionURL())
 				$action.setParameter("doRemoveAll", "true")
         		#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.all") $action)
