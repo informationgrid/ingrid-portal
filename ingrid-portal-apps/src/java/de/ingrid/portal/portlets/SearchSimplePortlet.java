@@ -1,6 +1,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -13,6 +14,7 @@ import javax.portlet.PortletSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.jetspeed.om.page.Page;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
@@ -334,8 +336,13 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         context.put("enableFacets", PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, Boolean.FALSE));
        
-        if(queryString != null && queryString.length() > 0){
-        	setUpQuery(request, queryString);
+        Page page = (Page) request.getAttribute("org.apache.jetspeed.Page");
+        HashMap params = (HashMap) request.getParameterMap();
+        if(page != null && (params != null && params.size() == 0)){
+        	if(Settings.PAGE_SEARCH_RESULT.indexOf(page.getPath()) > 0 && queryString != null && queryString.length() > 0){
+        		response.setTitle(messages.getString(TITLE_KEY_RESULT));
+            	setUpQuery(request, queryString);
+            }
         }
         super.doView(request, response);
     }
