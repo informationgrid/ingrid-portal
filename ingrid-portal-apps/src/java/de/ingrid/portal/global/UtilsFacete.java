@@ -2488,7 +2488,7 @@ public class UtilsFacete {
 		}
 		
 		if(attribute != null){
-			setAttributeToSession(request, "doAddAttributeInput", attribute, true);
+			setAttributeToSession(request, "doAddAttributeInput", attribute, false);
 			setAttributeToSession(request, "doAddAttribute", attribute, true);
 		}
 	}
@@ -2578,7 +2578,7 @@ public class UtilsFacete {
 		
 		if(areaAddress != null){
 			setAttributeToSession(request, "doAddAreaAddress", areaAddress, true);
-			setAttributeToSession(request, "doAddAreaAddressInput", areaAddress, true);
+			setAttributeToSession(request, "doAddAreaAddressInput", areaAddress, false);
 		}
 	}
 	
