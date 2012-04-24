@@ -1169,6 +1169,7 @@ public class UtilsFacete {
     		context.put("enableFacetePartnerList", enableFacetePartnerList);
     		setFacetSelectionState(context, request, "isPartnerSelect", true);
 		}else{
+			setFacetSelectionState(context, request, "isPartnerSelect", false);
 			ArrayList<HashMap<String, Long>> elementsPartner = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_PARTNER);
 			if(elementsPartner != null){
 				ArrayList<String> keys = new ArrayList<String>();

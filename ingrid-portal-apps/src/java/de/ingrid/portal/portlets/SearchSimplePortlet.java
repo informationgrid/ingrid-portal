@@ -334,6 +334,9 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         context.put("enableFacets", PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, Boolean.FALSE));
        
+        if(queryString != null && queryString.length() > 0){
+        	setUpQuery(request, queryString);
+        }
         super.doView(request, response);
     }
 

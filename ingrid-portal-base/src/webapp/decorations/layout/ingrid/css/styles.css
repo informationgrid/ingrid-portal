@@ -960,6 +960,5 @@ div.dialog_content input.btn { text-align: center; min-width: 120px; }
 /* InGrid Map Client*/
 
 p,label.search-ext-env{padding:2px;}
-ol, ul { list-style-type: none !important; }
 .x-tree-node-anchor {   font-size:11px !important;}
 ul.x-tab-strip-top {background-color: #CEDFF5;border-bottom-color: #8DB2E3;margin: 0;important!;}
