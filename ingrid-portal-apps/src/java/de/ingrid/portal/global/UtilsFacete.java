@@ -1432,7 +1432,9 @@ public class UtilsFacete {
     	if(selectedProviders != null && selectedProviders.size() > 0){
     		setFacetSelectionState(context, request, "isProviderSelect", true);
     		context.put("selectedProvider", selectedProviders);
-    		context.put("unselectedProvider", providers);
+    		if(providers != null && providers.size() > 0){
+    			context.put("unselectedProvider", providers);
+    		}
     	} else{
     		setFacetSelectionState(context, request, "isProviderSelect", false);
     		context.remove("selectedProvider");
@@ -1447,7 +1449,7 @@ public class UtilsFacete {
 			for(int i=0; i<selectedProvider.size();i++){
 				query.addField(new FieldQuery(true, false, Settings.QFIELD_PROVIDER, selectedProvider.get(i)));
 			}
-			query.addField(new FieldQuery(true, false, Settings.QFIELD_GROUPED, "grouped_off"));
+			//query.addField(new FieldQuery(true, false, Settings.QFIELD_GROUPED, "grouped_off"));
 		}
 	}
 	
