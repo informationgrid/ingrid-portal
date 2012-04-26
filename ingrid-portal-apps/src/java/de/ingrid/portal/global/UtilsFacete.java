@@ -2933,6 +2933,24 @@ public class UtilsFacete {
 			setFacetParamsToSession(request, SELECTED_METACLASS, paramsMetaclasses);
 		}
 		
+		// Partner
+		String paramsPartner = request.getParameter(PARAMS_PARTNER);
+		if(paramsPartner != null){
+			ArrayList<IngridPartner> selectedPartner = null; 
+			List<IngridPartner> partners = UtilsDB.getPartners();
+			for(int i=0; i < partners.size();i++){
+				IngridPartner partner = partners.get(i);
+				if(paramsPartner.equals(partner.getIdent())){
+					if(selectedPartner == null){
+						selectedPartner = new ArrayList<IngridPartner>();
+					}
+					selectedPartner.add(partner);
+					break;
+				}
+			}
+			setAttributeToSession(request, ENABLE_FACETE_PARTNER_LIST, selectedPartner);
+		}
+		
 		// Provider
 		String[] paramsProvider = request.getParameterValues(PARAMS_PROVIDER);
 		if(paramsProvider != null){
@@ -3146,13 +3164,29 @@ public class UtilsFacete {
         // Geothesaurus
         if(getAttributeFromSession(request, SELECTED_GEOTHESAURUS) != null){
         	HashMap geothesaurusHashMap = (HashMap) getAttributeFromSession(request, SELECTED_GEOTHESAURUS);
-        	if(geothesaurusHashMap.get("geothesaurusSelectTopics") != null){
-        		ArrayList<HashMap<String, String>> topics = (ArrayList<HashMap<String, String>>) geothesaurusHashMap.get("geothesaurusSelectTopics");
-        		for(int i=0; i<topics.size();i++){
-        			String topicId = topics.get(i).get("topicId");
-        			String topicName = topics.get(i).get("topicTitle");
-            		Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_GEOTHESAURUS, topicId +","+topicName));
-            	}
+        	if(geothesaurusHashMap.get("geothesaurusSelectTopicsId") != null){
+        		ArrayList<String> selectedTopicIds = (ArrayList<String>) geothesaurusHashMap.get("geothesaurusSelectTopicsId");
+        		if(selectedTopicIds != null){
+        			for(int i=0; i<selectedTopicIds.size(); i++){
+        				String selectedTopicId = selectedTopicIds.get(i);
+            			ArrayList<IngridHit> topics = (ArrayList<IngridHit>) getAttributeFromSession(request, GEOTHESAURUS_ALL_TOPICS);
+            			if(topics != null){
+            				for(int j=0; j<topics.size();j++){
+            					Topic topic = (Topic) topics.get(j);
+            					String topicId = topic.getTopicNativeKey();
+            					String topicName = topic.getTopicName();
+            					
+            					if(topicId == null){
+            						topicId = topic.getTopicID();
+            					}
+            					if(selectedTopicId.equals(topicId)){
+            						Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_GEOTHESAURUS, topicId +","+topicName));
+            						break;
+            					}
+            				}
+                		}
+            		}
+        		}
         	}
         }
         
