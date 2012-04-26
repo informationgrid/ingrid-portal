@@ -724,12 +724,14 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             SearchState.adaptSearchState(request, Settings.PARAM_FILTER, request.getParameter(Settings.PARAM_GROUPING));
         }
         
+        String url = actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request));
+        
         if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
-            UtilsFacete.setFaceteParamsToSessionByAction(request);
+            url = url + UtilsFacete.setFaceteParamsToSessionByAction(request, actionResponse);
         }
         
         // redirect to our page wih parameters for bookmarking
-        actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)));
+        actionResponse.sendRedirect(url);
     }
 
 

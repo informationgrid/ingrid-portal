@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
@@ -106,17 +107,52 @@ public class UtilsFacete {
     private static final String SELECTED_GEOTHESAURUS = "selectedGeothesaurus";
     private static final String SELECTED_MAP = "selectedMap";
     
+    private static final String PARAMS_TOPIC = "topic";
+    private static final String PARAMS_SERVICE = "service";
+    private static final String PARAMS_MEASURE = "measure";
+    private static final String PARAMS_DATATYPE = "dataype";
+    private static final String PARAMS_PROVIDER = "provider";
+    private static final String PARAMS_PARTNER = "partner";
+    private static final String PARAMS_GEOTHESAURUS = "geothesaurus";
+    private static final String PARAMS_METACLASS = "metaclass";
+    private static final String PARAMS_MAP_X1 = "x1";
+    private static final String PARAMS_MAP_X2 = "x2";
+    private static final String PARAMS_MAP_Y1 = "y1";
+    private static final String PARAMS_MAP_Y2 = "y2";
+    private static final String PARAMS_MAP_OPTIONS = "options";
+    private static final String PARAMS_AREA_ADDRESS_STREET = "street";
+    private static final String PARAMS_AREA_ADDRESS_ZIP = "zip";
+    private static final String PARAMS_AREA_ADDRESS_CITY = "city";
+    private static final String PARAMS_ATTRIBUTE_TITLE = "db_title";
+    private static final String PARAMS_ATTRIBUTE_INSTITUTE = "db_institute";
+    private static final String PARAMS_ATTRIBUTE_PM = "db_pm";
+    private static final String PARAMS_ATTRIBUTE_STAFF = "db_staff";
+    private static final String PARAMS_ATTRIBUTE_ORG = "db_org";
+    private static final String PARAMS_ATTRIBUTE_TERM_FROM = "term_from";
+    private static final String PARAMS_ATTRIBUTE_TERM_TO = "term_to";
+    private static final String PARAMS_MODTIME = "modtime";
+    
+    
     /**
-     * Prepare query by facete activity
+     * Prepare query by facet activity
      * 
      * @param ps
      * @param query
      */
     public static void facetePrepareInGridQuery (PortletRequest request, IngridQuery query){
     	
-    	//removeFaceteElementsFromSession(request);
-    	//checkSessionForNewSearchTerm(request);
-    	
+    	// Check for pre prozess doAction.
+    	boolean isFacetAction = false;
+    	if(getAttributeFromSession(request, "isFacetAction") != null){
+    		isFacetAction = (Boolean) getAttributeFromSession(request, "isFacetAction");
+    	}
+    	if(isFacetAction){
+    		setAttributeToSession(request, "isFacetAction", false);
+    	}else{
+    		// Set facet params to session (do not after doAction).
+        	getFacetAttributsParamsFromUrl(request);	
+    	}
+ 		
     	addToQueryTopic(request, query);
 	    addToQueryMeasures(request, query);
         addToQueryDatatype(request, query);
@@ -152,12 +188,20 @@ public class UtilsFacete {
         }
     }
     
+	/**
+	 * Set facet to context
+	 * 
+	 * @param request
+	 * @param context
+	 * @param facete
+	 */
 	public static void setParamsToContext(RenderRequest request, Context context, IngridDocument facete) {
 		
 		if(facete == null){
-			//removeFaceteElementsFromSession(request);
+			removeFaceteElementsFromSession(request);
 		}
 		
+		getFacetAttributsParamsFromUrl(request);
 		setParamsToContextTopic(request, context);
 		setParamsToContextMetaclass(request, context);
 		setParamsToContextDatatype(request, context);
@@ -177,8 +221,17 @@ public class UtilsFacete {
         context.put("enableFacetSelection", isFacetSelection(request));
 	}
 
-	public static void setFaceteParamsToSessionByAction(ActionRequest request) {
+	/**
+	 * Set action parameters to facet session
+	 * 
+	 * @param request
+	 * @param reponse
+	 * @return URL with facet parameters
+	 */
+	public static String setFaceteParamsToSessionByAction(ActionRequest request, ActionResponse reponse) {
 		
+		StringBuffer facetUrl = new StringBuffer("");
+
 		general(request);
 		
 		setFaceteParamsToSessionTopic(request);
@@ -195,8 +248,17 @@ public class UtilsFacete {
         setFaceteParamsToSessionAttribute(request);
         setFaceteParamsToSessionAreaAddress(request);
         
+        setFacetUrlParamsToUrl(request, facetUrl);
+        
+        return facetUrl.toString(); 
 	}
 
+	/**
+	 * Check getting facets for categories 
+	 * 
+	 * @param facetes
+	 * @param request
+	 */
 	public static void checkForExistingFacete(IngridDocument facetes, PortletRequest request) {
 		
 		HashMap<String, Long> elementsProvider = null;
@@ -1719,26 +1781,21 @@ public class UtilsFacete {
 		        	}
 				}
 				
-				if(doMapCoords != null){
-					if(selectedMap == null){
-						selectedMap = new HashMap();
+				if(coordOptions != null && coordOptions.size() > 0){
+					if(doMapCoords != null || webmapclientCoords != null){
+						if(selectedMap == null){
+							selectedMap = new HashMap();
+						}
 					}
-					selectedMap.put("doMapCoords", doMapCoords);
-					//setAttributeToSession(request, "doMapCoords", doMapCoords, true);
-				}
-				if(coordOptions != null){
-					if(selectedMap == null){
-						selectedMap = new HashMap();
+					if(doMapCoords != null){
+						selectedMap.put("doMapCoords", doMapCoords);
 					}
-					selectedMap.put("coordOptions", coordOptions);
-					//setAttributeToSession(request, "coordOptions", coordOptions);
-				}
-				if(webmapclientCoords != null){
-					if(selectedMap == null){
-						selectedMap = new HashMap();
+					if(coordOptions != null){
+						selectedMap.put("coordOptions", coordOptions);
 					}
-					selectedMap.put("webmapclientCoords", webmapclientCoords);
-					//setAttributeToSession(request, "webmapclientCoords", webmapclientCoords);
+					if(webmapclientCoords != null){
+						selectedMap.put("webmapclientCoords", webmapclientCoords);
+					}
 				}
 				
 				if(selectedMap != null){
@@ -2119,7 +2176,7 @@ public class UtilsFacete {
         return geothesaurusSelectTopics;
 	}
 	
-	private static void addToListOfTopicsGeoThesaurus(IngridHit ingridHit, ActionRequest request) {
+	private static void addToListOfTopicsGeoThesaurus(IngridHit ingridHit, PortletRequest request) {
 		ArrayList<IngridHit> allGeoThesaurusTopics = (ArrayList<IngridHit>) getAttributeFromSession(request, GEOTHESAURUS_ALL_TOPICS); 
 		if(allGeoThesaurusTopics == null){
 			allGeoThesaurusTopics = new ArrayList<IngridHit>();
@@ -2656,7 +2713,7 @@ public class UtilsFacete {
 		return request.getPortletSession().getAttribute(key, PortletSessionImpl.APPLICATION_SCOPE);
 	}
 	
-private static void general(ActionRequest request) {
+	private static void general(ActionRequest request) {
 		
 		String doRemoveAll = request.getParameter("doRemoveAll");
 		String doRemoveLast = request.getParameter("doRemoveLast");
@@ -2669,6 +2726,7 @@ private static void general(ActionRequest request) {
 		if(doRemoveLast != null){
 			removeLastFaceteSelection(request);
 		}
+		setAttributeToSession(request, "isFacetAction", true);
 	}
 	
 	public static void removeAllFaceteSelections(PortletRequest request){
@@ -2837,6 +2895,365 @@ private static void general(ActionRequest request) {
     	}
 		return i;
 	}
+	
+	/**
+	 * Create facet session by URL parameters
+	 * 
+	 * @param request
+	 */
+	private static void getFacetAttributsParamsFromUrl(PortletRequest request){
+		
+		// Topics
+		String[] paramsTopics = request.getParameterValues(PARAMS_TOPIC);
+		if(paramsTopics != null){
+			setFacetParamsToSession(request, SELECTED_TOPIC, paramsTopics);
+		}
+				
+		// Datatype
+		String[] paramsDatatype = request.getParameterValues(PARAMS_DATATYPE);
+		if(paramsDatatype != null){
+			setFacetParamsToSession(request, SELECTED_DATATYPE, paramsDatatype);
+		}
+
+		// Service
+		String[] paramsService = request.getParameterValues(PARAMS_SERVICE);
+		if(paramsService != null){
+			setFacetParamsToSession(request, SELECTED_SERVICE, paramsService);
+		}
+
+		// Measures
+		String[] paramsMeasure = request.getParameterValues(PARAMS_MEASURE);
+		if(paramsMeasure != null){
+			setFacetParamsToSession(request, SELECTED_MEASURES, paramsMeasure);
+		}
+
+		// Metaclass
+		String[] paramsMetaclasses = request.getParameterValues(PARAMS_METACLASS);
+		if(paramsMetaclasses != null){
+			setFacetParamsToSession(request, SELECTED_METACLASS, paramsMetaclasses);
+		}
+		
+		// Provider
+		String[] paramsProvider = request.getParameterValues(PARAMS_PROVIDER);
+		if(paramsProvider != null){
+			setFacetParamsToSession(request, SELECTED_PROVIDER, paramsProvider);
+		}
+		
+		// Geothesaurus
+		String[] paramsGeothesaurus = request.getParameterValues(PARAMS_GEOTHESAURUS);
+		if(paramsGeothesaurus != null){
+			HashMap geothesaurusHashMap = new HashMap();
+			ArrayList<String> selectedIds = null;
+			ArrayList<HashMap<String, String>> geothesaurusSelectTopics = null;
+			for(int i=0; i<paramsGeothesaurus.length; i++){
+				if(selectedIds == null){
+					selectedIds = new ArrayList<String>();
+				}
+				if(geothesaurusSelectTopics == null){
+					geothesaurusSelectTopics = new ArrayList<HashMap<String,String>>();
+				}
+				String geothesaurus = paramsGeothesaurus[i]; 
+				String topicId = geothesaurus.split(",")[0];
+				String topicName = geothesaurus.split(",")[1];
+				selectedIds.add(topicId);
+				
+				IngridHit[] topics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromText(topicName, "/location", request.getLocale());
+				for(int j=0; j<topics.length; j++){
+					Topic topic = (Topic) topics[j];
+					addToListOfTopicsGeoThesaurus((IngridHit)topics[j], request);
+					if(topicId.equals(topic.getTopicNativeKey())){
+						HashMap<String, String> addedTopic = new HashMap<String, String>();
+						addedTopic.put("topicId", topic.getTopicNativeKey());
+						addedTopic.put("topicTitle", topic.getTopicName());
+						geothesaurusSelectTopics.add(addedTopic);
+					}
+				}
+				
+			}
+			geothesaurusHashMap.put(GEOTHESAURUS_SELECTED_TOPICS, geothesaurusSelectTopics);
+	        geothesaurusHashMap.put(GEOTHESAURUS_SELECTED_TOPICS_IDS, selectedIds);
+			setAttributeToSession(request, SELECTED_GEOTHESAURUS, geothesaurusHashMap);
+		}
+		
+		// Time
+		String paramsModtime = request.getParameter(PARAMS_MODTIME);
+		if(paramsModtime != null){
+			setAttributeToSession(request, "modtime", paramsModtime);
+		}
+		
+		// AreaAddress
+		String paramsAreaAddressStreet = request.getParameter(PARAMS_AREA_ADDRESS_STREET);
+		String paramsAreaAddressZip = request.getParameter(PARAMS_AREA_ADDRESS_ZIP);
+		String paramsAreaAddressCity = request.getParameter(PARAMS_AREA_ADDRESS_CITY);
+		HashMap<String, String> areaAddress = null;
+		
+		if(paramsAreaAddressStreet != null || paramsAreaAddressZip != null || paramsAreaAddressCity != null){
+			areaAddress = new HashMap<String, String>();
+			if(paramsAreaAddressStreet != null){
+				areaAddress.put(SearchExtAdrPlaceReferenceForm.FIELD_STREET, paramsAreaAddressStreet);
+			}
+			if(paramsAreaAddressZip != null){
+				areaAddress.put(SearchExtAdrPlaceReferenceForm.FIELD_ZIP, paramsAreaAddressZip);
+			}
+			if(paramsAreaAddressCity != null){
+				areaAddress.put(SearchExtAdrPlaceReferenceForm.FIELD_CITY, paramsAreaAddressCity);
+			}
+			setAttributeToSession(request, "doAddAreaAddress", areaAddress);
+		}
+		
+		// Attribute
+		String paramsAttributeInstitute = request.getParameter(PARAMS_ATTRIBUTE_INSTITUTE);
+		String paramsAttributeOrg = request.getParameter(PARAMS_ATTRIBUTE_ORG);
+		String paramsAttributePm = request.getParameter(PARAMS_ATTRIBUTE_PM);
+		String paramsAttributeStaff = request.getParameter(PARAMS_ATTRIBUTE_STAFF);
+		String paramsAttributeTitle = request.getParameter(PARAMS_ATTRIBUTE_TITLE);
+		String paramsAttributeTermForm = request.getParameter(PARAMS_ATTRIBUTE_TERM_FROM);
+		String paramsAttributeTermTo = request.getParameter(PARAMS_ATTRIBUTE_TERM_TO);
+		HashMap<String, String> attribute = null;
+		
+		if(paramsAttributeInstitute != null || paramsAttributeOrg != null || paramsAttributePm != null
+				|| paramsAttributeStaff != null || paramsAttributeTitle != null || paramsAttributeTermForm != null 
+				|| paramsAttributeTermTo != null){
+			attribute = new HashMap<String, String>();
+			if(paramsAreaAddressStreet != null){
+				attribute.put(SearchExtResTopicAttributesForm.FIELD_DB_INSTITUTE, paramsAttributeInstitute);
+			}
+			if(paramsAreaAddressZip != null){
+				attribute.put(SearchExtResTopicAttributesForm.FIELD_DB_ORG, paramsAttributeOrg);
+			}
+			if(paramsAreaAddressCity != null){
+				attribute.put(SearchExtResTopicAttributesForm.FIELD_DB_PM, paramsAttributePm);
+			}
+			if(paramsAreaAddressStreet != null){
+				attribute.put(SearchExtResTopicAttributesForm.FIELD_DB_STAFF, paramsAttributeStaff);
+			}
+			if(paramsAreaAddressZip != null){
+				attribute.put(SearchExtResTopicAttributesForm.FIELD_DB_TITLE, paramsAttributeTitle);
+			}
+			if(paramsAreaAddressCity != null){
+				attribute.put(SearchExtResTopicAttributesForm.FIELD_TERM_FROM, paramsAttributeTermForm);
+			}
+			if(paramsAreaAddressCity != null){
+				attribute.put(SearchExtResTopicAttributesForm.FIELD_TERM_TO, paramsAttributeTermTo);
+			}
+			setAttributeToSession(request, "doAddAttribute", attribute);
+		}
+		
+        // Map
+		String[] paramsOptions = request.getParameterValues(PARAMS_MAP_OPTIONS);
+		String paramsMapX1 = request.getParameter(PARAMS_MAP_X1);
+		String paramsMapX2 = request.getParameter(PARAMS_MAP_X2);
+		String paramsMapY1 = request.getParameter(PARAMS_MAP_Y1);
+		String paramsMapY2 = request.getParameter(PARAMS_MAP_Y2);
+		
+		ArrayList<String> options = null;
+		HashMap<String,String> coords = null;
+		
+		if(paramsOptions != null){
+			for(int i=0; i<paramsOptions.length; i++){
+				if(options == null){
+					options = new ArrayList<String>();
+				}
+				options.add(paramsOptions[i]);
+			}
+		}
+    	
+		if(paramsMapX1 != null && paramsMapX2 != null && paramsMapY1 != null && paramsMapY2 != null){
+			coords = new HashMap<String, String>();
+			
+			coords.put("x1", paramsMapX1);
+			coords.put("y1", paramsMapY1);
+			coords.put("x2", paramsMapX2);
+			coords.put("y2", paramsMapY2);
+		}
+		
+		if(paramsOptions != null && coords != null){
+			HashMap<String, String> selectedMap = new HashMap<String, String>();
+    		for(int i=0; i < options.size(); i++){
+    			String value = "";
+            	if(request.getParameter("x1") != null){
+            		value = coords.get("x1").concat("' O / ");
+            	}
+            	if(request.getParameter("y1") != null){
+            		value = value.concat(coords.get("y1")).concat("' N");	
+            	}                
+                value = value.concat("<br>");
+            	if(request.getParameter("x2") != null){
+            		value = value.concat(coords.get("x2")).concat("' O / ");                    		
+            	}
+            	if(request.getParameter("y2") != null){
+            		value = value.concat(coords.get("y2")).concat("' N");
+            	} 
+                
+                value = value.concat("<br>" +  options.get(i));
+                selectedMap.put(options.get(i), value);
+    		}
+			HashMap mapHashMap = new HashMap();
+			mapHashMap.put("webmapclientCoords", coords);
+			mapHashMap.put("coordOptions", options);
+			mapHashMap.put("doMapCoords", selectedMap);
+			setAttributeToSession(request, SELECTED_MAP, mapHashMap);
+		}
+	}
+	
+	/**
+	 * Create URL by facet session
+	 * 
+	 * @param request
+	 * @param facetUrl
+	 */
+	private static void setFacetUrlParamsToUrl(ActionRequest request, StringBuffer facetUrl) {
+		
+		// Topic
+		if(getAttributeFromSession(request, SELECTED_TOPIC) != null){
+        	addUrlParameterForFacete(facetUrl, PARAMS_TOPIC, (ArrayList<String>) getAttributeFromSession(request, SELECTED_TOPIC));
+        }
+		
+		// Datatype
+        if(getAttributeFromSession(request, SELECTED_DATATYPE) != null){
+        	addUrlParameterForFacete(facetUrl, PARAMS_DATATYPE, (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE));
+        }
+        
+        // Service
+        if(getAttributeFromSession(request, SELECTED_SERVICE) != null){
+        	addUrlParameterForFacete(facetUrl, PARAMS_SERVICE, (ArrayList<String>) getAttributeFromSession(request, SELECTED_SERVICE));
+        }
+        
+        // Measure
+        if(getAttributeFromSession(request, SELECTED_MEASURES) != null){
+        	addUrlParameterForFacete(facetUrl, PARAMS_MEASURE, (ArrayList<String>) getAttributeFromSession(request, SELECTED_MEASURES));
+        }
+        
+        // Metaclass
+        if(getAttributeFromSession(request, SELECTED_METACLASS) != null){
+        	addUrlParameterForFacete(facetUrl, PARAMS_METACLASS, (ArrayList<String>) getAttributeFromSession(request, SELECTED_METACLASS));
+        }
+        
+        // Partner
+        if(getAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST) != null){
+        	ArrayList<IngridPartner> partners = (ArrayList<IngridPartner>) getAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);
+        	for(int i=0; i<partners.size();i++){
+        		IngridPartner partner = partners.get(i);
+        		Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_PARTNER, partner.getIdent()));
+        	}
+        }
+        
+        // Provider
+        if(getAttributeFromSession(request, SELECTED_PROVIDER) != null){
+        	addUrlParameterForFacete(facetUrl, PARAMS_PROVIDER, (ArrayList<String>) getAttributeFromSession(request, SELECTED_PROVIDER));
+        }
+        
+        // Geothesaurus
+        if(getAttributeFromSession(request, SELECTED_GEOTHESAURUS) != null){
+        	HashMap geothesaurusHashMap = (HashMap) getAttributeFromSession(request, SELECTED_GEOTHESAURUS);
+        	if(geothesaurusHashMap.get("geothesaurusSelectTopics") != null){
+        		ArrayList<HashMap<String, String>> topics = (ArrayList<HashMap<String, String>>) geothesaurusHashMap.get("geothesaurusSelectTopics");
+        		for(int i=0; i<topics.size();i++){
+        			String topicId = topics.get(i).get("topicId");
+        			String topicName = topics.get(i).get("topicTitle");
+            		Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_GEOTHESAURUS, topicId +","+topicName));
+            	}
+        	}
+        }
+        
+        // Map
+        if(getAttributeFromSession(request, SELECTED_MAP) != null){
+        	HashMap mapHashMap = (HashMap) getAttributeFromSession(request, SELECTED_MAP);
+        	ArrayList<String> options = (ArrayList<String>) mapHashMap.get("coordOptions");
+        	HashMap<String,String> coords = (HashMap<String,String>) mapHashMap.get("webmapclientCoords");
+        	if(coords != null){
+        		Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_MAP_X1, coords.get("x1")));
+        		Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_MAP_Y1, coords.get("y1")));
+        		Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_MAP_X2, coords.get("x2")));
+        		Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_MAP_Y2, coords.get("y2")));
+        	}
+        	
+        	if(options != null){
+        		addUrlParameterForFacete(facetUrl, PARAMS_MAP_OPTIONS, (ArrayList<String>) options);
+        	}
+        }
+       
+        // AreaAddress
+        if(getAttributeFromSession(request, "doAddAreaAddress") != null){
+        	HashMap<String, String> areaAddress = (HashMap<String, String>) getAttributeFromSession(request, "doAddAreaAddress");
+        	if (areaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_STREET) != null) {
+                Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_AREA_ADDRESS_STREET, areaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_STREET)));
+            }
+            if (areaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_ZIP) != null) {
+                Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_AREA_ADDRESS_ZIP, areaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_ZIP)));
+            }
+            if (areaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_CITY) != null) {
+                Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_AREA_ADDRESS_CITY, areaAddress.get(SearchExtAdrPlaceReferenceForm.FIELD_CITY)));
+            }
+        }
+        
+        // Time
+        if(getAttributeFromSession(request, "doTime") != null){
+        	String modtime = (String) getAttributeFromSession(request, "doTime");
+        	Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_MODTIME, modtime));
+        }
+        
+        // Attribute
+        if(getAttributeFromSession(request, "doAddAttribute") != null){
+        	HashMap<String, String> attribute = (HashMap<String, String>) getAttributeFromSession(request, "doAddAttribute");
+
+        	if (attribute.get(SearchExtResTopicAttributesForm.FIELD_DB_INSTITUTE) != null) {
+        		Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_ATTRIBUTE_INSTITUTE, attribute.get(SearchExtResTopicAttributesForm.FIELD_DB_INSTITUTE)));
+            }
+            if (attribute.get(SearchExtResTopicAttributesForm.FIELD_DB_ORG) != null) {
+            	Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_ATTRIBUTE_ORG, attribute.get(SearchExtResTopicAttributesForm.FIELD_DB_ORG)));
+            }
+            if (attribute.get(SearchExtResTopicAttributesForm.FIELD_DB_PM) != null) {
+            	Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_ATTRIBUTE_PM, attribute.get(SearchExtResTopicAttributesForm.FIELD_DB_PM)));
+            }
+            if (attribute.get(SearchExtResTopicAttributesForm.FIELD_DB_STAFF) != null) {
+            	Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_ATTRIBUTE_STAFF, attribute.get(SearchExtResTopicAttributesForm.FIELD_DB_STAFF)));
+            }
+            if (attribute.get(SearchExtResTopicAttributesForm.FIELD_DB_TITLE) != null) {
+            	Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_ATTRIBUTE_TITLE, attribute.get(SearchExtResTopicAttributesForm.FIELD_DB_TITLE)));
+            }
+            if (attribute.get(SearchExtResTopicAttributesForm.FIELD_TERM_FROM) != null) {
+            	Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_ATTRIBUTE_TERM_FROM, attribute.get(SearchExtResTopicAttributesForm.FIELD_TERM_FROM)));
+            }
+            if (attribute.get(SearchExtResTopicAttributesForm.FIELD_TERM_TO) != null) {
+            	Utils.appendURLParameter(facetUrl, Utils.toURLParam(PARAMS_ATTRIBUTE_TERM_TO, attribute.get(SearchExtResTopicAttributesForm.FIELD_TERM_TO)));
+            }
+        }
+	}
+
+	/**
+	 * Set parameters from session to URL
+	 * 
+	 * @param url
+	 * @param paramsKey
+	 * @param parameterFromSession
+	 */
+	private static void addUrlParameterForFacete(StringBuffer url, String paramsKey, ArrayList<String> parameterFromSession) {
+		for(int i=0; i<parameterFromSession.size();i++){
+    		Utils.appendURLParameter(url, Utils.toURLParam(paramsKey, parameterFromSession.get(i)));
+    	}
+	}
+	
+	
+	/**
+	 * Set parameters from URL to session
+	 * 
+	 * @param request
+	 * @param sessionKey
+	 * @param params
+	 */
+	private static void setFacetParamsToSession(PortletRequest request, String sessionKey, String[] params) {
+		ArrayList<String> values = null;
+		for(int i=0; i<params.length; i++){
+			if(values == null){
+				values = new ArrayList<String>();
+			}
+			values.add(params[i]);
+		}
+		setAttributeToSession(request, sessionKey, values);	
+	}
+
+	
 }
 
 
