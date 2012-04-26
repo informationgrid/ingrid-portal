@@ -19,7 +19,7 @@ span.icon_udk { margin-right:6px; margin-top:2px; position:absolute; width:21px;
 span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px; }
 span.normaltext { font-weight:normal; text-transform:none; }
 span.smaller {font-size: 83%}
-ul { list-style-type:square; padding-left:0; margin: 0 0 1em 30px; }
+ul { list-style-type:square; padding-left:0; margin: 0 0 oem 30px; }
 p { margin-top:0; margin-bottom:1em; font-size:12px; }
 strong {font-weight:bold}
 .section textarea, .section select, input { border: 1px solid #999999 !important; }
