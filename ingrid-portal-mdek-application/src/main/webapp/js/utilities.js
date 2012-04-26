@@ -462,28 +462,40 @@ UtilAddress.navObjectAddressReferences = function() {
 	});
 }
 
+// "PRIVATE" utility function for getting plain title !
+UtilAddress._getAddressTitle = function(adr) {
+    var title = "";
+    switch (adr.addressClass) {
+        case 0: // Institution
+            title = adr.organisation;
+            break;
+        case 1: // Unit
+            title = adr.organisation;
+            break;
+        case 2: // Person
+            if (adr.name) title += adr.name;
+            if (adr.givenName) title += ", "+adr.givenName;
+            break;
+        case 3: // Freie Adresse
+            if (adr.name) title += adr.name;
+            if (adr.givenName) title += ", "+adr.givenName;
+            if (adr.organisation) title += " ("+adr.organisation+")";
+            break;
+        case 100: // HIDDEN IGE USER ADDRESS
+            if (adr.name) title += adr.name;
+            if (adr.givenName) title += ", "+adr.givenName;
+//            if (adr.organisation) title += " ("+adr.organisation+")";
+            break;
+        default:
+            break;
+    }
+    
+    return title;
+}
+
 // Checks if a title can be constructed for the given adr
 UtilAddress.hasValidTitle = function(adr) {
-	var title = "";
-	switch (adr.addressClass) {
-		case 0: // Institution
-			title = adr.organisation;
-			break;
-		case 1:	// Unit
-			title = adr.organisation;
-			break;
-		case 2: // Person
-			if (adr.name) title += adr.name;
-			if (adr.givenName) title += ", "+adr.givenName;
-			break;
-		case 3: // Freie Adresse
-			if (adr.name) title += adr.name;
-			if (adr.givenName) title += ", "+adr.givenName;
-			if (adr.organisation) title += " ("+adr.organisation+")";
-			break;
-		default:
-			break;
-	}
+	var title = UtilAddress._getAddressTitle(adr);
 	if (title == null || title == "")
 		return false;
 	else
@@ -501,27 +513,7 @@ UtilAddress.hasValidTitle = function(adr) {
 //   adr: {addressClass: 3, name: "Name", givenName: "Vorname", organisation: "testOrga" }
 //        returns: "Name, Vorname (testOrga)"
 UtilAddress.createAddressTitle = function(adr) {
-	var title = "";
-
-	switch (adr.addressClass) {
-		case 0: // Institution
-			title = adr.organisation;
-			break;
-		case 1:	// Unit
-			title = adr.organisation;
-			break;
-		case 2: // Person
-			if (adr.name) title += adr.name;
-			if (adr.givenName) title += ", "+adr.givenName;
-			break;
-		case 3: // Freie Adresse
-			if (adr.name) title += adr.name;
-			if (adr.givenName) title += ", "+adr.givenName;
-			if (adr.organisation) title += " ("+adr.organisation+")";
-			break;
-		default:
-			break;
-	}
+    var title = UtilAddress._getAddressTitle(adr);
 	if (title == null || title == "")
 		return message.get("tree.newAddressName");
 	else

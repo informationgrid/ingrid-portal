@@ -12,6 +12,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekKeysSecurity;
+import de.ingrid.mdek.MdekUtils.AddressType;
 import de.ingrid.mdek.MdekUtils.IdcEntityVersion;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
@@ -204,7 +205,9 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			"AddressNode as modUserNode " +
 				"inner join modUserNode.t02AddressWork modUserAddr " +
 		"where " +
-			"aMeta.expiryState <= " + state.getDbValue() +
+			// exclude hidden user addresses !
+			AddressType.getHQLExcludeIGEUsersViaNode("addrNode") +
+			" and aMeta.expiryState <= " + state.getDbValue() +
 			" and adr.responsibleUuid = responsibleUserNode.addrUuid " +
 			" and comm.commtypeKey = " + de.ingrid.mdek.MdekUtils.COMM_TYPE_EMAIL +
 			" and adr.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(end) +
