@@ -110,7 +110,7 @@ public class UtilsFacete {
     private static final String PARAMS_TOPIC = "topic";
     private static final String PARAMS_SERVICE = "service";
     private static final String PARAMS_MEASURE = "measure";
-    private static final String PARAMS_DATATYPE = "dataype";
+    private static final String PARAMS_DATATYPE = "datatype";
     private static final String PARAMS_PROVIDER = "provider";
     private static final String PARAMS_PARTNER = "partner";
     private static final String PARAMS_GEOTHESAURUS = "geothesaurus";
