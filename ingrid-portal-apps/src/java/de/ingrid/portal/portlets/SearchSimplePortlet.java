@@ -12,11 +12,11 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.om.page.Page;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
@@ -25,6 +25,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.global.UtilsFacete;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.query.IngridQuery;
@@ -336,11 +337,13 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         context.put("enableFacets", PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, Boolean.FALSE));
        
+        // Set up query 
         Page page = (Page) request.getAttribute("org.apache.jetspeed.Page");
         HashMap params = (HashMap) request.getParameterMap();
         if(page != null && (params != null && params.size() == 0)){
         	if(Settings.PAGE_SEARCH_RESULT.indexOf(page.getPath()) > 0 && queryString != null && queryString.length() > 0){
         		response.setTitle(messages.getString(TITLE_KEY_RESULT));
+        		UtilsFacete.setAttributeToSession(request, UtilsFacete.SESSION_PARAMS_READ_FACET_FROM_SESSION, true);
             	setUpQuery(request, queryString);
             }
         }

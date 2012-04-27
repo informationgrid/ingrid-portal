@@ -134,6 +134,8 @@ public class UtilsFacete {
     private static final String PARAMS_ATTRIBUTE_TERM_TO = "term_to";
     private static final String PARAMS_MODTIME = "modtime";
     
+    public static final String SESSION_PARAMS_READ_FACET_FROM_SESSION = "readFacetFromSession";
+    public static final String SESSION_PARAMS_FACET_GROUPING = "facet_grouping";
     
     /**
      * Prepare query by facet activity
@@ -144,15 +146,20 @@ public class UtilsFacete {
     public static void facetePrepareInGridQuery (PortletRequest request, IngridQuery query){
     	
     	// Check for pre prozess doAction.
-    	boolean isFacetAction = false;
-    	if(getAttributeFromSession(request, "isFacetAction") != null){
-    		isFacetAction = (Boolean) getAttributeFromSession(request, "isFacetAction");
+    	boolean readFacetFromSession = false;
+    	if(getAttributeFromSession(request, SESSION_PARAMS_READ_FACET_FROM_SESSION) != null){
+    		readFacetFromSession = (Boolean) getAttributeFromSession(request, SESSION_PARAMS_READ_FACET_FROM_SESSION);
     	}
-    	if(isFacetAction){
-    		setAttributeToSession(request, "isFacetAction", false);
+    	if(readFacetFromSession){
+    		setAttributeToSession(request, SESSION_PARAMS_READ_FACET_FROM_SESSION, false);
     	}else{
-    		// Set facet params to session (do not after doAction).
-        	getFacetAttributsParamsFromUrl(request);	
+    		if(request.getParameter("f") != null){
+    			getFacetAttributsParamsFromUrl(request);
+    		}else{
+    			if(request.getParameter("js_ranked") == null){
+    				removeAttributeFromSession(request, SELECTED_DATATYPE);
+    			}
+    		}
     	}
  		
     	addToQueryTopic(request, query);
@@ -550,16 +557,17 @@ public class UtilsFacete {
 			for(int i=0; i < elementsTopicWithFacete.size(); i++){
     			List<String> keys = new ArrayList<String>(elementsTopicWithFacete.keySet());
     			String ident = keys.get(i);
-    			
-    			for(int j=0; j < unselectedTopics.size(); j++){
-    				if(ident != null){
-    					IngridEnvTopic top = unselectedTopics.get(j);
-    					String topIdent = top.getFormValue(); 
-    					
-        				if(ident.equals(topIdent.toLowerCase())){
-        					unselectedTopics.remove(j);
-        					break;
-        				}
+    			if(unselectedTopics != null){
+    				for(int j=0; j < unselectedTopics.size(); j++){
+        				if(ident != null){
+        					IngridEnvTopic top = unselectedTopics.get(j);
+        					String topIdent = top.getFormValue(); 
+        					
+            				if(ident.equals(topIdent.toLowerCase())){
+            					unselectedTopics.remove(j);
+            					break;
+            				}
+            			}
         			}
     			}
     		}
@@ -1329,7 +1337,7 @@ public class UtilsFacete {
             String grouping = SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING).toString();
             if(grouping != null){
             	if(grouping != IngridQuery.GROUPED_OFF && !grouping.equals(IngridQuery.GROUPED_OFF)){
-            		setAttributeToSession(request, "facet_grouping", grouping);
+            		setAttributeToSession(request, SESSION_PARAMS_FACET_GROUPING, grouping);
             	}
             }
             SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, IngridQuery.GROUPED_OFF, Settings.MSG_TOPIC_SEARCH);
@@ -1343,7 +1351,7 @@ public class UtilsFacete {
             String grouping = SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING).toString();
             if(grouping != null){
             	if(grouping != IngridQuery.GROUPED_OFF && !grouping.equals(IngridQuery.GROUPED_OFF)){
-            		setAttributeToSession(request, "facet_grouping", grouping);
+            		setAttributeToSession(request, SESSION_PARAMS_FACET_GROUPING, grouping);
             	}
             }
             SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, IngridQuery.GROUPED_OFF, Settings.MSG_TOPIC_SEARCH);
@@ -1362,7 +1370,7 @@ public class UtilsFacete {
 			
             // Revert setting of grouping to "grouped_off"
 			if(selectedIds != null && selectedIds.size() == 0){
-			   	String grouping = (String) getAttributeFromSession(request, "facet_grouping");
+			   	String grouping = (String) getAttributeFromSession(request, SESSION_PARAMS_FACET_GROUPING);
 	           	if(grouping != null){
 	           		SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, grouping, Settings.MSG_TOPIC_SEARCH);
 	           	}
@@ -2708,7 +2716,7 @@ public class UtilsFacete {
 		request.getPortletSession().removeAttribute(key, PortletSessionImpl.APPLICATION_SCOPE);
 	}
 	
-	private static void setAttributeToSession(PortletRequest request, String key, Object value){
+	public static void setAttributeToSession(PortletRequest request, String key, Object value){
 		setAttributeToSession(request, key, value, false);
 	}
 	
@@ -2761,7 +2769,7 @@ public class UtilsFacete {
 		if(doRemoveLast != null){
 			removeLastFaceteSelection(request);
 		}
-		setAttributeToSession(request, "isFacetAction", true);
+		setAttributeToSession(request, SESSION_PARAMS_READ_FACET_FROM_SESSION, true);
 	}
 	
 	public static void removeAllFaceteSelections(PortletRequest request){
@@ -2919,15 +2927,17 @@ public class UtilsFacete {
 	private static int isFacetSelection(PortletRequest request){
 		HashMap<String, Boolean> facetSelectionState = getFacetSelectionState(request);
 		int i=0; 
-    	for (Iterator<String> iterator = facetSelectionState.keySet().iterator(); iterator.hasNext();) {
-    		String key = iterator.next();
-    		if(facetSelectionState.get(key)){
-    			i=i+1;
-    			if(i>1){
-    				break;	
-    			}
-    		}
-    	}
+		if(facetSelectionState != null){
+			for (Iterator<String> iterator = facetSelectionState.keySet().iterator(); iterator.hasNext();) {
+	    		String key = iterator.next();
+	    		if(facetSelectionState.get(key)){
+	    			i=i+1;
+	    			if(i>1){
+	    				break;	
+	    			}
+	    		}
+	    	}	
+		}
 		return i;
 	}
 	
@@ -3156,12 +3166,14 @@ public class UtilsFacete {
 		ArrayList<String> list = new ArrayList<String>();
 		for(int i=0; i<params.length; i++){
 			String[] param = params[i].split(":");
-			String key = param[0];
-			String value = param[1];
-			
-			if(key != null && value != null){
-				if(key.equals(facetKey)){
-					list.add(value);
+			if(param != null && param.length == 2){
+				String key = param[0];
+				String value = param[1];
+				
+				if(key != null && value != null){
+					if(key.equals(facetKey)){
+						list.add(value);
+					}
 				}
 			}
 		}
@@ -3180,11 +3192,13 @@ public class UtilsFacete {
 		String[] params = facetParams.split(";");
 		for(int i=0; i<params.length; i++){
 			String[] param = params[i].split(":");
-			String key = param[0];
-			String value = param[1];
-			if(key != null && value != null){
-				if(key.equals(facetKey)){
-					return value;
+			if(param != null && param.length == 2){
+				String key = param[0];
+				String value = param[1];
+				if(key != null && value != null){
+					if(key.equals(facetKey)){
+						return value;
+					}
 				}
 			}
 		}
