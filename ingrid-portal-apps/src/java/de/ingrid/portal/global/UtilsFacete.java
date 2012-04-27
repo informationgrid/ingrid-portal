@@ -157,7 +157,8 @@ public class UtilsFacete {
     			getFacetAttributsParamsFromUrl(request);
     		}else{
     			if(request.getParameter("js_ranked") == null){
-    				removeAttributeFromSession(request, SELECTED_DATATYPE);
+    				removeAllFaceteSelections(request);
+    				removeFaceteElementsFromSession(request);
     			}
     		}
     	}
