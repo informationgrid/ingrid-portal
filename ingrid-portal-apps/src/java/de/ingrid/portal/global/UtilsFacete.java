@@ -41,6 +41,7 @@ import de.ingrid.portal.om.IngridMeasuresRubric;
 import de.ingrid.portal.om.IngridPartner;
 import de.ingrid.portal.om.IngridProvider;
 import de.ingrid.portal.om.IngridServiceRubric;
+import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHit;
@@ -1323,11 +1324,30 @@ public class UtilsFacete {
                 	selectedIds.add(chkVal);
                 }
             }
+            
+            // Set grouping to "grouped_off"
+            String grouping = SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING).toString();
+            if(grouping != null){
+            	if(grouping != IngridQuery.GROUPED_OFF && !grouping.equals(IngridQuery.GROUPED_OFF)){
+            		setAttributeToSession(request, "facet_grouping", grouping);
+            	}
+            }
+            SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, IngridQuery.GROUPED_OFF, Settings.MSG_TOPIC_SEARCH);
 		}
 		
 		if(doAddProviderChb != null){
 			selectedIds = new ArrayList<String>();
             selectedIds.add(doAddProviderChb);
+            
+            // Set grouping to "grouped_off"
+            String grouping = SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING).toString();
+            if(grouping != null){
+            	if(grouping != IngridQuery.GROUPED_OFF && !grouping.equals(IngridQuery.GROUPED_OFF)){
+            		setAttributeToSession(request, "facet_grouping", grouping);
+            	}
+            }
+            SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, IngridQuery.GROUPED_OFF, Settings.MSG_TOPIC_SEARCH);
+            
 		}
 		
 		if(doRemoveProvider != null){
@@ -1338,6 +1358,14 @@ public class UtilsFacete {
 						selectedIds.remove(i);
 					}
 				}
+			}
+			
+            // Revert setting of grouping to "grouped_off"
+			if(selectedIds != null && selectedIds.size() == 0){
+			   	String grouping = (String) getAttributeFromSession(request, "facet_grouping");
+	           	if(grouping != null){
+	           		SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, grouping, Settings.MSG_TOPIC_SEARCH);
+	           	}
 			}
 		}
 		
