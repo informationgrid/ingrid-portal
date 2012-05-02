@@ -146,7 +146,10 @@ public class UtilsFacete {
     public static void facetePrepareInGridQuery (PortletRequest request, IngridQuery query){
     	
     	// Check for pre prozess doAction.
-    	boolean readFacetFromSession = false;
+    	String portalTerm = request.getParameter("q");
+		String facetTerm  = (String) getAttributeFromSession(request, "faceteTerm");
+		
+		boolean readFacetFromSession = false;
     	if(getAttributeFromSession(request, SESSION_PARAMS_READ_FACET_FROM_SESSION) != null){
     		readFacetFromSession = (Boolean) getAttributeFromSession(request, SESSION_PARAMS_READ_FACET_FROM_SESSION);
     	}
@@ -157,12 +160,22 @@ public class UtilsFacete {
     			getFacetAttributsParamsFromUrl(request);
     		}else{
     			if(request.getParameter("js_ranked") == null){
-    				removeAllFaceteSelections(request);
-    				removeFaceteElementsFromSession(request);
+    				String action = request.getParameter("action"); 
+    				if(facetTerm != null){
+	    				if((portalTerm.equals(facetTerm) && action != null && !action.equals("doSearch")) 
+	    						|| (portalTerm.equals(facetTerm) && action == null)){
+	    					removeAllFaceteSelections(request);
+	    					removeFaceteElementsFromSession(request);
+	    				}
+    				}
     			}
     		}
     	}
  		
+    	if(portalTerm != null){
+			setAttributeToSession(request, "faceteTerm", portalTerm);
+		}
+    	
     	addToQueryTopic(request, query);
 	    addToQueryMeasures(request, query);
         addToQueryDatatype(request, query);
@@ -1335,11 +1348,13 @@ public class UtilsFacete {
             }
             
             // Set grouping to "grouped_off"
-            String grouping = SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING).toString();
-            if(grouping != null){
-            	if(grouping != IngridQuery.GROUPED_OFF && !grouping.equals(IngridQuery.GROUPED_OFF)){
-            		setAttributeToSession(request, SESSION_PARAMS_FACET_GROUPING, grouping);
-            	}
+            if(SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING) != null){
+            	String grouping = SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING).toString();
+                if(grouping != null){
+                	if(grouping != IngridQuery.GROUPED_OFF && !grouping.equals(IngridQuery.GROUPED_OFF)){
+                		setAttributeToSession(request, SESSION_PARAMS_FACET_GROUPING, grouping);
+                	}
+                }
             }
             SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, IngridQuery.GROUPED_OFF, Settings.MSG_TOPIC_SEARCH);
 		}
@@ -1349,11 +1364,13 @@ public class UtilsFacete {
             selectedIds.add(doAddProviderChb);
             
             // Set grouping to "grouped_off"
-            String grouping = SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING).toString();
-            if(grouping != null){
-            	if(grouping != IngridQuery.GROUPED_OFF && !grouping.equals(IngridQuery.GROUPED_OFF)){
-            		setAttributeToSession(request, SESSION_PARAMS_FACET_GROUPING, grouping);
-            	}
+            if(SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING) != null){
+	            String grouping = SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING).toString();
+	            if(grouping != null){
+	            	if(grouping != IngridQuery.GROUPED_OFF && !grouping.equals(IngridQuery.GROUPED_OFF)){
+	            		setAttributeToSession(request, SESSION_PARAMS_FACET_GROUPING, grouping);
+	            	}
+	            }
             }
             SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, IngridQuery.GROUPED_OFF, Settings.MSG_TOPIC_SEARCH);
             
@@ -1401,6 +1418,30 @@ public class UtilsFacete {
 		
 		ArrayList<HashMap<String, Long>> elementsProvider = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_PROVIDER);
 		
+		// Remove unselected provider with facets (selection return more than one provider facet) 
+		if(selectedProviders != null && elementsProvider != null){
+			for(int j=0; j<elementsProvider.size();j++){
+				HashMap<String, Long> elementProvider = elementsProvider.get(j);
+				for (Iterator<String> iterator = elementProvider.keySet().iterator(); iterator.hasNext();) {
+					String key = iterator.next();
+					boolean foundKey = false;
+					for (int i=0; i<selectedProviders.size(); i++){
+						String providerKey = selectedProviders.get(i);
+						if(key.equals(providerKey)){
+							foundKey = true;
+							break;
+						}
+					}
+					if(foundKey){
+						break;
+					}else{
+						elementsProvider.remove(j);
+					}
+				}
+			}
+		}
+		
+		// Add zero facet number for selected provider (selection have no facet)
 		if(selectedProviders != null){
 			for(int i=0; i< selectedProviders.size(); i++){
 				String selectedKey = selectedProviders.get(i);
@@ -2870,42 +2911,6 @@ public class UtilsFacete {
 		}
 		
 		return sortedInput;
-	}
-	
-	private static void checkSessionForNewSearchTerm(PortletRequest request){
-		String portalTerm = request.getParameter("q");
-		String portalDS = request.getParameter("ds");
-
-		String faceteTerm  = (String) getAttributeFromSession(request, "faceteTerm");
-		String faceteDS  = (String) getAttributeFromSession(request, "faceteDS");
-		
-		if(portalTerm != null && portalDS != null){
-			
-			if(faceteTerm == null){
-				faceteTerm = portalTerm;
-				setAttributeToSession(request, "faceteTerm", faceteTerm);
-			}
-			
-			if(faceteDS == null){
-				faceteDS = portalDS;
-				setAttributeToSession(request, "faceteDS", faceteDS);
-			}
-			
-			if(!portalTerm.equals(faceteTerm) || !portalDS.equals(faceteDS)){
-				removeAllFaceteSelections(request);
-			}
-			setAttributeToSession(request, "faceteTerm", portalTerm);
-			setAttributeToSession(request, "faceteDS", portalDS);
-		}else if (portalTerm != null){ 
-			if(faceteTerm == null){
-				faceteTerm = portalTerm;
-				setAttributeToSession(request, "faceteTerm", faceteTerm);
-			}
-			
-			if(!portalTerm.equals(faceteTerm)){
-				removeAllFaceteSelections(request);
-			}
-		}
 	}
 	
 	private static void setFacetSelectionState(Context context, PortletRequest request, String key, boolean value) {
