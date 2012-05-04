@@ -1245,7 +1245,29 @@
         <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle> 
     </portlet>
 
-    <portlet id="ShowMapsPortlet">
+    <portlet id="SaveMapsPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/save_maps.vm</value>
+        </init-param>
+        <portlet-name>SaveMapsPortlet</portlet-name>
+        <display-name>KartenLinkSave</display-name>
+        <description>This portlet displays the search results.</description>
+        <portlet-class>de.ingrid.portal.portlets.SaveMapsPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Kartenabschnitt als feste URLs</title>
+            <short-title>SaveMapsPortlet</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
+    </portlet>
+
+	<portlet id="ShowMapsPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
