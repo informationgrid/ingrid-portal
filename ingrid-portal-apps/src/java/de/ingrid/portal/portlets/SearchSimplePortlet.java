@@ -350,9 +350,13 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             HashMap params = (HashMap) request.getParameterMap();
             if(page != null && (params != null && params.size() == 0)){
             	if(Settings.PAGE_SEARCH_RESULT.indexOf(page.getPath()) > 0 && queryString != null && queryString.length() > 0){
-            		response.setTitle(messages.getString(TITLE_KEY_RESULT));
-            		UtilsFacete.setAttributeToSession(request, UtilsFacete.SESSION_PARAMS_READ_FACET_FROM_SESSION, true);
-                	setUpQuery(request, queryString);
+            		if(af != null){
+            			if(!queryString.equals(af.getINITIAL_QUERY())){
+		            		response.setTitle(messages.getString(TITLE_KEY_RESULT));
+		            		UtilsFacete.setAttributeToSession(request, UtilsFacete.SESSION_PARAMS_READ_FACET_FROM_SESSION, true);
+		            		setUpQuery(request, queryString);
+            			}
+            		}
                 }
             }
         }
