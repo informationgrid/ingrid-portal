@@ -229,10 +229,10 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // NOTICE: we use get method without instantiation, so we can do special
         // initialisation !
         SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
-                PortletSession.PORTLET_SCOPE);
+                PortletSession.APPLICATION_SCOPE);
         if (af == null) {
             af = (SearchSimpleForm) Utils.addActionForm(request, SearchSimpleForm.SESSION_KEY, SearchSimpleForm.class,
-                    PortletSession.PORTLET_SCOPE);
+                    PortletSession.APPLICATION_SCOPE);
             af.setINITIAL_QUERY(messages.getString("searchSimple.query.initial"));
             af.init();
         }
@@ -247,6 +247,9 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // that one for convenience
         // (although this state is not bookmarkable !)
         String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+        if(queryString.length() == 0 && af != null){
+        	queryString = af.getInput("q");
+        }
         af.setInput(SearchSimpleForm.FIELD_QUERY, queryString);
         // put ActionForm to context. use variable name "actionForm" so velocity
         // macros work !
@@ -342,13 +345,15 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                 PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, Boolean.FALSE));
        
         // Set up query 
-        Page page = (Page) request.getAttribute("org.apache.jetspeed.Page");
-        HashMap params = (HashMap) request.getParameterMap();
-        if(page != null && (params != null && params.size() == 0)){
-        	if(Settings.PAGE_SEARCH_RESULT.indexOf(page.getPath()) > 0 && queryString != null && queryString.length() > 0){
-        		response.setTitle(messages.getString(TITLE_KEY_RESULT));
-        		UtilsFacete.setAttributeToSession(request, UtilsFacete.SESSION_PARAMS_READ_FACET_FROM_SESSION, true);
-            	setUpQuery(request, queryString);
+        if(Utils.isJavaScriptEnabled(request)){
+        	Page page = (Page) request.getAttribute("org.apache.jetspeed.Page");
+            HashMap params = (HashMap) request.getParameterMap();
+            if(page != null && (params != null && params.size() == 0)){
+            	if(Settings.PAGE_SEARCH_RESULT.indexOf(page.getPath()) > 0 && queryString != null && queryString.length() > 0){
+            		response.setTitle(messages.getString(TITLE_KEY_RESULT));
+            		UtilsFacete.setAttributeToSession(request, UtilsFacete.SESSION_PARAMS_READ_FACET_FROM_SESSION, true);
+                	setUpQuery(request, queryString);
+                }
             }
         }
         super.doView(request, response);
@@ -389,6 +394,9 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
 	                    .getParameter(Settings.PARAM_QUERY_STRING));
         	} else {
 	        	SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, "");
+	        	SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
+	                    PortletSession.PORTLET_SCOPE);
+	        	af.setInput("q", "");
         	}
 
         	// Adapt search state to settings of IngridSessionPreferences !!!
