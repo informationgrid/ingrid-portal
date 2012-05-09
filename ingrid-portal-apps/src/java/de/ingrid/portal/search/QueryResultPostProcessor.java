@@ -243,72 +243,42 @@ public class QueryResultPostProcessor {
 
             // services !
             
-            // WMS, only process if Viewer is specified !
-            String[] servicesArray = (String[]) detail.get(Settings.HIT_KEY_WMS_URL);
-            
-            if (servicesArray == null || servicesArray.length < 1) {
-            	// there has been a change in the case of this key
-            	servicesArray = (String[]) detail.get(Settings.HIT_KEY_WMS_URL.toLowerCase());
+            // Service Links
+            String[] tmpArray = (String[]) detail.getArray(Settings.RESULT_KEY_SERVICE_UUID);
+            if (tmpArray != null && tmpArray.length > 0) {
+                hit.put(Settings.RESULT_KEY_SERVICE_UUID, tmpArray);
             }
             
-            if (servicesArray != null && WMSInterfaceImpl.getInstance().hasWMSViewer()) {
-                boolean objServHasAccessConstraint = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT).equals("Y") ? true : false;
-                
-                if (!objServHasAccessConstraint) {
-  
-                  Object serviceTypeArray = detail.get(Settings.HIT_KEY_OBJ_SERV_TYPE);
-                  Object serviceTypeKeyArray = detail.get(Settings.HIT_KEY_OBJ_SERV_TYPE_KEY);
-                  String serviceType = "";
-                  String serviceTypeKey = "";
-                  if (serviceTypeArray instanceof String[] && ((String[])serviceTypeArray).length > 0) {
-                      serviceType = ((String[])serviceTypeArray)[0];
-                  }
-                  if (serviceTypeKeyArray instanceof String[] && ((String[])serviceTypeKeyArray).length > 0) {
-                	  serviceTypeKey = ((String[])serviceTypeKeyArray)[0];
-                  }  
-                  tmpString = "";
-                  if (servicesArray instanceof String[]) {
-                      // PATCH for wrong data in database -> service string was passed multiple times !
-                  	// only show FIRST (!!!! This is an assumption that has been made to reduce the effort!!! ) WMS getCapabilities URL
-                  	
-                       for (int j = 0; j < servicesArray.length; j++) {
-                           if (serviceTypeKey.toLowerCase().equals("2") || serviceType.toLowerCase().indexOf("wms") != -1 || serviceType.toLowerCase().indexOf("view") != -1 || (servicesArray[j].toLowerCase().indexOf("service=wms") > -1 && servicesArray[j].toLowerCase().indexOf("request=getcapabilities") > -1)) {
-                           	tmpString = servicesArray[j];
-                           	break;
-                           }
-                       }
-                  } else {
-                      tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_WMS_URL);
-                      // only show WMS getCapabilities URL
-                      if (serviceType.indexOf("wms") != -1 || serviceType.indexOf("view") != -1 || (tmpString.toLowerCase().indexOf("service=wms") == -1 || tmpString.toLowerCase().indexOf("request=getcapabilities") == -1)) {
-                      	tmpString = "";
-                      }
-                  }
-                  
-                  if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)){
-	                  if (tmpString.length() > 0) {
-	                      try {
-	                          if (tmpString.toLowerCase().indexOf("request=getcapabilities") == -1) {
-	                              if (tmpString.indexOf("?") == -1) {
-	                                  tmpString = tmpString + "?";
-	                              }
-	                              if (!tmpString.endsWith("?")) {
-	                                  tmpString = tmpString + "&";
-	                              }
-	                              tmpString = tmpString + "REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1";
-	                          } else if (tmpString.toLowerCase().indexOf("version=") == -1){
-	                              if (!tmpString.endsWith("&")) {
-	                                  tmpString = tmpString + "&";
-	                              }
-	                              tmpString = tmpString + "VERSION=1.1.1";
-	                          }
-	                          hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString.trim(), "UTF-8"));
-	                      } catch (UnsupportedEncodingException e) {
-	                          log.error("Error url encoding wms URL!", e);
-	                      }
-	                  }
-                  }
+            // Coupled Resources (Map-objects)
+            tmpArray = (String[]) detail.getArray(Settings.RESULT_KEY_COUPLED_RESOURCE);
+            if (tmpArray != null && tmpArray.length > 0) {
+                hit.put(Settings.RESULT_KEY_COUPLED_RESOURCE, tmpArray);
+            }
+            
+            // Capabilities Url
+            tmpArray = (String[]) detail.getArray(Settings.RESULT_KEY_CAPABILITIES_URL);
+            if (tmpArray != null && tmpArray.length > 0) {
+                if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
+                    String[] modifiedUrls = new String[tmpArray.length];
+                    int i = 0;
+                    for (String url : tmpArray) {
+                        if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
+                            if (url.indexOf("?") == -1) {
+                                url += "?";
+                            }
+                            if (!url.endsWith("?")) {
+                                url += "&";
+                            }
+                            url += "REQUEST=GetCapabilities&SERVICE=WMS";
+                        }
+                        url = URLEncoder.encode(url.trim(), "UTF-8");
+                        modifiedUrls[i++] = url;
+                    }
+                    hit.put(Settings.RESULT_KEY_WMS_URL, modifiedUrls);
                 }
+            } else {
+                // if an old datasource is connected try to get WMS url the old way
+                addLegacyWMS(hit, detail);
             }
             
             PlugDescription plugDescr = (PlugDescription) hit.get(Settings.RESULT_KEY_PLUG_DESCRIPTION);
@@ -470,6 +440,86 @@ public class QueryResultPostProcessor {
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems processing DSC Hit ! hit = " + hit + ", detail=" + detail, ex);
+            }
+        }
+    }
+    
+    private static void addLegacyWMS(IngridHitWrapper hit, IngridHitDetail detail) {
+        // WMS, only process if Viewer is specified !
+        String[] servicesArray = (String[]) detail.get(Settings.HIT_KEY_WMS_URL);
+
+        if (servicesArray == null || servicesArray.length < 1) {
+            // there has been a change in the case of this key
+            servicesArray = (String[]) detail.get(Settings.HIT_KEY_WMS_URL.toLowerCase());
+        }
+
+        if (servicesArray != null && WMSInterfaceImpl.getInstance().hasWMSViewer()) {
+            boolean objServHasAccessConstraint = UtilsSearch.getDetailValue(detail,
+                    Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT).equals("Y") ? true : false;
+
+            if (!objServHasAccessConstraint) {
+
+                Object serviceTypeArray = detail.get(Settings.HIT_KEY_OBJ_SERV_TYPE);
+                Object serviceTypeKeyArray = detail.get(Settings.HIT_KEY_OBJ_SERV_TYPE_KEY);
+                String serviceType = "";
+                String serviceTypeKey = "";
+                if (serviceTypeArray instanceof String[] && ((String[]) serviceTypeArray).length > 0) {
+                    serviceType = ((String[]) serviceTypeArray)[0];
+                }
+                if (serviceTypeKeyArray instanceof String[] && ((String[]) serviceTypeKeyArray).length > 0) {
+                    serviceTypeKey = ((String[]) serviceTypeKeyArray)[0];
+                }
+                String tmpString = "";
+                if (servicesArray instanceof String[]) {
+                    // PATCH for wrong data in database -> service string was
+                    // passed multiple times !
+                    // only show FIRST (!!!! This is an assumption that has been
+                    // made to reduce the effort!!! ) WMS getCapabilities URL
+
+                    for (int j = 0; j < servicesArray.length; j++) {
+                        if (serviceTypeKey.toLowerCase().equals("2")
+                                || serviceType.toLowerCase().indexOf("wms") != -1
+                                || serviceType.toLowerCase().indexOf("view") != -1
+                                || (servicesArray[j].toLowerCase().indexOf("service=wms") > -1 && servicesArray[j]
+                                        .toLowerCase().indexOf("request=getcapabilities") > -1)) {
+                            tmpString = servicesArray[j];
+                            break;
+                        }
+                    }
+                } else {
+                    tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_WMS_URL);
+                    // only show WMS getCapabilities URL
+                    if (serviceType.indexOf("wms") != -1
+                            || serviceType.indexOf("view") != -1
+                            || (tmpString.toLowerCase().indexOf("service=wms") == -1 || tmpString.toLowerCase()
+                                    .indexOf("request=getcapabilities") == -1)) {
+                        tmpString = "";
+                    }
+                }
+
+                if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
+                    if (tmpString.length() > 0) {
+                        try {
+                            if (tmpString.toLowerCase().indexOf("request=getcapabilities") == -1) {
+                                if (tmpString.indexOf("?") == -1) {
+                                    tmpString = tmpString + "?";
+                                }
+                                if (!tmpString.endsWith("?")) {
+                                    tmpString = tmpString + "&";
+                                }
+                                tmpString = tmpString + "REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1";
+                            } else if (tmpString.toLowerCase().indexOf("version=") == -1) {
+                                if (!tmpString.endsWith("&")) {
+                                    tmpString = tmpString + "&";
+                                }
+                                tmpString = tmpString + "VERSION=1.1.1";
+                            }
+                            hit.put(Settings.RESULT_KEY_WMS_URL, new String[] {URLEncoder.encode(tmpString.trim(), "UTF-8")});
+                        } catch (UnsupportedEncodingException e) {
+                            log.error("Error url encoding wms URL!", e);
+                        }
+                    }
+                }
             }
         }
     }

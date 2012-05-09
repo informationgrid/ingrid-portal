@@ -746,7 +746,7 @@ public class UtilsFacete {
 			if(key.equals("map")){
 				HashMap<String, String> faceteEntry = new HashMap<String, String>();
 		        faceteEntry.put("id", "map");
-		        faceteEntry.put("query", "t011_obj_serv_op_connpoint.connect_point:http*");
+		        faceteEntry.put("query", "(capabilities_url:http* OR t011_obj_serv_op_connpoint.connect_point:http*)");
 		        faceteList.add(faceteEntry);
 			}else if(key.equals("topic")){
 				HashMap<String, String> faceteEntry = new HashMap<String, String>();
@@ -880,7 +880,10 @@ public class UtilsFacete {
 
 			for(int i = 0; i < selectedDatatype.size(); i++){
         		if(selectedDatatype.get(i).equals("map")){
-        			query.addWildCardFieldQuery(new WildCardFieldQuery(true, false, "t011_obj_serv_op_connpoint.connect_point", "http*"));
+        		    ClauseQuery cq = new ClauseQuery(true, false);
+        		    cq.addWildCardFieldQuery(new WildCardFieldQuery(false, false, "capabilities_url", "http*"));
+        		    cq.addWildCardFieldQuery(new WildCardFieldQuery(false, false, "t011_obj_serv_op_connpoint.connect_point", "http*"));
+        		    query.addClause(cq);
         		}else if(selectedDatatype.get(i).equals("topic")){
         			query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, Settings.QVALUE_DATATYPE_AREA_ENVTOPICS));
         		}else if(selectedDatatype.get(i).equals("other")){

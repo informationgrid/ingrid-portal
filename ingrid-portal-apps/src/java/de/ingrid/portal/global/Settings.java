@@ -204,6 +204,10 @@ public class Settings {
 
     public static final String RESULT_KEY_NO_OF_HITS = "no_of_hits";
     public static final String RESULT_KEY_DUMMY_HIT = "dummyHit";
+    
+    public static final String RESULT_KEY_CAPABILITIES_URL = "capabilities_url";
+    public static final String RESULT_KEY_SERVICE_UUID     = "refering_service_uuid";
+    public static final String RESULT_KEY_COUPLED_RESOURCE = "coupled_resource";
 
     // ===========================================
     // Hit Detail data (get data from hit details)
@@ -415,8 +419,5 @@ public class Settings {
 
     // reg exp to check for forbidden login patterns
     public static final String FORBIDDEN_LOGINS_REGEXP_STR = ".*/.*";
-
-
-
 
 }
