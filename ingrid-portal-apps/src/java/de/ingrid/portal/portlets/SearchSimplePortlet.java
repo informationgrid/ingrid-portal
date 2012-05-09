@@ -172,7 +172,11 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // check for passed RENDER PARAMETERS (for bookmarking) and
         // ADAPT OUR PERMANENT STATE (MESSAGES)
         // ----------------------------------
-        String action = request.getParameter(Settings.PARAM_ACTION);
+        String [] actions = request.getParameterValues(Settings.PARAM_ACTION);
+        String action = null;
+        if(actions != null){
+        	action = actions[actions.length-1];
+        }
         if (action == null) {
             action = "";
         }

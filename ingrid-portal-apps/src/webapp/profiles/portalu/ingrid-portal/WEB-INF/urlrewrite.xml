@@ -105,6 +105,71 @@
     
     <!-- Hauptsuche   -->
     <rule>
+        <from>/freitextsuche/rechtsvorschriften(.?)</from>
+        <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=4</to>
+    </rule>
+    <rule>
+        <from>/freitextsuche/rechtsvorschriften(.*)</from>
+        <to type="forward">/portal/main-search.psml$1</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/main-search.psml?(.*ds=4.*)</from>
+        <to>/freitextsuche/rechtsvorschriften$1</to>
+    </outbound-rule>
+       
+    <rule>
+        <from>/freitextsuche/addressen(.?)</from>
+        <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=2</to>
+    </rule>
+    <rule>
+        <from>/freitextsuche/addressen(.*)</from>
+        <to type="forward">/portal/main-search.psml$1</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/main-search.psml?(.*ds=2.*)</from>
+        <to>/freitextsuche/addressen$1</to>
+    </outbound-rule>
+    
+    <rule>
+        <from>/freitextsuche/umweltinformationen(.?)</from>
+        <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=1</to>
+    </rule>
+	<rule>
+        <from>/freitextsuche/umweltinformationen(.*)</from>
+        <to type="forward">/portal/main-search.psml$1</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/main-search.psml?(.*ds=1.*)</from>
+        <to>/freitextsuche/umweltinformationen$1</to>
+    </outbound-rule>
+    
+    <rule>
+        <from>/freitextsuche/forschungsprojekte(.?)</from>
+        <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=3</to>
+    </rule>
+    <rule>
+        <from>/freitextsuche/forschungsprojekte(.*)</from>
+        <to type="forward">/portal/main-search.psml$1</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/main-search.psml?(.*ds=3.*)</from>
+        <to>/freitextsuche/forschungsprojekte$1</to>
+    </outbound-rule>
+    
+    <rule>
+        <from>/freitextsuche/kataloge(.?)</from>
+        <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=5</to>
+    </rule>
+    <rule>
+        <from>/freitextsuche/kataloge(.*)</from>
+        <to type="forward">/portal/main-search.psml$1</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/main-search.psml?(.*ds=5.*)</from>
+        <to>/freitextsuche/kataloge$1</to>
+    </outbound-rule>
+    
+    <rule>
         <from>/freitextsuche</from>
         <to type="forward">/portal/main-search.psml</to>
     </rule>

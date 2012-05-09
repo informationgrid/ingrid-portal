@@ -161,8 +161,8 @@ public class UtilsFacete {
     		}else{
     			if(request.getParameter("js_ranked") == null){
     				String action = request.getParameter("action"); 
-    				if(facetTerm != null){
-	    				if((portalTerm.equals(facetTerm) && action != null && !action.equals("doSearch")) 
+    				if(facetTerm != null && portalTerm != null && action != null){
+	    				if((portalTerm.equals(facetTerm) && !action.equals("doSearch")) 
 	    						|| (portalTerm.equals(facetTerm) && action == null)){
 	    					removeAllFaceteSelections(request);
 	    					removeFaceteElementsFromSession(request);

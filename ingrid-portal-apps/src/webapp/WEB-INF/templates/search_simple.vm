@@ -14,7 +14,7 @@ $action.setParameter('action','doChangeDS')
 	<span id="envInfos" class="selected" title="$MESSAGES.getString('searchSimple.area.envInfos.tooltip')">$MESSAGES.getString('searchSimple.area.envInfos')</span>
 #else
     $action.setParameter('ds','1')
-	<a id="envInfos" href="$action" title="$MESSAGES.getString('searchSimple.area.envInfos.tooltip')">$MESSAGES.getString('searchSimple.area.envInfos')</a>	
+	<a id="envInfos" href="$renderResponse.encodeURL('/portal/main-search.psml?action=doChangeDS&amp;ds=1')" title="$MESSAGES.getString('searchSimple.area.envInfos.tooltip')">$MESSAGES.getString('searchSimple.area.envInfos')</a>	
 #end
 #if($enableDatasourceCatalog)
 	#if($enableSearchSeperator)
@@ -26,7 +26,7 @@ $action.setParameter('action','doChangeDS')
     	<span id="catalog" class="selected" title="$MESSAGES.getString('searchSimple.area.catalog.tooltip')">$MESSAGES.getString('searchSimple.area.catalog')</span>
     #else
         $action.setParameter('ds','5')
-    	<a id="catalog" href="$action" title="$MESSAGES.getString('searchSimple.area.catalog.tooltip')">$MESSAGES.getString('searchSimple.area.catalog')</a>	
+    	<a id="catalog" href="$renderResponse.encodeURL('/portal/main-search.psml?action=doChangeDS&amp;ds=5')" title="$MESSAGES.getString('searchSimple.area.catalog.tooltip')">$MESSAGES.getString('searchSimple.area.catalog')</a>	
     #end
 #end
 #if($enableDatasourceLaws)
@@ -39,7 +39,7 @@ $action.setParameter('action','doChangeDS')
     	<span id="laws" class="selected" title="$MESSAGES.getString('searchSimple.area.laws.tooltip')">$MESSAGES.getString('searchSimple.area.laws')</span>
     #else
         $action.setParameter('ds','4')
-    	<a id="laws" href="$action" title="$MESSAGES.getString('searchSimple.area.laws.tooltip')">$MESSAGES.getString('searchSimple.area.laws')</a>	
+    	<a id="laws" href="$renderResponse.encodeURL('/portal/main-search.psml?action=doChangeDS&amp;ds=4')" title="$MESSAGES.getString('searchSimple.area.laws.tooltip')">$MESSAGES.getString('searchSimple.area.laws')</a>	
     #end
 #end
 #if($enableDatasourceResearch)
@@ -52,7 +52,7 @@ $action.setParameter('action','doChangeDS')
     	<span id="research" class="selected" title="$MESSAGES.getString('searchSimple.area.research.tooltip')">$MESSAGES.getString('searchSimple.area.research')</span>
     #else
         $action.setParameter('ds','3')
-    	<a id="research" href="$action" title="$MESSAGES.getString('searchSimple.area.research.tooltip')">$MESSAGES.getString('searchSimple.area.research')</a>	
+    	<a id="research" href="$renderResponse.encodeURL('/portal/main-search.psml?action=doChangeDS&amp;ds=3')" title="$MESSAGES.getString('searchSimple.area.research.tooltip')">$MESSAGES.getString('searchSimple.area.research')</a>	
     #end
 #end
 #if($enableDatasourceAddresses)
@@ -65,7 +65,7 @@ $action.setParameter('action','doChangeDS')
     	<span id="addresses" class="selected" title="$MESSAGES.getString('searchSimple.area.addresses.tooltip')">$MESSAGES.getString('searchSimple.area.addresses')</span>
     #else
         $action.setParameter('ds','2')
-    	<a id="addresses" href="$action" title="$MESSAGES.getString('searchSimple.area.addresses.tooltip')">$MESSAGES.getString('searchSimple.area.addresses')</a>	
+    	<a id="addresses" href="$renderResponse.encodeURL('/portal/main-search.psml?action=doChangeDS&amp;ds=2')" title="$MESSAGES.getString('searchSimple.area.addresses.tooltip')">$MESSAGES.getString('searchSimple.area.addresses')</a>	
     #end
 #end
     	</p>

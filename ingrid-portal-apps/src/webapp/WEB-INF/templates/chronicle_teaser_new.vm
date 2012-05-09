@@ -22,6 +22,7 @@ $action.setParameter('action','doTeaser')
     </div>
     <p class="teaser_body">
         $MESSAGES.getString('chronicle.teaser.new.body')
+		<a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doChronicle" title="$MESSAGES.getString('chronicle.teaser.new.more.tooltip')">$MESSAGES.getString('chronicle.teaser.new.more')</a>
     </p>
     <p class="iconLink">
       <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
