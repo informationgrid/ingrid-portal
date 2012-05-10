@@ -564,8 +564,9 @@ function applyBeforeAddressPublishValidation() {
 var Validation = {};
 
 Validation.addEmailCheck = function(id, /*boolean*/onlyBeforePublish) {
-    //dijit.byId(id).regExpGen = dojox.validate.regexp.emailAddress;
-    Validation.addRegExCheck(id, dojox.validate.regexp.emailAddress)
+    dijit.byId(id).regExpGen = dojox.validate.regexp.emailAddress;
+    // addRegExCheck DOES NOT WORK !!!
+    //Validation.addRegExCheck(id, dojox.validate.regexp.emailAddress)
 }
 
 Validation.addUrlCheck = function(id, /*boolean*/onlyBeforePublish) {
