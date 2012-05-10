@@ -246,7 +246,14 @@ public class QueryResultPostProcessor {
             // Service Links
             String[] tmpArray = (String[]) detail.getArray(Settings.RESULT_KEY_SERVICE_UUID);
             if (tmpArray != null && tmpArray.length > 0) {
-                hit.put(Settings.RESULT_KEY_SERVICE_UUID, tmpArray);
+                // make valid wms urls
+                String[] tmpArray2 = new String[tmpArray.length];
+                int i = 0;
+                for (String entry : tmpArray) {
+                    String[] entrySplit = entry.split("#");
+                    tmpArray2[i++] = entrySplit[0]+"#"+entrySplit[1]+"#"+addCapabilitiesInformation(entrySplit[2])+"#"+entrySplit[3];
+                }
+                hit.put(Settings.RESULT_KEY_SERVICE_UUID, tmpArray2);
             }
             
             // Coupled Resources (Map-objects)
@@ -259,22 +266,13 @@ public class QueryResultPostProcessor {
             tmpArray = (String[]) detail.getArray(Settings.RESULT_KEY_CAPABILITIES_URL);
             if (tmpArray != null && tmpArray.length > 0) {
                 if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
-                    String[] modifiedUrls = new String[tmpArray.length];
                     int i = 0;
                     for (String url : tmpArray) {
-                        if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
-                            if (url.indexOf("?") == -1) {
-                                url += "?";
-                            }
-                            if (!url.endsWith("?")) {
-                                url += "&";
-                            }
-                            url += "REQUEST=GetCapabilities&SERVICE=WMS";
-                        }
-                        url = URLEncoder.encode(url.trim(), "UTF-8");
-                        modifiedUrls[i++] = url;
+                        url = addCapabilitiesInformation(url);
+                        // only take the first map url, which should be the only one! 
+                        hit.put(Settings.RESULT_KEY_WMS_URL, url);
+                        break;
                     }
-                    hit.put(Settings.RESULT_KEY_WMS_URL, modifiedUrls);
                 }
             } else {
                 // if an old datasource is connected try to get WMS url the old way
@@ -442,6 +440,20 @@ public class QueryResultPostProcessor {
                 log.error("Problems processing DSC Hit ! hit = " + hit + ", detail=" + detail, ex);
             }
         }
+    }
+
+    private static String addCapabilitiesInformation(String url) throws UnsupportedEncodingException {
+        if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
+            if (url.indexOf("?") == -1) {
+                url += "?";
+            }
+            if (!url.endsWith("?")) {
+                url += "&";
+            }
+            url += "REQUEST=GetCapabilities&SERVICE=WMS";
+        }
+        url = URLEncoder.encode(url.trim(), "UTF-8");
+        return url;
     }
     
     private static void addLegacyWMS(IngridHitWrapper hit, IngridHitDetail detail) {
