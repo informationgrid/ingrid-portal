@@ -191,7 +191,9 @@
                             res.linksFromObjectTable = [];
                             // if an address is added from another location, also add it to generalAddress!
                             UtilGrid.addTableDataRow("generalAddress", res);
-                            UtilGrid.addTableDataRow(dijit.byId("pageDialog").customParams.grid, res);
+                            if (dijit.byId("pageDialog").customParams.grid != "generalAddress") { 
+                                UtilGrid.addTableDataRow(dijit.byId("pageDialog").customParams.grid, res);
+                            }
                         }
                     },
                     //		timeout:20000,

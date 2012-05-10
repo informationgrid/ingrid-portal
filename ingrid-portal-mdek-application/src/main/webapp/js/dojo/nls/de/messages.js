@@ -182,12 +182,19 @@
 	"dialog.compareView.title":"Vergleichsansicht",
 	"dialog.help.helpMessageNotFound":"Der Hilfetext f&uuml;r das Feld mit der ID: '${0}' konnte nicht gefunden werden.",
 	"dialog.help.fieldName":"Feldname",
+	"dialog.general.info":"Information",
 	"dialog.general.warning":"Warnhinweis",
 	"dialog.object.detailView.title":"Detailansicht",
 	"dialog.address.detailView.title":"Adress-Detailansicht",
 	"dialog.showComments.title":"Kommentar ansehen/hinzufügen",
 	"dialog.operations.title":"Operation bearbeiten",
-
+	"dialog.remoteReferenceChange":"Verweis in Dienst angelegt",
+	"dialog.remoteReferenceChange.text":"Sie wurden zum Dienst '${0}' weitergeleitet und ein Verweis nach '${1}' wurde eingerichtet. Sie müssen noch speichern, damit die Änderungen wirksam werden!",
+	"dialog.save.for.remote.reference":"Das Hinzufügen des Verweises geschieht vom ausgewählten Dienst aus. Deshalb müssen alle Änderungen vorher gespeichert werden, da man sich nach Anlegen des Verweises im Dienstobjekt befinden wird.",
+	"dialog.save.extra.hint":"Hinweis: ",
+	"dialog.links.selectObject.coupling.info":"Hinweis: Wird eine Verknüpfung dieser Daten-Metadaten mit Dienst-Metadaten hergestellt, so bewirkt das eine Änderung in den Dienste-Metadaten, daher müssen die Dienste-Metadaten anschliessend gespeichert und neu veröffentlicht werden.",
+	"dialog.cannot.modify.table":"Dieser Eintrag kann nicht von hier bearbeitet/gelöscht werden! Wechseln Sie stattdessen zu dem Dienst und bearbeiten Sie den Verweis von dort!",
+	
 	"dialog.inputInvalidError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Bitte &uuml;berpr&uuml;fen sie die Rot unterlegten Felder auf ihre Eingabe.",
 	"dialog.inputInvalidHtmlTagError":"Der Speichervorgang konnte nicht durchgef&uuml;hrt werden. Eines der Eingabefelder enth&auml;lt ung&uuml;ltige HTML Tags. Es sind ausschlie&szlig;lich folgende Tags erlaubt: 'b, i, u, p, br, strong, ul, ol, li'.",
 	"dialog.generalError":"Beim Ausf&uuml;hren der Aktion ist folgender Fehler aufgetreten:<br /><br /> '${0}'",
@@ -378,6 +385,10 @@
 	"security.role.catalogAdmin":"Katalog-Administrator",
 	"security.role.metadataAdmin":"Metadaten-Administrator",
 	"security.role.metadataAuthor":"Metadaten-Autor",
+	
+	"ui.obj.type3.coupling.type.tight":"tight",
+	"ui.obj.type3.coupling.type.mixed":"mixed",
+	"ui.obj.type3.coupling.type.loose":"loose",
 
 	"cts.serviceError":"Der zur Transformation der eingegebenen Koordinaten verwendete Coordinate Tranformation Service des BKG (https://upd.geodatenzentrum.de) ist zur Zeit nicht zu erreichen. Bitte probieren Sie es zu einem sp&auml;teren Zeitpunkt erneut oder wenden Sie sich an die Betreiber des Dienstes.",
 	"cts.transformError":"Die eingegebenen Koordinaten konnten vom verwendeten Coordinate Tranformation Service (https://upd.geodatenzentrum.de) nicht transformiert werden. Bitte &uuml;berpr&uuml;fen Sie Ihre Eingabe.",

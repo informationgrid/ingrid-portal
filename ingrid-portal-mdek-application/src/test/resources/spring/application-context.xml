@@ -339,7 +339,7 @@
         <property name="pathToXml" value="data/codelists.xml" />    
     </bean>
     <bean id="igePersistency" class="de.ingrid.codelists.persistency.IgeCodeListPersistency">
-        <property name="catalogReqHandler"><ref bean="catalogRequestHandler" /></property>    
+        <property name="connectionFacade"><ref local="connectionFacade" /></property> 
     </bean>
     <bean id="codeListService" class="de.ingrid.codelists.CodeListService">
         <property name="persistencies">

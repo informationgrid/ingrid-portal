@@ -36,6 +36,7 @@ function createCustomTree(id, node, identifier, label, expandLoadFunction){
 	}
 	
 	myTree.startup();
+	return myTree;
 }
 
 /*

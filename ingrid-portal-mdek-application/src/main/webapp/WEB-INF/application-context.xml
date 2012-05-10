@@ -346,7 +346,6 @@
     </bean>
 -->
     <bean id="igePersistency" class="de.ingrid.codelists.persistency.IgeCodeListPersistency">
-        <property name="catalogReqHandler"><ref bean="catalogRequestHandler" /></property>
         <property name="connectionFacade"><ref local="connectionFacade" /></property>
     </bean>
     <bean id="codeListService" class="de.ingrid.codelists.CodeListService">
@@ -369,8 +368,8 @@
         <property name="repeatInterval" value="300000" />
         <property name="jobDataAsMap">
             <map>
-                <entry key="connectionFacade"><ref local="connectionFacade"/></entry>
+                <entry key="connectionFacade"><ref local="connectionFacade" /></entry>
             </map>
-      </property>
+        </property>
     </bean>
  </beans>

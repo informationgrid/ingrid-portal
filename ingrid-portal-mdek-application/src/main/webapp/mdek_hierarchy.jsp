@@ -602,12 +602,14 @@
                                         <label for="ref1ServiceLink" onclick="javascript:dialog.showContextHelp(arguments[0], 5066)">
                                             <fmt:message key="ui.obj.type1.serviceLink.title" />
                                         </label>
-                                    </span><span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddServiceLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Service'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 5066, gridId: 'ref1ServiceLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.serviceLink.link" /></a></span>
+                                    </span>
+<!--                                     <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddServiceLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Service'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 5066, gridId: 'ref1ServiceLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.serviceLink.link" /></a></span> -->
                                     <div class="input tableContainer">
                                         <div id="ref1ServiceLink" autoHeight="4" class="hideTableHeader" contextMenu="EDIT_LINK" relation_filter="5066" query="{relationType:'5066'}">
                                         </div>
                                     </div>
 									</div>
+									<div style="position:relative; float:right;"><button id="btnAddServiceLink"><fmt:message key="ui.obj.type1.buttonAddServiceLink" /></button></div>
                                 </span>
                             </div>
                             <div class="inputContainer">
@@ -1066,31 +1068,40 @@
                                 </span>
                             </div>
                             <div class="inputContainer">
-                                    <span id="uiElement3220" class="outer halfWidth">
-									<div><span id="ref3ServiceTypeLabel" class="label">
+                                <span id="uiElement3220" class="outer halfWidth">
+                                    <div>
+										<span id="ref3ServiceTypeLabel" class="label">
                                             <label for="ref3ServiceType" onclick="javascript:dialog.showContextHelp(arguments[0], 3220)">
                                                 <fmt:message key="ui.obj.type3.serviceType" />
                                             </label>
-                                        </span><!--
-                                        <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage('Assistent', 'erfassung_assistent_capabilities.html', 755, 195, true);" title="<fmt:message key="general.assistant" /> [Popup]"><fmt:message key="dialog.popup.serviceLink.link" /></a></span>
-                                        --><span class="input">
-                                            <div maxLength="255" autoComplete="false" listId="5100" id="ref3ServiceType" style="width:100%;">
-                                            </div>
                                         </span>
-										</div>
-									</span>
-                                    <span id="uiElement3230" class="outer halfWidth">
-                                    	<div><span class="label">
-                                            <label for="ref3ServiceVersion" onclick="javascript:dialog.showContextHelp(arguments[0], 3230)">
-                                                <fmt:message key="ui.obj.type3.serviceVersion" />
-                                            </label>
+										<span class="input">
+											<div maxLength="255" autoComplete="false" listId="5100" id="ref3ServiceType" style="width: 100%;"></div> 
                                         </span>
-                                        <div class="input tableContainer">
-                                            <div id="ref3ServiceVersion" autoHeight="4" interactive="true" class="hideTableHeader">
-                                            </div>
-                                        </div>
-										</div>
-                                    </span>
+									</div>
+									<div>
+                                        <span id="ref3CouplingTypeLabel" class="label"> 
+                                            <label for="ref3CouplingType" onclick="javascript:dialog.showContextHelp(arguments[0], 3220)">
+                                                <fmt:message key="ui.obj.type3.couplingType" /> 
+                                            </label> 
+                                        </span>
+                                        <span class="input">
+                                            <div maxLength="255" autoComplete="false" id="ref3CouplingType" style="width: 100%;"></div>
+                                        </span>
+                                    </div> 
+                                </span>
+                                <span id="uiElement3230" class="outer halfWidth">
+                                   	<div><span class="label">
+                                           <label for="ref3ServiceVersion" onclick="javascript:dialog.showContextHelp(arguments[0], 3230)">
+                                               <fmt:message key="ui.obj.type3.serviceVersion" />
+                                           </label>
+                                       </span>
+                                       <div class="input tableContainer">
+                                           <div id="ref3ServiceVersion" autoHeight="4" interactive="true" class="hideTableHeader">
+                                           </div>
+                                       </div>
+									</div>
+                                </span>
                             </div>
                             <div class="inputContainer">
                                 <span id="uiElementN004" class="outer">
@@ -1144,16 +1155,16 @@
                                             <label for="ref3BaseDataTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3345)">
                                                 <fmt:message key="ui.obj.type3.generalDataTable.title" />
                                             </label>
-                                        </span><span id="ref3MethodTab2Header" class="functionalLink onTab" style="display: none;"><!--marginRightColumn--><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref3AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref3BaseData'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3210, gridId: 'ref3BaseDataLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type3.generalDataTable.link" /></a></span>
-                                        <div id="ref3BaseDataTabContainer" class="h088" selectedChild="ref3BaseDataTab1">
-                                            <div id='ref3BaseDataTab1' label="<fmt:message key="ui.obj.type3.generalDataTable.tab.text" />">
-                                            <input type="text" id="ref3BaseDataText" name="ref3BaseDataText" class="textAreaFull" />
-                                        </div>
+                                        </span><span id="ref3MethodTab2Header" class="functionalLink onTab" style=""><!--marginRightColumn--><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref3AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref3BaseData'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3210, gridId: 'ref3BaseDataLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type3.generalDataTable.link" /></a></span>
                                         <div id='ref3MethodTab2' label="<fmt:message key="ui.obj.type3.generalDataTable.tab.links" />">
                                             <div class="input tableContainer">
                                                 <div id="ref3BaseDataLink" autoHeight="2" query="{relationType:'3210'}" class="hideTableHeader noValidate" contextMenu="EDIT_LINK" relation_filter="3210">
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div id="ref3BaseDataTabContainer" class="h088" selectedChild="ref3BaseDataTab1">
+                                            <div id='ref3BaseDataTab1' label="<fmt:message key="ui.obj.type3.generalDataTable.tab.text" />">
+                                            <input type="text" id="ref3BaseDataText" name="ref3BaseDataText" class="textAreaFull" />
                                         </div>
                                         </div>
 										</div>

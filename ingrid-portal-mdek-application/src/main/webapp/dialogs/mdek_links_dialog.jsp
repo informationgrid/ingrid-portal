@@ -469,7 +469,7 @@
                                         </label>
                                     </span>
                                     <span class="input">
-                                        <input type="text" id="linksFromObjectName" name="linksFromObjectName" disabled="true" dojoType="dijit.form.ValidationTextBox" />
+                                        <input type="text" id="linksFromObjectName" name="linksFromObjectName" disabled="true" dojoType="dijit.form.ValidationTextBox" style="width: 100%;" />
                                     </span>
                                 </div>
                             </span>
@@ -534,7 +534,7 @@
                                             <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="assignObjectDialogLink" href="javascript:void(0);" onClick="javascript:showAssignObjectDialog();" title="<fmt:message	key="dialog.links.selectObject" /> [Popup]"><fmt:message key="dialog.links.selectObject" /></a>
                                         </span>
                                         <span class="input">
-                                            <input type="text" id="linksToObjectName" name="linksToObjectName" disabled="true" dojoType="dijit.form.ValidationTextBox" />
+                                            <input type="text" id="linksToObjectName" name="linksToObjectName" disabled="true" dojoType="dijit.form.ValidationTextBox" style="width: 100%;" />
                                         </span>
                                     </div>
                                 </span>

@@ -249,7 +249,7 @@ function _connectStoreWithDirtyFlag(store) {
 // The deferred object signals an error if the user canceled the operation. No state changes
 // should be done in this case.
 // @arg nodeId - optional parameter that specifies the node that is about to be loaded
-udkDataProxy.checkForUnsavedChanges = function(nodeId)
+udkDataProxy.checkForUnsavedChanges = function(nodeId, extraInfo)
 {
 	console.debug("Check for unsaved changes called.");
 	var deferred = new dojo.Deferred();
@@ -270,6 +270,10 @@ udkDataProxy.checkForUnsavedChanges = function(nodeId)
 			displayText = message.get("dialog.object.saveChangesHint");
 		else
 			displayText = message.get("dialog.address.saveChangesHint");
+		
+		if (extraInfo) {
+		    displayText += "<br/><br/>"+message.get("dialog.save.extra.hint") + extraInfo;
+		}
 
 		dialog.show(message.get("dialog.saveChangesTitle"), displayText, dialog.INFO, [
         	{ caption: message.get("general.cancel"), action: function(){
@@ -1728,9 +1732,6 @@ udkDataProxy._setObjectData = function(nodeData)
   	
   var updatedStore = UtilStore.updateWriteStore("linksTo", linkTable);
   
-  // update data grids that display a sub set of this reference table
-  udkDataProxy._connectSharedStore();
-
   var unpubLinkTable = nodeData.linksFromObjectTable;
   var pubLinkTable = nodeData.linksFromPublishedObjectTable;
   dojo.forEach(pubLinkTable, function(link) { link.pubOnly = true; } );
@@ -1739,6 +1740,9 @@ udkDataProxy._setObjectData = function(nodeData)
   UtilList.addObjectLinkLabels(linkTable);
   UtilList.addIcons(linkTable);
   UtilStore.updateWriteStore("linksFrom", linkTable);
+  
+  // update data grids that display a sub set of this reference table
+  udkDataProxy._connectSharedStore();
 
   // Additional Fields
   // -- Clear all fields
@@ -1819,15 +1823,15 @@ udkDataProxy._setObjectData = function(nodeData)
 }
 
 udkDataProxy._connectSharedStore = function() {
-	var ids = [["ref1KeysLink", "3535"], ["ref1ServiceLink", "5066"], ["ref1DataBasisLink", "3570"], ["ref1BasisLink", "3520"],
-		["ref1SymbolsLink", "3555"], ["ref1ProcessLink", "3515"], ["ref2BaseDataLink", "3345"], ["ref3BaseDataLink", "3210"],
+	var ids = [["ref1KeysLink", "3535"], ["ref1DataBasisLink", "3570"], ["ref1BasisLink", "3520"],
+		["ref1SymbolsLink", "3555"], ["ref1ProcessLink", "3515"], ["ref2BaseDataLink", "3345"],
 		["ref5MethodLink", "3100"],
 		["ref5KeysLink", "3109"], 
 		["ref6BaseDataLink", "3210"]];
 	var idsLinkAddresses = [["ref2LocationLink", "3360"], ["ref4ParticipantsLink","3410"], ["ref4PMLink","3400"]];
 	
 	var linksToTableData = UtilGrid.getTableData("linksTo");
-	dojo.forEach(ids, function(id){
+	dojo.forEach(ids, function(id) {
 		//UtilGrid.getTableData(id).setItems(linksToStore, "_id");
 		UtilGrid.setTableData(id[0], dojo.filter(linksToTableData, function(item) {return item.relationType == id[1];}));
         UtilGrid.getTable(id[0]).invalidate();
@@ -1835,11 +1839,25 @@ udkDataProxy._connectSharedStore = function() {
    
 	
 	var linksToAddressesTableData = UtilGrid.getTableData("generalAddress");
-	dojo.forEach(idsLinkAddresses, function(id){
+	dojo.forEach(idsLinkAddresses, function(id) {
 		//UtilGrid.getTableData(id).setItems(linksToAddresses, "_id");
 		UtilGrid.setTableData(id[0], dojo.filter(linksToAddressesTableData, function(item) {return item.typeOfRelation == id[1];}));
 		UtilGrid.getTable(id[0]).invalidate();
 	});
+	
+	// also display linksFrom-objects in the following tables (bidirectional use!) -> ref1ServiceLink, ref3BaseDataLink
+	//var bidirectionalIds = [["ref1ServiceLink", "5066"],  ["ref3BaseDataLink", "3210"]];
+	var linksFromTableData = UtilGrid.getTableData("linksFrom");
+    var dataTo   = dojo.filter(linksToTableData, function(item) {return item.relationType == "5066";});
+    var dataFrom = dojo.filter(linksFromTableData, function(item) {return item.objectClass == "3" &&  item.relationType == "3210";});
+    UtilGrid.setTableData("ref1ServiceLink", dataTo.concat(dataFrom));
+    UtilGrid.getTable("ref1ServiceLink").invalidate();
+    
+    dataTo   = dojo.filter(linksToTableData, function(item) {return item.relationType == "3210";});
+    dataFrom = dojo.filter(linksFromTableData, function(item) {return item.objectClass == "1" &&  item.relationType == "5066";});
+    UtilGrid.setTableData("ref3BaseDataLink", dataTo.concat(dataFrom));
+    UtilGrid.getTable("ref3BaseDataLink").invalidate();
+	
 }
 
 udkDataProxy._setObjectDataClass0 = function(nodeData) {}
@@ -1898,6 +1916,7 @@ udkDataProxy._setObjectDataClass2 = function(nodeData) {
 udkDataProxy._setObjectDataClass3 = function(nodeData) {
     dijit.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
 	dijit.byId("ref3ServiceType").attr("value", nodeData.ref3ServiceType, true);
+	dijit.byId("ref3CouplingType").attr("value", nodeData.ref3CouplingType, true);
 	dijit.byId("ref3SystemEnv").attr("value", nodeData.ref3SystemEnv, true);
 	dijit.byId("ref3History").attr("value", nodeData.ref3History, true);
 	dijit.byId("ref3BaseDataText").attr("value", nodeData.ref3BaseDataText, true);
@@ -2389,6 +2408,7 @@ udkDataProxy._getObjectDataClass2 = function(nodeData) {
 udkDataProxy._getObjectDataClass3 = function(nodeData) {
     nodeData.inspireRelevant = dijit.byId("isInspireRelevant").checked ? true : false; // in case value is NULL!
 	nodeData.ref3ServiceType = dijit.byId("ref3ServiceType").getValue();
+	nodeData.ref3CouplingType = dijit.byId("ref3CouplingType").getValue();
 	nodeData.ref3SystemEnv = dijit.byId("ref3SystemEnv").getValue();
 	nodeData.ref3History = dijit.byId("ref3History").getValue();
 	nodeData.ref3BaseDataText = dijit.byId("ref3BaseDataText").getValue();
@@ -3199,4 +3219,70 @@ igeEvents.showNextError = function() {
 	
 	// update error menu entry in toolbar
 	
+}
+
+igeEvents.addServiceLink = function() {
+    // check for changes that need to be saved first
+    var def = udkDataProxy.checkForUnsavedChanges(null, message.get("dialog.save.for.remote.reference"));
+    var loadErrback = function(err) {
+        if (typeof(resultHandler) != "undefined") {
+            resultHandler.errback("Vor Auswahl des Dienst-Objektes bitte Speichern.");
+        }
+    }
+    
+    var readyToLink = function(result) {
+        if (result == undefined || result == "SAVE" || result == "DISCARD") {
+            var def2 = new dojo.Deferred();
+            // open dialog to choose service from
+            // check mdek_hierarchy.jsp for called sub-functions and variables
+            caller = { gridId: 'ref1ServiceLink' };
+            dialog.showPage(message.get("dialog.links.selectObject.title"), 'dialogs/mdek_links_select_object_dialog.jsp?c='+userLocale, 522, 520, true, {
+                // custom parameters
+                additionalText: message.get("dialog.links.selectObject.coupling.info"),
+                resultHandler: def2
+            });
+            
+            def2.addCallbacks(function(obj) {
+                console.debug("It's time to jump!");
+                var oldObject = currentUdk;
+                // jump to selected service if "submit" button was pressed (ignoring the change)
+                var defOpenRemoteObject = menuEventHandler.handleSelectNodeInTree(obj.uuid, "O");
+                
+                // add data object to link table using complete reference where UUID was exchange
+                defOpenRemoteObject.addCallback(function() {
+                    console.debug("remote object opened and loaded");
+                    var currentLink = obj;
+                    currentLink.uuid = oldObject.uuid;
+                    currentLink.title = oldObject.title;
+                    currentLink.objectClass = "1";
+                    currentLink.relationType = "3210";
+                    currentLink.relationTypeName = "Verweis zu Dienst";
+                    UtilList.addObjectLinkLabels([currentLink]);
+                    UtilList.addIcons([currentLink]);
+                    UtilGrid.addTableDataRow("ref3BaseDataLink", currentLink);
+                    
+                    // also add to "global" link table in "Verweise"
+                    if (caller.gridId != "linksTo") {
+                        UtilGrid.addTableDataRow("linksTo", currentLink);
+                    }
+                    
+                    // open section and jump to table and set dirty flag!
+                    setTimeout(function() {
+                        igeEvents.toggleFields('refClass3', 'showAll');
+                        dijit.scrollIntoView("ref3BaseDataLink");
+                        udkDataProxy.setDirtyFlag();
+                    }, 200);
+                    
+                    // show an info about what just happened
+                    dialog.show(message.get("dialog.remoteReferenceChange"), dojo.string.substitute(message.get("dialog.remoteReferenceChange.text"), [currentUdk.title, oldObject.title]), dialog.INFO);
+                });
+            },
+            // dialog was cancelled -> IS NOT CALLED WHEN CLICKED ON 'X'!!!
+            function() {
+                console.debug("Dialog closed without selection of a service.");
+            });
+        }
+    }
+    
+    def.addCallbacks(readyToLink, loadErrback);
 }

@@ -10,8 +10,30 @@
 
 <script type="text/javascript">
 
+var scriptScopeSelectObject = _container_;
+
 createTree = function() {
-	createCustomTree("treeAssignObj", null, "id", "title", loadObjectData);
+	var tree = createCustomTree("treeAssignObj", null, "id", "title", loadObjectData);
+
+	// only allow certain objects to choose from when adding to some tables
+	if (caller && caller.gridId == "ref1ServiceLink") {
+		tree.excludeFunction = function(item) {
+		    return item.userWritePermission && item.objectClass != 3;
+		}
+	}
+	if (caller && caller.gridId == "ref3BaseDataLink") {
+	    tree.excludeFunction = function(item) {
+            return item.userWritePermission && item.objectClass != 1;
+        }
+	}
+
+	dojo.connect(tree, "onClick", function(node, data) {
+		if (dojo.hasClass(data.labelNode, "TreeNodeNotSelectable")) {
+		    dijit.byId("btn_assign").set("disabled", true);
+		} else {
+		    dijit.byId("btn_assign").set("disabled", false);
+		}
+	});
 	
 	// Initialize the address tree	
 	// Load initial first level of the tree from the server
@@ -19,8 +41,6 @@ createTree = function() {
 	    for (var i = 0; i < str.length; i++) {
 	        str[i].id = "AssignObj_" + str[i].id;
 	    }
-	    
-	    var tree = dijit.byId("treeAssignObj");
 	    
 	    // Only use 'objects' and drop 'addresses'
 	    tree.model.store.newItem(str[0]);
@@ -85,10 +105,14 @@ init = function() {
 	});
 	
 	dojo.publish("/getObjectPathRequest", [{
-		id: dijit.byId("subPageDialog").customParams.jumpToNode,
+		id: scriptScopeSelectObject.customParams.jumpToNode,
 		resultHandler: deferred,
 		ignoreDirtyFlag: true
 	}]);
+	
+	if (scriptScopeSelectObject.customParams.additionalText) {
+	    dojo.byId("additionalText").innerHTML = scriptScopeSelectObject.customParams.additionalText; 
+	}
 	
 };
 
@@ -100,10 +124,10 @@ assignObject = function() {
 		retVal.title = node.item.title[0];
 		retVal.objectClass = node.item.nodeDocType[0].substr(5, 1);
 
-		dijit.byId("subPageDialog").customParams.resultHandler.callback(retVal);
+		scriptScopeSelectObject.customParams.resultHandler.callback(retVal);
 	}
 
-	dijit.byId("subPageDialog").hide();
+	scriptScopeSelectObject.hide();
 }
 
 dojo.addOnLoad(function() {
@@ -112,8 +136,8 @@ dojo.addOnLoad(function() {
 dojo.addOnUnload(function() {
 	// If the dialog was cancelled via the dialogs close button
 	// we need to signal an error (cancel action)
-	if (dijit.byId("subPageDialog").customParams.resultHandler.fired == -1) {
-		dijit.byId("subPageDialog").customParams.resultHandler.errback();
+	if (scriptScopeSelectObject.customParams.resultHandler.fired == -1) {
+	    scriptScopeSelectObject.customParams.resultHandler.errback();
 	}
 });
 
@@ -136,8 +160,9 @@ dojo.addOnUnload(function() {
         </div>
       </div>
       <div class="inputContainer">
+        <span id="additionalText"></span>
         <span class="button transparent">
-		  <span style="float:right;"><button dojoType="dijit.form.Button" onClick="assignObject"><fmt:message key="dialog.links.select.assign" /></button></span>
+		  <span style="float:right;"><button id="btn_assign" dojoType="dijit.form.Button" disabled="disabled" onClick="assignObject"><fmt:message key="dialog.links.select.assign" /></button></span>
         </span>
   	  </div>
   	  <div class="fill"></div>

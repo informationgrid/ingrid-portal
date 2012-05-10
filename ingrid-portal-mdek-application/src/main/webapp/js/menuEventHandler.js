@@ -1056,6 +1056,7 @@ menuEventHandler.handleShowComment = function() {
 
 // Selects and loads a node in the tree. The path to the node is expanded step by step.
 menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType) {
+    var defNodeLoaded = new dojo.Deferred();
     igeMenuBar.selectChild("pageHierarchy");
 
 	if (!UtilUI.isContainerNodeId(nodeId) && !UtilUI.isNewNodeId(nodeId)) {
@@ -1095,7 +1096,11 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType) {
             return def;*/
            
             var def = dijit.byId("dataTree")._setPathAttr(rootNodes.concat(path));
-            def.addCallback(dojo.partial(menuEventHandler._loadNode, nodeId));
+            def.addCallback(function() {
+                menuEventHandler._loadNode(nodeId).addCallback(function() {
+                    defNodeLoaded.callback();
+                });
+            });
             
 		});
 		
@@ -1103,6 +1108,7 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType) {
             return menuEventHandler._loadNode(nodeId); 
         });*/
 	}
+	return defNodeLoaded;
 }
 
 menuEventHandler._waitForNode = function(iterations, nodeId, def) {
@@ -1133,6 +1139,7 @@ menuEventHandler._waitForDataTree = function(iterations, def, path) {
 menuEventHandler._loadNode = function(nodeId) {
 	var tree = dijit.byId("dataTree");
 	var targetNode = dijit.byId(nodeId);
+	var loadNodeResultDef = new dojo.Deferred();
     var loadNodeDef = new dojo.Deferred();
 	if (targetNode) {
 		
@@ -1141,6 +1148,7 @@ menuEventHandler._loadNode = function(nodeId) {
 			dojo.window.scrollIntoView(targetNode.domNode);
 			dojo.publish("/selectNode", [{node: targetNode.item}]);
             dijit.byId("dataFormContainer").resize();
+            loadNodeResultDef.callback();
 		});
 		loadNodeDef.addErrback(function(msg){
 			dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
@@ -1150,7 +1158,7 @@ menuEventHandler._loadNode = function(nodeId) {
 		console.debug("Publishing event: /loadRequest("+targetNode.id+", "+targetNode.item.nodeAppType+")");
 		dojo.publish("/loadRequest", [{id: targetNode.id[0], appType: targetNode.item.nodeAppType[0], resultHandler:loadNodeDef}]);
 	}
-    return loadNodeDef;
+    return loadNodeResultDef;
 }
 
 

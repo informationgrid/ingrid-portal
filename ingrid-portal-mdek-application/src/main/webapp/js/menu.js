@@ -359,6 +359,10 @@ function initContextMenu(gridProperties) {
             label: message.get('contextmenu.table.editClicked'),
             onClick: function() {
             	console.debug(clickedSlickGridProperties);
+            	if (clickedSlickGridProperties.id == "ref1ServiceLink") {
+            	    UtilUI.showNoModifiableTable();
+            	    return;
+            	}
                 var rowData = clickedSlickGrid.getData()[clickedRow];
                 ingridObjectLayout.openLinkDialog({ gridId:clickedSlickGridProperties.id, filter:clickedSlickGridProperties.relation_filter, selectedRow:rowData });
             }

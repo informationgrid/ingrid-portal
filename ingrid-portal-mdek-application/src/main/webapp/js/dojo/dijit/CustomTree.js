@@ -29,6 +29,8 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
 	nodeToCopy: null,
 	nodeToCut: null,
 	copySubTree: false,
+	// register a function to decide which nodes not to make selectable
+	excludeFunction: null,
 
     _expandNode: function(node){
         var _this = this;
@@ -107,9 +109,16 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
         if (item.labelClass)
             myClass = item.labelClass;
         // check explicitly if set to false ! (can also be null in top nodes ...)
-        if (item.userWritePermission && item.userWritePermission[0] == false)
+        if ((item.userWritePermission && item.userWritePermission[0] == false) || this.itemNotAllowed(item))
             myClass += " TreeNodeNotSelectable";
 		return myClass;
+	},
+	
+	/*
+	 * call of an external function that is responsible for disabled nodes in the tree 
+	 */
+	itemNotAllowed: function(item) {
+	    return this.excludeFunction ? this.excludeFunction(item) : false;
 	},
 	
     getTooltip: function(/*dojo.data.Item*/ item){

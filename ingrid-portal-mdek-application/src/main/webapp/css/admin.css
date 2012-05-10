@@ -1,0 +1,157 @@
+body,html {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	font: normal 11px/16px Verdana, Arial, Helvetica, sans-serif;
+}
+
+div.table {
+	display: table;
+	border-collapse: collapse;
+}
+
+div.tr {
+	display: table-row;
+}
+
+div.td {
+	display: table-cell;
+	padding: 5px;
+}
+
+h1 {
+	position: absolute;
+	left: 150px;
+	top: 2px;
+	margin: 0;
+	font-size: 20px;
+}
+
+h2 {
+	height: 28px;
+	width: 180px;
+	background-color: #D1E4F1;
+	padding: 12px 0 0px 10px;
+	margin-top: 0;
+	margin-left: 40px;
+	font: bold 12px/15px Verdana, Arial, Helvetica, sans-serif;
+	color: #464646;
+}
+
+h3 {
+	background-color: #F5F8EB;
+	height: 28px;
+	padding: 12px 19px 0;
+	margin: 0;
+	font-size: 16px;
+	line-height: 18px;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#header {
+	height: 80px;
+	background-color: #68A5D2;
+	margin: 0 0 35px;
+	padding: 0;
+	color: #A2C6E3;
+}
+
+#menu {
+	width: 240px;
+	padding: 0 0 10px;
+	position: absolute;
+}
+
+ul {
+	background-color: #F5F8EB;
+	padding: 20px 0 20px 40px;
+}
+
+li a {
+	color: #464646 !important;
+}
+
+a,a:VISITED {
+	text-decoration: none;
+	color: #176798;
+}
+
+li {
+	list-style: none;
+	line-height: 14px;
+	margin-bottom: 8px;
+}
+
+#logoutContainer {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background-color: white;
+	padding: 3px 14px;
+}
+
+#cataloguesView .td {
+	border: 1px solid;
+	padding: 3px 10px;
+}
+
+.container {
+	background-color: #fff;
+}
+
+.content {
+	left: 240px;
+	position: relative;
+	top: 0px;
+	display: none;
+	border: 1px solid #DDE9BD;
+	width: 75%;
+	min-height: 650px;
+}
+
+.content div {
+	margin: 19px;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.error {
+	color: red;
+}
+
+.block {
+	width: 40px;
+	height: 40px;
+	background-color: #68A5D2;
+	position: absolute;
+}
+
+.block p {
+	padding-left: 10px;
+	color: white;
+	font-size: 20px;
+	margin-top: 10px;
+	font-weight: bold;
+}
+
+input[type="button"]:hover,input[type="submit"]:hover,button:hover {
+	background: #1B78B1;
+}
+
+input[type="button"],input[type="submit"],button {
+	min-width: 110px;
+	top: 2px;
+	padding: 4px 10px;
+	margin-right: 5px;
+	background: #68A5D2;
+	color: white;
+	font-weight: bold;
+	border: none;
+}
+
+#wrapper { margin: 50px auto; width: 250px; background-color: #eee; box-shadow: 0px 0px 10px #111; padding: 20px; }

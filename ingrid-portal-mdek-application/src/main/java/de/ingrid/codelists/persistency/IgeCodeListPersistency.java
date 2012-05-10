@@ -2,6 +2,7 @@ package de.ingrid.codelists.persistency;
 
 import java.lang.reflect.UndeclaredThrowableException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,6 @@ import de.ingrid.mdek.MdekKeysSecurity;
 import de.ingrid.mdek.MdekUtils;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
 import de.ingrid.mdek.caller.IMdekClientCaller;
-import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.mdek.util.MdekCatalogUtils;
@@ -26,9 +26,6 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
     
     private final static Logger log = Logger.getLogger(IgeCodeListPersistency.class);
     
-    // injected by Spring
-    private CatalogRequestHandler catalogReqHandler;
-
     // injected by Spring    
     private ConnectionFacade connectionFacade;
 
@@ -104,21 +101,27 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
             List<String[]> entriesEn = listEn.get(id);
             List<String[]> entriesIso = listIso.get(id);
             List<String[]> entriesReq = listReq.get(id);
+            Map<Integer, Map<String, String[]>> allEntries = mergeLists(entriesDe, entriesEn, entriesIso, entriesReq);
+            List<Integer> sortedList = new ArrayList<Integer>();
+            sortedList.addAll(allEntries.keySet());
+            Collections.sort(sortedList);
+            
             List<CodeListEntry> entries = new ArrayList<CodeListEntry>();
             String defaultEntry = "";
-            for (int i=0; i<entriesDe.size(); i++) {
+            for (Integer key : sortedList) {
+                Map<String, String[]> entrySet = allEntries.get(key);
                 CodeListEntry cle = new CodeListEntry();
-                cle.setId(entriesDe.get(i)[1]);
-                if (entriesDe.size() > i)
-                    cle.setLocalisedEntry("de", entriesDe.get(i)[0]);
-                if (entriesEn.size() > i)
-                    cle.setLocalisedEntry("en", entriesEn.get(i)[0]);
-                if (entriesIso.size() > i)
-                    cle.setLocalisedEntry(UtilsUDKCodeLists.LANG_ID_ISO_ENTRY, entriesIso.get(i)[0]);
-                if (entriesReq.size() > i)
-                    cle.setLocalisedEntry(UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE, entriesReq.get(i)[0]);
+                cle.setId(String.valueOf(key));
+                if (entrySet.get("de") != null)
+                    cle.setLocalisedEntry("de", entrySet.get("de")[0]);
+                if (entrySet.get("en") != null)
+                    cle.setLocalisedEntry("en", entrySet.get("en")[0]);
+                if (entrySet.get("iso") != null)
+                    cle.setLocalisedEntry(UtilsUDKCodeLists.LANG_ID_ISO_ENTRY, entrySet.get("iso")[0]);
+                if (entrySet.get("req") != null)
+                    cle.setLocalisedEntry(UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE, entrySet.get("req")[0]);
                 
-                if (MdekUtils.YES.equals(entriesDe.get(i)[2]))
+                if (MdekUtils.YES.equals(entrySet.get("de")[0]))
                     defaultEntry = cle.getId();
                 entries.add(cle);
             }
@@ -134,6 +137,22 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
         codelists.get(0).setLastModified(getLowestTimestamp(iplugList));
         
         return codelists;
+    }
+    
+    private Map<Integer, Map<String, String[]>> mergeLists(List<String[]> de, List<String[]> en, List<String[]> iso, List<String[]> req) {
+        Map<Integer, Map<String, String[]>> result = new HashMap<Integer, Map<String,String[]>>();
+        
+        Map<String, List<String[]>> allLists = new HashMap<String, List<String[]>>();
+        allLists.put("de", de);allLists.put("en", en);allLists.put("iso", iso);allLists.put("req", req);
+        for (String key : allLists.keySet()) {
+            for (String[] value : allLists.get(key)) {
+                if (result.get(Integer.valueOf(value[1])) == null)
+                    result.put(Integer.valueOf(value[1]), new HashMap<String, String[]>());
+                result.get(Integer.valueOf(value[1])).put(key, new String[]{value[0],value[2]});
+            }
+        }        
+        
+        return result;
     }
 
 
@@ -257,10 +276,6 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
         }
             
         return lists;
-    }
-
-    public void setCatalogReqHandler(CatalogRequestHandler catalogReqHandler) {
-        this.catalogReqHandler = catalogReqHandler;
     }
 
     private String getCatAdminUuid(String plugId) {

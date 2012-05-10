@@ -182,12 +182,19 @@
 	"dialog.compareView.title":"Compare View",
 	"dialog.help.helpMessageNotFound":"The help text for the field with id '${0}' could not be found.",
 	"dialog.help.fieldName":"Fieldname",
+	"dialog.general.info":"Information",
 	"dialog.general.warning":"Warning",
 	"dialog.object.detailView.title":"Detail View",
 	"dialog.address.detailView.title":"Address Detail View",
 	"dialog.showComments.title":"Show/Edit Comments",
 	"dialog.operations.title":"Edit operation",
-
+	"dialog.remoteReferenceChange":"Add reference in service",
+    "dialog.remoteReferenceChange.text":"You were forwarded to the service '${0}' and a reference to '${1}' has been established. You have to save to apply the changes!",
+    "dialog.save.for.remote.reference":"The reference will be added from the selected service. Therefore all changes have to be saved, since the service will be selected after the creation of the reference.",
+    "dialog.save.extra.hint":"Info: ",
+    "dialog.links.selectObject.coupling.info":"Info: If a link between Data-Metadata and Service-Metadata is established, a modification in the Service-Metadata will be applied. Therefore the Service-Metadata has to be saved or published again afterwards.",
+    "dialog.cannot.modify.table":"This entry cannot be modified/deleted from here! Change to this Service instead and edit this link from there!",
+    
 	"dialog.inputInvalidError":"There was an error validating input fields. Please check all entered data and try again.",
 	"dialog.inputInvalidHtmlTagError":"Error saving dataset. One of the input fields contains invalid HTML Tags. The following tags are allowed: 'b, i, u, p, br, strong, ul, ol, li'.",
 	"dialog.generalError":"An error occured:<br /><br /> '${0}'",
@@ -378,6 +385,10 @@
 	"security.role.catalogAdmin":"Catalog-Administrator",
 	"security.role.metadataAdmin":"Metadata-Administrator",
 	"security.role.metadataAuthor":"Metadaten-Author",
+	
+	"ui.obj.type3.coupling.type.tight":"tight",
+    "ui.obj.type3.coupling.type.mixed":"mixed",
+    "ui.obj.type3.coupling.type.loose":"loose",
 
 	"cts.serviceError":"An error occured while contacting the Coordinate Tranformation Service (https://upd.geodatenzentrum.de). Please try again later or contact the service operator.",
 	"cts.transformError":"The entered coordinate could not be transformed by the Coordinate Tranformation Service. Please check your input and try again.",

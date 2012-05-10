@@ -1498,6 +1498,10 @@ UtilUI.changeLabel = function(uiElementId, text) {
     }
 }
 
+UtilUI.showNoModifiableTable = function() {
+    dialog.show(message.get("dialog.general.info"), message.get("dialog.cannot.modify.table"), dialog.INFO);
+}
+
 // General utility functions for converting strings, etc.
 var UtilGeneral = {}
 
@@ -1930,6 +1934,12 @@ UtilGrid.setSelection = function(grid, selection) {
 }
 
 UtilGrid.removeTableDataRow = function(grid, itemIndexes) {
+    // we do not allow to delete from this table, because links only go: service -> data
+    if (grid == "ref1ServiceLink") {
+        UtilUI.showNoModifiableTable();
+        return;
+    }
+    
 	var table = this.getTable(grid);
 	var data = this.getTableData(grid);
 	if (data instanceof Array == false) {

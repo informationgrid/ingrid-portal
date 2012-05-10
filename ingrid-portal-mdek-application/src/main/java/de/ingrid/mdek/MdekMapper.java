@@ -286,6 +286,7 @@ public class MdekMapper implements DataMapperInterface {
 
             mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
             mdekObj.setRef3ServiceType((Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY));
+            mdekObj.setRef3CouplingType(td3Map.getString(MdekKeys.COUPLING_TYPE));
             mdekObj.setRef3ServiceTypeTable(mapToServiceTypeTable((List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_TYPE2_LIST)));
 
             mdekObj.setRef3SystemEnv((String) td3Map.get(MdekKeys.SYSTEM_ENVIRONMENT));
@@ -848,6 +849,7 @@ public class MdekMapper implements DataMapperInterface {
         case 3:
             IngridDocument td3Map = new IngridDocument();           
             td3Map.put(MdekKeys.SERVICE_TYPE_KEY, data.getRef3ServiceType());
+            td3Map.put(MdekKeys.COUPLING_TYPE, data.getRef3CouplingType());
             Boolean inspireRelevantC3 = data.getInspireRelevant();
             if (inspireRelevantC3 != null && inspireRelevantC3 == true)
                 udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, "Y");

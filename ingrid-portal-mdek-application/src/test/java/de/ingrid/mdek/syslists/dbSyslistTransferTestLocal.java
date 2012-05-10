@@ -59,7 +59,7 @@ public class dbSyslistTransferTestLocal {
         // ignore the following codelists (they are only local and might not 
         // contain all languages!
         List<String> removeCodeLists = new ArrayList<String>(Arrays.asList( 
-                new String[] {"1100", "1350", "1370", "3535", "3555"}));
+                new String[] {"1100", "1350", "1370", "3535", "3555", "6010", "6020"}));
         
         List<CodeList> codelistsToRemove = new ArrayList<CodeList>();
         

@@ -21,8 +21,8 @@
 %>
 
 <html dir="ltr">
-    
     <head>
+        <link rel="stylesheet" type="text/css" href="css/admin.css"></link>
         <script type='text/javascript' src='dwr/engine.js'></script>
         <script type='text/javascript' src='dwr/util.js'></script>
         <script src='dwr/interface/SecurityService.js'></script>
@@ -69,11 +69,13 @@
     </head>
     
     <body>
-        <table>
-            <tr><td>Username:</td><td><input id="username"></td></tr>
-            <tr><td>Password:</td><td><input id="password" type="password"></td></tr>
-            <tr><td></td><td><input id="submit" onclick="authenticate()" type="button" name="Login" value="Login"></td></tr>
-            <span id="error" style="display:none;">Invalid Username or password!</span>
-        </table>
+        <div id="wrapper">
+            <table style="width: 100%;">
+                <tr><td>Username:</td><td><input id="username" style="width: 100%;"></td></tr>
+                <tr><td>Password:</td><td><input id="password" type="password" style="width: 100%;"></td></tr>
+                <tr><td></td><td><input id="submit" onclick="authenticate()" type="button" name="Login" value="Login" style="float:right;"></td></tr>
+                <span id="error" style="display:none;">Invalid Username or password!</span>
+            </table>
+        </div>
     </body>
 </html>

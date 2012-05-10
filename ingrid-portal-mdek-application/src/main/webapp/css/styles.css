@@ -117,6 +117,7 @@ div .inputContainer h2 { padding-bottom: 5px; }
 .contentBlockWhite span.button { background: none repeat scroll 0 0 #C6C6C6; border-bottom: 0px solid #999999; display: block; height: 29px; margin-top: 4px; padding: 2px 5px 0 0; text-align: right; }
 .claro .dijitButton .dijitButtonNode, .claro .dijitDropDownButton .dijitButtonNode, .claro .dijitComboButton .dijitButtonNode, .claro .dijitToggleButton .dijitButtonNode { background-color: #156496; background-image: url(""); padding: 2px 4px 4px; }
 .claro .dijitButton .dijitButtonNode:hover, .claro .dijitDropDownButton .dijitButtonNode:hover, .claro .dijitComboButton .dijitButtonNode:hover, .claro .dijitToggleButton .dijitButtonNode:hover { background-color: #ADD9F9; background-image: url(""); padding: 2px 4px 4px; }
+.claro .dijitButtonDisabled .dijitButtonNode, .claro .dijitButtonDisabled .dijitButtonNode:hover { background-color: #E3E3E3; }
 .claro .dijitButtonText { color: #FFFFFF; padding: 0 0.8em; text-align: center; font-weight: normal; }
 .claro .dijitSelect .dijitButtonText { color: #000000; padding: 0 5px 2px; font-size: 10px; }
 .dijitToggleButton, .dijitButton, .dijitDropDownButton, .dijitComboButton { margin: 2px 5px 2px 5px; }

@@ -162,6 +162,7 @@ public class MdekDataBean {
 
 	// Object class 3 (Geodatendienst)
 	private Integer ref3ServiceType;
+	private String ref3CouplingType;
 	private List<Integer> ref3ServiceTypeTable;
 	private List<String> ref3ServiceVersion;
 	private String ref3SystemEnv;
@@ -1952,4 +1953,14 @@ public class MdekDataBean {
 	public void setOrgObjId(String orgObjId) {
 		this.orgObjId = orgObjId;
 	}
+
+
+    public void setRef3CouplingType(String ref3CouplingType) {
+        this.ref3CouplingType = ref3CouplingType;
+    }
+
+
+    public String getRef3CouplingType() {
+        return ref3CouplingType;
+    }
 }
