@@ -1886,8 +1886,10 @@ public class UtilsFacete {
 					}
 				}
 				
-				if(selectedMap != null){
+				if(selectedMap != null && coordOptions != null && coordOptions.size() > 0){
 					setAttributeToSession(request, SELECTED_MAP, selectedMap, true);
+				}else{
+					selectedMap.remove("webmapclientCoords");
 				}
 			}
 		}
