@@ -99,3 +99,7 @@
 		</div>
 	</div>
 </form>
+
+<script language="JavaScript" type="text/javascript">
+getAndSetMultiple(document.service_search.partner);
+</script>

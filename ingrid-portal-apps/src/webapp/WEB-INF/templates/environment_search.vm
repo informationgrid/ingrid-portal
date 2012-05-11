@@ -65,3 +65,9 @@
 		</div>
 	</div>
 </form>
+
+<script language="JavaScript" type="text/javascript">
+getAndSetMultiple(document.environment_search.rubric);
+getAndSetMultiple(document.environment_search.category);
+getAndSetMultiple(document.environment_search.partner);
+</script>

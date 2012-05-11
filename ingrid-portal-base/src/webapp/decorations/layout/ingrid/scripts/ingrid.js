@@ -236,3 +236,23 @@ function showButtonSelectCheckboxForm (form, button, coordDiv){
 	}
 	
 }
+
+function getAndSetMultiple(ob){
+	var arraySelect = new Array();
+    while (ob.selectedIndex != -1)
+    {
+        if (ob.selectedIndex != 0) arraySelect.push(ob.selectedIndex);
+        ob.options[ob.selectedIndex].selected = false;
+    }
+    if(arraySelect.length == 0){
+    	arraySelect.push(0);
+    }
+	setMultiple(ob, arraySelect)
+}
+
+function setMultiple(ob, arraySelect){
+    for (var i = 0;i < arraySelect.length; i++)
+    {
+		ob.options[arraySelect[i]].selected = true;
+    }
+}
