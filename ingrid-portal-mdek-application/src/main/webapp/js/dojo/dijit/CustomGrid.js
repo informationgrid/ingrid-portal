@@ -3,6 +3,7 @@ dojo.provide("ingrid.dijit.CustomGrid");
 dojo.require("dijit._Widget");
 dojo.require("ingrid.dijit.EditorLock");
 dojo.require("dojo.dnd.Moveable");
+//dojo.require("dojox.html.entities");
 
 // onselectstart="return false" on table/cell to prevent selection of text
 
@@ -859,6 +860,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
      },
      
      defaultFormatter: function(row, cell, value, columnDef, dataContext) {
+//         return (value === null || value === undefined) ? "" : dojox.html.entities.encode(value);
          return (value === null || value === undefined) ? "" : value;
      },
      
@@ -927,7 +929,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
                              // adding new row
                              if (this.activeRow === this.getDataLength()) {
                             	 this.navigateRight();
-                                 this.canvas.focus();
+                            	 this.setFocus();
                              }
                              else {
                             	 this.commitEditAndSetFocus();
@@ -1170,7 +1172,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
                  //}
              }
              else {
-                   this.canvas.focus();
+                   this.setFocus();
              }
          }
          else {
@@ -1256,7 +1258,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          // if the commit fails, it would do so due to a validation error
          // if so, do not steal the focus from the editor
          if (this.getEditorLock().commitCurrentEdit()) {
-               this.canvas.focus();
+             this.setFocus();
 
              if (this.options.autoEdit) {
                  this.navigateDown();
@@ -1266,7 +1268,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
 
      cancelEditAndSetFocus: function() {
          if (this.getEditorLock().cancelCurrentEdit()) {
-             this.canvas.focus();
+             this.setFocus();
          }
      },
      
@@ -1340,7 +1342,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
              this.canvas.setActive();
          }
          else {
-             //this.canvas.focus();
+             this.canvas.focus();
          }
      },
 /*
