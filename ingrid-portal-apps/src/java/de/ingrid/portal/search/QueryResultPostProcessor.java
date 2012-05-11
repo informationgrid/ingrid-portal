@@ -241,19 +241,25 @@ public class QueryResultPostProcessor {
             Object additionalHtml = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_ADDITIONAL_HTML_1);
             hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, additionalHtml);
 
-            // services !
+            boolean doNotShowMaps = false;
             
             // Service Links
             String[] tmpArray = (String[]) detail.getArray(Settings.RESULT_KEY_SERVICE_UUID);
             if (tmpArray != null && tmpArray.length > 0) {
-                // make valid wms urls
+                // make valid wms urls from capabilities url 
                 String[] tmpArray2 = new String[tmpArray.length];
                 int i = 0;
                 for (String entry : tmpArray) {
+                    // entry = uuid # name # wmsUrl # resourceId
                     String[] entrySplit = entry.split("#");
                     tmpArray2[i++] = entrySplit[0]+"#"+entrySplit[1]+"#"+addCapabilitiesInformation(entrySplit[2])+"#"+entrySplit[3];
                 }
                 hit.put(Settings.RESULT_KEY_SERVICE_UUID, tmpArray2);
+                
+                // maps will be shown with the coupled services here, so there
+                // is no need for showing a special map link ... we wouldn't even
+                // know which one!
+                doNotShowMaps = true;
             }
             
             // Coupled Resources (Map-objects)
@@ -264,7 +270,7 @@ public class QueryResultPostProcessor {
             
             // Capabilities Url
             tmpArray = (String[]) detail.getArray(Settings.RESULT_KEY_CAPABILITIES_URL);
-            if (tmpArray != null && tmpArray.length > 0) {
+            if (!doNotShowMaps && tmpArray != null && tmpArray.length > 0) {
                 if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
                     int i = 0;
                     for (String url : tmpArray) {
