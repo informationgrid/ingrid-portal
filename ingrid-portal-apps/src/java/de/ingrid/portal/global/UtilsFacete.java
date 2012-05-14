@@ -922,15 +922,18 @@ public class UtilsFacete {
 				
 			}
 			
-			if(query.getWildCardFieldQueries() !=null){
-				WildCardFieldQuery[] wildCardFieldQueries = query.getWildCardFieldQueries();
-				for(int i=0; i < wildCardFieldQueries.length; i++){
-					WildCardFieldQuery wildCardFieldQuery = wildCardFieldQueries[i];
-					String value = wildCardFieldQuery.getFieldName();
-					if(value.startsWith("t011_obj_serv_op_connpoint.connect_point")){
-						isMap=true;
-					}
-				}
+			ClauseQuery[] clauses = query.getClauses();
+			for (ClauseQuery clauseQuery : clauses) {
+    			if(clauseQuery.getWildCardFieldQueries() !=null){
+    				WildCardFieldQuery[] wildCardFieldQueries = clauseQuery.getWildCardFieldQueries();
+    				for(int i=0; i < wildCardFieldQueries.length; i++){
+    					WildCardFieldQuery wildCardFieldQuery = wildCardFieldQueries[i];
+    					String value = wildCardFieldQuery.getFieldName();
+    					if(value.indexOf("t011_obj_serv_op_connpoint.connect_point") != -1){
+    						isMap=true;
+    					}
+    				}
+    			}
 			}
 			
 			/* Add or Remove "datatypes" from query after selection*/
