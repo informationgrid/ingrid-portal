@@ -735,7 +735,7 @@ ingridObjectLayout.createFachBezugClass3 = function(){
         doLayout: false
     }, "ref3BaseDataTabContainer");
     
-    var ref3BaseDataTab1 = new dijit.form.SimpleTextarea({title: message.get("ui.obj.type2.generalDataTable.tab.text"), "class": "textAreaFull"}, "ref3BaseDataText");
+    var ref3BaseDataTab1 = new dijit.form.SimpleTextarea({title: message.get("ui.obj.type2.generalDataTable.tab.text"), "class": "textAreaFull noValidate"}, "ref3BaseDataText");
 	
 	var ref3MethodTab2 = new dijit.layout.ContentPane({
         title: message.get("ui.obj.type2.generalDataTable.tab.links")
@@ -1497,11 +1497,11 @@ ingridObjectLayout.applyDefaultConnections = function() {
     dojo.connect(UtilGrid.getTable("ref1BasisLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref1SymbolsLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref1KeysLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
-    dojo.connect(UtilGrid.getTable("ref1ServiceLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo", "linksFrom"]));
+    dojo.connect(UtilGrid.getTable("ref1ServiceLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref1DataBasisLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref1ProcessLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref2BaseDataLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
-    dojo.connect(UtilGrid.getTable("ref3BaseDataLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo", "linksFrom"]));
+    dojo.connect(UtilGrid.getTable("ref3BaseDataLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref5KeysLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref5MethodLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref6BaseDataLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));

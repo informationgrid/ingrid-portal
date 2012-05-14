@@ -1363,6 +1363,8 @@ UtilUI.setMandatory = function(/*html node to process*/containerNode) {
 		UtilUI.removeVisibilityClasses(containerNode);
 		dojo.addClass(containerNode, "required");
 		dojo.addClass(containerNode, "show");
+		// make sure tab containers and alike are displayed correctly!
+		igeEvents.refreshTabContainers();
 	}
 }
 UtilUI.setOptional = function(/*html node to process*/containerNode) {
@@ -2001,6 +2003,7 @@ UtilGrid.synchedDelete = function(checkGrids, msg){
 	        });
 	    });
 	    grid.invalidate();
+	    grid.notifyChangedData({type:"deleted", items:msg.items});
     });
 }
 
