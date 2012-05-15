@@ -359,11 +359,11 @@ public class UtilsFacete {
 					}
 					elementsGeothesaurus.put(key.replace("geothesaurus:", ""), value);
 
-				}else if(key.startsWith("map:")){
+				}else if(key.startsWith("coords:")){
 					if(elementsMap == null){
 						elementsMap = new HashMap<String, Long>();
 					}
-					elementsMap.put(key.replace("map:", ""), value);
+					elementsMap.put(key.replace("coords:", ""), value);
 
 				}
 			}
@@ -1750,7 +1750,7 @@ public class UtilsFacete {
 				    faceteEntry.put("query", "x1:" + webmapclientCoords.get("x1") + " y1:" + webmapclientCoords.get("y1") + " x2:" + webmapclientCoords.get("x2") + " y2:" + webmapclientCoords.get("y2") + " coord:" + coordOption);
 				    faceteList.add(faceteEntry);
 				}
-				facete.put("id", "map");
+				facete.put("id", "coords");
 				facete.put("classes", faceteList);
 		        
 				list.add(facete);
@@ -1952,7 +1952,7 @@ public class UtilsFacete {
         ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
 	    
         HashMap selectedGeothesaurus = (HashMap) getAttributeFromSession(request, SELECTED_GEOTHESAURUS);
-		if(selectedGeothesaurus != null){
+		if(selectedGeothesaurus != null && selectedGeothesaurus.size() > 0){
 			ArrayList<String> selectedIds = (ArrayList<String>) selectedGeothesaurus.get("geothesaurusSelectTopicsId");
 			if(selectedIds != null){
 				for(int i=0; i < selectedIds.size(); i++){
