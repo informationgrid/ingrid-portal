@@ -509,11 +509,25 @@ function ref3OperationPublishable(notPublishableIDs) {
     if (objClass == '3') {
         // Check if the operation table contains valid input (name has to be set)
     	// NOTICE: Name may be reset to "" if serviceType is changed !!!
-        if (dojo.some(UtilGrid.getTableData("ref3Operation"), function(op) {
-                return (!UtilGeneral.hasValue(op.name) || !UtilGeneral.hasValue(op.addressList) || !UtilGeneral.hasValue(op.platform)); })) {
+        var invalid = false;
+        dojo.forEach(UtilGrid.getTableData("ref3Operation"), function(op, row) {
+            // make sure row is visible before accessing it
+            // TODO: it would be better to remember styling information in grid itself, so that rows
+            //       in buffer also are shown with style information. Now the style will be overwritten
+            //       once a row is newly created by scrolling!
+            dijit.byId("ref3Operation").scrollRowIntoView(row);
+            if (!UtilGeneral.hasValue(op.name) || !UtilGeneral.hasValue(op.addressList) || !UtilGeneral.hasValue(op.platform)) {
+                dojo.query("#ref3Operation .slick-row:[row="+row+"]").addClass("important");
+                invalid = true;
+            } else {
+                dojo.query("#ref3Operation .slick-row:[row="+row+"]").removeClass("important");
+            }
+        });
+        if (invalid) {
             console.debug("All entries in the operation table must have a valid name.");
             notPublishableIDs.push("ref3Operation");
         }
+        
     }
 }
 

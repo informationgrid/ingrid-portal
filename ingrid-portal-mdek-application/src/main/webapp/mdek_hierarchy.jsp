@@ -1111,7 +1111,7 @@
                                         </label>
                                     </span><span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(getLocalizedTitle('ref3Operation'), 'dialogs/mdek_operation_dialog.jsp?c='+userLocale, 735, 745, true, {gridId:'ref3Operation'});" title="<fmt:message key="dialog.popup.operationTable.link" /> [Popup]"><fmt:message key="ui.obj.type3.operationTable.link" /></a></span>
                                     <div class="input tableContainer">
-                                        <div id="ref3Operation" autoHeight="4" contextMenu="EDIT_OPERATION">
+                                        <div id="ref3Operation" autoHeight="4" contextMenu="EDIT_OPERATION" class="importantIgnore">
                                         </div>
                                     </div>
                                     </div>
