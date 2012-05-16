@@ -1081,7 +1081,7 @@
 									</div>
 									<div>
                                         <span id="ref3CouplingTypeLabel" class="label"> 
-                                            <label for="ref3CouplingType" onclick="javascript:dialog.showContextHelp(arguments[0], 3220)">
+                                            <label for="ref3CouplingType" onclick="javascript:dialog.showContextHelp(arguments[0], 3221)">
                                                 <fmt:message key="ui.obj.type3.couplingType" /> 
                                             </label> 
                                         </span>

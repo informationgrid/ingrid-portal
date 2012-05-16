@@ -6,6 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
+
+<script src='dwr/interface/SecurityService.js'></script>
+<script src='dwr/engine.js'></script>
 </head>
 
 <%
@@ -13,9 +16,15 @@
 %>
 
 <script>
-    //window.close();
-    window.open('', '_self', '');
-    window.close();
+    SecurityService.isPortalConnected(function(response) {
+        if (response == true) {
+            window.open('', '_self', '');
+            window.close();
+        } else {
+            // redirect
+            document.location.href = document.location.href.replace(/closeWindow.jsp/, "login.jsp");
+        }
+    });
 </script>
 
 <body>

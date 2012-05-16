@@ -65,6 +65,14 @@
                 document.getElementById("error").style.display = "block";
             }
             
+            window.onload = function () {
+                document.getElementById("password").addEventListener('keydown', function (event) { 
+                    if (event.keyCode == 13) {
+                        authenticate();
+                    }
+                });
+            }
+            
         </script>
     </head>
     
@@ -74,7 +82,7 @@
                 <tr><td>Username:</td><td><input id="username" style="width: 100%;"></td></tr>
                 <tr><td>Password:</td><td><input id="password" type="password" style="width: 100%;"></td></tr>
                 <tr><td></td><td><input id="submit" onclick="authenticate()" type="button" name="Login" value="Login" style="float:right;"></td></tr>
-                <span id="error" style="display:none;">Invalid Username or password!</span>
+                <span id="error" class="error" style="display:none;">Invalid Username or password!</span>
             </table>
         </div>
     </body>
