@@ -148,6 +148,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
 		this.uid = "slickgrid_" + Math.round(1000000 * Math.random());
 		this.activeRow = this.activeCell = this.activeCellNode = null;
         this.headers = new Object();
+        this.invalidRows = [];
     },
     
     postCreate: function() {
@@ -384,6 +385,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
     },
     
     setData: function(newData, scrollToTop, noRender) {
+        this.resetInvalidRows();
         this.invalidateAllRows();
         this.data = newData;
         if (scrollToTop)
@@ -563,8 +565,9 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          var dataLoading = row < this.getDataLength() && !d;
          var cellCss;
          var rowCss = "slick-row " +
-             (dataLoading ? " loading" : "") +
-             (row % 2 == 1 ? ' odd' : ' even');
+             (dataLoading ? ' loading' : '') +
+             (row % 2 == 1 ? ' odd' : ' even') +
+             (this.invalidRows.indexOf(row) != -1 ? ' important' : '');
 
          var metadata = this.data.getItemMetadata && this.data.getItemMetadata(row);
 
@@ -2117,6 +2120,21 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          this.setCellCssStyles(this.options.selectedCellCssClass, hash);
 
          this.onSelectedRowsChanged({rows:this.getSelectedRows()});//, e);
+     },
+     
+     setInvalidRows: function(rowIndexes) {
+         this.invalidRows = rowIndexes;
+         this.invalidate();
+     },
+     
+     addInvalidRow: function(rowIndex) {
+         this.invalidRows.push(rowIndex);
+         this.invalidate();
+     },
+     
+     resetInvalidRows: function() {
+         this.invalidRows = [];
+         this.invalidate();
      },
      
      addCellCssStyles: function(key,hash) {
