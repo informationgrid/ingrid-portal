@@ -8,10 +8,14 @@ mapClientCallbackHooks = {bboxSelected: function(x1, x2, y1, y2) {
 	document.env_place_map.y2.value = y2;
 	
 	document.getElementById("coordinatesOutput").innerHTML=x1+" / "+y1+""+" | "+x2+" "+" / "+""+y2 ;
+	document.getElementById("areaidOutput").innerHTML="" ;
 
 
 }};
-
+mapClientCallbackAreaId = function(value) {	
+	document.getElementById("areaidOutput").innerHTML=" "+value ;
+	document.getElementById("coordinatesOutput").innerHTML="";
+};
 var viewConfiguration = "portalu-extended-search";
 
 </script>
@@ -32,10 +36,13 @@ var viewConfiguration = "portalu-extended-search";
           <input id="x2" name="x2" type="hidden" />
           <input id="y1" name="y1" type="hidden" />
           <input id="y2" name="y2" type="hidden" />
+          <input id="areaid" name="areaid" type="hidden" />		  
           <input id="chk_1" name="chk_1" type="checkbox"#getChecked("chk_1" "on") /><label class="search-ext-env" for="chk_1">$MESSAGES.getString('searchExtEnvPlaceMap.label.constraint1')</label><br />
           <input id="chk_2" name="chk_2" type="checkbox"#getChecked("chk_2" "on") /><label class="search-ext-env" for="chk_2">$MESSAGES.getString('searchExtEnvPlaceMap.label.constraint2')</label><br />
           <input id="chk_3" name="chk_3" type="checkbox"#getChecked("chk_3" "on") /><label class="search-ext-env" for="chk_3">$MESSAGES.getString('searchExtEnvPlaceMap.label.constraint3')</label><br />
           </p>
+		  	<div class="formbody_webmapclient_areaid_title">$MESSAGES.getString('searchExtEnvPlaceMap.label.area_id') </div>
+     	     <div id="areaidOutput" class="formbody_webmapclient_areaid" ></div>
 			<div class="formbody_webmapclient_coordinates_title">$MESSAGES.getString('searchExtEnvPlaceMap.label.selected_coordinates') </div>
      	     <div id="coordinatesOutput" class="formbody_webmapclient_coordinates" ></div>
       </div>      

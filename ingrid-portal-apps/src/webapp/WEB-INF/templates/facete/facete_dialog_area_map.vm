@@ -27,13 +27,13 @@
 			>
         <label for="chk_3">$MESSAGES.getString("searchResult.facete.area.map.options.include")</label>
         <br>
-        <div class="formbody_webmapclient_coordinates_title_facete">$MESSAGES.getString('searchExtEnvPlaceMap.label.selected_coordinates')<div id="coordinatesOutput" class="formbody_webmapclient_coordinates_facete" ></div> </div>
- 	           
+        <div class="formbody_webmapclient_coordinates_title_facete">$MESSAGES.getString('searchExtEnvPlaceMap.label.selected_coordinates')<div id="coordinatesOutput" class="formbody_webmapclient_coordinates_facete" ></div> </div><br/>
+		<div class="formbody_webmapclient_areaid_title_facete">$MESSAGES.getString('searchExtEnvPlaceMap.label.selected_areaid')<div id="areaidOutput" class="formbody_webmapclient_areaid_facete" ></div> </div>       
         <input id="x1" name="x1" type="hidden" />
         <input id="x2" name="x2" type="hidden" />
         <input id="y1" name="y1" type="hidden" />
         <input id="y2" name="y2" type="hidden" />
-
+		<input id="areaid" name="areaid" type="hidden" />	
         </p>
                 
         <div class="dialog_bottom">

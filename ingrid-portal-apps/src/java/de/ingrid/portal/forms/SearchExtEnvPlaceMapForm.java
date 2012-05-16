@@ -25,6 +25,7 @@ public class SearchExtEnvPlaceMapForm extends ActionForm {
     public static final String FIELD_X2 = "x2";
     public static final String FIELD_Y1 = "y1";
     public static final String FIELD_Y2 = "y2";
+    public static final String FIELD_AREAID = "areaid";
     
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
@@ -46,6 +47,7 @@ public class SearchExtEnvPlaceMapForm extends ActionForm {
         setInput(FIELD_X2, request.getParameter(FIELD_X2));
         setInput(FIELD_Y1, request.getParameter(FIELD_Y1));
         setInput(FIELD_Y2, request.getParameter(FIELD_Y2));
+        setInput(FIELD_AREAID, request.getParameter(FIELD_AREAID));
     }
 
     /**
