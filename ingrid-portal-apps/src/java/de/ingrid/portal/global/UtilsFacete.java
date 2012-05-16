@@ -1962,12 +1962,11 @@ public class UtilsFacete {
 				    faceteEntry.put("query", "areaid:" + id);
 				    faceteList.add(faceteEntry);
 				}
+				facete.put("id", "geothesaurus");
+				facete.put("classes", faceteList);
+		        
+				list.add(facete);
 			}
-			
-			facete.put("id", "geothesaurus");
-			facete.put("classes", faceteList);
-	        
-			list.add(facete);
 		}
 	}
 
