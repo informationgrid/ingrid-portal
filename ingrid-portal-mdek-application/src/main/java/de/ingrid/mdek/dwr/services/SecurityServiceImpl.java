@@ -184,7 +184,7 @@ public class SecurityServiceImpl implements SecurityService {
 			User u = securityRequestHandler.createUser(user, refetch);
 			UserData userData = new UserData();
 			userData.setPortalLogin(portalLogin);
-			userData.setAddressUuid(user.getAddressUuid());
+			userData.setAddressUuid(u.getAddressUuid());
 			userData.setPlugId(MdekSecurityUtils.getCurrentPortalUserData().getPlugId());
 
 			MdekSecurityUtils.createUserData(userData);

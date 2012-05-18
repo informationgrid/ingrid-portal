@@ -489,6 +489,11 @@ public class MdekUtils {
 			return result;
 		}
 
+		// if user has address data included then first map this one (and user data afterwards !)
+		if (user.getAddress() != null) {
+			result = MdekAddressUtils.convertFromAddressRepresentation(user.getAddress());
+		}
+
 		result.put(MdekKeysSecurity.IDC_USER_ID, user.getId());
 		result.put(MdekKeysSecurity.IDC_USER_ADDR_UUID, user.getAddressUuid());
 		List<Long> groupIds = user.getGroupIds();

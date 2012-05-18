@@ -8,6 +8,7 @@
             dojo.require("dijit.form.ValidationTextBox");
             dojo.require("ingrid.dijit.tree.LazyTreeStoreModel");
             dojo.require("ingrid.dijit.CustomTree");
+            dojo.require("dojox.validate.regexp");
             var userDataGroupData;
             
             var scriptScopeUser = _container_;
@@ -19,7 +20,10 @@
             var administratorId = null;
             var catAdminUserData = null;
             
-            var requiredElements = [["userDataAddressLink", "userDataAddressLinkLabel"]];
+            var requiredElements = [["userDataAddressSurname", "userDataAddressSurnameLabel"],
+                ["userDataAddressForename", "userDataAddressForenameLabel"],
+                ["userDataAddressEmailUser", "userDataAddressEmailUserLabel"]
+            ];
             
             dojo.connect(_container_, "onLoad", function(){
                 createGrids();
@@ -32,13 +36,16 @@
                 
                 // select first user?
                 //tree.attr("path", [tree.rootNode.item, tree.rootNode.getChildren()[0].item]);
-                dijit.byId("userDataAddressLink").validator = function() { return (this.getValue() != "" && this.getValue() != "Neuer Benutzer"); };
+                setUserAddressDataFieldsDisabled(true);
+
+                Validation.addEmailCheck("userDataAddressEmailUser", false);
+                Validation.addEmailCheck("userDataAddressEmailPointOfContact", false);
             });
             
             
             function createGrids() {
                 var tableStructure = [
-                    {field: 'name',name: "<fmt:message key='dialog.admin.users.name' />",width: 350-scrollBarWidth+'px'}
+                    {field: 'name',name: "<fmt:message key='dialog.admin.users.groupName' />",width: 350-scrollBarWidth+'px'}
                 ];
                 createDataGrid("availableGroupsList", null, tableStructure, null);
                 createDataGrid("groupsList", null, tableStructure, null);
@@ -128,7 +135,7 @@
             }
             
             function createGroupLists() {
-                var storeProps = { identifier: 'id', label: "<fmt:message key='dialog.admin.users.name' />" };
+                var storeProps = { identifier: 'id', label: "<fmt:message key='dialog.admin.groupName' />" };
                 createSelectBox("userDataGroup",
                     null, 
                     storeProps,
@@ -265,8 +272,9 @@
                         callback: function(){
                             var tree = dijit.byId("treeUser");
                             tree.model.store.deleteItem(user);
-                            tree.model.store.save();  
+                            tree.model.store.save();
                             resetInputFields();
+                            setUserAddressDataFieldsDisabled(true);
                             //dijit.byId("treeUser").selectedNode = null;
                         },
                         errorHandler: function(errMsg, err){
@@ -342,6 +350,7 @@
                     def.addCallback(function(data){
                         console.debug("after new item");
                         resetInputFields();
+                        setUserAddressDataFieldsDisabled(false);
                         UtilTree.selectNode("treeUser", "newUserNode");
                         treeNodeSelected(dijit.byId("newUserNode").item);
                         //setTimeout(function() {UtilTree.selectNode("treeUser", "newUserNode");}, 500);
@@ -356,7 +365,7 @@
             scriptScopeUser.saveUser = function(){
                 var selectedUser = dijit.byId("treeUser").selectedNode;
                 var login = dijit.byId("userDataLogin").getValue();
-                var oldUser = selectedUser.item.portalLogin+"";
+                var oldUserLogin = selectedUser.item.portalLogin+"";
                 selectedUser.item.portalLogin = login;
                 
                 if (dojo.trim(login).length == 0) {
@@ -372,11 +381,12 @@
                 }
                 
                 var user = {};
-                var userData = {};
+                user.address = scriptScopeUser.getAddressDataFromFields();  
                 
                 if (selectedUser.item.id == "newUserNode") {
-                    // If the current selected node is a new node, create it in the db
-                    user.addressUuid = currentSelectedAddressId+"";
+                    // DO NOT SET addressUuid, will be created in backend !
+                    //user.addressUuid = currentSelectedAddressId+""; // currentSelectedAddressId is undefined
+
                     var groups = UtilGrid.getTableData("groupsList");
                     
                     var groudIds = UtilList.map(groups, function(group) {
@@ -434,12 +444,12 @@
                     console.debug("newUser:");
                     console.debug(user);
                     
-                    SecurityService.storeUser(oldUser, user, login, true, {
+                    SecurityService.storeUser(oldUserLogin, user, login, true, {
                         preHook: showLoadingZone,
                         postHook: hideLoadingZone,
                         callback: function(newUser){
                             // if cat-admin was changed then user must be logged out
-                            if (user.role == 1 && (oldUser != login)) {
+                            if (user.role == 1 && (oldUserLogin != login)) {
                                 dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.users.updateCatAdmin' />", dialog.WARNING);
                             }
                             else {
@@ -462,7 +472,7 @@
                                     dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.users.updateError' />", dialog.WARNING);
                                 }
                             console.debug(errMsg);
-                            selectedUser.item.portalLogin = oldUser;
+                            selectedUser.item.portalLogin = oldUserLogin;
                             treeNodeSelected(currentSelectedUser);
                         }
                     });
@@ -571,16 +581,13 @@
                 }
                 
                 updateInputElements(item);
-                
-                // Delete the displayed address link since it's build from the node title ('Neuer Benutzer')
-                if (newUserNode != null && item.id == "newUserNode") {
-                    dijit.byId("userDataAddressLink").set("value","");
-                }
             }
             
             // Updates the input elements with the data from 'treeNode'
             function updateInputElements(treeNode){
-            
+                resetRequiredElements();
+                setUserAddressDataFieldsDisabled(false);
+
                 currentSelectedUser = treeNode;
                 dijit.byId("bImportUser").set("disabled", false);
                 if (treeNode.role == 1) {
@@ -600,8 +607,16 @@
                 }
                 
                 def.addCallback(function(){
+                    if (treeNode.addressUuid) {
+                        var def2 = scriptScopeUser.getAddressData(treeNode.addressUuid);
+                        def2.addCallback(function(addressData) {
+                            setUserAddressDataFields(addressData);
+                        });
+                    } else {
+                        setUserAddressDataFields(null);
+                    }
+
                     dijit.byId("userDataLogin").setValue(treeNode.portalLogin);
-                    dijit.byId("userDataAddressLink").setValue(treeNode.title);
                     dijit.byId("userDataRole").setValue(treeNode.roleName);
                     console.debug("set to groupid: " + treeNode.groupId);
                     //dijit.byId("userDataGroup").set("value",treeNode.groupId+"");
@@ -610,39 +625,99 @@
                 });
             }
             
-            
             function resetInputFields(){
                 dijit.byId("userDataLogin").set("value","");
-                dijit.byId("userDataAddressLink").set("value","");
                 dijit.byId("userDataRole").set("value","");
+
+                setUserAddressDataFields(null);
+
                 UtilGrid.setTableData("groupsList", []);
                 UtilGrid.setTableData("availableGroupsList", []);
                 currentSelectedAddressId = null;
                 currentSelectedUser = null;
             }
             
-            scriptScopeUser.searchForAddress = function(){
-                console.debug("searchForAddress");
-                var def = new dojo.Deferred();
-                dialog.showPage("<fmt:message key='general.searchAddress' />", 'dialogs/mdek_address_dialog.jsp?c='+userLocale, 755, 580, true, {
-                    resultHandler: def
-                });
-                
-                def.addCallback(getAddressData);
-                
-                def.addCallback(function(addressData){
-                    // the addressClass of an item in a tree is stored under objectClass
-                    // this has to be remapped for further usage
-                    /*if (addressData.addressClass == null) {
-                        console.debug("modify addressClass");
-                        addressData.addressClass = addressData.objectClass;
-                        addressData.organisation = addressData.title;
-                    }*/
-                    console.debug("add address: " + addressData);
-                    currentSelectedAddressId = [addressData.uuid];
-                    var title = UtilAddress.createAddressTitle(addressData);
-                    dijit.byId("userDataAddressLink").set("value", title);
-                });
+            function setUserAddressDataFields(addressData) {
+                if (addressData) {
+                    dijit.byId("userDataAddressSurname").setValue(addressData.name);
+                    dijit.byId("userDataAddressForename").setValue(addressData.givenName);
+                    var commValue = UtilAddress.getAddressCommunicationValue(addressData, ["E-Mail", "e-mail"])
+                    dijit.byId("userDataAddressEmailUser").setValue(commValue);
+                    var commValue = UtilAddress.getAddressCommunicationValue(addressData, ["emailPointOfContact"])
+                    dijit.byId("userDataAddressEmailPointOfContact").setValue(commValue);
+                    dijit.byId("userDataAddressInstitution").setValue(addressData.organisation);
+                    dijit.byId("userDataAddressStreet").setValue(addressData.street);
+                    dijit.byId("userDataAddressPostCode").setValue(addressData.postalCode);
+                    dijit.byId("userDataAddressCity").setValue(addressData.city);
+                    var commValue = UtilAddress.getAddressCommunicationValue(addressData, ["Telefon", "telephone"])
+                    dijit.byId("userDataAddressPhone").setValue(commValue);
+                } else {
+                    // reset fields
+                    dijit.byId("userDataAddressSurname").set("value","");
+                    dijit.byId("userDataAddressForename").set("value","");
+                    dijit.byId("userDataAddressEmailUser").set("value","");
+                    dijit.byId("userDataAddressEmailPointOfContact").set("value","");
+                    dijit.byId("userDataAddressInstitution").set("value","");
+                    dijit.byId("userDataAddressStreet").set("value","");
+                    dijit.byId("userDataAddressPostCode").set("value","");
+                    dijit.byId("userDataAddressCity").set("value","");
+                    dijit.byId("userDataAddressPhone").set("value","");
+                }
+            }
+
+            function setUserAddressDataFieldsDisabled(isDisabled) {
+                if (isDisabled) {
+                    resetRequiredElements();
+                }
+
+                dijit.byId("userDataAddressSurname").set("disabled", isDisabled);
+                dijit.byId("userDataAddressForename").set("disabled", isDisabled);
+                dijit.byId("userDataAddressEmailUser").set("disabled", isDisabled);
+                dijit.byId("userDataAddressEmailPointOfContact").set("disabled", isDisabled);
+                dijit.byId("userDataAddressInstitution").set("disabled", isDisabled);
+                dijit.byId("userDataAddressStreet").set("disabled", isDisabled);
+                dijit.byId("userDataAddressPostCode").set("disabled", isDisabled);
+                dijit.byId("userDataAddressCity").set("disabled", isDisabled);
+                dijit.byId("userDataAddressPhone").set("disabled", isDisabled);
+            }
+
+            scriptScopeUser.getAddressDataFromFields = function(){
+                var addr = {};
+                addr.name = dijit.byId("userDataAddressSurname").getValue();
+                addr.givenName = dijit.byId("userDataAddressForename").getValue();
+                addr.organisation = dijit.byId("userDataAddressInstitution").getValue();
+                addr.street = dijit.byId("userDataAddressStreet").getValue();
+                addr.postalCode = dijit.byId("userDataAddressPostCode").getValue();
+                addr.city = dijit.byId("userDataAddressCity").getValue();
+
+                var commList = [];
+                if (dijit.byId("userDataAddressEmailUser").getValue()) {
+                    var comm = {};
+                    comm.value = dijit.byId("userDataAddressEmailUser").getValue();
+                    comm.medium = "E-Mail";
+                    comm.description = null;
+                    commList.push(comm);
+                }
+                if (dijit.byId("userDataAddressEmailPointOfContact").getValue()) {
+                    var comm = {};
+                    comm.value = dijit.byId("userDataAddressEmailPointOfContact").getValue();
+                    comm.medium = "emailPointOfContact";
+                    comm.description = null;
+                    commList.push(comm);
+                }
+                if (dijit.byId("userDataAddressPhone").getValue()) {
+                    var comm = {};
+                    comm.value = dijit.byId("userDataAddressPhone").getValue();
+                    comm.medium = "Telefon";
+                    comm.description = null;
+                    commList.push(comm);
+                }
+
+                if (commList.length > 0) {
+                    addr.communication = commList;
+                }
+
+                return addr;
             }
             
             scriptScopeUser.searchForPortalUser = function(){
@@ -665,30 +740,15 @@
                 });
             }
             
-            function getUserDataForAddress(adrUuid){
+            scriptScopeUser.getAddressData = function(addrUuid){
+                var uuidToFetch = addrUuid;
+                if (addrUuid instanceof Array) {
+                    uuidToFetch = addrUuid[0];
+                }
+
                 var deferred = new dojo.Deferred();
                 
-                SecurityService.getUserDataForAddress(adrUuid, {
-                    preHook: showLoadingZone,
-                    postHook: hideLoadingZone,
-                    callback: function(userData){
-                        deferred.callback(userData);
-                    },
-                    errorHandler: function(errMsg, err){
-                        hideLoadingZone();
-                        displayErrorMessage(err);
-                        console.debug(errMsg);
-                        deferred.errback(err);
-                    }
-                });
-                
-                return deferred;
-            }
-            
-            function getAddressData(adrUuid){
-                var deferred = new dojo.Deferred();
-                
-                AddressService.getAddressData(adrUuid, null, {
+                AddressService.getAddressData(uuidToFetch, null, {
                     //preHook: showLoadingZone,
                     //postHook: hideLoadingZone,
                     callback: function(adr){
@@ -807,7 +867,7 @@
         <!-- CONTENT START -->
         <!--<div dojoType="dijit.layout.ContentPane" layoutAlign="client">-->
             <div id="contentSection" class="content contentBlockWhite top" style="">
-                <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="false" id="borderContainerMdekAdminUserAdmin" style="height:550px;">
+                <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="false" id="borderContainerMdekAdminUserAdmin" style="height:680px;">
                     <div dojoType="dijit.layout.BorderContainer" splitter="false" region="leading" style="width:264px;">
                         <div dojoType="dijit.layout.ContentPane" splitter="false" region="center" class="grey">
                             <!--<div id="userAdmin" class="content">--><!-- LEFT HAND SIDE CONTENT BLOCK 1 START --><!--<div class="spacer"></div>-->
@@ -847,7 +907,7 @@
                                                 <fmt:message key="dialog.admin.users.login" />
                                             </label>
                                         </span>
-                                        <span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onClick="javascript:scriptScopeUser.searchForPortalUser();" title="<fmt:message key="dialog.admin.users.searchPortalUser" /> [Popup]"><fmt:message key="dialog.admin.users.searchPortalUser" /></a></span>
+                                        <span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onClick="javascript:scriptScopeUser.searchForPortalUser();" title="<fmt:message key="dialog.admin.users.searchLoginUser" /> [Popup]"><fmt:message key="dialog.admin.users.searchLoginUser" /></a></span>
                                         <span class="input"><input type="text" id="userDataLogin" name="userDataLogin" style="width:100%;" disabled="true" dojoType="dijit.form.ValidationTextBox" /></span>
                                     </div></span>
                                     <span class="outer"><div>
@@ -859,18 +919,84 @@
                                         <span class="input"><input type="text" id="userDataRole" name="userDataRole" style="width:100%;" disabled="true" dojoType="dijit.form.ValidationTextBox" /></span>
                                     </div></span>
                                     
-                                    <span class="outer required"><div>
+                                <!-- USER DATA -->
+                                <div class="outer" style="margin-top:15px; margin-bottom:15px;">
+                                    <span class="outer required" style="width:33%;"><div>
                                         <span class="label">
-                                            <label id="userDataAddressLinkLabel" for="userDataAddressLink" onclick="javascript:dialog.showContextHelp(arguments[0], 8015)">
-                                                <fmt:message key="dialog.admin.users.address" />*
+                                            <label id="userDataAddressSurnameLabel" for="userDataAddressSurname" onclick="javascript:dialog.showContextHelp(arguments[0], 8015)">
+                                                <fmt:message key="dialog.admin.users.surName" />*
                                             </label>
                                         </span>
-                                        <span class="functionalLink marginRight"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" onClick="javascript:scriptScopeUser.searchForAddress();" title="<fmt:message key="dialog.admin.users.searchAddress" /> [Popup]"><fmt:message key="dialog.admin.users.searchAddress" /></a></span>
-                                        <span class="input"><input type="text" id="userDataAddressLink" name="userDataAddressLink" style="width:100%;" disabled="true" dojoType="dijit.form.ValidationTextBox" /></span>
+                                        <span class="input"><input type="text" maxLength="255" id="userDataAddressSurname" name="userDataAddressSurname" required="true" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
                                     </div></span>
-                                    
-                                    <span class="outer" style="width:45%;"><div>
-                                        <span class="label"><label id="availableGroupsListLabel" for="availableGroupsList" onclick="javascript:dialog.showContextHelp(arguments[0], 8016)"><fmt:message key="dialog.admin.users.available.groups"/></label></span>
+                                    <span class="outer required" style="width:33%;"><div>
+                                        <span class="label">
+                                            <label id="userDataAddressForenameLabel" for="userDataAddressForename" onclick="javascript:dialog.showContextHelp(arguments[0], 8200)">
+                                                <fmt:message key="dialog.admin.users.foreName" />*
+                                            </label>
+                                        </span>
+                                        <span class="input"><input type="text" maxLength="255" id="userDataAddressForename" name="userDataAddressForename" required="true" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                                    </div></span>
+                                    <span class="outer required" style="width:34%;"><div>
+                                        <span class="label">
+                                            <label id="userDataAddressEmailUserLabel" for="userDataAddressEmailUser" onclick="javascript:dialog.showContextHelp(arguments[0], 8201)">
+                                                <fmt:message key="dialog.admin.users.emailUser" />*
+                                            </label>
+                                        </span>
+                                        <span class="input"><input type="text" maxLength="255" id="userDataAddressEmailUser" name="userDataAddressEmailUser" required="true" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                                    </div></span>
+                                    <span class="outer" style="width:33%; clear:both;"><div>
+                                        <span class="label">
+                                            <label id="userDataAddressInstitutionLabel" for="userDataAddressInstitution" onclick="javascript:dialog.showContextHelp(arguments[0], 8203)">
+                                                <fmt:message key="dialog.admin.users.institution" />
+                                            </label>
+                                        </span>
+                                        <span class="input"><input type="text" id="userDataAddressInstitution" name="userDataAddressEmailPointOfContact" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                                    </div></span>
+                                    <span class="outer" style="width:33%;"><div>
+                                        <span class="label">
+                                            <label id="userDataAddressPhoneLabel" for="userDataAddressPhone" onclick="javascript:dialog.showContextHelp(arguments[0], 8207)">
+                                                <fmt:message key="dialog.admin.users.phone" />
+                                            </label>
+                                        </span>
+                                        <span class="input"><input type="text" maxLength="255" id="userDataAddressPhone" name="userDataAddressPhone" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                                    </div></span>
+                                    <span class="outer" style="width:34%;"><div>
+                                        <span class="label">
+                                            <label id="userDataAddressEmailPointOfContactLabel" for="userDataAddressEmailPointOfContact" onclick="javascript:dialog.showContextHelp(arguments[0], 8202)">
+                                                <fmt:message key="dialog.admin.users.emailPointOfContact" />
+                                            </label>
+                                        </span>
+                                        <span class="input"><input type="text" maxLength="255" id="userDataAddressEmailPointOfContact" name="userDataAddressEmailPointOfContact" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                                    </div></span>
+                                    <span class="outer" style="width:33%; clear:both;"><div>
+                                        <span class="label">
+                                            <label id="userDataAddressStreetLabel" for="userDataAddressStreet" onclick="javascript:dialog.showContextHelp(arguments[0], 8204)">
+                                                <fmt:message key="dialog.admin.users.street" />
+                                            </label>
+                                        </span>
+                                        <span class="input"><input type="text" maxLength="255" id="userDataAddressStreet" name="userDataAddressStreet" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                                    </div></span>
+                                    <span class="outer" style="width:33%;"><div>
+                                        <span class="label">
+                                            <label id="userDataAddressPostCodeLabel" for="userDataAddressPostCode" onclick="javascript:dialog.showContextHelp(arguments[0], 8205)">
+                                                <fmt:message key="dialog.admin.users.postCode" />
+                                            </label>
+                                        </span>
+                                        <span class="input"><input type="text" maxLength="10" id="userDataAddressPostCode" name="userDataAddressPostCode" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                                    </div></span>
+                                    <span class="outer" style="width:34%;"><div>
+                                        <span class="label">
+                                            <label id="userDataAddressCityLabel" for="userDataAddressCity" onclick="javascript:dialog.showContextHelp(arguments[0], 8206)">
+                                                <fmt:message key="dialog.admin.users.city" />
+                                            </label>
+                                        </span>
+                                        <span class="input"><input type="text" maxLength="255" id="userDataAddressCity" name="userDataAddressCity" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                                    </div></span>
+                                </div>
+
+                                    <span class="outer" style="width:45%; clear:both;"><div>
+                                        <span class="label"><label id="availableGroupsListLabel" for="availableGroupsList" onclick="javascript:dialog.showContextHelp(arguments[0], 8016)"><fmt:message key="dialog.admin.users.groupsAvailable"/></label></span>
                                         <div class="tableContainer">
                                             <div id="availableGroupsList" autoHeight="10" contextMenu="none" ></div>
                                         </div>
@@ -888,7 +1014,7 @@
                                     </div></span>
                                     
                                     <span class="outer" style="width:45%;"><div>
-                                        <span class="label"><label id="groupsListLabel" for="groupsList" onclick="javascript:dialog.showContextHelp(arguments[0], 8016)"><fmt:message key="dialog.admin.users.groups" /></label></span>
+                                        <span class="label"><label id="groupsListLabel" for="groupsList" onclick="javascript:dialog.showContextHelp(arguments[0], 8016)"><fmt:message key="dialog.admin.users.groupsAssigned" /></label></span>
                                         <div class="tableContainer">
                                             <div id="groupsList" autoHeight="10" contextMenu="none" ></div>
                                         </div>

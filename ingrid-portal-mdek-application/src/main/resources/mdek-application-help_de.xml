@@ -1497,8 +1497,9 @@
             <content>
                  <p><b>Konzept der Nutzerverwaltung des InGridEditors</b></p>
 				 <p>Das Konzept der Nutzerverwaltung des InGridEditors (IGE) beruht darauf, dass sich ein 
-				 Nutzer grundsätzlich nur einmal im Portal (unter <i>Mein PortalU</i>) anmelden muss. Daher 
-                 müssen die Nutzerinformationen des Portals mit denen des Editors verknüpft sein.</p>
+				 Nutzer grundsätzlich nur einmal im Portal (unter <i>Mein PortalU</i>) oder einer anderen externen
+				 Benutzerverwaltung anmelden muss. Daher müssen die Nutzerinformationen der externen
+				 Benutzerverwaltung (z.B. Portal) mit denen des Editors verknüpft sein.</p>
 				 <p>Dieser Anspruch macht eine Reihe von Schritten notwendig, damit ein spezieller Nutzer 
 				 die Rechte bekommt, die ihn gegenüber einem beliebigen Gast-Nutzer des Portals 
 				 auszeichnen. </p>
@@ -1525,13 +1526,12 @@
 				 <p>Folgende Schritte sind notwendig, bevor ein neuer Nutzer und seine Rechte im IGE 
 				 angelegt werden können:</p>
 				 <ol>
-				 <li>Der Benutzer muss sich selbst anmelden oder vom Administrator im Portal unter 
-				 <i>Mein PortalU</i> angemeldet werden.</li>
-				 <li>Der Benutzer erhält eine Email zur Bestätigung seiner Anmeldung. Er muss die Anmeldung 
-				 über den in ihr vorhanden Link bestätigen.</li>
-				 <li>Der Katalogadministrator muss im IGE unter dem Menüpunkt 
-				 <a href="?hkey=hierarchy-maintenance-1">Hierarchie &amp; Erfassung</a>
-				 eine Adresse für den Benutzer eingerichtet haben.</li>
+				 <li>Der Benutzer muss in der externen Benutzerverwaltung registriert worden sein, so dass ein
+				 externer Login vorliegt. Wird als externe Benutzerverwaltung das Portal verwendet, so kann
+				 sich der Benutzer selbst anmelden oder vom Administrator im Portal unter <i>Mein PortalU</i> 
+				 angemeldet werden.</li>
+				 <li>Bei einer initialen Anmeldung im Portal erhält der Benutzer eine Email zur Bestätigung
+				 seiner Anmeldung. Er muss die Anmeldung über den in ihr vorhanden Link bestätigen.</li>
 				 <li>Der Benutzer muss über den Untermenüpunkt 
                  <a href="?hkey=user-administration-2">Gruppenadministration</a> eine oder mehrere Gruppen angelegt haben, 
                  die die Rechte besitzen, die der Nutzer erhalten soll.</li>
@@ -1540,27 +1540,25 @@
 				 <ol>
 				 <li>Wählen Sie durch Mausklick im Hierarchiebaum der Nutzer auf der linken Seite des 
 				 Fensters einen Administrator aus, unterhalb dessen Sie den Nutzer anlegen wollen. Der 
-				 Name des ausgewählten Nutzers wird <b>rot</b> markiert. 
+				 Name des ausgewählten Nutzers wird markiert. 
 				 <br/>Ein Metadaten-Administrator kann nur unterhalb seines eigenen Eintrags einen Nutzer 
 				 anlegen. Ein Katalog-Administrator kann Metadaten-Administratoren unterhalb seines eigenen 
 				 Eintrags anlegen oder Metadaten-Autoren unterhalb eines Metadaten-Administrators. Unterhalb 
-				 von Metadaten-Administratoren können keine weiteren Nutzer angelegt werden.</li>
+				 von Metadaten-Autoren können keine weiteren Nutzer angelegt werden.</li>
 				 <li>Klicken Sie auf die Schalfläche <i>Nutzer anlegen</i>. Es öffnet sich ein Dialog. Sie 
-				 können jetzt den im Portal vergebenen Nutzernamen eingeben. Und mit <i>Übernehmen</i> dem 
-				 Katalog-Nutzer zuordnen.
+				 können jetzt den in der externen Benutzerverwaltung (z.B. im Portal) vergebenen Nutzernamen (Login)
+				 eingeben. Und mit <i>Übernehmen</i> dem Katalog-Nutzer zuordnen.
 				 <br/><u>Hinweis1:</u> Die Auswahlliste lässt sich nicht wie üblich über einen Klick auf das 
 				 Symbol an der rechten Seite der Eingabezeile öffnen. Durch die Eingabe eines oder mehrerer 
 				 Anfangsbuchstaben des Benutzernamens wird die Auswahlliste mit allen Benutzernamen geöffnet, 
 				 die diesen Anfangsbuchstaben entsprechen. Sie können jetzt den Namen auswählen.
-				 <br/><u>Hinweis2:</u> Jeder Portal-Nutzer kann maximal einem Katalog-Nutzer zugeordnet werden. 
-				 Bereits einem Katalog-Nutzer zugeordnete Namen von Portal-Nutzern werden nicht mehr in der 
-				 Auswahlliste angezeigt und können nicht erneut zugeordnet werden.
+				 <br/><u>Hinweis2:</u> Jeder Nutzer der externen Benutzerverwaltung (z.B. Portal-Nutzer) kann 
+				 maximal einem Katalog-Nutzer zugeordnet werden. Bereits einem Katalog-Nutzer zugeordnete Namen 
+				 von externen Nutzern werden nicht mehr in der Auswahlliste angezeigt und können nicht erneut 
+				 zugeordnet werden.
 				 <br/>Über diese Angabe sind <i>Login</i> und <i>Rolle</i> festgelegt.</li>
-				 <li>Rufen Sie über den Verweis <i>Adresse suchen</i> das Fenster <i>Adresse suchen</i> auf 
-				 (Die Funktionalität ist identisch zu dem Fenster 
-				 <a href="?hkey=maintanance-of-objects-2">Adresse hinzufügen</a> der Objekt-Verwaltung). 
-				 Wählen Sie eine Adresse aus und fügen Sie sie über <i>Übernehmen</i> den Nutzerangaben 
-				 hinzu.</li>
+				 <li>Fügen Sie Name, Email und Adressdaten des Katalog-Nutzers in den dafür vorgesehenen Feldern den 
+				 Nutzerangaben hinzu.</li>
                  <li>Wählen Sie eine oder mehrere Gruppen aus der Auswahlliste aus. Es werden alle Gruppen angezeigt, 
 				 die in der <a href="?hkey=user-administration-2">Gruppenadministration</a> angelegt wurden 
 				 und für die Sie die Berechtigung zur Administration besitzen.</li>
@@ -1570,7 +1568,7 @@
 				 <p>Wählen Sie durch Mausklick im Hierarchiebaum auf der linken Seite des Fensters einen 
 				 Nutzer aus, den Sie bearbeiten oder löschen wollen.</p>
 				 <p>Die Nutzerdaten werden in die Felder auf der rechten Seite des Fensters geladen. Sie 
-				 können das <i>Login</i>, den <i>Adressverweis</i> und die <i>Gruppe</i> ändern. Über 
+				 können das <i>Login</i>, die <i>Adressdaten</i> und die <i>Gruppe</i> ändern. Über 
 				 <i>Speichern</i> sichern Sie die Änderungen.</p>
 				 <p><u>Hinweis:</u> Dem Katalog-Administrator ist immer automatisch die Gruppe 
 				 <i>administrators</i> zugewiesen. Diese Zuordnung kann nicht geändert werden. Die Gruppe 

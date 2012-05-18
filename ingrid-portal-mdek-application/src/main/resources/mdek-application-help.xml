@@ -1144,7 +1144,7 @@
             <header>Users</header>
             <content>
 			<p> Concept of user management in InGridEditor.</p>
-			<p> The concept of user management in InGridEditors (IGE) is based on a user fundamentally only having to register once in the portal. Therefore the user information of the portal must be linked with those of the Editor.</p>
+			<p> The concept of user management in InGridEditors (IGE) is based on a user fundamentally only having to register once in an external Usersystem (e.g. the portal). Therefore the user information of the external Usersystem (e.g. the portal) must be linked with those of the Editor.</p>
 			<p>This requirement makes a series of steps necessary so that a specific user obtains the permissions giving him an advantage over any guest user of the portal. </p>
 			<p> The actual permissions, which not only include writing permissions but also the permission for quality assurance, are set in <a href="?hkey=user-administration-2">Groups</a> administration. A group with corresponding permissions is assigned to every user.</p>
 			<p>The permissions for user management are set by three hierarchy levels: </p>
@@ -1157,30 +1157,26 @@
 				 <p><b>Add a new user</b></p>
 				 <p>The following steps are necessary before a new user and his permissions can be installed in IGE:</p>
 				 <ol>
-				 <li>1.	The user has to register himself or be registered by the administrator in the Portal.</li>
-				 <li>2.	The user receives an e-mail to confirm his registration. He must confirm the registration via the link contained in it.</li>
-				 <li>3.	The catalogue administrator must have set up an address for the user in IGE under the 
-				 <a href="?hkey=hierarchy-maintenance-1">Hierarchy &amp; Acquisition</a>
-				 menu item.</li>
-				 <li>4.	The catalogue administrator must have set up a group in the
+				 <li>1.	The user has to register himself in the external Usersystem to supply an external Login. If the external Usersystem is the Portal the user has to register himself or be registered by the administrator in the Portal.</li>
+				 <li>2.	If initially registered in the Portal the user receives an e-mail to confirm his registration. He must confirm the registration via the link contained in it.</li>
+				 <li>3.	The catalogue administrator must have set up a group in the
 				 <a href="?hkey=user-administration-2">Groups</a> administration submenu item that has the permissions the user is to receive.</li>
 				 </ol>
 				 <p>After these preliminary tasks have been completed, please proceed as follows:</p>
 				 <ol>
-				 <li>By clicking with a mouse on the left side of the window in the users’ hierarchy tree of the users, select an administrator underneath whom you wish to add the user. The name of the user selected will be highlighted in red. A metadata administrator can only add a user below his own entry. A catalogue administrator can install metadata administrators below his own entry or metadata authors underneath a metadata administrator. No further users can be added underneath metadata authors.</li>
-				 <li>Click on the <i>Create User</i> button. A dialogue box opens up. You can now enter the user name given in the Portal and assign it to the catalogue user with <i>Apply</i>.
+				 <li>By clicking with a mouse on the left side of the window in the users’ hierarchy tree of the users, select an administrator underneath whom you wish to add the user. The name of the user selected will be highlighted. A metadata administrator can only add a user below his own entry. A catalogue administrator can install metadata administrators below his own entry or metadata authors underneath a metadata administrator. No further users can be added underneath metadata authors.</li>
+				 <li>Click on the <i>Create User</i> button. A dialogue box opens up. You can now enter the user name given in the external Usersystem (e.g. the Portal) and assign it to the catalogue user with <i>Apply</i>.
 				 <p>Note 1: By entering one or more initial letters of the user name, the dropdown list with all user names that match these letters is opened. You can now select the name.</p>
-				 <p>Note 2: Every portal user can only be assigned to one catalogue user at the most. Names of portal users already assigned to one catalogue user will no longer be shown in the dropdown list and can not be re-assigned. </p>
+				 <p>Note 2: Every user of the external Usersystem (e.g. every portal user) can only be assigned to one catalogue user at the most. Names of external users already assigned to one catalogue user will no longer be shown in the dropdown list and can not be re-assigned. </p>
 				 <p><i>Login</i> and <i>Role</i> are set by giving these details.</p>
 				</li>
-				 <li>Call up the <i>Search Address</i> window via the <i>Search Address</i> reference (the functionality is identical to the  
-				 <a href="?hkey=maintanance-of-objects-2">Add Address </a> window in object administration). Select an address and add it to the user data via <i>Apply</i>.</li>
+				 <li>Enter Name, E-Mail and address data in the given fields to add it to the user data.</li>
 				 <li>Select one or more groups from the selection list. All groups are displayed that have been installed in the Groups administration and for which you have administration rights.</li>
 				 <li>5.	<i>Save</i> the new user. It can now be used.</li>
 				 </ol>
 				 <p><b>Editing and deleting an existing user</b></p>
 				 <p>Select a user you want to edit or delete by clicking with the mouse in the hierarchy tree on the left side of the window.</p>
-				 <p>The <i>User Data</i> will be loaded in the fields on the right side of the window. You can change the <i>Login</i>, the <i>Address</i> reference and the <i>Group</i>. You save the changes using <i>Save</i>.</p>
+				 <p>The <i>User Data</i> will be loaded in the fields on the right side of the window. You can change the <i>Login</i>, the <i>Address data</i> and the <i>Group</i>. You save the changes using <i>Save</i>.</p>
 				 <p><u>Note</u>: The administrators group is automatically always assigned to the catalogue administrator. This arrangement cannot be changed. The group is not available to other users. </p>
 				 <p>To delete the user click on the <i>Delete User</i> button and confirm the operation in the dialogue box that opens up.</p>
 				 <p></p>

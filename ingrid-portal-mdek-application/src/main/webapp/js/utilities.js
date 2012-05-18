@@ -522,6 +522,22 @@ UtilAddress.createAddressTitle = function(adr) {
 		// FIXME: escape function doesn't exist anymore
 }
 
+// Returns first found value for the passed array of mediums (pass medium in de and en if from syslist, e.g. ["Telefon", "telephone"] !)
+UtilAddress.getAddressCommunicationValue = function(addr, mediumList) {
+	if (addr.communication) {
+        for (var i=0; i<addr.communication.length; i++) {
+        	var commMedium = addr.communication[i].medium;
+            var commValue = addr.communication[i].value;
+            for (var j=0; j<mediumList.length; j++) {
+            	if (commMedium == mediumList[j] && commValue) {
+            		return commValue;
+            	}
+            }
+        }
+	}
+	return null;
+}
+
 // returns a 'linkLabel' depending on the 'uuid' and 'title' of the address.
 // linkLabel is a html href to directly jump to a given address in the main tree
 UtilAddress.createAddressLinkLabel = function(adrUuid, adrTitle) {
