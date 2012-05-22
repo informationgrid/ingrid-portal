@@ -65,7 +65,7 @@ function loadit() {
 };
 
 function forwardToMdekEntry() {
-	// Forward to mdek_entry.jsp with the current queryString (used for the language parameter)
+	// Forward to start.jsp with the current queryString (used for the language parameter)
 	var queryString = '<%= request.getQueryString() == null ? "" : request.getQueryString() %>';
 
 	if (queryString.length == 0) {

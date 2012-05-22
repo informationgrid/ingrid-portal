@@ -21,7 +21,7 @@
             var selenium = '<%= request.getParameter("selenium") == null ? false : true %>';
         </script>
         
-        <jsp:include page="dojoScripts.jsp" />
+        <jsp:include page="dojoScripts_dev.jsp" />
         <!-- this css contains mainly references to images which must be held
              separately to avoid problems during optimization                 -->
         <link rel="stylesheet" href="css/imageReferences.css" />

@@ -44,7 +44,7 @@ Dies kann �ber verschiedene Wege gemacht werden:
 2. Login �ber dev_login.jsp
    Die Datei dev_login.jsp setzt den Benutzernamen auf einen beliebigen Wert (�ber den Parameter 'user') und leitet die Anfrage
    an die mdek-app weiter (�ber Parameter 'page') steuerbar. Beispiele:
-   - Anmelden als Benutzer 'mdek'. Standard Ziel ist mdek_entry.jsp:
+   - Anmelden als Benutzer 'mdek'. Standard Ziel ist start_dev.jsp:
      http://localhost:8080/ingrid-portal-mdek-application/dev_login.jsp?user=mdek
    - Anmelden als Benutzer 'mdek'. Zieladresse ist mdek_admin_entry.jsp:
      http://localhost:8080/ingrid-portal-mdek-application/dev_login.jsp?user=mdek&page=mdek_admin_entry.jsp
@@ -54,7 +54,7 @@ Dies kann �ber verschiedene Wege gemacht werden:
    - M�gliche Parameter:
      - user=mdek -> Als Benutzername wird 'mdek' verwendet. Der Benutzer muss in der mdek Datenbank existieren
        und mit dem verwendeten iplug korrekt verbunden sein
-     - page=mdek_admin_entry.jsp -> weiterleiten zu mdek_admin_entry.jsp. Default ist mdek_entry.jsp
+     - page=mdek_admin_entry.jsp -> weiterleiten zu mdek_admin_entry.jsp. Default ist start_dev.jsp
      - debug=true -> setze dojo Debug auf true. Default ist false
      - lang=en -> setze die verwendete Sprache auf Englisch. Default ist Deutsch (de)
 
