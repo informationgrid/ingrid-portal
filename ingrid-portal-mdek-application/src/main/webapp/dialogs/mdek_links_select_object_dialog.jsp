@@ -37,7 +37,7 @@ createTree = function() {
 	
 	// Initialize the address tree	
 	// Load initial first level of the tree from the server
-	TreeService.getSubTree(null, null, function(str){
+	TreeService.getSubTree(null, null, userLocale, function(str){
 	    for (var i = 0; i < str.length; i++) {
 	        str[i].id = "AssignObj_" + str[i].id;
 	    }
@@ -57,7 +57,7 @@ function loadObjectData(node, callback_function){
 		return;
 	}
 	var deferred = new dojo.Deferred();
-	TreeService.getSubTree(parentItem.id[0].substring(10, parentItem.id[0].length)+"", parentItem.nodeAppType[0]+"", {
+	TreeService.getSubTree(parentItem.id[0].substring(10, parentItem.id[0].length)+"", parentItem.nodeAppType[0]+"", userLocale, {
 		callback:function(res) {
 			for (var i = 0; i < res.length; i++) {
 				res[i].id = "AssignObj_"+res[i].id;

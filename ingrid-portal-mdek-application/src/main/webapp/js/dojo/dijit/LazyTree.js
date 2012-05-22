@@ -10,7 +10,7 @@ dojo.declare("ingrid.dijit.LazyTree", dijit.Tree, {
 	_loadSubTree: function(/*Item*/item ) {
 		var deferred = new dojo.Deferred();
 		console.debug("item to load subtree from: " + item.id + ":" + item.nodeAppType);
-		TreeService.getSubTree(item.id + "", item.nodeAppType + "", {
+		TreeService.getSubTree(item.id + "", item.nodeAppType + "", userLocale, {
 			callback: function(data){
 				treeStore = dijit.byId('dataTree').model.store;
 				dojo.forEach(data, function(node){

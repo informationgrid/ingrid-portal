@@ -8,11 +8,8 @@ import java.util.ResourceBundle;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.beans.TreeNodeBean;
-import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.handler.AddressRequestHandler;
 import de.ingrid.mdek.handler.ObjectRequestHandler;
-import de.ingrid.mdek.util.MdekObjectUtils;
-import de.ingrid.utils.udk.UtilsLanguageCodelist;
 
 public class TreeServiceImpl {
 
@@ -41,19 +38,13 @@ public class TreeServiceImpl {
 	private final static String ADDRESS_ROOT_DOCTYPE = "Addresses";
 	private final static String ADDRESS_APPTYPE = "A";
 
-	private static Locale loc;
-	
-	public List<TreeNodeBean> getSubTree(String nodeUuid, String nodeType) {
+	public List<TreeNodeBean> getSubTree(String nodeUuid, String nodeType, String language) {
 		if (nodeUuid != null && nodeType == null) {
 			throw new IllegalArgumentException("Wrong arguments on method getSubTree(): nodeType must be set if nodeUuid is set!");
 		}
 		
-		if(loc == null){
-			loc = getCatalogLocale();
-		}
-
 		if (nodeUuid == null) {
-			return createTree();
+			return createTree(language);
 		}
 
 
@@ -77,7 +68,7 @@ public class TreeServiceImpl {
 				for (TreeNodeBean node : subAddresses) {
 					addTreeNodeAddressInfo(node);
 				}
-				subAddresses.add(0, createFreeAddressRoot());
+				subAddresses.add(0, createFreeAddressRoot(language));
 
 			} else if (nodeUuid.equalsIgnoreCase(ADDRESS_FREE_ROOT)) {
 				subAddresses = addressRequestHandler.getRootAddresses(true);				
@@ -100,20 +91,20 @@ public class TreeServiceImpl {
 		}
 	}
 	
-	public List<TreeNodeBean> getAllSubTreeChildren(String nodeUuid, String nodeType) {
+	public List<TreeNodeBean> getAllSubTreeChildren(String nodeUuid, String nodeType, String language) {
 	    List<TreeNodeBean> allChildren = new ArrayList<TreeNodeBean>();
-	    List<TreeNodeBean> children = getSubTree(nodeUuid, nodeType);
+	    List<TreeNodeBean> children = getSubTree(nodeUuid, nodeType, language);
 	    for (TreeNodeBean child : children) {
-	        allChildren.addAll(getAllSubTreeChildren(child.getId(), child.getNodeAppType()));
+	        allChildren.addAll(getAllSubTreeChildren(child.getId(), child.getNodeAppType(), language));
         }
 	    allChildren.addAll(children);
 	    return allChildren;
 	}
 
 	
-	private static List<TreeNodeBean> createTree()
+	private static List<TreeNodeBean> createTree(String language)
 	{
-		ResourceBundle res = ResourceBundle.getBundle("messages", loc);
+		ResourceBundle res = ResourceBundle.getBundle("messages", new Locale(language));
 		List<TreeNodeBean> treeRoot = new ArrayList<TreeNodeBean>(); 
 
 		TreeNodeBean objectRoot = new TreeNodeBean();
@@ -151,9 +142,9 @@ public class TreeServiceImpl {
 		node.setNodeAppType(ADDRESS_APPTYPE);		
 	}
 
-	private static TreeNodeBean createFreeAddressRoot()
+	private static TreeNodeBean createFreeAddressRoot(String language)
 	{
-		ResourceBundle res = ResourceBundle.getBundle("messages", loc);
+		ResourceBundle res = ResourceBundle.getBundle("messages", new Locale(language));
 		TreeNodeBean freeAddressRoot = new TreeNodeBean(); 
 
 		freeAddressRoot.setContextMenu(ROOT_MENU_ID);
@@ -184,30 +175,5 @@ public class TreeServiceImpl {
 
 	public void setAddressRequestHandler(AddressRequestHandler addressRequestHandler) {
 		this.addressRequestHandler = addressRequestHandler;
-	}
-	
-	
-	/** Fetches locale NOT from catalog, instead from default language in language syslist !
-	 * If NO default language set, set "en" ! */
-	private Locale getCatalogLocale(){
-		MdekDataBean data = null; 		
-		try {
-			data = objectRequestHandler.getInitialObject(null);
-		} catch (RuntimeException e) {
-			log.debug("Error while getting node data.", e);
-			throw e;
-		}
-		MdekObjectUtils.setInitialValues(data);
-		Integer languageCode = data.getExtraInfoLangDataCode();
-		
-		if (languageCode != null) {
-			if (languageCode.compareTo(UtilsLanguageCodelist.getCodeFromShortcut("en")) == 0)
-				return new Locale("en");
-			else if (languageCode.compareTo(UtilsLanguageCodelist.getCodeFromShortcut("de")) == 0)
-				return new Locale("de");
-		}
-		
-		log.warn("Language ("+languageCode+") not supported! Using 'en' as default!");
-		return new Locale("en");
 	}
 }

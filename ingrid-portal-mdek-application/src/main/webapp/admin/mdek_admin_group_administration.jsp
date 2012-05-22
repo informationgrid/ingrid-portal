@@ -234,7 +234,7 @@ pageEncoding="UTF-8" %>
                 var uuid = node.id[0].substr(11);
                 
                 console.debug("Getting all free addresses: " + uuid);
-                TreeService.getSubTree(uuid, node.nodeAppType[0], {
+                TreeService.getSubTree(uuid, node.nodeAppType[0], userLocale, {
                     callback: function(res){
                         deferred.callback(res);
                     },

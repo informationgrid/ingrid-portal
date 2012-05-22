@@ -1703,7 +1703,7 @@ UtilTree.getSubTree = function(item, prefixIndex) {
 		type = item.nodeAppType[0];
 	}
     
-    TreeService.getSubTree(id, type, {
+    TreeService.getSubTree(id, type, userLocale, {
 		//preHook: UtilDWR.enterLoadingState,
 		//postHook: UtilDWR.exitLoadingState,
         callback: function(res){

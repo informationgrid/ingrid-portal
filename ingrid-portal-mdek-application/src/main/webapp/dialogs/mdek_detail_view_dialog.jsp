@@ -460,7 +460,7 @@ function renderSubordinatedElements(node) {
 
 	var deferred = new dojo.Deferred();
 	
-	TreeService.getAllSubTreeChildren(node.id[0], node.nodeAppType[0], {
+	TreeService.getAllSubTreeChildren(node.id[0], node.nodeAppType[0], userLocale, {
         callback:function(res) { deferred.callback(res); },
         errorHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); },
         exceptionHandler:function(message) { deferred.errback(new dojo.RpcError(message, this)); }
