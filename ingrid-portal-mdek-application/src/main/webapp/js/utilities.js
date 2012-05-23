@@ -484,7 +484,9 @@ UtilAddress._getAddressTitle = function(adr) {
         case 100: // HIDDEN IGE USER ADDRESS
             if (adr.name) title += adr.name;
             if (adr.givenName) title += ", "+adr.givenName;
-//            if (adr.organisation) title += " ("+adr.organisation+")";
+            if (title.length == 0) {
+            	title = adr.organisation;
+            }
             break;
         default:
             break;
