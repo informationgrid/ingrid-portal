@@ -43,6 +43,16 @@
 
   </style>
   <link href="/decorations/layout/ingrid-popup/css/styles.css" media="screen, projection" type="text/css" rel="stylesheet">
+  
+  <script src='dwr/interface/SecurityService.js'></script>
+  <script src='dwr/engine.js'></script>
+
+  <script>
+      SecurityService.isPortalConnected(function(response) {
+          if (response == false)
+              document.location.href = "login.jsp";
+      });
+  </script>
 </head>
 <body>
 <div class="layout-tigris">
