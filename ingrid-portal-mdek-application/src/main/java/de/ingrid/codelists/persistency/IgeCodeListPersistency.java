@@ -121,8 +121,10 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 if (entrySet.get("req") != null)
                     cle.setLocalisedEntry(UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE, entrySet.get("req")[0]);
                 
-                if (MdekUtils.YES.equals(entrySet.get("de")[0]))
-                    defaultEntry = cle.getId();
+                if (entrySet.get("de") != null) {
+                    if (MdekUtils.YES.equals(entrySet.get("de")[0]))
+                        defaultEntry = cle.getId();
+                }
                 entries.add(cle);
             }
             cl.setEntries(entries);
