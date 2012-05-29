@@ -53,7 +53,7 @@
             }
 
             function getAllAvailableUsers() {
-                UserRepoManager.getAllAvailableUsers(function(users) {
+                SecurityService.getAvailableUsers(function(users) {
                     createUserTable(users, "usersChoice", "userChoiceAdd");
                 });
             }

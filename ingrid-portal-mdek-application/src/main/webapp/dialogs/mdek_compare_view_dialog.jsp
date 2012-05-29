@@ -110,6 +110,7 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 		// Geodatendienst
 		renderList(nodeDataOld.ref3ServiceTypeTable, nodeDataNew.ref3ServiceTypeTable, "<fmt:message key='ui.obj.type3.ref3ServiceTypeTable.title' />", null, function(val) { return UtilSyslist.getSyslistEntryName(5200, val); });
 		renderTextWithTitle(UtilSyslist.getSyslistEntryName(5100, nodeDataOld.ref3ServiceType), UtilSyslist.getSyslistEntryName(5100, nodeDataNew.ref3ServiceType), "<fmt:message key='ui.obj.type3.ref3ServiceTypeTable.title' />");
+		renderTextWithTitle(nodeDataOld.ref3CouplingType, nodeDataNew.ref3CouplingType, "<fmt:message key='ui.obj.type3.couplingType' />");
 		renderList(nodeDataOld.ref3ServiceVersion, nodeDataNew.ref3ServiceVersion, "<fmt:message key='ui.obj.type3.serviceVersion' />");
 		renderTextWithTitle(nodeDataOld.ref3SystemEnv, nodeDataNew.ref3SystemEnv, "<fmt:message key='ui.obj.type3.environment' />");
 		renderTextWithTitle(nodeDataOld.ref3History, nodeDataNew.ref3History, "<fmt:message key='ui.obj.type3.history' />");
