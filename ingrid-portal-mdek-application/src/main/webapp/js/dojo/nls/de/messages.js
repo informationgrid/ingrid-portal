@@ -782,6 +782,7 @@
     "ui.3200.description":"Geodatendienst - Fachbezug - Systemumgebung",
     "ui.3210.description":"Dokument/Bericht/Literatur - Fachbezug - Basisdaten",
     "ui.3220.description":"Geodatendienst - Fachbezug - Art des Dienstes",
+    "ui.3221.description":"Geodatendienst - Fachbezug - Kopplungstyp",
     "ui.3230.description":"Geodatendienst - Fachbezug - Version des Services",
     "ui.3240.description":"Geodatendienst - Fachbezug - Historie",
     "ui.3250.description":"Geodatendienst - Fachbezug - Erl&auml;uterungen",

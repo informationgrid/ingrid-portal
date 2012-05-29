@@ -1068,17 +1068,21 @@
                                 </span>
                             </div>
                             <div class="inputContainer">
-                                <span id="uiElement3220" class="outer halfWidth">
+                              <span class="outer halfWidth">
+                              <div>
+                                <span id="uiElement3220">
                                     <div>
 										<span id="ref3ServiceTypeLabel" class="label">
                                             <label for="ref3ServiceType" onclick="javascript:dialog.showContextHelp(arguments[0], 3220)">
                                                 <fmt:message key="ui.obj.type3.serviceType" />
                                             </label>
                                         </span>
-										<span class="input">
+										<span class="input spaceBelow">
 											<div maxLength="255" autoComplete="false" listId="5100" id="ref3ServiceType" style="width: 100%;"></div> 
                                         </span>
 									</div>
+                                </span>
+                                <span id="uiElement3221">
 									<div>
                                         <span id="ref3CouplingTypeLabel" class="label"> 
                                             <label for="ref3CouplingType" onclick="javascript:dialog.showContextHelp(arguments[0], 3221)">
@@ -1090,6 +1094,8 @@
                                         </span>
                                     </div> 
                                 </span>
+                              </div> 
+                              </span>
                                 <span id="uiElement3230" class="outer halfWidth">
                                    	<div><span class="label">
                                            <label for="ref3ServiceVersion" onclick="javascript:dialog.showContextHelp(arguments[0], 3230)">

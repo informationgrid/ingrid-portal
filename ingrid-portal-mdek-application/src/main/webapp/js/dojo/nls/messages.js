@@ -782,6 +782,7 @@
     "ui.3200.description":"Geo-Service - Relevance - Environment",
     "ui.3210.description":"Document/Report/Literature - Relevance - General",
     "ui.3220.description":"Geo-Service - Relevance - Service Type Service",
+    "ui.3221.description":"Geo-Service - Relevance - Coupling type",
     "ui.3230.description":"Geo-Service - Relevance - Service Version",
     "ui.3240.description":"Geo-Service - Relevance - History",
     "ui.3250.description":"Geo-Service - Relevance - Descriptions",
