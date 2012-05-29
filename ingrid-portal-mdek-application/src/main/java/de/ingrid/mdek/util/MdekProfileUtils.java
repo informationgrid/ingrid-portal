@@ -129,6 +129,9 @@ public class MdekProfileUtils {
 
 	public static void addToScriptedProperties(Controls control, String jsToAdd) {
 		String js = control.getScriptedProperties();
+		if (js == null) {
+			js = "";
+		}
 		control.setScriptedProperties(js + jsToAdd);
 	}
 	public static void removeAllScriptedProperties(Controls control) {
