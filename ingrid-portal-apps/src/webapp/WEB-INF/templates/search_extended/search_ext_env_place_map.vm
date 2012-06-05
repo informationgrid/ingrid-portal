@@ -26,7 +26,11 @@ var viewConfiguration = "portalu-extended-search";
 #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" name="env_place_map" id="env_place_map">
       <div class="formbody_webmapclient formbody_map formbody_border_style" style="background-color:white">
-		<div id="openlayersDiv" class="openlayersDiv" style="width:100%;"></div>
+		<div id="openlayersDiv" class="openlayersDiv" style="width:100%;">
+			<noscript>
+           Javascript has to be enabled to run this application.
+           </noscript>
+		</div>
         <div class="line" style="width:33em"><hr /></div>
         <div class="float_right rightmargin"></div>
 		  #displayFormErrors()

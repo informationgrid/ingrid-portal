@@ -29,5 +29,8 @@ var mapUserId = '$mapUserId';
 
 </script>
 <div class="section">
+	<noscript>
+   Javascript has to be enabled to run this application.
+   </noscript>
 </div>	
 </div>
