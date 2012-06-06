@@ -696,10 +696,10 @@ UtilList.addObjectLinkLabels = function(list, isDirectLink) {
 	    isDirectLink && list[i].relationType == 3210 ? addJump = ", \"uiElementN003\"" : "";
 	    !isDirectLink && list[i].relationType == 3210 ? addJump = ", \"uiElement3345\"" : "";
 		if (list[i].pubOnly) {
-			list[i].linkLabel = "<a class='pubOnly' href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\""+addJump+");'"+
+			list[i].linkLabel = "<a class='pubOnly' href='#' onclick='menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\""+addJump+");'"+
 		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";			
 		} else {
-			list[i].linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\""+addJump+");'"+
+			list[i].linkLabel = "<a href='#' onclick='menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\""+addJump+");'"+
 		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";
 		}
 	}
@@ -710,7 +710,7 @@ UtilList.addObjectLinkLabels = function(list, isDirectLink) {
 // linkLabel is a html href to directly jump to a given address in the main tree
 UtilList.addAddressLinkLabels = function(list) {
 	for (var i = 0; i < list.length; ++i) {
-		list[i].linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"A\");'"+
+		list[i].linkLabel = "<a href='#' onclick='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"A\");'"+
 		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";
 	}
 	return list;
