@@ -12,7 +12,9 @@ mapClientCallbackHooks = {bboxSelected: function(x1, x2, y1, y2) {
 	document.getElementById("areaidOutput").innerHTML="" ;
 }};
 mapClientCallbackAreaId = function(value) {	
+	document.facete_map_form.areaid.value = value;
 	document.getElementById("areaidOutput").innerHTML=" "+value ;
+	showButtonSelectCheckboxForm(document.facete_map_form, 'facete_map_submit_btn','areaidOutput');
 	document.getElementById("coordinatesOutput").innerHTML="";
 };
 var viewConfiguration = "portalu-facete-search";

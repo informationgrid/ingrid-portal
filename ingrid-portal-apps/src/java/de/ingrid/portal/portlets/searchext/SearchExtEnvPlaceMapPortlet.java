@@ -99,30 +99,35 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements S
                 return;
             }
             String searchTerm = "";
-
-          String coordinates = "x1:".concat(f.getInput(SearchExtEnvPlaceMapForm.FIELD_X1));
-          coordinates = coordinates.concat(" y1:").concat(f.getInput(SearchExtEnvPlaceMapForm.FIELD_Y1));
-          coordinates = coordinates.concat(" x2:").concat(f.getInput(SearchExtEnvPlaceMapForm.FIELD_X2));
-          coordinates = coordinates.concat(" y2:").concat(f.getInput(SearchExtEnvPlaceMapForm.FIELD_Y2));            
-          if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK1)) {
-          searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:inside)");
-      }
-      if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK2)) {
-          if (searchTerm.length() > 0) {
-              searchTerm = searchTerm.concat(" OR ");
+          if(!f.getInput(SearchExtEnvPlaceMapForm.FIELD_AREAID).equals("")){
+        	  searchTerm = searchTerm.concat("areaid:").concat(f.getInput(SearchExtEnvPlaceMapForm.FIELD_AREAID));
+        	  
+          }else{
+        	  
+	          String coordinates = "x1:".concat(f.getInput(SearchExtEnvPlaceMapForm.FIELD_X1));
+	          coordinates = coordinates.concat(" y1:").concat(f.getInput(SearchExtEnvPlaceMapForm.FIELD_Y1));
+	          coordinates = coordinates.concat(" x2:").concat(f.getInput(SearchExtEnvPlaceMapForm.FIELD_X2));
+	          coordinates = coordinates.concat(" y2:").concat(f.getInput(SearchExtEnvPlaceMapForm.FIELD_Y2));            
+	          if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK1)) {
+	          searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:inside)");
+	          }
+		      if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK2)) {
+		          if (searchTerm.length() > 0) {
+		              searchTerm = searchTerm.concat(" OR ");
+		          }
+		          searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:intersect)");
+		      }
+		      if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK3)) {
+		          if (searchTerm.length() > 0) {
+		              searchTerm = searchTerm.concat(" OR ");
+		          }
+		          searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:include)");
+		      }
+		      if (searchTerm.length() == 0) {
+		          searchTerm = searchTerm.concat(coordinates);
+		      }	
           }
-          searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:intersect)");
-      }
-      if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK3)) {
-          if (searchTerm.length() > 0) {
-              searchTerm = searchTerm.concat(" OR ");
-          }
-          searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:include)");
-      }
-      if (searchTerm.length() == 0) {
-          searchTerm = searchTerm.concat(coordinates);
-      }
-      searchTerm = "(".concat(searchTerm).concat(")");
+          searchTerm = "(".concat(searchTerm).concat(")");
       
     String queryStr = (String) PortletMessaging.receive(request, Settings.MSG_TOPIC_SEARCH,
     		Settings.PARAM_QUERY_STRING);
@@ -131,44 +136,7 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements S
       
       
             // Zur Suchanfrage hinzufuegen
-//            WMSSearchDescriptor wmsDescriptor = WMSInterfaceImpl.getInstance().getWMSSearchParameter(
-//                    request.getPortletSession().getId());
-//            
-//            
-            
-            
-            
-//            if (wmsDescriptor == null) {
-//                f.setError("", "searchExtEnvPlaceMap.error.no_spacial_constraint");
-//                return;
-//            } else {
-//                String searchTerm = "";
-//                if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_BBOX) {
-//                    String coordinates = "x1:".concat(Double.toString(wmsDescriptor.getMinX()));
-//                    coordinates = coordinates.concat(" y1:").concat(Double.toString(wmsDescriptor.getMinY()));
-//                    coordinates = coordinates.concat(" x2:").concat(Double.toString(wmsDescriptor.getMaxX()));
-//                    coordinates = coordinates.concat(" y2:").concat(Double.toString(wmsDescriptor.getMaxY()));
-//                    if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK1)) {
-//                        searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:inside)");
-//                    }
-//                    if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK2)) {
-//                        if (searchTerm.length() > 0) {
-//                            searchTerm = searchTerm.concat(" OR ");
-//                        }
-//                        searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:intersect)");
-//                    }
-//                    if (f.hasInput(SearchExtEnvPlaceMapForm.FIELD_CHK3)) {
-//                        if (searchTerm.length() > 0) {
-//                            searchTerm = searchTerm.concat(" OR ");
-//                        }
-//                        searchTerm = searchTerm.concat("(").concat(coordinates).concat(" coord:include)");
-//                    }
-//                    if (searchTerm.length() == 0) {
-//                        searchTerm = searchTerm.concat(coordinates);
-//                    }
-//                    searchTerm = "(".concat(searchTerm).concat(")");
-//                    
-//                } else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
+//else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
 //                    searchTerm = searchTerm.concat("areaid:").concat(wmsDescriptor.getCommunityCode());
 //                }
 //                searchTerm = UtilsQueryString.stripQueryWhitespace(searchTerm);

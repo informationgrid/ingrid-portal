@@ -61,7 +61,7 @@ public class SearchExtEnvPlaceMapForm extends ActionForm {
             valid = false;
             
         }
-        else if(!hasInput(FIELD_X1) && !hasInput(FIELD_X2) && !hasInput(FIELD_Y1) && !hasInput(FIELD_Y2)){
+        else if(!hasInput(FIELD_X1) && !hasInput(FIELD_X2) && !hasInput(FIELD_Y1) && !hasInput(FIELD_Y2) && !hasInput(FIELD_AREAID)){
         	setError("", "searchExtEnvPlaceMap.error.no_spacial_constraint");
         	valid = false;
         }

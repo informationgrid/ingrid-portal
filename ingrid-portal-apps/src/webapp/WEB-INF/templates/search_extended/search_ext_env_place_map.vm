@@ -13,6 +13,7 @@ mapClientCallbackHooks = {bboxSelected: function(x1, x2, y1, y2) {
 
 }};
 mapClientCallbackAreaId = function(value) {	
+	document.env_place_map.areaid.value = value;
 	document.getElementById("areaidOutput").innerHTML=" "+value ;
 	document.getElementById("coordinatesOutput").innerHTML="";
 };

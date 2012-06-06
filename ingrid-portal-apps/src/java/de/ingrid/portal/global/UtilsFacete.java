@@ -1769,82 +1769,89 @@ public class UtilsFacete {
 		HashMap selectedMap = null;
 		
 		if(doAddMap != null){
-			coordOptions = new ArrayList<String>();
-			webmapclientCoords = new HashMap<String, String>();
 			
-        	if(request.getParameter("chk_1") != null){
-        		coordOptions.add(request.getParameter("chk_1"));
-        	}
-        	if(request.getParameter("chk_2") != null){
-        		coordOptions.add(request.getParameter("chk_2"));
-        	}
-        	if(request.getParameter("chk_3") != null){
-        		coordOptions.add(request.getParameter("chk_3"));
-        	}
-        	if(request.getParameter("x1") != null){
-        		webmapclientCoords.put("x1", request.getParameter("x1"));
-        	}
-        	if(request.getParameter("x2") != null){
-        		webmapclientCoords.put("x2", request.getParameter("x2"));	
-        	}                
-        	if(request.getParameter("y1") != null){
-        		webmapclientCoords.put("y1", request.getParameter("y1"));                    		
-        	}
-        	if(request.getParameter("y2") != null){
-        		webmapclientCoords.put("y2", request.getParameter("y2"));
-        	} 
+			if(!request.getParameter("areaid").equals("")){
+				if(selectedMap == null)
+					selectedMap = new HashMap();
+					selectedMap.put("areaid", request.getParameter("areaid"));
+			}else{
+			
+				coordOptions = new ArrayList<String>();
+				webmapclientCoords = new HashMap<String, String>();
+				
+	        	if(request.getParameter("chk_1") != null){
+	        		coordOptions.add(request.getParameter("chk_1"));
+	        	}
+	        	if(request.getParameter("chk_2") != null){
+	        		coordOptions.add(request.getParameter("chk_2"));
+	        	}
+	        	if(request.getParameter("chk_3") != null){
+	        		coordOptions.add(request.getParameter("chk_3"));
+	        	}
+	        	if(request.getParameter("x1") != null){
+	        		webmapclientCoords.put("x1", request.getParameter("x1"));
+	        	}
+	        	if(request.getParameter("x2") != null){
+	        		webmapclientCoords.put("x2", request.getParameter("x2"));	
+	        	}                
+	        	if(request.getParameter("y1") != null){
+	        		webmapclientCoords.put("y1", request.getParameter("y1"));                    		
+	        	}
+	        	if(request.getParameter("y2") != null){
+	        		webmapclientCoords.put("y2", request.getParameter("y2"));
+	        	} 
+	
+				if(coordOptions != null && coordOptions.size() > 0){
+					doMapCoords = new HashMap<String, String>();
+	        		for(int i=0; i < coordOptions.size(); i++){
+	        			String searchTerm = "";
+	        			//TODO implement areaid search
+	//	                    if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_BBOX) {
+	                    	if(request.getParameter("x1") != null){
+	                    		searchTerm = webmapclientCoords.get("x1").concat("' O / ");
+	                    	}
+	                    	if(request.getParameter("y1") != null){
+	                    		searchTerm = searchTerm.concat(webmapclientCoords.get("y1")).concat("' N");	
+	                    	}                
+	                        searchTerm = searchTerm.concat("<br>");
+	                    	if(request.getParameter("x2") != null){
+	                    		searchTerm = searchTerm.concat(webmapclientCoords.get("x2")).concat("' O / ");                    		
+	                    	}
+	                    	if(request.getParameter("y2") != null){
+	                    		searchTerm = searchTerm.concat(webmapclientCoords.get("y2")).concat("' N");
+	                    	} 
+	                        
+	                        searchTerm = searchTerm.concat("<br>" +  coordOptions.get(i));
+	//	                    } else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
+	//	                        searchTerm = searchTerm.concat("areaid:").concat(wmsDescriptor.getCommunityCode());
+	//	                    }
+	                    doMapCoords.put(coordOptions.get(i), searchTerm);
+	        		}
+				}
+			}
 
-			if(coordOptions != null && coordOptions.size() > 0){
-				doMapCoords = new HashMap<String, String>();
-        		for(int i=0; i < coordOptions.size(); i++){
-        			String searchTerm = "";
-        			//TODO implement areaid search
-//	                    if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_BBOX) {
-                    	if(request.getParameter("x1") != null){
-                    		searchTerm = webmapclientCoords.get("x1").concat("' O / ");
-                    	}
-                    	if(request.getParameter("y1") != null){
-                    		searchTerm = searchTerm.concat(webmapclientCoords.get("y1")).concat("' N");	
-                    	}                
-                        searchTerm = searchTerm.concat("<br>");
-                    	if(request.getParameter("x2") != null){
-                    		searchTerm = searchTerm.concat(webmapclientCoords.get("x2")).concat("' O / ");                    		
-                    	}
-                    	if(request.getParameter("y2") != null){
-                    		searchTerm = searchTerm.concat(webmapclientCoords.get("y2")).concat("' N");
-                    	} 
-                        
-                        searchTerm = searchTerm.concat("<br>" +  coordOptions.get(i));
-//	                    } else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
-//	                        searchTerm = searchTerm.concat("areaid:").concat(wmsDescriptor.getCommunityCode());
-//	                    }
-                    doMapCoords.put(coordOptions.get(i), searchTerm);
-        		}
+			if(doMapCoords != null){
+				if(selectedMap == null){
+					selectedMap = new HashMap();
+				}
+				selectedMap.put("doMapCoords", doMapCoords);
+				//setAttributeToSession(request, "doMapCoords", doMapCoords, true);
+			}
+			if(coordOptions != null){
+				if(selectedMap == null){
+					selectedMap = new HashMap();
+				}
+				selectedMap.put("coordOptions", coordOptions);
+				//setAttributeToSession(request, "coordOptions", coordOptions);
+			}
+			if(webmapclientCoords != null){
+				if(selectedMap == null){
+					selectedMap = new HashMap();
+				}
+				selectedMap.put("webmapclientCoords", webmapclientCoords);
+				//setAttributeToSession(request, "webmapclientCoords", webmapclientCoords);
 			}
 		}
-
-		if(doMapCoords != null){
-			if(selectedMap == null){
-				selectedMap = new HashMap();
-			}
-			selectedMap.put("doMapCoords", doMapCoords);
-			//setAttributeToSession(request, "doMapCoords", doMapCoords, true);
-		}
-		if(coordOptions != null){
-			if(selectedMap == null){
-				selectedMap = new HashMap();
-			}
-			selectedMap.put("coordOptions", coordOptions);
-			//setAttributeToSession(request, "coordOptions", coordOptions);
-		}
-		if(webmapclientCoords != null){
-			if(selectedMap == null){
-				selectedMap = new HashMap();
-			}
-			selectedMap.put("webmapclientCoords", webmapclientCoords);
-			//setAttributeToSession(request, "webmapclientCoords", webmapclientCoords);
-		}
-		
 		if(selectedMap != null){
 			setAttributeToSession(request, SELECTED_MAP, selectedMap, true);
 		}
@@ -1941,6 +1948,10 @@ public class UtilsFacete {
 		    			query.addClause(cq);
 					}
 		    	}
+		    }else if(selectedMap.get("areaid") != null){
+		    	ClauseQuery cq = new ClauseQuery(true, false);
+		    	cq.addField(new FieldQuery(true, false, "areaid", (String)selectedMap.get("areaid")));
+		    	query.addClause(cq);
 		    }
 		}
 	}
