@@ -15,18 +15,24 @@ public class RepoUser implements IEntity {
     
     private int version;
     
-    private String username;
+    private String login;
+    
+    private String firstName;
+    
+    private String surname;
+    
+    private String email;
     
     private String password;
     
     public RepoUser() {}
     
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public String getUsername() {
-        return username;
+    public String getLogin() {
+        return login;
     }
 
     public void setPassword(String password) {
@@ -47,7 +53,31 @@ public class RepoUser implements IEntity {
 
     @Override
     public Serializable getId() {
-        return getUsername();
+        return getLogin();
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
     
 }

@@ -4,7 +4,7 @@ body,html {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
-	font: normal 11px/16px Verdana, Arial, Helvetica, sans-serif;
+	font: normal 16px/16px Verdana, Arial, Helvetica, sans-serif;
 }
 
 div.table {
@@ -19,6 +19,12 @@ div.tr {
 div.td {
 	display: table-cell;
 	padding: 5px;
+}
+
+div {
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box; 
 }
 
 h1 {
@@ -112,7 +118,7 @@ li {
 	min-height: 650px;
 }
 
-.content div {
+.content > div {
 	margin: 19px;
 }
 
@@ -139,6 +145,10 @@ li {
 	font-weight: bold;
 }
 
+.comment {
+    color: gray;
+}
+
 input[type="button"]:hover,input[type="submit"]:hover,button:hover {
 	background: #1B78B1;
 }
@@ -155,3 +165,7 @@ input[type="button"],input[type="submit"],button {
 }
 
 #wrapper { margin: 50px auto; width: 250px; background-color: #eee; box-shadow: 0px 0px 10px #111; padding: 20px; }
+
+#usersGrid {
+    border: 1px solid gray;
+}

@@ -1,6 +1,8 @@
 package de.ingrid.mdek.security;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,7 +34,11 @@ public class TomcatAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public List<String> getAllUserIds() {
-        return repoManager.getAllUsers();
+        List<String> userIds = new ArrayList<String>();
+        for (Map info : repoManager.getAllUsers()) {
+            userIds.add((String) info.get("login"));
+        }
+        return userIds;
     }
 
     /**
