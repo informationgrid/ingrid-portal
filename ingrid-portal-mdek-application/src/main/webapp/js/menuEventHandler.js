@@ -1055,7 +1055,7 @@ menuEventHandler.handleShowComment = function() {
 }
 
 // Selects and loads a node in the tree. The path to the node is expanded step by step.
-menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType) {
+menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType, formIdJump) {
     var defNodeLoaded = new dojo.Deferred();
     igeMenuBar.selectChild("pageHierarchy");
 
@@ -1098,6 +1098,12 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType) {
             var def = dijit.byId("dataTree")._setPathAttr(rootNodes.concat(path));
             def.addCallback(function() {
                 menuEventHandler._loadNode(nodeId).addCallback(function() {
+                    if (formIdJump) {
+                        setTimeout(function() {
+                            igeEvents.toggleFields(UtilUI.getSectionElement(dojo.byId(formIdJump)), "showAll");
+                            dojo.window.scrollIntoView(formIdJump);
+                        }, 300);
+                    }
                     defNodeLoaded.callback();
                 });
             });

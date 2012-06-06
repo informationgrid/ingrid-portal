@@ -1726,7 +1726,7 @@ udkDataProxy._setObjectData = function(nodeData)
   var urlLinkTable = nodeData.linksToUrlTable;
   var linkTable = objLinkTable.concat(urlLinkTable);
 
-  UtilList.addObjectLinkLabels(linkTable);
+  UtilList.addObjectLinkLabels(linkTable, true);
   UtilList.addUrlLinkLabels(linkTable);
   UtilList.addIcons(linkTable);
   	
@@ -1737,7 +1737,7 @@ udkDataProxy._setObjectData = function(nodeData)
   dojo.forEach(pubLinkTable, function(link) { link.pubOnly = true; } );
   linkTable = pubLinkTable.concat(unpubLinkTable);
 
-  UtilList.addObjectLinkLabels(linkTable);
+  UtilList.addObjectLinkLabels(linkTable, false);
   UtilList.addIcons(linkTable);
   UtilStore.updateWriteStore("linksFrom", linkTable);
   
@@ -3256,15 +3256,13 @@ igeEvents.addServiceLink = function() {
                     currentLink.title = oldObject.title;
                     currentLink.objectClass = "1";
                     currentLink.relationType = "3210";
-                    currentLink.relationTypeName = "Verweis zu Dienst";
-                    UtilList.addObjectLinkLabels([currentLink]);
+                    currentLink.relationTypeName = "Verweis zu Daten";
+                    UtilList.addObjectLinkLabels([currentLink], true);
                     UtilList.addIcons([currentLink]);
                     UtilGrid.addTableDataRow("ref3BaseDataLink", currentLink);
                     
                     // also add to "global" link table in "Verweise"
-                    if (caller.gridId != "linksTo") {
-                        UtilGrid.addTableDataRow("linksTo", currentLink);
-                    }
+                    UtilGrid.addTableDataRow("linksTo", currentLink);
                     
                     // open section and jump to table and set dirty flag!
                     setTimeout(function() {
@@ -3285,4 +3283,31 @@ igeEvents.addServiceLink = function() {
     }
     
     def.addCallbacks(readyToLink, loadErrback);
+}
+
+igeEvents.addDataLink = function() {
+    var def = new dojo.Deferred();
+    
+    caller = { gridId: 'ref3BaseDataLink' };
+    dialog.showPage(message.get("dialog.links.selectObject.title"), 'dialogs/mdek_links_select_object_dialog.jsp?c='+userLocale, 522, 520, true, {
+        // custom parameters
+        //additionalText: message.get("dialog.links.selectObject.coupling.info"),
+        resultHandler: def
+    });
+    
+    def.addCallbacks(function(obj) {
+        var currentLink = obj;
+        currentLink.relationType = 3210;
+        currentLink.relationTypeName = "Verweis zu Daten";
+        UtilList.addObjectLinkLabels([currentLink], true);
+        UtilList.addIcons([currentLink]);
+        UtilGrid.addTableDataRow("ref3BaseDataLink", currentLink);
+        
+        // also add to "global" link table in "Verweise"
+        UtilGrid.addTableDataRow("linksTo", currentLink);
+    },
+    // dialog was cancelled -> IS NOT CALLED WHEN CLICKED ON 'X'!!!
+    function() {
+        console.debug("Dialog closed without selection of a data object.");
+    });
 }

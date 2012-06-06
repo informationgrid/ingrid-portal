@@ -748,6 +748,7 @@ ingridObjectLayout.createFachBezugClass3 = function(){
     createDataGrid("ref3BaseDataLink", null, ref3BaseDataLinkStructure, null);
     // no immediate dialog on row click !
 //    UtilGrid.addRowSelectionCallback("ref3BaseDataLink", ingridObjectLayout.openLinkDialog, { filter:3210 });
+    (new dijit.form.Button( {}, "btnAddDataLink")).onClick = igeEvents.addDataLink;
 
     ref3BaseDataTabContainer.addChild(ref3MethodTab2);
 	ref3BaseDataTabContainer.addChild(ref3BaseDataTab1);

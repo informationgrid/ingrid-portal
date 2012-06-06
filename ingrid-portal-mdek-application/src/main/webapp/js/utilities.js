@@ -689,13 +689,17 @@ UtilList.addAddressTitles = function(list) {
 // This function iterates over all entries in the list and adds a value: 'linkLabel' to each node
 // which is a href to the menuEventHandler 'selectNodeInTree' function
 // If an entry contains the variable 'pubOnly = true', the text color is set to grey
-UtilList.addObjectLinkLabels = function(list) {
+UtilList.addObjectLinkLabels = function(list, isDirectLink) {
+    var addJump = "";
 	for (var i = 0; i < list.length; ++i) {
+	    // jump to specific element
+	    isDirectLink && list[i].relationType == 3210 ? addJump = ", \"uiElementN003\"" : "";
+	    !isDirectLink && list[i].relationType == 3210 ? addJump = ", \"uiElement3345\"" : "";
 		if (list[i].pubOnly) {
-			list[i].linkLabel = "<a class='pubOnly' href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\");'"+
+			list[i].linkLabel = "<a class='pubOnly' href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\""+addJump+");'"+
 		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";			
 		} else {
-			list[i].linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\");'"+
+			list[i].linkLabel = "<a href='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\""+addJump+");'"+
 		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";
 		}
 	}

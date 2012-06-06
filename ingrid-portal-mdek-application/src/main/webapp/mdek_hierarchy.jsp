@@ -1082,18 +1082,6 @@
                                         </span>
 									</div>
                                 </span>
-                                <span id="uiElement3221">
-									<div>
-                                        <span id="ref3CouplingTypeLabel" class="label"> 
-                                            <label for="ref3CouplingType" onclick="javascript:dialog.showContextHelp(arguments[0], 3221)">
-                                                <fmt:message key="ui.obj.type3.couplingType" /> 
-                                            </label> 
-                                        </span>
-                                        <span class="input">
-                                            <div maxLength="255" autoComplete="false" id="ref3CouplingType" style="width: 100%;"></div>
-                                        </span>
-                                    </div> 
-                                </span>
                               </div> 
                               </span>
                                 <span id="uiElement3230" class="outer halfWidth">
@@ -1138,22 +1126,30 @@
                                 </span>
                             </div>
                             <div class="inputContainer">
-                                    <span id="uiElement3200" class="outer halfWidth">
-                                    	<div><span class="label">
-                                            <label for="ref3SystemEnv" onclick="javascript:dialog.showContextHelp(arguments[0], 3200)">
-                                                <fmt:message key="ui.obj.type3.environment" />
-                                            </label>
-                                        </span><span class="input"><input type="text" id="ref3SystemEnv" name="ref3SystemEnv" /></span>
-										</div>
-									</span>
-                                    <span id="uiElement3240" class="outer halfWidth">
-                                    	<div><span class="label">
-                                            <label for="ref3History" onclick="javascript:dialog.showContextHelp(arguments[0], 3240)">
-                                                <fmt:message key="ui.obj.type3.history" />
-                                            </label>
-                                        </span><span class="input"><input type="text" id="ref3History" name="ref3History" class="w320 h038" /></span>
-										</div>
-									</span>
+                                <span id="uiElement3200" class="outer halfWidth">
+                                	<div><span class="label">
+                                        <label for="ref3SystemEnv" onclick="javascript:dialog.showContextHelp(arguments[0], 3200)">
+                                            <fmt:message key="ui.obj.type3.environment" />
+                                        </label>
+                                    </span><span class="input"><input type="text" id="ref3SystemEnv" name="ref3SystemEnv" /></span>
+									</div>
+								</span>
+                                <span id="uiElement3240" class="outer halfWidth">
+                                	<div><span class="label">
+                                        <label for="ref3History" onclick="javascript:dialog.showContextHelp(arguments[0], 3240)">
+                                            <fmt:message key="ui.obj.type3.history" />
+                                        </label>
+                                    </span><span class="input"><input type="text" id="ref3History" name="ref3History" class="w320 h038" /></span>
+									</div>
+								</span>
+								<span id="uiElement3250" class="outer halfWidth">
+                                    <div><span class="label">
+                                        <label for="ref3Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 3250)">
+                                            <fmt:message key="ui.obj.type3.description" />
+                                        </label>
+                                        </span><span class="input"><input type="text" id="ref3Explanation" name="ref3Explanation" /></span>
+                                    </div>
+                                </span>
                             </div>
                             <div class="inputContainer">
                                     <span id="uiElement3345" class="outer halfWidth">
@@ -1161,7 +1157,9 @@
                                             <label for="ref3BaseDataTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3345)">
                                                 <fmt:message key="ui.obj.type3.generalDataTable.title" />
                                             </label>
-                                        </span><span id="ref3MethodTab2Header" class="functionalLink onTab" style=""><!--marginRightColumn--><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref3AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref3BaseData'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3210, gridId: 'ref3BaseDataLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type3.generalDataTable.link" /></a></span>
+                                        </span>
+                                        <!--<span id="ref3MethodTab2Header" class="functionalLink onTab" style=""><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref3AddBaseDataLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref3BaseData'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3210, gridId: 'ref3BaseDataLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type3.generalDataTable.link" /></a></span>
+                                        -->
                                         <div id='ref3MethodTab2' label="<fmt:message key="ui.obj.type3.generalDataTable.tab.links" />">
                                             <div class="input tableContainer">
                                                 <div id="ref3BaseDataLink" autoHeight="2" query="{relationType:'3210'}" class="hideTableHeader" contextMenu="EDIT_LINK" relation_filter="3210">
@@ -1174,15 +1172,20 @@
                                         </div>
                                         </div>
 										</div>
+										<div style="position:relative; float:right;"><button id="btnAddDataLink"><fmt:message key="ui.obj.type1.buttonAddDataLink" /></button></div>
                                     </span>
-                                    <span id="uiElement3250" class="outer halfWidth">
-                                    	<div><span class="label">
-                                            <label for="ref3Explanation" onclick="javascript:dialog.showContextHelp(arguments[0], 3250)">
-                                                <fmt:message key="ui.obj.type3.description" />
-                                            </label>
-                                        </span><span class="input"><input type="text" id="ref3Explanation" name="ref3Explanation" class="w320 h055" /></span>
-										</div>
-									</span>
+                                    <span id="uiElement3221" class="outer halfWidth">
+                                        <div>
+                                            <span id="ref3CouplingTypeLabel" class="label"> 
+                                                <label for="ref3CouplingType" onclick="javascript:dialog.showContextHelp(arguments[0], 3221)">
+                                                    <fmt:message key="ui.obj.type3.couplingType" /> 
+                                                </label> 
+                                            </span>
+                                            <span class="input">
+                                                <div maxLength="255" autoComplete="false" id="ref3CouplingType" style="width: 100%;"></div>
+                                            </span>
+                                        </div> 
+                                    </span>
                             </div>
                             <div class="inputContainer">
                             <span id="uiElement3260">
