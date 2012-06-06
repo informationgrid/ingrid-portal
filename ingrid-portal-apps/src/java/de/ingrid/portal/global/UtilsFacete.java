@@ -1772,8 +1772,11 @@ public class UtilsFacete {
 			
 			if(!request.getParameter("areaid").equals("")){
 				if(selectedMap == null)
-					selectedMap = new HashMap();
+				selectedMap = new HashMap();
+					doMapCoords = new HashMap<String, String>();
+					doMapCoords.put("inside", "AGS: "+request.getParameter("areaid"));
 					selectedMap.put("areaid", request.getParameter("areaid"));
+					
 			}else{
 			
 				coordOptions = new ArrayList<String>();
@@ -1900,6 +1903,7 @@ public class UtilsFacete {
 					setAttributeToSession(request, SELECTED_MAP, selectedMap, true);
 				}else{
 					selectedMap.remove("webmapclientCoords");
+					selectedMap.remove("areaid");
 				}
 			}
 		}
