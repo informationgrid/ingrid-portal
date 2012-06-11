@@ -1431,17 +1431,19 @@ public class UtilsFacete {
 				for (Iterator<String> iterator = elementProvider.keySet().iterator(); iterator.hasNext();) {
 					String key = iterator.next();
 					boolean foundKey = false;
-					for (int i=0; i<selectedProviders.size(); i++){
-						String providerKey = selectedProviders.get(i);
-						if(key.equals(providerKey)){
-							foundKey = true;
-							break;
+					if(selectedProviders!= null && selectedProviders.size() > 0){
+						for (int i=0; i<selectedProviders.size(); i++){
+							String providerKey = selectedProviders.get(i);
+							if(key.equals(providerKey)){
+								foundKey = true;
+								break;
+							}
 						}
-					}
-					if(foundKey){
-						break;
-					}else{
-						elementsProvider.remove(j);
+						if(foundKey){
+							break;
+						}else{
+							elementsProvider.remove(j);
+						}
 					}
 				}
 			}

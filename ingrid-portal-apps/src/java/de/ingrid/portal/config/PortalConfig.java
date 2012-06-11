@@ -220,6 +220,10 @@ public class PortalConfig extends PropertiesConfiguration {
     // Enable debug mode of webmap-client
     public static final String PORTAL_WEBMAPCLIENT_DEBUG = "portal.webmapclient.debug";
     
+    public static final String PORTAL_ADMIN_NUMBER_ROW_PROVIDER = "portal.admin.number.row.provider";
+    
+    public static final String PORTAL_ADMIN_NUMBER_ROW_PARTNER = "portal.admin.number.row.partner";
+    
     // private stuff
     private static PortalConfig instance = null;
     

@@ -4,15 +4,26 @@
 package de.ingrid.portal.portlets.admin;
 
 import java.lang.reflect.Array;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
+
+import org.apache.velocity.context.Context;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.AdminContentPartnerForm;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridPartner;
 
 /**
@@ -22,7 +33,7 @@ import de.ingrid.portal.om.IngridPartner;
  */
 public class ContentPartnerPortlet extends ContentPortlet {
 
-    //    private final static Logger log = LoggerFactory.getLogger(ContentPartnerPortlet.class);
+	private final static Logger log = LoggerFactory.getLogger(ContentPartnerPortlet.class);
 
     /**
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
@@ -100,5 +111,42 @@ public class ContentPartnerPortlet extends ContentPortlet {
         }
 
         super.doActionSave(request);
+    }
+    
+    protected boolean doViewDefault(RenderRequest request) {
+        try {
+            // always refresh !
+            refreshBrowserState(request);
+            ContentBrowserState state = getBrowserState(request);
+
+            // get data from database
+            String sortColumn = getSortColumn(request, "id");
+            boolean ascendingOrder = isAscendingOrder(request);
+            Session session = HibernateUtil.currentSession();
+            Criteria crit = session.createCriteria(dbEntityClass);
+            if (ascendingOrder) {
+                crit.addOrder(Order.asc(sortColumn));
+            } else {
+                crit.addOrder(Order.desc(sortColumn));
+            }
+            crit.setFirstResult(state.getFirstRow());
+            crit.setMaxResults(PortalConfig.getInstance().getInt(PortalConfig.PORTAL_ADMIN_NUMBER_ROW_PARTNER, state.getMaxRows()));
+            state.setMaxRows(PortalConfig.getInstance().getInt(PortalConfig.PORTAL_ADMIN_NUMBER_ROW_PARTNER, state.getMaxRows()));
+            
+            List displayResults = UtilsDB.getValuesFromDB(crit, session, null, true);
+            
+            // put to render context
+            Context context = getContext(request);
+            context.put(CONTEXT_ENTITIES, displayResults);
+            context.put(CONTEXT_BROWSER_STATE, state);
+            setDefaultViewPage(viewDefault);
+            return true;
+        } catch (Exception ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems processing default view:", ex);
+            }
+        }
+
+        return false;
     }
 }

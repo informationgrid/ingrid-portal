@@ -158,7 +158,8 @@ public class ContentProviderPortlet extends ContentPortlet {
             state.setTotalNumRows(totalResults.size());
             
             crit.setFirstResult(state.getFirstRow());
-            crit.setMaxResults(state.getMaxRows());
+            crit.setMaxResults(PortalConfig.getInstance().getInt(PortalConfig.PORTAL_ADMIN_NUMBER_ROW_PROVIDER, state.getMaxRows()));
+            state.setMaxRows(PortalConfig.getInstance().getInt(PortalConfig.PORTAL_ADMIN_NUMBER_ROW_PROVIDER, state.getMaxRows()));
             List displayResults = UtilsDB.getValuesFromDB(crit, session, null, true);
 
             // put to render context
