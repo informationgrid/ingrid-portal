@@ -93,9 +93,12 @@ public class ServiceSearchForm extends ActionForm {
 	            allOk = false;
 	        }
     	}
-        if (!hasInput(FIELD_PARTNER)) {
-            setError(FIELD_PARTNER, "serviceSearch.error.noPartner");
-            allOk = false;
+        if(PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_SEARCH_SERVICES_PROVIDER, Boolean.FALSE)){
+	        if (!hasInput(FIELD_PARTNER)) {
+	            setError(FIELD_PARTNER, "serviceSearch.error.noPartner");
+	            allOk = false;
+	        }
         }
         if (hasInput(FIELD_QUERY_STRING)) {
             try {

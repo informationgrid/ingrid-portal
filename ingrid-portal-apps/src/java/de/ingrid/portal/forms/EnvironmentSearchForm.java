@@ -5,6 +5,7 @@ package de.ingrid.portal.forms;
 
 import javax.portlet.PortletRequest;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
@@ -93,7 +94,13 @@ public class EnvironmentSearchForm extends ActionForm {
             setError(FIELD_PARTNER, "envSearch.error.noPartner");
             allOk = false;
         }
-
+        if(PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_SEARCH_TOPICS_PROVIDER, Boolean.FALSE)){
+	        if (!hasInput(FIELD_PARTNER)) {
+	            setError(FIELD_PARTNER, "envSearch.error.noPartner");
+	            allOk = false;
+	        }
+        }
         if (hasInput(FIELD_QUERY_STRING)) {
             try {
                 QueryStringParser.parse(this.getInput(FIELD_QUERY_STRING));

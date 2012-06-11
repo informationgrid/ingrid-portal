@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
@@ -90,9 +91,12 @@ public class MeasuresSearchForm extends ActionForm {
             setError(FIELD_RUBRIC, "measuresSearch.error.noRubric");
             allOk = false;
         }
-        if (!hasInput(FIELD_PARTNER)) {
-            setError(FIELD_PARTNER, "measuresSearch.error.noPartner");
-            allOk = false;
+        if(PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_ENABLE_SEARCH_MEASURES_PROVIDER, Boolean.FALSE)){
+        	if (!hasInput(FIELD_PARTNER)) {
+                setError(FIELD_PARTNER, "measuresSearch.error.noPartner");
+                allOk = false;
+            }	
         }
         if (hasInput(FIELD_QUERY_STRING)) {
             try {

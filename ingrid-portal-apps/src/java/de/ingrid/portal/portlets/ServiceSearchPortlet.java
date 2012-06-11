@@ -212,7 +212,14 @@ public class ServiceSearchPortlet extends AbstractVelocityMessagingPortlet {
 
         ServiceSearchForm af = (ServiceSearchForm) Utils.getActionForm(request, ServiceSearchForm.SESSION_KEY,
                 ServiceSearchForm.class, PortletSession.APPLICATION_SCOPE);
-
+        
+        String action = request.getParameter(Settings.PARAM_ACTION);
+        if(action != null && action.equals(Settings.PARAMV_ACTION_NEW_SEARCH)){
+        	af.clear();
+            // populate doesn't clear
+            af.populate(request);
+        } 
+        
         IngridQuery query = null;
         try {
         	// create query

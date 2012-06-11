@@ -10,10 +10,10 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
@@ -217,7 +217,14 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
 
         MeasuresSearchForm af = (MeasuresSearchForm) Utils.getActionForm(request, MeasuresSearchForm.SESSION_KEY,
                 MeasuresSearchForm.class, PortletSession.APPLICATION_SCOPE);
-
+        
+        String action = request.getParameter(Settings.PARAM_ACTION);
+        if(action != null && action.equals(Settings.PARAMV_ACTION_NEW_SEARCH)){
+        	af.clear();
+            // populate doesn't clear
+            af.populate(request);
+        } 
+        
         IngridQuery query = null;
         try {
             // add search term if exist
