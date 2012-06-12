@@ -21,7 +21,6 @@
         <link rel="stylesheet" href="dojo-src/release/dojo/dojo/resources/dojo.css">
         <link rel="stylesheet" href="dojo-src/release/dojo/dijit/themes/claro/claro.css">
         <link rel="stylesheet" href="dojo-src/release/dojo/dojox/grid/resources/claroGrid.css">
-        <link rel="stylesheet" href="dojo-src/release/dojo/dojox/grid/enhanced/resources/EnhancedGrid.css">
     
         <link rel="stylesheet" type="text/css" href="css/admin.css"></link>
     
@@ -51,12 +50,14 @@
         
             var loggedInUser = "<%= request.getSession(true).getAttribute("userName") %>";
             console.debug("user is: " + loggedInUser);
-            getAllUsers();
-            getAllAvailableUsers();
-            createCatalogueTable();
 
             dojo.connect(window, "onload", function() {
                 var parameters = dojo.queryToObject(dojo.doc.location.search.substring(1));
+                
+                getAllUsers();
+                getAllAvailableUsers();
+                createCatalogueTable();
+                
                 dojo.style(previousContent, "display", "block");
                 if (parameters.section) {
                     if (parameters.section == "user") 
@@ -298,14 +299,14 @@
         <div id="manageUserDiv" class="content">
             <h3>Manage User</h3>
             <div style="width: 96%; height: 400px;">
-                <table id="usersGrid" jsId="usersGrid" dojoType="dojox.grid.DataGrid" rowHeight="25" escapeHTMLInData=false selectable=false selectionMode="single" style="height: 100%; width: 100%;"><!--keepSelection=true data-dojo-props="autoHeight:true, selectionMode:'single'" >-->
+                <table id="usersGrid" jsId="usersGrid" dojoType="dojox.grid.DataGrid" escapeHTMLInData=false selectable=false selectionMode="single" style="height: 100%; width: 100%;">
                 <thead>
                     <tr>
-                        <th field="btn_edit" width="80px">&nbsp;</th>
-                        <th field="btn_delete" width="80px">&nbsp;</th>
                         <th field="surname" width="100px">Name</th>
                         <th field="firstName" width="100px">First Name</th>
                         <th field="email" width="auto">Email</th>
+                        <th field="btn_edit" width="80px">&nbsp;</th>
+                        <th field="btn_delete" width="80px">&nbsp;</th>
                     </tr>
                 </thead>
             
@@ -315,12 +316,12 @@
         </div>
     
         <div id="catOverviewDiv" class="content">
-            <h3>Connected Catalogues</h3>
+            <h3>Connected Catalogues</h3> 
 	        <div style="width: 96%; height: 300px;">
-                <table id="connectedCataloguesGrid" jsId="connectedCataloguesGrid" dojoType="dojox.grid.DataGrid" rowHeight="25" escapeHTMLInData=false selectable=false selectionMode="single" style="height: 100%; width: 100%;">
+                <table id="connectedCataloguesGrid" jsId="connectedCataloguesGrid" dojoType="dojox.grid.DataGrid" escapeHTMLInData=false selectable=false selectionMode="single" style="height: 100%; width: 100%;">
                 <thead>
                     <tr>
-                        <th field="iplug" width="100px">iPlug</th>
+                        <th field="iplug" width="200px">iPlug</th>
                         <th field="catAdmin" width="auto">Catalogue Administrator</th>
                         <th field="btn_delete" width="80px">&nbsp;</th>
                     </tr>
@@ -329,7 +330,7 @@
             </div>
             <h3>Available Catalogues</h3>
             <div style="width: 96%; height: 300px;">
-            <table id="availableCataloguesGrid" jsId="availableCataloguesGrid" dojoType="dojox.grid.DataGrid" rowHeight="25" escapeHTMLInData=false selectable=false selectionMode="single" style="height: 100%; width: 100%;">
+            <table id="availableCataloguesGrid" jsId="availableCataloguesGrid" dojoType="dojox.grid.DataGrid"  escapeHTMLInData=false selectable=false selectionMode="single" style="height: 100%; width: 100%;">
             <thead>
                 <tr>
                     <th field="iplug" width="auto">iPlug</th>
