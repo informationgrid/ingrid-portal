@@ -37,26 +37,26 @@
     <!-- in this iframe RIGHT search is executed ! -->
     <iframe id="frm_unranked" src="$unrankedResultUrl" style="display:none"></iframe>
     #end
-  #if($adminContent)
-	#if($rankedResultList.get("FACETS"))
-        <p>Facets:</p>
-        <p>$rankedResultList.get("FACETS")</p>
+    #if($adminContent)
+    <!--
+    #if($rankedResultList.get("FACETS"))
+        Facets:
+        $rankedResultList.get("FACETS")
     #end
-    #if($facetsQuery)
-        <p>Facets Query:</p>
-        <p>
+    
+	#if($facetsQuery)
+   		Facets Query:
         #foreach($facete in $facetsQuery)
-        	<span>$facete</span><br>
+        	$facete
         #end
-        </p>
-	#end
-	#if($searchQuery)
-        <p>Search Query:</p>
-        <p>
-        <span>$searchQuery</span><br>
-        </p>
     #end
-  #end
+    
+	#if($searchQuery)
+        Search Query:
+    	$searchQuery
+    #end
+    -->
+    #end
     <script type="text/javascript">
      	document.getElementById('search_facete').style.display = "block";
     	document.getElementById('search_hits').setAttribute('class', "javascript");

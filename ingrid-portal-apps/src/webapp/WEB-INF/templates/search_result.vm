@@ -34,26 +34,29 @@
     #end
     
       <div class="clearer"></div>
+	  
+	  
   #if($adminContent)
-	#if($rankedResultList.get("FACETS"))
-        <p>Facets:</p>
-        <p>$rankedResultList.get("FACETS")</p>
+	<!--
+    #if($rankedResultList.get("FACETS"))
+        Facets:
+        $rankedResultList.get("FACETS")
     #end
-    #if($facetsQuery)
-        <p>Facets Query:</p>
-        <p>
+    
+	#if($facetsQuery)
+   		Facets Query:
         #foreach($facete in $facetsQuery)
-        	<span>$facete</span><br>
+        	$facete
         #end
-        </p>
-	#end
-	#if($searchQuery)
-        <p>Search Query:</p>
-        <p>
-        <span>$searchQuery</span><br>
-        </p>
     #end
+    
+	#if($searchQuery)
+        Search Query:
+    	$searchQuery
+    #end
+    -->
   #end
+  
      <script type="text/javascript">
      	document.getElementById('search_facete').style.display = "block";
     	document.getElementById('search_hits').setAttribute('class', "javascript");
