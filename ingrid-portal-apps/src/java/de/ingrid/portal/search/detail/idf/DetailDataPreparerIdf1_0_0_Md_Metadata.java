@@ -2494,7 +2494,9 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
     private void addressEvaluateNode(ArrayList elements, Node node, boolean isIdfResponsibleParty) {
 
         String xpathExpression = "";
-        
+
+        boolean dataAdded = false;
+
         if(isIdfResponsibleParty){
             if(XPathUtils.nodeExists(node, "./idf:hierarchyParty")){
                 NodeList hierarchyPartyNodeList = XPathUtils.getNodeList(node, "./idf:hierarchyParty");
@@ -2514,13 +2516,14 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                     }
                     
                     if(type.equals("2")){
-                        // "Name"
+                    	// Person -> "Name"
                         xpathExpression = "./idf:addressIndividualName";
                         if(XPathUtils.nodeExists(hierarchyPartyNode, xpathExpression)){
                             value = XPathUtils.getString(hierarchyPartyNode, xpathExpression).trim();
                             elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), getIndividualName(value), uuid));
                         }
                     }else if(type.equals("3")){
+                    	// Free Address -> "Name" or "Organisation"
                         if(XPathUtils.nodeExists(hierarchyPartyNode, "./idf:addressIndividualName")){
                             value = XPathUtils.getString(hierarchyPartyNode, "./idf:addressIndividualName").trim();
                             elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), getIndividualName(value), uuid));
@@ -2536,6 +2539,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                             elements.add(addElementLink("linkLine", new Boolean(false), new Boolean(false), value, uuid));
                         }
                     }
+                    dataAdded = true;
                 }
             }else{
                 // Organistation
@@ -2546,6 +2550,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                     for(int i=0; i<valueTokenizer.countTokens();i++) {
                         addElement(elements, "textLine", valueTokenizer.nextToken());
                     }
+                    dataAdded = true;
                 }
                 
                 // Name
@@ -2553,6 +2558,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                 if (XPathUtils.nodeExists(node, xpathExpression)) {
                     String value = XPathUtils.getString(node, xpathExpression).trim();
                     addElement(elements, "textLine", getIndividualName(value));
+                    dataAdded = true;
                 }
             }
         }else{
@@ -2564,6 +2570,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                 for(int i=0; i<valueTokenizer.countTokens();i++) {
                     addElement(elements, "textLine", valueTokenizer.nextToken());
                 }
+                dataAdded = true;
             }
             
             // Name
@@ -2571,6 +2578,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
             if (XPathUtils.nodeExists(node, xpathExpression)) {
                 String value = XPathUtils.getString(node, xpathExpression).trim();
                 addElement(elements, "textLine", getIndividualName(value));
+                dataAdded = true;
             }
         }
         
@@ -2588,7 +2596,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         }
         */
         if (XPathUtils.nodeExists(node, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address")){
-            addSpace(elements);
+        	if (dataAdded) {
+                addSpace(elements);        		
+            	dataAdded = false;
+        	}
         }
         
         // "Street"
@@ -2613,6 +2624,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                     addElement(elements, "textLine", deliveryPoint);
                 }
             }
+            dataAdded = true;
         }
         
         String postalCode = "";
@@ -2632,6 +2644,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         
         if (postalCode.length() > 0 || city.length() > 0) {
             addElement(elements, "textLine", postalCode.concat(" ").concat(city));
+            dataAdded = true;
         }
         
         // "Country"
@@ -2646,9 +2659,12 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                     addElement(elements, "textLine", country);
                 }
             }
+            dataAdded = true;
         }
-        
-        addSpace(elements);
+
+        if (dataAdded) {
+            addSpace(elements);
+        }
         // "Mail"
         xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress";
         if (XPathUtils.nodeExists(node, xpathExpression)) {
