@@ -1597,6 +1597,38 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         	
 		}
 	}
+	
+	private void getCapabilityUrls(ArrayList elements, String xpathExpression) {
+	    if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+            
+            for (int i=0; i<nodeList.getLength();i++){
+                if(XPathUtils.nodeExists(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/idf:idfOnlineResource/gmd:linkage/gmd:URL")){
+                    Node node = XPathUtils.getNode(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/idf:idfOnlineResource/gmd:linkage/gmd:URL");                
+                    String urlValue = XPathUtils.getString(node, ".").trim();
+                    // do not display empty URLs
+                    if (urlValue == null || urlValue.length() == 0) {
+                        continue;
+                    }
+                    if (urlValue.toLowerCase().indexOf("request=getcapabilities") != -1) {
+                        HashMap elementCapabilities = new HashMap();
+                        elementCapabilities.put("type", "multiLine");
+                        HashMap elementMapLink = new HashMap();
+                        elementMapLink.put("type", "linkLine");
+                        elementMapLink.put("isMapLink", new Boolean(true));
+                        elementMapLink.put("isExtern", new Boolean(false));
+                        elementMapLink.put("title", messages.getString("common.result.showMap"));
+                        elementMapLink.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(urlValue));
+                        // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
+                        ArrayList list = new ArrayList();
+                        list.add(elementMapLink);
+                        elementCapabilities.put("elements", list);
+                        elements.add(elementCapabilities);
+                    }
+                }
+            }
+	    }
+	}
 
 	/** ONLY CALLED FOR CLASS 3 GEODATENDIENST !!! */
 	private void getConnectionPoints(String serviceType, ArrayList elements, String xpathExpression) {
@@ -3129,6 +3161,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                         if(context.get("description") == null){
                             context.put("description", description);
                         }
+                        
+                        // getcap-Link
+                        xpathExpression = "./gmd:distributionInfo/*/gmd:transferOptions";
+                        getCapabilityUrls(elements, xpathExpression);
                         
                         // "Übergeordnete Objekte"
                         xpathExpression ="./idf:superiorReference";
