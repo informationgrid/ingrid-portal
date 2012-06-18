@@ -31,7 +31,7 @@ var viewConfiguration = "portalu-facete-search";
     #if(!$geothesaurusSelectTopics || $geothesaurusSelectTopics.size() == 0)
 		<div style="padding:0px 0px 5px 0px;">
 			#if($webmapDebugMode)
-    		<a onclick="prepareDialogMap('dialog_area_map','/ingrid-webmap-client/frontend/index-dev.html','openlayersDivInParent','webmapIframe')"
+    		<a onclick="prepareDialogMap('dialog_area_map','/ingrid-webmap-client/frontend/index-dev.html?languageCode=$languageCode','openlayersDivInParent','webmapIframe')"
 				#if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)
 					class="facete_link_line facete_select_link_topic"
 				#else
@@ -41,7 +41,7 @@ var viewConfiguration = "portalu-facete-search";
     			$MESSAGES.getString("searchResult.facete.area.map.search")
     		</a>
 			#else
-		    <a onclick="prepareDialogMap('dialog_area_map','/ingrid-webmap-client/frontend/index.html','openlayersDivInParent','webmapIframe')"
+		    <a onclick="prepareDialogMap('dialog_area_map','/ingrid-webmap-client/frontend/index.html?languageCode=$languageCode','openlayersDivInParent','webmapIframe')"
 				#if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)
 					class="facete_link_line facete_select_link_topic"
 				#else

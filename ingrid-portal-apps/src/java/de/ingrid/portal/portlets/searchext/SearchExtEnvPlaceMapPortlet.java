@@ -4,6 +4,7 @@
 package de.ingrid.portal.portlets.searchext;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.security.Principal;
 import java.util.Collection;
 
@@ -15,8 +16,11 @@ import org.apache.jetspeed.headerresource.HeaderResource;
 import org.apache.jetspeed.portlet.PortletHeaderRequest;
 import org.apache.jetspeed.portlet.PortletHeaderResponse;
 import org.apache.jetspeed.portlet.SupportsHeaderPhase;
+import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchExtEnvPlaceMapForm;
@@ -26,7 +30,6 @@ import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
-import de.ingrid.portal.interfaces.om.WMSSearchDescriptor;
 import de.ingrid.portal.search.UtilsSearch;
 
 /**
@@ -35,6 +38,8 @@ import de.ingrid.portal.search.UtilsSearch;
  * @author martin@wemove.com
  */
 public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements SupportsHeaderPhase{
+
+    private final static Logger log = LoggerFactory.getLogger(SearchExtEnvPlaceMapPortlet.class);
 
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
@@ -61,7 +66,7 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements S
         // add personalized WMS Services to the URL
         String wmsURL = UtilsSearch.getWMSURL(request, request.getParameter("wms_url"), false);
         context.put("wmsURL", wmsURL);
-
+        
         /*
         // enable the save button if the query was set AND a user is logged on
         if (Utils.getLoggedOn(request)) {
@@ -159,11 +164,27 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements S
     }
     public void doHeader(PortletHeaderRequest request, PortletHeaderResponse response)
 			throws PortletException {
+        // this is an UGLY hack but otherwise I do not see how to access the 
+        // locale of the request. It is used to set the language code for the
+        // map client.
+        Field f;
+        String languageString = null;
+        try {
+            f = request.getClass().getDeclaredField("requestContext");
+            f.setAccessible(true);
+            RequestContext requestContext = (RequestContext) f.get(request);
+            languageString = requestContext.getLocale().getLanguage();
+        } catch (Exception e) {
+            log.warn("Error accessing request context in header phase.", e);
+        }
     	HeaderResource headerResource = response.getHeaderResource();
 		if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_WEBMAPCLIENT_DEBUG, false)){
         //debug mode
 		      
-        headerResource.addHeaderInfo("<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/adapter/ext/ext-base-debug.js\"></script>" +
+        headerResource.addHeaderInfo(
+                "<!-- start output header phase -->" +
+                "<script type=\"text/javascript\">var languageCode = '"+languageString+"';</script>" +
+                "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/adapter/ext/ext-base-debug.js\"></script>" +
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/ext-all-debug.js\"></script>" +
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/lib/OpenLayers.js\"></script>" +
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext/lib/GeoExt.js\"></script>"+
@@ -175,6 +196,7 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements S
         							 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/openlayers.addins/loadingpanel.css\" />"+
         							 "<!-- geoext extensions -->"+
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/SimplePrint.js\"></script>"+
+                                     "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Locale.js\"></script>"+
         							 "<!-- custom code -->"+
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/config.js\"></script>"+
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/Message.js\"></script>"+
@@ -200,7 +222,9 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements S
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/main.js\"></script>"+
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash.js\"></script>"+
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/ServiceContainer.js\">"+
-        							 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash.css\" />");
+        							 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash.css\" />"+
+                                     "<!-- end output header phase -->"
+        );
 		
 	
     
@@ -209,7 +233,10 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements S
 			//productive mode
 
 			
-	        headerResource.addHeaderInfo("<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/adapter/ext/ext-base.js\"></script>" +
+	        headerResource.addHeaderInfo(
+                    "<!-- start output header phase -->" +
+                    "<script type=\"text/javascript\">var languageCode = '"+languageString+"';</script>" +
+	                "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/adapter/ext/ext-base.js\"></script>" +
 					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/ext-all.js\"></script>" +
 					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/OpenLayers.js\"></script>" +
 					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext/script/GeoExt.js\"></script>"+
@@ -222,7 +249,9 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements S
 
 					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/frontend-all-min.js\"></script>"+
 					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash-min.js\"></script>"+
-					 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash-min.css\" />");		
+					 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash-min.css\" />"+
+					 "<!-- end output header phase -->"
+	        );		
 			
 
 		}

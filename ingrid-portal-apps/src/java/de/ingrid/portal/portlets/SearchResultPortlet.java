@@ -90,6 +90,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("MESSAGES", messages);
         context.put("enableFacete", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false));
         
+        // add request language, used to localize the map client
+        context.put("languageCode",request.getLocale().getLanguage());
+        
         PortletSession ps = request.getPortletSession();
                 
         if(request.getParameter("filter") != null){
