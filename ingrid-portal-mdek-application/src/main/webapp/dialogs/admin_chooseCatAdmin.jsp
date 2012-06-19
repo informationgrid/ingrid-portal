@@ -58,13 +58,13 @@
         <div>
             <div class="table container">
                 <div class="tr">
-                    <div class="td">User:</div><div class="td"><input jsId="usersChoice" dojoType="dijit.form.Select" store="usersChoiceStore"></div>
+                    <div class="td">Benutzer:</div><div class="td"><input jsId="usersChoice" dojoType="dijit.form.Select" store="usersChoiceStore"></div>
                 </div>
                 
                 <div class="tr">
                     <div class="td"></div>
                     <div class="td">
-                        <input type="button" id="btn_addCatalogue" onclick="addCatalogueAndReload();" value="Connect Catalogue">
+                        <input type="button" id="btn_addCatalogue" onclick="addCatalogueAndReload();" value="Katalog verbinden">
                     </div>
                 </div>
             </div>

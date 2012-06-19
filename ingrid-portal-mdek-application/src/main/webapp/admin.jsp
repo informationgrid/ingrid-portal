@@ -19,8 +19,9 @@
     <head>
     
         <link rel="stylesheet" href="dojo-src/release/dojo/dojo/resources/dojo.css">
+        <link rel="stylesheet" href="dojo-src/release/dojo/dojox/grid/resources/Grid.css">
         <link rel="stylesheet" href="dojo-src/release/dojo/dijit/themes/claro/claro.css">
-        <link rel="stylesheet" href="dojo-src/release/dojo/dojox/grid/resources/claroGrid.css">
+        <!--<link rel="stylesheet" href="dojo-src/release/dojo/dojox/grid/resources/claroGrid.css">-->
     
         <link rel="stylesheet" type="text/css" href="css/admin.css"></link>
     
@@ -43,7 +44,7 @@
             dojo.require("dijit.form.Button");
             
             
-            var locale = "en";
+            var locale = "de";
             var previousContent = "welcomeDiv";
             var allUsers = null;
             var availableUsers = null;
@@ -65,6 +66,16 @@
                     else if (parameters.section == "catalogues")
                         showContent("catOverviewDiv");
                 } 
+                // prevent sorting of button-columns
+                usersGrid.canSort = function(col){ if(Math.abs(col) == 4 || Math.abs(col) == 5) { return false; } else { return true; } };
+                connectedCataloguesGrid.canSort = function(col){ if(Math.abs(col) == 3) { return false; } else { return true; } };
+                availableCataloguesGrid.canSort = function(col){ if(Math.abs(col) == 2) { return false; } else { return true; } };
+                
+                dojo.connect(window, "onresize", function() { 
+                    usersGrid.resize();
+                    connectedCataloguesGrid.resize();
+                    availableCataloguesGrid.resize();
+                });
             });
             
             function initUserTable(users) {
@@ -76,8 +87,8 @@
             
             function addLinks(users) {
                 users.forEach(function(u) {
-                    u.btn_edit   = "<input type='button' class='table' onclick='editUser(\""+u.login+"\");'   value='edit'>";
-                    u.btn_delete = "<input type='button' class='table' onclick='removeUser(\""+u.login+"\");' value='delete'>";
+                    u.btn_edit   = "<input type='button' class='table' onclick='editUser(\""+u.login+"\");'   value='Bearbeiten'>";
+                    u.btn_delete = "<input type='button' class='table' onclick='removeUser(\""+u.login+"\");' value='Entfernen'>";
                 });
                 return users;
             }
@@ -128,11 +139,11 @@
                 dojo.forEach(iplugs, function(iplug) {
                     var user = getUserInfo(iplug.admin);
                     if (user) {
-                        iplug.btn_delete = "<input type='button' class='table' onclick='removeCatalogue(\""+iplug.iplug+"\", \""+iplug.admin+"\");' value='delete'>";
+                        iplug.btn_delete = "<input type='button' class='table' onclick='removeCatalogue(\""+iplug.iplug+"\", \""+iplug.admin+"\");' value='Entfernen'>";
                         iplug.catAdmin = user.surname + ", " + user.firstName + " (" + user.login + ")";
                         connectedIPlugs.push(iplug);
                     } else {
-                        iplug.btn_add = "<input type='button' class='table' onclick='addCatalogueDialog(\""+iplug.iplug+"\");' value='add'>";
+                        iplug.btn_add = "<input type='button' class='table' onclick='addCatalogueDialog(\""+iplug.iplug+"\");' value='Hinzufügen'>";
                         freeIPlugs.push(iplug);
                     }
                 });
@@ -195,7 +206,7 @@
             function editUser(userLogin) {
                 var user = getUserInfo(userLogin);
                 
-                dialog.showPage("Edit User", "dialogs/admin_editUser.jsp", null, null, true, {
+                dialog.showPage("Benutzer bearbeiten", "dialogs/admin_editUser.jsp", null, null, true, {
                    user: user
                 });
             }
@@ -210,7 +221,7 @@
 
             function removeUser(userLogin) {
                 var user = getUserInfo(userLogin);
-                dialog.show("Remove User", "Do you really want to remove the user: <br />" + user.surname +", " + user.firstName, dialog.INFO, 
+                dialog.show("Benutzer entfernen", "Möchten Sie wirklich diesen Benutzer entfernen: <br />" + user.surname +", " + user.firstName, dialog.INFO, 
                         [{caption:"OK", action:function(){
                             UserRepoManager.removeUser(user.login[0], function(success) {
                                 window.location.search="?section=user&rnd="+Math.random();
@@ -218,12 +229,16 @@
                                 console.debug("success removing user: " + success);
                             });
                         }}, 
-                         {caption:"Cancel", action:function(){console.debug("cancel");}}
+                         {caption:"Abbrechen", action:function(){console.debug("cancel");}}
                         ]);
             }
 
             function addCatalogueDialog(iplug) {
-                dialog.showPage("Choose Catalogue Administrator", "dialogs/admin_chooseCatAdmin.jsp", null, null, true, {iplug:iplug, callback:addCatalogue});
+                if (availableUsers.length > 0) {
+                    dialog.showPage("Benutzerwahl", "dialogs/admin_chooseCatAdmin.jsp", null, null, true, {iplug:iplug, callback:addCatalogue});
+                } else {
+                    dialog.show("Information", "Es gibt keinen freien Benutzer für eine Verbindung zu diesem Katalog. Bitte legen Sie zuerst einen neuen Benutzer an!");
+                }
             } 
             
             function addCatalogue(catalogue, login) {
@@ -240,7 +255,7 @@
             }
 
             function removeCatalogue(catalogue, login) {
-                dialog.show("Remove Catalogue", "Do you really want to remove this connection: <br />" + catalogue +" <-> " + login, dialog.INFO, 
+                dialog.show("Katalog entfernen", "Möchten Sie die Verbindung wirklich entfernen: <br />" + catalogue +" <-> " + login, dialog.INFO, 
                         [{caption:"OK", action:function(){
                             SecurityService.removeCatAdmin(catalogue, login, {
                                 callback: function(result) {
@@ -252,7 +267,7 @@
                                           }
                             });
                         }}, 
-                         {caption:"Cancel", action:function(){console.debug("cancel");}}
+                         {caption:"Abbrechen", action:function(){console.debug("cancel");}}
                         ]);
                 
             }
@@ -278,68 +293,70 @@
             <span id="logoutContainer"><a href="logout.jsp">Logout</a></span>
         </div>
         <div id="menu">
-	        <div class="block"><p>1</p></div><h2>User Management</h2>
+	        <div class="block"><p>1</p></div><h2>Benutzerverwaltung</h2>
 	        <ul>
-	            <li><a href="#" onclick="showContent('manageUserDiv');">Manage User</a></li>
-	            <!--<li><a href="#" onclick="showContent('addUserDiv');">Add User</a></li>-->
+	            <li><a href="#" onclick="showContent('manageUserDiv');">Benutzer verwalten</a></li>
 	        </ul>
 	        <div class="block"><p>2</p></div>
-	        <h2>Catalogue Management</h2>
+	        <h2>Katalogverwaltung</h2>
 	        <ul>
-	            <li><a href="#" onclick="showContent('catOverviewDiv');">Manage Catalogues</a></li>
-	            <!--<li><a href="#" onclick="showContent('addCatDiv');">Add Catalogue</a></li>-->
-	            <!--<li><a href="#" onclick="showContent('revomeCatDiv');">Remove Catalogue</a></li>-->
+	            <li><a href="#" onclick="showContent('catOverviewDiv');">Kataloge verwalten</a></li>
             </ul>
         </div>
         <div id="welcomeDiv" class="content">
-            <h3>Welcome</h3>
-            <div>Here you can manage the users and connected catalogues.</div>
+            <div class="contentBorder">
+                <h3>Willkommen</h3>
+                <div>Hier können Sie die Benutzer und angeschlossenen Kataloge verwalten.</div>
+            </div>
         </div>
         
         <div id="manageUserDiv" class="content">
-            <h3>Manage User</h3>
-            <div style="width: 96%; height: 400px;">
-                <table id="usersGrid" jsId="usersGrid" dojoType="dojox.grid.DataGrid" escapeHTMLInData=false selectable=false selectionMode="single" style="height: 100%; width: 100%;">
-                <thead>
-                    <tr>
-                        <th field="surname" width="100px">Name</th>
-                        <th field="firstName" width="100px">First Name</th>
-                        <th field="email" width="auto">Email</th>
-                        <th field="btn_edit" width="80px">&nbsp;</th>
-                        <th field="btn_delete" width="80px">&nbsp;</th>
-                    </tr>
-                </thead>
-            
-                </table>
-                <div class="td"><input type="button" onclick="addUser()" value="Add User"></div>
+            <div class="contentBorder">
+                <h3>Benutzer verwalten</h3>
+                <div style="padding:10px;">
+                    <table id="usersGrid" jsId="usersGrid" dojoType="dojox.grid.DataGrid" autoHeight="10" escapeHTMLInData=false selectable="false" selectionMode="single" style="width:100%; margin-bottom: 5px;">
+                        <thead>
+                            <tr>
+                                <th field="surname" width="100px;">Nachname</th>
+                                <th field="firstName" width="100px;">Vorname</th>
+                                <th field="email" width="200px">E-Mail</th>
+                                <th field="btn_edit" width="80px;">&nbsp;</th>
+                                <th field="btn_delete" width="80px;">&nbsp;</th>
+                                <th width="auto;" style="display:none;">&nbsp;</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <input type="button" onclick="addUser()" value="Benutzer hinzufügen">
+                </div>
             </div>
         </div>
     
         <div id="catOverviewDiv" class="content">
-            <h3>Connected Catalogues</h3> 
-	        <div style="width: 96%; height: 300px;">
-                <table id="connectedCataloguesGrid" jsId="connectedCataloguesGrid" dojoType="dojox.grid.DataGrid" escapeHTMLInData=false selectable=false selectionMode="single" style="height: 100%; width: 100%;">
-                <thead>
-                    <tr>
-                        <th field="iplug" width="200px">iPlug</th>
-                        <th field="catAdmin" width="auto">Catalogue Administrator</th>
-                        <th field="btn_delete" width="80px">&nbsp;</th>
-                    </tr>
-                </thead>
-                </table>
+            <div class="contentBorder">
+                <h3>Kataloge verwalten</h3> 
+    	        <div style="height: 300px; padding: 10px;">
+                    <table id="connectedCataloguesGrid" jsId="connectedCataloguesGrid" dojoType="dojox.grid.DataGrid" escapeHTMLInData=false selectable=false selectionMode="single" style="height: 100%; width: 100%; margin-bottom: 5px;">
+                        <thead>
+                            <tr>
+                                <th field="iplug" width="200px">iPlug</th>
+                                <th field="catAdmin" width="auto">Katalogadministrator</th>
+                                <th field="btn_delete" width="80px">&nbsp;</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <h3>Verfügbare Kataloge</h3>
+                <div style="height: 300px; padding: 10px;">
+                    <table id="availableCataloguesGrid" jsId="availableCataloguesGrid" dojoType="dojox.grid.DataGrid"  escapeHTMLInData=false selectable=false selectionMode="single" style="height: 100%; width: 100%;  margin-bottom: 5px;">
+                        <thead>
+                            <tr>
+                                <th field="iplug" width="auto">iPlug</th>
+                                <th field="btn_add" width="80px">&nbsp;</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
-            <h3>Available Catalogues</h3>
-            <div style="width: 96%; height: 300px;">
-            <table id="availableCataloguesGrid" jsId="availableCataloguesGrid" dojoType="dojox.grid.DataGrid"  escapeHTMLInData=false selectable=false selectionMode="single" style="height: 100%; width: 100%;">
-            <thead>
-                <tr>
-                    <th field="iplug" width="auto">iPlug</th>
-                    <th field="btn_add" width="80px">&nbsp;</th>
-                </tr>
-            </thead>
-        
-            </table>
-        </div>
 	    </div>
     </body>
 </html>

@@ -116,27 +116,27 @@
                     <div class="td">Login:</div><div class="td"><input id="edit_login" type="text" disabled></div>
                 </div>
                 <div class="tr">
-                    <div class="td">Password:</div><div class="td"><input id="edit_password" type="password"></div>
+                    <div class="td">Passwort:</div><div class="td"><input id="edit_password" type="password"></div>
                 </div>
                 <div class="tr">
-                    <div class="td">Password (repeat):</div><div class="td"><input id="edit_password_again" type="password"></div>
+                    <div class="td">Passwort (Wiederholung):</div><div class="td"><input id="edit_password_again" type="password"></div>
                 </div>
                 <div class="tr">
-                    <div class="td"></div><div class="td"><span class="comment" id="passwordInfo">Leave password empty for using old one!</span></div>
+                    <div class="td"></div><div class="td"><span class="comment" id="passwordInfo">Leer lassen, wenn Passwort<br />unverändert bleiben soll!</span></div>
                 </div>
                 <div class="tr">
-                    <div class="td">First Name:</div><div class="td"><input id="edit_firstName" type="text"></div>
+                    <div class="td">Vorname:</div><div class="td"><input id="edit_firstName" type="text"></div>
                 </div>
                 <div class="tr">
-                    <div class="td">Last Name:</div><div class="td"><input id="edit_surname" type="text"></div>
+                    <div class="td">Nachname:</div><div class="td"><input id="edit_surname" type="text"></div>
                 </div>
                 <div class="tr">
-                    <div class="td">Email:</div><div class="td"><input id="edit_email" type="text"></div>
+                    <div class="td">E-Mail:</div><div class="td"><input id="edit_email" type="text"></div>
                 </div>
                 <div class="tr">
                     <div class="td">
-                        <input type="button" id="btn_updateUser" onclick="updateUser()" value="Update User">
-                        <input type="button" id="btn_addUser" onclick="addNewUser()" value="Add User">
+                        <input type="button" id="btn_updateUser" onclick="updateUser()" value="Benutzer aktualisieren">
+                        <input type="button" id="btn_addUser" onclick="addNewUser()" value="Benutzer hinzufügen">
                     </div>
                 </div>
             </div>

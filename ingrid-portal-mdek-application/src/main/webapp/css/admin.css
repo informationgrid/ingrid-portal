@@ -69,6 +69,7 @@ h3 {
 	width: 240px;
 	padding: 0 0 10px;
 	position: absolute;
+	z-index: 99;
 }
 
 ul {
@@ -109,17 +110,28 @@ li {
 }
 
 .content {
-	left: 240px;
-	position: relative;
+	/*left: 240px;
+	float: relative;
 	top: 0px;
 	display: none;
-	border: 1px solid #DDE9BD;
-	width: 75%;
+	
+	width: 75%;*/
+	display: none;
 	min-height: 650px;
+	float: right;
+	right: 10px;
+	padding-left: 250px;
+	position: absolute;
+	width: 100%;
 }
 
 .content > div {
-	margin: 19px;
+	/*margin: 19px;*/
+}
+
+.contentBorder {
+    border: 1px solid #DDE9BD;
+    min-height: 250px;
 }
 
 .bold {
@@ -172,7 +184,7 @@ input[type="button"].table {
 #wrapper { margin: 50px auto; width: 250px; background-color: #eee; box-shadow: 0px 0px 10px #111; padding: 20px; }
 
 #usersGrid {
-    border: 1px solid gray;
+/*     border: 1px solid gray; */
 }
 
 .claro {
@@ -182,3 +194,9 @@ input[type="button"].table {
 .claro .dojoxGridRowOdd .dojoxGridRowTable tr {
     background-color: #EEE;
 }
+
+.claro .dojoxGridHeader .dojoxGridCell { background: none; }
+.claro .dojoxGridHeader { color: white; background-color: #68A5D2; }
+.dojoxGridArrowButtonChar { float: right; }
+.dojoxGridRowOver{ background-color: #D1E4F1; }
+.claro .dojoxGridRowOdd.dojoxGridRowOver .dojoxGridRowTable tr { background-color: transparent; }
