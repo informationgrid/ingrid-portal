@@ -34,6 +34,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	private final static Logger	log	= LoggerFactory.getLogger(DetailDataPreparerIdf1_0_0_Md_Metadata.class);
 	private final static String	UDK_OBJ_CLASS_TYPE = "UDK_OBJ_CLASS_TYPE";
 	
+	private String firstGetCapabiltiesUrl = null;
+	
 	public DetailDataPreparerIdf1_0_0_Md_Metadata(Node node, Context context, RenderRequest request, String iPlugId, RenderResponse response) {
 		super(node, context, request, iPlugId, response);
 		this.rootNode = node;
@@ -1141,7 +1143,11 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	        	}
 	        	// add map links to data objects from services
 	        	if (context.get(UDK_OBJ_CLASS_TYPE).equals("3") && type.equals("1")) {
+	        	    // get link from operation (unique one)
 	        	    link.put("mapLink", getCapabilityUrl());
+	        	} else if (this.firstGetCapabiltiesUrl != null && context.get(UDK_OBJ_CLASS_TYPE).equals("1") && type.equals("3")) {
+	        	    // get link from online resource (possibilty it's wrong?)
+	        	    link.put("mapLink", this.firstGetCapabiltiesUrl);
 	        	}
 	        	linkList.add(link);
 			}
@@ -1648,13 +1654,16 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                         elementMapLink.put("isMapLink", new Boolean(true));
                         elementMapLink.put("isExtern", new Boolean(false));
                         elementMapLink.put("title", messages.getString("common.result.showMap"));
-                        elementMapLink.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(urlValue));
+                        this.firstGetCapabiltiesUrl = "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(urlValue);
+                        elementMapLink.put("href", this.firstGetCapabiltiesUrl);
                         // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
                         ArrayList list = new ArrayList();
                         list.add(elementMapLink);
                         elementCapabilities.put("elements", list);
                         elementCapabilities.put("width", "full");
                         elements.add(elementCapabilities);
+                        // ADD FIRST ONE FOUND !!!
+                        break;
                     }
                 }
             }
@@ -3190,8 +3199,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                         addSectionTitle(elements, messages.getString("detail_description"));
                         
                         // showMap-Link
-                        xpathExpression = "./gmd:distributionInfo/*/gmd:transferOptions";
-                        getCapabilityUrls(elements, xpathExpression);
+                        if (context.get(UDK_OBJ_CLASS_TYPE).equals("1") || context.get(UDK_OBJ_CLASS_TYPE).equals("3")) {
+                            xpathExpression = "./gmd:distributionInfo/*/gmd:transferOptions";
+                            getCapabilityUrls(elements, xpathExpression);
+                        }
                         
                         addElementEntryLabelAbove(elements, description, alternateName, false);
                         if(context.get("description") == null){
