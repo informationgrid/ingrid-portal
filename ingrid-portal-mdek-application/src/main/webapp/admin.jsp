@@ -72,7 +72,7 @@
                 availableCataloguesGrid.canSort = function(col){ if(Math.abs(col) == 2) { return false; } else { return true; } };
                 
                 dojo.connect(window, "onresize", function() { 
-                    usersGrid.resize();
+//                    usersGrid.resize();
                     connectedCataloguesGrid.resize();
                     availableCataloguesGrid.resize();
                 });
@@ -160,17 +160,31 @@
                     var atLeastOneNotConnectedIPlug = false;
                     var atLeastOneConnectedIPlug = false;
                     
+                    if (iplugs) {
+                        console.debug(iplugs);
+                    }
                     var tableData = addCatLinks(iplugs);
                     
-                    var newStore = new dojo.data.ItemFileWriteStore(
-                        {data: {items: tableData.connectedIPlugs}}
-                    );
-                    connectedCataloguesGrid.setStore(newStore);
+                    var newStore;
+                    if (tableData.connectedIPlugs.length > 0) {
+                        newStore = new dojo.data.ItemFileWriteStore(
+                            {data: {items: tableData.connectedIPlugs}}
+                        );
+                        connectedCataloguesGrid.setStore(newStore);
+                    } else {
+                        dojo.style(connectedCataloguesGrid.domNode,"display", "none");
+                        dojo.style("infoConnectedCat", "display", "block");
+                    }
                     
-                    newStore = new dojo.data.ItemFileWriteStore(
-                        {data: {items: tableData.freeIPlugs}}
-                    );
-                    availableCataloguesGrid.setStore(newStore);
+                    if (tableData.freeIPlugs.length > 0) {
+                        newStore = new dojo.data.ItemFileWriteStore(
+                            {data: {items: tableData.freeIPlugs}}
+                        );
+                        availableCataloguesGrid.setStore(newStore);
+                    } else {
+                        dojo.style(availableCataloguesGrid.domNode,"display", "none");
+                        dojo.style("infoNoFreeCat", "display", "block");
+                    }
                 },
                 errback: function(error) {
                     console.debug("There's no connected iplug!");
@@ -306,15 +320,15 @@
         <div id="welcomeDiv" class="content">
             <div class="contentBorder">
                 <h3>Willkommen</h3>
-                <div>Hier können Sie die Benutzer und angeschlossenen Kataloge verwalten.</div>
+                <div style="padding:10px;">Hier können Sie die Benutzer und angeschlossenen Kataloge verwalten.</div>
             </div>
         </div>
         
         <div id="manageUserDiv" class="content">
             <div class="contentBorder">
                 <h3>Benutzer verwalten</h3>
-                <div style="padding:10px;">
-                    <table id="usersGrid" jsId="usersGrid" dojoType="dojox.grid.DataGrid" autoHeight="10" escapeHTMLInData=false selectable="false" selectionMode="single" style="width:100%; margin-bottom: 5px;">
+                <div style="padding:10px; overflow: auto;">
+                    <table id="usersGrid" jsId="usersGrid" dojoType="dojox.grid.DataGrid" autoHeight="10" autoWidth=true escapeHTMLInData=false selectable="false" selectionMode="single" style="margin-bottom: 5px;">
                         <thead>
                             <tr>
                                 <th field="surname" width="100px;">Nachname</th>
@@ -322,7 +336,6 @@
                                 <th field="email" width="200px">E-Mail</th>
                                 <th field="btn_edit" width="80px;">&nbsp;</th>
                                 <th field="btn_delete" width="80px;">&nbsp;</th>
-                                <th width="auto;" style="display:none;">&nbsp;</th>
                             </tr>
                         </thead>
                     </table>
@@ -334,27 +347,29 @@
         <div id="catOverviewDiv" class="content">
             <div class="contentBorder">
                 <h3>Kataloge verwalten</h3> 
-    	        <div style="height: 300px; padding: 10px;">
-                    <table id="connectedCataloguesGrid" jsId="connectedCataloguesGrid" dojoType="dojox.grid.DataGrid" escapeHTMLInData=false selectable=false selectionMode="single" style="height: 100%; width: 100%; margin-bottom: 5px;">
+    	        <div style="padding: 10px; overflow: auto;"">
+                    <table id="connectedCataloguesGrid" jsId="connectedCataloguesGrid" dojoType="dojox.grid.DataGrid" autoHeight="10" autoWidth=true escapeHTMLInData=false selectable=false selectionMode="single" style="margin-bottom: 5px;">
                         <thead>
                             <tr>
                                 <th field="iplug" width="200px">iPlug</th>
-                                <th field="catAdmin" width="auto">Katalogadministrator</th>
+                                <th field="catAdmin" width="200px">Katalogadministrator</th>
                                 <th field="btn_delete" width="80px">&nbsp;</th>
                             </tr>
                         </thead>
                     </table>
+                    <p id="infoConnectedCat" style="display:none;">Keine freien Kataloge verbunden!</p>
                 </div>
                 <h3>Verfügbare Kataloge</h3>
-                <div style="height: 300px; padding: 10px;">
-                    <table id="availableCataloguesGrid" jsId="availableCataloguesGrid" dojoType="dojox.grid.DataGrid"  escapeHTMLInData=false selectable=false selectionMode="single" style="height: 100%; width: 100%;  margin-bottom: 5px;">
+                <div style="padding: 10px; overflow: auto;"">
+                    <table id="availableCataloguesGrid" jsId="availableCataloguesGrid" dojoType="dojox.grid.DataGrid"  autoHeight="10" autoWidth=true escapeHTMLInData=false selectable=false selectionMode="single" style="height: 100%; width: 100%;  margin-bottom: 5px;">
                         <thead>
                             <tr>
-                                <th field="iplug" width="auto">iPlug</th>
+                                <th field="iplug" width="200px">iPlug</th>
                                 <th field="btn_add" width="80px">&nbsp;</th>
                             </tr>
                         </thead>
                     </table>
+                    <p id="infoNoFreeCat" style="display:none;">Keine freien Kataloge verbunden!</p>
                 </div>
             </div>
 	    </div>

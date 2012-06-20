@@ -85,14 +85,16 @@
             <div class="block"><p></p></div><h2>Login</h2></div>
         </div>
         <div id="" class="content" style="display: block;">
-            <h3>Loginseite</h3>
-            <div>
-                <table style="width: 100%;">
-                    <tr><td>Login:</td><td><input id="username" style="width: 200px;"></td></tr>
-                    <tr><td>Passwort:</td><td><input id="password" type="password" style="width: 200px;"></td></tr>
-                    <tr><td></td><td><input id="submit" onclick="authenticate()" type="button" name="Login" value="Login"></td></tr>
-                    <span id="error" class="error" style="display:none;">Unbekannter Benutzername oder Passwort!</span>
-                </table>
+            <div class="contentBorder">
+                <h3>Loginseite</h3>
+                <div style="padding: 10px;">
+                    <table style="width: 100%;">
+                        <tr><td>Login:</td><td><input id="username" style="width: 200px;"></td></tr>
+                        <tr><td>Passwort:</td><td><input id="password" type="password" style="width: 200px;"></td></tr>
+                        <tr><td></td><td><input id="submit" onclick="authenticate()" type="button" name="Login" value="Login"></td></tr>
+                        <span id="error" class="error" style="display:none;">Unbekannter Benutzername oder Passwort!</span>
+                    </table>
+                </div>
             </div>
         </div>
     </body>
