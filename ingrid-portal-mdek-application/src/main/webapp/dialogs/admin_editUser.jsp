@@ -86,11 +86,11 @@
         function isValidNewUserData(user) {
             var errors = "";
             if (user.password == "") {
-                errors += "<p>Password must not be empty!</p>";
+                errors += "<p>Passwort darf nicht leer sein!</p>";
             }
             
             if (usernameExists(user.login))
-                errors += "<p>Login already exists! Please choose another one.</p>";
+                errors += "<p>Login schon vorhanden! Bitte ein anderes auswählen.</p>";
             
             return errors;
         }
@@ -99,10 +99,10 @@
             var errors = "";
             
             if (user.login == "" || user.firstName == "" || user.surname == "" || user.email == "")
-                errors += "<p>All fields have to be filled!</p>";
+                errors += "<p>Alle Felder müssen ausgefüllt sein!</p>";
             
             if (user.password != passwordRepeat)
-                errors += "<p>Password does not match! Please type again.</p>";
+                errors += "<p>Passwort stimmt nicht überein! Bitte erneut eingeben.</p>";
             
             return errors;
         }
