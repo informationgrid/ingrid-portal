@@ -543,8 +543,10 @@ div.address_right { padding: 0px 10px; }
 .width_one_third { width:33%; }
 .width_two_thirds { width:66%; clear:both; position: relative; padding: 0 10px 10px; }
 
-.icon .map_link { background-color:#D9EAFA; width: 100px; padding: 3px; margin-top: 4px; text-align: center; margin-bottom: 1px;}
-.icon .map_link a { display: block; color: #1B78B1; font-size: 11px; padding: 0;}
+.icon .map_link { background-color:#D9EAFA; width: 155px; height: 130px; float: right; position: absolute; right: 40px;text-align: center;}
+.icon .map_link a { display: block; color: #1B78B1; font-size: 11px; line-height: 130px; padding: 0;}
+div.content a .map { opacity: 0.5; vertical-align: middle; }
+div.content a:hover .map { opacity: 1; }
 
 table.detail_table, body table { width:100%; border-bottom:2px solid #DDDDDD; margin-bottom:10px; border-left:1px solid #68A5D2; border-right:1px solid #68A5D2; }
 div.width_two_thirds table { border: 0; margin: 0; }

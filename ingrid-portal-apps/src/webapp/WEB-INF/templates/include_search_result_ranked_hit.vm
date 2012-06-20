@@ -95,16 +95,17 @@ $MESSAGES.setMsgParam('DOC')
                 </p>
 ##          #end
 
-            #foreach($res in $rs.refering_service_uuid)
-                #set($linkInfo = $res.split('#'))
-            <p class="result_link">
-                <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
-                <a target="_new" href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$list.get($linkInfo, 0)&plugid=$rs.plugid" title="$MESSAGES.getString('common.result.showService.tooltip')">$MESSAGES.getString('common.result.showService') "$list.get($linkInfo, 1)"</a>
-                #if($list.get($linkInfo, 2) != "")
-                    <a target="_new" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=$list.get($linkInfo, 2)" title="$MESSAGES.getString('common.result.showMap.tooltip')"><img class="map" src="/ingrid-portal-apps/images/world-map.png" alt="$MESSAGES.getString('common.result.showMap')" /></a>
-                #end
-            </p> 
-            #end
+            ## show link to service including a link to the map
+##            #foreach($res in $rs.refering_service_uuid)
+##                #set($linkInfo = $res.split('#'))
+##            <p class="result_link">
+##                <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
+##                <a target="_new" href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$list.get($linkInfo, 0)&plugid=$rs.plugid" title="$MESSAGES.getString('common.result.showService.tooltip')">$MESSAGES.getString('common.result.showService') "$list.get($linkInfo, 1)"</a>
+##                #if($list.get($linkInfo, 2) != "")
+##                    <a target="_new" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=$list.get($linkInfo, 2)" title="$MESSAGES.getString('common.result.showMap.tooltip')"><img class="map" src="/ingrid-portal-apps/images/world-map.png" alt="$MESSAGES.getString('common.result.showMap')" /></a>
+##                #end
+##            </p> 
+##            #end
             
             ## do not show wms urls when they already have been displayed (above)
             #if($rs.wms_url)
@@ -114,16 +115,17 @@ $MESSAGES.setMsgParam('DOC')
             </div>
             #end
             
-            #foreach($res in $rs.coupled_resource)
-                #set($linkInfo = $res.split('#'))
-            <p class="result_link coupled_resources">
-                <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
-                <a target="_new" href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$list.get($linkInfo, 0)&plugid=$rs.plugid" title="$MESSAGES.getString('common.result.showCoupledResource.tooltip')">$MESSAGES.getString('common.result.showCoupledResource') "$list.get($linkInfo, 1)"</a>
-                #if($rs.wms_url)
-                    <a target="_new" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=${rs.wms_url}" title="$MESSAGES.getString('common.result.showMap.tooltip')"><img class="map" src="/ingrid-portal-apps/images/world-map.png" alt="$MESSAGES.getString('common.result.showMap')" /></a>
-                #end
-            </p> 
-            #end
+            ## show link to data object including a link to the map
+##            #foreach($res in $rs.coupled_resource)
+##                #set($linkInfo = $res.split('#'))
+##            <p class="result_link coupled_resources">
+##                <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
+##                <a target="_new" href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$list.get($linkInfo, 0)&plugid=$rs.plugid" title="$MESSAGES.getString('common.result.showCoupledResource.tooltip')">$MESSAGES.getString('common.result.showCoupledResource') "$list.get($linkInfo, 1)"</a>
+##                #if($rs.wms_url)
+##                    <a target="_new" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=${rs.wms_url}" title="$MESSAGES.getString('common.result.showMap.tooltip')"><img class="map" src="/ingrid-portal-apps/images/world-map.png" alt="$MESSAGES.getString('common.result.showMap')" /></a>
+##                #end
+##            </p> 
+##            #end
             
             #if($rs.wms_coord)
             <p class="result_link">

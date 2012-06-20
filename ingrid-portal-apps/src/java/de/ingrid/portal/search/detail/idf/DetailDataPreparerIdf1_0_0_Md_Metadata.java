@@ -1139,6 +1139,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	        	}else{
 	        		link.put("href", "");
 	        	}
+	        	// add map links to data objects from services
+	        	if (context.get(UDK_OBJ_CLASS_TYPE).equals("3") && type.equals("1")) {
+	        	    link.put("mapLink", getCapabilityUrl());
+	        	}
 	        	linkList.add(link);
 			}
 			if (linkList != null && linkList.size() > 0){
@@ -1165,7 +1169,33 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}
 
-	private void getAdditionalFields(ArrayList elements, String xpathExpression) {
+	/**
+	 * This function is only used by service objects (class 3) and returns the
+	 * capabilities Url, which is retrieved by the getConnectionPoint function.
+	 * 
+	 * @return
+	 */
+	private String getCapabilityUrl() {
+	    String url = null;
+	    
+	    String xpathExpression = "./gmd:identificationInfo/*/srv:serviceType";
+        String serviceType = getNodeValue(new ArrayList(), xpathExpression, messages.getString("t011_obj_serv.type"), "5100");
+        
+	    ArrayList<HashMap> tempElements = new ArrayList<HashMap>();
+	    
+	    String opXPath = "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint";
+	    getConnectionPoints(serviceType, tempElements, opXPath);
+
+	    if (tempElements.size() > 0) {
+	        HashMap link = (HashMap) tempElements.get(0).get("link");
+	        if (link != null) {
+	            url = (String) link.get("href");
+	        }
+	    }
+        return url;
+    }
+
+    private void getAdditionalFields(ArrayList elements, String xpathExpression) {
 		getAdditionalFields(elements, xpathExpression, null);
 	}
 
@@ -1623,6 +1653,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                         ArrayList list = new ArrayList();
                         list.add(elementMapLink);
                         elementCapabilities.put("elements", list);
+                        elementCapabilities.put("width", "full");
                         elements.add(elementCapabilities);
                     }
                 }
@@ -3157,14 +3188,15 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                     }
                     if ((description.length() > 0) || alternateName.length() > 0) {
                         addSectionTitle(elements, messages.getString("detail_description"));
+                        
+                        // showMap-Link
+                        xpathExpression = "./gmd:distributionInfo/*/gmd:transferOptions";
+                        getCapabilityUrls(elements, xpathExpression);
+                        
                         addElementEntryLabelAbove(elements, description, alternateName, false);
                         if(context.get("description") == null){
                             context.put("description", description);
                         }
-                        
-                        // getcap-Link
-                        xpathExpression = "./gmd:distributionInfo/*/gmd:transferOptions";
-                        getCapabilityUrls(elements, xpathExpression);
                         
                         // "Übergeordnete Objekte"
                         xpathExpression ="./idf:superiorReference";

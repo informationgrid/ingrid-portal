@@ -1,4 +1,4 @@
-	/**
+    /**
  * Inlcude CSS styles for portlets (standardized classes)
  * See: Section PLT.C of the Portlet Specfication 1.0
  */
@@ -374,7 +374,7 @@ div.resultset p.result_description { font-size:11px; margin: 10px 0px 0px 0px; l
 div.resultset p.event_description { margin: 10px 0px 10px 0px; line-height:120%}
 div.resultset p.result_metadata { font-size:10px; color:#999999; margin:0; line-height:120%}
 div.resultset p.result_metadata_adress { font-size:11px; color:#999999; margin:7px 0 8px 0; line-height:120%}
-div.resultset p.result_link { font-size:65%; color:#999999; margin:3px 0 8px 0; }
+div.resultset p.result_link { font-size:65%; color:#999999; margin:3px 0 5px 0; }
 div.resultset p.result_link img { position:relative; top:1px; }
 div.resultset p.result_link a { text-decoration:none; font-size: 11px; }
 div.resultset p.result_link a:hover { text-decoration:underline; }
@@ -392,6 +392,15 @@ div.resultset_partner_only {background-color:#D1E4F1; margin: 0 0 20px 0;padding
 div.resultset_show_partner {text-decoration:none;font-size:12px; margin: 10px 0px 10px 0px;}
 
 .intendResult { font-weight: bold; left: 20px; position: relative; padding: 0 10px 0 0; }
+
+div.resultset .map_link { background-color:#D9EAFA; width: 100px; padding: 3px; margin-top: 4px; text-align: center; margin-bottom: 1px;}
+div.resultset .map_link a { display: block; color: #1B78B1; font-size: 11px; padding: 0;}
+
+div.resultset p.coupled_resources { padding-left: 20px; margin-bottom: 5px; }
+div.resultset p.result_link a { padding-right: 5px; }
+
+div.resultset p.result_link a .map { opacity: 0.5; }
+div.resultset p.result_link a:hover .map { opacity: 1; }
 
 /* TAB, EXTENDED SEARCH */
 div.tabs ul { list-style: none; padding: 7px 0 0px 0px; margin: 0;}
@@ -491,8 +500,8 @@ div.formheader span.portlet_info a { color: #FFFFFF; }
 
 div.formbody { padding:10px 30px; background: #EFEFEF; border: 1px solid #CECECE; }
 div.formbody_webmapclient { background: #EFEFEF; border: 1px solid #CECECE; }
-div.formbody_webmapclient_coordinates	 { left: 769px; top: 1200px; width: 441px; height: 11px; visibility: visible; position: absolute; vertical-align: middle; padding: 0pt; font-size: 11px; font-family: "Verdana",sans-serif; }
-div.formbody_webmapclient_coordinates_title	 { left: 769px; top: 1184px; width: 441px; height: 11px; visibility: visible; position: absolute; vertical-align: middle; padding: 0pt; font-size: 11px; font-family: "Verdana",sans-serif; }
+div.formbody_webmapclient_coordinates    { left: 769px; top: 1200px; width: 441px; height: 11px; visibility: visible; position: absolute; vertical-align: middle; padding: 0pt; font-size: 11px; font-family: "Verdana",sans-serif; }
+div.formbody_webmapclient_coordinates_title  { left: 769px; top: 1184px; width: 441px; height: 11px; visibility: visible; position: absolute; vertical-align: middle; padding: 0pt; font-size: 11px; font-family: "Verdana",sans-serif; }
 div.formbody_webmapclient_areaid { left: 769px; top: 1230px; width: 441px; height: 11px; visibility: visible; position: absolute; vertical-align: middle; padding: 0pt; font-size: 11px; font-family: "Verdana",sans-serif; }
 div.formbody_webmapclient_areaid_title { left: 769px; top: 1215px; width: 441px; height: 11px; visibility: visible; position: absolute; vertical-align: middle; padding: 0pt; font-size: 11px; font-family: "Verdana",sans-serif; }
 div.formbody_search { background-image: url(../images/bg_search.png); padding: 0px; }
@@ -934,6 +943,8 @@ div.dialog_content_webmapclient { font-size: 83%; line-height: 120%; width: 70%;
 div.dialog_content .inputstyletext { border: 1px inset #FFFFFF; padding: 2px 4px 2px 4px; margin-right:6px;margin-bottom: 5px; }
 div.formbody_webmapclient_coordinates_title_facete{font-size:13px;display:inline;}
 div.formbody_webmapclient_coordinates_facete{font-size:13px;display:inline;}
+div.formbody_webmapclient_areaid_title_facete{font-size:13px;display:inline;}
+div.formbody_webmapclient_areaid_facete{font-size:13px;display:inline;}
 div.btn_submit_dialog { padding: 11px 0 0; }
 div.btn_submit_dialog div.btn_center input { font-size: 11px; }
 

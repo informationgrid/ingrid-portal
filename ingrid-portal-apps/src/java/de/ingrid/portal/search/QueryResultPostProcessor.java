@@ -259,7 +259,7 @@ public class QueryResultPostProcessor {
                 // maps will be shown with the coupled services here, so there
                 // is no need for showing a special map link ... we wouldn't even
                 // know which one!
-                doNotShowMaps = true;
+                //doNotShowMaps = true;
             }
             
             // Coupled Resources (Map-objects)

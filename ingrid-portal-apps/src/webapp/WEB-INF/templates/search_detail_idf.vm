@@ -55,6 +55,9 @@
         #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>${myIndent}"))
         <span class="linkinfo"><br/>${myIndent}${myDescription}</span>
     #end
+    #if($tool.hasContent($entry.mapLink))
+        <a target="_new" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')"><img class="map" src="/ingrid-portal-apps/images/world-map.png" alt="$MESSAGES.getString('common.result.showMap')" /></a>
+    #end
     </div>  
 #end
 
@@ -137,7 +140,11 @@
                 #set($elements = $entry.elements)
             #end
         #end
-        <div class="width_two_thirds">
+        #if($entry.width=="full")
+            <div>
+        #else
+            <div class="width_two_thirds">
+        #end
         #foreach($e in $elements)
             #if($e.type=="multiLine")
                 #renderMultiLine($e)
