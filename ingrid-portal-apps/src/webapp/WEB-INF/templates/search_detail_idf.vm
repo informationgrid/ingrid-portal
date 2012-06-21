@@ -141,7 +141,7 @@
             #end
         #end
         #if($entry.width=="full")
-            <div>
+            <div class="float_right">
         #else
             <div class="width_two_thirds">
         #end
