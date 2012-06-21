@@ -1,12 +1,12 @@
 <div class="portlet-section-body">
 	<p class="iconLink">
 		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" /></span>
-		<span><a href="http://www.kst.portalu.de/" target="_new" title="$MESSAGES.getString('about.links.link1.tooltip')">$MESSAGES.getString('about.links.link1')</a></span>
+		<span><a class="marginal_portlet_link" href="http://www.umwelt.niedersachsen.de/live/live.php?navigation_id=2171&article_id=7455&_psmand=10" style="width:200px" target="_new" title="$MESSAGES.getString('about.links.link1.tooltip')">$MESSAGES.getString('about.links.link1')</a></span>
 		<span class="clearer"></span>
 	</p>
 	<p class="iconLink">
 		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" /></span>
-		<span><a href="http://www.kst.portalu.de/ingrid/dokumente.html" target="_new" title="$MESSAGES.getString('about.links.link2.tooltip')">$MESSAGES.getString('about.links.link2')</a></span>
+		<span><a class="marginal_portlet_link" href="http://www.umwelt.niedersachsen.de/live/live.php?navigation_id=2171&article_id=7455&_psmand=10" target="_new" title="$MESSAGES.getString('about.links.link2.tooltip')">$MESSAGES.getString('about.links.link2')</a></span>
 		<span class="clearer"></span>
 	</p>        
 </div>

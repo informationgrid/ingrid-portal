@@ -1,0 +1,15 @@
+# THIS IS AN EXAMPLE FOR DEFINING NEW PROPERTIES USED WITHIN THE PORTAL
+# ALL PROPERTIES DEFINED IN ingrid-portal-apps.properties CAN BE OVERWRITTEN
+# HERE!
+#
+# WHEN THE SYSTEM IS UPDATED THEN THIS FILE WON'T BE TOUCHED AND ALL SETTINGS WILL
+# BE KEPT!
+#
+# THE FILE HAS TO BE RENAMED TO ingrid-portal-apps_user.properties TO BE ACCEPTED! 
+
+# email of the webmaster
+# live
+email.webmaster=new_webmaster@portalu.de
+
+# enable/disable caching during bus queries (cache)
+portal.enable.caching=false
