@@ -195,7 +195,7 @@
 
             function addUser() {
                 
-                dialog.showPage("Add User", "dialogs/admin_editUser.jsp", null, null, true, {
+                dialog.showPage("Benutzer hinzufügen", "dialogs/admin_editUser.jsp", null, null, true, {
                     user: null
                  });
                 
