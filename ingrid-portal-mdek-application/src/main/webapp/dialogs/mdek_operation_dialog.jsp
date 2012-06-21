@@ -33,6 +33,10 @@ dojo.connect(operationsScriptScope, "onLoad", function(){
         caller = operationsScriptScope.customParams;
     }
 
+    // is called (also) after window click event, which is needed if an editor of 
+    // a grid cell is active. Otherwise the data is not transmitted to the store!
+    dojo.connect(dijit.byId("saveButton").domNode, "onclick", saveOperation);
+    
     console.debug("mdek_operation_dialog -> data from caller !");
     console.debug(caller);
 
@@ -437,7 +441,7 @@ closeThisDialog = function() {
           <div class="inputContainer">
             <span class="button" style="height:20px !important;">
             	<span style="float:right;"><button dojoType="dijit.form.Button" id="cancelButton" onClick="resetDialog"><fmt:message key="dialog.operation.cancel" /></button></span>
-            	<span style="float:right;"><button dojoType="dijit.form.Button" type="button" id="saveButton" onClick="saveOperation"><fmt:message key="dialog.operation.add" /></button></span>
+            	<span style="float:right;"><button dojoType="dijit.form.Button" type="button" id="saveButton"><fmt:message key="dialog.operation.add" /></button></span>
             </span>
       	  </div>
       	  <div class="fill"></div>
