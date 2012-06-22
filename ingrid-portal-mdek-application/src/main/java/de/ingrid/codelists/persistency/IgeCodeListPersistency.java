@@ -81,6 +81,11 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
             throw new RuntimeException("Codelist-Update aborted! No IGE-IPlugs connected!");
         }
         
+        // force to get initial codelist if one connected iPlug has never fetched any codelists
+        if (getLowestTimestamp(iplugList) == -1) {
+            return null;
+        }
+        
         Integer[] codelistsIds = getSyslistIDs(iplugList.get(0));
         
         Map<Integer, List<String[]>> listDe = getSyslists(iplugList.get(0), codelistsIds, "de");
@@ -90,8 +95,6 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
         
         List<CodeList> codelists = new ArrayList<CodeList>();
         for (Integer id : codelistsIds) {
-            
-            System.out.print(id+",");
             CodeList cl = new CodeList();
             cl.setId(String.valueOf(id));
             
