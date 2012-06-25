@@ -733,8 +733,22 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             url = UtilsFacete.setFaceteParamsToSessionByAction(request, actionResponse);
         }
         
+        boolean doRemoveFilter = Boolean.parseBoolean(request.getParameter("doRemoveFilter")); 
         // redirect to our page wih parameters for bookmarking
-        actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)) + url);
+        if(doRemoveFilter){
+        	// Remove filter and grouping
+        	SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, "");
+        	SearchState.adaptSearchState(request, Settings.PARAM_FILTER, "");
+        	actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)) + ps.getAttribute("facetsURL"));
+        }else{
+        	if(!url.equals(ps.getAttribute("facetsURL"))){
+        		ps.setAttribute("facetsURL", url);
+        		// Set selector page to 1 by facets activity
+        		SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, 1);
+        		SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, 1);
+        	}
+        	actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)) + url);
+        }
     }
 
 

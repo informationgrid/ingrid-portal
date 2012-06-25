@@ -5,9 +5,15 @@
     	#set ($filterSubject = "$MESSAGES.getString('common.result.provider') '$filterSubject'")
     #end
 
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter("doRemoveFilter", "true")
   <div id="content_full">
     <div class="resultset_partner_group">
-      <div class="ico_down_black"><span class="title">$MESSAGES.getString('common.result.filter.header') $filterSubject</span></div>
+      <div>
+        <a class="facete_link_line" href="$action">
+			<img class="facete_delete_img" title="Löschen" src="/ingrid-portal-apps/images/facete/facete_delete.png">
+		</a>
+		<span class="title">$MESSAGES.getString('common.result.filter.header') $filterSubject</span></div>
     </div>
   </div>  
 #end
