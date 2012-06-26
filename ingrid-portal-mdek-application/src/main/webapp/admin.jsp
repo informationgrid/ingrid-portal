@@ -206,14 +206,17 @@
                 //var userBox = dijit.byId("usersGrid");
                 var exists = false;
                 
-                usersGrid.store.fetch({
-                    onItem: function(item) {
-                        if (item.login.toString().toLowerCase() == login.toLowerCase()) {
-                            exists = true;
-                            return;
+                // after a clean installation the store might be null!
+                if (usersGrid.store) {
+                    usersGrid.store.fetch({
+                        onItem: function(item) {
+                            if (item.login.toString().toLowerCase() == login.toLowerCase()) {
+                                exists = true;
+                                return;
+                            }
                         }
-                    }
-                });
+                    });
+                }
                 return exists;
             } 
             
