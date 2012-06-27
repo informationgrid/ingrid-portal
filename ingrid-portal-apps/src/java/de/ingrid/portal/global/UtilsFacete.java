@@ -322,24 +322,20 @@ public class UtilsFacete {
 					}
 					elementsTopic.put(key.replace("topic:", ""), value);
 					
-				}else if(key.startsWith("t01_object.obj_class:")){
+				}else if(key.startsWith("metaclass")){
 					if(elementsMetaclass == null){
 						elementsMetaclass = new HashMap<String, Long>();
 					}
-					if(key.endsWith(":0")){
-						elementsMetaclass.put("job", value);
-					} else if(key.endsWith(":1")){
-						elementsMetaclass.put("map", value);
-					} else if(key.endsWith(":2")){
-						elementsMetaclass.put("document", value);
-					} else if(key.endsWith(":3")){
-						elementsMetaclass.put("geoservice", value);
-					} else if(key.endsWith(":4")){
-						elementsMetaclass.put("project", value);
-					} else if(key.endsWith(":5")){
-						elementsMetaclass.put("database", value);
-					} else if(key.endsWith(":6")){
-						elementsMetaclass.put("service", value);
+					
+					String replaceKey = key.replace("metaclass:", "");
+					ArrayList<String> selectedMetaclass = (ArrayList<String>) getAttributeFromSession(request, SELECTED_METACLASS);
+					if(selectedMetaclass != null && selectedMetaclass.size() > 0){
+						String metaclass = selectedMetaclass.get(0);
+						if(replaceKey.equals(metaclass)){
+							elementsMetaclass.put(replaceKey, value);	
+						}
+					}else{
+						elementsMetaclass.put(replaceKey, value);
 					}
 				}else if(key.startsWith("type:")){
 					if(elementsDatatype == null){
@@ -370,7 +366,7 @@ public class UtilsFacete {
 		}		
 		
 		if (elementsDatatype != null){
-			String[] sortedRanking = PortalConfig.getInstance().getStringArray("portal.search.facete.sort.ranking.datatype");
+			String[] sortedRanking = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETS_DATATYPE);
 			setAttributeToSession(request, ELEMENTS_DATATYPE, sortHashMapAsArrayList(elementsDatatype, sortedRanking));
 		}
 		
@@ -656,23 +652,53 @@ public class UtilsFacete {
 	/***************************** METACLASS *******************************************/
 
 	private static void setFaceteQueryParamsMetaclass(ArrayList<IngridDocument> list, PortletRequest request) {
-		
-		ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE); 
+		IngridDocument facete = new IngridDocument();
+        boolean isMetadataSelect = false;
+        
+		ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE);
 		if(selectedDatatype != null){
 			for(int i=0; i < selectedDatatype.size(); i++){
 				if(selectedDatatype.get(i).equals("metadata")){
-					IngridDocument faceteEntry = new IngridDocument();
-			        faceteEntry.put("id", "metaclass");
-			        faceteEntry.put("field", "t01_object.obj_class");
-			        list.add(faceteEntry);
-			        
-			        faceteEntry = new IngridDocument();
-			        faceteEntry.put("id", "t01_object.obj_class");
-			        
-			        list.add(faceteEntry);
+					isMetadataSelect = true;
 					break;
 				}
 			}
+		}
+		if(isMetadataSelect){
+			String[] availableMetaclass = {"job", "service", "map", "document", "geoservice", "project", "database", "inspire"};
+			ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
+		    
+			for(int i=0; i < availableMetaclass.length; i++){
+				String key = availableMetaclass[i];
+				HashMap<String, String> faceteEntry = new HashMap<String, String>();
+				faceteEntry.put("id", key);
+				if(key.equals("inspire")){
+			    	faceteEntry.put("query", "t04_search.searchterm:inspireidentifiziert");
+			    }else{
+			    	int value = 0;
+					if(key.equals("job")){
+						value = 0;
+					}else if(key.equals("map")){
+						value = 1;
+					}else if(key.equals("document")){
+						value = 2;
+					}else if(key.equals("geoservice")){
+						value = 3;
+					}else if(key.equals("project")){
+						value = 4;
+					}else if(key.equals("database")){
+						value = 5;
+					}else if(key.equals("service")){
+						value = 6;
+					}					
+					faceteEntry.put("query", "t01_object.obj_class:"+ value);
+			    }
+				faceteList.add(faceteEntry);
+			}
+	       facete.put("id", "metaclass");
+	       facete.put("classes", faceteList);
+	        
+	       list.add(facete);
 		}
 	}
 
@@ -729,7 +755,11 @@ public class UtilsFacete {
     	
 		if(selectedMetaclass != null && selectedMetaclass.size() > 0){
     	   for (int i = 0; i < selectedMetaclass.size(); i++) {
-               query.addField(new FieldQuery(true, false, Settings.QFIELD_METACLASS, selectedMetaclass.get(i).toString()));
+    		   if(selectedMetaclass.get(i).equals("inspire")){
+    			   query.addField(new FieldQuery(true, false, "t04_search.searchterm", "inspireidentifiziert"));
+    		   }else{
+    			   query.addField(new FieldQuery(true, false, Settings.QFIELD_METACLASS, selectedMetaclass.get(i)));
+    		   }
 	       }
 	    }
 	}
@@ -740,7 +770,7 @@ public class UtilsFacete {
 		IngridDocument facete = new IngridDocument();
         ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
 	    
-        String[] sortedRanking = PortalConfig.getInstance().getStringArray("portal.search.facete.sort.ranking.datatype");
+        String[] sortedRanking = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETS_DATATYPE);
 		for(int i=0; i < sortedRanking.length; i++){
 			String key = sortedRanking[i];
 			if(key.equals("map")){
@@ -973,7 +1003,7 @@ public class UtilsFacete {
         }else{
         	if(searchQuery != null){
         		if(searchQuery.indexOf("datatype") < 0 && searchDs == null){
-        			String[] availableDatatypes = PortalConfig.getInstance().getStringArray("portal.search.facete.sort.ranking.datatype");
+        			String[] availableDatatypes = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETS_DATATYPE);
                 	for(int i=0; i < availableDatatypes.length; i++){
                 		if(!availableDatatypes[i].equals("map") && !availableDatatypes[i].equals("topics")){
                 			//query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, availableDatatypes[i]));
@@ -1734,6 +1764,7 @@ public class UtilsFacete {
 	}
 	
 	/***************************** KARTE ***********************************************/
+	/*
 	private static void setFaceteQueryParamsMap(ArrayList<IngridDocument> list, PortletRequest request) {
 		IngridDocument facete = new IngridDocument();
         ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
@@ -1760,6 +1791,7 @@ public class UtilsFacete {
 			}
 		}
 	}
+	*/
 	
 	private static void setFaceteParamsToSessionMap(ActionRequest request) {
 		
@@ -3431,6 +3463,7 @@ public class UtilsFacete {
 
 		return urlParam;
 	}
+	
 }
 
 
