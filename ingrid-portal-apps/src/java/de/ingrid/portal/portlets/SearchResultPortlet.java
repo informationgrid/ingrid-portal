@@ -736,16 +736,24 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         boolean doRemoveFilter = Boolean.parseBoolean(request.getParameter("doRemoveFilter")); 
         // redirect to our page wih parameters for bookmarking
         if(doRemoveFilter){
-        	// Remove filter and grouping
-        	SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, "");
+        	// reset filter and grouping and page selector
+        	SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, "");
+    		SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, "");
         	SearchState.adaptSearchState(request, Settings.PARAM_FILTER, "");
-        	actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)) + ps.getAttribute("facetsURL"));
+        	SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, 1);
+        	SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, 0);
+    		SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, 1);
+    		SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, 0);
+    		actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)) + ps.getAttribute("facetsURL"));
         }else{
         	if(!url.equals(ps.getAttribute("facetsURL"))){
         		ps.setAttribute("facetsURL", url);
-        		// Set selector page to 1 by facets activity
+        		// reset page and page selector by facets activity
+        		SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, "");
         		SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, 1);
+        		SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, 0);
         		SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, 1);
+        		SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, 0);
         	}
         	actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)) + url);
         }

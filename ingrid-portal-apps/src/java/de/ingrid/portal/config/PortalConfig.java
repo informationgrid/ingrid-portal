@@ -221,7 +221,8 @@ public class PortalConfig extends PropertiesConfiguration {
     // Enable facete on search hits
     public static final String PORTAL_ENABLE_SEARCH_FACETE = "portal.search.facete.enable";
     public static final String PORTAL_SEARCH_FACETS_DATATYPE = "portal.search.facete.sort.ranking.datatype";
-    
+    public static final String PORTAL_SEARCH_FACETS_METACLASS = "portal.search.facete.sort.ranking.metaclass";
+
     // Enable debug mode of webmap-client
     public static final String PORTAL_WEBMAPCLIENT_DEBUG = "portal.webmapclient.debug";
     

@@ -137,6 +137,9 @@ public class UtilsFacete {
     public static final String SESSION_PARAMS_READ_FACET_FROM_SESSION = "readFacetFromSession";
     public static final String SESSION_PARAMS_FACET_GROUPING = "facet_grouping";
     
+    private static final String[] defaultDatatypes = {"www","fis","metadata","map","address","law","research","topic","measure","service","other"};
+    private static final String[] defaultMetaclasses = {"job","service","map","document","geoservice","project","database","inspire"};
+    
     /**
      * Prepare query by facet activity
      * 
@@ -367,7 +370,13 @@ public class UtilsFacete {
 		
 		if (elementsDatatype != null){
 			String[] sortedRanking = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETS_DATATYPE);
-			setAttributeToSession(request, ELEMENTS_DATATYPE, sortHashMapAsArrayList(elementsDatatype, sortedRanking));
+			if(sortedRanking.length==defaultDatatypes.length){
+				setAttributeToSession(request, ELEMENTS_DATATYPE, sortHashMapAsArrayList(elementsDatatype, sortedRanking));
+			}else{
+				setAttributeToSession(request, ELEMENTS_DATATYPE, sortHashMapAsArrayList(elementsDatatype));
+			}
+			
+			
 		}
 		
 		if (elementsProvider != null){
@@ -383,7 +392,12 @@ public class UtilsFacete {
 		}
 		
 		if (elementsMetaclass != null){
-			setAttributeToSession(request, ELEMENTS_METACLASS, sortHashMapAsArrayList(elementsMetaclass));
+			String[] sortedRanking = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETS_METACLASS);
+			if(sortedRanking.length==defaultMetaclasses.length){
+				setAttributeToSession(request, ELEMENTS_METACLASS, sortHashMapAsArrayList(elementsMetaclass, sortedRanking));
+			}else{
+				setAttributeToSession(request, ELEMENTS_METACLASS, sortHashMapAsArrayList(elementsMetaclass));
+			}
 		}
 		
 		if (elementsTime != null){
@@ -665,7 +679,7 @@ public class UtilsFacete {
 			}
 		}
 		if(isMetadataSelect){
-			String[] availableMetaclass = {"job", "service", "map", "document", "geoservice", "project", "database", "inspire"};
+			String[] availableMetaclass = defaultMetaclasses;
 			ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
 		    
 			for(int i=0; i < availableMetaclass.length; i++){
@@ -770,9 +784,9 @@ public class UtilsFacete {
 		IngridDocument facete = new IngridDocument();
         ArrayList<HashMap<String, String>> faceteList = new ArrayList<HashMap<String, String>> ();
 	    
-        String[] sortedRanking = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETS_DATATYPE);
-		for(int i=0; i < sortedRanking.length; i++){
-			String key = sortedRanking[i];
+        String[] enableDatatypes = defaultDatatypes;
+        for(int i=0; i < enableDatatypes.length; i++){
+			String key = enableDatatypes[i];
 			if(key.equals("map")){
 				HashMap<String, String> faceteEntry = new HashMap<String, String>();
 		        faceteEntry.put("id", "map");
@@ -1000,17 +1014,6 @@ public class UtilsFacete {
 			
 			if(isTopic){
 			}
-        }else{
-        	if(searchQuery != null){
-        		if(searchQuery.indexOf("datatype") < 0 && searchDs == null){
-        			String[] availableDatatypes = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETS_DATATYPE);
-                	for(int i=0; i < availableDatatypes.length; i++){
-                		if(!availableDatatypes[i].equals("map") && !availableDatatypes[i].equals("topics")){
-                			//query.addField(new FieldQuery(true, false, Settings.QFIELD_DATATYPE, availableDatatypes[i]));
-                		}
-                   	}
-           		}
-        	}
         }
 	}
 	
