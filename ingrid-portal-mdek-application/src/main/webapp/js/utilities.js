@@ -1342,6 +1342,37 @@ UtilString.hasValue = function(stringValue) {
 	return UtilGeneral.hasValue(stringValue);
 }
 
+UtilString.addCapabilitiesParameter = function(type, connUrl) {
+    if (connUrl.toLowerCase().indexOf("request=getcapabilities") == -1) {
+        if (connUrl.indexOf("?") == -1) {
+            connUrl = connUrl + "?";
+        }
+        if (!(connUrl.lastIndexOf("?") == connUrl.length - 1)
+                && !(connUrl.lastIndexOf("&") == connUrl.length - 1)) {
+            connUrl = connUrl + "&";
+        }
+        switch (type) {
+        case "1": // Suchdienste
+            connUrl = connUrl + "REQUEST=GetCapabilities&SERVICE=CSW";
+            break;
+        case "2": // view / Darstellungsdienste
+            connUrl = connUrl + "REQUEST=GetCapabilities&SERVICE=WMS";
+            break;
+        case "3": // Download - Dienste
+            connUrl = connUrl + "REQUEST=GetCapabilities&SERVICE=WFS";
+            break;
+        case "4": // Sonstige Dienste
+            connUrl = connUrl + "REQUEST=GetCapabilities&SERVICE=WCTS";
+            break;
+        case "6": // Sonstige Dienste
+            connUrl = connUrl + "REQUEST=GetCapabilities&SERVICE=WCS";
+            break;
+        }
+        
+    }
+    return connUrl;
+}
+
 // Utility functions needed for workflow control
 var UtilQA = {}
 

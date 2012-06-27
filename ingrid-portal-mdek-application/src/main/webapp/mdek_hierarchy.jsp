@@ -1108,6 +1108,14 @@
                                         <div id="ref3Operation" autoHeight="4" contextMenu="EDIT_OPERATION" class="importantIgnore">
                                         </div>
                                     </div>
+                                    <div style="position:relative; top: 2px; float:right;">
+                                        <span id="updateGetCapLoadingZone" style="visibility:hidden">
+                                            <img src="img/ladekreis.gif" style="vertical-align: middle;"/>
+                                        </span>
+                                        <button id="updateDatasetWithCapabilities">
+                                            <fmt:message key="ui.obj.operations.update.dataset" />
+                                        </button>
+                                    </div>
                                     </div>
                                 </span>
                             </div>

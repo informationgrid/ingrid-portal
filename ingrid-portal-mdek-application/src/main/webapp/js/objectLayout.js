@@ -767,6 +767,9 @@ ingridObjectLayout.createFachBezugClass3 = function(){
     // no immediate dialog on row click !
 //    UtilGrid.addRowSelectionCallback("ref3Operation", ingridObjectLayout.openOperationDialog);
 
+    var button = new dijit.form.Button({style:"margin-right: 0px;"}, "updateDatasetWithCapabilities");
+    button.onClick = igeEvents.updateDataset;
+    
     new dijit.form.CheckBox({}, "ref3HasAccessConstraint");
 }
 

@@ -1000,12 +1000,15 @@
     "dialog.statistics.adrClass3":"Freie Adresse",
     
     "validation.error.addressType":"Es muss mindestens eine Adressbeziehung angegeben werden!",
-    "validation.error.address.references":"All entries in the address table must have valid references.",
-    "validation.error.empty.table":"All entries in the table must contain data.",
-    "validation.error.conformity.table":"All entries in the conformity table must have a valid level and specification.",
-    "validation.error.dq.table":"NameOfMeasure + ResultValue needs to be filled.",
-    "validation.error.spatial.table":"At least one 'spatial' table has to contain an entry with a bounding box.",
-    "validation.error.spatial.expired.table":"The spatial reference table must not contain expired entries.",
-    "validation.error.email.table":"At least one entry has to be of type '${0}'."
+    "validation.error.address.references":"Alle Einträge in der Adresstabelle müssen korrekte Verweise haben.",
+    "validation.error.empty.table":"Alle Einträge in der Tabelle müssen ausgefüllt sein.",
+    "validation.error.conformity.table":"Alle Einträge in der Tabelle müssen einen gültigen Level und Spezifikation haben.",
+    "validation.error.dq.table":"'Art der Messung' + 'Wert' müssen ausgefüllt sein.",
+    "validation.error.spatial.table":"Mindestens eine Raumbezugs-Tabelle muss einen Eintrag mit Boundingbox enthalten.",
+    "validation.error.spatial.expired.table":"Die Raumbezugstabelle darf keine abgelaufenen Einträge enthalten.",
+    "validation.error.email.table":"Mindestens ein Eintrag muss vom Typ '${0}' sein.",
+    
+    "hint.noCapabilityUrlFound":"Es konnte keine GetCapabilities-Url gefunden werden, um den Datensatz zu aktualisieren.",
+    "hint.datasetUpdatedFromCapabilities":"Der Datensatz wurde erfolgreich aktualisiert."
   }
 )

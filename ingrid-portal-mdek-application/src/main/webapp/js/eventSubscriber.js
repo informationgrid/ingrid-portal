@@ -3311,3 +3311,107 @@ igeEvents.addDataLink = function() {
         console.debug("Dialog closed without selection of a data object.");
     });
 }
+
+igeEvents.getCapabilities = function(url, callback) {
+    GetCapabilitiesService.getCapabilities(url, {
+        preHook: showLoadingZone,
+        postHook: hideLoadingZone,
+        callback: function(res) {
+            if (res.versions == "1.3.0") {
+                dialog.show(message.get('general.warning'), dojo.string.substitute(message.get('dialog.wizard.getCap.version.warning'),[res.versions]), dialog.WARNING, [
+                    { caption: message.get('general.no'),  action: function() { dijit.byId("InfoDialog").hide(); scriptScope.closeThisDialog(); } },
+                    { caption: message.get('general.ok'), action: function() { dijit.byId("InfoDialog").hide(); callback(res); } }
+                ]);
+            } else {
+                callback(res);
+            }
+        },
+        errorHandler:function(errMsg, err) {
+            hideLoadingZone();
+            console.debug("Error: "+errMsg);
+            displayErrorMessage(err);
+        }
+    });
+}
+
+igeEvents.getCapabilityUrl = function() {
+    var url = null;
+    var data = UtilGrid.getTableData("ref3Operation");
+    var type = dijit.byId("ref3ServiceType").value;
+    dojo.some(data, function(item) {
+        if (item.methodCall == "GetCapabilities") {
+            url = item.addressList[0].title;
+            url = UtilString.addCapabilitiesParameter(type, url);
+        }
+    });
+    
+    return url;
+}
+
+igeEvents._updateFormFromCapabilities = function(capBean) {
+    dijit.byId("generalShortDesc").setValue(capBean.title);
+    var serviceTitle = dojo.trim(capBean.title+"");
+    if (serviceTitle.length != 0) {
+        dijit.byId("objectName").setValue(serviceTitle);
+    }
+
+    dijit.byId("generalDesc").setValue(capBean.description);
+    if (capBean.serviceType.indexOf("CSW") != -1) {
+        dijit.byId("ref3ServiceType").setValue(1);      
+        UtilStore.updateWriteStore("ref3ServiceTypeTable", UtilList.listToTableData([207]));
+
+    } else if (capBean.serviceType.indexOf("WMS") != -1) {
+        dijit.byId("ref3ServiceType").setValue(2);      
+        UtilStore.updateWriteStore("ref3ServiceTypeTable", UtilList.listToTableData([202]));
+
+    } else if (capBean.serviceType.indexOf("WFS") != -1) {
+        dijit.byId("ref3ServiceType").setValue(3);      
+        UtilStore.updateWriteStore("ref3ServiceTypeTable", UtilList.listToTableData([201]));
+        
+    } else if (capBean.serviceType.indexOf("WCTS") != -1) {
+        dijit.byId("ref3ServiceType").setValue(4);      
+//      dijit.byId("ref3ServiceTypeTable").store.setData(UtilList.addTableIndices(UtilList.listToTableData([207])));
+
+    } else if (capBean.serviceType.indexOf("WCS") != -1) {  // WCS does not exist yet
+        dijit.byId("ref3ServiceType").setValue(6);
+        UtilStore.updateWriteStore("ref3ServiceTypeTable", UtilList.listToTableData([203]));
+        dijit.byId("ref3Explanation").setValue("WCS Service");
+    }
+
+    UtilStore.updateWriteStore("ref3ServiceVersion", UtilList.listToTableData(capBean.versions));
+
+    // Prepare the operation table for display.
+    // Add table indices to the main obj and paramList
+    // Add table indices and convert to tableData: platform, addressList and dependencies
+    if (capBean.operations) {
+        for (var i = 0; i < capBean.operations.length; ++i) {
+            //UtilList.addTableIndices(capBean.operations[i].paramList);
+            capBean.operations[i].platform = UtilList.listToTableData(capBean.operations[i].platform);
+            capBean.operations[i].addressList = UtilList.listToTableData(capBean.operations[i].addressList);
+            capBean.operations[i].dependencies = UtilList.listToTableData(capBean.operations[i].dependencies);      
+        }
+    }   
+    UtilStore.updateWriteStore("ref3Operation", capBean.operations);
+    
+    // keywords !
+    igeEvents.addKeywords(capBean.keywords, { id:"getCapabilitiesWizard", _termListWidget:"thesaurusTerms" });
+}
+
+igeEvents.updateDataset = function() {
+    var url = igeEvents.getCapabilityUrl();
+    
+    if (!url) {
+        dialog.show(message.get('general.hint'), message.get('hint.noCapabilityUrlFound'), dialog.INFO);
+        return;
+    }
+    
+    showLoadingZone = function() {dojo.byId('updateGetCapLoadingZone').style.visibility = "visible";}
+    hideLoadingZone = function() {dojo.byId('updateGetCapLoadingZone').style.visibility = "hidden";}
+    
+    var setOperationValues = function(capBean) {
+        igeEvents._updateFormFromCapabilities(capBean);
+        dialog.show(message.get('general.hint'), message.get('hint.datasetUpdatedFromCapabilities'), dialog.INFO);
+    }
+    
+    igeEvents.getCapabilities(url, setOperationValues);
+}
