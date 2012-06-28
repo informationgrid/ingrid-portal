@@ -205,10 +205,10 @@ public class UtilsFacete {
 	        setFaceteQueryParamsGeothesaurus(list, request);
 	        query.put("FACETS", list);
 	        
-	        setAttributeToSession(request, "FACETS_QUERY", list, false);
+	        setAttributeToSession(request, "FACETS_QUERY", list);
         }
         
-        setAttributeToSession(request, "SEARCH_QUERY", query, false);
+        setAttributeToSession(request, "SEARCH_QUERY", query);
         if(log.isDebugEnabled()){
         	log.debug("Query Facete: " + query);
         }
@@ -2845,8 +2845,14 @@ public class UtilsFacete {
 		
 		request.getPortletSession().setAttribute("faceteSessionKeys", faceteSessionKeys, PortletSessionImpl.APPLICATION_SCOPE);
 		if(isSelection){
-			HashMap faceteLastSelection = new HashMap();
-			faceteLastSelection.put(key, value);
+			ArrayList<HashMap> faceteLastSelection = (ArrayList<HashMap>) request.getPortletSession().getAttribute("faceteLastSelection");
+			if(faceteLastSelection == null){
+				faceteLastSelection = new ArrayList<HashMap>();
+			}
+			
+			HashMap lastSelection = new HashMap();
+			lastSelection.put(key, value);
+			faceteLastSelection.add(lastSelection);
 			request.getPortletSession().setAttribute("faceteLastSelection", faceteLastSelection, PortletSessionImpl.APPLICATION_SCOPE);
 		}
 		request.getPortletSession().setAttribute(key, value, PortletSessionImpl.APPLICATION_SCOPE);
@@ -2888,12 +2894,16 @@ public class UtilsFacete {
 	
 	public static void removeLastFaceteSelection(ActionRequest request) {
 
-		HashMap faceteLastSelection = (HashMap) request.getPortletSession().getAttribute("faceteLastSelection");
+		ArrayList<HashMap>  faceteLastSelection = (ArrayList<HashMap>) request.getPortletSession().getAttribute("faceteLastSelection");
 		if(faceteLastSelection != null){
-			for (Iterator<String> iterator = faceteLastSelection.keySet().iterator(); iterator.hasNext();) {
-				String key = iterator.next();
-				removeAttributeFromSession(request, key);
+			HashMap lastSelection = faceteLastSelection.get(faceteLastSelection.size() - 1);
+			if(lastSelection != null){
+				for (Iterator<String> iterator = lastSelection.keySet().iterator(); iterator.hasNext();) {
+					String key = iterator.next();
+					removeAttributeFromSession(request, key);
+				}
 			}
+			faceteLastSelection.remove(faceteLastSelection.size() - 1);
 		}
 	}
 	
