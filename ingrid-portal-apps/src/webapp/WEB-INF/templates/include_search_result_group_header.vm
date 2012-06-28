@@ -29,6 +29,7 @@
         		#end
        			#if($showGroupHeader)
 					<div class="resultset_partner_group">
-						<div class="ico_down_black"><span class="title">$MESSAGES.getString('common.result.group.header') $!{groupSubject}</span></div>
+						<div class="ico_down_black"><span class="title">$MESSAGES.getString('common.result.group.header') </span><span class="title_subject">
+                        $!{groupSubject}</span></div>
 					</div>
 				#end
