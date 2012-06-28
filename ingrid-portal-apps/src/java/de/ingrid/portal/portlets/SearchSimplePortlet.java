@@ -175,7 +175,13 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         String [] actions = request.getParameterValues(Settings.PARAM_ACTION);
         String action = null;
         if(actions != null){
-        	action = actions[actions.length-1];
+        	if(Utils.isJavaScriptEnabled(request)){
+        		action = actions[actions.length-1];
+        	}else{
+        		if(actions.length>1){
+        			action = actions[actions.length-1];
+        		}
+        	}
         }
         if (action == null) {
             action = "";
