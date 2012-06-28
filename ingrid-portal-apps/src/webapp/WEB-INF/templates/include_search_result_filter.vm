@@ -13,7 +13,7 @@ $action.setParameter("doRemoveFilter", "true")
         <a class="facete_link_line" href="$action">
 			<img class="facete_delete_img" title="Löschen" src="/ingrid-portal-apps/images/facete/facete_delete.png">
 		</a>
-		<span class="title">$MESSAGES.getString('common.result.filter.header') $filterSubject</span></div>
+		<span class="title">$MESSAGES.getString('common.result.filter.header')</span><span class="title_subject"> $filterSubject</span></div>
     </div>
   </div>  
 #end
