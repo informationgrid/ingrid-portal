@@ -10,8 +10,8 @@ $action.setParameter("doRemoveFilter", "true")
   <div id="content_full">
     <div class="resultset_partner_group">
       <div>
-        <a class="facete_link_line" href="$action">
-			<img class="facete_delete_img" title="Löschen" src="/ingrid-portal-apps/images/facete/facete_delete.png">
+        <a class="resultset_partner_group_link" href="$action">
+			<img class="resultset_partner_group_delete_icon" title="$MESSAGES.getString('common.form.button.delete')" src="/ingrid-portal-apps/images/facete/facete_delete.png">
 		</a>
 		<span class="title">$MESSAGES.getString('common.result.filter.header')</span><span class="title_subject"> $filterSubject</span></div>
     </div>
