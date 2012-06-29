@@ -3025,16 +3025,22 @@ igeEvents.addKeywords = function(termList, caller) {
 
     // For object search terms...
     if ((caller.id == "thesaurusFreeTermsAddButton" || caller.id == "getCapabilitiesWizard") && termList && termList.length > 0) {
+        
+        // is Inspire-table available in this class?
+        var hasInspireTable = !dojo.hasClass("uiElement5064", "hide");
+        
         // Check if the termList contains inspire topics
         // If so, tell the user and wait for confirmation. Then proceed with the normal search
-        termList = dojo.filter(termList, function(t) {
-            if (UtilThesaurus.isInspireTopic(t)) {
-                inspireTopics.push(t);
-                return false;
-            } else {
-                return true;
-            }
-        });
+        if (hasInspireTable) {
+            termList = dojo.filter(termList, function(t) {
+                if (UtilThesaurus.isInspireTopic(t)) {
+                    inspireTopics.push(t);
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+        }
     }
     console.debug("term list: "+termList);
     console.debug("inspire topics: "+inspireTopics);
