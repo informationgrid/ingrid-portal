@@ -428,7 +428,7 @@
             </content>
         </section>
         <section help-key="ext-search-spacial-2">
-            <header>Raumeinschränkung begrifflich</header>
+            <header>Nach Ort suchen</header>
             <content>
                 <p>Über die begriffliche Raumeinschränkung können Sie zu Ihrem Suchausdruck gezielt
                     geografische Begriffe hinzufügen. Geben Sie hierfür einen beliebigen Begriff (z.B. Berlin) in 
@@ -478,7 +478,7 @@
             </section>
         </section>
         <section help-key="ext-search-spacial-6">
-            <header>Raumeinschränkung Karte</header>
+            <header>Auf Karte festlegen</header>
             <content>
                 <p>Die räumliche Einschränkung der PortalU-Suche ist sowohl über 
                 Begriffe als auch die Auswahl eines Kartenausschnitts (Bounding-Box) 
@@ -949,8 +949,8 @@
             <content>
                 <p>Nutzen Sie hierzu die <a href="?hkey=ext-search-spacial-1">Räumliche
                     Suche</a>. Sie können entweder ein Suchrechteck über dem
-                    gewünschten Suchbereich aufziehen (<a href="?hkey=ext-search-spacial-6">Raumeinschränkung Karte</a>)
-                    oder Ihre Stadt oder Ihren Kreis als Begriff eingeben (<a href="?hkey=ext-search-spacial-2">Raumeinschränkung begrifflich</a>).</p>
+                    gewünschten Suchbereich aufziehen (<a href="?hkey=ext-search-spacial-6">Auf Karte festlegen</a>)
+                    oder Ihre Stadt oder Ihren Kreis als Begriff eingeben (<a href="?hkey=ext-search-spacial-2">Nach Ort suchen</a>).</p>
             </content>
         </section>
         <section help-key="search-tipps-3">
