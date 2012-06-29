@@ -258,15 +258,23 @@
 			#end
 			
         </p>
-			#if($enableFacetSelection > 0)
-        		#set ($action = $renderResponse.createActionURL())
-				$action.setParameter("doRemoveLast", "true")
-        		#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.last") $action)
-			#end
-			#if($enableFacetSelection > 1)
-				#set ($action = $renderResponse.createActionURL())
-				$action.setParameter("doRemoveAll", "true")
-        		#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.all") $action)
+			#if($isSelection)
+    			#if($enableFacetSelection > 0)
+            		#set ($action = $renderResponse.createActionURL())
+    				$action.setParameter("doRemoveLast", "true")
+            		#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.last") $action)
+				#end
+				#if($enableFacetSelection > 1)
+    				#set ($action = $renderResponse.createActionURL())
+    				$action.setParameter("doRemoveAll", "true")
+            		#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.all") $action)
+				#end
+			#else
+				#if($enableFacetSelection > 0)
+    				#set ($action = $renderResponse.createActionURL())
+    				$action.setParameter("doRemoveAll", "true")
+            		#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.all") $action)
+				#end
 			#end
 		<br>
 	#end

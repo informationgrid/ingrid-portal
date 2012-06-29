@@ -245,6 +245,11 @@ public class UtilsFacete {
         context.put("facetsQuery", getAttributeFromSession(request, "FACETS_QUERY"));
         context.put("searchQuery", getAttributeFromSession(request, "SEARCH_QUERY"));
         context.put("enableFacetSelection", isFacetSelection(request));
+        // Set flag to check if facet component is select
+        context.put("isSelection", getAttributeFromSession(request, "isSelection"));
+        // Remove flag
+        removeAttributeFromSession(request, "isSelection");
+        
 	}
 
 	/**
@@ -2853,7 +2858,9 @@ public class UtilsFacete {
 			HashMap lastSelection = new HashMap();
 			lastSelection.put(key, value);
 			faceteLastSelection.add(lastSelection);
-			request.getPortletSession().setAttribute("faceteLastSelection", faceteLastSelection, PortletSessionImpl.APPLICATION_SCOPE);
+			setAttributeToSession(request, "faceteLastSelection", faceteLastSelection);
+			// Set selection flag of facet to session 
+			request.getPortletSession().setAttribute("isSelection", true, PortletSessionImpl.APPLICATION_SCOPE);
 		}
 		request.getPortletSession().setAttribute(key, value, PortletSessionImpl.APPLICATION_SCOPE);
 	}
