@@ -383,6 +383,11 @@ public class SecurityServiceImpl implements SecurityService {
         HttpSession session = WebContextFactory.get().getHttpServletRequest().getSession();
         session.setAttribute(key, value);
     }
+    
+    private Object getSessionAttribute(String key) {
+        HttpSession session = WebContextFactory.get().getHttpServletRequest().getSession();
+        return session.getAttribute(key);
+    }
 
     public boolean createCatAdmin(String plugId, String login) {
         IMdekCallerSecurity mdekCallerSecurity = MdekCallerSecurity.getInstance();
@@ -430,6 +435,20 @@ public class SecurityServiceImpl implements SecurityService {
             }
         }
         return availableUsers;
+    }
+    
+    public List<String> getIgeUsers() {
+        return MdekSecurityUtils.getAllIgeUserLogins();
+    }
+    
+    public boolean forceUserLogin(String login) {
+        // check if admin is user in session now
+        if ("admin".equals(getSessionAttribute("userName"))) {
+            // reset session user to login
+            setSessionAttribute("userName", login);
+            return true;
+        }
+        return false;        
     }
     
     public boolean isPortalConnected() {
