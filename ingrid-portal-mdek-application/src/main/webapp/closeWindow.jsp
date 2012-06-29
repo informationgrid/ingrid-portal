@@ -13,6 +13,7 @@
 
 <%
     request.getSession(true).setAttribute("userName", null);
+    request.getSession().invalidate();
 %>
 
 <script>

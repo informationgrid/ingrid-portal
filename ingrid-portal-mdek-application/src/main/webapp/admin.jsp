@@ -7,6 +7,7 @@
 <fmt:setBundle basename="messages" scope="session"/>
 
 <%
+
     String currentUser = (String)request.getSession(true).getAttribute("userName");
     if (!"admin".equals(currentUser)) {
         String destination ="login.jsp";
@@ -48,6 +49,7 @@
             var previousContent = "welcomeDiv";
             var allUsers = null;
             var availableUsers = null;
+            var allIgeUsers = null;
         
             var loggedInUser = "<%= request.getSession(true).getAttribute("userName") %>";
             console.debug("user is: " + loggedInUser);
@@ -55,9 +57,17 @@
             dojo.connect(window, "onload", function() {
                 var parameters = dojo.queryToObject(dojo.doc.location.search.substring(1));
                 
-                getAllUsers();
-                getAllAvailableUsers();
-                createCatalogueTable();
+                
+                var def = getAllUsers();
+                def.addCallback(getAllAvailableUsers);
+                def.addCallback(getAllIgeUsers);
+                
+                def.addCallback(function() {
+                    initUserTable(allUsers);
+                    createCatalogueTable();
+                });
+                
+                
                 
                 dojo.style(previousContent, "display", "block");
                 if (parameters.section) {
@@ -89,6 +99,11 @@
                 users.forEach(function(u) {
                     u.btn_edit   = "<input type='button' class='table' onclick='editUser(\""+u.login+"\");'   value='Bearbeiten'>";
                     u.btn_delete = "<input type='button' class='table' onclick='removeUser(\""+u.login+"\");' value='Entfernen'>";
+                    if (dojo.some(allIgeUsers, function(user) { if (u.login == user) return true;})) {
+                        u.btn_login  = "<input type='button' class='table' onclick='loginAs(\""+u.login+"\");' value='Login'>";
+                    } else {
+                        u.btn_login  = "";
+                    }
                 });
                 return users;
             }
@@ -98,16 +113,30 @@
             }
 
             function getAllUsers() {
+                var def = new dojo.Deferred();
                 UserRepoManager.getAllUsers(function(users) {
                     allUsers = users;
-                    initUserTable(users);
+                    def.resolve();
                 });
+                return def;
             }
 
             function getAllAvailableUsers() {
+                var def = new dojo.Deferred();
                 SecurityService.getAvailableUsers(function(users) {
                     availableUsers = users;
+                    def.resolve();
                 });
+                return def;
+            }
+            
+            function getAllIgeUsers() {
+                var def = new dojo.Deferred();
+                SecurityService.getIgeUsers(function(data) {
+                    allIgeUsers = data;
+                    def.resolve();
+                });
+                return def;
             }
             
             function getUserInfo(userLogin) {
@@ -288,6 +317,14 @@
                         ]);
                 
             }
+            
+            function loginAs(login) {
+                console.debug("Not yet implemented!");
+                SecurityService.forceUserLogin(login, function() {
+                    window.location.reload();
+                    //window.open("start.jsp", "_blank");
+                });
+            }
 
             function showContent(divId) {
                 if (previousContent == divId) return;
@@ -339,6 +376,7 @@
                                 <th field="email" width="200px">E-Mail</th>
                                 <th field="btn_edit" width="80px;">&nbsp;</th>
                                 <th field="btn_delete" width="80px;">&nbsp;</th>
+                                <th field="btn_login" width="80px;">&nbsp;</th>
                             </tr>
                         </thead>
                     </table>
