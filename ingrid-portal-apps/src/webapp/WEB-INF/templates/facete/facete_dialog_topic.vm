@@ -1,5 +1,5 @@
 #set ($action = $renderResponse.createActionURL())
-<div id="dialog_topic" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.title.topic")" dojoType="dijit.Dialog">
+<div id="dialog_topic" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.title.topic.dialog")" dojoType="dijit.Dialog">
 	<form name="topic_form" action="$action" method="post">
 		<div class="dialog_content">
 			#set($i = 0)

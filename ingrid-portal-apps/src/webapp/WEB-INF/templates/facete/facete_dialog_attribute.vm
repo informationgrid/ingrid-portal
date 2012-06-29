@@ -1,5 +1,5 @@
 #set ($action = $renderResponse.createActionURL())
-<div id="dialog_attribute" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.attribute")" dojoType="dijit.Dialog">
+<div id="dialog_attribute" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.attribute.dialog")" dojoType="dijit.Dialog">
 	<form action="$action" method="post">
     	<div class="dialog_content" style="width:400px;">
     		<p>

@@ -1,5 +1,5 @@
 #set ($action = $renderResponse.createActionURL())
-<div id="dialog_${partner.ident}" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.title.provider")" dojoType="dijit.Dialog">
+<div id="dialog_${partner.ident}" class="facete_dialog" title="$MESSAGES.getString("searchResult.facete.title.provider.dialog")" dojoType="dijit.Dialog">
 	<form name="providers_${partner.ident}_form" action="$action" method="post">
     	<div class="dialog_content">
 			#set($k = 0)
