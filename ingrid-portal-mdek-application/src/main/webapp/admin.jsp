@@ -144,6 +144,7 @@
                     }
                 });
                 
+                catChoice.set("value", "all");
             }
             
             function showLoginError() {
