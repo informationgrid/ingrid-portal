@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.security.auth.Subject;
@@ -426,18 +427,18 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     public List<String> getAvailableUsers() {
         List<String> allUsers = authProvider.getAllUserIds();
-        List<String> existingUsers = MdekSecurityUtils.getAllIgeUserLogins();
+        Map<String, String> existingUsers = MdekSecurityUtils.getAllIgeUserLogins();
         List<String> availableUsers = new ArrayList<String>();
         
         for (String user : allUsers) {
-            if (!existingUsers.contains(user)) {
+            if (!existingUsers.keySet().contains(user)) {
                 availableUsers.add(user);
             }
         }
         return availableUsers;
     }
     
-    public List<String> getIgeUsers() {
+    public Map<String, String> getIgeUsers() {
         return MdekSecurityUtils.getAllIgeUserLogins();
     }
     

@@ -2,8 +2,9 @@ package de.ingrid.mdek.util;
 
 import java.security.MessageDigest;
 import java.security.Principal;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -274,16 +275,16 @@ public class MdekSecurityUtils {
         return userData;
     }
     
-    public static List<String> getAllIgeUserLogins() {
+    public static Map<String, String> getAllIgeUserLogins() {
         IGenericDao<IEntity> dao = daoFactory.getDao(UserData.class);
 
         dao.beginTransaction();
         List<UserData> userList = (List) dao.findAll();  // Can't cast to List<RepoUser>
         dao.commitTransaction();
         
-        List<String> users = new ArrayList<String>();
+        Map<String, String> users = new HashMap<String, String>();
         for (UserData user : userList) {
-            users.add(user.getPortalLogin());
+            users.put(user.getPortalLogin(), user.getPlugId());
         }
 
         return users;

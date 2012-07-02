@@ -41,6 +41,8 @@
             dojo.require("dijit.dijit");
             dojo.require("dojox.grid.DataGrid");
             dojo.require("dojo.data.ItemFileWriteStore");
+            dojo.require("dijit.form.Select");
+            dojo.require("dojo.data.ItemFileReadStore");
             dojo.require("dojo.parser");
             dojo.require("dijit.form.Button");
             
@@ -50,6 +52,8 @@
             var allUsers = null;
             var availableUsers = null;
             var allIgeUsers = null;
+            var allCatalogues = null;
+            var connectedIPlugs = null;
         
             var loggedInUser = "<%= request.getSession(true).getAttribute("userName") %>";
             console.debug("user is: " + loggedInUser);
@@ -61,10 +65,11 @@
                 var def = getAllUsers();
                 def.addCallback(getAllAvailableUsers);
                 def.addCallback(getAllIgeUsers);
+                def.addCallback(createCatalogueTable);
                 
-                def.addCallback(function() {
+                def.addCallback(function() {                    
                     initUserTable(allUsers);
-                    createCatalogueTable();
+                    initCatalogueSelection();
                 });
                 
                 
@@ -77,7 +82,7 @@
                         showContent("catOverviewDiv");
                 } 
                 // prevent sorting of button-columns
-                usersGrid.canSort = function(col){ if(Math.abs(col) == 4 || Math.abs(col) == 5) { return false; } else { return true; } };
+                usersGrid.canSort = function(col){ if(Math.abs(col) == 5 || Math.abs(col) == 6) { return false; } else { return true; } };
                 connectedCataloguesGrid.canSort = function(col){ if(Math.abs(col) == 3) { return false; } else { return true; } };
                 availableCataloguesGrid.canSort = function(col){ if(Math.abs(col) == 2) { return false; } else { return true; } };
                 
@@ -99,15 +104,48 @@
                 users.forEach(function(u) {
                     u.btn_edit   = "<input type='button' class='table' onclick='editUser(\""+u.login+"\");'   value='Bearbeiten'>";
                     u.btn_delete = "<input type='button' class='table' onclick='removeUser(\""+u.login+"\");' value='Entfernen'>";
-                    if (dojo.some(allIgeUsers, function(user) { if (u.login == user) return true;})) {
-                        u.btn_login  = "<input type='button' class='table' onclick='loginAs(\""+u.login+"\");' value='Login'>";
+                    if (allIgeUsers[u.login]) {
+                        if(iplugIsConnected(allIgeUsers[u.login])) {
+                            u.btn_login  = "<input type='button' class='table' onclick='loginAs(\""+u.login+"\");' value='Login' title='In Katalog \""+allIgeUsers[u.login]+"\" einloggen.'>";
+                        } else {
+                            u.btn_login  = "";
+                        }
+                        u.connected_to = allIgeUsers[u.login];
                     } else {
                         u.btn_login  = "";
+                        u.connected_to = "";
                     }
                 });
                 return users;
             }
+            
+            function iplugIsConnected(plugid) {
+                if (dojo.some(connectedIPlugs, function(item) { return item.iplug == plugid; })) {
+                    return true;
+                }
+                return false;
+            }
 
+            function initCatalogueSelection() {
+                var preparedData = prepareDataForSelect(allCatalogues);
+                preparedData.push({id: "all", name: "alle Kataloge"});
+                store = new dojo.data.ItemFileReadStore(
+                        {data: {identifier: "id", label: "name", items: preparedData}}
+                );
+                store.fetch();
+                
+                var catChoice = dijit.byId("selectCatalogue");//new dijit.form.Select({store: store}, "selectCatalogue");
+                catChoice.setStore(store);
+                dojo.connect(catChoice, "onChange", function(value) {
+                    if (value == "all") {
+                        usersGrid.setQuery({})
+                    } else {
+                        usersGrid.setQuery({connected_to: value})
+                    }
+                });
+                
+            }
+            
             function showLoginError() {
                 document.getElementById("error").style.display = "block";
             }
@@ -134,6 +172,14 @@
                 var def = new dojo.Deferred();
                 SecurityService.getIgeUsers(function(data) {
                     allIgeUsers = data;
+                    allCatalogues = [];//{label: "all", value: "alle Kataloge"}];
+                    for(var key in allIgeUsers) {
+                        // only add iplugs that are not already in that array
+                        if (allCatalogues.indexOf(allIgeUsers[key]) == -1) {
+//                             allCatalogues.push({label: allIgeUsers[key], value:allIgeUsers[key]});
+                            allCatalogues.push(allIgeUsers[key]);
+                        }
+                    }
                     def.resolve();
                 });
                 return def;
@@ -183,11 +229,14 @@
             }
 
             function createCatalogueTable() {
+                var def = new dojo.Deferred();
                 // get all connected catalogues
                 CatalogManagementService.getConnectedCataloguesInfo({
                     callback: function(iplugs) {
                     var atLeastOneNotConnectedIPlug = false;
                     var atLeastOneConnectedIPlug = false;
+                    
+                    connectedIPlugs = iplugs;
                     
                     if (iplugs) {
                         console.debug(iplugs);
@@ -214,12 +263,13 @@
                         dojo.style(availableCataloguesGrid.domNode,"display", "none");
                         dojo.style("infoNoFreeCat", "display", "block");
                     }
+                    def.callback();
                 },
                 errback: function(error) {
                     console.debug("There's no connected iplug!");
                 }});
                 
-                
+                return def;
             }
 
             function addUser() {
@@ -337,6 +387,14 @@
                     connectedCataloguesGrid.resize();
                     availableCataloguesGrid.resize();
             }
+            
+            function prepareDataForSelect(data){
+                var preparedData = [];
+                dojo.forEach(data, function(item) {
+                    preparedData.push({name:item, id:item});
+                });
+                return preparedData;
+            }
         </script>
     </head>
     
@@ -368,12 +426,15 @@
             <div class="contentBorder">
                 <h3>Benutzer verwalten</h3>
                 <div style="padding:10px; overflow: auto;">
+                    Filterung nach Katalog: <div id="selectCatalogue" dojoType="dijit.form.Select"></div>
                     <table id="usersGrid" jsId="usersGrid" dojoType="dojox.grid.DataGrid" autoHeight="10" autoWidth=true escapeHTMLInData=false selectable="false" selectionMode="single" style="margin-bottom: 5px;">
                         <thead>
                             <tr>
+                                <th field="login" width="70px;">Login</th>
                                 <th field="surname" width="100px;">Nachname</th>
                                 <th field="firstName" width="100px;">Vorname</th>
                                 <th field="email" width="200px">E-Mail</th>
+<!--                                 <th field="connected_to" width="200px">iPlug</th> -->
                                 <th field="btn_edit" width="80px;">&nbsp;</th>
                                 <th field="btn_delete" width="80px;">&nbsp;</th>
                                 <th field="btn_login" width="80px;">&nbsp;</th>
