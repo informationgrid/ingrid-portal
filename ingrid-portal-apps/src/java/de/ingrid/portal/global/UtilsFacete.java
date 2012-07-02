@@ -349,7 +349,16 @@ public class UtilsFacete {
 					if(elementsDatatype == null){
 						elementsDatatype = new HashMap<String, Long>();
 					}
-					elementsDatatype.put(key.replace("type:", ""), value);
+					String replaceKey = key.replace("type:", "");
+					ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE); 
+					if(selectedDatatype != null && selectedDatatype.size() > 0){
+						String metaclass = selectedDatatype.get(0);
+						if(replaceKey.equals(metaclass)){
+							elementsDatatype.put(replaceKey, value);	
+						}
+					}else{
+						elementsDatatype.put(replaceKey, value);
+					}
 
 				}else if(key.startsWith("modtime:")){
 					if(elementsTime == null){
