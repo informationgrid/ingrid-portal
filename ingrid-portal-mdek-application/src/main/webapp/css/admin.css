@@ -181,6 +181,10 @@ input[type="button"].table {
 	padding: 0;
 }
 
+input[type="button"].table.disabled {
+    background-color: #DDD;
+}
+
 #wrapper { margin: 50px auto; width: 250px; background-color: #eee; box-shadow: 0px 0px 10px #111; padding: 20px; }
 
 #usersGrid {

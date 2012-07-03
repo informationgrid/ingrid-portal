@@ -82,7 +82,7 @@
                         showContent("catOverviewDiv");
                 } 
                 // prevent sorting of button-columns
-                usersGrid.canSort = function(col){ if(Math.abs(col) == 5 || Math.abs(col) == 6) { return false; } else { return true; } };
+                usersGrid.canSort = function(col){ if(Math.abs(col) == 5 || Math.abs(col) == 6 || Math.abs(col) == 7) { return false; } else { return true; } };
                 connectedCataloguesGrid.canSort = function(col){ if(Math.abs(col) == 3) { return false; } else { return true; } };
                 availableCataloguesGrid.canSort = function(col){ if(Math.abs(col) == 2) { return false; } else { return true; } };
                 
@@ -108,7 +108,7 @@
                         if(iplugIsConnected(allIgeUsers[u.login])) {
                             u.btn_login  = "<input type='button' class='table' onclick='loginAs(\""+u.login+"\");' value='Login' title='In Katalog \""+allIgeUsers[u.login]+"\" einloggen.'>";
                         } else {
-                            u.btn_login  = "";
+                            u.btn_login  = "<input type='button' class='table disabled' disabled='disabled' value='Login' title='Katalog \""+allIgeUsers[u.login]+"\" nicht angeschlossen!'>";
                         }
                         u.connected_to = allIgeUsers[u.login];
                     } else {
@@ -128,7 +128,7 @@
 
             function initCatalogueSelection() {
                 var preparedData = prepareDataForSelect(allCatalogues);
-                preparedData.push({id: "all", name: "alle Kataloge"});
+                preparedData.push({id: "all", name: "alle anzeigen"});
                 store = new dojo.data.ItemFileReadStore(
                         {data: {identifier: "id", label: "name", items: preparedData}}
                 );
@@ -428,7 +428,7 @@
                 <h3>Benutzer verwalten</h3>
                 <div style="padding:10px; overflow: auto;">
                     Filterung nach Katalog: <div id="selectCatalogue" dojoType="dijit.form.Select"></div>
-                    <table id="usersGrid" jsId="usersGrid" dojoType="dojox.grid.DataGrid" autoHeight="10" autoWidth=true escapeHTMLInData=false selectable="false" selectionMode="single" style="margin-bottom: 5px;">
+                    <table id="usersGrid" jsId="usersGrid" dojoType="dojox.grid.DataGrid" autoHeight="10" autoWidth=true escapeHTMLInData=false selectable="false" selectionMode="single" style="margin-bottom: 5px;margin-top: 5px;">
                         <thead>
                             <tr>
                                 <th field="login" width="70px;">Login</th>
