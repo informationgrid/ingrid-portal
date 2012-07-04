@@ -1006,7 +1006,9 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
                  this.mouse_is_inside = false;
              });
              
-             var eventWndClick = dojo.connect(dojo.isIE ? document : window, "onclick", this, function(evt){
+             // call the event already when mouse down was triggered, so that button clicks will execute after
+             // data was written to table when losing focus
+             var eventWndClick = dojo.connect(dojo.isIE ? document : window, "onmousedown", this, function(evt){
                  if (!this.mouse_is_inside) {
                      var _this = this;
                      // popup inputs need to commit data first, otherwise value won't change
