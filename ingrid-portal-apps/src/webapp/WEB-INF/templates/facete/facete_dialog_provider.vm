@@ -37,8 +37,8 @@
 			</div>
 			#if($unselectedProvider)
 				<div>
-				<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.unselected.entries")</p>
-                #foreach ($provider in $unselectedProvider)
+				<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.result.entries")</p>
+				#foreach ($provider in $unselectedProvider)
     				#if(${provider.sortkeyPartner} == ${partner.sortkey})
     					#set($k = $k + 1)
     					<div class="facete_chb">
@@ -46,6 +46,9 @@
 								<input id="${provider.ident}" class="facete_dialog_chb facete_input_chb" type=checkbox name="chk$k" value="${provider.ident}">
                         		$provider.name
     						</span>
+							#if($elementsProviderUnselect && $provider.ident)
+								#renderLinkEntryNumberInArrayHashMap($elementsProviderUnselect "$provider.ident")
+							#end
                        	</div>
     				#end
 				#end

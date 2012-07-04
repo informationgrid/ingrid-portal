@@ -69,6 +69,7 @@
         			#end
     			</div>
 			#end
+			<!--
         	#if($elementsTopicSelect)
         		#if($unselectedTopics)
             		<div>
@@ -88,6 +89,7 @@
         		</div>
 				#end
 			#end
+			-->
 		</div>
 		
 		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddTopic" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right btn_submit_dialog" "")

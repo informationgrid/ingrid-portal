@@ -41,8 +41,11 @@ import de.ingrid.portal.om.IngridMeasuresRubric;
 import de.ingrid.portal.om.IngridPartner;
 import de.ingrid.portal.om.IngridProvider;
 import de.ingrid.portal.om.IngridServiceRubric;
+import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
+import de.ingrid.portal.search.net.QueryDescriptor;
+import de.ingrid.portal.search.net.ThreadedQueryController;
 import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.query.ClauseQuery;
@@ -305,8 +308,6 @@ public class UtilsFacete {
 		HashMap<String, Long> elementsGeothesaurus = null;
 		HashMap<String, Long> elementsMap = null;
 		
-		removeFaceteElementsFromSession(request);
-		
 		for (Iterator<String> iterator = facetes.keySet().iterator(); iterator.hasNext();) {
 			String key = iterator.next();
 			Long value = (Long) facetes.get(key);
@@ -391,18 +392,30 @@ public class UtilsFacete {
 			}
 			
 			
+		} else{
+			removeAttributeFromSession(request, ELEMENTS_DATATYPE);
 		}
 		
 		if (elementsProvider != null){
-			setAttributeToSession(request, ELEMENTS_PROVIDER, sortHashMapAsArrayList(elementsProvider));
+			IngridDocument doc = getDefaultFacetsProvider(request);
+	    	checkForExistingORFacets(doc, request);
+		} else{
+			removeAttributeFromSession(request, ELEMENTS_PROVIDER);
 		}
 		
+		
 		if (elementsTopic != null){
-			setAttributeToSession(request, ELEMENTS_TOPIC, sortHashMapAsArrayList(elementsTopic));
+			IngridDocument doc = getDefaultFacetsTopics(request);
+	    	checkForExistingORFacets(doc, request);
+			
+		} else{
+			removeAttributeFromSession(request, ELEMENTS_TOPIC);
 		}
 		
 		if (elementsPartner != null){
 			setAttributeToSession(request, ELEMENTS_PARTNER, sortHashMapAsArrayList(elementsPartner));
+		} else{
+			removeAttributeFromSession(request, ELEMENTS_PARTNER);
 		}
 		
 		if (elementsMetaclass != null){
@@ -412,18 +425,26 @@ public class UtilsFacete {
 			}else{
 				setAttributeToSession(request, ELEMENTS_METACLASS, sortHashMapAsArrayList(elementsMetaclass));
 			}
+		} else{
+			removeAttributeFromSession(request, ELEMENTS_METACLASS);
 		}
 		
 		if (elementsTime != null){
 			setAttributeToSession(request, ELEMENTS_TIME, sortHashMapAsArrayList(elementsTime));
+		} else{
+			removeAttributeFromSession(request, ELEMENTS_TIME);
 		}
 		
 		if (elementsGeothesaurus != null){
 			setAttributeToSession(request, ELEMENTS_GEOTHESAURUS, sortHashMapAsArrayList(elementsGeothesaurus));
+		} else{
+			removeAttributeFromSession(request, ELEMENTS_GEOTHESAURUS);
 		}
 	
 		if (elementsMap != null){
 			setAttributeToSession(request, ELEMENTS_MAP, sortHashMapAsArrayList(elementsMap));
+		} else{
+			removeAttributeFromSession(request, ELEMENTS_MAP);
 		}
 	
 	}
@@ -1460,7 +1481,8 @@ public class UtilsFacete {
 	private static void setParamsToContextProvider (RenderRequest request, Context context){
 		
 		ArrayList<String> selectedProviders = (ArrayList<String>) getAttributeFromSession(request, SELECTED_PROVIDER);
-		List<IngridPartner> partners = (ArrayList<IngridPartner>) getAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);
+		List<IngridProvider> unselectedProviders = null;
+    	List<IngridPartner> partners = (ArrayList<IngridPartner>) getAttributeFromSession(request, ENABLE_FACETE_PARTNER_LIST);
 		List<IngridProvider> providers = null;
 		ArrayList<IngridProvider> enableFaceteProviderList = null;
 		
@@ -1470,6 +1492,7 @@ public class UtilsFacete {
 		}
 		
 		ArrayList<HashMap<String, Long>> elementsProvider = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_PROVIDER);
+		ArrayList<HashMap<String, Long>> elementsProviderUnselect = null;
 		
 		// Remove unselected provider with facets (selection return more than one provider facet) 
 		if(selectedProviders != null && elementsProvider != null){
@@ -1489,42 +1512,14 @@ public class UtilsFacete {
 						if(foundKey){
 							break;
 						}else{
-							elementsProvider.remove(j);
-						}
-					}
-				}
-			}
-		}
-		
-		// Add zero facet number for selected provider (selection have no facet)
-		if(selectedProviders != null){
-			for(int i=0; i< selectedProviders.size(); i++){
-				String selectedKey = selectedProviders.get(i);
-				boolean foundKey = false;
-				if(elementsProvider != null){
-					for(int j=0; j< elementsProvider.size(); j++){
-						HashMap<String, Long> provider = elementsProvider.get(j);
-						for (Iterator<String> iterator = provider.keySet().iterator(); iterator.hasNext();) {
-							String key = iterator.next();
-							if(key.equals(selectedKey)){
-								foundKey = true;
-								break;
+							if(elementsProviderUnselect == null){
+								elementsProviderUnselect = new ArrayList<HashMap<String,Long>>();
 							}
-						}
-						if(foundKey){
-							break;
+							elementsProviderUnselect.add(elementProvider);
+							elementsProvider.remove(j);
+							j--;
 						}
 					}
-					if(!foundKey){
-						HashMap<String, Long> addingProvider = new HashMap<String, Long>();
-						addingProvider.put(selectedKey, (long) 0);
-						elementsProvider.add(addingProvider);
-					}
-				}else{
-					elementsProvider = new ArrayList<HashMap<String,Long>>();
-					HashMap<String, Long> addingProvider = new HashMap<String, Long>();
-					addingProvider.put(selectedKey, (long) 0);
-					elementsProvider.add(addingProvider);
 				}
 			}
 		}
@@ -1552,26 +1547,38 @@ public class UtilsFacete {
     		}
 	    }
 		
-    	if(enableFaceteProviderList == null){
-    		ArrayList<HashMap<String, Long>> elementsPartner = (ArrayList<HashMap<String, Long>>) getAttributeFromSession(request, ELEMENTS_PARTNER);
-    		if(elementsPartner != null && elementsPartner.size() > 0){
-				for(int i=0; i < elementsPartner.size(); i++){
-					HashMap<String, Long> map = elementsPartner.get(i);
-	    			List<String> keys = new ArrayList<String>(map.keySet());
-		    		enableFaceteProviderList = (ArrayList<IngridProvider>) UtilsDB.getProvidersFromPartnerKey(keys.get(0));
-				}
-			}
+    	if(providers != null && elementsProviderUnselect != null){
+    		for(int i=0; i < elementsProviderUnselect.size(); i++){
+    			HashMap<String, Long> map = elementsProviderUnselect.get(i);
+    			List<String> keys = new ArrayList<String>(map.keySet());
+    			String ident = keys.get(0);
+    			for(int j=0; j < providers.size(); j++){
+    				if(ident != null){
+    					IngridProvider prov = providers.get(j);
+    					String provIdent = prov.getIdent(); 
+    					
+        				if(ident.equals(provIdent)){
+        					if(unselectedProviders == null){
+        						unselectedProviders = new ArrayList<IngridProvider>();
+        					}
+        					unselectedProviders.add(providers.get(j));
+        					break;
+        				}
+        			}
+    			}
+    		}
 		}
 		
     	context.put("enableFaceteProviderList", enableFaceteProviderList);
     	context.put("elementsProvider", elementsProvider);
+    	context.put("elementsProviderUnselect", elementsProviderUnselect);
     	context.put("enableFaceteProviderCount", PortalConfig.getInstance().getInt("portal.search.facete.provider.count", 3));
     	
     	if(selectedProviders != null && selectedProviders.size() > 0){
     		setFacetSelectionState(context, request, "isProviderSelect", true);
     		context.put("selectedProvider", selectedProviders);
-    		if(providers != null && providers.size() > 0){
-    			context.put("unselectedProvider", providers);
+    		if(unselectedProviders != null && unselectedProviders.size() > 0){
+    			context.put("unselectedProvider", unselectedProviders);
     		}
     	} else{
     		setFacetSelectionState(context, request, "isProviderSelect", false);
@@ -3491,6 +3498,104 @@ public class UtilsFacete {
 		}
 
 		return urlParam;
+	}
+
+	private static IngridDocument getDefaultFacetsTopics(PortletRequest request){
+		ThreadedQueryController controller = new ThreadedQueryController();
+        controller.setTimeout(PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_THREADED, 120000));
+        QueryDescriptor qd = null;
+		 
+		 qd = QueryPreProcessor.createRankedQueryDescriptor(request);
+         if (qd != null) {
+             controller.addQuery("ranked", qd);
+             IngridQuery query = qd.getQuery();
+             query.remove("FACETS");
+             // Remove topic selection on query
+             query.remove("clause");
+             ArrayList<IngridDocument> list = new ArrayList<IngridDocument>();
+             // Set topic facets to query
+             setFaceteQueryParamsTopic(list, request);
+             query.put("FACETS", list);
+             SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
+         }
+         
+         HashMap results = controller.search();
+         IngridHitsWrapper wrapper = (IngridHitsWrapper) results.get("ranked");
+         IngridDocument doc = new IngridDocument();
+          if(wrapper != null){
+        	 if(wrapper.get("FACETS") != null){
+            	 doc = (IngridDocument) wrapper.get("FACETS");
+             }	 
+         }
+         
+         return doc;
+	}
+	
+	private static IngridDocument getDefaultFacetsProvider(PortletRequest request){
+		ThreadedQueryController controller = new ThreadedQueryController();
+        controller.setTimeout(PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_THREADED, 120000));
+        QueryDescriptor qd = null;
+		 
+		 qd = QueryPreProcessor.createRankedQueryDescriptor(request);
+         if (qd != null) {
+             controller.addQuery("ranked", qd);
+             IngridQuery query = qd.getQuery();
+             query.remove("FACETS");
+             // Remove provider selection on query
+             query.remove("provider");
+             ArrayList<IngridDocument> list = new ArrayList<IngridDocument>();
+             // Set provider facets to query
+             setFaceteQueryParamsProvider(list, request);
+             query.put("FACETS", list);
+             SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
+         }
+         
+         HashMap results = controller.search();
+         IngridHitsWrapper wrapper = (IngridHitsWrapper) results.get("ranked");
+         IngridDocument doc = new IngridDocument();
+          if(wrapper != null){
+        	 if(wrapper.get("FACETS") != null){
+            	 doc = (IngridDocument) wrapper.get("FACETS");
+             }	 
+         }
+         
+         return doc;
+	}
+	
+public static void checkForExistingORFacets(IngridDocument facetes, PortletRequest request) {
+		
+		HashMap<String, Long> elementsProvider = null;
+		HashMap<String, Long> elementsTopic = null;
+		
+		for (Iterator<String> iterator = facetes.keySet().iterator(); iterator.hasNext();) {
+			String key = iterator.next();
+			Long value = (Long) facetes.get(key);
+			
+			if(value > 0){
+				if (key.startsWith("provider")){
+					if(elementsProvider == null){
+						elementsProvider = new HashMap<String, Long>();
+					}
+					elementsProvider.put(key.replace("provider:", ""), value);
+					
+				}else if(key.startsWith("topic")){
+					if(elementsTopic == null){
+						elementsTopic = new HashMap<String, Long>();
+					}
+					elementsTopic.put(key.replace("topic:", ""), value);
+				}
+			}
+		}		
+		
+		if (elementsProvider != null){
+			setAttributeToSession(request, ELEMENTS_PROVIDER, sortHashMapAsArrayList(elementsProvider));
+		}
+		
+		if (elementsTopic != null){
+			ArrayList<HashMap<String, Long>> sortedElementsTopic = sortHashMapAsArrayList(elementsTopic);
+			setAttributeToSession(request, ELEMENTS_TOPIC, sortedElementsTopic);
+		}
+	
 	}
 	
 }
