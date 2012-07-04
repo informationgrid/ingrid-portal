@@ -621,7 +621,7 @@ div.formbody input.qry_chronic {width: 29em; height: 25px; font-size: 83%; line-
 
 /*** Formular Einfache Suche Start Seite ***/
 
-div.formbody input.qrystr {width: 45em; height: 25px; font-size: 83%; line-height: 25px; border: 1px solid #999999; }
+div.formbody input.qrystr {width: 44em; height: 25px; font-size: 83%; line-height: 25px; border: 1px solid #999999; }
 
 /*** Formular Erweiterte Suche ***/
 
@@ -815,7 +815,7 @@ div.btn_gray_left { float:left; background-image: url(../images/button_gray_left
 div.btn_gray_right { float:left; background-image: url(../images/button_gray_right.png); height: 33px; width: 3px; }
 div.btn_gray_center { float:left; background-image: url("../images/button_gray.png"); background-position: right center; }
 
-.search_query_button { padding: 0px 0px 0px 625px; }
+.search_query_button { padding: 0px 0px 0px 610px; }
 .search_query_textarea { position: absolute;  margin: 1px 0 0; }
 div#logo img { height: 81px; width: 188px; }
 p.chronicle_teaser_title { float: none; width: 100%; }
