@@ -1623,7 +1623,7 @@ public class UtilsFacete {
 				       			faceteEntry.put("id", "modtime1");
 						   		cal = new GregorianCalendar();
 						   		cal.add(Calendar.MONTH, -1);
-							    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+							    faceteEntry.put("query", "t01_object.mod_time:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
 							    faceteList.add(faceteEntry);
 
 								break;
@@ -1636,7 +1636,7 @@ public class UtilsFacete {
 						   		timeNow = df.format(cal.getTime());
 							    cal = new GregorianCalendar();
 							    cal.add(Calendar.MONTH, -3);
-							    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+							    faceteEntry.put("query", "t01_object.mod_time:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
 							    faceteList.add(faceteEntry);	
 
 								break;
@@ -1649,7 +1649,7 @@ public class UtilsFacete {
 						   		timeNow = df.format(cal.getTime());
 							    cal = new GregorianCalendar();
 							    cal.add(Calendar.YEAR, -1);
-							    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+							    faceteEntry.put("query", "t01_object.mod_time:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
 							    faceteList.add(faceteEntry);	
 
 								break;
@@ -1662,11 +1662,21 @@ public class UtilsFacete {
 						   		timeNow = df.format(cal.getTime());
 							    cal = new GregorianCalendar();
 							    cal.add(Calendar.YEAR, -5);
-							    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+							    faceteEntry.put("query", "t01_object.mod_time:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
 							    faceteList.add(faceteEntry);
 							    
 								break;
-			
+				       		case 5:
+				       			faceteEntry = new HashMap<String, String>();
+							    faceteEntry.put("id", "modtime5");
+							    cal = new GregorianCalendar();
+							    cal.add(Calendar.YEAR, -5);
+							    cal.add(Calendar.DAY_OF_MONTH, -1);
+						   		timeNow = df.format(cal.getTime());
+							    faceteEntry.put("query", "t01_object.mod_time:[0* TO " + timeNow + "9*]");
+							    faceteList.add(faceteEntry);
+							    
+								break;
 							default:
 							    
 							    break;
@@ -1675,7 +1685,7 @@ public class UtilsFacete {
 			       		faceteEntry.put("id", "modtime1");
 				   		cal = new GregorianCalendar();
 				   		cal.add(Calendar.MONTH, -1);
-					    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+					    faceteEntry.put("query", "t01_object.mod_time:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
 					    faceteList.add(faceteEntry);
 					    
 					    faceteEntry = new HashMap<String, String>();
@@ -1686,7 +1696,7 @@ public class UtilsFacete {
 				   		timeNow = df.format(cal.getTime());
 					    cal = new GregorianCalendar();
 					    cal.add(Calendar.MONTH, -3);
-					    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+					    faceteEntry.put("query", "t01_object.mod_time:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
 					    faceteList.add(faceteEntry);	
 					
 					    faceteEntry = new HashMap<String, String>();
@@ -1697,7 +1707,7 @@ public class UtilsFacete {
 				   		timeNow = df.format(cal.getTime());
 					    cal = new GregorianCalendar();
 					    cal.add(Calendar.YEAR, -1);
-					    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+					    faceteEntry.put("query", "t01_object.mod_time:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
 					    faceteList.add(faceteEntry);	
 					
 					    faceteEntry = new HashMap<String, String>();
@@ -1708,7 +1718,16 @@ public class UtilsFacete {
 				   		timeNow = df.format(cal.getTime());
 				   		cal = new GregorianCalendar();
 					    cal.add(Calendar.YEAR, -5);
-					    faceteEntry.put("query", "t0113_dataset_reference.reference_date:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+					    faceteEntry.put("query", "t01_object.mod_time:[" + df.format(cal.getTime()) +  "0* TO " + timeNow + "9*]");
+					    faceteList.add(faceteEntry);
+					    
+					    faceteEntry = new HashMap<String, String>();
+					    faceteEntry.put("id", "modtime5");
+					    cal = new GregorianCalendar();
+					    cal.add(Calendar.YEAR, -5);
+					    cal.add(Calendar.DAY_OF_MONTH, -1);
+				   		timeNow = df.format(cal.getTime());
+				   		faceteEntry.put("query", "t01_object.mod_time:[0* TO " + timeNow + "9*]");
 					    faceteList.add(faceteEntry);
 			       	}
 			       	
@@ -1782,8 +1801,28 @@ public class UtilsFacete {
 			    // letzte 5 Jahre
             	cal = new GregorianCalendar();
             	cal.add(Calendar.YEAR, -5);
+            }else if(doTime.equals("4")){
+            	cal.add(Calendar.YEAR, -1);
+		   		cal.add(Calendar.DAY_OF_MONTH, -1);
+		   		timeNow = df.format(cal.getTime());
+			    // älter als 5 Jahre
+            	cal = new GregorianCalendar();
+            	cal.add(Calendar.YEAR, -5);
+            }else if(doTime.equals("5")){
+            	cal.add(Calendar.YEAR, -5);
+		   		cal.add(Calendar.DAY_OF_MONTH, -1);
+		   		timeNow = df.format(cal.getTime());
+			    // älter als 5 Jahre
+            	cal = new GregorianCalendar();
+            	cal.add(Calendar.YEAR, -5);
             }
-            query.addRangeQuery(new RangeQuery(true, false, "t0113_dataset_reference.reference_date", df.format(cal.getTime()) + "0*", timeNow + "9*", true));
+            
+            if(doTime.equals("5")){
+            	query.addRangeQuery(new RangeQuery(true, false, "t01_object.mod_time", "0*", timeNow + "9*", true));	
+            }else{
+            	query.addRangeQuery(new RangeQuery(true, false, "t01_object.mod_time", df.format(cal.getTime()) + "0*", timeNow + "9*", true));
+            }
+            
         }	
 	}
 	

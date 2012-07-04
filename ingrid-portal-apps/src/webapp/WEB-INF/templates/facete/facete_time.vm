@@ -3,6 +3,7 @@
 #set($isModTime2 = false)
 #set($isModTime3 = false)
 #set($isModTime4 = false)
+#set($isModTime5 = false)
 
 #if($elementsTime)
     <div class="cat_label">
@@ -23,6 +24,9 @@
     	#elseif($doTime && $doTime == "4")
     		$action.setParameter("doTime",  "0")
     		#renderFaceteSelectedAttributeHashMapNumber($action $MESSAGES.getString("searchResult.facete.time.4") $elementsTime "modtime4" true)
+    	#elseif($doTime && $doTime == "5")
+    		$action.setParameter("doTime",  "0")
+    		#renderFaceteSelectedAttributeHashMapNumber($action $MESSAGES.getString("searchResult.facete.time.5") $elementsTime "modtime5" true)
     	#else
     		#foreach($time in $elementsTime)
     			#foreach($key in $time.keySet())
@@ -34,6 +38,8 @@
     					#set($isModTime3 = true)
         			#elseif($key == "modtime4")
     					#set($isModTime4 = true)
+        			#elseif($key == "modtime5")
+    					#set($isModTime5 = true)
         			#end
         		#end
     		#end
@@ -70,6 +76,15 @@
                     <span class="facete_label">
                 		<a href="$action" class="facete_link_line" title="$MESSAGES.getString("searchResult.facete.time.4.tooltip")">$MESSAGES.getString("searchResult.facete.time.4")</a>
             			#renderLinkEntryNumberInArrayHashMap($elementsTime "modtime4")
+                	</span>
+        		</div>
+			#end
+			#if($isModTime5)
+    			$action.setParameter("doTime",  "5")
+            	<div>
+                    <span class="facete_label">
+                		<a href="$action" class="facete_link_line" title="$MESSAGES.getString("searchResult.facete.time.4.tooltip")">$MESSAGES.getString("searchResult.facete.time.5")</a>
+            			#renderLinkEntryNumberInArrayHashMap($elementsTime "modtime5")
                 	</span>
         		</div>
     		#end
