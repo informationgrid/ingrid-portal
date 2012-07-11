@@ -211,13 +211,14 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 boolean success = updateConnectedIgePlugs(plugId, doc, highestTimestamp, user); ;
                 if (!success) {
                     log.error("Could not update codelists in iPlug: " + plugId);
-                }
-                // rebuild syslist so that all documents have updated syslist values
-                // for those who allow free entries!
-                try {
-                    rebuildSyslists(plugId, user);
-                } catch (UndeclaredThrowableException e) {
-                    // a timeout exception is normal for a longer running process
+                } else {
+                    // rebuild syslist so that all documents have updated syslist values
+                    // for those who allow free entries!
+                    try {
+                        rebuildSyslists(plugId, user);
+                    } catch (UndeclaredThrowableException e) {
+                        // a timeout exception is normal for a longer running process
+                    }
                 }
             }
             if (log.isDebugEnabled()) {

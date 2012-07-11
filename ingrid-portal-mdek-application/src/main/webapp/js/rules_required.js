@@ -33,12 +33,14 @@ function applyRule1() {
 
 function applyRule2() {
 	console.debug("apply rule 2");
-	if (dijit.byId("thesaurusEnvExtRes").checked || UtilGrid.getTableData("thesaurusEnvTopics").length != 0) {
-		UtilUI.setMandatory(dojo.byId("uiElementN014"));
-		UtilUI.setMandatory(dojo.byId("uiElementN015"));
-	} else {
-		UtilUI.setOptional(dojo.byId("uiElementN014"));
-		UtilUI.setOptional(dojo.byId("uiElementN015"));		
+	if (!dojo.hasClass("uiElementN014", "hide")) {
+    	if (dijit.byId("thesaurusEnvExtRes").checked || UtilGrid.getTableData("thesaurusEnvTopics").length != 0) {
+    		UtilUI.setMandatory(dojo.byId("uiElementN014"));
+    		UtilUI.setMandatory(dojo.byId("uiElementN015"));
+    	} else {
+    		UtilUI.setOptional(dojo.byId("uiElementN014"));
+    		UtilUI.setOptional(dojo.byId("uiElementN015"));		
+    	}
 	}
 }
 	
@@ -66,62 +68,67 @@ function applyRule3(value) {
 }
 
 function applyRule5() {
-	console.debug("apply rule 5");
-	var snsHasBB = false;
-	var freeHasBB = false;
-	var snsData = UtilGrid.getTableData("spatialRefAdminUnit");
-	var freeData = UtilGrid.getTableData("spatialRefLocation");
-
-	for (var i = 0; i < snsData.length; ++i) {
-		if (snsData[i].longitude1 && snsData[i].longitude2 && snsData[i].latitude1 && snsData[i].latitude2)
-			snsHasBB = true;
-	}
-	for (var i = 0; i < freeData.length; ++i) {
-		// The values stored in freeData[] can be strings or numbers (when first loaded)
-		// -> convert them to strings and check the size
-		var lon1Length = dojo.trim(freeData[i].longitude1+"").length;
-		var lon2Length = dojo.trim(freeData[i].longitude2+"").length;
-		var lat1Length = dojo.trim(freeData[i].latitude1+"").length;
-		var lat2Length = dojo.trim(freeData[i].latitude2+"").length;
-		if (lon1Length != 0 && lon2Length != 0 && lat1Length != 0 && lat2Length != 0)
-			freeHasBB = true;
-	}
-
-	if (snsHasBB || !freeHasBB) {
-		UtilUI.setMandatory(dojo.byId("uiElementN006"));
-	} else {
-		UtilUI.setOptional(dojo.byId("uiElementN006"));		
-	}
-	if (!snsHasBB) {
-		UtilUI.setMandatory(dojo.byId("uiElementN008"));
-	} else {
-		UtilUI.setOptional(dojo.byId("uiElementN008"));
-	}
+    console.debug("apply rule 5");
+    if (!dojo.hasClass("uiElementN008", "hide")) {
+    	var snsHasBB = false;
+    	var freeHasBB = false;
+    	var snsData = UtilGrid.getTableData("spatialRefAdminUnit");
+    	var freeData = UtilGrid.getTableData("spatialRefLocation");
+    
+    	for (var i = 0; i < snsData.length; ++i) {
+    		if (snsData[i].longitude1 && snsData[i].longitude2 && snsData[i].latitude1 && snsData[i].latitude2)
+    			snsHasBB = true;
+    	}
+    	for (var i = 0; i < freeData.length; ++i) {
+    		// The values stored in freeData[] can be strings or numbers (when first loaded)
+    		// -> convert them to strings and check the size
+    		var lon1Length = dojo.trim(freeData[i].longitude1+"").length;
+    		var lon2Length = dojo.trim(freeData[i].longitude2+"").length;
+    		var lat1Length = dojo.trim(freeData[i].latitude1+"").length;
+    		var lat2Length = dojo.trim(freeData[i].latitude2+"").length;
+    		if (lon1Length != 0 && lon2Length != 0 && lat1Length != 0 && lat2Length != 0)
+    			freeHasBB = true;
+    	}
+    
+    	if (snsHasBB || !freeHasBB) {
+    		UtilUI.setMandatory(dojo.byId("uiElementN006"));
+    	} else {
+    		UtilUI.setOptional(dojo.byId("uiElementN006"));		
+    	}
+    	if (!snsHasBB) {
+    		UtilUI.setMandatory(dojo.byId("uiElementN008"));
+    	} else {
+    		UtilUI.setOptional(dojo.byId("uiElementN008"));
+    	}
+    }
 }
 
 // If one of the fields contains data, all fields are mandatory
 function applyRule6() {
 	console.debug("apply rule 6");
-	var spatialRefAltMin = dijit.byId("spatialRefAltMin");
-	var spatialRefAltMax = dijit.byId("spatialRefAltMax");
-	var spatialRefAltMeasure = dijit.byId("spatialRefAltMeasure");
-	var spatialRefAltVDate = dijit.byId("spatialRefAltVDate");
-
-
-	if (spatialRefAltMin.getValue() || spatialRefAltMax.getValue() ||
-			spatialRefAltMeasure.getValue() || spatialRefAltVDate.getValue()) {
-		UtilUI.setMandatory(dojo.byId("uiElementN010"));
-		UtilUI.setMandatory(dojo.byId("uiElement1130"));
-		UtilUI.setMandatory(dojo.byId("uiElement5020"));
-		UtilUI.setMandatory(dojo.byId("uiElement5021"));
-		UtilUI.setMandatory(dojo.byId("uiElement5022"));
-
-	} else {
-		UtilUI.setOptional(dojo.byId("uiElementN010"));
-		UtilUI.setOptional(dojo.byId("uiElement1130"));
-		UtilUI.setOptional(dojo.byId("uiElement5020"));
-		UtilUI.setOptional(dojo.byId("uiElement5021"));
-		UtilUI.setOptional(dojo.byId("uiElement5022"));
+	
+	if (!dojo.hasClass("uiElementN010", "hide")) {
+    	var spatialRefAltMin = dijit.byId("spatialRefAltMin");
+    	var spatialRefAltMax = dijit.byId("spatialRefAltMax");
+    	var spatialRefAltMeasure = dijit.byId("spatialRefAltMeasure");
+    	var spatialRefAltVDate = dijit.byId("spatialRefAltVDate");
+    
+    
+    	if (spatialRefAltMin.getValue() || spatialRefAltMax.getValue() ||
+    			spatialRefAltMeasure.getValue() || spatialRefAltVDate.getValue()) {
+    		UtilUI.setMandatory(dojo.byId("uiElementN010"));
+    		UtilUI.setMandatory(dojo.byId("uiElement1130"));
+    		UtilUI.setMandatory(dojo.byId("uiElement5020"));
+    		UtilUI.setMandatory(dojo.byId("uiElement5021"));
+    		UtilUI.setMandatory(dojo.byId("uiElement5022"));
+    
+    	} else {
+    		UtilUI.setOptional(dojo.byId("uiElementN010"));
+    		UtilUI.setOptional(dojo.byId("uiElement1130"));
+    		UtilUI.setOptional(dojo.byId("uiElement5020"));
+    		UtilUI.setOptional(dojo.byId("uiElement5021"));
+    		UtilUI.setOptional(dojo.byId("uiElement5022"));
+    	}
 	}
 }
 

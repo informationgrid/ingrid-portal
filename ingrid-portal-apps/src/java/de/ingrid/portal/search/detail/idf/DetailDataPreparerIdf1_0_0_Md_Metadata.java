@@ -1657,21 +1657,23 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	}
 	
 	private void addBigMapLink(ArrayList elements, String urlValue) {
-	    HashMap elementCapabilities = new HashMap();
-        elementCapabilities.put("type", "multiLine");
-        HashMap elementMapLink = new HashMap();
-        elementMapLink.put("type", "linkLine");
-        elementMapLink.put("isMapLink", new Boolean(true));
-        elementMapLink.put("isExtern", new Boolean(false));
-        elementMapLink.put("title", messages.getString("common.result.showMap"));
-        this.firstGetCapabiltiesUrl = "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(urlValue);
-        elementMapLink.put("href", this.firstGetCapabiltiesUrl);
-        // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
-        ArrayList list = new ArrayList();
-        list.add(elementMapLink);
-        elementCapabilities.put("elements", list);
-        elementCapabilities.put("width", "full");
-        elements.add(elementCapabilities);
+	    if (urlValue != null) {
+    	    HashMap elementCapabilities = new HashMap();
+            elementCapabilities.put("type", "multiLine");
+            HashMap elementMapLink = new HashMap();
+            elementMapLink.put("type", "linkLine");
+            elementMapLink.put("isMapLink", new Boolean(true));
+            elementMapLink.put("isExtern", new Boolean(false));
+            elementMapLink.put("title", messages.getString("common.result.showMap"));
+            this.firstGetCapabiltiesUrl = "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(urlValue);
+            elementMapLink.put("href", this.firstGetCapabiltiesUrl);
+            // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
+            ArrayList list = new ArrayList();
+            list.add(elementMapLink);
+            elementCapabilities.put("elements", list);
+            elementCapabilities.put("width", "full");
+            elements.add(elementCapabilities);
+	    }        
 	}
 
 	/** ONLY CALLED FOR CLASS 3 GEODATENDIENST !!! */

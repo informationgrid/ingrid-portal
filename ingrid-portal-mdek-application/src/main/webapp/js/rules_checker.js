@@ -58,9 +58,9 @@ function isObjectPublishable() {
     // check first general validity
     checkValidityOfInputElements(notPublishableIDs);
     
-    var widgets = dojo.query(".rubric:not(.hide) .required .dijitTextBox:not(.noValidate), .rubric:not(.hide) .required .dijitSelect:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.getAttribute("widgetid");});
+    var widgets = dojo.query(".rubric:not(.hide) .required:not(.hide) .dijitTextBox:not(.noValidate), .rubric:not(.hide) .required:not(.hide) .dijitSelect:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.getAttribute("widgetid");});
     widgets = widgets.concat(dojo.query(".dijitTextBox, .dijitSelect", "sectionTopObject").map(function(item) {return item.getAttribute("widgetid");}));
-    var grids = dojo.query(".rubric:not(.hide) .required .ui-widget:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.id;});
+    var grids = dojo.query(".rubric:not(.hide) .required:not(.hide) .ui-widget:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.id;});
     
     dojo.forEach(widgets, function(w) {
         if (dojo.trim(dijit.byId(w).get("displayedValue")).length == 0) {

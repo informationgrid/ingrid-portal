@@ -43,7 +43,7 @@ public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
 
     private Long getLastModifiedTimestampFromDb() {
         List<String> iplugList = connectionFacade.getMdekClientCaller().getRegisteredIPlugs();
-        Long lowestTimestamp = -1L;
+        Long lowestTimestamp = null;
         for (String iplug : iplugList) {
             IngridDocument response = connectionFacade.getMdekCallerCatalog().getLastModifiedTimestampOfSyslists(iplug, getCatAdminUuid(iplug));
             Long timestamp = MdekCatalogUtils.extractLastModifiedTimestampFromResponse(response);
@@ -51,7 +51,7 @@ public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
                 lowestTimestamp = timestamp;
             }
         }
-        return lowestTimestamp;
+        return lowestTimestamp == null ? -1 : lowestTimestamp;
     }
     
     private String getCatAdminUuid(String plugId) {
