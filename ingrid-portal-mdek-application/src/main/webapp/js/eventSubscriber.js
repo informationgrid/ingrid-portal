@@ -2339,8 +2339,11 @@ udkDataProxy._getObjectData = function(nodeData)
     case '6':
       udkDataProxy._getObjectDataClass6(nodeData);
       break;
+    case '7':
+        //udkDataProxy._getObjectDataClass7(nodeData);
+        break;
     default:
-      console.debug("Error in udkDataProxy._getObjectData - Object Class must be 0...5!");
+      console.debug("Error in udkDataProxy._getObjectData - Object Class must be 0...7!");
       break;
   }
 
@@ -3323,14 +3326,15 @@ igeEvents.getCapabilities = function(url, callback) {
         preHook: showLoadingZone,
         postHook: hideLoadingZone,
         callback: function(res) {
-            if (res.versions == "1.3.0") {
+            /*if (res.versions == "1.3.0") {
                 dialog.show(message.get('general.warning'), dojo.string.substitute(message.get('dialog.wizard.getCap.version.warning'),[res.versions]), dialog.WARNING, [
                     { caption: message.get('general.no'),  action: function() { dijit.byId("InfoDialog").hide(); scriptScope.closeThisDialog(); } },
                     { caption: message.get('general.ok'), action: function() { dijit.byId("InfoDialog").hide(); callback(res); } }
                 ]);
             } else {
                 callback(res);
-            }
+            }*/
+            callback(res);
         },
         errorHandler:function(errMsg, err) {
             hideLoadingZone();
@@ -3345,7 +3349,7 @@ igeEvents.getCapabilityUrl = function() {
     var data = UtilGrid.getTableData("ref3Operation");
     var type = dijit.byId("ref3ServiceType").value;
     dojo.some(data, function(item) {
-        if (item.methodCall == "GetCapabilities") {
+        if (item.name == "GetCapabilities") {
             url = item.addressList[0].title;
             url = UtilString.addCapabilitiesParameter(type, url);
         }
