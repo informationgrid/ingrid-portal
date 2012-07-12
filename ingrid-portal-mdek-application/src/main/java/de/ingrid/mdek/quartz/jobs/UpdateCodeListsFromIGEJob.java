@@ -28,21 +28,33 @@ public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
         
         CodeListService clService = getClServiceFromBean(jobExecutionContext);
         Long timestamp = getLastModifiedTimestampFromDb();
-        boolean success = clService.updateFromServer(timestamp);
         
-        // update db with initial codelists from service if no codelist could be fetched
-        // and there never has been an update to the db (timestamp does not exist!)
-        if (success == false && timestamp == -1) {
-            clService.persistToAll(clService.getCodeLists());
-        }
-        
-        if (log.isDebugEnabled()) {
-            log.debug("UpdateCodeListsFromIGEJob finished! (successful = " + success + ")");
+        // if at least one iPlug was found/connected
+        if (timestamp != null) {
+            boolean success = clService.updateFromServer(timestamp);
+            
+            // update db with initial codelists from service if no codelist could be fetched
+            // and there never has been an update to the db (timestamp does not exist!)
+            if (success == false && timestamp == -1) {
+                clService.persistToAll(clService.getCodeLists());
+            }
+            
+            if (log.isDebugEnabled()) {
+                log.debug("UpdateCodeListsFromIGEJob finished! (successful = " + success + ")");
+            }
+        } else {
+            if (log.isDebugEnabled()) {
+                log.debug("No iPlug connected to update codelists to!");
+            }
         }
     }
 
     private Long getLastModifiedTimestampFromDb() {
         List<String> iplugList = connectionFacade.getMdekClientCaller().getRegisteredIPlugs();
+        
+        if (iplugList.isEmpty())
+            return null;
+        
         Long lowestTimestamp = null;
         for (String iplug : iplugList) {
             IngridDocument response = connectionFacade.getMdekCallerCatalog().getLastModifiedTimestampOfSyslists(iplug, getCatAdminUuid(iplug));
