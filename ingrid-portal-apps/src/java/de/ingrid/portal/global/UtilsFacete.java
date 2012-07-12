@@ -468,7 +468,7 @@ public class UtilsFacete {
 								boolean isFound=false;
 								for (Iterator<String> iterator = elementsPartner.keySet().iterator(); iterator.hasNext();) {
 									String key = iterator.next();
-									if(key.equals(partners)){
+									if(key.equals(partner)){
 										isFound=true;
 										break;
 									}
@@ -488,7 +488,7 @@ public class UtilsFacete {
 								boolean isFound=false;
 								for (Iterator<String> iterator = elementsProvider.keySet().iterator(); iterator.hasNext();) {
 									String key = iterator.next();
-									if(key.equals(providers)){
+									if(key.equals(provider)){
 										isFound=true;
 										break;
 									}
