@@ -48,6 +48,7 @@ import de.ingrid.portal.search.net.QueryDescriptor;
 import de.ingrid.portal.search.net.ThreadedQueryController;
 import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
@@ -224,11 +225,7 @@ public class UtilsFacete {
 	 * @param context
 	 * @param facete
 	 */
-	public static void setParamsToContext(RenderRequest request, Context context, IngridDocument facete) {
-		
-		if(facete == null){
-			removeFaceteElementsFromSession(request);
-		}
+	public static void setParamsToContext(RenderRequest request, Context context, boolean deleteFacets) {
 		
 		getFacetAttributsParamsFromUrl(request);
 		setParamsToContextTopic(request, context);
@@ -297,7 +294,7 @@ public class UtilsFacete {
 	 * @param facetes
 	 * @param request
 	 */
-	public static void checkForExistingFacete(IngridDocument facetes, PortletRequest request) {
+	public static void checkForExistingFacete(IngridHitsWrapper hits, PortletRequest request) {
 		
 		HashMap<String, Long> elementsProvider = null;
 		HashMap<String, Long> elementsPartner = null;
@@ -308,80 +305,257 @@ public class UtilsFacete {
 		HashMap<String, Long> elementsGeothesaurus = null;
 		HashMap<String, Long> elementsMap = null;
 		
-		for (Iterator<String> iterator = facetes.keySet().iterator(); iterator.hasNext();) {
-			String key = iterator.next();
-			Long value = (Long) facetes.get(key);
+		IngridDocument facets = (IngridDocument) hits.get("FACETS");
+		if(facets != null){
+			for (Iterator<String> iterator = facets.keySet().iterator(); iterator.hasNext();) {
+				String key = iterator.next();
+				Long value = (Long) facets.get(key);
+				
+				if(value > 0){
+					if (key.startsWith("provider")){
+						if(elementsProvider == null){
+							elementsProvider = new HashMap<String, Long>();
+						}
+						elementsProvider.put(key.replace("provider:", ""), value);
+						
+					}else if(key.startsWith("partner")){
+						if(elementsPartner == null){
+							elementsPartner = new HashMap<String, Long>();
+						}
+						elementsPartner.put(key.replace("partner:", ""), value);
+						
+					}else if(key.startsWith("topic")){
+						if(elementsTopic == null){
+							elementsTopic = new HashMap<String, Long>();
+						}
+						elementsTopic.put(key.replace("topic:", ""), value);
+						
+					}else if(key.startsWith("metaclass")){
+						if(elementsMetaclass == null){
+							elementsMetaclass = new HashMap<String, Long>();
+						}
+						
+						String replaceKey = key.replace("metaclass:", "");
+						ArrayList<String> selectedMetaclass = (ArrayList<String>) getAttributeFromSession(request, SELECTED_METACLASS);
+						if(selectedMetaclass != null && selectedMetaclass.size() > 0){
+							String metaclass = selectedMetaclass.get(0);
+							if(replaceKey.equals(metaclass)){
+								elementsMetaclass.put(replaceKey, value);	
+							}
+						}else{
+							elementsMetaclass.put(replaceKey, value);
+						}
+					}else if(key.startsWith("type:")){
+						if(elementsDatatype == null){
+							elementsDatatype = new HashMap<String, Long>();
+						}
+						String replaceKey = key.replace("type:", "");
+						ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE); 
+						if(selectedDatatype != null && selectedDatatype.size() > 0){
+							String metaclass = selectedDatatype.get(0);
+							if(replaceKey.equals(metaclass)){
+								elementsDatatype.put(replaceKey, value);	
+							}
+						}else{
+							elementsDatatype.put(replaceKey, value);
+						}
+	
+					}else if(key.startsWith("modtime:")){
+						if(elementsTime == null){
+							elementsTime = new HashMap<String, Long>();
+						}
+						elementsTime.put(key.replace("modtime:", ""), value);
+	
+					}else if(key.startsWith("geothesaurus:")){
+						if(elementsGeothesaurus == null){
+							elementsGeothesaurus = new HashMap<String, Long>();
+						}
+						elementsGeothesaurus.put(key.replace("geothesaurus:", ""), value);
+	
+					}else if(key.startsWith("coords:")){
+						if(elementsMap == null){
+							elementsMap = new HashMap<String, Long>();
+						}
+						elementsMap.put(key.replace("coords:", ""), value);
+	
+					}
+				}
+			}		
 			
-			if(value > 0){
-				if (key.startsWith("provider")){
-					if(elementsProvider == null){
-						elementsProvider = new HashMap<String, Long>();
-					}
-					elementsProvider.put(key.replace("provider:", ""), value);
-					
-				}else if(key.startsWith("partner")){
-					if(elementsPartner == null){
-						elementsPartner = new HashMap<String, Long>();
-					}
-					elementsPartner.put(key.replace("partner:", ""), value);
-					
-				}else if(key.startsWith("topic")){
-					if(elementsTopic == null){
-						elementsTopic = new HashMap<String, Long>();
-					}
-					elementsTopic.put(key.replace("topic:", ""), value);
-					
-				}else if(key.startsWith("metaclass")){
-					if(elementsMetaclass == null){
-						elementsMetaclass = new HashMap<String, Long>();
-					}
-					
-					String replaceKey = key.replace("metaclass:", "");
-					ArrayList<String> selectedMetaclass = (ArrayList<String>) getAttributeFromSession(request, SELECTED_METACLASS);
-					if(selectedMetaclass != null && selectedMetaclass.size() > 0){
-						String metaclass = selectedMetaclass.get(0);
-						if(replaceKey.equals(metaclass)){
-							elementsMetaclass.put(replaceKey, value);	
+			if (elementsDatatype != null){
+				String[] sortedRanking = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETS_DATATYPE);
+				if(sortedRanking.length==defaultDatatypes.length){
+					setAttributeToSession(request, ELEMENTS_DATATYPE, sortHashMapAsArrayList(elementsDatatype, sortedRanking));
+				}else{
+					setAttributeToSession(request, ELEMENTS_DATATYPE, sortHashMapAsArrayList(elementsDatatype));
+				}
+				
+				
+			} else{
+				removeAttributeFromSession(request, ELEMENTS_DATATYPE);
+			}
+			
+			if (elementsProvider != null){
+				IngridDocument doc = getDefaultFacetsProvider(request);
+		    	checkForExistingORFacets(doc, request);
+			} else{
+				removeAttributeFromSession(request, ELEMENTS_PROVIDER);
+			}
+			
+			
+			if (elementsTopic != null){
+				IngridDocument doc = getDefaultFacetsTopics(request);
+		    	checkForExistingORFacets(doc, request);
+				
+			} else{
+				removeAttributeFromSession(request, ELEMENTS_TOPIC);
+			}
+			
+			if (elementsPartner != null){
+				setAttributeToSession(request, ELEMENTS_PARTNER, sortHashMapAsArrayList(elementsPartner));
+			} else{
+				removeAttributeFromSession(request, ELEMENTS_PARTNER);
+			}
+			
+			if (elementsMetaclass != null){
+				String[] sortedRanking = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETS_METACLASS);
+				if(sortedRanking.length==defaultMetaclasses.length){
+					setAttributeToSession(request, ELEMENTS_METACLASS, sortHashMapAsArrayList(elementsMetaclass, sortedRanking));
+				}else{
+					setAttributeToSession(request, ELEMENTS_METACLASS, sortHashMapAsArrayList(elementsMetaclass));
+				}
+			} else{
+				removeAttributeFromSession(request, ELEMENTS_METACLASS);
+			}
+			
+			if (elementsTime != null){
+				setAttributeToSession(request, ELEMENTS_TIME, sortHashMapAsArrayList(elementsTime));
+			} else{
+				removeAttributeFromSession(request, ELEMENTS_TIME);
+			}
+			
+			if (elementsGeothesaurus != null){
+				setAttributeToSession(request, ELEMENTS_GEOTHESAURUS, sortHashMapAsArrayList(elementsGeothesaurus));
+			} else{
+				removeAttributeFromSession(request, ELEMENTS_GEOTHESAURUS);
+			}
+		
+			if (elementsMap != null){
+				setAttributeToSession(request, ELEMENTS_MAP, sortHashMapAsArrayList(elementsMap));
+			} else{
+				removeAttributeFromSession(request, ELEMENTS_MAP);
+			}
+		}
+		// Add facets from older iplugs without facets values
+		checkNonFacetsIplugs(hits.getHits(), elementsDatatype, elementsPartner, elementsProvider, request);
+	}
+
+	private static void checkNonFacetsIplugs(IngridHit[] hits, HashMap<String, Long> elementsDatatype, HashMap<String, Long> elementsPartner, HashMap<String, Long> elementsProvider, PortletRequest request) {
+		
+		if(hits != null){
+			for (int i=0; i<hits.length; i++){
+				IngridHit hit = hits[i];
+				if(hit.getHitDetail() != null){
+					PlugDescription pd = (PlugDescription) hit.get("plugDescr");
+					if(pd != null){
+						String[] partners = pd.getPartners();
+						if(partners != null){
+							for(int j=0; j<partners.length; j++){
+								String partner = partners[j];
+								if(elementsPartner == null){
+									elementsPartner = new HashMap<String, Long>();
+								}
+								boolean isFound=false;
+								for (Iterator<String> iterator = elementsPartner.keySet().iterator(); iterator.hasNext();) {
+									String key = iterator.next();
+									if(key.equals(partners)){
+										isFound=true;
+										break;
+									}
+								}
+								if(!isFound){
+									elementsPartner.put(partner, 0L);						
+								}
+							}
 						}
-					}else{
-						elementsMetaclass.put(replaceKey, value);
-					}
-				}else if(key.startsWith("type:")){
-					if(elementsDatatype == null){
-						elementsDatatype = new HashMap<String, Long>();
-					}
-					String replaceKey = key.replace("type:", "");
-					ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE); 
-					if(selectedDatatype != null && selectedDatatype.size() > 0){
-						String metaclass = selectedDatatype.get(0);
-						if(replaceKey.equals(metaclass)){
-							elementsDatatype.put(replaceKey, value);	
+						String[] providers = pd.getProviders();
+						if(providers != null){
+							for(int j=0; j<providers.length; j++){
+								String provider = providers[j];
+								if(elementsProvider == null){
+									elementsProvider = new HashMap<String, Long>();
+								}
+								boolean isFound=false;
+								for (Iterator<String> iterator = elementsProvider.keySet().iterator(); iterator.hasNext();) {
+									String key = iterator.next();
+									if(key.equals(providers)){
+										isFound=true;
+										break;
+									}
+								}
+								if(!isFound){
+									elementsProvider.put(provider, 0L);			
+								}
+							}
 						}
-					}else{
-						elementsDatatype.put(replaceKey, value);
+						String[] datatypes = pd.getDataTypes();
+						if(datatypes != null){
+							if(elementsDatatype == null){
+								elementsDatatype = new HashMap<String, Long>();
+							}
+							ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE); 
+							if(selectedDatatype != null && selectedDatatype.size() > 0){
+								for(int j=0; j<selectedDatatype.size();j++){
+									String datatype = selectedDatatype.get(j);
+									for(int k=0; k<datatypes.length; k++){
+										String value = datatypes[k];
+										if(value.equals("topics")){
+											value = "topic";
+										}
+										if(datatype.equals(value)){
+											boolean isFound=false;
+											for (Iterator<String> iterator = elementsDatatype.keySet().iterator(); iterator.hasNext();) {
+												String key = iterator.next();
+												if(key.equals(datatype)){
+													isFound=true;
+													break;
+												}
+											}
+											if(!isFound){
+												elementsDatatype.put(datatype, 0L);		
+											}
+										}
+									}
+								}
+							}else{
+								for(int j=0; j<defaultDatatypes.length;j++){
+									String datatype = defaultDatatypes[j];
+									for(int k=0; k<datatypes.length; k++){
+										String value = datatypes[k];
+										if(value.equals("topics")){
+											value = "topic";
+										}
+										if(datatype.equals(value)){
+											boolean isFound=false;
+											for (Iterator<String> iterator = elementsDatatype.keySet().iterator(); iterator.hasNext();) {
+												String key = iterator.next();
+												if(key.equals(datatype)){
+													isFound=true;
+													break;
+												}
+											}
+											if(!isFound){
+												elementsDatatype.put(datatype, 0L);		
+											}
+										}
+									}
+								}
+							}
+						}
 					}
-
-				}else if(key.startsWith("modtime:")){
-					if(elementsTime == null){
-						elementsTime = new HashMap<String, Long>();
-					}
-					elementsTime.put(key.replace("modtime:", ""), value);
-
-				}else if(key.startsWith("geothesaurus:")){
-					if(elementsGeothesaurus == null){
-						elementsGeothesaurus = new HashMap<String, Long>();
-					}
-					elementsGeothesaurus.put(key.replace("geothesaurus:", ""), value);
-
-				}else if(key.startsWith("coords:")){
-					if(elementsMap == null){
-						elementsMap = new HashMap<String, Long>();
-					}
-					elementsMap.put(key.replace("coords:", ""), value);
-
 				}
 			}
-		}		
+		}
 		
 		if (elementsDatatype != null){
 			String[] sortedRanking = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETS_DATATYPE);
@@ -390,65 +564,24 @@ public class UtilsFacete {
 			}else{
 				setAttributeToSession(request, ELEMENTS_DATATYPE, sortHashMapAsArrayList(elementsDatatype));
 			}
-			
-			
 		} else{
 			removeAttributeFromSession(request, ELEMENTS_DATATYPE);
 		}
 		
 		if (elementsProvider != null){
-			IngridDocument doc = getDefaultFacetsProvider(request);
-	    	checkForExistingORFacets(doc, request);
+			setAttributeToSession(request, ELEMENTS_PROVIDER, sortHashMapAsArrayList(elementsProvider));
 		} else{
 			removeAttributeFromSession(request, ELEMENTS_PROVIDER);
 		}
 		
-		
-		if (elementsTopic != null){
-			IngridDocument doc = getDefaultFacetsTopics(request);
-	    	checkForExistingORFacets(doc, request);
-			
-		} else{
-			removeAttributeFromSession(request, ELEMENTS_TOPIC);
-		}
 		
 		if (elementsPartner != null){
 			setAttributeToSession(request, ELEMENTS_PARTNER, sortHashMapAsArrayList(elementsPartner));
 		} else{
 			removeAttributeFromSession(request, ELEMENTS_PARTNER);
 		}
-		
-		if (elementsMetaclass != null){
-			String[] sortedRanking = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETS_METACLASS);
-			if(sortedRanking.length==defaultMetaclasses.length){
-				setAttributeToSession(request, ELEMENTS_METACLASS, sortHashMapAsArrayList(elementsMetaclass, sortedRanking));
-			}else{
-				setAttributeToSession(request, ELEMENTS_METACLASS, sortHashMapAsArrayList(elementsMetaclass));
-			}
-		} else{
-			removeAttributeFromSession(request, ELEMENTS_METACLASS);
-		}
-		
-		if (elementsTime != null){
-			setAttributeToSession(request, ELEMENTS_TIME, sortHashMapAsArrayList(elementsTime));
-		} else{
-			removeAttributeFromSession(request, ELEMENTS_TIME);
-		}
-		
-		if (elementsGeothesaurus != null){
-			setAttributeToSession(request, ELEMENTS_GEOTHESAURUS, sortHashMapAsArrayList(elementsGeothesaurus));
-		} else{
-			removeAttributeFromSession(request, ELEMENTS_GEOTHESAURUS);
-		}
-	
-		if (elementsMap != null){
-			setAttributeToSession(request, ELEMENTS_MAP, sortHashMapAsArrayList(elementsMap));
-		} else{
-			removeAttributeFromSession(request, ELEMENTS_MAP);
-		}
-	
 	}
-
+	
 	/***************************** THEMEN **********************************************/
 	
 	private static void setFaceteQueryParamsTopic(ArrayList<IngridDocument> list, PortletRequest request) {
@@ -942,9 +1075,7 @@ public class UtilsFacete {
 	private static void addToQueryDatatype(PortletRequest request, IngridQuery query) {
 		
 		ArrayList<String> selectedDatatype = (ArrayList<String>) getAttributeFromSession(request, SELECTED_DATATYPE);
-		String searchQuery = request.getParameter("q");
-    	String searchDs = request.getParameter("ds");
-    	boolean isWww=false;
+		boolean isWww=false;
 		boolean isMetadata=false;
 		boolean isAddress=false;
 		boolean isLaw=false;

@@ -40,7 +40,6 @@ import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.portal.search.net.QueryDescriptor;
 import de.ingrid.portal.search.net.ThreadedQueryController;
-import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.query.IngridQuery;
 
 /**
@@ -632,10 +631,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             
             if(rankedHits != null){
             	if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
-            		if(rankedHits.get("FACETS") != null){
-	                   	UtilsFacete.checkForExistingFacete((IngridDocument) rankedHits.get("FACETS"), request);
-	               	}
-	               	UtilsFacete.setParamsToContext(request, context, (IngridDocument) rankedHits.get("FACETS") );
+            		UtilsFacete.checkForExistingFacete((IngridHitsWrapper) rankedHits, request);
+	                UtilsFacete.setParamsToContext(request, context, true);
             	}
             }
             
@@ -657,10 +654,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("unrankedPageSelector", unrankedPageNavigation);
         if(rankedHits != null){
         	if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
-                if(rankedHits.get("FACETS") != null){
-	               	UtilsFacete.checkForExistingFacete((IngridDocument) rankedHits.get("FACETS"), request);
-	           	}
-	           	UtilsFacete.setParamsToContext(request, context, (IngridDocument) rankedHits.get("FACETS"));
+                UtilsFacete.checkForExistingFacete((IngridHitsWrapper) rankedHits, request);
+	            UtilsFacete.setParamsToContext(request, context, true);
         	}
         }
         context.put("rankedResultList", rankedHits);

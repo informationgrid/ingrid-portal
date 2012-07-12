@@ -113,13 +113,12 @@
     #foreach($number in $numbers)
 		#foreach($key in $number.keySet())
 			#if($key == "$id")
-				#set($isFound = true)
-				($number.get($key))
+				#set($num = "$number.get($key)")
+				#if($num != "" && $num != "0")
+					($num)
+				#end
 			#end
 		#end
-	#end
-	#if(!$isFound)
-		(0)
 	#end
 	</span>
 #end
@@ -136,23 +135,20 @@
 	#set($isFound = false)
    	#foreach($key in $numbers.keySet())
 		#if($key == "$id")
-			#set($isFound = true)
-			($numbers.get($key))
+			#set($num = "$numbers.get($key)")
+			#if($num != "" && $num != "0")
+    			($num)
+			#end
 		#end
-	#end
-	#if(!$isFound)
-		(0)
 	#end
 	</span>
 #end
 
 #macro(renderLinkEntryNumber $number)
 	<span class="facete_label_number">
-       	#if($number != "")
+       	#if($number != "" && $number != "0")
     			($number)
-    	#else
-    		(0)
-		#end
+    	#end
 	</span>
 #end
 
