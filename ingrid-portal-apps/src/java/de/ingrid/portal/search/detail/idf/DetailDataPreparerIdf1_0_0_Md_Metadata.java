@@ -1567,30 +1567,34 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         		String size = "";
         		float roundSize = 0;
         		
-        		if(XPathUtils.nodeExists(nodeList.item(i),"./gmd:MD_DigitalTransferOptions/gmd:onLine")){
-        			xpathExpression = "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:linkage/gmd:URL";
-            		if(XPathUtils.nodeExists(nodeList.item(i), xpathExpression)){
-            			url = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
+        		NodeList onLineList = XPathUtils.getNodeList(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine");
+        		
+        		for (int j=0; j<onLineList.getLength();j++){
+        		    
+        		//if(XPathUtils.nodeExists(nodeList.item(i),"./gmd:MD_DigitalTransferOptions/gmd:onLine")){
+        			xpathExpression = "./*/gmd:linkage/gmd:URL";
+            		if(XPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
+            			url = XPathUtils.getString(onLineList.item(j), xpathExpression).trim();
             		}
             		
-            		xpathExpression = "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:function/gmd:CI_OnLineFunctionCode/@codeListValue";
-            		if(XPathUtils.nodeExists(nodeList.item(i), xpathExpression)){
-            			function = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
+            		xpathExpression = "./*/gmd:function/gmd:CI_OnLineFunctionCode/@codeListValue";
+            		if(XPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
+            			function = XPathUtils.getString(onLineList.item(j), xpathExpression).trim();
             		}
             		
-            		xpathExpression = "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:description";
-            		if(XPathUtils.nodeExists(nodeList.item(i), xpathExpression)){
-            			description = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
+            		xpathExpression = "./*/gmd:description";
+            		if(XPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
+            			description = XPathUtils.getString(onLineList.item(j), xpathExpression).trim();
             		}
             		
-            		xpathExpression = "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:name";
-            		if(XPathUtils.nodeExists(nodeList.item(i), xpathExpression)){
-            			name = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
+            		xpathExpression = "./*/gmd:name";
+            		if(XPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
+            			name = XPathUtils.getString(onLineList.item(j), xpathExpression).trim();
             		}
             		
-            		xpathExpression = "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField";
-            		if(XPathUtils.nodeExists(nodeList.item(i), xpathExpression)){
-            			attachedToField = XPathUtils.getString(nodeList.item(i), xpathExpression).trim();
+            		xpathExpression = "./*/idf:attachedToField";
+            		if(XPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
+            			attachedToField = XPathUtils.getString(onLineList.item(j), xpathExpression).trim();
             		}
 
             		// also mapped by T0112_media_option !!!
