@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import de.ingrid.mdek.beans.ProfileBean;
 import de.ingrid.mdek.dwr.services.CatalogServiceImpl;
-import de.ingrid.mdek.profile.ProfileConverter;
+import de.ingrid.utils.ige.profile.ProfileConverter;
+import de.ingrid.utils.ige.profile.beans.ProfileBean;
 
 public class ProfileServlet extends HttpServlet {
 

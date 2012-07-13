@@ -8,8 +8,8 @@ import org.directwebremoting.io.FileTransfer;
 
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.GenericValueBean;
-import de.ingrid.mdek.beans.ProfileBean;
 import de.ingrid.mdek.beans.SysList;
+import de.ingrid.utils.ige.profile.beans.ProfileBean;
 
 public interface CatalogService {
 
