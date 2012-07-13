@@ -238,7 +238,9 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			getNodeValue(elementsAdditionalInfo, xpathExpression, messages.getString("t01_object.metadata_standard_version"));
 			*/
 
-			addSpace(elementsAdditionalInfo);
+			if(elementsAdditionalInfo != null && elementsAdditionalInfo.size() > 0){
+				addSpace(elementsAdditionalInfo);
+			}
 			// Addresse (Metadatum)
 			xpathExpression = "./gmd:identificationInfo/*/gmd:pointOfContact";
 			getAddresses(elementsAdditionalInfo, xpathExpression, true);
@@ -2501,17 +2503,44 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         
         if(isForAdditionalInfo){
             if(elementsAddress != null && elementsAddress.size() > 0){
-                elements.add(elementsAddress.get(0));
+            	HashMap a = (HashMap) elementsAddress.get(0);
+            	if(a != null){
+        			ArrayList ae = (ArrayList) a.get("elements");
+        			if(ae != null && ae.size() > 0){
+        				elements.add(a);
+        			}
+        		}
             }
         }else{
-            if(elementsAddress.size() > 0){
-                HashMap elementAddress = new HashMap();
-                elementAddress.put("type", "multiLineAddresses");
-                elementAddress.put("title", messages.getString("addresses"));
-                elementAddress.put("id", "addresses_id");
-                elementAddress.put("elementsAddress", elementsAddress);
-                elements.add(elementAddress);
-            }
+        	HashMap elementAddress = new HashMap();
+        	if(elementsAddress != null){
+	        	switch (elementsAddress.size()) {
+	        	case 1:
+	        		HashMap a = (HashMap) elementsAddress.get(0);
+	        		if(a != null){
+	        			ArrayList ae = (ArrayList) a.get("elements");
+	        			if(ae != null && ae.size() > 0){
+	        				elementAddress.put("type", "multiLineAddresses");
+	                        elementAddress.put("title", messages.getString("addresses"));
+	                        elementAddress.put("id", "addresses_id");
+	                        elementAddress.put("elementsAddress", elementsAddress);
+	                        elements.add(elementAddress);
+	        			}
+	        		}
+					break;
+	
+				default:
+					if(elementsAddress.size() > 0){
+						elementAddress.put("type", "multiLineAddresses");
+		                elementAddress.put("title", messages.getString("addresses"));
+		                elementAddress.put("id", "addresses_id");
+		                elementAddress.put("elementsAddress", elementsAddress);
+		                elements.add(elementAddress);
+					}
+					break;
+	        	}
+        	}
+            
         }
     }
     
@@ -2765,7 +2794,9 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
             NodeList electronicMailAddressNodeList = XPathUtils.getNodeList(node, xpathExpression);
             for (int i = 0; i < electronicMailAddressNodeList.getLength(); i++) {
                 String value = XPathUtils.getString(electronicMailAddressNodeList.item(i), ".").trim();
-                elements.add(addElementEmailWeb(sysCodeList.getName("4430", "3"), value, value, value, LinkType.EMAIL));
+                if(value != null && value.length() > 0){
+                	elements.add(addElementEmailWeb(sysCodeList.getName("4430", "3"), value, value, value, LinkType.EMAIL));
+                }
             }
         }
         
@@ -2773,21 +2804,27 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice";
         if (XPathUtils.nodeExists(node, xpathExpression)) {
             String value = XPathUtils.getString(node, xpathExpression).trim();
-            addElement(elements, "textLine", value, sysCodeList.getName("4430", "1"));
+            if(value != null && value.length() > 0){
+                addElement(elements, "textLine", value, sysCodeList.getName("4430", "1"));
+            }
         }
         
         // "Fax"
         xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:facsimile";
         if (XPathUtils.nodeExists(node, xpathExpression)) {
             String value = XPathUtils.getString(node, xpathExpression).trim();
-            addElement(elements, "textLine", value, sysCodeList.getName("4430", "2"));
+            if(value != null && value.length() > 0){
+                addElement(elements, "textLine", value, sysCodeList.getName("4430", "2"));
+            }
         }
         
         // "URL"
         xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL";
         if (XPathUtils.nodeExists(node, xpathExpression)) {
             String value = XPathUtils.getString(node, xpathExpression).trim();
-            elements.add(addElementEmailWeb(sysCodeList.getName("4430", "4"), value, value, value, LinkType.WWW_URL));
+            if(value != null && value.length() > 0){
+                elements.add(addElementEmailWeb(sysCodeList.getName("4430", "4"), value, value, value, LinkType.WWW_URL));
+            }
         }
         
     }
