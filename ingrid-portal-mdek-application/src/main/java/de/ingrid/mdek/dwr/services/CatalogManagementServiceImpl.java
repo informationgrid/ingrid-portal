@@ -25,7 +25,6 @@ import org.xml.sax.SAXException;
 import au.com.bytecode.opencsv.CSVWriter;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekKeysSecurity;
-import de.ingrid.mdek.MdekUtils.CsvRequestType;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.SNSLocationUpdateJobInfoBean;
@@ -47,6 +46,7 @@ import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.ige.MdekUtils.CsvRequestType;
 
 public class CatalogManagementServiceImpl {
 

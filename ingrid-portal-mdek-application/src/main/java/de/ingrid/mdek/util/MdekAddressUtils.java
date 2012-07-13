@@ -8,14 +8,14 @@ import java.util.Map;
 import de.ingrid.mdek.DataMapperInterface;
 import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekKeys;
-import de.ingrid.mdek.MdekUtils.AddressType;
-import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressSearchResultBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
 import de.ingrid.mdek.beans.query.StatisticsBean;
 import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.ige.MdekUtils.AddressType;
+import de.ingrid.utils.ige.MdekUtils.WorkState;
 
 public class MdekAddressUtils {
 

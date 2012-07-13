@@ -18,7 +18,6 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekMapper;
-import de.ingrid.mdek.MdekUtils.SearchtermType;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.dwr.services.sns.SNSService;
@@ -30,6 +29,7 @@ import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.ige.MdekUtils.SearchtermType;
 
 public class SNSUpdateJob extends QuartzJobBean implements MdekJob, InterruptableJob {
 

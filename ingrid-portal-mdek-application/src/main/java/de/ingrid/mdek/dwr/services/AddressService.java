@@ -2,15 +2,15 @@ package de.ingrid.mdek.dwr.services;
 
 import java.util.List;
 
-import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
-import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
-import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
-import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressSearchResultBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
+import de.ingrid.utils.ige.MdekUtils.IdcEntityOrderBy;
+import de.ingrid.utils.ige.MdekUtils.IdcQAEntitiesSelectionType;
+import de.ingrid.utils.ige.MdekUtils.IdcWorkEntitiesSelectionType;
+import de.ingrid.utils.ige.MdekUtils.WorkState;
 
 public interface AddressService {
 

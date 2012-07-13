@@ -125,7 +125,7 @@ public class MdekCatalogUtils {
 	public static String removeMetadataFromSysListEntry(Integer listId, String entryValue) {
 		String retValue = entryValue;
 		
-		if (de.ingrid.mdek.MdekUtils.MdekSysList.OBJ_CONFORMITY_SPECIFICATION.getDbValue().equals(listId)) {
+		if (de.ingrid.utils.ige.MdekUtils.MdekSysList.OBJ_CONFORMITY_SPECIFICATION.getDbValue().equals(listId)) {
 			retValue = UtilsUDKCodeLists.parseCodeListEntryName(entryValue, ParseType.DATE_AT_END)[0];
 		}
 
@@ -154,7 +154,7 @@ public class MdekCatalogUtils {
 		List<String[]> returnList = null;
 
 		ParseType parseType = null;
-		if (de.ingrid.mdek.MdekUtils.MdekSysList.OBJ_CONFORMITY_SPECIFICATION.getDbValue().equals(listId)) {
+		if (de.ingrid.utils.ige.MdekUtils.MdekSysList.OBJ_CONFORMITY_SPECIFICATION.getDbValue().equals(listId)) {
 			parseType = ParseType.DATE_AT_END;
 		}
 		
@@ -186,7 +186,7 @@ public class MdekCatalogUtils {
 			String[] entryNamesDe = (String[]) listDocument.get(MdekKeys.LST_ENTRY_NAMES_DE);
 			String[] entryNamesEn = (String[]) listDocument.get(MdekKeys.LST_ENTRY_NAMES_EN);
 			Integer defaultIndex = (Integer) listDocument.get(MdekKeys.LST_DEFAULT_ENTRY_INDEX);
-			Boolean maintainable = (de.ingrid.mdek.MdekUtils.YES_INTEGER == ((Integer) listDocument.get(MdekKeys.LST_MAINTAINABLE)));
+			Boolean maintainable = (de.ingrid.utils.ige.MdekUtils.YES_INTEGER == ((Integer) listDocument.get(MdekKeys.LST_MAINTAINABLE)));
 
 			sysList.setId(listId);
 			sysList.setDeEntries(entryNamesDe);

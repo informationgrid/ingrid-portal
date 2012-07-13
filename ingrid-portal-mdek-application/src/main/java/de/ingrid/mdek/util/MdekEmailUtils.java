@@ -32,12 +32,12 @@ import de.ingrid.mdek.beans.SNSLocationUpdateResult;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.security.User;
+import de.ingrid.mdek.caller.IMdekCaller.FetchQuantity;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
-import de.ingrid.mdek.caller.IMdekCaller.FetchQuantity;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.jobs.util.ExpiredDataset;
 import de.ingrid.utils.IngridDocument;
@@ -183,7 +183,7 @@ public class MdekEmailUtils {
 		if (!isWorkflowControlEnabled() || isCurrentUserQAForObject(objUuid)) {
 			return;
 		}
-		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, MdekSecurityUtils.getCurrentUserUuid());
+		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.utils.ige.MdekUtils.IdcEntityVersion.WORKING_VERSION, MdekSecurityUtils.getCurrentUserUuid());
 		sendObjectMovedMail(MdekObjectUtils.extractSingleObjectFromResponse(response), oldParentUuid, newParentUuid);
 	}
 	
@@ -215,12 +215,12 @@ public class MdekEmailUtils {
 		if (!isWorkflowControlEnabled() || isCurrentUserQAForAddress(adrUuid)) {
 			return;
 		}
-		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 1, MdekSecurityUtils.getCurrentUserUuid());
+		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.utils.ige.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 1, MdekSecurityUtils.getCurrentUserUuid());
 		sendAddressMovedMail(MdekAddressUtils.extractSingleAddressFromResponse(response), oldParentUuid, newParentUuid);	
 	}
 
 	public static void sendObjectMarkedDeletedMail(String objUuid) {
-		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, MdekSecurityUtils.getCurrentUserUuid());
+		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.utils.ige.MdekUtils.IdcEntityVersion.WORKING_VERSION, MdekSecurityUtils.getCurrentUserUuid());
 		sendObjectMarkedDeletedMail(MdekObjectUtils.extractSingleObjectFromResponse(response));
 	}
 
@@ -241,7 +241,7 @@ public class MdekEmailUtils {
 	}
 
 	public static void sendAddressMarkedDeletedMail(String adrUuid) {
-		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 1, MdekSecurityUtils.getCurrentUserUuid());
+		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.utils.ige.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 1, MdekSecurityUtils.getCurrentUserUuid());
 		sendAddressMarkedDeletedMail(MdekAddressUtils.extractSingleAddressFromResponse(response));	
 	}
 
@@ -566,7 +566,7 @@ public class MdekEmailUtils {
 			" T021Communication comm " +
 		"where " +
 			" aNode.addrId = comm.adrId " +
-			" and comm.commtypeKey = " + de.ingrid.mdek.MdekUtils.COMM_TYPE_EMAIL;
+			" and comm.commtypeKey = " + de.ingrid.utils.ige.MdekUtils.COMM_TYPE_EMAIL;
 
 		qString += " and (";		
 		for (String uuid : uuidList) {
@@ -624,7 +624,7 @@ public class MdekEmailUtils {
 	private static boolean isWorkflowControlEnabled() {
 		IngridDocument response = mdekCallerCatalog.fetchCatalog(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
 		CatalogBean cat = MdekCatalogUtils.extractCatalogFromResponse(response);
-		return (cat.getWorkflowControl() != null && cat.getWorkflowControl().equals(de.ingrid.mdek.MdekUtils.YES));
+		return (cat.getWorkflowControl() != null && cat.getWorkflowControl().equals(de.ingrid.utils.ige.MdekUtils.YES));
 	}
 
 	private static boolean isCurrentUserQAForObject(String objUuid) {
@@ -672,13 +672,13 @@ public class MdekEmailUtils {
 	}
 
 	private static String getObjectTitle(String objUuid) {
-		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, MdekSecurityUtils.getCurrentUserUuid());
+		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), objUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.utils.ige.MdekUtils.IdcEntityVersion.WORKING_VERSION, MdekSecurityUtils.getCurrentUserUuid());
 		MdekDataBean data = MdekObjectUtils.extractSingleObjectFromResponse(response);
 		return data.getTitle();
 	}
 
 	private static String getAddressTitle(String adrUuid) {
-		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 0, MdekSecurityUtils.getCurrentUserUuid());
+		IngridDocument response = mdekCallerAddress.fetchAddress(connectionFacade.getCurrentPlugId(), adrUuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.utils.ige.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 0, MdekSecurityUtils.getCurrentUserUuid());
 		MdekAddressBean data = MdekAddressUtils.extractSingleAddressFromResponse(response);
 		return MdekAddressUtils.createAddressTitle(data.getOrganisation(), data.getName(), data.getGivenName());
 	}

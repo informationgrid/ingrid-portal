@@ -17,7 +17,6 @@ import org.quartz.UnableToInterruptJobException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import de.ingrid.mdek.MdekKeys;
-import de.ingrid.mdek.MdekUtils.SpatialReferenceType;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.SNSLocationUpdateJobInfoBean;
 import de.ingrid.mdek.beans.SNSLocationUpdateResult;
@@ -31,6 +30,7 @@ import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.ige.MdekUtils.SpatialReferenceType;
 
 public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, InterruptableJob {
 

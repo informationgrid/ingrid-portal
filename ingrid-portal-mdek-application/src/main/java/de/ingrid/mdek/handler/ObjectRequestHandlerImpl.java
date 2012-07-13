@@ -5,22 +5,16 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.MdekError;
-import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekError.MdekErrorType;
-import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
-import de.ingrid.mdek.MdekUtils.IdcEntityVersion;
-import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
-import de.ingrid.mdek.MdekUtils.IdcStatisticsSelectionType;
-import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
-import de.ingrid.mdek.MdekUtils.WorkState;
+import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
+import de.ingrid.mdek.caller.IMdekCaller.FetchQuantity;
 import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekClientCaller;
-import de.ingrid.mdek.caller.IMdekCaller.FetchQuantity;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekEmailUtils;
 import de.ingrid.mdek.util.MdekErrorUtils;
@@ -28,6 +22,12 @@ import de.ingrid.mdek.util.MdekObjectUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.ige.MdekUtils.IdcEntityOrderBy;
+import de.ingrid.utils.ige.MdekUtils.IdcEntityVersion;
+import de.ingrid.utils.ige.MdekUtils.IdcQAEntitiesSelectionType;
+import de.ingrid.utils.ige.MdekUtils.IdcStatisticsSelectionType;
+import de.ingrid.utils.ige.MdekUtils.IdcWorkEntitiesSelectionType;
+import de.ingrid.utils.ige.MdekUtils.WorkState;
 
 public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 
@@ -47,12 +47,12 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 	}
 
 	public MdekDataBean getObjectDetail(String uuid) {
-		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), uuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, MdekSecurityUtils.getCurrentUserUuid());
+		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), uuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.utils.ige.MdekUtils.IdcEntityVersion.WORKING_VERSION, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekObjectUtils.extractSingleObjectFromResponse(response);
 	}
 
 	public MdekDataBean getPublishedObjectDetail(String uuid) {
-		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), uuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.PUBLISHED_VERSION, MdekSecurityUtils.getCurrentUserUuid());
+		IngridDocument response = mdekCallerObject.fetchObject(connectionFacade.getCurrentPlugId(), uuid, FetchQuantity.EDITOR_ENTITY, de.ingrid.utils.ige.MdekUtils.IdcEntityVersion.PUBLISHED_VERSION, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekObjectUtils.extractSingleObjectFromResponse(response);
 	}
 	
