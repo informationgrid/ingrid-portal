@@ -2505,7 +2505,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
             if(elementsAddress != null && elementsAddress.size() > 0){
             	HashMap a = (HashMap) elementsAddress.get(0);
             	if(a != null){
-        			ArrayList ae = (ArrayList) a.get("elements");
+        			ArrayList ae = (ArrayList) a.get("elementsAddress");
         			if(ae != null && ae.size() > 0){
         				elements.add(a);
         			}
@@ -2598,12 +2598,13 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         
         ArrayList elementsMetaAddress = new ArrayList();
         String xpathExpression = "";
-        HashMap element = addElementAddress("multiLine", null, "", "false", new ArrayList());
-        ArrayList elements = (ArrayList) element.get("elements");
+        ArrayList elements = new ArrayList();
         
         addressEvaluateNode(elements,node, isIdfResponsibleParty);
-        
-        elementsMetaAddress.add(element);
+        if(elements.size() > 0){
+        	HashMap element = addElementAddress("multiLine", null, "", "false", elements);
+            elementsMetaAddress.add(element);
+        }
         
         HashMap elementAddress = new HashMap();
         elementAddress.put("type", "multiLineAddresses");
