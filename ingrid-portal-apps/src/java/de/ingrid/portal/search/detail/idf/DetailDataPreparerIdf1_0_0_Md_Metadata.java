@@ -2212,21 +2212,33 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 							
 							value = listDominator.size();
 							if (value != 0) {
-								row.add(notNull((String) listDominator.get(i)));
+								if(value > i){
+									row.add(notNull((String) listDominator.get(i)));
+								}else{
+									row.add("");
+								}
 							} else {
 								row.add("");
 							}
 							
 							value = listMeter.size();
 							if (value != 0) {
-								row.add(notNull((String) listMeter.get(i)));
+								if(value > i){
+									row.add(notNull((String) listMeter.get(i)));	
+								}else {
+									row.add("");
+								}
 							} else {
 								row.add("");
 							}
 							
 							value = listDpi.size();
 							if (value != 0) {
-								row.add(notNull((String) listDpi.get(i)));
+								if(value > i){
+									row.add(notNull((String) listDpi.get(i)));									
+								}else{
+									row.add("");
+								}
 							} else {
 								row.add("");
 							}
