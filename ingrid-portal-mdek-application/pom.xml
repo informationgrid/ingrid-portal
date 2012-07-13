@@ -48,7 +48,7 @@
           <warSourceExcludes>TEST_*.*,test_*.*,dev_*.*,dojo-release-1.6.0/**,dojo-src/util/**,dojo-src/dojo/**,dojo-src/dijit/**,dojo-src/dojox/**</warSourceExcludes>
           <!-- NOTICE: supply log4j.jar and commons-logging.jar in war, SO log4j.properties IS READ FROM WEBAPP !!!! -->
           <!-- Tomcat is configured for log4j, so if NO log4j.jar is supplied in war, log4j.properties is read from tomcat/common/classes, ignoring the one in the war !!! -->
-          <packagingExcludes>**/ingrid-utils*.jar,**/ingrid-mdek-api*.jar,**/ehcache*.jar,**/servlet-api*.jar,**/jetspeed-api*.jar</packagingExcludes>
+          <packagingExcludes>**/ingrid-utils.jar,**/ingrid-mdek-api*.jar,**/ehcache*.jar,**/servlet-api*.jar,**/jetspeed-api*.jar</packagingExcludes>
           <!-- ALSO CREATE JAR !!! NO WAY TO ADD NO CLASSIFIER TO NAME OF JAR, DEFAULT IS "classes" -> WILL BE ADDED -->
           <attachClasses>true</attachClasses>
           <!-- CONFIG-FILES needed at runtime in classes-path-->
