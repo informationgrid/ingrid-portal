@@ -528,6 +528,7 @@ public class UtilsFacete {
 									}
 								}
 							}else{
+								String[] defaultDatatypes = {"www","metadata","address"};
 								for(int j=0; j<defaultDatatypes.length;j++){
 									String datatype = defaultDatatypes[j];
 									for(int k=0; k<datatypes.length; k++){
