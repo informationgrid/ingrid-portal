@@ -2581,12 +2581,13 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                 
                 
                 if((isForAdditionalInfo && isMetadatumContact)){
-                    addSingleMetaAddress(elementsAddress, node, title, isIdfResponsibleParty);
+                	// render only email of MetadatumContact, see INGRID32-146
+                    addSingleMetaAddress(elementsAddress, node, title, isIdfResponsibleParty, true);
                 }else if (!isForAdditionalInfo && !isMetadatumContact){
                     element = addElementAddress("multiLine", title, "", "false", new ArrayList());
                     ArrayList elements = (ArrayList) element.get("elements");
                     
-                    addressEvaluateNode(elements, node, isIdfResponsibleParty);
+                    addressEvaluateNode(elements, node, isIdfResponsibleParty, false);
                     
                     elementsAddress.add(element);
                 }
@@ -2594,13 +2595,13 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         }
     }
     
-    private void addSingleMetaAddress(ArrayList elementsAddress, Node node, String title, Boolean isIdfResponsibleParty) {
+    private void addSingleMetaAddress(ArrayList elementsAddress, Node node, String title, Boolean isIdfResponsibleParty, boolean renderOnlyEmail) {
         
         ArrayList elementsMetaAddress = new ArrayList();
         String xpathExpression = "";
         ArrayList elements = new ArrayList();
         
-        addressEvaluateNode(elements,node, isIdfResponsibleParty);
+        addressEvaluateNode(elements,node, isIdfResponsibleParty, renderOnlyEmail);
         if(elements.size() > 0){
         	HashMap element = addElementAddress("multiLine", null, "", "false", elements);
             elementsMetaAddress.add(element);
@@ -2615,9 +2616,29 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         
     }
 
-    private void addressEvaluateNode(ArrayList elements, Node node, boolean isIdfResponsibleParty) {
+    private void addressEvaluateNode(ArrayList elements, Node node, boolean isIdfResponsibleParty, boolean renderOnlyEmail) {
 
         String xpathExpression = "";
+        
+        // first extract email addresses to be used here ore later !
+        // "Mail"
+        ArrayList<HashMap> elementsEmail = new ArrayList<HashMap>();
+        xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress";
+        if (XPathUtils.nodeExists(node, xpathExpression)) {
+            NodeList electronicMailAddressNodeList = XPathUtils.getNodeList(node, xpathExpression);
+            for (int i = 0; i < electronicMailAddressNodeList.getLength(); i++) {
+                String value = XPathUtils.getString(electronicMailAddressNodeList.item(i), ".").trim();
+                if(value != null && value.length() > 0){
+                	elementsEmail.add(addElementEmailWeb(sysCodeList.getName("4430", "3"), value, value, value, LinkType.EMAIL));
+                }
+            }
+        }
+        if (renderOnlyEmail) {
+            for (HashMap elementEmail : elementsEmail) {
+            	elements.add(elementEmail);
+            }
+            return;
+        }
 
         boolean dataAdded = false;
 
@@ -2790,15 +2811,9 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
             addSpace(elements);
         }
         // "Mail"
-        xpathExpression = "./gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress";
-        if (XPathUtils.nodeExists(node, xpathExpression)) {
-            NodeList electronicMailAddressNodeList = XPathUtils.getNodeList(node, xpathExpression);
-            for (int i = 0; i < electronicMailAddressNodeList.getLength(); i++) {
-                String value = XPathUtils.getString(electronicMailAddressNodeList.item(i), ".").trim();
-                if(value != null && value.length() > 0){
-                	elements.add(addElementEmailWeb(sysCodeList.getName("4430", "3"), value, value, value, LinkType.EMAIL));
-                }
-            }
+        // already extracted above !
+        for (HashMap elementEmail : elementsEmail) {
+        	elements.add(elementEmail);
         }
         
         // "Telefon"
