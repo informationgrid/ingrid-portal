@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
 
 import de.ingrid.mdek.EnumUtil;
+import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.SysList;
@@ -18,7 +19,6 @@ import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekErrorUtils;
-import de.ingrid.utils.ige.MdekUtils.MdekSysList;
 import de.ingrid.utils.ige.profile.ProfileMapper;
 import de.ingrid.utils.ige.profile.beans.ProfileBean;
 
