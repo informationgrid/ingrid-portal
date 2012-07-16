@@ -128,17 +128,17 @@
 		<convert converter="bean" match="de.ingrid.mdek.quartz.jobs.util.URLState"/>
 		<convert converter="enum" match="de.ingrid.mdek.quartz.jobs.util.URLState$State"/>
         
-        <convert converter="bean" match="de.ingrid.mdek.beans.ProfileBean" javascript="*"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.Rubric" javascript="*"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.controls.Controls" javascript="*"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.controls.TextControl" javascript="*"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.controls.TableControl" javascript="*"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.controls.TableColumn" javascript="*"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.controls.SelectControl" javascript="*"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.controls.DateControl" javascript="*"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.controls.NumberControl" javascript="*"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.controls.ExtendedControls" javascript="*"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.controls.OptionEntry" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.ProfileBean" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.Rubric" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.Controls" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.TextControl" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.TableControl" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.TableColumn" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.SelectControl" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.DateControl" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.NumberControl" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.ExtendedControls" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.OptionEntry" javascript="*"/>
 
 		<convert converter="enum" match="de.ingrid.mdek.dwr.services.cts.CoordinateTransformationService$SpatialReferenceSystem"/>
 
