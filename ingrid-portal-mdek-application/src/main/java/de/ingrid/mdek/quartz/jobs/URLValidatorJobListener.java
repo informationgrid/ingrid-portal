@@ -8,11 +8,11 @@ import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 
 import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekUtils;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.quartz.jobs.util.URLObjectReference;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.utils.IngridDocument;
-import de.ingrid.utils.ige.MdekUtils;
 
 
 public class URLValidatorJobListener implements JobListener {

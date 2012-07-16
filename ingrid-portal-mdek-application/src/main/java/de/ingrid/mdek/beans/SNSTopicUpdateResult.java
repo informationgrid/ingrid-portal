@@ -4,7 +4,7 @@ import java.util.Map;
 
 import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekKeys;
-import de.ingrid.utils.ige.MdekUtils.SearchtermType;
+import de.ingrid.mdek.MdekUtils.SearchtermType;
 
 public class SNSTopicUpdateResult {
 	private String title;

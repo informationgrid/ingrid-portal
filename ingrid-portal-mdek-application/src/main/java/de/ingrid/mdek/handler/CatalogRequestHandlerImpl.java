@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.MdekUtils.CsvRequestType;
+import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
@@ -27,8 +29,6 @@ import de.ingrid.mdek.util.MdekObjectUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
-import de.ingrid.utils.ige.MdekUtils.CsvRequestType;
-import de.ingrid.utils.ige.MdekUtils.MdekSysList;
 
 public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 

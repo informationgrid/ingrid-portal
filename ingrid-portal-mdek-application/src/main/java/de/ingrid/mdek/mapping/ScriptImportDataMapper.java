@@ -25,11 +25,11 @@ import org.w3c.dom.NodeList;
 import de.ingrid.codelists.CodeListService;
 import de.ingrid.mdek.MdekError;
 import de.ingrid.mdek.MdekError.MdekErrorType;
+import de.ingrid.mdek.MdekUtils;
 import de.ingrid.mdek.handler.ProtocolHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.xml.Versioning;
 import de.ingrid.mdek.xml.XMLKeys;
-import de.ingrid.utils.ige.MdekUtils;
 import de.ingrid.utils.xml.XMLUtils;
 
 public class ScriptImportDataMapper implements ImportDataMapper {

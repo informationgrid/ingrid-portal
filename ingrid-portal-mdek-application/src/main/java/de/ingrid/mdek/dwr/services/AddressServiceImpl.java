@@ -5,6 +5,10 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
+import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
+import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
+import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressSearchResultBean;
@@ -14,10 +18,6 @@ import de.ingrid.mdek.handler.AddressRequestHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekAddressUtils;
 import de.ingrid.mdek.util.MdekErrorUtils;
-import de.ingrid.utils.ige.MdekUtils.IdcEntityOrderBy;
-import de.ingrid.utils.ige.MdekUtils.IdcQAEntitiesSelectionType;
-import de.ingrid.utils.ige.MdekUtils.IdcWorkEntitiesSelectionType;
-import de.ingrid.utils.ige.MdekUtils.WorkState;
 
 public class AddressServiceImpl implements AddressService {
 

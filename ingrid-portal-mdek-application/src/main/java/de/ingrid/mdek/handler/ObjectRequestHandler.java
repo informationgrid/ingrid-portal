@@ -2,15 +2,15 @@ package de.ingrid.mdek.handler;
 
 import java.util.List;
 
+import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
+import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
+import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
+import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
-import de.ingrid.utils.ige.MdekUtils.IdcEntityOrderBy;
-import de.ingrid.utils.ige.MdekUtils.IdcQAEntitiesSelectionType;
-import de.ingrid.utils.ige.MdekUtils.IdcWorkEntitiesSelectionType;
-import de.ingrid.utils.ige.MdekUtils.WorkState;
 
 public interface ObjectRequestHandler {
 

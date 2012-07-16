@@ -5,12 +5,12 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
 
+import de.ingrid.mdek.MdekUtils;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekErrorUtils;
-import de.ingrid.utils.ige.MdekUtils;
 
 public class ExportServiceImpl {
 

@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import de.ingrid.mdek.MdekUtils.CsvRequestType;
+import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.beans.AnalyzeJobInfoBean;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.ExportJobInfoBean;
@@ -15,8 +17,6 @@ import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.utils.IngridDocument;
-import de.ingrid.utils.ige.MdekUtils.CsvRequestType;
-import de.ingrid.utils.ige.MdekUtils.MdekSysList;
 
 public interface CatalogRequestHandler {
 

@@ -19,7 +19,6 @@ import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.utils.IngridDocument;
-import de.ingrid.utils.ige.MdekUtils;
 
 public class SysListCache {
 

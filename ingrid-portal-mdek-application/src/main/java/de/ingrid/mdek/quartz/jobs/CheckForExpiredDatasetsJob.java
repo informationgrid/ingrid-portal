@@ -12,6 +12,8 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekKeysSecurity;
+import de.ingrid.mdek.MdekUtils.AddressType;
+import de.ingrid.mdek.MdekUtils.IdcEntityVersion;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
@@ -24,10 +26,8 @@ import de.ingrid.mdek.quartz.jobs.util.ExpiredDataset;
 import de.ingrid.mdek.util.MdekAddressUtils;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekEmailUtils;
+import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
-import de.ingrid.utils.ige.MdekUtils;
-import de.ingrid.utils.ige.MdekUtils.AddressType;
-import de.ingrid.utils.ige.MdekUtils.IdcEntityVersion;
 
 public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 
@@ -65,8 +65,8 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			expireCal.add(Calendar.DAY_OF_MONTH, -(expiryDuration));
 			notifyCal.add(Calendar.DAY_OF_MONTH, -(expiryDuration-this.notifyDaysBeforeExpiry));
 
-			List<ExpiredDataset> datasetsWillExpireList = getExpiredDatasets(expireCal.getTime(), notifyCal.getTime(), MdekUtils.ExpiryState.INITIAL, plugId);
-			List<ExpiredDataset> datasetsExpiredList = getExpiredDatasets(null, expireCal.getTime(), MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
+			List<ExpiredDataset> datasetsWillExpireList = getExpiredDatasets(expireCal.getTime(), notifyCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.INITIAL, plugId);
+			List<ExpiredDataset> datasetsExpiredList = getExpiredDatasets(null, expireCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
 
 			log.debug("Number of datasets to notify found: "+datasetsWillExpireList.size());
 			log.debug("Number of datasets to expire found: "+datasetsExpiredList.size());
@@ -74,13 +74,13 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			MdekEmailUtils.sendExpiryMails(datasetsExpiredList);
 
 			log.debug("Updating expiry states.");
-			updateExpiryState(datasetsWillExpireList, MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
-			updateExpiryState(datasetsExpiredList, MdekUtils.ExpiryState.EXPIRED, plugId);
+			updateExpiryState(datasetsWillExpireList, de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
+			updateExpiryState(datasetsExpiredList, de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED, plugId);
 			log.debug("CheckForExpiredDatasetsJob done.");
 		}
 	}
 
-	private void updateExpiryState(List<ExpiredDataset> expiredDatasetList, MdekUtils.ExpiryState state, String plugId) {
+	private void updateExpiryState(List<ExpiredDataset> expiredDatasetList, de.ingrid.mdek.MdekUtils.ExpiryState state, String plugId) {
 		IMdekCallerObject mdekCallerObject = connectionFacade.getMdekCallerObject();
 		IMdekCallerAddress mdekCallerAddress = connectionFacade.getMdekCallerAddress();
 		String catAdminUuid = getCatAdminUuid(plugId);
@@ -104,7 +104,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 		try {
 			IMdekCallerSecurity mdekCallerSecurity = connectionFacade.getMdekCallerSecurity();
 			IngridDocument response = mdekCallerSecurity.getCatalogAdmin(plugId, "");
-			IngridDocument result = de.ingrid.mdek.util.MdekUtils.getResultFromResponse(response);
+			IngridDocument result = MdekUtils.getResultFromResponse(response);
 			return (String) result.get(MdekKeysSecurity.IDC_USER_ADDR_UUID);
 		} catch (Exception e) {
 			return "";
@@ -120,7 +120,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 	}
 
 	private List<ExpiredDataset> getExpiredDatasets(Date begin, Date end,
-			MdekUtils.ExpiryState state, String plugId) {
+			de.ingrid.mdek.MdekUtils.ExpiryState state, String plugId) {
 
 		List<ExpiredDataset> expiredObjs = getExpiredObjects(begin, end, state, plugId);
 		List<ExpiredDataset> expiredAdrs = getExpiredAddresses(begin, end, state, plugId);
@@ -130,7 +130,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 	}
 
 	private List<ExpiredDataset> getExpiredObjects(Date begin, Date end,
-			MdekUtils.ExpiryState state, String plugId) {
+			de.ingrid.mdek.MdekUtils.ExpiryState state, String plugId) {
 		List<ExpiredDataset> resultList = new ArrayList<ExpiredDataset>();
 		IMdekCallerQuery mdekCallerQuery = connectionFacade.getMdekCallerQuery();
 
@@ -151,16 +151,16 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 		"where " +
 			"oMeta.expiryState <= " + state.getDbValue() +
 			" and obj.responsibleUuid = responsibleUserNode.addrUuid " +
-			" and comm.commtypeKey = " + MdekUtils.COMM_TYPE_EMAIL +
-			" and obj.modTime <= " + MdekUtils.dateToTimestamp(end) +
+			" and comm.commtypeKey = " + de.ingrid.mdek.MdekUtils.COMM_TYPE_EMAIL +
+			" and obj.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(end) +
 			" and modUserNode.addrUuid = obj.modUuid";
 		if (begin != null) {
-			qString += " and obj.modTime >= " + MdekUtils.dateToTimestamp(begin);
+			qString += " and obj.modTime >= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(begin);
 		}
 		qString += " order by obj.objClass, obj.objName";
 
 		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, numObjectsMax, "");
-		IngridDocument result = de.ingrid.mdek.util.MdekUtils.getResultFromResponse(response);
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {
 			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
@@ -170,7 +170,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 					dataset.setUuid(objEntity.getString("obj.objUuid"));
 					dataset.setTitle(objEntity.getString("obj.objName"));
 					dataset.setType(ExpiredDataset.Type.OBJECT);
-					dataset.setLastModified(de.ingrid.mdek.util.MdekUtils.convertTimestampToDate(objEntity.getString("obj.modTime")));
+					dataset.setLastModified(MdekUtils.convertTimestampToDate(objEntity.getString("obj.modTime")));
 					String institution = objEntity.getString("modUserAddr.institution");
 					String lastName = objEntity.getString("modUserAddr.lastname");
 					String firstName = objEntity.getString("modUserAddr.firstname");
@@ -186,7 +186,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 
 	
 	private List<ExpiredDataset> getExpiredAddresses(Date begin, Date end,
-			MdekUtils.ExpiryState state, String plugId) {
+			de.ingrid.mdek.MdekUtils.ExpiryState state, String plugId) {
 		List<ExpiredDataset> resultList = new ArrayList<ExpiredDataset>();
 		IMdekCallerQuery mdekCallerQuery = connectionFacade.getMdekCallerQuery();
 
@@ -209,15 +209,15 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			AddressType.getHQLExcludeIGEUsersViaNode("addrNode") +
 			" and aMeta.expiryState <= " + state.getDbValue() +
 			" and adr.responsibleUuid = responsibleUserNode.addrUuid " +
-			" and comm.commtypeKey = " + MdekUtils.COMM_TYPE_EMAIL +
-			" and adr.modTime <= " + MdekUtils.dateToTimestamp(end) +
+			" and comm.commtypeKey = " + de.ingrid.mdek.MdekUtils.COMM_TYPE_EMAIL +
+			" and adr.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(end) +
 			" and modUserNode.addrUuid = adr.modUuid";
 		if (begin != null) {
-			qString += " and adr.modTime >= " + MdekUtils.dateToTimestamp(begin);
+			qString += " and adr.modTime >= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(begin);
 		}
 
 		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, numAddressesMax, "");
-		IngridDocument result = de.ingrid.mdek.util.MdekUtils.getResultFromResponse(response);
+		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
 		if (result != null) {
 			List<IngridDocument> adrs = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
@@ -231,7 +231,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 					
 					/*
 					// add parent information to title
-					IngridDocument responseParent = connectionFacade.getMdekCallerAddress().fetchAddress(plugId, dataset.getUuid(), FetchQuantity.EDITOR_ENTITY, MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 20, "");
+					IngridDocument responseParent = connectionFacade.getMdekCallerAddress().fetchAddress(plugId, dataset.getUuid(), FetchQuantity.EDITOR_ENTITY, de.ingrid.mdek.MdekUtils.IdcEntityVersion.WORKING_VERSION, 0, 20, "");
 			        IngridDocument resultAddress = MdekUtils.getResultFromResponse(responseParent);
 			        MdekAddressBean parentInstitutions = getDetailedParentInfo(resultAddress);
 			        String parentInfo = null;
@@ -243,7 +243,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 					//else
 					dataset.setTitle(MdekAddressUtils.createAddressTitle(institution, lastName, firstName));
 					dataset.setType(ExpiredDataset.Type.ADDRESS);
-					dataset.setLastModified(de.ingrid.mdek.util.MdekUtils.convertTimestampToDate(adrEntity.getString("adr.modTime")));
+					dataset.setLastModified(MdekUtils.convertTimestampToDate(adrEntity.getString("adr.modTime")));
 					String modInstitution = adrEntity.getString("modUserAddr.institution");
 					String modLastName = adrEntity.getString("modUserAddr.lastname");
 					String modFirstName = adrEntity.getString("modUserAddr.firstname");

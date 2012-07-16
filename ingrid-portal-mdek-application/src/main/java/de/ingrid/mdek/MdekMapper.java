@@ -10,6 +10,11 @@ import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
+import de.ingrid.mdek.MdekUtils.MdekSysList;
+import de.ingrid.mdek.MdekUtils.PublishType;
+import de.ingrid.mdek.MdekUtils.SearchtermType;
+import de.ingrid.mdek.MdekUtils.UserOperation;
+import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.beans.CommentBean;
 import de.ingrid.mdek.beans.KeyValuePair;
 import de.ingrid.mdek.beans.TreeNodeBean;
@@ -35,12 +40,6 @@ import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
 import de.ingrid.utils.IngridDocument;
-import de.ingrid.utils.ige.MdekUtils;
-import de.ingrid.utils.ige.MdekUtils.MdekSysList;
-import de.ingrid.utils.ige.MdekUtils.PublishType;
-import de.ingrid.utils.ige.MdekUtils.SearchtermType;
-import de.ingrid.utils.ige.MdekUtils.UserOperation;
-import de.ingrid.utils.ige.MdekUtils.WorkState;
 import edu.emory.mathcs.backport.java.util.Arrays;
 
 public class MdekMapper implements DataMapperInterface {
