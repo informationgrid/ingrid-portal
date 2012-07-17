@@ -295,7 +295,7 @@ public class MdekCatalogUtils {
 		}
 	}
 
-	private static String getLanguageShort(Integer languageCode) {
+	public static String getLanguageShort(Integer languageCode) {
 		if (languageCode.compareTo(UtilsLanguageCodelist.getCodeFromShortcut("en")) == 0)
 			return "en";
 		else if (languageCode.compareTo(UtilsLanguageCodelist.getCodeFromShortcut("de")) == 0)

@@ -35,7 +35,7 @@ public class SysListCache {
 	// The key prefix used in sysList.properties
 	private final String SYSLIST_MAPPING_PREFIX = "sysList.map.";
 	// sysList language - remember language for each catalog
-	private Map<String, String> languageCodeCache;
+	private Map<String, Integer> languageCodeCache;
 
 	// EHCache manager
 	private CacheManager cacheManager;
@@ -48,7 +48,7 @@ public class SysListCache {
 		cacheManager = new CacheManager();
 		Cache cache = new Cache("sysListCache", 10000, true, false, 120, 120);
 		cacheManager.addCache(cache);
-		languageCodeCache = new HashMap<String, String>();
+		languageCodeCache = new HashMap<String, Integer>();
 	}
 
 	public void destroy() {
@@ -59,13 +59,13 @@ public class SysListCache {
 	public void loadInitialLists() {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle("sysList");
 		List<Integer> initialListIds = new ArrayList<Integer>();
-		String currentLanguage = null;
+		Integer currentLangCode = null;
 		keyCache = new HashMap<String, Integer>();
 
 		// Load the catalog data from the backend to extract the catalog language
 		try {
-		    currentLanguage = fetchLanguageCode();
-			languageCodeCache.put(connectionFacade.getCurrentPlugId(), currentLanguage);
+		    currentLangCode = fetchLanguageCode();
+			languageCodeCache.put(connectionFacade.getCurrentPlugId(), currentLangCode);
 
 		} catch (Exception e) {
 			// Could not get the lists from the backend
@@ -94,7 +94,8 @@ public class SysListCache {
 
 		// get the sysLists for all initialIDs and store them in the list cache
 		try {
-			Map<Integer, List<String[]>> sysLists = getSysLists(initialListIds.toArray(new Integer[]{}), currentLanguage);
+			String langShort = MdekCatalogUtils.getLanguageShort(currentLangCode);
+			Map<Integer, List<String[]>> sysLists = getSysLists(initialListIds.toArray(new Integer[]{}), langShort);
 			sysListCache = cacheManager.getCache("sysListCache");
 			
 			if (sysListCache == null) {
@@ -124,9 +125,9 @@ public class SysListCache {
 		}
 	}
 
-    private String fetchLanguageCode() {
+    private Integer fetchLanguageCode() {
         IngridDocument response = mdekCallerCatalog.fetchCatalog(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
-        return MdekCatalogUtils.extractCatalogFromResponse(response).getLanguageShort();
+        return MdekCatalogUtils.extractCatalogFromResponse(response).getLanguageCode();
     }
 
 
@@ -207,6 +208,13 @@ public class SysListCache {
 			}
 		}
 
+		// special behavior if default language is read and not set ! Then return catalog language !
+		if (listId == 99999999) {
+			// reads catalog language !
+			Integer initialKey = getInitialKeyFromListId(listId);
+			return getValueFromListId(listId, initialKey, true);
+		}
+
 		log.debug("Could not find default syslist entry for list: ["+listId+"]");
 		return null;
 	}
@@ -284,6 +292,12 @@ public class SysListCache {
 			}
 		}
 
+		// special behavior if default language is read and not set ! Then return catalog language !
+		if (listId == 99999999) {
+			String plugId = connectionFacade.getCurrentPlugId();
+			return languageCodeCache.get(plugId);
+		}
+
 		log.debug("Could not find default syslist entry for list: ["+listId+"]");
 		return null;
 	}
@@ -297,12 +311,13 @@ public class SysListCache {
 	public List<String[]> addSysListToCache(Integer listId) {
 		Integer[] listIds = {listId};
 		String plugId = connectionFacade.getCurrentPlugId();
-		String languageCode = languageCodeCache.get(plugId);
+		Integer languageCode = languageCodeCache.get(plugId);
 		if (languageCode == null) {
 		    languageCode = fetchLanguageCode();
 		    languageCodeCache.put(plugId, languageCode);
 		}
-		List<String[]> sysList = getSysLists(listIds, languageCode).get(listId);
+		String langShort = MdekCatalogUtils.getLanguageShort(languageCode);
+		List<String[]> sysList = getSysLists(listIds, langShort).get(listId);
 		Element e = new Element(createCacheKey(listId), sysList);
 		sysListCache.put(e);	
 		return sysList;
