@@ -50,29 +50,30 @@
             <header>Konzept und Aufgabe von PortalU</header>
             <content>
                 <p>PortalU, das Umweltportal Deutschland, bietet einen zentralen
-                    Zugriff auf 3 Mio. umweltrelevante Webseiten sowie über 500.000 
+                    Zugriff auf mehrere Millionen umweltrelevante Webseiten sowie über  
+                    eine halbe Millionen 
                     Katalog- und Datenbankeinträge von öffentlichen Institutionen 
                     und Organisationen in Bund, Ländern und Kommunen. Mit einem Mix aus
-                    aktuellen Nachrichten, Umweltmesswerten (z.B. aktuelle Ozon-
-                    konzentration in der Luft), Hintergrundinformationen,
+                    aktuellen Nachrichten, Umweltmesswerten, Hintergrundinformationen,
                     und historischen Umweltereignissen richtet sich PortalU
-                    sowohl an interessierte Laien als auch an Fachpublikum. Das
-                    Informationsangebot wird kontinuierlich ausgebaut mit dem
-                    Ziel, langfristig möglichst alle behördlichen Anbieter von
-                    Umweltinformationen zu erfassen.</p>
-                <p>Bei der Konzeption von PortalU spielten die
-                    EU-Umweltinformationsrichtlinie von 2003 und die geplante
-                    INSPIRE-Richtlinie eine wichtige Rolle. Diese Richtlinien
+                    sowohl an interessierte Laien als auch an ein versiertes 
+                    Fachpublikum. Das Informationsangebot wird kontinuierlich ausgebaut 
+                    mit dem Ziel, langfristig die Umweltinformationen möglichst aller
+                    behördlicher Anbieter unter einem Dach recherchierbar zu machen.</p>
+                <p>Als rechtliche Grundlage spielt die europäische 
+                    Umweltinformationsrichtlinie (2003/4/EG) und die europäische
+                    INSPIRE-Richtlinie (2007/2/EG) für PortalU eine zentrale Rolle. 
+                    Diese Richtlinien
                     setzen neue Maßstäbe für die öffentliche Verbreitung
                     behördlicher Umweltinformationen bzw. den Aufbau der dafür
                     notwendigen informationstechnischen Infrastrukturen.
-                    Zukünftig sind wesentlich mehr Behörden und Organisationen
-                    als bisher dazu verpflichtet, umweltrelevante Daten und
+                    Hiernach sind wesentlich mehr Behörden und Organisationen
+                    als zuvor dazu verpflichtet, umweltrelevante Daten und
                     Informationen in einer klar verständlichen und einfach
                     zugänglichen Form bereitzustellen.</p>
                   <p> PortalU und die eigens
                     zum Aufbau des Portals entwickelte Software
-                    „InGrid<sup>®</sup>“ wurden speziell als
+                    InGrid wurden speziell als
                     Werkzeuge zur Unterstützung der Behörden bei der Umsetzung
                     der Richtlinien konzipiert. </p>
             </content>
@@ -80,50 +81,43 @@
         <section help-key="about-2">
             <header>Die Betreiber von PortalU</header>
             <content>
-                <p> PortalU wurde 
-                im Rahmen der Bund-Länder Verwaltungsvereinbarung UDK/GEIN (VwV UDK/GEIN)
+                <p> Als Nachfolgeprojekt des Umweltdatenkatalogs (UDK) und des German 
+                    Environmental Information Network (gein) wurde PortalU  
+                    im Rahmen der Bund-Länder Verwaltungsvereinbarung UDK/GEIN
                     entwickelt. An dieser Verwaltungsvereinbarung sind
-                    u.a. das Umweltbundesministerium (BMU) und die
+                    unter anderem das Umweltbundesministerium und die
                     Umweltministerien aller 16 Länder beteiligt. PortalU wird
                     technisch und inhaltlich von der Koordinierungsstelle
-                    PortalU im Niedersächsischen Ministerium für Umwelt und Klimaschutz in
-                    Hannover betreut.</p>
+                    PortalU im Niedersächsischen Ministerium für Umwelt, Energie und 
+                    Klimaschutz in Hannover betreut.</p>
             </content>
         </section>
         <section help-key="about-3">
             <header>Funktionsüberblick</header>
             <content>
                 <p>
-                    <b>Suche:</b> Zentrale Funktion des Portals ist die
-                    PortalU-Suche (<a href="?hkey=search-1">Suche</a>),
-                    mit deren Hilfe Webseiten und Datenbankeinträge über eine
-                    herkömmliche Volltextsuche (<a href="?hkey=search-1">Einfache Suche</a>), aber
-                    auch über ein differenziertes Fachvokabular (<a href="?hkey=ext-search-1">Erweiterte Suche</a>)
-                    durchsucht werden können. </p>
+                    <b>Suche:</b> Zentrale Funktion des Portals mit 
+                    (<a href="?hkey=search-1">einfachen</a>) und 
+                    (<a href="?hkey=ext-search-1">erweiterten</a>) Suchfunktionen.
+                </p>
                 <p>
-                    <b>Karten:</b> Ein Kartenviewer bietet die Möglichkeit,
-                    Raumbezüge für die Suche über interaktive Karten einzugeben
-                    oder aber digitale Karten aus der Such-Ergebnisliste direkt
-                    in PortalU anzuzeigen.</p>
-                <p>
-                    <b>Themenseiten:</b> Die PortalU-Themenseiten  bieten einen
-                    themenbezogenen Zugang zu ausgewählten, besonders
-                    interessanten Informationen und Daten.</p>
-                <p>
-                    <b>Aktuelles</b>: Tagesaktuelle Meldungen werden direkt aus
-                    den Pressestellen der beteiligten Behörden und
-                    Organisationen eingeblendet.</p>
-                <p>
-                    <b>Service</b>: Hier finden Sie Nachrichten und
-                    Informationen über Veranstaltungen und aktuelle
-                    Publikationen im Umweltbereich.</p>
+                    <b>Themen:</b> Schneller Einstieg in einzelne Umweltthemen von
+                    A wie Abfall bis W wie Wasser.</p>  
                 <p>
                     <b>Messwerte</b>: PortalU informiert Sie rund um die Uhr
-                    über den aktuellen Zustand Ihrer Umwelt.</p>
+                    über den aktuellen Zustand Ihrer Umwelt.</p>                                         <p>
+                    <b>Service</b>: Nachrichten und Informationen über 
+                    Veranstaltungen und aktuelle Publikationen im Umweltbereich.</p>
+                <p>                   
+                    <b>Kataloge</b>: Recherchieren Sie in den Umwelt- und  
+                    Geodatenkatalogen von Bund und Ländern.</p>                    
+                <p>
+                    <b>Karten:</b> Aufruf von digitalen Umweltkarten und 
+                    Angabe und Raumbezüge bei der Suche.</p>
                 <p>
                     <b>Chronik</b>: Wann trat das Kyoto-Protokoll in
                     Kraft? Eine Antwort auf diese und viele andere Fragen zu
-                    historischen Umweltereignissen finden Sie in der Chronik.</p>
+                    historischen Umweltereignissen finden Sie in der Umweltchronik.</p>
             </content>
         </section>
         <section help-key="about-4">
@@ -134,32 +128,43 @@
                     Portalen und Suchmaschinen erfasst PortalU nicht nur
                     Webseiten, Textdokumente und andere Internetformate, sondern
                     kann auch auf Datenbanken und Fachinformationssysteme
-                    zugreifen, selbst wenn diese nicht online sind.</p>
+                    zugreifen, selbst wenn diese nicht online sind. 
+                </p>
             </content>
         </section>
         <section help-key="about-5">
-            <header>Bedingungen für Nutzung und Beteiligung an PortalU</header>
+            <header>Wie werde ich Informationsanbieter in PortalU?</header>
             <content>
-                <p>Der Kreis der Informationsanbieter in PortalU beschränkt sich
-                    vorwiegend auf Behörden und behördennahe Organisationen in
-                    Deutschland, wird aber kontinuierlich erweitert. Wenn Ihre
-                    Organisation ebenfalls umweltrelevante Informationen über
-                    PortalU bereitstellen möchte, wenden Sie sich bitte an die <a href="http://www.kst.portalu.de/" target="_new">Koordinierungsstelle PortalU</a>.</p>
+                <p>In PortalU können alle behördlichen Umweltinformationen im Sinne des                    Umweltinformationsgesetzes und alle umweltrelevanten Webkataloge im  
+                   Sinne von INSPIRE aufgenommen werden. Zum Anbieterkreis gehören: 
+                </p>
+                <ul>
+                    <li>Umweltressorts von Bund und Ländern</li>
+                    <li>andere Ressorts von Bund und Ländern</li>
+                    <li>auskunftspflichtige Unternehmen im Sinne des   
+                        Umweltinformationsgesetzes</li>
+                    <li>kommunale Umweltinformationen</li>
+                    <li>Forschungseinrichtungen</li>
+                </ul>
+                <p>Bietet ihre Behörde oder Institution umweltrelevante behördliche 
+                   Informationen im Internet an, die noch nicht in PortalU zu finden 
+                   sind? Dann sprechen Sie uns an: <a href="mailto:kst@portalu.de" title="Schreiben Sie uns - Email Programm startet automatisch">Koordinierungsstelle PortalU</a></p>
             </content>
         </section>
         <section help-key="about-6">
             <header>InGrid – Die Software hinter PortalU</header>
             <content>
-                <p>Zur Umsetzung von PortalU wurde das Softwarepaket InGrid<sup>®</sup>
-                    entwickelt. InGrid<sup>®</sup> setzt auf eine modulare und flexible
+                <p>Zur Umsetzung von PortalU wurde das Softwarepaket InGrid
+                    entwickelt. InGrid setzt auf eine modulare und flexible
                     Systemarchitektur auf der Basis lizenzfreier OpenSource
                     Produkte. Dadurch wird es möglich, die technische Struktur
                     des Umweltinformationsnetzes an sich wandelnde
-                    organisatorische Vorgaben anzupassen. So können mit InGrid<sup>®</sup>
+                    organisatorische Vorgaben anzupassen. So können mit InGrid
                     bei Bedarf regionale Umweltportale, z.B. für einzelne
                     Länder oder Kommunen, mit geringem technischem Aufwand
                     erstellt werden. Dank OpenSource ist die Nachnutzung der
-                    Software für die Partner der VwV UDK/GEIN lizenzfrei und kostenlos.</p>
+                    Software für die Partner der VwV UDK/GEIN lizenzfrei und 
+                    kostenlos.</p>
             </content>
         </section>
     </chapter>
@@ -168,68 +173,87 @@
         <section help-key="search-1">
             <header>Einfache Suche</header>
             <content>
-                <p>Über die Suche können Sie einen oder mehrere Suchbegriffe
-                    eingeben. Gefunden werden diejenigen Seiten, die alle
-                    Suchbegriffe enthalten.</p>
-                <p>Es wird je nach Einstellung in einem der folgenden Suchräume gesucht:</p>
-                <ul>
-                    <li>Umweltinformationen: behördliche Informationen zur Umwelt</li>
-                    <li>Rechtsvorschriften: Informationen zu rechtsrelevanten Themen</li>
-                    <li>Forschungsprojekte: Projekte zur Umweltforschung</li>
-                    <li>Adressen: Zuständigkeiten</li>
-                </ul>
+                <p>Suchen ist ganz einfach. Geben Sie in das Suchfeld einen oder 
+                   mehrere Begriffe ein und klicken Sie anschließend auf die 
+                   Schaltfläche <b>PortalU Suche</b>. PortalU durchsucht alle
+                   eingebundenen Umweltinformationen: Webseiten, Kataloge und
+                   Datenbanken, die für Ihre Suche von Interesse sind. Die 
+                   Ergebnisse Ihrer Suchanfrage werden in einer 
+                   <a href="?hkey=search-results-1">Suchergebnisseite</a> 
+                   wiedergegeben. </p>
             </content>
         </section>
         <section help-key="search-2">
-            <header>Weitere Themen zur Suche</header>
+            <header>Suchräume</header>
+            <content>
+                <p>Oberhalb des Suchfeldes können Sie über entsprechende 
+                   Schalflächen zwischen folgenden Suchräumen wählen. </p>
+                <ul>
+                    <li><b>Umweltinformationen</b>: behördliche Informationen 
+                        zur Umwelt</li>
+                    <li><b>Rechtsvorschriften</b>: Informationen zu 
+                        rechtsrelevanten Themen</li>
+                    <li><b>Forschungsprojekte</b>: Projekte zur Umweltforschung</li>
+                    <li><b>Adressen</b>: Zuständigkeiten</li>
+                </ul>
+                <p>In der Grundeinstellung erfolgt die Suche im Suchraum 
+                   <b>Umweltinformationen</b>.</p>
+            </content>
+        </section>
+
+        <section help-key="search-3">
+            <header>Suche verfeinern</header>
             <content>
                 <p>Neben der einfachen Suche können Sie Ihre Suche weiter
                     verfeinern. Lesen Sie hierzu folgende Themen:</p>
                 <ul>
                     <li>
+                        <a href="?hkey=search-results-1">Ähnliche Begriffe zur 
+                        Suche hinzufügen</a>
+                    </li>
+                    <li>
                         <a href="?hkey=ext-search-1">Erweiterte Suche
                             nach Umweltinformationen</a>
                     </li>
-
                     <li>
                         <a href="?hkey=ext-search-law-1">Erweiterte
                             Suche nach Rechtsvorschriften</a>
                     </li>
-
-
-            <li>
+                    <li>
                         <a href="?hkey=ext-search-research-1">Erweiterte
                             Suche nach Forschungsprojekten</a>
                     </li>
-
-
                     <li>
                         <a href="?hkey=ext-search-address-1">Erweiterte
                             Suche nach Adressen</a>
                     </li>
-                         
+                    <li>
+                        <a href="?hkey=search-expert-1">Experteneingabe</a>
+                    </li>
+                    </ul>
+            </content>
+        </section>                    
+        <section help-key="search-4">
+            <header>Weitere Themen</header>
+            <content>                    
+                <p>Weitere Themen, die für die Suche von Bedeutung sind:</p>         
+                  <ul>
                     <li>
                         <a href="?hkey=search-history-1">Suchhistorie</a>
                     </li>
                     <li>
+                        individuelle Anpassung der Suchergebnisseite unter 
                         <a href="?hkey=search-settings-1">Einstellungen</a>
                     </li>
                     <li>
-                        <a href="?hkey=search-tipps-1">Tipps</a>
+                        <a href="?hkey=search-tipps-1">Tipps</a> zur Suche
                     </li>
                     <li>
-                        <a href="?hkey=search-save-1">Suche speichern</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-expert-1">Experteneingabe</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-results-1">Suchergebnisliste</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-catalog-1">Kataloge</a>
+                        <a href="?hkey=search-save-1">Speicherung von Suchanfragen</a>
                     </li>
                 </ul>
+                <p>Einen kurzen Überblick über die Freitextsuche finden 
+                   Sie <a href="http://http://www.portalu.de/funktionen?action=doSearch/" target="_new">HIER</a>. </p>
             </content>
         </section>
     </chapter>
@@ -239,19 +263,19 @@
             <header>Erweiterte Suche nach Umweltinformationen</header>
             <content>
                 <p>Sie können Ihre Suche nach Umweltinformationen über die
-                    „Erweiterte Suche“ verfeinern.</p>
+                    <b>Erweiterte Suche</b> verfeinern.</p>
                 <p>Prinzipiell setzt sich ein Suchausdruck aus einzelnen
                     Suchbegriffen zusammen, die  mit Operatoren (UND, ODER,
                     NICHT) verbunden werden. Wie Sie diese Operatoren von Hand
-                    eingeben können, lesen Sie in dem Kapitel „<a href="?hkey=search-expert-1">Experteneingabe</a>“.</p>
-                <p>Die „Erweiterte Suche“ bietet Ihnen die
+                    eingeben können, lesen Sie in dem Kapitel <a href="?hkey=search-expert-1">Experteneingabe</a>.</p>
+                <p>Die <b>Erweiterte Suche</b> bietet Ihnen die
                     Möglichkeit, Ihren Suchausdruck per Assistenten aufzubauen.</p>
             </content>
         </section>
         <section help-key="ext-search-2">
             <header>Bereiche zur Spezifizierung der Suche</header>
             <content>
-                <p>Der sog. „Suchraum“ umfasst alle
+                <p>Der Suchraum umfasst alle
                     Webseiten, Dokumente etc., die von einer Suchanfrage erfasst
                     werden. Folgende Bereiche zur Erweiterung oder Einschränkung
                     des Suchraumes stehen Ihnen zur Verfügung:</p>
@@ -300,116 +324,55 @@
         <section help-key="ext-search-subject-2">
             <header>Fachwörterbuch</header>
             <content>
-                <p>Über das Fachwörterbuch können Sie Ihrem Suchausdruck
-                    Fachbegriffe hinzufügen. Dazu geben Sie einen beliebigen
-                    Begriff in das Eingabefeld ein und senden eine Anfrage an
-                    den <a href="#ext-search-subject-3">Thesaurus</a> ab.</p>
-                <p>Sie erhalten dann eine Reihe <a href="#ext-search-subject-5">ähnlicher Begriffe</a>, die
-                    Sie dem Suchausdruck hinzufügen können oder über deren
-                    Verlinkungen Sie ihren Suchbegriff weiter spezifizieren können.</p>
+                <p>Wenn Sie bei Ihrer Suchanfrage Fachbegriffe verwenden 
+                   möchten, können Sie den Umweltthesaurus UMTHES zur Hilfe 
+                   nehmen. Sie geben hierfür einen Begriff ein und klicken auf 
+                   die Schaltfläche <b>In Thesaurus suchen</b>. Sie erhalten 
+                   dann eine Reihe von <b>ähnlichen Begriffen</b> angezeigt. 
+                   Diese Schlagworte können Sie zu Ihrer Suchanfrage hinzufügen. 
+                   Wählen Sie 
+                   hierfür ein Schlagwort aus und klicken sie dann auf die 
+                   Schaltfläche <b>Zur Suchanfrage hinzufügen</b>. </p>
+                <p>Wenn die aufgelisteten Schlagworte nicht richtig passen, 
+                   können Sie im UMTHES nach weiteren Schlagworten suchen, die 
+                   mit einem der gelisteten Schlagworte in Beziehung stehen. 
+                   Klicken Sie hierfür auf ein Schlagwort. Angezeigt werden 
+                   alle Ober- und Unterbegriffen, verwandte Begriffe und 
+                   Synonyme, die im UMTHES verzeichnet sind. Über die 
+                   Schaltfläche <b>Zur Suchanfrage hinzufügen</b> können Sie 
+                   passende Schlagworte in Ihre Suche mit einbeziehen.</p>
             </content>
         </section>
         <section help-key="ext-search-subject-3">
-            <header>Thesaurus</header>
-            <section help-key="ext-search-subject-4">
-                <header>Was ist ein Thesaurus?</header>
+            <header>Der UMTHES</header>
                 <content>
-                    <p>Ein Thesaurus besteht, ähnlich wie ein Wörterbuch, aus
-                        Fachbegriffen zu einem bestimmten Themengebiet. Außer
-                        der korrekten Schreibweise enthält ein Thesaurus aber
-                        auch Informationen darüber, ob und wie sich ein Begriff
-                        verallgemeinern (Oberbegriffe), spezialisieren
-                        (Unterbegriffe) oder anders ausdrücken (Synonyme) lässt.
-                        Thesauri werden z.B. zum Verschlagworten und Auffinden
-                        von Dokumenten genutzt.</p>
-                    <p>PortalU verwendet den Umweltthesaurus
-                        (UMTHES<sup>®</sup>) des Umweltbundesamtes in Dessau. Er
-                        enthält mehr als 30.000 Fachbegriffe aus dem
-                        Themengebiet &quot;Umwelt&quot;.</p>
-                    <p>Der UMTHES<sup>® </sup>wird über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> vom
-                        Umweltbundesamt zur Verfügung gestellt.</p>
-                </content>
-            </section>
-            <section help-key="ext-search-subject-5">
-                <header>Ähnliche Begriffe</header>
-                <content>
-                    <p>Nach der Analyse Ihres Suchbegriffs durch den SNS werden
-                        „ähnliche“ Begriffe aus dem
-                        Thesaurus angezeigt. Sie haben die Möglichkeit, einen
-                        oder mehrere dieser Begriffe zu markieren und in Ihren
-                        Suchausdruck zu übernehmen („Zur Suchanfrage hinzufügen“).</p>
-                    <p>Sie haben aber auch die Möglichkeit, einen
-                        „ähnlichen“ Begriff weiter zu
-                        spezifizieren, in dem Sie auf den jeweiligen Begriff
-                        klicken. Er wird dann als <a href="?hkey=ext-search-subject-6">Thesaurus-Schlagwort</a>
-                        angezeigt. Zusätzlich werden die zugehörigen <a href="?hkey=ext-search-subject-7">Ober</a>-,<a href="?hkey=ext-search-subject-8"> Unter</a>- und <a href="?hkey=ext-search-subject-9">verwandten Begriffe</a>
-                        sowie die <a href="?hkey=ext-search-subject-10">Synonyme</a> angezeigt.</p>
-                </content>
-            </section>
-            <section help-key="ext-search-subject-6">
-                <header>Thesaurus-Schlagwort</header>
-                <content>
-                    <p>Dies ist das aktuell eingestellte Thesaurus-Schlagwort.
-                        Sie können es in ihren Suchausdruck übernehmen, indem
-                        Sie es ankreuzen und den Button „Zur
-                        Suchanfrage hinzufügen“ anklicken.</p>
-                </content>
-            </section>
-            <section help-key="ext-search-subject-7">
-                <header>Oberbegriffe</header>
-                <content>
-                    <p>Ein Oberbegriff ist ein Begriff, der ein
-                        Thesaurus-Schlagwort verallgemeinert. Der
-                        UMTHES<sup>®</sup> bietet die Möglichkeit, dass ein
-                        Thesaurus-Begriff mehrere Oberbegriffe besitzt.</p>
-                    <p>Sie können den oder die Oberbegriffe ihrem Suchausdruck
-                        hinzufügen, indem Sie sie ankreuzen und auf den Button
-                        „Zur Suchanfrage hinzufügen“ klicken.</p>
-                </content>
-            </section>
-            <section help-key="ext-search-subject-8">
-                <header>Unterbegriffe</header>
-                <content>
-                    <p>Ein Unterbegriff ist eine Spezialisierung eines
-                        Thesaurus-Schlagwortes. Ein Thesaurus-Begriff kann
-                        beliebig viele Unterbegriffe besitzen.</p>
-                    <p>Sie können einen oder mehrere Unterbegriffe ihrem
-                        Suchausdruck hinzufügen, in dem Sie sie ankreuzen und
-                        auf den Button „Zur Suchanfrage
-                        hinzufügen“ klicken.</p>
-                </content>
-            </section>
-            <section help-key="ext-search-subject-9">
-                <header>Verwandte Begriffe</header>
-                <content>
-                    <p>Ein verwandter Begriff ist ein Thesaurus-Begriff, der in
-                        einer Beziehung zu dem Thesaurus-Schlagwort steht, aber
-                        weder ein Ober- noch ein Unterbegriff ist. Ein
-                        Thesaurus-Begriff kann beliebig viele verwandte Begriffe besitzen.</p>
-                    <p>Sie können einen oder mehrere verwandte Begriffe ihrem
-                        Suchausdruck hinzufügen, indem Sie sie ankreuzen und
-                        auf den Button „Zur Suchanfrage
-                        hinzufügen“ klicken.</p>
-                </content>
-            </section>
-            <section help-key="ext-search-subject-10">
-                <header>Synonyme</header>
-                <content>
-                    <p>Ein Synonym ist ein alternativer , aber sinngleicher
-                        Ausdruck für das Thesaurus-Schlagwort.</p>
-                    <p>Manchmal setzt sich ein Synonym aus zwei oder mehreren
-                        Thesaurus-Begriffen zusammen. In diesem Fall ist das
-                        Synonym nicht als alternativer Ausdruck für einen
-                        einzelnen Thesaurus-Begriff, sondern als Synonym für den
-                        zusammengesetzten Begriff zu verstehen.</p>
-                    <p>Sie können ein oder mehrere Synonyme ihrem Suchausdruck
-                        hinzufügen, indem Sie sie ankreuzen und auf den Button
-                        „Zur Suchanfrage hinzufügen“ klicken.</p>
-                    <p>Wenn Sie auf den Synonym-Begriff klicken, gelangen Sie zu
-                        den dahinter liegenden Thesaurus-Begriffen. Sie können
-                        auch diese in Ihren Suchausdruck übernehmen.</p>
-                </content>
-            </section>
+                    <p>In PortalU kommt der Umweltthesaurus UMTHES des 
+                       Umweltbundesamtes zum Einsatz. Ein Thesaurus ist eine 
+                       Sammlung von Schlagworten, die miteinander in Beziehung 
+                       gesetzt werden. Zu jedem Schlagwort werden somit 
+                       Informationen vorgehalten, ob und wie es sich 
+                       verallgemeinern, spezialisieren oder anders ausdrücken 
+                       lässt. Hierbei wird zwischen Oberbegriffen, 
+                       Unterbegriffen, verwandten Begriffen und Synonymen 
+                       unterschieden. Das kontrollierte Thesaurusvokabular 
+                       kann zur Verschlagwortung von Dokumenten genutzt, damit 
+                       diese besser auffindbar sind. </p>
+                    <p>Im UMTHES werden über 30.000 umweltrelevante Schlagworte 
+                       vorgehalten. Einem Schlagwort können hierbei mehrere 
+                       Oberbegriffe, Unterbegriffe, verwandte Begriffe und 
+                       Synonyme zugeordnet sein. Ein verwandter Begriff  ist ein 
+                       Thesaurus-Begriff, der in einer Beziehung zu einem 
+                       anderen Thesaurus-Schlagwort steht, aber weder ein Ober- 
+                       noch ein Unterbegriff ist. Ein Synonym ist ein 
+                       alternativer, sinngleicher Ausdruck für ein Schlagwort. 
+                       Wenn sich ein Synonym aus zwei oder mehreren 
+                       Thesaurus-Begriffen zusammensetzt, ist dieses nicht als 
+                       alternativer Ausdruck für einen einzelnen 
+                       Thesaurus-Begriff zu verstehen, sondern als Synonym für 
+                       einen zusammengesetzten Begriff.</p>
+                    <p>Der UMTHES ist eine Komponente des <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des                
+                       Umweltbundesamtes.</p>
+                 </content>
         </section>
     </chapter>
     <chapter>
@@ -417,68 +380,55 @@
         <section help-key="ext-search-spacial-1">
             <header>Raum</header>
             <content>
-                <p>PortalU ermittelt über den <a href="#ext-search-spacial-3">Geo-Thesaurus Umwelt</a> des
-                    Umweltbundesamtes (Dessau) für jede Webseite, die über PortalU
-                    verfügbar ist, entsprechende Raumbezüge. Bei der räumlichen Suche in
-                    PortalU wird dieser Raumbezug genutzt. Die räumliche Suche ist
-                    also nicht, wie in den meisten anderen Suchmaschinen, eine
-                    Volltext-Suche nach räumlichen Begriffen. In den angeschlossenen Datenbanken
-                    erfolgt die räumliche Suche über die dort eingetragenen räumlichen
-                    Attribute.</p>
+                <p>Sie können Ihre Suchanfrage über einen geografischen Namen 
+                   oder individuell in einer Karte räumlich einschränken. Anders 
+                   als bei vielen anderen Suchmaschinen, erfolgt die räumliche 
+                   Einschränkung nicht über eine einfache Volltextsuche, sondern
+                   innovativ über die Berücksichtigung der entsprechenden 
+                   Koordinaten. </p>
             </content>
         </section>
         <section help-key="ext-search-spacial-2">
             <header>Nach Ort suchen</header>
             <content>
-                <p>Über die begriffliche Raumeinschränkung können Sie zu Ihrem Suchausdruck gezielt
-                    geografische Begriffe hinzufügen. Geben Sie hierfür einen beliebigen Begriff (z.B. Berlin) in 
-                    das Eingabefeld ein und klicken Sie anschließend auf dem Button "Geografische Namen 
-                    suchen". Dadurch wird eine Suchanfrage an den <a href="#ext-search-spacial-3">Geo-Thesaurus</a> gestartet. Als Ergebnis erhalten Sie
-                    eine Liste geografischer Namen, die Sie zu Ihrem Suchausdruck hinzufügen können.</p>                
-                <p>Wenn Sie Ihren Suchausdruck weiter spezifizieren möchten, klicken Sie auf einen
-                    geografischen Namen in der Ergebnisliste (z,B.  Berlin, Region/Landkreis). Die nun erscheinende Liste Lagebeziehungen beinhaltet weitere 
-                    geografischen Namen, die zum ursprünglichen Suchergebnis eine Lagebeziehung aufweisen.</p>
+                <p>Um Ihre Suchanfrage über einen Ortsnamen oder eine andere
+                   geografischen Bezeichnung 
+                   einzuschränken, geben Sie einen geografischen Namen (z.B. 
+                   Hannover) in das Suchfeld ein, klicken Sie auf die 
+                   Schaltfläche <b>Geografische Namen suchen</b>. Dadurch wird 
+                   eine Suchanfrage an den <a href="#ext-search-spacial-3">
+                   Geo-Thesaurus-Umwelt</a> gestartet. Machen Sie ein Häkchen 
+                   vor dem passenden Geografischen Namen in der Auswahlliste und
+                   klicken Sie auf die Schaltfläche <b>Zur Suchanfrage 
+                   hinzufügen</b>.</p>                
+                <p>Tipp: Zu den geografischen Namen in der Auswahlliste lassen 
+                   sich weitere Namen aufrufen, die zu den Namen eine 
+                   Lagebeziehung aufweisen. Klicken Sie hierfür auf den 
+                   jeweiligen geografischen Namen (z.B. Region Hannover).</p>
             </content>
             <section help-key="ext-search-spacial-3">
-                <header>Was ist ein Geo-Thesaurus?</header>
+                <header>Der Geo-Thesaurus-Umwelt</header>
                 <content>
+                    <p>Der Geo-Thesaurus-Umwelt ist eine Komponenten des 
+                       <a href="http://www.semantic-network.de/" target="_new">
+                       Semantic Network Service</a> (SNS) des
+                        Umweltbundesamtes. SNS stellt eine gemeinsame 
+                        Terminologie für den Bereich Umwelt auf deutsch und 
+                        englisch zur Verfügung. Der Geo-Thesaurus-Umwelt umfasst
+                        rund 50.000 geografische Namen und beschränkt sich aus 
+                        praktischen Gründen auf Orte, die üblicherweise auf 
+                        Karten ab dem Maßstab 1:250.000 verzeichnet sind.</p> 
                     <p>Ähnlich wie das Ortsverzeichnis eines Atlanten beschreibt
-                        der Geo-Thesaurus Umwelt die Namen von Gemeinden,
+                        der Geo-Thesaurus die Namen von Gemeinden,
                         Flüssen, Bergen, Landschaften und anderen geografischen
-                        Objekten in Deutschland. Dabei gibt der GTU die genaue
-                        Schreibweise als auch die geografische Position
-                        (Koordinaten) eines Orts an.</p>
-                    <p>Der Geo-Thesaurus beschränkt sich aus praktischen Gründen auf Orte,
-                        die üblicherweise auf Karten ab dem Maßstab 1:250.000
-                        verzeichnet sind. Derzeit sind ca. 50.000 geografische
-                        Objekte im Thesaurus verzeichnet. Der Geo-Thesaurus Umwelt wird über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
-                        Umweltbundesamtes zur Verfügung gestellt.</p>
-                </content>
+                        Objekten in Deutschland. Dabei gibt der Thesaurus neben
+                        der genauen Schreibweise auch die Koordinaten eines Orts
+                        und dessen Lagebeziehung zu anderen Orten an.</p>
+                 </content>
             </section>
- <section help-key="ext-search-spacial-3">
-                <header>Wie in PortalU vorgehen?</header>
-                <content>
-                    <p>Der Suchausdruck, den Sie über den Button "Geografische Namen suchen" abgeschickt haben,
-                         wird durch den SNS analysiert und Sie erhalten eine Reihe geografischer Namen zurück. 
-                         Sie können diese jetzt ankreuzen und Ihrem Suchausdruck hinzufügen. 
-                          Die geografischen Namen werden zur räumlichen Suche in den räumlichen 
-                         Informationen der Web-Seiten und der Datenbanken genutzt.</p>
-                   <p>Wollen Sie Ihre räumlichen Suchbegriffe weiter verfeinern, können Sie sich die 
-                        Lagebeziehungen durch einen Klick auf den jeweiligen Begriff ansehen.</p>
-                </content>
-            </section>
-            <section help-key="ext-search-spacial-5">
-                <header>Lagebeziehungen</header>
-                <content>
-                    <p>Nach dem Klick auf einen geografischen Namen (z.B. Berlin, Region/Landkreis) werden die
-                        Lagebeziehungen zu diesem Namen angezeigt. Durch Auswahl (Anklicken) räumlich
-                        relevanter geografischer Namen können Sie den
-                        gewünschten Raumbezug weiter konkretisieren.</p>
-                </content>
-            </section>
-        </section>
+         </section>
         <section help-key="ext-search-spacial-6">
-            <header>Auf Karte festlegen</header>
+            <header>Raumeinschränkung Karte</header>
             <content>
                 <p>Die räumliche Einschränkung der PortalU-Suche ist sowohl über 
                 Begriffe als auch die Auswahl eines Kartenausschnitts (Bounding-Box) 
@@ -546,25 +496,37 @@
                         nicht befüllt werden.</p>
 
                     <p><b>Themen</b></p>
-                    <p>Unter Themen finden Sie verschiedene nach Themen sortierte Kartendienste von Bund und Ländern, die in 
+                    <p>Unter Themen finden Sie verschiedene nach Themen 
+                       sortierte Kartendienste von Bund und Ländern, die in 
                        den PortalU-Kartenviewer reingeladen werden können.</p>
                     <p> <img border="0" width="319" height="144" src="../decorations/layout/ingrid-help/images/image203.jpg" alt="*"></img> </p> 
                        
                     <p>Die einzelnen Symbole haben die folgende Bedeutung:</p>
 
-                    <p> <img border="0" width="17" height="17" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> Das Ordnersymbol wird für die Anzeige der einzelnen Themen verwendet. 
+                    <p><img border="0" width="17" height="17" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> Das Ordnersymbol wird 
+                        für die Anzeige der einzelnen Themen verwendet. 
                         In den Ordnern finden Sie die entsprechenden Kartendienste.</p>
 
-                    <p> <img border="0" width="18" height="22" src="../decorations/layout/ingrid-help/images/image111.jpg" alt="*"></img> WMS zu aktiven Diensten hinzufügen und auf Ausschnitt zoomen: Mit einem Klick (linke Maustaste) auf dieses Symbol wird der entsprechende Dienst 
-                        zu den aktiven Diensten hinzugefügt und in der Karte auf den vom Dienst beschriebenen Kartenausschnitt 
-                        gezoomt. Wenn der Dienst weniger als 11 Layer enthält, werden alle Layer direkt 
-                        in der Karte aktiviert. Enthält der Dienst hingegen mehr als 10 Layer, werden die Layer nicht
-                         automatisch aktiviert, um die Ladezeit gering zu halten.</p>
+                    <p><img border="0" width="18" height="22" src="../decorations/layout/ingrid-help/images/image111.jpg" alt="*"></img> WMS zu aktiven Diensten    
+                        hinzufügen und auf Ausschnitt zoomen: Mit einem Klick 
+                        (linke Maustaste) auf dieses Symbol wird der 
+                        entsprechende Dienst zu den aktiven Diensten hinzugefügt
+                        und in der Karte auf den vom Dienst beschriebenen 
+                        Kartenausschnitt gezoomt. Wenn der Dienst weniger als 
+                        11 Layer enthält, werden alle Layer direkt 
+                        in der Karte aktiviert. Enthält der Dienst hingegen mehr
+                        als 10 Layer, werden die Layer nicht automatisch 
+                        aktiviert, um die Ladezeit gering zu halten.</p>
 
                     <p> <img border="0" width="18" height="16" src="../decorations/layout/ingrid-help/images/image104.jpg" alt="*"></img> Zeige Metadaten über Kartendienst: Weiterführende Informationen (Metadaten) über einen Dienst können für Kartendienste angezeigt 
-                         werden, die unter Themen bzw. Bund/Länder eingebunden sind. Die Informationen, die aus der jeweiligen GetCapabilities-URL 
-                         stammen, werden aus einer Datenbank des PortalU-Kartenviewers ausgelesen. Wenn in der GetCapabilities-URL bestimmte Angaben 
-                         wie z.B. zur Organisation oder Anschrift fehlen, können einige Felder nicht befüllt werden.</p>
+                         werden, die unter Themen bzw. Bund/Länder eingebunden 
+                         sind. Die Informationen, die aus der jeweiligen 
+                         GetCapabilities-URL 
+                         stammen, werden aus einer Datenbank des 
+                         PortalU-Kartenviewers ausgelesen. Wenn in der 
+                         GetCapabilities-URL bestimmte Angaben 
+                         wie z.B. zur Organisation oder Anschrift fehlen, können
+                         einige Felder nicht befüllt werden.</p>
 
                     <p><b>Bund/Länder</b></p>
                     <p>Unter Bund/Länder finden Sie umweltrelevante Kartendienste verschiedener Institutionen und Organisationen 
@@ -652,7 +614,7 @@
                         <b>Datenabfrage</b>
                     </p>
                     <p>
-                        <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image026.jpg" alt="*"></img> Über diesen Button können Sachdaten in der Karte abgefragt werden (z.B. in der Karte „Altlasten in Niedersachsen“ zu einer angeklickten Altablagerungfläche Sachdaten wie z.B. Nutzung: Sportanlage, Lagerungsform: Grube, Abfallarten: Bauschutt, Schrott, Altöl...). Die Informationen 
+                        <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image026.jpg" alt="*"></img> Über diesen Button können Sachdaten in der Karte abgefragt werden (z.B. in der Karte „Altlasten in Niedersachsen“ zu einer angeklickten Altablagerungsfläche Sachdaten wie z.B. Nutzung: Sportanlage, Lagerungsform: Grube, Abfallarten: Bauschutt, Schrott, Altöl...). Die Informationen 
                         werden über einen Web Feature Service (WFS) bereitgestellt. Über einen Klick 
                         in die Karte erhalten Sie standortspezifische Informationen der dargestellten Layer. </p>
                     <p> Welche Sachdaten angezeigt werden, hängt davon ab, bei welchem Layer unter „Aktive Dienste“ die 
@@ -728,7 +690,7 @@
             <content>
                 <p>PortalU ist in der Lage, nach den Zeitbezügen der
                     angeschlossenen Systeme zu suchen. Hierzu werden einerseits
-                    die Daten genutzt, die der <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
+                    die Daten genutzt, die der <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                     Umweltbundesamtes aus den Webseiten als Zeitbezüge
                     analysiert hat. Andererseits wird auf die Zeitbezüge in den
                     Datenbanken zugegriffen.</p>
@@ -770,15 +732,14 @@
                     von Ihnen gewünschte Feld des Zeitbezugs einfügen.</p>
             </content>
             <section help-key="ext-search-time-5">
-                <header>Was ist die Chronik?</header>
+                <header>Die Umweltchronik</header>
                 <content>
-                    <p>Die Chronik ist eine Sammlung aktueller und
-                        historischer Ereignisse, die unsere Umweltsituation
-                        wesentlich beeinflusst haben. Neben den Daten zu den
-                        Ereignissen wird gegebenenfalls eine Kurzbeschreibung der
-                        Ereignisse gegeben.</p>
-                    <p>Die Chronik wird über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
-                        Umweltbundesamtes in Dessau zur Verfügung gestellt.</p>
+                    <p>Die Umweltchronik ist eine Komponenten des <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
+                        Umweltbundesamtes.SNS stellt eine gemeinsame 
+                        Terminologie für den Bereich Umwelt auf deutsch und 
+                        englisch zur Verfügung. Die Umweltchronik umfasst über 
+                        2.000 aktuelle und historische Ereignisse, die unsere 
+                        Umwelt wesentlich beeinflusst haben. </p>
                 </content>
             </section>
             <section help-key="ext-search-time-6">
@@ -854,11 +815,14 @@
             <header>Suchhistorie</header>
             <content>
                 <p>PortalU speichert eine Historie Ihrer Suchanfragen. Neben
-                    dieser Historie, die automatisch für eine Sitzung vorübergehend gespeichert
-                    wird, können Sie als eingeloggter Nutzer (siehe <a href="?hkey=myingrid-1">Mein PortalU</a>) auch
-                    Suchanfragen permanent speichern (<a href="?hkey=search-save-1">Suche Speichern</a>).</p>
+                    dieser Historie, die automatisch für eine Sitzung 
+                    vorübergehend gespeichert
+                    wird, können Sie als eingeloggter Nutzer 
+                    (siehe <a href="?hkey=myingrid-1">Mein PortalU</a>) auch
+                    Suchanfragen permanent speichern 
+                    (<a href="?hkey=search-save-1">Suche Speichern</a>).</p>
                 <p>Sowohl die vorübergehenden als auch die permanent gespeicherten Suchanfragen können über den Reiter 
-                   „Suchhistorie“ aufgerufen werden.</p>
+                   <b>Suchhistorie</b> aufgerufen werden.</p>
             </content>
         </section>
         <section help-key="search-history-2">
@@ -877,7 +841,7 @@
                     Suchanfragen aufgelistet. Durch das Anklicken einer
                     Suchanfrage wird diese in das Suchfenster geladen und die
                     Suche ausgeführt. Gespeicherte Suchanfragen können durch
-                    Ankreuzen und den „Löschen“ -Button
+                    Ankreuzen und den <b>Löschen</b>-Button
                     entfernt werden.</p>
             </content>
         </section>
@@ -887,7 +851,7 @@
         <section help-key="search-settings-1">
             <header>Einstellungen</header>
             <content>
-                <p>Unter der Rubrik „Einstellungen“ können
+                <p>Unter der Rubrik <b>Einstellungen</b> können
                     Sie die Darstellung der Suchergebnisse steuern.</p>
             </content>
         </section>
@@ -898,7 +862,7 @@
                     (Relevanz der gefundenen Seite in Bezug auf Ihren
                     Suchausdruck) oder nach Aktualität (die neusten Seiten
                     stehen vorne) sortiert anzeigen lassen.</p>
-                <p>„Gruppierung“ bedeutet, dass die
+                <p><b>Gruppierung</b> bedeutet, dass die
                     Suchergebnisse nach Bund/Ländern, Informationsanbietern
                     oder Domänen zusammengefasst angezeigt werden.</p>
             </content>
@@ -908,11 +872,11 @@
             <content>
                 <p>PortalU führt nicht nur die bei Suchmaschinen übliche
                     Indexierung der Seiten durch, sondern lässt den Seiteninhalt
-                    auch über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
+                    auch über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                     Umweltbundesamtes analysieren. Als Ergebnis dieser Analyse
-                    werden den Webseiten Fachbegriffe aus dem  <a href="?hkey=ext-search-subject-4">Umwelt-Thesaurus</a> zugeordnet.</p>
-                <p>Wenn Sie durch Ankreuzen die Einstellung „Ähnliche
-                    Begriffe in die Suche einbeziehen“ wählen werden
+                    werden den Webseiten Fachbegriffe aus dem  <a href="?hkey=ext-search-subject-3">Umweltthesaurus UMTHES</a> zugeordnet.</p>
+                <p>Wenn Sie durch Ankreuzen die Einstellung <b>Ähnliche
+                    Begriffe in die Suche einbeziehen</b> wählen werden
                     die zugeordneten ähnlichen Begriffe in der Suche
                     mitberücksichtigt. (Hinweis: In den meisten Fällen wird
                     durch die Wahl dieser Einstellung die Treffermenge erhöht.)</p>
@@ -922,39 +886,40 @@
     <chapter>
         <header>Tipps</header>
         <section help-key="search-tipps-1">
-            <header>Sie möchten auch ähnliche Begriffe in die Suche einbeziehen?</header>
+            <header>Ähnliche Begriffe in die Suche einbeziehen</header>
             <content>
                 <p>Sie haben drei Möglichkeiten, ähnliche Begriffe in die Suche einzubeziehen:</p>
                 <ul>
                     <li>Automatisiert: Kreuzen Sie hierzu im Formular
-                        „Einstellungen für die Suche“ (<a href="?hkey=search-settings-1">Suche/Einstellungen</a>)
-                        die Option „Ähnliche Begriffe in die Suche
-                        einbeziehen“ an. Sie können diese
+                        <b>Einstellungen für die Suche</b> (<a href="?hkey=search-settings-1">Suche/Einstellungen</a>)
+                        die Option <b>Ähnliche Begriffe in die Suche
+                        einbeziehen</b> an. Sie können diese
                         Einstellungen auch dauerhaft vornehmen (siehe <a href="?hkey=myingrid-1">Mein PortalU</a>).</li>
                     <li>Vor einer Suche erweitern Sie Ihren Suchausdruck um
                         ähnliche Begriffe, indem Sie die Funktionalität
-                            „<a href="?hkey=ext-search-subject-2">Thema/Fachwörterbuch</a>“
-                        der „<a href="?hkey=ext-search-1">Erweiterten
-                        Suche</a>“ nutzen.</li>
-                    <li>Nach einer Suche werden Ihnen über der
-                        Suchergebnisliste „<a href="?hkey=ext-search-subject-5">Ähnliche
-                        Begriffe</a>“ angeboten, über die Sie ihren
-                        Suchausdruck erweitern können. Um die ähnlichen Begriffe zu sehen, klicken Sie auf  "Ähnliche Begriffe: 
-                        Suchen Sie nach .. " oder auf das Pluszeichen.</li>
+                        <a href="?hkey=ext-search-subject-2">Thema/Fachwörterbuch</a>
+                        der <a href="?hkey=ext-search-1">Erweiterten
+                        Suche</a> nutzen.</li>
+                    <li>Nach einer Suchanfrage wird über der Suchergebnisliste 
+                        der Link <b>Ähnliche Begriffe: Suchen Sie nach...</b>
+                        eingeblendet. Wenn Sie auf diese Schaltfläche klicken 
+                        oder das Pluszeichen betätigen, werden Ihnen ähnliche 
+                        Begriffe vorgeschlagen, die für Ihre Suchanfrage ggf. 
+                        interessant sein könnten.</li>
                 </ul>
             </content>
         </section>
         <section help-key="search-tipps-2">
-            <header>Sie möchten Ihre Suche auf Informationen zu Ihrem Wohnort begrenzen?</header>
+            <header>Suche auf Informationen zum Wohnort begrenzen</header>
             <content>
                 <p>Nutzen Sie hierzu die <a href="?hkey=ext-search-spacial-1">Räumliche
                     Suche</a>. Sie können entweder ein Suchrechteck über dem
-                    gewünschten Suchbereich aufziehen (<a href="?hkey=ext-search-spacial-6">Auf Karte festlegen</a>)
-                    oder Ihre Stadt oder Ihren Kreis als Begriff eingeben (<a href="?hkey=ext-search-spacial-2">Nach Ort suchen</a>).</p>
+                    gewünschten Suchbereich aufziehen (<a href="?hkey=ext-search-spacial-6">Raumeinschränkung Karte</a>)
+                    oder Ihre Stadt oder Ihren Kreis als Begriff eingeben (<a href="?hkey=ext-search-spacial-2">Raumeinschränkung begrifflich</a>).</p>
             </content>
         </section>
         <section help-key="search-tipps-3">
-            <header>Sie interessieren sich nur für Informationen ihres Landes?</header>
+            <header>Suche auf ein Bundesland begrenzen</header>
             <content>
                 <p>Über den <a href="?hkey=ext-search-area-1">Suchbereich</a> der
                     Suche können Sie ihr Land auswählen. Bedenken Sie, dass auch
@@ -966,14 +931,14 @@
             </content>
         </section>
         <section help-key="search-tipps-4">
-            <header>Sie haben eine spezielle Suchanfrage, die sie nicht über die
-                erweiterte Suche formulieren können?</header>
+            <header>Spezielle Suchanfrage, die man nicht über die
+                erweiterte Suche formulieren kann</header>
             <content>
                 <p>PortalU erlaubt komplexe Suchanfragen  durchzuführen, die
                     über die Möglichkeiten der erweiterten Suche hinausgehen
                     (z.B. Gruppierung über Klammerung oder Ähnlichkeitssuchen
                     usw.). Lesen Sie hierzu in der Hilfe zu PortalU den
-                    Abschnitt „<a href="?hkey=search-expert-1">Expertensuche</a>“
+                    Abschnitt <a href="?hkey=search-expert-1">Expertensuche</a>
                     und geben Sie Ihren Suchausdruck in das Suchfeld ein.</p>
             </content>
         </section>
@@ -1018,11 +983,11 @@
                         mit dem jeweiligen Suchbegriff übereinstimmt.</p>
                     <p>Weiterhin können Sie bestimmen, ob die Suche in allen
                         Feldern der Adresse durchgeführt werden soll (z.B. also
-                        auch in dem Feld „Strasse“) oder
+                        auch in dem Feld <b>Strasse</b>) oder
                         aber nur in den vorgegebenen Feldern
-                        „Institution“,
-                        „Person“,
-                        „Beschreibung“ und „Schlagworte“.</p>
+                        <b>Institution</b>,
+                        <b>Person</b>,
+                        <b>Beschreibung</b> und <b>Schlagworte</b>.</p>
                 </content>
             </section>
         </section>
@@ -1105,8 +1070,8 @@
                   <p>Über das Fachwörterbuch können Sie Ihrem Suchausdruck
                     Fachbegriffe hinzufügen. Dazu geben Sie einen beliebigen
                     Begriff in das Eingabefeld ein und senden eine Anfrage an
-                    den <a href="#ext-search-subject-3">Thesaurus</a> ab.</p>
-                <p>Sie erhalten dann eine Reihe <a href="#ext-search-subject-5">ähnlicher Begriffe</a>, die
+                    den <a href="#ext-search-subject-3">Umweltthesaurus UMTHES</a> ab.</p>
+                <p>Sie erhalten dann eine Reihe ähnlicher Begriffe, die
                     Sie dem Suchausdruck hinzufügen können oder über deren
                     Verlinkungen Sie ihren Suchbegriff weiter spezifizieren können.</p>
             </content>
@@ -1136,9 +1101,9 @@
                     Nutzer (siehe <a href="?hkey=myingrid-1">Mein
                     PortalU</a>) die Möglichkeit, den verwendeten Suchausdruck
                     dauerhaft zu speichern. Dies geschieht über die Funktion
-                    „Suche speichern“.</p>
+                    <b>Suche speichern</b>.</p>
                 <p>Hinweis: Die zuletzt verwendeten Suchanfragen sind auch ohne
-                    Speicherung für die laufende Sitzung über die „<a href="?hkey=search-history-1">Suchhistorie</a>“ zugänglich.</p>
+                    Speicherung für die laufende Sitzung über die <a href="?hkey=search-history-1">Suchhistorie</a> zugänglich.</p>
             </content>
         </section>
     </chapter>
@@ -1306,10 +1271,11 @@
                     <td>mspowerpoint </td>  
                     <td> Es wird nur nach MS PowerPoint - Dokumenten gesucht</td>
                     </tr>
-                </table>
+                </table>  
             </content>
         </section>
         <section help-key="search-expert-9">
+        <br></br>
             <header>Suche nach speziellen Datentypen</header>
             <content>
                 <p>Der PortalU-Volltextindex gliedert sich in verschiedene
@@ -1349,10 +1315,7 @@
                     <td>research</td>  
                     <td> Es wird nach Dokumenten aus dem Bereich 'Forschungsprojekte' gesucht</td>
                     </tr>
-                    
-                            
-                                    
-                    
+         
                     <tr>
                     <td>address</td>  
                     <td> Es wird nach Dokumenten aus dem Bereich 'Adressen' gesucht</td>
@@ -1379,6 +1342,7 @@
                     <td> Es wird nach Informationen aus Fachdatenbanken gesucht</td>
                     </tr>
                 </table>
+                <br></br>
             </content>
         </section>
         <section help-key="search-expert-10">
@@ -1403,7 +1367,9 @@
                 <p>Beispiel: ‚datatype:measure topic:air’ (Es wird nach
                     Dokumenten gesucht, die Messungen zum Thema 'Luft' zum Inhalt haben.)</p>
                 <p> Folgende Werte sind möglich:</p>
-                <p> radiation, air, water, misc </p>
+                <p> <b>radiation</b> für Strahlung, <b>air</b> für Luft, 
+                    <b>water</b> für Wasser
+                    und <b>misc</b> für weitere Messwerte. </p>
             </content>
         </section>
         <section help-key="search-expert-12">
@@ -1461,16 +1427,14 @@
                     <td>database  </td>  
                     <td> Es wird nach Metadaten der Klasse 'Datensammlung/Datenbank' gesucht</td>
                     </tr>
-                    
-                    
+
                     <tr>
                     <td>service </td>  
-                    <td> Es wird nach Metadaten der Klasse 'Dienst/Anwendung/Informationssystem' gesucht</td>
+                    <td> Es wird nach Metadaten der Klasse 'Dienst/Anwendung
+                         /Informationssystem' gesucht</td>
                     </tr>
-                   
-                
-                    
                 </table>
+                <br></br>
             </content>
         </section>
         <section help-key="search-expert-14">
@@ -1514,7 +1478,7 @@
                     <td>y2 </td>  
                     <td> unten</td>
                     </tr>
-               </table>
+               </table> <br></br>
                <p> Die Koordinaten müssen als Gradzahlen (WGS 84) eingegeben werden. </p>
             </content>
         </section>
@@ -1549,7 +1513,7 @@
                     <td> Das Dokument wurde einer Zeitspanne zugeordnet, die mit dem 
                     angegebenen Wert endet</td>
                     </tr>
-               </table>
+               </table><br></br>
                <p> Die Zeitangaben müssen immer in der Form YYYY-MM-DD (Y=Jahr, M=Monat, D=Tag) 
                eingegeben werden. </p>
             </content>
@@ -1558,55 +1522,126 @@
 -->
     </chapter>
     <chapter>
-        <header>Suchergebnisliste</header>
+        <header>Suchergebnisseite</header>
         <section help-key="search-results-1">
-            <header>Suchergebnisliste</header>
+            <header>Ergebnisseite</header>
             <content>
-                <p>Nach dem Absenden einer Suchanfrage erhalten Sie die
-                    Ergebnisliste. Sie gliedert sich in die Hauptergebnisliste
-                    (linke Spalte) und die Liste mit Ergebnissen aus weiteren
-                    Datenquellen (rechte Spalte). Weiterhin wird Ihnen die
-                    Möglichkeit gegeben, über das <a href="?hkey=search-1">Suchformular</a> ihre
-                    Suchanfrage zu verfeinern und erneut zu suchen. Hierzu
-                    können Sie auch die Ihnen angebotenen ähnlichen Begriffe nutzen.</p>
+                <p>Nach dem Absenden einer Suchanfrage werden die Suchergebnisse
+                   angezeigt. Die Suchergebnisseite ist in drei Bereiche 
+                   gegliedert. In der Mitte finden Sie die Hauptergebnisliste, 
+                   in der linken Spalte nach 
+                   <a href="?hkey=search-results-2">Kategorien</a> sortierte 
+                   Ergebnisse und in der rechten Spalte Ergebnisse aus 
+                   <a href="?hkey=search-results-3">weiteren Datenquellen</a>. 
+                   In der Hauptergebnisliste und in den Kategorien sind 
+                   Webseiten, Metadaten und/oder Fachinformationen enthalten, 
+                   die nach Relevanz gewichtet und sortiert sind. Der oberste 
+                   Eintrag weist hierbei die höchste Relevanz für die 
+                   Suchanfrage auf. Bei den weiteren Datenquellen findet eine 
+                   solche Vorsortierung hingegen nicht statt. </p>
+                <p>Ein Suchergebnis besteht aus einem Titel, der auf die 
+                   Webseite bzw. den Katalog- oder Datenbankeintrag verlinkt, 
+                   eine Kurzbeschreibung, Angaben zum Anbieter und der 
+                   Datenquelle sowie bei Webseiten die entsprechende URL. Wenn 
+                   bei einigem Katalogeintrag eine digitale Karte hinterlegt 
+                   ist, können Sie sich über den Link <b>Zeige Karte</b> die 
+                   Karte direkt im <a href="?hkey=maps-1">PortalU-Kartenviewer
+                   </a> ansehen.
+                </p>
             </content>
         </section>
         <section help-key="search-results-2">
-            <header>Hauptergebnisliste</header>
+            <header>Kategorien</header>
             <content>
-                <p>In der Hauptergebnisliste werden Ihnen die Ergebnisse aus der
-                    Suche in den Webseiten der angeschlossenen Server sowie in
-                    den Meta- und Fachinformationssystemen in einer nach
-                    Relevanz gewichteten Liste angezeigt.</p>
-                <p>Anstatt der einfachen gewichteten Liste können Sie sich die
-                    Ergebnisse auch nach Bund und Ländern oder nach Anbietern <a href="?hkey=search-settings-2">gruppiert</a>
-                    anzeigen lassen oder sie nach Aktualität <a href="?hkey=search-settings-2">sortieren</a>.</p>
-                <p>Ist die Fundstelle eine Webseite, erhalten Sie neben einer
-                    Reihe von Informationen (z.B. Titel, Beschreibung und
-                    Anbieter) einen Link, über den Sie direkt auf die
-                    Originalseite geführt werden.</p>
-                <p>Ist die Fundstelle eine Meta- oder Fachinformation, werden Sie
-                    über den Link auf die Detaildarstellung der Fachinformation
-                    geführt. In den Fällen, in denen ein direkter Link zu einer
-                    Webseite in den Meta- oder Fachinformationen vorhanden ist,
-                    bekommen Sie diesen angeboten und werden über ihn auf die
-                    Originalseite geführt. In den Fällen, in denen eine Karte
-                    hinterlegt ist, bekommen Sie einen Link „Zeige
-                    Karte“ angeboten, über den Sie die Karte in der
-                    Kartenansicht von PortalU öffnen können.</p>
+                <p>In der linken Spalte der Ergebnisseite werden die 
+                   Suchergebnisse nach Kategorien sortiert. In Klammern wird 
+                   hierbei angegeben, wie viele Ergebnisse pro Kategorie 
+                   gefunden wurden. </p>
+                <p>Durch einen Klick auf eine Kategorie wird das Suchergebnis 
+                   in der Hauptergebnisliste entsprechend eingepasst. Erscheinen 
+                   Checkboxen bei der Auswahl einer Kategorie, so werden die 
+                   Ergebnisse aller angeklickten Unterkategorien in der 
+                   Hauptergebnisliste wiedergegeben. Über die Schaltfläche 
+                   <b>Mehr</b> können Sie sich weitere Unterkategorien anzeigen 
+                   lassen. </p>
+                <p>Wenn Sie Ihre Suchanfrage präzisieren möchten, können Sie 
+                   auch mehrere Kategorien auswählen.</p>
+                <p>Um die vorgenommenen Einschränkung wieder aufzugeben, 
+                   klicken Sie auf die Schaltfläche <b>löschen</b> bzw. auf die 
+                   Schalfläche <b>x</b>. </p>
+                   
+                <p><b>Ergebnistypen</b> </p>
+                
+                <p>Webseiten: Suchergebnis aus umweltrelevanten Webauftritten</p>
+                <p>Metadaten: Suchergebnis in den angeschlossenen 
+                   Umweltdatenkatalogen </p>
+                <p>Karten: Suchergebnis aus der Klasse 
+                   <b>Geoinformation/Karte</b> der angeschlossenen 
+                   Umweltdatenkataloge und den im PortalU-Kartenviewer 
+                   verzeichneten Karten. Alle Karten können Sie sich im 
+                   <a href="?hkey=maps-1">PortalU-Kartenviewer</a> ansehen.</p>
+                <p>Rechtsvorschriften: Suchergebnis aus Informationsangeboten zu 
+                   rechtsrelevanten Themen</p>                   
+                <p>Forschungsprojekte: Suchergebnis aus Informationsangeboten zu 
+                   Projekten in der Umweltforschung</p> 
+                <p>Themen: Suchergebnis der PortalU-Rubrik 
+                   <a href="?hkey=search-topics-1">Themen</a> </p>                  
+                <p>Messwerte: Suchergebnis der PortalU-Rubrik 
+                   <a href="?hkey=search-measure-1">Messwerte</a></p>             
+                <p>Service: Suchergebnis der PortalU-Rubrik 
+                   <a href="?hkey=search-service-1">Service</a></p>
+                   
+                <p><b>Aktualität</b> </p>
+                
+                <p>Wenn Sie den Ergebnistyp <b>Metadaten</b> aufgewählt haben, 
+                   wird die Kategorie <b>Aktualität</b> angezeigt, in der die 
+                   Suchergebnisse 
+                   nach ihrem Zeitbezug sortiert werden. Die Aktualität bezieht 
+                   sich hierbei auf das Erstellungs- bzw. lezte Änderungsdatum 
+                   des jeweiligen Datensatzes (z.B. im letzten Monat, im letzten 
+                   5 Jahre oder älter als 5 Jahre).</p>
+                                      
+                <p><b>Anbieter</b> </p>
+                
+                <p>In der Kategorie <b>Anbieter</b> können Sie Ihr Suchergebnis 
+                   auf einen oder mehrere Informationsanbieter einschränken. Die 
+                   Anbieter sind hierbei nach dem Bund und Ländern sortiert, so 
+                   dass eine regionale Abgrenzung (z.B. auf ein Bundesland) 
+                   möglich ist. </p>                                         
+                                      
+                <p><b>Raumbezug</b> </p>
+                
+                <p>In der Kategorie <b>Raumbezug</b> können Sie Ihr Suchergebnis 
+                   räumlich einschränken, indem Sie entweder den Raum durch ein 
+                   Suchrechteck in einer Karte oder durch die Angabe eines 
+                   Ortsnamen einschränken. </p>
+                <p>Wenn Sie auf die Schaltfläche <b>Auf Karte festlegen</b> 
+                   klicken, können Sie ein Suchrechteck auf einer 
+                   Deutschlandkarte aufziehen. Klicken Sie auf die Schaltfläche 
+                   <b>Auswahl anwenden</b>, um die räumliche Einschränkung für 
+                   die Suchergebnisse zu übernehmen. 
+                   <a href="?hkey=ext-search-spatial-6">Mehr dazu</a></p>                               <p>Sie können Ihr Suchergebnis aber auch über Ortsnamen und 
+                   anderen geographischen Bezeichnungen einschränken. Klicken Sie 
+                   hierfür auf die Schaltfläche <b>Nach Ort suchen</b>, geben 
+                   Sie eine geographische Bezeichnung ein und klicken Sie 
+                   anschließend auf <b>suchen</b>. Aktivieren Sie nun die 
+                   passende Checkbox und klicken Sie auf <b>Auswahl anwenden</b> 
+                   um die räumliche Einschränkung für die Suchergebnisse zu übernehmen. 
+                   <a href="?hkey=ext-search-spatial-2">Mehr dazu</a></p>    
+                    
             </content>
         </section>
         <section help-key="search-results-3">
             <header>Weitere Datenquellen</header>
             <content>
-                <p>Neben den in der Hauptergebnisliste eingebunden Meta- und
-                    Fachinformationssystemen werden auch weitere
-                    Umweltinformationssysteme über PortalU abgefragt. Die
-                    Schnittstellen dieser Systeme erlauben keine Einbindung der
-                    Suchergebnisse in die gewichtete Hauptergebnisliste. Die
-                    Suchergebnisse werden daher in einer getrennten Liste nach
-                    Datenquellen geordnet angezeigt. Die Datenquellen werden
-                    dabei in der Reihenfolge der erfolgten Rückmeldungen aufgeführt.</p>
+                <p>Auf der Ergebnisseite werden in der rechten Spalte weitere 
+                   <b>Datenquellen</b> angezeigt. Hier werden Suchergebnisse 
+                   gelistet, die aus Informationsquellen stammen, die in 
+                   PortalU nicht nach Relevanz gewichtet und sortiert werden 
+                   können. Die Suchergebnisse dieser Datenquellen werden daher 
+                   in einer getrennten Liste nach Datenquellen geordnet 
+                   angezeigt. Die Datenquellen werden dabei in der Reihenfolge 
+                   der erfolgten Rückmeldungen aufgeführt.</p>
                 <p>Über die angebotenen Links werden Sie je nach Datenquelle
                     entweder direkt zu den einzelnen Suchergebnissen oder zu
                     einer Suchergebnisliste im Quellsystem weitergeleitet.</p>
@@ -1617,7 +1652,7 @@
             <content>
                 <p>PortalU bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
                     ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen
-                    eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
+                    eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                     Umweltbundesamtes in Dessau analysiert und ihnen zur
                     Verfügung gestellt.</p>
                 <p>Wenn Sie auf das Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg"></img> klicken,
@@ -1625,8 +1660,8 @@
                     Begriffe angeboten. Diese können Sie sich wiederum über das
                         <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg"></img> Symbol
                     anzeigen lassen. Durch das Ankreuzen der einzelnen Begriffe
-                    und Klick auf den Button „Zur Suche
-                    hinzufügen“ werden die ähnlichen Begriffe jeweils
+                    und Klick auf den Button <b>Zur Suche
+                    hinzufügen</b> werden die ähnlichen Begriffe jeweils
                     dem zugeordneten Suchbegriff hinzugefügt und zwar so, dass
                     ein Dokument gefunden wird, wenn entweder der Suchbegriff
                     oder der ähnliche Begriff enthalten ist (ODER-Verknüpfung).</p>
@@ -1636,238 +1671,133 @@
     <chapter>
         <header>Kataloge</header>
         <section help-key="search-catalog-1">
-            <header>Hierarchiebaum</header>
+            <header>Umweltmetadaten</header>
             <content>
-                <p>Die angeschlossenen Kataloge und deren Inhalte werden in 
-                    einem Hierarchie-Baum dargestellt, gegliedert nach Bund/Länder.
-                    In jedem Katalog kann nach Objekten (hier "Umweltinformationen") 
-                    oder Adressen navigiert werden. Die Detaildarstellung eines Eintrags 
-                    erfolgt erst auf Anfrage, d.h. bei Klick auf dessen Titel, gleich 
-                    wie in der <a href="?hkey=search-results-2">Hauptergebnisliste</a> bei 
-                    der freien Suche.</p>
+                <p>Recherchieren Sie in den Umwelt- und Geodatenkatalogen von 
+                   Bund und Ländern. Die Kataloge sind hierarchisch aufgebaut 
+                   und können mit einem Klick auf das Ordnersymbol aufgeklappt 
+                   werden. Die Umweltinformationen werden in den Katalogen als 
+                   <b>Objekte</b> bezeichnet. Als zusätzliche Information sind 
+                   im Bereich <b>Adressen</b> die jeweiligen behördlichen 
+                   Ansprechpartner aufgeführt. Durch einen Klick auf ein Objekt
+                   oder eine Adresse werden detaillierte Informationen 
+                   angezeigt. </p>
+                <p> Einen anschaulichen Überblick über Recherchemöglichkeiten 
+                    in den Umweltdatenkatalogen finden Sie <a href="http://www.portalu.de/funktionen?action=doCatalog" target="_new">HIER</a>.
+                </p>
             </content>
         </section>
         <section help-key="search-catalog-2">
-            <header>Thesaurus-Navigator</header>
+            <header>Schlagwortverzeichnis</header>
             <content>
-                <p>Die Darstellung des Thesaurus-Wortgutes erfolgt in einer Baumstruktur, 
-                ausgehend von den Topterms des SNS. Bei Auswahl (Anklicken) eines Thesaurus-Begriffs 
-                (Deskriptor) erfolgt die Darstellung der Metadatensätze der zur Verfügung 
-                stehenden Kataloge (Objekt- bzw. Adress-iPlugs), die mit dem ausgewählten 
-                Deskriptor verschlagwortet sind, in einer neben dem Hierarchiebaum stehenden 
-                "Trefferliste". Die Auflistung der Metadatensätze ist in dieser Liste nach 
-                den Katalogen gruppiert. Die Detaildarstellung eines Metadatensatzes erfolgt 
-                erst auf Anfrage, d.h. bei Klick auf dessen Titel, gleich wie in der Liste 
-                der Suchergebnisse bei der freien Suche. Das Umschalten zwischen 
-                "Umweltinformationen" (Objekten) und "Adressen" erfolgt direkt im Bereich 
-                der Trefferliste.</p>
+                <p>Der Umweltthesaurus UMTHES ist eine Komponenten des 
+                   <a href="http://www.semantic-network.de/" target="_new">
+                   Semantic Network Service</a> des Umweltbundesamtes. SNS 
+                   stellt eine gemeinsame Terminologie für den Bereich Umwelt 
+                   auf deutsch und englisch zur Verfügung. Der UMTHES ist ein
+                   etabliertes Schlagwortverzeichnis für umweltrelevante 
+                   Themenfelder, das seit vielen Jahren vom Umweltbundesamt
+                   bereitgestellt und laufend aktualisiert wird.
+                </p>
+                <p>Sie können das Wortgut des Thesaurus nutzen, um sich für ihre
+                 Fragestellung passende Schlagworte herauszusuchen. Die 
+                 Darstellung des Wortgutes erfolgt in einer Baumstruktur. Wenn 
+                 Sie auf ein Schlagwort klicken, werden in der rechten Spalte 
+                 alle Metadatensätze der zur Verfügung stehenden Kataloge 
+                 angezeigt, die mit dem ausgewählten Begriff verschlagwortet 
+                 sind. Die Metadatensätze sind hierbei nach Katalogen gruppiert.
+                 Durch einen Klick auf einen Metadatensatz erhalten Sie
+                 Detailinformationen. 
+                </p>
             </content>
         </section>
     </chapter>
     <chapter>
         <header>Themen</header>
         <section help-key="search-topics-1">
-            <header>Themen</header>
+            <header>Umweltthemen</header>
             <content>
-                <p>Die Informationen, die als „Themen“
-                    in PortalU bereitgestellt werden, sind Webseiten und
-                    UDK-Metadatenobjekte, die für ein bestimmtes Umweltthema
-                    besonders relevant und interessant sind. Über das eigentliche
-                    Thema (wie z.B. Wasser oder Abfall) können Sie
-                    die gewünschten Themenseite auswählen.</p>
-                <p>Wenn Sie über den Klick auf ein Thema direkt von der
-                    Startseite zu den Themen gekommen sind, ist das
-                    angewählte Thema  bereits voreingestellt und nur
-                    Themenseiten zu diesem Thema werden in der Ergebnisliste angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-topics-2">
-            <header>Themen</header>
-            <content>
-                <p>In diesem Bereich können Sie das Thema auswählen, über das
-                    Sie sich informieren wollen.</p>
-                <p>Sie können Mehrfachselektionen durchführen, indem Sie die
-                    Strg- bzw. Ctrl-Taste gedrückt halten und dann auf die
-                    gewünschten Themen klicken.</p>
-                <p>Wird „Alles auswählen“ selektiert, werden
-                    alle zur Verfügung stehenden Themen angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-topics-4">
-            <header>Bund/Länder</header>
-            <content>
-                <p>In diesem Bereich können Sie auswählen, von welchen
-                    Informationsanbietern (des Bundes oder einzelner Länder) Sie
-                    die Informationen wünschen.</p>
-                <p>Sie können Mehrfachselektionen durchführen, indem Sie die
-                    Strg- bzw. Ctrl-Taste gedrückt halten und dann auf den Bund
-                    oder die gewünschten Länder klicken.</p>
-                <p>Wird „Alles auswählen“ selektiert, werden
-                    die Informationen aller Informationsanbieter angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-topics-5">
-            <header>Gruppierung</header>
-            <content>
-                <p>Sie können sich die Ergebnisse entweder nach Bund und Ländern
-                    oder aber nach den einzelnen Informationsanbietern (z.B.
-                    Umweltbundesamt) gruppiert anzeigen lassen. Das heißt, alle
-                    Informationen des Bundes oder eines Landes bzw. eines Anbieters 
-                    werden zu einer Gruppe zusammengefasst und zusammen angezeigt.</p>
-                <p>Wünschen Sie eine solche Gruppierung nicht, können Sie die
-                    Einstellung „keine“ wählen.</p>
+                <p>Wenn Sie einen schnellen Überblick über ein Umweltthema 
+                   gewinnen möchten, recherchieren Sie am besten im Bereich 
+                   <b>Themen</b>. Hier finden Sie ausgewählte 
+                   Umweltinformationen, die Ihnen einen schnellen Einstieg in 
+                   21 Umweltthemen bieten. Zudem können Sie Ihre Suche auf den 
+                   Bund oder ein einzelnen Bundesland beschränken. </p>
+                <p>Wenn Sie mehrere Themen oder Bundesländer gleichzeitig 
+                   auswählen möchten, halten Sie die Strg- bzw. Ctrl-Taste 
+                   gedrückt und klicken nacheinander auf die gewünschten Themen 
+                   oder Bundesländer. Die Suchergebnisse können gruppiert 
+                   anzeigen: entweder nach Bundesebene und Bundesländern oder 
+                   nach den einzelnen Informationsanbietern.</p>
+                <p>Tipp: Wenn Sie auf der PortalU-Startseite auf ein Umweltthema 
+                   klicken (z.B. Wasser), wird Ihnen die entsprechende 
+                   Ergebnisliste direkt angezeigt.</p>              
+
+                <p> Einen anschaulichen Überblick über die Umweltthemen 
+                    finden Sie <a href="http://www.portalu.de/funktionen?action=doEnvironment" target="_new">HIER</a>. </p>
                   </content>
         </section>
     </chapter>
     <chapter>
         <header>Service</header>
         <section help-key="search-service-1">
-            <header>Service</header>
+            <header>Pressemitteilungen, Publikationen und Veranstaltungen</header>
             <content>
-                <p>Unter „Service“ werden die Rubriken
-                    „Pressemitteilungen“,
-                    „Publikationen“ und
-                    „Veranstaltungen“ des Bundes und der
-                    Länder zusammengefasst.</p>
-                <p>Von diesem Menüpunkt gelangen Sie zu den entsprechenden
-                    Seiten der Bundes- und Landesbehörden.</p>
-                <p>Wenn Sie auf der PortalU-Startseite einen Link in der Servicebox 
-                   anklicken (z.B. Veranstaltungen), werden Ihnen die Ergebnisse für 
-                   die gewählte Kategorie (z.B. Veranstaltungen) direkt angezeigt. 
-                   Hierbei findet ein Wechsel in die Rubrik Service statt.</p>
-                   
-                   
-                 <p><img border="0" width="266" height="128" src="../decorations/layout/ingrid-help/images/image270.jpg" alt="*"></img> </p>
-                             
-                   
-            </content>
-        </section>
-        <section help-key="search-service-2">
-            <header>Rubriken</header>
-            <content>
-                <p>In diesem Bereich können Sie bestimmte Rubriken auswählen.
-                    Nach dem Klick auf den Button „Anzeigen“
-                    werden Ihnen die zu den angekreuzten Rubriken zur Verfügung
-                    stehenden Seiten angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-service-3">
-            <header>Bund/Länder</header>
-            <content>
-                <p>In diesem Bereich können Sie auswählen, von welchen
-                    Informationsanbietern (des Bundes oder aus einzelner Länder)
-                    Sie die Informationen wünschen.</p>
-                <p>Sie können Mehrfachselektionen durchführen, indem Sie die
-                    Strg- bzw. Ctrl-Taste gedrückt halten und dann auf den Bund
-                    oder die gewünschten Länder klicken.</p>
-                <p>Wird „Alles auswählen“ selektiert, werden
-                    die Informationen aller Informationsanbieter angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-service-4">
-            <header>Gruppierung</header>
-            <content>
-                <p>Sie können sich die Ergebnisse entweder nach Bund und Ländern
-                    oder aber nach den einzelnen Informationsanbietern (z.B.
-                    Umweltbundesamt) gruppiert anzeigen lassen. Das heißt, alle
-                    Informationen des Bundes oder eines Landes bzw. eines
-                    Anbieters werden zu einer Gruppe zusammengefasst und
-                    zusammen angezeigt.</p>
-                <p>Wünschen Sie eine solche Gruppierung nicht, können Sie die
-                    Einstellung „keine“ wählen.</p>
+                <p>Im Bereich <b>Service</b> können Sie nach Pressemitteilungen,
+                  Publikationen und Veranstaltungen des Bundes und der Länder zum
+                  Thema Umwelt recherchieren. Die einzelnen Rubriken können 
+                  hierbei gemeinsam oder einzelnen durchsucht werden. Zudem 
+                  können Sie Ihre Suche auf den Bund oder ein einzelnen 
+                  Bundesland beschränken. Wenn Sie mehrere Bundesländer 
+                  gleichzeitig auswählen möchten, halten Sie die Strg- bzw. 
+                  Ctrl-Taste gedrückt und klicken Sie dann nacheinander die 
+                  gewünschten Bundesländer an. Die Suchergebnisse können 
+                  gruppiert anzeigen: entweder nach Bundesebene und 
+                  Bundesländern oder nach den einzelnen Informationsanbietern.
+                </p>
+                <p> Einen anschaulichen Überblick über die in PortalU 
+                    recherchierbaren Serviceangebote finden Sie <a href="http://www.portalu.de/funktionen?action=doService" target="_new">HIER</a>. </p>
             </content>
         </section>
     </chapter>
     <chapter>
         <header>Messwerte</header>
         <section help-key="search-measure-1">
-            <header>Messwerte</header>
+            <header>Umweltmesswerte</header>
             <content>
-                <p>Unter diesem Menüpunkt werden Ihnen die Webseiten und
-                    Informationssysteme zu Messdaten von Bund- und Ländern angezeigt.</p>
-                <p>Wenn Sie über den Klick auf die Rubrik Messwerte direkt von der
-                    Startseite zu dem Bereich Messwerte gekommen sind, ist die
-                    Rubrik  bereits vorgewählt und die zur Verfügung stehenden
-                    Seiten werden direkt in Form einer Suchergebnisliste angezeigt.</p>
+                <p>Im Bereich <b>Messwerte</b> können Sie nach Umweltmesswerten des 
+                   Bundes und der Länder suchen. Der Themenschwerpunkt liegt 
+                   hierbei auf den Bereichen Strahlung, Luft und Wasser. Wenn 
+                   Sie mehrere Bundesländer gleichzeitig auswählen möchten, 
+                   halten Sie die Strg- bzw. Ctrl-Taste gedrückt und klicken Sie 
+                   dann nacheinander die gewünschten Bundesländer an. Die 
+                   Suchergebnisse können gruppiert anzeigen: entweder nach 
+                   Bundesebene und Bundesländern oder nach den einzelnen 
+                   Informationsanbietern.</p>
+                <p>Einen anschaulichen Überblick über Umweltmesswerte in PortalU 
+                   finden Sie <a href="http://www.portalu.de/funktionen?action=doMeasures" target="_new">HIER</a>.</p>
             </content>
         </section>
-        <section help-key="search-measure-2">
-            <header>Rubriken</header>
-            <content>
-                <p>In diesem Bereich können Sie auswählen, zu welchem
-                    Umweltmedium Sie sich aktuelle  Messwerte anzeigen lassen
-                    wollen. Nach dem Klick auf den Button
-                    „Anzeigen“ werden Ihnen die zu den
-                    angekreuzten Rubriken zur Verfügung stehenden
-                    Messwert-Seiten angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-measure-3">
-            <header>Bund/Länder</header>
-            <content>
-                <p>In diesem Bereich können Sie auswählen, von welchen
-                    Informationsanbietern (des Bundes oder einzelner Länder) Sie
-                    die Informationen wünschen.</p>
-                <p>Sie können Mehrfachselektionen durchführen, indem Sie die
-                    Strg- bzw. Ctrl-Taste gedrückt halten und dann auf den Bund
-                    oder die gewünschten Länder klicken.</p>
-                <p>Wird „Alles auswählen“ selektiert, werden
-                    die Informationen aller Informationsanbieter angezeigt.</p>
-            </content>
-        </section>
-        <section help-key="search-measure-4">
-            <header>Gruppierung</header>
-            <content>
-                <p>Sie können sich die Ergebnisse entweder nach Bund und Ländern
-                    oder aber nach den einzelnen Informationsanbietern (z.B.
-                    Umweltbundesamt) gruppiert anzeigen lassen. Das heißt, alle
-                    Informationen des Bundes oder eines Landes bzw. eines
-                    Anbieters werden zu einer Gruppe zusammengefasst und
-                    zusammen angezeigt.</p>
-                <p>Wünschen Sie eine solche Gruppierung nicht, können Sie die
-                    Einstellung „keine“ wählen.</p>
-            </content>
-        </section>
+        
     </chapter>
     <chapter>
         <header>Chronik</header>
         <section help-key="search-chronicle-1">
-            <header>Chronik</header>
+            <header>Umweltchronik</header>
             <content>
-                <p>Die Chronik ist eine Sammlung aktueller und
-                    historischer Ereignisse, die unsere Umweltsituation
-                    wesentlich beeinflusst haben. Neben den Eckdaten liefert die
-                    Chronik eine  kurze Beschreibung der Ereignisse.</p>
-                <p>Die Chronik wird über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
+                <p>Die <b>Umweltchronik</b> ist eine Sammlung aktueller und 
+                   historischer Ereignisse, die unsere Umweltsituation 
+                   wesentlich beeinflusst haben. Neben den Eckdaten liefert 
+                   die Chronik eine kurze Beschreibung der Ereignisse. Die 
+                   Umweltchronik wird über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                     Umweltbundesamtes zur Verfügung gestellt.</p>
-                <p>Sie können gezielt nach Ereignissen suchen, indem Sie eine
-                    Suche in der Chronik über Suchbegriff, Zeitbezug und
-                    Ereignistyp über den Button „Anzeigen“ absenden.</p>
-            </content>
-        </section>
-        <section help-key="search-chronicle-2">
-            <header>Ereignistypen</header>
-            <content>
-                <p>Die Chronik verzeichnet verschiedene Ereignistypen. Sie
-                    können in diesem Bereich wählen, nach welchen Ereignistypen
-                    Sie suchen möchten.</p>
-            </content>
-        </section>
-        <section help-key="search-chronicle-3">
-            <header>Zeitbezug</header>
-            <content>
-                <p>Die Chronik verzeichnet zu jedem Ereignis das Datum, an
-                    dem es sich ereignet hat. In diesem Bereich Sie können den
-                    Zeitpunkt oder den Zeitraum angeben, in dem Sie nach
-                    umweltrelevanten Ereignissen suchen.</p>
-            </content>
-        </section>
-        <section help-key="search-chronicle-4">
-            <header>Suchbegriff</header>
-            <content>
-                <p>In diesem Bereich können Sie einen Suchbegriff eingeben. Es
-                    wird nach Ereignissen gesucht, die den Suchbegriff im Titel
-                    oder in der Beschreibung enthalten.</p>
+                <p>Die Recherche in der Chronik ist ganz einfach. Wählen Sie 
+                   einen oder mehrere Ereignistypen aus, geben einen Suchbegriff 
+                   ein und klicken dann auf die Schaltfläche <b>Anzeigen</b>. 
+                   Bei Bedarf können Sie zudem einen Zeitraum oder ein Datum 
+                   eingeben, um die Suche weiter einzuschränken. </p>
+                <p>Einen anschaulichen Überblick der Recherchemöglichkeiten in
+                   der Umweltchronik finden Sie <a href="http://www.portalu.de/funktionen?action=doChronicle" target="_new">HIER</a>.</p>
             </content>
         </section>
     </chapter>
@@ -1876,12 +1806,33 @@
         <section help-key="maps-1">
             <header>Karten</header>
             <content>
-                <p>Im Kartenviewer können Sie sich umweltrelevante Karten ansehen. Wählen Sie 
-                   einen Kartendienst aus der Rubrik „Themen“ oder der Rubrik „Bund/Länder“ aus 
-                   oder fügen Sie einen externen Dienst hinzu. Wenn Sie über ein PortalU-Suchergebnis 
-                   („Zeige Karte“) auf den Kartenviewer gelangt sind, wird Ihnen die entsprechende 
+                <p>Im Kartenviewer können Sie sich umweltrelevante Karten 
+                   ansehen. Wählen Sie 
+                   einen Kartendienst aus der Rubrik <b>Themen</b> oder der 
+                   Rubrik <b>Bund/Länder</b> aus 
+                   oder fügen Sie einen externen Dienst hinzu. Wenn Sie über 
+                   ein PortalU-Suchergebnis 
+                   (Schaltfläche <b>Zeige Karte</b>) auf den Kartenviewer 
+                   gelangt sind, wird Ihnen die entsprechende 
                    Karte direkt angezeigt.
                    </p>
+                <p>Einen anschaulichen Überblick die Funktionen des 
+                   Kartenviewers finden Sie <a href="http://www.portalu.de/funktionen?action=doMap" target="_new">HIER</a>.
+                </p>                   
+<script type="text/javascript" src="http://portalu.de/hilfe-docs/mediaplayer-5.9/jwplayer.js"></script>
+ 
+<div id="mediaspace">This text will be replaced</div>
+ 
+<script type="text/javascript">
+  jwplayer('mediaspace').setup({
+    'flashplayer': 'http://portalu.de/hilfe-docs/mediaplayer-5.9/player.swf',
+    'file': 'http://portalu.de/hilfe-docs/Use_Of_OpenLayers-II.mp4',
+    'controlbar': 'bottom',
+    'width': '960',
+    'height': '478'
+  });
+</script>
+
             </content>
         </section>
             <section help-key="maps-2">
@@ -2094,16 +2045,16 @@
         <section help-key="rss-news-1">
             <header>Aktuelles</header>
             <content>
-                <p>Unter „Aktuelles“ werden aktuelle
-                    Meldungen zum Thema „Umwelt“ aus Bundes-
+                <p>Unter <b>Aktuelles</b> werden aktuelle
+                    Meldungen zum Thema <b>Umwelt</b> aus Bundes-
                      und Landesbehörden gelistet. Die aktuellste Meldung steht
-                    dabei immer oben. Es wird jeweils nur der Titel und eine
+                    dabei immer oben. Es werden jeweils nur der Titel und eine
                     Kurzbeschreibung der Meldung angezeigt. Durch einen Klick
                     auf die Meldung werden Sie zu der Originalmeldung weitergeleitet.</p>
                 <p>Ältere Meldungen, die nicht mehr auf der Startseite angezeigt
                     werden, werden in dem Meldungsarchiv abgelegt. Sie können
                     diese Meldungen einsehen, indem Sie auf den Link
-                    „Weitere Meldungen“ klicken.</p>
+                    <b>Weitere Meldungen</b> klicken.</p>
                 <p>(Hinweis: Ggf. können Sie Meldungen, die so alt sind, dass
                     sie auch im Meldungsarchiv nicht mehr auffindbar sind, noch
                     auf den Original-Servern der jeweiligen Bundes- oder
@@ -2143,15 +2094,15 @@
             <header>Anmeldung</header>
             <content>
                 <p>Haben Sie bereits einen Benutzernamen und ein Kennwort, so
-                    geben Sie beides hier ein und klicken auf „Anmelden“.</p>
+                    geben Sie beides hier ein und klicken auf <b>Anmelden</b>.</p>
             </content>
             <section help-key="myingrid-3">
                 <header>Neuer Benutzer</header>
                 <content>
                     <p>Haben Sie noch keinen Benutzernamen und Kennwort, so
-                        klicken Sie auf den Link „Neuer
-                        Benutzer“. Damit werden Sie zu dem Formular
-                        „Anmeldung“ durchgeschaltet.</p>
+                        klicken Sie auf den Link <b>Neuer
+                        Benutzer</b>. Damit werden Sie zu dem Formular
+                        <b>Anmeldung</b> durchgeschaltet.</p>
                     <p>Bitte füllen Sie das Formular aus. Die Angaben mit
                         Sternchen * sind Pflichtangaben, die ausgefüllt werden
                         müssen. Alle anderen Angaben sind freiwillig.</p>
@@ -2159,8 +2110,8 @@
                         dienen nur der anonymisierten statistischen Auswertung.</p>
                     <p>Wenn Sie immer die neusten Nachrichten aus dem Umfeld von
                         PortalU erhalten möchten, so bestellen Sie den <a href="?hkey=ingrid-newsletter-1">PortalU-Newsletter</a>, indem Sie am
-                        Ende des Formulars „Ich möchte den Newsletter
-                        abonnieren.“ ankreuzen (Hinweis: Sie können ihn
+                        Ende des Formulars <b>Ich möchte den Newsletter
+                        abonnieren.</b> ankreuzen (Hinweis: Sie können ihn
                         jederzeit wieder abbestellen).</p>
                 </content>
             </section>
@@ -2168,7 +2119,7 @@
                 <header>Kennwort vergessen?</header>
                 <content>
                     <p>Wenn Sie Ihr Kennwort vergessen haben, klicken Sie auf
-                        den Link „Kennwort vergessen“. Sie
+                        den Link <b>Kennwort vergessen</b>. Sie
                         werden dann zu dem entsprechenden Formular geführt, in
                         dem Sie Ihre E-Mail-Adresse eingeben können. Nach dem
                         Absenden bekommen Sie umgehend Ihren Benutzernamen und
@@ -2179,8 +2130,8 @@
                 <header>Automatisches Login</header>
                 <content>
                     <p>Wenn Sie Ihre persönlichen Einstellungen immer nutzen
-                        möchten, können Sie die Option „Automatisches
-                        Login“ wählen. Sie müssen in diesem Fall sich
+                        möchten, können Sie die Option <b>Automatisches
+                        Login</b> wählen. Sie müssen in diesem Fall sich
                         nicht jedes Mal über Benutzernamen und Kennwort
                         aufschalten. (Hinweis: Diese Funktion funktioniert nur,
                         wenn Sie Ihrem Internet-Browser die Erlaubnis zur
@@ -2208,7 +2159,7 @@
                 <p>Wenn Sie immer die neuesten Nachrichten aus dem Umfeld von
                     PortalU erhalten möchten, können Sie den <a href="?hkey=ingrid-newsletter-1">PortalU-Newsletter</a>
                     abbonieren. Kreuzen Sie einfach am Ende des Formulars
-                    „Ich möchte den Newsletter abonnieren“
+                    <b>Ich möchte den Newsletter abonnieren</b>
                     an (Hinweis: Sie können ihn jederzeit wieder abbestellen).</p>
             </content>
         </section>
@@ -2299,13 +2250,13 @@
                     </p>
                     <p>PortalU führt nicht nur die bei Suchmaschinen übliche
                         Indizierung  der Seiten durch, sondern lässt den
-                        Seiteninhalt auch über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
+                        Seiteninhalt auch über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                         Umweltbundesamtes analysieren. Als Ergebnis dieser
-                        Analyse werden geeignete Fachbegriffe aus dem <a href="?hkey=ext-search-subject-4">Umwelt-Thesaurus</a>
+                        Analyse werden geeignete Fachbegriffe aus dem <a href="?hkey=ext-search-subject-3">Umweltthesaurus UMTHES</a>
                         den Webseiten zugeordnet.</p>
                     <p>Wenn Sie durch Ankreuzen die Einstellung
-                        „Ähnliche Begriffe in die Suche
-                        einbeziehen“ auswählen, werden diese
+                       <b>Ähnliche Begriffe in die Suche einbeziehen</b> 
+                        auswählen, werden diese
                         Schlagworte in der Suche mitberücksichtigt. (Hinweis: Es
                         ist davon auszugehen, dass die Wahl dieser Einstellung
                         die Treffermenge erhöht.)</p>
