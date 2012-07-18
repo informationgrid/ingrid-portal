@@ -39,7 +39,7 @@
         
         function formatUser(user) {
             var formatString = "user";
-            allUsers.some(function(u) {
+            dojo.some(allUsers, function(u) {
                 if (u.login == user) {
                     formatString = u.surname + ", " + u.firstName + " ("+u.login+")";
                     return true;

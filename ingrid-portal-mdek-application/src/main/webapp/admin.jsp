@@ -101,7 +101,7 @@
             }
             
             function addLinks(users) {
-                users.forEach(function(u) {
+                dojo.forEach(users, function(u) {
                     u.btn_edit   = "<input type='button' class='table' onclick='editUser(\""+u.login+"\");'   value='Bearbeiten'>";
                     u.btn_delete = "<input type='button' class='table' onclick='removeUser(\""+u.login+"\");' value='Entfernen'>";
                     if (allIgeUsers[u.login]) {
@@ -176,7 +176,7 @@
                     allCatalogues = [];//{label: "all", value: "alle Kataloge"}];
                     for(var key in allIgeUsers) {
                         // only add iplugs that are not already in that array
-                        if (allCatalogues.indexOf(allIgeUsers[key]) == -1) {
+                        if (dojo.indexOf(allCatalogues, allIgeUsers[key]) == -1) {
 //                             allCatalogues.push({label: allIgeUsers[key], value:allIgeUsers[key]});
                             allCatalogues.push(allIgeUsers[key]);
                         }
