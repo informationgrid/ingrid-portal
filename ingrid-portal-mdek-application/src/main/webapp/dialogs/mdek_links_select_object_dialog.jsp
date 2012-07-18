@@ -44,6 +44,7 @@ createTree = function() {
 	    
 	    // Only use 'objects' and drop 'addresses'
 	    tree.model.store.newItem(str[0]);
+	    tree._expandNode(tree.rootNode.getChildren()[0]);
 	});
 }
 
