@@ -7,6 +7,7 @@
 <fmt:setBundle basename="messages" scope="session"/>
 
 <%
+   
     String currentUser = (String)request.getSession(true).getAttribute("userName");
     if ("admin".equals(currentUser)) {
         System.out.println("Session name: " + request.getSession(true).getAttribute("userName"));
@@ -18,6 +19,7 @@
         if (redirect.length() > 0) destination = redirect; 
         response.sendRedirect(response.encodeRedirectURL(destination));
     }
+    
 %>
 
 <html dir="ltr">
@@ -47,14 +49,10 @@
                 
 	                // check if login is registered IGE-user
 	                SecurityService.authenticate(username, password, function(result) {
-	                    console.debug("result is: ");
-	                    console.debug(result);
 	                    if (result == true) {
-	                        console.debug("accept");
 	                        //window.location.href = "start.jsp";
 	                        window.location.reload();
 	                    } else {
-	                        console.debug("reject");
 	                        showLoginError();
 	                    }
 	                });
@@ -66,11 +64,20 @@
             }
             
             window.onload = function () {
-                document.getElementById("password").addEventListener('keydown', function (event) { 
-                    if (event.keyCode == 13) {
-                        authenticate();
-                    }
-                });
+                var pwField = document.getElementById("password");
+                if (!pwField.addEventListener) {
+                    pwField.attachEvent("keydown", function (event) { 
+                        if (event.keyCode == 13) {
+                            authenticate();
+                        }
+                    });
+                } else {
+                    pwField.addEventListener('keydown', function (event) { 
+                        if (event.keyCode == 13) {
+                            authenticate();
+                        }
+                    });
+                }
             }
             
         </script>
@@ -84,18 +91,21 @@
         <div id="menu">
             <div class="block"><p></p></div><h2>Login</h2></div>
         </div>
+        <!--<form action='<%= response.encodeURL("j_security_check") %>' method="POST">-->
         <div id="" class="content" style="display: block;">
             <div class="contentBorder">
                 <h3>Loginseite</h3>
                 <div style="padding: 10px;">
                     <table style="width: 100%;">
-                        <tr><td>Login:</td><td><input id="username" style="width: 200px;"></td></tr>
-                        <tr><td>Passwort:</td><td><input id="password" type="password" style="width: 200px;"></td></tr>
-                        <tr><td></td><td><input id="submit" onclick="authenticate()" type="button" name="Login" value="Login"></td></tr>
+                        <tr><td>Login:</td><td><input id="username" name="j_username" style="width: 200px;"></td></tr>
+                        <tr><td>Passwort:</td><td><input id="password" name="j_password" type="password" style="width: 200px;"></td></tr>
+                        <tr><td></td><td><input id="submit" type="submit" onclick="authenticate()" name="Login" value="Login"></td></tr>
+						<!--<tr><td></td><td><input id="submit" type="submit" name="Login" value="Login"></td></tr>-->
                         <span id="error" class="error" style="display:none;">Unbekannter Benutzername oder Passwort!</span>
                     </table>
                 </div>
             </div>
         </div>
+        <!--</form>-->
     </body>
 </html>
