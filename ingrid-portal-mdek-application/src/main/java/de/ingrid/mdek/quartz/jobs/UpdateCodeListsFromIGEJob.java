@@ -22,9 +22,7 @@ public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext)
             throws JobExecutionException {
-        if (log.isDebugEnabled()) {
-            log.debug("Executing UpdateCodeListsFromIGEJob...");
-        }
+        log.info("Executing UpdateCodeListsFromIGEJob...");
         
         CodeListService clService = getClServiceFromBean(jobExecutionContext);
         Long timestamp = getLastModifiedTimestampFromDb();
@@ -39,13 +37,9 @@ public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
                 clService.persistToAll(clService.getCodeLists());
             }
             
-            if (log.isDebugEnabled()) {
-                log.debug("UpdateCodeListsFromIGEJob finished! (successful = " + success + ")");
-            }
+            log.info("UpdateCodeListsFromIGEJob finished! (successful = " + success + ")");
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("No iPlug connected to update codelists to!");
-            }
+            log.info("No iPlug connected to update codelists to!");
         }
     }
 
