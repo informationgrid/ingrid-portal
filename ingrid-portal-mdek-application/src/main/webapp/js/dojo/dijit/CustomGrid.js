@@ -567,7 +567,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          var rowCss = "slick-row " +
              (dataLoading ? ' loading' : '') +
              (row % 2 == 1 ? ' odd' : ' even') +
-             (this.invalidRows.indexOf(row) != -1 ? ' important' : '');
+             (dojo.indexOf(this.invalidRows, row) != -1 ? ' important' : '');
 
          var metadata = this.data.getItemMetadata && this.data.getItemMetadata(row);
 
