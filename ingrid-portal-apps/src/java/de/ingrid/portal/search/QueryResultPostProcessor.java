@@ -306,6 +306,10 @@ public class QueryResultPostProcessor {
             if (isObject) {
                 hit.put(Settings.RESULT_KEY_UDK_IS_ADDRESS, new Boolean(false));
                 tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_UDK_CLASS);
+                // take first value if it was an array!
+                if (tmpString.contains(",")) {
+                    tmpString = tmpString.substring(0, tmpString.indexOf(','));
+                }
                 if (tmpString.length() > 0) {
                     hit.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
                 } else {
@@ -335,6 +339,10 @@ public class QueryResultPostProcessor {
                 hit.put(Settings.RESULT_KEY_DOC_UUID, tmpString);
 
                 String addrClass = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_CLASS);
+                // take first value if it was an array!
+                if (addrClass.contains(",")) {
+                    addrClass = addrClass.substring(0, addrClass.indexOf(','));
+                }
                 hit.put(Settings.RESULT_KEY_UDK_CLASS, addrClass);
                 
                 if (addrClass.equals("2") || addrClass.equals("3")) {
