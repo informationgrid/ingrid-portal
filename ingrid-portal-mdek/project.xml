@@ -23,7 +23,7 @@
   <groupId>de.ingrid.portal</groupId>
   <description>MDEK Portlets Container</description>
   <shortDescription>MDEK Portlets Container</shortDescription>
-  <currentVersion>3.2.0-SNAPSHOT</currentVersion>
+  <currentVersion>3.2.0</currentVersion>
   <dependencies>
     <dependency>
       <groupId>portlet-api</groupId>
@@ -182,7 +182,7 @@
     <dependency>
       <groupId>de.ingrid.mdek</groupId>
       <artifactId>ingrid-mdek-api</artifactId>
-      <version>3.2.0-SNAPSHOT</version>
+      <version>3.2.0</version>
       <type>jar</type>
       <properties>
         <war.bundle>false</war.bundle>
@@ -191,7 +191,7 @@
     <dependency>
       <groupId>de.ingrid.portal</groupId>
       <artifactId>ingrid-portal-mdek-application</artifactId>
-      <version>3.2.0-SNAPSHOT</version>
+      <version>3.2.0</version>
       <type>jar</type>
       <properties>
         <war.bundle>true</war.bundle>
@@ -200,7 +200,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils</artifactId>
-      <version>3.2.0-SNAPSHOT</version>
+      <version>3.2.0</version>
       <type>jar</type>
       <properties>
         <war.bundle>false</war.bundle>

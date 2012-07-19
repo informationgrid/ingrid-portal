@@ -22,7 +22,7 @@
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal</artifactId>
   <name>Ingrid Portal</name>
-  <currentVersion>3.2.0-SNAPSHOT</currentVersion> 
+  <currentVersion>3.2.0</currentVersion> 
   <dependencies>
     <dependency>
       <id>commons-logging</id>
@@ -58,7 +58,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-portal-utils</artifactId>
-      <version>3.2.0-SNAPSHOT</version>
+      <version>3.2.0</version>
       <properties>
         <war.bundle>false</war.bundle>
       </properties>
