@@ -1198,6 +1198,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	        HashMap link = (HashMap) tempElements.get(0).get("link");
 	        if (link != null) {
 	            url = (String) link.get("href");
+	            url = url.substring(url.indexOf("http"));
 	        }
 	    }
         return url;
@@ -1671,7 +1672,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
             elementMapLink.put("isMapLink", new Boolean(true));
             elementMapLink.put("isExtern", new Boolean(false));
             elementMapLink.put("title", messages.getString("common.result.showMap"));
-            this.firstGetCapabiltiesUrl = "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(urlValue);
+            this.firstGetCapabiltiesUrl = /*"portal/main-maps.psml?wms_url=" +*/ UtilsVelocity.urlencode(urlValue);
             elementMapLink.put("href", this.firstGetCapabiltiesUrl);
             // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
             ArrayList list = new ArrayList();
@@ -3270,7 +3271,9 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                             description = description.replaceAll("&gt;", ">");
                         }
                     }
-                    if ((description.length() > 0) || alternateName.length() > 0) {
+                    
+                    String capabilitiesUrl = getCapabilityUrl();
+                    if ((description.length() > 0) || alternateName.length() > 0 || capabilitiesUrl != null) {
                         addSectionTitle(elements, messages.getString("detail_description"));
                         
                         // showMap-Link
@@ -3280,7 +3283,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                             getCapabilityUrls(elements, xpathExpression);
                         } else if (context.get(UDK_OBJ_CLASS_TYPE).equals("3")) {
                             // get it directly from the operation
-                            addBigMapLink(elements, getCapabilityUrl());
+                            addBigMapLink(elements, capabilitiesUrl);
                         }
                         
                         addElementEntryLabelAbove(elements, description, alternateName, false);
