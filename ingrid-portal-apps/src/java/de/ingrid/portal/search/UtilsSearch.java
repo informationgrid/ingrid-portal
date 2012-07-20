@@ -240,11 +240,7 @@ public class UtilsSearch {
             }
             result.put(Settings.RESULT_KEY_ABSTRACT, UtilsString.cutString(summary.replaceAll("\\<.*?\\>",
                     ""), 400));
-            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)){
-	              if(UtilsSearch.getDetailValue(detail, "kml").length() > 0){
-	            	  result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getHit().getDocumentId()));
-	              }
-            }
+            result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getHit().getDocumentId()));
             
             // use internal provider instead of one set in plugdescription
             // e.g. results from Opensearch might support partner and provider
