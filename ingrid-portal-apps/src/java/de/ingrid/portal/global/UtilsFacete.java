@@ -397,7 +397,7 @@ public class UtilsFacete {
 			
 			if (elementsProvider != null){
 				IngridDocument doc = getDefaultFacetsProvider(request);
-		    	checkForExistingORFacets(doc, request);
+				elementsProvider = checkForExistingORFacets(doc, request);
 			} else{
 				removeAttributeFromSession(request, ELEMENTS_PROVIDER);
 			}
@@ -405,7 +405,7 @@ public class UtilsFacete {
 			
 			if (elementsTopic != null){
 				IngridDocument doc = getDefaultFacetsTopics(request);
-		    	checkForExistingORFacets(doc, request);
+				elementsTopic = checkForExistingORFacets(doc, request);
 				
 			} else{
 				removeAttributeFromSession(request, ELEMENTS_TOPIC);
@@ -3733,7 +3733,7 @@ public class UtilsFacete {
          return doc;
 	}
 	
-public static void checkForExistingORFacets(IngridDocument facetes, PortletRequest request) {
+public static HashMap<String, Long> checkForExistingORFacets(IngridDocument facetes, PortletRequest request) {
 		
 		HashMap<String, Long> elementsProvider = null;
 		HashMap<String, Long> elementsTopic = null;
@@ -3760,13 +3760,15 @@ public static void checkForExistingORFacets(IngridDocument facetes, PortletReque
 		
 		if (elementsProvider != null){
 			setAttributeToSession(request, ELEMENTS_PROVIDER, sortHashMapAsArrayList(elementsProvider));
+			return elementsProvider;
 		}
 		
 		if (elementsTopic != null){
 			ArrayList<HashMap<String, Long>> sortedElementsTopic = sortHashMapAsArrayList(elementsTopic);
 			setAttributeToSession(request, ELEMENTS_TOPIC, sortedElementsTopic);
+			return elementsProvider;
 		}
-	
+		return new HashMap<String, Long> ();
 	}
 	
 }
