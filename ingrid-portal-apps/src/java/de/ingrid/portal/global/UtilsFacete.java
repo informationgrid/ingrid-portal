@@ -1182,6 +1182,23 @@ public class UtilsFacete {
 			if(isTopic){
 			}
         }
+    	String[] hiddenDatatypes = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_HIDDEN_DATATYPES);
+    	if(hiddenDatatypes != null){
+    		for(int i=0; i < hiddenDatatypes.length;i++){
+    			String hiddenDatatype = hiddenDatatypes[i];
+    			FieldQuery[] datatypes = query.getDataTypes();
+    			boolean isFound = false;
+    			for(int j=0; j<datatypes.length;j++){
+    				FieldQuery datatype = datatypes[j];
+    				if(hiddenDatatype.equals(datatype.getFieldValue())){
+    					isFound=true;
+    				}
+    			}
+    			if(!isFound){
+    				query.addField(new FieldQuery(true, true, Settings.QFIELD_DATATYPE, hiddenDatatype));    				
+    			}
+    		}
+    	}
 	}
 	
 	/***************************** SERVICE *********************************************/
