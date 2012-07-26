@@ -1682,27 +1682,14 @@
           <header>Reinladen von Kartendiensten</header>
             <content>
 
-            <script type="text/javascript" src="/hilfe-docs/mediaplayer-5.9/jwplayer.js"></script>
- 
-              <div id="mediaspace">This text will be replaced</div>
- 
-              <script type="text/javascript">
-                jwplayer('mediaspace').setup({
-                 'flashplayer': '/hilfe-docs/mediaplayer-5.9/player.swf',
-                 'file': 'http://portalu.de/hilfe-docs/Use_Of_OpenLayers-II.mp4',
-                 'controlbar': 'bottom',
-                 'width': '960',
-                 'height': '478'
-                });
-            </script>
-
+            
                 <p>Die Karten gehen auf Kartendienste (Web Map Services) 
                    unterschiedlicher Anbieter auf Bundes- und Länderebene 
                    zurück. Alle in PortalU eingebundenen Kartendienste sind 
                    in der linken Spalte des Kartenviewers unter dem Reiter 
                    <b>Dienste</b> zu finden. Die Dienste sind zum einen nach 
                    <b>Anbietern</b> und zum anderen nach <b>Themen</b> 
-                   sortiert und müssen in der Regel zunächst in den Bereich 
+                   sortiert und müssen zunächst in den Bereich 
                    <b>Aktive Dienste</b> rein geladen werden. </p>
                 <p>Es gibt mehrere Möglichkeiten einen Kartendienst in den 
                    Kartenviewer rein zu laden: </p>
@@ -2025,9 +2012,30 @@
 
           </content>
         </section>
-
     </chapter>
-    <chapter>
+	<chapter>
+        <header>Aktuelles</header>
+        <section help-key="rss-news-1">
+            <header>Aktuelles</header>
+            <content>
+                <p>Unter „Aktuelles“ werden aktuelle
+                    Meldungen zum Thema „Umwelt“ aus Bundes-
+                     und Landesbehörden gelistet. Die aktuellste Meldung steht
+                    dabei immer oben. Es wird jeweils nur der Titel und eine
+                    Kurzbeschreibung der Meldung angezeigt. Durch einen Klick
+                    auf die Meldung werden Sie zu der Originalmeldung weitergeleitet.</p>
+                <p>Ältere Meldungen, die nicht mehr auf der Startseite angezeigt
+                    werden, werden in dem Meldungsarchiv abgelegt. Sie können
+                    diese Meldungen einsehen, indem Sie auf den Link
+                    „Weitere Meldungen“ klicken.</p>
+                <p>(Hinweis: Ggf. können Sie Meldungen, die so alt sind, dass
+                    sie auch im Meldungsarchiv nicht mehr auffindbar sind, noch
+                    auf den Original-Servern der jeweiligen Bundes- oder
+                    Landesbehörde finden. Klicken Sie hierzu auf <a href="?hkey=search-service-1">Service / Pressemitteilungen</a>.)</p>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
         <header>PortalU informiert</header>
         <section help-key="ingrid-inform-1">
             <header>PortalU informiert</header>
