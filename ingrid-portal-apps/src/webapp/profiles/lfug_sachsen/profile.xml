@@ -124,6 +124,13 @@
         </file>
     </files>
     <sql>
+        <!-- PortalU informiert -->
+        <execute>
+            <![CDATA[UPDATE ingrid_cms_item SET item_title='<span style=\'text-transform: none;\'>SachsenPortalU INFORMIERT</span>'\, item_value='<p><b>Recherchieren Sie nach Umweltinformationen im SachsenPortalU.</b></p><p>Das SachsenPortalU wird vom Land Sachsen betrieben und beinhaltet Daten von Informationsanbietern der Kommunen und des Landes.</p><p class=\"iconLink\"><span class=\"icon\"><img src=\"/ingrid-portal-apps/images/icn_linkintern.gif\" alt=\"interner Link\" /></span><span><a href=\"portal/main-about-partner.psml\">Beteiligte Behörden/Organisationen</a></span><span class=\"clearer\"></span></p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.teaser.inform') AND item_lang='de';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE ingrid_cms_item SET item_title='<span style=\'text-transform: none;\'>SachsenPortalU INFORMIERT</span>'\, item_value='<p><b>Recherchieren Sie nach Umweltinformationen im SachsenPortalU.</b></p><p>Das SachsenPortalU wird vom Land Sachsen betrieben und beinhaltet Daten von Informationsanbietern der Kommunen und des Landes.</p><p class=\"iconLink\"><span class=\"icon\"><img src=\"/ingrid-portal-apps/images/icn_linkintern.gif\" alt=\"interner Link\" /></span><span><a href=\"portal/main-about-partner.psml\">Beteiligte Behörden/Organisationen</a></span><span class=\"clearer\"></span></p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.teaser.inform') AND item_lang='en';]]>
+        </execute>    
         <execute>
             <![CDATA[UPDATE ingrid_cms_item SET item_title='Über SachsenPortalU' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.about') AND item_lang='de';]]>
         </execute>    
