@@ -165,6 +165,7 @@
             }
             
             function isValidCatalog(cat){
+            	if(cat.location.name) // can be undefined now
                 return (dojo.trim(cat.countryCode).length != 0 &&
                 dojo.trim(cat.languageCode).length != 0 &&
                 dojo.trim(cat.location.name).length != 0/* &&
@@ -173,6 +174,8 @@
                     min: 0,
                     max: 2147483647
                 })*/);
+            	else
+            		return false;
             }
             
         </script>
