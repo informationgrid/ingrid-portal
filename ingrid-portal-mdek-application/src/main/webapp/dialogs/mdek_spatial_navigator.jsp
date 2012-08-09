@@ -24,7 +24,7 @@ html> /**/ body .bottomRight {
 </style>
 
 <script type="text/javascript">
-dojo.addOnLoad(function() {
+//dojo.addOnLoad(function() {//doesnt work in IE
 	dojo.connect(dijit.byId("pageDialog"), "onLoad", function(){
     // Enter key on the ValdiationTextbox has to start a search:
     var inputField = dijit.byId("locationTextBox");
@@ -35,7 +35,7 @@ dojo.addOnLoad(function() {
             }
         });
     });
-});
+//});
 
 dojo.addOnUnload(function() {
  		deleteComboboxWidgets();

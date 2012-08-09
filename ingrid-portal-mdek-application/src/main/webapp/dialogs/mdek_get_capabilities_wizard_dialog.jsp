@@ -15,7 +15,7 @@ var thisDialog = dijit.byId("subPageDialog");
 if (thisDialog == undefined)
     thisDialog = dijit.byId("pageDialog");
 
-dojo.addOnLoad(function() {
+//dojo.addOnLoad(function() {//doesnt work in IE
 	dojo.connect(thisDialog, "onLoad", function(){
 		dijit.byId("objectClass").setValue("Class3");
 
@@ -27,7 +27,7 @@ dojo.addOnLoad(function() {
 	            }
 		});
 	});
-});
+//});
 
 
 scriptScope.startRequest = function() {
