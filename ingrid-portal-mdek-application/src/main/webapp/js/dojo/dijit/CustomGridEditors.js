@@ -371,7 +371,7 @@ DateCellEditor = function(args){
         calendar = new dijit.form.DateTextBox({id:"activeCell_"+args.grid.id, style: "width: 100%; color: black; font-family: Verdana, Helvetica, Arial, sans-serif;"}).placeAt(args.container);
         calendar.set("value", new Date());
         calendar.focus();
-        dojo.connect(calendar._picker.domNode, "onclick", this, function(evt){
+        dojo.connect(calendar._picker.domNode, "onmousedown", this, function(evt){
             dojo.stopEvent(evt);
         });
     };
