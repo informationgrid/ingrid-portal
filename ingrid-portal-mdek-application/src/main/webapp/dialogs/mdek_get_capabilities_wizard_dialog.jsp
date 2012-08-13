@@ -16,7 +16,7 @@ if (thisDialog == undefined)
     thisDialog = dijit.byId("pageDialog");
 
 //dojo.addOnLoad(function() {//doesnt work in IE
-	dojo.connect(thisDialog, "onLoad", function(){
+    dojo.connect(_container_, "onLoad", function() {
 		dijit.byId("objectClass").setValue("Class3");
 
 	    // Pressing 'enter' on the url input field is equal to a start button click
