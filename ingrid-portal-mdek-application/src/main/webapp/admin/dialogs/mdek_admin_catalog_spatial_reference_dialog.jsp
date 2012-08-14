@@ -245,7 +245,7 @@
 								<input type="text" id="locationTextBox" size="20" name="locationTextBox" style="width:292px;" dojoType="dijit.form.ValidationTextBox" />
 							</span>
 							<span style="float:right;">
-                                <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.selectLocation.search" />" id="findLocationTopicsButton" onClick="javascript:scriptScope.findLocationTopics();">
+                                <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.selectLocation.search" />" id="findLocationTopicsButton" onClick="javascript:scriptScope.findLocationTopics();" type="button">
                                     <fmt:message key="dialog.admin.catalog.selectLocation.search" />
                                 </button>
                             </span>
