@@ -238,6 +238,9 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
     }
     
     private boolean rebuildSyslists(String plugId, String catAdminUuid) {
+        if (log.isDebugEnabled()) {
+            log.debug("Call backend to rebuild syslist data (reindex) ...");
+        }
         IngridDocument response = connectionFacade.getMdekCallerCatalog().rebuildSyslistData(plugId, catAdminUuid);
         if (null == de.ingrid.mdek.util.MdekUtils.getResultFromResponse(response)) {
             return false;
@@ -263,6 +266,17 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 IngridDocument[] entriesDoc = new IngridDocument[codelist.getEntries().size()];
                 int i=0;
                 for (CodeListEntry entry : codelist.getEntries()) {
+                	// check umlaute !
+/*
+                    if (log.isDebugEnabled()) {
+                    	if ("100".equals(codelist.getId()) && "28462".equals(entry.getId())) {
+                            log.debug("Checking Umlaut of syslist/entry " + codelist.getId() + "/" + entry.getId());                    		
+                            for (String langKey : entry.getLocalisations().keySet()) {
+                            	log.debug(entry.getLocalisedEntry(langKey));
+                            }
+                    	}
+                    }
+*/
                     IngridDocument docEntry = new IngridDocument();
                     docEntry.putInt(MdekKeys.LST_ENTRY_ID, Integer.valueOf(entry.getId()));
                     docEntry.put(MdekKeys.LST_ENTRY_DESCRIPTION, entry.getDescription());
