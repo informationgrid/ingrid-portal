@@ -252,7 +252,23 @@ public class QueryResultPostProcessor {
                 for (String entry : tmpArray) {
                     // entry = uuid # name # wmsUrl # resourceId
                     String[] entrySplit = entry.split("#");
-                    tmpArray2[i++] = entrySplit[0]+"#"+entrySplit[1]+"#"+addCapabilitiesInformation(entrySplit[2])+"#"+entrySplit[3];
+                    switch (entrySplit.length) {
+					case 1:
+						tmpArray2[i++] = entrySplit[0];
+						break;
+					case 2:
+						tmpArray2[i++] = entrySplit[0]+"#"+entrySplit[1];
+						break;
+					case 3:
+						tmpArray2[i++] = entrySplit[0]+"#"+entrySplit[1]+"#"+addCapabilitiesInformation(entrySplit[2]);
+						break;
+					case 4:
+						tmpArray2[i++] = entrySplit[0]+"#"+entrySplit[1]+"#"+addCapabilitiesInformation(entrySplit[2])+"#"+entrySplit[3];
+						break;
+					default:
+						break;
+					}
+                    
                 }
                 hit.put(Settings.RESULT_KEY_SERVICE_UUID, tmpArray2);
                 
