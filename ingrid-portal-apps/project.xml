@@ -326,7 +326,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-codelist-service</artifactId>
-            <version>3.2.0</version>
+            <version>3.3.0-SNAPSHOT</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>

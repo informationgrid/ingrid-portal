@@ -29,15 +29,15 @@ public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
         
         // if at least one iPlug was found/connected
         if (timestamp != null) {
-            boolean success = clService.updateFromServer(timestamp);
+            Object modifiedCodelists = clService.updateFromServer(timestamp);
             
             // update db with initial codelists from service if no codelist could be fetched
             // and there never has been an update to the db (timestamp does not exist!)
-            if (success == false && timestamp == -1) {
+            if (modifiedCodelists == null && timestamp == -1) {
                 clService.persistToAll(clService.getCodeLists());
             }
             
-            log.info("UpdateCodeListsFromIGEJob finished! (successful = " + success + ")");
+            log.info("UpdateCodeListsFromIGEJob finished! (successful = " + (modifiedCodelists == null ? false : true) + ")");
         } else {
             log.info("No iPlug connected to update codelists to!");
         }

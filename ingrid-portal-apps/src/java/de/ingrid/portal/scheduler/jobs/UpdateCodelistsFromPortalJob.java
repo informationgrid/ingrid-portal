@@ -21,8 +21,8 @@ public class UpdateCodelistsFromPortalJob extends IngridMonitorAbstractJob {
         
         log.info("Executing UpdateCodelistsFromPortalJob...");
         CodeListService codelistService = CodeListServiceFactory.instance();
-        boolean success = codelistService.updateFromServer(codelistService.getLastModifiedTimestamp());
-        if (success) {
+        Object modifiedCodelists = codelistService.updateFromServer(codelistService.getLastModifiedTimestamp());
+        if (modifiedCodelists != null) {
             status = STATUS_OK;
             statusCode = STATUS_CODE_NO_ERROR;
         } else {
@@ -30,7 +30,7 @@ public class UpdateCodelistsFromPortalJob extends IngridMonitorAbstractJob {
             statusCode = STATUS_CODE_ERROR_NO_HITS;
         }
         
-        log.info("UpdateCodelistsFromPortalJob finished! (successful = " + success + ")");
+        log.info("UpdateCodelistsFromPortalJob finished! (successful = " + (modifiedCodelists == null ? false : true) + ")");
         
         computeTime(dataMap, stopTimer());
         updateJobData(context, status, statusCode);
