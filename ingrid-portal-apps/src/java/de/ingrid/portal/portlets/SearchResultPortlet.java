@@ -608,7 +608,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             // check for js enabled iframe rendering
 
         } else if (currentView.equals(TEMPLATE_RESULT_FILTERED_ONECOLUMN)) {
-        	if (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID)) {
+        	if (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID) && rankedHits == null) {
                 renderResultColumnRanked = false;
                 context.put("IS_RANKED", new Boolean(false));
         	} else {
