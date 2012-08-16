@@ -68,6 +68,8 @@
                 </p>
               #end
     		</div>
+			<div class="line"><hr /></div>
+			<br />
     	#end
     #else
     		<p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
