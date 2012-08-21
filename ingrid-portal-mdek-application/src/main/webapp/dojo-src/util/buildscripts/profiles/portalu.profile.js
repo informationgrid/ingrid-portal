@@ -7,7 +7,11 @@ dependencies = {
             name: "dojo.js",
             dependencies: [
                 "dijit.layout.ContentPane", 
-                "dijit.layout.TabContainer"
+                "dijit.layout.TabContainer",
+                "dijit.layout.BorderContainer",
+                "dijit.form.Button",
+                "dijit.Dialog",
+                "dojo.Animation"
             ]
         }
     ],

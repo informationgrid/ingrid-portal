@@ -103,7 +103,7 @@
                     <argument>action=clean,release </argument>
                     <argument>cssOptimize=comments.keepLines</argument>
                     <argument>optimize=shrinkSafe</argument>
-                    <argument>version=1.5.0-dev</argument>
+                    <argument>version=1.5.2-ingrid</argument>
                 </arguments>
                 <!-- optional -->
                 <workingDirectory>src/main/webapp/dojo-src/util/buildscripts</workingDirectory>

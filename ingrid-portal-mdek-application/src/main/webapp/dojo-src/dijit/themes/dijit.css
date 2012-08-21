@@ -94,7 +94,6 @@
 
 .dijitOffScreen {
 	position: absolute;
-	visibility: hidden;
 	left: 50%;
 	top: -10000px;
 }
@@ -111,7 +110,7 @@
 	padding: 0;
 }
 .dijit_a11y .dijitPopup,
-.dijit_ally .dijitPopup DIV,
+.dijit_a11y .dijitPopup DIV,
 .dijit_a11y .dijitPopup TABLE,
 .dijit_a11y .dijitTooltipContainer {
 	background-color: white !important;

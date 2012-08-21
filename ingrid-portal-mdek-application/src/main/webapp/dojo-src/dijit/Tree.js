@@ -314,7 +314,6 @@ dojo.declare(
 				}
 				if(!node){
 					node = this.tree._createTreeNode({
-							id: item.id, 
 							item: item,
 							tree: tree,
 							isExpandable: model.mayHaveChildren(item),

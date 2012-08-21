@@ -135,7 +135,7 @@ dojo.declare("dijit._HasDropDown",
 					}
 				}
 			}
-			if(this._opened && dropDown.focus){
+			if(this._opened && dropDown.focus && dropDown.autoFocus !== false){
 				// Focus the dropdown widget - do it on a delay so that we
 				// don't steal our own focus.
 				window.setTimeout(dojo.hitch(dropDown, "focus"), 1);
@@ -261,8 +261,6 @@ dojo.declare("dijit._HasDropDown",
 
 			if(this.disabled || this.readOnly){ return; }
 			this.focus();
-			var dropDown = this.dropDown;
-			if(!dropDown){ return; }
 			if(!this._opened){
 				// If we aren't loaded, load it first so there isn't a flicker
 				if(!this.isLoaded()){
@@ -293,7 +291,7 @@ dojo.declare("dijit._HasDropDown",
 			// ie, dependent on how much space is available (BK)
 
 			if(!this._preparedNode){
-				dijit.popup.moveOffScreen(ddNode);
+				dijit.popup.moveOffScreen(dropDown);
 				this._preparedNode = true;			
 				// Check if we have explicitly set width and height on the dropdown widget dom node
 				if(ddNode.style.width){
