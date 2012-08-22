@@ -28,14 +28,14 @@
 		<table>
 			<tr><td>
 		<h3>$MESSAGES.getString('entry.text.catalog'):</h3>
-		<select size="3" id="catalog" name="catalog" onchange="catalogChanged();" style="min-width:100px;">
+		<select size="8" id="catalog" name="catalog" onchange="catalogChanged();" style="min-width:100px;">
 #foreach ($entry in $catalogList)
 	<option value="$entry.plugId">$entry.catName ($entry.plugId)</option>
 #end
 		</select>
 		</td><td>
 		<h3>$MESSAGES.getString('entry.text.user'):</h3> 
-		<select size="3" id="user" name="user" onchange="userChanged();" style="min-width:150px;">
+		<select size="8" id="user" name="user" onchange="userChanged();" style="min-width:150px;">
 		</select>
         </td></tr>
         </table>
