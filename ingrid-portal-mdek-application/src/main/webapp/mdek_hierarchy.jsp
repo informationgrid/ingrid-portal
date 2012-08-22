@@ -1170,7 +1170,7 @@
                                         -->
                                         <div id='ref3MethodTab2' label="<fmt:message key="ui.obj.type3.generalDataTable.tab.links" />">
                                             <div class="input tableContainer">
-                                                <div id="ref3BaseDataLink" autoHeight="2" query="{relationType:'3210'}" class="hideTableHeader" contextMenu="EDIT_LINK" relation_filter="3210">
+                                                <div id="ref3BaseDataLink" autoHeight="4" query="{relationType:'3210'}" class="hideTableHeader" contextMenu="EDIT_LINK" relation_filter="3210">
                                                 </div>
                                             </div>
                                         </div>
