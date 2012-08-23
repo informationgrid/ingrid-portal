@@ -16,7 +16,7 @@
     <a href="../ingrid-portal-mdek-application/mdek_admin_entry.jsp">/ingrid-portal-mdek-application/mdek_admin_entry.jsp</a>
 -->
   <div class="formfooter formfooter_border_style" style="padding: 10px;">
-		#renderInputButtonOnClick("$MESSAGES.getString('entry.button.ige')" "" "Verweis" "" "float_right" "javaScript:void(window.open('/ingrid-portal-mdek-application/start.jsp?lang=$language', '_erfassung'));")
+		#renderInputButtonOnClick("$MESSAGES.getString('entry.button.ige')" "" "Verweis" "" "float_left" "javaScript:void(window.open('/ingrid-portal-mdek-application/start.jsp?lang=$language', '_erfassung'));")
 	<p class="clearer"/>
   </div>
 </div>
