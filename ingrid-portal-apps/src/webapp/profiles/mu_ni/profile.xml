@@ -16,6 +16,10 @@
             <hidden>true</hidden>
         </page>
         <page>
+            <name>main-maps.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>
