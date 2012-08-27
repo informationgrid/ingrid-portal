@@ -91,6 +91,10 @@
             <name>search-catalog/search-catalog-hierarchy.psml</name>
             <hidden>true</hidden>
         </page>
+        <page>
+            <name>service-contact-newsletter.psml</name>
+            <hidden>true</hidden>
+        </page>
     </pages>
     <files>
         <file>
