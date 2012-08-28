@@ -41,7 +41,9 @@
         </table>
 	</div>
 	<div class="formfooter formfooter_border_style">
-		#renderInputButtonClass("$MESSAGES.getString('entry.button.ige')" "" "doLoginIGE" "" "float_right")
+	    <span style="padding-left:4px; position: absolute;">
+		#renderInputButtonClass("$MESSAGES.getString('entry.button.ige')" "" "doLoginIGE" "" "float_left")
+	    </span>
 		<p class="clearer"/>
     </div>
 </form>
