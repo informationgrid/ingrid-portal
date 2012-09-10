@@ -56,12 +56,12 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
     }
 
     public void storeSysList(Integer listId, boolean maintainable, Integer defaultEntryIndex, Integer[] entryIds,
-            String[] entriesGerman, String[] entriesEnglish) {
+            String[] entriesGerman, String[] entriesEnglish, String[] data) {
         IngridDocument response = mdekCallerCatalog.storeSysList(
                 connectionFacade.getCurrentPlugId(),
                 listId,
                 maintainable,
-                defaultEntryIndex, entryIds, entriesGerman, entriesEnglish,
+                defaultEntryIndex, entryIds, entriesGerman, entriesEnglish, data, 
                 MdekSecurityUtils.getCurrentUserUuid());
 
         IngridDocument result = MdekUtils.getResultFromResponse(response);
@@ -137,7 +137,8 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
                         sysList.getDefaultIndex(),
                         sysList.getEntryIds(),
                         sysList.getDeEntries(),
-                        sysList.getEnEntries());
+                        sysList.getEnEntries(),
+                        sysList.getData());
             }
         }
     }

@@ -23,7 +23,7 @@ public interface CatalogRequestHandler {
 	public List<SysList> getAllSysListInfos();
 	public Map<Integer, List<String[]>> getSysLists(Integer[] listIds, String languageCode);
 	public void storeSysList(Integer listId, boolean maintainable, Integer defaultEntryIndex, Integer[] entryIds,
-			String[] entriesGerman, String[] entriesEnglish);
+			String[] entriesGerman, String[] entriesEnglish, String[] data);
 	public String[] getFreeListEntries(MdekSysList sysList);
 	public void replaceFreeEntryWithSysListEntry(String freeEntry, MdekSysList sysList, Integer sysListEntryId, String sysListEntryName);
 	public String exportSysLists(Integer[] listIds);

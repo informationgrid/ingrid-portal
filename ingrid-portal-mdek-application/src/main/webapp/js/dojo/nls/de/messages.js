@@ -104,6 +104,9 @@
     "contextmenu.table.showInTree":"Im Hierarchiebaum anzeigen",
     "contextmenu.table.showAddress":"Zeige Adresse",
     "contextmenu.table.editClicked":"Zeile bearbeiten",
+    "contextmenu.table.jumpToObject":"&Oumlffne in Erfassung",
+    "contextmenu.table.copyAddress":"Adresse kopieren",
+    "contextmenu.table.pasteAddress":"Adresse einf&uuml;gen",
 
 	"init.loadError":"Fehler in der Initialisierungsphase. Bitte versuchen Sie es erneut oder kontaktieren Sie den zust&auml;ndigen Systemadministrator.",
     "init.userError":"Fehler in der Initialisierungsphase. Der aktuelle Benutzer konnte nicht ermittelt werden. Bitte melden Sie sich zuerst am Portal an bevor Sie auf die Mdek Applikation zugreifen!",
@@ -966,6 +969,7 @@
 	"dialog.research.ext.obj.class4":"Vorhaben / Projekt / Programm",
 	"dialog.research.ext.obj.class5":"Datensammlung / Datenbank",
     "dialog.research.ext.obj.class6":"Dienst / Anwendung / Informationssystem",
+    "dialog.research.ext.obj.class7":"Open Data",
 	"dialog.research.ext.obj.thesaurusSearch":"In Thesaurus suchen",
 	"dialog.research.ext.obj.searchTerms":"Suchbegriffe",
 	
@@ -1009,6 +1013,7 @@
     "validation.error.email.table":"Mindestens ein Eintrag muss vom Typ '${0}' sein.",
     
     "hint.noCapabilityUrlFound":"Es konnte keine GetCapabilities-Url gefunden werden, um den Datensatz zu aktualisieren.",
-    "hint.datasetUpdatedFromCapabilities":"Der Datensatz wurde erfolgreich aktualisiert."
+    "hint.datasetUpdatedFromCapabilities":"Der Datensatz wurde erfolgreich aktualisiert.",
+    "hint.noEntriesFromParent":"Keine neuen Eintr&auml;ge vom &uuml;bergeordneten Objekt!"
   }
 )

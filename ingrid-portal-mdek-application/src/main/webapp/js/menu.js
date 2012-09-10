@@ -254,6 +254,12 @@ function initContextMenu(gridProperties) {
             label: message.get('contextmenu.table.showInTree'),
             onClick: selectObjectInTree
         }));
+        menu.addChild(new dijit.MenuItem({
+            label: message.get('contextmenu.table.jumpToObject'),
+            onClick: function() {
+                menuEventHandler.handleSelectNodeInTree(clickedSlickGrid.getDataItem(clickedRow).uuid, "O");
+            }
+        }));
     } else {
         menu.addChild(new dijit.MenuItem({
             label: message.get('contextmenu.table.selectAll'),
@@ -306,6 +312,7 @@ function initContextMenu(gridProperties) {
             }
             var grid = findGrid(e.target);
             var somethingIsSelected = UtilGrid.getSelectedRowIndexes(grid).length > 0;
+            var somethingIsCopied   = UtilGrid.getTable(grid).copiedAddress != null;
             dojo.forEach(menu.getChildren(), function(i) {
                 if (somethingIsSelected) {
                     if (i.id.indexOf("menuDeselectAll") != -1) i.setDisabled(false);
@@ -318,16 +325,55 @@ function initContextMenu(gridProperties) {
                     if (i.id.indexOf("menuRemoveClicked") != -1) i.setDisabled(false);
                     if (i.id.indexOf("menuEditClicked") != -1) i.setDisabled(false);
                     if (i.id.indexOf("menuShowAddress") != -1) i.setDisabled(false);
+                    if (i.id.indexOf("menuCopyAddress") != -1) i.setDisabled(false);
                 } else {
                     if (i.id.indexOf("menuRemoveClicked") != -1) i.setDisabled(true);
                     if (i.id.indexOf("menuEditClicked") != -1) i.setDisabled(true);
                     if (i.id.indexOf("menuShowAddress") != -1) i.setDisabled(true);
+                    if (i.id.indexOf("menuCopyAddress") != -1) i.setDisabled(true);
+                }
+                if (somethingIsCopied) {
+                    if (i.id.indexOf("menuPasteAddress") != -1) i.setDisabled(false);
+                } else {
+                    if (i.id.indexOf("menuPasteAddress") != -1) i.setDisabled(true);
                 }
             });
         });
     }
     
     if (type == "GENERAL_ADDRESS") {
+        menu.addChild(new dijit.MenuSeparator());
+        menu.addChild(new dijit.MenuItem({
+            id: "menuCopyAddress_"+type,
+            label: message.get('contextmenu.table.copyAddress'),
+            onClick: function() {
+                var rowData = clickedSlickGrid.getData()[clickedRow];
+                clickedSlickGrid.copiedAddress = dojo.clone(rowData);
+                console.debug(clickedSlickGrid.copiedAddress);
+                //dialog.showPage('Adresse', 'dialogs/mdek_address_preview_dialog.html', 500, 240, false, { data:rowData });
+            }
+        }));
+        menu.addChild(new dijit.MenuItem({
+            id: "menuPasteAddress_"+type,
+            label: message.get('contextmenu.table.pasteAddress'),
+            onClick: function() {
+                var rowData = clickedSlickGrid.getData()[clickedRow];
+                console.debug(rowData);
+                // ignore role if address is being replaced
+                if (rowData) {
+                    // remember role first
+                    var type = rowData.nameOfRelation;
+                    UtilGrid.updateTableDataRow(clickedSlickGrid.id, clickedRow, clickedSlickGrid.copiedAddress);
+                    //rowData = clickedSlickGrid.copiedAddress;
+                    UtilGrid.updateTableDataRowAttr(clickedSlickGrid.id, clickedRow, "nameOfRelation", type);
+                } else {
+                    UtilGrid.addTableDataRow(clickedSlickGrid.id, clickedSlickGrid.copiedAddress);
+                }
+                
+                //dialog.showPage('Adresse', 'dialogs/mdek_address_preview_dialog.html', 500, 240, false, { data:rowData });
+                clickedSlickGrid.copiedAddress = null;
+            }
+        }));
         menu.addChild(new dijit.MenuSeparator());
         menu.addChild(new dijit.MenuItem({
             id: "menuShowAddress_"+type,

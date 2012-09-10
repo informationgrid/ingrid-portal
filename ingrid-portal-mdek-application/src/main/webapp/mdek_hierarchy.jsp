@@ -1544,6 +1544,12 @@
                                         </div>
                                     </div>
 									</div>
+                                    <div style="position:relative; float:right;">
+                                        <span id="updateGetSpatialRefLocationFromParent" style="visibility:hidden">
+                                            <img src="img/ladekreis.gif" style="vertical-align: middle;"/>
+                                        </span>
+                                        <button id="btnGetSpatialRefLocationFromParent"><fmt:message key="ui.obj.spatial.btnGetSpatialRefLocationFromParent" /></button>
+                                    </div>
                                 </span>
                             </div>
                             <div class="inputContainer">
@@ -2018,6 +2024,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div style="position:relative; float:right;">
+                                    <span id="updateGetLinksToFromParent" style="visibility:hidden">
+                                        <img src="img/ladekreis.gif" style="vertical-align: middle;"/>
+                                    </span>
+                                    <button id="btnGetLinksToFromParent"><fmt:message key="ui.obj.links.btnGetLinksToFromParent" /></button>
+                                </div>
                             </span>
                             <span id="uiElementN018" class="outer" style="width:50%;">
                                 <div>
@@ -2359,19 +2371,7 @@
                                     </span>
                                 </span>
                             </div>
-                        <span id="uiElement4435" class="outer halfWidth optional">
-                            <div>
-                                <span class="label">
-                                    <label for="addressNotes" onclick="javascript:dialog.showContextHelp(arguments[0], 4435)">
-                                        <fmt:message key="ui.adr.details.notes" />
-                                    </label>
-                                </span>
-                                <span class="input">
-                                    <input type="text" maxLength="255" id="addressNotes" />
-                                </span>
-                            </div>
-                        </span>
-                        <span id="uiElement4440" class="outer halfWidth optional">
+                        <span id="uiElement4440" class="outer optional">
                             <div>
                                 <span class="label">
                                     <label for="addressTasks" onclick="javascript:dialog.showContextHelp(arguments[0], 4440)">

@@ -340,8 +340,8 @@ function PageNavigation(args) {
 var UtilDWR = {}
 
 // dwr preHook Function that has to be called by each dwr call that blocks certain interface functions (save, publish, etc.) 
-UtilDWR.enterLoadingState = function() {
-    dojo.style("loadingZone", "visibility", "visible");
+UtilDWR.enterLoadingState = function(/*optional*/otherLoadingDiv) {
+    dojo.style(otherLoadingDiv ? otherLoadingDiv : "loadingZone", "visibility", "visible");
     dojo.style("blockInputDiv", "visibility", "visible");
 
     UtilUI.setVisibleBlockDiv(true);
@@ -349,8 +349,8 @@ UtilDWR.enterLoadingState = function() {
 }
 
 // dwr postHook Function that has to be called after the dwr call returned 
-UtilDWR.exitLoadingState = function() {
-	dojo.style("loadingZone", "visibility", "hidden");
+UtilDWR.exitLoadingState = function(/*optional*/otherLoadingDiv) {
+	dojo.style(otherLoadingDiv ? otherLoadingDiv : "loadingZone", "visibility", "hidden");
     dojo.style("blockInputDiv", "visibility", "hidden");
     
     UtilUI.setVisibleBlockDiv(false);
@@ -1512,7 +1512,7 @@ UtilUI.enableHtmlLink = function(elementId) {
 }
 
 UtilUI.setVisibleBlockDiv = function(visible) {
-	var div = dojo.byId("loadBlockDiv");
+	var div = "loadBlockDiv";
 	if (div != undefined)
 		dojo.style(div, "display", visible ? "block" : "none");
 }
@@ -1555,6 +1555,22 @@ UtilUI.changeLabel = function(uiElementId, text) {
 
 UtilUI.showNoModifiableTable = function() {
     dialog.show(message.get("dialog.general.info"), message.get("dialog.cannot.modify.table"), dialog.INFO);
+}
+
+UtilUI.enableElement = function(element) {
+    // convert id to dijit if necessary
+    if (!(element instanceof Object)) {
+        element = dijit.byId(element);
+    }
+    element.set("disabled", false);
+}
+
+UtilUI.disableElement = function(element) {
+    // convert id to dijit if necessary
+    if (!(element instanceof Object)) {
+        element = dijit.byId(element);
+    }
+    element.set("disabled", true);
 }
 
 // General utility functions for converting strings, etc.
@@ -1863,6 +1879,26 @@ UtilSyslist.getSyslistEntryKey = function(syslist, value) {
 	return result;
 }
 
+UtilSyslist.getSyslistEntryData = function(syslist, value) {
+    if (value == undefined) return null;
+    
+    var result = value+"";
+    
+    var list = sysLists[syslist];
+    if (list != undefined) {
+        dojo.some(list, function(item) {
+            if (item[0] == result) {
+                result = item[3];
+                return true;
+            }
+        });
+    } else {
+        displayErrorMessage("SyslistID: " +  syslist + " not loaded!");
+        return null;
+    }
+    return result;
+}
+
 UtilSyslist.readSysListData = function(listId) {
     var def = new dojo.Deferred();
 
@@ -1886,7 +1922,8 @@ UtilSyslist.convertSysListToTableData = function(listItems) {
         listData.push({
             name: listItems[index][0],
             entryId: listItems[index][1],
-            isDefault: listItems[index][2] == "Y"
+            isDefault: listItems[index][2] == "Y",
+            data: listItems[index][3]
         });
     }
     

@@ -50,8 +50,8 @@ public class CatalogServiceImpl implements CatalogService {
 	}
 
 	public void storeSysList(Integer listId, boolean maintainable, Integer defaultEntryIndex, Integer[] entryIds,
-			String[] entriesGerman, String[] entriesEnglish) {
-		catalogRequestHandler.storeSysList(listId, maintainable, defaultEntryIndex, entryIds, entriesGerman, entriesEnglish);
+			String[] entriesGerman, String[] entriesEnglish, String[] data) {
+		catalogRequestHandler.storeSysList(listId, maintainable, defaultEntryIndex, entryIds, entriesGerman, entriesEnglish, data);
 	}
 
 	public void replaceFreeEntryWithSysListEntry(String freeEntry, Integer sysListId, Integer sysListEntryId, String sysListEntryName) {

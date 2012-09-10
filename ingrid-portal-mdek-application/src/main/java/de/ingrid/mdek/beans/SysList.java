@@ -5,6 +5,7 @@ public class SysList {
 	private Integer[] entryIds;
 	private String[] deEntries;
 	private String[] enEntries;
+	private String[] data;
 	private Boolean maintainable;
 	private Integer defaultIndex;
 
@@ -39,6 +40,14 @@ public class SysList {
 	public void setEnEntries(String[] enEntries) {
 		this.enEntries = enEntries;
 	}
+	
+	public String[] getData() {
+        return data;
+    }
+
+    public void setData(String[] data) {
+        this.data = data;
+    }
 
 	public Boolean getMaintainable() {
 		return maintainable;

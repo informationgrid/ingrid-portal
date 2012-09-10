@@ -29,7 +29,8 @@
 				var codeListTable11Structure = [
 					{field: 'entryId',name: "<fmt:message key='dialog.admin.catalog.management.codelists.id' />",width: '32px'},
 					{field: 'deName',name: "<fmt:message key='dialog.admin.catalog.management.codelists.germanName' />",width: '300px', editable:true},
-					{field: 'enName',name: "<fmt:message key='dialog.admin.catalog.management.codelists.englishName' />",width: '300px', editable:true}
+					{field: 'enName',name: "<fmt:message key='dialog.admin.catalog.management.codelists.englishName' />",width: '300px', editable:true},
+					{field: 'data',name: "<fmt:message key='dialog.admin.catalog.management.codelists.data' />",width: '300px', editable:true}
 				];
 				createDataGrid("codeListTable11", null, codeListTable11Structure, null);
 				
@@ -37,7 +38,8 @@
 					{field: 'entryId',name: "<fmt:message key='dialog.admin.catalog.management.codelists.id' />",width: '32px'},
 					{field: 'deName',name: "<fmt:message key='dialog.admin.catalog.management.codelists.germanName' />",width: '269px', editable:true},
 					{field: 'enName',name: "<fmt:message key='dialog.admin.catalog.management.codelists.englishName' />",width: '269px', editable:true},
-					{field: 'isDefault',name: 'isDefault',width: 'auto', editor: YesNoCheckboxCellEditor, formatter:BoolCellFormatter, editable:true}
+					{field: 'isDefault',name: 'isDefault',width: 'auto', editor: YesNoCheckboxCellEditor, formatter:BoolCellFormatter, editable:true},
+                    {field: 'data',name: "<fmt:message key='dialog.admin.catalog.management.codelists.data' />",width: '300px', editable:true}
 				];
 				createDataGrid("codeListTable12", null, codeListTable12Structure, null);
 				
@@ -262,7 +264,8 @@
                     idEntryMap[currentEntry.entryId] = {
                         deName: currentEntry.name,
                         entryId: currentEntry.entryId,
-                        isDefault: currentEntry.isDefault
+                        isDefault: currentEntry.isDefault,
+                        data: currentEntry.data
                     };
                 }
                 
@@ -280,7 +283,8 @@
                         idEntryMap[currentEntry.entryId] = {
                             enName: currentEntry.name,
                             entryId: currentEntry.entryId,
-                            isDefault: currentEntry.isDefault
+                            isDefault: currentEntry.isDefault,
+                            data: currentEntry.data
                         };
                     }
                 }
@@ -304,7 +308,6 @@
                 //UtilList.addTableIndices(data);
                 var sysListId = parseInt(dijit.byId("selectionList").getValue());
                 
-                console.debug("1");
                 if (dojo.some(CAN_SET_DEFAULT_LIST_IDS, function(listId){
                     return listId == sysListId;
                 })) {
@@ -394,6 +397,7 @@
                     var entryIds = [];
                     var entriesGerman = [];
                     var entriesEnglish = [];
+                    var data = [];
                     for (var index = 0; index < tableData.length; index++) {
                         var currentEntry = tableData[index];
                         var isDefault = setDefault && currentEntry.isDefault;// && isMarkedAsDefaultEntry(currentEntry);
@@ -404,6 +408,7 @@
                         console.debug("name (en): " + currentEntry.enName);
                         entriesEnglish.push(currentEntry.enName);
                         console.debug("isDefault: " + isDefault);
+                        data.push(currentEntry.data);
                         if (isDefault) {
                             defaultIndex = index;
                         }
@@ -414,7 +419,7 @@
                     var maintainable = dojo.some(MAINTAINABLE_LIST_IDS, function(listId){
                         return listId == parseInt(sysListId);
                     });
-                    var def = storeSysListDef(sysListId, maintainable, defaultIndex, entryIds, entriesGerman, entriesEnglish);
+                    var def = storeSysListDef(sysListId, maintainable, defaultIndex, entryIds, entriesGerman, entriesEnglish, data);
                     def.addCallback(function(){
                         // Show a 'success' message
                         dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.catalog.management.codelist.storeSuccess' />", dialog.INFO);
@@ -445,9 +450,9 @@
             // defaultIndex - the index of the default entry. Null if no entry should have a default value
             // entryIds - Ids of the entries as Int List. Null if it's a new entry
             // entriesGerman, entriesEnglish - The Entries as String Lists
-            function storeSysListDef(listId, maintainable, defaultIndex, entryIds, entriesGerman, entriesEnglish){
+            function storeSysListDef(listId, maintainable, defaultIndex, entryIds, entriesGerman, entriesEnglish, data){
                 var def = new dojo.Deferred();
-                CatalogService.storeSysList(listId, maintainable, defaultIndex, entryIds, entriesGerman, entriesEnglish, {
+                CatalogService.storeSysList(listId, maintainable, defaultIndex, entryIds, entriesGerman, entriesEnglish, data, {
                     callback: function(res){
                         console.debug("result:" + res);
                         def.callback(res);
@@ -834,12 +839,14 @@
                     var entryIds = [];
                     var entriesGerman = [];
                     var entriesEnglish = [];
+                    var data = [];
                     for (var index = 0; index < tableData.length; index++) {
                         var currentEntry = tableData[index];
                         var isDefault = currentEntry.isDefault;
                         entryIds.push(currentEntry.entryId);
                         entriesGerman.push(currentEntry.deName ? currentEntry.deName : null);
                         entriesEnglish.push(currentEntry.enName ? currentEntry.enName : null);
+                        data.push(currentEntry.data ? currentEntry.data : "");
                         if (isDefault) {
                             defaultIndex = index;
                         }
@@ -849,7 +856,7 @@
                     var maintainable = dojo.some(MAINTAINABLE_LIST_IDS, function(listId){
                         return listId == parseInt(sysListId);
                     });
-                    var sysListDef = storeSysListDef(sysListId, maintainable, defaultIndex, entryIds, entriesGerman, entriesEnglish);
+                    var sysListDef = storeSysListDef(sysListId, maintainable, defaultIndex, entryIds, entriesGerman, entriesEnglish, data);
                     sysListDef.addCallback(function(){
                         def.callback();
                     });

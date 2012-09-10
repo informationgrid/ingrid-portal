@@ -1493,7 +1493,7 @@ udkDataProxy._setAddressData = function(nodeData)
 	dijit.byId("addressCity").attr("value", nodeData.city, true);
 	dijit.byId("addressPOBox").attr("value", nodeData.pobox, true);
 	dijit.byId("addressZipPOBox").attr("value", nodeData.poboxPostalCode, true);
-	dijit.byId("addressNotes").attr("value", nodeData.addressDescription, true);
+	//DELETED: "addressNotes" (INGRID33-10)
 	dijit.byId("addressTasks").attr("value", nodeData.task, true);
 	UtilStore.updateWriteStore("addressCom", nodeData.communication, false);
 
@@ -1722,15 +1722,14 @@ udkDataProxy._setObjectData = function(nodeData)
 
 
   // -- Links --
-  var objLinkTable = nodeData.linksToObjectTable;
-  var urlLinkTable = nodeData.linksToUrlTable;
-  var linkTable = objLinkTable.concat(urlLinkTable);
-
-  UtilList.addObjectLinkLabels(linkTable, true);
-  UtilList.addUrlLinkLabels(linkTable);
-  UtilList.addIcons(linkTable);
+  var linkTable = udkDataProxy._prepareObjectAndUrlReferences(nodeData);
   	
   var updatedStore = UtilStore.updateWriteStore("linksTo", linkTable);
+  if (nodeData.parentUuid == null) {
+      UtilUI.disableElement("btnGetLinksToFromParent");
+  } else {
+      UtilUI.enableElement("btnGetLinksToFromParent");
+  }
   
   var unpubLinkTable = nodeData.linksFromObjectTable;
   var pubLinkTable = nodeData.linksFromPublishedObjectTable;
@@ -1977,6 +1976,18 @@ udkDataProxy._setObjectDataClass6 = function(nodeData) {
 }
 
 
+udkDataProxy._prepareObjectAndUrlReferences = function(nodeData) {
+    var objLinkTable = nodeData.linksToObjectTable;
+    var urlLinkTable = nodeData.linksToUrlTable;
+    var linkTable = objLinkTable.concat(urlLinkTable);
+
+    UtilList.addObjectLinkLabels(linkTable, true);
+    UtilList.addUrlLinkLabels(linkTable);
+    UtilList.addIcons(linkTable);
+    
+    return linkTable;
+}
+
 /*******************************************
  * Methods for sending data to the backend *
  *******************************************/
@@ -2026,7 +2037,7 @@ udkDataProxy._getAddressData = function(nodeData) {
 	nodeData.city = dijit.byId("addressCity").getValue();
 	nodeData.pobox = dijit.byId("addressPOBox").getValue();
 	nodeData.poboxPostalCode = dijit.byId("addressZipPOBox").getValue();
-	nodeData.addressDescription = dijit.byId("addressNotes").getValue();
+	//DELETED: "addressNotes" (INGRID33-10)
 	nodeData.task = dijit.byId("addressTasks").getValue();
 	nodeData.communication = udkDataProxy._getTableData("addressCom");
     
@@ -3424,4 +3435,76 @@ igeEvents.updateDataset = function() {
     }
     
     igeEvents.getCapabilities(url, setOperationValues);
+}
+
+igeEvents.getLinksToFromParent = function() {
+    console.debug("igeEvents.getLinksToFromParent: Not yet implemented!");
+    
+    // load parent object
+    ObjectService.getNodeData(currentUdk.parentUuid, "O", "true",
+        {
+            preHook: dojo.partial(UtilDWR.enterLoadingState, "updateGetLinksToFromParent"),
+            postHook: dojo.partial(UtilDWR.exitLoadingState, "updateGetLinksToFromParent"),
+            callback:function(objNodeData){
+                // get linksTo-references
+                var linkTableData = udkDataProxy._prepareObjectAndUrlReferences(objNodeData);
+                
+                // add parent references to current object
+                var data = UtilGrid.getTableData("linksTo");
+                // filter those entries that are not already present in the current object
+                var entriesToAdd = dojo.filter(linkTableData, function(item) {
+                    if (!dojo.some(data, function(d) { return d.uuid == item.uuid; })) {
+                        return true;
+                    }
+                    return false;
+                });
+                
+                
+                if (entriesToAdd.length === 0) {
+                    showToolTip("linksTo", message.get('hint.noEntriesFromParent'));
+                } else {
+                    // add entries
+                    dojo.forEach(entriesToAdd, function(entry) {
+                        UtilGrid.addTableDataRow("linksTo", entry);
+                    });
+                }
+            }
+        }
+    );
+}
+
+igeEvents.getSpatialRefLocationFromParent = function() {
+    console.debug("igeEvents.getLinksToFromParent: Not yet implemented!");
+    
+    // load parent object
+    ObjectService.getNodeData(currentUdk.parentUuid, "O", "true",
+        {
+            preHook: dojo.partial(UtilDWR.enterLoadingState, "updateGetSpatialRefLocationFromParent"),
+            postHook: dojo.partial(UtilDWR.exitLoadingState, "updateGetSpatialRefLocationFromParent"),
+            callback:function(objNodeData){
+                // get linksTo-references
+                var spatialTableData = objNodeData.spatialRefLocationTable;
+                
+                // add parent references to current object
+                var data = UtilGrid.getTableData("spatialRefLocation");
+                // filter those entries that are not already present in the current object
+                var entriesToAdd = dojo.filter(spatialTableData, function(item) {
+                    if (!dojo.some(data, function(d) { return d.name == item.name; })) {
+                        return true;
+                    }
+                    return false;
+                });
+                
+                
+                if (entriesToAdd.length === 0) {
+                    showToolTip("spatialRefLocation", message.get('hint.noEntriesFromParent'));
+                } else {
+                    // add entries
+                    dojo.forEach(entriesToAdd, function(entry) {
+                        UtilGrid.addTableDataRow("spatialRefLocation", entry);
+                    });
+                }
+            }
+        }
+    );
 }

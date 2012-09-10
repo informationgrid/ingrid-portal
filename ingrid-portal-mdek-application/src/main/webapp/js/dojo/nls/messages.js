@@ -104,6 +104,9 @@
     "contextmenu.table.showInTree":"Show in Hierarchy-Tree",
     "contextmenu.table.showAddress":"Show Address",
     "contextmenu.table.editClicked":"Edit row",
+    "contextmenu.table.jumpToObject":"Open in Acquisition",
+    "contextmenu.table.copyAddress":"Copy Address",
+    "contextmenu.table.pasteAddress":"Paste Address",
 
 	"init.loadError":"Error while loading initial values from the server. Please check your connection and try again.",
     "init.userError":"Error while loading initial values from the server. The current user could not be found. Please log in to the portal before accessing the mdek application.",
@@ -966,6 +969,7 @@
     "dialog.research.ext.obj.class4":"Enterprise / Project / Program",
     "dialog.research.ext.obj.class5":"Data Pooling / Data Base",
     "dialog.research.ext.obj.class6":"Service / Application / Information System",
+    "dialog.research.ext.obj.class7":"Open Data",
 	"dialog.research.ext.obj.thesaurusSearch":"Search in thesaurus",
 	"dialog.research.ext.obj.searchTerms":"Search terms",
 
@@ -1008,6 +1012,7 @@
     "validation.error.email.table":"At least one entry has to be of type '${0}'.",
     
     "hint.noCapabilityUrlFound":"No GetCapabilities-Url could be found to update this dataset.",
-    "hint.datasetUpdatedFromCapabilities":"The dataset has been successfully updated."
+    "hint.datasetUpdatedFromCapabilities":"The dataset has been successfully updated.",
+    "hint.noEntriesFromParent":"No new entries from parent object!"
   }
 )

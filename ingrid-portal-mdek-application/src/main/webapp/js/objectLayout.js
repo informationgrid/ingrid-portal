@@ -1041,7 +1041,23 @@ ingridObjectLayout.createRaumbezug = function() {
 		{field: 'latitude2',name: message.get("ui.obj.spatial.geoTable.header.latitude2"),width: 107-scrollBarWidth+'px', editable: true, type: DecimalCellEditor, constraints: latitudeConstraint, formatter: LocalizedNumberFormatter/*!!!, formatter: minMaxBoundingBoxValidation*/}
 	];
     createDataGrid("spatialRefLocation", null, spatialRefLocationStructure, null);
-    // UtilGrid.getTable("spatialRefLocation").onCellChange.subscribe(minMaxBoundingBoxValidation); // done in profile!!!
+    dojo.connect(UtilGrid.getTable("spatialRefLocation"), "onCellChange", function(msg) {
+        if (msg.cell == 0) {
+            var data = UtilSyslist.getSyslistEntryData(1100, msg.item.name);
+            console.debug("syslist data: " + data);
+            if (data && data.trim() != "") {
+                var splittedData = data.split(" ");
+                var row = UtilGrid.getTableData("spatialRefLocation")[msg.row];
+                row.longitude1 = splittedData[0];
+                row.latitude1 = splittedData[1];
+                row.longitude2 = splittedData[2];
+                row.latitude2 = splittedData[3];
+                UtilGrid.updateTableDataRow("spatialRefLocation", msg.row, row);
+            }
+        }
+    });
+
+    (new dijit.form.Button( {}, "btnGetSpatialRefLocationFromParent")).onClick = igeEvents.getSpatialRefLocationFromParent;
     
 	//new dijit.form.Select({},"spatialRefLocationSelect");
 	createSelectBox("spatialRefLocationSelect", null, storeProps, spatialData);
@@ -1297,6 +1313,8 @@ ingridObjectLayout.createReferences = function(){
     createDataGrid("linksTo", null, linksToStructure, null);
     // no immediate dialog on row click !
 //    UtilGrid.addRowSelectionCallback("linksTo", ingridObjectLayout.openLinkDialog);
+    
+    (new dijit.form.Button( {}, "btnGetLinksToFromParent")).onClick = igeEvents.getLinksToFromParent;
     
     var linksFromStructure = [
 		{field: 'icon',name: 'icon',width: '23px'}, 

@@ -16,7 +16,7 @@ var dqUiTableElements = ["dq109Table", "dq112Table", "dq113Table", "dq114Table",
 
 // Address Type is not included since the field is filled automatically
 var adrUiInputElements = [/*"addressType",*/ "addressOwner", "addressStreet", "addressCountry", "addressZipCode", "addressCity", "addressPOBox",
-	"addressZipPOBox", "addressNotes", "addressCom", "addressTasks", "thesaurusTermsAddress"];
+	"addressZipPOBox", /*"addressNotes",*/ "addressCom", "addressTasks", "thesaurusTermsAddress"];
 var adrClass0UiInputElements = ["headerAddressType0Unit"];
 var adrClass1UiInputElements = ["headerAddressType1Unit"];
 var adrClass2UiInputElements = ["headerAddressType2Lastname", "headerAddressType2Firstname", "headerAddressType2Style",

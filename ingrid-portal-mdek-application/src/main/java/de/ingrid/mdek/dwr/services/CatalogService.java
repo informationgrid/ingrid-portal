@@ -18,7 +18,7 @@ public interface CatalogService {
 	/** Removes metadata encoded in syslist values, e.g. ", yyyy-MM-dd" at end */
 	public Map<Integer, List<String[]>> getSysListsRemoveMetadata(Integer[] listIds, String languageCode);
 	public void storeSysList(Integer listId, boolean maintainable, Integer defaultEntryIndex, Integer[] entryIds,
-			String[] entriesGerman, String[] entriesEnglish);
+			String[] entriesGerman, String[] entriesEnglish, String[] data);
 	public String[] getFreeListEntries(Integer listId);
 	public void replaceFreeEntryWithSysListEntry(String freeEntry, Integer listId, Integer sysListEntryId, String sysListEntryName);
 	public FileTransfer exportSysLists(Integer[] listIds) throws UnsupportedEncodingException;
