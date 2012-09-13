@@ -113,12 +113,17 @@
   </build>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
-<!--
+
   <dependencyManagement>
     <dependencies>
+        <dependency>
+          <groupId>opensymphony</groupId>
+          <artifactId>quartz</artifactId>
+          <version>1.7.3</version>
+        </dependency>
     </dependencies>
   </dependencyManagement>
--->
+
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
     <dependency>

@@ -16,8 +16,9 @@
         <property name="cache.use_query_cache">false</property>
 
         <!-- SQL dialect -->
+        <!-- Do NOT use Oracle10gDialect, not supported in Portal -->
 <!--    <property name="dialect">org.hibernate.dialect.OracleDialect</property> -->
-		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">false</property>

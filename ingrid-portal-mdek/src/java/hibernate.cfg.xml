@@ -18,8 +18,9 @@
 -->        
 
         <!-- SQL dialect -->
-<!--    <property name="dialect">org.hibernate.dialect.Oracle9Dialect</property> -->
-		<property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+        <!-- Do NOT use Oracle10gDialect, not supported in Portal -->
+<!--	<property name="dialect">org.hibernate.dialect.OracleDialect</property> -->
+        <property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">false</property>
