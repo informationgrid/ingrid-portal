@@ -42,6 +42,22 @@ public class AddressServiceImpl implements AddressService {
 		}
 		return true;
 	}
+	
+	public boolean canCopyAddresses(String[] uuids) {
+        boolean success = true;
+        try {
+            for (String uuid : uuids) {
+                success = success && canCopyAddress(uuid);
+            }
+        } catch (MdekException e) {
+            // Wrap the MdekException in a RuntimeException so dwr can convert it
+            log.debug("MdekException while checking if one of several address can be cut.", e);
+            throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+        } catch (Exception e) {
+            log.error("Error checking if one of several address can be copied.", e);
+        }
+        return success;
+    }
 
 	public boolean canCutAddress(String uuid) {
 		log.debug("Query if address can be cut: "+uuid);
@@ -80,6 +96,15 @@ public class AddressServiceImpl implements AddressService {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public TreeNodeBean[] copyAddresses(String[] nodeUuids, String dstNodeUuid, Boolean includeChildren, Boolean copyToFreeAddress) {
+        TreeNodeBean[] result = new TreeNodeBean[nodeUuids.length];
+        int i = 0;
+        for (String uuid : nodeUuids) {
+            result[i++] = copyAddress(uuid, dstNodeUuid, includeChildren, copyToFreeAddress);
+        }
+        return result;
+    }
 
 	public MdekAddressBean createNewAddress(String parentUuid) {
 		log.debug("creating new address with parent id = "+parentUuid);		

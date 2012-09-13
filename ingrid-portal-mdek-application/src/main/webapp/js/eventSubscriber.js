@@ -327,7 +327,8 @@ udkDataProxy.handleLoadRequest = function(msg)
 
 	// Don't process newNode and objectRoot load requests.
 	if (msg.id == "newNode" || msg.id == "objectRoot" || msg.id == "addressRoot" || msg.id == "addressFreeRoot") {
-		dojo.publish("/selectNode", [{node: dijit.byId(msg.id).item}]);
+		//dojo.publish("/selectNode", [{node: dijit.byId(msg.id).item}]);
+	    currentUdk = {};
 		msg.resultHandler.callback();
 		return;
 	}
@@ -1000,9 +1001,9 @@ udkDataProxy.handleCanCutAddressRequest = function(msg) {
 
 
 udkDataProxy.handleCanCopyObjectRequest = function(msg) {
-	console.debug("udkDataProxy calling ObjectService.canCopyNode("+msg.id+", "+msg.copyTree+")");	
+	console.debug("udkDataProxy calling ObjectService.canCopyNode("+msg.nodeIds+", "+msg.copyTree+")");	
 
-	ObjectService.canCopyObject(msg.id,
+	ObjectService.canCopyObjects(msg.nodeIds,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -1018,9 +1019,9 @@ udkDataProxy.handleCanCopyObjectRequest = function(msg) {
 }
 
 udkDataProxy.handleCanCopyAddressRequest = function(msg) {
-	console.debug("udkDataProxy calling AddressService.canCopyAddress("+msg.id+", "+msg.copyTree+")");	
+	console.debug("udkDataProxy calling AddressService.canCopyAddress("+msg.nodeIds+", "+msg.copyTree+")");	
 
-	AddressService.canCopyAddress(msg.id,
+	AddressService.canCopyAddresses(msg.nodeIds,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -1113,9 +1114,9 @@ udkDataProxy.handleCutAddressRequest = function(msg) {
 }
 
 udkDataProxy.handleCopyObjectRequest = function(msg) {
-	console.debug("udkDataProxy calling ObjectService.copyNode("+msg.srcId+", "+msg.dstId+", "+msg.copyTree+")");	
+	console.debug("udkDataProxy calling ObjectService.copyNode("+msg.srcIds+", "+msg.dstId+", "+msg.copyTree+")");	
 
-	var srcId = msg.srcId;
+	var srcIds = msg.srcIds;
 	var dstId = msg.dstId;
 
 	if (dstId == "objectRoot") {
@@ -1131,7 +1132,7 @@ udkDataProxy.handleCopyObjectRequest = function(msg) {
 		msg.resultHandler.errback(err);
 	});
 
-	ObjectService.copyNode(srcId, dstId, msg.copyTree,
+	ObjectService.copyNodes(srcIds, dstId, msg.copyTree,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -1161,8 +1162,8 @@ udkDataProxy.handleCopyObjectRequest = function(msg) {
 }
 
 udkDataProxy.handleCopyAddressRequest = function(msg) {
-	var srcId = msg.srcId;
-	var dstId = msg.dstId;
+	var srcIds = msg.srcIds;
+	var dstId  = msg.dstId;
 	var copyToFreeAddress = false;
 
 	if (dstId == "addressRoot") {
@@ -1183,7 +1184,7 @@ udkDataProxy.handleCopyAddressRequest = function(msg) {
 	});
 
 	console.debug("udkDataProxy calling AddressService.copyAddress("+msg.srcId+", "+msg.dstId+", "+msg.copyTree+", "+copyToFreeAddress+")");	
-	AddressService.copyAddress(srcId, dstId, msg.copyTree, copyToFreeAddress,
+	AddressService.copyAddresses(srcIds, dstId, msg.copyTree, copyToFreeAddress,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -2673,14 +2674,10 @@ udkDataProxy._initResponsibleUserAddressList = function(nodeData) {
 
 // Looks for the node widget with uuid = nodeData.uuid and updates the
 // tree data (label, type, etc.) according to the given nodeData
-udkDataProxy._updateTree = function(nodeData, oldUuid, doNotSelectNode) {
-	console.debug("_updateTree("+nodeData.uuid+", "+oldUuid+", "+doNotSelectNode+")");
+udkDataProxy._updateTree = function(nodeData, oldUuid) {
+	console.debug("_updateTree("+nodeData.uuid+", "+oldUuid+")");
 	if (typeof(oldUuid) == "undefined" || oldUuid == null) {
 		oldUuid = nodeData.uuid;
-	}
-	var doSelectNode = true;
-	if (doNotSelectNode) {
-		doSelectNode = false;
 	}
 
 	var title = "";
@@ -2767,10 +2764,6 @@ udkDataProxy._updateTree = function(nodeData, oldUuid, doNotSelectNode) {
 		} else {
 			console.debug("Error in _updateTree: TreeNode widget not found. ID: "+nodeData.uuid);
 		}
-	}
-	
-	if (doSelectNode && node) {
-	    dojo.publish("/selectNode", [{node: node}]);
 	}
 }
 

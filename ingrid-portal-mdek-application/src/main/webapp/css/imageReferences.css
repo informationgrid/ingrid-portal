@@ -293,21 +293,6 @@
 	white-space: normal;
 }
 
-.claro .dijitTreeRowSelected {
-
-}
-
-.claro .dijitTreeRowHover {
-	/*background-image: url(images/treeHover.png);*/
-	background-repeat: repeat;
-	background-color: transparent !important;
-}
-
-/*
-.TreeIcon {
-	left: -5px;
-}*/
-
 div.TreeContent {
 /*	margin-left: 20px;	*/
 }

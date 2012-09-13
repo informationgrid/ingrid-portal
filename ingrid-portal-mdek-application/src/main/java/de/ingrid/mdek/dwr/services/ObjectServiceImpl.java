@@ -43,6 +43,22 @@ public class ObjectServiceImpl implements ObjectService {
 		}
 		return true;
 	}
+	
+	public boolean canCopyObjects(String[] uuids) {
+	    boolean success = true;
+        try {
+            for (String uuid : uuids) {
+                success = success && canCopyObject(uuid);
+            }
+        } catch (MdekException e) {
+            // Wrap the MdekException in a RuntimeException so dwr can convert it
+            log.debug("MdekException while checking if one of several nodes can be cut.", e);
+            throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+        } catch (Exception e) {
+            log.error("Error checking if one of several nodes can be copied.", e);
+        }
+        return success;
+    }
 
 	
 	public boolean canCutObject(String uuid) {
@@ -60,8 +76,7 @@ public class ObjectServiceImpl implements ObjectService {
 		return true;
 	}
 
-	public TreeNodeBean copyNode(String nodeUuid, String dstNodeUuid,
-			Boolean includeChildren) {
+	public TreeNodeBean copyNode(String nodeUuid, String dstNodeUuid, Boolean includeChildren) {
 		log.debug("Copying node with ID: "+nodeUuid+" to ID: "+dstNodeUuid);
 
 		try {
@@ -82,6 +97,14 @@ public class ObjectServiceImpl implements ObjectService {
 		}
 	}
 
+	public TreeNodeBean[] copyNodes(String[] nodeUuids, String dstNodeUuid, Boolean includeChildren) {
+	    TreeNodeBean[] result = new TreeNodeBean[nodeUuids.length];
+	    int i = 0;
+	    for (String uuid : nodeUuids) {
+	        result[i++] = copyNode(uuid, dstNodeUuid, includeChildren);
+	    }
+	    return result;
+	}
 	
 	public MdekDataBean createNewNode(String parentUuid) {
 		log.debug("creating new node with parent id = "+parentUuid);		

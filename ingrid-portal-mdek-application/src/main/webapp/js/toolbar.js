@@ -145,6 +145,7 @@ ingridToolbar.addToolbarEvents = function(isQAActive, isUserQA, buttons){
 //      dojo.debug("User has write permission? "+hasWritePermission);
 
         var enableList = [];
+        var dataTree = dijit.byId("dataTree");
 
         // Initially disable all buttons
         //dojo.forEach(buttonList, function(item) { if (item != null) { item.disable(); } });
@@ -156,6 +157,13 @@ ingridToolbar.addToolbarEvents = function(isQAActive, isUserQA, buttons){
         if (message.node.id == "objectRoot" || message.node.id == "addressRoot" || message.node.id == "addressFreeRoot") {
             if (canCreateRootNodes) {
                 enableList.push(buttons.NewDoc);
+            }
+            // if at least one node is selected and none of them is a special node (objectRoot, addressRoot, addressFreeRoot)
+            var notAllowedSelection = dojo.filter(dataTree.allFocusedNodes, function(node) { 
+                return node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot";
+            });
+            if (notAllowedSelection.length === 0) {
+                enableList.push(buttons.DelSubTree);
             }
 
         } else if (message.node.id == "newNode") {
@@ -230,7 +238,7 @@ ingridToolbar.addToolbarEvents = function(isQAActive, isUserQA, buttons){
     });
 
 
-    var showOrHidePasteButton = function(node) {
+    /*var showOrHidePasteButton = function(node) {
         // The paste button depends on the current selection in treeController and the current selected node
         if (dijit.byId("dataTree").canPaste(node)) {
             buttons.Paste.set("disabled", false);
@@ -238,11 +246,8 @@ ingridToolbar.addToolbarEvents = function(isQAActive, isUserQA, buttons){
             buttons.Paste.set("disabled", true);
         }       
     };
-    //!!!dojo.connect(treeController, "move", showOrHidePasteButton);
-    //dojo.connect(treeController, "prepareCopy", showOrHidePasteButton);
     dojo.subscribe("/prepareCopy", showOrHidePasteButton);
-    //dojo.connect(treeController, "prepareCut", showOrHidePasteButton);
-    dojo.subscribe("/prepareCut", showOrHidePasteButton);
+    dojo.subscribe("/prepareCut", showOrHidePasteButton);*/
 
     // Initially disable all icons
     for (i in buttons) {

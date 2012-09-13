@@ -26,12 +26,119 @@ dojo.declare("ingrid.dijit._CustomTreeNode", dijit._TreeNode, {
 
 dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
 	// remember the node we want to copy/cut
-	nodeToCopy: null,
+	nodesToCopy: null,
 	nodeToCut: null,
 	copySubTree: false,
 	// register a function to decide which nodes not to make selectable
 	excludeFunction: null,
+	
+	multiSelect: false,
+    lastFocusedNode: null, // To store the currently focused node in the tree.
+    allFocusedNodes: [], // array of currently focused nodes. eg., user holds cntrl key and selects multiple nodes.
+    ctrlKeyPressed: false, // Flag to find out if ctrl key was pressed, when click happened.
+    expandClicked: false, // the expand button next to the node was clicked (it's not a selection then!)
 
+    postCreate: function(){
+        this.inherited(arguments); // Call parent's postCreate
+        this.onClick = this.onClickDummy;
+        this.allFocusedNodes = [];
+        this.lastFocusedNode = null;
+    },
+    
+    onClickDummy: function(item, node) {  
+    },
+    
+    _onClick: function(temp, /*Event*/ e){
+        this.ctrlKeyPressed = e.ctrlKey ? true : false;
+        this.expandClicked = dojo.hasClass(e.target, "dijitTreeExpando") ? true : false;
+        this.inherited(arguments); 
+        dojo.stopEvent(e);
+    },
+    
+    focusNode: function(/* _tree.Node */ node){  
+        this.inherited(arguments);  
+        
+        if (this.expandClicked) return;
+          
+        this.lastFocusedNode = node;  
+        if(this.ctrlKeyPressed) {  
+            // Ctrl key was pressed
+        } else {  
+            // Ctrl key was not pressed, blur the previously selected nodes except the clicked node.  
+            this.resetSelection(node);
+        }  
+        var isExists = false; // Flag to find out if this node already been selected  
+        for(i=0;i < this.allFocusedNodes.length; i++) {  
+            var temp = this.allFocusedNodes[i];  
+            if(temp.item.id == node.item.id) isExists = true;  
+        }  
+        if( ! isExists) {
+            this.allFocusedNodes.push(node);
+        } else if (this.ctrlKeyPressed) {
+            // remove/deselect node from list
+            this.allFocusedNodes.splice(dojo.indexOf(this.allFocusedNodes, node), 1);
+        }
+        this.customOnClick (node.item, node, this.getSelectedItems() );  
+        //this.ctrlKeyPressed = false;  
+    },
+    
+    resetSelection: function(newSelectedNode) {
+        for(i=0; i < this.allFocusedNodes.length; i++) {  
+            var temp = this.allFocusedNodes[i]; 
+            // if node still exists (after copy/paste) then deselect it
+            if(temp != newSelectedNode && temp.labelNode) {  
+                temp.setSelected(false);
+            }
+        }
+        this.allFocusedNodes = [newSelectedNode];
+    },
+    
+    customBlurNode: function(node) {  
+        var labelNode = node.labelNode;  
+        dojo.removeClass(labelNode, "dijitTreeLabelFocused");  
+        labelNode.setAttribute("tabIndex", "-1");  
+        dijit.setWaiState(labelNode, "selected", false);  
+    },
+    
+    customOnClick: function (item, node, allSelectedItems) {  
+        //User overridable method.  
+    },
+    
+    blurNode: function(){  
+        // Not using, we've our own custom made blur method. See _customBlurNode  
+    },
+    
+    // Returns array of currently selected items.  
+    getSelectedItems: function() {  
+        var selectedItems = [];  
+        for(i=0;i < this.allFocusedNodes.length; i++) {  
+            var iNode = this.allFocusedNodes[i];  
+            selectedItems.push(iNode.item);  
+        }  
+        return selectedItems ;  
+    },
+    
+    _selectNode: function(node) {
+        if (this.multiSelect && this.ctrlKeyPressed) {
+            // deselect node again
+            if (dojo.indexOf(this.allFocusedNodes, node) == -1) {
+                node.setSelected(false);
+            } else {
+                node.setSelected(true);
+            }
+            this.ctrlKeyPressed = false;
+        } else {
+            this.allFocusedNodes = [node];
+            // set de-/selection css classes
+            var oldSelectedNode = this.selectedNode ? dojo.byId(this.selectedNode.id+"") : null;
+            if (oldSelectedNode) dojo.removeClass(oldSelectedNode, "TreeNodeSelect");
+            if (node) dojo.addClass(node.domNode, "TreeNodeSelect");
+            this.inherited(arguments);
+        }
+        // selection has changed and so toolbar might offer new options
+        if (this.selectedNode) dojo.publish("/selectNode", [{node: this.selectedNode.item}]);
+    },
+    
     _expandNode: function(node){
         var _this = this;
         var _arguments = arguments;
@@ -157,6 +264,12 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
 	},
 	
 	refreshChildren: function(/*TreeNode*/node) {
+	    // remove any selection
+//	    dojo.forEach(this.allFocusedNodes, function(node) {
+//	        node.setSelected(false);
+//	    });
+//	    this.allFocusedNodes = [];
+	    
 		// remove children from store first
 		this.removeChildren(node.item.children);
 		
@@ -170,14 +283,14 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
 		return this._expandNode(node);
 	},
 	
-	prepareCopy: function(/*TreeNodeItem*/node, /*boolean*/copySubTree) {
-		this.nodeToCopy = node;
+	prepareCopy: function(/*TreeNodeItem*/nodes, /*boolean*/copySubTree) {
+		this.nodesToCopy = nodes;
 		this.copySubTree = copySubTree;
 		if (this.nodeToCut) {
 			dijit.byId(this.nodeToCut.id[0]).set('class','');
 			this.nodeToCut = null;
 		}
-        dojo.publish("/prepareCopy", [node]);
+        dojo.publish("/prepareCopy", [nodes]);
 	},
 	
 	prepareCut: function(/*TreeNodeItem*/node) {
@@ -188,7 +301,7 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
 			
 		this.nodeToCut = node;
 		dijit.byId(this.nodeToCut.id[0]).set('class','nodeCut');
-		this.nodeToCopy = null;
+		this.nodesToCopy = null;
         dojo.publish("/prepareCut", [node]);
 	},
 	
@@ -277,49 +390,58 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
     },
     
     canPaste: function(node) {
-        var srcNode;
-        if (this.nodeToCopy != null)
-            srcNode = this.nodeToCopy;
+        var srcNodes;
+        var canBePasted = true;
+        
+        // cannot paste if multiple nodes are selected!
+        if (this.allFocusedNodes.length > 1)
+            return false;
+        
+        if (this.nodesToCopy != null)
+            srcNodes = this.nodesToCopy;
         else if (this.nodeToCut != null)
-            srcNode = this.nodeToCut;
+            srcNodes = this.nodeToCut;
         else
             return false;
 
         var dstIsRootNode = (node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot");
 
-        if (node != null) {
-            if (node.id == "newNode" || (!dstIsRootNode && (!node.userWriteTreePermission && !node.userWriteSubTreePermission && !node.userWriteSubNodePermission)))
-                return false;
-
-            if (dstIsRootNode && !UtilSecurity.canCreateRootNodes())
-                return false;
-
-            if (node.nodeAppType[0] == srcNode.nodeAppType[0]) {
-                if (node.nodeAppType == "O") {
-                    return true; // Objects can be pasted anywhere below objects
-                } else if (node.nodeAppType == "A") {
-                    var srcType = srcNode.objectClass;
-                    var dstType = node.objectClass;                 
-                    if (typeof(dstType) == "undefined" || dstType[0] == null) {
-                        // Target is either addressRoot or addressFreeRoot
-                        if (node.id == "addressFreeRoot") {
-                            return (srcType >= 2);  // Only Addresses can be converted to free addresses
-                        } else if (node.id == "addressRoot") {
-                            return (srcType == 0); // Only Institutions are allowed below the root node
+        dojo.forEach(srcNodes, function(srcNode) {
+            if (node != null) {
+                if (node.id == "newNode" || (!dstIsRootNode && (!node.userWriteTreePermission && !node.userWriteSubTreePermission && !node.userWriteSubNodePermission)))
+                    canBePasted = false;
+    
+                if (dstIsRootNode && !UtilSecurity.canCreateRootNodes())
+                    canBePasted = false;
+    
+                if (node.nodeAppType[0] == srcNode.nodeAppType[0]) {
+                    if (node.nodeAppType == "O") {
+                        //return true; // Objects can be pasted anywhere below objects
+                    } else if (node.nodeAppType == "A") {
+                        var srcType = srcNode.objectClass;
+                        var dstType = node.objectClass;                 
+                        if (typeof(dstType) == "undefined" || dstType[0] == null) {
+                            // Target is either addressRoot or addressFreeRoot
+                            if (node.id == "addressFreeRoot") {
+                                canBePasted = canBePasted && (srcType >= 2);  // Only Addresses can be converted to free addresses
+                            } else if (node.id == "addressRoot") {
+                                canBePasted = canBePasted && (srcType == 0); // Only Institutions are allowed below the root node
+                            }
                         }
+                        // The target node is no root node. Compare the src and dst types:
+                        if (dstType >= 2 || (srcType == 0 && dstType == 1))
+                            canBePasted = false;
+//                        else
+//                            return true;
+                        
                     }
-                    // The target node is no root node. Compare the src and dst types:
-                    if (dstType >= 2 || (srcType == 0 && dstType == 1))
-                        return false;
-                    else
-                        return true;
-                    
+                } else {
+                    // src and destination type are not equal
+                    canBePasted = false;
                 }
-            } else {
-                // src and destination type are not equal
-                return false;
             }
-        }
+        });
+        return canBePasted;
     },
 	
     _createTreeNode: function(/*Object*/ args){

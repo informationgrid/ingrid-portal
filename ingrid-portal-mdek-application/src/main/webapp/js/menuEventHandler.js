@@ -177,40 +177,37 @@ menuEventHandler.handleCut = function(mes) {
 		});
 
 		deferred.callback();
-		// Removed subtree check so address and object working copies can be moved
-/*
-		deferred.addErrback(function (err) {
-			if (typeof(err) != "undefined")
-				err.nodeAppType = selectedNode.nodeAppType;
-			displayErrorMessage(err);
-		});
-
-		if (selectedNode.nodeAppType == "O") {
-  			dojo.publish("/canCutObjectRequest", {id: selectedNode.id, resultHandler: deferred});
-  		} else if (selectedNode.nodeAppType == "A") {
-  			dojo.publish("/canCutAddressRequest", {id: selectedNode.id, resultHandler: deferred});
-  		}
-*/
 	}
 }
 
 
 menuEventHandler.handleCopyEntity = function(msg) {
-	var selectedNode = getSelectedNode(msg);
-	if (!selectedNode || selectedNode.id == "objectRoot" || selectedNode.id == "addressRoot" || selectedNode.id == "addressFreeRoot") {
-    	dialog.show(message.get("general.hint"), message.get("tree.selectNodeCopyHint"), dialog.WARNING);	
+	var selectedNodes = getSelectedNodes(msg);
+//	var targetNode = getTargetNode(msg);
+	
+	var notAllowedSelection = dojo.filter(selectedNodes, function(node) { 
+        return node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot";
+    });
+    
+    if (selectedNodes.length > 0 && notAllowedSelection.length > 0) {
+        dialog.show(message.get("dialog.general.warning"), message.get("tree.selectNodeCopyHint"), dialog.WARNING);	
 	} else {
 		var deferred = new dojo.Deferred();
 		deferred.addCallback(function() {
 			var tree = dijit.byId("dataTree");
-			tree.prepareCopy(selectedNode.item, false);
+			tree.prepareCopy(tree.getSelectedItems(), false);
 		});
 		deferred.addErrback(displayErrorMessage);
+		
+		var nodeIds = [];
+		dojo.forEach(selectedNodes, function(node) {
+		    nodeIds.push(node.id+"");
+		});
 
-		if (selectedNode.item.nodeAppType == "O") {
-	  		dojo.publish("/canCopyObjectRequest", [{id: selectedNode.id[0], copyTree: false, resultHandler: deferred}]);
-  		} else if (selectedNode.item.nodeAppType == "A") {
-  			dojo.publish("/canCopyAddressRequest", [{id: selectedNode.id[0], copyTree: false, resultHandler: deferred}]);
+		if (selectedNodes[0].item.nodeAppType == "O") {
+	  		dojo.publish("/canCopyObjectRequest", [{nodeIds: nodeIds, copyTree: false, resultHandler: deferred}]);
+  		} else if (selectedNodes[0].item.nodeAppType == "A") {
+  			dojo.publish("/canCopyAddressRequest", [{nodeIds: nodeIds, copyTree: false, resultHandler: deferred}]);
   		}
 	}
 }
@@ -301,13 +298,18 @@ menuEventHandler.handlePaste = function(msg) {
 					});
 				}
 			}
-		} else if (tree.nodeToCopy != null) {
+		} else if (tree.nodesToCopy != null) {
 			// If a newNode currently exists and is included in the copy operation abort the copy operation with
 			// an error message
 			var newNode = dijit.byId("newNode");
-			if (newNode && tree.copySubTree && _isChildOf(newNode, tree.nodeToCopy)) {
-				dialog.show(message.get("general.hint"), message.get("tree.saveNewNodeHint"), dialog.WARNING);
-				return;
+			if (newNode && tree.copySubTree) {
+			    var parentOfNewNode = dojo.some(tree.nodesToCopy, function(node) {
+			        return _isChildOf(newNode, node);
+			    });
+			    if (parentOfNewNode) {
+    				dialog.show(message.get("general.hint"), message.get("tree.saveNewNodeHint"), dialog.WARNING);
+    				return;
+			    }
 			} 
 
 			// A node can be inserted everywhere. Start the paste request.
@@ -316,24 +318,21 @@ menuEventHandler.handlePaste = function(msg) {
 				// Copy was successful. Update the tree.
 				tree.refreshChildren(targetNode);
 				tree.doPaste();
-
-				// TODO Which node to select?
-				// Selection is lost (somehow) on 'createChild'. Reselect the currently selected node
-				/*if (tree.selectedNode) {
-					tree.selectedNode.viewUnselect();
-					tree.selectedNode.viewSelect();
-				}*/
 			});
 			// If copy was unsuccessful notify user and do nothing.
 			deferred.addErrback(displayErrorMessage);
 
 			// Open the target node before copying a node. 
 			var def = tree._expandNode(targetNode);
-			var appType = tree.nodeToCopy.nodeAppType;
+			var appType = tree.nodesToCopy[0].nodeAppType;
+			var nodeIds = [];
+	        dojo.forEach(tree.nodesToCopy, function(node) {
+	            nodeIds.push(node.id+"");
+	        });
 			if (appType == "O") {
 				def.addCallback(function() {
 					dojo.publish("/copyObjectRequest", [{
-						srcId: tree.nodeToCopy.id[0],
+						srcIds: nodeIds,
 						dstId: targetNode.id[0],
 						copyTree: tree.copySubTree,
 						resultHandler: deferred
@@ -343,7 +342,7 @@ menuEventHandler.handlePaste = function(msg) {
 			} else if (appType == "A") {
 				def.addCallback(function() {
 					dojo.publish("/copyAddressRequest", [{
-						srcId: tree.nodeToCopy.id[0],
+						srcIds: nodeIds,
 						dstId: targetNode.id[0],
 						copyTree: tree.copySubTree,
 						resultHandler: deferred
@@ -363,6 +362,8 @@ menuEventHandler.handleSave = function() {
 
 		tree.selectedNode = dijit.byId(res.uuid);
 		
+		// manually publish select event, because during save operation there
+		// is no tree-select-event!
 		dojo.publish("/selectNode", [{node: tree.selectedNode.item}]);
 
 		resetRequiredFields();
@@ -535,16 +536,24 @@ menuEventHandler.handleDiscard = function(msg) {
 
 
 menuEventHandler.handleDelete = function(msg) {
-	// Get the selected node from the message
-	var selectedNode = getSelectedNode(msg);
+	// Get the selected nodes from the message
+	var selectedNodes = getSelectedNodes(msg);
+	
+	var selectedNode = selectedNodes[0];
+	// the currently loaded node, which can differ from the selected nodes
+	var loadedNode = dijit.byId(currentUdk.uuid);
 
 	if (selectedNode && selectedNode.id == "newNode") {
 		menuEventHandler.handleDiscard(msg);
 		return;
 	}
-
-	if (!selectedNode || selectedNode.id == "objectRoot" || selectedNode == "addressRoot" || selectedNode == "addressFreeRoot") {
-    	dialog.show(message.get("general.hint"), message.get("tree.selectNodeDeleteHint"), dialog.WARNING);
+	
+	var notAllowedSelection = dojo.filter(selectedNodes, function(node) { 
+	    return node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot";
+	});
+	
+	if (notAllowedSelection.length > 0) {
+    	dialog.show(message.get("dialog.general.warning"), message.get("tree.selectNodeDeleteHint"), dialog.WARNING);
 	} else {
 		// If a selected node was found do the following:
 		// 1. Query the user if he really wants to delete the selected object
@@ -554,46 +563,61 @@ menuEventHandler.handleDelete = function(msg) {
 		//    udkDataProxy and sent to the backend. We need another deferred obj 'deleteObjDef' for this
 		//    so we can see if the delete operation was successful.
 		var deferred = new dojo.Deferred();
-		deferred.addCallback(function() {
+		var deleteFunction = function(nodeToDelete) {
 	    	var deleteObjDef = new dojo.Deferred();
-	    	deleteObjDef.addCallback(function() {
-	    		// This function is called when the user has selected yes and the node was successfully
-				// deleted from the database
-				var tree = dijit.byId("dataTree");
-				if (tree.selectedNode == selectedNode || (tree.selectedNode && _isChildOf(tree.selectedNode, selectedNode))) {
-					// If the currently selected Node is a child of the deleted node, we select it's parent after deletion
-					var newSelectNode = dijit.byId(selectedNode.id[0]).getParent();
-					//tree.model.store.deleteItem(selectedNode.item);
-                    UtilTree.deleteNode("dataTree", selectedNode);
-
-					var d = new dojo.Deferred();
-					d.addCallback(function(){				
-                        UtilTree.selectNode("dataTree", newSelectNode.id[0], true);
-						dojo.publish("/selectNode", [{node: newSelectNode.item}]);
-						dojo.window.scrollIntoView(newSelectNode.domNode);
-					});
-					d.addErrback(function(msg){
-						dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
-						console.debug(msg);
-					});
-
-					// We also have to reset the dirty flag since the 'dirty' ndoe is deleted anyway
-					udkDataProxy.resetDirtyFlag();
-		    		console.debug("Publishing event: /loadRequest("+newSelectNode.id+", "+newSelectNode.item.nodeAppType+")");
-			    	dojo.publish("/loadRequest", [{id: newSelectNode.id[0], appType: newSelectNode.item.nodeAppType[0], resultHandler:d}]);
-				} else {
-					// Otherwise we just delete the node
-					//tree.model.store.deleteItem(selectedNode.item);
-                    UtilTree.deleteNode("dataTree", selectedNode);
-				}
-                tree.model.store.save();
-	    	});
-			deleteObjDef.addErrback(displayErrorMessage);
-
-			// Tell the backend to delete the selected node.
-	    	console.debug("Publishing event: /deleteRequest("+selectedNode.id+", "+selectedNode.nodeAppType+")");
-	    	dojo.publish("/deleteRequest", [{id: selectedNode.id[0], resultHandler: deleteObjDef}]);				
+	    	// the node could have been deleted already if parent node was deleted before (multi selection!)
+	    	if (dojo.byId(nodeToDelete.id[0])) {
+    	    	deleteObjDef.addCallback(function() {
+    	    		// This function is called when the user has selected yes and the node was successfully
+    				// deleted from the database
+    				var tree = dijit.byId("dataTree");
+    				
+    				// Otherwise we just delete the node
+                    UtilTree.deleteNode("dataTree", nodeToDelete);
+                    
+                    tree.model.store.save();
+    	    	});
+    			deleteObjDef.addErrback(displayErrorMessage);
+    
+    			// Tell the backend to delete the selected node.
+    	    	console.debug("Publishing event: /deleteRequest("+nodeToDelete.id+", "+nodeToDelete.nodeAppType+")");
+    	    	
+   	    	    dojo.publish("/deleteRequest", [{id: nodeToDelete.id[0], resultHandler: deleteObjDef}]);
+	    	} else {
+	    	    deleteObjDef.callback();
+	    	}
+	    	return deleteObjDef;
+		};
+		
+		// a function to jump to the root object/address if currently loaded 
+		// node has been deleted
+		var loadParentFunction = function() {
+		    var d = new dojo.Deferred();
+		    
+		    // if currently loaded node does not exist anymore
+		    // -> switch to root node
+		    if (currentUdk.uuid && !dijit.byId(currentUdk.uuid)) {
+		        if (currentUdk.nodeAppType === "O") {
+		            var root = dijit.byId("objectRoot");
+		        } else {
+		            var root = dijit.byId("addressRoot");
+		        }
+	            UtilTree.selectNode("dataTree", root.id[0], true);
+                //dojo.publish("/selectNode", [{node: root.item}]);
+                dojo.window.scrollIntoView(root.domNode);
+		    }
+		    
+		    return d;
+		};
+		
+		// 'schedule' all nodes for deletion
+		dojo.forEach(selectedNodes, function(node) {
+		    deferred.addCallback(dojo.partial(deleteFunction, node));
 		});
+		
+		// check if parent from loaded node was deleted
+		// -> load the parent instead!
+		deferred.addCallback(loadParentFunction);		
 
 		// Build the message key (dialog.<object|address>.delete<Children>Message)
 		var messageKey = "dialog.";
@@ -602,11 +626,16 @@ menuEventHandler.handleDelete = function(msg) {
 		else
 			messageKey += "address.delete";
 
-		if (selectedNode.item.isFolder)
+		var selectionContainsFolder = dojo.some(selectedNodes, function(node) { return node.item.isFolder[0]; });
+		if (selectionContainsFolder)
 			messageKey += "Children";
 
 		messageKey += "Message";
-		var displayText = dojo.string.substitute(message.get(messageKey), [selectedNode.item.title]);
+		
+		var nodeTitles = "<ul>";
+		dojo.forEach(selectedNodes, function(node) { nodeTitles += "<li>" + node.item.title + "</li>"; });
+		nodeTitles += "</ul>"
+		var displayText = dojo.string.substitute(message.get(messageKey), [nodeTitles]);
 
 		dialog.show(message.get("general.delete"), displayText, dialog.INFO, [
                         { caption: message.get("general.cancel"), action: function() { /*deferred.errback();*/ } },
@@ -647,8 +676,8 @@ menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
             var defUpdateTree = new dojo.Deferred();
             defUpdateTree.addCallback(function() {               
                 // update tree data but do NOT select node, to avoid display of right content if not initialized yet ! 
-                console.debug("_updateTree on right clicked tree node, NO \"/selectNode\" event !");
-                udkDataProxy._updateTree(res, null, true);
+                console.debug("_updateTree on right clicked tree node, NO \"/selectNode\" event should occur!");
+                udkDataProxy._updateTree(res, null);
     
                 if (selectedNode.isExpanded) {
                     console.debug("refreshChildren");
@@ -1152,7 +1181,7 @@ menuEventHandler._loadNode = function(nodeId) {
 		loadNodeDef.addCallback(function(){				
 			UtilTree.selectNode("dataTree", nodeId);
 			dojo.window.scrollIntoView(targetNode.domNode);
-			dojo.publish("/selectNode", [{node: targetNode.item}]);
+			//dojo.publish("/selectNode", [{node: targetNode.item}]);
             dijit.byId("dataFormContainer").resize();
             loadNodeResultDef.callback();
 		});
@@ -1205,26 +1234,54 @@ function alertNotImplementedYet()
   alert("Diese Funktionalit�t ist noch nicht implementiert.");
 }
 
+/**
+ * Check if the function was initiated by the context menu or from toolbar
+ * @param msg
+ * @returns true, if conext menu was used
+ */
+function calledFromContextMenu(msg) {
+    var fromContextMenu = false;
+    // if it was called from a submenu after a click on the tree
+    if (dojo.isIE) {
+        if (msg.srcElement.className.indexOf("dijitMenuItemLabel") != -1) {
+          fromContextMenu = true;
+        }
+    } else {
+        if (msg.target.classList.contains("dijitMenuItemLabel")) {
+          fromContextMenu = true;
+        }
+    }
+    return fromContextMenu;
+}
+
 function getSelectedNode(msg) {
-  // if it was called from a submenu after a click on the tree
-  var fromContextMenu = false;
-  if (dojo.isIE) {
-      if (msg.srcElement.className.indexOf("dijitMenuItemLabel") != -1) {
-        fromContextMenu = true;
-      }
-  } else {
-      if (msg.target.classList.contains("dijitMenuItemLabel")) {
-        fromContextMenu = true;
-      }
-  }
-  if (fromContextMenu) {
-    return dijit.byId("menuDataTree").clickedNode;
-  } else { // or from the toolbar
- 	if (dijit.byId("dataTree").selectedNode)
-    	return dijit.byId("dataTree").selectedNode;
-	else
-		return null;
-  }
+    if (calledFromContextMenu(msg)) {
+        return dijit.byId("menuDataTree").clickedNode;
+    } else { // or from the toolbar
+        var tree = dijit.byId("dataTree");
+        if (tree.selectedNode) 
+            return tree.selectedNode;
+        else 
+            return null;
+    }
+}
+
+function getTargetNode(msg) {
+    return getSelectedNode(msg);
+}
+
+function getSelectedNodes(msg) {
+//    var selectedNodes = dijit.byId("dataTree").allFocusedNodes;
+//    if (calledFromContextMenu(msg)) {
+//        var clickedAdditionalNode = dijit.byId("menuDataTree").clickedNode;
+//        // add last clicked nodes (where context menu was called) to selected nodes
+//        if (dojo.indexOf(selectedNodes, clickedAdditionalNode) === -1) {
+//            selectedNodes.push(clickedAdditionalNode);
+//        }
+//    }
+    // since the change of selecting and activating nodes in a tree
+    // it's now easier to access all selected nodes
+    return dijit.byId("dataTree").allFocusedNodes;
 }
 
 function _createNewNode(obj, parentClass)

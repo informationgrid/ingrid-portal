@@ -197,19 +197,17 @@ dialog.show = function(caption, text, /* dialog.WARNING|dialog.INFO */type, /* a
         //dimensions: [width, height]
         style: "width: "+width+"px;"// height: "+height+"px;"
     });
+	
+	dojo.addClass(dialogWnd.titleBar, type);
     
 	var content = '<div class="dijitDialogPaneContentArea">';
-	if (type == dialog.WARNING)
-		content += "<div class='popupWarning'>"+ message.get("dialog.general.warning") +"!</div>";
 	if (type == dialog.INFO)
 		text = '<strong>' + text + '</strong>';
 	content += '<div class="popupContent xNoScroll yScroll" >' + text + '<span class="buttons" id="InfoDialog_buttons"></span></div>'; // style="height:'+height+'px;"
 	content += '</div>';
-	content += '<div id="dialogButtonBar"></div>';
+	content += '<div id="dialogButtonBar" class="dijitDialogPaneActionBar"></div>';
 	
 	dialogWnd.set("content", content); 	
-	dojo.addClass("dialogButtonBar", "dijitDialogPaneActionBar");
-	
 	
   // add buttons
   if (btnActions) {
@@ -236,8 +234,7 @@ dialog.show = function(caption, text, /* dialog.WARNING|dialog.INFO */type, /* a
 			//dijit.byId(dlgId).destroyRecursive();
 			//closeDialog(dlgId);
 		}
-	}).placeAt(dojo.byId("dialogButtonBar"));//placeAt(dojo.byId(dlgId+'_buttons'));
-    //dojo.byId(dlgId+'_buttons').appendChild(button.domNode);
+	}).placeAt(dojo.byId("dialogButtonBar"));
   }
   
 	dialogWnd.startup();

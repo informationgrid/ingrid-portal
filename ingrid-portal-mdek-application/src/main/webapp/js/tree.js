@@ -35,6 +35,7 @@ ingridDataTree.createTree = function(){
         onClick: menuEventHandler.handleCut
     }));
 	menuDataTree.addChild(new dijit.MenuItem({
+	    id: "menuItemCopySingle",
         label: message.get('tree.nodeCopySingle'),
         onClick: menuEventHandler.handleCopyEntity
     }));
@@ -67,6 +68,7 @@ ingridDataTree.createTree = function(){
         }));
 	} else {
 		menuDataTree.addChild(new dijit.MenuItem({
+		    id: "menuItemDelete",
             label: message.get('tree.nodeDelete'),
             onClick: menuEventHandler.handleDelete
         }));
@@ -94,21 +96,35 @@ ingridDataTree.createTree = function(){
         var tn = dijit.getEnclosingWidget(e.target);
 		menuDataTree.clickedNode = tn;
         
-        console.debug("check node:");
-        console.debug(tn.item);
+        var enablePaste = multiSelection = false;
+        var dataTree = dijit.byId("dataTree");
 		
-        var enablePaste = false;
+		// 1) keep multi selection if clicked on one selected node
+        // 2) change selection to only clicked node if it isn't selected
+        var clickedNodeIsSelected = dojo.some(dataTree.allFocusedNodes, function(node) { 
+            return node.id == menuDataTree.clickedNode.id;
+        });
+        if (!clickedNodeIsSelected) {
+            //dataTree.focusNode(menuDataTree.clickedNode);
+            dataTree.resetSelection(menuDataTree.clickedNode);
+            menuDataTree.clickedNode.setSelected(true);
+        }
+        
+        // allow/deny paste
+        if (dataTree.canPaste(tn.item))
+            enablePaste = true;
+        
+		// menu for multiple selected nodes
+		if (dataTree.allFocusedNodes.length > 1)
+            multiSelection = true;
 		
-		// allow/deny paste
-		if (dijit.byId("dataTree").canPaste(tn.item))
-			enablePaste = true;
-
 		if (tn.item.id == "objectRoot" || tn.item.id == "addressRoot" || tn.item.id == "addressFreeRoot") {
 			// contrived condition: if this tree node doesn't have any children, disable all of the menu items
             dojo.forEach(menuDataTree.getChildren(), function(i) {
 				if (i.id == "menuItemNew" || i.id == "menuItemPaste" || 
 						i.id == "menuItemReload" || i.id == "menuItemSeparator") {
 					i.attr('class', "");
+					if (i.id != "menuItemSeparator") i.setDisabled(false);
 				} else {
 					i.attr('class', "hidden");
 				}
@@ -116,6 +132,7 @@ ingridDataTree.createTree = function(){
 					enablePaste ?  i.setDisabled(false) : i.setDisabled(true);
             });
 		} else { // for all child nodes of the objects and addresses
+	        
             dojo.forEach(menuDataTree.getChildren(), function(i) {
 				if (i.id == "menuItemReload" || i.id == "menuItemSeparator") {
 					i.attr('class', "hidden");
@@ -150,7 +167,7 @@ ingridDataTree.createTree = function(){
                 
                 if (!tn.item.userMovePermission[0] && (i.id == "menuItemMove" || i.id == "menuItemCut" || i.id == "menuItemDetach")) {
                     i.setDisabled(true);
-                  }
+                }
 
                 if (tn.item.publicationCondition && tn.item.publicationCondition[0]) {
                     if (i.id.indexOf("PublicationCondition") != -1) {
@@ -165,51 +182,27 @@ ingridDataTree.createTree = function(){
                         i.attr('class', "hidden");
                     }
                 }
+                
+                // only enable these menu entries on multi selection
+                if (multiSelection) {
+                    if (i.id == "menuItemMove" || i.id == "menuItemCut" || i.id == "menuItemDelete" || 
+                            i.id == "menuItemCopy" || i.id == "menuItemCopySingle") {
+                        // do not modify state, since they already should have the right one!
+                    } else {
+                        // disable all other entries
+                        i.setDisabled(true);
+                    }
+                }
             });
 		}
-        /*
-        // collect all items to disable
-        // disable paste if not possible
-      var actionsDisabled = [];
-      if (dojo.lang.isObject(this.treeController) && !this.treeController.canPaste(node))
-        actionsDisabled.push("menuItemPaste");
-
-      if (node.nodeAppType == "A" && (node.objectClass == 2 || node.objectClass == 3) ) {
-          actionsDisabled.push("menuItemNew");
-      }
-
-      if (node.id == "newNode") {
-          actionsDisabled.push("MOVE");
-          actionsDisabled.push("menuItemNew");
-          actionsDisabled.push("menuItemCopy");
-          actionsDisabled.push("menuItemCut");
-          actionsDisabled.push("menuItemPaste");
-      }
-
-      if (!node.userWriteTreePermission && node.id != "objectRoot" && node.id != "addressRoot" && node.id != "addressFreeRoot") {
-        actionsDisabled.push("MOVE");
-        actionsDisabled.push("menuItemCut");
-        actionsDisabled.push("DETACH");
-            if (!node.userWriteSubTreePermission) {
-                actionsDisabled.push("menuItemNew");
-                actionsDisabled.push("menuItemPaste");
-            }
-      }
-
-      if (!UtilSecurity.canCreateRootNodes() && (node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot")) {
-        actionsDisabled.push("menuItemNew");        
-      }
-      
-      dojo.forEach(menuDataTree.getChildren(), function(item) {
-          if (acionsDisabled.indexOf(item.id) != -1)
-               item.setDisabled(true);
-          else
-               item.setDisabled(false);
-      });
-		*/
 	});
 	
-	dojo.connect(dijit.byId("dataTree"), "onClick", ingridDataTreeHandler.onClick);
+    var dataTree = dijit.byId("dataTree");
+	dojo.connect(dataTree, "onClick",     ingridDataTreeHandler.onClick);
+	dojo.connect(dataTree, "onMouseOver", ingridDataTreeHandler.onMouseOver);
+	
+	// enable multi-selection of tree nodes for group operations
+	dataTree.multiSelect = true;
     
     // enable/disable inputs according to permission 
     igeEvents.disableInputOnWrongPermission();
@@ -245,28 +238,43 @@ ingridDataTreeHandler = new Object();
  * HANDLER 
  *********************************************************/
 
-ingridDataTreeHandler.onClick = function(item, node){
+ingridDataTreeHandler.onClick = function(item, node, oEvent){
     // don't do anything if already selected node is clicked again
     //if (this.selectedNode.id == node.id)
     //    return;
     
-	var deferred = new dojo.Deferred();
-	console.debug("Publishing event: /loadRequest(" + item.id[0] + ", " + item.nodeAppType[0] + ")");
-    
-    deferred.addErrback(function(err) {
-        displayErrorMessage(err);
-    });
-    deferred.addCallback(function(){
-        console.debug("resize border container");
-        dijit.byId("dataFormContainer").resize();
-    });
-    
-	dojo.publish("/loadRequest", [{
-		id: item.id[0],
-		appType: item.nodeAppType[0],
-		resultHandler: deferred
-	}]);
-    
-	return deferred;
+    // check for multiple selection mode (with CTRL-key)
+    if (oEvent.ctrlKey === true) {
+        
+    } else {
+        
+    	var deferred = new dojo.Deferred();
+    	console.debug("Publishing event: /loadRequest(" + item.id[0] + ", " + item.nodeAppType[0] + ")");
+        
+        deferred.addErrback(function(err) {
+            displayErrorMessage(err);
+        });
+        deferred.addCallback(function(){
+            console.debug("resize border container");
+            dijit.byId("dataFormContainer").resize();
+        });
+        
+    	dojo.publish("/loadRequest", [{
+    		id: item.id[0],
+    		appType: item.nodeAppType[0],
+    		resultHandler: deferred
+    	}]);
+        
+    	return deferred;
+    }
 }
+
+ingridDataTreeHandler.onMouseOver = function(oEvent) {
+    if (oEvent.ctrlKey === true) {
+        this.domNode.style.cursor = "pointer";
+    } else {
+        this.domNode.style.cursor = "default";
+    }
+}
+
 
