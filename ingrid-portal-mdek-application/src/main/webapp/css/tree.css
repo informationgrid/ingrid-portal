@@ -97,7 +97,7 @@ so I have to remove TreeExpand and process this one specifically
 .TreeNodeNotSelectable {
     border: none;
     color: #666666;
-    margin-left:0;
+/*     margin-left:0; */
 }
 
 .TreeContent .RichTextEditable, .TreeContent .RichTextEditable iframe {
@@ -119,6 +119,9 @@ input.treeCheckbox {
     border: none;
     background: none;
 }
+
+/* when a tree node is cut, the node gets a new color */
+.nodeCut { color: #888888; }
 
 .claro .dijitTreeRowHover {
     background-color: inherit;

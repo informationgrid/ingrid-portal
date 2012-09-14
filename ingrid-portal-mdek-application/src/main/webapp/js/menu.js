@@ -310,34 +310,37 @@ function initContextMenu(gridProperties) {
                     element = element.parentNode;
                 }                
             }
-            var grid = findGrid(e.target);
-            var somethingIsSelected = UtilGrid.getSelectedRowIndexes(grid).length > 0;
-            var somethingIsCopied   = UtilGrid.getTable(grid).copiedAddress != null;
-            dojo.forEach(menu.getChildren(), function(i) {
-                if (somethingIsSelected) {
-                    if (i.id.indexOf("menuDeselectAll") != -1) i.setDisabled(false);
-                    if (i.id.indexOf("menuRemoveSelected") != -1) i.setDisabled(false);
-                } else {
-                    if (i.id.indexOf("menuDeselectAll") != -1) i.setDisabled(true);
-                    if (i.id.indexOf("menuRemoveSelected") != -1) i.setDisabled(true);
-                }
-                if (clickedSlickGrid.getData()[clickedRow]) {
-                    if (i.id.indexOf("menuRemoveClicked") != -1) i.setDisabled(false);
-                    if (i.id.indexOf("menuEditClicked") != -1) i.setDisabled(false);
-                    if (i.id.indexOf("menuShowAddress") != -1) i.setDisabled(false);
-                    if (i.id.indexOf("menuCopyAddress") != -1) i.setDisabled(false);
-                } else {
-                    if (i.id.indexOf("menuRemoveClicked") != -1) i.setDisabled(true);
-                    if (i.id.indexOf("menuEditClicked") != -1) i.setDisabled(true);
-                    if (i.id.indexOf("menuShowAddress") != -1) i.setDisabled(true);
-                    if (i.id.indexOf("menuCopyAddress") != -1) i.setDisabled(true);
-                }
-                if (somethingIsCopied) {
-                    if (i.id.indexOf("menuPasteAddress") != -1) i.setDisabled(false);
-                } else {
-                    if (i.id.indexOf("menuPasteAddress") != -1) i.setDisabled(true);
-                }
-            });
+            
+            // all items have to be disabled if user has no permission
+            if (currentUdk.writePermission) {
+                var grid = findGrid(e.target);
+                var somethingIsSelected = UtilGrid.getSelectedRowIndexes(grid).length > 0;
+                var somethingIsCopied   = UtilGrid.getTable(grid).copiedAddress != null;
+                
+                dojo.forEach(menu.getChildren(), function(i) {
+                    // reset item to active first!
+                    if (i.declaredClass != "dijit.MenuSeparator") i.setDisabled(false);
+                    
+                    if (!somethingIsSelected) {
+                        if (i.id.indexOf("menuDeselectAll") != -1) i.setDisabled(true);
+                        if (i.id.indexOf("menuRemoveSelected") != -1) i.setDisabled(true);
+                    }
+                    if (!clickedSlickGrid.getData()[clickedRow]) {
+                        if (i.id.indexOf("menuRemoveClicked") != -1) i.setDisabled(true);
+                        if (i.id.indexOf("menuEditClicked") != -1) i.setDisabled(true);
+                        if (i.id.indexOf("menuShowAddress") != -1) i.setDisabled(true);
+                        if (i.id.indexOf("menuCopyAddress") != -1) i.setDisabled(true);
+                    }
+                    if (!somethingIsCopied) {
+                        if (i.id.indexOf("menuPasteAddress") != -1) i.setDisabled(true);
+                    }
+                });
+            } else {
+                dojo.forEach(menu.getChildren(), function(i) {
+                    if (i.declaredClass != "dijit.MenuSeparator")
+                        i.setDisabled(true);
+                });
+            }
         });
     }
     
@@ -438,7 +441,6 @@ function createContextMenu(grid, gridId, gridProperties) {
         e.preventDefault();
         var cell = this.getCellFromEvent(e);
         clickedRow = _getClickedRowFromTarget(e.target, 5); // look for row property within next 5 parents of target
-        console.debug("clicked row is: " + clickedRow);
         clickedSlickGrid = this; // needed for event when menuitem was clicked
         clickedSlickGridProperties = gridProperties;
     });

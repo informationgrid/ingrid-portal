@@ -222,6 +222,13 @@ public class AddressServiceImpl implements AddressService {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public void moveAddresses(String[] nodeUuids, String[] oldParentUuids, String newParentUuid, boolean moveToFreeAddress) {
+	    int i = 0;
+        for (String uuid : nodeUuids) {
+            moveAddress(uuid, oldParentUuids[i++], newParentUuid, moveToFreeAddress);
+        }
+	}
 
 	public MdekAddressBean saveAddressData(MdekAddressBean data, Boolean useWorkingCopy) {
 		log.debug("saveAddressData()");

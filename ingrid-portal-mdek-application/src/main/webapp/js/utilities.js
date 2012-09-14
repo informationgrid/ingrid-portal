@@ -1500,6 +1500,8 @@ UtilUI.disableHtmlLink = function(elementId) {
         element._disabledOnClick = element.onclick;
         element.onclick = null;
     }
+    // add style for disabled look
+    dojo.addClass(element, "disabled");
 }
 
 UtilUI.enableHtmlLink = function(elementId) {
@@ -1509,6 +1511,8 @@ UtilUI.enableHtmlLink = function(elementId) {
         element.onclick = element._disabledOnClick;
         element._disabledOnClick = null;
     }
+ // add style for disabled look
+    dojo.removeClass(element, "disabled");
 }
 
 UtilUI.setVisibleBlockDiv = function(visible) {
@@ -1784,6 +1788,26 @@ UtilTree.selectNode = function(treeId, nodeId) {
 	var newSelectedNode = dijit.byId(nodeId);
 	newSelectedNode.setSelected(true);
 	tree.selectedNode = newSelectedNode;*/
+}
+
+UtilTree.reloadNode = function(treeId, node) {
+    var d = new dojo.Deferred();
+    d.addCallback(function() {
+        UtilTree.selectNode(treeId, node.id[0]);
+        dojo.window.scrollIntoView(dojo.byId(node.id[0]));
+    });
+    d.addErrback(function(msg) {
+        dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
+        console.debug(msg);
+    });
+    udkDataProxy.resetDirtyFlag();
+    console.debug("Publishing event: /loadRequest(" + node.id + ", "
+            + node.item.nodeAppType + ")");
+    dojo.publish("/loadRequest", [{
+        id : node.id[0],
+        appType : node.item.nodeAppType[0],
+        resultHandler : d
+    }]);
 }
 
 /**

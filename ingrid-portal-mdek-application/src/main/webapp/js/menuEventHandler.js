@@ -165,15 +165,20 @@ menuEventHandler.handlePreview = function(msg) {
 	}
 }
 
+// no distinction between single and tree mode since only the whole tree can be cutted
 menuEventHandler.handleCut = function(mes) {
-	var selectedNode = getSelectedNode(mes);
-	if (!selectedNode || selectedNode.id == "objectRoot" || selectedNode.id == "addressRoot" || selectedNode.id == "addressFreeRoot") {
-    	dialog.show(message.get("general.hint"), message.get("tree.selectNodeCutHint"), dialog.WARNING);
-	} else {
+	var selectedNodes = getSelectedNodes(mes);
+	var notAllowedSelection = dojo.filter(selectedNodes, function(node) { 
+        return node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot";
+    });
+    
+    if (selectedNodes.length > 0 && notAllowedSelection.length > 0) {
+        dialog.show(message.get("dialog.general.warning"), message.get("tree.selectNodeCopyHint"), dialog.WARNING); 
+    } else {
 		var deferred = new dojo.Deferred();
 		deferred.addCallback(function() {
 			var tree = dijit.byId("dataTree");
-			tree.prepareCut(selectedNode.item);
+			tree.prepareCut(tree.getSelectedItems());
 		});
 
 		deferred.callback();
@@ -182,95 +187,85 @@ menuEventHandler.handleCut = function(mes) {
 
 
 menuEventHandler.handleCopyEntity = function(msg) {
-	var selectedNodes = getSelectedNodes(msg);
-//	var targetNode = getTargetNode(msg);
-	
-	var notAllowedSelection = dojo.filter(selectedNodes, function(node) { 
+    menuEventHandler._copyWithSubtree(msg, false);
+}
+
+menuEventHandler.handleCopyTree = function(msg) {
+    menuEventHandler._copyWithSubtree(msg, true);
+}
+
+menuEventHandler._copyWithSubtree = function(msg, withSubtree) {
+    var selectedNodes = getSelectedNodes(msg);
+    var notAllowedSelection = dojo.filter(selectedNodes, function(node) { 
         return node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot";
     });
     
     if (selectedNodes.length > 0 && notAllowedSelection.length > 0) {
-        dialog.show(message.get("dialog.general.warning"), message.get("tree.selectNodeCopyHint"), dialog.WARNING);	
-	} else {
-		var deferred = new dojo.Deferred();
-		deferred.addCallback(function() {
-			var tree = dijit.byId("dataTree");
-			tree.prepareCopy(tree.getSelectedItems(), false);
-		});
-		deferred.addErrback(displayErrorMessage);
-		
-		var nodeIds = [];
-		dojo.forEach(selectedNodes, function(node) {
-		    nodeIds.push(node.id+"");
-		});
+        dialog.show(message.get("dialog.general.warning"), message.get("tree.selectNodeCopyHint"), dialog.WARNING); 
+    } else {
+        var deferred = new dojo.Deferred();
+        deferred.addCallback(function() {
+            var tree = dijit.byId("dataTree");
+            tree.prepareCopy(tree.getSelectedItems(), withSubtree);
+        });
+        deferred.addErrback(function() {
+            dialog.show(message.get("general.error"), message.get("tree.nodeCanCopyError"), dialog.WARNING);        
+        });
+        
+        var nodeIds = [];
+        dojo.forEach(selectedNodes, function(node) {
+            nodeIds.push(node.id+"");
+        });
 
-		if (selectedNodes[0].item.nodeAppType == "O") {
-	  		dojo.publish("/canCopyObjectRequest", [{nodeIds: nodeIds, copyTree: false, resultHandler: deferred}]);
-  		} else if (selectedNodes[0].item.nodeAppType == "A") {
-  			dojo.publish("/canCopyAddressRequest", [{nodeIds: nodeIds, copyTree: false, resultHandler: deferred}]);
-  		}
-	}
-}
-
-menuEventHandler.handleCopyTree = function(msg) {
-	var selectedNode = getSelectedNode(msg);
-	if (!selectedNode || selectedNode.id[0] == "objectRoot" || selectedNode.id[0] == "addressRoot" || selectedNode.id[0] == "addressFreeRoot") {
-    	dialog.show(message.get("general.hint"), message.get("tree.selectNodeCopyHint"), dialog.WARNING);	
-	} else {
-		var deferred = new dojo.Deferred();
-		deferred.addCallback(function() {
-			var tree = dijit.byId("dataTree");
-			tree.prepareCopy(selectedNode.item, true);
-		});
-		deferred.addErrback(function() {
-    		dialog.show(message.get("general.error"), message.get("tree.nodeCanCopyError"), dialog.WARNING);		
-		});
-
-		if (selectedNode.item.nodeAppType == "O") {
-	  		dojo.publish("/canCopyObjectRequest", [{id: selectedNode.id[0], copyTree: true, resultHandler: deferred}]);
-  		} else if (selectedNode.item.nodeAppType == "A") {
-	  		dojo.publish("/canCopyAddressRequest", [{id: selectedNode.id[0], copyTree: true, resultHandler: deferred}]);
-  		}
-	}
+        if (selectedNodes[0].item.nodeAppType == "O") {
+            dojo.publish("/canCopyObjectRequest", [{nodeIds: nodeIds, copyTree: withSubtree, resultHandler: deferred}]);
+        } else if (selectedNodes[0].item.nodeAppType == "A") {
+            dojo.publish("/canCopyAddressRequest", [{nodeIds: nodeIds, copyTree: withSubtree, resultHandler: deferred}]);
+        }
+    }
 }
 
 menuEventHandler.handlePaste = function(msg) {
-	//var targetNodeItem = getSelectedNode(msg);
-	var targetNode = getSelectedNode(msg);//dijit.byId(targetNodeItem.id[0]);
+	var targetNode = getSelectedNode(msg);
 	
 	if (!targetNode || targetNode.id == "newNode") {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodePasteHint"), dialog.WARNING);
 	} else {
 		var tree = dijit.byId("dataTree");
 
-		if (tree.nodeToCut != null) {
-			if (targetNode.item == tree.nodeToCut || _isChildOf(targetNode, tree.nodeToCut)) {
+		if (tree.nodesToCut != null) {
+		    var invalidPaste = dojo.some(tree.nodesToCut, function(nodeItem) {
+		        return (targetNode.item == nodeItem || _isChildOf(targetNode, nodeItem));
+		    });
+			if (invalidPaste) {
 				// If an invalid target is selected (same node or child of node to cut)
 				dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
 				return;
 			} else {
-				var cutNodeWidget = dijit.byId(tree.nodeToCut.id[0]);
-				var appType = tree.nodeToCut.nodeAppType[0];
+//				var cutNodeWidget = dijit.byId(tree.nodeToCut.id[0]);
+			    var appType = tree.nodesToCut[0].nodeAppType;
 				// Valid target was selected. Start the request
 				var deferred = new dojo.Deferred();
 				deferred.addCallback(function() {
 					// Move was successful. Update the tree
-					//tree.model.store.deleteItem(tree.nodeToCut);
-                    UtilTree.deleteNode("dataTree", cutNodeWidget);
+				    dojo.forEach(tree.nodesToCut, function(node) {
+				        UtilTree.deleteNode("dataTree", dijit.byId(node.id[0]));
+				    });
 					tree.model.store.save();
 					tree.refreshChildren(targetNode);
-					var nodeToCut = tree.nodeToCut;
 					if (appType == "A") {
-						// If we moved an address from/to the freeAddress part of the tree, the icon has to be updated
-						if (targetNode.id == "addressFreeRoot") {
-							nodeToCut.nodeDocType[0] = "PersonAddress";	
-							nodeToCut.objectClass[0] = 3;
-						} else {
-							if (nodeToCut.nodeDocType[0].indexOf("PersonAddress") === 0) {
-								nodeToCut.nodeDocType[0] = "InstitutionPerson";	
-								nodeToCut.objectClass[0] = 2;
-							}
-						}
+					    dojo.forEach(tree.nodesToCut, function(nodeToCut) {
+    						// If we moved an address from/to the freeAddress part of the tree, the icon has to be updated
+    						if (targetNode.id == "addressFreeRoot") {
+    							nodeToCut.nodeDocType[0] = "PersonAddress";	
+    							nodeToCut.objectClass[0] = 3;
+    						} else {
+    							if (nodeToCut.nodeDocType[0].indexOf("PersonAddress") === 0) {
+    								nodeToCut.nodeDocType[0] = "InstitutionPerson";	
+    								nodeToCut.objectClass[0] = 2;
+    							}
+    						}
+					    });
 					}
 					tree.doPaste();
 				});
@@ -280,21 +275,25 @@ menuEventHandler.handlePaste = function(msg) {
 				// Open the target node before moving a node. If the targetNode would be expanded afterwards,
 				// a widget collision would be possible (nodeToCut already exists in the target after expand)
 				var def = tree._expandNode(targetNode);
+				
+				var nodeIds = [];
+				var parentNodeIds = [];
+	            dojo.forEach(tree.nodesToCut, function(node) {
+	                nodeIds.push(node.id+"");
+	                var parentId = dijit.byId(node.id+"").getParent().id+"";
+	                if (parentId == "objectRoot" || parentId == "addressRoot" || parentId == "addressFreeRoot")
+	                    parentNodeIds.push(null);
+	                else
+	                    parentNodeIds.push(parentId);
+	            });
+				
 				if (appType == "O") {
 					def.addCallback(function() {
-						var parentUuid = cutNodeWidget.getParent().id[0];
-						if (parentUuid == "objectRoot") {
-							parentUuid = null;
-						}
-						dojo.publish("/cutObjectRequest", [{srcId: tree.nodeToCut.id[0], parentUuid: parentUuid, dstId: targetNode.id[0], forcePublicationCondition: false, resultHandler: deferred}]);
+						dojo.publish("/cutObjectRequest", [{srcIds: nodeIds, parentUuids: parentNodeIds, dstId: targetNode.id[0], forcePublicationCondition: false, resultHandler: deferred}]);
 					});
 				} else if (appType == "A") {
 					def.addCallback(function() {
-						var parentUuid = cutNodeWidget.getParent().id[0];
-						if (parentUuid == "addressRoot" || parentUuid == "addressFreeRoot") {
-							parentUuid = null;
-						}
-						dojo.publish("/cutAddressRequest", [{srcId: tree.nodeToCut.id[0], parentUuid: parentUuid, dstId: targetNode.id[0], resultHandler: deferred}]);
+						dojo.publish("/cutAddressRequest", [{srcIds: nodeIds, parentUuids: parentNodeIds, dstId: targetNode.id[0], resultHandler: deferred}]);
 					});
 				}
 			}
@@ -420,6 +419,11 @@ menuEventHandler.handleUndo = function(mes) {
 menuEventHandler.handleDiscard = function(msg) {
 	// Get the selected node from the message
 	var selectedNode = getSelectedNode(msg);
+	menuEventHandler._discardNode(selectedNode);
+}
+
+menuEventHandler._discardNode = function(selectedNode) {
+    var discardDeferred = new dojo.Deferred();
 	if (!selectedNode || selectedNode.id[0] == "objectRoot") {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodeDeleteHint"), dialog.WARNING);
 	} else {
@@ -451,15 +455,14 @@ menuEventHandler.handleDiscard = function(msg) {
 					if (tree.selectedNode == selectedNode || _isChildOf(tree.selectedNode, selectedNode)) {
 						// If the currently selected Node is a child of the deleted node, we select it's parent after deletion
 						var newSelectNode = selectedNode.getParent();
-						//tree.model.store.deleteItem(selectedNode.item);
                         UtilTree.deleteNode("dataTree", selectedNode);
 
 						var d = new dojo.Deferred();
 						d.addCallback(function(){
 							UtilTree.selectNode("dataTree", newSelectNode.id[0]);
 							dojo.publish("/selectNode", [{node: newSelectNode.item}]);
-							//if (!dojo.isIE)				
 							dojo.window.scrollIntoView(newSelectNode.domNode);
+							discardDeferred.callback();
 						});
 						d.addErrback(function(msg){
 							dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
@@ -472,7 +475,6 @@ menuEventHandler.handleDiscard = function(msg) {
 				    	dojo.publish("/loadRequest", [{id: newSelectNode.id[0], appType: newSelectNode.item.nodeAppType, resultHandler:d}]);
 					} else {
 						// The selection does not have to be altered. Delete the node.
-						//tree.model.store.deleteItem(selectedNode.item);
                         UtilTree.deleteNode("dataTree", selectedNode);
 					}
 				} else {
@@ -491,20 +493,6 @@ menuEventHandler.handleDiscard = function(msg) {
 	    	dojo.publish("/deleteWorkingCopyRequest", [{id: selectedNode.id[0], resultHandler: deleteObjDef}]);				
 		});
 
-/*
-		// params for the first (really delete object query) dialog.
-		var params = {
-			nodeTitle: selectedNode.title,
-			nodeHasChildren: selectedNode.isFolder,
-			isPublished: selectedNode.isPublished,
-			resultHandler: deferred
-		};
-		if (selectedNode.isPublished) {
-			dialog.showPage(message.get("dialog.discardPubExistTitle"), "mdek_delete_working_copy_dialog.html", 342, 220, true, params);
-		} else {
-			dialog.showPage(message.get("dialog.discardPubNotExistTitle"), "mdek_delete_working_copy_dialog.html", 342, 220, true, params);
-		}
-*/	
 		// Build the dialog parameters
 		// messageKey = dialog.<object|address>.discardPub<Not>ExistMessage
 		var titleText = "";
@@ -532,28 +520,40 @@ menuEventHandler.handleDiscard = function(msg) {
         	{ caption: message.get("general.yes"),     action: function() { deferred.callback(); } }
 		]);
 	}
+	return discardDeferred;
 }
 
 
 menuEventHandler.handleDelete = function(msg) {
+    var deferred = new dojo.Deferred();
 	// Get the selected nodes from the message
 	var selectedNodes = getSelectedNodes(msg);
 	
-	var selectedNode = selectedNodes[0];
-	// the currently loaded node, which can differ from the selected nodes
-	var loadedNode = dijit.byId(currentUdk.uuid);
-
-	if (selectedNode && selectedNode.id == "newNode") {
-		menuEventHandler.handleDiscard(msg);
-		return;
+	var selectedNonNewNodes = [];
+    dojo.forEach(selectedNodes, function(node) {
+        if (node.id == "newNode") {
+            deferred.addCallback(dojo.partial(menuEventHandler._discardNode, node));
+        } else {
+            selectedNonNewNodes.push(node);
+        }
+    });
+	if (selectedNonNewNodes.length > 0) {
+	    deferred.addCallback(dojo.partial(menuEventHandler._deleteNodes, selectedNonNewNodes));
 	}
-	
-	var notAllowedSelection = dojo.filter(selectedNodes, function(node) { 
+	deferred.callback();
+	return deferred;
+}
+
+menuEventHandler._deleteNodes = function(selectedNonNewNodes) {
+    var deleteDeferred = new dojo.Deferred();
+    
+	var notAllowedSelection = dojo.filter(selectedNonNewNodes, function(node) { 
 	    return node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot";
 	});
 	
 	if (notAllowedSelection.length > 0) {
     	dialog.show(message.get("dialog.general.warning"), message.get("tree.selectNodeDeleteHint"), dialog.WARNING);
+    	//allDeferred.errback();
 	} else {
 		// If a selected node was found do the following:
 		// 1. Query the user if he really wants to delete the selected object
@@ -606,12 +606,12 @@ menuEventHandler.handleDelete = function(msg) {
                 //dojo.publish("/selectNode", [{node: root.item}]);
                 dojo.window.scrollIntoView(root.domNode);
 		    }
-		    
+		    deleteDeferred.callback();
 		    return d;
 		};
 		
 		// 'schedule' all nodes for deletion
-		dojo.forEach(selectedNodes, function(node) {
+		dojo.forEach(selectedNonNewNodes, function(node) {
 		    deferred.addCallback(dojo.partial(deleteFunction, node));
 		});
 		
@@ -621,19 +621,19 @@ menuEventHandler.handleDelete = function(msg) {
 
 		// Build the message key (dialog.<object|address>.delete<Children>Message)
 		var messageKey = "dialog.";
-		if (selectedNode.item.nodeAppType == "O")
+		if (selectedNonNewNodes[0].item.nodeAppType == "O")
 			messageKey += "object.delete";
 		else
 			messageKey += "address.delete";
 
-		var selectionContainsFolder = dojo.some(selectedNodes, function(node) { return node.item.isFolder[0]; });
+		var selectionContainsFolder = dojo.some(selectedNonNewNodes, function(node) { return node.item.isFolder[0]; });
 		if (selectionContainsFolder)
 			messageKey += "Children";
 
 		messageKey += "Message";
 		
 		var nodeTitles = "<ul>";
-		dojo.forEach(selectedNodes, function(node) { nodeTitles += "<li>" + node.item.title + "</li>"; });
+		dojo.forEach(selectedNonNewNodes, function(node) { nodeTitles += "<li>" + node.item.title + "</li>"; });
 		nodeTitles += "</ul>"
 		var displayText = dojo.string.substitute(message.get(messageKey), [nodeTitles]);
 
@@ -642,6 +642,7 @@ menuEventHandler.handleDelete = function(msg) {
                         { caption: message.get("general.ok"),     action: function() { deferred.callback(); } }
 		]);
 	}
+	return deleteDeferred;
 }
 
 menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
@@ -948,21 +949,30 @@ menuEventHandler._handleReassignAddressToAuthor = function(msg) {
 
 
 menuEventHandler.handleMarkDeleted = function(msg) {
+    var markDeferred = new dojo.Deferred();
 	// Get the selected node from the message
-	var selectedNode = getSelectedNode(msg);
+	var selectedNodes = getSelectedNodes(msg);
 
-	if (selectedNode.id == "newNode") {
-		menuEventHandler.handleDiscard(msg);
-		return;
-	}
-
-	if (!selectedNode.item.isPublished) {
-		menuEventHandler.handleDelete(msg);
-		return;
-	}
-
-	if (!selectedNode || selectedNode.id == "objectRoot" || selectedNode.id == "addressRoot" || selectedNode.id == "addressFreeRoot") {
-    	dialog.show(message.get("general.hint"), message.get("tree.selectNodeDeleteHint"), dialog.WARNING);
+	var selectedPublishedNodes = [];
+	var selectedNonPublishedNodes = [];
+	dojo.forEach(selectedNodes, function(node) {
+	    if (node.id == "newNode") {
+	        menuEventHandler.handleDiscard(msg);
+	    } else if (!node.item.isPublished[0]) {
+	        selectedNonPublishedNodes.push(node);
+	    } else {
+	        selectedPublishedNodes.push(node);
+	    }
+	});
+	if (selectedNonPublishedNodes.length > 0)
+	    markDeferred.addCallback(dojo.partial(menuEventHandler._deleteNodes, selectedNonPublishedNodes));
+	
+	var notAllowedSelection = dojo.filter(selectedPublishedNodes, function(node) { 
+        return node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot";
+    });
+    
+    if (notAllowedSelection.length > 0) {    	
+        dialog.show(message.get("general.hint"), message.get("tree.selectNodeDeleteHint"), dialog.WARNING);
 	} else {
 		// If a selected node was found do the following:
 		// 1. Query the user if he really wants to delete the selected object
@@ -972,81 +982,93 @@ menuEventHandler.handleMarkDeleted = function(msg) {
 		//    udkDataProxy and sent to the backend. We need another deferred obj 'deleteObjDef' for this
 		//    so we can see if the delete operation was successful.
 		var deferred = new dojo.Deferred();
-		deferred.addCallback(function() {
+		var deleteFunction = function(nodeToDelete) {
 	    	var deleteObjDef = new dojo.Deferred();
-	    	deleteObjDef.addCallback(function() {
-	    		// This function is called when the user has selected yes and the node was successfully
-				// marked as deleted
-				var tree = dijit.byId("dataTree");
-				// TODO: !!! determine selected node here
-				if (tree.selectedNode == selectedNode) {
-					// If the current node was marked as deleted, reload the current node (updates permissions, etc.)
-					var newSelectNode = selectedNode;
-					var treeListener = dijit.byId("treeListener");
+	    	if (dojo.byId(nodeToDelete.id[0])) {
+    	    	deleteObjDef.addCallback(function() {
+    	    		// This function is called when the user has selected yes and the node was successfully
+    				// marked as deleted
+    				var tree = dijit.byId("dataTree");
+    				if (tree.selectedNode == nodeToDelete) {
+                        // If the current node was marked as deleted, reload the
+                        // current node (updates permissions, etc.)
+    				    UtilTree.reloadNode("dataTree", nodeToDelete);
+    				    tree.model.store.setValue(nodeToDelete.item, "userWritePermission", false);
+                    } else {
+    					// Otherwise update the node that was marked as deleted
+    					// The nodeDocType and permissions have to be updated
+                        var treeNode = dijit.byId(nodeToDelete.id).item;
+                        
+                        if (nodeToDelete) {
+        					if (nodeToDelete.item.nodeDocType[0].search(/_BV|_RV/) != -1) {
+        						// If the nodeDocType ends with _BV or _RV, replace it with _QV
+        					    nodeToDelete.item.nodeDocType = nodeToDelete.item.nodeDocType[0].replace(/_BV|_RV/, "_QV");
+        					} else {
+        						// else add _QV to the end of the string
+        					    nodeToDelete.item.nodeDocType = nodeToDelete.item.nodeDocType[0] + "_QV";
+        					}
+        
+        					// update permissions
+        					nodeToDelete.item.userWriteSubTreePermission = nodeToDelete.item.userWriteTreePermission;
+        					nodeToDelete.item.userWritePermission = [false];
+        					nodeToDelete.userMovePermission = [false];
+        					nodeToDelete.item.userWriteSinglePermission = [false];
+        					nodeToDelete.userWriteSubNodePermission = [false];
+        					// set last item change via the model to trigger onChange-method which updates
+        					// the node style in the tree
+        					tree.model.store.setValue(nodeToDelete.item, "userWriteTreePermission", false);
+                        }
+    				}
+    				//tree.refreshChildren(nodeToDelete.getParent());
+    	    	});
+    			deleteObjDef.addErrback(displayErrorMessage);
+    
+    			// Tell the backend to delete the selected node.
+    	    	console.debug("Publishing event: /deleteRequest("+nodeToDelete.id+", "+nodeToDelete.item.nodeAppType+")");
+    	    	dojo.publish("/deleteRequest", [{id: nodeToDelete.id[0], resultHandler: deleteObjDef}]);
+	    	} else {
+                deleteObjDef.callback();
+            }
+            return deleteObjDef;
+		};
+		
+		// 'schedule' all nodes for deletion
+        dojo.forEach(selectedPublishedNodes, function(node) {
+            deferred.addCallback(dojo.partial(deleteFunction, node));
+        });
+        
+        // check if parent from loaded node was deleted
+        // -> load the parent instead!
+        //deferred.addCallback(loadParentFunction);   
 
-					var d = new dojo.Deferred();
-					d.addCallback(function(){				
-						//tree.selectNode(newSelectNode);
-						UtilTree.selectNode("dataTree", newSelectNode.id[0]);
-						//tree.selectedNode = newSelectNode;
-						dojo.publish("/selectNode", [{node: newSelectNode.item}]);
-						if (!dojo.isIE)				
-							dojo.window.scrollIntoView(newSelectNode.domNode);
-					});
-					d.addErrback(function(msg){
-						dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
-						console.debug(msg);
-					});
-
-					udkDataProxy.resetDirtyFlag();
-		    		console.debug("Publishing event: /loadRequest("+newSelectNode.id+", "+newSelectNode.item.nodeAppType+")");
-			    	dojo.publish("/loadRequest", [{id: newSelectNode.id[0], appType: newSelectNode.item.nodeAppType[0], resultHandler:d}]);
-
-				} else {
-					// Otherwise update the node that was marked as deleted
-					// The nodeDocType and permissions have to be updated
-					if (selectedNode.item.nodeDocType.search(/_BV|_RV/) != -1) {
-						// If the nodeDocType ends with _BV or _RV, replace it with _QV
-						selectedNode.item.nodeDocType = selectedNode.nodeDocType.replace(/_BV|_RV/, "_QV");
-					} else {
-						// else add _QV to the end of the string
-						selectedNode.item.nodeDocType = selectedNode.nodeDocType + "_QV";
-					}
-					//dijit.byId("treeDocIcons").setnodeDocTypeClass(selectedNode);
-
-					// update permissions
-					selectedNode.item.userWriteSubTreePermission = selectedNode.item.userWriteTreePermission;
-					selectedNode.item.userWritePermission = false;
-                    selectedNode.userMovePermission = false;
-					selectedNode.item.userWriteSinglePermission = false;
-					selectedNode.item.userWriteTreePermission = false;
-                    selectedNode.userWriteSubNodePermission = false;
-				}
-	    	});
-			deleteObjDef.addErrback(displayErrorMessage);
-
-			// Tell the backend to delete the selected node.
-	    	console.debug("Publishing event: /deleteRequest("+selectedNode.id+", "+selectedNode.item.nodeAppType+")");
-	    	dojo.publish("/deleteRequest", [{id: selectedNode.id[0], resultHandler: deleteObjDef}]);				
-		});
-
-		// Build the message key (dialog.<object|address>.delete<Children>Message)
-		var messageKey = "dialog.";
-		if (selectedNode.item.nodeAppType == "O")
-			messageKey += "object.markDelete";
-		else
-			messageKey += "address.markDelete";
-
-		if (selectedNode.item.isFolder)
-			messageKey += "Children";
-
-		messageKey += "Message";
-		var displayText = dojo.string.substitute(message.get(messageKey), [selectedNode.item.title]);
-
-		dialog.show(message.get("general.delete"), displayText, dialog.INFO, [
-                        { caption: message.get("general.cancel"), action: function() { deferred.errback(); } },
-                        { caption: message.get("general.ok"),     action: function() { deferred.callback(); } }
-		]);
+        if (selectedPublishedNodes.length > 0) {
+            markDeferred.addCallback(function() {
+                // Build the message key (dialog.<object|address>.delete<Children>Message)
+                var messageKey = "dialog.";
+                if (selectedPublishedNodes[0].item.nodeAppType == "O")
+                    messageKey += "object.markDelete";
+                else
+                    messageKey += "address.markDelete";
+    
+                var selectionContainsFolder = dojo.some(selectedPublishedNodes, function(node) { return node.item.isFolder[0]; });
+                if (selectionContainsFolder)
+                    messageKey += "Children";
+    
+                messageKey += "Message";
+                
+                var nodeTitles = "<ul>";
+                dojo.forEach(selectedPublishedNodes, function(node) { nodeTitles += "<li>" + node.item.title + "</li>"; });
+                nodeTitles += "</ul>"
+                var displayText = dojo.string.substitute(message.get(messageKey), [nodeTitles]);
+                
+        		dialog.show(message.get("general.delete"), displayText, dialog.INFO, [
+                                { caption: message.get("general.cancel"), action: function() { /*deferred.errback();*/ } },
+                                { caption: message.get("general.ok"),     action: function() { deferred.callback(); } }
+        		]);
+            });
+        }
+        markDeferred.callback();
+        return markDeferred;
 	}
 }
 

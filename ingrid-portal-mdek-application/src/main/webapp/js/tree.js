@@ -186,7 +186,7 @@ ingridDataTree.createTree = function(){
                 // only enable these menu entries on multi selection
                 if (multiSelection) {
                     if (i.id == "menuItemMove" || i.id == "menuItemCut" || i.id == "menuItemDelete" || 
-                            i.id == "menuItemCopy" || i.id == "menuItemCopySingle") {
+                            i.id == "menuItemCopy" || i.id == "menuItemCopySingle" || i.id == "menuItemDetach") {
                         // do not modify state, since they already should have the right one!
                     } else {
                         // disable all other entries

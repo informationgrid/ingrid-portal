@@ -27,7 +27,7 @@ dojo.declare("ingrid.dijit._CustomTreeNode", dijit._TreeNode, {
 dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
 	// remember the node we want to copy/cut
 	nodesToCopy: null,
-	nodeToCut: null,
+	nodesToCut: null,
 	copySubTree: false,
 	// register a function to decide which nodes not to make selectable
 	excludeFunction: null,
@@ -43,6 +43,9 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
         this.onClick = this.onClickDummy;
         this.allFocusedNodes = [];
         this.lastFocusedNode = null;
+        
+        // deselect deleted node
+        this.connect(this.model, "onDelete", "_onItemDeleteDeselect");
     },
     
     onClickDummy: function(item, node) {  
@@ -137,6 +140,21 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
         }
         // selection has changed and so toolbar might offer new options
         if (this.selectedNode) dojo.publish("/selectNode", [{node: this.selectedNode.item}]);
+    },
+    
+    // when a node is deleted make sure that the selection also is removed
+    // to prevent keeping of deleted nodes as part of the selection
+    _onItemDeleteDeselect: function(item) {
+        var removeAtIndex = null;
+        dojo.some(this.allFocusedNodes, function(node, i) {
+            if (node.item == item) {
+                removeAtIndex = i;
+                return true;
+            }
+            return false;
+        });
+        if (removeAtIndex != null)
+            this.allFocusedNodes.splice(removeAtIndex, 1);
     },
     
     _expandNode: function(node){
@@ -283,26 +301,33 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
 		return this._expandNode(node);
 	},
 	
-	prepareCopy: function(/*TreeNodeItem*/nodes, /*boolean*/copySubTree) {
+	prepareCopy: function(/*TreeNodeItem[]*/nodes, /*boolean*/copySubTree) {
 		this.nodesToCopy = nodes;
 		this.copySubTree = copySubTree;
-		if (this.nodeToCut) {
-			dijit.byId(this.nodeToCut.id[0]).set('class','');
-			this.nodeToCut = null;
+		if (this.nodesToCut) {
+		    dojo.forEach(this.nodesToCut, function(node) {
+		        dijit.byId(node.id[0]).set('class','');
+		    });
+			this.nodesToCut = null;
 		}
         dojo.publish("/prepareCopy", [nodes]);
 	},
 	
-	prepareCut: function(/*TreeNodeItem*/node) {
+	prepareCut: function(/*TreeNodeItem[]*/nodes) {
 		// if another node was chosen for cut
 		// -> reset it
-		if (this.nodeToCut)
-			dijit.byId(this.nodeToCut.id[0]).set('class','');
+		if (this.nodesToCut) {
+		    dojo.forEach(this.nodesToCut, function(node) {
+                dijit.byId(node.id[0]).set('class','');
+            });
+		}
 			
-		this.nodeToCut = node;
-		dijit.byId(this.nodeToCut.id[0]).set('class','nodeCut');
+		this.nodesToCut = nodes;
+		dojo.forEach(this.nodesToCut, function(node) {
+		    dijit.byId(node.id[0]).set('class','nodeCut');
+        });
 		this.nodesToCopy = null;
-        dojo.publish("/prepareCut", [node]);
+        dojo.publish("/prepareCut", [nodes]);
 	},
 	
 	doPaste: function() {
@@ -311,7 +336,7 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
 			// browser crashes here when tree is being refreshed
 			// but this here shouldn't be necessary since the node is removed
 			//dijit.byId(this.nodeToCut.id[0]).set('class',''); 
-			this.nodeToCut = null;
+			this.nodesToCut = null;
 		//}
 	},
     
@@ -399,8 +424,8 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
         
         if (this.nodesToCopy != null)
             srcNodes = this.nodesToCopy;
-        else if (this.nodeToCut != null)
-            srcNodes = this.nodeToCut;
+        else if (this.nodesToCut != null)
+            srcNodes = this.nodesToCut;
         else
             return false;
 

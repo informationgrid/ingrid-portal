@@ -195,7 +195,7 @@ ingridToolbar.addToolbarEvents = function(isQAActive, isUserQA, buttons){
             if (hasMovePermission == "true") {
                 // add delete Button here as well, because move permission means
                 // write-tree, which is exactly the condition for hasDeletePermission
-                enableList = enableList.concat([buttons.DelSubTree, buttons.Cut]);
+                enableList = enableList.concat([buttons.DelSubTree, buttons.Cut, buttons.markDeleted]);
             }
             // If the the user has write tree permission (tree), he can delete, move and create new nodes
             if (hasWriteTreePermission == "true") {

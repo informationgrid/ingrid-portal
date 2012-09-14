@@ -1046,8 +1046,8 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 		forcePubCond = msg.forcePublicationCondition;
 	}
 
-	console.debug("udkDataProxy calling ObjectService.moveNode("+msg.srcId+", "+msg.parentUuid+", "+msg.dstId+", "+forcePubCond+")");	
-	ObjectService.moveNode(msg.srcId, msg.parentUuid, msg.dstId, forcePubCond,
+	console.debug("udkDataProxy calling ObjectService.moveNode("+msg.srcIds+", "+msg.parentUuids+", "+msg.dstId+", "+forcePubCond+")");	
+	ObjectService.moveNodes(msg.srcIds, msg.parentUuids, msg.dstId, forcePubCond,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -1085,9 +1085,9 @@ udkDataProxy.handleCutObjectRequest = function(msg) {
 }
 
 udkDataProxy.handleCutAddressRequest = function(msg) {
-	var srcId = msg.srcId;
+	var srcIds = msg.srcIds;
 	var dstId = msg.dstId;
-	var parentUuid = msg.parentUuid;
+	var parentUuids = msg.parentUuids;
 	var moveToFreeAddress = false;
 
 	if (dstId == "addressRoot") {
@@ -1097,8 +1097,8 @@ udkDataProxy.handleCutAddressRequest = function(msg) {
 		moveToFreeAddress = true;
 	}
 
-	console.debug("udkDataProxy calling AddressService.moveAddress("+srcId+", "+parentUuid+", "+dstId+", "+moveToFreeAddress+")");	
-	AddressService.moveAddress(srcId, parentUuid, dstId, moveToFreeAddress,
+	console.debug("udkDataProxy calling AddressService.moveAddress("+srcIds+", "+parentUuids+", "+dstId+", "+moveToFreeAddress+")");	
+	AddressService.moveAddresses(srcIds, parentUuids, dstId, moveToFreeAddress,
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -1728,8 +1728,10 @@ udkDataProxy._setObjectData = function(nodeData)
   var updatedStore = UtilStore.updateWriteStore("linksTo", linkTable);
   if (nodeData.parentUuid == null) {
       UtilUI.disableElement("btnGetLinksToFromParent");
-  } else {
+      UtilUI.disableElement("btnGetSpatialRefLocationFromParent");
+  } else if (nodeData.writePermission) {
       UtilUI.enableElement("btnGetLinksToFromParent");
+      UtilUI.enableElement("btnGetSpatialRefLocationFromParent");
   }
   
   var unpubLinkTable = nodeData.linksFromObjectTable;
@@ -2715,7 +2717,6 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
                 publicationCondition: nodeData.extraInfoPublishArea,
 				title: title,
 				objectClass: objClass,
-				dojoType: 'ingrid:TreeNode',
 				nodeAppType: nodeData.nodeAppType,
 				userWritePermission: nodeData.writePermission,
                 userMovePermission: nodeData.movePermission,
@@ -3144,6 +3145,7 @@ igeEvents.disableInputOnWrongPermission = function() {
                         
                     if (UtilGrid.getTable(input.id)) {
                         UtilGrid.updateOption(input.id, "editable", true)
+                        dojo.removeClass(input.id, "disabled");
                     }
                     else {
                         var widget = dijit.getEnclosingWidget(input);
@@ -3173,13 +3175,11 @@ igeEvents.disableInputOnWrongPermission = function() {
                 dojo.forEach(allInputs, function(input) { 
                     if (UtilGrid.getTable(input.id)) {
                         UtilGrid.updateOption(input.id, "editable", false)
+                        dojo.addClass(input.id, "disabled");
                     }
                     else {
                         var widget = dijit.getEnclosingWidget(input);
                         // is it a table element then disable input differently
-                        //if (widget.structure)
-                        //    widget.set('_canEdit', false);
-                        //else
                         widget.set("disabled", true);
                     }
                 });
@@ -3200,11 +3200,11 @@ igeEvents.disableInputOnWrongPermission = function() {
 }
 
 igeEvents._toggleButtonsAccessibility = function(/*boolean*/disable) {
-    var widgets = ["thesaurusFreeTermsAddButton", "thesaurusFreeTermsAddressAddButton", "ref1ObjectIdentifierAddButton"]
-    dojo.forEach(widgets, function(w) {
-        var wid = dijit.byId(w);
-        if (wid)
-            wid.set("disabled", disable);
+    var buttons = dojo.query(".dijitButton", "contentFrameBodyObject");
+    dojo.forEach(buttons, function(button) {
+        var widget = dijit.byId(button.getAttribute("widgetid"));
+        if (widget)
+            widget.set("disabled", disable);
     });
 }
 

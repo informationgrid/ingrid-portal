@@ -214,6 +214,13 @@ public class ObjectServiceImpl implements ObjectService {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public void moveNodes(String[] nodeUuids, String[] oldParentUuids, String newParentUuid, boolean forcePublicationCondition) {
+	    int i = 0;
+	    for (String uuid : nodeUuids) {
+            moveNode(uuid, oldParentUuids[i++], newParentUuid, forcePublicationCondition);
+        }
+	}
 
 	public MdekDataBean saveNodeData(MdekDataBean data, Boolean useWorkingCopy, Boolean forcePublicationCondition) {
 		log.debug("saveNodeData()");

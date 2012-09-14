@@ -22,6 +22,7 @@ h1 { margin:0; padding:0; font:bold 14px/16px Verdana, Helvetica, Arial, sans-se
 h2 { margin:0; padding:0; font:bold 12px/16px Verdana, Helvetica, Arial, sans-serif; }
 a { color: #156496; text-decoration: none;}
 a:HOVER { text-decoration: underline;}
+a.disabled { color: #818181; }
 
 
 input, textarea, .dijitInputInner {font: normal 11px/12px Verdana,Helvetica,Arial,sans-serif;}
@@ -353,6 +354,8 @@ input.editor-text {
 .slick-cell.invalid {/*border-color: red;*/}
 .slick-row:hover {background-color: #C5C5C5;}
 .slick-cell .dijitInputField {height:14px;}
+.disabled .slick-row.even { background-color: #ddd; }
+.disabled .slick-row, .disabled .slick-row a { color: #818181; }
 
 /* Table presentation for detail/print preview */
 table.filteringTable, table.filteringTableBlue { top:0; left:0; font:normal 10px/14px Verdana, Helvetica, Arial, sans-serif; border-top:1px solid #838383; border-left:1px solid #838383; border-bottom:1px solid #add9f9; border-right:1px solid #add9f9; cursor:default; }
@@ -441,9 +444,6 @@ table.filteringTable tbody tr.alt td { background:#efefef; }
 .claro .dijitDialogCloseIconHover { background-position: -21px 50% !important; }
 
 /*.dojoxDialogPaneContent { padding: 5px 0 !important; }*/
-
-/* when a tree node is cut, the node gets a new color */
-.nodeCut { color: #888888; }
 
 iframe {
 	position: absolute;
