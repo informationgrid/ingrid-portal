@@ -54,6 +54,10 @@ dialog.showPage = function(caption, url, width, height, /* boolean */modal, /* a
     
 	dojo.connect(dialogWnd, "onHide", function(){
 		closeDialog(dlgId);
+		if (dojo.isIE > 8) {
+		    if (dijit.byId("dataFormContainer"))
+		        dijit.byId("dataFormContainer").layout();
+		}
 	});
 
 	dialogWnd.startup();

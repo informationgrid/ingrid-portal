@@ -1498,6 +1498,13 @@ ingridObjectLayout.applyDefaultConnections = function() {
         };
     });
     
+    // onResize fix for IE9
+    if (dojo.isIE > 8) {
+        dojo.connect(window, "onresize", function() {
+            dijit.byId("dataFormContainer").layout();
+        });
+    }
+    
     // add validation to thesaurus (an error should only occur from old data!)
     UtilGrid.getTable("thesaurusTerms").validate = thesaurusValidation;
     
