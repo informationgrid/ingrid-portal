@@ -177,6 +177,7 @@ dialog.show = function(caption, text, /* dialog.WARNING|dialog.INFO */type, /* a
 	if (!height) height = 155;
 	
 	if (dijit.byId("InfoDialog")) {
+	    dijit.byId("InfoDialog").hide();
 		dijit.byId("InfoDialog").destroyRecursive();
 	}
 	

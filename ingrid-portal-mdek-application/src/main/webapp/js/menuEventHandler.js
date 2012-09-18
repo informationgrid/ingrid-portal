@@ -21,6 +21,7 @@ menuEventHandler.handleNewEntity = function(mes) {
 			// publish a createObject request and attach the newly created node if it was successful
 			deferred.addCallback(function(res){
 				attachNewNode(selectedNode, res);
+				selectedNode.setSelected(false);
 				menuEventHandler.openCreateObjectWizardDialog();
 			});
 			deferred.addErrback(function(err){
@@ -71,6 +72,7 @@ menuEventHandler._createNewAddress = function(addressClass, parentNode) {
 	// publish a createNode request and attach the newly created node if it was successful
 	deferred.addCallback(function(res){ 
 		attachNewNode(dijit.byId(parentId), res);
+		parentNode.setSelected(false);
 	});
 	deferred.addErrback(function(err){
 //		dialog.show(message.get('general.error'), message.get('tree.nodeCreateError'), dialog.WARNING);
@@ -301,14 +303,22 @@ menuEventHandler.handlePaste = function(msg) {
 			// If a newNode currently exists and is included in the copy operation abort the copy operation with
 			// an error message
 			var newNode = dijit.byId("newNode");
-			if (newNode && tree.copySubTree) {
-			    var parentOfNewNode = dojo.some(tree.nodesToCopy, function(node) {
-			        return _isChildOf(newNode, node);
-			    });
-			    if (parentOfNewNode) {
-    				dialog.show(message.get("general.hint"), message.get("tree.saveNewNodeHint"), dialog.WARNING);
-    				return;
+			if (newNode) {
+			    if (tree.copySubTree) {
+    			    var parentOfNewNode = dojo.some(tree.nodesToCopy, function(node) {
+    			        return _isChildOf(newNode, node);
+    			    });
+    			    if (parentOfNewNode) {
+        				dialog.show(message.get("general.hint"), message.get("tree.saveNewNodeHint"), dialog.WARNING);
+        				return;
+    			    }
 			    }
+			    
+		        var newNodeToBeCopied = dojo.some(tree.nodesToCopy, function(node) { return node == newNode.item;});
+		        if (newNodeToBeCopied) {
+		            dialog.show(message.get("general.hint"), message.get("tree.saveNewNodeHint"), dialog.WARNING);
+                    return;
+		        }
 			} 
 
 			// A node can be inserted everywhere. Start the paste request.
@@ -399,7 +409,7 @@ menuEventHandler.handleUndo = function(mes) {
 			});
 			udkDataProxy.resetDirtyFlag();
     		console.debug("Publishing event: /loadRequest("+selectedNode.id+", "+selectedNode.item.nodeAppType+")");
-	    	dojo.publish("/loadRequest", [{id: selectedNode.id[0], appType: selectedNode.item.nodeAppType[0], resultHandler:def}]);
+	    	dojo.publish("/loadRequest", [{id: selectedNode.id[0], appType: selectedNode.item.nodeAppType[0], node: selectedNode.item, resultHandler:def}]);
 		});
 //		dialog.showPage(message.get("dialog.undoChangesTitle"), "mdek_delete_working_copy_dialog.html", 342, 220, true, {resultHandler:deferred, action:"UNDO"});
 		var displayText = "";
@@ -472,7 +482,7 @@ menuEventHandler._discardNode = function(selectedNode) {
 						// We also have to reset the dirty flag since the 'dirty' ndoe is deleted anyway
 						udkDataProxy.resetDirtyFlag();
 			    		console.debug("Publishing event: /loadRequest("+newSelectNode.id+", "+newSelectNode.item.nodeAppType+")");
-				    	dojo.publish("/loadRequest", [{id: newSelectNode.id[0], appType: newSelectNode.item.nodeAppType, resultHandler:d}]);
+				    	dojo.publish("/loadRequest", [{id: newSelectNode.id[0], appType: newSelectNode.item.nodeAppType, node: newSelectNode.item, resultHandler:d}]);
 					} else {
 						// The selection does not have to be altered. Delete the node.
                         UtilTree.deleteNode("dataTree", selectedNode);
@@ -694,7 +704,7 @@ menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
 //                udkDataProxy.resetDirtyFlag();
 
                 console.debug("Publishing event: /loadRequest("+treeSelectedNode.id+", "+treeSelectedNode.item.nodeAppType+")");
-                dojo.publish("/loadRequest", [{id: treeSelectedNode.id[0], appType: treeSelectedNode.item.nodeAppType[0], resultHandler:defUpdateTree}]);
+                dojo.publish("/loadRequest", [{id: treeSelectedNode.id[0], appType: treeSelectedNode.item.nodeAppType[0], node: treeSelectedNode.item, resultHandler:defUpdateTree}]);
             } else {
                 // if no reload of displayed node necessary, just update the according node in tree and its children !
             	defUpdateTree.callback();
@@ -1213,7 +1223,7 @@ menuEventHandler._loadNode = function(nodeId) {
 		});
 
 		console.debug("Publishing event: /loadRequest("+targetNode.id+", "+targetNode.item.nodeAppType+")");
-		dojo.publish("/loadRequest", [{id: targetNode.id[0], appType: targetNode.item.nodeAppType[0], resultHandler:loadNodeDef}]);
+		dojo.publish("/loadRequest", [{id: targetNode.id[0], appType: targetNode.item.nodeAppType[0], node:targetNode.item, resultHandler:loadNodeDef}]);
 	}
     return loadNodeResultDef;
 }

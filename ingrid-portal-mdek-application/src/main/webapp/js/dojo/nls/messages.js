@@ -117,6 +117,7 @@
     "tree.nodeCopySingle":"Copy Objects / Addresses",
     "tree.nodeCopy":"Copy Subtrees",
     "tree.nodePaste":"Paste",
+    "tree.saveNewNodeHint":"Please save the 'New object' before copying it!",
     "tree.nodePasteInvalidHint":"A node cannot be added underneath itself if it is cutted!",
     "tree.nodeMarkDeleted":"Mark deleted",
     "tree.nodeDelete":"Delete",

@@ -262,6 +262,7 @@ ingridDataTreeHandler.onClick = function(item, node, oEvent){
     	dojo.publish("/loadRequest", [{
     		id: item.id[0],
     		appType: item.nodeAppType[0],
+            node: item,
     		resultHandler: deferred
     	}]);
         

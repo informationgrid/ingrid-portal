@@ -117,6 +117,7 @@
     "tree.nodeCopySingle":"Objekte/Adressen kopieren",
     "tree.nodeCopy":"Teilb&auml;ume kopieren",
     "tree.nodePaste":"Einfügen",
+    "tree.saveNewNodeHint":"Bitte speichern Sie 'Neues Objekt' vor dem Kopiervorgang!",
     "tree.nodePasteInvalidHint":"Ein Knoten kann nicht unter sich selbst ausgeschnitten und hinzugefügt werden!",
     "tree.nodeMarkDeleted":"Als gelöscht markieren",
     "tree.nodeDelete":"Löschen",

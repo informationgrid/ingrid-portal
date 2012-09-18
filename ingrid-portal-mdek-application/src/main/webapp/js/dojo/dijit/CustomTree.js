@@ -130,16 +130,16 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
                 node.setSelected(true);
             }
             this.ctrlKeyPressed = false;
+            dojo.publish("/selectNode", [{node: null}]);
         } else {
             this.allFocusedNodes = [node];
             // set de-/selection css classes
-            var oldSelectedNode = this.selectedNode ? dojo.byId(this.selectedNode.id+"") : null;
-            if (oldSelectedNode) dojo.removeClass(oldSelectedNode, "TreeNodeSelect");
+            var oldSelectedNode = this.selectedNode ? dijit.byId(this.selectedNode.id+"") : null;
+            if (oldSelectedNode) dojo.removeClass(oldSelectedNode.domNode, "TreeNodeSelect");
             if (node) dojo.addClass(node.domNode, "TreeNodeSelect");
             this.inherited(arguments);
+            if (node) dojo.publish("/selectNode", [{node: node.item}]);
         }
-        // selection has changed and so toolbar might offer new options
-        if (this.selectedNode) dojo.publish("/selectNode", [{node: this.selectedNode.item}]);
     },
     
     // when a node is deleted make sure that the selection also is removed

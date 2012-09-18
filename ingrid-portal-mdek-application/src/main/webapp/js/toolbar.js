@@ -1,5 +1,7 @@
 ingridToolbar = new Object();
 
+ingridToolbar.buttons = {};
+
 dojo.require("dijit.Toolbar");
 
 /*
@@ -54,14 +56,14 @@ ingridToolbar.createToolbar = function(pane) {
 		["Expand", function(){igeEvents.toggleFields();}, "toggleFieldsBtn"]
 	];
 	
-	var buttons = this._createToolbarButtons(toolbar, entries, false);
+	this._createToolbarButtons(toolbar, entries, false);
     // add another button which is displayed when a validation error occured
     // when trying to save or publish
     toolbar.addChild(ingridToolbar._createErrorButton());
     
     this._createToolbarButtons(toolbar, entriesRight, true);
     
-    this.addToolbarEvents(isQAActive, isUserQA, buttons);
+    this.addToolbarEvents(isQAActive, isUserQA);
 }
 
 ingridToolbar._createErrorButton = function() {
@@ -80,7 +82,6 @@ ingridToolbar._createErrorButton = function() {
  * @param {Object} rightAligned
  */
 ingridToolbar._createToolbarButtons = function(toolbar, entries, rightAligned) {
-    var buttons = {};
 	var aligned = "left";
 	if (rightAligned) {
 		aligned = "right";
@@ -103,12 +104,10 @@ ingridToolbar._createToolbarButtons = function(toolbar, entries, rightAligned) {
 			
 			var button = new dijit.form.Button(params);
             // remember button for later connection to events
-            buttons[entry[0]] = button;
+			ingridToolbar.buttons[entry[0]] = button;
 			toolbar.addChild(button);
 		}
     });
-    
-    return buttons;
 }
 
 /**
@@ -116,141 +115,180 @@ ingridToolbar._createToolbarButtons = function(toolbar, entries, rightAligned) {
  * @param {Object} isQAActive
  * @param {Object} isUserQA
  */
-ingridToolbar.addToolbarEvents = function(isQAActive, isUserQA, buttons){
+ingridToolbar.addToolbarEvents = function(isQAActive, isUserQA){
     // Modify button tooltips depending on whether the current node is marked deleted
     if (isQAActive && isUserQA) {
         dojo.subscribe("/selectNode", function(msg){
-            var markedDeleted = msg.node.isMarkedDeleted+"" == true;
-            if (markedDeleted) {
-                buttons.FinalSave.domNode.setAttribute("title", message.get("ui.toolbar.discardDeleteCaption"));
-                buttons.DelSubTree.domNode.setAttribute("title", message.get("ui.toolbar.finalDeleteCaption"));
-            }
-            else {
-                buttons.FinalSave.domNode.setAttribute("title", message.get("ui.toolbar.publishCaption"));
-                buttons.DelSubTree.domNode.setAttribute("title", message.get("ui.toolbar.deleteCaption"));
+            if (msg.node) {
+                var markedDeleted = msg.node.isMarkedDeleted+"" == true;
+                if (markedDeleted) {
+                    ingridToolbar.buttons.FinalSave.domNode.setAttribute("title", message.get("ui.toolbar.discardDeleteCaption"));
+                    ingridToolbar.buttons.DelSubTree.domNode.setAttribute("title", message.get("ui.toolbar.finalDeleteCaption"));
+                }
+                else {
+                    ingridToolbar.buttons.FinalSave.domNode.setAttribute("title", message.get("ui.toolbar.publishCaption"));
+                    ingridToolbar.buttons.DelSubTree.domNode.setAttribute("title", message.get("ui.toolbar.deleteCaption"));
+                }
             }
         });
     }
     
     // Show/hide toolbar buttons depending on the user rights
     dojo.subscribe("/selectNode", function(message) {
-        var hasWritePermission = message.node.userWritePermission+"";
-        var hasMovePermission = message.node.userMovePermission+"";
-        var hasWriteSinglePermission = message.node.userWriteSinglePermission+"";
-        var hasWriteTreePermission = message.node.userWriteTreePermission+"";
-        var hasWriteSubNodePermission = message.node.userWriteSubNodePermission+"";
-        var hasWriteSubTreePermission = message.node.userWriteSubTreePermission+"";
-        var isPublished = message.node.isPublished+"";
-        var canCreateRootNodes = UtilSecurity.canCreateRootNodes();
-//      dojo.debug("User has write permission? "+hasWritePermission);
-
-        var enableList = [];
-        var dataTree = dijit.byId("dataTree");
-
+        var selectedNode = message.node;
         // Initially disable all buttons
-        //dojo.forEach(buttonList, function(item) { if (item != null) { item.disable(); } });
-        for (i in buttons) {
-            buttons[i].set("disabled", true);
+        for (i in ingridToolbar.buttons) {
+            ingridToolbar.buttons[i].set("disabled", true);
         }
-
-        // Build the enable list
-        if (message.node.id == "objectRoot" || message.node.id == "addressRoot" || message.node.id == "addressFreeRoot") {
-            if (canCreateRootNodes) {
-                enableList.push(buttons.NewDoc);
-            }
-            // if at least one node is selected and none of them is a special node (objectRoot, addressRoot, addressFreeRoot)
-            var notAllowedSelection = dojo.filter(dataTree.allFocusedNodes, function(node) { 
-                return node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot";
-            });
-            if (notAllowedSelection.length === 0) {
-                enableList.push(buttons.DelSubTree);
-            }
-
-        } else if (message.node.id == "newNode") {
-            enableList = enableList.concat([buttons.PrintDoc, buttons.Save, buttons.FinalSave, buttons.assignToQa, buttons.DelSubTree, buttons.ShowComments]);
-
+        
+        var dataTree = dijit.byId("dataTree");
+        // if active loaded node has been reselected (as the only selected node!)
+        if (!selectedNode &&
+             dataTree.allFocusedNodes.length === 1 && 
+             dataTree.selectedNode == dataTree.allFocusedNodes[0]) {
+            selectedNode = dataTree.selectedNode.item;
+        }
+        
+        if (selectedNode) {
+            ingridToolbar._handleSingleSelection(selectedNode);
         } else {
-            // If a 'normal' node (obj/adr that is not root) is selected, always enable the following nodes
-            enableList = enableList.concat([buttons.PrintDoc, buttons.Copy, buttons.ShowComments]);
-
-            // Only show the compare view dialog if a published version exists. Otherwise there's nothing to compare to
-            if (isPublished == "true") {
-                enableList.push(buttons.ShowChanges);
-            }
-
-            // If the node has children, enable the 'copy tree' button
-            if (message.node.isFolder[0]) {
-                enableList.push(buttons.CopySubTree);
-            }
-            // If the the user has write permission (single or tree), he can discard, save and publish nodes
-            if (hasWritePermission == "true") {
-                enableList = enableList.concat([buttons.Save, buttons.FinalSave, buttons.assignToQa]);              
-
-                // The discard button is only enabled if the user has write permission, a published version exists and an edited version exists
-                if (isPublished && message.node.nodeDocType[0].search(/_.V/) != -1) {
-                    enableList.push(buttons.Discard);
-                }
-            }
-            // If the the user has move permission, he can move the node
-            if (hasMovePermission == "true") {
-                // add delete Button here as well, because move permission means
-                // write-tree, which is exactly the condition for hasDeletePermission
-                enableList = enableList.concat([buttons.DelSubTree, buttons.Cut, buttons.markDeleted]);
-            }
-            // If the the user has write tree permission (tree), he can delete, move and create new nodes
-            if (hasWriteTreePermission == "true") {
-                //enableList = enableList.concat([buttons.DelSubTree, buttons.Cut]);
-                if (message.node.nodeAppType == "O") {
-                    enableList.push(buttons.NewDoc);
-
-                } else if (message.node.nodeAppType == "A" && message.node.objectClass != 2 && message.node.objectClass != 3) {
-                    // For addresses, the new entity button depends on the class of the selected node
-                    enableList.push(buttons.NewDoc);
-                }
-            }
-            // If the the user has write tree permission (tree), but a node is assigned to QA, the user
-            // is only allowed to create new subnodes -> hasWriteSubTreePermission
-            // If the user can only create direct subnodes -> hasWriteSubNodePermission
-            if (hasWriteSubTreePermission == "true" || hasWriteSubNodePermission == "true") {
-                enableList.push(buttons.NewDoc);
-            }
-            
-            // If the current node is assigned to the QA enable the reassign button
-            if (message.node.nodeDocType[0].search(/_Q/) != -1) {
-                enableList.push(buttons.reassign);
-            }
+            ingridToolbar._handleMultiSelection();
         }
-
-        // The paste button depends on the current selection in treeController and the current selected node
-        if (dijit.byId("dataTree").canPaste(message.node)) {
-            enableList.push(buttons.Paste);
-        }
-
-        dojo.forEach(enableList, function(item) { if (item != null) { item.set("disabled", false); } });
     });
-
+        
     // The undo button depends on the dirty flag
     dojo.connect(udkDataProxy, "setDirtyFlagNow", function() {
-        buttons.Undo.set("disabled", false);
+        ingridToolbar.buttons.Undo.set("disabled", false);
     });
     dojo.connect(udkDataProxy, "resetDirtyFlag", function() {
-        buttons.Undo.set("disabled", true);
+        ingridToolbar.buttons.Undo.set("disabled", true);
     });
 
-
-    /*var showOrHidePasteButton = function(node) {
-        // The paste button depends on the current selection in treeController and the current selected node
-        if (dijit.byId("dataTree").canPaste(node)) {
-            buttons.Paste.set("disabled", false);
-        } else {
-            buttons.Paste.set("disabled", true);
-        }       
-    };
-    dojo.subscribe("/prepareCopy", showOrHidePasteButton);
-    dojo.subscribe("/prepareCut", showOrHidePasteButton);*/
-
     // Initially disable all icons
-    for (i in buttons) {
-        buttons[i].set("disabled", true);
+    for (i in ingridToolbar.buttons) {
+        ingridToolbar.buttons[i].set("disabled", true);
     }
+}
+
+ingridToolbar._handleMultiSelection = function() {
+    var enableList = [];
+    var buttons = ingridToolbar.buttons;
+    
+    var selectedNodes = dijit.byId("dataTree").getSelectedItems();
+    if (selectedNodes.length == 0) return;
+    
+    var containsRoot = dojo.some(selectedNodes, function(node) {
+        if (node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot")
+            return true;
+    });
+    if (!containsRoot) {
+        enableList.push(buttons.Copy);
+    }
+    
+    // If the node has children, enable the 'copy tree' button
+    var atLeastOneNodeIsFolder = dojo.some(selectedNodes, function(node) {return node.isFolder[0];});
+    if (atLeastOneNodeIsFolder) {
+        enableList.push(buttons.CopySubTree);
+    }
+    
+    // If the the user has move permission, he can move the node
+    var allHaveMovePermission = dojo.every(selectedNodes, function(node) {return node.userMovePermission+"";});
+    if (allHaveMovePermission) {
+        // add delete Button here as well, because move permission means
+        // write-tree, which is exactly the condition for hasDeletePermission
+        enableList = enableList.concat([buttons.DelSubTree, buttons.Cut, buttons.markDeleted]);
+    }
+    
+    
+    // enable all possible toolbar buttons
+    dojo.forEach(enableList, function(item) { if (item != null) { item.set("disabled", false); } });
+}
+
+ingridToolbar._handleSingleSelection = function(node) {
+    var dataTree = dijit.byId("dataTree");
+    var hasWritePermission = node.userWritePermission+"";
+    var hasMovePermission = node.userMovePermission+"";
+    var hasWriteSinglePermission = node.userWriteSinglePermission+"";
+    var hasWriteTreePermission = node.userWriteTreePermission+"";
+    var hasWriteSubNodePermission = node.userWriteSubNodePermission+"";
+    var hasWriteSubTreePermission = node.userWriteSubTreePermission+"";
+    var isPublished = node.isPublished+"";
+    var canCreateRootNodes = UtilSecurity.canCreateRootNodes();
+    //dojo.debug("User has write permission? "+hasWritePermission);
+    
+    var enableList = [];
+    var buttons = ingridToolbar.buttons;
+    
+    // Build the enable list
+    if (node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot") {
+        if (canCreateRootNodes) {
+            enableList.push(buttons.NewDoc);
+        }
+        // if at least one node is selected and none of them is a special node (objectRoot, addressRoot, addressFreeRoot)
+        if (node.id != "objectRoot" && node.id != "addressRoot" && node.id != "addressFreeRoot") {
+            enableList.push(buttons.DelSubTree);
+        }
+    
+    } else if (node.id == "newNode") {
+        enableList = enableList.concat([buttons.PrintDoc, buttons.Save, buttons.FinalSave, buttons.assignToQa, buttons.DelSubTree, buttons.ShowComments]);
+    
+    } else {
+        // If a 'normal' node (obj/adr that is not root) is selected, always enable the following nodes
+        enableList = enableList.concat([buttons.PrintDoc, buttons.Copy, buttons.ShowComments]);
+    
+        // Only show the compare view dialog if a published version exists. Otherwise there's nothing to compare to
+        if (isPublished == "true") {
+            enableList.push(buttons.ShowChanges);
+        }
+    
+        // If the node has children, enable the 'copy tree' button
+        if (node.isFolder[0]) {
+            enableList.push(buttons.CopySubTree);
+        }
+        // If the the user has write permission (single or tree), he can discard, save and publish nodes
+        if (hasWritePermission == "true") {
+            enableList = enableList.concat([buttons.Save, buttons.FinalSave, buttons.assignToQa]);              
+    
+            // The discard button is only enabled if the user has write permission, a published version exists and an edited version exists
+            if (isPublished && node.nodeDocType[0].search(/_.V/) != -1) {
+                enableList.push(buttons.Discard);
+            }
+        }
+        // If the the user has move permission, he can move the node
+        if (hasMovePermission == "true") {
+            // add delete Button here as well, because move permission means
+            // write-tree, which is exactly the condition for hasDeletePermission
+            enableList = enableList.concat([buttons.DelSubTree, buttons.Cut, buttons.markDeleted]);
+        }
+        // If the the user has write tree permission (tree), he can delete, move and create new nodes
+        if (hasWriteTreePermission == "true") {
+            //enableList = enableList.concat([buttons.DelSubTree, buttons.Cut]);
+            if (node.nodeAppType == "O") {
+                enableList.push(buttons.NewDoc);
+    
+            } else if (node.nodeAppType == "A" && node.objectClass != 2 && node.objectClass != 3) {
+                // For addresses, the new entity button depends on the class of the selected node
+                enableList.push(buttons.NewDoc);
+            }
+        }
+        // If the the user has write tree permission (tree), but a node is assigned to QA, the user
+        // is only allowed to create new subnodes -> hasWriteSubTreePermission
+        // If the user can only create direct subnodes -> hasWriteSubNodePermission
+        if (hasWriteSubTreePermission == "true" || hasWriteSubNodePermission == "true") {
+            enableList.push(buttons.NewDoc);
+        }
+        
+        // If the current node is assigned to the QA enable the reassign button
+        if (node.nodeDocType[0].search(/_Q/) != -1) {
+            enableList.push(buttons.reassign);
+        }
+    }
+    
+    // The paste button depends on the current selection in treeController and the current selected node
+    if (dijit.byId("dataTree").canPaste(node)) {
+        enableList.push(buttons.Paste);
+    }
+    
+    // enable all possible toolbar buttons
+    dojo.forEach(enableList, function(item) { if (item != null) { item.set("disabled", false); } });
 }

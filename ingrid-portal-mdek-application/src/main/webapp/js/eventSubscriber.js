@@ -334,7 +334,7 @@ udkDataProxy.handleLoadRequest = function(msg)
 	}
     
 	var nodeId = msg.id;
-	var nodeAppType = msg.appType;
+	var nodeAppType = msg.appType+"";
 	var resultHandler = msg.resultHandler;
 	// TODO Check if we are in a state where it's safe to load data.
 	//      If we are, load the data. If not delay the call and bounce back the message (e.g. query user).
@@ -2791,28 +2791,27 @@ var toggleContainerAddress = ["headerAddressType0", "headerAddressType1", "heade
 var toggleContainerAddressPrefix = "header";
 
 igeEvents.handleSelectNode = function(message) {
-  if (message.node.id == "objectRoot" || message.node.id == "addressRoot" || message.node.id == "addressFreeRoot") {
-	dojo.style("sectionTopObject", "display", "none");
-	dojo.style("contentFrameBodyObject", "display", "none");
-	dojo.style("sectionTopAddress", "display", "none");
-	dojo.style("contentFrameBodyAddress", "display", "none");
-    dojo.style("contentNone", "display", "block");
-  }
-  else if (message.node.nodeAppType == "A") {
-  	dojo.style("sectionTopObject", "display", "none");
-	dojo.style("contentFrameBodyObject", "display", "none");
-	dojo.style("sectionTopAddress", "display", "block");
-	dojo.style("contentFrameBodyAddress", "display", "block");
-    dojo.style("contentNone", "display", "none");
-  }
-  else if (message.node.nodeAppType == "O") {
-  	dojo.style("sectionTopObject", "display", "block");
-	dojo.style("contentFrameBodyObject", "display", "block");
-	dojo.style("sectionTopAddress", "display", "none");
-	dojo.style("contentFrameBodyAddress", "display", "none");
-	dojo.style("contentNone", "display", "none");
-  }
-  //sizeContent();
+    if (!message.node) return; 
+
+    if (message.node.id == "objectRoot" || message.node.id == "addressRoot" || message.node.id == "addressFreeRoot") {
+        dojo.style("sectionTopObject", "display", "none");
+        dojo.style("contentFrameBodyObject", "display", "none");
+        dojo.style("sectionTopAddress", "display", "none");
+        dojo.style("contentFrameBodyAddress", "display", "none");
+        dojo.style("contentNone", "display", "block");
+    } else if (message.node.nodeAppType == "A") {
+        dojo.style("sectionTopObject", "display", "none");
+        dojo.style("contentFrameBodyObject", "display", "none");
+        dojo.style("sectionTopAddress", "display", "block");
+        dojo.style("contentFrameBodyAddress", "display", "block");
+        dojo.style("contentNone", "display", "none");
+    } else if (message.node.nodeAppType == "O") {
+        dojo.style("sectionTopObject", "display", "block");
+        dojo.style("contentFrameBodyObject", "display", "block");
+        dojo.style("sectionTopAddress", "display", "none");
+        dojo.style("contentFrameBodyAddress", "display", "none");
+        dojo.style("contentNone", "display", "none");
+    }
 }
 
 igeEvents.selectUDKClass = function() {
@@ -3121,7 +3120,8 @@ igeEvents.disableInputOnWrongPermission = function() {
     UtilUI._uiElementsActiveA = true;
     UtilUI._uiElementsActiveO = true;
 
-    dojo.subscribe("/selectNode", function(message) {
+    dojo.subscribe("/loadRequest", function(message) {
+        // 
         var hasWritePermission = message.node.userWritePermission[0];
         console.debug("received notification: handle permission on form: " + hasWritePermission);
 
@@ -3150,9 +3150,6 @@ igeEvents.disableInputOnWrongPermission = function() {
                     else {
                         var widget = dijit.getEnclosingWidget(input);
                         // is it a table element then disable input differently
-                        //if (widget.structure) //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SlickGrid
-                        //    widget.set('_canEdit', true);
-                        //else
                         widget.set("disabled", false);
                     }
                 });

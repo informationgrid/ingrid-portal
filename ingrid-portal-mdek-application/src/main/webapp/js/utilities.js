@@ -1806,6 +1806,7 @@ UtilTree.reloadNode = function(treeId, node) {
     dojo.publish("/loadRequest", [{
         id : node.id[0],
         appType : node.item.nodeAppType[0],
+        node: node.item,
         resultHandler : d
     }]);
 }
