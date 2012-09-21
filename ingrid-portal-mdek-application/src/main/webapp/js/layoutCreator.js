@@ -119,6 +119,8 @@ function createDataGrid(id, node, structure, initDataCallback, gridProperties, u
                     enableCellNavigation: true,asyncEditorLoading: false,
                     autoEdit: false, forceFitColumns: false, autoHeight:true};
                 
+                if (gridProperties.autoedit == "true") options.autoEdit = true;
+                
                 if (gridProperties.autoHeight)
                     options.visibleRowsInViewport = gridProperties.autoHeight;
                 if (gridProperties.interactive) {

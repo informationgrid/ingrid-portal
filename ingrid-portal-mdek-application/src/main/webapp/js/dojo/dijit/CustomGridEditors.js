@@ -507,28 +507,24 @@ YesNoCheckboxCellEditor = function(args) {
     var scope = this;
 
     this.init = function() {
-        select = new dijit.form.CheckBox({id:"activeCell_"+args.grid.id,'class':'editor-checkbox'}).placeAt(args.container);
-        select.focus();
     };
 
     this.destroy = function() {
-        select.destroy();
     };
 
     this.focus = function() {
-        select.focus();
     };
 
     this.loadValue = function(item) {
         defaultValue = item[args.column.field];
         if (defaultValue)
-            select.set("value", true);
+            select = false;
         else
-            select.set("value", false);
+            select = true;
     };
 
     this.serializeValue = function() {
-        return select.get("value") == "on";
+        return select;
     };
 
     this.applyValue = function(item,state) {
@@ -536,7 +532,7 @@ YesNoCheckboxCellEditor = function(args) {
     };
 
     this.isValueChanged = function() {
-        return (select.get("value") != defaultValue);
+        return (select != defaultValue);
     };
 
     this.validate = function() {
@@ -544,6 +540,10 @@ YesNoCheckboxCellEditor = function(args) {
             valid: true,
             msg: null
         };
+    };
+    
+    this.doesImmediateChange = function() {
+        return true;
     };
 
     this.init();

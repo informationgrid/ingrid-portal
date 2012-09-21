@@ -62,7 +62,7 @@ function LocalizedNumberFormatter(row, cell, value, columnDef, dataContext){
 }
 
 function BoolCellFormatter(row, cell, value, columnDef, dataContext) {
-    return value ? "<img src='img/tick.png'>" : "";
+    return value ? "<img src='img/tick.png'>" : "<img src='img/checkbox.png'>";
 }
 
 function FirstEntryFormatter(identifier, row, cell, value, columnDef, dataContext){

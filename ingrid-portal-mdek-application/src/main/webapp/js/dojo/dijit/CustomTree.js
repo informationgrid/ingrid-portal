@@ -130,7 +130,7 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
                 node.setSelected(true);
             }
             this.ctrlKeyPressed = false;
-            dojo.publish("/selectNode", [{node: null}]);
+            dojo.publish("/selectNode", [{id: this.id, node: null}]);
         } else {
             this.allFocusedNodes = [node];
             // set de-/selection css classes
@@ -138,7 +138,7 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
             if (oldSelectedNode) dojo.removeClass(oldSelectedNode.domNode, "TreeNodeSelect");
             if (node) dojo.addClass(node.domNode, "TreeNodeSelect");
             this.inherited(arguments);
-            if (node) dojo.publish("/selectNode", [{node: node.item}]);
+            if (node) dojo.publish("/selectNode", [{id: this.id, node: node.item}]);
         }
     },
     

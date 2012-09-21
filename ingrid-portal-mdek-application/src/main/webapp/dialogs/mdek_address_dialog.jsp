@@ -300,7 +300,7 @@
             </div>
            <div id="addressContent" class="content">
                 <!-- LEFT HAND SIDE CONTENT START -->
-                <div id="addressContainer" dojoType="dijit.layout.TabContainer" style="height:528px;" selectedChild="addressSearch">
+                <div id="addressContainer" dojoType="dijit.layout.TabContainer" style="height:528px; overflow:visible;" selectedChild="addressSearch">
                     <!-- TAB 1 START -->
                     <div id="addressSearch" dojoType="dijit.layout.ContentPane" class="blueTopBorder" title="<fmt:message key="dialog.searchAddress.directSearch" />">
                         <div class="inputContainer field grey">
@@ -338,7 +338,7 @@
                                 </span><span id="thesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden"><img id="thesImageZone" src="img/ladekreis.gif" /></span></span>
                         </div>
                         <div class="fill"></div>
-                        <div id="addressLinkSearchResults" class="inputContainer">
+                        <div id="addressLinkSearchResults" class="inputContainer" style="margin: 5px;">
                             <div class="">
                                 <span class="label"><fmt:message key="dialog.searchAddress.results" /></span>
                                 <div class="listInfo full">

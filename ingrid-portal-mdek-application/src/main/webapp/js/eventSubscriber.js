@@ -1448,6 +1448,7 @@ udkDataProxy._setData = function(nodeData)
 		break;
 	}  
 
+	def.addCallback(igeEvents.disableInputOnWrongPermission);
 	def.addCallback(udkDataProxy.resetDirtyFlag);
 
 	return def;
@@ -2791,7 +2792,7 @@ var toggleContainerAddress = ["headerAddressType0", "headerAddressType1", "heade
 var toggleContainerAddressPrefix = "header";
 
 igeEvents.handleSelectNode = function(message) {
-    if (!message.node) return; 
+    if (!message.node || message.id != "dataTree") return; 
 
     if (message.node.id == "objectRoot" || message.node.id == "addressRoot" || message.node.id == "addressFreeRoot") {
         dojo.style("sectionTopObject", "display", "none");
@@ -3116,84 +3117,85 @@ igeEvents.setObjectUuid = function() {
     });
 }
 
-igeEvents.disableInputOnWrongPermission = function() {
-    UtilUI._uiElementsActiveA = true;
-    UtilUI._uiElementsActiveO = true;
 
-    dojo.subscribe("/loadRequest", function(message) {
-        // 
-        var hasWritePermission = message.node.userWritePermission[0];
-        console.debug("received notification: handle permission on form: " + hasWritePermission);
+UtilUI._uiElementsActiveA = true;
+UtilUI._uiElementsActiveO = true;
+igeEvents.disableInputOnWrongPermission = function(node) {
+    var message = { node: node };
+    var hasWritePermission = message.node.writePermission;
+    console.debug("received notification: handle permission on form: " + hasWritePermission);
 
-        var nodeType = message.node.nodeAppType[0].toUpperCase();
-        var activeDiv = "contentFrameBodyObject";
-        
-        if (nodeType == "A")
-            activeDiv = "contentFrameBodyAddress";
-        else if (nodeType != "O")
-            return;
-        
-        if (hasWritePermission) {
-            if (!UtilUI["_uiElementsActive"+nodeType]) {
-                // elements that always shall be disabled
-                var ignoreElements = ["headerAddressType1Institution", "headerAddressType2Institution"];
-                
-                var allInputs = dojo.query(".required .input >, .optional .input >, .show .input >", activeDiv);
-                dojo.forEach(allInputs, function(input) { 
-                    if (dojo.indexOf(ignoreElements, input.id) != -1)
-                        return;
-                        
-                    if (UtilGrid.getTable(input.id)) {
-                        UtilGrid.updateOption(input.id, "editable", true)
-                        dojo.removeClass(input.id, "disabled");
-                    }
-                    else {
-                        var widget = dijit.getEnclosingWidget(input);
-                        // is it a table element then disable input differently
-                        widget.set("disabled", false);
-                    }
-                });
-                
-                // enable links
-                dojo.query(".functionalLink a", activeDiv).forEach(UtilUI.enableHtmlLink);
-                
-                // enable all buttons
-                igeEvents._toggleButtonsAccessibility(false);
-                
-                // enable header
-                igeEvents._toggleHeaderAccessibility(false);
-
-                UtilUI["_uiElementsActive"+nodeType] = true;
-            }
+    var nodeType = message.node.nodeAppType.toUpperCase();
+    var activeDiv = "contentFrameBodyObject";
+    
+    if (nodeType == "A")
+        activeDiv = "contentFrameBodyAddress";
+    else if (nodeType != "O")
+        return;
+    
+    var allInputs = dojo.query(".input >", activeDiv);
+    // add textareas inside tab containers who are not correctly inserted in DOM by dojo
+    allInputs = allInputs.concat(dojo.query(".dijitTabPaneWrapper textarea", activeDiv));
+    
+    if (hasWritePermission) {
+        if (!UtilUI["_uiElementsActive"+nodeType]) {
+            // elements that always shall be disabled
+            var ignoreElements = ["headerAddressType1Institution", "headerAddressType2Institution"];
             
-        } else {
-            if (UtilUI["_uiElementsActive"+nodeType]) {
-                var allInputs = dojo.query(".required .input >, .optional .input >, .show .input >", activeDiv);
-                dojo.forEach(allInputs, function(input) { 
-                    if (UtilGrid.getTable(input.id)) {
-                        UtilGrid.updateOption(input.id, "editable", false)
-                        dojo.addClass(input.id, "disabled");
-                    }
-                    else {
-                        var widget = dijit.getEnclosingWidget(input);
-                        // is it a table element then disable input differently
-                        widget.set("disabled", true);
-                    }
-                });
-                
-                // disable links
-                dojo.query(".functionalLink a", activeDiv).forEach(UtilUI.disableHtmlLink);
-                
-                // disable all buttons
-                igeEvents._toggleButtonsAccessibility(true);
-                
-                // disable header
-                igeEvents._toggleHeaderAccessibility(true);
-                
-                UtilUI["_uiElementsActive"+nodeType] = false;
-            }
+            dojo.forEach(allInputs, function(input) { 
+                if (dojo.indexOf(ignoreElements, input.id) != -1)
+                    return;
+                    
+                if (UtilGrid.getTable(input.id)) {
+                    UtilGrid.updateOption(input.id, "editable", true)
+                    dojo.removeClass(input.id, "disabled");
+                }
+                else {
+                    var widget = dijit.getEnclosingWidget(input);
+                    // is it a table element then disable input differently
+                    widget.set("disabled", false);
+                }
+            });
+            
+            // enable links
+            dojo.query(".functionalLink a", activeDiv).forEach(UtilUI.enableHtmlLink);
+            
+            // enable all buttons
+            igeEvents._toggleButtonsAccessibility(false);
+            
+            // enable header
+            igeEvents._toggleHeaderAccessibility(false);
+
+            UtilUI["_uiElementsActive"+nodeType] = true;
         }
-    });
+        
+    } else {
+        if (UtilUI["_uiElementsActive"+nodeType]) {
+            //var allInputs = dojo.query(".required .input >, .optional .input >, .show .input >", activeDiv);
+            dojo.forEach(allInputs, function(input) { 
+                if (UtilGrid.getTable(input.id)) {
+                    UtilGrid.updateOption(input.id, "editable", false)
+                    dojo.addClass(input.id, "disabled");
+                }
+                else {
+                    var widget = dijit.getEnclosingWidget(input);
+                    // is it a table element then disable input differently
+                    widget.set("disabled", true);
+                }
+            });
+            
+            // disable links
+            dojo.query(".functionalLink a", activeDiv).forEach(UtilUI.disableHtmlLink);
+            
+            // disable all buttons
+            igeEvents._toggleButtonsAccessibility(true);
+            
+            // disable header
+            igeEvents._toggleHeaderAccessibility(true);
+            
+            UtilUI["_uiElementsActive"+nodeType] = false;
+        }
+    }
 }
 
 igeEvents._toggleButtonsAccessibility = function(/*boolean*/disable) {

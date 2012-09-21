@@ -111,8 +111,9 @@ public class ObjectServiceImpl implements ObjectService {
 		MdekDataBean data = null;
 		try {
 			data = objectRequestHandler.getInitialObject(parentUuid);
-		} catch (Exception e) {
+		} catch (MdekException e) {
 			log.error("Error while getting node data.", e);
+			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 
 		MdekObjectUtils.setInitialValues(data);

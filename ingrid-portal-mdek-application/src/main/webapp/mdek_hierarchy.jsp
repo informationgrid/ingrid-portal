@@ -433,11 +433,10 @@
                                         <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddBasisLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Basis'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3520, gridId: 'ref1BasisLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.technicalBasisTable.link" /></a>
                                     </span>
                                     <div id="ref1BasisTabContainer" selectedChild="ref1BasisTab1">
-                                        <div id='ref1BasisTab1' label="<fmt:message key="ui.obj.type1.technicalBasisTable.tab.text" />">
-                                            <textarea id="ref1BasisText" name="ref1BasisText" class="">
-                                            </textarea>
+                                        <div id='ref1BasisTab1' class="input" label="<fmt:message key="ui.obj.type1.technicalBasisTable.tab.text" />">
+                                            <textarea id="ref1BasisText" name="ref1BasisText"></textarea>
                                         </div>
-                                        <div id='ref1BasisTab2' label="<fmt:message key="ui.obj.type1.technicalBasisTable.tab.links" />">
+                                        <div id='ref1BasisTab2' class="input" label="<fmt:message key="ui.obj.type1.technicalBasisTable.tab.links" />">
                                             <div id="ref1BasisLink" autoHeight="4" class="hideTableHeader noValidate" contextMenu="EDIT_LINK" relation_filter="3520" query="{relationType:'3520'}">
                                             </div>
                                         </div>
@@ -552,7 +551,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id='ref1SymbolsTab2' label="<fmt:message key="ui.obj.type1.symbolCatTable.tab.links" />">
+                                        <div id='ref1SymbolsTab2' class="input" label="<fmt:message key="ui.obj.type1.symbolCatTable.tab.links" />">
                                             <div id="ref1SymbolsLink" class="hideTableHeader noValidate" contextMenu="EDIT_LINK" relation_filter="3555" query="{relationType:'3555'}">
                                             </div>
                                         </div>
@@ -574,7 +573,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id='ref1KeysTab2' label="<fmt:message key="ui.obj.type1.keyCatTable.tab.links" />">
+                                        <div id='ref1KeysTab2' class="input" label="<fmt:message key="ui.obj.type1.keyCatTable.tab.links" />">
                                             <div id="ref1KeysLink" class="hideTableHeader noValidate" contextMenu="EDIT_LINK" relation_filter="3535" query="{relationType:'3535'}">
                                             </div>
                                         </div>
@@ -620,7 +619,7 @@
                                         </label>
                                     </span><span id="ref1DataBasisTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddDataBasisLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1DataBasis'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3570, gridId: 'ref1DataBasisLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.dataBasisTable.link" /></a></span>
                                     <div id="ref1DataBasisTabContainer" selectedChild="ref1DataBasisTab1">
-                                        <div id='ref1DataBasisTab1' label="<fmt:message key="ui.obj.type1.dataBasisTable.tab.text" />">
+                                        <div id='ref1DataBasisTab1' class="input" label="<fmt:message key="ui.obj.type1.dataBasisTable.tab.text" />">
                                             <input type="text" id="ref1DataBasisText" name="ref1DataBasisText" />
                                         </div>
                                         <div id='ref1DataBasisTab2' label="<fmt:message key="ui.obj.type1.dataBasisTable.tab.links" />">

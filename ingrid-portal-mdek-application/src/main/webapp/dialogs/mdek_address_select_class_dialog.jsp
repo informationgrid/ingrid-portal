@@ -98,16 +98,16 @@ scriptScope.noButtonFunc = function() {
 <body>
 	<div id="contentPane" layoutAlign="client" class="">
 		<div id="dialogContent" class="content">
-			<div id="messageDiv" class="field grey">
+			<div id="messageDiv" class="field" style="padding-bottom: 5px;">
 			</div>
 
 			<div>
 			  <input dojoType="dijit.form.Select" autoComplete="false" style="width:100%;" id="addressClassSelect" />
 			</div>
 
-			<div class="inputContainer grey" style="height:30px;">
-		        <span style="float:right; margin-top:5px;"><button dojoType="dijit.form.Button" title="<fmt:message key='general.cancel' />" onClick="javascript:scriptScope.noButtonFunc();"><fmt:message key="general.cancel" /></button></span>
-		        <span style="float:right; margin-top:5px;"><button dojoType="dijit.form.Button" title="<fmt:message key='general.addresses.add' />" onClick="javascript:scriptScope.yesButtonFunc();"><fmt:message key="general.addresses.add" /></button></span>
+			<div id="dialogButtonBar" class="dijitDialogPaneActionBar inputContainer grey" style="height:37px;">
+		        <span style="float:left; padding:5px 0;"><button id="cancelNewAddress" dojoType="dijit.form.Button" title="<fmt:message key='general.cancel' />" onClick="javascript:scriptScope.noButtonFunc();"><fmt:message key="general.cancel" /></button></span>
+		        <span style="float:right; padding:5px 0;"><button id="addAddress" dojoType="dijit.form.Button" title="<fmt:message key='general.addresses.add' />" onClick="javascript:scriptScope.yesButtonFunc();"><fmt:message key="general.addresses.add" /></button></span>
 			</div>
 	  	</div>
 	</div>

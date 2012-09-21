@@ -981,6 +981,9 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
              if (!this.getEditorLock().isActive() || this.getEditorLock().commitCurrentEdit()) {
                  //this.scrollRowIntoView(cell.row,false);
                  this.setActiveCellInternal(thisCell, (cell.row === this.getDataLength()) || this.options.autoEdit);
+                 if (this.currentEditor && this.currentEditor.doesImmediateChange()) {
+                     this.getEditorLock().commitCurrentEdit();
+                 }
              }
          }
          
@@ -1373,7 +1376,10 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          //}
 
          if (this.options.editable && !this.columns[cell.cell].cannotTriggerInsert) {
-             this.gotoCell(cell.row, cell.cell, true); 
+             this.gotoCell(cell.row, cell.cell, true);
+             if (this.currentEditor && this.currentEditor.doesImmediateChange()) {
+                 this.getEditorLock().commitCurrentEdit();
+             }
          }
      },
      

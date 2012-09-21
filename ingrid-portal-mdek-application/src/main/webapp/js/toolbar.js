@@ -119,7 +119,7 @@ ingridToolbar.addToolbarEvents = function(isQAActive, isUserQA){
     // Modify button tooltips depending on whether the current node is marked deleted
     if (isQAActive && isUserQA) {
         dojo.subscribe("/selectNode", function(msg){
-            if (msg.node) {
+            if (msg.node && (message.id == undefined || message.id == "dataTree")) {
                 var markedDeleted = msg.node.isMarkedDeleted+"" == true;
                 if (markedDeleted) {
                     ingridToolbar.buttons.FinalSave.domNode.setAttribute("title", message.get("ui.toolbar.discardDeleteCaption"));
@@ -135,18 +135,24 @@ ingridToolbar.addToolbarEvents = function(isQAActive, isUserQA){
     
     // Show/hide toolbar buttons depending on the user rights
     dojo.subscribe("/selectNode", function(message) {
+        // do not handle if another tree was selected!
+        if (message.id && message.id != "dataTree") return;
+        
         var selectedNode = message.node;
         // Initially disable all buttons
         for (i in ingridToolbar.buttons) {
             ingridToolbar.buttons[i].set("disabled", true);
         }
         
+        // always show help and expand button
+        ingridToolbar.buttons.Help.set("disabled", false);
+        
         var dataTree = dijit.byId("dataTree");
         // if active loaded node has been reselected (as the only selected node!)
         if (!selectedNode &&
-             dataTree.allFocusedNodes.length === 1 && 
-             dataTree.selectedNode == dataTree.allFocusedNodes[0]) {
-            selectedNode = dataTree.selectedNode.item;
+             (dataTree.allFocusedNodes.length === 0 ||
+             (dataTree.allFocusedNodes.length === 1 && dataTree.selectedNode == dataTree.allFocusedNodes[0]))) {
+            selectedNode = dataTree.selectedNode ? dataTree.selectedNode.item : null;
         }
         
         if (selectedNode) {
@@ -168,6 +174,7 @@ ingridToolbar.addToolbarEvents = function(isQAActive, isUserQA){
     for (i in ingridToolbar.buttons) {
         ingridToolbar.buttons[i].set("disabled", true);
     }
+    ingridToolbar.buttons.Help.set("disabled", false);
 }
 
 ingridToolbar._handleMultiSelection = function() {
@@ -181,9 +188,11 @@ ingridToolbar._handleMultiSelection = function() {
         if (node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot")
             return true;
     });
-    if (!containsRoot) {
-        enableList.push(buttons.Copy);
-    }
+    
+    // return immediately if a root node has been selected (disable toolbar!)
+    if (containsRoot) return;
+    
+    enableList = enableList.concat([buttons.Copy, buttons.Expand]);
     
     // If the node has children, enable the 'copy tree' button
     var atLeastOneNodeIsFolder = dojo.some(selectedNodes, function(node) {return node.isFolder[0];});
@@ -192,7 +201,7 @@ ingridToolbar._handleMultiSelection = function() {
     }
     
     // If the the user has move permission, he can move the node
-    var allHaveMovePermission = dojo.every(selectedNodes, function(node) {return node.userMovePermission+"";});
+    var allHaveMovePermission = dojo.every(selectedNodes, function(node) {return node.userMovePermission[0];});
     if (allHaveMovePermission) {
         // add delete Button here as well, because move permission means
         // write-tree, which is exactly the condition for hasDeletePermission
@@ -230,11 +239,11 @@ ingridToolbar._handleSingleSelection = function(node) {
         }
     
     } else if (node.id == "newNode") {
-        enableList = enableList.concat([buttons.PrintDoc, buttons.Save, buttons.FinalSave, buttons.assignToQa, buttons.DelSubTree, buttons.ShowComments]);
+        enableList = enableList.concat([buttons.PrintDoc, buttons.Save, buttons.FinalSave, buttons.assignToQa, buttons.DelSubTree, buttons.ShowComments, buttons.Expand]);
     
     } else {
         // If a 'normal' node (obj/adr that is not root) is selected, always enable the following nodes
-        enableList = enableList.concat([buttons.PrintDoc, buttons.Copy, buttons.ShowComments]);
+        enableList = enableList.concat([buttons.PrintDoc, buttons.Copy, buttons.ShowComments, buttons.Expand]);
     
         // Only show the compare view dialog if a published version exists. Otherwise there's nothing to compare to
         if (isPublished == "true") {

@@ -203,9 +203,6 @@ ingridDataTree.createTree = function(){
 	
 	// enable multi-selection of tree nodes for group operations
 	dataTree.multiSelect = true;
-    
-    // enable/disable inputs according to permission 
-    igeEvents.disableInputOnWrongPermission();
 }
 
 ingridDataTree.loadData = function(node, callback_function){

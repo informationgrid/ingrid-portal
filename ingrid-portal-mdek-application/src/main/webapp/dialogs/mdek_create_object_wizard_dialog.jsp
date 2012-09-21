@@ -628,7 +628,7 @@ closeThisDialog = function() {
                 <span class="outer"><div>
 				<span class="label"><label for="assistantDescriptorTable" onclick="javascript:dialog.showContextHelp(arguments[0], 8069)"><fmt:message key="dialog.wizard.create.descriptors" /></label></span>
 	                <div class="tableContainer" style="margin-bottom: 5px;">
-	                	<div id="assistantDescriptorTable" interactive="true" class="hideTableHeader"></div>
+	                	<div id="assistantDescriptorTable" interactive="true" autoEdit="true" class="hideTableHeader"></div>
 	                </div>
 
     				<div class="checkboxContainer">
@@ -639,7 +639,7 @@ closeThisDialog = function() {
                 <span class="outer"><div>
 	                <span class="label"><label for="assistantSpatialRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 8071)"><fmt:message key="dialog.wizard.create.spatial" /></label></span>
 					<div class="tableContainer" style="margin-bottom: 5px;">
-						<div id="assistantSpatialRefTable" interactive="true" ></div>
+						<div id="assistantSpatialRefTable" interactive="true" autoEdit="true"></div>
 	                </div>
     				<div class="checkboxContainer">
     					<span class="input"><input type="checkbox" name="assistantSpatialRefTableCheckbox" id="assistantSpatialRefTableCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8072)"><fmt:message key="dialog.wizard.create.selectAllSpatialRefs" /></label></span>

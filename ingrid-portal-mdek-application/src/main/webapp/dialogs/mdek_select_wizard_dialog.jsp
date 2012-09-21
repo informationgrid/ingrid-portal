@@ -55,9 +55,9 @@ closeThisDialog = function() {
     			</div>
     		</span>
     		
-			<div class="inputContainer grey" style="height:30px;">
-		        <span style="float:right; margin-top:5px;"><button dojoType="dijit.form.Button" title="<fmt:message key="dialog.wizard.select.cancel" />" onClick="javascript:closeThisDialog();"><fmt:message key="dialog.wizard.select.cancel" /></button></span>
-		        <span style="float:right; margin-top:5px;"><button dojoType="dijit.form.Button" title="<fmt:message key="dialog.wizard.select.continue" />" onClick="javascript:openWizard();"><fmt:message key="dialog.wizard.select.continue" /></button></span>
+			<div id="dialogButtonBar" class="dijitDialogPaneActionBar inputContainer grey" style="height:37px;">
+		        <span style="float:right; padding:5px 0;"><button dojoType="dijit.form.Button" title="<fmt:message key="dialog.wizard.select.cancel" />" onClick="javascript:closeThisDialog();"><fmt:message key="dialog.wizard.select.cancel" /></button></span>
+		        <span style="float:left; padding:5px 0;"><button dojoType="dijit.form.Button" title="<fmt:message key="dialog.wizard.select.continue" />" onClick="javascript:openWizard();"><fmt:message key="dialog.wizard.select.continue" /></button></span>
 			</div>
 	  	</div>
 	</div>

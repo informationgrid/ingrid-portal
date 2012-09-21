@@ -239,7 +239,18 @@ menuEventHandler.handlePaste = function(msg) {
 		    var invalidPaste = dojo.some(tree.nodesToCut, function(nodeItem) {
 		        return (targetNode.item == nodeItem || _isChildOf(targetNode, nodeItem));
 		    });
-			if (invalidPaste) {
+		    
+		    // check if new node is going to be pasted
+		    var newNode = dijit.byId("newNode");
+            if (newNode) {
+    		    var newNodeToBeCut = dojo.some(tree.nodesToCut, function(node) { return node == newNode.item;});
+                if (newNodeToBeCut) {
+                    dialog.show(message.get("general.hint"), message.get("tree.saveNewNodeHint"), dialog.WARNING);
+                    return;
+                }
+            }
+            
+            if (invalidPaste) {
 				// If an invalid target is selected (same node or child of node to cut)
 				dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
 				return;

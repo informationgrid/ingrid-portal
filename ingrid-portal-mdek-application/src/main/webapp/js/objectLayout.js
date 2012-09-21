@@ -185,8 +185,6 @@ ingridObjectLayout.createFachBezugClass1 = function(){
 	   {field: 'linkLabel',name: 'linkLabel',width: 685-scrollBarWidth-2+'px'}
 	];
     createDataGrid("ref1BasisLink", null, ref1Structure, null);
-    // no immediate dialog on row click !
-//    UtilGrid.addRowSelectionCallback("ref1BasisLink", ingridObjectLayout.openLinkDialog, { filter:3520 });
     
     tabRef1.addChild(tabRef1Tab1);
     tabRef1.addChild(tabRef1Tab2);
@@ -753,8 +751,6 @@ ingridObjectLayout.createFachBezugClass3 = function(){
     ref3BaseDataTabContainer.addChild(ref3MethodTab2);
 	ref3BaseDataTabContainer.addChild(ref3BaseDataTab1);
     ref3BaseDataTabContainer.startup();
-	
-	dojo.connect(ref3BaseDataTabContainer, "selectChild", dojo.partial(UtilUI.toggleFunctionalLink, "ref3MethodTab2"));
 	
 	new dijit.form.SimpleTextarea({"class": "textAreaFull", rows:5}, "ref3Explanation");
 	
