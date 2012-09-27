@@ -36,6 +36,7 @@
 	"general.deselect.all":"Deselect All",
 	"general.row.remove":"Remove Clicked Row",
     "general.info.browser":"The Internet Explorer 7 (or version 8 in compatibility mode) is not supported and layout problems can occur. It is recommended to use one of the supported browsers (IE8, FF3.6, Chrome)!",
+    "general.warning.unknownId":"The UUID <ul><li>${0}</li></ul> is unknown or does not exist in this catalogue!",
 	
 	"general.page":"Page",
 	

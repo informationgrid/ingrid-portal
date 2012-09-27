@@ -1368,9 +1368,10 @@ udkDataProxy.handleGetObjectPathRequest = function(msg) {
 				//postHook: UtilDWR.exitLoadingState,
 				callback: function(res){msg.resultHandler.callback(res);},
 //				timeout:10000,
-				errorHandler:function(message) {
+				errorHandler:function(errorMessage) {
 					//UtilDWR.exitLoadingState();
-					console.debug("Error in js/udkDataProxy.js: Error while getting path to node: " + message);
+					console.debug("Error in js/udkDataProxy.js: Error while getting path to node: " + errorMessage);
+					dialog.show(message.get("general.warning"), dojo.string.substitute(message.get("general.warning.unknownId"), [msg.id]) , dialog.WARNING);
 					msg.resultHandler.errback();
 				}
 			}
