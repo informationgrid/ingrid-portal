@@ -26,7 +26,7 @@ scriptScope.createDOMElements = function() {
     var commentCommentsTableStructure = [
         {field: 'date',name: "<fmt:message key='dialog.comments.date'/>",width: '120px', formatter: DateCellFormatter},
         {field: 'title',name: "<fmt:message key='dialog.comments.user'/>",width: '185px'},
-        {field: 'comment',name: "<fmt:message key='dialog.comments.comment'/>",width: '500px'}
+        {field: 'comment',name: "<fmt:message key='dialog.comments.comment'/>",width: '670px'}
     ];
     var def = createDataGrid("commentCommentsTable", null, commentCommentsTableStructure, null);
     return def;
@@ -81,12 +81,12 @@ scriptScope.addComment = function() {
 
 
 <div id="comment" class="">
-    <div id="winNavi" style="top:0px;">
-        <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=maintanance-of-objects-10#maintanance-of-objects-10', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
-    </div>
     <div id="commentContent" class="content">
         <!-- CONTENT START -->
         <div class="inputContainer">
+            <div id="winNavi" style="top:0px;">
+                <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=maintanance-of-objects-10#maintanance-of-objects-10', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+            </div>
             <span id="commentTableLabel" class="label">
             </span>
             <div class="input tableContainer">

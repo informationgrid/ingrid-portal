@@ -367,14 +367,10 @@ function initContextMenu(gridProperties) {
                     // remember role first
                     var type = rowData.nameOfRelation;
                     UtilGrid.updateTableDataRow(clickedSlickGrid.id, clickedRow, clickedSlickGrid.copiedAddress);
-                    //rowData = clickedSlickGrid.copiedAddress;
                     UtilGrid.updateTableDataRowAttr(clickedSlickGrid.id, clickedRow, "nameOfRelation", type);
                 } else {
                     UtilGrid.addTableDataRow(clickedSlickGrid.id, clickedSlickGrid.copiedAddress);
                 }
-                
-                //dialog.showPage('Adresse', 'dialogs/mdek_address_preview_dialog.html', 500, 240, false, { data:rowData });
-                clickedSlickGrid.copiedAddress = null;
             }
         }));
         menu.addChild(new dijit.MenuSeparator());

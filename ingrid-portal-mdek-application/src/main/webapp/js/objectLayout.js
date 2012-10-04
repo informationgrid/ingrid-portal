@@ -1516,17 +1516,17 @@ ingridObjectLayout.applyDefaultConnections = function() {
     dojo.connect(UtilGrid.getTable("ref2LocationLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["generalAddress"]));
 
     dojo.connect(UtilGrid.getTable("linksTo"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["ref1BasisLink","ref1SymbolsLink","ref1KeysLink",
-                                                                                                      "ref1ServiceLink","ref1DataBasisLink","ref1ProcessLink",
-                                                                                                      "ref2BaseDataLink","ref3BaseDataLink","ref5KeysLink",
+                                                                                                      "ref1ServiceLink",/*"ref1DataBasisLink",*/"ref1ProcessLink",
+                                                                                                      "ref2BaseDataLink",/*"ref3BaseDataLink",*/"ref5KeysLink",
                                                                                                       "ref5MethodLink", "ref6BaseDataLink"]));
-    dojo.connect(UtilGrid.getTable("ref1BasisLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
+    //dojo.connect(UtilGrid.getTable("ref1BasisLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref1SymbolsLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref1KeysLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref1ServiceLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref1DataBasisLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref1ProcessLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref2BaseDataLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
-    dojo.connect(UtilGrid.getTable("ref3BaseDataLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
+    //dojo.connect(UtilGrid.getTable("ref3BaseDataLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref5KeysLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref5MethodLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref6BaseDataLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));

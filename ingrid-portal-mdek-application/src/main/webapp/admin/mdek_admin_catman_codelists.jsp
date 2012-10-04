@@ -11,6 +11,7 @@
             
             var MAINTAINABLE_LIST_IDS = [];//100, 101, 102, 515, 518, 520, 523, 526, 528, 1100, 1320, 1350, 1370, 3385, 3535, 3555, 6005];
             var CAN_SET_DEFAULT_LIST_IDS = [1350, 1370];
+            var IDS_WITH_DATA_COLUMNS = ["1100"];
 
 			createDOMElements();
 			            
@@ -154,6 +155,16 @@
                             var mergedData = mergeTableData(germanData, englishData);
                             updateCodelistTable(mergedData);
                         });
+                        
+                        // hide/show data column
+                        var showColumn = IDS_WITH_DATA_COLUMNS.indexOf(value) !== -1;
+                        if (showColumn) {
+                            dijit.byId("codeListTable11").showColumn("data");
+                            dojo.style("infoText", "display", "block");
+                        } else {
+                            dijit.byId("codeListTable11").hideColumn("data");
+                            dojo.style("infoText", "display", "none");
+                        }
                     }
                 });
             }
@@ -386,7 +397,10 @@
             
             function saveChangesCodelist(){
                 var sysListId = dijit.byId("selectionList").getValue();
-                if (sysListId) {
+                
+                var isValid = validateCodelist(sysListId);
+                
+                if (sysListId && isValid) {
                     var setDefault = dijit.byId("selectionListDefault").checked;
                     var tableData = UtilGrid.getTableData("codeListTable11");
                     
@@ -430,8 +444,35 @@
                         dijit.byId("selectionList").onChange()
                     });
                 }
+                
+                if (!isValid) {
+                    dojo.style("validationError", "display", "block");
+                } else {
+                    dojo.style("validationError", "display", "none");
+                }
             }
             
+            function validateCodelist(sysListId) {
+                if (sysListId == "1100") {
+                    // check all data columns for valid entries
+                    var data = UtilGrid.getTableData("codeListTable11");
+                    var isValid = true;
+                    dojo.forEach(data, function(row) {
+                        var splittedData = row.data.split(" ");
+                        if (splittedData.length === 1 && splittedData[0] != "") {
+                            isValid = false;
+                        } else if (splittedData.length === 4) {
+                            var allValid = dojo.every(splittedData, function(item) { return item.match(/\d*\.?\d*/)[0] == item;})
+                            if (!allValid) isValid = false;
+                        } else if (splittedData.length > 1) {
+                            isValid = false;
+                        }
+                    });
+                    return isValid;
+                } else {
+                    return true;
+                }
+            }
             
             // Returns whether an entry in the table is marked as default
             function isMarkedAsDefaultEntry(entry){
@@ -1084,6 +1125,12 @@
                                     </span>
                                     <span id="codelistsLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden">
                                         <img src="img/ladekreis.gif" />
+                                    </span>
+                                    <span id="infoText" style="float:left; display:none;">
+                                        <fmt:message key="dialog.admin.catalog.management.codelists.data.info" />
+                                    </span>
+                                    <span id="validationError" class="error" style="clear: both; display:none;">
+                                        <fmt:message key="dialog.admin.catalog.management.codelists.validation.error" />
                                     </span>
                                 </span>
                             </div>

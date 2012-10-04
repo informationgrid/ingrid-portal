@@ -22,7 +22,14 @@ html,body {
 /* remove inactive vertical scrollbar in IE7 */
 html { 
     overflow: auto; 
-} 
+}
+
+.error {
+	background-color: #ffcaca; 
+    color: #c21130;
+    padding: 10px;
+    border: 1px solid #C21130;
+}
 
 .myGrid {
 	width: 100%;

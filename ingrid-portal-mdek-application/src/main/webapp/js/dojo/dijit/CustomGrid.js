@@ -118,7 +118,8 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
         sortable: false,
         minWidth: 30,
         rerenderOnResize: false,
-        headerCssClass: null
+        headerCssClass: null,
+        hidden: false
     },
     
     columnRowMoveHandler: {
@@ -580,8 +581,12 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          var colspan;
          var rowHasColumnData = metadata && metadata.columns;
 
-         for (var i=0, cols=this.columns.length; i<cols; i++) {
+         var columnsLength = this.columns.length;
+         for (var i=0, cols=columnsLength; i<cols; i++) {
              var m = this.columns[i];
+             // continue if this column is supposed to be hidden
+             if (m.hidden) continue;
+             
              colspan = this.getColspan(row, i);  // TODO:  don't calc unless we have to
 /*
              if (true || rowHasColumnData) {
@@ -596,7 +601,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
              }*/
 
              //cellCss = "slick-cell c" + i + (m.cssClass ? " " + m.cssClass : "");
-             cellCss = "slick-cell c"+i+" lr l" + i + " r" + Math.min(this.columns.length -1, i + colspan - 1) + (m.cssClass ? " " + m.cssClass : "");
+             cellCss = "slick-cell c"+i+" lr l" + i + " r" + Math.min(columnsLength -1, i + colspan - 1) + (m.cssClass ? " " + m.cssClass : "");
              if (row === this.activeRow && i === this.activeCell) {
                  cellCss += (" active");
              }
@@ -622,6 +627,26 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          }
 
          stringArray.push("</div>");
+     },
+     
+     hideColumn: function(colId) {
+         dojo.forEach(this.columns, function(column, index) {
+             if (column.id == colId) {
+                 column.hidden = true;
+                 this.invalidate();
+                 this.headers.children[index].style.display = "none";
+             }
+         }, this);
+     },
+     
+     showColumn: function(colId) {
+         dojo.forEach(this.columns, function(column, index) {
+             if (column.id == colId) {
+                 column.hidden = false;
+                 this.invalidate();
+                 this.headers.children[index].style.display = "";
+             }
+         }, this);
      },
      
      getViewportHeight: function() {
@@ -981,7 +1006,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
              if (!this.getEditorLock().isActive() || this.getEditorLock().commitCurrentEdit()) {
                  //this.scrollRowIntoView(cell.row,false);
                  this.setActiveCellInternal(thisCell, (cell.row === this.getDataLength()) || this.options.autoEdit);
-                 if (this.currentEditor && this.currentEditor.doesImmediateChange()) {
+                 if (this.currentEditor && this.currentEditor.doesImmediateChange && this.currentEditor.doesImmediateChange()) {
                      this.getEditorLock().commitCurrentEdit();
                  }
              }
@@ -1377,7 +1402,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
 
          if (this.options.editable && !this.columns[cell.cell].cannotTriggerInsert) {
              this.gotoCell(cell.row, cell.cell, true);
-             if (this.currentEditor && this.currentEditor.doesImmediateChange()) {
+             if (this.currentEditor && this.currentEditor.doesImmediateChange && this.currentEditor.doesImmediateChange()) {
                  this.getEditorLock().commitCurrentEdit();
              }
          }

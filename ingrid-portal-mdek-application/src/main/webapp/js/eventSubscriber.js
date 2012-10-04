@@ -662,7 +662,10 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
         });
 	});
 	onPublishDef.addErrback(function(err) {
-		msg.resultHandler.errback(err);
+	    if (err.cause && err.cause.message)
+	        msg.resultHandler.errback(err.cause.message);
+	    else
+	        msg.resultHandler.errback(err);
 	});
 
 
@@ -1829,6 +1832,7 @@ udkDataProxy._setObjectData = function(nodeData)
 udkDataProxy._connectSharedStore = function() {
 	var ids = [["ref1KeysLink", "3535"], ["ref1DataBasisLink", "3570"], ["ref1BasisLink", "3520"],
 		["ref1SymbolsLink", "3555"], ["ref1ProcessLink", "3515"], ["ref2BaseDataLink", "3345"],
+		["ref3BaseDataLink", "3600"],
 		["ref5MethodLink", "3100"],
 		["ref5KeysLink", "3109"], 
 		["ref6BaseDataLink", "3210"]];
@@ -1849,19 +1853,16 @@ udkDataProxy._connectSharedStore = function() {
 		UtilGrid.getTable(id[0]).invalidate();
 	});
 	
-	// also display linksFrom-objects in the following tables (bidirectional use!) -> ref1ServiceLink, ref3BaseDataLink
+	// display linksFrom-objects in the following tables (bidirectional use!) -> ref1ServiceLink, ref3BaseDataLink
 	//var bidirectionalIds = [["ref1ServiceLink", "5066"],  ["ref3BaseDataLink", "3210"]];
 	var linksFromTableData = UtilGrid.getTableData("linksFrom");
-    var dataTo   = dojo.filter(linksToTableData, function(item) {return item.relationType == "5066";});
-    var dataFrom = dojo.filter(linksFromTableData, function(item) {return item.objectClass == "3" &&  item.relationType == "3210";});
-    UtilGrid.setTableData("ref1ServiceLink", dataTo.concat(dataFrom));
+    var dataFrom = dojo.filter(linksFromTableData, function(item) {return item.objectClass == "3" &&  item.relationType == "3600";});
+    UtilGrid.setTableData("ref1ServiceLink", dataFrom);
     UtilGrid.getTable("ref1ServiceLink").invalidate();
     
-    dataTo   = dojo.filter(linksToTableData, function(item) {return item.relationType == "3210";});
-    dataFrom = dojo.filter(linksFromTableData, function(item) {return item.objectClass == "1" &&  item.relationType == "5066";});
-    UtilGrid.setTableData("ref3BaseDataLink", dataTo.concat(dataFrom));
-    UtilGrid.getTable("ref3BaseDataLink").invalidate();
-	
+    // remove type 3600 from linksTo and linksFrom table
+    UtilGrid.setTableData("linksTo", dojo.filter(linksToTableData, function(item) {return item.relationType != "3600";}));
+    UtilGrid.setTableData("linksFrom", dojo.filter(linksFromTableData, function(item) {return item.relationType != "3600";}));
 }
 
 udkDataProxy._setObjectDataClass0 = function(nodeData) {}
@@ -2218,6 +2219,11 @@ udkDataProxy._getObjectData = function(nodeData)
 
   // -- Links --
   var linksToTable = udkDataProxy._getTableData("linksTo");
+  // concat with other tables separated earlier
+  if (nodeData.objectClass == "3") {
+      linksToTable = linksToTable.concat(udkDataProxy._getTableData("ref3BaseDataLink"));
+  }
+  
   var objLinks = [];
   var urlLinks = [];
   dojo.forEach(linksToTable, function(link) {
@@ -3268,14 +3274,15 @@ igeEvents.addServiceLink = function() {
                     currentLink.uuid = oldObject.uuid;
                     currentLink.title = oldObject.title;
                     currentLink.objectClass = "1";
-                    currentLink.relationType = "3210";
+                    currentLink.relationType = "3600";
                     currentLink.relationTypeName = "Verweis zu Daten";
                     UtilList.addObjectLinkLabels([currentLink], true);
                     UtilList.addIcons([currentLink]);
                     UtilGrid.addTableDataRow("ref3BaseDataLink", currentLink);
                     
                     // also add to "global" link table in "Verweise"
-                    UtilGrid.addTableDataRow("linksTo", currentLink);
+                    // -> not anymore INGRID32-190
+                    // UtilGrid.addTableDataRow("linksTo", currentLink);
                     
                     // open section and jump to table and set dirty flag!
                     setTimeout(function() {
@@ -3310,14 +3317,15 @@ igeEvents.addDataLink = function() {
     
     def.addCallbacks(function(obj) {
         var currentLink = obj;
-        currentLink.relationType = 3210;
+        currentLink.relationType = 3600;
         currentLink.relationTypeName = "Verweis zu Daten";
         UtilList.addObjectLinkLabels([currentLink], true);
         UtilList.addIcons([currentLink]);
         UtilGrid.addTableDataRow("ref3BaseDataLink", currentLink);
         
         // also add to "global" link table in "Verweise"
-        UtilGrid.addTableDataRow("linksTo", currentLink);
+        // -> not anymore INGRID32-190
+        // UtilGrid.addTableDataRow("linksTo", currentLink);
     },
     // dialog was cancelled -> IS NOT CALLED WHEN CLICKED ON 'X'!!!
     function() {

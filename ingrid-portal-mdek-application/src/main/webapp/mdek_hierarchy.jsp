@@ -604,7 +604,7 @@
                                     </span>
 <!--                                     <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddServiceLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Service'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 5066, gridId: 'ref1ServiceLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.serviceLink.link" /></a></span> -->
                                     <div class="input tableContainer">
-                                        <div id="ref1ServiceLink" autoHeight="4" class="hideTableHeader" contextMenu="EDIT_LINK" relation_filter="5066" query="{relationType:'5066'}">
+                                        <div id="ref1ServiceLink" autoHeight="4" class="hideTableHeader">
                                         </div>
                                     </div>
 									</div>
@@ -1169,7 +1169,7 @@
                                         -->
                                         <div id='ref3MethodTab2' label="<fmt:message key="ui.obj.type3.generalDataTable.tab.links" />">
                                             <div class="input tableContainer">
-                                                <div id="ref3BaseDataLink" autoHeight="4" query="{relationType:'3210'}" class="hideTableHeader" contextMenu="EDIT_LINK" relation_filter="3210">
+                                                <div id="ref3BaseDataLink" autoHeight="4" query="{relationType:'3600'}" class="hideTableHeader" relation_filter="3600">
                                                 </div>
                                             </div>
                                         </div>
