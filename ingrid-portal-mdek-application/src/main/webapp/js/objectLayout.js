@@ -1287,7 +1287,7 @@ ingridObjectLayout.createThesaurus = function() {
 	
 	
 	var thesaurusEnvTopicsStructure = [
-		{field: 'title',name: 'title',width: 677-scrollBarWidth+'px',
+		{field: 'title',name: 'title',width: 675-scrollBarWidth+'px',
 			type: SelectboxEditor,
 	        options: [], // will be filled later, when syslists are loaded
 	        values: [],
@@ -1519,7 +1519,7 @@ ingridObjectLayout.applyDefaultConnections = function() {
                                                                                                       "ref1ServiceLink",/*"ref1DataBasisLink",*/"ref1ProcessLink",
                                                                                                       "ref2BaseDataLink",/*"ref3BaseDataLink",*/"ref5KeysLink",
                                                                                                       "ref5MethodLink", "ref6BaseDataLink"]));
-    //dojo.connect(UtilGrid.getTable("ref1BasisLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
+    dojo.connect(UtilGrid.getTable("ref1BasisLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref1SymbolsLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref1KeysLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     //dojo.connect(UtilGrid.getTable("ref1ServiceLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
