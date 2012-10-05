@@ -1049,10 +1049,10 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
                                 if (correct) {
                                     if (_this.currentEditor) 
                                         _this.currentEditor.destroy();
-                                    dojo.removeClass(_this.activeCellNode, "active");
                                 }
                             }
                             _this.mouse_is_inside = false;
+                            dojo.removeClass(_this.activeCellNode, "active");
                         } 
                         catch (e) {
                             console.debug("Error");

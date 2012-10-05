@@ -245,6 +245,7 @@
 	"dialog.admin.catalog.management.codelist.selectImportFile":"Select import file",
 	"dialog.admin.catalog.management.codelist.importHint":"Warning: The SysLists will be overwritten on import. Therefore we suggest creating a backup before starting the import process! Do you want to continue?",
 	"dialog.admin.catalog.management.codelist.importSuccess":"The Import process was successful",
+	"dialog.admin.catalog.management.codelist.boundingbox.wrong.format":"The data doesn't have the correct format! Please use four decimal numbers separated by spaces. (E.g: 13.1 15 16.323 17.9)",
 	"dialog.admin.catalog.management.additionalFields.store":"All changes will be stored. If fields have been deleted, all containing data will be deleted as well<br>Do you want to continue?",
 	"dialog.admin.catalog.management.additionalFields.storeSuccess":"The additional fields were stored successfully.",
 	"dialog.admin.management.duplicates.success":"The object name was updated successfully.",

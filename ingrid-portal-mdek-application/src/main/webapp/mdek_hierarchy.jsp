@@ -1397,7 +1397,7 @@
                                             </label>
                                         </span>
                                         <div class="input tableContainer">
-                                            <div id="ref6ServiceVersion" autoHeight="4" interactive="true"></div>
+                                            <div id="ref6ServiceVersion" autoHeight="4" interactive="true" class="hideTableHeader"></div>
                                         </div>
                                         </div>
                                     </span>

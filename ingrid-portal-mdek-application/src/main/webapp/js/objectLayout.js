@@ -1522,7 +1522,7 @@ ingridObjectLayout.applyDefaultConnections = function() {
     //dojo.connect(UtilGrid.getTable("ref1BasisLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref1SymbolsLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref1KeysLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
-    dojo.connect(UtilGrid.getTable("ref1ServiceLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
+    //dojo.connect(UtilGrid.getTable("ref1ServiceLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref1DataBasisLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref1ProcessLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));
     dojo.connect(UtilGrid.getTable("ref2BaseDataLink"), "onDeleteItems", dojo.partial(UtilGrid.synchedDelete, ["linksTo"]));

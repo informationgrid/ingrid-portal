@@ -351,7 +351,7 @@ function initContextMenu(gridProperties) {
             label: message.get('contextmenu.table.copyAddress'),
             onClick: function() {
                 var rowData = clickedSlickGrid.getData()[clickedRow];
-                clickedSlickGrid.copiedAddress = dojo.clone(rowData);
+                clickedSlickGrid.copiedAddress = rowData;
                 console.debug(clickedSlickGrid.copiedAddress);
                 //dialog.showPage('Adresse', 'dialogs/mdek_address_preview_dialog.html', 500, 240, false, { data:rowData });
             }
@@ -362,14 +362,16 @@ function initContextMenu(gridProperties) {
             onClick: function() {
                 var rowData = clickedSlickGrid.getData()[clickedRow];
                 console.debug(rowData);
+                // make a copy of the address which is going to be copied
+                var copyClone = dojo.clone(clickedSlickGrid.copiedAddress);
                 // ignore role if address is being replaced
                 if (rowData) {
                     // remember role first
                     var type = rowData.nameOfRelation;
-                    UtilGrid.updateTableDataRow(clickedSlickGrid.id, clickedRow, clickedSlickGrid.copiedAddress);
+                    UtilGrid.updateTableDataRow(clickedSlickGrid.id, clickedRow, copyClone);
                     UtilGrid.updateTableDataRowAttr(clickedSlickGrid.id, clickedRow, "nameOfRelation", type);
                 } else {
-                    UtilGrid.addTableDataRow(clickedSlickGrid.id, clickedSlickGrid.copiedAddress);
+                    UtilGrid.addTableDataRow(clickedSlickGrid.id, copyClone);
                 }
             }
         }));

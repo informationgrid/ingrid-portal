@@ -131,6 +131,7 @@
                             // enable context menu
                             contextMenu.DEFAULT.bindDomNode(dojo.byId("codeListTable11"));
                             contextMenu.DEFAULT.bindDomNode(dojo.byId("codeListTable12"));
+                            dijit.byId("button_codelistSave").set("disabled", false);
                             hideEditDisabledHint();
                             
                         }
@@ -143,6 +144,7 @@
                             // disable context menu
                             contextMenu.DEFAULT.unBindDomNode(dojo.byId("codeListTable11"));
                             contextMenu.DEFAULT.unBindDomNode(dojo.byId("codeListTable12"));
+                            dijit.byId("button_codelistSave").set("disabled", true);
                             showEditDisabledHint();
                         }
                         
@@ -399,8 +401,12 @@
                 var sysListId = dijit.byId("selectionList").getValue();
                 
                 var isValid = validateCodelist(sysListId);
+                if (!isValid) {
+                    dialog.show(message.get("general.error"), message.get("dialog.admin.catalog.management.codelist.boundingbox.wrong.format"), dialog.WARNING);
+                    return;
+                }
                 
-                if (sysListId && isValid) {
+                if (sysListId) {
                     var setDefault = dijit.byId("selectionListDefault").checked;
                     var tableData = UtilGrid.getTableData("codeListTable11");
                     
@@ -1119,7 +1125,7 @@
                                 </div>
                                 <span>
                                     <span style="float:right;">
-                                        <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.management.codelists.save" />" onClick="javascript:scriptScopeCodeLists.saveChanges();">
+                                        <button id="button_codelistSave" dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.management.codelists.save" />" onClick="javascript:scriptScopeCodeLists.saveChanges();">
                                             <fmt:message key="dialog.admin.catalog.management.codelists.save" />
                                         </button>
                                     </span>
@@ -1128,9 +1134,6 @@
                                     </span>
                                     <span id="infoText" style="float:left; display:none;">
                                         <fmt:message key="dialog.admin.catalog.management.codelists.data.info" />
-                                    </span>
-                                    <span id="validationError" class="error" style="clear: both; display:none;">
-                                        <fmt:message key="dialog.admin.catalog.management.codelists.validation.error" />
                                     </span>
                                 </span>
                             </div>
