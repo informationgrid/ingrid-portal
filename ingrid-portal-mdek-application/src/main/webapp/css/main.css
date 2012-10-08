@@ -24,6 +24,10 @@ a { color: #156496; text-decoration: none;}
 a:HOVER { text-decoration: underline;}
 a.disabled { color: #818181; }
 
+.clear { clear: both; }
+.left { float: left; }
+.right { float: right; }
+
 
 input, textarea, .dijitInputInner {font: normal 11px/12px Verdana,Helvetica,Arial,sans-serif;}
 .dijitInputInner {font: normal 10px Verdana,Helvetica,Arial,sans-serif !important;}
@@ -105,7 +109,8 @@ input, textarea, .dijitInputInner {font: normal 11px/12px Verdana,Helvetica,Aria
 .contentBlockWhite .inputContainer { /*width:668px;*/ clear:both; /*margin-bottom:10.5px;*/ display:block; }
 
 .content { /*padding:6px 15px; font-size:12px;*/ }
-.content span.functionalLink { float:right; color:#156496; font-size:11px; margin-top:-19px;}
+.content span.functionalLink { float:right; color:#156496; font-size:11px; /*margin-top:-19px;*/}
+.content span.functionalLink.disabled { opacity: 0.4; }
 .content span.onTab { position: relative; right:1px; display:block; height:18px; text-align:right; top: 30px; z-index:99; }
 .content span.functionalLink img { padding-left:13px; }
 .content span.functionalLink a { /*text-decoration:none; color:#156496;*/ margin-left:6px; }

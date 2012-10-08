@@ -1732,11 +1732,11 @@ udkDataProxy._setObjectData = function(nodeData)
   	
   var updatedStore = UtilStore.updateWriteStore("linksTo", linkTable);
   if (nodeData.parentUuid == null) {
-      UtilUI.disableElement("btnGetLinksToFromParent");
-      UtilUI.disableElement("btnGetSpatialRefLocationFromParent");
+      UtilUI.disableHtmlLink("linkGetLinksToFromParent");
+      UtilUI.disableHtmlLink("linkGetSpatialRefLocationFromParent");
   } else if (nodeData.writePermission) {
-      UtilUI.enableElement("btnGetLinksToFromParent");
-      UtilUI.enableElement("btnGetSpatialRefLocationFromParent");
+      UtilUI.enableHtmlLink("linkGetLinksToFromParent");
+      UtilUI.enableHtmlLink("linkGetSpatialRefLocationFromParent");
   }
   
   var unpubLinkTable = nodeData.linksFromObjectTable;
@@ -3439,13 +3439,11 @@ igeEvents.updateDataset = function() {
 }
 
 igeEvents.getLinksToFromParent = function() {
-    console.debug("igeEvents.getLinksToFromParent: Not yet implemented!");
-    
     // load parent object
     ObjectService.getNodeData(currentUdk.parentUuid, "O", "true",
         {
-            preHook: dojo.partial(UtilDWR.enterLoadingState, "updateGetLinksToFromParent"),
-            postHook: dojo.partial(UtilDWR.exitLoadingState, "updateGetLinksToFromParent"),
+            //preHook: dojo.partial(UtilDWR.enterLoadingState, "updateGetLinksToFromParent"),
+            //postHook: dojo.partial(UtilDWR.exitLoadingState, "updateGetLinksToFromParent"),
             callback:function(objNodeData){
                 // get linksTo-references
                 var linkTableData = udkDataProxy._prepareObjectAndUrlReferences(objNodeData);
@@ -3475,13 +3473,11 @@ igeEvents.getLinksToFromParent = function() {
 }
 
 igeEvents.getSpatialRefLocationFromParent = function() {
-    console.debug("igeEvents.getLinksToFromParent: Not yet implemented!");
-    
     // load parent object
     ObjectService.getNodeData(currentUdk.parentUuid, "O", "true",
         {
-            preHook: dojo.partial(UtilDWR.enterLoadingState, "updateGetSpatialRefLocationFromParent"),
-            postHook: dojo.partial(UtilDWR.exitLoadingState, "updateGetSpatialRefLocationFromParent"),
+            //preHook: dojo.partial(UtilDWR.enterLoadingState, "updateGetSpatialRefLocationFromParent"),
+            //postHook: dojo.partial(UtilDWR.exitLoadingState, "updateGetSpatialRefLocationFromParent"),
             callback:function(objNodeData){
                 // get linksTo-references
                 var spatialTableData = objNodeData.spatialRefLocationTable;

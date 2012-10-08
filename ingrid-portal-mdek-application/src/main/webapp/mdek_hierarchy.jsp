@@ -260,7 +260,7 @@
 								</div>
                             </span>									
                             <span id="uiElement1000" class="outer">
-                            	<div><span id="generalAddressTableLabel" class="label">
+                            	<div><span id="generalAddressTableLabel" class="label left">
                                     <label for="generalAddressTable" onclick="javascript:dialog.showContextHelp(arguments[0], 1000)">
                                         <span id="generalAddressTableLabelText"><fmt:message key="ui.obj.general.addressTable.title" /></span>
                                     </label>
@@ -268,7 +268,7 @@
                                     <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" />
                                         <a id="generalAddressTableLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('generalAddress'), 'dialogs/mdek_address_dialog.jsp?c='+userLocale, 755, 585, true, {grid: 'generalAddress'});" title="<fmt:message key="dialog.popup.addressTable.link" /> [Popup]"><fmt:message key="ui.obj.general.addressTable.link" /></a>
                                     </span>
-                                <div id="generalAddressTable" class="input tableContainer">
+                                <div id="generalAddressTable" class="input tableContainer clear">
                                     <div id="generalAddress" autoHeight="4" contextMenu="GENERAL_ADDRESS" class="hideTableHeader" interactive="true">
                                     </div>
                                 </div></div>
@@ -334,14 +334,14 @@
                             <div class="inputContainer">
                                 <span id="uiElement1409" class="outer">
                                     <div>
-                                        <span id="thesaurusTermsLabel" class="label">
+                                        <span id="thesaurusTermsLabel" class="label left">
                                         <label for="thesaurusTerms" onclick="javascript:dialog.showContextHelp(arguments[0], 1420)">
                                             <fmt:message key="ui.obj.thesaurus.terms" />
                                         </label>
                                         </span>
                                     <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('thesaurusTerms'), 'dialogs/mdek_thesaurus_assist_dialog.jsp?c='+userLocale, 735, 430, true);" title="<fmt:message key='dialog.popup.thesaurus.terms.link.assistant' /> [Popup]"><fmt:message key="ui.obj.thesaurus.terms.link.assistant" /></a>
                                         <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="thesaurusTermsNavigatorLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('thesaurusNavigator'), 'dialogs/mdek_thesaurus_dialog.jsp?c='+userLocale, 1010, 430, true, {dstTable: 'thesaurusTerms'});" title="<fmt:message key="dialog.popup.thesaurus.terms.link.navigator" /> [Popup]"><fmt:message key="ui.obj.thesaurus.terms.link.navigator" /></a></span>
-                                    <div class="input tableContainer">
+                                    <div class="input tableContainer clear">
                                         <div id="thesaurusTerms" autoHeight="4" class="hideTableHeader">
                                         </div>
                                     </div>
@@ -424,7 +424,7 @@
                         <div id="ref1Content" class="content">
                             <span id="uiElement3520" class="outer">
                                 <div>
-                                    <span id="ref1BasisTabContainerLabel" class="label">
+                                    <span id="ref1BasisTabContainerLabel" class="label left">
                                         <label for="ref1BasisTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3520)">
                                             <fmt:message key="ui.obj.type1.technicalBasisTable.title" />
                                         </label>
@@ -536,7 +536,7 @@
                             </div>
                             <div class="inputContainer">
                                 <span id="uiElement3555" class="outer">
-                                	<div><span class="label">
+                                	<div><span class="label left">
                                         <label for="ref1SymbolsTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3555)">
                                             <fmt:message key="ui.obj.type1.symbolCatTable.title" />
                                         </label>
@@ -561,7 +561,7 @@
                             </div>
                             <div class="inputContainer">
                                 <span id="uiElement3535" class="outer">
-                                	<div><span class="label">
+                                	<div><span class="label left">
                                         <label for="ref1KeysTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3535)">
                                             <fmt:message key="ui.obj.type1.keyCatTable.title" />
                                         </label>
@@ -613,7 +613,7 @@
                             </div>
                             <div class="inputContainer">
                                 <span id="uiElement3570" class="outer">
-                                	<div><span class="label">
+                                	<div><span class="label left">
                                         <label for="ref1DataBasisTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3570)">
                                             <fmt:message key="ui.obj.type1.dataBasisTable.title" />
                                         </label>
@@ -634,7 +634,7 @@
                             </div>
                             <div class="inputContainer">
                                 <span id="uiElement3515" class="outer">
-                                	<div><span class="label">
+                                	<div><span class="label left">
                                         <label for="ref1ProcessTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3515)">
                                             <fmt:message key="ui.obj.type1.processTable.title" />
                                         </label>
@@ -1098,12 +1098,12 @@
                             </div>
                             <div class="inputContainer">
                                 <span id="uiElementN004" class="outer">
-                                    <div><span class="label">
+                                    <div><span class="label left">
                                         <label for="ref3Operation" onclick="javascript:dialog.showContextHelp(arguments[0], 7015)">
                                             <fmt:message key="ui.obj.type3.operationTable.title" />
                                         </label>
                                     </span><span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(getLocalizedTitle('ref3Operation'), 'dialogs/mdek_operation_dialog.jsp?c='+userLocale, 735, 745, true, {gridId:'ref3Operation'});" title="<fmt:message key="dialog.popup.operationTable.link" /> [Popup]"><fmt:message key="ui.obj.type3.operationTable.link" /></a></span>
-                                    <div class="input tableContainer">
+                                    <div class="input tableContainer clear">
                                         <div id="ref3Operation" autoHeight="4" contextMenu="EDIT_OPERATION" class="importantIgnore">
                                         </div>
                                     </div>
@@ -1495,12 +1495,12 @@
                         <div id="spatialRefContent" class="content">
                             <div id="spatialRefAdminUnitContainer" class="inputContainer">
                                 <span id="uiElementN006" class="outer">
-                                	<div><span id="spatialRefAdminUnitLabel" class="label">
+                                	<div><span id="spatialRefAdminUnitLabel" class="label left">
                                         <label for="spatialRefAdminUnit" onclick="javascript:dialog.showContextHelp(arguments[0], 10006)">
                                             <fmt:message key="ui.obj.spatial.geoThesTable.title" />
                                         </label>
                                     </span><span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="spatialRefAdminUnitLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('spatialRefAdminUnit'), 'dialogs/mdek_spatial_navigator.jsp?c='+userLocale, 530, 230, true);" title="<fmt:message key="dialog.popup.geoThesTable.link" /> [Popup]"><fmt:message key="ui.obj.spatial.geoThesTable.link" /></a></span>
-                                    <div class="input tableContainer">
+                                    <div class="input tableContainer clear">
                                         <div id="spatialRefAdminUnit" autoHeight="4">
                                         </div>
                                     </div>
@@ -1531,24 +1531,21 @@
                             </div>
                             <div id="spatialRefLocationContainer" class="inputContainer">
                                 <span id="uiElementN008" class="outer">
-                                	<div><span id="spatialRefLocationLabel" class="label">
+                                	<div><span id="spatialRefLocationLabel" class="label left">
                                         <label for="spatialRefLocation" onclick="javascript:dialog.showContextHelp(arguments[0], 10008)">
                                             <fmt:message key="ui.obj.spatial.geoTable.title" />
                                         </label>
                                     </span><span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="spatialRefLocationLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('spatialRefLocation'), 'dialogs/mdek_spatial_assist_dialog.jsp?c='+userLocale, 555, 240, true);" title="<fmt:message key="dialog.popup.geoTable.link" /> [Popup]"><fmt:message key="ui.obj.spatial.geoTable.link" /></a><!-- The following feature is not yet implemented --><!--
                                         <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" title="<fmt:message key="dialog.popup.geoSearch.link" /> [Popup]"><fmt:message key="dialog.popup.geoSearch.link" /></a>
                                         --></span>
-                                    <div class="input tableContainer">
+                                    <span class="functionalLink">
+                                        <img src="img/inherit.png" width="10" height="9" alt="Popup" /><a href="#" id="linkGetSpatialRefLocationFromParent" onclick="igeEvents.getSpatialRefLocationFromParent();" title="<fmt:message key="ui.obj.inherit.link.tooltip" /> [Popup]"><fmt:message key="ui.obj.inherit.link" /></a>
+                                    </span>
+                                    <div class="input tableContainer clear">
                                         <div id="spatialRefLocation" interactive="true" autoHeight="4">
                                         </div>
                                     </div>
 									</div>
-                                    <div style="position:relative; float:right;">
-                                        <span id="updateGetSpatialRefLocationFromParent" style="visibility:hidden">
-                                            <img src="img/ladekreis.gif" style="vertical-align: middle;"/>
-                                        </span>
-                                        <button id="btnGetSpatialRefLocationFromParent"><fmt:message key="ui.obj.spatial.btnGetSpatialRefLocationFromParent" /></button>
-                                    </div>
                                 </span>
                             </div>
                             <div class="inputContainer">
@@ -1924,7 +1921,7 @@
                                 </span>
                                 <span id="uiElementN026" class="outer halfWidth">
                                     <div>
-                                    <span id="availabilityUseConstraintsLabel" class="label">
+                                    <span id="availabilityUseConstraintsLabel" class="label left">
                                         <label for="availabilityUseConstraints" onclick="javascript:dialog.showContextHelp(arguments[0], 10026)">
                                             <fmt:message key="ui.obj.availability.useConstraints" />
                                         </label>
@@ -1933,7 +1930,7 @@
                                         <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" />
                                         <a id="availabilityUseConstraintsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('availabilityUseConstraints'), 'dialogs/mdek_use_constraints_dialog.jsp?c='+userLocale, 735, 300, true);" title="<fmt:message key="dialog.popup.useConstraints.link" /> [Popup]"><fmt:message key="ui.obj.availability.useConstraints.link" /></a>
                                     </span>
-                                    <span class="input"><input type="text" id="availabilityUseConstraints" name="availabilityUseConstraints" /></span>
+                                    <span class="input clear"><input type="text" id="availabilityUseConstraints" name="availabilityUseConstraints" /></span>
                                     </div>
                                 </span>
                             </div>
@@ -2010,7 +2007,7 @@
                         <div id="linksContent" class="content">
                             <span id="uiElementN017" class="outer" style="width:50%;">
                                 <div>
-                                    <span class="label">
+                                    <span class="label left">
                                         <label for="linksTo" onclick="javascript:dialog.showContextHelp(arguments[0], 1500)">
                                             <fmt:message key="ui.obj.links.linksTo.title" />
                                         </label>
@@ -2018,16 +2015,13 @@
                                     <span class="functionalLink">
                                         <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(getLocalizedTitle('linksTo'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {gridId: 'linksTo'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.links.linksTo.link" /></a>
                                     </span>
-                                    <div class="input tableContainer">
+                                    <span class="functionalLink">
+                                        <img src="img/inherit.png" width="10" height="9" alt="Popup" /><a href="#" id="linkGetLinksToFromParent" onclick="igeEvents.getLinksToFromParent();" title="<fmt:message key="ui.obj.inherit.link.tooltip" /> [Popup]"><fmt:message key="ui.obj.inherit.link" /></a>
+                                    </span>
+                                    <div class="input tableContainer clear">
                                         <div id="linksTo" autoHeight="4" class="hideTableHeader" contextMenu="EDIT_LINK">
                                         </div>
                                     </div>
-                                </div>
-                                <div style="position:relative; float:right;">
-                                    <span id="updateGetLinksToFromParent" style="visibility:hidden">
-                                        <img src="img/ladekreis.gif" style="vertical-align: middle;"/>
-                                    </span>
-                                    <button id="btnGetLinksToFromParent"><fmt:message key="ui.obj.links.btnGetLinksToFromParent" /></button>
                                 </div>
                             </span>
                             <span id="uiElementN018" class="outer" style="width:50%;">
@@ -2402,12 +2396,12 @@
                         <div id="adrThesaurusContent" class="content">
                             <div class="inputContainer">
                                 <span id="uiElement4510" class="outer optional">
-                                    <div><span class="label">
+                                    <div><span class="label left">
                                         <label for="thesaurusTermsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 4510)">
                                             <fmt:message key="ui.adr.thesaurus.terms" />
                                         </label>
                                     </span><span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(getLocalizedTitle('thesaurusNavigator'), 'dialogs/mdek_thesaurus_dialog.jsp?c='+userLocale, 1010, 430, true, {dstTable: 'thesaurusTermsAddress'});" title="<fmt:message key="dialog.popup.thesaurus.terms.link.navigator" /> [Popup]"><fmt:message key="ui.adr.thesaurus.terms.link.navigator" /></a></span>
-                                    <div class="input tableContainer">
+                                    <div class="input tableContainer clear">
                                         <div id="thesaurusTermsAddress" autoHeight="3" minRows="3" class="hideTableHeader">
                                         </div>
                                     </div>

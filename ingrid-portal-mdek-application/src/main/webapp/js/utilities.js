@@ -1501,7 +1501,7 @@ UtilUI.disableHtmlLink = function(elementId) {
         element.onclick = null;
     }
     // add style for disabled look
-    dojo.addClass(element, "disabled");
+    dojo.addClass(element.parentNode, "disabled");
 }
 
 UtilUI.enableHtmlLink = function(elementId) {
@@ -1511,8 +1511,8 @@ UtilUI.enableHtmlLink = function(elementId) {
         element.onclick = element._disabledOnClick;
         element._disabledOnClick = null;
     }
- // add style for disabled look
-    dojo.removeClass(element, "disabled");
+    // add style for disabled look
+    dojo.removeClass(element.parentNode, "disabled");
 }
 
 UtilUI.setVisibleBlockDiv = function(visible) {

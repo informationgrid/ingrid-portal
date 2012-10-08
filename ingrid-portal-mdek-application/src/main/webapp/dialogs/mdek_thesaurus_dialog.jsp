@@ -75,7 +75,7 @@
                 
                 console.debug("create grid");
                 var thesaurusDescListStructure = [
-                    {field: 'label',name: 'name',width: '247px'}
+                    {field: 'label',name: 'name',width: '245px'}
                 ];
                 createDataGrid("thesaurusDescList", null, thesaurusDescListStructure, null);
             }
