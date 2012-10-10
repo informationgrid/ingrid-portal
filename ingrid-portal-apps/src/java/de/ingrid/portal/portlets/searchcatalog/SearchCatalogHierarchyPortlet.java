@@ -35,7 +35,8 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
 
     // VIEW TEMPLATES
     private final static String TEMPLATE_START = "/WEB-INF/templates/search_catalog/search_cat_hierarchy.vm";
-
+    //scroll top value
+    private String scrollTop = "0";
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         
@@ -46,7 +47,8 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
 
         // add velocity utils class
         context.put("tool", new UtilsVelocity());
-
+        //add scolling info
+        context.put("scrollTop", scrollTop);
         // set positions in main tab
         context.put(VAR_MAIN_TAB, PARAMV_TAB_HIERARCHY);
 
@@ -113,6 +115,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
         String action = request.getParameter(Settings.PARAM_ACTION);
+        scrollTop = request.getParameter("scrollTop");
         if (action == null) {
             action = "";
         }

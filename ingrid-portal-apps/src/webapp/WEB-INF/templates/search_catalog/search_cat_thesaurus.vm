@@ -19,15 +19,15 @@
 		#set ($renderSubNodes = true)
 		## render "-" and icon WITH ACTION -> node can be closed
 		##$action.setParameter('action','doCloseNode')
-		<a href="$url?action=doCloseNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>
-   		<a href="$url?action=doCloseNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
+		<a id="$node.get("topicID")" href="$url?action=doCloseNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()" onclick="makeScrollTopLink('$url?action=doCloseNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()', '$node.get("topicID")')"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>
+   		<a id="$node.get("topicID")Icon" href="$url?action=doCloseNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()" onclick="makeScrollTopLink('$url?action=doCloseNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()', '$node.get("topicID")')"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
 	#else
 		#set ($renderSubNodes = false)
 		#if ($node.expandable)
 			## render "+" and icon WITH ACTION -> node not opened yet and can be expanded 
 			##$action.setParameter('action','doOpenNode')
-			<a href="$url?action=doOpenNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>
-			<a href="$url?action=doOpenNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
+			<a  id="$node.get("topicID")" href="$url?action=doOpenNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()" onclick="makeScrollTopLink('$url?action=doOpenNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()', '$node.get("topicID")')"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>
+			<a id="$node.get("topicID")Icon" href="$url?action=doOpenNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()" onclick="makeScrollTopLink('$url?action=doOpenNode&q=$node.name&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()', '$node.get("topicID")')"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
 		#else
 			## render nothing
 			&nbsp;
@@ -85,3 +85,34 @@
     </div>
   </form>
 </div>
+
+<script type="text/javascript">
+document.onreadystatechange = function () {
+    if (document.readyState == "complete") {
+			var browser = whichBrowser();
+			if(browser.indexOf("Chrome") != -1)
+				document.body.scrollTop = $scrollTop;
+			else
+				document.documentElement.scrollTop = $scrollTop;
+
+    }
+}
+	function makeScrollTopLink(url, nodeId){
+		var browser = whichBrowser();
+		if(browser.indexOf("Chrome") != -1)
+    		var top = document.body.scrollTop;
+		else
+			var top = document.documentElement.scrollTop 
+		url = url.replace(/\s/g, "%20")
+		url = url + "&scrollTop="+top;
+    	document.getElementById(nodeId).href = url;
+		document.getElementById(nodeId+'Icon').href = url;
+	}
+	whichBrowser = function(){
+  var N= navigator.appName, ua= navigator.userAgent, tem;
+  var M= ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+  if(M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) M[2]= tem[1];
+  M= M? [M[1], M[2]]: [N, navigator.appVersion,'-?'];
+  return M;
+ };
+</script>

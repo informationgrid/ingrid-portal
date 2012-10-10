@@ -58,18 +58,20 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
     
 	/* Defines which search state to use */
     private final static String SEARCH_STATE_TOPIC = Settings.MSG_TOPIC_SEARCH;
-    
+    //store the scrollposition of the browser
+    private String scrollTop = "0";
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
 
     	IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                  request.getLocale()));
-         
+    	
 		Context context = getContext(request);
-
+		if(request.getParameter("scrollTop") != null)
+			scrollTop = request.getParameter("scrollTop");
         // add velocity utils class
         context.put("tool", new UtilsVelocity());
-
+        context.put("scrollTop", scrollTop);
         // set positions in main tab
         context.put(VAR_MAIN_TAB, PARAMV_TAB_THESAURUS);
 
