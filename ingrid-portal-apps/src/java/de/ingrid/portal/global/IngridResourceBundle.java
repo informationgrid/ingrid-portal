@@ -65,9 +65,12 @@ public class IngridResourceBundle {
         }
     }
 
-    public String getProfileString(String key) {
+    public String getProfileString(String key) throws Exception {
         ResourceBundle profileRes = ResourceBundle.getBundle("de.ingrid.portal.resources.ProfileResources", r
                 .getLocale());
+        if(profileRes.getLocale() != r.getLocale()){
+        	throw new Exception("Profile resource file not exist!");
+        }
         return profileRes.getString(key);
     }
 
