@@ -450,12 +450,6 @@
                         dijit.byId("selectionList").onChange()
                     });
                 }
-                
-                if (!isValid) {
-                    dojo.style("validationError", "display", "block");
-                } else {
-                    dojo.style("validationError", "display", "none");
-                }
             }
             
             function validateCodelist(sysListId) {
@@ -464,6 +458,9 @@
                     var data = UtilGrid.getTableData("codeListTable11");
                     var isValid = true;
                     dojo.forEach(data, function(row) {
+                        // continue with next entry if data field is null!
+                        if (!row.data) return;
+                        
                         var splittedData = row.data.split(" ");
                         if (splittedData.length === 1 && splittedData[0] != "") {
                             isValid = false;

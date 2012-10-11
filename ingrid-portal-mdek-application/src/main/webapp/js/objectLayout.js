@@ -1046,10 +1046,10 @@ ingridObjectLayout.createRaumbezug = function() {
                 data = data.replace(/,/g, ".");
                 var splittedData = data.split(" ");
                 var row = UtilGrid.getTableData("spatialRefLocation")[msg.row];
-                row.longitude1 = splittedData[0];
-                row.latitude1 = splittedData[1];
-                row.longitude2 = splittedData[2];
-                row.latitude2 = splittedData[3];
+                row.longitude1 = parseFloat(splittedData[0]);
+                row.latitude1 = parseFloat(splittedData[1]);
+                row.longitude2 = parseFloat(splittedData[2]);
+                row.latitude2 = parseFloat(splittedData[3]);
                 UtilGrid.updateTableDataRow("spatialRefLocation", msg.row, row);
             }
         }
