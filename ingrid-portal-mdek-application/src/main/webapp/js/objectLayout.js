@@ -1042,6 +1042,8 @@ ingridObjectLayout.createRaumbezug = function() {
             var data = UtilSyslist.getSyslistEntryData(1100, msg.item.name);
             console.debug("syslist data: " + data);
             if (data && data.trim() != "") {
+                // replace "," with "." for correct data format
+                data = data.replace(/,/g, ".");
                 var splittedData = data.split(" ");
                 var row = UtilGrid.getTableData("spatialRefLocation")[msg.row];
                 row.longitude1 = splittedData[0];

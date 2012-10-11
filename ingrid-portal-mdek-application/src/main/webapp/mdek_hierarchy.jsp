@@ -1539,7 +1539,7 @@
                                         <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:void(0);" title="<fmt:message key="dialog.popup.geoSearch.link" /> [Popup]"><fmt:message key="dialog.popup.geoSearch.link" /></a>
                                         --></span>
                                     <span class="functionalLink">
-                                        <img src="img/inherit.png" width="10" height="9" alt="Popup" /><a href="#" id="linkGetSpatialRefLocationFromParent" onclick="igeEvents.getSpatialRefLocationFromParent();" title="<fmt:message key="ui.obj.inherit.link.tooltip" /> [Popup]"><fmt:message key="ui.obj.inherit.link" /></a>
+                                        <img src="img/inherit.png" width="10" height="9" alt="inherit" /><a href="#" id="linkGetSpatialRefLocationFromParent" onclick="igeEvents.getSpatialRefLocationFromParent();" title="<fmt:message key="ui.obj.inherit.link.tooltip" />"><fmt:message key="ui.obj.inherit.link" /></a>
                                     </span>
                                     <div class="input tableContainer clear">
                                         <div id="spatialRefLocation" interactive="true" autoHeight="4">
@@ -2016,7 +2016,7 @@
                                         <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(getLocalizedTitle('linksTo'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {gridId: 'linksTo'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.links.linksTo.link" /></a>
                                     </span>
                                     <span class="functionalLink">
-                                        <img src="img/inherit.png" width="10" height="9" alt="Popup" /><a href="#" id="linkGetLinksToFromParent" onclick="igeEvents.getLinksToFromParent();" title="<fmt:message key="ui.obj.inherit.link.tooltip" /> [Popup]"><fmt:message key="ui.obj.inherit.link" /></a>
+                                        <img src="img/inherit.png" width="10" height="9" alt="Popup" /><a href="#" id="linkGetLinksToFromParent" onclick="igeEvents.getLinksToFromParent();" title="<fmt:message key="ui.obj.inherit.link.tooltip" />"><fmt:message key="ui.obj.inherit.link" /></a>
                                     </span>
                                     <div class="input tableContainer clear">
                                         <div id="linksTo" autoHeight="4" class="hideTableHeader" contextMenu="EDIT_LINK">
@@ -2362,6 +2362,11 @@
                                             </span>
                                         </div>
                                     </span>
+                                    <div style="position:relative; float:right;">
+                                        <button id="buttonGetAddressFromParent">
+                                            <fmt:message key="ui.adr.details.buttonInherit" />
+                                        </button>
+                            </div>
                                 </span>
                             </div>
                         <span id="uiElement4440" class="outer optional">

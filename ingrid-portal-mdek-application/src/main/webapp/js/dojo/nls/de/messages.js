@@ -141,6 +141,7 @@
     "tree.publicationInternet":"&Auml;ndern auf Internet",
     "tree.publicationIntranet":"&Auml;ndern auf Intranet",
     "tree.publicationInternal":"&Auml;ndern auf amtsintern",
+    "tree.inheritAddress":"Adressangaben in nachgeordnete Adressen &uuml;bernehmen",
 
 	"dialog.object.deleteChildrenMessage":"Sollen die folgenden Objekte ${0} und alle untergeordneten Objekte wirklich endg&uuml;ltig gel&ouml;scht werden?",
 	"dialog.address.deleteChildrenMessage":"Sollen die folgenden Adressen ${0} und alle untergeordneten Adressen wirklich endg&uuml;ltig gel&ouml;scht werden?",
@@ -245,7 +246,7 @@
 	"dialog.admin.catalog.management.codelist.selectImportFile":"Importdatei ausw&auml;hlen",
 	"dialog.admin.catalog.management.codelist.importHint":"Achtung: Die Auswahllisten werden beim Import nicht &uuml;berpr&uuml;ft. Es wird daher empfohlen die Listen vor dem Importvorgang zu sichern (Export oder Datenbank Backup)! M&ouml;chten Sie mit dem Importvorgang fortfahren?",
 	"dialog.admin.catalog.management.codelist.importSuccess":"Der Importvorgang wurde erfolgreich abgeschlossen.",
-	"dialog.admin.catalog.management.codelist.boundingbox.wrong.format":"Die Daten befinden sich im falschen Format! Bitte verwenden Sie vier Dezimalzahlen die mit Leerzeichen getrennt sind. (Bsp.: 13.1 15 16.323 17.9)",
+	"dialog.admin.catalog.management.codelist.boundingbox.wrong.format":"Die Daten befinden sich im falschen Format! Bitte verwenden Sie vier Dezimalzahlen die mit Leerzeichen getrennt sind. (Bsp.: 9,605 52,304 9,918 52,454)",
 	"dialog.admin.catalog.management.additionalFields.store":"Alle &Auml;nderungen werden gespeichert. Falls Felder entfernt wurden, werden auch alle Daten aus diesen Feldern gel&ouml;scht.<br>M&ouml;chten Sie mit der Aktion fortfahren?",
 	"dialog.admin.catalog.management.additionalFields.storeSuccess":"Die zus&auml;tzlichen Felder wurden erfolgreich gespeichert.",
 	"dialog.admin.catalog.management.searchTerms.jobStartHint":"Der SNS Update Job wurde gestartet. Bitte f&uuml;hren Sie nach erfolgreichem Update eine Reindexierung durch (Menu 'Auswahl-/ISO-Codelistenpflege -> Reindexierung')!",
@@ -1021,6 +1022,10 @@
     
     "hint.noCapabilityUrlFound":"Es konnte keine GetCapabilities-Url gefunden werden, um den Datensatz zu aktualisieren.",
     "hint.datasetUpdatedFromCapabilities":"Der Datensatz wurde erfolgreich aktualisiert.",
-    "hint.noEntriesFromParent":"Keine neuen Eintr&auml;ge vom &uuml;bergeordneten Objekt!"
+    "hint.noEntriesFromParent":"Keine neuen Eintr&auml;ge vom &uuml;bergeordneten Objekt!",
+    "hint.addressFromParentAdded":"Adressdaten von übergeordneter Adresse übernommen!",
+    
+    "warning.address.inherit":"Möchten Sie wirklich ihre Daten mit denen der übergeordneten Adresse überschreiben? Die folgenden Felder werden ersetzt: <ul><li>Straße/Hausnummer</li><li>PLZ</li><li>Ort</li><li>Postfach</li><li>PLZ (Postfach)</li><li>Land</li></ul>",
+    "warning.address.inherit.to.children":"Sollen wirklich allen Unteradressen die Adressdaten von '${0}' übergeben werden?"
   }
 )

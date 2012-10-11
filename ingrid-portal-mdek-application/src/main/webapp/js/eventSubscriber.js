@@ -137,6 +137,7 @@ dojo.addOnLoad(function()
     dojo.subscribe("/deleteRequest", udkDataProxy, "handleDeleteRequest");
     dojo.subscribe("/deleteWorkingCopyRequest", udkDataProxy, "handleDeleteWorkingCopyRequest");
     dojo.subscribe("/changePublicationCondition", udkDataProxy, "handleChangePublicationCondition");
+    dojo.subscribe("/inheritAddressToChildren", udkDataProxy, "handleInheritAddressToChildren");
 	
 	dojo.subscribe("/selectNode", igeEvents, "handleSelectNode");
     
@@ -965,6 +966,42 @@ udkDataProxy.handleChangePublicationCondition = function(msg) {
     });
 }
 
+udkDataProxy.handleInheritAddressToChildren = function(msg) {
+    console.debug("udkDataProxy calling AddressService.inheritAddressToChildren("+msg.id+")");
+    AddressService.inheritAddressToChildren(msg.id, {
+        preHook: UtilDWR.enterLoadingState,
+        postHook: UtilDWR.exitLoadingState,
+        callback: function(res){msg.resultHandler.callback(res);},
+        errorHandler:function(err) {
+            UtilDWR.exitLoadingState();
+            // Check for the publication condition error
+            /*if (err.indexOf("SUBTREE_HAS_LARGER_PUBLICATION_CONDITION") != -1) {
+                var onForceSaveDef = new dojo.Deferred();                        
+                // If the user wants to save the object anyway, set force save and start another request
+                onForceSaveDef.addCallback(function() {
+                    msg.forcePublicationCondition = true;
+                    udkDataProxy.handleChangePublicationCondition(msg);
+                });
+                onForceSaveDef.addErrback(function(err) {
+                    msg.resultHandler.errback(err);
+                });
+
+                // Display the 'publication condition' dialog with the attached resultHandler
+                var displayText = message.get("operation.hint.publicationConditionSaveHint");
+                dialog.show(message.get("general.warning"), displayText, dialog.WARNING, [
+                    { caption: message.get("general.cancel"),  action: function() { *//**onForceSaveDef.errback();*//* } },
+                    { caption: message.get("general.save"), action: function() { onForceSaveDef.callback(); } }
+                ]);
+
+            } else {
+                console.debug("Error in js/eventSubscriber.js: udkDataProxy.handleChangePublicationCondition:");
+                msg.resultHandler.errback(err);
+            }*/
+        }
+    });
+}
+
+
 udkDataProxy.handleCanCutObjectRequest = function(msg) {
 	console.debug("udkDataProxy calling ObjectService.canCutNode("+msg.id+")");	
 
@@ -1468,6 +1505,13 @@ udkDataProxy._setAddressData = function(nodeData)
 		else 
 			parentClass = -1;
 	}
+
+	// show inherit button only if node has a parent
+	if (nodeData.parentUuid == null) {
+	    UtilUI.disableElement("buttonGetAddressFromParent");
+    } else if (nodeData.writePermission) {
+        UtilUI.enableElement("buttonGetAddressFromParent");
+    }
 
 	// ------------------ Header ------------------
 	dijit.byId("addressTitle").attr("value", UtilAddress.createAddressTitle(nodeData), true);
@@ -3504,4 +3548,31 @@ igeEvents.getSpatialRefLocationFromParent = function() {
             }
         }
     );
+}
+
+igeEvents.getAddressDataFromParent = function() {
+    var def = new dojo.Deferred();
+    dialog.show(message.get("general.warning"), message.get('warning.address.inherit'), dialog.WARNING, [
+        { caption: message.get("general.cancel"),  action: function() { /**onForceSaveDef.errback();*/ } },
+        { caption: message.get("general.ok"), action: function() { def.callback(); } }
+    ]);    
+    
+    def.addCallback(function() {
+        // load parent address
+        AddressService.getAddressData(currentUdk.parentUuid, "true",
+            {
+                callback:function(addrNodeData){
+                    
+                    dijit.byId("addressStreet").attr("value", addrNodeData.street, true);
+                    dijit.byId("addressCountry").attr("value", addrNodeData.countryCode == -1 ? null : addrNodeData.countryCode , true);
+                    dijit.byId("addressZipCode").attr("value", addrNodeData.postalCode, true);
+                    dijit.byId("addressCity").attr("value", addrNodeData.city, true);
+                    dijit.byId("addressPOBox").attr("value", addrNodeData.pobox, true);
+                    dijit.byId("addressZipPOBox").attr("value", addrNodeData.poboxPostalCode, true);
+                    
+                    showToolTip("spatialRefLocation", message.get('hint.addressFromParentAdded'));
+                }
+            }
+        );
+    });
 }

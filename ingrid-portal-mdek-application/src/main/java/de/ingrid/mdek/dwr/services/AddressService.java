@@ -33,4 +33,5 @@ public interface AddressService {
 	public MdekAddressBean fetchAddressObjectReferences(String addrUuid, int startIndex, int numRefs);
 	public AddressStatisticsResultBean getAddressStatistics(String objUuid, boolean freeAddressesOnly);
 	public ThesaurusStatisticsResultBean getAddressThesaurusStatistics(String adrUuid, boolean freeAddressesOnly, boolean thesaurusTerms, int startHit, int numHits);
+	public void inheritAddressToChildren(String adrUuid);
 }

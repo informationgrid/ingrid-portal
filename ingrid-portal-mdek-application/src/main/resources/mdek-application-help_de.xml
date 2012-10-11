@@ -402,6 +402,21 @@
 				 der aktuellen Adresse nach einer Sicherheitsabfrage endgültig gelöscht.</p>
 				 <p>Diese Funktion steht für die Ebenen <i>Objekte</i>, <i>Adressen</i> und 
 				 <i>freie Adressen</i> nicht zur Verfügung.</p>
+                 <p><b>Kopieren/Ausschneiden/Löschen mehrerer Objekte oder Adressen</b></p>
+                 <p>Mithilfe der "Strg"-Taste ist es möglich weitere Knoten aus dem Hierarchiebaum
+                 auszuwählen. Wird ein bereits markiertes Objekt bei gedrückter "Strg"-Taste angeklickt
+                 so wird die Markierung wieder entfernt. Sobald mehr als ein Knoten markiert wird, schränkt 
+                 sich die Auswahl an möglichen Operationen auf <i>Löschen</i>, <i>Objekte/Adressen/Teilbäume ausschneiden   
+                 </i>, <i>Objekte/Adressen kopieren</i> und <i>Teilbäume kopieren</i> ein. Diese Operationen
+                 können über die Toolbar oder über das Kontextmenü aufgerufen werden (Rechtsklick auf einen Knoten im Baum
+                 ). Wird das Kontextmenü jedoch auf einem nicht markierten Knoten aufgerufen, so wird die aktuelle 
+                 Markierung verworfen und nur der angeklickte Knoten wird ausgewählt.</p>
+                 <p><b>Ändern auf Internet/Intranet/amtsintern</b></p>
+                 <p>Über diese Operationen im Kontextmenü ist es möglich den Veröffentlichungszustand eines
+                 Objektes mittels eines einfachem Klicks zu ändern. Das Objekt wird automatisch nach der Änderung
+                 gespeichert bzw. veröffentlicht. Sollte sich die Veröffentlichungsbreite der Unterobjekte eines
+                 gewählten Objektes unterscheiden, so wird ein Hinweis ausgegeben. Wird dieser bestätigt, so wird
+                 den Unterobjekte automatisch der korrekte Veröffentlichungszustand zugewiesen.</p>
             </content>
         </section>
         <section help-key="hierarchy-maintenance-2">

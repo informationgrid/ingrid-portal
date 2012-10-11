@@ -434,7 +434,6 @@ public class MdekMapper implements DataMapperInterface {
         mdekAddress.setCity((String) adr.get(MdekKeys.CITY));
         mdekAddress.setPobox((String) adr.get(MdekKeys.POST_BOX));
         mdekAddress.setPoboxPostalCode((String) adr.get(MdekKeys.POST_BOX_POSTAL_CODE));
-        mdekAddress.setAddressDescription((String) adr.get(MdekKeys.ADDRESS_DESCRIPTION));
         mdekAddress.setTask((String) adr.get(MdekKeys.FUNCTION));
         mdekAddress.setCommunication(mapToCommunicationTable((List<IngridDocument>) adr.get(MdekKeys.COMMUNICATION)));
 
@@ -667,7 +666,6 @@ public class MdekMapper implements DataMapperInterface {
         udkAdr.put(MdekKeys.CITY, data.getCity());
         udkAdr.put(MdekKeys.POST_BOX, data.getPobox());
         udkAdr.put(MdekKeys.POST_BOX_POSTAL_CODE, data.getPoboxPostalCode());
-        udkAdr.put(MdekKeys.ADDRESS_DESCRIPTION, data.getAddressDescription());
         udkAdr.put(MdekKeys.FUNCTION, data.getTask());
         udkAdr.put(MdekKeys.COMMUNICATION, mapFromCommunicationTable(data.getCommunication()));
 

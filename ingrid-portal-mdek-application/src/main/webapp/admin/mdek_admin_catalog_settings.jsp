@@ -248,7 +248,7 @@
 						</span>
                         </div></span>
 						<span class="outer"><div>
-						    <span class="label required">
+						    <span class="label required left">
                             <label for="adminCatalogSpatialRef" onclick="javascript:dialog.showContextHelp(arguments[0], 8006)">
                                 <fmt:message key="dialog.admin.catalog.location" />*
                             </label>

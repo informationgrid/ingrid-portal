@@ -89,6 +89,11 @@ ingridDataTree.createTree = function(){
         label: message.get('tree.publicationInternal'),
         onClick: dojo.partial(menuEventHandler.changePublicationCondition, 3)
     }));
+    menuDataTree.addChild(new dijit.MenuItem({
+        id: "menuItemInheritAddress",
+        label: message.get('tree.inheritAddress'),
+        onClick: menuEventHandler.inheritAddressToChildren
+    }));
 
 	// connect the special menu for the root node
     dojo.connect(menuDataTree, "_openMyself", this, function(e) {
@@ -96,7 +101,7 @@ ingridDataTree.createTree = function(){
         var tn = dijit.getEnclosingWidget(e.target);
 		menuDataTree.clickedNode = tn;
         
-        var enablePaste = multiSelection = false;
+        var enablePaste = multiSelection = isAddressNode = false;
         var dataTree = dijit.byId("dataTree");
 		
 		// 1) keep multi selection if clicked on one selected node
@@ -118,6 +123,9 @@ ingridDataTree.createTree = function(){
 		if (dataTree.allFocusedNodes.length > 1)
             multiSelection = true;
 		
+		if (!multiSelection && tn.item.nodeAppType == "A")
+		    isAddressNode = true;
+		
 		if (tn.item.id == "objectRoot" || tn.item.id == "addressRoot" || tn.item.id == "addressFreeRoot") {
 			// contrived condition: if this tree node doesn't have any children, disable all of the menu items
             dojo.forEach(menuDataTree.getChildren(), function(i) {
@@ -134,8 +142,9 @@ ingridDataTree.createTree = function(){
 		} else { // for all child nodes of the objects and addresses
 	        
             dojo.forEach(menuDataTree.getChildren(), function(i) {
-				if (i.id == "menuItemReload" || i.id == "menuItemSeparator") {
+				if (i.id == "menuItemReload" || i.id == "menuItemSeparator" || (!isAddressNode && i.id == "menuItemInheritAddress")) {
 					i.attr('class', "hidden");
+					return;
 				} else {
 					i.attr('class', "");
 				}
@@ -181,6 +190,10 @@ ingridDataTree.createTree = function(){
                     if (i.id.indexOf("PublicationCondition") != -1) {
                         i.attr('class', "hidden");
                     }
+                }
+                
+                if (i.id == "menuItemInheritAddress" && tn.item.isFolder[0] != true) {
+                    i.setDisabled(true);
                 }
                 
                 // only enable these menu entries on multi selection

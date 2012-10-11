@@ -468,7 +468,7 @@
                         if (splittedData.length === 1 && splittedData[0] != "") {
                             isValid = false;
                         } else if (splittedData.length === 4) {
-                            var allValid = dojo.every(splittedData, function(item) { return item.match(/\d*\.?\d*/)[0] == item;})
+                            var allValid = dojo.every(splittedData, function(item) { return item.match(/\d*\,?\d*/)[0] == item;})
                             if (!allValid) isValid = false;
                         } else if (splittedData.length > 1) {
                             isValid = false;
@@ -1072,13 +1072,13 @@
     <body>
         <div class="contentBlockWhite content">
         <!-- CONTENT START -->
-            <div id="winNavi">
+            <div id="winNavi" class="right">
                 <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=overall-catalog-management-4#overall-catalog-management-4', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
             </div>
-            <br>
-            <br>
-                    <div class="content"><span id="importExportLink" class="functionalLink onTab" style="right: 27px;"><img src="img/ic_fl_export.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.export" />" /><a href="javascript:void(0);" onclick="javascript:scriptScopeCodeLists.exportCodelists();" title="<fmt:message key="dialog.admin.catalog.management.codelists.export" /> [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.export" /></a><img src="img/ic_fl_import.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.import" />" /><a href="javascript:void(0);" onclick="javascript:scriptScopeCodeLists.importCodelists();" title="<fmt:message key="dialog.admin.catalog.management.codelists.import" /> [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.import" /></a></span></div>
-                    <div id="codeListTabContainer" dojoType="dijit.layout.TabContainer" style="height:520px;" selectedChild="codeListTab">
+            <span class="outer">
+                <div>
+                    <span id="importExportLink" class="functionalLink onTab"><img src="img/ic_fl_export.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.export" />" /><a href="javascript:void(0);" onclick="javascript:scriptScopeCodeLists.exportCodelists();" title="<fmt:message key="dialog.admin.catalog.management.codelists.export" /> [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.export" /></a><img src="img/ic_fl_import.gif" width="11" height="10" alt="<fmt:message key="dialog.admin.catalog.management.codelists.import" />" /><a href="javascript:void(0);" onclick="javascript:scriptScopeCodeLists.importCodelists();" title="<fmt:message key="dialog.admin.catalog.management.codelists.import" /> [Popup]"><fmt:message key="dialog.admin.catalog.management.codelists.import" /></a></span>
+                    <div id="codeListTabContainer" dojoType="dijit.layout.TabContainer" style="height:520px; width: 100%;" selectedChild="codeListTab">
                         <!-- TAB 1 START -->
                         <div id="codeListTab" dojoType="dijit.layout.BorderContainer" class="grey" title="<fmt:message key="dialog.admin.catalog.management.codelists.codelistTitle" />">
                                 <div dojoType="dijit.layout.ContentPane" region="top" class="grey">
@@ -1220,6 +1220,8 @@
                             </div>
                         </div>
                     </div><!-- TAB 3 END -->
+                </div>
+            </span>
         <!-- CONTENT END -->
         </div>
     </body>

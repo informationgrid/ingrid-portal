@@ -52,7 +52,6 @@ public class MdekAddressBean {
 	private String poboxPostalCode;
 	private String pobox;
 	private String task;
-	private String addressDescription;
 
 	private Integer typeOfRelation;
 	private String nameOfRelation;
@@ -255,14 +254,6 @@ public class MdekAddressBean {
 
 	public void setPobox(String pobox) {
 		this.pobox = pobox;
-	}
-
-	public String getAddressDescription() {
-		return addressDescription;
-	}
-
-	public void setAddressDescription(String addressDescription) {
-		this.addressDescription = addressDescription;
 	}
 
 	public Integer getTypeOfRelation() {

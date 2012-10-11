@@ -141,6 +141,7 @@
     "tree.publicationInternet":"Change to Internet",
     "tree.publicationIntranet":"Change to Intranet",
     "tree.publicationInternal":"Change to Internal",
+    "tree.inheritAddress":"Update address data in children",
 
 	"dialog.object.deleteChildrenMessage":"Do you really want to delete the objects: ${0} and all subobjects?",
 	"dialog.address.deleteChildrenMessage":"Do you really want to delete the addresses: ${0} and all subaddresses?",
@@ -245,7 +246,7 @@
 	"dialog.admin.catalog.management.codelist.selectImportFile":"Select import file",
 	"dialog.admin.catalog.management.codelist.importHint":"Warning: The SysLists will be overwritten on import. Therefore we suggest creating a backup before starting the import process! Do you want to continue?",
 	"dialog.admin.catalog.management.codelist.importSuccess":"The Import process was successful",
-	"dialog.admin.catalog.management.codelist.boundingbox.wrong.format":"The data doesn't have the correct format! Please use four decimal numbers separated by spaces. (E.g: 13.1 15 16.323 17.9)",
+	"dialog.admin.catalog.management.codelist.boundingbox.wrong.format":"The data doesn't have the correct format! Please use four decimal numbers separated by spaces. (E.g: 9,605 52,304 9,918 52,454)",
 	"dialog.admin.catalog.management.additionalFields.store":"All changes will be stored. If fields have been deleted, all containing data will be deleted as well<br>Do you want to continue?",
 	"dialog.admin.catalog.management.additionalFields.storeSuccess":"The additional fields were stored successfully.",
 	"dialog.admin.management.duplicates.success":"The object name was updated successfully.",
@@ -464,9 +465,9 @@
 	"ui.toolbar.HelpCaption":"Help",
 	"ui.toolbar.NewDocCaption":"Create new",
 	"ui.toolbar.PrintDocCaption":"Print preview",
-	"ui.toolbar.CutCaption":"Cut Object/Address/Subtree",
-	"ui.toolbar.CopyCaption":"Copy Object/Address",
-	"ui.toolbar.CopySubTreeCaption":"Copy subtree",
+	"ui.toolbar.CutCaption":"Cut Objects/Addresses/Subtrees",
+	"ui.toolbar.CopyCaption":"Copy Objects/Addresses",
+	"ui.toolbar.CopySubTreeCaption":"Copy Subtrees",
 	"ui.toolbar.PasteCaption":"Paste",
 	"ui.toolbar.SaveCaption":"Save",
 	"ui.toolbar.UndoCaption":"Undo",
@@ -1020,6 +1021,10 @@
     
     "hint.noCapabilityUrlFound":"No GetCapabilities-Url could be found to update this dataset.",
     "hint.datasetUpdatedFromCapabilities":"The dataset has been successfully updated.",
-    "hint.noEntriesFromParent":"No new entries from parent object!"
+    "hint.noEntriesFromParent":"No new entries from parent object!",
+    "hint.addressFromParentAdded":"Addressdata written from parent address!",
+    
+    "warning.address.inherit":"Do you really want to replace your data with the one from the parent address? The following fields will be replaced: <ul><li>Street</li><li>Post code</li><li>City</li><li>P.O. Box</li><li>Post code (POB)</li><li>Country</li></ul>",
+    "warning.address.inherit.to.children":"Shall the address data from '${0}' be copied to all sub-addresses?"
   }
 )

@@ -902,7 +902,7 @@
                                 </span>
                                 <div class="inputContainer field grey" style="">
                                     <span class="outer"><div>
-                                        <span class="label">
+                                        <span class="label left">
                                             <label for="userDataLogin" onclick="javascript:dialog.showContextHelp(arguments[0], 8013)">
                                                 <fmt:message key="dialog.admin.users.login" />
                                             </label>

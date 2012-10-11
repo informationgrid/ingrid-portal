@@ -133,6 +133,9 @@ ingridAddressLayout.createAddressAndTasks = function(){
         return UtilSyslist.getSyslistEntry(6200);
     });
     
+    var button = new dijit.form.Button({}, "buttonGetAddressFromParent");
+    button.onClick = igeEvents.getAddressDataFromParent;
+    
     //DELETED TextArea: "addressNotes" (INGRID33-10)
     new dijit.form.SimpleTextarea({"class": "textAreaFull"}, "addressTasks");
 }

@@ -265,6 +265,20 @@
 				 <p>In the other cases the sub tree is finally deleted from the current object or the current address after a security prompt.</p>
 				 <p>This function is not available for the <i>Objects</i>, <i>Adressen</i> and 
 				 <i>Free Addresses</i> levels.</p>
+                 <p><b>Copy/Cut/Delete of several objects or addresses</b></p>
+                 <p>With the "Ctrl"-key it is possible to select more than one node from the hierarchy tree.
+                 If an already marked node is clicked again while pressing the "Ctrl"-key the node will be
+                 unmarked. When several nodes are marked the available operations are <i>Delete</i>, <i>Cut Objects/Addresses/Subtrees   
+                 </i>, <i>Copy Objects/Addresses</i> und <i>Copy Subtrees</i>. These operations can be accessed from
+                 the toolbar or via the context menu when right-clicking on one of the marked nodes. Is the
+                 context menu called from a non-marked node, then the marked nodes will be unmarked and only the
+                 clicked node is marked.</p>
+                 <p><b>Change to Internet/Intranet/Internal</b></p>
+                 <p>These operations in the context menu allow to change the publication condition with one click.
+                 The object will be saved or published automatically after the change is done. In case the publication
+                 condition of the sub-objects is different from the one of the selected object, a dialog will appear.
+                 If this one is accepted all sub-objects will be modified to reflect the correct publication condition.
+                 </p>
             </content>
         </section>
         <section help-key="hierarchy-maintenance-2">

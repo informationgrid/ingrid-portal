@@ -364,6 +364,10 @@ public class AddressServiceImpl implements AddressService {
 			throw e;
 		}
 	}
+	
+	public void inheritAddressToChildren(String adrUuid) {
+
+	}
 
 	public AddressRequestHandler getAddressRequestHandler() {
 		return addressRequestHandler;

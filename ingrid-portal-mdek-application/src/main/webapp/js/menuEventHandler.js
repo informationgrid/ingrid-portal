@@ -1248,6 +1248,24 @@ menuEventHandler.openCreateObjectWizardDialog = function() {
 	dialog.showPage(message.get("dialog.wizard.selectTitle"), "dialogs/mdek_select_wizard_dialog.jsp?c="+userLocale, 350, 170, true);
 }
 
+menuEventHandler.inheritAddressToChildren = function(msg) {
+    var def = new dojo.Deferred();
+
+    // Get the selected node from the message
+    var selectedNode = getSelectedNode(msg);
+    
+    dialog.show(message.get("general.warning"), dojo.string.substitute(message.get('warning.address.inherit.to.children'), [selectedNode.label]), dialog.WARNING, [
+        { caption: message.get("general.cancel"),  action: function() { /**onForceSaveDef.errback();*/ } },
+        { caption: message.get("general.ok"), action: function() { def.callback(); } }
+    ]);    
+    
+    def.addCallback(function() {
+        console.debug("Publishing event: /inheritAddressToChildren("+selectedNode.id+")");
+        dojo.publish("/inheritAddressToChildren", [{id: selectedNode.id[0], resultHandler: def}]);
+    });
+    return def;
+}
+
 
 // ------------------------- Helper functions -------------------------
 
