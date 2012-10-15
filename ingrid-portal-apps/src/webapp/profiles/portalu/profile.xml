@@ -270,12 +270,12 @@
             <![CDATA[INSERT INTO ingrid_measures_rubric (`id`\, `form_value`\, `query_value`\, `sortkey`) VALUES (1\, 'str'\, 'radiation'\, 1);]]>
         </execute>
 		<!-- MainMenu position-->		
-		<!-- <execute>
+		<execute>
             <![CDATA[UPDATE folder_menu SET ELEMENT_ORDER='3' WHERE OPTIONS='/main-service.psml';]]>
         </execute>
 		<execute>
             <![CDATA[UPDATE folder_menu SET ELEMENT_ORDER='1' WHERE OPTIONS='/main-environment.psml';]]>
-        </execute>-->
+        </execute>
 		<!-- Impressum -->
 		<execute>
             <![CDATA[UPDATE ingrid_cms_item SET item_title='Impressum'\, item_value='<h2><a name=herausgeber></a>Herausgeber</h2><p>PortalU wird von der Koordinierungsstelle PortalU im Niedersächsischen Ministerium für Umwelt und Klimaschutz auf der Grundlage der <a href=\"http://www.kst.portalu.de/verwaltungskooperation/VVGEIN_endg.pdf\" target=\"_new\" title=\"Link öffnet in neuem Fenster\">Bund-Länder-Verwaltungsvereinbarung UDK/GEIN</a> betrieben und weiterentwickelt.</p><h3><a href=\"http://www.kst.portalu.de/\" target=\"_new\" title=\"Link öffnet in neuem Fenster\">Koordinierungsstelle PortalU</a></h3><p>Niedersächsisches Ministerium für Umwelt und Klimaschutz<br>Archivstrasse 2<br>D-30169 Hannover<br><a href=\"http://www.portalu.de/ingrid-portal/portal/service-contact.psml\">Kontakt</a></p><p class=MsoNormal><a name=verantwortlich></a> </p><h2>Verantwortliche Gesamtredaktion</h2><p>Dr. Fred Kruse</p><p class=MsoNormal><a name=realisierung></a> </p><h2>Realisierung</h2><h3><a href=\"http://www.wemove.com/contact.php\" target=\"_new\" title=\"Link öffnet in neuem Fenster\">wemove digital solutions GmbH</a></h3><h3><a href=\"http://www.chives.de/\" target=\"_new\" title=\"Link öffnet in neuem Fenster\">chives - Büro für Webdesign Plus Darmstadt</a></h3><p class=MsoNormal><a name=betrieb></a> </p><h2>Technischer Betrieb</h2><h3><a href=\"http://www.its-technidata.de/\" target=\"_new\" title=\"Link öffnet in neuem Fenster\">TechniData IT Service GmbH</a></h3> <p class=MsoNormal><a name=haftung></a> </p> <h2>Haftungsausschluss</h2><p>Das Niedersächsische Ministerium für Umwelt und Klimaschutz übernimmt keine Verantwortung für die Inhalte von Websites\, die über Links erreicht werden. Die Links werden bei der Aufnahme nur kursorisch angesehen und bewertet. Eine kontinuierliche Prüfung der Inhalte ist weder beabsichtigt noch möglich. Das Niedersächsische Ministerium für Umwelt und Klimaschutz distanziert sich ausdrücklich von allen Inhalten\, die möglicherweise straf- oder haftungsrechtlich relevant sind oder gegen die guten Sitten verstoßen.</p> <p> </p><h2>Nutzungsbedingungen</h2><p class=MsoNormal>Die im PortalU-Kartenviewer eingebundenen Karten (Geodatendienste) stammen von behördlichen Anbietern auf Bundes- und Landesebene. Die Nutzung der kostenfrei angebotenen Geodatendienste ist hierbei an entsprechende Bedingungen geknüpft\, die zu beachten sind.</p><p class=MsoNormal> </p><p class=MsoNormal>Für Dienste aus Bayern sind die Nutzugsbedingungen der GDI-BY zu beachten:</p><p class=MsoNormal><a href=\"http://www.gdi.bayern.de/Dokumente/Nutzungsbedingungen_allgemein.html\">http://www.gdi.bayern.de/Dokumente/Nutzungsbedingungen_allgemein.html</a></p><p class=MsoNormal> </p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.disclaimer') AND item_lang='de';]]>
@@ -305,9 +305,11 @@
             <![CDATA[UPDATE ingrid_cms_item SET item_value='.</p><p>Our address:</p><p>Niedersächsisches Umweltministerium<br />Koordinierungsstelle PortalU<br />Archivstrasse 2<br />D-30169 Hannover<br /></p> <p>Please contact us! We will answer your request as soon as possible. All data you entered will be saved only to process your request.</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.contact.intro.postEmail') AND item_lang='en';]]>
         </execute>
         <!-- Thesaurus Browser als Untermenü  -->
+        <!--
         <execute>
             <![CDATA[UPDATE folder_menu SET options='/search-catalog/search-catalog-hierarchy.psml' WHERE options='/search-catalog/search-catalog-thesaurus.psml';]]>
         </execute>
+        -->
         <!-- Use _new templates for info portlet -->
        	<execute>
             <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/chronicle_info_new.vm' WHERE value='/WEB-INF/templates/chronicle_info.vm';]]>
