@@ -5,7 +5,7 @@
 <head>
 
 <script type="text/javascript">
-var scriptScope = this;
+var scriptScope = _container_;
 
 dojo.connect(_container_, "onUnload", function() {
 	// If the dialog was cancelled via the dialogs close button
@@ -16,18 +16,14 @@ dojo.connect(_container_, "onUnload", function() {
 });
 
 scriptScope.selectFile = function() {
-	if (_container_.customParams.resultHandler) {
+    this.hide();
+	if (this.customParams.resultHandler) {
 		var file = dwr.util.getValue("selectFileInputField");
 
 		if (file && file.textLength != 0 && file.value != "") {
-			_container_.customParams.resultHandler.callback(file);
-
-		} else {
-			_container_.customParams.resultHandler.errback();
+			this.customParams.resultHandler.callback(file);
 		}
 	}
-	
-	_container_.hide(); 
 }
 
 </script>
@@ -36,20 +32,23 @@ scriptScope.selectFile = function() {
 <body>
 
 	<div class="">
+        <span class="label left">
+            <label for="selectFileInputField" onclick="javascript:dialog.showContextHelp(arguments[0], 8060)"><fmt:message key="dialog.file.selectFile" /></label>
+        </span>
 		<div id="winNavi" style="top:0;">
 			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=overall-catalog-management-4#overall-catalog-management-4', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
 		</div>
 		<div class="content">
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div class="inputContainer field grey">
-				<span class="label"><label for="selectFileInputField" onclick="javascript:dialog.showContextHelp(arguments[0], 8060)"><fmt:message key="dialog.file.selectFile" /></label></span>
+				
 					<span>
-						<input type="file" id="selectFileInputField" size="80" style="width:100%;" />
+						<input type="file" id="selectFileInputField" size="80" style="" />
 					</span>
 			</div>
 
-			<div class="grey" style="height:30px;">
-		        <span style="float:right; margin-top:5px;"><button dojoType="dijit.form.Button" title="<fmt:message key="dialog.file.select" />" onClick="javascript:scriptScope.selectFile();"><fmt:message key="dialog.file.select" /></button></span>
+			<div class="dijitDialogPaneActionBar">
+		        <span><button dojoType="dijit.form.Button" title="<fmt:message key="dialog.file.select" />" onClick="javascript:scriptScope.selectFile();"><fmt:message key="dialog.file.select" /></button></span>
 			</div>
 			<!-- LEFT HAND SIDE CONTENT END -->
 		</div>

@@ -175,21 +175,22 @@ public class MdekCatalogUtils {
 		return returnList;
 	}
 
-	public static String convertSysListsToXML(IngridDocument result) {
-		Set<String> listKeys = (Set<String>) result.keySet();
+	public static String convertSysListsToXML(IngridDocument resultDe, IngridDocument resultEn) {
+		Set<String> listKeys = (Set<String>) resultDe.keySet();
 		List<SysList> sysLists = new ArrayList<SysList>();
 
 		for (String listKey : listKeys) {
 			SysList sysList = new SysList();
 
-			IngridDocument listDocument = (IngridDocument) result.get(listKey);
-			Integer listId = (Integer) listDocument.get(MdekKeys.LST_ID);
+			IngridDocument listDocumentDe = (IngridDocument) resultDe.get(listKey);
+			IngridDocument listDocumentEn = (IngridDocument) resultEn.get(listKey);
+			Integer listId = (Integer) listDocumentDe.get(MdekKeys.LST_ID);
 
-			Integer[] entryIds = (Integer[]) listDocument.get(MdekKeys.LST_ENTRY_IDS);
-			String[] entryNamesDe = (String[]) listDocument.get(MdekKeys.LST_ENTRY_NAMES_DE);
-			String[] entryNamesEn = (String[]) listDocument.get(MdekKeys.LST_ENTRY_NAMES_EN);
-			Integer defaultIndex = (Integer) listDocument.get(MdekKeys.LST_DEFAULT_ENTRY_INDEX);
-			Boolean maintainable = (de.ingrid.mdek.MdekUtils.YES_INTEGER == ((Integer) listDocument.get(MdekKeys.LST_MAINTAINABLE)));
+			Integer[] entryIds = (Integer[]) listDocumentDe.get(MdekKeys.LST_ENTRY_IDS);
+			String[] entryNamesDe = (String[]) listDocumentDe.get(MdekKeys.LST_ENTRY_NAMES);
+			String[] entryNamesEn = (String[]) listDocumentEn.get(MdekKeys.LST_ENTRY_NAMES);
+			Integer defaultIndex = (Integer) listDocumentDe.get(MdekKeys.LST_DEFAULT_ENTRY_INDEX);
+			Boolean maintainable = (de.ingrid.mdek.MdekUtils.YES_INTEGER == ((Integer) listDocumentDe.get(MdekKeys.LST_MAINTAINABLE)));
 
 			sysList.setId(listId);
 			sysList.setDeEntries(entryNamesDe);

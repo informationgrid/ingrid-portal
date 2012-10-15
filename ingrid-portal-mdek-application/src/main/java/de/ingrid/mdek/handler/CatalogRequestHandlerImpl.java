@@ -107,19 +107,26 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
             listIds = listIdsTemp.toArray(new Integer[0]);
         }
 
-        IngridDocument response = mdekCallerCatalog.getSysLists(
+        IngridDocument responseDe = mdekCallerCatalog.getSysLists(
                 connectionFacade.getCurrentPlugId(),
                 listIds,
-                null,
+                "de",
+                MdekSecurityUtils.getCurrentUserUuid());
+        
+        IngridDocument responseEn = mdekCallerCatalog.getSysLists(
+                connectionFacade.getCurrentPlugId(),
+                listIds,
+                "en",
                 MdekSecurityUtils.getCurrentUserUuid());
 
 
-        IngridDocument result = MdekUtils.getResultFromResponse(response);
-        if (result != null) {
-            return MdekCatalogUtils.convertSysListsToXML(result);
+        IngridDocument resultDe = MdekUtils.getResultFromResponse(responseDe);
+        IngridDocument resultEn = MdekUtils.getResultFromResponse(responseEn);
+        if (resultDe != null) {
+            return MdekCatalogUtils.convertSysListsToXML(resultDe, resultEn);
 
         } else {
-            MdekErrorUtils.handleError(response);
+            MdekErrorUtils.handleError(responseDe);
             return null;
         }
     }
