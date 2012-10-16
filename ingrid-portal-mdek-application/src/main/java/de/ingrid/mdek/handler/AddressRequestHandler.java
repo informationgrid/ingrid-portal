@@ -35,4 +35,5 @@ public interface AddressRequestHandler {
 	public AddressSearchResultBean getQAAddresses(WorkState workState, IdcQAEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits);
 	public AddressStatisticsResultBean getAddressStatistics(String uuid, boolean freeAddressesOnly);
 	public ThesaurusStatisticsResultBean getAddressThesaurusStatistics(String adrUuid, boolean freeAddressesOnly, boolean thesaurusTerms, int startHit, int numHits);
+	public String mergeAddressToSubAddresses(String adrUuid);
 }

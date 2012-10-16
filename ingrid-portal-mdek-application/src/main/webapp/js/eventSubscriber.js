@@ -974,29 +974,7 @@ udkDataProxy.handleInheritAddressToChildren = function(msg) {
         callback: function(res){msg.resultHandler.callback(res);},
         errorHandler:function(err) {
             UtilDWR.exitLoadingState();
-            // Check for the publication condition error
-            /*if (err.indexOf("SUBTREE_HAS_LARGER_PUBLICATION_CONDITION") != -1) {
-                var onForceSaveDef = new dojo.Deferred();                        
-                // If the user wants to save the object anyway, set force save and start another request
-                onForceSaveDef.addCallback(function() {
-                    msg.forcePublicationCondition = true;
-                    udkDataProxy.handleChangePublicationCondition(msg);
-                });
-                onForceSaveDef.addErrback(function(err) {
-                    msg.resultHandler.errback(err);
-                });
-
-                // Display the 'publication condition' dialog with the attached resultHandler
-                var displayText = message.get("operation.hint.publicationConditionSaveHint");
-                dialog.show(message.get("general.warning"), displayText, dialog.WARNING, [
-                    { caption: message.get("general.cancel"),  action: function() { *//**onForceSaveDef.errback();*//* } },
-                    { caption: message.get("general.save"), action: function() { onForceSaveDef.callback(); } }
-                ]);
-
-            } else {
-                console.debug("Error in js/eventSubscriber.js: udkDataProxy.handleChangePublicationCondition:");
-                msg.resultHandler.errback(err);
-            }*/
+            displayErrorMessage(err);
         }
     });
 }

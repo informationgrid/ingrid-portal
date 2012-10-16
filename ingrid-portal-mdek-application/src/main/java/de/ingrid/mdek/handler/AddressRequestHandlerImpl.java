@@ -235,7 +235,19 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		return MdekUtils.extractThesaurusStatistics(result);
 	}
-
+	
+	public String mergeAddressToSubAddresses(String adrUuid) {
+        IngridDocument response = mdekCallerAddress.mergeAddressToSubAddresses(connectionFacade.getCurrentPlugId(), adrUuid, MdekSecurityUtils.getCurrentUserUuid());
+        IngridDocument result = MdekUtils.getResultFromResponse(response);
+        if (result != null) {
+            log.info("SUCCESS: " + result.get(MdekKeys.RESULTINFO_NUMBER_OF_PROCESSED_ENTITIES) + " subnodes merged !");
+            return String.valueOf(result.get(MdekKeys.RESULTINFO_NUMBER_OF_PROCESSED_ENTITIES));
+        } else {
+            MdekErrorUtils.handleError(response);
+        }
+        
+        return null;        
+    }
 	
 	public ConnectionFacade getConnectionFacade() {
 		return connectionFacade;

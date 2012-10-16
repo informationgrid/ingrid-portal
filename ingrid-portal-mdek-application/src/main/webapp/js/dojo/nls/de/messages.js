@@ -1026,6 +1026,8 @@
     "hint.addressFromParentAdded":"Adressdaten von übergeordneter Adresse übernommen!",
     
     "warning.address.inherit":"Möchten Sie wirklich ihre Daten mit denen der übergeordneten Adresse überschreiben? Die folgenden Felder werden ersetzt: <ul><li>Straße/Hausnummer</li><li>PLZ</li><li>Ort</li><li>Postfach</li><li>PLZ (Postfach)</li><li>Land</li></ul>",
-    "warning.address.inherit.to.children":"Sollen wirklich allen Unteradressen die Adressdaten von '${0}' übergeben werden?"
+    "warning.address.inherit.to.children":"Sollen wirklich allen Unteradressen die Adressdaten von '${0}' übergeben werden?",
+    
+    "info.address.inherit.to.children":"Es wurden ${0} Adressen verändert!"
   }
 )

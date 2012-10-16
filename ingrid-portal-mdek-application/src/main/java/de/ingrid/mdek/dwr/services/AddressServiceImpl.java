@@ -365,8 +365,8 @@ public class AddressServiceImpl implements AddressService {
 		}
 	}
 	
-	public void inheritAddressToChildren(String adrUuid) {
-
+	public String inheritAddressToChildren(String adrUuid) {
+	    return addressRequestHandler.mergeAddressToSubAddresses(adrUuid);
 	}
 
 	public AddressRequestHandler getAddressRequestHandler() {

@@ -1249,21 +1249,26 @@ menuEventHandler.openCreateObjectWizardDialog = function() {
 }
 
 menuEventHandler.inheritAddressToChildren = function(msg) {
+    var defMain = new dojo.Deferred();
     var def = new dojo.Deferred();
 
     // Get the selected node from the message
     var selectedNode = getSelectedNode(msg);
     
+    defMain.addCallback(function(res) {
+        dialog.show(message.get("general.info"), dojo.string.substitute(message.get('info.address.inherit.to.children'), [res]), dialog.INFO);
+    });
+    
     dialog.show(message.get("general.warning"), dojo.string.substitute(message.get('warning.address.inherit.to.children'), [selectedNode.label]), dialog.WARNING, [
         { caption: message.get("general.cancel"),  action: function() { /**onForceSaveDef.errback();*/ } },
         { caption: message.get("general.ok"), action: function() { def.callback(); } }
-    ]);    
+    ]);
     
     def.addCallback(function() {
         console.debug("Publishing event: /inheritAddressToChildren("+selectedNode.id+")");
-        dojo.publish("/inheritAddressToChildren", [{id: selectedNode.id[0], resultHandler: def}]);
+        dojo.publish("/inheritAddressToChildren", [{id: selectedNode.id[0], resultHandler: defMain}]);
     });
-    return def;
+    return defMain;
 }
 
 
