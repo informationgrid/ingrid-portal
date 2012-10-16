@@ -45,10 +45,10 @@
     	    <strong>$node.name</strong>
     	#elseif ($node.type == 2) ## Descriptor Type
     	  #if ($node.name == $ps.currentQueryTerm)
-            <strong><a href="$url?action=doSearch&q=$node.topic&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()"><span style="text-decoration:underline">$node.name</span></a></strong>
+            <strong><a href="$url?action=doSearch&q=$node.topic&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()&scrollTop=0"><span style="text-decoration:underline">$node.name</span></a></strong>
     	    <!--<strong><a href="$action"><span style="text-decoration:underline">$node.name</span></a></strong>-->
     	  #else
-            <strong><a href="$url?action=doSearch&q=$node.topic&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()">$node.name</a></strong>
+            <strong><a href="$url?action=doSearch&q=$node.topic&nodeId=$node.get("topicID")&parentNodes=$node.getAllParentsAsString()&scrollTop=0">$node.name</a></strong>
     	    <!--<strong><a href="$action">$node.name</a></strong>-->
     	  #end
     	#elseif ($node.type == -1) ## SNS Error Type
