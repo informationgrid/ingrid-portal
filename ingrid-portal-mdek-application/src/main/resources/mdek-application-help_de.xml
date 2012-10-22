@@ -225,7 +225,7 @@
 
                 <ul>
                     <li>
-                        Dashboard
+                        <a href="?hkey=dashboard-1">Dashboard</a>
                     </li>
                     <li>
                         <a href="?hkey=hierarchy-maintenance-1">Hierrarchie &amp; Erfassung</a>
@@ -310,7 +310,26 @@
             </content>
         </section>
     </chapter>
-   <chapter>
+    <chapter>
+        <header>Dashboard</header>
+        <section help-key="dashboard-1">
+            <header>Beschreibung</header>
+            <content>
+                <p>Das Dashboard zeigt eine Übersicht über den verwendeten Katalog. Überdies werden alle zuletzt
+                bearbeiteten Objekte und Adressen des eingeloggten Benutzers tabellarisch angezeigt, so dass
+                ein schneller Sprung zu einem kürzlich bearbeiteten Objekte bzw. Adresse möglich ist.</p>
+                <br />
+                <p>Ein Klick auf "Alle Datensätze" zeigt die zuletzt bearbeiteten Objekte und Adressen aller Nutzer
+                an. Hier erhält man einen Überblick, welche Objekte/Adressen auf dem gesamten Katalog gerade bearbeitet
+                werden. Ist ein Objekt/Adresse grau, so bedeutet dies, dass der eingeloggte Benutzer keine Schreibrechte
+                darauf besitzt.</p>
+                <br />
+                <p>Ein Klick auf die "Aktualisieren"-Schaltfläche lädt die Informationen neu ein ohne dass die Seite neu 
+                geladen werden muss.</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
         <header>Hierarchie u. Erfassung</header>
         <section help-key="hierarchy-maintenance-1">
             <header>Anordnung der Metadaten (Der Strukturbaum)</header>

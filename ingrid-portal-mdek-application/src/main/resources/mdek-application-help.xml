@@ -153,7 +153,7 @@
 
                 <ul>
                      <li>
-                        Dashboard
+                        <a href="?hkey=dashboard-1">Dashboard</a>
                     </li>
                     <li>
                         <a href="?hkey=hierarchy-maintenance-1">Hierarchy &amp; Acquisition</a>
@@ -217,7 +217,24 @@
             </content>
         </section>
     </chapter>
-   <chapter>
+    <chapter>
+        <header>Dashboard</header>
+        <section help-key="dashboard-1">
+            <header>Description</header>
+            <content>
+                <p>The dashboard shows an overview of the catalogue that is in use. Moreover the currently
+                edited objects and addresses of the logged in user are shown. So it's possible to jump directly to 
+                the object/address that has been recently edited.</p>
+                <br />
+                <p>If you click on "All Datasets" all recently edited objects/addresses of all users are shown.
+                This overview show which objects/addresses are edited on the whole catalogue. A gray object/address
+                signifies that the logged in user has no write permission for this object/address.</p>
+                <br />
+                <p>A click on the "Update"-button refreshes the data without the need of reloading the whole page.</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
         <header>Hierarchy &amp; Acquisition</header>
         <section help-key="hierarchy-maintenance-1">
             <header>Arranging the metadata (Structure tree)</header>
