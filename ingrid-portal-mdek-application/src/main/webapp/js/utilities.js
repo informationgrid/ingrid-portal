@@ -689,17 +689,26 @@ UtilList.addAddressTitles = function(list) {
 // This function iterates over all entries in the list and adds a value: 'linkLabel' to each node
 // which is a href to the menuEventHandler 'selectNodeInTree' function
 // If an entry contains the variable 'pubOnly = true', the text color is set to grey
-UtilList.addObjectLinkLabels = function(list, isDirectLink) {
+// showPermission changes the style of the link if there is no write permission
+UtilList.addObjectLinkLabels = function(list, isDirectLink, showPermission) {
     var addJump = "";
+    var disabledClass;
 	for (var i = 0; i < list.length; ++i) {
 	    // jump to specific element
 	    isDirectLink && list[i].relationType == 3210 ? addJump = ", \"uiElementN003\"" : "";
 	    !isDirectLink && list[i].relationType == 3210 ? addJump = ", \"uiElement3345\"" : "";
+	    
+	    disabledClass = "";
+	    if (showPermission) {
+	        if (!list[i].writePermission)
+	            disabledClass = " disabled";
+	    } 
+	    
 		if (list[i].pubOnly) {
-			list[i].linkLabel = "<a class='pubOnly' href='#' onclick='menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\""+addJump+");'"+
+			list[i].linkLabel = "<a class='pubOnly"+disabledClass+"' href='#' onclick='menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\""+addJump+");'"+
 		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";			
 		} else {
-			list[i].linkLabel = "<a href='#' onclick='menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\""+addJump+");'"+
+			list[i].linkLabel = "<a class='"+disabledClass+"' href='#' onclick='menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"O\""+addJump+");'"+
 		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";
 		}
 	}
@@ -708,9 +717,16 @@ UtilList.addObjectLinkLabels = function(list, isDirectLink) {
 
 // Iterates over an array of addresses and adds a property 'linkLabel' depending on the 'uuid' and 'title' of the address.
 // linkLabel is a html href to directly jump to a given address in the main tree
-UtilList.addAddressLinkLabels = function(list) {
+// showPermission changes the style of the link if there is no write permission
+UtilList.addAddressLinkLabels = function(list, showPermission) {
+    var disabledClass;
 	for (var i = 0; i < list.length; ++i) {
-		list[i].linkLabel = "<a href='#' onclick='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"A\");'"+
+	    disabledClass = "";
+        if (showPermission) {
+            if (!list[i].writePermission)
+                disabledClass = " disabled";
+        } 
+		list[i].linkLabel = "<a class='"+disabledClass+"' href='#' onclick='javascript:menuEventHandler.handleSelectNodeInTree(\""+list[i].uuid+"\", \"A\");'"+
 		                    "title='"+list[i].title+"'>"+list[i].title+"</a>";
 	}
 	return list;

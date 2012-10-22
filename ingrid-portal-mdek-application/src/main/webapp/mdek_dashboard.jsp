@@ -4,16 +4,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
         <script type="text/javascript">
+            dojo.require("dijit.layout.TabContainer");
+        
 			var infoData = {};
 			
 			var def1 = getCatalogInfo();
 			
 			dojo.connect(_container_, "onLoad", function(){
 				var def2 = createGrids();
-				//var def1 = getObjectInformation();
 				
 				var defList = new dojo.DeferredList([def1, def2]);
 				defList.addCallback(updateInfo);
+				
+				dojo.connect(dijit.byId("dashboardTab"), "selectChild", updateInfo);
 			});
 			
 			function getCatalogInfo() {
@@ -24,7 +27,6 @@
 					callback: function(res){
 						infoData.catalogName = res.catalogName;
 						infoData.location = res.location.name;
-						//infoData.numUser = res.totalNumHits;
 						def.callback();
 					}
 				});
@@ -47,7 +49,7 @@
 					{ field: 'workState', name: "<fmt:message key='ui.dashboard.status' />", width: '105px' },
 					{ field: 'modificationTime', name: "<fmt:message key='ui.dashboard.changed' />", width: 'auto' }
 			    ];
-			    var def1 = createDataGrid("objectInfo", null, structure, receiveWorkObjects);
+			    var def1 = createDataGrid("objectInfo", null, structure, dojo.partial(receiveWorkObjects, "PORTAL_QUICKLIST"));
 				
 				var addrStructure = [
 			        { field: 'nodeDocType', name: "&nbsp;", width: '23px',formatter:renderIconClass },
@@ -55,37 +57,51 @@
 					{ field: 'workState', name: "<fmt:message key='ui.dashboard.status' />", width: '105px' },
 					{ field: 'modificationTime', name: "<fmt:message key='ui.dashboard.changed' />", width: 'auto' }
 			    ];
-			    var def2 = createDataGrid("addressInfo", null, addrStructure, receiveWorkAddresses);
+			    var def2 = createDataGrid("addressInfo", null, addrStructure, dojo.partial(receiveWorkAddresses, "PORTAL_QUICKLIST"));
 				
-				var defList = new dojo.DeferredList([def1, def2]);
+			    var def3 = createDataGrid("globalObjectInfo", null, structure, dojo.partial(receiveWorkObjects, "PORTAL_QUICKLIST_ALL_USERS"));
+			    var def4 = createDataGrid("globalAddressInfo", null, addrStructure, dojo.partial(receiveWorkAddresses, "PORTAL_QUICKLIST_ALL_USERS"));
+			    
+				var defList = new dojo.DeferredList([def1, def2, def3, def4]);
 				return defList;
 			}
 			
 			
-			function receiveWorkObjects() {
+			function receiveWorkObjects(selection) {
 				var def = new dojo.Deferred();
 				
-				ObjectService.getWorkObjects("PORTAL_QUICKLIST", "DATE", true, 0, 20, {
+				ObjectService.getWorkObjects(selection, "DATE", true, 0, 20, {
 					callback: function(res){
-						infoData.numObjects = res.totalNumHits;
-                        UtilList.addObjectLinkLabels(res.resultList);
+					    if (selection == "PORTAL_QUICKLIST") {
+					        infoData.numObjects = res.totalNumHits;
+					        UtilList.addObjectLinkLabels(res.resultList);
+					    } else {
+					        infoData.numObjectsAll = res.totalNumHits;
+					        UtilList.addObjectLinkLabels(res.resultList, null, true);
+					    }
+                            
 						def.callback(res.resultList);
 					}
 				});
 				return def;
 			}
 			
-			function receiveWorkAddresses() {
+			function receiveWorkAddresses(selection) {
 				var def = new dojo.Deferred();
-				AddressService.getWorkAddresses("PORTAL_QUICKLIST", "DATE", true, 0, 20, {
+				AddressService.getWorkAddresses(selection, "DATE", true, 0, 20, {
 					callback: function(res){
-						infoData.numAddresses = res.totalNumHits;
-                        
-                        dojo.forEach(res.resultList, function(adr) {
+					    dojo.forEach(res.resultList, function(adr) {
                             adr.title = UtilAddress.createAddressTitle(adr);
                         });
+					    
+					    if (selection == "PORTAL_QUICKLIST") {
+					        infoData.numAddresses = res.totalNumHits;
+					        UtilList.addAddressLinkLabels(res.resultList);
+					    } else {
+					        infoData.numAddressesAll = res.totalNumHits;
+					        UtilList.addAddressLinkLabels(res.resultList, true);
+					    }
                         
-                        UtilList.addAddressLinkLabels(res.resultList);
 						def.callback(res.resultList);
 					}
 				});
@@ -93,13 +109,21 @@
 			}
 			
             function updateDashboard() {
-                var def1 = receiveWorkObjects();
+                var def1 = receiveWorkObjects("PORTAL_QUICKLIST");
                 def1.addCallback(function(data){
                     UtilGrid.setTableData("objectInfo", data);
                 });
-                var def2 = receiveWorkAddresses();
+                var def2 = receiveWorkAddresses("PORTAL_QUICKLIST");
                 def2.addCallback(function(data){
                     UtilGrid.setTableData("addressInfo", data);
+                });
+                var def3 = receiveWorkObjects("PORTAL_QUICKLIST_ALL_USERS");
+                def3.addCallback(function(data){
+                    UtilGrid.setTableData("globalObjectInfo", data);
+                });
+                var def4 = receiveWorkAddresses("PORTAL_QUICKLIST_ALL_USERS");
+                def4.addCallback(function(data){
+                    UtilGrid.setTableData("globalAddressInfo", data);
                 });
                 getCatalogInfo().addCallback(updateInfo);
             }
@@ -107,8 +131,13 @@
 			function updateInfo() {
 				dojo.byId("catalogName").innerHTML = infoData.catalogName;
 				dojo.byId("location").innerHTML = infoData.location;
-				dojo.byId("numObjects").innerHTML = infoData.numObjects;
-				dojo.byId("numAddresses").innerHTML = infoData.numAddresses;
+				if (dijit.byId("dashboardTab").selectedChildWidget.id == "userSpace") {
+    				dojo.byId("numObjects").innerHTML = infoData.numObjects;
+    				dojo.byId("numAddresses").innerHTML = infoData.numAddresses;
+				} else {
+				    dojo.byId("numObjects").innerHTML = infoData.numObjectsAll;
+                    dojo.byId("numAddresses").innerHTML = infoData.numAddressesAll;
+				}
 				dojo.byId("numUsers").innerHTML = infoData.numUsers;
 			}
 			
@@ -154,18 +183,37 @@
 							</table>
 						</div>
 					</div>
-	                <div class="inputContainer field">
-	                    <h2><fmt:message key="ui.dashboard.title.objectsDraft" /></h2>
-	                    <div class="tableContainer">
-							<div id="objectInfo" autoHeight="10" contextMenu="none"></div>
-	                    </div>
-	                </div>
-					<div class="inputContainer field">
-	                    <h2><fmt:message key="ui.dashboard.title.addressesDraft" /></h2>
-	                    <div class="tableContainer">
-							<div id="addressInfo" autoHeight="10" contextMenu="none"></div>
-	                    </div>
-	                </div>
+                    <div id="dashboardTab" dojoType="dijit.layout.TabContainer" doLayout="false" style="width:100%;" selectedChild="userSpace">
+                        <!-- MAIN TAB 1 START -->
+                        <div id="userSpace" dojoType="dijit.layout.ContentPane" title="<fmt:message key="ui.dashboard.myObjAdr" />" class="tab" style="overflow:hidden;">
+        	                <div class="inputContainer field">
+        	                    <h2><fmt:message key="ui.dashboard.title.objectsDraft" /></h2>
+        	                    <div class="tableContainer">
+        							<div id="objectInfo" autoHeight="10" contextMenu="none"></div>
+        	                    </div>
+        	                </div>
+        					<div class="inputContainer field">
+        	                    <h2><fmt:message key="ui.dashboard.title.addressesDraft" /></h2>
+        	                    <div class="tableContainer">
+        							<div id="addressInfo" autoHeight="10" contextMenu="none"></div>
+        	                    </div>
+        	                </div>
+                        </div>
+                        <div id="globalSpace" dojoType="dijit.layout.ContentPane" title="<fmt:message key="ui.dashboard.allObjAdr" />" class="tab" style="overflow:hidden;">
+                            <div class="inputContainer field">
+                                <h2><fmt:message key="ui.dashboard.title.objectsDraft" /></h2>
+                                <div class="tableContainer">
+                                    <div id="globalObjectInfo" autoHeight="10" contextMenu="none"></div>
+                                </div>
+                            </div>
+                            <div class="inputContainer field">
+                                <h2><fmt:message key="ui.dashboard.title.addressesDraft" /></h2>
+                                <div class="tableContainer">
+                                    <div id="globalAddressInfo" autoHeight="10" contextMenu="none"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 	                <div class="inputContainer">
 	                    <span class="button"><span style="float:right;">
 	                        </span><span id="catalogueFieldSettingsLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden"><img src="img/ladekreis.gif" /></span></span>

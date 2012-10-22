@@ -138,12 +138,6 @@ div #toolbarPane .dijitToolbar .dijitButtonNode:hover { background-color: #ADD9F
 .inputButtonInLineRight { padding-left:30px; }
 .claro .dijitTextBox .dijitInputField { padding-left:4px; padding-right:4px; }
 
-/* LINK */
-.ui-widget-content a { color: #115C8E; /*text-decoration: none;*/ }
-.ui-widget-content a:hover { color: #115C8E; /*text-decoration: underline; */}
-/*.expandContent a { color: #156496; text-decoration: none; }
-.expandContent a:hover { color: #156496; text-decoration: underline; }*/
-
 /* INFO */
 .infobox { background-color:#E6F0F5; border-bottom: 2px solid #156496; border-top: 2px solid #156496;  margin: 3px 0 11px 4px; padding: 0 16px 10px 6px; position: relative; width:700px; }
 .infoboxImage { width:16px; height:16px; padding-left: 16px; padding-top: 5px; }
@@ -215,3 +209,15 @@ div.rubricBottom span.rubricButtons .dijitButtonNode:hover { background-color:#A
 .slick-cell.active.editable {padding: 0 !important;}
 .slick-cell .dijitComboBox .dijitButtonNode, .slick-cell .dijitComboBox .dijitButtonNode input {height:100% !important;}
 .slick-row {height:20px;}
+
+/* styles for displaying a hierarchical structure with css print/detail view! */
+.h_line {
+    border-bottom: 1px #ccc dashed;
+    overflow:visible;
+    height:9px;        
+    margin: 5px 5px 3px 0;
+    display: inline-block;
+}
+.v_line {
+    border-left: 1px #ccc dashed;
+}
