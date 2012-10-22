@@ -1609,6 +1609,10 @@
 				 steht anderen Nutzern nicht zur Verfügung.</p>
 				 <p>Zum Löschen des Nutzers klicken Sie auf die Schaltfläche <i>Nutzer löschen</i> und 
 				 bestätigen den Vorgang in dem sich öffnenden Dialog.</p>
+                 <p><b>Anzeige der Verantwortlichkeiten</b></p>
+                 <p>Über den Reiter "Als Verantwortlicher" werden zwei Tabellen angezeigt, die die Objekte
+                 und Adressen auflisten, in denen der ausgewählte Benutzer als Verantwortlicher eingetragen
+                 ist. Es ist möglich direkt von diesen Tabellen auf ein Objekt bzw. Adresse zu springen.</p>
             </content>
         </section>
         <section help-key="user-administration-2">

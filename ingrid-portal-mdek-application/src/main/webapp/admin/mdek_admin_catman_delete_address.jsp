@@ -34,17 +34,8 @@
                     {field: 'uuid',name: 'ID',width: '300px'}, 
                     {field: 'objectName',name: "<fmt:message key='dialog.admin.catalog.management.deleteAddress.objectName' />",width: '300px'}
                 ];
-                var replaceInfoAddressListStructure2 = [
-                    {field: 'icon',name: '&nbsp;',width: '30px'},
-                    {field: 'uuid',name: 'ID',width: '300px'}, 
-                    {field: 'title',name: "<fmt:message key='dialog.admin.catalog.management.deleteAddress.objectName' />",width: '300px'}
-                ];
-                
+               
                 createDataGrid("replaceInfoAddressList", null, replaceInfoAddressListStructure, null);
-                
-                createDataGrid("replaceUserList", null, replaceInfoAddressListStructure, null);
-                
-                createDataGrid("replaceAddressList", null, replaceInfoAddressListStructure2, null);
                 
                 createDataGrid("addressNewDataMDQS", null, addressDeleteDataMDQSStructure, null);
                 
@@ -151,22 +142,7 @@
                     UtilStore.updateWriteStore("replaceInfoAddressList", detailedAddressInfo.objAddressList);
                 }
                 
-                // Set List of objects whose responsible user will be replaced
-                if (detailedAddressInfo.objResponsibleAddressList) {
-                    UtilList.addIcons(detailedAddressInfo.objResponsibleAddressList);
-                    UtilStore.updateWriteStore("replaceUserList", detailedAddressInfo.objResponsibleAddressList);
-                }
-                
-                // Set List of addresses whose responsible user will be replaced
-                if (detailedAddressInfo.addrResponsibleUserList) {
-                    UtilList.addIcons(detailedAddressInfo.addrResponsibleUserList);
-                    UtilList.addAddressTitles(detailedAddressInfo.addrResponsibleUserList);
-                    UtilStore.updateWriteStore("replaceAddressList", detailedAddressInfo.addrResponsibleUserList);
-                }
-                
-                if (detailedAddressInfo.objResponsibleAddressList.length >= MAX_NUM_DATASETS ||
-                detailedAddressInfo.objAddressList.length >= MAX_NUM_DATASETS ||
-                detailedAddressInfo.addrResponsibleUserList.length >= MAX_NUM_DATASETS) {
+                if (detailedAddressInfo.objAddressList.length >= MAX_NUM_DATASETS) {
 				dojo.byId('maxNumDatasetsWarning').style.visibility = "visible";
                 }
                 else {
@@ -181,8 +157,6 @@
                 dijit.byId("addressDeleteDataUser").setValue("");
                 UtilGrid.setTableData("addressDeleteDataMDQS", []);
                 UtilGrid.setTableData("replaceInfoAddressList", []);
-                UtilGrid.setTableData("replaceUserList", []);
-                UtilGrid.setTableData("replaceAddressList", []);
             }
             
             //Update the fields for 'address to replace'
@@ -212,7 +186,6 @@
             //   responsibleUser: {title:address title, uuid:address uuid},
             //   qaUsers: [ {title:address title, uuid:address uuid}, {...}, ...],
             //   objAddressList: [ {obj1}, {obj2}, ... ],
-            //   objResponsibleAddressList: [ {obj1}, {obj2}, ... ]
             // }
             function createDetailedAddressInformationDef(addressUuid){
                 var def = new dojo.Deferred();
@@ -220,16 +193,12 @@
                 var responsibleUsersDef = getUsersWithWritePermissionDef(addressUuid);
                 
                 var objAddressDef = getObjectsWithAddressDef(addressUuid);
-                var objResponsibleAddressDef = getObjectsWithResponsibleUserDef(addressUuid);
-                var addrResponsibleUserDef = getAddressesWithResponsibleUser(addressUuid);
                 
-                var defList = new dojo.DeferredList([addressDetailsDef, responsibleUsersDef, objAddressDef, objResponsibleAddressDef, addrResponsibleUserDef], false, false, true);
+                var defList = new dojo.DeferredList([addressDetailsDef, responsibleUsersDef, objAddressDef], false, false, true);
                 defList.addCallback(function(resultList){
                     var addressDetails = resultList[0][1];
                     var responsibleUserList = resultList[1][1];
                     var objAddressList = resultList[2][1];
-                    var objResponsibleAddressList = resultList[3][1];
-                    var addrResponsibleUserList = resultList[4][1];
                     
                     var responsibleUser = null;
                     for (var index = 0; index < responsibleUserList.length; ++index) {
@@ -255,9 +224,7 @@
                         address: addressDetails,
                         responsibleUser: responsibleUser,
                         qaUsers: qaUsers,
-                        objAddressList:objAddressList,
-                        objResponsibleAddressList: objResponsibleAddressList,
-                        addrResponsibleUserList: addrResponsibleUserList
+                        objAddressList:objAddressList
                     });
                 });
                 
@@ -312,42 +279,6 @@
                 var def = new dojo.Deferred();
                 
                 CatalogManagementService.getObjectsOfAddressByType(adrUuid, null, MAX_NUM_DATASETS, {
-                    callback: function(objects){
-                        def.callback(objects);
-                    },
-                    errorHandler: function(message, err){
-                        displayErrorMessage(err);
-                        console.debug("Error: " + message);
-                        def.errback(err);
-                    }
-                });
-                
-                return def;
-            }
-            
-            // Fetch objects where given adrUuid is set as the responsible user
-            function getObjectsWithResponsibleUserDef(adrUuid){
-                var def = new dojo.Deferred();
-                
-                CatalogManagementService.getObjectsOfResponsibleUser(adrUuid, MAX_NUM_DATASETS, {
-                    callback: function(objects){
-                        def.callback(objects);
-                    },
-                    errorHandler: function(message, err){
-                        displayErrorMessage(err);
-                        console.debug("Error: " + message);
-                        def.errback(err);
-                    }
-                });
-                
-                return def;
-            }
-            
-            // Fetch objects where given adrUuid is set as the responsible user
-            function getAddressesWithResponsibleUser(adrUuid){
-                var def = new dojo.Deferred();
-                
-                CatalogManagementService.getAddressesOfResponsibleUser(adrUuid, MAX_NUM_DATASETS, {
                     callback: function(objects){
                         def.callback(objects);
                     },
@@ -592,22 +523,6 @@
                         </div>
                     </div>
                     <!-- TAB 1 END -->
-                    <!-- TAB 2 START -->
-                    <div id="replaceUser" dojoType="dijit.layout.ContentPane" title="<fmt:message key="dialog.admin.catalog.management.deleteAddress.replaceResponsibleAddress" />">
-                        <div class="tableContainer">
-                            <div id="replaceUserList" autoHeight="4" contextMenu="none">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- TAB 2 END -->
-                    <!-- TAB 3 START -->
-                    <div id="replaceAddress" dojoType="dijit.layout.ContentPane" title="<fmt:message key="dialog.admin.catalog.management.deleteAddress.replaceResponsibleAddressFromAddress" />">
-                        <div class="tableContainer">
-                            <div id="replaceAddressList" autoHeight="4" contextMenu="none">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- TAB 3 END -->
                 </div>
                 <span id="maxNumDatasetsWarning" style="visibility: hidden;">
                     <fmt:message key="dialog.admin.catalog.management.deleteAddress.maxNumHits" />

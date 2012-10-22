@@ -1211,6 +1211,10 @@
 				 <p><u>Note</u>: The administrators group is automatically always assigned to the catalogue administrator. This arrangement cannot be changed. The group is not available to other users. </p>
 				 <p>To delete the user click on the <i>Delete User</i> button and confirm the operation in the dialogue box that opens up.</p>
 				 <p></p>
+                 <p><b>Responsibility view</b></p>
+                 <p>When clicking on the tab "As responsible user", two tables are shown, listing the objects
+                 and addressed, in which the currently selected user is set as responsible. It's possible to
+                 jump directly to the object/address by clicking an entry from the table.</p>
             </content>
         </section>
         <section help-key="user-administration-2">

@@ -20,38 +20,57 @@
             var administratorId = null;
             var catAdminUserData = null;
             
+            var MAX_NUM_DATASETS = 100;
+            
             var requiredElements = [["userDataAddressSurname", "userDataAddressSurnameLabel"],
                 ["userDataAddressForename", "userDataAddressForenameLabel"],
                 ["userDataAddressEmailUser", "userDataAddressEmailUserLabel"]
             ];
             
             dojo.connect(_container_, "onLoad", function(){
-                createGrids();
+                dijit.byId("borderContainerMdekAdminUserAdmin").resize();
                 
-                createCustomTree("treeUser", null, "userId", "title", loadUserData);
+                this.createGrids();
                 
-                createGroupLists();
+                createCustomTree("treeUser", null, "userId", "title", this.loadUserData);
                 
-                initializeUserTree();
+                this.createGroupLists();
+                
+                this.initializeUserTree();
                 
                 // select first user?
                 //tree.attr("path", [tree.rootNode.item, tree.rootNode.getChildren()[0].item]);
-                setUserAddressDataFieldsDisabled(true);
+                this.setUserAddressDataFieldsDisabled(true);
 
                 Validation.addEmailCheck("userDataAddressEmailUser", false);
                 Validation.addEmailCheck("userDataAddressEmailPointOfContact", false);
             });
             
             
-            function createGrids() {
+            scriptScopeUser.createGrids = function() {
                 var tableStructure = [
                     {field: 'name',name: "<fmt:message key='dialog.admin.users.groupName' />",width: 350-scrollBarWidth+'px'}
                 ];
                 createDataGrid("availableGroupsList", null, tableStructure, null);
                 createDataGrid("groupsList", null, tableStructure, null);
+                
+                // responsible tables
+                var responsibleUserInObjectsStructure = [
+                   {field: 'icon',name: '&nbsp;',width: '30px'},
+                   {field: 'uuid',name: 'ID',width: '300px'}, 
+                   {field: 'linkLabel',name: "<fmt:message key='dialog.admin.catalog.management.deleteAddress.objectName' />",width: '300px'}
+                ];
+                var responsibleUserInAddressesStructure = [
+                   {field: 'icon',name: '&nbsp;',width: '30px'},
+                   {field: 'uuid',name: 'ID',width: '300px'}, 
+                   {field: 'title',name: "<fmt:message key='dialog.admin.catalog.management.deleteAddress.objectName' />",width: '300px'}
+                ];
+               
+                createDataGrid("responsibleUserInObjects", null, responsibleUserInObjectsStructure, null);
+                createDataGrid("responsibleUserInAddresses", null, responsibleUserInObjectsStructure, null);
             }
             
-            function loadUserData(node, callback_function){
+            scriptScopeUser.loadUserData = function(node, callback_function){
                 var parentItem = node.item;
                 var store = this.tree.model.store;
                 
@@ -62,7 +81,7 @@
                 console.debug("parentItem");
                 console.debug(parentItem);
                 SecurityService.getSubUsers(parentItem.userId[0], {
-                    preHook: showLoadingZone,
+                    preHook: scriptScopeUser.showLoadingZone,
                     postHook: hideLoadingZone,
                     callback: function(res){
                         var userNodes = convertUserListToTreeNodes(res);
@@ -89,7 +108,7 @@
             }
             
             
-            function setTreeRoot(catAdmin){
+            scriptScopeUser.setTreeRoot = function(catAdmin){
                 console.debug(catAdmin);
                 // Add the data to the tree
                 var title = UtilAddress.createAddressTitle(catAdmin.address);
@@ -124,27 +143,27 @@
             
             
             // Resets the tree view and loads the catalog administrator from the backend
-            function initializeUserTree(){
+            scriptScopeUser.initializeUserTree = function(){
             
-                var def = getCatalogAdmin();
+                var def = UtilSecurity.getCatAdmin();
                 def.addCallback(function(catAdmin){
-                    setTreeRoot(catAdmin);
+                    scriptScopeUser.setTreeRoot(catAdmin);
                 });
                 
                 dojo.connect(dijit.byId("treeUser"), "onClick", treeNodeSelected);
             }
             
-            function createGroupLists() {
+            scriptScopeUser.createGroupLists = function() {
                 var storeProps = { identifier: 'id', label: "<fmt:message key='dialog.admin.groupName' />" };
                 createSelectBox("userDataGroup",
                     null, 
                     storeProps,
                     null//function(){return UtilSecurity.getAllGroups(includeCatAdminGroup);}
                 );
-                initializeGroupLists(true);
+                this.initializeGroupLists(true);
             }
             
-            function initializeGroupLists(includeCatAdminGroup){
+            scriptScopeUser.initializeGroupLists = function(includeCatAdminGroup){
                 var def = UtilSecurity.getAllGroups(includeCatAdminGroup);
                 
                 def.then(function(groupList){
@@ -274,7 +293,7 @@
                             tree.model.store.deleteItem(user);
                             tree.model.store.save();
                             resetInputFields();
-                            setUserAddressDataFieldsDisabled(true);
+                            scriptScopeUser.setUserAddressDataFieldsDisabled(true);
                             //dijit.byId("treeUser").selectedNode = null;
                         },
                         errorHandler: function(errMsg, err){
@@ -342,21 +361,17 @@
                     def.addCallback(function(deferred){
                         //treeController.createChild(selectedUser, "last", createNewUserNode(selectedUser, portalUser));
                         console.debug("create new user: ");
-                        console.debug(selectedUser);
-                        console.debug(createNewUserNode(selectedUser.item, portalUser));
+                        //console.debug(selectedUser);
+                        //console.debug(createNewUserNode(selectedUser.item, portalUser));
                         tree.model.store.newItem(createNewUserNode(selectedUser.item, portalUser), {parent: selectedUser.item, attribute:"children"} );
                     });
                     
                     def.addCallback(function(data){
                         console.debug("after new item");
                         resetInputFields();
-                        setUserAddressDataFieldsDisabled(false);
+                        scriptScopeUser.setUserAddressDataFieldsDisabled(false);
                         UtilTree.selectNode("treeUser", "newUserNode");
                         treeNodeSelected(dijit.byId("newUserNode").item);
-                        //setTimeout(function() {UtilTree.selectNode("treeUser", "newUserNode");}, 500);
-                        /*dojo.event.topic.publish(treeListener.eventNames.select, {
-                            node: newNode
-                        });*/
                     });
                 });
             }
@@ -406,7 +421,7 @@
                             var tree = dijit.byId("treeUser");
                             updateTreeNode(selectedUser, newUser);
                             UtilTree.selectNode("treeUser", "TreeNode_" + newUser.id);
-                            updateInputElements(tree.selectedNode.item);
+                            scriptScopeUser.updateInputElements(tree.selectedNode.item);
 
                             dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.users.createSuccess' />", dialog.INFO);
                         },
@@ -513,7 +528,7 @@
                     }
                 }
                 
-                updateInputElements(user);
+                scriptScopeUser.updateInputElements(user);
             }
             
             // Check all input fields for their validity
@@ -580,29 +595,30 @@
                     tree.model.store.save();                    
                 }
                 
-                updateInputElements(item);
+                scriptScopeUser.updateInputElements(item);
             }
             
             // Updates the input elements with the data from 'treeNode'
-            function updateInputElements(treeNode){
+            scriptScopeUser.updateInputElements = function(treeNode){
+                showLoadingZone();
                 resetRequiredElements();
-                setUserAddressDataFieldsDisabled(false);
+                scriptScopeUser.setUserAddressDataFieldsDisabled(false);
 
                 currentSelectedUser = treeNode;
                 dijit.byId("bImportUser").set("disabled", false);
                 if (treeNode.role == 1) {
                     // Standards for catAdmin
-                    var def = initializeGroupLists(true);
-                    UtilGrid.updateOption("availableGroupsList", "editable", false);//.disable();
-                    UtilGrid.updateOption("groupsList", "editable", false);//).disable();
+                    var def = scriptScopeUser.initializeGroupLists(true);
+                    UtilGrid.updateOption("availableGroupsList", "editable", false);
+                    UtilGrid.updateOption("groupsList", "editable", false);
                 }
                 else {
                     if (treeNode.role == 3) {
                         dijit.byId("bImportUser").set("disabled", true);
                     }
-                    var def = initializeGroupLists(false);
-                    UtilGrid.updateOption("availableGroupsList", "editable", true);//.disable();
-                    UtilGrid.updateOption("groupsList", "editable", true);//).disable();
+                    var def = scriptScopeUser.initializeGroupLists(false);
+                    UtilGrid.updateOption("availableGroupsList", "editable", true);
+                    UtilGrid.updateOption("groupsList", "editable", true);
                     
                 }
                 
@@ -621,8 +637,30 @@
                     console.debug("set to groupid: " + treeNode.groupId);
                     //dijit.byId("userDataGroup").set("value",treeNode.groupId+"");
                     currentSelectedAddressId = treeNode.addressUuid;
-                    //currentSelectedUser = treeNode;
+                    
+                    // new users do not have an ID yet!
+                    if (currentSelectedAddressId) {
+                        showLoadingZone();
+                        // update responsible User data
+                        var defRespObj = getObjectsWithResponsibleUser(currentSelectedAddressId[0]);
+                        defRespObj.addCallback(function(objects) {
+                            UtilList.addIcons(objects);
+                            UtilList.addObjectLinkLabels(objects);
+                            UtilGrid.setTableData("responsibleUserInObjects", objects);
+                        });
+                        var defRespAddr = getAddressesWithResponsibleUser(currentSelectedAddressId[0]);
+                        defRespAddr.addCallback(function(addresses) {
+                            UtilList.addIcons(addresses);
+                            UtilList.addAddressTitles(addresses);
+                            UtilList.addAddressLinkLabels(addresses);
+                            UtilGrid.setTableData("responsibleUserInAddresses", addresses);
+                        });
+                        
+                        var defList = new dojo.DeferredList([defRespObj, defRespAddr]);
+                        defList.addCallback(function() {hideLoadingZone();});
+                    }
                 });
+                
             }
             
             function resetInputFields(){
@@ -665,7 +703,7 @@
                 }
             }
 
-            function setUserAddressDataFieldsDisabled(isDisabled) {
+            scriptScopeUser.setUserAddressDataFieldsDisabled = function(isDisabled) {
                 if (isDisabled) {
                     resetRequiredElements();
                 }
@@ -749,31 +787,9 @@
                 var deferred = new dojo.Deferred();
                 
                 AddressService.getAddressData(uuidToFetch, null, {
-                    //preHook: showLoadingZone,
-                    //postHook: hideLoadingZone,
                     callback: function(adr){
                         console.debug("got addressData: " + adr);
                         deferred.callback(adr);
-                    },
-                    errorHandler: function(errMsg, err){
-                        hideLoadingZone();
-                        displayErrorMessage(err);
-                        console.debug(errMsg);
-                        deferred.errback(err);
-                    }
-                });
-                
-                return deferred;
-            }
-            
-            function getCatalogAdmin(){
-                var deferred = new dojo.Deferred();
-                
-                SecurityService.getCatalogAdmin({
-                    preHook: showLoadingZone,
-                    postHook: hideLoadingZone,
-                    callback: function(user){
-                        deferred.callback(user);
                     },
                     errorHandler: function(errMsg, err){
                         hideLoadingZone();
@@ -841,6 +857,42 @@
                 }
             }
             
+            // Fetch objects where given adrUuid is set as the responsible user
+            function getObjectsWithResponsibleUser(adrUuid){
+                var def = new dojo.Deferred();
+                
+                CatalogManagementService.getObjectsOfResponsibleUser(adrUuid, MAX_NUM_DATASETS, {
+                    callback: function(objects){
+                        def.callback(objects);
+                    },
+                    errorHandler: function(message, err){
+                        displayErrorMessage(err);
+                        console.debug("Error: " + message);
+                        def.errback(err);
+                    }
+                });
+                
+                return def;
+            }
+            
+            // Fetch objects where given adrUuid is set as the responsible user
+            function getAddressesWithResponsibleUser(adrUuid){
+                var def = new dojo.Deferred();
+                
+                CatalogManagementService.getAddressesOfResponsibleUser(adrUuid, MAX_NUM_DATASETS, {
+                    callback: function(objects){
+                        def.callback(objects);
+                    },
+                    errorHandler: function(message, err){
+                        displayErrorMessage(err);
+                        console.debug("Error: " + message);
+                        def.errback(err);
+                    }
+                });
+                
+                return def;
+            }
+            
             function getDocTypeForRole(roleId){
                 switch (roleId) {
                     case 1:
@@ -866,7 +918,7 @@
     <body>
         <!-- CONTENT START -->
         <!--<div dojoType="dijit.layout.ContentPane" layoutAlign="client">-->
-            <div id="contentSection" class="content contentBlockWhite top" style="">
+            <div id="contentSection" class="content contentBlockWhite top">
                 <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="false" id="borderContainerMdekAdminUserAdmin" style="height:680px;">
                     <div dojoType="dijit.layout.BorderContainer" splitter="false" region="leading" style="width:264px;">
                         <div dojoType="dijit.layout.ContentPane" splitter="false" region="center" class="grey">
@@ -888,19 +940,15 @@
                             </span>
                         </div><!-- LEFT HAND SIDE CONTENT BLOCK 1 END -->
                     </div>
-                    <div dojoType="dijit.layout.BorderContainer" splitter="false" region="center" style="">
-                        <div dojoType="dijit.layout.ContentPane" splitter="false" region="center">
-                            <!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
-                            <div id="winNavi" style="top:0px;">
-                                <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=user-administration-1#user-administration-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
-                            </div>
-                            <div id="userData" class="inputContainer" style="">
-                                <span class="label">
-                                    <label onclick="javascript:dialog.showContextHelp(arguments[0], 8012)">
-                                        <fmt:message key="dialog.admin.users.userData" />
-                                    </label>
-                                </span>
-                                <div class="inputContainer field grey" style="">
+                    <div dojoType="dijit.layout.BorderContainer" splitter="false" region="center">
+                        <!-- RIGHT HAND SIDE CONTENT BLOCK 1 START -->
+                        <span class="functionalLink onTab" style="top: 0px;">
+                            <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=user-administration-1#user-administration-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+                        </span>
+                        <div id="userManagementTab" dojoType="dijit.layout.TabContainer" splitter="false" region="center" doLayout="true" style="width:100%;" selectedChild="userData">
+                            <!-- MAIN TAB 1 START -->
+                            <div id="userData" dojoType="dijit.layout.ContentPane" title="<fmt:message key="dialog.admin.users.userData" />" class="tab grey" style="overflow:hidden;">
+                                <div class="inputContainer field grey">
                                     <span class="outer"><div>
                                         <span class="label left">
                                             <label for="userDataLogin" onclick="javascript:dialog.showContextHelp(arguments[0], 8013)">
@@ -1021,15 +1069,31 @@
                                     </div></span>
                                     <div class="fill"></div>
                                 </div>
-                            </div>
+                            </div> <!-- END OF TAB 1 -->
+                            <!-- BEGIN OF TAB 2 -->
+                            <div id="responsibleData" dojoType="dijit.layout.ContentPane" title="<fmt:message key="dialog.admin.users.responsible" />" class="tab grey" style="width: 100%; overflow:hidden;">
+                                <div class="inputContainer field grey">
+                                    <span class="label"><label><fmt:message key="dialog.admin.users.inObjects" /></label></span>
+                                    <div class="tableContainer spaceBelow">
+                                        <div id="responsibleUserInObjects" autoHeight="10" contextMenu="none">
+                                        </div>
+                                    </div>
+                                    <span class="label"><label><fmt:message key="dialog.admin.users.inAddresses" /></label></span>
+                                    <div class="tableContainer">
+                                        <div id="responsibleUserInAddresses" autoHeight="10" contextMenu="none">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- END OF TAB 2 -->
                         </div>
+                        <!-- </div> -->
                         <div dojoType="dijit.layout.ContentPane" splitter="false" region="bottom">
                             <div class="inputContainer">
                                 <span class="button"><span style="float:right;">
                                     <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.users.save" />" onClick="javascript:scriptScopeUser.saveUser();">
                                         <fmt:message key="dialog.admin.users.save" />
                                     </button>
-                                </span><span id="adminUserLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden"><img src="img/ladekreis.gif" /></span></span>
+                                </span><span id="adminUserLoadingZone" style="float:left; margin:4px 0 0 4px; z-index: 100; visibility:hidden"><img src="img/ladekreis.gif" /></span></span>
                             </div>
                         </div>
                         <!-- RIGHT HAND SIDE CONTENT BLOCK 1 END -->
