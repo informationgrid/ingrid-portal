@@ -311,8 +311,10 @@ function initContextMenu(gridProperties) {
                 }                
             }
             
-            // all items have to be disabled if user has no permission
-            if (currentUdk.writePermission) {
+            // all items have to be disabled if user has no permission if hierarchy page is used!
+            var isHierarchyPage = dijit.byId("stackContainer").selectedChildWidget.id == "pageHierarchy";
+            
+            if (!isHierarchyPage || currentUdk.writePermission) {
                 var grid = findGrid(e.target);
                 var somethingIsSelected = UtilGrid.getSelectedRowIndexes(grid).length > 0;
                 var somethingIsCopied   = UtilGrid.getTable(grid).copiedAddress != null;
