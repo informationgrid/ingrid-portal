@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
@@ -53,12 +52,19 @@ pageEncoding="UTF-8" %>
                     {field: 'tree',name: "<fmt:message key='dialog.admin.groups.addressTree' />",width: '100px'},
                     {field: 'subnode',name: "<fmt:message key='dialog.admin.groups.addressSubNode' />",width: '100px'}
                 ];
-                createDataGrid("groupDataRightsObjectsList", null, objRightsStructure, null);
                 
+                var usersStructure = [
+                   {field: 'nodeDocType', name: "&nbsp;", width: '23px',formatter:renderIconClass },
+                   {field: 'title',name: "<fmt:message key='dialog.admin.groups.userName' />",width: '350px'}
+               ];
+                
+                createDataGrid("groupDataRightsObjectsList", null, objRightsStructure, null);
                 createDataGrid("groupDataRightsAddressesList", null, addrRightsStructure, null);
-				
+                createDataGrid("usersOfGroupTable", null, usersStructure, null);
+                
                 createCustomTree("treeObjects", null, "id", "title", expandLoadObjects);
                 createCustomTree("treeAddresses", null, "id", "title", expandLoadAddresses);
+                
 				return def;
             }
             
@@ -499,6 +505,14 @@ pageEncoding="UTF-8" %>
                     setObjectPermissions(groupDetails.objectPermissions);
                     setGroupPermissions(groupDetails.groupPermissions);
                 });
+                
+                var def2 = UtilSecurity.getUsersFromGroup(group.name);
+                def2.addCallback(function(users){
+                    dojo.forEach(users, function(adr) {
+                        adr.title = UtilAddress.createAddressTitle(adr.address);
+                    });
+                    UtilGrid.setTableData("usersOfGroupTable", users);
+                });
             }
             
             
@@ -828,69 +842,69 @@ pageEncoding="UTF-8" %>
                         </div>
                     </div><!-- RIGHT HAND SIDE CONTENT BLOCK 1 END --><!-- CONTENT BLOCK 2 START --><!-- SPLIT CONTAINER START -->
                 </div>
-                <div id="permissionListObjects" style="display: none;padding-top: 15px;">
-                    <span class="label required">
-                        <label onclick="javascript:dialog.showContextHelp(arguments[0], 8022)">
-                            <fmt:message key="dialog.admin.groups.objectPermissions" />
-                        </label>
-                    </span><!--
-                    --><!--<div id="groupDataObjects"></div>-->
-                    <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="false" id="groupDataObjects" layoutAlign="client" design="headline" style="height:250px;">
-                        <!-- LEFT HAND SIDE CONTENT BLOCK 2 START -->
-                        <div dojoType="dijit.layout.ContentPane" region="leading" class="" splitter="true" style="width: 300px;">
-                            <!-- tree components -->
-                            <div id="treeObjects">
+                <div id="groupAdministrationTab" dojoType="dijit.layout.TabContainer" doLayout="false" style="width:100%;" selectedChild="permissionListObjects">
+                    <!-- MAIN TAB 1 START -->
+                    <div id="permissionListObjects" dojoType="dijit.layout.ContentPane" title="<fmt:message key="dialog.admin.groups.objectPermissions" />" class="tab" style="overflow:hidden;">
+                        <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="false" id="groupDataObjects" layoutAlign="client" design="headline" style="height:250px;">
+                            <!-- LEFT HAND SIDE CONTENT BLOCK 2 START -->
+                            <div dojoType="dijit.layout.ContentPane" region="leading" class="" splitter="true" style="width: 300px;">
+                                <!-- tree components -->
+                                <div id="treeObjects">
+                                </div>
                             </div>
-                        </div>
-                        <!-- LEFT HAND SIDE CONTENT BLOCK 2 END --><!-- RIGHT HAND SIDE CONTENT BLOCK 2 START -->
-                        <div dojoType="dijit.layout.ContentPane" region="center" splitter="false" class="innerPadding">
-                            <div class="selectEntryBtn">
-                                <button dojoType="dijit.form.Button" id="addObjectButton" onClick="javascript:adminGroupScope.addObject();">
-                                    &nbsp;>&nbsp;
-                                </button>
-                            </div>
-                            <div id="groupDataObjectsData">
-                                <div class="tableContainer">
-                                    <div id="groupDataRightsObjectsList" autoHeight="9">
+                            <!-- LEFT HAND SIDE CONTENT BLOCK 2 END --><!-- RIGHT HAND SIDE CONTENT BLOCK 2 START -->
+                            <div dojoType="dijit.layout.ContentPane" region="center" splitter="false" class="field">
+                                <div class="selectEntryBtn">
+                                    <button dojoType="dijit.form.Button" id="addObjectButton" onClick="javascript:adminGroupScope.addObject();">
+                                        &nbsp;>&nbsp;
+                                    </button>
+                                </div>
+                                <div id="groupDataObjectsData">
+                                    <div class="tableContainer">
+                                        <div id="groupDataRightsObjectsList" autoHeight="9">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- RIGHT HAND SIDE CONTENT BLOCK 2 END -->
                         </div>
-                        <!-- RIGHT HAND SIDE CONTENT BLOCK 2 END -->
                     </div>
-                </div>
                 <!-- CONTENT BLOCK 2 END --><!-- CONTENT BLOCK 3 START --><!-- SPLIT CONTAINER START -->
-                <div id="permissionListAddresses" style="display: none;padding-top: 15px;">
-                    <span class="label required">
-                        <label onclick="javascript:dialog.showContextHelp(arguments[0], 8023)">
-                            <fmt:message key="dialog.admin.groups.addressPermissions" />
-                        </label>
-                    </span>
-                    <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="false" id="groupDataAddresses" style="height:250px;">
-                        <!-- LEFT HAND SIDE CONTENT BLOCK 3 START -->
-                        <div dojoType="dijit.layout.ContentPane" region="leading" splitter="true" style="width: 300px;">
-                            <!-- tree components -->
-                            <div id="treeAddresses">
+                    <div id="permissionListAddresses" dojoType="dijit.layout.ContentPane" title="<fmt:message key="dialog.admin.groups.addressPermissions" />" class="tab" style="overflow:hidden;">
+                        <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="false" id="groupDataAddresses" style="height:250px;">
+                            <!-- LEFT HAND SIDE CONTENT BLOCK 3 START -->
+                            <div dojoType="dijit.layout.ContentPane" region="leading" splitter="true" style="width: 300px;">
+                                <!-- tree components -->
+                                <div id="treeAddresses">
+                                </div>
                             </div>
-                        </div>
-                        <!-- LEFT HAND SIDE CONTENT BLOCK 3 END -->
-                        <!-- RIGHT HAND SIDE CONTENT BLOCK 3 START -->
-                        <div dojoType="dijit.layout.ContentPane" region="center" splitter="false" class="inputContainer innerPadding">
-                            <div class="selectEntryBtn">
-                                <button dojoType="dijit.form.Button" id="addAddressButton" onClick="javascript:adminGroupScope.addAddress();">
-                                    &nbsp;>&nbsp;
-                                </button>
-                            </div>
-                            <div id="groupDataAddressesData">
-                                <div class="tableContainer">
-                                    <div id="groupDataRightsAddressesList" autoHeight="9">
+                            <!-- LEFT HAND SIDE CONTENT BLOCK 3 END -->
+                            <!-- RIGHT HAND SIDE CONTENT BLOCK 3 START -->
+                            <div dojoType="dijit.layout.ContentPane" region="center" splitter="false" class="inputContainer field">
+                                <div class="selectEntryBtn">
+                                    <button dojoType="dijit.form.Button" id="addAddressButton" onClick="javascript:adminGroupScope.addAddress();">
+                                        &nbsp;>&nbsp;
+                                    </button>
+                                </div>
+                                <div id="groupDataAddressesData">
+                                    <div class="tableContainer">
+                                        <div id="groupDataRightsAddressesList" autoHeight="9">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- RIGHT HAND SIDE CONTENT BLOCK 2 END -->
                         </div>
-                        <!-- RIGHT HAND SIDE CONTENT BLOCK 2 END -->
+                        <!-- CONTENT BLOCK 2 END -->
                     </div>
-                    <!-- CONTENT BLOCK 2 END -->
+                    <!-- CONTENT BLOCK 3 START -->
+                    <div id="belongingUsers" dojoType="dijit.layout.ContentPane" title="<fmt:message key="dialog.admin.groups.belongingUsers" />" class="tab grey" style="overflow:hidden;">
+                        <div class="field">
+                            <div id="usersOfGroupTable" autoHeight="10" contextMenu="none">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CONTENT BLOCK 3 END -->
                 </div>
             </div>
         </div>
