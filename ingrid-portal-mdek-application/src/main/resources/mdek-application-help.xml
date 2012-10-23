@@ -1257,7 +1257,8 @@
 				 <p><u>Note:</u> This right is only effective in connection with   
 				 <a href="?hkey=quality-assurance-0">Workflow Control</a> being switched on in the 
 				 <a href="?hkey=catalog-administration-1">Catalogue Settings</a>.</p>
-				
+				<p><b>belonging users</b></p>
+                 <p>On an extra tab, a table shows all the users that belong to the selected group.</p>
 				<p><b>The special <i>administrators</i> group of the catalogue administrator</b></p>
 				 <p>The <i>Administrators</i> group is always assigned to the catalogue administrator. This assignment can <b>not</b> be changed. The group has write permission for the whole catalogue (of course including the permission to add new objects and addresses to the topmost level). The group has fixed permissions and is automatically present in every catalogue. It cannot be maintained via the group administration and is therefore not shown in the list of the groups.</p>
             </content>
