@@ -1551,31 +1551,7 @@ udkDataProxy._setAddressData = function(nodeData)
 	
     commentStore = commentData;
 
-/*
-// Don't display all 'institutions', only the first one that is found (http://jira.media-style.com/browse/INGRIDII-130)
-	var institution = "";
-	dojo.forEach(nodeData.parentInstitutions, function(item) {
-		if (item.addressClass == 0) {
-			institution += item.organisation+"\n";
-		} else if (item.addressClass == 1) {
-			institution += "\t"+item.organisation+"\n";
-		}
-	});
-	institution = dojo.string.trim(institution);
-*/
-
-	var institution = "";
-	for (var i = nodeData.parentInstitutions.length-1; i >= 0; --i) {
-		if (nodeData.parentInstitutions[i].addressClass == 0) {
-			// Only display the first institution we encounter and break
-			institution = nodeData.parentInstitutions[i].organisation+"\n"+institution;
-			break;
-
-		} else if (nodeData.parentInstitutions[i].addressClass == 1) {
-			institution = "\t"+nodeData.parentInstitutions[i].organisation+"\n"+institution;
-		}
-	}
-	institution = dojo.trim(institution);
+	var institution = UtilAddress.determineInstitution(nodeData);
 
 //	var addressFields = ["headerAddressType0Institution", "headerAddressType0Unit", "headerAddressType1Institution", "headerAddressType1Unit",
 	var addressFields = ["headerAddressType0Unit", "headerAddressType1Institution", "headerAddressType1Unit",
@@ -3009,15 +2985,17 @@ igeEvents.toggleFields = function(section, /* optional */ mode, /* optional flag
 			sectionDiv.isExpanded = true;
 		}
 
-		if (sectionDiv.isExpanded == false) {
-			mode = "showAll";
-			sectionDiv.isExpanded = true;
-
-		} else {
-			mode = "showRequired";
-			sectionDiv.isExpanded = false;			
+		if (!mode) {
+    		if (sectionDiv.isExpanded == false) {
+    			mode = "showAll";
+    			sectionDiv.isExpanded = true;
+    
+    		} else {
+    			mode = "showRequired";
+    			sectionDiv.isExpanded = false;			
+    		}
 		}
-
+		
 		var toggleBtn = dijit.byId('toggleFieldsBtn');
 		var btnImage = toggleBtn.domNode.getElementsByTagName('img')[0];
 		this.toggleButton(section, mode);

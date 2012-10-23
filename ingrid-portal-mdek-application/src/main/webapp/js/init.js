@@ -17,38 +17,6 @@ var sessionExpired = false;
 // this is defined in start.jsp where language is transported within url request parameter 
 //var userLocale = ...
 
-//dojo.require("dijit.form.Select");
-
-// bugfix which should be part of dojo 1.6
-// onChange handler is called when changed programmatically (not good)
-/*dijit.form.Select.extend({
-   _updateSelection: function() {
-        this.value = this._getValueFromOpts();
-        var val = this.value;
-        if(!dojo.isArray(val)){
-            val = [val];
-        }
-        if(val && val[0]){
-            dojo.forEach(this._getChildren(), function(child){
-                var isSelected = dojo.some(val, function(v){
-                    return child.option && (v === child.option.value);
-                });
-                dojo.toggleClass(child.domNode, this.baseClass + "SelectedOption", isSelected);
-                dijit.setWaiState(child.domNode, "selected", isSelected);
-            }, this);
-        }
-   }
-});*/
-
-// change focus behaviour since target can be null under certain circumstances
-// see: http://bugs.jquery.com/ticket/7910
-/*var _beforeactivate = jQuery.event.special.change.filters.beforeactivate;
-
-jQuery.event.special.change.filters.focus = jQuery.event.special.change.filters.beforeactivate = function(e) {
-    e.target = e.target || e.currentTarget || e.originalTarget;
-    _beforeactivate(e);
-}*/
-
 dojo.addOnLoad(function() {
     // show an info message for browser IE7 that it shouldn't be used
     if (dojo.isIE == 7) {
@@ -91,25 +59,22 @@ dojo.addOnLoad(function() {
         // triggered immediately and the page would be switching always
         // -> not when set initially?! (see declaration of selectbox!)
         setTimeout(function() {dojo.connect(dijit.byId("languageBox"), "onChange", menuEventHandler.switchLanguage);}, 2000);
-        //if (!jumpToNodeOnInit())
-            dijit.byId("stackContainer").selectChild(dijit.byId("pageDashboard"), false);
-            jumpToNodeOnInit();
+        dijit.byId("stackContainer").selectChild(dijit.byId("pageDashboard"), false);
+        jumpToNodeOnInit();
         
         // create an iframe which will be used for printing    
         dojo.create("iframe", {id: 'printFrame', name: 'printFrame', style: {position:"absolute", left:"-1000px", height: "0", border:"0"}}, dojo.body());
-
-        //console.debug("Cookie:");
-        //console.debug(document.cookie);
+        initPrintFrame();
 	});
 });
 
 function initPrintFrame() {
     var cssLink1 = document.createElement("link") 
-    cssLink1.href = "js/jquery/slick.grid.css"; 
+    cssLink1.href = "/ingrid-portal-mdek-application/css/slick.grid.css"; 
     cssLink1.rel = "stylesheet"; 
     cssLink1.type = "text/css";
     var cssLink2 = document.createElement("link") 
-    cssLink2.href = "css/styles.css"; 
+    cssLink2.href = "/ingrid-portal-mdek-application/css/styles.css"; 
     cssLink2.rel = "stylesheet"; 
     cssLink2.type = "text/css";
     parent.printFrame.document.head.appendChild(cssLink1);

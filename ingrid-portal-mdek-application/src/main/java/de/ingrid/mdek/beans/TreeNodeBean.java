@@ -19,8 +19,6 @@ public class TreeNodeBean {
 	private Boolean userWriteSubNodePermission;
 	private Boolean userWriteSubTreePermission;
 
-	private String contextMenu;
-	private String dojoType;
 	private String nodeAppType;
 
 	public String getId() {
@@ -133,22 +131,6 @@ public class TreeNodeBean {
 
 	public void setUserWriteSubTreePermission(Boolean userWriteSubTreePermission) {
 		this.userWriteSubTreePermission = userWriteSubTreePermission;
-	}
-
-	public String getContextMenu() {
-		return contextMenu;
-	}
-
-	public void setContextMenu(String contextMenu) {
-		this.contextMenu = contextMenu;
-	}
-
-	public String getDojoType() {
-		return dojoType;
-	}
-
-	public void setDojoType(String dojoType) {
-		this.dojoType = dojoType;
 	}
 
 	public String getNodeAppType() {

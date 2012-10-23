@@ -17,6 +17,8 @@ var adrPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:d
 var curObjQuery = null;     // string representing the current object query
 var curAdrQuery = null;     // string representing the current address query
 
+var lastQuery   = null;
+
     createDomElements();
 
 //dojo.addOnLoad(function() {
@@ -39,7 +41,7 @@ researchScriptScope.connectKeyEvents = function() {
                 if (event.keyCode == dojo.keys.ENTER) {
                     // Check if we have to do a normal or an extended search 
                     if (isExtendedSearchActive("adr")) {
-                        scriptScopeResearchExtObj.startNewSearch();
+                        scriptScopeResearchExtAddr.startNewSearch();
                     } else {
                         researchScriptScope.startNewAddressSearch();
                     }
@@ -101,31 +103,57 @@ function startObjectSearch() {
     if (curObjQuery == null || dojo.trim(curObjQuery) == "") {
         return;
     }
+    
+    researchScriptScope.lastObjSearchType = "queryObjectsFullText";
+    
     console.debug("query:");
     console.debug(curObjQuery);
-    QueryService.queryObjectsFullText(curObjQuery, objPageNav.getStartHit(), resultsPerPage, {
-        preHook: showObjectLoadingZone,
-        postHook: hideObjectLoadingZone,
-        callback: function(res) { updateObjectResultTable(res); updateObjectPageNavigation(res); },
-        errorHandler: function(errMsg, err) {
-            displayErrorMessage(err);
-        }       
+    var def = queryObjectsFullText(objPageNav.getStartHit(), resultsPerPage);
+    def.addCallback(function(res) {
+        updateObjectResultTable(res); 
+        updateObjectPageNavigation(res);
     });
 }
+
+function queryObjectsFullText(start, howMany) {
+    var def = new dojo.Deferred();
+    
+    QueryService.queryObjectsFullText(curObjQuery, start, howMany, {
+        preHook: showObjectLoadingZone,
+        postHook: hideObjectLoadingZone,
+        callback: def.callback,
+        errorHandler: function(errMsg, err) {displayErrorMessage(err);}       
+    });
+    
+    return def;
+}
+
 // Starts a search with the current parameters stored in 'curAdrQuery' and 'adrPageNav'
 function startAddressSearch() {
     if (curAdrQuery == null || dojo.trim(curAdrQuery) == "") {
         return;
     }
+    
+    researchScriptScope.lastAddrSearchType = "queryAddressesFullText";
 
-    QueryService.queryAddressesFullText(curAdrQuery, adrPageNav.getStartHit(), resultsPerPage, {
+    var def = queryAddressesFullText(adrPageNav.getStartHit(), resultsPerPage);
+    def.addCallback(function(res) {
+        updateAddressResultTable(res); 
+        updateAddressPageNavigation(res);
+    });
+}
+
+function queryAddressesFullText(start, howMany) {
+    var def = new dojo.Deferred();
+    
+    QueryService.queryAddressesFullText(curAdrQuery, start, howMany, {
         preHook: showAddressLoadingZone,
         postHook: hideAddressLoadingZone,
-        callback: function(res) { updateAddressResultTable(res); updateAddressPageNavigation(res); },
-        errorHandler: function(errMsg, err) {
-            displayErrorMessage(err);
-        }       
+        callback: def.callback,
+        errorHandler: function(errMsg, err) {displayErrorMessage(err);}       
     });
+    
+    return def;
 }
 
 function updateObjectResultTable(res) {
@@ -239,6 +267,44 @@ function hideAddressLoadingZone() {
     dojo.style("addressSearchLoadingZone", "visibility", "hidden");
 }
 
+function showPreviewDialog() {
+    var def = null;
+    var isObjectSearch = dijit.byId("researchTabContainer").selectedChildWidget.id == "objSearch";
+    
+    if (isObjectSearch) {
+        if (researchScriptScope.lastObjSearchType === "queryObjectsFullText") {
+            def = queryObjectsFullText(0, 10000);
+        } else if (researchScriptScope.lastObjSearchType === "queryObjectsExtended") {
+            def = queryObjectsExtended(0, 10000);
+        }
+    } else {
+        if (researchScriptScope.lastAddrSearchType === "queryAddressesFullText") {
+            def = queryAddressesFullText(0, 10000);
+        } else if (researchScriptScope.lastAddrSearchType === "queryAddressesExtended") {
+            def = queryAddressesExtended(0, 10000);
+        }
+    }
+    
+    if (def === null) {
+        console.debug("not yet searched or type not supported: " + researchScriptScope.lastObjSearchType + " : " + researchScriptScope.lastAddrSearchType);
+        return;
+    }
+    
+    def.addCallback(function(searchResult) {
+        // params for the first (really delete object query) dialog.
+        var params = {
+            useDirtyData: false,
+            searchResult: searchResult
+        };
+     
+        if (isObjectSearch) {
+            dialog.showPage(message.get("dialog.object.detailView.title"), "dialogs/mdek_detail_view_dialog.jsp?c="+userLocale, 755, 600, true, params);
+        } else {
+            dialog.showPage(message.get("dialog.address.detailView.title"), "dialogs/mdek_detail_view_address_dialog.jsp?c="+userLocale, 755, 600, true, params);
+        }
+    });
+}
+
 </script>
 
 </head>
@@ -251,10 +317,10 @@ function hideAddressLoadingZone() {
       <div id="search" class="content">
 
         <!-- MAIN TAB CONTAINER START -->
-        <div id="objects" dojoType="dijit.layout.TabContainer" doLayout="false" selectedChild="objSearch">
+        <div id="researchTabContainer" dojoType="dijit.layout.TabContainer" doLayout="false" selectedChild="objSearch">
           <!-- MAIN TAB 1 START -->
             <div id="objSearch" dojoType="dijit.layout.ContentPane" class="blueTopBorder" title="<fmt:message key="dialog.research.objects" />">
-              <div class="inputContainer field grey">
+              <div class="inputContainer field grey noSpaceBelow">
               <span class="input"><input type="text" id="objSearchInput" name="objSearchInput" dojoType="dijit.form.ValidationTextBox" style="width:100%;"/></span>
               <div class="expandContent"><a href="javascript:void(0);" onclick="javascript:toggleContent('obj');" title="<fmt:message key="dialog.research.extSearch" />"><img id="extContentObjToggleArrow" src="img/ic_info_expand.gif" width="8" height="8" alt="Pfeil" /> <fmt:message key="dialog.research.extSearch" /></a></div>
               <div class="spacer"></div>
@@ -276,7 +342,8 @@ function hideAddressLoadingZone() {
             <!-- OBJECT SEARCH RESULT LIST START -->
             <div class="spacer"></div>
             <div id="objectSearchResultsContainer" class="inputContainer noSpaceBelow">
-              <span class="label"><fmt:message key="dialog.research.result" /></span>
+              <span class="label left"><fmt:message key="dialog.research.result" /></span>
+              <span class="label right" style="padding-right: 5px;"><a href="#" onclick="showPreviewDialog();"><img src="img/ic_fl_print.gif" width="11" height="11" alt="print" /><fmt:message key="dialog.research.preview" /></a></span>
               <div class="listInfo">
                 <span id="objSearchResultsInfo" class="searchResultsInfo">&nbsp;</span>
                 <span id="objSearchResultsPaging" class="searchResultsPaging">&nbsp;</span>
@@ -317,7 +384,8 @@ function hideAddressLoadingZone() {
             <!-- ADDRESS SEARCH RESULT LIST START -->
             <div class="spacer"></div>
             <div id="addressSearchResultsContainer" class="inputContainer noSpaceBelow">
-              <span class="label"><fmt:message key="dialog.research.result" /></span>
+              <span class="label left"><fmt:message key="dialog.research.result" /></span>
+              <span class="label right" style="padding-right: 5px;"><a href="#" onclick="showPreviewDialog();"><img src="img/ic_fl_print.gif" width="11" height="11" alt="print" /><fmt:message key="dialog.research.preview" /></a></span>
               <div class="listInfo">
                 <span id="adrSearchResultsInfo" class="searchResultsInfo">&nbsp;</span>
                 <span id="adrSearchResultsPaging" class="searchResultsPaging">&nbsp;</span>

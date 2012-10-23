@@ -151,14 +151,27 @@ function createDomElements() {
 function startSearch() {
     console.debug("query: ");
     console.debug(currentQuery);
-	QueryService.queryObjectsExtended(currentQuery, pageNav.getStartHit(), resultsPerPage, {
-		preHook: showLoadingZone,
-		postHook: hideLoadingZone,
-		callback: function(res) { updateResultTable(res); updatePageNavigation(res); },
-		errorHandler: function(errMsg, err) {
-			displayErrorMessage(err);
-		}		
-	});
+    
+    researchScriptScope.lastObjSearchType = "queryObjectsExtended";
+
+	var def = queryObjectsExtended(pageNav.getStartHit(), resultsPerPage);
+    def.addCallback(function(res) {
+        updateResultTable(res); 
+        updatePageNavigation(res);
+    });
+}
+
+function queryObjectsExtended(start, howMany) {
+    var def = new dojo.Deferred();
+    
+    QueryService.queryObjectsExtended(currentQuery, start, howMany, {
+        preHook: showLoadingZone,
+        postHook: hideLoadingZone,
+        callback: def.callback,
+        errorHandler: function(errMsg, err) {displayErrorMessage(err);}       
+    });
+    
+    return def;
 }
 
 function updateResultTable(res) {

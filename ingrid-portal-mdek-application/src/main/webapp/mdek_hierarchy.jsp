@@ -424,7 +424,7 @@
                         <div id="ref1Content" class="content">
                             <span id="uiElement3520" class="outer">
                                 <div>
-                                    <span id="ref1BasisTabContainerLabel" class="label left">
+                                    <span id="ref1BasisTabContainerLabel" class="label">
                                         <label for="ref1BasisTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3520)">
                                             <fmt:message key="ui.obj.type1.technicalBasisTable.title" />
                                         </label>
@@ -536,7 +536,7 @@
                             </div>
                             <div class="inputContainer">
                                 <span id="uiElement3555" class="outer">
-                                	<div><span class="label left">
+                                	<div><span class="label">
                                         <label for="ref1SymbolsTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3555)">
                                             <fmt:message key="ui.obj.type1.symbolCatTable.title" />
                                         </label>
@@ -561,7 +561,7 @@
                             </div>
                             <div class="inputContainer">
                                 <span id="uiElement3535" class="outer">
-                                	<div><span class="label left">
+                                	<div><span class="label">
                                         <label for="ref1KeysTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3535)">
                                             <fmt:message key="ui.obj.type1.keyCatTable.title" />
                                         </label>
@@ -613,7 +613,7 @@
                             </div>
                             <div class="inputContainer">
                                 <span id="uiElement3570" class="outer">
-                                	<div><span class="label left">
+                                	<div><span class="label">
                                         <label for="ref1DataBasisTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3570)">
                                             <fmt:message key="ui.obj.type1.dataBasisTable.title" />
                                         </label>
@@ -634,7 +634,7 @@
                             </div>
                             <div class="inputContainer">
                                 <span id="uiElement3515" class="outer">
-                                	<div><span class="label left">
+                                	<div><span class="label">
                                         <label for="ref1ProcessTabContainer" onclick="javascript:dialog.showContextHelp(arguments[0], 3515)">
                                             <fmt:message key="ui.obj.type1.processTable.title" />
                                         </label>

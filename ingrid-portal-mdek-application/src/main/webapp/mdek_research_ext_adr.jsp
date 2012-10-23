@@ -71,14 +71,26 @@ dojo.addOnLoad(function() {
 
 // Starts a search with the current parameters stored in 'currentQuery' and 'pageNav'
 function startSearch() {
-	QueryService.queryAddressesExtended(currentQuery, pageNav.getStartHit(), resultsPerPage, {
-		preHook: showLoadingZone,
-		postHook: hideLoadingZone,
-		callback: function(res) { updateResultTable(res); updatePageNavigation(res); },
-		errorHandler: function(errMsg, err) {
-			displayErrorMessage(err);
-		}		
-	});
+    researchScriptScope.lastAddrSearchType = "queryAddressesExtended";
+    
+	var def = queryAddressesExtended(pageNav.getStartHit(), resultsPerPage);
+    def.addCallback(function(res) {
+        updateResultTable(res); 
+        updatePageNavigation(res);
+    });
+}
+
+function queryAddressesExtended(start, howMany) {
+    var def = new dojo.Deferred();
+    
+    QueryService.queryAddressesExtended(currentQuery, start, howMany, {
+        preHook: showLoadingZone,
+        postHook: hideLoadingZone,
+        callback: def.callback,
+        errorHandler: function(errMsg, err) {displayErrorMessage(err);}       
+    });
+    
+    return def;
 }
 
 function updateResultTable(res) {

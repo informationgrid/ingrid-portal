@@ -25,9 +25,6 @@ public class TreeServiceImpl {
 	private final static String OBJECT_ROOT_NAME = "general.objects";
 
 	private final static String OBJECT_ROOT_DOCTYPE = "Objects";
-	private final static String ROOT_MENU_ID = "contextMenu2";
-	private final static String NODE_MENU_ID = "contextMenu1";
-	private final static String NODE_DOJO_TYPE = "ingrid:TreeNode";
 	private final static String OBJECT_APPTYPE = "O";
 
 
@@ -108,20 +105,16 @@ public class TreeServiceImpl {
 		List<TreeNodeBean> treeRoot = new ArrayList<TreeNodeBean>(); 
 
 		TreeNodeBean objectRoot = new TreeNodeBean();
-		objectRoot.setContextMenu(ROOT_MENU_ID);
 		objectRoot.setIsFolder(true);
 		objectRoot.setNodeDocType(OBJECT_ROOT_DOCTYPE);
 		objectRoot.setTitle(res.getString(OBJECT_ROOT_NAME));
-		objectRoot.setDojoType(NODE_DOJO_TYPE);
 		objectRoot.setNodeAppType(OBJECT_APPTYPE);
 		objectRoot.setId(OBJECT_ROOT);
 
 		TreeNodeBean addressRoot = new TreeNodeBean();
-		addressRoot.setContextMenu(ROOT_MENU_ID);
 		addressRoot.setIsFolder(true);
 		addressRoot.setNodeDocType(ADDRESS_ROOT_DOCTYPE);
 		addressRoot.setTitle(res.getString(ADDRESS_ROOT_NAME));
-		addressRoot.setDojoType(NODE_DOJO_TYPE);
 		addressRoot.setNodeAppType(ADDRESS_APPTYPE);
 		addressRoot.setId(ADDRESS_ROOT);
 
@@ -131,14 +124,10 @@ public class TreeServiceImpl {
 	}
 
 	public static void addTreeNodeObjectInfo(TreeNodeBean node) {
-		node.setContextMenu(NODE_MENU_ID);
-		node.setDojoType(NODE_DOJO_TYPE);
 		node.setNodeAppType(OBJECT_APPTYPE);		
 	}
 
 	public static void addTreeNodeAddressInfo(TreeNodeBean node) {
-		node.setContextMenu(NODE_MENU_ID);
-		node.setDojoType(NODE_DOJO_TYPE);
 		node.setNodeAppType(ADDRESS_APPTYPE);		
 	}
 
@@ -147,11 +136,9 @@ public class TreeServiceImpl {
 		ResourceBundle res = ResourceBundle.getBundle("messages", new Locale(language));
 		TreeNodeBean freeAddressRoot = new TreeNodeBean(); 
 
-		freeAddressRoot.setContextMenu(ROOT_MENU_ID);
 		freeAddressRoot.setIsFolder(true);
 		freeAddressRoot.setNodeDocType(ADDRESS_ROOT_DOCTYPE);
 		freeAddressRoot.setTitle(res.getString(ADDRESS_FREE_ROOT_NAME));
-		freeAddressRoot.setDojoType(NODE_DOJO_TYPE);
 		freeAddressRoot.setNodeAppType(ADDRESS_APPTYPE);
 		freeAddressRoot.setId(ADDRESS_FREE_ROOT);
 

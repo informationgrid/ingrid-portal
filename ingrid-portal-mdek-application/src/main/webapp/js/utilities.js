@@ -547,6 +547,21 @@ UtilAddress.createAddressLinkLabel = function(adrUuid, adrTitle) {
 		"title='"+adrTitle+"'>"+adrTitle+"</a>";
 }
 
+UtilAddress.determineInstitution = function(nodeData) {
+    var institution = "";
+    for (var i = nodeData.parentInstitutions.length-1; i >= 0; --i) {
+        if (nodeData.parentInstitutions[i].addressClass == 0) {
+            // Only display the first institution we encounter and break
+            institution = nodeData.parentInstitutions[i].organisation+"\n"+institution;
+            break;
+
+        } else if (nodeData.parentInstitutions[i].addressClass == 1) {
+            institution = "\t"+nodeData.parentInstitutions[i].organisation+"\n"+institution;
+        }
+    }
+    return dojo.trim(institution);
+}
+
 
 // Utility functions for handling misc data from the frontend
 var UtilUdk = {}
