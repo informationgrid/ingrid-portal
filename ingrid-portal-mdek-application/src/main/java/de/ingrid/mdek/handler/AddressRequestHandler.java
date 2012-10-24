@@ -20,7 +20,7 @@ public interface AddressRequestHandler {
 	public MdekAddressBean getPublishedAddressDetail(String uuid);
 	public MdekAddressBean getInitialAddress(String parentUuid);
 	public MdekAddressBean saveAddress(MdekAddressBean data);
-	public MdekAddressBean publishAddress(MdekAddressBean data);
+	public MdekAddressBean publishAddress(MdekAddressBean data, boolean forcePublicationCondition);
 	public MdekAddressBean assignAddressToQA(MdekAddressBean data);
 	public MdekAddressBean reassignAddressToAuthor(MdekAddressBean data);
 	public void deleteAddress(String uuid, boolean forceDeleteReferences);
@@ -29,7 +29,7 @@ public interface AddressRequestHandler {
 	public boolean canCopyAddress(String uuid);
 	public List<String> getPathToAddress(String uuid);
 	public TreeNodeBean copyAddress(String fromUuid, String toUuid, boolean copySubTree, boolean copyToFreeAddress);
-	public void moveAddressSubTree(String fromUuid, String oldParentUuid, String newParentUuid, boolean moveToFreeAddress);
+	public void moveAddressSubTree(String fromUuid, String oldParentUuid, String newParentUuid, boolean moveToFreeAddress, boolean forcePublicationCondition);
 	public MdekAddressBean fetchAddressObjectReferences(String addrUuid, int startIndex, int numRefs);
 	public AddressSearchResultBean getWorkAddresses(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits);
 	public AddressSearchResultBean getQAAddresses(WorkState workState, IdcQAEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits);

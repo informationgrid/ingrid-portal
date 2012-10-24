@@ -128,8 +128,8 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		return MdekAddressUtils.extractAddressesFromResponse(response);
 	}
 
-	public void moveAddressSubTree(String fromUuid, String oldParentUuid, String newParentUuid, boolean moveToFreeAddress) {
-		IngridDocument response = mdekCallerAddress.moveAddress(connectionFacade.getCurrentPlugId(), fromUuid, newParentUuid, moveToFreeAddress, MdekSecurityUtils.getCurrentUserUuid());
+	public void moveAddressSubTree(String fromUuid, String oldParentUuid, String newParentUuid, boolean moveToFreeAddress, boolean forcePublicationCondition) {
+		IngridDocument response = mdekCallerAddress.moveAddress(connectionFacade.getCurrentPlugId(), fromUuid, newParentUuid, moveToFreeAddress, forcePublicationCondition, MdekSecurityUtils.getCurrentUserUuid());
 		if (MdekUtils.getResultFromResponse(response) == null) {
 			MdekErrorUtils.handleError(response);
 
@@ -138,7 +138,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		}
 	}
 
-	public MdekAddressBean publishAddress(MdekAddressBean data) {
+	public MdekAddressBean publishAddress(MdekAddressBean data, boolean forcePublicationCondition) {
 		IngridDocument adr = (IngridDocument) MdekAddressUtils.convertFromAddressRepresentation(data);
 
 		if (data.getUuid().equalsIgnoreCase("newNode")) {
@@ -149,7 +149,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		log.debug("Sending the following address for publishing:");
 		log.debug(adr);
 
-		IngridDocument response = mdekCallerAddress.publishAddress(connectionFacade.getCurrentPlugId(), adr, true, 0, NUM_INITIAL_REFERENCES, MdekSecurityUtils.getCurrentUserUuid());
+		IngridDocument response = mdekCallerAddress.publishAddress(connectionFacade.getCurrentPlugId(), adr, true, forcePublicationCondition, 0, NUM_INITIAL_REFERENCES, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekAddressUtils.extractSingleAddressFromResponse(response);
 	}
 

@@ -17,13 +17,13 @@ public interface AddressService {
 	public MdekAddressBean getAddressData(String nodeUuid, Boolean useWorkingCopy);
 	public List<String> getAddressInstitutions(List<String> uuid);
 	public MdekAddressBean getPublishedAddressData(String nodeUuid);
-	public MdekAddressBean saveAddressData(MdekAddressBean data, Boolean useWorkingCopy);
+	public MdekAddressBean saveAddressData(MdekAddressBean data, Boolean useWorkingCopy, boolean forcePublicationCondition);
 	public MdekAddressBean assignAddressToQA(MdekAddressBean data);
 	public MdekAddressBean reassignAddressToAuthor(MdekAddressBean data);
 	public AddressSearchResultBean getWorkAddresses(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits);
 	public AddressSearchResultBean getQAAddresses(WorkState workState, IdcQAEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits);
 	public TreeNodeBean copyAddress(String nodeUuid, String dstNodeUuid, Boolean includeChildren, Boolean copyToFreeAddress);
-	public void moveAddress(String nodeUuid, String oldParentUuid, String newParentUuid, boolean moveToFreeAddress);
+	public void moveAddress(String nodeUuid, String oldParentUuid, String newParentUuid, boolean moveToFreeAddress, boolean forcePublicationCondition);
 	public void deleteAddress(String nodeUuid, Boolean forceDeleteReferences, Boolean markOnly);
 	public MdekAddressBean deleteAddressWorkingCopy(String nodeUuid, Boolean forceDeleteReferences, Boolean markOnly);
 	public MdekAddressBean createNewAddress(String parentUuid);

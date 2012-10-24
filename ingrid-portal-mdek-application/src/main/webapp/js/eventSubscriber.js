@@ -550,7 +550,7 @@ udkDataProxy._handleSaveAddressRequest = function(msg) {
 
 	// ---- DWR call to store the data ----
 	console.debug("udkDataProxy calling AddressService.saveAddressData("+nodeData.uuid+", true)");
-	AddressService.saveAddressData(nodeData, "true",
+	AddressService.saveAddressData(nodeData, "true", false, 
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -731,7 +731,7 @@ udkDataProxy.handlePublishAddressRequest = function(msg) {
 
 	// ---- DWR call to store the data ----
 	console.debug("udkDataProxy calling AddressService.saveAddressData("+nodeData.uuid+", false)");
-	AddressService.saveAddressData(nodeData, "false",
+	AddressService.saveAddressData(nodeData, "false", false, 
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
@@ -1116,7 +1116,7 @@ udkDataProxy.handleCutAddressRequest = function(msg) {
 	}
 
 	console.debug("udkDataProxy calling AddressService.moveAddress("+srcIds+", "+parentUuids+", "+dstId+", "+moveToFreeAddress+")");	
-	AddressService.moveAddresses(srcIds, parentUuids, dstId, moveToFreeAddress,
+	AddressService.moveAddresses(srcIds, parentUuids, dstId, moveToFreeAddress, false, 
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,

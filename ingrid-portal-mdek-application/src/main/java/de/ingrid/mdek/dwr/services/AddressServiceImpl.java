@@ -206,11 +206,11 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 
-	public void moveAddress(String nodeUuid, String oldParentUuid, String newParentUuid, boolean moveToFreeAddress) {
+	public void moveAddress(String nodeUuid, String oldParentUuid, String newParentUuid, boolean moveToFreeAddress, boolean forcePublicationCondition) {
 		log.debug("Moving address with ID: "+nodeUuid+" and parent "+oldParentUuid+" to ID: "+newParentUuid);
 
 		try {
-			addressRequestHandler.moveAddressSubTree(nodeUuid, oldParentUuid, newParentUuid, moveToFreeAddress);
+			addressRequestHandler.moveAddressSubTree(nodeUuid, oldParentUuid, newParentUuid, moveToFreeAddress, forcePublicationCondition);
 		}
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
@@ -223,14 +223,14 @@ public class AddressServiceImpl implements AddressService {
 		}
 	}
 	
-	public void moveAddresses(String[] nodeUuids, String[] oldParentUuids, String newParentUuid, boolean moveToFreeAddress) {
+	public void moveAddresses(String[] nodeUuids, String[] oldParentUuids, String newParentUuid, boolean moveToFreeAddress, boolean forcePublicationCondition) {
 	    int i = 0;
         for (String uuid : nodeUuids) {
-            moveAddress(uuid, oldParentUuids[i++], newParentUuid, moveToFreeAddress);
+            moveAddress(uuid, oldParentUuids[i++], newParentUuid, moveToFreeAddress, forcePublicationCondition);
         }
 	}
 
-	public MdekAddressBean saveAddressData(MdekAddressBean data, Boolean useWorkingCopy) {
+	public MdekAddressBean saveAddressData(MdekAddressBean data, Boolean useWorkingCopy, boolean forcePublicationCondition) {
 		log.debug("saveAddressData()");
 
 		if (useWorkingCopy) {
@@ -249,7 +249,7 @@ public class AddressServiceImpl implements AddressService {
 		} else {
 			log.debug("Publishing address with ID: "+data.getUuid());
 
-			try { return addressRequestHandler.publishAddress(data); }
+			try { return addressRequestHandler.publishAddress(data, forcePublicationCondition); }
 			catch (MdekException e) {
 				// Wrap the MdekException in a RuntimeException so dwr can convert it
 				log.debug("MdekException while publishing address.", e);
