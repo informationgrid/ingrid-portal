@@ -440,6 +440,9 @@ public class MdekMapper implements DataMapperInterface {
         // Thesaurus
         mdekAddress.setThesaurusTermsTable(mapToThesTermsTable((List<IngridDocument>) adr.get(MdekKeys.SUBJECT_TERMS)));
 
+        // Extra Info
+        mdekAddress.setExtraInfoPublishArea((Integer) adr.get(MdekKeys.PUBLICATION_CONDITION));
+        
         // References
         mdekAddress.setLinksFromObjectTable(mapToObjectLinksTable((List<IngridDocument>) adr.get(MdekKeys.OBJ_REFERENCES_FROM)));
         mdekAddress.setLinksFromPublishedObjectTable(mapToObjectLinksTable((List<IngridDocument>) adr.get(MdekKeys.OBJ_REFERENCES_FROM_PUBLISHED_ONLY)));
@@ -545,6 +548,7 @@ public class MdekMapper implements DataMapperInterface {
         TreeNodeBean treeNode = getTreeNodeWithCommonParameters(doc);
 
         treeNode.setTitle(buildAddressTitle(doc));
+        treeNode.setPublicationCondition((Integer) doc.get(MdekKeys.PUBLICATION_CONDITION));
         String adrDocType = getAddressDocType(doc);
         treeNode.setNodeDocType(adrDocType);
 
@@ -671,6 +675,9 @@ public class MdekMapper implements DataMapperInterface {
 
         //Thesaurus
         udkAdr.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTable(data.getThesaurusTermsTable()));
+        
+        // Publication condition
+        udkAdr.put(MdekKeys.PUBLICATION_CONDITION, data.getExtraInfoPublishArea());
         
         // Comments
         udkAdr.put(MdekKeys.COMMENT_LIST, mapFromCommentTable(data.getCommentTable()));

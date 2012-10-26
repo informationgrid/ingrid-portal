@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 
-
+<title><fmt:message key="general.help" /></title>
 <link rel="StyleSheet" href="css/main.css" type="text/css" />
 
 <style type="text/css">

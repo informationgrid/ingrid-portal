@@ -737,10 +737,10 @@ udkDataProxy.handlePublishAddressRequest = function(msg) {
 			postHook: UtilDWR.exitLoadingState,
 			callback: function(res) { onPublishDef.callback(res); },
 //			timeout:10000,
-			errorHandler:function(err) {
+			errorHandler:function(err, msg) {
 				UtilDWR.exitLoadingState();
 				console.debug("Error in js/udkDataProxy.js: Error while publishing address:");
-				onPublishDef.errback(err);
+				onPublishDef.errback(msg);
 			}
 		}
 	);
@@ -937,7 +937,7 @@ udkDataProxy.handleChangePublicationCondition = function(msg) {
         preHook: UtilDWR.enterLoadingState,
         postHook: UtilDWR.exitLoadingState,
         callback: function(res){msg.resultHandler.callback(res);},
-        errorHandler:function(err) {
+        errorHandler:function(err, errObj) {
             UtilDWR.exitLoadingState();
             // Check for the publication condition error
             if (err.indexOf("SUBTREE_HAS_LARGER_PUBLICATION_CONDITION") != -1) {
@@ -960,7 +960,7 @@ udkDataProxy.handleChangePublicationCondition = function(msg) {
 
             } else {
                 console.debug("Error in js/eventSubscriber.js: udkDataProxy.handleChangePublicationCondition:");
-                msg.resultHandler.errback(err);
+                msg.resultHandler.errback(errObj);
             }
         }
     });
@@ -1542,6 +1542,8 @@ udkDataProxy._setAddressData = function(nodeData)
 	var numReferences = nodeData.totalNumReferences || 0;
 	UtilAddress.initObjectAddressReferenceTable(linkTable, numReferences);
 
+	// publication info
+	dijit.byId("extraInfoPublishAreaAddress").attr("value", nodeData.extraInfoPublishArea, true);
 
 	// Comments
 	var commentData = UtilList.addDisplayDates(nodeData.commentTable);
@@ -2055,6 +2057,9 @@ udkDataProxy._getAddressData = function(nodeData) {
 
 	// -- Links --
 	nodeData.linksFromObjectTable = udkDataProxy._getTableData("associatedObjName");
+	
+	// -- Extra Info --
+	nodeData.extraInfoPublishArea = dijit.byId("extraInfoPublishAreaAddress").getValue();
 
 	// Comments
 	//nodeData.commentTable = UtilStore.convertItemsToJS(commentStore, commentStore._arrayOfTopLevelItems);
@@ -2761,11 +2766,12 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 			node.objectClass = [objClass],
 			node.id = [nodeData.uuid];	
 			// update permissions
-			node.isPublished = [nodeData.isPublished];
-			node.userWritePermission = [nodeData.writePermission];
-            node.userMovePermission = [nodeData.movePermission];
-			node.userWriteSinglePermission = [nodeData.writeSinglePermission];
-			node.userWriteTreePermission = [nodeData.writeTreePermission];
+			node.isPublished                = [nodeData.isPublished];
+			node.workState                  = [nodeData.workState];
+			node.userWritePermission        = [nodeData.writePermission];
+            node.userMovePermission         = [nodeData.movePermission];
+			node.userWriteSinglePermission  = [nodeData.writeSinglePermission];
+			node.userWriteTreePermission    = [nodeData.writeTreePermission];
             node.userWriteSubNodePermission = [nodeData.writeSubNodePermission];
 			node.userWriteSubTreePermission = [nodeData.writeSubTreePermission];
 		} else {
@@ -2981,12 +2987,8 @@ igeEvents.toggleFields = function(section, /* optional */ mode, /* optional flag
   		}
 		var sectionDiv = dojo.byId(sectionDivId);
 
-		if (typeof(sectionDiv.isExpanded) == "undefined") {
-			sectionDiv.isExpanded = true;
-		}
-
 		if (!mode) {
-    		if (sectionDiv.isExpanded == false) {
+    		if (sectionDiv.isExpanded == false || typeof(sectionDiv.isExpanded) == "undefined") {
     			mode = "showAll";
     			sectionDiv.isExpanded = true;
     

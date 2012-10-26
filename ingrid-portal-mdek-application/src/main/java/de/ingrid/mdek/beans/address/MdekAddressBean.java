@@ -71,6 +71,9 @@ public class MdekAddressBean {
 	private List<MdekAddressBean> parentInstitutions;
 	private Integer totalNumReferences;
 	
+	// Extra Info
+	private Integer extraInfoPublishArea;
+	
 	
 	public MdekAddressBean() {
 		this.communication = new ArrayList<CommunicationBean>();
@@ -464,4 +467,12 @@ public class MdekAddressBean {
 	public void setHideAddress(Boolean hideAddress) {
 		this.hideAddress = hideAddress;
 	}
+
+    public Integer getExtraInfoPublishArea() {
+        return extraInfoPublishArea;
+    }
+
+    public void setExtraInfoPublishArea(Integer extraInfoPublishArea) {
+        this.extraInfoPublishArea = extraInfoPublishArea;
+    }
 }

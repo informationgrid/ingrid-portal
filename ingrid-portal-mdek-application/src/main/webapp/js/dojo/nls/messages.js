@@ -383,6 +383,8 @@
 	"operation.error.addressTypeConflict":"This action can not be carried out with this address type!",
     "operation.error.addressHasNoEmail":"Could not store address. The address must have at lease one email address!",
 	"operation.error.userHasRunningJobs":"Please cancel the current running job before starting a new one.",
+	"operation.error.address.referencingObjectsHaveLargerPublicationCondition":"The objects ${0} reference to the address, which is going to be published but they have a broader publication condition than the address itself!",
+	"operation.error.address.referencedAddressesHaveSmallerPublicationCondition":"The addresses ${0} have a smaller publication condition! You have to change the publication condition to be able to publish this object.",
 	"operation.hint.publicationConditionSaveHint":"The subtree contains objects with an incompatible publication condition (in the published versions). By saving this object all published versions of subobjects will be modified. Do you really want to continue?",
 	"operation.hint.publicationConditionMoveHint":"The subtree contains objects with an incompatible publication condition. By moving this object all subobjects will be modified. Do you really want to continue?",
 	"operation.hint.forceDeleteObjectHint":"The object '${0}' is referenced by other MD-S. Do you really want to delete this object?",

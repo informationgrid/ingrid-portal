@@ -100,6 +100,12 @@ function displayErrorMessage(err) {
             document.location.href = "session_expired.jsp"
         } else if (err.message.indexOf("REFERENCED_ADDRESSES_NOT_PUBLISHED") != -1) {
             handleAddressNeverPublishedException(err);
+        } else if (err.message.indexOf("REFERENCING_OBJECTS_HAVE_LARGER_PUBLICATION_CONDITION") != -1) {
+            var objectList = formatObjectsFromList(err.referencedConflictingObjects);
+            dialog.show(message.get("general.error"), dojo.string.substitute(message.get("operation.error.address.referencingObjectsHaveLargerPublicationCondition"), [objectList]), dialog.WARNING);
+        } else if (err.message.indexOf("REFERENCED_ADDRESSES_HAVE_SMALLER_PUBLICATION_CONDITION") != -1) {
+            var addressList = formatAddressesFromList(err.referencedConflictingAddresses);
+            dialog.show(message.get("general.error"), dojo.string.substitute(message.get("operation.error.address.referencedAddressesHaveSmallerPublicationCondition"), [addressList]), dialog.WARNING);
         } else {
             dialog.show(message.get("general.error"), dojo.string.substitute(message.get("dialog.generalError"), [err.message]), dialog.WARNING, null, 800, 350);               
         }
@@ -125,4 +131,24 @@ function printStackTrace(error) {
 	});
 	
 	return stack;
+}
+
+function formatObjectsFromList(objects) {
+    var result = "<ul>";
+    dojo.forEach(objects, function(object) {
+        var pubName = UtilSyslist.getSyslistEntryName(3571, object.extraInfoPublishArea);
+        result += "<li>"+object.title+" ("+pubName+")</li>";
+    });
+    result += "</ul>";
+    return result;
+}
+
+function formatAddressesFromList(addresses) {
+    var result = "<ul>";
+    dojo.forEach(addresses, function(address) {
+        var pubName = UtilSyslist.getSyslistEntryName(3571, address.extraInfoPublishArea);
+        result += "<li>"+UtilAddress.createAddressTitle(address)+" ("+pubName+")</li>";
+    });
+    result += "</ul>";
+    return result;
 }

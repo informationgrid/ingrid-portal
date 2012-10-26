@@ -31,6 +31,8 @@ ingridAddressLayout.createPartOne = function() {
     
     this.createAddressThesaurus();
     
+    this.createAdditionalInfo();
+    
     console.debug("associated");
     this.createAssociatedObj();
     
@@ -153,6 +155,13 @@ ingridAddressLayout.createAddressThesaurus = function(){
     button._inputFieldWidget = dijit.byId("thesaurusFreeTermInputAddress");
     button._termListWidget = "thesaurusTermsAddress";
     button.onClick = igeEvents.executeSearch;
+}
+
+ingridAddressLayout.createAdditionalInfo = function() {
+    var storeProps = {data: {identifier: '1',label: '0'}};
+    createSelectBox("extraInfoPublishAreaAddress", null, storeProps, function(){
+        return UtilSyslist.getSyslistEntry(3571);
+    });
 }
 
 ingridAddressLayout.createAssociatedObj = function() {

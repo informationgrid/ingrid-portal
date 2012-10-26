@@ -16,6 +16,7 @@ import de.ingrid.mdek.exception.AddressNeverPublishedException;
 import de.ingrid.mdek.exception.EntityReferencedException;
 import de.ingrid.mdek.exception.GroupDeleteException;
 import de.ingrid.mdek.exception.InvalidPermissionException;
+import de.ingrid.mdek.exception.PublicationConditionException;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.utils.IngridDocument;
@@ -59,6 +60,10 @@ public class MdekErrorUtils {
 				handleEntityReferencedByObjectError(err, MdekErrorType.ADDRESS_IS_IDCUSER_ADDRESS);
 			} else if (containsErrorType(err, MdekErrorType.REFERENCED_ADDRESSES_NOT_PUBLISHED)) {
 			    handleAddressNeverPublishedError(err, MdekErrorType.REFERENCED_ADDRESSES_NOT_PUBLISHED);
+			} else if (containsErrorType(err, MdekErrorType.REFERENCING_OBJECTS_HAVE_LARGER_PUBLICATION_CONDITION)) {
+                handlePublicationConditionConflictError(err, MdekErrorType.REFERENCING_OBJECTS_HAVE_LARGER_PUBLICATION_CONDITION);
+			} else if (containsErrorType(err, MdekErrorType.REFERENCED_ADDRESSES_HAVE_SMALLER_PUBLICATION_CONDITION)) {
+                handlePublicationConditionConflictError(err, MdekErrorType.REFERENCED_ADDRESSES_HAVE_SMALLER_PUBLICATION_CONDITION);
 			} else {
 				//throw new MdekException(err);
 				throw convertToRuntimeException(new MdekException(err));
@@ -70,7 +75,36 @@ public class MdekErrorUtils {
 		}
 	}
 
-	private static void handleAddressNeverPublishedError(List<MdekError> errorList, MdekErrorType errType) {
+	private static void handlePublicationConditionConflictError(List<MdekError> errors,
+            MdekErrorType errType) {
+	    
+	    List<MdekDataBean>    referencedConflictingObjects   = null;
+	    List<MdekAddressBean> referencedConflictingAddresses = null;
+	    
+	    if (errType.equals(MdekErrorType.REFERENCING_OBJECTS_HAVE_LARGER_PUBLICATION_CONDITION)) {
+	        referencedConflictingObjects = new ArrayList<MdekDataBean>();
+	        for (MdekError error : errors) {
+	            referencedConflictingObjects.addAll(MdekObjectUtils.extractDetailedObjects((IngridDocument)error.getErrorInfo()));
+            }
+	    } else if (errType.equals(MdekErrorType.REFERENCED_ADDRESSES_HAVE_SMALLER_PUBLICATION_CONDITION)) {
+	        referencedConflictingAddresses = new ArrayList<MdekAddressBean>();
+            for (MdekError error : errors) {
+                referencedConflictingAddresses.addAll(MdekAddressUtils.extractDetailedAddresses((IngridDocument)error.getErrorInfo()));
+            }
+	    } else {
+	        log.warn("Unknown MdekErrorType: " + errType.toString());
+	    }
+
+
+	    PublicationConditionException e = new PublicationConditionException(errType.toString());
+	    e.setReferencedConflictingObjects(referencedConflictingObjects);
+	    e.setReferencedConflictingAddresses(referencedConflictingAddresses);
+	    
+	    throw(e);
+        
+    }
+
+    private static void handleAddressNeverPublishedError(List<MdekError> errorList, MdekErrorType errType) {
 	    List<MdekAddressBean> sourceAddresses = new ArrayList<MdekAddressBean>();
 	    
         // TODO Auto-generated method stub

@@ -2434,6 +2434,32 @@
                         </div>
                         <div class="fill"></div>
                     </div>
+                    <!-- Zusatzinformation -->
+                    <div id="additionalInfo" class="rubric contentBlock">
+                        <div class="titleBar">
+                            <a href="javascript:igeEvents.toggleFields('extraInfo');" title="<fmt:message key="general.open.required.field" />">
+                                <div class="image18px titleIcon"></div>
+                            </a>
+                            <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7003)">
+                                <fmt:message key="ui.obj.additionalInfo.title" />
+                            </div>
+                            <div class="titleUp">
+                                <a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a>
+                            </div>
+                        </div>
+                        <div class="inputContainer">
+                            <span id="uiElement4571" class="outer halfWidth">
+                                <div><span class="label">
+                                    <label id="extraInfoPublishAreaAddressLabel" for="extraInfoPublishAreaAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 3571)">
+                                        <fmt:message key="ui.obj.additionalInfo.publicationCondition" />
+                                    </label>
+                                </span><span class="input"><input autoComplete="false" style="width:100%;" listId="3571" id="extraInfoPublishAreaAddress" /></span>
+                                </div>
+                            </span>
+                            <span class="outer halfWidth"></span>
+                            <div class="fill"></div>
+                        </div>
+                    </div>
                     <!-- ZUGEORDNETE OBJEKTE //-->
                     <div class="fill"></div>
                     <div id="associatedObj" class="rubric contentBlock">
