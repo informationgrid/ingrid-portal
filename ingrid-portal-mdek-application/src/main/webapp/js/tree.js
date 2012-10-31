@@ -178,13 +178,19 @@ ingridDataTree.createTree = function(){
                     i.setDisabled(true);
                 }
 
-                if (tn.item.publicationCondition && tn.item.publicationCondition[0]) {
-                    if (i.id.indexOf("PublicationCondition") != -1) {
-                        i.attr('class', "");
-                        i.setDisabled(false);
-                    }
-                    if (i.id == "menuItemPublicationCondition" + tn.item.publicationCondition[0]) {
-                        i.setDisabled(true);
+                if (!isAddressNode) {
+                    if (tn.item.publicationCondition && tn.item.publicationCondition[0]) {
+                        if (i.id.indexOf("PublicationCondition") != -1) {
+                            i.attr('class', "");
+                            i.setDisabled(false);
+                        }
+                        if (i.id == "menuItemPublicationCondition" + tn.item.publicationCondition[0]) {
+                            i.setDisabled(true);
+                        }
+                    } else {
+                        if (i.id.indexOf("PublicationCondition") != -1) {
+                            i.attr('class', "hidden");
+                        }
                     }
                 } else {
                     if (i.id.indexOf("PublicationCondition") != -1) {
