@@ -312,27 +312,17 @@
 #end
 
 #macro (renderImageLine $entry)
-    #renderGroupTitle ($entry.title)
-        <div>
-        ##set($elements = $entry.elements)
-        #set($elements = $entry)
-        #set($count = 0)
+    <div class="">
+        #renderSectionTitle ($entry.title)
+        #set($elements = $entry.elements)
         #foreach($e in $elements)
-            #set($count = $count + 1)
-            #if($count % 2 != 0)
             <div class="detail_group_line">
-            #end
                 <div class="float_left detail_group">
-                    ##renderImageTable($e)
-                    #renderImageTable($e "Infos zur Datei" "Hier kann eine Beschreibung des Bildes hinterlegt werden.")
+                    #renderImageTable($e "" "")
                 </div>
-            
-            #if($count % 2 == 0 || $count == $elements.size())
             </div>
-            #end
         #end
-        </div>
-    ##end
+    </div>
 #end
 
 ## Render section title
@@ -405,7 +395,6 @@
 #end
 
 ## Render image with description and title
-##macro (renderImageTable $entry)
 #macro (renderImageTable $image $data_info $descr)
     <table class="detail_image_table">
         <tr>
@@ -414,14 +403,14 @@
                 <img class="detail_image" src="$image" alt="$MESSAGES.getString('common.alt.icon.extern')" />
             </td>
         </tr>
+        #if ($data_info != "")
         <tr class="detail_image_tr">
             <td class="detail_image_descr_td">
-                ##<p id="detail_image_p">$entry.imgInfo</p>
                 <p class="detail_image_p">$data_info</p>
-                ##$entry.imgDescr
                 <p class="detail_image_descr_p">$descr</p>
             </td>
         </tr>
+        #end
     </table>
 #end
 

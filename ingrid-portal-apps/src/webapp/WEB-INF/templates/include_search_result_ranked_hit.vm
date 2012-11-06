@@ -73,11 +73,16 @@ $MESSAGES.setMsgParam('DOC')
             #else
               <span class="result_title"><span class="intendResult">#renderTitle($rs.title) </span></span>
             #end
-            ## render additional html if passed !
+            
+            <div>
+            ## render additional html if passed by an iPlug!
+            ## this can be a preview image, map, ...
             $!rs.additional_html_1
+            
             <p class="result_description">
             $!rs.abstract 
             </p>
+            </div>
 ##          #if($topHit)
                 <p class="result_metadata">
                 #set ($showProvider = true)

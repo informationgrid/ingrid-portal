@@ -88,6 +88,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			xpathExpression = "./gmd:identificationInfo/*";
 			getGeneralTab(elementsGeneral, xpathExpression);
 			
+			// Graphic overview
+			xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic";
+            getPreviewImage(elementsGeneral, xpathExpression);
+			
 			// Addresses
 			xpathExpression = "./gmd:identificationInfo/*/gmd:pointOfContact";
 			getAddresses(elementsGeneral, xpathExpression, false);
@@ -329,7 +333,24 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}
 	
-	/** NOTICE: replaces all "\n" with "<br/>" because can have multiple lines (text areas, e.g. gmd:useLimitation). */
+	private void getPreviewImage(ArrayList elementsGeneral, String xpathExpression) {
+	    if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            Node node = XPathUtils.getNode(rootNode, xpathExpression);
+            Node nodeAttribute = node.getAttributes().getNamedItem("gco:href");
+            if (nodeAttribute != null) {
+                String value = nodeAttribute.getNodeValue();
+                HashMap listEntry = new HashMap();
+                listEntry.put("type", "image");
+                listEntry.put("title", messages.getString("preview"));
+                String[] imageUrlArray = new String[1];
+                imageUrlArray[0] = value;
+                listEntry.put("elements", imageUrlArray);
+                elementsGeneral.add(listEntry);
+            }
+	    }        
+    }
+
+    /** NOTICE: replaces all "\n" with "<br/>" because can have multiple lines (text areas, e.g. gmd:useLimitation). */
 	private void getNodeListValueList(ArrayList elements, String xpathExpression, String subXPathExpression, String codeListId, String type) {
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
@@ -1686,9 +1707,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	/** ONLY CALLED FOR CLASS 3 GEODATENDIENST !!! */
 	private void getConnectionPoints(String serviceType, ArrayList elements, String xpathExpression) {
 		// only render operations for Karte !?
-		if (!"view".equals(serviceType)) {
-			return;
-		}
+	    // -> for all kinds! (INGRID-2162)
+		//if (!"view".equals(serviceType)) {
+		//	return;
+		//}
 
 		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
@@ -3298,6 +3320,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                         // "Untergeordnete Objekte"
                         xpathExpression ="./idf:subordinatedReference";
                         getReference(elements, xpathExpression, ReferenceType.SUBORDINATE);
+                        
+                        // Graphic overview
+                        //xpathExpression = "./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:graphicOverview/gmd:MD_BrowseGraphic";
+                        //getPreviewImage(elements, xpathExpression);
                         
                         // close description
                         closeDiv(elements);

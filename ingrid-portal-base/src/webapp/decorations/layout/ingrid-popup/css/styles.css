@@ -550,7 +550,7 @@ div.content a:hover .map { opacity: 1; }
 
 table.detail_table, body table { width:100%; border-bottom:2px solid #DDDDDD; margin-bottom:10px; border-left:1px solid #68A5D2; border-right:1px solid #68A5D2; }
 div.width_two_thirds table { border: 0; margin: 0; }
-table.detail_image_table { width:100%; }
+table.detail_image_table { width:100%; border-color: rgb(221,221,221); }
 table.detail_table_text {  border-top:1px solid #DDDDDD; width:100% }
 
 div.table_div { padding: 0 10px 10px; }

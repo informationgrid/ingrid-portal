@@ -225,7 +225,7 @@
 
                 <ul>
                     <li>
-                        Dashboard
+                        <a href="?hkey=dashboard-1">Dashboard</a>
                     </li>
                     <li>
                         <a href="?hkey=hierarchy-maintenance-1">Hierrarchie &amp; Erfassung</a>
@@ -310,7 +310,26 @@
             </content>
         </section>
     </chapter>
-   <chapter>
+    <chapter>
+        <header>Dashboard</header>
+        <section help-key="dashboard-1">
+            <header>Beschreibung</header>
+            <content>
+                <p>Das Dashboard zeigt eine Übersicht über den verwendeten Katalog. Überdies werden alle zuletzt
+                bearbeiteten Objekte und Adressen des eingeloggten Benutzers tabellarisch angezeigt, so dass
+                ein schneller Sprung zu einem kürzlich bearbeiteten Objekte bzw. Adresse möglich ist.</p>
+                <br />
+                <p>Ein Klick auf "Alle Datensätze" zeigt die zuletzt bearbeiteten Objekte und Adressen aller Nutzer
+                an. Hier erhält man einen Überblick, welche Objekte/Adressen auf dem gesamten Katalog gerade bearbeitet
+                werden. Ist ein Objekt/Adresse grau, so bedeutet dies, dass der eingeloggte Benutzer keine Schreibrechte
+                darauf besitzt.</p>
+                <br />
+                <p>Ein Klick auf die "Aktualisieren"-Schaltfläche lädt die Informationen neu ein ohne dass die Seite neu 
+                geladen werden muss.</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
         <header>Hierarchie u. Erfassung</header>
         <section help-key="hierarchy-maintenance-1">
             <header>Anordnung der Metadaten (Der Strukturbaum)</header>
@@ -402,6 +421,21 @@
 				 der aktuellen Adresse nach einer Sicherheitsabfrage endgültig gelöscht.</p>
 				 <p>Diese Funktion steht für die Ebenen <i>Objekte</i>, <i>Adressen</i> und 
 				 <i>freie Adressen</i> nicht zur Verfügung.</p>
+                 <p><b>Kopieren/Ausschneiden/Löschen mehrerer Objekte oder Adressen</b></p>
+                 <p>Mithilfe der "Strg"-Taste ist es möglich weitere Knoten aus dem Hierarchiebaum
+                 auszuwählen. Wird ein bereits markiertes Objekt bei gedrückter "Strg"-Taste angeklickt
+                 so wird die Markierung wieder entfernt. Sobald mehr als ein Knoten markiert wird, schränkt 
+                 sich die Auswahl an möglichen Operationen auf <i>Löschen</i>, <i>Objekte/Adressen/Teilbäume ausschneiden   
+                 </i>, <i>Objekte/Adressen kopieren</i> und <i>Teilbäume kopieren</i> ein. Diese Operationen
+                 können über die Toolbar oder über das Kontextmenü aufgerufen werden (Rechtsklick auf einen Knoten im Baum
+                 ). Wird das Kontextmenü jedoch auf einem nicht markierten Knoten aufgerufen, so wird die aktuelle 
+                 Markierung verworfen und nur der angeklickte Knoten wird ausgewählt.</p>
+                 <p><b>Ändern auf Internet/Intranet/amtsintern</b></p>
+                 <p>Über diese Operationen im Kontextmenü ist es möglich den Veröffentlichungszustand eines
+                 Objektes mittels eines einfachem Klicks zu ändern. Das Objekt wird automatisch nach der Änderung
+                 gespeichert bzw. veröffentlicht. Sollte sich die Veröffentlichungsbreite der Unterobjekte eines
+                 gewählten Objektes unterscheiden, so wird ein Hinweis ausgegeben. Wird dieser bestätigt, so wird
+                 den Unterobjekte automatisch der korrekte Veröffentlichungszustand zugewiesen.</p>
             </content>
         </section>
         <section help-key="hierarchy-maintenance-2">
@@ -1575,6 +1609,10 @@
 				 steht anderen Nutzern nicht zur Verfügung.</p>
 				 <p>Zum Löschen des Nutzers klicken Sie auf die Schaltfläche <i>Nutzer löschen</i> und 
 				 bestätigen den Vorgang in dem sich öffnenden Dialog.</p>
+                 <p><b>Anzeige der Verantwortlichkeiten</b></p>
+                 <p>Über den Reiter "Als Verantwortlicher" werden zwei Tabellen angezeigt, die die Objekte
+                 und Adressen auflisten, in denen der ausgewählte Benutzer als Verantwortlicher eingetragen
+                 ist. Es ist möglich direkt von diesen Tabellen auf ein Objekt bzw. Adresse zu springen.</p>
             </content>
         </section>
         <section help-key="user-administration-2">
@@ -1659,6 +1697,9 @@
 				 <p><u>Hinweis:</u> Dieses Recht wird nur im Zusammenhang mit der eingeschalteten 
 				 <a href="?hkey=quality-assurance-0">Workflow-Kontrolle</a> in den 
 				 <a href="?hkey=catalog-administration-1">Katalogeinstellungen</a> wirksam.</p>
+                 <p><b>zugeordnete Nutzer</b></p>
+                 <p>Auf einem extra Reiter ist es möglich, sich die Benutzer auflisten zu lassen, die zur 
+                 ausgewählten Gruppe gehören.</p>
 				 <p><b>Die spezielle Gruppe <i>administrators</i> des Katalogadministrators</b></p>
 				 <p>Dem Katalogadministrator wird immer automatisch die Gruppe <i>administrators</i> zugewiesen. 
 				 Diese Zuweisung kann <b>nicht</b> verändert werden. Die Gruppe hat Schreibrechte auf den gesamten 

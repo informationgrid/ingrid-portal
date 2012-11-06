@@ -43,7 +43,7 @@ copy ingrid-portal-base\src\java\de\ingrid\portal\resources\PortalLayoutResource
 REM ============= APPS ================
 copy ingrid-portal-apps\src\webapp\dwd_warnmodul\wmDWDconfig.cfg ingrid-portal-apps\src\webapp\profiles\portalu\ingrid-portal-apps\dwd_warnmodul
 copy ingrid-portal-apps\src\webapp\WEB-INF\portlet.xml ingrid-portal-apps\src\webapp\profiles\portalu\ingrid-portal-apps\WEB-INF
-REM copy ingrid-portal-apps\src\webapp\WEB-INF\classes\ingrid-portal-apps.properties ingrid-portal-apps\src\webapp\profiles\portalu\ingrid-portal-apps\WEB-INF\classes
+copy ingrid-portal-apps\src\java\ingrid-portal-apps.properties ingrid-portal-apps\src\webapp\profiles\portalu\ingrid-portal-apps\WEB-INF\classes
 copy ingrid-portal-apps\src\java\ingrid-portal-help*.xml ingrid-portal-apps\src\webapp\profiles\portalu\ingrid-portal-apps\WEB-INF\classes
 copy ingrid-portal-apps\src\java\quartz_jobs.xml ingrid-portal-apps\src\webapp\profiles\portalu\ingrid-portal-apps\WEB-INF\classes
 REM copy ingrid-portal-apps\src\java\wms_interface.properties ingrid-portal-apps\src\webapp\profiles\portalu\ingrid-portal-apps\WEB-INF\classes
@@ -61,3 +61,5 @@ copy ingrid-portal-mdek\src\webapp\WEB-INF\velocity\velocity-macros.vm ingrid-po
 
 REM ============= MDEK-APPLICATION ================
 copy  ingrid-portal-mdek-application\src\main\resources\mdek-application-help*.xml ingrid-portal-apps\src\webapp\profiles\portalu\ingrid-portal-mdek-application\WEB-INF\classes
+
+PAUSE
