@@ -152,6 +152,10 @@ ingridObjectLayout.createGeneralInfo = function(){
     console.debug("generalAddress");
     createDataGrid("generalAddress", null, structure, null);
     
+    new dijit.form.ValidationTextBox({
+        style: "width:100%;"
+    }, "generalPreviewImage");
+    
     var thesaurusInspireStructure = [
         {field: 'title',name: 'title',width: 708-scrollBarWidth+'px',
             type: SelectboxEditor,

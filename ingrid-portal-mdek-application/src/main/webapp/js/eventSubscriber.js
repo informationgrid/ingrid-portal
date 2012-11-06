@@ -1985,13 +1985,36 @@ udkDataProxy._setObjectDataClass6 = function(nodeData) {
 udkDataProxy._prepareObjectAndUrlReferences = function(nodeData) {
     var objLinkTable = nodeData.linksToObjectTable;
     var urlLinkTable = nodeData.linksToUrlTable;
+    
+    var url = this._filterPreviewImage(urlLinkTable);
+    dijit.byId("generalPreviewImage").set( "value", url );
+    
     var linkTable = objLinkTable.concat(urlLinkTable);
 
     UtilList.addObjectLinkLabels(linkTable, true);
     UtilList.addUrlLinkLabels(linkTable);
     UtilList.addIcons(linkTable);
-    
+
     return linkTable;
+}
+
+udkDataProxy._filterPreviewImage = function(urlList) {
+    var foundObjectIndex = null;
+    dojo.some(urlList, function(urlObject, index) {
+        if (urlObject.relationType == 9000) {
+            foundObjectIndex = index;
+            return true;
+        }
+        return false;
+    });
+    
+    if (foundObjectIndex != null) {
+        var url = urlList[foundObjectIndex].url;
+        urlList.splice(foundObjectIndex, 1);
+        return url;
+    } else {
+        return "";
+    }
 }
 
 /*******************************************
@@ -2236,6 +2259,10 @@ udkDataProxy._getObjectData = function(nodeData)
   		objLinks.push(link);  	
   	}
   });
+  
+  // add url to preview image to url table
+  var previewUrl = dijit.byId("generalPreviewImage").getValue();
+  if (previewUrl) urlLinks.push(UtilList.urlToListEntry(previewUrl));
 
   nodeData.linksToObjectTable = objLinks;
   nodeData.linksToUrlTable = urlLinks;

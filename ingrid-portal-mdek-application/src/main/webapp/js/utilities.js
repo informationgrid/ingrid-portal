@@ -923,6 +923,16 @@ UtilList.getValueForDisplayValue = function(selectbox, displayValue) {
 	return foundValue;
 }
 
+UtilList.urlToListEntry = function(url) {
+    var urlObject = {};
+    urlObject.name = "preview-image";
+    urlObject.relationType = 9000;
+    urlObject.relationTypeName = "Bildvorschau";
+    urlObject.url = url;
+    urlObject.urlType = 1;
+    return urlObject;
+}
+
 //see dojo.map in newer dojo releases
 UtilList.map = function(list, myFunction) {
 	var outArr = [];

@@ -283,6 +283,16 @@
                                 </div>
                                 </div>
                             </span>
+                            <span id="uiElement5100" class="outer">
+                                <div><span class="label">
+                                    <label for="generalPreviewImage" onclick="javascript:dialog.showContextHelp(arguments[0], 5100)">
+                                        <fmt:message key="ui.obj.general.previewImage" />
+                                    </label>
+                                </span><span class="input">
+                                    <div type="text" maxLength="255" id="generalPreviewImage" name="generalPreviewImage" class="fullWidth">
+                                    </div>
+                                </span></div>
+                            </span>
                             <div class="fill"></div>
                         </div>
                     </div>
@@ -2437,7 +2447,7 @@
                     <!-- Zusatzinformation -->
                     <div id="additionalInfo" class="rubric contentBlock">
                         <div class="titleBar">
-                            <a href="javascript:igeEvents.toggleFields('extraInfo');" title="<fmt:message key="general.open.required.field" />">
+                            <a href="javascript:igeEvents.toggleFields('additionalInfo');" title="<fmt:message key="general.open.required.field" />">
                                 <div class="image18px titleIcon"></div>
                             </a>
                             <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7003)">
