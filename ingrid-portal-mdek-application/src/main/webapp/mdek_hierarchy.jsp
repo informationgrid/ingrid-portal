@@ -2450,7 +2450,7 @@
                             <a href="javascript:igeEvents.toggleFields('additionalInfo');" title="<fmt:message key="general.open.required.field" />">
                                 <div class="image18px titleIcon"></div>
                             </a>
-                            <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7003)">
+                            <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7103)">
                                 <fmt:message key="ui.obj.additionalInfo.title" />
                             </div>
                             <div class="titleUp">
@@ -2460,7 +2460,7 @@
                         <div class="inputContainer">
                             <span id="uiElement4571" class="outer halfWidth">
                                 <div><span class="label">
-                                    <label id="extraInfoPublishAreaAddressLabel" for="extraInfoPublishAreaAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 3571)">
+                                    <label id="extraInfoPublishAreaAddressLabel" for="extraInfoPublishAreaAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 4571)">
                                         <fmt:message key="ui.obj.additionalInfo.publicationCondition" />
                                     </label>
                                 </span><span class="input"><input autoComplete="false" style="width:100%;" listId="3571" id="extraInfoPublishAreaAddress" /></span>
