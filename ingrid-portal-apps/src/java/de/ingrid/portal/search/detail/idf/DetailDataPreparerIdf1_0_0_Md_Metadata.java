@@ -98,7 +98,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			
 	// Tab "Verweise"
 			ArrayList referenceList = new ArrayList();
-			// "Verweise"
+			// "Verweise" and "Gekoppelte Daten"
 			xpathExpression ="./idf:crossReference";
 			getReference(referenceList, xpathExpression, ReferenceType.CROSS);
 			
@@ -1103,12 +1103,15 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		if(XPathUtils.nodeExists(rootNode, xpathExpression)){
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
 			ArrayList linkList = new ArrayList();
+			ArrayList linkListCoupledData = new ArrayList();
 			for (int i=0; i<nodeList.getLength();i++){
 				Node node = nodeList.item(i);
 				String uuid = "";
 				String title = "";
 				String type = "";
 				String attachedToField = "";
+				String entryId = "";
+				String serviceType = "";
 				String description = "";
 				
 				xpathExpression = "./@uuid";
@@ -1130,6 +1133,14 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 				if(XPathUtils.nodeExists(node, xpathExpression)){
 					attachedToField = XPathUtils.getString(node, xpathExpression).trim();
 				}
+				
+				xpathExpression = "./idf:attachedToField/@entry-id";
+                if(XPathUtils.nodeExists(node, xpathExpression)){
+                    entryId = XPathUtils.getString(node, xpathExpression);
+                }
+                
+                xpathExpression = "./gmd:identificationInfo/*/srv:serviceType";
+                serviceType = XPathUtils.getString(rootNode, xpathExpression);
 				
 				xpathExpression = "./idf:description";
 				if(XPathUtils.nodeExists(node, xpathExpression)){
@@ -1165,16 +1176,23 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	        		link.put("href", "");
 	        	}
 	        	// add map links to data objects from services
-	        	if (context.get(UDK_OBJ_CLASS_TYPE).equals("3") && type.equals("1")) {
+	        	if (entryId.equals("3600") && context.get(UDK_OBJ_CLASS_TYPE).equals("3")) {
 	        	    // get link from operation (unique one)
-	        	    link.put("mapLink", getCapabilityUrl());
-	        	} else if (this.firstGetCapabiltiesUrl != null && context.get(UDK_OBJ_CLASS_TYPE).equals("1") && type.equals("3")) {
-	        	    // get link from online resource (possibilty it's wrong?)
-	        	    link.put("mapLink", this.firstGetCapabiltiesUrl);
+	        	    if (serviceType.equals("view")) {
+	        	        link.put("mapLink", getCapabilityUrl());
+	        	    }
+	        	    linkListCoupledData.add(link);
+	        	} else if (entryId.equals("3600") && context.get(UDK_OBJ_CLASS_TYPE).equals("1")) {
+	        	    if (this.firstGetCapabiltiesUrl != null) {
+	        	        // get link from online resource (possibilty it's wrong?)
+	        	        link.put("mapLink", this.firstGetCapabiltiesUrl);
+	        	    }
+	        	    linkListCoupledData.add(link);
+	        	} else {
+	        	    linkList.add(link);
 	        	}
-	        	linkList.add(link);
 			}
-			if (linkList != null && linkList.size() > 0){
+			if (linkList != null && linkList.size() > 0 || linkListCoupledData != null && linkListCoupledData.size() > 0 ){
 				switch (referenceType) {
 					case SUPERIOR:
 						addReferenceToElement(elements, linkList, null, messages.getString("superior_references"));
@@ -1190,6 +1208,17 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 							element.put("linkList", linkList);
 							elements.add(element);
 						}
+						if (!linkListCoupledData.isEmpty()) {
+                            HashMap element = new HashMap();
+                            element.put("type", "linkList");
+                            if (context.get(UDK_OBJ_CLASS_TYPE).equals("3")) {
+                                element.put("title", messages.getString("coupled_data"));
+                            } else {
+                                element.put("title", messages.getString("coupled_service"));
+                            }
+                            element.put("linkList", linkListCoupledData);
+                            elements.add(element);
+                        }
 						break;
 					default:
 						break;
