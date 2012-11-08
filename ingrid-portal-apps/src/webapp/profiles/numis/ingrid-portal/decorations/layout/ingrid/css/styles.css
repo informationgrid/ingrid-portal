@@ -301,7 +301,7 @@ div#results_right { float:left; width:26.6458em; margin: 0px 0px 0 2.625em; }
 ***/
 
 /* full width content area styles */
-div#content_full { float:left; width:55.5625em; }
+div#content_full { float:left; width:100%; }
 div#content_full .clearer { clear:both; display:block; height:1px; line-height:0px; font-size:1px; margin:0; padding:0; }
 
 div.portal-layout-OneColumn {width: 55.57em}
@@ -374,7 +374,7 @@ div.section div.indent {margin-left: 1em}
 div.noresult { margin-top:20px; }
 div.noresult ul { line-height:2em; }
 
-div.resultset_nav { text-align:right; background:#E2E2E2; padding:0px 10px; font-size:75%; color:#000000; }
+div.resultset_nav { text-align:right; background:#E2E2E2; padding:0px 10px 3px; font-size:75%; color:#000000; }
 div.resultset_nav a { text-decoration:underline; font-weight: bold;}
 
 div.resultset { padding:4px 4px 4px 0px; font-size:14px; }
@@ -392,8 +392,9 @@ div.resultset p.result_link a:hover { color:#2C5C91; text-decoration:underline; 
 div.resultset span.result_title { }
 div.resultset span.inquiry { margin-left:20px; font-size:83%; }
 div.resultset em.date { font-style:normal; font-size: 11px; color:#E0003C; border-left: 1px solid #2C5C91; margin-left: 25px; padding: 0 0 0 5px; }
-div.resultset_partner_group { background: #EAEAEA url(../images/bg_resultset_partner_group.png) left top repeat-x; margin: 0 0 10px 0;padding: 0.25em 0.875em 0.05em 0.7em;}
+div.resultset_partner_group { background: none repeat scroll 0 0 #E2E2E2; margin: 0 0 10px 0;padding: 0.25em 0.875em 0.05em 0.7em;}
 div.resultset_partner_group span.title { font-size:67.5%; font-weight:bold; line-height:100%; text-transform:uppercase;}
+div.resultset_partner_group span.title_subject { color:#000000; font-size:67.5%; font-weight:bold; line-height:100%; text-transform:uppercase;}
 div.resultset_partner_group p.result_description { font-size:65%;margin: 5px 0px 0px 0px; line-height:120%}
 div.resultset_partner_group p.result_metadata { font-size:65%; color:#999999; margin:0; line-height:120%; margin-bottom:2px;}
 
@@ -566,6 +567,9 @@ input.btn_disable { background: none; height: 31px; color: #CECECE; font-weight:
 input.btn_search { background-image: url("../images/button_search.png"); background-position: right center; height: 31px; color: #FFFFFF; font-weight: bold; text-align: left; padding: 0px 38px 3px 9px; border: 0 none !important; font-size: 12px; font-family: Verdana, Arial, sans-serif; }
 input.btn_search:hover { cursor: pointer; background-image: url(../images/button_hover.png); }
 input.btn_search_disable { background: none; height: 31px; color: #CECECE; font-weight: bold; text-align: left; padding-left: 9px; padding-right: 38px;  padding-bottom: 2px; border: 0 none !important; background-image: url(../images/background-mainmenu-hover.png); font-family: Verdana, Arial, sans-serif; text-shadow: 1px -1px 0px #BCE465; }
+input.btn_gray { background: none; height: 33px; color: #1b78b1; font-weight: bold; text-align: left; padding-left: 10px; padding-right: 10px; padding-bottom: 2px; border: 0 none !important; font-size: 12px; font-family: Verdana, Arial, sans-serif; /* text-shadow: 1px -1px 0 #1C5269; */ }
+input.btn_gray:hover { color: #FFFFFF; cursor: pointer; background-image: url(../images/background-mainmenu-hover.png); }
+input.btn_gray_disable { background: none; height: 33px; font-weight: bold; color: #111111; text-align: left; padding-left: 10px; padding-right: 10px; border: 0 none !important;}
 
 /*Use only at profile NUMIS*/
 input.btn_admin { margin:0px; }
@@ -804,6 +808,9 @@ div.btn_search_center { float:left; background-position: right center; }
 div.btn_left { float:left; background-image: url(../images/button_left.png); height: 31px; width: 3px; }
 div.btn_right { float:left; background-image: url(../images/button_right.png); height: 31px; width:3px; }
 div.btn_center { float:left; background-image: url("../images/button.png"); background-position: right center; }
+div.btn_gray_left { float:left; background-image: url(../images/button_gray_left.png); height: 33px; width: 3px; }
+div.btn_gray_right { float:left; background-image: url(../images/button_gray_right.png); height: 33px; width: 3px; }
+div.btn_gray_center { float:left; background-image: url("../images/button_gray.png"); background-position: right center; }
 
 .search_query_button { padding: 0px 0px 0px 390px; }
 .search_query_textarea { position: absolute;  margin: 1px 0 0; }
@@ -819,3 +826,137 @@ object.weatherObject { width:250px; height:310px; }
 
 a.marginal_portlet_link { width:190px !important; }
 p.chronicle_teaser_title { float: none; width: 100%; }
+
+/** new for InGrid 3.2.0 **/
+
+/* pagination styles */
+#filterArea {padding-bottom:8px;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#cecece}
+#paginationAndHint {margin-top:8px;}
+#dbBrowserHint {float:left}
+#pagination {float:right}
+#btnPageFirst {float:left;margin-top:4px;margin-right:4px}
+#btnPagePrev {float:left;margin-top:4px;margin-right:8px}
+#btnPageNext {float:left;margin-top:4px;margin-right:4px;margin-left:8px}
+#btnPageLast {float:left;margin-top:4px}
+.btn_pg_left {float:left;height:19px;width: 2px;background-image:url(../images/button_small_left.png)}
+.btn_pg_left_disabled {float:left;height:19px;width: 2px;background:#cecece}
+.btn_pg_right {float:left;height:19px;width: 2px;background-image:url(../images/button_small_right.png)}
+.btn_pg_right_disabled {float:left;height:19px;width: 2px;background:#cecece}
+.btn_pg_center {float:left;height:19px;background-image:url(../images/button_small.png); background-position: right center; }
+.btn_pg_center_disabled {float:left;height:19px;background:#cecece}
+
+
+/* facete styles */
+/* facete */
+div#facete { padding: 10px 0px; }
+div#facete a { cursor:pointer; }
+div#facete h2 { color:#5E5E5F; }
+div.facete_open { width:13px; height:13px; background-image: url(../images/facete_cat_open.png); }
+div.facete_close { width:13px; height:13px; background-image: url(../images/facete_cat_close.png); }
+div#search_facete { width: 227px; float: left; padding: 0; }
+div#search_facete.openNode { width:227px ; margin:0 0 0 0px; }
+div#search_facete.closeNode { width:0; margin:0; }
+div#search_hits { float: left; padding: 0 0 0 25px; width:636px; border-left: 1px dotted #CCCCCC; overflow: hidden }
+div#search_hits.openNode { width:863px; }
+div#search_hits.closeNode { }
+div#search_hits.nonjavascript { padding: 0 0 0 0; width:100%; border-left: 0px dotted #CCCCCC;}
+div#search_hits.javascript { }
+div#search_hits div#results_lefts div.section { width:37em; }
+
+div#search_facete_address { width: 227px; float: left; padding: 0; }
+div#search_facete_address.openNode { width:227px ; margin:0 0 0 0px; }
+div#search_facete_address.closeNode { width:0; margin:0; }
+div#search_hits_address { float: left; padding: 0 0 0 25px; width:636px; border-left: 1px dotted #CCCCCC;}
+div#search_hits_address.openNode { width:863px; }
+div#search_hits_address.closeNode { }
+div#search_hits_address.nonjavascript { float: left; padding: 0 0 0 0; width:100%; border-left: 0px dotted #CCCCCC;}
+div#search_hits_address.javascript { }
+
+div.cat_label { }
+div.cat_label a { font-size: 12px; font-weight:bold; }
+div.cat_content { padding:5px 0 0 20px; display: block; }
+div.cat_content div span.dijitButton { font-size:12px; padding: 0px; font-weight: bold; color: #1B78B1; margin: 0 0 0 -5px; }
+div.cat_content div span.dijitButton span.dijitButtonNode { background-color: transparent; background-image: none; border:0; padding:0; -moz-box-shadow:none; -moz-border-radius:0; }
+div.cat_content_entry { display:block; padding:5px 0px 10px 25px; }
+div.cat_entry_label { padding: 2px 0px; }
+div.cat_entry_label a { font-weight:normal; font-size:12px; }
+div.cat_entry_delete { padding: 0 0 0 30px; }
+div.cat_entry_delete div a { font-size:10px; }
+div.cat_entry_label span { font-size: 12px; font-weight: bold; color: #1B78B1; }
+div.facete_line { }
+div.facete_chb { padding: 0 0 5px; font-size:12px; }
+div.facete_chb span a { font-size:12px; position: relative; }
+div.facete_chb span a input { position: absolute; }
+div.facete_chb p { padding: 0px; margin: 0px; }
+
+a.facete_open_node { float:right; padding: 10px 10px 0px 0px; cursor:pointer; }
+a.facete_link_line { font-size:12px; }
+a.facete_more_link_line { font-size:12px; padding: 0px 0px 0px 20px; font-weight: bold;  }
+
+input.facete_input_chb { float:left; margin: 1px 0 0 -20px; top: -2px; }
+a.facete_label_chb { color:#111111; }
+
+div.dijitDialog { background: none repeat scroll 0 0 #FFFFFF; padding: 10px; min-width: 400px; }
+div.facete_dialog {min-width: 610px; max-width:810px; max-width:850px;}
+div.facete_dialog div.dijitDialogTitleBar { border-bottom: 1px dotted #CECECE !important; background-color: #FFFFFF !important; background-image: none !important; height: 30px; }
+div.facete_dialog div.dijitDialogTitleBar span.dijitDialogCloseIcon { }
+div.facete_dialog span.dijitDialogTitle { font-size:14px; font-weight: bold; padding: 0 15px; }
+div.facete_dialog span.dijitDialogCloseIcon { float:right; background-image: url("/ingrid-portal-apps/images/facete/facete_close_dialog.png"); width:22px; height:22px; }
+div.facete_dialog span.closeText {}
+div.facete_dialog_underlay { background: #1B78B1 !important; }
+div.facete_dialog div.dijitDialogPaneContent { border-top: 0 !important; }
+div.facete_dialog div.dijitDialogPaneContent div.dialog_content { padding:25px 5px; max-height: 500px; overflow: auto; }
+div.facete_dialog div.dijitDialogPaneContent div.dialog_content table tr td { padding:0px 20px; }
+div.facete_dialog div.dijitDialogPaneContent div.dialog_bottom { border-top: 1px dotted #CECECE; padding:10px 0 0;  }
+div.facete_dialog_sns_content { border-top:1px dotted #CCCCCC; padding:10px 0px; }
+input.facete_input_chb_dialog { float:left; margin: 3px 5px 0; }
+label.facete_label_chb_dialog { padding: 0 0 0 7px; font-size:12px; color:#1B78B1; }
+div.dialog_error_message {}
+div.dialog_error_message span { color: #CC0000; font-size:12px; font-weight:bold; }
+input.facete_dialog_chb { margin:0; }
+p.dialog_sub_title { font-weight:bold; }
+div.dialog_sub_content { padding:0 0 10px 0; }
+span.dialog_loading_panel { }
+
+div.closeDialog { float: right; margin: -30px 0 0; }
+div.closeDialogWebmapClient { right:5px; position:absolute;display:inline;margin:  0 0; top:10px; }
+img.facete_open { cursor: pointer; padding: 2px 0px 0 0; }
+img.facete_delete_img { margin: 0px 0px -1px 0px; }
+div.facete_delete span.facete_delete_span_img { position:absolute; padding: 5px 0 0; }
+div.facete_delete span.facete_delete_span_a { position:relative; left:15px; }
+
+div.dialog_bottom div.btn_center input.btn { font-size:11px; color:#FFFFFF; }
+
+iframe.facete_map { height: 505px; width: 880px; }
+
+div.dialog_content input.thesaurus_term { font-size: 83%; line-height: 120%; width: 70%; height: 50%; }
+div.dialog_content_webmapclient { font-size: 83%; line-height: 120%; width: 70%; height: 50%; max-width:820px;height:500px; padding:2px}
+div.dialog_content .inputstyletext { border: 1px inset #FFFFFF; padding: 2px 4px 2px 4px; margin-right:6px;margin-bottom: 5px; }
+div.formbody_webmapclient_coordinates_title_facete{font-size:13px;display:inline;}
+div.formbody_webmapclient_coordinates_facete{font-size:13px;display:inline;}
+div.formbody_webmapclient_areaid_title_facete{font-size:13px;display:inline;}
+div.formbody_webmapclient_areaid_facete{font-size:13px;display:inline;}
+div.btn_submit_dialog { padding: 11px 0 0; }
+div.btn_submit_dialog div.btn_center input { font-size: 11px; }
+
+span.facete_label { color: #5E5E5F; }
+span.facete_label_number { font-size:11px; color:#5e5e5f; }
+span.facete_label_dialog { padding: 0 0 0 7px; font-size:11px; color: #176798; }
+
+ul.facete_ul_more { margin: 0 0 0 -5px; list-style: none outside none; list-style-type: none; }
+ul.facete_ul_more li { display: inline; }
+ul.facete_ul_more li a { font-size:11px !important; }
+a.facete_more { font-weight:bold; }
+img.more_seperator { widht:2px; height:11px; padding:0px 2px; }
+a.facete_delete_link { font-weight: bold; font-size:11px; }
+a.facete_select_link { color: #111111; font-weight:normal !important; }
+a.facete_select_link_topic { font-weight:bold; }
+
+div#area a.facete_link_line { font-size:11px;font-weight: bold; }
+div#thesaurus a.facete_link_line { font-size:11px;font-weight: bold; }
+div#attribute a.facete_link_line { font-size:11px;font-weight: bold; }
+div#area_address a.facete_link_line { font-size:11px;font-weight: bold; }
+div.dialog_content input.btn { text-align: center; min-width: 120px; }
+
+.tundra .dijitBorderContainer { background-color: transparent !important; }
+.tundra .dijitSplitContainer-child, .tundra .dijitBorderContainer-child { border: 0px solid #CCCCCC !important; }

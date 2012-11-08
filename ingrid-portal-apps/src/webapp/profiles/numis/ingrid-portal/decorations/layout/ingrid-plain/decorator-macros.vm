@@ -191,13 +191,6 @@
 	                    	#includeSubNavigation($subMenu true)
 	                    </div>
 	                #end
-				#elseif ($currentPage.startsWith('/search-catalog/search-catalog-hierarchy') || $currentPage.startsWith('/search-catalog/search-catalog-thesaurus'))
-				#set($subMenu = $site.getMenu("sub-menu-catalog"))
-	            	#if($subMenu && !$subMenu.empty)
-	                    <div id="subnav">
-	                    	#includeSubNavigation($subMenu true)
-	                    </div>
-            		#end
             	#end
           		</li>
             #else
@@ -245,18 +238,6 @@
         #elseif($element.url.startsWith('/main-features.psml'))
             #set($linkTitle = $MESSAGES.getString('ingrid.page.features.tooltip'))
             #set($linkName = $MESSAGES.getString('ingrid.page.features'))
-        #elseif($element.url.startsWith('/main-about-partner.psml'))
-            #set($linkTitle = $MESSAGES.getString('ingrid.page.partner.tooltip'))
-            #set($linkName = $MESSAGES.getString('ingrid.page.partner'))
-        #elseif($element.url.startsWith('/main-about-data-source.psml'))
-            #set($linkTitle = $MESSAGES.getString('ingrid.page.data.source.tooltip'))
-            #set($linkName = $MESSAGES.getString('ingrid.page.data.source'))
-        #elseif($element.url.startsWith('/search-catalog/search-catalog-hierarchy.psml'))
-            #set($linkTitle = $MESSAGES.getString('ingrid.page.hierarchy.tooltip'))
-            #set($linkName = $MESSAGES.getString('ingrid.page.hierarchy'))
-        #elseif($element.url.startsWith('/search-catalog/search-catalog-thesaurus.psml'))
-            #set($linkTitle = $MESSAGES.getString('ingrid.page.thesaurus.tooltip'))
-            #set($linkName = $MESSAGES.getString('ingrid.page.thesaurus'))
         #end
         #if($element.isSelected($site))
             #set($elemSelected = true)

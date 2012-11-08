@@ -11,7 +11,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
   <base href="#BaseHref()" />
-  <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "NUMIS - Das niedersächsische Umweltportal")</title>
+  <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "PortalU")</title>
   <meta http-equiv="Content-type" content="#ContentType()" />
   <meta http-equiv="Content-style-type" content="text/css" />   
   <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
@@ -27,7 +27,7 @@
 #end
   <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
   #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
-	<link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
+    <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
   #end
 <!--<link rel="stylesheet" media="screen, projection" type="text/css" href="styles/portal_u.css" />-->
 
@@ -35,7 +35,7 @@
   #includeHeaderResource()
   #* Hack ! Fix fuer width:100%; height:100% aus inkludierten Headern von J2 Portlets (j2-admin ...) -> zerschiesst Navigation *#
   <style>
-	html, body { width: auto; height: auto; }
+    html, body { width: auto; height: auto; }
   </style>
   #includeJavaScriptForHead()
   #IncludeStylesheets()
@@ -59,40 +59,39 @@ var xmlhttp=false;
 // JScript gives us Conditional compilation, we can cope with old IE versions.
 // and security blocked creation of the objects.
 try {
-	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+    xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
 } catch (e) {
-	try {
-   		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-  	} catch (E) {
-   		xmlhttp = false;
-  	}
+    try {
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    } catch (E) {
+        xmlhttp = false;
+    }
 }
 @end @*/
 if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
-	try {
-		xmlhttp = new XMLHttpRequest();
-	} catch (e) {
-		xmlhttp=false;
-	}
+    try {
+        xmlhttp = new XMLHttpRequest();
+    } catch (e) {
+        xmlhttp=false;
+    }
 }
 if (!xmlhttp && window.createRequest) {
-	try {
-		xmlhttp = window.createRequest();
-	} catch (e) {
-		xmlhttp=false;
-	}
+    try {
+        xmlhttp = window.createRequest();
+    } catch (e) {
+        xmlhttp=false;
+    }
 }
 if (xmlhttp) {
     xmlhttp.open('GET', '$jetspeed.getAbsoluteUrl('/detect-js.psml?js=1')', true);
     xmlhttp.onreadystatechange = function () {};
     xmlhttp.send(null);
-}	
+}   
 </script>
-
   </head>
-  <body class="#PageBaseCSSClass() claro body-background">
+  <body class="#PageBaseCSSClass() claro">
     <noscript>
-	  <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
+      <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
     </noscript>
 <!--  BEGIN: layout/html/portalu/decorator.vm -->
     <div class="#PageBaseCSSClass()">
@@ -140,7 +139,7 @@ if (xmlhttp) {
 </div>
 
 <!-- CONTENT BLOCK -->
-<div id="container">
+<div id="container" style="margin:0px;">
   
 ## $jetspeed.include($jetspeed.currentFragment)
 

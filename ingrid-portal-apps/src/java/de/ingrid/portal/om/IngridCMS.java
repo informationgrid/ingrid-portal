@@ -6,14 +6,7 @@ package de.ingrid.portal.om;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
-
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import de.ingrid.portal.global.UtilsDB;
-import de.ingrid.portal.hibernate.HibernateUtil;
 
 /**
  * TODO Describe your created type (class, etc.) here.

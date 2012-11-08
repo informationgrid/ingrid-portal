@@ -1,0 +1,246 @@
+/**
+ * Inlcude CSS styles for portlets (standardized classes)
+ * See: Section PLT.C of the Portlet Specfication 1.0
+ */
+@import url("./PLT.C.All.css");
+
+
+/********************************************************************
+  standard styles 
+*********************************************************************/
+
+body { padding: 0; margin: 0; color: #505050; background-color: #FFFFFF; font-family: Arial,sans-serif; }
+body.body-background { background:url("../images/body.png") repeat-x scroll 0 0 #E2EBF0; width:966px; padding-bottom: 50px; }
+div.layout-tigris { filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#bebebe' ); -moz-box-shadow:0 0 0.417em #BEBEBE; -webkit-box-shadow:0 0 0.417em #BEBEBE; }
+
+sup { line-height: 0; }
+img { border:0; }
+span.icon { margin-right:4px; margin-top:2px; float:left; }
+/*Need for IE6*/
+* html span.icon { margin-right:4px; margin-top:7px; float:left; }
+
+span.icon_udk { float:left; width:17px; height:20px; position: absolute; margin: 1px 0 0; }
+/* no float for detail page in OPERA */
+span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px; }
+span.normaltext { font-weight:normal; text-transform:none; }
+span.smaller {font-size: 83%}
+ul { list-style-type:square; padding-left:0; margin: 0 0 1em 30px; }
+p { margin-top:0; margin-bottom:1em; font-size:12px; }
+strong {font-weight:bold}
+
+div.line { border: 0; background-color: #98B812; height: 1px; margin:10px 0 15px 0; padding:0 }
+div.line_form { border: 0; background-color: #E2E2E2; height: 1px; margin:10px 0 10px 0; padding:0}
+/* for CSS1 browsers */ 
+div.line hr { display: none;}
+div.line_form hr { display: none;}
+/* for CSS2 browsers */
+div.line * { display: none;}
+div.line_form * { display: none;}
+
+a,a:link { color: #2C5C91; text-decoration: none; }
+a:visited { color: #2C5C91; }
+a:hover { text-decoration: underline; }
+a:focus { color: #111111; text-decoration: none; }
+a:active { color: #111111; text-decoration: none; }
+a.selected { font-weight:bold; }
+/*search_seperator style used at profile NUMIS*/
+span.search_seperator{ color:#999999; }
+
+h1 { color: #2C5C91; font-size: 24px; font-weight: normal; line-height: 24px; margin: 0 0 0.5em 0; }
+h2 { font-family: Arial, Verdana, Helvetica, sans-serif; font-size:90%; line-height:120%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
+h3 { font-family: Arial, Verdana, Helvetica, sans-serif; font-size:80%; line-height:120%; font-weight:bold; margin-top:0.4em; margin-bottom:0.3em; }
+
+table.border { border-collapse:collapse; border-top: 1px solid #E2EBF0; border-left: 1px solid #E2EBF0; border-right: 1px solid #E2EBF0; }
+table.fullwidth { width:100%; }
+th {font-size: 75%; vertical-align:top; padding:3px;}
+td {font-size: 75%; vertical-align:top; padding-left:3px;}
+table.formtable td {font-size: 75%; vertical-align:middle; margin:0;}
+td.iconwidth { width:9px; }
+table.layout td {font-size: 100%}
+td.fontcolor {color: #2C5C91;}
+
+/********************************************************************
+  helper styles 
+*********************************************************************/
+
+.hide { position: absolute; left: -1000em; width:500em; line-height:0px; }
+.clearer { clear:both; height:1px; line-height: 0px; font-size: 1px; margin:0; padding:0; }
+.float { float:left; }
+.float_left { float:left; }
+.float_right { float:right; }
+.bgred {background-color:#FF0000}
+.top { margin-top:0; }
+.nobottommargin { margin-bottom:0; }
+.leftmargin {margin-left: 12px; }
+.leftmargin_big {margin-left: 84px; }
+.nospace { margin-bottom:0; padding-bottom:0; }
+.rightmargin { margin-right:1.5em; }
+
+div.ico_linkintern {margin: 0 0 0.3em 0;padding-left: 15px; background-image:url("../images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 .2em;}
+div.ico_arrowup {margin: 0 0 0.3em 0;padding-left: 15px; background-image:url("../images/arrow_up.gif");background-repeat: no-repeat;background-position: 0.0em .4em;}
+div.ico_down_black {margin: 0 0 0.3em 0;padding-left: 10px; background-image:url("../images/ico_down_black.gif");background-repeat: no-repeat;background-position: 0.0em -.1em;}
+
+/********************************************************************
+  breadcrumb styles 
+*********************************************************************/
+
+div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; background-color:#FFFFFF; font-size: 75%; }
+
+/********************************************************************
+  identity area styles
+*********************************************************************/
+
+div#identity { padding:0; margin:0; height: 90px; width:100%; min-width:1240px; background-color:#FFFFFF; overflow:visible; position:relative; z-index:5; }
+div.motiv_karten { background-image:url(../images/01_motiv_karten.png); background-repeat:no-repeat; }
+
+div.en_motiv_karten { background-image:url(../images/01_motiv_karten.png); background-repeat:no-repeat; }
+
+/********************************************************************
+  logo styles 
+*********************************************************************/
+
+div#logo { float: left; }
+
+/********************************************************************
+  logged on styles 
+*********************************************************************/
+
+div#logged_on {float: right; clear:right; font-size: 65%; margin:2.5em 1.2em 0 0; padding:0 5px; color:#2C5C91; background:#FFFFFF; }
+div#logged_on a, div#logged_on a:link, div#logged_on a:visited {color:#2C5C91; text-decoration: none}
+div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { text-decoration: underline; }
+
+/********************************************************************
+  service navigation styles
+*********************************************************************/
+
+div#servicenav { padding: 0 10px; float: right; margin: 0; }
+#servicenav { font-size: 70%; }
+div#servicenav ul { list-style: none; margin: -3px; height:22px; padding:0 10px 0 10px; }
+div#servicenav ul li { display:inline; color: #FFFFFF; font-size: 12px; }
+div#servicenav ul li a { color:#FFFFFF !important; padding: 0 5px; }
+div#servicenav ul li a:hover { text-decoration:underline;}
+div#servicenav ul li a.selected { text-decoration:underline; color:#FFFFFF !important; font-weight:normal; padding:0px 5px; }
+div#servicenav ul li a.selected:hover { text-decoration:underline; }
+div.service_nav_center { background-image: url(../images/service_nav.png); }
+div.service_nav_left { float:left; width:4px; height:23px; background-image: url(../images/service_nav_left.png); }
+div.service_nav_right { float:left; width:4px; height:23px; background-image: url(../images/service_nav_right.png); }
+
+/*style to change language switch style (use in profiles)*/
+select.language_switch_style {font-size:100%; background-color:transparent; color:#FFFFFF; }
+
+/********************************************************************
+  main navigation styles
+*********************************************************************/
+
+/* IE Win needs this to show background-color \*/
+html body div#mainnav { height: 31px; }
+/* End Hack */
+
+div#mainnav { background: url(../images/background-mainmenu.png); margin:0; padding:0; height:31px;  z-index: 10; position: relative;}  
+div#mainnav ul { list-style: none; padding: 0px 0 0px 56px; margin: 0; }
+div#mainnav ul li { padding: 8px 0px; margin:0; border: 0; float: left; font-size: 12px; font-weight:bold; }
+div#mainnav ul li:hover { }
+
+div#mainnav ul li ul {}
+div#mainnav ul li ul li { padding:3px 0px; }
+div#mainnav ul li ul li:hover { background: url(); }
+
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+div#mainnav ul li a {float:none;}
+/* End IE5-Mac hack */
+
+div#mainnav ul li a,  
+div#mainnav ul li a:link, 
+div#mainnav ul li a:visited 
+ { text-decoration:none; color:#FFFFFF; padding:6px 15px 8px; margin:0; font-size: 14px; font-weight:normal; }  
+
+div#mainnav ul li a.selected,
+div#mainnav ul li a.selected:link, 
+div#mainnav ul li a.selected:visited 
+ { text-decoration:none; color:#1C5679; background-image:url(); padding:0px 15px 0px 15px; margin: 7px 0; float:left; font-weight: bold; }  
+
+div#mainnav ul li a:hover,
+div#mainnav ul li a:active
+ { background: url(../images/background-mainmenu-hover.png);  padding:7px 15px 7px 15px; margin:0px; height:31px; }
+
+div#mainnav div.tabs { margin:-10px 0 31px; }
+div#mainnav div.tabs_left { width:4px; height:33px; float:left; background-image: url(../images/tabs-left.png); }
+div#mainnav div.tabs_right { width:4px; height:33px; float:left; background-image: url(../images/tabs-right.png); }
+div#mainnav div.tabs_center { height:33px; float:left; background-image: url(../images/tabs.png); padding: 0; }
+/********************************************************************
+  sub navigation styles
+*********************************************************************/
+
+div#subnav { height:1.375em; padding: 2px 0px 0px 0px; position: absolute; }
+div#subnavBack { position:relative; border-top: solid #FFFFFF 0px; background:#E2E2E2; height:14px; }
+
+div#subnav ul { list-style:none; padding: 0px 0px 0px 5px; margin:0; line-height:140%; color:#E2E2E2;}
+div#subnav ul li { display:inline; padding:0; margin:0; }
+
+div#subnav ul li a,
+div#subnav ul li a:link,
+div#subnav ul li a:visited,
+div#subnav ul li a:active {text-decoration:none; color:#215A7E; font-weight: normal; padding:0px 10px !important; border:0px !important; font-size:12px; }
+
+div#subnav ul li a:hover, div#subnav ul li a:focus {color:#2C5C91;text-decoration:underline; background-image: url() !important;  }
+div#subnav ul li a.selected { text-decoration:none; color:#111111; font-weight:bold; background-image: url() !important; float:none !important; }
+
+div.subnav_corner { vertical-align:bottom; float:right; width:21px; background-color:#999}
+div.subnav_corner_img { vertical-align:bottom; width: 21px; height:100%; background-position:bottom; background-color:#E2E2E2}
+
+div#subnav div.subnav_left { background-image: url(../images/subnav_left.png); width: 5px; height: 22px; float:left; }
+div#subnav div.subnav_right { background-image: url(../images/subnav_right.png); width: 5px; height: 22px; float:left; }
+div#subnav div.subnav_center { background-image: url(../images/subnav.png); height: 22px; float:left; }
+
+div#subnavBack ul { list-style:none; padding: 0px; margin:0; line-height:120%; color:#111111; }
+div#subnavBack ul li { display:inline; padding: 0px 10px 0px 0px; float:left; font-size: 12px; }
+
+div#subnavBack ul li a.selected { text-decoration:none; color:#215A7E; font-weight:bold; }
+div#subnavBack ul li a,
+div#subnavBack ul li a:link,
+div#subnavBack ul li a:visited,
+div#subnavBack ul li a:active {text-decoration:none; color:#215A7E;}  
+div#subnavBack ul li a:hover, div#subnav ul li a:focus { color:#2C5C91; text-decoration:underline; }
+
+div#subnavBack div.subnav_left { background-image: url(../images/subnav_left.png); width: 5px; height: 22px; float:left; margin: 0px 0px 0px 63px; }
+div#subnavBack div.subnav_right { background-image: url(../images/subnav_right.png); width: 5px; height: 22px; float:left; }
+div#subnavBack div.subnav_center { background-image: url(../images/subnav.png); float:left; padding-left:10px; padding-top: 3px; }
+
+/********************************************************************
+  content block styles
+  base layout for content area and marginal column  
+*********************************************************************/
+
+div#container { width:56em; margin:28px 0 50px 63px; }
+
+/*** alt ***/
+div#content { float:left; width:37.1875em; }
+div#marginal { float:left; width:15.75em; margin: 0px 0px 0 2.625em; }
+
+/*** portlat column styles, replacing div#content and div#marginal ***/
+div.portal-layout-column-1 { float:left; width:37.1875em; }
+div.portal-layout-column-2 { float:left; width:15.75em; margin: 0px 0px 0 2.625em; }
+
+
+/********************************************************************
+  footer block styles  
+*********************************************************************/
+
+div#footercontainer { background: url(../images/logo-numis_footer.png) no-repeat scroll 53px 30px #F8F8F8; border: 1px solid #F8F8F8; height:137px; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#bebebe' ); -moz-box-shadow:0 0 0.417em #BEBEBE; -webkit-box-shadow:0 0 0.417em #BEBEBE; display:none; }
+#footercontent { font-size: 11px; width:64.5em; margin-left:197px; color:#909090; padding: 45px 0 0; line-height: 140%; display:none; }
+
+div#footermarginalcontainer { height: 20px; display:none; }
+div#footermarginal { display:none; }
+
+div#finalfootercontainer { float: left; width: 59.5em; display:none;}
+div#finalfooter { padding-left:112px; padding-bottom:20px; padding-top:0px; height:11px; font-size:65%; line-height:120%; color:#000000; }
+
+div#logo img { padding:31px 27px 0; }
+
+/* InGrid Map Client*/
+
+p,label.search-ext-env{padding:2px;}
+ol, ul { list-style-type: none !important; }
+.x-tree-node-anchor {   font-size:11px !important;}
+ul.x-tab-strip-top {background-color: #CEDFF5;border-bottom-color: #8DB2E3;margin: 0;important!;}
+li.x-tree-node{margin-left:-25px;}
