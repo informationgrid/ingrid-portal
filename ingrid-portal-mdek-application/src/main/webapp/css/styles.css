@@ -78,7 +78,7 @@ html {
 /* TAB */
 .dijitTabPane, .tab { padding: 0px !important; }
 .claro .dijitTabContent { border: 0px solid #B5BCC7; }
-.claro .dijitTabContainerTop-tabs .dijitTabChecked .dijitTabContent { background-color: #156496; color: #FFFFFF; padding-bottom: 4px; padding-top: 6px; }
+.claro .dijitTabContainerTop-tabs .dijitTabChecked .dijitTabContent { background-color: #82c4ed; color: #0c3753; padding-bottom: 4px; padding-top: 6px; }
 .claro .dijitTabContainerTop-tabs .dijitTabContent { background-image: url(""); background-position: 0 0; border-color: #848484 #848484 transparent; border-width: 1px 1px 0; border-style: solid solid none; min-width: 60px; padding: 3px 8px 3px 4px; text-align: center; }
 .claro .dijitTabContainerTop-tabs .dijitTab { margin-right: 2px; padding-top: 3px; top: 1px; }
 
@@ -93,7 +93,7 @@ div .dijitDialogPaneContent div.dijitContentPane { padding:0px; }
 /*.slick-cell { font-weight: normal; padding-left: 4px; padding-right: 4px; }*/
 .slick-cell {border-color: transparent transparent transparent #156496; border-style: solid; /*padding: 0px 4px; border-width: 0 0 0 1px;*/ }
 .slick-cell.selected {background-color: #9a9a9a;}
-.slick-header-columns, .slick-header-column {background: url(""); color: #FFFFFF; font-weight: bold; background-color: #156496; font-size:10px;}
+.slick-header-columns, .slick-header-column {background: url(""); color: #0c3753; font-weight: bold; background-color: #82c4ed; font-size:10px;}
 .tableContainer { background-color: #EEEEEE; }
 .note { background-color: #EEEEEE; font: 10px/11px Verdana,Helvetica,Arial,sans-serif; }
 .div #import td label { padding-top:5px; padding-right: 10px; }
@@ -125,7 +125,7 @@ div .inputContainer h2 { padding-bottom: 5px; }
 .claro .dijitButton .dijitButtonNode:hover, .claro .dijitDropDownButton .dijitButtonNode:hover, .claro .dijitComboButton .dijitButtonNode:hover, .claro .dijitToggleButton .dijitButtonNode:hover { background-color: #ADD9F9; background-image: url(""); padding: 2px 4px 4px; }
 .dijitButtonContents { outline-color: transparent; }
 .claro .dijitButtonDisabled .dijitButtonNode, .claro .dijitButtonDisabled .dijitButtonNode:hover { background-color: #E3E3E3; }
-.claro .dijitButtonText { color: #FFFFFF; padding: 0 0.8em; text-align: center; font-weight: normal; }
+.claro .dijitButtonText { color: #156496; padding: 0 0.8em; text-align: center; font-weight: normal; }
 .claro .dijitSelect .dijitButtonText { color: #000000; padding: 0 5px 2px; font-size: 10px; }
 .dijitToggleButton, .dijitButton, .dijitDropDownButton, .dijitComboButton { margin: 2px 5px 2px 5px; }
 .contentBlockWhite .field { padding: 12px; }

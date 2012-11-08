@@ -247,7 +247,7 @@
 	"dialog.admin.catalog.management.codelist.notMaintainable":"nicht editierbar",
 	"dialog.admin.catalog.management.codelist.selectImportFile":"Importdatei ausw&auml;hlen",
 	"dialog.admin.catalog.management.codelist.importHint":"Achtung: Die Auswahllisten werden beim Import nicht &uuml;berpr&uuml;ft. Es wird daher empfohlen die Listen vor dem Importvorgang zu sichern (Export oder Datenbank Backup)! M&ouml;chten Sie mit dem Importvorgang fortfahren?",
-	"dialog.admin.catalog.management.codelist.importSuccess":"Der Importvorgang wurde erfolgreich abgeschlossen.",
+	"dialog.admin.catalog.management.codelist.importSuccess":"Der Importvorgang wurde erfolgreich abgeschlossen. Die Änderungen an den Auswahllisten werden beim nächsten Start des Editors sichtbar!",
 	"dialog.admin.catalog.management.codelist.boundingbox.wrong.format":"Die Daten befinden sich im falschen Format! Bitte verwenden Sie vier Dezimalzahlen die mit Leerzeichen getrennt sind. (Bsp.: 9,605 52,304 9,918 52,454)",
 	"dialog.admin.catalog.management.additionalFields.store":"Alle &Auml;nderungen werden gespeichert. Falls Felder entfernt wurden, werden auch alle Daten aus diesen Feldern gel&ouml;scht.<br>M&ouml;chten Sie mit der Aktion fortfahren?",
 	"dialog.admin.catalog.management.additionalFields.storeSuccess":"Die zus&auml;tzlichen Felder wurden erfolgreich gespeichert.",

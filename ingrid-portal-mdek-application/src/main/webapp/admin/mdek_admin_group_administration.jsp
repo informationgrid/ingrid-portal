@@ -796,7 +796,7 @@
                 <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=user-administration-2#user-administration-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
             </div>
             <div id="groupAdmin" class="content">
-                <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="false" style="height:250px; clear:both;" layoutAlign="client" design="headline" style="">
+                <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="false" class="spaceBelow" style="height:250px; clear:both;" layoutAlign="client" design="headline">
                     <!-- LEFT HAND SIDE CONTENT BLOCK 1 START -->
                     <div dojoType="dijit.layout.ContentPane" region="leading" class="tableContainer" style="width: 270px; padding:5px;">
                         <div id="groups" autoHeight="9" forceGridHeight="false">
