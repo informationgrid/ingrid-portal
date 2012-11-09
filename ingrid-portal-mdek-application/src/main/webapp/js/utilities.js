@@ -595,7 +595,7 @@ UtilUdk.getCurrentObjectClass = function() {
 		return 0;
 	}
 
-	return objectClassWidget.getValue()[5];
+	return objectClassWidget.getValue().substring(5);
 }
 
 // returns "Class1", "Class2" ...

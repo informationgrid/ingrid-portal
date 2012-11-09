@@ -400,6 +400,9 @@ scriptScopeDetailView.renderNodeData = function(nodeData) {
 	this.renderTextWithTitle(this.removeEvilTags(nodeData.generalDescription), "<fmt:message key='ui.obj.general.description' />");
 	// addresses
 	this.renderAddressList(nodeData.generalAddressTable);
+	// preview image
+	var previewImageUrl = udkDataProxy._filterPreviewImage(nodeData.linksToUrlTable);
+	this.renderTextWithTitle(previewImageUrl, "<fmt:message key='ui.obj.general.previewImage' />");
     
     this.renderAdditionalFieldsForRubric("general", additionalFields);
 

@@ -152,9 +152,22 @@ ingridObjectLayout.createGeneralInfo = function(){
     console.debug("generalAddress");
     createDataGrid("generalAddress", null, structure, null);
     
-    new dijit.form.ValidationTextBox({
+    var previewImage = new dijit.form.ValidationTextBox({
         style: "width:100%;"
     }, "generalPreviewImage");
+    
+    // show a tooltip when hovering over image
+    previewImage.tooltip = new dijit.Tooltip({
+        connectId: ["generalPreviewImage"],
+        label: "<img src='' width='300' height='300' alt='IMAGE NOT FOUND' />",
+        showDelay: 600,
+        position: 'above'
+    });
+    
+    dojo.connect(previewImage, "onChange", function(value) {
+        //this.tooltip.destroyRecursive();
+        this.tooltip.label = "<img src='"+value+"' width='300' height='300' alt='IMAGE NOT FOUND: "+value+"' />";
+    });
     
     var thesaurusInspireStructure = [
         {field: 'title',name: 'title',width: 708-scrollBarWidth+'px',

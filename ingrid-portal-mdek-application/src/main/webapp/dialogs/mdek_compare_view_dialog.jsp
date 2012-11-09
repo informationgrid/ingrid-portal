@@ -43,6 +43,11 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	renderTable(nodeDataOld.generalAddressTable, nodeDataNew.generalAddressTable, ["nameOfRelation", "linkLabel"], ["<fmt:message key='dialog.compare.object.addressLink.type' />", "<fmt:message key='dialog.compare.object.addressLink.title' />"], "<fmt:message key='ui.obj.general.addressTable.title' />");
     renderList(nodeDataOld.thesaurusInspireTermsList, nodeDataNew.thesaurusInspireTermsList, "<fmt:message key='ui.obj.thesaurus.terms.inspire' />", null, function (val) { return UtilSyslist.getSyslistEntryName(6100, val);});
     
+    // preview image
+    var previewImageUrlOld = udkDataProxy._filterPreviewImage(nodeDataOld.linksToUrlTable);
+    var previewImageUrlNew = udkDataProxy._filterPreviewImage(nodeDataNew.linksToUrlTable);
+    renderTextWithTitle(previewImageUrlOld, previewImageUrlNew, "<fmt:message key='ui.obj.general.previewImage' />");
+    
     renderAdditionalFieldsForRubric("general", oldAdditionalFields, newAdditionalFields);
     
 	// technical domains
