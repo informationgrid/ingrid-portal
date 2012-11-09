@@ -89,7 +89,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			getGeneralTab(elementsGeneral, xpathExpression);
 			
 			// Graphic overview
-			xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic";
+			xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString";
             getPreviewImage(elementsGeneral, xpathExpression);
 			
 			// Addresses
@@ -336,17 +336,14 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	private void getPreviewImage(ArrayList elementsGeneral, String xpathExpression) {
 	    if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
             Node node = XPathUtils.getNode(rootNode, xpathExpression);
-            Node nodeAttribute = node.getAttributes().getNamedItem("gco:href");
-            if (nodeAttribute != null) {
-                String value = nodeAttribute.getNodeValue();
-                HashMap listEntry = new HashMap();
-                listEntry.put("type", "image");
-                listEntry.put("title", messages.getString("preview"));
-                String[] imageUrlArray = new String[1];
-                imageUrlArray[0] = value;
-                listEntry.put("elements", imageUrlArray);
-                elementsGeneral.add(listEntry);
-            }
+            String value = node.getTextContent();
+            HashMap listEntry = new HashMap();
+            listEntry.put("type", "image");
+            listEntry.put("title", messages.getString("preview"));
+            String[] imageUrlArray = new String[1];
+            imageUrlArray[0] = value;
+            listEntry.put("elements", imageUrlArray);
+            elementsGeneral.add(listEntry);
 	    }        
     }
 
