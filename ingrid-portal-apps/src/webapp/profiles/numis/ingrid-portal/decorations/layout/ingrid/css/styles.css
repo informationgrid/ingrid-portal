@@ -14,7 +14,7 @@ ul li ul  { padding-bottom:4px;}
 *********************************************************************/
 
 body { padding: 0; margin: 0; color: #505050; background-color: #FFFFFF; font-family: Arial,sans-serif; }
-body.body-background { background:url("../images/body.png") repeat-x scroll 0 0 #E2EBF0; width:966px; padding-bottom: 50px; }
+body.body-background { background:url("../images/body.png") repeat-x scroll 0 0 #E2EBF0; width:986px; padding-bottom: 50px; }
 div.layout-tigris { background:#FFFFFF; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#bebebe' ); -moz-box-shadow:0 0 0.417em #BEBEBE; -webkit-box-shadow:0 0 0.417em #BEBEBE; }
 
 sup { line-height: 0; }
@@ -94,7 +94,7 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
   identity area styles
 *********************************************************************/
 
-div#identity { padding:0; margin:0; height: 90px; width:966px; background-color:#FFFFFF; overflow:visible; }
+div#identity { padding:0; margin:0; height: 90px; width:986px; background-color:#FFFFFF; overflow:visible; }
 div.motiv_blank { background-image:url(../images/01_motiv_start.png); background-repeat:no-repeat; }
 div.motiv_start { background-image:url(../images/01_motiv_start.png); background-repeat:no-repeat; }
 div.motiv_suche { background-image:url(../images/01_motiv_suche.png); background-repeat:no-repeat; }
@@ -177,7 +177,7 @@ div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { text-deco
   service navigation styles
 *********************************************************************/
 
-div#servicenav { padding: 0 10px; float: right; margin: 0; }
+div#servicenav { padding: 0 30px; float: right; margin: 0; }
 #servicenav { font-size: 70%; }
 div#servicenav ul { list-style: none; margin: -3px; height:22px; padding:0 10px 0 10px; }
 div#servicenav ul li { display:inline; color: #FFFFFF; font-size: 12px; }
@@ -201,7 +201,7 @@ select.language_switch_style {font-size:100%; background-color:transparent; colo
 html body div#mainnav { height: 31px; }
 /* End Hack */
 
-div#mainnav { background: url(../images/background-mainmenu.png); margin:0; padding:0; width:966px; height:31px;  z-index: 10; position: relative;}  
+div#mainnav { background: url(../images/background-mainmenu.png); margin:0; padding:0; width:986px; height:31px;  z-index: 10; position: relative;}  
 div#mainnav ul { list-style: none; padding: 0px 0 0px 56px; margin: 0; }
 div#mainnav ul li { padding: 8px 0px; margin:0; border: 0; float: left; font-size: 12px; font-weight:bold; }
 div#mainnav ul li:hover { }
@@ -237,7 +237,7 @@ div#mainnav div.tabs_center { height:33px; float:left; background-image: url(../
 *********************************************************************/
 
 div#subnav { height:1.375em; padding: 2px 0px 0px 0px; position: absolute; }
-div#subnavBack { position:relative; border-top: solid #FFFFFF 0px; background:#E2E2E2; width:966px; height:14px; }
+div#subnavBack { position:relative; border-top: solid #FFFFFF 0px; background:#E2E2E2; width:986px; height:14px; }
 
 div#subnav ul { list-style:none; padding: 0px 0px 0px 5px; margin:0; line-height:140%; color:#E2E2E2;}
 div#subnav ul li { display:inline; padding:0; margin:0; }
