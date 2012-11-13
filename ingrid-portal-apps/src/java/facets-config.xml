@@ -101,6 +101,33 @@ Die Facette Attribute (<id>Attribute</id>) ist eine spezielle Facette. Hier werd
 - Forschungsprojekte-Attributenabfrage anhand der Eingabe von Projektname, Institution, Projektleiter, Beteiligte, Projektträger und/oder Laufzeit.
 
 
+Facetten-Klassen (Nicht-indexbasierte iPlugs)
+****************
+Wird eine Facette (<facet>) erstellt, deren Query (<query>) ein Nicht-indexbasiertes iPlug (z.B. Opensearch-iPlug) abfragt, so muss diese Facette zunächst im iPlug definiert werden.
+Um eine Definition in solch einen iPlug durchzuführen, fügt man der Datei "springapp-servlet.xml" (unter "<IPLUG_INSTALLATION>/webapp/WEB-INF") folgenden Eintrag hinzu:
+
+...
+<bean id="plugDescriptionFacetCounter"
+       class="de.ingrid.search.utils.facet.counter.DscPlugdescriptionFacetCounter">
+       <property name="plugDescriptionWrapper">
+           <ref bean="plugDescriptionWrapper" />
+       </property>
+       <property name="facetClassDefinitions">
+           <list>
+           		...
+           		<value>test3:test23</value> 		// Siehe Beispiel: "Test UND-Abfrage"
+           		...
+           </list>
+	</property>
+</bean>
+....
+
+Unter "property" (property>) mit dem Namen "facetClassDefinitions" erweitert man die Liste (<list>) mit dem Wert (<value>):  
+<value>"FACET-PARENT-ID":"FACET-ID"</value>
+
+Dadurch wird von dem iPlug eine Facetten-Klasse mit der Notation "FACET-PARENT-ID":"FACET-ID" zurückgeliefert. 
+
+
 Beispiele:
 **********
 Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dialog)

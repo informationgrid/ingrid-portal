@@ -354,8 +354,6 @@ public class UtilsFacete {
 									}
 									if(isFacetConfigSelect(tmpFacetKey.getFacets())){
 										tmpFacetKey.setSelect(facetIsSelect);	
-									}else{
-										tmpFacetKey.setSelect(false);
 									}
 									resetFacetConfigValues(config);
 								}
