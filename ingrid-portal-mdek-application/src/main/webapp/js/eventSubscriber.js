@@ -1542,9 +1542,6 @@ udkDataProxy._setAddressData = function(nodeData)
 	var numReferences = nodeData.totalNumReferences || 0;
 	UtilAddress.initObjectAddressReferenceTable(linkTable, numReferences);
 
-	// publication info
-	dijit.byId("extraInfoPublishAreaAddress").attr("value", nodeData.extraInfoPublishArea, true);
-
 	// Comments
 	var commentData = UtilList.addDisplayDates(nodeData.commentTable);
 	dojo.forEach(commentData, function(data, i) {
@@ -1568,10 +1565,14 @@ udkDataProxy._setAddressData = function(nodeData)
 		case 0:
 //			dijit.byId("headerAddressType0Institution").attr("value", institution);
 			dijit.byId("headerAddressType0Unit").attr("value", nodeData.organisation, true);
+			// publication info
+		    dijit.byId("extraInfoPublishAreaAddress0").attr("value", nodeData.extraInfoPublishArea, true);
 			break;
 		case 1:
 			dijit.byId("headerAddressType1Institution").attr("value", institution, true);
 			dijit.byId("headerAddressType1Unit").attr("value", nodeData.organisation, true);
+			// publication info
+		    dijit.byId("extraInfoPublishAreaAddress1").attr("value", nodeData.extraInfoPublishArea, true);
 			break;
 		case 2:
 			dijit.byId("headerAddressType2Institution").attr("value", institution, true);
@@ -1580,6 +1581,8 @@ udkDataProxy._setAddressData = function(nodeData)
 			dijit.byId("headerAddressType2Style").attr("value", nodeData.nameForm, true);
 			dijit.byId("headerAddressType2Title").attr("value", nodeData.titleOrFunction, true);
             dijit.byId("headerAddressType2HideAddress").attr("value", nodeData.hideAddress, true);
+            // publication info
+            dijit.byId("extraInfoPublishAreaAddress2").attr("value", nodeData.extraInfoPublishArea, true);
 			break;
 		case 3:
 			//dijit.byId("headerAddressType3Lastname").attr("value", nodeData.name, true);
@@ -1588,6 +1591,8 @@ udkDataProxy._setAddressData = function(nodeData)
 			dijit.byId("headerAddressType3Style").attr("value", nodeData.nameForm, true);
 			dijit.byId("headerAddressType3Title").attr("value", nodeData.titleOrFunction, true);
 			dijit.byId("headerAddressType3Institution").attr("value", nodeData.organisation, true);
+			// publication info
+		    dijit.byId("extraInfoPublishAreaAddress3").attr("value", nodeData.extraInfoPublishArea, true);
 			break;
 		default:
 			console.debug("Error in udkDataProxy._setAddressData - Address Class must be 0, 1, 2 or 3. Wrong value: "+nodeData.addressClass);
@@ -2081,9 +2086,6 @@ udkDataProxy._getAddressData = function(nodeData) {
 	// -- Links --
 	nodeData.linksFromObjectTable = udkDataProxy._getTableData("associatedObjName");
 	
-	// -- Extra Info --
-	nodeData.extraInfoPublishArea = dijit.byId("extraInfoPublishAreaAddress").getValue();
-
 	// Comments
 	//nodeData.commentTable = UtilStore.convertItemsToJS(commentStore, commentStore._arrayOfTopLevelItems);
     nodeData.commentTable = commentStore;
@@ -2094,10 +2096,14 @@ udkDataProxy._getAddressData = function(nodeData) {
 		case 0:
 //			nodeData.organisation = dijit.byId("headerAddressType0Institution").getValue();
 			nodeData.organisation = dijit.byId("headerAddressType0Unit").getValue();
+			// -- Extra Info --
+		    nodeData.extraInfoPublishArea = dijit.byId("extraInfoPublishAreaAddress0").getValue();
 			break;
 		case 1:
 //			dijit.byId("headerAddressType1Institution").attr("value", nodeData.organisation);
 			nodeData.organisation = dijit.byId("headerAddressType1Unit").getValue();
+			// -- Extra Info --
+		    nodeData.extraInfoPublishArea = dijit.byId("extraInfoPublishAreaAddress1").getValue();
 			break;
 		case 2:
 			nodeData.name = dijit.byId("headerAddressType2Lastname").getValue();
@@ -2105,6 +2111,8 @@ udkDataProxy._getAddressData = function(nodeData) {
 			nodeData.nameForm = dijit.byId("headerAddressType2Style").getValue();
 			nodeData.titleOrFunction = dijit.byId("headerAddressType2Title").getValue();
             nodeData.hideAddress = dijit.byId("headerAddressType2HideAddress").checked ? true : false; // in case value is NULL!
+            // -- Extra Info --
+            nodeData.extraInfoPublishArea = dijit.byId("extraInfoPublishAreaAddress2").getValue();
 			break;
 		case 3:
 			nodeData.name = dijit.byId("headerAddressType3Lastname").getValue();
@@ -2112,6 +2120,8 @@ udkDataProxy._getAddressData = function(nodeData) {
 			nodeData.nameForm = dijit.byId("headerAddressType3Style").getValue();
 			nodeData.titleOrFunction = dijit.byId("headerAddressType3Title").getValue();
 			nodeData.organisation = dijit.byId("headerAddressType3Institution").getValue();
+			// -- Extra Info --
+		    nodeData.extraInfoPublishArea = dijit.byId("extraInfoPublishAreaAddress3").getValue();
 			break;
 		default:
 			console.debug("Error in udkDataProxy._getAddressData - Address Class must be 0, 1, 2 or 3!");

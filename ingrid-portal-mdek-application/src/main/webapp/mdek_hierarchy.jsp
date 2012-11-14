@@ -612,7 +612,6 @@
                                             <fmt:message key="ui.obj.type1.serviceLink.title" />
                                         </label>
                                     </span>
-<!--                                     <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddServiceLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('ref1Service'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 5066, gridId: 'ref1ServiceLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.serviceLink.link" /></a></span> -->
                                     <div class="input tableContainer">
                                         <div id="ref1ServiceLink" autoHeight="4" class="hideTableHeader">
                                         </div>
@@ -2125,6 +2124,18 @@
                                     </div>
                                 </span>
                             </div>
+                            <div class="inputContainer">
+                                <span id="uiElement4571_at0" class="outer halfWidth">
+                                    <div><span class="label">
+                                        <label id="extraInfoPublishAreaAddress0Label" for="extraInfoPublishAreaAddress0" onclick="javascript:dialog.showContextHelp(arguments[0], 4571)">
+                                            <fmt:message key="ui.obj.additionalInfo.publicationCondition" />
+                                        </label>
+                                    </span><span class="input"><input autoComplete="false" style="width:100%;" listId="3571" id="extraInfoPublishAreaAddress0" /></span>
+                                    </div>
+                                </span>
+                                <span class="outer halfWidth"></span>
+                                <div class="fill"></div>
+                            </div>
                         </div>
                         <div class="fill"></div>
                     </div><!-- ADDRESS TYPE 1 //-->
@@ -2150,6 +2161,18 @@
                                     </span><span class="input"><input type="text" maxLength="255" required="true" id="headerAddressType1Unit" /></span>
                                     </div>
                                 </span>
+                            </div>
+                            <div class="inputContainer">
+                                <span id="uiElement4571_at1" class="outer halfWidth">
+                                    <div><span class="label">
+                                        <label id="extraInfoPublishAreaAddress1Label" for="extraInfoPublishAreaAddress1" onclick="javascript:dialog.showContextHelp(arguments[0], 4571)">
+                                            <fmt:message key="ui.obj.additionalInfo.publicationCondition" />
+                                        </label>
+                                    </span><span class="input"><input autoComplete="false" style="width:100%;" listId="3571" id="extraInfoPublishAreaAddress1" /></span>
+                                    </div>
+                                </span>
+                                <span class="outer halfWidth"></span>
+                                <div class="fill"></div>
                             </div>
                         </div>
                         <div class="fill"></div>
@@ -2203,15 +2226,23 @@
                                         </div>
                                     </span>
                             </div>
-                            <div class="inputContainer">
-                                <span id="uiElement4320" class="outer optional show">
+                            <div>
+                                <span id="uiElement4320" class="outer halfWidth optional show">
                                     <div>
-                                    <div class="input">
+                                    <div class="input"><span class="label">&nbsp;</span>
                                         <input type="checkbox" id="headerAddressType2HideAddress" />
                                         <label onclick="javascript:dialog.showContextHelp(arguments[0], 4320)">
                                             <fmt:message key="ui.adr.general.hideAddress" />
                                         </label>
                                     </div>
+                                    </div>
+                                </span>
+                                <span id="uiElement4571_at2" class="outer halfWidth">
+                                    <div><span class="label">
+                                        <label id="extraInfoPublishAreaAddress2Label" for="extraInfoPublishAreaAddress2" onclick="javascript:dialog.showContextHelp(arguments[0], 4571)">
+                                            <fmt:message key="ui.obj.additionalInfo.publicationCondition" />
+                                        </label>
+                                    </span><span class="input"><input autoComplete="false" style="width:100%;" listId="3571" id="extraInfoPublishAreaAddress2" /></span>
                                     </div>
                                 </span>
                             </div>
@@ -2266,6 +2297,18 @@
                                     </span><span class="input"><input type="text" maxLength="255" id="headerAddressType3Institution" class="w668 h038" /></span>
                                     </div>
                                 </span>
+                            </div>
+                            <div class="inputContainer">
+                                <span id="uiElement4571_at3" class="outer halfWidth">
+                                    <div><span class="label">
+                                        <label id="extraInfoPublishAreaAddress3Label" for="extraInfoPublishAreaAddress3" onclick="javascript:dialog.showContextHelp(arguments[0], 4571)">
+                                            <fmt:message key="ui.obj.additionalInfo.publicationCondition" />
+                                        </label>
+                                    </span><span class="input"><input autoComplete="false" style="width:100%;" listId="3571" id="extraInfoPublishAreaAddress3" /></span>
+                                    </div>
+                                </span>
+                                <span class="outer halfWidth"></span>
+                                <div class="fill"></div>
                             </div>
                         </div>
                         <div class="fill"></div>
@@ -2443,32 +2486,6 @@
                             </div>
                         </div>
                         <div class="fill"></div>
-                    </div>
-                    <!-- Zusatzinformation -->
-                    <div id="additionalInfo" class="rubric contentBlock">
-                        <div class="titleBar">
-                            <a href="javascript:igeEvents.toggleFields('additionalInfo');" title="<fmt:message key="general.open.required.field" />">
-                                <div class="image18px titleIcon"></div>
-                            </a>
-                            <div class="titleCaption" onclick="javascript:dialog.showContextHelp(arguments[0], 7103)">
-                                <fmt:message key="ui.obj.additionalInfo.title" />
-                            </div>
-                            <div class="titleUp">
-                                <a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a>
-                            </div>
-                        </div>
-                        <div class="inputContainer">
-                            <span id="uiElement4571" class="outer halfWidth">
-                                <div><span class="label">
-                                    <label id="extraInfoPublishAreaAddressLabel" for="extraInfoPublishAreaAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 4571)">
-                                        <fmt:message key="ui.obj.additionalInfo.publicationCondition" />
-                                    </label>
-                                </span><span class="input"><input autoComplete="false" style="width:100%;" listId="3571" id="extraInfoPublishAreaAddress" /></span>
-                                </div>
-                            </span>
-                            <span class="outer halfWidth"></span>
-                            <div class="fill"></div>
-                        </div>
                     </div>
                     <!-- ZUGEORDNETE OBJEKTE //-->
                     <div class="fill"></div>

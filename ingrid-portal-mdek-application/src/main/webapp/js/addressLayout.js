@@ -159,7 +159,16 @@ ingridAddressLayout.createAddressThesaurus = function(){
 
 ingridAddressLayout.createAdditionalInfo = function() {
     var storeProps = {data: {identifier: '1',label: '0'}};
-    createSelectBox("extraInfoPublishAreaAddress", null, storeProps, function(){
+    createSelectBox("extraInfoPublishAreaAddress0", null, storeProps, function(){
+        return UtilSyslist.getSyslistEntry(3571);
+    });
+    createSelectBox("extraInfoPublishAreaAddress1", null, storeProps, function(){
+        return UtilSyslist.getSyslistEntry(3571);
+    });
+    createSelectBox("extraInfoPublishAreaAddress2", null, storeProps, function(){
+        return UtilSyslist.getSyslistEntry(3571);
+    });
+    createSelectBox("extraInfoPublishAreaAddress3", null, storeProps, function(){
         return UtilSyslist.getSyslistEntry(3571);
     });
 }

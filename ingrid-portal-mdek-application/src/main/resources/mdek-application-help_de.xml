@@ -973,6 +973,12 @@
 				 zu der Adresse angezeigt. Diese Anzeige ist immer sichtbar.</p>
 				 <p>Darunter wird - grau hinterlegt - je nach Adresstyp der Name der Institution, 
 				 der Einheit oder der Person angezeigt.</p>
+                 <p>In der Auswahlbox unter "Veröffentlichung" lässt sich die Sichtbarkeit dieser Adresse
+                 einstellen. Während die Auswahl "Internet" keine Einschränkungen besitzt, wird die Adresse
+                 bei "Intranet" oder "amtsintern" nicht im Internet veröffentlicht.</p>
+                 <p>Bei dem Adresstyp "Person" gibt es zusätzlich die Besonderheit "Daten nicht anzeigen" als 
+                 Checkbox. Hierdurch lassen sich die Daten einer Adresse verstecken und stattdessen, die der 
+                 übergeordneten Adresse verwendet.</p>
 				 <p>Die weiteren Informationen sind zu folgenden Gruppen zusammengefasst:</p>
 				 <ul>
 				 <li>Adresse und Aufgaben </li>

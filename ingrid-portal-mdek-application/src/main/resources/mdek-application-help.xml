@@ -710,6 +710,11 @@
 				 as well as the status information <i>Created</i>, <i>Modified</i> and <i>Last Change</i>. This display is always visible.</p>
 				 <p>Underneath – with a grey background – the name of the institution, unit or the person is displayed according to the 
 				 type of address.</p>
+                 <p>The select box "Publication condition" determines the visibility of the address. While
+                 the choice "internet" has no restriction, an address with "intranet" or "internal" will not 
+                 be published in the internet.</p>
+                 <p>The address type "person" also offers a ceckbox "Do not display data". Is this option checked
+                 the data of this address will not be used. Instead the data from the parent address is used.</p>
 				 <p>Further information is collected in the following groups:</p>
 				 <ul>
 				 <li>Address and Tasks</li>
