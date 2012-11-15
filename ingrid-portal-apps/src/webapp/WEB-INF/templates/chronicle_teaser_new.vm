@@ -20,10 +20,13 @@ $action.setParameter('action','doTeaser')
                 
             #end
     </div>
-    <p class="teaser_body">
-        $MESSAGES.getString('chronicle.teaser.new.body')
-		<a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doChronicle" title="$MESSAGES.getString('chronicle.teaser.new.more.tooltip')">$MESSAGES.getString('chronicle.teaser.new.more')</a>
-    </p>
+	#if($MESSAGES.getString('chronicle.teaser.new.body').length() > 0)
+        <p class="teaser_body">
+            $MESSAGES.getString('chronicle.teaser.new.body')
+    		<a href="$renderResponse.encodeURL('/portal/main-features.psml')?action=doChronicle" title="$MESSAGES.getString('chronicle.teaser.new.more.tooltip')">$MESSAGES.getString('chronicle.teaser.new.more')</a>
+        </p>
+	#end
+	<span class="clearer"> </span>
     <p class="iconLink">
       <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
       <span><a href="$action" title="$MESSAGES.getString('chronicle.teaser.new.link.tooltip')">$MESSAGES.getString('chronicle.teaser.new.link')</a></span>
