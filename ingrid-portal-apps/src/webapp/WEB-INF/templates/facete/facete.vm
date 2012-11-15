@@ -231,70 +231,99 @@
     </div>
 	<div id="$treeFacet.getId()" class="cat_content_entry">
 	#set($isSelect = false)
+	#set($countFacetWithValue = 0)
 	#foreach ($treeSubFacet in $treeFacet.getFacets())
+		#if($treeSubFacet.getFacetValue() || $treeSubFacet.isOldIPlug())
+			#set($countFacetWithValue = $countFacetWithValue + 1)
+		#end
 		#if($treeSubFacet.isSelect())
 			#set($isSelect = true)
 		#end
 	#end
-	#set($count = 0)
-	#foreach ($treeSubFacet in $treeFacet.getFacets())
-		#if($isSelect)
-			#if($treeSubFacet.isSelect())
-				#if($treeSubFacet.getFacetValue() || $treeSubFacet.isOldIPlug())
-					<div class="facete_chb">
-    					<span>
-        					#set ($action = $renderResponse.createActionURL())
-        					$action.setParameter("check_box_$treeFacet.getId()", "$treeSubFacet.getId()")
-        					<input id="$treeSubFacet.getId()" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
-        						<a href="$action" class="facete_label_chb">
-        						$MESSAGES.getString("$treeSubFacet.getName()")
-        						#if($treeSubFacet.getFacetValue())
-									#renderLinkEntryNumber("$treeSubFacet.getFacetValue()")
-								#end
-        						</a> 
-        					</input>
-            			</span>
-					</div>
-				#end
+	#if($countFacetWithValue > 3)
+        #set($count = 0)
+        #foreach ($treeSubFacet in $treeFacet.getFacets())
+        	#if($isSelect)
+        		#if($treeSubFacet.isSelect())
+        			#if($treeSubFacet.getFacetValue() || $treeSubFacet.isOldIPlug())
+        				<div class="facete_chb">
+        					<span>
+            					#set ($action = $renderResponse.createActionURL())
+            					$action.setParameter("check_box_$treeFacet.getId()", "$treeSubFacet.getId()")
+            					<input id="$treeSubFacet.getId()" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
+            						<a href="$action" class="facete_label_chb">
+            						$MESSAGES.getString("$treeSubFacet.getName()")
+            						#if($treeSubFacet.getFacetValue())
+        								#renderLinkEntryNumber("$treeSubFacet.getFacetValue()")
+        							#end
+            						</a> 
+            					</input>
+                			</span>
+        				</div>
+        			#end
+        		#end
+        	#else
+        		#if($count < 3)
+        			#if($treeSubFacet.getFacetValue()|| $treeSubFacet.isOldIPlug())
+        				<div class="facete_chb">
+        					<span>
+            					#set ($action = $renderResponse.createActionURL())
+            					$action.setParameter("check_box_$treeFacet.getId()", "$treeSubFacet.getId()")
+            					<input id="$treeSubFacet.getId()" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
+            						<a href="$action">
+            						$MESSAGES.getString("$treeSubFacet.getName()")
+        							#if($treeSubFacet.getFacetValue())
+        								#renderLinkEntryNumber("$treeSubFacet.getFacetValue()")
+        							#end
+            						</a> 
+            					</input>
+            				</span>
+        				</div>
+        				#set($count = $count + 1)
+        			#end
+        		#end
+        	#end
+        #end
+        <ul class="facete_ul_more">
+        	<li>
+        		#renderFaceteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.category.plus") "" "dialog_$treeFacet.getId()" "button_$treeFacet.getId()")
+            </li>
+        	#if($isSelect)
+        		<li>
+        			<img class="more_seperator" src="/ingrid-portal-apps/images/facete/facete_delete_seperator.png">
+                </li>
+        		<li>
+        			#set ($action = $renderResponse.createActionURL())
+            		$action.setParameter("doRemove",  "${treeParentId}:$treeFacet.getId()")
+                	#renderFaceteDeleteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.topic.delete") $action)
+                </li>
+        	#end
+        </ul>
+        #renderFacetDialog($treeFacet)
+	#else
+		#foreach ($treeSubFacet in $treeFacet.getFacets())
+			#if($treeSubFacet.getFacetValue() || $treeSubFacet.isOldIPlug())
+				<div class="facete_chb">
+					<span>
+    					#set ($action = $renderResponse.createActionURL())
+    					$action.setParameter("check_box_$treeFacet.getId()", "$treeSubFacet.getId()")
+    					<input id="$treeSubFacet.getId()" class="facete_input_chb" type=checkbox 
+							#if($treeSubFacet.isSelect())
+								checked
+							#end
+							onclick="location.href='$action'">
+    						<a href="$action" class="facete_label_chb">
+    						$MESSAGES.getString("$treeSubFacet.getName()")
+    						#if($treeSubFacet.getFacetValue())
+								#renderLinkEntryNumber("$treeSubFacet.getFacetValue()")
+							#end
+    						</a> 
+    					</input>
+        			</span>
+				</div>
 			#end
-		#else
-			#if($count < 3)
-				#if($treeSubFacet.getFacetValue()|| $treeSubFacet.isOldIPlug())
-					<div class="facete_chb">
-    					<span>
-        					#set ($action = $renderResponse.createActionURL())
-        					$action.setParameter("check_box_$treeFacet.getId()", "$treeSubFacet.getId()")
-        					<input id="$treeSubFacet.getId()" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
-        						<a href="$action">
-        						$MESSAGES.getString("$treeSubFacet.getName()")
-								#if($treeSubFacet.getFacetValue())
-									#renderLinkEntryNumber("$treeSubFacet.getFacetValue()")
-								#end
-        						</a> 
-        					</input>
-        				</span>
-    				</div>
-					#set($count = $count + 1)
-				#end
-			#end
-		#end
+        #end
 	#end
-	<ul class="facete_ul_more">
-		<li>
-			#renderFaceteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.category.plus") "" "dialog_$treeFacet.getId()" "button_$treeFacet.getId()")
-        </li>
-		#if($isSelect)
-			<li>
-				<img class="more_seperator" src="/ingrid-portal-apps/images/facete/facete_delete_seperator.png">
-            </li>
-			<li>
-				#set ($action = $renderResponse.createActionURL())
-        		$action.setParameter("doRemove",  "${treeParentId}:$treeFacet.getId()")
-            	#renderFaceteDeleteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.topic.delete") $action)
-            </li>
-		#end
-	</ul>
-	#renderFacetDialog($treeFacet)
 	</div>
 #end
 

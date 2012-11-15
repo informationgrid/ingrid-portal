@@ -44,7 +44,7 @@ public class FacetsConfig {
 			instance = getInstance();
 		}
 		
-		return extractFacets((ArrayList<Node>) instance.getRoot().getChildren("facets"), null);
+		return extractFacets((ArrayList<Node>) instance.getRoot().getChildren("facet"), null);
 	}
 	
 	/**
@@ -53,11 +53,8 @@ public class FacetsConfig {
 	 * @param facets
 	 * @return
 	 */
-	private static ArrayList<IngridFacet> extractFacets(ArrayList<Node> facets, IngridFacet parentFacet){
+	private static ArrayList<IngridFacet> extractFacets(ArrayList<Node> facet, IngridFacet parentFacet){
 		ArrayList<IngridFacet> ingridFacets = new ArrayList<IngridFacet>();
-		
-		Node facetsNode = (Node) facets.get(0);
-		ArrayList<Node> facet = (ArrayList<Node>) facetsNode.getChildren("facet"); 
 		
 		if(facet != null){
 			for(Node facetNode : facet){
@@ -172,7 +169,14 @@ public class FacetsConfig {
 							Node subNode = (Node) node.getChildren("[@queryType]").get(0); 
 							ingridFacet.setQueryType(subNode.getValue().toString());
 						}
-						ingridFacet.setFacets(extractFacets((ArrayList<Node>) facetNode.getChildren("facets"), ingridFacet));
+						
+						Node facetsNode = (Node) facetNode.getChildren("facets").get(0);
+						if(facetNode != null){
+							ArrayList<Node> subFacet = (ArrayList<Node>) facetsNode.getChildren("facet"); 
+							if(subFacet != null){
+								ingridFacet.setFacets(extractFacets(subFacet, ingridFacet));							
+							}
+						}
 					}
 				}
 				

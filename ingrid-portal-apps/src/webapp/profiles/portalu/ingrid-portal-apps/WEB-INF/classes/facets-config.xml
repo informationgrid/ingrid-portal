@@ -30,7 +30,7 @@ Struktur:
 						<id></id> ******************* Facettierungsbaum-Enkel-ID
 					</facet>
 					...
-				</facets>
+				</facets> 
 			</facet>
 			...
 		</facets>

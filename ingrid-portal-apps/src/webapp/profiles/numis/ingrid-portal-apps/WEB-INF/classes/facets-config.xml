@@ -143,88 +143,25 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
 				<query>datatype:www</query>
 				<id>www</id>
 			</facet>
-		<!-- Karten -->
-			<facet>
-				<name>searchResult.facete.datatype.map</name>
-				<query>(capabilities_url:http* OR t011_obj_serv_op_connpoint.connect_point:http*) datatype:metadata</query>
-				<id>map</id>
-			</facet>
-		<!-- Themen -->
-		<!-- Kann nicht erweitert werden -->
-			<facet sort="SORT_BY_VALUE_DESC">
-				<name>searchResult.facete.title.topic</name>
-				<query>datatype:topics</query>
-				<id>topic</id>
-			</facet>
-		<!-- Rechtsvorschriften -->
-			<facet>
-				<name>searchResult.facete.datatype.law</name>
-				<query>datatype:law</query>
-				<id>law</id>
-			</facet>
-		<!-- Forschungsprojekte -->
-			<facet>
-				<name>searchResult.facete.datatype.research</name>
-				<query>datatype:research</query>
-				<id>research</id>
-			</facet>
-		<!-- Messwerte -->
-			<facet sort="SORT_BY_VALUE_DESC">
-				<name>searchResult.facete.datatype.measure</name>
-				<query>datatype:measure</query>
-				<id>measure</id>
-				<facets queryType="OR">
-					<facet>
-						<name>searchResult.facete.measures.radiation</name>
-						<query>topic:radiation</query>
-						<id>radiation</id>
-					</facet>
-					<facet>
-						<name>searchResult.facete.measures.air</name>
-						<query>topic:air</query>
-						<id>air</id>
-					</facet>
-					<facet>
-						<name>searchResult.facete.measures.water</name>
-						<query>topic:water</query>
-						<id>water</id>
-					</facet>
-					<facet>
-						<name>searchResult.facete.measures.misc</name>
-						<query>topic:misc</query>
-						<id>misc</id>
-					</facet>
-				</facets>
-			</facet>
-		<!-- Service -->
-			<facet sort="SORT_BY_VALUE_DESC">
-				<name>searchResult.facete.title.service</name>
-				<query>datatype:service</query>
-				<id>service</id>
-				<facets queryType="OR">
-					<facet>
-						<name>searchResult.facete.service.press</name>
-						<query>topic:press</query>
-						<id>press</id>
-					</facet>
-					<facet>
-						<name>searchResult.facete.service.publication</name>
-						<query>topic:publication</query>
-						<id>publication</id>
-					</facet>
-					<facet>
-						<name>searchResult.facete.service.event</name>
-						<query>topic:event</query>
-						<id>event</id>
-					</facet>
-				</facets>
-			</facet>
 		<!-- Metadaten -->
 			<facet>
 				<name>searchResult.facete.title.metaclass</name>
 				<query>datatype:metadata</query>
 				<id>metadata</id>
 				<facets>
+              <!-- INSPIRE-relevant -->
+					<facet>
+<!--						<name>searchResult.facete.metaclass.inspire</name> -->
+						<name>INSPIRE</name>
+	                    <query>t04_search.searchterm:inspireidentifiziert</query>
+						<id>inspire</id>
+					</facet>
+              <!-- Opendata -->
+    	             <facet>
+						<name>Opendata</name>
+						<query>t04_search.searchterm:opendataident</query>
+						<id>opendata</id>
+					</facet>
 				<!-- Organisationseinheit / Fachaufgabe -->
 					<facet>
 						<name>searchResult.facete.metaclass.job</name>
@@ -267,11 +204,99 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
 						<query>t01_object.obj_class:5</query>
 						<id>database</id>
 					</facet>
-				<!-- INSPIRE relevant -->
+				</facets>
+			</facet>
+
+
+
+        <!-- INSPIRE-relevant -->
+			<facet>
+				<name>INSPIRE</name>
+              <query>t04_search.searchterm:inspireidentifiziert</query>
+				<id>inspire</id>
+			</facet>
+        <!-- Opendata -->
+           <facet>
+				<name>Opendata</name>
+				<query>t04_search.searchterm:opendataident</query>
+				<id>opendata</id>
+			</facet>
+
+
+
+		<!-- Karten -->
+			<facet>
+				<name>searchResult.facete.datatype.map</name>
+				<query>(capabilities_url:http* OR t011_obj_serv_op_connpoint.connect_point:http*) datatype:metadata</query>
+				<id>map</id>
+			</facet>
+		<!-- Messwerte -->
+			<facet sort="SORT_BY_VALUE_DESC">
+				<name>searchResult.facete.datatype.measure</name>
+				<query>datatype:measure</query>
+				<id>measure</id>
+				<facets queryType="OR">
 					<facet>
-						<name>searchResult.facete.metaclass.inspire</name>
-						<query>t04_search.searchterm:inspireidentifiziert</query>
-						<id>inspire</id>
+						<name>searchResult.facete.measures.radiation</name>
+						<query>topic:radiation</query>
+						<id>radiation</id>
+					</facet>
+					<facet>
+						<name>searchResult.facete.measures.air</name>
+						<query>topic:air</query>
+						<id>air</id>
+					</facet>
+					<facet>
+						<name>searchResult.facete.measures.water</name>
+						<query>topic:water</query>
+						<id>water</id>
+					</facet>
+					<facet>
+						<name>searchResult.facete.measures.misc</name>
+						<query>topic:misc</query>
+						<id>misc</id>
+					</facet>
+				</facets>
+			</facet>
+		<!-- Themen -->
+		<!-- Kann nicht erweitert werden -->
+			<facet sort="SORT_BY_VALUE_DESC">
+				<name>searchResult.facete.title.topic</name>
+				<query>datatype:topics</query>
+				<id>topic</id>
+			</facet>
+		<!-- Rechtsvorschriften -->
+			<facet>
+				<name>searchResult.facete.datatype.law</name>
+				<query>datatype:law</query>
+				<id>law</id>
+			</facet>
+		<!-- Forschungsprojekte -->
+			<facet>
+				<name>searchResult.facete.datatype.research</name>
+				<query>datatype:research</query>
+				<id>research</id>
+			</facet>
+		<!-- Service -->
+			<facet sort="SORT_BY_VALUE_DESC">
+				<name>searchResult.facete.title.service</name>
+				<query>datatype:service</query>
+				<id>service</id>
+				<facets queryType="OR">
+					<facet>
+						<name>searchResult.facete.service.press</name>
+						<query>topic:press</query>
+						<id>press</id>
+					</facet>
+					<facet>
+						<name>searchResult.facete.service.publication</name>
+						<query>topic:publication</query>
+						<id>publication</id>
+					</facet>
+					<facet>
+						<name>searchResult.facete.service.event</name>
+						<query>topic:event</query>
+						<id>event</id>
 					</facet>
 				</facets>
 			</facet>

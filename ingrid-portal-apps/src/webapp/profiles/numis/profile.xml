@@ -133,7 +133,7 @@
         </page>
         <page>
             <name>service-contact-newsletter.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>service-contact.psml</name>
@@ -141,15 +141,6 @@
             <portlets>
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::Contact</name>
-                </portlet>
-                <portlet col="1" row="0">
-                    <name>ingrid-portal-apps::InfoPortlet</name>
-                    <preference name="infoTemplate">
-                    	<value>/WEB-INF/templates/newsletter_teaser.vm</value>
-                    </preference>
-                    <preference name="titleKey">
-                    	<value>teaser.newsletter.title</value>
-                    </preference>
                 </portlet>
             </portlets>
         </page>

@@ -105,7 +105,7 @@ div#logo { float: left; }
   logged on styles 
 *********************************************************************/
 
-div#logged_on {float: right; clear:right; font-size: 65%; margin:2.5em 1.2em 0 0; padding:0 5px; color:#2C5C91; background:#FFFFFF; }
+div#logged_on {float: left; clear:right; font-size: 80% !important; margin:4.8em 1.2em 0 -10.6em; padding:0 5px; color:#2C5C91; background:#FFFFFF; }
 div#logged_on a, div#logged_on a:link, div#logged_on a:visited {color:#2C5C91; text-decoration: none}
 div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { text-decoration: underline; }
 
@@ -113,7 +113,7 @@ div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { text-deco
   service navigation styles
 *********************************************************************/
 
-div#servicenav { padding: 0 10px; float: right; margin: 0; }
+div#servicenav { padding: 0 0 0 469px; float: left; margin: 0; }
 #servicenav { font-size: 70%; }
 div#servicenav ul { list-style: none; margin: -3px; height:22px; padding:0 10px 0 10px; }
 div#servicenav ul li { display:inline; color: #FFFFFF; font-size: 12px; }

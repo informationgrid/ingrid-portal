@@ -10,7 +10,7 @@
 *********************************************************************/
 
 body { padding: 0; margin: 0; color: #505050; background-color: #FFFFFF; font-family: Arial,sans-serif !important; }
-body.body-background { background:url("../images/body.png") repeat-x scroll 0 0 #E2EBF0; width:966px; padding-bottom: 50px; }
+body.body-background { background:url("../images/body.png") repeat-x scroll 0 0 #E2EBF0; width:986px; padding-bottom: 50px; }
 div.layout-tigris { background:#FFFFFF; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#bebebe' ); -moz-box-shadow:0 0 0.417em #BEBEBE; -webkit-box-shadow:0 0 0.417em #BEBEBE; }
 
 img { border:0; }
@@ -82,7 +82,7 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
   identity area styles
 *********************************************************************/
 
-div#identity { padding:0; margin:0; height: 90px; width:966px; background-color:#FFFFFF; overflow:visible; }
+div#identity { padding:0; margin:0; height: 90px; width:986px; background-color:#FFFFFF; overflow:visible; }
 div.motiv_hilfe { background-image:url(../images/01_motiv_hilfe.png); background-repeat:no-repeat; }
 
 div.en_motiv_hilfe { background-image:url(../images/01_motiv_hilfe.png); background-repeat:no-repeat; }
@@ -122,7 +122,7 @@ div#servicenav ul li a:hover { text-decoration:none; color:#111111; background:u
 html body div#mainnav { }
 /* End Hack */
 
-div#mainnav { background-image: url("../images/background_mainnav.png"); margin:0; padding:0; width:966px; height:31px; }  
+div#mainnav { background-image: url("../images/background_mainnav.png"); margin:0; padding:0; width:986px; height:31px; }  
 div#mainnav ul { list-style: none; padding: 0px 0 0px 56px; margin: 0; height:29px}
 div#mainnav ul li { padding: 2px 0px 6px 0; margin: 0px 2px 0px 0px; border: 0; float: left;font-size: 75%; font-weight:bold;}
 
@@ -518,4 +518,4 @@ div.helpcontent li a { font-size:12px; }
 
 div#popupContent li { font-size:14px; }
 
-.greenSeparator { background:#E2E2E2; border-top: 0 none; height: 14px; width: 966px; }
+.greenSeparator { background:#E2E2E2; border-top: 0 none; height: 14px; width: 986px; }

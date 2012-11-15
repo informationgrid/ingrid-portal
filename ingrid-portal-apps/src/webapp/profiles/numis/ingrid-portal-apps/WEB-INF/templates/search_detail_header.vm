@@ -20,9 +20,9 @@
 	<meta name="igc-objektklasse" content="${udkObjClassName}" />
 	<meta name="igc-icon" content="http://213.144.28.243/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" />
   #end
-  <meta name="author" content="wemove digital solutions" />
+  <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
   <meta name="keywords" content="" />
-  <meta name="copyright" content="wemove digital solutions GmbH" />
+  <meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
   <meta name="robots" content="index,follow" />
   <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
 
@@ -121,14 +121,7 @@ self.focus();
 #if($lang && $lang.toString() == 'en')
 	#set($langCode = "en_")
 #end
-#set($currentPage = $site.getPage().url)
-##if($currentPage == "/main-maps.psml")
-##<div id="identity" class="motiv_karten">
-###elseif($currentPage == "/search-detail.psml")
 <div id="identity" class="${langCode}motiv_suche_detail">
-###else
-##<div id="identity" class="motiv_blank">
-###end
   <!-- LOGO -->
   <div id="logo">
     <a href="$renderResponse.encodeURL('/portal/default-page.psml')"><img class="image_alt" src="/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo NUMIS" /></a>
