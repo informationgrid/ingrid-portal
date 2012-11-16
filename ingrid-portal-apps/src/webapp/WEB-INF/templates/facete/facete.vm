@@ -362,11 +362,13 @@
 		 #end
     #else
 		#foreach ($treeSubFacet in $treeFacet.getFacets())
-    		<div class="facete_chb">
-        		#set ($action = $renderResponse.createActionURL())
-        		$action.setParameter("$treeFacet.getId()", "$treeSubFacet.getId()")
-        		#renderFaceteSelectedAttributeNumber ($action $MESSAGES.getString("$treeSubFacet.getName()") $MESSAGES.getString("$treeSubFacet.getName()") $treeSubFacet.getFacetValue() $treeSubFacet.isSelect())
-            </div>
+			#if($treeSubFacet.getFacetValue())
+				<div class="facete_chb">
+					#set ($action = $renderResponse.createActionURL())
+					$action.setParameter("$treeFacet.getId()", "$treeSubFacet.getId()")
+					#renderFaceteSelectedAttributeNumber ($action $MESSAGES.getString("$treeSubFacet.getName()") $MESSAGES.getString("$treeSubFacet.getName()") $treeSubFacet.getFacetValue() $treeSubFacet.isSelect())
+				</div>
+			#end
 		#end
      #end
 	</div>
