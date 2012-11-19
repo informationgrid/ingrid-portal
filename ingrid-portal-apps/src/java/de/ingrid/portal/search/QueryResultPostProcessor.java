@@ -465,6 +465,11 @@ public class QueryResultPostProcessor {
                     hit.put(Settings.RESULT_KEY_UDK_TITLE, tmpTitle);
                 }
             }
+            String cswUrl = (String) PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
+            if (!cswUrl.isEmpty()) {
+                String parameter = "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+hit.get(Settings.RESULT_KEY_DOC_UUID)+"&iplug="+hit.getPlugId()+"&elementSetName=full";
+                hit.put(Settings.RESULT_KEY_CSW_INTERFACE_URL, cswUrl + parameter);
+            }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems processing DSC Hit ! hit = " + hit + ", detail=" + detail, ex);

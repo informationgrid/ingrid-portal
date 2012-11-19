@@ -232,6 +232,9 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_ADMIN_NUMBER_ROW_PARTNER = "portal.admin.number.row.partner";
     
+    // Link to CSW Interface
+    public static final String CSW_INTERFACE_URL = "csw.interface.url";
+    
     // private stuff
     private static PortalConfig instance = null;
     

@@ -43,6 +43,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		this.request = request;
 		this.iPlugId = iPlugId;
 		this.response = response;
+		this.uuid = null;
 		messages = (IngridResourceBundle) context.get("MESSAGES");
 		sysCodeList = new IngridSysCodeList(request.getLocale());
 	}
@@ -199,7 +200,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			
 			// "Objekt-ID"
 			xpathExpression = "gmd:fileIdentifier";
-			getNodeValue(elementsAdditionalInfo, xpathExpression, messages.getString("t01_object.obj_id"));
+			this.uuid = getNodeValue(elementsAdditionalInfo, xpathExpression, messages.getString("t01_object.obj_id"), null);
+			
+			// "XML-Link"
+            addLinkToGetXML(elementsAdditionalInfo);
 					
 			// "Elternobjekt"
 			/* NOT IN USED
@@ -333,7 +337,15 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 		}
 	}
 	
-	private void getPreviewImage(ArrayList elementsGeneral, String xpathExpression) {
+	private void addLinkToGetXML(ArrayList elementsContainer) {
+	    String cswUrl = (String) PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
+        if (!cswUrl.isEmpty()) {
+            String htmlLink = "<a href="+cswUrl+"?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+this.uuid+"&iplug="+this.iPlugId+"&elementSetName=full&elementSetName=full' target='_blank'>"+messages.getString("xml_link")+"</a>";
+            addElementEntryLabelLeft(elementsContainer, htmlLink, messages.getString("xml_link_label"));
+        }
+    }
+
+    private void getPreviewImage(ArrayList elementsGeneral, String xpathExpression) {
 	    if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
             Node node = XPathUtils.getNode(rootNode, xpathExpression);
             String value = node.getTextContent();

@@ -208,6 +208,8 @@ public class Settings {
     public static final String RESULT_KEY_CAPABILITIES_URL = "capabilities_url";
     public static final String RESULT_KEY_SERVICE_UUID     = "refering_service_uuid";
     public static final String RESULT_KEY_COUPLED_RESOURCE = "coupled_resource";
+    
+    public static final String RESULT_KEY_CSW_INTERFACE_URL = "csw_link";
 
     // ===========================================
     // Hit Detail data (get data from hit details)

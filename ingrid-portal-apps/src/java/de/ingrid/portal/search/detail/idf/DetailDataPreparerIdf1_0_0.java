@@ -40,6 +40,7 @@ public class DetailDataPreparerIdf1_0_0 {
 	public RenderRequest		request;
 	public RenderResponse		response;
 	public String				iPlugId;
+	public String               uuid;
 	
 	public ArrayList			elementsGeneral;
 	public ArrayList			elementsReference;
