@@ -159,7 +159,7 @@ public class UtilsFacete {
 			if(portalTerm != null && facetTerm != null){
 				if(!portalTerm.equals(facetTerm)){
 					//Reset config facet values
-					resetFacetConfigValues(config);
+					resetFacetConfigValues(config, null);
 					setAttributeToSession(request, FACET_CONFIG, config);
 				}
 			}
@@ -282,29 +282,7 @@ public class UtilsFacete {
 						// Dialog checkbox selection
 						String[] split = key.split("_box_");
 						if(split.length > 1){
-							IngridFacet tmpFacetKey = getFacetById(config, split[1]);
-							if(tmpFacetKey != null){
-								IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), value);
-								if(tmpFacetValue != null){
-									if(tmpFacetValue.isSelect()){
-										tmpFacetValue.setSelect(false);
-										if(tmpFacetValue.getFacets() != null){
-											for(IngridFacet tmpSubFacet : tmpFacetValue.getFacets()){
-												tmpSubFacet.setSelect(false);
-											}
-										}
-									}else{
-										tmpFacetValue.setSelect(true);
-										facetIsSelect = true;
-										// Set last selection
-										if(lastSelection == null){
-											lastSelection = new HashMap<String, String>();
-										}
-										lastSelection.put(tmpFacetKey.getId() + ":" + tmpFacetValue.getId(), tmpFacetValue.getId());
-									}
-								}
-							}
-						}else{
+							resetFacetConfigValues(config, split[1]);
 							IngridFacet tmpFacetKey = getFacetById(config, split[1]);
 							if(tmpFacetKey != null){
 								IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), value);
@@ -331,7 +309,7 @@ public class UtilsFacete {
 					}else{
 						// Set facet selection
 						if(value != null){
-							resetFacetConfigValues(config);
+							resetFacetConfigValues(config, null);
 							IngridFacet tmpFacetKey = getFacetById(config, key);
 							if(tmpFacetKey != null){
 								IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), value);
@@ -355,7 +333,7 @@ public class UtilsFacete {
 									if(isFacetConfigSelect(tmpFacetKey.getFacets())){
 										tmpFacetKey.setSelect(facetIsSelect);	
 									}
-									resetFacetConfigValues(config);
+									resetFacetConfigValues(config, null);
 								}
 							}
 						}
@@ -2316,13 +2294,25 @@ public class UtilsFacete {
 	}
 
 	
-	private static void resetFacetConfigValues(ArrayList<IngridFacet> config) {
+	private static void resetFacetConfigValues(ArrayList<IngridFacet> config, String key) {
 		if(config != null){
 			for(IngridFacet facet : config){
-				facet.setFacetValue(null);
-				facet.setOldIPlug(false);
-				if(facet.getFacets() != null){
-					resetFacetConfigValues(facet.getFacets());
+				boolean isOrSelect = false;
+				if(key != null){
+					if(facet.getId().equals(key)){
+						if(facet.getQueryType() != null){
+							if(facet.getQueryType().equals("OR") || facet.getQueryType().equals("OR_DIALOG")){
+								isOrSelect = true;
+							}
+						}
+					}
+				}
+				if(!isOrSelect){
+					facet.setFacetValue(null);
+					facet.setOldIPlug(false);
+					if(facet.getFacets() != null){
+						resetFacetConfigValues(facet.getFacets(), key);
+					}
 				}
 			}
 		}
