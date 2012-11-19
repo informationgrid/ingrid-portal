@@ -118,7 +118,7 @@ ingridObjectLayout.createInfoHeader = function() {
 	dijit.byId("objectClass").onChange = igeEvents.selectUDKClass;
     
 	var storeProps = {data: {identifier: '1',label: '0'}};
-	createSelectBox("objectOwner", null, storeProps, null);
+	createFilteringSelect("objectOwner", null, storeProps, null);
 }
 
 ingridObjectLayout.createGeneralInfo = function(){

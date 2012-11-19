@@ -994,7 +994,11 @@ UtilStore.updateWriteStore = function(/*(name of) element that has store*/id, /*
 		storeProps.items = data;
 		
 		var updatedStore = new dojo.data.ItemFileWriteStore({data:storeProps});
-		widget.setStore(updatedStore, widget.query);
+		if (widget.setStore) {
+		    widget.setStore(updatedStore, widget.query);
+		} else {
+		    widget.set("store", updatedStore);//, widget.query);
+		}
 	}
 	return id;
 /*

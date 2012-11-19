@@ -2622,7 +2622,7 @@ udkDataProxy._initResponsibleUserObjectList = function(nodeData) {
 				data: {	identifier: '1', label: '0', items: list }
 			});
 			//selectWidget.store.data = list;
-			selectWidget.setStore(updatedStore);
+			selectWidget.set("store", updatedStore);
 			def.callback(nodeData);
 		},
 		errorHandler: function(errMsg, err) {

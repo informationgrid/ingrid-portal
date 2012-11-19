@@ -13,24 +13,39 @@
                     {field: 'name',name: 'i',width: '200px', editable: false, sortable:true},
                     {field: 'description',name: 'label',width: '400px', editable: false, sortable:true}
                 ];
-                createDataGrid("grid", null, gridStructure, null);
+                createDataGrid("grid", null, gridStructure, addTableData);
                 
-                var data = [
-                    {name:"abc", description:"description", selection: true},
-                    {name:"aatete", description:"achso", selection: false},
-                    {name:"test", description:"aaabbbccc", selection: true}
-                ];
-                UtilGrid.setTableData("grid", data);
+                // UtilGrid.setTableData("grid", data);
                 
                 var gridStructureBool = [
                     {field: 'selection',name: 'selection',width: '23px', formatter: BoolCellFormatter, type: YesNoCheckboxCellEditor, editable: true},
                     {field: 'name',name: 'i',width: '200px', editable: false, sortable:true},
                     {field: 'description',name: 'label',width: '400px', editable: false, sortable:true}
                                  ];
-                createDataGrid("gridBool", null, gridStructureBool, null);
+                createDataGrid("gridBool", null, gridStructureBool, addTableData);
                 //dijit.byId("gridBool").options.autoEdit = true;
-                UtilGrid.setTableData("gridBool", data);
+                // UtilGrid.setTableData("gridBool", data);
+
+                createDataGrid("gridCMEdit", null, gridStructureBool, addTableData);
+                // next function is needed for context menu "gridCMDuplicateGrid"
+                selectObjectInTree = function() { console.debug("object in tree selected");};
+                createDataGrid("gridCMDuplicateGrid", null, gridStructureBool, addTableData);
+                createDataGrid("gridCMGeneralAddress", null, gridStructureBool, addTableData);
+                createDataGrid("gridCMEditOperation", null, gridStructureBool, addTableData);
+                createDataGrid("gridCMEditLink", null, gridStructureBool, addTableData);
+
             });
+
+            function addTableData() {
+                var def = new dojo.Deferred();
+                var data = [
+                    {name:"abc", description:"description", selection: true},
+                    {name:"aatete", description:"achso", selection: false},
+                    {name:"test", description:"aaabbbccc", selection: true}
+                ];
+                def.callback(data);
+                return def;
+            }
             
             function changeData() {
                 var data = [];
@@ -46,7 +61,24 @@
 	    <div id="grid"></div>
         
         <input type="button" onclick="changeData()" value="ChangeData">
+
+        <h2>ContextMenu: None</h2>        
+        <div id="gridBool" interactive="true" autoEdit="true" contextMenu="none" class="hideTableHeader"></div>
+
+        <h2>ContextMenu: EDIT</h2>
+        <div id="gridCMEdit" interactive="true" autoEdit="true" contextMenu="EDIT" class="hideTableHeader"></div>
         
-        <div id="gridBool" interactive="true" autoEdit="true" class="hideTableHeader"></div>
+        <h2>ContextMenu: DUPLICATE_GRID</h2>
+        <div id="gridCMDuplicateGrid" interactive="true" autoEdit="true" contextMenu="DUPLICATE_GRID" class="hideTableHeader"></div>
+
+        <h2>ContextMenu: GENERAL_ADDRESS</h2>
+        <div id="gridCMGeneralAddress" interactive="true" autoEdit="true" contextMenu="GENERAL_ADDRESS" class="hideTableHeader"></div>
+
+        <h2>ContextMenu: EDIT_OPERATION</h2>
+        <div id="gridCMEditOperation" interactive="true" autoEdit="true" contextMenu="EDIT_OPERATION" class="hideTableHeader"></div>
+
+        <h2>ContextMenu: EDIT_LINK</h2>
+        <div id="gridCMEditLink" interactive="true" autoEdit="true" contextMenu="EDIT_LINK" class="hideTableHeader"></div>
+
 	</body>
 </html>

@@ -66,7 +66,7 @@ ingridAddressLayout.createInfoHeader = function () {
     addrClassText.onChange = igeEvents.selectUDKAddressType;
     
     var storeProps = {data: {identifier: '1',label: '0'}};
-    createSelectBox("addressOwner", null, storeProps, null);
+    createFilteringSelect("addressOwner", null, storeProps, null);
 
     //new dijit.layout.ContentPane({}, "contentFrameAddress");
 }

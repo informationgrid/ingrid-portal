@@ -133,10 +133,11 @@ dialog.showContextHelp = function(e, guiId, caption /* optional */) {
                 title: caption,
                 dockable: false,
                 resizable: true,
-                style: "position:absolute; width: 300px; height: auto; left: "+(mouseX + 15)+"px; top: "+(mouseY + 15)+"px;"
+                style: "position:absolute; width: 300px; height: 300px; left: "+(mouseX + 15)+"px; top: "+(mouseY + 15)+"px;"
             }, contentDiv);
             dlg.startup();
 		}
+
         // do not make dialog higher than 400px initially
         var height = dojo.style(dlg.domNode, "height");
         if (height > 400) {
@@ -151,7 +152,7 @@ dialog.showContextHelp = function(e, guiId, caption /* optional */) {
 }
 
 function _createContextHelpContent(helpMessage, guiId) {
-    var text = helpMessage.helpText; 
+    var text = "<div style='padding:10px;'>" + helpMessage.helpText; 
     
     if (helpMessage.sample && helpMessage.sample.length != 0)
         text += "<br/><br/><strong>Beispiel:</strong><br/>"+helpMessage.sample;
@@ -159,6 +160,7 @@ function _createContextHelpContent(helpMessage, guiId) {
     if (guiId && guiId != -1)
         text += "<br/><br/>Feld ID: "+guiId
        
+    text += "</div>";
     return text;
 }
 
