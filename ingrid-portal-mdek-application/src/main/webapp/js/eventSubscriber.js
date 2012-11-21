@@ -967,15 +967,38 @@ udkDataProxy.handleChangePublicationCondition = function(msg) {
 }
 
 udkDataProxy.handleInheritAddressToChildren = function(msg) {
-    console.debug("udkDataProxy calling AddressService.inheritAddressToChildren("+msg.id+")");
-    AddressService.inheritAddressToChildren(msg.id, {
-        preHook: UtilDWR.enterLoadingState,
-        postHook: UtilDWR.exitLoadingState,
-        callback: function(res){msg.resultHandler.callback(res);},
-        errorHandler:function(err) {
-            UtilDWR.exitLoadingState();
-            displayErrorMessage(err);
-        }
+    // check for unsaved changes if parent node was clicked! 
+    var isChild = UtilDOM.activeNodeHasParent(msg.id);
+    
+    if (isChild) {
+        var deferred = udkDataProxy.checkForUnsavedChanges();
+    } else {
+        var deferred = new dojo.Deferred();
+        deferred.callback();
+    }
+    
+    deferred.addCallback(function() {
+        console.debug("udkDataProxy calling AddressService.inheritAddressToChildren("+msg.id+")");
+        AddressService.inheritAddressToChildren(msg.id, {
+            preHook: UtilDWR.enterLoadingState,
+            postHook: UtilDWR.exitLoadingState,
+            callback: function(res){
+                if (isChild) {
+                    // reload node
+                    dojo.publish("/loadRequest", [{
+                        id: currentUdk.uuid,
+                        appType: currentUdk.nodeAppType/*,
+                        node: item,
+                        resultHandler: deferred*/
+                    }]);
+                }
+                msg.resultHandler.callback(res);
+            },
+            errorHandler:function(err) {
+                UtilDWR.exitLoadingState();
+                displayErrorMessage(err);
+            }
+        });
     });
 }
 

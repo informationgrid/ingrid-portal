@@ -1896,6 +1896,19 @@ UtilDOM._replaceAttribute = function(attribute){
 	return attribute;
 }
 
+// Search for a parent node with the uuid and check if
+// it has the active selected node as a child
+UtilDOM.activeNodeHasParent = function(parentUuid){
+    if (!currentUdk) return false;
+    
+    var activeDomNode = dojo.byId(currentUdk.uuid).parentNode;
+    while (activeDomNode) {
+        if (activeDomNode.id == parentUuid) return true;
+        activeDomNode = activeDomNode.parentNode;
+    }
+    return false;
+}
+
 // Utility functions for DOM
 var UtilSyslist = {}
 
