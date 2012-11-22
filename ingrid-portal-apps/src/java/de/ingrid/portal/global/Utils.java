@@ -462,7 +462,7 @@ public class Utils {
 			// create the message part 
 		    MimeBodyPart messageBodyPart = new MimeBodyPart();
 		    // fill message
-		    messageBodyPart.setText(text, "text/plain; charset=UTF-8");
+		    messageBodyPart.setText(text);
 			
 		    Multipart multipart = new MimeMultipart();
 		    multipart.addBodyPart(messageBodyPart);
@@ -475,7 +475,7 @@ public class Utils {
 			    messageBodyPart.setFileName(attachment.getName());
 			    multipart.addBodyPart(messageBodyPart);
 			}
-			
+			msg.setContent(multipart);
 			Transport.send(msg);
 			emailSent = true;
 		} catch (AddressException e) {
