@@ -235,6 +235,9 @@ public class PortalConfig extends PropertiesConfiguration {
     // Link to CSW Interface
     public static final String CSW_INTERFACE_URL = "csw.interface.url";
     
+    public static final String PORTAL_CONTACT_UPLOAD_ENABLE = "email.contact.upload.enable";
+    public static final String PORTAL_CONTACT_UPLOAD_SIZE = "email.contact.upload.size";
+    
     // private stuff
     private static PortalConfig instance = null;
     

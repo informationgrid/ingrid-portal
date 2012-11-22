@@ -41,6 +41,24 @@
             </properties>
         </dependency>
         <dependency>
+	    	<groupId>commons-fileupload</groupId>
+	      	<artifactId>commons-fileupload</artifactId>
+	      	<version>1.2.2</version>
+	      	<type>jar</type>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+	    </dependency>
+        <dependency>
+	    	<groupId>commons-io</groupId>
+	      	<artifactId>commons-io</artifactId>
+	      	<version>1.4</version>
+	      	<type>jar</type>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+	    </dependency>
+        <dependency>
             <groupId>org.apache.portals.bridges</groupId>
             <artifactId>portals-bridges-common</artifactId>
             <version>${portals.bridges.common.version}</version>

@@ -4,6 +4,7 @@
 package de.ingrid.portal.global;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
@@ -22,13 +23,19 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
@@ -399,6 +406,10 @@ public class Utils {
 		return buffer;
 	}
 
+	public static boolean sendEmail(String from, String subject, String[] to, String text, HashMap headers) {
+		return sendEmail(from, subject, to, text, headers, null);
+	}
+	
 	/**
 	 * Send email
 	 * 
@@ -409,7 +420,7 @@ public class Utils {
 	 * @param headers
 	 * @return true if email was sent, else false
 	 */
-	public static boolean sendEmail(String from, String subject, String[] to, String text, HashMap headers) {
+	public static boolean sendEmail(String from, String subject, String[] to, String text, HashMap headers, File attachment) {
 
 		boolean debug = log.isDebugEnabled();
 		boolean emailSent = false;
@@ -444,16 +455,37 @@ public class Utils {
 					msg.addHeader(key, (String) headers.get(key));
 				}
 			}
-
+			
 			// Setting the Subject and Content Type
 			msg.setSubject(subject);
-			msg.setContent(text, "text/plain; charset=UTF-8");
+			
+			// create the message part 
+		    MimeBodyPart messageBodyPart = new MimeBodyPart();
+		    // fill message
+		    messageBodyPart.setText(text, "text/plain; charset=UTF-8");
+			
+		    Multipart multipart = new MimeMultipart();
+		    multipart.addBodyPart(messageBodyPart);
+
+			if(attachment != null){
+				// Part two is attachment
+			    messageBodyPart = new MimeBodyPart();
+			    DataSource source = new FileDataSource(attachment);
+			    messageBodyPart.setDataHandler(new DataHandler(source));
+			    messageBodyPart.setFileName(attachment.getName());
+			    multipart.addBodyPart(messageBodyPart);
+			}
+			
 			Transport.send(msg);
 			emailSent = true;
 		} catch (AddressException e) {
 			log.error("invalid email address format", e);
 		} catch (MessagingException e) {
 			log.error("error sending email.", e);
+		} finally{
+			if(attachment != null){
+				attachment.delete();
+			}
 		}
 
 		return emailSent;

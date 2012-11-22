@@ -1,6 +1,6 @@
 $contactIntroPostEmail
 #set ($action = $renderResponse.createActionURL())
-<form action="$action" method="post" name="contact" id="contact">
+<form action="$action" method="post" name="contact" id="contact" enctype="multipart/form-data">
 	<div class="formbody formbody_border_style">
 #displayFormErrors()
 		<h3>
@@ -47,7 +47,12 @@ $contactIntroPostEmail
 			<input class="float_left col2right inputstyletext" type="text" id="xx5" name="phone" value="#getFieldValue('phone')"/>
 			<span class="clearer"></span>    			  
 		</p>
-
+#if ($uploadEnable)
+    		<p>
+    			<label class="float_left col2left_incr">$MESSAGES.getString('contact.form.upload') $uploadSize MB)</label>
+				<input type="file" id="upload" name="upload"></input>
+            </p>
+#end
 #if ($enableNewsletter)		
 		<p>
 			<label class="float_left col2left_incr">$MESSAGES.getString('contact.form.newsletter')</label>

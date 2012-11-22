@@ -3,7 +3,11 @@
  */
 package de.ingrid.portal.forms;
 
+import java.util.List;
+
 import javax.portlet.PortletRequest;
+
+import org.apache.commons.fileupload.FileItem;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Utils;
@@ -39,6 +43,8 @@ public class ContactForm extends ActionForm {
     public static final String FIELD_NEWSLETTER = "newsletter";
     
     public static final String FIELD_JCAPTCHA = "jcaptcha";
+
+    public static final String FIELD_UPLOAD = "upload";
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
@@ -109,6 +115,40 @@ public class ContactForm extends ActionForm {
     public void setErrorCaptcha(){
     	clearErrors();
     	setError(FIELD_JCAPTCHA, "contact.jcaptcha.error");
+    }
+
+    public void setErrorUpload(){
+    	clearErrors();
+    	setError(FIELD_UPLOAD, "contact.error.upload");
+    }
+    
+    public void populate(List<FileItem> items) {
+    	if(items != null){
+	        clearInput();
+	        for(FileItem item : items){
+	        	if(item.getFieldName().equals(FIELD_MESSAGE)){
+	        		setInput(FIELD_MESSAGE, item.getString());
+	        	} else if(item.getFieldName().equals(FIELD_FIRSTNAME)){
+	        		setInput(FIELD_FIRSTNAME, item.getString());
+	        	} else if(item.getFieldName().equals(FIELD_LASTNAME)){
+	        		setInput(FIELD_LASTNAME, item.getString());
+	        	} else if(item.getFieldName().equals(FIELD_COMPANY)){
+	        		setInput(FIELD_COMPANY, item.getString());
+	        	} else if(item.getFieldName().equals(FIELD_PHONE)){
+	        		setInput(FIELD_PHONE, item.getString());
+	        	} else if(item.getFieldName().equals(FIELD_EMAIL)){
+	        		setInput(FIELD_EMAIL, item.getString());
+	        	} else if(item.getFieldName().equals(FIELD_ACTIVITY)){
+	        		setInput(FIELD_ACTIVITY, item.getString());
+	        	} else if(item.getFieldName().equals(FIELD_INTEREST)){
+	        		setInput(FIELD_INTEREST, item.getString());
+	        	} else if(item.getFieldName().equals(FIELD_NEWSLETTER)){
+	        		setInput(FIELD_NEWSLETTER, item.getString());
+	        	} else if(item.getFieldName().equals(FIELD_JCAPTCHA)){
+	        		setInput(FIELD_JCAPTCHA, item.getString());
+	        	}
+	        }
+    	}
     }
     
 }
