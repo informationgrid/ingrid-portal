@@ -130,6 +130,11 @@
           <executable>maven</executable>
           <!-- optional -->
           <!-- <workingDirectory>.</workingDirectory>-->
+          <environmentVariables>
+            <PATH> 
+              /opt/portalu/ingrid/maven/maven-1.1/bin/maven
+            </PATH>
+          </environmentVariables>
           <arguments>
             <argument>j2:portal.genapp.minimal</argument>
           </arguments>
