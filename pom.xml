@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>de.ingrid</groupId>
+        <artifactId>ingrid-base-pom</artifactId>
+        <version>3.3.0-SNAPSHOT</version>
+      </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.ingrid.portal</groupId>
+    <artifactId>ingrid-portal</artifactId>
+    <packaging>pom</packaging>
+    <version>3.3.0-SNAPSHOT</version>
+    <name>Ingrid Portal</name>
+
+    <modules>
+        <module>ingrid-portal-apps</module>
+        <module>ingrid-portal-layout</module>
+        <module>ingrid-portal-mdek</module>
+        <module>ingrid-portal-base</module>
+        <module>ingrid-portal-mdek-application</module>
+        <module>ingrid-portal-distribution</module>
+    </modules>
+
+    <build>
+    <finalName>ingrid-portal-${version}</finalName>
+    <!-- <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <excludes>
+          <exclude>*.xml</exclude>
+          <exclude>*.properties</exclude>
+          <exclude>*.bak</exclude>
+        </excludes>
+      </resource>
+    </resources> -->
+
+  </build>
+  <repositories>
+    <!-- Repo of parent pom needed, parent pom may not be installed locally yet -->
+    <repository>
+      <snapshots />
+      <id>de.ingrid.all</id>
+      <name>Maven Repo InGrid</name>
+      <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
+    </repository>
+  </repositories>
+</project>

@@ -1,0 +1,312 @@
+<project name="MySql Configuration">
+    <description>
+        MySql Configuration Build Script
+    </description>
+
+    <!-- =============================================
+         = PROPERTIES                                =
+         ============================================= -->
+         
+    <property name="mySqlDriverClass"              value="com.mysql.jdbc.Driver"/>
+    <property name="mySqlDialect"                  value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+    <property name="mySqlDbDriver"                 location="${basedir}/mysql-connector-java-5.1.6.jar"/>
+    
+    <!-- mysql portal imports -->
+    <property name="importMySQL"     location="${installDir}/sql/ingrid-portal-mysql40.sql"/>
+    <property name="updateMySQL114"  location="${installDir}/sql/update_1.1.4_mysql.sql"/>
+    <property name="updateMySQL116"  location="${installDir}/sql/update_1.1.6_mysql.sql"/>
+    <property name="updateMySQL117"  location="${installDir}/sql/update_1.1.7_mysql.sql"/>
+    <property name="updateMySQL118"  location="${installDir}/sql/update_1.1.8_mysql.sql"/>
+    <property name="updateMySQL120"  location="${installDir}/sql/update_1.2.0_mysql.sql"/>
+    <property name="updateMySQL130"  location="${installDir}/sql/update_1.3.0_mysql.sql"/>
+    <property name="updateMySQL300"  location="${installDir}/sql/update_3.0.0_mysql.sql"/>
+    <property name="updateMySQL301"  location="${installDir}/sql/update_3.0.1_mysql.sql"/>
+    <property name="updateMySQL310"  location="${installDir}/sql/update_3.1.0_mysql.sql"/>
+    <property name="updateMySQL320a" location="${installDir}/sql/update_3.2.0a_mysql.sql"/>
+    <property name="updateMySQL320b" location="${installDir}/sql/update_3.2.0b_mysql.sql"/>
+    <property name="updateMySQL320c" location="${installDir}/sql/update_3.2.0c_mysql.sql"/>
+    <property name="updateMySQL320d" location="${installDir}/sql/update_3.2.0d_mysql.sql"/>
+
+    <!-- mysql ige imports -->
+    <property name="mdekDB"          location="${installDir}/sql/mdek_0_mysql.sql"/>
+    <property name="mdekDB_301"      location="${installDir}/sql/mdek_3.0.1_mysql.sql"/>
+    <property name="mdekDB_320"      location="${installDir}/sql/mdek_3.2.0_mysql.sql"/>
+
+
+    <target name="CheckDbs" depends="checkPortalDb, checkMdekDb" if="useMysql">
+        <echo>DBs checked for existence and version
+        </echo>
+        <echo>Portal DB not existed      : ${portal.db.not.exists}</echo>
+        <echo>Portal DB version not found: ${portal.db.version.not.supported}</echo>
+        <echo>Portal Version             : ${portal.version}</echo>
+        <echo>MDEK DB not exists         : ${mdek.db.not.exists}</echo>
+    </target>
+
+    <target name="checkPortalDb" depends="tryCreatePortalDb" if="portal.installed" unless="only.ige.installation">
+        <sql    driver   ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                onerror   ="continue" 
+                errorproperty="portal.db.not.exists"
+                failOnConnectionError="true"
+                >
+            <![CDATA[
+            SELECT * FROM page;
+            ]]>
+        </sql>
+        <sql driver   ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                print     ="yes"
+                output    ="version.properties"
+                expandProperties="true" showheaders="false" showtrailers="false"
+                onerror   ="continue" 
+                errorproperty="portal.db.version.not.supported"
+                failOnConnectionError="false"
+                >
+            <![CDATA[
+            SELECT 'portal.version=', item_value FROM ingrid_lookup WHERE item_key="ingrid_db_version";
+            ]]>
+        </sql>
+        
+        <property file="version.properties" />
+    </target>
+
+    <target name="checkMdekDb" if="ige.installed" unless="withoutIge" depends="tryCreateMdekDb">
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${_mdekDBUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}" 
+                onerror   ="continue" 
+                errorproperty="mdek.db.not.exists"
+                failOnConnectionError="false">
+            <![CDATA[
+            SELECT * FROM help_messages;
+            ]]>
+        </sql> 
+    </target>
+
+    
+    <!-- =============================================
+         = PORTAL DATABASE                           =
+         ============================================= -->
+         
+    <target name="tryCreatePortalDb" if="portal.installed" description="Create a mySQL database.">
+        <echo>MySQL-Portal-Datenbank erstellen (${_dbUrl})
+        </echo>
+
+        <basename property="dbName" file="${_dbUrl}"/>
+
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="jdbc:mysql://localhost/mysql"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                onerror   ="continue"
+                failOnConnectionError="false"
+                >
+            <transaction>
+                <!-- Create new one if not already exists-->
+                CREATE DATABASE IF NOT EXISTS `${dbName}` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci
+            </transaction>
+            <transaction>
+                <!-- Give rights to user to access the new database -->
+                GRANT ALL PRIVILEGES ON `${dbName}`.* TO '${dbUser}'@'localhost' WITH GRANT OPTION
+            </transaction>
+        </sql>
+    </target>
+
+    <target name="PortalDbUpdateFromInitial" if="useMysql" description="Import the mySQL database.">
+        <echo>MySQL-Portal Daten importieren (initial)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${importMySQL}"/>
+            <transaction src="${updateMySQL114}"/>
+            <transaction src="${updateMySQL116}"/>
+            <transaction src="${updateMySQL117}"/>
+            <transaction src="${updateMySQL118}"/>
+            <transaction src="${updateMySQL120}"/>
+            <transaction src="${updateMySQL130}"/>
+            <transaction src="${updateMySQL300}"/>
+            <transaction src="${updateMySQL301}"/>
+            <transaction src="${updateMySQL310}"/>
+            <transaction src="${updateMySQL320a}"/>
+            <transaction src="${updateMySQL320b}"/>
+            <transaction src="${updateMySQL320c}"/>
+            <transaction src="${updateMySQL320d}"/>
+        </sql>
+    </target>
+    
+    <target name="PortalDbUpdateFrom300" if="useMysql">
+        <echo>MySQL-Portal Daten importieren (ab 3.0.0)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateMySQL301}"/>
+            <transaction src="${updateMySQL310}"/>
+            <transaction src="${updateMySQL320a}"/>
+            <transaction src="${updateMySQL320b}"/>
+            <transaction src="${updateMySQL320c}"/>
+            <transaction src="${updateMySQL320d}"/>
+        </sql>
+    </target>
+    
+    <target name="PortalDbUpdateFrom301" if="useMysql">
+        <echo>MySQL-Portal Daten importieren (ab 3.0.1)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateMySQL310}"/>
+            <transaction src="${updateMySQL320a}"/>
+            <transaction src="${updateMySQL320b}"/>
+            <transaction src="${updateMySQL320c}"/>
+            <transaction src="${updateMySQL320d}"/>
+        </sql>
+    </target>
+    
+    <target name="PortalDbUpdateFrom310" if="useMysql">
+        <echo>MySQL-Portal Daten importieren (ab 3.1.0)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateMySQL320a}"/>
+            <transaction src="${updateMySQL320b}"/>
+            <transaction src="${updateMySQL320c}"/>
+            <transaction src="${updateMySQL320d}"/>
+        </sql>
+    </target>
+    
+    <!-- =============================================
+         = IGE MDEK DATABASE                         =
+         ============================================= -->
+    
+    <target name="tryCreateMdekDb" if="ige.installed" unless="withoutIge" description="Create a mySQL database.">
+        <echo>MySQL-Mdek-Datenbank erstellen (${_mdekDBUrl})
+        </echo>
+
+        <basename property="dbMdekName" file="${_mdekDBUrl}"/>
+
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="jdbc:mysql://localhost/mysql"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                onerror   ="continue" 
+                failOnConnectionError="false"
+                >
+            <transaction>
+                <!-- Create new one if not already exists-->
+                CREATE DATABASE IF NOT EXISTS `${dbMdekName}` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci
+            </transaction>
+            <transaction>
+                <!-- Give rights to user to access the new database -->
+                GRANT ALL PRIVILEGES ON `${dbMdekName}`.* TO '${dbUser}'@'localhost' WITH GRANT OPTION
+            </transaction>
+        </sql>
+    </target>
+    
+    <target name="mdekDbNotExists" if="mdek.db.not.exists">
+        <echo>Neue Mdek-DB!</echo>
+        <echo>Mdek MySQL-Daten importieren
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${_mdekDBUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                failOnConnectionError="false"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${mdekDB}"/>
+            <transaction src="${mdekDB_301}"/>
+            <transaction src="${mdekDB_320}"/>
+
+        </sql>
+    </target>
+
+    <target name="mdekDbExists" unless="mdek.db.not.exists">
+        <echo>Update vorhandene Mdek-DB!</echo>
+        <echo>Mdek MySQL-Daten importieren
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${_mdekDBUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                failOnConnectionError="false"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${mdekDB_301}"/>
+            <transaction src="${mdekDB_320}"/>
+
+        </sql>
+    </target>
+    
+    <target name="hideMetadataMenu" if="useMysql">
+        <echo>Schreibe Ingrid-Editor Konfiguration - Disabling Metadata Menu
+        </echo>
+        <!-- hide the "Metadata"-tab in menu -->
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${dbUrl}"
+                userid    ="${dbUser}"
+                password  ="${dbPassword}"
+                >
+            <transaction>
+                UPDATE page SET IS_HIDDEN = '1' WHERE PATH ='/mdek/mdek_portal_admin.psml' OR PATH ='/mdek/mdek_entry.psml'
+            </transaction>
+        </sql>
+    </target>
+</project>

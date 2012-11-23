@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE installer PUBLIC "-//tp23 //DTD Ant Installer Config//EN" "http://antinstaller.sf.net/dtd/antinstall-config-0.8.dtd">
+<installer
+            ui                    ="swing,text,swing-auto,text-auto"
+            loadDefaults          ="prompt"
+            verbose               ="true"
+            debug                 ="false"
+            lookAndFeel           ="greymetal"
+            name                  ="PortalU Installation"
+            windowIcon            ="/resources/icons/logoIcon.gif"
+            defaultImageResource  ="/resources/makewavesdawn.png"
+            minJavaVersion        ="1.6"
+            version               ="1.0">
+
+    <!--  The target "extract" must be called first, so it is defined on the first page -->
+    <page
+            type        ="input"
+            name        ="intro"
+            overflow    = "true"
+            displayText ="Willkommen zur InGrid-PortalU Installation">
+        <comment displayText="" bold="true" explanatoryText="Nehmen Sie Einstellungen vor, um das Portal zu konfigurieren."/>
+
+        <comment displayText="Hinweis: " bold="true"/>
+        <comment displayText="" explanatoryText="Wenn dies ein Update ist, dann können die Einstellungen der vorherigen Installation verwendet werden. Dazu muss sich die Datei 'ant.install.properties' im gleichen Verzeichnis wie der Installer befinden."/>
+        <target-select
+            property      ="updateOrNew"
+            displayText   ="Neu oder Update"
+            defaultValue  ="true">
+            <option value="setUpdateProperty" text="Update (Einstellungen bleiben erhalten)"/>
+            <option value="setInstallProperty" text="Neuinstallation"/>
+        </target-select>
+    </page>
+    
+    <page 
+            ifTarget    ="setInstallProperty"
+            type        ="input"
+            overflow    = "true"
+            name        ="installAll"
+            displayText ="Portal- und/oder IGE Installation">
+        <target-select
+            property     ="portalChoice"
+            displayText  ="Installationswahl"
+            defaultValue ="true">
+            <option text ="Portal installieren"            value="InstallPortal"/>
+            <option text ="Nur InGrid Editor installieren" value="InstallOnlyIge"/>
+        </target-select>
+    </page>
+
+    <page
+            ifTarget    ="InstallPortal"
+            type        ="input"
+            name        ="menu"
+            overflow    = "true"
+            displayText ="Auswahl der Konfigurationen">
+        <target-select
+            property     ="dbChoice"
+            displayText  ="Datenbankkonfiguration"
+            defaultValue ="true">
+            <option text ="MySQL"  value="setMySqlProperty"/>
+            <option text ="Oracle" value="setOracleProperty"/>
+        </target-select>
+        <checkbox
+            property     ="configMdek"
+            displayText  ="InGrid-Editor"
+            defaultValue ="true">
+        </checkbox>
+    </page>
+    
+    <page
+            ifTarget    ="InstallOnlyIge"
+            type        ="input"
+            name        ="menu"
+            overflow    = "true"
+            displayText ="Auswahl der Konfigurationen">
+        <target-select
+            property     ="dbChoice"
+            displayText  ="Datenbankkonfiguration"
+            defaultValue ="true">
+            <option text ="MySQL"  value="setMySqlProperty"/>
+            <option text ="Oracle" value="setOracleProperty"/>
+        </target-select>
+    </page>
+    
+    <page
+            ifTarget    ="setMySqlProperty"
+            ifProperty  ="(${portalChoice}==InstallOnlyIge)"
+            type        ="input"
+            overflow    = "true"
+            name        ="igeDbOptionsMysql"
+            displayText ="Einstellungen für die Mdek MySQL-Datenbank">
+        <comment bold="true" displayText="" explanatoryText="Eine vorhandene Datenbank mit gleichem Namen wird beim Erstellen entfernt. Dem angebenen Benutzer werden die Rechte an der Datenbank erteilt! Dafür wird ein Datenbankadministrator benötigt (siehe folgende Seite)."/>            
+        <text property="dbUser"     displayText="MySQL Benutzername:"      defaultValue="ingrid"/>
+        <text property="dbPassword" displayText="MySQL Benutzer-Passwort:" defaultValue=""/>
+        <comment displayText="" bold="true" explanatoryText="Für das Erstellen der Datenbank wird ein Administrator benötigt! Bitte geben Sie diesen hier an."/>
+        <text property="adminUser"         displayText="MySQL Administrator:"           defaultValue="root"/>
+        <text property="adminPassword"     displayText="MySQL Administrator-Passwort:"  defaultValue=""/>
+    </page>
+    
+    <page
+            ifTarget    ="setOracleProperty"
+            ifProperty  ="(${configMdek}==true) || (${portalChoice}==InstallOnlyIge)"
+            overflow    = "true"
+            type        ="input"
+            name        ="igeDbOptionsOracle"
+            displayText ="Einstellungen für die Mdek Oracle-Datenbank">
+        <!--<comment bold="true" displayText="" explanatoryText="Wenn die Datenbank während der Installation erstellt werden soll, so wird eine eventuell vorhandene Datenbank mit gleichem Namen entfernt. Dem angebenen Benutzer werden automatisch die Rechte an der neuen Datenbank erteilt! Für diese Operationen wird ein Datenbankadministrator vorausgesetzt, der auf der folgenden Seite eingegeben werden kann."/>            
+        <text property="dbUser"     displayText="MySQL Benutzername:"      defaultValue="ingrid"/>
+        <text property="dbPassword" displayText="MySQL Benutzer-Passwort:" defaultValue=""/>-->
+        <comment displayText="" bold="true" explanatoryText="Für das Erstellen der Datenbank wird ein Administrator benötigt! Bitte geben Sie diesen hier an."/>
+        <text property="mdekUser"         displayText="Mdek User:"          defaultValue="mdek"/>
+        <text property="mdekPassword"     displayText="Mdek Passwort:"      defaultValue=""/>
+    </page>
+
+    <page
+            ifTarget    ="setMySqlProperty"
+            ifProperty  ="(${portalChoice}==InstallPortal)"
+            overflow    = "true"
+            type        ="input"
+            name        ="mysqlOptions"
+            displayText ="Einstellungen für die MySQL-Datenbank">
+        <comment bold="true" displayText="" explanatoryText="Dem angebenen Benutzer werden automatisch die Rechte an der neuen Datenbank erteilt! Für diese Operationen wird ein Datenbankadministrator vorausgesetzt, der weiter unten eingegeben werden muss."/>            
+        <text property="dbUser"     displayText="MySQL Benutzername:"      defaultValue="ingrid"/>
+        <text property="dbPassword" displayText="MySQL Benutzer-Passwort:" defaultValue=""/>
+        <text property="dbUrl"      displayText="MySQL Datenbank-URL:"     defaultValue="jdbc:mysql://localhost/ingrid-portal"/>
+
+        <comment displayText="" bold="true" explanatoryText="Für das Erstellen der Datenbank wird ein Administrator benötigt! Bitte geben Sie diesen hier an."/>
+        <text property="adminUser"         displayText="MySQL Administrator:"           defaultValue="root"/>
+        <text property="adminPassword"     displayText="MySQL Administrator-Passwort:"  defaultValue=""/>
+    </page>
+
+    <!-- here is a problem when choosing update or new installation -->
+    <page
+            ifTarget    ="setOracleProperty"
+            ifProperty  ="(${portalChoice}==InstallPortal)"
+            overflow    = "true"
+            type        ="input"
+            name        ="oracleOptions"
+            displayText ="Einstellungen für die Portal Oracle-Datenbank">
+        <text property="adminUser"  displayText="Oracle Benutzername:"      defaultValue="ingrid-portal"/>
+        <text property="adminPassword"  displayText="Oracle Benutzer-Passwort:" defaultValue=""/>
+        <text property="dbUrl"      displayText="Oracle Datenbank-URL:"     defaultValue="jdbc:oracle:thin:@127.0.0.1:1521:xe"/>
+
+        <comment displayText="" bold="true" explanatoryText="Stellen Sie sicher, dass die Datenbank und der Datenbankbenutzer existieren und die Rechte für den Benutzer korrekt gesetzt sind!"/>
+    </page>
+
+    <page
+            ifProperty  ="(${configMdek}==true) || (${portalChoice}==InstallOnlyIge)"
+            type        ="input"
+            overflow    = "true"
+            name        ="igeOptions"
+            displayText ="Einstellungen für den InGridEditor">
+
+        <comment displayText="" bold="true" explanatoryText="Hinweis: Die Domäne wird für die Versendung von Emails verwendet, in denen Links zum IGE generiert werden. Dafür wird die Domäne gebraucht, auf welcher der IGE erreicht werden kann."/>
+        <text property="mdekServerPort" displayText="InGridEditor Port:"    defaultValue="11000"/>
+        <text property="mdekDBUrl"      displayText="InGridEditor DB-URL:"  defaultValue="jdbc:mysql://localhost/mdek"/>
+        <text property="mdekMailSmtp"   displayText="SMTP-Server:"          defaultValue="localhost"/>
+        <text property="mdekMailSender" displayText="Sender Email Adresse:" defaultValue="info@portalu.de"/>
+        <text property="mdekDirectLink" displayText="Domäne:"               defaultValue="www.'meine-Adresse.de'"/>
+    </page>
+
+    <page
+            ifTarget    ="InstallOnlyIge"
+            type        ="input"
+            overflow    = "true"
+            name        ="igeOptions"
+            displayText ="Erweiterte Einstellungen für den IGE">
+            
+            <text property="igeAdminPassword" displayText="Passwort fuer Administrator:" defaultValue=""/>
+            <comment displayText="" explanatoryText="Mit dem Login 'admin' und diesem Passwort, koennen Sie Benutzer fuer den IGE verwalten sowie Kataloge verbinden."/>
+    </page>
+    
+    <page
+            ifTarget    ="InstallPortal"
+            type        ="input"
+            overflow    = "true"
+            name        ="iBusOptions"
+            displayText ="Einstellungen für den iBus">
+
+        <comment displayText="" explanatoryText="Der Client-Name muss eindeutig sein, da es sonst zu Kommunikationsproblemen zum iBus führen kann. Die Server-IP ist die Adresse des Rechners, auf dem der iBus über dem Server-Port angesprochen werden kann."/>
+        <text property="clientName" displayText="Client Name:" defaultValue="/ingrid-group:portal-'Ihr-Name'"/>
+        <text property="serverName" displayText="Server Name:" defaultValue="/ingrid-group:ibus-'Ihr-Name'"/>
+        <text property="serverIp"   displayText="Server IP:"   defaultValue="127.0.0.1"/>
+        <text property="serverPort" displayText="Server Port:" defaultValue="9900"/>
+    </page>
+    
+    <page
+            ifProperty  ="(${portalChoice}==InstallPortal) || (${updateOrNew}==setUpdateProperty)"
+            overflow    ="true"
+            type        ="input"
+            name        ="webmapOptions"
+            displayText ="Einstellungen für den Kartenclient">
+
+        <comment displayText="" explanatoryText="Geben Sie die Url der Opensearchschnittstelle an. Es reicht die Basis-Url wie im default angegeben, der Rest der Anfrage wird dynamisch hinzugefügt."/>
+        <text property="openSearchUrl" displayText="Opensearch Url:" defaultValue="http://www.portalu.de/opensearch/query"/>
+        <comment displayText="" explanatoryText="Geben Sie die Basis-Url für das Laden von gespeicherten Karten an."/>
+        <text property="loadMapUrl" displayText="Karten-Url:" defaultValue="http://www.portalu.de/kartendienste"/>
+        <comment displayText="" explanatoryText="Geben Sie ein Verzeichnis zum Speichern der Map Client Daten an."/>
+        <directory
+                property        ="WebmapDataDir"
+                defaultValue    ="/opt/ingrid"
+                defaultValueWin ="${env.ProgramFiles}"
+                displayText     ="Webmapdatenverzeichnis"
+                create          ="true"/>    
+        <target-select
+            property     ="webmapChoice"
+            displayText  ="Konfiguration überschreiben?"
+            defaultValue ="true">
+            <option text="Ja"   value="OverwriteMapData"/>
+            <option text="Nein" value="KeepMapData"/>
+        </target-select>
+
+    </page>
+    
+    <page
+        ifProperty  ="(${configMdek}==true) || (${portalChoice}==InstallOnlyIge) || (${updateOrNew}==setUpdateProperty)"
+        type        ="input"
+        overflow    = "true"
+        name        ="codelistRepoOptions"
+        displayText ="Einstellungen fuer das Codelist Repository">
+        <comment displayText="" explanatoryText="Ignorieren Sie diese Seite wenn Sie keinen InGrid Editor (IGE) installieren bzw. installiert haben!"/>
+        <text property="clUrl"      displayText="Codelist Repository Url:" defaultValue="http://localhost/codelist-repo/rest/getCodelists" />
+        <text property="clUsername" displayText="Repository-Benutzername:" defaultValue="admin" />
+        <text property="clPassword" displayText="Repository Passwort:"     defaultValue="" />
+    </page>
+    
+    <page
+            ifTarget    ="setInstallProperty"
+            type        ="input"
+            overflow    = "true"
+            name        ="properties"
+            displayText ="Benötigte Installationsoptionen"
+            target      ="StartInstallation">
+        <directory
+                property        ="installDir"
+                defaultValue    ="/opt/ingrid/ingrid-portal"
+                defaultValueWin ="${env.ProgramFiles}\ingrid-portal"
+                displayText     ="Installationsverzeichnis"
+                create          ="true"/>
+    </page>
+    
+    <page
+        ifTarget    ="setUpdateProperty"
+        type        ="input"
+        overflow    = "true"
+        name        ="properties"
+        displayText ="Benötigte Installationsoptionen"
+        target      ="StartInstallation">
+        <directory
+            property            ="installDir"
+            defaultValue        ="/opt/ingrid/ingrid-portal"
+            defaultValueWin     ="${env.ProgramFiles}\ingrid-portal"
+            displayText         ="Altes Installationsverzeichnis"
+            create              ="false"
+            checkExists         ="true" />
+    </page>
+    
+    <page
+            type        ="progress"
+            name        ="progress"
+            displayText ="Installationsfortschritt"
+            showTargets ="true"
+            target      ="cleanuptarget">
+    </page>
+</installer>
+
+

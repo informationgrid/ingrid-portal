@@ -1,0 +1,531 @@
+<project name="PortalU Installation">
+    <description>
+        PortalU Installation Script
+    </description>
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+    
+    <import file="build_mysql.xml"  as="mysql" />
+    <import file="build_oracle.xml" as="oracle" />
+    <!--<import file="debug.xml"        as="debug" />-->
+
+    <!-- =============================================
+    	 = PROPERTIES								 =
+    	 ============================================= -->
+    <property name="tomcat-artifact"               value="apache-tomcat-6.0.35"/>
+    <property name="installedTomcatContextDir"     value="${installDir}/${tomcat-artifact}/conf/Catalina/localhost"/>
+    
+    <property name="mysqlDbDriverInApache"         location="${basedir}/distribution/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.6.jar"/>
+    <property name="oracleDbDriverInApache"        location="./distribution/${tomcat-artifact}/shared/lib/ojdbc14.jar"/>
+
+    <property name="xml-communication-apps"        value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/communication.xml"/>
+    <property name="prop-ingrid-portal-apps"       value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties"/>
+    <property name="mdek-app-class-path"           value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application/WEB-INF/classes"/>
+    <property name="prop-mdek-apps"                value="${mdek-app-class-path}/mdek.properties"/>
+    <property name="prop-datasource-mdek-apps"     value="${mdek-app-class-path}/default-datasource.properties"/>
+    <property name="xml-communication-mdek-apps"   value="${mdek-app-class-path}/communication.xml"/>
+    <property name="i-prop-mdek-igeAdminUser"      value="${mdek-app-class-path}/igeAdminUser.properties"/>
+    <property name="spring-xml"                    value="${mdek-app-class-path}/../configurations.xml"/>
+    
+    <property name="i-prop-ingrid-webmap-client"   value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/application.properties"/>
+    <property name="i-config-ingrid-webmap-client" value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/ingrid_webmap_client_config.xml"/>
+    
+    <!-- =============================================
+         = CONFIGURATIONS                            =
+         ============================================= -->
+    <target name="configureProperties" if="installProcedure">
+        <echo>Configure Properties
+        </echo>
+    	<property name="_adminUser"     value="${adminUser}" />
+    	<property name="_adminPassword" value="${adminPassword}" />
+    	<property name="_dbUrl"         value="${dbUrl}" />
+    	<property name="_mdekDBUrl"     value="${mdekDBUrl}" />
+        
+        <!-- in Oracle each user has its own database (space) -->
+        <if>
+            <equals arg1="${useOracle}" arg2="true" />
+            <then>
+                <property name="_dbUser"        value="${adminUser}" />
+                <property name="_dbPassword"    value="${adminPassword}" />
+                <property name="_mdekUser" value="${mdekUser}" />
+                <property name="_mdekPassword" value="${mdekPassword}" />
+            </then>
+            <else>
+                <property name="_dbUser"        value="${dbUser}" />
+                <property name="_dbPassword"    value="${dbPassword}" />
+                <property name="_mdekUser" value="${dbUser}" />
+                <property name="_mdekPassword" value="${dbPassword}" />
+            </else>
+        </if>
+    </target>
+
+    <target name="configurePropertiesFromFiles" if="updateProcedure">
+        <echo>Configure Properties from previous Installation
+        </echo>
+        <xmlproperty  file="${installedTomcatContextDir}/ingrid-portal-apps.xml" prefix="cipaXML"/>
+        <property name="_adminUser" value="${cipaXML.Context.Resource(username)}" />
+        <property name="_adminPassword" value="${cipaXML.Context.Resource(password)}" />
+        <property name="_dbUrl" value="${cipaXML.Context.Resource(url)}" />
+        <!--<property name="_mySqlDbDriverClass" value="${cipaXML.Context.Resource(driverClassName)}" />
+        <property name="_mySqlDbDriver" value="${mySqlDbDriver}" />-->
+        
+        <xmlproperty  file="${installedTomcatContextDir}/ingrid-portal-mdek.xml" prefix="cipmXML"/>
+        <property name="_mdekDBUrl" value="${cipmXML.Context.Resource(url)}" />
+        
+        <if>
+            <equals arg1="${cipaXML.Context.Resource(driverClassName)}" arg2="com.mysql.jdbc.Driver" />
+            <then>
+                <runtarget target="setMySqlProperty"/>
+            </then>
+        <else>
+            <runtarget target="setOracleProperty"/>
+        </else>
+        </if>
+        
+        <property name="_mdekUser" value="${cipmXML.Context.Resource(username)}" />
+        <property name="_mdekPassword" value="${cipmXML.Context.Resource(password)}" />
+        
+        <!-- check what has been installed previously -->
+        <available file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application" type="dir" property="ige.installed"/>
+        <available file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps" type="dir" property="portal.installed"/>
+    </target>
+
+    <target name="setUpdateProperty" depends="UnzipInstallerForUpdate">
+        <property name="installType" value="update" />
+        <property name="updateProcedure" value="true" />
+    </target>
+    
+    <target name="setInstallProperty">
+        <property name="installProcedure" value="true" />
+    </target>
+    
+    <target name="setMySqlProperty">
+    	<property name="useMysql" value="true" />
+        <property name="usedDriver" value="${mySqlDriverClass}" />
+        <property name="usedDialect" value="${mySqlDialect}" />
+        <!-- check current database status 
+        <runtarget target="mysql.CheckDbs"/>-->
+    </target>
+
+    <target name="setOracleProperty">
+    	<property name="useOracle" value="true" />
+        <property name="usedDriver" value="${oracleDriverClass}" />
+        <property name="usedDialect" value="${oracleDialect}" />
+        <!-- check current database status
+        <runtarget target="oracle.CheckDbs"/>-->
+    </target>
+
+    <target name="KeepMapData">
+        <property name="KeepMapData" value="true" />
+    </target>
+
+    <target name="OverwriteMapData">
+        <property name="OverwriteMapData" value="true" />
+    </target>
+
+
+    <target name="UnzipInstaller">
+    	 <unzip src="${antinstaller.jar}" dest="${basedir}">
+            <patternset>
+                <include name="distribution/**/*.*"/>
+            </patternset>
+        </unzip>
+
+        <copy file="${mysqlDbDriverInApache}"  todir="${basedir}"/>
+        <copy file="${oracleDbDriverInApache}" todir="."/>
+    </target>
+    
+    <target name="UnzipInstallerForUpdate">
+    	 <unzip src="${antinstaller.jar}" dest="${basedir}">
+            <patternset>
+                <include name="distribution/**/*.*"/>
+                <exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/ROOT.xml" />
+                <exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/ingrid-portal-apps.xml" />
+                <exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/ingrid-portal-mdek.xml" />
+                <exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/ingrid-webmap-client.xml" />
+            </patternset>
+        </unzip>
+
+        <copy file="${mysqlDbDriverInApache}"  todir="${basedir}"/>
+        <copy file="${oracleDbDriverInApache}" todir="."/>
+    </target>
+
+
+    <!-- =============================================
+         = MAIN TARGETS                              =
+         ============================================= -->
+    <target name="InstallPortal" depends="UnzipInstaller">
+        <!-- complete or without IGE -->
+        <if>
+            <equals arg1="${configMdek}" arg2="true" />
+            <then>
+                <property name="installType" value="portalComplete" />
+                <property name="ige.installed" value="true" />
+            </then>
+        <else>
+            <property name="installType" value="portalOnly" />
+            <property name="withoutIge" value="true" />
+        </else>
+        </if>
+        <property name="portal.installed" value="true" />
+    </target>
+
+    <target name="InstallOnlyIge" depends="UnzipInstaller">
+        <property name="installType" value="onlyIge" />
+        <property name="ige.installed" value="true" />
+        <property name="only.ige.installation" value="true" />
+    </target>
+
+    <target name="StartInstallation" depends="configureProperties,configurePropertiesFromFiles">
+        <runtarget target="MoveFiles" />
+        
+        <if>
+            <equals arg1="${useOracle}" arg2="true" />
+            <then>
+                <runtarget target="oracle.CheckDbs" />
+            </then>
+            <else>
+                <runtarget target="mysql.CheckDbs" />
+            </else>
+        </if>
+        
+        <!--<runtarget target="oracle.CheckDbs" />-->
+        <if>
+            <equals arg1="${installType}" arg2="portalComplete" />
+            <then>
+                <echo message="Complete" />
+                <runtarget target="ExtractPortal"/>
+                <runtarget target="ExtractIge"/>
+                <runtarget target="configurePortal"/>
+                <runtarget target="configureIge"/>
+                <runtarget target="updatePortalDb"/>
+                <runtarget target="updateIgeDb"/>
+                <runtarget target="KeepMapDataImpl"/>
+                <runtarget target="OverwriteMapDataImpl"/>
+            </then>
+            <elseif>
+                <equals arg1="${installType}" arg2="portalOnly" />
+                <then>
+                    <echo message="Portal Only" />
+                    <runtarget target="ExtractPortal"/>
+                    <runtarget target="configurePortal"/>
+                    <runtarget target="updatePortalDb"/>
+                    <runtarget target="configurePortalOnly"/>
+                    <runtarget target="KeepMapDataImpl"/>
+                    <runtarget target="OverwriteMapDataImpl"/>
+                 </then>
+            </elseif>
+            <elseif>
+                <equals arg1="${installType}" arg2="onlyIge" />
+                <then>
+                    <echo message="Ige Only" />
+                    <runtarget target="ExtractIge"/>
+                    <runtarget target="configureIge"/>
+                    <runtarget target="configureIgeOnly"/>
+                    <runtarget target="updateIgeDb"/>
+                 </then>
+            </elseif>
+            <elseif>
+                <equals arg1="${installType}" arg2="update" />
+                <then>
+                    <echo message="Update" />
+
+                    <runtarget target="ExtractPortalForUpdate" />
+                    <runtarget target="ExtractIgeForUpdate" />
+                    <runtarget target="updatePortalDb"/>
+                    <runtarget target="updateIgeDb"/>
+                    <runtarget target="writeCodelistConfig" />
+                    <runtarget target="UpdateWebMapClient"/>
+                 </then>
+            </elseif>
+        </if>
+    </target>
+    
+    <target name="UpdateWebMapClient" if="portal.installed">
+        <runtarget target="KeepMapDataImpl"/>
+        <runtarget target="OverwriteMapDataImpl"/>    
+    </target>
+
+    <!-- =============================================
+         = WORKER                                    =
+         ============================================= -->
+    <target name="ExtractPortal">
+    	<move file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-base.war" tofile="${installDir}/${tomcat-artifact}/webapps/ROOT.war"/>
+        <unwar src="${installDir}/${tomcat-artifact}/webapps/ROOT.war"                   dest="${installDir}/${tomcat-artifact}/webapps/ROOT"/>
+        <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client.war"  dest="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client"/>
+        <move toDir="${installDir}/${tomcat-artifact}/webapps">
+            <fileset dir="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/deploy">
+                <include name="**/ingrid-portal-apps.war"/>
+                <include name="**/ingrid-portal-mdek.war"/>
+            </fileset>
+        </move>
+        <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps"/>
+        <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek"/>
+    </target>
+
+    <target name="ExtractPortalForUpdate" if="portal.installed">
+        <!-- rename ingrid-portal to ROOT, so it'll be accessible from tomcat root -->
+        <move file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-base.war" tofile="${installDir}/${tomcat-artifact}/webapps/ROOT.war"/>
+        <unwar src="${installDir}/${tomcat-artifact}/webapps/ROOT.war"                   dest="${installDir}/${tomcat-artifact}/webapps/ROOT"/>
+        <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client.war"  dest="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client"/>
+        <move toDir="${installDir}/${tomcat-artifact}/webapps">
+            <fileset dir="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/deploy">
+                <include name="**/ingrid-portal-apps.war"/>
+                <include name="**/ingrid-portal-mdek.war"/>
+            </fileset>
+        </move>
+        <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps">
+            <patternset>
+                <exclude name="WEB-INF/classes/communication.xml" />
+            </patternset>
+        </unwar>
+        <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek"/>
+    </target>
+    
+    <target name="ExtractIge">
+    	<unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application.war"  dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application"/>
+    </target>
+
+    <target name="ExtractIgeForUpdate" if="ige.installed">
+        <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application.war"  dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application">
+            <patternset>
+                <exclude name="WEB-INF/classes/communication.xml" />
+                <exclude name="WEB-INF/classes/default-datasource.properties" />
+                <exclude name="WEB-INF/classes/mdek.properties" />
+                <exclude name="WEB-INF/classes/igeAdminUser.properties" />
+            </patternset>
+        </unwar>
+
+        <chmod dir="${installDir}/${tomcat-artifact}/bin" perm="755" includes="**/*.sh"/>
+        <chmod dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application/WEB-INF" perm="600" includes="configurations.xml"/>
+
+        <mkdir dir="${installDir}/${tomcat-artifact}/logs"/>
+    </target>
+    
+    <target name="RemoveOldLibs" if="updateProcedure">
+        <delete dir="${installDir}/${tomcat-artifact}/shared/lib"/>
+        <delete dir="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/lib"/>
+        <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/lib"/>
+        <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek/WEB-INF/lib"/>
+        <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application/WEB-INF/lib"/>
+    </target>
+    
+    <target name="MoveFiles" depends="RemoveOldLibs">
+    	<move toDir="${installDir}/${tomcat-artifact}">
+            <fileset dir="${basedir}/distribution/${tomcat-artifact}"/>
+        </move>
+        <move toDir="${installDir}/sql">
+            <fileset dir="${basedir}/distribution/sql"/>
+        </move>
+        
+        <chmod dir="${installDir}/${tomcat-artifact}/bin" perm="755" includes="**/*.sh"/>
+        <mkdir dir="${installDir}/${tomcat-artifact}/logs"/>
+    </target>
+
+    <target name="configurePortal">
+    	<echo>Schreibe iBus Konfiguration in communication.xml (Ingrid-Portal-Apps)
+        </echo>
+        <xmlproperty  file="${xml-communication-apps}" prefix="ipaXML"/>
+        <replace      file="${xml-communication-apps}" token="${ipaXML.communication.client(name)}"                           value="${clientName}"/>
+        <replace      file="${xml-communication-apps}" token="${ipaXML.communication.client.connections.server(name)}"        value="${serverName}"/>
+        <replace      file="${xml-communication-apps}" token="${ipaXML.communication.client.connections.server.socket(ip)}"   value="${serverIp}"/>
+        <replace      file="${xml-communication-apps}" token="${ipaXML.communication.client.connections.server.socket(port)}" value="${serverPort}"/>
+
+        <echo>Schreibe iBus Admin-URL in ingrid-portal-apps.xml (Ingrid-Portal-Apps)
+        </echo>
+        <property file="${prop-ingrid-portal-apps}" prefix="appPROP"/>
+        <replace  file="${prop-ingrid-portal-apps}" token="${appPROP.ibus.admin.url}"     value="http://${serverIp}/ibus-gui/"/>
+        
+        <!-- Writing username and password into xml files -->
+        <xmlproperty  file="${installedTomcatContextDir}/ROOT.xml" prefix="cipXML"/>
+        <replace      file="${installedTomcatContextDir}/ROOT.xml" token='username="${cipXML.Context.Resource(username)}"' value='username="${_dbUser}"'/>
+        <replace      file="${installedTomcatContextDir}/ROOT.xml" token='password="${cipXML.Context.Resource(password)}"' value='password="${_dbPassword}"'/>
+        <replace      file="${installedTomcatContextDir}/ROOT.xml" token='url="${cipXML.Context.Resource(url)}"' value='url="${_dbUrl}"'/>
+        <replace      file="${installedTomcatContextDir}/ROOT.xml" token='driverClassName="${cipXML.Context.Resource(driverClassName)}"'                 value='driverClassName="${usedDriver}"'/>
+
+        <xmlproperty  file="${installedTomcatContextDir}/ingrid-portal-apps.xml" prefix="cipaXML"/>
+        <replace      file="${installedTomcatContextDir}/ingrid-portal-apps.xml" token='username="${cipaXML.Context.Resource(username)}"' value='username="${_dbUser}"'/>
+        <replace      file="${installedTomcatContextDir}/ingrid-portal-apps.xml" token='password="${cipaXML.Context.Resource(password)}"' value='password="${_dbPassword}"'/>
+        <replace      file="${installedTomcatContextDir}/ingrid-portal-apps.xml" token='url="${cipaXML.Context.Resource(url)}"' value='url="${_dbUrl}"'/>
+        <replace      file="${installedTomcatContextDir}/ingrid-portal-apps.xml" token='driverClassName="${cipaXML.Context.Resource(driverClassName)}"'                 value='driverClassName="${usedDriver}"'/>
+    </target>
+
+    <target name="configurePortalOnly">
+    	<runtarget target="mysql.hideMetadataMenu"/>
+    	<runtarget target="oracle.hideMetadataMenu"/>
+        
+        <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application.war" />
+    </target>
+
+    <target name="configureIge">
+    	<echo>Schreibe Ingrid-Editor Konfiguration
+        </echo>
+        <xmlproperty  file="${xml-communication-mdek-apps}" prefix="ipmaXML"/>
+        <replace      file="${xml-communication-mdek-apps}" token="${ipmaXML.communication.server(name)}"         value="/ingrid-group:ige-ibus"/>
+        <replace      file="${xml-communication-mdek-apps}" token="${ipmaXML.communication.server.socket(port)}"  value="${mdekServerPort}"/>
+
+        <property file="${prop-datasource-mdek-apps}" prefix="madataPROP"/>
+        <replace  file="${prop-datasource-mdek-apps}" token='driverClass=${madataPROP.hibernate.driverClass}' value='driverClass=${usedDriver}' />
+        <replace  file="${prop-datasource-mdek-apps}" token='dialect=${madataPROP.hibernate.dialect}' value='dialect=${usedDialect}' />
+        <replace  file="${prop-datasource-mdek-apps}" token='jdbcUrl=${madataPROP.hibernate.jdbcUrl}' value='jdbcUrl=${_mdekDBUrl}'/>
+        <replace  file="${prop-datasource-mdek-apps}" token='user=${madataPROP.hibernate.user}' 		value='user=${_mdekUser}'/>
+        <replace  file="${prop-datasource-mdek-apps}" token='password=${madataPROP.hibernate.password}' value='password=${_mdekPassword}'/>
+
+        <property file="${prop-mdek-apps}" prefix="mdekPROP"/>
+        <replace  file="${prop-mdek-apps}" token="${mdekPROP.workflow.mail.smtp}"   value="${mdekMailSmtp}"/>
+        <replace  file="${prop-mdek-apps}" token="${mdekPROP.workflow.mail.sender}" value="${mdekMailSender}"/>
+        <replace  file="${prop-mdek-apps}" token="${mdekPROP.mdek.directLink}"      value="http://${mdekDirectLink}/ingrid-portal-mdek-application/index.jsp"/>
+
+        <xmlproperty  file="${installedTomcatContextDir}/ingrid-portal-mdek.xml" prefix="cipmXML"/>
+        <replace      file="${installedTomcatContextDir}/ingrid-portal-mdek.xml" token='username="${cipmXML.Context.Resource(username)}"' value='username="${_mdekUser}"'/>
+        <replace      file="${installedTomcatContextDir}/ingrid-portal-mdek.xml" token='password="${cipmXML.Context.Resource(password)}"' value='password="${_mdekPassword}"'/>
+        <replace      file="${installedTomcatContextDir}/ingrid-portal-mdek.xml" token='url="${cipmXML.Context.Resource(url)}"' value='url="${_mdekDBUrl}"'/>
+        <replace      file="${installedTomcatContextDir}/ingrid-portal-mdek.xml" token='driverClassName="${cipaXML.Context.Resource(driverClassName)}"'                 value='driverClassName="${usedDriver}"'/>
+
+        <runtarget target="writeCodelistConfig"/>
+    </target>
+    
+    <target name="writeCodelistConfig">
+        <echo>Schreiben der Codelist-Repository Informationen in configurations.xml
+        </echo>
+        <replace file="${spring-xml}" token="@URL@"      value="${clUrl}" />
+        <replace file="${spring-xml}" token="@USERNAME@" value="${clUsername}" />
+        <replace file="${spring-xml}" token="@PASSWORD@" value="${clPassword}" />
+        
+        <chmod dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application/WEB-INF" perm="600" includes="configurations.xml"/>
+    </target>
+
+    <target name="configureIgeOnly">
+    	<echo>Konfiguriere Standalone-IGE und setze Administrator-Passwort fuer IGE Verwaltung
+        </echo>
+        <replace file="${spring-xml}"               token="portal-user-services.xml"  value="tomcat-user-services.xml" />
+        <replace file="${i-prop-mdek-igeAdminUser}" token="@ADMINPASS@"               value="${igeAdminPassword}" />
+        
+        <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal.war" />
+        <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client.war" />
+        <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps.war" />
+        <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek.war" />
+    </target>
+
+    <target name="updatePortalDb" if="portal.installed">
+        <echo>Konfiguration des Portals
+        </echo> 
+        <if>
+            <equals arg1="${portal.db.not.exists}" arg2="true" />
+            <then>
+                <runtarget target="mysql.PortalDbUpdateFromInitial"/> 
+                <runtarget target="oracle.UpdateDbManually"/>
+            </then>
+        <elseif>
+            <equals arg1="${portal.version}" arg2=",1" />
+            <then>
+                <!-- import was executed but no patches installed yet -->
+                <runtarget target="mysql.PortalDbUpdateFromInitial"/>
+                <runtarget target="oracle.PortalDbUpdateFromInitial"/>
+            </then>
+        </elseif>
+        <elseif>
+            <equals arg1="${portal.version}" arg2=",3.0.0" />
+            <then>
+                <runtarget target="mysql.PortalDbUpdateFrom300"/>
+                <runtarget target="oracle.PortalDbUpdateFrom300"/>
+            </then>
+        </elseif>
+        <elseif>
+            <equals arg1="${portal.version}" arg2=",3.0.1" />
+            <then>
+                <runtarget target="mysql.PortalDbUpdateFrom301"/>
+                <runtarget target="oracle.PortalDbUpdateFrom301"/>
+            </then>
+        </elseif>
+        <elseif>
+            <equals arg1="${portal.version}" arg2=",3.1.0" />
+            <then>
+                <runtarget target="mysql.PortalDbUpdateFrom310"/>
+                <runtarget target="oracle.PortalDbUpdateFrom310"/>
+            </then>
+        </elseif>
+        <elseif>
+            <equals arg1="${portal.version}" arg2=",3.2.0d" />
+            <then>
+                <echo>Ihre Datenbank ist aktuell!</echo>
+            </then>
+        </elseif>
+        <else>
+            <echo>Bitte aktualisieren Sie die Portaldatenbank manuell!
+            </echo>
+        </else>
+        </if>
+        <!--<runtarget target="oracle.UpdateDbManually"/>-->
+    </target>
+
+    <target name="updateIgeDb" if="ige.installed">
+        <if>
+            <equals arg1="${useOracle}" arg2="true" />
+            <then>
+                <runtarget target="oracle.mdekDbExists"/>
+            </then>
+            <else>
+                <runtarget target="mysql.mdekDbNotExists"/>
+                <runtarget target="mysql.mdekDbExists"/>
+            </else>
+        </if>
+    </target>
+
+
+    <!-- =============================================
+         = MAPCLIENT                                 =
+         ============================================= -->
+		 
+    <target name="KeepMapDataImpl" description="" if="KeepMapData">
+        <!-- write the application.properties file-->
+        <runtarget target="writeMapClientProps"/>
+    </target>
+
+    <target name="OverwriteMapDataImpl"  description="" if="OverwriteMapData">
+        <!-- write the application.properties file-->
+        <runtarget target="writeMapClientProps"/>
+        <!-- create the data dir and move the config file there-->
+        <mkdir dir="${WebmapDataDir}/WebmapClientData"/>
+        <mkdir dir="${WebmapDataDir}/WebmapClientData/data/tmp"/>
+        <mkdir dir="${WebmapDataDir}/WebmapClientData/data/users"/>
+        <move file="${i-config-ingrid-webmap-client}" tofile="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>    
+    </target>    
+
+    <target name="writeMapClientProps" description="">
+        <echo>Schreibe Webmap-Client Konfigration
+            </echo>
+        <!-- write the application.properties file-->
+        <property file="${i-prop-ingrid-webmap-client}" prefix="webmapPROP"/>
+        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.administration.file}"   value="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>
+        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.frontend.sessionDir}"   value="${WebmapDataDir}/WebmapClientData/data/tmp"/>
+        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.frontend.userDataDir}"  value="${WebmapDataDir}/WebmapClientData/data/users"/>
+        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.opensearch.searchurl}"  value="${openSearchUrl}?q={query}+t011_obj_serv_op_connpoint.connect_point:http*+cache:off+datatype:metadata+ranking:score&amp;ingrid=1&amp;h=100"/>
+    	<replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.mapdownload.dir}"   	value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/downloads"/>
+        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.frontend.shortUrlBase}" value="${loadMapUrl}"/>
+		<!-- replace occurences of backslash since tomcat doesnt understand it and escapes the tokens -->
+		<replace file="${i-prop-ingrid-webmap-client}" token="\" value="/"/>
+    </target>
+
+
+    <target name="cleanuptarget">
+        <delete file="${mysqlDbDriverInApache}"/>
+        <delete file="${oracleDbDriverInApache}"/>
+        <echo>
+=================
+Weiteres Vorgehen
+=================
+
+        </echo>
+        <echo>
+Gehen Sie ins Verzeichnis:
+${installDir}/${tomcat-artifact}
+und rufen sie von der Kommandozeile folgendes auf
+"bin/startup.sh", um den TomCat/Portal zu starten.
+
+Bitte lesen Sie bzgl. weiteren Vorgehen die Kapitel unter
+"http://www.kst.portalu.de/wiki/index.php/Portal".
+        </echo>
+    </target>
+
+</project>

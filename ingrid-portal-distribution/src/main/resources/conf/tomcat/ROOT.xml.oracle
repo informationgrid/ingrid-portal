@@ -1,0 +1,40 @@
+<!--
+Copyright 2004 The Apache Software Foundation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<Context path="/ingrid-portal" 
+         docBase="ingrid-portal" 
+         crossContext="true">
+
+  <Realm className="org.apache.catalina.realm.JAASRealm"
+         appName="Jetspeed"
+         userClassNames="org.apache.jetspeed.security.impl.UserPrincipalImpl"
+         roleClassNames="org.apache.jetspeed.security.impl.RolePrincipalImpl"
+         useContextClassLoader="true"
+         debug="0"/>
+
+
+  <Resource name="jdbc/jetspeed" auth="Container"
+          factory="org.apache.commons.dbcp.BasicDataSourceFactory"
+          type="javax.sql.DataSource" username="INGRID_PORTAL" password="INGRID_PORTAL"
+          driverClassName="oracle.jdbc.OracleDriver" url="jdbc:oracle:thin:@localhost:1521:XE"
+          maxActive="100" maxIdle="30" maxWait="10000" validationQuery="SELECT 1 FROM DUAL"
+          removeAbandoned="true" removeAbandonedTimeout="60" logAbandoned="true"/> 
+
+   <!-- make sure that unicode values are transmitted from form elements! 
+        login with tomcat6 is broken without setting changeSessionIdOnAuthentication="false"
+   -->
+   <Valve className="org.apache.catalina.authenticator.FormAuthenticator" characterEncoding="UTF-8" changeSessionIdOnAuthentication="false"/> 
+
+</Context>

@@ -1,0 +1,300 @@
+<project name="Oracle Configuration">
+    <description>
+        Oracle Configuration Build Script
+    </description>
+    
+    <!-- =============================================
+         = PROPERTIES                                =
+         ============================================= -->
+         
+    <property name="oracleDriverClass"             value="oracle.jdbc.driver.OracleDriver"/>
+    <property name="oracleDialect"                 value="org.hibernate.dialect.Oracle10gDialect"/>
+    <property name="oracleDbDriver"                location="./ojdbc14.jar"/>
+    
+    <!-- mysql portal imports -->
+    <property name="importOracle"  location="${basedir}/distribution/sql/ingrid-portal-oracle_10_2_user_ingrid.dmp"/>
+    <property name="updateOracle114"  location="${installDir}/sql/update_1.1.4_oracle.sql"/>
+    <property name="updateOracle116"  location="${installDir}/sql/update_1.1.6_oracle.sql"/>
+    <property name="updateOracle117"  location="${installDir}/sql/update_1.1.7_oracle.sql"/>
+    <property name="updateOracle118"  location="${installDir}/sql/update_1.1.8_oracle.sql"/>
+    <property name="updateOracle120"  location="${installDir}/sql/update_1.2.0_oracle.sql"/>
+    <property name="updateOracle130"  location="${installDir}/sql/update_1.3.0_oracle.sql"/>
+    <property name="updateOracle130Trigger" location="${installDir}/sql/update_1.3.0_trigger_oracle.sql"/>
+    <property name="updateOracle300"  location="${installDir}/sql/update_3.0.0_oracle.sql"/>
+    <property name="updateOracle301"  location="${installDir}/sql/update_3.0.1_oracle.sql"/>
+    <property name="updateOracle310"  location="${installDir}/sql/update_3.1.0_oracle.sql"/>
+    <property name="updateOracle320a" location="${installDir}/sql/update_3.2.0a_oracle.sql"/>
+    <property name="updateOracle320b" location="${installDir}/sql/update_3.2.0b_oracle.sql"/>
+    <property name="updateOracle320c" location="${installDir}/sql/update_3.2.0c_oracle.sql"/>
+    <property name="updateOracle320d" location="${installDir}/sql/update_3.2.0d_oracle.sql"/>
+    
+
+    <!-- oracle ige imports -->
+    <property name="mdekDBOracle"          location="${installDir}/sql/mdek_0_oracle.sql"/>
+    <property name="mdekDBOracle_301"      location="${installDir}/sql/mdek_3.0.1_oracle.sql"/>
+    <property name="mdekDBOracle_311"      location="${installDir}/sql/mdek_3.1.1_oracle.sql"/>
+    <property name="mdekDBOracle_320"      location="${installDir}/sql/mdek_3.2.0_oracle.sql"/>
+
+
+    <target name="CheckDbs" depends="checkPortalDbOracle, checkMdekDbOracle" if="useOracle">
+        <echo>DBs checked for existence and version
+        </echo>
+        <echo>Portal DB not existed      : ${portal.db.not.exists}</echo>
+        <echo>Portal DB version not found: ${portal.db.version.not.supported}</echo>
+        <echo>Portal Version             : ${portal.version}</echo>
+        <echo>MDEK DB not exists         : ${mdek.db.not.exists}</echo>
+    </target>
+
+    <target name="checkPortalDbOracle" unless="only.ige.installation">
+        <echo>Admin user: ${_adminUser} ... ${_adminPassword}
+        </echo>
+        <sql    driver   ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                onerror   ="continue" 
+                errorproperty="portal.db.not.exists"
+                failOnConnectionError="true"
+                >
+            <![CDATA[
+            SELECT * FROM page;
+            ]]>
+        </sql>
+        <echo>check version
+        </echo>
+        <sql driver   ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                print     ="yes"
+                output    ="version.properties"
+                expandProperties="true" showheaders="false" showtrailers="false"
+                onerror   ="continue" 
+                errorproperty="portal.db.version.not.supported"
+                failOnConnectionError="false"
+                >
+            <![CDATA[
+            SELECT 'portal.version=', item_value FROM ingrid_lookup WHERE item_key='ingrid_db_version';
+            ]]>
+        </sql>
+        
+        <property file="version.properties" />
+    </target>
+
+    <target name="checkMdekDbOracle">
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_mdekDBUrl}"
+                userid    ="${_mdekUser}"
+                password  ="${_mdekPassword}" 
+                onerror   ="continue" 
+                errorproperty="mdek.db.not.exists"
+                failOnConnectionError="false">
+            <![CDATA[
+            SELECT * FROM help_messages;
+            ]]>
+        </sql> 
+    </target>
+    
+    
+    
+    <target name="UpdateDbManually" if="useOracle">
+        <echo>Bitte aktualisieren Sie die Oracle-Datenbank manuell!
+        </echo>
+    </target>
+
+    
+    <!-- =============================================
+         = PORTAL DATABASE                           =
+         ============================================= -->
+
+    <!-- Import is not yet working! -->
+    <!--<taskdef uri="antlib:net.sf.incanto" resource="net/sf/incanto/antlib.xml" />-->
+    <target name="PortalDbImportOracle">
+        <impdp 
+            logon="test_portal/test_portal@192.168.0.238:1521:xe as sysdba"
+            failonerror="yes">
+            <![CDATA[
+                dumpfile=../sql/ingrid-portal-oracle_10_2_user_ingrid.dmp
+            ]]>
+        </impdp>
+    </target>
+    
+    <target name="PortalDbUpdateFromInitial" if="useOracle" description="Import the mySQL database.">
+        <echo>Oracle-Portal Daten importieren (initial)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <!--<transaction src="${importOracle}"/>-->
+            <transaction src="${updateOracle114}"/>
+            <transaction src="${updateOracle116}"/>
+            <transaction src="${updateOracle117}"/>
+            <transaction src="${updateOracle118}"/>
+            <transaction src="${updateOracle120}"/>
+            <transaction src="${updateOracle130}"/>
+            <transaction src="${updateOracle300}"/>
+            <transaction src="${updateOracle301}"/>
+            <transaction src="${updateOracle310}"/>
+            <transaction src="${updateOracle320a}"/>
+            <transaction src="${updateOracle320b}"/>
+            <transaction src="${updateOracle320c}"/>
+            <transaction src="${updateOracle320d}"/>
+        </sql>
+        
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                delimiter ="/"
+                >
+
+            <transaction src="${updateOracle130Trigger}"/>
+        </sql>
+    </target>
+    
+    <target name="PortalDbUpdateFrom300" if="useOracle">
+        <echo>Oracle-Portal Daten importieren (ab 3.0.0)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateOracle301}"/>
+            <transaction src="${updateOracle310}"/>
+            <transaction src="${updateOracle320a}"/>
+            <transaction src="${updateOracle320b}"/>
+            <transaction src="${updateOracle320c}"/>
+            <transaction src="${updateOracle320d}"/>
+        </sql>
+    </target>
+    
+    <target name="PortalDbUpdateFrom301" if="useOracle">
+        <echo>Oracle-Portal Daten importieren (ab 3.0.1)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateOracle310}"/>
+            <transaction src="${updateOracle320a}"/>
+            <transaction src="${updateOracle320b}"/>
+            <transaction src="${updateOracle320c}"/>
+            <transaction src="${updateOracle320d}"/>
+        </sql>
+    </target>
+    
+    <target name="PortalDbUpdateFrom310" if="useOracle">
+        <echo>Oracle-Portal Daten importieren (ab 3.1.0)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateOracle320a}"/>
+            <transaction src="${updateOracle320b}"/>
+            <transaction src="${updateOracle320c}"/>
+            <transaction src="${updateOracle320d}"/>
+        </sql>
+    </target>
+    
+    <!-- =============================================
+         = IGE MDEK DATABASE                         =
+         ============================================= -->
+    
+    
+    <target name="mdekDbNotExists" if="mdek.db.not.exists">
+        <echo>Neue Mdek-DB!</echo>
+        <echo>Mdek Oracle-Daten importieren
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_mdekDBUrl}"
+                userid    ="${_mdekUser}"
+                password  ="${_mdekPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${mdekDBOracle}"/>
+            <!--<transaction src="${mdekDBOracle_301}"/>
+            <transaction src="${mdekDBOracle_320}"/>-->
+
+        </sql>
+    </target>
+
+    <target name="mdekDbExists" unless="mdek.db.not.exists">
+        <echo>Update vorhandene Mdek-DB!</echo>
+        <echo>Mdek Oracle-Daten importieren
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_mdekDBUrl}"
+                userid    ="${_mdekUser}"
+                password  ="${_mdekPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${mdekDBOracle_301}"/>
+            <transaction src="${mdekDBOracle_311}"/>
+            <transaction src="${mdekDBOracle_320}"/>
+
+        </sql>
+    </target>
+    
+    <target name="hideMetadataMenu" if="useOracle">
+        <echo>Schreibe Ingrid-Editor Konfiguration - Disabling Metadata Menu
+        </echo>
+        <!-- hide the "Metadata"-tab in menu -->
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                >
+            <transaction>
+                UPDATE page SET IS_HIDDEN = '1' WHERE PATH ='/mdek/mdek_portal_admin.psml' OR PATH ='/mdek/mdek_entry.psml'
+            </transaction>
+        </sql>
+    </target>
+</project>
