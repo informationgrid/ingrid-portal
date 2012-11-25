@@ -13,6 +13,9 @@
 		<action type="fix" dev="wemove" issue="INGRID33-19">
           Catalogues: Fixed jumping to head, when reloading page on opening/closing node.
 		</action>  
+        <action type="fix" dev="wemove" issue="INGRID-2177">
+          MapClient: fix problems searching for terms with special characters.
+        </action>  
     </release>
 
     <!-- ADD HERE STUFF ALSO ADDED TO BRANCH 3.2.x ! -->
