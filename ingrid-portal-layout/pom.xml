@@ -11,10 +11,10 @@
   <version>3.3.0-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Ingrid Portal Layout</name>
-  <!-- <scm>
-    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-apps</connection>
-    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-apps</developerConnection>
-  </scm> -->
+  <scm>
+    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-layout</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-layout</developerConnection>
+  </scm>
   <build>
     <finalName>ingrid-portal-layout</finalName>
     <sourceDirectory>src/java</sourceDirectory>
@@ -47,34 +47,14 @@
       </plugin>
       <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
       <!-- HACK: Upload JAR file WITHOUT "-classes" in name, so MAVEN1 can handle it (no classifier "classes" possible in maven1) !!! -->
-      
-     
     </plugins>
-    <!-- <resources>
-      <resource>
-        <directory>src/java</directory>
-        <includes>
-          <include>**/*.properties</include>
-        </includes>
-      </resource>
-    </resources> -->
+    <!-- <resources><resource><directory>src/java</directory><includes><include>**/*.properties</include></includes></resource></resources>-->
   </build>
-
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
-
-  <!-- <dependencyManagement>
-    <dependencies>
-        <dependency>
-          <groupId>opensymphony</groupId>
-          <artifactId>quartz</artifactId>
-          <version>1.7.3</version>
-        </dependency>
-    </dependencies>
-  </dependencyManagement> -->
-
+  <!-- <dependencyManagement><dependencies><dependency><groupId>opensymphony</groupId><artifactId>quartz</artifactId><version>1.7.3</version></dependency></dependencies></dependencyManagement>-->
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
-     <dependency>
+    <dependency>
       <groupId>portlet-api</groupId>
       <artifactId>portlet-api</artifactId>
       <scope>provided</scope>

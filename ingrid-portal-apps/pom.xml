@@ -11,7 +11,10 @@
   <version>3.3.0-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Ingrid Portal Apps</name>
-  <!-- <scm><connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-apps</connection><developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-apps</developerConnection></scm>-->
+  <scm>
+    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-apps</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-apps</developerConnection>
+  </scm>
   <build>
     <finalName>ingrid-portal-apps</finalName>
     <sourceDirectory>src/java</sourceDirectory>
@@ -566,7 +569,7 @@
       <groupId>xstream</groupId>
       <artifactId>xstream</artifactId>
       <version>1.2</version>
-      <!-- <scope>provided</scope> -->
+      <!-- <scope>provided</scope>-->
       <exclusions>
         <exclusion>
           <groupId>xpp3</groupId>

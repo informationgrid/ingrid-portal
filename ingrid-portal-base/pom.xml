@@ -11,7 +11,10 @@
   <version>3.3.0-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Ingrid Portal Base</name>
-  <!-- <scm><connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-apps</connection><developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-apps</developerConnection></scm>-->
+  <scm>
+    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-base</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-base</developerConnection>
+  </scm>
   <build>
     <finalName>ingrid-portal</finalName>
     <sourceDirectory>src/java</sourceDirectory>
@@ -714,12 +717,8 @@
             <configuration>
               <executable>/opt/portalu/ingrid/maven/maven-1.1/bin/maven</executable>
               <environmentVariables>
-                <PATH>
-                  /bin:/opt/portalu/ingrid/maven/maven-1.1/bin
-                </PATH>
-                <MAVEN_HOME>
-                  /opt/portalu/ingrid/maven/maven-1.1
-                </MAVEN_HOME>
+                <PATH>/bin:/opt/portalu/ingrid/maven/maven-1.1/bin</PATH>
+                <MAVEN_HOME>/opt/portalu/ingrid/maven/maven-1.1</MAVEN_HOME>
               </environmentVariables>
               <arguments>
                 <argument>j2:portal.genapp.minimal</argument>

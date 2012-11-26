@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                              http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
-    <groupId>de.ingrid.portal</groupId>
-    <artifactId>ingrid-portal</artifactId>
-    <!-- <artifactId>ingrid-base-pom</artifactId>-->
+    <groupId>de.ingrid</groupId>
+    <!-- <artifactId>ingrid-portal</artifactId> -->
+     <artifactId>ingrid-releases-pom</artifactId>
     <version>3.3.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -11,6 +11,10 @@
   <packaging>pom</packaging>
   <version>3.3.0-SNAPSHOT</version>
   <name>Ingrid Portal Distribution</name>
+  <scm>
+    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-distribution</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-distribution</developerConnection>
+  </scm>
   <!-- <dependencyManagement>
     <dependencies>
       <dependency>
@@ -127,127 +131,31 @@
     </resources>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <!--  
+                one of these: 
+                IPLUG_SE, IPLUG_DSC, IPLUG_SNS, IPLUG_TAMINO, IPLUG_FPN, IPLUG_G2K, IPLUG_CSW, IPLUG_CSW_DSC, OTHER
+                see ingrid-utils:de.ingrid.utils.metadata.IPlugType
+              -->
+              <iPlug-Type>INGRID_PORTAL</iPlug-Type>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <!-- Add Type of Component to Manifest of Installer for Upgrade Server -->
         <configuration>
-          <appendAssemblyId>true</appendAssemblyId>
+          <!-- <finalName>ingrid-portal-my</finalName> -->
           <archive>
             <manifestEntries>
-              <ingridComponentType>PORTAL</ingridComponentType>
-            </manifestEntries>
-            <manifest>
-              <mainClass>org.tp23.antinstaller.selfextract.NonExtractor</mainClass>
-            </manifest>
-            <manifestEntries>
-              <Implementation-Version>${version}</Implementation-Version>
-              <Implementation-Build>${buildNumber}</Implementation-Build>
-              <Build-Timestamp>${timestamp}</Build-Timestamp>
+              <ingridComponentType>INGRID_PORTAL</ingridComponentType>
             </manifestEntries>
           </archive>
-          <descriptors>
-            <descriptor>src/main/assembly/bin.xml</descriptor>
-          </descriptors>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>unpack-installer</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>de.ingrid</groupId>
-                  <artifactId>ingrid-installer</artifactId>
-                  <type>jar</type>
-                </artifactItem>
-              </artifactItems>
-              <!-- other configurations here -->
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>unpack</id>
-            <phase>compile</phase>
-            <configuration>
-              <tasks>
-                <unjar dest="target/installer">
-                  <fileset dir="target/dependency/lib">
-                    <include name="**/*.jar"/>
-                  </fileset>
-                </unjar>
-                <copy todir="target/installer/resources">
-                  <fileset dir="target/dependency/resources"/>
-                </copy>
-              </tasks>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-changes-plugin</artifactId>
-        <version>2.1</version>
-        <configuration>
-          <smtpHost>localhost</smtpHost>
-          <subject>[ingrid update announcement] ${artifactId}-${version}</subject>
-          <mailSender>
-            <name>Release Notification</name>
-            <email>noreply@wemove.com</email>
-          </mailSender>
-          <toAddresses>
-            <toAddress implementation="java.lang.String">ingrid-announcement@wemove.com</toAddress>
-          </toAddresses>
-          <issueManagement>
-            <system>JIRA</system>
-            <url>http://dev.wemove.com/jira/browse/INGRID</url>
-          </issueManagement>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>wagon-maven-plugin</artifactId>
-        <version>1.0-beta-1</version>
-        <configuration>
-          <fromDir>target</fromDir>
-          <includes>${build.finalName}-installer.jar,site*/**/*</includes>
-          <!-- NOTICE: distribution directory is "artifactId". REDEFINE in project pom if different directory needed (e.g. "ingrid-iplug-ige" instead of "ingrid-mdek" !) -->
-          <url>file:///opt/ingrid/distributions/${project.artifactId}/${project.version}</url>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>2.0-beta-9</version>
-        <configuration>
-          <!--
-            During release:perform, execute deploy changes:changes-report
-            assembly:assembly wagon:upload changes:announcement-mail to upload
-            the distribution to /opt/ingrid/distributions
-          -->
-          <preparationGoals>clean verify deploy changes:changes-report assembly:assembly wagon:upload -Dproject.url=</preparationGoals>
-          <goals>changes:announcement-mail -Dproject.url= --non-recursive</goals>
         </configuration>
       </plugin>
     </plugins>

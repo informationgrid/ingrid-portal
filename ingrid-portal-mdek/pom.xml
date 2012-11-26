@@ -11,10 +11,10 @@
   <version>3.3.0-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Ingrid Portal Mdek</name>
-  <!-- <scm>
-    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-apps</connection>
-    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-apps</developerConnection>
-  </scm> -->
+  <scm>
+    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek</developerConnection>
+  </scm>
   <build>
     <finalName>ingrid-portal-mdek</finalName>
     <sourceDirectory>src/java</sourceDirectory>
