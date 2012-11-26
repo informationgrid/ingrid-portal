@@ -128,13 +128,6 @@
         </executions>
         <configuration>
           <executable>maven</executable>
-          <!-- optional -->
-          <!-- <workingDirectory>.</workingDirectory>-->
-          <environmentVariables>
-            <PATH> 
-              /opt/portalu/ingrid/maven/maven-1.1/bin/maven
-            </PATH>
-          </environmentVariables>
           <arguments>
             <argument>j2:portal.genapp.minimal</argument>
           </arguments>
@@ -701,4 +694,40 @@
       <url>http://maven.jahia.org/maven2</url>
     </repository>
   </repositories>
+  <profiles>
+    <profile>
+      <id>hudson</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.2.1</version>
+            <executions>
+              <execution>
+                <phase>compile</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <executable>/opt/portalu/ingrid/maven/maven-1.1/bin/maven</executable>
+              <environmentVariables>
+                <PATH>
+                  /bin:/opt/portalu/ingrid/maven/maven-1.1/bin
+                </PATH>
+                <MAVEN_HOME>
+                  /opt/portalu/ingrid/maven/maven-1.1
+                </MAVEN_HOME>
+              </environmentVariables>
+              <arguments>
+                <argument>j2:portal.genapp.minimal</argument>
+              </arguments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
