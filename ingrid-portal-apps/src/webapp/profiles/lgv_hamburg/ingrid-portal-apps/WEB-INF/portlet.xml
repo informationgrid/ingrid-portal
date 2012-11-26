@@ -694,7 +694,7 @@
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/service_teaser.vm</value>
+            <value>/WEB-INF/templates/service_teaser_new.vm</value>
         </init-param>
         <portlet-name>ServiceTeaser</portlet-name>
         <display-name>Service Teaser</display-name>
@@ -730,7 +730,7 @@
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/measures_teaser.vm</value>
+            <value>/WEB-INF/templates/measures_teaser_new.vm</value>
         </init-param>
         <portlet-name>MeasuresTeaser</portlet-name>
         <display-name>Measures Teaser</display-name>
@@ -766,7 +766,7 @@
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/chronicle_teaser.vm</value>
+            <value>/WEB-INF/templates/chronicle_teaser_new.vm</value>
         </init-param>
         <portlet-name>ChronicleTeaser</portlet-name>
         <display-name>Chronik Teaser</display-name>

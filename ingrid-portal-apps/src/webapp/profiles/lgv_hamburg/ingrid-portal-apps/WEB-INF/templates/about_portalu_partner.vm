@@ -1,0 +1,8 @@
+<div class="portlet-section-body">
+	<p>$MESSAGES.getString('about.partner.text')</p>
+	<p class="iconLink">
+		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
+		<span><a href="$renderResponse.encodeURL('/datenkataloge')" title="$MESSAGES.getString('about.partner.link.tooltip')">$MESSAGES.getString('about.partner.link')</a></span>
+		<span class="clearer"></span>
+	</p>
+</div>

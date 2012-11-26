@@ -5,19 +5,19 @@
     <pages>
         <page>
             <name>main-measures.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>main-service.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>main-environment.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>main-chronicle.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>main-maps.psml</name>
@@ -40,8 +40,12 @@
             <hidden>false</hidden>
         </page>
         <page>
+            <name>main-about.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
             <name>main-features.psml</name>
-            <hidden>true</hidden>
+            <hidden>false</hidden>
         </page>
         <page>
             <name>default-page.psml</name>
@@ -50,23 +54,30 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
+                <!--
                 <portlet col="0" row="1">
                     <name>ingrid-portal-apps::EnvironmentTeaser</name>
                 </portlet>
-                <portlet col="0" row="2">
+                -->
+                <portlet col="0" row="1">
                     <name>ingrid-portal-apps::RssNewsTeaser</name>
                 </portlet>
                 <portlet col="1" row="0">
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
+                <!--
                 <portlet col="1" row="1">
                     <name>ingrid-portal-apps::ServiceTeaser</name>
                 </portlet>
                 <portlet col="1" row="2">
                     <name>ingrid-portal-apps::MeasuresTeaser</name>
                 </portlet>
-				<portlet col="1" row="3">
+                <portlet col="1" row="3">
                     <name>ingrid-portal-apps::ChronicleTeaser</name>
+                </portlet>
+                -->
+                <portlet col="1" row="4">
+                    <name>ingrid-portal-apps::WeatherTeaser</name>
                 </portlet>
             </portlets>
         </page>
@@ -86,15 +97,17 @@
                 <portlet col="1" row="0">
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
+                <!--
                 <portlet col="1" row="1">
                     <name>ingrid-portal-apps::ServiceTeaser</name>
                 </portlet>
                 <portlet col="1" row="2">
                     <name>ingrid-portal-apps::MeasuresTeaser</name>
                 </portlet>
-				<portlet col="1" row="3">
+                <portlet col="1" row="3">
                     <name>ingrid-portal-apps::ChronicleTeaser</name>
                 </portlet>
+                -->
             </portlets>
         </page>
         <page>
@@ -113,15 +126,17 @@
                 <portlet col="1" row="0">
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
+                <!--
                 <portlet col="1" row="1">
                     <name>ingrid-portal-apps::ServiceTeaser</name>
                 </portlet>
                 <portlet col="1" row="2">
                     <name>ingrid-portal-apps::MeasuresTeaser</name>
                 </portlet>
-				<portlet col="1" row="3">
+                <portlet col="1" row="3">
                     <name>ingrid-portal-apps::ChronicleTeaser</name>
                 </portlet>
+                -->
             </portlets>
         </page>
         <page>
@@ -130,7 +145,11 @@
         </page>
         <page>
             <name>service-contact-newsletter.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>service-contact-newsletter.psml</name>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>service-contact.psml</name>
@@ -158,7 +177,7 @@
         </file>
         <file>
             <action>copy-dir</action>
-            <src>ingrid-portal-apps/</src>
+			<src>ingrid-portal-apps/</src>
         </file>
         <file>
             <action>copy-dir</action>
@@ -166,14 +185,14 @@
         </file>
     </files>
     <sql>
-		<!-- HMDK informiert -->
+		<!-- PortalU informiert -->
         <execute>
-            <![CDATA[UPDATE ingrid_cms_item SET item_title='<span style=\"text-transform: none;\">Fachliche Leitstelle des HMDK INFORMIERT</span>'\, item_value='<p>Letzte Sitzung der AG HMDK:<br>11. Februar 2010\, 9.00 - 11.00 Uhr in den Räumen des LGV\, Sachsenkamp 4</p><p class=\"iconLink\"> <span class=\"icon\"><img src=\"/ingrid-portal-apps/images/icn_linkextern.gif\" alt=\"externer Link\"></span> <span><a href=\"http://fhhportal.stadt.hamburg.de/websites/LGV/gdi-hh/HMDK/Forms/AllItems.aspx?RootFolder=%2fwebsites%2fLGV%2fgdi%2dhh%2fHMDK%2fProtokolle%20AG%20HMDK%2fProtokoll%202010%2d02%2d11&FolderCTID=&View=%7b584968C6%2d0CDE%2d41BA%2d818F%2dAB2DCB69FE02%7d\" target=\"_new\" title=\"Link öffnet in neuem Fenster\">weitere Informationen</a></span> <span class=\"clearer\"></span></p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.teaser.inform') AND item_lang='de';]]>
-        </execute>
+            <![CDATA[UPDATE ingrid_cms_item SET item_title='<span style=\"text-transform: none;\">HMDK AKTUELL</span>'\, item_value='<p>HMDK - nigel, nagel und neu!</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.teaser.inform') AND item_lang='de';]]>
+            </execute>
         <execute>
-            <![CDATA[UPDATE ingrid_cms_item SET item_title='<span style=\"text-transform: none;\">Fachliche Leitstelle des HMDK INFORMS</span>'\, item_value='<p>Letzte Sitzung der AG HMDK:<br>11. Februar 2010\, 9.00 - 11.00 Uhr in den Räumen des LGV\, Sachsenkamp 4</p><p class=\"iconLink\"> <span class=\"icon\"><img src=\"/ingrid-portal-apps/images/icn_linkextern.gif\" alt=\"externer Link\"></span> <span><a href=\"http://fhhportal.stadt.hamburg.de/websites/LGV/gdi-hh/HMDK/Forms/AllItems.aspx?RootFolder=%2fwebsites%2fLGV%2fgdi%2dhh%2fHMDK%2fProtokolle%20AG%20HMDK%2fProtokoll%202010%2d02%2d11&FolderCTID=&View=%7b584968C6%2d0CDE%2d41BA%2d818F%2dAB2DCB69FE02%7d\" target=\"_new\" title=\"Link öffnet in neuem Fenster\">weitere Informationen</a></span> <span class=\"clearer\"></span></p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.teaser.inform') AND item_lang='en';]]>
+            <![CDATA[UPDATE ingrid_cms_item SET item_title='<span style=\"text-transform: none;\">HMDK INFORMS</span>'\, item_value='<p>HMDK - nigel, nagel und neu!</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.teaser.inform') AND item_lang='en';]]>
         </execute>    
-        <!-- Über HMDK -->
+        <!-- Über PortalU -->
         <execute>
             <![CDATA[UPDATE ingrid_cms_item SET item_title='Über den HMDK'\, item_value='<p>Willkommen beim HMDK®\, dem Metadatenportal der Freien und Hansestadt Hamburg. Wer im Bereich der hamburgischen Verwaltung nach Daten sucht\, hat mit dem HMDK® heute ein praktisches\, umfassendes Hilfsmittel\, mit dem Antworten auf viele Fragen zu finden sind: </p><ul type=\"circle\"><li>Allgemein: Welche Daten sind zu einem Thema vorhanden?</li><li>Fachbezug: Worüber geben die Daten Auskunft?</li><li>Verfügbarkeit: Wie liegen die Daten vor?</li><li>Zuständigkeit: Wer verwaltet die Daten und wer kann fachliche Auskünfte erteilen?</li><li>Zeitbezug: Seit wann und in welchem Abstand werden die Daten erfasst?</li><li>Raumbezug: Für welches Gebiet sind die Daten gültig?</li></ul><p>Die integrierte Suchmaschine ist eine zentrale Komponente des HMDK®. Mit ihrer Hilfe können Sie Datenbankeinträge nach Stichworten durchsuchen. Über die Option \"Erweiterte Suche\" ist es möglich\, zusätzlich ein differenziertes Fachvokabular zur Zusammenstellung Ihrer Suchanfrage zu nutzen.</p><p>Die Metadaten sollen dabei für Experten und Laien gleichermaßen aussagekräftig sein und die wichtigsten Informationen über die eigentlichen Daten enthalten\, so etwa Objekt\, Adresse\, Erhebungsdatum\, Aktualität\, Maßstab\, Nutzungsbedingungen\, Ansprechpartner und technische Details.</p><p>Technische Grundlage des HMDK® ist die modular aufgebaute Software InGrid®. Der Name InGrid® steht hierbei für \"Information Grid\" – Informationsnetz. Die Software wurde für den Betrieb des zentralen Umweltportals der Umweltverwaltung von Bund und Ländern in Deutschland (PortalU®) entwickelt und ist so konzipiert\, dass sie auch auf anderen Ebenen und in unterschiedlichen Einsatzbereichen genutzt werden kann.</p><p>Die InGrid®-Software leistet in ihrer Struktur genau das\, was Fachleute von einer Metadatenbank erwarten. Sie enthält Objektklassen\, die hinreichend detailliert untergliedert sind – und ebenso detaillierte Adressenangaben zu Institutionen\, Abteilungen und Personen.</p><p>Die Erfassung und Aktualisierung der Metadaten erfolgt hierbei mit dem InGrid®Editor. Der Editor ist eine Webanwendung mit einer einfach bedienbaren Oberfläche\, die eine dezentrale Metadatenpflege über Standard-Browsertechnologie via Internet ermöglicht.</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.about') AND item_lang='de';]]>
         </execute>    
@@ -184,10 +203,13 @@
 		<execute>
             <![CDATA[UPDATE LINK SET URL='mailto:Info@gv.hamburg.de' WHERE NAME='webmaster.link';]]>
         </execute>
-        <!-- Impressum -->
+        <execute>
+            <![CDATA[INSERT INTO ingrid_measures_rubric (`id`\, `form_value`\, `query_value`\, `sortkey`) VALUES (1\, 'str'\, 'radiation'\, 1);]]>
+        </execute>
+		<!-- Impressum -->
 		<execute>
             <![CDATA[UPDATE ingrid_cms_item SET item_title='Impressum'\, item_value='<a name=\"herausgeber\"></a><h2>Betreiber</h2><p>Freie und Hansestadt Hamburg<br>Landesbetrieb Geoinformation und Vermessung<br>Sachsenkamp 4<br>D-20097 Hamburg<br>Tel.: +49 40 4 28 26 - 0<br>Fax: +49 40 4 28 26 - 59 66<br>E-Mail: <a href=\"mailto:info@gv.hamburg.de\">Info@gv.hamburg.de</a></p><br><h3>Geschäftsführer</h3><p>Dr. Winfried Hawerk<br></p><br><a name=\"haftung\"></a><h2>Allgemeine inhaltliche Veranwortung / Haftung</h2><p>Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p><br><a name=\"realisierung\"></a><h2>Wortbildmarke</h2><p>Die Marke mit der Registernummer 300 26 395 wurde beim Deutschen Patent- und Markenamt in München unter dem Aktenzeichen: 300 26 395.3 / 42 am 07.12.2000 eingetragen.<br><br><img src=\"http://www.hmdk.de/bilder/HMDK-Logo.gif\" width=\"150\" height=\"49\"><br><br>Markeninhaber:<br>Freie und Hansestadt Hamburg\,<br>vertreten durch die Behörde für Stadtentwicklung und Umwelt\,<br>Landesbetrieb Geoinformation und Vermessung\, Hamburg</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.disclaimer') AND item_lang='de';]]>
-		</execute>
+        </execute>
 		<execute>
             <![CDATA[UPDATE ingrid_cms_item SET item_title='Disclaimer'\, item_value='<a name=\"herausgeber\"></a><h2>Betreiber</h2><p>Freie und Hansestadt Hamburg<br>Landesbetrieb Geoinformation und Vermessung<br>Sachsenkamp 4<br>D-20097 Hamburg<br>Tel.: +49 40 4 28 26 - 0<br>Fax: +49 40 4 28 26 - 59 66<br>E-Mail: <a href=\"mailto:info@gv.hamburg.de\">Info@gv.hamburg.de</a></p><br><h3>Geschäftsführer</h3><p>Dr. Winfried Hawerk<br></p><br><a name=\"haftung\"></a><h2>Allgemeine inhaltliche Veranwortung / Haftung</h2><p>Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p><br><a name=\"realisierung\"></a><h2>Wortbildmarke</h2><p>Die Marke mit der Registernummer 300 26 395 wurde beim Deutschen Patent- und Markenamt in München unter dem Aktenzeichen: 300 26 395.3 / 42 am 07.12.2000 eingetragen.<br><br><img src=\"http://www.hmdk.de/bilder/HMDK-Logo.gif\" width=\"150\" height=\"49\"><br><br>Markeninhaber:<br>Freie und Hansestadt Hamburg\,<br>vertreten durch die Behörde für Stadtentwicklung und Umwelt\,<br>Landesbetrieb Geoinformation und Vermessung\, Hamburg</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.disclaimer') AND item_lang='en';]]>
         </execute>
@@ -196,8 +218,8 @@
             <![CDATA[UPDATE ingrid_cms_item SET item_title='Datenschutz'\, item_value='<p>Der HMDK enthält sowohl Inhalte\, die als Teledienst nach § 2 Teledienstgesetz (TDG) als auch Inhalte\, die als Mediendienst nach § 2 Mediendienste-Staatsvertrag (MDStV) zu bewerten sind. Hierbei werden folgende Verfahrensgrundsätze gewährleistet:<br></p><ul><li>Bei jedem Zugriff eines Nutzers auf eine Seite aus dem Angebot des HMDK und bei jedem Abruf einer Datei werden Daten über diesen Vorgang in einer Protokolldatei gespeichert. Diese Daten sind nicht personenbezogen. Wir können also nicht nachvollziehen\, welcher Nutzer welche Daten abgerufen hat. Die Protokolldaten werden lediglich in anonymisierter Form statistisch ausgewertet und dienen damit der inhaltlichen Verbesserung unseres Angebotes.<br><br></li><li>Eine Ausnahme besteht innerhalb des Internetangebotes mit der Eingabe persönlicher oder dienstlicher Daten (eMail-Adresse\, Name\, Anschrift) zur Anmeldung bei \"Mein PortalU\" oder der Bestellung des PortalU-Newsletters. Dabei erfolgt die Angabe dieser Daten durch Nutzerinnen und Nutzer ausdrücklich freiwillig. Ihre persönlichen Daten werden von uns selbstverständlich nicht an Dritte weitergegeben. Die Inanspruchnahme aller angebotenen Dienste ist\, soweit dies technisch möglich und zumutbar ist\, auch ohne Angabe solcher Daten beziehungsweise unter Angabe anonymisierter Daten oder eines Pseudonyms möglich.<br><br></li><li>Sie können alle allgemein zugänglichen HMDK-Seiten ohne den Einsatz von Cookies benutzen. Wenn Ihre Browser-Einstellungen das Setzen von Cookies zulassen\, werden vom HMDK sowohl Session-Cookies als auch permanente Cookies gesetzt. Diese dienen ausschließlich der Erhöhung des Bedienungskomforts.</li></ul>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.privacy') AND item_lang='de';]]>
         </execute>
 		<execute>
-            <![CDATA[UPDATE ingrid_cms_item SET item_title='Privacy'\, item_value='<p>Der HMDK enthält sowohl Inhalte\, die als Teledienst nach § 2 Teledienstgesetz (TDG) als auch Inhalte\, die als Mediendienst nach § 2 Mediendienste-Staatsvertrag (MDStV) zu bewerten sind. Hierbei werden folgende Verfahrensgrundsätze gewährleistet:<br></p><ul><li>Bei jedem Zugriff eines Nutzers auf eine Seite aus dem Angebot des HMDK und bei jedem Abruf einer Datei werden Daten über diesen Vorgang in einer Protokolldatei gespeichert. Diese Daten sind nicht personenbezogen. Wir können also nicht nachvollziehen\, welcher Nutzer welche Daten abgerufen hat. Die Protokolldaten werden lediglich in anonymisierter Form statistisch ausgewertet und dienen damit der inhaltlichen Verbesserung unseres Angebotes.<br><br></li><li>Eine Ausnahme besteht innerhalb des Internetangebotes mit der Eingabe persönlicher oder dienstlicher Daten (eMail-Adresse\, Name\, Anschrift) zur Anmeldung bei \"Mein PortalU\" oder der Bestellung des PortalU-Newsletters. Dabei erfolgt die Angabe dieser Daten durch Nutzerinnen und Nutzer ausdrücklich freiwillig. Ihre persönlichen Daten werden von uns selbstverständlich nicht an Dritte weitergegeben. Die Inanspruchnahme aller angebotenen Dienste ist\, soweit dies technisch möglich und zumutbar ist\, auch ohne Angabe solcher Daten beziehungsweise unter Angabe anonymisierter Daten oder eines Pseudonyms möglich.<br><br></li><li>Sie können alle allgemein zugänglichen HMDK-Seiten ohne den Einsatz von Cookies benutzen. Wenn Ihre Browser-Einstellungen das Setzen von Cookies zulassen\, werden vom HMDK sowohl Session-Cookies als auch permanente Cookies gesetzt. Diese dienen ausschließlich der Erhöhung des Bedienungskomforts.</li></ul>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.privacy') AND item_lang='en';]]>
-		</execute>
+            <![CDATA[UPDATE ingrid_cms_item SET item_title='Privacy Policy'\, item_value='<p>Der HMDK enthält sowohl Inhalte\, die als Teledienst nach § 2 Teledienstgesetz (TDG) als auch Inhalte\, die als Mediendienst nach § 2 Mediendienste-Staatsvertrag (MDStV) zu bewerten sind. Hierbei werden folgende Verfahrensgrundsätze gewährleistet:<br></p><ul><li>Bei jedem Zugriff eines Nutzers auf eine Seite aus dem Angebot des HMDK und bei jedem Abruf einer Datei werden Daten über diesen Vorgang in einer Protokolldatei gespeichert. Diese Daten sind nicht personenbezogen. Wir können also nicht nachvollziehen\, welcher Nutzer welche Daten abgerufen hat. Die Protokolldaten werden lediglich in anonymisierter Form statistisch ausgewertet und dienen damit der inhaltlichen Verbesserung unseres Angebotes.<br><br></li><li>Eine Ausnahme besteht innerhalb des Internetangebotes mit der Eingabe persönlicher oder dienstlicher Daten (eMail-Adresse\, Name\, Anschrift) zur Anmeldung bei \"Mein PortalU\" oder der Bestellung des PortalU-Newsletters. Dabei erfolgt die Angabe dieser Daten durch Nutzerinnen und Nutzer ausdrücklich freiwillig. Ihre persönlichen Daten werden von uns selbstverständlich nicht an Dritte weitergegeben. Die Inanspruchnahme aller angebotenen Dienste ist\, soweit dies technisch möglich und zumutbar ist\, auch ohne Angabe solcher Daten beziehungsweise unter Angabe anonymisierter Daten oder eines Pseudonyms möglich.<br><br></li><li>Sie können alle allgemein zugänglichen HMDK-Seiten ohne den Einsatz von Cookies benutzen. Wenn Ihre Browser-Einstellungen das Setzen von Cookies zulassen\, werden vom HMDK sowohl Session-Cookies als auch permanente Cookies gesetzt. Diese dienen ausschließlich der Erhöhung des Bedienungskomforts.</li></ul>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.privacy') AND item_lang='en';]]>
+        </execute>
 		<!-- Willkommen-->
 		<execute>
             <![CDATA[UPDATE ingrid_cms_item SET item_title='Willkommen beim HMDK'\, item_value='<p>Willkommen beim HMDK®\, dem Metadatenportal der Freien und Hansestadt Hamburg. Wer im Bereich der hamburgischen Verwaltung nach Daten sucht\, hat mit dem HMDK® heute ein praktisches\, umfassendes Hilfsmittel\, mit dem Antworten auf viele Fragen zu finden sind: </p><ul type=\"circle\"><li>Allgemein: Welche Daten sind zu einem Thema vorhanden?</li><li>Fachbezug: Worüber geben die Daten Auskunft?</li><li>Verfügbarkeit: Wie liegen die Daten vor?</li><li>Zuständigkeit: Wer verwaltet die Daten und wer kann fachliche Auskünfte erteilen?</li><li>Zeitbezug: Seit wann und in welchem Abstand werden die Daten erfasst?</li><li>Raumbezug: Für welches Gebiet sind die Daten gültig?</li></ul><p>Die integrierte Suchmaschine ist eine zentrale Komponente des HMDK®. Mit ihrer Hilfe können Sie Datenbankeinträge nach Stichworten durchsuchen. Über die Option \"Erweiterte Suche\" ist es möglich\, zusätzlich ein differenziertes Fachvokabular zur Zusammenstellung Ihrer Suchanfrage zu nutzen.</p><p>Die Metadaten sollen dabei für Experten und Laien gleichermaßen aussagekräftig sein und die wichtigsten Informationen über die eigentlichen Daten enthalten\, so etwa Objekt\, Adresse\, Erhebungsdatum\, Aktualität\, Maßstab\, Nutzungsbedingungen\, Ansprechpartner und technische Details.</p><p>Technische Grundlage des HMDK® ist die modular aufgebaute Software InGrid®. Der Name InGrid® steht hierbei für \"Information Grid\" – Informationsnetz. Die Software wurde für den Betrieb des zentralen Umweltportals der Umweltverwaltung von Bund und Ländern in Deutschland (PortalU®) entwickelt und ist so konzipiert\, dass sie auch auf anderen Ebenen und in unterschiedlichen Einsatzbereichen genutzt werden kann.</p><p>Die InGrid®-Software leistet in ihrer Struktur genau das\, was Fachleute von einer Metadatenbank erwarten. Sie enthält Objektklassen\, die hinreichend detailliert untergliedert sind – und ebenso detaillierte Adressenangaben zu Institutionen\, Abteilungen und Personen.</p><p>Die Erfassung und Aktualisierung der Metadaten erfolgt hierbei mit dem InGrid®Editor. Der Editor ist eine Webanwendung mit einer einfach bedienbaren Oberfläche\, die eine dezentrale Metadatenpflege über Standard-Browsertechnologie via Internet ermöglicht.</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='ingrid.home.welcome') AND item_lang='de';]]>
@@ -212,26 +234,27 @@
 		<execute>
             <![CDATA[UPDATE ingrid_cms_item SET item_value='.</p><p>Unsere Postadresse:</p><p>Landesbetrieb Geoinformation und Vermessung<br />Geodatenanwendungen<br />Sachsenkamp 4<br />D-20097 Hamburg<br /></p> <p>Nehmen Sie online Kontakt mit uns auf! Wir werden Ihnen schnellstmöglichst per E-Mail antworten. Die eingegebenen Informationen und Daten werden nur zur Bearbeitung Ihrer Anfrage gespeichert und genutzt.</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key='portalu.contact.intro.postEmail') AND item_lang='en';]]>
         </execute>
-		<execute>
-            <![CDATA[DELETE FROM ingrid_measures_rubric WHERE query_value='radiation';]]>
+        <!-- Thesaurus Browser als Untermenü  -->
+        <execute>
+            <![CDATA[UPDATE folder_menu SET options='/search-catalog/search-catalog-hierarchy.psml' WHERE options='/search-catalog/search-catalog-thesaurus.psml';]]>
         </execute>
-        <!-- Use old templates for info portlet -->
+        <!-- Use _new templates for info portlet -->
        	<execute>
-            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/chronicle_info.vm' WHERE value='/WEB-INF/templates/chronicle_info_new.vm';]]>
+            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/chronicle_info_new.vm' WHERE value='/WEB-INF/templates/chronicle_info.vm';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/environment_info.vm' WHERE value='/WEB-INF/templates/environment_info_new.vm';]]>
+            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/environment_info_new.vm' WHERE value='/WEB-INF/templates/environment_info.vm';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/measures_info.vm' WHERE value='/WEB-INF/templates/measures_info_new.vm';]]>
+            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/measures_info_new.vm' WHERE value='/WEB-INF/templates/measures_info.vm';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/service_info.vm' WHERE value='/WEB-INF/templates/service_info_new.vm';]]>
+            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/service_info_new.vm' WHERE value='/WEB-INF/templates/service_info.vm';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/search_simple_info.vm' WHERE value='/WEB-INF/templates/search_simple_info_new.vm';]]>
+            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/search_simple_info_new.vm' WHERE value='/WEB-INF/templates/search_simple_info.vm';]]>
         </execute>
-        <!-- Set decorator to ingrid-marginal-teaser -->
+        <!-- Set decorator to ingrid-marginal-header -->
         <execute>
             <![CDATA[CREATE TABLE IF NOT EXISTS `tmp_table` (`id` bigint(20) NOT NULL AUTO_INCREMENT\, `item_key` varchar(255) COLLATE latin1_general_ci DEFAULT NULL\, `item_value` varchar(255) COLLATE latin1_general_ci DEFAULT NULL\, `item_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP\, PRIMARY KEY (`id`));]]>
         </execute>
@@ -242,25 +265,25 @@
             <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-chronicle.psml')) WHERE `item_key`='tmp_id';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-header' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
         </execute>
         <execute>
             <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-measures.psml')) WHERE `item_key`='tmp_id';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-header' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
         </execute>
         <execute>
             <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-environment.psml')) WHERE `item_key`='tmp_id';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-header' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
         </execute>
         <execute>
             <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-service.psml')) WHERE `item_key`='tmp_id';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+            <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-header' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
         </execute>
         <execute>
             <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-search.psml')) WHERE `item_key`='tmp_id';]]>
@@ -272,23 +295,23 @@
             <![CDATA[UPDATE ingrid_lookup SET `item_value` = (SELECT fragment_id FROM fragment WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'jetspeed-layouts::IngridTwoColumns') WHERE `item_key`='tmp_id';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+            <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-header' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
         </execute>
         <execute>
             <![CDATA[DELETE FROM ingrid_lookup WHERE item_key = 'tmp_id';]]>
         </execute>
-        <!-- Revert feature page as default for about page -->
+        <!-- Set feature page as default for about page -->
         <execute>
             <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT menu_id FROM folder_menu WHERE name = 'main-menu') WHERE `item_key`='tmp_id';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE folder_menu SET OPTIONS = '/main-about.psml' WHERE OPTIONS = '/main-features.psml' AND parent_id  = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') ;]]>
+            <![CDATA[UPDATE folder_menu SET OPTIONS = '/main-features.psml' WHERE OPTIONS = '/main-about.psml' AND parent_id  = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') ;]]>
         </execute>
         <execute>
             <![CDATA[DROP TABLE tmp_table;]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE page SET title = 'ingrid.page.features.tooltip'\, short_title = 'ingrid.page.features' WHERE path = '/main-features.psml';]]>
+            <![CDATA[UPDATE page SET title = 'ingrid.page.about.tooltip'\, short_title = 'ingrid.page.about' WHERE path = '/main-features.psml';]]>
         </execute>
-    </sql>
+	</sql>
 </profile>

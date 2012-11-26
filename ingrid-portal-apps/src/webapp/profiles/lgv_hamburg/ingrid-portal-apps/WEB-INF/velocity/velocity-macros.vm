@@ -30,7 +30,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro (displayFormErrors)
-#displayFormErrorsByForm($actionForm)	
+#displayFormErrorsByForm($actionForm)   
 #end
 
 #macro (displayFormMessagesByForm $form)
@@ -44,7 +44,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro (displayFormMessages)
-#displayFormMessagesByForm($actionForm)	
+#displayFormMessagesByForm($actionForm) 
 #end
 
 
@@ -75,82 +75,122 @@ $fieldLabel#end
 ## ------------------------------
 #macro (renderDBBrowserNavigation $browser)
 <div class="contentNavigation">
-   	<div class="contentNavigationLeft">
-	#if ($browser.hasPreviousPage())
-       	<input class="btn btn_admin" type="submit" name="doFirst" value="<<" />
-       	<input class="btn btn_admin" type="submit" name="doPrev" value="<" />
-	#end
-		&nbsp;
-	</div>
-   	<div class="contentNavigationMiddle">$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() $MESSAGES.getString('component.forms.text.of') $browser.getTotalNumRows() $MESSAGES.getString('component.forms.text.entries')</div>
-   	<div class="contentNavigationRight">
-		&nbsp;
-	#if ($browser.hasNextPage())
-			<input class="btn btn_admin" type="submit" name="doNext" value=">" />
-			<input class="btn btn_admin" type="submit" name="doLast" value=">>" />
-	#end
-	</div>
-	<p class="clearer"></p>
+    <div class="contentNavigationLeft">
+    #if ($browser.hasPreviousPage())
+        #renderInputButtonClass("<<" "" "doFirst" "" "btn_admin")
+        #renderInputButtonClass("<" "" "doPrev" "" "btn_admin")
+    #end
+        &nbsp;
+    </div>
+    <div class="contentNavigationMiddle">$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() $MESSAGES.getString('component.forms.text.of') $browser.getTotalNumRows() $MESSAGES.getString('component.forms.text.entries')</div>
+    <div class="contentNavigationRight">
+    #if ($browser.hasNextPage())
+        #renderInputButtonClass(">" "" "doNext" "" "btn_admin")
+        #renderInputButtonClass(">>" "" "doLast" "" "btn_admin")
+    #end
+    </div>
+    <p class="clearer"></p>
 </div>
+#end
+
+#macro (renderPaginationAndHint $browser $hint)
+    <div id="paginationAndHint">
+      <div id="dbBrowserHint">
+        <p>$hint</p>
+      </div>
+      <div id="pagination" style="float:right">    
+      <div id="btnPageFirst" class="btn_admin">
+        <div id="doFirst"#if($browser.hasPreviousPage()) class="btn_pg_left"#else class="btn_pg_left_disabled"#end></div>
+        <div#if($browser.hasPreviousPage()) class="btn_pg_center"#else class="btn_pg_center_disabled"#end>
+          <input#if($browser.hasPreviousPage()) class="btn"#else class="btn_disable" disabled="true"#end style="height:19px;padding:0" type="image" src="../../decorations/layout/ingrid/images/button_page_first.png" onclick="" title="" name="doFirst" value="first">
+        </div>
+        <div id="doFirst right"#if($browser.hasPreviousPage()) class="btn_pg_right"#else class="btn_pg_right_disabled"#end></div>
+      </div>
+      <div id="btnPagePrev" class="btn_admin">
+        <div id="doPrev"#if($browser.hasPreviousPage()) class="btn_pg_left"#else class="btn_pg_left_disabled"#end></div>
+        <div#if($browser.hasPreviousPage()) class="btn_pg_center"#else class="btn_pg_center_disabled"#end>
+          <input#if($browser.hasPreviousPage()) class="btn"#else class="btn_disable" disabled="true"#end style="height:19px;padding:0" type="image" src="../../decorations/layout/ingrid/images/button_page_prev.png" onclick="" title="" name="doPrev" value="prev">
+        </div>
+        <div id="doPrev right"#if($browser.hasPreviousPage()) class="btn_pg_right"#else class="btn_pg_right_disabled"#end></div>
+      </div>
+      <div id="paginationText" style="float:left">
+        <p>$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() $MESSAGES.getString('component.forms.text.of') $browser.getTotalNumRows() $MESSAGES.getString('component.forms.text.entries')</p>
+      </div>
+      <div id="btnPageNext" class="btn_admin">
+        <div id="doNext"#if($browser.hasNextPage()) class="btn_pg_left"#else class="btn_pg_left_disabled"#end></div>
+        <div#if($browser.hasNextPage()) class="btn_pg_center"#else class="btn_pg_center_disabled"#end>
+          <input#if($browser.hasNextPage()) class="btn"#else class="btn_disable" disabled="true"#end style="height:19px;padding:0" type="image" src="../../decorations/layout/ingrid/images/button_page_next.png" onclick="" title="" name="doNext" value="next">
+        </div>
+        <div id="doNext right"#if($browser.hasNextPage()) class="btn_pg_right"#else class="btn_pg_right_disabled"#end></div>
+      </div>
+      <div id="btnPageLast" class="btn_admin">
+        <div id="doLast"#if($browser.hasNextPage()) class="btn_pg_left"#else class="btn_pg_left_disabled"#end></div>
+        <div#if($browser.hasNextPage()) class="btn_pg_center"#else class="btn_pg_center_disabled"#end>
+          <input#if($browser.hasNextPage()) class="btn"#else class="btn_disable" disabled="true"#end style="height:19px;padding:0" type="image" src="../../decorations/layout/ingrid/images/button_page_last.png" onclick="" title="" name="doLast" value="last">
+        </div>
+        <div id="doLast right"#if($browser.hasNextPage()) class="btn_pg_right"#else class="btn_pg_right_disabled"#end></div>
+      </div>
+      </div>
+    </div>
 #end
 
 #macro (renderDBBrowserHeader $colNames $colTitles)
 <tr>
-	<td class="contentColumnHead"></td>
-	#foreach ($colTitle in $colTitles)
-		#set ($colLink = $renderResponse.createActionURL())
-		#set ($colIndex = $velocityCount - 1)
-		$colLink.setParameter("sortColumn", $colNames.get($colIndex))
-   		<td class="contentColumnHead"><a href="$colLink" class="contentColumnHead">$colTitle</a></td>
-	#end
+    <td class="contentColumnHead"></td>
+    #foreach ($colTitle in $colTitles)
+        #set ($colLink = $renderResponse.createActionURL())
+        #set ($colIndex = $velocityCount - 1)
+        $colLink.setParameter("sortColumn", $colNames.get($colIndex))
+        <td class="contentColumnHead"><a href="$colLink" class="contentColumnHead">$colTitle</a></td>
+    #end
 </tr>
 #end
 
 #macro (renderDBHeader $colNames $colTitles)
 <tr height=30>
-	<td class="contentColumnHeadLight" style="font-weight:bold; vertical-align:middle;"></td>
-	#foreach ($colTitle in $colTitles)
-		#set ($colLink = $renderResponse.createActionURL())
-		#set ($colIndex = $velocityCount - 1)
-		$colLink.setParameter("sortColumn", $colNames.get($colIndex))
-   		<td class="contentColumnHeadLight" style="font-weight:bold; vertical-align:middle;"><a href="$colLink" class="contentColumnHeadLight">$colTitle</a></td>
-	#end
+    <td class="contentColumnHeadLight" style="font-weight:bold; vertical-align:middle;"></td>
+    #foreach ($colTitle in $colTitles)
+        #set ($colLink = $renderResponse.createActionURL())
+        #set ($colIndex = $velocityCount - 1)
+        $colLink.setParameter("sortColumn", $colNames.get($colIndex))
+        <td class="contentColumnHeadLight" style="font-weight:bold; vertical-align:middle;"><a href="$colLink" class="contentColumnHeadLight">$colTitle</a></td>
+    #end
 </tr>
 #end
 
 #macro (renderDBBrowserRow $rowId $rowValues)
 <tr>
 #if ($velocityCount % 2 == 0)
-	#set ($rowstyle = "contentRowEven")
+    #set ($rowstyle = "contentRowEven")
 #else
-	#set ($rowstyle = "contentRowOdd")
+    #set ($rowstyle = "contentRowOdd")
 #end   
-	<td class="$rowstyle">
-		<input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+    <td class="$rowstyle">
+        <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
     </td>
-	<td class="$rowstyle">$rowId</td>
+    <td class="$rowstyle">$rowId</td>
 #foreach ($rowValue in $rowValues)
-	<td class="$rowstyle">$rowValue</td>
+    <td class="$rowstyle">$rowValue</td>
 #end
 </tr>
 #end
 
 #macro (renderDBBrowserRowWithEditLink $rowId $rowValues)
 #if ($velocityCount % 2 == 0)
-	#set ($rowstyle = "contentRowEven")
+    #set ($rowstyle = "contentRowEven")
 #else
-	#set ($rowstyle = "contentRowOdd")
+    #set ($rowstyle = "contentRowOdd")
 #end   
 <tr class="$rowstyle">
-	<td>
-		<input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+    <td>
+        <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
     </td>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('doEdit','Edit')
 $action.setParameter("id", "$rowId")
-	<td><a href="$action">$rowId</a></td>
+    <td><a href="$action">$rowId</a></td>
 #foreach ($rowValue in $rowValues)
-	<td><a href="$action">$rowValue</a></td>
+    <td><a href="$action">$rowValue</a></td>
 #end
 </tr>
 #end
@@ -158,79 +198,79 @@ $action.setParameter("id", "$rowId")
 #macro (renderDBBrowserRowWithEditLinkNoSelection $rowId $rowValues)
 <tr>
 #if ($velocityCount % 2 == 0)
-	#set ($rowstyle = "contentRowEven")
+    #set ($rowstyle = "contentRowEven")
 #else
-	#set ($rowstyle = "contentRowOdd")
+    #set ($rowstyle = "contentRowOdd")
 #end   
-	<td class="$rowstyle">
-		<input id="chk_$velocityCount" name="id" type="hidden" value="$rowId" />
+    <td class="$rowstyle">
+        <input id="chk_$velocityCount" name="id" type="hidden" value="$rowId" />
     </td>
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('doEdit','Edit')
 $action.setParameter("id", "$rowId")
-	<td class="$rowstyle"><a href="$action">$rowId</a></td>
+    <td class="$rowstyle"><a href="$action">$rowId</a></td>
 #foreach ($rowValue in $rowValues)
-	<td class="$rowstyle"><a href="$action">$rowValue</a></td>
+    <td class="$rowstyle"><a href="$action">$rowValue</a></td>
 #end
 </tr>
 #end
 
 #macro (renderDBBrowserFooterButtons $buttons)
-	#renderDBBrowserFooterButtonsDisable ($buttons "false")
+    #renderDBBrowserFooterButtonsDisable ($buttons "false")
 #end
 
 #macro (renderDBBrowserFooterButtonDisable $button)
-	#if($button == "doDelete")
-		<input class="btn_disable float_left" type="submit" name="doDelete" onClick="return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')" value="$MESSAGES.getString('component.forms.buttons.delete')" disabled/>
-	#end
+    #if($button == "doDelete")
+        #renderInputButtonDisable("$MESSAGES.getString('component.forms.buttons.delete')" "" "doDelete" "" "float_left" "return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')" "true")
+    #end
 #end
 
 #macro (renderDBBrowserFooterButtonsDisable $buttons $disableDeleteButton)
 <div class="formfooter formfooter_border_style">
 #foreach ($button in $buttons)
-	#if($button == "doEdit")
-		<input class="btn float_left" type="submit" name="doEdit" value="Edit"/>
-		<span class="float_left">&nbsp;</span>
-	#end
-	#if($button == "doDelete")
-		#if($disableDeleteButton == "true")
-			#renderDBBrowserFooterButtonDisable ($button)
-		#else
-			<input class="btn float_left" type="submit" name="doDelete" onClick="return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')" value="$MESSAGES.getString('component.forms.buttons.delete')" />
-		#end
-	#end
-	#if($button == "doRefresh")
-    	<input class="btn float_right" type="submit" name="doRefresh" value="$MESSAGES.getString('component.forms.buttons.refresh')" />
-		<span class="float_right">&nbsp;</span>
-	#end
-	#if($button == "doNew")
-		<input class="btn float_right" type="submit" name="doNew" value="$MESSAGES.getString('component.forms.buttons.add')" />
-	#end
-	#if($button == "doClear")
-		<span class="float_left">&nbsp;</span>
-		<input class="btn float_left" type="submit" name="doClear" value="$MESSAGES.getString('component.forms.buttons.reset')" title="$MESSAGES.getString('component.forms.info.reset')" />
-	#end
+    #if($button == "doEdit")
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.edit')" "" "doEdit" "" "float_left")
+        <span class="float_left">&nbsp;</span>
+    #end
+    #if($button == "doDelete")
+        #if($disableDeleteButton == "true")
+            #renderDBBrowserFooterButtonDisable ($button)
+        #else
+            #renderInputButtonOnClick("$MESSAGES.getString('component.forms.buttons.delete')" "float:left" "doDelete" "" "float_left" "return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')")
+        #end
+    #end
+    #if($button == "doRefresh")
+        #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.refresh')" "" "doRefresh" "" "float_right")
+        <span class="float_right">&nbsp;</span>
+    #end
+    #if($button == "doNew")
+        #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.add')" "" "doNew" "" "float_right")
+    #end
+    #if($button == "doClear")
+        <span class="float_left">&nbsp;</span>
+        #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.reset')" "" "doClear" "" "float_left")
+    #end
 #end
-	<p class="clearer"></p>
+    <p class="clearer"></p>
 </div>
 #end
 
 
 #macro (renderDBBrowserFooter)
-	#set ($buttons = ["doEdit", "doDelete", "doRefresh", "doNew"])
-	#renderDBBrowserFooterButtons($buttons)
+    #set ($buttons = ["doEdit", "doDelete", "doRefresh", "doNew"])
+    #renderDBBrowserFooterButtons($buttons)
 #end
 
 #macro (renderDBEditId $mode $id)
 #if ($mode == 'edit')
-	<input type="hidden" name="id" value="$!{id}"/>
-	<p>
-		<label class="float_left col2left_incr">Id</label><span>$!{id}</span>
+    <input type="hidden" name="id" value="$!{id}"/>
+    <p>
+        <label class="float_left col2left_incr">Id</label><span>$!{id}</span>
         <span class="clearer"></span>
-	</p>
+    </p>
 #else
 ## new entity, but we add id so we have something to extract entity from request !
-	<input type="hidden" name="id" value="-1"/>
+    <input type="hidden" name="id" value="-1"/>
 #end
 #end
 
@@ -238,47 +278,47 @@ $action.setParameter("id", "$rowId")
 <p>
     <label class="float_left col2left_incr" for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
     <textarea class="float_left" cols="125" rows="2" name="${colName}$!{index}" id="${colName}$!{index}">$colValue</textarea>
-   	<span class="clearer"></span>
+    <span class="clearer"></span>
 </p>
 #end
 
 #macro (renderDBEditTextField $index $colName $colLabel $colValue)
-	#renderDBEditTextFieldDisable ($index $colName $colLabel $colValue "false")
+    #renderDBEditTextFieldDisable ($index $colName $colLabel $colValue "false")
 #end
 
 #macro (renderDBEditTextFieldDisable $index $colName $colLabel $colValue $disable)
-	<p>
-		<label class="float_left col2left_incr" for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
-		
-	#if($disable == 'true')
-		<input class="float_left inputstyletext contentInput" type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue" disabled/>
-	#else
-		<input class="float_left inputstyletext contentInput" type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue"/>
-	#end
-		<span class="clearer"></span>
-	</p>
+    <p>
+        <label class="float_left col2left_incr" for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
+        
+    #if($disable == 'true')
+        <input class="float_left inputstyletext contentInput" type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue" disabled/>
+    #else
+        <input class="float_left inputstyletext contentInput" type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue"/>
+    #end
+        <span class="clearer"></span>
+    </p>
 #end
 
 #macro (renderDBEditFooter $mode)
 <div class="formfooter formfooter_border_style" align="right">
-	#if ($mode == 'edit')
-		#set ($butAction = 'doUpdate')
-	#elseif ($mode == 'new')
-		#set ($butAction = 'doSave')
-	#end
-	#if ($disableSaving && $disableSaving == 'true')
-		## do nothing
-	#else
-		<input class="btn" type="submit" name="$butAction" value="$MESSAGES.getString('component.forms.buttons.save')" />
-	#end
-	<input class="btn" type="submit" name="doCancel" value="$MESSAGES.getString('component.forms.buttons.back')" />
+    #if ($mode == 'edit')
+        #set ($butAction = 'doUpdate')
+    #elseif ($mode == 'new')
+        #set ($butAction = 'doSave')
+    #end
+    #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.back')" "" "doCancel" "" "float_right")
+    #if ($disableSaving && $disableSaving == 'true')
+        ## do nothing
+    #else
+        #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.save')" "" $butAction "" "float_right")
+    #end
 </div>
 #end
 
 #macro (renderTextField $label $id)
 <p>
-  	<label class="float_left col2left_incr" for="query">#displayFieldLabel($id $label)</label>
-  	<input class="float_left inputstyletext contentInput" id="$id" name="$id" value="#getHTMLEscapedFieldValue("$id")" type="text">
+    <label class="float_left col2left_incr" for="query">#displayFieldLabel($id $label)</label>
+    <input class="float_left inputstyletext contentInput" id="$id" name="$id" value="#getHTMLEscapedFieldValue("$id")" type="text">
 </p>
 #end
 
@@ -299,51 +339,61 @@ $action.setParameter("id", "$rowId")
 #end
 
 #macro (renderInputButton $buttonvalue $buttonstyle $buttonname $buttontitle)
-	#renderInputButtonClass ($buttonvalue $buttonstyle $buttonname $buttontitle "")
+    #renderInputButtonClass ($buttonvalue $buttonstyle $buttonname $buttontitle "")
 #end
 
 #macro (renderInputButtonClass $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass)
-	#renderInputButtonOnClick ($buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass "")
+    #renderInputButtonOnClick ($buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass "")
 #end
 
 #macro (renderInputButtonOnClick $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick)
-	#renderInputButtonDisable ($buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick "false")
+    #renderInputButtonDisable ($buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick "false")
 #end
 
 #macro (renderInputButtonDisable $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick $buttondisable)
-	<span>
-		#if($buttondisable == "true")
-			<input type="submit" value="$buttonvalue" style="$buttonstyle" name="$buttonname" title="$buttontitle" class="btn_disable $buttonclass" onclick="$buttononclick" disabled />
-		#else
-			<input type="submit" value="$buttonvalue" style="$buttonstyle" name="$buttonname" title="$buttontitle" class="btn $buttonclass" onclick="$buttononclick" />
-		#end
-	</span>
+    <div class="$buttonclass" style="$buttonstyle">
+        <div class="btn_left" id="$buttonname left"></div>
+        <div class="btn_center">
+            #if($buttondisable == "true")
+                <input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_disable" onclick="$buttononclick" disabled />
+            #else
+                <input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn" onclick="$buttononclick" />
+            #end
+        </div>
+        <div class="btn_right" id="$buttonname right"></div>
+    </div>
 #end
 
+
 #macro (renderInputButtonSearch $buttonvalue $buttonstyle $buttonname $buttontitle)
-	#renderInputButtonSearchClass ("$buttonvalue" $buttonstyle $buttonname $buttontitle "")
+    #renderInputButtonSearchClass ("$buttonvalue" $buttonstyle $buttonname $buttontitle "")
 #end
 
 #macro (renderInputButtonSearchClass $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass)
-	#renderInputButtonSearchOnClick ("$buttonvalue" $buttonstyle $buttonname $buttontitle $buttonclass "")
+    #renderInputButtonSearchOnClick ("$buttonvalue" $buttonstyle $buttonname $buttontitle $buttonclass "")
 #end
 
 #macro (renderInputButtonSearchOnClick $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick)
-	#renderInputButtonSearchDisable ($buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick "false")
+    #renderInputButtonSearchDisable ("$buttonvalue" $buttonstyle $buttonname $buttontitle $buttonclass  $buttononclick "false")
 #end
 
 #macro (renderInputButtonSearchDisable $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick $buttondisable)
-	<span>
-		#if($buttondisable == "true")
-			<input type="submit" value="$buttonvalue" style="$buttonstyle" name="$buttonname" title="$buttontitle" class="btn_search_disable $buttonclass" onclick="$buttononclick" disabled />
-		#else
-			<input type="submit" value="$buttonvalue" style="$buttonstyle" name="$buttonname" title="$buttontitle" class="btn_search $buttonclass" onclick="$buttononclick" />
-		#end
-	</span>
+    <div class="$buttonclass" style="$buttonstyle">
+        <div class="btn_search_left" id="$buttonname left"></div>
+        <div class="btn_search_center">
+            #if($buttondisable == "true")
+                <input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_search_disable" onclick="$buttononclick" disabled/>
+            #else
+                <input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_search" onclick="$buttononclick"/>
+            #end
+            
+        </div>
+        <div class="btn_search_right" id="$buttonname right"></div>
+    </div>
 #end
 
 #macro(renderTopicImageRandom $index)
 	<div class="themen_image">
-		<img class="themen_image_style" height="65" width="140" src="/ingrid-portal-apps/images/index_themen.jpg" alt="$MESSAGES.getString('teaser.environment.img.alt')" />
+		<img class="themen_image_style" height="96" width="210" src="/ingrid-portal-apps/images/topics/index_themen_${index}.png" alt="$MESSAGES.getString('teaser.environment.img.alt')" />
 	</div>
 #end

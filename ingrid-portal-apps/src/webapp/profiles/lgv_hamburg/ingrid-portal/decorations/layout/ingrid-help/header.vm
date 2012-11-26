@@ -7,7 +7,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
-  <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "HMDK")</title>
+  <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "PortalU")</title>
   <meta http-equiv="Content-type" content="#ContentType()" />
   <meta http-equiv="Content-style-type" content="text/css" />   
   <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
@@ -55,9 +55,10 @@
 <div id="popupheader" class="${langCode}motiv_hilfe">
 	<!-- LOGO -->
   <div id="logo">
-    <img src="#GetPageResource('images/logo.gif')" width="168" height="60" alt="Logo PortalU" />
+    <img src="#GetPageResource('images/logo.gif')" width="188" height="81" alt="Logo PortalU" />
   </div>
 </div>
+<div class="greenSeparator"></div>
 
 <!-- CONTENT BLOCK -->
   
