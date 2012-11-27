@@ -132,6 +132,8 @@ html body div#mainnav { height: 31px; }
 div#mainnav { background: #3e3e3e; margin:0; padding:0; width:59.5em; height:30px;  z-index: 10; position: relative;}  
 div#mainnav ul { list-style: none; padding: 0px 0 0px 56px; margin: 0;}
 div#mainnav ul li { padding: 5px 0px; margin: 0px 0px 0px -2px; border: 0; float: left;font-size: 12px; font-weight:bold;}
+/** FOR IE7 **/
+*+html div#mainnav ul li { padding: 5px 0px 10px 0px ; }
 div#mainnav ul li:hover { }
 
 div#mainnav ul li ul {}
@@ -247,13 +249,19 @@ div.themen_image { margin:0; padding:4px 14px 0 0; float:left; }
 /*Need for profile NUMIS*/
 div img.themen_image_style{}
 
-div.section { margin: 0 0 0px 0; padding:0; }
+div.section { margin: 0; padding:0; }
 div.section p a { text-decoration:underline; }
 div.section div p a { text-decoration:none; }
 div.section div p a:hover { text-decoration:underline; }
+
 div.section-header { margin-top:0; padding:0; }
+/** FOR IE7 **/
+*+html div.section-header { padding:0 0 10px 0; }
+
 div.section-header h1 { display:inline; float:left; padding-top:0em; padding-bottom:0em; color: #5E5E5F; text-transform: uppercase; }
 div.section-header span.portlet_info { float:right; font-size:80%; }
+/** FOR IE7 **/
+*+html div.section-header span.portlet_info { padding:0 0 5px 0; }
 div.section-header span.edit_info { float:right; font-size:80%; }
 
 /* n�tig f�r Firefox, sonst zerreissts �berschrift ! */
@@ -671,6 +679,8 @@ a.tooltip:hover span { visibility: visible; }
 .teaser_body { float:left; }
 
 div.section-header span.portlet_info a { color:#8F8F8F; padding:0px 18px 10px 5px; background: url(../images/help.png) no-repeat; font-weight: bold; font-size: 14px; }
+/** FOR IE7 **/
+*+html div.section-header span.portlet_info a { padding:0px 18px 10px 10px; } 
 div.section-header span.portlet_info a:hover { color:#FFFFFF; text-decoration:none; cursor:help; }
 p.datasource_selection a.selected { color:#000000; padding: 2px; }
 p.datasource_selection span.selected { color:#000000; padding: 2px; }
