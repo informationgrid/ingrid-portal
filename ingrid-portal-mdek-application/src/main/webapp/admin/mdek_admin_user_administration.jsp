@@ -24,7 +24,8 @@
             
             var requiredElements = [["userDataAddressSurname", "userDataAddressSurnameLabel"],
                 ["userDataAddressForename", "userDataAddressForenameLabel"],
-                ["userDataAddressEmailUser", "userDataAddressEmailUserLabel"]
+                ["userDataAddressEmailUser", "userDataAddressEmailUserLabel",
+                ["userDataAddressInstitution", "userDataAddressInstitutionLabel"]]
             ];
             
             dojo.connect(_container_, "onLoad", function(){
@@ -44,6 +45,10 @@
 
                 Validation.addEmailCheck("userDataAddressEmailUser", false);
                 Validation.addEmailCheck("userDataAddressEmailPointOfContact", false);
+                
+                
+                this.addRequiredBehaviour();
+                
             });
             
             
@@ -585,6 +590,58 @@
                 });
             }
             
+            scriptScopeUser.addRequiredBehaviour = function() {
+                dojo.connect(dijit.byId("userDataAddressInstitution"), "onChange", function(value) {
+                    var hasEnteredName = false;
+                    if (dijit.byId("userDataAddressForename").value.trim() != "" || dijit.byId("userDataAddressSurname").value.trim() != "") {
+                        hasEnteredName = true;
+                    }
+                    if (value.trim() == "") {
+                        dojo.addClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = true;
+                        dojo.addClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = true;
+                        // if all fields are empty then let this field be also required
+                        if (hasEnteredName) {
+                            dojo.removeClass("institutionInput", "required"); dijit.byId("userDataAddressInstitution").required = false;
+                        }
+                    } else {
+                        if (!hasEnteredName) {
+                            dojo.removeClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = false;
+                            dojo.removeClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = false;
+                        }
+                        dojo.addClass("institutionInput", "required"); dijit.byId("userDataAddressInstitution").required = true;
+                    }
+                    scriptScopeUser.revalidate();
+                });
+                
+                dojo.connect(dijit.byId("userDataAddressSurname"), "onChange", function(value) { 
+                    if (value.trim() != "" || (value.trim() == "" && dijit.byId("userDataAddressForename").value.trim() != "")) {
+                        dojo.addClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = true;
+                        dojo.addClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = true;
+                    } else {
+                        dojo.removeClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = false;
+                        dojo.removeClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = false;
+                    }
+                    scriptScopeUser.revalidate();
+                });
+                
+                dojo.connect(dijit.byId("userDataAddressForename"), "onChange", function(value) { 
+                    if (value.trim() != "" || (value.trim() == "" && dijit.byId("userDataAddressSurname").value.trim() != "")) {
+                        dojo.addClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = true;
+                        dojo.addClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = true;
+                    } else {
+                        dojo.removeClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = false;
+                        dojo.removeClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = false;
+                    }
+                    scriptScopeUser.revalidate();
+                });
+            }
+            
+            scriptScopeUser.revalidate = function() {
+                dijit.byId("userDataAddressSurname").validate();
+                dijit.byId("userDataAddressForename").validate();
+                dijit.byId("userDataAddressInstitution").validate();
+            }
+            
             // Function that is called when a treeNode is clicked
             function treeNodeSelected(item, treeNode){
                 // Check if a 'newUserNode' exists. If it does and the user clicked another node, delete the newUserNode.
@@ -969,18 +1026,18 @@
                                     
                                 <!-- USER DATA -->
                                 <div class="outer" style="margin-top:15px; margin-bottom:15px;">
-                                    <span class="outer required" style="width:33%;"><div>
+                                    <span id="surnameInput" class="outer required" style="width:33%;"><div>
                                         <span class="label">
                                             <label id="userDataAddressSurnameLabel" for="userDataAddressSurname" onclick="javascript:dialog.showContextHelp(arguments[0], 8015)">
-                                                <fmt:message key="dialog.admin.users.surName" />*
+                                                <fmt:message key="dialog.admin.users.surName" /><span class="requiredSign">*</span>
                                             </label>
                                         </span>
                                         <span class="input"><input type="text" maxLength="255" id="userDataAddressSurname" name="userDataAddressSurname" required="true" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
                                     </div></span>
-                                    <span class="outer required" style="width:33%;"><div>
+                                    <span id="forenameInput" class="outer required" style="width:33%;"><div>
                                         <span class="label">
                                             <label id="userDataAddressForenameLabel" for="userDataAddressForename" onclick="javascript:dialog.showContextHelp(arguments[0], 8200)">
-                                                <fmt:message key="dialog.admin.users.foreName" />*
+                                                <fmt:message key="dialog.admin.users.foreName" /><span class="requiredSign">*</span>
                                             </label>
                                         </span>
                                         <span class="input"><input type="text" maxLength="255" id="userDataAddressForename" name="userDataAddressForename" required="true" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
@@ -988,18 +1045,18 @@
                                     <span class="outer required" style="width:34%;"><div>
                                         <span class="label">
                                             <label id="userDataAddressEmailUserLabel" for="userDataAddressEmailUser" onclick="javascript:dialog.showContextHelp(arguments[0], 8201)">
-                                                <fmt:message key="dialog.admin.users.emailUser" />*
+                                                <fmt:message key="dialog.admin.users.emailUser" /><span class="requiredSign">*</span>
                                             </label>
                                         </span>
                                         <span class="input"><input type="text" maxLength="255" id="userDataAddressEmailUser" name="userDataAddressEmailUser" required="true" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
                                     </div></span>
-                                    <span class="outer" style="width:33%; clear:both;"><div>
+                                    <span id="institutionInput" class="outer required" style="width:33%; clear:both;"><div>
                                         <span class="label">
                                             <label id="userDataAddressInstitutionLabel" for="userDataAddressInstitution" onclick="javascript:dialog.showContextHelp(arguments[0], 8203)">
-                                                <fmt:message key="dialog.admin.users.institution" />
+                                                <fmt:message key="dialog.admin.users.institution" /><span class="requiredSign">*</span>
                                             </label>
                                         </span>
-                                        <span class="input"><input type="text" id="userDataAddressInstitution" name="userDataAddressEmailPointOfContact" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                                        <span class="input"><input type="text" id="userDataAddressInstitution" name="userDataAddressEmailPointOfContact" required="true" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
                                     </div></span>
                                     <span class="outer" style="width:33%;"><div>
                                         <span class="label">
@@ -1053,10 +1110,10 @@
                                     <span class="outer" style="width:60px;"><div>
                                         <span class="entry">
                                             <span class="buttonCol" style="margin:80px -4px 0px;">
-                                                <button dojoType="dijit.form.Button" id="addSelectedButton" onClick="addSelected">&nbsp;>&nbsp;</button>
-                                                <button dojoType="dijit.form.Button" id="addAllButton" onClick="addAll">>></button>
-                                                <button dojoType="dijit.form.Button" id="removeAllButton" onClick="removeAll"><<</button>
-                                                <button dojoType="dijit.form.Button" id="removeSelectedButton" onClick="removeSelected">&nbsp;<&nbsp;</button>
+                                                <button dojoType="dijit.form.Button" id="addSelectedButton" onClick="addSelected">&nbsp;&gt;&nbsp;</button>
+                                                <button dojoType="dijit.form.Button" id="addAllButton" onClick="addAll">&gt;&gt;</button>
+                                                <button dojoType="dijit.form.Button" id="removeAllButton" onClick="removeAll">&lt;&lt;</button>
+                                                <button dojoType="dijit.form.Button" id="removeSelectedButton" onClick="removeSelected">&nbsp;&lt;&nbsp;</button>
                                             </span>
                                         </span>
                                     </div></span>
