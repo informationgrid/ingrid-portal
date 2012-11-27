@@ -591,49 +591,34 @@
             }
             
             scriptScopeUser.addRequiredBehaviour = function() {
-                dojo.connect(dijit.byId("userDataAddressInstitution"), "onChange", function(value) {
-                    var hasEnteredName = false;
-                    if (dijit.byId("userDataAddressForename").value.trim() != "" || dijit.byId("userDataAddressSurname").value.trim() != "") {
-                        hasEnteredName = true;
-                    }
-                    if (value.trim() == "") {
-                        dojo.addClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = true;
-                        dojo.addClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = true;
-                        // if all fields are empty then let this field be also required
-                        if (hasEnteredName) {
-                            dojo.removeClass("institutionInput", "required"); dijit.byId("userDataAddressInstitution").required = false;
-                        }
-                    } else {
-                        if (!hasEnteredName) {
-                            dojo.removeClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = false;
-                            dojo.removeClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = false;
-                        }
-                        dojo.addClass("institutionInput", "required"); dijit.byId("userDataAddressInstitution").required = true;
-                    }
-                    scriptScopeUser.revalidate();
-                });
-                
-                dojo.connect(dijit.byId("userDataAddressSurname"), "onChange", function(value) { 
-                    if (value.trim() != "" || (value.trim() == "" && dijit.byId("userDataAddressForename").value.trim() != "")) {
-                        dojo.addClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = true;
-                        dojo.addClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = true;
-                    } else {
-                        dojo.removeClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = false;
-                        dojo.removeClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = false;
-                    }
-                    scriptScopeUser.revalidate();
-                });
-                
-                dojo.connect(dijit.byId("userDataAddressForename"), "onChange", function(value) { 
-                    if (value.trim() != "" || (value.trim() == "" && dijit.byId("userDataAddressSurname").value.trim() != "")) {
-                        dojo.addClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = true;
-                        dojo.addClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = true;
-                    } else {
-                        dojo.removeClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = false;
-                        dojo.removeClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = false;
-                    }
-                    scriptScopeUser.revalidate();
-                });
+                dojo.connect(dijit.byId("userDataAddressInstitution"), "onChange", scriptScopeUser.checkFields);                
+                dojo.connect(dijit.byId("userDataAddressSurname"), "onChange", scriptScopeUser.checkFields);                
+                dojo.connect(dijit.byId("userDataAddressForename"), "onChange", scriptScopeUser.checkFields);
+            }
+            
+            // 1) if a forename or surname has text and the institution is empty -> the other field also is required
+            // 2) if only institution has text -> only this field is required 
+            // 3) all field are required otherwise
+            scriptScopeUser.checkFields = function() {
+                var surnameEmpty     = dijit.byId("userDataAddressSurname").value.trim() === "";
+                var forenameEmpty    = dijit.byId("userDataAddressForename").value.trim() === "";
+                var institutionEmpty = dijit.byId("userDataAddressInstitution").value.trim() === "";
+
+                if (institutionEmpty && (!surnameEmpty || !forenameEmpty)) {
+                    dojo.addClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = true;
+                    dojo.addClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = true;
+                    dojo.removeClass("institutionInput", "required"); dijit.byId("userDataAddressInstitution").required = false;
+                } else if (!institutionEmpty && surnameEmpty && forenameEmpty) {
+                    dojo.removeClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = false;
+                    dojo.removeClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = false;
+                    dojo.addClass("institutionInput", "required"); dijit.byId("userDataAddressInstitution").required = true;
+                } else {
+                    dojo.addClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = true;
+                    dojo.addClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = true;
+                    dojo.addClass("institutionInput", "required"); dijit.byId("userDataAddressInstitution").required = true;
+                }
+                // make changes immediately
+                scriptScopeUser.revalidate();
             }
             
             scriptScopeUser.revalidate = function() {
