@@ -70,20 +70,22 @@
     				## Check for sub facets
     				#if($facet.isSelect())
     					## Check if 'OR' or 'AND'
-    					#if($facet.getQueryType() == "OR")
-    						## Create Tree with multi selection
-							#if($facet.isOldIPlug())
-								#set ($action = $renderResponse.createActionURL())
-								$action.setParameter("$parentId", "$facet.getId()")
-								#renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
-							#else
-								#renderCheckboxTree ($facet $parentId)
+						#if($facet.getQueryType())
+							#if($facet.getQueryType() == "OR")
+        						## Create Tree with multi selection
+        						#if($facet.isOldIPlug())
+        							#set ($action = $renderResponse.createActionURL())
+        							$action.setParameter("$parentId", "$facet.getId()")
+        							#renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+        						#else
+        							#renderCheckboxTree ($facet $parentId)
+        						#end
+        					#elseif($facet.getQueryType() == "OR_DIALOG")
+        						## Create Tree with multi selection with dialog
+        						#renderCheckboxTreeDialog ($facet $parentId)
 							#end
-    					#elseif($facet.getQueryType() == "OR_DIALOG")
-							## Create Tree with multi selection with dialog
-							#renderCheckboxTreeDialog ($facet $parentId)
 						#else
-    						## Create Tree with single selection
+							## Create Tree with single selection
 							#if($facet.isOldIPlug())
 								#set ($action = $renderResponse.createActionURL())
 								$action.setParameter("$parentId", "$facet.getId()")
@@ -116,52 +118,56 @@
 
 
 #macro(renderFacetContent $facet)
-	#if($facet.getQueryType() == "OR")
-		#renderCheckboxTree ($facet "")
-	#elseif($facet.getQueryType() == "OR_DIALOG")
-		#renderCheckboxTreeDialog ($facet "")
-	#else
-    	#if($facet.getId() == 'area' || $facet.getId() == 'attribute' || $facet.getId() == 'area.address')
-    		## RAUMBEZUG ##
-            #if($facet.getId() == 'area')
-    			#parse ('/WEB-INF/templates/facete/facete_area.vm')
-            #end
-            
-            ## ATTRIBUTE ##
-            #if($facet.getId() == 'attribute')
-    			#parse ('/WEB-INF/templates/facete/facete_attribute.vm')
-            #end
-            
-            ## RAUMBEZUG - ADDRESSEN ##
-            #if($facet.getId() == 'area.address')
-    			#parse ('/WEB-INF/templates/facete/facete_area_address.vm')
+	#if($facet)
+    	#if($facet.getQueryType())
+    		#if($facet.getQueryType() == "OR")
+        		#renderCheckboxTree ($facet "")
+        	#elseif($facet.getQueryType() == "OR_DIALOG")
+        		#renderCheckboxTreeDialog ($facet "")
     		#end
     	#else
-			<div class="cat_label">
-    			<img id="$facet.getId()_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('$facet.getId()')">
-        		<a onclick="openNode('$facet.getId()')" title="$MESSAGES.getString("$facet.getName()")">$MESSAGES.getString("$facet.getName()")</a>
-        		<br>
-        	</div>
-        	
-        	<div id="$facet.getId()" class="cat_content">
-    			#set($isSelected = false)
-    			#foreach($subFacet in $facet.getFacets())
-    				#if($subFacet.isSelect())
-    					#set($isSelected = true)
-    				#end
-    			#end
-    			
-        		#foreach($subFacet in $facet.getFacets())
-    				#if($isSelected)
-    					#if($subFacet.isSelect())
-    						#renderFacetCategoryEntry($subFacet $facet.getId())
-    					#end
-    				#else
-						#renderFacetCategoryEntry($subFacet $facet.getId())
-    				#end
+    		#if($facet.getId() == 'area' || $facet.getId() == 'attribute' || $facet.getId() == 'area.address')
+        		## RAUMBEZUG ##
+                #if($facet.getId() == 'area')
+        			#parse ('/WEB-INF/templates/facete/facete_area.vm')
+                #end
+                
+                ## ATTRIBUTE ##
+                #if($facet.getId() == 'attribute')
+        			#parse ('/WEB-INF/templates/facete/facete_attribute.vm')
+                #end
+                
+                ## RAUMBEZUG - ADDRESSEN ##
+                #if($facet.getId() == 'area.address')
+        			#parse ('/WEB-INF/templates/facete/facete_area_address.vm')
         		#end
-            </div>
-    		<br />
+        	#else
+    			<div class="cat_label">
+        			<img id="$facet.getId()_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('$facet.getId()')">
+            		<a onclick="openNode('$facet.getId()')" title="$MESSAGES.getString("$facet.getName()")">$MESSAGES.getString("$facet.getName()")</a>
+            		<br>
+            	</div>
+            	
+            	<div id="$facet.getId()" class="cat_content">
+        			#set($isSelected = false)
+        			#foreach($subFacet in $facet.getFacets())
+        				#if($subFacet.isSelect())
+        					#set($isSelected = true)
+        				#end
+        			#end
+        			
+            		#foreach($subFacet in $facet.getFacets())
+        				#if($isSelected)
+        					#if($subFacet.isSelect())
+        						#renderFacetCategoryEntry($subFacet $facet.getId())
+        					#end
+        				#else
+    						#renderFacetCategoryEntry($subFacet $facet.getId())
+        				#end
+            		#end
+                </div>
+        		<br />
+    		#end
 		#end
 	#end
 #end
