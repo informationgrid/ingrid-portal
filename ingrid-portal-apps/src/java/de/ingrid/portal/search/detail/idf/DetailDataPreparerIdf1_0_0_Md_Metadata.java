@@ -1187,14 +1187,14 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	        	// add map links to data objects from services
 	        	if (entryId.equals("3600") && context.get(UDK_OBJ_CLASS_TYPE).equals("3")) {
 	        	    // get link from operation (unique one)
-	        	    if (serviceType.equals("view")) {
-	        	        link.put("mapLink", getCapabilityUrl());
+	        	    if (serviceType.trim().equals("view")) {
+	        	        link.put("mapLink", getCapabilityUrl() + "&ID=" + getLayerIdentifier(node));
 	        	    }
 	        	    linkListCoupledData.add(link);
 	        	} else if (entryId.equals("3600") && context.get(UDK_OBJ_CLASS_TYPE).equals("1")) {
 	        	    if (this.firstGetCapabiltiesUrl != null) {
 	        	        // get link from online resource (possibilty it's wrong?)
-	        	        link.put("mapLink", this.firstGetCapabiltiesUrl);
+	        	        link.put("mapLink", this.firstGetCapabiltiesUrl + "&ID=" + getLayerIdentifier(node));
 	        	    }
 	        	    linkListCoupledData.add(link);
 	        	} else {
@@ -1262,6 +1262,33 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	    }
         return url;
     }
+	
+	private String getLayerIdentifier(Node crossReference) {
+	    if (context.get(UDK_OBJ_CLASS_TYPE).equals("1")) {
+	        String href = XPathUtils.getString(rootNode, "./gmd:identificationInfo/gmd:MD_DataIdentification/@uuid");
+	        if (href != null) {
+	            return href;
+	        }
+	    } else {
+    	    String origId = XPathUtils.getString(crossReference, "./@orig-uuid");
+    	    String uuid   = XPathUtils.getString(crossReference, "./@uuid");
+    	    String xpathExpression = "./gmd:identificationInfo/*/srv:operatesOn";
+    	    
+    	    NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+            for (int i=0; i < nodeList.getLength(); i++){
+                Node node = nodeList.item(i);
+    	    
+                String uuidRef = XPathUtils.getString(node, "./@uuidref");
+                String href = XPathUtils.getString(node, "./@xlink:href");
+                
+                if (uuidRef != null && (uuidRef.equals(uuid) || uuidRef.equals(origId))) {
+                    return href;
+                }
+            }
+	    }
+        
+	    return "NOT_FOUND";
+	}
 
     private void getAdditionalFields(ArrayList elements, String xpathExpression) {
 		getAdditionalFields(elements, xpathExpression, null);
@@ -1713,7 +1740,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                         continue;
                     }
                     if (urlValue.toLowerCase().indexOf("request=getcapabilities") != -1) {
-                        addBigMapLink(elements, urlValue);
+                        // also add an identifier to select the correct layer in the map client 
+                        addBigMapLink(elements, urlValue + "&ID=" + getLayerIdentifier(null));
                         // ADD FIRST ONE FOUND !!!
                         break;
                     }

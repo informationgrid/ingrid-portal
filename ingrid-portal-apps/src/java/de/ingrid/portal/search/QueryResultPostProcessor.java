@@ -242,6 +242,7 @@ public class QueryResultPostProcessor {
             hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, additionalHtml);
 
             boolean doNotShowMaps = false;
+            String firstResourceId = null;
             
             // Service Links
             String[] tmpArray = (String[]) detail.getArray(Settings.RESULT_KEY_SERVICE_UUID);
@@ -250,20 +251,21 @@ public class QueryResultPostProcessor {
                 String[] tmpArray2 = new String[tmpArray.length];
                 int i = 0;
                 for (String entry : tmpArray) {
-                    // entry = uuid # name # wmsUrl # resourceId
-                    String[] entrySplit = entry.split("#");
+                    // entry = uuid @@ name @@ wmsUrl @@ resourceId
+                    String[] entrySplit = entry.split("@@");
                     switch (entrySplit.length) {
 					case 1:
 						tmpArray2[i++] = entrySplit[0];
 						break;
 					case 2:
-						tmpArray2[i++] = entrySplit[0]+"#"+entrySplit[1];
+						tmpArray2[i++] = entrySplit[0]+"@@"+entrySplit[1];
 						break;
 					case 3:
-						tmpArray2[i++] = entrySplit[0]+"#"+entrySplit[1]+"#"+addCapabilitiesInformation(entrySplit[2]);
+						tmpArray2[i++] = entrySplit[0]+"@@"+entrySplit[1]+"@@"+addCapabilitiesInformation(entrySplit[2]);
 						break;
 					case 4:
-						tmpArray2[i++] = entrySplit[0]+"#"+entrySplit[1]+"#"+addCapabilitiesInformation(entrySplit[2])+"#"+entrySplit[3];
+						tmpArray2[i++] = entrySplit[0]+"@@"+entrySplit[1]+"@@"+addCapabilitiesInformation(entrySplit[2])+"@@"+entrySplit[3];
+						if (firstResourceId == null) firstResourceId = entrySplit[3];
 						break;
 					default:
 						break;
@@ -291,6 +293,8 @@ public class QueryResultPostProcessor {
                     int i = 0;
                     for (String url : tmpArray) {
                         url = addCapabilitiesInformation(url);
+                        // add layer information to link
+                        if (firstResourceId != null) url += "&ID=" + firstResourceId;
                         // only take the first map url, which should be the only one! 
                         hit.put(Settings.RESULT_KEY_WMS_URL, url);
                         break;
