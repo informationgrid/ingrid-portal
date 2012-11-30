@@ -27,10 +27,16 @@
 ## ***************************
 ## include the header here
 ## ***************************
-#set($pageTitle = $rec.get("title"))
-#set($pageDescription = $rec.get("summary"))
+#set($pageTitle = "")
+#set($pageDescription = "")
+#if($rec.get("title"))
+	#set($pageTitle = $rec.get("title"))
+#end
+#if($rec.get("summary"))
+	#set($pageDescription = $rec.get("summary"))
+#end
 #set($pageDescription = $pageDescription.replace('"',"'"))
-#set($pageDescription = $stringTools.cutString($pageDescription))
+#set($pageDescription = $stringTools.cutString($pageDescription, 300))
 #parse('WEB-INF/templates/search_detail_header.vm')
 
 #set ($action = $renderResponse.createActionURL())

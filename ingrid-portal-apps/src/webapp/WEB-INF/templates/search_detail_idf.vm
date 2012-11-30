@@ -128,47 +128,53 @@
         #end
         #if($tool.hasContent($entry.title))
             #renderGroupTitle($entry.title)
-        #end
-        #if($entry.sort=="false")
-            #set($elements = $entry.elements)
-        #else
-            #set ($hasBody = false)
-            #set ($hasBody = $sorter.sort($entry.elements,"body"))
-            #if ($hasBody)
-                #set($elements = $hasBody)
-            #else
+		#end
+		#if($tool.hasContent($entry.sort))
+            #if($entry.sort == "false")
                 #set($elements = $entry.elements)
-            #end
-        #end
+            #else
+                #set ($hasBody = false)
+                #set ($hasBody = $sorter.sort($entry.elements,"body"))
+                #if ($hasBody)
+                    #set($elements = $hasBody)
+                #else
+                    #set($elements = $entry.elements)
+                #end
+			#end
+		#else
+			#set($elements = $entry.elements)
+		#end
         #if($entry.width=="full")
             <div class="float_right">
         #else
             <div class="width_two_thirds">
         #end
         #foreach($e in $elements)
-            #if($e.type=="multiLine")
-                #renderMultiLine($e)
-            #elseif($e.type=="textLine")
-                #renderTextLine($e)
-            #elseif($e.type=="textList")
-                #renderTextList($e)
-            #elseif($e.type=="textLinkLine")
-                #renderTextLinkLine($e)
-            #elseif($e.type=="linkLine")
-                #renderLinkLine($e)
-            #elseif($e.type=="linkLineAddress")
-                #renderLinkLineAddress($e)
-            #elseif($e.type=="textLabelAbove")
-                #renderTextLabelAbove($e)
-            #elseif($e.type=="textLabelDuring")
-                #renderTextLabelDuring($e)
-            #elseif($e.type=="textLabelLeft")
-                #renderTextLabelLeft($e)
-            #elseif($e.type=="line")
-                <div class="line"><hr /></div><br/>
-            #elseif($e.type=="space")
-                <div style="clear:both; padding:5px;"></div>
-            #end
+			#if($e.type)
+                #if($e.type=="multiLine")
+                    #renderMultiLine($e)
+                #elseif($e.type=="textLine")
+                    #renderTextLine($e)
+                #elseif($e.type=="textList")
+                    #renderTextList($e)
+                #elseif($e.type=="textLinkLine")
+                    #renderTextLinkLine($e)
+                #elseif($e.type=="linkLine")
+                    #renderLinkLine($e)
+                #elseif($e.type=="linkLineAddress")
+                    #renderLinkLineAddress($e)
+                #elseif($e.type=="textLabelAbove")
+                    #renderTextLabelAbove($e)
+                #elseif($e.type=="textLabelDuring")
+                    #renderTextLabelDuring($e)
+                #elseif($e.type=="textLabelLeft")
+                    #renderTextLabelLeft($e)
+                #elseif($e.type=="line")
+                    <div class="line"><hr /></div><br/>
+                #elseif($e.type=="space")
+                    <div style="clear:both; padding:5px;"></div>
+				#end
+			#end
         #end
         </div>
     #end
@@ -177,17 +183,21 @@
 #macro (renderMultiLineHalf $entry)
     #if($tool.hasContent($entry.elements))
         #renderGroupTitle($entry.title)
-        #if($entry.sort=="false")
-            #set($elements = $entry.elements)
-        #else
-            #set ($hasBody = false)
-            #set ($hasBody = $sorter.sort($entry.elements,"body"))
-            #if ($hasBody)
-                #set($elements = $hasBody)
-            #else
+		#if($tool.hasContent($entry.sort))
+			#if($entry.sort == "false")
                 #set($elements = $entry.elements)
-            #end
-        #end
+            #else
+                #set ($hasBody = false)
+                #set ($hasBody = $sorter.sort($entry.elements,"body"))
+                #if ($hasBody)
+                    #set($elements = $hasBody)
+                #else
+                    #set($elements = $entry.elements)
+                #end
+			#end
+		#else
+			#set($elements = $entry.elements)
+		#end
         #foreach($e in $elements)
             #renderTypeHalf($e)
         #end
@@ -255,27 +265,29 @@
 #end
 
 #macro(renderTypeHalf $e)
-    #if($e.type=="multiLine")
-        #renderMultiLineHalf($e)
-    #elseif($e.type=="textLine")
-        #renderTextLine($e)
-    #elseif($e.type=="textList")
-        #renderTextList($e)
-    #elseif($e.type=="textLinkLine")
-        #renderTextLinkLine($e)
-    #elseif($e.type=="linkLine")
-        #renderLinkLineAddress($e)
-    #elseif($e.type=="textLabelAbove")
-        #renderTextLabelAbove($e)
-    #elseif($e.type=="textLabelDuring")
-        #renderTextLabelDuring($e)
-    #elseif($e.type=="textLabelLeft")
-        #renderTextLabelLeft($e)
-    #elseif($e.type=="line")
-        <div class="line"><hr /></div><br/>
-    #elseif($e.type=="space")
-        <div style="clear:both; padding:5px;"></div>
-    #end
+	#if($e.type)
+        #if($e.type=="multiLine")
+            #renderMultiLineHalf($e)
+        #elseif($e.type=="textLine")
+            #renderTextLine($e)
+        #elseif($e.type=="textList")
+            #renderTextList($e)
+        #elseif($e.type=="textLinkLine")
+            #renderTextLinkLine($e)
+        #elseif($e.type=="linkLine")
+            #renderLinkLineAddress($e)
+        #elseif($e.type=="textLabelAbove")
+            #renderTextLabelAbove($e)
+        #elseif($e.type=="textLabelDuring")
+            #renderTextLabelDuring($e)
+        #elseif($e.type=="textLabelLeft")
+            #renderTextLabelLeft($e)
+        #elseif($e.type=="line")
+            <div class="line"><hr /></div><br/>
+        #elseif($e.type=="space")
+            <div style="clear:both; padding:5px;"></div>
+		#end
+	#end
 #end
 
 ##Render header 
@@ -291,19 +303,23 @@
                 #renderTitleHeader($elements.get("general").get("title"))
                 #if($tool.hasContent($elements.get("elementsGeneral")))
                     #foreach($e in $elements.get("elementsGeneral"))
-                        #if($e.type=="udkClass")
-                            #renderUdkClass($e)
-                        #elseif($e.type=="addressType")
-                            #renderAddressType($e)
-                        #end
+						#if($e.type)
+                            #if($e.type=="udkClass")
+                                #renderUdkClass($e)
+                            #elseif($e.type=="addressType")
+                                #renderAddressType($e)
+							#end
+						#end
                     #end
                 #elseif($tool.hasContent($elements.get("udk")))
                     #foreach($e in $elements.get("udk"))
-                        #if($e.type=="udkClass")
-                            #renderUdkClass($e)
-                        #elseif($e.type=="addressType")
-                            #renderAddressType($e)
-                        #end
+						#if($e.type)
+                            #if($e.type=="udkClass")
+                                #renderUdkClass($e)
+                            #elseif($e.type=="addressType")
+                                #renderAddressType($e)
+							#end
+						#end
                     #end
                 #end
             </div>
@@ -625,11 +641,17 @@
                 </td>
                 #end
                 <td class="text_label_left_body">
-                    #if($entry.body.type=="linkLine")
-                        #renderLinkLine($entry.body)
-                    #else
-                        $entry.body
-                    #end
+					#if($entry.body)
+						#if($entry.body.type)
+                            #if($entry.body.type == "linkLine")
+                                #renderLinkLine($entry.body)
+    						#else
+								$entry.body
+							#end
+                        #else
+                            $entry.body
+						#end
+					#end
                 </td>
             #end
             </tr>
@@ -678,116 +700,118 @@
 #macro (renderElements $elements)
     <div class="section">
         #foreach($e in $elements)
-            #if($e.type=="entry")
-                #renderEntry($e)
-            #elseif($e.type=="multiLine")
-                #renderMultiLine($e)
-            #elseif($e.type=="multiLineAddresses")
-                #renderMultiLineAddresses($e)
-            #elseif($e.type=="entryInline")
-                #renderEntryInLine($e)
-            #elseif($e.type=="linkList")
-                #renderLinkList($e)
-            #elseif($e.type=="textList")
-                #renderTextList($e)
-            #elseif($e.type=="table")
-                #renderTable($e)
-            #elseif($e.type=="textLine")
-                #renderTextLine($e)
-            #elseif($e.type=="linkLine")
-                #renderLinkLine($e)
-            #elseif($e.type=="textLinkLine")
-                #renderTextLinkLine($e)
-            #elseif($e.type=="linkLineAddress")
-                #renderLinkLineAddress($e)
-            #elseif($e.type=="textLabelAbove")
-                #renderTextLabelAbove($e)
-            #elseif($e.type=="textLabelDuring")
-                #renderTextLabelDuring($e)
-            #elseif($e.type=="textLabelLeft")
-                #renderTextLabelLeft($e)
-            #elseif($e.type=="image")
-                #renderImageLine($e)
-            #elseif($e.type=="section")
-                #renderSectionTitle($e.title)
-            #elseif($e.type=="group")
-                #renderGroupTitle($e.title)
-            #elseif($e.type=="beginnDiv")
-                <div class="content">
-            #elseif($e.type=="endDiv")
-                </div>
-            #elseif($e.type=="line")
-                <div class="line"><hr /></div><br/>
-            #elseif($e.type=="space")
-                <div style="clear:both; padding:5px;"></div>
-            #elseif($e.type=="kml")
-                #renderKML($e)
-            #elseif($e.type=="html")
-                $e.body
-            #elseif($e.type=="gmd")
-                ##render title
-                #renderDetailHeader($e)
-                <div dojoType="dijit.layout.TabContainer" doLayout="false" style="width: 100%; min-height: 100px;">
-                    #if($tool.hasContent($e.body.get("elementsGeneral")))
-                        <div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('general_tab')" class="contentTab">
-                            #renderNoScriptTitle($MESSAGES.getString('general_tab'))
-                            #renderClearer()
-                            #renderElements($e.body.get("elementsGeneral"))
-                        </div>
-                    #end
-                    #if($tool.hasContent($e.body.get("elementsReference")))
-                        <div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('references_tab')" class="contentTab">
-                            #renderNoScriptTitle($MESSAGES.getString('references_tab')) 
-                            #renderClearer()
-                            #renderElements($e.body.get("elementsReference"))
-                        </div>
-                    #end
-                    #if($tool.hasContent($e.body.get("elementsAreaTime")))
-                        <div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('spacial_reference_tab')" class="contentTab">
-                            #renderNoScriptTitle($MESSAGES.getString('spacial_reference_tab'))  
-                            #renderClearer()
-                            #renderElements($e.body.get("elementsAreaTime"))
-                        </div>
-                    #end
-                    #if($tool.hasContent($e.body.get("elementsSubject")))
-                        <div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('subject_reference_tab')" class="contentTab">
-                            #renderNoScriptTitle($MESSAGES.getString('subject_reference_tab'))  
-                            #renderClearer()
-                            #renderElements($e.body.get("elementsSubject"))
-                        </div>
-                    #end
-                    #if($tool.hasContent($e.body.get("elementsDataQuality")))
-                        <div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('data_quality')" class="contentTab">
-                            #renderNoScriptTitle($MESSAGES.getString('data_quality'))   
-                            #renderClearer()
-                            #renderElements($e.body.get("elementsDataQuality"))
-                        </div>
-                    #end
-                    #if($tool.hasContent($e.body.get("elementsAvailability")))
-                        <div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('availability_tab')" class="contentTab">
-                            #renderNoScriptTitle($MESSAGES.getString('availability_tab'))   
-                            #renderClearer()
-                            #renderElements($e.body.get("elementsAvailability"))
-                        </div>
-                    #end
-                    #if($tool.hasContent($e.body.get("elementsAdditionalInfo")))
-                        <div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('additional_information_tab')" class="contentTab">
-                            #renderNoScriptTitle($MESSAGES.getString('additional_information_tab')) 
-                            #renderClearer()
-                            #renderElements($e.body.get("elementsAdditionalInfo"))
-                        </div>
-                    #end
-                    #if($tool.hasContent($e.body.get("elementsAdditionalField")))
-                        #foreach($additionalFieldSection in $e.body.get("elementsAdditionalField"))
-                            <div dojoType="dijit.layout.ContentPane" title="$additionalFieldSection.title" class="contentTab">
-                                #renderNoScriptTitle($additionalFieldSection.title)
+			#if($e.type)
+                #if($e.type=="entry")
+                    #renderEntry($e)
+                #elseif($e.type=="multiLine")
+                    #renderMultiLine($e)
+                #elseif($e.type=="multiLineAddresses")
+                    #renderMultiLineAddresses($e)
+                #elseif($e.type=="entryInline")
+                    #renderEntryInLine($e)
+                #elseif($e.type=="linkList")
+                    #renderLinkList($e)
+                #elseif($e.type=="textList")
+                    #renderTextList($e)
+                #elseif($e.type=="table")
+                    #renderTable($e)
+                #elseif($e.type=="textLine")
+                    #renderTextLine($e)
+                #elseif($e.type=="linkLine")
+                    #renderLinkLine($e)
+                #elseif($e.type=="textLinkLine")
+                    #renderTextLinkLine($e)
+                #elseif($e.type=="linkLineAddress")
+                    #renderLinkLineAddress($e)
+                #elseif($e.type=="textLabelAbove")
+                    #renderTextLabelAbove($e)
+                #elseif($e.type=="textLabelDuring")
+                    #renderTextLabelDuring($e)
+                #elseif($e.type=="textLabelLeft")
+                    #renderTextLabelLeft($e)
+                #elseif($e.type=="image")
+                    #renderImageLine($e)
+                #elseif($e.type=="section")
+                    #renderSectionTitle($e.title)
+                #elseif($e.type=="group")
+                    #renderGroupTitle($e.title)
+                #elseif($e.type=="beginnDiv")
+                    <div class="content">
+                #elseif($e.type=="endDiv")
+                    </div>
+                #elseif($e.type=="line")
+                    <div class="line"><hr /></div><br/>
+                #elseif($e.type=="space")
+                    <div style="clear:both; padding:5px;"></div>
+                #elseif($e.type=="kml")
+                    #renderKML($e)
+                #elseif($e.type=="html")
+                    $e.body
+                #elseif($e.type=="gmd")
+                    ##render title
+                    #renderDetailHeader($e)
+                    <div dojoType="dijit.layout.TabContainer" doLayout="false" style="width: 100%; min-height: 100px;">
+                        #if($tool.hasContent($e.body.get("elementsGeneral")))
+                            <div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('general_tab')" class="contentTab">
+                                #renderNoScriptTitle($MESSAGES.getString('general_tab'))
                                 #renderClearer()
-                                #renderElements($additionalFieldSection.body)
+                                #renderElements($e.body.get("elementsGeneral"))
                             </div>
                         #end
-                    #end
-               </div>
-            #end
+                        #if($tool.hasContent($e.body.get("elementsReference")))
+                            <div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('references_tab')" class="contentTab">
+                                #renderNoScriptTitle($MESSAGES.getString('references_tab')) 
+                                #renderClearer()
+                                #renderElements($e.body.get("elementsReference"))
+                            </div>
+                        #end
+                        #if($tool.hasContent($e.body.get("elementsAreaTime")))
+                            <div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('spacial_reference_tab')" class="contentTab">
+                                #renderNoScriptTitle($MESSAGES.getString('spacial_reference_tab'))  
+                                #renderClearer()
+                                #renderElements($e.body.get("elementsAreaTime"))
+                            </div>
+                        #end
+                        #if($tool.hasContent($e.body.get("elementsSubject")))
+                            <div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('subject_reference_tab')" class="contentTab">
+                                #renderNoScriptTitle($MESSAGES.getString('subject_reference_tab'))  
+                                #renderClearer()
+                                #renderElements($e.body.get("elementsSubject"))
+                            </div>
+                        #end
+                        #if($tool.hasContent($e.body.get("elementsDataQuality")))
+                            <div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('data_quality')" class="contentTab">
+                                #renderNoScriptTitle($MESSAGES.getString('data_quality'))   
+                                #renderClearer()
+                                #renderElements($e.body.get("elementsDataQuality"))
+                            </div>
+                        #end
+                        #if($tool.hasContent($e.body.get("elementsAvailability")))
+                            <div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('availability_tab')" class="contentTab">
+                                #renderNoScriptTitle($MESSAGES.getString('availability_tab'))   
+                                #renderClearer()
+                                #renderElements($e.body.get("elementsAvailability"))
+                            </div>
+                        #end
+                        #if($tool.hasContent($e.body.get("elementsAdditionalInfo")))
+                            <div dojoType="dijit.layout.ContentPane" title="$MESSAGES.getString('additional_information_tab')" class="contentTab">
+                                #renderNoScriptTitle($MESSAGES.getString('additional_information_tab')) 
+                                #renderClearer()
+                                #renderElements($e.body.get("elementsAdditionalInfo"))
+                            </div>
+                        #end
+                        #if($tool.hasContent($e.body.get("elementsAdditionalField")))
+                            #foreach($additionalFieldSection in $e.body.get("elementsAdditionalField"))
+                                <div dojoType="dijit.layout.ContentPane" title="$additionalFieldSection.title" class="contentTab">
+                                    #renderNoScriptTitle($additionalFieldSection.title)
+                                    #renderClearer()
+                                    #renderElements($additionalFieldSection.body)
+                                </div>
+                            #end
+                        #end
+                   </div>
+				#end
+			#end
         #end
    </div>
 #end
