@@ -9,7 +9,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -297,12 +299,12 @@ public class UtilsFileHelper {
 			bufferReader = new BufferedReader(new FileReader(path));
 			String input = "";
 			while((input = bufferReader.readLine()) != null) {
-				if(input.startsWith("Build-SVN-Revision")){
+				if(input.startsWith("Implementation-Build")){
 					String value = input.split(":")[1].trim();
 					if(value.length() > 0){
 						versionMap.put("svn_version", value);
 					}
-				}else if(input.startsWith("Build-Version")){
+				}else if(input.startsWith("Implementation-Version")){
 					String value = input.split(":")[1].trim();
 					if(value.length() > 0){
 						versionMap.put("project_version", value);	
@@ -310,7 +312,8 @@ public class UtilsFileHelper {
 				}else if(input.startsWith("Build-Timestamp")){
 					String value = input.split(":")[1].trim();
 					if(value.length() > 0){
-						versionMap.put("build_time", value);	
+					    Date date = new Date(Long.valueOf(value));
+						versionMap.put("build_time", date.toString());	
 					}
 				}
 			}
