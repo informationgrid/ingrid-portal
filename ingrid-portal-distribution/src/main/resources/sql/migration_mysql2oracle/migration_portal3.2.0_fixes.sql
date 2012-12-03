@@ -22,6 +22,7 @@ UPDATE ingrid_principal_pref SET pref_value2 = pref_value;
 ALTER TABLE ingrid_principal_pref DROP COLUMN pref_value;
 ALTER TABLE ingrid_principal_pref RENAME COLUMN pref_value2 TO pref_value;
 
+-- NOTICE: Keep CLOB if description > 4000 in Feed wanted ! BUT THEN ojdbc6.jar DRIVER HAS TO BE USED FOR Oracle 11g !
 PROMPT ! Change ingrid_rss_store.description from CLOB to VARCHAR2(4000 CHAR) ...
 ALTER TABLE ingrid_rss_store ADD description2 VARCHAR2(4000 CHAR);
 UPDATE ingrid_rss_store SET description2 = description;
@@ -75,6 +76,24 @@ ALTER TABLE portlet_content_type ADD modes2 VARCHAR2(4000 CHAR);
 UPDATE portlet_content_type SET modes2 = modes;
 ALTER TABLE portlet_content_type DROP COLUMN modes;
 ALTER TABLE portlet_content_type RENAME COLUMN modes2 TO modes;
+
+PROMPT ! Change ingrid_rss_store.link from VARCHAR(255) to VARCHAR2(4000 CHAR) ...
+ALTER TABLE INGRID_RSS_STORE ADD link2 VARCHAR2(4000 CHAR);
+UPDATE INGRID_RSS_STORE SET link2 = link;
+ALTER TABLE INGRID_RSS_STORE DROP COLUMN link;
+ALTER TABLE INGRID_RSS_STORE RENAME COLUMN link2 TO link;
+
+PROMPT ! CHANGE COLUMN CONSTRAINTS (columns nullable, ...)
+PROMPT ---------------------------------------------------
+
+-- for avoiding Error when creating NEW User
+ALTER TABLE SECURITY_CREDENTIAL MODIFY (PREV_AUTH_DATE null);
+ALTER TABLE SECURITY_CREDENTIAL MODIFY PREV_AUTH_DATE DEFAULT NULL;
+ALTER TABLE SECURITY_CREDENTIAL MODIFY (LAST_AUTH_DATE null);
+ALTER TABLE SECURITY_CREDENTIAL MODIFY LAST_AUTH_DATE DEFAULT NULL;
+
+-- for avoiding Error when adding NEW Feed
+ALTER TABLE INGRID_RSS_SOURCE MODIFY (LASTUPDATE null);
 
 commit;
 
