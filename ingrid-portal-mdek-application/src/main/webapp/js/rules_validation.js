@@ -171,6 +171,9 @@ function titleDateValidation(gridId){
     
         if (((item.title == undefined || item.title == "") && (item.date == undefined || item.date == "")))
             rowError = false;
+
+        if (item.title == null)
+            rowError = true;
             
         if (rowError) {
             error = true;
