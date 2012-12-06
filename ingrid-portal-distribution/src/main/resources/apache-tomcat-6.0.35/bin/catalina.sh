@@ -101,6 +101,12 @@ esac
 # needed for TomCat 5.5.27+ when it complains about '"' in *.jsp
 JAVA_OPTS="$JAVA_OPTS -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false -Duser.language=de"
 
+# include a jmx script, if available, i.e. to specify jmx port, etc.
+# caution: the jmx script must echo the actual command to be able to work in the current environment
+if [ -f $INGRID_HOME/bin/jmx.sh ]; then
+  eval `sh $INGRID_HOME/bin/jmx.sh`
+fi
+
 # changed memory parameters due to integration of gssoil thesaurus, gazetteer service in IGE !
 #CATALINA_OPTS="$CATALINA_OPTS -server -Xmx1024m -XX:MaxPermSize=256m"
 CATALINA_OPTS="$CATALINA_OPTS -server -Xms256m -Xmx1024m -XX:PermSize=384m -XX:MaxPermSize=384m -Xss2048k"
