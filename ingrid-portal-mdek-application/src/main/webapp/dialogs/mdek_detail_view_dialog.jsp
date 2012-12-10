@@ -275,6 +275,13 @@ scriptScopeDetailView.renderSimpleTreeNode = function(nodeData) {
 }
 
 scriptScopeDetailView.loadAndRenderTreeNode = function(nodeId, nodeType) {
+/*    if (nodeId == "objectRoot") {
+        scriptScopeDetailView.detailDivContent += "<p>Objekte</p>";
+        var def = new dojo.Deferred();
+        def.callback();
+        return def;
+    }
+*/        
     // skip if the user canceled
     // since several asynchronous deferreds exists it's better to ignore execution
     if (!scriptScopeDetailView.stopOperation) {
@@ -1049,16 +1056,16 @@ scriptScopeDetailView.findNodeInSubTree = function(uuid) {
 </head>
 
 <body>
-    <div id="contentPane" layoutAlign="client" class="contentBlockWhite" style="width:700px;">
+    <div id="contentPane" class="contentBlockWhite">
         <div id="dialogContent" class="content">
-            <div id="printDialogSettings">
+            <div id="printDialogSettings" class="grey">
+                <input type="checkbox" id="showDetailedView" dojoType="dijit.form.CheckBox" checked=true />
+                <label for="showDetailedView" class="inActive" style="margin-right: 15px;">
+                    <fmt:message key="dialog.detail.print.showDetailedView" />
+                </label>
                 <input type="checkbox" id="showSubTree" dojoType="dijit.form.CheckBox" />
                 <label for="showSubTree" class="inActive">
                     <fmt:message key="dialog.detail.print.showSubTree" />
-                </label>
-                <input type="checkbox" id="showDetailedView" dojoType="dijit.form.CheckBox" checked=false />
-                <label for="showDetailedView" class="inActive">
-                    <fmt:message key="dialog.detail.print.showDetailedView" />
                 </label>
                 <input type="checkbox" id="showSubordinateObjects" dojoType="dijit.form.CheckBox" style="display:none;" checked=true />
                 <label for="showSubordinateObjects" style="display:none;" class="inActive" title="<fmt:message key="dialog.detail.print.showSubordinate.tooltip" />">

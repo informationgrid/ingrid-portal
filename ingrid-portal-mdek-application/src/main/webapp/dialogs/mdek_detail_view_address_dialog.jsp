@@ -390,16 +390,16 @@ scriptScopeDetailViewAddr.renderText = function(val) {
 
 <body>
     <div dojoType="dijit.layout.ContentPane">
-        <div id="contentPane" layoutAlign="client" class="contentBlockWhite" style="width: 700px;">
+        <div id="contentPane" class="contentBlockWhite">
             <div id="dialogContent" class="content">
-                <div id="printDialogSettings">
-                    <input type="checkbox" id="showSubTree" dojoType="dijit.form.CheckBox" /> <label for="showSubTree"
-                        class="inActive"> <fmt:message key="dialog.detail.print.showSubTree" />
-                    </label> 
-                    <input type="checkbox" id="showDetailedView" dojoType="dijit.form.CheckBox" checked=false /> 
+                <div id="printDialogSettings" class="grey">
+                    <input type="checkbox" id="showDetailedView" dojoType="dijit.form.CheckBox" checked=true /> 
                     <label
-                        for="showDetailedView" class="inActive"> <fmt:message
+                        for="showDetailedView" class="inActive" style="margin-right: 15px;"> <fmt:message
                             key="dialog.detail.print.showDetailedView" />
+                    </label>
+                    <input type="checkbox" id="showSubTree" dojoType="dijit.form.CheckBox" /> <label for="showSubTree"
+                        class="inActive"> <fmt:message key="dialog.detail.print.showSubTreeAddress" />
                     </label> 
                     <span id="detailLoadingZone" style="visibility: hidden;" class="processInfo right">
                         <img src="img/ladekreis.gif" width="20" height="20" alt="Loading" />
