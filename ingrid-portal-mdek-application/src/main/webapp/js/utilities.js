@@ -1872,6 +1872,16 @@ UtilTree.deleteNode = function(treeId, node) {
 	tree.model.store.deleteItem(node.item);
 }
 
+/**
+ * Refresh children of a node. If no node is given then a currently selected
+ * node is used.
+ */
+UtilTree.refreshChildren = function(treeId, node) {
+    var tree = dijit.byId("dataTree");
+    var selectedNode = node ? node : tree.selectedNode;
+    tree.refreshChildren(selectedNode);
+}
+
 // Utility functions for DOM
 var UtilDOM = {}
 

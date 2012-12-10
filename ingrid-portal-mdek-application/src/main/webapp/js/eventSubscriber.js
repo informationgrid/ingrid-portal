@@ -676,7 +676,11 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
-			callback: function(res) { onPublishDef.callback(res); },
+			callback: function(res) {
+			    // refresh children
+                UtilTree.refreshChildren("dataTree");
+			    onPublishDef.callback(res); 
+			},
 //			timeout:10000,
 			errorHandler:function(err, ex) {
 				UtilDWR.exitLoadingState();
@@ -712,6 +716,11 @@ udkDataProxy.handlePublishObjectRequest = function(msg) {
 udkDataProxy.handlePublishAddressRequest = function(msg) {
 	// Construct an MdekDataBean from the available data
 	var nodeData = udkDataProxy._getData();
+	
+	var forcePubCond = false;
+    if (msg && typeof(msg.forcePublicationCondition) != "undefined") {
+        forcePubCond = msg.forcePublicationCondition;
+    }
 
 	// Deferred obj for the main publish operation. The passed resulthandler is called with the appropriate result
 	var onPublishDef = new dojo.Deferred();
@@ -731,16 +740,42 @@ udkDataProxy.handlePublishAddressRequest = function(msg) {
 
 	// ---- DWR call to store the data ----
 	console.debug("udkDataProxy calling AddressService.saveAddressData("+nodeData.uuid+", false)");
-	AddressService.saveAddressData(nodeData, "false", false, 
+	AddressService.saveAddressData(nodeData, "false", forcePubCond, 
 		{
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
-			callback: function(res) { onPublishDef.callback(res); },
+			callback: function(res) {
+			    // refresh children
+	            UtilTree.refreshChildren("dataTree");
+			    onPublishDef.callback(res); 
+			},
 //			timeout:10000,
 			errorHandler:function(err, msg) {
 				UtilDWR.exitLoadingState();
-				console.debug("Error in js/udkDataProxy.js: Error while publishing address:");
-				onPublishDef.errback(msg);
+				
+				if (err.indexOf("SUBTREE_HAS_LARGER_PUBLICATION_CONDITION") != -1) {
+                    var onForcePublishDef = new dojo.Deferred();
+                    
+                    // If the user wants to publish the object anyway, set force publish and start another request
+                    onForcePublishDef.addCallback(function() {
+                        msg.forcePublicationCondition = true;
+                        dojo.publish("/publishAddressRequest", [msg]);
+                    });
+                    // If the user cancelled the operation notify the result handler
+                    onForcePublishDef.addErrback(onPublishDef.errback);
+
+                    // Display the 'publication condition' dialog with the attached resultHandler
+//                  dialog.showPage(message.get("general.warning"), "mdek_pubCond_dialog.html", 382, 220, true, {operation:"SAVE", resultHandler:onForcePublishDef});
+                    var displayText = message.get("operation.hint.publicationConditionSaveHint.address");
+                    dialog.show(message.get("general.warning"), displayText, dialog.WARNING, [
+                        { caption: message.get("general.cancel"),  action: function() { /**onForcePublishDef.errback();*/ } },
+                        { caption: message.get("general.save"), action: function() { onForcePublishDef.callback(); } }
+                    ], 382, 220);
+
+                } else {
+                    console.debug("Error in js/udkDataProxy.js: Error while publishing address:");
+                    onPublishDef.errback(msg);
+                }
 			}
 		}
 	);
