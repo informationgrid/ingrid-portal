@@ -2247,7 +2247,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
         
-    private static String convertTimestampToDisplayDate(String timeStamp) {
+    synchronized private static String convertTimestampToDisplayDate(String timeStamp) {
         if (timeStamp != null) {
             return MdekUtils.timestampToDisplayDate(timeStamp);
         } else {
