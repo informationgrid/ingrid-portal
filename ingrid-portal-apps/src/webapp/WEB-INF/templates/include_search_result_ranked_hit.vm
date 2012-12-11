@@ -52,11 +52,7 @@ $MESSAGES.setMsgParam('DOC')
                 #end
                 
                 #if($rs.docuuid && $rs.docuuid.length() > 0)
-                ## render "Get XML"-link displayed next to the title
-                #if ($rs.csw_link)
-                    #set($xmlLink = "<a href='$rs.csw_link' target='_blank'><img src='/ingrid-portal-apps/images/xml.gif' title='$MESSAGES.getString('common.result.show.xml')'></a>")
-                #end
-                <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><span class="intendResult" style="left:$leftDistance;"><a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end#if($rs.docid)&docid=$rs.docid#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern.result')">#renderTitle($rs.title.trim())</a>$!xmlLink</span></span>
+                <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><span class="intendResult" style="left:$leftDistance;"><a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end#if($rs.docid)&docid=$rs.docid#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern.result')">#renderTitle($rs.title.trim())</a></span></span>
                 #else   
                 <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_udk_obj_${rs.udk_class}.gif" alt="${udkObjClassName}" title="${udkObjClassName}"></span><span class="intendResult" style="left:$leftDistance;"><a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern.result')">#renderTitle($rs.title.trim())</a></span></span>
                 #end    
@@ -69,11 +65,7 @@ $MESSAGES.setMsgParam('DOC')
                     #set($leftDistance = '')
                 #end
                 #if($rs.docuuid && $rs.docuuid.length() > 0)
-                    ## render "Get XML"-link displayed next to the title
-                    #if ($rs.csw_link)
-                        #set($xmlLink = "<a href='$rs.csw_link' target='_blank'><img src='/ingrid-portal-apps/images/xml.gif' title='$MESSAGES.getString('common.result.show.xml')'></a>")
-                    #end
-                    <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/$iconImage" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span><span class="intendResult" style="left:$leftDistance;"><a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&docuuid=$rs.docuuid&plugid=$rs.plugid" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern.result')">#renderTitle($rs.title.trim())</a>$!xmlLink</span></span>
+                    <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/$iconImage" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span><span class="intendResult" style="left:$leftDistance;"><a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&docuuid=$rs.docuuid&plugid=$rs.plugid" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern.result')">#renderTitle($rs.title.trim())</a></span></span>
                 #else   
                     <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/$iconImage" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span><span class="intendResult" style="left:$leftDistance;"><a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern.result')">#renderTitle($rs.title.trim())</a></span></span>
                 #end    
@@ -127,6 +119,17 @@ $MESSAGES.setMsgParam('DOC')
                 <a target="_new" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=${rs.wms_url}" title="$MESSAGES.getString('common.result.showMap.tooltip')">$MESSAGES.getString('common.result.showMap')</a>
             </div>
             #end
+            
+            ## render "Get XML"-link displayed next to the title
+            #if ($rs.csw_link)
+            <div class="result_link map_link">
+                <a href='$rs.csw_link' target='_blank' title='$MESSAGES.getString('common.result.show.xml')'>
+                    XML
+                </a>
+            </div>
+            #end
+            
+            <div class="clearer"></div>
             
             ## show link to data object including a link to the map
 ##            #foreach($res in $rs.coupled_resource)
