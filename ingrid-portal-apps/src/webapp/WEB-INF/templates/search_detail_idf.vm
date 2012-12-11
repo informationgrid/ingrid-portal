@@ -30,9 +30,7 @@
             #if($entry.isExtern)
                 <img src="/decorations/layout/ingrid-popup/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
             #elseif($entry.isMapLink)
-                <div class="map_link">
-                    <a target="_new" href="/kartendienste?wms_url=${entry.get("href")}">$entry.title</a>
-                </div>
+                <a target="_new" href="${entry.get("href")}" style="text-align: center;"><img width="200" src="$entry.src"><p>$entry.title</p></a>
             #else
                 <img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
             #end
@@ -128,8 +126,8 @@
         #end
         #if($tool.hasContent($entry.title))
             #renderGroupTitle($entry.title)
-		#end
-		#if($tool.hasContent($entry.sort))
+        #end
+        #if($tool.hasContent($entry.sort))
             #if($entry.sort == "false")
                 #set($elements = $entry.elements)
             #else
@@ -140,17 +138,17 @@
                 #else
                     #set($elements = $entry.elements)
                 #end
-			#end
-		#else
-			#set($elements = $entry.elements)
-		#end
+            #end
+        #else
+            #set($elements = $entry.elements)
+        #end
         #if($entry.width=="full")
             <div class="float_right">
         #else
             <div class="width_two_thirds">
         #end
         #foreach($e in $elements)
-			#if($e.type)
+            #if($e.type)
                 #if($e.type=="multiLine")
                     #renderMultiLine($e)
                 #elseif($e.type=="textLine")
@@ -173,8 +171,8 @@
                     <div class="line"><hr /></div><br/>
                 #elseif($e.type=="space")
                     <div style="clear:both; padding:5px;"></div>
-				#end
-			#end
+                #end
+            #end
         #end
         </div>
     #end
@@ -183,8 +181,8 @@
 #macro (renderMultiLineHalf $entry)
     #if($tool.hasContent($entry.elements))
         #renderGroupTitle($entry.title)
-		#if($tool.hasContent($entry.sort))
-			#if($entry.sort == "false")
+        #if($tool.hasContent($entry.sort))
+            #if($entry.sort == "false")
                 #set($elements = $entry.elements)
             #else
                 #set ($hasBody = false)
@@ -194,10 +192,10 @@
                 #else
                     #set($elements = $entry.elements)
                 #end
-			#end
-		#else
-			#set($elements = $entry.elements)
-		#end
+            #end
+        #else
+            #set($elements = $entry.elements)
+        #end
         #foreach($e in $elements)
             #renderTypeHalf($e)
         #end
@@ -265,7 +263,7 @@
 #end
 
 #macro(renderTypeHalf $e)
-	#if($e.type)
+    #if($e.type)
         #if($e.type=="multiLine")
             #renderMultiLineHalf($e)
         #elseif($e.type=="textLine")
@@ -286,8 +284,8 @@
             <div class="line"><hr /></div><br/>
         #elseif($e.type=="space")
             <div style="clear:both; padding:5px;"></div>
-		#end
-	#end
+        #end
+    #end
 #end
 
 ##Render header 
@@ -303,23 +301,23 @@
                 #renderTitleHeader($elements.get("general").get("title"))
                 #if($tool.hasContent($elements.get("elementsGeneral")))
                     #foreach($e in $elements.get("elementsGeneral"))
-						#if($e.type)
+                        #if($e.type)
                             #if($e.type=="udkClass")
                                 #renderUdkClass($e)
                             #elseif($e.type=="addressType")
                                 #renderAddressType($e)
-							#end
-						#end
+                            #end
+                        #end
                     #end
                 #elseif($tool.hasContent($elements.get("udk")))
                     #foreach($e in $elements.get("udk"))
-						#if($e.type)
+                        #if($e.type)
                             #if($e.type=="udkClass")
                                 #renderUdkClass($e)
                             #elseif($e.type=="addressType")
                                 #renderAddressType($e)
-							#end
-						#end
+                            #end
+                        #end
                     #end
                 #end
             </div>
@@ -641,17 +639,17 @@
                 </td>
                 #end
                 <td class="text_label_left_body">
-					#if($entry.body)
-						#if($entry.body.type)
+                    #if($entry.body)
+                        #if($entry.body.type)
                             #if($entry.body.type == "linkLine")
                                 #renderLinkLine($entry.body)
-    						#else
-								$entry.body
-							#end
+                            #else
+                                $entry.body
+                            #end
                         #else
                             $entry.body
-						#end
-					#end
+                        #end
+                    #end
                 </td>
             #end
             </tr>
@@ -700,7 +698,7 @@
 #macro (renderElements $elements)
     <div class="section">
         #foreach($e in $elements)
-			#if($e.type)
+            #if($e.type)
                 #if($e.type=="entry")
                     #renderEntry($e)
                 #elseif($e.type=="multiLine")
@@ -810,8 +808,8 @@
                             #end
                         #end
                    </div>
-				#end
-			#end
+                #end
+            #end
         #end
    </div>
 #end
@@ -856,7 +854,7 @@
 #end
 ##
     ## Remove comment for new detail view
-	<div class="detail_block">
+    <div class="detail_block">
     #if($data)
         <div id="detail_background" >
             #renderElements($data)

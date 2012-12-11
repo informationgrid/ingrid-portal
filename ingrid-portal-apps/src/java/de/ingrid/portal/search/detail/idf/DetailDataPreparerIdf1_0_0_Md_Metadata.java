@@ -90,8 +90,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			getGeneralTab(elementsGeneral, xpathExpression);
 			
 			// Graphic overview
-			xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString";
-            getPreviewImage(elementsGeneral, xpathExpression);
+			//xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString";
+            //getPreviewImage(elementsGeneral, xpathExpression);
 			
 			// Addresses
 			xpathExpression = "./gmd:identificationInfo/*/gmd:pointOfContact";
@@ -345,18 +345,37 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         }
     }
 
-    private void getPreviewImage(ArrayList elementsGeneral, String xpathExpression) {
-	    if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+	private String getPreviewImageUrl(String xpathExpression) {
+	    if (xpathExpression == null)
+	        xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString";
+	    
+	    String value = null;
+        if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
             Node node = XPathUtils.getNode(rootNode, xpathExpression);
-            String value = node.getTextContent();
-            HashMap listEntry = new HashMap();
-            listEntry.put("type", "image");
-            listEntry.put("title", messages.getString("preview"));
-            String[] imageUrlArray = new String[1];
-            imageUrlArray[0] = value;
-            listEntry.put("elements", imageUrlArray);
-            elementsGeneral.add(listEntry);
-	    }        
+            value = node.getTextContent();
+        }
+        return value;
+    }
+	
+    private void getPreviewImage(ArrayList elements, String xpathExpression) {
+	    String url = getPreviewImageUrl(xpathExpression);
+	    if (url != null) {
+	        HashMap elementCapabilities = new HashMap();
+            elementCapabilities.put("type", "multiLine");
+            HashMap elementMapLink = new HashMap();
+            elementMapLink.put("type", "linkLine");
+            elementMapLink.put("isMapLink", new Boolean(true));
+            elementMapLink.put("isExtern", new Boolean(false));
+            elementMapLink.put("title", messages.getString("preview"));
+            elementMapLink.put("href", url);
+            elementMapLink.put("src", url);
+            // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
+            ArrayList list = new ArrayList();
+            list.add(elementMapLink);
+            elementCapabilities.put("elements", list);
+            elementCapabilities.put("width", "full");
+            elements.add(elementCapabilities);
+	    }
     }
 
     /** NOTICE: replaces all "\n" with "<br/>" because can have multiple lines (text areas, e.g. gmd:useLimitation). */
@@ -1759,8 +1778,12 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
             elementMapLink.put("isMapLink", new Boolean(true));
             elementMapLink.put("isExtern", new Boolean(false));
             elementMapLink.put("title", messages.getString("common.result.showMap"));
-            this.firstGetCapabiltiesUrl = /*"portal/main-maps.psml?wms_url=" +*/ UtilsVelocity.urlencode(urlValue);
+            this.firstGetCapabiltiesUrl = "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(urlValue);
             elementMapLink.put("href", this.firstGetCapabiltiesUrl);
+            // use preview image if provided otherwise static image
+            String imageUrl = getPreviewImageUrl(null);
+            if (imageUrl == null ) imageUrl = "/ingrid-portal-apps/images/show_map.png";
+            elementMapLink.put("src", imageUrl);
             // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
             ArrayList list = new ArrayList();
             list.add(elementMapLink);
@@ -3364,14 +3387,20 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                     if ((description.length() > 0) || alternateName.length() > 0 || capabilitiesUrl != null) {
                         addSectionTitle(elements, messages.getString("detail_description"));
                         
-                        // showMap-Link
-                        if (context.get(UDK_OBJ_CLASS_TYPE).equals("1")) {
-                            // search for it in onlineResources
-                            xpathExpression = "./gmd:distributionInfo/*/gmd:transferOptions";
-                            getCapabilityUrls(elements, xpathExpression);
-                        } else if (context.get(UDK_OBJ_CLASS_TYPE).equals("3")) {
-                            // get it directly from the operation
-                            addBigMapLink(elements, capabilitiesUrl);
+                        // showMap/Preview-Link
+                        if (context.get(UDK_OBJ_CLASS_TYPE).equals("1") || context.get(UDK_OBJ_CLASS_TYPE).equals("3")) {
+                            if (context.get(UDK_OBJ_CLASS_TYPE).equals("1")) {
+                                // search for it in onlineResources
+                                xpathExpression = "./gmd:distributionInfo/*/gmd:transferOptions";
+                                getCapabilityUrls(elements, xpathExpression);
+                            }else if (context.get(UDK_OBJ_CLASS_TYPE).equals("3")) {
+                                // get it directly from the operation
+                                addBigMapLink(elements, capabilitiesUrl);
+                            }
+                        } else {
+                            // show preview image (with map link information if provided)
+                            xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString";
+                            getPreviewImage(elements, xpathExpression);
                         }
                         
                         addElementEntryLabelAbove(elements, description, alternateName, false);
@@ -3386,10 +3415,6 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                         // "Untergeordnete Objekte"
                         xpathExpression ="./idf:subordinatedReference";
                         getReference(elements, xpathExpression, ReferenceType.SUBORDINATE);
-                        
-                        // Graphic overview
-                        //xpathExpression = "./gmd:identificationInfo/gmd:MD_DataIdentification/gmd:graphicOverview/gmd:MD_BrowseGraphic";
-                        //getPreviewImage(elements, xpathExpression);
                         
                         // close description
                         closeDiv(elements);
