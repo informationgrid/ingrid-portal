@@ -757,19 +757,20 @@ udkDataProxy.handlePublishAddressRequest = function(msg) {
                     var onForcePublishDef = new dojo.Deferred();
                     
                     // If the user wants to publish the object anyway, set force publish and start another request
-                    onForcePublishDef.addCallback(function() {
+                    // To keep it simple let this do the user manually!!! (INGRID33-12)
+                    /*onForcePublishDef.addCallback(function() {
                         msg.forcePublicationCondition = true;
                         dojo.publish("/publishAddressRequest", [msg]);
                     });
                     // If the user cancelled the operation notify the result handler
                     onForcePublishDef.addErrback(onPublishDef.errback);
-
+                    */
                     // Display the 'publication condition' dialog with the attached resultHandler
 //                  dialog.showPage(message.get("general.warning"), "mdek_pubCond_dialog.html", 382, 220, true, {operation:"SAVE", resultHandler:onForcePublishDef});
                     var displayText = message.get("operation.hint.publicationConditionSaveHint.address");
                     dialog.show(message.get("general.warning"), displayText, dialog.WARNING, [
-                        { caption: message.get("general.cancel"),  action: function() { /**onForcePublishDef.errback();*/ } },
-                        { caption: message.get("general.save"), action: function() { onForcePublishDef.callback(); } }
+                        { caption: message.get("general.ok"),  action: function() {} },
+                        //{ caption: message.get("general.save"), action: function() { onForcePublishDef.callback(); } }
                     ], 382, 220);
 
                 } else {
